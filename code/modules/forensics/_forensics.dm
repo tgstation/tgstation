@@ -73,29 +73,39 @@
 
 /// Empties the fingerprints list
 /datum/forensics/proc/wipe_fingerprints()
+	if(isnull(fingerprints))
+		return NONE
+
 	fingerprints = null
-	return TRUE
+	return COMPONENT_CLEANED
 
 /// Empties the blood_DNA list
 /datum/forensics/proc/wipe_blood_DNA()
+	if(isnull(blood_DNA))
+		return NONE
+
 	blood_DNA = null
-	return TRUE
+	return COMPONENT_CLEANED
 
 /// Empties the fibers list
 /datum/forensics/proc/wipe_fibers()
+	if(isnull(fibers))
+		return NONE
+
 	fibers = null
-	return TRUE
+	return COMPONENT_CLEANED
 
 /// Handles cleaning up the various forensic types
 /datum/forensics/proc/clean_act(datum/source, clean_types)
 	SIGNAL_HANDLER
 
+	. = NONE
 	if(clean_types & CLEAN_TYPE_FINGERPRINTS)
-		wipe_fingerprints()
+		. |= wipe_fingerprints()
 	if(clean_types & CLEAN_TYPE_BLOOD)
-		wipe_blood_DNA()
+		. |= wipe_blood_DNA()
 	if(clean_types & CLEAN_TYPE_FIBERS)
-		wipe_fibers()
+		. |= wipe_fibers()
 
 /// Adds the given list into fingerprints
 /datum/forensics/proc/add_fingerprint_list(list/fingerprints)
@@ -109,10 +119,10 @@
 /// Adds a single fingerprint
 /datum/forensics/proc/add_fingerprint(mob/living/suspect, ignoregloves = FALSE)
 	if(!isliving(suspect))
-		if(!iscameramob(suspect))
+		if(!iseyemob(suspect))
 			return
 		if(isaicamera(suspect))
-			var/mob/camera/ai_eye/ai_camera = suspect
+			var/mob/eye/camera/ai/ai_camera = suspect
 			if(!ai_camera.ai)
 				return
 			suspect = ai_camera.ai
@@ -190,10 +200,10 @@
 /// Adds a single hiddenprint
 /datum/forensics/proc/add_hiddenprint(mob/suspect)
 	if(!isliving(suspect))
-		if(!iscameramob(suspect))
+		if(!iseyemob(suspect))
 			return
 		if(isaicamera(suspect))
-			var/mob/camera/ai_eye/ai_camera = suspect
+			var/mob/eye/camera/ai/ai_camera = suspect
 			if(!ai_camera.ai)
 				return
 			suspect = ai_camera.ai
@@ -229,6 +239,32 @@
 /datum/forensics/proc/check_blood()
 	if(!isitem(parent) || isorgan(parent)) // organs don't spawn with blood decals by default
 		return
-	if(!length(blood_DNA))
+	var/blood_color = parent.get_blood_dna_color()
+	if (blood_color)
+		parent.AddElement(/datum/element/decal/blood, _color = blood_color, _emissive = parent.get_blood_emissive_alpha())
+
+/// Returns how many blood datums on us fit our parent's expose flags
+/datum/forensics/proc/get_visible_blood()
+	RETURN_TYPE(/list)
+	var/expose_flag = null
+	if (isturf(parent) || istype(parent, /obj/effect/decal))
+		expose_flag = BLOOD_COVER_TURFS
+	else if (ismob(parent))
+		expose_flag = BLOOD_COVER_MOBS
+	else if (isitem(parent))
+		expose_flag = BLOOD_COVER_ITEMS
+
+	if (!expose_flag)
 		return
-	parent.AddElement(/datum/element/decal/blood)
+
+	var/visible_blood = list()
+	for (var/blood_key in blood_DNA)
+		var/datum/blood_type/blood_type = blood_DNA[blood_key]
+		if (!istype(blood_type))
+			blood_type = get_blood_type(blood_type)
+			if (!istype(blood_type))
+				continue
+		if (blood_type.blood_flags & expose_flag)
+			visible_blood[blood_key] = blood_type
+
+	return visible_blood

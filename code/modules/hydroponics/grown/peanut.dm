@@ -1,6 +1,6 @@
 // Peanuts!
 /obj/item/seeds/peanut
-	name = "pack of peanut seeds"
+	name = "peanut seed pack"
 	desc = "These seeds grow into peanut plants."
 	icon_state = "seed-peanut"
 	species = "peanut"
@@ -21,5 +21,7 @@
 	desc = "A tasty pair of groundnuts concealed in a tough shell."
 	icon_state = "peanut"
 	foodtypes = NUTS
-	grind_results = list(/datum/reagent/consumable/peanut_butter = 0)
 	tastes = list("peanuts" = 1)
+
+/obj/item/food/grown/peanut/grind_results()
+	return list(/datum/reagent/consumable/peanut_butter = 0)

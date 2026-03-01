@@ -3,18 +3,20 @@
 	desc = "You are addicted to something that doesn't exist. Suffer."
 	gain_text = span_danger("You suddenly feel the craving for... something? You're not sure what it is.")
 	medical_record_text = "Patient has a history with SOMETHING but he refuses to tell us what it is."
-	abstract_parent_type = /datum/quirk/item_quirk/addict
+	abstract_type = /datum/quirk/item_quirk/addict
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
+	no_process_traits = list(TRAIT_LIVERLESS_METABOLISM)
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
 	var/where_drug //! Where the drug spawned
 	var/obj/item/drug_container_type //! If this is defined before pill generation, pill generation will be skipped. This is the type of the pill bottle.
 	var/where_accessory //! where the accessory spawned
 	var/obj/item/accessory_type //! If this is null, an accessory won't be spawned.
-	var/process_interval = 30 SECONDS //! how frequently the quirk processes
-	var/next_process = 0 //! ticker for processing
 	var/drug_flavour_text = "Better hope you don't run out... of what, exactly? You don't know."
+	var/process_interval = 30 SECONDS //! how frequently the quirk processes
+	COOLDOWN_DECLARE(next_process) //! ticker for processing
 
-/datum/quirk/item_quirk/addict/add_unique(client/client_source)
+/datum/quirk/item_quirk/addict/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	if(!reagent_type)
@@ -25,6 +27,7 @@
 	for(var/addiction in reagent_instance.addiction_types)
 		human_holder.last_mind?.add_addiction_points(addiction, 1000)
 
+/datum/quirk/item_quirk/addict/add_unique(client/client_source)
 	var/current_turf = get_turf(quirk_holder)
 
 	if(!drug_container_type)
@@ -34,17 +37,17 @@
 	if(istype(drug_instance, /obj/item/storage/pill_bottle))
 		var/pill_state = "pill[rand(1,20)]"
 		for(var/i in 1 to 7)
-			var/obj/item/reagent_containers/pill/pill = new(drug_instance)
+			var/obj/item/reagent_containers/applicator/pill/pill = new(drug_instance)
 			pill.icon_state = pill_state
 			pill.reagents.add_reagent(reagent_type, 3)
 
 	give_item_to_holder(
 		drug_instance,
 		list(
-			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_HANDS = ITEM_SLOT_HANDS,
+			LOCATION_LPOCKET,
+			LOCATION_RPOCKET,
+			LOCATION_BACKPACK,
+			LOCATION_HANDS,
 		),
 		flavour_text = drug_flavour_text,
 	)
@@ -53,30 +56,29 @@
 		give_item_to_holder(
 		accessory_type,
 		list(
-			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_HANDS = ITEM_SLOT_HANDS,
+			LOCATION_LPOCKET,
+			LOCATION_RPOCKET,
+			LOCATION_BACKPACK,
+			LOCATION_HANDS,
 		)
 	)
 
 /datum/quirk/item_quirk/addict/process(seconds_per_tick)
-	if(HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM))
+	if(!COOLDOWN_FINISHED(src, next_process))
 		return
+	COOLDOWN_START(src, next_process, process_interval)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	if(world.time > next_process)
-		next_process = world.time + process_interval
-		var/deleted = QDELETED(reagent_instance)
-		var/missing_addiction = FALSE
-		for(var/addiction_type in reagent_instance.addiction_types)
-			if(!LAZYACCESS(human_holder.last_mind?.active_addictions, addiction_type))
-				missing_addiction = TRUE
-		if(deleted || missing_addiction)
-			if(deleted)
-				reagent_instance = new reagent_type()
-			to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
-			for(var/addiction in reagent_instance.addiction_types)
-				human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
+	var/deleted = QDELETED(reagent_instance)
+	var/missing_addiction = FALSE
+	for(var/addiction_type in reagent_instance.addiction_types)
+		if(!LAZYACCESS(human_holder.last_mind?.active_addictions, addiction_type))
+			missing_addiction = TRUE
+	if(deleted || missing_addiction)
+		if(deleted)
+			reagent_instance = new reagent_type()
+		to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
+		for(var/addiction in reagent_instance.addiction_types)
+			human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
 
 /datum/quirk/item_quirk/addict/junkie
 	name = "Junkie"
@@ -86,7 +88,6 @@
 	gain_text = span_danger("You suddenly feel the craving for drugs.")
 	medical_record_text = "Patient has a history of hard drugs."
 	hardcore_value = 4
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
 	drug_flavour_text = "Better hope you don't run out..."
 
@@ -102,8 +103,8 @@
 	return ..()
 
 /datum/quirk/item_quirk/addict/remove()
-	if(quirk_holder && reagent_instance)
-		for(var/addiction_type in subtypesof(/datum/addiction))
+	if(!QDELETED(quirk_holder) && reagent_instance)
+		for(var/addiction_type in GLOB.addictions)
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/addict/smoker
@@ -123,7 +124,7 @@
 		/obj/effect/spawner/random/entertainment/cigarette_pack,
 		/obj/effect/spawner/random/entertainment/cigar,
 		/obj/effect/spawner/random/entertainment/lighter,
-		/obj/item/clothing/mask/cigarette/pipe,
+		/obj/item/cigarette/pipe,
 	)
 
 /datum/quirk_constant_data/smoker
@@ -145,15 +146,10 @@
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
 	var/mob/living/carbon/carbon_holder = quirk_holder
-	var/obj/item/organ/internal/lungs/smoker_lungs = null
-	var/obj/item/organ/internal/lungs/old_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/smoker_lungs = null
+	var/obj/item/organ/lungs/old_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(old_lungs && IS_ORGANIC_ORGAN(old_lungs))
-		if(isplasmaman(carbon_holder))
-			smoker_lungs = /obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
-		else if(isethereal(carbon_holder))
-			smoker_lungs = /obj/item/organ/internal/lungs/ethereal/ethereal_smoker
-		else
-			smoker_lungs = /obj/item/organ/internal/lungs/smoker_lungs
+		smoker_lungs = carbon_holder.dna.species.smoker_lungs
 	if(!isnull(smoker_lungs))
 		smoker_lungs = new smoker_lungs
 		smoker_lungs.Insert(carbon_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
@@ -162,7 +158,7 @@
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/mask_item = human_holder.get_item_by_slot(ITEM_SLOT_MASK)
-	if(istype(mask_item, /obj/item/clothing/mask/cigarette))
+	if(istype(mask_item, /obj/item/cigarette))
 		var/obj/item/storage/fancy/cigarettes/cigarettes = drug_container_type
 		if(istype(mask_item, initial(cigarettes.spawn_type)))
 			quirk_holder.clear_mood_event("wrong_cigs")
@@ -208,22 +204,22 @@
 
 /datum/quirk/item_quirk/addict/alcoholic/post_add()
 	. = ..()
-	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
+	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK, PROC_REF(check_brandy))
 	var/obj/item/reagent_containers/brandy_container = drug_container_type
 	if(isnull(brandy_container))
-		stack_trace("Alcoholic quirk added while the GLOB.alcohol_containers is (somehow) not initialized!")
+		stack_trace("Alcoholic quirk added while the GLOB.possible_alcoholic_addictions is (somehow) not initialized!")
 		brandy_container = new drug_container_type
 		qdel(brandy_container)
 
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
 	// alcoholic livers have 25% less health and healing
-	var/obj/item/organ/internal/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(alcohol_liver && IS_ORGANIC_ORGAN(alcohol_liver)) // robotic livers aren't affected
 		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
 		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
 
 /datum/quirk/item_quirk/addict/alcoholic/remove()
-	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK)
+	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK)
 
 /datum/quirk/item_quirk/addict/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
 	SIGNAL_HANDLER

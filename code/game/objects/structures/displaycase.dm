@@ -77,9 +77,9 @@
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/glasshit.ogg', 75, TRUE)
+			playsound(src, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/displaycase/atom_deconstruct(disassembled = TRUE)
 	dump()
@@ -125,7 +125,7 @@
 		. += "[initial(icon_state)]_closed"
 		return
 
-/obj/structure/displaycase/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/structure/displaycase/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.GetID() && !broken)
 		if(allowed(user))
 			to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
@@ -159,7 +159,7 @@
 				toggle_lock(user)
 	else if(open && !showpiece)
 		insert_showpiece(attacking_item, user)
-		return TRUE //cancel the attack chain, wether we successfully placed an item or not
+		return TRUE //cancel the attack chain, whether we successfully placed an item or not
 	else if(glass_fix && broken && istype(attacking_item, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/glass_sheet = attacking_item
 		if(glass_sheet.get_amount() < 2)
@@ -227,6 +227,7 @@
 	resistance_flags = FLAMMABLE
 	anchored = TRUE
 	density = FALSE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	///The airlock electronics inserted into the chassis, to be moved to the finished product.
 	var/obj/item/electronics/airlock/electronics
 
@@ -272,7 +273,7 @@
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/electronics/airlock))
 		balloon_alert(user, "installing electronics...")
 		if(do_after(user, 3 SECONDS, target = src) && user.transferItemToLoc(attacking_item, src))
@@ -359,7 +360,7 @@
 	holographic_showpiece = TRUE
 	update_appearance()
 
-/obj/structure/displaycase/trophy/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/displaycase/trophy/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/key/displaycase))
 		toggle_historian_mode(user)
 		return
@@ -387,7 +388,7 @@
 /obj/structure/displaycase/trophy/proc/toggle_historian_mode(mob/user)
 	historian_mode = !historian_mode
 	balloon_alert(user, "[historian_mode ? "enabled" : "disabled"] historian mode.")
-	playsound(src, 'sound/machines/twobeep.ogg', vary = 50)
+	playsound(src, 'sound/machines/beep/twobeep.ogg', vary = 50)
 	SStgui.update_uis(src)
 
 /obj/structure/displaycase/trophy/toggle_lock(mob/user)
@@ -411,7 +412,7 @@
 		data["showpiece_icon"] = icon2base64(getFlatIcon(showpiece, no_anim=TRUE))
 	return data
 
-/obj/structure/displaycase/trophy/ui_act(action, params)
+/obj/structure/displaycase/trophy/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -426,7 +427,7 @@
 			return
 		if("change_message")
 			if(showpiece && !holographic_showpiece)
-				var/new_trophy_message = tgui_input_text(usr, "Let's make history!", "Trophy Message", trophy_message, MAX_PLAQUE_LEN)
+				var/new_trophy_message = tgui_input_text(usr, "Let's make history!", "Trophy Message", trophy_message, max_length = MAX_PLAQUE_LEN)
 				if(!new_trophy_message)
 					return
 				trophy_message = new_trophy_message
@@ -526,7 +527,7 @@
 	data["product_icon"] = showpiece ? icon2base64(getFlatIcon(showpiece, no_anim=TRUE)) : null
 	return data
 
-/obj/structure/displaycase/forsale/ui_act(action, params)
+/obj/structure/displaycase/forsale/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -562,7 +563,7 @@
 				if(payments_acc)
 					payments_acc.adjust_money(sale_price, "Display Case: [capitalize(showpiece.name)]")
 				usr.put_in_hands(showpiece)
-				to_chat(usr, span_notice("You purchase [showpiece] for [sale_price] credits."))
+				to_chat(usr, span_notice("You purchase [showpiece] for [sale_price] [MONEY_NAME]."))
 				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 				flick("[initial(icon_state)]_vend", src)
 				showpiece = null
@@ -576,7 +577,7 @@
 			if(!potential_acc || !potential_acc.registered_account)
 				return
 			if(!check_access(potential_acc))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 				return
 			toggle_lock()
 		if("Register")
@@ -585,13 +586,13 @@
 			if(!potential_acc || !potential_acc.registered_account)
 				return
 			if(!check_access(potential_acc))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 				return
 			payments_acc = potential_acc.registered_account
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 		if("Adjust")
 			if(!check_access(potential_acc) || potential_acc.registered_account != payments_acc)
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 				return
 
 			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000)
@@ -609,7 +610,7 @@
 			return TRUE
 	. = TRUE
 
-/obj/structure/displaycase/forsale/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/displaycase/forsale/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(isidcard(attacking_item))
 		//Card Registration
 		var/obj/item/card/id/potential_acc = attacking_item
@@ -665,7 +666,7 @@
 /obj/structure/displaycase/forsale/examine(mob/user)
 	. = ..()
 	if(showpiece && !open)
-		. += span_notice("[showpiece] is for sale for [sale_price] credits.")
+		. += span_notice("[showpiece] is for sale for [sale_price] [MONEY_NAME].")
 	if(broken)
 		. += span_notice("[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.")
 

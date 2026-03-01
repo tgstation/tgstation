@@ -15,7 +15,7 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_KICK
 
 	butcher_results = list(/obj/item/food/meat/slab/grassfed = 4)
@@ -31,7 +31,7 @@
 
 	minimum_survivable_temperature = COLD_ROOM_TEMP - 75 // enough so that they can survive the cold room spawn with plenty of room for comfort
 
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 
 	ai_controller = /datum/ai_controller/basic_controller/goat
 	/// How often will we develop an evil gleam in our eye?
@@ -51,6 +51,7 @@
 	AddElement(/datum/element/cliff_walking) //we walk the cliff
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GOAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attack))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
@@ -72,7 +73,7 @@
 	if(!(living_target.mob_biotypes & MOB_PLANT))
 		return
 
-	living_target.adjustBruteLoss(20)
+	living_target.adjust_brute_loss(20)
 	playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 	var/obj/item/bodypart/edible_bodypart
 

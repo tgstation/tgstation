@@ -85,6 +85,16 @@
 	mood_change = 9
 	timeout = 3 MINUTES
 
+/datum/mood_event/antinarcotic_medium
+	description = "I wish I was numb again!"
+	mood_change = -4
+	timeout = 3 MINUTES
+
+/datum/mood_event/antinarcotic_heavy
+	description = "NO!! Make the cotton come back!"
+	mood_change = -9
+	timeout = 3 MINUTES
+
 /datum/mood_event/stimulant_medium
 	description = "I have so much energy! I feel like I could do anything!"
 	mood_change = 4
@@ -124,3 +134,8 @@
 	description = "I feel my soul degrading!"
 	mood_change = -8
 	timeout = 8 MINUTES
+
+/datum/mood_event/sadness_inverse
+	description = "I'M SO SAD..."
+	mood_change = -150
+	special_screen_obj = "mood_happiness_bad"

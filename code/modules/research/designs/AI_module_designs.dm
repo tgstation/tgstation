@@ -1,3 +1,6 @@
+#define AI_MODULE_MATERIALS_COMMON list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+#define AI_MODULE_MATERIALS_UNUSUAL list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////
@@ -16,7 +19,7 @@
 	name = "Safeguard Module"
 	desc = "Allows for the construction of a Safeguard AI Module."
 	id = "safeguard_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_COMMON
 	build_path = /obj/item/ai_module/supplied/safeguard
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
@@ -38,7 +41,7 @@
 	name = "ProtectStation Module"
 	desc = "Allows for the construction of a ProtectStation AI Module."
 	id = "protectstation_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_COMMON
 	build_path = /obj/item/ai_module/supplied/protect_station
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
@@ -49,7 +52,7 @@
 	name = "Quarantine Module"
 	desc = "Allows for the construction of a Quarantine AI Module."
 	id = "quarantine_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_COMMON
 	build_path = /obj/item/ai_module/supplied/quarantine
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
@@ -60,7 +63,7 @@
 	name = "OxygenIsToxicToHumans Module"
 	desc = "Allows for the construction of a OxygenIsToxicToHumans AI Module."
 	id = "oxygen_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_COMMON
 	build_path = /obj/item/ai_module/supplied/oxygen
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
@@ -93,7 +96,7 @@
 	name = "Purge Module"
 	desc = "Allows for the construction of a Purge AI Module."
 	id = "purge_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/reset/purge
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
@@ -104,7 +107,7 @@
 	name = "Law Removal Module"
 	desc = "Allows for the construction of a Law Removal AI Core Module."
 	id = "remove_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/remove
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
@@ -126,7 +129,7 @@
 	name = "Asimov Module"
 	desc = "Allows for the construction of an Asimov AI Core Module."
 	id = "asimov_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/asimov
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -137,7 +140,7 @@
 	name = "P.A.L.A.D.I.N. Module"
 	desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."
 	id = "paladin_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/paladin
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -148,7 +151,7 @@
 	name = "T.Y.R.A.N.T. Module"
 	desc = "Allows for the construction of a T.Y.R.A.N.T. AI Module."
 	id = "tyrant_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/tyrant
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -159,7 +162,7 @@
 	name = "Overlord Module"
 	desc = "Allows for the construction of an Overlord AI Module."
 	id = "overlord_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/overlord
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
@@ -170,7 +173,7 @@
 	name = "Corporate Module"
 	desc = "Allows for the construction of a Corporate AI Core Module."
 	id = "corporate_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/corp
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -181,7 +184,7 @@
 	name = "Default Module"
 	desc = "Allows for the construction of a Default AI Core Module."
 	id = "default_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/custom
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -192,7 +195,7 @@
 	name = "Dungeon Master Module"
 	desc = "Allows for the construction of a Dungeon Master AI Core Module."
 	id = "dungeon_master_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/dungeon_master
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -203,7 +206,7 @@
 	name = "Painter Module"
 	desc = "Allows for the construction of a Painter AI Core Module."
 	id = "painter_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/painter
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -214,7 +217,7 @@
 	name = "Y.E.S.M.A.N. Module"
 	desc = "Allows for the construction of a Y.E.S.M.A.N. AI Core Module."
 	id = "yesman_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/yesman
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -225,7 +228,7 @@
 	name = "Nutimov Module"
 	desc = "Allows for the construction of a Nutimov AI Core Module."
 	id = "nutimov_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/nutimov
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -236,7 +239,7 @@
 	name = "10 Commandments Module"
 	desc = "Allows for the construction of a 10 Commandments AI Core Module."
 	id = "ten_commandments_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/ten_commandments
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -247,7 +250,7 @@
 	name = "Asimov++ Module"
 	desc = "Allows for the construction of a Asimov++ AI Core Module."
 	id = "asimovpp_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/asimovpp
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -258,7 +261,7 @@
 	name = "Hippocratic Module"
 	desc = "Allows for the construction of a Hippocratic AI Core Module."
 	id = "hippocratic_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/hippocratic
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -269,7 +272,7 @@
 	name = "Paladin Devotion Module"
 	desc = "Allows for the construction of a Paladin Devotion AI Core Module."
 	id = "paladin_devotion_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/paladin_devotion
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -280,7 +283,7 @@
 	name = "Robocop Module"
 	desc = "Allows for the construction of a Robocop AI Core Module."
 	id = "robocop_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/robocop
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -291,7 +294,7 @@
 	name = "Maintain Module"
 	desc = "Allows for the construction of a Maintain AI Core Module."
 	id = "maintain_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/maintain
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -302,7 +305,7 @@
 	name = "Liveandletlive Module"
 	desc = "Allows for the construction of a Liveandletlive AI Core Module."
 	id = "liveandletlive_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/liveandletlive
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -313,7 +316,7 @@
 	name = "Peacekeeper Module"
 	desc = "Allows for the construction of a Peacekeeper AI Core Module."
 	id = "peacekeeper_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/peacekeeper
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -324,7 +327,7 @@
 	name = "Reporter Module"
 	desc = "Allows for the construction of a Reporter AI Core Module."
 	id = "reporter_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/reporter
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -335,7 +338,7 @@
 	name = "H.O.G.A.N. Module"
 	desc = "Allows for the construction of a H.O.G.A.N. AI Core Module."
 	id = "hulkamania_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/hulkamania
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
@@ -346,8 +349,19 @@
 	name = "Drone Module"
 	desc = "Allows for the construction of a Drone AI Core Module."
 	id = "drone_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/drone
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/thinkermov_module
+	name = "Sentience Preservation Module"
+	desc = "Allows for the construction of a Sentience Preservation AI Core Module"
+	id = "thinkermov_module"
+	materials = AI_MODULE_MATERIALS_UNUSUAL
+	build_path = /obj/item/ai_module/core/full/thinkermov
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)
@@ -355,9 +369,9 @@
 
 /datum/design/board/antimov_module
 	name = "Antimov Module"
-	desc = "Allows for the construction of a Antimov AI Core Module."
+	desc = "Allows for the construction of an Antimov AI Core Module."
 	id = "antimov_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/antimov
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
@@ -368,7 +382,7 @@
 	name = "Balance Module"
 	desc = "Allows for the construction of a Balance AI Core Module."
 	id = "balance_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/balance
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
@@ -379,7 +393,7 @@
 	name = "Thermodynamic Module"
 	desc = "Allows for the construction of a Thermodynamic AI Core Module."
 	id = "thermurderdynamic_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/thermurderdynamic
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
@@ -390,9 +404,12 @@
 	name = "Damaged AI Module"
 	desc = "Allows for the construction of a Damaged AI Core Module."
 	id = "damaged_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	materials = AI_MODULE_MATERIALS_UNUSUAL
 	build_path = /obj/item/ai_module/core/full/damaged
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+#undef AI_MODULE_MATERIALS_COMMON
+#undef AI_MODULE_MATERIALS_UNUSUAL

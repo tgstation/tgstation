@@ -8,7 +8,7 @@
 	program_open_overlay = "research"
 	tgui_id = "NtosScipaper"
 	program_icon = "paper-plane"
-	download_access = list(ACCESS_ORDNANCE, ACCESS_SCIENCE, ACCESS_AWAY_SCIENCE)
+	download_access = list(ACCESS_ORDNANCE, ACCESS_SCIENCE, ACCESS_AWAY_SCIENCE, ACCESS_ATMOSPHERICS)
 
 	var/datum/techweb/linked_techweb
 	/// Unpublished, temporary paper datum.
@@ -18,7 +18,7 @@
 	/// The file under consideration.
 	var/datum/computer_file/data/ordnance/selected_file
 
-/datum/computer_file/program/scipaper_program/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+/datum/computer_file/program/scipaper_program/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	paper_to_be = new
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
@@ -155,7 +155,8 @@
 					else
 						data["relations"][partner.type] = "Undefined"
 				data["purchaseableBoosts"][partner.type] = list()
-				for(var/node_id in linked_techweb.get_available_nodes())
+				var/displayable_nodes = linked_techweb.get_available_nodes() + linked_techweb.get_researched_nodes()
+				for(var/node_id in displayable_nodes)
 					// Not from our partner
 					if(!(node_id in partner.boostable_nodes))
 						continue
@@ -218,11 +219,12 @@
 			var/datum/scientific_partner/partner = locate(text2path(params["boost_seller"])) in SSresearch.scientific_partners
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(params["purchased_boost"])
 			if(partner && node)
-				if(partner.purchase_boost(linked_techweb, node))
-					computer.say("Purchase succesful.")
+				var/possible_boost = partner.purchase_boost(linked_techweb, node)
+				if(possible_boost)
+					computer.say("Purchase successful[possible_boost == SCIPAPER_ALREADY_BOUGHT ? ", refunding [partner.boostable_nodes[params["purchased_boost"]]] points" : ""].")
 					playsound(computer, 'sound/machines/ping.ogg', 25)
 					return TRUE
-			playsound(computer, 'sound/machines/terminal_error.ogg', 25)
+			playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25)
 			return TRUE
 
 /// Publication and adding points.
@@ -235,5 +237,5 @@
 		SStgui.update_uis(src)
 		playsound(computer, 'sound/machines/ping.ogg', 25)
 		return TRUE
-	playsound(computer, 'sound/machines/terminal_error.ogg', 25)
+	playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25)
 	return FALSE

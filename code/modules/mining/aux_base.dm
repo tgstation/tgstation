@@ -133,7 +133,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		return FALSE
 	return TRUE
 
-/obj/machinery/computer/auxiliary_base/ui_act(action, params)
+/obj/machinery/computer/auxiliary_base/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -62,7 +62,7 @@
 /area/shuttle/escape)
 "bV" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/turf_decal/trimline/dark_blue/arrow_ccw{
 	dir = 8
@@ -92,7 +92,7 @@
 "cM" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/rack,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/ointment{
 	pixel_x = 5
@@ -125,7 +125,7 @@
 /area/shuttle/escape)
 "dW" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -183,6 +183,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/south,
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/shuttle/escape)
 "gr" = (
@@ -223,7 +224,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "hu" = (
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/free/directional/north,
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 8
 	},
@@ -287,7 +288,7 @@
 /area/shuttle/escape)
 "jo" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/turf_decal/trimline/dark_blue/arrow_ccw{
 	dir = 8
@@ -533,7 +534,7 @@
 /area/shuttle/escape)
 "pu" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -573,7 +574,7 @@
 /area/shuttle/escape)
 "qe" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -609,7 +610,7 @@
 /area/shuttle/escape)
 "rw" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -617,9 +618,7 @@
 /area/shuttle/escape)
 "ry" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "sn" = (
@@ -682,7 +681,7 @@
 /area/shuttle/escape)
 "uK" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -868,7 +867,7 @@
 /area/shuttle/escape)
 "Cx" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -887,7 +886,7 @@
 /area/shuttle/escape)
 "CR" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -935,7 +934,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/shuttle/escape";
 	desc = "Used to control the Lance's automated defenses.";
-	icon_state = "control_kill";
 	lethal = 1;
 	pixel_y = -26;
 	req_access = list("command")
@@ -968,8 +966,8 @@
 /obj/item/book/manual/wiki/surgery{
 	pixel_x = -15
 	},
-/obj/item/surgery_tray/full,
-/obj/item/surgery_tray/full{
+/obj/effect/spawner/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full{
 	pixel_x = 5
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -1076,7 +1074,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "In" = (
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
@@ -1199,7 +1197,7 @@
 /area/shuttle/escape)
 "LD" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -1240,7 +1238,7 @@
 	},
 /area/shuttle/escape)
 "MA" = (
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
@@ -1340,9 +1338,6 @@
 	},
 /area/shuttle/escape)
 "Pe" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
 /obj/machinery/button/door/directional/south{
 	id = "lance_psych";
 	name = "Panic Room Bolt Control";
@@ -1350,6 +1345,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/white/textured_large,
 /area/shuttle/escape)
 "Px" = (
@@ -1409,6 +1405,7 @@
 "RO" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -1523,6 +1520,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -1539,7 +1537,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "WO" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},

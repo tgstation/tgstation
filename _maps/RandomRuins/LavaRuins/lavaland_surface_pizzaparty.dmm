@@ -376,7 +376,7 @@
 /obj/item/storage/box/lights/bulbs,
 /obj/item/storage/toolbox/mechanical/old,
 /obj/item/gift{
-	contains_type = /obj/item/gun/ballistic/automatic/toy/unrestricted
+	contains_type = /obj/item/gun/ballistic/automatic/toy
 	},
 /obj/item/gift{
 	contains_type = /obj/item/gun/ballistic/automatic/pistol/toy
@@ -523,7 +523,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
 /obj/item/gift{
-	contains_type = /obj/item/toy/plush/goatplushie;
+	contains_type = /obj/item/toy/plush/beeplushie;
 	pixel_x = 7;
 	pixel_y = 6
 	},

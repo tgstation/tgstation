@@ -1,5 +1,5 @@
 /datum/action/cooldown/spell/conjure
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 	school = SCHOOL_CONJURATION
 
 	/// The radius around the caster the items will appear. 0 = spawns on top of the caster.
@@ -58,6 +58,7 @@
 		var/atom/summoned_object = new summoned_object_type(spawn_place)
 
 		summoned_object.flags_1 |= ADMIN_SPAWNED_1
+		ADD_TRAIT(summoned_object, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 		if(summon_lifespan > 0)
 			QDEL_IN(summoned_object, summon_lifespan)
 

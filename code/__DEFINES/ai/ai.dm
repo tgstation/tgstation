@@ -11,9 +11,15 @@
 ///The AI is currently in idle mode.
 #define AI_STATUS_IDLE "ai_idle"
 
+//Flags returned by get_able_to_run()
+///pauses AI processing
+#define AI_UNABLE_TO_RUN (1<<1)
+///bypass canceling our actions on set_ai_status()
+#define AI_PREVENT_CANCEL_ACTIONS (1<<2)
+
 ///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
 #define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles
-#define AI_BOT_PATH_LENGTH 75
+#define AI_BOT_PATH_LENGTH 60
 
 // How far should we, by default, be looking for interesting things to de-idle?
 #define AI_DEFAULT_INTERESTING_DIST 10
@@ -55,6 +61,13 @@
 #define PAUSE_DURING_DO_AFTER (1<<2)
 /// Continue processing while in stasis
 #define CAN_ACT_IN_STASIS (1<<3)
+/// Continue processing while aggressively grabbed
+#define CAN_ACT_WHILE_GRABBED (1<<4)
+
+/// Flags we expect for most AI controllers
+#define DEFAULT_AI_FLAGS (PAUSE_DURING_DO_AFTER | CAN_ACT_WHILE_GRABBED)
+/// Flags for passive mobs that are easy to push around
+#define PASSIVE_AI_FLAGS (PAUSE_DURING_DO_AFTER | STOP_MOVING_WHEN_PULLED)
 
 //Base Subtree defines
 
@@ -63,12 +76,14 @@
 
 //Generic subtree defines
 
+/// default search range (tiles, passed to oview) when using find_and_set
+#define SEARCH_TACTIC_DEFAULT_RANGE 7
 /// probability that the pawn should try resisting out of restraints
 #define RESIST_SUBTREE_PROB 50
 ///macro for whether it's appropriate to resist right now, used by resist subtree
 #define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE))
 ///macro for whether the pawn can act, used generally to prevent some horrifying ai disasters
-#define IS_DEAD_OR_INCAP(source) (source.incapacitated() || source.stat)
+#define IS_DEAD_OR_INCAP(source) (source.incapacitated || source.stat)
 
 GLOBAL_LIST_INIT(all_radial_directions, list(
 	"NORTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),

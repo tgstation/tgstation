@@ -9,6 +9,7 @@
 	modifystate = TRUE
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
+	light_color = COLOR_BLUE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = /obj/item/stock_parts/power_store/cell/pulse
 
@@ -59,6 +60,9 @@
 /obj/item/gun/energy/pulse/carbine/loyalpin
 	pin = /obj/item/firing_pin/implant/mindshield
 
+/obj/item/gun/energy/pulse/carbine/taserless
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/laser)
+
 /obj/item/gun/energy/pulse/destroyer
 	name = "pulse destroyer"
 	desc = "A heavy-duty energy rifle built for pure destruction."
@@ -78,6 +82,9 @@
 	worn_icon_state = "gun"
 	inhand_icon_state = "gun"
 	cell_type = /obj/item/stock_parts/power_store/cell/pulse/pistol
+
+/obj/item/gun/energy/pulse/pistol/taserless
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/gun/energy/pulse/pistol/loyalpin
 	pin = /obj/item/firing_pin/implant/mindshield

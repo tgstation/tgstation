@@ -36,7 +36,7 @@
 			heal_when_sinked = TRUE,
 			health_per_second = 1,
 			outline_colour = COLOR_PALE_GREEN,
-			damage_res_sinked = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1))
+			damage_res_sinked = string_assoc_list(list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)))
 
 	if (!isbasicmob(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -99,7 +99,7 @@
 /datum/component/ground_sinking/proc/finish_sinking(mob/living/basic/living_target)
 	sinked = TRUE
 	is_sinking = FALSE
-	living_target.density = FALSE
+	living_target.set_density(FALSE)
 	living_target.damage_coeff = damage_res_sinked
 	if(heal_when_sinked)
 		start_regenerating()
@@ -112,8 +112,8 @@
 	if(sinked && heal_when_sinked)
 		stop_regenerating()
 	living_target.icon_state = target_icon_state
-	living_target.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
-	living_target.density = TRUE
+	living_target.damage_coeff = string_assoc_list(list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1))
+	living_target.set_density(TRUE)
 	sinked = FALSE
 
 /// The mop starts regaining health

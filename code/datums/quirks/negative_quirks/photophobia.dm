@@ -8,7 +8,9 @@
 	gain_text = span_danger("The safety of light feels off...")
 	lose_text = span_notice("Enlightening.")
 	medical_record_text = "Patient has acute phobia of light, and insists it is physically harmful."
+	medical_symptom_text = "Exhibits heightened sensitivity to bright lights, leading to discomfort and avoidance behaviors."
 	hardcore_value = 4
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_TRAUMALIKE
 	mail_goodies = list(
 		/obj/item/flashlight/flashdark,
 		/obj/item/food/grown/mushroom/glowshroom/shadowshroom,
@@ -27,22 +29,22 @@
 		COMSIG_CARBON_LOSE_ORGAN,
 		COMSIG_MOVABLE_MOVED,))
 	quirk_holder.clear_mood_event(MOOD_CATEGORY_PHOTOPHOBIA)
-	var/obj/item/organ/internal/eyes/normal_eyes = quirk_holder.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/normal_eyes = quirk_holder.get_organ_slot(ORGAN_SLOT_EYES)
 	if(istype(normal_eyes))
 		normal_eyes.flash_protect = initial(normal_eyes.flash_protect)
 
-/datum/quirk/photophobia/proc/check_eyes(obj/item/organ/internal/eyes/sensitive_eyes)
+/datum/quirk/photophobia/proc/check_eyes(datum/source, obj/item/organ/eyes/sensitive_eyes)
 	SIGNAL_HANDLER
 	if(!istype(sensitive_eyes))
 		return
 	update_eyes(sensitive_eyes)
 
-/datum/quirk/photophobia/proc/update_eyes(obj/item/organ/internal/eyes/target_eyes)
+/datum/quirk/photophobia/proc/update_eyes(obj/item/organ/eyes/target_eyes)
 	if(!istype(target_eyes))
 		return
 	target_eyes.flash_protect = max(target_eyes.flash_protect - 1, FLASH_PROTECTION_HYPER_SENSITIVE)
 
-/datum/quirk/photophobia/proc/restore_eyes(obj/item/organ/internal/eyes/normal_eyes)
+/datum/quirk/photophobia/proc/restore_eyes(datum/source, obj/item/organ/eyes/normal_eyes)
 	SIGNAL_HANDLER
 	if(!istype(normal_eyes))
 		return

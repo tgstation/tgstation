@@ -32,13 +32,14 @@
 	maptext_y = -2
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = TUTORIAL_INSTRUCTIONS_LAYER
+	appearance_flags = parent_type::appearance_flags | KEEP_APART
 
 /atom/movable/screen/tutorial_instruction_text/Initialize(mapload, datum/hud/hud_owner, message, client/client)
 	. = ..()
 
 	var/view = client?.view_size.getView()
 	maptext_width = view ? view_to_pixels(view)[1] : 480
-	pixel_x = (maptext_width - world.icon_size) * -0.5
+	pixel_x = (maptext_width - ICON_SIZE_X) * -0.5
 
 	change_message(message)
 

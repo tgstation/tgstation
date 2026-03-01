@@ -4,7 +4,7 @@
 	. = ..()
 	if(!.)
 		return
-	adjustBruteLoss(15)
+	adjust_brute_loss(15)
 	var/hitverb = "hit"
 	if(mob_size < MOB_SIZE_LARGE)
 		safe_throw_at(get_edge_target_turf(src, get_dir(user, src)), 2, 1, user)
@@ -33,7 +33,7 @@
 		apply_damage(damage, BRUTE, affecting)
 		log_combat(user, src, "attacked")
 	else
-		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+		playsound(loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 		visible_message(span_danger("[user]'s punch misses [src]!"), \
 						span_danger("You avoid [user]'s punch!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_warning("Your punch misses [src]!"))

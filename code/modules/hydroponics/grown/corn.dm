@@ -1,6 +1,6 @@
 // Corn
 /obj/item/seeds/corn
-	name = "pack of corn seeds"
+	name = "corn seed pack"
 	desc = "I don't mean to sound corny..."
 	icon_state = "seed-corn"
 	species = "corn"
@@ -24,10 +24,14 @@
 	trash_type = /obj/item/grown/corncob
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
-	grind_results = list(/datum/reagent/consumable/cornmeal = 0, /datum/reagent/consumable/nutriment/fat/oil/corn = 0)
-	juice_typepath = /datum/reagent/consumable/corn_starch
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
+
+/obj/item/food/grown/corn/grind_results()
+	return list(/datum/reagent/consumable/cornmeal = 0, /datum/reagent/consumable/nutriment/fat/oil/corn = 0)
+
+/obj/item/food/grown/corn/juice_typepath()
+	return /datum/reagent/consumable/corn_starch
 
 /obj/item/food/grown/corn/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/oven_baked_corn, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -45,19 +49,21 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	grind_results = list(/datum/reagent/cellulose = 10) //really partially hemicellulose
 
-/obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, params)
+/obj/item/grown/corncob/grind_results()
+	return list(/datum/reagent/cellulose = 10)
+
+/obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.get_sharpness())
 		to_chat(user, span_notice("You use [W] to fashion a pipe out of the corn cob!"))
-		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
+		new /obj/item/cigarette/pipe/cobpipe (user.loc)
 		qdel(src)
 	else
 		return ..()
 
 // Snapcorn
 /obj/item/seeds/corn/snapcorn
-	name = "pack of snapcorn seeds"
+	name = "snapcorn seed pack"
 	desc = "Oh snap!"
 	icon_state = "seed-snapcorn"
 	species = "snapcorn"
@@ -100,7 +106,7 @@
 
 //Pepper-corn - Heh funny.
 /obj/item/seeds/corn/pepper
-	name = "pack of pepper-corn seeds"
+	name = "pepper-corn seed pack"
 	desc = "If Peter picked a pack of pepper-corn..."
 	icon_state = "seed-peppercorn"
 	species = "peppercorn"
@@ -116,8 +122,10 @@
 	icon_state = "peppercorn"
 	trash_type = /obj/item/grown/corncob/pepper
 	foodtypes = VEGETABLES
-	grind_results = list(/datum/reagent/consumable/blackpepper = 0)
 	tastes = list("pepper" = 1, "sneezing" = 1)
+
+/obj/item/food/grown/peppercorn/grind_results()
+	return list(/datum/reagent/consumable/blackpepper = 0)
 
 /obj/item/grown/corncob/pepper
 	seed = /obj/item/seeds/corn/pepper

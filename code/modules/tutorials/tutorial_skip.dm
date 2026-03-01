@@ -6,6 +6,7 @@
 	alpha = 0
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	layer = TUTORIAL_INSTRUCTIONS_LAYER
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/atom/movable/screen/tutorial_skip_text/skip_text
 
 /atom/movable/screen/tutorial_skip/Initialize(mapload, datum/hud/hud_owner)
@@ -23,6 +24,7 @@
 /atom/movable/screen/tutorial_skip_text
 	alpha = 0
 	layer = TUTORIAL_INSTRUCTIONS_LAYER
+	appearance_flags = parent_type::appearance_flags | KEEP_APART
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	maptext_height = 32
 	maptext_width = 200

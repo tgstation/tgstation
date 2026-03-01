@@ -8,7 +8,7 @@
 /mob/living/silicon/pai/ui_data(mob/user)
 	var/list/data = list()
 	data["door_jack"] = hacking_cable
-	data["image"] = card.emotion_icon
+	data["screen_image_interface_icon"] = card.screen_image.interface_icon
 	data["installed"] = installed_software
 	data["ram"] = ram
 	return data
@@ -135,16 +135,16 @@
  */
 /mob/living/silicon/pai/proc/change_image()
 	var/list/possible_choices = list()
-	for(var/face_option in possible_overlays)
+	for(var/datum/pai_screen_image/screen_option as anything in subtypesof(/datum/pai_screen_image))
 		var/datum/radial_menu_choice/choice = new
-		choice.name = face_option
-		choice.image = image(icon = card.icon, icon_state = "pai-[face_option]")
-		possible_choices[face_option] += choice
+		choice.name = screen_option.name
+		choice.image = image(icon = screen_option.icon, icon_state = screen_option.icon_state)
+		possible_choices[screen_option] += choice
 	var/atom/anchor = get_atom_on_turf(src)
 	var/new_image = show_radial_menu(src, anchor, possible_choices, custom_check = CALLBACK(src, PROC_REF(check_menu), anchor), radius = 40, require_near = TRUE)
 	if(isnull(new_image))
 		return FALSE
-	card.emotion_icon = new_image
+	card.screen_image = new_image
 	card.update_appearance()
 	return TRUE
 
@@ -160,7 +160,7 @@
 		to_chat(src, span_syndradio("You are not at liberty to do this! All agents are clandestine."))
 		return FALSE
 	var/mob/living/carbon/holder = get_holder()
-	if(!iscarbon(holder))
+	if(!isnull(holder))
 		balloon_alert(src, "not being carried")
 		return FALSE
 	balloon_alert(src, "requesting dna sample")
@@ -171,7 +171,7 @@
 	if(!holder.has_dna())
 		balloon_alert(src, "no dna detected!")
 		return FALSE
-	to_chat(src, span_boldannounce(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
+	to_chat(src, span_bolddanger(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
 	to_chat(src, span_notice("DNA [holder.dna.unique_enzymes == master_dna ? "matches" : "does not match"] our stored Master's DNA."))
 	return TRUE
 
@@ -198,8 +198,8 @@
 /mob/living/silicon/pai/proc/host_scan(mode)
 	switch(mode)
 		if(PAI_SCAN_TARGET)
-			var/mob/living/target = get_holder()
-			if(!isliving(target))
+			var/mob/living/carbon/target = get_holder()
+			if(isnull(target))
 				balloon_alert(src, "not being carried!")
 				return FALSE
 			healthscan(src, target)
@@ -219,6 +219,9 @@
 	stack_trace("Invalid mode passed to host scan: [mode || "null"]")
 	return FALSE
 
+/// Huds from PAI software
+#define PAI_HUD_TRAIT "pai_hud"
+
 /**
  * Proc that toggles any active huds based on the option.
  *
@@ -227,18 +230,16 @@
 /mob/living/silicon/pai/proc/toggle_hud(mode)
 	if(isnull(mode))
 		return FALSE
-	var/datum/atom_hud/hud
-	var/hud_on
 	if(mode == PAI_TOGGLE_MEDICAL_HUD)
-		hud = GLOB.huds[med_hud]
-		medHUD = !medHUD
-		hud_on = medHUD
+		if(HAS_TRAIT_FROM(src, TRAIT_MEDICAL_HUD, PAI_HUD_TRAIT))
+			REMOVE_TRAIT(src, TRAIT_MEDICAL_HUD, PAI_HUD_TRAIT)
+		else
+			ADD_TRAIT(src, TRAIT_MEDICAL_HUD, PAI_HUD_TRAIT)
 	if(mode == PAI_TOGGLE_SECURITY_HUD)
-		hud = GLOB.huds[sec_hud]
-		secHUD = !secHUD
-		hud_on = secHUD
-	if(hud_on)
-		hud.show_to(src)
-	else
-		hud.hide_from(src)
+		if(HAS_TRAIT_FROM(src, TRAIT_SECURITY_HUD, PAI_HUD_TRAIT))
+			REMOVE_TRAIT(src, TRAIT_SECURITY_HUD, PAI_HUD_TRAIT)
+		else
+			ADD_TRAIT(src, TRAIT_SECURITY_HUD, PAI_HUD_TRAIT)
 	return TRUE
+
+#undef PAI_HUD_TRAIT

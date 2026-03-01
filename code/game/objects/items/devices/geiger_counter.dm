@@ -67,13 +67,13 @@
 	update_appearance(UPDATE_ICON)
 	balloon_alert(user, "switch [scanning ? "on" : "off"]")
 
-/obj/item/geiger_counter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/geiger_counter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if (user.combat_mode)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 		return NONE
-	if (!CAN_IRRADIATE(interacting_with))
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/geiger_counter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!CAN_IRRADIATE(interacting_with))
 		return NONE
 
 	user.visible_message(span_notice("[user] scans [interacting_with] with [src]."), span_notice("You scan [interacting_with]'s radiation levels with [src]..."))
@@ -112,9 +112,9 @@
 
 /obj/item/geiger_counter/click_alt(mob/living/user)
 	if(!scanning)
-		to_chat(usr, span_warning("[src] must be on to reset its radiation level!"))
+		to_chat(user, span_warning("[src] must be on to reset its radiation level!"))
 		return CLICK_ACTION_BLOCKING
-	to_chat(usr, span_notice("You flush [src]'s radiation counts, resetting it to normal."))
+	to_chat(user, span_notice("You flush [src]'s radiation counts, resetting it to normal."))
 	last_perceived_radiation_danger = null
 	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS

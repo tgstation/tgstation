@@ -19,10 +19,14 @@
 /datum/wound
 	/// What it's named
 	var/name = "Wound"
+	/// Optional, what is the wound named when someone is checking themselves (IE, no scanner - just with their eyes and hands)
+	var/undiagnosed_name
 	/// The description shown on the scanners
 	var/desc = ""
 	/// The basic treatment suggested by health analyzers
 	var/treat_text = ""
+	/// Even more basic treatment
+	var/treat_text_short = ""
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
 
@@ -59,8 +63,6 @@
 
 	/// Specific items such as bandages or sutures that can try directly treating this wound
 	var/list/treatable_by
-	/// Specific items such as bandages or sutures that can try directly treating this wound only if the user has the victim in an aggressive grab or higher
-	var/list/treatable_by_grabbed
 	/// Any tools with any of the flags in this list will be usable to try directly treating this wound
 	var/list/treatable_tools
 	/// How long it will take to treat this wound with a standard effective tool, assuming it doesn't need surgery
@@ -76,6 +78,9 @@
 	var/limp_chance
 	/// How much we're contributing to this limb's bleed_rate
 	var/blood_flow
+	/// Surgical states we're applying to our limb
+	/// Note: This var is mutated after it is applied, to only states that were successfully applied
+	var/surgery_states = NONE
 
 	/// How much having this wound will add to all future check_wounding() rolls on this limb, to allow progression to worse injuries with repeated damage
 	var/threshold_penalty
@@ -89,8 +94,6 @@
 
 	/// What status effect we assign on application
 	var/status_effect_type
-	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
-	var/datum/surgery/attached_surgery
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * [base_xadone_progress_to_qdel] power
 	var/cryo_progress
 
@@ -112,6 +115,14 @@
 	/// The actionspeed modifier we will use in case we are on the arms and have a interaction penalty. Qdelled on destroy.
 	var/datum/actionspeed_modifier/wound_interaction_inefficiency/actionspeed_mod
 
+	/// List of states -> other states that override them and prevent them from being added by wounds
+	var/static/list/exclusive_surgery_states = list(
+		"[SURGERY_SKIN_CUT]" = SURGERY_SKIN_OPEN,
+		"[SURGERY_VESSELS_UNCLAMPED]" = SURGERY_VESSELS_CLAMPED,
+		"[SURGERY_BONE_SAWED]" = SURGERY_BONE_DRILLED,
+		"[SURGERY_BONE_DRILLED]" = SURGERY_BONE_SAWED,
+	)
+
 /datum/wound/New()
 	. = ..()
 
@@ -119,15 +130,14 @@
 	update_actionspeed_modifier()
 
 /datum/wound/Destroy()
-	QDEL_NULL(attached_surgery)
 	if (limb)
-		remove_wound()
+		remove_wound(destroying = QDELING(limb))
 
 	QDEL_NULL(actionspeed_mod)
 
 	return ..()
 
-/// If we should have an actionspeed_mod, ensures we do and updates its slowdown. Otherwise, ensures we dont have one
+/// If we should have an actionspeed_mod, ensures we do and updates its slowdown. Otherwise, ensures we don't have one
 /// by qdeleting any existing modifier.
 /datum/wound/proc/update_actionspeed_modifier()
 	if (should_have_actionspeed_modifier())
@@ -173,27 +183,28 @@
  *
  *
  * Arguments:
- * * L: The bodypart we're wounding, we don't care about the person, we can get them through the limb
+ * * limb: The bodypart we're wounding, we don't care about the person, we can get them through the limb
  * * silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly
  * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
  * * attack_direction: For bloodsplatters, if relevant
  * * wound_source: The source of the wound, such as a weapon.
  */
-/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown", replacing = FALSE)
-
-	if (!can_be_applied_to(L, old_wound))
+/datum/wound/proc/apply_wound(obj/item/bodypart/limb, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown", replacing = FALSE)
+	if (!limb.is_woundable() || !can_be_applied_to(limb, old_wound))
 		qdel(src)
 		return FALSE
 
-	if(isitem(wound_source))
-		var/obj/item/wound_item = wound_source
-		src.wound_source = wound_item.name
-	else
+	if(isatom(wound_source))
+		var/atom/wound_atom = wound_source
+		src.wound_source = wound_atom.name
+	else if(istext(wound_source))
 		src.wound_source = wound_source
+	else
+		src.wound_source = "Unknown"
 
-	set_victim(L.owner)
-	set_limb(L, replacing)
+	set_victim(limb.owner)
+	set_limb(limb, replacing)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
 	update_descriptions()
@@ -201,8 +212,7 @@
 	if(status_effect_type)
 		victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
-	if(!victim.alerts[ALERT_WOUNDED]) // only one alert is shared between all of the wounds
-		victim.throw_alert(ALERT_WOUNDED, /atom/movable/screen/alert/status_effect/wound)
+	victim.update_health_hud()
 
 	var/demoted
 	if(old_wound)
@@ -221,7 +231,7 @@
 
 		victim.visible_message(msg, span_userdanger("Your [limb.plaintext_zone] [occur_text]!"), vision_distance = vis_dist)
 		if(sound_effect)
-			playsound(L.owner, sound_effect, sound_volume + (20 * severity), TRUE, falloff_exponent = SOUND_FALLOFF_EXPONENT + 2,  ignore_walls = FALSE, falloff_distance = 0)
+			playsound(limb.owner, sound_effect, sound_volume + (20 * severity), TRUE, falloff_exponent = SOUND_FALLOFF_EXPONENT + 2,  ignore_walls = FALSE, falloff_distance = 0)
 
 	wound_injury(old_wound, attack_direction = attack_direction)
 	if(!demoted)
@@ -230,13 +240,13 @@
 	return TRUE
 
 /// Returns TRUE if we can be applied to the limb.
-/datum/wound/proc/can_be_applied_to(obj/item/bodypart/L, datum/wound/old_wound)
+/datum/wound/proc/can_be_applied_to(obj/item/bodypart/limb, datum/wound/old_wound)
 	var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
 
 	// We assume we aren't being randomly applied - we have no reason to believe we are
 	// And, besides, if we were, you could just as easily check our pregen data rather than run this proc
 	// Generally speaking this proc is called in apply_wound, which is called when the caller is already confidant in its ability to be applied
-	return pregen_data.can_be_applied_to(L, old_wound = old_wound)
+	return pregen_data.can_be_applied_to(limb, old_wound = old_wound)
 
 /// Returns the zones we can be applied to.
 /datum/wound/proc/get_viable_zones()
@@ -265,6 +275,7 @@
 		UnregisterSignal(victim, COMSIG_QDELETING)
 		UnregisterSignal(victim, COMSIG_MOB_SWAP_HANDS)
 		UnregisterSignal(victim, COMSIG_CARBON_POST_REMOVE_LIMB)
+		UnregisterSignal(victim, COMSIG_ATOM_ITEM_INTERACTION)
 		if (actionspeed_mod)
 			victim.remove_actionspeed_modifier(actionspeed_mod) // no need to qdelete it, just remove it from our victim
 
@@ -273,23 +284,29 @@
 	if(victim)
 		RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(null_victim))
 		RegisterSignals(victim, list(COMSIG_MOB_SWAP_HANDS, COMSIG_CARBON_POST_REMOVE_LIMB, COMSIG_CARBON_POST_ATTACH_LIMB), PROC_REF(add_or_remove_actionspeed_mod))
-
+		RegisterSignal(victim, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(interact_try_treating))
 		if (limb)
 			start_limping_if_we_should() // the status effect already handles removing itself
 			add_or_remove_actionspeed_mod()
 
 /// Proc called to change the variable `limb` and react to the event.
-/datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE)
+/// * replaced - Is the wound being overriden by another (stronger) wound?
+/// * destroying - Is this coming from a limb's Destroy() call? If so, cut down on updates we cause
+/datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE, destroying = FALSE)
 	if(limb == new_value)
 		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
+
 	. = limb
+
 	if(limb) // if we're nulling limb, we're basically detaching from it, so we should remove ourselves in that case
-		UnregisterSignal(limb, COMSIG_QDELETING)
-		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_UNGAUZED))
+		UnregisterSignal(limb, COMSIG_BODYPART_UPDATING_SURGERY_STATE)
 		LAZYREMOVE(limb.wounds, src)
-		limb.update_wounds(replaced)
+		if (!destroying)
+			limb.update_wounds(replaced)
 		if (disabling)
 			limb.remove_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+		if (surgery_states)
+			limb.remove_surgical_state(surgery_states)
 
 	limb = new_value
 
@@ -297,15 +314,33 @@
 
 	if (limb)
 		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
-		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_UNGAUZED), PROC_REF(gauze_state_changed))
 		if (disabling)
 			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))
+
+		if(surgery_states) // first check filters invalid states
+			for (var/state in exclusive_surgery_states)
+				if (!(limb.surgery_state & exclusive_surgery_states[state]))
+					continue
+				var/actual_state = text2num(state)
+				if (actual_state & surgery_states)
+					surgery_states &= ~actual_state
+
+		if (surgery_states) // second check applies any remaining valid states
+			limb.add_surgical_state(surgery_states)
+			// NB: don't check state changes until AFTER we finish apply our own, or we'll just undo ourselves
+			RegisterSignal(limb, COMSIG_BODYPART_UPDATING_SURGERY_STATE, PROC_REF(on_surgery_state_change))
 
 		if (victim)
 			start_limping_if_we_should() // the status effect already handles removing itself
 			add_or_remove_actionspeed_mod()
 
 		update_inefficiencies(replaced)
+
+/// Used to remove states applied or removed by operations from ourselves as to not remove them if we heal mid-surgery
+/datum/wound/proc/on_surgery_state_change(datum/source, old_state, current_state, changed_states)
+	SIGNAL_HANDLER
+	// Any state that changes, adding or removing, should henceforth be untouched by us. Let the surgeon handle it.
+	surgery_states &= ~changed_states
 
 /datum/wound/proc/add_or_remove_actionspeed_mod()
 	update_actionspeed_modifier()
@@ -323,14 +358,17 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-/// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
-/datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
+/// Remove the wound from whatever it's afflicting, and cleans up whatever status effects it had or modifiers it had on interaction times.
+/// * ignore_limb - Used for detachments where we only want to forget the victim
+/// * replaced - If the wound is being replaced by another type
+/// * destroying - If we're being removed by a limb getting destroyed
+/datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE, destroying = FALSE)
 	//TODO: have better way to tell if we're getting removed without replacement (full heal) scar stuff
 	var/old_victim = victim
 	var/old_limb = limb
 
 	set_disabling(FALSE)
-	if(limb && can_scar && !already_scarred && !replaced)
+	if(limb && can_scar && !already_scarred && !replaced && !destroying)
 		already_scarred = TRUE
 		var/datum/scar/new_scar = new
 		new_scar.generate(limb, src)
@@ -340,19 +378,19 @@
 	null_victim() // we use the proc here because some behaviors may depend on changing victim to some new value
 
 	if(limb && !ignore_limb)
-		set_limb(null, replaced) // since we're removing limb's ref to us, we should do the same
-		// if you want to keep the ref, do it externally, theres no reason for us to remember it
+		set_limb(null, replaced, destroying) // since we're removing limb's ref to us, we should do the same
+		// if you want to keep the ref, do it externally, there's no reason for us to remember it
 
 	if (ismob(old_victim))
 		var/mob/mob_victim = old_victim
-		SEND_SIGNAL(mob_victim, COMSIG_CARBON_POST_LOSE_WOUND, src, old_limb, ignore_limb, replaced)
+		SEND_SIGNAL(mob_victim, COMSIG_CARBON_POST_LOSE_WOUND, src, old_limb, ignore_limb, replaced, destroying)
+		if(!replaced && !limb)
+			mob_victim.update_health_hud()
 
 /datum/wound/proc/remove_wound_from_victim()
 	if(!victim)
 		return
 	LAZYREMOVE(victim.all_wounds, src)
-	if(!victim.all_wounds)
-		victim.clear_alert(ALERT_WOUNDED)
 	SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 
 /**
@@ -413,31 +451,23 @@
 
 	return 0
 
-/// Signal proc for if gauze has been applied or removed from our limb.
-/datum/wound/proc/gauze_state_changed()
-	SIGNAL_HANDLER
-
-	if (wound_flags & ACCEPTS_GAUZE)
-		update_inefficiencies()
-
 /// Updates our limping and interaction penalties in accordance with our gauze.
 /datum/wound/proc/update_inefficiencies(replaced_or_replacing = FALSE)
+	SHOULD_NOT_SLEEP(TRUE)
+
 	if (wound_flags & ACCEPTS_GAUZE)
+		var/splint_factor = limb.get_splint_factor()
 		if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-			if(limb.current_gauze?.splint_factor)
-				limp_slowdown = initial(limp_slowdown) * limb.current_gauze.splint_factor
-				limp_chance = initial(limp_chance) * limb.current_gauze.splint_factor
-			else
-				limp_slowdown = initial(limp_slowdown)
-				limp_chance = initial(limp_chance)
+			limp_slowdown = initial(limp_slowdown) * splint_factor
+			limp_chance = initial(limp_chance) * splint_factor
 		else if(limb.body_zone in GLOB.arm_zones)
-			if(limb.current_gauze?.splint_factor)
-				set_interaction_efficiency_penalty(1 + ((get_effective_actionspeed_modifier()) * limb.current_gauze.splint_factor))
+			if(splint_factor < 1)
+				set_interaction_efficiency_penalty(1 + (get_effective_actionspeed_modifier() * splint_factor))
 			else
 				set_interaction_efficiency_penalty(initial(interaction_efficiency_penalty))
 
 		if(initial(disabling))
-			set_disabling(isnull(limb.current_gauze))
+			set_disabling(splint_factor < 1)
 
 		limb.update_wounds(replaced_or_replacing)
 
@@ -455,73 +485,82 @@
 		if(WOUND_SEVERITY_LOSS)
 			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_LOSS)
 
+/datum/wound/proc/interact_try_treating(datum/source, mob/living/user, obj/item/tool, ...)
+	SIGNAL_HANDLER
+
+	return try_treating(tool, user)
+
 /**
- * try_treating() is an intercept run from [/mob/living/carbon/proc/attackby] right after surgeries but before anything else. Return TRUE here if the item is something that is relevant to treatment to take over the interaction.
+ * Attempt to treat the wound with the given item/tool by the given user
+ * This proc leads into [/datum/wound/proc/treat]
  *
- * This proc leads into [/datum/wound/proc/treat] and probably shouldn't be added onto in children types. You can specify what items or tools you want to be intercepted
- * with var/list/treatable_by and var/treatable_tool, then if an item fulfills one of those requirements and our wound claims it first, it goes over to treat() and treat_self().
+ * You can specify what items or tools you want to be intercepted
+ * with var/list/treatable_by and var/treatable_tool,
+ * then if an item fulfills one of those requirements and our wound claims it first,
+ * it goes over to treat() and treat_self().
  *
  * Arguments:
  * * I: The item we're trying to use
  * * user: The mob trying to use it on us
  */
-/datum/wound/proc/try_treating(obj/item/I, mob/user)
-	// first we weed out if we're not dealing with our wound's bodypart, or if it might be an attack
-	if(!I || limb.body_zone != user.zone_selected)
-		return FALSE
+/datum/wound/proc/try_treating(obj/item/tool, mob/living/user)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(isliving(user))
-		var/mob/living/tendee = user
-		if(I.force && tendee.combat_mode)
-			return FALSE
+	if(limb.body_zone != user.zone_selected)
+		return NONE
 
-	if(!item_can_treat(I, user))
-		return FALSE
+	if(user.combat_mode && tool.force)
+		return NONE
 
-	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
+	if(!item_can_treat(tool, user))
+		return NONE
+
+	// now that we've determined we have a valid attempt at treating,
+	// we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))
 		to_chat(user, span_warning("You're already interacting with [victim]!"))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	// next we check if the bodypart in actually accessible (not under thick clothing). We skip the species trait check since skellies
 	// & such may need to use bone gel but may be wearing a space suit for..... whatever reason a skeleton would wear a space suit for
 	if(ishuman(victim))
 		var/mob/living/carbon/human/victim_human = victim
 		if(!victim_human.try_inject(user, injection_flags = INJECT_CHECK_IGNORE_SPECIES | INJECT_TRY_SHOW_ERROR_MESSAGE))
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
-	// lastly, treat them
-	return treat(I, user) // we allow treat to return a value so it can control if the item does its normal interaction or not
+	INVOKE_ASYNC(src, PROC_REF(treat), tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Returns TRUE if the item can be used to treat our wounds. Hooks into treat() - only things that return TRUE here may be used there.
 /datum/wound/proc/item_can_treat(obj/item/potential_treater, mob/user)
 	// check if we have a valid treatable tool
 	if(potential_treater.tool_behaviour in treatable_tools)
 		return TRUE
-	if(TOOL_CAUTERY in treatable_tools && potential_treater.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
-		return TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
-	if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(potential_treater, user))
+	if((user == victim || (user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE)) && check_grab_treatments(potential_treater, user))
 		return TRUE
 	// failing THAT, we check if we have a generally allowed item
-	for(var/allowed_type in treatable_by)
-		if(istype(potential_treater, allowed_type))
-			return TRUE
-
-/// Return TRUE if we have an item that can only be used while aggro grabbed (unhanded aggro grab treatments go in [/datum/wound/proc/try_handling]). Treatment is still is handled in [/datum/wound/proc/treat]
-/datum/wound/proc/check_grab_treatments(obj/item/I, mob/user)
+	if(is_type_in_list(potential_treater, treatable_by))
+		return TRUE
 	return FALSE
 
-/// Like try_treating() but for unhanded interactions, used by joint dislocations for manual bodypart chiropractice for example. Ignores thick material checks since you can pop an arm into place through a thick suit unlike using sutures
+/// Return TRUE if we have an item that can only be used while aggro grabbed
+/// (unhanded aggro grab treatments go in [/datum/wound/proc/try_handling]).
+/// Treatment is still is handled in [/datum/wound/proc/treat]
+/datum/wound/proc/check_grab_treatments(obj/item/tool, mob/user)
+	return FALSE
+
+/// Like try_treating() but for unhanded interactions, used by joint dislocations for manual bodypart chiropractice for example.
+/// Ignores thick material checks since you can pop an arm into place through a thick suit unlike using sutures
 /datum/wound/proc/try_handling(mob/living/user)
 	return FALSE
 
 /// Someone is using something that might be used for treating the wound on this limb
-/datum/wound/proc/treat(obj/item/I, mob/user)
+/datum/wound/proc/treat(obj/item/tool, mob/user)
 	return
 
 /// If var/processing is TRUE, this is run on each life tick
-/datum/wound/proc/handle_process(seconds_per_tick, times_fired)
+/datum/wound/proc/handle_process(seconds_per_tick)
 	return
 
 /// For use in do_after callback checks
@@ -554,7 +593,7 @@
 	return
 
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
-/datum/wound/proc/on_stasis(seconds_per_tick, times_fired)
+/datum/wound/proc/on_stasis(seconds_per_tick)
 	return
 
 /// Sets our blood flow
@@ -585,7 +624,7 @@
  * Returns BLOOD_FLOW_STEADY if we're not bleeding or there's no change (like piercing), BLOOD_FLOW_DECREASING if we're clotting (non-critical slashes, gauzed, coagulant, etc), BLOOD_FLOW_INCREASING if we're opening up (crit slashes/heparin/nitrous oxide)
  */
 /datum/wound/proc/get_bleed_rate_of_change()
-	if(blood_flow && HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+	if(blood_flow && HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 		return BLOOD_FLOW_INCREASING
 	return BLOOD_FLOW_STEADY
 
@@ -600,16 +639,17 @@
 /datum/wound/proc/get_examine_description(mob/user)
 	. = get_wound_description(user)
 	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-		. += span_notice("\nThere is a holo-image next to the wound that seems to contain indications for treatment.")
+		. += span_notice("<br>There is a holo-image next to the wound that seems to contain indications for treatment.")
 
 	return .
 
 /datum/wound/proc/get_wound_description(mob/user)
 	var/desc
 
-	if ((wound_flags & ACCEPTS_GAUZE) && limb.current_gauze)
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if ((wound_flags & ACCEPTS_GAUZE) && current_gauze)
 		var/sling_condition = get_gauze_condition()
-		desc = "[victim.p_Their()] [limb.plaintext_zone] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
+		desc = "[victim.p_Their()] [limb.plaintext_zone] is [sling_condition] fastened in a sling of [current_gauze.name]"
 	else
 		desc = "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
 
@@ -617,16 +657,41 @@
 
 	return get_desc_intensity(desc)
 
+/**
+ * Used when a mob is examining themselves / their limbs
+ *
+ * Reports what this wound looks like to them
+ *
+ * It should be formatted as an extension of the limb:
+ * Input is something like "Your chest is bruised.",
+ * you would add something like "It is bleeding."
+ *
+ * * self_aware - if TRUE, the examiner is more aware of themselves and thus may get more detailed information
+ *
+ * Return a string, to be concatenated with other organ / limb status strings. Include spans and punctuation.
+ */
+/datum/wound/proc/get_self_check_description(self_aware)
+	switch(severity)
+		if(WOUND_SEVERITY_TRIVIAL)
+			return span_danger("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_MODERATE)
+			return span_warning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_SEVERE)
+			return span_boldwarning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)]!")
+		if(WOUND_SEVERITY_CRITICAL)
+			return span_boldwarning("It's suffering [a_or_from] [LOWER_TEXT(undiagnosed_name || name)]!!")
+
 /// A hook proc used to modify desc before it is spanned via [get_desc_intensity]. Useful for inserting spans yourself.
 /datum/wound/proc/modify_desc_before_span(desc, mob/user)
 	return desc
 
 /datum/wound/proc/get_gauze_condition()
 	SHOULD_BE_PURE(TRUE)
-	if (!limb.current_gauze)
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if (!current_gauze)
 		return null
 
-	switch(limb.current_gauze.absorption_capacity)
+	switch(current_gauze.absorption_capacity)
 		if(0 to 1.25)
 			return "just barely"
 		if(1.25 to 2.75)
@@ -643,22 +708,42 @@
 		return span_bold("[desc]!")
 	return "[desc]."
 
+/**
+ * Prints the details about the wound for the wound scanner on simple mode
+ */
 /datum/wound/proc/get_scanner_description(mob/user)
-	return "Type: [name]\nSeverity: [severity_text(simple = FALSE)]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
+	return "Type: [name]<br>\
+		Severity: [severity_text()]<br>\
+		Description: [desc]<br>\
+		Recommended Treatment: [treat_text]"
 
+/**
+ * Prints the details about the wound for the wound scanner on complex mode
+ */
 /datum/wound/proc/get_simple_scanner_description(mob/user)
-	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [simple_desc ? simple_desc : desc]\n<i>Treatment Guide: [simple_treat_text]</i>\n<i>Homemade Remedies: [homemade_treat_text]</i>"
+	var/severity_text_formatted = severity_text()
+	for(var/i in 1 to severity)
+		severity_text_formatted += "!"
 
-/datum/wound/proc/severity_text(simple = FALSE)
+	return "[name] detected!<br>\
+		Risk: [severity_text_formatted]<br>\
+		Description: [simple_desc || desc]<br>\
+		<i>Treatment Guide: [simple_treat_text]</i><br>\
+		<i>Homemade Remedies: [homemade_treat_text]</i>"
+
+/**
+ * Returns what text describes this wound
+ */
+/datum/wound/proc/severity_text()
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
 			return "Trivial"
 		if(WOUND_SEVERITY_MODERATE)
-			return "Moderate" + (simple ? "!" : "")
+			return "Moderate"
 		if(WOUND_SEVERITY_SEVERE)
-			return "Severe" + (simple ? "!!" : "")
+			return "<b>Severe</b>"
 		if(WOUND_SEVERITY_CRITICAL)
-			return "Critical" + (simple ? "!!!" : "")
+			return "<b>Critical</b>"
 
 /// Returns TRUE if our limb is the head or chest, FALSE otherwise.
 /// Essential in the sense of "we cannot live without it".
@@ -676,7 +761,7 @@
 	// fleshy burns will look for flesh then bone
 	// dislocations will look for flesh, then bone, then metal
 	var/file = default_scar_file
-	for (var/biotype as anything in pregen_data.scar_priorities)
+	for (var/biotype in pregen_data.scar_priorities)
 		if (scarred_limb.biological_state & text2num(biotype))
 			file = GLOB.biotypes_to_scar_file[biotype]
 			break
@@ -688,13 +773,13 @@
 /datum/wound/proc/get_limb_examine_description()
 	return
 
-/// Gets the flat percentage chance increment of a dismember occuring, if a dismember is attempted (requires mangled flesh and bone). returning 15 = +15%.
+/// Gets the flat percentage chance increment of a dismember occurring, if a dismember is attempted (requires mangled flesh and bone). returning 15 = +15%.
 /datum/wound/proc/get_dismember_chance_bonus(existing_chance)
 	SHOULD_BE_PURE(TRUE)
 
 	var/datum/wound_pregen_data/pregen_data = get_pregen_data()
 
-	if (WOUND_BLUNT in pregen_data.required_wounding_types && severity >= WOUND_SEVERITY_CRITICAL)
+	if (pregen_data.required_wounding_type == WOUND_BLUNT && severity >= WOUND_SEVERITY_CRITICAL)
 		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
 
 /// Returns our pregen data, which is practically guaranteed to exist, so this proc can safely be used raw.

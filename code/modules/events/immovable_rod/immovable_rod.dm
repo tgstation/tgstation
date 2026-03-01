@@ -131,7 +131,8 @@
 		// Did we reach our destination? We're probably on Icebox. Let's get rid of ourselves.
 		// Ordinarily this won't happen as the average destination is the edge of the map and
 		// the rod will auto transition to a new z-level.
-		if(loc == destination_turf)
+		// If the rod is parallel to the destination at the world border, it is likely stuck (once again, icebox)
+		if((loc == destination_turf) || ((y == destination_turf.y || x == destination_turf.x) && (y == world.maxy || x == world.maxx || x == 1 || y == 1)))
 			qdel(src)
 			return
 
@@ -145,7 +146,7 @@
 /obj/effect/immovablerod/singularity_act()
 	return
 
-/obj/effect/immovablerod/singularity_pull()
+/obj/effect/immovablerod/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/immovablerod/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
@@ -163,9 +164,7 @@
 	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
 		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(2, holder = src, location = get_turf(src))
-		smoke.start()
+		do_smoke(2, src, get_turf(src))
 		var/obj/singularity/bad_luck = new(get_turf(src))
 		bad_luck.energy = 800
 		qdel(clong)
@@ -212,11 +211,8 @@
 				transform = transform.Scale(1.005, 1.005)
 				name = "[initial(name)] of sentient slaying +[num_sentient_mobs_hit]"
 
-	if(iscarbon(smeared_mob))
-		var/mob/living/carbon/smeared_carbon = smeared_mob
-		smeared_carbon.adjustBruteLoss(100)
-		var/obj/item/bodypart/penetrated_chest = smeared_carbon.get_bodypart(BODY_ZONE_CHEST)
-		penetrated_chest?.receive_damage(60, wound_bonus = 20, sharpness=SHARP_POINTY)
+	smeared_mob.apply_damage(100, BRUTE, spread_damage = TRUE)
+	smeared_mob.apply_damage(60, BRUTE, BODY_ZONE_CHEST, wound_bonus = 20, sharpness = SHARP_POINTY)
 
 	if(smeared_mob.density || prob(10))
 		EX_ACT(smeared_mob, EXPLODE_HEAVY)

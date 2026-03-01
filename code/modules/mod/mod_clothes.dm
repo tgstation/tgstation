@@ -9,7 +9,12 @@
 	body_parts_covered = HEAD
 	heat_protection = HEAD
 	cold_protection = HEAD
-	item_flags = IMMUTABLE_SLOW
+
+// Even without a hat stabilizer, hats can be worn - however, they'll fall off very easily
+/obj/item/clothing/head/mod/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
+	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
 /obj/item/clothing/suit/mod
 	name = "MOD chestplate"
@@ -22,13 +27,17 @@
 	allowed = list(
 		/obj/item/tank/internals,
 		/obj/item/flashlight,
-		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/tank/jetpack/captain,
 	)
 	armor_type = /datum/armor/none
 	body_parts_covered = CHEST|GROIN
 	heat_protection = CHEST|GROIN
 	cold_protection = CHEST|GROIN
-	item_flags = IMMUTABLE_SLOW
+	drop_sound = null
+
+/obj/item/clothing/suit/mod/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
 
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"
@@ -41,7 +50,13 @@
 	body_parts_covered = HANDS|ARMS
 	heat_protection = HANDS|ARMS
 	cold_protection = HANDS|ARMS
-	item_flags = IMMUTABLE_SLOW
+	equip_sound = null
+	pickup_sound = null
+	drop_sound = null
+
+/obj/item/clothing/gloves/mod/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
 
 /obj/item/clothing/shoes/mod
 	name = "MOD boots"
@@ -54,5 +69,42 @@
 	body_parts_covered = FEET|LEGS
 	heat_protection = FEET|LEGS
 	cold_protection = FEET|LEGS
-	item_flags = IGNORE_DIGITIGRADE | IMMUTABLE_SLOW
-	can_be_tied = FALSE
+	item_flags = IGNORE_DIGITIGRADE
+	fastening_type = SHOES_SLIPON
+	equip_sound = null
+
+/obj/item/clothing/shoes/mod/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
+
+/obj/item/clothing/glasses/mod
+	name = "MOD glasses"
+	desc = "A pair of glasses for a MODsuit."
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "standard-glasses"
+	base_icon_state = "glasses"
+	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	armor_type = /datum/armor/none
+	equip_sound = null
+	pickup_sound = null
+	drop_sound = null
+
+/obj/item/clothing/glasses/mod/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
+
+/obj/item/clothing/neck/mod
+	name = "MOD tie"
+	desc = "An tie for a MODsuit."
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "standard-tie"
+	base_icon_state = "tie"
+	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
+	armor_type = /datum/armor/none
+	equip_sound = null
+	pickup_sound = null
+	drop_sound = null
+
+/obj/item/clothing/neck/mod/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)

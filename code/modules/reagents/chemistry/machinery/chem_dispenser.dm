@@ -23,7 +23,7 @@
 	/// If the UI has the pH meter shown
 	var/show_ph = TRUE
 	/// The overlay used to display the beaker on the machine
-	var/mutable_appearance/beaker_overlay
+	VAR_PRIVATE/mutable_appearance/beaker_overlay
 	/// Icon to display when the machine is powered
 	var/working_state = "dispenser_working"
 	/// Icon to display when the machine is not powered
@@ -41,9 +41,14 @@
 	/// Starting purity of the created reagents
 	var/base_reagent_purity = 1
 	/// Records the reagents dispensed by the user if this list is not null
-	var/list/recording_recipe
+	VAR_PRIVATE/list/recording_recipe
 	/// Saves all the recipes recorded by the machine
-	var/list/saved_recipes = list()
+	VAR_PRIVATE/list/saved_recipes = list()
+
+	/// Filters out all reactions that don't have any of these tags from the reaction list
+	var/shown_reaction_tags = DAMAGE_HEALING_REACTION_TAGS | MEDICATION_REACTION_TAGS | CHEMIST_REACTION_TAGS
+	/// Filters out all reactions that have any one of these tags from the reaction list
+	var/hidden_reaction_tags = REACTION_TAG_ACTIVE | REACTION_TAG_FOOD | REACTION_TAG_DRINK
 
 	/// The default list of dispensable_reagents
 	var/static/list/default_dispensable_reagents = list(
@@ -90,6 +95,7 @@
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin
 	)
+
 /obj/machinery/chem_dispenser/Initialize(mapload)
 	if(dispensable_reagents != null && !dispensable_reagents.len)
 		dispensable_reagents = default_dispensable_reagents
@@ -122,9 +128,9 @@
 	if(panel_open)
 		. += span_notice("[src]'s maintenance hatch is open!")
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads:\n\
+		. += span_notice("The status display reads:\n\
 		Recharge rate: <b>[display_power(recharge_amount, convert = FALSE)]</b>.\n\
-		Energy cost: <b>[siunit(power_cost, "J/u", 3)]</b>.</span>"
+		Energy cost: <b>[siunit(power_cost, "J/u", 3)]</b>.")
 	. += span_notice("Use <b>RMB</b> to eject a stored beaker.")
 
 /obj/machinery/chem_dispenser/on_set_is_operational(old_value)
@@ -142,8 +148,8 @@
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
-	b_o.pixel_y = -4
-	b_o.pixel_x = -7
+	b_o.pixel_w = -7
+	b_o.pixel_z = -4
 	return b_o
 
 /obj/machinery/chem_dispenser/proc/work_animation()
@@ -211,9 +217,11 @@
 	.["amount"] = amount
 	.["energy"] = cell.charge ? cell.charge : 0 //To prevent NaN in the UI.
 	.["maxEnergy"] = cell.maxcharge
-	.["displayedEnergy"] = display_energy(cell.charge)
-	.["displayedMaxEnergy"] = display_energy(cell.maxcharge)
+	.["displayedUnits"] = cell.charge ? (cell.charge / power_cost) : 0
+	.["displayedMaxUnits"] = cell.maxcharge / power_cost
 	.["showpH"] = isnull(recording_recipe) ? show_ph : FALSE //virtual beakers have no ph to compute & display
+	var/obj/item/held_item = user.get_active_held_item()
+	.["hasBeakerInHand"] = held_item?.is_chem_container() || FALSE
 
 	var/list/chemicals = list()
 	var/is_hallucinating = FALSE
@@ -225,9 +233,11 @@
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
 		if(temp)
 			var/chemname = temp.name
+			var/chemcolor = temp.color
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals += list(list("title" = chemname, "id" = temp.name, "pH" = temp.ph, "pHCol" = convert_ph_to_readable_color(temp.ph)))
+				chemcolor = random_colour()
+			chemicals += list(list("title" = chemname, "id" = temp.name, "pH" = temp.ph, "color" = chemcolor, "pHCol" = convert_ph_to_readable_color(temp.ph)))
 	.["chemicals"] = chemicals
 	.["recipes"] = saved_recipes
 
@@ -253,6 +263,18 @@
 		beaker_data["contents"] = beakerContents
 	.["beaker"] = beaker_data
 
+/obj/machinery/chem_dispenser/ui_static_data(mob/user)
+	var/list/data = list()
+
+	data["reaction_list"] = get_reaction_list()
+	data["all_bitflags"] = list()
+	for(var/readable_flag, real_flag in REACTION_TAG_READABLE)
+		if((real_flag & hidden_reaction_tags) || !(real_flag & shown_reaction_tags))
+			continue
+		data["all_bitflags"][readable_flag] = real_flag
+
+	return data
+
 /obj/machinery/chem_dispenser/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -275,12 +297,15 @@
 			if(!recording_recipe)
 				var/reagent = GLOB.name2reagent[reagent_name]
 				if(beaker && dispensable_reagents.Find(reagent))
-
 					var/datum/reagents/holder = beaker.reagents
 					var/to_dispense = max(0, min(amount, holder.maximum_volume - holder.total_volume))
+					if(!to_dispense)
+						say("The container is full!")
+						return
 					if(!cell.use(to_dispense * power_cost))
 						say("Not enough energy to complete operation!")
 						return
+					beaker.add_hiddenprint(ui.user)
 					holder.add_reagent(reagent, to_dispense, reagtemp = dispensed_temperature, added_purity = base_reagent_purity)
 
 					work_animation()
@@ -301,6 +326,13 @@
 			replace_beaker(ui.user)
 			return TRUE
 
+		if("insert")
+			var/obj/item/reagent_containers/container = ui.user.get_active_held_item()
+			if(container?.can_insert_container(ui.user, src))
+				replace_beaker(ui.user, container)
+
+			return TRUE
+
 		if("dispense_recipe")
 			if(!is_operational || QDELETED(cell))
 				return
@@ -316,7 +348,6 @@
 				if(!recording_recipe)
 					if(!beaker)
 						return
-
 					var/datum/reagents/holder = beaker.reagents
 					var/to_dispense = max(0, min(dispense_amount, holder.maximum_volume - holder.total_volume))
 					if(!to_dispense)
@@ -324,6 +355,7 @@
 					if(!cell.use(to_dispense * power_cost))
 						say("Not enough energy to complete operation!")
 						return
+					beaker.add_hiddenprint(ui.user)
 					holder.add_reagent(reagent, to_dispense, reagtemp = dispensed_temperature, added_purity = base_reagent_purity)
 					work_animation()
 				else
@@ -343,7 +375,7 @@
 		if("save_recording")
 			if(!is_operational)
 				return
-			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name", MAX_NAME_LEN)
+			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name", max_length = MAX_NAME_LEN, encode = FALSE)
 			if(!ui.user.can_perform_action(src, ALLOW_SILICON_REACH))
 				return
 			if(saved_recipes[name] && tgui_alert(ui.user, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
@@ -354,7 +386,7 @@
 					if(!dispensable_reagents.Find(reagent_id))
 						visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
 						to_chat(ui.user, span_warning("[src] cannot find <b>[reagent]</b>!"))
-						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+						playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
 				recording_recipe = null
@@ -395,14 +427,13 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/chem_dispenser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(is_reagent_container(tool) && !(tool.item_flags & ABSTRACT) && tool.is_open_container())
-		if(!user.transferItemToLoc(tool, src))
-			return ITEM_INTERACT_BLOCKING
-		replace_beaker(user, tool)
-		ui_interact(user)
-		return ITEM_INTERACT_SUCCESS
+	if(!tool.can_insert_container(user, src))
+		return NONE
+	if(!replace_beaker(user, tool))
+		return ITEM_INTERACT_BLOCKING
 
-	return NONE
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_dispenser/get_cell()
 	return cell
@@ -448,15 +479,25 @@
 		parts_rating += servo.tier
 	power_cost = max(new_power_cost, 0.1 KILO WATTS)
 
+/**
+ * Insert, remove, replace the existig beaker. Returns TRUE on success.
+ * Arguments:
+ *
+ * * mob/living/user - the player trying to replace the beaker
+ * * obj/item/reagent_containers/new_beaker - the beaker we are trying to insert, swap with existing or remove if null
+ */
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
-	if(!user)
-		return FALSE
-	if(beaker)
+	if(!QDELETED(beaker))
 		try_put_in_hand(beaker, user)
-		beaker = null
-	if(new_beaker)
+	if(!QDELETED(new_beaker))
+		if(!user.transferItemToLoc(new_beaker, src))
+			update_appearance(UPDATE_OVERLAYS)
+			return FALSE
+
 		beaker = new_beaker
-	update_appearance()
+
+	update_appearance(UPDATE_OVERLAYS)
+
 	return TRUE
 
 /obj/machinery/chem_dispenser/on_deconstruction(disassembled)
@@ -481,6 +522,61 @@
 /obj/machinery/chem_dispenser/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
+/obj/machinery/chem_dispenser/proc/get_reaction_list()
+	var/static/list/reaction_list
+	if(reaction_list?[type])
+		return reaction_list[type]
+
+	reaction_list ||= list()
+	reaction_list[type] = list()
+
+	var/list/new_reaction_list = list()
+	for(var/result, reactions in GLOB.chemical_reactions_list_product_index - dispensable_reagents)
+		var/datum/reagent/result_datum = GLOB.chemical_reagents_list[result]
+		for(var/datum/chemical_reaction/reaction as anything in reactions)
+			if(!(reaction.reaction_tags & shown_reaction_tags))
+				continue
+			if(reaction.reaction_tags & hidden_reaction_tags)
+				continue
+			if(reaction.required_container)
+				continue
+
+			var/index = result_datum.name
+			var/list/new_info = get_reaction_info(reaction)
+			new_info["description"] = result_datum.description
+			new_info["color"] = result_datum.color
+
+			var/num_alts = 0
+			while(new_reaction_list[index])
+				num_alts++
+				index = "[result_datum.name] (Alt[num_alts == 1 ? "" : " #[num_alts]"])"
+
+			new_reaction_list[index] = new_info
+
+	reaction_list[type] = new_reaction_list
+	return reaction_list[type]
+
+/obj/machinery/chem_dispenser/proc/get_reaction_info(datum/chemical_reaction/reaction)
+	var/list/info = list()
+	info["id"] = reaction.type
+	info["lower_temperature"] = reaction.required_temp
+	info["upper_temperature"] = reaction.optimal_temp
+	info["lower_ph"] = reaction.optimal_ph_min
+	info["upper_ph"] = reaction.optimal_ph_max
+	info["bitflags"] = reaction.reaction_tags
+	info["required_reagents"] = reagent_list_to_info(reaction.required_reagents)
+	info["required_catalysts"] = reagent_list_to_info(reaction.required_catalysts)
+	return info
+
+/obj/machinery/chem_dispenser/proc/reagent_list_to_info(list/reagent_list)
+	var/list/info = list()
+	for(var/datum/reagent/reagent_typepath as anything in reagent_list)
+		info += list(list(
+			"name" = reagent_typepath::name,
+			"amount" = reagent_list[reagent_typepath],
+			"typepath" = reagent_typepath,
+		))
+	return info
 
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
@@ -497,6 +593,8 @@
 	nopower_state = null
 	pass_flags = PASSTABLE
 	show_ph = FALSE
+	shown_reaction_tags = KITCHEN_REACTION_TAGS
+	hidden_reaction_tags = REACTION_TAG_ACTIVE
 	/// The default list of reagents dispensable by the soda dispenser
 	var/static/list/drinks_dispensable_reagents = list(
 		/datum/reagent/consumable/coffee,
@@ -541,7 +639,7 @@
 	if(emagged_reagents != null && !emagged_reagents.len)
 		emagged_reagents = drink_emagged_reagents
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 
 /obj/machinery/chem_dispenser/drinks/setDir()
 	var/old = dir
@@ -553,22 +651,23 @@
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	switch(dir)
 		if(NORTH)
-			b_o.pixel_y = 7
-			b_o.pixel_x = rand(-9, 9)
+			b_o.pixel_w = rand(-9, 9)
+			b_o.pixel_z = 7
 		if(EAST)
-			b_o.pixel_x = 4
-			b_o.pixel_y = rand(-5, 7)
+			b_o.pixel_w = 4
+			b_o.pixel_z = rand(-5, 7)
 		if(WEST)
-			b_o.pixel_x = -5
-			b_o.pixel_y = rand(-5, 7)
+			b_o.pixel_w = -5
+			b_o.pixel_z = rand(-5, 7)
 		else//SOUTH
-			b_o.pixel_y = -7
-			b_o.pixel_x = rand(-9, 9)
+			b_o.pixel_w = rand(-9, 9)
+			b_o.pixel_z = -7
 	return b_o
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of soft drinks. This model has had its safeties shorted out."
 	obj_flags = CAN_BE_HIT | EMAGGED
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/fullupgrade
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize(mapload)
 	. = ..()
@@ -652,6 +751,8 @@
 	name = "botanical chemical dispenser"
 	desc = "Creates and dispenses chemicals useful for botany."
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
+	shown_reaction_tags = BOTANIST_REACTION_TAGS
+	hidden_reaction_tags = REACTION_TAG_ACTIVE
 
 	/// The default list of dispensable reagents available in the mutagensaltpeter chem dispenser
 	var/static/list/mutagensaltpeter_dispensable_reagents = list(
@@ -736,7 +837,7 @@
 		/datum/reagent/toxin/plasma,
 		/datum/reagent/uranium,
 		/datum/reagent/consumable/liquidelectricity/enriched,
-		/datum/reagent/medicine/c2/synthflesh
+		/datum/reagent/medicine/c2/synthflesh,
 	)
 
 /obj/machinery/chem_dispenser/abductor/Initialize(mapload)

@@ -69,7 +69,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(scanning_mode == SCAN_SALES_TAG && isidcard(attacking_item))
 		var/obj/item/card/id/potential_acc = attacking_item
@@ -120,7 +120,7 @@
 		if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 			return
 		new_custom_price = chosen_price
-		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))
+		to_chat(user, span_notice("[src] will now give things a [new_custom_price] [MONEY_SYMBOL] tag."))
 
 /obj/item/universal_scanner/item_ctrl_click(mob/user)
 	. = CLICK_ACTION_BLOCKING
@@ -149,7 +149,7 @@
 			. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
 
 	if(scanning_mode == SCAN_PRICE_TAG)
-		. += span_notice("The current custom price is set to [new_custom_price] cr. <b>Right-click</b> to change.")
+		. += span_notice("The current custom price is set to [new_custom_price] [MONEY_SYMBOL]. <b>Right-click</b> to change.")
 
 /obj/item/universal_scanner/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	switch(scanning_mode)
@@ -165,7 +165,7 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Scan for export value"
 	return CONTEXTUAL_SCREENTIP_SET
 /**
- * Scans an object, target, and provides it's export value based on selling to the cargo shuttle, to mob/user.
+ * Scans an object, target, and provides its export value based on selling to the cargo shuttle, to mob/user.
  */
 /obj/item/universal_scanner/proc/export_scan(obj/target, mob/user)
 	var/datum/export_report/report = export_item_and_contents(target, dry_run = TRUE)
@@ -178,7 +178,7 @@
 	if(length(target.contents))
 		message = "Scanned [target] and its contents"
 		if(price)
-			message += ", total value: <b>[price]</b> credits"
+			message += ", total value: <b>[price]</b> [MONEY_NAME]"
 		else
 			message += ", no export values"
 			warning = TRUE
@@ -190,7 +190,7 @@
 			message += ", unable to determine value."
 			warning = TRUE
 		else if(price)
-			message += ", value: <b>[price]</b> credits."
+			message += ", value: <b>[price]</b> [MONEY_NAME]."
 		else
 			message += ", no export value."
 			warning = TRUE
@@ -200,7 +200,7 @@
 		to_chat(user, span_notice(message))
 
 	if(price)
-		playsound(src, 'sound/machines/terminal_select.ogg', 50, vary = TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_select.ogg', 50, vary = TRUE)
 
 	if(istype(target, /obj/item/delivery))
 		var/obj/item/delivery/parcel = target
@@ -231,7 +231,7 @@
 				cube.AddComponent(/datum/component/pricetag, scanner_account, cube.handler_tip, FALSE)
 
 				cube.bounty_handler_account = scanner_account
-				cube.bounty_handler_account.bank_card_talk("Bank account for [price ? "<b>[price * cube.handler_tip]</b> credit " : ""]handling tip successfully registered.")
+				cube.bounty_handler_account.bank_card_talk("Bank account for [price ? "<b>[price * cube.handler_tip]</b> [MONEY_NAME_SINGULAR] " : ""]handling tip successfully registered.")
 
 				if(cube.bounty_holder_account != cube.bounty_handler_account) //No need to send a tracking update to the person scanning it
 					cube.bounty_holder_account.bank_card_talk("<b>[cube]</b> was scanned in \the <b>[get_area(cube)]</b> by <b>[scan_human] ([scan_human.job])</b>.")
@@ -240,13 +240,13 @@
 				to_chat(user, span_warning("Bank account not detected. Handling tip not registered."))
 
 /**
- * Scans an object, target, and sets it's custom_price variable to new_custom_price, presenting it to the user.
+ * Scans an object, target, and sets its custom_price variable to new_custom_price, presenting it to the user.
  */
 /obj/item/universal_scanner/proc/price_tag(obj/target, mob/user)
 	if(isitem(target))
 		var/obj/item/selected_target = target
 		selected_target.custom_price = new_custom_price
-		to_chat(user, span_notice("You set the price of [selected_target] to [new_custom_price] cr."))
+		to_chat(user, span_notice("You set the price of [selected_target] to [new_custom_price] [MONEY_SYMBOL]."))
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu
@@ -257,7 +257,7 @@
 /obj/item/universal_scanner/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	return TRUE
 

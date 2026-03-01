@@ -3,12 +3,13 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
+	abstract_type = /obj/item/clothing/mask
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_MASK
-	strip_delay = 40
-	equip_delay_other = 40
+	strip_delay = 4 SECONDS
+	equip_delay_other = 4 SECONDS
 	visor_vars_to_toggle = NONE
-	var/modifies_speech = FALSE
+
 	var/adjusted_flags = null
 	///Did we install a filtering cloth?
 	var/has_filter = FALSE
@@ -25,41 +26,20 @@
 		var/status = !(clothing_flags & VOICEBOX_DISABLED)
 		to_chat(user, span_notice("You turn the voice box in [src] [status ? "on" : "off"]."))
 
-/obj/item/clothing/mask/equipped(mob/M, slot)
-	. = ..()
-	if ((slot & ITEM_SLOT_MASK) && modifies_speech)
-		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-	else
-		UnregisterSignal(M, COMSIG_MOB_SAY)
-
-/obj/item/clothing/mask/dropped(mob/M)
-	. = ..()
-	UnregisterSignal(M, COMSIG_MOB_SAY)
-
-/obj/item/clothing/mask/vv_edit_var(vname, vval)
-	if(vname == NAMEOF(src, modifies_speech) && ismob(loc))
-		var/mob/M = loc
-		if(M.get_item_by_slot(ITEM_SLOT_MASK) == src)
-			if(vval)
-				if(!modifies_speech)
-					RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-			else if(modifies_speech)
-				UnregisterSignal(M, COMSIG_MOB_SAY)
-	return ..()
-
-/obj/item/clothing/mask/proc/handle_speech()
-	SIGNAL_HANDLER
-
 /obj/item/clothing/mask/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
-	if(isinhands)
+	if(isinhands || !(body_parts_covered & HEAD))
 		return
+	if(damaged_clothes)
+		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 
-	if(body_parts_covered & HEAD)
-		if(damaged_clothes)
-			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+/obj/item/clothing/mask/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+	. = ..()
+	if (isinhands || !(body_parts_covered & HEAD))
+		return
+	var/blood_overlay = get_blood_overlay("mask")
+	if (blood_overlay)
+		. += blood_overlay
 
 /obj/item/clothing/mask/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -78,7 +58,7 @@
 
 /obj/item/clothing/mask/update_icon_state()
 	. = ..()
-	icon_state = "[initial(icon_state)][up ? "_up" : ""]"
+	icon_state = "[base_icon_state || initial(post_init_icon_state) || initial(icon_state)][up ? "_up" : ""]"
 
 /**
  * Proc called in lungs.dm to act if wearing a mask with filters, used to reduce the filters durability, return a changed gas mixture depending on the filter status

@@ -79,7 +79,7 @@
 /// Actually create a mob
 /datum/action/cooldown/mob_cooldown/hivelord_spawn/proc/complete_spawn(turf/spawn_turf, target)
 	var/mob/living/brood = new spawn_type(spawn_turf)
-	brood.faction = owner.faction
+	SET_FACTION_AND_ALLIES_FROM(brood, owner)
 	brood.ai_controller?.set_blackboard_key(ai_target_key, target)
 	brood.dir = get_dir(owner, spawn_turf)
 
@@ -98,8 +98,8 @@
 
 	var/turf/my_turf = get_turf(src)
 	dir = get_dir(spawn_from, my_turf)
-	var/move_x = (my_turf.x - spawn_from.x) * world.icon_size
-	var/move_y = (my_turf.y - spawn_from.y) * world.icon_size
+	var/move_x = (my_turf.x - spawn_from.x) * ICON_SIZE_X
+	var/move_y = (my_turf.y - spawn_from.y) * ICON_SIZE_Y
 	pixel_x = -move_x
 	pixel_y = -move_y
 

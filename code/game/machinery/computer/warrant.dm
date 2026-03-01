@@ -88,30 +88,30 @@
 
 	if(!isliving(user) || issilicon(user))
 		to_chat(user, span_warning("ACCESS DENIED"))
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	var/mob/living/player = user
 	var/obj/item/card/id/auth = player.get_idcard(TRUE)
 	if(!auth)
 		to_chat(user, span_warning("ACCESS DENIED: No ID card detected."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	var/datum/bank_account/account = auth.registered_account
 	if(!account?.account_holder || account.account_holder == "Unassigned")
 		to_chat(user, span_warning("ACCESS DENIED: No account linked to ID."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	var/amount = params["amount"]
-	if(!amount || !isnum(amount) || amount > warrant.fine || !account.adjust_money(-amount, "Paid fine for [target.name]"))
+	if(!amount || !isnum(amount) || amount <= 0 || amount > warrant.fine || !account.adjust_money(-amount, "Paid fine for [target.name]"))
 		to_chat(user, span_warning("ACCESS DENIED: Invalid amount."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
-	account.bank_card_talk("You have paid [amount]cr towards [target.name]'s fine of [warrant.fine]cr.")
-	log_econ("[amount]cr was transferred from [user]'s transaction to [target.name]'s [warrant.fine]cr fine")
+	account.bank_card_talk("You have paid [amount][MONEY_SYMBOL] towards [target.name]'s fine of [warrant.fine][MONEY_SYMBOL].")
+	log_econ("[amount][MONEY_SYMBOL] was transferred from [user]'s transaction to [target.name]'s [warrant.fine][MONEY_SYMBOL] fine")
 	SSblackbox.record_feedback("amount", "credits_transferred", amount)
 	warrant.pay_fine(amount)
 
@@ -124,21 +124,23 @@
 			"A friendly face",
 			"A helpful stranger",
 		)
-		warrant.alert_owner(user, src, target.name, "[pick(titles)] has paid [amount]cr towards your fine.")
+		warrant.alert_owner(user, src, target.name, "[pick(titles)] has paid [amount][MONEY_SYMBOL] towards your fine.")
 
 	var/datum/bank_account/sec_account = SSeconomy.get_dep_account(ACCOUNT_SEC)
 	sec_account.adjust_money(amount)
+	SSblackbox.ReportCitation(REF(warrant), paid = warrant.paid)
 
 	if(warrant.fine != 0 || target.name == user)
 		return TRUE
 
 	warrant.alert_owner(user, src, target.name, "One of your outstanding warrants has been completely paid.")
+	warrant.valid = FALSE
 	return TRUE
 
 /// Finishes printing, resets the printer.
 /obj/machinery/computer/warrant/proc/print_finish(obj/item/paper/bounty)
 	printing = FALSE
-	playsound(src, 'sound/machines/terminal_eject.ogg', 100, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 100, TRUE)
 	bounty.forceMove(loc)
 
 	return TRUE
@@ -147,7 +149,7 @@
 /obj/machinery/computer/warrant/proc/print_bounty(mob/user, list/params)
 	if(printing)
 		balloon_alert(user, "printer busy")
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.manifest.general
@@ -164,7 +166,7 @@
 	bounty_text += "<b>Issued to:</b><br>[usr]<br>"
 	bounty_text += "<b>Issued on:</b><br>[warrant.time]<br>"
 	bounty_text += "<b>Comments:</b><br>[!target.security_note ? "None." : target.security_note]<br><br>"
-	bounty_text += "<center><b>FINE:</b> [warrant.fine] credits</center>"
+	bounty_text += "<center><b>FINE:</b> [warrant.fine] [MONEY_NAME]</center>"
 
 	printing = TRUE
 	balloon_alert(user, "printing")
@@ -172,7 +174,7 @@
 
 	var/obj/item/paper/bounty = new(null)
 	bounty.name = "Bounty for [target.name]"
-	bounty.desc = "A [warrant.fine]cr bounty for [target.name]."
+	bounty.desc = "A [warrant.fine][MONEY_SYMBOL] bounty for [target.name]."
 	bounty.add_raw_text(bounty_text)
 	bounty.update_icon()
 

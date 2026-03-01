@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	name = "\improper Space Wizard"
 	roundend_category = "wizards/witches"
 	antagpanel_category = ANTAG_GROUP_WIZARDS
-	job_rank = ROLE_WIZARD
+	pref_flag = ROLE_WIZARD
 	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 0.5
@@ -15,6 +15,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Demonstrate your incredible and destructive magical powers."
 	hardcore_random_bonus = TRUE
+
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -25,6 +26,10 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	show_to_ghosts = TRUE
 	/// This mob's Grand Ritual ability
 	var/datum/action/cooldown/grand_ritual/ritual
+	/// Perks that wizard learn
+	var/list/perks = list()
+	/// Button that hide perks hud.
+	var/atom/movable/screen/perk/more/compact_button
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
@@ -44,20 +49,22 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard_minion/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/current_mob = mob_override || owner.current
-	current_mob.faction |= ROLE_WIZARD
+	current_mob.add_faction(ROLE_WIZARD)
 	add_team_hud(current_mob)
 
 /datum/antagonist/wizard_minion/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/last_mob = mob_override || owner.current
-	last_mob.faction -= ROLE_WIZARD
+	last_mob.remove_faction(ROLE_WIZARD)
 
 /datum/antagonist/wizard_minion/on_gain()
 	create_objectives()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+	owner.add_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
+	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+		blessed_hud.check_hud(owner.current)
 
 /datum/antagonist/wizard_minion/on_removal()
-	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+	owner.remove_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
 	return ..()
 
 /datum/antagonist/wizard_minion/proc/create_objectives()
@@ -77,7 +84,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		CRASH("Wizard datum with no owner.")
 	assign_ritual()
 	equip_wizard()
-	owner.current.add_quirk(/datum/quirk/introvert)
+	owner.current.add_personality(/datum/personality/introvert)
+	owner.current.add_personality(/datum/personality/callous) // no sense of right and wrong
 	if(give_objectives)
 		create_objectives()
 	if(move_to_lair)
@@ -85,7 +93,9 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	. = ..()
 	if(allow_rename)
 		rename_wizard()
-	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+	owner.add_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
+	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+		blessed_hud.check_hud(owner.current)
 
 /datum/antagonist/wizard/Destroy()
 	QDEL_NULL(ritual)
@@ -122,7 +132,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	if(!owner.current)
 		return
 	if(!GLOB.wizardstart.len)
-		SSjob.SendToLateJoin(owner.current)
+		SSjob.send_to_late_join(owner.current)
 		to_chat(owner, "HOT INSERTION, GO GO GO")
 	owner.current.forceMove(pick(GLOB.wizardstart))
 
@@ -179,7 +189,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 			qdel(spell)
 			owner.current.actions -= spell
 
-	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+	owner.remove_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
 	return ..()
 
 /datum/antagonist/wizard/proc/equip_wizard()
@@ -225,13 +235,13 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/wizard_mob = mob_override || owner.current
-	wizard_mob.faction |= ROLE_WIZARD
+	wizard_mob.add_faction(ROLE_WIZARD)
 	add_team_hud(wizard_mob)
 	ritual?.Grant(owner.current)
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/wizard_mob = mob_override || owner.current
-	wizard_mob.faction -= ROLE_WIZARD
+	wizard_mob.remove_faction(ROLE_WIZARD)
 	if (ritual)
 		ritual.Remove(wizard_mob)
 		UnregisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE)
@@ -441,10 +451,15 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 /datum/team/wizard/roundend_report()
 	var/list/parts = list()
 
-	parts += "<span class='header'>Wizards/witches of [master_wizard.owner.name] team were:</span>"
+	parts += span_header("Wizards/witches of [master_wizard.owner.name] team were:")
 	parts += master_wizard.roundend_report()
 	parts += " "
-	parts += "<span class='header'>[master_wizard.owner.name] apprentices and minions were:</span>"
+	parts += span_header("[master_wizard.owner.name] apprentices and minions were:")
 	parts += printplayerlist(members - master_wizard.owner)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/antagonist/wizard/on_respawn(mob/new_character)
+	new_character.forceMove(pick(GLOB.wizardstart))
+	equip_wizard()
+	return TRUE

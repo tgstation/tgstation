@@ -57,7 +57,7 @@
 		span_notice("You wash your [washing_face ? "face" : "hands"] using [src]."),
 	)
 
-/obj/structure/water_source/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/structure/water_source/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(busy)
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
@@ -94,27 +94,7 @@
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/medical/gauze))
-		var/obj/item/stack/medical/gauze/G = attacking_item
-		new /obj/item/reagent_containers/cup/rag(loc)
-		to_chat(user, span_notice("You tear off a strip of gauze and make a rag."))
-		G.use(1)
-		return
-
-	if(istype(attacking_item, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/cloth = attacking_item
-		new /obj/item/reagent_containers/cup/rag(loc)
-		to_chat(user, span_notice("You tear off a strip of cloth and make a rag."))
-		cloth.use(1)
-		return
-
-	if(istype(attacking_item, /obj/item/stack/ore/glass))
-		new /obj/item/stack/sheet/sandblock(loc)
-		to_chat(user, span_notice("You wet the sand and form it into a block."))
-		attacking_item.use(1)
-		return
-
-	if(!user.combat_mode)
+	if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
 		to_chat(user, span_notice("You start washing [attacking_item]..."))
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))
@@ -137,13 +117,39 @@
 	base_icon_state = "puddle"
 	resistance_flags = UNACIDABLE
 
+/obj/structure/water_source/puddle/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/water_source/puddle/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_RMB] = "Scoop Tadpoles"
+
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/water_source/puddle/attack_hand(mob/user, list/modifiers)
 	icon_state = "[base_icon_state]-splash"
 	. = ..()
 	icon_state = base_icon_state
 
-/obj/structure/water_source/puddle/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/water_source/puddle/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	icon_state = "[base_icon_state]-splash"
 	. = ..()
 	icon_state = base_icon_state
+
+/obj/structure/water_source/puddle/attack_hand_secondary(mob/living/carbon/human/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	icon_state = "[base_icon_state]-splash"
+	balloon_alert(user, "scooping tadpoles...")
+	if(do_after(user, 5 SECONDS, src))
+		playsound(loc, 'sound/effects/slosh.ogg', 15, TRUE)
+		balloon_alert(user, "got a tadpole")
+		var/obj/item/fish/tadpole/tadpole = new(loc)
+		tadpole.randomize_size_and_weight()
+		user.put_in_hands(tadpole)
+	icon_state = base_icon_state
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

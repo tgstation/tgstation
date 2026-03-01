@@ -12,7 +12,6 @@
 	interaction_flags_click = ALLOW_SILICON_REACH
 	/// List of dishes the drive can hold
 	var/static/list/collectable_items = list(
-		/obj/item/trash/waffles,
 		/obj/item/broken_bottle,
 		/obj/item/kitchen/fork,
 		/obj/item/plate,
@@ -24,7 +23,6 @@
 	)
 	/// List of items the drive detects as trash
 	var/static/list/disposable_items = list(
-		/obj/item/trash/waffles,
 		/obj/item/broken_bottle,
 		/obj/item/plate_shard,
 		/obj/item/shard,
@@ -40,10 +38,6 @@
 	var/suck_distance = 0
 
 	COOLDOWN_DECLARE(time_since_dishes)
-
-/obj/machinery/dish_drive/Initialize(mapload)
-	. = ..()
-	RefreshParts()
 
 /obj/machinery/dish_drive/examine(mob/user)
 	. = ..()
@@ -77,7 +71,7 @@
 	LAZYREMOVE(dish_drive_contents, dish)
 	user.put_in_hands(dish)
 	balloon_alert(user, "[dish] taken")
-	playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
+	playsound(src, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 	flick("synthesizer_beam", src)
 
 /obj/machinery/dish_drive/wrench_act(mob/living/user, obj/item/tool)
@@ -85,13 +79,13 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/dish_drive/attackby(obj/item/dish, mob/living/user, params)
+/obj/machinery/dish_drive/attackby(obj/item/dish, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_list(dish, collectable_items) && !user.combat_mode)
 		if(!user.transferItemToLoc(dish, src))
 			return
 		LAZYADD(dish_drive_contents, dish)
 		balloon_alert(user, "[dish] placed in drive")
-		playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
+		playsound(src, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 		flick("synthesizer_beam", src)
 		return
 	else if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), dish))
@@ -131,7 +125,7 @@
 				LAZYADD(dish_drive_contents, dish)
 				visible_message(span_notice("[src] beams up [dish]!"))
 				dish.forceMove(src)
-				playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
+				playsound(src, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 				flick("synthesizer_beam", src)
 			else
 				step_towards(dish, src)
@@ -155,7 +149,7 @@
 	if(!bin)
 		if(manual)
 			visible_message(span_warning("[src] buzzes. There are no disposal bins in range!"))
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 		return
 	var/disposed = 0
 	for(var/obj/item/dish in dish_drive_contents)
@@ -168,8 +162,8 @@
 			disposed++
 	if (disposed)
 		visible_message(span_notice("[src] [pick("whooshes", "bwooms", "fwooms", "pshooms")] and beams [disposed] stored item\s into the nearby [bin.name]."))
-		playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
-		playsound(bin, 'sound/items/pshoom.ogg', 50, TRUE)
+		playsound(src, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
+		playsound(bin, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 		Beam(bin, icon_state = "rped_upgrade", time = 5)
 		bin.update_appearance()
 		flick("synthesizer_beam", src)

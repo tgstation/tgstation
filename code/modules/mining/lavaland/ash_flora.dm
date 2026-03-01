@@ -10,7 +10,6 @@
 	resistance_flags = LAVA_PROOF
 	gender = PLURAL
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER //sporangiums up don't shoot
-	product_types = list(/obj/item/food/grown/ash_flora/shavings = 1)
 	harvest_with_hands = TRUE
 	harvested_name = "shortened mushrooms"
 	harvested_desc = "Some quickly regrowing mushrooms, formerly known to be quite large."
@@ -26,6 +25,9 @@
 	. = ..()
 	base_icon_state = "[base_icon_state][rand(1, number_of_variants)]"
 	icon_state = base_icon_state
+
+/obj/structure/flora/ash/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/shavings = 1)
 
 /obj/structure/flora/ash/harvest(user, product_amount_multiplier)
 	if(!..())
@@ -45,7 +47,6 @@
 	desc = "A number of mushrooms, each of which surrounds a greenish sporangium with a number of leaf-like structures."
 	icon_state = "s_mushroom1"
 	base_icon_state = "s_mushroom"
-	product_types = list(/obj/item/food/grown/ash_flora/mushroom_leaf = 1)
 	harvested_name = "leafless mushrooms"
 	harvested_desc = "A bunch of formerly-leafed mushrooms, with their sporangiums exposed. Scandalous?"
 	harvest_amount_high = 4
@@ -56,12 +57,14 @@
 	regrowth_time_low = 2400
 	regrowth_time_high = 6000
 
+/obj/structure/flora/ash/leaf_shroom/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/mushroom_leaf = 1)
+
 /obj/structure/flora/ash/cap_shroom
 	name = "tall mushrooms"
 	desc = "Several mushrooms, the larger of which have a ring of conks at the midpoint of their stems."
 	icon_state = "r_mushroom1"
 	base_icon_state = "r_mushroom"
-	product_types = list(/obj/item/food/grown/ash_flora/mushroom_cap = 1)
 	harvested_name = "small mushrooms"
 	harvested_desc = "Several small mushrooms near the stumps of what likely were larger mushrooms."
 	harvest_amount_high = 4
@@ -72,6 +75,9 @@
 	regrowth_time_low = 3000
 	regrowth_time_high = 5400
 
+/obj/structure/flora/ash/cap_shroom/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/mushroom_cap = 1)
+
 /obj/structure/flora/ash/stem_shroom
 	name = "numerous mushrooms"
 	desc = "A large number of mushrooms, some of which have long, fleshy stems. They're radiating light!"
@@ -79,7 +85,6 @@
 	base_icon_state = "t_mushroom"
 	light_range = 1.5
 	light_power = 2.1
-	product_types = list(/obj/item/food/grown/ash_flora/mushroom_stem = 1)
 	harvested_name = "tiny mushrooms"
 	harvested_desc = "A few tiny mushrooms around larger stumps. You can already see them growing back."
 	harvest_amount_high = 4
@@ -90,12 +95,14 @@
 	regrowth_time_low = 3000
 	regrowth_time_high = 6000
 
+/obj/structure/flora/ash/stem_shroom/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/mushroom_stem = 1)
+
 /obj/structure/flora/ash/cacti
 	name = "fruiting cacti"
 	desc = "Several prickly cacti, brimming with ripe fruit and covered in a thin layer of ash."
 	icon_state = "cactus1"
 	base_icon_state = "cactus"
-	product_types = list(/obj/item/food/grown/ash_flora/cactus_fruit = 20, /obj/item/seeds/lavaland/cactus = 1)
 	harvested_name = "cacti"
 	harvested_desc = "A bunch of prickly cacti. You can see fruits slowly growing beneath the covering of ash."
 	harvest_amount_high = 2
@@ -111,12 +118,14 @@
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 3, max_damage = 6, probability = 70)
 
+/obj/structure/flora/ash/cacti/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/cactus_fruit = 20, /obj/item/seeds/lavaland/cactus = 1)
+
 /obj/structure/flora/ash/seraka
 	name = "seraka mushrooms"
 	desc = "A small cluster of seraka mushrooms. These must have come with the ashlizards."
 	icon_state = "seraka_mushroom1"
 	base_icon_state = "seraka_mushroom"
-	product_types = list(/obj/item/food/grown/ash_flora/seraka = 1)
 	harvested_name = "harvested seraka mushrooms"
 	harvested_desc = "A couple of small seraka mushrooms, with the larger ones clearly having been recently removed. They'll grow back... eventually."
 	harvest_amount_high = 6
@@ -129,6 +138,9 @@
 	number_of_variants = 2
 	harvest_message_true_thresholds = FALSE
 
+/obj/structure/flora/ash/seraka/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/seraka = 1)
+
 /obj/structure/flora/ash/fireblossom
 	name = "fire blossom"
 	desc = "An odd flower that grows commonly near bodies of lava."
@@ -137,7 +149,6 @@
 	light_range = LIGHT_FIRE_BLOSSOM
 	light_power = LIGHT_FIRE_BLOSSOM
 	light_color = COLOR_BIOLUMINESCENCE_YELLOW
-	product_types = list(/obj/item/food/grown/ash_flora/fireblossom = 1)
 	harvested_name = "fire blossom stems"
 	harvested_desc = "A few fire blossom stems, missing their flowers."
 	harvest_amount_high = 3
@@ -147,6 +158,9 @@
 	regrowth_time_low = 2500
 	regrowth_time_high = 4000
 	number_of_variants = 2
+
+/obj/structure/flora/ash/fireblossom/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/fireblossom = 1)
 
 /obj/structure/flora/ash/fireblossom/after_harvest()
 	set_light_power(LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED)
@@ -166,7 +180,6 @@
 	desc = "A number of bright, springy blue fruiting plants. They seem to be unconcerned with the hardy, cold environment."
 	icon_state = "chilly_pepper1"
 	base_icon_state = "chilly_pepper"
-	product_types = list(/obj/item/food/grown/icepepper = 1)
 	harvested_name = "springy grass"
 	harvested_desc = "A bunch of springy, bouncy fruiting grass, all picked. Or maybe they were never fruiting at all?"
 	harvest_amount_high = 3
@@ -178,6 +191,9 @@
 	regrowth_time_high = 5500
 	number_of_variants = 2
 
+/obj/structure/flora/ash/chilly/get_potential_products()
+	return list(/obj/item/food/grown/icepepper = 1)
+
 //SNACKS
 
 /obj/item/food/grown/ash_flora
@@ -185,19 +201,21 @@
 	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
 	icon = 'icons/obj/mining_zones/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
+	abstract_type = /obj/item/food/grown/ash_flora
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	seed = /obj/item/seeds/lavaland/polypore
 	wine_power = 20
+	foodtypes = VEGETABLES
 
 /obj/item/food/grown/ash_flora/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-4, 4)
 	pixel_y = base_pixel_y + rand(-4, 4)
 
-/obj/item/food/grown/ash_flora/shavings //So we can't craft bowls from everything.
-	grind_results = list(/datum/reagent/toxin/mushroom_powder = 5)
+/obj/item/food/grown/ash_flora/shavings/grind_results()
+	return list(/datum/reagent/toxin/mushroom_powder = 5)
 
 /obj/item/food/grown/ash_flora/mushroom_leaf
 	name = "mushroom leaf"
@@ -226,6 +244,11 @@
 	icon_state = "cactus_fruit"
 	seed = /obj/item/seeds/lavaland/cactus
 	wine_power = 50
+	foodtypes = FRUIT
+
+/obj/item/food/grown/ash_flora/cactus_fruit/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, growth_modifier = 0.1, ability_modifier = -0.05)
 
 /obj/item/food/grown/ash_flora/seraka
 	name = "seraka cap"
@@ -233,6 +256,10 @@
 	icon_state = "seraka_cap"
 	seed = /obj/item/seeds/lavaland/seraka
 	wine_power = 40
+
+/obj/item/food/grown/ash_flora/seraka/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, ability_modifier = 0.1)
 
 /obj/item/food/grown/ash_flora/fireblossom
 	name = "fire blossom"
@@ -242,7 +269,12 @@
 	seed = /obj/item/seeds/lavaland/fireblossom
 	wine_power = 40
 
-//SEEDS
+/obj/item/food/grown/ash_flora/fireblossom/Initialize(mapload)
+	. = ..()
+	// Fire flowers make fireproof raptors
+	AddElement(/datum/element/raptor_food, color_chances = string_list(list(/datum/raptor_color/blue = 5)))
+
+// SEEDS
 
 /obj/item/seeds/lavaland
 	name = "lavaland seeds"
@@ -261,7 +293,7 @@
 	graft_gene = /datum/plant_gene/trait/fire_resistance
 
 /obj/item/seeds/lavaland/cactus
-	name = "pack of fruiting cactus seeds"
+	name = "fruiting cactus seed pack"
 	desc = "These seeds grow into fruiting cacti."
 	icon_state = "seed-cactus"
 	species = "cactus"
@@ -275,7 +307,7 @@
 
 ///Star Cactus seeds, mutation of lavaland cactus.
 /obj/item/seeds/star_cactus
-	name = "pack of star cacti seeds"
+	name = "star cacti seed pack"
 	desc = "These seeds grow into star cacti."
 	icon_state = "seed-starcactus"
 	species = "starcactus"
@@ -303,7 +335,7 @@
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
 
 /obj/item/seeds/lavaland/polypore
-	name = "pack of polypore mycelium"
+	name = "polypore mycelium pack"
 	desc = "This mycelium grows into bracket mushrooms, also known as polypores. Woody and firm, shaft miners often use them for makeshift crafts."
 	icon_state = "mycelium-polypore"
 	species = "polypore"
@@ -311,10 +343,10 @@
 	product = /obj/item/food/grown/ash_flora/shavings
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
 	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/sugar = 0.06, /datum/reagent/consumable/ethanol = 0.04, /datum/reagent/stabilizing_agent = 0.06, /datum/reagent/consumable/mintextract = 0.02)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/ethanol = 0.04, /datum/reagent/stabilizing_agent = 0.06, /datum/reagent/consumable/mintextract = 0.02)
 
 /obj/item/seeds/lavaland/porcini
-	name = "pack of porcini mycelium"
+	name = "porcini mycelium pack"
 	desc = "This mycelium grows into Boletus edulus, also known as porcini. Native to the late Earth, but discovered on Lavaland. Has culinary, medicinal and relaxant effects."
 	icon_state = "mycelium-porcini"
 	species = "porcini"
@@ -322,10 +354,10 @@
 	product = /obj/item/food/grown/ash_flora/mushroom_leaf
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
 	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.06, /datum/reagent/consumable/vitfro = 0.04, /datum/reagent/drug/nicotine = 0.04)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.06,  /datum/reagent/consumable/sugar = 0.06, /datum/reagent/consumable/vitfro = 0.04, /datum/reagent/drug/nicotine = 0.04)
 
 /obj/item/seeds/lavaland/inocybe
-	name = "pack of inocybe mycelium"
+	name = "inocybe mycelium pack"
 	desc = "This mycelium grows into an inocybe mushroom, a species of Lavaland origin with hallucinatory and toxic effects."
 	icon_state = "mycelium-inocybe"
 	species = "inocybe"
@@ -336,7 +368,7 @@
 	reagents_add = list(/datum/reagent/toxin/mindbreaker = 0.04, /datum/reagent/consumable/entpoly = 0.08, /datum/reagent/drug/mushroomhallucinogen = 0.04)
 
 /obj/item/seeds/lavaland/ember
-	name = "pack of embershroom mycelium"
+	name = "embershroom mycelium pack"
 	desc = "This mycelium grows into embershrooms, a species of bioluminescent mushrooms native to Lavaland."
 	icon_state = "mycelium-ember"
 	species = "ember"
@@ -347,7 +379,7 @@
 	reagents_add = list(/datum/reagent/consumable/tinlux = 0.04, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/drug/space_drugs = 0.02)
 
 /obj/item/seeds/lavaland/seraka
-	name = "pack of seraka mycelium"
+	name = "seraka mycelium pack"
 	desc = "This mycelium grows into seraka mushrooms, a species of savoury mushrooms originally native to Tizira used in food and traditional medicine."
 	icon_state = "mycelium-seraka"
 	species = "seraka"
@@ -358,7 +390,7 @@
 	reagents_add = list(/datum/reagent/toxin/mushroom_powder = 0.1, /datum/reagent/medicine/coagulant/seraka_extract = 0.02)
 
 /obj/item/seeds/lavaland/fireblossom
-	name = "pack of fire blossom seeds"
+	name = "fire blossom seed pack"
 	desc = "These seeds grow into fire blossoms."
 	plantname = "Fire Blossom"
 	icon_state = "seed-fireblossom"
@@ -375,7 +407,7 @@
 	name = "Mushroom Bowl"
 	result = /obj/item/reagent_containers/cup/bowl/mushroom_bowl
 	reqs = list(/obj/item/food/grown/ash_flora/shavings = 5)
-	time = 30
+	time = 3 SECONDS
 	category = CAT_CONTAINERS
 
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl
@@ -385,6 +417,7 @@
 	icon_state = "mushroom_bowl"
 	fill_icon_state = "fullbowl"
 	fill_icon = 'icons/obj/mining_zones/ash_flora.dmi'
+	custom_materials = null
 
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl/update_icon_state()
 	if(!reagents.total_volume)

@@ -37,7 +37,9 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_Z, S)
 	return S
 
-/datum/controller/subsystem/mapping/proc/get_level(z)
-	if (z_list && z >= 1 && z <= z_list.len)
+/// Returns the /datum/space_level associated with the given z level.
+/datum/controller/subsystem/mapping/proc/get_level(z) as /datum/space_level
+	RETURN_TYPE(/datum/space_level)
+	if(ISINRANGE(z, 1, length(z_list)))
 		return z_list[z]
 	CRASH("Unmanaged z-level [z]! maxz = [world.maxz], z_list.len = [z_list ? z_list.len : "null"]")

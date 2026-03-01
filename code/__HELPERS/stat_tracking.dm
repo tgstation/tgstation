@@ -9,7 +9,7 @@
 		lines += "[entry] => [num2text(data[STAT_ENTRY_TIME], 10)]ms ([data[STAT_ENTRY_COUNT]]) (avg:[num2text(data[STAT_ENTRY_TIME]/(data[STAT_ENTRY_COUNT] || 1), 99)])"
 
 	if (user)
-		user << browse("<ol><li>[lines.Join("</li><li>")]</li></ol>", "window=[url_encode("stats:[REF(stats)]")]")
+		user << browse(HTML_SKELETON("<ol><li>[lines.Join("</li><li>")]</li></ol>"), "window=[url_encode("stats:[REF(stats)]")]")
 
 	. = lines.Join("\n")
 

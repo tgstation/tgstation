@@ -6,5 +6,7 @@
 
 /datum/preference/toggle/ambient_occlusion/apply_to_client(client/client, value)
 	/// Backdrop for the game world plane.
-	for(var/atom/movable/screen/plane_master/plane_master as anything in client.mob?.hud_used?.get_true_plane_masters(GAME_PLANE))
+	for(var/atom/movable/screen/plane_master/plane_master as anything in client.mob?.hud_used?.get_true_plane_masters(RENDER_PLANE_GAME_WORLD))
+		plane_master.show_to(client.mob)
+	for(var/atom/movable/screen/plane_master/plane_master as anything in client.mob?.hud_used?.get_true_plane_masters(RUNECHAT_PLANE))
 		plane_master.show_to(client.mob)

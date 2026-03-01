@@ -20,10 +20,12 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 /datum/fax_panel_interface/New()
 	//Get all faxes, and save them to our list.
 	for(var/obj/machinery/fax/fax as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
+		if(istype(fax, /obj/machinery/fax/admin))
+			continue
 		available_faxes += WEAKREF(fax)
 
 	//Get all stamps
-	for(var/stamp in subtypesof(/obj/item/stamp))
+	for(var/stamp in valid_subtypesof(/obj/item/stamp))
 		var/obj/item/stamp/real_stamp = new stamp()
 		if(!istype(real_stamp, /obj/item/stamp/chameleon) && !istype(real_stamp, /obj/item/stamp/mod))
 			var/stamp_detail = real_stamp.get_writing_implement_details()
@@ -55,7 +57,7 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 		ui.open()
 
 /datum/fax_panel_interface/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/fax_panel_interface/ui_static_data(mob/user)
 	var/list/data = list()

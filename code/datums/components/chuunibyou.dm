@@ -47,6 +47,7 @@
 	RegisterSignal(parent, COMSIG_MOB_PRE_INVOCATION, PROC_REF(on_pre_invocation))
 	RegisterSignal(parent, COMSIG_MOB_TRY_SPEECH, PROC_REF(on_try_speech))
 	RegisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(on_after_spell_cast))
+	ADD_TRAIT(parent, TRAIT_CHUUNIBYOU, REF(src))
 
 /datum/component/chuunibyou/UnregisterFromParent()
 	. = ..()
@@ -56,20 +57,21 @@
 		COMSIG_MOB_TRY_SPEECH,
 		COMSIG_MOB_AFTER_SPELL_CAST,
 	))
+	REMOVE_TRAIT(parent, TRAIT_CHUUNIBYOU, REF(src))
 
 /// signal sent when the parent tries to speak. we let speech pass if we are casting a spell so mimes still chuuni their spellcasts
 /// (this may end in the mime dying)
 /datum/component/chuunibyou/proc/on_try_speech(datum/source, message, ignore_spam, forced)
 	SIGNAL_HANDLER
 
-	if(casting_spell)
+	if(casting_spell && !HAS_TRAIT(src, TRAIT_MUTE))
 		return COMPONENT_IGNORE_CAN_SPEAK
 
 ///signal sent when the parent casts a spell that has a projectile
 /datum/component/chuunibyou/proc/on_spell_projectile(mob/living/source, datum/action/cooldown/spell/spell, atom/cast_on, obj/projectile/to_fire)
 	SIGNAL_HANDLER
 
-	playsound(to_fire,'sound/magic/staff_change.ogg', 75, TRUE)
+	playsound(to_fire,'sound/effects/magic/staff_change.ogg', 75, TRUE)
 	to_fire.color = "#f825f8"
 	to_fire.name = "chuuni-[to_fire.name]"
 	to_fire.set_light(2, 2, LIGHT_COLOR_PINK, l_on = TRUE)
@@ -99,7 +101,7 @@
 	COOLDOWN_START(src, heal_cooldown, CHUUNIBYOU_COOLDOWN_TIME)
 
 	source.heal_overall_damage(heal_amount)
-	playsound(source, 'sound/magic/staff_healing.ogg', 30)
+	playsound(source, 'sound/effects/magic/staff_healing.ogg', 30)
 	to_chat(source, span_danger("You feel slightly healed by your chuuni powers."))
 
 /datum/component/chuunibyou/no_healing

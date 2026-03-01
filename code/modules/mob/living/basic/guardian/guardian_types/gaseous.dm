@@ -48,7 +48,7 @@
 	source.set_fire_stacks(0, remove_wet_stacks = FALSE)
 
 /// Maintain our summoner at a stable body temperature
-/mob/living/basic/guardian/gaseous/proc/on_summoner_life(mob/living/source, seconds_per_tick, times_fired)
+/mob/living/basic/guardian/gaseous/proc/on_summoner_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	source.adjust_bodytemperature(get_temp_change_amount((summoner.get_body_temp_normal() - summoner.bodytemperature), temp_stabilization_rate * seconds_per_tick))
 
@@ -81,8 +81,9 @@
 	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "smoke"
 	cooldown_time = 0 SECONDS // We're here for the interface not the cooldown
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
+	/// Particle effect we use to show smoke
+	VAR_PRIVATE/obj/effect/abstract/particle_holder/mob_smoke
 	/// Gas being expelled.
 	var/active_gas = null
 	/// Associative list of types of gases to moles we create every life tick.
@@ -123,17 +124,20 @@
 	if(isnull(picked_gas) || isnull(gas_type))
 		return
 
+	if(isguardian(owner))
+		var/mob/living/basic/guardian/guardian_owner = owner
+		if(!guardian_owner.is_deployed())
+			to_chat(owner, span_warning("You cannot release gas without being summoned!"))
+			return
+
 	to_chat(owner, span_bolddanger("You start releasing [picked_gas]."))
 	owner.investigate_log("set their gas type to [picked_gas].", INVESTIGATE_ATMOS)
 	var/had_gas = !isnull(active_gas)
 	active_gas = gas_type
-	if(isnull(owner.particles))
-		owner.particles = new /particles/smoke/steam()
-		owner.particles.position = list(-1, 8, 0)
-		owner.particles.fadein = 5
-		owner.particles.height = 200
+	if(isnull(mob_smoke))
+		mob_smoke = new(owner, /particles/smoke/steam/guardian)
 	var/datum/gas/chosen_gas = active_gas // Casting it so that we can access gas vars in initial, it's still a typepath
-	owner.particles.color = initial(chosen_gas.primary_color)
+	mob_smoke.color = initial(chosen_gas.primary_color)
 	if (!had_gas)
 		RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
@@ -143,14 +147,21 @@
 	if (!isnull(active_gas))
 		to_chat(src, span_notice("You stop releasing gas."))
 	active_gas = null
-	QDEL_NULL(owner.particles)
+	QDEL_NULL(mob_smoke)
 	UnregisterSignal(owner, COMSIG_LIVING_LIFE)
 
 /// Release gas every life tick while active
-/datum/action/cooldown/mob_cooldown/expel_gas/proc/on_life(datum/source, seconds_per_tick, times_fired)
+/datum/action/cooldown/mob_cooldown/expel_gas/proc/on_life(datum/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	if (isnull(active_gas))
 		return // We shouldn't even be registered at this point but just in case
+
+	if(isguardian(owner))
+		var/mob/living/basic/guardian/guardian_owner = owner
+		if(!guardian_owner.is_deployed())
+			stop_gas()
+			return
+
 	var/datum/gas_mixture/mix_to_spawn = new()
 	mix_to_spawn.add_gas(active_gas)
 	mix_to_spawn.gases[active_gas][MOLES] = possible_gases[active_gas] * seconds_per_tick

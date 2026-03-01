@@ -1,8 +1,9 @@
 /atom/movable/screen/ai
 	icon = 'icons/hud/screen_ai.dmi'
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/ai/Click()
-	if(isobserver(usr) || usr.incapacitated())
+	if(isobserver(usr) || usr.incapacitated)
 		return TRUE
 
 /atom/movable/screen/ai/aicore
@@ -308,7 +309,6 @@
 	using = new /atom/movable/screen/ai/modpc(null, src)
 	using.screen_loc = ui_ai_mod_int
 	static_inventory += using
-	myai.interfaceButton = using
 	var/atom/movable/screen/ai/modpc/tabletbutton = using
 	tabletbutton.robot = myai
 

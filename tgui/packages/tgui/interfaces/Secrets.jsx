@@ -1,7 +1,4 @@
-import { toFixed } from 'common/math';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   Flex,
@@ -10,7 +7,10 @@ import {
   RoundGauge,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const TAB2NAME = [
@@ -354,13 +354,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={0.0}
+            <Button
+              icon="robot"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Triple AI mode"
+              onClick={() => act('tripleAI')}
+            />
           </Stack.Item>
           <Stack.Item>
             <Button
@@ -417,21 +417,21 @@ const FunTab = (props) => {
           </Stack.Item>
           <Stack.Item>
             <Button
-              icon="dollar-sign"
+              icon="house"
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              content="Ancap Station"
-              onClick={() => act('ancap')}
+              content="Send Shuttle Back"
+              onClick={() => act('send_shuttle_back')}
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="oil-well"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Tap Ore Vents"
+              onClick={() => act('ore_vents')}
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -456,13 +456,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="dollar-sign"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Dpt Order Cooldown"
+              onClick={() => act('department_cooldown_override')}
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -575,8 +575,23 @@ const FunForYouTab = (props) => {
         </Stack>
       </Stack.Item>
       <Stack.Item>
+        <Stack fill>
+          <Stack.Item>
+            <NoticeBox danger width={19.6} mb={0}>
+              <Button
+                color="red"
+                icon="cat"
+                fluid
+                content="CASCAAADE"
+                onClick={() => act('cascade')}
+              />
+            </NoticeBox>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item>
         <Stack>
-          <Stack.Item grow>
+          <Stack.Item>
             <NoticeBox danger width={19.6} mb={0}>
               <Button
                 color="red"
@@ -587,7 +602,7 @@ const FunForYouTab = (props) => {
               />
             </NoticeBox>
           </Stack.Item>
-          <Stack.Item grow>
+          <Stack.Item>
             <NoticeBox info width={19.6} mb={0}>
               <Button
                 color="blue"
@@ -637,7 +652,7 @@ export const Secrets = (props) => {
   const TabComponent = TAB2NAME[tabIndex - 1].component();
 
   return (
-    <Window title="Secrets Panel" width={500} height={488} theme="admin">
+    <Window title="Secrets Panel" width={500} height={520} theme="admin">
       <Window.Content>
         <Flex direction="column" height="100%">
           <Flex.Item mb={1}>
@@ -719,7 +734,7 @@ export const Secrets = (props) => {
                           average: [100 * 0.25, 100 * 0.75],
                           bad: [100 * 0.75, 100],
                         }}
-                        format={(value) => toFixed(value) + '%'}
+                        format={(value) => `${toFixed(value)}%`}
                       />
                     </LabeledControls.Item>
                   </LabeledControls>

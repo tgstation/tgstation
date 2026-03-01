@@ -24,6 +24,7 @@ export const MESSAGE_TYPE_INTERNAL = 'internal';
 export const MESSAGE_TYPE_SYSTEM = 'system';
 export const MESSAGE_TYPE_LOCALCHAT = 'localchat';
 export const MESSAGE_TYPE_RADIO = 'radio';
+export const MESSAGE_TYPE_ENTERTAINMENT = 'entertainment';
 export const MESSAGE_TYPE_INFO = 'info';
 export const MESSAGE_TYPE_WARNING = 'warning';
 export const MESSAGE_TYPE_DEADCHAT = 'deadchat';
@@ -38,8 +39,18 @@ export const MESSAGE_TYPE_ADMINLOG = 'adminlog';
 export const MESSAGE_TYPE_ATTACKLOG = 'attacklog';
 export const MESSAGE_TYPE_DEBUG = 'debug';
 
+type MessageType = {
+  type: string;
+  name: string;
+  description: string;
+} & Partial<{
+  selector: string;
+  important: boolean;
+  admin: boolean;
+}>;
+
 // Metadata for each message type
-export const MESSAGE_TYPES = [
+export const MESSAGE_TYPES: MessageType[] = [
   // Always-on types
   {
     type: MESSAGE_TYPE_SYSTEM,
@@ -60,7 +71,13 @@ export const MESSAGE_TYPES = [
     name: 'Radio',
     description: 'All departments of radio messages',
     selector:
-      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .comradio, .secradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .newscaster, .resonate, .abductor, .alien, .changeling',
+      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .comradio, .secradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .resonate, .abductor, .alien, .changeling',
+  },
+  {
+    type: MESSAGE_TYPE_ENTERTAINMENT,
+    name: 'Entertainment',
+    description: 'Entertainment and newscaster broadcasts',
+    selector: '.enteradio, .newscaster',
   },
   {
     type: MESSAGE_TYPE_INFO,

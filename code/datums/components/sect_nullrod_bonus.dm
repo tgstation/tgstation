@@ -16,10 +16,10 @@
 	check_bonus_rites()
 
 /datum/component/sect_nullrod_bonus/RegisterWithParent()
-	RegisterSignal(SSdcs, COMSIG_GLOB_NULLROD_PICKED, PROC_REF(on_nullrod_picked))
+	RegisterSignals(SSdcs, list(COMSIG_RELIGIOUS_SECT_CHANGED, COMSIG_GLOB_NULLROD_PICKED), PROC_REF(on_nullrod_picked))
 
 /datum/component/sect_nullrod_bonus/UnregisterFromParent()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_NULLROD_PICKED)
+	UnregisterSignal(SSdcs, list(COMSIG_RELIGIOUS_SECT_CHANGED, COMSIG_GLOB_NULLROD_PICKED))
 
 /datum/component/sect_nullrod_bonus/proc/on_nullrod_picked(datum/source)
 	SIGNAL_HANDLER
@@ -29,7 +29,7 @@
 	if(bonus_applied || !GLOB.holy_weapon_type)
 		return
 	var/list/unlocked_rites = bonus_rites[GLOB.holy_weapon_type]
-	if(!unlocked_rites)
+	if(!unlocked_rites || !GLOB.religious_sect)
 		return
 	GLOB.religious_sect.rites_list.Add(unlocked_rites)
 	bonus_applied = TRUE

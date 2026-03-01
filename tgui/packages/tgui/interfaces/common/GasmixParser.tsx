@@ -1,4 +1,4 @@
-import { Box, Button, LabeledList } from '../../components';
+import { Box, Button, LabeledList } from 'tgui-core/components';
 
 export type Gasmix = {
   name?: string;
@@ -39,7 +39,7 @@ export const GasmixParser = (props: GasmixParserProps) => {
 
   return !total_moles ? (
     <Box nowrap italic mb="10px">
-      {'No Gas Detected!'}
+      No Gas Detected!
     </Box>
   ) : (
     <LabeledList {...rest}>
@@ -72,7 +72,7 @@ export const GasmixParser = (props: GasmixParserProps) => {
           )
         }
       >
-        {(total_moles ? temperature.toFixed(2) : '-') + ' K'}
+        {`${total_moles ? temperature.toFixed(2) : '-'} K`}
       </LabeledList.Item>
       <LabeledList.Item
         label={
@@ -83,7 +83,7 @@ export const GasmixParser = (props: GasmixParserProps) => {
           )
         }
       >
-        {(total_moles ? volume.toFixed(2) : '-') + ' L'}
+        {`${total_moles ? volume.toFixed(2) : '-'} L`}
       </LabeledList.Item>
       <LabeledList.Item
         label={
@@ -94,7 +94,7 @@ export const GasmixParser = (props: GasmixParserProps) => {
           )
         }
       >
-        {(total_moles ? pressure.toFixed(2) : '-') + ' kPa'}
+        {`${total_moles ? pressure.toFixed(2) : '-'} kPa`}
       </LabeledList.Item>
       {detailedReactions ? (
         reactions.map((reaction) => (

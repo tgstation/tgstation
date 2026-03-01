@@ -1,16 +1,22 @@
-import { createContext, Dispatch, SetStateAction, useState } from 'react';
-import { Stack } from 'tgui/components';
+import {
+  createContext,
+  type Dispatch,
+  type SetStateAction,
+  useState,
+} from 'react';
 import { Window } from 'tgui/layouts';
+import { Stack } from 'tgui-core/components';
 
 import { VIEWMODE } from './constants';
 import { OrbitBlade } from './OrbitBlade';
 import { OrbitContent } from './OrbitContent';
 import { OrbitSearchBar } from './OrbitSearchBar';
-import { ViewMode } from './types';
+import type { ViewMode } from './types';
 
 export function Orbit(props) {
   const [autoObserve, setAutoObserve] = useState(false);
   const [bladeOpen, setBladeOpen] = useState(false);
+  const [realNameDisplay, setRealNameDisplay] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>(VIEWMODE.Health);
 
@@ -23,6 +29,8 @@ export function Orbit(props) {
         setAutoObserve,
         bladeOpen,
         setBladeOpen,
+        realNameDisplay,
+        setRealNameDisplay,
         searchQuery,
         setSearchQuery,
         viewMode,
@@ -59,6 +67,8 @@ type Context = {
   setAutoObserve: Dispatch<SetStateAction<boolean>>;
   bladeOpen: boolean;
   setBladeOpen: Dispatch<SetStateAction<boolean>>;
+  realNameDisplay: boolean;
+  setRealNameDisplay: Dispatch<SetStateAction<boolean>>;
   searchQuery: string;
   setSearchQuery: Dispatch<SetStateAction<string>>;
   viewMode: ViewMode;

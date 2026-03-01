@@ -22,7 +22,7 @@
 	COOLDOWN_DECLARE(stun_cooldown)
 
 /datum/component/stun_n_cuff/Initialize(list/blacklist_mobs = list(),
-	stun_sound = 'sound/weapons/egloves.ogg',
+	stun_sound = 'sound/items/weapons/egloves.ogg',
 	stun_timer = 8 SECONDS,
 	handcuff_timer = 4 SECONDS,
 	stun_cooldown_timer = 10 SECONDS,
@@ -75,14 +75,13 @@
 		living_parent.balloon_alert(human_target, "already cuffed!")
 		return
 
-	playsound(parent, 'sound/weapons/cablecuff.ogg', 30, TRUE)
+	playsound(parent, 'sound/items/weapons/cablecuff.ogg', 30, TRUE)
 	human_target.visible_message(span_danger("[parent] is trying to put zipties on [human_target]!"),\
 		span_danger("[parent] is trying to put zipties on you!"))
 
 	if(!do_after(parent, handcuff_timer, human_target))
 		return
 	human_target.set_handcuffed(new handcuff_type(human_target))
-	human_target.update_handcuffed()
 	post_arrest_callback?.Invoke(human_target)
 
 /datum/component/stun_n_cuff/proc/stun_target(mob/living/carbon/human_target)

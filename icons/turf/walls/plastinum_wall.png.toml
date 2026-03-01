@@ -1,0 +1,2 @@
+output_name = "plastinum_wall"
+template = "bitmask/diagonal_corner_32x32"

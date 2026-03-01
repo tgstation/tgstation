@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
-import { Button, NoticeBox, Section, Stack } from 'tgui/components';
+import { Button, NoticeBox, Section, Stack } from 'tgui-core/components';
 
 import { DOOR_JACK, HOST_SCAN, PHOTO_MODE, SOFTWARE_DESC } from './constants';
-import { PaiData } from './types';
+import type { PaiData } from './types';
 
 /**
  * Renders two sections: A section of buttons and

@@ -49,14 +49,8 @@
 
 	batman.visible_message(span_warning("[batman] gets a slightly too tight hug from [big_guy]!"), span_userdanger("You feel your body break as [big_guy] embraces you!"))
 
-	if(iscarbon(batman))
-		var/mob/living/carbon/carbon_batman = batman
-		for(var/obj/item/bodypart/bodypart_to_break in carbon_batman.bodyparts)
-			if(bodypart_to_break.body_zone == BODY_ZONE_HEAD)
-				continue
-			bodypart_to_break.receive_damage(brute = 15, wound_bonus = 35)
-	else
-		batman.adjustBruteLoss(150)
+	for(var/zone in GLOB.all_body_zones - BODY_ZONE_HEAD)
+		batman.apply_damage(15, BRUTE, zone, wound_bonus = 35)
 
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
@@ -92,21 +86,16 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
+	if(target == controller.pawn) // this can sometimes end up as ourselves, in which case there is no reason to move
+		return FALSE
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/use_on_object/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	var/mob/living/pawn = controller.pawn
-	var/obj/item/held_item = pawn.get_item_by_slot(pawn.get_active_hand())
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	pawn.set_combat_mode(FALSE)
-	if(held_item)
-		held_item.melee_attack_chain(pawn, target)
-	else
-		pawn.UnarmedAttack(target, TRUE)
-
+	controller.ai_interact(target = target, combat_mode = FALSE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/give
@@ -122,13 +111,17 @@
 	var/obj/item/held_item = pawn.get_active_held_item()
 	var/atom/target = controller.blackboard[target_key]
 
-	if(!held_item) //if held_item is null, we pretend that action was succesful
+	if(!held_item) //if held_item is null, we pretend that action was successful
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-	if(!target || !isliving(target))
+	if(QDELETED(target) || !target.IsReachableBy(pawn))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/mob/living/living_target = target
+	if(!isliving(living_target)) // target should reasonably only ever be set to a living mob
+		stack_trace("Tried to give an item to a non-living target!")
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
 	var/perform_flags = try_to_give_item(controller, living_target, held_item)
 	if(perform_flags & AI_BEHAVIOR_FAILED)
 		return perform_flags
@@ -168,35 +161,73 @@
 		target.put_in_hands(held_item)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
+/datum/ai_behavior/give/finish_action(datum/ai_controller/controller, succeeded, target_key)
+	. = ..()
+	controller.clear_blackboard_key(target_key)
 
 /datum/ai_behavior/consume
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
 	action_cooldown = 2 SECONDS
-
-/datum/ai_behavior/consume/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	set_movement_target(controller, controller.blackboard[target_key])
 
 /datum/ai_behavior/consume/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hunger_timer_key)
 	var/mob/living/living_pawn = controller.pawn
 	var/obj/item/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return AI_BEHAVIOR_DELAY
+	if(QDELETED(target) || !living_pawn.is_holding(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	if(!(target in living_pawn.held_items))
-		if(!living_pawn.get_empty_held_indexes() || !living_pawn.put_in_hands(target))
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	controller.ai_interact(target = living_pawn, combat_mode = FALSE)
 
-	target.melee_attack_chain(living_pawn, living_pawn)
-
-	if(QDELETED(target) || prob(10)) // Even if we don't finish it all we can randomly decide to be done
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_DELAY
+	return AI_BEHAVIOR_DELAY | (is_content(living_pawn, target) ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 
 /datum/ai_behavior/consume/finish_action(datum/ai_controller/controller, succeeded, target_key, hunger_timer_key)
 	. = ..()
-	if(succeeded)
-		controller.set_blackboard_key(hunger_timer_key, world.time + rand(12 SECONDS, 60 SECONDS))
+	if(!succeeded)
+		return
+	controller.set_blackboard_key(hunger_timer_key, world.time + rand(12 SECONDS, 60 SECONDS))
+
+	var/mob/living/living_pawn = controller.pawn
+	var/obj/item/target = controller.blackboard[target_key]
+	if(!QDELETED(target) && !DOING_INTERACTION_WITH_TARGET(living_pawn, target))
+		controller.clear_blackboard_key(target_key)
+		living_pawn.dropItemToGround(target) // drops empty drink glasses
+	for(var/obj/item/trash/trash in living_pawn.held_items)
+		living_pawn.dropItemToGround(trash) // drops spawned trash items
+
+/// Check if the target is fully consumed, or being actively consumed, or if we're just bored of eating it
+/datum/ai_behavior/consume/proc/is_content(mob/living/living_pawm, obj/item/target)
+	if(QDELETED(target))
+		return TRUE
+	if(DOING_INTERACTION_WITH_TARGET(living_pawm, target))
+		return TRUE
+	if(target.reagents?.total_volume <= 0)
+		return TRUE
+	// Even if we don't finish it all we can randomly decide to be done
+	return prob(10)
+
+// navigate to target item and pick it up if we can
+/datum/ai_behavior/navigate_to_and_pick_up
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+	action_cooldown = 2 SECONDS
+
+/datum/ai_behavior/navigate_to_and_pick_up/setup(datum/ai_controller/controller, target_key, drop_held = TRUE)
+	. = ..()
+	set_movement_target(controller, controller.blackboard[target_key])
+
+/datum/ai_behavior/navigate_to_and_pick_up/setup(datum/ai_controller/controller, target_key, drop_held = TRUE)
+	var/mob/living/living_pawn = controller.pawn
+	var/obj/item/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	if(living_pawn.is_holding(target)) // already in hands
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	if(!target.IsReachableBy(living_pawn)) // can't reach it, despite being adjacent
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(living_pawn.get_active_held_item()) // something is in our hands already
+		if(!drop_held || !living_pawn.dropItemToGround(living_pawn.get_active_held_item()))
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	controller.ai_interact(target, combat_mode = FALSE)
+	return AI_BEHAVIOR_DELAY | (target.loc == living_pawn ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
 
 /**
  * Drops items in hands, very important for future behaviors that require the pawn to grab stuff
@@ -205,12 +236,11 @@
 
 /datum/ai_behavior/drop_item/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
-	var/obj/item/best_held = GetBestWeapon(controller, null, living_pawn.held_items)
-	for(var/obj/item/held as anything in living_pawn.held_items)
-		if(!held || held == best_held)
-			continue
-		living_pawn.dropItemToGround(held)
-	return AI_BEHAVIOR_DELAY
+	var/list/my_held_items = living_pawn.held_items - GetBestWeapon(controller, null, living_pawn.held_items)
+	if(!length(my_held_items))
+		return AI_BEHAVIOR_FAILED | AI_BEHAVIOR_DELAY
+	living_pawn.dropItemToGround(pick(my_held_items))
+	return AI_BEHAVIOR_SUCCEEDED | AI_BEHAVIOR_DELAY
 
 /// This behavior involves attacking a target.
 /datum/ai_behavior/attack
@@ -276,7 +306,7 @@
 		return AI_BEHAVIOR_INSTANT
 	living_pawn.manual_emote(emote)
 	if(speech_sound) // Only audible emotes will pass in a sound
-		playsound(living_pawn, speech_sound, 80, vary = TRUE)
+		playsound(living_pawn, speech_sound, 80, vary = TRUE, pressure_affected =TRUE, ignore_walls = FALSE)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/perform_speech

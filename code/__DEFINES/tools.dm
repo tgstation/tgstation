@@ -1,4 +1,5 @@
 // Tool types, if you add new ones please add them to /obj/item/debug/omnitool in code/game/objects/items/debug_items.dm
+// and to GLOB.all_tool_behaviours in code/_globalvars/lists/engineering.dm
 #define TOOL_CROWBAR "crowbar"
 #define TOOL_MULTITOOL "multitool"
 #define TOOL_SCREWDRIVER "screwdriver"
@@ -38,3 +39,26 @@
 
 /// Combination flag for any item interaction that blocks the rest of the attack chain
 #define ITEM_INTERACT_ANY_BLOCKER (ITEM_INTERACT_SUCCESS | ITEM_INTERACT_BLOCKING)
+
+/// How many seconds between each fuel depletion tick ("use" proc)
+#define TOOL_FUEL_BURN_INTERVAL 5
+
+///This is a number I got by quickly searching up the temperature to melt iron/glass, though not really realistic.
+///This is used for places where lighters should not be hot enough to be used as a welding tool on.
+#define HIGH_TEMPERATURE_REQUIRED 1500
+
+/**
+ * A helper for checking if an item interaction should be skipped.
+ * This is only used explicitly because some interactions may not want to ever be skipped.
+ */
+#define SHOULD_SKIP_INTERACTION(target, item, user) (HAS_TRAIT(target, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && user.combat_mode)
+
+// Used by the decal painter to get information about the decal being painted
+/// Icon state to paint
+#define DECAL_INFO_ICON_STATE "icon_state"
+/// Color to paint the decal with
+#define DECAL_INFO_COLOR "color"
+/// Dir of the decal sprite
+#define DECAL_INFO_DIR "dir"
+/// Alpha of the decal
+#define DECAL_INFO_ALPHA "alpha"

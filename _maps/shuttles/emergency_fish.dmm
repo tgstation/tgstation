@@ -45,6 +45,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "cZ" = (
@@ -146,6 +147,14 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
+"hP" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 4
+	},
+/obj/structure/sign/warning/directional/east,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "iA" = (
 /obj/structure/chair/pew/right{
 	dir = 1
@@ -228,10 +237,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
-"oA" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
 "oB" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
@@ -260,7 +265,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "pa" = (
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -300,7 +305,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "qG" = (
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
@@ -311,20 +316,17 @@
 "qO" = (
 /obj/structure/table/wood,
 /obj/item/fishing_line{
-	layer = 4;
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/fishing_hook{
-	layer = 5;
-	pixel_y = 3
-	},
 /obj/item/bait_can/worm{
-	pixel_x = -5;
 	pixel_y = 13
 	},
 /obj/effect/turf_decal/tile/dark/half/contrasted{
 	dir = 4
+	},
+/obj/item/fishing_hook{
+	pixel_y = 3
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
@@ -524,6 +526,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "GK" = (
@@ -586,12 +589,7 @@
 /area/shuttle/escape)
 "IM" = (
 /obj/structure/table/wood,
-/obj/item/fishing_hook{
-	layer = 5;
-	pixel_y = 3
-	},
 /obj/item/fishing_line{
-	layer = 4;
 	pixel_x = 6;
 	pixel_y = 3
 	},
@@ -601,6 +599,9 @@
 	},
 /obj/effect/turf_decal/tile/dark/half/contrasted{
 	dir = 4
+	},
+/obj/item/fishing_hook{
+	pixel_y = 3
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
@@ -667,7 +668,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "Mp" = (
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -709,7 +710,7 @@
 /area/shuttle/escape)
 "OR" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/dark/anticorner/contrasted{
@@ -785,6 +786,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "Tn" = (
@@ -818,6 +820,16 @@
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
+"UI" = (
+/obj/machinery/stasis{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/vitals_reader/directional/west,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "UL" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -840,7 +852,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Vo" = (
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/dark/half/contrasted{
 	dir = 8
@@ -849,7 +861,7 @@
 /area/shuttle/escape)
 "VD" = (
 /obj/structure/table/glass,
-/obj/item/surgery_tray/full{
+/obj/effect/spawner/surgery_tray/full{
 	pixel_y = 6
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -874,8 +886,11 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "WX" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 4
+	},
+/obj/structure/sign/warning/directional/east,
+/turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "Xx" = (
 /obj/structure/chair/comfy/shuttle{
@@ -900,7 +915,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Ys" = (
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/dark/half/contrasted{
@@ -978,10 +993,10 @@ Id
 xH
 Me
 oB
-FA
+UI
 VD
 FA
-kd
+jL
 Me
 UW
 UW
@@ -1011,7 +1026,7 @@ DM
 DM
 DM
 Hy
-jL
+kd
 Me
 UW
 UW
@@ -1052,7 +1067,7 @@ Kg
 "}
 (5,1,1) = {"
 Me
-oA
+jL
 SS
 qA
 aa
@@ -1150,9 +1165,9 @@ Ih
 Ih
 Ou
 pQ
-BA
+hP
 bB
-bB
+WX
 bB
 BA
 bB
@@ -1168,7 +1183,7 @@ Kg
 "}
 (9,1,1) = {"
 Me
-oA
+jL
 cf
 qA
 aa
@@ -1179,9 +1194,9 @@ qO
 AV
 EC
 jL
-WX
+jL
 QN
-WX
+jL
 jL
 aa
 XZ

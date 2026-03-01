@@ -125,13 +125,16 @@
 
 /obj/lightning_thrower/Destroy()
 	. = ..()
+	clear_signals()
 	signal_turfs = null
 	STOP_PROCESSING(SSprocessing, src)
 
 /obj/lightning_thrower/process(seconds_per_tick)
 	var/list/dirs = throw_diagonals ? GLOB.diagonals : GLOB.cardinals
 	throw_diagonals = !throw_diagonals
-	playsound(src, 'sound/magic/lightningbolt.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+	playsound(src, 'sound/effects/magic/lightningbolt.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+	if(length(signal_turfs))
+		clear_signals()
 	for(var/direction in dirs)
 		var/victim_turf = get_step(src, direction)
 		if(isclosedturf(victim_turf))
@@ -143,8 +146,7 @@
 			shock_victim(null, victim)
 	addtimer(CALLBACK(src, PROC_REF(clear_signals)), shock_duration)
 
-/obj/lightning_thrower/proc/clear_signals(datum/source)
-	SIGNAL_HANDLER
+/obj/lightning_thrower/proc/clear_signals()
 	for(var/turf in signal_turfs)
 		UnregisterSignal(turf, COMSIG_ATOM_ENTERED)
 		signal_turfs -= turf

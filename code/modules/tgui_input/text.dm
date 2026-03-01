@@ -10,12 +10,12 @@
  * * message - The content of the text input, shown in the body of the TGUI window.
  * * title - The title of the text input modal, shown on the top of the TGUI window.
  * * default - The default (or current) value, shown as a placeholder.
- * * max_length - Specifies a max length for input. MAX_MESSAGE_LEN is default (1024)
+ * * max_length - Specifies a max length for input. By default is infinity.
  * * multiline -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
  * * encode - Toggling this determines if input is filtered via html_encode. Setting this to FALSE gives raw input.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_text(mob/user, message = "", title = "Text Input", default, max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = TRUE, timeout = 0, ui_state = GLOB.always_state)
+/proc/tgui_input_text(mob/user, message = "", title = "Text Input", default, max_length, multiline = FALSE, encode = TRUE, timeout = 0, ui_state = GLOB.always_state)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -133,16 +133,16 @@
 		data["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
 	return data
 
-/datum/tgui_input_text/ui_act(action, list/params)
+/datum/tgui_input_text/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
 	switch(action)
 		if("submit")
 			if(max_length)
-				if(length(params["entry"]) > max_length)
+				if(length_char(params["entry"]) > max_length)
 					CRASH("[usr] typed a text string longer than the max length")
-				if(encode && (length(html_encode(params["entry"])) > max_length))
+				if(encode && (length_char(html_encode(params["entry"])) > max_length))
 					to_chat(usr, span_notice("Your message was clipped due to special character usage."))
 			set_entry(params["entry"])
 			closed = TRUE
@@ -162,4 +162,4 @@
 /datum/tgui_input_text/proc/set_entry(entry)
 	if(!isnull(entry))
 		var/converted_entry = encode ? html_encode(entry) : entry
-		src.entry = trim(converted_entry, PREVENT_CHARACTER_TRIM_LOSS(max_length))
+		src.entry = max_length ? trim(converted_entry, PREVENT_CHARACTER_TRIM_LOSS(max_length)) : converted_entry

@@ -1,10 +1,18 @@
-import { map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { clamp } from 'common/math';
-import { vecLength, vecSubtract } from 'common/vector';
+import { vecLength, vecSubtract } from 'tgui-core/vector';
+import { sortBy } from 'es-toolkit';
+import { map } from 'es-toolkit/compat';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  Section,
+  Table,
+} from 'tgui-core/components';
+import { flow } from 'tgui-core/fp';
+import { clamp } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 const coordsToVec = (coords) => map(coords.split(', '), parseFloat);
@@ -30,13 +38,12 @@ export const Gps = (props) => {
         return { ...signal, dist, index };
       }),
     (signals) =>
-      sortBy(
-        signals,
+      sortBy(signals, [
         // Signals with distance metric go first
         (signal) => signal.dist === undefined,
         // Sort alphabetically
         (signal) => signal.entrytag,
-      ),
+      ]),
   ])(data.signals || []);
   return (
     <Window title="Global Positioning System" width={470} height={700}>
@@ -115,7 +122,7 @@ export const Gps = (props) => {
                           rotation={signal.degrees}
                         />
                       )}
-                      {signal.dist !== undefined && signal.dist + 'm'}
+                      {signal.dist !== undefined && `${signal.dist}m`}
                     </Table.Cell>
                     <Table.Cell collapsing>{signal.coords}</Table.Cell>
                   </Table.Row>

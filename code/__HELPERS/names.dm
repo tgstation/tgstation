@@ -372,5 +372,34 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 			return "a blood filter"
 		if(TOOL_ROLLINGPIN)
 			return "a rolling pin"
+		if(TOOL_RUSTSCRAPER)
+			return "a rust scraper"
 		else
 			return "something... but the gods didn't set this up right (Please report this bug)"
+
+///Find the first name of a mob from a passed string with regex
+/proc/first_name(given_name)
+	var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
+	firstname.Find(given_name)
+	return firstname.match
+
+/// Find the last name of a mob from a passed string with regex
+/proc/last_name(given_name)
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(given_name)
+	return lasttname.match
+
+/// Find whitespace or dashes in the passed string with regex and returns TRUE if found
+/proc/is_mononym(given_name)
+	var/static/regex/breaks = regex(@"\s")
+	if(breaks.Find(given_name))
+		return FALSE
+	return TRUE
+
+/// Generates and returns a list of both arabic and roman numerals for 1 through 99
+/proc/generate_number_strings()
+	var/list/numbers = list()
+	for(var/i in 1 to 99)
+		numbers += "[i]"
+		numbers += "\Roman[i]"
+	return numbers

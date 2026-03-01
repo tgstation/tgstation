@@ -10,8 +10,7 @@
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT)
 	points = 50
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
-	grind_results = list(/datum/reagent/bluespace = 20)
-	scan_state = "rock_BScrystal"
+	scan_state = "rock_bscrystal"
 	merge_type = /obj/item/stack/ore/bluespace_crystal
 	/// The teleport range when crushed/thrown at someone.
 	var/blink_range = 8
@@ -21,11 +20,14 @@
 	points = 0
 	refined_type = null
 	merge_type = /obj/item/stack/ore/bluespace_crystal/refined
+	drop_sound = null //till I make a better one
+	pickup_sound = null
 
 /obj/item/stack/ore/bluespace_crystal/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+	AddElement(/datum/element/raptor_food, ability_modifier = 0.05, attack_modifier = 0.5, color_chances = string_list(list(/datum/raptor_color/black = 1)))
 
 /obj/item/stack/ore/bluespace_crystal/get_part_rating()
 	return 1
@@ -54,14 +56,15 @@
 /obj/item/stack/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
-	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT*0.5)
+	mats_per_unit = list(/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 //nice try
 	refined_type = null
-	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/silicon = 20)
 	merge_type = /obj/item/stack/ore/bluespace_crystal/artificial
+	drop_sound = null //till I make a better one
+	pickup_sound = null
 
-//Polycrystals, aka stacks
+// Polycrystals, aka stacks
 /obj/item/stack/sheet/bluespace_crystal
 	name = "bluespace polycrystal"
 	icon = 'icons/obj/stack_objects.dmi'
@@ -74,7 +77,6 @@
 	attack_verb_continuous = list("bluespace polybashes", "bluespace polybatters", "bluespace polybludgeons", "bluespace polythrashes", "bluespace polysmashes")
 	attack_verb_simple = list("bluespace polybash", "bluespace polybatter", "bluespace polybludgeon", "bluespace polythrash", "bluespace polysmash")
 	novariants = TRUE
-	grind_results = list(/datum/reagent/bluespace = 20)
 	merge_type = /obj/item/stack/sheet/bluespace_crystal
 	material_type = /datum/material/bluespace
 	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
@@ -96,3 +98,6 @@
 			to_chat(user, span_notice("You break off a crystal."))
 	else
 		..()
+
+/obj/item/stack/sheet/bluespace_crystal/fifty
+	amount = 50

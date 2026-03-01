@@ -7,7 +7,7 @@
 	return ..()
 
 /datum/buildmode_mode/smite/show_help(client/builder)
-	to_chat(builder, span_purple(examine_block(
+	to_chat(builder, span_purple(boxed_message(
 		"[span_bold("Select smite to use")] -> Right Mouse Button on buildmode button\n\
 		[span_bold("Smite the mob")] -> Left Mouse Button on mob/living"))
 	)
@@ -37,4 +37,4 @@
 		to_chat(user, span_notice("No smite selected."))
 		return
 
-	selected_smite.effect(user, object)
+	selected_smite.do_effect(user, object)

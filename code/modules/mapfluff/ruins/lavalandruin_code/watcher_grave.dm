@@ -153,7 +153,7 @@
 	/// Type of projectile we fire
 	var/projectile_type = /obj/projectile/baby_watcher_blast
 	/// Sound to make when we shoot
-	var/projectile_sound = 'sound/weapons/pierce.ogg'
+	var/projectile_sound = 'sound/items/weapons/pierce.ogg'
 	/// Time between taking potshots at goliaths
 	var/fire_delay = 5 SECONDS
 	/// How much faster do we shoot when avenging our parent?
@@ -165,6 +165,8 @@
 
 /obj/effect/watcher_orbiter/Initialize(mapload)
 	. = ..()
+	if(LAZYLEN(target_faction))
+		target_faction = string_list(target_faction)
 	START_PROCESSING(SSobj, src)
 
 // Shuttle rotation fucks with our position, we just want to stick with our guy
@@ -182,7 +184,7 @@
 	for (var/mob/living/potential_target in oview(5, src))
 		if (!ismining(potential_target) || potential_target.stat == DEAD)
 			continue
-		if (!faction_check(target_faction, potential_target.faction))
+		if (!potential_target.has_faction(target_faction))
 			continue
 		shoot_at(potential_target)
 		return
@@ -254,8 +256,7 @@
 	icon_state = "ice_2"
 	damage = 10
 	damage_type = BRUTE // Mining mobs don't take a lot of burn damage so we'll pretend
-	speed = 1
-	pixel_speed_multiplier = 0.5
+	speed = 0.5
 
 /obj/projectile/baby_watcher_blast/Initialize(mapload)
 	. = ..()

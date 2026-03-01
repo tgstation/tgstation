@@ -9,6 +9,7 @@
 
 /datum/song/ui_data(mob/user)
 	var/list/data = ..()
+	data["id"] = id
 	data["using_instrument"] = using_instrument?.name || "No instrument loaded!"
 	data["note_shift"] = note_shift
 	data["octaves"] = round(note_shift / 12, 0.01)
@@ -71,6 +72,11 @@
 			else
 				stop_playing()
 			return TRUE
+		if("set_instrument_id")
+			var/new_id = reject_bad_name(LOWER_TEXT(params["id"]), max_length = 20, allow_numbers = TRUE, cap_after_symbols = FALSE)
+			if(new_id)
+				id = new_id
+			return TRUE
 		if("change_instrument")
 			var/new_instrument = params["new_instrument"]
 			//only one instrument, so no need to bother changing it.
@@ -111,7 +117,7 @@
 			tempo = sanitize_tempo(5) // default 120 BPM
 			return TRUE
 		if("add_new_line")
-			var/newline = tgui_input_text(user, "Enter your line", parent.name)
+			var/newline = tgui_input_text(user, "Enter your line", parent.name, max_length = MUSIC_MAXLINECHARS)
 			if(!newline || !in_range(parent, user))
 				return
 			if(lines.len > MUSIC_MAXLINES)
@@ -129,7 +135,7 @@
 			var/line_to_edit = params["line_editing"]
 			if(line_to_edit > lines.len || line_to_edit < 1)
 				return FALSE
-			var/new_line_text = tgui_input_text(user, "Enter your line ", parent.name, lines[line_to_edit], MUSIC_MAXLINECHARS)
+			var/new_line_text = tgui_input_text(user, "Enter your line ", parent.name, lines[line_to_edit], max_length = MUSIC_MAXLINECHARS)
 			if(isnull(new_line_text) || !in_range(parent, user))
 				return FALSE
 			lines[line_to_edit] = new_line_text

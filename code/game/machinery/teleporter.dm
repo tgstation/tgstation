@@ -33,7 +33,7 @@
 /obj/machinery/teleport/hub/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.")
+		. += span_notice("The status display reads: Success chance is <b>[70 + (accuracy * 10)]%</b>.")
 
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
@@ -52,7 +52,7 @@
 	if(is_ready())
 		teleport(AM)
 
-/obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
+/obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
 		if(power_station?.engaged)
 			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
@@ -102,8 +102,7 @@
 
 /obj/machinery/teleport/hub/syndicate/Initialize(mapload)
 	. = ..()
-	var/obj/item/stock_parts/matter_bin/super/super_bin = new(src)
-	LAZYADD(component_parts, super_bin)
+	LAZYADD(component_parts, GLOB.stock_part_datums[/datum/stock_part/matter_bin/tier3])
 	RefreshParts()
 
 /obj/machinery/teleport/station
@@ -162,24 +161,25 @@
 		teleporter_console = null
 	return ..()
 
-/obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/M = W
-		if(panel_open)
-			M.set_buffer(src)
-			balloon_alert(user, "saved to multitool buffer")
-		else
-			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
-				if(linked_stations.len < efficiency)
-					linked_stations.Add(M.buffer)
-					M.set_buffer(null)
-					balloon_alert(user, "data uploaded from buffer")
-				else
-					to_chat(user, span_alert("This station can't hold more information, try to use better parts."))
-		return
-	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+/obj/machinery/teleport/station/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = NONE
+
+	if(panel_open)
+		tool.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
+		return ITEM_INTERACT_SUCCESS
+
+	if(!istype(tool.buffer, /obj/machinery/teleport/station) || tool.buffer == src)
+		return ITEM_INTERACT_BLOCKING
+
+	if(linked_stations.len < efficiency)
+		linked_stations.Add(tool.buffer)
+		tool.set_buffer(null)
+		balloon_alert(user, "data uploaded from buffer")
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/teleport/station/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_appearance()
 		return
 

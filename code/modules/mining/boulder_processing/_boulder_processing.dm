@@ -15,8 +15,8 @@
 	var/boulders_held_max = 1
 	/// What sound plays when a thing operates?
 	var/usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
-	/// Silo link to it's materials list.
-	var/datum/component/remote_materials/silo_materials
+	/// Silo link to its materials list.
+	var/datum/remote_materials/silo_materials
 	/// Mining points held by the machine for miners.
 	var/points_held = 0
 	///The action verb to display to players
@@ -30,8 +30,8 @@
 /obj/machinery/bouldertech/Initialize(mapload)
 	. = ..()
 
-	silo_materials = AddComponent(
-		/datum/component/remote_materials, \
+	silo_materials = new (
+		src, \
 		mapload, \
 		mat_container_flags = MATCONTAINER_NO_INSERT \
 	)
@@ -46,7 +46,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/bouldertech/Destroy()
-	silo_materials = null
+	QDEL_NULL(silo_materials)
 	return ..()
 
 /obj/machinery/bouldertech/on_deconstruction(disassembled)
@@ -81,14 +81,14 @@
 	for(var/obj/item/boulder/potential_boulder in contents)
 		boulder_count += 1
 	. += span_notice("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
-	. += span_notice("Can process upto <b>[boulders_processing_count] boulders</b> at a time.")
+	. += span_notice("Can process up to <b>[boulders_processing_count] boulders</b> at a time.")
 
 	if(anchored)
-		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
+		. += span_notice("It's [EXAMINE_HINT("anchored")] in place.")
 	else
 		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to start operations.")
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 
 	if(panel_open)
 		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
@@ -103,6 +103,8 @@
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored)
 		return FALSE
+	if(istype(mover, /obj/item/stack/sheet))
+		return TRUE
 	if(istype(mover, /obj/item/boulder))
 		return can_process_boulder(mover)
 	if(isgolem(mover))
@@ -127,7 +129,7 @@
 	if(!istype(new_boulder) || QDELETED(new_boulder))
 		return FALSE
 
-	//someone just processed this
+	//someone is still processing this
 	if(new_boulder.processed_by)
 		return FALSE
 
@@ -149,7 +151,6 @@
  */
 /obj/machinery/bouldertech/proc/accept_boulder(obj/item/boulder/new_boulder)
 	PRIVATE_PROC(TRUE)
-
 	if(!can_process_boulder(new_boulder))
 		return FALSE
 
@@ -262,7 +263,7 @@
 			if(!COOLDOWN_FINISHED(src, sound_cooldown))
 				return ITEM_INTERACT_BLOCKING
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, FALSE)
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/card/id/id_card = tool
@@ -304,7 +305,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor first!")
+		balloon_alert(user, "anchor it first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(panel_open)
 		balloon_alert(user, "close panel!")
@@ -351,8 +352,8 @@
 				rejected_mats[possible_mat] = quantity
 				continue
 			points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
-			if(!silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
-				rejected_mats[possible_mat] = quantity
+			if(isnull(silo_materials.silo) || !silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
+				new possible_mat.sheet_type(drop_location(), floor(quantity / SHEET_MATERIAL_AMOUNT))
 
 		//puts back materials that couldn't be processed
 		chosen_boulder.set_custom_materials(rejected_mats, refining_efficiency)
@@ -408,6 +409,9 @@
 		return TRUE
 	if(locate(/obj/item/boulder) in loc) //There is an boulder in our loc. it has be removed so we don't clog up our loc with even more boulders
 		return FALSE
+	if(!length(specific_boulder.custom_materials))
+		specific_boulder.break_apart()
+		return TRUE
 
 	//Reset durability to little random lower value cause we have crushed it so many times
 	var/size = specific_boulder.boulder_size

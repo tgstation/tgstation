@@ -50,7 +50,6 @@
 	active_overlay_icon_state = "bg_spell_border_active_red"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED
 	panel = "Spells"
-	melee_cooldown_time = 0 SECONDS
 
 	/// The sound played on cast.
 	var/sound = null
@@ -190,7 +189,7 @@
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
-			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES) && !(human_owner.glasses?.clothing_flags & CASTING_CLOTHES))
+			if(!(astype(human_owner.head, /obj/item/clothing)?.clothing_flags & CASTING_CLOTHES) && !(human_owner.glasses?.clothing_flags & CASTING_CLOTHES))
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
@@ -246,7 +245,11 @@
 		return target // They're just standing around, proceed as normal
 
 	if(HAS_TRAIT(cast_loc, TRAIT_CASTABLE_LOC))
-		return cast_loc // They're in an atom which allows casting, so redirect the caster to loc
+		if(HAS_TRAIT(cast_loc, TRAIT_SPELLS_TRANSFER_TO_LOC) && ismob(cast_loc.loc))
+			return cast_loc.loc
+		else
+			return cast_loc
+	// They're in an atom which allows casting, so redirect the caster to loc
 
 	return null
 
@@ -360,9 +363,7 @@
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
 	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
-		var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
-		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
-		smoke.start()
+		do_smoke(smoke_amt, owner, get_turf(owner))
 
 	// Send signals last in case they delete the spell
 	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
@@ -375,7 +376,8 @@
 
 	///even INVOCATION_NONE should go through this because the signal might change that
 	invocation(invoker)
-	playsound(invoker, sound, 50, vary = TRUE)
+	if(sound)
+		playsound(invoker, sound, 50, vary = TRUE)
 
 /// The invocation that accompanies the spell, called from spell_feedback() before cast().
 /datum/action/cooldown/spell/proc/invocation(mob/living/invoker)
@@ -400,7 +402,11 @@
 				invoker.whisper(used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_EMOTE)
-			invoker.visible_message(used_invocation_message, invocation_self_message)
+			invoker.visible_message(
+				capitalize(REPLACE_PRONOUNS(replacetext(used_invocation_message, "%CASTER", "[invoker]"), invoker)),
+				capitalize(REPLACE_PRONOUNS(replacetext(invocation_self_message, "%CASTER", "[invoker]"), invoker)),
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
 
 /// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
 /datum/action/cooldown/spell/proc/try_invoke(mob/living/invoker, feedback = TRUE)

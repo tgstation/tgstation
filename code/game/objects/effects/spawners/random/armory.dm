@@ -24,6 +24,33 @@
 	icon_state = "rubbershot"
 	loot = list(/obj/item/storage/box/rubbershot)
 
+/obj/effect/spawner/random/armory/buckshot
+	name = "buckshot spawner"
+	icon_state = "buckshot"
+	loot = list(/obj/item/storage/box/lethalshot)
+
+/obj/effect/spawner/random/armory/buckshot/sketchy
+	name = "sketchy buckshot spawner"
+	icon_state = "buckshot"
+	loot = list(
+		/obj/item/storage/box/lethalshot = 4,
+		/obj/item/storage/box/lethalshot/old = 2,
+	)
+
+/obj/effect/spawner/random/armory/slug
+	name = "slug shell spawner"
+	icon_state = "buckshot"
+	loot = list(/obj/item/storage/box/slugs)
+
+/obj/effect/spawner/random/armory/strilka
+	name = ".310 Strilka ammo box spawner"
+	icon_state = "buckshot"
+	spawn_loot_count = 1
+	loot = list(
+		/obj/item/storage/toolbox/ammobox/strilka310,
+		/obj/item/storage/toolbox/ammobox/strilka310/surplus,
+	)
+
 // Weapons
 /obj/effect/spawner/random/armory/disablers
 	name = "disabler spawner"
@@ -34,6 +61,33 @@
 	name = "laser gun spawner"
 	icon_state = "laser_gun"
 	loot = list(/obj/item/gun/energy/laser)
+
+/obj/effect/spawner/random/armory/laser_pistol
+	name = "laser pistol spawner"
+	icon_state = "laser_gun"
+	spawn_loot_count = 6
+	loot = list(/obj/item/gun/energy/laser/pistol)
+
+/obj/effect/spawner/random/armory/laser_carbine
+	name = "laser_carbine spawner"
+	icon_state = "laser_gun"
+	loot = list(/obj/item/gun/energy/laser/carbine)
+
+/obj/effect/spawner/random/armory/assault_laser
+	name = "assault laser gun spawner"
+	icon_state = "laser_gun"
+	spawn_loot_count = 1
+	loot = list(/obj/item/gun/energy/laser/assault)
+
+/obj/effect/spawner/random/armory/pick_laser_loadout
+	name = "laser gun type randomizer"
+	icon_state = "laser_gun"
+	spawn_loot_count = 1
+	loot = list(
+		/obj/effect/spawner/random/armory/laser_gun = 30,
+		/obj/effect/spawner/random/armory/laser_carbine = 30,
+		/obj/effect/spawner/random/armory/laser_pistol = 10,
+	)
 
 /obj/effect/spawner/random/armory/e_gun
 	name = "energy gun spawner"

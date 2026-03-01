@@ -2,7 +2,7 @@
 	name = "handheld crew monitor" //Thanks to Gun Hog for the name!
 	desc = "A miniature machine that tracks suit sensors across the station."
 	icon = 'icons/obj/devices/scanner.dmi'
-	icon_state = "scanner"
+	icon_state = "crew_monitor"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -11,6 +11,13 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_price = PAYCHECK_CREW * 5
 	custom_premium_price = PAYCHECK_CREW * 6
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 /obj/item/sensor_device/attack_self(mob/user)
 	GLOB.crewmonitor.show(user,src) //Proc already exists, just had to call it
+
+/obj/item/sensor_device/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/drag_to_activate)

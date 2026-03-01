@@ -94,7 +94,7 @@
 /obj/machinery/mineral/processing_unit_console/ui_data(mob/user)
 	return processing_machine.ui_data()
 
-/obj/machinery/mineral/processing_unit_console/ui_act(action, list/params)
+/obj/machinery/mineral/processing_unit_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -142,7 +142,7 @@
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 	///Material container for materials
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 	/// What can be input into the machine?
 	var/accepted_type = /obj/item/stack
 
@@ -150,9 +150,9 @@
 	. = ..()
 	proximity_monitor = new(src, 1)
 
-	materials = AddComponent( \
-		/datum/component/material_container, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+	materials = new ( \
+		src, \
+		SSmaterials.get_materials_by_flag(MATERIAL_SILO_STORED), \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
 		allowed_items = accepted_type \
@@ -160,10 +160,11 @@
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
-	selected_material = GET_MATERIAL_REF(/datum/material/iron)
+	selected_material = SSmaterials.get_material(/datum/material/iron)
 
 /obj/machinery/mineral/processing_unit/Destroy()
-	materials = null
+	QDEL_NULL(proximity_monitor)
+	QDEL_NULL(materials)
 	mineral_machine = null
 	stored_research = null
 	return ..()
@@ -248,7 +249,7 @@
 		on = FALSE
 	else
 		var/out = get_step(src, output_dir)
-		materials.retrieve_sheets(sheets_to_remove, mat, out)
+		materials.retrieve_stack(sheets_to_remove, mat, out)
 
 /obj/machinery/mineral/processing_unit/proc/smelt_alloy(seconds_per_tick = 2)
 	var/datum/design/alloy = stored_research.isDesignResearchedID(selected_alloy) //check if it's a valid design
@@ -266,16 +267,14 @@
 
 	generate_mineral(alloy.build_path)
 
-/obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/D, seconds_per_tick = 2)
-	if(D.make_reagent)
+/obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/design, seconds_per_tick = 2)
+	if(design.make_reagent)
 		return FALSE
 
 	var/build_amount = SMELT_AMOUNT * seconds_per_tick
 
-	for(var/mat_cat in D.materials)
-		var/required_amount = D.materials[mat_cat]
+	for(var/mat_cat, required_amount in design.materials)
 		var/amount = materials.materials[mat_cat]
-
 		build_amount = min(build_amount, round(amount / required_amount))
 
 	return build_amount

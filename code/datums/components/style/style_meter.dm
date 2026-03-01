@@ -98,6 +98,7 @@
 
 	clean_up(loc)
 	forceMove(get_turf(src))
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), src)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/style_meter/multitool_act(mob/living/user, obj/item/tool)
@@ -115,9 +116,7 @@
 /// Unregister signals and just generally clean up ourselves after being removed from glasses
 /obj/item/style_meter/proc/clean_up(atom/movable/old_location)
 	old_location.cut_overlay(meter_appearance)
-	UnregisterSignal(old_location, COMSIG_ITEM_EQUIPPED)
-	UnregisterSignal(old_location, COMSIG_ITEM_DROPPED)
-	UnregisterSignal(old_location, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(old_location, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE, COMSIG_CLICK_ALT))
 	UnregisterSignal(old_location, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	if(!style_meter)
 		return
@@ -128,11 +127,11 @@
 	icon_state = "style_meter_background"
 	icon = 'icons/hud/style_meter.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screen_loc = "WEST,CENTER:16"
-	maptext_height = 120
+	screen_loc = "WEST,CENTER-1:19"
+	maptext_height = 160
 	maptext_width = 105
 	maptext_x = 5
-	maptext_y = 100
+	maptext_y = 124
 	maptext = ""
 	layer = SCREENTIP_LAYER
 

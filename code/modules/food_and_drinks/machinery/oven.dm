@@ -31,6 +31,8 @@
 	var/datum/looping_sound/oven/oven_loop
 	///Current state of smoke coming from the oven
 	var/smoke_state = OVEN_SMOKE_STATE_NONE
+	///Currently used particle type, if any
+	var/particle_type
 
 /obj/machinery/oven/Initialize(mapload)
 	. = ..()
@@ -40,8 +42,12 @@
 
 /obj/machinery/oven/Destroy()
 	QDEL_NULL(oven_loop)
-	QDEL_NULL(particles)
+	if (particle_type)
+		remove_shared_particles(particle_type)
 	return ..()
+
+/obj/machinery/oven/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return ..() || istype(contained, /obj/item/plate/oven_tray)
 
 /// Used to determine if the oven appears active and cooking, or offline.
 /obj/machinery/oven/proc/appears_active()
@@ -58,7 +64,7 @@
 	. = ..()
 	if(open)
 		var/mutable_appearance/door_overlay = mutable_appearance(icon, "[base_icon_state]_lid_open")
-		door_overlay.pixel_y = OVEN_LID_Y_OFFSET
+		door_overlay.pixel_z = OVEN_LID_Y_OFFSET
 		. += door_overlay
 	else
 		. += mutable_appearance(icon, "[base_icon_state]_lid_closed")
@@ -99,7 +105,7 @@
 	update_appearance()
 	use_energy(active_power_usage)
 
-/obj/machinery/oven/attackby(obj/item/item, mob/user, params)
+/obj/machinery/oven/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!open || used_tray || !istype(item, /obj/item/plate/oven_tray))
 		return ..()
 
@@ -120,11 +126,11 @@
 ///Adds a tray to the oven, making sure the shit can get baked.
 /obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray, mob/baker)
 	used_tray = oven_tray
+	playsound(src, SFX_TRAY_INSERT, 50, TRUE)
 
 	if(!open)
 		oven_tray.vis_flags |= VIS_HIDE
 	vis_contents += oven_tray
-	oven_tray.flags_1 |= IS_ONTOP_1
 	oven_tray.vis_flags |= VIS_INHERIT_PLANE
 	oven_tray.pixel_y = OVEN_TRAY_Y_OFFSET
 	oven_tray.pixel_x = OVEN_TRAY_X_OFFSET
@@ -141,7 +147,6 @@
 
 /obj/machinery/oven/proc/tray_removed_from_oven(obj/item/oven_tray)
 	SIGNAL_HANDLER
-	oven_tray.flags_1 &= ~IS_ONTOP_1
 	oven_tray.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= oven_tray
 	used_tray = null
@@ -210,16 +215,22 @@
 /obj/machinery/oven/proc/set_smoke_state(new_state)
 	if(new_state == smoke_state)
 		return
-	smoke_state = new_state
 
-	QDEL_NULL(particles)
+	smoke_state = new_state
+	if (particle_type)
+		remove_shared_particles(particle_type)
+		particle_type = null
+
 	switch(smoke_state)
 		if(OVEN_SMOKE_STATE_BAD)
-			particles = new /particles/smoke()
+			particle_type = /particles/smoke
 		if(OVEN_SMOKE_STATE_NEUTRAL)
-			particles = new /particles/smoke/steam()
+			particle_type = /particles/smoke/steam
 		if(OVEN_SMOKE_STATE_GOOD)
-			particles = new /particles/smoke/steam/mild()
+			particle_type = /particles/smoke/steam/mild
+
+	if (particle_type)
+		add_shared_particles(particle_type)
 
 /obj/machinery/oven/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool, ignore_panel = TRUE)
@@ -251,6 +262,9 @@
 	icon_state = "oven_tray"
 	max_items = 6
 	biggest_w_class = WEIGHT_CLASS_BULKY
+	sound_vary = TRUE
+	pickup_sound = SFX_TRAY_PICKUP
+	drop_sound = SFX_TRAY_DROP
 
 /obj/item/plate/oven_tray/item_interaction_secondary(mob/living/user, obj/item/item, list/modifiers)
 	if(isnull(item.atom_storage))
@@ -261,6 +275,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/plate/oven_tray/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 	if(isnull(item.atom_storage))
 		return NONE
 

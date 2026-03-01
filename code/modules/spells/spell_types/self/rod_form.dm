@@ -104,7 +104,7 @@
 		span_userdanger("The [src] penetrates you!"),
 		span_danger("You hear a CLANG!"),
 		)
-	penetrated.adjustBruteLoss(70 + damage_bonus)
+	penetrated.adjust_brute_loss(70 + damage_bonus)
 
 /obj/effect/immovablerod/wizard/suplex_rod(mob/living/strongman)
 	var/mob/living/wizard = our_wizard?.resolve()
@@ -122,7 +122,7 @@
 	return TRUE
 
 /**
- * Called when the wizard rod reaches it's maximum distance
+ * Called when the wizard rod reaches its maximum distance
  * or is otherwise stopped by something.
  * Dumps out the wizard, and deletes.
  */
@@ -138,8 +138,7 @@
 	our_wizard = WEAKREF(wizard)
 
 	wizard.forceMove(src)
-	wizard.status_flags |= GODMODE
-	wizard.add_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_NO_TRANSFORM), REF(src))
+	wizard.add_traits(list(TRAIT_GODMODE, TRAIT_MAGICALLY_PHASED, TRAIT_NO_TRANSFORM), REF(src))
 
 /**
  * Eject our current wizard, removing them from the rod
@@ -150,8 +149,7 @@
 	if(QDELETED(wizard))
 		return
 
-	wizard.status_flags &= ~GODMODE
-	wizard.remove_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_NO_TRANSFORM), REF(src))
+	wizard.remove_traits(list(TRAIT_GODMODE, TRAIT_MAGICALLY_PHASED, TRAIT_NO_TRANSFORM), REF(src))
 	wizard.forceMove(get_turf(src))
 	our_wizard = null
 

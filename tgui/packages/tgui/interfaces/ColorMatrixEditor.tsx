@@ -1,6 +1,3 @@
-import { toFixed } from 'common/math';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -8,7 +5,10 @@ import {
   NumberInput,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -41,14 +41,15 @@ export const ColorMatrixEditor = (props) => {
                                 {`${PREFIXES[row]}${PREFIXES[col]}:`}
                               </Box>
                               <NumberInput
+                                tickWhileDragging
                                 minValue={-Infinity}
                                 maxValue={+Infinity}
                                 value={currentColor[row * 4 + col]}
                                 step={0.01}
                                 width="50px"
                                 format={(value) => toFixed(value, 2)}
-                                onDrag={(value) => {
-                                  let retColor = currentColor;
+                                onChange={(value) => {
+                                  const retColor = currentColor;
                                   retColor[row * 4 + col] = value;
                                   act('transition_color', {
                                     color: retColor,

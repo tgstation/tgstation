@@ -1,5 +1,12 @@
+import {
+  Box,
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
 export const BorgPanel = (props) => {
@@ -49,7 +56,7 @@ export const BorgPanel = (props) => {
             <LabeledList.Item label="Charge">
               {!cell.missing ? (
                 <ProgressBar value={cellPercent}>
-                  {cell.charge + ' / ' + cell.maxcharge}
+                  {`${cell.charge} / ${cell.maxcharge}`}
                 </ProgressBar>
               ) : (
                 <span className="color-bad">No cell installed</span>

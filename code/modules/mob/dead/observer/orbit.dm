@@ -38,7 +38,8 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			user.reset_perspective(null)
 			user.orbiting_ref = ref
 			if (auto_observe)
-				user.do_observe(poi)
+				if (poi != user)
+					user.do_observe(poi)
 			return TRUE
 		if ("refresh")
 			ui.send_full_update()
@@ -59,6 +60,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 /datum/orbit_menu/ui_static_data(mob/user)
 	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, PROC_REF(validate_mob_poi)), append_dead_role = FALSE)
 	var/list/new_other_pois = SSpoints_of_interest.get_other_pois()
+	var/is_admin = user?.client?.holder
 
 	var/list/alive = list()
 	var/list/antagonists = list()
@@ -78,6 +80,9 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		serialized["full_name"] = name
 		if(number_of_orbiters)
 			serialized["orbiters"] = number_of_orbiters
+
+		if (is_admin)
+			serialized["ckey"] = mob_poi.ckey
 
 		if(mob_poi.GetComponent(/datum/component/deadchat_control))
 			deadchat_controlled += list(serialized)
@@ -104,7 +109,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(isliving(mob_poi))
 			serialized += get_living_data(mob_poi)
 
-		var/list/antag_data = get_antag_data(mob_poi.mind)
+		var/list/antag_data = get_antag_data(mob_poi.mind, is_admin)
 		if(length(antag_data))
 			serialized += antag_data
 			antagonists += list(serialized)
@@ -142,6 +147,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		"ghosts" = ghosts,
 		"misc" = misc,
 		"npcs" = npcs,
+		"can_observe" = !HAS_TRAIT(user, TRAIT_NO_OBSERVE),
 	)
 
 
@@ -151,17 +157,16 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 
 /// Helper function to get threat type, group, overrides for job and icon
-/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind) as /list
+/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind, is_admin) as /list
 	var/list/serialized = list()
 
 	for(var/datum/antagonist/antag as anything in poi_mind.antag_datums)
-		if(!antag.show_to_ghosts)
+		if(!antag.show_to_ghosts && !is_admin)
 			continue
 
 		serialized["antag"] = antag.name
 		serialized["antag_group"] = antag.antagpanel_category
-		serialized["job"] = antag.name
-		serialized["icon"] = antag.antag_hud_name
+		serialized["antag_icon"] = antag.antag_hud_name
 
 		return serialized
 
@@ -211,13 +216,25 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	if(issilicon(player))
 		serialized["job"] = player.job
 		serialized["icon"] = "borg"
-	else
-		var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
-		serialized["job"] = id_card?.get_trim_assignment()
-		serialized["icon"] = id_card?.get_trim_sechud_icon_state()
+		return serialized
 
+	var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
+	serialized["job"] = id_card?.get_trim_assignment()
+	serialized["icon"] = id_card?.get_trim_sechud_icon_state()
+
+	var/datum/job/job = player.mind?.assigned_role
+	if (isnull(job))
+		return serialized
+
+	serialized["mind_job"] = job.title
+	var/datum/outfit/outfit = job.get_outfit()
+	if (isnull(outfit))
+		return serialized
+
+	var/datum/id_trim/trim = outfit.id_trim
+	if (!isnull(trim))
+		serialized["mind_icon"] = trim::sechud_icon_state
 	return serialized
-
 
 /// Gets a list: Misc data and whether it's critical. Handles all snowflakey type cases
 /datum/orbit_menu/proc/get_misc_data(atom/movable/atom_poi) as /list
@@ -273,7 +290,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
  * Helper POI validation function passed as a callback to various SSpoints_of_interest procs.
  *
  * Provides extended validation above and beyond standard, limiting mob POIs without minds or ckeys
- * unless they're mobs, camera mobs or megafauna. Also allows exceptions for mobs that are deadchat controlled.
+ * unless they're mobs, eye mobs or megafauna. Also allows exceptions for mobs that are deadchat controlled.
  *
  * If they satisfy that requirement, falls back to default validation for the POI.
  */
@@ -282,7 +299,8 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	if(!potential_mob_poi.mind && !potential_mob_poi.ckey)
 		if(!mob_allowed_typecache)
 			mob_allowed_typecache = typecacheof(list(
-				/mob/camera,
+				/mob/eye,
+				/mob/living/basic/boss,
 				/mob/living/basic/regal_rat,
 				/mob/living/simple_animal/bot,
 				/mob/living/simple_animal/hostile/megafauna,

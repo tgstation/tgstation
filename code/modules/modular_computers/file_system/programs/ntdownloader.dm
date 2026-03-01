@@ -11,6 +11,8 @@
 
 	///The program currently being downloaded.
 	var/datum/computer_file/program/downloaded_file
+	///weak ref to the user who began the download
+	var/datum/weakref/download_user
 	///Boolean on whether the `downloaded_file` is being downloaded from the Syndicate store,
 	///in which case it will appear as 'ENCRYPTED' in logs, rather than display file name.
 	var/hacked_download = FALSE
@@ -35,7 +37,7 @@
 	ui_header = null
 	. = ..()
 
-/datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename)
+/datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename, mob/user)
 	if(downloaded_file)
 		return FALSE
 
@@ -64,6 +66,11 @@
 		hacked_download = FALSE
 
 	downloaded_file = PRG.clone()
+	download_user = WEAKREF(user)
+
+	// If the filesize is 0 (or somehow lower), we instantly download to avoid invalid number issues with stepwise download.
+	if(downloaded_file.size <= 0)
+		complete_file_download()
 
 /datum/computer_file/program/ntnetdownload/proc/abort_file_download()
 	if(!downloaded_file)
@@ -72,25 +79,28 @@
 	downloaded_file = null
 	download_completion = FALSE
 	ui_header = null
+	download_user = null
 
 /datum/computer_file/program/ntnetdownload/proc/complete_file_download()
 	if(!downloaded_file)
 		return
 	generate_network_log("Completed download of file [hacked_download ? "**ENCRYPTED**" : "[downloaded_file.filename].[downloaded_file.filetype]"].")
-	if(!computer || !computer.store_file(downloaded_file))
+	if(!computer || !computer.store_file(downloaded_file, download_user?.resolve()))
 		// The download failed
 		downloaderror = "I/O ERROR - Unable to save file. Check whether you have enough free space on your hard drive and whether your hard drive is properly connected. If the issue persists contact your system administrator for assistance."
 	downloaded_file = null
 	download_completion = FALSE
 	ui_header = "downloader_finished.gif"
+	download_user = null
 
 /datum/computer_file/program/ntnetdownload/process_tick(seconds_per_tick)
 	if(!downloaded_file)
 		return
 	if(download_completion >= downloaded_file.size)
 		complete_file_download()
+		return
 	// Download speed according to connectivity state. NTNet server is assumed to be on unlimited speed so we're limited by our local connectivity
-	var/download_netspeed
+	var/download_netspeed = 0
 	// Speed defines are found in misc.dm
 	switch(ntnet_status)
 		if(NTNET_LOW_SIGNAL)
@@ -99,17 +109,20 @@
 			download_netspeed = NTNETSPEED_HIGHSIGNAL
 		if(NTNET_ETHERNET_SIGNAL)
 			download_netspeed = NTNETSPEED_ETHERNET
-	if(download_netspeed)
-		if(HAS_TRAIT(computer, TRAIT_MODPC_HALVED_DOWNLOAD_SPEED))
-			download_netspeed *= 0.5
-		download_completion += download_netspeed
+	if(download_netspeed <= 0)
+		return
+	if(HAS_TRAIT(computer, TRAIT_MODPC_HALVED_DOWNLOAD_SPEED))
+		download_netspeed *= 0.5
+	// We don't complete it here so we stay on 100% for a cycle
+	// We do cap out our completion to avoid UI issues
+	download_completion = min(download_completion  + download_netspeed, downloaded_file.size)
 
 /datum/computer_file/program/ntnetdownload/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	switch(action)
 		if("PRG_downloadfile")
 			if(!downloaded_file)
-				begin_file_download(params["filename"])
+				begin_file_download(params["filename"], usr)
 			return TRUE
 		if("PRG_reseterror")
 			if(downloaderror)

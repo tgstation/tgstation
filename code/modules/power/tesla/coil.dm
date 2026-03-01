@@ -74,7 +74,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/energy_accumulator/tesla_coil/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/energy_accumulator/tesla_coil/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "coil_open[anchored]", "coil[anchored]", W))
 		return
 
@@ -114,7 +114,7 @@
 	var/power = (powernet.avail) * 0.2 * input_power_multiplier  //Always always always use more then you output for the love of god
 	power = min(surplus(), power) //Take the smaller of the two
 	add_load(power)
-	playsound(src.loc, 'sound/magic/lightningshock.ogg', zap_sound_volume, TRUE, zap_sound_range)
+	playsound(src.loc, 'sound/effects/magic/lightningshock.ogg', zap_sound_volume, TRUE, zap_sound_range)
 	tesla_zap(source = src, zap_range = 10, power = power, cutoff = 1e3, zap_flags = zap_flags)
 	zap_buckle_check(power)
 
@@ -126,6 +126,8 @@
 	anchored = FALSE
 	density = TRUE
 	wants_powernet = FALSE
+
+	circuit = /obj/item/circuitboard/machine/grounding_rod
 
 	can_buckle = TRUE
 	buckle_lying = 0
@@ -154,7 +156,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/energy_accumulator/grounding_rod/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/energy_accumulator/grounding_rod/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "grounding_rod_open[anchored]", "grounding_rod[anchored]", W))
 		return
 

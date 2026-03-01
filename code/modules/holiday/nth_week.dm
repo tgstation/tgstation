@@ -84,3 +84,12 @@
 
 /datum/holiday/nth_week/moth/getStationPrefix()
 	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
+
+/datum/holiday/nth_week/ice_cream
+	name = ICE_CREAM_DAY
+	begin_week = 3
+	begin_month = JULY
+	begin_weekday = SUNDAY
+
+/datum/holiday/nth_week/ice_cream/getStationPrefix()
+	return pick("Ice Cream", "Gelato", "Semifreddo", "Cornuto", "Soft Serve", "Cone", "Ice", "Cream", "I Scream", "Parfait", "Straccciatella", "Sherbet", "Snow", "Affogato", "Mochi", "Tartufo", "Sundae", "Neapolitan")

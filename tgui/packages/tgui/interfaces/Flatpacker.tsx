@@ -1,7 +1,3 @@
-import { BooleanLike } from 'common/react';
-import { toTitleCase } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -12,12 +8,15 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
-import { TableCell } from '../components/Table';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+import { toTitleCase } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialIcon } from './Fabrication/MaterialIcon';
-import { Material } from './Fabrication/Types';
+import type { Material } from './Fabrication/Types';
 
 type Data = {
   SHEET_MATERIAL_AMOUNT: number;
@@ -30,7 +29,6 @@ type Design = {
   name: string;
   icon: string;
   requiredMaterials: Material[];
-  canPrint: BooleanLike;
   disableReason?: string;
 };
 
@@ -39,7 +37,7 @@ export const Flatpacker = (props: any) => {
   const { SHEET_MATERIAL_AMOUNT, materials, design, busy } = data;
 
   return (
-    <Window width={400} height={445} title="Flatpacker">
+    <Window width={670} height={400} title="Flatpacker">
       <Window.Content>
         {!!busy && (
           <Dimmer
@@ -74,6 +72,7 @@ export const Flatpacker = (props: any) => {
                   tooltipPosition="left"
                   height="37px"
                   width="37px"
+                  disabled={!design}
                   onClick={() => act('ejectBoard')}
                 >
                   <Icon name="eject" size={1.5} mt="0.8rem" ml="0rem" />
@@ -145,7 +144,7 @@ const BoardPreview = (props: BoardPreviewProps) => {
             icon="cog"
             fontSize={1.2}
             textAlign="center"
-            disabled={!design || !design.canPrint}
+            disabled={!design || design.disableReason !== ''}
             tooltip={design.disableReason}
             tooltipPosition="bottom"
             onClick={() => onPrint()}
@@ -167,22 +166,28 @@ const CostPreview = (props: CostPreviewProps) => {
   const { materials, SHEET_MATERIAL_AMOUNT } = props;
 
   return (
-    <Section fill>
+    <Section fill scrollable>
       {materials ? (
         <Table>
           {materials.map((material) => (
             <Table.Row key={material.name} className="candystripe">
               <Table.Cell verticalAlign="middle">
-                <MaterialIcon
-                  materialName={material.name}
-                  sheets={material.amount / SHEET_MATERIAL_AMOUNT}
-                />
+                <div style={{ width: '200px' }}>
+                  <MaterialIcon
+                    materialName={material.name}
+                    sheets={material.amount / SHEET_MATERIAL_AMOUNT}
+                  />
+                </div>
               </Table.Cell>
-              <TableCell verticalAlign="middle">
-                {toTitleCase(material.name)}
-              </TableCell>
               <Table.Cell verticalAlign="middle">
-                &times;{(material.amount / SHEET_MATERIAL_AMOUNT).toFixed(2)}
+                <div style={{ width: '200px' }}>
+                  {toTitleCase(material.name)}
+                </div>
+              </Table.Cell>
+              <Table.Cell verticalAlign="middle">
+                <div style={{ width: '200px' }}>
+                  x{(material.amount / SHEET_MATERIAL_AMOUNT).toFixed(2)}
+                </div>
               </Table.Cell>
             </Table.Row>
           ))}

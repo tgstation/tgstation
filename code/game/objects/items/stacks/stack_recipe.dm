@@ -7,6 +7,8 @@
 	var/title = "ERROR"
 	/// What atom the recipe makes, typepath
 	var/atom/result_type
+	/// Generated base64 image. Used only if result has color
+	var/result_image
 	/// Amount of stack required to make
 	var/req_amount = 1
 	/// Amount of resulting atoms made
@@ -23,6 +25,8 @@
 	var/trait_modifier = 1
 	/// Category for general crafting menu
 	var/category
+	/// The amount of material to remove from the recipe's result
+	var/list/removed_mats
 
 	///crafting_flags var to hold bool values
 	var/crafting_flags = CRAFT_CHECK_DENSITY
@@ -33,12 +37,13 @@
 	req_amount = 1,
 	res_amount = 1,
 	max_res_amount = 1,
-	time = 0,
+	time = 0 SECONDS,
 	crafting_flags = CRAFT_CHECK_DENSITY,
 	placement_checks = NONE,
 	trait_booster,
 	trait_modifier = 1,
 	category,
+	list/removed_mats,
 )
 
 	src.title = title
@@ -53,6 +58,17 @@
 	src.trait_modifier = trait_modifier
 	src.category = src.category || category || CAT_MISC
 
+	src.removed_mats = removed_mats
+
+	// We create base64 image only if item have color. Otherwise use icon_ref for TGUI
+	var/obj/item/result = result_type
+	var/paint = result::color
+	if(!isnull(paint) && paint != COLOR_WHITE)
+		var/icon/result_icon = icon(result::icon, result::icon_state, SOUTH, 1)
+		result_icon.Scale(32, 32)
+		result_icon.Blend(paint, ICON_MULTIPLY)
+		src.result_image = "[icon2base64(result_icon)]"
+
 /datum/stack_recipe/radial
 	/// Optional info to be shown on the radial option for this item
 	var/desc
@@ -63,7 +79,7 @@
 	req_amount = 1,
 	res_amount = 1,
 	max_res_amount = 1,
-	time = 0,
+	time = 0 SECONDS,
 	crafting_flags = CRAFT_CHECK_DENSITY,
 	placement_checks = NONE,
 	trait_booster,

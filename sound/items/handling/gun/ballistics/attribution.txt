@@ -1,0 +1,17 @@
+shotgun_pickup1.ogg - https://freesound.org/people/PNMCarrieRailfan/sounds/681692/ , License: CC BY-NC 4.0
+shotgun_drop1.ogg - https://freesound.org/people/PNMCarrieRailfan/sounds/681690/ , License: CC BY-NC 4.0
+pistol_pickup1.ogg - https://freesound.org/people/PNMCarrieRailfan/sounds/682043/ , License: CC BY-NC 4.0
+pistol_drop1.ogg - https://freesound.org/people/PNMCarrieRailfan/sounds/682043/ , License: CC BY-NC 4.0
+rifle_pickup.ogg - https://freesound.org/people/the_Carlos/sounds/706972/ , License: CC BY 4.0
+rifle_drop1.ogg - https://freesound.org/people/the_Carlos/sounds/706972/ , License: CC BY 4.0
+smg_drop1.ogg - https://freesound.org/people/hyperix6/sounds/676588/ , License: CC0
+smg_pickup1.ogg - https://freesound.org/people/hyperix6/sounds/676588/ , License: CC0
+magazine_pickup1.ogg - https://freesound.org/people/PNMCarrieRailfan/sounds/681511/ , License: CC BY-NC 4.0
+magazine_drop1.ogg - https://freesound.org/people/PNMCarrieRailfan/sounds/681511/ , License: CC BY-NC 4.0
+
+
+
+
+
+
+

@@ -23,7 +23,7 @@
 	demoraliser = new(src, 7, TRUE, mood_category)
 	return ..()
 
-/obj/structure/sign/poster/traitor/attackby(obj/item/tool, mob/user, params)
+/obj/structure/sign/poster/traitor/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if (tool.tool_behaviour == TOOL_WIRECUTTER)
 		QDEL_NULL(demoraliser)
 	return ..()
@@ -50,7 +50,7 @@
 
 /obj/structure/sign/poster/traitor/cloning
 	name = "Demand Cloning Pods Now"
-	desc = "This poster claims that Nanotrasen is intentionally witholding cloning technology just for its executives, condemning you to suffer and die when you could have a fresh, fit body.'"
+	desc = "This poster claims that Nanotrasen is intentionally withholding cloning technology just for its executives, condemning you to suffer and die when you could have a fresh, fit body.'"
 	icon_state = "traitor_cloning"
 
 /obj/structure/sign/poster/traitor/ai_rights

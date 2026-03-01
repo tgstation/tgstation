@@ -55,7 +55,7 @@
 
 	return data
 
-/obj/machinery/implantchair/ui_act(action, params)
+/obj/machinery/implantchair/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -84,7 +84,7 @@
 			ready = FALSE
 			addtimer(CALLBACK(src, PROC_REF(set_ready)),injection_cooldown)
 	else
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
+		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 	update_appearance()
 
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)
@@ -162,12 +162,12 @@
 	injection_cooldown = 0
 	replenish_cooldown = 300
 
-/obj/machinery/implantchair/genepurge/implant_action(mob/living/carbon/human/H,mob/user)
-	if(!istype(H))
+/obj/machinery/implantchair/genepurge/implant_action(mob/living/carbon/human/human, mob/user)
+	if(!istype(human))
 		return FALSE
-	H.set_species(/datum/species/human, 1)//lizards go home
-	purrbation_remove(H)//remove cats
-	H.dna.remove_all_mutations()//hulks out
+	human.dna.remove_all_mutations()//hulks out
+	human.set_species(/datum/species/human, 1)//lizards go home
+	purrbation_remove(human)//remove cats
 	return TRUE
 
 
@@ -191,7 +191,7 @@
 		objective = tgui_input_text(user, "What order do you want to imprint on [C]?", "Brainwashing", max_length = 120)
 		message_admins("[ADMIN_LOOKUPFLW(user)] set brainwash machine objective to '[objective]'.")
 		user.log_message("set brainwash machine objective to '[objective]'.", LOG_GAME)
-	if(HAS_TRAIT(C, TRAIT_MINDSHIELD))
+	if(HAS_MIND_TRAIT(C, TRAIT_UNCONVERTABLE))
 		return FALSE
 	brainwash(C, objective)
 	message_admins("[ADMIN_LOOKUPFLW(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")

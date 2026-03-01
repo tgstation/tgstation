@@ -1,5 +1,10 @@
 /// Helper to open the panel
 /datum/lootpanel/proc/open(turf/tile)
+	if (tile != source_turf)
+		if (source_turf)
+			UnregisterSignal(source_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+		RegisterSignals(tile, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(on_source_turf_entered))
+
 	source_turf = tile
 
 #if !defined(OPENDREAM) && !defined(UNIT_TESTS)
@@ -7,7 +12,7 @@
 		var/build = owner.byond_build
 		var/version = owner.byond_version
 		if(build < 515 || (build == 515 && version < 1635))
-			to_chat(owner.mob, examine_block(span_info("\
+			to_chat(owner.mob, boxed_message(span_info("\
 				<span class='bolddanger'>Your version of Byond doesn't support fast image loading.</span>\n\
 				Detected: [version].[build]\n\
 				Required version for this feature: <b>515.1635</b> or later.\n\

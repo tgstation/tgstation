@@ -3,8 +3,7 @@
 	description = "Coordinate engineering, ensure equipment doesn't get stolen, \
 		make sure the Supermatter doesn't blow up, maintain telecommunications."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
-	department_head = list(JOB_CAPTAIN)
-	head_announce = list("Engineering")
+	head_announce = RADIO_CHANNEL_ENGINEERING
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -46,6 +45,8 @@
 	rpg_title = "Head Crystallomancer"
 	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 
+	human_authority = JOB_AUTHORITY_HUMANS_ONLY
+
 	voice_of_god_power = 1.4 //Command staff has authority
 
 
@@ -65,14 +66,14 @@
 	id_trim = /datum/id_trim/job/chief_engineer
 	uniform = /obj/item/clothing/under/rank/engineering/chief_engineer
 	backpack_contents = list(
-		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/melee/baton/telescopic/silver = 1,
 		/obj/item/construction/rcd/ce = 1,
 	)
 	belt = /obj/item/storage/belt/utility/chief/full
 	ears = /obj/item/radio/headset/heads/ce
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/utility/hardhat/white
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	head = /obj/item/clothing/head/utility/hardhat/welding/white/up
+	shoes = /obj/item/clothing/shoes/workboots
 	l_pocket = /obj/item/modular_computer/pda/heads/ce
 
 	backpack = /obj/item/storage/backpack/industrial

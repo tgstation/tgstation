@@ -48,11 +48,12 @@
 	playsound(get_turf(owner), 'sound/effects/nightmare_poof.ogg', 50, TRUE, -1, ignore_walls = FALSE)
 	cast_on.visible_message(span_boldwarning("[cast_on] melts into the shadows!"))
 	cast_on.SetAllImmobility(0)
-	cast_on.setStaminaLoss(0, FALSE)
+	cast_on.set_stamina_loss(0, FALSE)
 	enter_jaunt(cast_on)
 
 /obj/effect/dummy/phased_mob/shadow
 	name = "shadows"
+	phased_mob_icon_state = "purple_laser"
 	/// Max amount of light permitted before being kicked out
 	var/light_max = SHADOW_SPECIES_LIGHT_THRESHOLD
 	/// The amount that shadow heals us per SSobj tick (times seconds_per_tick)

@@ -65,13 +65,13 @@
 	amount *= our_mob.get_damage_mod(type)
 	switch (type)
 		if(BRUTE)
-			host.adjustBruteLoss(amount, forced = TRUE)
+			host.adjust_brute_loss(amount, forced = TRUE)
 		if(BURN)
-			host.adjustFireLoss(amount, forced = TRUE)
+			host.adjust_fire_loss(amount, forced = TRUE)
 		if(TOX)
-			host.adjustToxLoss(amount, forced = TRUE)
+			host.adjust_tox_loss(amount, forced = TRUE)
 		if(OXY)
-			host.adjustOxyLoss(amount, forced = TRUE)
+			host.adjust_oxy_loss(amount, forced = TRUE)
 
 	on_passed_damage?.Invoke(our_mob, host, amount)
 	return COMPONENT_IGNORE_CHANGE
@@ -80,9 +80,9 @@
 /datum/component/life_link/proc/on_limb_damage(mob/living/our_mob, limb, brute, burn)
 	SIGNAL_HANDLER
 	if (brute != 0)
-		host.adjustBruteLoss(brute, updating_health = FALSE)
+		host.adjust_brute_loss(brute, updating_health = FALSE)
 	if (burn != 0)
-		host.adjustFireLoss(burn, updating_health = FALSE)
+		host.adjust_fire_loss(burn, updating_health = FALSE)
 	if (brute != 0 || burn != 0)
 		host.updatehealth()
 	on_passed_damage?.Invoke(our_mob, host, brute + burn)
@@ -123,24 +123,14 @@
 
 /// Update our health on the medical hud
 /datum/component/life_link/proc/update_med_hud_health(mob/living/mob_parent)
-	var/image/holder = mob_parent.hud_list?[HEALTH_HUD]
-	if(isnull(holder))
-		return
-	holder.icon_state = "hud[RoundHealth(host)]"
-	var/icon/size_check = icon(mob_parent.icon, mob_parent.icon_state, mob_parent.dir)
-	holder.pixel_y = size_check.Height() - world.icon_size
+	mob_parent.set_hud_image_state(HEALTH_HUD, "hud[RoundHealth(host)]")
 
 /// Update our vital status on the medical hud
 /datum/component/life_link/proc/update_med_hud_status(mob/living/mob_parent)
-	var/image/holder = mob_parent.hud_list?[STATUS_HUD]
-	if(isnull(holder))
-		return
-	var/icon/size_check = icon(mob_parent.icon, mob_parent.icon_state, mob_parent.dir)
-	holder.pixel_y = size_check.Height() - world.icon_size
 	if(host.stat == DEAD || HAS_TRAIT(host, TRAIT_FAKEDEATH))
-		holder.icon_state = "huddead"
+		mob_parent.set_hud_image_state(STATUS_HUD, "huddead")
 	else
-		holder.icon_state = "hudhealthy"
+		mob_parent.set_hud_image_state(STATUS_HUD, "hudhealthy")
 
 /// When our status tab updates, draw how much HP our host has in there
 /datum/component/life_link/proc/on_status_tab_updated(mob/living/source, list/items)

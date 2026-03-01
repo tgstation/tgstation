@@ -102,7 +102,7 @@
 /area/station/asteroid)
 "N" = (
 /obj/item/instrument/trombone,
-/obj/item/organ/internal/tongue/bone,
+/obj/item/organ/tongue/bone,
 /turf/open/misc/asteroid/dug,
 /area/station/asteroid)
 "O" = (

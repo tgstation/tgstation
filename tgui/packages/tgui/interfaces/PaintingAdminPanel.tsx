@@ -1,9 +1,9 @@
-import { decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
+import { Box, Button, LabeledList, Section, Table } from 'tgui-core/components';
+import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 type PaintingAdminPanelData = {

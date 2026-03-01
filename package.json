@@ -1,0 +1,10 @@
+{
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.10",
+		"prettier": "^3.7.4"
+	},
+	"scripts": {
+		"tgui:fix": "biome check --write --unsafe tgui",
+		"tgui:lint": "biome lint tgui"
+	}
+}

@@ -1,5 +1,5 @@
 
-/mob/living/brain/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/brain/Life(seconds_per_tick = SSMOBS_DT)
 	if(isnull(loc) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
@@ -11,24 +11,24 @@
 			stack_trace("/mob/living/brain with container set, but we weren't inside of it!")
 			container = null
 	. = ..()
-	handle_emp_damage(seconds_per_tick, times_fired)
+	handle_emp_damage(seconds_per_tick)
 
 /mob/living/brain/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(health > HEALTH_THRESHOLD_DEAD)
 		return
 	if(stat != DEAD)
 		death()
-	var/obj/item/organ/internal/brain/BR
+	var/obj/item/organ/brain/BR
 	if(container?.brain)
 		BR = container.brain
-	else if(istype(loc, /obj/item/organ/internal/brain))
+	else if(istype(loc, /obj/item/organ/brain))
 		BR = loc
 	if(BR)
 		BR.set_organ_damage(BRAIN_DAMAGE_DEATH) //beaten to a pulp
 
-/mob/living/brain/proc/handle_emp_damage(seconds_per_tick, times_fired)
+/mob/living/brain/proc/handle_emp_damage(seconds_per_tick)
 	if(!emp_damage)
 		return
 

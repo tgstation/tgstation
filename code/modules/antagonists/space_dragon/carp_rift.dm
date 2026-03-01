@@ -111,6 +111,8 @@
 		healing_color = COLOR_BLUE, \
 	)
 
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/carp_rift)
+
 	gravity_aura = new(
 		/* host = */src,
 		/* range = */15,
@@ -141,7 +143,7 @@
 		. += span_notice("It has [carp_stored] carp available to spawn as.")
 
 /obj/structure/carp_rift/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/magic/lightningshock.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/lightningshock.ogg', 50, TRUE)
 
 /obj/structure/carp_rift/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -157,7 +159,7 @@
 	if(charge_state == CHARGE_COMPLETED)
 		if(SPT_PROB(1.25, seconds_per_tick) && dragon)
 			var/mob/living/newcarp = new dragon.ai_to_spawn(loc)
-			newcarp.faction = dragon.owner.current.faction.Copy()
+			newcarp.set_faction(dragon.owner.current.get_faction())
 		if(SPT_PROB(1.5, seconds_per_tick))
 			var/rand_dir = pick(GLOB.cardinals)
 			GLOB.move_manager.move_to(src, get_step(src, rand_dir), 1)
@@ -256,14 +258,14 @@
 	if(isnull(dragon))
 		return
 	var/mob/living/newcarp = new dragon.minion_to_spawn(loc)
-	newcarp.faction = dragon.owner.current.faction
+	SET_FACTION_AND_ALLIES_FROM(newcarp, dragon.owner.current)
 	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
 	dragon.wavespeak?.link_mob(newcarp)
 
 	if(!is_listed)
 		ckey_list += user.ckey
-	newcarp.key = user.key
+	newcarp.PossessByPlayer(user.key)
 	newcarp.set_name()
 	var/datum/antagonist/space_carp/carp_antag = new(src)
 	newcarp.mind.add_antag_datum(carp_antag)
@@ -275,6 +277,21 @@
 		set_light_color(LIGHT_COLOR_BLUE)
 		update_light()
 	return TRUE
+
+/obj/structure/carp_rift/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(HAS_TRAIT(attacking_item, TRAIT_TELEKINESIS_CONTROLLED))
+		if(user)
+			to_chat(user, span_warning("The gravitational field of [src] interferes with the telekenetic control of [user], nullifying the hit!"))
+		return FALSE
+	. = ..()
+
+/obj/structure/carp_rift/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(HAS_TRAIT(hit_by, TRAIT_TELEKINESIS_CONTROLLED))
+		var/mob/thrower = throwingdatum.thrower.resolve()
+		if(thrower && ismob(thrower))
+			to_chat(thrower, span_warning("The gravitational field of [src] interferes with the telekenetic control of [hit_by], nullifying the hit!"))
+		return
+	. = ..()
 
 #undef CHARGE_ONGOING
 #undef CHARGE_FINALWARNING

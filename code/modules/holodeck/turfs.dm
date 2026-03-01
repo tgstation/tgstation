@@ -11,6 +11,9 @@
 /turf/open/floor/holofloor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	return ITEM_INTERACT_BLOCKING // Fuck you
 
+/turf/open/floor/holofloor/crowbar_act(mob/living/user, obj/item/I)
+	return NONE // Fuck you
+
 /turf/open/floor/holofloor/burn_tile()
 	return //you can't burn a hologram!
 
@@ -57,10 +60,10 @@
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
 	name = "lush grass"
-	desc = "Looking at the lushious field, you suddenly feel homesick."
+	desc = "Looking at the luscious field, you suddenly feel homesick."
 	icon_state = "grass0"
 	bullet_bounce_sound = null
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/holofloor/grass/Initialize(mapload)
 	. = ..()
@@ -73,7 +76,7 @@
 	icon = 'icons/turf/sand.dmi'
 	icon_state = "sand"
 	bullet_bounce_sound = null
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/holofloor/beach/coast
 	gender = NEUTER
@@ -100,7 +103,7 @@
 	name = "asteroid sand"
 	desc = "The sand crunches beneath your feet, though it feels soft to the touch."
 	icon_state = "asteroid"
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/holofloor/asteroid/Initialize(mapload)
 	icon_state = "asteroid[rand(0, 12)]"
@@ -111,19 +114,24 @@
 	name = "basalt"
 	desc = "You still feel hot, despite the cool walls of the holodeck."
 	icon_state = "basalt0"
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/holofloor/basalt/Initialize(mapload)
 	. = ..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
-		set_basalt_light(src)
+		switch(icon_state)
+			if("basalt1", "basalt2", "basalt3")
+				set_light(BASALT_LIGHT_RANGE_BRIGHT, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
+			if("basalt5", "basalt9")
+				set_light(BASALT_LIGHT_RANGE_DIM, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
 
 /turf/open/floor/holofloor/space
 	name = "\proper space"
 	desc = "Space-looking floor. Thankfully, the deadly aspects of space are not emulated here."
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
+	layer = SPACE_LAYER
 	plane = PLANE_SPACE
 
 /turf/open/floor/holofloor/hyperspace
@@ -132,7 +140,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "speedspace_ns_1"
 	bullet_bounce_sound = null
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/holofloor/hyperspace/Initialize(mapload)
 	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
@@ -153,7 +161,7 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET
 	canSmoothWith = SMOOTH_GROUP_CARPET
 	bullet_bounce_sound = null
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/holofloor/carpet/Initialize(mapload)
 	. = ..()
@@ -161,13 +169,13 @@
 
 /turf/open/floor/holofloor/carpet/update_icon(updates=ALL)
 	. = ..()
-	if((updates & UPDATE_SMOOTHING) && overfloor_placed && smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if((updates & UPDATE_SMOOTHING) && overfloor_placed && smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH(src)
 
 /turf/open/floor/holofloor/wood
 	icon_state = "wood"
 	desc = "Makes you feel at home."
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/holofloor/snow
 	gender = PLURAL
@@ -178,7 +186,7 @@
 	slowdown = 2
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/holofloor/dark
 	icon_state = "darkfull"
@@ -187,7 +195,7 @@
 /turf/open/floor/holofloor/stairs
 	name = "stairs"
 	icon_state = "stairs"
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/holofloor/stairs/left
 	icon_state = "stairs-l"

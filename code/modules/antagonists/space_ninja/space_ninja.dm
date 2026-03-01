@@ -1,7 +1,7 @@
 /datum/antagonist/ninja
 	name = "\improper Space Ninja"
 	antagpanel_category = ANTAG_GROUP_NINJAS
-	job_rank = ROLE_NINJA
+	pref_flag = ROLE_NINJA
 	antag_hud_name = "ninja"
 	hijack_speed = 1
 	show_name_in_check_antagonists = TRUE
@@ -12,6 +12,7 @@
 	can_assign_self_objectives = TRUE
 	ui_name = "AntagInfoNinja"
 	default_custom_objective = "Destroy vital station infrastructure, without being seen."
+	desensitized_modifier = DESENSITIZED_THRESHOLD
 	///Whether or not this ninja will obtain objectives
 	var/give_objectives = TRUE
 
@@ -24,7 +25,7 @@
  * * Returns a proc call on the given human which will equip them with all the gear.
  */
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/ninja = owner.current)
-	return ninja.equipOutfit(/datum/outfit/ninja)
+	return ninja.equip_species_outfit(/datum/outfit/ninja)
 
 /**
  * Proc that adds the proper memories to the antag datum
@@ -101,7 +102,7 @@
 
 /datum/antagonist/ninja/greet()
 	. = ..()
-	SEND_SOUND(owner.current, sound('sound/effects/ninja_greeting.ogg'))
+	SEND_SOUND(owner.current, sound('sound/music/antag/ninja_greeting.ogg'))
 	to_chat(owner.current, span_danger("I am an elite mercenary of the mighty Spider Clan!"))
 	to_chat(owner.current, span_warning("Surprise is my weapon. Shadows are my armor. Without them, I am nothing."))
 	to_chat(owner.current, span_notice("The station is located to your [dir2text(get_dir(owner.current, locate(world.maxx/2, world.maxy/2, owner.current.z)))]. A thrown ninja star will be a great way to get there."))
@@ -112,15 +113,20 @@
 		addObjectives()
 	addMemories()
 	equip_space_ninja(owner.current)
-	owner.current.add_quirk(/datum/quirk/freerunning)
-	owner.current.add_quirk(/datum/quirk/light_step)
-	owner.current.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_ninja))
-	owner.current.mind.special_role = ROLE_NINJA
+	owner.current.add_quirk(/datum/quirk/freerunning, announce = FALSE)
+	owner.current.add_quirk(/datum/quirk/light_step, announce = FALSE)
+	owner.current.mind.set_assigned_role(SSjob.get_job_type(/datum/job/space_ninja))
 	return ..()
 
 /datum/antagonist/ninja/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/space_ninja))
-	new_owner.special_role = ROLE_NINJA
+	new_owner.set_assigned_role(SSjob.get_job_type(/datum/job/space_ninja))
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has ninja'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has ninja'ed [key_name(new_owner)].")
+
+/datum/antagonist/ninja/on_respawn(mob/new_character)
+	equip_space_ninja()
+	var/turf/spawnpoint = find_space_spawn()
+	if(spawnpoint)
+		new_character.forceMove(spawnpoint)
+	return TRUE

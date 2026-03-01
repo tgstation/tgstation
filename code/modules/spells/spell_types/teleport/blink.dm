@@ -2,7 +2,7 @@
 	name = "Blink"
 	desc = "This spell randomly teleports you a short distance."
 	button_icon_state = "blink"
-	sound = 'sound/magic/blink.ogg'
+	sound = 'sound/effects/magic/blink.ogg'
 
 	school = SCHOOL_TRANSLOCATION
 	cooldown_time = 2 SECONDS
@@ -16,4 +16,9 @@
 	inner_tele_radius = 0
 	outer_tele_radius = 6
 
-	post_teleport_sound = 'sound/magic/blink.ogg'
+	post_teleport_sound = 'sound/effects/magic/blink.ogg'
+
+/datum/action/cooldown/spell/teleport/radius_turf/blink/slow
+	name = "Minor Blink"
+	desc = "This spell randomly teleports you a short distance, you're still practising doing it quickly."
+	cooldown_time = 8 SECONDS

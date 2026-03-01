@@ -1,5 +1,6 @@
+import { Button, Flex, NoticeBox } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, Flex, NoticeBox } from '../../components';
 
 /**
  * This component by expects the following fields to be returned

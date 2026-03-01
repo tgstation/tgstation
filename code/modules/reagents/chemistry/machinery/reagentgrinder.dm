@@ -1,6 +1,6 @@
 
 /obj/machinery/reagentgrinder
-	name = "\improper All-In-One Grinder"
+	name = "all-in-one grinder"
 	desc = "From BlenderTech. Will It Blend? Let's test it out!"
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "juicer"
@@ -9,7 +9,6 @@
 	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
-	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
 	anchored_tabletop_offset = 8
 
 	/// The maximum weight of items this grinder can hold
@@ -90,11 +89,15 @@
 	for(var/obj/item/target in src)
 		if((target in component_parts) || target == beaker)
 			continue
-		to_process["[target.name]"] += 1
+		var/amount = 1
+		if (isstack(target))
+			var/obj/item/stack/target_stack = target
+			amount = target_stack.amount
+		to_process["[target.name]"] += amount
 		total_weight += target.w_class
 	if(to_process.len)
-		. += span_notice("Currently holding.")
-		for(var/target_name as anything in to_process)
+		. += span_notice("Currently holding:")
+		for(var/target_name in to_process)
 			. += span_notice("[to_process[target_name]] [target_name]")
 		. += span_notice("Filled to <b>[round((total_weight / maximum_weight) * 100)]%</b> capacity.")
 
@@ -114,7 +117,7 @@
 		. += span_notice("It can be [EXAMINE_HINT("wrenched")] loose.")
 	else
 		. += span_warning("Needs to be [EXAMINE_HINT("wrenched")] in place to work.")
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 
@@ -174,21 +177,22 @@
 	//surface level checks to filter out items that can be grinded/juice
 	var/list/obj/item/filtered_list = list()
 	for(var/obj/item/ingredient as anything in to_add)
-		//what are we trying to grind exactly?
+		// What are we trying to grind exactly?
 		if((ingredient.item_flags & ABSTRACT) || (ingredient.flags_1 & HOLOGRAM_1))
 			continue
 
-		//Nothing would come from grinding or juicing
-		if(!length(ingredient.grind_results) && !ingredient.reagents.total_volume)
+		// Nothing would come from grinding or juicing
+		if(!length(ingredient.grind_results()) && !ingredient.reagents.total_volume)
 			to_chat(user, span_warning("You cannot grind/juice [ingredient] into reagents!"))
 			continue
 
-		//Error messages should be in the objects' definitions
-		if(!ingredient.blend_requirements(src))
+		// Error messages should be in the objects' definitions
+		if(!ingredient.blend_requirements(src, user))
 			continue
 
 		filtered_list += ingredient
-	if(!filtered_list.len)
+
+	if(!length(filtered_list))
 		return FALSE
 
 	//find total weight of all items already in grinder
@@ -204,7 +208,11 @@
 		if(weapon.w_class + total_weight > maximum_weight)
 			to_chat(user, span_warning("[weapon] is too big to fit into [src]."))
 			continue
-		weapon.forceMove(src)
+
+		//try to remove the right way
+		if(!user.transferItemToLoc(weapon, src))
+			continue
+
 		total_weight += weapon.w_class
 		items_transfered += 1
 		to_chat(user, span_notice("[weapon] was loaded into [src]."))
@@ -212,8 +220,8 @@
 	return items_transfered
 
 /obj/machinery/reagentgrinder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(user.combat_mode || (tool.item_flags & ABSTRACT) || (tool.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return NONE
+	if(user.combat_mode && !is_reagent_container(tool)  && !tool.is_open_container() || (tool.item_flags & ABSTRACT) || (tool.flags_1 & HOLOGRAM_1))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	//add the beaker
 	if (is_reagent_container(tool) && tool.is_open_container())
@@ -246,9 +254,9 @@
 		return ITEM_INTERACT_SUCCESS
 
 	//add item directly
-	else if(length(tool.grind_results) || tool.reagents?.total_volume)
-		if(tool.atom_storage) //anything that has internal storage would be too much recursion for us to handle
-			to_chat(user, span_notice("Drag this item onto [src] to dump its contents."))
+	else if(length(tool.grind_results()) || tool.reagents?.total_volume)
+		if(tool.atom_storage && length(tool.contents)) //anything that has internal storage would be too much recursion for us to handle
+			to_chat(user, span_notice("Drag this item onto [src] to dump its contents, or empty it to grind the container."))
 			return ITEM_INTERACT_BLOCKING
 
 		//add the items
@@ -265,45 +273,36 @@
 	return NONE
 
 /obj/machinery/reagentgrinder/wrench_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
+	. = NONE
 
-	var/tool_result = ITEM_INTERACT_BLOCKING
 	if(operating)
 		balloon_alert(user, "still operating!")
-		return tool_result
+		return ITEM_INTERACT_BLOCKING
 
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		update_appearance(UPDATE_OVERLAYS)
-		tool_result = ITEM_INTERACT_SUCCESS
-	return tool_result
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/reagentgrinder/screwdriver_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
+	. = NONE
 
-	var/tool_result = ITEM_INTERACT_BLOCKING
 	if(operating)
 		balloon_alert(user, "still operating!")
-		return tool_result
+		return ITEM_INTERACT_BLOCKING
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance(UPDATE_OVERLAYS)
-		tool_result = ITEM_INTERACT_SUCCESS
-	return tool_result
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/reagentgrinder/crowbar_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
+	. = NONE
 
-	var/tool_result = ITEM_INTERACT_BLOCKING
 	if(operating)
 		balloon_alert(user, "still operating!")
-		return tool_result
+		return ITEM_INTERACT_BLOCKING
 
 	if(default_deconstruction_crowbar(tool))
-		tool_result = ITEM_INTERACT_SUCCESS
-	return tool_result
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/reagentgrinder/proc/on_storage_dump(datum/source, datum/storage/storage, mob/user)
 	SIGNAL_HANDLER
@@ -320,9 +319,7 @@
 
 /obj/machinery/reagentgrinder/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(operating || !can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !check_interactable(user))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -334,13 +331,11 @@
 	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/reagentgrinder/ui_interact(mob/user)
-	. = ..()
-
-	//some interaction sanity checks
-	if(!anchored || operating || !can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+	//sanity check
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return
+
 	var/static/radial_eject = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject")
-	var/static/radial_mix = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_mix")
 
 	//create list of options available
 	var/list/options = list()
@@ -349,7 +344,7 @@
 		if((to_process in component_parts) || to_process == beaker)
 			continue
 
-		if(!QDELETED(beaker) && !beaker.reagents.holder_full() && is_operational && anchored)
+		if(is_operational && anchored && !QDELETED(beaker) && !beaker.reagents.holder_full())
 			var/static/radial_grind = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind")
 			options["grind"] = radial_grind
 
@@ -358,16 +353,17 @@
 
 		options["eject"] = radial_eject
 		break
+
 	//eject action if we have a beaker
 	if(!QDELETED(beaker))
 		options["eject"] = radial_eject
 		//mix reagents present inside
-		if(beaker?.reagents.total_volume && is_operational && anchored)
+		if(is_operational && anchored && beaker.reagents.total_volume)
+			var/static/radial_mix = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_mix")
 			options["mix"] = radial_mix
+
 	//examine action if Ai is trying to see whats up
 	if(HAS_AI_ACCESS(user))
-		if(machine_stat & NOPOWER)
-			return
 		var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
 		options["examine"] = radial_examine
 
@@ -381,16 +377,18 @@
 	)
 	if(!choice)
 		return
+
+	//act on choice
 	switch(choice)
 		if("eject")
 			replace_beaker(user)
 			dump_inventory_contents()
 		if("grind", "juice")
-			operate_for(60 DECISECONDS, choice == "juice", user)
+			operate_for(6 SECONDS, choice == "juice", user)
 		if("mix")
-			mix(50 DECISECONDS, user)
+			mix(5 SECONDS, user)
 		if("examine")
-			to_chat(user, examine_block("<span class='infoplain'>[examine(user)]</span>"))
+			to_chat(user, boxed_message(jointext(examine(user), "\n")))
 
 /**
  * Checks if the radial menu can interact with this machine
@@ -401,13 +399,7 @@
 /obj/machinery/reagentgrinder/proc/check_interactable(mob/user)
 	PRIVATE_PROC(TRUE)
 
-	if(!can_interact(user))
-		return FALSE
-
-	if(!anchored || operating || !user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return FALSE
-
-	return TRUE
+	return !operating && user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH)
 
 /**
  * Grinds/Juices all contents inside the grinder
@@ -420,55 +412,49 @@
 /obj/machinery/reagentgrinder/proc/operate_for(time, juicing = FALSE, mob/user)
 	PRIVATE_PROC(TRUE)
 
+	if(!anchored || !is_operational || QDELETED(beaker) || beaker.reagents.holder_full())
+		operating = FALSE
+		return
+	operating = TRUE
+
 	var/duration = time / speed
 
 	Shake(pixelshiftx = 1, pixelshifty = 0, duration = duration)
-	operating = TRUE
 	if(!juicing)
 		playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
 	else
 		playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 
 	var/total_weight
-	for(var/obj/item/weapon in src)
-		if((weapon in component_parts) || weapon == beaker)
-			continue
+	var/item_weight
+	for(var/obj/item/ingredient in contents)
 		if(beaker.reagents.holder_full())
 			break
+		if((ingredient in component_parts) || ingredient == beaker)
+			continue
 
-		//recursively process everything inside this atom
-		var/item_processed = FALSE
-		var/item_weight = weapon.w_class
-		for(var/obj/item/ingredient as anything in weapon.get_all_contents_type(/obj/item))
-			if(beaker.reagents.holder_full())
-				break
+		//record item weight before & after blending
+		item_weight = ingredient.w_class
 
-			if(juicing)
-				if(!ingredient.juice(beaker.reagents, user))
-					to_chat(user, span_danger("[src] shorts out as it tries to juice up [ingredient], and transfers it back to storage."))
-					continue
-				item_processed = TRUE
-			else if(length(ingredient.grind_results) || ingredient.reagents?.total_volume)
-				if(!ingredient.grind(beaker.reagents, user))
-					if(isstack(ingredient))
-						to_chat(user, span_notice("[src] attempts to grind as many pieces of [ingredient] as possible."))
-					else
-						to_chat(user, span_danger("[src] shorts out as it tries to grind up [ingredient], and transfers it back to storage."))
-					continue
-				item_processed = TRUE
+		if(juicing)
+			if(!ingredient.juice(beaker.reagents, user))
+				to_chat(user, span_danger("[src] shorts out as it tries to juice up [ingredient], and transfers it back to storage."))
+				continue
+		else if(!ingredient.grind(beaker.reagents, user))
+			if(isstack(ingredient))
+				to_chat(user, span_notice("[src] attempts to grind as many pieces of [ingredient] as possible."))
+			else
+				to_chat(user, span_danger("[src] shorts out as it tries to grind up [ingredient], and transfers it back to storage."))
+			continue
 
 		//happens only for stacks where some of the sheets were grinded so we roughly compute the weight grinded
-		if(item_weight != weapon.w_class)
-			total_weight += item_weight - weapon.w_class
+		if(item_weight != ingredient.w_class)
+			total_weight += item_weight - ingredient.w_class
 		else
 			total_weight += item_weight
 
-		//delete only if operation was successfull for atleast 1 item(also delete atoms for whom only some of its contents were processed as they are non functional now)
-		if(item_processed)
-			qdel(weapon)
-
 	//use power according to the total weight of items grinded
-	use_energy((active_power_usage * (duration / 1 SECONDS)) * (total_weight / maximum_weight))
+	use_energy((active_power_usage * (duration / (1 SECONDS))) * (total_weight / maximum_weight))
 
 	addtimer(CALLBACK(src, PROC_REF(stop_operating)), duration)
 
@@ -488,10 +474,15 @@
 /obj/machinery/reagentgrinder/proc/mix(time, mob/user)
 	PRIVATE_PROC(TRUE)
 
+	if(!anchored || !is_operational || QDELETED(beaker) || !beaker.reagents.total_volume)
+		operating = FALSE
+		return
+	operating = TRUE
+
 	var/duration = time / speed
 
 	Shake(pixelshiftx = 1, pixelshifty = 0, duration = duration)
-	operating = TRUE
+
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(mix_complete), duration), duration)
@@ -505,8 +496,7 @@
 /obj/machinery/reagentgrinder/proc/mix_complete(duration)
 	PRIVATE_PROC(TRUE)
 
-	if(QDELETED(beaker) || beaker.reagents.total_volume <= 0)
-		operating = FALSE
+	if(QDELETED(src) || !is_operational)
 		return
 
 	//Recipe to make Butter
@@ -517,14 +507,15 @@
 		var/obj/item/food/butter/tasty_butter = new(drop_location())
 		tasty_butter.reagents.set_all_reagents_purity(purity)
 
-	//Recipe to make Mayonnaise
-	if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
-		beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
-
-	//Recipe to make whipped cream
-	if (beaker.reagents.has_reagent(/datum/reagent/consumable/cream))
-		beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
-
-	//power consumed based on the ratio of total reagents mixed
-	use_energy((active_power_usage * (duration / 1 SECONDS)) * (beaker.reagents.total_volume / beaker.reagents.maximum_volume))
 	operating = FALSE
+
+	if (!beaker.reagents.total_volume)
+		return
+
+	//Recipe to make Mayonnaise
+	beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
+	//Recipe to make whipped cream
+	beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
+	//power consumed based on the ratio of total reagents mixed
+	use_energy((active_power_usage * (duration / (1 SECONDS))) * (beaker.reagents.total_volume / beaker.reagents.maximum_volume))
+

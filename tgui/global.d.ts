@@ -42,6 +42,16 @@ type ByondType = {
   windowId: string;
 
   /**
+   * True if javascript is running in BYOND.
+   */
+  IS_BYOND: boolean;
+
+  /**
+   * Version of Blink engine of WebView2. Null if N/A.
+   */
+  BLINK: number | null;
+
+  /**
    * If `true`, unhandled errors and common mistakes result in a blue screen
    * of death, which stops this window from handling incoming messages and
    * closes the active instance of tgui datum if there was one.
@@ -52,6 +62,11 @@ type ByondType = {
    * It is recommended that you keep this ON to detect hard to find bugs.
    */
   strictMode: boolean;
+
+  /**
+   * The external URL for the IndexedDB IFrame to use as the origin
+   */
+  storageCdn: string;
 
   /**
    * Makes a BYOND call.
@@ -85,14 +100,14 @@ type ByondType = {
    *
    * Returns a promise with a key-value object containing all properties.
    */
-  winget(id: string | null): Promise<object>;
+  winget(id: string | null): Promise<Record<string, any>>;
 
   /**
    * Retrieves all properties of the BYOND skin element.
    *
    * Returns a promise with a key-value object containing all properties.
    */
-  winget(id: string | null, propName: '*'): Promise<object>;
+  winget(id: string | null, propName: '*'): Promise<Record<string, any>>;
 
   /**
    * Retrieves an exactly one property of the BYOND skin element,
@@ -108,7 +123,7 @@ type ByondType = {
    *
    * Returns a promise with a key-value object containing listed properties.
    */
-  winget(id: string | null, propNames: string[]): Promise<object>;
+  winget(id: string | null, propNames: string[]): Promise<Record<string, any>>;
 
   /**
    * Assigns properties to BYOND skin elements in bulk.
@@ -158,16 +173,36 @@ type ByondType = {
    * Loads a script into the document.
    */
   loadJs(url: string): void;
+
+  /**
+   * Maps icons to their ref
+   */
+  iconRefMap: Record<string, string | undefined>;
+
+  /**
+   * Downloads a blob, platform-agnostic
+   */
+  saveBlob(blob: Blob, filename: string, ext: string): void;
 };
 
 /**
  * Object that provides access to Byond Skin API and is available in
  * any tgui application.
  */
-const Byond: ByondType;
+const Byond: ByondType = {};
 
 interface Window {
   Byond: ByondType;
-  __store__: Store<unknown, AnyAction>;
-  __augmentStack__: (store: Store) => StackAugmentor;
+  __augmentStack__: (stack: string, error?: Error) => string;
+
+  // IE IndexedDB stuff.
+  msIndexedDB: IDBFactory;
+  msIDBTransaction: IDBTransaction;
+
+  // 516 byondstorage API.
+  hubStorage: Storage;
+  domainStorage: Storage;
+  serverStorage: Storage;
+
+  __chatRenderer__: any;
 }

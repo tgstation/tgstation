@@ -105,6 +105,7 @@
 	default_price = PAYCHECK_LOWER
 	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
+	allow_custom = TRUE
 
 /obj/item/vending_refill/hydroseeds
 	machine_name = "MegaSeed Servitor"

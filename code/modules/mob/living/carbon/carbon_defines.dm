@@ -1,5 +1,6 @@
 /mob/living/carbon
-	blood_volume = BLOOD_VOLUME_NORMAL
+	abstract_type = /mob/living/carbon
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	gender = MALE
 	pressure_resistance = 15
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD)
@@ -11,6 +12,9 @@
 	usable_hands = 0 //Populated on init through list/bodyparts
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
 	blocks_emissive = EMISSIVE_BLOCK_NONE
+	mouse_drop_zone = TRUE
+	// STOP_OVERLAY_UPDATE_BODY_PARTS is removed after we call update_body_parts() during init.
+	living_flags = ALWAYS_DEATHGASP|STOP_OVERLAY_UPDATE_BODY_PARTS
 	///List of [/obj/item/organ]s in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
@@ -34,7 +38,7 @@
 	var/obj/item/tank/internal = null
 	/// "External" air tank. Never set this manually. Not required to stay directly equipped on the mob (i.e. could be a machine or MOD suit module).
 	var/obj/item/tank/external = null
-	var/obj/item/clothing/head = null
+	var/obj/item/head = null
 
 	///only used by humans
 	var/obj/item/clothing/gloves = null
@@ -45,20 +49,20 @@
 	///only used by humans.
 	var/obj/item/clothing/ears = null
 
-	/// Carbon, you should really only be accessing this through has_dna() but it's your life
+	/// DNA is carbon-only, and ideally you should be accessing it through has_dna(), but you can access it directly if you know you're working with a carbon mob
 	var/datum/dna/dna = null
 	///last mind to control this mob, for blood-based cloning
 	var/datum/mind/last_mind = null
 
 	///This is used to determine if the mob failed a breath. If they did fail a breath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
 	var/failed_last_breath = FALSE
+	///Sound loop for breathing when using internals
+	var/datum/looping_sound/breathing/breathing_loop
 
 	/// Used in [carbon/proc/check_breath] and [lungs/proc/check_breath]]
 	var/co2overloadtime = null
 
 	var/obj/item/food/meat/slab/type_of_meat = /obj/item/food/meat/slab
-
-	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
 
 	rotate_on_lying = TRUE
 
@@ -103,7 +107,7 @@
 	/// Assoc list of BODY_ZONE -> wounding_type. Set when a limb is dismembered, unset when one is attached. Used for determining what scar to add when it comes time to generate them.
 	var/list/body_zone_dismembered_by
 
-	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/human/biotechcompat/ for example.
+	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/biotechcompat/ for example.
 	var/skillchip_complexity_modifier = 0
 
 	/// Can other carbons be shoved into this one to make it fall?
@@ -123,3 +127,7 @@
 
 	COOLDOWN_DECLARE(bleeding_message_cd)
 
+	/// Obscured hide flags (hideflags that can't be seen AND can't be interacted with)
+	var/obscured_slots = NONE
+	/// Covered hide flags (hideflags that can be seen, BUT can't be interacted with)
+	var/covered_slots = NONE

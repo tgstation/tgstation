@@ -1,5 +1,12 @@
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+} from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosNetDos = (props) => {

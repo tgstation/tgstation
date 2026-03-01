@@ -3,10 +3,12 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_HUNGRY_MEOW = list("mrrp...", "mraw..."),
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_MAX_DISTANCE_TO_FOOD = 2,
 	)
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/beg_human,
@@ -54,13 +56,12 @@
 
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/human_beg, BB_HUMAN_BEG_TARGET, /mob/living/carbon/human)
 
-/datum/ai_behavior/find_and_set/human_beg/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/human_beg/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/locate_items = controller.blackboard[BB_HUNTABLE_PREY]
 	for(var/mob/living/carbon/human/human_target in oview(search_range, controller.pawn))
 		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
 			continue
-		if(!length(typecache_filter_list(human_target.held_items, locate_items)))
-			continue
-		return human_target
-
+		for (var/obj/item/held_item in human_target.held_items)
+			if (is_type_in_typecache(held_item, locate_items))
+				return human_target
 	return null

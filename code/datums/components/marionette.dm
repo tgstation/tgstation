@@ -29,8 +29,10 @@
 /datum/component/marionette/proc/on_pull(atom/movable/source, atom/movable/puller, force)
 	SIGNAL_HANDLER
 
-	if(!puller)
+	if(!puller || grabber == puller)
 		return
+	if(grabber)
+		UnregisterSignal(grabber, list(COMSIG_MOVABLE_KEYBIND_FACE_DIR, COMSIG_MOB_SAY, COMSIG_QDELETING))
 	grabber = puller
 	RegisterSignal(grabber, COMSIG_MOVABLE_KEYBIND_FACE_DIR, PROC_REF(on_puller_turn))
 	RegisterSignal(grabber, COMSIG_MOB_SAY, PROC_REF(on_puller_speech))

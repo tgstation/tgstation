@@ -115,7 +115,7 @@
 /obj/effect/cross_action/singularity_act()
 	return
 
-/obj/effect/cross_action/singularity_pull()
+/obj/effect/cross_action/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/cross_action/spacetime_dist/Initialize(mapload, flags = MAGIC_RESISTANCE)
@@ -149,7 +149,7 @@
 	if(!busy)
 		walk_link(AM)
 
-/obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, params)
+/obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(user.temporarilyRemoveItemFromInventory(W))
 		walk_link(W)
 	else

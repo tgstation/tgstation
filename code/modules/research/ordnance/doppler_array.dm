@@ -15,7 +15,7 @@
 	/// List of all explosion records in the form of /datum/data/tachyon_record
 	var/list/records = list()
 	/// Reference to a disk we are going to print to.
-	var/obj/item/computer_disk/inserted_disk
+	var/obj/item/disk/computer/inserted_disk
 
 	// Lighting system to better communicate the directions.
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
@@ -31,7 +31,7 @@
 	update_doppler_light()
 
 	// Rotation determines the detectable direction.
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 
 /datum/data/tachyon_record
 	name = "Log Recording"
@@ -48,9 +48,9 @@
 	. = ..()
 	. += span_notice("It is currently facing [dir2text(dir)]")
 
-/obj/machinery/doppler_array/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/computer_disk))
-		var/obj/item/computer_disk/disk = item
+/obj/machinery/doppler_array/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(item, /obj/item/disk/computer))
+		var/obj/item/disk/computer/disk = item
 		eject_disk(user)
 		if(user.transferItemToLoc(disk, src))
 			inserted_disk = disk
@@ -89,7 +89,7 @@
 	if(inserted_disk.add_file(record_data))
 		playsound(src, 'sound/machines/ping.ogg', 25)
 	else
-		playsound(src, 'sound/machines/terminal_error.ogg', 25)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 25)
 
 /**
  * Checks a specified tachyon record for fitting reactions, then returns a list with
@@ -207,10 +207,10 @@
 /obj/machinery/doppler_array/proc/eject_disk(mob/user)
 	if(!inserted_disk)
 		return FALSE
-	if(user)
-		user.put_in_hands(inserted_disk)
-	else
+	if(!user || !Adjacent(user))
 		inserted_disk.forceMove(drop_location())
+	else
+		user.put_in_hands(inserted_disk)
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 	return TRUE
 
@@ -243,8 +243,8 @@
 
 /obj/machinery/doppler_array/Destroy()
 	inserted_disk = null
-	QDEL_NULL(records) //We only want the list nuked, not the contents.
-	. = ..()
+	records.Cut() // We only want to clear the list itself, not delete its contents.
+	return ..()
 
 /obj/machinery/doppler_array/proc/update_doppler_light()
 	SIGNAL_HANDLER
@@ -290,7 +290,7 @@
 		data["records"] += list(record_data)
 	return data
 
-/obj/machinery/doppler_array/ui_act(action, list/params)
+/obj/machinery/doppler_array/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

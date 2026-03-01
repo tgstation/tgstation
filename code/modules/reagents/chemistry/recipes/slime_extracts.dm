@@ -21,9 +21,9 @@
 		delete_extract(holder)
 
 /datum/chemical_reaction/slime/proc/delete_extract(datum/reagents/holder)
-	var/obj/item/slime_extract/M = holder.my_atom
-	if(M.extract_uses <= 0 && !results.len) //if the slime doesn't output chemicals
-		qdel(M)
+	var/obj/item/slime_extract/extract = holder.my_atom
+	if(!isnull(extract) && extract.extract_uses <= 0 && !length(results)) //if the slime doesn't output chemicals
+		qdel(extract)
 
 //Grey
 /datum/chemical_reaction/slime/slimespawn
@@ -65,6 +65,21 @@
 	required_reagents = list(/datum/reagent/uranium/radium = 1)
 	required_container = /obj/item/slime_extract/green
 
+/datum/chemical_reaction/slime/slimefelinid
+	results = list(/datum/reagent/mutationtoxin/felinid = 1)
+	required_reagents = list(/datum/reagent/consumable/milk = 1)
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimemoth
+	results = list(/datum/reagent/mutationtoxin/moth = 1)
+	required_reagents = list(/datum/reagent/cellulose = 1)
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimeethereal
+	results = list(/datum/reagent/mutationtoxin/ethereal = 1)
+	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 1)
+	required_container = /obj/item/slime_extract/green
+
 //Metal
 /datum/chemical_reaction/slime/slimemetal
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
@@ -88,7 +103,7 @@
 
 //Gold
 /datum/chemical_reaction/slime/slimemobspawn
-	required_reagents = list(/datum/reagent/toxin/plasma = 1)
+	required_reagents = list(/datum/reagent/toxin/plasma = 15)
 	required_container = /obj/item/slime_extract/gold
 	deletes_extract = FALSE //we do delete, but we don't do so instantly
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME | REACTION_TAG_DANGEROUS
@@ -103,7 +118,7 @@
 
 /datum/chemical_reaction/slime/slimemobspawn/proc/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message(span_danger("The slime extract begins to vibrate violently!"))
-	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 5, "Gold Slime", HOSTILE_SPAWN), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(chemical_mob_spawn), holder, 4, "Gold Slime", HOSTILE_SPAWN), 5 SECONDS)
 
 /datum/chemical_reaction/slime/slimemobspawn/lesser
 	required_reagents = list(/datum/reagent/blood = 1)
@@ -147,7 +162,7 @@
 		var/obj/item/food_item = new chosen(T)
 		ADD_TRAIT(food_item, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 		if(prob(5))//Fry it!
-			food_item.AddElement(/datum/element/fried_item, rand(15, 60))
+			food_item.AddElement(/datum/element/fried_item, rand(15, 60) SECONDS)
 		if(prob(5))//Grill it!
 			food_item.AddElement(/datum/element/grilled_item, rand(30 SECONDS, 100 SECONDS))
 		if(prob(50))
@@ -222,7 +237,7 @@
 	required_container = /obj/item/slime_extract/orange
 
 /datum/chemical_reaction/slime/slimefire
-	required_reagents = list(/datum/reagent/toxin/plasma = 1)
+	required_reagents = list(/datum/reagent/toxin/plasma = 15)
 	required_container = /obj/item/slime_extract/orange
 	deletes_extract = FALSE
 
@@ -249,12 +264,17 @@
 
 //Yellow
 /datum/chemical_reaction/slime/slimeoverload
-	required_reagents = list(/datum/reagent/blood = 1)
+	required_reagents = list(/datum/reagent/blood = 15)
 	required_container = /obj/item/slime_extract/yellow
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/slime/slimeoverload/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	empulse(get_turf(holder.my_atom), 3, 7)
+	var/turf/turf = get_turf(holder.my_atom)
+	var/lastkey = holder.my_atom.fingerprintslast
+	empulse(get_turf(holder.my_atom), 3, 5, emp_source = src)
+	if(lastkey)
+		var/mob/toucher = get_mob_by_key(lastkey)
+		toucher.log_message("triggered EMP reaction at [AREACOORD(turf)].", LOG_GAME, log_globally = FALSE)
 	..()
 
 /datum/chemical_reaction/slime/slimecell
@@ -356,7 +376,7 @@
 
 //Oil
 /datum/chemical_reaction/slime/slimeexplosion
-	required_reagents = list(/datum/reagent/toxin/plasma = 1)
+	required_reagents = list(/datum/reagent/toxin/plasma = 15)
 	required_container = /obj/item/slime_extract/oil
 	deletes_extract = FALSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME | REACTION_TAG_DANGEROUS
@@ -380,11 +400,11 @@
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
 	if(holder?.my_atom)
-		explosion(holder.my_atom, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
+		explosion(holder.my_atom, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, explosion_cause = src)
 
 
 /datum/chemical_reaction/slime/slimeoil
-	results = list(/datum/reagent/consumable/nutriment/fat/oil = 10)
+	results = list(/datum/reagent/consumable/nutriment/fat/oil/corn = 10)
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/oil
 
@@ -394,7 +414,7 @@
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 
 /datum/chemical_reaction/slime/slimepotion2/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/slimepotion/slime/sentience(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/sentience(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/renaming
@@ -402,13 +422,13 @@
 	required_reagents = list(/datum/reagent/water = 1)
 
 /datum/chemical_reaction/slime/renaming/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/slimepotion/slime/renaming(holder.my_atom.drop_location())
+	new /obj/item/slimepotion/renaming(holder.my_atom.drop_location())
 	..()
 
 
 //Adamantine
 /datum/chemical_reaction/slime/adamantine
-	required_reagents = list(/datum/reagent/toxin/plasma = 1)
+	required_reagents = list(/datum/reagent/toxin/plasma = 15)
 	required_container = /obj/item/slime_extract/adamantine
 
 /datum/chemical_reaction/slime/adamantine/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -431,7 +451,7 @@
 
 /datum/chemical_reaction/slime/slimecrystal/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/obj/item/stack/ore/bluespace_crystal/BC = new (get_turf(holder.my_atom))
-	BC.visible_message(span_notice("The [BC.name] appears out of thin air!"))
+	BC.visible_message(span_notice("\The [BC] appears out of thin air!"))
 	..()
 
 /datum/chemical_reaction/slime/slimeradio
@@ -439,7 +459,7 @@
 	required_container = /obj/item/slime_extract/bluespace
 
 /datum/chemical_reaction/slime/slimeradio/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/slimepotion/slime/slimeradio(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/slimeradio(get_turf(holder.my_atom))
 	..()
 
 //Cerulean

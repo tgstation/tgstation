@@ -1,6 +1,3 @@
-import { toFixed } from 'common/math';
-
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -8,7 +5,10 @@ import {
   LabeledList,
   NoticeBox,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const ExosuitControlConsole = (props) => {
@@ -68,7 +68,7 @@ export const ExosuitControlConsole = (props) => {
                     'good'
                   }
                 >
-                  {(typeof mech.charge === 'number' && mech.charge + '%') ||
+                  {(typeof mech.charge === 'number' && `${mech.charge}%`) ||
                     'Not Found'}
                 </Box>
               </LabeledList.Item>
@@ -76,7 +76,7 @@ export const ExosuitControlConsole = (props) => {
                 {(typeof mech.airtank === 'number' && (
                   <AnimatedNumber
                     value={mech.airtank}
-                    format={(value) => toFixed(value, 2) + ' kPa'}
+                    format={(value) => `${toFixed(value, 2)} kPa`}
                   />
                 )) ||
                   'Not Equipped'}

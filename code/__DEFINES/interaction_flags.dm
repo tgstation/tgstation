@@ -26,6 +26,8 @@
 #define INTERACT_ATOM_MOUSEDROP_IGNORE_USABILITY (1<<12)
 /// Bypass all adjacency and other checks for mouse drop
 #define INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS (INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT | INTERACT_ATOM_MOUSEDROP_IGNORE_USABILITY)
+/// calls try_interact() on attack_paw() and returns that.
+#define INTERACT_ATOM_ATTACK_PAW (1<<13)
 
 /// attempt pickup on attack_hand for items
 #define INTERACT_ITEM_ATTACK_HAND_PICKUP (1<<0)
@@ -46,3 +48,5 @@
 #define INTERACT_MACHINE_REQUIRES_SIGHT (1<<6)
 /// the user must be able to read to interact
 #define INTERACT_MACHINE_REQUIRES_LITERACY (1<<7)
+/// user must be standing up in order to interact
+#define INTERACT_MACHINE_REQUIRES_STANDING (1<<8)

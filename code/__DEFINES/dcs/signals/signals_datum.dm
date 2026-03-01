@@ -14,17 +14,21 @@
 #define COMSIG_PREQDELETED "parent_preqdeleted"
 /// just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
 #define COMSIG_QDELETING "parent_qdeleting"
+/// Called whenever an admin manually deletes an object, via the "Delete" verb, before qdel() is called: (client/deleting_admin)
+#define COMSIG_ADMIN_DELETING "parent_admin_deleting"
 /// generic topic handler (usr, href_list)
 #define COMSIG_TOPIC "handle_topic"
 /// handler for vv_do_topic (usr, href_list)
 #define COMSIG_VV_TOPIC "vv_topic"
 	#define COMPONENT_VV_HANDLED (1<<0)
 /// from datum ui_act (usr, action)
-#define COMSIG_UI_ACT "COMSIG_UI_ACT"
+#define COMSIG_UI_ACT "ui_act"
+/// from datum/tgui/get_payload(user, list/data)
+#define COMSIG_UI_DATA "ui_data"
 
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"
-/// fires on the target datum when an element is attached to it  (/datum/element)
+/// fires on the target datum when an element is detached from it (/datum/element)
 #define COMSIG_ELEMENT_DETACH "element_detach"
 
 // Merger datum signals
@@ -45,3 +49,13 @@
 
 ///from /datum/bank_account/pay_debt(), after a portion or all the debt has been paid.
 #define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"
+
+///from /datum/component/on_hit_effect/send_signal(): (user, target, hit_zone)
+#define COMSIG_ON_HIT_EFFECT "comsig_on_hit_effect"
+
+///from /datum/component/bubble_icon_override/get_bubble_icon(): (list/holder)
+#define COMSIG_GET_BUBBLE_ICON "get_bubble_icon"
+
+///from /datum/sprite_editor_workspace/is_valid_color(): (color)
+#define COMSIG_SPRITE_EDITOR_VALIDATE_COLOR "sprite_editor_validate_color"
+	#define COLOR_IS_INVALID (1<<0)

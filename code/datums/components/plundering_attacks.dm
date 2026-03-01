@@ -44,7 +44,7 @@
 		amount_to_steal = account_to_rob.account_balance
 	plunder_stored += amount_to_steal
 	account_to_rob.adjust_money(-amount_to_steal)
-	account_to_rob.bank_card_talk("Transaction confirmed! Transferred [amount_to_steal] credits to \<NULL_ACCOUNT\>!")
+	account_to_rob.bank_card_talk("Transaction confirmed! Transferred [amount_to_steal] [MONEY_NAME] to \<NULL_ACCOUNT\>!")
 
 /datum/component/plundering_attacks/proc/drop_plunder()
 	SIGNAL_HANDLER

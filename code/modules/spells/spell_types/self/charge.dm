@@ -5,12 +5,12 @@
 		to grant magical power to a fellow magic user."
 	button_icon_state = "charge"
 
-	sound = 'sound/magic/charge.ogg'
+	sound = 'sound/effects/magic/charge.ogg'
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 60 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
 
-	invocation = "DIRI CEL"
+	invocation = "Diri Cel!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 

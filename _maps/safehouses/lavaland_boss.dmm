@@ -63,7 +63,7 @@
 /obj/machinery/light/directional/east,
 /obj/structure/railing,
 /obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "A" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{

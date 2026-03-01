@@ -1,7 +1,7 @@
 //Hydroponics tank and base code
 /obj/item/watertank
 	name = "backpack water tank"
-	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
+	desc = "A S.U.N.S.H.I.N.E. brand water tank backpack with a nozzle to water plants."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	inhand_icon_state = "waterbackpack"
@@ -28,6 +28,7 @@
 	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
 	RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/watertank/Destroy()
 	QDEL_NULL(noz)
@@ -37,17 +38,13 @@
 /obj/item/watertank/ui_action_click(mob/user)
 	toggle_mister(user)
 
-/obj/item/watertank/item_action_slot_check(slot, mob/user)
-	if(slot & user.getBackSlot())
-		return 1
-
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
 	if(!istype(user))
 		return
 	if(user.get_item_by_slot(user.getBackSlot()) != src)
 		to_chat(user, span_warning("The watertank must be worn properly to use!"))
 		return
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 
 	if(QDELETED(noz))
@@ -94,13 +91,7 @@
 	else
 		return ..()
 
-/obj/item/watertank/mouse_drop_dragged(atom/over_object)
-	var/mob/M = loc
-	if(istype(M) && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
-/obj/item/watertank/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/watertank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item == noz)
 		remove_noz()
 		return TRUE
@@ -290,13 +281,16 @@
 /obj/item/extinguisher/mini/nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(AttemptRefill(interacting_with, user))
 		return NONE
+	return ..()
+
+/obj/item/extinguisher/mini/nozzle/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(nozzle_mode == EXTINGUISHER)
 		return ..()
 
 	var/Adj = user.Adjacent(interacting_with)
 	if(nozzle_mode == RESIN_LAUNCHER)
-		if(Adj)
-			return ITEM_INTERACT_BLOCKING //Safety check so you don't blast yourself trying to refill your tank
+		if(Adj && user.combat_mode)
+			return ITEM_INTERACT_SKIP_TO_ATTACK
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
 			balloon_alert(user, "not enough water!")
@@ -316,7 +310,9 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(nozzle_mode == RESIN_FOAM)
-		if(!Adj || !isturf(interacting_with))
+		if(!isturf(interacting_with))
+			return NONE
+		if(!Adj)
 			balloon_alert(user, "too far!")
 			return ITEM_INTERACT_BLOCKING
 		for(var/thing in interacting_with)
@@ -362,14 +358,12 @@
 	anchored = TRUE
 
 /obj/effect/resin_container/proc/Smoke()
-	var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
-	foaming.set_up(4, holder = src, location = loc)
-	foaming.start()
+	do_foam(4, src, loc, foam_type = /datum/effect_system/fluid_spread/foam/metal/resin)
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
 
 // Please don't spacedrift thanks
-/obj/effect/resin_container/newtonian_move(direction, instant = FALSE, start_delay = 0)
+/obj/effect/resin_container/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 0, controlled_cap = null)
 	return TRUE
 
 #undef EXTINGUISHER
@@ -395,18 +389,13 @@
 	/// How much to inject per second
 	var/injection_amount = 0.5
 	amount_per_transfer_from_this = 5
-	reagent_flags = OPENCONTAINER
-	spillable = FALSE
+	initial_reagent_flags = TRANSPARENT
 	possible_transfer_amounts = list(5,10,15)
 	fill_icon_thresholds = list(0, 15, 60)
 	fill_icon_state = "backpack"
 
 /obj/item/reagent_containers/chemtank/ui_action_click()
 	toggle_injection()
-
-/obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
-	if(slot & ITEM_SLOT_BACK)
-		return 1
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr

@@ -1,5 +1,6 @@
+import { Button, Dimmer, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Dimmer, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const STORY_VALUE_KEY = -1;

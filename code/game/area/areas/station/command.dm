@@ -2,7 +2,7 @@
 	name = "Command"
 	icon_state = "command"
 	ambientsounds = list(
-		'sound/ambience/signal.ogg',
+		'sound/ambience/misc/signal.ogg',
 		)
 	airlock_wires = /datum/wires/airlock/command
 	sound_environment = SOUND_AREA_STANDARD_STATION
@@ -35,6 +35,22 @@
 	name = "\improper Corporate Emergency Closet"
 	icon_state = "command"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+// Monitored areas
+
+/area/station/command/eva
+	name = "EVA Storage"
+	icon_state = "eva"
+	ambience_index = AMBIENCE_DANGER
+	motion_monitored = TRUE
+
+/area/station/command/eva/upper
+	name = "Upper EVA Storage"
+
+/area/station/command/vault
+	name = "\improper Vault"
+	icon_state = "nuke_storage" // someone should change this, not me though
+	motion_monitored = TRUE
 
 /*
 * Command Head Areas

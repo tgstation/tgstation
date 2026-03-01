@@ -1,6 +1,7 @@
 /obj/item/clothing/head/costume
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	abstract_type = /obj/item/clothing/head/costume
 
 /obj/item/clothing/head/costume/powdered_wig
 	name = "powdered wig"
@@ -50,10 +51,20 @@
 	inhand_icon_state = null
 	flags_inv = HIDEHAIR
 
-/obj/item/clothing/head/costume/maidheadband
+/obj/item/clothing/head/costume/maid_headband
 	name = "maid headband"
 	desc = "Just like from one of those chinese cartoons!"
-	icon_state = "maid_headband"
+	greyscale_colors = "#494955#EEEEEE"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/maid_headband"
+	post_init_icon_state = "maid"
+	greyscale_config = /datum/greyscale_config/maid_headband
+	greyscale_config_worn = /datum/greyscale_config/maid_headband/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/maid_headband_inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/maid_headband_inhands_right
+	inhand_icon_state = "maid"
+	flags_1 = IS_PLAYER_COLORABLE_1
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/head/costume/chicken
 	name = "chicken suit head"
@@ -87,6 +98,10 @@
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
+/obj/item/clothing/head/costume/lobsterhat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
+
 /obj/item/clothing/head/costume/drfreezehat
 	name = "doctor freeze's wig"
 	desc = "A cool wig for cool people."
@@ -109,20 +124,17 @@
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
 
 /obj/item/clothing/head/costume/cardborg/equipped(mob/living/user, slot)
 	..()
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
-		var/mob/living/carbon/human/H = user
-		if(istype(H.wear_suit, /obj/item/clothing/suit/costume/cardborg))
-			var/obj/item/clothing/suit/costume/cardborg/CB = H.wear_suit
-			CB.disguise(user, src)
-
-/obj/item/clothing/head/costume/cardborg/dropped(mob/living/user)
-	..()
-	user.remove_alt_appearance("standard_borg_disguise")
+		var/mob/living/carbon/human/human_user = user
+		if(istype(human_user.wear_suit, /obj/item/clothing/suit/costume/cardborg))
+			var/obj/item/clothing/suit/costume/cardborg/suit = human_user.wear_suit
+			suit.disguise(user, src)
 
 /obj/item/clothing/head/costume/bronze
 	name = "bronze hat"
@@ -131,21 +143,26 @@
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor_type = /datum/armor/costume_bronze
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/head/costume/fancy
 	name = "fancy hat"
-	icon_state = "fancy_hat"
-	greyscale_colors = "#E3C937#782A81"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/fancy"
+	post_init_icon_state = "fancy_hat"
 	greyscale_config = /datum/greyscale_config/fancy_hat
 	greyscale_config_worn = /datum/greyscale_config/fancy_hat/worn
+	greyscale_colors = "#E3C937#782A81"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/football_helmet
 	name = "football helmet"
-	icon_state = "football_helmet"
-	greyscale_colors = "#D74722"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/football_helmet"
+	post_init_icon_state = "football_helmet"
 	greyscale_config = /datum/greyscale_config/football_helmet
 	greyscale_config_worn = /datum/greyscale_config/football_helmet/worn
+	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/tv_head
@@ -156,10 +173,9 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi' //Grandfathered in from the wallframe for status displays.
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	clothing_flags = SNUG_FIT
-	flash_protect = FLASH_PROTECTION_SENSITIVE
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	var/has_fov = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 /datum/armor/costume_bronze
 	melee = 5
@@ -168,15 +184,6 @@
 	bomb = 10
 	fire = 20
 	acid = 20
-
-/obj/item/clothing/head/costume/tv_head/Initialize(mapload)
-	. = ..()
-	if(has_fov)
-		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
-
-/obj/item/clothing/head/costume/tv_head/fov_less
-	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you. It's very easy to see out of this one."
-	has_fov = FALSE
 
 /obj/item/clothing/head/costume/irs
 	name = "internal revenue service cap"
@@ -195,6 +202,9 @@
 	desc = "A neon-blue pair of headphones. They look neo-futuristic."
 	icon_state = "decker_hat"
 	inhand_icon_state = null
+	equip_sound = SFX_HEADSET_EQUIP
+	pickup_sound = SFX_HEADSET_PICKUP
+	drop_sound = 'sound/items/handling/headset/headset_drop1.ogg'
 
 /obj/item/clothing/head/costume/yuri
 	name = "yuri initiate helmet"
@@ -210,3 +220,29 @@
 	It's only a replica, and probably wouldn't protect you from anything."
 	icon_state = "allies_helmet"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/costume/hairpin
+	name = "fancy hairpin"
+	desc = "A delicate hairpin normally paired with traditional clothing"
+	icon_state = "hairpin_fancy"
+	inhand_icon_state = "hairpin_fancy"
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+
+/obj/item/clothing/head/costume/snakeeater
+	name = "strange bandana"
+	desc = "A bandana. It seems to have a little carp embroidered on the inside, as well as the kanji '魚'."
+	icon_state = "snake_eater"
+	inhand_icon_state = null
+	clothing_traits = list(TRAIT_FISH_EATER)
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+
+/obj/item/clothing/head/costume/knight
+	name = "fake medieval helmet"
+	desc = "A classic metal helmet. Though, this one seems to be very obviously fake..."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
+	icon_state = "knight_green"
+	inhand_icon_state = "knight_helmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	dog_fashion = null

@@ -25,7 +25,7 @@
 		/datum/reagent/consumable/ice = 4,
 	)
 	tastes = list("ice cream" = 2, "berry" = 2)
-	foodtypes = FRUIT | DAIRY | SUGAR
+	foodtypes = GRAIN|FRUIT|DAIRY|SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	crafting_complexity = FOOD_COMPLEXITY_3
 	crafted_food_buff = /datum/status_effect/food/chilling
@@ -42,7 +42,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("blue cherries" = 2, "ice cream" = 2)
-	foodtypes = FRUIT | DAIRY | SUGAR
+	foodtypes = GRAIN|FRUIT|DAIRY|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 	crafted_food_buff = /datum/status_effect/food/chilling
 
@@ -62,7 +62,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("ice cream" = 1, "banana" = 1)
-	foodtypes = FRUIT | DAIRY | SUGAR
+	foodtypes = GRAIN|FRUIT|DAIRY|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 	crafted_food_buff = /datum/status_effect/food/chilling
 
@@ -82,7 +82,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
-	foodtypes = FRUIT | DAIRY | SUGAR
+	foodtypes = GRAIN|FRUIT|DAIRY|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
 	crafted_food_buff = /datum/status_effect/food/chilling
 
@@ -109,6 +109,15 @@
 	food_flags = FOOD_FINGER_FOOD
 	crafting_complexity = FOOD_COMPLEXITY_2
 	crafted_food_buff = /datum/status_effect/food/chilling
+
+/obj/item/food/snowcones/on_craft_completion(list/components, datum/crafting_recipe/food/current_recipe, atom/crafter)
+	. = ..()
+	// replaces the ice from the input with water
+	reagents.remove_reagent(/datum/reagent/consumable/ice, 15)
+	reagents.add_reagent(/datum/reagent/water, 11)
+	// then add 1u nutriment for free
+	reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
+	// the juice component will be transferred in from crafting
 
 /obj/item/food/snowcones/lime
 	name = "lime snowcone"
@@ -349,7 +358,7 @@
 
 /obj/item/food/popsicle/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_bite)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_bite)))
 
 /obj/item/food/popsicle/update_overlays()
 	. = ..()
@@ -437,7 +446,7 @@
 		/datum/reagent/consumable/sugar = 2,
 	)
 	tastes = list("chopped hazelnuts", "waffle")
-	foodtypes = DAIRY | SUGAR
+	foodtypes = GRAIN|DAIRY|SUGAR
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	crafted_food_buff = /datum/status_effect/food/chilling
@@ -454,3 +463,4 @@
 	overlay_state = "meatsicle"
 	foodtypes = RAW | MEAT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)

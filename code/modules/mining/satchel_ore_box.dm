@@ -8,6 +8,7 @@
 	desc = "A heavy wooden box, which can be filled with a lot of ores or boulders"
 	density = TRUE
 	pressure_resistance = 5 * ONE_ATMOSPHERE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/structure/ore_box/Initialize(mapload)
 	. = ..()
@@ -55,7 +56,7 @@
 		deconstruct(TRUE)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/structure/ore_box/attackby(obj/item/weapon, mob/user, params)
+/obj/structure/ore_box/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/stack/ore) || istype(weapon, /obj/item/boulder))
 		user.transferItemToLoc(weapon, src)
 		return TRUE
@@ -65,6 +66,13 @@
 		return TRUE
 	else
 		return ..()
+
+/obj/structure/ore_box/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived, /obj/item/boulder) && ismecha(loc)) //Boulders being put into a mech's orebox get processed
+		var/obj/item/boulder/to_process = arrived
+		to_process.convert_to_ore(src)
+		qdel(to_process)
 
 /obj/structure/ore_box/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -95,7 +103,7 @@
 
 	return list("materials" = materials)
 
-/obj/structure/ore_box/ui_act(action, params)
+/obj/structure/ore_box/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -4,15 +4,20 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "preferred_ai_emote_display"
 	should_generate_icons = TRUE
+	should_update_preview = FALSE
 
 /datum/preference/choiced/ai_emote_display/init_possible_values()
-	return assoc_to_keys(GLOB.ai_status_display_emotes)
+	if(!length(GLOB.ai_status_display_all_options))
+		init_ai_status_display_options()
+	return assoc_to_keys(GLOB.ai_status_display_all_options)
 
 /datum/preference/choiced/ai_emote_display/icon_for(value)
 	if (value == "Random")
-		return icon('icons/mob/silicon/ai.dmi', "questionmark")
+		return uni_icon('icons/mob/silicon/ai.dmi', "questionmark")
 	else
-		return icon('icons/obj/machines/status_display.dmi', GLOB.ai_status_display_emotes[value])
+		if(!length(GLOB.ai_status_display_all_options))
+			init_ai_status_display_options()
+		return uni_icon('icons/obj/machines/status_display.dmi', GLOB.ai_status_display_all_options[value])
 
 /datum/preference/choiced/ai_emote_display/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

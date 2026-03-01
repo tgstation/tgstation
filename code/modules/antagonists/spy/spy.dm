@@ -3,11 +3,13 @@
 	roundend_category = "spies"
 	antagpanel_category = "Spy"
 	antag_hud_name = "spy"
-	job_rank = ROLE_SPY
+	pref_flag = ROLE_SPY
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 1
 	ui_name = "AntagInfoSpy"
 	preview_outfit = /datum/outfit/spy
+	can_assign_self_objectives = TRUE
+	default_custom_objective = "Rob the station blind."
 	/// Whether an uplink has been created (successfully or at all)
 	var/uplink_created = FALSE
 	/// String displayed in the antag panel pointing the spy to where their uplink is.
@@ -28,7 +30,7 @@
 	if(spawn_with_objectives)
 		give_random_objectives()
 	. = ..()
-	SEND_SOUND(owner.current, sound('sound/ambience/antag/spy.ogg'))
+	SEND_SOUND(owner.current, sound('sound/music/antag/spy.ogg'))
 
 /datum/antagonist/spy/ui_static_data(mob/user)
 	var/list/data = ..()
@@ -203,7 +205,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
 	head = /obj/item/clothing/head/fedora
-	suit = /obj/item/clothing/suit/jacket/trenchcoat
+	suit = /obj/item/clothing/suit/jacket/leather_trenchcoat
 	glasses = /obj/item/clothing/glasses/osi
 	ears = /obj/item/radio/headset
 
@@ -222,7 +224,7 @@
 		stack_trace("[type] created on invalid target [Target || "null"]")
 		qdel(src)
 
-/datum/action/backup_uplink/Trigger(trigger_flags)
+/datum/action/backup_uplink/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

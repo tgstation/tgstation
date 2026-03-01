@@ -2,6 +2,10 @@
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "prosthetic_organ"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = FALSE
+
+/datum/preference/choiced/prosthetic_organ/create_default_value()
+	return "Random"
 
 /datum/preference/choiced/prosthetic_organ/init_possible_values()
 	return list("Random") + GLOB.organ_choice

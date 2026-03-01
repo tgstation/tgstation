@@ -27,6 +27,7 @@
 	icon_screen = "seclaptop"
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE
+	projectiles_pass_chance = 100
 
 /obj/machinery/computer/records/security/laptop/syndie
 	desc = "A cheap, jailbroken security laptop. It functions as a security records console. It's bolted to the table."
@@ -34,10 +35,12 @@
 
 /obj/machinery/computer/records/security/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/arrest_console_data,
-		/obj/item/circuit_component/arrest_console_arrest,
-	))
+	AddComponent(/datum/component/usb_port, \
+		typecacheof(list(
+			/obj/item/circuit_component/arrest_console_data,
+			/obj/item/circuit_component/arrest_console_arrest,
+		), only_root_path = TRUE) \
+	)
 
 /obj/machinery/computer/records/security/emp_act(severity)
 	. = ..()
@@ -65,11 +68,11 @@
 			qdel(target)
 			continue
 
-/obj/machinery/computer/records/security/attacked_by(obj/item/attacking_item, mob/living/user)
-	. = ..()
-	if(!istype(attacking_item, /obj/item/photo))
-		return
-	insert_new_record(user, attacking_item)
+/obj/machinery/computer/records/security/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/photo))
+		return NONE
+	insert_new_record(user, tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/records/security/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -77,7 +80,6 @@
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		character_preview_view = create_character_preview_view(user)
 		ui = new(user, src, "SecurityRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -102,6 +104,7 @@
 				paid = warrant.paid,
 				time = warrant.time,
 				valid = warrant.valid,
+				voider = warrant.voider,
 			))
 
 		var/list/crimes = list()
@@ -113,6 +116,7 @@
 				name = crime.name,
 				time = crime.time,
 				valid = crime.valid,
+				voider = crime.voider,
 			))
 
 		records += list(list(
@@ -177,7 +181,7 @@
 
 		if("set_note")
 			var/note = strip_html_full(params["note"], MAX_MESSAGE_LEN)
-			investigate_log("[user] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".")
+			investigate_log("[user] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".", INVESTIGATE_RECORDS)
 			target.security_note = note
 			return TRUE
 
@@ -202,13 +206,13 @@
 	var/input_name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
 	if(!input_name)
 		to_chat(usr, span_warning("You must enter a name for the crime."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 75, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 75, TRUE)
 		return FALSE
 
 	var/max = CONFIG_GET(number/maxfine)
 	if(params["fine"] > max)
-		to_chat(usr, span_warning("The maximum fine is [max] credits."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 75, TRUE)
+		to_chat(usr, span_warning("The maximum fine is [max] [MONEY_NAME]."))
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 75, TRUE)
 		return FALSE
 
 	var/input_details
@@ -219,6 +223,7 @@
 		var/datum/crime/new_crime = new(name = input_name, details = input_details, author = usr)
 		target.crimes += new_crime
 		investigate_log("New Crime: <strong>[input_name]</strong> | Added to [target.name] by [key_name(user)]. Their previous status was [target.wanted_status]", INVESTIGATE_RECORDS)
+		SSblackbox.ReportCitation(REF(new_crime), user.ckey, user.real_name, target.name, input_name, input_details)
 		target.wanted_status = WANTED_ARREST
 
 		update_matching_security_huds(target.name)
@@ -228,9 +233,9 @@
 	var/datum/crime/citation/new_citation = new(name = input_name, details = input_details, author = usr, fine = params["fine"])
 
 	target.citations += new_citation
-	new_citation.alert_owner(user, src, target.name, "You have been issued a [params["fine"]]cr citation for [input_name]. Fines are payable at Security.")
+	new_citation.alert_owner(user, src, target.name, "You have been issued a [params["fine"]][MONEY_SYMBOL] citation for [input_name]. Fines are payable at Security.")
 	investigate_log("New Citation: <strong>[input_name]</strong> Fine: [params["fine"]] | Added to [target.name] by [key_name(user)]", INVESTIGATE_RECORDS)
-	SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, target.name, input_name, params["fine"])
+	SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, target.name, input_name, input_details, params["fine"])
 
 	return TRUE
 
@@ -248,12 +253,14 @@
 		var/new_name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
 		investigate_log("[user] edited crime: \"[editing_crime.name]\" for target: \"[target.name]\", changing the name to: \"[new_name]\".", INVESTIGATE_RECORDS)
 		editing_crime.name = new_name
+		SSblackbox.ReportCitation(REF(editing_crime), message = new_name)
 		return TRUE
 
-	if(params["details"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
-		var/new_details = strip_html_full(params["details"], MAX_MESSAGE_LEN)
+	if(params["description"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
+		var/new_details = strip_html_full(params["description"], MAX_MESSAGE_LEN)
 		investigate_log("[user] edited crime \"[editing_crime.name]\" for target: \"[target.name]\", changing the details to: \"[new_details]\" from: \"[editing_crime.details]\".", INVESTIGATE_RECORDS)
 		editing_crime.details = new_details
+		SSblackbox.ReportCitation(REF(editing_crime), description = new_details)
 		return TRUE
 
 	return FALSE
@@ -269,6 +276,9 @@
 
 /// Only qualified personnel can edit records.
 /obj/machinery/computer/records/security/proc/has_armory_access(mob/user)
+	if (HAS_SILICON_ACCESS(user))
+		return TRUE
+
 	if(!isliving(user))
 		return FALSE
 	var/mob/living/player = user
@@ -284,16 +294,22 @@
 
 /// Voids crimes, or sets someone to discharged if they have none left.
 /obj/machinery/computer/records/security/proc/invalidate_crime(mob/user, datum/record/crew/target, list/params)
-	if(!has_armory_access(user))
-		return FALSE
 	var/datum/crime/to_void = locate(params["crime_ref"]) in target.crimes
+	var/acquitted = TRUE
 	if(!to_void)
+		to_void = locate(params["crime_ref"]) in target.citations
+		// No need to change status after invalidatation of citation
+		acquitted = FALSE
+		if(!to_void)
+			return FALSE
+
+	if(user != to_void.author && !has_armory_access(user))
 		return FALSE
 
 	to_void.valid = FALSE
+	to_void.voider = user
 	investigate_log("[key_name(user)] has invalidated [target.name]'s crime: [to_void.name]", INVESTIGATE_RECORDS)
 
-	var/acquitted = TRUE
 	for(var/datum/crime/incident in target.crimes)
 		if(!incident.valid)
 			continue
@@ -310,7 +326,7 @@
 /// Finishes printing, resets the printer.
 /obj/machinery/computer/records/security/proc/print_finish(obj/item/printable)
 	printing = FALSE
-	playsound(src, 'sound/machines/terminal_eject.ogg', 100, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 100, TRUE)
 	printable.forceMove(loc)
 
 	return TRUE
@@ -319,7 +335,7 @@
 /obj/machinery/computer/records/security/proc/print_record(mob/user, datum/record/crew/target, list/params)
 	if(printing)
 		balloon_alert(user, "printer busy")
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	printing = TRUE
@@ -334,7 +350,7 @@
 	switch(params["type"])
 		if("missing")
 			var/obj/item/photo/mugshot = target.get_front_photo()
-			var/obj/item/poster/wanted/missing/missing_poster = new(null, mugshot.picture.picture_image, input_alias, input_description, input_header)
+			var/obj/item/poster/wanted/missing/missing_poster = new(null, null, mugshot.picture.picture_image, input_alias, input_description, input_header)
 
 			printable = missing_poster
 
@@ -353,7 +369,7 @@
 				input_description += "<b>Details:</b> [incident.details]\n"
 
 			var/obj/item/photo/mugshot = target.get_front_photo()
-			var/obj/item/poster/wanted/wanted_poster = new(null, mugshot.picture.picture_image, input_alias, input_description, input_header)
+			var/obj/item/poster/wanted/wanted_poster = new(null, null, mugshot.picture.picture_image, input_alias, input_description, input_header)
 
 			printable = wanted_poster
 
@@ -369,7 +385,6 @@
 	addtimer(CALLBACK(src, PROC_REF(print_finish), printable), 2 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 	return TRUE
-
 
 /**
  * Security circuit component

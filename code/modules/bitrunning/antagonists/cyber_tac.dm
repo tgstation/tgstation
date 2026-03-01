@@ -24,7 +24,7 @@
 		/obj/item/ammo_box/magazine/m223,
 	)
 
-/datum/outfit/cyber_police/tactical/post_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/cyber_police/tactical/post_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
 
 	var/obj/item/implant/weapons_auth/auth = new(user)

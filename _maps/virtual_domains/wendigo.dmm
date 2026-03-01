@@ -40,9 +40,6 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored/virtual_domain)
-"ai" = (
-/turf/closed/indestructible/binary,
-/area/icemoon/underground/explored/virtual_domain)
 "aj" = (
 /obj/effect/mob_spawn/corpse/human/cargo_tech,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -197,9 +194,8 @@
 	},
 /area/icemoon/underground/explored/virtual_domain)
 "aL" = (
-/obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
-/area/icemoon/underground/explored/virtual_domain)
+/area/virtual_domain/fullbright)
 "aM" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/indestructible/necropolis{
@@ -346,6 +342,10 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored/virtual_domain)
+"yf" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored/virtual_domain)
 "KV" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
@@ -369,23 +369,23 @@ aS
 aS
 aS
 aS
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
 aS
 aS
 aS
@@ -407,8 +407,8 @@ aS
 aS
 aS
 aS
-ai
-ai
+aL
+aL
 ae
 ae
 ae
@@ -424,8 +424,8 @@ ae
 ae
 ar
 ae
-ai
-ai
+aL
+aL
 aS
 aS
 aS
@@ -445,8 +445,8 @@ aS
 aS
 aS
 aS
-ai
-ai
+aL
+aL
 ae
 ae
 ae
@@ -464,8 +464,8 @@ ae
 ae
 ae
 ae
-ai
-ai
+aL
+aL
 aS
 aS
 aS
@@ -483,8 +483,8 @@ aS
 aS
 aS
 aS
-ai
-ai
+aL
+aL
 ae
 ae
 av
@@ -504,8 +504,8 @@ av
 ae
 ae
 ae
-ai
-ai
+aL
+aL
 aS
 aS
 aS
@@ -521,8 +521,8 @@ aS
 (5,1,1) = {"
 aS
 aS
-ai
-ai
+aL
+aL
 ae
 ae
 av
@@ -544,23 +544,23 @@ ab
 ae
 au
 ae
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
 aL
 "}
 (6,1,1) = {"
 aS
-ai
-ai
+aL
+aL
 ae
 ae
 ae
@@ -584,8 +584,8 @@ au
 ae
 ae
 ae
-ai
-ai
+aL
+aL
 ae
 ae
 ae
@@ -593,12 +593,12 @@ ae
 ae
 ae
 ae
-ae
-ai
+yf
+aL
 "}
 (7,1,1) = {"
-ai
-ai
+aL
+aL
 ae
 ae
 ae
@@ -624,7 +624,7 @@ av
 ae
 ae
 ae
-ai
+aL
 ae
 ae
 ae
@@ -633,10 +633,10 @@ ad
 ag
 ae
 ae
-ai
+aL
 "}
 (8,1,1) = {"
-ai
+aL
 ae
 ae
 ae
@@ -672,10 +672,10 @@ aa
 aa
 ag
 ae
-ai
+aL
 "}
 (9,1,1) = {"
-ai
+aL
 ae
 ae
 ae
@@ -711,10 +711,10 @@ am
 aa
 aD
 ae
-ai
+aL
 "}
 (10,1,1) = {"
-ai
+aL
 ae
 ae
 ar
@@ -750,10 +750,10 @@ ae
 aT
 ae
 ae
-ai
+aL
 "}
 (11,1,1) = {"
-ai
+aL
 ae
 ae
 ae
@@ -789,10 +789,10 @@ ae
 aK
 ae
 ae
-ai
+aL
 "}
 (12,1,1) = {"
-ai
+aL
 ae
 ae
 ab
@@ -828,10 +828,10 @@ ae
 ae
 ae
 ae
-ai
+aL
 "}
 (13,1,1) = {"
-ai
+aL
 ae
 ae
 ab
@@ -867,10 +867,10 @@ ae
 ae
 ae
 ae
-ai
+aL
 "}
 (14,1,1) = {"
-ai
+aL
 ae
 ae
 ar
@@ -906,10 +906,10 @@ aV
 aV
 aZ
 ae
-ai
+aL
 "}
 (15,1,1) = {"
-ai
+aL
 ae
 ae
 au
@@ -945,10 +945,10 @@ aV
 aV
 aV
 ae
-ai
+aL
 "}
 (16,1,1) = {"
-ai
+aL
 ae
 ad
 ac
@@ -984,10 +984,10 @@ aV
 aV
 aV
 ae
-ai
+aL
 "}
 (17,1,1) = {"
-ai
+aL
 KV
 aI
 aa
@@ -1023,10 +1023,10 @@ aV
 aV
 aV
 ae
-ai
+aL
 "}
 (18,1,1) = {"
-ai
+aL
 ae
 ae
 am
@@ -1062,10 +1062,10 @@ aV
 aV
 aV
 ae
-ai
+aL
 "}
 (19,1,1) = {"
-ai
+aL
 ae
 ae
 av
@@ -1101,10 +1101,10 @@ aV
 aV
 aV
 ae
-ai
+aL
 "}
 (20,1,1) = {"
-ai
+aL
 ae
 ae
 ae
@@ -1140,10 +1140,10 @@ aV
 aV
 aA
 ae
-ai
+aL
 "}
 (21,1,1) = {"
-ai
+aL
 ar
 ae
 au
@@ -1179,10 +1179,10 @@ ae
 ae
 ae
 ae
-ai
+aL
 "}
 (22,1,1) = {"
-ai
+aL
 ae
 ae
 ab
@@ -1218,10 +1218,10 @@ ae
 ae
 ae
 ae
-ai
+aL
 "}
 (23,1,1) = {"
-ai
+aL
 ae
 ae
 ab
@@ -1257,10 +1257,10 @@ ae
 ae
 ae
 ae
-ai
+aL
 "}
 (24,1,1) = {"
-ai
+aL
 ae
 ae
 ae
@@ -1296,10 +1296,10 @@ ae
 aU
 ae
 ae
-ai
+aL
 "}
 (25,1,1) = {"
-ai
+aL
 ae
 ae
 ae
@@ -1335,10 +1335,10 @@ ad
 aI
 aW
 ae
-ai
+aL
 "}
 (26,1,1) = {"
-ai
+aL
 ae
 ae
 ae
@@ -1374,11 +1374,11 @@ aK
 ae
 ae
 ae
-ai
+aL
 "}
 (27,1,1) = {"
-ai
-ai
+aL
+aL
 ae
 au
 ae
@@ -1404,7 +1404,7 @@ ae
 ae
 ar
 ae
-ai
+aL
 ae
 ae
 ae
@@ -1413,12 +1413,12 @@ ae
 ae
 ae
 ae
-ai
+aL
 "}
 (28,1,1) = {"
 aS
-ai
-ai
+aL
+aL
 ae
 au
 ae
@@ -1442,8 +1442,8 @@ ae
 ae
 ae
 ae
-ai
-ai
+aL
+aL
 ae
 ae
 ae
@@ -1452,13 +1452,13 @@ ae
 ae
 ae
 ae
-ai
+aL
 "}
 (29,1,1) = {"
 aS
 aS
-ai
-ai
+aL
+aL
 ae
 ae
 ae
@@ -1480,25 +1480,25 @@ ae
 ae
 ar
 ae
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
 "}
 (30,1,1) = {"
 aS
 aS
 aS
-ai
-ai
+aL
+aL
 ae
 ae
 ae
@@ -1518,8 +1518,8 @@ ae
 ae
 ae
 ae
-ai
-ai
+aL
+aL
 aS
 aS
 aS
@@ -1537,8 +1537,8 @@ aS
 aS
 aS
 aS
-ai
-ai
+aL
+aL
 ae
 ae
 ae
@@ -1556,8 +1556,8 @@ ae
 ae
 ae
 ae
-ai
-ai
+aL
+aL
 aS
 aS
 aS
@@ -1577,8 +1577,8 @@ aS
 aS
 aS
 aS
-ai
-ai
+aL
+aL
 ae
 ae
 ae
@@ -1594,8 +1594,8 @@ ae
 ae
 ae
 ae
-ai
-ai
+aL
+aL
 aS
 aS
 aS
@@ -1617,23 +1617,23 @@ aS
 aS
 aS
 aS
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
 aS
 aS
 aS

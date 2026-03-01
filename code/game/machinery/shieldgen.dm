@@ -58,7 +58,7 @@
 
 /obj/structure/emergency_shield/regenerating/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_NO_EXAMINE)
 
 /obj/structure/emergency_shield/regenerating/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -84,7 +84,7 @@
 
 /obj/structure/emergency_shield/cult/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_NO_EXAMINE)
 
 /obj/structure/emergency_shield/cult/narsie
 	name = "sanguine barrier"
@@ -236,7 +236,7 @@
 		set_anchored(FALSE)
 
 
-/obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
+/obj/machinery/shieldgen/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
@@ -286,6 +286,10 @@
 	icon = 'icons/obj/machines/shield_generator.dmi'
 	icon_state = "shield_wall_gen"
 	base_icon_state = "shield_wall_gen"
+	light_on = FALSE
+	light_range = 2.5
+	light_power = 2
+	light_color = LIGHT_COLOR_BLUE
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
@@ -320,10 +324,16 @@
 
 /obj/machinery/power/shieldwallgen/Initialize(mapload)
 	. = ..()
+	//Add to the early process queue to prioritize power draw
+	SSmachines.processing_early += src
 	if(anchored)
 		connect_to_network()
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 	set_wires(new /datum/wires/shieldwallgen(src))
+
+/obj/machinery/power/shieldwallgen/update_appearance(updates)
+	. = ..()
+	set_light(l_on = !!active)
 
 /obj/machinery/power/shieldwallgen/update_icon_state()
 	icon_state = "[base_icon_state][active ? "_on" : ""]"
@@ -348,7 +358,7 @@
 		return FALSE
 	. = ..()
 
-/obj/machinery/power/shieldwallgen/process()
+/obj/machinery/power/shieldwallgen/process_early()
 	if(active)
 		if(active == ACTIVE_SETUPFIELDS)
 			var/fields = 0
@@ -450,7 +460,7 @@
 		return
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))
@@ -530,7 +540,10 @@
 	icon_state = "shieldwall"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	light_range = 3
+	light_range = 2.5
+	light_power = 0.7
+	light_color = LIGHT_COLOR_BLUE
+	var/primary_direction = NONE
 	var/needs_power = FALSE
 	var/obj/machinery/power/shieldwallgen/gen_primary
 	var/obj/machinery/power/shieldwallgen/gen_secondary
@@ -553,6 +566,10 @@
 	gen_primary = null
 	gen_secondary = null
 	return ..()
+
+/obj/machinery/shieldwall/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src, alpha = 200)
 
 /obj/machinery/shieldwall/process()
 	if(needs_power)

@@ -13,6 +13,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+	if(LAZYLEN(faction))
+		faction = string_list(faction)
 	// Initial is non standard here, but ghosts move before they get here so it's needed. this is a cold path too so it's ok
 	SET_PLANE_IMPLICIT(src, initial(plane))
 	add_to_mob_list()
@@ -28,23 +30,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead/canUseStorage()
 	return FALSE
-
-/mob/dead/get_status_tab_items()
-	. = ..()
-	if(SSticker.HasRoundStarted())
-		return
-	var/time_remaining = SSticker.GetTimeLeft()
-	if(time_remaining > 0)
-		. += "Time To Start: [round(time_remaining/10)]s"
-	else if(time_remaining == -10)
-		. += "Time To Start: DELAYED"
-	else
-		. += "Time To Start: SOON"
-
-	. += "Players: [LAZYLEN(GLOB.clients)]"
-	if(client.holder)
-		. += "Players Ready: [SSticker.totalPlayersReady]"
-		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
 
 #define SERVER_HOPPER_TRAIT "server_hopper"
 
@@ -74,20 +59,21 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(tgui_alert(usr, "Jump to server [pick] ([addr])?", "Server Hop", list("Yes", "No")) != "Yes")
 		return
 
-	var/client/C = client
-	to_chat(C, span_notice("Sending you to [pick]."))
-	new /atom/movable/screen/splash(null, null, C)
+	var/client/hopper = client
+	to_chat(hopper, span_notice("Sending you to [pick]."))
+	var/atom/movable/screen/splash/fade_in = new(null, null, hopper, FALSE)
+	fade_in.fade(FALSE)
 
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, SERVER_HOPPER_TRAIT)
 	sleep(2.9 SECONDS) //let the animation play
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, SERVER_HOPPER_TRAIT)
 
-	if(!C)
+	if(!hopper)
 		return
 
 	winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 
-	C << link("[addr]")
+	hopper << link("[addr]")
 
 #undef SERVER_HOPPER_TRAIT
 

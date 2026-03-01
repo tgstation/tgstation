@@ -80,7 +80,6 @@
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = poll_question,
 		check_jobban = ban_type,
-		role = ban_type,
 		poll_time = poll_length,
 		checked_target = parent,
 		ignore_category = poll_ignore_key,
@@ -142,13 +141,20 @@
 		return
 	if (extra_control_checks && !extra_control_checks.Invoke(harbinger))
 		return
+
 	harbinger.log_message("took control of [new_body].", LOG_GAME)
-	new_body.key = harbinger.key
-	to_chat(new_body, span_boldnotice(assumed_control_message))
-	after_assumed_control?.Invoke(harbinger)
+	// doesn't transfer mind because that transfers antag datum as well
+	new_body.PossessByPlayer(harbinger.ckey)
+
+	// Already qdels due to below proc but just in case
 	qdel(src)
 
-/// When someone else assumes control via some other means, get rid of our component
-/datum/component/ghost_direct_control/proc/on_login()
+/// When someone assumes control, get rid of our component
+/datum/component/ghost_direct_control/proc/on_login(mob/harbinger)
 	SIGNAL_HANDLER
+	// This proc is called the very moment .key is set, so we need to force mind to initialize here if we want the invoke to affect the mind of the mob
+	if(isnull(harbinger.mind))
+		harbinger.mind_initialize()
+	to_chat(harbinger, span_boldnotice(assumed_control_message))
+	after_assumed_control?.Invoke(harbinger)
 	qdel(src)

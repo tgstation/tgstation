@@ -10,6 +10,11 @@
 	action_intent.screen_loc = ui_combat_toggle
 	static_inventory += action_intent
 
+	floor_change = new /atom/movable/screen/floor_changer(null, src)
+	floor_change.icon = ui_style
+	floor_change.screen_loc = ui_alien_floor_change
+	static_inventory += floor_change
+
 	healths = new /atom/movable/screen/healths/alien(null, src)
 	infodisplay += healths
 
@@ -24,16 +29,16 @@
 
 	rest_icon = new /atom/movable/screen/rest(null, src)
 	rest_icon.icon = ui_style
-	rest_icon.screen_loc = ui_above_intent
+	rest_icon.screen_loc = ui_rest
 	rest_icon.update_appearance()
 	static_inventory += rest_icon
 
+	sleep_icon = new /atom/movable/screen/sleep(null, src)
+	sleep_icon.icon = ui_style
+	sleep_icon.screen_loc = ui_drop_throw
+
 	using = new/atom/movable/screen/language_menu(null, src)
 	using.screen_loc = ui_alien_language_menu
-	static_inventory += using
-
-	using = new /atom/movable/screen/floor_menu(null, src)
-	using.screen_loc = ui_alien_floor_menu
 	static_inventory += using
 
 	using = new /atom/movable/screen/navigate(null, src)

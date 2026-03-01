@@ -1,6 +1,6 @@
 // Cherries
 /obj/item/seeds/cherry
-	name = "pack of cherry pits"
+	name = "cherry pit pack"
 	desc = "Careful not to crack a tooth on one... That'd be the pits."
 	icon_state = "seed-cherry"
 	species = "cherry"
@@ -28,13 +28,15 @@
 	gender = PLURAL
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
-	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
 	wine_power = 30
 
+/obj/item/food/grown/cherries/grind_results()
+	return list(/datum/reagent/consumable/cherryjelly = 0)
+
 // Blue Cherries
 /obj/item/seeds/cherry/blue
-	name = "pack of blue cherry pits"
+	name = "blue cherry pit pack"
 	desc = "The blue kind of cherries."
 	icon_state = "seed-bluecherry"
 	species = "bluecherry"
@@ -51,13 +53,15 @@
 	icon_state = "bluecherry"
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
-	grind_results = list(/datum/reagent/consumable/bluecherryjelly = 0)
 	tastes = list("blue cherry" = 1)
 	wine_power = 50
 
+/obj/item/food/grown/bluecherries/grind_results()
+	return list(/datum/reagent/consumable/bluecherryjelly = 0)
+
 //Cherry Bulbs
 /obj/item/seeds/cherry/bulb
-	name = "pack of cherry bulb pits"
+	name = "cherry bulb pit pack"
 	desc = "The glowy kind of cherries."
 	icon_state = "seed-cherrybulb"
 	species = "cherrybulb"
@@ -76,13 +80,15 @@
 	icon_state = "cherry_bulb"
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
-	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
 	wine_power = 50
 
+/obj/item/food/grown/cherrybulbs/grind_results()
+	return list(/datum/reagent/consumable/cherryjelly = 0)
+
 //Cherry Bombs
 /obj/item/seeds/cherry/bomb
-	name = "pack of cherry bomb pits"
+	name = "cherry bomb pit pack"
 	desc = "They give you vibes of dread and frustration."
 	icon_state = "seed-cherry_bomb"
 	species = "cherry_bomb"

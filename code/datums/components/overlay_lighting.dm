@@ -62,23 +62,23 @@
 	var/directional = FALSE
 	///Whether we're a beam light
 	var/beam = FALSE
-	///A cone overlay for directional light, it's alpha and color are dependant on the light
+	///A cone overlay for directional light, its alpha and color are dependent on the light
 	var/image/cone
 	///Current tracked direction for the directional cast behaviour
 	var/current_direction
-	///Tracks current directional x offset so we dont update unecessarily
+	///Tracks current directional x offset so we don't update unnecessarily
 	var/directional_offset_x
-	///Tracks current directional y offset so we dont update unecessarily
+	///Tracks current directional y offset so we don't update unnecessarily
 	var/directional_offset_y
 	///Cast range for the directional cast (how far away the atom is moved)
 	var/cast_range = 2
 
-/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam)
+/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam, force)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	var/atom/movable/movable_parent = parent
-	if(movable_parent.light_system != OVERLAY_LIGHT && movable_parent.light_system != OVERLAY_LIGHT_DIRECTIONAL && movable_parent.light_system != OVERLAY_LIGHT_BEAM)
+	if(!force && movable_parent.light_system != OVERLAY_LIGHT && movable_parent.light_system != OVERLAY_LIGHT_DIRECTIONAL && movable_parent.light_system != OVERLAY_LIGHT_BEAM)
 		stack_trace("[type] added to [parent], with [movable_parent.light_system] value for the light_system var. Use [OVERLAY_LIGHT], [OVERLAY_LIGHT_DIRECTIONAL] or [OVERLAY_LIGHT_BEAM] instead.")
 		return COMPONENT_INCOMPATIBLE
 
@@ -88,12 +88,14 @@
 	SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_VISUAL_PLANE, movable_parent)
 	visible_mask.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	visible_mask.alpha = 0
+	visible_mask.blend_mode = BLEND_ADD
 	if(is_directional)
 		directional = TRUE
 		cone = image('icons/effects/light_overlays/light_cone.dmi', icon_state = "light")
 		SET_PLANE_EXPLICIT(cone, O_LIGHTING_VISUAL_PLANE, movable_parent)
 		cone.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		cone.alpha = 110
+		cone.blend_mode = BLEND_ADD
 		cone.transform = cone.transform.Translate(-32, -32)
 		set_direction(movable_parent.dir)
 	if(is_beam)
@@ -332,6 +334,8 @@
 ///Called when the current_holder is qdeleted, to remove the light effect.
 /datum/component/overlay_lighting/proc/on_parent_attached_to_qdel(atom/movable/source, force)
 	SIGNAL_HANDLER
+	if(isnull(parent_attached_to))
+		return
 	UnregisterSignal(parent_attached_to, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	if(directional)
 		UnregisterSignal(parent_attached_to, COMSIG_ATOM_DIR_CHANGE)
@@ -392,6 +396,7 @@
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= visible_mask
 	visible_mask.alpha = set_alpha
+	visible_mask.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += visible_mask
 	if(!directional)
@@ -399,6 +404,7 @@
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= cone
 	cone.alpha = min(120, (abs(new_power) * 60) + 15)
+	cone.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += cone
 

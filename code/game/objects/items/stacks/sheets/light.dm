@@ -11,14 +11,17 @@
 	throw_range = 7
 	obj_flags = CONDUCTS_ELECTRICITY
 	max_amount = 60
-	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/copper = 5)
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.05)
 	merge_type = /obj/item/stack/light_w
+
+/obj/item/stack/light_w/grind_results()
+	return list(/datum/reagent/silicon = 20, /datum/reagent/copper = 5)
 
 /obj/item/stack/light_w/examine(mob/user)
 	. = ..()
-	. += span_warning("The [name] looks unfinished, add <b>iron</b> to complete it.")
+	. += span_warning("\The [src] looks unfinished, add <b>iron</b> to complete it.")
 
-/obj/item/stack/light_w/attackby(obj/item/O, mob/user, params)
+/obj/item/stack/light_w/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/M = O
 		if (M.use(1))

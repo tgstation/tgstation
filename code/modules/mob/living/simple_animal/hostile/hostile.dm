@@ -1,4 +1,5 @@
 /mob/living/simple_animal/hostile
+	abstract_type = /mob/living/simple_animal/hostile
 	faction = list(FACTION_HOSTILE)
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
@@ -10,7 +11,7 @@
 	///How many shots per volley.
 	var/rapid = 0
 	///Time between rapid fire shots
-	var/rapid_fire_delay = 2
+	var/rapid_fire_delay = 2 DECISECONDS
 
 	///Are we dodging?
 	var/dodging = FALSE
@@ -48,7 +49,7 @@
 	///What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown = 0
 	///How long, in deciseconds, the cooldown of ranged attacks is
-	var/ranged_cooldown_time = 30
+	var/ranged_cooldown_time = 3 SECONDS
 	///if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
 	var/ranged_ignores_vision = FALSE
 	///Should the ranged mob check for friendlies when shooting
@@ -71,9 +72,7 @@
 	///Timer for regaining our old search_objects value after being attacked
 	var/search_objects_timer_id
 	///The delay between being attacked and gaining our old search_objects value back
-	var/search_objects_regain_time = 30
-	///A typecache of objects types that will be checked against to attack, should we have search_objects enabled
-	var/list/wanted_objects = list()
+	var/search_objects_regain_time = 3 SECONDS
 	///Mobs ignore mob/living targets with a stat lower than that of stat_attack. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.
 	var/stat_attack = CONSCIOUS
 	///Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
@@ -85,23 +84,17 @@
 	//Attempting to call GET_TARGETS_FROM(mob) when this var is null will just return mob as a base
 	///all range/attack/etc. calculations should be done from the atom this weakrefs, useful for Vehicles and such.
 	var/datum/weakref/targets_from
-	///if true, equivalent to having a wanted_objects list containing ALL objects.
-	var/attack_all_objects = FALSE
 	///id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timer_id
 	///30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
-	var/lose_patience_timeout = 300
-
-/mob/living/simple_animal/hostile/Initialize(mapload)
-	. = ..()
-	wanted_objects = typecacheof(wanted_objects)
+	var/lose_patience_timeout = 30 SECONDS
 
 /mob/living/simple_animal/hostile/Destroy()
 	//We can't use losetarget here because fucking cursed blobs override it to do nothing the motherfuckers
 	GiveTarget(null)
 	return ..()
 
-/mob/living/simple_animal/hostile/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //dead
 		GLOB.move_manager.stop_looping(src)
@@ -165,11 +158,11 @@
 		FindTarget(list(source))
 	return ..()
 
-/mob/living/simple_animal/hostile/bullet_act(obj/projectile/P)
+/mob/living/simple_animal/hostile/bullet_act(obj/projectile/proj)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
-		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
-			FindTarget(list(P.firer))
-		Goto(P.starting, move_to_delay, 3)
+		if(proj.firer && get_dist(src, proj.firer) <= aggro_vision_range)
+			FindTarget(list(proj.firer))
+		Goto(proj.starting, move_to_delay, 3)
 	return ..()
 
 //////////////HOSTILE MOB TARGETING AND AGGRESSION////////////
@@ -254,8 +247,8 @@
 		return FALSE
 
 	if(ismob(the_target)) //Target is in godmode, ignore it.
-		var/mob/M = the_target
-		if(M.status_flags & GODMODE)
+		var/mob/mob = the_target
+		if(HAS_TRAIT(mob, TRAIT_GODMODE))
 			return FALSE
 
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
@@ -264,6 +257,8 @@
 		if(isliving(the_target))
 			var/mob/living/L = the_target
 			var/faction_check = faction_check_atom(L)
+			if(L.has_status_effect(/datum/status_effect/shapechange_mob))
+				faction_check = FALSE
 			if(robust_searching)
 				if(faction_check && !attack_same)
 					return FALSE
@@ -292,10 +287,6 @@
 				return FALSE
 			return TRUE
 
-	if(isobj(the_target))
-		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
-			return TRUE
-
 	return FALSE
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
@@ -320,7 +311,7 @@
 
 /mob/living/simple_animal/hostile/proc/CheckAndAttack()
 	var/atom/target_from = GET_TARGETS_FROM(src)
-	if(target && isturf(target_from.loc) && target.Adjacent(target_from) && !incapacitated())
+	if(target && isturf(target_from.loc) && target.Adjacent(target_from) && !incapacitated)
 		AttackingTarget(target)
 
 /mob/living/simple_animal/hostile/proc/MoveToTarget(list/possible_targets)//Step 5, handle movement between us and our target
@@ -396,10 +387,10 @@
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget(atom/attacked_target)
 	in_melee = TRUE
-	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
+	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, attacked_target) & COMPONENT_HOSTILE_NO_ATTACK)
 		return FALSE //but more importantly return before attack_animal called
-	var/result = target.attack_animal(src)
-	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
+	var/result = attacked_target.attack_animal(src)
+	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, attacked_target, result)
 	return result
 
 /mob/living/simple_animal/hostile/proc/Aggro()
@@ -483,7 +474,7 @@
 	if(projectiletype)
 		fire_projectile(projectiletype, targeted_atom, projectilesound)
 		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
-			newtonian_move(get_dir(targeted_atom, target_from))
+			newtonian_move(get_angle(targeted_atom, target_from))
 
 
 /mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
@@ -639,6 +630,11 @@
 	target = null
 	LoseTarget()
 
+/mob/living/simple_animal/hostile/proc/handle_friend_del(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_QDELETING)
+	friends -= source
+
 /mob/living/simple_animal/hostile/proc/add_target(new_target)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_FOUND_TARGET, new_target)
 	if(target)
@@ -652,7 +648,8 @@
 	if (!.)
 		return
 	friends += new_friend
-	faction = new_friend.faction.Copy()
+	RegisterSignal(new_friend, COMSIG_QDELETING, PROC_REF(handle_friend_del))
+	SET_FACTION_AND_ALLIES_FROM(src, new_friend)
 
 /mob/living/simple_animal/hostile/lazarus_revive(mob/living/reviver, malfunctioning)
 	. = ..()

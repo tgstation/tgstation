@@ -14,7 +14,7 @@ Prismatic extracts:
 	if(!isturf(interacting_with) || isspaceturf(interacting_with))
 		return NONE
 	user.do_attack_animation(interacting_with)
-	interacting_with.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
+	interacting_with.add_atom_colour(color_transition_filter(paintcolor, SATURATION_OVERRIDE), WASHABLE_COLOUR_PRIORITY)
 	playsound(interacting_with, 'sound/effects/slosh.ogg', 20, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
@@ -115,7 +115,7 @@ Prismatic extracts:
 	colour = SLIME_TYPE_RAINBOW
 
 /obj/item/slimecross/prismatic/rainbow/attack_self(mob/user)
-	var/newcolor = input(user, "Choose the slime color:", "Color change",paintcolor) as color|null
+	var/newcolor = tgui_color_picker(user, "Choose the slime color:", "Color change", paintcolor)
 	if(user.get_active_held_item() != src || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 	if(!newcolor)

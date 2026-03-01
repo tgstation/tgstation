@@ -14,7 +14,7 @@
 	var/time_to_decay = 30 SECONDS
 	/// Area around the vendor that will pushback nearby mobs.
 	var/pulse_distance = PULSE_DISTANCE_RANGE
-
+	allow_custom = FALSE
 
 /obj/machinery/vending/runic_vendor/Initialize(mapload)
 	if(mapload)
@@ -65,7 +65,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	visible_message(span_warning("[src] flickers and disappears!"))
-	playsound(src,'sound/weapons/resonator_blast.ogg',25,TRUE)
+	playsound(src,'sound/items/weapons/resonator_blast.ogg',25,TRUE)
 	return ..()
 
 /obj/machinery/vending/runic_vendor/proc/runic_explosion()

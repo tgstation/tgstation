@@ -22,6 +22,8 @@
 	var/hit_sound
 	///if we have a brick inside us
 	var/bricked = FALSE
+	drop_sound = SFX_CLOTH_DROP
+	pickup_sound = SFX_CLOTH_PICKUP
 
 /obj/item/pillow/Initialize(mapload)
 	. = ..()
@@ -37,8 +39,8 @@
 		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\
 		)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -46,14 +48,14 @@
 	. = ..()
 	QDEL_NULL(pillow_trophy)
 
-/obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, params)
+/obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!iscarbon(target_mob))
 		return
 	if(bricked || HAS_TRAIT(src, TRAIT_WIELDED))
-		hit_sound = 'sound/items/pillow_hit2.ogg'
+		hit_sound = 'sound/items/pillow/pillow_hit2.ogg'
 	else
-		hit_sound = 'sound/items/pillow_hit.ogg'
+		hit_sound = 'sound/items/pillow/pillow_hit.ogg'
 	user.apply_damage(5, STAMINA) //Had to be done so one person cannot keep multiple people stam critted
 	last_fighter = user
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
@@ -71,7 +73,7 @@
 		user.visible_message("[user] starts to smother [victim]", span_notice("You begin smothering [victim]"), vision_distance = COMBAT_MESSAGE_RANGE)
 		INVOKE_ASYNC(src, PROC_REF(smothering), user, victim)
 
-/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!bricked && istype(attacking_item, /obj/item/stack/sheet/mineral/sandstone))
 		var/obj/item/stack/sheet/mineral/sandstone/brick = attacking_item
 		balloon_alert(user, "inserting brick...")
@@ -116,7 +118,7 @@
 	user.put_in_hands(pillow_trophy)
 	pillow_trophy = null
 	balloon_alert(user, "tag removed")
-	playsound(user,'sound/items/poster_ripped.ogg', 50)
+	playsound(user,'sound/items/poster/poster_ripped.ogg', 50)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -131,7 +133,7 @@
 		icon_state = "pillow_[variation]_t"
 		inhand_icon_state = "pillow_t"
 
-/// Puts a brick inside the pillow, increasing it's damage
+/// Puts a brick inside the pillow, increasing its damage
 /obj/item/pillow/proc/become_bricked()
 	bricked = TRUE
 	var/datum/component/two_handed/two_handed = GetComponent(/datum/component/two_handed)
@@ -220,4 +222,3 @@
 	desc = "Daww look at that little mime!"
 	icon_state = "pillow_6_t"
 	variation = 6
-

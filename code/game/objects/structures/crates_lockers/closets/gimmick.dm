@@ -3,18 +3,21 @@
 	desc = "Old will forever be in fashion."
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 	max_integrity = 70
 	door_anim_time = 0 // no animation
+	material_drop = /obj/item/stack/sheet/mineral/wood
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/closet/acloset
 	name = "strange closet"
 	desc = "It looks alien!"
 	icon_state = "alien"
 	material_drop = /obj/item/stack/sheet/mineral/abductor
+	custom_materials = list(/datum/material/alloy/alien = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/closet/gimmick
 	name = "administrative supply closet"

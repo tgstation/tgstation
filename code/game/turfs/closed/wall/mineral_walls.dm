@@ -2,6 +2,7 @@
 	name = "mineral wall"
 	desc = "This shouldn't exist"
 	icon_state = ""
+	abstract_type = /turf/closed/wall/mineral
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	rcd_memory = null
@@ -130,7 +131,7 @@
 	radiate()
 	return ..()
 
-/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
+/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, list/modifiers)
 	radiate()
 	return ..()
 
@@ -189,6 +190,8 @@
 	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
 	girder_type = /obj/structure/barricade/wooden
 	hardness = 67 //a bit weaker than iron (60)
+	sheet_amount = 5
+	make_delay = 5 SECONDS
 
 /turf/closed/wall/mineral/bamboo
 	name = "bamboo wall"
@@ -197,7 +200,7 @@
 	icon_state = "bamboo_wall-0"
 	base_icon_state = "bamboo_wall"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BAMBOO_WALLS
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
 	hardness = 80 //it's not a mineral...
@@ -274,34 +277,33 @@
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
-/turf/closed/wall/mineral/titanium/rust_turf()
+/turf/closed/wall/mineral/titanium/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
-		return
+		return TRUE
 	return ..()
 
 /turf/closed/wall/mineral/titanium/nodiagonal
-	icon = 'icons/turf/walls/shuttle_wall.dmi'
-	icon_state = "map-shuttle_nd"
-	base_icon_state = "shuttle_wall"
+	icon = MAP_SWITCH('icons/turf/walls/shuttle_wall.dmi', 'icons/turf/walls/misc_wall.dmi')
+	icon_state = MAP_SWITCH("shuttle_wall-0", "shuttle_nd")
 	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/wall/mineral/titanium/overspace
-	icon_state = "map-overspace"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	icon = MAP_SWITCH('icons/turf/walls/shuttle_wall.dmi', 'icons/turf/walls/misc_wall.dmi')
+	icon_state = MAP_SWITCH("shuttle_wall-0", "shuttle_overspace")
 	fixed_underlay = list("space" = TRUE)
 
-/turf/closed/wall/mineral/titanium/interior/copyTurf(turf/T)
+/turf/closed/wall/mineral/titanium/interior/copyTurf(turf/copy_to_turf, copy_air = FALSE, flags = null)
 	. = ..()
-	T.transform = transform
+	copy_to_turf.transform = transform
 
-/turf/closed/wall/mineral/titanium/copyTurf(turf/T)
+/turf/closed/wall/mineral/titanium/copyTurf(turf/copy_to_turf, copy_air = FALSE, flags = null)
 	. = ..()
-	T.transform = transform
+	copy_to_turf.transform = transform
 
 /turf/closed/wall/mineral/titanium/survival
 	name = "pod wall"
-	desc = "An easily-compressable wall used for temporary shelter."
+	desc = "An easily-compressible wall used for temporary shelter."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "survival_pod_walls-0"
 	base_icon_state = "survival_pod_walls"
@@ -321,10 +323,10 @@
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
-/turf/closed/wall/mineral/titanium/rust_turf()
+/turf/closed/wall/mineral/titanium/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
-		return
+		return TRUE
 	return ..()
 
 /////////////////////Plastitanium walls/////////////////////
@@ -344,30 +346,27 @@
 	custom_materials = list(/datum/material/alloy/plastitanium = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
-/turf/closed/wall/mineral/plastitanium/rust_turf()
+/turf/closed/wall/mineral/plastitanium/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
-		return
+		return TRUE
 	return ..()
 
 
 /turf/closed/wall/mineral/plastitanium/nodiagonal
-	icon = 'icons/turf/walls/plastitanium_wall.dmi'
-	icon_state = "map-shuttle_nd"
-	base_icon_state = "plastitanium_wall"
+	icon = MAP_SWITCH('icons/turf/walls/plastitanium_wall.dmi', 'icons/turf/walls/misc_wall.dmi')
+	icon_state = MAP_SWITCH("plastitanium_wall-0", "plastitanium_nd")
 	smoothing_flags = SMOOTH_BITMASK
-	rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /turf/closed/wall/mineral/plastitanium/overspace
-	icon_state = "map-overspace"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	icon = MAP_SWITCH('icons/turf/walls/plastitanium_wall.dmi', 'icons/turf/walls/misc_wall.dmi')
+	icon_state = MAP_SWITCH("plastitanium_wall-0", "plastitanium_overspace")
 	fixed_underlay = list("space" = TRUE)
-	rust_resistance = RUST_RESISTANCE_TITANIUM
 
-/turf/closed/wall/mineral/plastitanium/rust_turf()
+/turf/closed/wall/mineral/plastitanium/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
-		return
+		return TRUE
 	return ..()
 
 
@@ -379,6 +378,6 @@
 /turf/closed/wall/mineral/plastitanium/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()
 
-/turf/closed/wall/mineral/plastitanium/copyTurf(turf/T)
+/turf/closed/wall/mineral/plastitanium/copyTurf(turf/copy_to_turf, copy_air = FALSE, flags = null)
 	. = ..()
-	T.transform = transform
+	copy_to_turf.transform = transform

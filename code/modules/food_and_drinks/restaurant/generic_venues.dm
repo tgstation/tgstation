@@ -62,6 +62,7 @@
 	holosign_type = /obj/structure/holosign/robot_seat/restaurant
 
 /obj/structure/holosign/robot_seat/restaurant
+	gender = PLURAL
 	name = "restaurant seating"
 	linked_venue = /datum/venue/restaurant
 
@@ -86,6 +87,7 @@
 	)
 
 /obj/machinery/restaurant_portal/bar
+	name = "bar portal"
 	linked_venue = /datum/venue/bar
 
 /obj/item/holosign_creator/robot_seat/bar
@@ -93,5 +95,6 @@
 	holosign_type = /obj/structure/holosign/robot_seat/bar
 
 /obj/structure/holosign/robot_seat/bar
+	gender = PLURAL
 	name = "bar seating"
 	linked_venue = /datum/venue/bar

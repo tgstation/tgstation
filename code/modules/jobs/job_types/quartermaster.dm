@@ -3,8 +3,7 @@
 	description = "Coordinate cargo technicians and shaft miners, assist with \
 		economical purchasing."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
-	department_head = list(JOB_CAPTAIN)
-	head_announce = list(RADIO_CHANNEL_SUPPLY)
+	head_announce = RADIO_CHANNEL_SUPPLY
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -29,20 +28,20 @@
 		/datum/job_department/cargo,
 		/datum/job_department/command,
 		)
-	family_heirlooms = list(/obj/item/stamp, /obj/item/stamp/denied)
+	family_heirlooms = list(/obj/item/stamp/granted, /obj/item/stamp/denied)
 	mail_goodies = list(
 		/obj/item/circuitboard/machine/emitter = 3
 	)
 	rpg_title = "Steward"
 	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 	voice_of_god_power = 1.4 //Command staff has authority
-	ignore_human_authority = TRUE
+	human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
 	jobtype = /datum/job/quartermaster
 	backpack_contents = list(
-		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/melee/baton/telescopic/bronze = 1,
 	)
 	id_trim = /datum/id_trim/job/quartermaster
 	id = /obj/item/card/id/advanced/silver

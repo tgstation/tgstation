@@ -1,4 +1,3 @@
-import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -9,7 +8,9 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 export const MedicalKiosk = (props) => {
@@ -185,6 +186,7 @@ const MedicalKioskScanResults2 = (props) => {
     illness_info,
     bleed_status,
     blood_levels,
+    blood_name,
     blood_status,
   } = data;
   return (
@@ -201,7 +203,7 @@ const MedicalKioskScanResults2 = (props) => {
           {illness_info}
         </LabeledList.Item>
         <LabeledList.Divider />
-        <LabeledList.Item label="Blood Levels">
+        <LabeledList.Item label={`${blood_name} Levels`}>
           <ProgressBar value={blood_levels / 100} color="bad">
             <AnimatedNumber value={blood_levels} />
           </ProgressBar>
@@ -209,7 +211,7 @@ const MedicalKioskScanResults2 = (props) => {
             {bleed_status}
           </Box>
         </LabeledList.Item>
-        <LabeledList.Item label="Blood Information">
+        <LabeledList.Item label={`${blood_name} Information`}>
           {blood_status}
         </LabeledList.Item>
       </LabeledList>

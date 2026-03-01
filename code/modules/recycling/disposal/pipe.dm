@@ -62,7 +62,7 @@
 	return ..()
 
 /**
- * Expells the pipe's contents.
+ * Expels the pipe's contents.
  *
  * This proc checks through src's contents for holder objects,
  * and then tells each one to empty onto the tile. Called when
@@ -156,7 +156,7 @@
 	if(!can_be_deconstructed(user))
 		return TRUE
 
-	if(!I.tool_start_check(user, amount=1))
+	if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return TRUE
 
 	to_chat(user, span_notice("You start slicing [src]..."))
@@ -189,7 +189,7 @@
 				pipe.setDir(dir)
 	spew_forth()
 
-/obj/structure/disposalpipe/singularity_pull(S, current_size)
+/obj/structure/disposalpipe/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()

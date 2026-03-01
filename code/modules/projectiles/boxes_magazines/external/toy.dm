@@ -1,5 +1,7 @@
 /obj/item/ammo_box/magazine/toy
 	name = "foam force META magazine"
+	desc = "A magazine specifically designed for foam force \"firearms\". Probably not great for actually killing your fellow spaceman."
+	abstract_type = /obj/item/ammo_box/magazine/toy
 	ammo_type = /obj/item/ammo_casing/foam_dart
 	caliber = CALIBER_FOAM
 
@@ -20,7 +22,7 @@
 /obj/item/ammo_box/magazine/toy/pistol
 	name = "foam force pistol magazine"
 	icon_state = "9x19p"
-	max_ammo = 8
+	max_ammo = 12
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
 /obj/item/ammo_box/magazine/toy/pistol/riot
@@ -47,7 +49,7 @@
 		if(round_number == i) //only count odd numbers.
 			continue
 		var/obj/item/ammo_casing/foam_dart/boolet = stored_ammo[i]
-		. += "c20r45-foam-[boolet.tip_color]-[round_number]"
+		. += "c20r45-foam-[boolet::tip_color]-[round_number]"
 
 
 /obj/item/ammo_box/magazine/toy/smgm45/riot

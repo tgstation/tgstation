@@ -19,11 +19,30 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flash_protect = FLASH_PROTECTION_WELDER
-	strip_delay = 50
-	equip_delay_other = 50
+	strip_delay = 5 SECONDS
+	equip_delay_other = 5 SECONDS
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	dog_fashion = null
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	///How much this helmet affects fishing difficulty
+	var/fishing_modifier = 3
+	///Icon state applied when we get spraypainted/peppersprayed. If null, does not add the dirt component
+	var/visor_dirt = "helm_dirt"
+
+/obj/item/clothing/head/helmet/space/Initialize(mapload)
+	. = ..()
+	if(visor_dirt)
+		AddComponent(/datum/component/clothing_dirt, visor_dirt)
+	if(fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
+	add_stabilizer()
+
+/obj/item/clothing/head/helmet/space/proc/add_stabilizer(loose_hat = TRUE)
+	AddComponent(/datum/component/hat_stabilizer, loose_hat = loose_hat)
 
 /datum/armor/helmet_space
 	bio = 100
@@ -45,7 +64,7 @@
 	allowed = list(
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
-		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/tank/jetpack/captain,
 		)
 	slowdown = 1
 	armor_type = /datum/armor/suit_space
@@ -54,8 +73,8 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	strip_delay = 80
-	equip_delay_other = 80
+	strip_delay = 8 SECONDS
+	equip_delay_other = 8 SECONDS
 	resistance_flags = NONE
 	actions_types = list(/datum/action/item_action/toggle_spacesuit)
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
@@ -69,6 +88,8 @@
 	var/thermal_on = FALSE
 	/// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 	var/show_hud = TRUE
+	///How much this suit affects fishing difficulty
+	var/fishing_modifier = 5
 
 /datum/armor/suit_space
 	bio = 100
@@ -79,6 +100,15 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
+
+	if(fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
+
+/obj/item/clothing/suit/space/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	. = ..()
+	if(isnull(cell))
+		return
+	toggle_spacesuit(toggler = null, manual_toggle = FALSE) //turn on the thermal regulator by default.
 
 /// Start Processing on the space suit when it is worn to heat the wearer
 /obj/item/clothing/suit/space/equipped(mob/living/user, slot)
@@ -148,7 +178,10 @@
 		thermal_on = FALSE
 
 // support for items that interact with the cell
-/obj/item/clothing/suit/space/get_cell()
+/obj/item/clothing/suit/space/get_cell(atom/movable/interface, mob/user)
+	if(istype(interface, /obj/item/inducer))
+		to_chat(user, span_alert("Error: unable to interface with [interface]."))
+		return null
 	return cell
 
 // Show the status of the suit and the cell
@@ -184,7 +217,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 // object handling for accessing features of the suit
-/obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
+/obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!cell_cover_open || !istype(I, /obj/item/stock_parts/power_store/cell))
 		return ..()
 	if(cell)

@@ -1,16 +1,16 @@
-import { round } from 'common/math';
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Button,
   LabeledList,
   ProgressBar,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+import { round } from 'tgui-core/math';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
+import { type Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
 
 const damageTypes = [
   {

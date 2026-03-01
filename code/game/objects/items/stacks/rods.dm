@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	new/datum/stack_recipe("ladder", /obj/structure/ladder/crafted, 15, time = 15 SECONDS, crafting_flags = CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("catwalk floor tile", /obj/item/stack/tile/catwalk_tile, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("stairs frame", /obj/structure/stairs_frame, 10, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_STRUCTURE), \
-	new/datum/stack_recipe("probing cane", /obj/item/cane/white, 3, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY, category = CAT_TOOLS), \
+	new/datum/stack_recipe("probing cane", /obj/item/cane/white, 3, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_SKIP_MATERIALS_PARITY, category = CAT_TOOLS), \
 	new/datum/stack_recipe("sharpened iron rod", /obj/item/ammo_casing/rebar, 1, time = 0.2 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY, category = CAT_WEAPON_AMMO), \
 	))
 
@@ -28,17 +28,24 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throw_speed = 3
 	throw_range = 7
 	demolition_mod = 1.25
-	mats_per_unit = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	max_amount = 50
 	attack_verb_continuous = list("hits", "bludgeons", "whacks")
 	attack_verb_simple = list("hit", "bludgeon", "whack")
-	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	embedding = list(embed_chance = 50)
+	hitsound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
+	embed_type = /datum/embedding/rods
 	novariants = TRUE
 	matter_amount = 2
 	cost = HALF_SHEET_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/material/iron
 	merge_type = /obj/item/stack/rods
+	pickup_sound = 'sound/items/handling/materials/iron_rod_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/metal_drop.ogg'
+	sound_vary = TRUE
+	usable_for_construction = TRUE
+
+/datum/embedding/rods
+	embed_chance = 50
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))//it looks like theyre ur mum
@@ -58,8 +65,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/spear, /datum/crafting_recipe/stunprod, /datum/crafting_recipe/teleprod) // snatcher prod isn't here as a spoopy secret
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -74,9 +81,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	. = ..()
 	var/amount = get_amount()
 	if(amount <= 5)
-		icon_state = "rods-[amount]"
+		icon_state = "[initial(icon_state)]-[amount]"
 	else
-		icon_state = "rods"
+		icon_state = initial(icon_state)
 
 /obj/item/stack/rods/welder_act(mob/living/user, obj/item/tool)
 	if(get_amount() < 2)
@@ -125,9 +132,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/lava
 	name = "heat resistant rod"
-	desc = "Treated, specialized iron rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
+	desc = "Treated, specialized iron rods. When exposed to the vacuum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
 	singular_name = "heat resistant rod"
-	icon_state = "rods"
+	icon_state = "lavarods"
 	inhand_icon_state = "rods"
 	color = "#5286b9ff"
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -139,3 +146,23 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/lava/thirty
 	amount = 30
+
+/obj/item/stack/rods/shuttle
+	name = "shuttle frame rods"
+	desc = "Treated, specialized iron rods suitable for the construction of shuttle frames or the expansion of existing shuttles."
+	singular_name = "shuttle frame rod"
+	icon_state = "shuttlerods"
+	mats_per_unit = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT,  /datum/material/titanium=SMALL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/rods/shuttle
+
+/obj/item/stack/rods/shuttle/five
+	amount = 5
+
+/obj/item/stack/rods/shuttle/ten
+	amount = 10
+
+/obj/item/stack/rods/shuttle/twentyfive
+	amount = 25
+
+/obj/item/stack/rods/shuttle/fifty
+	amount = 50

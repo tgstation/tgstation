@@ -1,12 +1,12 @@
 // Drone inventory procs
 
-/mob/living/basic/drone/doUnEquip(obj/item/item, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
+/mob/living/basic/drone/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	if(..())
 		update_held_items()
-		if(item == head)
+		if(item_dropping == head)
 			head = null
 			update_worn_head()
-		if(item == internal_storage)
+		if(item_dropping == internal_storage)
 			internal_storage = null
 			update_inv_internal_storage()
 		return TRUE
@@ -59,7 +59,7 @@
 		equipping.pulledby.stop_pulling()
 
 	equipping.screen_loc = null // will get moved if inventory is visible
-	equipping.forceMove(src)
+	equipping.forceMove(src) //This has to come before has_equipped is called.
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
 
 	switch(slot)
@@ -74,10 +74,7 @@
 			return
 
 	//Call back for item being equipped to drone
-	equipping.on_equipped(src, slot)
+	has_equipped(equipping, slot)
 
 /mob/living/basic/drone/getBackSlot()
-	return ITEM_SLOT_DEX_STORAGE
-
-/mob/living/basic/drone/getBeltSlot()
 	return ITEM_SLOT_DEX_STORAGE

@@ -1,9 +1,10 @@
-/proc/getviewsize(view)
-	if(!view) // Just to avoid any runtimes that could otherwise cause constant disconnect loops.
-		stack_trace("Missing value for 'view' in getviewsize(), defaulting to world.view!")
-		view = world.view
+/proc/getviewsize(view = world.view)
+	SHOULD_BE_PURE(TRUE)
 
 	if(isnum(view))
+		//resetting back to 0- this is the same as just checking !view but we want to be clear the point of the check.
+		if(view == 0)
+			return list(0, 0)
 		var/totalviewrange = (view < 0 ? -1 : 1) + 2 * view
 		return list(totalviewrange, totalviewrange)
 	else
@@ -16,8 +17,8 @@
 	if(!view)
 		return list(0, 0)
 	var/list/view_info = getviewsize(view)
-	view_info[1] *= world.icon_size
-	view_info[2] *= world.icon_size
+	view_info[1] *= ICON_SIZE_X
+	view_info[2] *= ICON_SIZE_Y
 	return view_info
 
 /**

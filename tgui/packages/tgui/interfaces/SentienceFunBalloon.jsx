@@ -1,4 +1,3 @@
-import { useBackend } from '../backend';
 import {
   Button,
   Input,
@@ -6,7 +5,9 @@ import {
   NumberInput,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const SentienceFunBalloon = (props) => {
@@ -22,7 +23,7 @@ export const SentienceFunBalloon = (props) => {
                 <Input
                   fluid
                   value={group_name}
-                  onChange={(e, value) =>
+                  onBlur={(value) =>
                     act('group_name', {
                       updated_name: value,
                     })
@@ -31,13 +32,14 @@ export const SentienceFunBalloon = (props) => {
               </LabeledList.Item>
               <LabeledList.Item label="Effect range">
                 <NumberInput
+                  tickWhileDragging
                   width="84px"
                   value={range}
                   minValue={1}
                   maxValue={100}
                   step={1}
                   stepPixelSize={15}
-                  onDrag={(value) =>
+                  onChange={(value) =>
                     act('effect_range', {
                       updated_range: value,
                     })

@@ -45,8 +45,6 @@
 	var/datum/click_intercept = null
 	///Time when the click was intercepted
 	var/click_intercept_time = 0
-	///Used for admin AI interaction
-	var/AI_Interact = FALSE
 
 	///Used to cache this client's bans to save on DB queries
 	var/ban_cache = null
@@ -140,7 +138,7 @@
 	var/list/credits
 
 	///these persist between logins/logouts during the same round.
-	var/datum/player_details/player_details
+	var/datum/persistent_client/persistent_client
 
 	///Should only be a key-value list of north/south/east/west = atom/movable/screen.
 	var/list/char_render_holders
@@ -177,8 +175,6 @@
 	/// Messages currently seen by this client
 	var/list/seen_messages
 
-	//Hide top bars
-	var/fullscreen = FALSE
 	//Hide status bar (bottom left)
 	var/show_status_bar = TRUE
 
@@ -232,9 +228,6 @@
 	var/last_asset_job = 0
 	var/last_completed_asset_job = 0
 
-	/// rate limiting for the crew manifest
-	var/crew_manifest_delay
-
 	/// A buffer of currently held keys.
 	var/list/keys_held = list()
 	/// A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: `"key"` -> `"combo"` (ex: `"D"` -> `"CtrlD"`)
@@ -268,3 +261,9 @@
 
 	/// Loot panel for the client
 	var/datum/lootpanel/loot_panel
+
+	///Which ambient sound this client is currently being provided.
+	var/current_ambient_sound
+
+	/// The DPI scale of the client. 1 is equivalent to 100% window scaling, 2 will be 200% window scaling
+	var/window_scaling

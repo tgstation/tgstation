@@ -16,4 +16,4 @@
 	else
 		var/message = interacting_with.reagents.generate_taste_message(user, taste_sensitivity)
 		to_chat(user, span_notice("[src] tastes <i>[message]</i> in [interacting_with]."))
-	return ITEM_INTERACT_SUCCESS
+	return user.combat_mode ? NONE : ITEM_INTERACT_SUCCESS

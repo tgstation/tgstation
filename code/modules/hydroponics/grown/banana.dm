@@ -1,6 +1,6 @@
 // Banana
 /obj/item/seeds/banana
-	name = "pack of banana seeds"
+	name = "banana seed pack"
 	desc = "They're seeds that grow into banana trees. When grown, keep away from clown."
 	icon_state = "seed-banana"
 	species = "banana"
@@ -25,12 +25,14 @@
 	trash_type = /obj/item/grown/bananapeel
 	bite_consumption_mod = 3
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/banana
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
+
+/obj/item/food/grown/banana/juice_typepath()
+	return /datum/reagent/consumable/banana
 
 /obj/item/food/grown/banana/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/grown/banana/Initialize(mapload)
 	. = ..()
@@ -39,15 +41,9 @@
 
 ///Clowns will always like bananas.
 /obj/item/food/grown/banana/proc/check_liked(mob/living/carbon/human/consumer)
-	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if (!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
 		return FOOD_LIKED
-
-/obj/item/food/grown/banana/generate_trash(atom/location)
-	. = ..()
-	var/obj/item/grown/bananapeel/peel = .
-	if(istype(peel))
-		peel.grind_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
 
 /obj/item/food/grown/banana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -84,6 +80,9 @@
 		else
 			icon_state = "[icon_state]_3"
 
+/obj/item/grown/bananapeel/grind_results()
+	return list(/datum/reagent/medicine/coagulant/banana_peel = seed.potency * 0.2)
+
 /obj/item/grown/bananapeel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
@@ -91,7 +90,7 @@
 
 // Mimana - invisible sprites are totally a feature!
 /obj/item/seeds/banana/mime
-	name = "pack of mimana seeds"
+	name = "mimana seed pack"
 	desc = "They're seeds that grow into mimana trees. When grown, keep away from mime."
 	icon_state = "seed-mimana"
 	species = "mimana"
@@ -119,7 +118,7 @@
 
 // Bluespace Banana
 /obj/item/seeds/banana/bluespace
-	name = "pack of bluespace banana seeds"
+	name = "bluespace banana seed pack"
 	desc = "They're seeds that grow into bluespace banana trees. When grown, keep away from bluespace clown."
 	icon_state = "seed-banana-blue"
 	species = "bluespacebanana"
@@ -161,7 +160,7 @@
 
 /obj/item/food/grown/banana/bunch
 	name = "banana bunch"
-	desc = "Am exquisite bunch of bananas. The almost otherwordly plumpness steers the mind any discening entertainer towards the divine."
+	desc = "An exquisite bunch of bananas. The almost otherwordly plumpness steers the mind any discerning entertainer towards the divine."
 	icon_state = "banana_bunch"
 	bite_consumption_mod = 4
 	var/is_ripening = FALSE
@@ -171,6 +170,7 @@
 	reagents.clear_reagents()
 	reagents.add_reagent(/datum/reagent/consumable/monkey_energy, 10)
 	reagents.add_reagent(/datum/reagent/consumable/banana, 10)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWNANA, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/item/food/grown/banana/bunch/proc/start_ripening()
 	if(is_ripening)
@@ -205,3 +205,14 @@
 	if(!is_simian(user))
 		return to_chat(user, span_notice("You don't really know what to do with this."))
 	else start_ripening()
+
+/// Used for april fools mail
+/obj/item/grown/bananapeel/gros_michel
+	name = "gros michel peel"
+	desc = "A peel from a species of banana that's hyper-vulnerable to contamination."
+
+/obj/item/grown/bananapeel/gros_michel/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/germ_sensitive, mapload)
+	transform *= 1.25
+	AddComponent(/datum/component/decomposition, mapload, decomp_req_handle = TRUE, custom_time = 1 MINUTES, decomp_result = /obj/item/food/badrecipe/moldy)

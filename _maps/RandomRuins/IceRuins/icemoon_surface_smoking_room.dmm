@@ -72,7 +72,7 @@
 /turf/open/floor/wood,
 /area/ruin/smoking_room/house)
 "m" = (
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /obj/machinery/door/airlock/wood,
 /obj/structure/curtain/cloth/fancy{
 	open = 0
@@ -175,11 +175,11 @@
 /area/ruin/smoking_room/room)
 "E" = (
 /obj/item/trash/shrimp_chips,
-/obj/item/clothing/mask/cigarette/rollie/trippy{
+/obj/item/cigarette/rollie/trippy{
 	pixel_x = 3;
 	pixel_y = -1
 	},
-/obj/item/clothing/mask/cigarette/rollie/trippy{
+/obj/item/cigarette/rollie/trippy{
 	pixel_x = 3;
 	pixel_y = 5
 	},

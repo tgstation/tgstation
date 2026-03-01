@@ -4,15 +4,16 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "preferred_ai_hologram_display"
 	should_generate_icons = TRUE
+	should_update_preview = FALSE
 
 /datum/preference/choiced/ai_hologram_display/init_possible_values()
 	return assoc_to_keys(GLOB.ai_hologram_icons) + "Random"
 
 /datum/preference/choiced/ai_hologram_display/icon_for(value)
 	if (value == "Random")
-		return icon('icons/mob/silicon/ai.dmi', "questionmark")
+		return uni_icon('icons/mob/silicon/ai.dmi', "questionmark")
 	else
-		return icon(GLOB.ai_hologram_icons[value], GLOB.ai_hologram_icon_state[value])
+		return uni_icon(GLOB.ai_hologram_icons[value], GLOB.ai_hologram_icon_state[value])
 
 /datum/preference/choiced/ai_hologram_display/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

@@ -1,11 +1,10 @@
 /datum/job/research_director
 	title = JOB_RESEARCH_DIRECTOR
 	description = "Supervise research efforts, ensure Robotics is in working \
-		order, make sure the AI and its Cyborgs aren't rogue, replacing them if \
+		order, make sure the AI and its Cyborgs aren't rogue, replace them if \
 		they are."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
-	department_head = list(JOB_CAPTAIN)
-	head_announce = list("Science")
+	head_announce = RADIO_CHANNEL_SCIENCE
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -29,7 +28,7 @@
 	paycheck_department = ACCOUNT_SCI
 
 	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
-	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_BALLMER_SCIENTIST)
+	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_SCIENTIST_LIVER)
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
 	bounty_types = CIV_JOB_SCI
@@ -43,6 +42,8 @@
 	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
 	rpg_title = "Archmagister"
 	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
+
+	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
@@ -58,9 +59,9 @@
 	id = /obj/item/card/id/advanced/silver
 	id_trim = /datum/id_trim/job/research_director
 	uniform = /obj/item/clothing/under/rank/rnd/research_director/turtleneck
-	suit = /obj/item/clothing/suit/jacket/research_director
+	suit = /obj/item/clothing/suit/toggle/labcoat/research_director
 	backpack_contents = list(
-		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/melee/baton/telescopic/silver = 1,
 		)
 	belt = /obj/item/modular_computer/pda/heads/rd
 	head = /obj/item/clothing/head/beret/science/rd

@@ -14,7 +14,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_ORGANIC
 	var/smooth_icon = 'icons/turf/floors/ash.dmi'
 
@@ -69,3 +69,6 @@
 /turf/open/misc/ashplanet/wateryrock/Initialize(mapload)
 	icon_state = "[icon_state][rand(1, 9)]"
 	. = ..()
+
+/turf/open/misc/ashplanet/wateryrock/lavaland_atmos
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

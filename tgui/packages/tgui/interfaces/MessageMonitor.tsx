@@ -1,7 +1,4 @@
-import { BooleanLike } from 'common/react';
-import { Dispatch, SetStateAction, useState } from 'react';
-
-import { useBackend } from '../backend';
+import { type Dispatch, type SetStateAction, useState } from 'react';
 import {
   Box,
   Button,
@@ -10,7 +7,10 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 enum Screen {
@@ -72,7 +72,7 @@ const RequestLogsScreen = (props) => {
               <Table.Cell>Delete</Table.Cell>
               <Table.Cell>Message</Table.Cell>
               <Table.Cell>Stamp</Table.Cell>
-              <Table.Cell>Departament</Table.Cell>
+              <Table.Cell>Department</Table.Cell>
               <Table.Cell>Authentication</Table.Cell>
             </Table.Row>
             {requests?.map((request) => (
@@ -178,7 +178,7 @@ const MainScreenAuth = (props: AuthScreenProps) => {
         <Section>
           <Input
             value={auth_password}
-            onChange={(e, value) => setPassword(value)}
+            onChange={setPassword}
             placeholder="Password"
           />
           <Button
@@ -229,7 +229,7 @@ const MainScreenAuth = (props: AuthScreenProps) => {
         </Table.Row>
         <Table.Row>
           <Table.Cell>
-            <Button
+            <Button.Confirm
               content={'Clear Message Logs'}
               onClick={() => act('clear_message_logs')}
             />
@@ -238,7 +238,7 @@ const MainScreenAuth = (props: AuthScreenProps) => {
         </Table.Row>
         <Table.Row>
           <Table.Cell>
-            <Button
+            <Button.Confirm
               content={'Clear Request Console Logs'}
               onClick={() => act('clear_request_logs')}
             />
@@ -281,7 +281,7 @@ const MainScreenNotAuth = (props: AuthScreenProps) => {
         <Section>
           <Input
             value={auth_password}
-            onChange={(e, value) => setPassword(value)}
+            onChange={setPassword}
             placeholder="Password"
           />
           <Button onClick={() => act('auth', { auth_password: auth_password })}>

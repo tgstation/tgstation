@@ -6,6 +6,7 @@
 	main_feature_name = "Vampire status"
 	should_generate_icons = TRUE
 	relevant_inherent_trait = TRAIT_BLOOD_CLANS
+	should_update_preview = FALSE
 
 /datum/preference/choiced/vampire_status/create_default_value()
 	return "Inoculated" //eh, have em try out the mechanic first
@@ -16,9 +17,9 @@
 /datum/preference/choiced/vampire_status/icon_for(value)
 	switch (value)
 		if ("Inoculated")
-			return icon('icons/obj/drinks/drinks.dmi', "bloodglass")
+			return uni_icon('icons/obj/drinks/drinks.dmi', "bloodglass")
 		if ("Outcast")
-			return icon('icons/obj/medical/bloodpack.dmi', "generic_bloodpack")
+			return uni_icon('icons/obj/medical/bloodpack.dmi', "generic_bloodpack")
 
 ///list that stores a vampire house name for each department
 GLOBAL_LIST_EMPTY(vampire_houses)
@@ -32,7 +33,7 @@ GLOBAL_LIST_EMPTY(vampire_houses)
 
 	//find and setup the house (department) this vampire is joining
 	var/datum/job_department/vampire_house
-	var/datum/job/vampire_job = SSjob.GetJob(target.job)
+	var/datum/job/vampire_job = SSjob.get_job(target.job)
 	if(!vampire_job) //no job or no mind LOSERS
 		return
 	var/list/valid_departments = (SSjob.joinable_departments.Copy()) - list(/datum/job_department/silicon, /datum/job_department/undefined)

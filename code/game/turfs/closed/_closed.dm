@@ -1,6 +1,7 @@
 /turf/closed
 	layer = CLOSED_TURF_LAYER
 	plane = WALL_PLANE
+	abstract_type = /turf/closed
 	turf_flags = IS_SOLID
 	opacity = TRUE
 	density = TRUE
@@ -15,3 +16,6 @@
 
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
+
+/turf/closed/examine_descriptor(mob/user)
+	return "wall"

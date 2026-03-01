@@ -6,8 +6,20 @@
 /// Two mobs one is facing a person, but the other is perpendicular
 #define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR 3 //Do I win the most informative but also most stupid define award?
 
-/proc/random_blood_type()
-	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+/// Returns one of the human blood types at random, weighted by their rarity
+/proc/random_human_blood_type()
+	RETURN_TYPE(/datum/blood_type)
+	return get_blood_type(pick_weight(
+		list(
+			BLOOD_TYPE_O_MINUS = 4,
+			BLOOD_TYPE_O_PLUS = 36,
+			BLOOD_TYPE_A_MINUS = 3,
+			BLOOD_TYPE_A_PLUS = 28,
+			BLOOD_TYPE_B_MINUS= 1,
+			BLOOD_TYPE_B_PLUS = 20,
+			BLOOD_TYPE_AB_MINUS = 1,
+			BLOOD_TYPE_AB_PLUS = 5,
+		)))
 
 /proc/random_eye_color()
 	switch(pick(20;"brown",20;"hazel",20;"grey",15;"blue",15;"green",1;"amber",1;"albino"))
@@ -27,6 +39,20 @@
 			return "#" + pick("cc","dd","ee","ff") + pick("00","11","22","33","44","55","66","77","88","99") + pick("00","11","22","33","44","55","66","77","88","99")
 		else
 			return COLOR_BLACK
+
+/proc/random_hair_color()
+	var/static/list/natural_hair_colors = list(
+		"#111111", "#362925", "#3B3831", "#41250C", "#412922",
+		"#544C49", "#583322", "#593029", "#703b30", "#714721",
+		"#744729", "#74482a", "#7b746e", "#855832", "#863019",
+		"#8c4734", "#9F550E", "#A29A96", "#A4381C", "#B17B41",
+		"#C0BAB7", "#EFE5E4", "#F7F3F1", "#FFF2D6", "#a15537",
+		"#a17e61", "#b38b67", "#ba673c", "#c89f73", "#d9b380",
+		"#dbc9b8", "#e1621d", "#e17d17", "#e1af93", "#f1cc8f",
+		"#fbe7a1",
+	)
+
+	return pick(natural_hair_colors)
 
 /proc/random_underwear(gender)
 	if(length(SSaccessories.underwear_list) == 0)
@@ -175,8 +201,14 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
  * @param {number} max_interact_count - The maximum amount of interactions allowed.
  *
  * @param {boolean} hidden - By default, any action 1 second or longer shows a cog over the user while it is in progress. If hidden is set to TRUE, the cog will not be shown.
+ *
+ * @param {icon} icon - The icon file of the cog. Default: 'icons/effects/progressbar.dmi'
+ *
+ * @param {iconstate} iconstate - The icon state of the cog. Default: "Cog"
+ *
+ * @param {mob} bar_override - Mob which should see the bar instead of the user
  */
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE)
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE, icon = 'icons/effects/progressbar.dmi', iconstate = "cog", mob/bar_override = null)
 	if(!user)
 		return FALSE
 	if(!isnum(delay))
@@ -194,10 +226,14 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/atom/target_loc = target?.loc
 
 	var/drifting = FALSE
-	if(GLOB.move_manager.processing_on(user, SSspacedrift))
+	if(!isnull(user.drift_handler))
 		drifting = TRUE
 
 	var/holding = user.get_active_held_item()
+
+#ifdef UNIT_TESTS
+	timed_action_flags &= ~IGNORE_SLOWDOWNS //it shouldn't stop unit test dummies from being fast as hell
+#endif
 
 	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
 		delay *= user.cached_multiplicative_actions_slowdown
@@ -206,11 +242,11 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/datum/cogbar/cog
 
 	if(progress)
-		if(user.client)
-			progbar = new(user, delay, target || user)
+		if(user.client || bar_override?.client)
+			progbar = new(bar_override || user, delay, target || user)
 
 		if(!hidden && delay >= 1 SECONDS)
-			cog = new(user)
+			cog = new(bar_override || user, icon, iconstate)
 
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
 
@@ -223,7 +259,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 
-		if(drifting && !GLOB.move_manager.processing_on(user, SSspacedrift))
+		if(drifting && isnull(user.drift_handler))
 			drifting = FALSE
 			user_loc = user.loc
 
@@ -231,6 +267,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			|| (!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
 			|| (!(timed_action_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
 			|| (!(timed_action_flags & IGNORE_INCAPACITATED) && HAS_TRAIT(user, TRAIT_INCAPACITATED)) \
+			|| ((timed_action_flags & DO_AFTER_CHECK_NEXT_MOVE) && world.time < user.next_move) \
 			|| (extra_checks && !extra_checks.Invoke()))
 			. = FALSE
 			break
@@ -475,7 +512,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		. += borg
 
 //Returns a list of AI's
-/proc/active_ais(check_mind=FALSE, z = null, skip_syndicate, only_syndicate)
+/proc/active_ais(check_mind = FALSE, z = null, skip_syndicate = FALSE, only_syndicate = FALSE)
 	. = list()
 	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
 		if(ai.stat == DEAD)
@@ -487,10 +524,9 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			continue
 		if(only_syndicate && !syndie_ai)
 			continue
-		if(check_mind)
-			if(!ai.mind)
-				continue
-		if(z && !(z == ai.z) && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+		if(check_mind && !ai.mind)
+			continue
+		if(!isnull(z) && z != ai.z && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
 			continue
 		. += ai
 
@@ -528,8 +564,8 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
  * When passed the difference between two temperatures returns the amount of change to temperature to apply.
  * The change rate should be kept at a low value tween 0.16 and 0.02 for optimal results.
  * vars:
- * * temp_diff (required) The differance between two temperatures
- * * change_rate (optional)(Default: 0.06) The rate of range multiplyer
+ * * temp_diff (required) The difference between two temperatures
+ * * change_rate (optional)(Default: 0.06) The rate of range multiplier
  */
 /proc/get_temp_change_amount(temp_diff, change_rate = 0.06)
 	if(temp_diff < 0)
@@ -548,7 +584,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/list/sortmob = sort_names(GLOB.mob_list)
 	for(var/mob/living/silicon/ai/mob_to_sort in sortmob)
 		moblist += mob_to_sort
-	for(var/mob/camera/mob_to_sort in sortmob)
+	for(var/mob/eye/mob_to_sort in sortmob)
 		moblist += mob_to_sort
 	for(var/mob/living/silicon/pai/mob_to_sort in sortmob)
 		moblist += mob_to_sort
@@ -579,8 +615,11 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 /proc/get_mob_by_ckey(key)
 	if(!key)
 		return
-	var/list/mobs = sort_mobs()
-	for(var/mob/mob in mobs)
+	var/mob/persistent_mob = GLOB.persistent_clients_by_ckey[key]?.mob
+	if(persistent_mob)
+		return persistent_mob
+	// hopefully the above will always handle it, but any time a coder thinks "no way this will happen", murphy's law guarantees it somehow will
+	for(var/mob/mob as anything in GLOB.mob_list)
 		if(mob.ckey == key)
 			return mob
 
@@ -618,7 +657,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		else
 			return zone
 
-///Takes a zone and returns it's "parent" zone, if it has one.
+///Takes a zone and returns its "parent" zone, if it has one.
 /proc/deprecise_zone(precise_zone)
 	switch(precise_zone)
 		if(BODY_ZONE_PRECISE_GROIN)
@@ -677,8 +716,6 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		slot_strings += "hand"
 	if(slot_flags & ITEM_SLOT_DEX_STORAGE)
 		slot_strings += "dextrous storage"
-	if(slot_flags & ITEM_SLOT_BACKPACK)
-		slot_strings += "backpack"
 	return slot_strings
 
 ///Returns the direction that the initiator and the target are facing
@@ -704,7 +741,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		mob_occupant = occupant
 
 	else if(isorgan(occupant))
-		var/obj/item/organ/internal/brain/brain = occupant
+		var/obj/item/organ/brain/brain = occupant
 		mob_occupant = brain.brainmob
 
 	return mob_occupant
@@ -725,7 +762,10 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			newname = requesting_client?.prefs?.read_preference(preference_type)
 		else
 			var/datum/preference/preference = GLOB.preference_entries[preference_type]
-			newname = preference.create_informed_default_value(requesting_client.prefs)
+			if (requesting_client?.prefs)
+				newname = preference.create_informed_default_value(requesting_client.prefs)
+			else
+				newname = preference.create_default_value()
 
 		for(var/mob/living/checked_mob in GLOB.player_list)
 			if(checked_mob == src)
@@ -806,3 +846,20 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	else
 		. = invoked_callback.Invoke()
 	usr = temp
+
+/**
+ * Iterates over all mobs that can see the passed movable and adds specific mood events to them based on their personalities.
+ *
+ * * source: String source for the mood event
+ * * personality_to_mood: A list mapping personality types to mood event types. Example: list(/datum/personality/chill = /datum/mood_event/chill_guy)
+ * * range: The range in which to check for viewers. Default is view range.
+ * * additional args may be supplied to pass into the mood event constructor.
+ */
+/proc/add_personality_mood_to_viewers(atom/movable/source, mood_key, list/personality_to_mood, range, ...)
+	for(var/mob/living/nearby in viewers(range, source))
+		if(nearby.stat >= UNCONSCIOUS || nearby.is_blind())
+			continue
+		for(var/personality in personality_to_mood)
+			if(HAS_PERSONALITY(nearby, personality))
+				nearby.add_mood_event(arglist( list("[mood_key]_[personality]", personality_to_mood[personality]) + args.Copy(4) ))
+				break

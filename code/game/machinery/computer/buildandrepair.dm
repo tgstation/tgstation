@@ -8,7 +8,7 @@
 
 /obj/structure/frame/computer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	register_context()
 
 /obj/structure/frame/computer/atom_deconstruct(disassembled = TRUE)
@@ -76,23 +76,23 @@
 
 	switch(state)
 		if(FRAME_STATE_EMPTY)
-			. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose" : "in place"].")
+			. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose." : "into place."]")
 			if(anchored)
-				. += span_warning("It's missing a circuit board.")
+				. += span_warning("It's missing a circuit board!")
 			else
 				. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
 		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
-			. += span_warning("An [circuit.name] is installed and should be [EXAMINE_HINT("screwed")] in place.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("pried")] out.")
+			. += span_info("A circuit board is installed and should be [EXAMINE_HINT("screwed")] in place.")
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
-			. += span_warning("Its requires [EXAMINE_HINT("5 cable")] pieces to wire it.")
 			. += span_notice("The circuit board can be [EXAMINE_HINT("screwed")] loose.")
+			. += span_info("It should be [EXAMINE_HINT("wired")] with 5 cables.")
 		if(FRAME_COMPUTER_STATE_WIRED)
-			. += span_notice("The wires can be cut out with [EXAMINE_HINT("wire cutters")].")
-			. += span_warning("Its requires [EXAMINE_HINT("2 glass")] sheets to complete the screen.")
+			. += span_notice("Its wires can be [EXAMINE_HINT("cut")].")
+			. += span_info("It should be [EXAMINE_HINT("fitted")] with 2 glass panels.")
 		if(FRAME_COMPUTER_STATE_GLASSED)
 			. += span_notice("The screen can be [EXAMINE_HINT("pried")] out.")
-			. += span_notice("The moniter can be [EXAMINE_HINT("screwed")] to complete it")
+			. += span_info("The monitor should be [EXAMINE_HINT("screwed")] on to complete it.")
 
 /obj/structure/frame/computer/circuit_added(obj/item/circuitboard/added)
 	state = FRAME_COMPUTER_STATE_BOARD_INSTALLED
@@ -105,9 +105,6 @@
 /obj/structure/frame/computer/install_board(mob/living/user, obj/item/circuitboard/computer/board, by_hand)
 	if(state != FRAME_COMPUTER_STATE_EMPTY)
 		balloon_alert(user, "circuit already installed!")
-		return FALSE
-	if(!anchored && istype(board))
-		balloon_alert(user, "frame must be anchored!")
 		return FALSE
 	. = ..()
 	if(. && !by_hand) // Installing via RPED auto-secures it
@@ -124,9 +121,7 @@
 
 			if(add_cabling(user, cable, time = 0))
 				if(!no_sound)
-					replacer.play_rped_sound()
-					if(replacer.works_from_distance)
-						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+					replacer.play_rped_effect()
 					no_sound = TRUE
 				return install_parts_from_part_replacer(user, replacer, no_sound = no_sound)  // Recursive call to handle the next part
 
@@ -139,9 +134,7 @@
 
 			if(add_glass(user, glass_sheets, time = 0))
 				if(!no_sound)
-					replacer.play_rped_sound()
-					if(replacer.works_from_distance)
-						user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+					replacer.play_rped_effect()
 				return TRUE
 
 			return FALSE
@@ -198,8 +191,6 @@
 		if(FRAME_COMPUTER_STATE_GLASSED)
 			if(finalize_construction(user, tool))
 				return ITEM_INTERACT_SUCCESS
-
-			balloon_alert(user, "missing components!")
 			return ITEM_INTERACT_BLOCKING
 
 /obj/structure/frame/computer/crowbar_act(mob/living/user, obj/item/tool)
@@ -299,6 +290,10 @@
 	return TRUE
 
 /obj/structure/frame/computer/finalize_construction(mob/living/user, obj/item/tool)
+	if(!anchored)
+		balloon_alert(user, "frame must be anchored!")
+		return FALSE
+
 	tool.play_tool_sound(src)
 	var/obj/machinery/new_machine = new circuit.build_path(loc)
 	new_machine.balloon_alert(user, "monitor connected")

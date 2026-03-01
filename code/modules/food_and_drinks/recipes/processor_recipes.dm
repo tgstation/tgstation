@@ -22,7 +22,7 @@
 		/obj/item/food/meat/slab/xeno,
 		/obj/item/food/meat/slab/bear,
 		/obj/item/food/meat/slab/chicken)
-	food_multiplier = 3
+	food_multiplier = MEATSLAB_PROCESSED_AMOUNT
 
 /datum/food_processor_process/cutlet
 	input = /obj/item/food/meat/cutlet/plain
@@ -139,3 +139,7 @@
 	output = /obj/item/popsicle_stick
 	food_multiplier = 3
 	preserve_materials = FALSE
+
+/datum/food_processor_process/canned_ink
+	input = /obj/item/food/ink_sac
+	output = /obj/item/food/canned/squid_ink

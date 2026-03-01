@@ -64,7 +64,7 @@
 
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 	if(tram)
-		RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_display))
+		RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(update_display))
 
 /obj/machinery/computer/tram_controls/update_current_power_usage()
 	return // We get power from area rectifiers
@@ -130,7 +130,7 @@
 		this_destination["id"] = destination.platform_code
 		. += list(this_destination)
 
-/obj/machinery/computer/tram_controls/ui_act(action, params)
+/obj/machinery/computer/tram_controls/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

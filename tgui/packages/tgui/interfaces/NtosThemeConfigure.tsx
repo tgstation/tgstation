@@ -1,5 +1,6 @@
+import { Button, Flex } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Flex } from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {

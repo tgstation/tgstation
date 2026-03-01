@@ -1,6 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { capitalizeAll } from 'common/string';
 import { useBackend } from 'tgui/backend';
+import { Window } from 'tgui/layouts';
 import {
   Button,
   Icon,
@@ -10,8 +9,9 @@ import {
   Slider,
   Stack,
   Tooltip,
-} from 'tgui/components';
-import { Window } from 'tgui/layouts';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+import { capitalizeAll } from 'tgui-core/string';
 
 type Data = {
   can_hack: BooleanLike;
@@ -35,7 +35,7 @@ type Settings = {
 
 export function SimpleBot(props) {
   const { data } = useBackend<Data>();
-  const { can_hack, custom_controls, locked } = data;
+  const { can_hack, locked } = data;
   const access = !locked || !!can_hack;
 
   return (
@@ -43,25 +43,11 @@ export function SimpleBot(props) {
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
-            <Section title="Settings" buttons={<TabDisplay />}>
-              {!access ? <NoticeBox>Locked!</NoticeBox> : <SettingsDisplay />}
-            </Section>
+            <BotSettings />
           </Stack.Item>
           {!!access && (
             <Stack.Item grow>
-              <Section fill scrollable title="Controls">
-                <LabeledControls wrap>
-                  {Object.entries(custom_controls).map((control) => (
-                    <LabeledControls.Item
-                      pb={2}
-                      key={control[0]}
-                      label={capitalizeAll(control[0].replace('_', ' '))}
-                    >
-                      <ControlHelper control={control} />
-                    </LabeledControls.Item>
-                  ))}
-                </LabeledControls>
-              </Section>
+              <BotControl />
             </Stack.Item>
           )}
         </Stack>
@@ -70,6 +56,36 @@ export function SimpleBot(props) {
   );
 }
 
+export function BotSettings(props) {
+  const { act, data } = useBackend<Data>();
+  const { can_hack, locked } = data;
+  const access = !locked || !!can_hack;
+  return (
+    <Section title="Settings" buttons={<TabDisplay />}>
+      {!access ? <NoticeBox>Locked!</NoticeBox> : <SettingsDisplay />}
+    </Section>
+  );
+}
+
+export function BotControl(props) {
+  const { act, data } = useBackend<Data>();
+  const { custom_controls } = data;
+  return (
+    <Section fill scrollable title="Controls">
+      <LabeledControls wrap>
+        {Object.entries(custom_controls).map((control) => (
+          <LabeledControls.Item
+            pb={2}
+            key={control[0]}
+            label={capitalizeAll(control[0].replace('_', ' '))}
+          >
+            <ControlHelper control={control} />
+          </LabeledControls.Item>
+        ))}
+      </LabeledControls>
+    </Section>
+  );
+}
 /** Creates a lock button at the top of the controls */
 function TabDisplay(props) {
   const { act, data } = useBackend<Data>();
@@ -246,7 +262,6 @@ function SettingsDisplay(props) {
 }
 
 enum ControlType {
-  MedbotSync = 'sync_tech',
   MedbotThreshold = 'heal_threshold',
   FloorbotTiles = 'tile_stack',
   FloorbotLine = 'line_mode',
@@ -264,8 +279,6 @@ function ControlHelper(props: ControlProps) {
   const { control } = props;
 
   switch (control[0]) {
-    case ControlType.MedbotSync:
-      return <MedbotSync />;
     case ControlType.MedbotThreshold:
       return <MedbotThreshold control={control} />;
     case ControlType.FloorbotTiles:
@@ -282,25 +295,6 @@ function ControlHelper(props: ControlProps) {
         />
       );
   }
-}
-
-/** Small button to sync medbots with research. */
-function MedbotSync(props) {
-  const { act } = useBackend<Data>();
-
-  return (
-    <Tooltip
-      content={`Synchronize surgical data with research network.
-       Improves Tending Efficiency.`}
-    >
-      <Icon
-        color="purple"
-        name="cloud-download-alt"
-        size={2}
-        onClick={() => act('sync_tech')}
-      />
-    </Tooltip>
-  );
 }
 
 /** Slider button for medbot healing thresholds */
@@ -356,10 +350,8 @@ function FloorbotLine(props: ControlProps) {
         name={control[1] ? 'compass' : 'toggle-off'}
         onClick={() => act('line_mode')}
         size={!control[1] ? 2 : 1.5}
-      >
-        {' '}
-        {control[1] ? control[1].toString().charAt(0).toUpperCase() : ''}
-      </Icon>
+      />
+      {control[1] ? control[1].toString().charAt(0).toUpperCase() : ''}
     </Tooltip>
   );
 }

@@ -3,28 +3,44 @@
 	desc = "Because you really needed another excuse to punch your crewmates."
 	icon_state = "boxing"
 	greyscale_colors = "#f32110"
-	equip_delay_other = 60
+	equip_delay_other = 6 SECONDS
 	species_exception = list(/datum/species/golem) // now you too can be a golem boxing champion
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
+	equip_sound = 'sound/items/equip/glove_equip.ogg'
 	/// Determines the version of boxing (or any martial art for that matter) that the boxing gloves gives
 	var/style_to_give = /datum/martial_art/boxing
+	/// Specifically for whether they get longer knockdown when they jump out of traitor mail
+	var/extrapower = FALSE
 
 /obj/item/clothing/gloves/boxing/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/extendohand_l, /datum/crafting_recipe/extendohand_r)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 	AddComponent(/datum/component/martial_art_giver, style_to_give)
+	AddElement(/datum/element/adjust_fishing_difficulty, 19)
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
+
+/obj/item/clothing/gloves/boxing/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	to_chat(user, span_danger("As you open [letter], boxing gloves spring out and deliver you a swift uppercut!"))
+	var/mob/living/userasliving = user
+	playsound(user, SFX_PUNCH, 25, TRUE)
+	userasliving.Knockdown((extrapower ? 2 : 4) SECONDS, (extrapower ? 4 : 6) SECONDS)
+	userasliving.adjust_stamina_loss(extrapower ? 40 : 80)
+	forceMove(user.loc)
+	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /obj/item/clothing/gloves/boxing/evil
 	name = "evil boxing gloves"
-	desc = "These strange gloves radiate an unsually evil aura."
+	desc = "These strange gloves radiate an unusually evil aura."
 	greyscale_colors = "#21211f"
 	style_to_give = /datum/martial_art/boxing/evil
+	extrapower = TRUE
 
 /obj/item/clothing/gloves/boxing/green
 	icon_state = "boxinggreen"
@@ -44,8 +60,9 @@
 	icon_state = "boxinggold"
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT*1)  //LITERALLY GOLD
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
-	equip_delay_other = 120
+	equip_delay_other = 12 SECONDS
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	extrapower = TRUE
 
 /obj/item/clothing/gloves/boxing/golden/Initialize(mapload)
 	. = ..()

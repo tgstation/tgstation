@@ -8,6 +8,12 @@
 	caliber = CALIBER_SHOTGUN
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 	projectile_type = /obj/projectile/bullet/shotgun_slug
+	newtonian_force = 1.25
+
+/obj/item/ammo_casing/shotgun/milspec
+	name = "shotgun milspec slug"
+	desc = "A 12 gauge milspec lead slug."
+	projectile_type = /obj/projectile/bullet/shotgun_slug/milspec
 
 /obj/item/ammo_casing/shotgun/executioner
 	name = "executioner slug"
@@ -44,8 +50,9 @@
 	desc = "A shotgun shell which fires a spread of incendiary pellets."
 	icon_state = "ishell2"
 	projectile_type = /obj/projectile/bullet/incendiary/shotgun/dragonsbreath
-	pellets = 4
-	variance = 35
+	pellets = 6
+	variance = 15
+	randomspread = TRUE
 
 /obj/item/ammo_casing/shotgun/stunslug
 	name = "taser slug"
@@ -59,6 +66,7 @@
 	desc = "A shotgun shell rigged with CMC technology, which launches a massive slug when fired."
 	icon_state = "mshell"
 	projectile_type = /obj/projectile/bullet/cannonball/meteorslug
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/ammo_casing/shotgun/pulseslug
 	name = "pulse slug"
@@ -67,6 +75,7 @@
 	would have difficulty with."
 	icon_state = "pshell"
 	projectile_type = /obj/projectile/beam/pulse/shotgun
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.2)
 
 /obj/item/ammo_casing/shotgun/frag12
 	name = "FRAG-12 slug"
@@ -80,7 +89,24 @@
 	icon_state = "gshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot
 	pellets = 6
-	variance = 25
+	variance = 15
+	randomspread = TRUE
+
+/obj/item/ammo_casing/shotgun/buckshot/old
+	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/old
+	can_misfire = TRUE
+	misfire_increment = 2
+	integrity_damage = 4
+
+/obj/item/ammo_casing/shotgun/buckshot/old/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
+	. = ..()
+	if(fired_from)
+		do_smoke(0, fired_from, fired_from)
+
+/obj/item/ammo_casing/shotgun/buckshot/milspec
+	name = "milspec buckshot shell"
+	desc = "A 12 gauge buckshot shell, used by various paramilitaries and mercernary forces."
+	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/milspec
 
 /obj/item/ammo_casing/shotgun/buckshot/spent
 	projectile_type = null
@@ -91,7 +117,8 @@
 	icon_state = "rshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_rubbershot
 	pellets = 6
-	variance = 20
+	variance = 15
+	randomspread = TRUE
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
 /obj/item/ammo_casing/shotgun/incapacitate
@@ -103,6 +130,27 @@
 	variance = 25
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
+/obj/item/ammo_casing/shotgun/flechette
+	name = "flechette shell"
+	desc = "A shotgun casing filled with small metal darts. Pokes many tiny holes into meat and kevlar alike. Useful for turning someones insides \
+		into outsides."
+	icon_state = "flechette"
+	projectile_type = /obj/projectile/bullet/pellet/flechette
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
+	pellets = 8
+	variance = 10
+
+/obj/item/ammo_casing/shotgun/flechette/donk
+	name = "\improper Donk Co. 'Donk Spike' Shell"
+	desc = "Donk Co., looking to create a new and exciting shell to move onto the open market, invented what they call the 'Donk Spike'. \
+		A flechette not made from standard ferrous metals. But...plastic. It was a financial failure due to a complete lack of \
+		confidence in the product. Now there are millions of these things in landfills across the sector. This is one such example. \
+		Looks like a donk-pocket! Tastes like death!"
+	icon_state = "flechette_donk"
+	projectile_type = /obj/projectile/bullet/pellet/flechette/donk
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
+	pellets = 5
+
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
 	desc = "An advanced shotgun shell which uses a subspace ansible crystal to produce an effect similar to a standard ion rifle. \
@@ -110,7 +158,9 @@
 	icon_state = "ionshell"
 	projectile_type = /obj/projectile/ion/weak
 	pellets = 4
-	variance = 35
+	variance = 15
+	randomspread = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 
 /obj/item/ammo_casing/shotgun/scatterlaser
 	name = "scatter laser shell"
@@ -118,7 +168,8 @@
 	icon_state = "lshell"
 	projectile_type = /obj/projectile/beam/scatter
 	pellets = 6
-	variance = 35
+	variance = 15
+	randomspread = TRUE
 
 /obj/item/ammo_casing/shotgun/scatterlaser/emp_act(severity)
 	. = ..()
@@ -140,8 +191,8 @@
 
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/meteorslug, /datum/crafting_recipe/pulseslug, /datum/crafting_recipe/dragonsbreath, /datum/crafting_recipe/ionslug)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -159,7 +210,13 @@
 /obj/item/ammo_casing/shotgun/dart/attackby()
 	return
 
+/obj/item/ammo_casing/shotgun/dart/large
+	name = "XL shotgun dart"
+	desc = "A dart for use in shotguns. Can be injected with up to 25 units of any chemical."
+	reagent_amount = 25
+
 /obj/item/ammo_casing/shotgun/dart/bioterror
+	name = "bioterror dart"
 	desc = "An improved shotgun dart filled with deadly toxins. Can be injected with up to 30 units of any chemical."
 	reagent_amount = 30
 

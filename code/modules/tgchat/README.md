@@ -5,6 +5,7 @@
 ### Message Format
 
 TgChat handles sending messages from the server to the client through the use of JSON payloads, of which the format will change depending on the type of message and the intended client endpoint. An example of the payload for chat messages is as follows:
+
 ```json
 {
 	"sequence": 0,
@@ -13,13 +14,13 @@ TgChat handles sending messages from the server to the client through the use of
 		"text": ". . .", // ?optional !atleast-one
 		"html": ". . .", // ?optional !atleast-one
 		"avoidHighlighting": 0 // ?optional
-	},
+	}
 }
 ```
 
 ### Reliability
 
-In the past there have been issues where BYOND will silently and without reason lose a message we sent to the client, to detect this and recover from it seamlessly TgChat also has a baked in reliability layer. This reliability layer is very primitive, and simply keeps track of received sequence numbers. Should the client receive an unexpected sequence number TgChat asks the server to resend any missing packets. 
+In the past there have been issues where BYOND will silently and without reason lose a message we sent to the client, to detect this and recover from it seamlessly TgChat also has a baked in reliability layer. This reliability layer is very primitive, and simply keeps track of received sequence numbers. Should the client receive an unexpected sequence number TgChat asks the server to resend any missing packets.
 
 ### Ping System
 

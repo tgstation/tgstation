@@ -15,7 +15,7 @@
 	material_flags = MATERIAL_EFFECTS
 	rust_resistance = RUST_RESISTANCE_BASIC
 	var/list/icons
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 
 
@@ -97,6 +97,10 @@
 /turf/open/floor/mineral/titanium/blue/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/mineral/titanium/blue/lavaland_atmos
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+
 /turf/open/floor/mineral/titanium/white
 	icon_state = "titanium_white"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/white
@@ -174,7 +178,7 @@
 
 //Used in SnowCabin.dm
 /turf/open/floor/mineral/plastitanium/red/snow_cabin
-	temperature = 180
+	temperature = ICEBOX_MIN_TEMPERATURE
 
 //BANANIUM
 
@@ -195,7 +199,7 @@
 	if(isliving(arrived))
 		squeak()
 
-/turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, params)
+/turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		honk()
@@ -253,7 +257,7 @@
 	if(isliving(arrived))
 		radiate()
 
-/turf/open/floor/mineral/uranium/attackby(obj/item/W, mob/user, params)
+/turf/open/floor/mineral/uranium/attackby(obj/item/W, mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		radiate()

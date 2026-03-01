@@ -37,6 +37,7 @@
 		if(screenmob != mymob)
 			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
 			C.screen += plane_master
+		// this color makes parallax not black
 		plane_master.color = list(
 			0, 0, 0, 0,
 			0, 0, 0, 0,
@@ -61,12 +62,7 @@
 	var/turf/screen_location = get_turf(screenmob)
 
 	if(SSmapping.level_trait(screen_location?.z, ZTRAIT_NOPARALLAX))
-		for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
-			white_space.hide_plane(screenmob)
 		return FALSE
-
-	for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
-		white_space.unhide_plane(screenmob)
 
 	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(viewmob, TRAIT_BYPASS_MEASURES))
 		return FALSE
@@ -191,7 +187,7 @@
 	if(!offset_x && !offset_y && !force)
 		return
 
-	var/glide_rate = round(world.icon_size / screenmob.glide_size * world.tick_lag, world.tick_lag)
+	var/glide_rate = round(ICON_SIZE_ALL / screenmob.glide_size * world.tick_lag, world.tick_lag)
 	C.previous_turf = posobj
 
 	var/largest_change = max(abs(offset_x), abs(offset_y))
@@ -273,9 +269,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/Initialize(mapload, datum/hud/hud_owner, template = FALSE)
 	. = ..()
-	// Parallax layers are independant of hud, they care about client
+	// Parallax layers are independent of hud, they care about client
 	// Not doing this will just create a bunch of hard deletes
-	hud = null
+	set_new_hud(hud_owner = null)
 
 	if(template)
 		return
@@ -297,8 +293,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer/proc/update_o(view)
 	if (!view)
 		view = world.view
-
-	var/static/parallax_scaler = world.icon_size / 480
+	var/static/pixel_grid_size = ICON_SIZE_ALL * 15
+	var/static/parallax_scaler = ICON_SIZE_ALL / pixel_grid_size
 
 	// Turn the view size into a grid of correctly scaled overlays
 	var/list/viewscales = getviewsize(view)
@@ -311,8 +307,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 			if(x == 0 && y == 0)
 				continue
 			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)
-			texture_overlay.pixel_w += 480 * x
-			texture_overlay.pixel_z += 480 * y
+			texture_overlay.pixel_w += pixel_grid_size * x
+			texture_overlay.pixel_z += pixel_grid_size * y
 			new_overlays += texture_overlay
 	cut_overlays()
 	add_overlay(new_overlays)
@@ -335,7 +331,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer/planet
 	icon_state = "planet"
 	blend_mode = BLEND_OVERLAY
-	absolute = TRUE //Status of seperation
+	absolute = TRUE //Status of separation
 	speed = 3
 	layer = 30
 

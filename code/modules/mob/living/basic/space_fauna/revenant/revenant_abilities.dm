@@ -119,9 +119,7 @@
 			continue
 
 		light.visible_message(span_boldwarning("[light] suddenly flares brightly and begins to spark!"))
-		var/datum/effect_system/spark_spread/light_sparks = new /datum/effect_system/spark_spread()
-		light_sparks.set_up(4, 0, light)
-		light_sparks.start()
+		do_sparks(4, FALSE, light)
 		new /obj/effect/temp_visual/revenant(get_turf(light))
 		addtimer(CALLBACK(src, PROC_REF(overload_shock), light, caster), 2 SECONDS)
 
@@ -135,7 +133,7 @@
 			human_mob.electrocute_act(shock_damage, to_shock, flags = SHOCK_NOGLOVES)
 
 		do_sparks(4, FALSE, human_mob)
-		playsound(human_mob, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
+		playsound(human_mob, 'sound/machines/defib/defib_zap.ogg', 50, TRUE, -1)
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /datum/action/cooldown/spell/aoe/revenant/defile
@@ -143,7 +141,6 @@
 	desc = "Twists and corrupts the nearby area as well as dispelling holy auras on floors."
 	button_icon_state = "defile"
 	cooldown_time = 15 SECONDS
-
 	aoe_radius = 4
 	unlock_amount = 10
 	cast_amount = 30
@@ -169,6 +166,14 @@
 	if(victim.type == /turf/closed/wall/r_wall && prob(10) && !HAS_TRAIT(victim, TRAIT_RUSTY))
 		new /obj/effect/temp_visual/revenant(victim)
 		victim.AddElement(/datum/element/rust)
+	for(var/obj/machinery/shower/cursed_shower in victim)
+		new /obj/effect/temp_visual/revenant(victim)
+		cursed_shower.has_water_reclaimer = FALSE
+		cursed_shower.reagents.remove_all(1, relative=TRUE)
+		cursed_shower.reagents.add_reagent(/datum/reagent/blood, initial(cursed_shower.reagent_capacity))
+		if(prob(50))
+			cursed_shower.intended_on = TRUE
+			cursed_shower.update_actually_on(TRUE)
 	for(var/obj/effect/decal/cleanable/food/salt/salt in victim)
 		new /obj/effect/temp_visual/revenant(victim)
 		qdel(salt)
@@ -185,7 +190,7 @@
 		if(window.fulltile)
 			new /obj/effect/temp_visual/revenant/cracks(window.loc)
 	for(var/obj/machinery/light/light in victim)
-		light.flicker(20) //spooky
+		light.flicker(rand(3, 5)) //spooky
 
 //Malfunction: Makes bad stuff happen to robots and machines.
 /datum/action/cooldown/spell/aoe/revenant/malfunction
@@ -270,7 +275,7 @@
 				if(mob.reagents)
 					mob.reagents.add_reagent(/datum/reagent/toxin/plasma, 5)
 		else
-			mob.adjustToxLoss(5)
+			mob.adjust_tox_loss(5)
 	for(var/obj/structure/spacevine/vine in victim) //Fucking with botanists, the ability.
 		vine.add_atom_colour("#823abb", TEMPORARY_COLOUR_PRIORITY)
 		new /obj/effect/temp_visual/revenant(vine.loc)

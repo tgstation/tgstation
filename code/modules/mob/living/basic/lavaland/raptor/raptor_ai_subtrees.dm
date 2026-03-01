@@ -1,6 +1,6 @@
 /datum/ai_planning_subtree/find_and_hunt_target/heal_raptors
 	target_key = BB_INJURED_RAPTOR
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/heal_raptor
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/heal_raptor
 	finding_behavior = /datum/ai_behavior/find_hunt_target/injured_raptor
 	hunt_targets = list(/mob/living/basic/raptor)
 	hunt_chance = 70
@@ -11,18 +11,14 @@
 		return
 	return ..()
 
-/datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble
-	target_key = BB_RAPTOR_VICTIM
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/bully_raptors
-	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_victim
-	hunt_targets = list(/mob/living/basic/raptor)
-	hunt_chance = 30
-	hunt_range = 9
+/datum/ai_planning_subtree/find_and_hunt_target/heal_rider
+	target_key = BB_INJURED_RAPTOR
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/heal_raptor
+	finding_behavior = /datum/ai_behavior/find_injured_rider
+	hunt_targets = list(/mob/living/carbon/human)
 
-/datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(controller.blackboard[BB_BASIC_MOB_HEALER] || !controller.blackboard[BB_RAPTOR_TROUBLE_MAKER])
-		return
-	if(world.time < controller.blackboard[BB_RAPTOR_TROUBLE_COOLDOWN])
+/datum/ai_planning_subtree/find_and_hunt_target/heal_rider/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(!controller.blackboard[BB_BASIC_MOB_HEALER])
 		return
 	return ..()
 
@@ -30,15 +26,26 @@
 	target_key = BB_BASIC_MOB_FLEE_TARGET
 
 /datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/raptor/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard[BB_RAPTOR_COWARD])
+	if(controller.blackboard[BB_RAPTOR_COWARD])
+		return ..()
+
+	var/mob/living/basic/raptor/raptor = controller.pawn
+	if (raptor.health <= raptor.maxHealth * controller.blackboard[BB_RAPTOR_FLEE_THRESHOLD])
+		return ..()
+
+	if (!length(raptor.buckled_mobs))
 		return
-	return ..()
+
+	var/mob/living/buckled_to = raptor.buckled_mobs[1]
+	// Flee if our owner is badly injured and out
+	if (buckled_to.stat != CONSCIOUS && buckled_to.stat != DEAD)
+		return ..()
 
 /datum/ai_planning_subtree/find_and_hunt_target/care_for_young
 	target_key = BB_RAPTOR_BABY
-	hunting_behavior = /datum/ai_behavior/hunt_target/care_for_young
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off/care_for_young
 	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_baby
-	hunt_targets = list(/mob/living/basic/raptor/baby_raptor)
+	hunt_targets = list(/mob/living/basic/raptor)
 	hunt_chance = 75
 	hunt_range = 9
 
@@ -49,14 +56,14 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/raptor_trough
 	target_key = BB_RAPTOR_TROUGH_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off
 	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_trough
 	hunt_targets = list(/obj/structure/ore_container/food_trough/raptor_trough)
 	hunt_chance = 80
 	hunt_range = 9
 
 /datum/ai_planning_subtree/find_and_hunt_target/raptor_trough/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(world.time < controller.blackboard[BB_RAPTOR_EAT_COOLDOWN])
+	if(world.time < controller.blackboard[BB_NEXT_FOOD_EAT])
 		return
 	return ..()
 

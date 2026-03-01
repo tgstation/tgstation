@@ -14,7 +14,7 @@
 	var/description
 	/// The recommended occupancy limit for the shuttle (count chairs, beds, and benches then round to 5)
 	var/occupancy_limit
-	/// Description of the prerequisition that has to be achieved for the shuttle to be purchased
+	/// Description of the prerequisite that has to be achieved for the shuttle to be purchased
 	var/prerequisites
 	/// Shuttle warnings and hazards to the admin who spawns the shuttle
 	var/admin_notes
@@ -40,7 +40,7 @@
 	. = ..()
 
 /datum/map_template/shuttle/preload_size(path, cache)
-	. = ..(path, TRUE) // Done this way because we still want to know if someone actualy wanted to cache the map
+	. = ..(path, TRUE) // Done this way because we still want to know if someone actually wanted to cache the map
 	if(!cached_map)
 		return
 
@@ -56,8 +56,23 @@
 	. = ..()
 	if(!.)
 		return
-	var/list/turfs = block( locate(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ]),
-							locate(.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ]))
+
+	var/list/turfs = block(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ], \
+					.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ])
+
+	dispatch(turfs, register)
+
+/datum/map_template/shuttle/proc/dispatch(list/turfs, register=TRUE)
+	while(TRUE)
+		var/found = FALSE
+		for(var/turf/current_turf in turfs)
+			if(is_type_on_turf(current_turf, /obj/modular_map_root))
+				found = TRUE
+		if(found)
+			sleep(5 DECISECONDS)
+		else
+			break
+
 	for(var/i in 1 to turfs.len)
 		var/turf/place = turfs[i]
 		if(isspaceturf(place)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.

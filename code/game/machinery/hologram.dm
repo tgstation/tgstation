@@ -39,9 +39,9 @@ Possible to do for anyone motivated enough:
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "holopad0"
 	base_icon_state = "holopad"
-	layer = LOW_OBJ_LAYER
 	/// The plane is set such that it shows up without being covered by pipes/wires in a map editor, we change this on initialize.
-	plane = GAME_PLANE
+	layer = MAP_SWITCH(ABOVE_OPEN_TURF_LAYER, LOW_OBJ_LAYER)
+	plane = MAP_SWITCH(FLOOR_PLANE, GAME_PLANE)
 	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_holopad
@@ -101,9 +101,6 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/Initialize(mapload)
 	. = ..()
-	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
-	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
-	update_appearance()
 
 	var/static/list/hovering_mob_typechecks = list(
 		/mob/living/silicon = list(
@@ -111,6 +108,7 @@ Possible to do for anyone motivated enough:
 		)
 	)
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
+	set_wires(new /datum/wires/holopad(src))
 
 	if(on_network)
 		holopads += src
@@ -171,7 +169,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/tutorial/attack_hand(mob/user, list/modifiers)
 	if(!istype(user))
 		return
-	if(user.incapacitated() || !is_operational)
+	if(user.incapacitated || !is_operational)
 		return
 	if(replay_mode)
 		replay_stop()
@@ -191,13 +189,13 @@ Possible to do for anyone motivated enough:
 	for(var/datum/holocall/holocall_to_disconnect as anything in holo_calls)
 		holocall_to_disconnect.ConnectionFailure(src)
 
-	for (var/I in masters)
-		clear_holo(I)
-
 	if(replay_mode)
 		replay_stop()
 	if(record_mode)
 		record_stop()
+
+	for (var/I in masters)
+		clear_holo(I)
 
 	QDEL_NULL(disk)
 
@@ -219,6 +217,11 @@ Possible to do for anyone motivated enough:
 	if(outgoing_call)
 		outgoing_call.ConnectionFailure(src)
 
+/obj/machinery/holopad/on_deconstruction(dissassembled)
+	disk?.forceMove(drop_location())
+	disk = null
+	return ..()
+
 /obj/machinery/holopad/RefreshParts()
 	. = ..()
 	var/holograph_range = 4
@@ -228,10 +231,16 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/examine(mob/user)
 	. = ..()
-	if(isAI(user))
-		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :h to speak through the projection. Right-click to project or cancel a projection. Alt-click to hangup all active and incomming calls. Ctrl-click to end projection without jumping to your last location.")
-	else if(in_range(user, src) || isobserver(user))
+	if(isAI(user) || in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
+
+	if(!isAI(user))
+		return
+
+	. += span_info("Use :[/datum/saymode/holopad::key] to speak through the projection.")
+	. += span_info("Right-click to project or cancel a projection.")
+	. += span_info("Alt-click to hangup all active and incomming calls.")
+	. += span_info("Ctrl-click to end projection without jumping to your last location.")
 
 /obj/machinery/holopad/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -254,24 +263,24 @@ Possible to do for anyone motivated enough:
 	if(record_mode)
 		record_stop()
 
-/obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
+/obj/machinery/holopad/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", item))
 		return
 
-	if(default_pry_open(P, close_after_pry = TRUE, closed_density = FALSE))
+	if(default_pry_open(item, close_after_pry = TRUE, closed_density = FALSE))
 		return
 
-	if(default_deconstruction_crowbar(P))
+	if(default_deconstruction_crowbar(item))
 		return
 
-	if(istype(P,/obj/item/disk/holodisk))
+	if(istype(item, /obj/item/disk/holodisk))
 		if(disk)
 			to_chat(user,span_warning("There's already a disk inside [src]!"))
 			return
-		if (!user.transferItemToLoc(P,src))
+		if (!user.transferItemToLoc(item, src))
 			return
-		to_chat(user,span_notice("You insert [P] into [src]."))
-		disk = P
+		to_chat(user,span_notice("You insert [item] into [src]."))
+		disk = item
 		return
 
 	return ..()
@@ -304,14 +313,14 @@ Possible to do for anyone motivated enough:
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		var/list/call_data = list(
-			caller = HC.user,
-			connected = HC.connected_holopad == src ? TRUE : FALSE,
-			ref = REF(HC)
+			"caller" = HC.user,
+			"connected" = HC.connected_holopad == src ? TRUE : FALSE,
+			"ref" = REF(HC)
 		)
 		data["holo_calls"] += list(call_data)
 	return data
 
-/obj/machinery/holopad/ui_act(action, list/params)
+/obj/machinery/holopad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -330,7 +339,7 @@ Possible to do for anyone motivated enough:
 				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
 					if(!AI.client)
 						continue
-					to_chat(AI, span_info("Your presence is requested at <a href='?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
+					to_chat(AI, span_info("Your presence is requested at <a href='byond://?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='byond://?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
 				return TRUE
 			else
 				to_chat(usr, span_info("A request for AI presence was already sent recently."))
@@ -525,7 +534,7 @@ Possible to do for anyone motivated enough:
 		if(outgoing_call)
 			holocall.Disconnect(src)//can't answer calls while calling
 		else
-			playsound(src, 'sound/machines/twobeep.ogg', 100) //bring, bring!
+			playsound(src, 'sound/machines/beep/twobeep.ogg', 100) //bring, bring!
 			are_ringing = TRUE
 
 	if(ringing != are_ringing)
@@ -571,22 +580,22 @@ Possible to do for anyone motivated enough:
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+/obj/machinery/holopad/Hear(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(speaker && LAZYLEN(masters) && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				master.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
+				master.relay_speech(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 	for(var/datum/holocall/holocall_to_update as anything in holo_calls)
 		if(holocall_to_update.connected_holopad == src)//if we answered this call originating from another holopad
 			if(speaker == holocall_to_update.hologram && holocall_to_update.user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 				holocall_to_update.user.create_chat_message(speaker, message_language, raw_message, spans)
 			else
-				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, message_range = INFINITY)
+				holocall_to_update.user.Hear(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range = INFINITY)
 
 	if(outgoing_call?.hologram && speaker == outgoing_call.user)
-		outgoing_call.hologram.say(raw_message, sanitize = FALSE)
+		outgoing_call.hologram.say(raw_message, spans = spans, sanitize = FALSE, language = message_language, message_mods = message_mods)
 
 	if(record_mode && speaker == record_user)
 		record_message(speaker, raw_message, message_language)
@@ -624,10 +633,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return TRUE
 
 /obj/machinery/holopad/proc/clear_holo(datum/owner)
-	qdel(masters[owner]) // Get rid of owner's hologram
+	qdel(masters[owner])
 	unset_holo(owner)
 	return TRUE
-
 /**
  * Called by holocall to inform outgoing_call that the receiver picked up.
  */
@@ -678,7 +686,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(!isliving(owner))
 		return TRUE
 	var/mob/living/user = owner
-	if(user.incapacitated() || !user.client)
+	if(user.incapacitated || !user.client)
 		return FALSE
 	return TRUE
 
@@ -754,6 +762,14 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return hologram
 
 /obj/machinery/holopad/proc/replay_start()
+	if(!disk)
+		say("Please insert the disc to play the recording.")
+		return
+
+	if(!disk.record)
+		say("There is no record on the disc. Please check the disk.")
+		return
+
 	if(!replay_mode)
 		replay_mode = TRUE
 		replay_holo = setup_replay_holo(disk.record)
@@ -761,6 +777,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		replay_entry(1)
 
 /obj/machinery/holopad/proc/replay_stop()
+	if(!disk || !disk.record)
+		return FALSE
 	if(replay_mode)
 		replay_mode = FALSE
 		offset = FALSE
@@ -857,6 +875,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	initial_language_holder = /datum/language_holder/universal
 	var/mob/living/Impersonation
 	var/datum/holocall/HC
+
+/obj/effect/overlay/holo_pad_hologram/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/holographic_nature)
 
 /obj/effect/overlay/holo_pad_hologram/Destroy()
 	Impersonation = null

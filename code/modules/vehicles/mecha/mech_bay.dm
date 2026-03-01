@@ -76,7 +76,7 @@
 		recharge_console.update_appearance()
 
 
-/obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user, params)
+/obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "recharge_port-o", "recharge_port", I))
 		return
 
@@ -114,7 +114,7 @@
 		ui = new(user, src, "MechBayPowerConsole", name)
 		ui.open()
 
-/obj/machinery/computer/mech_bay_power_console/ui_act(action, params)
+/obj/machinery/computer/mech_bay_power_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -5,10 +5,10 @@ import {
   Section,
   Stack,
   Tooltip,
-} from 'tgui/components';
+} from 'tgui-core/components';
 
 import { getColor } from './helpers';
-import { Threshold } from './types';
+import type { Threshold } from './types';
 
 /**
  * Similar to the virus info display.
@@ -46,7 +46,7 @@ export const SymptomDisplay = (props) => {
 /** Displays threshold data */
 const Thresholds = (props) => {
   const { thresholds = [] } = props;
-  let convertedThresholds = Object.entries<Threshold>(thresholds);
+  const convertedThresholds = Object.entries<Threshold>(thresholds);
 
   return (
     <Section mt={1} title="Thresholds">
@@ -70,7 +70,7 @@ const Thresholds = (props) => {
 /** Displays the numerical trait modifiers for a virus symptom */
 const Traits = (props) => {
   const {
-    symptom: { level, weight, resistance, stage_speed, stealth, transmission },
+    symptom: { level, resistance, stage_speed, stealth, transmission, symptom_cure, cure_color},
   } = props;
 
   return (
@@ -81,12 +81,7 @@ const Traits = (props) => {
             {level}
           </LabeledList.Item>
         </Tooltip>
-        <Tooltip content="The space the symptom takes.">
-          <LabeledList.Item color={getColor(weight)} label="Weight">
-            {weight}
-          </LabeledList.Item>
-        </Tooltip>
-        <Tooltip content="Decides the cure complexity.">
+        <Tooltip content="Protection from cures and natural recovery.">
           <LabeledList.Item color={getColor(resistance)} label="Resistance">
             {resistance}
           </LabeledList.Item>
@@ -104,6 +99,11 @@ const Traits = (props) => {
         <Tooltip content="Decides the spread type.">
           <LabeledList.Item color={getColor(transmission)} label="Transmission">
             {transmission}
+          </LabeledList.Item>
+        </Tooltip>
+        <Tooltip content="What reagent remedies this symptom.">
+          <LabeledList.Item color={cure_color} label="Cure">
+            {symptom_cure}
           </LabeledList.Item>
         </Tooltip>
       </LabeledList>

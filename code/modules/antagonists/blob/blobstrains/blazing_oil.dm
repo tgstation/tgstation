@@ -12,7 +12,6 @@
 	message = "The blob splashes you with burning oil"
 	message_living = ", and you feel your skin char and melt"
 	reagent = /datum/reagent/blob/blazing_oil
-	fire_based = TRUE
 
 /datum/blobstrain/reagent/blazing_oil/extinguish_reaction(obj/structure/blob/B)
 	B.take_damage(4.5, BURN, ENERGY)
@@ -32,7 +31,7 @@
 	taste_description = "burning oil"
 	color = "#B68D00"
 
-/datum/reagent/blob/blazing_oil/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+/datum/reagent/blob/blazing_oil/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/eye/blob/overmind)
 	. = ..()
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 	exposed_mob.adjust_fire_stacks(round(reac_volume/10))

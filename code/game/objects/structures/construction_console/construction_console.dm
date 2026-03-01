@@ -1,7 +1,7 @@
 /**
  * Camera console used to control a base building drone
  *
- * Using this console will put the user in control of a [base building drone][/mob/camera/ai_eye/remote/base_construction].
+ * Using this console will put the user in control of a [base building drone][/mob/eye/camera/remote/base_construction].
  * The drone will appear somewhere within the allowed_area var, or if no area is specified, at the location of the console.area
  * Upon interacting, the user will be granted a set of base building actions that will generally be carried out at the drone's location.
  * To create a new base builder system, this class should be the only thing that needs to be subtyped.
@@ -17,6 +17,7 @@
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
 	light_color = LIGHT_COLOR_PINK
+	add_usb_port = FALSE
 	///Area that the eyeobj will be constrained to. If null, eyeobj will be able to build and move anywhere.
 	var/area/allowed_area
 	///Assoc. list ("structure_name" : count) that keeps track of the number of special structures that can't be built with an RCD, for example, tiny fans or turrets.
@@ -61,14 +62,13 @@
 	var/turf/spawn_spot = find_spawn_spot()
 	if (!spawn_spot)
 		return FALSE
-	eyeobj = new /mob/camera/ai_eye/remote/base_construction(spawn_spot, src)
-	eyeobj.origin = src
+	eyeobj = new /mob/eye/camera/remote/base_construction(spawn_spot, src)
 	return TRUE
 
-/obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, params)
+/obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	//If we have an internal RCD, we can refill it by slapping the console with some materials
 	if(internal_rcd && (istype(W, /obj/item/rcd_ammo) || istype(W, /obj/item/stack/sheet)))
-		internal_rcd.attackby(W, user, params)
+		internal_rcd.attackby(W, user, modifiers)
 	else
 		return ..()
 
@@ -95,7 +95,7 @@
  * The mob is constrained to a given area defined by the base construction console.
  *
  */
-/mob/camera/ai_eye/remote/base_construction
+/mob/eye/camera/remote/base_construction
 	name = "construction holo-drone"
 	//Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
 	move_on_shuttle = TRUE
@@ -105,21 +105,21 @@
 	///Reference to the camera console controlling this drone
 	var/obj/machinery/computer/camera_advanced/base_construction/linked_console
 
-/mob/camera/ai_eye/remote/base_construction/Initialize(mapload, obj/machinery/computer/camera_advanced/console_link)
+/mob/eye/camera/remote/base_construction/Initialize(mapload, obj/machinery/computer/camera_advanced/console_link)
 	linked_console = console_link
 	if(!linked_console)
 		stack_trace("A base consturuction drone was created with no linked console")
 		return INITIALIZE_HINT_QDEL
 	return ..()
 
-/mob/camera/ai_eye/remote/base_construction/setLoc(turf/destination, force_update = FALSE)
+/mob/eye/camera/remote/base_construction/setLoc(turf/destination, force_update = FALSE)
 	var/area/curr_area = get_area(destination)
 	//Only move if we're in the allowed area. If no allowed area is defined, then we're free to move wherever.
 	if(!linked_console.allowed_area || istype(curr_area, linked_console.allowed_area))
 		return ..()
 
-/mob/camera/ai_eye/remote/base_construction/relaymove(mob/living/user, direction)
-	//This camera eye is visible, and as such needs to keep it's dir updated
+/mob/eye/camera/remote/base_construction/relaymove(mob/living/user, direction)
+	//This camera eye is visible, and as such needs to keep its dir updated
 	dir = direction
 	return ..()
 

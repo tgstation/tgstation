@@ -19,8 +19,8 @@ Burning extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
-	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
-	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/fireball.ogg', 50, TRUE)
 	do_effect(user)
 
 /obj/item/slimecross/burning/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -45,12 +45,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
 	user.visible_message(span_danger("[src] boils over with a caustic gas!"))
-	var/datum/reagents/tmp_holder = new/datum/reagents(100)
-	tmp_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 100)
-
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-	smoke.set_up(7, holder = src, location = get_turf(user), carry = tmp_holder)
-	smoke.start(log = TRUE)
+	do_chem_smoke(7, user, get_turf(user), /datum/reagent/consumable/condensedcapsaicin, 100, log = TRUE)
 	..()
 
 /obj/item/slimecross/burning/purple
@@ -93,14 +88,14 @@ Burning extracts:
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
 	user.visible_message(span_danger("[src] explodes into an electrical field!"))
-	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, TRUE)
+	playsound(get_turf(src), 'sound/items/weapons/zapbang.ogg', 50, TRUE)
 	for(var/mob/living/M in range(4,get_turf(user)))
 		if(M != user)
 			var/mob/living/carbon/C = M
 			if(istype(C))
 				C.electrocute_act(25,src)
 			else
-				M.adjustFireLoss(25)
+				M.adjust_fire_loss(25)
 			to_chat(M, span_danger("You feel a sharp electrical pulse!"))
 	..()
 
@@ -120,12 +115,8 @@ Burning extracts:
 
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
 	user.visible_message(span_danger("[src] releases a burst of chilling smoke!"))
-	var/datum/reagents/tmp_holder = new/datum/reagents(100)
-	tmp_holder.add_reagent(/datum/reagent/consumable/frostoil, 40)
 	user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 10)
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-	smoke.set_up(7, holder = src, location = get_turf(user), carry = tmp_holder)
-	smoke.start(log = TRUE)
+	do_chem_smoke(7, user, get_turf(user), /datum/reagent/consumable/frostoil, 40, log = TRUE)
 	..()
 
 /obj/item/slimecross/burning/silver
@@ -211,9 +202,6 @@ Burning extracts:
 	effect_desc = "The user gets a dull arm blade in the hand it is used in."
 
 /obj/item/slimecross/burning/green/do_effect(mob/user)
-	var/which_hand = "l_hand"
-	if(!(user.active_hand_index % 2))
-		which_hand = "r_hand"
 	var/mob/living/L = user
 	if(!istype(user))
 		return
@@ -226,7 +214,7 @@ Burning extracts:
 	else
 		user.visible_message(span_danger("[src] sublimates the flesh around [user]'s arm, transforming the bone into a gruesome blade!"))
 	user.emote("scream")
-	L.apply_damage(30,BURN,which_hand)
+	L.apply_damage(30, BURN, L.get_active_hand())
 	..()
 
 /obj/item/slimecross/burning/pink
@@ -246,7 +234,7 @@ Burning extracts:
 	user.visible_message(span_danger("[src] shudders violently, and summons an army for [user]!"))
 	for(var/i in 1 to 3) //Less than gold normally does, since it's safer and faster.
 		var/mob/living/spawned_mob = create_random_mob(get_turf(user), HOSTILE_SPAWN)
-		spawned_mob.faction |= "[REF(user)]"
+		spawned_mob.add_ally(user)
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))
@@ -263,7 +251,7 @@ Burning extracts:
 /// Inflicts a blastwave upon every mob within a small radius.
 /obj/item/slimecross/burning/oil/proc/boom()
 	var/turf/T = get_turf(src)
-	playsound(T, 'sound/effects/explosion2.ogg', 200, TRUE)
+	playsound(T, 'sound/effects/explosion/explosion2.ogg', 200, TRUE)
 	for(var/mob/living/target in range(2, T))
 		new /obj/effect/temp_visual/explosion(get_turf(target))
 		SSexplosions.med_mov_atom += target

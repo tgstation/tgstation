@@ -2,7 +2,6 @@
 	title = JOB_STATION_ENGINEER
 	description = "Start the Supermatter, wire the solars, repair station hull \
 		and wiring damage."
-	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 5
@@ -31,6 +30,7 @@
 	mail_goodies = list(
 		/obj/item/storage/box/lights/mixed = 20,
 		/obj/item/lightreplacer = 10,
+		/obj/item/spess_knife = 10,
 		/obj/item/holosign_creator/engineering = 8,
 		/obj/item/wrench/bolter = 8,
 		/obj/item/clothing/head/utility/hardhat/red/upgraded = 1
@@ -47,7 +47,7 @@
 	uniform = /obj/item/clothing/under/rank/engineering/engineer
 	belt = /obj/item/storage/belt/utility/full/engi
 	ears = /obj/item/radio/headset/headset_eng
-	head = /obj/item/clothing/head/utility/hardhat
+	head = /obj/item/clothing/head/utility/hardhat/welding/up
 	shoes = /obj/item/clothing/shoes/workboots
 	l_pocket = /obj/item/modular_computer/pda/engineering
 	r_pocket = /obj/item/t_scanner

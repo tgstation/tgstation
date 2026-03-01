@@ -3,13 +3,20 @@
 	desc = "Used to access the station's automated alert system."
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
-	circuit = /obj/item/circuitboard/computer/stationalert
+	circuit = /obj/item/circuitboard/computer/station_alert
 	light_color = LIGHT_COLOR_CYAN
 	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
 
 /obj/machinery/computer/station_alert/Initialize(mapload)
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
+	if(is_station_level(z))
+		var/static/list/alert_areas
+		if(isnull(alert_areas))
+			alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), SSmapping.levels_by_trait(ZTRAIT_STATION), alert_areas)
+	else
+		name = "local alert console"
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z), title = name)
 	RegisterSignals(alert_control.listener, list(COMSIG_ALARM_LISTENER_TRIGGERED, COMSIG_ALARM_LISTENER_CLEARED), PROC_REF(update_alarm_display))
 	return ..()
 

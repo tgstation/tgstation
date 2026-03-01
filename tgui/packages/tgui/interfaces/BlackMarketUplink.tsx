@@ -1,14 +1,16 @@
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
   Button,
+  Image,
   Modal,
   Section,
   Stack,
   Tabs,
-} from '../components';
-import { formatMoney } from '../format';
+} from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -35,6 +37,7 @@ type Item = {
   desc: string;
   amount: number;
   cost: number;
+  html_icon: string;
 };
 
 type DeliveryMethod = {
@@ -62,7 +65,7 @@ export const BlackMarketUplink = (props) => {
             <Box inline bold>
               <AnimatedNumber
                 value={money}
-                format={(value) => formatMoney(value) + ' cr'}
+                format={(value) => `${formatMoney(value)} cr`}
               />
             </Box>
           }
@@ -105,13 +108,27 @@ export const BlackMarketUplink = (props) => {
             {items.map((item) => (
               <Box key={item.name} className="candystripe" p={1} pb={2}>
                 <Stack align="baseline">
-                  <Stack.Item grow bold>
-                    {item.name}
+                  <Stack.Item grow>
+                    <Stack align="horizontal">
+                      {!!item.html_icon && (
+                        <Stack.Item>
+                          <Image
+                            m={1}
+                            src={`data:image/jpeg;base64,${item.html_icon}`}
+                            height="64px"
+                            width="64px"
+                          />
+                        </Stack.Item>
+                      )}
+                      <Stack.Item grow bold>
+                        {item.name}
+                      </Stack.Item>
+                    </Stack>
                   </Stack.Item>
                   <Stack.Item color="label">
-                    {item.amount ? item.amount + ' in stock' : 'Out of stock'}
+                    {item.amount ? `${item.amount} in stock` : 'Out of stock'}
                   </Stack.Item>
-                  <Stack.Item>{formatMoney(item.cost) + ' cr'}</Stack.Item>
+                  <Stack.Item>{`${formatMoney(item.cost)} cr`}</Stack.Item>
                   <Stack.Item>
                     <Button
                       content="Buy"
@@ -160,7 +177,7 @@ const ShipmentSelector = (props) => {
               <Box mt={1}>{method.description}</Box>
               <Button
                 mt={2}
-                content={formatMoney(method.price) + ' cr'}
+                content={`${formatMoney(method.price)} cr`}
                 disabled={money < method.price}
                 onClick={() =>
                   act('buy', {

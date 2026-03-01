@@ -50,7 +50,7 @@
 	throwforce_on = 0,
 	throw_speed_on = 2,
 	sharpness_on = NONE,
-	hitsound_on = 'sound/weapons/blade1.ogg',
+	hitsound_on = 'sound/items/weapons/blade1.ogg',
 	w_class_on = WEIGHT_CLASS_BULKY,
 	clumsy_check = TRUE,
 	clumsy_damage = 10,
@@ -114,10 +114,10 @@
 /datum/component/transforming/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT, COMSIG_DETECTIVE_SCANNED))
 
-/datum/component/transforming/proc/on_scan(datum/source, mob/user, list/extra_data)
+/datum/component/transforming/proc/on_scan(datum/source, mob/user, datum/detective_scanner_log/entry)
 	SIGNAL_HANDLER
-	LAZYADD(extra_data[DETSCAN_CATEGORY_NOTES], "Readings suggest some form of state changing.")
 
+	entry.add_data_entry(DETSCAN_CATEGORY_NOTES, "Readings suggest some form of state changing.")
 
 /*
  * Called on [COMSIG_ITEM_ATTACK_SELF].
@@ -150,7 +150,7 @@
  * Also starts the [transform_cooldown] if we have a set [transform_cooldown_time].
  *
  * source - the item being transformed / parent
- * user - the mob transforming the item
+ * user - the mob transforming the item (can be null)
  *
  * returns TRUE.
  */
@@ -158,7 +158,8 @@
 	toggle_active(source)
 	if(!(SEND_SIGNAL(source, COMSIG_TRANSFORMING_ON_TRANSFORM, user, active) & COMPONENT_NO_DEFAULT_MESSAGE))
 		default_transform_message(source, user)
-
+	if(!isnull(user))
+		SEND_SIGNAL(user, COMSIG_MOB_TRANSFORMING_ITEM, source, active)
 	if(isnum(transform_cooldown_time))
 		COOLDOWN_START(src, transform_cooldown, transform_cooldown_time)
 	if(user)
@@ -174,7 +175,7 @@
 /datum/component/transforming/proc/default_transform_message(obj/item/source, mob/user)
 	if(user)
 		source.balloon_alert(user, "[active ? "enabled" : "disabled"] [source]")
-	playsound(source, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(source, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 
 /*
  * Toggle active between true and false, and call
@@ -216,6 +217,7 @@
 	source.icon_state = "[source.icon_state]_on"
 	if(inhand_icon_change && source.inhand_icon_state)
 		source.inhand_icon_state = "[source.inhand_icon_state]_on"
+	source.update_appearance()
 	source.update_inhand_icon()
 
 /*
@@ -244,9 +246,8 @@
 	source.update_weight_class(initial(source.w_class))
 	source.icon_state = initial(source.icon_state)
 	source.inhand_icon_state = initial(source.inhand_icon_state)
-	if(ismob(source.loc))
-		var/mob/loc_mob = source.loc
-		loc_mob.update_held_items()
+	source.update_appearance()
+	source.update_inhand_icon()
 
 /*
  * If [clumsy_check] is set to TRUE, attempt to cause a side effect for clumsy people activating this item.
@@ -273,11 +274,11 @@
 		var/obj/item/item_parent = parent
 		switch(item_parent.damtype)
 			if(STAMINA)
-				user.adjustStaminaLoss(clumsy_damage)
+				user.adjust_stamina_loss(clumsy_damage)
 			if(OXY)
-				user.adjustOxyLoss(clumsy_damage)
+				user.adjust_oxy_loss(clumsy_damage)
 			if(TOX)
-				user.adjustToxLoss(clumsy_damage)
+				user.adjust_tox_loss(clumsy_damage)
 			if(BRUTE)
 				user.take_bodypart_damage(brute=clumsy_damage)
 			if(BURN)

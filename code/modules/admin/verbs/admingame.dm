@@ -12,28 +12,29 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 	body += "<body>Options panel for <b>[player]</b>"
 	if(player.client)
 		body += " played by <b>[player.client]</b> "
-		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=[(GLOB.admin_datums[player.client.ckey] || GLOB.deadmins[player.client.ckey]) ? "rank" : "add"];key=[player.key]'>[player.client.holder ? player.client.holder.rank_names() : "Player"]</A>\]"
+		body += "\[<A href='byond://?_src_=holder;[HrefToken()];editrights=[(GLOB.admin_datums[player.client.ckey] || GLOB.deadmins[player.client.ckey]) ? "rank" : "add"];key=[player.key]'>[player.client.holder ? player.client.holder.rank_names() : "Player"]</A>\]"
 		if(CONFIG_GET(flag/use_exp_tracking))
-			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(player)]'>" + player.client.get_exp_living(FALSE) + "</a>\]"
+			body += "\[<A href='byond://?_src_=holder;[HrefToken()];getplaytimewindow=[REF(player)]'>" + player.client.get_exp_living(FALSE) + "</a>\]"
 
 	if(isnewplayer(player))
 		body += " <B>Hasn't Entered Game</B> "
 	else
-		body += " \[<A href='?_src_=holder;[HrefToken()];revive=[REF(player)]'>Heal</A>\] "
+		body += " \[<A href='byond://?_src_=holder;[HrefToken()];revive=[REF(player)]'>Heal</A>\] "
 
 	if(player.ckey)
-		body += "<br>\[<A href='?_src_=holder;[HrefToken()];ppbyckey=[player.ckey];ppbyckeyorigmob=[REF(player)]'>Find Updated Panel</A>\]"
+		body += "<br>\[<A href='byond://?_src_=holder;[HrefToken()];ppbyckey=[player.ckey];ppbyckeyorigmob=[REF(player)]'>Find Updated Panel</A>\]"
 
 	if(player.client)
-		body += "<br>\[<b>First Seen:</b> [player.client.player_join_date]\]\[<b>Byond account registered on:</b> [player.client.account_join_date]\]"
+		body += "<br>\[<b>First Seen:</b> [player.client.player_join_date]\]"
+		body += "<br>\[<b>Byond account registered on:</b> [player.client.account_join_date]\]"
 		body += "<br><br><b>CentCom Galactic Ban DB: </b> "
 		if(CONFIG_GET(string/centcom_ban_db))
-			body += "<a href='?_src_=holder;[HrefToken()];centcomlookup=[player.client.ckey]'>Search</a>"
+			body += "<a href='byond://?_src_=holder;[HrefToken()];centcomlookup=[player.client.ckey]'>Search</a>"
 		else
 			body += "<i>Disabled</i>"
 		body += "<br><br><b>Show related accounts by:</b> "
-		body += "\[ <a href='?_src_=holder;[HrefToken()];showrelatedacc=cid;client=[REF(player.client)]'>CID</a> | "
-		body += "<a href='?_src_=holder;[HrefToken()];showrelatedacc=ip;client=[REF(player.client)]'>IP</a> \]"
+		body += "\[ <a href='byond://?_src_=holder;[HrefToken()];showrelatedacc=cid;client=[REF(player.client)]'>CID</a> | "
+		body += "<a href='byond://?_src_=holder;[HrefToken()];showrelatedacc=ip;client=[REF(player.client)]'>IP</a> \]"
 		var/full_version = "Unknown"
 		if(player.client.byond_version)
 			full_version = "[player.client.byond_version].[player.client.byond_build ? player.client.byond_build : "xxx"]"
@@ -41,67 +42,67 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 
 
 	body += "<br><br>\[ "
-	body += "<a href='?_src_=vars;[HrefToken()];Vars=[REF(player)]'>VV</a> - "
+	body += "<a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(player)]'>VV</a> - "
 	if(player.mind)
-		body += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(player)]'>TP</a> - "
-		body += "<a href='?_src_=holder;[HrefToken()];skill=[REF(player)]'>SKILLS</a> - "
+		body += "<a href='byond://?_src_=holder;[HrefToken()];traitor=[REF(player)]'>TP</a> - "
+		body += "<a href='byond://?_src_=holder;[HrefToken()];skill=[REF(player)]'>SKILLS</a> - "
 	else
-		body += "<a href='?_src_=holder;[HrefToken()];initmind=[REF(player)]'>Init Mind</a> - "
+		body += "<a href='byond://?_src_=holder;[HrefToken()];initmind=[REF(player)]'>Init Mind</a> - "
 	if (iscyborg(player))
-		body += "<a href='?_src_=holder;[HrefToken()];borgpanel=[REF(player)]'>BP</a> - "
-	body += "<a href='?priv_msg=[player.ckey]'>PM</a> - "
-	body += "<a href='?_src_=holder;[HrefToken()];subtlemessage=[REF(player)]'>SM</a> - "
+		body += "<a href='byond://?_src_=holder;[HrefToken()];borgpanel=[REF(player)]'>BP</a> - "
+	body += "<a href='byond://?priv_msg=[player.ckey]'>PM</a> - "
+	body += "<a href='byond://?_src_=holder;[HrefToken()];subtlemessage=[REF(player)]'>SM</a> - "
 	if (ishuman(player) && player.mind)
-		body += "<a href='?_src_=holder;[HrefToken()];HeadsetMessage=[REF(player)]'>HM</a> - "
-	body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(player)]'>FLW</a> - "
+		body += "<a href='byond://?_src_=holder;[HrefToken()];HeadsetMessage=[REF(player)]'>HM</a> - "
+	body += "<a href='byond://?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(player)]'>FLW</a> - "
 	//Default to client logs if available
 	var/source = LOGSRC_MOB
 	if(player.ckey)
 		source = LOGSRC_CKEY
-	body += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(player)];log_src=[source]'>LOGS</a>\] <br>"
+	body += "<a href='byond://?_src_=holder;[HrefToken()];individuallog=[REF(player)];log_src=[source]'>LOGS</a>\] <br>"
 
 	body += "<b>Mob type</b> = [player.type]<br><br>"
 
-	if(player.client)
+	if(HAS_CONNECTED_PLAYER(player))
 		body += "<b>Old names:</b> "
-		var/datum/player_details/deets = GLOB.player_details[player.ckey]
-		if(deets)
-			body += deets.get_played_names()
+		if(player.persistent_client)
+			body += player.persistent_client.get_played_names()
 		else
 			body += "<i>None?!</i>"
 		body += "<br><br>"
 
-	body += "<A href='?_src_=holder;[HrefToken()];boot2=[REF(player)]'>Kick</A> | "
+	body += "<A href='byond://?_src_=holder;[HrefToken()];boot2=[REF(player)]'>Kick</A> | "
 	if(player.client)
-		body += "<A href='?_src_=holder;[HrefToken()];newbankey=[player.key];newbanip=[player.client.address];newbancid=[player.client.computer_id]'>Ban</A> | "
+		body += "<A href='byond://?_src_=holder;[HrefToken()];newbankey=[player.key];newbanip=[player.client.address];newbancid=[player.client.computer_id]'>Ban</A> | "
 	else
-		body += "<A href='?_src_=holder;[HrefToken()];newbankey=[player.key]'>Ban</A> | "
+		body += "<A href='byond://?_src_=holder;[HrefToken()];newbankey=[player.key]'>Ban</A> | "
 
-	body += "<A href='?_src_=holder;[HrefToken()];showmessageckey=[player.ckey]'>Notes | Messages | Watchlist</A> | "
+	body += "<A href='byond://?_src_=holder;[HrefToken()];showmessageckey=[player.ckey]'>Notes | Messages | Watchlist</A> | "
 	if(player.client)
-		body += "| <A href='?_src_=holder;[HrefToken()];sendtoprison=[REF(player)]'>Prison</A> | "
-		body += "\ <A href='?_src_=holder;[HrefToken()];sendbacktolobby=[REF(player)]'>Send back to Lobby</A> | "
+		body += "| <A href='byond://?_src_=holder;[HrefToken()];sendtoprison=[REF(player)]'>Prison</A> | "
+		body += "\ <A href='byond://?_src_=holder;[HrefToken()];sendbacktolobby=[REF(player)]'>Send back to Lobby</A> | "
 		var/muted = player.client.prefs.muted
 		body += "<br><b>Mute: </b> "
-		body += "\[<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_INTERNET_REQUEST]'><font color='[(muted & MUTE_INTERNET_REQUEST)?"red":"blue"]'>WEBREQ</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
-		body += "(<A href='?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
+		body += "\[<A href='byond://?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
+		body += "<A href='byond://?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
+		body += "<A href='byond://?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
+		body += "<A href='byond://?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
+		body += "<A href='byond://?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_INTERNET_REQUEST]'><font color='[(muted & MUTE_INTERNET_REQUEST)?"red":"blue"]'>WEBREQ</font></a> | "
+		body += "<A href='byond://?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
+		body += "(<A href='byond://?_src_=holder;[HrefToken()];mute=[player.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
 
 	body += "<br><br>"
-	body += "<A href='?_src_=holder;[HrefToken()];jumpto=[REF(player)]'><b>Jump to</b></A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];getmob=[REF(player)]'>Get</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];sendmob=[REF(player)]'>Send To</A>"
+	body += "<A href='byond://?_src_=holder;[HrefToken()];jumpto=[REF(player)]'><b>Jump to</b></A> | "
+	body += "<A href='byond://?_src_=holder;[HrefToken()];getmob=[REF(player)]'>Get</A> | "
+	body += "<A href='byond://?_src_=holder;[HrefToken()];sendmob=[REF(player)]'>Send To</A>"
 
 	body += "<br><br>"
-	body += "<A href='?_src_=holder;[HrefToken()];traitor=[REF(player)]'>Traitor panel</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];narrateto=[REF(player)]'>Narrate to</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];subtlemessage=[REF(player)]'>Subtle message</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];playsoundto=[REF(player)]'>Play sound to</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];languagemenu=[REF(player)]'>Language Menu</A>"
+	body += "<A href='byond://?_src_=holder;[HrefToken()];traitor=[REF(player)]'>Traitor panel</A> | "
+	body += "<A href='byond://?_src_=holder;[HrefToken()];narrateto=[REF(player)]'>Narrate to</A> | "
+	body += "<A href='byond://?_src_=holder;[HrefToken()];subtlemessage=[REF(player)]'>Subtle message</A> | "
+	body += "<A href='byond://?_src_=holder;[HrefToken()];playsoundto=[REF(player)]'>Play sound to</A> | "
+	body += "<A href='byond://?_src_=holder;[HrefToken()];languagemenu=[REF(player)]'>Language Menu</A> | "
+	body += "<A href='byond://?_src_=holder;[HrefToken()];rpreminder=[REF(player)]'>Roleplay Reminder</A>"
 
 	if(player.client)
 		if(!isnewplayer(player))
@@ -110,60 +111,134 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 			if(isobserver(player))
 				body += "<b>Ghost</b> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(player)]'>Make Ghost</A> | "
+				body += "<A href='byond://?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(player)]'>Make Ghost</A> | "
 
 			if(ishuman(player) && !ismonkey(player))
 				body += "<b>Human</b> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=human;mob=[REF(player)]'>Make Human</A> | "
+				body += "<A href='byond://?_src_=holder;[HrefToken()];simplemake=human;mob=[REF(player)]'>Make Human</A> | "
 
 			if(ismonkey(player))
 				body += "<b>Monkey</b> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=monkey;mob=[REF(player)]'>Make Monkey</A> | "
+				body += "<A href='byond://?_src_=holder;[HrefToken()];simplemake=monkey;mob=[REF(player)]'>Make Monkey</A> | "
 
 			if(iscyborg(player))
 				body += "<b>Cyborg</b> | "
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=robot;mob=[REF(player)]'>Make Cyborg</A> | "
+				body += "<A href='byond://?_src_=holder;[HrefToken()];simplemake=robot;mob=[REF(player)]'>Make Cyborg</A> | "
 
 			if(isAI(player))
 				body += "<b>AI</b>"
 			else
-				body += "<A href='?_src_=holder;[HrefToken()];makeai=[REF(player)]'>Make AI</A>"
+				body += "<A href='byond://?_src_=holder;[HrefToken()];makeai=[REF(player)]'>Make AI</A>"
 
 		body += "<br><br>"
 		body += "<b>Other actions:</b>"
 		body += "<br>"
 		if(!isnewplayer(player))
-			body += "<A href='?_src_=holder;[HrefToken()];forcespeech=[REF(player)]'>Forcesay</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];applyquirks=[REF(player)]'>Apply Client Quirks</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdome1=[REF(player)]'>Thunderdome 1</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(player)]'>Thunderdome 2</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(player)]'>Thunderdome Admin</A> | "
-			body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(player)]'>Thunderdome Observer</A> | "
-		body += "<A href='?_src_=holder;[HrefToken()];admincommend=[REF(player)]'>Commend Behavior</A> | "
+			body += "<A href='byond://?_src_=holder;[HrefToken()];forcespeech=[REF(player)]'>Forcesay</A> | "
+			body += "<A href='byond://?_src_=holder;[HrefToken()];applyquirks=[REF(player)]'>Apply Client Quirks</A> | "
+			body += "<A href='byond://?_src_=holder;[HrefToken()];tdome1=[REF(player)]'>Thunderdome 1</A> | "
+			body += "<A href='byond://?_src_=holder;[HrefToken()];tdome2=[REF(player)]'>Thunderdome 2</A> | "
+			body += "<A href='byond://?_src_=holder;[HrefToken()];tdomeadmin=[REF(player)]'>Thunderdome Admin</A> | "
+			body += "<A href='byond://?_src_=holder;[HrefToken()];tdomeobserve=[REF(player)]'>Thunderdome Observer</A> | "
+		body += "<A href='byond://?_src_=holder;[HrefToken()];admincommend=[REF(player)]'>Commend Behavior</A> | "
 
 	body += "<br>"
 	body += "</body></html>"
 
-	user << browse(body, "window=adminplayeropts-[REF(player)];size=550x515")
+	user << browse(body, "window=adminplayeropts-[REF(player)];size=550x540")
 	BLACKBOX_LOG_ADMIN_VERB("Player Panel")
 
-/client/proc/cmd_admin_godmode(mob/M in GLOB.mob_list)
+ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupants PP", obj/target in world)
+	var/list/options = list()
+
+	// Vehicles
+	if(istype(target, /obj/vehicle))
+		var/obj/vehicle/target_vehicle = target
+		if(istype(target_vehicle.occupants, /list) && target_vehicle.occupants.len)
+			for(var/mob/mob_occupant in target_vehicle.occupants)
+				options["[mob_occupant.name] ([mob_occupant.tag])[target_vehicle.is_driver(mob_occupant) ? " (Driver)" : ""]"] = "\ref[mob_occupant]"
+		// Searching for mobs in exosuit equipment (e.g. seccage, sleepers)
+		for(var/obj/item/mecha_parts/mecha_equipment/obj_contents in target.contents)
+			for(var/mob/mob_in_equipment in obj_contents.contents)
+				options["[mob_in_equipment.name] ([mob_in_equipment.tag])"] = "\ref[mob_in_equipment]"
+
+	// Closets, crates, bodybags, coffins, etc.
+	else if(istype(target, /obj/structure/closet))
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
+		// Searching for mobs in bodybags placed inside closet
+		for(var/obj/structure/closet/obj_contents in target.contents)
+			for(var/mob/mob_in_bodybag in obj_contents.contents)
+				options["[mob_in_bodybag.name] ([mob_in_bodybag.tag])"] = "\ref[mob_in_bodybag]"
+		// That's basically the same for folded bodybags (e.g. bluespace bodybags with mobs inside)
+		for(var/obj/item/bodybag/obj_contents_folded in target.contents)
+			for(var/mob/mob_in_bodybag_folded in obj_contents_folded.contents)
+				options["[mob_in_bodybag_folded.name] ([mob_in_bodybag_folded.tag])"] = "\ref[mob_in_bodybag_folded]"
+
+	// Folded bodybags (e.g. bluespace bodybags with mobs inside)
+	else if(istype(target, /obj/item/bodybag))
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
+
+	// Body containers (morgue trays, crematoriums)
+	else if(istype(target, /obj/structure/bodycontainer))
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
+		// Searching for mobs in bodybags placed inside body container
+		for(var/obj/structure/closet/obj_contents in target.contents)
+			for(var/mob/mob_in_bodybag in obj_contents.contents)
+				options["[mob_in_bodybag.name] ([mob_in_bodybag.tag])"] = "\ref[mob_in_bodybag]"
+		// That's basically the same for folded bodybags (e.g. bluespace bodybags with mobs inside)
+		for(var/obj/item/bodybag/obj_contents_folded in target.contents)
+			for(var/mob/mob_in_bodybag_folded in obj_contents_folded.contents)
+				options["[mob_in_bodybag_folded.name] ([mob_in_bodybag_folded.tag])"] = "\ref[mob_in_bodybag_folded]"
+
+	// Machinery
+	else if(istype(target, /obj/machinery))
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
+
+	else
+		tgui_alert(user,"Unsupported object type! Supported types: /obj/vehicle; /obj/structure/closet; /obj/structure/bodycontainer; /obj/machinery; /obj/item/bodybag.")
+		return
+
+	if(!options.len)
+		tgui_alert(user, "No occupants found!")
+		return
+
+	var/choice
+	if(options.len == 1)
+		choice = options[1]
+	else
+		choice = tgui_input_list(user, "Select mob", "Player Panel", options)
+
+	if(choice)
+		var/mob/selected_mob = locate(options[choice])
+		if(selected_mob)
+			SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/show_player_panel, selected_mob)
+		return
+
+/client/proc/cmd_admin_godmode(mob/mob in GLOB.mob_list)
 	set category = "Admin.Game"
 	set name = "Godmode"
 	if(!check_rights(R_ADMIN))
 		return
 
-	M.status_flags ^= GODMODE
-	to_chat(usr, span_adminnotice("Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]"), confidential = TRUE)
+	var/had_trait = HAS_TRAIT_FROM(mob, TRAIT_GODMODE, ADMIN_TRAIT)
+	if(had_trait)
+		REMOVE_TRAIT(mob, TRAIT_GODMODE, ADMIN_TRAIT)
+	else
+		ADD_TRAIT(mob, TRAIT_GODMODE, ADMIN_TRAIT)
+	to_chat(usr, span_adminnotice("Toggled [had_trait ? "OFF" : "ON"]"), confidential = TRUE)
 
-	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
-	var/msg = "[key_name_admin(usr)] has toggled [ADMIN_LOOKUPFLW(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]"
+	log_admin("[key_name(usr)] has toggled [key_name(mob)]'s nodamage to [had_trait ? "Off" : "On"]")
+	var/msg = "[key_name_admin(usr)] has toggled [ADMIN_LOOKUPFLW(mob)]'s nodamage to [had_trait ? "Off" : "On"]"
 	message_admins(msg)
-	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Godmode", "[M.status_flags & GODMODE ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	admin_ticket_log(mob, msg)
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Godmode", "[had_trait ? "Disabled" : "Enabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
@@ -190,9 +265,9 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 		if(findtext(G_found.real_name,"monkey"))
 			if(tgui_alert(user,"This character appears to have been a monkey. Would you like to respawn them as such?",,list("Yes","No")) == "Yes")
 				var/mob/living/carbon/human/species/monkey/new_monkey = new
-				SSjob.SendToLateJoin(new_monkey)
+				SSjob.send_to_late_join(new_monkey)
 				G_found.mind.transfer_to(new_monkey) //be careful when doing stuff like this! I've already checked the mind isn't in use
-				new_monkey.key = G_found.key
+				new_monkey.PossessByPlayer(G_found.key)
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
 				var/msg = span_adminnotice("[key_name_admin(user)] has respawned [new_monkey.key] as a filthy monkey.")
 				message_admins(msg)
@@ -202,7 +277,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 
 	//Ok, it's not a monkey. So, spawn a human.
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
-	SSjob.SendToLateJoin(new_character)
+	SSjob.send_to_late_join(new_character)
 
 	var/datum/record/locked/record_found //Referenced to later to either randomize or not randomize the character.
 	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
@@ -225,9 +300,9 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	else
 		new_character.mind_initialize()
 	if(is_unassigned_job(new_character.mind.assigned_role))
-		new_character.mind.set_assigned_role(SSjob.GetJobType(SSjob.overflow_role))
+		new_character.mind.set_assigned_role(SSjob.get_job_type(SSjob.overflow_role))
 
-	new_character.key = G_found.key
+	new_character.PossessByPlayer(G_found.key)
 
 	/*
 	The code below functions with the assumption that the mob is already a traitor if they have a special role.
@@ -242,36 +317,17 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	//Now for special roles and equipment.
 	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(/datum/antagonist/traitor)
 	if(traitordatum)
-		SSjob.EquipRank(new_character, new_character.mind.assigned_role, new_character.client)
+		SSjob.equip_rank(new_character, new_character.mind.assigned_role, new_character.client)
 		new_character.mind.give_uplink(silent = TRUE, antag_datum = traitordatum)
 
-	switch(new_character.mind.special_role)
-		if(ROLE_WIZARD)
-			new_character.forceMove(pick(GLOB.wizardstart))
-			var/datum/antagonist/wizard/A = new_character.mind.has_antag_datum(/datum/antagonist/wizard,TRUE)
-			A.equip_wizard()
-		if(ROLE_SYNDICATE)
-			new_character.forceMove(pick(GLOB.nukeop_start))
-			var/datum/antagonist/nukeop/N = new_character.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
-			N.equip_op()
-		if(ROLE_NINJA)
-			var/list/ninja_spawn = list()
-			for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
-				ninja_spawn += L
-			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(/datum/antagonist/ninja)
-			ninjadatum.equip_space_ninja()
-			if(ninja_spawn.len)
-				new_character.forceMove(pick(ninja_spawn))
+	var/skip_job_respawn = FALSE
+	for(var/datum/antagonist/antag as anything in new_character.mind.antag_datums)
+		skip_job_respawn ||= antag.on_respawn(new_character)
+		if(skip_job_respawn)
+			break
 
-		else//They may also be a cyborg or AI.
-			switch(new_character.mind.assigned_role.type)
-				if(/datum/job/cyborg)//More rigging to make em' work and check if they're traitor.
-					new_character = new_character.Robotize(TRUE)
-				if(/datum/job/ai)
-					new_character = new_character.AIize()
-				else
-					if(!traitordatum) // Already equipped there.
-						SSjob.EquipRank(new_character, new_character.mind.assigned_role, new_character.client)//Or we simply equip them.
+	if(!skip_job_respawn)
+		new_character.mind.assigned_role.on_respawn(new_character)
 
 	//Announces the character on all the systems, based on the record.
 	if(!record_found && (new_character.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
@@ -321,15 +377,15 @@ ADMIN_VERB(manage_job_slots, R_ADMIN, "Manage Job Slots", "Manage the number of 
 		dat += "</td>"
 		dat += "<td>"
 		if(job.total_positions >= 0)
-			dat += "<A href='?src=[REF(src)];[HrefToken()];customjobslot=[job.title]'>Custom</A> | "
-			dat += "<A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add 1</A> | "
+			dat += "<A href='byond://?src=[REF(src)];[HrefToken()];customjobslot=[job.title]'>Custom</A> | "
+			dat += "<A href='byond://?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add 1</A> | "
 			if(job.total_positions > job.current_positions)
-				dat += "<A href='?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A> | "
+				dat += "<A href='byond://?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A> | "
 			else
 				dat += "Remove | "
-			dat += "<A href='?src=[REF(src)];[HrefToken()];unlimitjobslot=[job.title]'>Unlimit</A></td>"
+			dat += "<A href='byond://?src=[REF(src)];[HrefToken()];unlimitjobslot=[job.title]'>Unlimit</A></td>"
 		else
-			dat += "<A href='?src=[REF(src)];[HrefToken()];limitjobslot=[job.title]'>Limit</A></td>"
+			dat += "<A href='byond://?src=[REF(src)];[HrefToken()];limitjobslot=[job.title]'>Limit</A></td>"
 
 	browser.height = min(100 + count * 20, 650)
 	browser.set_content(dat.Join())
@@ -339,7 +395,7 @@ ADMIN_VERB(toggle_view_range, R_ADMIN, "Change View Range", "Switch between 1x a
 	if(user.view_size.getView() == user.view_size.default)
 		user.view_size.setTo(input(user, "Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,37) - 7)
 	else
-		user.view_size.resetToDefault(getScreenSize(user.prefs.read_preference(/datum/preference/toggle/widescreen)))
+		user.view_size.resetToDefault()
 
 	log_admin("[key_name(user)] changed their view range to [user.view].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Change View Range", "[user.view]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
@@ -355,15 +411,17 @@ ADMIN_VERB(combo_hud, R_ADMIN, "Toggle Combo HUD", "Toggles the Admin Combo HUD.
 	log_admin("[key_name(user)] toggled their admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Combo HUD", "[user.combo_hud_enabled ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
+/// List of hud traits in the admin combo hud
+#define ADMIN_HUDS list(TRAIT_SECURITY_HUD, TRAIT_MEDICAL_HUD, TRAIT_DIAGNOSTIC_HUD, TRAIT_BOT_PATH_HUD)
+
 /client/proc/enable_combo_hud()
 	if (combo_hud_enabled)
 		return
 
 	combo_hud_enabled = TRUE
 
-	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
-		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
-		atom_hud.show_to(mob)
+	for (var/hudtrait in ADMIN_HUDS)
+		ADD_TRAIT(mob, hudtrait, ADMIN_TRAIT)
 
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
 		antag_hud.show_to(mob)
@@ -377,15 +435,16 @@ ADMIN_VERB(combo_hud, R_ADMIN, "Toggle Combo HUD", "Toggles the Admin Combo HUD.
 
 	combo_hud_enabled = FALSE
 
-	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
-		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
-		atom_hud.hide_from(mob)
+	for (var/hudtrait in ADMIN_HUDS)
+		REMOVE_TRAIT(mob, hudtrait, ADMIN_TRAIT)
 
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
 		antag_hud.hide_from(mob)
 
 	mob.lighting_cutoff = mob.default_lighting_cutoff()
 	mob.update_sight()
+
+#undef ADMIN_HUDS
 
 ADMIN_VERB(show_traitor_panel, R_ADMIN, "Show Traitor Panel", "Edit mobs's memory and role", ADMIN_CATEGORY_GAME, mob/target_mob)
 	var/datum/mind/target_mind = target_mob.mind
@@ -413,20 +472,28 @@ ADMIN_VERB(lag_switch_panel, R_ADMIN, "Show Lag Switches", "Display the controls
 		to_chat(user, span_notice("The Lag Switch subsystem has not yet been initialized."))
 		return
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Lag Switches</title></head><body><h2><B>Lag (Reduction) Switches</B></h2>")
-	dat += "Automatic Trigger: <a href='?_src_=holder;[HrefToken()];change_lag_switch_option=TOGGLE_AUTO'><b>[SSlag_switch.auto_switch ? "On" : "Off"]</b></a><br/>"
-	dat += "Population Threshold: <a href='?_src_=holder;[HrefToken()];change_lag_switch_option=NUM'><b>[SSlag_switch.trigger_pop]</b></a><br/>"
-	dat += "Slowmode Cooldown (toggle On/Off below): <a href='?_src_=holder;[HrefToken()];change_lag_switch_option=SLOWCOOL'><b>[SSlag_switch.slowmode_cooldown/10] seconds</b></a><br/>"
-	dat += "<br/><b>SET ALL MEASURES: <a href='?_src_=holder;[HrefToken()];change_lag_switch=ALL_ON'>ON</a> | <a href='?_src_=holder;[HrefToken()];change_lag_switch=ALL_OFF'>OFF</a></b><br/>"
-	dat += "<br/>Disable ghosts zoom and t-ray verbs (except staff): <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_GHOST_ZOOM_TRAY]'><b>[SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] ? "On" : "Off"]</b></a><br/>"
-	dat += "Disable late joining: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_NON_OBSJOBS]'><b>[SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "On" : "Off"]</b></a><br/>"
+	dat += "Automatic Trigger: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch_option=TOGGLE_AUTO'><b>[SSlag_switch.auto_switch ? "On" : "Off"]</b></a><br/>"
+	dat += "Population Threshold: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch_option=NUM'><b>[SSlag_switch.trigger_pop]</b></a><br/>"
+	dat += "Slowmode Cooldown (toggle On/Off below): <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch_option=SLOWCOOL'><b>[SSlag_switch.slowmode_cooldown/10] seconds</b></a><br/>"
+	dat += "<br/><b>SET ALL MEASURES: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=ALL_ON'>ON</a> | <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=ALL_OFF'>OFF</a></b><br/>"
+	dat += "<br/>Disable ghosts zoom and t-ray verbs (except staff): <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_GHOST_ZOOM_TRAY]'><b>[SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] ? "On" : "Off"]</b></a><br/>"
+	dat += "Disable late joining: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_NON_OBSJOBS]'><b>[SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "On" : "Off"]</b></a><br/>"
 	dat += "<br/>============! MAD GHOSTS ZONE !============<br/>"
-	dat += "Disable deadmob keyLoop (except staff, informs dchat): <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_DEAD_KEYLOOP]'><b>[SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] ? "On" : "Off"]</b></a><br/>"
+	dat += "Disable deadmob keyLoop (except staff, informs dchat): <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_DEAD_KEYLOOP]'><b>[SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] ? "On" : "Off"]</b></a><br/>"
 	dat += "==========================================<br/>"
 	dat += "<br/><b>Measures below can be bypassed with a <abbr title='TRAIT_BYPASS_MEASURES'><u>special trait</u></abbr></b><br/>"
-	dat += "Slowmode say verb (informs world): <a href='?_src_=holder;[HrefToken()];change_lag_switch=[SLOWMODE_SAY]'><b>[SSlag_switch.measures[SLOWMODE_SAY] ? "On" : "Off"]</b></a><br/>"
-	dat += "Disable runechat: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_RUNECHAT]'><b>[SSlag_switch.measures[DISABLE_RUNECHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br/>"
-	dat += "Disable examine icons: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_USR_ICON2HTML]'><b>[SSlag_switch.measures[DISABLE_USR_ICON2HTML] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to examiner</span><br/>"
-	dat += "Disable parallax: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_PARALLAX]'><b>[SSlag_switch.measures[DISABLE_PARALLAX] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
-	dat += "Disable footsteps: <a href='?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_FOOTSTEPS]'><b>[SSlag_switch.measures[DISABLE_FOOTSTEPS] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
+	dat += "Slowmode say verb (informs world): <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[SLOWMODE_SAY]'><b>[SSlag_switch.measures[SLOWMODE_SAY] ? "On" : "Off"]</b></a><br/>"
+	dat += "Disable runechat: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_RUNECHAT]'><b>[SSlag_switch.measures[DISABLE_RUNECHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br/>"
+	dat += "Disable examine icons: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_USR_ICON2HTML]'><b>[SSlag_switch.measures[DISABLE_USR_ICON2HTML] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to examiner</span><br/>"
+	dat += "Disable parallax: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_PARALLAX]'><b>[SSlag_switch.measures[DISABLE_PARALLAX] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
+	dat += "Disable footsteps: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_FOOTSTEPS]'><b>[SSlag_switch.measures[DISABLE_FOOTSTEPS] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
 	dat += "</body></html>"
 	user << browse(dat.Join(), "window=lag_switch_panel;size=420x480")
+
+ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CATEGORY_GAME)
+	var/datum/spawnpanel/panel = user.holder.spawn_panel
+	if(!panel)
+		panel = new()
+		user.holder.spawn_panel = panel
+	panel.ui_interact(user.mob)
+	BLACKBOX_LOG_ADMIN_VERB("Spawn Panel")

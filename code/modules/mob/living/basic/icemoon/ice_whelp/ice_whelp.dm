@@ -5,7 +5,6 @@
 	icon_state = "ice_whelp"
 	icon_living = "ice_whelp"
 	icon_dead = "ice_whelp_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(
 		/obj/item/stack/ore/diamond = 3,
@@ -15,6 +14,7 @@
 	)
 	crusher_loot = /obj/item/crusher_trophy/tail_spike
 	speed = 12
+	initial_language_holder = /datum/language_holder/lizard/hear_common
 
 	maxHealth = 300
 	health = 300
@@ -26,9 +26,9 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	death_message = "collapses on its side."
-	death_sound = 'sound/magic/demon_dies.ogg'
+	death_sound = 'sound/effects/magic/demon_dies.ogg'
 
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
@@ -36,41 +36,37 @@
 	ai_controller = /datum/ai_controller/basic_controller/ice_whelp
 	///how much we will heal when cannibalizing a target
 	var/heal_on_cannibalize = 5
+	var/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice = BB_WHELP_STRAIGHTLINE_FIRE,
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption = BB_WHELP_WIDESPREAD_FIRE,
+	)
 
 /mob/living/basic/mining/ice_whelp/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
-	AddComponent(/datum/component/basic_mob_ability_telegraph)
-	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
-
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
-
-	var/static/list/innate_actions = list(
-		/datum/action/cooldown/mob_cooldown/fire_breath/ice = BB_WHELP_STRAIGHTLINE_FIRE,
-		/datum/action/cooldown/mob_cooldown/fire_breath/ice/cross = BB_WHELP_WIDESPREAD_FIRE,
-	)
-
 	grant_actions_by_list(innate_actions)
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, ai_controller.blackboard[BB_WHELP_STRAIGHTLINE_FIRE])
 
-
-/mob/living/basic/mining/ice_whelp/proc/pre_attack(mob/living/sculptor, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/mining/ice_whelp/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(istype(target, /obj/structure/flora/rock/icy))
-		INVOKE_ASYNC(src, PROC_REF(create_sculpture), target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		create_sculpture(target)
+		return FALSE
 
-	if(!istype(target, src.type))
-		return
+	if(!istype(target, type))
+		return TRUE
 
 	var/mob/living/victim = target
 	if(victim.stat != DEAD)
-		return
+		return TRUE
 
-	INVOKE_ASYNC(src, PROC_REF(cannibalize_victim), victim)
-	return COMPONENT_HOSTILE_NO_ATTACK
+	cannibalize_victim(victim)
+	return FALSE
 
 /// Carve a stone into a beautiful self-portrait
 /mob/living/basic/mining/ice_whelp/proc/create_sculpture(atom/target)
@@ -91,4 +87,17 @@
 	if(!do_after(src, 5 SECONDS, target))
 		return
 	target.gib(DROP_ALL_REMAINS)
-	adjustBruteLoss(-1 * heal_on_cannibalize)
+	adjust_brute_loss(-1 * heal_on_cannibalize)
+
+///Ash whelp, the "lava" variant of ice whelps.
+/mob/living/basic/mining/ice_whelp/ash
+	name = "ash whelp"
+	desc = "The offspring of an ash drake, weak in comparison but still terrifying."
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon_state = "ash_whelp"
+	icon_living = "ash_whelp"
+	icon_dead = "ash_whelp_dead"
+	innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/fire_breath = BB_WHELP_STRAIGHTLINE_FIRE,
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption/fire = BB_WHELP_WIDESPREAD_FIRE,
+	)

@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(time_track)
 	name = "Time Tracking"
 	wait = 100
-	init_order = INIT_ORDER_TIMETRACK
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/time_dilation_current = 0
@@ -42,7 +41,7 @@ SUBSYSTEM_DEF(time_track)
 	)
 
 /datum/controller/subsystem/time_track/Initialize()
-	GLOB.perf_log = "[GLOB.log_directory]/perf-[GLOB.round_id ? GLOB.round_id : "NULL"]-[SSmapping.config?.map_name].csv"
+	GLOB.perf_log = "[GLOB.log_directory]/perf-[GLOB.round_id ? GLOB.round_id : "NULL"]-[SSmapping.current_map.map_name].csv"
 	world.Profile(PROFILE_RESTART, type = "sendmaps")
 	//Need to do the sendmaps stuff in its own file, since it works different then everything else
 	var/list/sendmaps_headers = list()
@@ -108,7 +107,7 @@ SUBSYSTEM_DEF(time_track)
 		text2file(sendmaps_json,"bad_sendmaps.json")
 		can_fire = FALSE
 		return
-	var/send_maps_sort = send_maps_data.Copy() //Doing it like this guarentees us a properly sorted list
+	var/send_maps_sort = send_maps_data.Copy() //Doing it like this guarantees us a properly sorted list
 
 	for(var/list/packet in send_maps_data)
 		send_maps_sort[packet["name"]] = packet

@@ -1,14 +1,12 @@
-import { BooleanLike, classes } from 'common/react';
-import { capitalize } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
   Button,
   ColorBox,
   Divider,
+  Icon,
+  ImageButton,
   LabeledList,
   NumberInput,
   ProgressBar,
@@ -16,12 +14,17 @@ import {
   Stack,
   Table,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+import { capitalize } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Beaker, BeakerReagent } from './common/BeakerDisplay';
+import type { Beaker, BeakerReagent } from './common/BeakerDisplay';
 
 type Container = {
   icon: string;
+  icon_state: string;
   ref: string;
   name: string;
   volume: number;
@@ -52,13 +55,17 @@ type Data = {
   isPrinting: BooleanLike;
   printingProgress: number;
   printingTotal: number;
+  selectedPillDuration: number;
   maxPrintable: number;
+  maxPillDuration: number;
   beaker: AnalyzableBeaker;
   buffer: AnalyzableBeaker;
   isTransfering: BooleanLike;
   suggestedContainerRef: string;
   selectedContainerRef: string;
   selectedContainerVolume: number;
+  selectedContainerCategory?: string;
+  hasBeakerInHand: BooleanLike;
 };
 
 export const ChemMaster = (props) => {
@@ -92,12 +99,16 @@ const ChemMasterContent = (props: {
     isPrinting,
     printingProgress,
     printingTotal,
+    selectedPillDuration,
     maxPrintable,
+    maxPillDuration,
     isTransfering,
     beaker,
     buffer,
     categories,
     selectedContainerVolume,
+    selectedContainerCategory,
+    hasBeakerInHand,
   } = data;
 
   const [itemCount, setItemCount] = useState<number>(1);
@@ -110,7 +121,7 @@ const ChemMasterContent = (props: {
       <Section
         title="Beaker"
         buttons={
-          beaker && (
+          beaker ? (
             <Box>
               <Box inline color="label" mr={2}>
                 <AnimatedNumber value={beaker.currentVolume} initial={0} />
@@ -120,6 +131,20 @@ const ChemMasterContent = (props: {
                 Eject
               </Button>
             </Box>
+          ) : (
+            <Button
+              icon="eject"
+              onClick={() => act('insert')}
+              style={{
+                opacity: hasBeakerInHand ? 1 : 0.5,
+              }}
+              tooltip={
+                !hasBeakerInHand && 'You need to hold a container in your hand'
+              }
+              tooltipPosition="bottom-start"
+            >
+              Insert
+            </Button>
           )
         }
       >
@@ -203,6 +228,20 @@ const ChemMasterContent = (props: {
                     setItemCount(value);
                   }}
                 />
+                {selectedContainerCategory === 'pills' && (
+                  <NumberInput
+                    unit="s"
+                    step={1}
+                    value={selectedPillDuration}
+                    minValue={0}
+                    maxValue={maxPillDuration}
+                    onChange={(value) => {
+                      act('setPillDuration', {
+                        duration: value,
+                      });
+                    }}
+                  />
+                )}
                 <Box inline mx={1}>
                   {`${
                     Math.round(
@@ -291,7 +330,7 @@ const ReagentEntry = (props: ReagentProps) => {
       <Table.Cell color="label">
         {`${chemical.name} `}
         <AnimatedNumber value={chemical.volume} initial={0} />
-        {`u`}
+        {'u'}
       </Table.Cell>
       <Table.Cell collapsing>
         <Button
@@ -375,43 +414,38 @@ const ContainerButton = (props: CategoryButtonProps) => {
   const { isPrinting, selectedContainerRef, suggestedContainerRef } = data;
   const { category, container, showPreferredContainer } = props;
   const isPillPatch = ['pills', 'patches'].includes(category.name);
+  const fallback = <Icon m="18px" name="spinner" spin />;
+  const fallbackPillPatch = <Icon m="10px" name="spinner" spin />;
 
   return (
     <Tooltip
       key={container.ref}
       content={`${capitalize(container.name)}\xa0(${container.volume}u)`}
     >
-      <Button
-        overflow="hidden"
-        color={'transparent'}
-        backgroundColor={
+      <ImageButton
+        dmIcon={container.icon}
+        dmIconState={container.icon_state}
+        dmFallback={isPillPatch ? fallbackPillPatch : fallback}
+        imageSize={isPillPatch ? 48 : 64}
+        color={
           showPreferredContainer &&
           selectedContainerRef !== suggestedContainerRef && // if we selected the same container as the suggested then don't override color
           container.ref === suggestedContainerRef
             ? 'blue'
             : 'transparent'
         }
-        width={isPillPatch ? '32px' : '48px'}
-        height={isPillPatch ? '32px' : '48px'}
         selected={container.ref === selectedContainerRef}
         disabled={isPrinting}
+        m={isPillPatch ? '4px' : '2px'}
         p={0}
         onClick={() => {
           act('selectContainer', {
             ref: container.ref,
           });
         }}
-      >
-        <Box
-          m={isPillPatch ? '0' : '8px'}
-          style={{
-            transform: 'scale(2)',
-          }}
-          className={classes(['chemmaster32x32', container.icon])}
-        />
-      </Button>
+      />
     </Tooltip>
-  ) as any;
+  );
 };
 
 const AnalysisResults = (props: {
@@ -491,5 +525,5 @@ const GroupTitle = ({ title }) => {
         <Divider />
       </Stack.Item>
     </Stack>
-  ) as any;
+  );
 };

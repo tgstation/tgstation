@@ -63,7 +63,7 @@
 		material = pick(MANNEQUIN_WOOD, MANNEQUIN_PLASTIC)
 	icon_state = "mannequin_[material]_[body_type == FEMALE ? "female" : "male"]"
 	AddElement(/datum/element/strippable, GLOB.strippable_mannequin_items)
-	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
+	AddElement(/datum/element/simple_rotation, ROTATION_IGNORE_ANCHORED)
 	AddComponent(/datum/component/marionette)
 	update_appearance()
 
@@ -93,20 +93,20 @@
 /obj/structure/mannequin/update_overlays()
 	. = ..()
 	var/mutable_appearance/pedestal = mutable_appearance(icon, "pedestal_[material]")
-	pedestal.pixel_y = -3
+	pedestal.pixel_z = -3
 	. += pedestal
 	var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[underwear_name]
 	if(underwear)
 		if(body_type == FEMALE && underwear.gender == MALE)
-			. += wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
+			. += mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 		else
-			. += mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+			. += mutable_appearance(underwear.icon, underwear.icon_state, layer = -BODY_LAYER)
 	var/datum/sprite_accessory/undershirt/undershirt = SSaccessories.undershirt_list[undershirt_name]
 	if(undershirt)
 		if(body_type == FEMALE)
-			. += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+			. += mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
 		else
-			. += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+			. += mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
 	var/datum/sprite_accessory/socks/socks = SSaccessories.socks_list[socks_name]
 	if(socks)
 		. += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
@@ -114,49 +114,12 @@
 		var/obj/item/worn_item = worn_items[slot_flag]
 		if(!worn_item)
 			continue
-		var/default_layer = 0
-		var/default_icon = null
+		var/default_icon = get_default_icon_by_slot(text2num(slot_flag))
+		var/default_layer = get_default_layer_by_slot(text2num(slot_flag))
 		var/female_icon = NO_FEMALE_UNIFORM
-		switch(text2num(slot_flag)) //this kinda sucks because build worn icon kinda sucks
-			if(ITEM_SLOT_HEAD)
-				default_layer = HEAD_LAYER
-				default_icon = 'icons/mob/clothing/head/default.dmi'
-			if(ITEM_SLOT_EYES)
-				default_layer = GLASSES_LAYER
-				default_icon = 'icons/mob/clothing/eyes.dmi'
-			if(ITEM_SLOT_EARS)
-				default_layer = EARS_LAYER
-				default_icon = 'icons/mob/clothing/ears.dmi'
-			if(ITEM_SLOT_MASK)
-				default_layer = FACEMASK_LAYER
-				default_icon = 'icons/mob/clothing/mask.dmi'
-			if(ITEM_SLOT_NECK)
-				default_layer = NECK_LAYER
-				default_icon = 'icons/mob/clothing/neck.dmi'
-			if(ITEM_SLOT_BACK)
-				default_layer = BACK_LAYER
-				default_icon = 'icons/mob/clothing/back.dmi'
-			if(ITEM_SLOT_BELT)
-				default_layer = BELT_LAYER
-				default_icon = 'icons/mob/clothing/belt.dmi'
-			if(ITEM_SLOT_ID)
-				default_layer = ID_LAYER
-				default_icon = 'icons/mob/clothing/id.dmi'
-			if(ITEM_SLOT_ICLOTHING)
-				default_layer = UNIFORM_LAYER
-				default_icon = DEFAULT_UNIFORM_FILE
-				if(body_type == FEMALE && istype(worn_item, /obj/item/clothing/under))
-					var/obj/item/clothing/under/worn_jumpsuit = worn_item
-					female_icon = worn_jumpsuit.female_sprite_flags
-			if(ITEM_SLOT_OCLOTHING)
-				default_layer = SUIT_LAYER
-				default_icon = DEFAULT_SUIT_FILE
-			if(ITEM_SLOT_GLOVES)
-				default_layer = GLOVES_LAYER
-				default_icon = 'icons/mob/clothing/hands.dmi'
-			if(ITEM_SLOT_FEET)
-				default_layer = SHOES_LAYER
-				default_icon = DEFAULT_SHOES_FILE
+		if(body_type == FEMALE && istype(worn_item, /obj/item/clothing/under))
+			var/obj/item/clothing/under/worn_jumpsuit = worn_item
+			female_icon = worn_jumpsuit.female_sprite_flags
 		. += worn_item.build_worn_icon(default_layer, default_icon, female_uniform = female_icon)
 
 /obj/structure/mannequin/attack_hand_secondary(mob/user, list/modifiers)
@@ -183,9 +146,11 @@
 
 /obj/structure/mannequin/wood
 	material = MANNEQUIN_WOOD
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 25)
 
 /obj/structure/mannequin/plastic
 	material = MANNEQUIN_PLASTIC
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 25)
 
 /obj/structure/mannequin/skeleton
 	name = "skeleton model"

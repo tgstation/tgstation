@@ -1,5 +1,12 @@
+import {
+  Button,
+  Icon,
+  Input,
+  LabeledList,
+  Section,
+} from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Icon, Input, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 export const HypnoChair = (props) => {
@@ -51,7 +58,7 @@ export const HypnoChair = (props) => {
             <LabeledList.Item label="Trigger Phrase">
               <Input
                 value={data.trigger}
-                onChange={(e, value) =>
+                onBlur={(value) =>
                   act('set_phrase', {
                     phrase: value,
                   })

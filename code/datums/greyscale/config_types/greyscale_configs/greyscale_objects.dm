@@ -3,6 +3,11 @@
 	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'
 	json_config = 'code/datums/greyscale/json_configs/material_airlock.json'
 
+/datum/greyscale_config/big_manipulator
+	name = "Big Manipulator"
+	icon_file = 'icons/obj/machines/big_manipulator_parts/big_manipulator_core.dmi'
+	json_config = 'code/datums/greyscale/json_configs/big_manipulator.json'
+
 //
 // BENCHES
 //
@@ -77,6 +82,11 @@
 	icon_file = 'icons/obj/storage/wrapping.dmi'
 	json_config = 'code/datums/greyscale/json_configs/giftdeliverypackage1.json'
 
+/datum/greyscale_config/giftdeliveryfloppy
+	name = "Gift Floppy Disk Package"
+	icon_file = 'icons/obj/storage/wrapping.dmi'
+	json_config = 'code/datums/greyscale/json_configs/giftdeliveryfloppy.json'
+
 /datum/greyscale_config/wrap_paper
 	name = "Wrapping Paper"
 	icon_file = 'icons/obj/stack_objects.dmi'
@@ -116,6 +126,11 @@
 	name = "Stationary Canister"
 	icon_file = 'icons/obj/pipes_n_cables/stationary_canisters.dmi'
 	json_config = 'code/datums/greyscale/json_configs/smooth_canister_stationary.json'
+
+/datum/greyscale_config/stationary_canister_overlays
+	name = "Stationary Canister"
+	icon_file = 'icons/obj/pipes_n_cables/stationary_canisters_misc.dmi'
+	json_config = 'code/datums/greyscale/json_configs/smooth_canister_stationary_overlays.json'
 
 // MISC ATMOSPHERICS
 /datum/greyscale_config/meter

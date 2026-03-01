@@ -1,7 +1,7 @@
-import { BooleanLike, classes } from 'common/react';
+import { Box, Button, Icon, Stack } from 'tgui-core/components';
+import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -37,12 +37,13 @@ export function NukeKeypad(props) {
                 mb={1}
                 textAlign="center"
                 fontSize="40px"
-                lineHeight={1.25}
+                lineHeight={0.80}
                 width="55px"
+                height="50px"
                 className={classes([
                   'NuclearBomb__Button',
                   'NuclearBomb__Button--keypad',
-                  'NuclearBomb__Button--' + key,
+                  `NuclearBomb__Button--${key}`,
                 ])}
                 onClick={() => act('keypad', { digit: key })}
               >

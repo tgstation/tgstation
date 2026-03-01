@@ -6,6 +6,7 @@
 	caliber = CALIBER_50BMG
 	projectile_type = /obj/projectile/bullet/p50
 	icon_state = ".50"
+	newtonian_force = 1.5
 
 /obj/item/ammo_casing/p50/surplus
 	name = ".50 BMG surplus bullet casing"
@@ -32,3 +33,13 @@
 	name = ".50 BMG marksman round bullet casing"
 	desc = "A .50 caliber marksman round casing."
 	projectile_type = /obj/projectile/bullet/p50/marksman
+
+// Lahti 20x138mm rifle ammo //
+
+/obj/item/ammo_casing/mm20x138
+	name = "20x138mm bullet casing"
+	desc = "A 20x138mm bullet casing."
+	caliber = CALIBER_50BMG
+	projectile_type = /obj/projectile/bullet/mm20x138
+	icon_state = ".50"
+	newtonian_force = 1.5

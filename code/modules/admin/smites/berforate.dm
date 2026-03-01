@@ -51,3 +51,7 @@
 				shots_this_limb += 1
 				if (shots_this_limb > shots_per_limb_per_rep)
 					break
+
+/datum/smite/berforate/divine
+	name = ":B:erforate (Divine)"
+	smite_flags = SMITE_DIVINE

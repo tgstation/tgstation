@@ -4,7 +4,7 @@
  * This component adds a near-invisible underlay to a movable target to expand the clickable surface of its icon without
  * resorting to MOUSE_OPACITY_OPAQUE.
  * The underlay ignores the parent's color and alpha and can be offset.
- * The name is a portmanteau of "click" and "hitbox", because technically this isn't an hitbox,
+ * The name is a portmanteau of "click" and "hitbox", because technically this isn't a hitbox,
  * but it helps catch clicks, and I don't want to give it a loooong name like openspace_item_click_handler
  */
 /datum/component/clickbox
@@ -77,8 +77,8 @@
 	clickbox_underlay = mutable_appearance('icons/ui/clickbox.dmi', clickbox_icon_state, CLICKBOX_LAYER, alpha = 1, appearance_flags = RESET_COLOR|RESET_ALPHA)
 	clickbox_underlay.transform = clickbox_underlay.transform.Scale(clickbox_width, clickbox_height)
 	//Keeps the underlay more or less centered.
-	clickbox_underlay.pixel_x = x_offset * 1/clickbox_width
-	clickbox_underlay.pixel_y = y_offset * 1/clickbox_height
+	clickbox_underlay.pixel_w = x_offset * 1/clickbox_width
+	clickbox_underlay.pixel_z = y_offset * 1/clickbox_height
 	mov_parent.underlays += clickbox_underlay
 
 /datum/component/clickbox/proc/on_vv_modify_transform(atom/source)

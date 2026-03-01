@@ -2,7 +2,8 @@
 	name = "Herby cheese"
 	reqs = list(
 		/obj/item/food/cheese/curd_cheese = 1,
-		/obj/item/food/grown/herbs = 4
+		/obj/item/food/grown/herbs = 4,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/herby_cheese
 	category = CAT_MOTH
@@ -27,6 +28,7 @@
 	)
 	result = /obj/item/food/toasted_seeds
 	category = CAT_MOTH
+	crafting_flags = parent_type::crafting_flags & ~CRAFT_CLEARS_REAGENTS // seeds don't have nutriment
 
 /datum/crafting_recipe/food/engine_fodder
 	name = "Engine fodder"
@@ -52,6 +54,7 @@
 		/obj/item/food/onion_slice = 1
 	)
 	result = /obj/item/food/squeaking_stir_fry
+	removed_foodtypes = BREAKFAST
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/sweet_chili_cabbage_wrap
@@ -95,6 +98,7 @@
 		/obj/item/food/cheese/firm_cheese_slice = 1
 	)
 	result = /obj/item/food/raw_green_lasagne
+	added_foodtypes = RAW
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_baked_rice
@@ -106,6 +110,8 @@
 		/obj/item/food/grown/potato = 2,
 	)
 	result = /obj/item/food/raw_baked_rice
+	removed_foodtypes = BREAKFAST
+	added_foodtypes = RAW
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/buttered_baked_corn
@@ -145,9 +151,9 @@
 	reqs = list(
 		/obj/item/food/cheese/mozzarella = 1,
 		/obj/item/food/breadslice/plain = 2,
-		/obj/item/food/tomato_sauce = 1
 	)
 	result = /obj/item/food/mozzarella_sticks
+	added_foodtypes = FRIED
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_stuffed_peppers
@@ -180,6 +186,8 @@
 		/datum/reagent/consumable/cornmeal_batter = 5
 	)
 	result = /obj/item/food/mac_balls
+	removed_foodtypes = JUNKFOOD
+	added_foodtypes = FRIED
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/hua_mulan_congee
@@ -187,9 +195,12 @@
 	reqs = list(
 		/datum/reagent/consumable/nutriment/soup/rice_porridge = 10,
 		/obj/item/food/meat/bacon = 1,
-		/obj/item/food/friedegg = 2
+		/obj/item/food/friedegg = 2,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/bowled/hua_mulan_congee
+	removed_foodtypes = BREAKFAST
+	added_foodtypes = GRAIN
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/fried_eggplant_polenta
@@ -199,7 +210,8 @@
 		/obj/item/food/grown/eggplant = 1,
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/tomato_sauce = 1,
-		/obj/item/food/cheese/mozzarella = 1
+		/obj/item/food/cheese/mozzarella = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/bowled/fried_eggplant_polenta
 	category = CAT_MOTH
@@ -241,6 +253,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/cotton_salad
+	added_foodtypes = CLOTH
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/moth_kachumbari
@@ -266,6 +279,7 @@
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_margherita
+	added_foodtypes = RAW
 	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_firecracker
@@ -277,6 +291,7 @@
 		/obj/item/food/grown/ghost_chili = 1
 	)
 	result = /obj/item/food/raw_mothic_firecracker
+	added_foodtypes = RAW
 	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_five_cheese
@@ -290,6 +305,7 @@
 		/obj/item/food/cheese/cheese_curds = 1
 	)
 	result = /obj/item/food/raw_mothic_five_cheese
+	added_foodtypes = RAW
 	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_white_pie
@@ -302,6 +318,7 @@
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_white_pie
+	added_foodtypes = RAW
 	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_pesto
@@ -312,6 +329,7 @@
 		/obj/item/food/cheese/mozzarella = 1
 	)
 	result = /obj/item/food/raw_mothic_pesto
+	added_foodtypes = RAW
 	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_garlic
@@ -322,6 +340,7 @@
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_garlic
+	added_foodtypes = RAW
 	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/moth_cheese_cakes
@@ -334,6 +353,8 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/food/moth_cheese_cakes
+	added_foodtypes = GRAIN|FRIED
+	removed_foodtypes = JUNKFOOD
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/mothmallow
@@ -345,6 +366,7 @@
 		/datum/reagent/consumable/ethanol/rum = 5
 	)
 	result = /obj/item/food/cake/mothmallow
+	added_foodtypes = SUGAR
 	category = CAT_MOTH
 
 /datum/crafting_recipe/food/moffin
@@ -355,6 +377,7 @@
 		/obj/item/stack/sheet/cloth = 1,
 	)
 	result = /obj/item/food/muffin/moffin
+	added_foodtypes = CLOTH|SUGAR|BREAKFAST
 	category = CAT_MOTH
 
 // Soups

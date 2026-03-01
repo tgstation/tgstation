@@ -6,6 +6,7 @@
 /obj/item/food/cheese
 	name = "the concept of cheese"
 	desc = "This probably shouldn't exist."
+	abstract_type = /obj/item/food/cheese
 	tastes = list("cheese" = 1)
 	food_reagents = list(/datum/reagent/consumable/nutriment/fat = 3)
 	foodtypes = DAIRY
@@ -36,9 +37,13 @@
 	rat_heal = 10
 	crafting_complexity = FOOD_COMPLEXITY_1
 
+/obj/item/food/cheese/wedge/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/food_storage)
+
 /obj/item/food/cheese/wheel
 	name = "cheese wheel"
-	desc = "A big wheel of delcious Cheddar."
+	desc = "A big wheel of delicious Cheddar."
 	icon_state = "cheesewheel"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/fat = 10,
@@ -54,7 +59,7 @@
 	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/wheel/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/cheese/wheel/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -82,6 +87,7 @@
 	tastes = list("cheese" = 4, "royalty" = 1)
 	rat_heal = 70
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
 
 //Curd cheese, a general term which I will now proceed to stretch as thin as the toppings on a supermarket sandwich:
 //I'll use it as a substitute for ricotta, cottage cheese and quark, as well as any other non-aged, soft grainy cheese
@@ -94,7 +100,6 @@
 		/datum/reagent/consumable/cream = 1,
 	)
 	tastes = list("cream" = 1, "cheese" = 1)
-	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -109,7 +114,6 @@
 	name = "cheese curds"
 	desc = "Not to be mistaken for curd cheese. Tasty deep fried."
 	icon_state = "cheese_curds"
-	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -123,23 +127,25 @@
 	desc = "Firm aged cheese, similar in texture to firm tofu. Due to its lack of moisture it's particularly useful for cooking with, as it doesn't melt easily."
 	icon_state = "firm_cheese"
 	tastes = list("aged cheese" = 1)
-	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cheese/firm_cheese/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/firm_cheese_slice, 3, 3 SECONDS, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/firm_cheese_slice, 3, 3 SECONDS, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/cheese/firm_cheese_slice
 	name = "firm cheese slice"
 	desc = "A slice of firm cheese. Perfect for grilling or making into delicious pesto."
 	icon_state = "firm_cheese_slice"
 	tastes = list("aged cheese" = 1)
-	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 10
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/cheese/firm_cheese_slice/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/firm_cheese_slice/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
@@ -149,7 +155,6 @@
 	desc = "Delicious, creamy, and cheesy, all in one simple package."
 	icon_state = "mozzarella"
 	tastes = list("mozzarella" = 1)
-	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 10
 	crafting_complexity = FOOD_COMPLEXITY_2

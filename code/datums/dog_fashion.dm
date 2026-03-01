@@ -4,13 +4,13 @@
 	///Description modifier for the dog that we're dressing up
 	var/desc = null
 	///Hearable emotes modifier for the dog that we're dressing up
-	var/list/emote_hear = list()
+	var/list/emote_hear
 	///Visible emotes modifier for the dog that we're dressing up
-	var/list/emote_see = list()
+	var/list/emote_see
 	///Speech modifier for the dog that we're dressing up
-	var/list/speak = list()
+	var/list/speak
 	///Speech verb modifier for the dog that we're dressing up
-	var/list/speak_emote = list()
+	var/list/speak_emote
 
 	// This isn't applied to the dog, but stores the icon_state of the
 	// sprite that the associated item uses
@@ -41,16 +41,16 @@
 		dressup_doggy.name = name
 	if(desc)
 		dressup_doggy.desc = desc
-	if(length(speak_emote))
+	if(LAZYLEN(speak_emote))
 		dressup_doggy.speak_emote = string_list(speak_emote)
 
 ///Applies random speech modifiers to the dog
 /datum/dog_fashion/proc/apply_to_speech(datum/ai_planning_subtree/random_speech/speech)
-	if(length(emote_see))
+	if(LAZYLEN(emote_see))
 		speech.emote_see = string_list(emote_see)
-	if(length(emote_hear))
+	if(LAZYLEN(emote_hear))
 		speech.emote_hear = string_list(emote_hear)
-	if(length(speak))
+	if(LAZYLEN(speak))
 		speech.speak = string_list(speak)
 
 /**
@@ -89,6 +89,10 @@
 /datum/dog_fashion/head/captain
 	name = "Captain %REAL_NAME%"
 	desc = "Probably better than the last captain."
+
+/datum/dog_fashion/head/dragoon
+	name = "Dragoon %REAL_NAME%"
+	desc = "The last living Dragon Knight."
 
 /datum/dog_fashion/head/kitty
 	name = "Runtime"
@@ -233,7 +237,7 @@
 	name = "Butter %REAL_NAME%"
 	desc = "%NAME%. %CAPITAL_REAL_NAME% with the butter. %NAME%. %CAPITAL_REAL_NAME% with a butter on 'em."
 	obj_icon_state = "butter"
-	speak = list() //they're very patient and focused on holding the butter on 'em
+	speak = null //they're very patient and focused on holding the butter on 'em
 	emote_see = list("shakes a little.", "looks around.")
 	emote_hear = list("licks a trickle of the butter up.", "smiles.")
 
@@ -243,3 +247,18 @@
 	obj_icon_state = "eyepatch"
 	emote_hear = list("sighs gruffly.", "groans.")
 	emote_see = list("considers their own mortality.", "stares bleakly into the middle distance.", "ponders the horrors of warfare.")
+
+/datum/dog_fashion/head/watermelon
+	name = "Watermelon Warrior %REAL_NAME%"
+	desc = "5% safer than normal and ready to take on advantage!"
+	obj_icon_state = "watermelon"
+
+/datum/dog_fashion/head/holymelon
+	name = "Holymelon Paladin %REAL_NAME%"
+	desc = "Extraterrestrial powers beware, %NAME% is here to smite you down!"
+	obj_icon_state = "holymelon"
+
+/datum/dog_fashion/head/barrelmelon
+	name = "Barrelmelon Berserk %REAL_NAME%"
+	desc = "Either the sturdiness of the helmet gave %REAL_NAME% a confidence boost, or its bit tight on their head..."
+	obj_icon_state = "barrelmelon"

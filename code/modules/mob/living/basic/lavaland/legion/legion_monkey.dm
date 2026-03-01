@@ -12,7 +12,7 @@
 	attack_verb_continuous = "mauls"
 	attack_verb_simple = "maul"
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	speak_emote = list("chimpers")
 	corpse_type = /obj/effect/mob_spawn/corpse/human/monkey
 	ai_controller = /datum/ai_controller/basic_controller/legion_monkey
@@ -20,7 +20,6 @@
 /mob/living/basic/mining/legion/monkey/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponent(/datum/component/regenerator, outline_colour = COLOR_SOFT_RED)
 
 /mob/living/basic/mining/legion/monkey/assign_abilities()
@@ -35,6 +34,7 @@
 	desc = "You can see what was once a monkey under the densely packed snow. It doesn't look friendly."
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "snow_monkey"
+	has_emissive = FALSE
 
 /mob/living/basic/mining/legion/monkey/snow/Initialize(mapload)
 	. = ..()
@@ -49,12 +49,13 @@
 		BB_TIME_TO_GIVE_UP_ON_VENT_PATHING = 30 SECONDS,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 
 	// We understand that vents are nice little hidey holes through epigenetic inheritance, so we'll use them.
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/random_speech/legion,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,

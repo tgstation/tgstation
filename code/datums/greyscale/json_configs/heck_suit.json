@@ -4,13 +4,13 @@
 			"type": "icon_state",
 			"icon_state": "hostile_env_plates",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "hostile_env_detail",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	],
 	"hostile_env_t": [
@@ -18,13 +18,13 @@
 			"type": "icon_state",
 			"icon_state": "hostile_env_plates",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "hostile_env_detail",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	]
 }

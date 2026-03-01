@@ -53,7 +53,7 @@
 			. += span_notice("It's operating on the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
 		else
 			. += span_warning("It's disconnected from the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
-		. += span_notice("It's power line can be changed with a [EXAMINE_HINT("multitool")].")
+		. += span_notice("Its power line can be changed with a [EXAMINE_HINT("multitool")].")
 
 /obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
 	if(can_change_cable_layer)
@@ -167,7 +167,7 @@
 		return amount //Shuttles get free power, don't ask why
 
 	var/obj/machinery/power/apc/local_apc = home.apc
-	if(isnull(local_apc))
+	if(isnull(local_apc) || !local_apc.operating)
 		return FALSE
 
 	// Surplus from the grid.
@@ -177,7 +177,7 @@
 	if((amount > grid_used) && !ignore_apc && !QDELETED(local_apc.cell)) // Use from the APC's cell if there isn't enough energy from the grid.
 		apc_used = local_apc.cell.use(amount - grid_used, force = force)
 
-	if(!force && (amount < grid_used + apc_used)) // If we aren't forcing it and there isn't enough energy to supply demand, return nothing.
+	if(!force && (amount > grid_used + apc_used)) // If we aren't forcing it and there isn't enough energy to supply demand, return nothing.
 		return FALSE
 
 	// Use the grid's and APC's energy.
@@ -202,7 +202,7 @@
 		return amount
 
 	var/obj/machinery/power/apc/my_apc = my_area.apc
-	if(isnull(my_apc) || QDELETED(my_apc.cell))
+	if(isnull(my_apc) || !my_apc.operating || QDELETED(my_apc.cell))
 		return FALSE
 	return my_apc.cell.use(amount, force = force)
 
@@ -228,8 +228,9 @@
 		return amount //Shuttles get free power, don't ask why
 
 	var/obj/machinery/power/apc/local_apc = home.apc
-	if(!local_apc)
+	if(isnull(local_apc) || !local_apc.operating)
 		return FALSE
+
 	var/surplus = local_apc.surplus()
 	if(surplus <= 0) //I don't know if powernet surplus can ever end up negative, but I'm just gonna failsafe it
 		return FALSE
@@ -323,7 +324,7 @@
 
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
-/obj/machinery/power/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc

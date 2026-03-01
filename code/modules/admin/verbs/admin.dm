@@ -32,7 +32,7 @@ ADMIN_VERB(unprison, R_ADMIN, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEG
 		tgui_alert(user, "[prisoner.name] is not prisoned.")
 		return
 
-	SSjob.SendToLateJoin(prisoner)
+	SSjob.send_to_late_join(prisoner)
 	message_admins("[key_name_admin(user)] has unprisoned [key_name_admin(prisoner)]")
 	log_admin("[key_name(user)] has unprisoned [key_name(prisoner)]")
 	BLACKBOX_LOG_ADMIN_VERB("Unprison")
@@ -45,7 +45,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 	var/list/msg = list()
 	msg += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	for(var/client/client in sort_list(GLOB.clients, GLOBAL_PROC_REF(cmp_playtime_asc)))
-		msg += "<LI> [ADMIN_PP(client.mob)] [key_name_admin(client)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(client.mob)]'>" + client.get_exp_living() + "</a></LI>"
+		msg += "<LI> [ADMIN_PP(client.mob)] [key_name_admin(client)]: <A href='byond://?_src_=holder;[HrefToken()];getplaytimewindow=[REF(client.mob)]'>" + client.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
 	user << browse(msg.Join(), "window=Player_playtime_check")
 
@@ -58,9 +58,12 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 	if(!message)
 		return
 
+	if(!SSshuttle.centcom_recall(usr, SSshuttle.emergency.timer, message)) // feedback handled within
+		return
+
 	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
 	usr.log_message("triggered a CentCom recall, with the message of: [message]", LOG_GAME)
-	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
+
 
 /datum/admins/proc/cmd_show_exp_panel(client/client_to_check)
 	if(!check_rights(R_ADMIN))
@@ -100,6 +103,8 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 /datum/admins/proc/modify_traits(datum/D)
 	if(!D)
 		return
+	if(!check_rights(R_VAREDIT))
+		return
 
 	var/add_or_remove = input("Remove/Add?", "Trait Remove/Add") as null|anything in list("Add","Remove")
 	if(!add_or_remove)
@@ -123,7 +128,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 		return
 	chosen_trait = available_traits[chosen_trait]
 
-	var/source = "adminabuse"
+	var/source = TRAIT_ADMIN_GRANTED
 	switch(add_or_remove)
 		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
 			if(GLOB.movement_type_trait_to_flag[chosen_trait]) //include the required element.
@@ -144,7 +149,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-ADMIN_VERB(drop_everything, R_ADMIN, "Drop Everything", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/dropee in GLOB.mob_list)
+ADMIN_VERB(drop_everything, R_ADMIN, "Drop Everything", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/dropee in GLOB.mob_list)
 	var/confirm = tgui_alert(user, "Make [dropee] drop everything?", "Message", list("Yes", "No"))
 	if(confirm != "Yes")
 		return

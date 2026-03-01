@@ -34,7 +34,7 @@
 /obj/machinery/power/apc/proc/fork_outlet_act(mob/living/user, obj/item/tool)
 	var/metal = 0
 	var/shock_source = null
-	metal += LAZYACCESS(tool.custom_materials, GET_MATERIAL_REF(/datum/material/iron))//This prevents wooden rolling pins from shocking the user
+	metal += LAZYACCESS(tool.custom_materials, SSmaterials.get_material(/datum/material/iron))//This prevents wooden rolling pins from shocking the user
 
 	if(cell || terminal) //The mob gets shocked by whichever powersource has the most electricity
 		if(cell && terminal)
@@ -110,7 +110,7 @@
 		if(isnull(choice) \
 			|| !user.is_holding(installing_cable) \
 			|| !user.Adjacent(src) \
-			|| user.incapacitated() \
+			|| user.incapacitated \
 			|| !can_place_terminal(user, installing_cable, silent = TRUE) \
 		)
 			return ITEM_INTERACT_BLOCKING
@@ -320,7 +320,6 @@
 		balloon_alert(user, "cell removed")
 		var/turf/user_turf = get_turf(user)
 		cell.forceMove(user_turf)
-		cell.update_appearance()
 		cell = null
 		charging = APC_NOT_CHARGING
 		update_appearance()
@@ -380,16 +379,16 @@
 	if((machine_stat & BROKEN) || opened == APC_COVER_REMOVED)
 		new /obj/item/stack/sheet/iron(loc)
 		user.visible_message(span_notice("[user.name] cuts [src] apart with [welder]."))
-		balloon_alert(user, "disassembled the broken frame")
+		user.balloon_alert(user, "disassembled the broken frame")
 	else
 		new /obj/item/wallframe/apc(loc)
 		user.visible_message(span_notice("[user.name] cuts [src] from the wall with [welder]."))
-		balloon_alert(user, "cut the frame from the wall")
+		user.balloon_alert(user, "cut the frame from the wall")
 	qdel(src)
 	return TRUE
 
 /obj/machinery/power/apc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!(the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if(!(the_rcd.construction_upgrades & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return FALSE
 
 	if(!has_electronics)
@@ -408,7 +407,7 @@
 	return FALSE
 
 /obj/machinery/power/apc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(!(the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS) || rcd_data["[RCD_DESIGN_MODE]"] != RCD_WALLFRAME)
+	if(!(the_rcd.construction_upgrades & RCD_UPGRADE_SIMPLE_CIRCUITS) || rcd_data[RCD_DESIGN_MODE] != RCD_WALLFRAME)
 		return FALSE
 
 	if(!has_electronics)

@@ -16,7 +16,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	. = ..()
 	if(mapload)
 		hidden_item = new /obj/item/food/urinalcake(src)
-	find_and_hang_on_wall()
+		find_and_mount_on_atom()
 
 /obj/structure/urinal/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -37,7 +37,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 			user.changeNext_move(CLICK_CD_MELEE)
 			user.visible_message(span_danger("[user] slams [grabbed_mob] into [src]!"), span_danger("You slam [grabbed_mob] into [src]!"))
 			grabbed_mob.emote("scream")
-			grabbed_mob.adjustBruteLoss(8)
+			grabbed_mob.adjust_brute_loss(8)
 		else
 			to_chat(user, span_warning("You need a tighter grip!"))
 		return
@@ -51,7 +51,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		return
 	return ..()
 
-/obj/structure/urinal/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/urinal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(exposed)
 		if(hidden_item)
 			to_chat(user, span_warning("There is already something in the drain enclosure!"))

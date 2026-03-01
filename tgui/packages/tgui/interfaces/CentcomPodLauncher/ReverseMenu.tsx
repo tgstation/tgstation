@@ -1,8 +1,9 @@
+import { Button, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, Section, Stack } from '../../components';
 import { REVERSE_OPTIONS } from './constants';
 import { useTab } from './hooks';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function ReverseMenu(props) {
   const { act, data } = useBackend<PodLauncherData>();
@@ -33,6 +34,7 @@ export function ReverseMenu(props) {
             Afer landing, returns to
             dropoff turf (or bay
             if none specified).`}
+          tooltipPosition="bottom"
         />
       }
       fill

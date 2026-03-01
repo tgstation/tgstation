@@ -1,17 +1,17 @@
-import { useBackend } from '../../backend';
+import { useState } from 'react';
 import {
   Button,
   Icon,
-  Input,
   NoticeBox,
   RestrictedInput,
   Section,
   Stack,
   Table,
-} from '../../components';
-import { formatMoney } from '../../format';
-import { CargoCartButtons } from './CargoButtons';
-import { CargoData } from './types';
+} from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
+
+import { useBackend } from '../../backend';
+import type { CargoData } from './types';
 
 export function CargoCart(props) {
   const { act, data } = useBackend<CargoData>();
@@ -20,18 +20,20 @@ export function CargoCart(props) {
   const sendable = !!away && !!docked;
 
   return (
-    <Stack fill vertical>
+    <Stack fill vertical g={0}>
       <Stack.Item grow>
-        <Section fill scrollable title="Cart" buttons={<CargoCartButtons />}>
+        <Section fill scrollable>
           <CheckoutItems />
         </Section>
       </Stack.Item>
       {cart.length > 0 && !!can_send && (
         <Stack.Item>
-          <Section align="right">
+          <Section textAlign="right">
             <Stack fill align="center">
               <Stack.Item grow>
-                {!sendable && <Icon color="blue" name="toolbox" spin />}
+                {!sendable && (
+                  <Icon mr={0.5} size={1.5} color="blue" name="toolbox" spin />
+                )}
               </Stack.Item>
               <Stack.Item>
                 <Button
@@ -55,7 +57,9 @@ export function CargoCart(props) {
 
 function CheckoutItems(props) {
   const { act, data } = useBackend<CargoData>();
-  const { amount_by_name = {}, can_send, cart = [], max_order } = data;
+  const { can_send, cart = [], max_order } = data;
+
+  const [isValid, setIsValid] = useState(true);
 
   if (cart.length === 0) {
     return <NoticeBox>Nothing in cart</NoticeBox>;
@@ -81,43 +85,42 @@ function CheckoutItems(props) {
           <Table.Cell>{entry.object}</Table.Cell>
 
           <Table.Cell width={11}>
-            {can_send && entry.can_be_cancelled ? (
-              <RestrictedInput
-                width={5}
-                minValue={0}
-                maxValue={max_order}
-                value={entry.amount}
-                onEnter={(e, value) =>
-                  act('modify', {
-                    order_name: entry.object,
-                    amount: value,
-                  })
-                }
-              />
-            ) : (
-              <Input width="40px" value={entry.amount} disabled />
-            )}
-
-            {!!can_send && !!entry.can_be_cancelled && (
+            {!!can_send && !!entry.can_be_cancelled ? (
               <>
-                <Button
-                  icon="plus"
-                  disabled={amount_by_name[entry.object] >= max_order}
-                  onClick={() =>
-                    act('add_by_name', { order_name: entry.object })
-                  }
-                />
                 <Button
                   icon="minus"
                   onClick={() => act('remove', { order_name: entry.object })}
                 />
+                <RestrictedInput
+                  width={5}
+                  minValue={0}
+                  maxValue={max_order}
+                  value={entry.amount}
+                  onEnter={(value) =>
+                    isValid &&
+                    act('modify', {
+                      order_name: entry.object,
+                      amount: value,
+                    })
+                  }
+                  onValidationChange={setIsValid}
+                />
+                <Button
+                  icon="plus"
+                  disabled={entry.amount >= max_order}
+                  onClick={() =>
+                    act('add_by_name', { order_name: entry.object })
+                  }
+                />
               </>
+            ) : (
+              <RestrictedInput width="40px" value={entry.amount} disabled />
             )}
           </Table.Cell>
 
           <Table.Cell collapsing color="average">
-            {!!entry.paid && <b>[Private x {entry.paid}]</b>}
-            {!!entry.dep_order && <b>[Department x {entry.dep_order}]</b>}
+            {!!entry.paid && <b>[Private x {entry.amount}]</b>}
+            {!!entry.dep_order && <b>[Department x {entry.amount}]</b>}
           </Table.Cell>
 
           <Table.Cell collapsing color="gold" textAlign="right">

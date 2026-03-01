@@ -2,10 +2,11 @@
 
 /atom/movable/screen/pai
 	icon = 'icons/hud/screen_pai.dmi'
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/required_software
 
 /atom/movable/screen/pai/Click()
-	if(isobserver(usr) || usr.incapacitated())
+	if(isobserver(usr) || usr.incapacitated)
 		return FALSE
 	var/mob/living/silicon/pai/user = usr
 	if(required_software && !user.installed_software.Find(required_software))

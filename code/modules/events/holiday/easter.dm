@@ -46,27 +46,11 @@
 //Easter Baskets
 /obj/item/storage/basket/easter
 	name = "Easter Basket"
-
-/obj/item/storage/basket/easter/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg, /obj/item/surprise_egg))
-
-/obj/item/storage/basket/easter/proc/countEggs()
-	cut_overlays()
-	add_overlay("basket-grass")
-	add_overlay("basket-egg[min(contents.len, 5)]")
-
-/obj/item/storage/basket/easter/Exited(atom/movable/gone, direction)
-	. = ..()
-	countEggs()
-
-/obj/item/storage/basket/easter/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	countEggs()
+	storage_type = /datum/storage/basket/easter
 
 //Bunny Suit
 /obj/item/clothing/head/costume/bunnyhead
-	name = "Easter Bunny Head"
+	name = "Easter Bunny head"
 	icon_state = "bunnyhead"
 	inhand_icon_state = null
 	desc = "Considerably more cute than 'Frank'."
@@ -75,7 +59,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/suit/costume/bunnysuit
-	name = "Easter Bunny Suit"
+	name = "easter bunny suit"
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
@@ -88,7 +72,7 @@
 
 //Bunny bag!
 /obj/item/storage/backpack/satchel/bunnysatchel
-	name = "Easter Bunny Satchel"
+	name = "easter bunny satchel"
 	desc = "Good for your eyes."
 	icon_state = "satchel_carrot"
 	inhand_icon_state = null
@@ -158,7 +142,7 @@
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/food/hotcrossbun
-
+	added_foodtypes = SUGAR | BREAKFAST
 	category = CAT_BREAD
 
 /datum/crafting_recipe/food/briochecake
@@ -176,8 +160,10 @@
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "scotchegg"
 	bite_consumption = 3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	crafting_complexity = FOOD_COMPLEXITY_2
+	foodtypes = MEAT
 
 /datum/crafting_recipe/food/scotchegg
 	name = "Scotch egg"
@@ -188,6 +174,7 @@
 		/obj/item/food/meatball = 1
 	)
 	result = /obj/item/food/scotchegg
+	removed_foodtypes = BREAKFAST
 	category = CAT_EGG
 
 /datum/crafting_recipe/food/mammi
@@ -198,6 +185,7 @@
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/food/bowled/mammi
+	added_foodtypes = DAIRY
 	category = CAT_MISCFOOD
 
 /obj/item/food/chocolatebunny
@@ -206,6 +194,7 @@
 	icon_state = "chocolatebunny"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	crafting_complexity = FOOD_COMPLEXITY_1
+	foodtypes = JUNKFOOD | SUGAR
 
 /datum/crafting_recipe/food/chocolatebunny
 	name = "Chocolate bunny"

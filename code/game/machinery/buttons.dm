@@ -12,6 +12,7 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OPEN
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	///Icon suffix for the skin of the front pannel that is added to base_icon_state
 	var/skin = ""
 	///Whether it is possible to change the panel skin
@@ -36,19 +37,18 @@
 	fire = 90
 	acid = 70
 
+/obj/machinery/button/get_save_vars()
+	return ..() + NAMEOF(src, id)
+
 /**
  * INITIALIZATION
  */
 
-/obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
+/obj/machinery/button/Initialize(mapload)
 	. = ..()
-	if(built)
-		setDir(ndir)
+	if(!mapload)
 		set_panel_open(TRUE)
 		update_appearance()
-
-	if(!built && !device && device_type)
-		device = new device_type(src)
 
 	check_access(null)
 
@@ -60,8 +60,9 @@
 			board.one_access = 1
 			board.accesses = req_one_access
 
-	setup_device()
-	find_and_hang_on_wall()
+	setup_device(mapload)
+	if(mapload)
+		find_and_mount_on_atom()
 	register_context()
 
 /obj/machinery/button/Destroy()
@@ -69,7 +70,9 @@
 	QDEL_NULL(board)
 	return ..()
 
-/obj/machinery/button/proc/setup_device()
+/obj/machinery/button/proc/setup_device(mapload)
+	if(mapload && !device && device_type)
+		device = new device_type(src)
 	if(id && istype(device, /obj/item/assembly/control))
 		var/obj/item/assembly/control/control_device = device
 		control_device.id = id
@@ -139,11 +142,15 @@
 	if(device)
 		to_chat(user, span_warning("The button already contains a device!"))
 		return ITEM_INTERACT_BLOCKING
+	if(!(new_device.assembly_behavior & ASSEMBLY_FUNCTIONAL_OUTPUT))
+		to_chat(user, span_warning("\The [new_device] won't really do anything meaningful inside of the button..."))
+		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(new_device, src, silent = FALSE))
 		to_chat(user, span_warning("\The [new_device] is stuck to you!"))
 		return ITEM_INTERACT_BLOCKING
 
 	device = new_device
+	SEND_SIGNAL(new_device, COMSIG_ASSEMBLY_ADDED_TO_BUTTON, src, user)
 	to_chat(user, span_notice("You add \the [new_device] to the button."))
 
 	update_appearance()
@@ -218,7 +225,6 @@
 		balloon_alert(user, "access overridden")
 	return TRUE
 
-
 /obj/machinery/button/attack_ai(mob/user)
 	if(!silicon_access_disabled && !panel_open)
 		return attempt_press(user)
@@ -273,6 +279,7 @@
 	return ..()
 
 /obj/machinery/button/proc/remove_assembly(mob/user)
+	SEND_SIGNAL(device, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON, src, user)
 	user.put_in_hands(device)
 	to_chat(user, span_notice("You remove \the [device] from the button frame."))
 	device = null
@@ -393,17 +400,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/machinery/button/door/setup_device()
-	if(!device)
-		if(normaldoorcontrol)
-			var/obj/item/assembly/control/airlock/airlock_device = new(src)
-			airlock_device.specialfunctions = specialfunctions
-			device = airlock_device
-		else
-			var/obj/item/assembly/control/control_device = new(src)
-			control_device.sync_doors = sync_doors
-			device = control_device
-	..()
+/obj/machinery/button/door/setup_device(mapload)
+	if(mapload)
+		device = normaldoorcontrol ? new /obj/item/assembly/control/airlock(src) : new /obj/item/assembly/control(src)
+
+	if(istype(device, /obj/item/assembly/control/airlock))
+		var/obj/item/assembly/control/airlock/airlock_device = device
+		airlock_device.specialfunctions = specialfunctions
+	else if(istype(device, /obj/item/assembly/control))
+		var/obj/item/assembly/control/control_device = device
+		control_device.sync_doors = sync_doors
+	return ..()
 
 /obj/machinery/button/door/incinerator_vent_ordmix
 	name = "combustion chamber vent control"
@@ -491,10 +498,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	device_type = /obj/item/assembly/control/curtain
 	var/sync_doors = TRUE
 
-/obj/machinery/button/curtain/setup_device()
+/obj/machinery/button/curtain/setup_device(mapload)
+	. = ..()
 	var/obj/item/assembly/control/curtain = device
-	curtain.sync_doors = sync_doors
-	return ..()
+	if(istype(curtain))
+		curtain.sync_doors = sync_doors
 
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
@@ -515,3 +523,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	result_path = /obj/machinery/button
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	pixel_shift = 24
+
+/obj/item/wallframe/button/find_support_structure(atom/structure)
+	return istype(structure, /obj/structure/table) ? structure : ..()
+
+/obj/item/wallframe/button/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/structure/table))
+		return user.combat_mode ? ..() : NONE
+	return ..()

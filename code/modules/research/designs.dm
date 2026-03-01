@@ -29,7 +29,7 @@ other types of metals and chemistry for reagents).
 	var/id = DESIGN_ID_IGNORE
 	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER])
 	var/build_type = null
-	/// List of materials required to create one unit of the product. Format is (typepath or caregory) -> amount
+	/// List of materials required to create one unit of the product. Format is (typepath or requirements datum) -> amount
 	var/list/materials = list()
 	/// The amount of time required to create one unit of the product.
 	var/construction_time = 3.2 SECONDS
@@ -60,7 +60,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/error_design
 	name = "ERROR"
-	desc = "This usually means something in the database has corrupted. If this doesn't go away automatically, inform Central Comamnd so their techs can fix this ASAP(tm)"
+	desc = "This usually means something in the database has corrupted. If this doesn't go away automatically, inform Central Command so their techs can fix this ASAP(tm)"
 
 /datum/design/Destroy()
 	SSresearch.techweb_designs -= id
@@ -68,17 +68,20 @@ other types of metals and chemistry for reagents).
 
 /datum/design/proc/InitializeMaterials()
 	var/list/temp_list = list()
-	for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
-		var/amount = materials[i]
-		if(!istext(i)) //Not a category, so get the ref the normal way
-			var/datum/material/M = GET_MATERIAL_REF(i)
-			temp_list[M] = amount
-		else
-			temp_list[i] = amount
+	// Go through all of our materials, get the subsystem instance, and then replace the list.
+	for(var/mat_type, amount in materials)
+		if(ispath(mat_type, /datum/material_requirement))
+			temp_list[mat_type] = amount
+			continue
+
+		// Not a material requirement, so get the ref the normal way
+		var/datum/material/mat = SSmaterials.get_material(mat_type)
+		temp_list[mat] = amount
+
 	materials = temp_list
 
 /datum/design/proc/icon_html(client/user)
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	sheet.send(user)
 	return sheet.icon_tag(id)
 
@@ -88,6 +91,17 @@ other types of metals and chemistry for reagents).
 
 	return isnull(desc) ? initial(object_build_item_path.desc) : desc
 
+/// Produce the resulting item, optionally with a specfic amount if we're a stack design
+/datum/design/proc/create_result(atom/drop_loc, list/custom_materials, amount = null)
+	if (!ispath(build_path, /obj/item/stack) && !isnull(amount))
+		CRASH("[src] create_result was passed an amount, despite not being a stack design!")
+
+	if (!ispath(build_path, /obj/item/stack))
+		return new build_path(drop_loc)
+
+	if (isnull(amount))
+		amount = 1
+	return new build_path(drop_loc, amount)
 
 ////////////////////////////////////////
 //Disks for transporting design datums//
@@ -113,7 +127,7 @@ other types of metals and chemistry for reagents).
  * Args:
  * - stored_research - The techweb that's storing us.
  */
-/obj/item/disk/design_disk/proc/on_upload(datum/techweb/stored_research)
+/obj/item/disk/design_disk/proc/on_upload(datum/techweb/stored_research, atom/research_source)
 	return
 
 /obj/item/disk/design_disk/bepis
@@ -134,9 +148,9 @@ other types of metals and chemistry for reagents).
 		blueprints += new_entry
 
 ///Unhide and research our node so we show up in the R&D console.
-/obj/item/disk/design_disk/bepis/on_upload(datum/techweb/stored_research)
+/obj/item/disk/design_disk/bepis/on_upload(datum/techweb/stored_research, atom/research_source)
 	stored_research.hidden_nodes -= bepis_node.id
-	stored_research.research_node(bepis_node, force = TRUE, auto_adjust_cost = FALSE)
+	stored_research.research_node(bepis_node, force = TRUE, auto_adjust_cost = FALSE, research_source = research_source)
 
 /**
  * Subtype of Bepis tech disk

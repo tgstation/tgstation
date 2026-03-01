@@ -29,7 +29,6 @@
 	desc = "Leap towards the enemy!"
 	cooldown_time = 7 SECONDS
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	///telegraph time before jumping
 	var/wind_up_time = 2 SECONDS
 	///intervals between each of our attacks
@@ -38,7 +37,7 @@
 	var/times_to_attack = 4
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/Activate(atom/target)
-	if(owner.CanReach(target))
+	if(target.IsReachableBy(owner))
 		attack_combo(target)
 		StartCooldown()
 		return TRUE
@@ -53,8 +52,8 @@
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/proc/launch_towards_target(atom/target)
 	new /obj/effect/temp_visual/mook_dust(get_turf(owner))
-	playsound(get_turf(owner), 'sound/weapons/thudswoosh.ogg', 25, TRUE)
-	playsound(owner, 'sound/voice/mook_leap_yell.ogg', 100, TRUE)
+	playsound(get_turf(owner), 'sound/items/weapons/thudswoosh.ogg', 25, TRUE)
+	playsound(owner, 'sound/mobs/non-humanoids/mook/mook_leap_yell.ogg', 100, TRUE)
 	var/turf/target_turf = get_turf(target)
 
 	if(!target_turf.is_blocked_turf())
@@ -75,14 +74,14 @@
 	owner.throw_at(target = final_turf, range = 7, speed = 1, spin = FALSE, callback = CALLBACK(src, PROC_REF(attack_combo), target))
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/proc/attack_combo(atom/target)
-	if(!owner.CanReach(target))
+	if(!target.IsReachableBy(owner))
 		return FALSE
 
 	for(var/i in 0 to (times_to_attack - 1))
 		addtimer(CALLBACK(src, PROC_REF(attack_target), target), i * attack_interval)
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/proc/attack_target(atom/target)
-	if(!owner.CanReach(target) || owner.stat == DEAD)
+	if(!target.IsReachableBy(owner) || owner.stat == DEAD)
 		return
 	var/mob/living/basic/basic_owner = owner
 	basic_owner.melee_attack(target, ignore_cooldown = TRUE)
@@ -92,7 +91,6 @@
 	desc = "Soar high in the air!"
 	cooldown_time = 14 SECONDS
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/Activate(atom/target)
@@ -117,13 +115,13 @@
 		var/mob/living/basic/mining/mook/mook_owner = owner
 		mook_owner.change_combatant_state(state = MOOK_ATTACK_ACTIVE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(owner))
-	playsound(get_turf(owner), 'sound/weapons/thudswoosh.ogg', 50, TRUE)
-	animate(owner, pixel_y = owner.base_pixel_y + 146, time = 0.5 SECONDS)
+	playsound(owner, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE)
+	animate(owner, pixel_z = 146, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 	addtimer(CALLBACK(src, PROC_REF(land_on_turf), target), 0.5 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/proc/land_on_turf(turf/target)
 	do_teleport(owner, target, precision = 3,  no_effects = TRUE)
-	animate(owner, pixel_y = owner.base_pixel_y, time = 0.5 SECONDS)
+	animate(owner, pixel_z = -146, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(owner))
 	if(is_mook)
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/basic/mining/mook, change_combatant_state), MOOK_ATTACK_NEUTRAL), 0.5 SECONDS)
@@ -136,8 +134,8 @@
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
 	pixel_x = -16
-	pixel_y = -16
-	base_pixel_y = -16
+	pixel_z = -16
+	base_pixel_z = -16
 	base_pixel_x = -16
 	duration = 1 SECONDS
 

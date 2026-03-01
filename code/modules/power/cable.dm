@@ -1,6 +1,9 @@
 //Use this only for things that aren't a subtype of obj/machinery/power
 //For things that are, override "should_have_node()" on them
-GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/grille)))
+GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
+	/obj/structure/grille,
+	/obj/structure/table/reinforced,
+)))
 
 #define UNDER_SMES -1
 #define UNDER_TERMINAL 1
@@ -21,12 +24,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
-	var/linked_dirs = 0 //bitflag
-	var/node = FALSE //used for sprites display
+	max_integrity = 50
+	var/linked_dirs = NONE //bitflag
 	var/cable_layer = CABLE_LAYER_2 //bitflag
 	var/datum/powernet/powernet
 	var/cable_color = CABLE_COLOR_YELLOW
 	var/is_fully_initialized = FALSE
+	/// Dir bitflags in which we cannot connect due to being cut
+	var/banned_links = NONE
 
 /obj/structure/cable/layer1
 	color = CABLE_HEX_COLOR_RED
@@ -46,7 +51,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	. = ..()
 
 	GLOB.cable_list += src //add it to the global cable list
-	Connect_cable()
+	connect_cable()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 	RegisterSignal(src, COMSIG_RAT_INTERACT, PROC_REF(on_rat_eat))
 	if(isturf(loc))
@@ -69,33 +74,34 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	if(avail())
 		king.apply_damage(10)
-		playsound(king, 'sound/effects/sparks2.ogg', 100, TRUE)
+		playsound(king, 'sound/effects/sparks/sparks2.ogg', 100, TRUE)
 	deconstruct()
 
 	return COMPONENT_RAT_INTERACTED
 
 ///Set the linked indicator bitflags
-/obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)
+/obj/structure/cable/proc/connect_cable(clear_before_updating = FALSE)
 	var/under_thing = NONE
 	if(clear_before_updating)
-		linked_dirs = 0
-	var/obj/machinery/power/search_parent
-	for(var/obj/machinery/power/P in loc)
-		if(istype(P, /obj/machinery/power/terminal))
-			under_thing = UNDER_TERMINAL
-			search_parent = P
-			break
-		if(istype(P, /obj/machinery/power/smes))
+		linked_dirs = NONE
+
+	var/obj/machinery/power/search_parent = locate(/obj/machinery/power/terminal) in loc
+	if (!isnull(search_parent))
+		under_thing = UNDER_TERMINAL
+	else
+		search_parent = locate(/obj/machinery/power/smes) in loc
+		if (!isnull(search_parent))
 			under_thing = UNDER_SMES
-			search_parent = P
-			break
+
 	for(var/check_dir in GLOB.cardinals)
-		var/TB = get_step(src, check_dir)
+		if (check_dir & banned_links)
+			continue
+		var/turf/step_turf = get_step(src, check_dir)
 		//don't link from smes to its terminal
 		if(under_thing)
 			switch(under_thing)
 				if(UNDER_SMES)
-					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
+					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in step_turf
 					//Why null or equal to the search parent?
 					//during map init it's possible for a placed smes terminal to not have initialized to the smes yet
 					//but the cable underneath it is ready to link.
@@ -104,36 +110,42 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					//This might break.
 					if(term && (!term.master || term.master == search_parent))
 						continue
+
 				if(UNDER_TERMINAL)
-					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
+					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in step_turf
 					if(S && (!S.terminal || S.terminal == search_parent))
 						continue
-		var/inverse = REVERSE_DIR(check_dir)
-		for(var/obj/structure/cable/C in TB)
-			if(C.cable_layer & cable_layer)
-				linked_dirs |= check_dir
-				C.linked_dirs |= inverse
 
-				// We will update on LateInitialize otherwise.
-				if (C.is_fully_initialized)
-					C.update_appearance(UPDATE_ICON)
+		var/inverse = REVERSE_DIR(check_dir)
+		for(var/obj/structure/cable/other_cable in step_turf)
+			if(!(other_cable.cable_layer & cable_layer) || (other_cable.banned_links & inverse))
+				continue
+			linked_dirs |= check_dir
+			other_cable.linked_dirs |= inverse
+
+			// We will update on LateInitialize otherwise.
+			if (other_cable.is_fully_initialized)
+				other_cable.update_appearance(UPDATE_ICON)
 
 	if (is_fully_initialized)
 		update_appearance(UPDATE_ICON)
 
 ///Clear the linked indicator bitflags
-/obj/structure/cable/proc/Disconnect_cable()
+/obj/structure/cable/proc/disconnect_cable()
 	for(var/check_dir in GLOB.cardinals)
+		if(!(linked_dirs & check_dir))
+			continue
 		var/inverse = REVERSE_DIR(check_dir)
-		if(linked_dirs & check_dir)
-			var/TB = get_step(loc, check_dir)
-			for(var/obj/structure/cable/C in TB)
-				if(cable_layer & C.cable_layer)
-					C.linked_dirs &= ~inverse
-					C.update_appearance()
+		var/turf/check_turf = get_step(loc, check_dir)
+		for(var/obj/structure/cable/other_cable in check_turf)
+			if(!(other_cable.cable_layer & cable_layer))
+				continue
+			other_cable.linked_dirs &= ~inverse
+			if (other_cable.is_fully_initialized)
+				other_cable.update_appearance()
 
 /obj/structure/cable/Destroy() // called when a cable is deleted
-	Disconnect_cable()
+	disconnect_cable()
 
 	if(powernet)
 		cut_cable_from_powernet() // update the powernets
@@ -145,53 +157,120 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/obj/item/stack/cable_coil/cable = new(drop_location(), 1)
 	cable.set_cable_color(cable_color)
 
-///////////////////////////////////
-// General procedures
-///////////////////////////////////
-
-/obj/structure/cable/update_icon_state()
-	if(!linked_dirs)
-		icon_state = "l[cable_layer]-noconnection"
+/obj/structure/cable/atom_destruction(damage_flag)
+	if(!powernet || damage_flag != BOMB)
 		return ..()
 
-	// TODO: stop doing this shit in update_icon_state, this should be event based for the love of all that is holy
-	var/list/dir_icon_list = list()
-	for(var/check_dir in GLOB.cardinals)
-		if(linked_dirs & check_dir)
-			dir_icon_list += "[check_dir]"
-	var/dir_string = dir_icon_list.Join("-")
-	if(dir_icon_list.len > 1)
-		for(var/obj/O in loc)
-			if(GLOB.wire_node_generating_types[O.type])
-				dir_string = "[dir_string]-node"
-				break
-			else if(istype(O, /obj/machinery/power))
-				var/obj/machinery/power/P = O
-				if(P.should_have_node())
-					dir_string = "[dir_string]-node"
-					break
-	dir_string = "l[cable_layer]-[dir_string]"
-	icon_state = dir_string
+	powernet.propagate_light_flicker(src)
 	return ..()
 
-/obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
-	var/turf/T = get_turf(src)
-	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-		return
-	if(W.tool_behaviour == TOOL_WIRECUTTER)
-		if (shock(user, 50))
-			return
-		user.visible_message(span_notice("[user] cuts the cable."), span_notice("You cut the cable."))
-		investigate_log("was cut by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
-		deconstruct()
-		return
+/obj/structure/cable/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
+	if(damage_flag == BOMB && HAS_TRAIT(src, TRAIT_UNDERFLOOR))
+		damage_amount *= 0.25
+	return ..()
 
-	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		to_chat(user, get_power_info())
-		shock(user, 5, 0.2)
+/obj/structure/cable/proc/get_dir_string(links, node)
+	if(!links)
+		return "l[cable_layer]-noconnection"
 
+	var/list/dir_icon_list = list()
+	for(var/check_dir in GLOB.cardinals)
+		if(links & check_dir)
+			dir_icon_list += "[check_dir]"
+
+	var/dir_string = dir_icon_list.Join("-")
+	if(length(dir_icon_list) == 1 || !node)
+		return "l[cable_layer]-[dir_string]"
+	return "l[cable_layer]-[dir_string]-node"
+
+/obj/structure/cable/update_icon_state()
+	var/node = !!banned_links
+	if (!node)
+		for(var/obj/connector in loc)
+			if(GLOB.wire_node_generating_types[connector.type])
+				node = TRUE
+				break
+			if(!istype(connector, /obj/machinery/power))
+				continue
+			var/obj/machinery/power/power_node = connector
+			if(power_node.should_have_node())
+				node = TRUE
+				break
+	icon_state = get_dir_string(linked_dirs, node)
+	return ..()
+
+/obj/structure/cable/update_overlays()
+	. = ..()
+	if (!banned_links)
+		return
+	for (var/check_dir in GLOB.cardinals)
+		if (banned_links & check_dir)
+			. += mutable_appearance(icon, "l[cable_layer]-clasp-[check_dir]", layer, src, appearance_flags = KEEP_APART | RESET_COLOR)
+
+/obj/structure/cable/wirecutter_act(mob/living/user, obj/item/tool)
+	var/turf/our_turf = get_turf(src)
+	if (our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+		return NONE
+
+	if (shock(user, 50))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] cuts the cable."), span_notice("You cut the cable."))
+	investigate_log("was cut by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
+	deconstruct()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/cable/wirecutter_act_secondary(mob/living/user, obj/item/tool)
+	var/turf/our_turf = get_turf(src)
+	if (our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+		return NONE
+
+	if (shock(user, 50))
+		return ITEM_INTERACT_BLOCKING
+
+	var/list/choices = list()
+	for (var/check_dir in GLOB.cardinals)
+		if (!(check_dir & (linked_dirs | banned_links)))
+			continue
+
+		if (check_dir & banned_links)
+			choices[capitalize(dir2text(check_dir))] = icon(icon, get_dir_string(linked_dirs | check_dir))
+		else
+			choices[capitalize(dir2text(check_dir))] = icon(icon, get_dir_string(linked_dirs & ~check_dir))
+
+	var/choice = show_radial_menu(user, src, choices, require_near = TRUE, tooltips = TRUE)
+	if (!can_interact(user) || !choice)
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/cutters = user.get_active_held_item()
+	if (!cutters.tool_behaviour == TOOL_WIRECUTTER)
+		return ITEM_INTERACT_BLOCKING
+
+	// Insuls taken off?
+	if (shock(user, 50))
+		return ITEM_INTERACT_BLOCKING
+
+	var/picked_dir = text2dir(choice)
+	if (picked_dir & banned_links)
+		banned_links &= ~picked_dir
+	else
+		banned_links |= picked_dir
+		var/obj/structure/cable/other_cable = locate() in get_step(our_turf, picked_dir)
+		var/inverse = REVERSE_DIR(picked_dir)
+		if (!isnull(other_cable) && (other_cable.linked_dirs & inverse))
+			other_cable.linked_dirs &= ~inverse
+			other_cable.update_appearance(UPDATE_ICON)
+	connect_cable(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/cable/multitool_act(mob/living/user, obj/item/tool)
+	var/turf/our_turf = get_turf(src)
+	if (our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+		return NONE
 	add_fingerprint(user)
-
+	to_chat(user, get_power_info())
+	shock(user, 5, null, 0.2)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/cable/proc/get_power_info()
 	if(powernet?.avail > 0)
@@ -199,26 +278,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	else
 		return span_danger("The cable is not powered.")
 
-
-// Items usable on a cable :
-//   - Wirecutters : cut it duh !
-//   - Multitool : get the power currently passing through the cable
-//
-/obj/structure/cable/attackby(obj/item/W, mob/user, params)
-	handlecable(W, user, params)
-
-
 // shock the user with probability prb
-/obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
-	if(!prob(prb))
-		return FALSE
-	if(electrocute_mob(user, powernet, src, siemens_coeff))
-		do_sparks(5, TRUE, src)
-		return TRUE
-	else
-		return FALSE
+/obj/structure/cable/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+	shock_source = powernet
+	return ..()
 
-/obj/structure/cable/singularity_pull(S, current_size)
+/obj/structure/cable/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
@@ -301,8 +366,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // merge with the powernets of power objects in the source turf
 /obj/structure/cable/proc/mergeConnectedNetworksOnTurf()
 	var/list/to_connect = list()
-	node = FALSE
-
 	if(!powernet) //if we somehow have no powernet, make one (should not happen for cables)
 		var/datum/powernet/newPN = new()
 		newPN.add_cable(src)
@@ -330,7 +393,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	//now that cables are done, let's connect found machines
 	for(var/obj/machinery/power/PM in to_connect)
-		node = TRUE
 		if(!PM.connect_to_network())
 			PM.disconnect_from_network() //if we somehow can't connect the machine to the new powernet, remove it from the old nonetheless
 
@@ -443,7 +505,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	attack_verb_simple = list("whip", "lash", "discipline", "flog")
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
 	cost = 1
 	source = /datum/robot_energy_storage/wire
@@ -460,15 +521,22 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	update_appearance()
 
+/obj/item/stack/cable_coil/grind_results()
+	return list(/datum/reagent/copper = 2)
+
 /obj/item/stack/cable_coil/examine(mob/user)
 	. = ..()
 	. += "<b>Use it in hand</b> to change the layer you are placing on, amongst other things."
 
 /obj/item/stack/cable_coil/update_name()
+	if(novariants)
+		return
 	. = ..()
 	name = "cable [(amount < 3) ? "piece" : "coil"]"
 
 /obj/item/stack/cable_coil/update_desc()
+	if(novariants)
+		return
 	. = ..()
 	desc = "A [(amount < 3) ? "piece" : "coil"] of insulated power cable."
 
@@ -497,7 +565,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -523,36 +591,41 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return
 	switch(layer_result)
 		if("Layer 1")
+			icon = initial(icon)
+			novariants = FALSE
 			set_cable_color(CABLE_COLOR_RED)
 			target_type = /obj/structure/cable/layer1
 			target_layer = CABLE_LAYER_1
-			novariants = FALSE
 		if("Layer 2")
+			icon = initial(icon)
+			novariants = FALSE
 			set_cable_color(CABLE_COLOR_YELLOW)
 			target_type = /obj/structure/cable
 			target_layer = CABLE_LAYER_2
-			novariants = FALSE
 		if("Layer 3")
+			icon = initial(icon)
+			novariants = FALSE
 			set_cable_color(CABLE_COLOR_BLUE)
 			target_type = /obj/structure/cable/layer3
 			target_layer = CABLE_LAYER_3
-			novariants = FALSE
 		if("Multilayer cable hub")
 			name = "multilayer cable hub"
 			desc = "A multilayer cable hub."
+			icon = 'icons/obj/pipes_n_cables/structures.dmi'
 			icon_state = "cable_bridge"
+			novariants = TRUE
 			set_cable_color(CABLE_COLOR_WHITE)
 			target_type = /obj/structure/cable/multilayer
 			target_layer = CABLE_LAYER_2
-			novariants = TRUE
 		if("Multi Z layer cable hub")
 			name = "multi z layer cable hub"
 			desc = "A multi-z layer cable hub."
+			icon = 'icons/obj/pipes_n_cables/structures.dmi'
 			icon_state = "cablerelay-broken-cable"
+			novariants = TRUE
 			set_cable_color(CABLE_COLOR_WHITE)
 			target_type = /obj/structure/cable/multilayer/multiz
 			target_layer = CABLE_LAYER_2
-			novariants = TRUE
 		if("Cable restraints")
 			if (amount >= CABLE_RESTRAINTS_COST)
 				if(use(CABLE_RESTRAINTS_COST))
@@ -565,22 +638,47 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // General procedures
 ///////////////////////////////////
 //you can use wires to heal robotics
-/obj/item/stack/cable_coil/attack(mob/living/carbon/human/H, mob/user)
-	if(!istype(H))
-		return ..()
 
-	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && IS_ROBOTIC_LIMB(affecting))
-		if(user == H)
-			user.visible_message(span_notice("[user] starts to fix some of the wires in [H]'s [affecting.name]."), span_notice("You start fixing some of the wires in [H == user ? "your" : "[H]'s"] [affecting.name]."))
-			if(!do_after(user, 5 SECONDS, H))
-				return
-		if(H.item_heal(user, 0, 15, "dents", "burnt wires", BODYTYPE_ROBOTIC))
-			use(1)
-		return
-	else
-		return ..()
+/obj/item/stack/cable_coil/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ishuman(interacting_with))
+		return NONE
 
+	if(user.combat_mode)
+		return NONE
+
+	return try_heal_loop(interacting_with, user)
+
+/obj/item/stack/cable_coil/proc/try_heal_loop(atom/interacting_with, mob/living/user, repeating = FALSE)
+	var/mob/living/carbon/human/attacked_humanoid = interacting_with
+	var/obj/item/clothing/under/uniform = attacked_humanoid.w_uniform
+	if(uniform?.repair_sensors(user))
+		return ITEM_INTERACT_SUCCESS
+
+	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
+	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
+		return NONE
+
+	if (!affecting.burn_dam)
+		balloon_alert(user, "limb not damaged")
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] starts to fix some of the wires in [attacked_humanoid == user ? user.p_their() : "[attacked_humanoid]'s"] [affecting.name]."),
+		span_notice("You start fixing some of the wires in [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
+
+	var/use_delay = repeating ? 1 SECONDS : 0
+	if(user == attacked_humanoid)
+		use_delay = 5 SECONDS
+
+	if(!do_after(user, use_delay, attacked_humanoid))
+		return ITEM_INTERACT_BLOCKING
+
+	if (!attacked_humanoid.item_heal(user, brute_heal = 0, burn_heal = 15, heal_message_brute = "dents", heal_message_burn = "burnt wires", required_bodytype = BODYTYPE_ROBOTIC))
+		return ITEM_INTERACT_BLOCKING
+
+	if (use(1) && amount > 0)
+		INVOKE_ASYNC(src, PROC_REF(try_heal_loop), interacting_with, user, TRUE)
+
+	return ITEM_INTERACT_SUCCESS
 
 ///////////////////////////////////////////////
 // Cable laying procedures
@@ -620,9 +718,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	use(1)
 
-	if(C.shock(user, 50))
-		if(prob(50)) //fail
-			C.deconstruct()
+	if(C.shock(user, 50) && prob(50)) //fail
+		C.deconstruct()
 
 	return C
 
@@ -732,11 +829,11 @@ GLOBAL_LIST(hub_radial_layer_list)
 
 	cut_cable_from_powernet(FALSE)
 
-	Disconnect_cable()
+	disconnect_cable()
 
 	cable_layer ^= CL
 
-	Connect_cable(TRUE)
+	connect_cable(TRUE)
 
 	Reload()
 
@@ -746,7 +843,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -766,3 +863,9 @@ GLOBAL_LIST(hub_radial_layer_list)
 // This is a mapping aid. In order for this to be placed on a map and function, all three layers need to have their nodes active
 /obj/structure/cable/multilayer/connected
 		cable_layer = CABLE_LAYER_1 | CABLE_LAYER_2 | CABLE_LAYER_3
+
+/obj/structure/cable/multilayer/layer1
+		cable_layer = CABLE_LAYER_1
+
+/obj/structure/cable/multilayer/layer3
+		cable_layer =  CABLE_LAYER_3

@@ -1,6 +1,3 @@
-import { round, toFixed } from '../../common/math';
-import { BooleanLike } from '../../common/react';
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -12,10 +9,14 @@ import {
   RoundGauge,
   Section,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+import { round, toFixed } from 'tgui-core/math';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
-import { Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
+import { type Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
 
 export type ActiveReaction = {
   name: string;
@@ -40,6 +41,7 @@ type Data = {
   acidicBufferVol: number;
   basicBufferVol: number;
   dispenseVolume: number;
+  hasBeakerInHand: BooleanLike;
 };
 
 type ReactionDisplayProps = {
@@ -67,7 +69,7 @@ export const ReactionDisplay = (props: ReactionDisplayProps) => {
           <Flex.Item color="label">
             <AnimatedNumber
               value={beaker.pH}
-              format={(value) => 'pH: ' + round(value, 3)}
+              format={(value) => `pH: ${round(value, 3)}`}
             />
           </Flex.Item>
           <Flex.Item>
@@ -191,6 +193,7 @@ export const ChemHeater = (props) => {
     dispenseVolume,
     upgradeLevel,
     activeReactions = [],
+    hasBeakerInHand,
   } = data;
   const isBeakerLoaded = beaker !== null;
 
@@ -223,6 +226,7 @@ export const ChemHeater = (props) => {
               <Table.Cell />
               <Table.Cell>
                 <NumberInput
+                  tickWhileDragging
                   width="45px"
                   unit="u"
                   step={1}
@@ -230,7 +234,7 @@ export const ChemHeater = (props) => {
                   value={dispenseVolume}
                   minValue={1}
                   maxValue={10}
-                  onDrag={(value) =>
+                  onChange={(value) =>
                     act('disp_vol', {
                       target: value,
                     })
@@ -244,6 +248,7 @@ export const ChemHeater = (props) => {
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
+                  tickWhileDragging
                   width="65px"
                   unit="K"
                   step={10}
@@ -251,7 +256,7 @@ export const ChemHeater = (props) => {
                   value={round(targetTemp, 0.1)}
                   minValue={0}
                   maxValue={1000}
-                  onDrag={(value) =>
+                  onChange={(value) =>
                     act('temperature', {
                       target: value,
                     })
@@ -278,7 +283,7 @@ export const ChemHeater = (props) => {
                 color={COLORS.reagent.acidicbuffer}
                 textAlign="center"
               >
-                {acidicBufferVol + 'u'}
+                {`${acidicBufferVol}u`}
               </Table.Cell>
               <Table.Cell>
                 <Button
@@ -303,7 +308,7 @@ export const ChemHeater = (props) => {
                   {(isBeakerLoaded && (
                     <AnimatedNumber
                       value={currentTemp}
-                      format={(value) => toFixed(value) + ' K'}
+                      format={(value) => `${toFixed(value)} K`}
                     />
                   )) ||
                     '—'}
@@ -326,7 +331,7 @@ export const ChemHeater = (props) => {
                 />
               </Table.Cell>
               <Table.Cell color={COLORS.reagent.basicbuffer} textAlign="center">
-                {basicBufferVol + 'u'}
+                {`${basicBufferVol}u`}
               </Table.Cell>
               <Table.Cell>
                 <Button
@@ -352,7 +357,12 @@ export const ChemHeater = (props) => {
             highDangerDisplay={upgradeLevel >= 2}
           />
         )}
-        <BeakerSectionDisplay beaker={beaker} showpH={false} />
+        <BeakerSectionDisplay
+          beaker={beaker}
+          showpH={false}
+          showInsertButton={true}
+          hasBeakerInHand={hasBeakerInHand}
+        />
       </Window.Content>
     </Window>
   );

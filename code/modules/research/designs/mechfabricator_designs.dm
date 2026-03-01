@@ -1039,7 +1039,8 @@
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1091,7 +1092,8 @@
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1173,7 +1175,8 @@
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1191,7 +1194,8 @@
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1480,6 +1484,34 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
+/datum/design/borg_upgrade_plunger
+	name = "Integrated Plunger"
+	id = "borg_upgrade_plunger"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/plunger
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.125,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*0.75,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
+	)
+
+/datum/design/borg_upgrade_high_capacity_replacer
+	name = "High Capacity Light Replacer"
+	id = "borg_upgrade_high_capacity_replacer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/high_capacity_light_replacer
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.125,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*0.75,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
+	)
+
 /datum/design/borg_upgrade_rolling_table
 	name = "Rolling Table Dock"
 	id = "borg_upgrade_rolling_table"
@@ -1525,6 +1557,21 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
 
+/datum/design/borg_upgrade_botany
+	name = "Botany Tools"
+	id = "borg_upgrade_botany"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/botany_upgrade
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*13,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*2 // approx. all mats that u wasting on those tools on lathe
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+
 /datum/design/borg_upgrade_drink_apparatus
 	name = "Drink Apparatus"
 	id = "borg_upgrade_drink_apparatus"
@@ -1564,6 +1611,20 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
 
+/datum/design/borg_upgrade_shuttle_blueprints
+	name = "Engineering Shuttle Blueprints"
+	id = "borg_upgrade_engineering_shuttle_blueprints"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/shuttle_blueprints
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*2.5,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
+	)
+
 /datum/design/borg_upgrade_expand
 	name = "Expand Module"
 	id = "borg_upgrade_expand"
@@ -1595,13 +1656,14 @@
 	search_metadata = "boris"
 
 /datum/design/borg_upgrade_rped
-	name = "Rapid Part Exchange Device"
+	name = "Rapid Part Exchange Device Expanded"
 	id = "borg_upgrade_rped"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/rped
 	materials = list(
-		/datum/material/iron =SHEET_MATERIAL_AMOUNT*5,
-		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*2.5,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT*2.5
 	)
 	construction_time = 12 SECONDS
 	category = list(
@@ -1619,11 +1681,11 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
 
-/datum/design/borg_upgrade_circuit_app
-	name = "Circuit Manipulator"
-	id = "borg_upgrade_circuitapp"
+/datum/design/borg_upgrade_engineering_app
+	name = "Engineering Apparatus"
+	id = "borg_upgrade_engineeringapp"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/circuit_app
+	build_path = /obj/item/borg/upgrade/engineering_app
 	materials = list(
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT,
 		/datum/material/titanium =SMALL_MATERIAL_AMOUNT*5,
@@ -1655,6 +1717,22 @@
 	materials = list(
 		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass =SMALL_MATERIAL_AMOUNT*5,
+	)
+	construction_time = 12 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MEDICAL
+	)
+
+/datum/design/borg_upgrade_syringe
+	name = "Advanced Syringe"
+	id = "borg_upgrade_syringe"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/bs_syringe
+	materials = list(
+		/datum/material/iron =SHEET_MATERIAL_AMOUNT,
+		/datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/bluespace =SMALL_MATERIAL_AMOUNT*5
 	)
 	construction_time = 12 SECONDS
 	category = list(
@@ -1731,7 +1809,8 @@
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1753,7 +1832,8 @@
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1777,7 +1857,8 @@
 		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
 		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
 		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
-		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES
+		RND_CATEGORY_MECHFAB_CLARKE + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -1889,6 +1970,29 @@
 	var/datum/mod_theme/theme = GLOB.mod_themes[initial(armor_type.theme)]
 	desc = "External plating for a MODsuit. [theme.desc]"
 
+/datum/design/mod_plating/civilian
+	name = "MOD Civilian Plating"
+	id = "mod_plating_civilian"
+	build_path = /obj/item/mod/construction/plating/civilian
+	materials = list(
+		/datum/material/iron =SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT*1.5,
+		/datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	research_icon_state = "civilian-plating"
+
+/datum/design/mod_plating/portable_suit
+	name = "MOD Portable Suit Plating"
+	id = "mod_plating_portable_suit"
+	build_path = /obj/item/mod/construction/plating/portable_suit
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT,
+	)
+	research_icon_state = "psuit-plating"
+
 /datum/design/mod_plating/engineering
 	name = "MOD Engineering Plating"
 	id = "mod_plating_engineering"
@@ -1927,19 +2031,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 	research_icon_state = "medical-plating"
-
-/datum/design/mod_plating/security
-	name = "MOD Security Plating"
-	id = "mod_plating_security"
-	build_path = /obj/item/mod/construction/plating/security
-	materials = list(
-		/datum/material/iron =SHEET_MATERIAL_AMOUNT*3,
-		/datum/material/uranium =SHEET_MATERIAL_AMOUNT,
-		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	research_icon_state = "security-plating"
 
 /datum/design/mod_plating/cosmohonk
 	name = "MOD Cosmohonk Plating"
@@ -2006,7 +2097,7 @@
 	desc = "[initial(module.desc)] It uses [initial(module.complexity)] complexity."
 
 /datum/design/module/mod_storage
-	name = "Storage Module"
+	name = "Compact Storage Module"
 	id = "mod_storage"
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT *1.25,
@@ -2015,13 +2106,24 @@
 	build_path = /obj/item/mod/module/storage
 
 /datum/design/module/mod_storage_expanded
-	name = "Expanded Storage Module"
+	name = "Storage Module"
 	id = "mod_storage_expanded"
 	materials = list(
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/uranium =SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/mod/module/storage/large_capacity
+
+/datum/design/module/mod_storage_holding
+	name = "Storage Module of Holding"
+	id = "mod_storage_holding"
+	materials = list(
+		/datum/material/gold =SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/uranium = SMALL_MATERIAL_AMOUNT*2.5,
+		/datum/material/bluespace =SHEET_MATERIAL_AMOUNT
+	)
+	build_path = /obj/item/mod/module/storage/holding
 
 /datum/design/module/mod_visor_medhud
 	name = "Medical Visor Module"
@@ -2338,14 +2440,14 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
 
-/datum/design/module/mod_organ_thrower
-	name = "Organ Thrower Module"
-	id = "mod_organ_thrower"
+/datum/design/module/mod_organizer
+	name = "Organizer Module"
+	id = "mod_organizer"
 	materials = list(
 		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/mod/module/organ_thrower
+	build_path = /obj/item/mod/module/organizer
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
@@ -2512,6 +2614,18 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
 
+/datum/design/module/mirage
+	name = "Mirage Grenade Dispenser Module"
+	id = "mod_mirage_grenade"
+	materials = list(
+		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/mod/module/dispenser/mirage
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
+	)
+
 //MODsuit bepis modules
 /datum/design/module/disposal
 	name = "Disposal Connector Module"
@@ -2606,6 +2720,17 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
 
+/datum/design/module/fishing_glove
+	name = "MOD Fishing Glove Module"
+	id = "mod_fishing"
+	materials = list(
+		/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/mod/module/fishing_glove
+
 /datum/design/posisphere
 	name = "Positronic Sphere"
 	desc = "The latest in Artificial Pesterance."
@@ -2623,3 +2748,14 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/module/mister_janitor
+	name = "Cleaning Mister Module"
+	id = "mod_mister_janitor"
+	materials = list(
+		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT * 1,
+	)
+	build_path = /obj/item/mod/module/mister/cleaner
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE
+	)

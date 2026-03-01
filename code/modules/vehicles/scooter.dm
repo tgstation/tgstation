@@ -3,6 +3,7 @@
 	desc = "A fun way to get around."
 	icon_state = "scooter"
 	are_legs_exposed = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 11)
 
 /obj/vehicle/ridden/scooter/Initialize(mapload)
 	. = ..()
@@ -39,8 +40,9 @@
 	desc = "An old, battered skateboard. It's still rideable, but probably unsafe."
 	icon_state = "skateboard"
 	density = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
 	///Sparks datum for when we grind on tables
-	var/datum/effect_system/spark_spread/sparks
+	var/datum/effect_system/basic/spark_spread/sparks
 	///Whether the board is currently grinding
 	var/grinding = FALSE
 	///Stores the time of the last crash plus a short cooldown, affects availability and outcome of certain actions
@@ -51,19 +53,23 @@
 	var/instability = 10
 	///If true, riding the skateboard with walk intent on will prevent crashing.
 	var/can_slow_down = TRUE
+	///The actual item for the skateboard
+	var/obj/item/melee/skateboard/board_item
 
-/obj/vehicle/ridden/scooter/skateboard/Initialize(mapload)
+/obj/vehicle/ridden/scooter/skateboard/Initialize(mapload, obj/item/melee/skateboard/board_item)
 	. = ..()
-	sparks = new
-	sparks.set_up(1, 0, src)
+	sparks = new(src, 1, FALSE)
 	sparks.attach(src)
+	if(!istype(board_item))
+		src.board_item = new board_item_type(src)
+	else
+		src.board_item = board_item
 
 /obj/vehicle/ridden/scooter/skateboard/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard)
 
 /obj/vehicle/ridden/scooter/skateboard/Destroy()
-	if(sparks)
-		QDEL_NULL(sparks)
+	QDEL_NULL(sparks)
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/relaymove(mob/living/user, direction)
@@ -94,9 +100,9 @@
 		return
 
 	next_crash = world.time + 10
-	rider.adjustStaminaLoss(instability*6)
+	rider.adjust_stamina_loss(instability*6)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
-	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || iscarbon(bumped_thing))
+	if(!iscarbon(rider) || rider.get_stamina_loss() >= 100 || grinding || iscarbon(bumped_thing))
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
 		unbuckle_mob(rider)
 		if((istype(bumped_thing, /obj/machinery/disposal/bin)))
@@ -108,7 +114,7 @@
 		rider.throw_at(throw_target, 3, 2)
 		var/head_slot = rider.get_item_by_slot(ITEM_SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat)))
-			rider.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+			rider.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5)
 			rider.updatehealth()
 		visible_message(span_danger("[src] crashes into [bumped_thing], sending [rider] flying!"))
 		rider.Paralyze(8 SECONDS)
@@ -133,8 +139,8 @@
 		return
 
 	var/mob/living/skater = buckled_mobs[1]
-	skater.adjustStaminaLoss(instability*0.3)
-	if(skater.getStaminaLoss() >= 100)
+	skater.adjust_stamina_loss(instability*0.3)
+	if(skater.get_stamina_loss() >= 100)
 		obj_flags = CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 		unbuckle_mob(skater)
@@ -154,10 +160,10 @@
 			sparks.start() //the most radical way to start plasma fires
 	for(var/mob/living/carbon/victim in location)
 		if(victim.body_position == LYING_DOWN)
-			playsound(location, 'sound/items/trayhit2.ogg', 40)
+			playsound(location, 'sound/items/trayhit/trayhit2.ogg', 40)
 			victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = victim.get_random_valid_zone(even_weights = TRUE), wound_bonus = 20)
 			victim.Paralyze(1.5 SECONDS)
-			skater.adjustStaminaLoss(instability)
+			skater.adjust_stamina_loss(instability)
 			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
 	addtimer(CALLBACK(src, PROC_REF(grind)), 0.1 SECONDS)
 
@@ -168,13 +174,13 @@
 	if (over_object == skater)
 		pick_up_board(skater)
 
-/obj/vehicle/ridden/scooter/skateboard/proc/pick_up_board(mob/living/carbon/skater)
-	if (skater.incapacitated() || !Adjacent(skater))
+/obj/vehicle/ridden/scooter/skateboard/proc/pick_up_board(mob/living/carbon/skater, forced = FALSE)
+	if ((skater.incapacitated || !Adjacent(skater)) && !forced)
 		return
 	if(has_buckled_mobs())
 		to_chat(skater, span_warning("You can't lift this up when somebody's on it."))
 		return
-	skater.put_in_hands(new board_item_type(get_turf(skater)))
+	skater.put_in_hands(board_item)
 	qdel(src)
 
 /obj/vehicle/ridden/scooter/skateboard/pro
@@ -206,6 +212,20 @@
 			to_chat(rider, span_warning("[src] [p_are()] not powerful enough to fly upwards."))
 		return FALSE
 
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded
+	name = "holy skateboard"
+	desc = "A board blessed by the gods with the power to grind for our sins. Has the initials 'J.C.' on the underside."
+	board_item_type = /obj/item/melee/skateboard/holyboard
+	instability = 3
+	icon_state = "hoverboard_holy"
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/make_ridable()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/hover/holy)
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"
 	desc = "The engineering complexity of a spaceship concentrated inside of a board. Just as expensive, too."
@@ -226,8 +246,9 @@
 	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "scooter_frame"
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
-/obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
+/obj/item/scooter_frame/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/stack/sheet/iron))
 		return ..()
 	if(!I.tool_start_check(user, amount=5))
@@ -250,7 +271,7 @@
 /obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
 	return
 
-/obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/I, mob/user, params)
+/obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/stack/rods))
 		return ..()
 	if(!I.tool_start_check(user, amount=2))

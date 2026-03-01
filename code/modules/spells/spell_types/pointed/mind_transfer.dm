@@ -9,8 +9,9 @@
 	cooldown_reduction_per_rank =  10 SECONDS
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_MIND|SPELL_CASTABLE_AS_BRAIN
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED|AB_CHECK_OPEN_TURF
 
-	invocation = "GIN'YU CAPAN"
+	invocation = "GIN'YU CAPAN."
 	invocation_type = INVOCATION_WHISPER
 
 	active_msg = "You prepare to swap minds with a target..."
@@ -110,7 +111,7 @@
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/cult) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/changeling) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
-		|| mind_to_swap.key?[1] == "@" \
+		|| IS_FAKE_KEY(mind_to_swap.key) \
 	)
 		to_chat(caster, span_warning("[to_swap.p_Their()] mind is resisting your spell!"))
 		return FALSE
@@ -127,7 +128,7 @@
 
 	// Just in case the swappee's key wasn't grabbed by transfer_to...
 	if(to_swap_key)
-		caster.key = to_swap_key
+		caster.PossessByPlayer(to_swap_key)
 
 	// MIND TRANSFER END
 
@@ -137,7 +138,7 @@
 
 	// Only the caster and victim hear the sounds,
 	// that way no one knows for sure if the swap happened
-	SEND_SOUND(caster, sound('sound/magic/mandswap.ogg'))
-	SEND_SOUND(to_swap, sound('sound/magic/mandswap.ogg'))
+	SEND_SOUND(caster, sound('sound/effects/magic/mandswap.ogg'))
+	SEND_SOUND(to_swap, sound('sound/effects/magic/mandswap.ogg'))
 
 	return TRUE

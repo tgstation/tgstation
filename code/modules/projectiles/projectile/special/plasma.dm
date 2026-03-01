@@ -15,7 +15,7 @@
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
-		M.gets_drilled(firer, FALSE)
+		M.gets_drilled(firer)
 		if(mine_range)
 			mine_range--
 			range++
@@ -38,3 +38,4 @@
 	damage = 24
 	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+

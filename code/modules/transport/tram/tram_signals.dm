@@ -103,8 +103,7 @@
 
 /obj/machinery/transport/crossing_signal/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
-	RegisterSignal(SStransport, COMSIG_COMMS_STATUS, PROC_REF(comms_change))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(wake_up))
 	SStransport.crossing_signals += src
 	register_context()
 
@@ -118,7 +117,7 @@
 	SStransport.crossing_signals -= src
 	. = ..()
 
-/obj/machinery/transport/crossing_signal/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/transport/crossing_signal/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!user.combat_mode)
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 			return
@@ -150,8 +149,8 @@
 			. += span_notice("The orange [EXAMINE_HINT("remote warning")] light is on.")
 			. += span_notice("The status display reads: Check track sensor.")
 		if(TRANSPORT_REMOTE_FAULT)
-			. += span_notice("The blue [EXAMINE_HINT("remote fault")] light is on.")
-			. += span_notice("The status display reads: Check tram controller.")
+			. += span_notice("The blue [EXAMINE_HINT("telecoms failure")] light is on.")
+			. += span_notice("The status display reads: Check telecommunications network.")
 		if(TRANSPORT_LOCAL_FAULT)
 			. += span_notice("The red [EXAMINE_HINT("local fault")] light is on.")
 			. += span_notice("The status display reads: Repair required.")
@@ -180,7 +179,7 @@
 	find_uplink()
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/transport/crossing_signal/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/machinery/transport/crossing_signal/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(weapon.tool_behaviour == TOOL_WRENCH && panel_open)
@@ -246,10 +245,10 @@
 		operating_status = TRANSPORT_REMOTE_FAULT
 	else
 		operating_status = TRANSPORT_SYSTEM_NORMAL
+		if(isnull(linked_sensor))
+			link_sensor()
+		wake_sensor()
 
-	if(isnull(linked_sensor))
-		link_sensor()
-	wake_sensor()
 	update_operating()
 
 /obj/machinery/transport/crossing_signal/on_set_machine_stat()
@@ -275,13 +274,11 @@
 	if(updated_controller.specific_transport_id != configured_transport_id)
 		return
 
-	switch(new_status)
-		if(TRUE)
-			if(operating_status == TRANSPORT_REMOTE_FAULT)
-				operating_status = TRANSPORT_SYSTEM_NORMAL
-		if(FALSE)
-			if(operating_status == TRANSPORT_SYSTEM_NORMAL)
-				operating_status = TRANSPORT_REMOTE_FAULT
+	if(new_status)
+		if(operating_status == TRANSPORT_REMOTE_FAULT)
+			operating_status = TRANSPORT_SYSTEM_NORMAL
+	else if(operating_status == TRANSPORT_SYSTEM_NORMAL)
+		operating_status = TRANSPORT_REMOTE_FAULT
 
 /**
  * Update processing state.
@@ -304,6 +301,8 @@
 	// degraded signal operating conditions of any type show blue
 	var/idle_aspect = operating_status == TRANSPORT_SYSTEM_NORMAL ? XING_STATE_GREEN : XING_STATE_MALF
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
+	if(tram.controller_status & COMM_ERROR)
+		idle_aspect = XING_STATE_MALF
 
 	// Check for stopped states. Will kill the process since tram starting up will restart process.
 	if(!tram || !tram.controller_operational || !tram.controller_active || !is_operational || !inbound || !outbound)
@@ -353,7 +352,7 @@
 		return PROCESS_KILL
 
 	// Finally the interesting part where it's ACTUALLY approaching
-	if(approach_distance <= red_distance_threshold)
+	if(approach_distance <= red_distance_threshold && operating_status == TRANSPORT_SYSTEM_NORMAL)
 		set_signal_state(XING_STATE_RED)
 		return
 	if(approach_distance <= amber_distance_threshold && operating_status == TRANSPORT_SYSTEM_NORMAL)
@@ -473,6 +472,7 @@
 	icon_state = "sensor-base"
 	desc = "Uses an infrared beam to detect passing trams. Works when paired with a sensor on the other side of the track."
 	layer = TRAM_RAIL_LAYER
+	plane = FLOOR_PLANE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/guideway_sensor
 	/// Sensors work in a married pair
@@ -487,7 +487,7 @@
 /obj/machinery/transport/guideway_sensor/post_machine_initialize()
 	. = ..()
 	pair_sensor()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(wake_up))
 
 /obj/machinery/transport/guideway_sensor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -516,7 +516,7 @@
 			. += span_notice("The red [EXAMINE_HINT("local fault")] light is on.")
 			. += span_notice("The status display reads: Repair required.")
 
-/obj/machinery/transport/guideway_sensor/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/transport/guideway_sensor/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (!user.combat_mode)
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 			return
@@ -559,7 +559,7 @@
 	new_partner.paired_sensor = WEAKREF(src)
 	new_partner.set_machine_stat(machine_stat & ~MAINT)
 	new_partner.update_appearance()
-	playsound(src, 'sound/machines/synth_yes.ogg', 75, vary = FALSE, use_reverb = TRUE)
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 75, vary = FALSE, use_reverb = TRUE)
 
 /obj/machinery/transport/guideway_sensor/Destroy()
 	SStransport.sensors -= src
@@ -568,7 +568,7 @@
 		divorcee.set_machine_stat(machine_stat & ~MAINT)
 		divorcee.paired_sensor = null
 		divorcee.update_appearance()
-		playsound(src, 'sound/machines/synth_no.ogg', 75, vary = FALSE, use_reverb = TRUE)
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 75, vary = FALSE, use_reverb = TRUE)
 		paired_sensor = null
 	. = ..()
 
@@ -655,9 +655,14 @@
 	var/list/obj/machinery/transport/guideway_sensor/sensor_candidates = list()
 
 	for(var/obj/machinery/transport/guideway_sensor/sensor in SStransport.sensors)
-		if(sensor.z == src.z)
-			if((sensor.x == src.x && sensor.dir & NORTH|SOUTH) || (sensor.y == src.y && sensor.dir & EAST|WEST))
-				sensor_candidates += sensor
+		if(sensor.z != src.z)
+			continue
+		if(sensor.x != src.x && !(sensor.dir & (NORTH|SOUTH)))
+			continue
+		if(sensor.y != src.y && !(sensor.dir & (EAST|WEST)))
+			continue
+
+		sensor_candidates += sensor
 
 	var/obj/machinery/transport/guideway_sensor/selected_sensor = get_closest_atom(/obj/machinery/transport/guideway_sensor, sensor_candidates, src)
 	var/sensor_distance = get_dist(src, selected_sensor)

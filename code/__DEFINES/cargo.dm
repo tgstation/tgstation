@@ -1,33 +1,9 @@
-#define STYLE_STANDARD 1
-#define STYLE_BLUESPACE 2
-#define STYLE_CENTCOM 3
-#define STYLE_SYNDICATE 4
-#define STYLE_BLUE 5
-#define STYLE_CULT 6
-#define STYLE_MISSILE 7
-#define STYLE_RED_MISSILE 8
-#define STYLE_BOX 9
-#define STYLE_HONK 10
-#define STYLE_FRUIT 11
-#define STYLE_INVISIBLE 12
-#define STYLE_GONDOLA 13
-#define STYLE_SEETHROUGH 14
-
-#define POD_SHAPE 1
-#define POD_BASE 2
-#define POD_DOOR 3
-#define POD_DECAL 4
-#define POD_GLOW 5
-#define POD_RUBBLE_TYPE 6
-#define POD_NAME 7
-#define POD_DESC 8
-
 #define RUBBLE_NONE 1
 #define RUBBLE_NORMAL 2
 #define RUBBLE_WIDE 3
 #define RUBBLE_THIN 4
 
-#define POD_SHAPE_NORML 1
+#define POD_SHAPE_NORMAL 1
 #define POD_SHAPE_OTHER 2
 
 #define POD_TRANSIT "1"
@@ -36,6 +12,9 @@
 #define POD_LEAVING "4"
 
 #define SUPPLYPOD_X_OFFSET -16
+
+///DO NOT GO ANY LOWER THAN X1.4 the "CARGO_CRATE_VALUE" value if using regular crates, or infinite profit will be possible! This is also unit tested against.
+#define CARGO_MINIMUM_COST CARGO_CRATE_VALUE * 1.4
 
 /// The baseline unit for cargo crates. Adjusting this will change the cost of all in-game shuttles, crate export values, bounty rewards, and all supply pack import values, as they use this as their unit of measurement.
 #define CARGO_CRATE_VALUE 200
@@ -53,8 +32,36 @@
 /// Universal Scanner mode for using the price tagger.
 #define SCAN_PRICE_TAG 3
 
+// Defines for use with `export_item_and_contents()`, aka the export code that sells the items.
+/// Default export define, these are things that are sold to centcom.
+#define EXPORT_MARKET_STATION "supply"
+/// Export market for pirates.
+#define EXPORT_MARKET_PIRACY "piracy"
+
 ///Used by coupons to define that they're cursed
 #define COUPON_OMEN "omen"
+
+// Supply pack flags determining ordering properties
+/// Order is literally never visible, presumably it's an abstract type or something
+#define ORDER_INVISIBLE (1 << 0)
+/// Only orderable on emagged consoles
+#define ORDER_EMAG_ONLY (1 << 1)
+/// Only orderable on consoles with doctored boards
+#define ORDER_CONTRABAND (1 << 2)
+/// Can only be ordered privately, can use discount coupons, and arrives in a bag instead of a crate
+#define ORDER_GOODY (1 << 3)
+/// Can only be ordered via the express order console
+#define ORDER_POD_ONLY (1 << 4)
+/// Can only be ordered if the following flag is also enabled, for conditionally provided options
+#define ORDER_SPECIAL (1 << 5)
+/// If present then a special order can be ordered
+#define ORDER_SPECIAL_ENABLED (1 << 6)
+/// Unavailable to departmental order consoles even if it is in an appropriate category
+#define ORDER_NOT_DEPARTMENTAL (1 << 7)
+/// This will notify admins when it is purchased
+#define ORDER_DANGEROUS (1 << 8)
+/// This is set when something is created by an admin to make sure its contents is also marked as such
+#define ORDER_ADMIN_SPAWNED (1 << 9)
 
 ///Discount categories for coupons. This one is for anything that isn't discountable.
 #define SUPPLY_PACK_NOT_DISCOUNTABLE null
@@ -71,3 +78,17 @@
 #define EXPORT_SOLD 1
 ///Sell the item, but for the love of god, don't delete it, we're handling it in a fancier way.
 #define EXPORT_SOLD_DONT_DELETE 2
+
+
+//At 320 it's 7.5 minutes, at 1400 it's 12.44 minutes,  at 3000 (around gun crates) it's 15.5 minutes, at 8000 (hat crate) 20 minutes, at 9000 (expensive atmos cans) it's 20.58 minutes, and at the 20k crate it's 24.76 minutes.
+/// Multiplies the logarithmic value calculating the free crate cooldown
+#define DEPARTMENTAL_ORDER_COOLDOWN_COEFFICIENT 60
+/// Used for the power of the logarithmic value for the free crate cooldown
+#define DEPARTMENTAL_ORDER_COOLDOWN_EXPONENT 2.2
+
+//At 320 it's 475 credits, at 1400 it's 669 credits,  at 3000 (around gun crates) its 778, at 8000 (hat crate) it's 925 credits, at 9000 (expensive atmos cans) it's 943 credits, and at the 20k crate it's 1070 credits.
+
+/// Multiplies the logarithmic value calculating the free crate delivery reward
+#define DEPARTMENTAL_ORDER_REWARD_COEFFICIENT 120
+/// Used for the power of the logarithmic value for the free crate delivery reward
+#define DEPARTMENTAL_ORDER_REWARD_EXPONENT 1.5

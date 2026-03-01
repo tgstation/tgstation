@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import { Button, NoticeBox, Section, TextArea } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Button, NoticeBox, Section, TextArea } from '../../components';
-import { RequestsData } from './types';
+import type { RequestsData } from './types';
 
 export const AnnouncementTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
@@ -15,7 +15,7 @@ export const AnnouncementTab = (props) => {
         height={20}
         maxLength={1025}
         value={messageText}
-        onChange={(_, value) => setMessageText(value)}
+        onChange={setMessageText}
         placeholder="Type your announcement..."
       />
       <Section>
@@ -62,6 +62,6 @@ const AuthenticationNoticeBox = (props) => {
   return (
     (!authentication_data.announcement_authenticated && !is_admin_ghost_ai && (
       <NoticeBox>Swipe your card to authenticate yourself</NoticeBox>
-    )) || <NoticeBox info>Succesfully authenticated</NoticeBox>
+    )) || <NoticeBox info>Successfully authenticated</NoticeBox>
   );
 };

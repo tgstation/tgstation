@@ -8,9 +8,11 @@
 		terminal.connect_to_network()
 
 /obj/machinery/power/apc/proc/make_terminal(terminal_cable_layer = cable_layer)
+	//attempt to locate a terminal if mappers/map export placed it here
+	terminal = locate(/obj/machinery/power/terminal) in loc
 	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	terminal = new/obj/machinery/power/terminal(loc)
+	if(QDELETED(terminal))
+		terminal = new /obj/machinery/power/terminal(loc)
 	terminal.cable_layer = terminal_cable_layer
 	terminal.setDir(dir)
 	terminal.master = src
@@ -30,12 +32,12 @@
 		area.power_light = (lighting > APC_CHANNEL_AUTO_OFF)
 		area.power_equip = (equipment > APC_CHANNEL_AUTO_OFF)
 		area.power_environ = (environ > APC_CHANNEL_AUTO_OFF)
-		playsound(src.loc, 'sound/machines/terminal_on.ogg', 50, FALSE)
+		playsound(src.loc, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
 	else
 		area.power_light = FALSE
 		area.power_equip = FALSE
 		area.power_environ = FALSE
-		playsound(src.loc, 'sound/machines/terminal_off.ogg', 50, FALSE)
+		playsound(src.loc, 'sound/machines/terminal/terminal_off.ogg', 50, FALSE)
 	area.power_change()
 
 /obj/machinery/power/apc/proc/toggle_breaker(mob/user)

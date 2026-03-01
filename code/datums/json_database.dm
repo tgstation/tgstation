@@ -14,7 +14,7 @@
 
 /datum/json_database/New(filepath)
 	if (IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>json_database creation, linking to [html_encode(filepath)], was blocked.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("json_database creation, linking to [html_encode(filepath)], was blocked."), confidential = TRUE)
 		return
 
 	ASSERT(isnull(existing_json_database[filepath]), "[filepath] already has an associated json_database. You must expose it somehow and use that instead of making a new one.")
@@ -60,6 +60,16 @@
 /// Do not mutate it yourself.
 /datum/json_database/proc/get_key(key)
 	return cached_data[key]
+
+/// Picks the data of a random key and then removes that key from the database.
+/// Since the list is no longer inside the database, you can mutate and use it as you like.
+/datum/json_database/proc/pick_and_take_key()
+	if(!length(cached_data))
+		return null
+	var/key = pick(cached_data)
+	. =  cached_data[key]
+	cached_data -= key
+	queue_save()
 
 /// Sets the data at the key to the value, and queues a save.
 /datum/json_database/proc/set_key(key, value)

@@ -9,7 +9,7 @@
 		return
 	var/mob/living/carbon/dude = target
 	var/obj/item/clothing/shoes/sick_kicks = dude.shoes
-	if (!sick_kicks?.can_be_tied)
+	if (!sick_kicks || sick_kicks.fastening_type == SHOES_SLIPON)
 		to_chat(user, span_warning("[dude] does not have knottable shoes!"), confidential = TRUE)
 		return
 	sick_kicks.adjust_laces(SHOES_KNOTTED)

@@ -21,9 +21,8 @@
 	blood_master.forceMove(run_loc_floor_bottom_left)
 
 	var/datum/component/bloodysoles/soles = holds_blood.GetComponent(/datum/component/bloodysoles)
-	var/blood_type = pool.blood_state
 
-	TEST_ASSERT(soles.bloody_shoes[blood_type], "Shoes didn't become stained after stepping in a pool of [blood_type]")
+	TEST_ASSERT(soles.total_bloodiness, "Shoes didn't become stained after stepping in a pool of blood")
 
 	//The bloody soles component handles the order of stepping on blood/stepping on a bloody tile in a constranating way
 	//Which means it needs to check and see if any time has passed between steps, so it can be sure the player is stepping onto a new tile (that should become bloody)
@@ -39,10 +38,9 @@
 
 	var/footprint_total = 0
 	for(var/obj/effect/decal/cleanable/blood/footprints/print_set in move_to)
-		if(print_set.blood_state == blood_type)
-			footprint_total += 1
+		footprint_total += 1
 
-	TEST_ASSERT(footprint_total, "The floor didn't get covered in [blood_type] after being walked over")
+	TEST_ASSERT(footprint_total, "The floor didn't get covered in blood after being walked over")
 
 	soles.last_pickup -= 1
 
@@ -54,8 +52,7 @@
 
 	footprint_total = 0
 	for(var/obj/effect/decal/cleanable/blood/footprints/print_set in move_to)
-		if(print_set.blood_state == blood_type)
-			footprint_total += 1
+		footprint_total += 1
 
 	TEST_ASSERT(footprint_total, "The floor somehow lost its footprints after being walked over")
 	TEST_ASSERT_EQUAL(footprint_total, 1, "The floor had more than one set of footprints in it, something is fucked")

@@ -7,6 +7,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "separator"
 	light_power = 1
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/wood = SHEET_MATERIAL_AMOUNT, /datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
 
 	///Is the mixture currently boiling
 	var/boiling = FALSE
@@ -42,7 +43,7 @@
 /obj/structure/chem_separator/atom_deconstruct(disassembled)
 	var/atom/drop = drop_location()
 
-	new /obj/item/stack/sheet/mineral/wood(drop, 1)
+	new /obj/item/stack/sheet/mineral/wood(drop)
 
 	new /obj/item/thermometer(drop)
 
@@ -115,12 +116,12 @@
 	if(burner_on)
 		. += span_notice("Off burner with [EXAMINE_HINT("ALT LMB")].")
 	else
-		. += span_notice("You can start a flame with an combustible device.")
+		. += span_notice("You can start a flame with a combustible device.")
 
 	if(condenser_installed)
 		. += span_notice("The in-built condenser can facilitate faster cooling but consumes fuel.")
 	else
-		. += span_notice("You could install a [EXAMINE_HINT("condenser")] for fater cooling.")
+		. += span_notice("You could install a [EXAMINE_HINT("condenser")] for faster cooling.")
 
 	. += span_notice("You can [EXAMINE_HINT("examine more")] to see reagent boiling points & fuel properties.")
 	. += span_notice("The whole aparatus can be [EXAMINE_HINT("pried")] apart.")

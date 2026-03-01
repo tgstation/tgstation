@@ -1,6 +1,6 @@
 // CUCUMBERS YEAH
 /obj/item/seeds/cucumber
-	name = "pack of cucumber seeds"
+	name = "cucumber seed pack"
 	desc = "These seeds grow into cucumber plants."
 	icon_state = "seed-cucumber"
 	species = "cucumber"
@@ -22,5 +22,7 @@
 	desc = "Oblong and green, with pimples, the standard of salads."
 	icon_state = "cucumber"
 	foodtypes = VEGETABLES
-	juice_typepath = /datum/reagent/consumable/cucumberjuice
 	tastes = list("cucumber" = 1)
+
+/obj/item/food/grown/cucumber/juice_typepath()
+	return /datum/reagent/consumable/cucumberjuice

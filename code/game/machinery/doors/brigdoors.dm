@@ -31,14 +31,11 @@
 	var/list/flashers = list()
 	///List of weakrefs to nearby closets
 	var/list/closets = list()
-	///needed to send messages to sec radio
-	var/obj/item/radio/sec_radio
+	///Channel to report prisoneer's release
+	var/broadcast_channel = RADIO_CHANNEL_SECURITY
 
 /obj/machinery/status_display/door_timer/Initialize(mapload)
 	. = ..()
-
-	sec_radio = new/obj/item/radio(src)
-	sec_radio.set_listening(FALSE)
 
 	if(id != null)
 		for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
@@ -136,8 +133,7 @@
 		return 0
 
 	if(!forced)
-		sec_radio.set_frequency(FREQ_SECURITY)
-		sec_radio.talk_into(src, "Timer has expired. Releasing prisoner.", FREQ_SECURITY)
+		aas_config_announce(/datum/aas_config_entry/brig_cell_release_announcement, list("CELL" = name), src, list(broadcast_channel))
 
 	timing = FALSE
 	activation_time = 0
@@ -173,21 +169,21 @@
  * * seconds - Return the time in seconds if TRUE, else deciseconds.
  */
 /obj/machinery/status_display/door_timer/proc/time_left(seconds = FALSE)
-	. = max(0, timer_duration + activation_time - world.time)
+	. = max(0, timer_duration + (activation_time ? activation_time - world.time : 0))
 	if(seconds)
 		. /= (1 SECONDS)
 
 /**
  * Set the timer. Does NOT automatically start counting down, but does update the display.
  *
- * returns TRUE if no change occurred
+ * returns FALSE if no change occurred
  *
  * Arguments:
  * value - time in deciseconds to set the timer for.
  */
 /obj/machinery/status_display/door_timer/proc/set_timer(value)
-	var/new_time = clamp(value, 0, MAX_TIMER + world.time - activation_time)
-	. = new_time == timer_duration //return 1 on no change
+	var/new_time = clamp(value, 0, MAX_TIMER)
+	. = new_time != timer_duration //return 1 on change
 	timer_duration = new_time
 	update_content()
 
@@ -214,7 +210,7 @@
 			break
 	return data
 
-/obj/machinery/status_display/door_timer/ui_act(action, params)
+/obj/machinery/status_display/door_timer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -279,6 +275,15 @@
 		if(!istype(get_area(src), area_type))
 			continue
 		timer_end(forced = TRUE)
+
+/datum/aas_config_entry/brig_cell_release_announcement
+	name = "Security Alert: Cell Timer Expired"
+	announcement_lines_map = list(
+		"Message" = "Timer for %CELL has expired. Releasing prisoner.",
+	)
+	vars_and_tooltips_map = list(
+		"CELL" = "will be replaced with the cell name.",
+	)
 
 #undef PRESET_SHORT
 #undef PRESET_MEDIUM

@@ -61,7 +61,7 @@
 	shot.firer = wearer // don't hit ourself that would be really annoying
 	shot.impacted = list(WEAKREF(wearer) = TRUE)
 	shot.def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) // they're fired from boots after all
-	shot.preparePixelProjectile(target, wearer)
+	shot.aim_projectile(target, wearer)
 	if(!shot.suppressed)
 		wearer.visible_message(span_danger("[wearer]'s [name] fires \a [shot]!"), "", blind_message = span_hear("You hear a gunshot!"), vision_distance=COMBAT_MESSAGE_RANGE)
 	shot.fire()

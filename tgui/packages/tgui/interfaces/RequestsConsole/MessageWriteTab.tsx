@@ -1,7 +1,4 @@
-import { sort } from 'common/collections';
 import { useState } from 'react';
-
-import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
@@ -9,8 +6,10 @@ import {
   Section,
   Stack,
   TextArea,
-} from '../../components';
-import { RequestPriority, RequestsData, RequestType } from './types';
+} from 'tgui-core/components';
+
+import { useBackend, useLocalState } from '../../backend';
+import { RequestPriority, type RequestsData, RequestType } from './types';
 
 export const MessageWriteTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
@@ -22,9 +21,9 @@ export const MessageWriteTab = (props) => {
     information_consoles = [],
   } = data;
 
-  const sorted_assistance = sort(assistance_consoles);
-  const sorted_supply = sort(supply_consoles);
-  const sorted_information = sort(information_consoles);
+  const sorted_assistance = assistance_consoles.sort();
+  const sorted_supply = supply_consoles.sort();
+  const sorted_information = information_consoles.sort();
 
   const resetMessage = () => {
     setMessageText('');
@@ -147,7 +146,7 @@ export const MessageWriteTab = (props) => {
         height={20}
         maxLength={1025}
         value={messageText}
-        onChange={(_, value) => setMessageText(value)}
+        onChange={setMessageText}
         placeholder="Type your message..."
       />
       <Section>

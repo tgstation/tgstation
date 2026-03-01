@@ -1,7 +1,8 @@
+import { Button, Section } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, Section } from '../../components';
 import { SOUNDS } from './constants';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function PodSounds(props) {
   const { act, data } = useBackend<PodLauncherData>();
@@ -15,10 +16,8 @@ export function PodSounds(props) {
           icon="volume-up"
           onClick={() => act('soundVolume')}
           selected={soundVolume !== defaultSoundVolume}
-          tooltip={
-            `
-            Sound Volume:` + soundVolume
-          }
+          tooltip={`Sound Volume:${soundVolume}`}
+          tooltipPosition="top-start"
         />
       }
       fill
@@ -30,7 +29,7 @@ export function PodSounds(props) {
           onClick={() => act(sound.act)}
           selected={data[sound.act]}
           tooltip={sound.tooltip}
-          tooltipPosition="top-end"
+          tooltipPosition="top-start"
         >
           {sound.title}
         </Button>

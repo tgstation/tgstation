@@ -42,7 +42,7 @@
  *
  * required user mob The mob interacting with the UI.
  *
- * return list Statuic Data to be sent to the UI.
+ * return list Static Data to be sent to the UI.
  */
 /datum/proc/ui_static_data(mob/user)
 	return list()
@@ -55,12 +55,13 @@
  *
  * required user the mob currently interacting with the ui
  * optional ui ui to be updated
+ * always_instant when set to true stops the ui update cooldown from happening
  */
-/datum/proc/update_static_data(mob/user, datum/tgui/ui)
+/datum/proc/update_static_data(mob/user, datum/tgui/ui, always_instant)
 	if(!ui)
 		ui = SStgui.get_open_ui(user, src)
 	if(ui)
-		ui.send_full_update()
+		ui.send_full_update(always_instant = always_instant)
 
 /**
  * public
@@ -72,6 +73,17 @@
 /datum/proc/update_static_data_for_all_viewers()
 	for (var/datum/tgui/window as anything in open_uis)
 		window.send_full_update()
+
+/**
+ * public
+ *
+ * Will force an update on non-static data for all viewers.
+ * Use when you are manually controlling UI data updates,
+ * such as when you are not using the auto-update system.
+ */
+/datum/proc/update_data_for_all_viewers()
+	for(var/datum/tgui/ui as anything in open_uis)
+		ui.send_update()
 
 /**
  * public
@@ -90,6 +102,10 @@
 	// If UI is not interactive or usr calling Topic is not the UI user, bail.
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return TRUE
+	if(action == "change_ui_state")
+		var/mob/living/user = ui.user
+		//write_preferences will make sure it's valid for href exploits.
+		user.client.prefs.write_preference(GLOB.preference_entries[layout_prefs_used], params["new_state"])
 
 /**
  * public

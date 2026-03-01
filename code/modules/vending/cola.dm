@@ -1,7 +1,7 @@
 
 /obj/machinery/vending/cola
 	name = "\improper Robust Softdrinks"
-	desc = "A softdrink vendor provided by Robust Industries, LLC."
+	desc = "A soft drinks vendor provided by Robust Industries, LLC."
 	icon_state = "Cola_Machine"
 	panel_type = "panel2"
 	product_slogans = "Robust Softdrinks: More robust than a toolbox to the head!"
@@ -36,6 +36,42 @@
 	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
 
+	var/static/list/spiking_booze = list(
+		// Your "common" spiking booze
+		/datum/reagent/consumable/ethanol/vodka = 5,
+		/datum/reagent/consumable/ethanol/beer = 5,
+		/datum/reagent/consumable/ethanol/whiskey = 5,
+		/datum/reagent/consumable/ethanol/gin = 5,
+		/datum/reagent/consumable/ethanol/rum = 5,
+		// A bit rarer, can be dangerous if you take too much
+		/datum/reagent/consumable/ethanol/thirteenloko = 3,
+		/datum/reagent/consumable/ethanol/absinthe = 3,
+		/datum/reagent/consumable/ethanol/hooch = 3,
+		/datum/reagent/consumable/ethanol/moonshine = 3,
+		// Gets funky here
+		/datum/reagent/consumable/ethanol/beepsky_smash = 1,
+		/datum/reagent/consumable/ethanol/gargle_blaster = 1,
+		/datum/reagent/consumable/ethanol/neurotoxin = 1,
+		)
+
+/obj/machinery/vending/cola/on_dispense(obj/item/vended_item, dispense_returned = FALSE)
+	// Only apply to newly dispensed items
+	if(dispense_returned)
+		return
+	// 35% chance that your drink will be safe, as safe pure acid and sugar that these drinks probably are can be
+	if(!onstation || !HAS_TRAIT(SSstation, STATION_TRAIT_SPIKED_DRINKS) || !prob(65))
+		return
+	// Don't fill booze with more booze
+	if (isnull(vended_item.reagents) || vended_item.reagents.has_reagent(/datum/reagent/consumable/ethanol, check_subtypes = TRUE))
+		return
+	var/removed_volume = vended_item.reagents.remove_all(rand(5, vended_item.reagents.maximum_volume * 0.5))
+	if (!removed_volume)
+		return
+	// Don't want bubbling sodas when we add some rum to cola
+	ADD_TRAIT(vended_item, TRAIT_SILENT_REACTIONS, VENDING_MACHINE_TRAIT)
+	vended_item.reagents.add_reagent(pick_weight(spiking_booze), removed_volume)
+	vended_item.reagents.handle_reactions()
+	REMOVE_TRAIT(vended_item, TRAIT_SILENT_REACTIONS, VENDING_MACHINE_TRAIT)
 
 /obj/item/vending_refill/cola
 	machine_name = "Robust Softdrinks"
@@ -45,10 +81,12 @@
 	icon_state = "Cola_Machine"
 	light_mask = "cola-light-mask"
 	light_color = COLOR_MODERATE_BLUE
+	allow_custom = FALSE
 
 /obj/machinery/vending/cola/black
 	icon_state = "cola_black"
 	light_mask = "cola-light-mask"
+	allow_custom = FALSE
 
 /obj/machinery/vending/cola/red
 	icon_state = "red_cola"
@@ -57,6 +95,7 @@
 	product_slogans = "Cola in space!"
 	light_mask = "red_cola-light-mask"
 	light_color = COLOR_DARK_RED
+	allow_custom = FALSE
 
 /obj/machinery/vending/cola/space_up
 	icon_state = "space_up"
@@ -65,6 +104,7 @@
 	product_slogans = "Space-up! Like a hull breach in your mouth."
 	light_mask = "space_up-light-mask"
 	light_color = COLOR_DARK_MODERATE_LIME_GREEN
+	allow_custom = FALSE
 
 /obj/machinery/vending/cola/starkist
 	icon_state = "starkist"
@@ -74,12 +114,14 @@
 	panel_type = "panel7"
 	light_mask = "starkist-light-mask"
 	light_color = COLOR_LIGHT_ORANGE
+	allow_custom = FALSE
 
 /obj/machinery/vending/cola/sodie
 	icon_state = "soda"
 	panel_type = "panel7"
 	light_mask = "soda-light-mask"
 	light_color = COLOR_WHITE
+	allow_custom = FALSE
 
 /obj/machinery/vending/cola/pwr_game
 	icon_state = "pwr_game"
@@ -88,6 +130,7 @@
 	product_slogans = "The POWER that gamers crave! PWR GAME!"
 	light_mask = "pwr_game-light-mask"
 	light_color = COLOR_STRONG_VIOLET
+	allow_custom = FALSE
 
 /obj/machinery/vending/cola/shamblers
 	name = "\improper Shambler's Vendor"
@@ -108,7 +151,13 @@
 	product_slogans = "~Shake me up some of that Shambler's Juice!~"
 	product_ads = "Refreshing!;Thirsty for DNA? Satiate your craving!;Over 1 trillion souls drank!;Made with real DNA!;The hivemind demands your thirst!;Drink up!;Absorb your thirst."
 	light_mask = "shamblers-light-mask"
+	refill_canister = /obj/item/vending_refill/cola/shamblers
 	light_color = COLOR_MOSTLY_PURE_PINK
+
+
+/obj/item/vending_refill/cola/shamblers
+	machine_name = "Shambler's Vendor"
+	icon_state = "refill_shamblers"
 
 /obj/machinery/vending/cola/shamblers/Initialize(mapload)
 	. = ..()

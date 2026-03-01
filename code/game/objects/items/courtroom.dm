@@ -7,12 +7,14 @@
 	desc = "Order, order! No bombs in my courthouse."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "gavelhammer"
+	icon_angle = -135
 	force = 5
 	throwforce = 6
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("bashes", "batters", "judges", "whacks")
 	attack_verb_simple = list("bash", "batter", "judge", "whack")
 	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/gavelhammer/Initialize(mapload)
 	. = ..()
@@ -32,8 +34,9 @@
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
-/obj/item/gavelblock/attackby(obj/item/I, mob/user, params)
+/obj/item/gavelblock/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/gavelhammer))
 		playsound(loc, 'sound/items/gavel.ogg', 100, TRUE)
 		user.visible_message(span_warning("[user] strikes [src] with [I]."))

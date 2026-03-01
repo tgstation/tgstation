@@ -6,9 +6,10 @@
 	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	icon_state = "shade_cult"
 	icon_living = "shade_cult"
-	mob_biotypes = MOB_SPIRIT
+	mob_biotypes = MOB_SPIRIT | MOB_UNDEAD
 	maxHealth = 40
 	health = 40
+	status_flags = CANPUSH
 	speak_emote = list("hisses")
 	response_help_continuous = "puts their hand through"
 	response_help_simple = "put your hand through"
@@ -27,13 +28,15 @@
 	faction = list(FACTION_CULT)
 	basic_mob_flags = DEL_ON_DEATH
 	initial_language_holder = /datum/language_holder/construct
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
 	/// The different flavors of goop shades can drop, depending on theme.
 	var/static/list/remains_by_theme = list(
-		THEME_CULT = list(/obj/item/ectoplasm/construct),
-		THEME_HOLY = list(/obj/item/ectoplasm/angelic),
-		THEME_WIZARD = list(/obj/item/ectoplasm/mystic),
+		THEME_CULT = /obj/item/ectoplasm/construct,
+		THEME_HOLY = /obj/item/ectoplasm/angelic,
+		THEME_WIZARD = /obj/item/ectoplasm/mystic,
+		THEME_HERETIC = /obj/item/ectoplasm/construct,
 	)
 
 /mob/living/basic/shade/Initialize(mapload)
@@ -43,8 +46,8 @@
 	if(isnull(theme))
 		return
 	icon_state = "shade_[theme]"
-	var/list/remains = string_list(remains_by_theme[theme])
-	if(length(remains))
+	var/remains = remains_by_theme[theme]
+	if(remains)
 		AddElement(/datum/element/death_drops, remains)
 
 /mob/living/basic/shade/update_icon_state()
@@ -70,7 +73,7 @@
 		SSblackbox.record_feedback("tally", "cult_shade_suicided", 1)
 	..()
 
-/mob/living/basic/shade/attackby(obj/item/item, mob/user, params)
+/mob/living/basic/shade/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/soulstone))
 		var/obj/item/soulstone/stone = item
 		stone.capture_shade(src, user)

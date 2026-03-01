@@ -42,8 +42,14 @@
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 20,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT,
+	)
 	/// The sound the guillotine makes when it successfully cuts off a head
-	var/drop_sound = 'sound/weapons/guillotine.ogg'
+	var/drop_sound = 'sound/items/weapons/guillotine.ogg'
 	/// The current state of the blade
 	var/blade_status = GUILLOTINE_BLADE_RAISED
 	/// How sharp the blade is
@@ -76,7 +82,7 @@
 	var/msg = "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]"
 
 	if (blade_status == GUILLOTINE_BLADE_RAISED)
-		msg += "The blade is raised, ready to fall, and"
+		msg += " The blade is raised, ready to fall, and"
 
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP)
 			msg += " looks sharp enough to decapitate without any resistance."
@@ -183,7 +189,7 @@
 	blade_status = GUILLOTINE_BLADE_DROPPED
 	icon_state = "guillotine"
 
-/obj/structure/guillotine/attackby(obj/item/W, mob/user, params)
+/obj/structure/guillotine/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if (istype(W, /obj/item/sharpener))
 		add_fingerprint(user)
 		if (blade_status == GUILLOTINE_BLADE_SHARPENING)

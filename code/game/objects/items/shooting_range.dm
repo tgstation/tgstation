@@ -5,7 +5,7 @@
 	icon_state = "target_h"
 	density = FALSE
 	max_integrity = 1800
-	item_flags = CAN_BE_HIT
+	obj_flags = CAN_BE_HIT
 	/// Lazylist to keep track of bullet-hole overlays.
 	var/list/bullethole_overlays
 
@@ -32,7 +32,7 @@
 	if(isnull(always_leave_marks))
 		always_leave_marks = typecacheof(list(
 			/obj/projectile/beam/practice,
-			/obj/projectile/beam/laser/carbine/practice,
+			/obj/projectile/beam/laser/rapid/practice,
 		))
 
 	var/is_invalid_damage = hitting_projectile.damage_type != BRUTE && hitting_projectile.damage_type != BURN
@@ -52,8 +52,8 @@
 		return
 
 	var/image/bullet_hole = image('icons/effects/effects.dmi', "dent", OBJ_LAYER + 0.5)
-	bullet_hole.pixel_x = p_x - 1 //offset correction
-	bullet_hole.pixel_y = p_y - 1
+	bullet_hole.pixel_w = p_x - 1 //offset correction
+	bullet_hole.pixel_z = p_y - 1
 	if(hitting_projectile.damage_type != BRUTE)
 		bullet_hole.setDir(pick(GLOB.cardinals))// random scorch design
 		if(hitting_projectile.damage < 20 && is_generic_projectile)
@@ -82,6 +82,6 @@
 	desc = "A shooting target that looks like a useless clown."
 	max_integrity = 2000
 
-/obj/item/target/clown/bullet_act(obj/projectile/P)
+/obj/item/target/clown/bullet_act(obj/projectile/proj)
 	. = ..()
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)

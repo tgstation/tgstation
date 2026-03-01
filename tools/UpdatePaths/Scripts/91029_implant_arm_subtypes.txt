@@ -1,0 +1,12 @@
+/obj/item/organ/cyberimp/arm/gun/laser : /obj/item/organ/cyberimp/arm/toolkit/gun/laser{@OLD}
+/obj/item/organ/cyberimp/arm/gun/taser : /obj/item/organ/cyberimp/arm/toolkit/gun/taser{@OLD}
+/obj/item/organ/cyberimp/arm/toolset : /obj/item/organ/cyberimp/arm/toolkit/toolset{@OLD}
+/obj/item/organ/cyberimp/arm/paperwork : /obj/item/organ/cyberimp/arm/toolkit/paperwork{@OLD}
+/obj/item/organ/cyberimp/arm/esword : /obj/item/organ/cyberimp/arm/toolkit/esword{@OLD}
+/obj/item/organ/cyberimp/arm/medibeam : /obj/item/organ/cyberimp/arm/toolkit/medibeam{@OLD}
+/obj/item/organ/cyberimp/arm/flash : /obj/item/organ/cyberimp/arm/toolkit/flash{@OLD}
+/obj/item/organ/cyberimp/arm/baton : /obj/item/organ/cyberimp/arm/toolkit/baton{@OLD}
+/obj/item/organ/cyberimp/arm/combat : /obj/item/organ/cyberimp/arm/toolkit/combat{@OLD}
+/obj/item/organ/cyberimp/arm/surgery : /obj/item/organ/cyberimp/arm/toolkit/surgery{@OLD}
+/obj/item/organ/cyberimp/arm/surgery/emagged : /obj/item/organ/cyberimp/arm/toolkit/surgery/emagged {@OLD}
+/obj/item/organ/cyberimp/arm/shard/scythe : /obj/item/organ/cyberimp/arm/toolkit/shard/scythe{@OLD}

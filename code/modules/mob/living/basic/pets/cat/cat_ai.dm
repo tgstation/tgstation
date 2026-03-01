@@ -1,6 +1,7 @@
 /datum/ai_controller/basic_controller/cat
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_HOSTILE_MEOWS = list("Mawwww", "Mrewwww", "mhhhhng..."),
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/pet/cat),
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/pet/cat/kitten),
@@ -9,6 +10,8 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/reside_in_home,
 		/datum/ai_planning_subtree/flee_target/from_flee_key/cat_struggle,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,
@@ -41,7 +44,7 @@
 	if(SPT_PROB(reside_chance, seconds_per_tick))
 		controller.queue_behavior(/datum/ai_behavior/find_and_set/valid_home, BB_CAT_HOME, /obj/structure/cat_house)
 
-/datum/ai_behavior/find_and_set/valid_home/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/valid_home/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/obj/structure/cat_house/home in oview(search_range, controller.pawn))
 		if(home.resident_cat)
 			continue
@@ -63,7 +66,7 @@
 	var/obj/structure/cat_house/home = controller.blackboard[target_key]
 	var/mob/living/basic/living_pawn = controller.pawn
 	if(living_pawn == home.resident_cat || isnull(home.resident_cat))
-		living_pawn.melee_attack(home)
+		controller.ai_interact(target = home)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -92,7 +95,7 @@
 
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/cat_tresspasser, BB_TRESSPASSER_TARGET, /mob/living/basic/pet/cat)
 
-/datum/ai_behavior/find_and_set/cat_tresspasser/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/cat_tresspasser/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/ignore_types = controller.blackboard[BB_BABIES_CHILD_TYPES]
 	for(var/mob/living/basic/pet/cat/potential_enemy in oview(search_range, controller.pawn))
 		if(potential_enemy.gender != MALE)
@@ -213,13 +216,13 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/find_cat_food
 	target_key = BB_CAT_FOOD_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/find_cat_food
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/find_cat_food
 	finding_behavior = /datum/ai_behavior/find_hunt_target/find_cat_food
 	hunt_targets = list(/obj/item/fish, /obj/item/food/deadmouse, /obj/item/food/fishmeat)
 	hunt_chance = 75
 	hunt_range = 9
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/find_cat_food
+/datum/ai_behavior/hunt_target/interact_with_target/find_cat_food
 	always_reset_target = TRUE
 
 /datum/ai_behavior/find_hunt_target/find_cat_food/valid_dinner(mob/living/source, atom/dinner, radius)
@@ -241,7 +244,7 @@
 
 /datum/ai_behavior/find_and_set/valid_kitten
 
-/datum/ai_behavior/find_and_set/valid_kitten/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/valid_kitten/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/kitten = locate(locate_path) in oview(search_range, controller.pawn)
 	//kitten already has food near it, go feed another hungry kitten
 
@@ -253,7 +256,6 @@
 		return kitten
 	return null
 
-/datum/ai_behavior/deliver_food_to_kitten
 /datum/ai_behavior/deliver_food_to_kitten
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
 	action_cooldown = 5 SECONDS

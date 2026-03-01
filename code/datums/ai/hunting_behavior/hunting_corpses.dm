@@ -1,7 +1,7 @@
 /// Find and attack corpses
 /datum/ai_planning_subtree/find_and_hunt_target/corpses
 	finding_behavior = /datum/ai_behavior/find_hunt_target/corpses
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target
 	hunt_targets = list(/mob/living)
 
 /// Find nearby dead mobs

@@ -6,71 +6,82 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 
 /datum/material
+	abstract_type = /datum/material
 	/// What the material is referred to as IC.
 	var/name = "material"
 	/// A short description of the material. Not used anywhere, yet...
 	var/desc = "its..stuff."
 	/// What the material is indexed by in the SSmaterials.materials list. Defaults to the type of the material.
-	var/id
+	var/id = null
 
-	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
-	///Deprecated, use greyscale_color instead.
-	var/color
-	///Determines the color palette of the material. Formatted the same as atom/var/greyscale_colors
-	var/greyscale_colors
-	///Base alpha of the material, is used for greyscale icons.
-	var/alpha = 255
-	///Starlight color of the material
-	///This is the color of light it'll emit if its turf is transparent and over space. Defaults to COLOR_STARLIGHT if not set
-	var/starlight_color
-	///Bitflags that influence how SSmaterials handles this material.
+	/// Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
-	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
-	var/list/categories = list()
-	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets
-	var/sheet_type
-	/// What type of ore is this material associated with? Used for mining, and not every material has one.
-	var/obj/item/ore_type
-	///This is a modifier for force, and resembles the strength of the material
-	var/strength_modifier = 1
-	///This is a modifier for integrity, and resembles the strength of the material
-	var/integrity_modifier = 1
+	/// Material behaviors, controls how the material is categorized and in what recipes it can be used
+	var/mat_flags = NONE
+	/// List of material property IDs to their values, 0 - 10
+	var/mat_properties = null
 
-	///This is the amount of value per 1 unit of the material
+	// Color values
+	/// Base color of the material, for items that don't have greyscale configs nor are made of multiple materials. Item isn't changed in color if this is null.
+	/// This can be a RGB or color matrix, but it cannot be RGBA as alpha is automatically filled in.
+	var/color = null
+	/**
+	 * If the color is a color matrix and either the item uses greyscale configs or is made of multiple colored materials. This will be used instead because
+	 * neither greyscale configs nor BlendRGB() support color matrices.
+	 * Also this has to be RRGGBB, six characters, no alpha channel as it's automatically filled in.
+	 *
+	 * Basically, set this if the color is a color matrix (list)
+	 */
+	var/greyscale_color = null
+	/// Base alpha of the material
+	var/alpha = 255
+	/// Starlight color of the material
+	/// This is the color of light it'll emit if its turf is transparent and over space. Defaults to GLOB.starlight_color if not set
+	var/starlight_color = null
+
+	// Trading values
+	/// This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
-	///This is the minimum value of the material, used in the stock market for any mat that isn't set to null
+	/// This is the minimum value of the material, used in the stock market for any mat that isn't set to null
 	var/minimum_value_override = null
-	///Is this material traded on the stock market?
+	/// Is this material traded on the stock market?
 	var/tradable = FALSE
-	///If this material is tradable, what is the base quantity of the material on the stock market?
+	/// If this material is tradable, what is the base quantity of the material on the stock market?
 	var/tradable_base_quantity = 0
 
-	///Armor modifiers, multiplies an items normal armor vars by these amounts.
-	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1, ACID = 1)
-	///How beautiful is this material per unit.
-	var/beauty_modifier = 0
-	///Can be used to override the sound items make, lets add some SLOSHing.
-	var/item_sound_override
-	///Can be used to override the stepsound a turf makes. MORE SLOOOSH
-	var/turf_sound_override
-	///what texture icon state to overlay
-	var/texture_layer_icon_state
-	///a cached icon for the texture filter
-	var/cached_texture_filter_icon
-	///What type of shard the material will shatter to
-	var/obj/item/shard_type
-	///How resistant the material is to rusting when applied to a turf
+	// Associated item types
+	/// The type of sheet this material creates.
+	var/sheet_type = null
+	/// What type of ore is this material associated with? Used for mining, and not every material has one.
+	var/obj/item/ore_type = null
+	/// What type of shard the material will shatter to
+	var/obj/item/shard_type = null
+	/// What type of debris the tile will leave behind when shattered.
+	var/obj/effect/decal/debris_type = null
+	/// Reagent type(s) of this material. Can be a reagent typepath or a list.
+	var/list/material_reagent = null
+
+	// Misc stats
+	/// How resistant the material is to rusting when applied to a turf
 	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
-	///What type of debris the tile will leave behind when shattered.
-	var/obj/effect/decal/debris_type
 	/// How likely this mineral is to be found in a boulder during mining.
 	var/mineral_rarity = MATERIAL_RARITY_COMMON
 	/// How many points per units of ore does this grant?
 	var/points_per_unit = 1
 
+	// Sound/icon stats, not inherited
+	/// Can be used to override the sound items make, lets add some SLOSHing.
+	var/item_sound_override = null
+	/// Can be used to override the stepsound a turf makes. MORE SLOOOSH
+	var/turf_sound_override = null
+	/// What texture icon state to overlay
+	var/texture_layer_icon_state = null
+	/// A cached icon for the texture filter
+	var/icon/cached_texture_filter_icon = null
+
 /** Handles initializing the material.
  *
- * Arugments:
+ * Arguments:
  * - _id: The ID the material should use. Overrides the existing ID.
  */
 /datum/material/proc/Initialize(_id, ...)
@@ -82,88 +93,21 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(texture_layer_icon_state)
 		cached_texture_filter_icon = icon('icons/turf/composite.dmi', texture_layer_icon_state)
 
+	for (var/prop_id in mat_properties)
+		var/datum/material_property/property = SSmaterials.properties[prop_id]
+		property.attach_to(src)
+
 	return TRUE
 
 ///This proc is called when the material is added to an object.
-/datum/material/proc/on_applied(atom/source, amount, material_flags)
-	if(material_flags & MATERIAL_COLOR) //Prevent changing things with pre-set colors, to keep colored toolboxes their looks for example
-		if(color) //Do we have a custom color?
-			source.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-		if(alpha)
-			source.alpha = alpha
-		if(texture_layer_icon_state)
-			ADD_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
-			source.add_filter("material_texture_[name]",1,layering_filter(icon=cached_texture_filter_icon,blend_mode=BLEND_INSET_OVERLAY))
+/datum/material/proc/on_applied(atom/source, mat_amount, multiplier)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_APPLIED, source, mat_amount, multiplier)
 
-	if(material_flags & MATERIAL_GREYSCALE)
-		var/config_path = get_greyscale_config_for(source.greyscale_config)
-		source.set_greyscale(greyscale_colors, config_path)
-
-	if(alpha < 255)
-		source.opacity = FALSE
-	if(material_flags & MATERIAL_ADD_PREFIX)
-		source.name = "[name] [source.name]"
-
-	if(beauty_modifier)
-		source.AddElement(/datum/element/beauty, beauty_modifier * amount)
-
-	if(isobj(source)) //objs
-		on_applied_obj(source, amount, material_flags)
-
-	else if(istype(source, /turf)) //turfs
-		on_applied_turf(source, amount, material_flags)
-
-	source.mat_update_desc(src)
-
-///This proc is called when a material updates an object's description
-/atom/proc/mat_update_desc(datum/material/mat)
-	return
-
-///This proc is called when the material is added to an object specifically.
-/datum/material/proc/on_applied_obj(obj/o, amount, material_flags)
-	if(material_flags & MATERIAL_AFFECT_STATISTICS)
-		var/new_max_integrity = CEILING(o.max_integrity * integrity_modifier, 1)
-		o.modify_max_integrity(new_max_integrity)
-		o.force *= strength_modifier
-		o.throwforce *= strength_modifier
-		o.set_armor(o.get_armor().generate_new_with_multipliers(armor_modifiers))
-
-	if(!isitem(o))
-		return
-	var/obj/item/item = o
-
-	if(material_flags & MATERIAL_GREYSCALE)
-		var/worn_path = get_greyscale_config_for(item.greyscale_config_worn)
-		var/lefthand_path = get_greyscale_config_for(item.greyscale_config_inhand_left)
-		var/righthand_path = get_greyscale_config_for(item.greyscale_config_inhand_right)
-		item.set_greyscale(
-			new_worn_config = worn_path,
-			new_inhand_left = lefthand_path,
-			new_inhand_right = righthand_path
-		)
-
-	if(!item_sound_override)
-		return
-	item.hitsound = item_sound_override
-	item.usesound = item_sound_override
-	item.mob_throw_hit_sound = item_sound_override
-	item.equip_sound = item_sound_override
-	item.pickup_sound = item_sound_override
-	item.drop_sound = item_sound_override
-
-/datum/material/proc/on_applied_turf(turf/T, amount, material_flags)
-	if(isopenturf(T))
-		if(turf_sound_override)
-			var/turf/open/O = T
-			O.footstep = turf_sound_override
-			O.barefootstep = turf_sound_override + "barefoot"
-			O.clawfootstep = turf_sound_override + "claw"
-			O.heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	if(alpha < 255)
-		T.AddElement(/datum/element/turf_z_transparency)
-		setup_glow(T)
-	T.rust_resistance = mat_rust_resistance
-	return
+///This proc is called when the material becomes the one the object is composed of the most
+/datum/material/proc/on_main_applied(atom/source, mat_amount, multiplier)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_MAIN_APPLIED, source, mat_amount, multiplier)
 
 /datum/material/proc/setup_glow(turf/on)
 	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother
@@ -183,61 +127,23 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material/proc/lit_turf_deleted(turf/source)
 	source.set_light(0, 0, null)
 
-/datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
-	if(!config_path)
-		return
-	for(var/datum/greyscale_config/path as anything in subtypesof(config_path))
-		if(type != initial(path.material_skin))
-			continue
-		return path
-
-///This proc is called when the material is removed from an object.
+/// This proc is called when the material is removed from an object.
 /datum/material/proc/on_removed(atom/source, amount, material_flags)
-	if(material_flags & MATERIAL_COLOR) //Prevent changing things with pre-set colors, to keep colored toolboxes their looks for example
-		if(color)
-			source.remove_atom_colour(FIXED_COLOUR_PRIORITY, color)
-		if(texture_layer_icon_state)
-			source.remove_filter("material_texture_[name]")
-			REMOVE_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
-		source.alpha = initial(source.alpha)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_REMOVED, source, amount, material_flags)
 
-	if(material_flags & MATERIAL_GREYSCALE)
-		source.set_greyscale(initial(source.greyscale_colors), initial(source.greyscale_config))
+/// This proc is called when the material is no longer the one the object is composed by the most
+/datum/material/proc/on_main_removed(atom/source, mat_amount, multiplier)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_MAIN_REMOVED, source, mat_amount, multiplier)
 
-	if(material_flags & MATERIAL_ADD_PREFIX)
-		source.name = initial(source.name)
+////Called in `/datum/component/edible/proc/on_material_effects`
+/datum/material/proc/on_edible_applied(atom/source, datum/component/edible/edible)
+	return
 
-	if(beauty_modifier)
-		source.RemoveElement(/datum/element/beauty, beauty_modifier * amount)
-
-	if(isobj(source)) //objs
-		on_removed_obj(source, amount, material_flags)
-
-	if(istype(source, /turf)) //turfs
-		on_removed_turf(source, amount, material_flags)
-
-///This proc is called when the material is removed from an object specifically.
-/datum/material/proc/on_removed_obj(obj/o, amount, material_flags)
-	if(material_flags & MATERIAL_AFFECT_STATISTICS)
-		var/new_max_integrity = initial(o.max_integrity)
-		o.modify_max_integrity(new_max_integrity)
-		o.force = initial(o.force)
-		o.throwforce = initial(o.throwforce)
-
-	if(isitem(o) && (material_flags & MATERIAL_GREYSCALE))
-		var/obj/item/item = o
-		item.set_greyscale(
-			new_worn_config = initial(item.greyscale_config_worn),
-			new_inhand_left = initial(item.greyscale_config_inhand_left),
-			new_inhand_right = initial(item.greyscale_config_inhand_right)
-		)
-
-/datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
-	if(alpha < 255)
-		T.RemoveElement(/datum/element/turf_z_transparency)
-		// yeets glow
-		T.UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
-		T.set_light(0, 0, null)
+////Called in `/datum/component/edible/proc/on_remove_material_effects`
+/datum/material/proc/on_edible_removed(atom/source, datum/component/edible/edible)
+	return
 
 /**
  * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
@@ -245,8 +151,23 @@ Simple datum which is instanced once per type and is used for every object of sa
  * * M - person consuming the mat
  * * S - (optional) item the mat is contained in (NOT the item with the mat itself)
  */
-/datum/material/proc/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	return FALSE
+/datum/material/proc/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if (!material_reagent)
+		return FALSE
+
+	var/effect_multiplier = source_item.custom_materials[type] / SHEET_MATERIAL_AMOUNT
+	if (!islist(material_reagent))
+		victim.reagents?.add_reagent(material_reagent, rand(6, 8) * effect_multiplier)
+		source_item?.reagents?.add_reagent(material_reagent, source_item.reagents.total_volume * MATERIAL_REAGENT_CONSUMPTION_MULT * effect_multiplier)
+		return TRUE
+
+	for (var/datum/reagent/reagent_type as anything in material_reagent)
+		var/amount_mult = material_reagent[reagent_type] / length(material_reagent)
+		victim.reagents?.add_reagent(material_reagent, rand(6, 8) * effect_multiplier * amount_mult)
+		source_item?.reagents?.add_reagent(material_reagent, source_item.reagents.total_volume * MATERIAL_REAGENT_CONSUMPTION_MULT * effect_multiplier * amount_mult)
+	return TRUE
 
 /** Returns the composition of this material.
  *
@@ -255,6 +176,55 @@ Simple datum which is instanced once per type and is used for every object of sa
  * Arguments:
  * - amount: The amount of the material to break down.
  */
-/datum/material/proc/return_composition(amount = 1)
+/datum/material/proc/return_composition(amount = 1, flags)
 	// Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.
 	return list((src) = amount)
+
+///Returns the list of armor modifiers, with each element having its assoc value multiplied by the multiplier arg
+/datum/material/proc/get_armor_modifiers(multiplier)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/density = get_property(MATERIAL_DENSITY)
+	var/hardness = get_property(MATERIAL_HARDNESS)
+	var/flexibility = get_property(MATERIAL_FLEXIBILITY)
+	var/reflectivity = get_property(MATERIAL_REFLECTIVITY)
+	var/electric = get_property(MATERIAL_ELECTRICAL)
+	var/thermal = get_property(MATERIAL_THERMAL)
+	var/chemical = get_property(MATERIAL_CHEMICAL)
+	var/flammability = get_property(MATERIAL_FLAMMABILITY) // Optional, might be not present
+	// Welcome to hell
+	var/list/armor_modifiers = list(
+		// Based on density, with a bonus/malus for matching flexibility
+		// We cap divergence at 4 (reduced by hardness above 6 for REALLY dense stuff) to make it not extremely punishing on light fabrics or heavy materials
+		// Iron at a baseline of density of 6 and flexibility of 4 has divergence of 4, so (1 + 0.2) / (0.8 + 0.4) = 1
+		MELEE = (1 + (density - 4) * 0.1) / (0.8 + min(4 - max(0, hardness - 6), abs(flexibility - density)) * 0.1),
+		// Hardness and density, with flexibility actually being detrimental
+		BULLET = (1 + (density - 4) * 0.025 + (hardness - 4) * 0.075) / (1 - max(0, flexibility - 2) * 0.1),
+		// 0.6 ~ 1 for reflectivity below 4, 1 ~ 1.4 for reflectivity above 6, reduced for transparent materials
+		LASER = 1 + MATERIAL_PROPERTY_DIVERGENCE(reflectivity, 4, 6) * 0.1 - (255 - alpha) / 50 * 0.2,
+		// Essentially laser but with contribution split between reflectivity and inverse electric conductivity
+		// Here reflectivity applies if its below 4 or above 8, and conductivity if its below 4 or above 6
+		ENERGY = 1 + MATERIAL_PROPERTY_DIVERGENCE(reflectivity, 4, 8) * 0.05 - MATERIAL_PROPERTY_DIVERGENCE(electric, 4, 6) * 0.1,
+		// Linearly scales from 0.2 to 1.8 with density
+		BOMB = 1 + (density - 4) * 0.2,
+		// Each level of flammability reduces FIRE armor by 20%, with thermal conductivity reducing it by further 20% for each level above 6 and increasing for each level below 2
+		FIRE = max(0, 1 - max(0, (thermal - 6) * 0.2) + max(0, (2 - thermal) * 0.2) - flammability * 0.2),
+		// Linearly scales from 0.2 to 1.8 with chemical resistance
+		ACID = 1 + (chemical - 4) * 0.2,
+	)
+
+	for (var/armor_key in armor_modifiers)
+		// Safety check to ensure that we don't have inverted armor values
+		if (armor_modifiers[armor_key] < 0)
+			armor_modifiers[armor_key] = 0
+		armor_modifiers[armor_key] = GET_MATERIAL_MODIFIER(armor_modifiers[armor_key], multiplier)
+
+	return armor_modifiers
+
+/datum/material/proc/get_property(prop_id)
+	if (!isnull(mat_properties?[prop_id]))
+		return mat_properties[prop_id]
+
+	var/datum/material_property/derived/derived_prop = SSmaterials.properties[prop_id]
+	if (!istype(derived_prop))
+		return null // Property was not specified on the material and wasn't a derived one
+	return derived_prop.get_value(src)

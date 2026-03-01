@@ -4,6 +4,7 @@
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED)
 	threat.AddComponent(/datum/component/virtual_entity, src)
 
+
 /// Choses which antagonist role is spawned based on threat
 /obj/machinery/quantum_server/proc/get_antagonist_role()
 	var/list/available = list()
@@ -18,6 +19,7 @@
 	threat -= initial(chosen.threat) * 0.5
 
 	return chosen
+
 
 /// Selects a target to mutate. Gives two attempts, then crashes if it fails.
 /obj/machinery/quantum_server/proc/get_mutation_target()
@@ -34,6 +36,7 @@
 	target_ref = pick(mutation_candidate_refs)
 	resolved = target_ref.resolve()
 	return resolved
+
 
 /// Finds any mobs with minds in the zones and gives them the bad news
 /obj/machinery/quantum_server/proc/notify_spawned_threats()
@@ -52,9 +55,11 @@
 
 		to_chat(baddie, span_userdanger("You have been flagged for deletion! Thank you for your service."))
 
+
 /// Removes a specific threat - used when station spawning
 /obj/machinery/quantum_server/proc/remove_threat(mob/living/threat)
 	spawned_threat_refs.Remove(WEAKREF(threat))
+
 
 /// Selects the role and waits for a ghost orbiter
 /obj/machinery/quantum_server/proc/setup_glitch(datum/antagonist/bitrunning_glitch/forced_role)
@@ -83,6 +88,7 @@
 	spawn_glitch(chosen_role, mutation_target, chosen_one)
 	return mutation_target
 
+
 /// Orbit poll has concluded - spawn the antag
 /obj/machinery/quantum_server/proc/spawn_glitch(datum/antagonist/bitrunning_glitch/chosen_role, mob/living/mutation_target, mob/dead/observer/ghost)
 	if(QDELETED(mutation_target))
@@ -105,32 +111,35 @@
 	mutation_target.gib(DROP_ALL_REMAINS)
 
 	var/datum/mind/ghost_mind = ghost.mind
-	new_mob.key = ghost.key
+	new_mob.PossessByPlayer(ghost.key)
 
-	if(ghost_mind?.current)
-		new_mob.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
+	if(ghost_mind)
+		new_mob.AddComponent(/datum/component/temporary_body, ghost_mind, return_on_death = TRUE)
 
 	var/datum/mind/antag_mind = new_mob.mind
 	antag_mind.add_antag_datum(chosen_role)
-	antag_mind.special_role = ROLE_GLITCH
-	antag_mind.set_assigned_role(SSjob.GetJobType(/datum/job/bitrunning_glitch))
+	antag_mind.set_assigned_role(SSjob.get_job_type(/datum/job/bitrunning_glitch))
 
-	playsound(new_mob, 'sound/magic/ethereal_exit.ogg', 50, vary = TRUE)
+	playsound(new_mob, 'sound/effects/magic/ethereal_exit.ogg', 50, vary = TRUE)
 	message_admins("[ADMIN_LOOKUPFLW(new_mob)] has been made into virtual antagonist by an event.")
 	new_mob.log_message("was spawned as a virtual antagonist by an event.", LOG_GAME)
 
 	add_threats(new_mob)
 
+
 /// Oh boy - transports the antag station side
 /obj/machinery/quantum_server/proc/station_spawn(mob/living/antag, obj/machinery/byteforge/chosen_forge)
 	antag.balloon_alert(antag, "scanning...")
 	chosen_forge.setup_particles(angry = TRUE)
-	radio.talk_into(src, "SECURITY BREACH: Unauthorized entry sequence detected.", RADIO_CHANNEL_SUPPLY)
+	var/obj/machinery/announcement_system/aas = get_announcement_system(null, src, list(RADIO_CHANNEL_SUPPLY))
+	if (aas)
+		aas.broadcast("QUANTUM SERVER ALERT: Security breach detected. Unauthorized entry sequence in progress...", list(RADIO_CHANNEL_SUPPLY))
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_STATION_SPAWN)
 
 	var/timeout = 2 SECONDS
 	if(!ishuman(antag))
-		radio.talk_into(src, "Fabrication protocols have crashed unexpectedly. Please evacuate the area.", RADIO_CHANNEL_SUPPLY)
+		if (aas)
+			aas.broadcast("QUANTUM SERVER ALERT: Fabrication protocols have crashed unexpectedly. Please evacuate the area.", list(RADIO_CHANNEL_SUPPLY))
 		timeout = 10 SECONDS
 
 	if(!do_after(antag, timeout) || QDELETED(chosen_forge) || QDELETED(antag) || QDELETED(src) || !is_ready || !is_operational)
@@ -152,8 +161,8 @@
 
 	if(ishuman(antag))
 		reset_equipment(antag)
-	else
-		radio.talk_into(src, "CRITICAL ALERT: Unregistered mechanical entity deployed.")
+	else if (aas)
+		aas.broadcast("QUANTUM SERVER CRITICAL ALERT: Unregistered mechanical entity deployed.", list())
 
 	var/datum/antagonist/antag_datum = antag.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch)
 	if(istype(antag_datum))
@@ -163,12 +172,13 @@
 	if(temp_body)
 		qdel(temp_body)
 
-	do_teleport(antag, get_turf(chosen_forge), forced = TRUE, asoundin = 'sound/magic/ethereal_enter.ogg', asoundout = 'sound/magic/ethereal_exit.ogg', channel = TELEPORT_CHANNEL_QUANTUM)
+	do_teleport(antag, get_turf(chosen_forge), forced = TRUE, asoundin = 'sound/effects/magic/ethereal_enter.ogg', asoundout = 'sound/effects/magic/ethereal_exit.ogg', channel = TELEPORT_CHANNEL_QUANTUM)
+
 
 /// Removes any invalid candidates from the list
 /obj/machinery/quantum_server/proc/validate_mutation_candidates()
 	for(var/datum/weakref/creature_ref as anything in mutation_candidate_refs)
-		var/mob/living/creature = creature_ref.resolve()
+		var/mob/living/creature = creature_ref?.resolve()
 		if(isnull(creature) || creature.mind)
 			mutation_candidate_refs.Remove(creature_ref)
 

@@ -44,7 +44,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, PROC_REF(on_attack_ghost))
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNMODIFIABLE))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool_act))
-		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attack_by))
+		RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwdriver_act))
 		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_object_deconstruct))
@@ -91,7 +91,7 @@
 
 /datum/component/shell/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_ATOM_ATTACKBY,
+		COMSIG_ATOM_ITEM_INTERACTION,
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
 		COMSIG_OBJ_DECONSTRUCT,
@@ -160,55 +160,56 @@
 	attached_circuit?.set_on(source.anchored)
 
 /**
- * Called when an item hits the parent. This is the method to add the circuitboard to the component.
+ * Called when interacting with the parent using an item. This is the method to add the circuitboard to the component.
  */
-/datum/component/shell/proc/on_attack_by(atom/source, obj/item/item, mob/living/attacker)
+/datum/component/shell/proc/on_item_interaction(atom/source, mob/living/user, obj/item/item, list/modifiers)
 	SIGNAL_HANDLER
-	if(!is_authorized(attacker))
+	if(!is_authorized(user))
 		return
 
 	if(istype(item, /obj/item/stock_parts/power_store/cell))
-		source.balloon_alert(attacker, "can't put cell in directly!")
+		source.balloon_alert(user, "can't put cell in directly!")
 		return
 
 	if(istype(item, /obj/item/inducer))
 		var/obj/item/inducer/inducer = item
-		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, attack_atom), attached_circuit || parent, attacker, list())
-		return COMPONENT_NO_AFTERATTACK
+		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, interact_with_atom), attached_circuit || parent, user, list())
+		return ITEM_INTERACT_SUCCESS
 
 	if(attached_circuit)
 		if(attached_circuit.owner_id && item == attached_circuit.owner_id.resolve())
 			set_locked(!locked)
-			source.balloon_alert(attacker, "[locked ? "locked" : "unlocked"] [source]")
-			return COMPONENT_NO_AFTERATTACK
+			source.balloon_alert(user, "[locked ? "locked" : "unlocked"] [source]")
+			return ITEM_INTERACT_SUCCESS
 
 		if(!attached_circuit.owner_id && isidcard(item))
-			source.balloon_alert(attacker, "owner id set for [item]")
+			source.balloon_alert(user, "owner id set for [item]")
 			attached_circuit.owner_id = WEAKREF(item)
-			return COMPONENT_NO_AFTERATTACK
+			return ITEM_INTERACT_SUCCESS
 
 		if(istype(item, /obj/item/circuit_component))
-			attached_circuit.add_component_manually(item, attacker)
-			return COMPONENT_NO_AFTERATTACK
+			if(attached_circuit.add_component_manually(item, user))
+				return ITEM_INTERACT_SUCCESS
+			return ITEM_INTERACT_BLOCKING
 
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
 	var/obj/item/integrated_circuit/logic_board = item
-	. = COMPONENT_NO_AFTERATTACK
 
 	if(logic_board.shell) // I'll be surprised if this ever happens
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(attached_circuit)
-		source.balloon_alert(attacker, "there is already a circuitboard inside!")
-		return
+		source.balloon_alert(user, "there is already a circuitboard inside!")
+		return ITEM_INTERACT_BLOCKING
 
 	if(logic_board.current_size > capacity)
-		source.balloon_alert(attacker, "this is too large to fit into [parent]!")
-		return
+		source.balloon_alert(user, "this is too large to fit into [parent]!")
+		return ITEM_INTERACT_BLOCKING
 
-	logic_board.inserter_mind = WEAKREF(attacker.mind)
-	attach_circuit(logic_board, attacker)
+	logic_board.inserter_mind = WEAKREF(user.mind)
+	attach_circuit(logic_board, user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Sets whether the shell is locked or not
 /datum/component/shell/proc/set_locked(new_value)
@@ -319,7 +320,7 @@
 		attached_circuit.add_component(to_add)
 	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, PROC_REF(on_circuit_add_component_manually))
 	if(attached_circuit.display_name != "")
-		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
+		parent_atom.name = "[initial(parent_atom.name)] ([strip_html(attached_circuit.display_name)])"
 	attached_circuit.set_locked(FALSE)
 
 	if((shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) || circuitboard.admin_only)
@@ -346,7 +347,11 @@
 	))
 	if(attached_circuit.loc == parent || (!QDELETED(attached_circuit) && attached_circuit.loc == null))
 		var/atom/parent_atom = parent
-		attached_circuit.forceMove(parent_atom.drop_location())
+		var/drop_location = parent_atom.drop_location()
+		if(drop_location)
+			attached_circuit.forceMove(drop_location)
+		else
+			attached_circuit.moveToNullspace()
 
 	for(var/obj/item/circuit_component/to_remove as anything in unremovable_circuit_components)
 		attached_circuit.remove_component(to_remove)
@@ -376,7 +381,7 @@
 	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
 
 /**
- * Determines if a user is authorized to see the existance of this shell. Returns false if they are not
+ * Determines if a user is authorized to see the existence of this shell. Returns false if they are not
  *
  * Arguments:
  * * user - The user to check if they are authorized

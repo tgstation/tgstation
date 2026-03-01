@@ -39,8 +39,12 @@
 	var/naturally_occuring = TRUE
 	///If the symptom requires an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
 	var/required_organ
-	/// How much space does this symptom use?
-	var/weight = 1
+	///The remedy for this symptom
+	var/symptom_cure = /datum/reagent/medicine/spaceacillin
+	///What color the cure text shows up in the pandemic UI
+	var/cure_color = "green"
+	///A remedied symptom has no effect and contributes to the cure
+	var/remedied = FALSE
 
 /datum/symptom/New()
 	var/list/S = SSdisease.list_symptoms
@@ -68,7 +72,11 @@
 	if(required_organ)
 		if(!advanced_disease.has_required_infectious_organ(advanced_disease.affected_mob, required_organ))
 			return FALSE
-
+	if(symptom_cure)
+		if(symptom_cure && advanced_disease.affected_mob.has_reagent(symptom_cure))
+			remedied = TRUE
+			return FALSE
+		remedied = FALSE
 	if(world.time < next_activation)
 		return FALSE
 	else
@@ -108,7 +116,6 @@
 	var/list/data = list()
 	data["name"] = name
 	data["desc"] = desc
-	data["weight"] = weight
 	data["stealth"] = stealth
 	data["resistance"] = resistance
 	data["stage_speed"] = stage_speed
@@ -116,6 +123,12 @@
 	data["level"] = level
 	data["neutered"] = neutered
 	data["threshold_desc"] = threshold_descs
+	if(symptom_cure)
+		var/datum/reagent/cure = symptom_cure
+		data["symptom_cure"] = cure.name
+	else
+		data["symptom_cure"] = "Nothing"
+	data["cure_color"] = cure_color
 	return data
 
 /// Check if we can generate randomly

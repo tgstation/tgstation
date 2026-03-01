@@ -16,8 +16,8 @@
 	inherent_factions = list(FACTION_FAITHLESS)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 
-	mutantbrain = /obj/item/organ/internal/brain/shadow
-	mutanteyes = /obj/item/organ/internal/eyes/shadow
+	mutantbrain = /obj/item/organ/brain/shadow
+	mutanteyes = /obj/item/organ/eyes/shadow
 	mutantheart = null
 	mutantlungs = null
 
@@ -31,6 +31,14 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/shadow,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/shadow,
 	)
+
+/datum/species/shadow/on_species_gain(mob/living/carbon/carbon_mob, datum/species/old_species, pref_load, regenerate_icons)
+	. = ..()
+	RegisterSignal(carbon_mob, COMSIG_MOB_FLASH_OVERRIDE_CHECK, PROC_REF(on_flashed))
+
+/datum/species/shadow/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
+	. = ..()
+	UnregisterSignal(human, COMSIG_MOB_FLASH_OVERRIDE_CHECK)
 
 /datum/species/shadow/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
@@ -89,57 +97,38 @@
 
 	return to_add
 
-/obj/item/organ/internal/eyes/shadow
+/obj/item/organ/eyes/shadow
 	name = "burning red eyes"
 	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+	iris_overlay = null
 	color_cutoffs = list(20, 10, 40)
 	pepperspray_protect = TRUE
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
-/// the key to some of their powers
-/obj/item/organ/internal/brain/shadow
+/// the key to none of their powers
+/obj/item/organ/brain/shadow
 	name = "shadowling tumor"
 	desc = "Something that was once a brain, before being remolded by a shadowling. It has adapted to the dark, irreversibly."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
-	/// What status effect do we gain while in darkness?
-	var/applied_status = /datum/status_effect/shadow_regeneration
+	shade_color = "grey-ish"
 
-/obj/item/organ/internal/brain/shadow/on_life(seconds_per_tick, times_fired)
-	. = ..()
-	var/turf/owner_turf = owner.loc
-	if(!isturf(owner_turf))
-		return
-	var/light_amount = owner_turf.get_lumcount()
+/datum/species/shadow/get_scream_sound(mob/living/carbon/human/moth)
+	return 'sound/mobs/humanoids/shadow/shadow_wail.ogg'
 
-	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-		owner.apply_status_effect(applied_status)
-	if (!owner.has_status_effect(applied_status))
-		owner.take_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
+/datum/species/shadow/proc/on_flashed(source, mob/living/carbon/flashed, flash, deviation)
+	SIGNAL_HANDLER
 
-/// Heal in darkness and potentially trigger other effects, persists for a short duration after leaving
-/datum/status_effect/shadow_regeneration
-	id = "shadow_regeneration"
-	duration = 2 SECONDS
-	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration
+	if(deviation == DEVIATION_FULL) //If no deviation, we can assume it's a non-assembly flash and should do max flash damage.
+		flashed.apply_damage(16, BURN, attacking_item = flash)
+		flashed.adjust_confusion_up_to(3 SECONDS, 6 SECONDS)
+	else //If it's anything less than a full hit, it does less than stellar damage. Bear in mind that this damage is dished out much faster since flashes have a quicker cooldown on clicks.
+		flashed.apply_damage(8, BURN, attacking_item = flash)
+		flashed.adjust_confusion_up_to(1 SECONDS, 3 SECONDS)
 
-/datum/status_effect/shadow_regeneration/on_apply()
-	. = ..()
-	if (!.)
-		return FALSE
-	heal_owner()
-	return TRUE
+	INVOKE_ASYNC(flashed, TYPE_PROC_REF(/mob, emote), "scream")
+	flashed.visible_message(span_danger("[flashed] wails in pain as a burst of light singes their flesh!"), \
+		span_danger("You wail in pain as the sudden burst of light singes your flesh!"), \
+		span_danger("Something wails in pain! It sounds like a terrifying monster! Good thing you can't see it, or you'd probably be freaking out right now."))
 
-/datum/status_effect/shadow_regeneration/refresh(effect)
-	. = ..()
-	heal_owner()
-
-/// Regenerate health whenever this status effect is applied or reapplied
-/datum/status_effect/shadow_regeneration/proc/heal_owner()
-	owner.heal_overall_damage(brute = 1, burn = 1, required_bodytype = BODYTYPE_ORGANIC)
-
-/atom/movable/screen/alert/status_effect/shadow_regeneration
-	name = "Shadow Regeneration"
-	desc = "Bathed in soothing darkness, you will slowly heal yourself."
-	icon_state = "lightless"
+	return FLASH_OVERRIDDEN

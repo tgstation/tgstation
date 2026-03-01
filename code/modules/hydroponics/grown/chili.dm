@@ -1,6 +1,6 @@
 // Chili
 /obj/item/seeds/chili
-	name = "pack of chili seeds"
+	name = "chili seed pack"
 	desc = "These seeds grow into chili plants. HOT! HOT! HOT!"
 	icon_state = "seed-chili"
 	species = "chili"
@@ -25,12 +25,12 @@
 	desc = "It's spicy! Wait... IT'S BURNING ME!!"
 	icon_state = "chilipepper"
 	bite_consumption_mod = 2
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	wine_power = 20
 
 // Ice Chili
 /obj/item/seeds/chili/ice
-	name = "pack of chilly pepper seeds"
+	name = "chilly pepper seed pack"
 	desc = "These seeds grow into chilly pepper plants."
 	icon_state = "seed-icepepper"
 	species = "chiliice"
@@ -51,12 +51,12 @@
 	desc = "It's a mutant strain of chili."
 	icon_state = "icepepper"
 	bite_consumption_mod = 5
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	wine_power = 30
 
 // Ghost Chili
 /obj/item/seeds/chili/ghost
-	name = "pack of ghost chili seeds"
+	name = "ghost chili seed pack"
 	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
 	icon_state = "seed-chilighost"
 	species = "chilighost"
@@ -78,12 +78,12 @@
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"
 	bite_consumption_mod = 5
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	wine_power = 50
 
 // Bell Pepper
 /obj/item/seeds/chili/bell_pepper
-	name = "pack of bell pepper seeds"
+	name = "bell pepper seed pack"
 	desc = "These seeds grow into bell pepper plants. MILD! MILD! MILD!"
 	icon_state = "seed-bell-pepper"
 	species = "bellpepper"
@@ -103,7 +103,7 @@
 	name = "bell pepper"
 	desc = "A big mild pepper that's good for many things."
 	icon_state = "bell_pepper"
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 
 /obj/item/food/grown/bell_pepper/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/roasted_bell_pepper, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)

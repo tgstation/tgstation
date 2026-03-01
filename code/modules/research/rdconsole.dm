@@ -35,6 +35,12 @@ Nothing else in the console has ID requirements.
 	var/id_cache = list()
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
+	/// Cooldown that prevents hanging the MC when tech disks are copied
+	STATIC_COOLDOWN_DECLARE(cooldowncopy)
+
+// An unlocked subtype of the console for mapping.
+/obj/machinery/computer/rdconsole/unlocked
+	circuit = /obj/item/circuitboard/computer/rdconsole/unlocked
 
 /proc/CallMaterialName(ID)
 	if (istype(ID, /datum/material))
@@ -64,7 +70,7 @@ Nothing else in the console has ID requirements.
 		d_disk = null
 	return ..()
 
-/obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
+/obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, list/modifiers, list/attack_modifiers)
 	//Loading a disk into it.
 	if(istype(D, /obj/item/disk))
 		if(istype(D, /obj/item/disk/tech_disk))
@@ -96,6 +102,20 @@ Nothing else in the console has ID requirements.
 		stored_research = tool.buffer
 	return TRUE
 
+/obj/machinery/computer/rdconsole/proc/enqueue_node(id, mob/user)
+	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
+		say("Node enqueue failed: Either no techweb is found, node is already researched or is not available!")
+		return FALSE
+	stored_research.enqueue_node(id, user)
+	return TRUE
+
+/obj/machinery/computer/rdconsole/proc/dequeue_node(id, mob/user)
+	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
+		say("Node dequeue failed: Either no techweb is found, node is already researched or is not available!")
+		return FALSE
+	stored_research.dequeue_node(id, user)
+	return TRUE
+
 /obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
 	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
 		say("Node unlock failed: Either no techweb is found, node is already researched or is not available!")
@@ -109,7 +129,7 @@ Nothing else in the console has ID requirements.
 		user.investigate_log("researched [id]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
 		if(istype(stored_research, /datum/techweb/science))
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = ISOtime()))
-		if(stored_research.research_node_id(id))
+		if(stored_research.research_node_id(id, research_source = src))
 			say("Successfully researched [TN.display_name].")
 			var/logname = "Unknown"
 			if(HAS_AI_ACCESS(user))
@@ -147,7 +167,10 @@ Nothing else in the console has ID requirements.
 	balloon_alert(user, "security protocols disabled")
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
-	locked = FALSE
+	var/obj/item/circuitboard/computer/rdconsole/board = circuit
+	if(!(board.obj_flags & EMAGGED))
+		board.silence_announcements = TRUE
+	board.locked = FALSE
 	return TRUE
 
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, datum/tgui/ui = null)
@@ -159,18 +182,22 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/research_designs),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
 // heavy data from this proc should be moved to static data when possible
 /obj/machinery/computer/rdconsole/ui_data(mob/user)
 	var/list/data = list()
+
+	var/obj/item/circuitboard/computer/rdconsole/board = circuit
+
 	data["stored_research"] = !!stored_research
-	data["locked"] = locked
+	data["locked"] = board.locked
 	if(!stored_research) //lack of a research node is all we care about.
 		return data
 	data += list(
 		"nodes" = list(),
+		"queue_nodes" = stored_research.research_queue_nodes,
 		"experiments" = list(),
 		"researched_designs" = stored_research.researched_designs,
 		"points" = stored_research.research_points,
@@ -194,6 +221,10 @@ Nothing else in the console has ID requirements.
 	// Serialize all nodes to display
 	for(var/v in stored_research.tiers)
 		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(v)
+		var/enqueued_by_user = FALSE
+
+		if((v in stored_research.research_queue_nodes) && stored_research.research_queue_nodes[v] == user)
+			enqueued_by_user = TRUE
 
 		// Ensure node is supposed to be visible
 		if (stored_research.hidden_nodes[v])
@@ -201,24 +232,19 @@ Nothing else in the console has ID requirements.
 
 		data["nodes"] += list(list(
 			"id" = n.id,
+			"is_free" = n.is_free(stored_research),
 			"can_unlock" = stored_research.can_unlock_node(n),
+			"have_experiments_done" = stored_research.have_experiments_for_node(n),
 			"tier" = stored_research.tiers[n.id],
+			"enqueued_by_user" = enqueued_by_user
 		))
 
 	// Get experiments and serialize them
 	var/list/exp_to_process = stored_research.available_experiments.Copy()
 	for (var/e in stored_research.completed_experiments)
 		exp_to_process += stored_research.completed_experiments[e]
-	for (var/e in exp_to_process)
-		var/datum/experiment/ex = e
-		data["experiments"][ex.type] = list(
-			"name" = ex.name,
-			"description" = ex.description,
-			"tag" = ex.exp_tag,
-			"progress" = ex.check_progress(),
-			"completed" = ex.completed,
-			"performance_hint" = ex.performance_hint,
-		)
+	for (var/datum/experiment/ex as anything in exp_to_process)
+		data["experiments"][ex.type] = ex.to_ui_data()
 	return data
 
 /**
@@ -275,7 +301,7 @@ Nothing else in the console has ID requirements.
 
 	// Build design cache
 	var/design_cache = list()
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 	for (var/design_id in SSresearch.techweb_designs)
 		var/datum/design/design = SSresearch.techweb_designs[design_id] || SSresearch.error_design
@@ -297,15 +323,17 @@ Nothing else in the console has ID requirements.
 		"id_cache" = flat_id_cache,
 	)
 
-/obj/machinery/computer/rdconsole/ui_act(action, list/params)
+/obj/machinery/computer/rdconsole/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
 
 	add_fingerprint(usr)
 
+	var/obj/item/circuitboard/computer/rdconsole/board = circuit
+
 	// Check if the console is locked to block any actions occuring
-	if (locked && action != "toggleLock")
+	if (board.locked && action != "toggleLock")
 		say("Console is locked, cannot perform further actions.")
 		return TRUE
 
@@ -315,16 +343,27 @@ Nothing else in the console has ID requirements.
 				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
 				return TRUE
 			if(allowed(usr))
-				locked = !locked
+				board.locked = !board.locked
 			else
 				to_chat(usr, span_boldwarning("Unauthorized Access."))
 			return TRUE
+
 		if ("researchNode")
 			research_node(params["node_id"], usr)
 			return TRUE
+
+		if ("enqueueNode")
+			enqueue_node(params["node_id"], usr)
+			return TRUE
+
+		if ("dequeueNode")
+			dequeue_node(params["node_id"], usr)
+			return TRUE
+
 		if ("ejectDisk")
 			eject_disk(params["type"])
 			return TRUE
+
 		if ("uploadDisk")
 			if (params["type"] == RND_DESIGN_DISK)
 				if(QDELETED(d_disk))
@@ -334,22 +373,31 @@ Nothing else in the console has ID requirements.
 					if(D)
 						stored_research.add_design(D, TRUE)
 				say("Uploading blueprints from disk.")
-				d_disk.on_upload(stored_research)
+				d_disk.on_upload(stored_research, src)
 				return TRUE
 			if (params["type"] == RND_TECH_DISK)
+				if(!COOLDOWN_FINISHED(src, cooldowncopy)) // prevents MC hang
+					say("Servers busy!")
+					return
 				if (QDELETED(t_disk))
 					say("No tech disk inserted!")
 					return TRUE
+				COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
 				say("Uploading technology disk.")
 				t_disk.stored_research.copy_research_to(stored_research)
 			return TRUE
+
 		//Tech disk-only action.
 		if ("loadTech")
+			if(!COOLDOWN_FINISHED(src, cooldowncopy)) // prevents MC hang
+				say("Servers busy!")
+				return
 			if(QDELETED(t_disk))
 				say("No tech disk inserted!")
 				return
-			stored_research.copy_research_to(t_disk.stored_research)
+			COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
 			say("Downloading to technology disk.")
+			stored_research.copy_research_to(t_disk.stored_research)
 			return TRUE
 
 /obj/machinery/computer/rdconsole/proc/eject_disk(type)

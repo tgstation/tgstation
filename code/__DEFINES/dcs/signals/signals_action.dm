@@ -2,7 +2,7 @@
 
 ///from base of datum/action/proc/Trigger(): (datum/action)
 #define COMSIG_ACTION_TRIGGER "action_trigger"
-	// Return to block the trigger from occuring
+	// Return to block the trigger from occurring
 	#define COMPONENT_ACTION_BLOCK_TRIGGER (1<<0)
 /// From /datum/action/Grant(): (mob/grant_to)
 #define COMSIG_ACTION_GRANTED "action_grant"
@@ -43,6 +43,9 @@
 /// From /datum/action/vehicle/sealed/mecha/mech_toggle_safeties/proc/update_action_icon(): ()
 #define COMSIG_MECH_SAFETIES_TOGGLE "mech_safeties_toggle"
 
+/// From /datum/action/vehicle/sealed/mecha//mob_exit(): ()
+#define COMSIG_MECHA_MOB_EXIT "mecha_mob_exit"
+
 /// From /datum/action/cooldown/mob_cooldown/assume_form/proc/assume_appearances(), sent to the action owner: (atom/movable/target)
 #define COMSIG_ACTION_DISGUISED_APPEARANCE "mob_ability_disguise_appearance"
 
@@ -51,3 +54,9 @@
 
 /// From /datum/action/cooldown/mob_cooldown/capture_photo/Activate():
 #define COMSIG_ACTION_PHOTO_CAPTURED "action_photo_captured"
+
+/// From /datum/action/vehicle/ridden/wheelchair/bell/Trigger():
+#define COMSIG_WHEELCHAIR_BELL_RANG "wheelchair_bell_rang"
+
+/// From /datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(), sent to the /mob/living/carbon/hurtguy: (/mob/living/carbon/mendicant)
+#define COMSIG_ON_LAY_ON_HANDS "mob_ability_lay_on_hands"

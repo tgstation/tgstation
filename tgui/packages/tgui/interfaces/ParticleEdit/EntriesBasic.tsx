@@ -1,6 +1,4 @@
 import { useContext } from 'react';
-
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -10,23 +8,30 @@ import {
   LabeledList,
   NumberInput,
   Stack,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { ParticleContext } from '.';
 import {
-  EntryCoordProps,
-  EntryFloatProps,
-  EntryGradientProps,
-  EntryIconStateProps,
-  EntryTransformProps,
+  type EntryCoordProps,
+  type EntryFloatProps,
+  type EntryGradientProps,
+  type EntryIconStateProps,
+  type EntryTransformProps,
   MatrixTypes,
   P_DATA_ICON_ADD,
   P_DATA_ICON_REMOVE,
   P_DATA_ICON_WEIGHT,
-  ParticleUIData,
+  type ParticleUIData,
   SpaceToNum,
   SpaceTypes,
 } from './data';
-import { editKeyOf, editWeightOf, setGradientSpace } from './helpers';
+import {
+  editKeyOf,
+  editWeightOf,
+  isColorSpaceObject,
+  setGradientSpace,
+} from './helpers';
 
 export const EntryFloat = (props: EntryFloatProps) => {
   const { act } = useBackend<ParticleUIData>();
@@ -41,11 +46,12 @@ export const EntryFloat = (props: EntryFloatProps) => {
       />
       <NumberInput
         animated
+        tickWhileDragging
         value={float}
         minValue={0}
         maxValue={Infinity}
         step={1}
-        onDrag={(value) =>
+        onChange={(value) =>
           act('edit', {
             var: var_name,
             new_value: value,
@@ -69,11 +75,12 @@ export const EntryCoord = (props: EntryCoordProps) => {
       />
       <NumberInput
         animated
+        tickWhileDragging
         minValue={-Infinity}
         maxValue={Infinity}
         step={1}
         value={coord?.[0] || 0}
-        onDrag={(value) =>
+        onChange={(value) =>
           act('edit', {
             var: var_name,
             new_value: [value, coord?.[1], coord?.[2]],
@@ -82,11 +89,12 @@ export const EntryCoord = (props: EntryCoordProps) => {
       />
       <NumberInput
         animated
+        tickWhileDragging
         minValue={-Infinity}
         maxValue={Infinity}
         step={1}
         value={coord?.[1] || 0}
-        onDrag={(value) =>
+        onChange={(value) =>
           act('edit', {
             var: var_name,
             new_value: [coord?.[0], value, coord?.[2]],
@@ -95,11 +103,12 @@ export const EntryCoord = (props: EntryCoordProps) => {
       />
       <NumberInput
         animated
+        tickWhileDragging
         minValue={-Infinity}
         maxValue={Infinity}
         step={1}
         value={coord?.[2] || 0}
-        onDrag={(value) =>
+        onChange={(value) =>
           act('edit', {
             var: var_name,
             new_value: [coord?.[0], coord?.[1], value],
@@ -114,12 +123,21 @@ export const EntryGradient = (props: EntryGradientProps) => {
   const { act } = useBackend<ParticleUIData>();
   const { setDesc } = useContext(ParticleContext);
   const { name, var_name, gradient } = props;
+
   const isLooping = gradient?.find((x) => x === 'loop');
-  const space_type = gradient?.includes('space')
-    ? Object.keys(SpaceToNum).find(
-        (space) => SpaceToNum[space] === gradient['space'],
-      )
-    : 'COLORSPACE_RGB';
+
+  let space_type = 'COLORSPACE_RGB';
+  const gradientSpace = gradient?.find(isColorSpaceObject);
+
+  if (gradientSpace) {
+    const match = Object.keys(SpaceToNum).find(
+      (space) => SpaceToNum[space] === gradientSpace.space,
+    );
+    if (match) {
+      space_type = match;
+    }
+  }
+
   return (
     <LabeledList.Item label={name}>
       <Stack>
@@ -170,8 +188,8 @@ export const EntryGradient = (props: EntryGradientProps) => {
                 <Input
                   key={index}
                   maxWidth={'70px'}
-                  value={entry}
-                  onChange={(e, value) =>
+                  value={entry.toString()}
+                  onBlur={(value) =>
                     act('edit', {
                       var: var_name,
                       new_value: gradient!.map((x, i) =>
@@ -181,8 +199,8 @@ export const EntryGradient = (props: EntryGradientProps) => {
                   }
                 />
                 <Button
-                  icon={'minus'}
-                  tooltip={'Remove entry'}
+                  icon="minus"
+                  tooltip="Remove entry"
                   onClick={() =>
                     act('edit', {
                       var: var_name,
@@ -244,12 +262,13 @@ export const EntryTransform = (props: EntryTransformProps) => {
           {transform?.map((value, index) => (
             <NumberInput
               animated
+              tickWhileDragging
               key={index}
               value={value}
               minValue={0}
               maxValue={1}
               step={1}
-              onDrag={(value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: transform!.map((x, i) =>
@@ -289,11 +308,12 @@ export const EntryIcon = (props: EntryIconStateProps) => {
               <Stack.Item>
                 <NumberInput
                   animated
+                  tickWhileDragging
                   minValue={0}
                   maxValue={Infinity}
                   step={1}
                   value={icon_state[icon_name]}
-                  onDrag={(value) =>
+                  onChange={(value) =>
                     act('edit', {
                       var: var_name,
                       var_mod: P_DATA_ICON_WEIGHT,
@@ -364,9 +384,9 @@ export const EntryIconState = (props: EntryIconStateProps) => {
             <>
               <Stack.Item>
                 <Input
-                  width={'70px'}
+                  width="70px"
                   value={iconstate}
-                  onChange={(e, value) =>
+                  onBlur={(value) =>
                     act('edit', {
                       var: var_name,
                       new_value: editKeyOf(icon_state, iconstate, value),
@@ -380,11 +400,12 @@ export const EntryIconState = (props: EntryIconStateProps) => {
               <Stack.Item>
                 <NumberInput
                   animated
+                  tickWhileDragging
                   minValue={0}
                   maxValue={Infinity}
                   step={1}
                   value={icon_state[iconstate]}
-                  onDrag={(value) =>
+                  onChange={(value) =>
                     act('edit', {
                       var: var_name,
                       new_value: editWeightOf(icon_state, iconstate, value),
@@ -413,7 +434,7 @@ export const EntryIconState = (props: EntryIconStateProps) => {
           <>
             <Input
               value={icon_state ? icon_state : 'None'}
-              onChange={(e, value) =>
+              onBlur={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,

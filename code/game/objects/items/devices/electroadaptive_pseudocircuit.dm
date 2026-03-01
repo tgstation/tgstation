@@ -44,7 +44,7 @@
 	if(!circuits)
 		to_chat(R, span_warning("You need more material. Use [src] on existing simple circuits to break them down."))
 		return
-	playsound(R, 'sound/items/rped.ogg', 50, TRUE)
+	playsound(R, 'sound/items/tools/rped.ogg', 50, TRUE)
 	recharging = TRUE
 	circuits--
 	maptext = MAPTEXT(circuits)

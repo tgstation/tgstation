@@ -3,7 +3,7 @@
 
 /obj/item/tcgcard
 	name = "Coder"
-	desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
+	desc = "Wow, a mint condition coder card! Better tell the GitHub all about this!"
 	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "runtime"
 	w_class = WEIGHT_CLASS_TINY
@@ -128,7 +128,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon_state = template.icon_state
 	return ..()
 
-/obj/item/tcgcard/attackby(obj/item/item, mob/living/user, params)
+/obj/item/tcgcard/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/tcgcard))
 		var/obj/item/tcgcard/second_card = item
 		var/obj/item/tcgcard_deck/new_deck = new /obj/item/tcgcard_deck(drop_location())
@@ -151,7 +151,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	else
 		ntransform.TurnTo(UNTAPPED_ANGLE , TAPPED_ANGLE)
 	tapped = !tapped
-	animate(src, transform = ntransform, time = 2, easing = (EASE_IN|EASE_OUT))
+	animate(src, transform = ntransform, time = 2, easing = SINE_EASING)
 
 /obj/item/tcgcard/proc/flip_card(mob/user)
 	to_chat(user, span_notice("You turn the card over."))
@@ -188,6 +188,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon_state = "deck_up"
 	base_icon_state = "deck"
 	obj_flags = UNIQUE_RENAME
+	spawn_blacklisted = TRUE
 	var/flipped = FALSE
 	var/static/radial_draw = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw")
 	var/static/radial_shuffle = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle")
@@ -249,11 +250,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
-/obj/item/tcgcard_deck/attackby(obj/item/item, mob/living/user, params)
+/obj/item/tcgcard_deck/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(istype(item, /obj/item/tcgcard))
 		if(contents.len >= 30)
@@ -332,11 +333,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
-	desc = "Contains six complete fuckups by the coders. Report this on github please!"
+	desc = "Contains six complete fuckups by the coders. Report this on GitHub please!"
 	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "error"
 	w_class = WEIGHT_CLASS_TINY
-	custom_price = PAYCHECK_CREW * 0.75 //Price reduced from * 2 to * 0.75, this is planned as a temporary measure until card persistance is added.
+	custom_price = PAYCHECK_CREW * 0.75 //Price reduced from * 2 to * 0.75, this is planned as a temporary measure until card persistence is added.
 	///The card series to look in
 	var/series = "MEME"
 	///Chance of the pack having a coin in it out of 10
@@ -351,7 +352,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"epic" = 30,
 		"legendary" = 5,
 		"misprint" = 1)
-	///The amount of cards to draw from the guarenteed rarity table
+	///The amount of cards to draw from the guaranteed rarity table
 	var/guaranteed_count = 1
 	///The guaranteed rarity table, acts about the same as the rarity table. it can have as many or as few raritys as you'd like
 	var/list/guar_rarity = list(
@@ -400,7 +401,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		new /obj/item/tcgcard(get_turf(user), series, template)
 	to_chat(user, span_notice("Wow! Check out these cards!"))
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
-	playsound(loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
+	playsound(loc, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
 	if(prob(contains_coin))
 		to_chat(user, span_notice("...and it came with a flipper, too!"))
 		new /obj/item/coin/thunderdome(get_turf(user))
@@ -427,14 +428,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	resistance_flags = FLAMMABLE //burn your enemies' collections, for only you can Collect Them All!
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	storage_type = /datum/storage/card_binder
 
-/obj/item/storage/card_binder/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/tcgcard)
-	atom_storage.max_total_storage = 120
-	atom_storage.max_slots = 60
-
-///Returns a list of cards ids of card_cnt weighted by rarity from the pack's tables that have matching series, with gnt_cnt of the guarenteed table.
+///Returns a list of cards ids of card_cnt weighted by rarity from the pack's tables that have matching series, with gnt_cnt of the guaranteed table.
 /obj/item/cardpack/proc/buildCardListWithRarity(card_cnt, rarity_cnt)
 	var/list/toReturn = list()
 	//You can always get at least one of some rarity
@@ -453,7 +449,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			weight += rarity_table[chance]
 		var/random = rand(weight)
 		for(var/bracket in rarity_table)
-			//Steals blatently from pick_weight(), sorry buddy I need the index
+			//Steals blatantly from pick_weight(), sorry buddy I need the index
 			random -= rarity_table[bracket]
 			if(random <= 0)
 				rarity = bracket
@@ -469,12 +465,12 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			log_runtime("The index [rarity] of rarity_table does not exist in the global cache")
 	return toReturn
 
-//All of these values should be overriden by either a template or a card itself
+//All of these values should be overridden by either a template or a card itself
 /datum/card
 	///Unique ID, for use in lookups and (eventually) for persistence. MAKE SURE THIS IS UNIQUE FOR EACH CARD IN AS SERIES, OR THE ENTIRE SYSTEM WILL BREAK, AND I WILL BE VERY DISAPPOINTED.
 	var/id = "coder"
 	var/name = "Coder"
-	var/desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
+	var/desc = "Wow, a mint condition coder card! Better tell the GitHub all about this!"
 	///This handles any extra rules for the card, i.e. extra attributes, special effects, etc. If you've played any other card game, you know how this works.
 	var/rules = "There are no rules here. There is no escape. No Recall or Intervention can work in this place."
 	var/icon = DEFAULT_TCG_DMI

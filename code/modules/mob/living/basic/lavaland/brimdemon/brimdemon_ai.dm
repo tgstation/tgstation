@@ -7,10 +7,10 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
-	ai_traits = PAUSE_DURING_DO_AFTER
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/no_target
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic,
 		/datum/ai_planning_subtree/move_to_cardinal/brimdemon,
@@ -31,7 +31,7 @@
 	var/datum/action/cooldown/ability = controller.blackboard[BB_TARGETED_ACTION]
 	if(QDELETED(target) || QDELETED(controller.pawn) || !ability?.IsAvailable())
 		return
-	ability.InterceptClickOn(caller = controller.pawn, target = target)
+	ability.InterceptClickOn(clicker = controller.pawn, target = target)
 
 /datum/ai_planning_subtree/targeted_mob_ability/brimbeam
 	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/brimbeam

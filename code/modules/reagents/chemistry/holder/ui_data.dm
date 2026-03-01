@@ -98,20 +98,18 @@
 			return "Overwhelmingly exothermic"
 
 /datum/reagents/proc/parse_addictions(datum/reagent/reagent)
-	var/addict_text = list()
-	for(var/entry in reagent.addiction_types)
-		var/datum/addiction/ref = SSaddiction.all_addictions[entry]
-		switch(reagent.addiction_types[entry])
-			if(-INFINITY to 0)
-				continue
-			if(0 to 5)
-				addict_text += "Weak [ref.name]"
-			if(5 to 10)
-				addict_text += "[ref.name]"
-			if(10 to 20)
-				addict_text += "Strong [ref.name]"
-			if(20 to INFINITY)
-				addict_text += "Potent [ref.name]"
+	var/list/addict_text = list()
+	for(var/entry, threshold in reagent.addiction_types)
+		switch(threshold)
+			if(0 to 10)
+				addict_text += "Potent [GLOB.addictions[entry].name]"
+			if(10 to 30)
+				addict_text += "Strong [GLOB.addictions[entry].name]"
+			if(30 to 100)
+				addict_text += "[GLOB.addictions[entry].name]"
+			if(100 to INFINITY)
+				addict_text += "Weak [GLOB.addictions[entry].name]"
+
 	return addict_text
 
 /datum/reagents/ui_data(mob/user)
@@ -257,27 +255,8 @@
 	//Use GLOB list - saves processing
 	data["master_reaction_list"] = GLOB.chemical_reactions_results_lookup_list
 	data["bitflags"] = list()
-	data["bitflags"]["BRUTE"] = REACTION_TAG_BRUTE
-	data["bitflags"]["BURN"] = REACTION_TAG_BURN
-	data["bitflags"]["TOXIN"] = REACTION_TAG_TOXIN
-	data["bitflags"]["OXY"] = REACTION_TAG_OXY
-	data["bitflags"]["HEALING"] = REACTION_TAG_HEALING
-	data["bitflags"]["DAMAGING"] = REACTION_TAG_DAMAGING
-	data["bitflags"]["EXPLOSIVE"] = REACTION_TAG_EXPLOSIVE
-	data["bitflags"]["OTHER"] = REACTION_TAG_OTHER
-	data["bitflags"]["DANGEROUS"] = REACTION_TAG_DANGEROUS
-	data["bitflags"]["EASY"] = REACTION_TAG_EASY
-	data["bitflags"]["MODERATE"] = REACTION_TAG_MODERATE
-	data["bitflags"]["HARD"] = REACTION_TAG_HARD
-	data["bitflags"]["ORGAN"] = REACTION_TAG_ORGAN
-	data["bitflags"]["DRINK"] = REACTION_TAG_DRINK
-	data["bitflags"]["FOOD"] = REACTION_TAG_FOOD
-	data["bitflags"]["SLIME"] = REACTION_TAG_SLIME
-	data["bitflags"]["DRUG"] = REACTION_TAG_DRUG
-	data["bitflags"]["UNIQUE"] = REACTION_TAG_UNIQUE
-	data["bitflags"]["CHEMICAL"] = REACTION_TAG_CHEMICAL
-	data["bitflags"]["PLANT"] = REACTION_TAG_PLANT
-	data["bitflags"]["COMPETITIVE"] = REACTION_TAG_COMPETITIVE
+	for(var/readable_flag, real_flag in REACTION_TAG_READABLE)
+		data["bitflags"][readable_flag] = real_flag
 
 	return data
 
@@ -297,7 +276,7 @@
 	var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
 	return reaction.type
 
-/datum/reagents/ui_act(action, params)
+/datum/reagents/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -407,5 +386,12 @@
 		if("toggle_tag_competitive")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_COMPETITIVE
 			return TRUE
+		if("toggle_tag_component")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_COMPONENT
+			return TRUE
+		if("toggle_tag_active")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_ACTIVE
+			return TRUE
+
 		if("update_ui")
 			return TRUE

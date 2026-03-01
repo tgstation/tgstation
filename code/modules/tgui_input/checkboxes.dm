@@ -73,8 +73,7 @@
 /datum/tgui_checkbox_input/Destroy(force)
 	SStgui.close_uis(src)
 	state = null
-	QDEL_NULL(items)
-
+	items?.Cut()
 	return ..()
 
 /datum/tgui_checkbox_input/proc/wait()
@@ -115,7 +114,7 @@
 
 	return data
 
-/datum/tgui_checkbox_input/ui_act(action, list/params)
+/datum/tgui_checkbox_input/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

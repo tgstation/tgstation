@@ -11,7 +11,7 @@
 /obj/effect/landmark/singularity_act()
 	return
 
-/obj/effect/landmark/singularity_pull()
+/obj/effect/landmark/singularity_pull(atom/singularity, current_size)
 	return
 
 INITIALIZE_IMMEDIATE(/obj/effect/landmark)
@@ -306,6 +306,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.newplayer_start += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/start/pun_pun
+	name = JOB_PUN_PUN
+	icon = 'icons/mob/human/human.dmi'
+	icon_state = "monkey"
+
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
 
@@ -535,37 +540,41 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 				continue
 			hangover_debris += new /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty(turf_to_spawn_on)
 
-///Spawns the mob with some drugginess/drunkeness, and some disgust.
+///Spawns the mob with some drugginess/drunkenness, and some disgust.
 /obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)
 	if(!iscarbon(hangover_mob))
 		return
+
 	var/mob/living/carbon/spawned_carbon = hangover_mob
-	spawned_carbon.set_resting(TRUE, silent = TRUE)
-	if(prob(50))
-		spawned_carbon.adjust_drugginess(rand(30 SECONDS, 40 SECONDS))
-	else
-		spawned_carbon.adjust_drunk_effect(rand(15, 25))
-	spawned_carbon.adjust_disgust(rand(5, 55)) //How hungover are you?
-	if(spawned_carbon.head)
+	if(HAS_PERSONALITY(spawned_carbon, /datum/personality/teetotal))
+		spawned_carbon.add_mood_event("hungover", /datum/mood_event/teetotal_hangover)
+		spawned_carbon.adjust_disgust(30)
 		return
 
+	spawned_carbon.set_resting(TRUE, silent = TRUE)
+	if(HAS_PERSONALITY(spawned_carbon, /datum/personality/bibulous))
+		spawned_carbon.add_mood_event("hungover", /datum/mood_event/bibulous_hangover)
+		spawned_carbon.adjust_drunk_effect(rand(30, 60))
+		spawned_carbon.adjust_drugginess(rand(10 SECONDS, 20 SECONDS))
+		spawned_carbon.adjust_disgust(rand(30, 70))
+		return
+
+	spawned_carbon.add_mood_event("hungover", /datum/mood_event/normal_hangover)
+	spawned_carbon.adjust_disgust(rand(10, 50)) //How hungover are you?
+	if(prob(50))
+		spawned_carbon.adjust_drunk_effect(rand(15, 25))
+	else
+		spawned_carbon.adjust_drugginess(rand(30 SECONDS, 40 SECONDS))
+
 /obj/effect/landmark/start/hangover/JoinPlayerHere(mob/joining_mob, buckle)
-	. = ..()
-	make_hungover(joining_mob)
-
-/obj/effect/landmark/start/hangover/closet
-	name = "hangover spawn closet"
-	icon_state = "hangover_spawn_closet"
-
-/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
+	var/mob/created_joining_mob = ..()
+	make_hungover(created_joining_mob)
 	for(var/obj/structure/closet/closet in get_turf(src))
 		if(closet.opened)
 			continue
-		joining_mob.forceMove(closet)
-		make_hungover(joining_mob)
-		return
-
-	return ..() //Call parent as fallback
+		created_joining_mob.forceMove(closet)
+		return created_joining_mob
+	return created_joining_mob
 
 //Landmark that creates destinations for the navigate verb to path to
 /obj/effect/landmark/navigate_destination

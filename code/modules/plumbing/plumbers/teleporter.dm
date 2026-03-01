@@ -8,27 +8,22 @@
 	///whoever we teleport our chems to
 	var/obj/machinery/plumbing/receiver/target = null
 
-/obj/machinery/plumbing/sender/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/sender/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_demand, layer)
 
-/obj/machinery/plumbing/sender/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I))
-		return
-
-	var/obj/item/multitool/M = I
-
+/obj/machinery/plumbing/sender/multitool_act(mob/living/user, obj/item/multitool/M)
 	if(!istype(M.buffer, /obj/machinery/plumbing/receiver))
 		to_chat(user, span_warning("Invalid buffer."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(target)
 		lose_teleport_target()
 
 	set_teleport_target(M.buffer)
 
-	to_chat(user, span_green("You succesfully link [src] to the [M.buffer]."))
-	return TRUE
+	to_chat(user, span_green("You successfully link [src] to the [M.buffer]."))
+	return ITEM_INTERACT_SUCCESS
 
 ///Lose our previous target and make our previous target lose us. Seperate proc because I feel like I'll need this again
 /obj/machinery/plumbing/sender/proc/lose_teleport_target()
@@ -67,14 +62,10 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
-/obj/machinery/plumbing/receiver/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I))
-		return
-
-	var/obj/item/multitool/M = I
+/obj/machinery/plumbing/receiver/multitool_act(mob/living/user, obj/item/multitool/M)
 	M.set_buffer(src)
 	balloon_alert(user, "saved to multitool buffer")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/plumbing/receiver/process(seconds_per_tick)
 	if(!is_operational || panel_open)
@@ -107,7 +98,7 @@
 
 	senders = list()
 
-/obj/machinery/plumbing/receiver/attackby(obj/item/I, mob/user, params)
+/obj/machinery/plumbing/receiver/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, icon_state + "_open", initial(icon_state), I))
 		update_appearance()
 		return

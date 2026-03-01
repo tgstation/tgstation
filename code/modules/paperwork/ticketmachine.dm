@@ -31,7 +31,8 @@
 /obj/machinery/ticket_machine/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/machinery/ticket_machine/Destroy()
 	for(var/obj/item/ticket_machine_ticket/ticket in tickets)
@@ -49,13 +50,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	. += span_notice("The ticket machine shows that ticket #[current_number] is currently being served.")
 	. += span_notice("You can take a ticket out with <b>Left-Click</b> to be number [ticket_number + 1] in queue.")
 
-/obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
-		return
-	var/obj/item/multitool/M = I
+/obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/multitool/M)
 	M.set_buffer(src)
 	balloon_alert(user, "saved to multitool buffer")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ticket_machine/emag_act(mob/user, obj/item/card/emag/emag_card) //Emag the ticket machine to dispense burning tickets, as well as randomize its number to destroy the HoP's mind.
 	if(obj_flags & EMAGGED)
@@ -90,7 +88,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	if(LAZYLEN(tickets))
 		current_ticket = tickets[1]
 		current_number++ //Increment the one we're serving.
-		playsound(src, 'sound/misc/announce_dig.ogg', 50, FALSE)
+		playsound(src, 'sound/announcer/announcement/announce_dig.ogg', 50, FALSE)
 		say("Now serving [current_ticket]!")
 		if(!(obj_flags & EMAGGED))
 			current_ticket.audible_message(span_notice("\the [current_ticket] vibrates!"), hearing_distance = SAMETILE_MESSAGE_RANGE)
@@ -180,7 +178,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 			maptext_x = 4
 	maptext = MAPTEXT(current_number) //Finally, apply the maptext
 
-/obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
+/obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		if(!(ticket_number >= max_number))
@@ -216,7 +214,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	if((user_ref in ticket_holders) && !(obj_flags & EMAGGED))
 		to_chat(user, span_warning("You already have a ticket!"))
 		return
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number++
 	to_chat(user, span_notice("You take a ticket from [src], looks like you're number [ticket_number] in queue..."))
 	var/obj/item/ticket_machine_ticket/theirticket = new (get_turf(src), ticket_number)
@@ -256,6 +254,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		name += " #[num]"
 		saved_maptext = MAPTEXT(num)
 		maptext = saved_maptext
+	AddElement(/datum/element/burn_on_item_ignition)
 
 /obj/item/ticket_machine_ticket/examine(mob/user)
 	. = ..()
@@ -267,12 +266,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/ticket_machine_ticket/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	maptext = saved_maptext //For some reason, storage code removes all maptext off objs, this stops its number from being wiped off when taken out of storage.
-
-/obj/item/ticket_machine_ticket/attackby(obj/item/P, mob/living/carbon/human/user, params) //Stolen from papercode
-	if(burn_paper_product_attackby_check(P, user))
-		return
-
-	return ..()
 
 /obj/item/ticket_machine_ticket/Destroy()
 	if(source)

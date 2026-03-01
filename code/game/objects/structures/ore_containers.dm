@@ -1,7 +1,7 @@
 ///structure to contain ores
 /obj/structure/ore_container
 
-/obj/structure/ore_container/attackby(obj/item/ore, mob/living/carbon/human/user, list/modifiers)
+/obj/structure/ore_container/attackby(obj/item/ore, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	if(istype(ore, /obj/item/stack/ore) && !user.combat_mode)
 		ore.forceMove(src)
 		return
@@ -23,25 +23,16 @@
 		ui.open()
 
 /obj/structure/ore_container/ui_data(mob/user)
-	var/list/data = list()
-	data["ores"] = list()
+	var/list/ores = list()
 	for(var/obj/item/stack/ore/ore_item in contents)
-		data["ores"] += list(list(
+		ores += list(list(
 			"id" = REF(ore_item),
 			"name" = ore_item.name,
 			"amount" = ore_item.amount,
+			"icon" = ore_item::icon,
+			"icon_state" = ore_item::icon_state,
 		))
-	return data
-
-/obj/structure/ore_container/ui_static_data(mob/user)
-	var/list/data = list()
-	data["ore_images"] = list()
-	for(var/obj/item/stack/ore_item as anything in subtypesof(/obj/item/stack/ore))
-		data["ore_images"] += list(list(
-			"name" = initial(ore_item.name),
-			"icon" = icon2base64(getFlatIcon(image(icon = initial(ore_item.icon), icon_state = initial(ore_item.icon_state)), no_anim=TRUE))
-		))
-	return data
+	return list("ores" = ores)
 
 /obj/structure/ore_container/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

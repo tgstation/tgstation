@@ -70,6 +70,12 @@
 	  * Filled with nulls on init, populated only on publication.
 	*/
 	var/list/published_papers
+	/**
+	  * Assoc list of nodes queued for automatic research when there are enough points available
+	  * research_queue_nodes[node_id] = user_enqueued
+	*/
+	var/list/research_queue_nodes = list()
+
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
@@ -143,10 +149,10 @@
 		CHECK_TICK
 		if(get_available_nodes()[i] || get_researched_nodes()[i] || get_visible_nodes()[i])
 			receiver.hidden_nodes -= i //We can see it so let them see it too.
-	for(var/i in researched_nodes)
+	for(var/i in researched_nodes - receiver.researched_nodes)
 		CHECK_TICK
 		receiver.research_node_id(i, TRUE, FALSE, FALSE)
-	for(var/i in researched_designs)
+	for(var/i in researched_designs - receiver.researched_designs)
 		CHECK_TICK
 		receiver.add_design_by_id(i)
 	receiver.recalculate_nodes()
@@ -311,24 +317,55 @@
 	var/points_rewarded
 	if(completed_experiment.points_reward)
 		add_point_list(completed_experiment.points_reward)
-		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding "
-		var/list/english_list_keys = list()
-		for(var/points_type in completed_experiment.points_reward)
-			english_list_keys += "[completed_experiment.points_reward[points_type]] [points_type]"
-		points_rewarded += "[english_list(english_list_keys)] points"
+		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding [completed_experiment.get_points_reward_text()]"
 		result_text += points_rewarded
 	result_text += "!"
 
+	SEND_SIGNAL(src, COMSIG_TECHWEB_EXPERIMENT_COMPLETED, completed_experiment)
 	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb [id]/[organization][refund ? ", refunding [refund] points" : ""][points_rewarded].")
 	return result_text
 
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
 
-/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id)
-	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id)
+/datum/techweb/proc/enqueue_node(id, mob/user)
+	var/queue_first = FALSE
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/human_user = user
+		var/list/access = human_user.wear_id?.GetAccess()
+		if(ACCESS_RD in access)
+			queue_first = TRUE
 
-/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE)
+	if(id in research_queue_nodes)
+		if(queue_first)
+			research_queue_nodes.Remove(id) // Remove to be able to place first
+		else
+			return FALSE
+
+	for(var/node_id in research_queue_nodes)
+		if(research_queue_nodes[node_id] == user)
+			research_queue_nodes.Remove(node_id)
+
+	if (queue_first)
+		research_queue_nodes.Insert(1, id)
+	research_queue_nodes[id] = user
+
+	return TRUE
+
+/datum/techweb/proc/dequeue_node(id, mob/user)
+	if(!(id in research_queue_nodes))
+		return FALSE
+	if(research_queue_nodes[id] != user)
+		return FALSE
+
+	research_queue_nodes.Remove(id)
+
+	return TRUE
+
+/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id, atom/research_source)
+	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id, research_source)
+
+/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, atom/research_source)
 	if(!istype(node))
 		return FALSE
 	update_node_status(node)
@@ -376,6 +413,10 @@
 	// Avoid logging the same 300+ lines at the beginning of every round
 	if (MC_RUNNING())
 		log_research(log_message)
+
+	// Dequeue
+	if(node.id in research_queue_nodes)
+		research_queue_nodes.Remove(node.id)
 
 	return TRUE
 
@@ -446,7 +487,7 @@
 		return
 	if(researched)
 		researched_nodes[node.id] = TRUE
-		for(var/id in node.design_ids)
+		for(var/id in node.design_ids - researched_designs)
 			add_design(SSresearch.techweb_design_by_id(id))
 	else
 		if(available)
@@ -518,10 +559,13 @@
 		if(experiment.type != paper_to_add.experiment_path)
 			continue
 
-		experiment.completed = TRUE
-		var/announcetext = complete_experiment(experiment)
-		if(length(GLOB.experiment_handlers))
-			var/datum/component/experiment_handler/handler = GLOB.experiment_handlers[1]
-			handler.announce_message_to_all(announcetext)
+		experiment.finish_experiment(linked_web_override = src)
 
 	return TRUE
+
+/// Returns a flat list of all design datums this techweb has researched.
+/datum/techweb/proc/get_researched_design_datums()
+	var/list/designs = list()
+	for(var/id in researched_designs)
+		designs += SSresearch.techweb_design_by_id(id)
+	return designs

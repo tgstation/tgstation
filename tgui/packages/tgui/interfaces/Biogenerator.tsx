@@ -1,12 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { classes } from 'common/react';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
-  Icon,
   LabeledList,
   NoticeBox,
   NumberInput,
@@ -15,7 +10,10 @@ import {
   Stack,
   Table,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+import { type BooleanLike, classes } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -81,7 +79,7 @@ export function Biogenerator(props) {
               ))}
             </Tabs>
           </Stack.Item>
-          <Stack.Item grow mt="2px">
+          <Stack.Item grow>
             <Section fill scrollable>
               <Table>
                 {items.map((item) => (
@@ -118,9 +116,8 @@ function Controls() {
             <Button
               width={7}
               lineHeight={2}
-              align="center"
               icon="cog"
-              iconSpin={processing ? 1 : 0}
+              iconSpin={processing}
               disabled={!can_process || processing}
               onClick={() => act('activate')}
             >
@@ -239,9 +236,10 @@ function Item(props: Props) {
       </Table.Cell>
       <Table.Cell collapsing>
         <Button
-          align="right"
           width={5}
-          pr={0}
+          icon="leaf"
+          iconPosition="right"
+          textAlign="right"
           disabled={disabled}
           onClick={() =>
             act('create', {
@@ -250,7 +248,7 @@ function Item(props: Props) {
             })
           }
         >
-          {parseFloat((cost * amount).toFixed(2))} <Icon name="leaf" />
+          {parseFloat((cost * amount).toFixed(2))}
         </Button>
       </Table.Cell>
     </Table.Row>

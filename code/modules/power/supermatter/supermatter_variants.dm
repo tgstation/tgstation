@@ -53,10 +53,28 @@
 	anchored = TRUE
 	moveable = FALSE
 
-/atom/movable/supermatter_warp_effect
-	plane = GRAVITY_PULSE_PLANE
-	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
-	icon = 'icons/effects/light_overlays/light_352.dmi'
-	icon_state = "light"
-	pixel_x = -176
-	pixel_y = -176
+/// Normal sm but small (sm sword recipe element) (wiz only) and adamantine pedestal for it
+/obj/machinery/power/supermatter_crystal/small
+	name = "strangely small supermatter crystal"
+	desc = "A strangely translucent and iridescent crystal on an adamantine pedestal. It looks like it should be a bit bigger..."
+	base_icon_state = "sm_small"
+	icon_state = "sm_small"
+	moveable = TRUE
+	anchored = FALSE
+	custom_materials = list(/datum/material/adamantine = SHEET_MATERIAL_AMOUNT * 20, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
+
+/obj/machinery/power/supermatter_crystal/small/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/gps, "Adamantium Signal")
+	priority_announce("Anomalous crystal detected onboard. Location is marked on every GPS device.", "Nanotrasen Anomaly Department Announcement")
+
+/obj/item/adamantine_pedestal
+	name = "adamantine pedestal"
+	desc = "An adamantine pedestal. It looks like it should have something small but massive on top."
+	icon = 'icons/obj/machines/engine/supermatter.dmi'
+	icon_state = "pedestal"
+	w_class = WEIGHT_CLASS_HUGE
+	throw_speed = 1
+	throw_range = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	custom_materials = list(/datum/material/adamantine = SHEET_MATERIAL_AMOUNT * 20)

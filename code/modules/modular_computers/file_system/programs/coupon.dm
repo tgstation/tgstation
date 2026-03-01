@@ -14,7 +14,7 @@
 	can_run_on_flags = PROGRAM_PDA //It relies on the PDA messenger to let you know of new codes
 	detomatix_resistance = DETOMATIX_RESIST_MALUS
 
-/datum/computer_file/program/coupon/on_install()
+/datum/computer_file/program/coupon/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	///set the discount_coupons list, which means SSmodular_computers will now begin to periodically produce new coupon codes.
 	LAZYINITLIST(SSmodular_computers.discount_coupons)
@@ -30,7 +30,7 @@
 	data["printed_coupons"] = list()
 	data["redeemed_coupons"] = list()
 	data["valid_id"] = FALSE
-	var/obj/item/card/id/user_id = computer.computer_id_slot
+	var/obj/item/card/id/user_id = computer.stored_id
 	if(user_id?.registered_account.add_to_accounts)
 		for(var/datum/coupon_code/coupon as anything in user_id.registered_account.redeemed_coupons)
 			var/list/coupon_data = list(
@@ -46,7 +46,7 @@
 
 /datum/computer_file/program/coupon/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	var/obj/item/card/id/user_id = computer.computer_id_slot
+	var/obj/item/card/id/user_id = computer.stored_id
 	if(!(user_id?.registered_account.add_to_accounts))
 		return TRUE
 	switch(action)
@@ -88,10 +88,10 @@
  * Normally, modular PCs can be print paper already, but I find this additional step
  * to be less lazy and fitting to the "I gotta go print it before it expires" aspect of it.
  */
-/datum/computer_file/program/coupon/tap(atom/tapped_atom, mob/living/user, params)
+/datum/computer_file/program/coupon/tap(atom/tapped_atom, mob/living/user, list/modifiers)
 	if(!istype(tapped_atom, /obj/machinery/photocopier))
 		return FALSE
-	var/obj/item/card/id/user_id = computer.computer_id_slot
+	var/obj/item/card/id/user_id = computer.stored_id
 	if(!(user_id?.registered_account))
 		computer.balloon_alert(user, "no bank account found!")
 		return TRUE

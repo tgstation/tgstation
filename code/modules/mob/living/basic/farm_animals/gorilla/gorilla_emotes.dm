@@ -1,4 +1,5 @@
 /datum/emote/gorilla
+	abstract_type = /datum/emote/gorilla
 	mob_type_allowed_typecache = /mob/living/basic/gorilla
 	mob_type_blacklist_typecache = list()
 
@@ -8,4 +9,4 @@
 	message = "oogas."
 	message_param = "oogas at %t."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	sound = 'sound/creatures/gorilla.ogg'
+	sound = 'sound/mobs/non-humanoids/gorilla/gorilla.ogg'

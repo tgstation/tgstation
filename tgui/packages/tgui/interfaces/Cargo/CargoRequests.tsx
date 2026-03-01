@@ -1,45 +1,30 @@
-import { decodeHtmlEntities } from 'common/string';
+import { Button, NoticeBox, Section, Table } from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
+import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
-import { Button, NoticeBox, Section, Table } from '../../components';
-import { TableCell, TableRow } from '../../components/Table';
-import { formatMoney } from '../../format';
-import { CargoData } from './types';
+import type { CargoData } from './types';
 
 export function CargoRequests(props) {
   const { act, data } = useBackend<CargoData>();
-  const { requests = [], requestonly, can_send, can_approve_requests } = data;
+  const { requests = [], requestonly, can_send, can_approve_requests, displayed_currency_name} = data;
 
   return (
-    <Section
-      fill
-      scrollable
-      title="Active Requests"
-      buttons={
-        !requestonly && (
-          <Button
-            icon="times"
-            color="transparent"
-            onClick={() => act('denyall')}
-          >
-            Clear
-          </Button>
-        )
-      }
-    >
+    <Section fill scrollable>
       {requests.length === 0 && <NoticeBox success>No Requests</NoticeBox>}
       {requests.length > 0 && (
         <Table>
-          <TableRow header color="gray">
-            <TableCell>ID</TableCell>
-            <TableCell>Object</TableCell>
-            <TableCell>Orderer</TableCell>
-            <TableCell>Reason</TableCell>
-            <TableCell>Cost</TableCell>
+          <Table.Row header color="gray">
+            <Table.Cell>ID</Table.Cell>
+            <Table.Cell>Object</Table.Cell>
+            <Table.Cell>Orderer</Table.Cell>
+            <Table.Cell>Reason</Table.Cell>
+            <Table.Cell>Account</Table.Cell>
+            <Table.Cell>Cost</Table.Cell>
             {(!requestonly || !!can_send) && !!can_approve_requests && (
-              <TableCell>Actions</TableCell>
+              <Table.Cell>Actions</Table.Cell>
             )}
-          </TableRow>
+          </Table.Row>
 
           {requests.map((request) => (
             <Table.Row key={request.id} className="candystripe" color="label">
@@ -51,8 +36,11 @@ export function CargoRequests(props) {
               <Table.Cell color="lightgray" width="25%">
                 <i>{decodeHtmlEntities(request.reason)}</i>
               </Table.Cell>
+              <Table.Cell collapsing>
+                {request.account}
+              </Table.Cell>
               <Table.Cell collapsing color="gold">
-                {formatMoney(request.cost)} cr
+                {formatMoney(request.cost)}{displayed_currency_name}
               </Table.Cell>
               {(!requestonly || !!can_send) && !!can_approve_requests && (
                 <Table.Cell collapsing>

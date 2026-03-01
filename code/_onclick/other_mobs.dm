@@ -109,11 +109,11 @@
 	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED))
 		var/ignore_flags = NONE
 		if(interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED)
-			ignore_flags |= IGNORE_RESTRAINTS
+			ignore_flags |= INCAPABLE_RESTRAINTS
 		if(!(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB))
-			ignore_flags |= IGNORE_GRAB
+			ignore_flags |= INCAPABLE_GRAB
 
-		if(user.incapacitated(ignore_flags))
+		if(INCAPACITATED_IGNORING(user, ignore_flags))
 			return FALSE
 	return TRUE
 
@@ -175,7 +175,7 @@
  * Called when a simple animal is unarmed attacking / clicking on this atom.
  */
 /atom/proc/attack_animal(mob/user, list/modifiers)
-	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
+	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user, modifiers)
 
 /**
  * Called when a simple animal or basic mob right clicks an atom.
@@ -200,7 +200,8 @@
 /atom/proc/attack_paw(mob/user, list/modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
-	return FALSE
+	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_PAW)
+		. = _try_interact(user)
 
 
 /*
@@ -234,7 +235,7 @@
 	return TRUE
 
 /atom/proc/attack_larva(mob/user, list/modifiers)
-	return
+	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_LARVA, user, modifiers)
 
 /**
  * Called when an alien larva right clicks an atom.

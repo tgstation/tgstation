@@ -9,7 +9,27 @@
 	armor_type = /datum/armor/poddoor_shutters
 	max_integrity = 100
 	recipe_type = /datum/crafting_recipe/shutters
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	animation_sound = 'sound/machines/shutter.ogg'
+	show_nav_computer_icon = FALSE
+
+/obj/machinery/door/poddoor/shutters/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 1.388 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 1.388 SECONDS
+
+/obj/machinery/door/poddoor/shutters/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.76 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 1.388 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.152 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 1.388 SECONDS
 
 /obj/machinery/door/poddoor/shutters/preopen
 	icon_state = "open"
@@ -18,6 +38,7 @@
 
 /obj/machinery/door/poddoor/shutters/preopen/deconstructed
 	deconstruction = BLASTDOOR_NEEDS_WIRES
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/machinery/door/poddoor/shutters/indestructible
 	name = "hardened shutters"

@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	update_morgue_status()
 	update_appearance(UPDATE_ICON_STATE)
 	if(morgue_state == MORGUE_HAS_REVIVABLE && beeper && COOLDOWN_FINISHED(src, next_beep))
-		playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
+		playsound(src, 'sound/items/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
 		COOLDOWN_START(src, next_beep, beep_cooldown)
 
 	if(!connected || connected.loc != src)
@@ -425,6 +425,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 /obj/structure/bodycontainer/crematorium/Initialize(mapload)
 	. = ..()
+	if(mapload && check_holidays(ICE_CREAM_DAY) && !istype(src, /obj/structure/bodycontainer/crematorium/creamatorium))
+		var/obj/structure/bodycontainer/crematorium/creamatorium/creamy = new(loc)
+		creamy.id = id
+		return INITIALIZE_HINT_QDEL
 	GLOB.crematoriums += src
 
 /obj/structure/bodycontainer/crematorium/Destroy()
@@ -477,7 +481,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			if(user.stat != DEAD)
 				user.investigate_log("has died from being cremated.", INVESTIGATE_DEATHS)
 			M.death(TRUE)
-			if(M) //some animals get automatically deleted on death.
+			if(!QDELETED(M)) //some animals get automatically deleted on death.
 				M.ghostize()
 				qdel(M)
 
@@ -550,7 +554,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		to_chat(user, span_warning("That's not connected to anything!"))
 	add_fingerprint(user)
 
-/obj/structure/tray/attackby(obj/P, mob/user, params)
+/obj/structure/tray/attackby(obj/P, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(P, /obj/item/riding_offhand))
 		return ..()
 

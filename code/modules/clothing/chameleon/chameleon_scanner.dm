@@ -6,6 +6,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_TINY
 	actions_types = list(/datum/action/item_action/chameleon/change/scanner)
+	action_slots = ALL
 	throw_speed = 3
 	/// Range that we can scan people
 	var/scan_range = 5
@@ -46,10 +47,14 @@
 /obj/item/chameleon_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return scan_target(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-/obj/item/chameleon_scanner/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
+/obj/item/chameleon_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
-/obj/item/chameleon_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/chameleon_scanner/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with) && !isturf(interacting_with))
+		return NONE
 	var/list/scanned_outfit = scan_target(interacting_with, user)
 	if(length(scanned_outfit))
 		var/datum/outfit/empty_outfit = new()

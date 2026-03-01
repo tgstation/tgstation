@@ -1,6 +1,6 @@
 # Required Tests (Continuous Integration)
 
-> ℹ️ This is not the documentation for *writing* a test. You can find that in [the unit tests folder](../../code/modules/unit_tests/README.md).
+> ℹ️ This is not the documentation for _writing_ a test. You can find that in [the unit tests folder](../../code/modules/unit_tests/README.md).
 
 Every pull request runs through a series of checks and tests to ensure its quality.
 
@@ -10,7 +10,7 @@ If after reading this guide you still do not understand why a check suite is fai
 
 ## Run Linters
 
-The [linters](https://en.wikipedia.org/wiki/Lint_(software)) check the maps and code for common mistakes. This includes things like:
+The [linters](<https://en.wikipedia.org/wiki/Lint_(software)>) check the maps and code for common mistakes. This includes things like:
 
 - Files not being included in the .dme
 - Misspelling Nanotrasen as NanoTrasen
@@ -30,9 +30,9 @@ You can also see the errors on the "Files Changed" tab of your pull request.
 
 Linter failures are usually very easy to fix, and will hopefully be clear from the message alone.
 
-## Compile Maps / Windows Build
+## Compile Maps
 
-These two check nothing more than that your code actually compiles, with slightly different requirements. Compile Maps forces all maps (including space ruins etc) to be compiled in, to make sure all of them are valid, and Windows Build makes sure your code actually compiles on Windows. If these tests pass, but other tests fail, it means your code *compiles* but not necessarily that it *works*.
+This checks nothing more than that your code actually compiles, with slightly different requirements. Compile Maps forces all maps (including space ruins etc) to be compiled in, to make sure all of them are valid. If these tests pass, but other tests fail, it means your code _compiles_ but not necessarily that it _works_.
 
 ## Integration Tests
 
@@ -44,7 +44,7 @@ Sometimes a test will fail on only one map, and not the others. This means two t
 
 Screenshot tests exist to make sure things look the same before and after your commit. This helps us detect bugs such as humans not properly rendering clothing/limbs.
 
-If your commit *does* change the appearance of something saved in a screenshot test, you will automatically receive a message on your PR showing you the before and after. From here, it will contain instructions for how to resolve the issue, whether it's a bug or intentional.
+If your commit _does_ change the appearance of something saved in a screenshot test, you will automatically receive a message on your PR showing you the before and after. From here, it will contain instructions for how to resolve the issue, whether it's a bug or intentional.
 
 ## Codeowner Reviews
 

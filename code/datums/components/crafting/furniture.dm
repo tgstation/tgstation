@@ -22,8 +22,18 @@
 	result = /obj/structure/aquarium
 	time = 10 SECONDS
 	reqs = list(
-		/obj/item/stack/sheet/iron = 15,
+		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/sheet/glass = 10,
+		/obj/item/aquarium_kit = 1,
+	)
+	category = CAT_FURNITURE
+
+/datum/crafting_recipe/fish_tank
+	name = "Portable Fish Tank"
+	result = /obj/item/fish_tank
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/plastic = 5,
 		/obj/item/aquarium_kit = 1,
 	)
 	category = CAT_FURNITURE
@@ -71,3 +81,40 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	category = CAT_FURNITURE
 	time = 10 SECONDS
+
+/datum/crafting_recipe/lamp
+	name = "Desk Lamp"
+	result = /obj/item/flashlight/lamp
+	reqs = list(
+		/obj/item/flashlight = 1,
+		/obj/item/stack/rods = 1,
+		/obj/item/light/bulb = 1,
+	)
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	category = CAT_FURNITURE
+
+/datum/crafting_recipe/lamp/New()
+	. = ..()
+	LAZYADD(blacklist, subtypesof(/obj/item/flashlight))
+
+/datum/crafting_recipe/lamp/green
+	name = "Green Desk Lamp"
+	result = /obj/item/flashlight/lamp/green
+
+/datum/crafting_recipe/banana_lamp
+	name = "Banana Lamp"
+	result = /obj/item/flashlight/lamp/bananalamp
+	reqs = list(
+		/obj/item/flashlight/lamp = 1,
+		/obj/item/grown/bananapeel = 1,
+	)
+	blacklist = list(
+		/obj/item/flashlight/lamp/bananalamp,
+		/obj/item/flashlight/lamp/space_bubble,
+	)
+	requirements_mats_blacklist = list(/obj/item/grown/bananapeel)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	category = CAT_FURNITURE
+
+

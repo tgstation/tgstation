@@ -59,7 +59,7 @@
 					message_out = "\"[message_in]\""
 				else if(!user.has_language(language))
 					// Language unknown: scramble
-					message_out = "\"[language_instance.scramble(message_in)]\""
+					message_out = "\"[language_instance.scramble_paragraph(message_in, user.get_partially_understood_languages())]\""
 				else
 					message_out = "(Unintelligible)"
 				packet_out["message"] = message_out
@@ -95,7 +95,7 @@
 	return data
 
 
-/obj/machinery/computer/telecomms/server/ui_act(action, params)
+/obj/machinery/computer/telecomms/server/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

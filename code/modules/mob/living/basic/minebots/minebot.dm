@@ -18,10 +18,11 @@
 	obj_damage = 10
 	attack_verb_continuous = "drills"
 	attack_verb_simple = "drill"
-	attack_sound = 'sound/weapons/circsawhit.ogg'
+	attack_sound = 'sound/items/weapons/circsawhit.ogg'
 	sentience_type = SENTIENCE_MINEBOT
 	speak_emote = list("states")
 	mob_biotypes = MOB_ROBOTIC
+	faction = list(FACTION_STATION, FACTION_NEUTRAL)
 	death_message = "blows apart!"
 	light_system = OVERLAY_LIGHT
 	light_range = 6
@@ -31,6 +32,7 @@
 	light_on = FALSE
 	combat_mode = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	///the gun we use to kill
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun
 	///our normal overlay
@@ -42,13 +44,14 @@
 	///the commands our owner can give us
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle/minebot,
+		/datum/pet_command/move,
 		/datum/pet_command/protect_owner/minebot,
 		/datum/pet_command/minebot_ability/light,
 		/datum/pet_command/minebot_ability/dump,
 		/datum/pet_command/automate_mining,
 		/datum/pet_command/free/minebot,
-		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/minebot,
+		/datum/pet_command/follow/start_active,
+		/datum/pet_command/attack/minebot,
 	)
 	///possible colors the bot can have
 	var/static/list/possible_colors= list(
@@ -63,9 +66,8 @@
 	neutral_overlay = mutable_appearance(icon = 'icons/mob/silicon/aibots.dmi', icon_state = "mining_drone_grey")
 	combat_overlay = mutable_appearance(icon = 'icons/mob/silicon/aibots.dmi', icon_state = "mining_drone_offense_grey")
 	AddComponent(/datum/component/obeys_commands, pet_commands)
-	var/static/list/death_drops = list(/obj/effect/decal/cleanable/robot_debris/old)
-	AddElement(/datum/element/death_drops, death_drops)
-	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
+	AddElement(/datum/element/death_drops, /obj/effect/decal/cleanable/blood/gibs/robot_debris/old)
+	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 
 	var/static/list/innate_actions = list(
@@ -81,11 +83,7 @@
 	stored_gun = new(src)
 	var/obj/item/implant/radio/mining/comms = new(src)
 	comms.implant(src)
-	var/static/list/accesses = list(
-		/datum/id_trim/job/shaft_miner,
-	)
-	AddElement(/datum/element/mob_access, accesses)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	assign_access()
 
 /mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE)
 	. = ..()
@@ -121,13 +119,13 @@
 		user.balloon_alert(user, "at full integrity!")
 		return TRUE
 	if(welder.use_tool(src, user, 0, volume=40))
-		adjustBruteLoss(-15)
+		adjust_brute_loss(-15)
 		user.balloon_alert(user, "successfully repaired!")
 	return TRUE
 
-/mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, params)
+/mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)
 	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
-		item_used.melee_attack_chain(user, stored_gun, params)
+		item_used.melee_attack_chain(user, stored_gun, modifiers)
 		return
 
 	return ..()
@@ -167,7 +165,7 @@
 
 /mob/living/basic/mining_drone/ui_static_data(mob/user)
 	var/list/data = list()
-	data["bot_icon"] = icon2base64(getFlatIcon(src))
+	data["bot_icon"] = icon2base64(getFlatIcon(src, no_anim = TRUE))
 	data["possible_colors"] = list()
 	for(var/color in possible_colors)
 		data["possible_colors"] += list(list(
@@ -250,13 +248,15 @@
 	QDEL_NULL(stored_gun)
 	return ..()
 
-/mob/living/basic/mining_drone/proc/pre_attack(datum/source, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/mining_drone/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(!istype(target, /mob/living/basic/node_drone))
-		return NONE
-	INVOKE_ASYNC(src, PROC_REF(repair_node_drone), target)
-	return COMPONENT_HOSTILE_NO_ATTACK
+		return TRUE
+	repair_node_drone(target)
+	return FALSE
 
 /mob/living/basic/mining_drone/proc/repair_node_drone(mob/living/my_target)
 	do_sparks(5, FALSE, source = my_target)
@@ -270,3 +270,10 @@
 		return
 
 	. += combat_mode ? combat_overlay : neutral_overlay
+
+/mob/living/basic/mining_drone/proc/assign_access()
+	var/static/list/required_access
+	if(isnull(required_access))
+		var/datum/id_trim/access_card = SSid_access.trim_singletons_by_path[/datum/id_trim/job/shaft_miner]
+		required_access = access_card.access
+	AddComponent(/datum/component/simple_access, required_access)

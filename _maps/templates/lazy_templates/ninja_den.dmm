@@ -76,7 +76,7 @@
 /turf/open/floor/bamboo/tatami/purple,
 /area/centcom/central_command_areas/holding)
 "bH" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "bO" = (
@@ -532,9 +532,9 @@
 /area/centcom/central_command_areas/holding)
 "ni" = (
 /obj/structure/rack,
-/obj/item/nullrod/claymore/saber/red{
+/obj/item/melee/energy/sword/nullrod/red{
 	damtype = "stamina";
-	force = 30
+	active_force = 30
 	},
 /obj/item/nullrod/claymore/katana{
 	damtype = "stamina";
@@ -898,9 +898,9 @@
 /area/centcom/central_command_areas/holding)
 "vr" = (
 /obj/structure/rack,
-/obj/item/nullrod/claymore/saber{
+/obj/item/melee/energy/sword/nullrod{
 	damtype = "stamina";
-	force = 30;
+	active_force = 30;
 	pixel_x = 5;
 	pixel_y = -3
 	},
@@ -1041,7 +1041,6 @@
 /obj/machinery/vending/coffee{
 	default_price = 0;
 	extra_price = 0;
-	fair_market_price = 0;
 	name = "\improper Jim Norton's Quebecois Coffee"
 	},
 /turf/open/floor/wood/large,
@@ -1059,7 +1058,6 @@
 /area/centcom/central_command_areas/holding)
 "zU" = (
 /obj/structure/table/wood,
-/obj/item/toy/plush/goatplushie,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
@@ -1567,7 +1565,6 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "JV" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/item/food/grown/rice,
 /obj/item/food/grown/rice,
 /obj/item/food/grown/rice,
@@ -1583,6 +1580,9 @@
 /obj/item/food/grown/onion/red,
 /obj/item/food/grown/onion/red,
 /obj/item/food/grown/coffee,
+/obj/structure/closet/secure_closet/freezer/fridge/open{
+	name = "kitchen cabinet"
+	},
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "Kb" = (
@@ -1650,15 +1650,15 @@
 /area/centcom/central_command_areas/holding)
 "Mz" = (
 /obj/structure/closet,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/machinery/iv_drip,
 /obj/item/emergency_bed,
 /obj/item/storage/medkit/regular,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
-/obj/item/organ/internal/heart/cybernetic/tier2,
-/obj/item/organ/internal/heart/cybernetic/tier2,
+/obj/item/organ/heart/cybernetic/tier2,
+/obj/item/organ/heart/cybernetic/tier2,
 /obj/item/defibrillator,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
@@ -1691,7 +1691,6 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/condiment/enzyme{
-	layer = 5;
 	pixel_x = 10;
 	pixel_y = 2
 	},
@@ -2040,9 +2039,7 @@
 /obj/item/food/grown/cabbage,
 /obj/item/food/grown/cherries,
 /obj/item/food/grown/cherries,
-/obj/item/reagent_containers/condiment/enzyme{
-	layer = 5
-	},
+/obj/item/reagent_containers/condiment/enzyme,
 /obj/item/food/grown/redbeet,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)

@@ -47,7 +47,7 @@
 	QDEL_LIST(random_targeted_spells)
 	return ..()
 
-/datum/disease/wizarditis/stage_act(seconds_per_tick, times_fired)
+/datum/disease/wizarditis/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -99,7 +99,7 @@
 
 				var/datum/action/cooldown/spell/picked = pick(random_spells)
 				picked.Activate(affected_mob)
-				affected_mob.sneeze()
+				affected_mob.emote("sneeze")
 				return
 
 /datum/disease/wizarditis/proc/spawn_wizard_clothes(chance = 0)

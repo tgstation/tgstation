@@ -24,11 +24,11 @@
 		action_text = "",\
 		complete_text = "",\
 		required_modifier = RIGHT_CLICK,\
+		extra_checks = CALLBACK(src, PROC_REF(is_deployed)),\
 		after_healed = CALLBACK(src, PROC_REF(after_healed)),\
 	)
 
-	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	medsensor.show_to(src)
+	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
 
 	var/datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/teleport = new(src)
 	teleport.Grant(src)
@@ -134,7 +134,7 @@
 /// Start teleporting
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/perform_teleport(mob/living/source, atom/target)
 	source.do_attack_animation(target)
-	playsound(target, 'sound/weapons/punch1.ogg', 50, TRUE, TRUE, frequency = -1)
+	playsound(target, 'sound/items/weapons/punch1.ogg', 50, TRUE, TRUE, frequency = -1)
 	source.balloon_alert(source, "teleporting...")
 	target.visible_message(
 		span_danger("[target] starts to glow faintly!"), \

@@ -14,15 +14,16 @@
 /obj/item/clothing/head/wig/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	AddComponent(/datum/component/hat_stabilizer, loose_hat = FALSE)
 
 /obj/item/clothing/head/wig/equipped(mob/user, slot)
 	. = ..()
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
-		item_flags |= EXAMINE_SKIP
+		ADD_TRAIT(src, TRAIT_EXAMINE_SKIP, CLOTHING_TRAIT)
 
 /obj/item/clothing/head/wig/dropped(mob/user)
 	. = ..()
-	item_flags &= ~EXAMINE_SKIP
+	REMOVE_TRAIT(src, TRAIT_EXAMINE_SKIP, CLOTHING_TRAIT)
 
 /obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/hair/hair_style = SSaccessories.hairstyles_list[hairstyle]
@@ -42,7 +43,7 @@
 
 	var/mutable_appearance/hair_overlay = mutable_appearance(hair.icon, hair.icon_state, layer = -HAIR_LAYER, appearance_flags = RESET_COLOR)
 	hair_overlay.color = color
-	hair_overlay.pixel_y = hair.y_offset
+	hair_overlay.pixel_z = hair.y_offset
 	. += hair_overlay
 
 	// So that the wig actually blocks emissives.
@@ -50,7 +51,7 @@
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", SSaccessories.hairstyles_list - "Bald")
-	var/newcolor = adjustablecolor ? input(usr,"","Choose Color",color) as color|null : null
+	var/newcolor = adjustablecolor ? tgui_color_picker(usr,"","Choose Color",color) : null
 	if(!user.can_perform_action(src))
 		return
 	if(new_style && new_style != hairstyle)

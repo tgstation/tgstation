@@ -1,7 +1,7 @@
 /datum/quirk/item_quirk/blindness
 	name = "Blind"
 	desc = "You are completely blind, nothing can counteract this."
-	icon = FA_ICON_EYE_SLASH
+	icon = FA_ICON_BLIND
 	value = -16
 	gain_text = span_danger("You can't see anything.")
 	lose_text = span_notice("You miraculously gain back your vision.")
@@ -18,7 +18,12 @@
 	var/obj/item/clothing/glasses/blindfold/white/blindfold = new
 	blindfold.add_atom_colour(client_source?.prefs.read_preference(/datum/preference/color/blindfold_color), FIXED_COLOUR_PRIORITY)
 	blindfold.colored_before = TRUE
-	give_item_to_holder(blindfold, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(blindfold, list(LOCATION_EYES, LOCATION_HANDS))
+
+/datum/quirk/item_quirk/blindness/is_species_appropriate(datum/species/mob_species)
+	if(ispath(mob_species, /datum/species/dullahan))
+		return FALSE
+	return ..()
 
 /datum/quirk/item_quirk/blindness/add(client/client_source)
 	quirk_holder.become_blind(QUIRK_TRAIT)

@@ -55,7 +55,7 @@
 	return data
 
 /obj/effect/fun_balloon/sentience/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /obj/effect/fun_balloon/sentience/ui_status(mob/user, datum/ui_state/state)
 	if(popped)
@@ -64,7 +64,7 @@
 		return UI_INTERACTIVE
 	return ..()
 
-/obj/effect/fun_balloon/sentience/ui_act(action, list/params)
+/obj/effect/fun_balloon/sentience/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -112,7 +112,7 @@
 
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(FALSE)
-		body.key = C.key
+		body.PossessByPlayer(C.key)
 		if (make_antag)
 			body.mind.add_antag_datum(antag_type)
 			continue
@@ -135,11 +135,11 @@
 	var/effect_range = 5
 
 /obj/effect/fun_balloon/scatter/effect()
-	for(var/mob/living/M in range(effect_range, get_turf(src)))
-		var/turf/T = find_safe_turf(zlevel = src.z)
-		new /obj/effect/temp_visual/gravpush(get_turf(M))
-		M.forceMove(T)
-		to_chat(M, span_notice("Pop!"), confidential = TRUE)
+	for(var/mob/living/dispersed_mob in range(effect_range, get_turf(src)))
+		var/turf/drop_off = find_safe_turf(z)
+		new /obj/effect/temp_visual/gravpush(get_turf(dispersed_mob))
+		dispersed_mob.forceMove(drop_off)
+		dispersed_mob.balloon_alert(dispersed_mob, "pop!")
 
 // ----------- Station Crash
 // Can't think of anywhere better to put it right now

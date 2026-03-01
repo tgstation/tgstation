@@ -21,6 +21,6 @@
 
 /obj/item/door_seal/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is sealing [user.p_them()]self off from the world with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
+	playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE)
 	return BRUTELOSS
 

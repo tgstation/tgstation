@@ -8,14 +8,14 @@
 	agent = "Shitty Adrenal Glands"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spreading_modifier = 1
-	desc = "If left untreated the subject will suffer from lethargy, dizziness and periodic loss of conciousness."
+	desc = "If left untreated the subject will suffer from lethargy, dizziness and periodic loss of consciousness."
 	severity = DISEASE_SEVERITY_MEDIUM
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	spread_text = "Organ failure"
 	visibility_flags = HIDDEN_PANDEMIC
 	bypasses_immunity = TRUE
 
-/datum/disease/adrenal_crisis/stage_act(seconds_per_tick, times_fired)
+/datum/disease/adrenal_crisis/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

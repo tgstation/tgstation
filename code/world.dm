@@ -6,7 +6,7 @@
  *
  * Two possibilities exist: either we are alone in the Universe or we are not. Both are equally terrifying. ~ Arthur C. Clarke
  *
- * The byond world object stores some basic byond level config, and has a few hub specific procs for managing hub visiblity
+ * The byond world object stores some basic byond level config, and has a few hub specific procs for managing hub visibility
  */
 /world
 	mob = /mob/dead/new_player

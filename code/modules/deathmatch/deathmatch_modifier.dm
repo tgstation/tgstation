@@ -64,25 +64,32 @@
 /datum/deathmatch_modifier/health
 	name = "Double-Health"
 	description = "Doubles your starting health"
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/health/triple)
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health/half, /datum/deathmatch_modifier/health/triple)
 	var/multiplier = 2
 
 /datum/deathmatch_modifier/health/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.maxHealth *= multiplier
 	player.health *= multiplier
 
+/datum/deathmatch_modifier/health/half
+	name = "Half-Health"
+	description = "It's your funeral"
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health, /datum/deathmatch_modifier/health/triple)
+	multiplier = 0.5
+
 /datum/deathmatch_modifier/health/triple
 	name = "Triple-Health"
 	description = "When \"Double-Health\" isn't enough..."
 	multiplier = 3
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/health)
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health, /datum/deathmatch_modifier/health/half)
+
 
 /datum/deathmatch_modifier/tenacity
 	name = "Tenacity"
 	description = "Unaffected by critical condition and pain"
 
 /datum/deathmatch_modifier/tenacity/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	player.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), DEATHMATCH_TRAIT)
+	player.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA, TRAIT_NO_DAMAGE_OVERLAY), DEATHMATCH_TRAIT)
 
 /datum/deathmatch_modifier/no_wounds
 	name = "No Wounds"
@@ -232,7 +239,7 @@
 	projectile.ricochets_max += 2
 	projectile.min_ricochets += 2
 	projectile.ricochet_incidence_leeway = 0
-	ADD_TRAIT(projectile, TRAIT_ALWAYS_HIT_ZONE, DEATHMATCH_TRAIT)
+	projectile.accuracy_falloff = 0
 
 /datum/deathmatch_modifier/stormtrooper
 	name = "Stormtrooper Aim"
@@ -388,8 +395,10 @@
 	contents = list(
 		/mob/living/basic/ant = 2,
 		/mob/living/basic/construct/proteon = 2,
+		/mob/living/basic/dark_wizard = 2,
 		/mob/living/basic/flesh_spider = 2,
 		/mob/living/basic/garden_gnome = 2,
+		/mob/living/basic/goose = 2,
 		/mob/living/basic/killer_tomato = 2,
 		/mob/living/basic/leaper = 1,
 		/mob/living/basic/mega_arachnid = 1,
@@ -399,13 +408,11 @@
 		/mob/living/basic/mining/lobstrosity = 1,
 		/mob/living/basic/mining/mook = 2,
 		/mob/living/basic/mouse/rat = 2,
+		/mob/living/basic/vatbeast = 1,
 		/mob/living/basic/spider/giant/nurse/scrawny = 2,
 		/mob/living/basic/spider/giant/tarantula/scrawny = 2,
 		/mob/living/basic/spider/giant/hunter/scrawny = 2,
-		/mob/living/simple_animal/hostile/dark_wizard = 2,
-		/mob/living/simple_animal/hostile/retaliate/goose = 2,
 		/mob/living/simple_animal/hostile/ooze = 1,
-		/mob/living/simple_animal/hostile/vatbeast = 1,
 	)
 
 /datum/deathmatch_modifier/drop_pod/missiles
@@ -519,7 +526,7 @@
 			modifiers_pool -= modpath
 
 	///Pick global modifiers at random.
-	for(var/iteration in rand(3, 5))
+	for(var/iteration in 1 to rand(3, 5))
 		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[pick_n_take(modifiers_pool)]
 		modifier.on_select(lobby)
 		modifier.on_start_game(lobby)
@@ -573,7 +580,7 @@
 	name = "Random martial arts"
 	description = "Everyone learns a random martial art!"
 	blacklisted_maps = list(/datum/lazy_template/deathmatch/meatower)
-	// krav maga excluded because its too common and too simple, mushpunch excluded because its horrible and not even funny
+	// kaza ruk excluded because its too common and too simple, mushpunch excluded because its horrible and not even funny
 	var/static/list/weighted_martial_arts = list(
 		// common
 		/datum/martial_art/cqc = 30,
@@ -590,7 +597,7 @@
 	. = ..()
 
 	var/datum/martial_art/picked_art_path = pick_weight(weighted_martial_arts)
-	var/datum/martial_art/instantiated_art = new picked_art_path()
+	var/datum/martial_art/instantiated_art = new picked_art_path(player)
 
 	if (istype(instantiated_art, /datum/martial_art/boxing))
 		player.mind.adjust_experience(/datum/skill/athletics, SKILL_EXP_LEGENDARY)

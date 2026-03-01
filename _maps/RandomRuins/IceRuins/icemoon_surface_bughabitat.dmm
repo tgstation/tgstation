@@ -24,7 +24,7 @@
 /area/ruin/bughabitat)
 "bu" = (
 /obj/effect/spawner/random/food_or_drink/snack,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/fakebasalt,
 /area/ruin/bughabitat)
 "bQ" = (
@@ -140,7 +140,7 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "ot" = (
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /obj/item/seeds/soya,
 /turf/open/floor/fakebasalt,
 /area/ruin/bughabitat)
@@ -188,7 +188,7 @@
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
 "sr" = (
-/obj/machinery/plumbing/growing_vat,
+/obj/machinery/vatgrower,
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
 "st" = (
@@ -322,14 +322,10 @@
 /area/ruin/bughabitat)
 "Ku" = (
 /obj/structure/table,
-/obj/item/construction/plumbing/research,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Ly" = (
 /obj/structure/table,
-/obj/item/stack/ducts/fifty{
-	amount = 23
-	},
 /mob/living/basic/butterfly,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
@@ -367,7 +363,7 @@
 /area/ruin/bughabitat)
 "RJ" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/fakebasalt,
 /area/ruin/bughabitat)
 "RR" = (

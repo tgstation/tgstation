@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	var/rounds = 0
 	var/direct_load //For weapons where we re-load the weapon itself rather than adding to the ammo storage.
-	var/load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
+	var/load_audio = 'sound/items/weapons/gun/general/mag_bullet_insert.ogg'
 	var/ammo_type
 	/// whether to qdel this mecha_ammo when it becomes empty
 	var/qdel_on_empty = FALSE
@@ -75,7 +75,7 @@
 	icon_state = "missile_he"
 	rounds = 8
 	direct_load = TRUE
-	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
+	load_audio = 'sound/items/weapons/gun/general/mag_bullet_insert.ogg'
 	ammo_type = MECHA_AMMO_MISSILE_SRM
 
 /// PEP-6 Missile type - Used by Robotics
@@ -86,7 +86,7 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*4,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	rounds = 6
 	direct_load = TRUE
-	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
+	load_audio = 'sound/items/weapons/gun/general/mag_bullet_insert.ogg'
 	ammo_type = MECHA_AMMO_MISSILE_PEP
 
 /obj/item/mecha_ammo/flashbang

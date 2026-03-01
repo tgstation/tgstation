@@ -7,6 +7,7 @@
 	device_type = BINARY
 	layer = GAS_PUMP_LAYER
 	pipe_flags = PIPING_BRIDGE
+	obj_flags = parent_type::obj_flags | UNIQUE_RENAME
 
 /obj/machinery/atmospherics/components/binary/set_init_directions()
 	switch(dir)

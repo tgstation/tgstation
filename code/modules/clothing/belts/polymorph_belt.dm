@@ -31,27 +31,37 @@
 	if (!active)
 		. += span_warning("It requires a Bioscrambler Anomaly Core in order to function.")
 
-/obj/item/polymorph_belt/item_action_slot_check(slot, mob/user, datum/action/action)
-	return slot & ITEM_SLOT_BELT
-
 /obj/item/polymorph_belt/update_icon_state()
 	icon_state = base_icon_state + (active ? "" : "_inactive")
 	worn_icon_state = base_icon_state + (active ? "" : "_inactive")
 	return ..()
 
-/obj/item/polymorph_belt/attackby(obj/item/weapon, mob/user, params)
-	if (!istype(weapon, /obj/item/assembly/signaler/anomaly/bioscrambler))
-		return ..()
+/obj/item/polymorph_belt/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/assembly/signaler/anomaly/bioscrambler))
+		return NONE
+
+	if (active)
+		balloon_alert(user, "core already inserted!")
+		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert(user, "inserting...")
+
 	if (!do_after(user, delay = 3 SECONDS, target = src))
-		return
-	qdel(weapon)
+		balloon_alert(user, "interrupted!")
+		return ITEM_INTERACT_BLOCKING
+
+	if (active)
+		balloon_alert(user, "core already inserted!")
+		return ITEM_INTERACT_BLOCKING
+
 	active = TRUE
 	update_appearance(UPDATE_ICON_STATE)
 	update_transform_action()
-	playsound(src, 'sound/machines/crate_open.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/polymorph_belt/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/polymorph_belt/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if (.)
 		return
@@ -104,8 +114,14 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 	possible_shapes = list(/mob/living/basic/cockroach)
+	can_be_shared = FALSE
+	shapechange_type = /datum/status_effect/shapechange_mob/from_spell/polymorph_belt
 	/// Amount of time it takes us to transform back or forth
 	var/channel_time = 3 SECONDS
+
+/datum/action/cooldown/spell/shapeshift/polymorph_belt/cast(mob/living/cast_on)
+	cast_on = owner //make sure this is only affecting the wearer of the belt
+	return ..()
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/Remove(mob/remove_from)
 	var/datum/status_effect/shapechange_mob/shapechange = remove_from.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
@@ -114,6 +130,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/before_cast(mob/living/cast_on)
+	cast_on = owner
 	. = ..()
 	if (. & SPELL_CANCEL_CAST)
 		return
@@ -139,7 +156,7 @@
 		cast_on.transform = old_transform
 		return . | SPELL_CANCEL_CAST
 	cast_on.visible_message(span_warning("[cast_on]'s body rearranges itself with a horrible crunching sound!"))
-	playsound(cast_on, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(cast_on, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/after_cast(atom/cast_on)
 	. = ..()
@@ -156,3 +173,22 @@
 	var/mob/living/will_become = transform_type
 	desc = "Assume your [initial(will_become.name)] form!"
 	build_all_button_icons(update_flags = UPDATE_BUTTON_NAME)
+
+/// Subtype of the polymorph status effect which tracks arbitrary mob transformation
+/datum/status_effect/shapechange_mob/from_spell/polymorph_belt
+
+/datum/status_effect/shapechange_mob/from_spell/polymorph_belt/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_CHANGED_TYPE, PROC_REF(on_type_change))
+
+/datum/status_effect/shapechange_mob/from_spell/polymorph_belt/on_pre_type_change(mob/living/source)
+	return // Stub out base effect because we don't want to cancel if they transform
+
+/// If our mob transforms (via aging usually) then move the status effect across to the new mob
+/datum/status_effect/shapechange_mob/from_spell/polymorph_belt/proc/on_type_change(mob/living/source, mob/living/new_mob)
+	SIGNAL_HANDLER
+	var/caster = caster_mob // Will be unset when the mob is unshifted
+	var/datum/action/cooldown/spell/shapeshift/transform_action = source_weakref?.resolve()
+	transform_action.possible_shapes |= new_mob.type
+	restore_caster()
+	new_mob.apply_status_effect(type, caster, transform_action)

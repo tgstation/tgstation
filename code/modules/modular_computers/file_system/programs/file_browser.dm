@@ -35,7 +35,7 @@
 				return
 			var/newname = reject_bad_name(params["new_name"])
 			if(!newname || newname != params["new_name"])
-				playsound(computer, 'sound/machines/terminal_error.ogg', 25, FALSE)
+				playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25, FALSE)
 				return
 			file.filename = newname
 			return TRUE
@@ -47,7 +47,7 @@
 				return
 			var/newname = reject_bad_name(params["new_name"])
 			if(!newname || newname != params["new_name"])
-				playsound(computer, 'sound/machines/terminal_error.ogg', 25, FALSE)
+				playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25, FALSE)
 				return
 			file.filename = newname
 			return TRUE
@@ -71,7 +71,7 @@
 			if(!computer.can_store_file(F))
 				return FALSE
 			var/datum/computer_file/C = F.clone(FALSE)
-			computer.store_file(C)
+			computer.store_file(C, usr)
 			return TRUE
 		if("PRG_togglesilence")
 			var/datum/computer_file/program/binary = computer.find_file_by_name(params["name"])

@@ -22,3 +22,18 @@
 /datum/ai_behavior/pet_use_ability/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
+
+/datum/ai_behavior/pet_use_ability/then_attack
+
+/datum/ai_behavior/pet_use_ability/then_attack/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
+	. = ..()
+	if(succeeded)
+		controller.queue_behavior(/datum/ai_behavior/basic_melee_attack, target_key, BB_PET_TARGETING_STRATEGY)
+
+/datum/ai_behavior/pet_use_ability/then_attack/short_ranged
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	required_distance = 4
+
+/datum/ai_behavior/pet_use_ability/then_attack/long_ranged
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	required_distance = 8

@@ -3,8 +3,8 @@
 	name = "trash bin"
 	icon_state = "trashbin"
 	base_icon_state = "trashbin"
-	open_sound = 'sound/effects/bin_open.ogg'
-	close_sound = 'sound/effects/bin_close.ogg'
+	open_sound = 'sound/effects/bin/bin_open.ogg'
+	close_sound = 'sound/effects/bin/bin_close.ogg'
 	anchored = TRUE
 	horizontal = FALSE
 	delivery_icon = null
@@ -12,6 +12,7 @@
 	paint_jobs = null
 	elevation = 17
 	elevation_open = 17
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/bin/LateInitialize()
 	. = ..()
@@ -32,7 +33,7 @@
 		return
 	. += base_icon_state + "_some"
 
-/obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, params)
+/obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/storage/bag/trash) && !opened)
 		var/obj/item/storage/bag/trash/T = W
 		to_chat(user, span_notice("You fill the bag."))
@@ -66,4 +67,4 @@
 	items_to_sweep.Cut()
 
 	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
-	playsound(broom.loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+	playsound(broom.loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)

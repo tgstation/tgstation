@@ -10,75 +10,6 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/lube = 30)
 
-//COMBAT CLOWN SHOES
-//Clown shoes with combat stats and noslip. Of course they still squeak.
-/obj/item/clothing/shoes/clown_shoes/combat
-	name = "combat clown shoes"
-	desc = "advanced clown shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeak at 100% capacity."
-	clothing_traits = list(TRAIT_NO_SLIP_WATER)
-	slowdown = SHOES_SLOWDOWN
-	armor_type = /datum/armor/clown_shoes_combat
-	strip_delay = 70
-	resistance_flags = NONE
-
-/datum/armor/clown_shoes_combat
-	melee = 25
-	bullet = 25
-	laser = 25
-	energy = 25
-	bomb = 50
-	bio = 90
-	fire = 70
-	acid = 50
-
-/obj/item/clothing/shoes/clown_shoes/combat/Initialize(mapload)
-	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets/shoes)
-
-/// Recharging rate in PPS (peels per second)
-#define BANANA_SHOES_RECHARGE_RATE 17
-#define BANANA_SHOES_MAX_CHARGE 3000
-
-//The super annoying version
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat
-	name = "mk-honk combat shoes"
-	desc = "The culmination of years of clown combat research, these shoes leave a trail of chaos in their wake. They will slowly recharge themselves over time, or can be manually charged with bananium."
-	slowdown = SHOES_SLOWDOWN
-	armor_type = /datum/armor/banana_shoes_combat
-	strip_delay = 70
-	resistance_flags = NONE
-	always_noslip = TRUE
-
-/datum/armor/banana_shoes_combat
-	melee = 25
-	bullet = 25
-	laser = 25
-	energy = 25
-	bomb = 50
-	bio = 50
-	fire = 90
-	acid = 50
-
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize(mapload)
-	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets/shoes)
-	bananium.insert_amount_mat(BANANA_SHOES_MAX_CHARGE, /datum/material/bananium)
-
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process(seconds_per_tick)
-	var/bananium_amount = bananium.get_material_amount(/datum/material/bananium)
-	if(bananium_amount < BANANA_SHOES_MAX_CHARGE)
-		bananium.insert_amount_mat(min(BANANA_SHOES_RECHARGE_RATE * seconds_per_tick, BANANA_SHOES_MAX_CHARGE - bananium_amount), /datum/material/bananium)
-
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/attack_self(mob/user)
-	ui_action_click(user)
-
-#undef BANANA_SHOES_RECHARGE_RATE
-#undef BANANA_SHOES_MAX_CHARGE
-
 //BANANIUM SWORD
 
 /obj/item/melee/energy/sword/bananium
@@ -89,7 +20,7 @@
 	force = 0
 	throwforce = 0
 	hitsound = null
-	embedding = null
+	embed_type = null
 	light_color = COLOR_YELLOW
 	sword_color_icon = "bananium"
 	active_heat = 0
@@ -131,7 +62,7 @@
 		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 		slipper.Slip(src, hit_atom)
 
-/obj/item/melee/energy/sword/bananium/attackby(obj/item/weapon, mob/living/user, params)
+/obj/item/melee/energy/sword/bananium/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(COOLDOWN_FINISHED(src, next_trombone_allowed) && istype(weapon, /obj/item/melee/energy/sword/bananium))
 		COOLDOWN_START(src, next_trombone_allowed, 5 SECONDS)
 		to_chat(user, span_warning("You slap the two swords together. Sadly, they do not seem to fit!"))
@@ -192,7 +123,7 @@
 //BOMBANANA
 
 /obj/item/seeds/banana/bombanana
-	name = "pack of bombanana seeds"
+	name = "bombanana seed pack"
 	desc = "They're seeds that grow into bombanana trees. When grown, give to the clown."
 	plantname = "Bombanana Tree"
 	product = /obj/item/food/grown/banana/bombanana
@@ -203,27 +134,51 @@
 	tastes = list("explosives" = 10)
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
 
+/obj/item/food/grown/banana/bombanana/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FOOD_CONSUMED, PROC_REF(on_consumed))
+
+/// Log whenever someone eats this with an explicit message since it willspawn a live bomb.
+/obj/item/food/grown/banana/bombanana/proc/on_consumed(datum/source, mob/living/eater, mob/feeder)
+	SIGNAL_HANDLER
+	var/list/concatable = list("[key_name_and_tag(eater)] has eaten a bombanana!")
+	if(feeder != eater)
+		concatable += "This person was fed this by [key_name_and_tag(feeder)]."
+
+	concatable += "As a result of this, a bombanana peel will be spawned at [AREACOORD(src)]."
+
+	var/final_string = jointext(concatable, " ")
+	log_bomber(details = final_string) // sorta wacks out the traditional "log_bomber" format but it gets the point across better
+	return NONE
+
 /obj/item/grown/bananapeel/bombanana
-	desc = "A peel from a banana. Why is it beeping?"
+	desc = parent_type::desc + " Why is it beeping?"
 	seed = /obj/item/seeds/banana/bombanana
-	var/det_time = 50
+	/// How long we have until we explode.
+	var/det_time = 5 SECONDS
+	/// Ref to the bomb we spawn when we explode.
 	var/obj/item/grenade/syndieminibomb/bomb
 
 /obj/item/grown/bananapeel/bombanana/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, det_time)
 	bomb = new /obj/item/grenade/syndieminibomb(src)
+	bomb.name = "bombanana peel"
 	bomb.det_time = det_time
+
+	var/potential_user = null
 	if(iscarbon(loc))
 		to_chat(loc, span_danger("[src] begins to beep."))
-	bomb.arm_grenade(loc, null, FALSE)
+		potential_user = loc // just for fingerprint diagnosis in explosion logging, the on_consumed proc will have provided the necessary context already
+
+	bomb.arm_grenade(potential_user, msg = FALSE)
 
 /obj/item/grown/bananapeel/bombanana/Destroy()
 	. = ..()
 	QDEL_NULL(bomb)
 
 /obj/item/grown/bananapeel/bombanana/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide."))
+	user.visible_message(span_suicide("[user] is deliberately slipping on \the [src]! It looks like \he's trying to commit suicide."))
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
 	bomb.arm_grenade(user, 0, FALSE)
 	return BRUTELOSS

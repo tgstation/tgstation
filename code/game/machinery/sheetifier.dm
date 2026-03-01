@@ -7,12 +7,12 @@
 	circuit = /obj/item/circuitboard/machine/sheetifier
 	layer = BELOW_OBJ_LAYER
 	var/busy_processing = FALSE
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 
 /obj/machinery/sheetifier/Initialize(mapload)
 	. = ..()
-	materials = AddComponent( \
-		/datum/component/material_container, \
+	materials = new ( \
+		src, \
 		list(/datum/material/meat, /datum/material/hauntium), \
 		SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, \
 		MATCONTAINER_EXAMINE, \
@@ -24,7 +24,7 @@
 	)
 
 /obj/machinery/sheetifier/Destroy()
-	materials = null
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/sheetifier/update_overlays()
@@ -63,10 +63,13 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/sheetifier/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
+/obj/machinery/sheetifier/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), tool))
 		update_appearance()
-		return
-	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_FAILURE
+
+/obj/machinery/sheetifier/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING

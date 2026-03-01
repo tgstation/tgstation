@@ -15,17 +15,17 @@
 	/// Probability of successfully blocking attacks while on throw mode
 	var/block_chance = 75
 
-/datum/martial_art/cqc/on_teach(mob/living/new_holder)
+/datum/martial_art/cqc/activate_style(mob/living/new_holder)
 	. = ..()
 	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_holder, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))
 
-/datum/martial_art/cqc/on_remove(mob/living/remove_from)
+/datum/martial_art/cqc/deactivate_style(mob/living/remove_from)
 	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY, COMSIG_LIVING_CHECK_BLOCK))
 	return ..()
 
 ///Signal from getting attacked with an item, for a special interaction with touch spells
-/datum/martial_art/cqc/proc/on_attackby(mob/living/cqc_user, obj/item/attack_weapon, mob/attacker, params)
+/datum/martial_art/cqc/proc/on_attackby(mob/living/cqc_user, obj/item/attack_weapon, mob/attacker, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(!istype(attack_weapon, /obj/item/melee/touch_attack))
@@ -46,24 +46,34 @@
 /datum/martial_art/cqc/proc/check_block(mob/living/cqc_user, atom/movable/hitby, damage, attack_text, attack_type, ...)
 	SIGNAL_HANDLER
 
-	if(!can_use(cqc_user) || !cqc_user.throw_mode || cqc_user.incapacitated(IGNORE_GRAB))
+	if(!can_use(cqc_user) || !cqc_user.throw_mode || INCAPACITATED_IGNORING(cqc_user, INCAPABLE_GRAB))
 		return NONE
 	if(attack_type == PROJECTILE_ATTACK)
 		return NONE
-	if(!prob(block_chance))
+
+	var/blocking_text = "block"
+	var/blocking_text_s = "blocks"
+	var/potential_block_chance = block_chance
+
+	if(attack_type == OVERWHELMING_ATTACK)
+		blocking_text = "dodge"
+		blocking_text_s = "dodges"
+		potential_block_chance = clamp(round(potential_block_chance / (attack_type == OVERWHELMING_ATTACK ? 2 : 1), 1), 0, 100)
+
+	if(!prob(potential_block_chance))
 		return NONE
 
 	var/mob/living/attacker = GET_ASSAILANT(hitby)
 	if(istype(attacker) && cqc_user.Adjacent(attacker))
 		cqc_user.visible_message(
-			span_danger("[cqc_user] blocks [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
-			span_userdanger("You block [attack_text]!"),
+			span_danger("[cqc_user] [blocking_text_s] [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
+			span_userdanger("You [blocking_text] [attack_text]!"),
 		)
 		attacker.Stun(4 SECONDS)
 	else
 		cqc_user.visible_message(
-			span_danger("[cqc_user] blocks [attack_text]!"),
-			span_userdanger("You block [attack_text]!"),
+			span_danger("[cqc_user] [blocking_text_s] [attack_text]!"),
+			span_userdanger("You [blocking_text] [attack_text]!"),
 		)
 	return SUCCESSFUL_BLOCK
 
@@ -104,7 +114,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You slam [defender] into the ground!"))
-	playsound(attacker, 'sound/weapons/slam.ogg', 50, TRUE, -1)
+	playsound(attacker, 'sound/items/weapons/slam.ogg', 50, TRUE, -1)
 	defender.apply_damage(10, BRUTE)
 	defender.Paralyze(12 SECONDS)
 	log_combat(attacker, defender, "slammed (CQC)")
@@ -115,7 +125,7 @@
 		return FALSE
 
 	attacker.do_attack_animation(defender)
-	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() && defender.getStaminaLoss() >= 100)
+	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() && defender.get_stamina_loss() >= 100)
 		log_combat(attacker, defender, "knocked out (Head kick)(CQC)")
 		defender.visible_message(
 			span_danger("[attacker] kicks [defender]'s head, knocking [defender.p_them()] out!"),
@@ -125,12 +135,12 @@
 			attacker,
 		)
 		to_chat(attacker, span_danger("You kick [defender]'s head, knocking [defender.p_them()] out!"))
-		playsound(attacker, 'sound/weapons/genhit1.ogg', 50, TRUE, -1)
+		playsound(attacker, 'sound/items/weapons/genhit1.ogg', 50, TRUE, -1)
 
 		var/helmet_protection = defender.run_armor_check(BODY_ZONE_HEAD, MELEE)
 		defender.apply_effect(20 SECONDS, EFFECT_KNOCKDOWN, helmet_protection)
 		defender.apply_effect(10 SECONDS, EFFECT_UNCONSCIOUS, helmet_protection)
-		defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
+		defender.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15, 150)
 
 	else
 		defender.visible_message(
@@ -141,12 +151,12 @@
 			attacker,
 		)
 		to_chat(attacker, span_danger("You kick [defender] back!"))
-		playsound(attacker, 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+		playsound(attacker, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 		defender.throw_at(throw_target, 1, 14, attacker)
 		defender.apply_damage(10, attacker.get_attack_type())
 		if(defender.body_position == LYING_DOWN && !defender.IsUnconscious())
-			defender.adjustStaminaLoss(45)
+			defender.adjust_stamina_loss(45)
 		log_combat(attacker, defender, "kicked (CQC)")
 
 	return TRUE
@@ -162,8 +172,8 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You punch [defender]'s neck!"))
-	defender.adjustStaminaLoss(60)
-	playsound(attacker, 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+	defender.adjust_stamina_loss(60)
+	playsound(attacker, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 	return TRUE
 
 /datum/martial_art/cqc/proc/Restrain(mob/living/attacker, mob/living/defender)
@@ -181,7 +191,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You lock [defender] into a restraining position!"))
-	defender.adjustStaminaLoss(20)
+	defender.adjust_stamina_loss(20)
 	defender.Stun(10 SECONDS)
 	restraining_mob = WEAKREF(defender)
 	addtimer(VARSET_CALLBACK(src, restraining_mob, null), 5 SECONDS, TIMER_UNIQUE)
@@ -201,11 +211,11 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You strike [defender]'s abdomen, neck and back consecutively!"))
-	playsound(defender, 'sound/weapons/cqchit2.ogg', 50, TRUE, -1)
+	playsound(defender, 'sound/items/weapons/cqchit2.ogg', 50, TRUE, -1)
 	var/obj/item/held_item = defender.get_active_held_item()
 	if(held_item && defender.temporarilyRemoveItemFromInventory(held_item))
 		attacker.put_in_hands(held_item)
-	defender.adjustStaminaLoss(50)
+	defender.adjust_stamina_loss(50)
 	defender.apply_damage(25, attacker.get_attack_type())
 	return TRUE
 
@@ -291,7 +301,7 @@
 		picked_hit_type = pick("kick", "stomp")
 	defender.apply_damage(bonus_damage, BRUTE)
 
-	playsound(defender, (picked_hit_type == "kick" || picked_hit_type == "stomp") ? 'sound/weapons/cqchit2.ogg' : 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+	playsound(defender, (picked_hit_type == "kick" || picked_hit_type == "stomp") ? 'sound/items/weapons/cqchit2.ogg' : 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 
 	defender.visible_message(
 		span_danger("[attacker] [picked_hit_type]ed [defender]!"),
@@ -344,7 +354,7 @@
 			attacker,
 		)
 		to_chat(attacker, span_danger("You strike [defender]'s jaw,[disarmed_item ? " disarming [defender.p_them()] of [disarmed_item] and" : ""] leaving [defender.p_them()] disoriented!"))
-		playsound(defender, 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
+		playsound(defender, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 		defender.set_jitter_if_lower(4 SECONDS)
 		defender.apply_damage(5, attacker.get_attack_type())
 		log_combat(attacker, defender, "disarmed (CQC)", addition = disarmed_item ? "(disarmed of [disarmed_item])" : null)
@@ -358,7 +368,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_warning("You fail to disarm [defender]!"))
-	playsound(defender, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "failed to disarm (CQC)")
 	return MARTIAL_ATTACK_FAIL
 

@@ -4,7 +4,7 @@
 	icon_state = "cowboy_brown"
 	armor_type = /datum/armor/shoes_cowboy
 	custom_price = PAYCHECK_CREW
-	can_be_tied = FALSE
+	fastening_type = SHOES_SLIPON
 	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
 
 	var/max_occupants = 4
@@ -18,16 +18,12 @@
 
 /obj/item/clothing/shoes/cowboy/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = /datum/storage/pockets/shoes)
-
-	if(prob(2))
-		//There's a snake in my boot
+	if(prob(2)) //There's a snake in my boot
 		new /mob/living/basic/snake(src)
-
 	if(has_spurs)
 		LoadComponent(/datum/component/squeak, spur_sound, 50, falloff_exponent = 20)
-
+	AddElement(/datum/element/ignites_matches)
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
@@ -89,19 +85,31 @@
 	bio = 95
 
 /obj/item/clothing/shoes/cowboy/lizard
-	name = "lizard skin boots"
+	name = "lizardskin boots"
 	desc = "You can hear a faint hissing from inside the boots; you hope it is just a mournful ghost."
-	icon_state = "lizardboots_green"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	icon_state = "/obj/item/clothing/shoes/cowboy/lizard"
+	post_init_icon_state = "lizardboots"
+	greyscale_config = /datum/greyscale_config/lizard_shoes
+	greyscale_config_worn = /datum/greyscale_config/lizard_shoes/worn
+	greyscale_colors = "#859333"
 	armor_type = /datum/armor/cowboy_lizard
 
 /datum/armor/cowboy_lizard
 	bio = 90
 	fire = 40
 
+/obj/item/clothing/shoes/cowboy/lizard/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/stack/sheet/animalhide/carbon/lizard/skin = locate() in components
+	if (isnull(skin) || !length(skin.skin_color)) // what
+		return ..()
+	set_greyscale(skin.skin_color)
+	return ..()
+
 /obj/item/clothing/shoes/cowboy/lizard/masterwork
-	name = "\improper Hugs-The-Feet lizard skin boots"
+	name = "\improper Hugs-The-Feet lizardskin boots"
 	desc = "A pair of masterfully crafted lizard skin boots. Finally a good application for the station's most bothersome inhabitants."
-	icon_state = "lizardboots_blue"
+	greyscale_colors = "#3e76a7"
 
 /// Shoes for the nuke-ops cowboy fit
 /obj/item/clothing/shoes/cowboy/black/syndicate
@@ -109,3 +117,14 @@
 	desc = "And they sing, oh, ain't you glad you're single? And that song ain't so very far from wrong."
 	armor_type = /datum/armor/shoes_combat
 	has_spurs = TRUE
+	body_parts_covered = FEET|LEGS
+
+// Laced variants for loadout
+/obj/item/clothing/shoes/cowboy/laced
+	fastening_type = SHOES_LACED
+
+/obj/item/clothing/shoes/cowboy/white/laced
+	fastening_type = SHOES_LACED
+
+/obj/item/clothing/shoes/cowboy/black/laced
+	fastening_type = SHOES_LACED

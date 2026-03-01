@@ -24,7 +24,10 @@
 	/// This uses the same nested list format as turfs_by_zlevel
 	var/list/list/turf/turfs_to_uncontain_by_zlevel = list()
 
-	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	/// General flag for area properties
+	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | CULT_PERMITTED
+	/// Flag for mapping related area properties (such as cavegen)
+	var/area_flags_mapping = UNIQUE_AREA
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
@@ -58,6 +61,8 @@
 
 	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
+	/// Whether or not this area unifies all of its motion sensors.
+	var/motion_monitored = FALSE
 
 	/// Size of the area in open turfs, only calculated for indoors areas.
 	var/areasize = 0
@@ -80,8 +85,8 @@
 	var/power_light = TRUE
 	var/power_environ = TRUE
 	var/power_apc_charge = TRUE
-
-	var/has_gravity = FALSE
+	/// The default gravity for the area
+	var/default_gravity = ZERO_GRAVITY
 
 	var/parallax_movedir = 0
 
@@ -91,19 +96,19 @@
 	///Does this area immediately play an ambience track upon enter?
 	var/forced_ambience = FALSE
 	///The background droning loop that plays 24/7
-	var/ambient_buzz = 'sound/ambience/shipambience.ogg'
+	var/ambient_buzz = 'sound/ambience/general/shipambience.ogg'
 	///The volume of the ambient buzz
 	var/ambient_buzz_vol = 35
 	///Used to decide what the minimum time between ambience is
-	var/min_ambience_cooldown = 30 SECONDS
+	var/min_ambience_cooldown = 4 SECONDS
 	///Used to decide what the maximum time between ambience is
-	var/max_ambience_cooldown = 60 SECONDS
+	var/max_ambience_cooldown = 10 SECONDS
 
 	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/cameras
 
-	///Typepath to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
+	/// Typepath to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
 	var/area/area_limited_icon_smoothing
 
 	/// The energy usage of the area in the last machines SS tick.
@@ -124,11 +129,14 @@
 	/// List of all air scrubbers in the area
 	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
 
+	/// Are shuttles allowed to dock in this area
+	var/allow_shuttle_docking = FALSE
+
 /**
  * A list of teleport locations
  *
  * Adding a wizard area teleport list because motherfucking lag -- Urist
- * I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game
+ * I am far too lazy to make it a proper list of areas so I'll just make it run the usual teleport routine at the start of the game
  */
 GLOBAL_LIST_EMPTY(teleportlocs)
 
@@ -160,7 +168,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/New()
 	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
-	if (area_flags & UNIQUE_AREA)
+	if (area_flags_mapping & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
 	GLOB.areas += src
 	energy_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
@@ -168,9 +176,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return ..()
 
 /*
- * Initalize this area
+ * Initialize this area
  *
- * intializes the dynamic area lighting and also registers the area with the z level via
+ * initializes the dynamic area lighting and also registers the area with the z level via
  * reg_in_areas_in_z
  *
  * returns INITIALIZE_HINT_LATELOAD
@@ -207,6 +215,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/LateInitialize()
 	power_change() // all machines set to current power level, also updates icon
 	update_beauty()
+	if(motion_monitored)
+		AddComponent(/datum/component/monitored_area)
 
 /// Generate turfs, including cool cave wall gen
 /area/proc/RunTerrainGeneration()
@@ -355,6 +365,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	//just for sanity sake cause why not
 	if(!isnull(GLOB.areas))
 		GLOB.areas -= src
+	if(!isnull(GLOB.custom_areas))
+		GLOB.custom_areas -= src
 	//machinery cleanup
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
@@ -414,7 +426,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /**
  * Update the icon state of the area
  *
- * Im not sure what the heck this does, somethign to do with weather being able to set icon
+ * I'm not sure what the heck this does, something to do with weather being able to set icon
  * states on areas?? where the heck would that even display?
  */
 /area/update_icon_state()
@@ -439,7 +451,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /**
  * Returns int 1 or 0 if the area has power for the given channel
  *
- * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
+ * evaluates a mixture of variables mappers can set, requires_power, always_unpowered and then
  * per channel power_equip, power_light, power_environ
  */
 /area/proc/powered(chan) // return true if the area has power to given channel
@@ -540,26 +552,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	for(var/atom/movable/recipient as anything in arrived.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
 
-	if(!isliving(arrived))
-		return
-
-	var/mob/living/L = arrived
-	if(!L.ckey)
-		return
-
-	if(ambient_buzz != old_area.ambient_buzz)
-		L.refresh_looping_ambience()
-
-///Tries to play looping ambience to the mobs.
-/mob/proc/refresh_looping_ambience()
-	var/area/my_area = get_area(src)
-
-	if(!(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)) || !my_area.ambient_buzz)
-		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
-		return
-
-	SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = CHANNEL_BUZZ))
-
+	if(ismob(arrived))
+		var/mob/mob = arrived
+		mob.update_ambience_area(src)
 
 /**
  * Called when an atom exits an area
@@ -584,6 +579,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		beauty = 0
 		return FALSE //Too big
 	beauty = totalbeauty / areasize
+	SEND_SIGNAL(src, COMSIG_AREA_BEAUTY_UPDATED)
 
 /**
  * Setup an area (with the given name)
@@ -624,8 +620,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/drop_location()
 	CRASH("Bad op: area/drop_location() called")
 
-/// A hook so areas can modify the incoming args (of what??)
-/area/proc/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
+/// A hook so areas can modify the incoming args of ChangeTurf
+/area/proc/place_on_top_react(list/new_baseturfs, turf/added_layer, flags)
 	return flags
 
 

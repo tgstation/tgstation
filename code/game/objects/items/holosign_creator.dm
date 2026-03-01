@@ -13,6 +13,9 @@
 	throw_speed = 3
 	throw_range = 7
 	item_flags = NOBLUDGEON
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	var/list/signs
 	var/max_signs = 10
 	//time to create a holosign in deciseconds.
@@ -20,6 +23,11 @@
 	//holosign image that is projected
 	var/holosign_type = /obj/structure/holosign/wetsign
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
+	/// List of special things we can project holofans under/through.
+	var/list/projectable_through = list(
+		/obj/machinery/door,
+		/obj/structure/mineral_door,
+	)
 
 /obj/item/holosign_creator/Initialize(mapload)
 	. = ..()
@@ -35,15 +43,21 @@
 		return
 	. += span_notice("It is currently maintaining <b>[signs.len]/[max_signs]</b> projections.")
 
+/obj/item/holosign_creator/check_allowed_items(atom/target, not_inside, target_self)
+	if(HAS_TRAIT(target, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return FALSE
+	return ..()
+
 /obj/item/holosign_creator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!check_allowed_items(interacting_with, not_inside = TRUE))
 		return NONE
+
 	var/turf/target_turf = get_turf(interacting_with)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
+
 	if(target_holosign)
-		qdel(target_holosign)
 		return ITEM_INTERACT_BLOCKING
-	if(target_turf.is_blocked_turf(TRUE)) //can't put holograms on a tile that has dense stuff
+	if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //can't put holograms on a tile that has dense stuff
 		return ITEM_INTERACT_BLOCKING
 	if(holocreator_busy)
 		balloon_alert(user, "busy making a hologram!")
@@ -51,7 +65,9 @@
 	if(LAZYLEN(signs) >= max_signs)
 		balloon_alert(user, "max capacity!")
 		return ITEM_INTERACT_BLOCKING
+
 	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+
 	if(creation_time)
 		holocreator_busy = TRUE
 		if(!do_after(user, creation_time, target = interacting_with))
@@ -60,8 +76,9 @@
 		holocreator_busy = FALSE
 		if(LAZYLEN(signs) >= max_signs)
 			return ITEM_INTERACT_BLOCKING
-		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
+		if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 			return ITEM_INTERACT_BLOCKING
+
 	target_holosign = create_holosign(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -105,15 +122,15 @@
 
 /obj/item/holosign_creator/security
 	name = "security holobarrier projector"
-	desc = "A holographic projector that creates holographic security barriers."
+	desc = "A holographic projector that creates holographic security barriers. You can remotely open barriers with it."
 	icon_state = "signmaker_sec"
 	holosign_type = /obj/structure/holosign/barrier
-	creation_time = 3 SECONDS
+	creation_time = 2 SECONDS
 	max_signs = 6
 
 /obj/item/holosign_creator/engineering
 	name = "engineering holobarrier projector"
-	desc = "A holographic projector that creates holographic engineering barriers."
+	desc = "A holographic projector that creates holographic engineering barriers. You can remotely open barriers with it."
 	icon_state = "signmaker_engi"
 	holosign_type = /obj/structure/holosign/barrier/engineering
 	creation_time = 1 SECONDS
@@ -126,6 +143,12 @@
 	holosign_type = /obj/structure/holosign/barrier/atmos
 	creation_time = 0
 	max_signs = 6
+	projectable_through = list(
+		/obj/machinery/door,
+		/obj/structure/mineral_door,
+		/obj/structure/window,
+		/obj/structure/grille,
+	)
 	/// Clearview holograms don't catch clicks and are more transparent
 	var/clearview = FALSE
 	/// Timer for auto-turning off clearview
@@ -134,6 +157,13 @@
 /obj/item/holosign_creator/atmos/Initialize(mapload)
 	. = ..()
 	register_context()
+
+/obj/item/holosign_creator/atmos/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!(. & ITEM_INTERACT_SUCCESS))
+		return
+	var/obj/machinery/door/firedoor/firelock = locate() in get_turf(interacting_with)
+	firelock?.open()
 
 /obj/item/holosign_creator/atmos/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

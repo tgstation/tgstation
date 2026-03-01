@@ -282,7 +282,7 @@
 	return crowbar_door(user, I)
 
 /obj/structure/mineral_door/wood/attackby(obj/item/I, mob/living/user)
-	if(I.get_temperature())
+	if(I.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		fire_act(I.get_temperature())
 		return
 
@@ -300,7 +300,7 @@
 
 /obj/structure/mineral_door/paperframe/Initialize(mapload)
 	. = ..()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/structure/mineral_door/paperframe/examine(mob/user)
@@ -318,7 +318,7 @@
 	return crowbar_door(user, I)
 
 /obj/structure/mineral_door/paperframe/attackby(obj/item/I, mob/living/user)
-	if(I.get_temperature()) //BURN IT ALL DOWN JIM
+	if(I.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //BURN IT ALL DOWN JIM
 		fire_act(I.get_temperature())
 		return
 
@@ -333,6 +333,6 @@
 	return ..()
 
 /obj/structure/mineral_door/paperframe/Destroy()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()

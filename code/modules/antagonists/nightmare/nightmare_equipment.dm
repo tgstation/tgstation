@@ -3,21 +3,22 @@
  */
 /obj/item/light_eater
 	name = "light eater" //as opposed to heavy eater
-	icon = 'icons/obj/weapons/changeling_items.dmi'
-	icon_state = "arm_blade"
-	inhand_icon_state = "arm_blade"
+	icon = 'icons/obj/weapons/nightmare_items.dmi'
+	icon_state = "light_eater"
+	inhand_icon_state = "light_eater"
+	icon_angle = 180
 	force = 25
 	armour_penetration = 35
-	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/antag/nightmare_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/nightmare_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FIRE_PROOF | LAVA_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_MINING
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	wound_bonus = -30
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	///If this is true, our next hit will be critcal, temporarily stunning our target
 	var/has_crit = FALSE
 	///The timer which controls our next crit
@@ -47,15 +48,14 @@
 	UnregisterSignal(user, COMSIG_MOB_AFTER_EXIT_JAUNT)
 	remove_crit()
 
-/obj/item/light_eater/attack(mob/living/target, mob/living/user, params)
+/obj/item/light_eater/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!has_crit)
 		return
 	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100, TRUE)
-	var/datum/dna/target_dna = target.has_dna()
 	if(target.stat == DEAD)
 		user.visible_message(span_warning("[user] gores [target] with [src]!"), span_warning("You gore [target] with [src], which doesn't accomplish much, but it does make you feel a little better."))
-	else if(!target_dna?.check_mutation(/datum/mutation/human/hulk) && (iscarbon(target) || issilicon(target)))
+	else if(!HAS_TRAIT(target, TRAIT_HULK) && (iscarbon(target) || issilicon(target)))
 		user.visible_message(span_boldwarning("[user] gores [target] with [src], bringing them to a halt!"), span_userdanger("You gore [target] with [src], bringing them to a halt!"))
 		target.Paralyze(issilicon(target) ? 2 SECONDS : 1 SECONDS)
 	else

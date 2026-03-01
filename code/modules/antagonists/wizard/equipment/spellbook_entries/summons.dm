@@ -20,15 +20,12 @@
 		There is a good chance that they will shoot each other first."
 
 /datum/spellbook_entry/summon/guns/can_be_purchased()
-	// Summon Guns requires 98 threat.
-	if(SSdynamic.threat_level < MINIMUM_THREAT_FOR_RITUALS)
-		return FALSE
-	// Also must be config enabled
-	return !CONFIG_GET(flag/no_summon_guns)
+	// Must be a high chaos round + Also must be config enabled
+	return SSdynamic.current_tier.tier == DYNAMIC_TIER_HIGH && !CONFIG_GET(flag/no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	summon_guns(user, 10)
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/effects/magic/castsummon.ogg', 50, TRUE)
 	return ..()
 
 /datum/spellbook_entry/summon/magic
@@ -37,15 +34,12 @@
 		why they aren't to be trusted with it at the same time."
 
 /datum/spellbook_entry/summon/magic/can_be_purchased()
-	// Summon Magic requires 98 threat.
-	if(SSdynamic.threat_level < MINIMUM_THREAT_FOR_RITUALS)
-		return FALSE
-	// Also must be config enabled
-	return !CONFIG_GET(flag/no_summon_magic)
+	// Must be a high chaos round + Also must be config enabled
+	return SSdynamic.current_tier.tier == DYNAMIC_TIER_HIGH && !CONFIG_GET(flag/no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	summon_magic(user, 10)
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/effects/magic/castsummon.ogg', 50, TRUE)
 	return ..()
 
 /datum/spellbook_entry/summon/events
@@ -57,15 +51,12 @@
 	limit = 5 // Each purchase can intensify it.
 
 /datum/spellbook_entry/summon/events/can_be_purchased()
-	// Summon Events requires 98 threat.
-	if(SSdynamic.threat_level < MINIMUM_THREAT_FOR_RITUALS)
-		return FALSE
-	// Also, must be config enabled
-	return !CONFIG_GET(flag/no_summon_events)
+	// Must be a high chaos round + Also must be config enabled
+	return SSdynamic.current_tier.tier == DYNAMIC_TIER_HIGH && !CONFIG_GET(flag/no_summon_events)
 
 /datum/spellbook_entry/summon/events/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	summon_events(user)
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/effects/magic/castsummon.ogg', 50, TRUE)
 	return ..()
 
 /datum/spellbook_entry/summon/curse_of_madness
@@ -74,11 +65,11 @@
 	cost = 4
 
 /datum/spellbook_entry/summon/curse_of_madness/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
-	var/message = tgui_input_text(user, "Whisper a secret truth to drive your victims to madness", "Whispers of Madness")
+	var/message = tgui_input_text(user, "Whisper a secret truth to drive your victims to madness", "Whispers of Madness", max_length = MAX_MESSAGE_LEN)
 	if(!message || QDELETED(user) || QDELETED(book) || !can_buy(user, book))
 		return FALSE
 	curse_of_madness(user, message)
-	playsound(user, 'sound/magic/mandswap.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/magic/mandswap.ogg', 50, TRUE)
 	return ..()
 
 /// A wizard ritual that allows the wizard to teach a specific spellbook enty to everyone on the station.
@@ -135,7 +126,7 @@
 	return ..()
 
 /datum/spellbook_entry/summon/specific_spell/can_be_purchased()
-	if(SSdynamic.threat_level < MINIMUM_THREAT_FOR_RITUALS)
+	if(SSdynamic.current_tier.tier != DYNAMIC_TIER_HIGH)
 		return FALSE
 	if(GLOB.mass_teaching)
 		return FALSE

@@ -8,11 +8,11 @@ ADMIN_VERB(camera_view, R_DEBUG, "Camera Range Display", "Shows the range of cam
 
 	if(!on)
 		var/list/seen = list()
-		for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
-			for(var/turf/T in C.can_see())
-				seen[T]++
-		for(var/turf/T in seen)
-			T.maptext = MAPTEXT(seen[T])
+		for(var/obj/machinery/camera/cam as anything in SScameras.cameras)
+			for(var/turf/cam_turf as anything in cam.can_see())
+				seen[cam]++
+		for(var/turf/seen_turf as anything in seen)
+			seen_turf.maptext = MAPTEXT(seen[seen_turf])
 	BLACKBOX_LOG_ADMIN_VERB("Show Camera Range")
 
 #ifdef TESTING
@@ -34,7 +34,7 @@ ADMIN_VERB_VISIBILITY(sec_camera_report, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG
 ADMIN_VERB(sec_camera_report, R_DEBUG, "Camera Report", "Get a printout of all camera issues.", ADMIN_CATEGORY_MAPPING)
 	var/list/obj/machinery/camera/CL = list()
 
-	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/C as anything in SScameras.cameras)
 		CL += C
 
 	var/output = {"<B>Camera Abnormalities Report</B><HR>
@@ -61,7 +61,7 @@ ADMIN_VERB(sec_camera_report, R_DEBUG, "Camera Report", "Get a printout of all c
 					output += "<li><font color='red'>Camera not connected to wall at [ADMIN_VERBOSEJMP(C1)] Network: [json_encode(C1.network)]</font></li>"
 
 	output += "</ul>"
-	user << browse(output,"window=airreport;size=1000x500")
+	user << browse(HTML_SKELETON(output),"window=airreport;size=1000x500")
 	BLACKBOX_LOG_ADMIN_VERB("Show Camera Report")
 
 ADMIN_VERB_VISIBILITY(intercom_view, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
@@ -84,9 +84,9 @@ ADMIN_VERB(show_map_reports, R_DEBUG, "Show Map Reports", "Displays a list of ma
 	var/dat = {"<b>List of all map reports:</b><br>"}
 
 	for(var/datum/map_report/report as anything in GLOB.map_reports)
-		dat += "[report.tag] ([report.original_path]) - <a href='?src=[REF(report)];[HrefToken()];show=1'>View</a><br>"
+		dat += "[report.tag] ([report.original_path]) - <a href='byond://?src=[REF(report)];[HrefToken()];show=1'>View</a><br>"
 
-	user << browse(dat, "window=map_reports")
+	user << browse(HTML_SKELETON(dat), "window=map_reports")
 
 ADMIN_VERB_VISIBILITY(cmd_show_at_list, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_show_at_list, R_DEBUG, "Show roundstart AT list", "Displays a list of active turfs coordinates at roundstart.", ADMIN_CATEGORY_MAPPING)
@@ -98,7 +98,7 @@ ADMIN_VERB(cmd_show_at_list, R_DEBUG, "Show roundstart AT list", "Displays a lis
 		dat += "[ADMIN_VERBOSEJMP(T)]\n"
 		dat += "<br>"
 
-	user << browse(dat, "window=at_list")
+	user << browse(HTML_SKELETON(dat), "window=at_list")
 
 	BLACKBOX_LOG_ADMIN_VERB("Show Roundstart Active Turfs")
 
@@ -208,7 +208,7 @@ ADMIN_VERB(create_mapping_job_icons, R_DEBUG, "Generate job landmarks icons", "G
 			else
 				for(var/obj/item/I in D)
 					qdel(I)
-				randomize_human(D)
+				randomize_human_normie(D)
 				D.dress_up_as_job(
 					equipping = JB,
 					visual_only = TRUE,
@@ -224,14 +224,14 @@ ADMIN_VERB(create_mapping_job_icons, R_DEBUG, "Generate job landmarks icons", "G
 
 ADMIN_VERB_VISIBILITY(debug_z_levels, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(debug_z_levels, R_DEBUG, "Debug Z-Levels", "Displays a list of all z-levels and their linkages.", ADMIN_CATEGORY_MAPPING)
-	to_chat(user, examine_block(gather_z_level_information(append_grid = TRUE)), confidential = TRUE)
+	to_chat(user, boxed_message(gather_z_level_information(append_grid = TRUE)), confidential = TRUE)
 
 /// Returns all necessary z-level information. Argument `append_grid` allows the user to see a table showing all of the z-level linkages, which is only visible and useful in-game.
 /proc/gather_z_level_information(append_grid = FALSE)
 	var/list/messages = list()
 
 	var/list/z_list = SSmapping.z_list
-	messages += "\n<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]\n"
+	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]\n"
 
 	var/list/linked_levels = list()
 	var/min_x = INFINITY
@@ -337,7 +337,7 @@ ADMIN_VERB(check_for_obstructed_atmospherics, R_DEBUG, "Check For Obstructed Atm
 
 	var/list/results = list()
 
-	results += "<h2><b>Anything that is considered to aesthetically obstruct an atmospherics machine (vent, scrubber, port) is listed below.</b> Please re-arrange to accomodate for this.</h2><br>"
+	results += "<h2><b>Anything that is considered to aesthetically obstruct an atmospherics machine (vent, scrubber, port) is listed below.</b> Please re-arrange to accommodate for this.</h2><br>"
 
 	// Ignore out stuff we see in normal and standard mapping that we don't care about (false alarms). Typically stuff that goes directionally off turfs or other undertile objects that we don't want to care about.
 	var/list/ignore_list = list(
@@ -390,7 +390,7 @@ ADMIN_VERB(check_for_obstructed_atmospherics, R_DEBUG, "Check For Obstructed Atm
 ADMIN_VERB_VISIBILITY(modify_lights, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(modify_lights, R_DEBUG, "Toggle Light Debug", "Toggles light debug mode.", ADMIN_CATEGORY_MAPPING)
 	if(GLOB.light_debug_enabled)
-		undebug_sources()
+		undebug_light_sources()
 		return
 
 	for(var/obj/machinery/light/fix_up as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
@@ -398,7 +398,7 @@ ADMIN_VERB(modify_lights, R_DEBUG, "Toggle Light Debug", "Toggles light debug mo
 		if(initial(fix_up.status) == LIGHT_OK)
 			fix_up.fix()
 		CHECK_TICK
-	debug_sources()
+	debug_light_sources()
 
 ADMIN_VERB_VISIBILITY(visualize_lights, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(visualize_lights, R_DEBUG, "Visualize Lighting Corners", "Visualizes the corners of all lights on the station.", ADMIN_CATEGORY_MAPPING)

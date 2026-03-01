@@ -26,16 +26,19 @@
 	///Designs imported from technology disks that we can print.
 	var/list/imported_designs = list()
 	///The container to hold materials
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
+	//looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
 
 /obj/machinery/autolathe/Initialize(mapload)
-	materials = AddComponent( \
-		/datum/component/material_container, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
+	print_sound = new(src,  FALSE)
+	materials = new ( \
+		src, \
+		SSmaterials.flat_materials, \
 		0, \
-		MATCONTAINER_EXAMINE, \
+		MATCONTAINER_EXAMINE|MATCONTAINER_ACCEPT_ALLOYS, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/autolathe, AfterMaterialInsert)) \
 	)
 	. = ..()
@@ -48,8 +51,8 @@
 	register_context()
 
 /obj/machinery/autolathe/Destroy()
-	materials = null
-	QDEL_NULL(wires)
+	QDEL_NULL(print_sound)
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/autolathe/examine(mob/user)
@@ -57,14 +60,14 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("Material usage cost at <b>[creation_efficiency * 100]%</b>")
+	. += span_notice("Material usage cost at <b>[creation_efficiency * 100]%</b>.")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
 	else
 		. += span_notice("[EXAMINE_HINT("Drag")] towards a direction (while next to it) to change drop direction.")
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
 
@@ -77,7 +80,7 @@
 		return NONE
 
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_RMB] = "[panel_open ? "Close" : "Open"] Panel"
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
@@ -85,11 +88,11 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/autolathe/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
+	. = NONE
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/autolathe/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+/obj/machinery/autolathe/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", tool))
 		return ITEM_INTERACT_SUCCESS
@@ -97,7 +100,7 @@
 /obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
 
-	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
+	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benefit from it
 	if(directly_use_energy(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.4 * initial(active_power_usage))))
 		flick_overlay_view(mutable_appearance('icons/obj/machines/lathes.dmi', "autolathe_mat"), 1 SECONDS)
 
@@ -109,7 +112,7 @@
 				highest_mat = present_mat
 				highest_mat_ref = mat
 
-		flick_overlay_view(material_insertion_animation(highest_mat_ref.greyscale_colors), 1 SECONDS)
+		flick_overlay_view(material_insertion_animation(highest_mat_ref), 1 SECONDS)
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
@@ -125,7 +128,6 @@
 		ui = new(user, src, "Autolathe")
 		ui.open()
 
-
 /**
  * Converts all the designs supported by this autolathe into UI data
  * Arguments
@@ -137,7 +139,7 @@
 
 	var/list/output = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	for(var/design_id in designs)
@@ -149,16 +151,21 @@
 		var/coeff = (ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency)
 		var/list/cost = list()
 		var/customMaterials = FALSE
-		for(var/i in design.materials)
-			var/datum/material/mat = i
-
-			var/design_cost = OPTIMAL_COST(design.materials[i] * coeff)
+		for(var/datum/material/mat as anything in design.materials)
+			var/mat_cost = design.materials[mat]
+			var/design_cost = OPTIMAL_COST(mat_cost * coeff)
 			if(istype(mat))
 				cost[mat.name] = design_cost
 				customMaterials = FALSE
-			else
-				cost[i] = design_cost
-				customMaterials = TRUE
+				continue
+
+			var/datum/material_requirement/requirement = SSmaterials.requirements[mat]
+			if (!requirement)
+				stack_trace("Design [design] has an invalid material requirement [requirement]")
+				continue
+
+			cost[requirement.get_description()] = design_cost
+			customMaterials = TRUE
 
 		//create & send ui data
 		var/icon_size = spritesheet.icon_size_id(design.id)
@@ -187,11 +194,10 @@
 
 	return data
 
-
 /obj/machinery/autolathe/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs),
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
 /obj/machinery/autolathe/ui_data(mob/user)
@@ -214,11 +220,13 @@
 	if(action != "make")
 		stack_trace("unknown autolathe ui_act: [action]")
 		return
+
 	if(disabled)
 		say("Unable to print, voltage mismatch in internal wiring.")
 		return
+
 	if(busy)
-		say("currently printing.")
+		say("Currently printing.")
 		return
 
 	//validate design
@@ -247,33 +255,39 @@
 		return
 	build_count = clamp(build_count, 1, 50)
 
-	//check for materials required. For custom material items decode their required materials
+	// Check for materials required. For custom material items decode their required materials
 	var/list/materials_needed = list()
-	for(var/material in design.materials)
-		var/amount_needed = design.materials[material]
-		if(istext(material)) // category
-			var/list/choices = list()
-			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
-				if(materials.get_material_amount(valid_candidate) < amount_needed)
-					continue
+	var/mat_choice = FALSE
+	for(var/material, amount_needed in design.materials)
+		if(!ispath(material, /datum/material_requirement)) // Material requirement
+			if(!istype(material, /datum/material))
+				CRASH("Autolathe ui_act got passed an invalid material id: [material]")
+			materials_needed[material] += amount_needed
+			continue
+
+		var/list/choices = list()
+		for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_req(material))
+			if(materials.get_material_amount(valid_candidate) >= (amount_needed + materials_needed[valid_candidate]))
 				choices[valid_candidate.name] = valid_candidate
-			if(!length(choices))
-				say("No valid materials with applicable amounts detected for design.")
-				return
-			var/chosen = tgui_input_list(
-				ui.user,
-				"Select the material to use",
-				"Material Selection",
-				sort_list(choices),
-			)
-			if(isnull(chosen))
-				return // user cancelled
-			material = choices[chosen]
+
+		if(!length(choices))
+			say("No valid materials with applicable amounts detected for design.")
+			return
+
+		var/chosen = tgui_input_list(
+			ui.user,
+			"Select the material to use",
+			"Material Selection",
+			sort_list(choices),
+		)
+		if(isnull(chosen))
+			return // user cancelled
+
+		material = choices[chosen]
 
 		if(isnull(material))
-			stack_trace("got passed an invalid material id: [material]")
-			return
-		materials_needed[material] = amount_needed
+			CRASH("A player chose an invalid custom material in autolathe ui_act: [material]")
+		materials_needed[material] += amount_needed
 
 	//checks for available materials
 	var/material_cost_coefficient = ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency
@@ -283,8 +297,9 @@
 
 	//compute power & time to print 1 item
 	var/charge_per_item = 0
-	for(var/material in design.materials)
-		charge_per_item += design.materials[material]
+	for(var/material, amount in design.materials)
+		charge_per_item += amount
+
 	charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * material_cost_coefficient * active_power_usage)
 	var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
 
@@ -292,6 +307,8 @@
 	busy = TRUE
 	icon_state = "autolathe_n"
 	SStgui.update_uis(src)
+	// play this after all checks passed individually for each item.
+	print_sound.start()
 	var/turf/target_location
 	if(drop_direction)
 		target_location = get_step(src, drop_direction)
@@ -299,6 +316,13 @@
 			target_location = get_turf(src)
 	else
 		target_location = get_turf(src)
+
+	//give achievement for using unique material
+	if(mat_choice)
+		for(var/datum/material/material in materials_needed)
+			if(!istype(material, /datum/material/glass) && !istype(material, /datum/material/iron))
+				ui.user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, ui.user)
+				break
 	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, build_count, build_time_per_item, material_cost_coefficient, charge_per_item, materials_needed, target_location), build_time_per_item)
 
 	return TRUE
@@ -354,24 +378,20 @@
 		var/max_stack_amount = initial(stack_item.max_amount)
 		var/number_to_make = (initial(stack_item.amount) * items_remaining)
 		while(number_to_make > max_stack_amount)
-			created = new stack_item(null, max_stack_amount) //it's imporant to spawn things in nullspace, since obj's like stacks qdel when they enter a tile/merge with other stacks of the same type, resulting in runtimes.
+			created = design.create_result(target, materials_needed, amount = max_stack_amount)
 			if(isitem(created))
 				created.pixel_x = created.base_pixel_x + rand(-6, 6)
 				created.pixel_y = created.base_pixel_y + rand(-6, 6)
-			created.forceMove(target)
 			number_to_make -= max_stack_amount
-
-		created = new stack_item(null, number_to_make)
-
+		created = design.create_result(target, materials_needed, amount = number_to_make)
 	else
-		created = new design.build_path(null)
+		created = design.create_result(target, materials_needed)
 		split_materials_uniformly(materials_needed, material_cost_coefficient, created)
 
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)
 		created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
-	created.forceMove(target)
 
 	if(is_stack)
 		items_remaining = 0
@@ -389,7 +409,7 @@
 */
 /obj/machinery/autolathe/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
-
+	print_sound.stop()
 	icon_state = initial(icon_state)
 	busy = FALSE
 	SStgui.update_uis(src)
@@ -416,47 +436,55 @@
 	drop_direction = 0
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(user.combat_mode) //so we can hit the machine
+/obj/machinery/autolathe/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
 		return ..()
 
 	if(busy)
 		balloon_alert(user, "it's busy!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
-	if(panel_open && is_wire_tool(attacking_item))
+	if(panel_open && is_wire_tool(tool))
 		wires.interact(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 	if(machine_stat)
-		return TRUE
+		return ..()
 
-	if(istype(attacking_item, /obj/item/disk/design_disk))
-		user.visible_message(span_notice("[user] begins to load \the [attacking_item] in \the [src]..."),
-			balloon_alert(user, "uploading design..."),
-			span_hear("You hear the chatter of a floppy drive."))
-		busy = TRUE
-		if(do_after(user, 14.4, target = src))
-			var/obj/item/disk/design_disk/disky = attacking_item
-			var/list/not_imported
-			for(var/datum/design/blueprint as anything in disky.blueprints)
-				if(!blueprint)
-					continue
-				if(blueprint.build_type & AUTOLATHE)
-					imported_designs[blueprint.id] = TRUE
-				else
-					LAZYADD(not_imported, blueprint.name)
-			if(not_imported)
-				to_chat(user, span_warning("The following design[length(not_imported) > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
-		busy = FALSE
-		update_static_data_for_all_viewers()
-		return TRUE
+	if(!istype(tool, /obj/item/disk/design_disk))
+		return ..()
 
 	if(panel_open)
 		balloon_alert(user, "close the panel first!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."),
+		balloon_alert(user, "uploading design..."),
+		span_hear("You hear the chatter of a floppy drive."))
+	busy = TRUE
+
+	if(!do_after(user, 1.5 SECONDS, target = src))
+		busy = FALSE
+		update_static_data_for_all_viewers()
+		balloon_alert(user, "interrupted!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/disk/design_disk/disky = tool
+	var/list/not_imported
+	for(var/datum/design/blueprint as anything in disky.blueprints)
+		if(!blueprint)
+			continue
+		if(blueprint.build_type & AUTOLATHE)
+			imported_designs[blueprint.id] = TRUE
+		else
+			LAZYADD(not_imported, blueprint.name)
+
+	if(not_imported)
+		to_chat(user, span_warning("The following design[length(not_imported) > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
+
+	busy = FALSE
+	update_static_data_for_all_viewers()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/autolathe/RefreshParts()
 	. = ..()
@@ -465,10 +493,10 @@
 		mat_capacity += new_matter_bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
 	materials.max_amount = mat_capacity
 
-	var/efficiency=1.8
+	var/efficiency = 1.8
 	for(var/datum/stock_part/servo/new_servo in component_parts)
 		efficiency -= new_servo.tier * 0.2
-	creation_efficiency = max(1,efficiency) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of servo efficiency
+	creation_efficiency = max(1, round(efficiency, 0.1)) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of servo efficiency
 
 /**
  * Cut a wire in the autolathe
@@ -488,22 +516,12 @@
 			if(!wires.is_cut(wire))
 				disabled = FALSE
 
-/**
- * Shock a mob who is trying to interact with the autolathe
- * Arguments
- *
- * * mob/user - the mob we are trying to shock
- * * prb - the probability of getting shocked
- */
-/obj/machinery/autolathe/proc/shock(mob/user, prb)
+/obj/machinery/autolathe/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
 	if(machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
 		return FALSE
-	if(!prob(prb))
-		return FALSE
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
-	return electrocute_mob(user, get_area(src), src, 0.7, TRUE)
+	if(isnull(siemens_coeff))
+		siemens_coeff = 0.7
+	return ..()
 
 /**
  * Is the autolathe hacked. Allowing us to acess hidden designs

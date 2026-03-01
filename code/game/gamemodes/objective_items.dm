@@ -1,6 +1,54 @@
+GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
+
 /proc/add_item_to_steal(source, type)
 	GLOB.steal_item_handler.objectives_by_path[type] += source
 	return type
+
+/// Holds references to information about all of the items you might need to steal for objectives
+/datum/objective_item_handler
+	var/list/list/objectives_by_path
+	var/generated_items = FALSE
+
+/datum/objective_item_handler/New()
+	. = ..()
+	objectives_by_path = list()
+	for(var/datum/objective_item/item as anything in subtypesof(/datum/objective_item))
+		objectives_by_path[initial(item.targetitem)] = list()
+	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(save_items))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, PROC_REF(new_item_created))
+
+/datum/objective_item_handler/proc/new_item_created(datum/source, obj/item/item)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(item, TRAIT_ITEM_OBJECTIVE_BLOCKED))
+		return
+	if(!generated_items)
+		item.add_stealing_item_objective()
+		return
+	var/typepath = item.add_stealing_item_objective()
+	if(typepath != null)
+		register_item(item, typepath)
+
+/// Registers all items that are potentially stealable and removes ones that aren't.
+/// We still need to do things this way because on mapload, items may not be on the station until everything has finished loading.
+/datum/objective_item_handler/proc/save_items()
+	SIGNAL_HANDLER
+	for(var/obj/item/typepath as anything in objectives_by_path)
+		var/list/obj_by_path_cache = objectives_by_path[typepath].Copy()
+		for(var/obj/item/object as anything in obj_by_path_cache)
+			register_item(object, typepath)
+	generated_items = TRUE
+
+/datum/objective_item_handler/proc/register_item(atom/object, typepath)
+	var/turf/place = get_turf(object)
+	if(!place || !is_station_level(place.z))
+		objectives_by_path[typepath] -= object
+		return
+	RegisterSignal(object, COMSIG_QDELETING, PROC_REF(remove_item))
+
+/datum/objective_item_handler/proc/remove_item(atom/source)
+	SIGNAL_HANDLER
+	for(var/typepath in objectives_by_path)
+		objectives_by_path[typepath] -= source
 
 //Contains the target item datums for Steal objectives.
 /datum/objective_item
@@ -36,6 +84,9 @@
 	var/difficulty = 0
 	/// A hint explaining how one may find the target item.
 	var/steal_hint = "The clown might have one."
+
+	///If the item takes special steps to destroy for an objective (e.g. blackbox)
+	var/destruction_method = null
 
 /// For objectives with special checks (does that intellicard have an ai in it? etcetc)
 /datum/objective_item/proc/check_special_completion(obj/item/thing)
@@ -244,11 +295,10 @@
 	steal_hint = "A self-defense weapon standard-issue for all heads of staffs barring the Head of Security. Rarely found off of their person."
 
 /datum/objective_item/steal/traitor/telebaton/check_special_completion(obj/item/thing)
-	return thing.type == /obj/item/melee/baton/telescopic
+	return !istype(thing, /obj/item/melee/baton/telescopic/contractor_baton)
 
 /obj/item/melee/baton/telescopic/add_stealing_item_objective()
-	if(type == /obj/item/melee/baton/telescopic)
-		return add_item_to_steal(src, /obj/item/melee/baton/telescopic)
+	return add_item_to_steal(src, /obj/item/melee/baton/telescopic)
 
 /datum/objective_item/steal/traitor/cargo_budget
 	name = "cargo's departmental budget"
@@ -325,10 +375,10 @@
 	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/hos)
 
 /datum/objective_item/steal/compactshotty
-	name = "the head of security's personal compact shotgun"
+	name = "the warden's personal compact shotgun"
 	targetitem = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
-	excludefromjob = list(JOB_HEAD_OF_SECURITY)
-	item_owner = list(JOB_HEAD_OF_SECURITY)
+	excludefromjob = list(JOB_WARDEN)
+	item_owner = list(JOB_WARDEN)
 	exists_on_map = TRUE
 	difficulty = 4
 	steal_hint = "A miniaturized combat shotgun. May be found in Head of Security's locker or strapped to their back."
@@ -351,15 +401,15 @@
 
 /datum/objective_item/steal/jetpack
 	name = "the Captain's jetpack"
-	targetitem = /obj/item/tank/jetpack/oxygen/captain
+	targetitem = /obj/item/tank/jetpack/captain
 	excludefromjob = list(JOB_CAPTAIN)
 	item_owner = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
 	difficulty = 3
 	steal_hint = "A special yellow jetpack found in the Suit Storage Unit in the Captain's Quarters."
 
-/obj/item/tank/jetpack/oxygen/captain/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/tank/jetpack/oxygen/captain)
+/obj/item/tank/jetpack/captain/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/tank/jetpack/captain)
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
@@ -470,15 +520,15 @@
 
 /datum/objective_item/steal/hdd_extraction
 	name = "the source code for Project Goon from the master R&D server mainframe"
-	targetitem = /obj/item/computer_disk/hdd_theft
+	targetitem = /obj/item/disk/computer/hdd_theft
 	excludefromjob = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST)
 	item_owner = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	exists_on_map = TRUE
 	difficulty = 4
 	steal_hint = "The hard drive of the master research server, found in R&D's server room."
 
-/obj/item/computer_disk/hdd_theft/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/computer_disk/hdd_theft)
+/obj/item/disk/computer/hdd_theft/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/disk/computer/hdd_theft)
 
 /datum/objective_item/steal/hdd_extraction/New()
 	special_equipment += /obj/item/paper/guides/antag/hdd_extraction
@@ -558,6 +608,7 @@
 	exists_on_map = TRUE
 	difficulty = 4
 	steal_hint = "The station's data Blackbox, found solely within Telecommunications."
+	destruction_method = "Too strong to be destroyed via normal means - needs to be dusted via the supermatter, or burnt in the chapel's crematorium."
 
 /obj/item/blackbox/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/blackbox)
@@ -860,6 +911,17 @@
 /obj/item/mod/control/pre_equipped/rescue/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/rescue)
 
+/datum/objective_item/steal/spy/cmo_defib
+	name = "Chief Medical Officer's Compact Defibrillator"
+	targetitem = /obj/item/defibrillator/compact/loaded/cmo
+	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
+	exists_on_map = TRUE
+	difficulty = 2
+	steal_hint = "The Compact Defibrillator, found on their person, or in their closet."
+
+/obj/item/defibrillator/compact/loaded/cmo/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/defibrillator/compact/loaded/cmo)
+
 /datum/objective_item/steal/spy/hos_modsuit
 	name = "the head of security's safeguard MOD control unit"
 	targetitem = /obj/item/mod/control/pre_equipped/safeguard
@@ -912,11 +974,11 @@
 
 /datum/objective_item/steal/spy/captain_sabre_sheathe
 	name = "the captain's sabre sheathe"
-	targetitem = /obj/item/storage/belt/sabre
+	targetitem = /obj/item/storage/belt/sheath/sabre
 	excludefromjob = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
 	difficulty = 3
 	steal_hint = "The sheathe for the captain's sabre, found in their closet or strapped to their waist at all times."
 
-/obj/item/storage/belt/sabre/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/storage/belt/sabre)
+/obj/item/storage/belt/sheath/sabre/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/storage/belt/sheath/sabre)

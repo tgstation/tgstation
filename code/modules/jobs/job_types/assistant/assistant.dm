@@ -39,7 +39,7 @@ Assistant
 
 /datum/job/assistant/get_outfit(consistent)
 	if(consistent)
-		return /datum/outfit/job/assistant/consistent
+		return /datum/outfit/job/assistant/preview
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
 		return ..()
 
@@ -58,13 +58,15 @@ Assistant
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/target)
 	..()
+	give_holiday_hat(target)
+	give_jumpsuit(target)
+
+/datum/outfit/job/assistant/proc/give_holiday_hat(mob/living/carbon/human/target)
 	for(var/holidayname in GLOB.holidays)
 		var/datum/holiday/holiday_today = GLOB.holidays[holidayname]
 		var/obj/item/special_hat = holiday_today.holiday_hat
 		if(prob(HOLIDAY_HAT_CHANCE) && !isnull(special_hat) && isnull(head))
 			head = special_hat
-
-	give_jumpsuit(target)
 
 /datum/outfit/job/assistant/proc/give_jumpsuit(mob/living/carbon/human/target)
 	var/static/jumpsuit_number = 0
@@ -86,13 +88,25 @@ Assistant
 /datum/outfit/job/assistant/consistent
 	name = "Assistant - Consistent"
 
+/datum/outfit/job/assistant/consistent/give_holiday_hat(mob/living/carbon/human/target)
+	return
+
 /datum/outfit/job/assistant/consistent/give_jumpsuit(mob/living/carbon/human/target)
 	uniform = /obj/item/clothing/under/color/grey
 
-/datum/outfit/job/assistant/consistent/post_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/job/assistant/consistent/post_equip(mob/living/carbon/human/H, visuals_only)
 	..()
 
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		H.w_uniform?.update_greyscale()
 		H.update_worn_undersuit()
+
+/datum/outfit/job/assistant/preview
+	name = "Assistant - Preview"
+
+/datum/outfit/job/assistant/preview/give_jumpsuit(mob/living/carbon/human/target)
+	if (target.jumpsuit_style == PREF_SUIT)
+		uniform = /obj/item/clothing/under/color/grey
+	else
+		uniform = /obj/item/clothing/under/color/jumpskirt/grey

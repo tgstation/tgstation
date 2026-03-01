@@ -3,9 +3,10 @@
 	name = "bioscrambler anomaly"
 	icon_state = "bioscrambler"
 	anomaly_core = /obj/item/assembly/signaler/anomaly/bioscrambler
-	immortal = TRUE
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	layer = ABOVE_MOB_LAYER
+	lifespan = ANOMALY_COUNTDOWN_TIMER * 2
+
 	/// Who are we moving towards?
 	var/datum/weakref/pursuit_target
 	/// Cooldown for every anomaly pulse
@@ -15,7 +16,7 @@
 	/// Range of the anomaly pulse
 	var/range = 2
 
-/obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan)
 	. = ..()
 	pursuit_target = WEAKREF(find_nearest_target())
 
@@ -24,8 +25,8 @@
 	if(!COOLDOWN_FINISHED(src, pulse_cooldown))
 		return
 
-	new /obj/effect/temp_visual/bioscrambler_wave(get_turf(src))
-	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
+	new /obj/effect/temp_visual/circle_wave/bioscrambler(get_turf(src))
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
 	COOLDOWN_START(src, pulse_cooldown, pulse_delay)
 	for(var/mob/living/carbon/nearby in hearers(range, src))
 		nearby.bioscramble(name)
@@ -62,7 +63,7 @@
 	for(var/mob/living/carbon/target in GLOB.player_list)
 		if (target.z != z)
 			continue
-		if (target.status_flags & GODMODE)
+		if (HAS_TRAIT(target, TRAIT_GODMODE))
 			continue
 		if (target.stat >= UNCONSCIOUS)
 			continue // Don't just haunt a corpse
@@ -80,19 +81,6 @@
 /obj/effect/anomaly/bioscrambler/docile/update_target()
 	return
 
-/// Visual effect spawned when the bioscrambler scrambles your bio
-/obj/effect/temp_visual/bioscrambler_wave
-	icon = 'icons/effects/64x64.dmi'
-	icon_state = "circle_wave"
-	pixel_x = -16
-	pixel_y = -16
-	duration = 0.5 SECONDS
-	color = COLOR_LIME
-
-/obj/effect/temp_visual/bioscrambler_wave/Initialize(mapload)
-	transform = matrix().Scale(0.1)
-	animate(src, transform = matrix().Scale(2), time = duration, flags = ANIMATION_PARALLEL)
-	animate(src, alpha = 255, time = duration * 0.6, flags = ANIMATION_PARALLEL)
-	animate(alpha = 0, time = duration * 0.4)
-	apply_wibbly_filters(src)
-	return ..()
+/obj/effect/anomaly/bioscrambler/detonate()
+	COOLDOWN_RESET(src, pulse_cooldown)
+	anomalyEffect()

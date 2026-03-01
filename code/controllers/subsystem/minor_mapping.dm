@@ -1,10 +1,19 @@
-#define PROB_MOUSE_SPAWN 98
 #define PROB_SPIDER_REPLACEMENT 50
 
 SUBSYSTEM_DEF(minor_mapping)
 	name = "Minor Mapping"
-	init_order = INIT_ORDER_MINOR_MAPPING
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms,
+	)
 	flags = SS_NO_FIRE
+	///a list of vermin we pick from to spawn.
+	var/list/vermin_chances = list(
+		/mob/living/basic/mouse = 72,
+		/mob/living/basic/snail = 16,
+		/mob/living/basic/stoat = 10,
+		/mob/living/basic/regal_rat/controlled = 2,
+	)
 
 /datum/controller/subsystem/minor_mapping/Initialize()
 // This whole subsystem just introduces a lot of odd confounding variables into unit test situations,
@@ -14,6 +23,12 @@ SUBSYSTEM_DEF(minor_mapping)
 #else
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
 	place_satchels(satchel_amount = 2)
+	var/weakpoint_spawns = 3
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_SPAWN_WEAKPOINTS))
+		weakpoint_spawns = rand(4,8)
+
+	weakpoint_spawns += SSmapping.current_map.bonus_weakpoints //This will add 0 by default, or additional on large maps where it's included in the config.
+	place_weakpoints(weakpoint_spawns)
 	return SS_INIT_SUCCESS
 #endif
 
@@ -27,14 +42,14 @@ SUBSYSTEM_DEF(minor_mapping)
 			continue
 
 		to_spawn--
-		if(HAS_TRAIT(SSstation, STATION_TRAIT_SPIDER_INFESTATION) && prob(PROB_SPIDER_REPLACEMENT))
-			new /mob/living/basic/spider/maintenance(proposed_turf)
-			return
 
-		if (prob(PROB_MOUSE_SPAWN))
-			new /mob/living/basic/mouse(proposed_turf)
+		var/picked_path
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_SPIDER_INFESTATION) && prob(PROB_SPIDER_REPLACEMENT))
+			picked_path = /mob/living/basic/spider/maintenance
 		else
-			new /mob/living/basic/regal_rat/controlled(proposed_turf)
+			picked_path = pick_weight(vermin_chances)
+
+		new picked_path(proposed_turf)
 
 /// Returns true if a mouse won't die if spawned on this turf
 /datum/controller/subsystem/minor_mapping/proc/valid_mouse_turf(turf/open/proposed_turf)
@@ -49,6 +64,8 @@ SUBSYSTEM_DEF(minor_mapping)
 	///List of areas where satchels should not be placed.
 	var/list/blacklisted_area_types = list(
 		/area/station/holodeck,
+		/area/space/nearstation,
+		/area/station/solars,
 		)
 
 	while(turfs.len && satchel_amount > 0)
@@ -86,5 +103,31 @@ SUBSYSTEM_DEF(minor_mapping)
 
 	return shuffle(suitable)
 
-#undef PROB_MOUSE_SPAWN
+/// This behaves nearly the same as spawning underfloot satchels, but instead spawns weakpoints.
+/datum/controller/subsystem/minor_mapping/proc/place_weakpoints(weakpoint_amount)
+	if(weakpoint_amount == 0)
+		return
+	var/list/turfs = find_satchel_suitable_turfs()
+	///List of areas where weakpoints should not be placed.
+	var/list/blacklisted_area_types = get_blacklist_areas() + /area/station/maintenance
+	while(turfs.len && weakpoint_amount > 0)
+		var/turf/turf = pick_n_take(turfs)
+		if(is_type_in_list(get_area(turf), blacklisted_area_types))
+			continue
+		var/obj/effect/weakpoint/new_point = new(turf)
+		SEND_SIGNAL(new_point, COMSIG_OBJ_HIDE, turf.underfloor_accessibility)
+		weakpoint_amount--
+
+/**
+ * Areas for minor_mapping procs to avoid. Mutate or adjust based on use case.
+ */
+/datum/controller/subsystem/minor_mapping/proc/get_blacklist_areas()
+	var/list/blacklist_areas = list(
+		/area/station/holodeck,
+		/area/space/nearstation,
+		/area/station/solars,
+	)
+	return blacklist_areas
+
+
 #undef PROB_SPIDER_REPLACEMENT

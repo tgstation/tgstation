@@ -8,7 +8,7 @@
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED
 	/// Typecache of all item types we explicitly cannot pick
 	/// Note that abstract items are already excluded
-	VAR_FINAL/list/chameleon_blacklist = list()
+	VAR_FINAL/list/chameleon_blacklist
 	/// Typecache of typepaths we can turn into
 	VAR_FINAL/list/chameleon_typecache
 	/// Assoc list of item name + icon state to item typepath
@@ -31,10 +31,18 @@
 		qdel(src)
 		return
 
+	name = "Change [chameleon_name] Appearance"
+	build_all_button_icons()
+
+	LAZYINITLIST(chameleon_blacklist)
+	LAZYINITLIST(chameleon_typecache)
+	LAZYINITLIST(chameleon_list)
+
 	initialize_blacklist()
 	initialize_disguises()
+
 	if(active_type)
-		if(chameleon_blacklist[active_type])
+		if(is_type_in_typecache(active_type, chameleon_blacklist))
 			stack_trace("[type] has an active type defined in init which is blacklisted ([active_type])")
 			active_type = null
 		else
@@ -73,31 +81,40 @@
 	var/datum/action/chameleon_outfit/outfit_action = locate() in remove_from.actions
 	QDEL_NULL(outfit_action)
 
+/// Basic initialization of the chameleon items we cannot pick from
 /datum/action/item_action/chameleon/change/proc/initialize_blacklist()
 	chameleon_blacklist |= typecacheof(target.type)
 
+/// Basic initialization of the chameleon items we can pick from
 /datum/action/item_action/chameleon/change/proc/initialize_disguises()
-	name = "Change [chameleon_name] Appearance"
-	build_all_button_icons()
-
-	LAZYINITLIST(chameleon_typecache)
-	LAZYINITLIST(chameleon_list)
-
 	if(!ispath(chameleon_type, /obj/item))
 		stack_trace("Non-item chameleon type defined on [type] ([chameleon_type])")
 		return
 
 	add_chameleon_items(chameleon_type)
 
-/datum/action/item_action/chameleon/change/proc/add_chameleon_items(type_to_add)
+/// Used for formatting a typepath into something human readable for selection
+/datum/action/item_action/chameleon/change/proc/format_readable_name(datum/format_type)
+	if(ispath(format_type, /obj/item))
+		var/obj/item/format_item = format_type
+		return "[format_item::name] ([replacetext(format_item::post_init_icon_state || format_item::icon_state, "_", " ")])"
 
-	chameleon_typecache |= typecacheof(type_to_add)
-	for(var/obj/item/item_type as anything in chameleon_typecache)
-		if(chameleon_blacklist[item_type] || (initial(item_type.item_flags) & ABSTRACT) || !initial(item_type.icon_state))
+	return "[format_type]"
+
+/**
+ * Adds items of the given type or types to the chameleon selection list
+ *
+ * * type_or_types_to_add: A single typepath or a list of typepaths to add to the chameleon selection
+ * * only_root: If TRUE, only add the literal type or types passed, not their children
+ * * ignore_root: If TRUE, only add children of the type or types passed, not the literal types
+ */
+/datum/action/item_action/chameleon/change/proc/add_chameleon_items(type_or_types_to_add, only_root = FALSE, ignore_root = FALSE)
+	var/list/new_items = typecacheof(type_or_types_to_add, only_root_path = only_root, ignore_root_path = ignore_root)
+	for(var/obj/item/item_type as anything in new_items - chameleon_typecache)
+		if(is_type_in_typecache(item_type, chameleon_blacklist) || (item_type::item_flags & ABSTRACT) || item_type == item_type::abstract_type || !item_type::icon_state)
 			continue
-		var/chameleon_item_name = "[initial(item_type.name)] ([initial(item_type.icon_state)])"
-		chameleon_list[chameleon_item_name] = item_type
-
+		chameleon_list[format_readable_name(item_type)] = item_type
+	chameleon_typecache |= new_items
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/picked_name = tgui_input_list(user, "Select [chameleon_name] to change into", "Chameleon Settings", sort_list(chameleon_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
@@ -120,62 +137,61 @@
 	if(ismob(chameleon_item.loc))
 		var/mob/wearer = chameleon_item.loc
 		wearer.update_clothing(chameleon_item.slot_flags | ITEM_SLOT_HANDS)
+		wearer.refresh_obscured()
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
 	PROTECTED_PROC(TRUE) // Call update_look, not this!
 
 	var/atom/atom_target = target
-	atom_target.name = initial(picked_item.name)
-	atom_target.desc = initial(picked_item.desc)
-	atom_target.icon_state = initial(picked_item.icon_state)
+	atom_target.name = picked_item::name
+	atom_target.desc = picked_item::desc
+	atom_target.icon_state = picked_item::post_init_icon_state || picked_item::icon_state
 
 	if(isitem(atom_target))
 		var/obj/item/item_target = target
-		item_target.worn_icon = initial(picked_item.worn_icon)
-		item_target.lefthand_file = initial(picked_item.lefthand_file)
-		item_target.righthand_file = initial(picked_item.righthand_file)
+		item_target.worn_icon = picked_item::worn_icon
+		item_target.lefthand_file = picked_item::lefthand_file
+		item_target.righthand_file = picked_item::righthand_file
 
-		item_target.worn_icon_state = initial(picked_item.worn_icon_state)
-		item_target.inhand_icon_state = initial(picked_item.inhand_icon_state)
+		item_target.worn_icon_state = picked_item::worn_icon_state
+		item_target.inhand_icon_state = picked_item::inhand_icon_state
 
-		if(initial(picked_item.greyscale_colors))
-			if(initial(picked_item.greyscale_config_worn))
+		if(picked_item::greyscale_colors)
+			if(picked_item.greyscale_config_worn)
 				item_target.worn_icon = SSgreyscale.GetColoredIconByType(
-					initial(picked_item.greyscale_config_worn),
-					initial(picked_item.greyscale_colors),
+					picked_item::greyscale_config_worn,
+					picked_item::greyscale_colors,
 				)
-			if(initial(picked_item.greyscale_config_inhand_left))
+			if(picked_item::greyscale_config_inhand_left)
 				item_target.lefthand_file = SSgreyscale.GetColoredIconByType(
-					initial(picked_item.greyscale_config_inhand_left),
-					initial(picked_item.greyscale_colors),
+					picked_item::greyscale_config_inhand_left,
+					picked_item::greyscale_colors,
 				)
-			if(initial(picked_item.greyscale_config_inhand_right))
+			if(picked_item::greyscale_config_inhand_right)
 				item_target.righthand_file = SSgreyscale.GetColoredIconByType(
-					initial(picked_item.greyscale_config_inhand_right),
-					initial(picked_item.greyscale_colors),
+					picked_item::greyscale_config_inhand_right,
+					picked_item::greyscale_colors,
 				)
 
-		item_target.flags_inv = initial(picked_item.flags_inv)
-		item_target.transparent_protection = initial(picked_item.transparent_protection)
+		item_target.flags_inv = picked_item::flags_inv
+		item_target.hair_mask = picked_item::hair_mask
+		item_target.transparent_protection = picked_item::transparent_protection
 		if(isclothing(item_target) && ispath(picked_item, /obj/item/clothing))
 			var/obj/item/clothing/clothing_target = item_target
 			var/obj/item/clothing/picked_clothing = picked_item
-			clothing_target.flags_cover = initial(picked_clothing.flags_cover)
+			clothing_target.flags_cover = picked_clothing::flags_cover
 
 
-	if(initial(picked_item.greyscale_config) && initial(picked_item.greyscale_colors))
+	if((picked_item::greyscale_config) && picked_item::greyscale_colors)
 		atom_target.icon = SSgreyscale.GetColoredIconByType(
-			initial(picked_item.greyscale_config),
-			initial(picked_item.greyscale_colors),
+			picked_item::greyscale_config,
+			picked_item::greyscale_colors,
 		)
 
 	else
-		atom_target.icon = initial(picked_item.icon)
+		atom_target.icon = picked_item::icon
 
-/datum/action/item_action/chameleon/change/Trigger(trigger_flags)
-	if(!IsAvailable(feedback = TRUE))
-		return FALSE
-
+/datum/action/item_action/chameleon/change/do_effect(trigger_flags)
 	select_look(owner)
 	return TRUE
 
@@ -208,7 +224,7 @@
 
 	if(istype(applying_from, /datum/outfit/job))
 		var/datum/outfit/job/job_outfit = applying_from
-		var/datum/job/job_datum = SSjob.GetJobType(job_outfit.jobtype)
+		var/datum/job/job_datum = SSjob.get_job_type(job_outfit.jobtype)
 		apply_job_data(job_datum)
 
 	update_look(using_item_type)

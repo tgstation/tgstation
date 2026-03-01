@@ -4,8 +4,13 @@
 
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1622" = "Bug breaking rendering can lead to wallhacks.",
-	))
-
+))
+GLOBAL_LIST_INIT(unrecommended_builds, list(
+	"1670" = "Bug breaking in-world text rendering.",
+	"1671" = "Bug breaking in-world text rendering.",
+	"1675" = "Frequent crashing.",
+	"1676" = "Frequent crashing.",
+))
 #define LIMITER_SIZE 5
 #define CURRENT_SECOND 1
 #define SECOND_COUNT 2
@@ -114,6 +119,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			list("id" = message_id, "player_key" = usr.ckey)
 		)
 		query_message_read.warn_execute()
+		QDEL_NULL(query_message_read)
 		return
 
 	// TGUIless adminhelp
@@ -135,6 +141,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	switch(href_list["action"])
 		if("openLink")
 			src << link(href_list["link"])
+		if("openWebMap")
+			if(!SSmapping.current_map.mapping_url)
+				return
+			if(is_station_level(mob.z))
+				src << link("[SSmapping.current_map.mapping_url]/?x=[mob.x]&y=[mob.y]&zoom=6")
+			else
+				src << link("[SSmapping.current_map.mapping_url]")
 	if (hsrc)
 		var/datum/real_src = hsrc
 		if(QDELETED(real_src))
@@ -249,6 +262,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 
+	var/reconnecting = FALSE
+	if(GLOB.persistent_clients_by_ckey[ckey])
+		reconnecting = TRUE
+		persistent_client = GLOB.persistent_clients_by_ckey[ckey]
+	else
+		persistent_client = new(ckey)
+	persistent_client.set_client(src)
+
+	winset(src, null, list("browser-options" = "find,refresh"))
+
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
 	stat_panel.subscribe(src, PROC_REF(on_stat_panel_message))
@@ -301,40 +324,47 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if(!joined_player_preferences)
 				continue //this shouldn't happen.
 
-			var/client/C = GLOB.directory[joined_player_ckey]
-			var/in_round = ""
-			if (joined_players[joined_player_ckey])
-				in_round = " who has played in the current round"
-			var/message_type = "Notice"
+			var/client/potential_match = GLOB.directory[joined_player_ckey]
 
-			var/matches
+			var/matched_ip = null
+			var/matched_cid = null
+			var/same_round = FALSE
+
 			if(joined_player_preferences.last_ip == address)
-				matches += "IP ([address])"
+				matched_ip = "IP [address]"
+
 			if(joined_player_preferences.last_id == computer_id)
-				if(matches)
-					matches = "BOTH [matches] and "
-					alert_admin_multikey = TRUE
-					message_type = "MULTIKEY"
-				matches += "Computer ID ([computer_id])"
+				matched_cid = "Computer ID [computer_id]"
 				alert_mob_dupe_login = TRUE
 
-			if(matches)
-				if(C)
-					message_admins(span_danger("<B>[message_type]: </B></span><span class='notice'>Connecting player [key_name_admin(src)] has the same [matches] as [key_name_admin(C)]<b>[in_round]</b>."))
-					log_admin_private("[message_type]: Connecting player [key_name(src)] has the same [matches] as [key_name(C)][in_round].")
-				else
-					message_admins(span_danger("<B>[message_type]: </B></span><span class='notice'>Connecting player [key_name_admin(src)] has the same [matches] as [joined_player_ckey](no longer logged in)<b>[in_round]</b>. "))
-					log_admin_private("[message_type]: Connecting player [key_name(src)] has the same [matches] as [joined_player_ckey](no longer logged in)[in_round].")
-	var/reconnecting = FALSE
-	if(GLOB.player_details[ckey])
-		reconnecting = TRUE
-		player_details = GLOB.player_details[ckey]
-		player_details.byond_version = full_version
-	else
-		player_details = new(ckey)
-		player_details.byond_version = full_version
-		GLOB.player_details[ckey] = player_details
+			if(isnull(matched_ip) && isnull(matched_cid))
+				continue
 
+			if (joined_players[joined_player_ckey])
+				same_round = TRUE
+
+			var/double_match = !isnull(matched_ip) && !isnull(matched_cid)
+
+			if(double_match && same_round)
+				alert_admin_multikey = TRUE
+
+			var/list/concatables = list()
+			concatables += span_danger(span_bold("[double_match ? "MULTIKEY" : "Notice"]:"))
+			concatables += "<span class='notice'>Connecting player [key_name_admin(src)] has the same"
+			if(double_match)
+				concatables += "!BOTH! [matched_ip] and [matched_cid]"
+			else
+				concatables += (!isnull(matched_ip) ? matched_ip : matched_cid)
+			concatables += "as [isnull(potential_match) ? "[joined_player_ckey] (no longer logged in)" : "[key_name_admin(potential_match)]"]"
+			if(same_round)
+				concatables += span_bold("in the current round")
+
+			concatables += "</span>"
+
+			var/sendable_string = jointext(concatables, " ")
+
+			message_admins(sendable_string)
+			log_admin_private(strip_html_full(sendable_string, MAX_MESSAGE_LEN))
 
 	. = ..() //calls mob.Login()
 
@@ -357,7 +387,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				new /datum/admins(autoadmin_ranks, ckey)
 
 	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin && is_localhost())
-		var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
+		var/datum/admin_rank/localhost_rank = new("!localhost!", RANK_SOURCE_LOCAL, R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
+		if(QDELETED(localhost_rank))
+			to_chat(world, "Local admin rank creation failed, somehow?")
+			return
 		new /datum/admins(list(localhost_rank), ckey, 1, 1)
 
 	if (length(GLOB.stickybanadminexemptions))
@@ -393,6 +426,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		inline_css = file("html/statbrowser.css"),
 	)
 	addtimer(CALLBACK(src, PROC_REF(check_panel_loaded)), 30 SECONDS)
+
+	INVOKE_ASYNC(src, PROC_REF(acquire_dpi))
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
@@ -437,7 +472,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			msg += "Your version: [byond_version].[byond_build]<br>"
 			msg += "Required version to remove this message: [warn_version].[warn_build] or later<br>"
 			msg += "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.<br>"
-			src << browse(msg, "window=warning_popup")
+			src << browse(HTML_SKELETON(msg), "window=warning_popup")
 		else
 			to_chat(src, span_danger("<b>Your version of byond may be getting out of date:</b>"))
 			to_chat(src, CONFIG_GET(string/client_warn_message))
@@ -481,7 +516,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		display_unread_notes(src, time_stamp)
 	qdel(query_last_connected)
 
-	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
+	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need its current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		player_age = 0
 	var/nnpa = CONFIG_GET(number/notify_new_player_age)
@@ -523,7 +558,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(CONFIG_GET(flag/aggressive_changelog))
 			changelog()
 		else
-			winset(src, "infowindow.changelog", "font-style=bold")
+			winset(src, "infobuttons.changelog", "font-style=bold")
 
 	if(ckey in GLOB.clientmessages)
 		for(var/message in GLOB.clientmessages[ckey])
@@ -536,7 +571,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, span_warning("Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you."))
 
-	update_ambience_pref(prefs.read_preference(/datum/preference/toggle/sound_ambience))
+	update_ambience_pref(prefs.read_preference(/datum/preference/numeric/volume/sound_ambience_volume))
 	check_ip_intel()
 
 	//This is down here because of the browse() calls in tooltip/New()
@@ -548,9 +583,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	loot_panel = new(src)
 
-	view_size = new(src, getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
+	view_size = new(src)
+	set_fullscreen(logging_in = TRUE)
 	view_size.resetFormat()
 	view_size.setZoomMode()
+	view_size.apply()
 	Master.UpdateTickRate()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 	fully_created = TRUE
@@ -581,6 +618,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients -= src
 	GLOB.directory -= ckey
+	if(persistent_client)
+		persistent_client.set_client(null)
+	else
+		stack_trace("A client was Del()'d without a persistent_client! This should not be happening.")
+
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.interviews.client_logout(src)
@@ -726,22 +768,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					qdel(query_datediff)
 	qdel(query_get_client_age)
 	if(!new_player)
-		var/datum/db_query/query_log_player = SSdbcore.NewQuery(
+		SSdbcore.FireAndForget(
 			"UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = :round_id, ip = INET_ATON(:ip), computerid = :computerid, lastadminrank = :admin_rank, accountjoindate = :account_join_date WHERE ckey = :ckey",
 			list("round_id" = GLOB.round_id, "ip" = address, "computerid" = computer_id, "admin_rank" = admin_rank, "account_join_date" = account_join_date || null, "ckey" = ckey)
 		)
-		if(!query_log_player.Execute())
-			qdel(query_log_player)
-			return
-		qdel(query_log_player)
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/db_query/query_log_connection = SSdbcore.NewQuery({"
+	SSdbcore.FireAndForget({"
 		INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`)
 		VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid)
 	"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id))
-	query_log_connection.Execute()
-	qdel(query_log_connection)
 
 	SSserver_maint.UpdateHubStatus()
 
@@ -1040,12 +1076,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		to_chat(src, announcement)
 
 ///Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments
-/client/proc/give_award(achievement_type, mob/user, value = 1)
-	return player_details.achievements.unlock(achievement_type, user, value)
+/client/proc/give_award(achievement_type, mob/user, value = 1, ...)
+	return persistent_client.achievements.unlock(arglist(args))
 
 ///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
-/client/proc/get_award_status(achievement_type, mob/user, value = 1)
-	return player_details.achievements.get_achievement_status(achievement_type)
+/client/proc/get_award_status(achievement_type)
+	return persistent_client.achievements.get_achievement_status(achievement_type)
 
 ///Gives someone hearted status for OOC, from behavior commendations
 /client/proc/adjust_heart(duration = 24 HOURS)
@@ -1082,7 +1118,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/check_panel_loaded()
 	if(stat_panel.is_ready())
 		return
-	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
+	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='byond://?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
 
 /**
  * Initializes dropdown menus on client
@@ -1109,8 +1145,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)
-		holder.filteriffic = new /datum/filter_editor(in_atom)
-		holder.filteriffic.ui_interact(mob)
+		holder.filterrific = new /datum/filter_editor(in_atom)
+		holder.filterrific.ui_interact(mob)
 
 ///opens the particle editor UI for the in_atom object for this client
 /client/proc/open_particle_editor(atom/movable/in_atom)
@@ -1191,21 +1227,20 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set name = "Toggle Fullscreen"
 	set category = "OOC"
 
-	fullscreen = !fullscreen
+	var/is_on = prefs.read_preference(/datum/preference/toggle/fullscreen_mode)
+	prefs.write_preference(GLOB.preference_entries[/datum/preference/toggle/fullscreen_mode], !is_on)
+	set_fullscreen()
 
-	if (fullscreen)
-		winset(usr, "mainwindow", "on-size=")
-		winset(usr, "mainwindow", "titlebar=false")
-		winset(usr, "mainwindow", "can-resize=false")
-		winset(usr, "mainwindow", "menu=")
-		winset(usr, "mainwindow", "is-maximized=false")
-		winset(usr, "mainwindow", "is-maximized=true")
-	else
-		winset(usr, "mainwindow", "menu=menu")
-		winset(usr, "mainwindow", "titlebar=true")
-		winset(usr, "mainwindow", "can-resize=true")
-		winset(usr, "mainwindow", "is-maximized=false")
-		winset(usr, "mainwindow", "on-size=attempt_auto_fit_viewport")
+/client/proc/set_fullscreen(logging_in = FALSE)
+	var/fullscreen = prefs?.read_preference(/datum/preference/toggle/fullscreen_mode)
+	//no need to set every login to not fullscreen, they already aren't.
+	//we also dont need to call attempt_auto_fit_viewport, Login does that for us.
+	if(logging_in)
+		if(fullscreen)
+			winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
+		return
+	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
+	attempt_auto_fit_viewport()
 
 /client/verb/toggle_status_bar()
 	set name = "Toggle Status Bar"
@@ -1214,9 +1249,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	show_status_bar = !show_status_bar
 
 	if (show_status_bar)
-		winset(usr, "mapwindow.status_bar", "is-visible=true")
+		winset(src, "mapwindow.status_bar", "is-visible=true")
 	else
-		winset(usr, "mapwindow.status_bar", "is-visible=false")
+		winset(src, "mapwindow.status_bar", "is-visible=false")
 
 /// Clears the client's screen, aside from ones that opt out
 /client/proc/clear_screen()
@@ -1257,6 +1292,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	message_to_send += "(No admins online)"
 
 	send2adminchat("Server", jointext(message_to_send, " "))
+
+/// This grabs the DPI of the user per their skin
+/client/proc/acquire_dpi()
+	window_scaling = text2num(winget(src, null, "dpi"))
 
 #undef ADMINSWARNED_AT
 #undef CURRENT_MINUTE

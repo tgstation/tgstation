@@ -7,8 +7,8 @@
 	name = "Pheromone Receptors"
 	desc = "We attune our senses to track other changelings by scent.  The closer they are, the easier we can find them."
 	helptext = "We will know the general direction of nearby changelings, with closer scents being stronger.  Our chemical generation is slowed while this is active."
-	button_icon = 'icons/mob/actions/actions_spells.dmi'
-	button_icon_state = "nose"
+	button_icon_state = "pheromone_receptors"
+	category = "utility"
 	chemical_cost = 0 //Reduces regain rate while active.
 	dna_cost = 2
 	var/receptors_active = FALSE
@@ -55,7 +55,7 @@
 			var/datum/antagonist/changeling/antag_datum = IS_CHANGELING(C)
 			if(istype(antag_datum))
 				var/their_loc = get_turf(C)
-				var/distance = get_dist_euclidian(my_loc, their_loc)
+				var/distance = get_dist_euclidean(my_loc, their_loc)
 				if (distance < CHANGELING_PHEROMONE_MAX_DISTANCE)
 					changelings[C] = (CHANGELING_PHEROMONE_MAX_DISTANCE ** 2) - (distance ** 2)
 

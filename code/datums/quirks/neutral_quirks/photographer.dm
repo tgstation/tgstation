@@ -16,14 +16,14 @@
 	photo_album.persistence_load()
 	photo_album.name = "[human_holder.real_name]'s photo album"
 
-	give_item_to_holder(photo_album, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(photo_album, list(LOCATION_BACKPACK, LOCATION_HANDS))
 	give_item_to_holder(
 		/obj/item/camera,
 		list(
-			LOCATION_NECK = ITEM_SLOT_NECK,
-			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_HANDS = ITEM_SLOT_HANDS
+			LOCATION_NECK,
+			LOCATION_LPOCKET,
+			LOCATION_RPOCKET,
+			LOCATION_BACKPACK,
+			LOCATION_HANDS
 		)
 	)

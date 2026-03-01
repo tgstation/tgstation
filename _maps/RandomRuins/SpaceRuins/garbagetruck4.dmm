@@ -75,6 +75,7 @@
 /obj/item/clothing/shoes/kindle_kicks{
 	pixel_y = -10
 	},
+/obj/structure/sign/warning/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "hH" = (
@@ -118,11 +119,10 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "lg" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "lm" = (
 /obj/structure/spider/stickyweb,
-/obj/structure/spider/stickyweb/very_sticky,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "mf" = (
@@ -182,7 +182,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "qX" = (
-/obj/structure/spider/stickyweb/very_sticky,
 /obj/item/food/badrecipe/moldy,
 /obj/structure/spider/stickyweb,
 /obj/item/food/spidereggs{
@@ -198,19 +197,15 @@
 /obj/item/food/spidereggs,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
-"rb" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/garbagetruck/toystore)
 "rc" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/flashlight/flare/torch,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "ri" = (
 /obj/structure/lattice/catwalk,
 /obj/item/crowbar/large/emergency,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "rr" = (
 /obj/structure/floodlight_frame,
@@ -222,7 +217,7 @@
 "rI" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "sh" = (
 /obj/item/food/badrecipe/moldy/bacteria,
@@ -316,10 +311,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "wu" = (
-/obj/machinery/airalarm{
-	pixel_y = 25
-	},
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "ww" = (
@@ -385,7 +378,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "wK" = (
-/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
 /obj/item/clothing/under/costume/skeleton,
 /obj/item/clothing/mask/gas/prop,
 /turf/open/floor/plating,
@@ -396,15 +389,15 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "xd" = (
-/obj/effect/decal/cleanable/robot_debris/up,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/melee/skateboard,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "xf" = (
 /obj/structure/door_assembly/door_assembly_wood,
 /obj/effect/decal/cleanable/plastic,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "xC" = (
@@ -492,7 +485,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /obj/effect/spawner/random/entertainment/plushie,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "yS" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -585,7 +578,7 @@
 "Hj" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Hv" = (
 /obj/effect/decal/cleanable/glass/plastitanium/screws,
@@ -607,7 +600,7 @@
 "Ix" = (
 /obj/structure/closet/cardboard,
 /obj/item/bodypart/chest/robot,
-/obj/item/toy/katana,
+/obj/item/storage/belt/sheath/katana/toy,
 /obj/item/toy/plush/snakeplushie,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
@@ -642,8 +635,8 @@
 "JI" = (
 /obj/item/dice/d10,
 /obj/structure/filingcabinet/chestdrawer,
-/obj/item/computer_disk/maintenance/modsuit_control,
-/obj/item/computer_disk/maintenance/modsuit_control,
+/obj/item/disk/computer/maintenance/modsuit_control,
+/obj/item/disk/computer/maintenance/modsuit_control,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "KR" = (
@@ -748,7 +741,7 @@
 /obj/item/coin/plastic,
 /obj/structure/safe,
 /obj/structure/spider/stickyweb,
-/obj/item/tank/jetpack/oxygen{
+/obj/item/tank/jetpack{
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas. It's blue, and has a triangle chiselled into the paint."
 	},
 /obj/item/switchblade,
@@ -800,6 +793,7 @@
 	},
 /obj/structure/mop_bucket,
 /obj/item/broken_bottle,
+/obj/structure/sign/warning/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "UD" = (
@@ -812,8 +806,8 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/space/nearstation)
 "Wl" = (
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
@@ -846,7 +840,7 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "XL" = (
 /obj/item/scooter_frame,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/decal/cleanable/garbage,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
@@ -879,8 +873,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Zi" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ZM" = (
 /obj/item/papercutter,
 /obj/item/paper_bin,
@@ -955,7 +949,7 @@ xC
 Ix
 dq
 TO
-rb
+Yr
 "}
 (4,1,1) = {"
 yP
@@ -1109,7 +1103,7 @@ ld
 Hy
 Rl
 hD
-rb
+Yr
 "}
 (11,1,1) = {"
 Zi

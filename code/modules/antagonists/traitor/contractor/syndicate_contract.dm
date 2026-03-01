@@ -102,19 +102,22 @@
 		if(traitor_data.uplink_handler.contractor_hub.current_contract == src)
 			traitor_data.uplink_handler.contractor_hub.current_contract = null
 
-	for(var/obj/item/person_contents as anything in person_sent.gather_belongings())
+	for(var/obj/item/person_contents as anything in person_sent.gather_belongings(FALSE, FALSE))
 		if(ishuman(person_sent))
 			var/mob/living/carbon/human/human_sent = person_sent
 			if(person_contents == human_sent.w_uniform)
 				continue //So all they're left with are shoes and uniform.
 			if(person_contents == human_sent.shoes)
 				continue
-		person_sent.transferItemToLoc(person_contents)
+		var/unequipped = person_sent.temporarilyRemoveItemFromInventory(person_contents)
+		if (!unequipped)
+			continue
+		person_contents.moveToNullspace()
 		victim_belongings.Add(WEAKREF(person_contents))
 
 	var/obj/structure/closet/supplypod/extractionpod/pod = source
 	// Handle the pod returning
-	pod.startExitSequence(pod)
+	pod.start_exit_sequence(pod)
 
 	if(ishuman(person_sent))
 		var/mob/living/carbon/human/target = person_sent
@@ -138,7 +141,7 @@
 		return
 	contractor_id.registered_account.adjust_money(ransom * 0.35)
 	contractor_id.registered_account.bank_card_talk("We've processed the ransom, agent. \
-		Here's your cut - your balance is now [contractor_id.registered_account.account_balance] cr.", TRUE)
+		Here's your cut - your balance is now [contractor_id.registered_account.account_balance] [MONEY_SYMBOL].", TRUE)
 
 #define VICTIM_EXPERIENCE_START 0
 #define VICTIM_EXPERIENCE_FIRST_HIT 1

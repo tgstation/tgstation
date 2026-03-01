@@ -17,7 +17,7 @@
 		return
 	if(isliving(moved))
 		var/mob/living/living_moved = moved
-		if (living_moved.incapacitated() || living_moved.body_position == LYING_DOWN)
+		if (living_moved.incapacitated || living_moved.body_position == LYING_DOWN)
 			return
 	var/rotation_degree = (360 / 3)
 	if(direction & SOUTHWEST)

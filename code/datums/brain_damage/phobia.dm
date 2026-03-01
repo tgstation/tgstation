@@ -2,23 +2,18 @@
 	name = "Phobia"
 	desc = "Patient is unreasonably afraid of something."
 	scan_desc = "phobia"
+	symptoms = "When exposed to a specific stimulus, experiences \
+		an immediate anxiety or fear response far greater than typically expected, \
+		leading to panic attacks or impaired social and occupational functioning. \
+		Physical contact such as hugging, or medication such as Psicodine may lessen the severity of the reaction."
 	gain_text = span_warning("You start finding default values very unnerving...")
 	lose_text = span_notice("You no longer feel afraid of default values.")
+	/// What do we fear exactly?
 	var/phobia_type
-	/// Cooldown for proximity checks so we don't spam a range 7 view every two seconds.
-	COOLDOWN_DECLARE(check_cooldown)
-	/// Cooldown for freakouts to prevent permastunning.
-	COOLDOWN_DECLARE(scare_cooldown)
-
-	///What mood event to apply when we see the thing & freak out.
-	var/datum/mood_event/mood_event_type
-
-	var/regex/trigger_regex
-	//instead of cycling every atom, only cycle the relevant types
-	var/list/trigger_mobs
-	var/list/trigger_objs //also checked in mob equipment
-	var/list/trigger_turfs
-	var/list/trigger_species
+	/// Specific terror handler to apply, in case we want
+	var/terror_handler = /datum/terror_handler/phobia_source
+	/// What mood event to apply when we see the thing & freak out.
+	var/mood_event_type = /datum/mood_event/phobia
 
 /datum/brain_trauma/mild/phobia/New(new_phobia_type)
 	if(new_phobia_type)
@@ -30,120 +25,22 @@
 	gain_text = span_warning("You start finding [phobia_type] very unnerving...")
 	lose_text = span_notice("You no longer feel afraid of [phobia_type].")
 	scan_desc += " of [phobia_type]"
-	trigger_regex = GLOB.phobia_regexes[phobia_type]
-	trigger_mobs = GLOB.phobia_mobs[phobia_type]
-	trigger_objs = GLOB.phobia_objs[phobia_type]
-	trigger_turfs = GLOB.phobia_turfs[phobia_type]
-	trigger_species = GLOB.phobia_species[phobia_type]
-	..()
-
-/datum/brain_trauma/mild/phobia/on_lose(silent)
-	owner.clear_mood_event("phobia_[phobia_type]")
 	return ..()
 
-/datum/brain_trauma/mild/phobia/on_life(seconds_per_tick, times_fired)
-	..()
-	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
-		return
-	if(owner.is_blind())
-		return
+/datum/brain_trauma/mild/phobia/on_gain()
+	. = ..()
+	var/datum/component/fearful/fear = owner.AddComponentFrom(REF(src), /datum/component/fearful, list(/datum/terror_handler/startle))
+	var/datum/terror_handler/phobia_source/phobia = fear.add_handler(terror_handler, REF(src))
+	phobia.trigger_regex = GLOB.phobia_regexes[phobia_type]
+	phobia.trigger_mobs = GLOB.phobia_mobs[phobia_type]
+	phobia.trigger_objs = GLOB.phobia_objs[phobia_type]
+	phobia.trigger_turfs = GLOB.phobia_turfs[phobia_type]
+	phobia.trigger_species = GLOB.phobia_species[phobia_type]
+	phobia.mood_event_type = mood_event_type
 
-	if(!COOLDOWN_FINISHED(src, check_cooldown) || !COOLDOWN_FINISHED(src, scare_cooldown))
-		return
-
-	COOLDOWN_START(src, check_cooldown, 5 SECONDS)
-	var/list/seen_atoms = view(7, owner)
-	if(LAZYLEN(trigger_objs))
-		for(var/obj/seen_item in seen_atoms)
-			if(is_scary_item(seen_item))
-				freak_out(seen_item)
-				return
-		for(var/mob/living/carbon/human/nearby_guy in seen_atoms) //check equipment for trigger items
-			for(var/obj/item/equipped as anything in nearby_guy.get_visible_items())
-				if(is_scary_item(equipped))
-					freak_out(equipped)
-					return
-
-	if(LAZYLEN(trigger_turfs))
-		for(var/turf/T in seen_atoms)
-			if(is_type_in_typecache(T, trigger_turfs))
-				freak_out(T)
-				return
-
-	seen_atoms -= owner //make sure they aren't afraid of themselves.
-	if(LAZYLEN(trigger_mobs) || LAZYLEN(trigger_species))
-		for(var/mob/M in seen_atoms)
-			if(is_type_in_typecache(M, trigger_mobs))
-				freak_out(M)
-				return
-
-			else if(ishuman(M)) //check their species
-				var/mob/living/carbon/human/H = M
-				if(LAZYLEN(trigger_species) && H.dna && H.dna.species && is_type_in_typecache(H.dna.species, trigger_species))
-					freak_out(H)
-					return
-
-/// Returns true if this item should be scary to us
-/datum/brain_trauma/mild/phobia/proc/is_scary_item(obj/checked)
-	if (QDELETED(checked) || !is_type_in_typecache(checked, trigger_objs))
-		return FALSE
-	if (!isitem(checked))
-		return TRUE
-	var/obj/item/checked_item = checked
-	return !(checked_item.item_flags & EXAMINE_SKIP)
-
-/datum/brain_trauma/mild/phobia/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE])) 	//words can't trigger you if you can't hear them *taps head*
-		return
-
-	if(HAS_TRAIT(owner, TRAIT_FEARLESS) || !COOLDOWN_FINISHED(src, scare_cooldown))
-		return
-
-	if(trigger_regex.Find(hearing_args[HEARING_RAW_MESSAGE]) != 0)
-		addtimer(CALLBACK(src, PROC_REF(freak_out), null, trigger_regex.group[2]), 1 SECONDS) //to react AFTER the chat message
-		hearing_args[HEARING_RAW_MESSAGE] = trigger_regex.Replace(hearing_args[HEARING_RAW_MESSAGE], "[span_phobia("$2")]$3")
-
-/datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)
-	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
-		return
-	if(trigger_regex.Find(speech_args[SPEECH_MESSAGE]) != 0)
-		to_chat(owner, span_warning("You can't bring yourself to say the word \"[span_phobia("[trigger_regex.group[2]]")]\"!"))
-		speech_args[SPEECH_MESSAGE] = ""
-
-/datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
-	COOLDOWN_START(src, scare_cooldown, 12 SECONDS)
-	if(owner.stat == DEAD)
-		return
-	if(mood_event_type)
-		owner.add_mood_event("phobia_[phobia_type]", mood_event_type)
-	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
-	if(reason)
-		to_chat(owner, span_userdanger("Seeing [span_phobia(reason.name)] [message]!"))
-	else if(trigger_word)
-		to_chat(owner, span_userdanger("Hearing [span_phobia(trigger_word)] [message]!"))
-	else
-		to_chat(owner, span_userdanger("Something [message]!"))
-	var/reaction = rand(1,4)
-	switch(reaction)
-		if(1)
-			to_chat(owner, span_warning("You are paralyzed with fear!"))
-			owner.Stun(70)
-			owner.set_jitter_if_lower(16 SECONDS)
-		if(2)
-			owner.emote("scream")
-			owner.set_jitter_if_lower(10 SECONDS)
-			owner.say("AAAAH!!", forced = "phobia")
-			if(reason)
-				owner._pointed(reason)
-		if(3)
-			to_chat(owner, span_warning("You shut your eyes in terror!"))
-			owner.set_jitter_if_lower(10 SECONDS)
-			owner.adjust_temp_blindness(20 SECONDS)
-		if(4)
-			owner.adjust_dizzy(20 SECONDS)
-			owner.adjust_confusion(10 SECONDS)
-			owner.set_jitter_if_lower(20 SECONDS)
-			owner.adjust_stutter(20 SECONDS)
+/datum/brain_trauma/mild/phobia/on_lose(silent)
+	. = ..()
+	owner.RemoveComponentSource(REF(src), /datum/component/fearful)
 
 // Defined phobia types for badminry, not included in the RNG trauma pool to avoid diluting.
 
@@ -166,15 +63,7 @@
 /datum/brain_trauma/mild/phobia/blood
 	phobia_type = "blood"
 	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/blood/is_scary_item(obj/checked)
-	if (GET_ATOM_BLOOD_DNA_LENGTH(checked))
-		return TRUE
-	return ..()
-
-/datum/brain_trauma/mild/phobia/carps
-	phobia_type = "carps"
-	random_gain = FALSE
+	terror_handler = /datum/terror_handler/phobia_source/blood
 
 /datum/brain_trauma/mild/phobia/clowns
 	phobia_type = "clowns"
@@ -192,17 +81,16 @@
 	phobia_type = "falling"
 	random_gain = FALSE
 
+/datum/brain_trauma/mild/phobia/fish
+	phobia_type = "fish"
+	random_gain = FALSE
+
 /datum/brain_trauma/mild/phobia/greytide
 	phobia_type = "greytide"
 	random_gain = FALSE
 
 /datum/brain_trauma/mild/phobia/guns
 	phobia_type = "guns"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/heresy
-	phobia_type = "heresy"
-	mood_event_type = /datum/mood_event/heresy
 	random_gain = FALSE
 
 /datum/brain_trauma/mild/phobia/insects

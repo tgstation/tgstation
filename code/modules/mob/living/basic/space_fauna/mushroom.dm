@@ -19,7 +19,7 @@
 	maxHealth = 60
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	faction = list(FACTION_MUSHROOM)
@@ -53,7 +53,6 @@
 	health = maxHealth
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_attacked_target))
 
 /datum/ai_controller/basic_controller/mushroom
 	blackboard = list(
@@ -78,14 +77,9 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/mushroom_food
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/mushroom_food
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/reset_target
 	hunt_targets = list(/obj/item/food/grown/mushroom)
 	hunt_range = 6
-
-
-/datum/ai_behavior/hunt_target/unarmed_attack_target/mushroom_food
-	hunt_cooldown = 15 SECONDS
-	always_reset_target = TRUE
 
 /mob/living/basic/mushroom/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
@@ -99,27 +93,24 @@
 		recover(attack_target)
 		return TRUE
 
-/mob/living/basic/mushroom/proc/on_attacked_target(mob/living/basic/attacker, atom/target)
-	SIGNAL_HANDLER
-
-	if(!istype(target, /mob/living/basic/mushroom))
+/mob/living/basic/mushroom/melee_attack(mob/living/basic/mushroom/target, list/modifiers, ignore_cooldown = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!istype(target) || target.stat != DEAD)
 		return
-	var/mob/living/basic/mushroom/victim = target
-	if(victim.stat != DEAD)
+	if(target.faint_ticker >= 3)
+		consume_mushroom(target)
 		return
-	if(victim.faint_ticker >= 3)
-		consume_mushroom(victim)
-		return
-
-	victim.faint_ticker++
-	visible_message(span_notice("[src] chews a bit on [victim]."))
+	target.faint_ticker++
+	visible_message(span_notice("[src] chews a bit on [target]."))
 
 /mob/living/basic/mushroom/proc/consume_mushroom(mob/living/basic/mushroom/consumed)
 	visible_message(span_warning("[src] devours [consumed]!"))
 	var/level_gain = (consumed.powerlevel - powerlevel)
 	if(level_gain >= 0 && !ckey && !consumed.bruised)//Player shrooms can't level up to become robust gods.
 		consumed.level_up(level_gain)
-	adjustBruteLoss(-consumed.maxHealth)
+	adjust_brute_loss(-consumed.maxHealth)
 	qdel(consumed)
 
 /mob/living/basic/mushroom/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
@@ -153,11 +144,11 @@
 	if(stat == DEAD)
 		revive(HEAL_ALL)
 	else
-		adjustBruteLoss(-5)
+		adjust_brute_loss(-5)
 	COOLDOWN_START(src, recovery_cooldown, 5 MINUTES)
 
 /mob/living/basic/mushroom/proc/level_up(level_gain)
-	adjustBruteLoss(-maxHealth) //They'll always heal, even if they don't gain a level
+	adjust_brute_loss(-maxHealth) //They'll always heal, even if they don't gain a level
 	if(powerlevel > 9)
 		return
 	if(level_gain == 0)
@@ -169,7 +160,7 @@
 		melee_damage_upper += (level_gain * rand(1,5))
 	maxHealth += (level_gain * rand(1,5))
 
-/mob/living/basic/mushroom/attackby(obj/item/mush, mob/living/carbon/human/user, list/modifiers)
+/mob/living/basic/mushroom/attackby(obj/item/mush, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	if(istype(mush, /obj/item/food/grown/mushroom))
 		recover(mush)
 		return

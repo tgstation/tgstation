@@ -2,12 +2,12 @@
 	name = "Sacred Flame"
 	desc = "Makes everyone around you more flammable, and lights yourself on fire."
 	button_icon_state = "sacredflame"
-	sound = 'sound/magic/fireball.ogg'
+	sound = 'sound/effects/magic/fireball.ogg'
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 6 SECONDS
 
-	invocation = "FI'RAN DADISKO"
+	invocation = "FI'RAN DADISKO!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 

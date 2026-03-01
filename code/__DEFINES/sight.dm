@@ -25,6 +25,7 @@
 #define BORGTHERM (1<<1)
 #define BORGXRAY (1<<2)
 #define BORGMATERIAL (1<<3)
+#define BORGDEFAULT 0
 
 //for clothing visor toggles, these determine which vars to toggle
 #define VISOR_FLASHPROTECT (1<<0)
@@ -71,7 +72,7 @@
 //------------------------
 // INVISIBILITY SOURCE IDS
 // Though don't feel the need to add one here if you have a simple effect that
-// gets added and/or removed in only one place near eachother in the code.
+// gets added and/or removed in only one place near each other in the code.
 
 #define INVISIBILITY_SOURCE_INVISIMIN "invisimin"
 #define INVISIBILITY_SOURCE_STEALTHMODE "stealthmode"

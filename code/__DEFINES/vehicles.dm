@@ -29,6 +29,12 @@
 // This rider must be our friend
 #define JUST_FRIEND_RIDERS (1<<5)
 
+
+///Flags relating to our AI controller when ridden
+//do we halt planning while ridden?
+#define RIDING_PAUSE_AI_PLANNING (1<<0)
+//do we halt movement while ridden?
+#define RIDING_PAUSE_AI_MOVEMENT (1<<1)
 //car_traits flags
 ///Will this car kidnap people by ramming into them?
 #define CAN_KIDNAP (1<<0)
@@ -42,6 +48,3 @@
 #define VIM_SOUND_COOLDOWN (1 SECONDS)
 ///how much vim heals per weld
 #define VIM_HEAL_AMOUNT 20
-
-/// The vehicle being ridden requires pixel offsets for all directions
-#define RIDING_OFFSET_ALL "ALL"

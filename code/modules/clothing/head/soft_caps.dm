@@ -33,7 +33,7 @@
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)
-	if(!user.incapacitated())
+	if(!user.incapacitated)
 		flipped = !flipped
 		if(flipped)
 			icon_state = "[soft_type][soft_suffix]_flipped"
@@ -83,15 +83,6 @@
 	soft_type = "grey"
 	dog_fashion = null
 
-/* A grey baseball cap that grants TRAIT_JOLLY when it's on your head.
- * Used for testing that gaining and losing the JOLLY trait behaves properly.
- * Also a perfectly valid weird admin reward.
- */
-/obj/item/clothing/head/soft/grey/jolly
-	name = "jolly grey cap"
-	desc = "It's a baseball hat in a sublime grey colour. Why, wearing this alone would boost a person's spirits!"
-	clothing_traits = list(TRAIT_JOLLY)
-
 /obj/item/clothing/head/soft/orange
 	name = "orange cap"
 	desc = "It's a baseball hat in a tasteless orange colour."
@@ -134,7 +125,7 @@
 	icon_state = "secsoft"
 	soft_type = "sec"
 	armor_type = /datum/armor/cosmetic_sec
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	dog_fashion = null
 
 /obj/item/clothing/head/soft/veteran
@@ -143,7 +134,7 @@
 	icon_state = "veteransoft"
 	soft_type = "veteran"
 	armor_type = /datum/armor/cosmetic_sec
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	dog_fashion = null
 
 /obj/item/clothing/head/soft/paramedic
@@ -169,10 +160,13 @@
 	clothing_flags = SNUG_FIT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	dog_fashion = null
+	clothing_traits = list(TRAIT_SCARY_FISHERMAN) //Fish, carps, lobstrosities and frogs fear me.
 
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) //you asked for this.
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
+	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
 #define PROPHAT_MOOD "prophat"
 

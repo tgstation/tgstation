@@ -6,8 +6,8 @@
 	armor_flag = ENERGY
 	damage_type = TOX
 	damage = 10
-	speed = 0.4
-	hitsound = 'sound/weapons/emitter2.ogg'
+	speed = 2.5
+	hitsound = 'sound/items/weapons/emitter2.ogg'
 	impact_type = /obj/effect/projectile/impact/xray
 	var/static/list/particle_colors = list(
 		"red" = COLOR_RED,
@@ -29,7 +29,7 @@
 	if (ishuman(target))
 		SSradiation.irradiate(target)
 
-	..()
+	return ..()
 
 /atom/proc/fire_nuclear_particle(angle = rand(0,360)) //used by fusion to fire random nuclear particles. Fires one particle in a random direction.
 	var/obj/projectile/energy/nuclear_particle/P = new /obj/projectile/energy/nuclear_particle(src)

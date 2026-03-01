@@ -1,0 +1,4 @@
+# convert 'dual' style incident displays to delam mode
+
+/obj/machinery/incident_display/dual : /obj/machinery/incident_display/delam{@OLD}
+/obj/machinery/incident_display/dual/@SUBTYPES : /obj/machinery/incident_display/delam/@SUBTYPES{@OLD}

@@ -1,0 +1,327 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium/survival,
+/area/shuttle/supply)
+"c" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+"f" = (
+/turf/template_noop,
+/area/template_noop)
+"g" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargounload"
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"h" = (
+/obj/machinery/door/poddoor{
+	id = "cargounload";
+	name = "Supply Dock Unloading Door"
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargounload"
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"i" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+"j" = (
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "cargounload"
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"l" = (
+/turf/open/floor/iron/stairs/left,
+/area/shuttle/supply)
+"o" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+"p" = (
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/area/shuttle/supply)
+"r" = (
+/obj/structure/railing,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "cargoload"
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"t" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+"u" = (
+/obj/machinery/conveyor{
+	dir = 6;
+	id = "cargoload"
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"w" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"x" = (
+/obj/effect/spawner/structure/window/survival_pod,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"y" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargounload"
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"C" = (
+/turf/open/floor/iron/stairs/medium,
+/area/shuttle/supply)
+"E" = (
+/obj/effect/turf_decal/bot/right,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+"F" = (
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"G" = (
+/obj/machinery/door/poddoor{
+	id = "cargoload";
+	name = "Supply Dock Loading Door"
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "cargoload"
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"H" = (
+/obj/machinery/button/door/directional/west{
+	pixel_y = 6;
+	id = "cargounload";
+	name = "Loading Doors"
+	},
+/obj/machinery/button/door/directional/west{
+	pixel_y = -6;
+	id = "cargoload";
+	name = "Loading Doors"
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"J" = (
+/obj/effect/turf_decal/box/corners,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+"K" = (
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+"L" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+"M" = (
+/obj/structure/railing,
+/obj/machinery/conveyor/inverted{
+	dir = 9;
+	id = "cargoload"
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"N" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"P" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+"Q" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"R" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "cargounload"
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"S" = (
+/obj/machinery/door/airlock/survival_pod/glass,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"U" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+"W" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+"Y" = (
+/obj/machinery/door/airlock/survival_pod/glass,
+/obj/docking_port/mobile/supply{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"Z" = (
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
+
+(1,1,1) = {"
+f
+p
+h
+Y
+p
+S
+G
+p
+a
+a
+a
+a
+f
+"}
+(2,1,1) = {"
+a
+a
+g
+F
+H
+F
+u
+M
+Z
+t
+o
+a
+a
+"}
+(3,1,1) = {"
+a
+j
+R
+F
+F
+F
+F
+r
+U
+o
+o
+L
+N
+"}
+(4,1,1) = {"
+a
+y
+W
+E
+E
+i
+F
+r
+U
+o
+o
+L
+N
+"}
+(5,1,1) = {"
+a
+g
+E
+E
+E
+E
+F
+Q
+Z
+o
+o
+L
+N
+"}
+(6,1,1) = {"
+a
+g
+E
+E
+E
+E
+F
+w
+l
+K
+K
+L
+N
+"}
+(7,1,1) = {"
+a
+a
+P
+E
+E
+J
+F
+F
+C
+c
+K
+a
+a
+"}
+(8,1,1) = {"
+f
+a
+a
+x
+x
+x
+a
+a
+a
+a
+a
+a
+f
+"}

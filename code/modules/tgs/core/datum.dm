@@ -6,7 +6,7 @@ TGS_DEFINE_AND_SET_GLOBAL(tgs, null)
 
 	var/list/warned_deprecated_command_runs
 
-/datum/tgs_api/New(datum/tgs_event_handler/event_handler, datum/tgs_version/version)
+/datum/tgs_api/New(datum/tgs_event_handler/event_handler, datum/tgs_version/version, datum/tgs_http_handler/http_handler)
 	..()
 	src.event_handler = event_handler
 	src.version = version
@@ -72,3 +72,6 @@ TGS_PROTECT_DATUM(/datum/tgs_api)
 
 /datum/tgs_api/proc/TriggerEvent(event_name, list/parameters, wait_for_completion)
 	return FALSE
+
+/datum/tgs_api/proc/TriggerDeployment()
+	return TGS_UNIMPLEMENTED

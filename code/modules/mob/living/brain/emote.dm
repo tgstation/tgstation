@@ -1,9 +1,10 @@
 /datum/emote/brain
+	abstract_type = /datum/emote/brain
 	mob_type_allowed_typecache = list(/mob/living/brain)
 	mob_type_blacklist_typecache = list()
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/brain/can_run_emote(mob/user, status_check = TRUE, intentional)
+/datum/emote/brain/can_run_emote(mob/user, status_check = TRUE, intentional, params)
 	. = ..()
 	var/mob/living/brain/B = user
 	if(!istype(B) || (!(B.container && istype(B.container, /obj/item/mmi))))

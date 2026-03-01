@@ -1,6 +1,5 @@
 VERB_MANAGER_SUBSYSTEM_DEF(input)
 	name = "Input"
-	init_order = INIT_ORDER_INPUT
 	init_stage = INITSTAGE_EARLY
 	flags = SS_TICKER
 	priority = FIRE_PRIORITY_INPUT
@@ -19,7 +18,7 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	///running average of how many movement iterations from player input the server processes every second. used for the subsystem stat entry
 	var/movements_per_second = 0
 	///running average of the amount of real time clicks take to truly execute after the command is originally sent to the server.
-	///if a click isnt delayed at all then it counts as 0 deciseconds.
+	///if a click isn't delayed at all then it counts as 0 deciseconds.
 	var/average_click_delay = 0
 
 /datum/controller/subsystem/verb_manager/input/Initialize()
@@ -31,14 +30,14 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 
 	return SS_INIT_SUCCESS
 
-// This is for when macro sets are eventualy datumized
+// This is for when macro sets are eventually datumized
 /datum/controller/subsystem/verb_manager/input/proc/setup_default_macro_sets()
 	macro_set = list(
-	"Any" = "\"KeyDown \[\[*\]\]\"",
-	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
-	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
-	"Tab" = "\".winset \\\"input.focus=true?map.focus=true:input.focus=true\\\"\"",
-	"Escape" = "Open-Escape-Menu",
+		"Any" = "\"KeyDown \[\[*\]\] \[\[map.mouse-pos\]\] \[\[map.size\]\]\"",
+		"Any+UP" = "\"KeyUp \[\[*\]\] \[\[map.mouse-pos\]\] \[\[map.size\]\]\"",
+		"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+		"Tab" = "\".winset \\\"input.focus=true?map.focus=true:input.focus=true\\\"\"",
+		"Escape" = "Open-Escape-Menu",
 	)
 
 // Badmins just wanna have fun ♪
@@ -75,7 +74,7 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	movements_per_second = MC_AVG_SECONDS(movements_per_second, moves_this_run, wait TICKS)
 
 /datum/controller/subsystem/verb_manager/input/run_verb_queue()
-	var/deferred_clicks_this_run = 0 //acts like current_clicks but doesnt count clicks that dont get processed by SSinput
+	var/deferred_clicks_this_run = 0 //acts like current_clicks but doesn't count clicks that don't get processed by SSinput
 
 	for(var/datum/callback/verb_callback/queued_click as anything in verb_queue)
 		if(!istype(queued_click))
@@ -95,6 +94,5 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	current_clicks = 0
 
 /datum/controller/subsystem/verb_manager/input/stat_entry(msg)
-	. = ..()
-	. += "M/S:[round(movements_per_second,0.01)] | C/S:[round(clicks_per_second,0.01)] ([round(delayed_clicks_per_second,0.01)] | CD: [round(average_click_delay / (1 SECONDS),0.01)])"
-
+	msg = "\n  M/S:[round(movements_per_second,0.01)] | C/S:[round(clicks_per_second,0.01)] ([round(delayed_clicks_per_second,0.01)] | CD: [round(average_click_delay / (1 SECONDS),0.01)])"
+	return ..()

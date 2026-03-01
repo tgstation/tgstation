@@ -6,7 +6,7 @@
 	/// If the airlock should require ALL or only ONE of the listed accesses
 	var/one_access = 0
 	/// Checks to see if this airlock has an unrestricted helper (will set to TRUE if present).
-	var/unres_sensor = FALSE
+	var/unres_latch = FALSE
 	/// Unrestricted sides, or sides of the airlock that will open regardless of access
 	var/unres_sides = NONE
 	///what name are we passing to the finished airlock
@@ -109,7 +109,7 @@
 			var/new_cycle_id = trim(params["passedCycleId"], 30)
 			passed_cycle_id = new_cycle_id
 
-/obj/item/electronics/airlock/ui_act(action, params)
+/obj/item/electronics/airlock/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -1,6 +1,7 @@
 /obj/item/clothing/head/hats
 	icon = 'icons/obj/clothing/head/hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
+	abstract_type = /obj/item/clothing/head/hats
 
 /obj/item/clothing/head/hats/centhat
 	name = "\improper CentCom hat"
@@ -9,7 +10,7 @@
 	inhand_icon_state = "that"
 	flags_inv = 0
 	armor_type = /datum/armor/hats_centhat
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 
 /datum/armor/hats_centhat
 	melee = 30
@@ -22,11 +23,13 @@
 
 /obj/item/clothing/head/costume/constable
 	name = "constable helmet"
-	desc = "A british looking helmet."
+	desc = "A British-looking helmet."
 	icon_state = "constable"
 	inhand_icon_state = null
 	custom_price = PAYCHECK_COMMAND * 1.5
 	worn_y_offset = 4
+	armor_type = /datum/armor/head_helmet
+	hair_mask = /datum/hair_mask/standard_hat_middle
 
 /obj/item/clothing/head/costume/spacepolice
 	name = "space police cap"
@@ -50,14 +53,18 @@
 	icon_state = "mailman"
 	desc = "<i>'Right-on-time'</i> mail service head wear."
 	clothing_traits = list(TRAIT_HATED_BY_DOGS)
+	custom_premium_price = PAYCHECK_CREW
 
 /obj/item/clothing/head/bio_hood/plague
 	name = "plague doctor's hat"
-	desc = "These were once used by plague doctors. Will protect you from exposure to the Pestilence."
+	desc = "These were once used by plague doctors. This hat will only slightly protect you from exposure to the Pestilence."
 	icon_state = "plaguedoctor"
-	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	armor_type = /datum/armor/bio_hood_plague
-	flags_inv = NONE
+	flags_inv = HIDEHAIR|HIDEEARS
+	clothing_flags = SNUG_FIT
+	flags_cover = NONE
+	dirt_state = null
+	alternate_worn_layer = HAIR_LAYER
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -80,12 +87,24 @@
 	icon_state = "bearpelt"
 	inhand_icon_state = null
 
+/obj/item/clothing/head/costume/bearpelt/equipped(mob/living/user, slot)
+	..()
+	if(!ishuman(user) || !(slot & ITEM_SLOT_HEAD))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/clothing/suit/costume/bear_suit/our_suit = human_user.wear_suit
+	if(!our_suit || !istype(our_suit))
+		return
+
+	our_suit.make_friendly(user, src)
+
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."
-	icon_state = "beret_flat"
-	icon_preview = 'icons/obj/clothing/head/beret.dmi'
-	icon_state_preview = "beret_flat"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/flatcap"
+	post_init_icon_state = "beret_flat"
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#8F7654"
@@ -185,19 +204,23 @@
 /obj/item/clothing/head/costume/santa/gags
 	name = "santa hat"
 	desc = "On the first day of christmas my employer gave to me!"
-	icon_state = "santa_hat"
-	greyscale_colors = "#cc0000#f8f8f8"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/santa/gags"
+	post_init_icon_state = "santa_hat"
 	greyscale_config = /datum/greyscale_config/santa_hat
 	greyscale_config_worn = /datum/greyscale_config/santa_hat/worn
+	greyscale_colors = "#cc0000#f8f8f8"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/jester
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
-	icon_state = "jester_map"
-	greyscale_colors = "#00ff00#ff0000"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/jester"
+	post_init_icon_state = "jester_map"
 	greyscale_config = /datum/greyscale_config/jester_hat
 	greyscale_config_worn = /datum/greyscale_config/jester_hat/worn
+	greyscale_colors = "#00ff00#ff0000"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/jesteralt
@@ -209,11 +232,31 @@
 	name = "rice hat"
 	desc = "Welcome to the rice fields, motherfucker."
 	icon_state = "rice_hat"
+	base_icon_state = "rice_hat"
+	var/reversed = FALSE
+
+/obj/item/clothing/head/costume/rice_hat/click_alt(mob/user)
+	reversed = !reversed
+	worn_icon_state = "[base_icon_state][reversed ? "_kim" : ""]"
+	to_chat(user, span_notice("You [reversed ? "lower" : "raise"] the hat."))
+	update_appearance()
 
 /obj/item/clothing/head/costume/lizard
 	name = "lizardskin cloche hat"
 	desc = "How many lizards died to make this hat? Not enough."
-	icon_state = "lizard"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/lizard"
+	post_init_icon_state = "lizard_hat"
+	greyscale_config = /datum/greyscale_config/lizard_hat
+	greyscale_config_worn = /datum/greyscale_config/lizard_hat/worn
+	greyscale_colors = "#859333"
+
+/obj/item/clothing/head/costume/lizard/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/stack/sheet/animalhide/carbon/lizard/skin = locate() in components
+	if (isnull(skin) || !length(skin.skin_color)) // what
+		return ..()
+	set_greyscale(skin.skin_color)
+	return ..()
 
 /obj/item/clothing/head/costume/scarecrow_hat
 	name = "scarecrow hat"
@@ -273,11 +316,11 @@
 /obj/item/clothing/head/hats/centcom_cap
 	name = "\improper CentCom commander cap"
 	icon_state = "centcom_cap"
-	desc = "Worn by the finest of CentCom commanders. Inside the lining of the cap, lies two faint initials."
+	desc = "Worn by the finest of CentCom commanders. Two faint initials lie inside the lining of the cap."
 	inhand_icon_state = "that"
 	flags_inv = 0
 	armor_type = /datum/armor/hats_centcom_cap
-	strip_delay = (8 SECONDS)
+	strip_delay = 8 SECONDS
 
 /datum/armor/hats_centcom_cap
 	melee = 30
@@ -297,7 +340,13 @@
 /obj/item/clothing/head/costume/ushanka
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
-	icon_state = "ushankadown"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/ushanka"
+	post_init_icon_state = "ushanka_gagdown"
+	greyscale_config = /datum/greyscale_config/ushanka
+	greyscale_config_worn = /datum/greyscale_config/ushanka/worn
+	greyscale_colors = "#C7B08B#5A4E44"
+	flags_1 = IS_PLAYER_COLORABLE_1
 	inhand_icon_state = null
 	flags_inv = HIDEEARS|HIDEHAIR
 	cold_protection = HEAD
@@ -305,9 +354,9 @@
 	dog_fashion = /datum/dog_fashion/head/ushanka
 	var/earflaps = TRUE
 	///Sprite visible when the ushanka flaps are folded up.
-	var/upsprite = "ushankaup"
+	var/upsprite = "ushanka_gagup"
 	///Sprite visible when the ushanka flaps are folded down.
-	var/downsprite = "ushankadown"
+	var/downsprite = "ushanka_gagdown"
 
 /obj/item/clothing/head/costume/ushanka/attack_self(mob/user)
 	if(earflaps)
@@ -323,9 +372,20 @@
 /obj/item/clothing/head/costume/ushanka/polar
 	name = "bear hunter's ushanka"
 	desc = "Handcrafted in Siberia from real polar bears."
-	icon_state = "ushankadown_polar"
-	upsprite = "ushankaup_polar"
-	downsprite = "ushankadown_polar"
+	icon_state = "/obj/item/clothing/head/costume/ushanka/polar"
+	greyscale_colors = "#FCFCFD#CCCED1"
+	flags_1 = null
+
+/obj/item/clothing/head/costume/ushanka/sec
+	name = "security ushanka"
+	icon_state = "/obj/item/clothing/head/costume/ushanka/sec"
+	desc = "A warm and comfortable ushanka, dyed with 'all natural flavors' according to the tag."
+	greyscale_colors = "#C7B08B#A52F29"
+	armor_type = /datum/armor/cosmetic_sec
+	flags_1 = null
+
+/obj/item/clothing/head/costume/nightcap
+	abstract_type = /obj/item/clothing/head/costume/nightcap
 
 /obj/item/clothing/head/costume/nightcap/blue
 	name = "blue nightcap"
@@ -343,3 +403,4 @@
 	icon_state = "paper"
 	worn_icon_state = "paper"
 	dog_fashion = /datum/dog_fashion/head
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)

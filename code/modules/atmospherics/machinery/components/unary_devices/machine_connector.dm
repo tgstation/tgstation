@@ -57,8 +57,12 @@
 /**
  * Called when the machine has been moved, reconnect to the pipe network
  */
-/datum/gas_machine_connector/proc/moved_connected_machine()
+/datum/gas_machine_connector/proc/moved_connected_machine(obj/machinery/source, atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	SIGNAL_HANDLER
+	if(forced) // Called from parent doing abstract_move()
+		gas_connector.abstract_move(get_turf(connected_machine))
+		return // No side-effects means no disconnections
+
 	gas_connector.forceMove(get_turf(connected_machine))
 	reconnect_connector()
 

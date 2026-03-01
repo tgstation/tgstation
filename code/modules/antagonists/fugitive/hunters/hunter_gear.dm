@@ -106,9 +106,7 @@
 	color = "#d6ad8b"
 
 /obj/item/clothing/suit/armor/reactive/psykerboost/cooldown_activation(mob/living/carbon/human/owner)
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(1, 1, src)
-	sparks.start()
+	do_sparks(1, TRUE, src)
 	return ..()
 
 /obj/item/clothing/suit/armor/reactive/psykerboost/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -134,6 +132,7 @@
 	icon_state = "bouncy_castle"
 	anchored = TRUE
 	density = TRUE
+	layer = OBJ_LAYER
 
 /obj/structure/bouncy_castle/Initialize(mapload, mob/gored)
 	. = ..()
@@ -147,21 +146,17 @@
 		max_blood = INFINITY,\
 	)
 
-	AddComponent(/datum/component/bloody_spreader,\
-		blood_left = INFINITY,\
-		blood_dna = list("meaty DNA" = "MT-"),\
-		diseases = null,\
-	)
+	AddComponent(/datum/component/bloody_spreader)
 
 /obj/structure/bouncy_castle/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
+				playsound(src, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/item/paper/crumpled/fluff/fortune_teller
 	name = "scribbled note"
@@ -221,13 +216,4 @@
 
 /obj/item/radio/headset/psyker/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
-
-/obj/item/radio/headset/psyker/equipped(mob/living/user, slot)
-	. = ..()
-	if(slot_flags & slot)
-		ADD_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
-
-/obj/item/radio/headset/psyker/dropped(mob/user, silent)
-	. = ..()
-	REMOVE_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
+	AddComponent(/datum/component/wearertargeting/earprotection)

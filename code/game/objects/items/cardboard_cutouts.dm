@@ -8,6 +8,7 @@
 	resistance_flags = FLAMMABLE
 	obj_flags = CAN_BE_HIT
 	item_flags = NO_PIXEL_RANDOM_DROP
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 5)
 	/// If the cutout is pushed over and has to be righted
 	var/pushed_over = FALSE
 	/// If the cutout actually appears as what it portray and not a discolored version
@@ -49,7 +50,7 @@
 	if(!user.combat_mode || pushed_over || !isturf(loc))
 		return ..()
 	user.visible_message(span_warning("[user] pushes over [src]!"), span_danger("You push over [src]!"))
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	push_over()
 
 /obj/item/cardboard_cutout/equipped(mob/living/user, slot)
@@ -79,7 +80,7 @@
 	pushed_over = FALSE
 	tacticool = AddComponent(/datum/component/tactical)
 
-/obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, params)
+/obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/toy/crayon))
 		change_appearance(I, user)
 		return TRUE
@@ -93,7 +94,7 @@
 		push_over()
 
 /obj/item/cardboard_cutout/atom_deconstruct(disassembled)
-	new /obj/item/stack/sheet/cardboard(loc, 1)
+	new /obj/item/stack/sheet/cardboard(loc)
 
 /proc/get_cardboard_cutout_instance(datum/cardboard_cutout/cardboard_cutout)
 	ASSERT(ispath(cardboard_cutout), "[cardboard_cutout] is not a path of /datum/cardboard_cutout")
@@ -149,7 +150,7 @@
 /obj/item/cardboard_cutout/proc/check_menu(mob/living/user, obj/item/toy/crayon/crayon)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(pushed_over)
 		to_chat(user, span_warning("Right [src] first!"))
@@ -360,3 +361,34 @@
 	applied_name = "Private Security Officer"
 	applied_desc = "A cardboard cutout of a private security officer."
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
+
+/datum/cardboard_cutout/heretic
+	name = "Heretic"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a Heretic."
+	outfit = /datum/outfit/heretic_hallucination
+
+/datum/cardboard_cutout/changeling
+	name = "Changeling"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a Changeling."
+	outfit = /datum/outfit/changeling
+
+/datum/cardboard_cutout/pirate
+	name = "Pirate"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a space pirate."
+	outfit = /datum/outfit/pirate/space/captain/cardboard
+
+/datum/cardboard_cutout/ninja
+	name = "Space Ninja"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of a space ninja."
+	outfit = /datum/outfit/ninja
+
+/datum/cardboard_cutout/abductor
+	name = "Abductor Agent"
+	applied_name = "Unknown"
+	applied_desc = "A cardboard cutout of an abductor agent."
+	species = /datum/species/abductor
+	outfit = /datum/outfit/abductor/agent/cardboard

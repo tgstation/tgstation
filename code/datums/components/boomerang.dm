@@ -1,7 +1,7 @@
-///The cooldown period between last_boomerang_throw and it's methods of implementing a rebound proc.
+///The cooldown period between last_boomerang_throw and its methods of implementing a rebound proc.
 #define BOOMERANG_REBOUND_INTERVAL (1 SECONDS)
 /**
- * If an ojvect is given the boomerang component, it should be thrown back to the thrower after either hitting it's target, or landing on the thrown tile.
+ * If an ojvect is given the boomerang component, it should be thrown back to the thrower after either hitting its target, or landing on the thrown tile.
  * Thrown objects should be thrown back to the original thrower with this component, a number of tiles defined by boomerang_throw_range.
  */
 /datum/component/boomerang
@@ -60,12 +60,11 @@
  * * hit_atom: The atom that has been hit by the boomerang component.
  * * init_throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
  */
-/datum/component/boomerang/proc/return_hit_throw(datum/source, atom/hit_atom, datum/thrownthing/init_throwing_datum)
+/datum/component/boomerang/proc/return_hit_throw(datum/source, atom/hit_atom, datum/thrownthing/init_throwing_datum, caught)
 	SIGNAL_HANDLER
-	if (!COOLDOWN_FINISHED(src, last_boomerang_throw))
+	if (!COOLDOWN_FINISHED(src, last_boomerang_throw) || caught)
 		return
-	var/obj/item/true_parent = parent
-	aerodynamic_swing(init_throwing_datum, true_parent)
+	aerodynamic_swing(init_throwing_datum)
 
 /**
  * Proc that triggers when the thrown boomerang does not hit a target.
@@ -76,22 +75,23 @@
 	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, last_boomerang_throw))
 		return
-	var/obj/item/true_parent = parent
-	aerodynamic_swing(throwingdatum, true_parent)
+	aerodynamic_swing(throwingdatum)
 
 /**
  * Proc that triggers when the thrown boomerang has been fully thrown, rethrowing the boomerang back to the thrower, and producing visible feedback.
  * * throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
  * * hit_atom: The atom that has been hit by the boomerang'd object.
  */
-/datum/component/boomerang/proc/aerodynamic_swing(datum/thrownthing/throwingdatum, obj/item/true_parent)
-	var/mob/thrown_by = true_parent.thrownby?.resolve()
-	if(thrown_by)
-		addtimer(CALLBACK(true_parent, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, boomerang_throw_range, throwingdatum.speed, null, TRUE), 0.1 SECONDS)
+/datum/component/boomerang/proc/aerodynamic_swing(datum/thrownthing/throwingdatum)
+	var/mob/thrown_by = throwingdatum?.get_thrower()
+	var/obj/item/true_parent = parent
+	if(istype(thrown_by))
+		addtimer(CALLBACK(true_parent, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, boomerang_throw_range, throwingdatum.speed, thrown_by, TRUE), 0.1 SECONDS)
 		COOLDOWN_START(src, last_boomerang_throw, BOOMERANG_REBOUND_INTERVAL)
-	var/mob/thrower = throwingdatum?.get_thrower()
-	true_parent.visible_message(span_danger("[true_parent] is flying back at [thrower]!"), \
-						span_danger("You see [true_parent] fly back at you!"), \
-						span_hear("You hear an aerodynamic woosh!"))
+	true_parent.visible_message(
+		span_danger("[true_parent] is flying back at [thrown_by]!"),
+		span_danger("You see [true_parent] fly back at you!"),
+		span_hear("You hear an aerodynamic woosh!"),
+	)
 
 #undef BOOMERANG_REBOUND_INTERVAL

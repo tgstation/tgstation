@@ -19,7 +19,7 @@
 	var/currentcolor = LIGHT_COLOR_CYAN
 	///var to prevent changing color on certain admin spawn only tiles
 	var/can_modify_colour = TRUE
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	///icons for radial menu
 	var/static/list/lighttile_designs
 	///used for light floors that cycle colours
@@ -129,7 +129,7 @@
 	currentcolor = choice
 	update_appearance()
 
-/turf/open/floor/light/attackby(obj/item/C, mob/user, params)
+/turf/open/floor/light/attackby(obj/item/C, mob/user, list/modifiers)
 	if(..())
 		return
 	if(istype(C, /obj/item/light/bulb)) //only for light tiles
@@ -184,7 +184,7 @@
 /turf/open/floor/light/proc/check_menu(mob/living/user, obj/item/multitool)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(!multitool || !user.is_holding(multitool))
 		return FALSE

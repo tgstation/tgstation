@@ -21,7 +21,8 @@
 	contraband = list(/obj/item/reagent_containers/cup/bottle/wizarditis = 1) //No one can get to the machine to hack it anyways; for the lulz - Microwave
 	armor_type = /datum/armor/vending_magivend
 	resistance_flags = FIRE_PROOF
-	default_price = 0 //Just in case, since it's primary use is storage.
+	refill_canister = /obj/item/vending_refill/magivend
+	default_price = 0 //Just in case, since its primary use is storage.
 	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
 	light_mask = "magivend-light-mask"
@@ -33,3 +34,7 @@
 	energy = 100
 	fire = 100
 	acid = 50
+
+/obj/item/vending_refill/magivend
+	machine_name = "MagiVend"
+	icon_state = "refill_magivend"

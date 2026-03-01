@@ -1,6 +1,6 @@
 // Berries
 /obj/item/seeds/berry
-	name = "pack of berry seeds"
+	name = "berry seed pack"
 	desc = "These seeds grow into berry bushes."
 	icon_state = "seed-berry"
 	species = "berry"
@@ -25,13 +25,15 @@
 	icon_state = "berrypile"
 	gender = PLURAL
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/berryjuice
 	tastes = list("berry" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/gin
 
+/obj/item/food/grown/berries/juice_typepath()
+	return /datum/reagent/consumable/berryjuice
+
 // Poison Berries
 /obj/item/seeds/berry/poison
-	name = "pack of poison-berry seeds"
+	name = "poison-berry seed pack"
 	desc = "These seeds grow into poison-berry bushes."
 	icon_state = "seed-poisonberry"
 	species = "poisonberry"
@@ -48,14 +50,16 @@
 	icon_state = "poisonberrypile"
 	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
-	juice_typepath = /datum/reagent/consumable/poisonberryjuice
 	tastes = list("poison-berry" = 1)
 	distill_reagent = null
 	wine_power = 35
 
+/obj/item/food/grown/berries/poison/juice_typepath()
+	return /datum/reagent/consumable/poisonberryjuice
+
 // Death Berries
 /obj/item/seeds/berry/death
-	name = "pack of death-berry seeds"
+	name = "death-berry seed pack"
 	desc = "These seeds grow into death berries."
 	icon_state = "seed-deathberry"
 	species = "deathberry"
@@ -64,8 +68,10 @@
 	lifespan = 30
 	potency = 50
 	mutatelist = null
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/tox_resistance)
 	reagents_add = list(/datum/reagent/toxin/coniine = 0.08, /datum/reagent/toxin/staminatoxin = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 30
+	graft_gene = /datum/plant_gene/trait/tox_resistance
 
 /obj/item/food/grown/berries/death
 	seed = /obj/item/seeds/berry/death
@@ -74,14 +80,16 @@
 	icon_state = "deathberrypile"
 	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
-	juice_typepath = /datum/reagent/consumable/poisonberryjuice
 	tastes = list("death-berry" = 1)
 	distill_reagent = null
 	wine_power = 50
 
+/obj/item/food/grown/berries/death/juice_typepath()
+	return /datum/reagent/consumable/poisonberryjuice
+
 // Glow Berries
 /obj/item/seeds/berry/glow
-	name = "pack of glow-berry seeds"
+	name = "glow-berry seed pack"
 	desc = "These seeds grow into glow-berry bushes."
 	icon_state = "seed-glowberry"
 	species = "glowberry"
@@ -108,7 +116,7 @@
 
 // Grapes
 /obj/item/seeds/grape
-	name = "pack of grape seeds"
+	name = "grape seed pack"
 	desc = "These seeds grow into grape vines."
 	icon_state = "seed-grapes"
 	species = "grape"
@@ -134,16 +142,18 @@
 	icon_state = "grapes"
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/grapejuice
 	tastes = list("grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/wine
+
+/obj/item/food/grown/grapes/juice_typepath()
+	return /datum/reagent/consumable/grapejuice
 
 /obj/item/food/grown/grapes/make_dryable()
 	AddElement(/datum/element/dryable, /obj/item/food/no_raisin/healthy)
 
 // Green Grapes
 /obj/item/seeds/grape/green
-	name = "pack of green grape seeds"
+	name = "green grape seed pack"
 	desc = "These seeds grow into green-grape vines."
 	icon_state = "seed-greengrapes"
 	species = "greengrape"
@@ -162,7 +172,7 @@
 
 // Toechtauese Berries
 /obj/item/seeds/toechtauese
-	name = "pack of töchtaüse berry seeds"
+	name = "töchtaüse berry seed pack"
 	desc = "These seeds grow into töchtaüse bushes."
 	icon_state = "seed-toechtauese"
 	species = "toechtauese"
@@ -185,12 +195,14 @@
 	desc = "A branch with töchtaüse berries on it. They're a favourite on the Mothic Fleet, but not in this form."
 	icon_state = "toechtauese_branch"
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/toechtauese_juice
 	tastes = list("fiery itchy pain" = 1)
 	distill_reagent = /datum/reagent/toxin/itching_powder
 
+/obj/item/food/grown/toechtauese/juice_typepath()
+	return /datum/reagent/consumable/toechtauese_juice
+
 /obj/item/seeds/lanternfruit
-	name = "pack of lanternfruit seeds"
+	name = "lanternfruit seed pack"
 	desc = "These seeds grow into lanternfruit pods."
 	icon_state = "seed-lanternfruit"
 	species = "lanternfruit"
@@ -214,7 +226,7 @@
 /obj/item/food/grown/lanternfruit
 	seed = /obj/item/seeds/lanternfruit
 	name = "lanternfruits"
-	desc = "A sofly glowing fruit with a handle-shaped stem, an Ethereal favorite!"
+	desc = "A softly glowing fruit with a handle-shaped stem, an Ethereal favorite!"
 	icon_state = "lanternfruit"
 	foodtypes = FRUIT
 	tastes = list("tv static" = 1, "sour pear" = 1, "grapefruit" = 1)

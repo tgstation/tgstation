@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -9,7 +6,10 @@ import {
   LabeledControls,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -46,7 +46,7 @@ const TrainingControls = (props) => {
           value={movespeed}
           minValue={1}
           maxValue={10}
-          onDrag={(_, value) => act('movespeed', { movespeed: value })}
+          onChange={(_, value) => act('movespeed', { movespeed: value })}
         />
       </LabeledControls.Item>
       <LabeledControls.Item label="Range">
@@ -58,7 +58,7 @@ const TrainingControls = (props) => {
           value={range}
           minValue={1}
           maxValue={7}
-          onDrag={(_, value) => act('range', { range: value })}
+          onChange={(_, value) => act('range', { range: value })}
         />
       </LabeledControls.Item>
       <Stack.Item>

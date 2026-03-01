@@ -72,15 +72,11 @@
 	// target not in range
 	if(interacting_with.z != user.z)
 		return NONE
-	// target not in view
-	if(!(interacting_with in view(7, get_turf(user))))
-		user.balloon_alert(user, "out of range!")
-		return ITEM_INTERACT_BLOCKING
 
 	//replace lights & stuff
 	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
 
-/obj/item/lightreplacer/attackby(obj/item/insert, mob/user, params)
+/obj/item/lightreplacer/attackby(obj/item/insert, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(uses >= max_uses)
 		user.balloon_alert(user, "already full!")
@@ -133,7 +129,7 @@
 			if(src.uses >= max_uses)
 				break
 
-			//consume the item only if it's an light tube,bulb or shard
+			//consume the item only if it's a light tube, bulb or shard
 			loaded = FALSE
 			if(istype(item_to_check, /obj/item/light))
 				var/obj/item/light/found_light = item_to_check
@@ -208,7 +204,7 @@
 	for(var/obj/machinery/light/target in user.loc)
 		replace_light(target, user)
 		on_a_light = TRUE
-	if(!on_a_light) //So we dont give a ballon alert when we just used replace_light
+	if(!on_a_light) //So we don't give a balloon alert when we just used replace_light
 		user.balloon_alert(user, "[uses] lights, [bulb_shards]/[BULB_SHARDS_REQUIRED] fragments")
 
 /**
@@ -223,7 +219,7 @@
 	if(istype(target, /obj/machinery/light))
 		if(replace_light(target, user) && bluespace_toggle)
 			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-			playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+			playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
 		return TRUE
 
 	// if we are attacking a floodlight frame finish it
@@ -233,7 +229,7 @@
 			new /obj/machinery/power/floodlight(frame.loc)
 			if(bluespace_toggle)
 				user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-				playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+				playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
 			to_chat(user, span_notice("You finish \the [frame] with a light tube."))
 			qdel(frame)
 		return TRUE
@@ -246,7 +242,7 @@
 				light_replaced = TRUE
 		if(light_replaced && bluespace_toggle)
 			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-			playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+			playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
 		return TRUE
 
 	return FALSE
@@ -321,18 +317,68 @@
 
 	return TRUE
 
-/obj/item/lightreplacer/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+/obj/item/lightreplacer/advanced
+	name = "high capacity light replacer"
+	desc = "A higher capacity light replacer. Refill with broken or working lightbulbs, or sheets of glass."
+	icon_state = "lightreplacer_high"
+	max_uses = 50
+
+#define BLIGHTREPLACER_SPOT_COOLDOWN (BLIGHTREPLACER_SPOT_LIFE + 1 SECONDS)
+#define BLIGHTREPLACER_SPOT_RANGE 7
+#define BLIGHTREPLACER_SPOT_LIFE (5 SECONDS)
 
 /obj/item/lightreplacer/blue
 	name = "bluespace light replacer"
 	desc = "A modified light replacer that zaps lights into place. Refill with broken or working lightbulbs, or sheets of glass."
 	icon_state = "lightreplacer_blue"
 	bluespace_toggle = TRUE
+	actions_types = list(/datum/action/item_action/lightreplacer_scan)
+	action_slots = ALL
+	COOLDOWN_DECLARE(lightreplacer_spot_cooldown)
 
 /obj/item/lightreplacer/blue/emag_act()
 	return FALSE  // balancing against longrange explosions
+
+/obj/item/lightreplacer/blue/ui_action_click(mob/user, actiontype)
+	if(!COOLDOWN_FINISHED(src, lightreplacer_spot_cooldown))
+		balloon_alert(user, "on cooldown!")
+		return
+	COOLDOWN_START(src, lightreplacer_spot_cooldown, BLIGHTREPLACER_SPOT_COOLDOWN)
+	lightreplacer_scan()
+
+/// Scans the area in search of fixtures with broken bulbs in the BLIGHTREPLACER_SPOT_RANGE range, and also marks them with the blue_firefly effect.
+/obj/item/lightreplacer/blue/proc/lightreplacer_scan()
+	var/turf/source_turf = get_turf(src)
+	for(var/obj/machinery/light/broken_light in dview(BLIGHTREPLACER_SPOT_RANGE, source_turf))
+		if(broken_light.status == LIGHT_OK)
+			continue
+		var/obj/effect/temp_visual/blue_firefly/firefly = new(get_turf(broken_light))
+		animate(firefly, alpha = 0, time = BLIGHTREPLACER_SPOT_LIFE, easing = CIRCULAR_EASING | EASE_IN)
+
+/datum/action/item_action/lightreplacer_scan
+	name = "Scan for broken lamps"
+	desc = "Scans the surrounding area for fixtures with broken light bulbs and marks them."
+
+/obj/effect/temp_visual/blue_firefly
+	name = "bluespace firefly"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "bluespace_firefly"
+	light_power = 1
+	light_range = 2
+	light_color = LIGHT_COLOR_DARK_BLUE
+	duration = BLIGHTREPLACER_SPOT_LIFE
+
+/obj/effect/temp_visual/blue_firefly/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/effect/temp_visual/blue_firefly/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
+
+#undef BLIGHTREPLACER_SPOT_COOLDOWN
+#undef BLIGHTREPLACER_SPOT_RANGE
+#undef BLIGHTREPLACER_SPOT_LIFE
 
 #undef GLASS_SHEET_USES
 #undef LIGHTBULB_COST

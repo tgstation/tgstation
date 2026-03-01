@@ -175,7 +175,7 @@ The console is located at computer/gulag_teleporter.dm
 	use_energy(active_power_usage)
 
 /obj/item/circuitboard/machine/gulag_teleporter
-	name = "labor camp teleporter (Machine Board)"
+	name = "Labor Camp Teleporter"
 	build_path = /obj/machinery/gulag_teleporter
 	req_components = list(
 		/obj/item/stack/ore/bluespace_crystal = 2,

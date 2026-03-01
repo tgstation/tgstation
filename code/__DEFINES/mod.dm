@@ -5,7 +5,10 @@
 #define DEFAULT_CHARGE_DRAIN (0.005 * STANDARD_CELL_CHARGE) // A standard cell lasts 200 seconds with this on active power usage, while a high power one lasts 2,000 seconds.
 
 /// Default time for a part of the suit to seal.
-#define MOD_ACTIVATION_STEP_TIME (2 SECONDS)
+#define MOD_ACTIVATION_STEP_TIME (1 SECONDS)
+
+/// How likely the UI is to fail when malfunctioning
+#define MOD_MALFUNCTION_PROB 75
 
 /// Passive module, just acts when put in naturally.
 #define MODULE_PASSIVE 0
@@ -22,6 +25,8 @@
 #define MODULE_ALLOW_INCAPACITATED (1<<1)
 /// This module can be used while the suit is off
 #define MODULE_ALLOW_INACTIVE (1<<2)
+/// This module can be used (by button) while the suit is unworn
+#define MODULE_ALLOW_UNWORN (1<<3)
 
 #define UNSEALED_LAYER "unsealed_layer"
 #define SEALED_LAYER "sealed_layer"
@@ -54,6 +59,10 @@
 #define GAUNTLET_SEAL_MESSAGE "tighten around your fingers and wrists"
 #define BOOT_UNSEAL_MESSAGE "relax their grip on your legs"
 #define BOOT_SEAL_MESSAGE "seal around your feet"
+#define GLASSES_UNSEAL_MESSAGE "moves away from your eyes"
+#define GLASSES_SEAL_MESSAGE "settle onto your eyes"
+#define NECKWEAR_UNSEAL_MESSAGE "looses around your neck"
+#define NECKWEAR_SEAL_MESSAGE "tightens around your neck"
 
 /// Global list of all /datum/mod_theme
 GLOBAL_LIST_INIT(mod_themes, setup_mod_themes())

@@ -12,7 +12,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/misc/dirt/station
@@ -77,6 +77,9 @@
 
 /turf/open/misc/grass/jungle/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/misc/grass/jungle/station
+	baseturfs = /turf/open/misc/dirt/station
 
 /turf/closed/mineral/random/jungle
 	baseturfs = /turf/open/misc/dirt/dark/jungle

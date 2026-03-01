@@ -33,11 +33,19 @@
 
 	var/list/options_map
 
+/obj/item/circuit_component/soundemitter/Initialize(mapload)
+	if(CONFIG_GET(flag/disallow_circuit_sounds))
+		update_ui_alerts(new_flag=CIRCUIT_FLAG_DISABLED)
+	. = ..()
+
 /obj/item/circuit_component/soundemitter/get_ui_notices()
 	. = ..()
 	. += create_ui_notice("Sound Cooldown: [DisplayTimeText(sound_cooldown)]", "orange", "stopwatch")
 	if(CONFIG_GET(flag/disallow_circuit_sounds))
 		. += create_ui_notice("Non-functional", "red", "exclamation")
+		update_ui_alerts(new_flag=CIRCUIT_FLAG_DISABLED)
+	else
+		update_ui_alerts(remove_flag=CIRCUIT_FLAG_DISABLED)
 
 
 /obj/item/circuit_component/soundemitter/populate_ports()
@@ -47,26 +55,26 @@
 
 /obj/item/circuit_component/soundemitter/populate_options()
 	var/static/component_options = list(
-		"Buzz" = 'sound/machines/buzz-sigh.ogg',
-		"Buzz Twice" = 'sound/machines/buzz-two.ogg',
+		"Buzz" = 'sound/machines/buzz/buzz-sigh.ogg',
+		"Buzz Twice" = 'sound/machines/buzz/buzz-two.ogg',
 		"Chime" = 'sound/machines/chime.ogg',
 		"Honk" = 'sound/items/bikehorn.ogg',
 		"Ping" = 'sound/machines/ping.ogg',
 		"Sad Trombone" = 'sound/misc/sadtrombone.ogg',
 		"Warn" = 'sound/machines/warning-buzzer.ogg',
 		"Slow Clap" = 'sound/machines/slowclap.ogg',
-		"Moth Buzz" = 'sound/voice/moth/scream_moth.ogg',
-		"Squeak" = 'sound/items/toysqueak1.ogg',
-		"Rip" = 'sound/items/poster_ripped.ogg',
+		"Moth Buzz" = 'sound/mobs/humanoids/moth/scream_moth.ogg',
+		"Squeak" = 'sound/items/toy_squeak/toysqueak1.ogg',
+		"Rip" = 'sound/items/poster/poster_ripped.ogg',
 		"Coinflip" = 'sound/items/coinflip.ogg',
 		"Megaphone" = 'sound/items/megaphone.ogg',
-		"Warpwhistle" = 'sound/magic/warpwhistle.ogg',
-		"Hiss" = 'sound/voice/hiss1.ogg',
-		"Lizard" = 'sound/voice/lizard/lizard_scream_1.ogg',
-		"Flashbang" = 'sound/weapons/flashbang.ogg',
-		"Flash" = 'sound/weapons/flash.ogg',
-		"Whip" = 'sound/weapons/whip.ogg',
-		"Laugh Track" = 'sound/items/SitcomLaugh1.ogg',
+		"Warpwhistle" = 'sound/effects/magic/warpwhistle.ogg',
+		"Hiss" = 'sound/mobs/non-humanoids/hiss/hiss1.ogg',
+		"Lizard" = 'sound/mobs/humanoids/lizard/lizard_scream_1.ogg',
+		"Flashbang" = 'sound/items/weapons/flashbang.ogg',
+		"Flash" = 'sound/items/weapons/flash.ogg',
+		"Whip" = 'sound/items/weapons/whip.ogg',
+		"Laugh Track" = 'sound/items/sitcom_laugh/sitcomLaugh1.ogg',
 		"Gavel" = 'sound/items/gavel.ogg',
 	)
 	sound_file = add_option_port("Sound Option", component_options)
@@ -79,10 +87,11 @@
 
 /obj/item/circuit_component/soundemitter/input_received(datum/port/input/port)
 	if(CONFIG_GET(flag/disallow_circuit_sounds))
-		ui_color = "red"
+		// Without constantly checking the config 24/7 or sending a signal to every circuit, best we can do to update existing emitters is this.
+		update_ui_alerts(new_flag=CIRCUIT_FLAG_DISABLED)
 		return
 	else
-		ui_color = initial(ui_color)
+		update_ui_alerts(remove_flag=CIRCUIT_FLAG_DISABLED)
 
 	if(!parent.shell)
 		return

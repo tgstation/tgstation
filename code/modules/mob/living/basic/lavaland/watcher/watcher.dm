@@ -13,6 +13,9 @@
 	speed = 3
 	maxHealth = 160
 	health = 160
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = "buffets"
 	attack_verb_simple = "buffet"
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
@@ -27,9 +30,9 @@
 	/// What kind of beams we got?
 	var/projectile_type = /obj/projectile/temp/watcher
 	/// Icon state for our eye overlay
-	var/eye_glow = "ice_glow"
+	var/eye_glow = "watcher_glow"
 	/// Sound to play when we shoot
-	var/shoot_sound = 'sound/weapons/pierce.ogg'
+	var/shoot_sound = 'sound/items/weapons/pierce.ogg'
 	/// Typepath of our gaze ability
 	var/gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze
 	// We attract and eat these things for some reason
@@ -68,7 +71,8 @@
 	. = ..()
 	if (stat == DEAD)
 		return
-	. += emissive_appearance(icon, "watcher_emissive", src)
+	. += emissive_appearance(icon, "watcher_emissive", src, effect_type = EMISSIVE_NO_BLOOM)
+	. += emissive_appearance(icon, "watcher_emissive_bloom", src)
 
 /// I love eating diamonds yum
 /mob/living/basic/mining/watcher/proc/consume(atom/movable/thing)
@@ -97,6 +101,7 @@
 	icon_state = "watcher_icewing"
 	icon_living = "watcher_icewing"
 	icon_dead = "watcher_icewing_dead"
+	eye_glow = "ice_glow"
 	maxHealth = 130
 	health = 130
 	projectile_type = /obj/projectile/temp/watcher/ice_wing

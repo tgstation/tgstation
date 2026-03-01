@@ -11,7 +11,7 @@
 	severity = DISEASE_SEVERITY_BIOHAZARD
 
 
-/datum/disease/fake_gbs/stage_act(seconds_per_tick, times_fired)
+/datum/disease/fake_gbs/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -19,7 +19,7 @@
 	switch(stage)
 		if(2)
 			if(SPT_PROB(0.5, seconds_per_tick))
-				affected_mob.sneeze()
+				affected_mob.emote("sneeze")
 		if(3)
 			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("cough")

@@ -19,8 +19,8 @@ Chilling extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
-	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
-	playsound(src, 'sound/effects/glassbr1.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/glass/glassbr1.ogg', 50, TRUE)
 	do_effect(user)
 
 /obj/item/slimecross/chilling/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -148,7 +148,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/bluespace
 	colour = SLIME_TYPE_BLUESPACE
 	effect_desc = "Touching people with this extract adds them to a list, when it is activated it teleports everyone on that list to the user."
-	var/list/allies = list()
+	var/list/slimepals = list()
 	var/active = FALSE
 
 /obj/item/slimecross/chilling/bluespace/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -158,31 +158,31 @@ Chilling extracts:
 	if(HAS_TRAIT(interacting_with, TRAIT_NO_TELEPORT))
 		to_chat(user, span_warning("[interacting_with] resists being linked with [src]!"))
 		return ITEM_INTERACT_BLOCKING
-	if(interacting_with in allies)
-		allies -= interacting_with
+	if(interacting_with in slimepals)
+		slimepals -= interacting_with
 		to_chat(user, span_notice("You unlink [src] with [interacting_with]."))
 	else
-		allies += interacting_with
+		slimepals += interacting_with
 		to_chat(user, span_notice("You link [src] with [interacting_with]."))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slimecross/chilling/bluespace/do_effect(mob/user)
-	if(allies.len <= 0)
+	if(slimepals.len <= 0)
 		to_chat(user, span_warning("[src] is not linked to anyone!"))
 		return
 	to_chat(user, span_notice("You feel [src] pulse as it begins charging bluespace energies..."))
 	active = TRUE
-	for(var/mob/living/M in allies)
+	for(var/mob/living/M in slimepals)
 		var/datum/status_effect/slimerecall/S = M.apply_status_effect(/datum/status_effect/slimerecall)
 		S.target = user
 	if(do_after(user, 10 SECONDS, target=src))
 		to_chat(user, span_notice("[src] shatters as it tears a hole in reality, snatching the linked individuals from the void!"))
-		for(var/mob/living/M in allies)
+		for(var/mob/living/M in slimepals)
 			var/datum/status_effect/slimerecall/S = M.has_status_effect(/datum/status_effect/slimerecall)
 			M.remove_status_effect(S)
 	else
 		to_chat(user, span_warning("[src] falls dark, dissolving into nothing as the energies fade away."))
-		for(var/mob/living/M in allies)
+		for(var/mob/living/M in slimepals)
 			var/datum/status_effect/slimerecall/S = M.has_status_effect(/datum/status_effect/slimerecall)
 			if(istype(S))
 				S.interrupted = TRUE
@@ -192,24 +192,24 @@ Chilling extracts:
 /obj/item/slimecross/chilling/sepia
 	colour = SLIME_TYPE_SEPIA
 	effect_desc = "Touching someone with it adds/removes them from a list. Activating the extract stops time for 30 seconds, and everyone on the list is immune, except the user."
-	var/list/allies = list()
+	var/list/slimepals = list()
 
 /obj/item/slimecross/chilling/sepia/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 	user.do_attack_animation(interacting_with)
-	if(interacting_with in allies)
-		allies -= interacting_with
+	if(interacting_with in slimepals)
+		slimepals -= interacting_with
 		to_chat(user, span_notice("You unlink [src] with [interacting_with]."))
 	else
-		allies += interacting_with
+		slimepals += interacting_with
 		to_chat(user, span_notice("You link [src] with [interacting_with]."))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slimecross/chilling/sepia/do_effect(mob/user)
 	user.visible_message(span_warning("[src] shatters, freezing time itself!"))
-	allies -= user //support class
-	new /obj/effect/timestop(get_turf(user), 2, 300, allies)
+	slimepals -= user //support class
+	new /obj/effect/timestop(get_turf(user), 2, 300, slimepals)
 	..()
 
 /obj/item/slimecross/chilling/cerulean
@@ -252,9 +252,6 @@ Chilling extracts:
 	effect_desc = "Creates a bone gun in the hand it is used in, which uses blood as ammo."
 
 /obj/item/slimecross/chilling/green/do_effect(mob/user)
-	var/which_hand = "l_hand"
-	if(!(user.active_hand_index % 2))
-		which_hand = "r_hand"
 	var/mob/living/L = user
 	if(!istype(user))
 		return
@@ -267,7 +264,7 @@ Chilling extracts:
 	else
 		user.visible_message(span_danger("[src] chills and snaps off the front of the bone on [user]'s arm, leaving behind a strange, gun-like structure!"))
 	user.emote("scream")
-	L.apply_damage(30,BURN,which_hand)
+	L.apply_damage(30, BURN, L.get_active_hand())
 	..()
 
 /obj/item/slimecross/chilling/pink

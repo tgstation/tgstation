@@ -32,7 +32,7 @@
 
 /datum/bounty/item/mining/skull_helmet
 	name = "Skull Helmet"
-	description = "Station 42's Head of Security has her birthday tomorrow! We want to suprise her with a fashionable skull helmet."
+	description = "Station 42's Head of Security has her birthday tomorrow! We want to surprise her with a fashionable skull helmet."
 	reward = CARGO_CRATE_VALUE * 8
 	wanted_types = list(/obj/item/clothing/head/helmet/skull = TRUE)
 

@@ -5,13 +5,22 @@
 	health = 125
 	icon_state = "alienh"
 	alien_speed = -0.3
+
+	default_organ_types_by_slot = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/alien,
+		ORGAN_SLOT_XENO_HIVENODE = /obj/item/organ/alien/hivenode,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/alien,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes/alien,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/alien,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/alien,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = /obj/item/organ/alien/plasmavessel/small,
+		ORGAN_SLOT_EXTERNAL_TAIL = /obj/item/organ/tail/xeno,
+	)
+
 	var/atom/movable/screen/leap_icon = null
 	///How fast does our pounce move us?
 	var/pounce_speed = 2
-
-/mob/living/carbon/alien/adult/hunter/create_internal_organs()
-	organs += new /obj/item/organ/internal/alien/plasmavessel/small
-	..()
 
 //Hunter verbs
 
@@ -49,14 +58,14 @@
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
 		leaping = TRUE
 		//Because the leaping sprite is bigger than the normal one
-		body_position_pixel_x_offset = -8
+		add_offsets(LEAPING_TRAIT, x_add = -8, animate = FALSE)
 		update_icons()
 		ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT) //Throwing itself doesn't protect mobs against lava (because gulag).
 		throw_at(A, MAX_ALIEN_LEAP_DIST, pounce_speed, src, FALSE, TRUE, callback = CALLBACK(src, PROC_REF(leap_end)))
 
 /mob/living/carbon/alien/adult/hunter/proc/leap_end()
 	leaping = FALSE
-	body_position_pixel_x_offset = 0
+	remove_offsets(LEAPING_TRAIT, animate = FALSE)
 	REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
 	update_icons()
 
@@ -72,7 +81,7 @@
 			var/blocked = FALSE
 			if(ishuman(hit_atom))
 				var/mob/living/carbon/human/H = hit_atom
-				if(H.check_block(src, 0, "the [name]", attack_type = LEAP_ATTACK))
+				if(H.check_block(src, 0, "\the [src]", attack_type = LEAP_ATTACK))
 					blocked = TRUE
 			if(!blocked)
 				L.visible_message(span_danger("[src] pounces on [L]!"), span_userdanger("[src] pounces on you!"))

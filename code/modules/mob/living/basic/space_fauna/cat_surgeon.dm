@@ -19,14 +19,14 @@
 	melee_damage_upper = 15
 	attack_verb_continuous = "slashes at"
 	attack_verb_simple = "slash at"
-	attack_sound = 'sound/weapons/circsawhit.ogg'
+	attack_sound = 'sound/items/weapons/circsawhit.ogg'
 	combat_mode = TRUE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
 	habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5
 	faction = list(FACTION_HOSTILE)
-	status_flags = CANPUSH
+	status_flags = CANPUSH | CANSTUN
 	basic_mob_flags = DEL_ON_DEATH
 
 	ai_controller = /datum/ai_controller/basic_controller/cat_butcherer
@@ -51,7 +51,7 @@
 		return
 
 	var/mob/living/carbon/human/attacked = target
-	var/obj/item/organ/external/tail/cat/tail = attacked.get_organ_by_type(/obj/item/organ/external/tail/cat)
+	var/obj/item/organ/tail/cat/tail = attacked.get_organ_by_type(/obj/item/organ/tail/cat)
 	if(QDELETED(tail))
 		return
 
@@ -71,6 +71,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,

@@ -4,12 +4,13 @@
 			"type": "icon_state",
 			"icon_state": "base",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "handle",
-			"blend_mode": "overlay"
+			"blend_mode": "overlay",
+			"color_ids": [2]
 		}
 	],
 	"default_worn": [
@@ -17,12 +18,13 @@
 			"type": "icon_state",
 			"icon_state": "worn_shaft",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "worn_handle",
-			"blend_mode": "overlay"
+			"blend_mode": "overlay",
+			"color_ids": [2]
 		}
 	]
 }

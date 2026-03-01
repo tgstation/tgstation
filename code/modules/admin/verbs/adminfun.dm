@@ -76,6 +76,18 @@ ADMIN_VERB(gib_self, R_ADMIN, "Gibself", "Give yourself the same treatment you g
 	if (istype(ourself))
 		ourself.gib()
 
+ADMIN_VERB(dust_self, R_ADMIN, "Dustself", "Give yourself the same treatment you give others.", ADMIN_CATEGORY_FUN)
+	var/confirm = tgui_alert(user, "You sure?", "Confirm", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
+	log_admin("[key_name(user)] used dustself.")
+	message_admins(span_adminnotice("[key_name_admin(user)] used dustself."))
+	BLACKBOX_LOG_ADMIN_VERB("Dust Self")
+
+	var/mob/living/ourself = user.mob
+	if (istype(ourself))
+		ourself.dust(just_ash = FALSE, drop_items = FALSE, force = TRUE)
+
 ADMIN_VERB(everyone_random, R_SERVER, "Make Everyone Random", "Make everyone have a random appearance.", ADMIN_CATEGORY_FUN)
 	if(SSticker.HasRoundStarted())
 		to_chat(user, "Nope you can't do this, the game's already started. This only works before rounds!", confidential = TRUE)
@@ -110,7 +122,7 @@ ADMIN_VERB(mass_zombie_infection, R_ADMIN, "Mass Zombie Infection", "Infects all
 
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/H = i
-		new /obj/item/organ/internal/zombie_infection/nodamage(H)
+		new /obj/item/organ/zombie_infection/nodamage(H)
 
 	message_admins("[key_name_admin(user)] added a latent zombie infection to all humans.")
 	log_admin("[key_name(user)] added a latent zombie infection to all humans.")
@@ -121,7 +133,7 @@ ADMIN_VERB(mass_zombie_cure, R_ADMIN, "Mass Zombie Cure", "Removes the zombie in
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/organ/internal/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
+	for(var/obj/item/organ/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
 		qdel(I)
 
 	message_admins("[key_name_admin(user)] cured all zombies.")
@@ -147,14 +159,104 @@ ADMIN_VERB(polymorph_all, R_ADMIN, "Polymorph All", "Applies the effects of the 
 			continue
 
 		M.audible_message(span_hear("...wabbajack...wabbajack..."))
-		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, TRUE, -1)
+		playsound(M.loc, 'sound/effects/magic/staff_change.ogg', 50, TRUE, -1)
 
 		M.wabbajack()
 
 	message_admins("Mass polymorph started by [who_did_it] is complete.")
 
+/// Allow admin to mass add or remove a trait across all mobs
+ADMIN_VERB(mass_modify_traits, R_FUN, "Mass Modify Traits", "Adds or removes a trait from every mob.", ADMIN_CATEGORY_FUN)
+
+	var/choice = tgui_alert(user, "Add or Remove Trait?", "Mass Add/Remove Trait", list("Add", "Remove"))
+	if(isnull(choice))
+		return
+	var/is_add = (choice == "Add")
+	var/lower_choice = LOWER_TEXT(choice)
+
+	// Build list of valid traits that can be applied to mobs
+	var/list/available_traits = list()
+	for(var/key in GLOB.admin_visible_traits)
+		if(ispath(/mob, key)) // so we get atom and atom/movable traits too, which doing (istype(key, /mob)) would skip
+			available_traits += GLOB.admin_visible_traits[key]
+	if(!length(available_traits))
+		return
+
+	available_traits = sort_list(available_traits, GLOBAL_PROC_REF(cmp_typepaths_asc)) // sort alphabetically
+
+	var/mob_trait = tgui_input_list(user, "Select a trait to [lower_choice].", "Mass [choice] Trait", available_traits)
+	if(isnull(mob_trait))
+		return
+	mob_trait = available_traits[mob_trait]
+
+	var/target_scope = tgui_alert(user, "[choice] [lower_choice == "add" ? "to" : "from"] all mobs, or only cliented ones?", "Scope", list("All", "Cliented"))
+	if(!target_scope)
+		return
+	var/cliented_only = (target_scope == "Cliented")
+
+	// So we get readable trait name to display in the uis
+	if(!GLOB.admin_trait_name_map)
+		GLOB.admin_trait_name_map = generate_admin_trait_name_map()
+	var/trait_name = GLOB.admin_trait_name_map[mob_trait] || mob_trait
+
+	// Ask for confirmation first
+	var/action_word = is_add ? "to" : "from"
+	var/confirm = tgui_alert(
+		user,
+		"Please confirm you want to [lower_choice] [trait_name] [action_word] every [cliented_only ? "cliented" : ""] mob?",
+		"Confirm Mass [choice] Trait",
+		list("Yes", "No")
+	)
+	if(confirm != "Yes")
+		return
+
+	// Perform operation
+	var/affected = 0
+	if(is_add) // Adding trait
+		var/needs_movetype = GLOB.movement_type_trait_to_flag[mob_trait]
+		for(var/mob/mob_to_modify as anything in GLOB.alive_mob_list)
+			if(cliented_only && !mob_to_modify.client)
+				continue
+			if(needs_movetype)
+				mob_to_modify.AddElement(/datum/element/movetype_handler)
+			ADD_TRAIT(mob_to_modify, mob_trait, TRAIT_ADMIN_GRANTED)
+			affected++
+
+	else // Removing trait
+		var/source = null
+		var/remove_mode = tgui_alert(user, "Remove from specific source?", "Mass Remove Trait", list("All", "Admin-Granted Traits", "Specific"))
+		if(isnull(remove_mode))
+			return
+
+		switch(remove_mode)
+			if("Admin-Granted Traits") source = TRAIT_ADMIN_GRANTED
+			if("Specific")
+				source = LOWER_TEXT(tgui_input_text(user, "Enter source", "Mass Remove Trait", max_length = MAX_NAME_LEN))
+				if(isnull(source))
+					return
+
+		for(var/mob/mob_to_modify as anything in GLOB.alive_mob_list)
+			if(cliented_only && !mob_to_modify.client)
+				continue
+			REMOVE_TRAIT(mob_to_modify, mob_trait, source)
+			affected++
+
+	if(affected)
+		var/plural = affected == 1 ? "mob" : "mobs"
+		var/log_msg = "[key_name_admin(user)] mass [lower_choice][is_add ? "ed" : "d"] [trait_name] [action_word] [affected] [plural]."
+		message_admins(log_msg)
+		log_admin(log_msg)
+
+/// Returns only traits that apply to mobs
+/proc/get_mob_admin_traits()
+	var/list/out = list()
+	for(var/key in GLOB.admin_visible_traits)
+		if(ispath(key, /mob)) // key is a mob type or subtype
+			out += GLOB.admin_visible_traits[key]
+	return out
+
 ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player with divine power.", ADMIN_CATEGORY_FUN, mob/living/target in world)
-	var/punishment = input(user, "Choose a punishment", "DIVINE SMITING") as null|anything in GLOB.smites
+	var/punishment = tgui_input_list(user, "Choose a punishment", "DIVINE SMITING", GLOB.smites)
 
 	if(QDELETED(target) || !punishment)
 		return
@@ -164,11 +266,15 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player
 	var/configuration_success = smite.configure(user)
 	if (configuration_success == FALSE)
 		return
-	smite.effect(user, target)
+	smite.do_effect(user, target)
 
 /// "Turns" people into objects. Really, we just add them to the contents of the item.
-/proc/objectify(atom/movable/target, path)
-	var/atom/tomb = new path(get_turf(target))
+/proc/objectify(atom/movable/target, path_or_instance)
+	var/atom/tomb
+	if(ispath(path_or_instance))
+		tomb = new path_or_instance(get_turf(target))
+	else
+		tomb = path_or_instance
 	target.forceMove(tomb)
 	target.AddComponent(/datum/component/itembound, tomb)
 
@@ -187,14 +293,14 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player
 /proc/firing_squad(mob/living/carbon/target, turf/source_turf, body_zone, wound_bonus, damage)
 	if(!target.get_bodypart(body_zone))
 		return
-	playsound(target, 'sound/weapons/gun/revolver/shot.ogg', 100)
+	playsound(target, 'sound/items/weapons/gun/revolver/shot.ogg', 100)
 	var/obj/projectile/bullet/smite/divine_wrath = new(source_turf)
 	divine_wrath.damage = damage
 	divine_wrath.wound_bonus = wound_bonus
 	divine_wrath.original = target
 	divine_wrath.def_zone = body_zone
 	divine_wrath.spread = 0
-	divine_wrath.preparePixelProjectile(target, source_turf)
+	divine_wrath.aim_projectile(target, source_turf)
 	divine_wrath.fire()
 
 /client/proc/punish_log(whom, punishment)

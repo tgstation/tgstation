@@ -30,6 +30,7 @@
 /obj/structure/spacevine/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CHASM_DESTROYED, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_INVERTED_DEMOLITION, INNATE_TRAIT)
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -76,26 +77,24 @@
 	if(!override)
 		qdel(src)
 
-/obj/structure/spacevine/attacked_by(obj/item/item, mob/living/user)
-	var/damage_dealt = item.force
-	if(item.get_sharpness())
-		damage_dealt *= 4
+/obj/structure/spacevine/attacked_by(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
+	LAZYSET(attack_modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
+	LAZYSET(attack_modifiers, FORCE_MULTIPLIER, 1)
 	if(item.damtype == BURN)
-		damage_dealt *= 4
-
-	for(var/datum/spacevine_mutation/mutation in mutations)
-		damage_dealt = mutation.on_hit(src, user, item, damage_dealt) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
-	take_damage(damage_dealt, item.damtype, MELEE, 1)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 4)
+	if(item.get_sharpness())
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 4)
+	return ..()
 
 /obj/structure/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/weapons/slash.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/slash.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/spacevine/proc/on_entered(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER
@@ -161,7 +160,7 @@
 	if(!istype(stepturf))
 		return
 
-	if(isspaceturf(stepturf) || isopenspaceturf(stepturf) || !stepturf.Enter(src))
+	if(is_space_or_openspace(stepturf) || !stepturf.Enter(src))
 		return
 	if(ischasm(stepturf) && !HAS_TRAIT(stepturf, TRAIT_CHASM_STOPPED))
 		return

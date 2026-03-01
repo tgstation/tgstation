@@ -5,6 +5,7 @@
 	icon_state = "cat_house"
 	density = TRUE
 	anchored = TRUE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	///cat residing in this house
 	var/mob/living/resident_cat
 
@@ -41,6 +42,6 @@
 		return
 	var/image/cat_icon = image(icon = resident_cat.icon, icon_state = resident_cat.icon_state, layer = LOW_ITEM_LAYER)
 	cat_icon.transform = cat_icon.transform.Scale(0.7, 0.7)
-	cat_icon.pixel_x = 0
-	cat_icon.pixel_y = -9
+	cat_icon.pixel_w = 0
+	cat_icon.pixel_z = -9
 	. += cat_icon

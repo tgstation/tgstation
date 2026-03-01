@@ -13,13 +13,24 @@
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"
 ///signal sent out by an atom upon onZImpact : (turf/impacted_turf, levels)
 #define COMSIG_ATOM_ON_Z_IMPACT "movable_on_z_impact"
-///Signal sent after an atom movable moves on shuttle.
+/// From base of /atom/movable/beforeShuttleMove (turf/newT, direction, move_mode, /obj/docking_port/mobile/moving_dock)
+#define COMSIG_ATOM_BEFORE_SHUTTLE_MOVE "movable_before_shuttle_move"
+	// Docking turf movement return values - return a combination of these to override the move_mode for the turf containing the atom
+	#define COMPONENT_MOVE_TURF MOVE_TURF
+	#define COMPONENT_MOVE_AREA MOVE_AREA
+	#define COMPONENT_MOVE_CONTENTS MOVE_CONTENTS
+/// From base of /atom/movable/afterShuttleMove (turf/oldT)
 #define COMSIG_ATOM_AFTER_SHUTTLE_MOVE "movable_after_shuttle_move"
 ///called on a movable (NOT living) when it starts pulling (atom/movable/pulled, state, force)
 #define COMSIG_ATOM_START_PULL "movable_start_pull"
 /// called on /atom when something attempts to pass through it (atom/movable/source, atom/movable/passing, dir)
 #define COMSIG_ATOM_TRIED_PASS "atom_tried_pass"
-	#define COMSIG_COMPONENT_PERMIT_PASSAGE (1 << 0)
+/// called on /movable when something attempts to pass through it (atom/movable/source, atom/movable/passing, dir) AND WHEN general_movement = FALSE for some fucking reason
+#define COMSIG_MOVABLE_CAN_PASS_THROUGH "movable_can_pass_through"
+/// If given, we permit passage through
+#define COMSIG_COMPONENT_PERMIT_PASSAGE (1 << 0)
+/// If given, we DONT permit passage through
+#define COMSIG_COMPONENT_REFUSE_PASSAGE (1 << 1)
 ///called on /living when someone starts pulling (atom/movable/pulled, state, force)
 #define COMSIG_LIVING_START_PULL "living_start_pull"
 ///called on /living when someone is pulled (mob/living/puller)

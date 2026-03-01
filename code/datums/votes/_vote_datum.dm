@@ -170,13 +170,14 @@
  * Return a formatted string of text to be displayed to everyone.
  */
 /datum/vote/proc/get_result_text(list/all_winners, real_winner, list/non_voters)
+	var/title_text = ""
 	var/returned_text = ""
 	if(override_question)
-		returned_text += span_bold(override_question)
+		title_text += span_bold(override_question)
 	else
-		returned_text += span_bold("[capitalize(name)] Vote")
+		title_text += span_bold("[capitalize(name)] Vote")
 
-	returned_text += "\nWinner Selection: "
+	returned_text += "Winner Selection: "
 	switch(winner_method)
 		if(VOTE_WINNER_METHOD_NONE)
 			returned_text += "None"
@@ -215,7 +216,7 @@
 	returned_text += "\n"
 	returned_text += get_winner_text(all_winners, real_winner, non_voters)
 
-	return returned_text
+	return fieldset_block(title_text, returned_text, "boxed_message purple_box")
 
 /**
  * Gets the text that displays the winning options within the result text.

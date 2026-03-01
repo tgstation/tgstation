@@ -1,13 +1,11 @@
 {
-  "private": true,
-  "name": "tgui-dev-server",
-  "version": "5.0.1",
-  "type": "module",
-  "dependencies": {
-    "axios": "^1.6.8",
-    "glob": "^7.2.3",
-    "source-map": "^0.7.4",
-    "stacktrace-parser": "^0.1.10",
-    "ws": "^8.16.0"
-  }
+	"name": "tgui-dev-server",
+	"version": "6.0.0",
+	"dependencies": {
+		"axios": "^1.10.0",
+		"source-map": "^0.7.4",
+		"stacktrace-parser": "^0.1.11"
+	},
+	"private": true,
+	"type": "module"
 }

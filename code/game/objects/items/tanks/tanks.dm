@@ -16,12 +16,16 @@
 	icon = 'icons/obj/canisters.dmi'
 	icon_state = "generic"
 	inhand_icon_state = "generic_tank"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	worn_icon = 'icons/mob/clothing/back.dmi' //since these can also get thrown into suit storage slots. if something goes on the belt, set this to null.
-	hitsound = 'sound/weapons/smash.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
+	pickup_sound = 'sound/items/handling/gas_tank/gas_tank_pick_up.ogg'
+	drop_sound = 'sound/items/handling/gas_tank/gas_tank_drop.ogg'
+	sound_vary = TRUE
 	pressure_resistance = ONE_ATMOSPHERE * 5
 	force = 5
 	throwforce = 10
@@ -30,6 +34,7 @@
 	demolition_mod = 1.25
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	actions_types = list(/datum/action/item_action/set_internals)
+	action_slots = ALL
 	armor_type = /datum/armor/item_tank
 	integrity_failure = 0.5
 	/// If we are in the process of exploding, stops multi explosions
@@ -42,7 +47,7 @@
 	var/leaking = FALSE
 	/// The pressure of the gases this tank supplies to internals.
 	var/distribute_pressure = ONE_ATMOSPHERE
-	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
+	/// Icon state when in a tank holder or a surgical table. Null makes it incompatible with tank holder.
 	var/tank_holder_icon_state = "holder_generic"
 	///Used by process() to track if there's a reason to process each tick
 	var/excited = TRUE
@@ -52,6 +57,8 @@
 	var/list/reaction_info
 	/// Mob that is currently breathing from the tank.
 	var/mob/living/carbon/breathing_mob = null
+	///Progress bar showing how much volume is in the tank when equipped.
+	var/datum/progressbar/volume_bar
 	/// Attached assembly, can either detonate the tank or release its contents when receiving a signal
 	var/obj/item/assembly_holder/tank_assembly
 	/// Whether or not it will try to explode when it receives a signal
@@ -69,7 +76,7 @@
 	if (QDELETED(breathing_mob))
 		breathing_mob = null
 		return
-	// Close open air tank if it got dropped by it's current user.
+	// Close open air tank if it got dropped by its current user.
 	if (loc != breathing_mob)
 		breathing_mob.cutoff_internals()
 
@@ -83,20 +90,15 @@
 /// Called by carbons after they connect the tank to their breathing apparatus.
 /obj/item/tank/proc/after_internals_opened(mob/living/carbon/carbon_target)
 	breathing_mob = carbon_target
-	playsound(loc, 'sound/items/internals_on.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	RegisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	playsound(loc, 'sound/items/internals/internals_on.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	var/pressure_on_open = air_contents.return_pressure() //we start off "full" when we toggle, and count down from there.
+	volume_bar = new(carbon_target, pressure_on_open, src, pressure_on_open)
 
 /// Called by carbons after they disconnect the tank from their breathing apparatus.
 /obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
 	breathing_mob = null
-	playsound(loc, 'sound/items/internals_off.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	UnregisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
-
-/obj/item/tank/proc/get_status_tab_item(mob/living/source, list/items)
-	SIGNAL_HANDLER
-	items += "Internal Atmosphere Info: [name]"
-	items += "Tank Pressure: [air_contents.return_pressure()] kPa"
-	items += "Distribution Pressure: [distribute_pressure] kPa"
+	playsound(loc, 'sound/items/internals/internals_off.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	QDEL_NULL(volume_bar)
 
 /// Attempts to toggle the mob's internals on or off using this tank. Returns TRUE if successful.
 /obj/item/tank/proc/toggle_internals(mob/living/carbon/mob_target)
@@ -134,6 +136,7 @@
 	STOP_PROCESSING(SSobj, src)
 	air_contents = null
 	QDEL_NULL(tank_assembly)
+	QDEL_NULL(volume_bar)
 	return ..()
 
 /obj/item/tank/update_overlays()
@@ -188,13 +191,15 @@
 	user.visible_message(span_suicide("[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	if(!QDELETED(human_user) && air_contents && air_contents.return_pressure() >= 1000)
-		ADD_TRAIT(human_user, TRAIT_DISFIGURED, TRAIT_GENERIC)
+		var/obj/item/bodypart/head = human_user.get_bodypart(BODY_ZONE_HEAD)
+		if(head)
+			ADD_TRAIT(head, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		human_user.inflate_gib()
 		return MANUAL_SUICIDE
 	to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
 	return SHAME
 
-/obj/item/tank/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/tank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(istype(attacking_item, /obj/item/assembly_holder))
 		if(tank_assembly)
@@ -253,7 +258,7 @@
 	if(istype(carbon_user) && (carbon_user.external == src || carbon_user.internal == src))
 		.["connected"] = TRUE
 
-/obj/item/tank/ui_act(action, params)
+/obj/item/tank/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -319,6 +324,8 @@
 /obj/item/tank/process(seconds_per_tick)
 	if(!air_contents)
 		return
+	if(!QDELETED(volume_bar))
+		volume_bar.update(air_contents.return_pressure())
 
 	//Allow for reactions
 	excited = (excited | air_contents.react(src))
@@ -440,7 +447,7 @@
 
 /obj/item/tank/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
 	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
-	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	playsound(src, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(ignite)), 1 SECONDS)
 
 /// Attaches an assembly holder to the tank to create a bomb.

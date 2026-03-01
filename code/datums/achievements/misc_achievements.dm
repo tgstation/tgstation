@@ -8,6 +8,12 @@
 	database_id = MEDAL_METEOR
 	icon_state = "meteors"
 
+/datum/award/achievement/misc/meteor_punch
+	name = "Your Life In Your Hands"
+	desc = "Give some space debris a piece of your mind"
+	database_id = MEDAL_METEOR_PUNCH
+	icon_state = "punchmeteors"
+
 /datum/award/achievement/misc/pulse
 	name = "Jackpot"
 	desc = "Win a pulse rifle from an arcade machine"
@@ -232,3 +238,22 @@
 	desc = "Successfully carry a boulder from Lavaland all the way to Centcom, without ever dropping it. We must imagine you're happy to unlock this."
 	database_id = MEDAL_SISYPHUS
 	icon_state = "sisyphus"
+
+/datum/award/achievement/misc/cigarettes
+	name = "Unhealthy Snacks"
+	desc = "You were curious to taste it. And then another. You must have more!"
+	database_id = MEDAL_CIGARETTES
+	icon_state = "cigarettes"
+
+/datum/award/achievement/misc/sharkdragon
+	name = "You're What You Eat"
+	desc = "Nutritionists often recommend a balanced and varied diet. However that clearly isn't the case for some creatures."
+	database_id = MEDAL_SHARKDRAGON
+	icon_state = "dragon_plus_fish"
+
+/datum/award/achievement/misc/desensitized
+	name = "In Flanders Fields"
+	desc = "You have witnessed more death and despair in one shift than most TerraGov marines have seen across an entire tour of duty. \
+		Perhaps one day you'll find peace. But not today."
+	database_id = MEDAL_DESENSITIZED
+	icon_state = "desensitized"

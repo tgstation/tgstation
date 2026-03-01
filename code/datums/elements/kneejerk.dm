@@ -14,10 +14,8 @@
 
 	UnregisterSignal(source, COMSIG_ITEM_ATTACK)
 
-/datum/element/kneejerk/proc/on_item_attack(datum/source, mob/living/target, mob/living/user, params)
+/datum/element/kneejerk/proc/on_item_attack(datum/source, mob/living/target, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
-
-	var/list/modifiers = params2list(params)
 
 	if((user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && LAZYACCESS(modifiers, RIGHT_CLICK) && target.buckled)
 		tap_knee(source, target, user)
@@ -28,7 +26,7 @@
 	var/selected_zone = user.zone_selected
 	var/obj/item/bodypart/leg/right = target.get_bodypart(BODY_ZONE_R_LEG)
 	var/obj/item/bodypart/leg/left = target.get_bodypart(BODY_ZONE_L_LEG)
-	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 
 	if(!ishuman(target))
 		return
@@ -51,17 +49,17 @@
 	var/target_brain_damage = target_brain.damage
 
 	if(target_brain_damage < BRAIN_DAMAGE_MILD) //a healthy brain produces a normal reaction
-		playsound(target, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+		playsound(target, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 		target.visible_message(span_danger("[target]'s leg kicks out sharply!"), \
 			span_danger("Your leg kicks out sharply!"))
 
 	else if(target_brain_damage < BRAIN_DAMAGE_SEVERE) //a mildly damaged brain produces a delayed reaction
-		playsound(target, 'sound/weapons/punchmiss.ogg', 15, TRUE, -1)
+		playsound(target, 'sound/items/weapons/punchmiss.ogg', 15, TRUE, -1)
 		target.visible_message(span_danger("After a moment, [target]'s leg kicks out sharply!"), \
 			span_danger("After a moment, your leg kicks out sharply!"))
 
 	else if(target_brain_damage < BRAIN_DAMAGE_DEATH) //a severely damaged brain produces a delayed + weaker reaction
-		playsound(target, 'sound/weapons/punchmiss.ogg', 5, TRUE, -1)
+		playsound(target, 'sound/items/weapons/punchmiss.ogg', 5, TRUE, -1)
 		target.visible_message(span_danger("After a moment, [target]'s leg kicks out weakly!"), \
 			span_danger("After a moment, your leg kicks out weakly!"))
 

@@ -9,10 +9,14 @@
 	obj_flags = BLOCKS_CONSTRUCTION
 	can_buckle = TRUE
 	buckle_lying = 90
+	buckle_dir = SOUTH
 	circuit = /obj/item/circuitboard/machine/stasis
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 	interaction_flags_click = ALLOW_SILICON_REACH
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 3
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 3
 	var/stasis_enabled = TRUE
 	var/last_stasis_sound = FALSE
 	var/stasis_can_toggle = 0
@@ -22,6 +26,21 @@
 /obj/machinery/stasis/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/elevation, pixel_shift = 6)
+	update_buckle_vars(dir)
+
+/obj/machinery/stasis/RefreshParts()
+	. = ..()
+
+	var/energy_rating = 0
+	for(var/datum/stock_part/part in component_parts)
+		energy_rating += part.energy_rating()
+
+	for(var/obj/item/stock_parts/part in component_parts)
+		energy_rating += part.energy_rating
+
+	idle_power_usage = initial(idle_power_usage) / (energy_rating/2)
+	active_power_usage = initial(active_power_usage) / (energy_rating/2)
+	update_current_power_usage()
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
@@ -32,9 +51,9 @@
 	if(last_stasis_sound != _running)
 		var/sound_freq = rand(5120, 8800)
 		if(_running)
-			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
 		else
-			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth/synth_no.ogg', 50, TRUE, frequency = sound_freq)
 		last_stasis_sound = _running
 
 /obj/machinery/stasis/click_alt(mob/user)
@@ -56,6 +75,13 @@
 		if(HAS_TRAIT(L, TRAIT_STASIS))
 			thaw_them(L)
 	return ..()
+
+/obj/machinery/stasis/setDir(newdir)
+	. = ..()
+	update_buckle_vars(newdir)
+
+/obj/machinery/stasis/proc/update_buckle_vars(newdir)
+	buckle_lying = newdir & NORTHEAST ? 270 : 90
 
 /obj/machinery/stasis/proc/stasis_running()
 	return stasis_enabled && is_operational
@@ -110,13 +136,11 @@
 	var/freq = rand(24750, 26550)
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
 	target.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_MACHINE_EFFECT)
-	ADD_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 	target.extinguish_mob()
 	update_use_power(ACTIVE_POWER_USE)
 
 /obj/machinery/stasis/proc/thaw_them(mob/living/target)
 	target.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_MACHINE_EFFECT)
-	REMOVE_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 	if(target == occupant)
 		update_use_power(IDLE_POWER_USE)
 
@@ -124,24 +148,27 @@
 	if(!can_be_occupant(L))
 		return
 	set_occupant(L)
-	if(stasis_running() && check_nap_violations())
+	if(stasis_running())
 		chill_out(L)
 	update_appearance()
+	L.AddComponentFrom(type, /datum/component/free_operation)
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
 	if(L == occupant)
 		set_occupant(null)
 	update_appearance()
+	L.RemoveComponentSource(type, /datum/component/free_operation)
 
 /obj/machinery/stasis/process()
-	if(!(occupant && isliving(occupant) && check_nap_violations()))
+	if(!isliving(occupant))
 		update_use_power(IDLE_POWER_USE)
 		return
 	var/mob/living/L_occupant = occupant
 	if(stasis_running())
 		if(!HAS_TRAIT(L_occupant, TRAIT_STASIS))
 			chill_out(L_occupant)
+
 	else if(HAS_TRAIT(L_occupant, TRAIT_STASIS))
 		thaw_them(L_occupant)
 
@@ -153,8 +180,5 @@
 /obj/machinery/stasis/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	return default_deconstruction_crowbar(I) || .
-
-/obj/machinery/stasis/nap_violation(mob/violator)
-	unbuckle_mob(violator, TRUE)
 
 #undef STASIS_TOGGLE_COOLDOWN

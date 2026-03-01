@@ -5,6 +5,7 @@
 	icon_state = "secbot"
 	light_color = "#f56275"
 	light_power = 0.8
+	gender = MALE
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -19,19 +20,21 @@
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
 	bot_mode_flags = ~BOT_MODE_CAN_BE_SAPIENT
-	data_hud_type = DATA_HUD_SECURITY_ADVANCED
+	data_hud_type = TRAIT_SECURITY_HUD
 	hackables = "target identification systems"
 	path_image_color = COLOR_RED
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
 
 	automated_announcements = list(
-		BEEPSKY_VOICED_CRIMINAL_DETECTED = 'sound/voice/beepsky/criminal.ogg',
-		BEEPSKY_VOICED_FREEZE = 'sound/voice/beepsky/freeze.ogg',
-		BEEPSKY_VOICED_JUSTICE = 'sound/voice/beepsky/justice.ogg',
-		BEEPSKY_VOICED_YOUR_MOVE = 'sound/voice/beepsky/creep.ogg',
-		BEEPSKY_VOICED_I_AM_THE_LAW = 'sound/voice/beepsky/iamthelaw.ogg',
-		BEEPSKY_VOICED_SECURE_DAY = 'sound/voice/beepsky/secureday.ogg',
+		BEEPSKY_VOICED_CRIMINAL_DETECTED = 'sound/mobs/non-humanoids/beepsky/criminal.ogg',
+		BEEPSKY_VOICED_FREEZE = 'sound/mobs/non-humanoids/beepsky/freeze.ogg',
+		BEEPSKY_VOICED_JUSTICE = 'sound/mobs/non-humanoids/beepsky/justice.ogg',
+		BEEPSKY_VOICED_YOUR_MOVE = 'sound/mobs/non-humanoids/beepsky/creep.ogg',
+		BEEPSKY_VOICED_I_AM_THE_LAW = 'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg',
+		BEEPSKY_VOICED_SECURE_DAY = 'sound/mobs/non-humanoids/beepsky/secureday.ogg',
 	)
+
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.2)
 
 	///Whether this secbot is considered 'commissioned' and given the trait on Initialize.
 	var/commissioned = FALSE
@@ -56,10 +59,11 @@
 	var/security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_RECORDS | SECBOT_HANDCUFF_TARGET
 //	Selections: SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_WEAPONS | SECBOT_CHECK_RECORDS | SECBOT_HANDCUFF_TARGET
 
-	///On arrest, charges the violator this much. If they don't have that much in their account, they will get beaten instead
-	var/fair_market_price_arrest = 25
-	///Charged each time the violator is stunned on detain
-	var/fair_market_price_detain = 5
+	/// On arrest, charges the violator this much.
+	/// If they don't have that much in their account, they will get beaten instead
+	var/price_arrest = 0
+	/// Charged each time the violator is stunned on detain
+	var/price_detain = 0
 	///Force of the harmbaton used on them
 	var/weapon_force = 20
 	///The department the secbot will deposit collected money into
@@ -92,7 +96,7 @@
 	desc = "It's Sergeant-At-Armsky! He's a disgruntled assistant to the warden that would probably shoot you if he had hands."
 	health = 45
 	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
-	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
+	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS | SECBOT_CHECK_WEAPONS
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
 	name = "Officer Pipsqueak"
@@ -143,7 +147,6 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddComponent(/datum/component/security_vision, judgement_criteria = NONE, update_judgement_criteria = CALLBACK(src, PROC_REF(judgement_criteria)))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /mob/living/simple_animal/bot/secbot/Destroy()
 	QDEL_NULL(weapon)
@@ -167,12 +170,12 @@
 	GLOB.move_manager.stop_looping(src)
 	last_found = world.time
 
-/mob/living/simple_animal/bot/secbot/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/mob/living/simple_animal/bot/secbot/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(!(security_mode_flags & SECBOT_SABOTEUR_AFFECTED))
 		security_mode_flags |= SECBOT_SABOTEUR_AFFECTED
 		addtimer(CALLBACK(src, PROC_REF(remove_saboteur_effect)), disrupt_duration)
-		return COMSIG_SABOTEUR_SUCCESS
+		return TRUE
 
 /mob/living/simple_animal/bot/secbot/proc/remove_saboteur_effect()
 	security_mode_flags &= ~SECBOT_SABOTEUR_AFFECTED
@@ -181,7 +184,7 @@
 	if(base_speed < initial(base_speed) + 3)
 		base_speed += 3
 		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 6 SECONDS)
-		playsound(src, 'sound/machines/defib_zap.ogg', 50)
+		playsound(src, 'sound/machines/defib/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
 
 /mob/living/simple_animal/bot/secbot/Exited(atom/movable/gone, direction)
@@ -202,9 +205,10 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/secbot/ui_act(action, params)
+/mob/living/simple_animal/bot/secbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
+	var/mob/user = ui.user
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)
@@ -269,7 +273,7 @@
 
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/attackby(obj/item/attacking_item, mob/living/user, params)
+/mob/living/simple_animal/bot/secbot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	..()
 	if(!(bot_mode_flags & BOT_MODE_ON)) // Bots won't remember if you hit them while they're off.
 		return
@@ -289,7 +293,7 @@
 
 	if(bot_type == HONK_BOT)
 		audible_message(span_danger("[src] gives out an evil laugh!"))
-		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
+		playsound(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
 	else
 		audible_message(span_danger("[src] buzzes oddly!"))
 
@@ -297,15 +301,15 @@
 	update_appearance()
 	return TRUE
 
-/mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/proj)
 	. = ..()
 	if(. != BULLET_ACT_HIT)
 		return
 
-	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet))
-		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if(Proj.is_hostile_projectile() && Proj.damage < src.health && ishuman(Proj.firer))
-				retaliate(Proj.firer)
+	if(istype(proj, /obj/projectile/beam) || istype(proj, /obj/projectile/bullet))
+		if((proj.damage_type == BURN) || (proj.damage_type == BRUTE))
+			if(proj.is_hostile_projectile() && proj.damage < src.health && ishuman(proj.firer))
+				retaliate(proj.firer)
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
@@ -316,17 +320,14 @@
 		return ..()
 	var/mob/living/carbon/carbon_target = attack_target
 	if(!carbon_target.IsParalyzed() || !(security_mode_flags & SECBOT_HANDCUFF_TARGET))
-		if(!check_nap_violations())
-			stun_attack(attack_target, TRUE)
-		else
-			stun_attack(attack_target)
+		stun_attack(attack_target, payment_check())
 	else if(carbon_target.canBeHandcuffed() && !carbon_target.handcuffed)
 		start_handcuffing(attack_target)
 
 /mob/living/simple_animal/bot/secbot/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(isitem(hitting_atom))
 		var/obj/item/item_hitby = hitting_atom
-		var/mob/thrown_by = item_hitby.thrownby?.resolve()
+		var/mob/thrown_by = throwingdatum?.get_thrower()
 		if(item_hitby.throwforce < src.health && thrown_by && ishuman(thrown_by))
 			var/mob/living/carbon/human/human_throwee = thrown_by
 			retaliate(human_throwee)
@@ -334,7 +335,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/start_handcuffing(mob/living/carbon/current_target)
 	mode = BOT_ARREST
-	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+	playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
 	current_target.visible_message(span_danger("[src] is trying to put zipties on [current_target]!"),\
 						span_userdanger("[src] is trying to put zipties on you!"))
 	addtimer(CALLBACK(src, PROC_REF(handcuff_target), current_target), 6 SECONDS)
@@ -348,13 +349,12 @@
 		return FALSE
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new cuff_type(current_target))
-		current_target.update_handcuffed()
 		playsound(src, SFX_LAW, 50, FALSE)
 		back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
-	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/items/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 	var/threat = 5
@@ -405,11 +405,7 @@
 				back_to_idle()
 				return
 			if(Adjacent(target) && isturf(target.loc)) // if right next to perp
-				if(!check_nap_violations())
-					stun_attack(target, TRUE)
-				else
-					stun_attack(target)
-
+				stun_attack(target, payment_check())
 				set_anchored(TRUE)
 				return
 
@@ -446,11 +442,11 @@
 				frustration = 0
 				return
 
-			if(target.handcuffed) //no target or target cuffed? back to idle.
-				if(!check_nap_violations())
+			if(target.handcuffed) // target is cuffed, mission accomplished
+				if(payment_check()) // try to fine them - give them a love tap if they fail
 					stun_attack(target, TRUE)
-					return
-				back_to_idle()
+				else // otherwise return to idle state
+					back_to_idle()
 				return
 
 			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !HAS_TRAIT(target, TRAIT_FLOORED))) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
@@ -509,7 +505,11 @@
 /// React to detecting criminal scum by making some kind of noise
 /mob/living/simple_animal/bot/secbot/proc/threat_react(threatlevel)
 	speak("Level [threatlevel] infraction alert!")
-	playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+	playsound(src, pick(
+		'sound/mobs/non-humanoids/beepsky/criminal.ogg',
+		'sound/mobs/non-humanoids/beepsky/justice.ogg',
+		'sound/mobs/non-humanoids/beepsky/freeze.ogg',
+		), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/explode()
 	var/atom/Tsec = drop_location()
@@ -546,7 +546,7 @@
 			new /obj/item/assembly/prox_sensor(Tsec)
 			drop_part(baton_type, Tsec)
 
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
@@ -563,36 +563,26 @@
 			return
 		knockOver(C)
 
-/// Returns false if the current target is unable to pay the fair_market_price for being arrested/detained
-/mob/living/simple_animal/bot/secbot/proc/check_nap_violations()
-	if(!SSeconomy.full_ancap)
-		return TRUE
-	if(!target)
-		return TRUE
+/// Returns true if the current target is unable to pay to be detained/arrested
+/mob/living/simple_animal/bot/secbot/proc/payment_check()
+	var/fair_market_price = (security_mode_flags & SECBOT_HANDCUFF_TARGET) ? price_arrest : price_detain
+	if(fair_market_price <= 0)
+		return FALSE
 	if(!ishuman(target))
-		return TRUE
+		return FALSE
 	var/mob/living/carbon/human/human_target = target
 	var/obj/item/card/id/target_id = human_target.get_idcard()
 	if(!target_id)
-		say("Suspect NAP Violation: No ID card found.")
-		nap_violation(target)
-		return FALSE
+		say("Unable to pay fine: No ID card found.")
+		return TRUE
 	var/datum/bank_account/insurance = target_id.registered_account
 	if(!insurance)
-		say("Suspect NAP Violation: No bank account found.")
-		nap_violation(target)
-		return FALSE
-	var/fair_market_price = (security_mode_flags & SECBOT_HANDCUFF_TARGET ? fair_market_price_detain : fair_market_price_arrest)
-	if(!insurance.adjust_money(-fair_market_price))
-		say("Suspect NAP Violation: Unable to pay.")
-		nap_violation(target)
-		return FALSE
-	var/datum/bank_account/beepsky_department_account = SSeconomy.get_dep_account(payment_department)
-	say("Thank you for your compliance. Your account been charged [fair_market_price] credits.")
-	if(beepsky_department_account)
-		beepsky_department_account.adjust_money(fair_market_price)
+		say("Unable to pay fine: No bank account found.")
+		return TRUE
+	if(!insurance.adjust_money(-fair_market_price, "Securitron fine"))
+		say("Unable to pay fine: Not enough funds in account.")
 		return TRUE
 
-/// Does nothing
-/mob/living/simple_animal/bot/secbot/proc/nap_violation(mob/violator)
-	return
+	SSeconomy.get_dep_account(payment_department)?.adjust_money(fair_market_price)
+	say("Fine paid: Thank you for your compliance. Your account been charged [fair_market_price] [MONEY_NAME].")
+	return FALSE

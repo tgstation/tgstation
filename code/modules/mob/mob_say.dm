@@ -50,7 +50,7 @@
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", EMOTE_VISIBLE|EMOTE_AUDIBLE, message, TRUE), SSspeech_controller)
+	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", NONE, message, TRUE), SSspeech_controller)
 
 /mob/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	var/list/filter_result
@@ -75,7 +75,7 @@
 			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, LOWER_TEXT(config.soft_ic_filter_regex.match))
 			log_filter("Soft IC", message, filter_result)
 			return FALSE
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[html_encode(message)]\"")
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
 		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, LOWER_TEXT(config.soft_ic_filter_regex.match))
 		log_filter("Soft IC (Passed)", message, filter_result)
@@ -106,13 +106,16 @@
 	if(!allow_mimes && HAS_MIND_TRAIT(src, TRAIT_MIMING))
 		return FALSE
 
-	if(is_muzzled())
-		return FALSE
-
 	return ..()
 
-///Speak as a dead person (ghost etc)
-/mob/proc/say_dead(message)
+/**
+ * say_dead
+ * allows you to speak as a dead person
+ * Args:
+ * - message: The message you're sending to chat.
+ * - mannequin_controller: If someone else is forcing you to speak, this is the mob doing it.
+ */
+/mob/proc/say_dead(message, mob/mannequin_controller)
 	var/name = real_name
 	var/alt_name = ""
 
@@ -120,7 +123,7 @@
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
-	var/jb = is_banned_from(ckey, "Deadchat")
+	var/jb = is_banned_from(mannequin_controller?.ckey || ckey, "Deadchat")
 	if(QDELETED(src))
 		return
 
@@ -153,7 +156,7 @@
 		if(name != real_name)
 			alt_name = " (died as [real_name])"
 
-	var/spanned = say_quote(say_emphasis(message))
+	var/spanned = generate_messagepart(message)
 	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
 	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
@@ -163,6 +166,11 @@
 	if(client?.holder?.fakekey)
 		displayed_key = null
 	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = displayed_key)
+	for(var/mob/mobs_hearing as anything in GLOB.player_list)
+		if(SSticker.current_state != GAME_STATE_FINISHED && (mobs_hearing.see_invisible < invisibility || !isdead(mobs_hearing)))
+			continue
+		if(runechat_prefs_check(mobs_hearing))
+			mobs_hearing.create_chat_message(src, /datum/language/common, message)
 
 ///Check if this message is an emote
 /mob/proc/check_emote(message, forced)

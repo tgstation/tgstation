@@ -1,7 +1,4 @@
-import { createSearch } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -11,7 +8,10 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
@@ -168,7 +168,7 @@ export const BotAnnouncement = (props) => {
           <Stack vertical>
             <Stack.Item>
               <Input
-                onInput={(event, newValue) => setSearch(newValue)}
+                onChange={setSearch}
                 fluid
                 autoFocus
                 placeholder="Search..."

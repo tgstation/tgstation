@@ -8,8 +8,9 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	volume = 5
-	reagent_flags = TRANSPARENT
+	initial_reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/dropper/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!target.reagents)
@@ -28,41 +29,40 @@
 		var/fraction = min(amount_per_transfer_from_this / reagents.total_volume, 1)
 
 		if(ismob(target))
+			user.changeNext_move(CLICK_CD_MELEE)
 			if(ishuman(target))
 				var/mob/living/carbon/human/victim = target
-
 				var/obj/item/safe_thing = victim.is_eyes_covered()
 
 				if(safe_thing)
 					if(!safe_thing.reagents)
 						safe_thing.create_reagents(100)
 
-					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this, transferred_by = user, methods = TOUCH)
+					trans = round(reagents.trans_to(safe_thing, amount_per_transfer_from_this, transferred_by = user, methods = TOUCH), CHEMICAL_VOLUME_ROUNDING)
 
 					target.visible_message(span_danger("[user] tries to squirt something into [target]'s eyes, but fails!"), \
 											span_userdanger("[user] tries to squirt something into your eyes, but fails!"))
-
-					to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+					if(trans)
+						to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 					update_appearance()
 					return ITEM_INTERACT_BLOCKING
+
 			else if(isalien(target)) //hiss-hiss has no eyes!
 				to_chat(target, span_danger("[target] does not seem to have any eyes!"))
 				return ITEM_INTERACT_BLOCKING
 
-			target.visible_message(span_danger("[user] squirts something into [target]'s eyes!"), \
-									span_userdanger("[user] squirts something into your eyes!"))
-
+			target.visible_message(
+				span_danger("[user] squirts something into [target]'s eyes!"),
+				span_userdanger("[user] squirts something into your eyes!"),
+			)
+			SEND_SIGNAL(target, COMSIG_MOB_REAGENTS_DROPPED_INTO_EYES, user, src, reagents, fraction)
 			reagents.expose(target, TOUCH, fraction)
 			var/mob/M = target
-			var/R
-			if(reagents)
-				for(var/datum/reagent/A in src.reagents.reagent_list)
-					R += "[A] ([num2text(A.volume)]),"
+			log_combat(user, M, "squirted", reagents.get_reagent_log_string())
 
-			log_combat(user, M, "squirted", R)
-
-		trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
-		to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+		trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
+		if(trans)
+			to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 		update_appearance()
 		target.update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -75,9 +75,9 @@
 		to_chat(user, span_warning("[target] is empty!"))
 		return ITEM_INTERACT_BLOCKING
 
-	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
-
-	to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
+	var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
+	if(trans)
+		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
 
 	update_appearance()
 	target.update_appearance()

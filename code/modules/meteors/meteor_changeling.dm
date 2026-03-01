@@ -30,7 +30,7 @@
 	return TRUE
 
 //If the meteor misses the station and deletes itself, we make absolutely sure the changeling reaches the station.
-/obj/effect/meteor/meaty/changeling/handle_stopping()
+/obj/effect/meteor/meaty/changeling/moved_off_z()
 	if(!landing_target)
 		//If our destination turf is gone for some reason, we chuck them at the observer_start landmark (usually at the center of the station) as a last resort.
 		landing_target = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
@@ -38,7 +38,7 @@
 	for(var/atom/movable/changeling in contents)
 		changeling.forceMove(get_turf(src))
 		changeling.throw_at(landing_target, 2, 2)
-		changeling.visible_message(span_warning("[changeling] is launched out from inside of the [name]"), span_changeling("Sensing that something is terribly wrong, we forcibly eject ourselves from the [name]!"))
+		changeling.visible_message(span_warning("[changeling] is launched out from inside of \the [src]!"), span_changeling("Sensing that something is terribly wrong, we forcibly eject ourselves from \the [src]!"))
 		playsound(changeling, 'sound/effects/splat.ogg', 50, pressure_affected = FALSE)
 
 	return ..()
