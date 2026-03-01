@@ -863,7 +863,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// BODYPARTS_HIGH_LAYER (arms)
 	// BODY_LAYER (body markings (full body), underwear (full body))
 	// EYES_LAYER,
-
 	// DAMAGE_LAYER (full body)
 	// HIGHEST_LAYER (full body)
 	// UNIFORM_LAYER (full body)
