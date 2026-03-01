@@ -10,8 +10,6 @@
 
 	///list of turfs adjacent to us that air can flow onto
 	var/list/atmos_adjacent_turfs
-	/// Cached share coefficient, recomputed when atmospheric adjacency is rebuilt.
-	var/atmos_share_coeff = 1
 	///bitfield of dirs in which we are superconducitng
 	var/atmos_supeconductivity = NONE
 
@@ -264,10 +262,9 @@
 	//cache for sanic speed
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
-	var/our_share_coeff = atmos_share_coeff
+	var/our_share_coeff = 1/(LAZYLEN(adjacent_turfs) + 1)
 
 	var/datum/gas_mixture/our_air = air
-	var/should_update_visuals = FALSE
 
 	var/list/share_end
 
@@ -291,7 +288,7 @@
 			continue
 		LINDA_CYCLE_ARCHIVE(enemy_tile)
 
-		/******************* GROUP HANDLING START *****************************************************************/
+	/******************* GROUP HANDLING START *****************************************************************/
 
 		var/should_share_air = FALSE
 		var/datum/gas_mixture/enemy_air = enemy_tile.air
@@ -321,9 +318,8 @@
 
 		//air sharing
 		if(should_share_air)
-			var/difference = our_air.share(enemy_air, our_share_coeff, enemy_tile.atmos_share_coeff)
+			var/difference = our_air.share(enemy_air, our_share_coeff, 1 / (LAZYLEN(enemy_tile.atmos_adjacent_turfs) + 1))
 			if(difference)
-				should_update_visuals = TRUE
 				if(difference > 0)
 					consider_pressure_difference(enemy_tile, difference)
 				else
@@ -344,8 +340,7 @@
 				new_group.add_turf(src)
 				our_excited_group = excited_group
 			// shares 4/5 of our difference in moles with the atmosphere
-			if(our_air.share(planetary_mix, 0.8, 0.8))
-				should_update_visuals = TRUE
+			our_air.share(planetary_mix, 0.8, 0.8)
 			// temperature share with the atmosphere with an inflated heat capacity to simulate faster sharing with a large atmosphere
 			our_air.temperature_share(planetary_mix, OPEN_HEAT_TRANSFER_COEFFICIENT, planetary_mix.temperature_archived, planetary_mix.heat_capacity() * 5)
 			planetary_mix.garbage_collect()
@@ -359,20 +354,16 @@
 		LAST_SHARE_CHECK
 		if(!difference)
 			continue
-		should_update_visuals = TRUE
 		if(difference > 0)
 			consider_pressure_difference(enemy_tile, difference)
 		else
 			enemy_tile.consider_pressure_difference(src, difference)
 
 	var/reacting = our_air.react(src)
-	if(reacting & REACTING)
-		should_update_visuals = TRUE
 	if(our_excited_group)
 		our_excited_group.turf_reactions |= reacting //Adds the flag to turf_reactions so excited groups can check for them before dismantling.
 
-	if(should_update_visuals)
-		update_visuals()
+	update_visuals()
 	if(!consider_superconductivity(starting = TRUE) && !active_hotspot && !(reacting & (REACTING | STOP_REACTIONS)))
 		if(!our_excited_group) //If nothing of interest is happening, kill the active turf
 			SSair.remove_from_active(src) //This will kill any connected excited group, be careful (This broke atmos for 4 years)
