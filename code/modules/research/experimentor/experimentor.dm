@@ -34,7 +34,7 @@
 
 /obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
-	set_wires(new /datum/wires/rnd/experimentor(src))
+	set_wires(new /datum/wires/experimentor(src))
 
 	load_handlers()
 
