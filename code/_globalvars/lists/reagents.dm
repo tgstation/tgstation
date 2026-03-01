@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 			reagents += list(list("name" = reagent::name, "id" = reagent))
 
 		for(var/datum/reagent/product as anything in reaction.results)
-			product_names += product.name
+			product_names += product::name
 			product_ids += product
 
 		var/product_name
