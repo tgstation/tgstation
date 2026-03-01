@@ -241,3 +241,4 @@
 	desc = "This rough saddle will give you a serviceable seat upon a goliath! Provided you can get one to stand still."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 5)

@@ -111,6 +111,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if (!(source.material_flags & MATERIAL_EFFECTS))
 		return
 
+	#warn Material platforms/ladders
 	if (track_flags & MATERIAL_TURF_CONTACT)
 		if (isopenturf(source))
 			RegisterSignal(source, COMSIG_ATOM_ENTERED, PROC_REF(on_floor_entered))

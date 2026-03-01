@@ -10,6 +10,7 @@
 	force = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	damtype = STAMINA
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 3)
 	///change the description based on the pillow tag
 	var/static/tag_desc = "This one seems to have its tag removed."
 	///pillow tag is attached to it

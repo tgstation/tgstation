@@ -70,12 +70,12 @@
 // Polycrystals, aka stacks
 /obj/item/stack/sheet/bluespace_crystal
 	name = "bluespace polycrystal"
+	singular_name = "bluespace polycrystal"
+	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "polycrystal"
 	inhand_icon_state = null
 	gulag_valid = TRUE
-	singular_name = "bluespace polycrystal"
-	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("bluespace polybashes", "bluespace polybatters", "bluespace polybludgeons", "bluespace polythrashes", "bluespace polysmashes")
 	attack_verb_simple = list("bluespace polybash", "bluespace polybatter", "bluespace polybludgeon", "bluespace polythrash", "bluespace polysmash")
@@ -86,18 +86,19 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user, list/modifiers)
-	if(user.get_inactive_held_item() == src)
-		if(is_zero_amount(delete_if_zero = TRUE))
-			return
-		var/BC = new crystal_type(src)
-		user.put_in_hands(BC)
-		use(1)
-		if(!amount)
-			to_chat(user, span_notice("You break the final crystal off."))
-		else
-			to_chat(user, span_notice("You break off a crystal."))
+	if(user.get_inactive_held_item() != src)
+		return ..()
+
+	if(is_zero_amount(delete_if_zero = TRUE))
+		return
+
+	var/BC = new crystal_type(src)
+	user.put_in_hands(BC)
+	use(1)
+	if(!amount)
+		to_chat(user, span_notice("You break the final crystal off."))
 	else
-		..()
+		to_chat(user, span_notice("You break off a crystal."))
 
 /obj/item/stack/sheet/bluespace_crystal/fifty
 	amount = 50

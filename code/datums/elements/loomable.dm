@@ -14,6 +14,8 @@
 	var/target_needs_anchoring
 	/// How long it takes to loom the item
 	var/loom_time
+	/// Should materials from the parent item be transfered to the child?
+	var/inherit_materials
 
 /datum/element/loomable/Attach(
 	obj/item/target,
@@ -22,7 +24,8 @@
 	loom_type = /obj/structure/loom,
 	process_completion_verb = "spun",
 	target_needs_anchoring = TRUE,
-	loom_time = 1 SECONDS
+	loom_time = 1 SECONDS,
+	inherit_materials = TRUE,
 )
 	. = ..()
 	//currently this element only works for items as we need to call /obj/item/attack_atom()
@@ -34,6 +37,7 @@
 	src.process_completion_verb = process_completion_verb
 	src.target_needs_anchoring = target_needs_anchoring
 	src.loom_time = loom_time
+	src.inherit_materials = inherit_materials
 	RegisterSignal(target, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(try_and_loom_me))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
@@ -73,6 +77,7 @@
 /datum/element/loomable/proc/loom_me(obj/item/source, mob/living/user, atom/target)
 	//this allows us to count the amount of times it has successfully used the stack's required amount
 	var/spawning_amount = 0
+	var/list/source_materials = source.custom_materials.Copy()
 	if(isstack(source))
 		var/obj/item/stack/stack_we_use = source
 		while(stack_we_use.amount >= required_amount)
@@ -80,7 +85,8 @@
 				break
 
 			if(!stack_we_use.use(required_amount))
-				user.balloon_alert(user, "need [required_amount] of [source]!")
+				if (!spawning_amount)
+					user.balloon_alert(user, "need [required_amount] of [source]!")
 				break
 
 			spawning_amount++
@@ -96,8 +102,19 @@
 	if(spawning_amount == 0)
 		return
 
-	var/new_thing
+	var/atom/new_thing = null
+	if (ispath(resulting_atom, /obj/item/stack))
+		new_thing = new resulting_atom(target.drop_location(), new_amount = spawning_amount, mat_override = inherit_materials ? source_materials : null)
+		user.balloon_alert_to_viewers("[process_completion_verb] [new_thing]")
+		return
+
+	for(var/mat_type in source_materials)
+		// Split materials per stack
+		source_materials[mat_type] /= spawning_amount
+
 	for(var/repeated in 1 to spawning_amount)
 		new_thing = new resulting_atom(target.drop_location())
+		if(inherit_materials)
+			new_thing.set_custom_materials(source_materials)
 
 	user.balloon_alert_to_viewers("[process_completion_verb] [new_thing]")

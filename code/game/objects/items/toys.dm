@@ -1115,6 +1115,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_range = 9
 	throw_speed = 0.5
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 3)
 
 /*
  * Clockwork Watch

@@ -43,6 +43,7 @@
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 	storage_type = /datum/storage/utility_belt
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/storage/belt/utility/chief
 	name = "chief engineer's toolbelt"
@@ -197,6 +198,7 @@
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 	storage_type = /datum/storage/medical_belt
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/storage/belt/medical/paramedic
 	name = "EMT belt"
@@ -261,6 +263,7 @@
 	worn_icon_state = "security"
 	content_overlays = TRUE
 	storage_type = /datum/storage/security_belt
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
@@ -488,6 +491,7 @@
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 	storage_type = /datum/storage/janitor_belt
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/storage/belt/janitor/full/PopulateContents()
 	new /obj/item/lightreplacer(src)
@@ -503,6 +507,7 @@
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
 	storage_type = /datum/storage/bandolier_belt
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
@@ -513,6 +518,7 @@
 	dying_key = DYE_REGISTRY_FANNYPACK
 	custom_price = PAYCHECK_CREW * 2
 	storage_type = /datum/storage/fanny_pack
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 2, /datum/material/leather = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/storage/belt/fannypack/black
 	name = "black fannypack"
@@ -851,6 +857,7 @@
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	storage_type = /datum/storage/katana_sheath
 	stored_blade = /obj/item/katana
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/storage/belt/sheath/katana/empty
 	stored_blade = NONE
@@ -881,6 +888,7 @@
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	storage_type = /datum/storage/hanzo_sheath
 	stored_blade = /obj/item/nullrod/claymore/katana
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/storage/belt/sheath/hanzo_katana/empty
 	stored_blade = NONE
@@ -893,6 +901,7 @@
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 	storage_type = /datum/storage/plant_belt
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/storage/belt/sheath/sabre/gunpowered
 	name = "modified sabre sheath"

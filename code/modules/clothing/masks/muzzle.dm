@@ -8,6 +8,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	equip_delay_other = 2 SECONDS
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/mask/muzzle/Initialize(mapload)
 	. = ..()
@@ -36,6 +37,7 @@
 	greyscale_config = /datum/greyscale_config/tape_piece
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn
 	greyscale_colors = "#B2B2B2"
+	custom_materials = null
 	///Dertermines whether the tape piece does damage when ripped off of someone.
 	var/harmful_strip = FALSE
 	///The ammount of damage dealt when the tape piece is ripped off of someone.

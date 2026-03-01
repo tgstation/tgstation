@@ -232,7 +232,7 @@
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
-/// Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
+/// Can cause bluespace effects on use. (Teleportation)
 /datum/material/bluespace
 	name = "bluespace crystal"
 	desc = "Crystals with bluespace properties."
@@ -604,7 +604,7 @@
 	color = "#EDC9AF"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_AMORPHOUS
 	mat_properties = list(
-		MATERIAL_DENSITY = 2,
+		MATERIAL_DENSITY = 3,
 		MATERIAL_HARDNESS = 0,
 		MATERIAL_FLEXIBILITY = 0,
 		MATERIAL_REFLECTIVITY = 7,
@@ -680,13 +680,13 @@
 		MATERIAL_THERMAL = 1,
 		MATERIAL_CHEMICAL = 8,
 	)
+	material_reagent = list(/datum/reagent/iron = 1, /datum/reagent/fuel/unholywater = 2)
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "runed"
 
 /datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	. = ..()
-	victim.reagents.add_reagent(/datum/reagent/fuel/unholywater, rand(8, 12))
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
 	return TRUE
@@ -885,3 +885,44 @@
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(30, BURN, BODY_ZONE_HEAD, wound_bonus = 5)
 	return TRUE
+
+/// Evil and very unstable version of bluespace crystals
+/datum/material/telecrystal
+	name = "telecrystal"
+	desc = "An ominous-looking gemstone capable of transporting objects vast distances through bluespace."
+	color = "#BD1B28"
+	alpha = 200
+	starlight_color = COLOR_SYNDIE_RED
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 1,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 10,
+		MATERIAL_ELECTRICAL = 10,
+		MATERIAL_THERMAL = 2,
+		MATERIAL_CHEMICAL = 8,
+		MATERIAL_BEAUTY = -0.5, // very evil bad no good
+		MATERIAL_TELEPORTING = 5,
+		MATERIAL_PENETRATING = TRUE,
+	)
+	sheet_type = /obj/item/stack/sheet/telecrystal
+	material_reagent = list(/datum/reagent/bluespace = 1, /datum/reagent/medicine/stimulants = 1) // We don't have liquid telecrystals and I don't wanna risk it
+	value_per_unit = 1200 / SHEET_MATERIAL_AMOUNT
+	texture_layer_icon_state = "shine"
+
+/datum/material/telecrystal/on_main_applied(atom/source, mat_amount, multiplier)
+	. = ..()
+	if(istype(source, /obj/item/fishing_rod))
+		RegisterSignal(source, COMSIG_ROD_BEGIN_FISHING, PROC_REF(on_begin_fishing))
+
+/datum/material/telecrystal/on_main_removed(atom/source, mat_amount, multiplier)
+	. = ..()
+	if(istype(source, /obj/item/fishing_rod))
+		UnregisterSignal(source, COMSIG_ROD_BEGIN_FISHING)
+
+/datum/material/telecrystal/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge)
+	SIGNAL_HANDLER
+	// Oops, all chainsawfish!
+	challenge.register_reward_signals(GLOB.preset_fish_sources[/datum/fish_source/portal/syndicate])
+

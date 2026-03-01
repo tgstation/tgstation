@@ -469,6 +469,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	SET_BASE_PIXEL(7, 7)
 	framed_offset_x = 7
 	framed_offset_y = 7
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/canvas/twentythree_nineteen
 	name = "canvas (23x19)"
@@ -479,6 +480,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	framed_offset_x = 5
 	framed_offset_y = 7
 	pixels_per_unit = 8
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/canvas/twentythree_twentythree
 	name = "canvas (23x23)"
@@ -489,6 +491,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	framed_offset_x = 5
 	framed_offset_y = 5
 	pixels_per_unit = 8
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/canvas/twentyfour_twentyfour
 	name = "canvas (24x24) (AI Universal Standard)"

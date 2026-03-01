@@ -5,7 +5,7 @@
 	desc = "The gathered remains of a drake. It still crackles with heat, and smells distinctly of brimstone."
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	icon_state = "dragon"
-	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 10)
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 10, /datum/material/leather/goliath = SHEET_MATERIAL_AMOUNT * 6)
 
 /obj/item/drake_remains/Initialize(mapload)
 	. = ..()
@@ -28,7 +28,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
-	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 10)
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 10, /datum/material/leather/goliath = SHEET_MATERIAL_AMOUNT * 6)
 
 /datum/armor/cloak_drake
 	melee = 65

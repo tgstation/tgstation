@@ -35,6 +35,7 @@
 	name = "carpskin fedora"
 	icon_state = "fedora_carpskin"
 	inhand_icon_state = null
+	custom_materials = list(/datum/material/leather/carp_scales = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/head/fedora/carpskin/Initialize(mapload)
 	. = ..()

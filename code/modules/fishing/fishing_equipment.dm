@@ -492,6 +492,7 @@
 	resistance_flags = ACID_PROOF
 	storage_type = /datum/storage/carpskin_bag
 	fishing_modifier = -4
+	custom_materials = list(/datum/material/leather/carp_scales = SHEET_MATERIAL_AMOUNT * 3)
 
 ///An item that allows the user to add and remove traits from a fish at their own discretion.
 /obj/item/fish_genegun

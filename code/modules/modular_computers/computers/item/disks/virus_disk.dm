@@ -111,12 +111,12 @@
 
 /obj/item/disk/computer/virus/frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!istype(attacking_item, /obj/item/stack/telecrystal))
+	if(!istype(attacking_item, /obj/item/stack/sheet/telecrystal))
 		return
 	if(!charges)
 		to_chat(user, span_notice("[src] is out of charges, it's refusing to accept [attacking_item]."))
 		return
-	var/obj/item/stack/telecrystal/telecrystal_stack = attacking_item
+	var/obj/item/stack/sheet/telecrystal/telecrystal_stack = attacking_item
 	telecrystals += telecrystal_stack.amount
 	to_chat(user, span_notice("You slot [telecrystal_stack] into [src]. The next time it's used, it will also give telecrystals."))
 	telecrystal_stack.use(telecrystal_stack.amount)

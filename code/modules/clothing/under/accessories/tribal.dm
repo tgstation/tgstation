@@ -13,7 +13,7 @@
 	icon_state = "skull"
 	attachment_slot = GROIN
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
-	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2, /datum/material/leather/goliath = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/accessory/skilt
 	name = "sinew skirt"

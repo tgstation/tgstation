@@ -101,6 +101,7 @@
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
 	storage_type = /datum/storage/bag/ore
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 4)
 	/// If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/spam_protection = FALSE
 	/// Mob we're currently tracking
@@ -243,6 +244,7 @@
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	icon_state = "satchel_bspace"
 	storage_type = /datum/storage/bag/ore/holding
+	custom_materials = null
 
 /obj/item/storage/bag/plants
 	name = "plant bag"
@@ -251,6 +253,7 @@
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/plants
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
@@ -344,6 +347,7 @@
 	worn_icon_state = "bookbag"
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/books
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/storage/bag/tray
 	name = "serving tray"
@@ -430,6 +434,7 @@
 	desc = "A bag for storing pills, patches, and bottles."
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/chemistry
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/storage/bag/money
 	name = "money bag"
@@ -473,6 +478,7 @@
 	desc = "A bag for the safe transportation and disposal of biowaste and other virulent materials."
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/bio
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/storage/bag/xeno
 	name = "science bag"
@@ -482,6 +488,7 @@
 	desc = "A bag for the storage and transport of anomalous materials."
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/xeno
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/storage/bag/construction
 	name = "construction bag"
@@ -492,6 +499,7 @@
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/construction
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"
@@ -586,7 +594,7 @@
 
 /obj/item/storage/bag/quiver/lesser
 	storage_type = /datum/storage/bag/quiver/less
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT, /datum/material/leather = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/storage/bag/quiver/full/PopulateContents()
 	. = ..()

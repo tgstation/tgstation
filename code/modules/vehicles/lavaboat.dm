@@ -11,6 +11,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	can_buckle = TRUE
 	key_type = /obj/item/oar
+	custom_materials = list(/datum/material/leather/goliath = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/vehicle/ridden/lavaboat/Initialize(mapload)
 	. = ..()

@@ -296,6 +296,7 @@
 /atom/proc/apply_single_mat_effect(datum/material/material, amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
 
+	// Derived and not optional, so this needs to be on base and not in the property code itself
 	var/beauty_modifier = material.get_property(MATERIAL_BEAUTY)
 	if(beauty_modifier)
 		AddElement(/datum/element/beauty, beauty_modifier * amount)

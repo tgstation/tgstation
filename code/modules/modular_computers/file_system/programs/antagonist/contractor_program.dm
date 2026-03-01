@@ -84,7 +84,7 @@
 			return TRUE
 		if("PRG_redeem_TC")
 			if (traitor_data.uplink_handler.contractor_hub.contract_TC_to_redeem)
-				var/obj/item/stack/telecrystal/crystals = new /obj/item/stack/telecrystal(get_turf(user), traitor_data.uplink_handler.contractor_hub.contract_TC_to_redeem)
+				var/obj/item/stack/sheet/telecrystal/crystals = new /obj/item/stack/sheet/telecrystal(get_turf(user), traitor_data.uplink_handler.contractor_hub.contract_TC_to_redeem)
 				if(ishuman(user))
 					var/mob/living/carbon/human/H = user
 					if(H.put_in_hands(crystals))

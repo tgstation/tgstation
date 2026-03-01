@@ -354,7 +354,7 @@
 		/obj/item/stack/sheet/mineral/gold, // This is money, the only real money actually, if you ask a Ron Paul-style guy.
 		/obj/item/stack/sheet/mineral/silver,
 		/obj/item/stack/sheet/mineral/mythril,
-		/obj/item/stack/telecrystal,
+		/obj/item/stack/sheet/telecrystal,
 	))
 
 
