@@ -69,12 +69,15 @@
 	if(computer.stored_paper < CANVAS_PAPER_COST)
 		to_chat(usr, span_notice("Printing error: Your printer needs at least [CANVAS_PAPER_COST] paper to print a canvas."))
 		return
-	computer.stored_paper -= CANVAS_PAPER_COST
 
 	//canvas printing!
 	var/datum/painting/chosen_portrait = locate(selected_painting) in SSpersistent_paintings.paintings
 
-	chosen_portrait.spawn_canvas(get_turf(computer.physical))
+	var/obj/item/canvas/new_canvas = chosen_portrait.spawn_canvas(get_turf(computer.physical))
+	if(!new_canvas)
+		to_chat(usr, span_notice("Printing error: An unknown error has occurred."))
+		return
+	computer.stored_paper -= CANVAS_PAPER_COST
 	to_chat(usr, span_notice("You have printed [chosen_portrait.title] onto a new canvas."))
 	playsound(computer.physical, 'sound/machines/printer.ogg', 100, TRUE)
 

@@ -99,11 +99,11 @@
 	var/art_width = art_icon.Width()
 	var/art_height = art_icon.Height()
 	var/obj/item/canvas/printed_canvas
-	for(var/obj/item/canvas/canvas_type in typesof(/obj/item/canvas))
+	for(var/obj/item/canvas/canvas_type as anything in typesof(/obj/item/canvas))
 		if(canvas_type::width == art_width && canvas_type::height == art_height)
 			printed_canvas = new canvas_type(spawn_loc)
 	if(!printed_canvas)
-		return
+		return null
 	fill_canvas(printed_canvas, art_icon)
 	return printed_canvas
 

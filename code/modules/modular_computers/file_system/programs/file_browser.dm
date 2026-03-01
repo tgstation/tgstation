@@ -50,10 +50,11 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 	transformer.blend_color("#ffffff", ICON_OVERLAY)
 	transformer.blend_icon(uni_icon(temp_file, ""), ICON_OVERLAY, x+1, y+1)
 	var/datum/universal_icon/blank = uni_icon('icons/blanks/32x32.dmi', "nothing", transform = transformer)
-	canvas.fill_grid_from_icon(canvas.workspace.get_first_layer_pixel_data(), blank.to_icon())
+	canvas.fill_grid_from_icon(blank.to_icon())
 	fdel(temp_file)
 	canvas.painting_metadata.medium = "Digital Art"
 	canvas.used = TRUE
+	canvas.update_icon()
 
 /proc/check_can_print_photo(_typepath, _image_file, obj/item/modular_computer/computer, mob/user)
 	if(computer.stored_paper < PHOTO_PAPER_COST)
