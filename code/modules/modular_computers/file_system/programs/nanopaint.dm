@@ -282,6 +282,7 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 
 /datum/computer_file/program/nanopaint/proc/save_file(mob/user, name, file_type, obj/item/disk/computer/target_disk)
 	var/datum/computer_file/file = new file_type()
+	file.filename = reject_bad_name(name, allow_numbers = TRUE, cap_after_symbols = FALSE, cap_at_start = FALSE)
 	var/file_stored
 	if(target_disk)
 		file_stored = target_disk.add_file(file)

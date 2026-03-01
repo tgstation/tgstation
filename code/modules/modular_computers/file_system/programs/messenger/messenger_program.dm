@@ -309,12 +309,12 @@
 
 			var/photo_uid = text2num(params["uid"])
 
-			var/datum/computer_file/image/selected_image = computer.find_file_by_uid(photo_uid)
+			var/datum/computer_file/image/selected_image_file = computer.find_file_by_uid(photo_uid)
 
-			if(!istype(selected_image))
+			if(!istype(selected_image_file))
 				return FALSE
 
-			selected_image = selected_image.image_name
+			selected_image = selected_image_file.image_name
 			return TRUE
 
 		if("PDA_siliconSelectPhoto")

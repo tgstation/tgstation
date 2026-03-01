@@ -100,7 +100,7 @@ export const NanopaintSelectDialog = (props: NanopaintSelectDialogProps) => {
               </Stack.Item>
               <Stack.Item>
                 <Dropdown
-                  selected={dropdownOptions[descIndex]}
+                  selected={dropdownOptions[descIndex].displayText}
                   options={dropdownOptions}
                   onSelected={(v) => {
                     const newExtension = saveableTypes[v].extension;

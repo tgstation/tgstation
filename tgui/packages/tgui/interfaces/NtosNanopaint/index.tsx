@@ -139,7 +139,7 @@ export const NtosNanopaint = (props) => {
                   <Button
                     icon="search-minus"
                     tooltip="Zoom Out (Shift + Scroll Down)"
-                    disabled={zoom <= 1}
+                    disabled={!workspaceOpen || zoom <= 1}
                     onClick={() => setZoom(zoom - 1)}
                   />
                 </Stack.Item>
@@ -147,7 +147,7 @@ export const NtosNanopaint = (props) => {
                   <Button
                     icon="search-plus"
                     tooltip="Zoom In (Shift + Scroll Up)"
-                    disabled={zoom >= 20}
+                    disabled={!workspaceOpen || zoom >= 20}
                     onClick={() => setZoom(zoom + 1)}
                   />
                 </Stack.Item>

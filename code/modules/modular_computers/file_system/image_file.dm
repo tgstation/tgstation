@@ -34,6 +34,8 @@
 
 /// Assigns an asset path to the stored image, for use in the UI.
 /datum/computer_file/image/proc/assign_path()
+	if(isnull(stored_icon))
+		return
 	if(!isnull(image_name))
 		return
 	image_name = SSmodular_computers.get_next_picture_name()
