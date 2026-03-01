@@ -852,15 +852,18 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// These two are cached, and have their appearance shared(?), so it's safer to just not touch it
 	"[MUTATIONS_LAYER]" = NO_MODIFY,
 	"[FRONT_MUTATIONS_LAYER]" = NO_MODIFY,
+	//So mutant parts get offsets applied too.
+	"[BODY_FRONT_LAYER]" = UPPER_BODY,
+	"[OUTER_HAIR_LAYER]" = UPPER_BODY,
+	"[BODY_ADJ_LAYER]" = UPPER_BODY,
+	"[BODY_BEHIND_LAYER]" = UPPER_BODY,
 	// These DO get a filter, I'm leaving them here as reference,
 	// to show how many filters are added at a glance
 	// BACK_LAYER (backpacks are big)
 	// BODYPARTS_HIGH_LAYER (arms)
 	// BODY_LAYER (body markings (full body), underwear (full body))
 	// EYES_LAYER,
-	// BODY_ADJ_LAYER (external organs like wings)
-	// BODY_BEHIND_LAYER (external organs like wings)
-	// BODY_FRONT_LAYER (external organs like wings)
+
 	// DAMAGE_LAYER (full body)
 	// HIGHEST_LAYER (full body)
 	// UNIFORM_LAYER (full body)

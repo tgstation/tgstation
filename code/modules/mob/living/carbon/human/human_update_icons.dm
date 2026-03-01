@@ -1003,7 +1003,11 @@ generate/load female uniform sprites matching all previously decided variables
 	if(isnull(offset_type))
 		if(islist(raw_applied))
 			for(var/image/applied_appearance in raw_applied)
-				apply_height_filters(applied_appearance)
+				var/sub_offset_type = GLOB.layers_to_offset[num2text(-applied_appearance.layer)]
+				if(!isnull(sub_offset_type))
+					apply_height_offsets(applied_appearance, sub_offset_type)
+				else
+					apply_height_filters(applied_appearance)
 		else if(isimage(raw_applied))
 			apply_height_filters(raw_applied)
 	else
@@ -1032,6 +1036,7 @@ generate/load female uniform sprites matching all previously decided variables
 		else
 			return
 
+	appearance.pixel_z = initial(appearance.pixel_z)
 	appearance.pixel_z += final_offset
 	return appearance
 
