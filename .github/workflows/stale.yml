@@ -44,9 +44,10 @@ jobs:
 
   announce:
     runs-on: ubuntu-24.04
-    if: ${{ jobs.stale.outputs.staled_prs != '[]' }}
+    needs: stale
+    if: ${{ needs.stale.outputs.staled_prs != '[]' }}
     matrix:
-      pull_request: ${{ fromJSON(jobs.stale.outputs.staled_prs) }}
+      pull_request: ${{ fromJSON(needs.stale.outputs.staled_prs) }}
     steps:
       - name: "Check for DISCORD_WEBHOOK"
         id: secrets_set
