@@ -44,9 +44,6 @@
 	/// The cached string we show for examine that lets you know how fucked up the fan is.
 	var/examine_condition
 
-	/// Pressure where normal (non-overclocked) venting is blocked for safety.
-	var/static/max_safe_vent_pressure = 50 * ONE_ATMOSPHERE
-
 	/// Datum for managing the overclock sound loop
 	var/datum/looping_sound/vent_pump_overclock/sound_loop
 
@@ -259,70 +256,58 @@
 			investigate_log("was destroyed as a result of overclocking", INVESTIGATE_ATMOS)
 			return
 
+	var/percent_integrity = get_integrity_percentage()
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/datum/gas_mixture/environment = us.return_air()
-	var/percent_integrity = 1
-	if(!fan_overclocked && atom_integrity < max_integrity)
-		percent_integrity = get_integrity_percentage()
-	var/environment_pressure
+	var/environment_pressure = environment.return_pressure()
 
 	if(pump_direction & ATMOS_DIRECTION_RELEASING) // internal -> external
-		environment_pressure = environment.return_pressure()
-		if(!fan_overclocked && (environment_pressure >= max_safe_vent_pressure))
-			return FALSE
-
 		var/pressure_delta = 10000
 
 		if(pressure_checks&ATMOS_EXTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (external_pressure_bound - environment_pressure))
 		if(pressure_checks&ATMOS_INTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
-		if(pressure_delta <= 0 || air_contents.temperature <= 0)
-			return
 
-		var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
-		if(percent_integrity < 1)
-			transfer_moles *= percent_integrity
-		if(transfer_moles <= MOLAR_ACCURACY)
-			return
+		if(pressure_delta > 0)
+			if(air_contents.temperature > 0)
+				if(!fan_overclocked && (environment_pressure >= 50 * ONE_ATMOSPHERE))
+					return FALSE
 
-		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-		if(!removed || !length(removed.gases))
-			return
+				var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
+				if(!fan_overclocked && (percent_integrity < 1))
+					transfer_moles *= percent_integrity
 
-		us.assume_air(removed)
-		update_parents()
+				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+
+				if(!removed || !removed.total_moles())
+					return
+
+				loc.assume_air(removed)
+				update_parents()
 
 	else // external -> internal
-		var/internal_pressure
-		if(!fan_overclocked)
-			internal_pressure = air_contents.return_pressure()
-			if(internal_pressure >= max_safe_vent_pressure)
-				return FALSE
-
-		environment_pressure = environment.return_pressure()
 		var/pressure_delta = 10000
 		if(pressure_checks&ATMOS_EXTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
 		if(pressure_checks&ATMOS_INTERNAL_BOUND)
-			if(isnull(internal_pressure))
-				internal_pressure = air_contents.return_pressure()
-			pressure_delta = min(pressure_delta, (internal_pressure_bound - internal_pressure))
-		if(pressure_delta <= 0 || environment.temperature <= 0)
-			return
+			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
-		var/transfer_moles = (pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)
-		if(percent_integrity < 1)
-			transfer_moles *= percent_integrity
-		if(transfer_moles <= MOLAR_ACCURACY)
-			return
+		if(pressure_delta > 0 && environment.temperature > 0)
+			if(!fan_overclocked && (air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE))
+				return FALSE
 
-		var/datum/gas_mixture/removed = us.remove_air(transfer_moles)
-		if(!removed || !length(removed.gases)) // No venting from space
-			return
+			var/transfer_moles = (pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)
+			if(!fan_overclocked && (percent_integrity < 1))
+				transfer_moles *= percent_integrity
 
-		air_contents.merge(removed)
-		update_parents()
+			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
+
+			if(!removed || !removed.total_moles()) //No venting from space 4head
+				return
+
+			air_contents.merge(removed)
+			update_parents()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_name()
 	. = ..()
