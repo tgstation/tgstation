@@ -35,6 +35,8 @@ SUBSYSTEM_DEF(materials)
 	var/list/datum/material_property/properties
 	/// A typepath -> instance list of material requirements
 	var/list/datum/material_requirement/requirements
+	/// A typepath -> instance list of material slots
+	var/list/datum/material_slot/material_slots
 
 ///Ran on initialize, populated the materials and material dictionaries with their appropriate vars (See these variables for more info)
 /datum/controller/subsystem/materials/proc/initialize_materials()
@@ -50,6 +52,10 @@ SUBSYSTEM_DEF(materials)
 	requirements = list()
 	for(var/datum/material_requirement/requirement_type as anything in valid_subtypesof(/datum/material_requirement))
 		requirements[requirement_type] = new requirement_type()
+
+	material_slots = list()
+	for(var/datum/material_slot/slot_type as anything in valid_subtypesof(/datum/material_slot))
+		material_slots[slot_type] = new slot_type()
 
 	for(var/datum/material/mat_type as anything in valid_subtypesof(/datum/material))
 		if(initial(mat_type.init_flags) & MATERIAL_INIT_MAPLOAD)

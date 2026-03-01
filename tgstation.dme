@@ -1804,6 +1804,8 @@
 #include "code\datums\materials\hauntium.dm"
 #include "code\datums\materials\meat.dm"
 #include "code\datums\materials\pizza.dm"
+#include "code\datums\materials\material_slots\_slot.dm"
+#include "code\datums\materials\material_slots\generic.dm"
 #include "code\datums\materials\properties\_properties.dm"
 #include "code\datums\materials\properties\derived.dm"
 #include "code\datums\materials\properties\optional.dm"

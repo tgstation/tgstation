@@ -1121,7 +1121,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 ///Definitions for slime products that don't have anywhere else to go (Floor tiles, blueprints).
 
 /obj/item/stack/tile/bluespace
-	name = "bluespace floor tile"
+	name = "stabilized bluespace floor tile"
 	singular_name = "floor tile"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds."
 	icon_state = "tile_bluespace"

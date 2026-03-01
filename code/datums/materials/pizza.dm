@@ -23,7 +23,7 @@
 	make_edible(source, mat_amount)
 	ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //the fishing rod itself is the bait... sorta.
 
-/datum/material/pizza/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/pizza/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(IS_EDIBLE(source))
 		make_edible(source, mat_amount, multiplier)
@@ -54,7 +54,7 @@
 		eat_time = 3 SECONDS, \
 		tastes = /obj/item/food/pizza/margherita::tastes)
 
-/datum/material/pizza/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/pizza/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	source.RemoveComponentSource(SOURCE_EDIBLE_PIZZA_MAT, /datum/component/edible)
 

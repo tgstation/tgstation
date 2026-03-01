@@ -52,6 +52,9 @@
 			blink_mob(hit_atom)
 		use(1)
 
+/obj/item/stack/ore/bluespace_crystal/attack_self_secondary(mob/user, modifiers)
+	interact(user)
+
 //Artificial bluespace crystal, doesn't give you much research.
 /obj/item/stack/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
@@ -80,9 +83,6 @@
 	merge_type = /obj/item/stack/sheet/bluespace_crystal
 	material_type = /datum/material/bluespace
 	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
-
-/obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
-	to_chat(user, span_warning("You cannot crush the polycrystal in-hand, try breaking one off."))
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user, list/modifiers)

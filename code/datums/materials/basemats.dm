@@ -89,6 +89,7 @@
 		MATERIAL_ELECTRICAL = 9,
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 4,
+		MATERIAL_VAMPIRES_BANE = 5,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	ore_type = /obj/item/stack/ore/silver
@@ -209,7 +210,8 @@
 		MATERIAL_ELECTRICAL = 10,
 		MATERIAL_THERMAL = 8,
 		MATERIAL_CHEMICAL = 0,
-		MATERIAL_FLAMMABILITY = 9, // Literally sets itself on fire from any excitement
+		MATERIAL_FLAMMABILITY = 10, // Literally sets itself on fire from any excitement
+		MATERIAL_FIRESTACKER = 1,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	ore_type = /obj/item/stack/ore/plasma
@@ -218,22 +220,19 @@
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 15 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/plasma/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/plasma/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
-	if(ismovable(source))
-		source.AddElement(/datum/element/firestacker, 1 * multiplier)
 	source.AddComponent(/datum/component/combustible_flooder, GAS_PLASMA, mat_amount * 0.05 * multiplier) //Empty temp arg, fully dependent on whatever ignited it.
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
-/datum/material/plasma/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/plasma/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
-	source.RemoveElement(/datum/element/firestacker, mat_amount = 1 * multiplier)
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
-///Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
+/// Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
 /datum/material/bluespace
 	name = "bluespace crystal"
 	desc = "Crystals with bluespace properties."
@@ -250,6 +249,7 @@
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 4,
 		MATERIAL_BEAUTY = 0.5, // Absolutely mesmerizing
+		MATERIAL_TELEPORTING = 3,
 	)
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	ore_type = /obj/item/stack/ore/bluespace_crystal
@@ -306,7 +306,7 @@
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 60 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/bananium/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/bananium/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	source.LoadComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50 * multiplier, falloff_exponent = 20)
 	source.AddComponent(/datum/component/slippery, min(mat_amount / 10 * multiplier, 80 * multiplier))
@@ -332,7 +332,7 @@
 	)
 	rewards += pick_weight(funny_fish)
 
-/datum/material/bananium/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/bananium/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/slippery))
 	qdel(source.GetComponent(/datum/component/squeak))
@@ -391,12 +391,12 @@
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/runite/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/runite/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
-/datum/material/runite/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/runite/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
@@ -484,12 +484,12 @@
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/adamantine/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/adamantine/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) // light-absorbing, environment-cancelling fishing rod.
 
-/datum/material/adamantine/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/adamantine/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) // light-absorbing, environment-cancelling fishing rod.
@@ -522,13 +522,13 @@
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/mythril/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/mythril/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(isitem(source))
 		source.AddComponent(/datum/component/fantasy)
 		ADD_TRAIT(source, TRAIT_INNATELY_FANTASTICAL_ITEM, REF(src)) // DO THIS LAST OR WE WILL NEVER GET OUR BONUSES!!!
 
-/datum/material/mythril/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/mythril/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(isitem(source))
 		REMOVE_TRAIT(source, TRAIT_INNATELY_FANTASTICAL_ITEM, REF(src)) // DO THIS FIRST OR WE WILL NEVER GET OUR BONUSES DELETED!!!
@@ -557,16 +557,17 @@
 		MATERIAL_THERMAL = 8,
 		MATERIAL_CHEMICAL = 4,
 		MATERIAL_FLAMMABILITY = 10,
+		MATERIAL_FIRESTACKER = 1,
 	)
 	sheet_type = /obj/item/stack/sheet/hot_ice
 	material_reagent = /datum/reagent/toxin/hot_ice
 	value_per_unit = 400 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/hot_ice/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/hot_ice/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	source.AddComponent(/datum/component/combustible_flooder, GAS_PLASMA, mat_amount * 1.5 * multiplier, (mat_amount * 0.2 + 300) * multiplier)
 
-/datum/material/hot_ice/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/hot_ice/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
 
@@ -869,12 +870,12 @@
 	material_reagent = /datum/reagent/toxin/plasma
 	value_per_unit = 900 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/zaukerite/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/zaukerite/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_IGNORE_ENVIRONMENT, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
-/datum/material/zaukerite/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/zaukerite/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		REMOVE_TRAIT(source, TRAIT_ROD_IGNORE_ENVIRONMENT, REF(src)) //light-absorbing, environment-cancelling fishing rod.

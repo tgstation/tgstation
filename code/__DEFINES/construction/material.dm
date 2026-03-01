@@ -74,10 +74,18 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 // Optional material property IDs
 #define MATERIAL_FLAMMABILITY "flammability"
 #define MATERIAL_RADIOACTIVITY "radioactivity"
+#define MATERIAL_FIRESTACKER "firestacker"
+#define MATERIAL_VAMPIRES_BANE "vampires_bane"
+#define MATERIAL_TELEPORTING "teleporting"
+#define MATERIAL_PENETRATING "penetrating"
 
 // Derived material property IDs
 #define MATERIAL_INTEGRITY "integrity"
 #define MATERIAL_BEAUTY "beauty"
+
+// Flags for signal tracking on materials
+/// Send COMSIG_MATERIAL_EFFECT_CONTACT whenever a mob steps/is shoved into this material tile
+#define MATERIAL_TURF_CONTACT (1 << 0)
 
 /// Maximum value for a core material property
 #define MATERIAL_PROPERTY_MAX 10
@@ -170,5 +178,7 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_LIST_OPTIMAL_AMOUNT "optimal_amount"
 /// The key to access the multiplier used to selectively control effects and modifiers of a material.
 #define MATERIAL_LIST_MULTIPLIER "multiplier"
+/// Key controlling which material slots a material is assigned to
+#define MATERIAL_LIST_SLOTS "slot"
 /// A macro that ensures some multiplicative modifiers higher than 1 don't become lower than 1 and vice-versa because of the multiplier.
 #define GET_MATERIAL_MODIFIER(modifier, multiplier) (modifier >= 1 ? 1 + ((modifier) - 1) * (multiplier) : (modifier)**(multiplier))

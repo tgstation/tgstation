@@ -20,6 +20,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/mat_flags = NONE
 	/// List of material property IDs to their values, 0 - 10
 	var/mat_properties = null
+	/// Flags for which comsigs we should track/send
+	/// These exist for performance reasons as to avoid unnecessary work on materials without properties that trigger off these, or doing the same checks for each property
+	var/track_flags = NONE
 
 	// Color values
 	/// Base color of the material, for items that don't have greyscale configs nor are made of multiple materials. Item isn't changed in color if this is null.
@@ -99,15 +102,61 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 	return TRUE
 
-///This proc is called when the material is added to an object.
-/datum/material/proc/on_applied(atom/source, mat_amount, multiplier)
+/// This proc is called when the material is added to an object.
+/// Can be called even if the material is covered by a slot
+/datum/material/proc/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MATERIAL_APPLIED, source, mat_amount, multiplier)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_APPLIED, source, mat_amount, multiplier, from_slot)
 
-///This proc is called when the material becomes the one the object is composed of the most
+	if (!(source.material_flags & MATERIAL_EFFECTS))
+		return
+
+	if (track_flags & MATERIAL_TURF_CONTACT)
+		if (isopenturf(source))
+			RegisterSignal(source, COMSIG_ATOM_ENTERED, PROC_REF(on_floor_entered))
+		else if (isclosedturf(source))
+			RegisterSignal(source, COMSIG_LIVING_DISARM_COLLIDE, PROC_REF(on_wall_shove_collide))
+
+/// This proc is called when the material becomes the one the object is composed of the most
+/// Only called when the material isn't assigned to a slot
 /datum/material/proc/on_main_applied(atom/source, mat_amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MATERIAL_MAIN_APPLIED, source, mat_amount, multiplier)
+
+/// This proc is called when the material is removed from an object.
+/datum/material/proc/on_removed(atom/source, mat_amount, material_flags, from_slot)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_REMOVED, source, mat_amount, material_flags, from_slot)
+
+/// This proc is called when the material is no longer the one the object is composed by the most
+/datum/material/proc/on_main_removed(atom/source, mat_amount, multiplier)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_MAIN_REMOVED, source, mat_amount, multiplier)
+	var/static/list/material_signals = list(
+		COMSIG_ATOM_ENTERED,
+		COMSIG_LIVING_DISARM_COLLIDE,
+	)
+	UnregisterSignal(source, material_signals)
+
+/datum/material/proc/on_floor_entered(turf/open/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+
+	if (!isliving(arrived))
+		SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_CONTACT, source, arrived, null, null, FALSE)
+		return
+
+	var/mob/living/victim = arrived
+	var/skin_contact = TRUE
+	for (var/obj/item/worn_item in victim.get_equipped_items(INCLUDE_ABSTRACT))
+		if (worn_item.body_parts_covered & LEGS)
+			skin_contact = FALSE
+			break
+
+	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_CONTACT, source, arrived, null, null, skin_contact)
+
+/datum/material/proc/on_wall_shove_collide(turf/closed/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
+	SIGNAL_HANDLER
+	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_CONTACT, source, target, shover, null, TRUE)
 
 /datum/material/proc/setup_glow(turf/on)
 	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother
@@ -127,15 +176,6 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material/proc/lit_turf_deleted(turf/source)
 	source.set_light(0, 0, null)
 
-/// This proc is called when the material is removed from an object.
-/datum/material/proc/on_removed(atom/source, amount, material_flags)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MATERIAL_REMOVED, source, amount, material_flags)
-
-/// This proc is called when the material is no longer the one the object is composed by the most
-/datum/material/proc/on_main_removed(atom/source, mat_amount, multiplier)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MATERIAL_MAIN_REMOVED, source, mat_amount, multiplier)
 
 ////Called in `/datum/component/edible/proc/on_material_effects`
 /datum/material/proc/on_edible_applied(atom/source, datum/component/edible/edible)

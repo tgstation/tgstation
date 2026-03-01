@@ -2069,11 +2069,12 @@
 
 /obj/item/finalize_remove_material_effects(list/materials)
 	. = ..()
+	if (!(material_flags & MATERIAL_AFFECT_STATISTICS) || initial(siemens_coefficient) == 0 || siemens_coefficient != 0)
+		return
 	// If we were made from an insulator we cannot restore via division
-	if (initial(siemens_coefficient) != 0 && siemens_coefficient == 0)
-		siemens_coefficient = initial(siemens_coefficient)
-		if (siemens_coefficient > 0 && (initial(obj_flags) & CONDUCTS_ELECTRICITY) && !(obj_flags & CONDUCTS_ELECTRICITY))
-			obj_flags |= CONDUCTS_ELECTRICITY
+	siemens_coefficient = initial(siemens_coefficient)
+	if (siemens_coefficient > 0 && (initial(obj_flags) & CONDUCTS_ELECTRICITY) && !(obj_flags & CONDUCTS_ELECTRICITY))
+		obj_flags |= CONDUCTS_ELECTRICITY
 
 /obj/item/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)
 	var/density = material.get_property(MATERIAL_DENSITY)

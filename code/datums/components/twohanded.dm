@@ -147,6 +147,8 @@
 	RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, PROC_REF(on_sharpen))
 	RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
 	RegisterSignal(parent, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, PROC_REF(remove_fantasy_bonuses))
+	RegisterSignal(parent, COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS, PROC_REF(on_materials_updated))
+	RegisterSignal(parent, COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS, PROC_REF(on_materials_updated))
 
 // Remove all siginals registered to the parent item
 /datum/component/two_handed/UnregisterFromParent()
@@ -160,6 +162,8 @@
 		COMSIG_ITEM_SHARPEN_ACT,
 		COMSIG_ITEM_APPLY_FANTASY_BONUSES,
 		COMSIG_ITEM_REMOVE_FANTASY_BONUSES,
+		COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS,
+		COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS,
 	))
 
 /// Triggered on equip of the item containing the component
@@ -418,6 +422,17 @@
 	if(wielded && ismob(source.loc))
 		unwield(source.loc)
 	force_multiplier = source.reset_fantasy_variable("force_multiplier", force_multiplier)
+
+/datum/component/two_handed/proc/on_materials_updated(obj/item/source, list/materials, datum/material/main_material)
+	SIGNAL_HANDLER
+	// With materials assigned we need to update our forces.
+	if (wielded)
+		// Materials modify force multiplicatively! Most of the time, for snowflakes they gotta handle it themselves
+		force_unwielded *= source.force / force_wielded
+		force_wielded = source.force
+	else
+		force_wielded *= source.force / force_unwielded
+		force_unwielded = source.force
 
 /**
  * The offhand dummy item for two handed items

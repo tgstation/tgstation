@@ -17,6 +17,7 @@
 	embed_type = /datum/embedding/spear
 	armour_penetration = 5
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.15)
+	material_slots = list(/datum/material_slot/weapon_head/speartip = /datum/material/glass, /datum/material_slot/handle/spear = /datum/material/iron)
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
@@ -25,7 +26,7 @@
 	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
 	exposed_wound_bonus = 15
-	material_flags = MATERIAL_EFFECTS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
 	/// The icon prefix for this flavor of spear
 	var/icon_prefix = "spearglass"
 	/// How much damage to do unwielded
@@ -36,8 +37,6 @@
 	var/improvised_construction = TRUE
 	/// What is left over when a spear breaks
 	var/spear_leftovers = /obj/item/stack/rods
-	/// Material type from which our tip is made
-	var/tip_mat_type = null
 	/// What pike do we construct if someone kills themselves with us?
 	var/pike_type = /obj/structure/headpike
 
@@ -107,77 +106,32 @@
 	var/obj/item/stack/rods/rod = locate() in components
 	if (rod)
 		spear_leftovers = rod.type
+		set_material_slot(/datum/material_slot/handle/spear, rod.get_master_material())
 
 	var/obj/item/shard/tip = locate() in components
 	if (!tip)
 		return ..()
 
 	var/datum/material/tip_material = tip.get_master_material()
-	// For master material effects. As on_craft_completion is ran before set_custom_materials, this will allow the speartip to be treated as our master material no matter what
-	tip_mat_type = tip_material.id
-	switch (tip_mat_type)
+	set_material_slot(/datum/material_slot/weapon_head/speartip, tip_material)
+	switch (tip_material)
 		if (/datum/material/alloy/plasmaglass)
 			icon_prefix = "spearplasma"
 		if (/datum/material/alloy/titaniumglass)
 			icon_prefix = "speartitanium"
 		if (/datum/material/alloy/plastitaniumglass)
 			icon_prefix = "spearplastitanium"
+
+	AddComponent(/datum/component/two_handed, \
+		icon_wielded = "[icon_prefix]1", \
+		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
+		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+	)
 	update_appearance()
 	return ..()
 
 /obj/item/spear/get_master_material()
-	if (tip_mat_type && custom_materials[tip_mat_type])
-		return SSmaterials.get_material(tip_mat_type)
-	return ..()
-
-/obj/item/spear/apply_main_material_effects(datum/material/main_material, amount, multiplier)
-	. = ..()
-	var/density = main_material.get_property(MATERIAL_DENSITY)
-	var/hardness = main_material.get_property(MATERIAL_HARDNESS)
-	// If a spear is too hard its unwieldy, if it is too light it doesn't have enough weight behind it
-	var/force_change = (hardness - 4) - max(0, density - 4) - max(0, 4 - density) * 2
-	force_unwielded += force_change
-	force_wielded += force_change
-	force = force_unwielded
-	throwforce += force_change
-	wound_bonus += force_change * 5
-	modify_max_integrity(max_integrity + (hardness - 4) * 10)
-	throw_range += (hardness - 4) - (density - 4) * 2
-	throw_speed += floor(((hardness - 4) - (density - 4) * 2) / 2)
-	// These try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
-	armour_penetration += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
-	exposed_wound_bonus += (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
-	AddComponent(/datum/component/two_handed, \
-		force_unwielded = force_unwielded, \
-		force_wielded = force_wielded, \
-		icon_wielded = "[icon_prefix]1", \
-		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
-		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
-	)
-
-/obj/item/spear/remove_main_material_effects(datum/material/main_material, amount, multiplier)
-	. = ..()
-	var/density = main_material.get_property(MATERIAL_DENSITY)
-	var/hardness = main_material.get_property(MATERIAL_HARDNESS)
-	var/force_change = (hardness - 4) - (density - 4)
-	force_unwielded -= force_change
-	force_wielded -= force_change
-	force = force_unwielded
-	throwforce -= force_change
-	wound_bonus -= force_change * 5
-	modify_max_integrity(max_integrity - (hardness - 4) * 10)
-	throw_range -= (hardness - 4) - (density - 4) * 2
-	throw_speed -= floor(((hardness - 4) - (density - 4) * 2) / 2)
-	// These try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
-	armour_penetration -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
-	exposed_wound_bonus -= (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
-	AddComponent(/datum/component/two_handed, \
-		force_unwielded = force_unwielded, \
-		force_wielded = force_wielded, \
-		icon_wielded = "[icon_prefix]1", \
-		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
-		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
-	)
+	return get_material_from_slot(/datum/material_slot/weapon_head/speartip) || ..()
 
 /obj/item/spear/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(improvised_construction)
@@ -204,6 +158,60 @@
 /obj/item/spear/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	reach = 2
 	armour_penetration /= 2
+
+/datum/material_slot/weapon_head/speartip
+
+/datum/material_slot/weapon_head/speartip/on_applied(obj/item/spear/target, datum/material/material, amount, multiplier)
+	. = ..()
+	if (!(target.material_flags & MATERIAL_AFFECT_STATISTICS))
+		return FALSE
+
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/hardness = material.get_property(MATERIAL_HARDNESS)
+	// If a spear is too hard its unwieldy, if it is too light it doesn't have enough weight behind it
+	var/material_effect = (hardness - 4) - max(0, density - 4) - max(0, 4 - density) * 2
+	target.wound_bonus += material_effect * 5
+	// These try to keep parity with titanium/plastitanium spears as armorpen boost was exclusive to them
+	target.armour_penetration += MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
+	target.exposed_wound_bonus += (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
+	return FALSE
+
+/datum/material_slot/weapon_head/spearhead/on_removed(obj/item/spear/target, datum/material/material, amount, multiplier)
+	. = ..()
+	if (!(target.material_flags & MATERIAL_AFFECT_STATISTICS))
+		return FALSE
+
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/hardness = material.get_property(MATERIAL_HARDNESS)
+	var/material_effect = (hardness - 4) - max(0, density - 4) - max(0, 4 - density) * 2
+	target.wound_bonus -= material_effect * 5
+	target.armour_penetration -= MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) * 5
+	target.exposed_wound_bonus -= (MATERIAL_PROPERTY_DIVERGENCE(hardness, 4, 6) - (density - 4)) * 5
+	return FALSE
+
+/datum/material_slot/handle/spear
+
+/datum/material_slot/handle/spear/on_applied(obj/item/target, datum/material/material, amount, multiplier)
+	. = ..()
+	if (!(target.material_flags & MATERIAL_AFFECT_STATISTICS))
+		return FALSE
+
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/hardness = material.get_property(MATERIAL_HARDNESS)
+	target.throw_range += (hardness - 4) - (density - 4) * 2
+	target.throw_speed += floor((hardness - 4) / 2) - (density - 4) * 2
+	return FALSE
+
+/datum/material_slot/handle/spear/on_removed(obj/item/target, datum/material/material, amount, multiplier)
+	. = ..()
+	if (!(target.material_flags & MATERIAL_AFFECT_STATISTICS))
+		return FALSE
+
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/hardness = material.get_property(MATERIAL_HARDNESS)
+	target.throw_range -= (hardness - 4) - (density - 4) * 2
+	target.throw_speed -= floor((hardness - 4) / 2) - (density - 4) * 2
+	return FALSE
 
 /obj/item/spear/explosive
 	name = "explosive lance"
@@ -350,7 +358,9 @@
 	custom_materials =  list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 42,
 		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 15,
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 5)
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 5,
+	)
+	material_slots = list(/datum/material_slot/weapon_head/speartip = /datum/material/titanium, /datum/material_slot/handle/spear = /datum/material/alloy/plasteel)
 
 /obj/item/spear/dragonator/Initialize(mapload)
 	. = ..()
@@ -375,7 +385,9 @@
 	custom_materials =  list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 42,
 		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 15,
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 5)
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 5,
+	)
+	material_slots = list(/datum/material_slot/weapon_head/speartip = /datum/material/titanium, /datum/material_slot/handle/spear = /datum/material/alloy/plasteel)
 
 /obj/item/spear/dragonator_untreated/fire_act(exposed_temperature, exposed_volume)
 	var/obj/item/spear/dragonator/dragonator = new(loc)
@@ -394,6 +406,7 @@
 	throwforce = 22
 	armour_penetration = 20 //Enhanced armor piercing
 	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4)
+	material_slots = list(/datum/material_slot/weapon_head/speartip = /datum/material/bone, /datum/material_slot/handle/spear = /datum/material/bone)
 	force_unwielded = 12
 	force_wielded = 20
 	spear_leftovers = /obj/item/stack/sheet/bone
@@ -419,6 +432,7 @@
 
 	throwforce = 23	//Better to throw
 	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 25)
+	material_slots = list(/datum/material_slot/weapon_head/speartip = /datum/material/bamboo, /datum/material_slot/handle/spear = /datum/material/bamboo)
 	spear_leftovers = /obj/item/stack/sheet/mineral/bamboo
 	pike_type = /obj/structure/headpike/bamboo
 
@@ -450,6 +464,7 @@
 		/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/alloy/plastitaniumglass = SHEET_MATERIAL_AMOUNT,
 	)
+	material_slots = list(/datum/material_slot/weapon_head/speartip = /datum/material/diamond, /datum/material_slot/handle/spear = /datum/material/alloy/plastitaniumglass)
 	action_slots = ITEM_SLOT_HANDS
 	actions_types = list(/datum/action/item_action/skybulge)
 	improvised_construction = FALSE

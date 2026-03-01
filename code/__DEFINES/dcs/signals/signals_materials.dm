@@ -8,3 +8,8 @@
 #define COMSIG_MATERIAL_REMOVED "material_removed"
 /// from /datum/material/proc/on_main_removed(source, mat_amount, multiplier): (atom/old_atom, mat_amount, multiplier)
 #define COMSIG_MATERIAL_MAIN_REMOVED "material_main_removed"
+
+// Material property effect triggers
+/// When a material comes into active contact with an atom (such as hitting it): (datum/material/source, atom/object, atom/target, mob/living/user, def_zone, skin_contact)
+/// skin_contact determines if there was direct contact if it was a mob who was affected
+#define COMSIG_MATERIAL_EFFECT_CONTACT "material_effect_contact"
