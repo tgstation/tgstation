@@ -178,10 +178,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /// Add a specific amount of moles to specified gas or add a new gas to the mix
 /// amount is added so make it negative to remove
-/datum/gas_mixture/proc/adjust_gas_moles(datum/gas/species, amount, incoming_temp)
+/// temperature default to our gas mix temp unless specified
+/datum/gas_mixture/proc/adjust_gas(datum/gas/species, amount, incoming_temp)
 	ASSERT_GAS(species, src)
 	gases[species][MOLES] += amount
 	total_moles += amount
+	incoming_temp ? incoming_temp : temperature
 	//heat transfer
 	if(abs(temperature - incoming_temp) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && incoming_temp)
 		var/self_heat_capacity = heat_capacity()

@@ -301,8 +301,8 @@
 
 		if(air.gases[/datum/gas/plasma])
 			var/mole_count = air.gases[/datum/gas/plasma][MOLES]
-			air.adjust_gas_moles(/datum/gas/nitrogen, mole_count)
-			air.adjust_gas_moles(/datum/gas/plasma, -mole_count)
+			air.adjust_gas(/datum/gas/nitrogen, mole_count)
+			air.adjust_gas(/datum/gas/plasma, -mole_count)
 			air.garbage_collect()
 
 		for(var/obj/effect/hotspot/fire in chilly)
