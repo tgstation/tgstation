@@ -519,7 +519,6 @@
 
 /// Called when the bubble either arrives at the station, or is interacted with someone/something.
 /obj/structure/closet/crate/market/proc/pop_crate()
-	new /obj/effect/particle_effect/sparks(get_turf(src))
-	balloon_alert_to_viewers("pop!")
+	do_sparks(1, TRUE, get_turf(src))
 	dump_contents()
 	qdel(src)

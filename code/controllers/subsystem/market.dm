@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(market)
  * @param market_whitelist A list of markets to which the item should be added. If null, the item is added to all markets.
  */
 /datum/controller/subsystem/market/proc/initialize_item(datum/market_item/path, list/market_whitelist)
-	if((!path::item || !prob(path::availability_prob)))
+	if(!path::item || !prob(path::availability_prob))
 		return
 	var/datum/market_item/item_instance = new path()
 	for(var/potential_market in item_instance.markets)
