@@ -75,7 +75,7 @@
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/target_alien = organ_owner
 		target_alien.updatePlasmaDisplay()
-	RegisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	RegisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_items))
 
 /obj/item/organ/alien/plasmavessel/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
@@ -84,7 +84,7 @@
 		organ_owner_alien.updatePlasmaDisplay()
 	UnregisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 
-/obj/item/organ/alien/plasmavessel/proc/get_status_tab_item(mob/living/carbon/source, list/items)
+/obj/item/organ/alien/plasmavessel/proc/get_status_tab_items(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
 	items += "Plasma Stored: [stored_plasma]/[max_plasma]"
 

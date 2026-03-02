@@ -25,7 +25,7 @@
 	RegisterSignal(parent, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(on_limb_damage))
 	RegisterSignals(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_damage_adjusted))
 	RegisterSignal(parent, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_updated))
-	RegisterSignal(parent, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_status_tab_updated))
+	RegisterSignal(parent, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_items))
 	if (!isnull(host))
 		var/mob/living/living_parent = parent
 		living_parent.updatehealth()
@@ -133,7 +133,7 @@
 		mob_parent.set_hud_image_state(STATUS_HUD, "hudhealthy")
 
 /// When our status tab updates, draw how much HP our host has in there
-/datum/component/life_link/proc/on_status_tab_updated(mob/living/source, list/items)
+/datum/component/life_link/proc/get_status_tab_items(mob/living/source, list/items)
 	SIGNAL_HANDLER
 	var/healthpercent = health_percentage(host)
 	items += "Host Health: [round(healthpercent, 0.5)]%"

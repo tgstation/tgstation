@@ -905,6 +905,14 @@
 	set category = null
 	return
 
+/mob/proc/has_important_stat_entries()
+	. = list()
+	. += get_status_tab_items()
+	. -= .[1] //remove the "offset unique stuff"
+//	. += get_actions_for_statpanel()
+	to_chat(world, "has [length(.)] items found as important stat panel entries.")
+	return !!length(.)
+
 /// Adds this list to the output to the stat browser
 /mob/proc/get_status_tab_items()
 	. = list("") //we want to offset unique stuff from standard stuff
