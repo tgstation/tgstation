@@ -27,6 +27,13 @@
 	var/list/stored_dna_human = list()
 	///weak ref to the dna vault
 	var/datum/weakref/dna_vault_ref
+	/// Things we consider to be animals
+	var/static/list/animal_typecache = typecacheof(list(
+		/mob/living/basic,
+		/mob/living/carbon/alien,
+		/mob/living/simple_animal,
+		/obj/item/fish,
+	))
 
 /obj/item/dna_probe/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(interacting_with, /obj/machinery/dna_vault))
@@ -148,8 +155,7 @@
 	if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		return TRUE
 	if((allowed_scans & DNA_PROBE_SCAN_ANIMALS) && isliving(target))
-		var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
-		if(isanimal_or_basicmob(target) || is_type_in_typecache(target, non_simple_animals) || ismonkey(target))
+		if(is_type_in_typecache(target, animal_typecache) || ismonkey(target))
 			return TRUE
 	return FALSE
 
