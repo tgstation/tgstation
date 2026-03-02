@@ -48,10 +48,12 @@ export function setClientTheme(name): void | Promise<void> {
     // Buttons
     'options.background-color': themeColor.BUTTON,
     'options.text-color': themeColor.TEXT,
-    'reconnect.background-color': themeColor.BUTTON,
-    'reconnect.text-color': themeColor.TEXT,
+    'hotkeys.background-color': themeColor.BUTTON,
+    'hotkeys.text-color': themeColor.TEXT,
     'fullscreen-toggle.background-color': themeColor.BUTTON,
     'fullscreen-toggle.text-color': themeColor.TEXT,
+    'reconnect.background-color': themeColor.BG_IMPORTANT,
+    'reconnect.text-color': themeColor.TEXT,
     'chat.background-color': themeColor.BUTTON,
     'chat.text-color': themeColor.TEXT,
     // Status and verb tabs

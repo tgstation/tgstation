@@ -12,12 +12,14 @@ export const COLORS = {
     BG_SECOND: '#151515',
     BUTTON: '#404040',
     TEXT: '#A6A6A6',
+    BG_IMPORTANT: '#492020',
   },
   LIGHT: {
     BG_BASE: '#EEEEEE',
     BG_SECOND: '#FFFFFF',
     BUTTON: '#FFFFFF',
     TEXT: '#000000',
+    BG_IMPORTANT: '#492020',
   },
 } as const;
 
