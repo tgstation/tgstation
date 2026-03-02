@@ -131,133 +131,82 @@
 
 /obj/item/camera/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/camera_film))
-		return camera_film_act(user, tool)
-	if(istype(tool, /obj/item/disk/holodisk))
-		return holodisk_act(user, tool)
-
-/obj/item/camera/proc/camera_film_act(mob/living/user, obj/item/camera_film/new_film)
-	if(pictures_left)
-		balloon_alert(user, "isn't empty!")
-		return ITEM_INTERACT_BLOCKING
-	if(!user.temporarilyRemoveItemFromInventory(new_film))
-		return ITEM_INTERACT_BLOCKING
-	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	qdel(new_film)
-	pictures_left = pictures_max
-	return ITEM_INTERACT_SUCCESS
-
-/obj/item/camera/proc/holodisk_act(mob/living/user, obj/item/disk/holodisk/new_disk)
-	if(!user.transferItemToLoc(new_disk, src))
-		balloon_alert(user, "stuck in hand!")
-		return TRUE
-	if(disk)
-		user.put_in_hands(disk)
-		balloon_alert(user, "disks swapped!")
-	else
-		balloon_alert(user, "disk inserted!")
-	playsound(src, 'sound/machines/card_slide.ogg', 50)
-	disk = new_disk
-	return ITEM_INTERACT_SUCCESS
-
-/// Attempt to take an image, optionally given a user.
-/obj/item/camera/proc/attempt_picture(atom/target, atom/user)
-	if(!can_target(target, user))
-		return FALSE
-	if(!photo_taken(target, user))
-		return FALSE
-	return TRUE
-
-/// Check whether we can take a picture of the target, optionally given a user.
-/obj/item/camera/proc/can_target(atom/target, atom/user)
-	if(!on || blending || !pictures_left)
-		return FALSE
-	var/turf/target_turf = get_turf(target)
-	if(isnull(target_turf))
-		return FALSE
-	if(isAI(user))
-		return can_ai_target(target_turf)
-	if(ismob(user))
-		return can_mob_target(target_turf, user)
-
-	if(isliving(loc))
-		if(!(target_turf in view(world.view, loc)))
-			return FALSE
-		return TRUE
-
-	// User is an atom or null
-	if(!(target_turf in view(world.view, user || src)))
-		return FALSE
-	return TRUE
-
-/// Check whether an AI could take a picture of the target turf.
-/obj/item/camera/proc/can_ai_target(turf/target_turf)
-	return SScameras.is_visible_by_cameras(target_turf)
-
-/// Check whether a mob could take a picture of the target turf.
-/obj/item/camera/proc/can_mob_target(turf/target_turf, mob/user)
-	return (target_turf in get_hear_turfs(user.client?.view || world.view, user.client?.eye || user))
-
-/obj/item/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	// Always skip on storage and tables
-	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
-		return NONE
-
-	return ranged_interact_with_atom(interacting_with, user, modifiers)
-
-/obj/item/camera/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(disk)
-		if(!ismob(interacting_with))
-			to_chat(user, span_warning("Invalid holodisk target."))
+		if(pictures_left)
+			balloon_alert(user, "isn't empty!")
 			return ITEM_INTERACT_BLOCKING
-		if(disk.record)
-			QDEL_NULL(disk.record)
-
-		disk.record = new
-		var/mob/recorded_mob = interacting_with
-		disk.record.caller_name = recorded_mob.name
-		disk.record.set_caller_image(recorded_mob)
-
-	return attempt_picture(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-
-/obj/item/camera/proc/photo_taken(atom/target, mob/user)
-
-	on = FALSE
-	addtimer(CALLBACK(src, PROC_REF(cooldown)), cooldown)
-
-	icon_state = state_off
-
-	INVOKE_ASYNC(src, PROC_REF(captureimage), target, user, picture_size_x - 1, picture_size_y - 1)
-	return TRUE
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			return ITEM_INTERACT_BLOCKING
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(tool)
+		pictures_left = pictures_max
+		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/disk/holodisk))
+		if(!user.transferItemToLoc(tool, src))
+			balloon_alert(user, "stuck in hand!")
+			return TRUE
+		if(disk)
+			user.put_in_hands(disk)
+			balloon_alert(user, "disks swapped!")
+		else
+			balloon_alert(user, "disk inserted!")
+		playsound(src, 'sound/machines/card_slide.ogg', 50)
+		disk = tool
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/camera/proc/cooldown()
+	PRIVATE_PROC(TRUE)
+
 	UNTIL(!blending)
 	icon_state = state_on
 	on = TRUE
 
-/obj/item/camera/proc/show_picture(mob/user, datum/picture/selection)
-	var/obj/item/photo/P = new(src, selection)
-	P.show(user)
-	to_chat(user, P.desc)
-	qdel(P)
+/obj/item/camera/proc/flash_end()
+	set_light_on(FALSE)
 
-/obj/item/camera/proc/captureimage(atom/target, mob/user, size_x = 1, size_y = 1)
+/obj/item/camera/proc/on_flash(atom/target, mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+
+	on = FALSE
+	addtimer(CALLBACK(src, PROC_REF(cooldown)), cooldown)
+	icon_state = state_off
 	if(flash_enabled)
 		set_light_on(TRUE)
 		addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
-	blending = TRUE
+
+/obj/item/camera/proc/steal_souls(list/victims)
+	return
+
+/// Attempt to take an image, optionally given a user.
+/obj/item/camera/proc/attempt_picture(atom/target, mob/user)
+	//Checking if we can target
+	if(!on || blending)
+		return
 	var/turf/target_turf = get_turf(target)
-	if(!isturf(target_turf))
-		blending = FALSE
-		return FALSE
-	size_x = clamp(size_x, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	size_y = clamp(size_y, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
-	var/list/mobs_spotted = list()
-	var/list/dead_spotted = list()
+	if(isnull(target_turf))
+		return
+	if(isAI(user) && !SScameras.is_visible_by_cameras(target_turf))
+		return
+	if(isliving(loc) && !(target_turf in view(world.view, loc)))
+		return
+	if(!(target_turf in view(world.view, user || src)))
+		return
+
+	//These vars will be reused later on
+	var/size_x = picture_size_x - 1
+	var/size_y = picture_size_y - 1
 	var/list/viewlist = getviewsize(user?.client?.view || world.view)
 	var/view_range = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
 	var/viewer = get_turf(user?.client?.eye || user || target) // not sure why target is a fallback
 	var/list/seen = get_hear_turfs(view_range, viewer)
+	if(ismob(user) && !(target_turf in seen))
+		return
+
+	//taking the actual picture
+	on_flash(target, user)
+	blending = TRUE
+	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
+	var/list/mobs_spotted = list()
+	var/list/dead_spotted = list()
 	var/list/turfs = list()
 	var/list/mobs = list()
 	var/blueprints = FALSE
@@ -271,7 +220,6 @@
 	for(var/turf/seen_placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
 		if(isnull(seen_placeholder))
 			continue
-
 		if(cameranet_user && !SScameras.is_visible_by_cameras(seen_placeholder))
 			continue
 		if(!cameranet_user && !(seen_placeholder in seen))
@@ -316,13 +264,28 @@
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
 	blending = FALSE
-	return picture
 
-/obj/item/camera/proc/flash_end()
-	set_light_on(FALSE)
+/obj/item/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// Always skip on storage and tables
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
-/obj/item/camera/proc/steal_souls(list/victims)
-	return
+/obj/item/camera/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(disk)
+		if(!ismob(interacting_with))
+			to_chat(user, span_warning("Invalid holodisk target."))
+			return ITEM_INTERACT_BLOCKING
+		if(disk.record)
+			QDEL_NULL(disk.record)
+
+		disk.record = new
+		var/mob/recorded_mob = interacting_with
+		disk.record.caller_name = recorded_mob.name
+		disk.record.set_caller_image(recorded_mob)
+
+	INVOKE_ASYNC(src, PROC_REF(attempt_picture), interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
 	if(!silent)
@@ -331,11 +294,15 @@
 	if(print_picture_on_snap)
 		printpicture(user, picture)
 
-
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
-	pictures_left--
-	var/obj/item/photo/new_photo = new(get_turf(src), picture)
+	var/obj/item/photo/new_photo
 	if(user)
+		if(!pictures_left)
+			to_chat(user, span_warning("No film left."))
+			return
+
+		new_photo = new(get_turf(src), picture)
+
 		if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
 			to_chat(user, span_notice("[pictures_left] photos left."))
 
@@ -358,12 +325,21 @@
 
 	else if(isliving(loc))
 		var/mob/living/holder = loc
+
+		if(!pictures_left)
+			to_chat(holder, span_warning("No film left."))
+			return
+
+		new_photo = new(get_turf(src), picture)
+
 		if(holder.put_in_hands(new_photo))
 			to_chat(holder, span_notice("[pictures_left] photos left."))
 
 	new_photo.set_picture(picture, TRUE, TRUE)
 	if(CONFIG_GET(flag/picture_logging_camera))
 		picture.log_to_file()
+
+	pictures_left--
 
 /obj/item/circuit_component/camera
 	display_name = "Camera"

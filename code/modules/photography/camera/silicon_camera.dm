@@ -15,7 +15,7 @@
 	if(!can_take_picture(clicker))
 		return
 	clicker.face_atom(clicked_on)
-	INVOKE_ASYNC(src, PROC_REF(captureimage), clicked_on, clicker, picture_size_x - 1, picture_size_y - 1)
+	INVOKE_ASYNC(src, PROC_REF(attempt_picture), clicked_on, clicker)
 	toggle_camera_mode(clicker, sound = FALSE)
 
 /// Toggles the camera mode on or off.
@@ -56,7 +56,10 @@
 /obj/item/camera/siliconcam/proc/viewpictures(mob/user)
 	var/datum/picture/selection = selectpicture(user)
 	if(istype(selection))
-		show_picture(user, selection)
+		var/obj/item/photo/P = new(src, selection)
+		P.show(user)
+		to_chat(user, P.desc)
+		qdel(P)
 
 /obj/item/camera/siliconcam/ai_camera
 	name = "AI photo camera"

@@ -27,6 +27,7 @@
 	. = ..()
 	internal_camera = new(computer)
 	internal_camera.print_picture_on_snap = FALSE
+	internal_camera.cooldown = 1 SECONDS
 	RegisterSignal(internal_camera, COMSIG_CAMERA_IMAGE_CAPTURED, PROC_REF(save_picture))
 
 /datum/computer_file/program/maintenance/camera/Destroy()
@@ -38,14 +39,10 @@
 	. = ..()
 
 	QDEL_NULL(internal_picture)
-	if(internal_camera.blending)
-		user.balloon_alert(user, "still blending!")
-		return
-
 	var/turf/our_turf = get_turf(tapped_atom)
 	var/spooky_camera = locate(/datum/computer_file/program/maintenance/spectre_meter) in computer.stored_files
 	internal_camera.see_ghosts = spooky_camera ?  CAMERA_SEE_GHOSTS_BASIC : CAMERA_NO_GHOSTS
-	INVOKE_ASYNC(internal_camera, TYPE_PROC_REF(/obj/item/camera, captureimage), our_turf, user, internal_camera.picture_size_x + 1, internal_camera.picture_size_y + 1)
+	INVOKE_ASYNC(internal_camera, TYPE_PROC_REF(/obj/item/camera, attempt_picture), our_turf, user)
 
 /datum/computer_file/program/maintenance/camera/proc/save_picture(cam, target, user, datum/picture/picture)
 	SIGNAL_HANDLER
@@ -115,11 +112,7 @@
 		if(!target)
 			return
 	var/datum/computer_file/program/maintenance/camera/cam = associated_program
-	if(!cam.internal_camera.can_target(target))
-		return
-	var/pic_size_x = cam.internal_camera.picture_size_x - 1
-	var/pic_size_y = cam.internal_camera.picture_size_y - 1
-	INVOKE_ASYNC(cam.internal_camera, TYPE_PROC_REF(/obj/item/camera, captureimage), target, null, pic_size_x, pic_size_y)
+	INVOKE_ASYNC(cam.internal_camera, TYPE_PROC_REF(/obj/item/camera, attempt_picture), target)
 
 /obj/item/circuit_component/mod_program/camera/proc/on_image_captured(obj/item/camera/source, atom/target, mob/user)
 	SIGNAL_HANDLER
