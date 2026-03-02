@@ -8,7 +8,6 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien
 	name = "Alien Power"
-	panel = "Alien"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
@@ -345,7 +344,6 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/mob_cooldown/sneak/alien
 	name = "Alien Sentinel Sneak"
-	panel = "Alien"
 	desc = "Blend into the shadows to stalk your prey."
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "alien_sneak"
