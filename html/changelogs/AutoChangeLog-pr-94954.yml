@@ -1,0 +1,5 @@
+author: "itsmeow"
+delete-after: True
+changes:
+  - code_imp: "Optimized species and antagonist icon loading in the preferences menu on local, speeding up time to open in development."
+  - bugfix: "GAGS map preview generation no longer silently errors outside of unit tests due to a compilation error."
