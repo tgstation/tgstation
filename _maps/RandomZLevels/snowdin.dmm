@@ -2106,9 +2106,6 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
 "hZ" = (
-/obj/item/gun/ballistic/rifle/boltaction,
-/obj/item/ammo_box/speedloader/strilka310,
-/obj/item/ammo_box/speedloader/strilka310,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
 	name = "security officer's locker";
@@ -2116,8 +2113,6 @@
 	},
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash,
-/obj/item/storage/box/rubbershot,
-/obj/structure/fireaxecabinet/directional/north,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/secpost)
 "ic" = (
@@ -4254,10 +4249,7 @@
 /turf/closed/wall/r_wall/rust,
 /area/awaymission/snowdin/post/secpost)
 "pJ" = (
-/obj/machinery/door/airlock/vault{
-	name = "Armory"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/structure/door_assembly/door_assembly_vault,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/secpost)
 "pK" = (
@@ -4449,8 +4441,6 @@
 "qn" = (
 /obj/structure/guncase/shotgun,
 /obj/item/gun/ballistic/shotgun/automatic,
-/obj/item/gun/ballistic/shotgun/automatic,
-/obj/item/gun/ballistic/shotgun/automatic,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/secpost)
 "qo" = (
@@ -4572,11 +4562,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "qK" = (
 /obj/structure/rack,
-/obj/item/storage/box/lethalshot,
-/obj/item/storage/box/lethalshot{
-	pixel_x = 2;
-	pixel_y = 2
-	},
+/obj/item/paper/crumpled/ruins/snowdin/missingarmory,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/secpost)
 "qL" = (
@@ -6618,6 +6604,11 @@
 /obj/structure/rack,
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/cave)
+"zP" = (
+/obj/structure/closet/crate/wooden,
+/obj/effect/spawner/random/exotic/languagebook,
+/turf/open/floor/plating/snowed/cavern,
+/area/awaymission/snowdin/cave/cavern)
 "zQ" = (
 /obj/item/hatchet{
 	pixel_x = 4;
@@ -7523,7 +7514,16 @@
 /area/awaymission/snowdin/cave)
 "Ds" = (
 /obj/structure/closet/crate/wooden,
-/turf/open/floor/plating/snowed/cavern,
+/obj/item/gun/ballistic/rifle/lionhunter,
+/obj/item/shield/ballistic,
+/obj/item/mod/module/energy_shield{
+	desc = "You get the feeling like this wont always be here, like its a placeholder of some kind"
+	},
+/obj/item/mod/module/storage/large_capacity,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
+	temperature = 120
+	},
 /area/awaymission/snowdin/cave/cavern)
 "Dv" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -7746,6 +7746,7 @@
 /obj/machinery/suit_storage_unit{
 	state_open = 1
 	},
+/obj/item/paper/crumpled/ruins/snowdin/missingsuit,
 /turf/open/floor/mineral/plastitanium{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180";
 	planetary_atmos = 1;
@@ -7757,7 +7758,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow,
-/obj/machinery/suit_storage_unit/syndicate,
+/obj/machinery/suit_storage_unit,
 /turf/open/floor/mineral/plastitanium{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180";
 	planetary_atmos = 1;
@@ -7769,9 +7770,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/weather/snow,
-/obj/machinery/suit_storage_unit{
-	state_open = 1
-	},
+/obj/machinery/suit_storage_unit,
 /turf/open/floor/mineral/plastitanium{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180";
 	planetary_atmos = 1;
@@ -9116,7 +9115,6 @@
 /area/awaymission/snowdin/post/cavern1)
 "LW" = (
 /obj/structure/table/wood,
-/obj/structure/fireaxecabinet/directional/south,
 /obj/effect/spawner/random/exotic/snow_gear,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
@@ -9606,6 +9604,10 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main/mechbay)
+"OO" = (
+/obj/structure/guncase/shotgun,
+/turf/open/floor/iron/dark,
+/area/awaymission/snowdin/post/secpost)
 "OP" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/west,
@@ -10241,6 +10243,11 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/snowdin/cave)
+"Sh" = (
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/structure/closet/crate/wooden,
+/turf/open/floor/plating/snowed/cavern,
+/area/awaymission/snowdin/cave/cavern)
 "Si" = (
 /mob/living/basic/spider/giant/hunter/ice,
 /turf/open/misc/asteroid/snow/ice,
@@ -11156,10 +11163,6 @@
 /obj/structure/rack,
 /obj/item/storage/box/rubbershot,
 /obj/machinery/light/small/directional/south,
-/obj/item/storage/box/rubbershot{
-	pixel_x = 2;
-	pixel_y = 2
-	},
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/secpost)
 "Xw" = (
@@ -19853,7 +19856,7 @@ oc
 oz
 Ss
 pH
-qn
+OO
 qn
 pH
 Zy
@@ -31834,7 +31837,7 @@ CC
 El
 an
 an
-EE
+EF
 CC
 ae
 ae
@@ -32091,7 +32094,7 @@ CC
 Em
 Mq
 an
-EF
+EE
 CC
 AU
 Ru
@@ -32348,7 +32351,7 @@ SZ
 En
 OH
 Mq
-EE
+EF
 CC
 Ym
 Zy
@@ -49458,7 +49461,7 @@ WN
 wN
 wN
 LM
-cm
+WN
 wN
 wN
 wN
@@ -49956,7 +49959,7 @@ eJ
 eJ
 eJ
 wN
-cm
+WN
 WN
 wN
 eJ
@@ -50737,7 +50740,7 @@ eJ
 eJ
 eJ
 WN
-cm
+WN
 WN
 wN
 wN
@@ -50932,7 +50935,7 @@ bh
 bh
 bh
 eJ
-eK
+eJ
 eK
 gc
 gc
@@ -51087,7 +51090,7 @@ eL
 eJ
 eJ
 tp
-PH
+qi
 qi
 qi
 tp
@@ -51704,7 +51707,7 @@ bh
 bh
 eJ
 eJ
-KP
+Ds
 gc
 gc
 gV
@@ -51859,7 +51862,7 @@ qi
 qi
 tp
 qi
-qi
+TW
 qi
 tp
 qi
@@ -52116,7 +52119,7 @@ qi
 TW
 tv
 qi
-TW
+Sh
 qi
 tv
 TW
@@ -52369,7 +52372,7 @@ eJ
 eJ
 eJ
 tp
-PH
+zP
 qi
 tp
 qi
@@ -53143,7 +53146,7 @@ eL
 eJ
 eJ
 tp
-PH
+zP
 qi
 qi
 tp
@@ -54833,7 +54836,7 @@ eJ
 tp
 tp
 tp
-PH
+VU
 qi
 qi
 qi
@@ -56886,7 +56889,7 @@ eJ
 eJ
 eJ
 tp
-PH
+VU
 fD
 tp
 tp
@@ -65103,8 +65106,8 @@ eJ
 eJ
 gW
 tp
-PH
-Ds
+VU
+VU
 qi
 qi
 tp
@@ -65614,8 +65617,8 @@ tp
 PH
 fD
 tp
-PH
-PH
+VU
+VU
 tp
 qi
 qi
@@ -66135,7 +66138,7 @@ qi
 tp
 qi
 qi
-PH
+VU
 tp
 eJ
 eJ
@@ -66181,7 +66184,7 @@ eJ
 tp
 tz
 qi
-PH
+VU
 tp
 eJ
 eJ

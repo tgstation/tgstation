@@ -43,35 +43,56 @@
 	)
 
 /obj/effect/spawner/random/exotic/antag_gear_weak
-	name = "antag gear weak"
+	name = "loot weak"
 	icon_state = "syndi_toolbox"
 	loot = list(
-		/obj/item/storage/medkit/regular = 45,
-		/obj/item/storage/medkit/toxin = 35,
-		/obj/item/storage/medkit/brute = 27,
-		/obj/item/storage/medkit/fire = 27,
-		/obj/item/storage/toolbox/syndicate = 12,
-		/obj/item/borg/upgrade/diamond_drill = 3,
-		/obj/item/knife/butcher = 14,
-		/obj/item/clothing/glasses/night = 10,
-		/obj/item/pickaxe/drill/diamonddrill = 6,
-	)
-
-/obj/effect/spawner/random/exotic/antag_gear
-	name = "antag gear"
-	icon_state = "esword"
-	loot = list(
 		/obj/item/clothing/glasses/science/night = 15,
-		/obj/item/shield/riot = 12,
+		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 10,
+		/obj/item/storage/toolbox/syndicate = 10,
+		/obj/item/shield/riot = 10,
+		/obj/item/storage/box/syndie_kit/chameleon = 10,
+		/obj/item/knife/combat = 10,
+		/obj/item/grenade/clusterbuster/smoke = 10,
 		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 5,
 		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 5,
 		/obj/item/stack/sheet/mineral/plasma{amount = 15} = 5,
 		/obj/item/stack/sheet/mineral/gold{amount = 15} = 5,
-		/obj/item/grenade/clusterbuster/smoke = 15,
-		/obj/item/clothing/under/chameleon = 13,
-		/obj/item/knife/combat = 10,
 		/obj/item/implantcase/deathrattle = 5,
-		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 1,
+	)
+
+/obj/effect/spawner/random/exotic/antag_gear//15
+	name = "antag gear"
+	icon_state = "esword"
+	loot = list(
+		/obj/item/mod/control/pre_equipped/empty/syndicate = 9,
+		/obj/item/mod/control/pre_equipped/empty/elite = 1,
+		/obj/item/mod/module/energy_shield = 2,
+		/obj/item/mod/module/jetpack/advanced = 2,
+		/obj/item/mod/module/visor/night = 2,
+		/obj/item/mod/module/storage/syndicate = 2,
+		/obj/item/mod/module/jetpack/advanced = 2,
+		/obj/item/gun/ballistic/automatic/pistol/m1911 = 5,//replaces makarov
+		/obj/item/melee/energy/sword/saber/blue = 1,
+		/obj/item/pen/edagger = 4,
+		/obj/item/autosurgeon/syndicate/anti_stun/single_use = 2,
+		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset/single_use = 3,
+		/obj/item/climbing_hook/syndicate = 5,
+		/obj/item/dualsaber/toy = 5,
+		/obj/item/storage/box/syndie_kit/emp = 5,
+		/obj/item/storage/box/syndie_kit/imp_storage = 5,
+		/obj/item/storage/box/syndie_kit/imp_radio = 5,
+		/obj/item/gun/ballistic/automatic/napad = 1,
+		/obj/item/gun/ballistic/automatic/smartgun = 4,//this gun is so shit i hate it, i miss the plastikov and im so furious that this shitty ass gun replaced something actually viable
+		/obj/item/flashlight/lantern/syndicate = 5,
+		/obj/item/reagent_containers/spray/syndicate = 5,
+		/obj/item/storage/box/survival/syndie = 5,
+		/obj/item/storage/box/evilmeds = 5,
+		/obj/item/storage/box/syndie_kit/space = 5,
+		/obj/item/storage/box/syndicate/bundle_b = 0.01,//two of these kits possible, four of these spawners per snowdin, 1/8 chance of snowdin being picked as the away mission leading to a 0.01 chance (equal to the chance of getting a pulse rifle from an arcade) of these spawning every round, meaning that these will spawn once in every 10000 rounds.
+		/obj/item/storage/box/syndicate/bundle_a = 0.01,
+		/obj/item/storage/box/stockparts/deluxe = 4.98,
+		/obj/item/storage/box/alchemist_random_chems = 5,
+		//obj/item/gun/ballistic/automatic/lahti = 1, uncomment to instantly summon the maintainers
 	)
 
 /obj/effect/spawner/random/exotic/snow_gear

@@ -184,6 +184,14 @@
 	name = "Research Feed"
 	default_raw_text = {"<i>A page full of graphs and other detailed information on the seismic activity of the surrounding area.</i>"}
 
+/obj/item/paper/crumpled/ruins/snowdin/missingarmory
+	name = "scribbled note"
+	default_raw_text = {"If you were left behind during the evacuation, weve taken most of the guns and went to look for the others, we should be back."}
+
+/obj/item/paper/crumpled/ruins/snowdin/missingsuit
+	name = "scribbled note"
+	default_raw_text = {"Well shit, we crashed, the others are dead and im writting this note for myself, Ive taken the suit and im going to head down south where I saw some other people with lanterns go to during the snowstorm, maybe they know a way out of here."}
+
 //profile of each of the old crewmembers for the outpost
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/overseer
