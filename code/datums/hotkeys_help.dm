@@ -16,6 +16,7 @@
 	if(action == "open_keybindings")
 		user.client.prefs.current_window = PREFERENCE_TAB_KEYBINDINGS
 		user.client.prefs.ui_interact(usr)
+		user.client?.uiclose(ui.window.id)
 		return TRUE
 
 // Not static data since user could rebind keys.
