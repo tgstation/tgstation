@@ -63,7 +63,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "u" = (
 /turf/template_noop,
@@ -137,15 +137,6 @@
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"C" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/power/shuttle_engine/propulsion{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "D" = (
 /obj/machinery/door/airlock/titanium{
@@ -306,7 +297,7 @@ u
 u
 "}
 (2,1,1) = {"
-C
+M
 s
 a
 a
@@ -347,7 +338,7 @@ u
 u
 "}
 (3,1,1) = {"
-C
+M
 s
 a
 a
@@ -429,7 +420,7 @@ l
 u
 "}
 (5,1,1) = {"
-C
+M
 s
 a
 a
@@ -470,7 +461,7 @@ l
 l
 "}
 (6,1,1) = {"
-C
+M
 s
 a
 a
@@ -552,7 +543,7 @@ a
 l
 "}
 (8,1,1) = {"
-C
+M
 s
 a
 a
@@ -593,7 +584,7 @@ a
 l
 "}
 (9,1,1) = {"
-C
+M
 s
 a
 a
@@ -634,7 +625,7 @@ a
 l
 "}
 (10,1,1) = {"
-C
+M
 s
 a
 a
@@ -798,7 +789,7 @@ r
 l
 "}
 (14,1,1) = {"
-C
+M
 s
 a
 a
@@ -839,7 +830,7 @@ a
 l
 "}
 (15,1,1) = {"
-C
+M
 s
 a
 a
@@ -962,7 +953,7 @@ a
 l
 "}
 (18,1,1) = {"
-C
+M
 s
 a
 a
@@ -1003,7 +994,7 @@ a
 l
 "}
 (19,1,1) = {"
-C
+M
 s
 a
 a
@@ -1085,7 +1076,7 @@ l
 u
 "}
 (21,1,1) = {"
-C
+M
 s
 a
 a
@@ -1126,7 +1117,7 @@ u
 u
 "}
 (22,1,1) = {"
-C
+M
 s
 a
 a
