@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - qol: "Items shipping via the black market using the \"launch\" option now launch via a self-destructing energy bubble, holding your item(s)."
+  - balance: "The \"launch\" shipping option on the black market is now free shipping."
+  - admin: "Admins may now use the new \"Create Black Market Item\" verb in order to list any item on the black market! Fun for events. Bug your admin today!"
