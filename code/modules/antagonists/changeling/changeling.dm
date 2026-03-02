@@ -142,6 +142,7 @@
 	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	RegisterSignal(living_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fullhealed))
 	RegisterSignal(living_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	living_mob.client?.set_stat_panel()
 	RegisterSignal(living_mob, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(new_brain))
 	RegisterSignals(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), PROC_REF(on_click_sting))
 	ADD_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
@@ -221,6 +222,7 @@
 		COMSIG_MOB_HUD_CREATED,
 		COMSIG_CARBON_GAIN_ORGAN,
 	))
+	living_mob.client?.set_stat_panel()
 	REMOVE_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
 	REMOVE_TRAIT(living_mob, TRAIT_BRAINLESS_CARBON, CHANGELING_TRAIT)
 	REMOVE_TRAIT(living_mob, TRAIT_CHANGELING_HIVEMIND, CHANGELING_TRAIT)

@@ -7,7 +7,7 @@
 	set_stat_panel()
 
 /client/proc/set_stat_panel()
-	if(mob.should_have_stat_panel())
+	if(should_have_stat_panel())
 		winset(src, "infowindow.info", "left=statwindow")
 	else
 		winset(src, "infowindow.info", "left=null")

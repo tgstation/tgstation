@@ -76,6 +76,7 @@
 		var/mob/living/carbon/alien/target_alien = organ_owner
 		target_alien.updatePlasmaDisplay()
 	RegisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	organ_owner.client?.set_stat_panel()
 
 /obj/item/organ/alien/plasmavessel/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
@@ -83,6 +84,7 @@
 		var/mob/living/carbon/alien/organ_owner_alien = organ_owner
 		organ_owner_alien.updatePlasmaDisplay()
 	UnregisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+	organ_owner.client?.set_stat_panel()
 
 /obj/item/organ/alien/plasmavessel/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER

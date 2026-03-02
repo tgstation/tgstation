@@ -117,12 +117,14 @@
 		START_PROCESSING(SSobj, src)
 		update_hud_icon(user) // update the hud
 		RegisterSignal(user, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+		user.client?.set_stat_panel()
 
 // On removal stop processing, save battery
 /obj/item/clothing/suit/space/dropped(mob/living/user)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	UnregisterSignal(user, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+	user.client?.set_stat_panel()
 	var/mob/living/carbon/carbon_user = user
 	if(istype(carbon_user))
 		carbon_user.update_spacesuit_hud_icon("0")
