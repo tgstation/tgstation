@@ -30,6 +30,7 @@
 /obj/item/reagent_containers/spray/Initialize(mapload, vol)
 	. = ..()
 	AddElement(/datum/element/reagents_item_heatable)
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/reagent_containers/spray/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
@@ -150,6 +151,16 @@
 		log_combat(usr, usr.loc, "emptied onto", src, addition="which had [reagents.get_reagent_log_string()]")
 		src.reagents.clear_reagents()
 
+/obj/item/reagent_containers/spray/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	if(reagents.total_volume < amount_per_transfer_from_this)
+		return
+	to_chat(user, span_danger("As you open [letter], a mist spritzes out from inside!"))
+	spray(user, user)
+	playsound(user, spray_sound, 50, TRUE, -6)
+	forceMove(user.loc)
+	return COMPONENT_TRAITOR_MAIL_HANDLED
+
 /// Handles updating the spray distance when the reagents change.
 /obj/item/reagent_containers/spray/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
@@ -235,11 +246,15 @@
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	amount_per_transfer_from_this = 1
+	initial_reagent_flags = OPENCONTAINER
 	has_variable_transfer_amount = FALSE
 	can_toggle_range = FALSE
 	current_range = 1
 	volume = 10
 	list_reagents = list(/datum/reagent/water = 10)
+
+/obj/item/reagent_containers/spray/waterflower/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash)
+	return ..(hit_atom, throwingdatum, do_splash = FALSE)
 
 ///Subtype used for the lavaland clown ruin.
 /obj/item/reagent_containers/spray/waterflower/superlube

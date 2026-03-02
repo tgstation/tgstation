@@ -16,7 +16,6 @@
 	/// List of sources which prevent SIGHT_BYPASS from working
 	var/static/list/blocking_sources = list(
 		QUIRK_TRAIT, // Meant to be completely immutable
-		ECHOLOCATION_TRAIT, // Breaks the UI badly
 		UNCONSCIOUS_TRAIT, // Duh
 	)
 

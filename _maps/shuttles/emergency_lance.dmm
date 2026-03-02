@@ -183,6 +183,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/south,
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/shuttle/escape)
 "gr" = (
@@ -1404,6 +1405,7 @@
 "RO" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -1518,6 +1520,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},

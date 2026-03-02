@@ -281,7 +281,7 @@
  * * dispensed_design - Design datum to attempt to dispense.
  */
 /obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/dispensed_design)
-	var/obj/item/built_part = new dispensed_design.build_path(src)
+	var/obj/item/built_part = dispensed_design.create_result(src)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[built_part.type]"))
 
 	being_built = null
