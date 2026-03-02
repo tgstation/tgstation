@@ -10,21 +10,21 @@ macro "default"
 
 
 menu "menu"
-	elem
+	elem 
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = ""
 		command = ""
 		category = "&File"
@@ -34,7 +34,7 @@ menu "menu"
 		command = ".reconnect"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Quit\tAlt-F4"
 		command = ".quit"
 		category = "&File"
@@ -43,12 +43,12 @@ menu "menu"
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Admin Help\tF1"
 		command = "adminhelp"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Hotkeys"
 		command = "Hotkeys-Help"
 		category = "&Help"
@@ -161,6 +161,62 @@ window "info_and_buttons"
 		splitter = 2
 		show-splitter = false
 
+window "infobuttons"
+	elem "infobuttons"
+		type = MAIN
+		pos = 291,0
+		size = 676x30
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = none
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+		outer-size = 692x88
+		outer-pos = 291,0
+		inner-size = 676x30
+		inner-pos = 8,31
+		screen-size = 1920x1040
+	elem "options"
+		type = BUTTON
+		pos = 0,5
+		size = 92x25
+		anchor1 = 0,0
+		anchor2 = 15,100
+		background-color = none
+		saved-params = "is-checked"
+		text = "Menu"
+		command = "open-escape-menu"
+	elem "reconnect"
+		type = BUTTON
+		pos = 97,5
+		size = 94x25
+		anchor1 = 15,0
+		anchor2 = 29,100
+		background-color = none
+		saved-params = "is-checked"
+		text = "Reconnect"
+		command = ".reconnect"
+	elem "fullscreen-toggle"
+		type = BUTTON
+		pos = 196,5
+		size = 91x25
+		anchor1 = 29,0
+		anchor2 = 43,100
+		background-color = none
+		saved-params = "is-checked"
+		text = "Fullscreen"
+		command = "fullscreen"
+	elem "chat"
+		type = BUTTON
+		pos = 568,5
+		size = 104x25
+		anchor1 = 85,0
+		anchor2 = 99,100
+		background-color = none
+		saved-params = "is-checked"
+		text = "Chat"
+		command = "wiki"
+
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
@@ -253,7 +309,6 @@ window "inputwindow"
 		size = 520x25
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "input"
@@ -265,7 +320,6 @@ window "inputwindow"
 		is-default = true
 		border = line
 		saved-params = "command"
-		can-scroll = true
 
 window "inputbuttons"
 	elem "inputbuttons"
