@@ -7,3 +7,9 @@
   Y0SH1M4S73R:
   - qol: You no longer need to learn the recipe for the MOD soul core.
   - qol: You can slapcraft MOD soul cores using soul shards.
+2026-03-02:
+  Absolucy:
+  - code_imp: Minor code optimizations for APC processing.
+  - bugfix: Healium crystals now properly update turf atmos.
+  TealSeer:
+  - image: the HFR glows in the dark now
