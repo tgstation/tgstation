@@ -140,6 +140,7 @@
 		qdel(tool)
 		pictures_left = pictures_max
 		return ITEM_INTERACT_SUCCESS
+
 	if(istype(tool, /obj/item/disk/holodisk))
 		if(!user.transferItemToLoc(tool, src))
 			balloon_alert(user, "stuck in hand!")

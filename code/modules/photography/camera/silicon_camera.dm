@@ -2,6 +2,7 @@
 /obj/item/camera/siliconcam
 	name = "silicon photo camera"
 	resistance_flags = INDESTRUCTIBLE
+	cooldown = 2 SECONDS
 	/// List of all pictures taken by this camera.
 	var/list/datum/picture/stored = list()
 
