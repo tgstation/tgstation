@@ -10,21 +10,21 @@ macro "default"
 
 
 menu "menu"
-	elem
+	elem 
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = ""
 		command = ""
 		category = "&File"
@@ -34,7 +34,7 @@ menu "menu"
 		command = ".reconnect"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Quit\tAlt-F4"
 		command = ".quit"
 		category = "&File"
@@ -43,12 +43,12 @@ menu "menu"
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Admin Help\tF1"
 		command = "adminhelp"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Hotkeys"
 		command = "Hotkeys-Help"
 		category = "&Help"
@@ -176,7 +176,7 @@ window "infobuttons"
 		inner-size = 676x30
 		inner-pos = 8,31
 		screen-size = 1920x1040
-    elem "options"
+	elem "options"
 		type = BUTTON
 		pos = 0,5
 		size = 87x25
@@ -218,8 +218,8 @@ window "infobuttons"
 		command = ".reconnect"
 	elem "chat"
 		type = BUTTON
-		pos = 553,5
-		size = 89x25
+		pos = 560,5
+		size = 112x25
 		anchor1 = 85,0
 		anchor2 = 99,100
 		background-color = none
