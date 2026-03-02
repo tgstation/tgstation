@@ -82,57 +82,61 @@
 	if(!our_vault)
 		playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 50)
 		balloon_alert(user, "need database!")
-		return
+		return FALSE
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro_tray = target
 		if(!hydro_tray.myseed)
-			return
+			return FALSE
 		if(our_vault.plant_dna[hydro_tray.myseed.type])
-			to_chat(user, span_notice("Plant data is already present in vault storage."))
-			return
+			balloon_alert(user, "data already in vault!")
+			return FALSE
 		if(stored_dna_plants[hydro_tray.myseed.type])
-			to_chat(user, span_notice("Plant data already present in local storage."))
-			return
+			balloon_alert(user, "data already in scanner!")
+			return FALSE
 		if(hydro_tray.plant_status != HYDROTRAY_PLANT_HARVESTABLE) // So it's bit harder.
-			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
-			return
+			balloon_alert(user, "plant is not harvestable!")
+			return FALSE
 		stored_dna_plants[hydro_tray.myseed.type] = TRUE
 		playsound(src, 'sound/machines/compiler/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
 		return TRUE
-	else if(ishuman(target))
+
+	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		if(our_vault.human_dna[human_target.dna.unique_identity])
-			to_chat(user, span_notice("Humanoid data already present in vault storage."))
-			return
+			balloon_alert(user, "data already in vault!")
+			return FALSE
 		if(stored_dna_human[human_target.dna.unique_identity])
-			to_chat(user, span_notice("Humanoid data already present in local storage."))
-			return
+			balloon_alert(user, "data already in scanner!")
+			return FALSE
 		if(!(human_target.mob_biotypes & MOB_ORGANIC))
-			to_chat(user, span_alert("No compatible DNA detected."))
-			return .
+			balloon_alert(user, "no compatible dna!")
+			return FALSE
 		stored_dna_human[human_target.dna.unique_identity] = TRUE
 		playsound(src, 'sound/machines/compiler/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
 		return TRUE
 
-	if(!isliving(target))
-		return
+	var/static/list/animal_typecache = typecacheof(list(
+		/mob/living/basic,
+		/mob/living/carbon/alien,
+		/mob/living/simple_animal,
+		/obj/item/fish,
+	))
+	if(!is_type_in_typecache(target, animal_typecache) && !ismonkey(target))
+		return FALSE
+	if(our_vault.animal_dna[target.type])
+		balloon_alert(user, "data already in vault!")
+		return FALSE
+	if(stored_dna_animal[target.type])
+		balloon_alert(user, "data already in scanner!")
+		return FALSE
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(!(living_target.mob_biotypes & MOB_ORGANIC))
+			balloon_alert(user, "no compatible dna!")
+			return FALSE
 
-	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
-	if(!isanimal_or_basicmob(target) && !is_type_in_typecache(target, non_simple_animals) && !ismonkey(target))
-		return
-
-	var/mob/living/living_target = target
-	if(our_vault.animal_dna[living_target.type])
-		to_chat(user, span_notice("Animal data already present in vault storage."))
-		return
-	if(stored_dna_animal[living_target.type])
-		to_chat(user, span_notice("Animal data already present in local storage."))
-		return
-	if(!(living_target.mob_biotypes & MOB_ORGANIC))
-		to_chat(user, span_alert("No compatible DNA detected."))
-		return .
 	stored_dna_animal[living_target.type] = TRUE
 	playsound(src, 'sound/machines/compiler/compiler-stage2.ogg', 50)
 	balloon_alert(user, "data added")
