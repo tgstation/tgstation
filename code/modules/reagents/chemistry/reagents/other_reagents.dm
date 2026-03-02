@@ -2836,9 +2836,12 @@
 		target.set_custom_materials()
 	var/list/metal_dat = list((metal_ref) = metal_amount)
 	target.material_flags = applied_material_flags
-	if (length(target.material_slots))
-		for (var/slot_type in target.material_slots)
-			target.material_slots[slot_type] = metal_ref
+	if (target.has_material_slots())
+		var/list/new_slots = target.get_material_slots()
+		for (var/slot_type in new_slots)
+			new_slots[slot_type] = metal_ref
+		// Safe to call and doesn't do anything as no materials are currently present on the target
+		target.set_material_slots(new_slots)
 	target.set_custom_materials(metal_dat)
 
 /datum/reagent/gravitum

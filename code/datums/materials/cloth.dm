@@ -24,7 +24,7 @@
 	desc = "An incredibly tough and dense titanium-infused fabric."
 	color = "#8B9BB4"
 	mat_properties = list(
-		MATERIAL_DENSITY = 6,
+		MATERIAL_DENSITY = 5,
 		MATERIAL_HARDNESS = 4,
 		MATERIAL_FLEXIBILITY = 8,
 		MATERIAL_REFLECTIVITY = 3,
@@ -41,9 +41,9 @@
 	desc = "Made with love and animal cruelty."
 	color = "#E2E1DE"
 	mat_properties = list(
-		MATERIAL_DENSITY = 5,
-		MATERIAL_HARDNESS = 0,
-		MATERIAL_FLEXIBILITY = 8,
+		MATERIAL_DENSITY = 4,
+		MATERIAL_HARDNESS = 1,
+		MATERIAL_FLEXIBILITY = 9,
 		MATERIAL_REFLECTIVITY = 0,
 		MATERIAL_ELECTRICAL = 5,
 		MATERIAL_THERMAL = 1,
@@ -74,6 +74,7 @@
 /datum/material/leather/xeno_chitin
 	name = "alien chitin"
 	desc = "Pitch-black chitin with a bright green membrane underneath."
+	mat_flags = MATERIAL_CLASS_FABRIC | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_POLYMER
 	color = "#34334B"
 	mat_properties = list(
 		MATERIAL_DENSITY = 5,
@@ -112,7 +113,7 @@
 	color = "#6D252F"
 	mat_properties = list(
 		MATERIAL_DENSITY = 6, // Uncomfortably heavy and rigid
-		MATERIAL_HARDNESS = 6,
+		MATERIAL_HARDNESS = 7,
 		MATERIAL_FLEXIBILITY = 6,
 		MATERIAL_REFLECTIVITY = 0,
 		MATERIAL_ELECTRICAL = 4,

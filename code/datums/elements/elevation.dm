@@ -130,10 +130,10 @@
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON,
 		COMSIG_TURF_RESET_ELEVATION,
 	))
-	REMOVE_TRAIT(source, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src))
 	for(var/mob/living/living in source)
 		deelevate_mob(living)
 		UnregisterSignal(living, list(COMSIG_LIVING_SET_BUCKLED, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION)))
+	REMOVE_TRAIT(source, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src))
 	return ..()
 
 /datum/element/elevation_core/proc/on_entered(turf/source, atom/movable/entered, atom/old_loc)

@@ -72,7 +72,7 @@
 	affect_target(source, target, user, def_zone, has_contact)
 
 /datum/material_slot/weapon_head/proc/affect_target(obj/item/source, atom/target, mob/living/user, def_zone, skin_contact = TRUE)
-	var/datum/material/source_mat = SSmaterials.get_material(source.material_slots[type])
+	var/datum/material/source_mat = SSmaterials.get_material(source.get_material_from_slot(type))
 	SEND_SIGNAL(source_mat, COMSIG_MATERIAL_EFFECT_CONTACT, source, target, user, def_zone, skin_contact)
 
 /// Main type for all weapon handles

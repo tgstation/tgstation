@@ -7,6 +7,7 @@
 	/// Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
 	var/material_modifier = 1
 	/// List of material slots to be used to control material behaviors instead of default ones
+	/// This uses a stringlist cache and should not be accessed directly, use get_material_from_slot or get/set_material_slot(s) instead
 	var/list/datum/material_slot/material_slots = null
 
 /// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
@@ -48,6 +49,10 @@
 			return
 
 	sortTim(materials, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+	// Don't sort as order can matter for what materials get assigned to which slot
+	// Safe to stringlist as it only contains slot typepaths to material IDs without any instances
+	if(!isnull(material_slots))
+		material_slots = string_list(material_slots)
 	apply_material_effects(materials)
 
 ///proc responsible for applying material effects when setting materials.
@@ -118,7 +123,10 @@
 		if (material && custom_materials[material])
 			slot.on_removed(src, material, custom_materials[material], get_material_multiplier(material, custom_materials, custom_materials.Find(material)))
 
+	material_slots = material_slots.Copy()
 	material_slots[slot_type] = new_material
+	material_slots = string_list(material_slots)
+
 	var/datum/material_slot/slot = SSmaterials.material_slots[slot_type]
 	var/datum/material/material = istype(new_material, /datum/material) ? new_material : SSmaterials.get_material(new_material)
 	if (material && custom_materials[material])
@@ -133,7 +141,7 @@
 			if (material && custom_materials[material])
 				slot.on_removed(src, material, custom_materials[material], get_material_multiplier(material, custom_materials, custom_materials.Find(material)))
 
-	material_slots = new_slots.Copy()
+	material_slots = string_list(new_slots.Copy())
 	for (var/slot_type, material_id in material_slots)
 		var/datum/material_slot/slot = SSmaterials.material_slots[slot_type]
 		var/datum/material/material = SSmaterials.get_material(material_id)
@@ -425,11 +433,15 @@
 
 /// Tries to fetch a material matching a specific slot
 /atom/proc/get_material_from_slot(slot_type)
-	var/list/material_effects = get_material_effects_list(custom_materials)
-	for (var/datum/material/material as anything in material_effects)
-		var/list/effects = material_effects[material]
-		if (effects[MATERIAL_LIST_SLOTS]?[slot_type])
-			return material
+	return material_slots?[slot_type]
+
+/// Fetches a copy of all material slots.
+/atom/proc/get_material_slots()
+	return material_slots?.Copy()
+
+/// Returns TRUE if this atom utilizes material slots
+/atom/proc/has_material_slots()
+	return !!length(material_slots)
 
 /**
  * Returns the material composition of the atom.

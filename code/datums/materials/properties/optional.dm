@@ -101,22 +101,8 @@
 
 /datum/material_property/firestacker/attach_to(datum/material/material)
 	. = ..()
-	material.track_flags |= MATERIAL_TURF_CONTACT
-	RegisterSignal(material, COMSIG_MATERIAL_APPLIED, PROC_REF(on_applied))
-	RegisterSignal(material, COMSIG_MATERIAL_REMOVED, PROC_REF(on_removed))
+	material.track_flags |= MATERIAL_TRACK_CONTACT | MATERIAL_TRACK_IMPACT
 	RegisterSignal(material, COMSIG_MATERIAL_EFFECT_CONTACT, PROC_REF(on_contact))
-
-/datum/material_property/firestacker/proc/on_applied(datum/material/source, atom/new_atom, mat_amount, multiplier, from_slot)
-	SIGNAL_HANDLER
-
-	if (!from_slot)
-		new_atom.AddElement(/datum/element/firestacker, source.get_property(id) * multiplier)
-
-/datum/material_property/firestacker/proc/on_removed(datum/material/source, atom/old_atom, mat_amount, multiplier, from_slot)
-	SIGNAL_HANDLER
-
-	if (!from_slot)
-		old_atom.RemoveElement(/datum/element/firestacker, source.get_property(id) * multiplier)
 
 /datum/material_property/firestacker/proc/on_contact(datum/material/source, atom/object, mob/living/target, mob/living/user, def_zone, skin_contact)
 	SIGNAL_HANDLER
@@ -125,7 +111,6 @@
 	if (isfloorturf(object) && !skin_contact && !source.get_property(MATERIAL_PENETRATING))
 		return
 
-	#warn Needs multiplier/amount per slot cached in a list instead of being direct
 	if (isliving(target))
 		target.adjust_fire_stacks(source.get_property(id))
 
@@ -142,7 +127,7 @@
 
 /datum/material_property/vampires_bane/attach_to(datum/material/material)
 	. = ..()
-	material.track_flags |= MATERIAL_TURF_CONTACT
+	material.track_flags |= MATERIAL_TRACK_CONTACT | MATERIAL_TRACK_IMPACT
 	RegisterSignal(material, COMSIG_MATERIAL_EFFECT_CONTACT, PROC_REF(on_contact))
 
 /datum/material_property/vampires_bane/proc/on_contact(datum/material/source, atom/object, mob/living/target, mob/living/user, def_zone, skin_contact)
@@ -152,7 +137,6 @@
 		return
 
 	to_chat(target, span_userdanger("Contact with [object] sears your undead flesh!"))
-	#warn Needs multiplier/amount per slot cached in a list instead of being direct
 	target.apply_damage(source.get_property(id), BURN, def_zone, wound_bonus = 10, wound_clothing = FALSE)
 
 /// Teleports targets who come into active contact with the material around, property value determines teleport radius and damage taken per teleport
@@ -168,11 +152,14 @@
 
 /datum/material_property/teleporting/attach_to(datum/material/material)
 	. = ..()
-	material.track_flags |= MATERIAL_TURF_CONTACT
+	material.track_flags |= MATERIAL_TRACK_CONTACT | MATERIAL_TRACK_IMPACT
 	RegisterSignal(material, COMSIG_MATERIAL_EFFECT_CONTACT, PROC_REF(on_contact))
 
 /datum/material_property/teleporting/proc/on_contact(datum/material/source, atom/object, atom/target, mob/living/user, def_zone, skin_contact)
 	SIGNAL_HANDLER
+
+	if (!ismovable(target))
+		return
 
 	// Floors don't trigger if you're wearing shoes because it'd be too cancer
 	if (isfloorturf(object) && !skin_contact && !source.get_property(MATERIAL_PENETRATING))

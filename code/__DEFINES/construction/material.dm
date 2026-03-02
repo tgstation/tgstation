@@ -84,8 +84,10 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_BEAUTY "beauty"
 
 // Flags for signal tracking on materials
-/// Send COMSIG_MATERIAL_EFFECT_CONTACT whenever a mob steps/is shoved into this material tile
-#define MATERIAL_TURF_CONTACT (1 << 0)
+/// Send COMSIG_MATERIAL_EFFECT_CONTACT whenever a mob steps onto a material atom/is shoved into this material wall
+#define MATERIAL_TRACK_CONTACT (1 << 0)
+/// Send COMSIG_MATERIAL_EFFECT_CONTACT whenever a mob is hit by/hits/catches the material atom
+#define MATERIAL_TRACK_IMPACT (1 << 1)
 
 /// Maximum value for a core material property
 #define MATERIAL_PROPERTY_MAX 10

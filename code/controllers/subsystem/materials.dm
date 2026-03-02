@@ -194,7 +194,7 @@ SUBSYSTEM_DEF(materials)
 	if(!combo)
 		combo = list()
 		for(var/mat in materials_declaration)
-			combo[SSmaterials.get_material(mat)] = OPTIMAL_COST(materials_declaration[mat] * multiplier)
+			combo[get_material(mat)] = OPTIMAL_COST(materials_declaration[mat] * multiplier)
 		material_combos[combo_index] = combo
 	return combo
 
