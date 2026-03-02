@@ -77,7 +77,7 @@
 	remove_verb(parent, /mob/living/verb/pulled) // No dragging people into the blob
 	RegisterSignal(parent, COMSIG_MOB_MIND_INITIALIZED, PROC_REF(on_mind_init))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_update_appearance))
-	RegisterSignal(parent, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_update_status_tab))
+	RegisterSignal(parent, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_items))
 	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, PROC_REF(on_blob_touched))
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, PROC_REF(on_burned))
 	RegisterSignal(parent, COMSIG_ATOM_TRIED_PASS, PROC_REF(on_attempted_pass))
@@ -133,7 +133,7 @@
 		minion.remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
 /// When our icon is updated, update our colour too
-/datum/component/blob_minion/proc/on_update_status_tab(mob/living/minion, list/status_items)
+/datum/component/blob_minion/proc/get_status_tab_items(mob/living/minion, list/status_items)
 	SIGNAL_HANDLER
 	if (isnull(overmind))
 		return
