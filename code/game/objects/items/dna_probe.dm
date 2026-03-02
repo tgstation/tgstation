@@ -137,7 +137,7 @@
 			balloon_alert(user, "no compatible dna!")
 			return FALSE
 
-	stored_dna_animal[living_target.type] = TRUE
+	stored_dna_animal[target.type] = TRUE
 	playsound(src, 'sound/machines/compiler/compiler-stage2.ogg', 50)
 	balloon_alert(user, "data added")
 	return TRUE
