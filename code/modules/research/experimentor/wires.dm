@@ -16,6 +16,8 @@
 	return ..()
 
 /datum/wires/experimentor/on_pulse(wire)
+	set waitfor = FALSE
+
 	var/obj/machinery/rnd/experimentor/experimentor = holder
 	if(!experimentor.loaded_item)
 		return
