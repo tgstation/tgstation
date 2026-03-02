@@ -177,7 +177,7 @@ window "infobuttons"
 		anchor2 = 99,100
 		background-color = none
 		saved-params = "is-checked"
-		text = "Chat"
+		text = "Toggle Stat Panel"
 		command = "wiki"
 
 window "infowindow"
