@@ -4123,6 +4123,7 @@
 #include "code\modules\client\preferences\species_features\vampire.dm"
 #include "code\modules\client\verbs\ooc.dm"
 #include "code\modules\client\verbs\ping.dm"
+#include "code\modules\client\verbs\stat_panel.dm"
 #include "code\modules\client\verbs\suicide.dm"
 #include "code\modules\client\verbs\typing.dm"
 #include "code\modules\client\verbs\who.dm"
