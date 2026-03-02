@@ -179,7 +179,7 @@ window "infobuttons"
 	elem "options"
 		type = BUTTON
 		pos = 0,5
-		size = 87x25
+		size = 87x27
 		anchor1 = 0,0
 		anchor2 = 15,100
 		background-color = none
@@ -189,7 +189,7 @@ window "infobuttons"
 	elem "hotkeys"
 		type = BUTTON
 		pos = 92,5
-		size = 88x25
+		size = 88x27
 		anchor1 = 15,0
 		anchor2 = 29,100
 		background-color = none
@@ -199,7 +199,7 @@ window "infobuttons"
 	elem "fullscreen-toggle"
 		type = BUTTON
 		pos = 185,5
-		size = 87x25
+		size = 87x27
 		anchor1 = 29,0
 		anchor2 = 43,100
 		background-color = none
@@ -209,7 +209,7 @@ window "infobuttons"
 	elem "reconnect"
 		type = BUTTON
 		pos = 277,5
-		size = 87x25
+		size = 87x27
 		anchor1 = 43,0
 		anchor2 = 57,100
 		background-color = none
@@ -219,7 +219,7 @@ window "infobuttons"
 	elem "chat"
 		type = BUTTON
 		pos = 560,5
-		size = 112x25
+		size = 112x27
 		anchor1 = 85,0
 		anchor2 = 99,100
 		background-color = none
