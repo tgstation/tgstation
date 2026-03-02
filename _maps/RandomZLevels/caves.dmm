@@ -32,9 +32,7 @@
 /obj/item/stack/sheet/runed_metal{
 	amount = 25
 	},
-/obj/item/veilrender/honkrender,
-/obj/item/clothing/mask/gas/clown_hat,
-/obj/item/organ/heart/demon,
+/obj/item/mod/module/anti_magic,
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/bmp_asteroid/level_four)
 "av" = (
@@ -1001,7 +999,6 @@
 /obj/item/slimepotion/fireproof,
 /obj/item/gun/energy/e_gun/mini,
 /obj/item/gun/energy/laser/musket,
-/obj/item/organ/eyes/robotic/thermals,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "kE" = (
@@ -1062,8 +1059,8 @@
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "pC" = (
-/obj/item/mjollnir,
 /mob/living/basic/spider/giant/nurse/away_caves,
+/obj/item/nullrod/claymore/talking/chainsword,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_three)
 "pL" = (
@@ -1193,7 +1190,6 @@
 /obj/item/gun/energy/laser/soul,
 /obj/item/slimepotion/fireproof,
 /obj/item/slimepotion/fireproof,
-/obj/item/clothing/glasses/thermal,
 /obj/item/grenade/frag,
 /obj/item/grenade/frag,
 /obj/item/gun/energy/e_gun/old,
@@ -1288,9 +1284,7 @@
 	amount = 25
 	},
 /obj/item/coin/antagtoken,
-/obj/item/book/granter/action/spell/summonitem{
-	name = "\proper an extremely flamboyant book"
-	},
+/obj/item/book/granter/action/spell/smoke,
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/bmp_asteroid/level_four)
 "DH" = (
@@ -1371,6 +1365,10 @@
 /obj/item/clothing/head/collectable/wizard,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_three)
+"Jk" = (
+/obj/item/storage/box/ingredients/american,
+/turf/open/misc/asteroid/basalt,
+/area/awaymission/caves/bmp_asteroid/level_four)
 "JD" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/basalt,
@@ -1441,7 +1439,7 @@
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "OA" = (
-/obj/item/gun/ballistic/automatic/pistol/deagle/gold,
+/obj/item/food/burger,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_four)
 "OX" = (
@@ -24590,7 +24588,7 @@ ad
 ad
 rv
 rv
-rv
+Jk
 rv
 rv
 rv
