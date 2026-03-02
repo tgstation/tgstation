@@ -88,6 +88,16 @@
 	shield_icon = "mageshield"
 	required_slots = list()
 
+/obj/item/mod/module/energy_shield/prototype
+	name = "MOD prototype energy shield"
+	desc = "An early prototype of energy shield adapted for use inside of a MOD, the energy shield before this saw \
+	extensive use in now defunct construction, combat, and mining exosuits with exosuits being something between a \
+	modsuit and a mech with most still functioning exosuits either being in a museaum or a military parade"
+	recharge_start_delay = 30 SECONDS
+	max_charges = 2
+	charge_increment_delay = 30 SECONDS
+	shield_icon = "shield-yellow"
+
 ///Magic Nullifier - Protects you from magic.
 /obj/item/mod/module/anti_magic
 	name = "MOD magic nullifier module"

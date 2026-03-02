@@ -550,6 +550,18 @@
 		/obj/item/mod/module/noslip,
 	)
 
+/obj/item/mod/control/pre_equipped/responsory/inquisitory/syndie/less_mods
+	starting_frequency = null
+	req_access = null
+	applied_cell = /obj/item/stock_parts/power_store/cell/super
+	insignia_type = /obj/item/mod/module/insignia/security
+	theme = /datum/mod_theme/responsory/traitor
+	applied_modules = list(
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/pathfinder,
+	)
+
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
 	insignia_type = /obj/item/mod/module/insignia/commander
 	additional_modules = /obj/item/mod/module/power_kick

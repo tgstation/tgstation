@@ -60,13 +60,13 @@
 		/obj/item/implantcase/deathrattle = 5,
 	)
 
-/obj/effect/spawner/random/exotic/antag_gear//15
+/obj/effect/spawner/random/exotic/antag_gear
 	name = "antag gear"
 	icon_state = "esword"
 	loot = list(
 		/obj/item/mod/control/pre_equipped/empty/syndicate = 9,
-		/obj/item/mod/control/pre_equipped/empty/elite = 1,
-		/obj/item/mod/module/energy_shield = 2,
+		/obj/item/mod/control/pre_equipped/responsory/inquisitory/syndie/less_mods = 1,
+		/obj/item/mod/module/energy_shield/prototype = 2,
 		/obj/item/mod/module/jetpack/advanced = 2,
 		/obj/item/mod/module/visor/night = 2,
 		/obj/item/mod/module/storage/syndicate = 2,
@@ -78,11 +78,11 @@
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset/single_use = 3,
 		/obj/item/climbing_hook/syndicate = 5,
 		/obj/item/dualsaber/toy = 5,
-		/obj/item/storage/box/syndie_kit/emp = 5,
+		/obj/item/card/emag = 5,
 		/obj/item/storage/box/syndie_kit/imp_storage = 5,
 		/obj/item/storage/box/syndie_kit/imp_radio = 5,
 		/obj/item/gun/ballistic/automatic/napad = 1,
-		/obj/item/gun/ballistic/automatic/smartgun = 4,//this gun is so shit i hate it, i miss the plastikov and im so furious that this shitty ass gun replaced something actually viable
+		/obj/item/gun/ballistic/automatic/smartgun = 4,
 		/obj/item/flashlight/lantern/syndicate = 5,
 		/obj/item/reagent_containers/spray/syndicate = 5,
 		/obj/item/storage/box/survival/syndie = 5,

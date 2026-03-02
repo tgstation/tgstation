@@ -7516,10 +7516,8 @@
 /obj/structure/closet/crate/wooden,
 /obj/item/gun/ballistic/rifle/lionhunter,
 /obj/item/shield/ballistic,
-/obj/item/mod/module/energy_shield{
-	desc = "You get the feeling like this wont always be here, like its a placeholder of some kind"
-	},
 /obj/item/mod/module/storage/large_capacity,
+/obj/item/mod/module/energy_shield/prototype,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
