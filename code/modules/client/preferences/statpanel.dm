@@ -13,4 +13,4 @@
 /datum/preference/toggle/statpanel
 	savefile_key = "statpanel_open"
 	savefile_identifier = PREFERENCE_PLAYER
-	default_value = FALSE
+	default_value = TRUE
