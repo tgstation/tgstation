@@ -18,7 +18,7 @@
 	if(iscarbon(old_loc))
 		UnregisterSignal(old_loc, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 	if(iscarbon(loc))
-		RegisterSignal(loc, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_items))
+		RegisterSignal(loc, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 /obj/item/assembly/health/activate()
 	if(!..())
@@ -79,7 +79,7 @@
 		health_target = HEALTH_THRESHOLD_CRIT
 	return
 
-/obj/item/assembly/health/proc/get_status_tab_items(mob/living/carbon/source, list/items)
+/obj/item/assembly/health/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
 	items += "Health: [round((source.health / source.maxHealth) * 100)]%"
 
