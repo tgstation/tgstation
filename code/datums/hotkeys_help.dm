@@ -10,6 +10,14 @@
 		ui = new(user, src, "HotkeysHelp")
 		ui.open()
 
+/datum/hotkeys_help/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	var/mob/user = ui.user
+	if(action == "open_keybindings")
+		user.client.prefs.current_window = PREFERENCE_TAB_KEYBINDINGS
+		user.client.prefs.ui_interact(usr)
+		return TRUE
+
 // Not static data since user could rebind keys.
 /datum/hotkeys_help/ui_data(mob/user)
 	// List every keybind to chat.
