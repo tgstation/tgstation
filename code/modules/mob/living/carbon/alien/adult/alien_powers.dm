@@ -18,6 +18,12 @@ Doesn't work on other aliens/AI.*/
 	/// How much plasma this action uses.
 	var/plasma_cost = 0
 
+/datum/action/cooldown/alien/New(Target)
+	. = ..()
+	//not free
+	if(plasma_cost != 0)
+		name = "[initial(name)] ([plasma_cost]P)"
+
 /datum/action/cooldown/alien/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
@@ -49,13 +55,6 @@ Doesn't work on other aliens/AI.*/
 		unset_click_ability(owner, refund_cooldown = FALSE)
 
 	return TRUE
-
-/datum/action/cooldown/alien/set_statpanel_format()
-	. = ..()
-	if(!islist(.))
-		return
-
-	.[PANEL_DISPLAY_STATUS] = "PLASMA - [plasma_cost]"
 
 /datum/action/cooldown/alien/make_structure
 	/// The type of structure the action makes on use
