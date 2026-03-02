@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes:
+  - bugfix: "Fixed chat interference when you would be put to sleep but were sleep immune."
