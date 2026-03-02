@@ -921,7 +921,6 @@
 	. += get_status_tab_items()
 	. -= .[1] //remove the "offset unique stuff"
 	. += get_actions_for_statpanel()
-	to_chat(world, "has [length(.)] items found as important stat panel entries.")
 	return !!length(.)
 
 /client/verb/toggle_stat_panel()
