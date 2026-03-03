@@ -13,7 +13,7 @@
 	icon_state = "broken_state"
 
 	/// Anomaly type
-	var/anomaly_type
+	var/obj/item/assembly/signaler/anomaly/anomaly_type
 
 /obj/item/raw_anomaly_core/bluespace
 	name = "raw bluespace core"
@@ -51,11 +51,6 @@
 	anomaly_type = /obj/item/assembly/signaler/anomaly/hallucination
 	icon_state = "rawcore_hallucination"
 
-/obj/item/raw_anomaly_core/random
-	name = "random raw core"
-	desc = "You should not see this!"
-	icon_state = "rawcore_bluespace"
-
 /obj/item/raw_anomaly_core/bioscrambler
 	name = "raw bioscrambler core"
 	desc = "The raw core of a bioscrambler anomaly, it squirms."
@@ -79,6 +74,12 @@
 	desc = "The raw core of a weather anomaly. It makes you wish for a rainy day."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/weather
 	icon_state = "rawcore_weather"
+
+/obj/item/raw_anomaly_core/random
+	name = "random raw core"
+	desc = "You should not see this!"
+	icon_state = "rawcore_bluespace"
+	item_flags = parent_type::item_flags | ABSTRACT
 
 /obj/item/raw_anomaly_core/random/Initialize(mapload)
 	. = ..()
