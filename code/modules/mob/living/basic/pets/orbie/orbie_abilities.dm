@@ -33,7 +33,7 @@
 /datum/action/cooldown/mob_cooldown/capture_photo/Activate(atom/target)
 	if(isnull(internal_camera))
 		return FALSE
-	INVOKE_ASYNC(internal_camera, TYPE_PROC_REF(/obj/item/camera, attempt_picture), target, owner)
+	internal_camera.attempt_picture(target, owner)
 	StartCooldown()
 	return TRUE
 

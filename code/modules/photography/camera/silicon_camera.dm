@@ -16,7 +16,7 @@
 	if(!can_take_picture(clicker))
 		return
 	clicker.face_atom(clicked_on)
-	INVOKE_ASYNC(src, PROC_REF(attempt_picture), clicked_on, clicker)
+	attempt_picture(clicked_on, clicker)
 	toggle_camera_mode(clicker, sound = FALSE)
 
 /// Toggles the camera mode on or off.

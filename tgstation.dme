@@ -6695,6 +6695,7 @@
 #include "code\modules\wiremod\components\abstract\list_variable.dm"
 #include "code\modules\wiremod\components\abstract\module.dm"
 #include "code\modules\wiremod\components\abstract\variable.dm"
+#include "code\modules\wiremod\components\action\camera.dm"
 #include "code\modules\wiremod\components\action\equpiment_action.dm"
 #include "code\modules\wiremod\components\action\laserpointer.dm"
 #include "code\modules\wiremod\components\action\light.dm"

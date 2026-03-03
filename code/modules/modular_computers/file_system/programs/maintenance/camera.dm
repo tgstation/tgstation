@@ -39,10 +39,8 @@
 	. = ..()
 
 	QDEL_NULL(internal_picture)
-	var/turf/our_turf = get_turf(tapped_atom)
-	var/spooky_camera = locate(/datum/computer_file/program/maintenance/spectre_meter) in computer.stored_files
-	internal_camera.see_ghosts = spooky_camera ?  CAMERA_SEE_GHOSTS_BASIC : CAMERA_NO_GHOSTS
-	INVOKE_ASYNC(internal_camera, TYPE_PROC_REF(/obj/item/camera, attempt_picture), our_turf, user)
+	internal_camera.see_ghosts = (locate(/datum/computer_file/program/maintenance/spectre_meter) in computer.stored_files) ?  CAMERA_SEE_GHOSTS_BASIC : CAMERA_NO_GHOSTS
+	internal_camera.attempt_picture(get_turf(tapped_atom), user)
 
 /datum/computer_file/program/maintenance/camera/proc/save_picture(cam, target, user, datum/picture/picture)
 	SIGNAL_HANDLER
@@ -112,7 +110,7 @@
 		if(!target)
 			return
 	var/datum/computer_file/program/maintenance/camera/cam = associated_program
-	INVOKE_ASYNC(cam.internal_camera, TYPE_PROC_REF(/obj/item/camera, attempt_picture), target)
+	cam.internal_camera.attempt_picture(target)
 
 /obj/item/circuit_component/mod_program/camera/proc/on_image_captured(obj/item/camera/source, atom/target, mob/user)
 	SIGNAL_HANDLER
