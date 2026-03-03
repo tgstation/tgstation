@@ -1685,6 +1685,7 @@
 /area/awaymission/caves/academy)
 "kL" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/item/guardian_creator/carp,
 /turf/open/floor/iron/white,
 /area/awaymission/caves/academy)
 "kN" = (
@@ -1865,6 +1866,10 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
+/area/awaymission/caves/academy)
+"lO" = (
+/obj/effect/baseturf_helper/beach,
+/turf/closed/wall/r_wall,
 /area/awaymission/caves/academy)
 "lQ" = (
 /obj/structure/table,
@@ -2088,6 +2093,19 @@
 /obj/item/food/meat/slab,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/caves/academy)
+"pe" = (
+/obj/structure/table,
+/obj/effect/oneway{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
+"qT" = (
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "rl" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/wood,
@@ -2133,6 +2151,10 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/caves/academy)
+"wf" = (
+/obj/structure/table,
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "wg" = (
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron,
@@ -2145,6 +2167,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
+/area/awaymission/caves/academy)
+"yH" = (
+/obj/machinery/computer/records/security{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "zI" = (
 /obj/item/clothing/under/syndicate,
@@ -2161,11 +2189,21 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
+"Ab" = (
+/obj/effect/landmark/awaystart,
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "Av" = (
 /obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
+/area/awaymission/caves/academy)
+"Aw" = (
+/obj/effect/oneway{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "AA" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -2173,6 +2211,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
+/area/awaymission/caves/academy)
+"AH" = (
+/obj/machinery/power/shuttle_engine/propulsion/left{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "AK" = (
 /obj/structure/kitchenspike,
@@ -2189,6 +2233,13 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/cable,
 /turf/open/floor/circuit/green,
+/area/awaymission/caves/academy)
+"Cg" = (
+/obj/machinery/gateway/away,
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
+"Ck" = (
+/turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "CD" = (
 /obj/item/stack/cable_coil,
@@ -2226,6 +2277,9 @@
 "Fl" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
+/area/awaymission/caves/academy)
+"GK" = (
+/turf/closed/indestructible/reinforced/titanium,
 /area/awaymission/caves/academy)
 "GP" = (
 /obj/machinery/light/directional/north,
@@ -2295,10 +2349,12 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
-"KG" = (
-/obj/structure/table/wood,
-/obj/item/boulder/true_boulder,
-/turf/open/floor/engine/cult,
+"Km" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "KZ" = (
 /obj/structure/chair/office{
@@ -2337,6 +2393,17 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
+"MO" = (
+/obj/structure/table/wood,
+/obj/item/boulder/true_boulder,
+/turf/open/floor/engine/cult,
+/area/awaymission/caves/academy)
+"Oa" = (
+/obj/structure/railing/unbreakable{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "Of" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/structure/cable,
@@ -2358,6 +2425,11 @@
 /obj/item/dice/d20,
 /obj/structure/cable,
 /turf/open/floor/carpet,
+/area/awaymission/caves/academy)
+"QD" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "RA" = (
 /obj/effect/turf_decal/tile/green,
@@ -2421,6 +2493,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
+"Wo" = (
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
+"Wz" = (
+/obj/structure/window/reinforced/fulltile/indestructible,
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
 "WG" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/carpet,
@@ -2464,6 +2544,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
+"ZP" = (
+/obj/effect/baseturf_helper/beach,
+/turf/closed/mineral/random/high_chance,
+/area/awaymission/beach/academy)
 
 (1,1,1) = {"
 aG
@@ -5753,9 +5837,9 @@ jU
 jU
 mK
 mK
+mY
 mK
 mK
-mK
 jU
 jU
 jU
@@ -5792,8 +5876,8 @@ jU
 jU
 mK
 mK
-mK
-mK
+mY
+mY
 mK
 mK
 jU
@@ -5882,47 +5966,47 @@ jU
 jU
 jU
 mK
+mY
+mY
+mY
 mK
-mK
-mK
-mK
-jU
-jU
-mK
-mK
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
 jU
 jU
 mK
 mK
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
 mK
+mK
+mY
 mK
 mK
 jU
@@ -6564,7 +6648,7 @@ jU
 jU
 mK
 mK
-mK
+mY
 mK
 mK
 jU
@@ -6665,36 +6749,36 @@ jU
 jU
 mK
 mK
+mY
+mY
+mK
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
+jU
 mK
 mK
-mK
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-mK
-mK
-mK
+mY
 mK
 mK
 jU
@@ -6794,9 +6878,9 @@ jU
 jU
 mK
 mK
-mK
-mK
-mK
+mY
+mY
+mY
 mK
 jU
 jU
@@ -6923,9 +7007,9 @@ jU
 jU
 jU
 mK
-mK
-mK
-mK
+mY
+mY
+mY
 mK
 mK
 jU
@@ -10124,11 +10208,11 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
+AH
+AH
+AH
+AH
+AH
 mK
 mY
 mY
@@ -10253,13 +10337,13 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
-jU
-mK
+GK
+Km
+Km
+Km
+Km
+Km
+GK
 mY
 mY
 aG
@@ -10383,14 +10467,14 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
-jU
-mK
-mK
+GK
+Ab
+Ck
+Ck
+Ck
+Ab
+GK
+mY
 mY
 aG
 aG
@@ -10513,14 +10597,14 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-mK
+GK
+Ab
+Ck
+Cg
+Ck
+Ab
+GK
+mY
 mY
 aG
 aG
@@ -10643,14 +10727,14 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-mK
+GK
+Ab
+Ck
+Ck
+Ck
+Ab
+GK
+mY
 mY
 aG
 aG
@@ -10773,14 +10857,14 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-mK
+GK
+Ck
+Ab
+Ab
+Ab
+Ck
+GK
+mY
 mY
 aG
 aG
@@ -10903,14 +10987,14 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-mK
+GK
+Ck
+Ck
+Ck
+Ck
+Ck
+GK
+mY
 mY
 aG
 aG
@@ -11033,14 +11117,14 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
-jU
-jU
-mK
+Wo
+Ck
+Ck
+Ck
+Ck
+Ck
+Wo
+mY
 mY
 aG
 aG
@@ -11163,14 +11247,14 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
-jU
-mK
-mK
+GK
+pe
+pe
+Oa
+pe
+pe
+GK
+mY
 mY
 aG
 aG
@@ -11293,13 +11377,13 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
-jU
-mK
+GK
+Ck
+Ck
+Aw
+Ck
+Ck
+GK
 mY
 mY
 aG
@@ -11402,7 +11486,7 @@ jH
 jH
 jH
 jH
-jQ
+QD
 jH
 jW
 jH
@@ -11423,13 +11507,13 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
-mK
-mK
+GK
+qT
+wf
+wf
+wf
+yH
+GK
 mY
 mY
 aG
@@ -11553,13 +11637,13 @@ jU
 jU
 jU
 jU
-jU
-jU
-jU
-jU
-jU
-mK
-mY
+GK
+Wz
+Wz
+Wz
+Wz
+Wz
+GK
 mY
 mY
 aG
@@ -11832,7 +11916,7 @@ mY
 mY
 mK
 jU
-jS
+lO
 jS
 bh
 bh
@@ -13129,7 +13213,7 @@ aG
 aG
 aG
 mY
-mK
+ZP
 mK
 jU
 jU
@@ -15095,7 +15179,7 @@ aG
 aG
 aL
 la
-KG
+MO
 la
 aL
 aG

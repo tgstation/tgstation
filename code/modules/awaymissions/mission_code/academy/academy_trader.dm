@@ -15,12 +15,3 @@
 	throw_speed = 0.5
 	slowdown = 2
 	drag_slowdown = 1.5 // It's still a big rock.
-
-/obj/item/fake_items/time_stopper/no_anchor
-	anchored = 0
-
-/obj/item/fake_items/wabbajack/no_anchor
-	anchored = 0
-
-/obj/item/fake_items/abductor_win_stick/no_anchor
-	anchored = 0
