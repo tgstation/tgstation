@@ -1984,6 +1984,7 @@
 /area/awaymission/caves/academy)
 "mt" = (
 /obj/structure/table,
+/obj/item/gun/magic/wand/nothing/disabler,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/caves/academy)
 "mw" = (
@@ -2293,6 +2294,11 @@
 "JX" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/wood,
+/area/awaymission/caves/academy)
+"KG" = (
+/obj/structure/table/wood,
+/obj/item/boulder/true_boulder,
+/turf/open/floor/engine/cult,
 /area/awaymission/caves/academy)
 "KZ" = (
 /obj/structure/chair/office{
@@ -15089,7 +15095,7 @@ aG
 aG
 aL
 la
-lg
+KG
 la
 aL
 aG
