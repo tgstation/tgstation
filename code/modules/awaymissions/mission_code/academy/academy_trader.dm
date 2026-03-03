@@ -1,17 +1,25 @@
-//the one boulder to rule them all, rust reference
-/obj/item/boulder/true_boulder
-	name = "One rock to rule them all"
-	desc = "A stone that is well weighted and easy to hold, one side is easy and comfortable to hold, you could easily bash somebodys head in with this or mine a metal node."
-	icon_state = "ore"
-	icon = 'icons/obj/ore.dmi'
-	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND
-	w_class = WEIGHT_CLASS_HUGE
-	throwforce = 25 // rock
-	throw_range = 5
-	force = 25 // the one rock to rule them all
-	armour_penetration = 100 //the rock does not care what you wear
-	block_chance = 25 // funny
-	tk_throw_range = 0 // no fancy magic tricks with the rock
-	throw_speed = 0.5
-	slowdown = 2
-	drag_slowdown = 1.5 // It's still a big rock.
+/mob/living/basic/trader/mr_corporate
+	name = "Mr Corporate"
+	desc = "A high ranking centcom official in their modsuit, they seem a bit, shallow."
+	speak_emote = list("demands")
+	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID
+	gender = MALE
+	spawner_path = /obj/effect/mob_spawn/corpse/human/skeleton/mr_corporate
+	loot = list(/obj/effect/decal/remains/human)
+	ranged_attack_casing = /obj/item/ammo_casing/a75
+	held_weapon_visual = /obj/item/gun/ballistic/automatic/gyropistol
+	trader_data_path = /datum/trader_data/mr_corporate
+
+/obj/effect/mob_spawn/corpse/human/skeleton/mr_corporate
+	mob_species = /datum/species/skeleton
+	outfit = /datum/outfit/mr_corporate
+
+/datum/outfit/mr_corporate
+	name = "Centcom official"
+	uniform = /obj/item/clothing/under/rank/centcom/commander
+	mask = /obj/item/clothing/mask/gas/atmos/centcom
+	ears = /obj/item/radio/headset/headset_cent/alt/leader
+	shoes = /obj/item/clothing/shoes/jackboots
+	back = /obj/item/mod/control/pre_equipped/corporate
+	gloves = /obj/item/clothing/gloves/kaza_ruk/combatglovesplus
+	neck = /obj/item/clothing/neck/large_scarf/green

@@ -3808,6 +3808,8 @@
 #include "code\modules\awaymissions\mission_code\stationCollision.dm"
 #include "code\modules\awaymissions\mission_code\undergroundoutpost45.dm"
 #include "code\modules\awaymissions\mission_code\academy\academy_items_and_mobs.dm"
+#include "code\modules\awaymissions\mission_code\academy\academy_trader.dm"
+#include "code\modules\awaymissions\mission_code\academy\academy_trader_data.dm"
 #include "code\modules\awaymissions\mission_code\academy\academy_zone.dm"
 #include "code\modules\awaymissions\mission_code\heretic\cbrn.dm"
 #include "code\modules\awaymissions\mission_code\heretic\fake_items.dm"
