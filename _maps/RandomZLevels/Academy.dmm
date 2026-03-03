@@ -126,9 +126,7 @@
 /turf/closed/wall/mineral/wood,
 /area/awaymission/caves/academy)
 "aM" = (
-/obj/machinery/door/window{
-	dir = 8
-	},
+/obj/machinery/door/window/right/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
@@ -182,7 +180,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/caves/academy)
 "aZ" = (
-/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -596,6 +593,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
+"dr" = (
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "ds" = (
 /obj/structure/sink{
 	dir = 4;
@@ -655,10 +656,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
-"dE" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/awaymission/caves/academy)
 "dF" = (
 /obj/structure/training_machine,
 /turf/open/floor/iron,
@@ -668,9 +665,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "dJ" = (
-/obj/machinery/door/window{
-	dir = 4
-	},
+/obj/machinery/door/window/right/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -701,9 +696,7 @@
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "dW" = (
-/obj/machinery/door/window{
-	dir = 4
-	},
+/obj/machinery/door/window/right/directional/east,
 /obj/item/ammo_casing,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -803,12 +796,8 @@
 	},
 /area/awaymission/caves/academy)
 "eu" = (
-/obj/machinery/door/window{
-	dir = 4
-	},
-/obj/machinery/door/window{
-	dir = 8
-	},
+/obj/machinery/door/window/right/directional/east,
+/obj/machinery/door/window/right/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "ev" = (
@@ -1143,6 +1132,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
+"gQ" = (
+/obj/effect/landmark/awaystart,
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "gR" = (
 /obj/structure/ladder/unbreakable/rune{
 	height = 1;
@@ -1454,7 +1448,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
 "iY" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/right/directional/south,
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/caves/academy)
@@ -1700,13 +1694,13 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
 "kA" = (
-/obj/structure/grille,
 /obj/item/shard,
 /obj/structure/cable,
+/obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/awaymission/caves/academy)
 "kC" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/right/directional/south,
 /turf/open/floor/carpet,
 /area/awaymission/caves/academy)
 "kD" = (
@@ -1722,11 +1716,6 @@
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/guardian_creator/carp,
 /turf/open/floor/iron/white,
-/area/awaymission/caves/academy)
-"kN" = (
-/obj/structure/grille,
-/obj/structure/cable,
-/turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "kO" = (
 /obj/structure/table,
@@ -1814,10 +1803,8 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/academy)
 "li" = (
-/obj/machinery/door/window{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "ll" = (
@@ -2580,6 +2567,10 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
+"MT" = (
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "MW" = (
 /obj/effect/baseturf_helper/beach,
 /turf/closed/mineral/random/high_chance,
@@ -2644,6 +2635,11 @@
 "QY" = (
 /mob/living/basic/skeleton/templar/academy,
 /turf/open/floor/wood,
+/area/awaymission/caves/academy)
+"QZ" = (
+/obj/effect/landmark/awaystart,
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "RA" = (
 /obj/effect/turf_decal/tile/green,
@@ -9912,9 +9908,9 @@ TQ
 TQ
 eM
 jS
-kN
 jb
-kN
+jb
+jb
 jS
 jU
 jU
@@ -10880,11 +10876,11 @@ jU
 jU
 jU
 dj
-LG
+gQ
 JS
 fV
 JS
-LG
+QZ
 dj
 mY
 mY
@@ -11660,11 +11656,11 @@ jU
 jU
 jU
 dj
-JS
+MT
 JS
 om
 JS
-JS
+dr
 dj
 mY
 mY
@@ -13162,9 +13158,9 @@ fb
 jS
 jS
 jS
-dE
+jH
 eZ
-dE
+jH
 jS
 jU
 jU
