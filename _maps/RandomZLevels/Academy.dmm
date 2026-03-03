@@ -495,6 +495,10 @@
 "cD" = (
 /turf/open/floor/carpet,
 /area/awaymission/caves/academy)
+"cE" = (
+/obj/structure/window/reinforced/fulltile/indestructible,
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
 "cI" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/grass,
@@ -555,6 +559,9 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white/corner,
+/area/awaymission/caves/academy)
+"dj" = (
+/turf/closed/indestructible/reinforced/titanium,
 /area/awaymission/caves/academy)
 "dk" = (
 /obj/effect/turf_decal/tile/red{
@@ -840,7 +847,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
 "eE" = (
-/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/carpet,
 /area/awaymission/caves/academy)
 "eH" = (
@@ -883,6 +890,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
+/area/awaymission/caves/academy)
+"eS" = (
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "eU" = (
 /obj/machinery/door/airlock/gold,
@@ -1025,6 +1038,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/caves/academy)
+"fV" = (
+/obj/machinery/gateway/away,
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "fW" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/gold,
@@ -1139,6 +1156,10 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/snow,
+/area/awaymission/caves/academy)
+"gZ" = (
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/carpet,
 /area/awaymission/caves/academy)
 "ha" = (
 /obj/structure/destructible/cult/pylon,
@@ -1648,6 +1669,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless,
 /area/awaymission/caves/academy)
+"ks" = (
+/obj/machinery/power/shuttle_engine/propulsion/left{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
 "kx" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1867,10 +1894,6 @@
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
-"lO" = (
-/obj/effect/baseturf_helper/beach,
-/turf/closed/wall/r_wall,
-/area/awaymission/caves/academy)
 "lQ" = (
 /obj/structure/table,
 /turf/open/floor/plating,
@@ -2078,6 +2101,12 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
+"om" = (
+/obj/effect/oneway{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "os" = (
 /obj/structure/constructshell,
 /obj/machinery/light/directional/north,
@@ -2093,19 +2122,6 @@
 /obj/item/food/meat/slab,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/caves/academy)
-"pe" = (
-/obj/structure/table,
-/obj/effect/oneway{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
-/area/awaymission/caves/academy)
-"qT" = (
-/obj/machinery/computer/crew{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
-/area/awaymission/caves/academy)
 "rl" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/wood,
@@ -2115,6 +2131,10 @@
 /obj/item/gun/energy/floragun,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
+/area/awaymission/caves/academy)
+"so" = (
+/mob/living/basic/wizard,
+/turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "sr" = (
 /obj/structure/mirror/directional/north,
@@ -2132,6 +2152,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/beach/academy)
+"uI" = (
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/carpet,
+/area/awaymission/caves/academy)
 "uM" = (
 /obj/structure/chair{
 	dir = 1
@@ -2151,28 +2175,28 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/caves/academy)
-"wf" = (
-/obj/structure/table,
-/turf/open/floor/mineral/titanium,
-/area/awaymission/caves/academy)
 "wg" = (
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
+"wk" = (
+/obj/structure/railing/unbreakable{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "xr" = (
 /turf/closed/indestructible/rock,
 /area/awaymission/beach/academy)
+"xM" = (
+/obj/structure/table,
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "yg" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/awaymission/caves/academy)
-"yH" = (
-/obj/machinery/computer/records/security{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "zI" = (
 /obj/item/clothing/under/syndicate,
@@ -2189,9 +2213,14 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
-"Ab" = (
-/obj/effect/landmark/awaystart,
-/turf/open/floor/mineral/titanium,
+"zS" = (
+/obj/effect/baseturf_helper/beach,
+/turf/closed/wall/r_wall,
+/area/awaymission/caves/academy)
+"Ao" = (
+/obj/structure/cable,
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/carpet,
 /area/awaymission/caves/academy)
 "Av" = (
 /obj/structure/chair/wood{
@@ -2199,24 +2228,12 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
-"Aw" = (
-/obj/effect/oneway{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
-/area/awaymission/caves/academy)
 "AA" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/awaymission/caves/academy)
-"AH" = (
-/obj/machinery/power/shuttle_engine/propulsion/left{
-	dir = 8
-	},
-/turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "AK" = (
 /obj/structure/kitchenspike,
@@ -2234,13 +2251,6 @@
 /obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/awaymission/caves/academy)
-"Cg" = (
-/obj/machinery/gateway/away,
-/turf/open/floor/mineral/titanium,
-/area/awaymission/caves/academy)
-"Ck" = (
-/turf/open/floor/mineral/titanium,
-/area/awaymission/caves/academy)
 "CD" = (
 /obj/item/stack/cable_coil,
 /obj/structure/cable,
@@ -2252,6 +2262,13 @@
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/caves/academy)
+"Da" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "DS" = (
 /obj/structure/chair/stool/directional/south,
@@ -2278,8 +2295,14 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
-"GK" = (
-/turf/closed/indestructible/reinforced/titanium,
+"FN" = (
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
+"GA" = (
+/obj/structure/table/wood,
+/obj/item/boulder/true_boulder,
+/turf/open/floor/engine/cult,
 /area/awaymission/caves/academy)
 "GP" = (
 /obj/machinery/light/directional/north,
@@ -2333,6 +2356,9 @@
 /obj/item/storage/box/matches,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
+"JS" = (
+/turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
 "JT" = (
 /obj/structure/chair{
 	dir = 1
@@ -2349,18 +2375,15 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
-"Km" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 8
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/mineral/titanium,
-/area/awaymission/caves/academy)
 "KZ" = (
 /obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/carpet,
+/area/awaymission/caves/academy)
+"LG" = (
+/obj/effect/landmark/awaystart,
+/turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "LH" = (
 /obj/effect/turf_decal/tile/red,
@@ -2393,17 +2416,10 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
-"MO" = (
-/obj/structure/table/wood,
-/obj/item/boulder/true_boulder,
-/turf/open/floor/engine/cult,
-/area/awaymission/caves/academy)
-"Oa" = (
-/obj/structure/railing/unbreakable{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
-/area/awaymission/caves/academy)
+"MW" = (
+/obj/effect/baseturf_helper/beach,
+/turf/closed/mineral/random/high_chance,
+/area/awaymission/beach/academy)
 "Of" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/structure/cable,
@@ -2426,11 +2442,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/caves/academy)
-"QD" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/door/poddoor/shutters/preopen,
-/turf/open/floor/plating,
-/area/awaymission/caves/academy)
 "RA" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -2438,9 +2449,25 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
+"Sw" = (
+/obj/structure/cable,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/carpet,
+/area/awaymission/caves/academy)
+"Sx" = (
+/mob/living/basic/wizard,
+/turf/open/floor/grass,
+/area/awaymission/caves/academy)
 "SR" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/snow,
+/area/awaymission/caves/academy)
+"SW" = (
+/obj/structure/table,
+/obj/effect/oneway{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "Tk" = (
 /obj/structure/safe/floor{
@@ -2484,25 +2511,28 @@
 /obj/machinery/vending/magivend,
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
+"Vw" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
 "VN" = (
 /obj/structure/filingcabinet,
 /turf/open/floor/wood,
+/area/awaymission/caves/academy)
+"VU" = (
+/obj/machinery/computer/records/security{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "Wc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
-"Wo" = (
-/obj/machinery/door/airlock/external/ruin,
-/turf/open/floor/plating,
-/area/awaymission/caves/academy)
-"Wz" = (
-/obj/structure/window/reinforced/fulltile/indestructible,
-/turf/open/floor/plating,
-/area/awaymission/caves/academy)
 "WG" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/carpet,
 /area/awaymission/caves/academy)
 "WK" = (
@@ -2544,10 +2574,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
-"ZP" = (
-/obj/effect/baseturf_helper/beach,
-/turf/closed/mineral/random/high_chance,
-/area/awaymission/beach/academy)
 
 (1,1,1) = {"
 aG
@@ -10208,11 +10234,11 @@ jU
 jU
 jU
 jU
-AH
-AH
-AH
-AH
-AH
+ks
+ks
+ks
+ks
+ks
 mK
 mY
 mY
@@ -10337,13 +10363,13 @@ jU
 jU
 jU
 jU
-GK
-Km
-Km
-Km
-Km
-Km
-GK
+dj
+Da
+Da
+Da
+Da
+Da
+dj
 mY
 mY
 aG
@@ -10467,13 +10493,13 @@ jU
 jU
 jU
 jU
-GK
-Ab
-Ck
-Ck
-Ck
-Ab
-GK
+dj
+LG
+JS
+JS
+JS
+LG
+dj
 mY
 mY
 aG
@@ -10597,13 +10623,13 @@ jU
 jU
 jU
 jU
-GK
-Ab
-Ck
-Cg
-Ck
-Ab
-GK
+dj
+LG
+JS
+fV
+JS
+LG
+dj
 mY
 mY
 aG
@@ -10689,7 +10715,7 @@ lB
 bh
 bh
 bh
-bh
+Ao
 bh
 df
 mq
@@ -10727,13 +10753,13 @@ jU
 jU
 jU
 jU
-GK
-Ab
-Ck
-Ck
-Ck
-Ab
-GK
+dj
+LG
+JS
+JS
+JS
+LG
+dj
 mY
 mY
 aG
@@ -10820,7 +10846,7 @@ cD
 cD
 WG
 Qd
-bh
+Sw
 df
 iH
 jS
@@ -10857,13 +10883,13 @@ jU
 jU
 jU
 jU
-GK
-Ck
-Ab
-Ab
-Ab
-Ck
-GK
+dj
+JS
+LG
+LG
+LG
+JS
+dj
 mY
 mY
 aG
@@ -10987,13 +11013,13 @@ jU
 jU
 jU
 jU
-GK
-Ck
-Ck
-Ck
-Ck
-Ck
-GK
+dj
+JS
+JS
+JS
+JS
+JS
+dj
 mY
 mY
 aG
@@ -11069,7 +11095,7 @@ mx
 mx
 mx
 mx
-mx
+so
 mx
 nc
 hd
@@ -11117,13 +11143,13 @@ jU
 jU
 jU
 jU
-Wo
-Ck
-Ck
-Ck
-Ck
-Ck
-Wo
+FN
+JS
+JS
+JS
+JS
+JS
+FN
 mY
 mY
 aG
@@ -11247,13 +11273,13 @@ jU
 jU
 jU
 jU
-GK
-pe
-pe
-Oa
-pe
-pe
-GK
+dj
+SW
+SW
+wk
+SW
+SW
+dj
 mY
 mY
 aG
@@ -11377,13 +11403,13 @@ jU
 jU
 jU
 jU
-GK
-Ck
-Ck
-Aw
-Ck
-Ck
-GK
+dj
+JS
+JS
+om
+JS
+JS
+dj
 mY
 mY
 aG
@@ -11486,7 +11512,7 @@ jH
 jH
 jH
 jH
-QD
+Vw
 jH
 jW
 jH
@@ -11507,13 +11533,13 @@ jU
 jU
 jU
 jU
-GK
-qT
-wf
-wf
-wf
-yH
-GK
+dj
+eS
+xM
+xM
+xM
+VU
+dj
 mY
 mY
 aG
@@ -11583,6 +11609,7 @@ Iw
 cD
 cD
 mx
+Sx
 fD
 fD
 fD
@@ -11590,8 +11617,7 @@ fD
 fD
 fD
 fD
-fD
-mx
+so
 Iw
 bh
 cD
@@ -11599,7 +11625,7 @@ Iw
 ii
 In
 cD
-cD
+gZ
 cD
 df
 df
@@ -11637,13 +11663,13 @@ jU
 jU
 jU
 jU
-GK
-Wz
-Wz
-Wz
-Wz
-Wz
-GK
+dj
+cE
+cE
+cE
+cE
+cE
+dj
 mY
 mY
 aG
@@ -11730,7 +11756,7 @@ cD
 cD
 WG
 Qd
-cD
+uI
 df
 dy
 jS
@@ -11916,7 +11942,7 @@ mY
 mY
 mK
 jU
-lO
+zS
 jS
 bh
 bh
@@ -13213,7 +13239,7 @@ aG
 aG
 aG
 mY
-ZP
+MW
 mK
 jU
 jU
@@ -15179,7 +15205,7 @@ aG
 aG
 aL
 la
-MO
+GA
 la
 aL
 aG
