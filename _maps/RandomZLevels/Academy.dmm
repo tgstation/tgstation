@@ -607,6 +607,8 @@
 "dt" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/mob_buckler,
+/mob/living/basic/trooper/nanotrasen/ranged/elite/traitor,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
 "du" = (
@@ -777,10 +779,8 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
 "en" = (
-/obj/structure/table,
-/obj/item/gun/ballistic/shotgun/automatic/combat,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/obj/item/book/granter/action/spell/smoke/lesser,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/caves/academy)
 "eo" = (
 /obj/structure/table/reinforced,
@@ -797,6 +797,7 @@
 /area/awaymission/beach/academy)
 "es" = (
 /obj/machinery/light/directional/east,
+/mob/living/basic/wizard/academy,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -1083,6 +1084,7 @@
 	name = "Skeleton Storage Control";
 	pixel_y = -24
 	},
+/mob/living/basic/wizard/academy/high_magus,
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "gn" = (
@@ -1111,7 +1113,7 @@
 /area/awaymission/caves/academy)
 "gx" = (
 /obj/structure/closet/athletic_mixed,
-/turf/open/floor/engine/cult,
+/turf/closed/mineral/random/high_chance,
 /area/awaymission/caves/academy)
 "gC" = (
 /turf/open/floor/iron,
@@ -1402,6 +1404,10 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
+"iG" = (
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/iron,
+/area/awaymission/caves/academy)
 "iH" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/yellow{
@@ -1583,6 +1589,7 @@
 "jK" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/mob/living/basic/skeleton/templar/academy,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
 "jL" = (
@@ -1599,6 +1606,7 @@
 /obj/structure/closet/crate,
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/gun/magic/wand/resurrection/inert,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
 "jQ" = (
@@ -1733,6 +1741,7 @@
 /area/awaymission/caves/academy)
 "kP" = (
 /obj/effect/decal/cleanable/cobweb,
+/mob/living/basic/heretic_summon/raw_prophet,
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/academy)
 "kR" = (
@@ -1755,8 +1764,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/academy)
 "kV" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/engine/cult,
+/turf/closed/indestructible/wood,
 /area/awaymission/caves/academy)
 "kW" = (
 /obj/structure/ladder/unbreakable/rune{
@@ -1772,6 +1780,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
+/mob/living/basic/construct/artificer/noncult,
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/academy)
 "la" = (
@@ -1795,6 +1804,9 @@
 /area/awaymission/caves/academy)
 "lg" = (
 /obj/structure/table/wood,
+/obj/item/stack/sheet/mineral/mythril{
+	amount = 6
+	},
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/academy)
 "lh" = (
@@ -1827,6 +1839,10 @@
 /obj/machinery/power/smes/magical,
 /obj/structure/cable,
 /turf/open/floor/vault,
+/area/awaymission/caves/academy)
+"lt" = (
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "lw" = (
 /obj/item/ectoplasm,
@@ -1916,7 +1932,16 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "lU" = (
-/obj/structure/closet/radiation,
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/mob_buckler,
+/obj/item/clothing/gloves/combat/wizard{
+	pixel_x = -18;
+	pixel_y = -13;
+	anchored = 1
+	},
+/mob/living/basic/wizard/academy/tired,
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "lV" = (
@@ -1959,8 +1984,15 @@
 /turf/open/floor/carpet,
 /area/awaymission/caves/academy)
 "me" = (
-/obj/structure/constructshell,
-/turf/open/floor/plating,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/item/reagent_containers/condiment/protein/wizbulk,
+/turf/open/floor/iron/white/corner,
 /area/awaymission/caves/academy)
 "mg" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -1976,9 +2008,7 @@
 /turf/open/floor/vault,
 /area/awaymission/caves/academy)
 "mk" = (
-/obj/structure/rack,
-/obj/item/claymore,
-/obj/item/toy/figure/wizard,
+/obj/structure/constructshell,
 /turf/open/floor/vault,
 /area/awaymission/caves/academy)
 "ml" = (
@@ -2070,6 +2100,7 @@
 /obj/structure/ladder/unbreakable/rune{
 	id = "academy_storage"
 	},
+/mob/living/basic/illusion,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
 "mY" = (
@@ -2108,9 +2139,10 @@
 /turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "os" = (
-/obj/structure/constructshell,
-/obj/machinery/light/directional/north,
-/turf/open/floor/plating,
+/obj/structure/chair/stool/directional/south,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/mob/living/basic/wizard/academy,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
 "ou" = (
 /obj/structure/ladder/unbreakable/rune{
@@ -2122,9 +2154,35 @@
 /obj/item/food/meat/slab,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/caves/academy)
+"ps" = (
+/obj/structure/table/wood,
+/obj/item/gun/magic/wand/fireball/inert,
+/turf/open/floor/wood,
+/area/awaymission/caves/academy)
+"pC" = (
+/mob/living/basic/construct/proteon/hostile,
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
+"qV" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/mob/living/basic/wizard/academy/buffwiz,
+/turf/open/floor/iron/white/corner,
+/area/awaymission/caves/academy)
 "rl" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/wood,
+/area/awaymission/caves/academy)
+"rt" = (
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron,
 /area/awaymission/caves/academy)
 "rA" = (
 /obj/structure/table,
@@ -2132,13 +2190,27 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
+"sm" = (
+/mob/living/basic/skeleton/templar/academy/leader,
+/turf/open/floor/iron/showroomfloor,
+/area/awaymission/caves/academy)
 "so" = (
-/mob/living/basic/wizard,
+/mob/living/basic/wizard/academy,
+/turf/open/floor/wood,
+/area/awaymission/caves/academy)
+"sp" = (
+/mob/living/basic/wizard/academy,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "sr" = (
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron/cafeteria,
+/area/awaymission/caves/academy)
+"su" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/holywater/hell,
+/turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "sw" = (
 /obj/machinery/power/terminal{
@@ -2146,12 +2218,28 @@
 	},
 /turf/open/floor/vault,
 /area/awaymission/caves/academy)
+"tt" = (
+/mob/living/basic/wizard/academy,
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
+"tv" = (
+/mob/living/basic/construct/harvester/heretic,
+/turf/open/floor/engine/cult,
+/area/awaymission/caves/academy)
 "tO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/beach/academy)
+"ug" = (
+/mob/living/basic/spider/giant/viper/wizard,
+/turf/open/floor/engine/cult,
+/area/awaymission/caves/academy)
+"uw" = (
+/mob/living/basic/illusion/shover,
+/turf/open/floor/iron,
+/area/awaymission/caves/academy)
 "uI" = (
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/carpet,
@@ -2163,8 +2251,9 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
 "vA" = (
-/obj/item/clothing/mask/gas/syndicate,
-/turf/open/misc/asteroid/snow,
+/obj/structure/chair/wood,
+/mob/living/basic/wizard/academy,
+/turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "vD" = (
 /obj/structure/rack,
@@ -2185,6 +2274,21 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
+"wt" = (
+/obj/item/stack/sheet/greatergem{
+	pixel_x = 10;
+	pixel_y = -1
+	},
+/obj/item/stock_parts/power_store/cell/high/slime_hypercharged{
+	pixel_x = 23;
+	pixel_y = -10
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
+"xd" = (
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/iron,
+/area/awaymission/caves/academy)
 "xr" = (
 /turf/closed/indestructible/rock,
 /area/awaymission/beach/academy)
@@ -2192,11 +2296,20 @@
 /obj/structure/table,
 /turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
+"xP" = (
+/mob/living/basic/paper_wizard,
+/turf/open/floor/engine/cult,
+/area/awaymission/caves/academy)
 "yg" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /turf/open/floor/iron,
+/area/awaymission/caves/academy)
+"yj" = (
+/obj/structure/chair/wood,
+/mob/living/basic/faithless,
+/turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "zI" = (
 /obj/item/clothing/under/syndicate,
@@ -2222,6 +2335,10 @@
 /obj/structure/window/spawner/directional/east,
 /turf/open/floor/carpet,
 /area/awaymission/caves/academy)
+"Ar" = (
+/mob/living/basic/construct/harvester,
+/turf/open/floor/engine/cult,
+/area/awaymission/caves/academy)
 "Av" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -2242,6 +2359,11 @@
 "AM" = (
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/academy)
+"Bp" = (
+/obj/structure/chair/stool/directional/south,
+/mob/living/basic/wizard/academy,
+/turf/open/floor/iron,
+/area/awaymission/caves/academy)
 "BI" = (
 /obj/structure/rack,
 /turf/open/misc/asteroid/snow,
@@ -2254,6 +2376,10 @@
 "CD" = (
 /obj/item/stack/cable_coil,
 /obj/structure/cable,
+/turf/open/floor/iron,
+/area/awaymission/caves/academy)
+"CL" = (
+/mob/living/basic/skeleton/templar/academy,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
 "CM" = (
@@ -2269,6 +2395,17 @@
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
+"Dh" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/book/granter/action/spell/summon_cheese,
+/turf/open/floor/iron/cafeteria,
 /area/awaymission/caves/academy)
 "DS" = (
 /obj/structure/chair/stool/directional/south,
@@ -2299,6 +2436,10 @@
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
+"Gw" = (
+/mob/living/basic/construct/juggernaut/angelic,
+/turf/open/floor/engine/cult,
+/area/awaymission/caves/academy)
 "GA" = (
 /obj/structure/table/wood,
 /obj/item/boulder/true_boulder,
@@ -2316,6 +2457,11 @@
 "Hb" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/showroomfloor,
+/area/awaymission/caves/academy)
+"Hj" = (
+/obj/structure/table,
+/obj/item/fake_items/time_stopper/no_anchor,
+/turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "Hs" = (
 /obj/structure/table/reinforced,
@@ -2375,6 +2521,10 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
+"Km" = (
+/mob/living/basic/construct/proteon/hostile,
+/turf/open/floor/carpet,
+/area/awaymission/caves/academy)
 "KZ" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -2401,6 +2551,10 @@
 "Mm" = (
 /turf/open/floor/light,
 /area/awaymission/caves/academy)
+"My" = (
+/mob/living/basic/heretic_summon/fire_shark,
+/turf/open/floor/engine/cult,
+/area/awaymission/caves/academy)
 "Mz" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/light,
@@ -2420,6 +2574,14 @@
 /obj/effect/baseturf_helper/beach,
 /turf/closed/mineral/random/high_chance,
 /area/awaymission/beach/academy)
+"NT" = (
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/academy)
+"Od" = (
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/wood,
+/area/awaymission/caves/academy)
 "Of" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/structure/cable,
@@ -2429,6 +2591,25 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
+"OU" = (
+/obj/item/wrench/caravan{
+	pixel_x = -18;
+	pixel_y = -28;
+	anchored = 1
+	},
+/obj/item/mod/module/energy_shield/wizard{
+	anchored = 1;
+	pixel_x = -13;
+	pixel_y = 0
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
+"Pl" = (
+/obj/item/mod/control{
+	anchored = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
 "PY" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
@@ -2436,11 +2617,23 @@
 "Qd" = (
 /turf/open/misc/grass/jungle,
 /area/awaymission/caves/academy)
+"Qi" = (
+/obj/item/mod/module/anti_magic/wizard{
+	anchored = 1;
+	pixel_x = 0;
+	pixel_y = -3
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
 "Qo" = (
 /obj/structure/table/wood,
 /obj/item/dice/d20,
 /obj/structure/cable,
 /turf/open/floor/carpet,
+/area/awaymission/caves/academy)
+"QY" = (
+/mob/living/basic/skeleton/templar/academy,
+/turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "RA" = (
 /obj/effect/turf_decal/tile/green,
@@ -2449,13 +2642,38 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
+"RJ" = (
+/obj/item/mod/core/soul{
+	pixel_x = 11;
+	pixel_y = -14
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
+"Sc" = (
+/mob/living/basic/wizard/academy,
+/turf/open/floor/iron,
+/area/awaymission/caves/academy)
+"Sg" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/north,
+/obj/item/fake_items/abductor_win_stick/no_anchor,
+/mob/living/basic/wizard/academy,
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/caves/academy)
+"Sn" = (
+/obj/machinery/light/directional/east,
+/mob/living/basic/wizard/academy,
+/turf/open/floor/iron,
+/area/awaymission/caves/academy)
 "Sw" = (
 /obj/structure/cable,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/carpet,
 /area/awaymission/caves/academy)
 "Sx" = (
-/mob/living/basic/wizard,
+/mob/living/basic/wizard/academy,
 /turf/open/floor/grass,
 /area/awaymission/caves/academy)
 "SR" = (
@@ -2468,6 +2686,10 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
+/area/awaymission/caves/academy)
+"SZ" = (
+/mob/living/basic/wizard/academy,
+/turf/open/floor/iron/grimy,
 /area/awaymission/caves/academy)
 "Tk" = (
 /obj/structure/safe/floor{
@@ -2485,6 +2707,18 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
+/area/awaymission/caves/academy)
+"TI" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/mob/living/basic/wizard/academy,
+/turf/open/floor/wood,
+/area/awaymission/caves/academy)
+"TJ" = (
+/obj/structure/table/wood,
+/obj/item/fake_items/wabbajack/no_anchor,
+/turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "TQ" = (
 /turf/open/floor/iron/white/side{
@@ -2549,6 +2783,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/vault,
 /area/awaymission/caves/academy)
+"XP" = (
+/obj/item/book/granter/chuunibyou,
+/turf/open/misc/asteroid/snow,
+/area/awaymission/caves/academy)
 "XR" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating,
@@ -2573,6 +2811,10 @@
 "Zc" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
+/area/awaymission/caves/academy)
+"ZD" = (
+/mob/living/basic/skeleton/templar/academy,
+/turf/open/misc/grass/jungle,
 /area/awaymission/caves/academy)
 
 (1,1,1) = {"
@@ -5420,7 +5662,7 @@ mY
 aG
 mY
 mY
-kc
+XP
 kc
 kc
 kc
@@ -5681,7 +5923,7 @@ mY
 aG
 mY
 zI
-vA
+kc
 kc
 kc
 kc
@@ -5811,7 +6053,7 @@ mK
 aG
 mY
 mY
-kc
+en
 kc
 kc
 kc
@@ -8591,7 +8833,7 @@ bv
 gC
 gC
 gC
-gC
+Sc
 bt
 nr
 BQ
@@ -8748,7 +8990,7 @@ jH
 jS
 jH
 fo
-jH
+tt
 fo
 jH
 fo
@@ -9113,7 +9355,7 @@ jH
 LW
 bv
 gC
-gC
+Sc
 fI
 gC
 gC
@@ -9262,7 +9504,7 @@ gC
 hT
 dU
 ef
-dU
+Bp
 hT
 DS
 jS
@@ -9403,7 +9645,7 @@ fK
 fK
 cC
 vD
-Oh
+Sn
 jD
 gC
 jS
@@ -9775,7 +10017,7 @@ bZ
 be
 bh
 df
-df
+SZ
 Iw
 Iw
 Iw
@@ -10025,7 +10267,7 @@ mx
 mx
 mx
 mx
-mx
+so
 mx
 Iw
 df
@@ -10041,9 +10283,9 @@ mx
 my
 mL
 el
-my
+vA
 mL
-el
+TI
 mx
 Iw
 gC
@@ -10412,8 +10654,8 @@ hb
 aV
 LH
 mx
-mL
-el
+ps
+TI
 mL
 el
 mx
@@ -10575,7 +10817,7 @@ cA
 Iw
 dc
 Iw
-dc
+Sg
 Iw
 aC
 Iw
@@ -10728,7 +10970,7 @@ jS
 jS
 cD
 cD
-cD
+Km
 cD
 jS
 jS
@@ -10792,8 +11034,8 @@ lR
 mx
 mx
 Iw
-gC
-gC
+CL
+xd
 ns
 gC
 gC
@@ -10836,8 +11078,8 @@ dV
 mx
 mx
 fN
-mx
-mx
+Od
+QY
 Iw
 bh
 cD
@@ -10845,7 +11087,7 @@ Iw
 cD
 cD
 WG
-Qd
+ZD
 Sw
 df
 iH
@@ -10922,7 +11164,7 @@ cD
 cD
 jC
 Iw
-gC
+rt
 al
 ah
 cb
@@ -10938,7 +11180,7 @@ fD
 fD
 fD
 Iw
-df
+SZ
 df
 cD
 bZ
@@ -10967,7 +11209,7 @@ fD
 fD
 fD
 fD
-mx
+lt
 Iw
 bh
 cD
@@ -11116,7 +11358,7 @@ bh
 iY
 bh
 jH
-jH
+pC
 jH
 jH
 jH
@@ -11559,7 +11801,7 @@ bh
 Iw
 cg
 Tk
-mL
+TJ
 Iw
 bh
 bh
@@ -11617,7 +11859,7 @@ fD
 fD
 fD
 fD
-so
+sp
 Iw
 bh
 cD
@@ -11746,8 +11988,8 @@ at
 mx
 mx
 mx
-mx
-mx
+Od
+QY
 Iw
 bh
 cD
@@ -11755,7 +11997,7 @@ Iw
 cD
 cD
 WG
-Qd
+ZD
 uI
 df
 dy
@@ -11832,7 +12074,7 @@ cD
 cD
 jC
 Iw
-gC
+iG
 bZ
 be
 gC
@@ -11897,7 +12139,7 @@ jU
 jS
 jS
 cD
-cD
+Km
 cD
 cD
 jS
@@ -11962,8 +12204,8 @@ ka
 fr
 rl
 Iw
-gC
-gC
+CL
+xd
 Oh
 gC
 cD
@@ -12251,10 +12493,10 @@ dt
 fn
 Zc
 Zc
-en
-eD
 iQ
 eD
+iQ
+os
 Iw
 dD
 gC
@@ -12512,7 +12754,7 @@ Zc
 Zc
 Zc
 iQ
-eD
+os
 rA
 eD
 Iw
@@ -12614,7 +12856,7 @@ dm
 dm
 jU
 jS
-iA
+NT
 Iw
 Iw
 aM
@@ -12631,8 +12873,8 @@ gC
 RA
 Iw
 cv
-bR
-JT
+me
+qV
 dk
 bb
 dk
@@ -13008,7 +13250,7 @@ eN
 eN
 eN
 eN
-eN
+sm
 ma
 eN
 Iw
@@ -13174,7 +13416,7 @@ Yv
 eV
 bz
 Yq
-gC
+Sc
 gC
 jS
 hb
@@ -13410,7 +13652,7 @@ aa
 aa
 ad
 Iw
-dl
+Dh
 Hs
 dl
 dl
@@ -13824,7 +14066,7 @@ jH
 jH
 jH
 gC
-gC
+Sc
 jS
 jS
 jU
@@ -14895,9 +15137,9 @@ jU
 mK
 aG
 Iw
-me
-me
-me
+jH
+jH
+jH
 jH
 mm
 mm
@@ -14908,7 +15150,7 @@ gC
 gC
 gC
 mQ
-gC
+uw
 Iw
 aG
 mY
@@ -15025,9 +15267,9 @@ mK
 mK
 aG
 Iw
-os
-me
-me
+GP
+jH
+jH
 jH
 mm
 mm
@@ -15720,7 +15962,7 @@ aG
 aL
 AM
 lg
-AM
+xP
 AM
 kX
 aL
@@ -15838,14 +16080,14 @@ aG
 (103,1,1) = {"
 aG
 aG
-aG
-aG
-aG
-aG
-aG
-aG
-aG
-aG
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
 aG
 aL
 AM
@@ -15968,14 +16210,14 @@ aG
 (104,1,1) = {"
 aG
 aG
-aG
-aG
-aL
-aL
-aL
-aL
-aG
-aG
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
 aG
 aL
 AM
@@ -16076,7 +16318,7 @@ Mz
 Mm
 Mm
 mx
-mL
+su
 Iw
 xr
 mK
@@ -16098,14 +16340,14 @@ aG
 (105,1,1) = {"
 aG
 aG
-aG
-aL
-aL
+mY
+mY
+mY
 gx
 gx
-aL
-aL
-aG
+mY
+mY
+mY
 aG
 aL
 AM
@@ -16228,14 +16470,14 @@ aG
 (106,1,1) = {"
 aG
 aG
-aL
-aL
-AM
-AM
-AM
-AM
-aL
-aL
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
 aG
 aL
 aL
@@ -16358,15 +16600,15 @@ aG
 (107,1,1) = {"
 aG
 aG
-aL
-AM
-AM
-AM
-AM
-AM
-AM
-aL
-aL
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+aG
 aG
 aG
 aL
@@ -16488,21 +16730,21 @@ aG
 (108,1,1) = {"
 aG
 aG
-aL
-AM
-AM
-AM
-AM
-AM
-AM
-AM
-aL
-aL
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+aG
 aG
 aL
+aL
 AM
 aL
-aG
+aL
 aL
 aL
 aL
@@ -16594,7 +16836,7 @@ gC
 Iw
 mx
 mx
-my
+yj
 mA
 el
 lF
@@ -16618,16 +16860,16 @@ aG
 (109,1,1) = {"
 aG
 aG
-aL
-AM
-AM
-AM
-AM
-AM
-AM
-AM
-AM
-aL
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+aG
+aG
 aL
 AM
 AM
@@ -16648,7 +16890,7 @@ lw
 jH
 jH
 jH
-lQ
+Hj
 lq
 aG
 mY
@@ -16748,17 +16990,17 @@ aG
 (110,1,1) = {"
 aG
 aG
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+aG
+aG
 aL
-AM
-AM
-AM
-AM
-AM
-AM
-AM
-AM
-gN
-AM
 AM
 kW
 AM
@@ -16878,16 +17120,16 @@ aG
 (111,1,1) = {"
 aG
 aG
-aL
-AM
-AM
-AM
-AM
-AM
-AM
-AM
-AM
-aL
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+aG
+aG
 aL
 AM
 AM
@@ -17008,25 +17250,25 @@ aG
 (112,1,1) = {"
 aG
 aG
-aL
-AM
-AM
-AM
-AM
-AM
-AM
-AM
-aL
-aL
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+aG
 aG
 aL
+aL
 AM
 aL
-aG
+aL
 aL
 lf
 AM
-AM
+ug
 aL
 aG
 mY
@@ -17138,15 +17380,15 @@ aG
 (113,1,1) = {"
 aG
 aG
-aL
-AM
-AM
-AM
-AM
-AM
-AM
-aL
-aL
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+aG
 aG
 aG
 aL
@@ -17167,8 +17409,8 @@ lq
 jH
 jH
 jH
-jH
-XR
+RJ
+wt
 lq
 aG
 mY
@@ -17268,22 +17510,22 @@ aG
 (114,1,1) = {"
 aG
 aG
-aL
-aL
-AM
-AM
-AM
-AM
-aL
-aL
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
 aG
-aL
-aL
-aL
+kV
+kV
+kV
 gN
-aL
-aL
-aL
+kV
+kV
+kV
 aG
 aG
 aG
@@ -17297,8 +17539,8 @@ lq
 lz
 jH
 jH
-jH
-jH
+Qi
+Pl
 lq
 aG
 mY
@@ -17398,22 +17640,22 @@ aG
 (115,1,1) = {"
 aG
 aG
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
 aG
-aL
-aL
-AM
-AM
-aL
-aL
-aG
-aG
-aL
-AM
 kV
+Ar
+mC
 AM
+mC
+tv
 kV
-AM
-aL
 aG
 mY
 mY
@@ -17427,7 +17669,7 @@ lq
 ly
 jH
 jH
-jH
+OU
 lU
 lq
 aG
@@ -17528,22 +17770,22 @@ aG
 (116,1,1) = {"
 aG
 aG
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
 aG
-aG
-aL
-aL
-aL
-aL
-aG
-aG
-aG
-aL
-aL
-aL
+kV
+kV
+kV
 AM
-aL
-aL
-aL
+kV
+kV
+kV
 aG
 mY
 mY
@@ -17658,22 +17900,22 @@ aG
 (117,1,1) = {"
 aG
 aG
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+mY
 aG
-aG
-aG
-aG
-aG
-aG
-aG
-aG
-aG
-aL
-aL
-aL
+kV
+kV
+kV
 AM
-aL
-aL
-aL
+kV
+kV
+kV
 aG
 mY
 mY
@@ -17797,13 +18039,13 @@ mY
 mY
 mY
 aG
-aL
+kV
 kP
-kV
+mC
 AM
+mC
+My
 kV
-AM
-aL
 aG
 mY
 mY
@@ -17927,13 +18169,13 @@ mY
 mY
 mY
 aG
-aL
-aL
-aL
+kV
+kV
+kV
 AM
-aL
-aL
-aL
+kV
+kV
+kV
 aG
 mY
 mY
@@ -18057,13 +18299,13 @@ mY
 mY
 mY
 aG
-aL
-aL
-aL
+kV
+kV
+kV
 AM
-aL
-aL
-aL
+kV
+kV
+kV
 aG
 mY
 mY
@@ -18187,13 +18429,13 @@ mY
 mY
 mY
 aG
-aL
-AM
 kV
+Gw
+mC
 AM
-kV
+mC
 kZ
-aL
+kV
 aG
 mY
 mY
@@ -18317,13 +18559,13 @@ mY
 mY
 mY
 aG
-aL
-aL
-aL
+kV
+kV
+kV
 AM
-aL
-aL
-aL
+kV
+kV
+kV
 aG
 mY
 mY
@@ -18447,13 +18689,13 @@ mY
 mY
 mY
 aG
-aL
-aL
-aL
-aL
-aL
-aL
-aL
+kV
+kV
+kV
+kV
+kV
+kV
+kV
 aG
 mY
 mY

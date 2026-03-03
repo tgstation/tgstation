@@ -29,6 +29,14 @@
 	name = "WIZ BULK, UNNATURAL GAIN FOR THE UNNATURALLY TALENTED"
 	desc = "It has a small part on the back that says 'doesnt work for the not magically attuned'"
 
+/obj/item/nullrod/claymore/chainsaw_sword/kyle
+	name = "kyle"
+	desc = "An chainsaw sword that has its blade heated up to be nearly white hot, why the fuck is it named kyle? why not like, the incinerator or heretic melter or something."
+	damtype = BURN
+	chaplain_spawnable = FALSE
+	station_holy_item = FALSE
+	force = 30
+
 //mobs start here
 /mob/living/basic/wizard/academy/buffwiz
 	name = "Buff wizard"
@@ -38,10 +46,28 @@
 	health = 500
 	melee_damage_lower = 50
 	melee_damage_upper = 50
-	loot = /obj/item/reagent_containers/condiment/protein/wizbulk
+
+/mob/living/basic/wizard/academy/tired
+	name = "over-worked wizard"
+	desc = "This wizard doesnt seem hostile and pays you no mind, they continue working frantically as they do something to the modsuit- it appears like theyre changing it, somehow, maybe you can steal from him a bit."
+	speed = 0
+	maxHealth = 75
+	health = 75
+	melee_damage_lower = 4
+	melee_damage_upper = 4
+	faction = list(FACTION_NEUTRAL)
+
+/mob/living/basic/wizard/academy/high_magus
+	name = "High Magus"
+	desc = "The high magus of this area, still only a slightly above average wizard"
+	speed = 0
+	maxHealth = 750
+	health = 750
+	melee_damage_lower = 25
+	melee_damage_upper = 25
 
 /mob/living/basic/skeleton/templar/academy
-	name = "undead templar gaurd"
+	name = "undead knight gaurd"
 	desc = "The reanimated remains of a knight, this one appears to be a gaurd."
 	loot = list(
 		/obj/effect/decal/remains/human,
@@ -51,6 +77,7 @@
 		/obj/item/shield/buckler,
 	)
 	outfit = /datum/outfit/academy_knight
+	faction = list(ROLE_WIZARD)
 
 /datum/outfit/academy_knight
 	name = "Knight"
@@ -63,3 +90,16 @@
 	head = /obj/item/clothing/head/helmet/knight/greyscale
 	l_hand = /obj/item/claymore
 	r_hand = /obj/item/shield/buckler
+
+/mob/living/basic/trooper/nanotrasen/ranged/elite/traitor
+	name = "Traitor Nanotrasen Elite Assault Officer"
+	desc = "A nanotrasen elite assault officer turned traitor"
+	faction = list(ROLE_WIZARD)
+
+/mob/living/basic/skeleton/templar/academy/leader
+	name = "Knight leader"
+	desc = "This one isnt trapped behind glass or being ordered around like the others, this one must be in charge of the others"
+	maxHealth = 450
+	health = 450
+	melee_damage_lower = 35
+	melee_damage_upper = 35

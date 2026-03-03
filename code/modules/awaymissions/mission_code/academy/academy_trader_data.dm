@@ -4,10 +4,15 @@
 	sell_sound = 'sound/mobs/non-humanoids/hiss/hiss2.ogg'
 
 	initial_products = list(
-		/obj/item/mod/module/anti_magic/wizard = list(PAYCHECK_CREW * 200, 1),
-		/obj/item/nullrod = list(PAYCHECK_CREW * 40, 1),
+		/obj/item/nullrod/claymore/chainsaw_sword/kyle = list(PAYCHECK_CREW * 200, 1),
 		/obj/item/sharpener = list(PAYCHECK_CREW * 200, INFINITY),
-		/obj/item/sharpener/super = list(PAYCHECK_CREW * 400, 1),
+		/obj/item/book/bible = list(PAYCHECK_CREW * 1, INFINITY),
+		/obj/item/reagent_containers/cup/glass/bottle/holywater = list(PAYCHECK_CREW * 5, INFINITY),
+		/obj/item/grenade/chem_grenade/holy = list(PAYCHECK_CREW * 20, INFINITY),
+		/obj/item/ammo_casing/arrow = list(PAYCHECK_CREW * 10, INFINITY),
+		/obj/item/ammo_casing/arrow/holy = list(PAYCHECK_CREW * 5, INFINITY),
+		/obj/item/gun/ballistic/bow/shortbow = list(PAYCHECK_CREW * 40, INFINITY),
+		/obj/item/ammo_casing/arrow/holy/blazing = list(PAYCHECK_CREW * 10, INFINITY),
 	)
 
 //tome
@@ -63,6 +68,7 @@
 		/obj/item/nuke_core = list(PAYCHECK_CREW * 40, INFINITY, "*he puts his hands up shielding himself from the plutonium rock* OH MY GOD WHY DID YOU BRING ME THIS THING?! *he then seems to remember that his suit is radiation proof to which he snatches it out of your hand*"),
 		/obj/item/melee/supermatter_sword = list(PAYCHECK_CREW * 200, INFINITY, "*he stares at you completely silent for what feels like two minutes* W-Well- that is, an interesting product of your stations rnd- ill just be taking that."),
 		/obj/item/melee/cultblade/haunted = list(PAYCHECK_CREW * 20, 1, "Good work retriving the cont- oh, this is specialized nar'si equipment... ill send a team over to the station"),//to-do, spawn a red alert inquisition ert if this item is sold
+		/obj/item/seeds/kudzu = list(PAYCHECK_CREW * 20, INFINITY, "Good work retriving the contraband"),
 	)
 
 	say_phrases = list(
