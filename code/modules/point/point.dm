@@ -99,7 +99,8 @@
  *
  * overridden here and in /mob/dead/observer for different point span classes and sanity checks
  */
-/mob/proc/pointed(atom/A)
+/mob/verb/pointed(atom/A)
+	set name = "Point To"
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(_pointed), A))
