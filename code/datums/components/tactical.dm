@@ -44,9 +44,14 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(user, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(on_name_inquiry))
 	RegisterSignal(user, COMSIG_HUMAN_GET_FORCED_NAME, PROC_REF(on_name_inquiry))
-	ADD_TRAIT(user, TRAIT_UNKNOWN, REF(src))
+	// This forces a name update on the user, so we don't need to call name update ourselves
+	ADD_TRAIT(user, TRAIT_UNKNOWN_APPEARANCE, REF(src))
 
 	current_slot = slot
+	source.pixel_x = source.base_pixel_x
+	source.pixel_y = source.base_pixel_y
+	source.pixel_w = source.base_pixel_w
+	source.pixel_z = source.base_pixel_z
 
 	on_icon_update(source)
 
@@ -105,7 +110,7 @@
 	))
 	current_slot = null
 	user.remove_alt_appearance("sneaking_mission[REF(src)]")
-	REMOVE_TRAIT(user, TRAIT_UNKNOWN, REF(src))
+	REMOVE_TRAIT(user, TRAIT_UNKNOWN_APPEARANCE, REF(src))
 
 ///Checks if a mob is holding us, and if so we will modify our appearance to properly match w/ the mob.
 /datum/component/tactical/proc/tactical_update(obj/item/source)

@@ -73,7 +73,7 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/wolf)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	// this is purely a convenience thing once tamed so you can drag them away from shit
-	ai_controller.ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_controller.ai_traits |= STOP_MOVING_WHEN_PULLED
 	// makes tamed wolves run away far less
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_DISTANCE, 7)
 
@@ -83,5 +83,5 @@
 	. = ..()
 	if(isnull(.))
 		return
-	faction = new_friend.faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM(src, new_friend)
 	visible_message(span_notice("[src] lowers [src.p_their()] snout at [new_friend]'s offering and begins to wag [src.p_their()] tail."))

@@ -1,4 +1,4 @@
-import { Channel } from './ChannelIterator';
+import type { Channel } from './ChannelIterator';
 import { RADIO_PREFIXES, WindowSize } from './constants';
 
 /**
@@ -59,7 +59,7 @@ export function getPrefix(
     return;
   }
 
-  let adjusted = value
+  const adjusted = value
     .slice(0, 3)
     ?.toLowerCase()
     ?.replace('.', ':') as keyof typeof RADIO_PREFIXES;

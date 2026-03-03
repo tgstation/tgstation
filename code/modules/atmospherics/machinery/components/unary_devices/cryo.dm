@@ -20,6 +20,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_y = 22
 	appearance_flags = KEEP_TOGETHER
+	vis_flags = VIS_INHERIT_PLANE
 	/// The current occupant being presented
 	var/mob/living/occupant
 
@@ -203,7 +204,7 @@
 		. += span_notice("Use [EXAMINE_HINT("Alt-Click")] to [state_open ? "Close" : "Open"] the machine.")
 		. += span_notice("Use [EXAMINE_HINT("Ctrl-Click")] to turn [on ? "Off" : "On"] the machine.")
 
-		. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] open.")
+		. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] open.")
 		if(panel_open)
 			. += span_notice("[src] can be [EXAMINE_HINT("pried")] apart.")
 			. += span_notice("[src] can be rotated with a [EXAMINE_HINT("wrench")].")
@@ -569,10 +570,10 @@
 
 		occupant_data["health"] = mob_occupant.health
 		occupant_data["maxHealth"] = mob_occupant.maxHealth
-		occupant_data["bruteLoss"] = mob_occupant.getBruteLoss()
-		occupant_data["oxyLoss"] = mob_occupant.getOxyLoss()
-		occupant_data["toxLoss"] = mob_occupant.getToxLoss()
-		occupant_data["fireLoss"] = mob_occupant.getFireLoss()
+		occupant_data["bruteLoss"] = mob_occupant.get_brute_loss()
+		occupant_data["oxyLoss"] = mob_occupant.get_oxy_loss()
+		occupant_data["toxLoss"] = mob_occupant.get_tox_loss()
+		occupant_data["fireLoss"] = mob_occupant.get_fire_loss()
 	.["occupant"] = occupant_data
 
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
@@ -680,10 +681,14 @@
 
 /datum/aas_config_entry/medical_cryo_announcements/compile_announce(list/variables_map, announcement_line)
 	variables_map["AUTOEJECTING"] = variables_map["EJECTING"] ? announcement_lines_map["Autoejecting"] : ""
-	. = ..()
-	// Why double replacetext_char? Well, to handle cases where variable in the middle of sentence like "also %AUTOEJECTING this", so there will be no double spaces
-	// Yeah I am bad, at this, sorry (it should be a perfect place for regex usage, but I am weak)
-	. = trim(replacetext_char(replacetext_char(., "\[NO DATA\] ", ""), "\[NO DATA\]", ""))
+	var/list/exploded_string = splittext_char(..(), "\[NO DATA\]")
+	var/list/trimed_message = list()
+	for (var/line in exploded_string)
+		line = trim(line)
+		if (line)
+			trimed_message += line
+	// Rebuild the string without empty lines
+	. = trimed_message.Join(" ")
 
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR

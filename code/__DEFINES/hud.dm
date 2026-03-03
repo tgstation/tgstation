@@ -15,6 +15,11 @@
 /// Used for HUD objects
 #define APPEARANCE_UI (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
 
+//used to set the default viewport to the user's preference.
+#define VIEWPORT_USE_PREF "use_pref"
+#define WIDESCREEN_VIEWPORT_SIZE "19x15"
+#define SQUARE_VIEWPORT_SIZE "15x15"
+
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.
 
@@ -63,20 +68,14 @@
 #define ui_above_movement_top "EAST-2:26, SOUTH+1:24"
 #define ui_above_intent "EAST-3:24, SOUTH+1:7"
 #define ui_movi "EAST-2:26,SOUTH:5"
+#define ui_acti "EAST-3:24,SOUTH:5"
 #define ui_combat_toggle "EAST-3:24,SOUTH:5"
-#define ui_floor_change "BOTTOM+1:8,RIGHT-1:28"
 #define ui_zonesel "EAST-1:28,SOUTH:5"
 #define ui_acti_alt "EAST-1:28,SOUTH:5" //alternative intent switcher for when the interface is hidden (F12)
 #define ui_crafting "EAST-4:22,SOUTH:5"
 #define ui_building "EAST-4:22,SOUTH:21"
 #define ui_language_menu "EAST-4:6,SOUTH:21"
 #define ui_navigate_menu "EAST-4:6,SOUTH:5"
-#define ui_memories_menu "EAST-4:6,SOUTH:5"
-
-//basic mob-unique ui
-#define ui_basic_combat_toggle "EAST-1:28,SOUTH:6"
-#define ui_basic_language_menu "BOTTOM+1:26,RIGHT-1:28"
-#define ui_basic_memories_menu "BOTTOM+1:26,RIGHT-1:12"
 
 //Upper left (action buttons)
 #define ui_action_palette "WEST+0:23,NORTH-1:5"
@@ -115,7 +114,6 @@
 #define ui_human_navigate "EAST-3:7,SOUTH+1:7"
 #define ui_human_language "EAST-3:7,SOUTH+1:24"
 #define ui_human_area "EAST-3:24,SOUTH+1:24"
-#define ui_human_memories_area "EAST-4:22,SOUTH+1:7"
 
 //Drones
 #define ui_drone_drop "CENTER+1:18,SOUTH:5"
@@ -139,7 +137,6 @@
 #define ui_borg_alerts "CENTER+4:21,SOUTH:5"
 #define ui_borg_language_menu "CENTER+4:19,SOUTH+1:6"
 #define ui_borg_navigate_menu "CENTER+4:3,SOUTH+1:6"
-#define ui_borg_memories_menu "CENTER+3:19,SOUTH+1:6"
 #define ui_borg_floor_changer "EAST-1:28,SOUTH+1:39"
 
 //Aliens
@@ -149,7 +146,6 @@
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"
 #define ui_alien_language_menu "EAST-4:20,SOUTH:5"
 #define ui_alien_navigate_menu "EAST-4:4,SOUTH:5"
-#define ui_alien_memories_menu "EAST-4:20,SOUTH:1:20"
 #define ui_alien_floor_change "EAST-3:24, SOUTH:24"
 
 //AI
@@ -159,7 +155,6 @@
 #define ui_ai_state_laws "BOTTOM:6,RIGHT-1"
 #define ui_ai_mod_int "BOTTOM:6,RIGHT"
 #define ui_ai_language_menu "BOTTOM+1:8,RIGHT-1:30"
-#define ui_ai_memories_menu "BOTTOM+1:24,RIGHT-1:30"
 
 #define ui_ai_crew_monitor "BOTTOM:6,CENTER-1"
 #define ui_ai_crew_manifest "BOTTOM:6,CENTER"
@@ -177,33 +172,36 @@
 #define ui_ai_godownup "BOTTOM+5,RIGHT-1"
 
 //pAI
-#define ui_pai_software "SOUTH:6,WEST"
-#define ui_pai_shell "SOUTH:6,WEST+1"
-#define ui_pai_chassis "SOUTH:6,WEST+2"
-#define ui_pai_rest "SOUTH:6,WEST+3"
-#define ui_pai_light "SOUTH:6,WEST+4"
-#define ui_pai_state_laws "SOUTH:6,WEST+5"
-#define ui_pai_crew_manifest "SOUTH:6,WEST+6"
-#define ui_pai_host_monitor "SOUTH:6,WEST+7"
-#define ui_pai_internal_gps "SOUTH:6,WEST+8"
-#define ui_pai_mod_int "SOUTH:6,WEST+9"
-#define ui_pai_newscaster "SOUTH:6,WEST+10"
-#define ui_pai_take_picture "SOUTH:6,WEST+11"
-#define ui_pai_view_images "SOUTH:6,WEST+12"
-#define ui_pai_radio "EAST-1:28,SOUTH:6"
-#define ui_pai_language_menu "BOTTOM+1:8,RIGHT-1:28"
-#define ui_pai_navigate_menu "BOTTOM+1:8,RIGHT-1:12"
-#define ui_pai_memories_menu "BOTTOM+1:24,RIGHT-1:28"
+#define ui_pai_software "SOUTH+1:5,WEST:2"
+#define ui_pai_state_laws "SOUTH+1:5,WEST+1"
+#define ui_pai_shell "SOUTH:5,WEST:2"
+#define ui_pai_chassis "SOUTH:5,WEST+1:2"
+#define ui_pai_rest "SOUTH:5,WEST+2:2"
+#define ui_pai_light "SOUTH:5,WEST+3:2"
+#define ui_pai_crew_manifest "SOUTH:5,CENTER-2"
+#define ui_pai_host_monitor "SOUTH:5,CENTER-1"
+#define ui_pai_internal_gps "SOUTH:5,CENTER"
+#define ui_pai_mod_int "SOUTH:5,CENTER+1"
+#define ui_pai_newscaster "SOUTH:5,CENTER+2"
+#define ui_pai_take_picture "SOUTH:5,EAST-3:28"
+#define ui_pai_view_images "SOUTH:5,EAST-2:28"
+#define ui_pai_radio "SOUTH:5,EAST-1:28"
+#define ui_pai_language_menu "SOUTH:1:37,EAST-1:12"
+#define ui_pai_navigate_menu "SOUTH:1:37,EAST-1:28"
 
 //Ghosts
 #define ui_ghost_spawners_menu "SOUTH:6,CENTER-3:24"
 #define ui_ghost_orbit "SOUTH:6,CENTER-2:24"
 #define ui_ghost_reenter_corpse "SOUTH:6,CENTER-1:24"
-#define ui_ghost_teleport "SOUTH:6,CENTER:24"
-#define ui_ghost_settings "SOUTH: 6, CENTER+1:24"
-#define ui_ghost_minigames "SOUTH: 6, CENTER+2:24"
-#define ui_ghost_language_menu "SOUTH: 6, CENTER+3:24"
-#define ui_ghost_floor_changer "SOUTH: 6, CENTER+3:8"
+#define ui_dnr "SOUTH:6,CENTER:24"
+#define ui_ghost_teleport "SOUTH:6,CENTER+1:24"
+#define ui_ghost_settings "SOUTH: 6, CENTER+2:24"
+#define ui_ghost_minigames "SOUTH: 6, CENTER+3:24"
+#define ui_ghost_language_menu "SOUTH: 6, CENTER+4:22"
+#define ui_ghost_floor_changer "SOUTH: 6, CENTER+4:7"
+
+//Voidwalker
+#define ui_voidwalker_left_of_hands "CENTER+-2:16,SOUTH+0:5"
 
 //Blobbernauts
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"

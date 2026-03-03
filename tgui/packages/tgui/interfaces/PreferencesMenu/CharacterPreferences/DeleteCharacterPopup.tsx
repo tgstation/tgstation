@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Modal, Stack } from 'tgui-core/components';
 
-import { PreferencesMenuData } from '../types';
+import type { PreferencesMenuData } from '../types';
 
 type Props = {
   close: () => void;

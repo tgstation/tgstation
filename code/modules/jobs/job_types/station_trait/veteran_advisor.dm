@@ -3,7 +3,6 @@
 	description = "Advise HoS, and Captain on matters of Security. Train green Officers. \
 		Lay back in your wheelchair and say \"I told you\" to the HoS when all of the station collapses."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0
@@ -35,7 +34,7 @@
 	)
 	rpg_title = "Royal Advisor"
 	allow_bureaucratic_error = FALSE
-	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
+	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS | JOB_ANTAG_PROTECTED
 
 /datum/job/veteran_advisor/get_default_roundstart_spawn_point()
 	for(var/obj/effect/landmark/start/spawn_point as anything in GLOB.start_landmarks_list)
@@ -83,3 +82,4 @@
 	r_hand = /obj/item/cane
 
 	implants = list(/obj/item/implant/mindshield)
+	pda_slot = ITEM_SLOT_BACK

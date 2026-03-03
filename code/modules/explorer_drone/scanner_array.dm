@@ -175,6 +175,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	var/datum/exoscan/scan = GLOB.exoscanner_controller.create_scan(scan_type,target)
 	if(scan)
 		RegisterSignal(scan, COMSIG_EXOSCAN_INTERRUPTED, PROC_REF(scan_failed))
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 20, vary = TRUE)
 
 /obj/machinery/computer/exoscanner_control/proc/scan_failed()
 	SIGNAL_HANDLER
@@ -189,7 +190,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
 
 /obj/machinery/exoscanner
-	name = "Scanner array"
+	name = "scanner array"
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "scanner_off"
 	desc = "A sophisticated scanning array. Easily influenced by its environment."
@@ -201,7 +202,6 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	. = ..()
 	RegisterSignals(GLOB.exoscanner_controller,list(COMSIG_EXOSCAN_STARTED,COMSIG_EXOSCAN_FINISHED), PROC_REF(scan_change))
 	update_readiness()
-	RefreshParts()
 
 /obj/machinery/exoscanner/RefreshParts()
 	. = ..()

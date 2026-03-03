@@ -9,6 +9,16 @@
 	///how many uses can be stored
 	var/max_uses = 5
 
+/obj/item/tattoo_kit/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/tattoo_kit/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(istype(held_item, /obj/item/toner))
+		context[SCREENTIP_CONTEXT_LMB] = "Refill"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/tattoo_kit/examine(mob/tattoo_artist)
 	. = ..()
 	if(!uses)
@@ -17,17 +27,22 @@
 		. += span_notice("This kit has enough ink for [uses] use\s.")
 	. += span_boldnotice("You can use a toner cartridge to refill this.")
 
-/obj/item/tattoo_kit/attackby(obj/item/toner/ink_cart, mob/living/tattoo_artist, list/modifiers, list/attack_modifiers)
-	. = ..()
+/obj/item/tattoo_kit/item_interaction(mob/living/user, obj/item/toner/ink_cart, list/modifiers)
 	if(!istype(ink_cart))
-		return
+		return NONE
 	var/added_amount = round(ink_cart.charges / 5)
 	if(added_amount == 0)
-		return
+		balloon_alert(user, "none left!")
+		return ITEM_INTERACT_BLOCKING
+	if(uses >= max_uses)
+		balloon_alert(user, "already full!")
+		return ITEM_INTERACT_BLOCKING
+
 	added_amount = min(uses + added_amount, max_uses)
 	uses += min(max_uses, added_amount)
 	qdel(ink_cart)
-	balloon_alert(tattoo_artist, "added tattoo ink")
+	balloon_alert(user, "added tattoo ink")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/tattoo_kit/attack(mob/living/tattoo_holder, mob/living/tattoo_artist, list/modifiers, list/attack_modifiers)
 	. = ..()

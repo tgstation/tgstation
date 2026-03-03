@@ -218,28 +218,10 @@
 		for(var/i in 1 to mineral_amount)
 			new mineral(loc)
 
-/obj/structure/tram/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-
-	if(istype(item, /obj/item/wallframe/tram))
-		try_wallmount(item, user)
-
-/obj/structure/tram/proc/try_wallmount(obj/item/wallmount, mob/user)
-	if(!istype(wallmount, /obj/item/wallframe/tram))
-		return
-
-	var/obj/item/wallframe/frame = wallmount
-	if(frame.try_build(src, user))
-		frame.attach(src, user)
-
-	return
-
 /*
  * Other misc tramwall types
  */
-
 /obj/structure/tram/alt
-
 
 /obj/structure/tram/alt/titanium
 	name = "solid tram"
@@ -423,7 +405,7 @@
 	icon_state = "bamboo_wall-0"
 	base_icon_state = "wall"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_WALLS  + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BAMBOO_WALLS
 	mineral = /obj/item/stack/sheet/mineral/bamboo
 	tram_wall_type = /obj/structure/tram/alt/bamboo
@@ -485,7 +467,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/tram/spoiler/LateInitialize()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(set_spoiler))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(set_spoiler))
 
 /obj/structure/tram/spoiler/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

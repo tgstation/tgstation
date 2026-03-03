@@ -27,10 +27,10 @@
 	if(istype(eating, /obj/item/food/golem_food))
 		return
 	source.balloon_alert(source, "minerals only!")
-	return COMSIG_CARBON_BLOCK_EAT
+	return BLOCK_EAT_ATTEMPT
 
 /// Golem stomach cannot process nutriment except from minerals
-/obj/item/organ/stomach/golem/on_life(delta_time, times_fired)
+/obj/item/organ/stomach/golem/on_life(delta_time)
 	for(var/datum/reagent/consumable/food in reagents.reagent_list)
 		if (istype(food, /datum/reagent/consumable/nutriment/mineral))
 			continue
@@ -38,7 +38,7 @@
 	return ..()
 
 /// Slow down based on how full you are
-/obj/item/organ/stomach/golem/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)
+/obj/item/organ/stomach/golem/handle_hunger(mob/living/carbon/human/human, delta_time)
 	// the effects are all negative, so just don't run them if you have the trait
 	. = ..()
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
@@ -63,7 +63,8 @@
 /atom/movable/screen/alert/status_effect/golem_statued
 	name = "Statued"
 	desc = "You no longer have the energy to move your body!"
-	icon_state = "golem_statued"
+	use_user_hud_icon = TRUE
+	overlay_state = "golem_statued"
 
 /datum/status_effect/golem_statued/on_apply()
 	. = ..()

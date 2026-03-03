@@ -58,8 +58,8 @@ SUBSYSTEM_DEF(title)
 	for(var/thing in GLOB.clients)
 		if(!thing)
 			continue
-		var/atom/movable/screen/splash/S = new(null, thing, FALSE)
-		S.Fade(FALSE,FALSE)
+		var/atom/movable/screen/splash/S = new(null, null, thing, FALSE)
+		S.fade(FALSE,FALSE)
 
 /datum/controller/subsystem/title/Recover()
 	icon = SStitle.icon

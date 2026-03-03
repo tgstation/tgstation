@@ -35,32 +35,31 @@
 		if(radio)
 			radio.talk_into(src, message, , spans, language, message_mods)
 		return NOPASS
-	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
+	else if(message_mods[RADIO_EXTENSION] in GLOB.default_radio_channels)
 		if(radio)
 			radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 			return NOPASS
 	return FALSE
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(message, language)
+/mob/living/silicon/ai/proc/holopad_talk(message, list/spans = list(), language, list/message_mods = list())
 	message = trim(message)
 
 	if (!message)
 		return
 
 	var/obj/machinery/holopad/active_pad = current
-	if(istype(active_pad) && active_pad.masters[src])//If there is a hologram and its master is the user.
-		var/obj/effect/overlay/holo_pad_hologram/ai_holo = active_pad.masters[src]
-		var/turf/padturf = get_turf(active_pad)
-		var/padloc
-		if(padturf)
-			padloc = AREACOORD(padturf)
-		else
-			padloc = "(UNKNOWN)"
-		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		ai_holo.say(message, sanitize = FALSE, language = language)
-	else
+	// Only continue if there is a hologram and its master is the user.
+	if(!istype(active_pad) || !active_pad.masters[src])
 		to_chat(src, span_alert("No holopad connected."))
+		return
+
+	var/obj/effect/overlay/holo_pad_hologram/ai_holo = active_pad.masters[src]
+	var/turf/pad_turf = get_turf(active_pad)
+	var/pad_loc = pad_turf ? AREACOORD(pad_turf) : "(UNKNOWN)"
+
+	log_sayverb_talk(message, message_mods, tag = "HOLOPAD in [pad_loc]")
+	ai_holo.say(message, spans = spans, sanitize = FALSE, language = language, message_mods = message_mods)
 
 
 // Make sure that the code compiles with AI_VOX undefined
@@ -172,7 +171,7 @@
 			// Play voice for all mobs in the z level
 			for(var/mob/player_mob as anything in GLOB.player_list)
 				var/pref_volume = safe_read_pref(player_mob.client, /datum/preference/numeric/volume/sound_ai_vox)
-				if(!player_mob.can_hear() || !pref_volume)
+				if(HAS_TRAIT(player_mob, TRAIT_DEAF) || !pref_volume)
 					continue
 
 				var/turf/player_turf = get_turf(player_mob)

@@ -28,9 +28,11 @@
 	gender = PLURAL
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
-	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
 	wine_power = 30
+
+/obj/item/food/grown/cherries/grind_results()
+	return list(/datum/reagent/consumable/cherryjelly = 0)
 
 // Blue Cherries
 /obj/item/seeds/cherry/blue
@@ -51,9 +53,11 @@
 	icon_state = "bluecherry"
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
-	grind_results = list(/datum/reagent/consumable/bluecherryjelly = 0)
 	tastes = list("blue cherry" = 1)
 	wine_power = 50
+
+/obj/item/food/grown/bluecherries/grind_results()
+	return list(/datum/reagent/consumable/bluecherryjelly = 0)
 
 //Cherry Bulbs
 /obj/item/seeds/cherry/bulb
@@ -76,9 +80,11 @@
 	icon_state = "cherry_bulb"
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
-	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
 	wine_power = 50
+
+/obj/item/food/grown/cherrybulbs/grind_results()
+	return list(/datum/reagent/consumable/cherryjelly = 0)
 
 //Cherry Bombs
 /obj/item/seeds/cherry/bomb

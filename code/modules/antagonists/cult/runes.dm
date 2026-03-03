@@ -242,7 +242,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(!IS_CULTIST(non_cultist))
 			myriad_targets += non_cultist
 
-	if(!length(myriad_targets) && !try_spawn_sword())
+	if(!length(myriad_targets) && !try_sacrifice_item())
 		fail_invoke()
 		return
 
@@ -290,11 +290,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(invoker, span_warning("Something is shielding [convertee]'s mind!"))
 		return FALSE
 
-	var/brutedamage = convertee.getBruteLoss()
-	var/burndamage = convertee.getFireLoss()
+	var/brutedamage = convertee.get_brute_loss()
+	var/burndamage = convertee.get_fire_loss()
 	if(brutedamage || burndamage)
-		convertee.adjustBruteLoss(-(brutedamage * 0.75))
-		convertee.adjustFireLoss(-(burndamage * 0.75))
+		convertee.adjust_brute_loss(-(brutedamage * 0.75))
+		convertee.adjust_fire_loss(-(burndamage * 0.75))
 
 	convertee.visible_message(
 		span_warning("[convertee] writhes in pain [(brutedamage || burndamage) \
@@ -314,15 +314,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(check_holidays(APRIL_FOOLS) && prob(10))
 		convertee.Paralyze(10 SECONDS)
-		if(istype(human_convertee))
-			human_convertee.force_say()
 		convertee.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
 
 	else
 		convertee.Unconscious(10 SECONDS)
 
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
-	convertee.mind.special_role = ROLE_CULTIST
 	convertee.mind.add_antag_datum(/datum/antagonist/cult, cult_team)
 
 	to_chat(convertee, span_cult_bold_italic("Your blood pulses. Your head throbs. The world goes red. \
@@ -401,50 +398,38 @@ structure_check() searches for nearby cultist structures required for the invoca
 		sacrificial.investigate_log("has been sacrificially gibbed by the cult.", INVESTIGATE_DEATHS)
 		sacrificial.gib(DROP_ALL_REMAINS)
 
-	try_spawn_sword() // after sharding and gibbing, which potentially dropped a null rod
+	try_sacrifice_item() // after sharding and gibbing, which potentially dropped a sacrificable item
 
 	return TRUE
 
-/// Tries to convert a null rod over the rune to a cult sword
-/obj/effect/rune/convert/proc/try_spawn_sword()
-	for(var/obj/item/nullrod/rod in loc)
-		if(rod.anchored || (rod.resistance_flags & INDESTRUCTIBLE))
+/// Tries to convert a valid item over the rune to something else
+/obj/effect/rune/convert/proc/try_sacrifice_item()
+	for(var/obj/item/checked_item in loc)
+		if(checked_item.anchored || (checked_item.resistance_flags & INDESTRUCTIBLE))
 			continue
 
-		var/num_slain = LAZYLEN(rod.cultists_slain)
-		var/displayed_message = "[rod] glows an unholy red and begins to transform..."
-		if(GET_ATOM_BLOOD_DNA_LENGTH(rod))
-			displayed_message += " The blood of [num_slain] fallen cultist[num_slain == 1 ? "":"s"] is absorbed into [rod]!"
-
-		rod.visible_message(span_cult_italic(displayed_message))
-		switch(num_slain)
-			if(0)
-				animate_spawn_sword(rod, /obj/item/melee/cultblade/dagger)
-			if(1)
-				animate_spawn_sword(rod, /obj/item/melee/cultblade)
-			else
-				animate_spawn_sword(rod, /obj/item/melee/cultblade/halberd)
-		return TRUE
+		if(SEND_SIGNAL(checked_item, COMSIG_ITEM_CULT_SACRIFICE, src) & COMPONENT_SACRIFICE_SUCCESSFUL)
+			return TRUE
 
 	return FALSE
 
-/// Does an animation of a null rod transforming into a cult sword
-/obj/effect/rune/convert/proc/animate_spawn_sword(obj/item/nullrod/former_rod, new_blade_typepath)
+/// Does an animation of a sacrificable item transforming into something else
+/obj/effect/rune/convert/proc/animate_convert_item(obj/item/old_item, new_movable_typepath)
 	playsound(src, 'sound/effects/magic.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.66)
-	former_rod.anchored = TRUE
-	former_rod.Shake()
-	animate(former_rod, alpha = 0, transform = matrix(former_rod.transform).Scale(0.01), time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
-	QDEL_IN(former_rod, 2 SECONDS)
+	old_item.anchored = TRUE
+	old_item.Shake()
+	animate(old_item, alpha = 0, transform = matrix(old_item.transform).Scale(0.01), time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	QDEL_IN(old_item, 2 SECONDS)
 
-	var/obj/item/new_blade = new new_blade_typepath(loc)
-	var/matrix/blade_matrix_on_spawn = matrix(new_blade.transform)
-	new_blade.name = "converted [new_blade.name]"
-	new_blade.anchored = TRUE
-	new_blade.alpha = 0
-	new_blade.transform = matrix(new_blade.transform).Scale(0.01)
-	new_blade.Shake()
-	animate(new_blade, alpha = 255, transform = blade_matrix_on_spawn, time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
-	addtimer(VARSET_CALLBACK(new_blade, anchored, FALSE), 2 SECONDS)
+	var/atom/movable/new_movable = new new_movable_typepath(loc)
+	var/matrix/matrix_on_spawn = matrix(new_movable.transform)
+	new_movable.name = "converted [new_movable.name]"
+	new_movable.anchored = TRUE
+	new_movable.alpha = 0
+	new_movable.transform = matrix(new_movable.transform).Scale(0.01)
+	new_movable.Shake()
+	animate(new_movable, alpha = 255, transform = matrix_on_spawn, time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	addtimer(VARSET_CALLBACK(new_movable, anchored, FALSE), 2 SECONDS)
 
 /obj/effect/rune/empower
 	cultist_name = "Empower"
@@ -924,7 +909,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	color = "#FC9B54"
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
-		if(!IS_CULTIST(target) && target.blood_volume)
+		if(!IS_CULTIST(target) && CAN_HAVE_BLOOD(target))
 			if(target.can_block_magic(charge_cost = 0))
 				continue
 			to_chat(target, span_cult_large("Your blood boils in your veins!"))
@@ -949,7 +934,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 /obj/effect/rune/blood_boil/proc/do_area_burn(turf/T, multiplier)
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
-		if(!IS_CULTIST(target) && target.blood_volume)
+		if(!IS_CULTIST(target) && target.get_blood_volume())
 			if(target.can_block_magic(charge_cost = 0))
 				continue
 			target.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
@@ -1019,7 +1004,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.apply_status_effect(/datum/status_effect/cultghost) //ghosts can't summon more ghosts
 		new_human.set_invis_see(SEE_INVISIBLE_OBSERVER)
-		new_human.add_traits(list(TRAIT_NOBREATH, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT) // permanently mortal can be removed once this is a bespoke kind of mob
+		new_human.add_traits(list(TRAIT_NOBREATH, TRAIT_SPAWNED_MOB, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT) // permanently mortal can be removed once this is a bespoke kind of mob
 		ghosts++
 		playsound(src, 'sound/effects/magic/exit_blood.ogg', 50, TRUE)
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
@@ -1029,7 +1014,6 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			new_human.AddComponent( \
 				/datum/component/temporary_body, \
 				old_mind = ghost_to_spawn.mind, \
-				old_body = ghost_to_spawn.mind.current, \
 			)
 		new_human.PossessByPlayer(ghost_to_spawn.key)
 		var/datum/antagonist/cult/created_cultist = new_human.mind?.add_antag_datum(/datum/antagonist/cult)
@@ -1142,17 +1126,16 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 	for(var/mob/living/target in range(src, 3))
 		target.Paralyze(30)
-	empulse(T, 0.42*(intensity), 1)
+	empulse(T, 0.42*(intensity), 1, emp_source = src)
 
 	var/list/images = list()
-	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	for(var/mob/living/M in GLOB.alive_mob_list)
 		if(!is_valid_z_level(T, get_turf(M)))
 			continue
 		if(ishuman(M))
 			if(!IS_CULTIST(M))
-				sec_hud.hide_from(M)
-				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(hudFix), M), duration)
+				ADD_TRAIT(M, TRAIT_BLOCK_SECHUD, CULT_TRAIT)
+				addtimer(TRAIT_CALLBACK_REMOVE(M, TRAIT_BLOCK_SECHUD, CULT_TRAIT), duration)
 			var/image/A = image('icons/mob/nonhuman-player/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
@@ -1197,7 +1180,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 				force_event_async(/datum/round_event_control/meteor_wave, "an apocalypse rune")
 
 			if(51 to 60)
-				force_event_async(/datum/round_event_control/spider_infestation, "an apocalypse rune")
+				SSdynamic.force_run_midround(/datum/dynamic_ruleset/midround/spiders)
 
 			if(61 to 70)
 				force_event_async(/datum/round_event_control/anomaly/anomaly_flux, "an apocalypse rune")
@@ -1229,13 +1212,3 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			if(I.icon_state != "bloodsparkles")
 				I.override = TRUE
 		sleep(19 SECONDS)
-
-
-
-/proc/hudFix(mob/living/carbon/human/target)
-	if(!target || !target.client)
-		return
-	var/obj/O = target.get_item_by_slot(ITEM_SLOT_EYES)
-	if(istype(O, /obj/item/clothing/glasses/hud/security))
-		var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-		sec_hud.show_to(target)

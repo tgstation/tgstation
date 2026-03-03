@@ -1,7 +1,6 @@
 /datum/job/prisoner
 	title = JOB_PRISONER
 	description = "Keep yourself occupied in permabrig."
-	department_head = list("The Security Team")
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 2
@@ -23,7 +22,7 @@
 
 	family_heirlooms = list(/obj/item/pen/blue)
 	rpg_title = "Defeated Miniboss"
-	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS & ~JOB_REOPEN_ON_ROUNDSTART_LOSS
+	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS | JOB_ANTAG_PROTECTED & ~JOB_REOPEN_ON_ROUNDSTART_LOSS
 
 /datum/job/prisoner/New()
 	. = ..()
@@ -60,6 +59,7 @@
 	ears = null
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	box = /obj/item/storage/box/survival/prisoner
+	pda_slot = null
 
 /datum/outfit/job/prisoner/pre_equip(mob/living/carbon/human/H)
 	..()

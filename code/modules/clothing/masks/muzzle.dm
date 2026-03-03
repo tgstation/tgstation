@@ -7,7 +7,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/glasses_righthand.dmi'
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
-	equip_delay_other = 20
+	equip_delay_other = 2 SECONDS
 
 /obj/item/clothing/mask/muzzle/Initialize(mapload)
 	. = ..()
@@ -19,24 +19,7 @@
 		if(src == carbon_user.wear_mask)
 			to_chat(user, span_warning("You need help taking this off!"))
 			return
-	..()
-
-/obj/item/clothing/mask/muzzle/breath
-	name = "surgery mask"
-	desc = "To silence those pesky patients before putting them under."
-	icon_state = "breathmuzzle"
-	inhand_icon_state = "breathmuzzle"
-	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
-	body_parts_covered = NONE
-	flags_cover = NONE
-	clothing_flags = MASKINTERNALS
-	armor_type = /datum/armor/muzzle_breath
-	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
-
-/obj/item/clothing/mask/muzzle/breath/examine_tags(mob/user)
-	. = ..()
-	.["surgical"] = "Does not block surgery on covered bodyparts."
+	return ..()
 
 /obj/item/clothing/mask/muzzle/tape
 	name = "tape piece"
@@ -45,8 +28,8 @@
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
 	clothing_flags = INEDIBLE_CLOTHING
-	equip_delay_other = 40
-	strip_delay = 40
+	equip_delay_other = 4 SECONDS
+	strip_delay = 4 SECONDS
 	icon = 'icons/map_icons/clothing/mask.dmi'
 	icon_state = "/obj/item/clothing/mask/muzzle/tape"
 	post_init_icon_state = "tape_piece"
@@ -57,9 +40,6 @@
 	var/harmful_strip = FALSE
 	///The ammount of damage dealt when the tape piece is ripped off of someone.
 	var/stripping_damage = 0
-
-/datum/armor/muzzle_breath
-	bio = 100
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
@@ -96,15 +76,15 @@
 	desc = "A piece of tape that can be put over someone's mouth. This one has extra strength."
 	icon_state = "/obj/item/clothing/mask/muzzle/tape/super"
 	greyscale_colors = "#4D4D4D"
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 
 /obj/item/clothing/mask/muzzle/tape/surgical
 	name = "surgical tape piece"
 	desc = "A piece of tape that can be put over someone's mouth. As long as you apply this to your patient, you won't hear their screams of pain!"
 	icon_state = "/obj/item/clothing/mask/muzzle/tape/surgical"
 	greyscale_colors = "#70BAE7"
-	equip_delay_other = 30
-	strip_delay = 30
+	equip_delay_other = 3 SECONDS
+	strip_delay = 3 SECONDS
 
 /obj/item/clothing/mask/muzzle/tape/pointy
 	name = "pointy tape piece"
@@ -124,5 +104,5 @@
 	desc = "A piece of tape that can be put over someone's mouth. This thing could rip your face into a thousand pieces if ripped off."
 	icon_state = "/obj/item/clothing/mask/muzzle/tape/pointy/super"
 	greyscale_colors = "#8C0A00#300008"
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	stripping_damage = 20

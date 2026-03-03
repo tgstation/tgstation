@@ -125,10 +125,24 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define TELEPORT_CHANNEL_MAGIC "magic"
 /// Cult teleportation, does whatever it wants (unless there's holiness)
 #define TELEPORT_CHANNEL_CULT "cult"
-/// Eigenstate teleportation, can do most things (that aren't in a teleport-prevented zone)
-#define TELEPORT_CHANNEL_EIGENSTATE "eigenstate"
 /// Anything else
 #define TELEPORT_CHANNEL_FREE "free"
+
+// Container flags for get_teleportable_container
+/// Count mob inventory as a valid container
+#define TELEPORT_CONTAINER_INCLUDE_INVENTORY (1<<0)
+/// Count modsuits with at least one sealed part as valid containers, even if mob inventory is not a valid container
+#define TELEPORT_CONTAINER_INCLUDE_SEALED_MODSUIT (1<<1)
+/// Count atom storage as a valid container
+#define TELEPORT_CONTAINER_INCLUDE_STORAGE (1<<2)
+/// Count closets as a valid container
+#define TELEPORT_CONTAINER_INCLUDE_CLOSET (1<<3)
+/// Count vehicles as a valid container
+#define TELEPORT_CONTAINER_INCLUDE_VEHICLE (1<<4)
+/// Count mech equipment (particularly cargo holds and sleepers) as a valid container
+#define TELEPORT_CONTAINER_INCLUDE_MECH_EQUIPMENT (1<<5)
+/// Count stomachs as a valid container (ew)
+#define TELEPORT_CONTAINER_INCLUDE_STOMACH (1<<6)
 
 ///Return values for moveloop Move()
 #define MOVELOOP_FAILURE 0
@@ -144,9 +158,5 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define INERTIA_FORCE_SPACEMOVE_REDUCTION 0.75 NEWTONS
 /// How much inertia we must have to not be able to instantly stop after having something to grab
 #define INERTIA_FORCE_SPACEMOVE_GRAB 1.5 NEWTONS
-/// How much inertia is required for the impacted object to be thrown at the wall
-#define INERTIA_FORCE_THROW_FLOOR 10 NEWTONS
-/// How much inertia is required past the floor to add 1 strength
-#define INERTIA_FORCE_PER_THROW_FORCE 5 NEWTONS
 // Results in maximum speed of 1 tile per tick, capped at about 2/3rds of maximum force
 #define INERTIA_SPEED_COEF 0.375

@@ -207,11 +207,7 @@
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "fX" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/animalhide/lizard,
-/obj/item/stack/sheet/animalhide/lizard,
-/obj/item/stack/sheet/animalhide/lizard,
-/obj/item/stack/sheet/animalhide/lizard,
-/obj/item/stack/sheet/animalhide/lizard,
+/obj/item/stack/sheet/animalhide/carbon/lizard/five,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gc" = (
@@ -233,7 +229,7 @@
 	icon_state = "dirt-0"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/oil{
+/obj/effect/decal/cleanable/blood/oil{
 	icon_state = "floor4"
 	},
 /turf/open/floor/iron,
@@ -534,7 +530,7 @@
 "nM" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "od" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/the_outlet/storefront)
@@ -551,7 +547,7 @@
 "oG" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/clothing/glasses/blindfold,
-/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/mask/breath/muzzle,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
@@ -869,7 +865,7 @@
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-137"
 	},
-/obj/effect/decal/cleanable/oil{
+/obj/effect/decal/cleanable/blood/oil{
 	icon_state = "floor7"
 	},
 /obj/machinery/light/dim/directional/south,
@@ -932,11 +928,11 @@
 /area/ruin/space/has_grav/the_outlet/storefront)
 "wK" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
-/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
+/obj/item/stack/sheet/animalhide/carbon/human,
 /obj/item/knife/butcher,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
@@ -976,7 +972,7 @@
 	icon_state = "dirt-0"
 	},
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "ya" = (
@@ -1566,7 +1562,7 @@
 "LA" = (
 /obj/item/stack/rods/two,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "LL" = (
 /mob/living/basic/construct/proteon/hostile,
 /obj/effect/decal/cleanable/crayon/rune2,

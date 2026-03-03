@@ -139,10 +139,10 @@
 	if (isnull(creator))
 		return
 	icon_state = callout::icon_state
-	color = colorize_string(creator.GetVoice(), 2, 0.9)
+	color = colorize_string(creator.get_voice(), 2, 0.9)
 	update_appearance()
 	var/turf/target_loc = get_turf(target)
-	animate(src, pixel_x = (target_loc.x - loc.x) * ICON_SIZE_X + target.pixel_x, pixel_y = (target_loc.y - loc.y) * ICON_SIZE_Y + target.pixel_y, time = 0.2 SECONDS, easing = EASE_OUT)
+	animate(src, pixel_x = (target_loc.x - loc.x) * ICON_SIZE_X + target.pixel_x, pixel_y = (target_loc.y - loc.y) * ICON_SIZE_Y + target.pixel_y, time = 0.2 SECONDS, easing = SINE_EASING|EASE_OUT)
 
 /datum/callout_option
 	var/name = "ERROR"

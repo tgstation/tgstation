@@ -1,4 +1,5 @@
-import { filter, sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import { useState } from 'react';
 import {
   Box,
@@ -13,7 +14,7 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { scale, toFixed } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -76,11 +77,10 @@ export const NtosNetDownloader = (props) => {
       : // Otherwise, show respective programs for the category.
         filter(programs, (program) => program.category === selectedCategory);
   // This sorts all programs in the lists by name and compatibility
-  items = sortBy(
-    items,
+  items = sortBy(items, [
     (program: ProgramData) => !program.compatible,
     (program: ProgramData) => program.filedesc,
-  );
+  ]);
   if (!emagged) {
     // This filters the list to only contain verified programs
     items = filter(items, (program) => program.verifiedsource === 1);

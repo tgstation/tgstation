@@ -19,7 +19,7 @@
 	var/record_number = 1
 	var/obj/item/tank/inserted_tank
 	/// Reference to a disk we are going to print to.
-	var/obj/item/computer_disk/inserted_disk
+	var/obj/item/disk/computer/inserted_disk
 
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
@@ -60,8 +60,8 @@
 		RegisterSignal(inserted_tank, COMSIG_QDELETING, PROC_REF(tank_destruction))
 		update_appearance()
 		return
-	if(istype(item, /obj/item/computer_disk))
-		var/obj/item/computer_disk/attacking_disk = item
+	if(istype(item, /obj/item/disk/computer))
+		var/obj/item/disk/computer/attacking_disk = item
 		eject_disk(user)
 		if(user.transferItemToLoc(attacking_disk, src))
 			inserted_disk = attacking_disk

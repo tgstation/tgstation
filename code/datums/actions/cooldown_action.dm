@@ -7,8 +7,6 @@
 
 	/// The actual next time this ability can be used
 	var/next_use_time = 0
-	/// The stat panel this action shows up in the stat panel in. If null, will not show up.
-	var/panel
 	/// The default cooldown applied when StartCooldown() is called
 	var/cooldown_time = 0
 	/// The default melee cooldown applied after the ability ends. If set to null, copies cooldown_time.
@@ -215,14 +213,14 @@
 	for(var/datum/action/cooldown/cd_action in owner.actions)
 		cd_action.disable()
 
-/datum/action/cooldown/Trigger(trigger_flags, atom/target)
+/datum/action/cooldown/Trigger(mob/clicker, trigger_flags, atom/target)
 	. = ..()
 	if(!.)
 		return FALSE
 	if(!owner)
 		return FALSE
 
-	var/mob/user = usr || owner
+	var/mob/user = clicker || owner
 
 	// If our cooldown action is a click_to_activate action:
 	// The actual action is activated on whatever the user clicks on -
@@ -329,41 +327,5 @@
 		on_who.update_mouse_pointer()
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	return TRUE
-
-/// Formats the action to be returned to the stat panel.
-/datum/action/cooldown/proc/set_statpanel_format()
-	if(!panel)
-		return null
-
-	var/time_remaining = max(next_use_time - world.time, 0)
-	var/time_remaining_in_seconds = round(time_remaining / 10, 0.1)
-	var/cooldown_time_in_seconds =  round(cooldown_time / 10, 0.1)
-
-	var/list/stat_panel_data = list()
-
-	// Pass on what panel we should be displayed in.
-	stat_panel_data[PANEL_DISPLAY_PANEL] = panel
-	// Also pass on the name of the spell, with some spacing
-	stat_panel_data[PANEL_DISPLAY_NAME] = " - [name]"
-
-	// No cooldown time at all, just show the ability
-	if(cooldown_time_in_seconds <= 0)
-		stat_panel_data[PANEL_DISPLAY_STATUS] = ""
-
-	// It's a toggle-active ability, show if it's active
-	else if(click_to_activate && owner.click_intercept == src)
-		stat_panel_data[PANEL_DISPLAY_STATUS] = "ACTIVE"
-
-	// It's on cooldown, show the cooldown
-	else if(time_remaining_in_seconds > 0)
-		stat_panel_data[PANEL_DISPLAY_STATUS] = "CD - [time_remaining_in_seconds]s / [cooldown_time_in_seconds]s"
-
-	// It's not on cooldown, show that it is ready
-	else
-		stat_panel_data[PANEL_DISPLAY_STATUS] = "READY"
-
-	SEND_SIGNAL(src, COMSIG_ACTION_SET_STATPANEL, stat_panel_data)
-
-	return stat_panel_data
 
 #undef COOLDOWN_NO_DISPLAY_TIME

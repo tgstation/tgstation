@@ -9,7 +9,7 @@ import { CargoCatalog } from './CargoCatalog';
 import { CargoHelp } from './CargoHelp';
 import { CargoRequests } from './CargoRequests';
 import { CargoStatus } from './CargoStatus';
-import { CargoData } from './types';
+import type { CargoData } from './types';
 
 enum TAB {
   Catalog = 'catalog',

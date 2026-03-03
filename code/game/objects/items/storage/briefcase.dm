@@ -21,6 +21,10 @@
 	/// The path of the folder that gets spawned in New()
 	var/folder_path = /obj/item/folder
 
+/obj/item/storage/briefcase/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
+
 /obj/item/storage/briefcase/PopulateContents()
 	new /obj/item/pen(src)
 	var/obj/item/folder/folder = new folder_path(src)
@@ -81,10 +85,17 @@
 	icon_state = "secure"
 	base_icon_state = "secure"
 	inhand_icon_state = "sec-case"
+	var/stored_lock_code
 
 /obj/item/storage/briefcase/secure/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/lockable_storage)
+	AddComponent(/datum/component/lockable_storage, stored_lock_code)
+	RegisterSignal(src, COMSIG_LOCKABLE_STORAGE_SET_CODE, PROC_REF(update_lock_code))
+
+/obj/item/storage/briefcase/secure/proc/update_lock_code(obj/item/storage/briefcase/secure/briefacase, new_code)
+	SIGNAL_HANDLER
+
+	stored_lock_code = new_code
 
 /// Base container used for gimmick disks.
 /obj/item/storage/briefcase/secure/digital_storage

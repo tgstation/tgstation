@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(unplanned_controllers)
 	return ..()
 
 /datum/controller/subsystem/unplanned_controllers/stat_entry(msg)
-	msg = "Planning AIs:[length(GLOB.unplanned_controllers[target_status])]"
+	msg = "\n  Planning AIs:[length(GLOB.unplanned_controllers[target_status])]"
 	return ..()
 
 /datum/controller/subsystem/unplanned_controllers/fire(resumed)

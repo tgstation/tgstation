@@ -56,8 +56,9 @@
 	base_pixel_x = -32
 	maptext_height = 64
 	maptext_width = 64
-	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
+	crusher_loot = /obj/structure/closet/crate/necropolis/dragon/crusher
+	replace_crusher_drop = TRUE
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	initial_language_holder = /datum/language_holder/lizard/hear_common
@@ -153,7 +154,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
 	SLEEP_CHECK_DEATH(0, src)
 	visible_message(span_boldwarning("[src] starts to glow vibrantly as its wounds close up!"))
-	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
+	adjust_brute_loss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
 	set_light_range(10)
@@ -220,7 +221,7 @@
 	for(var/mob/living/L in T.contents - owner)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
-		L.adjustFireLoss(10)
+		L.adjust_fire_loss(10)
 		to_chat(L, span_userdanger("You fall directly into the pool of lava!"))
 
 	// deals damage to mechs
@@ -295,11 +296,11 @@
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
 		if(islist(flame_hit) && !flame_hit[L])
-			L.adjustFireLoss(40)
+			L.adjust_fire_loss(40)
 			to_chat(L, span_userdanger("You're hit by the drake's fire breath!"))
 			flame_hit[L] = TRUE
 		else
-			L.adjustFireLoss(10) //if we've already hit them, do way less damage
+			L.adjust_fire_loss(10) //if we've already hit them, do way less damage
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 	name = "lesser ash drake"
@@ -312,7 +313,9 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	loot = list()
-	crusher_loot = list()
+	crusher_loot = null
+	achievement_type = null
+	score_achievement_type = null
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	attack_action_types = list()
 
@@ -326,8 +329,6 @@
 	. = ..()
 	lava_swoop?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
 
-/mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
-	return
 
 #undef DRAKE_ENRAGED
 #undef SWOOP_DAMAGEABLE

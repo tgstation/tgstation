@@ -106,7 +106,7 @@
 
 		var/obj/item/bodypart/old_bodypart = victim.get_bodypart(target_zone)
 		var/obj/item/bodypart/new_bodypart = new part_type()
-		new_bodypart.replace_limb(victim, TRUE)
+		new_bodypart.replace_limb(victim)
 		qdel(old_bodypart)
 
 /// Contaminated sample
@@ -136,7 +136,7 @@
 		span_boldwarning("[victim]'s flesh slithers off in a disgusting heap!"),\
 		span_boldwarning("As you emerge from the pod, your skin slithers off onto the ground!"))
 	victim.set_species(/datum/species/skeleton)
-	new /obj/effect/gibspawner/human/bodypartless(victim.drop_location())
+	new /obj/effect/gibspawner/human/bodypartless(victim.drop_location(), victim)
 
 /// Become a psyker, possibly the worst fate on this list
 /datum/experimental_cloner_fuckup/psykerize

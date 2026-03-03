@@ -65,16 +65,18 @@
 	if(isitem(source) && SHOULD_SKIP_INTERACTION(target, source, user))
 		return NONE
 
-	// By default, give XP
+	var/call_wash = TRUE
 	var/give_xp = TRUE
 	if(pre_clean_callback)
 		var/callback_return = pre_clean_callback.Invoke(source, target, user)
 		if(callback_return & CLEAN_BLOCKED)
 			return (callback_return & CLEAN_DONT_BLOCK_INTERACTION) ? NONE : ITEM_INTERACT_BLOCKING
+		if(callback_return & CLEAN_NO_WASH)
+			call_wash = FALSE
 		if(callback_return & CLEAN_NO_XP)
 			give_xp = FALSE
 
-	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, give_xp)
+	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, call_wash, give_xp)
 	return ITEM_INTERACT_SUCCESS
 
 /**
@@ -86,9 +88,10 @@
  * * source the datum that sent the signal to start cleaning
  * * target the thing being cleaned
  * * user the person doing the cleaning
- * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
+ * * call_wash set this to false if the target should not be wash()ed
+ * * grant_xp set this to false if the user should not be granted cleaning experience
  */
-/datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, clean_target = TRUE)
+/datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, call_wash = TRUE, grant_xp = TRUE)
 	//make sure we don't attempt to clean something while it's already being cleaned
 	if(HAS_TRAIT(target, TRAIT_CURRENTLY_CLEANING) || (SEND_SIGNAL(target, COMSIG_ATOM_PRE_CLEAN, user) & COMSIG_ATOM_CANCEL_CLEAN))
 		return
@@ -125,12 +128,12 @@
 	var/clean_succeeded = FALSE
 	if(do_after(user, cleaning_duration, target = target))
 		clean_succeeded = TRUE
-		if(clean_target)
-			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
+		for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
+			if(call_wash && grant_xp)
 				user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
-				all_cleaned[cleanable_decal] = GET_ATOM_BLOOD_DNA(cleanable_decal)
-			if(target.wash(cleaning_strength))
-				user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
+			all_cleaned[cleanable_decal] = GET_ATOM_BLOOD_DNA(cleanable_decal)
+		if(call_wash && target.wash(cleaning_strength) && grant_xp)
+			user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
 
 	on_cleaned_callback?.Invoke(source, target, user, clean_succeeded, all_cleaned)
 	//remove the cleaning overlay

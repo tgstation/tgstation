@@ -101,6 +101,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 1.2 SECONDS
 	category = CAT_WEAPON_AMMO
+	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY
 
 /datum/crafting_recipe/trashball
 	name = "Trashball"
@@ -176,3 +177,13 @@
 	time = 5 SECONDS
 	category = CAT_WEAPON_AMMO
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/ashen_arrow
+	name = "Ashen Arrow"
+	result = /obj/item/ammo_casing/arrow/ashen
+	reqs = list(
+		/obj/item/stack/sheet/bone = 1,
+		/obj/item/stack/sheet/sinew = 1,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_AMMO

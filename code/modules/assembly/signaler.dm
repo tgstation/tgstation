@@ -37,16 +37,15 @@
 	suicide_mob = REF(user)
 	return MANUAL_SUICIDE_NONLETHAL
 
-/obj/item/assembly/signaler/proc/manual_suicide(datum/mind/suicidee)
-	var/mob/living/user = suicidee.current
+/obj/item/assembly/signaler/proc/manual_suicide()
+	var/mob/living/user = suicider.current
 	if(!istype(user))
 		return
-	if(suicide_mob == REF(user))
-		user.visible_message(span_suicide("[user]'s [src] receives a signal, killing [user.p_them()] instantly!"))
-	else
-		user.visible_message(span_suicide("[user]'s [src] receives a signal and [user.p_they()] die[user.p_s()] like a gamer!"))
+	if(suicide_mob != REF(user))
+		return
+	user.visible_message(span_suicide("[user]'s [src] receives a signal, killing [user.p_them()] instantly!"))
 	user.set_suicide(TRUE)
-	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
+	user.adjust_oxy_loss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(FALSE)
 	playsound(user, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	qdel(src)
@@ -54,6 +53,7 @@
 /obj/item/assembly/signaler/Initialize(mapload)
 	. = ..()
 	set_frequency(frequency)
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/assembly/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -164,7 +164,7 @@
 	if(signal.data["code"] != code)
 		return
 	if(suicider)
-		manual_suicide(suicider)
+		manual_suicide()
 		return
 
 	// If the holder is a TTV, we want to store the last received signal to incorporate it into TTV logging, else wipe it.
@@ -181,6 +181,12 @@
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 	return
+
+/obj/item/assembly/signaler/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	to_chat(user, span_danger("As you open [letter], you accidentally press a button on [src]!"))
+	INVOKE_ASYNC(src, PROC_REF(signal)) // No need to check for cooldown, the cooldown is shorter than the do_after for opening mail
+	return NONE //don't return handled, we want in hands and open ui
 
 /obj/item/assembly/signaler/cyborg
 

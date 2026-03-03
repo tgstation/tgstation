@@ -38,7 +38,7 @@
 /obj/effect/particle_effect/fluid/foam/Initialize(mapload)
 	. = ..()
 	if(slippery_foam)
-		AddComponent(/datum/component/slippery, 100)
+		AddComponent(/datum/component/slippery, 100, can_slip_callback = CALLBACK(src, PROC_REF(try_slip)))
 	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
 		layer = WATER_LEVEL_LAYER
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
@@ -98,7 +98,7 @@
 				continue
 			if(object.invisibility >= INVISIBILITY_ABSTRACT) // Don't foam landmarks please
 				continue
-			if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
+			if(HAS_TRAIT(object, TRAIT_UNDERFLOOR))
 				continue
 			if (HAS_TRAIT(loc, TRAIT_ELEVATED_TURF) && !HAS_TRAIT(object, TRAIT_ELEVATING_OBJECT))
 				continue // Do expose tables, don't expose items on tables
@@ -137,6 +137,9 @@
 	lifetime -= seconds_per_tick
 	return TRUE
 
+/obj/effect/particle_effect/fluid/foam/proc/try_slip(mob/living/slipper, mob/living/slippee)
+	return !HAS_TRAIT(slippee, TRAIT_MOB_ELEVATED)
+
 /obj/effect/particle_effect/fluid/foam/spread(seconds_per_tick = 0.2 SECONDS)
 	if(group.total_size > group.target_size)
 		return
@@ -148,7 +151,7 @@
 	info.pass_flags = PASSTABLE | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/spread_turf = get_step(src, iter_dir)
-		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, info))
+		if(spread_turf?.density || location.LinkBlockedWithAccess(spread_turf, info))
 			continue
 
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!
@@ -163,7 +166,7 @@
 			foam_mob(foaming, seconds_per_tick)
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
-		reagents.copy_to(spread_foam, (reagents.total_volume))
+		reagents.trans_to(spread_foam, reagents.total_volume, copy_only = TRUE)
 		spread_foam.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		spread_foam.result_type = result_type
 		SSfoam.queue_spread(spread_foam)
@@ -175,37 +178,65 @@
 	if(prob(max(0, exposed_temperature - 475)))   //foam dissolves when heated
 		kill_foam()
 
+/// Proc to quickly spawn foam
+/// reagent_type can accept a list of reagents, optionally as a key-value pair with values overriding reagent_volume if not null
+/proc/do_foam(range = 1, atom/holder = null, turf/location = null, datum/reagent/reagent_type = null, reagent_volume = 10, datum/reagents/carry = null, amount = null, log = FALSE, datum/effect_system/fluid_spread/foam/foam_type = /datum/effect_system/fluid_spread/foam, result_type = null, stop_reactions = FALSE, reagent_scale = FOAM_REAGENT_SCALE)
+	if (carry || isnull(reagent_type))
+		var/datum/effect_system/fluid_spread/foam/foam = new foam_type(location, range, amount, holder || location, carry, result_type, stop_reactions, reagent_scale)
+		foam.start(log = log)
+		return
+
+	if (ispath(reagent_type, /datum/reagent))
+		var/datum/reagents/foam_reagents = new /datum/reagents(reagent_volume)
+		foam_reagents.add_reagent(reagent_type, reagent_volume)
+		var/datum/effect_system/fluid_spread/foam/foam = new foam_type(location, range, amount, holder || location, foam_reagents, result_type, stop_reactions, reagent_scale)
+		foam.start(log = log)
+		return
+
+
+	if (!islist(reagent_type))
+		CRASH("do_foam passed a non-reagent path, non-list reagent_type [reagent_type]!")
+
+	var/list/reagent_list = reagent_type
+	var/chem_volume = 0
+	for (var/chem_type in reagent_list)
+		chem_volume += reagent_list[chem_type] || reagent_volume
+
+	var/datum/reagents/foam_reagents = new /datum/reagents(chem_volume)
+	for (var/chem_type in reagent_list)
+		foam_reagents.add_reagent(chem_type, reagent_list[chem_type] || reagent_volume)
+
+	var/datum/effect_system/fluid_spread/foam/foam = new foam_type(location, range, amount, holder || location, foam_reagents, result_type, stop_reactions, reagent_scale)
+	foam.start(log = log)
+
 /// A factory for foam fluid floods.
 /datum/effect_system/fluid_spread/foam
 	effect_type = /obj/effect/particle_effect/fluid/foam
 	/// A container for all of the chemicals we distribute through the foam.
-	var/datum/reagents/chemholder
-	/// The amount that
+	var/datum/reagents/chemholder = null
+	/// The amount that we multiply the payload by
 	var/reagent_scale = FOAM_REAGENT_SCALE
 	/// What type of thing the foam should leave behind when it dissipates.
 	var/atom/movable/result_type = null
 
-
-/datum/effect_system/fluid_spread/foam/New()
-	..()
+/datum/effect_system/fluid_spread/foam/New(turf/location, range = 1, amount = null, atom/holder = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE, reagent_scale = FOAM_REAGENT_SCALE)
+	. = ..()
 	chemholder = new(1000, NO_REACT)
+	carry?.trans_to(chemholder, carry.total_volume, no_react = stop_reactions, copy_only = TRUE)
+	if(!isnull(result_type))
+		src.result_type = result_type
+	src.reagent_scale = reagent_scale
 
 /datum/effect_system/fluid_spread/foam/Destroy()
 	QDEL_NULL(chemholder)
 	return ..()
-
-/datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE)
-	. = ..()
-	carry?.copy_to(chemholder, carry.total_volume, no_react = stop_reactions)
-	if(!isnull(result_type))
-		src.result_type = result_type
 
 /datum/effect_system/fluid_spread/foam/start(log = FALSE)
 	var/obj/effect/particle_effect/fluid/foam/foam = new effect_type(location, new /datum/fluid_group(amount))
 	var/foamcolor = mix_color_from_reagents(chemholder.reagent_list)
 	if(reagent_scale > 1) // Make room in case we were created by a particularly stuffed payload.
 		foam.reagents.maximum_volume *= reagent_scale
-	chemholder.copy_to(foam, chemholder.total_volume, reagent_scale) // Foam has an amplifying effect on the reagents it is supplied with. This is balanced by the reagents being diluted as the area the foam covers increases.
+	chemholder.trans_to(foam, chemholder.total_volume, reagent_scale, copy_only = TRUE) // Foam has an amplifying effect on the reagents it is supplied with. This is balanced by the reagents being diluted as the area the foam covers increases.
 	foam.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
 	if(!isnull(result_type))
 		foam.result_type = result_type
@@ -231,7 +262,6 @@
 /datum/effect_system/fluid_spread/foam/long
 	effect_type = /obj/effect/particle_effect/fluid/foam/long_life
 	reagent_scale = FOAM_REAGENT_SCALE * (30 / 8)
-
 
 // Firefighting foam
 /// A variant of foam which absorbs plasma in the air if there is a fire.
@@ -321,6 +351,7 @@
 /obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
+	AddElement(/datum/element/uses_girder_wall_recipes)
 
 /obj/structure/foamedmetal/Destroy()
 	air_update_turf(TRUE, FALSE)
@@ -346,37 +377,6 @@
 	to_chat(user, span_warning("You hit [src] but bounce off it!"))
 	playsound(src.loc, 'sound/items/weapons/tap.ogg', 100, TRUE)
 
-/obj/structure/foamedmetal/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	///A speed modifier for how fast the wall is build
-	var/platingmodifier = 1
-	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
-		platingmodifier = 0.7
-		if(next_beep <= world.time)
-			next_beep = world.time + 1 SECONDS
-			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
-	add_fingerprint(user)
-
-	if(!istype(W, /obj/item/stack/sheet))
-		return ..()
-
-	var/obj/item/stack/sheet/sheet_for_plating = W
-	if(istype(sheet_for_plating, /obj/item/stack/sheet/iron))
-		if(sheet_for_plating.get_amount() < 2)
-			to_chat(user, span_warning("You need two sheets of iron to finish a wall on [src]!"))
-			return
-		to_chat(user, span_notice("You start adding plating to the foam structure..."))
-		if (do_after(user, 40 * platingmodifier, target = src))
-			if(!sheet_for_plating.use(2))
-				return
-			to_chat(user, span_notice("You add the plating."))
-			var/turf/T = get_turf(src)
-			T.place_on_top(/turf/closed/wall/metal_foam_base)
-			transfer_fingerprints_to(T)
-			qdel(src)
-		return
-
-	add_hiddenprint(user)
-
 /// A metal foam variant which produces slightly sturdier walls.
 /obj/effect/particle_effect/fluid/foam/metal/iron
 	name = "iron foam"
@@ -401,7 +401,7 @@
 
 /obj/effect/particle_effect/fluid/foam/metal/smart/make_result() //Smart foam adheres to area borders for walls
 	var/turf/open/location = loc
-	if(isspaceturf(location))
+	if(isspaceturf(location) || isopenspaceturf(location))
 		location.place_on_top(/turf/open/floor/plating/foam)
 
 	for(var/cardinal in GLOB.cardinals)
@@ -495,9 +495,7 @@
 
 /obj/effect/spawner/foam_starter/Initialize(mapload)
 	. = ..()
-
-	var/datum/effect_system/fluid_spread/foam/foam = new foam_type()
-	foam.set_up(foam_size, holder = src, location = loc)
+	var/datum/effect_system/fluid_spread/foam/foam = new foam_type(loc, foam_size, holder = src)
 	foam.start()
 
 /obj/effect/spawner/foam_starter/small

@@ -44,6 +44,10 @@
 	if (isnull(viewer_client))
 		return
 
+	if(!runechat_prefs_check(viewer, EMOTE_MESSAGE))
+		to_chat(viewer, span_emote("[icon2html(src, viewer)] [src.name]: [text]"))
+		return
+
 	var/image/balloon_alert = image(loc = isturf(src) ? src : get_atom_on_turf(src), layer = ABOVE_MOB_LAYER)
 	SET_PLANE_EXPLICIT(balloon_alert, BALLOON_CHAT_PLANE, src)
 	balloon_alert.alpha = 0

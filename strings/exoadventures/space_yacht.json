@@ -4,13 +4,8 @@
 	"author": "Kinnebian",
 	"starting_node": "A yacht in space?",
 	"starting_qualities": {},
-	"required_site_traits": [
-		"in space"
-	],
-	"loot_categories": [
-		"cash",
-		"drugs"
-	],
+	"required_site_traits": ["in space"],
+	"loot_categories": ["cash", "drugs"],
 	"scan_band_mods": {
 		"Plasma absorption band": 5
 	},

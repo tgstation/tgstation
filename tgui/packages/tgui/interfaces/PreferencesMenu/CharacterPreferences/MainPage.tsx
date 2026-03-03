@@ -1,6 +1,8 @@
-import { filter, map, sortBy } from 'common/collections';
-import { ReactNode, useState } from 'react';
-import { sendAct, useBackend } from 'tgui/backend';
+import { sortBy } from 'es-toolkit';
+import { filter, map } from 'es-toolkit/compat';
+import { type ReactNode, useState } from 'react';
+import { useBackend } from 'tgui/backend';
+import { sendAct } from 'tgui/events/act';
 import {
   Box,
   Button,
@@ -12,20 +14,19 @@ import {
 } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
-
 import { CharacterPreview } from '../../common/CharacterPreview';
 import { RandomizationButton } from '../components/RandomizationButton';
 import { features } from '../preferences/features';
 import {
-  FeatureChoicedServerData,
+  type FeatureChoicedServerData,
   FeatureValueInput,
 } from '../preferences/features/base';
-import { Gender, GENDERS } from '../preferences/gender';
+import { GENDERS, Gender } from '../preferences/gender';
 import {
   createSetPreference,
-  PreferencesMenuData,
+  type PreferencesMenuData,
   RandomSetting,
-  ServerData,
+  type ServerData,
 } from '../types';
 import { useRandomToggleState } from '../useRandomToggleState';
 import { useServerPrefs } from '../useServerPrefs';
@@ -336,18 +337,15 @@ function MainFeature(props: MainFeatureProps) {
 }
 
 const createSetRandomization =
-  (act: typeof sendAct, preference: string) => (newSetting: RandomSetting) => {
-    act('set_random_preference', {
+  (preference: string) => (newSetting: RandomSetting) => {
+    sendAct('set_random_preference', {
       preference,
       value: newSetting,
     });
   };
 
 function sortPreferences(array: [string, unknown][]) {
-  return sortBy(array, ([featureId, _]) => {
-    const feature = features[featureId];
-    return feature?.name;
-  });
+  return sortBy(array, [([featureId]) => features[featureId]?.name]);
 }
 
 type PreferenceListProps = {
@@ -398,7 +396,7 @@ export function PreferenceList(props: PreferenceListProps) {
                   {randomSetting && (
                     <Stack.Item>
                       <RandomizationButton
-                        setValue={createSetRandomization(act, featureId)}
+                        setValue={createSetRandomization(featureId)}
                         value={randomSetting}
                       />
                     </Stack.Item>
@@ -428,13 +426,9 @@ export function getRandomization(
   serverData: ServerData | undefined,
   randomBodyEnabled: boolean,
 ): Record<string, RandomSetting> {
-  if (!serverData) {
-    return {};
-  }
-
   const { data } = useBackend<PreferencesMenuData>();
 
-  if (!randomBodyEnabled) {
+  if (!randomBodyEnabled || !serverData) {
     return {};
   }
 
@@ -457,6 +451,7 @@ type MainPageProps = {
 
 export function MainPage(props: MainPageProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
+
   const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] =
     useState(false);
   const [multiNameInputOpen, setMultiNameInputOpen] = useState(false);
@@ -465,7 +460,7 @@ export function MainPage(props: MainPageProps) {
   const serverData = useServerPrefs();
 
   const currentSpeciesData =
-    serverData && serverData.species[data.character_preferences.misc.species];
+    serverData?.species[data.character_preferences.misc.species];
 
   const contextualPreferences =
     data.character_preferences.secondary_features || [];
@@ -490,12 +485,12 @@ export function MainPage(props: MainPageProps) {
   };
 
   if (randomBodyEnabled) {
-    nonContextualPreferences['random_species'] =
-      data.character_preferences.randomization['species'];
+    nonContextualPreferences.random_species =
+      data.character_preferences.randomization.species;
   } else {
     // We can't use random_name/is_accessible because the
     // server doesn't know whether the random toggle is on.
-    delete nonContextualPreferences['random_name'];
+    delete nonContextualPreferences.random_name;
   }
 
   return (
@@ -586,10 +581,7 @@ export function MainPage(props: MainPageProps) {
                       currentValue={clothing}
                       handleSelect={createSetPreference(act, clothingKey)}
                       randomization={randomizationOfMainFeatures[clothingKey]}
-                      setRandomization={createSetRandomization(
-                        act,
-                        clothingKey,
-                      )}
+                      setRandomization={createSetRandomization(clothingKey)}
                     />
                   )}
                 </Stack.Item>

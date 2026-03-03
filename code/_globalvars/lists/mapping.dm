@@ -92,6 +92,16 @@ GLOBAL_LIST_INIT(alldirs, list(
 	SOUTHEAST,
 	SOUTHWEST,
 ))
+GLOBAL_LIST_INIT(alldirs_dmi_order, list(
+	SOUTH,
+	NORTH,
+	EAST,
+	WEST,
+	SOUTHEAST,
+	SOUTHWEST,
+	NORTHEAST,
+	NORTHWEST,
+))
 
 GLOBAL_LIST_INIT(cardinal_angles, list(
 	"[NORTH]" = 0,
@@ -135,6 +145,7 @@ GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
 GLOBAL_LIST_EMPTY(bar_areas)
+GLOBAL_LIST_EMPTY(mining_center) // For determining vent size ranked lists, epicenters for comparison goes here.
 
 /// List of all the maps that have been cached for /proc/load_map
 GLOBAL_LIST_EMPTY(cached_maps)

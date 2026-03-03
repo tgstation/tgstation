@@ -35,10 +35,10 @@ Difficulty: Hard
 	loot = list()
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1, /obj/item/wendigo_skull = 1)
-	crusher_loot = list(/obj/item/crusher_trophy/wendigo_horn)
+	crusher_loot = /obj/item/crusher_trophy/wendigo_horn
 	wander = FALSE
 	del_on_death = FALSE
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	achievement_type = /datum/award/achievement/boss/wendigo_kill
 	crusher_achievement_type = /datum/award/achievement/boss/wendigo_crusher
 	score_achievement_type = /datum/award/score/wendigo_score
@@ -180,7 +180,7 @@ Difficulty: Hard
 			all_turfs -= stomp_turf
 		SLEEP_CHECK_DEATH(delay, owner)
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed, list/force_grant)
+/mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed)
 	if(health > 0)
 		return
 

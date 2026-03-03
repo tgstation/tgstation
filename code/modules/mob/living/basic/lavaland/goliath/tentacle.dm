@@ -27,6 +27,7 @@
 			return INITIALIZE_HINT_QDEL
 	deltimer(action_timer)
 	action_timer = addtimer(CALLBACK(src, PROC_REF(animate_grab)), 0.7 SECONDS, TIMER_STOPPABLE)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/effect/goliath_tentacle/Destroy()
 	deltimer(action_timer)
@@ -35,6 +36,7 @@
 /// Change to next icon state and set up grapple
 /obj/effect/goliath_tentacle/proc/animate_grab()
 	icon_state = "goliath_tentacle_wiggle"
+	update_appearance(UPDATE_OVERLAYS)
 	deltimer(action_timer)
 	addtimer(CALLBACK(src, PROC_REF(grab)), 0.3 SECONDS, TIMER_STOPPABLE)
 
@@ -45,7 +47,7 @@
 			continue
 		balloon_alert(victim, "grabbed")
 		visible_message(span_danger("[src] grabs hold of [victim]!"))
-		victim.adjustBruteLoss(rand(min_damage, max_damage))
+		victim.adjust_brute_loss(rand(min_damage, max_damage))
 		if (victim.apply_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled, grapple_time, src))
 			buckle_mob(victim, TRUE)
 			SEND_SIGNAL(victim, COMSIG_GOLIATH_TENTACLED_GRABBED)
@@ -64,8 +66,14 @@
 	SEND_SIGNAL(src, COMSIG_GOLIATH_TENTACLE_RETRACTING)
 	unbuckle_all_mobs(force = TRUE)
 	icon_state = "goliath_tentacle_retract"
+	update_appearance(UPDATE_OVERLAYS)
 	deltimer(action_timer)
 	action_timer = QDEL_IN_STOPPABLE(src, 0.7 SECONDS)
+
+/obj/effect/goliath_tentacle/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
+	. += emissive_appearance(icon, "[icon_state]_e_bloom", src)
 
 /obj/effect/goliath_tentacle/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

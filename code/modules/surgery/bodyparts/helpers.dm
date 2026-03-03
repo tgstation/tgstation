@@ -11,6 +11,15 @@
 		if(bodypart.body_zone == zone)
 			return bodypart
 
+///Returns TRUE/FALSE on whether the mob should have a limb in a given zone, used for species-restrictions.
+/mob/living/carbon/proc/should_have_limb(zone)
+	if(!zone || !dna)
+		return TRUE
+	var/datum/species/carbon_species = dna.species
+	if(zone in carbon_species.bodypart_overrides)
+		return TRUE
+	return FALSE
+
 /// Replaces a single limb and deletes the old one if there was one
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
 	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
@@ -108,10 +117,25 @@
 /mob/living/carbon/alien/larva/has_right_hand(check_disabled = TRUE)
 	return TRUE
 
+/// Returns the bodypart holding the passed item
+/mob/living/carbon/proc/get_hand_of_item(obj/item/I)
+	return get_bodypart(get_hand_zone_of_item(I))
 
-/mob/living/carbon/proc/get_missing_limbs()
+///Returns a list of all limbs this mob should have.
+/mob/living/proc/get_all_limbs() as /list
 	RETURN_TYPE(/list)
-	var/list/full = GLOB.all_body_zones.Copy()
+	return GLOB.all_body_zones.Copy()
+
+///Returns a list of all limbs this mob should have.
+/mob/living/carbon/get_all_limbs()
+	if(dna)
+		return dna.species.bodypart_overrides.Copy()
+	return ..()
+
+///Returns a list of all missing limbs this mob should have on them, but don't.
+/mob/living/carbon/proc/get_missing_limbs() as /list
+	RETURN_TYPE(/list)
+	var/list/full = get_all_limbs()
 	for(var/zone in full)
 		if(get_bodypart(zone))
 			full -= zone
@@ -128,7 +152,7 @@
 	return list()
 
 /mob/living/carbon/get_disabled_limbs()
-	var/list/full = GLOB.all_body_zones.Copy()
+	var/list/full = get_all_limbs()
 	var/list/disabled = list()
 	for(var/zone in full)
 		var/obj/item/bodypart/affecting = get_bodypart(zone)
@@ -169,6 +193,8 @@
 // FUCK YOU AUGMENT CODE - With love, Kapu
 /mob/living/carbon/proc/newBodyPart(zone)
 	var/path = dna.species.bodypart_overrides[zone]
+	if(isnull(path))
+		return null
 	var/obj/item/bodypart/new_bodypart = new path()
 	return new_bodypart
 

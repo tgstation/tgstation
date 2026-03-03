@@ -8,6 +8,7 @@
 	desc = "A heavy wooden box, which can be filled with a lot of ores or boulders"
 	density = TRUE
 	pressure_resistance = 5 * ONE_ATMOSPHERE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/structure/ore_box/Initialize(mapload)
 	. = ..()

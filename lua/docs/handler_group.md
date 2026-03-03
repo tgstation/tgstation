@@ -5,18 +5,23 @@ This module is for registering signals on a datum or several datums and being ab
 ## Functions
 
 ### HandlerGroup.new()
+
 Creates a new handler group instance
 
 ### HandlerGroup:register_signal(datum, signal, func)
+
 Registers a signal on a datum, exactly the same as `SS13.register_signal`
 
 ### HandlerGroup:clear()
+
 Clears all registered signals that have been registered by this handler group.
 
 ### HandlerGroup:clear_on(datum, signal, func)
+
 Clears all registered signals that have been registered by this handler group when a signal is called on the specified datum. Additionally, a function can be ran before it is cleared
 
 ### HandlerGroup.register_once(datum, signal func)
+
 Identical to just creating a new HandlerGroup instance and calling `clear_on(datum, signal, func)`.
 
 The idea is to register a signal and clear it after it has been called once.
@@ -26,9 +31,11 @@ The idea is to register a signal and clear it after it has been called once.
 The following examples showcase why using handler groups can make life easier in specific situations.
 
 ### Explode when mob enters location
+
 This function creates a 1 tile-wide explosion at the specified location if a specific mob walks over it. The explosion won't happen if the mob dies. This function should be callable on the same mob for different locations. The function should be self-contained, it should not affect other registered signals that the mob may have registered.
 
 #### Without Handler Groups
+
 ```lua
 local function explodeAtLocation(mobVar, position)
 	local deathCallback
@@ -51,6 +58,7 @@ end
 ```
 
 #### With Handler Groups
+
 ```lua
 local function explodeAtLocation(mobVar, position)
 	local handler = handler_group.new()

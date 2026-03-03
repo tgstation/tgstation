@@ -7,7 +7,7 @@ import {
   Section,
   TextArea,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -139,7 +139,7 @@ function getErrorText(
   message: string,
   target: boolean,
 ) {
-  let reasonList: string[] = [];
+  const reasonList: string[] = [];
   if (!target) reasonList.push('target');
   if (!name) reasonList.push('name');
   if (!job) reasonList.push('job');

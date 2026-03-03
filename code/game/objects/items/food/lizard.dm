@@ -16,6 +16,7 @@
 	foodtypes = MEAT|RAW
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/raw_tiziran_sausage/Initialize(mapload)
 	. = ..()
@@ -35,6 +36,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 	custom_price = PAYCHECK_CREW
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/raw_headcheese
 	name = "raw headcheese block"
@@ -49,6 +51,7 @@
 	foodtypes = MEAT|RAW|GORE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/raw_headcheese/Initialize(mapload)
 	. = ..()
@@ -67,9 +70,10 @@
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/headcheese/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/headcheese_slice
 	name = "headcheese slice"
@@ -84,6 +88,7 @@
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 
 /obj/item/food/shredded_lungs
 	name = "crispy shredded lung stirfry"
@@ -122,6 +127,7 @@
 	foodtypes = MEAT|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/moonfish_eggs
 	name = "moonfish eggs"
@@ -212,6 +218,7 @@
 	foodtypes = MEAT|NUTS|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 //Why does like, every language on the planet besides English call them pommes? Who knows, who cares- the lizards call them it too, because funny.
 /obj/item/food/lizard_fries
@@ -230,6 +237,7 @@
 	foodtypes = MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/brain_pate
 	name = "eyeball-and-brain pate"
@@ -259,6 +267,7 @@
 	foodtypes = MEAT | VEGETABLES | NUTS | GORE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 
 /obj/item/food/kebab/picoss_skewers
 	name = "picoss skewer"
@@ -349,6 +358,7 @@
 	foodtypes = MEAT | SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_BULKY
 	crafting_complexity = FOOD_COMPLEXITY_5
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 3)
 
 //Spaghetti Dishes
 
@@ -441,7 +451,7 @@
 	AddComponent(/datum/component/bakeable, bread_type, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/rootdough/make_processable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, flat_type, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, flat_type, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Flatten", sound_to_play = SFX_ROLLING_PIN_ROLLING)
 
 /obj/item/food/rootdough/egg
 	desc = "A root based dough, made with nuts, tubers and eggs. Used in a wide range of Tiziran cooking."
@@ -462,7 +472,7 @@
 	var/grill_type = /obj/item/food/root_flatbread
 
 /obj/item/food/flatrootdough/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, process_type, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, process_type, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/flatrootdough/make_grillable()
 	AddComponent(/datum/component/grillable, grill_type, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -489,7 +499,7 @@
 	foodtypes = parent_type::foodtypes | MEAT
 
 /obj/item/food/rootdoughslice/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/rootdoughslice/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/rootroll, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -541,7 +551,7 @@
 
 /obj/item/food/bread/root/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/ingredients_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/bread/root/egg
 	foodtypes = parent_type::foodtypes | MEAT
@@ -559,7 +569,7 @@
 
 /obj/item/food/breadslice/root/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 /obj/item/food/breadslice/root/egg
 	foodtypes = parent_type::foodtypes | MEAT
@@ -568,6 +578,7 @@
 /obj/item/food/pizza/flatbread
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = null
+	abstract_type = /obj/item/food/pizza/flatbread
 	slice_type = null
 
 /obj/item/food/pizza/flatbread/rustic
@@ -597,6 +608,7 @@
 	foodtypes = VEGETABLES | NUTS | MEAT
 	boxtag = "Italic Flatbread"
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/pizza/flatbread/imperial
 	name = "\improper Imperial flatbread"
@@ -611,6 +623,7 @@
 	foodtypes = VEGETABLES | MEAT | NUTS | GORE
 	boxtag = "Imperial Victory Flatbread"
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 4)
 
 /obj/item/food/pizza/flatbread/rawmeat
 	name = "meatlovers flatbread"
@@ -623,6 +636,7 @@
 	tastes = list("bread" = 1, "meat" = 1)
 	foodtypes = MEAT|VEGETABLES|RAW|NUTS
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pizza/flatbread/stinging
 	name = "\improper Stinging flatbread"
@@ -700,6 +714,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2.25)
 
 /obj/item/food/honey_roll
 	name = "honey sweetroll"
@@ -926,6 +941,7 @@
 	)
 	foodtypes = MEAT|VEGETABLES|NUTS
 	crafting_complexity = FOOD_COMPLEXITY_3 //Gotta make the dough, +1
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/burger/rat/korta
 	name = "rat rootburger"
@@ -956,6 +972,7 @@
 	foodtypes = NUTS | MEAT | BREAKFAST | VEGETABLES | FRIED
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/burger/rootrib
 	name = "rootrib"
@@ -972,6 +989,7 @@
 	foodtypes = NUTS | MEAT | VEGETABLES | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/burger/rootchicken
 	name = "chicken rootwich"
@@ -989,6 +1007,7 @@
 	foodtypes = NUTS | MEAT | VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/burger/rootfish
 	name = "Fish rootwich"
@@ -1019,3 +1038,4 @@
 	foodtypes = NUTS | MEAT | VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)

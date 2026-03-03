@@ -9,7 +9,7 @@
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "revenant_idle"
-	mob_biotypes = MOB_SPIRIT
+	mob_biotypes = MOB_SPIRIT | MOB_UNDEAD
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
@@ -95,7 +95,7 @@
 /mob/living/basic/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SEE_BLESSED_TILES), INNATE_TRAIT)
 
 	grant_actions_by_list(abilities)
 
@@ -126,13 +126,12 @@
 
 	generated_objectives_and_spells = TRUE
 	mind.set_assigned_role(SSjob.get_job_type(/datum/job/revenant))
-	mind.special_role = ROLE_REVENANT
 	SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
 	mind.add_antag_datum(/datum/antagonist/revenant)
 	return TRUE
 
 /// Signal Handler Injection to handle Life() stuff for revenants
-/mob/living/basic/revenant/proc/on_life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/revenant/proc/on_life(seconds_per_tick = SSMOBS_DT)
 	SIGNAL_HANDLER
 
 	if(dormant)
@@ -279,7 +278,7 @@
 /mob/living/basic/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/basic/revenant/dust(just_ash, drop_items, force)
+/mob/living/basic/revenant/dust(just_ash, drop_items, give_moodlet, force)
 	death()
 
 /mob/living/basic/revenant/gib()
@@ -300,7 +299,7 @@
 /mob/living/basic/revenant/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
-/mob/living/basic/revenant/bullet_act()
+/mob/living/basic/revenant/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || dormant)
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()

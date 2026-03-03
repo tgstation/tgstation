@@ -99,6 +99,7 @@
 	foodtypes = VEGETABLES | DAIRY | MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 // Fries
 /obj/item/food/fries

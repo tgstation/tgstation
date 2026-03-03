@@ -18,6 +18,13 @@
 		{
 			"type": "byond",
 			"request": "launch",
+			"name": "Launch DreamSeeker (absolute minimum)",
+			"preLaunchTask": "Build All (absolute minimum)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
+		},
+		{
+			"type": "byond",
+			"request": "launch",
 			"name": "Launch DreamSeeker (testing)",
 			"preLaunchTask": "Build All (testing)",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
@@ -55,6 +62,14 @@
 		{
 			"type": "byond",
 			"request": "launch",
+			"name": "Launch DreamDaemon (absolute minimum)",
+			"preLaunchTask": "Build All (absolute minimum)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
+			"dreamDaemon": true
+		},
+		{
+			"type": "byond",
+			"request": "launch",
 			"name": "Launch DreamDaemon (testing)",
 			"preLaunchTask": "Build All (testing)",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
@@ -82,10 +97,7 @@
 			"request": "launch",
 			"program": "${command:dreammaker.returnDreamDaemonPath}",
 			"cwd": "${workspaceRoot}",
-			"args": [
-				"${command:dreammaker.getFilenameDmb}",
-				"-trusted"
-			],
+			"args": ["${command:dreammaker.getFilenameDmb}", "-trusted"],
 			"preLaunchTask": "Build All"
 		},
 		{
@@ -94,10 +106,7 @@
 			"request": "launch",
 			"program": "${command:dreammaker.returnDreamDaemonPath}",
 			"cwd": "${workspaceRoot}",
-			"args": [
-				"${command:dreammaker.getFilenameDmb}",
-				"-trusted"
-			],
+			"args": ["${command:dreammaker.getFilenameDmb}", "-trusted"],
 			"preLaunchTask": "Build All (low memory mode)"
 		},
 		{

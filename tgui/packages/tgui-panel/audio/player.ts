@@ -28,8 +28,8 @@ export class AudioPlayer {
   options: AudioOptions;
   volume: number;
 
-  onPlaySubscribers: { (): void }[];
-  onStopSubscribers: { (): void }[];
+  onPlaySubscribers: (() => void)[];
+  onStopSubscribers: (() => void)[];
 
   constructor() {
     this.element = null;
@@ -91,7 +91,9 @@ export class AudioPlayer {
       logger.log('playback failed');
     });
 
-    this.onPlaySubscribers.forEach((subscriber) => subscriber());
+    this.onPlaySubscribers.forEach((subscriber) => {
+      subscriber();
+    });
   }
 
   stop(): void {
@@ -102,7 +104,9 @@ export class AudioPlayer {
     this.element.pause();
     this.destroy();
 
-    this.onStopSubscribers.forEach((subscriber) => subscriber());
+    this.onStopSubscribers.forEach((subscriber) => {
+      subscriber();
+    });
   }
 
   setVolume(volume: number): void {

@@ -133,6 +133,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
 	)
 
 /**
@@ -259,6 +260,7 @@
 	greyscale_colors = "#927444#8b4c31#4c202d"
 	starting_programs = list(
 		/datum/computer_file/program/skill_tracker,
+		/datum/computer_file/program/raptordex,
 	)
 
 /obj/item/modular_computer/pda/bitrunner
@@ -324,7 +326,7 @@
 	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda-clown"
 	post_init_icon_state = null
-	inserted_disk = /obj/item/computer_disk/virus/clown
+	inserted_disk = /obj/item/disk/computer/virus/clown
 	greyscale_config = null
 	greyscale_colors = null
 	inserted_item = /obj/item/toy/crayon/rainbow
@@ -337,7 +339,7 @@
 		lube_flags = NO_SLIP_WHEN_WALKING,\
 		on_slip_callback = CALLBACK(src, PROC_REF(AfterSlip)),\
 		can_slip_callback = CALLBACK(src, PROC_REF(try_slip)),\
-		slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT),\
+		slot_whitelist = ITEM_SLOT_ID | ITEM_SLOT_BELT,\
 	)
 	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
 
@@ -356,7 +358,7 @@
 
 /obj/item/modular_computer/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != saved_identification))
-		var/obj/item/computer_disk/virus/clown/cart = inserted_disk
+		var/obj/item/disk/computer/virus/clown/cart = inserted_disk
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 			playsound(src,'sound/machines/ping.ogg',30,TRUE)
@@ -366,7 +368,7 @@
 
 /obj/item/modular_computer/pda/mime
 	name = "mime PDA"
-	inserted_disk = /obj/item/computer_disk/virus/mime
+	inserted_disk = /obj/item/disk/computer/virus/mime
 	icon_state = "/obj/item/modular_computer/pda/mime"
 	greyscale_config = /datum/greyscale_config/tablet/mime
 	greyscale_colors = "#FAFAFA#EA3232"
@@ -394,6 +396,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/emojipedia,
 		/datum/computer_file/program/newscaster,
+		/datum/computer_file/program/portrait_printer,
 	)
 
 /obj/item/modular_computer/pda/curator/Initialize(mapload)
@@ -498,7 +501,7 @@
 	var/datum/computer_file/program/themeify/theme_app = locate() in stored_files
 	if(theme_app)
 		for(var/theme_key in GLOB.pda_name_to_theme - GLOB.default_pda_themes)
-			theme_app.imported_themes += theme_key
+			LAZYADD(theme_app.imported_themes, theme_key)
 
 /obj/item/modular_computer/pda/clear/get_messenger_ending()
 	return "Sent from my crystal PDA"

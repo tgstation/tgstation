@@ -27,8 +27,11 @@
 	throw_speed = 3
 	drop_sound = 'sound/items/handling/tools/multitool_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/multitool_pickup.ogg'
-	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
-	custom_premium_price = PAYCHECK_COMMAND * 3
+	custom_materials = list(
+		/datum/material/iron =SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.2
+		)
+	custom_premium_price = PAYCHECK_CREW * 3
 	toolspeed = 1
 	usesound = 'sound/items/weapons/empty.ogg'
 	var/datum/buffer // simple machine buffer for device linkage
@@ -295,10 +298,10 @@
 
 	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-			var/datum/camerachunk/chunk = GLOB.cameranet.getCameraChunk(x, y, epicenter.z)
+			var/datum/camerachunk/chunk = SScameras.generate_chunk(x, y, epicenter.z)
 			// removing cameras in build mode didnt affect it and i guess it needs an AI eye to update so we have to do this manually
 			// unless we only want to see static in a jank manner only if an eye updates it
-			chunk?.update() // UPDATE THE FUCK NOW
+			chunk?.force_update(only_if_necessary = FALSE) // UPDATE THE FUCK NOW
 			. |= chunk
 
 /obj/item/multitool/ai_detect/proc/cleanup_static()

@@ -31,7 +31,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 	//--rendering relay vars--
 	/// list of planes we will relay this plane's render to
-	var/list/render_relay_planes = list(RENDER_PLANE_GAME)
+	var/list/render_relay_planes = list(RENDER_PLANE_UNLIT_GAME)
 	/// blend mode to apply to the render relay in case you dont want to use the plane_masters blend_mode
 	var/blend_mode_override
 	/// list of current relays this plane is utilizing to render

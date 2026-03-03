@@ -1,9 +1,9 @@
 //KEEP IN MIND: These are different from gun/grenadelauncher. These are designed to shoot premade rocket and grenade projectiles, not flashbangs or chemistry casings etc.
 //Put handheld rocket launchers here if someone ever decides to make something so hilarious ~Paprika
 
-/obj/item/gun/ballistic/revolver/grenadelauncher//this is only used for underbarrel grenade launchers at the moment, but admins can still spawn it if they feel like being assholes
-	desc = "A break-operated grenade launcher."
+/obj/item/gun/ballistic/revolver/grenadelauncher
 	name = "grenade launcher"
+	desc = "A break-operated grenade launcher."
 	icon_state = "dshotgun_sawn"
 	inhand_icon_state = "gun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin/implant/pindicate
 	bolt_type = BOLT_TYPE_NO_BOLT
+	can_muzzle_flash = FALSE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
 	pin = /obj/item/firing_pin
@@ -19,6 +20,28 @@
 	..()
 	if(istype(A, /obj/item/ammo_box) || isammocasing(A))
 		chamber_round()
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
+	name = "underbarrel grenade launcher"
+	spawn_blacklisted = TRUE
+	pin = null
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel/Initialize(mapload)
+	. = ..()
+	var/obj/item/gun/gun = loc
+	if (!istype(gun))
+		return INITIALIZE_HINT_QDEL
+	pin = gun.pin
+	RegisterSignal(gun, COMSIG_GUN_PIN_INSERTED, PROC_REF(on_pin_inserted))
+	RegisterSignal(gun, COMSIG_GUN_PIN_REMOVED, PROC_REF(on_pin_removed))
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel/proc/on_pin_inserted(obj/item/gun/source, obj/item/firing_pin/new_pin, mob/living/user)
+	SIGNAL_HANDLER
+	pin = new_pin
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel/proc/on_pin_removed(obj/item/gun/source, obj/item/firing_pin/old_pin, mob/living/user)
+	SIGNAL_HANDLER
+	pin = null
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/cyborg
 	desc = "A 6-shot grenade launcher."
@@ -38,7 +61,7 @@
 	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m75
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = 0 SECONDS
 	actions_types = list()
 	casing_ejector = FALSE
 
@@ -60,7 +83,7 @@
 	can_suppress = FALSE
 	pin = /obj/item/firing_pin/implant/pindicate
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = 0 SECONDS
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -68,6 +91,7 @@
 	cartridge_wording = "rocket"
 	empty_indicator = TRUE
 	tac_reloads = FALSE
+	can_muzzle_flash = FALSE
 	/// Do we shit flames behind us when we fire?
 	var/backblast = TRUE
 

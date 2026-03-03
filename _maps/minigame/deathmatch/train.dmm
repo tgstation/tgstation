@@ -34,7 +34,7 @@
 	locked = 0
 	},
 /obj/effect/decal/cleanable/fuel_pool/hivis,
-/obj/item/ammo_box/c38,
+/obj/item/ammo_box/speedloader/c38,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
@@ -242,7 +242,7 @@
 	locked = 0
 	},
 /obj/effect/decal/cleanable/fuel_pool/hivis,
-/obj/item/ammo_box/c38,
+/obj/item/ammo_box/speedloader/c38,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
@@ -617,7 +617,7 @@
 /area/deathmatch)
 "EX" = (
 /obj/structure/lattice/catwalk,
-/obj/item/ammo_box/c38/match,
+/obj/item/ammo_box/speedloader/c38/match,
 /turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
 /area/deathmatch)
 "Fa" = (
@@ -932,7 +932,7 @@
 	locked = 0
 	},
 /obj/effect/decal/cleanable/fuel_pool/hivis,
-/obj/item/ammo_box/c38,
+/obj/item/ammo_box/speedloader/c38,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},

@@ -258,7 +258,7 @@
 				play_sound = TRUE
 
 	if(play_sound && !no_sound)
-		replacer.play_rped_sound()
+		replacer.play_rped_effect()
 
 	return TRUE
 
@@ -357,14 +357,14 @@
 		// We might end up qdel'ing the part if it's a stock part datum.
 		// In practice, this doesn't have side effects to the name,
 		// but academically we should not be using an object after it's deleted.
-		var/part_name = "[tool]"
+		var/part_name = "\the [tool]"
 
 		if (ispath(stock_part_base, /datum/stock_part))
 			// We can't just reuse stock_part_path here or its singleton,
 			// or else putting in a tier 2 part will deconstruct to a tier 1 part.
 			var/stock_part_datum = GLOB.stock_part_datums_per_object[tool.type]
 			if (isnull(stock_part_datum))
-				stack_trace("tool.type] does not have an associated stock part datum!")
+				stack_trace("[tool.type] does not have an associated stock part datum!")
 				continue
 
 			components += stock_part_datum
@@ -446,22 +446,17 @@
 			return FALSE
 
 	tool.play_tool_sound(src)
-	var/obj/machinery/new_machine = new circuit.build_path(loc)
+	// Prevent us from dropping stuff thanks to /Exited
+	var/obj/item/circuitboard/machine/leaving_circuit = circuit
+	components -= leaving_circuit
+	leaving_circuit.replacement_parts = components
+	// Build the machine with the replacement parts
+	circuit = null
+	var/obj/machinery/new_machine = new leaving_circuit.build_path(loc, board = leaving_circuit)
 	if(istype(new_machine))
-		new_machine.clear_components()
 		// Set anchor state
 		new_machine.set_anchored(anchored)
-		// Prevent us from dropping stuff thanks to /Exited
-		var/obj/item/circuitboard/machine/leaving_circuit = circuit
-		circuit = null
-		// Assign the circuit & parts & move them all at once into the machine
-		// no need to separately move circuit board as its already part of the components list
-		new_machine.circuit = leaving_circuit
-		new_machine.component_parts = components
-		for (var/obj/new_part in components)
-			new_part.forceMove(new_machine)
 		//Inform machine that its finished & cleanup
-		new_machine.RefreshParts()
 		new_machine.on_construction(user)
 		components = null
 	qdel(src)

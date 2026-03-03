@@ -70,8 +70,7 @@
 "dC" = (
 /obj/structure/sign/warning/fire/directional/north,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/plasma_input{
-	dir = 4;
-	chamber_id = "lizardgaslava"
+	dir = 4
 	},
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=30000;TEMP=293.15"
@@ -134,8 +133,7 @@
 /area/ruin/thelizardsgas_lavaland)
 "fO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
-	dir = 8;
-	chamber_id = "lizardgaslava"
+	dir = 8
 	},
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=30000;TEMP=293.15"
@@ -401,8 +399,7 @@
 "rv" = (
 /obj/structure/sign/warning/fire/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
-	dir = 8;
-	chamber_id = "lizardgaslava"
+	dir = 8
 	},
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=30000;TEMP=293.15"
@@ -588,6 +585,7 @@
 	pixel_y = -1
 	},
 /obj/structure/closet/crate/freezer,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
 /turf/open/floor/iron/freezer{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -649,8 +647,7 @@
 /area/ruin/thelizardsgas_lavaland)
 "BU" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/plasma_input{
-	dir = 4;
-	chamber_id = "lizardgaslava"
+	dir = 4
 	},
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=30000;TEMP=293.15"
@@ -718,7 +715,7 @@
 	},
 /area/ruin/thelizardsgas_lavaland)
 "Eh" = (
-/obj/machinery/atmospherics/components/tank/oxygen{
+/obj/machinery/atmospherics/components/tank/air/layer2{
 	dir = 8
 	},
 /turf/open/floor/iron/smooth{
@@ -734,7 +731,6 @@
 /area/ruin/thelizardsgas_lavaland)
 "Es" = (
 /obj/machinery/door/airlock/external/ruin,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -854,6 +850,12 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/thelizardsgas_lavaland)
+"Im" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
 "IC" = (
 /obj/structure/cable,
 /obj/structure/railing,
@@ -882,8 +884,7 @@
 /area/ruin/thelizardsgas_lavaland)
 "JK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
-	dir = 8;
-	chamber_id = "lizardgaslava"
+	dir = 8
 	},
 /obj/item/toy/plush/lizard_plushie/space/green{
 	desc = "A famous lizard, in plushy form.";
@@ -1043,7 +1044,6 @@
 	pixel_y = 2;
 	pixel_x = 6
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -1535,7 +1535,7 @@ IU
 HL
 xW
 rM
-IU
+Im
 pp
 FA
 dC

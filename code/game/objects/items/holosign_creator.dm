@@ -13,6 +13,9 @@
 	throw_speed = 3
 	throw_range = 7
 	item_flags = NOBLUDGEON
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	var/list/signs
 	var/max_signs = 10
 	//time to create a holosign in deciseconds.
@@ -154,6 +157,13 @@
 /obj/item/holosign_creator/atmos/Initialize(mapload)
 	. = ..()
 	register_context()
+
+/obj/item/holosign_creator/atmos/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!(. & ITEM_INTERACT_SUCCESS))
+		return
+	var/obj/machinery/door/firedoor/firelock = locate() in get_turf(interacting_with)
+	firelock?.open()
 
 /obj/item/holosign_creator/atmos/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

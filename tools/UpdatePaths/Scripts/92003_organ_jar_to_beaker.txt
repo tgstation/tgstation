@@ -1,0 +1,3 @@
+#comment This repaths Organ Jars to be a beaker subtype https://github.com/tgstation/tgstation/pull/92003
+
+/obj/item/reagent_containers/cup/organ_jar : /obj/item/reagent_containers/cup/beaker/organ_jar{@OLD}

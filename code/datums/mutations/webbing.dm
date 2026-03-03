@@ -1,5 +1,5 @@
 //spider webs
-/datum/mutation/human/webbing
+/datum/mutation/webbing
 	name = "Webbing Production"
 	desc = "Allows the user to lay webbing, and travel through it."
 	quality = POSITIVE
@@ -8,7 +8,7 @@
 	power_path = /datum/action/cooldown/mob_cooldown/lay_web/genetic
 	energy_coeff = 1
 
-/datum/mutation/human/webbing/setup()
+/datum/mutation/webbing/setup()
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/lay_web/genetic/to_modify = .
 
@@ -20,13 +20,13 @@
 		return
 	to_modify.webbing_time = 2 SECONDS // Spin webs faster but not more often
 
-/datum/mutation/human/webbing/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/webbing/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
 
-/datum/mutation/human/webbing/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/webbing/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)

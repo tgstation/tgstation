@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 #define SENTIENT_BOT_RESET_TIMER 45 SECONDS
 
 /mob/living/basic/bot
+	abstract_type = /mob/living/basic/bot
 	icon = 'icons/mob/silicon/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
@@ -84,7 +85,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/list/current_pathed_turfs = list()
 
 	///The type of data HUD the bot uses. Diagnostic by default.
-	var/data_hud_type = DATA_HUD_DIAGNOSTIC
+	var/data_hud_type = TRAIT_DIAGNOSTIC_HUD
 	/// If true we will allow ghosts to control this mob
 	var/can_be_possessed = FALSE
 	/// Message to display upon possession
@@ -101,6 +102,10 @@ GLOBAL_LIST_INIT(command_strings, list(
 	)
 	///name of the UI we will attempt to open
 	var/bot_ui = "SimpleBot"
+	// The faction of the bot before it inherited the pai's faction
+	var/list/original_faction
+	// The allies of the bot before it inherited the pai's faction
+	var/list/original_allies
 	/// If true we will offer this
 	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 
@@ -111,8 +116,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 	AddElement(/datum/element/ai_retaliate)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
-	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
+	RegisterSignal(src, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 	add_traits(list(TRAIT_NO_GLIDE, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
+	LoadComponent(/datum/component/bloodysoles/bot)
 	GLOB.bots_list += src
 
 	// Give bots a fancy new ID card that can hold any access.
@@ -130,16 +136,15 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	//Adds bot to the diagnostic HUD system
 	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_atom_to_hud(src)
 	diag_hud_set_bothealth()
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 
 	//If a bot has its own HUD (for player bots), provide it.
 	if(!isnull(data_hud_type))
-		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
-		datahud.show_to(src)
+		ADD_TRAIT(src, data_hud_type, INNATE_TRAIT)
 
 	if(mapload && is_station_level(z) && (bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT) && (bot_mode_flags & BOT_MODE_ROUNDSTART_POSSESSION))
 		enable_possession(mapload = mapload)
@@ -230,13 +235,18 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if (can_announce)
 		COOLDOWN_START(src, offer_ghosts_cooldown, 30 SECONDS)
 
+	if (user)
+		log_silicon("[key_name(user)] enabled sapience for [src] ([initial(src.name)])") // Not technically a silicon but who is counting
+
 /// Disables this bot from being possessed by ghosts
 /mob/living/basic/bot/proc/disable_possession(mob/user)
+	if (user)
+		log_silicon("[key_name(user)] disabled sapience for [src] ([initial(src.name)])")
 	can_be_possessed = FALSE
 	if(isnull(key))
 		return
 	if (user)
-		log_combat(user, src, "ejected from [initial(src.name)] control.")
+		log_combat(user, src, "ejected [key_name(src)] from control of [src] ([initial(src.name)]).")
 	to_chat(src, span_warning("You feel yourself fade as your personality matrix is reset!"))
 	ghostize(can_reenter_corpse = FALSE)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
@@ -260,7 +270,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/new_name = sanitize_name(
 		reject_bad_text(tgui_input_text(
 			user = user,
-			message = "This machine is designated [real_name]. Would you like to update its registration?",
+			message = "This machine is designated [real_name]. Would you like to update [p_their()] registration?",
 			title = "Name change",
 			default = real_name,
 			max_length = MAX_NAME_LEN,
@@ -332,16 +342,16 @@ GLOBAL_LIST_INIT(command_strings, list(
 	else
 		. += "[src] is in pristine condition."
 
-	. += span_notice("Its maintenance panel is [bot_access_flags & BOT_COVER_MAINTS_OPEN ? "open" : "closed"].")
-	. += span_info("You can use a <b>screwdriver</b> to [bot_access_flags & BOT_COVER_MAINTS_OPEN ? "close" : "open"] it.")
+	. += span_notice("[p_Their()] maintenance panel is [bot_access_flags & BOT_COVER_MAINTS_OPEN ? "open" : "closed"].")
+	. += span_info("You can use a <b>screwdriver</b> to [bot_access_flags & BOT_COVER_MAINTS_OPEN ? "close" : "open"] [p_them()].")
 
 	if(bot_access_flags & BOT_COVER_MAINTS_OPEN)
-		. += span_notice("Its control panel is [bot_access_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"].")
+		. += span_notice("[p_Their()] control panel is [bot_access_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"].")
 		if(!(bot_access_flags & BOT_COVER_EMAGGED) && (issilicon(user) || user.Adjacent(src)))
-			. += span_info("Alt-click [issilicon(user) ? "" : "or use your ID on "]it to [bot_access_flags & BOT_COVER_LOCKED ? "un" : ""]lock its control panel.")
+			. += span_info("Alt-click [issilicon(user) ? "" : "or use your ID on "][p_them()] to [bot_access_flags & BOT_COVER_LOCKED ? "un" : ""]lock [p_their()] control panel.")
 	if(isnull(paicard))
 		return
-	. += span_notice("It has a pAI device installed.")
+	. += span_notice("[p_They()] [p_have()] a pAI device installed.")
 	if(!(bot_access_flags & BOT_COVER_MAINTS_OPEN))
 		. += span_info("You can use a <b>hemostat</b> to remove it.")
 
@@ -507,7 +517,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(message_mods[RADIO_EXTENSION] == MODE_DEPARTMENT)
 		internal_radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 		return REDUCE_RANGE
-	if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
+	if(message_mods[RADIO_EXTENSION] in GLOB.default_radio_channels)
 		internal_radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 		return REDUCE_RANGE
 
@@ -700,7 +710,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 	paicard.pai.mind.transfer_to(src)
 	to_chat(src, span_notice("You sense your form change as you are uploaded into [src]."))
 	name = paicard.pai.name
-	faction = user.faction.Copy()
+	original_faction = get_faction()
+	original_allies = allies
+	SET_FACTION_AND_ALLIES_FROM(src, user)
 	log_combat(user, paicard.pai, "uploaded to [initial(src.name)],")
 	return TRUE
 
@@ -731,7 +743,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 		to_chat(paicard.pai, span_notice("You feel your control fade as [paicard] ejects from [initial(name)]."))
 	paicard = null
 	name = initial(name)
-	faction = initial(faction)
+	set_faction(original_faction)
+	set_allies(original_allies)
 	remove_all_languages(source = LANGUAGE_PAI)
 	get_selected_language()
 
@@ -765,12 +778,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 	update_appearance()
 
 /mob/living/basic/bot/rust_heretic_act()
-	adjustBruteLoss(400)
+	adjust_brute_loss(400)
 
-/mob/living/basic/bot/proc/attempt_access(mob/bot, obj/door_attempt)
+/mob/living/basic/bot/proc/retrieve_access(mob/bot, list/player_access)
 	SIGNAL_HANDLER
-
-	return (door_attempt.check_access(access_card) ? ACCESS_ALLOWED : ACCESS_DISALLOWED)
+	player_access += access_card.GetAccess()
 
 /mob/living/basic/bot/proc/generate_speak_list()
 	return null
@@ -818,9 +830,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/proc/emag_effects(user)
 	return
-
-/mob/living/basic/bot/spawn_gibs(drop_bitflags = NONE)
-	new /obj/effect/gibspawner/robot(drop_location(), src)
 
 /mob/living/basic/bot/get_hit_area_message(input_area)
 	// we just get hit, there's no complexity for hitting an arm (if it exists) or anything.

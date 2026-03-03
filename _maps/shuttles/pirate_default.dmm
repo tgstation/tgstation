@@ -14,11 +14,11 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/recharger,
-/obj/item/gun/energy/laser{
+/obj/item/gun/energy/laser/soul{
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/gun/energy/laser{
+/obj/item/gun/energy/laser/soul{
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -398,7 +398,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bf" = (
@@ -407,7 +407,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/turretid{
-	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
 	pixel_y = -24;

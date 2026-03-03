@@ -25,13 +25,18 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_GUN_NEURONS_ACTIVATED = FALSE,
 		BB_SONG_LINES = MONKEY_SONG,
 		BB_RESISTING = FALSE,
+		BB_MONKEY_GIVE_CHANCE = 5,
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
 
 /datum/targeting_strategy/basic/monkey
 
 /datum/targeting_strategy/basic/monkey/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
+	// if they wronged us, all bets are off
 	if(controller.blackboard[BB_MONKEY_ENEMIES][the_target])
+		return FALSE
+	// target was forcibly set, all bets are off again
+	if(controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] == the_target)
 		return FALSE
 	return ..()
 
@@ -59,11 +64,23 @@ have ways of interacting with a specific mob and control it.
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/generic_resist,
 		/datum/ai_planning_subtree/monkey_combat,
+		/datum/ai_planning_subtree/serve_food,
 		/datum/ai_planning_subtree/generic_hunger,
 		/datum/ai_planning_subtree/generic_play_instrument,
-		/datum/ai_planning_subtree/punpun_shenanigans,
+		/datum/ai_planning_subtree/monkey_shenanigans,
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey/pun_pun
+
+/datum/ai_controller/monkey/pun_pun/TryPossessPawn(atom/new_pawn)
+	. = ..()
+	if(. & AI_CONTROLLER_INCOMPATIBLE)
+		return
+	pawn = new_pawn
+	set_blackboard_key(BB_IGNORE_DRINKS, TRUE)
+	set_blackboard_key(BB_MONKEY_TAMED, TRUE)
+	set_blackboard_key(BB_MONKEY_GIVE_CHANCE, 30)
+	set_blackboard_key(BB_MONKEY_PRESS_TYPEPATH, /obj/structure/desk_bell)
+	set_trip_mode(mode = FALSE)
 
 /datum/ai_controller/monkey/angry
 

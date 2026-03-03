@@ -1,4 +1,4 @@
-#define CREDIT_TYPE_MINING "mp"
+
 
 /obj/machinery/computer/order_console/mining
 	name = "mining equipment order console"
@@ -15,7 +15,7 @@
 	and hopefully get delivered by them.
 	35% cheaper than express delivery."}
 	express_tooltip = @{"Sends your purchases instantly."}
-	credit_type = CREDIT_TYPE_MINING
+	credit_type = MONEY_MINING_SYMBOL
 
 	order_categories = list(
 		CATEGORY_MINING,
@@ -127,6 +127,5 @@
 			points += amount
 			to_chat(user, span_notice("You transfer [amount] mining points from [attacking_id] to [src]."))
 
-#undef CREDIT_TYPE_MINING
 #undef TO_POINT_CARD
 #undef TO_USER_ID

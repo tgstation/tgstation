@@ -6,6 +6,7 @@
 	foldabletype = null
 	max_integrity = 150
 	ttv_icon = "motor_chair_ttv"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 14.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	///How "fast" the wheelchair goes only affects ramming
 	var/speed = 2
 	///Self explanatory, ratio of how much power we use
@@ -40,15 +41,17 @@
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
 
-/obj/vehicle/ridden/wheelchair/motorized/CheckParts(list/parts_list)
-	// This wheelchair was crafted, so clean out default parts
-	qdel(power_cell)
-	component_parts = list()
+/obj/vehicle/ridden/wheelchair/motorized/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
 
-	for(var/obj/item/stock_parts/part in parts_list)
-		if(istype(part, /obj/item/stock_parts/power_store/cell)) // power cell, physically moves into the wheelchair
+	// This wheelchair was crafted, so clean out default parts
+	QDEL_NULL(power_cell)
+
+	component_parts = list()
+	for(var/obj/item/stock_parts/part in contents)
+		// power cell, physically moves into the wheelchair
+		if(istype(part, /obj/item/stock_parts/power_store/cell))
 			power_cell = part
-			part.forceMove(src)
 			continue
 
 		// find matching datum/stock_part for this part and add to component list
@@ -56,8 +59,6 @@
 		if(isnull(newstockpart))
 			CRASH("No corresponding datum/stock_part for [part.type]")
 		component_parts += newstockpart
-		// delete this part
-		part.moveToNullspace()
 		qdel(part)
 	refresh_parts()
 
@@ -140,12 +141,14 @@
 	. = ..()
 	if (!disassembled)
 		return
-	new /obj/item/stack/rods(drop_location(), 2)
-	new /obj/item/stack/sheet/iron(drop_location(), 6)
+
+	var/atom/drop = drop_location()
+	new /obj/item/stack/rods(drop, 2)
+	new /obj/item/stack/sheet/iron(drop, 6)
 	for(var/datum/stock_part/part in component_parts)
-		new part.physical_object_type(drop_location())
+		new part.physical_object_type(drop)
 	if(!isnull(power_cell))
-		power_cell.forceMove(drop_location())
+		power_cell.forceMove(drop)
 		power_cell = null
 
 /obj/vehicle/ridden/wheelchair/motorized/screwdriver_act(mob/living/user, obj/item/tool)
@@ -163,7 +166,7 @@
 		return
 	. += "Speed: [speed]"
 	. += "Energy efficiency: [power_efficiency]"
-	. += "Power: [power_cell.charge] out of [power_cell.maxcharge]"
+	. += "Power: [display_energy(power_cell.charge)] out of [display_energy(power_cell.maxcharge)]"
 
 /obj/vehicle/ridden/wheelchair/motorized/Move(newloc, direct)
 	. = ..()
@@ -195,13 +198,13 @@
 		unbuckle_mob(disabled)
 		disabled.throw_at(throw_target, 2, 3)
 		disabled.Knockdown(10 SECONDS)
-		disabled.adjustStaminaLoss(40)
+		disabled.adjust_stamina_loss(40)
 		if(isliving(bumped_atom))
 			var/mob/living/ramtarget = bumped_atom
 			throw_target = get_edge_target_turf(ramtarget, pick(GLOB.cardinals))
 			ramtarget.throw_at(throw_target, 2, 3)
 			ramtarget.Knockdown(8 SECONDS)
-			ramtarget.adjustStaminaLoss(35)
+			ramtarget.adjust_stamina_loss(35)
 			visible_message(span_danger("[src] crashes into [ramtarget], sending [disabled] and [ramtarget] flying!"))
 		else
 			visible_message(span_danger("[src] crashes into [bumped_atom], sending [disabled] flying!"))

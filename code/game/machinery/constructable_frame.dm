@@ -6,6 +6,7 @@
 	base_icon_state = "box_"
 	density = TRUE
 	max_integrity = 250
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	/// What board do we accept
 	var/board_type = /obj/item/circuitboard
 	/// Reference to the circuit inside the frame
@@ -196,7 +197,7 @@
 		// After installing, attempts to follow up by inserting parts
 		install_parts_from_part_replacer(user, replacer, no_sound = TRUE)
 		if(!no_sound)
-			replacer.play_rped_sound()
+			replacer.play_rped_effect()
 		return TRUE
 
 	return FALSE

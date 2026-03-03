@@ -22,7 +22,7 @@
 	health = 50
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/pony
 	/// Do we register a unique rider?
 	var/unique_tamer = FALSE
@@ -34,6 +34,7 @@
 	var/list/ponycolors = list("#cc8c5d", "#cc8c5d")
 
 /datum/emote/pony
+	abstract_type = /datum/emote/pony
 	mob_type_allowed_typecache = /mob/living/basic/pony
 	mob_type_blacklist_typecache = list()
 
@@ -122,7 +123,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 

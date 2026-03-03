@@ -230,3 +230,4 @@
 	turf_type = /turf/open/floor/fake_snow
 	mineralType = "snow"
 	merge_type = /obj/item/stack/tile/mineral/snow
+	mats_per_unit = list(/datum/material/snow = HALF_SHEET_MATERIAL_AMOUNT / 2)

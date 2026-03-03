@@ -130,6 +130,10 @@
 		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unsecure" : "Install/Secure"]"
 		return CONTEXTUAL_SCREENTIP_SET
 
+	if(held_item?.atom_storage)
+		context[SCREENTIP_CONTEXT_RMB] = "Dump contents"
+		return CONTEXTUAL_SCREENTIP_SET
+
 	if(broken > NOT_BROKEN)
 		if(broken == REALLY_BROKEN && held_item?.tool_behaviour == TOOL_WIRECUTTER)
 			context[SCREENTIP_CONTEXT_LMB] = "Repair"
@@ -552,7 +556,7 @@
 
 	dirty = 0
 	update_appearance()
-	return . || TRUE
+	. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /obj/machinery/microwave/proc/eject()
 	var/atom/drop_loc = drop_location()
@@ -639,9 +643,7 @@
 
 /obj/machinery/microwave/proc/spark()
 	visible_message(span_warning("Sparks fly around [src]!"))
-	var/datum/effect_system/spark_spread/sparks = new
-	sparks.set_up(2, 1, src)
-	sparks.start()
+	do_sparks(2, TRUE, src)
 
 /**
  * The start of the cook loop
@@ -748,7 +750,7 @@
 			else
 				dirty++
 
-		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
+		metal_amount += (cooked_item.custom_materials?[SSmaterials.get_material(/datum/material/iron)] || 0)
 
 	if(cursed_chef && (metal_amount || prob(5)))  // If we're unlucky and have metal, we're guaranteed to explode
 		spark()

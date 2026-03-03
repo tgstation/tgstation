@@ -87,7 +87,7 @@
 
 	var/success = FALSE
 
-	if(do_after(living_pawn, MONKEY_ITEM_SNATCH_DELAY, victim) && target && living_pawn.CanReach(victim))
+	if(do_after(living_pawn, MONKEY_ITEM_SNATCH_DELAY, victim) && target && victim.IsReachableBy(living_pawn))
 
 		for(var/obj/item/I in victim.held_items)
 			if(I == target)
@@ -195,7 +195,7 @@
 
 	//look for any potential weapons we're holding
 	var/obj/item/potential_weapon = locate() in living_pawn.held_items
-	if(!living_pawn.CanReach(target, potential_weapon))
+	if(!target.IsReachableBy(living_pawn, potential_weapon?.reach))
 		return FALSE
 
 	if(isnull(potential_weapon))
@@ -288,7 +288,7 @@
 		if(!enemies[possible_enemy]) //We don't hate this creature! But we might still attack it!
 			if(!controller.blackboard[BB_MONKEY_AGGRESSIVE]) //We are not aggressive either, so we won't attack!
 				continue
-			if(faction_check(possible_enemy.faction, list(FACTION_MONKEY, FACTION_JUNGLE), exact_match = FALSE) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS]) // do not target your team. includes monkys gorillas etc.
+			if(possible_enemy.has_faction(list(FACTION_MONKEY, FACTION_JUNGLE)) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS]) // do not target your team. includes monkys gorillas etc.
 				continue
 		// Weighted list, so the closer they are the more likely they are to be chosen as the enemy
 		valids[possible_enemy] = CEILING(100 / (get_dist(controller.pawn, possible_enemy) || 1), 1)

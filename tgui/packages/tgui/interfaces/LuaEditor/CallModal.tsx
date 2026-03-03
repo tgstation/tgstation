@@ -1,9 +1,9 @@
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { Button, Modal, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { ListMapper } from './ListMapper';
-import { CallInfo, LuaEditorData, LuaEditorModal } from './types';
+import type { CallInfo, LuaEditorData, LuaEditorModal } from './types';
 
 type CallModalProps = {
   setModal: Dispatch<SetStateAction<LuaEditorModal>>;

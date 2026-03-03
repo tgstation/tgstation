@@ -19,8 +19,8 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flash_protect = FLASH_PROTECTION_WELDER
-	strip_delay = 50
-	equip_delay_other = 50
+	strip_delay = 5 SECONDS
+	equip_delay_other = 5 SECONDS
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	dog_fashion = null
@@ -38,7 +38,7 @@
 	if(visor_dirt)
 		AddComponent(/datum/component/clothing_dirt, visor_dirt)
 	if(fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 	add_stabilizer()
 
 /obj/item/clothing/head/helmet/space/proc/add_stabilizer(loose_hat = TRUE)
@@ -64,7 +64,7 @@
 	allowed = list(
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
-		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/tank/jetpack/captain,
 		)
 	slowdown = 1
 	armor_type = /datum/armor/suit_space
@@ -73,8 +73,8 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	strip_delay = 80
-	equip_delay_other = 80
+	strip_delay = 8 SECONDS
+	equip_delay_other = 8 SECONDS
 	resistance_flags = NONE
 	actions_types = list(/datum/action/item_action/toggle_spacesuit)
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
@@ -102,7 +102,7 @@
 		cell = new cell(src)
 
 	if(fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
 /obj/item/clothing/suit/space/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
 	. = ..()

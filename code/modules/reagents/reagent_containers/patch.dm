@@ -186,6 +186,11 @@
 	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 2, /datum/reagent/medicine/granibitaluri = 8)
 	icon_state = "bandaid_burn"
 
+/obj/item/reagent_containers/applicator/patch/fent
+	name = "unmarked patch"
+	desc = "An unmarked, unlabeled transdermal patch for you to wear!"
+	list_reagents = list(/datum/reagent/toxin/fentanyl = 2)
+
 /obj/item/reagent_containers/applicator/patch/synthflesh
 	name = "synthflesh patch"
 	desc = "Helps with brute and burn injuries. Slightly toxic. Three patches applied can restore a corpse husked by burns."
@@ -203,7 +208,7 @@
 		return
 	// Check mob damage for synthflesh unhusking
 	var/mob/living/carbon/carbies = eater
-	if(HAS_TRAIT_FROM(carbies, TRAIT_HUSK, BURN) && carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD * 2.5)
+	if(HAS_TRAIT_FROM(carbies, TRAIT_HUSK, BURN) && carbies.get_fire_loss() > UNHUSK_DAMAGE_THRESHOLD * 2.5)
 		// give them a warning if the mob is a husk but synthflesh won't unhusk yet
 		carbies.visible_message(span_boldwarning("[carbies]'s burns need to be repaired first before synthflesh will unhusk it!"))
 

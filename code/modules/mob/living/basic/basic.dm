@@ -2,6 +2,7 @@
 /mob/living/basic
 	name = "basic mob"
 	icon = 'icons/mob/simple/animal.dmi'
+	abstract_type = /mob/living/basic
 	health = 20
 	maxHealth = 20
 	max_stamina = BASIC_MOB_STAMINA_MATCH_HEALTH
@@ -30,7 +31,7 @@
 	///How much wounding power it has
 	var/wound_bonus = CANT_WOUND
 	///How much bare wounding power it has
-	var/bare_wound_bonus = 0
+	var/exposed_wound_bonus = 0
 	///If the attacks from this are sharp
 	var/sharpness = NONE
 
@@ -50,7 +51,7 @@
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
-	var/list/speak_emote = list()
+	var/list/speak_emote
 
 	///When someone interacts with the simple animal.
 	///Help-intent verb in present continuous tense.
@@ -119,8 +120,9 @@
 	apply_target_randomisation()
 	make_stamina_slowable()
 
-	if(speak_emote)
+	if(LAZYLEN(speak_emote))
 		speak_emote = string_list(speak_emote)
+	damage_coeff = string_assoc_list(damage_coeff)
 
 	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
 	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)
@@ -162,10 +164,10 @@
 		return
 	AddElement(/datum/element/attack_zone_randomiser)
 
-/mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * seconds_per_tick, forced = TRUE)
+		adjust_stamina_loss(-stamina_recovery * seconds_per_tick, forced = TRUE)
 
 /mob/living/basic/get_default_say_verb()
 	return length(speak_emote) ? pick(speak_emote) : ..()
@@ -341,3 +343,12 @@
 	Move(get_step(src, dir), dir)
 	animate(src, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
 	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)
+
+///ovverride to add mob specific cytology mutation effects, returns TRUE if we added a mob specific mutation
+/mob/living/basic/proc/mutate()
+	if(SEND_SIGNAL(src, COMSIG_BASICMOB_MUTATED) & MUTATED_NO_FURTHER_MUTATIONS)
+		//Tells the vat our mob has been mutated by another source and we don't want to add potentially incompatible mutations such as shiny mutation.
+		return TRUE
+	else
+		return FALSE
+

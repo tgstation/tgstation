@@ -148,12 +148,16 @@
 		return FALSE
 
 	var/bounty_key = bounty.get_dupe_protection_key(stealing)
+	// record that we've claimed this type of bounty
 	handler.all_claimed_bounty_types[bounty_key] += 1
 	handler.claimed_bounties_from_last_pool[bounty_key] = TRUE
-
+	// clear up the bounty itself
 	bounty.clean_up_stolen_item(stealing, spy, handler)
 	bounty.claimed = TRUE
-
+	// adds child items to the bounty pool, ie ammo for a newly acquired gun
+	for(var/child_item_type in bounty.reward_item.relevant_child_items)
+		handler.try_add_to_loot_pool(SStraitor.uplink_items_by_type[child_item_type])
+	// and finally, spawn the reward
 	var/atom/movable/reward = bounty.reward_item.spawn_item_for_generic_use(spy)
 	if(isitem(reward))
 		spy.put_in_hands(reward)

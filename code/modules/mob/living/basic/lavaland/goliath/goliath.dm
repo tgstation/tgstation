@@ -82,6 +82,7 @@
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(goliath_foods))
 	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/goliath/Destroy()
 	QDEL_NULL(tentacles)
@@ -95,7 +96,7 @@
 		. += span_info("Someone appears to have attached a saddle to this one.")
 
 // Goliaths can summon tentacles more frequently as they take damage, scary.
-/mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
 	. = ..()
 	if (. <= 0)
 		return
@@ -158,13 +159,18 @@
 	. = ..()
 	if(isnull(.))
 		return
-	faction = new_friend.faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM(src, new_friend)
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)
 	tentacles?.Trigger(target = atom_target)
 
 /mob/living/basic/mining/goliath/ranged_secondary_attack(atom/atom_target, modifiers)
 	tentacle_line?.Trigger(target = atom_target)
+
+/mob/living/basic/mining/goliath/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /// Version of the goliath that already starts saddled and doesn't require a lasso to be ridden.
 /mob/living/basic/mining/goliath/deathmatch
@@ -203,7 +209,7 @@
 	/// List of places we might spawn a tentacle, if we're alive
 	var/list/tentacle_target_turfs
 
-/mob/living/basic/mining/goliath/ancient/immortal/Life(seconds_per_tick, times_fired)
+/mob/living/basic/mining/goliath/ancient/immortal/Life(seconds_per_tick)
 	. = ..()
 	if (!. || !isturf(loc))
 		return

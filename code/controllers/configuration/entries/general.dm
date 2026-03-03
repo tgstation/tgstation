@@ -66,6 +66,10 @@
 /// log login/logout
 /datum/config_entry/flag/log_access
 
+/// log blood worm actions like entering/leaving hosts
+/datum/config_entry/flag/log_blood_worm
+	default = TRUE
+
 /// Config entry which special logging of failed logins under suspicious circumstances.
 /datum/config_entry/flag/log_suspicious_login
 
@@ -120,6 +124,10 @@
 
 /// log emotes
 /datum/config_entry/flag/log_emote
+
+/// log ghost polling
+/datum/config_entry/flag/log_ghost_poll
+	default = TRUE
 
 /// log economy actions
 /datum/config_entry/flag/log_econ
@@ -176,14 +184,6 @@
 
 /// allow votes to change map
 /datum/config_entry/flag/allow_vote_map
-
-/// allow players to vote to re-do the map vote
-/datum/config_entry/flag/allow_rock_the_vote
-
-/// the number of times we allow players to rock the vote
-/datum/config_entry/number/max_rocking_votes
-	default = 1
-	min_val = 1
 
 /// minimum time between voting sessions (deciseconds, 10 minute default)
 /datum/config_entry/number/vote_delay
@@ -318,7 +318,7 @@
 /datum/config_entry/string/banappeals
 
 /datum/config_entry/string/wikiurl
-	default = "http://tgstation13.org/wiki"
+	default = "https://wiki.tgstation13.org"
 
 /datum/config_entry/string/forumurl
 	default = "http://tgstation13.org/phpBB/index.php"
@@ -328,6 +328,9 @@
 
 /datum/config_entry/string/githuburl
 	default = "https://www.github.com/tgstation/tgstation"
+
+/datum/config_entry/string/configurl
+	default = "https://github.com/tgstation-operations/server-config"
 
 /datum/config_entry/string/discordbotcommandprefix
 	default = "?"
@@ -630,16 +633,17 @@
 	default = -1
 	min_val = 0
 
-/datum/config_entry/string/default_view
-	default = "15x15"
-
-/datum/config_entry/string/default_view_square
-	default = "15x15"
-
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
 
+/datum/config_entry/number/roundstart_logout_report_time_average
+	default = 10 MINUTES
+	min_val = 0
+
+/datum/config_entry/number/roundstart_logout_report_time_variance
+	default = 3 MINUTES
+	min_val = 0
 
 /datum/config_entry/flag/reopen_roundstart_suicide_roles
 
@@ -768,6 +772,12 @@
 	min_val = 0
 	max_val = 100
 
+/// Pop requirement to exclude recently played maps from votes.
+/datum/config_entry/number/map_vote_minimum_pop_to_remember_maps
+	default = 0 //0 means disabled
+	integer = TRUE
+	min_val = 0
+
 /// If admins with +DEBUG can initialize byond-tracy midround.
 /datum/config_entry/flag/allow_tracy_start
 	protection = CONFIG_ENTRY_LOCKED
@@ -788,3 +798,9 @@
 
 /datum/config_entry/flag/generate_assets_in_init
 	default = FALSE
+
+/datum/config_entry/number/minimum_ascension_time
+	default = 0 // 1 minute
+	min_val = 0
+
+/datum/config_entry/flag/fishing

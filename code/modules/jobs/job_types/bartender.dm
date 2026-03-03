@@ -1,7 +1,6 @@
 /datum/job/bartender
 	title = JOB_BARTENDER
 	description = "Serve booze, mix drinks, keep the crew drunk."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1

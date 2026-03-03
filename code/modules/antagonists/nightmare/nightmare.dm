@@ -1,7 +1,7 @@
 /datum/antagonist/nightmare
 	name = "\improper Nightmare"
 	antagpanel_category = ANTAG_GROUP_ABOMINATIONS
-	job_rank = ROLE_NIGHTMARE
+	pref_flag = ROLE_NIGHTMARE
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
@@ -16,6 +16,14 @@
 /datum/antagonist/nightmare/on_gain()
 	forge_objectives()
 	. = ..()
+
+/datum/antagonist/nightmare/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/nightmare = mob_override || owner.current
+	nightmare.mob_mood.mood_modifier -= 1
+
+/datum/antagonist/nightmare/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/nightmare = mob_override || owner.current
+	nightmare.mob_mood.mood_modifier += 1
 
 /datum/outfit/nightmare
 	name = "Nightmare (Preview only)"
@@ -39,7 +47,7 @@
 	..()
 
 /datum/objective/nightmare_fluff/check_completion()
-	return owner.current.stat != DEAD
+	return owner.current && owner.current.stat != DEAD
 
 /datum/antagonist/nightmare/forge_objectives()
 	var/datum/objective/nightmare_fluff/objective = new

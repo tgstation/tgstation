@@ -19,7 +19,7 @@
 	base_icon_state = "savannah_ivanov"
 	icon_state = "savannah_ivanov_0_0"
 	//does not include mmi compatibility
-	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | BEACON_TRACKABLE | BEACON_CONTROLLABLE
 	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
 	max_integrity = 450 //really tanky, like damn
@@ -80,7 +80,7 @@
 	///skyfall builds up in charges every 2 seconds, when it reaches 5 charges the ability actually starts
 	var/skyfall_charge_level = 0
 
-/datum/action/vehicle/sealed/mecha/skyfall/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/mecha/skyfall/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return
 	if(!owner || !chassis || !(owner in chassis.occupants))
@@ -208,14 +208,14 @@
 				to_chat(crushed_victim, span_userdanger("The tremors from [chassis] landing sends you flying!"))
 				var/fly_away_direction = get_dir(chassis, crushed_victim)
 				crushed_victim.throw_at(get_edge_target_turf(crushed_victim, fly_away_direction), 4, 3)
-				crushed_victim.adjustBruteLoss(15)
+				crushed_victim.adjust_brute_loss(15)
 				continue
 			to_chat(crushed_victim, span_userdanger("[chassis] crashes down on you from above!"))
 			if(crushed_victim.stat != CONSCIOUS)
 				crushed_victim.investigate_log("has been gibbed by a falling Savannah Ivanov mech.", INVESTIGATE_DEATHS)
 				crushed_victim.gib(DROP_ALL_REMAINS)
 				continue
-			crushed_victim.adjustBruteLoss(80)
+			crushed_victim.adjust_brute_loss(80)
 
 /**
  * ## abort_skyfall
@@ -252,7 +252,7 @@
 		end_missile_targeting()
 	return ..()
 
-/datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return
 	if(!chassis || !(owner in chassis.occupants))

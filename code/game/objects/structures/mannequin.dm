@@ -63,7 +63,7 @@
 		material = pick(MANNEQUIN_WOOD, MANNEQUIN_PLASTIC)
 	icon_state = "mannequin_[material]_[body_type == FEMALE ? "female" : "male"]"
 	AddElement(/datum/element/strippable, GLOB.strippable_mannequin_items)
-	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
+	AddElement(/datum/element/simple_rotation, ROTATION_IGNORE_ANCHORED)
 	AddComponent(/datum/component/marionette)
 	update_appearance()
 
@@ -146,9 +146,11 @@
 
 /obj/structure/mannequin/wood
 	material = MANNEQUIN_WOOD
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 25)
 
 /obj/structure/mannequin/plastic
 	material = MANNEQUIN_PLASTIC
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 25)
 
 /obj/structure/mannequin/skeleton
 	name = "skeleton model"

@@ -4,7 +4,7 @@
  * fusion_process() handles all the main fusion reaction logic and consequences (lightning, radiation, particles) from an active fusion reaction.
  */
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/process(seconds_per_tick)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/process_atmos(seconds_per_tick)
 	/*
 	 *Pre-checks
 	 */
@@ -21,11 +21,11 @@
 
 	// Run the reaction if it is either live or being started
 	if (start_power || power_level)
-		play_ambience()
+		play_ambience(seconds_per_tick)
 		fusion_process(seconds_per_tick)
 		// Note that we process damage/healing even if the fusion process aborts.
 		// Running out of fuel won't save you if your moderator and coolant are exploding on their own.
-		process_moderator_overflow()
+		process_moderator_overflow(seconds_per_tick)
 		process_damageheal(seconds_per_tick)
 		check_alert()
 	if (start_power)
@@ -33,6 +33,10 @@
 	update_pipenets()
 
 	check_deconstructable()
+
+	if(linked_interface)
+		// The interface MUST be updated after every atmos tick to show accurate information.
+		SStgui.update_uis(linked_interface)
 
 /**
  * Called by process()
@@ -202,11 +206,11 @@
 	radiation = max(-(PLANCK_LIGHT_CONSTANT / 5e-18) * radiation_modifier * delta_temperature, 0)
 	power_output = efficiency * (internal_power - conduction - radiation)
 	//Hotter air is easier to heat up and cool down
-	heat_limiter_modifier = 10 * (10 ** power_level) * (heating_conductor / 100)
+	heat_limiter_modifier = 5 * (10 ** power_level) * (heating_conductor / 100)
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	heat_output_min = - heat_limiter_modifier * 0.01 * negative_temperature_multiplier
 	heat_output_max = heat_limiter_modifier * positive_temperature_multiplier
-	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, heat_output_min, heat_output_max)
+	heat_output = clamp(internal_instability * power_output * heat_modifier / 200, heat_output_min, heat_output_max)
 
 	// Is the fusion process actually going to run?
 	// Note we have to always perform the above calculations to keep the UI updated, so we can't use this to early return.
@@ -219,9 +223,9 @@
 	var/production_amount
 	switch(power_level)
 		if(3,4)
-			production_amount = clamp(heat_output * 5e-4, 0, fuel_consumption_rate) * seconds_per_tick
+			production_amount = clamp(heat_output / 1000, 0, fuel_consumption_rate) * seconds_per_tick
 		else
-			production_amount = clamp(heat_output / 10 ** (power_level+1), 0, fuel_consumption_rate) * seconds_per_tick
+			production_amount = clamp(heat_output * 2 / 10 ** (power_level+1), 0, fuel_consumption_rate) * seconds_per_tick
 
 	// antinob production is special, and uses its own calculations from how stale the fusion mix is (via byproduct ratio and fresh fuel rate)
 	var/dirty_production_rate = scaled_fuel_list[scaled_fuel_list[3]] / fuel_injection_rate
@@ -268,6 +272,8 @@
 		if(4)
 			moderator_internal.gases[tier[3]][MOLES] += scaled_production * 1.65
 			moderator_internal.gases[tier[4]][MOLES] += scaled_production * 1.25
+			if(moderator_list[/datum/gas/plasma] > 50)
+				moderator_internal.gases[tier[5]][MOLES] += scaled_production * 1.15
 		if(5)
 			moderator_internal.gases[tier[4]][MOLES] += scaled_production * 0.65
 			moderator_internal.gases[tier[5]][MOLES] += scaled_production
@@ -379,7 +385,11 @@
 	//Modifies the internal_fusion temperature with the amount of heat output
 	var/temperature_modifier = selected_fuel.temperature_change_multiplier
 	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE * temperature_modifier)
-		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,FUSION_MAXIMUM_TEMPERATURE * temperature_modifier)
+		internal_fusion.temperature = clamp(
+			internal_fusion.temperature + heat_output * seconds_per_tick,
+			TCMB,
+			FUSION_MAXIMUM_TEMPERATURE * temperature_modifier,
+		)
 	else
 		internal_fusion.temperature -= heat_limiter_modifier * 0.01 * seconds_per_tick
 
@@ -449,8 +459,10 @@
 
 	// If we have a preposterous amount of mass in the fusion mix, things get bad extremely fast
 	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
-		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
-		critical_threshold_proximity = max(critical_threshold_proximity + min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MAX_DAMAGE), 0) * seconds_per_tick
+		var/moles_over_limit = internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES
+		var/hypercritical_damage_taken = max(moles_over_limit * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
+		hypercritical_damage_taken = min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MAX_DAMAGE) * seconds_per_tick
+		critical_threshold_proximity = max(critical_threshold_proximity + hypercritical_damage_taken, 0)
 		warning_damage_flags |= HYPERTORUS_FLAG_HIGH_FUEL_MIX_MOLE
 
 	// High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen

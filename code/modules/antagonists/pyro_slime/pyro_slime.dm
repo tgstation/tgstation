@@ -5,6 +5,7 @@
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
+	pref_flag = ROLE_PYROCLASTIC_SLIME
 
 /datum/antagonist/pyro_slime/on_gain()
 	forge_objectives()
@@ -18,7 +19,7 @@
 	explanation_text = "I am fire. I am hunger. The cold is agony. The living pulse with energy; their warmth fuels me. The dead are husks, their embers long faded. Water is death. Fire... fire is freedom."
 
 /datum/objective/pyro_slime/check_completion()
-	return owner.current.stat != DEAD
+	return owner.current && owner.current.stat != DEAD
 
 /datum/antagonist/pyro_slime/forge_objectives()
 	var/datum/objective/pyro_slime/objective = new

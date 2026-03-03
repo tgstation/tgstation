@@ -63,9 +63,8 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	var/blobbernaut_reagentatk_bonus = 0
 
 /datum/blobstrain/New(mob/eye/blob/new_overmind)
-	if (!istype(new_overmind))
-		stack_trace("blobstrain created without overmind")
-	overmind = new_overmind
+	if(new_overmind)
+		overmind = new_overmind
 
 /datum/blobstrain/Destroy()
 	overmind = null
@@ -126,7 +125,8 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		blob_mob.health /= max_mob_health_multiplier
 
 
-/datum/blobstrain/proc/on_sporedeath(mob/living/spore)
+/datum/blobstrain/proc/on_sporedeath(mob/living/dead_minion, death_cloud_size)
+	return
 
 /datum/blobstrain/proc/send_message(mob/living/M)
 	var/totalmessage = message
@@ -145,7 +145,8 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	send_message(L)
 
 /// When this blob's blobbernaut attacks any atom
-/datum/blobstrain/proc/blobbernaut_attack(atom/attacking, mob/living/basic/blobbernaut)
+/datum/blobstrain/proc/blobbernaut_attack(mob/living/blobbernaut, atom/victim)
+	SIGNAL_HANDLER
 	return
 
 /datum/blobstrain/proc/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this
@@ -168,3 +169,6 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 
 /datum/blobstrain/proc/examine(mob/user)
 	return list("<b>Progress to Critical Mass:</b> [span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount].")]")
+
+/datum/blobstrain/proc/on_blobmob_atom_interacted(mob/living/minion, atom/interacted_atom, adjacent, modifiers)
+	return

@@ -8,9 +8,9 @@
 	)
 	mutanttongue = /obj/item/organ/tongue/monkey
 	mutantbrain = /obj/item/organ/brain/primate
-	skinned_type = /obj/item/stack/sheet/animalhide/monkey
+	skinned_type = /obj/item/stack/sheet/animalhide/carbon/monkey
 	meat = /obj/item/food/meat/slab/monkey
-	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
+	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/carbon/monkey = 1)
 	inherent_traits = list(
 		TRAIT_NO_AUGMENTS,
 		TRAIT_NO_BLOOD_OVERLAY,
@@ -45,15 +45,14 @@
 	if (pref_load)
 		ADD_TRAIT(human_who_gained_species, TRAIT_BORN_MONKEY, INNATE_TRAIT) // Not a species trait, you cannot escape your genetic destiny
 	passtable_on(human_who_gained_species, SPECIES_TRAIT)
-	human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
-	human_who_gained_species.dna.activate_mutation(/datum/mutation/human/race)
+	human_who_gained_species.dna.add_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
 	human_who_gained_species.AddElement(/datum/element/human_biter)
 	human_who_gained_species.update_mob_height()
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
 	passtable_off(C, SPECIES_TRAIT)
-	C.dna.remove_mutation(/datum/mutation/human/race)
+	C.dna.remove_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
 	C.RemoveElement(/datum/element/human_biter)
 	C.update_mob_height()
 
@@ -177,7 +176,7 @@
 	crossing_mob.knockOver(owner)
 
 /obj/item/organ/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
-	if(!HAS_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER))
+	if(!HAS_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER) || HAS_TRAIT(owner, TRAIT_FERAL_BITER))
 		return owner.get_bodypart(BODY_ZONE_HEAD)
 	return ..()
 

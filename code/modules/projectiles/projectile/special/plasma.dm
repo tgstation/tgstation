@@ -38,3 +38,4 @@
 	damage = 24
 	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+

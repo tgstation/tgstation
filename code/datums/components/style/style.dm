@@ -95,7 +95,7 @@
 		src.multitooled = multitooled
 
 /datum/component/style/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_USER_ITEM_INTERACTION, PROC_REF(hotswap))
+	RegisterSignal(parent, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hotswap))
 	RegisterSignal(parent, COMSIG_MOB_MINED, PROC_REF(on_mine))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 	RegisterSignal(parent, COMSIG_MOB_EMOTED("taunt"), PROC_REF(on_taunt))
@@ -110,7 +110,7 @@
 	ADD_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
 
 /datum/component/style/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_USER_ITEM_INTERACTION)
+	UnregisterSignal(parent, COMSIG_USER_PRE_ITEM_ATTACK)
 	UnregisterSignal(parent, COMSIG_MOB_MINED)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(parent, COMSIG_MOB_EMOTED("taunt"))
@@ -139,16 +139,15 @@
 /datum/component/style/proc/add_action(action, amount)
 	if(length(actions) > 9)
 		actions.Cut(1, 2)
+	var/action_id = 0
 	if(length(actions))
 		var/last_action = actions[length(actions)]
 		if(action == actions[last_action])
 			amount *= 0.5
-	var/id
-	while(!id || (id in actions))
-		id = "action[rand(1, 1000)]"
-	actions[id] = action
+		action_id = text2num(last_action) + 1
+	actions["[action_id]"] = action
 	change_points(amount)
-	addtimer(CALLBACK(src, PROC_REF(remove_action), id), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(remove_action), action_id), 10 SECONDS)
 
 /datum/component/style/proc/remove_action(action_id)
 	actions -= action_id
@@ -197,7 +196,7 @@
 
 			rank = rank_changed
 	meter.maptext = "[format_rank_string(rank)][generate_multiplier()][generate_actions()]"
-	meter.maptext_y = 94 - 12 * length(actions)
+	meter.maptext_y = initial(meter.maptext_y) - 12 * length(actions)
 	update_meter(point_to_rank(), go_back)
 
 /datum/component/style/proc/update_meter(new_rank, go_back)
@@ -293,27 +292,28 @@
 			return "#364866"
 
 /// A proc that lets a user, when their rank >= `hotswap_rank`, swap items in storage with what's in their hands, simply by clicking on the stored item with a held item
-/datum/component/style/proc/hotswap(mob/living/source, atom/target, obj/item/weapon, list/modifiers)
+/datum/component/style/proc/hotswap(mob/living/source, obj/item/weapon, atom/target, list/modifiers)
 	SIGNAL_HANDLER
-
-	if((rank < hotswap_rank) || !isitem(target) || !(target in source.get_all_contents()))
+	if((rank < hotswap_rank) || !isitem(target) || get(target, /mob/living) != source)
 		return NONE
 
 	var/obj/item/item_target = target
-
 	if(!(item_target.item_flags & IN_STORAGE))
 		return NONE
 
-	var/datum/storage/atom_storage = item_target.loc.atom_storage
+	INVOKE_ASYNC(src, PROC_REF(hotswap_interact), source, weapon, target, modifiers)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
+/datum/component/style/proc/hotswap_interact(mob/living/source, obj/item/weapon, atom/target, list/modifiers)
+	var/datum/storage/atom_storage = target.loc.atom_storage
 	if(!atom_storage.can_insert(weapon, source, messages = FALSE))
 		source.balloon_alert(source, "unable to hotswap!")
-		return NONE
+		return
 
-	atom_storage.attempt_insert(weapon, source, override = TRUE)
-	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, put_in_hands), target)
-	source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
-	return ITEM_INTERACT_BLOCKING
+	if (atom_storage.attempt_insert(weapon, source, override = TRUE) && source.put_in_hands(target))
+		source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
+	else
+		source.balloon_alert(source, "unable to hotswap!")
 
 // Point givers
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)
@@ -323,7 +323,7 @@
 		return
 
 	var/mob/living/disrespected = attacked_atom
-	if(disrespected.stat || faction_check(punching_person.faction, disrespected.faction) || !(FACTION_MINING in disrespected.faction))
+	if(disrespected.stat || disrespected.faction_check_atom(punching_person) || !disrespected.has_faction(FACTION_MINING))
 		return
 
 	add_action(ACTION_DISRESPECT, 60 * (ismegafauna(disrespected) ? 2 : 1))
@@ -336,7 +336,7 @@
 
 	var/mob/living/attacked = attacked_mob
 	var/mob/mob_parent = parent
-	if(faction_check(attacking_person.faction, attacked.faction) || !(FACTION_MINING in attacked.faction) || (istype(mob_parent.get_active_held_item(), /obj/item/kinetic_crusher) && attacked.has_status_effect(/datum/status_effect/crusher_mark)))
+	if(attacking_person.faction_check_atom(attacked) || !attacked.has_faction(FACTION_MINING) || (istype(mob_parent.get_active_held_item(), /obj/item/kinetic_crusher) && attacked.has_status_effect(/datum/status_effect/crusher_mark)))
 		return
 
 	add_action(ACTION_MELEED, 50 * (ismegafauna(attacked) ? 1.5 : 1))
@@ -370,7 +370,7 @@
 /datum/component/style/proc/on_resonator_burst(datum/source, mob/creator, mob/living/hit_living)
 	SIGNAL_HANDLER
 
-	if(faction_check(creator.faction, hit_living.faction) || (hit_living.stat != CONSCIOUS) || !(FACTION_MINING in hit_living.faction))
+	if(creator.faction_check_atom(hit_living) || (hit_living.stat != CONSCIOUS) || !hit_living.has_faction(FACTION_MINING))
 		return
 
 	add_action(ACTION_TRAPPER, 70)
@@ -426,7 +426,7 @@
 	if(died == parent)
 		change_points(-500, use_multiplier = FALSE)
 		return
-	else if(faction_check(mob_parent.faction, died.faction) || !(FACTION_MINING in died.faction) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
+	else if(mob_parent.faction_check_atom(died) || !died.has_faction(FACTION_MINING) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
 		return
 	if(ismegafauna(died))
 		add_action(ACTION_MAJOR_KILL, 350)

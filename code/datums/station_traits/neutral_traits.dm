@@ -377,7 +377,8 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
 	weight = 1
-	report_message = "We've reports of high amount of trace eigenstasium on your station. Ensure that your closets are working correctly."
+	report_message = "We've reports of loose bluespace streams affecting your station's lockers and closets. \
+		You might lose some of your belongings... or gain some new ones!"
 
 /datum/station_trait/linked_closets/on_round_start()
 	. = ..()
@@ -392,7 +393,7 @@
 		var/list/targets = list()
 		for(var/how_many in 1 to rand(2,3))
 			targets += pick_n_take(roundstart_closets)
-		GLOB.eigenstate_manager.create_new_link(targets)
+		GLOB.closet_teleport_controller.create_new_link(targets)
 
 
 #define PRO_SKUB "pro-skub"
@@ -501,16 +502,27 @@
 /// Crew don't ever spawn as enemies of the station. Obsesseds, blob infection, space changelings etc can still happen though
 /datum/station_trait/background_checks
 	name = "Station-Wide Background Checks"
-	report_message = "We replaced the intern doing your crew's background checks with a trained screener for this shift! That said, our enemies may just find another way to infiltrate the station, so be careful."
+	report_message = "We replaced the intern doing your crew's background checks with a trained screener for this shift! \
+		That said, our enemies may just find another way to infiltrate the station, so be careful."
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 1
 	show_in_report = TRUE
 	can_revert = FALSE
 
-	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
-	threat_reduction = 15
 	dynamic_threat_id = "Background Checks"
 
+/datum/station_trait/background_checks/New()
+	. = ..()
+	RegisterSignal(SSdynamic, COMSIG_DYNAMIC_PRE_ROUNDSTART, PROC_REF(modify_config))
+
+/datum/station_trait/background_checks/proc/modify_config(datum/source, list/dynamic_config)
+	SIGNAL_HANDLER
+
+	for(var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
+		if(ruleset.ruleset_flags & RULESET_INVADER)
+			continue
+		dynamic_config[initial(ruleset.config_tag)] ||= list()
+		dynamic_config[initial(ruleset.config_tag)][NAMEOF(ruleset, weight)] = 0
 
 /datum/station_trait/pet_day
 	name = "Bring Your Pet To Work Day"

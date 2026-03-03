@@ -1,6 +1,7 @@
 /turf/closed
 	layer = CLOSED_TURF_LAYER
 	plane = WALL_PLANE
+	abstract_type = /turf/closed
 	turf_flags = IS_SOLID
 	opacity = TRUE
 	density = TRUE

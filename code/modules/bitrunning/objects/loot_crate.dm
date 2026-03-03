@@ -66,9 +66,11 @@
 
 /// Handles generating random numbers & calculating loot totals
 /obj/structure/closet/crate/secure/bitrunning/decrypted/proc/calculate_loot(reward_points, rewards_multiplier, ore_multiplier)
+	PRIVATE_PROC(TRUE)
+
 	var/base = rewards_multiplier + reward_points
 	var/random_sum = (rand() + 0.5) * base
-	return ROUND_UP(random_sum * ore_multiplier)
+	return max(ROUND_UP(random_sum * ore_multiplier), 1)
 
 /// Handles spawning completion loot. This tries to handle bad flat and assoc lists
 /obj/structure/closet/crate/secure/bitrunning/decrypted/proc/spawn_loot(list/completion_loot)

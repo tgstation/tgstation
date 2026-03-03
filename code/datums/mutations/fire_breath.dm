@@ -1,4 +1,4 @@
-/datum/mutation/human/firebreath
+/datum/mutation/firebreath
 	name = "Fire Breath"
 	desc = "An ancient mutation that gives lizards breath of fire."
 	quality = POSITIVE
@@ -11,7 +11,7 @@
 	energy_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/firebreath/setup()
+/datum/mutation/firebreath/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/cone/staggered/fire_breath/to_modify = .
 	if(!istype(to_modify)) // null or invalid

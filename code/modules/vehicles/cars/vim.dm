@@ -19,6 +19,7 @@
 	light_on = FALSE
 	engine_sound = 'sound/effects/servostep.ogg'
 	interaction_flags_mouse_drop = NONE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.55, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	///Maximum size of a mob trying to enter the mech
 	var/maximum_mob_size = MOB_SIZE_SMALL
 	COOLDOWN_DECLARE(sound_cooldown)
@@ -44,7 +45,7 @@
 	. += span_notice("[src] can be repaired with a welder.")
 
 /obj/vehicle/sealed/car/vim/atom_destruction(damage_flag)
-	new /obj/effect/decal/cleanable/oil(get_turf(src))
+	new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 	do_sparks(5, TRUE, src)
 	visible_message(span_bolddanger("[src] blows apart!"))
 	return ..()

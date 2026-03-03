@@ -28,9 +28,11 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/atmos_volume_pump,
-	))
+	AddComponent(/datum/component/usb_port, \
+		typecacheof(list(
+			/obj/item/circuit_component/atmos_volume_pump,
+		), only_root_path = TRUE) \
+	)
 	register_context()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/click_ctrl(mob/user)
@@ -38,7 +40,6 @@
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance(UPDATE_ICON)
 		return CLICK_ACTION_SUCCESS
 	return CLICK_ACTION_BLOCKING
 
@@ -70,10 +71,18 @@
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
 
-// Pump mechanism just won't do anything if the pressure is too high/too low unless you overclock it.
+	// Pump mechanism just won't do anything if the pressure is too high/too low unless you overclock it.
 
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
+
+	// Requires being able to leak air in order to overclock.
+	if(overclocked)
+		var/turf/turf = loc
+		if(isclosedturf(turf))
+			balloon_alert_to_viewers("jammed!")
+			overclocked = FALSE
+			update_appearance(UPDATE_ICON)
 
 	if((input_starting_pressure < VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE) || ((output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE)) && !overclocked)
 		return
@@ -154,11 +163,10 @@
 	if(!overclocked)
 		overclocked = TRUE
 		to_chat(user, "The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits.")
-		update_icon()
 	else
 		overclocked = FALSE
 		to_chat(user, "The pump quiets down as you turn its limiters back on.")
-		update_icon()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 // mapping

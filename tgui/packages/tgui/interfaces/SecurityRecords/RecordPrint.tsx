@@ -7,12 +7,12 @@ import {
   getDefaultPrintHeader,
   getSecurityRecord,
 } from './helpers';
-import { PRINTOUT, SecurityRecordsData } from './types';
+import { PRINTOUT, type SecurityRecordsData } from './types';
 
 /** Handles printing posters and rapsheets */
 export const RecordPrint = (props) => {
   const foundRecord = getSecurityRecord();
-  if (!foundRecord) return <> </>;
+  if (!foundRecord) return;
 
   const { crew_ref, crimes, name } = foundRecord;
   const innocent = !crimes?.length;

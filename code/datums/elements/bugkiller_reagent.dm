@@ -30,7 +30,7 @@
 		return
 
 	// capping damage so splashing a beaker on a moth is not an instant crit
-	var/damage = min(round(0.4 * reac_volume * (1 - touch_protection), 0.1), 12)
+	var/damage = min(round(reac_volume * (1 - touch_protection), 0.1), 20)
 	if(damage < 1)
 		return
 
@@ -69,6 +69,8 @@
 	if(owner.stat == DEAD || QDELETED(owner))
 		return
 
+	ADD_TRAIT(owner, TRAIT_BUGKILLER_DEATH, REF(src))
+
 	if(isbasicmob(owner))
 		var/mob/living/basic/basic_owner = owner
 		basic_owner.basic_mob_flags &= ~DEL_ON_DEATH
@@ -85,4 +87,5 @@
 /atom/movable/screen/alert/status_effect/bugkiller_death
 	name = "Overwhelming Toxicity"
 	desc = "Don't go into the light!"
-	icon_state = "paralysis"
+	use_user_hud_icon = TRUE
+	overlay_state = "paralysis"

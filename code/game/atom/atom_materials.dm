@@ -10,6 +10,10 @@
 /// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	// Easy way to know no changes are being made.
+	if((custom_materials == materials) && multiplier == 1)
+		return
+
 	var/replace_mats = length(materials)
 	if(length(custom_materials))
 		remove_material_effects(replace_mats)
@@ -26,20 +30,33 @@
 /atom/proc/initialize_materials(list/materials, multiplier = 1)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(multiplier != 1)
-		materials = materials.Copy() //avoid editing the list that was originally used as argument if it's ever going to be used again.
+		materials = materials.Copy() //avoid editing the original list since it may be cached somewhere (likely in the materials subsystem).
 		for(var/current_material in materials)
 			materials[current_material] *= multiplier
 
+	//Let's be sure that there are absolutely no materials in the list that aren't positive.
+	var/list/nonpos_mats
+	for(var/mat in materials)
+		if(materials[mat] <= 0)
+			LAZYADD(nonpos_mats, "[mat] = [materials[mat]]")
+			materials -= mat
+	if(length(nonpos_mats))
+		stack_trace("materials with non-positive values found in [type]: [english_list(nonpos_mats, and_text = ", ")]")
+		if(!length(materials))
+			return
+
+	sortTim(materials, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 	apply_material_effects(materials)
 
 ///proc responsible for applying material effects when setting materials.
 /atom/proc/apply_material_effects(list/materials)
 	SHOULD_CALL_PARENT(TRUE)
+
 	if(material_flags & MATERIAL_EFFECTS)
 		var/list/material_effects = get_material_effects_list(materials)
 		finalize_material_effects(material_effects)
 
-	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials)
+	custom_materials = SSmaterials.get_material_set_cache(materials)
 
 /// Proc responsible for removing material effects when setting materials.
 /atom/proc/remove_material_effects(replace_mats = TRUE)
@@ -58,7 +75,7 @@
 	var/list/material_effects = list()
 	var/index = 1
 	for(var/current_material in materials)
-		var/datum/material/material = GET_MATERIAL_REF(current_material)
+		var/datum/material/material = SSmaterials.get_material(current_material)
 		material_effects[material] = list(
 			MATERIAL_LIST_OPTIMAL_AMOUNT = OPTIMAL_COST(materials[current_material] * material_modifier),
 			MATERIAL_LIST_MULTIPLIER = get_material_multiplier(material, materials, index),
@@ -76,7 +93,7 @@
  * be 1 if below 1. Just don't return negative values.
  */
 /atom/proc/get_material_multiplier(datum/material/custom_material, list/materials, index)
-	return 1/length(materials)
+	return 1 / length(materials)
 
 ///Called by apply_material_effects(). It ACTUALLY handles applying effects common to all atoms (depending on material flags)
 /atom/proc/finalize_material_effects(list/materials)
@@ -84,17 +101,13 @@
 	var/total_alpha = 0
 	var/list/colors = list()
 	var/mat_length = length(materials)
-	var/datum/material/main_material //the material with the highest amount (after calculations)
-	var/main_mat_amount
-	var/main_mat_mult
+	var/datum/material/main_material = materials[1]//the material with the highest amount (after calculations)
+	var/main_mat_amount = materials[main_material][MATERIAL_LIST_OPTIMAL_AMOUNT]
+	var/main_mat_mult = materials[main_material][MATERIAL_LIST_MULTIPLIER]
 	for(var/datum/material/custom_material as anything in materials)
 		var/list/deets = materials[custom_material]
 		var/mat_amount = deets[MATERIAL_LIST_OPTIMAL_AMOUNT]
 		var/multiplier = deets[MATERIAL_LIST_MULTIPLIER]
-		if(mat_amount > main_mat_amount)
-			main_material = custom_material
-			main_mat_amount = mat_amount
-			main_mat_mult = multiplier
 
 		apply_single_mat_effect(custom_material, mat_amount, multiplier)
 		custom_material.on_applied(src, mat_amount, multiplier)
@@ -104,8 +117,6 @@
 			gather_material_color(custom_material, colors, mat_amount, multicolor = mat_length > 1)
 			var/added_alpha = custom_material.alpha * (custom_material.alpha / 255)
 			total_alpha += GET_MATERIAL_MODIFIER(added_alpha, multiplier)
-		if(custom_material.beauty_modifier)
-			AddElement(/datum/element/beauty, custom_material.beauty_modifier * mat_amount)
 
 	apply_main_material_effects(main_material, main_mat_amount, main_mat_mult)
 
@@ -134,6 +145,8 @@
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		var/prefixes = get_material_prefixes(materials)
 		name = "[prefixes] [name]"
+
+	SEND_SIGNAL(src, COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS, materials, main_material)
 
 /**
  * A proc used by both finalize_material_effects() and finalize_remove_material_effects() to get the colors
@@ -199,23 +212,37 @@
 	if(!config_type)
 		return
 	for(var/datum/greyscale_config/path as anything in subtypesof(config_type))
-		if(mat_type != initial(path.material_skin))
-			continue
-		return path
+		if(mat_type == initial(path.material_skin))
+			return path
 
 ///Apply material effects of a single material.
-/atom/proc/apply_single_mat_effect(datum/material/custom_material, amount, multipier)
+/atom/proc/apply_single_mat_effect(datum/material/material, amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
-	return
+
+	var/beauty_modifier = material.get_property(MATERIAL_BEAUTY)
+	if(beauty_modifier)
+		AddElement(/datum/element/beauty, beauty_modifier * amount)
+		if(beauty_modifier >= 0.15 && HAS_TRAIT(src, TRAIT_FISHING_BAIT))
+			AddElement(/datum/element/shiny_bait)
+
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !uses_integrity)
+		return
+
+	var/base_modifier = material.get_property(MATERIAL_INTEGRITY)
+	var/integrity_mod = GET_MATERIAL_MODIFIER(base_modifier, multiplier)
+	modify_max_integrity(ceil(max_integrity * integrity_mod))
+	var/list/armor_mods = material.get_armor_modifiers(multiplier)
+	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
 
 ///A proc for material effects that only the main material (which the atom's primarly composed of) should apply.
-/atom/proc/apply_main_material_effects(datum/material/main_material, amount, multipier)
+/atom/proc/apply_main_material_effects(datum/material/main_material, amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
-	if(main_material.texture_layer_icon_state && material_flags & MATERIAL_COLOR)
+
+	if(main_material.texture_layer_icon_state && (material_flags & MATERIAL_COLOR))
 		ADD_KEEP_TOGETHER(src, MATERIAL_SOURCE(main_material))
 		add_filter("material_texture_[main_material.name]", 1, layering_filter(icon = main_material.cached_texture_filter_icon, blend_mode = BLEND_INSET_OVERLAY))
 
-	main_material.on_main_applied(src, amount, multipier)
+	main_material.on_main_applied(src, amount, multiplier)
 
 ///Called by remove_material_effects(). It ACTUALLY handles removing effects common to all atoms (depending on material flags)
 /atom/proc/finalize_remove_material_effects(list/materials)
@@ -236,8 +263,6 @@
 		custom_material.on_removed(src, mat_amount, multiplier)
 		if(material_flags & MATERIAL_COLOR)
 			gather_material_color(custom_material, colors, mat_amount, multicolor = mat_length > 1)
-		if(custom_material.beauty_modifier)
-			RemoveElement(/datum/element/beauty, custom_material.beauty_modifier * mat_amount)
 
 	remove_main_material_effects(main_material, main_mat_amount, main_mat_mult)
 
@@ -252,10 +277,37 @@
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		name = initial(name)
 
+	// Ensure that we restore armor zero'd out by zero multipliers, as we don't have anything to go off other than our initial values
+	if((material_flags & MATERIAL_AFFECT_STATISTICS) && uses_integrity && initial(armor_type))
+		var/datum/armor/inital_armor = get_armor_by_type(initial(armor_type))
+		for (var/armor_id in ARMOR_LIST_ALL)
+			var/initial_rating = inital_armor.get_rating(armor_id)
+			if (get_armor_rating(armor_id) == 0 && initial_rating != 0)
+				set_armor_rating(armor_id, initial_rating)
+
+	SEND_SIGNAL(src, COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS, materials, main_material)
+
 ///Remove material effects of a single material.
-/atom/proc/remove_single_mat_effect(datum/material/custom_material, amount, multipier)
+/atom/proc/remove_single_mat_effect(datum/material/material, amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
-	return
+
+	var/beauty_modifier = material.get_property(MATERIAL_BEAUTY)
+	if(beauty_modifier)
+		RemoveElement(/datum/element/beauty, beauty_modifier * amount)
+		if(beauty_modifier >= 0.15 && HAS_TRAIT(src, TRAIT_FISHING_BAIT))
+			RemoveElement(/datum/element/shiny_bait)
+
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !uses_integrity)
+		return
+
+	var/base_modifier = material.get_property(MATERIAL_INTEGRITY)
+	var/integrity_mod = GET_MATERIAL_MODIFIER(base_modifier, multiplier)
+	modify_max_integrity(floor(max_integrity / integrity_mod))
+	var/list/armor_mods = material.get_armor_modifiers(multiplier)
+	for (var/armor_type, value in armor_mods)
+		if (value != 0) // Needs to be restored to initial values in finalize effects, sorry
+			armor_mods[armor_type] = 1 / value
+	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
 
 ///A proc to remove the material effects previously applied by the (ex-)main material
 /atom/proc/remove_main_material_effects(datum/material/main_material, amount, multipier)
@@ -297,7 +349,7 @@
 
 	var/list/cached_materials = custom_materials
 	for(var/mat in cached_materials)
-		var/datum/material/material = GET_MATERIAL_REF(mat)
+		var/datum/material/material = SSmaterials.get_material(mat)
 		var/list/material_comp = material.return_composition(cached_materials[mat], flags)
 		for(var/comp_mat in material_comp)
 			.[comp_mat] += material_comp[comp_mat]
@@ -318,65 +370,117 @@
 	for(var/current_material in cached_materials)
 		if(cached_materials[current_material] < mat_amount)
 			continue
-		var/datum/material/material = GET_MATERIAL_REF(current_material)
+		var/datum/material/material = SSmaterials.get_material(current_material)
 		if(!istype(material, required_material))
 			continue
 		LAZYSET(materials_of_type, material, cached_materials[current_material])
 
 	return materials_of_type
 
-/**
- * Fetches a list of all of the materials this object has with the desired material category.
- *
- * Arguments:
- * - category: The category to check for
- * - any_flags: Any bitflags that must be present for the category
- * - all_flags: All bitflags that must be present for the category
- * - no_flags: Any bitflags that must not be present for the category
- * - mat_amount: The minimum amount of materials that must be present
- */
-/atom/proc/has_material_category(category, any_flags=0, all_flags=0, no_flags=0, mat_amount=0)
-	var/list/cached_materials = custom_materials
-	if(!length(cached_materials))
-		return null
-
-	var/materials_of_category
-	for(var/current_material in cached_materials)
-		if(cached_materials[current_material] < mat_amount)
-			continue
-		var/datum/material/material = GET_MATERIAL_REF(current_material)
-		var/category_flags = material?.categories[category]
-		if(isnull(category_flags))
-			continue
-		if(any_flags && !(category_flags & any_flags))
-			continue
-		if(all_flags && (all_flags != (category_flags & all_flags)))
-			continue
-		if(no_flags && (category_flags & no_flags))
-			continue
-		LAZYSET(materials_of_category, material, cached_materials[current_material])
-	return materials_of_category
-
-/**
- * Gets the most common material in the object.
- */
+/// Gets the most common material in the object.
 /atom/proc/get_master_material()
-	var/list/cached_materials = custom_materials
-	if(!length(cached_materials))
-		return null
+	return length(custom_materials) ? SSmaterials.get_material(custom_materials[1]) : null //materials are sorted by amount, the first is always the main one
 
-	var/most_common_material = null
-	var/max_amount = 0
-	for(var/material in cached_materials)
-		if(cached_materials[material] > max_amount)
-			most_common_material = material
-			max_amount = cached_materials[material]
-
-	if(most_common_material)
-		return GET_MATERIAL_REF(most_common_material)
-
-/**
- * Gets the total amount of materials in this atom.
- */
+/// Gets the total amount of materials in this atom.
 /atom/proc/get_custom_material_amount()
 	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
+
+/// A simple proc that iterates through each material that the object is made of and spawns some stacks based on their amount and associated sheet/ore type.
+/atom/proc/drop_custom_materials(multiplier = 1)
+	for(var/datum/material/material as anything in custom_materials)
+		var/stack_type = material.sheet_type || material.ore_type
+		if(!stack_type)
+			continue
+		var/amount_to_spawn = FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT * multiplier, 1)
+		if(amount_to_spawn > 0)
+			new stack_type(loc, amount_to_spawn)
+
+/**
+ * A bit of leeway when comparing the amount of material of two items.
+ * This was made to test the material composition of items spawned via crafting/processable component and an items of the same type spawned
+ * via other means, since small portion of materials can be lost when rounding down values to the nearest integers and we can't do much about it.
+ * (eg. a slab of meat worth 100 mat points is cut in three cutlets, each 33, with the remaining 1 percent lost to rounding)
+ *
+ * right now it's 3 points per 100 units of a material.
+ *
+ */
+
+#define COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION 0.03
+
+/// Compares the materials of two items to see if they're roughly the same. Primarily used in crafting and processing unit tests.
+/atom/proc/compare_materials(atom/target)
+	if(custom_materials == target.custom_materials) // SSmaterials caches the combinations so we don't have to run more complex checks
+		return TRUE
+	if(length(custom_materials) != length(target.custom_materials))
+		return FALSE
+	for(var/mat in custom_materials)
+		var/enemy_amount = target.custom_materials[mat]
+		if(!enemy_amount) //we couldn't find said material, early return so we won't perform a division by zero
+			return FALSE
+		var/ratio_difference = abs((custom_materials[mat] / enemy_amount) - 1)
+		if(ratio_difference > COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION)
+			return FALSE
+	return TRUE
+
+/**
+ * Returns a string with the materials and their respective amounts written in a way that reflects how it's displayed in the code
+ * (eg. [list(/datum/material/meat = 100, /datum/material/plastic = 10)]). Also used in several unit tests.
+ * Not to be confused with get_material_english_list()
+ * Arguments:
+ * * as_sheets: returns the text in terms of sheets, e.g "[list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2)]"
+ */
+/atom/proc/transcribe_materials_list(list/mats_list, as_sheets = TRUE)
+	if(!mats_list)
+		if(!custom_materials)
+			return "null"
+		mats_list = custom_materials
+	var/text = "list("
+	var/index = 1
+	var/mats_len = length(mats_list)
+	for(var/datum/material/mat as anything in mats_list)
+		var/amount_string = ""
+		if(as_sheets)
+			var/amount = sheets_from_value(mats_list[mat])
+			switch(amount)
+				if(0 to 0.49)
+					amount_string = "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
+				if(0.5)
+					amount_string = "HALF_SHEET_MATERIAL_AMOUNT"
+				if(1)
+					amount_string = "SHEET_MATERIAL_AMOUNT"
+				else
+					amount_string = "SHEET_MATERIAL_AMOUNT * " + num2text(amount)
+		else
+			amount_string = "[mats_list[mat]]"
+		text += "[mat.type] = " + amount_string
+		if(index < mats_len)
+			text += ", "
+		index++
+	text += ")"
+	return text
+
+/// Convert a raw material amount into
+/// "SHEET_MATERIAL_AMOUNT", or "* N", with rounding rules.
+/proc/sheets_from_value(value, sheet_amount = SHEET_MATERIAL_AMOUNT)
+	if(!value)
+		return 0
+
+	// If value is small, do NOT try rounding to nearest 0 or 5. percentage error becomes huge.
+	var/final_value
+
+	if(value < sheet_amount)
+		// Use exact amount for small-value materials (0.1, 0.25, 0.55, etc)
+		final_value = value
+	else
+		// Large values: round to nearest 0 or 5
+		var/nearest5_value = round(value / 5) * 5
+		var/max_error = value * COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION // 3%
+		if(abs(nearest5_value - value) <= max_error)
+			final_value = nearest5_value
+		else
+			final_value = value
+
+	var/final_sheet_multiplier = final_value / sheet_amount
+	return final_sheet_multiplier
+
+#undef COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION

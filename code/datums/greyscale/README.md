@@ -40,14 +40,14 @@ The json is made up of some metadata and a list of layers used while creating th
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/some_other_config",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		[
 			{
 				"type": "icon_state",
 				"icon_state": "highlights",
 				"blend_mode": "overlay",
-				"color_ids": [ 2 ]
+				"color_ids": [2]
 			},
 			{
 				"type": "reference",
@@ -72,6 +72,7 @@ Once it is done generating it will be placed in an icon file with the icon state
 
 Most commonly, we'll only use the "icon_state" type...
 Thus, **this will be the most common layout**:
+
 ```json
 {
 	"full_icon_state_name": [
@@ -79,18 +80,18 @@ Thus, **this will be the most common layout**:
 			"type": "icon_state",
 			"icon_state": "component_state_1",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "component_state_2",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "non_colorable_component_state",
-			"blend_mode": "overlay",
+			"blend_mode": "overlay"
 		}
 	]
 }
@@ -106,12 +107,14 @@ Additionally, for the sake of mappers, it's appreciated if there's a pre-made ob
 While the amount of dm code required to make a greyscale sprite was minimized as much as possible, some small amount is required anyway if you want anything to use it.
 
 As an example:
+
 ```c
 /datum/greyscale_config/canister
 	name = "Canister" //Required for debugging, will runtime without one!
 	icon_file = 'icons/obj/pipes_n_cables/canisters/default.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_default.json'
 ```
+
 And that's all you need to make it usable by other code:
 
 ```c
@@ -157,8 +160,10 @@ If you want your item to be colorable in a vending machine (or other places if t
 	...
 	flags_1 = IS_PLAYER_COLORABLE_1
 ```
-However, **be extremely careful**, as this *requires* that you put *all* of the object's `flags_1` flags in that statement all over again. It's ugly, I know, but there's no
+
+However, **be extremely careful**, as this _requires_ that you put _all_ of the object's `flags_1` flags in that statement all over again. It's ugly, I know, but there's no
 better way to do this with BYOND just yet. You can put multiple flags like this (not real flags):
+
 ```c
 /obj/item/clothing/head/beret
 	...

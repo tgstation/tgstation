@@ -55,6 +55,16 @@
 #define CELL_LINE_TABLE_QUEEN_BEE "cell_line_bee_queen_table"
 #define CELL_LINE_TABLE_BUTTERFLY "cell_line_butterfly_table"
 #define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
+#define CELL_LINE_TABLE_GOAT "cell_line_table_goat"
+#define CELL_LINE_TABLE_PIG "cell_line_table_pig"
+
+//! Biopsy cell line organ types
+#define CELL_LINE_ORGAN_HEART "cell_line_organ_heart"
+#define CELL_LINE_ORGAN_LUNGS "cell_line_organ_lungs"
+#define CELL_LINE_ORGAN_LIVER "cell_line_organ_liver"
+#define CELL_LINE_ORGAN_STOMACH "cell_line_organ_stomach"
+
+#define CELL_LINE_ORGAN_HEART_CURSED "cell_line_organ_heart_cursed"
 
 //! All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"
@@ -66,11 +76,12 @@
 //Defines how many percent of vat grown atoms come out as hue shifted color mutants. A flat chance for now, maybe in the future dependant on the cell line.
 #define CYTO_SHINY_CHANCE 15
 
-#define SCIPAPER_COOPERATION_INDEX 1
-#define SCIPAPER_FUNDING_INDEX 2
+#define SCIPAPER_COOPERATION_INDEX "cooperation"
+#define SCIPAPER_FUNDING_INDEX "funding"
 #define SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER 0.01
 /// How much money is one point of gain worth.
 #define SCIPAPER_GAIN_TO_MONEY 125
+#define SCIPAPER_ALREADY_BOUGHT 2
 
 ///Connects the 'server_var' to a valid research server on your Z level.
 ///Used for machines in LateInitialize, to ensure that RND servers are loaded first.

@@ -14,14 +14,7 @@
 				"H": " IT COMES... "
 			}
 		},
-		"string_replacements": [
-			"'",
-			"fth",
-			"nglu",
-			"glor"
-		],
-		"string_additions": [
-			"agn"
-		]
+		"string_replacements": ["'", "fth", "nglu", "glor"],
+		"string_additions": ["agn"]
 	}
 }

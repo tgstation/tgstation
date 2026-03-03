@@ -28,10 +28,10 @@
 /obj/item/freeze_cube/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	icon_state = initial(icon_state)
 	var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
-	var/mob/thrown_by = throwingdatum.get_thrower()
+	var/mob/thrown_by = throwingdatum?.get_thrower()
 	if(ismovable(hit_atom) && !caught && (!thrown_by || thrown_by && COOLDOWN_FINISHED(src, freeze_cooldown)))
 		freeze_hit_atom(hit_atom)
-	if(thrown_by && !caught)
+	if(istype(thrown_by) && !caught)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, throw_range+2, throw_speed, null, TRUE), 0.1 SECONDS)
 
 /obj/item/freeze_cube/proc/freeze_hit_atom(atom/movable/hit_atom)

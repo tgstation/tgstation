@@ -9,6 +9,8 @@
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON "atom_init_success_on"
 ///from base of atom/examine(): (/mob, list/examine_text)
 #define COMSIG_ATOM_EXAMINE "atom_examine"
+/// from base of atom/examine(): (/mob, list/examine_text)
+#define COMSIG_CARBON_MID_EXAMINE "carbon_mid_examine"
 ///from base of atom/examine_tags(): (/mob, list/examine_tags)
 #define COMSIG_ATOM_EXAMINE_TAGS "atom_examine_tags"
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
@@ -70,13 +72,12 @@
 #define COMSIG_ATOM_EXITED "atom_exited"
 ///from base of atom/movable/Moved(): (atom/movable/gone, direction)
 #define COMSIG_ATOM_ABSTRACT_EXITED "atom_abstract_exited"
+///from base of atom/Exited(): (atom/exited, direction)
+#define COMSIG_ATOM_EXITING "atom_exiting"
 ///from base of atom/Bumped(): (/atom/movable) (the one that gets bumped)
 #define COMSIG_ATOM_BUMPED "atom_bumped"
 ///from base of atom/has_gravity(): (turf/location, list/forced_gravities)
 #define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
-///from internal loop in atom/movable/proc/CanReach(): (list/next)
-#define COMSIG_ATOM_CANREACH "atom_can_reach"
-	#define COMPONENT_ALLOW_REACH (1<<0)
 ///for when an atom has been created through processing (atom/original_atom, list/chosen_processing_option)
 #define COMSIG_ATOM_CREATEDBY_PROCESSING "atom_createdby_processing"
 ///when an atom is processed (mob/living/user, obj/item/process_item, list/atom/results)
@@ -133,9 +134,6 @@
 	///cancel clean
 	#define COMSIG_ATOM_CANCEL_CLEAN (1<<0)
 
-/// From /obj/item/stack/make_item()
-#define COMSIG_ATOM_CONSTRUCTED "atom_constructed"
-
 /// From /obj/effect/particle_effect/sparks/proc/sparks_touched(datum/source, atom/movable/singed)
 #define COMSIG_ATOM_TOUCHED_SPARKS "atom_touched_sparks"
 #define COMSIG_ATOM_TOUCHED_HAZARDOUS_SPARKS "atom_touched_hazardous_sparks"
@@ -148,6 +146,11 @@
 
 /// From /datum/component/tether/UnregisterFromParent()
 #define COMSIG_ATOM_TETHER_SNAPPED "atom_tether_snapped"
+
+/// From /atom/finalize_material_effects(): (list/materials, datum/material/main_material)
+#define COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS "atom_finalize_material_effects"
+/// From /atom/finalize_remove_material_effects(): (list/materials, datum/material/main_material)
+#define COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS "atom_finalize_remove_material_effects"
 
 /// From /atom/proc/update_atom_colour() : (color_changed)
 #define COMSIG_ATOM_COLOR_UPDATED "atom_color_updated"

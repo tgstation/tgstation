@@ -63,6 +63,7 @@
 	var/datum/callback/post_birth_callback
 
 /datum/emote/cat
+	abstract_type = /datum/emote/cat
 	mob_type_allowed_typecache = /mob/living/basic/pet/cat
 	mob_type_blacklist_typecache = list()
 
@@ -193,6 +194,8 @@
 		/obj/item/food/breadslice/plain = 1
 	)
 	collar_icon_state = null
+	//just ensuring the mats contained by the cat when spawned are the same of when crafted
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 3)
 
 /mob/living/basic/pet/cat/breadcat/add_cell_sample()
 	return

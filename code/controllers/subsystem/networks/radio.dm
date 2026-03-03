@@ -11,6 +11,15 @@ SUBSYSTEM_DEF(radio)
 		saymodes[SM.key] = SM
 	return ..()
 
+/// Gets the say mode associated with the given key, if available to the given user.
+/datum/controller/subsystem/radio/proc/get_available_say_mode(mob/living/user, key)
+	var/datum/saymode/selected_saymode = SSradio.saymodes[key]
+	if(isnull(selected_saymode))
+		return
+	if(!selected_saymode.can_be_used_by(user))
+		return
+	return selected_saymode
+
 /datum/controller/subsystem/radio/proc/add_object(obj/device, new_frequency as num, filter = null as text|null)
 	var/f_text = num2text(new_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]

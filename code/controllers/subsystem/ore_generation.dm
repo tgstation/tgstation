@@ -21,26 +21,49 @@ SUBSYSTEM_DEF(ore_generation)
 	 */
 	var/list/ore_vent_minerals = list()
 
-	/// A tracker of how many of each ore vent size we have in the game. Useful for tracking purposes.
-
 /datum/controller/subsystem/ore_generation/Initialize()
-	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
-	while(length(ore_vent_minerals) > 0) //Keep looping if there's more to assign
-		var/stallbreaker = 0
-		for(var/obj/structure/ore_vent/vent as anything in possible_vents)
-			if(length(ore_vent_minerals) <= 0) //But break early if there's none left.
+	/// First, lets sort each ore_vent here based on their distance to the landmark, then we'll assign sizes.
+	var/list/sort_vents = list()
+	for(var/obj/structure/ore_vent/vent as anything in possible_vents)
+
+		var/obj/landmark_anchor //We need to find the mining epicenter to gather distance from.
+		for(var/obj/possible_landmark as anything in GLOB.mining_center) // have to check multiple due to icebox
+			if(possible_landmark.z == vent.z)
+				landmark_anchor = possible_landmark
 				break
-			if(vent.unique_vent)
-				continue //Ya'll already got your minerals.
-			if(length(difflist(first = ore_vent_minerals, second = vent.mineral_breakdown, skiprep = 1)))
-				vent.generate_mineral_breakdown(new_minerals = 1, map_loading = TRUE)
-			else
-				stallbreaker++
-				if(stallbreaker >= length(possible_vents))
-					break //We've done all we can here. break inner loop
-				continue
-		if(stallbreaker >= length(possible_vents))
-			break //We've done all we can here. break outer loop
+
+		if(!landmark_anchor) //We're missing a mining epicenter landmark, but it's not crash-worthy.
+			vent.vent_size_setup(random = TRUE, force_size = null, map_loading = TRUE)
+			continue
+
+		sort_vents.Insert(length(sort_vents), vent)
+		sort_vents[vent] = get_dist(get_turf(vent),get_turf(landmark_anchor))
+
+	sortTim(sort_vents, GLOBAL_PROC_REF(cmp_numeric_asc), associative = TRUE) // Should sort list from closest to farthest.
+	possible_vents = sort_vents // Now we can work with the main list
+
+	var/cutoff = round((length(possible_vents) / 3))
+	var/vent_size_level = SMALL_VENT_TYPE
+
+	for(var/obj/structure/ore_vent/vent as anything in possible_vents)
+		vent.vent_size_setup(random = FALSE, force_size = vent_size_level, map_loading = TRUE)
+		cutoff--
+		if(cutoff > 0 || vent_size_level == LARGE_VENT_TYPE)
+			continue
+		cutoff = round((length(possible_vents) / 3))
+		switch(vent_size_level)
+			if(SMALL_VENT_TYPE)
+				vent_size_level = MEDIUM_VENT_TYPE
+			if(MEDIUM_VENT_TYPE)
+				vent_size_level = LARGE_VENT_TYPE
+
+	//Finally, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
+	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
+	for(var/obj/structure/ore_vent/vent as anything in possible_vents)
+		if(vent.unique_vent)
+			continue //Ya'll already got your minerals.
+		vent.generate_mineral_breakdown(map_loading = TRUE)
+
 
 	/// Handles roundstart logging
 	logger.Log(

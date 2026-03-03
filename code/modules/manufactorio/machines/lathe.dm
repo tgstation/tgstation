@@ -8,7 +8,7 @@
 	/// design id we print
 	var/design_id
 	///The container to hold materials
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 	//looping sound for printing items
 	var/datum/looping_sound/lathe_print/print_sound
 	///Designs related to the autolathe
@@ -20,9 +20,9 @@
 
 /obj/machinery/power/manufacturing/lathe/Initialize(mapload)
 	print_sound = new(src,  FALSE)
-	materials = AddComponent( \
-		/datum/component/material_container, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
+	materials = new ( \
+		src, \
+		SSmaterials.flat_materials, \
 		0, \
 		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
 	)
@@ -31,6 +31,10 @@
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe] = new /datum/techweb/autounlocking/autolathe
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe]
+
+/obj/machinery/power/manufacturing/lathe/Destroy()
+	QDEL_NULL(materials)
+	return ..()
 
 /obj/machinery/power/manufacturing/lathe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
@@ -57,11 +61,10 @@
 	if(isnull(design))
 		return
 	. += span_notice("It needs:")
-	for(var/valid_type in design.materials)
+	for(var/valid_type, amount in design.materials)
 		var/atom/ingredient = valid_type
-		var/amount = design.materials[ingredient] / SHEET_MATERIAL_AMOUNT
 
-		. += "[amount] sheets of [initial(ingredient.name)]"
+		. += "[amount / SHEET_MATERIAL_AMOUNT] sheets of [initial(ingredient.name)]"
 
 /obj/machinery/power/manufacturing/lathe/update_overlays()
 	. = ..()
@@ -109,14 +112,12 @@
 		return
 	//check for materials required. For custom material items decode their required materials
 	var/list/materials_needed = list()
-	for(var/material in design.materials)
-		var/amount_needed = design.materials[material]
-		if(istext(material)) // category
-			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
-				if(materials.get_material_amount(valid_candidate) < amount_needed)
-					continue
-				material = valid_candidate
-				break
+	for(var/material, amount_needed in design.materials)
+		if(ispath(material, /datum/material_requirement)) // Material requirement
+			for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_req(material))
+				if(materials.get_material_amount(valid_candidate) >= amount_needed)
+					material = valid_candidate
+					break
 		if(isnull(material))
 			return
 		materials_needed[material] = amount_needed
@@ -143,9 +144,16 @@
 	var/atom/movable/created
 	if(is_stack)
 		var/obj/item/stack/stack_item = initial(design.build_path)
-		created = new stack_item(null, 1)
+		var/max_stack_amount = initial(stack_item.max_amount)
+		var/amount = initial(stack_item.amount)
+		while(amount > max_stack_amount)
+			var/obj/item/stack/new_stack = new stack_item(drop_location(), max_stack_amount)
+			if(!send_resource(new_stack, dir))
+				withheld = new_stack
+			amount -= max_stack_amount
+		created = new stack_item(drop_location(), amount)
 	else
-		created = new design.build_path(null)
+		created = design.create_result(drop_location(), materials_needed)
 		split_materials_uniformly(materials_needed, target_object = created)
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)
@@ -154,7 +162,6 @@
 
 	if(!send_resource(created, dir))
 		withheld = created
-
 
 /obj/machinery/power/manufacturing/lathe/proc/finalize_build()
 	print_sound.stop()

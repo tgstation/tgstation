@@ -24,13 +24,19 @@
 	/// The user who opened the window
 	var/client/client
 	/// Injury phrases to blurt out
-	var/list/hurt_phrases = list("GACK!", "GLORF!", "OOF!", "AUGH!", "OW!", "URGH!", "HRNK!")
+	var/static/list/hurt_phrases = list("GACK!", "GLORF!", "OOF!", "AUGH!", "OW!", "URGH!", "HRNK!")
 	/// Max message length
 	var/max_length = MAX_MESSAGE_LEN
 	/// The modal window
 	var/datum/tgui_window/window
 	/// Boolean for whether the tgui_say was opened by the user.
 	var/window_open
+	/// What text was present in the say box the last time save_text was called
+	var/saved_text = ""
+	/// What channel was in use in the say box the last time save_text was called
+	var/saved_channel
+	/// Speech suffuxes used for force_say after "-". Defaults to hurt_phrases
+	var/list/alter_phrases
 
 /** Creates the new input window to exist in the background. */
 /datum/tgui_say/New(client/client, id)
@@ -50,7 +56,6 @@
 	sleep(3 SECONDS)
 	window.initialize(
 			strict_mode = TRUE,
-			fancy = TRUE,
 			inline_css = file("tgui/public/tgui-say.bundle.css"),
 			inline_js = file("tgui/public/tgui-say.bundle.js"),
 	);
@@ -128,7 +133,7 @@
 	if (type == "typing")
 		start_typing()
 		return TRUE
-	if (type == "entry" || type == "force")
+	if (type == "entry" || type == "force" || type == "save")
 		handle_entry(type, payload)
 		return TRUE
 	return FALSE

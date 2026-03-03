@@ -18,32 +18,36 @@
 	/// Eyecolor from the HUD
 	var/hud_color = "#3CB8A5"
 
+/obj/item/organ/cyberimp/eyes/hud/Initialize(mapload)
+	. = ..()
+	if(toggled_on)
+		for(var/hud_trait in HUD_traits)
+			add_organ_trait(hud_trait)
+
 /obj/item/organ/cyberimp/eyes/hud/proc/toggle_hud(mob/living/carbon/human/eye_owner)
 	if(toggled_on)
 		toggled_on = FALSE
-		eye_owner.remove_traits(HUD_traits, ORGAN_TRAIT)
+		for(var/hud_trait in HUD_traits)
+			remove_organ_trait(hud_trait)
 		balloon_alert(eye_owner, "hud disabled")
 		if(hud_color)
 			eye_owner.remove_eye_color(EYE_COLOR_HUD_PRIORITY)
 		return
 	toggled_on = TRUE
-	eye_owner.add_traits(HUD_traits, ORGAN_TRAIT)
+	for(var/hud_trait in HUD_traits)
+		add_organ_trait(hud_trait)
 	balloon_alert(eye_owner, "hud enabled")
 	if(hud_color)
 		eye_owner.add_eye_color_right(hud_color, EYE_COLOR_HUD_PRIORITY)
 
 /obj/item/organ/cyberimp/eyes/hud/on_mob_insert(mob/living/carbon/human/eye_owner, special = FALSE, movement_flags)
 	. = ..()
-	eye_owner.add_traits(HUD_traits, ORGAN_TRAIT)
-	toggled_on = TRUE
-	if(hud_color)
+	if(toggled_on && hud_color)
 		eye_owner.add_eye_color_right(hud_color, EYE_COLOR_HUD_PRIORITY, !special)
 
 /obj/item/organ/cyberimp/eyes/hud/on_mob_remove(mob/living/carbon/human/eye_owner, special, movement_flags)
 	. = ..()
-	eye_owner.remove_traits(HUD_traits, ORGAN_TRAIT)
-	toggled_on = FALSE
-	if(hud_color)
+	if(toggled_on && hud_color)
 		eye_owner.remove_eye_color(EYE_COLOR_HUD_PRIORITY, !special)
 
 /obj/item/organ/cyberimp/eyes/hud/medical

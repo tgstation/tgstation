@@ -290,7 +290,3 @@
 /obj/item/borg/cookbook/dropped(mob/user, silent)
 	SStgui.close_uis(cooking)
 	return ..()
-
-/obj/item/borg/cookbook/cyborg_unequip(mob/user)
-	SStgui.close_uis(cooking)
-	return ..()

@@ -207,7 +207,6 @@
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)
 "aT" = (
-/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "aU" = (
@@ -226,6 +225,7 @@
 "aW" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/mob_spawn/corpse/human/assistant,
+/obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)
 "aX" = (
@@ -802,10 +802,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/bridge)
-"dv" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned/bridge)
 "dw" = (
 /obj/structure/bed/pod{
 	dir = 1
@@ -814,6 +810,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot_white,
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/crew)
 "dx" = (
@@ -926,9 +923,11 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/bridge)
 "pm" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned/crew)
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/turf_decal/bot_white,
+/obj/structure/sign/nanotrasen/directional/west,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned/bridge)
 "qd" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
@@ -1230,6 +1229,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
+"KQ" = (
+/obj/structure/sign/warning/secure_area/directional/east,
+/turf/open/floor/pod,
+/area/shuttle/abandoned/cargo)
 "LM" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -1594,7 +1597,7 @@ by
 cP
 da
 dy
-dv
+dy
 do
 ds
 dy
@@ -1623,7 +1626,7 @@ cY
 cY
 cY
 dx
-iz
+pm
 dp
 dt
 dx
@@ -1712,7 +1715,7 @@ de
 aq
 dl
 dq
-pm
+aq
 aq
 aq
 de
@@ -1791,7 +1794,7 @@ cA
 aS
 bn
 cA
-cA
+KQ
 cH
 ez
 cV

@@ -21,7 +21,7 @@ const [count, setCount] = useState(0);
 const [isEven, setIsEven] = useState(false);
 
 useEffect(() => {
-  setIsEven(count % 2 === 0);
+	setIsEven(count % 2 === 0);
 }, [count]);
 
 // Good!

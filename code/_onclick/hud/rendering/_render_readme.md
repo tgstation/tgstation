@@ -6,6 +6,7 @@
 4. [Render plates](#render-plates)
 
 ## Byond internal functionality
+
 This part of the guide will assume that you have read the byond reference entry for rendering at www.byond.com/docs/ref//#/{notes}/renderer
 
 When you create an atom, this will always create an internal byond structure called an "appearance". This appearance you will likely be familiar with, as it is exposed through the /atom/var/appearance var. This appearance var holds data on how to render the object, ie what icon/icon_state/color etc it is using. Note that appearance vars will always copy, and do not hold a reference. When you update a var, for example lets pretend we add a filter, the appearance will be updated to include the filter. Note that, however, vis_contents objets are uniquely excluded from appearances. Then, when the filter is updated, the appearance will be recreated, and the atom marked as "dirty". After it has been updated, the SendMaps() function (sometimes also called maptick), which is a internal byond function that iterates over all objects in a clients view and in the clients.mob.contents, checks for "dirty" atoms, then resends any "dirty" appearances to clients as needed and unmarks them as dirty. This function is notoriously slow, but we can see its tick usage through the world.map_cpu var. We can also avoid more complex checks checking whether an object is visible on a clients screen by using the TILE_BOUND appearance flag.
@@ -17,6 +18,7 @@ A) Talk to someone who has inside knowledge(like lummox) about it, most of this 
 B) Use the undocumented debug printer which reads of data on icons rendering, this is very dense but can be useful in some cases. To use: Right click top tab -> Options & Messages -> Client -> Command -> Enter ".debug profile mapicons" and press Enter -> go to your Byond directory and find BYOND/cfg/mapicons.json . Yes this is one giant one-line json.
 
 ## Known internal snowflake
+
 The following is an incomplete list of pitfalls that come from byond snowflake that are known, this list is obviously incomplete.
 
 1. Transforms are very slow on clientside. This is not usually noticable, but if you start using large amounts of them it will grind you to a halt quickly, regardless of whether its on overlays or objs
@@ -32,6 +34,7 @@ The following is an incomplete list of pitfalls that come from byond snowflake t
 11. Displacement filter: The byond "displacement filter" does not, as the name would make you expect, use displacement maps, but instead uses normal maps.
 
 ## The rendering solution
+
 One of the main issues with making pretty effects is how objects can only render to one plane, and how filters can only be applied to single objects. Quite simply it means we can't apply effects to multiple planes at once, and an effect to one plane only by treating it as a single unit:
 
 ![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/rendering/renderpipe_old.png)
@@ -52,6 +55,4 @@ Through these this allows us to treat planes as single objects, and lets us dist
 
 The rendering system uses two objects to unify planes: render_relay and render_plates. Render relays use render_target/source and the relay_render_to_plane proc to replicate the plane master on the render relay. This render relay is then rendered onto a render_plate, which is a plane master that renders the render_relays onto itself. This plate can then be hierarchically rendered with the same process until it reaches the master render_plate, which is the plate that will actually render to the player. These plates naturally in the byond style have quirks. For example, rendering to two plates will double any effects such as color or filters, and as such you need to carefully manage how you render them. Keep in mind as well that when sorting the layers for rendering on a plane that they should not be negative, this is handled automatically in relay_render_to_plane. When debugging note that mouse_opacity can act bizarrely with this method, such as only allowing you to click things that are layered over objects on a certain plane but automatically setting the mouse_opacity should be handling this. Note that if you decide to manipulate a plane with internal byond objects that you will have to manually extrapolate the vars that are set if you want to render them to another plane (See blackness plane for example), and that this is not documented anywhere.
 
-
-Good luck and godspeed with coding
-	- Just another contributor
+Good luck and godspeed with coding - Just another contributor

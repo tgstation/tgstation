@@ -19,8 +19,6 @@
 	///How much sitting on this chair influences fishing difficulty
 	var/fishing_modifier = -5
 	var/has_armrest = FALSE
-	// The mutable appearance used for the overlay over buckled mobs.
-	var/mutable_appearance/armrest
 
 /obj/structure/chair/Initialize(mapload)
 	. = ..()
@@ -28,18 +26,42 @@
 		name = "tactical [name]"
 		fishing_modifier -= 8
 	MakeRotate()
-	if (has_armrest)
-		gen_armrest()
 	if(can_buckle && fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
-/obj/structure/chair/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer || !has_armrest)
+/obj/structure/chair/buckle_feedback(mob/living/being_buckled, mob/buckler)
+	if(HAS_TRAIT(being_buckled, TRAIT_RESTRAINED))
 		return ..()
-	cut_overlay(armrest)
-	QDEL_NULL(armrest)
-	gen_armrest()
-	return ..()
+
+	if(being_buckled == buckler)
+		being_buckled.visible_message(
+			span_notice("[buckler] sits down on [src]."),
+			span_notice("You sit down on [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_buckled.visible_message(
+			span_notice("[buckler] sits [being_buckled] down on [src]."),
+			span_notice("[buckler] sits you down on [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+
+/obj/structure/chair/unbuckle_feedback(mob/living/being_unbuckled, mob/unbuckler)
+	if(HAS_TRAIT(being_unbuckled, TRAIT_RESTRAINED))
+		return ..()
+
+	if(being_unbuckled == unbuckler)
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] stands up from [src]."),
+			span_notice("You stand up from [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] stands [being_unbuckled] up from [src]."),
+			span_notice("[unbuckler] stands you up from [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
 
 /obj/structure/chair/examine(mob/user)
 	. = ..()
@@ -49,11 +71,10 @@
 
 ///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
 /obj/structure/chair/proc/MakeRotate()
-	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED|ROTATION_GHOSTS_ALLOWED)
+	AddElement(/datum/element/simple_rotation, ROTATION_IGNORE_ANCHORED|ROTATION_GHOSTS_ALLOWED)
 
 /obj/structure/chair/Destroy()
 	SSjob.latejoin_trackers -= src //These may be here due to the arrivals shuttle
-	QDEL_NULL(armrest)
 	return ..()
 
 /obj/structure/chair/atom_deconstruct(disassembled)
@@ -77,29 +98,16 @@
 		return
 	. = ..()
 
-/obj/structure/chair/update_atom_colour()
-	. = ..()
-	if (armrest)
-		color_atom_overlay(armrest)
-
-/obj/structure/chair/proc/gen_armrest()
-	armrest = GetArmrest()
-	armrest.layer = ABOVE_MOB_LAYER
-	armrest.appearance_flags |= KEEP_APART
-	update_armrest()
-
-/obj/structure/chair/proc/GetArmrest()
-	return mutable_appearance(icon, "[icon_state]_armrest")
-
-/obj/structure/chair/proc/update_armrest()
-	if (cached_color_filter)
-		armrest = filter_appearance_recursive(armrest, cached_color_filter)
-	update_appearance()
-
 /obj/structure/chair/update_overlays()
 	. = ..()
-	if(has_buckled_mobs())
-		. += armrest
+	if (!has_buckled_mobs())
+		return
+	var/mutable_appearance/armrest = mutable_appearance(icon, "[icon_state]_armrest", ABOVE_MOB_LAYER, src, appearance_flags = KEEP_APART)
+	var/mutable_appearance/armrest_blocker = emissive_blocker(icon, "[icon_state]_armrest", src, ABOVE_MOB_LAYER)
+	if (cached_color_filter)
+		armrest = filter_appearance_recursive(armrest, cached_color_filter)
+	. += armrest
+	. += armrest_blocker
 
 ///allows each chair to request the electrified_buckle component with overlays that dont look ridiculous
 /obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
@@ -149,13 +157,13 @@
 	. = ..()
 	handle_layer()
 	if (has_armrest)
-		update_armrest()
+		update_appearance()
 
 /obj/structure/chair/post_unbuckle_mob()
 	. = ..()
 	handle_layer()
 	if (has_armrest)
-		update_armrest()
+		update_appearance()
 
 /obj/structure/chair/setDir(newdir)
 	..()
@@ -180,6 +188,7 @@
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
 	fishing_modifier = -6
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/structure/chair/wood/narsie_act()
 	return
@@ -199,6 +208,7 @@
 	item_chair = null
 	fishing_modifier = -7
 	has_armrest = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/chair/comfy/brown
 	color = rgb(70, 47, 28)
@@ -222,6 +232,13 @@
 	buildstacktype = /obj/item/stack/sheet/mineral/titanium
 	buckle_sound = SFX_SEATBELT_BUCKLE
 	unbuckle_sound = SFX_SEATBELT_UNBUCKLE
+	resistance_flags = FIRE_PROOF
+	max_integrity = 120
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2)
+
+/obj/structure/chair/comfy/shuttle/Initialize(mapload)
+	. = ..()
+	update_appearance()
 
 /obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
@@ -229,6 +246,42 @@
 		echair_overlay.pixel_x = -1
 		overlays_from_child_procs = list(echair_overlay)
 	. = ..()
+
+/obj/structure/chair/comfy/shuttle/buckle_feedback(mob/living/being_buckled, mob/buckler)
+	if(being_buckled == buckler)
+		being_buckled.visible_message(
+			span_notice("[buckler] sits down on [src], pulling the overhead restraint down to secure [buckler.p_them()]self."),
+			span_notice("You sit down on [src], pulling the overhead restraint down to secure yourself."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_buckled.visible_message(
+			span_notice("[buckler] sits [being_buckled] down on [src], pulling the overhead restraint down to secure [buckler.p_them()]."),
+			span_notice("[buckler] sits you down on [src], pulling the overhead restraint down to secure you."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+
+/obj/structure/chair/comfy/shuttle/unbuckle_feedback(mob/living/being_unbuckled, mob/unbuckler)
+	if(being_unbuckled == unbuckler)
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] flips the overhead restraint up, standing up from [src]."),
+			span_notice("You flip the overhead restraint up, standing up from [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] flips the overhead restraint up, standing [being_unbuckled] up from [src]."),
+			span_notice("[unbuckler] flips the overhead restraint up, standing you up from [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+
+/obj/structure/chair/comfy/shuttle/update_overlays()
+	. = ..()
+	if(has_buckled_mobs())
+		. += mutable_appearance(icon, "[icon_state]_down_front", ABOVE_MOB_LAYER + 0.01)
+		. += mutable_appearance(icon, "[icon_state]_down_behind", src.layer + 0.01)
+	else
+		. += mutable_appearance(icon, "[icon_state]_up", src.layer + 0.01)
 
 /obj/structure/chair/comfy/shuttle/tactical
 	name = "tactical chair"
@@ -239,6 +292,7 @@
 	icon_state = "carp_chair"
 	buildstacktype = /obj/item/stack/sheet/animalhide/carp
 	fishing_modifier = -12
+	custom_materials = null
 
 /obj/structure/chair/office
 	name = "office chair"
@@ -247,6 +301,7 @@
 	item_chair = null
 	fishing_modifier = -6
 	icon_state = "officechair_dark"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/structure/chair/office/Initialize(mapload)
 	. = ..()
@@ -273,10 +328,16 @@
 	name = "stool"
 	desc = "Apply butt."
 	icon_state = "stool"
-	can_buckle = FALSE
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 	max_integrity = 300
+
+/obj/structure/chair/stool/post_buckle_mob(mob/living/Mob)
+	Mob.add_offsets(type, z_add = 4)
+	. = ..()
+
+/obj/structure/chair/stool/post_unbuckle_mob(mob/living/Mob)
+	Mob.remove_offsets(type)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 
@@ -309,13 +370,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	desc = "It has some unsavory stains on it..."
 	icon_state = "bar"
 	item_chair = /obj/item/chair/stool/bar
-	can_buckle = TRUE
 
-/obj/structure/chair/stool/bar/post_buckle_mob(mob/living/M)
-	M.pixel_y += 4
-
-/obj/structure/chair/stool/bar/post_unbuckle_mob(mob/living/M)
-	M.pixel_y -= 4
+/obj/structure/chair/stool/bar/post_buckle_mob(mob/living/Mob)
+	. = ..()
+	Mob.add_offsets(type, z_add = 7)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
@@ -328,6 +386,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 2
 	item_chair = /obj/item/chair/stool/bamboo
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/chair
 	name = "chair"
@@ -346,7 +405,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	max_integrity = 100
 	hitsound = 'sound/items/trayhit/trayhit1.ogg'
 	hit_reaction_chance = 50
-	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	item_flags = SKIP_FANTASY_ON_SPAWN
 
 	// Duration of daze inflicted when the chair is smashed against someone from behind.
@@ -354,6 +413,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 	// What structure type does this chair become when placed?
 	var/obj/structure/chair/origin_type = /obj/structure/chair
+
+/obj/item/chair/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
 
 /obj/item/chair/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -369,25 +432,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	plant(user)
 
 /obj/item/chair/proc/plant(mob/user)
-	var/turf/T = get_turf(loc)
-	if(isgroundlessturf(T))
+	var/turf/turf = user.loc
+	if(!istype(turf) || isgroundlessturf(turf))
 		to_chat(user, span_warning("You need ground to plant this on!"))
+		return
+	if(!user.dropItemToGround(src))
+		to_chat(user, span_warning("[src] is stuck to your hand!"))
 		return
 	if(flags_1 & HOLOGRAM_1)
 		to_chat(user, span_notice("You try to place down \the [src], but it fades away!"))
 		qdel(src)
 		return
 
-	for(var/obj/A in T)
-		if(istype(A, /obj/structure/chair))
+	for(var/obj/object in turf)
+		if(istype(object, /obj/structure/chair))
 			to_chat(user, span_warning("There is already a chair here!"))
 			return
-		if(A.density && !(A.flags_1 & ON_BORDER_1))
+		if(object.density && !(object.flags_1 & ON_BORDER_1))
 			to_chat(user, span_warning("There is already something here!"))
 			return
 
 	user.visible_message(span_notice("[user] rights \the [src.name]."), span_notice("You right \the [name]."))
-	var/obj/structure/chair/chair = new origin_type(get_turf(loc))
+	var/obj/structure/chair/chair = new origin_type(turf)
 	chair.set_custom_materials(custom_materials)
 	TransferComponents(chair)
 	chair.setDir(user.dir)
@@ -403,7 +469,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
+	else if(custom_materials[SSmaterials.get_material(/datum/material/iron)])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
@@ -470,6 +536,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	origin_type = /obj/structure/chair/stool/bamboo
 	max_integrity = 40 //Submissive and breakable unlike the chad iron stool
 	daze_amount = 0 //Not hard enough to cause them to become dazed
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god
@@ -484,6 +551,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	origin_type = /obj/structure/chair/wood
 	custom_materials = null
 	daze_amount = 0
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/chair/wood/narsie_act()
 	return
@@ -509,6 +577,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	item_chair = null
 	fishing_modifier = -13 //the pinnacle of Ratvarian technology.
 	has_armrest = TRUE
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT)
 	/// Total rotations made
 	var/turns = 0
 
@@ -552,6 +621,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	obj_flags = parent_type::obj_flags | NO_DEBRIS_AFTER_DECONSTRUCTION
 	alpha = 0
 	fishing_modifier = -21 //it only lives for 25 seconds, so we make them worth it.
+	custom_materials = null
 
 /obj/structure/chair/mime/wrench_act_secondary(mob/living/user, obj/item/weapon)
 	return NONE
@@ -568,7 +638,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "No matter how much you squirm, it'll still be uncomfortable."
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	buildstacktype = /obj/item/stack/sheet/plastic
 	buildstackamount = 2
 	item_chair = /obj/item/chair/plastic
@@ -602,7 +672,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 7
 	throw_range = 5 //Lighter Weight --> Flies Farther.
-	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	max_integrity = 70
 	daze_amount = 0
 	origin_type = /obj/structure/chair/plastic
@@ -618,3 +688,76 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "Oh, so this is like the fucked up Monopoly rules where there are no rules and you can pick up and place the musical chairs as you please."
 	particles = new /particles/musical_notes
 	origin_type = /obj/structure/chair/musical
+
+/obj/structure/handrail
+	name = "handrail"
+	desc = "Hold on tight!"
+	icon = 'icons/obj/handrail.dmi'
+	icon_state = "handrail"
+	anchored = TRUE
+	can_buckle = TRUE
+	buckle_lying = NO_BUCKLE_LYING
+	resistance_flags = FIRE_PROOF
+	max_integrity = 50
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
+	layer = OBJ_LAYER
+
+/obj/structure/handrail/attack_hand(mob/living/user, list/modifiers)
+	return ..() || mouse_buckle_handling(user, user)
+
+/obj/structure/handrail/is_user_buckle_possible(mob/living/target, mob/user, check_loc = TRUE)
+	return ..() && user == target && !HAS_TRAIT(target, TRAIT_HANDS_BLOCKED)
+
+/obj/structure/handrail/post_buckle_mob(mob/living/buckled_mob)
+	RegisterSignal(buckled_mob, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), PROC_REF(stop_buckle))
+
+	var/z_offset = 0
+	var/w_offset = 0
+	if(dir & NORTH)
+		z_offset = -4
+	else if(dir & SOUTH)
+		z_offset = 8
+	if(dir & EAST)
+		w_offset = -8
+	else if(dir & WEST)
+		w_offset = 8
+
+	buckled_mob.add_offsets(type, z_add = z_offset, w_add = w_offset)
+
+/obj/structure/handrail/post_unbuckle_mob(mob/living/unbuckled_mob)
+	UnregisterSignal(unbuckled_mob, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED))
+	unbuckled_mob.remove_offsets(type)
+
+/obj/structure/handrail/proc/stop_buckle(mob/living/source, ...)
+	SIGNAL_HANDLER
+	source.visible_message(
+		span_warning("[source] loses [source.p_their()] grip on [src]!"),
+		span_warning("You lose your grip on [src]!"),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
+	unbuckle_mob(source, TRUE, TRUE)
+
+/obj/structure/handrail/buckle_feedback(mob/living/being_buckled, mob/buckler)
+	buckler.visible_message(
+		span_notice("[buckler] grabs [src] tight, keeping [buckler.p_them()]self upright."),
+		span_notice("You grab [src] tight, keeping yourself upright."),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
+
+/obj/structure/handrail/unbuckle_feedback(mob/living/being_unbuckled, mob/unbuckler)
+	if(being_unbuckled == unbuckler)
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] lets go of [src]."),
+			span_notice("You let go of [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)
+	else
+		being_unbuckled.visible_message(
+			span_warning("[unbuckler] forces [being_unbuckled] to let go of [src]!"),
+			span_warning("[unbuckler] forces you to let go of [src]!"),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)

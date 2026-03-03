@@ -70,7 +70,7 @@
 	///what the instrument will glow when playing
 	var/glow_color = COLOR_BLACK
 
-/datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar_of_gods/altar)
+/datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar/of_gods/altar)
 	. = ..()
 	to_chat(user, span_notice(song_invocation_message))
 	user.AddComponent(/datum/component/smooth_tunes, src, repeats_okay, particles_path, glow_color)
@@ -173,7 +173,7 @@
 	if(listener.mind?.holy_role)
 		damage_dealt *= 0.5
 
-	listener.adjustBruteLoss(damage_dealt)
+	listener.adjust_brute_loss(damage_dealt)
 
 /datum/religion_rites/song_tuner/pain/finish_effect(mob/living/carbon/human/listener, atom/song_source)
 	var/obj/item/bodypart/sliced_limb = pick(listener.bodyparts)

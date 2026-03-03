@@ -113,21 +113,42 @@
 			continue
 		bounty_types[difficulty][bounty] = weight
 
+	var/list/limited_items = list()
+	var/list/show_anyways = list()
+	show_anyways += typesof(/datum/uplink_item/spy_unique/shotgun_ammo) // acquiring a shotgun is not difficult
+
 	for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-		if(isnull(item.item) || item.item == ABSTRACT_UPLINK_ITEM)
+		// limited items is populated as we go
+		if(item in limited_items)
 			continue
-		if(!(item.purchasable_from & UPLINK_SPY))
+		// proc handles checking if the item is valid
+		if(!try_add_to_loot_pool(item))
 			continue
-		// This will have some overlap, and that's intentional -
-		// Adds some variety, rare moments where you can get a hard reward for an easier bounty (or visa versa)
-		if(item.cost <= CONFIG_GET(number/spy_easy_reward_tc_threshold))
-			possible_uplink_items[SPY_DIFFICULTY_EASY] += item
-		if(item.cost >= CONFIG_GET(number/spy_easy_reward_tc_threshold) && item.cost <= CONFIG_GET(number/spy_hard_reward_tc_threshold))
-			possible_uplink_items[SPY_DIFFICULTY_MEDIUM] += item
-		if(item.cost >= CONFIG_GET(number/spy_hard_reward_tc_threshold))
-			possible_uplink_items[SPY_DIFFICULTY_HARD] += item
+		// any child items, such as ammo, are removed from the pool until the parent item is rewarded
+		for(var/child_item_type in (item.relevant_child_items || list()) - show_anyways)
+			if(prob(10)) // 10% chance to have it anyways though. teehee
+				continue
+			var/child_item = SStraitor.uplink_items_by_type[child_item_type]
+			for(var/difficulty in possible_uplink_items)
+				possible_uplink_items[difficulty] -= child_item
+			limited_items |= child_item
 
 	refresh_bounty_list()
+
+/// Helper to attempt to add the passed uplink item datum to the possible bounty pool(s).
+/datum/spy_bounty_handler/proc/try_add_to_loot_pool(datum/uplink_item/item)
+	if(isnull(item.item) || item.item == ABSTRACT_UPLINK_ITEM || !(item.purchasable_from & UPLINK_SPY))
+		return FALSE
+
+	// This will have some overlap, and that's intentional -
+	// Adds some variety, rare moments where you can get a hard reward for an easier bounty (or visa versa)
+	if(item.cost <= CONFIG_GET(number/spy_easy_reward_tc_threshold))
+		possible_uplink_items[SPY_DIFFICULTY_EASY] |= item
+	if(item.cost >= CONFIG_GET(number/spy_easy_reward_tc_threshold) && item.cost <= CONFIG_GET(number/spy_hard_reward_tc_threshold))
+		possible_uplink_items[SPY_DIFFICULTY_MEDIUM] |= item
+	if(item.cost >= CONFIG_GET(number/spy_hard_reward_tc_threshold))
+		possible_uplink_items[SPY_DIFFICULTY_HARD] |= item
+	return TRUE
 
 /// Helper that returns a list of all active bounties in a single list, regardless of difficulty.
 /datum/spy_bounty_handler/proc/get_all_bounties() as /list
@@ -152,7 +173,9 @@
 	bounties_to_give[SPY_DIFFICULTY_MEDIUM] += converted_medium_bounties
 
 	for(var/difficulty in bounties)
-		QDEL_LIST(bounties[difficulty])
+		for(var/datum/spy_bounty/bounty as anything in bounties[difficulty])
+			bounty.clear_bounty(src)
+		bounties[difficulty].Cut()
 
 		var/list/pool = bounty_types[difficulty]
 		var/amount_to_give = bounties_to_give[difficulty]

@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	var/static/list/restricted_areas = typecacheof(list(
 		/area/station/security,
 		/area/station/command,
-		/area/station/ai_monitored,
+		/area/station/ai,
 		/area/station/maintenance,
 		/area/station/solars,
 	))
@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	///cooldown till we can alter our pet's appearance again
 	COOLDOWN_DECLARE(alter_appearance_cooldown)
 
-/datum/computer_file/program/virtual_pet/on_install()
+/datum/computer_file/program/virtual_pet/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	profile_picture = getFlatIcon(image(icon = 'icons/ui/virtualpet/pet_state.dmi', icon_state = "pet_preview"))
 	GLOB.virtual_pets_list += src
@@ -175,10 +175,12 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 /datum/computer_file/program/virtual_pet/proc/post_cleaned(mob/source, mob/user)
 	SIGNAL_HANDLER
 
+	. = NONE
 	source.spin(spintime = 2 SECONDS, speed = 1) //celebrate!
 	happiness = min(happiness + PET_CLEAN_BONUS, max_happiness)
 	COOLDOWN_START(src, on_clean_cooldown, 1 MINUTES)
 	START_PROCESSING(SSprocessing, src)
+	. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 ///manage the pet's hat offsets when he changes direction
 /datum/computer_file/program/virtual_pet/proc/on_change_dir(datum/source, old_dir, new_dir)
@@ -432,7 +434,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 /datum/computer_file/program/virtual_pet/ui_static_data(mob/user)
 	var/list/data = list()
 	data["pet_state_icons"] = list()
-	for(var/list_index as anything in pet_state_icons)
+	for(var/list_index in pet_state_icons)
 		var/list/sprite_location = pet_state_icons[list_index]
 		data["pet_state_icons"] += list(list(
 			"name" = list_index,
@@ -444,7 +446,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 		"hat_name" = "none",
 	))
 
-	for(var/type_index as anything in hat_selections)
+	for(var/type_index in hat_selections)
 		if(level >= hat_selections[type_index])
 			var/obj/item/hat = type_index
 			var/hat_name = initial(hat.name)

@@ -11,7 +11,7 @@ import {
   Stack,
   TextArea,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
@@ -85,7 +85,7 @@ export const PollsSection = () => {
             { name, description, owner, creator, current_bets = [], locked },
             index,
           ) => (
-            <Section title={name + ' - Created by ' + creator} key={name}>
+            <Section title={`${name} - Created by ${creator}`} key={name}>
               <Stack>
                 <Stack.Item grow>
                   <Stack.Item grow>{description}</Stack.Item>
