@@ -339,7 +339,7 @@
 
 
 //arrow wand
-/obj/itme/gun/magic/wand/nothing/arrow
+/obj/item/gun/magic/wand/nothing/arrow
     name = "AWSOME WAND OF BULLET MURDER"
     desc = "What the fuck? it looks like one of those wands that you buy from the costume vendor but it has a sticker on it that says 'AWSOME WAND OF BULLET MURDER'"
     ammo_type = /obj/item/ammo_casing/arrow
