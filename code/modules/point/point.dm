@@ -101,8 +101,6 @@
  */
 /mob/verb/pointed(atom/A)
 	set name = "Point To"
-	set hidden = TRUE
-
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(_pointed), A))
