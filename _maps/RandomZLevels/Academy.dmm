@@ -2190,6 +2190,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
+"sh" = (
+/obj/machinery/light/directional/north,
+/mob/living/basic/construct/proteon/hostile,
+/turf/open/floor/plating,
+/area/awaymission/caves/academy)
 "sm" = (
 /mob/living/basic/skeleton/templar/academy/leader,
 /turf/open/floor/iron/showroomfloor,
@@ -2272,6 +2277,7 @@
 /obj/structure/railing/unbreakable{
 	dir = 8
 	},
+/mob/living/basic/trader/mr_corporate,
 /turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "wt" = (
@@ -2288,6 +2294,10 @@
 "xd" = (
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron,
+/area/awaymission/caves/academy)
+"xi" = (
+/mob/living/basic/skeleton/templar/academy,
+/turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "xr" = (
 /turf/closed/indestructible/rock,
@@ -2764,6 +2774,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
+/area/awaymission/caves/academy)
+"Wu" = (
+/mob/living/basic/pet/gondola,
+/turf/open/floor/grass,
 /area/awaymission/caves/academy)
 "WG" = (
 /obj/structure/window/spawner/directional/south,
@@ -11176,9 +11190,9 @@ al
 ah
 gC
 JX
+Wu
 fD
-fD
-fD
+Wu
 Iw
 SZ
 df
@@ -11237,7 +11251,7 @@ np
 jS
 Fl
 jH
-jH
+xi
 jS
 jU
 jU
@@ -11307,7 +11321,7 @@ be
 gC
 JX
 fD
-fD
+Wu
 fD
 Iw
 df
@@ -11957,7 +11971,7 @@ ah
 gC
 JX
 fD
-fD
+Wu
 fD
 Iw
 df
@@ -12086,9 +12100,9 @@ bZ
 be
 gC
 JX
+Wu
 fD
-fD
-fD
+Wu
 Iw
 df
 df
@@ -15529,7 +15543,7 @@ aG
 Iw
 jH
 jH
-jH
+pC
 jH
 mn
 mo
@@ -15790,7 +15804,7 @@ Iw
 GP
 jH
 jH
-jH
+pC
 Iw
 Iw
 Iw
@@ -15918,7 +15932,7 @@ mY
 aG
 Iw
 jH
-jH
+pC
 jH
 jH
 Iw
@@ -16178,8 +16192,8 @@ mY
 aG
 Iw
 jH
-jH
-jH
+pC
+pC
 jH
 Iw
 gC
@@ -16307,7 +16321,7 @@ mY
 mY
 aG
 Iw
-GP
+sh
 jH
 jH
 jH
