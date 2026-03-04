@@ -152,10 +152,10 @@
 #define ui_alienplasmadisplay "EAST,CENTER-2:15"
 #define ui_alien_queen_finder "EAST,CENTER-3:15"
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"
-#define ui_alien_language_menu "EAST-4:20,SOUTH:5"
-#define ui_alien_navigate_menu "EAST-4:4,SOUTH:5"
-#define ui_alien_memories_menu "EAST-4:20,SOUTH:1:20"
-#define ui_alien_floor_change "EAST-3:24, SOUTH:24"
+#define ui_alien_language_menu "EAST-4:22,SOUTH:5"
+#define ui_alien_navigate_menu "EAST-4:6,SOUTH:5"
+#define ui_alien_memories_menu "EAST-4:22,SOUTH:1:20"
+#define ui_alien_floor_change "EAST-3:24,SOUTH:20"
 
 //AI
 #define ui_ai_core "BOTTOM:6,RIGHT-4"
@@ -163,8 +163,8 @@
 #define ui_ai_announcement "BOTTOM:6,RIGHT-2"
 #define ui_ai_state_laws "BOTTOM:6,RIGHT-1"
 #define ui_ai_mod_int "BOTTOM:6,RIGHT"
-#define ui_ai_language_menu "BOTTOM+1:8,RIGHT-1:30"
-#define ui_ai_memories_menu "BOTTOM+1:24,RIGHT-1:30"
+#define ui_ai_language_menu "BOTTOM+1:6,RIGHT-1:30"
+#define ui_ai_memories_menu "BOTTOM+1:22,RIGHT-1:30"
 
 #define ui_ai_crew_monitor "BOTTOM:6,CENTER-1"
 #define ui_ai_crew_manifest "BOTTOM:6,CENTER"
