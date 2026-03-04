@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscdel: "Removed showing spells as their own tab in the stat panel."
-  - qol: "Xenos now show the cost of their abilities when you hover over the action button."

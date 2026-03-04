@@ -23,6 +23,10 @@
   Cyberboss:
   - bugfix: Fixed chat interference when you would be put to sleep but were sleep
       immune.
+  JohnFulpWillard:
+  - rscdel: Removed showing spells as their own tab in the stat panel.
+  - qol: Xenos now show the cost of their abilities when you hover over the action
+      button.
   itsmeow:
   - code_imp: Optimized species and antagonist icon loading in the preferences menu
       on local, speeding up time to open in development.
