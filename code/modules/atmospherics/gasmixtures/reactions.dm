@@ -120,7 +120,7 @@
 			consumed = MOLES_GAS_VISIBLE
 
 	if(consumed)
-		air.gases[/datum/gas/water_vapor][MOLES] -= consumed
+		air.adjust_gas(/datum/gas/water_vapor, -consumed)
 		SET_REACTION_RESULTS(consumed)
 		. |= REACTING
 

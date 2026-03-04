@@ -309,24 +309,21 @@
 				moderator_internal.adjust_gas(/datum/gas/proto_nitrate, min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35))
 		if(3, 4)
 			if(moderator_list[/datum/gas/plasma] > 10)
-				var/datum/gas_holder/incoming_gas = new(src)
-				incoming_gas.gas_species = list(/datum/gas/freon = scaled_production * 0.15, /datum/gas/nitrium = scaled_production * 1.05)
-				internal_output.adjust_multiple_gases(incoming_gas)
+				var/list/new_gases = list(/datum/gas/freon = scaled_production * 0.15, /datum/gas/nitrium = scaled_production * 1.05)
+				internal_output.adjust_multiple_gases(new_gases)
 				moderator_internal.adjust_gas(/datum/gas/plasma, min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45))
 			if(moderator_list[/datum/gas/freon] > 50)
 				heat_output *= 0.9
 				radiation *= 0.8
 			if(moderator_list[/datum/gas/proto_nitrate]> 15)
-				var/datum/gas_holder/incoming_gas = new(src)
-				incoming_gas.gas_species = list(/datum/gas/nitrium = scaled_production * 1.25, /datum/gas/halon = scaled_production * 1.15)
-				internal_output.adjust_multiple_gases(incoming_gas)
+				var/list/new_gases = list(/datum/gas/nitrium = scaled_production * 1.25, /datum/gas/halon = scaled_production * 1.15)
+				internal_output.adjust_multiple_gases(new_gases)
 				moderator_internal.adjust_gas(/datum/gas/proto_nitrate, min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.55))
 				radiation *= 1.95
 				heat_output *= 1.25
 			if(moderator_list[/datum/gas/bz] > 100)
-				var/datum/gas_holder/incoming_gas = new(src)
-				incoming_gas.gas_species = list(/datum/gas/healium = scaled_production * 1.5, /datum/gas/proto_nitrate = scaled_production * 1.5)
-				internal_output.adjust_multiple_gases(incoming_gas)
+				var/list/new_gases = list(/datum/gas/healium = scaled_production * 1.5, /datum/gas/proto_nitrate = scaled_production * 1.5)
+				internal_output.adjust_multiple_gases(new_gases)
 				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * seconds_per_tick)
 
 		if(5)
@@ -337,16 +334,14 @@
 				heat_output *= 0.5
 				radiation *= 0.2
 			if(moderator_list[/datum/gas/proto_nitrate] > 50)
-				var/datum/gas_holder/incoming_gas = new(src)
-				incoming_gas.gas_species = list(/datum/gas/nitrium = scaled_production * 1.95, /datum/gas/pluoxium = scaled_production)
-				internal_output.adjust_multiple_gases(incoming_gas)
+				var/list/new_gases = list(/datum/gas/nitrium = scaled_production * 1.95, /datum/gas/pluoxium = scaled_production)
+				internal_output.adjust_multiple_gases(new_gases)
 				moderator_internal.adjust_gas(/datum/gas/proto_nitrate, min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35))
 				radiation *= 1.95
 				heat_output *= 1.25
 			if(moderator_list[/datum/gas/bz] > 100)
-				var/datum/gas_holder/incoming_gas = new(src)
-				incoming_gas.gas_species = list(/datum/gas/healium = scaled_production, /datum/gas/freon = scaled_production * 1.15)
-				internal_output.adjust_multiple_gases(incoming_gas)
+				var/list/new_gases = list(/datum/gas/healium = scaled_production, /datum/gas/freon = scaled_production * 1.15)
+				internal_output.adjust_multiple_gases(new_gases)
 				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * seconds_per_tick)
 			if(moderator_list[/datum/gas/healium] > 100)
 				if(critical_threshold_proximity > 400)
@@ -360,9 +355,8 @@
 				internal_output.adjust_gas(/datum/gas/bz, scaled_production * 1.15)
 				moderator_internal.adjust_gas(/datum/gas/plasma, -min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45))
 			if(moderator_list[/datum/gas/proto_nitrate])
-				var/datum/gas_holder/incoming_gas = new(src)
-				incoming_gas.gas_species = list(/datum/gas/zauker = scaled_production * 5.35, /datum/gas/nitrium = scaled_production * 2.15)
-				internal_output.adjust_multiple_gases(incoming_gas)
+				var/list/new_gases = list(/datum/gas/zauker = scaled_production * 5.35, /datum/gas/nitrium = scaled_production * 2.15)
+				internal_output.adjust_multiple_gases(new_gases)
 				moderator_internal.adjust_gas(/datum/gas/proto_nitrate, -min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 3.35))
 				radiation *= 2
 				heat_output *= 2.25

@@ -178,43 +178,23 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /// Add a specific amount of moles to specified gas or add a new gas to the mix
 /// amount is added so make it negative to remove
-/// temperature default to our gas mix temp unless specified
-/datum/gas_mixture/proc/adjust_gas(datum/gas/species, amount, incoming_temp)
-	ASSERT_GAS(species, src)
-	gases[species][MOLES] += amount
+/datum/gas_mixture/proc/adjust_gas(gas, amount)
+	ASSERT_GAS(gas, src)
+	gases[gas][MOLES] += amount
 	total_moles += amount
-	incoming_temp ? incoming_temp : temperature
-	//heat transfer
-	if(abs(temperature - incoming_temp) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && incoming_temp)
-		var/self_heat_capacity = heat_capacity()
-		var/giver_heat_capacity = species.specific_heat * amount
-		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
-		total_heat_capacity = combined_heat_capacity
-		if(combined_heat_capacity)
-			temperature = (incoming_temp * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
 	garbage_collect()
 
 /// Add a specific amount of moles to all the gasses present or add a new gas to the mix
-/datum/gas_mixture/proc/adjust_multiple_gases(datum/gas_holder/incoming_gas)
+///gases_moles is an associative list of gas species to their amount to be added
+/datum/gas_mixture/proc/adjust_multiple_gases(list/gases_moles)
 	var/list/our_gases = gases
-	var/list/holder_gases = incoming_gas.gas_species
 	// Moles transfer into self
-	for(var/gas_specie as anything in holder_gases)
+	for(var/gas_specie as anything in gases_moles)
 		if(!(gas_specie in our_gases))
 			ASSERT_GAS(gas_specie, src)
-		gases[gas_specie][MOLES] += holder_gases[gas_specie]
-		total_moles += holder_gases[gas_specie]
+		gases[gas_specie][MOLES] += gases_moles[gas_specie]
+		total_moles += gases_moles[gas_specie]
 
-	//heat transfer
-	var/temperature_delta = abs(temperature - incoming_gas.temperature)
-	if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && incoming_gas.temperature)
-		var/self_heat_capacity = heat_capacity()
-		var/giver_heat_capacity = incoming_gas.heat_capacity()
-		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
-		if(combined_heat_capacity)
-			temperature = (incoming_gas.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
-	garbage_collect()
-	qdel(incoming_gas)
 
 /// Modify the gas list as to convert moles of gas species A to gas species B
 /// reactant and product are the gas species to convert and conversion_amount is the amount to be converted
@@ -831,13 +811,3 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	atmos_contents += temperature_str
 	return atmos_contents.Join(";")
 
-/datum/gas_holder
-	/// Associative list of species to moles
-	var/list/gas_species
-	var/temperature
-
-/datum/gas_holder/proc/heat_capacity()
-	. = 0
-	for(var/datum/gas/gas_type in gas_species)
-		var/gas_data = gas_type.specific_heat
-		. += gas_data * gas_species[gas_type]
