@@ -192,6 +192,7 @@
 		mona_lisa.DrawBox(color, pixel_coords[1], pixel_coords[2], ++pixel_coords[1], ++pixel_coords[2])
 		drawn_image.icon = mona_lisa
 		log_minimap_drawing("[key_name(source)] has made a dot at [pixel_coords[1]/2], [pixel_coords[2]/2]")
+		my_map.process()
 		return TRUE
 	starting_coords = pixel_coords
 	RegisterSignal(source, COMSIG_CLIENT_MOUSEUP, PROC_REF(on_mouseup))
@@ -206,6 +207,7 @@
 	draw_line(starting_coords, end_coords)
 	last_drawn = list(starting_coords, end_coords)
 	log_minimap_drawing("[key_name(usr)] drew a [color] line from [starting_coords[1]], [starting_coords[2]] to [end_coords[1]], [end_coords[2]]")
+	my_map.process()
 
 /// proc for drawing a line from list(startx, starty) to list(endx, endy) on the screen. yes this is aa ripoff of [/proc/getline]
 /atom/movable/screen/minimap_tool/draw_tool/proc/draw_line(list/start_coords, list/end_coords, draw_color = color)
