@@ -1163,6 +1163,7 @@
 #include "code\datums\components\deadchat_control.dm"
 #include "code\datums\components\death_linked.dm"
 #include "code\datums\components\debris_bleeder.dm"
+#include "code\datums\components\defaceable.dm"
 #include "code\datums\components\dejavu.dm"
 #include "code\datums\components\deployable.dm"
 #include "code\datums\components\direct_explosive_trap.dm"
