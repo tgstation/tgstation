@@ -855,8 +855,8 @@
 		our_crystal.use(1)
 		our_prod = /obj/item/melee/baton/security/cattleprod/teleprod
 
-	else if(istype(item, /obj/item/stack/sheet/telecrystal))
-		var/obj/item/stack/sheet/telecrystal/our_crystal = item
+	else if(istype(item, /obj/item/stack/telecrystal))
+		var/obj/item/stack/telecrystal/our_crystal = item
 		our_crystal.use(1)
 		our_prod = /obj/item/melee/baton/security/cattleprod/telecrystalprod
 	else

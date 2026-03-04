@@ -121,7 +121,7 @@
 		return FALSE
 
 	telecrystals -= amount
-	var/tcs = new /obj/item/stack/sheet/telecrystal(get_turf(user), amount)
+	var/tcs = new /obj/item/stack/telecrystal(get_turf(user), amount)
 	user.put_in_hands(tcs)
 
 	log_uplink("[key_name(user)] purchased [amount] raw telecrystals from [source]'s uplink")

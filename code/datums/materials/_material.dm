@@ -132,6 +132,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 	if (track_flags & MATERIAL_TRACK_IMPACT)
 		RegisterSignal(source, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
+		RegisterSignal(source, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_throw_impact_living))
 		RegisterSignal(source, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
 		RegisterSignal(source, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(on_item_attack))
 		RegisterSignal(source, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self))
@@ -168,6 +169,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if (track_flags & MATERIAL_TRACK_IMPACT)
 		var/static/list/material_signals = list(
 			COMSIG_MOVABLE_IMPACT,
+			COMSIG_MOVABLE_IMPACT_ZONE,
 			COMSIG_ITEM_ATTACK,
 			COMSIG_ITEM_ATTACK_ATOM,
 			COMSIG_ITEM_ATTACK_SELF,
@@ -190,11 +192,11 @@ Simple datum which is instanced once per type and is used for every object of sa
 		if (!skin_contact)
 			break
 
-	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_CONTACT, source, target, shover, null, !!skin_contact)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_TOUCH, source, target, shover, null, !!skin_contact)
 
 /datum/material/proc/on_item_attack(obj/item/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
-	impact_affect_user(source, user, user)
+	impact_affect_touch(source, user, user)
 	// Living mobs use a different signal
 	if (!isliving(target))
 		impact_affect_target(source, target, user)
@@ -211,25 +213,36 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /datum/material/proc/on_item_attack_self(obj/item/source, mob/living/user)
 	SIGNAL_HANDLER
-	impact_affect_user(source, user, user)
+	impact_affect_touch(source, user, user)
 
 /datum/material/proc/on_throw_impact(obj/item/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
 	SIGNAL_HANDLER
 	if (caught)
-		impact_affect_user(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living))
-	else
-		impact_affect_target(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living), skin_contact = FALSE) // balance reasons
+		impact_affect_touch(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living))
+	else if (!isliving(hit_atom)) // Hit mobs have armor checking
+		impact_affect_throw_impact(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living))
 
-/datum/material/proc/impact_affect_user(obj/item/source, mob/living/user, mob/living/initiator)
+/datum/material/proc/on_throw_impact_living(obj/item/source, mob/living/target, def_zone, blocked, datum/thrownthing/throwing_datum)
+	SIGNAL_HANDLER
+
+	var/has_contact = TRUE
+	for (var/obj/item/worn_item in target.get_equipped_items(INCLUDE_ABSTRACT))
+		if (worn_item.body_parts_covered & def_zone)
+			has_contact = FALSE
+			break
+
+	impact_affect_throw_impact(source, target, astype(throwing_datum.thrower.resolve(), /mob/living), def_zone, has_contact)
+
+/datum/material/proc/impact_affect_touch(obj/item/source, mob/living/user, mob/living/initiator)
 	var/arm_dir = IS_LEFT_INDEX(user.active_hand_index) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 	if (!ishuman(user))
-		SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_CONTACT, source, user, initiator, arm_dir, TRUE)
+		SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_TOUCH, source, user, initiator, arm_dir, TRUE)
 		return
 
 	var/mob/living/carbon/human/as_human = user
 	var/obj/item/bodypart/hand = as_human.has_hand_for_held_index(as_human.get_held_index_of_item(source))
 	if (!hand)
-		SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_CONTACT, source, user, initiator, arm_dir, FALSE)
+		SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_TOUCH, source, user, initiator, arm_dir, FALSE)
 		return
 
 	var/list/obj/item/hand_covers = as_human.get_clothing_on_part(hand)
@@ -239,10 +252,13 @@ Simple datum which is instanced once per type and is used for every object of sa
 			hand_covered = TRUE
 			break
 
-	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_CONTACT, source, user, initiator, hand.body_zone, !hand_covered)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_TOUCH, source, user, initiator, hand.body_zone, !hand_covered)
 
 /datum/material/proc/impact_affect_target(obj/item/source, atom/target, mob/living/user, def_zone, skin_contact = TRUE)
-	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_CONTACT, source, target, user, def_zone, skin_contact)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_HIT, source, target, user, def_zone, skin_contact)
+
+/datum/material/proc/impact_affect_throw_impact(obj/item/source, atom/target, mob/living/user, def_zone, skin_contact = TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_THROW_IMPACT, source, target, user, def_zone, skin_contact)
 
 /datum/material/proc/setup_glow(turf/on)
 	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother

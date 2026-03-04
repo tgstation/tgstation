@@ -102,7 +102,13 @@
 /datum/material_property/firestacker/attach_to(datum/material/material)
 	. = ..()
 	material.track_flags |= MATERIAL_TRACK_CONTACT | MATERIAL_TRACK_IMPACT
-	RegisterSignal(material, COMSIG_MATERIAL_EFFECT_CONTACT, PROC_REF(on_contact))
+	var/static/list/interaction_signals = list(
+		COMSIG_MATERIAL_EFFECT_TOUCH,
+		COMSIG_MATERIAL_EFFECT_STEP,
+		COMSIG_MATERIAL_EFFECT_HIT,
+		COMSIG_MATERIAL_EFFECT_THROW_IMPACT,
+	)
+	RegisterSignals(material, interaction_signals, PROC_REF(on_contact))
 
 /datum/material_property/firestacker/proc/on_contact(datum/material/source, atom/object, mob/living/target, mob/living/user, def_zone, skin_contact)
 	SIGNAL_HANDLER
@@ -128,7 +134,13 @@
 /datum/material_property/vampires_bane/attach_to(datum/material/material)
 	. = ..()
 	material.track_flags |= MATERIAL_TRACK_CONTACT | MATERIAL_TRACK_IMPACT
-	RegisterSignal(material, COMSIG_MATERIAL_EFFECT_CONTACT, PROC_REF(on_contact))
+	var/static/list/interaction_signals = list(
+		COMSIG_MATERIAL_EFFECT_TOUCH,
+		COMSIG_MATERIAL_EFFECT_STEP,
+		COMSIG_MATERIAL_EFFECT_HIT,
+		COMSIG_MATERIAL_EFFECT_THROW_IMPACT,
+	)
+	RegisterSignals(material, interaction_signals, PROC_REF(on_contact))
 
 /datum/material_property/vampires_bane/proc/on_contact(datum/material/source, atom/object, mob/living/target, mob/living/user, def_zone, skin_contact)
 	SIGNAL_HANDLER
@@ -153,7 +165,13 @@
 /datum/material_property/teleporting/attach_to(datum/material/material)
 	. = ..()
 	material.track_flags |= MATERIAL_TRACK_CONTACT | MATERIAL_TRACK_IMPACT
-	RegisterSignal(material, COMSIG_MATERIAL_EFFECT_CONTACT, PROC_REF(on_contact))
+	var/static/list/interaction_signals = list(
+		COMSIG_MATERIAL_EFFECT_TOUCH,
+		COMSIG_MATERIAL_EFFECT_STEP,
+		COMSIG_MATERIAL_EFFECT_HIT,
+	)
+	RegisterSignals(material, interaction_signals, PROC_REF(on_contact))
+	RegisterSignal(material, COMSIG_MATERIAL_EFFECT_THROW_IMPACT, PROC_REF(on_impact))
 
 /datum/material_property/teleporting/proc/on_contact(datum/material/source, atom/object, atom/target, mob/living/user, def_zone, skin_contact)
 	SIGNAL_HANDLER
@@ -169,6 +187,13 @@
 	do_teleport(target, get_turf(target), value, channel = TELEPORT_CHANNEL_BLUESPACE)
 	if (object.uses_integrity)
 		object.take_damage(object.max_integrity * value * 0.025)
+
+/datum/material_property/teleporting/proc/on_impact(datum/material/source, atom/object, atom/target, mob/living/user, def_zone, skin_contact)
+	SIGNAL_HANDLER
+
+	// Unless its a specialized weapon, don't teleport the target for balance reasons
+	if (object.has_material_slots() || source.get_property(MATERIAL_PENETRATING))
+		on_contact(source, object, target, user, def_zone, skin_contact)
 
 /// Makes all contact count as skin contact
 /datum/material_property/penetrating

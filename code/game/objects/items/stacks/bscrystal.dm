@@ -7,7 +7,8 @@
 	singular_name = "bluespace crystal"
 	dye_color = DYE_COSMIC
 	w_class = WEIGHT_CLASS_TINY
-	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT)
+	material_flags = NONE // Put some effort into making a teleporting weapon, cmon
+	mats_per_unit = list(/datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
 	points = 50
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
 	scan_state = "rock_bscrystal"

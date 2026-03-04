@@ -952,7 +952,7 @@ GLOBAL_LIST_INIT(paperframe_recipes, list(
 	desc = "Something's bloody meat compressed into a nice solid sheet."
 	singular_name = "meat sheet"
 	icon_state = "sheet-meat"
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_NO_DESCRIPTORS
 	mats_per_unit = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/meat
 	material_type = /datum/material/meat
@@ -999,7 +999,7 @@ GLOBAL_LIST_INIT(pizza_sheet_recipes, list(
 	desc = "These sheets seem cursed."
 	singular_name = "haunted sheet"
 	icon_state = "sheet-meat"
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_NO_DESCRIPTORS
 	mats_per_unit = list(/datum/material/hauntium = SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/hauntium
 	material_type = /datum/material/hauntium

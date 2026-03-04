@@ -73,8 +73,9 @@
 			return
 
 	// Not tracking initializations or existing objects as this would allow you to TP someone from plating by placing a tile underneath
-	RegisterSignal(target_turf, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(on_entered), override = TRUE) // Turf init code is unstable as shit
-	RegisterSignal(target_turf, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(on_exited), override = TRUE)
+	RegisterSignal(target_turf, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	RegisterSignal(target_turf, COMSIG_TURF_MOVABLE_THROW_LANDED, PROC_REF(on_entered)) // Need this as shoves are 1 tile throws, and COMSIG_ATOM_ENTERED runs before the throw ends
+	RegisterSignal(target_turf, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 
 /datum/component/material_turf_tracking/UnregisterFromParent()
 	. = ..()
@@ -111,15 +112,16 @@
 /datum/component/material_turf_tracking/proc/on_turf_gained(turf/source)
 	SIGNAL_HANDLER
 
-	RegisterSignal(source, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(on_entered))
-	RegisterSignal(source, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(on_exited))
+	RegisterSignal(source, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	RegisterSignal(source, COMSIG_TURF_MOVABLE_THROW_LANDED, PROC_REF(on_entered))
+	RegisterSignal(source, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 	for (var/atom/movable/thing in source)
 		on_entered(source, thing)
 
 /datum/component/material_turf_tracking/proc/on_turf_lost(turf/source)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, list(COMSIG_ATOM_ABSTRACT_ENTERED, COMSIG_ATOM_ABSTRACT_EXITED))
+	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_TURF_MOVABLE_THROW_LANDED, COMSIG_ATOM_EXITED))
 	for (var/atom/movable/thing in source)
 		UnregisterSignal(thing, list(SIGNAL_ADDTRAIT(TRAIT_MOB_ELEVATED), COMSIG_MOVETYPE_FLAG_DISABLED))
 
@@ -160,7 +162,7 @@
 
 /datum/component/material_turf_tracking/proc/trigger_effect(atom/movable/arrived)
 	if (!isliving(arrived))
-		SEND_SIGNAL(owner_material, COMSIG_MATERIAL_EFFECT_CONTACT, parent, arrived, null, null, FALSE)
+		SEND_SIGNAL(owner_material, COMSIG_MATERIAL_EFFECT_STEP, parent, arrived, null, null, FALSE)
 		return
 
 	var/mob/living/victim = arrived
@@ -173,7 +175,7 @@
 		if (!skin_contact)
 			break
 
-	SEND_SIGNAL(owner_material, COMSIG_MATERIAL_EFFECT_CONTACT, parent, arrived, null, null, !!skin_contact)
+	SEND_SIGNAL(owner_material, COMSIG_MATERIAL_EFFECT_STEP, parent, arrived, null, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), !!skin_contact)
 
 /datum/component/material_turf_tracking/proc/on_mob_elevated(mob/living/source, trait)
 	if (source.throwing || source.invisibility >= INVISIBILITY_ABSTRACT || (source.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))

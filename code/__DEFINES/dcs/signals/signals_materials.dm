@@ -10,6 +10,11 @@
 #define COMSIG_MATERIAL_MAIN_REMOVED "material_main_removed"
 
 // Material property effect triggers
-/// When a material comes into active contact with an atom (such as hitting it): (datum/material/source, atom/object, atom/target, mob/living/user, def_zone, skin_contact)
-/// skin_contact determines if there was direct contact if it was a mob who was affected
-#define COMSIG_MATERIAL_EFFECT_CONTACT "material_effect_contact"
+/// When a material is touched by an atom: (datum/material/source, atom/object, atom/target, mob/living/initiator, def_zone, skin_contact)
+#define COMSIG_MATERIAL_EFFECT_TOUCH "material_effect_touch"
+/// When a material is stepped onto: (datum/material/source, atom/object, atom/target, mob/living/initiator, def_zone, skin_contact)
+#define COMSIG_MATERIAL_EFFECT_STEP "material_effect_step"
+/// When a material hits something: (datum/material/source, atom/object, atom/target, mob/living/user, def_zone, skin_contact)
+#define COMSIG_MATERIAL_EFFECT_HIT "material_effect_hit"
+/// When a material hits something when thrown: (datum/material/source, atom/object, atom/target, mob/living/thrower, def_zone, skin_contact)
+#define COMSIG_MATERIAL_EFFECT_THROW_IMPACT "material_effect_throw_impact"

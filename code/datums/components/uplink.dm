@@ -105,7 +105,7 @@
 	purchase_log = null
 	return ..()
 
-/datum/component/uplink/proc/load_tc(mob/user, obj/item/stack/sheet/telecrystal/telecrystals, silent = FALSE)
+/datum/component/uplink/proc/load_tc(mob/user, obj/item/stack/telecrystal/telecrystals, silent = FALSE)
 	if(!silent)
 		to_chat(user, span_notice("You slot [telecrystals] into [parent] and charge its internal uplink."))
 	var/amt = telecrystals.amount
@@ -118,7 +118,7 @@
 	if(!active)
 		return //no hitting everyone/everything just to try to slot tcs in!
 
-	if(istype(item, /obj/item/stack/sheet/telecrystal))
+	if(istype(item, /obj/item/stack/telecrystal))
 		load_tc(user, item)
 
 	if(!istype(item))
