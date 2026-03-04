@@ -606,9 +606,8 @@
 			to_chat(user, span_warning("The screws locking [src]'s keyslot are stripped, and can't be removed."))
 			return ITEM_INTERACT_BLOCKING
 		if(RADIO_KEYSLOT_EMAGGABLE_LOCK)
-			if(!(obj_flags & EMAGGED))
-				to_chat(user, span_warning("The screws locking [src]'s keyslot are fastened tight, and likely can't be removed without some kind of magnet..."))
-				return ITEM_INTERACT_BLOCKING
+			to_chat(user, span_warning("The screws locking [src]'s keyslot are fastened tight, and likely can't be removed without some kind of magnet..."))
+			return ITEM_INTERACT_BLOCKING
 
 	var/list/removed_keys = remove_keys(user)
 	if(length(removed_keys) > 1)

@@ -58,10 +58,17 @@
 		. += span_notice("Speaking through this intercom will anonymize your voice.")
 
 	if(freqlock == RADIO_FREQENCY_UNLOCKED)
-		if(obj_flags & EMAGGED)
+		if((obj_flags & EMAGGED) && initial(freqlock) == RADIO_FREQENCY_EMAGGABLE_LOCK)
 			. += span_warning("Its frequency lock has been shorted...")
 	else
 		. += span_notice("It has a frequency lock set to [frequency/10].")
+
+	if(keylock == RADIO_KEYSLOT_UNLOCKED)
+		if((obj_flags & EMAGGED) && initial(keylock) == RADIO_KEYSLOT_EMAGGABLE_LOCK)
+			. += span_warning("Its keyslot's security screws have been uplifted...")
+	else
+		. += span_notice("The screws in its keyslot are [keylock == RADIO_KEYSLOT_LOCKED ? "stripped" : "fastened tight"], \
+			preventing the removal of its encryption key[keylock == RADIO_KEYSLOT_LOCKED ? "" : " without some kind of magnet"].")
 
 /obj/item/radio/intercom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -185,7 +192,10 @@
 
 	balloon_alert(user, "[message] broken")
 	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	keylock = RADIO_KEYSLOT_UNLOCKED
+	if(freqlock == RADIO_FREQENCY_EMAGGABLE_LOCK)
+		freqlock = RADIO_FREQENCY_UNLOCKED
+	if(keylock == RADIO_KEYSLOT_EMAGGABLE_LOCK)
+		keylock = RADIO_KEYSLOT_UNLOCKED
 	obj_flags |= EMAGGED
 	return TRUE
 
