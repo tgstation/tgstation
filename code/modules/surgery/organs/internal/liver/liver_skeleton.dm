@@ -13,14 +13,14 @@
 	///Var for burn healing via milk
 	var/milk_burn_healing = 2.5
 
-/obj/item/organ/liver/bone/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
+/obj/item/organ/liver/bone/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick)
 	. = ..()
 	// parent returned COMSIG_MOB_STOP_REAGENT_TICK or we are failing
 	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))
 		return
 	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
-		organ_owner.adjust_stamina_loss(7.5 * REM * seconds_per_tick, updating_stamina = FALSE)
-		organ_owner.adjust_brute_loss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
+		organ_owner.adjust_stamina_loss(3.25  * seconds_per_tick, updating_stamina = FALSE)
+		organ_owner.adjust_brute_loss(0.25 * seconds_per_tick, updating_health = FALSE)
 		if(SPT_PROB(10, seconds_per_tick))
 			switch(rand(1, 3))
 				if(1)
@@ -47,7 +47,7 @@
 		if(chem.volume > 50)
 			organ_owner.reagents.remove_reagent(chem.type, (chem.volume - 50))
 			to_chat(organ_owner, span_warning("The excess milk is dripping off your bones!"))
-		organ_owner.heal_bodypart_damage(milk_brute_healing * REM * seconds_per_tick, milk_burn_healing * REM * seconds_per_tick)
+		organ_owner.heal_bodypart_damage(0.5 * milk_brute_healing * seconds_per_tick, 0.5 * milk_burn_healing * seconds_per_tick)
 		for(var/datum/wound/iter_wound as anything in organ_owner.all_wounds)
-			iter_wound.on_xadone(1 * REM * seconds_per_tick)
+			iter_wound.on_xadone(0.5 * seconds_per_tick)
 		return // Do normal metabolism

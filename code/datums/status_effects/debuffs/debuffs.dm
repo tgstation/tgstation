@@ -16,6 +16,8 @@
 	remove_on_fullheal = TRUE
 	heal_flag_necessary = HEAL_CC_STATUS
 	var/needs_update_stat = FALSE
+	/// Suffixes attached to the force_say when applied, uses the "hurt" suffixes by default
+	var/list/alter_phrases
 
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -31,6 +33,20 @@
 		owner.update_stat()
 	return ..()
 
+/datum/status_effect/incapacitating/on_apply()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	if(!.)
+		return
+
+	force_say()
+
+/datum/status_effect/incapacitating/proc/force_say()
+	SHOULD_CALL_PARENT(TRUE)
+
+	var/mob/living/carbon/human/human = owner
+	if(istype(human))
+		human.force_say(alter_phrases, immediate = TRUE)
 
 //STUN
 /datum/status_effect/incapacitating/stun
@@ -79,6 +95,7 @@
 //PARALYZED
 /datum/status_effect/incapacitating/paralyzed
 	id = "paralyzed"
+	alter_phrases = list("") // "Why am I about to be froz-"
 
 /datum/status_effect/incapacitating/paralyzed/on_apply()
 	. = ..()
@@ -134,6 +151,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
 	tick_interval = 2 SECONDS
+	alter_phrases = list("Zzz...", "ZZz...", "ZZZ...", "zzZ...", "zZZ...", "ZzZ...", "zzz...", "zZz...", "mimimimimimi...")
 
 /datum/status_effect/incapacitating/sleeping/on_apply()
 	. = ..()
@@ -152,6 +170,10 @@
 		REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 		tick_interval = initial(tick_interval)
 	return ..()
+
+/datum/status_effect/incapacitating/sleeping/force_say()
+	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
+		..()
 
 ///If the mob is sleeping and gain the TRAIT_SLEEPIMMUNE we remove the TRAIT_KNOCKEDOUT and stop the tick() from happening
 /datum/status_effect/incapacitating/sleeping/proc/on_owner_insomniac(mob/living/source)
@@ -282,7 +304,7 @@
 	. = ..()
 	if(!.)
 		return
-	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS, TRAIT_TUMOR_SUPPRESSED), TRAIT_STATUS_EFFECT(id))
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
 	var/filter = owner.get_filter("stasis_status_ripple")
 	animate(filter, radius = 0, time = 0.2 SECONDS, size = 2, easing = JUMP_EASING, loop = -1, flags = ANIMATION_PARALLEL)
@@ -295,7 +317,7 @@
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
-	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS, TRAIT_TUMOR_SUPPRESSED), TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter("stasis_status_ripple")
 	update_time_of_death()
 	if(iscarbon(owner))
@@ -604,7 +626,7 @@
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
 		return
 
 	var/mob/hearing_speaker = hearing_args[HEARING_SPEAKER]
@@ -752,18 +774,25 @@
 /datum/status_effect/go_away/deletes_mob
 	id = "go_away_deletes_mob"
 	duration = 30 SECONDS
+	/// Timer that tracks when we should vanish
+	var/deletion_timer
 
 /datum/status_effect/go_away/deletes_mob/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
-	RegisterSignal(new_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(wipe_bozo))
+	deletion_timer = addtimer(CALLBACK(src, PROC_REF(wipe_bozo)), duration - 5 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
+	RegisterSignals(new_owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH), PROC_REF(wipe_bozo))
 
 /datum/status_effect/go_away/deletes_mob/proc/wipe_bozo()
-	qdel(src)
+	deltimer(deletion_timer)
+	owner.fade_into_nothing()
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
 
 /datum/status_effect/go_away/deletes_mob/on_remove()
 	. = ..()
-	if(!QDELETED(owner))
-		qdel(owner)
+	deltimer(deletion_timer)
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
 
 /atom/movable/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"

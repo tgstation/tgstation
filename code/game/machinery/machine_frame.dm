@@ -357,14 +357,14 @@
 		// We might end up qdel'ing the part if it's a stock part datum.
 		// In practice, this doesn't have side effects to the name,
 		// but academically we should not be using an object after it's deleted.
-		var/part_name = "[tool]"
+		var/part_name = "\the [tool]"
 
 		if (ispath(stock_part_base, /datum/stock_part))
 			// We can't just reuse stock_part_path here or its singleton,
 			// or else putting in a tier 2 part will deconstruct to a tier 1 part.
 			var/stock_part_datum = GLOB.stock_part_datums_per_object[tool.type]
 			if (isnull(stock_part_datum))
-				stack_trace("tool.type] does not have an associated stock part datum!")
+				stack_trace("[tool.type] does not have an associated stock part datum!")
 				continue
 
 			components += stock_part_datum

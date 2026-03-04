@@ -99,11 +99,12 @@
 /// Beyond this temperature, being on fire will increase body temperature by less and less
 #define BODYTEMP_FIRE_TEMP_SOFTCAP 1200
 
-/// The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
+/// The amount of pressure damage someone takes in a high pressure damage is equal to (pressure / HAZARD_HIGH_PRESSURE) * PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
 #define PRESSURE_DAMAGE_COEFFICIENT 2
 #define MAX_HIGH_PRESSURE_DAMAGE 2
-/// The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
-#define LOW_PRESSURE_DAMAGE 4
+/// The amount of damage someone takes when in a low pressure area scales up over time, starting at BASE_LOW_PRESSURE_DAMAGE, up to MAX_LOW_PRESSURE_DAMAGE.
+#define BASE_LOW_PRESSURE_DAMAGE 2
+#define MAX_LOW_PRESSURE_DAMAGE (BASE_LOW_PRESSURE_DAMAGE * 2.5)
 
 /// Humans are slowed by the difference between bodytemp and BODYTEMP_COLD_DAMAGE_LIMIT divided by this
 #define COLD_SLOWDOWN_FACTOR 20

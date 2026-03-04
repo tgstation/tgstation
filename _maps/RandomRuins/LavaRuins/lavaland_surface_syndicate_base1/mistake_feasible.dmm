@@ -71,7 +71,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "ao" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
@@ -180,7 +180,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "aN" = (
@@ -254,16 +253,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
+"GB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
 "IP" = (
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"Zh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
+"Kf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 
@@ -313,8 +313,8 @@ aa
 aD
 aW
 ah
-ao
-ah
+GB
+aH
 ao
 ah
 ac
@@ -327,9 +327,9 @@ aa
 aD
 IP
 ah
-aH
 ah
 aH
+ah
 ah
 aD
 aB
@@ -341,8 +341,8 @@ aa
 aD
 ah
 ah
-Zh
-ah
+aM
+aH
 aM
 ah
 am
@@ -355,7 +355,7 @@ aa
 aD
 aW
 ah
-aQ
+Kf
 gS
 gS
 aQ

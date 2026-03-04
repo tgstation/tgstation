@@ -114,16 +114,16 @@
 /datum/fish_source/dimensional_rift/proc/on_epic_fail(mob/user, datum/fishing_challenge/challenge, success)
 	challenge.location.visible_message(span_danger("[challenge.location]'s tendrils lash out and pull on [user]'s [user.get_active_hand()], ripping it clean off and throwing it towards itself!"))
 	var/obj/item/bodypart/random_arm = user.get_active_hand()
-	random_arm.dismember(BRUTE, FALSE)
-	random_arm.forceMove(user.drop_location())
-	random_arm.throw_at(challenge.location, 7, 1, null, TRUE)
+	if (random_arm.dismember(BRUTE, FALSE))
+		random_arm.forceMove(user.drop_location())
+		random_arm.throw_at(challenge.location, 7, 1, null, TRUE)
 	// Abstract items shouldn't be thrown in!
 	if(!(challenge.used_rod.item_flags & ABSTRACT))
 		challenge.used_rod.forceMove(user.drop_location())
 		challenge.used_rod.throw_at(challenge.location, 7, 1, null, TRUE)
-	addtimer(CALLBACK(src, PROC_REF(check_item_location), challenge.location, random_arm, challenge.used_rod), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(check_item_location), challenge.location, challenge.used_rod), 1 SECONDS)
 
-/datum/fish_source/dimensional_rift/proc/check_item_location(atom/location, obj/item/bodypart/random_arm, obj/item/used_rod)
+/datum/fish_source/dimensional_rift/proc/check_item_location(atom/location, obj/item/used_rod)
 	for(var/obj/item/thingy in get_turf(location))
 		// If it's not in the list and it's not what we know as the used rod, skip.
 		// This lets fishing gloves be dragged in as well. I mean honestly if you try fishing in here with those you should just Fucking Die but that's for later.

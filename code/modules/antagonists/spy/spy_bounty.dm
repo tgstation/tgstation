@@ -209,7 +209,7 @@
 	if(had_attack_hand_interaction)
 		thing.interaction_flags_atom |= INTERACT_ATOM_ATTACK_HAND
 	thing.anchored = was_anchored
-	thing.transform = thing.transform.Scale(10)
+	thing.transform = thing.transform.Scale(100)
 	thing.moveToNullspace()
 
 	var/item_price

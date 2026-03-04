@@ -820,7 +820,7 @@
 /datum/uplink_item/suits/synd_ai_upgrade
 	name = "Syndicate AI Upgrade"
 	desc = "...unless you buy the Syndicate Upgrade! This data chip allows the captured AI to increase its interaction range by two tiles per application. The Syndicate recommends three or four purchases at most, for a total of seven or infinite meters of range."
-	item = /obj/item/computer_disk/syndie_ai_upgrade
+	item = /obj/item/disk/computer/syndie_ai_upgrade
 	cost = 4
 	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 	cant_discount = TRUE

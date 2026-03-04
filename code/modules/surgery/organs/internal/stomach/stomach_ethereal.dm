@@ -16,10 +16,10 @@
 	QDEL_NULL(cell)
 	return ..()
 
-/obj/item/organ/stomach/ethereal/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/stomach/ethereal/on_life(seconds_per_tick)
 	. = ..()
 	adjust_charge(-ETHEREAL_DISCHARGE_RATE * seconds_per_tick)
-	handle_charge(owner, seconds_per_tick, times_fired)
+	handle_charge(owner, seconds_per_tick)
 
 /obj/item/organ/stomach/ethereal/on_mob_insert(mob/living/carbon/stomach_owner)
 	. = ..()
@@ -58,7 +58,7 @@
 	var/amount_changed = clamp(amount, ETHEREAL_CHARGE_NONE - cell.charge(), ETHEREAL_CHARGE_DANGEROUS - cell.charge())
 	return cell.change(amount_changed)
 
-/obj/item/organ/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick, times_fired)
+/obj/item/organ/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick)
 	switch(cell.charge())
 		if(-INFINITY to ETHEREAL_CHARGE_NONE)
 			carbon.add_mood_event("charge", /datum/mood_event/decharged)

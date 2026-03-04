@@ -231,7 +231,7 @@ ADMIN_VERB(debug_z_levels, R_DEBUG, "Debug Z-Levels", "Displays a list of all z-
 	var/list/messages = list()
 
 	var/list/z_list = SSmapping.z_list
-	messages += "\n<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]\n"
+	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]\n"
 
 	var/list/linked_levels = list()
 	var/min_x = INFINITY

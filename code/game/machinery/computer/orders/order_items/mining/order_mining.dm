@@ -92,7 +92,7 @@
 	cost_per_order = 7000
 
 /datum/orderable_item/mining/kheiralcuffs
-	purchase_path = /obj/item/kheiral_cuffs
+	purchase_path = /obj/item/clothing/accessory/kheiral_cuffs
 	cost_per_order = 675
 
 /datum/orderable_item/mining/bhop

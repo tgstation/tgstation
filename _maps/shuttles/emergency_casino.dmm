@@ -97,6 +97,7 @@
 /area/shuttle/escape/brig)
 "el" = (
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ep" = (
@@ -544,6 +545,7 @@
 	pixel_x = 2;
 	pixel_y = 8
 	},
+/obj/machinery/wall_healer/free/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "pp" = (
@@ -571,8 +573,8 @@
 /area/shuttle/escape)
 "qn" = (
 /obj/machinery/stasis,
-/obj/machinery/wall_healer/free/directional/east,
 /obj/machinery/light/directional/north,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "qr" = (
@@ -691,6 +693,7 @@
 "vL" = (
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "vM" = (

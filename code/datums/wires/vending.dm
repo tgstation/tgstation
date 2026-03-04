@@ -94,23 +94,9 @@
 		if(WIRE_SPEAKER)
 			vending_machine.shut_up = mend
 
-
-/**
- * Shock the passed in user
- *
- * This checks we have power and that the passed in prob is passed, then generates some sparks
- * and calls electrocute_mob on the user
- *
- * Arguments:
- * * user - the user to shock
- * * shock_chance - probability the shock happens
- */
-/obj/machinery/vending/proc/shock(mob/living/user, shock_chance)
-	if(!istype(user) || machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
+/obj/machinery/vending/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+	if(machine_stat & (BROKEN|NOPOWER))
 		return FALSE
-	if(!prob(shock_chance))
-		return FALSE
-	do_sparks(5, TRUE, src)
-	if(electrocute_mob(user, get_area(src), src, 0.7, dist_check = TRUE))
-		return TRUE
-	return FALSE
+	if(isnull(siemens_coeff))
+		siemens_coeff = 0.7
+	return ..()

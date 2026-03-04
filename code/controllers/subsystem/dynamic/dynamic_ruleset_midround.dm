@@ -435,7 +435,7 @@
 	max_antag_cap += prob(50) // 50% chance to get a second xeno, free!
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/can_be_selected()
-	return ..() && length(find_vents()) > 0
+	return ..() && length(find_vent_spawns()) > 0
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
 	. = ..()
@@ -451,30 +451,53 @@
 	return new /mob/living/carbon/alien/larva
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/create_execute_args()
-	return list(find_vents())
+	return list(find_vent_spawns())
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/assign_role(datum/mind/candidate, list/vent_list)
 	// xeno login gives antag datums
 	var/obj/vent = length(vent_list) >= 2 ? pick_n_take(vent_list) : vent_list[1]
 	candidate.current.move_into_vent(vent)
 
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/proc/find_vents()
-	var/list/vents = list()
-	var/list/vent_pumps = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump)
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent as anything in vent_pumps)
-		if(QDELETED(temp_vent))
-			continue
-		if(!is_station_level(temp_vent.loc.z) || temp_vent.welded)
-			continue
-		var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
-		if(!temp_vent_parent)
-			continue
-		// Stops Aliens getting stuck in small networks.
-		// See: Security, Virology
-		if(length(temp_vent_parent.other_atmos_machines) <= 20)
-			continue
-		vents += temp_vent
-	return vents
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms
+	name = "Blood Worm Infestation"
+	config_tag = "Midround Blood Worm"
+	preview_antag_datum = /datum/antagonist/blood_worm/infestation
+	// Please set this to HEAVY_MIDROUND once dynamic has fine-grained handling for spawn times and doesn't restrict all heavy midrounds to spawning after 40 minutes.
+	// Blood worms are intended to spawn 10-30 minutes into a round. This is a band-aid fix, and the better of two evils. (wrong threat tier vs wrong round timing)
+	midround_type = LIGHT_MIDROUND
+	false_alarm_able = TRUE
+	pref_flag = ROLE_BLOOD_WORM_INFESTATION
+	candidate_role = "Blood Worm"
+	ruleset_flags = RULESET_INVADER
+	weight = 2 // For reference, Nightmare has a weight of 5.
+	min_pop = 20 // Blood worms are limited by resources, so low pop means they have a harder time getting their tail in the door.
+	min_antag_cap = 1
+	max_antag_cap = 2
+	signup_atom_appearance = /mob/living/basic/blood_worm/juvenile
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/can_be_selected()
+	return ..() && length(find_vent_spawns()) > 0
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/execute()
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(announce_worms)), rand(450, 750) SECONDS)
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/create_ruleset_body()
+	return new /mob/living/basic/blood_worm/hatchling
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/create_execute_args()
+	return list(find_vent_spawns())
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/assign_role(datum/mind/candidate, list/vent_list)
+	candidate.add_antag_datum(/datum/antagonist/blood_worm)
+	var/obj/vent = length(vent_list) >= 2 ? pick_n_take(vent_list) : vent_list[1]
+	candidate.current.move_into_vent(vent)
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/proc/announce_worms()
+	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/false_alarm()
+	announce_worms()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare
 	name = "Nightmare"

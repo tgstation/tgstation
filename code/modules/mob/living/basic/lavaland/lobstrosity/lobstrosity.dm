@@ -97,8 +97,8 @@
 	. = ..()
 	if(isnull(.))
 		return
-	faction |= new_friend.faction
-	faction -= FACTION_MINING
+	APPLY_FACTION_AND_ALLIES_FROM(src, new_friend)
+	remove_faction(FACTION_MINING)
 
 /mob/living/basic/mining/lobstrosity/mind_initialize()
 	. = ..()
@@ -171,6 +171,7 @@
 	var/was_tamed = FALSE
 
 /datum/emote/lobstrosity_juvenile
+	abstract_type = /datum/emote/lobstrosity_juvenile
 	mob_type_allowed_typecache = /mob/living/basic/mining/lobstrosity/juvenile
 	mob_type_blacklist_typecache = list()
 

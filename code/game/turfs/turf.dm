@@ -177,12 +177,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
 
-	// apply materials properly from the default custom_materials value
-	if (!length(custom_materials))
-		set_custom_materials(custom_materials)
-
 	if(uses_integrity)
 		atom_integrity = max_integrity
+
+	// apply materials properly from the default custom_materials value
+	if (length(custom_materials))
+		set_custom_materials(custom_materials)
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -630,18 +630,19 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return
 
 /// Check if the heretic is strong enough to rust this turf, and if so, rusts the turf with an added visual effect.
-/turf/rust_heretic_act(rust_strength = 1)
-	if((turf_flags & NO_RUST) || (rust_strength < rust_resistance))
-		return
-	rust_turf()
-
-/// Override this to change behaviour when being rusted by a heretic
-/turf/proc/rust_turf()
-	if(HAS_TRAIT(src, TRAIT_RUSTY))
+/turf/rust_heretic_act(rust_strength = RUST_RESISTANCE_BASIC)
+	if((rust_strength < rust_resistance))
 		return
 
-	AddElement(/datum/element/rust/heretic)
-	new /obj/effect/glowing_rune(src)
+	if (rust_turf(magic = TRUE))
+		new /obj/effect/glowing_rune(src)
+
+/// Override this to change behaviour when being rusted
+/turf/proc/rust_turf(magic = FALSE)
+	if ((turf_flags & NO_RUST) || HAS_TRAIT(src, TRAIT_RUSTIMMUNE) || HAS_TRAIT(src, TRAIT_RUSTY))
+		return FALSE
+	AddElement(magic ? /datum/element/rust/heretic : /datum/element/rust)
+	return TRUE
 
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))
@@ -785,14 +786,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
 
-/turf/apply_main_material_effects(datum/material/main_material, amount, multipier)
+/turf/apply_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
 	if(alpha < 255)
 		ADD_TURF_TRANSPARENCY(src, MATERIAL_SOURCE(main_material))
 		main_material.setup_glow(src)
 	rust_resistance = main_material.mat_rust_resistance
 
-/turf/remove_main_material_effects(datum/material/custom_material, amount, multipier)
+/turf/remove_main_material_effects(datum/material/custom_material, amount, multiplier)
 	. = ..()
 	rust_resistance = initial(rust_resistance)
 	if(alpha == 255)

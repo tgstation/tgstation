@@ -508,7 +508,7 @@
 			emote("scream")
 			set_facial_hairstyle("Shaved", update = FALSE)
 			set_hairstyle("Bald") //This calls update_body_parts()
-			ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
+			ADD_TRAIT(affecting, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 		apply_damage(acidity * damage_mod, BRUTE, affecting)
 		apply_damage(acidity * damage_mod * 2, BURN, affecting)
@@ -580,7 +580,7 @@
 		if(40 to INFINITY)
 			combined_msg += span_danger("You feel very unwell!")
 
-	var/cached_blood_volume = get_blood_volume(apply_modifiers = TRUE)
+	var/cached_blood_volume = HAS_TRAIT(src, TRAIT_NOBLOOD) ? BLOOD_VOLUME_NORMAL : get_blood_volume(apply_modifiers = TRUE)
 	var/oxy = get_oxy_loss() + (losebreath * 4) + (cached_blood_volume < BLOOD_VOLUME_NORMAL ? ((BLOOD_VOLUME_NORMAL - cached_blood_volume) * 0.1) : 0) + (HAS_TRAIT(src, TRAIT_SELF_AWARE) ? 0 : (rand(-3, 0) * 5))
 	switch(oxy)
 		if(10 to 20)

@@ -24,7 +24,7 @@
 	..()
 
 
-/datum/disease/revblight/stage_act(seconds_per_tick, times_fired)
+/datum/disease/revblight/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

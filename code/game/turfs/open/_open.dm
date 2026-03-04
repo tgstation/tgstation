@@ -569,7 +569,7 @@
 	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	new used_tiles.tile_type(src)
 
-/turf/open/apply_main_material_effects(datum/material/main_material, amount, multipier)
+/turf/open/apply_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
 	if(!main_material.turf_sound_override)
 		return

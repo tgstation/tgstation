@@ -5,8 +5,6 @@
 // /obj signals
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
-///from base of code/game/machinery
-#define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
 /// from /obj/item/toy/crayon/spraycan/use_on: (user, spraycan, color_is_dark)
@@ -100,11 +98,6 @@
 #define COMSIG_FIREALARM_ON_RESET "firealarm_reset"
 
 // /obj access signals
-
-#define COMSIG_OBJ_ALLOWED "door_try_to_activate"
-	#define COMPONENT_OBJ_ALLOW (1<<0)
-	#define COMPONENT_OBJ_DISALLOW (1<<1)
-
 #define COMSIG_AIRLOCK_SHELL_ALLOWED "airlock_shell_try_allowed"
 
 // /obj/machinery/door/airlock signals
@@ -228,7 +221,7 @@
 #define COMSIG_MINE_TRIGGERED "minegoboom"
 ///from [/obj/structure/closet/supplypod/proc/handleReturnAfterDeparting]:
 #define COMSIG_SUPPLYPOD_RETURNING "supplypodgohome"
-///from [/obj/structure/closet/supplypod/proc/preOpen]:
+///from [/obj/structure/closet/supplypod/proc/pre_open]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
 /// from [/obj/item/stack/proc/can_merge]: (obj/item/stack/merge_with, in_hand)
@@ -259,10 +252,6 @@
 
 ///a deliver_first element closet was successfully delivered
 #define COMSIG_CLOSET_DELIVERED "crate_delivered"
-
-///Eigenstasium
-///From base of [/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom]: (var/target)
-#define COMSIG_EIGENSTATE_ACTIVATE "eigenstate_activate"
 
 // /obj signals for economy
 ///called when the payment component tries to charge an account.
@@ -440,6 +429,10 @@
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
 ///from the base of /obj/projectile/process(): ()
 #define COMSIG_PROJECTILE_BEFORE_MOVE "projectile_before_move"
+///sent to firer at the end of /mob/living/apply_projectile_effects(): (mob/living/target, hit_limb, blocked)
+#define COMSIG_PROJECTILE_POST_HIT_LIVING "projectile_post_hit_living"
+///sent to projectile at the end of /mob/living/apply_projectile_effects(): (mob/living/target, hit_limb, blocked)
+#define COMSIG_PROJECTILE_SELF_POST_HIT_LIVING "projectile_post_hit_living"
 // FROM [/obj/item/proc/set_embed] sent when an item's embedding properties are changed : ()
 #define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
@@ -645,3 +638,19 @@
 
 /// Sent from /obj/item/mob_holder/purple_raptor/proc/toggle_wings() : (mob/living/carbon/human/user)
 #define COMSIG_RAPTOR_WINGS_CLOSED "raptor_wings_closed"
+
+/// Sent from /obj/machinery/vitals_monitor/proc/set_patient() : (mob/living/old_patient, mob/living/new_patient)
+#define COMSIG_VITALS_SET_PATIENT "vitals_set_patient"
+
+/// Sent from /obj/item/bodypart/limb/proc/apply_item(): (obj/item/bodypart/limb)
+#define COMSIG_ITEM_APPLIED_TO_LIMB "item_applied_to_limb"
+/// Sent from /obj/item/bodypart/limb/proc/Exited(): (obj/item/bodypart/limb)
+#define COMSIG_ITEM_UNAPPLIED_FROM_LIMB "item_removed_from_limb"
+
+/// Sent from /obj/effect/rune/convert/try_sacrifice_item(obj/effect/rune/convert/rune)
+#define COMSIG_ITEM_CULT_SACRIFICE "item_cult_sacrifice"
+	#define COMPONENT_SACRIFICE_SUCCESSFUL (1<<0)
+
+/// Sent from /obj/item/mail/traitor/after_unwrap(mob/user, obj/item/mail/traitor/letter)
+#define COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL "traitor_mail_opened"
+	#define COMPONENT_TRAITOR_MAIL_HANDLED (1<<0)

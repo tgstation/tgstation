@@ -74,7 +74,7 @@
 	if(!can_finish_build(item_attached, user))
 		return
 	var/mob/living/basic/bot/cleanbot/bot = new(drop_location())
-	bot.apply_custom_bucket(bucket_obj)
+	bucket_obj.forceMove(bot)
 	bot.name = created_name
 	bot.robot_arm = item_attached.type
 	to_chat(user, span_notice("You add [item_attached] to [src]. Beep boop!"))

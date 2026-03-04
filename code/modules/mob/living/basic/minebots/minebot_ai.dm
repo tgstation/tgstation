@@ -74,7 +74,7 @@
 		controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_DRONE_DEFEND, /mob/living/basic/node_drone)
 		return
 	var/mob/living/living_pawn = controller.pawn
-	if(!living_pawn.faction.Find(REF(target)))
+	if(!living_pawn.has_ally(target))
 		controller.queue_behavior(/datum/ai_behavior/befriend_target, BB_DRONE_DEFEND)
 		return
 	if(target.health < (target.maxHealth * 0.75) && controller.blackboard[BB_MINEBOT_REPAIR_DRONE])

@@ -301,7 +301,7 @@
 
 /obj/item/clothing/suit/armor/riot/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	AddElement(/datum/element/adjust_fishing_difficulty, 5)
 	init_rustle_component()
 
 /obj/item/clothing/suit/armor/riot/proc/init_rustle_component()
@@ -428,7 +428,7 @@
 
 /obj/item/clothing/suit/armor/swat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	AddElement(/datum/element/adjust_fishing_difficulty, 5)
 	init_rustle_component()
 
 /obj/item/clothing/suit/armor/swat/proc/init_rustle_component()
@@ -552,7 +552,7 @@
 	desc = "A classic suit of armour, able to be made from many different materials."
 	icon_state = "knight_greyscale"
 	inhand_icon_state = null
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS // Can change color and add prefix
 	armor_type = /datum/armor/knight_greyscale
 
 /datum/armor/knight_greyscale
@@ -724,7 +724,7 @@
 
 /obj/item/clothing/suit/armor/vest/military/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	AddElement(/datum/element/adjust_fishing_difficulty, 5)
 
 /datum/armor/military
 	melee = 45

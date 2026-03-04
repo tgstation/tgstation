@@ -57,7 +57,7 @@
 				return potential_victim
 		if(!ishuman(potential_victim))
 			continue
-		if(living_pawn.faction.Find(REF(potential_victim)))
+		if(living_pawn.has_ally(potential_victim))
 			continue //dont steal from friends
 		if(holding_valuable(controller, potential_victim))
 			controller.set_blackboard_key(BB_ALWAYS_IGNORE_FACTION, TRUE)

@@ -81,7 +81,7 @@ Difficulty: Extremely Hard
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg')
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', COMSIG_HOSTILE_FOUND_TARGET) // change to COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET) in basic conversion
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
 	frost_orbs = null

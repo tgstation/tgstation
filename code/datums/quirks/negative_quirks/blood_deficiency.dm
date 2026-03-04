@@ -31,7 +31,7 @@
 		return FALSE
 	return ..()
 
-/datum/quirk/blooddeficiency/proc/lose_blood(datum/source, seconds_per_tick, times_fired)
+/datum/quirk/blooddeficiency/proc/lose_blood(datum/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/human/human_holder = quirk_holder

@@ -8,9 +8,9 @@
 	)
 	mutanttongue = /obj/item/organ/tongue/monkey
 	mutantbrain = /obj/item/organ/brain/primate
-	skinned_type = /obj/item/stack/sheet/animalhide/monkey
+	skinned_type = /obj/item/stack/sheet/animalhide/carbon/monkey
 	meat = /obj/item/food/meat/slab/monkey
-	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
+	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/carbon/monkey = 1)
 	inherent_traits = list(
 		TRAIT_NO_AUGMENTS,
 		TRAIT_NO_BLOOD_OVERLAY,

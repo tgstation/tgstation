@@ -16,7 +16,7 @@
 	severity = DISEASE_SEVERITY_UNCURABLE
 	bypasses_immunity = TRUE
 
-/datum/disease/chronic_illness/stage_act(seconds_per_tick, times_fired)
+/datum/disease/chronic_illness/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

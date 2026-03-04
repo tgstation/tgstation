@@ -149,8 +149,8 @@
 	var/healing = -healing_per_second * seconds_per_tick
 	update_health += owner.adjust_brute_loss(healing, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
 	update_health += owner.adjust_fire_loss(healing, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-	update_health += owner.adjust_tox_loss(healing, updating_health = FALSE, required_biotype = BODYTYPE_ORGANIC)
-	update_health += owner.adjust_oxy_loss(healing, updating_health = FALSE, required_biotype = BODYTYPE_ORGANIC)
+	update_health += owner.adjust_tox_loss(healing, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+	update_health += owner.adjust_oxy_loss(healing, updating_health = FALSE, required_biotype = MOB_ORGANIC)
 	if (update_health)
 		owner.updatehealth()
 	if (can_sleep && (owner.mob_biotypes & MOB_ORGANIC))

@@ -88,6 +88,8 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_BLOODED (1<<5)
 /// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation)
 #define BIO_JOINTED (1<<6)
+/// Skin is covered in thick chitin and is resistant to cutting
+#define BIO_CHITIN (1<<7)
 /// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
 #define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
 /// Has flesh and bone - See BIO_BONE and BIO_FLESH
@@ -96,6 +98,8 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_STANDARD_UNJOINTED (BIO_FLESH_BONE|BIO_BLOODED)
 /// Standard humanoid limbs - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed, and be dislocated. Think human arms and legs
 #define BIO_STANDARD_JOINTED (BIO_STANDARD_UNJOINTED|BIO_JOINTED)
+/// Xenomorph limbs (xenos are immune to wounds anyhow)
+#define BIO_STANDARD_ALIEN (BIO_CHITIN|BIO_BONE|BIO_BLOODED|BIO_JOINTED)
 
 // "Where" a specific biostate is within a given limb
 // Interior is hard shit, the last line, shit like bones
@@ -117,6 +121,7 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 	"[BIO_METAL]" = ANATOMY_INTERIOR,
 	"[BIO_FLESH]" = ANATOMY_EXTERIOR,
 	"[BIO_BONE]" = ANATOMY_INTERIOR,
+	"[BIO_CHITIN]" = ANATOMY_EXTERIOR,
 ))
 
 // Wound series

@@ -34,7 +34,7 @@
 	QDEL_NULL(our_jaunt)
 	QDEL_NULL(terrorize_spell)
 
-/obj/item/organ/brain/shadow/nightmare/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/shadow/nightmare/on_life(seconds_per_tick)
 	. = ..()
 
 	var/turf/owner_turf = owner.loc
@@ -47,8 +47,6 @@
 
 /datum/status_effect/shadow/nightmare
 	id = "nightmare"
-	duration = 2 SECONDS
-	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare
 
 /datum/status_effect/shadow/nightmare/on_apply()
@@ -80,14 +78,16 @@
 	name = "heart of darkness"
 	desc = "An alien organ that twists and writhes when exposed to light."
 	visual = TRUE
-	icon_state = "demon_heart-on"
-	base_icon_state = "demon_heart"
+	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+	icon_state = "dark_heart-on"
+	base_icon_state = "dark_heart"
 
 	beat_noise = "the writhing pulses of a fear given form" // evil schmeevil
-	color = COLOR_CRAYON_BLACK
 	decay_factor = 0
 	// No love is to be found in a heart so twisted.
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5)
+	// In case you want to drink light as well as eat it
+	organ_traits = list(TRAIT_LIGHT_DRINKER)
 	/// How many life ticks in the dark the owner has been dead for. Used for nightmare respawns.
 	var/respawn_progress = 0
 	/// The armblade granted to the host of this heart.
@@ -125,7 +125,7 @@
 /obj/item/organ/heart/nightmare/Stop()
 	return FALSE
 
-/obj/item/organ/heart/nightmare/on_death(seconds_per_tick, times_fired)
+/obj/item/organ/heart/nightmare/on_death(seconds_per_tick)
 	if(!owner)
 		return
 	var/turf/T = get_turf(owner)

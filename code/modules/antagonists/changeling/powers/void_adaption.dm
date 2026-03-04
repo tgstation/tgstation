@@ -4,6 +4,8 @@
 	helptext = "This ability is passive, and will automatically protect us in situations of extreme cold or vacuum, \
 		as well as removing our need to breathe oxygen, although we will still be affected by hazardous gases. \
 		While it is actively protecting us from temperature or pressure it reduces our chemical regeneration rate."
+	category = "utility"
+	button_icon_state = "void_adaption"
 	owner_has_control = FALSE
 	dna_cost = 2
 

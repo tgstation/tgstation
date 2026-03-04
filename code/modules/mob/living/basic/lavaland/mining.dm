@@ -59,4 +59,4 @@
 	SIGNAL_HANDLER
 	if(!(possible_ashwalker.faction.Find(FACTION_ASHWALKER)) || !(FACTION_ASHWALKER in faction))
 		return
-	faction.Remove(FACTION_ASHWALKER)
+	remove_faction(FACTION_ASHWALKER)

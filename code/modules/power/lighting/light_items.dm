@@ -8,7 +8,6 @@
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT)
-	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	///How much light it gives off
 	var/brightness = 2
 	///LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
@@ -29,6 +28,9 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/golem_food, golem_food_key = /obj/item/light, extra_validation = CALLBACK(src, PROC_REF(is_intact)))
+
+/obj/item/light/grind_results()
+	return list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10)
 
 /obj/item/light/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()

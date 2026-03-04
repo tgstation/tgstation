@@ -230,8 +230,10 @@
 	custom_price = PAYCHECK_CREW * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
 	junkiness = 10 //less junky than other options, since peanuts are a decently healthy snack option
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/nutriment/fat/oil = 2)
 	var/safe_for_consumption = TRUE
+
+/obj/item/food/peanuts/grind_results()
+	return list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/nutriment/fat/oil = 2)
 
 /obj/item/food/peanuts/salted
 	name = "\improper Gallery's salt reserves peanuts"
@@ -397,7 +399,9 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	custom_price = PAYCHECK_CREW//pistachios are even more expensive.
 	junkiness = 10 //on par with peanuts
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/nutriment/fat/oil = 2)
+
+/obj/item/food/pistachios/grind_results()
+	return list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/nutriment/fat/oil = 2)
 
 /obj/item/food/semki
 	name = "\improper Semki Sunflower Seeds"
@@ -538,7 +542,9 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	foodtypes = JUNKFOOD | SUGAR | NUTS
 	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list(/datum/reagent/consumable/nutriment/fat/oil = 3, /datum/reagent/consumable/caramel = 2)
+
+/obj/item/food/hot_shots/grind_results()
+	return list(/datum/reagent/consumable/nutriment/fat/oil = 3, /datum/reagent/consumable/caramel = 2)
 
 /obj/item/food/sticko
 	name = "\improper Sticko Classic"

@@ -26,8 +26,9 @@
 #define CRAFT_ON_SOLID_GROUND (1<<4)
 /// If the craft checks that there are objects with density in the same turf when being built
 #define CRAFT_CHECK_DENSITY (1<<5)
-/// Crafting passes reagents of components to the finished product
-#define CRAFT_TRANSFERS_REAGENTS (1<<6)
+/// Any reagent inputs to the craft will be transferred to the finishing product instead of being deleted
+/// Note this only handles reagents that are SPECIFICALLY ASKED FOR in the component list, not all reagents in all components
+#define CRAFT_TRANSFERS_REAGENT_COMPONENTS (1<<6)
 /// Crafting clears all reagents present in the finished product
 #define CRAFT_CLEARS_REAGENTS (1<<7)
 /// For the crafting unit test, we don't check if the custom materials of an item are the same when crafted and spawned should its recipe have this flag.
@@ -36,6 +37,14 @@
 #define CRAFT_IGNORE_DO_AFTER (1<<9)
 /// This craft won't change the materials of the resulting item to match that of the combined components
 #define CRAFT_NO_MATERIALS (1<<10)
+
+//Crafting blacklist behaviors
+/// By default, blacklist the result if it's not in reqs
+#define BLACKLIST_RESULT_IF_NOT_IN_REQS null
+/// Always blacklist - override default behavior
+#define ALWAYS_BLACKLIST_RESULT TRUE
+/// Never blacklist - override default behavior
+#define NEVER_BLACKLIST_RESULT FALSE
 
 //food/drink crafting defines
 //When adding new defines, please make sure to also add them to the encompassing list

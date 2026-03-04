@@ -37,7 +37,9 @@
 /**
  * Called when this datum is created, checks if the passed mob can experience this mood event
  *
+ * * home - the mood datum we are being added to
  * * who - the mob to check
+ * * ... - any other arguments that are passed to the mood event
  *
  * Return TRUE if the mob can experience this mood event
  * Return FALSE if the mob should be unaffected
@@ -66,6 +68,10 @@
 
 /**
  * Wrapper for the mood event being added to a mob
+ *
+ * * home - the mood datum we are being added to
+ * * who - the mob to add the mood event to
+ * * mood_args - any other arguments that are passed to the mood event
  */
 /datum/mood_event/proc/on_add(datum/mood/home, mob/living/who, list/mood_args)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -139,3 +145,25 @@
  */
 /datum/mood_event/proc/be_replaced(datum/mood/home, datum/mood_event/new_event, ...)
 	return ALLOW_NEW_MOOD
+
+/// Subtype of mood event that iterates over all subtypes of itself to find a suitable one to apply
+/datum/mood_event/conditional
+	abstract_type = /datum/mood_event/conditional
+	/// Priority of this condition over other conditions. Higher = more priority.
+	/// If two priorities are the same, the first one found is used, which would be the one defined first in code.
+	var/priority = 0
+
+/datum/mood_event/conditional/can_effect_mob(datum/mood/home, mob/living/who, ...)
+	return ..() && condition_fulfilled(arglist(args.Copy(2)))
+
+/**
+ * Is the condition for this mood event fulfilled for the given mob?
+ *
+ * * who - the mob to check
+ * * ... - any other arguments that are passed to the mood event
+ */
+/datum/mood_event/conditional/proc/condition_fulfilled(mob/living/who, ...)
+	return FALSE
+
+/datum/mood_event/conditional/be_replaced(datum/mood/home, datum/mood_event/conditional/new_event, ...)
+	return initial(new_event.priority) > initial(priority) ? ALLOW_NEW_MOOD : BLOCK_NEW_MOOD

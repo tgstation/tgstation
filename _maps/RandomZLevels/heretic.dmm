@@ -434,8 +434,8 @@
 /obj/structure/table,
 /obj/item/healthanalyzer,
 /obj/item/healthanalyzer,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "cz" = (
@@ -1030,11 +1030,11 @@
 /area/awaymission/beach/heretic)
 "fK" = (
 /obj/structure/table,
-/obj/item/stack/sticky_tape{
+/obj/item/stack/medical/wrap/sticky_tape{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/stack/sticky_tape{
+/obj/item/stack/medical/wrap/sticky_tape{
 	pixel_x = -6;
 	pixel_y = 5
 	},
@@ -1385,7 +1385,7 @@
 /area/awaymission/beach/heretic)
 "ho" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/item/stack/medical/mesh,
 /obj/effect/turf_decal/siding{
 	dir = 6
@@ -1956,6 +1956,11 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
+/area/awaymission/caves/heretic_laboratory)
+"kj" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "kk" = (
 /obj/structure/window/spawner/directional/south,
@@ -3097,6 +3102,8 @@
 /obj/machinery/door/airlock/hatch,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/puzzle/keycard/heretic_entrance,
+/obj/effect/mapping_helpers/airlock/access/all/supply,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "qn" = (
@@ -3630,6 +3637,10 @@
 /obj/item/multitool,
 /turf/open/floor/wood,
 /area/awaymission/caves/heretic_laboratory_clean)
+"tc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
 "td" = (
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/iron/small,
@@ -3918,7 +3929,7 @@
 "uM" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/item/stack/medical/suture,
 /obj/effect/turf_decal/siding{
 	dir = 10
@@ -4848,7 +4859,6 @@
 /area/awaymission/caves/heretic_laboratory)
 "yZ" = (
 /obj/machinery/door/airlock/hatch,
-/obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
@@ -5041,7 +5051,6 @@
 /area/awaymission/caves/heretic_laboratory)
 "Av" = (
 /obj/machinery/door/airlock/hatch,
-/obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -5594,7 +5603,7 @@
 /area/awaymission/beach/heretic)
 "Dz" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/item/stack/medical/mesh,
 /obj/item/stack/medical/suture,
 /obj/effect/turf_decal/siding{
@@ -5798,12 +5807,6 @@
 "EG" = (
 /obj/effect/spawner/random/food_or_drink/seed_rare,
 /turf/open/misc/grass/jungle/station,
-/area/awaymission/beach/heretic)
-"EH" = (
-/obj/machinery/computer/shuttle/ferry/request{
-	dir = 4
-	},
-/turf/open/floor/pod/light,
 /area/awaymission/beach/heretic)
 "EI" = (
 /turf/open/water/beach,
@@ -6143,6 +6146,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
+"Gk" = (
+/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/puzzle/keycard/heretic_entrance,
+/obj/effect/mapping_helpers/airlock/access/all/supply,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "Gm" = (
@@ -15439,7 +15448,7 @@ KB
 bl
 Ii
 DN
-Az
+Ka
 wn
 wh
 wn
@@ -15696,7 +15705,7 @@ KB
 Ii
 wn
 wn
-Az
+Ka
 wn
 wh
 wn
@@ -15953,7 +15962,7 @@ KB
 wn
 wn
 wn
-Az
+Ka
 wn
 wh
 wn
@@ -16210,7 +16219,7 @@ KB
 wn
 wn
 ji
-Az
+Ka
 wn
 wh
 wn
@@ -16467,7 +16476,7 @@ KB
 wn
 TL
 Oc
-Az
+Ka
 wn
 wh
 wn
@@ -16724,7 +16733,7 @@ KB
 wn
 wn
 AZ
-Az
+Ka
 wn
 wh
 wn
@@ -16981,7 +16990,7 @@ KB
 wn
 wn
 wn
-Az
+Ka
 wn
 wh
 wn
@@ -17238,7 +17247,7 @@ KB
 wn
 wn
 wn
-Az
+Ka
 wn
 wh
 wn
@@ -17495,7 +17504,7 @@ KB
 wn
 wn
 wn
-Az
+Ka
 wn
 wh
 wn
@@ -18245,7 +18254,7 @@ KB
 KB
 KB
 qm
-Xh
+Gk
 KB
 KB
 KB
@@ -23394,7 +23403,7 @@ OQ
 WY
 xW
 SP
-eJ
+kj
 eJ
 Ay
 CQ
@@ -26235,7 +26244,7 @@ xl
 xl
 WF
 dO
-Hz
+tc
 pU
 hI
 KB
@@ -42202,7 +42211,7 @@ wf
 wf
 wf
 bb
-EH
+BV
 gT
 wf
 wf

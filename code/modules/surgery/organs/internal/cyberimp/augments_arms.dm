@@ -287,9 +287,11 @@
 		/obj/item/taperecorder,
 		/obj/item/lighter,
 		/obj/item/laser_pointer,
-		/obj/item/stamp/granted,
-		/obj/item/stamp/denied,
+		/obj/item/stamp/mod/toolkit,
 	)
+
+/obj/item/stamp/mod/toolkit
+	name = "integrated electronic stamp"
 
 /obj/item/organ/cyberimp/arm/toolkit/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)

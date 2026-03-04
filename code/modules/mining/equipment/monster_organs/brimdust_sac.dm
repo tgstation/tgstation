@@ -35,7 +35,7 @@
 	qdel(src)
 
 // Every x seconds, if on lavaland, add one stack
-/obj/item/organ/monster_core/brimdust_sac/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/monster_core/brimdust_sac/on_life(seconds_per_tick)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, brimdust_auto_apply_cooldown))
 		return
@@ -47,7 +47,7 @@
 /// Make a cloud which applies brimdust to everyone nearby
 /obj/item/organ/monster_core/brimdust_sac/on_triggered_internal()
 	var/turf/origin_turf = get_turf(owner)
-	do_smoke(range = 2, holder = owner, location = origin_turf, smoke_type = /obj/effect/particle_effect/fluid/smoke/bad/brimdust)
+	do_smoke(2, owner, origin_turf, effect_type = /obj/effect/particle_effect/fluid/smoke/bad/brimdust)
 
 /// Smoke which applies brimdust to you, and is also bad for your lungs
 /obj/effect/particle_effect/fluid/smoke/bad/brimdust

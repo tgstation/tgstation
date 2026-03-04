@@ -229,7 +229,7 @@
 				spawned_mob = create_random_mob(get_turf(holder.my_atom), mob_class)
 			else
 				spawned_mob = new mob_class(get_turf(holder.my_atom))//Spawn our specific mob_class
-			spawned_mob.faction |= mob_faction
+			spawned_mob.add_faction(mob_faction)
 			ADD_TRAIT(spawned_mob, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 			if(prob(50))
 				for(var/j in 1 to rand(1, 3))
@@ -278,52 +278,67 @@
  *
  * arguments:
  * * holder - the reagents datum that it is being used on
- * * created_volume - the volume of reacting elements
+ * * volume - the volume of reacting elements
  * * modifier - a flat additive numeric to the size of the explosion - set this if you want a minimum range
  * * strengthdiv - the divisional factor of the explosion, a larger number means a smaller range - This is the part that modifies an explosion's range with volume (i.e. it divides it by this number)
+ * * clear_mob_reagents - should our mob be purged of their reagents?
+ * * clear_holder_reagents - should the reagent holder be fully purged? Heavily recommended to be TRUE, unless you have code handling that elsewhere down the line for whatever reason
+ * * flame_factor - multiplier to flame range of the explosion
+ * * flash_factor - multiplier to flash range of the explosion
  */
-/datum/chemical_reaction/proc/default_explode(datum/reagents/holder, created_volume, modifier = 0, strengthdiv = 10, clear_mob_reagents)
-	var/power = modifier + round(created_volume/strengthdiv, 1)
-	if(power > 0)
-		var/turf/T = get_turf(holder.my_atom)
+/proc/reagent_explode(datum/reagents/holder, volume, modifier = 0, strengthdiv = 10, clear_mob_reagents = FALSE, clear_holder_reagents = TRUE, flash_factor = null, flame_factor = null)
+	if (QDELETED(holder))
+		return
+
+	var/power = modifier + round(volume / strengthdiv, 1)
+	if (power > 0)
+		var/turf/our_turf = get_turf(holder.my_atom)
 		var/inside_msg
-		if(ismob(holder.my_atom))
-			var/mob/M = holder.my_atom
-			inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
+		if (ismob(holder.my_atom))
+			var/mob/owner = holder.my_atom
+			inside_msg = " inside [ADMIN_LOOKUPFLW(owner)]"
 		var/lastkey = holder.my_atom.fingerprintslast //This can runtime (null.fingerprintslast) - due to plumbing?
 		var/touch_msg = "N/A"
-		if(lastkey)
+		if (lastkey)
 			var/mob/toucher = get_mob_by_key(lastkey)
 			touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
-		if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
-			message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
-		log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
-		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(power , T, 0, 0)
-		e.start(holder.my_atom)
-	if (ismob(holder.my_atom))
-		if(!clear_mob_reagents)
-			return
-		// Only clear reagents if they use a special explosive reaction to do it; it shouldn't apply
-		// to any explosion inside a person
-		holder.clear_reagents()
-		if(iscarbon(holder.my_atom))
-			var/mob/living/carbon/victim = holder.my_atom
-			var/vomit_flags = MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE
-			// The vomiting here is for effect, not meant to help with purging
-			victim.vomit(vomit_flags, distance = 5)
-		// Not quite the same if the reaction is in their stomach; they'll throw up
-		// from any explosion, but it'll only make them puke up everything in their
-		// stomach
-	else if (istype(holder.my_atom, /obj/item/organ/stomach))
+		if (!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
+			message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(our_turf)][inside_msg]. Last Fingerprint: [touch_msg].")
+		log_game("Reagent explosion reaction occurred at [AREACOORD(our_turf)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+		var/datum/effect_system/reagents_explosion/explosion_system = new(our_turf, power, flash_fact = flash_factor, flame_fact = flame_factor)
+		explosion_system.start(holder.my_atom)
+
+	if (istype(holder.my_atom, /obj/item/organ/stomach))
 		var/obj/item/organ/stomach/indigestion = holder.my_atom
 		if(power < 1)
 			return
-		indigestion.owner?.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE, lost_nutrition = 150, distance = 5, purge_ratio = 1)
+		if (clear_mob_reagents)
+			indigestion.owner?.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE, lost_nutrition = 150, distance = 5, purge_ratio = 1)
+		if (clear_holder_reagents)
+			holder.clear_reagents()
+		return
+
+	if (!ismob(holder.my_atom))
 		holder.clear_reagents()
 		return
-	else
+
+	// Not quite the same if the reaction is in their stomach; they'll throw up
+	// from any explosion, but it'll only make them puke up everything in their
+	// stomach
+	if (!clear_mob_reagents)
+		return
+
+	// Only clear reagents if they use a special explosive reaction to do it; it shouldn't apply
+	// to any explosion inside a person
+	if (clear_holder_reagents)
 		holder.clear_reagents()
+
+	if (iscarbon(holder.my_atom))
+		var/mob/living/carbon/victim = holder.my_atom
+		var/vomit_flags = MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE
+		// The vomiting here is for effect, not meant to help with purging
+		victim.vomit(vomit_flags, distance = 5)
+
 /*
  *Creates a flash effect only - less expensive than explode()
  *
@@ -354,7 +369,6 @@
 //Spews out the inverse of the chems in the beaker of the products/reactants only
 /datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)
 	var/datum/reagents/invert_reagents = new (2100, NO_REACT)//I think the biggest size we can get is 2100?
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
 	var/sum_volume = 0
 	invert_reagents.my_atom = holder.my_atom //Give the gas a fingerprint
 	for(var/datum/reagent/reagent as anything in holder.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
@@ -370,8 +384,7 @@
 	if(!force_range)
 		force_range = (sum_volume/6) + 3
 	if(invert_reagents.reagent_list)
-		smoke.set_up(force_range, holder = holder.my_atom, location = holder.my_atom, carry = invert_reagents)
-		smoke.start(log = TRUE)
+		do_chem_smoke(force_range, holder.my_atom, holder.my_atom, carry = invert_reagents, log = TRUE)
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
 		clear_reactants(holder)
@@ -381,7 +394,6 @@
 //Spews out the corrisponding reactions reagents  (products/required) of the beaker in a smokecloud. Doesn't spew catalysts
 /datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE)
 	var/datum/reagents/reagents = new/datum/reagents(2100, NO_REACT)//Lets be safe first
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
 	reagents.my_atom = holder.my_atom //fingerprint
 	var/sum_volume = 0
 	for (var/datum/reagent/reagent as anything in holder.reagent_list)
@@ -391,8 +403,7 @@
 	if(!force_range)
 		force_range = (sum_volume/6) + 3
 	if(reagents.reagent_list)
-		smoke.set_up(force_range, holder = holder.my_atom, location = holder.my_atom, carry = reagents)
-		smoke.start(log = TRUE)
+		do_chem_smoke(force_range, holder = holder.my_atom, location = holder.my_atom, carry = reagents, log = TRUE)
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
 		clear_reactants(holder)

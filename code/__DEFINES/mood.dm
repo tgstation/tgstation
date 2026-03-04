@@ -51,7 +51,7 @@
 #define TERROR_HANDLER_EFFECT "effect"
 
 // Default cooldown for terror messages, to not get spammy
-#define TERROR_MESSAGE_CD 30 SECONDS
+#define TERROR_MESSAGE_CD 15 SECONDS
 
 // Values for terror buildup effects
 /// Initial value for effects that apply the component from spooking you
@@ -76,6 +76,20 @@
 /// How much terror being hugged reduces, or increases if its done by a nightmare or someone you're afraid of
 #define HUG_TERROR_AMOUNT 90
 
+/// Cooldown for phobia checks, to avoid constantly refreshing views
+#define PHOBIA_CHECK_DELAY 5 SECONDS
+/// Delay between phobia freakouts, also the time it takes for the buildup effect to fade away
+#define PHOBIA_FREAKOUT_DELAY 12 SECONDS
+/// Amount of terror granted whenever we hear a word we're afraid of
+#define PHOBIA_WORD_TERROR_BUILDUP 40
+/// Amount of terror granted by each phobia trigger
+#define PHOBIA_FREAKOUT_TERROR_BUILDUP 120
+
+/// Cooldown for fear screams
+#define TERROR_STARTLE_COOLDOWN 12 SECONDS
+/// Minimum difference in fear per tick for screams to actually trigger, so we don't proc from minor fears
+#define TERROR_STARTLE_MINIMUM_DIFFERENCE 40
+
 /// Relates to fear or resisting fear
 #define MOOD_EVENT_FEAR (1<<0)
 /// Relates to art
@@ -98,3 +112,13 @@
 #define BLOCK_NEW_MOOD FALSE
 /// Return from /be_replaced or /be_refreshed to actually go through and allow the new mood event to be added
 #define ALLOW_NEW_MOOD TRUE
+
+/// Threshold for desensitization effects to start applying
+#define DESENSITIZED_THRESHOLD 0.5
+/// Minimum level for desensitization multiplier
+#define DESENSITIZED_MINIMUM 0.1
+/// Reduction in desensitization level per death witnessed
+#define DESENSITIZED_REDUCTION_PER_DEATH 0.025
+
+/// Check if a mob is desensitized (passes the threshold)
+#define IS_DESENSITIZED(mob) ((mob.mind?.desensitized_level || 1) <= DESENSITIZED_THRESHOLD)

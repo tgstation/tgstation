@@ -159,7 +159,7 @@ Then the player gets the profit from selling his own wasted time.
 
 
 /**
- * Returns the cost of the xported item i.e. amount * base cost * elasticity if TRUE
+ * Returns the cost of the exported item i.e. amount * base cost * elasticity if TRUE
  *
  * Arguments
  * * obj/exported_item - the item we are trying to export
@@ -244,7 +244,7 @@ Then the player gets the profit from selling his own wasted time.
 	if(unit_name)
 		msg += unit_name
 		if(total_amount > 1)
-			msg += "s"
+			msg += plural_s(unit_name)
 		if(message)
 			msg += " "
 

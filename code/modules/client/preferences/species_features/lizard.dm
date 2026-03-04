@@ -102,7 +102,7 @@
 		if(!path)
 			continue
 		var/obj/item/bodypart/new_part = new path()
-		new_part.replace_limb(target, TRUE)
+		new_part.replace_limb(target)
 		new_part.update_limb(is_creating = TRUE)
 		qdel(old_part)
 

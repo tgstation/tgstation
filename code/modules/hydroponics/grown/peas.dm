@@ -54,10 +54,12 @@
 	desc = "Ridens Cicer, guaranteed to improve your mood dramatically upon consumption!"
 	icon_state = "laughpeas"
 	foodtypes = VEGETABLES
-	juice_typepath = /datum/reagent/consumable/laughsyrup
 	tastes = list ("a prancing rabbit" = 1) //Vib Ribbon sends her regards.. wherever she is.
 	wine_power = 90
 	wine_flavor = "a vector-graphic rabbit dancing on your tongue"
+
+/obj/item/food/grown/laugh/juice_typepath()
+	return /datum/reagent/consumable/laughsyrup
 
 // World Peas - Peace at last, peace at last...
 /obj/item/seeds/peas/laugh/peace

@@ -178,7 +178,7 @@
 	icon_state = "eggs"
 	you_are_text = "You are a flesh spider."
 	flavour_text = "An abomination of nature set upon the station by changelings. Your only goal is to kill, terrorize, and survive."
-	faction = list()
+	faction = null
 	directive = null
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(

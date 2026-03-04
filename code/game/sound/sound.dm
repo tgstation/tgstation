@@ -39,6 +39,9 @@
 	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
 
+	if (falloff_distance >= maxdistance)
+		CRASH("playsound(): falloff_distance is equal to or higher than maxdistance! Bump up extrarange or reduce the falloff_distance.")
+
 	if(vary && !frequency)
 		frequency = get_rand_frequency() // skips us having to do it per-sound later. should just make this a macro tbh
 
@@ -95,7 +98,7 @@
  * * volume_preference - Optional: Will be checked to modify the volume of the sound.
  */
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/sound_to_use, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE, datum/preference/numeric/volume/volume_preference = null)
-	if(!client || !can_hear())
+	if(!client || HAS_TRAIT(src, TRAIT_DEAF))
 		return
 
 	if(!sound_to_use)

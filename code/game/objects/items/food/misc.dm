@@ -13,8 +13,10 @@
 	tastes = list("watermelon" = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
-	juice_typepath = /datum/reagent/consumable/watermelonjuice
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/watermelonslice/juice_typepath()
+	return /datum/reagent/consumable/watermelonjuice
 
 /obj/item/food/watermelonmush
 	name = "watermelon mush"
@@ -29,8 +31,10 @@
 	tastes = list("watermelon" = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
-	juice_typepath = /datum/reagent/consumable/watermelonjuice
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/watermelonmush/juice_typepath()
+	return /datum/reagent/consumable/watermelonjuice
 
 /obj/item/food/holymelonslice
 	name = "holymelon slice"
@@ -45,8 +49,10 @@
 	tastes = list("holymelon" = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
-	juice_typepath = /datum/reagent/water/holywater
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/holymelonslice/juice_typepath()
+	return /datum/reagent/water/holywater
 
 /obj/item/food/holymelonmush
 	name = "holymelon mush"
@@ -61,8 +67,10 @@
 	tastes = list("holymelon" = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
-	juice_typepath = /datum/reagent/water/holywater
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/holymelonmush/juice_typepath()
+	return /datum/reagent/water/holywater
 
 /obj/item/food/barrelmelonslice
 	name = "barrelmelon slice"
@@ -77,8 +85,10 @@
 	tastes = list("beer" = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
-	juice_typepath = /datum/reagent/consumable/ethanol/beer
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/barrelmelonslice/juice_typepath()
+	return /datum/reagent/consumable/ethanol/beer
 
 /obj/item/food/barrelmelonmush
 	name = "barrelmelon mush"
@@ -93,9 +103,10 @@
 	tastes = list("beer" = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
-	juice_typepath = /datum/reagent/consumable/ethanol/beer
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/barrelmelonmush/juice_typepath()
+	return /datum/reagent/consumable/ethanol/beer
 
 /obj/item/food/appleslice
 	name = "apple slice"
@@ -110,8 +121,10 @@
 	tastes = list("apple" = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
-	juice_typepath = /datum/reagent/consumable/applejuice
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/appleslice/juice_typepath()
+	return /datum/reagent/consumable/applejuice
 
 /obj/item/food/hugemushroomslice
 	name = "huge mushroom slice"
@@ -431,10 +444,12 @@
 	name = "pineapple slice"
 	desc = "A sliced piece of juicy pineapple."
 	icon_state = "pineapple_slice"
-	juice_typepath = /datum/reagent/consumable/pineapplejuice
 	tastes = list("pineapple" = 1)
 	foodtypes = FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/pineappleslice/juice_typepath()
+	return /datum/reagent/consumable/pineapplejuice
 
 /obj/item/food/crab_rangoon
 	name = "crab rangoon"
@@ -619,9 +634,11 @@
 		/datum/reagent/medicine/antihol = 2,
 	)
 	tastes = list("pickle" = 1, "spices" = 1, "salt water" = 2)
-	juice_typepath = /datum/reagent/consumable/pickle
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/pickle/juice_typepath()
+	return /datum/reagent/consumable/pickle
 
 /obj/item/food/pickle/make_edible()
 	. = ..()

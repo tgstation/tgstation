@@ -40,7 +40,7 @@
 	/// Amount by which you heal from eating some iron
 	var/healed_amount = 3
 	/// Order in which to heal damage types
-	var/list/damage_heal_order = list(BRUTE, BURN, TOX, OXY)
+	var/list/damage_heal_order = list(BRUTE, BURN)
 
 /datum/golem_food_buff/iron/apply_effects(mob/living/carbon/consumer, atom/movable/consumed, multiplier = 1)
 	if (consumer.health == consumer.maxHealth)

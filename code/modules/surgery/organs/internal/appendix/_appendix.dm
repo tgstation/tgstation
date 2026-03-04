@@ -10,7 +10,6 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_APPENDIX
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/toxin/bad_food = 5)
-	grind_results = list(/datum/reagent/toxin/bad_food = 5)
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
 
@@ -18,6 +17,9 @@
 	now_fixed = span_info("The pain in your abdomen has subsided.")
 
 	var/inflamation_stage = 0
+
+/obj/item/organ/appendix/grind_results()
+	return list(/datum/reagent/toxin/bad_food = 5)
 
 /obj/item/organ/appendix/update_name()
 	. = ..()
@@ -27,7 +29,7 @@
 	icon_state = "[base_icon_state][inflamation_stage ? "inflamed" : ""]"
 	return ..()
 
-/obj/item/organ/appendix/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/appendix/on_life(seconds_per_tick)
 	. = ..()
 	if(!owner)
 		return

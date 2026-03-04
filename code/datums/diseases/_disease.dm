@@ -97,22 +97,28 @@
 		return
 	UnregisterSignal(affected_mob, COMSIG_CARBON_PRE_BREATHE)
 
+// Proc to determine if the virus can resist natural recovery
+/datum/disease/proc/get_recovery_failure_chance()
+	return 0
+
 ///Proc to process the disease and decide on whether to advance, cure or make the symptoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
-/datum/disease/proc/stage_act(seconds_per_tick, times_fired)
+/datum/disease/proc/stage_act(seconds_per_tick)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 	var/recovery_prob = 0
 	var/cure_mod
 	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
+	var/is_sleeping = HAS_TRAIT_FROM_ONLY(affected_mob, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(/datum/status_effect/incapacitating/sleeping::id))
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
 			cure(add_resistance = FALSE)
 			return FALSE
 
-	if(has_cure())
+	var/cure_status = has_cure()
+	if(cure_status)
 		cure_mod = cure_chance / bad_immune
 		if(istype(src, /datum/disease/advance))
-			cure_mod = max(cure_chance, DISEASE_MINIMUM_CHEMICAL_CURE_CHANCE)
+			cure_mod = cure_mod * 2 * cure_status // Advanced diseases can be cured up to 2x as fast if all symptoms are remedied
 		if(disease_flags & CHRONIC && SPT_PROB(cure_mod, seconds_per_tick))
 			update_stage(1)
 			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
@@ -128,7 +134,7 @@
 	if(stage == max_stages && stage_peaked != TRUE) //mostly a sanity check in case we manually set a virus to max stages
 		stage_peaked = TRUE
 
-	if(SPT_PROB(stage_prob*slowdown*bad_immune, seconds_per_tick))
+	if(SPT_PROB(stage_prob * slowdown * bad_immune, seconds_per_tick))
 		update_stage(min(stage + 1, max_stages))
 
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
@@ -180,7 +186,7 @@
 				if(SANITY_LEVEL_INSANE)
 					recovery_prob += -0.4
 
-		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)) && HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT)) //resting starved won't help, but resting helps
+		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)) && is_sleeping) //resting starved won't help, but resting helps
 			var/turf/rest_turf = get_turf(affected_mob)
 			var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
@@ -209,8 +215,9 @@
 
 		recovery_prob = clamp(recovery_prob / bad_immune, 0, 100)
 
-		if(recovery_prob)
-			if(SPT_PROB(recovery_prob, seconds_per_tick))
+		if(recovery_prob && (bad_immune == 1))
+			var/failure_chance = (1 - get_recovery_failure_chance() / 100)
+			if(SPT_PROB(recovery_prob * failure_chance, seconds_per_tick))
 				if(stage == 1 && prob(cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER)) //if we reduce FROM stage == 1, cure the virus - after defeating its cure_chance in a final battle
 					if(!HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) && (affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING))
 						if(stage_peaked == FALSE) //if you didn't ride out the virus from its peak, if you're malnourished when it cures, you don't get resistance
@@ -224,7 +231,7 @@
 						return FALSE
 				update_stage(max(stage - 1, 1))
 
-		if(HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT) || slowdown != 1) //sleeping and using spaceacillin lets us nosell applicable virus symptoms firing with decreasing effectiveness over time
+		if(is_sleeping || slowdown != 1) //sleeping and using spaceacillin lets us nosell applicable virus symptoms firing with decreasing effectiveness over time
 			if(prob(100 - min((100 * (symptom_offsets / DISEASE_SYMPTOM_OFFSET_DURATION)), 100 - cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER))) //viruses with higher cure_chance will ultimately be more possible to offset symptoms on
 				symptom_offsets = min(symptom_offsets + 1, DISEASE_SYMPTOM_OFFSET_DURATION)
 				return FALSE

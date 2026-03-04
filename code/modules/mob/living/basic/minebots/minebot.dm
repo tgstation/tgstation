@@ -276,4 +276,4 @@
 	if(isnull(required_access))
 		var/datum/id_trim/access_card = SSid_access.trim_singletons_by_path[/datum/id_trim/job/shaft_miner]
 		required_access = access_card.access
-	AddElement(/datum/element/mob_access, required_access)
+	AddComponent(/datum/component/simple_access, required_access)

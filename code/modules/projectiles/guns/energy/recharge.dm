@@ -94,8 +94,11 @@
 
 /obj/item/gun/energy/recharge/update_icon_state()
 	. = ..()
-	if(no_charge_state && !can_shoot())
-		icon_state = no_charge_state
+	if(no_charge_state)
+		if(can_shoot())
+			icon_state = base_icon_state
+		else
+			icon_state = no_charge_state
 
 /obj/item/gun/energy/recharge/ebow
 	name = "mini energy crossbow"
@@ -163,7 +166,6 @@
 /obj/item/gun/energy/recharge/fisher/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The SC/FISHER is an illegally-modified kinetic accelerator that's been cut down and refit into a miniature energy gun chassis, \
 			optimized for temporary, but effective, electronic warfare.<br>\
 			<br>\

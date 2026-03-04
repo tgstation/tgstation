@@ -76,7 +76,7 @@
 	)
 
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(faction_check(faction, user.faction, FALSE) && !user.client)
+	if(faction_check_atom(user) && !user.client)
 		return
 	return ..()
 

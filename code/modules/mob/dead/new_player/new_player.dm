@@ -6,7 +6,6 @@
 	density = FALSE
 	stat = DEAD
 	hud_type = /datum/hud/new_player
-	hud_possible = list()
 
 	/// String Values tied to Defines that state whether the new_player is ready to play or not.
 	/// Do try your best to compare this value directly against the defines for certainty but helper procs do exist in bulkier situations.

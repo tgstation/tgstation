@@ -46,10 +46,26 @@
 	tastes = list("sweetness" = 2, "cake" = 5)
 	foodtypes = GRAIN | DAIRY | SUGAR
 	slice_type = /obj/item/food/cakeslice/plain
+	///ingredient holder for this cake
+	VAR_PROTECTED/cake_holder = /obj/item/food/cake/empty
 
 /obj/item/food/cake/plain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/ingredients_holder, /obj/item/food/cake/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
+	AddComponent(/datum/component/ingredients_holder, cake_holder, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
+
+/obj/item/food/cake/plain/vegan
+	name = "vegan plain cake"
+	desc = "A plain vegan cake, not a lie."
+	tastes = list("cake" = 5)
+	foodtypes = GRAIN
+	cake_holder = /obj/item/food/cake/empty/vegan
+	slice_type = /obj/item/food/cakeslice/plain/vegan
+
+/obj/item/food/cakeslice/plain/vegan
+	name = "plain vegan cake slice"
+	desc = "Just a slice of vegan cake, it is enough for everyone."
+	tastes = list("cake" = 5)
+	foodtypes = GRAIN
 
 /obj/item/food/cakeslice/plain
 	name = "plain cake slice"
@@ -74,6 +90,17 @@
 /obj/item/food/cakeslice/empty/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
+
+/obj/item/food/cake/empty/vegan
+	name = "vegan cake"
+	desc = "A custom vegan cake made by an really insane chef."
+	foodtypes = GRAIN
+	slice_type = /obj/item/food/cakeslice/empty/vegan
+
+/obj/item/food/cakeslice/empty/vegan
+	name = "vegan cake slice"
+	desc = "A slice of custom vegan cake, made by an really insane chef."
+	foodtypes = GRAIN
 
 /obj/item/food/cake/carrot
 	name = "carrot cake"
