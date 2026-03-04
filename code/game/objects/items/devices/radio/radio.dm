@@ -56,14 +56,14 @@
 	var/subspace_switchable = FALSE
 	/// Frequency lock to stop the user from untuning specialist radios.
 	var/freqlock = RADIO_FREQENCY_UNLOCKED
+	/// Locks the keyslot to prevent removing the encryption key from specialist radios.
+	var/keylock = RADIO_KEYSLOT_UNLOCKED
 	/// If true, broadcasts will be large and BOLD.
 	var/use_command = FALSE
 	/// If true, use_command can be toggled at will.
 	var/command = FALSE
 	/// Does it play radio noise?
 	var/radio_noise = TRUE
-	/// Locks the keyslot to prevent removing the encryption key from specialist radios.
-	var/keylock = RADIO_KEYSLOT_UNLOCKED
 
 	///makes anyone who is talking through this anonymous.
 	var/anonymize = FALSE
