@@ -177,6 +177,9 @@
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.radio.interact(usr)
 
+/datum/hud/pai
+	ui_style = 'icons/hud/screen_pai.dmi'
+
 /datum/hud/pai/New(mob/living/silicon/pai/owner)
 	..()
 	var/atom/movable/screen/using
@@ -213,16 +216,19 @@
 
 // Language menu
 	using = new /atom/movable/screen/language_menu(null, src)
+//	using.icon = ui_style //willard todo: icon
 	using.screen_loc = ui_pai_language_menu
 	static_inventory += using
 
-// Language menu
+// Memories
 	using = new /atom/movable/screen/memories(null, src)
+	using.icon = ui_style
 	using.screen_loc = ui_pai_memories_menu
 	static_inventory += using
 
 // Navigation
 	using = new /atom/movable/screen/navigate(null, src)
+//	using.icon = ui_style //willard todo: icon
 	using.screen_loc = ui_pai_navigate_menu
 	static_inventory += using
 

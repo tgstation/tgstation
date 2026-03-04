@@ -6,23 +6,29 @@
 	name = "cyborg module"
 	icon_state = "nomod"
 
-/atom/movable/screen/robot/Click()
+/atom/movable/screen/robot/Click(location, control, params)
 	if(isobserver(usr))
 		return TRUE
 
-/atom/movable/screen/robot/module/Click()
-	//observers can look at borg's inventories
-	var/mob/living/silicon/robot/robot_owner = hud.mymob
-	if(robot_owner.model.type != /obj/item/robot_model)
-		if(usr.active_storage == robot_owner.model.atom_storage)
-			robot_owner.model.atom_storage.hide_contents(usr)
-		else
-			robot_owner.model.atom_storage.open_storage(usr)
-		return TRUE
+/atom/movable/screen/robot/module/Click(location, control, params)
 	. = ..()
-	if(.)
+	var/mob/living/silicon/robot/robot_owner = hud.mymob
+	if((robot_owner.model.type == /obj/item/robot_model))
+		if(.)
+			return
+		robot_owner.pick_model()
 		return
-	robot_owner.pick_model()
+	var/list/modifiers = params2list(params)
+	if(robot_owner.module_active && !LAZYACCESS(modifiers, RIGHT_CLICK) && !.)
+		robot_owner.uneq_active()
+		return
+
+	//observers can look at borg's inventories, so we ignore parent return value here, unlike everywhere else.
+	if(usr.active_storage == robot_owner.model.atom_storage)
+		robot_owner.model.atom_storage.hide_contents(usr)
+	else
+		robot_owner.model.atom_storage.open_storage(usr)
+	return TRUE
 
 /atom/movable/screen/robot/module1
 	name = "module1"
@@ -64,17 +70,6 @@
 	var/mob/living/silicon/robot/R = usr
 	R.radio.interact(R)
 
-/atom/movable/screen/robot/store
-	name = "store"
-	icon_state = "store"
-	screen_loc = ui_borg_store
-
-/atom/movable/screen/robot/store/Click()
-	if(..())
-		return
-	var/mob/living/silicon/robot/R = usr
-	R.uneq_active()
-
 /datum/hud/robot
 	ui_style = 'icons/hud/screen_cyborg.dmi'
 
@@ -86,16 +81,19 @@
 
 // Language
 	using = new/atom/movable/screen/language_menu(null, src)
+//	using.icon = ui_style //willard todo: icon
 	using.screen_loc = ui_borg_language_menu
 	static_inventory += using
 
 // Navigation
 	using = new /atom/movable/screen/navigate(null, src)
+//	using.icon = ui_style //willard todo: icon
 	using.screen_loc = ui_borg_navigate_menu
 	static_inventory += using
 
 // Memories
 	using = new /atom/movable/screen/memories(null, src)
+//	using.icon = ui_style //willard todo: icon
 	using.screen_loc = ui_borg_memories_menu
 	static_inventory += using
 
@@ -153,7 +151,7 @@
 	//Combat Mode
 	action_intent = new /atom/movable/screen/combattoggle/robot(null, src)
 	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_combat_toggle
+	action_intent.screen_loc = ui_borg_intents
 	static_inventory += action_intent
 
 	floor_change = new /atom/movable/screen/floor_changer(null, src)
