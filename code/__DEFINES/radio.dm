@@ -96,6 +96,7 @@
 #define FREQ_ENGINEERING 1357 // Engineering comms frequency, orange
 #define FREQ_SECURITY 1359 // Security comms frequency, red
 #define FREQ_ENTERTAINMENT 1415 // Used by entertainment monitors, cyan
+#define FREQ_INTERROGATION 1423
 #define FREQ_HOLOGRID_SOLUTION 1433
 #define FREQ_STATUS_DISPLAYS 1435
 

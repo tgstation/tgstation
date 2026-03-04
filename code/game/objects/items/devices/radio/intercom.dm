@@ -242,6 +242,28 @@
 	command = TRUE
 	icon_off = "intercom_command-p"
 
+// Set of intercoms for use in interrogation. Interior one starts broadcasting, exterior one hides voices.
+/obj/item/radio/intercom/interrogation
+	name = "interrogation intercom"
+	abstract_type = /obj/item/radio/intercom/interrogation
+	freqlock = RADIO_FREQENCY_LOCKED
+
+/obj/item/radio/intercom/interrogation/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_INTERROGATION)
+
+/obj/item/radio/intercom/interrogation/inside
+	desc = "An intercom that broadcasts any ongoing interrogation to someone that's probably taking notes."
+
+/obj/item/radio/intercom/interrogation/inside/Initialize(mapload)
+	. = ..()
+	set_broadcasting(TRUE)
+	set_listening(FALSE)
+
+/obj/item/radio/intercom/interrogation/outside
+	desc = "An intercom that allows communication with the inside of the interrogation room, while scrambling voices for \"privacy\"."
+	anonymize = TRUE
+
 // Subtype that simply has freerange enabled
 /obj/item/radio/intercom/freerange
 	name = "free-range intercom"
@@ -354,6 +376,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/ai_private/broadcasting, IN
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/ai_private/freerange, INTERCOM_OFFSET)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/ai_private/quiet, INTERCOM_OFFSET)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/interrogation/inside, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/interrogation/outside, INTERCOM_OFFSET)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/freerange, INTERCOM_OFFSET)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/freerange/ai_core, INTERCOM_OFFSET)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate, INTERCOM_OFFSET)
