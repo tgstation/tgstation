@@ -88,8 +88,8 @@
 		/obj/item/storage/box/survival/syndie = 5,
 		/obj/item/storage/box/evilmeds = 5,
 		/obj/item/storage/box/syndie_kit/space = 5,
-		/obj/effect/spawner/random/exotic/antag_sub_spawner = 1
-		/obj/item/storage/box/stockparts/deluxe = 4
+		/obj/effect/spawner/random/exotic/antag_sub_spawner = 1,
+		/obj/item/storage/box/stockparts/deluxe = 4,
 		/obj/item/storage/box/alchemist_random_chems = 5,
 	)
 
