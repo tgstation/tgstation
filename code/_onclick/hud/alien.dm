@@ -73,6 +73,7 @@
 	static_inventory += using
 
 	using = new /atom/movable/screen/memories(null, src)
+	using.icon = ui_style
 	using.screen_loc = ui_alien_memories_menu
 	static_inventory += using
 

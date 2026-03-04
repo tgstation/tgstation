@@ -199,7 +199,7 @@
 #define ui_pai_radio "SOUTH:5,EAST-1:28"
 #define ui_pai_language_menu "SOUTH:1:37,EAST-1:12"
 #define ui_pai_navigate_menu "SOUTH:1:37,EAST-1:28"
-#define ui_pai_memories_menu "BOTTOM+1:24,RIGHT-1:28"
+#define ui_pai_memories_menu "SOUTH:5:50,EAST-1:28"
 
 //Ghosts
 #define ui_ghost_spawners_menu "SOUTH:6,CENTER-3:24"
