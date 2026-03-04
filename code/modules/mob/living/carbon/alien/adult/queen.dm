@@ -94,12 +94,11 @@
 	/// The promotion only takes plasma when completed, not on activation.
 	var/promotion_plasma_cost = 500
 
-/datum/action/cooldown/alien/promote/set_statpanel_format()
+/datum/action/cooldown/alien/promote/New(Target)
 	. = ..()
-	if(!islist(.))
-		return
-
-	.[PANEL_DISPLAY_STATUS] = "PLASMA - [promotion_plasma_cost]"
+	//not free
+	if(promotion_plasma_cost != 0)
+		name = "[initial(name)] ([promotion_plasma_cost]P)"
 
 /datum/action/cooldown/alien/promote/IsAvailable(feedback = FALSE)
 	. = ..()
