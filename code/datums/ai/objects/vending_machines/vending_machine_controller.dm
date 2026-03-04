@@ -8,8 +8,11 @@
 		BB_VENDING_BUSY_TILTING = FALSE,
 		BB_VENDING_LAST_HIT_SUCCESSFUL = FALSE,
 	)
+	/// If TRUE stops mobs from buying things from active machines
 	var/block_usage = FALSE
+	/// Range to search for mobs to crunch
 	var/vision_range = 7
+	/// Seconds between attempts to find a new mob to crunch
 	var/search_for_enemy_cooldown = 2 SECONDS
 
 /datum/ai_controller/vending_machine/TryPossessPawn(atom/new_pawn)
