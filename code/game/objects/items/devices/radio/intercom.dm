@@ -186,7 +186,7 @@
 		message = "key lock"
 
 	if(!message)
-		balloon_alert(user, "can't break lock[freqlock && keylock ? "s" : ""]!")
+		balloon_alert(user, "can't break lock[(freqlock && keylock) ? "s" : ""]!")
 		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
 		return .
 
