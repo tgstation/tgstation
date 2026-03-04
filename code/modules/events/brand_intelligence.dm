@@ -82,7 +82,8 @@
 		infected_machines += rebel
 		rebel.shut_up = FALSE
 		rebel.shoot_inventory = TRUE
-		RegisterSignal(rebel, COMSIG_VENDING_UI_INTERACT, PROC_REF(deny_vending_interact))
+		if(prob(50))
+			RegisterSignal(rebel, COMSIG_VENDING_UI_INTERACT, PROC_REF(deny_vending_interact))
 
 		if(ISMULTIPLE(activeFor, 4))
 			origin_machine.speak(pick(rampant_speeches))
