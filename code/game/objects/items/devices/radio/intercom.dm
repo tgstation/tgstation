@@ -221,8 +221,7 @@
 	pixel_shift = 26
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
-
+// Used in the confessional booth in the chapel, locked to the confessional frequency and hides voices
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
 	desc = "Talk through this... to confess your many sins. Conceals your voice, to keep them secret."
@@ -231,9 +230,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 
 /obj/item/radio/intercom/chapel/Initialize(mapload)
 	. = ..()
-	set_frequency(1481)
+	set_frequency(FREQ_CONFESSIONAL)
 	set_broadcasting(TRUE)
 
+// Special type of intercom for use in the bridge that can tune into any frequency and has loudmic (NOT FOR PUBLIC AREAS)
 /obj/item/radio/intercom/command
 	name = "command intercom"
 	desc = "The command's special free-frequency intercom. It's a versatile tool that can be tuned to any frequency, granting you access to channels you're not supposed to be on. Plus, it comes equipped with a built-in voice amplifier for crystal-clear communication."
@@ -242,12 +242,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 	command = TRUE
 	icon_off = "intercom_command-p"
 
+// Subtype that simply has freerange enabled
+/obj/item/radio/intercom/freerange
+	name = "free-range intercom"
+	desc = "A special intercom that can be tuned to any frequency, bypassing encryption."
+	freerange = TRUE
+
+// For use in the AI core to allow the AI to tune into any encrypted frequency if comms are down
+/obj/item/radio/intercom/freerange/ai_core
+	name = "\improper AI free-range intercom"
+
+/obj/item/radio/intercom/freerange/ai_core/Initialize(mapload)
+	. = ..()
+	set_listening(FALSE)
+
+// Intercom with loudmic and innate syndicate channel access
 /obj/item/radio/intercom/syndicate
 	name = "syndicate intercom"
 	desc = "Talk smack through this."
 	command = TRUE
 	special_channels = RADIO_SPECIAL_SYNDIE
 
+// Syndicate intercom that also has freefrange on top of syndicate channel
 /obj/item/radio/intercom/syndicate/freerange
 	name = "syndicate wide-band intercom"
 	desc = "A custom-made Syndicate-issue intercom used to transmit on all Nanotrasen frequencies. Particularly expensive."
@@ -258,9 +274,97 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 	desc = "Talk through this to talk to whoever is in this facility with you."
 	freerange = TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 27)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 27)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 27)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate, 27)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate/freerange, 27)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/mi13, 27)
+/obj/item/radio/intercom/ai_private
+	name = "\improper AI private intercom"
+	desc = "An intercom primarily used for a private line directly to the station's AI."
+
+/obj/item/radio/intercom/ai_private/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_AI_PRIVATE)
+
+// For use in AI uploads: Tuned to AI private, actively broadcasting and relaying
+/obj/item/radio/intercom/ai_private/broadcasting
+
+/obj/item/radio/intercom/ai_private/broadcasting/Initialize(mapload)
+	. = ..()
+	set_broadcasting(TRUE)
+
+// For use in AI chambers: Tuned to AI private, free-range allowed, otherwise doesn't broadcast or relay
+/obj/item/radio/intercom/ai_private/freerange
+	desc = parent_type::desc + " This one can be tuned to any frequency, bypassing encryption."
+	freerange = TRUE
+
+/obj/item/radio/intercom/ai_private/freerange/Initialize(mapload)
+	. = ..()
+	set_listening(FALSE)
+
+// For use in AI antechambers: Tuned to AI private, actively broadcasting, but not relaying
+/obj/item/radio/intercom/ai_private/quiet
+
+/obj/item/radio/intercom/ai_private/quiet/Initialize(mapload)
+	. = ..()
+	set_listening(FALSE)
+
+// Subtype that spawns with an encryption key and has a key lock
+/obj/item/radio/intercom/departmental
+	desc = "A station intercom primarily intended for speaking with members of a department."
+	keylock = RADIO_KEYSLOT_EMAGGABLE_LOCK
+	abstract_type = /obj/item/radio/intercom/departmental
+
+/obj/item/radio/intercom/departmental/Initialize(mapload)
+	. = ..()
+	if(length(keyslot?.channels) >= 1)
+		set_frequency(GLOB.default_radio_channels[keyslot.channels[1]])
+
+/obj/item/radio/intercom/departmental/cargo
+	name = "cargo intercom"
+	keyslot = /obj/item/encryptionkey/headset_cargo
+
+/obj/item/radio/intercom/departmental/command
+	name = "command intercom"
+	keyslot = /obj/item/encryptionkey/headset_com
+
+/obj/item/radio/intercom/departmental/engineering
+	name = "engineering intercom"
+	keyslot = /obj/item/encryptionkey/headset_eng
+
+/obj/item/radio/intercom/departmental/medical
+	name = "medical intercom"
+	keyslot = /obj/item/encryptionkey/headset_med
+
+/obj/item/radio/intercom/departmental/science
+	name = "science intercom"
+	keyslot = /obj/item/encryptionkey/headset_sci
+
+/obj/item/radio/intercom/departmental/security
+	name = "security intercom"
+	keyslot = /obj/item/encryptionkey/headset_sec
+
+/obj/item/radio/intercom/departmental/service
+	name = "service intercom"
+	keyslot = /obj/item/encryptionkey/headset_service
+
+#define INTERCOM_OFFSET 27
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/ai_private, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/ai_private/broadcasting, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/ai_private/freerange, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/ai_private/quiet, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/freerange, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/freerange/ai_core, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate/freerange, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/mi13, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/cargo, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/command, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/engineering, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/medical, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/science, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/security, INTERCOM_OFFSET)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/departmental/service, INTERCOM_OFFSET)
+
+#undef INTERCOM_OFFSET

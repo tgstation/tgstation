@@ -62,6 +62,8 @@
 	var/command = FALSE
 	/// Does it play radio noise?
 	var/radio_noise = TRUE
+	/// Locks the keyslot to prevent removing the encryption key from specialist radios.
+	var/keylock = RADIO_KEYSLOT_UNLOCKED
 
 	///makes anyone who is talking through this anonymous.
 	var/anonymize = FALSE
@@ -599,6 +601,15 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
+	switch(keylock)
+		if(RADIO_KEYSLOT_LOCKED)
+			to_chat(user, span_warning("THe screws locking [src]'s keyslot are stripped, and can't be removed."))
+			return ITEM_INTERACT_BLOCKING
+		if(RADIO_KEYSLOT_EMAGGABLE_LOCK)
+			if(!(obj_flags & EMAGGED))
+				to_chat(user, span_warning("The screws locking [src]'s keyslot are fastened tight, and likely can't be removed without some kind of magnet..."))
+				return ITEM_INTERACT_BLOCKING
+
 	var/list/removed_keys = remove_keys(user)
 	if(length(removed_keys) > 1)
 		to_chat(user, span_notice("You remove the encryption keys from [src]."))
@@ -631,7 +642,7 @@
 	if(keyslot)
 		loc.balloon_alert(user, "cannot hold a second key!")
 		return ITEM_INTERACT_BLOCKING
-	if(freqlock)
+	if(freqlock || keylock)
 		loc.balloon_alert(user, "keyslot is locked!")
 		return ITEM_INTERACT_BLOCKING
 
