@@ -90,7 +90,7 @@
 /obj/machinery/computer/old{
 	dir = 1
 	},
-/obj/item/computer_disk/black_market,
+/obj/item/disk/computer/black_market,
 /turf/open/floor/temple,
 /area/rainworld/surface/misty_island/temple/inside)
 "wq" = (

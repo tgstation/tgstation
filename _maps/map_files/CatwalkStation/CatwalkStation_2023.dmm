@@ -15928,7 +15928,6 @@
 /obj/item/beacon,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/bomb)
-<<<<<<< HEAD
 "eja" = (
 /obj/machinery/newscaster/directional/west,
 /obj/structure/table/reinforced,
@@ -15936,15 +15935,6 @@
 /obj/item/pen,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai/satellite/chamber)
-"ejc" = (
-/obj/structure/cable,
-/obj/structure/sign/nanotrasen/directional/north,
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/commons/fitness/recreation)
-=======
 "ejb" = (
 /obj/machinery/door/airlock{
 	name = "Abandoned Chapel"
@@ -15953,7 +15943,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard)
->>>>>>> b1ebe7d4f77311c9beb828df0c591786ab75aef8
+"ejc" = (
+/obj/structure/cable,
+/obj/structure/sign/nanotrasen/directional/north,
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation)
 "ejh" = (
 /obj/effect/turf_decal/stripes/asteroid/corner,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
@@ -29988,7 +29985,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-<<<<<<< HEAD
 "hWN" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
@@ -30009,8 +30005,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-=======
->>>>>>> b1ebe7d4f77311c9beb828df0c591786ab75aef8
 "hXc" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L4"
