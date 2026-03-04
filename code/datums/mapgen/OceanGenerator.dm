@@ -76,7 +76,7 @@
 		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/hivelord = 1,
 		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/basilisk = 1,
 	)
-	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/serpent = 25, /mob/living/simple_animal/hostile/megafauna/colossus = 5, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = 1)
+	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/serpent = 25, /mob/living/simple_animal/hostile/megafauna/colossus = 5, /mob/living/basic/boss/blood_drunk_miner = 1)
 
 
 /datum/map_generator/cave_generator/rainworld/surface/noruins //use this for when you don't want ruins to spawn in a certain area
