@@ -7,7 +7,7 @@
 	singular_name = "bluespace crystal"
 	dye_color = DYE_COSMIC
 	w_class = WEIGHT_CLASS_TINY
-	material_flags = NONE // Put some effort into making a teleporting weapon, cmon
+	material_flags = NONE // Handles in-hand/thrown teleports by itself
 	mats_per_unit = list(/datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
 	points = 50
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
@@ -75,6 +75,7 @@
 	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
 	icon_state = "polycrystal"
 	inhand_icon_state = null
+	material_flags = MATERIAL_NO_DESCRIPTORS
 	gulag_valid = TRUE
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("bluespace polybashes", "bluespace polybatters", "bluespace polybludgeons", "bluespace polythrashes", "bluespace polysmashes")

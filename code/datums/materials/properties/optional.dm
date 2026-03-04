@@ -169,9 +169,9 @@
 		COMSIG_MATERIAL_EFFECT_TOUCH,
 		COMSIG_MATERIAL_EFFECT_STEP,
 		COMSIG_MATERIAL_EFFECT_HIT,
+		COMSIG_MATERIAL_EFFECT_THROW_IMPACT,
 	)
 	RegisterSignals(material, interaction_signals, PROC_REF(on_contact))
-	RegisterSignal(material, COMSIG_MATERIAL_EFFECT_THROW_IMPACT, PROC_REF(on_impact))
 
 /datum/material_property/teleporting/proc/on_contact(datum/material/source, atom/object, atom/target, mob/living/user, def_zone, skin_contact)
 	SIGNAL_HANDLER
@@ -185,15 +185,11 @@
 
 	var/value = source.get_property(id)
 	do_teleport(target, get_turf(target), value, channel = TELEPORT_CHANNEL_BLUESPACE)
-	if (object.uses_integrity)
-		object.take_damage(object.max_integrity * value * 0.025)
-
-/datum/material_property/teleporting/proc/on_impact(datum/material/source, atom/object, atom/target, mob/living/user, def_zone, skin_contact)
-	SIGNAL_HANDLER
-
-	// Unless its a specialized weapon, don't teleport the target for balance reasons
-	if (object.has_material_slots() || source.get_property(MATERIAL_PENETRATING))
-		on_contact(source, object, target, user, def_zone, skin_contact)
+	if (isstack(object))
+		var/obj/item/stack/as_stack = object
+		as_stack.use(1)
+	else if (object.uses_integrity)
+		object.take_damage(object.max_integrity * value * 0.01)
 
 /// Makes all contact count as skin contact
 /datum/material_property/penetrating

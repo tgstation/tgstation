@@ -249,7 +249,7 @@
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 4,
 		MATERIAL_BEAUTY = 0.5, // Absolutely mesmerizing
-		MATERIAL_TELEPORTING = 3,
+		MATERIAL_TELEPORTING = 5,
 	)
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	ore_type = /obj/item/stack/ore/bluespace_crystal
@@ -903,7 +903,7 @@
 		MATERIAL_THERMAL = 2,
 		MATERIAL_CHEMICAL = 8,
 		MATERIAL_BEAUTY = -0.5, // very evil bad no good
-		MATERIAL_TELEPORTING = 5,
+		MATERIAL_TELEPORTING = 8,
 		MATERIAL_PENETRATING = TRUE,
 	)
 	sheet_type = /obj/item/stack/sheet/telepolycrystal
