@@ -654,3 +654,7 @@
 /// Sent from /obj/item/mail/traitor/after_unwrap(mob/user, obj/item/mail/traitor/letter)
 #define COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL "traitor_mail_opened"
 	#define COMPONENT_TRAITOR_MAIL_HANDLED (1<<0)
+
+/// From /obj/machinery/vending/ui_interact(): (mob/user, datum/vending_ui/ui)
+#define COMSIG_VENDING_UI_INTERACT "vending_ui_interact"
+	#define VENDING_DENIED (1<<0)
