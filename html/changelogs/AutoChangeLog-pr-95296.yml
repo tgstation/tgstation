@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed setting a custom chat font screwing up some spans, such as robotic speech."
