@@ -1,9 +1,10 @@
 /obj/item/stack/telecrystal
 	name = "telecrystal"
-	desc = "It seems to be pulsing with suspiciously enticing energies."
+	desc = "Covered in a web of finely engraved geometrical patterns, pulsing with suspiciously enticing energies."
 	singular_name = "telecrystal"
 	icon_state = "telecrystal"
 	dye_color = DYE_SYNDICATE
+	full_w_class = WEIGHT_CLASS_TINY
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 50
 	item_flags = NOBLUDGEON
@@ -33,3 +34,17 @@
 
 /obj/item/stack/telecrystal/twenty
 	amount = 20
+
+/obj/item/stack/sheet/telepolycrystal
+	name = "tele-polycrystal"
+	singular_name = "tele-polycrystal"
+	desc = "A \"somewhat\" stable chunk of telecrystal. It lacks the precision-carved tuning channels, making it useless for long-range matter teleportation."
+	icon_state = "telepolycrystal"
+	inhand_icon_state = null
+	full_w_class = WEIGHT_CLASS_TINY
+	w_class = WEIGHT_CLASS_TINY
+	dye_color = DYE_SYNDICATE
+	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/telepolycrystal
+	material_type = /datum/material/telecrystal
+	mats_per_unit = list(/datum/material/telecrystal = SHEET_MATERIAL_AMOUNT)

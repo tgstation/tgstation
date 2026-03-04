@@ -906,8 +906,7 @@
 		MATERIAL_TELEPORTING = 5,
 		MATERIAL_PENETRATING = TRUE,
 	)
-	#warn TODO
-	//sheet_type = /obj/item/stack/telecrystal
+	sheet_type = /obj/item/stack/sheet/telepolycrystal
 	material_reagent = list(/datum/reagent/bluespace = 1, /datum/reagent/medicine/stimulants = 1) // We don't have liquid telecrystals and I don't wanna risk it
 	value_per_unit = 1200 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"

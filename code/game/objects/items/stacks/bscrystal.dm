@@ -73,7 +73,6 @@
 	name = "bluespace polycrystal"
 	singular_name = "bluespace polycrystal"
 	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
-	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "polycrystal"
 	inhand_icon_state = null
 	gulag_valid = TRUE
