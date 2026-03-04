@@ -91,14 +91,13 @@
 		/obj/effect/spawner/random/exotic/antag_sub_spawner = 1
 		/obj/item/storage/box/stockparts/deluxe = 4
 		/obj/item/storage/box/alchemist_random_chems = 5,
-		//obj/item/gun/ballistic/automatic/lahti = 1, uncomment to instantly summon the maintainers
 	)
 
 /obj/effect/spawner/random/exotic/antag_sub_spawner
 	name = "antag gear sub spawner"
 	loot = list(
 		/obj/effect/spawner/random/exotic/antag_gear = 98,
-		/obj/item/storage/box/syndicate/bundle_b = 1,//two of these kits possible, four of these spawners per snowdin, 1/8 chance of snowdin being picked as the away mission leading to a 0.01 chance (equal to the chance of getting a pulse rifle from an arcade) of these spawning every round, meaning that these will spawn once in every 10000 rounds.
+		/obj/item/storage/box/syndicate/bundle_b = 1,
 		/obj/item/storage/box/syndicate/bundle_a = 1,
 	)
 
