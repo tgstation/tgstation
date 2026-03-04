@@ -60,7 +60,7 @@
 	if(!block_usage)
 		return NONE
 	vending_machine.speak(pick(
-		"Once in a life time offer, and you [pick("blew", "missed", "screwed up")] it!",
+		"Once in a life time offer, and you [pick("blew it", "missed it", "screwed it up")]!",
 		"The deals are off!",
 		"We don't accept card, only accept flesh and blood!",
 		"You had your chance!",

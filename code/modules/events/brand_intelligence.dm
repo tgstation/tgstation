@@ -106,7 +106,7 @@
 	SIGNAL_HANDLER
 
 	// don't block usage if the ui is already open
-	// primarily to stop insta-denying people who pass the threshold -> buy something -> drop out of the threshold from
+	// primarily to stop insta-denying people who pass the threshold -> buy something -> drop out of threshold
 	if(ui)
 		return NONE
 
@@ -115,7 +115,7 @@
 		var/mob/living/living_user = user
 		cash += living_user.tally_physical_credits()
 		var/obj/item/card/id/card = living_user.get_idcard(TRUE)
-		cash += card.registered_account?.account_balance
+		cash += card?.registered_account?.account_balance
 
 	if(cash >= PAYCHECK_COMMAND * 10)
 		return NONE
