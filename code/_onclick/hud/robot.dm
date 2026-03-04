@@ -81,19 +81,19 @@
 
 // Language
 	using = new/atom/movable/screen/language_menu(null, src)
-//	using.icon = ui_style //willard todo: icon
+	using.icon = ui_style
 	using.screen_loc = ui_borg_language_menu
 	static_inventory += using
 
 // Navigation
 	using = new /atom/movable/screen/navigate(null, src)
-//	using.icon = ui_style //willard todo: icon
+	using.icon = ui_style
 	using.screen_loc = ui_borg_navigate_menu
 	static_inventory += using
 
 // Memories
 	using = new /atom/movable/screen/memories(null, src)
-//	using.icon = ui_style //willard todo: icon
+	using.icon = ui_style
 	using.screen_loc = ui_borg_memories_menu
 	static_inventory += using
 
