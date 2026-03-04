@@ -1,0 +1,4 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - rscadd: "AIs can now rotate their hologram by using the \"block movement\" keybind."
