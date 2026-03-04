@@ -603,7 +603,7 @@
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
 	switch(keylock)
 		if(RADIO_KEYSLOT_LOCKED)
-			to_chat(user, span_warning("THe screws locking [src]'s keyslot are stripped, and can't be removed."))
+			to_chat(user, span_warning("The screws locking [src]'s keyslot are stripped, and can't be removed."))
 			return ITEM_INTERACT_BLOCKING
 		if(RADIO_KEYSLOT_EMAGGABLE_LOCK)
 			if(!(obj_flags & EMAGGED))
