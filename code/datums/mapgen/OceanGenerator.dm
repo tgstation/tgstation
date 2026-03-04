@@ -57,7 +57,7 @@
 		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/hivelord = 4,
 		/obj/structure/spawner/ice_moon/demonic_portal/rainworld/basilisk = 4,
 	)
-	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/serpent = 15, /mob/living/simple_animal/hostile/megafauna/colossus = 5, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = 1)
+	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/serpent = 15, /mob/living/simple_animal/hostile/megafauna/colossus = 5, /mob/living/basic/boss/blood_drunk_miner = 1)
 
 /datum/map_generator/cave_generator/rainworld/surface/mining/deep_ocean
 	mob_spawn_chance = 0.8
@@ -100,7 +100,7 @@
 	weighted_megafauna_spawn_list = list(
 		/mob/living/simple_animal/hostile/megafauna/serpent = 25,
 		/mob/living/simple_animal/hostile/megafauna/colossus = 5,
-		/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = 1,
+		/mob/living/basic/boss/blood_drunk_miner = 1,
 	)
 	weighted_closed_turf_types = list(
 		/turf/closed/mineral/random/rainworld = 1,
