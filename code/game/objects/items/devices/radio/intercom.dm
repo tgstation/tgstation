@@ -164,26 +164,30 @@
 	. = ..()
 
 	if(obj_flags & EMAGGED)
-		return
+		return .
 
-	switch(freqlock)
-		// Emagging an intercom with an emaggable lock will remove the lock
-		if(RADIO_FREQENCY_EMAGGABLE_LOCK)
-			balloon_alert(user, "frequency lock cleared")
-			playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-			freqlock = RADIO_FREQENCY_UNLOCKED
-			obj_flags |= EMAGGED
-			return TRUE
+	if(!freqlock && !keylock)
+		balloon_alert(user, "no locks to break!")
+		return .
 
-		// A fully locked one will do nothing, as locked is intended to be used for stuff that should never be changed
-		if(RADIO_FREQENCY_LOCKED)
-			balloon_alert(user, "can't override frequency lock!")
-			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
-			return
+	var/message = ""
+	if(freqlock == RADIO_FREQENCY_EMAGGABLE_LOCK && keylock == RADIO_KEYSLOT_EMAGGABLE_LOCK)
+		message = "frequency and key lock"
+	else if(freqlock == RADIO_FREQENCY_EMAGGABLE_LOCK)
+		message = "frequency lock"
+	else if(keylock == RADIO_KEYSLOT_EMAGGABLE_LOCK)
+		message = "key lock"
 
-		// Emagging an unlocked one will do nothing, for now
-		else
-			return
+	if(!message)
+		balloon_alert(user, "can't break lock[freqlock && keylock ? "s" : ""]!")
+		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
+		return .
+
+	balloon_alert(user, "[message] broken")
+	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	keylock = RADIO_KEYSLOT_UNLOCKED
+	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/item/radio/intercom/update_icon_state()
 	icon_state = on ? initial(icon_state) : icon_off
