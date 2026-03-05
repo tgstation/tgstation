@@ -8,7 +8,7 @@
 #define SMALL_PRIZE 400
 #define BIG_PRIZE 1000
 #define JACKPOT 10000
-#define SPIN_TIME 36 //As always, deciseconds.
+#define SPIN_TIME 40 // Deciseconds
 #define REEL_DEACTIVATE_DELAY 4
 #define JACKPOT_SEVENS FA_ICON_7
 #define HOLOCHIP 1
@@ -28,23 +28,30 @@
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = FALSE
+	var/winning = 0 //0 - default, 1 - freespin, 2 - big cash, 3 - jackpot
 	var/balance = 0 //How much money is in the machine, ready to be CONSUMED.
 	var/jackpots = 0
 	var/paymode = HOLOCHIP //toggles between HOLOCHIP/COIN, defined above
 	var/cointype = /obj/item/coin/iron //default cointype
 	/// Icons that can be displayed by the slot machine.
 	var/static/list/icons = list(
-		FA_ICON_LEMON = list("value" = 2, "colour" = "yellow"),
-		FA_ICON_STAR = list("value" = 2, "colour" = "yellow"),
-		FA_ICON_BOMB = list("value" = 2, "colour" = "red"),
-		FA_ICON_BIOHAZARD = list("value" = 2, "colour" = "green"),
-		FA_ICON_APPLE_WHOLE = list("value" = 2, "colour" = "red"),
-		FA_ICON_7 = list("value" = 1, "colour" = "yellow"),
-		FA_ICON_DOLLAR_SIGN = list("value" = 2, "colour" = "green"),
+		FA_ICON_LEMON,
+		FA_ICON_STAR,
+		FA_ICON_BOMB,
+		FA_ICON_BIOHAZARD,
+		FA_ICON_APPLE_WHOLE,
+		FA_ICON_7,
+		FA_ICON_DOLLAR_SIGN,
 	)
 
 	var/static/list/coinvalues
-	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
+	var/list/reels = list(
+		list("", "", ""),
+		list("", "", ""),
+		list("", "", ""),
+		list("", "", ""),
+		list("", "", ""),
+	)
 	var/static/list/ray_filter = list(type = "rays", y = 16, size = 40, density = 4, color = COLOR_RED_LIGHT, factor = 15, flags = FILTER_OVERLAY)
 
 /obj/machinery/computer/slot_machine/Initialize(mapload)
@@ -52,13 +59,8 @@
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
 
-	toggle_reel_spin_sync(1) //The reels won't spin unless we activate them
-
-	var/list/reel = reels[1]
-	for(var/i in 1 to reel.len) //Populate the reels.
-		randomize_reels()
-
-	toggle_reel_spin_sync(0)
+	// Populate the reels
+	randomize_reels()
 
 	if (isnull(coinvalues))
 		coinvalues = list()
@@ -164,24 +166,22 @@
 
 /obj/machinery/computer/slot_machine/ui_static_data(mob/user)
 	var/list/data = list()
-	data["icons"] = list()
-	for(var/icon_name in icons)
-		var/list/icon = icons[icon_name]
-		icon += list("icon" = icon_name)
-		data["icons"] += list(icon)
+	data["icons"] = icons
 	data["cost"] = SPIN_PRICE
 	data["jackpot"] = JACKPOT
-
 	return data
 
 /obj/machinery/computer/slot_machine/ui_data(mob/user)
 	var/list/data = list()
-	var/list/reel_states = list()
-	for(var/reel_state in reels)
-		reel_states += list(reel_state)
-	data["state"] = reel_states
+	var/list/_reels = list()
+	for(var/reel in reels)
+		_reels += list(list(
+			"icons" = reel,
+		))
+	data["reels"] = _reels
 	data["balance"] = balance
 	data["working"] = working
+	data["winning"] = winning
 	data["money"] = money
 	data["plays"] = plays
 	data["jackpots"] = jackpots
@@ -222,6 +222,10 @@
 	if(!can_spin(user))
 		return
 
+	if(!use_energy(active_power_usage, force = FALSE))
+		say("Not enough energy!")
+		return
+
 	var/the_name
 	if(user)
 		the_name = user.real_name
@@ -237,23 +241,18 @@
 	plays += 1
 	working = TRUE
 
-	toggle_reel_spin(1)
 	update_appearance()
-	var/spin_loop = addtimer(CALLBACK(src, PROC_REF(do_spin)), 2, TIMER_LOOP|TIMER_STOPPABLE)
 
-	addtimer(CALLBACK(src, PROC_REF(finish_spinning), spin_loop, user, the_name), SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len))
-	//WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
-
-/obj/machinery/computer/slot_machine/proc/do_spin()
-	if(!use_energy(active_power_usage, force = FALSE))
-		say("Not enough energy!")
-		return
+	// Randomize reels to get the new final state.
 	randomize_reels()
 
-/obj/machinery/computer/slot_machine/proc/finish_spinning(spin_loop, mob/user, the_name)
-	toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)
+	// Now wait for a pre-determined delay to set machine to a non-spinning state.
+	// On the UI side, result is pre-determined: after the delay below,
+	// animation stops at the newly calculated state of the reels.
+	addtimer(CALLBACK(src, PROC_REF(finish_spinning), user, the_name), SPIN_TIME)
+
+/obj/machinery/computer/slot_machine/proc/finish_spinning(mob/user, the_name)
 	working = FALSE
-	deltimer(spin_loop)
 	give_prizes(the_name, user)
 	update_appearance()
 
@@ -273,29 +272,12 @@
 		return FALSE
 	return TRUE
 
-/// Sets the spinning states of all reels to value, with a delay between them
-/obj/machinery/computer/slot_machine/proc/toggle_reel_spin(value, delay = 0) //value is 1 or 0 aka on or off
-	for(var/list/reel in reels)
-		if(!value)
-			playsound(src, 'sound/machines/ding_short.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		reels[reel] = value
-		if(delay)
-			sleep(delay)
-
-/// Same as toggle_reel_spin, but without the delay and runs synchronously
-/obj/machinery/computer/slot_machine/proc/toggle_reel_spin_sync(value)
-	for(var/list/reel in reels)
-		reels[reel] = value
-
 /// Randomize the states of all reels
 /obj/machinery/computer/slot_machine/proc/randomize_reels()
-
 	for(var/reel in reels)
-		if(reels[reel])
-			reel[3] = reel[2]
-			reel[2] = reel[1]
-			var/chosen = pick(icons)
-			reel[1] = icons[chosen] + list("icon_name" = chosen)
+		reel[1] = pick(icons)
+		reel[2] = pick(icons)
+		reel[3] = pick(icons)
 
 /// Checks if any prizes have been won, and pays them out
 /obj/machinery/computer/slot_machine/proc/give_prizes(usrname, mob/user)
@@ -307,6 +289,7 @@
 		bang.arm_grenade(null, 1 SECONDS)
 
 	else if(check_jackpot(JACKPOT_SEVENS))
+		winning = 3
 		var/prize = money + JACKPOT
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] [MONEY_NAME]!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
@@ -326,6 +309,7 @@
 				sleep(REEL_DEACTIVATE_DELAY)
 
 	else if(linelength == 5)
+		winning = 2
 		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand [MONEY_NAME]!'")
 		give_money(BIG_PRIZE)
 		if(isliving(user) && (user in viewers(src)))
@@ -333,6 +317,7 @@
 			living_user.add_mood_event("slots", /datum/mood_event/slots/win/big)
 
 	else if(linelength == 4)
+		winning = 2
 		visible_message("<b>[src]</b> says, 'Winner! You win four hundred [MONEY_NAME]!'")
 		give_money(SMALL_PRIZE)
 		if(isliving(user) && (user in viewers(src)))
@@ -340,11 +325,13 @@
 			living_user.add_mood_event("slots", /datum/mood_event/slots/win)
 
 	else if(linelength == 3)
+		winning = 1
 		to_chat(user, span_notice("You win three free games!"))
 		balance += SPIN_PRICE * 4
 		money = max(money - SPIN_PRICE * 4, money)
 
 	else
+		winning = 0
 		balloon_alert(user, "no luck!")
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50)
 		did_player_win = FALSE
@@ -352,22 +339,32 @@
 			var/mob/living/living_user = user
 			living_user.add_mood_event("slots", /datum/mood_event/slots/loss)
 
+	SStgui.update_uis(src)
+	addtimer(CALLBACK(src, PROC_REF(clear_winning)), 3 SECONDS)
+
 	if(did_player_win)
 		add_filter("jackpot_rays", 3, ray_filter)
 		animate(get_filter("jackpot_rays"), offset = 10, time = 3 SECONDS, loop = -1)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "jackpot_rays"), 3 SECONDS)
 		playsound(src, 'sound/machines/roulette/roulettejackpot.ogg', 50, TRUE)
 
+/obj/machinery/computer/slot_machine/proc/clear_winning()
+	winning = 0
+
 /// Checks for a jackpot (5 matching icons in the middle row) with the given icon name
 /obj/machinery/computer/slot_machine/proc/check_jackpot(name)
-	return reels[1][2]["icon_name"] + reels[2][2]["icon_name"] + reels[3][2]["icon_name"] + reels[4][2]["icon_name"] + reels[5][2]["icon_name"] == "[name][name][name][name][name]"
+	return reels[1][2] == name \
+		&& reels[2][2] == name \
+		&& reels[3][2] == name \
+		&& reels[4][2] == name \
+		&& reels[5][2] == name
 
 /// Finds the largest number of consecutive matching icons in a row
 /obj/machinery/computer/slot_machine/proc/get_lines()
 	var/amountthesame
 
 	for(var/i in 1 to 3)
-		var/inputtext = reels[1][i]["icon_name"] + reels[2][i]["icon_name"] + reels[3][i]["icon_name"] + reels[4][i]["icon_name"] + reels[5][i]["icon_name"]
+		var/inputtext = reels[1][i] + reels[2][i] + reels[3][i] + reels[4][i] + reels[5][i]
 		for(var/icon in icons)
 			var/j = 3 //The lowest value we have to check for.
 			var/symboltext = icon + icon + icon

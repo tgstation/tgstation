@@ -1,0 +1,201 @@
+.SlotMachine__Banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  font-size: 18px;
+  text-align: center;
+  text-shadow:
+    2px 2px 6px #000,
+    0 2px #000,
+    0 -2px #000,
+    2px 0 #000,
+    -2px 0 #000;
+
+  background: linear-gradient(-45deg, #d16949, #ce3771, #229dca, #189175);
+  background-size: 400% 400%;
+  animation: SlotMachine__GradientMove 10s ease infinite;
+}
+
+@keyframes SlotMachine__GradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.SlotMachine__Banner--winning {
+  animation: SlotMachine__Winning 0.4s step-end infinite !important;
+}
+
+@keyframes SlotMachine__Winning {
+  0% {
+    color: #ff0;
+    background: #f00;
+  }
+  50% {
+    color: #f00;
+    background: #ff0;
+  }
+  100% {
+    color: #f00;
+    background: #ff0;
+  }
+}
+
+.SlotMachine__BannerTitle {
+  font-size: 26px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.SlotMachine__BannerTitle span {
+  animation:
+    SlotMachine__Depth1 1.2s ease-in-out alternate infinite,
+    SlotMachine__Depth2 0.8s ease-in-out alternate infinite;
+  animation-composition: replace, add;
+  position: relative;
+  display: inline-block;
+  padding: 0 0.12em;
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      animation-delay: $i * -0.2s;
+    }
+  }
+}
+
+@keyframes SlotMachine__Depth1 {
+  0% {
+    transform: translatex(-0.2em) translatey(-0.1em);
+  }
+  100% {
+    transform: translatex(0.2em) translatey(0.1em);
+  }
+}
+
+@keyframes SlotMachine__Depth2 {
+  0% {
+    transform: translatex(0.1em) translatey(-0.1em);
+  }
+  100% {
+    transform: translatex(-0.1em) translatey(0.1em);
+  }
+}
+
+.SlotMachine__Reels {
+  display: flex;
+  margin: 0 -3px;
+}
+
+.SlotMachine__Reel {
+  position: relative;
+  flex: 1;
+  margin: 0 3px;
+  overflow: hidden;
+  height: 180px;
+  background: linear-gradient(
+    to bottom,
+    #888 0%,
+    #ccc 15%,
+    #eee 40%,
+    #ddd 60%,
+    #aaa 85%,
+    #666 100%
+  );
+}
+
+.SlotMachine__Reel::after {
+  position: absolute;
+  top: 58px;
+  left: 0;
+  bottom: 58px;
+  right: 0;
+  display: block;
+  content: '';
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.SlotMachine__Tile {
+  position: relative;
+  height: 60px;
+  background: linear-gradient(
+    to bottom,
+    #888 0%,
+    #ccc 15%,
+    #eee 40%,
+    #ddd 60%,
+    #aaa 85%,
+    #666 100%
+  );
+  border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+  z-index: 5;
+}
+
+.SlotMachine__Tile:last-child {
+  border-bottom: 0;
+}
+
+.SlotMachine__IconStrip {
+  transform: translateY(calc(-60px * 27));
+  // animation-duration: 3.5s;
+  text-align: center;
+  // animation: scroll-up 2s linear infinite;
+  // animation-play-state: paused;
+  // transform: translateY(0px);
+  text-shadow:
+    2px 2px 6px #000,
+    0 2px #000,
+    0 -2px #000,
+    2px 0 #000,
+    -2px 0 #000;
+  z-index: 4;
+}
+
+.SlotMachine__Reel:nth-child(1) .SlotMachine__IconStrip {
+  animation-delay: 0s;
+  animation-duration: 2.8s;
+}
+
+.SlotMachine__Reel:nth-child(2) .SlotMachine__IconStrip {
+  animation-delay: 0.1s;
+  animation-duration: 3s;
+}
+
+.SlotMachine__Reel:nth-child(3) .SlotMachine__IconStrip {
+  animation-delay: 0.2s;
+  animation-duration: 3.2s;
+}
+
+.SlotMachine__Reel:nth-child(4) .SlotMachine__IconStrip {
+  animation-delay: 0.3s;
+  animation-duration: 3.4s;
+}
+
+.SlotMachine__Reel:nth-child(5) .SlotMachine__IconStrip {
+  animation-delay: 0.4s;
+  animation-duration: 3.6s;
+}
+
+.SlotMachine__IconStrip--spinning {
+  transform: translateY(0);
+  animation-name: SlotMachine__Spin;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(1, 1.26, 0.88, 0.96);
+}
+
+@keyframes SlotMachine__Spin {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(-60px * 27));
+  }
+}
