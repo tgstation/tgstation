@@ -555,7 +555,7 @@ effective or pretty fucking useless.
 
 /obj/item/clothing/shoes/jackboots/dagger/equipped(mob/living/user, slot)
 	. = ..()
-	if(!(slot & ITEM_SLOT_FEET) || !istype(user))
+	if((slot & ITEM_SLOT_FEET) || !istype(user))
 		modified_bodyparts += user.get_bodypart(BODY_ZONE_L_LEG)
 		modified_bodyparts += user.get_bodypart(BODY_ZONE_R_LEG)
 		for(var/obj/item/bodypart/bodypart in modified_bodyparts)
