@@ -6,7 +6,7 @@
 	return null
 
 /mob/living/carbon/examine(mob/user)
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE) && !isobserver(user))
 		return list(span_warning("You're struggling to make out any details..."))
 
 	var/t_He = p_They()
@@ -53,19 +53,32 @@
 	for(var/obj/item/bodypart/body_part as anything in bodyparts)
 		if(body_part.bodypart_disabled)
 			disabled += body_part
+
+		var/treatment_distance = isliving(user) && get_dist(src, user) <= CARBON_EXAMINE_EMBEDDING_MAX_DIST
 		for(var/obj/item/embedded as anything in body_part.embedded_objects)
 			if(embedded.get_embed().stealthy_embed)
 				continue
 			var/harmless = embedded.get_embed().is_harmless()
 			var/stuck_wordage = harmless ? "stuck to" : "embedded in"
 			var/embed_line = "\a [embedded]"
-			if (get_dist(src, user) <= CARBON_EXAMINE_EMBEDDING_MAX_DIST)
+			if (treatment_distance)
 				embed_line = "<a href='byond://?src=[REF(src)];embedded_object=[REF(embedded)];embedded_limb=[REF(body_part)]'>\a [embedded]</a>"
 			var/embed_text = "[t_He] [t_has] [icon2html(embedded, user)] [embed_line] [stuck_wordage] [t_his] [body_part.plaintext_zone]!"
 			if (harmless)
 				. += span_italics(span_notice(embed_text))
 			else
 				. += span_boldwarning(embed_text)
+
+		var/obj/item/tourniquet/current_tourniquet = LAZYACCESS(body_part.applied_items, LIMB_ITEM_TOURNIQUET)
+		if(current_tourniquet)
+			var/tourniquet_href = "\a [current_tourniquet]"
+			if(treatment_distance)
+				tourniquet_href = "<a href='byond://?src=[REF(src)];remove_tourniquet=[REF(body_part)]'>[tourniquet_href]</a>"
+			var/tourniquet_msg = "[t_He] [t_has] [icon2html(current_tourniquet, user)] [tourniquet_href] tightly secured around [t_his] [body_part.body_zone == BODY_ZONE_HEAD ? "neck" : body_part.plaintext_zone]."
+			if(body_part.body_zone == BODY_ZONE_HEAD)
+				. += span_boldwarning(tourniquet_msg)
+			else
+				. += span_notice(tourniquet_msg)
 
 		for(var/datum/wound/iter_wound as anything in body_part.wounds)
 			. += span_danger(iter_wound.get_examine_description(user))
@@ -566,7 +579,7 @@
 		if(undershirt.has_sensor == BROKEN_SENSORS)
 			. += list(span_notice("\The [undershirt]'s medical sensors are sparking."))
 
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
+	if((HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) && !isobserver(user))
 		return
 
 	var/limbs_text = get_mismatched_limb_text()

@@ -382,18 +382,16 @@
 
 //This is where stability mutations exist now.
 			if(myseed.instability >= 80)
-				var/mutation_chance = myseed.instability - 75
-				mutate(0, 0, 0, 0, 0, 0, 0, mutation_chance, 0) //Scaling odds of a random trait or chemical
+				traitmutate(myseed.instability - 75) //Scaling odds of a random trait or chemical
 			if(myseed.instability >= 60)
 				if(prob((myseed.instability)/2) && !self_sustaining && LAZYLEN(myseed.mutatelist) && !myseed.get_gene(/datum/plant_gene/trait/never_mutate)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow or having Prosophobic Inclination trait.
 					mutatespecie()
 					myseed.set_instability(myseed.instability/2)
-			if(myseed.instability >= 40)
-				if(prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No hardmutation if Symbiotic Resilience trait is present.
-					hardmutate()
-			if(myseed.instability >= 20 )
-				if(prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No mutation if Symbiotic Resilience trait is present.
-					mutate()
+			if(myseed.instability >= 20 && prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No hardmutation if Symbiotic Resilience trait is present.
+				if(myseed.instability >= 40)
+					hardmutate(stabmut = myseed.instability >= 80 ? 5 : 0)
+				else
+					mutate(stabmut = 0)
 
 //Health & Age///////////////////////////////////////////////////////////
 
@@ -677,15 +675,50 @@
 	set_pestlevel(0) // Reset
 	visible_message(span_warning("The [oldPlantName] is overtaken by some [myseed.plantname]!"))
 
+/// Mutates the stats of the current seed
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3) // Mutates the current seed
-	if(!myseed)
-		return
-	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
+	myseed?.mutate(
+		lifemut = lifemut,
+		endmut = endmut,
+		productmut = productmut,
+		yieldmut = yieldmut,
+		potmut = potmut,
+		wrmut = wrmut,
+		wcmut = wcmut,
+		traitmut = traitmut,
+		stabmut = stabmut,
+	)
 
+/// Mutate but with higher default values
 /obj/machinery/hydroponics/proc/hardmutate(lifemut = 4, endmut = 10, productmut = 2, yieldmut = 4, potmut = 50, wrmut = 4, wcmut = 10, traitmut = 0, stabmut = 4)
-	mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut, stabmut)
+	myseed?.mutate(
+		lifemut = lifemut,
+		endmut = endmut,
+		productmut = productmut,
+		yieldmut = yieldmut,
+		potmut = potmut,
+		wrmut = wrmut,
+		wcmut = wcmut,
+		traitmut = traitmut,
+		stabmut = stabmut,
+	)
 
-/obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
+/// Mutate but only introduce a random trait
+/obj/machinery/hydroponics/proc/traitmutate(traitmut = 1)
+	myseed?.mutate(
+		lifemut = 0,
+		endmut = 0,
+		productmut = 0,
+		yieldmut = 0,
+		potmut = 0,
+		wrmut = 0,
+		wcmut = 0,
+		traitmut = traitmut,
+		stabmut = 0,
+	)
+
+/// Mutate the species of the plant into one of its mutations
+/obj/machinery/hydroponics/proc/mutatespecie()
 	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD || !LAZYLEN(myseed.mutatelist))
 		return
 
@@ -701,7 +734,8 @@
 	var/message = span_warning("[oldPlantName] suddenly mutates into [myseed.plantname]!")
 	addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
 
-/obj/machinery/hydroponics/proc/polymorph() // Polymorph a plant into another plant
+/// Transform the plant into a completely random species
+/obj/machinery/hydroponics/proc/polymorph()
 	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD)
 		return
 
@@ -717,7 +751,8 @@
 	var/message = span_warning("[oldPlantName] suddenly polymorphs into [myseed.plantname]!")
 	addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
 
-/obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
+/// Mutates the weeds in the tray into a random weed plant (which can overtake existing plants)
+/obj/machinery/hydroponics/proc/mutateweed()
 	if(weedlevel <= 5)
 		visible_message(span_warning("The few weeds in [src] seem to react, but only for a moment..."))
 		return

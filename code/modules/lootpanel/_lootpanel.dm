@@ -45,7 +45,7 @@
 /datum/lootpanel/ui_close(mob/user)
 	. = ..()
 
-	UnregisterSignal(source_turf, COMSIG_ATOM_ENTERED)
+	UnregisterSignal(source_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 	source_turf = null
 	reset_contents()
 

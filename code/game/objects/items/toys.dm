@@ -829,10 +829,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/ash_type = /obj/effect/decal/cleanable/ash
 
-/obj/item/toy/snappop/proc/pop_burst(n=3, c=1)
-	var/datum/effect_system/spark_spread/s = new()
-	s.set_up(n, c, src)
-	s.start()
+/obj/item/toy/snappop/proc/pop_burst(n = 3, c = TRUE)
+	do_sparks(n, c, src)
 	new ash_type(loc)
 	visible_message(span_warning("[src] explodes!"),
 		span_hear("You hear a snap!"))

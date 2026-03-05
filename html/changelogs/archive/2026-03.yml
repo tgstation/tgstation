@@ -1,0 +1,45 @@
+2026-03-01:
+  JohnFulpWillard:
+  - qol: Escape menu's quit button now brings you to a second page instead of a TGUI
+      panel.
+  TealSeer:
+  - image: emitters glow in the dark now
+  Y0SH1M4S73R:
+  - qol: You no longer need to learn the recipe for the MOD soul core.
+  - qol: You can slapcraft MOD soul cores using soul shards.
+2026-03-02:
+  Absolucy:
+  - code_imp: Minor code optimizations for APC processing.
+  - bugfix: Healium crystals now properly update turf atmos.
+  TealSeer:
+  - image: the HFR glows in the dark now
+2026-03-03:
+  ArcaneMusic:
+  - qol: Items shipping via the black market using the "launch" option now launch
+      via a self-destructing energy bubble, holding your item(s).
+  - balance: The "launch" shipping option on the black market is now free shipping.
+  - admin: Admins may now use the new "Create Black Market Item" verb in order to
+      list any item on the black market! Fun for events. Bug your admin today!
+  Cyberboss:
+  - bugfix: Fixed chat interference when you would be put to sleep but were sleep
+      immune.
+  JohnFulpWillard:
+  - rscdel: Removed showing spells as their own tab in the stat panel.
+  - qol: Xenos now show the cost of their abilities when you hover over the action
+      button.
+  itsmeow:
+  - code_imp: Optimized species and antagonist icon loading in the preferences menu
+      on local, speeding up time to open in development.
+  - bugfix: GAGS map preview generation no longer silently errors outside of unit
+      tests due to a compilation error.
+2026-03-04:
+  Absolucy:
+  - bugfix: Fixed setting a custom chat font screwing up some spans, such as robotic
+      speech.
+  DATA-xPUNGED:
+  - rscadd: AIs can now rotate their hologram by using the "block movement" keybind.
+  SmArtKar:
+  - bugfix: Fixed toilets being able to delete objects
+2026-03-05:
+  Jacquerel:
+  - rscadd: You can draw faces onto some bots using a pen, crayon, or spraycan

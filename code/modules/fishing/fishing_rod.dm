@@ -161,13 +161,7 @@
 	. += boxed_message(block.Join("\n"))
 
 	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
-		block = list()
-		block += span_info("Right now, fish caught by this fishing rod have a [get_material_fish_chance(user)]% of being made of its same materials.")
-		var/datum/material/material = get_master_material()
-		if(material.fish_weight_modifier != 1)
-			var/heavier = material.fish_weight_modifier > 1 ? "heavier" : "lighter"
-			block += span_info("Fish made of the same material as this rod tend to be [abs(material.fish_weight_modifier - 1) * 100]% [heavier].")
-		. += boxed_message(block.Join("\n"))
+		. += boxed_message(span_info("Right now, fish caught by this fishing rod have a [get_material_fish_chance(user)]% of being made of its same materials."))
 
 	block = list()
 	if(HAS_TRAIT(src, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
@@ -196,32 +190,19 @@
 
 /obj/item/fishing_rod/apply_single_mat_effect(datum/material/custom_material, amount, multiplier)
 	. = ..()
-	difficulty_modifier += custom_material.fishing_difficulty_modifier * multiplier
-	cast_range += custom_material.fishing_cast_range * multiplier
-	experience_multiplier *= GET_MATERIAL_MODIFIER(custom_material.fishing_experience_multiplier, multiplier)
-	completion_speed_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_completion_speed, multiplier)
-	bait_speed_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_bait_speed_mult, multiplier)
-	deceleration_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_deceleration_mult, multiplier)
-	bounciness_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_bounciness_mult, multiplier)
-	gravity_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
-	var/height_mod = GET_MATERIAL_MODIFIER(custom_material.strength_modifier, multiplier)
-	if(height_mod > 1)
-		bait_height_mult *= height_mod**0.75
-
+	cast_range += round(2 - custom_material.get_property(MATERIAL_DENSITY) / 2) * multiplier
+	bait_speed_mult *= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_REFLECTIVITY) - 4) * 0.1, multiplier)
+	deceleration_mult *= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_HARDNESS) - 4) * 0.1, multiplier)
+	bounciness_mult *= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_FLEXIBILITY) - 4) * 0.1, multiplier)
+	gravity_mult *= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_DENSITY) - 4) * 0.1, multiplier)
 
 /obj/item/fishing_rod/remove_single_mat_effect(datum/material/custom_material, amount, multiplier)
 	. = ..()
-	difficulty_modifier -= custom_material.fishing_difficulty_modifier * multiplier
-	cast_range -= custom_material.fishing_cast_range * multiplier
-	experience_multiplier /= GET_MATERIAL_MODIFIER(custom_material.fishing_experience_multiplier, multiplier)
-	completion_speed_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_completion_speed, multiplier)
-	bait_speed_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_bait_speed_mult, multiplier)
-	deceleration_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_deceleration_mult, multiplier)
-	bounciness_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_bounciness_mult, multiplier)
-	gravity_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
-	var/height_mod = GET_MATERIAL_MODIFIER(custom_material.strength_modifier, multiplier)
-	if(height_mod > 1)
-		bait_height_mult *= 1/(height_mod**0.75)
+	cast_range -= round(2 - custom_material.get_property(MATERIAL_DENSITY) / 2) * multiplier
+	bait_speed_mult /= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_REFLECTIVITY) - 4) * 0.1, multiplier)
+	deceleration_mult /= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_HARDNESS) - 4) * 0.1, multiplier)
+	bounciness_mult /= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_FLEXIBILITY) - 4) * 0.1, multiplier)
+	gravity_mult /= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_DENSITY) - 4) * 0.1, multiplier)
 
 /**
  * Is there a reason why this fishing rod couldn't fish in target_fish_source?

@@ -403,10 +403,6 @@
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-///Can the mob hear
-/mob/proc/can_hear()
-	return !HAS_TRAIT(src, TRAIT_DEAF)
-
 /**
  * Get the list of keywords for policy config
  *

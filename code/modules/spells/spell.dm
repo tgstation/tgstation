@@ -49,7 +49,6 @@
 	overlay_icon_state = "bg_spell_border"
 	active_overlay_icon_state = "bg_spell_border_active_red"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED
-	panel = "Spells"
 
 	/// The sound played on cast.
 	var/sound = null
@@ -363,9 +362,7 @@
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
 	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
-		var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
-		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
-		smoke.start()
+		do_smoke(smoke_amt, owner, get_turf(owner))
 
 	// Send signals last in case they delete the spell
 	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
