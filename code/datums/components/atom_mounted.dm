@@ -25,9 +25,7 @@
 		signals += COMSIG_ATOM_BEFORE_SHUTTLE_MOVE
 	UnregisterSignal(parent, signals)
 
-/**
- * When the wall is examined, explains that it's supporting the linked object.
- */
+/// When the wall is examined, explains that it's supporting the linked object.
 /datum/component/atom_mounted/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
