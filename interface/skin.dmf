@@ -246,7 +246,7 @@ window "input_and_buttons"
 	elem "input_and_buttons"
 		type = MAIN
 		pos = 291,0
-		size = 640x20
+		size = 645x30
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
@@ -254,7 +254,7 @@ window "input_and_buttons"
 	elem "input_buttons_child"
 		type = CHILD
 		pos = 0,0
-		size = 640x20
+		size = 645x30
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #ffc41f
