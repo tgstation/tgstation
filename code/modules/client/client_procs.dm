@@ -584,13 +584,13 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	loot_panel = new(src)
 
 	view_size = new(src)
-	set_fullscreen(logging_in = TRUE)
 	view_size.resetFormat()
 	view_size.setZoomMode()
 	view_size.apply()
 	Master.UpdateTickRate()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 	fully_created = TRUE
+	set_fullscreen()
 
 //////////////
 //DISCONNECT//
@@ -1231,15 +1231,8 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	prefs.write_preference(GLOB.preference_entries[/datum/preference/toggle/fullscreen_mode], !is_on)
 	set_fullscreen()
 
-/client/proc/set_fullscreen(logging_in = FALSE)
-	var/fullscreen = prefs?.read_preference(/datum/preference/toggle/fullscreen_mode)
-	//no need to set every login to not fullscreen, they already aren't.
-	//we also dont need to call attempt_auto_fit_viewport, Login does that for us.
-	if(logging_in)
-		if(fullscreen)
-			winset(src, "mainwindow", "is-fullscreen=[fullscreen ? "true" : "false"]")
-		return
-	winset(src, "mainwindow", "is-fullscreen=[fullscreen ? "true" : "false"]")
+/client/proc/set_fullscreen()
+	winset(src, "mainwindow", "is-fullscreen=[prefs?.read_preference(/datum/preference/toggle/fullscreen_mode) ? "true" : "false"]")
 	attempt_auto_fit_viewport()
 
 /client/verb/toggle_status_bar()
