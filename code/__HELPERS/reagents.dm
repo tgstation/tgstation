@@ -188,7 +188,7 @@
 	var/static/list/reagent_static_list = list()
 	var/list/reagent_list_to_process
 
-	whitelist = whitelist ? whitelist : subtypesof(/datum/reagent)
+	whitelist ||= subtypesof(/datum/reagent)
 
 	if(!reagent_list_to_process)
 		reagent_list_to_process = list()

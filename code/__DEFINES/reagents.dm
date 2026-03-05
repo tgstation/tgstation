@@ -132,7 +132,7 @@
 #define REAGENT_SPAWN_MAINTENANCE_PILL (1<<1)
 
 /// Do not ever spawn in anything random
-#define REAGENT_SPAWN_NO_RANDOM 0
+#define REAGENT_SPAWN_NO_RANDOM NONE
 /// Just spawn in everything, we don't care
 #define REAGENT_SPAWN_ALL_RANDOM_SPAWNS ALL
 
