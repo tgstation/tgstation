@@ -198,8 +198,7 @@
 				continue
 			if(reagent_path::randomized_spawns & randomization_flags)
 				reagent_list_to_process += reagent_path
-
- 	return pick(reagent_list_to_process)
+	return pick(reagent_list_to_process)
 
 ///Returns reagent datum from reagent name string
 /proc/get_chem_id(chem_name)
