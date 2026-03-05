@@ -72,7 +72,9 @@
 		// Some recipes might accept an abstract base type as its reqs - e.g. obj/item/food/grown - signifying it can use any item of that type.
 		// Let's not actually create those abstract base types though, and instead pick a random subtype to use.
 		if(req_path.abstract_type == req_path)
-			req_path = pick(valid_subtypesof(req_path))
+			var/list/subtypes = valid_subtypesof(req_path)
+			if(length(subtypes))
+				req_path = pick(subtypes)
 
 		//it's any other item
 		for(var/iteration in 1 to amount)
