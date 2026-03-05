@@ -259,28 +259,28 @@
 	var/list/tier = fuel.secondary_products
 	switch(power_level)
 		if(1)
-			moderator_internal.gases[tier[1]][MOLES] += scaled_production * 0.95
-			moderator_internal.gases[tier[2]][MOLES] += scaled_production * 0.75
+			moderator_internal.adjust_gas(tier[1], scaled_production * 0.95)
+			moderator_internal.adjust_gas(tier[2], scaled_production * 0.75)
 		if(2)
-			moderator_internal.gases[tier[1]][MOLES] += scaled_production * 1.65
-			moderator_internal.gases[tier[2]][MOLES] += scaled_production
+			moderator_internal.adjust_gas(tier[1], scaled_production * 1.65)
+			moderator_internal.adjust_gas(tier[2], scaled_production)
 			if(moderator_list[/datum/gas/plasma] > 50)
-				moderator_internal.gases[tier[3]][MOLES] += scaled_production * 1.15
+				moderator_internal.adjust_gas(tier[3], scaled_production * 1.15)
 		if(3)
-			moderator_internal.gases[tier[2]][MOLES] += scaled_production * 0.5
-			moderator_internal.gases[tier[3]][MOLES] += scaled_production * 0.45
+			moderator_internal.adjust_gas(tier[2], scaled_production * 0.5)
+			moderator_internal.adjust_gas(tier[3], scaled_production * 0.45)
 		if(4)
-			moderator_internal.gases[tier[3]][MOLES] += scaled_production * 1.65
-			moderator_internal.gases[tier[4]][MOLES] += scaled_production * 1.25
+			moderator_internal.adjust_gas(tier[3], scaled_production * 1.65)
+			moderator_internal.adjust_gas(tier[4], scaled_production * 1.25)
 			if(moderator_list[/datum/gas/plasma] > 50)
-				moderator_internal.gases[tier[5]][MOLES] += scaled_production * 1.15
+				moderator_internal.adjust_gas(tier[5], scaled_production * 1.15)
 		if(5)
-			moderator_internal.gases[tier[4]][MOLES] += scaled_production * 0.65
-			moderator_internal.gases[tier[5]][MOLES] += scaled_production
-			moderator_internal.gases[tier[6]][MOLES] += scaled_production * 0.75
+			moderator_internal.adjust_gas(tier[4], scaled_production * 0.65)
+			moderator_internal.adjust_gas(tier[5], scaled_production)
+			moderator_internal.adjust_gas(tier[6], scaled_production * 0.75)
 		if(6)
-			moderator_internal.gases[tier[5]][MOLES] += scaled_production * 0.35
-			moderator_internal.gases[tier[6]][MOLES] += scaled_production
+			moderator_internal.adjust_gas(tier[5], scaled_production * 0.35)
+			moderator_internal.adjust_gas(tier[6], scaled_production)
 
 /**
  * Perform common fusion actions:

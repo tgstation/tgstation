@@ -145,6 +145,7 @@
 /datum/gas_reaction/miaster/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
 	var/list/water_vapor = cached_gases[/datum/gas/water_vapor]
+	var/list/miasma = cached_gases[/datum/gas/miasma]
 	// As the name says it, it needs to be dry
 	if(water_vapor && water_vapor[MOLES] / air.total_moles() > MIASTER_STERILIZATION_MAX_HUMIDITY)
 		return NO_REACTION
