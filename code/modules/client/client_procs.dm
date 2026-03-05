@@ -1237,9 +1237,9 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	//we also dont need to call attempt_auto_fit_viewport, Login does that for us.
 	if(logging_in)
 		if(fullscreen)
-			winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
+			winset(src, "mainwindow", "is-fullscreen=[fullscreen ? "true" : "false"]")
 		return
-	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
+	winset(src, "mainwindow", "is-fullscreen=[fullscreen ? "true" : "false"]")
 	attempt_auto_fit_viewport()
 
 /client/verb/toggle_status_bar()
