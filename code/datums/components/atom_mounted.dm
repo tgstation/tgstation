@@ -1,16 +1,18 @@
 // This element should be applied to wall-mounted machines/structures, so that if the support structure it's "hanging" from is broken or deconstructed, the wall-hung structure will deconstruct.
 /datum/component/atom_mounted
+	/// The closed turf our object is currently linked to.
+	var/atom/hanging_support_atom
 
 /datum/component/atom_mounted/Initialize(target_structure)
 	. = ..()
 	if(!isobj(parent) || !isatom(target_structure))
 		return COMPONENT_INCOMPATIBLE
-
-	RegisterSignal(target_structure, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	if(isturf(target_structure))
-		RegisterSignal(target_structure, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
+	hanging_support_atom = target_structure
+	RegisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	if(isturf(hanging_support_atom))
+		RegisterSignal(hanging_support_atom, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
 	else
-		RegisterSignal(target_structure, COMSIG_QDELETING, PROC_REF(on_structure_delete))
+		RegisterSignal(hanging_support_atom, COMSIG_QDELETING, PROC_REF(on_structure_delete))
 
 /datum/component/atom_mounted/RegisterWithParent()
 	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, INNATE_TRAIT)
@@ -25,12 +27,18 @@
 		signals += COMSIG_ATOM_BEFORE_SHUTTLE_MOVE
 	UnregisterSignal(parent, signals)
 
-/// When the wall is examined, explains that it's supporting the linked object.
+/datum/component/atom_mounted/Destroy(force)
+	hanging_support_atom = null
+	return ..()
+
+/**
+ * When the wall is examined, explains that it's supporting the linked object.
+ */
 /datum/component/atom_mounted/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	if(parent in view(user.client?.view || world.view, user))
-		examine_list += span_notice("[span_bold("\the [parent]")] is mounted in place.")
+		examine_list += span_notice("\The [hanging_support_atom] is currently supporting [span_bold("\the [parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
 
 /// When the type of turf changes, if it is changing into a floor we should drop our contents
 /datum/component/atom_mounted/proc/on_turf_changing(turf/source, path, new_baseturfs, flags, post_change_callbacks)
@@ -40,13 +48,23 @@
 	if(isopenturf(source) && ispath(path, /turf/open))
 		//we are transforming from plating into anything that isn't space
 		if(isplatingturf(source) && !ispath(path, /turf/open/space))
+			addtimer(CALLBACK(src, PROC_REF(reload_turf), source.x, source.y, source.z), 0.1 SECONDS)
+
 			return
 
 		//we are transforming into plating turf
-		if(ispath(LAZYACCESS(source.baseturfs, length(source.baseturfs)), /turf/open/floor/plating))
+		else if(ispath(LAZYACCESS(source.baseturfs, length(source.baseturfs)), /turf/open/floor/plating))
+			addtimer(CALLBACK(src, PROC_REF(reload_turf), source.x, source.y, source.z), 0.1 SECONDS)
+
 			return
 
 	drop_wallmount()
+
+///Relocate the support atom turf after changing regarding plating
+/datum/component/atom_mounted/proc/reload_turf(x, y, z)
+	PRIVATE_PROC(TRUE)
+
+	hanging_support_atom = locate(x, y, z)
 
 ///When the atom the object is mounted on is destroyed deconstruct
 /datum/component/atom_mounted/proc/on_structure_delete(datum/source, force)
