@@ -532,7 +532,6 @@
 	flags_cover = GLASSESCOVERSEYES
 	tint = INFINITY // You WILL Be blind, no matter what
 	dog_fashion = /datum/dog_fashion/head
-	custom_materials = null
 	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/glasses/blindfold/Initialize(mapload)
@@ -545,7 +544,7 @@
 	icon_state = "trickblindfold"
 	inhand_icon_state = "blindfold"
 	flags_cover = GLASSESCOVERSEYES
-	custom_materials = null
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/glasses/blindfold/white
 	name = "blind personnel blindfold"

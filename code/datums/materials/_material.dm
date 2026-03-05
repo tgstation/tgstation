@@ -135,7 +135,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 		RegisterSignal(source, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_throw_impact_living))
 		RegisterSignal(source, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
 		RegisterSignal(source, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(on_item_attack))
-		RegisterSignal(source, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self))
+		// Allow recipe crafting for stack items
+		if(!isstack(souce))
+			RegisterSignal(source, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self))
 		RegisterSignal(source, COMSIG_ITEM_ATTACK_ZONE, PROC_REF(on_item_attack_living))
 
 /// This proc is called when the material becomes the one the object is composed of the most
