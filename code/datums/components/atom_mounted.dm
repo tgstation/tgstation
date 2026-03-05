@@ -9,7 +9,7 @@
 		return COMPONENT_INCOMPATIBLE
 	hanging_support_atom = target_structure
 	RegisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	if(isclosedturf(hanging_support_atom))
+	if(isturf(hanging_support_atom))
 		RegisterSignal(hanging_support_atom, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
 	else
 		RegisterSignal(hanging_support_atom, COMSIG_QDELETING, PROC_REF(on_structure_delete))
@@ -41,11 +41,21 @@
 		examine_list += span_notice("\The [hanging_support_atom] is currently supporting [span_bold("\the [parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
 
 /// When the type of turf changes, if it is changing into a floor we should drop our contents
-/datum/component/atom_mounted/proc/on_turf_changing(datum/source, path, new_baseturfs, flags, post_change_callbacks)
+/datum/component/atom_mounted/proc/on_turf_changing(turf/source, path, new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 
-	if(ispath(path, /turf/open))
-		drop_wallmount()
+	//if we transforming from open to open turf we can skip deconstruction under some conditions
+	if(isopenturf(source) && ispath(path, /turf/open))
+		//we are transforming from plating into anything that isn't space
+		if(isplatingturf(source) && !ispath(path, /turf/open/space))
+			return
+
+		//we are transforming into plating turf
+		if(ispath(LAZYACCESS(source.baseturfs, length(source.baseturfs)), /turf/open/floor/plating))
+			return
+
+
+	drop_wallmount()
 
 ///When the atom the object is mounted on is destroyed deconstruct
 /datum/component/atom_mounted/proc/on_structure_delete(datum/source, force)
