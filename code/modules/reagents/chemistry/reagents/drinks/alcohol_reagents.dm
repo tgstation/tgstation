@@ -713,15 +713,8 @@
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_metabolize(mob/living/drinker)
 	. = ..()
 	to_chat(drinker, span_notice("You feel gentle warmth spread through your body!"))
-	light_holder = new(drinker)
+	light_holder = drinker.mob_light()
 	light_holder.set_light(3, 0.7, COLOR_TANGERINE_YELLOW) //Tequila Sunrise makes you radiate dim light, like a sunrise!
-
-/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
-	if(QDELETED(light_holder))
-		holder.del_reagent(type) //If we lost our light object somehow, remove the reagent
-	else if(light_holder.loc != drinker)
-		light_holder.forceMove(drinker)
-	return ..()
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
