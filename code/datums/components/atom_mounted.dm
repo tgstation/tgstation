@@ -66,6 +66,8 @@
 
 	hanging_support_atom = locate(x, y, z)
 
+	hanging_support_atom = get_turf(hanging_support_atom)
+
 ///When the atom the object is mounted on is destroyed deconstruct
 /datum/component/atom_mounted/proc/on_structure_delete(datum/source, force)
 	SIGNAL_HANDLER
