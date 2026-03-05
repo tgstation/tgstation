@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Blink, Box, Button, Icon, Section, Stack } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
 import { classes } from 'tgui-core/react';
@@ -41,6 +41,18 @@ const pluralS = (amount: number) => {
 
 const slotIconToColor = (iconName: string): string => {
   return iconMetaByName[iconName]?.color || '#f0f';
+};
+
+const pickRandomMany = <T extends unknown>(items: T[], n: number) => {
+  const result: T[] = [];
+  for (let i = 0; i < n; i += 1) {
+    result.push(pickRandom(items));
+  }
+  return result;
+};
+
+const pickRandom = <T extends unknown>(items: T[]) => {
+  return items[Math.floor(Math.random() * items.length)];
 };
 
 export const SlotMachine = (props) => {
@@ -112,7 +124,31 @@ const getBannerPages = () => [
   BannerStats,
 ];
 
-const WINNING_TEXTS = [null, 'FREE SPIN!', 'BIG PRIZE!', 'JACKPOT!!!'];
+const BANNER_TEXTS = [
+  'SPIN! SPIN!',
+  'WARMED UP!',
+  'HOT SLOTS',
+  'SPIN & WIN!',
+  'BELIEVE IT!',
+  'ZERO 2 HERO!',
+  'JUST ONE MORE',
+  'SPIN OF FATE',
+  'BONUS TIME!',
+  'BORN TO SPIN!',
+  'NICE SPIN!',
+  'NO SPIN NO WIN',
+  'BET & FORGET',
+  'HONK FOR LUCK',
+  'DEBT 4 LIFE',
+];
+
+const WINNING_TEXTS = [
+  null,
+  'FREE SPINS!',
+  'PRIZE!',
+  'BIG PRIZE!',
+  'JACKPOT!!!',
+];
 
 const Banner = () => {
   const { data } = useBackend<BackendData>();
@@ -150,8 +186,18 @@ type BannerTitleProps = {
 
 const BannerTitle = (props: BannerTitleProps) => {
   const { data } = useBackend<BackendData>();
-  const defaultText = data.balance <= 0 ? 'INSERT COIN' : 'SPIN! SPIN!';
-  const letters = (props.text || defaultText).split('');
+  const defaultText = useRef(pickRandom(BANNER_TEXTS));
+  let text = props.text;
+  if (!text) {
+    if (data.balance <= 0) {
+      text = 'INSERT COIN';
+    } else if (data.balance <= 5) {
+      text = 'ONE LAST SPIN';
+    } else {
+      text = defaultText.current;
+    }
+  }
+  const letters = text.split('');
   return (
     <div className={'SlotMachine__BannerTitle'}>
       {letters.map((letter, i) => (
@@ -163,6 +209,24 @@ const BannerTitle = (props: BannerTitleProps) => {
 
 const BannerOnlyFewCreds = () => {
   const { data } = useBackend<BackendData>();
+  const variant = useRef(pickRandom([0, 1]));
+
+  if (variant.current === 1) {
+    return (
+      <div>
+        For only{' '}
+        <Blink interval={200} time={200}>
+          <b>{data.cost}</b>
+        </Blink>{' '}
+        credit{pluralS(data.cost)}!
+        <br />
+        <Box inline fontSize={'12px'}>
+          You can fix all your problems!
+        </Box>
+      </div>
+    );
+  }
+
   return (
     <div>
       Only{' '}
@@ -229,20 +293,11 @@ type IconStripProps = {
   spinning?: boolean;
 };
 
-const randomizeIcons = (icons: string[], n: number) => {
-  const result: string[] = [];
-  for (let i = 0; i < n; i += 1) {
-    const icon = icons[Math.floor(Math.random() * icons.length)];
-    result.push(icon);
-  }
-  return result;
-};
-
 const IconStrip = (props: IconStripProps) => {
   const { icons, iconsNeeded, spinning } = props;
 
   const [drawnIcons, setDrawnIcons] = useState([
-    ...randomizeIcons(icons, ICON_STRIP_LENGTH - 3),
+    ...pickRandomMany(icons, ICON_STRIP_LENGTH - 3),
     ...iconsNeeded,
   ]);
 
@@ -250,12 +305,12 @@ const IconStrip = (props: IconStripProps) => {
     if (spinning) {
       setDrawnIcons((drawnIcons) => [
         ...drawnIcons.slice(-3),
-        ...randomizeIcons(icons, ICON_STRIP_LENGTH - 6),
+        ...pickRandomMany(icons, ICON_STRIP_LENGTH - 6),
         ...iconsNeeded,
       ]);
     } else {
       setDrawnIcons([
-        ...randomizeIcons(icons, ICON_STRIP_LENGTH - 3),
+        ...pickRandomMany(icons, ICON_STRIP_LENGTH - 3),
         ...iconsNeeded,
       ]);
     }

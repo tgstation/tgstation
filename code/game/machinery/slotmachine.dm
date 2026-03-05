@@ -1,7 +1,8 @@
 /*******************************\
-|   Slot Machines |
-|   Original code by Glloyd |
-|   Tgstation port by Miauw |
+|   SLOT MACHINES               |
+|   Original code by Glloyd     |
+|   Tgstation port by Miauw     |
+|   Tgui spin by stylemistake   |
 \*******************************/
 
 #define SPIN_PRICE 5
@@ -25,13 +26,13 @@
 	circuit = /obj/item/circuitboard/computer/slot_machine
 	light_color = LIGHT_COLOR_BROWN
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON // don't need to be literate to play slots
-	var/money = 3000 //How much money it has CONSUMED
+	var/money = 3000 // How much money it has CONSUMED
 	var/plays = 0
 	var/working = FALSE
-	var/winning = 0 //0 - default, 1 - freespin, 2 - big cash, 3 - jackpot
-	var/balance = 0 //How much money is in the machine, ready to be CONSUMED.
+	var/winning = 0 // 0 - default, 1 - freespin, 2 - prize, 3 - big prize, 4 - jackpot
+	var/balance = 0 // How much money is in the machine, ready to be CONSUMED.
 	var/jackpots = 0
-	var/paymode = HOLOCHIP //toggles between HOLOCHIP/COIN, defined above
+	var/paymode = HOLOCHIP // toggles between HOLOCHIP/COIN, defined above
 	var/cointype = /obj/item/coin/iron //default cointype
 	/// Icons that can be displayed by the slot machine.
 	var/static/list/icons = list(
@@ -243,6 +244,10 @@
 
 	update_appearance()
 
+	// Play the lever pull sound and a reel spin sound after a short delay
+	playsound(src, 'sound/machines/lever/lever_start.ogg', 50)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/machines/roulette/roulettewheel.ogg', 20), 0.3 SECONDS)
+
 	// Randomize reels to get the new final state.
 	randomize_reels()
 
@@ -289,7 +294,7 @@
 		bang.arm_grenade(null, 1 SECONDS)
 
 	else if(check_jackpot(JACKPOT_SEVENS))
-		winning = 3
+		winning = 4
 		var/prize = money + JACKPOT
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] [MONEY_NAME]!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
@@ -309,7 +314,7 @@
 				sleep(REEL_DEACTIVATE_DELAY)
 
 	else if(linelength == 5)
-		winning = 2
+		winning = 3
 		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand [MONEY_NAME]!'")
 		give_money(BIG_PRIZE)
 		if(isliving(user) && (user in viewers(src)))
@@ -333,11 +338,12 @@
 	else
 		winning = 0
 		balloon_alert(user, "no luck!")
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50)
 		did_player_win = FALSE
 		if(isliving(user) && (user in viewers(src)))
 			var/mob/living/living_user = user
 			living_user.add_mood_event("slots", /datum/mood_event/slots/loss)
+
+	playsound(src, 'sound/machines/lever/lever_stop.ogg', 50)
 
 	SStgui.update_uis(src)
 	addtimer(CALLBACK(src, PROC_REF(clear_winning)), 3 SECONDS)

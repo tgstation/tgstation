@@ -53,6 +53,7 @@
   font-size: 26px;
   font-weight: bold;
   font-family: 'Courier New', Courier, monospace;
+  white-space: pre;
 }
 
 .SlotMachine__BannerTitle span {
@@ -62,8 +63,8 @@
   animation-composition: replace, add;
   position: relative;
   display: inline-block;
-  padding: 0 0.12em;
-  @for $i from 1 through 12 {
+  padding: 0 0.075em;
+  @for $i from 1 through 14 {
     &:nth-child(#{$i}) {
       animation-delay: $i * -0.2s;
     }
