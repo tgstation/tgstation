@@ -60,9 +60,12 @@
 	. = ..()
 	if(!map_object)
 		map_object = my_map.fetch_minimap_object(editing_z, my_map.minimap_flags)
-	active = !active
 
-	if(active)
+	if(!active)
+		if(locate(/atom/movable/screen/minimap) in owner.client.screen) //This seems like the most effective way to do this without some wacky code
+			to_chat(owner, span_warning("You already have a minimap open!"))
+			return FALSE
+		active = !active
 		owner.client.screen += map_object
 		owner.client.screen += drawing_tools
 		if(length(SSmapping.get_connected_levels(editing_z)) > 1)
@@ -70,6 +73,8 @@
 			owner.client.screen += z_up
 			owner.client.screen += z_down
 		return
+
+	active = !active
 	owner.client.screen -= map_object
 	owner.client.screen -= drawing_tools
 	owner.client.screen -= z_indicator
@@ -167,6 +172,7 @@
 	desc = "Draw using a color. Drag to draw a line, right click to place a dot. Right click this button to unselect."
 	// color that this draw tool will be drawing in
 	color = COLOR_PINK
+	///last thing this tool has drawn, stored so it can be reverted with right click
 	var/list/last_drawn
 	///temporary existing list used to calculate a line between the start of a click and the end of a click
 	var/list/starting_coords
