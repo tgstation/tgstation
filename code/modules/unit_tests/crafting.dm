@@ -55,7 +55,7 @@
 		for(var/index in 1 to amount)
 			new spawn_path(turf)
 
-	for(var/req_path, amount in recipe.reqs) //spawn items and reagents
+	for(var/datum/req_path, amount in recipe.reqs) //spawn items and reagents
 		if(ispath(req_path, /datum/reagent)) //it's a reagent
 			if(!bottomless_cup.reagents.has_reagent(req_path, amount))
 				bottomless_cup.reagents.add_reagent(req_path, amount + 1, no_react = TRUE)
@@ -68,6 +68,11 @@
 		if(ispath(req_path, /obj/item/stack)) //it's a stack
 			new req_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
+
+		// Some recipes might accept an abstract base type as its reqs - e.g. obj/item/food/grown - signifying it can use any item of that type.
+		// Let's not actually create those abstract base types though, and instead pick a random subtype to use.
+		if(req_path.abstract_type == req_path)
+			req_path = pick(valid_subtypesof(req_path))
 
 		//it's any other item
 		for(var/iteration in 1 to amount)
