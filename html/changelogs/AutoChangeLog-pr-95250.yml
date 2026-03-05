@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - rscadd: "You can now deploy, undeploy, activate & deactivate other people's MODsuit via the strip menu"
