@@ -2,11 +2,8 @@ import { useEffect, useState } from 'react';
 import { Blink, Box, Button, Icon, Section, Stack } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
 import { classes } from 'tgui-core/react';
-import { createLogger } from 'tgui/logging';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-
-const logger = createLogger('SlotMachine');
 
 type Reel = {
   icons: string[];
@@ -81,7 +78,7 @@ export const SlotMachine = (props) => {
                 </Button>
               }
             >
-              <Box inline fontSize={2}>
+              <Box textAlign={'center'} fontSize={2}>
                 {formatMoney(balance)} cr
               </Box>
             </Section>
