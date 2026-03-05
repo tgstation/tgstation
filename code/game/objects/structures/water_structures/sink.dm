@@ -296,7 +296,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 
 /obj/item/wallframe/sinkframe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
-	if(istype(tool, /obj/item/stock_parts/water_recycler))
+	if(istype(tool, /obj/item/stock_parts/water_recycler) && result_path == /obj/structure/sink/greyscale)
 		qdel(tool)
 		result_path = /obj/structure/sink/greyscale/filled
 		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
