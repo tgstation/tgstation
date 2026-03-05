@@ -1,19 +1,10 @@
-import {
-  Blink,
-  Box,
-  Button,
-  Flex,
-  Icon,
-  Section,
-  Stack,
-} from 'tgui-core/components';
-
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Blink, Box, Button, Icon, Section, Stack } from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
 import { classes } from 'tgui-core/react';
 import { createLogger } from 'tgui/logging';
-import { formatMoney } from 'tgui-core/format';
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
 
 const logger = createLogger('SlotMachine');
 
@@ -69,7 +60,7 @@ export const SlotMachine = (props) => {
         <Section>
           <div className={'SlotMachine__Reels'}>
             {reels.map((reel, i) => (
-              <div className={'SlotMachine__Reel'}>
+              <div key={i} className={'SlotMachine__Reel'}>
                 <IconStrip
                   icons={icons}
                   iconsNeeded={reel.icons}
@@ -161,7 +152,9 @@ type BannerTitleProps = {
 };
 
 const BannerTitle = (props: BannerTitleProps) => {
-  const letters = (props.text || 'SPIN! SPIN!').split('');
+  const { data } = useBackend<BackendData>();
+  const defaultText = data.balance <= 0 ? 'INSERT COIN' : 'SPIN! SPIN!';
+  const letters = (props.text || defaultText).split('');
   return (
     <div className={'SlotMachine__BannerTitle'}>
       {letters.map((letter, i) => (
