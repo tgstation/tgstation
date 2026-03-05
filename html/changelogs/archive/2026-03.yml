@@ -23,8 +23,23 @@
   Cyberboss:
   - bugfix: Fixed chat interference when you would be put to sleep but were sleep
       immune.
+  JohnFulpWillard:
+  - rscdel: Removed showing spells as their own tab in the stat panel.
+  - qol: Xenos now show the cost of their abilities when you hover over the action
+      button.
   itsmeow:
   - code_imp: Optimized species and antagonist icon loading in the preferences menu
       on local, speeding up time to open in development.
   - bugfix: GAGS map preview generation no longer silently errors outside of unit
       tests due to a compilation error.
+2026-03-04:
+  Absolucy:
+  - bugfix: Fixed setting a custom chat font screwing up some spans, such as robotic
+      speech.
+  DATA-xPUNGED:
+  - rscadd: AIs can now rotate their hologram by using the "block movement" keybind.
+  SmArtKar:
+  - bugfix: Fixed toilets being able to delete objects
+2026-03-05:
+  Jacquerel:
+  - rscadd: You can draw faces onto some bots using a pen, crayon, or spraycan

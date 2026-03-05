@@ -6,7 +6,6 @@
 	button_icon_state = "unsettle"
 	background_icon_state = "bg_void"
 	overlay_icon_state = null
-	panel = null
 	spell_requirements = NONE
 	cooldown_time = 12 SECONDS
 	cast_range = 9
@@ -82,7 +81,6 @@
 	background_icon_state = "bg_void"
 	button_icon = 'icons/mob/actions/actions_voidwalker.dmi'
 	button_icon_state = "telepathy"
-	panel = null
 	overlay_icon_state = null
 
 /datum/action/cooldown/spell/list_target/telepathy/voidwalker/sunwalker

@@ -23,8 +23,6 @@ var current_tab = null;
 //with just "loading" to not appear broken.
 var mc_tab_parts = [["Loading..."]];
 var href_token = null;
-var spells = [];
-var spell_tabs = [];
 var verb_tabs = [];
 var verbs = [["", ""]]; // list with a list inside
 var tickets = [];
@@ -211,21 +209,6 @@ function TakeTabFromByond(tab) {
   Byond.sendMessage("Remove-Tabs", { tab: tab });
 }
 
-function spell_cat_check(cat) {
-  var spells_in_cat = 0;
-  var spellcat = "";
-  for (var s = 0; s < spells.length; s++) {
-    var spell = spells[s];
-    spellcat = spell[0];
-    if (spellcat == cat) {
-      spells_in_cat++;
-    }
-  }
-  if (spells_in_cat < 1) {
-    removeStatusTab(cat);
-  }
-}
-
 function tab_change(tab) {
   if (tab == current_tab) return;
   if (document.getElementById(current_tab))
@@ -234,15 +217,12 @@ function tab_change(tab) {
   set_byond_tab(tab);
   if (document.getElementById(tab))
     document.getElementById(tab).className = "button active"; // make current button active
-  var spell_tabs_thingy = spell_tabs.includes(tab);
   var verb_tabs_thingy = verb_tabs.includes(tab);
   statcontentdiv.className = "statcontent";
   if (tab == "Status") {
     draw_status();
   } else if (tab == "MC") {
     draw_mc();
-  } else if (spell_tabs_thingy) {
-    draw_spells(tab);
   } else if (verb_tabs_thingy) {
     draw_verbs(tab);
   } else if (tab == "Debug Stat Panel") {
@@ -655,31 +635,6 @@ function draw_interviews() {
   document.getElementById("statcontent").appendChild(table);
 }
 
-function draw_spells(cat) {
-  statcontentdiv.textContent = "";
-  var table = document.createElement("table");
-  for (var i = 0; i < spells.length; i++) {
-    var part = spells[i];
-    if (part[0] != cat) continue;
-    var tr = document.createElement("tr");
-    var td1 = document.createElement("td");
-    td1.textContent = part[1];
-    var td2 = document.createElement("td");
-    if (part[3]) {
-      var a = document.createElement("a");
-      a.href = "byond://?src=" + part[3] + ";statpanel_item_click=left";
-      a.textContent = part[2];
-      td2.appendChild(a);
-    } else {
-      td2.textContent = part[2];
-    }
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    table.appendChild(tr);
-  }
-  document.getElementById("statcontent").appendChild(table);
-}
-
 function make_verb_onclick(command) {
   return function () {
     run_after_focus(function () {
@@ -822,17 +777,6 @@ function add_verb_list(payload) {
   }
 }
 
-function init_spells() {
-  var cat = "";
-  for (var i = 0; i < spell_tabs.length; i++) {
-    cat = spell_tabs[i];
-    if (cat.length > 0) {
-      verb_tabs.push(cat);
-      createStatusTab(cat);
-    }
-  }
-}
-
 document.addEventListener("mouseup", restoreFocus);
 document.addEventListener("keyup", restoreFocus);
 
@@ -844,23 +788,6 @@ if (!current_tab) {
 window.onload = function () {
   Byond.sendMessage("Update-Verbs");
 };
-
-Byond.subscribeTo("update_spells", function (payload) {
-  spell_tabs = payload.spell_tabs;
-  var do_update = false;
-  if (spell_tabs.includes(current_tab)) {
-    do_update = true;
-  }
-  init_spells();
-  if (payload.actions) {
-    spells = payload.actions;
-    if (do_update) {
-      draw_spells(current_tab);
-    }
-  } else {
-    remove_spells();
-  }
-});
 
 Byond.subscribeTo("remove_verb_list", function (v) {
   var to_remove = v;
@@ -930,29 +857,6 @@ Byond.subscribeTo("update_mc", function (payload) {
 
   if (current_tab == "MC") {
     draw_mc();
-  }
-});
-
-Byond.subscribeTo("remove_spells", function () {
-  for (var s = 0; s < spell_tabs.length; s++) {
-    removeStatusTab(spell_tabs[s]);
-  }
-});
-
-Byond.subscribeTo("init_spells", function () {
-  var cat = "";
-  for (var i = 0; i < spell_tabs.length; i++) {
-    cat = spell_tabs[i];
-    if (cat.length > 0) {
-      verb_tabs.push(cat);
-      createStatusTab(cat);
-    }
-  }
-});
-
-Byond.subscribeTo("check_spells", function () {
-  for (var v = 0; v < spell_tabs.length; v++) {
-    spell_cat_check(spell_tabs[v]);
   }
 });
 
