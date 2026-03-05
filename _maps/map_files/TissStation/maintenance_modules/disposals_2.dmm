@@ -123,7 +123,7 @@
 	dir = 8
 	},
 /obj/machinery/recycler{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/window/spawner/directional/north{
 	pixel_y = 4

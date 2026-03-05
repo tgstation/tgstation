@@ -954,7 +954,7 @@
 "NN" = (
 /obj/structure/transit_tube/crossing/horizontal,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "Of" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,

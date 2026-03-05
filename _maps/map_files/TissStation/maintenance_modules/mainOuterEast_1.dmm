@@ -458,9 +458,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "si" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
+/obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -850,6 +848,7 @@
 /area/station/commons/fitness/recreation/bowling)
 "Me" = (
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/eighties,
 /area/station/commons/fitness/recreation/bowling)
 "Mr" = (
