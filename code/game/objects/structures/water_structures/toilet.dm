@@ -107,7 +107,8 @@
 		return
 	if(gone in fishes)
 		LAZYREMOVE(fishes, gone)
-		return
+	else if(gone == stuck_item)
+		stuck_item = null
 
 /obj/structure/toilet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -234,6 +235,7 @@
 /obj/structure/toilet/dump_contents()
 	for(var/obj/toilet_item in (cistern_items + fishes))
 		toilet_item.forceMove(drop_location())
+	stuck_item?.forceMove(drop_location())
 
 /obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
 	dump_contents()

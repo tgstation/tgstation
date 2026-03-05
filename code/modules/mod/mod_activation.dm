@@ -50,11 +50,7 @@
 		balloon_alert(user, "currently [active ? "unsealing" : "sealing"]!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
-	var/deploy = TRUE
-	for(var/obj/item/part as anything in get_parts())
-		if(part.loc != src)
-			deploy = FALSE
-			break
+	var/deploy = check_retracted()
 	wearer.visible_message(span_notice("[wearer]'s [src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
 		span_notice("[src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
@@ -324,5 +320,13 @@
 	control_activation(is_on = TRUE)
 	for(var/obj/item/part as anything in get_parts())
 		deploy(null, part, instant = TRUE)
+
+/// Checks if the suit is fully retracted, with no parts outside
+/obj/item/mod/control/proc/check_retracted()
+	for(var/obj/item/part as anything in get_parts())
+		if(part.loc != src)
+			return FALSE
+	return TRUE
+
 
 #undef MOD_ACTIVATION_STEP_FLAGS
