@@ -3066,7 +3066,7 @@
 	name = "Herbal Liqueur"
 	description = "A liqueur made with a wide variety of herbs and spices, infused into spirit through both distillation and maceration. So many, in fact, that trying to pick them out by scent and taste seems nearly impossible..."
 	boozepwr = 75
-	color = "#95be7dff"
+	color = "#95be7d"
 	quality = DRINK_NICE
 	taste_description = "confounding herbaceousness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3083,7 +3083,7 @@
 	name = "Bartender's Handshake"
 	description = "A tradition of somewhat inconsistent providence that may have something to do with an obscure challenge-coin based marketing scheme, this drink is a way for bartenders to greet and test each other's mettle via a drink that only a fellow barkeep could appreciate. While there are nearly as many versions of this drink as there are bars, this version tests one's palate by combining two of the most bitter ingredients you're likely to find in a bar."
 	boozepwr = 50
-	color = "#8d0c0cff"
+	color = "#270101"
 	quality = DRINK_VERYGOOD
 	taste_description = "pretentious bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3101,7 +3101,7 @@
 	name = "Brandy Crusta"
 	description = "The far more gussied up ancestor of the Sidecar, this heavily garnished cocktail is the grandparent of many essential drinks served today."
 	boozepwr = 30
-	color = "#f8c51cff"
+	color = "#f8c51c"
 	quality = DRINK_VERYGOOD
 	taste_description = "orangy sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3110,7 +3110,7 @@
 	name = "Casino"
 	description = "A gin-heavy classic. Juniper is tempered by scant amounts of citrus and sweetened with liqueur."
 	boozepwr = 50
-	color = "#fdee65ff"
+	color = "#fdee65"
 	quality = DRINK_GOOD
 	taste_description = "sweet juniper"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3119,7 +3119,7 @@
 	name = "Garibaldi"
 	description = "Named for the 19th century Italian general, the red-orange color scheme of this drink mimics the shirts of those who followed him into battles all across the world."
 	boozepwr = 15
-	color = "#f77e2eff"
+	color = "#f77e2e"
 	quality = DRINK_GOOD
 	taste_description = "bitter oranges"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3128,7 +3128,7 @@
 	name = "Improved Whiskey Cocktail"
 	description = "The Classic Whiskey cocktail improved by the addition of absinthe and maraschino, as well as swapping the typical orange peel garnish for lemon."
 	boozepwr = 65
-	color = "#b8a385ff"
+	color = "#b8a385"
 	quality = DRINK_VERYGOOD
 	taste_description = "nutty anise-scented whiskey"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3137,7 +3137,7 @@
 	name = "Jungle Bird"
 	description = "This late-tiki concoction leverages the brilliant combination of bitter liqueur and pineapple juice to make a remarkably well-balanced cocktail."
 	boozepwr = 25
-	color = "#dab870ff"
+	color = "#da8370"
 	quality = DRINK_VERYGOOD
 	taste_description = "pineapple and quinine"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3196,7 +3196,7 @@
 	name = "Poet's Dream"
 	description = "This cocktail takes a classic martini base and twists it into a deliciously sweet and herbal mode. Nanotrasen regulations state not to drink this too soon before sleep, or risk 'oneiric encroachment,' whatever that means."
 	boozepwr = 50
-	color = "#d4b14fff"
+	color = "#d4b14f"
 	quality = DRINK_GOOD
 	taste_description = "honeyed herbal gin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3205,7 +3205,7 @@
 	name = "Pousse Cafe"
 	description = "An aesthetically beautiful cocktail made from the careful and meticulous layering of various liquors. Extremely annoying to make."
 	boozepwr = 50
-	color = "#93cf33ff"
+	color = "#93cf33"
 	quality = DRINK_FANTASTIC
 	taste_description = "a cascade of varying liqueurs"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3214,7 +3214,7 @@
 	name = "Spritz" // If someone wants to add an elderflower spritz or something else like that, just rename this to spritz al bitter or whatever
 	description = "This bittersweet and refreshing aperitif brings to mind the beautiful summer sunsets of venice."
 	boozepwr = 20
-	color = "#ee714bff"
+	color = "#ee714b"
 	quality = DRINK_GOOD
 	taste_description = "bittersweet refreshment"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3228,7 +3228,7 @@
 	name = "Vieux Carré"
 	description = "One of the best of many great cocktails to come out of New Orleans, this drink does honor to that city's French Quarter both in name and in taste."
 	boozepwr = 60
-	color = "#b43110ff"
+	color = "#b43110"
 	quality = DRINK_VERYGOOD
 	taste_description = "Creole hospitality"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
