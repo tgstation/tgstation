@@ -40,3 +40,6 @@
   - rscadd: AIs can now rotate their hologram by using the "block movement" keybind.
   SmArtKar:
   - bugfix: Fixed toilets being able to delete objects
+2026-03-05:
+  Jacquerel:
+  - rscadd: You can draw faces onto some bots using a pen, crayon, or spraycan
