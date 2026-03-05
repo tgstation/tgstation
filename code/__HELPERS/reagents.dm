@@ -184,23 +184,30 @@
 		return null
 
 ///Returns a random reagent object, with the option to blacklist reagents.
-/proc/get_random_reagent_id(list/blacklist)
-	var/static/list/reagent_static_list = list() //This is static, and will be used by default if a blacklist is not passed.
+/proc/get_random_reagent_id(randomization_flags = REAGENT_SPAWN_RANDOM_PRODUCERS, list/blacklist)
+	var/static/list/reagent_static_list = list()
 	var/list/reagent_list_to_process
-	if(blacklist) //If we do have a blacklist, we recompile a new list with the excluded reagents not present and pick from there.
-		reagent_list_to_process = list()
-	else
-		reagent_list_to_process = reagent_static_list
 
-	if(!reagent_list_to_process.len)
+	var/cache_key = "[randomization_flags]" //small reminder that bitflags are integers and will be mistaken as list positions
+	reagent_list_to_process = reagent_static_list.Find(cache_key)
+	if(!reagent_list_to_process)
+		reagent_list_to_process = list()
+
 		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
-			if(is_path_in_list(reagent_path, blacklist))
-				continue
-			if(initial(reagent_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
+			if(reagent_path::randomized_spawns & randomization_flags)
 				reagent_list_to_process += reagent_path
 
-	var/picked_reagent = pick(reagent_list_to_process)
-	return picked_reagent
+		reagent_static_list[cache_key] = reagent_list_to_process
+
+	if(blacklist)
+		var/blacklisted_list = list()
+		for(var/datum/reagent/reagent_path as anything in reagent_list_to_process)
+			if(is_path_in_list(reagent_path, blacklist))
+				continue
+			blacklisted_list += reagent_path
+		reagent_list_to_process = blacklisted_list
+
+ 	return pick(reagent_list_to_process)
 
 ///Returns a random reagent consumable ethanol object minus blacklisted reagents
 /proc/get_random_drink_id()

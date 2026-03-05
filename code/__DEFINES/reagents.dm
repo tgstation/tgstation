@@ -126,6 +126,16 @@
 /// Supercedes [REAGENT_REVERSE_METABOLISM].
 #define REAGENT_UNAFFECTED_BY_METABOLISM (1<<10)
 
+/// Spawn from features that can produce an infinite amount of something, like geysers, strange seeds and bees
+#define REAGENT_SPAWN_RANDOM_PRODUCERS (1<<0)
+/// Spawn from maintpills (only real maintpills, not the fake mapped or purchased kind)
+#define REAGENT_SPAWN_MAINTENANCE_PILL (1<<1)
+
+/// Do not ever spawn in anything random
+#define REAGENT_SPAWN_NO_RANDOM 0
+/// Just spawn in everything, we don't care
+#define REAGENT_SPAWN_ALL_RANDOM_SPAWNS ALL
+
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion
 #define REACTION_CLEAR_IMPURE (1<<0)
