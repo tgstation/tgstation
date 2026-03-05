@@ -1,0 +1,14 @@
+author: "GuffyWuffy"
+delete-after: True
+changes:
+  - map: "Tisserand: fixed camera in engine pre-chamber"
+  - map: "Tisserand: fixed recycler direction"
+  - map: "Tisserand: added fancy tech items in storage"
+  - map: "Tisserand: fixed maint to department accesses"
+  - map: "Tisserand: fixed bowling alley power and pipes"
+  - map: "Tisserand: medical walkway alarms now accessible"
+  - map: "Tisserand: added exits to space to departmental walkways"
+  - map: "Tisserand: added sinks to break rooms"
+  - map: "Tisserand: added navigation verbs to bathrooms"
+  - map: "Tisserand: added rechargers to escape shuttle cockpit"
+  - map: "Tisserand: added additional secure morgue in coroner's office"
