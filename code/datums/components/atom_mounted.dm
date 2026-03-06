@@ -4,9 +4,10 @@
 	var/atom/hanging_support_atom
 
 /datum/component/atom_mounted/Initialize(target_structure)
-	. = ..()
 	if(!isobj(parent) || !isatom(target_structure))
 		return COMPONENT_INCOMPATIBLE
+	. = ..()
+
 	hanging_support_atom = target_structure
 	RegisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	if(isturf(hanging_support_atom))
@@ -28,6 +29,7 @@
 	UnregisterSignal(parent, signals)
 
 /datum/component/atom_mounted/Destroy(force)
+	UnregisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE)
 	hanging_support_atom = null
 	return ..()
 
@@ -46,37 +48,35 @@
 
 	//if we transforming from open to open turf we can skip deconstruction under some conditions
 	if(isopenturf(source) && ispath(path, /turf/open))
+		var/reload = FALSE
+
 		//we are transforming from plating into anything that isn't space
 		if(isplatingturf(source) && !ispath(path, /turf/open/space))
-			addtimer(CALLBACK(src, PROC_REF(reload_turf), source.x, source.y, source.z), 0.1 SECONDS)
-
-			return
-
+			reload = TRUE
 		//we are transforming into plating turf
 		else if(ispath(LAZYACCESS(source.baseturfs, length(source.baseturfs)), /turf/open/floor/plating))
-			addtimer(CALLBACK(src, PROC_REF(reload_turf), source.x, source.y, source.z), 0.1 SECONDS)
+			reload = TRUE
 
+		if(reload)
+			var/obj/target = parent
+			qdel(src)
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/obj, find_and_mount_on_atom)), 0.1 SECONDS)
 			return
 
 	drop_wallmount()
 
-///Relocate the support atom turf after changing regarding plating
-/datum/component/atom_mounted/proc/reload_turf(x, y, z)
-	PRIVATE_PROC(TRUE)
-
-	hanging_support_atom = locate(x, y, z)
-
-	hanging_support_atom = get_turf(hanging_support_atom)
-
 ///When the atom the object is mounted on is destroyed deconstruct
 /datum/component/atom_mounted/proc/on_structure_delete(datum/source, force)
 	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
 
 	drop_wallmount()
 
 /// If we get dragged from our wall (by a singulo for instance) we should deconstruct
 /datum/component/atom_mounted/proc/on_move(datum/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
+
 	// If we're having our lighting messed with we're likely to get dragged about
 	// That shouldn't lead to a decon
 	if(HAS_TRAIT(parent, TRAIT_LIGHTING_DEBUGGED))
@@ -86,6 +86,7 @@
 ///Called when the object is about to be shuttle rotated so we have to delete ourself and mount again later
 /datum/component/atom_mounted/proc/detach(datum/source, newT, rotation, move_mode, moving_dock)
 	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
 
 	qdel(src)
 
