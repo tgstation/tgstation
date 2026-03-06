@@ -428,10 +428,12 @@
 	// With materials assigned we need to update our forces.
 	if (wielded)
 		// Materials modify force multiplicatively! Most of the time, for snowflakes they gotta handle it themselves
-		force_unwielded *= source.force / force_wielded
+		if (!isnull(force_wielded))
+			force_unwielded *= source.force / force_wielded
 		force_wielded = source.force
 	else
-		force_wielded *= source.force / force_unwielded
+		if (!isnull(force_unwielded))
+			force_wielded *= source.force / force_unwielded
 		force_unwielded = source.force
 
 /**

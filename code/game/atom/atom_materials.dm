@@ -7,7 +7,6 @@
 	/// Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
 	var/material_modifier = 1
 	/// List of material slots to be used to control material behaviors instead of default ones
-	/// This uses a stringlist cache and should not be accessed directly, use get_material_from_slot or get/set_material_slot(s) instead
 	var/list/datum/material_slot/material_slots = null
 
 /// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
@@ -49,10 +48,6 @@
 			return
 
 	sortTim(materials, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
-	// Don't sort as order can matter for what materials get assigned to which slot
-	// Safe to stringlist as it only contains slot typepaths to material IDs without any instances
-	if(!isnull(material_slots))
-		material_slots = string_list(material_slots)
 	apply_material_effects(materials)
 
 ///proc responsible for applying material effects when setting materials.
@@ -121,16 +116,33 @@
 		var/datum/material/material = SSmaterials.get_material(material_slots[slot_type])
 		// Not present/initialized
 		if (material && custom_materials[material])
-			slot.on_removed(src, material, custom_materials[material], get_material_multiplier(material, custom_materials, custom_materials.Find(material)))
+			var/list/materials_slots = get_slots_of_material(material)
+			var/slot_sum = 0
+			if (length(materials_slots) > 1)
+				for (var/other_slot_type in materials_slots)
+					var/datum/material_slot/other_slot = SSmaterials.material_slots[other_slot_type]
+					slot_sum += other_slot.material_amount
+			slot.on_removed(src, material, custom_materials[material] * (slot_sum > 0 ? slot.material_amount / slot_sum : 1), get_material_multiplier(material, custom_materials, custom_materials.Find(material)))
 
-	material_slots = material_slots.Copy()
-	material_slots[slot_type] = new_material
-	material_slots = string_list(material_slots)
+
+	// Don't store materials directly, only their IDs
+	if (istype(new_material, /datum/material))
+		var/datum/material/as_material = new_material
+		material_slots[slot_type] = as_material.id
+	else
+		material_slots[slot_type] = new_material
 
 	var/datum/material_slot/slot = SSmaterials.material_slots[slot_type]
 	var/datum/material/material = istype(new_material, /datum/material) ? new_material : SSmaterials.get_material(new_material)
-	if (material && custom_materials[material])
-		slot.on_applied(src, material, custom_materials[material], get_material_multiplier(material, custom_materials, custom_materials.Find(material)))
+	if (!material || !custom_materials[material])
+		return
+	var/list/materials_slots = get_slots_of_material(material)
+	var/slot_sum = 0
+	if (length(materials_slots) > 1)
+		for (var/other_slot_type in materials_slots)
+			var/datum/material_slot/other_slot = SSmaterials.material_slots[other_slot_type]
+			slot_sum += other_slot.material_amount
+	slot.on_applied(src, material, custom_materials[material] * (slot_sum > 0 ? slot.material_amount / slot_sum : 1), get_material_multiplier(material, custom_materials, custom_materials.Find(material)))
 
 /atom/proc/set_material_slots(list/new_slots)
 	if (length(material_slots))
@@ -138,15 +150,33 @@
 			var/datum/material_slot/slot = SSmaterials.material_slots[slot_type]
 			var/datum/material/material = SSmaterials.get_material(material_id)
 			// Not present/initialized
-			if (material && custom_materials[material])
-				slot.on_removed(src, material, custom_materials[material], get_material_multiplier(material, custom_materials, custom_materials.Find(material)))
+			if (!material || !custom_materials[material])
+				continue
+			var/list/materials_slots = get_slots_of_material(material)
+			var/slot_sum = 0
+			if (length(materials_slots) > 1)
+				for (var/other_slot_type in materials_slots)
+					var/datum/material_slot/other_slot = SSmaterials.material_slots[other_slot_type]
+					slot_sum += other_slot.material_amount
+			slot.on_removed(src, material, custom_materials[material] * (slot_sum > 0 ? slot.material_amount / slot_sum : 1), get_material_multiplier(material, custom_materials, custom_materials.Find(material)))
 
-	material_slots = string_list(new_slots.Copy())
+	if (!length(new_slots))
+		material_slots = null
+		return
+
+	material_slots = new_slots.Copy()
 	for (var/slot_type, material_id in material_slots)
 		var/datum/material_slot/slot = SSmaterials.material_slots[slot_type]
 		var/datum/material/material = SSmaterials.get_material(material_id)
-		if (material && custom_materials[material])
-			slot.on_applied(src, material, custom_materials[material], get_material_multiplier(material, custom_materials, custom_materials.Find(material)))
+		if (!material || !custom_materials[material])
+			continue
+		var/list/materials_slots = get_slots_of_material(material)
+		var/slot_sum = 0
+		if (length(materials_slots) > 1)
+			for (var/other_slot_type in materials_slots)
+				var/datum/material_slot/other_slot = SSmaterials.material_slots[other_slot_type]
+				slot_sum += other_slot.material_amount
+		slot.on_applied(src, material, custom_materials[material] * (slot_sum > 0 ? slot.material_amount / slot_sum : 1), get_material_multiplier(material, custom_materials, custom_materials.Find(material)))
 
 /**
  * A proc that can be used to selectively control the stat changes and effects from a material without affecting the others.
@@ -185,9 +215,19 @@
 		var/from_slot = FALSE
 		if(!isnull(material_slots) && length(deets[MATERIAL_LIST_SLOTS]))
 			from_slot = TRUE
+			var/slot_sum = 0
+			// A material is in multiple slots, we need to cut it up between them
+			if(length(deets[MATERIAL_LIST_SLOTS]) > 1)
+				for(var/slot_type in deets[MATERIAL_LIST_SLOTS])
+					var/datum/material_slot/slot = SSmaterials.material_slots[slot_type]
+					slot_sum += slot.material_amount
+
 			for(var/slot_type in deets[MATERIAL_LIST_SLOTS])
 				var/datum/material_slot/slot = SSmaterials.material_slots[slot_type]
-				do_effects &= slot.on_applied(src, custom_material, mat_amount, multiplier)
+				var/slot_amt = mat_amount
+				if (slot_sum > 0)
+					slot_amt *= slot.material_amount / slot_sum
+				do_effects &= slot.on_applied(src, custom_material, slot_amt, multiplier)
 
 			if(!do_effects && custom_material == main_material)
 				do_main_material = FALSE
@@ -341,8 +381,18 @@
 		var/from_slot = FALSE
 		if(!isnull(material_slots) && length(deets[MATERIAL_LIST_SLOTS]))
 			from_slot = TRUE
+			var/slot_sum = 0
+			// A material is in multiple slots, we need to cut it up between them
+			if(length(deets[MATERIAL_LIST_SLOTS]) > 1)
+				for(var/slot_type in deets[MATERIAL_LIST_SLOTS])
+					var/datum/material_slot/slot = SSmaterials.material_slots[slot_type]
+					slot_sum += slot.material_amount
+
 			for(var/slot_type in deets[MATERIAL_LIST_SLOTS])
 				var/datum/material_slot/slot = SSmaterials.material_slots[slot_type]
+				var/slot_amt = mat_amount
+				if (slot_sum > 0)
+					slot_amt *= slot.material_amount / slot_sum
 				do_effects &= slot.on_removed(src, custom_material, mat_amount, multiplier)
 
 			if(!do_effects && custom_material == main_material)
@@ -432,7 +482,7 @@
 
 /// Tries to fetch a material matching a specific slot
 /atom/proc/get_material_from_slot(slot_type)
-	return material_slots?[slot_type]
+	return SSmaterials.get_material(material_slots?[slot_type])
 
 /// Fetches a copy of all material slots.
 /atom/proc/get_material_slots()

@@ -1,4 +1,5 @@
-//spears
+#define SPEAR_CUSTOM_TIP_PREFIX "spearblank"
+
 /obj/item/spear
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
@@ -114,13 +115,26 @@
 
 	var/datum/material/tip_material = tip.get_master_material()
 	set_material_slot(/datum/material_slot/weapon_head/speartip, tip_material)
-	switch (tip_material)
+	return ..()
+
+/obj/item/spear/set_material_slot(slot_type, new_material)
+	. = ..()
+	if (slot_type != /datum/material_slot/weapon_head/speartip)
+		return
+
+	if (istype(new_material, /datum/material))
+		var/datum/material/as_material = new_material
+		new_material = as_material.type
+
+	switch (new_material)
 		if (/datum/material/alloy/plasmaglass)
 			icon_prefix = "spearplasma"
 		if (/datum/material/alloy/titaniumglass)
 			icon_prefix = "speartitanium"
 		if (/datum/material/alloy/plastitaniumglass)
 			icon_prefix = "spearplastitanium"
+		else
+			icon_prefix = SPEAR_CUSTOM_TIP_PREFIX
 
 	AddComponent(/datum/component/two_handed, \
 		icon_wielded = "[icon_prefix]1", \
@@ -128,10 +142,30 @@
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
 	update_appearance()
-	return ..()
+
+/obj/item/spear/update_overlays()
+	. = ..()
+	if (icon_prefix != SPEAR_CUSTOM_TIP_PREFIX)
+		return
+	var/datum/material/tip_material = get_master_material()
+	var/mutable_appearance/tip_overlay = mutable_appearance(icon, "speartip", appearance_flags = KEEP_APART | RESET_COLOR)
+	tip_overlay.color = tip_material.color
+	. += tip_overlay
+
+/obj/item/spear/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+	. = ..()
+	if (icon_prefix != SPEAR_CUSTOM_TIP_PREFIX)
+		return
+	var/datum/material/tip_material = get_master_material()
+	var/mutable_appearance/tip_overlay = mutable_appearance(icon, "speartip[HAS_TRAIT(src, TRAIT_WIELDED)]", appearance_flags = RESET_COLOR)
+	tip_overlay.color = tip_material.color
+	. += tip_overlay
 
 /obj/item/spear/get_master_material()
-	return get_material_from_slot(/datum/material_slot/weapon_head/speartip) || ..()
+	var/datum/material/tip_material = get_material_from_slot(/datum/material_slot/weapon_head/speartip)
+	if (!tip_material)
+		return ..()
+	return custom_materials[tip_material] ? tip_material : ..()
 
 /obj/item/spear/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(improvised_construction)
@@ -160,6 +194,8 @@
 	armour_penetration /= 2
 
 /datum/material_slot/weapon_head/speartip
+	name = "tip"
+	material_amount = 1.75
 
 /datum/material_slot/weapon_head/speartip/on_applied(obj/item/spear/target, datum/material/material, amount, multiplier)
 	. = ..()
@@ -212,6 +248,55 @@
 	target.throw_range -= (hardness - 4) - (density - 4) * 2
 	target.throw_speed -= floor((hardness - 4) / 2) - (density - 4) * 2
 	return FALSE
+
+/obj/item/wireprod
+	name = "wireprod"
+	desc = "A metal rod with some wire attached to one of the ends, waiting for something sharp."
+	icon = 'icons/obj/weapons/spear.dmi'
+	icon_state = "wireprod"
+	inhand_icon_state = "spearblank"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	icon_angle = -45
+	force = 5
+	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65)
+	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
+	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
+	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
+
+/obj/item/wireprod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/datum/material/shard_mat = null
+	if (istype(tool, /obj/item/shard))
+		shard_mat = tool.get_master_material()
+	else if (istype(tool, /obj/item/stack))
+		shard_mat = tool.get_master_material()
+		if (!(shard_mat.mat_flags & MATERIAL_CLASS_CRYSTAL))
+			shard_mat = null
+
+	if (!shard_mat)
+		return NONE
+
+	var/obj/item/spear/spear = new(drop_location())
+	var/datum/material/rod_material = get_master_material()
+	spear.set_material_slot(/datum/material_slot/handle/spear, get_master_material())
+	spear.set_material_slot(/datum/material_slot/weapon_head/speartip, shard_mat)
+	spear.set_custom_materials(list((rod_material) = custom_materials[rod_material], (shard_mat) = tool.custom_materials[shard_mat]))
+	spear.update_appearance()
+	to_chat(user, span_notice("You attach [tool] to [src]'s tip."))
+
+	if (istype(tool, /obj/item/stack))
+		var/obj/item/stack/stack = tool
+		stack.use(1)
+	else
+		qdel(tool)
+
+	var/was_holding = user.get_held_index_of_item(src)
+	qdel(src)
+	if (was_holding)
+		user.put_in_hands(spear)
+
+#undef SPEAR_CUSTOM_TIP_PREFIX
 
 /obj/item/spear/explosive
 	name = "explosive lance"
@@ -345,6 +430,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	demolition_mod = 0.5
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	material_flags = MATERIAL_EFFECTS
 	force = 13
 	throwforce = 23
 	throw_range = 9
@@ -376,6 +462,7 @@
 	icon_state = "speardragonraw0"
 	icon_prefix = "speardragonraw"
 	base_icon_state = "speardragonraw"
+	material_flags = MATERIAL_EFFECTS
 	demolition_mod = 0.5
 	wound_bonus = 0
 	exposed_wound_bonus = 0
@@ -391,6 +478,8 @@
 
 /obj/item/spear/dragonator_untreated/fire_act(exposed_temperature, exposed_volume)
 	var/obj/item/spear/dragonator/dragonator = new(loc)
+	dragonator.set_material_slots(material_slots)
+	dragonator.set_custom_materials(custom_materials.Copy())
 	playsound(dragonator.loc, 'sound/effects/magic/staff_change.ogg',5)
 	qdel(src)
 
@@ -459,7 +548,7 @@
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "gore", "lance")
 	throwforce = 24
 	embed_type = null //no embedding
-
+	material_flags = MATERIAL_EFFECTS
 	custom_materials = list(
 		/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/alloy/plastitaniumglass = SHEET_MATERIAL_AMOUNT,

@@ -241,7 +241,7 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
 	// Defaults to an iron head, wooden handle mace
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.5, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.5)
-	material_slots = list(/datum/material_slot/weapon_head = /datum/material/iron, /datum/material_slot/handle = /datum/material/wood)
+	material_slots = list(/datum/material_slot/weapon_head/mace = /datum/material/iron, /datum/material_slot/handle = /datum/material/wood)
 	slot_flags = ITEM_SLOT_BELT
 	force = 16
 	w_class = WEIGHT_CLASS_BULKY
@@ -269,6 +269,10 @@
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
 		final_block_chance = 0
 	return ..()
+
+/datum/material_slot/weapon_head/mace
+	name = "mace head"
+	material_amount = 3
 
 /obj/item/sord
 	name = "\improper SORD"

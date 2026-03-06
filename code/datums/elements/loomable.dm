@@ -73,7 +73,6 @@
 /datum/element/loomable/proc/loom_me(obj/item/source, mob/living/user, atom/target)
 	//this allows us to count the amount of times it has successfully used the stack's required amount
 	var/spawning_amount = 0
-	var/list/source_materials = source.custom_materials.Copy()
 	if(isstack(source))
 		var/obj/item/stack/stack_we_use = source
 		while(stack_we_use.amount >= required_amount)

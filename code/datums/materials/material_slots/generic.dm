@@ -2,6 +2,7 @@
 
 /// Generic main/parent type for all weapon heads
 /datum/material_slot/weapon_head
+	name = "weapon head"
 	requirement_type = /datum/material_requirement/solid_material
 
 /datum/material_slot/weapon_head/on_applied(obj/item/target, datum/material/material, amount, multiplier)
@@ -91,15 +92,16 @@
 	affect_throw_impact(source, target, astype(throwing_datum.thrower.resolve(), /mob/living), def_zone, has_contact)
 
 /datum/material_slot/weapon_head/proc/affect_target(obj/item/source, atom/target, mob/living/user, def_zone, skin_contact = TRUE)
-	var/datum/material/source_mat = SSmaterials.get_material(source.get_material_from_slot(type))
+	var/datum/material/source_mat = source.get_material_from_slot(type)
 	SEND_SIGNAL(source_mat, COMSIG_MATERIAL_EFFECT_HIT, source, target, user, def_zone, skin_contact)
 
 /datum/material_slot/weapon_head/proc/affect_throw_impact(obj/item/source, atom/target, mob/living/user, def_zone, skin_contact = TRUE)
-	var/datum/material/source_mat = SSmaterials.get_material(source.get_material_from_slot(type))
+	var/datum/material/source_mat = source.get_material_from_slot(type)
 	SEND_SIGNAL(source_mat, COMSIG_MATERIAL_EFFECT_THROW_IMPACT, source, target, user, def_zone, skin_contact)
 
 /// Main type for all weapon handles
 /datum/material_slot/handle
+	name = "handle"
 	requirement_type = /datum/material_requirement/solid_material
 
 /datum/material_slot/handle/on_applied(obj/item/target, datum/material/material, amount, multiplier)
@@ -186,7 +188,7 @@
 		affect_user(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living))
 
 /datum/material_slot/handle/proc/affect_user(obj/item/source, mob/living/user, mob/living/initiator)
-	var/datum/material/source_mat = SSmaterials.get_material(source.get_material_from_slot(type))
+	var/datum/material/source_mat = source.get_material_from_slot(type)
 	var/arm_dir = IS_LEFT_INDEX(user.active_hand_index) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 	if (!ishuman(user))
 		SEND_SIGNAL(source_mat, COMSIG_MATERIAL_EFFECT_TOUCH, source, user, initiator, arm_dir, TRUE)

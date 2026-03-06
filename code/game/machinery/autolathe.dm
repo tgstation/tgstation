@@ -288,7 +288,7 @@
 
 		var/chosen = tgui_input_list(
 			ui.user,
-			"Select the material to use",
+			"Select the material to use[slot ? " for [LOWER_TEXT(slot.name)]" : ""]",
 			"Material Selection",
 			sort_list(choices),
 		)
