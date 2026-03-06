@@ -243,7 +243,6 @@
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	icon_state = "satchel_bspace"
 	storage_type = /datum/storage/bag/ore/holding
-	custom_materials = null
 
 /obj/item/storage/bag/plants
 	name = "plant bag"

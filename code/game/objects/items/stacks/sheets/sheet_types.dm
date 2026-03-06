@@ -553,6 +553,9 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	pickup_sound = SFX_CLOTH_PICKUP
 	drop_sound = SFX_CLOTH_DROP
 
+/obj/item/stack/sheet/cloth/grind_results()
+	return list(/datum/reagent/cellulose = 20)
+
 /obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
 	. += GLOB.cloth_recipes
@@ -617,7 +620,10 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 
 /obj/item/stack/sheet/cotton/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/loomable, resulting_atom = loom_result, loom_time = loom_time, inherit_materials = TRUE)
+	AddElement(/datum/element/loomable, resulting_atom = loom_result, loom_time = loom_time)
+
+/obj/item/stack/sheet/cotton/grind_results()
+	return list(/datum/reagent/cellulose = 20)
 
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"

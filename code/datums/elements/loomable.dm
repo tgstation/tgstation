@@ -14,8 +14,6 @@
 	var/target_needs_anchoring
 	/// How long it takes to loom the item
 	var/loom_time
-	/// Should materials from the parent item be transfered to the child?
-	var/inherit_materials
 
 /datum/element/loomable/Attach(
 	obj/item/target,
@@ -25,7 +23,6 @@
 	process_completion_verb = "spun",
 	target_needs_anchoring = TRUE,
 	loom_time = 1 SECONDS,
-	inherit_materials = TRUE,
 )
 	. = ..()
 	//currently this element only works for items as we need to call /obj/item/attack_atom()
@@ -37,7 +34,6 @@
 	src.process_completion_verb = process_completion_verb
 	src.target_needs_anchoring = target_needs_anchoring
 	src.loom_time = loom_time
-	src.inherit_materials = inherit_materials
 	RegisterSignal(target, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(try_and_loom_me))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
@@ -104,17 +100,11 @@
 
 	var/atom/new_thing = null
 	if (ispath(resulting_atom, /obj/item/stack))
-		new_thing = new resulting_atom(target.drop_location(), new_amount = spawning_amount, mat_override = inherit_materials ? source_materials : null)
-		user.balloon_alert_to_viewers("[process_completion_verb] [new_thing]")
-		return
-
-	for(var/mat_type in source_materials)
-		// Split materials per stack
-		source_materials[mat_type] /= spawning_amount
-
-	for(var/repeated in 1 to spawning_amount)
-		new_thing = new resulting_atom(target.drop_location())
-		if(inherit_materials)
-			new_thing.set_custom_materials(source_materials)
-
+		var/obj/item/stack/stack_type = resulting_atom
+		while (spawning_amount > 0)
+			new_thing = new resulting_atom(target.drop_location(), new_amount = min(spawning_amount, stack_type::max_amount))
+			spawning_amount -= stack_type::max_amount
+	else
+		for(var/repeated in 1 to spawning_amount)
+			new_thing = new resulting_atom(target.drop_location())
 	user.balloon_alert_to_viewers("[process_completion_verb] [new_thing]")

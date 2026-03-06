@@ -105,7 +105,7 @@
 			// Slots were unset, abort
 			if (!material_effects[material])
 				continue
-		else if (slot_index <= length(material_effects))// Otherwise, go by index
+		else if (slot_index <= length(material_effects)) // Otherwise, go by index
 			material = material_effects[slot_index]
 		if (!material)
 			continue
@@ -441,6 +441,14 @@
 /// Returns TRUE if this atom utilizes material slots
 /atom/proc/has_material_slots()
 	return !!length(material_slots)
+
+/// Lists all slots in which a material is present
+/atom/proc/get_slots_of_material(datum/material/material)
+	. = list()
+	for (var/slot_type, material_id in material_slots)
+		if (material_id == istype(material) ? material.id : material)
+			. += slot_type
+	return .
 
 /**
  * Returns the material composition of the atom.

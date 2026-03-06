@@ -9,5 +9,3 @@
 	icon_state = "sheet-bileworm"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/bileworm
-	mats_per_unit = null
-	material_type = null
