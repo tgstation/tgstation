@@ -10,6 +10,7 @@ type Data = {
   reels: Reel[];
   balance: number;
   working: number;
+  winning: number;
   money: number;
   cost: number;
   plays: number;
