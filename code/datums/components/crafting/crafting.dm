@@ -37,7 +37,7 @@
 
 	var/mob/user = parent
 	var/atom/movable/screen/screen_obj = user.hud_used.add_screen_object(/atom/movable/screen/craft, HUD_MOB_CRAFTING_MENU, HUD_GROUP_STATIC, user.hud_used.ui_style, screen_loc_override, update_screen = TRUE)
-	RegisterSignal(screen_obj, COMSIG_CLICK, PROC_REF(component_ui_interact))
+	RegisterSignal(screen_obj, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(component_ui_interact))
 
 #define COOKING TRUE
 #define CRAFTING FALSE
