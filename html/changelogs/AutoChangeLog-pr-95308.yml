@@ -1,0 +1,4 @@
+author: "maximal08, levels0"
+delete-after: True
+changes:
+  - bugfix: "experimentor wires should now work properly"
