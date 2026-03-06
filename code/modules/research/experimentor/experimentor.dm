@@ -34,7 +34,7 @@
 
 /obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
-	set_wires(new /datum/wires/rnd/experimentor(src))
+	set_wires(new /datum/wires/experimentor(src))
 
 	load_handlers()
 
@@ -246,7 +246,7 @@
 
 /obj/machinery/rnd/experimentor/proc/match_reaction(obj/item/matching, target_reaction)
 	PRIVATE_PROC(TRUE)
-	if(isnull(matching) || isnull(target_reaction))
+	if(isnull(matching) || isnull(target_reaction) || target_reaction == SCANTYPE_DISCOVER)
 		return FAIL
 
 	if(item_reactions["[matching.type]"] == target_reaction)
@@ -254,13 +254,12 @@
 	return FAIL
 
 /obj/machinery/rnd/experimentor/proc/try_perform_experiment(reaction)
-	PRIVATE_PROC(TRUE)
 	if(!stored_research || !loaded_item || !COOLDOWN_FINISHED(src, run_experiment))
 		return FALSE
 
 	if(istype(loaded_item, /obj/item/relic))
 		reaction = SCANTYPE_DISCOVER
-	else if(reaction != SCANTYPE_DISCOVER)
+	else
 		reaction = match_reaction(loaded_item, reaction)
 
 	if(reaction != FAIL)
