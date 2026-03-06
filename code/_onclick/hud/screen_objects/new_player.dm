@@ -683,7 +683,7 @@
 
 	var/round_started = SSticker.HasRoundStarted()
 	if(!MC_RUNNING())
-		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>[(round_started ? null : "[time_remaining_str()]<br />")]Loading...</span>")
+		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>[(round_started ? null : "Starting in [time_remaining_str()]<br />")]Loading...</span>")
 		return
 
 	if(SSticker.IsPostgame())
@@ -699,7 +699,7 @@
 		new_maptext += "</span>"
 	else
 		if(hud.mymob.client?.holder)
-			new_maptext = "<span style='text-align: center; vertical-align: middle'>[time_remaining_str()]<br /> \
+			new_maptext = "<span style='text-align: center; vertical-align: middle'>Starting in [time_remaining_str()]<br /> \
 				[LAZYLEN(GLOB.clients)] player\s<br /> \
 				[SSticker.totalPlayersReady] players ready<br /> \
 				[SSticker.total_admins_ready] / [length(GLOB.admins)] admins ready</span>"
@@ -712,13 +712,10 @@
 /atom/movable/screen/lobby/new_player_info/proc/time_remaining_str()
 	var/time_remaining = SSticker.GetTimeLeft()
 	if(time_remaining > 0)
-		time_remaining = "[round(time_remaining/10)]s"
-	else if(time_remaining == -10)
-		time_remaining = "DELAYED"
-	else
-		time_remaining = "SOON"
-
-	return "Starting in [time_remaining]"
+		return "[round(time_remaining/10)]s"
+	if(time_remaining == -10)
+		return "DELAYED"
+	return "SOON"
 
 #undef OVERLAY_X_DIFF
 #undef OVERLAY_Y_DIFF
