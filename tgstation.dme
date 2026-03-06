@@ -4084,6 +4084,7 @@
 #include "code\modules\client\preferences\sounds.dm"
 #include "code\modules\client\preferences\species.dm"
 #include "code\modules\client\preferences\statpanel.dm"
+#include "code\modules\client\preferences\status_bar.dm"
 #include "code\modules\client\preferences\tgui.dm"
 #include "code\modules\client\preferences\tooltips.dm"
 #include "code\modules\client\preferences\trans_prosthetic.dm"
