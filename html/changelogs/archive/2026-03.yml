@@ -58,3 +58,9 @@
   lelandkemble:
   - rscadd: You can now deploy, undeploy, activate & deactivate other people's MODsuit
       via the strip menu
+2026-03-06:
+  SmArtKar:
+  - bugfix: Fixed elder atmosian getting affected by metal hydrogen it is made out
+      of
+  maximal08, levels0:
+  - bugfix: experimentor wires should now work properly
