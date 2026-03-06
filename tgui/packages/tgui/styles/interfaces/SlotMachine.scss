@@ -123,42 +123,6 @@
   border-bottom: 2px solid black;
 }
 
-.SlotMachine__Tile {
-  position: relative;
-  height: 60px;
-  background: linear-gradient(
-    to bottom,
-    #888 0%,
-    #ccc 15%,
-    #eee 40%,
-    #ddd 60%,
-    #aaa 85%,
-    #666 100%
-  );
-  border-bottom: 2px solid rgba(0, 0, 0, 0.8);
-  z-index: 5;
-}
-
-.SlotMachine__Tile:last-child {
-  border-bottom: 0;
-}
-
-.SlotMachine__IconStrip {
-  transform: translateY(calc(-60px * 27));
-  // animation-duration: 3.5s;
-  text-align: center;
-  // animation: scroll-up 2s linear infinite;
-  // animation-play-state: paused;
-  // transform: translateY(0px);
-  text-shadow:
-    2px 2px 6px #000,
-    0 2px #000,
-    0 -2px #000,
-    2px 0 #000,
-    -2px 0 #000;
-  z-index: 4;
-}
-
 .SlotMachine__Reel:nth-child(1) .SlotMachine__IconStrip {
   animation-delay: 0s;
   animation-duration: 2.8s;
@@ -182,6 +146,21 @@
 .SlotMachine__Reel:nth-child(5) .SlotMachine__IconStrip {
   animation-delay: 0.4s;
   animation-duration: 3.6s;
+}
+
+.SlotMachine__IconStrip {
+  transform: translateY(calc(-60px * 27));
+  // animation-duration: 3.5s;
+  text-align: center;
+  // animation: scroll-up 2s linear infinite;
+  // animation-play-state: paused;
+  // transform: translateY(0px);
+  text-shadow:
+    2px 2px 6px #000,
+    0 2px #000,
+    0 -2px #000,
+    2px 0 #000,
+    -2px 0 #000;
 }
 
 .SlotMachine__IconStrip--spinning {

@@ -5,12 +5,7 @@ import { classes } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-type Reel = {
-  icons: string[];
-  spinning: number;
-};
-
-type BackendData = {
+type Data = {
   icons: string[];
   reels: Reel[];
   balance: number;
@@ -23,7 +18,14 @@ type BackendData = {
   paymode: number;
 };
 
-type IconMeta = { color: string };
+type Reel = {
+  icons: string[];
+  spinning: number;
+};
+
+type IconMeta = {
+  color: string;
+};
 
 const iconMetaByName: Record<string, IconMeta> = {
   'fa-7': { color: '#b22' },
@@ -55,11 +57,9 @@ const pickRandom = <T extends unknown>(items: T[]) => {
   return items[Math.floor(Math.random() * items.length)];
 };
 
-export const SlotMachine = (props) => {
-  const { act, data } = useBackend<BackendData>();
-  // icons: The list of possible icons, including colour and name
-  // backendState: the current state of the slots according to the backend
-  const { icons, plays, jackpots, money, cost, reels, balance, jackpot } = data;
+export const SlotMachine = () => {
+  const { act, data } = useBackend<Data>();
+  const { icons, cost, reels, balance } = data;
   const spinning = data.working === 1;
 
   return (
@@ -85,7 +85,7 @@ export const SlotMachine = (props) => {
               fill
               title="Balance"
               buttons={
-                <Button onClick={() => act('payout')} disabled={!(balance > 0)}>
+                <Button onClick={() => act('payout')} disabled={balance <= 0}>
                   Refund
                 </Button>
               }
@@ -138,8 +138,21 @@ const BANNER_TEXTS = [
   'NICE SPIN!',
   'NO SPIN NO WIN',
   'BET & FORGET',
-  'HONK FOR LUCK',
+  'HONK 4 LUCK',
   'DEBT 4 LIFE',
+  'SPINGULARITY',
+  'SPIN CITY',
+  'BURN & EARN',
+  'JACKPOT SOON!',
+  'WIN THE DAY!',
+  'FORTUNE CALLS',
+  'INSTANT GOLD!',
+  'DREAM BIGGER!',
+  'WINNERS ONLY!',
+  'SPIN IS LIFE',
+  'BIG ONE SOON!',
+  'LUCKY SPIN!',
+  'CASH OUT? NO!',
 ];
 
 const WINNING_TEXTS = [
@@ -151,7 +164,7 @@ const WINNING_TEXTS = [
 ];
 
 const Banner = () => {
-  const { data } = useBackend<BackendData>();
+  const { data } = useBackend<Data>();
   const [page, setPage] = useState(0);
 
   useEffect(() => {
@@ -185,7 +198,7 @@ type BannerTitleProps = {
 };
 
 const BannerTitle = (props: BannerTitleProps) => {
-  const { data } = useBackend<BackendData>();
+  const { data } = useBackend<Data>();
   const defaultText = useRef(pickRandom(BANNER_TEXTS));
   let text = props.text;
   if (!text) {
@@ -208,7 +221,7 @@ const BannerTitle = (props: BannerTitleProps) => {
 };
 
 const BannerOnlyFewCreds = () => {
-  const { data } = useBackend<BackendData>();
+  const { data } = useBackend<Data>();
   const variant = useRef(pickRandom([0, 1]));
 
   if (variant.current === 1) {
@@ -241,7 +254,7 @@ const BannerOnlyFewCreds = () => {
 };
 
 const BannerPrizeMoney = () => {
-  const { data } = useBackend<BackendData>();
+  const { data } = useBackend<Data>();
   return (
     <div>
       Available prize money:
@@ -254,7 +267,7 @@ const BannerPrizeMoney = () => {
 };
 
 const BannerJackpot = () => {
-  const { data } = useBackend<BackendData>();
+  const { data } = useBackend<Data>();
   return (
     <div>
       Current jackpot:
@@ -267,7 +280,7 @@ const BannerJackpot = () => {
 };
 
 const BannerStats = () => {
-  const { data } = useBackend<BackendData>();
+  const { data } = useBackend<Data>();
   return (
     <div>
       <Box inline fontSize={'13px'}>
