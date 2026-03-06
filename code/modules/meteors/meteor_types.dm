@@ -359,6 +359,8 @@
 	..()
 	playsound(src, 'sound/items/airhorn/AirHorn.ogg', 100, TRUE, -1)
 	for(var/atom/movable/object in view(4, get_turf(src)))
+		if(islightingobj(object)) // won't really work anyways due to the fact they can't be moved, but let's just not waste time on them at all
+			continue
 		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
 		object.safe_throw_at(throwtarget, 5, 1, force = MOVE_FORCE_STRONG)
 
