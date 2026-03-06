@@ -187,9 +187,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /// Add a specific amount of moles to all the gasses present or add a new gas to the mix
 ///gases_moles is an associative list of gas species to their amount to be added
 /datum/gas_mixture/proc/adjust_multiple_gases(list/gases_moles)
-	var/list/our_gases = gases
 	// Moles transfer into self
-	for(var/gas_specie as anything in gases_moles)
+	for(var/gas_specie in gases_moles)
 		adjust_gas(gas_specie, gases_moles[gas_specie])
 
 
