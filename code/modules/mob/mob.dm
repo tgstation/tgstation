@@ -437,6 +437,12 @@
 		return FALSE
 	return TRUE
 
+/mob/dead/observer/runechat_prefs_check(mob/target, visible_message_flags = NONE)
+	if(!..())
+		return FALSE
+	if(!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_ghosts))
+		return FALSE
+	return TRUE
 
 ///Get the item on the mob in the storage slot identified by the id passed in
 /mob/proc/get_item_by_slot(slot_id) as /obj/item
@@ -905,33 +911,6 @@
 	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
 	return .
 
-/**
- * Convert a list of spells into a displyable list for the statpanel
- *
- * Shows charge and other important info
- */
-/mob/proc/get_actions_for_statpanel()
-	var/list/data = list()
-	for(var/datum/action/cooldown/action in actions)
-		var/list/action_data = action.set_statpanel_format()
-		if(!length(action_data))
-			return
-
-		data += list(list(
-			// the panel the action gets displayed to
-			// in the future, this could probably be replaced with subtabs (a la admin tabs)
-			action_data[PANEL_DISPLAY_PANEL],
-			// the status of the action, - cooldown, charges, whatever
-			action_data[PANEL_DISPLAY_STATUS],
-			// the name of the action
-			action_data[PANEL_DISPLAY_NAME],
-			// a ref to the action button of this action for this mob
-			// it's a ref to the button specifically, instead of the action itself,
-			// because statpanel href calls click(), which the action button (not the action itself) handles
-			REF(action.viewers[hud_used]),
-		))
-
-	return data
 
 /mob/proc/swap_hand(held_index, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead

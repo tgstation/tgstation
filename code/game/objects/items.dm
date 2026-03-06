@@ -972,7 +972,7 @@
 
 /// If an object can successfully be used as a fire starter it will return a message
 /obj/item/proc/ignition_effect(atom/A, mob/user)
-	if(get_temperature())
+	if(get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		. = span_notice("[user] lights [A] with [src].")
 	else
 		. = ""

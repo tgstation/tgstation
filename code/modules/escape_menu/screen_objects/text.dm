@@ -3,6 +3,7 @@
 	maptext_width = 100
 	maptext_height = 8
 
+	VAR_PROTECTED/list/screen_directions = list("NORTH", "WEST")
 	VAR_PRIVATE/datum/escape_menu/escape_menu
 	VAR_PRIVATE/button_text
 	VAR_PRIVATE/font_size
@@ -23,10 +24,11 @@
 	//this decides how far out you can 'click' on this, so it's important to keep it short.
 	//yes even here, maptext can still embed links without using clickable subtype.
 	src.maptext_width = round((max(length(button_text), 20) * (font_size / 2.25)), 1)
-	src.maptext_height = maptext_height * (font_size / 5)
+	src.maptext_height = (maptext_height * (font_size / 5))
+	src.maptext_height *= length(splittext(button_text, "\n"))
 
 	update_text()
-	screen_loc = "NORTH:[offset[1]],WEST:[offset[2]]"
+	screen_loc = "[screen_directions[1]]:[offset[1]],[screen_directions[2]]:[offset[2]]"
 
 /atom/movable/screen/escape_menu/text/proc/update_text()
 	SHOULD_CALL_PARENT(TRUE)
@@ -82,3 +84,9 @@
 
 	src.hovered = hovered
 	update_text()
+
+/atom/movable/screen/escape_menu/text/clickable/center
+	screen_directions = list("NORTH", "CENTER")
+
+/atom/movable/screen/escape_menu/text/center
+	screen_directions = list("NORTH", "CENTER")

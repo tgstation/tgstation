@@ -565,13 +565,6 @@
 	for(var/obj/item/stock_parts/power_store/cell as anything in cells_to_charge)
 		charge_cell(charge_per_item, cell, grid_only = TRUE)
 
-/obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
-	if(prob(prb))
-		return
-	do_sparks(5, TRUE, src)
-	if(electrocute_mob(user, src, src, 1, TRUE))
-		return TRUE
-
 /obj/machinery/suit_storage_unit/relaymove(mob/living/user, direction)
 	if(locked)
 		if(message_cooldown <= world.time)
