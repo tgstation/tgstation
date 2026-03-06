@@ -190,10 +190,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/our_gases = gases
 	// Moles transfer into self
 	for(var/gas_specie as anything in gases_moles)
-		if(!(gas_specie in our_gases))
-			ASSERT_GAS(gas_specie, src)
-		gases[gas_specie][MOLES] += gases_moles[gas_specie]
-		total_moles += gases_moles[gas_specie]
+		adjust_gas(gas_specie, gases_moles[gas_specie])
 
 
 /// Modify the gas list as to convert moles of gas species A to gas species B

@@ -250,9 +250,9 @@
 	var/scaled_production = production_amount * selected_fuel.gas_production_multiplier
 
 	for(var/gas_id in fuel.requirements)
-		internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption)
+		internal_fusion.adjust_gas(gas_id, -min(fuel_list[gas_id], fuel_consumption))
 	for(var/gas_id in fuel.primary_products)
-		internal_fusion.gases[gas_id][MOLES] += fuel_consumption * 0.5
+		internal_fusion.adjust_gas(gas_id, fuel_consumption * 0.5)
 
 	// Each recipe provides a tier list of six output gases.
 	// Which gases are produced depend on what the fusion level is.
