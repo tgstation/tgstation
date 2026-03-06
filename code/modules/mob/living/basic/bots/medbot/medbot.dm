@@ -28,6 +28,9 @@
 	announcement_type = /datum/action/cooldown/bot_announcement/medbot
 	path_image_color = "#d9d9f4"
 
+	///Because of our animation we need to handle drawn-on overlays ourself
+	var/painted_face_colour
+
 	///anouncements when we find a target to heal
 	var/static/list/wait_announcements = list(
 		MEDIBOT_VOICED_HOLD_ON = 'sound/mobs/non-humanoids/medbot/coming.ogg',
@@ -140,6 +143,11 @@
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
 		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
 
+	AddComponent(/datum/component/defaceable, \
+		drawing_of = "eyes", \
+		on_defaced = CALLBACK(src, PROC_REF(on_defaced)), \
+	)
+
 	var/static/list/hat_offsets = list(4,-9)
 	var/static/list/remove_hat = list(SIGNAL_ADDTRAIT(TRAIT_MOB_TIPPED))
 	var/static/list/prevent_checks = list(TRAIT_MOB_TIPPED)
@@ -193,13 +201,24 @@
 	if(!(medical_mode_flags & MEDBOT_STATIONARY_MODE))
 		. += mutable_appearance(icon, "[base_icon_state]_overlay_wheels")
 
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-		. += mutable_appearance(icon, "[base_icon_state]_overlay_incapacitated")
-		. += emissive_appearance(icon, "[base_icon_state]_overlay_incapacitated", src, alpha = src.alpha)
-	else if(bot_mode_flags & BOT_MODE_ON)
-		var/mode_suffix = mode == BOT_HEALING ? "active" : "idle"
-		. += mutable_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]")
-		. += emissive_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]", src, alpha = src.alpha)
+	var/mode_suffix = mode == BOT_HEALING ? "active" : "idle"
+	if (HAS_TRAIT(src, TRAIT_DEFACED))
+		var/mutable_appearance/face = mutable_appearance('icons/mob/silicon/aibot_faces.dmi', "medbot_[mode_suffix]")
+		face.color = painted_face_colour
+		. += face
+		. += mutable_appearance('icons/mob/silicon/aibot_faces.dmi', "medbot_highlight_[mode_suffix]")
+	else
+		if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+			. += mutable_appearance(icon, "[base_icon_state]_overlay_incapacitated")
+			. += emissive_appearance(icon, "[base_icon_state]_overlay_incapacitated", src, alpha = src.alpha)
+		else if(bot_mode_flags & BOT_MODE_ON)
+			. += mutable_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]")
+			. += emissive_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]", src, alpha = src.alpha)
+
+/// Set our drawn-on ink colour
+/mob/living/basic/bot/medbot/proc/on_defaced(ink_colour)
+	SIGNAL_HANDLER
+	painted_face_colour = ink_colour
 
 //this is sin
 /mob/living/basic/bot/medbot/generate_speak_list()

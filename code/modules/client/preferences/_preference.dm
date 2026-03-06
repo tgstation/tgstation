@@ -127,6 +127,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// will show the feature as selectable.
 	var/relevant_head_flag = null
 
+	/// If this is a character preference, should we update the character preview
+	/// when this preference is updated?
+	var/should_update_preview = TRUE
+
 /// Called on the saved input when retrieving.
 /// Also called by the value sent from the user through UI. Do not trust it.
 /// Input is the value inside the savefile, output is to tell other code
@@ -307,7 +311,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	if (preference.savefile_identifier == PREFERENCE_PLAYER)
 		preference.apply_to_client_updated(parent, read_preference(preference.type))
-	else
+	else if (preference.should_update_preview)
 		character_preview_view?.update_body()
 
 	return TRUE

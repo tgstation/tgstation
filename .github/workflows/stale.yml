@@ -13,9 +13,13 @@ jobs:
       issues: write # for actions/stale to close stale issues
       pull-requests: write # for actions/stale to close stale PRs
     runs-on: ubuntu-24.04
+    outputs:
+      staled_prs: ${{ steps.filter-prs.outputs.result }}
 
     steps:
-      - uses: actions/stale@v10
+      - name: Mark stale issues and pull requests
+        uses: actions/stale@v10
+        id: stale
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-pr-message: "This PR has been inactive for long enough to be automatically marked as stale. This means it is at risk of being auto closed in ~7 days. Please address any outstanding review items and ensure your PR is finished - if both are true, and you have auto-staled anyway, you need to actively ask maintainers (by pinging them in the /tg/station Discord) to (re)review or merge your PR. If no maintainer responds to your request, you may wish to close this PR yourself while you seek maintainer comment, as you will later be able to reopen the PR yourself."
@@ -31,3 +35,39 @@ jobs:
           exempt-issue-labels: "RED LABEL"
           exempt-pr-labels: "RED LABEL,Good First PR"
           operations-per-run: 300
+      - name: Filter staled pull requests for announcement
+        id: filter-prs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            return JSON.parse(context.job.steps.stale.outputs.staled-issues-prs).filter(issue => !!issue.pull_request)
+
+  announce:
+    runs-on: ubuntu-24.04
+    needs: stale
+    if: ${{ needs.stale.outputs.staled_prs != '[]' }}
+    strategy:
+     matrix:
+      pull_request: ${{ fromJSON(needs.stale.outputs.staled_prs) }}
+    steps:
+      - name: "Check for DISCORD_WEBHOOK"
+        id: secrets_set
+        env:
+          ENABLER_SECRET: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          unset SECRET_EXISTS
+          if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
+          echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
+      - name: Send Discord notification
+        uses: tgstation/discord-notify@v3
+        if: >
+          steps.secrets_set.outputs.SECRETS_ENABLED
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          title: ${{ matrix.pull_request.user.login }} - ${{ matrix.pull_request.title }}
+          message: ${{ format('**Pull Request \#{0} automatically marked as stale.**', matrix.pull_request.number) }}
+          include_image: false
+          show_author: false
+          avatar_url: https://avatars.githubusercontent.com/u/1363778?s=200&v=4
+          username: GitHub
+          title_url: "${{ matrix.pull_request.html_url }}"

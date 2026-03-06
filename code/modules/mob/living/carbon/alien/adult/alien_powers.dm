@@ -8,7 +8,6 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien
 	name = "Alien Power"
-	panel = "Alien"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
@@ -17,6 +16,12 @@ Doesn't work on other aliens/AI.*/
 
 	/// How much plasma this action uses.
 	var/plasma_cost = 0
+
+/datum/action/cooldown/alien/New(Target)
+	. = ..()
+	//not free
+	if(plasma_cost != 0)
+		name = "[initial(name)] ([plasma_cost]P)"
 
 /datum/action/cooldown/alien/IsAvailable(feedback = FALSE)
 	. = ..()
@@ -49,13 +54,6 @@ Doesn't work on other aliens/AI.*/
 		unset_click_ability(owner, refund_cooldown = FALSE)
 
 	return TRUE
-
-/datum/action/cooldown/alien/set_statpanel_format()
-	. = ..()
-	if(!islist(.))
-		return
-
-	.[PANEL_DISPLAY_STATUS] = "PLASMA - [plasma_cost]"
 
 /datum/action/cooldown/alien/make_structure
 	/// The type of structure the action makes on use
@@ -346,7 +344,6 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/mob_cooldown/sneak/alien
 	name = "Alien Sentinel Sneak"
-	panel = "Alien"
 	desc = "Blend into the shadows to stalk your prey."
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "alien_sneak"

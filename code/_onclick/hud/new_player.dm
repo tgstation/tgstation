@@ -779,7 +779,7 @@
 
 	var/round_started = SSticker.HasRoundStarted()
 	if(!MC_RUNNING())
-		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>[(round_started ? null : "[time_remaining_str()]<br />")]Loading...</span>")
+		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>[(round_started ? null : "Starting in [time_remaining_str()]<br />")]Loading...</span>")
 		return
 	if(SSticker.IsPostgame())
 		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>Game ended, <br /> \
@@ -795,7 +795,7 @@
 	else
 
 		if(hud.mymob.client?.holder)
-			new_maptext = "<span style='text-align: center; vertical-align: middle'>[time_remaining_str()]<br /> \
+			new_maptext = "<span style='text-align: center; vertical-align: middle'>Starting in [time_remaining_str()]<br /> \
 				[LAZYLEN(GLOB.clients)] player\s<br /> \
 				[SSticker.totalPlayersReady] players ready<br /> \
 				[SSticker.total_admins_ready] / [length(GLOB.admins)] admins ready</span>"
@@ -814,7 +814,7 @@
 	else
 		time_remaining = "SOON"
 
-	return "Starting in [time_remaining]"
+	return time_remaining
 
 #undef OVERLAY_X_DIFF
 #undef OVERLAY_Y_DIFF

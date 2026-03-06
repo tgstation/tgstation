@@ -39,6 +39,11 @@
 	if(!.)
 		return
 
+	force_say()
+
+/datum/status_effect/incapacitating/proc/force_say()
+	SHOULD_CALL_PARENT(TRUE)
+
 	var/mob/living/carbon/human/human = owner
 	if(istype(human))
 		human.force_say(alter_phrases, immediate = TRUE)
@@ -165,6 +170,10 @@
 		REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 		tick_interval = initial(tick_interval)
 	return ..()
+
+/datum/status_effect/incapacitating/sleeping/force_say()
+	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
+		..()
 
 ///If the mob is sleeping and gain the TRAIT_SLEEPIMMUNE we remove the TRAIT_KNOCKEDOUT and stop the tick() from happening
 /datum/status_effect/incapacitating/sleeping/proc/on_owner_insomniac(mob/living/source)

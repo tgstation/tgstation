@@ -1307,6 +1307,9 @@
 	explosive_resistance += explosion_block
 	SEND_SIGNAL(src, COMSIG_MOVABLE_EXPLOSION_BLOCK_CHANGED, old_block, explosion_block)
 
+/**
+ * This proc is called when a thrown object makes contact with it's target. It then follows up by calling hitby below.
+ */
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = FALSE
 	var/hitpush = TRUE

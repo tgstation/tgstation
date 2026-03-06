@@ -27,6 +27,12 @@
 	. = ..()
 	set_weapon() //giving it the right projectile and firing sound.
 
+	AddComponent(/datum/component/defaceable, \
+		icon = 'icons/mob/silicon/aibot_faces.dmi', \
+		icon_states = list("ed209" = FALSE, "ed209_highlight" = TRUE), \
+		drawing_of = "a face", \
+	)
+
 /mob/living/simple_animal/bot/secbot/ed209/bot_reset()
 	..()
 	set_weapon()

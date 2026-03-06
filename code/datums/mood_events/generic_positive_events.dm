@@ -657,7 +657,7 @@
 	mood_change = 1
 
 /datum/mood_event/slacking_off_lazy
-	description = "Boss makes a dollar, I make a dime. That's why I slack on job time."
+	description = "Boss makes a dollar, I make a dime. That's why I slack on company time."
 	mood_change = 1
 
 /datum/mood_event/working_diligent

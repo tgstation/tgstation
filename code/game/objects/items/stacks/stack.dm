@@ -461,8 +461,8 @@
 	builder.investigate_log("crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 	// Apply mat datums
-	if(LAZYLEN(mats_per_unit) && !(recipe.crafting_flags & CRAFT_NO_MATERIALS))
-		var/list/result_mats = mats_per_unit.Copy()
+	if(LAZYLEN(used_stack.mats_per_unit) && !(recipe.crafting_flags & CRAFT_NO_MATERIALS))
+		var/list/result_mats = used_stack.mats_per_unit.Copy()
 		for(var/mat in recipe.removed_mats)
 			var/to_remove = recipe.removed_mats[mat]
 			var/datum/material/ref_mat = locate(mat) in result_mats

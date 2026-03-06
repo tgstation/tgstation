@@ -417,6 +417,9 @@
   Absolucy:
   - bugfix: Fixed a rare bug that could result in people permanently becoming pitch
       black as a result of stabilized pyrite or regenerative rainbow extracts.
+  Ghommie:
+  - bugfix: Fixed materials not being applied when crafting with stacks if said stack
+      is zero'd in the process.
   JohnFulpWillard:
   - bugfix: pAIs/AIs in a Modsuit/PDA can now take photos properly, and their zoom
       functionality works again.
@@ -426,6 +429,8 @@
   - bugfix: Weather anomaly cores are orderable from cargo
   - refactor: Anomaly core cargo orders are auto-generated - report any oddities with
       them.
+  MelokG000:
+  - qol: you can now quit the game
   Swan:
   - bugfix: fixes the gravity generator's crushing gravity effect not disappearing
       when the gen goes offline
