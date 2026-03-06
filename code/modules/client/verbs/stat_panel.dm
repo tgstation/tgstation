@@ -18,5 +18,4 @@
 	. = list()
 	. += mob.get_status_tab_items()
 	. -= .[1] //remove the "offset unique stuff"
-	. += mob.get_actions_for_statpanel()
 	return !!length(.)
