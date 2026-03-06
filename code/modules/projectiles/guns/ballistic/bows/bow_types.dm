@@ -50,4 +50,4 @@
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
 	projectile_damage_multiplier = 0.5
-	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 6, /datum/material/leather = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 6)

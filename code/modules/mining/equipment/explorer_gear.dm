@@ -122,7 +122,6 @@
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/hooded_goliath
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
-	custom_materials = list(/datum/material/leather/goliath = SHEET_MATERIAL_AMOUNT * 9)
 
 /obj/item/clothing/suit/hooded/cloak/goliath/Initialize(mapload)
 	. = ..()
@@ -195,7 +194,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
-	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 6, /datum/material/leather/goliath = SHEET_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 6)
 
 /obj/item/clothing/suit/armor/bone/Initialize(mapload)
 	. = ..()

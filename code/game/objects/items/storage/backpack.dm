@@ -301,7 +301,6 @@
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel-leather"
 	inhand_icon_state = "satchel"
-	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/storage/backpack/satchel/leather/withwallet/PopulateContents()
 	new /obj/item/storage/wallet/random(src)

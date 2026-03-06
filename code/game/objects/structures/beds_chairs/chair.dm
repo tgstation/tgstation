@@ -292,7 +292,7 @@
 	icon_state = "carp_chair"
 	buildstacktype = /obj/item/stack/sheet/animalhide/carp
 	fishing_modifier = -12
-	custom_materials = list(/datum/material/leather/carp_scales = SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = null
 
 /obj/structure/chair/office
 	name = "office chair"

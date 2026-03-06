@@ -451,7 +451,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSEYES
 	clothing_flags = CARP_STYLE_FACTOR
 	fishing_modifier = -4
-	custom_materials = list(/datum/material/leather/carp_scales = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/mask/gas/tiki_mask
 	name = "tiki mask"

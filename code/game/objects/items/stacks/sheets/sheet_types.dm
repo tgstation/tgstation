@@ -499,7 +499,6 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 /*
  * Cloth
  */
-#warn clothing should be generalized
 GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("white jumpskirt", /obj/item/clothing/under/color/jumpskirt/white, 3, crafting_flags = NONE, category = CAT_CLOTHING), /*Ladies first*/ \
 	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
@@ -553,8 +552,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	pickup_sound = SFX_CLOTH_PICKUP
 	drop_sound = SFX_CLOTH_DROP
-	mats_per_unit = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/cloth
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
@@ -585,8 +582,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/durathread
 	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
-	mats_per_unit = list(/datum/material/cloth/durathread = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/cloth/durathread
 
 /obj/item/stack/sheet/durathread/Initialize(mapload)
 	. = ..()
@@ -616,8 +611,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cotton
 	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
-	mats_per_unit = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/cloth
 
 	var/loom_result = /obj/item/stack/sheet/cloth
 	var/loom_time = 1 SECONDS
@@ -633,8 +626,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	icon_state = "sheet-durathreadraw"
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	loom_result = /obj/item/stack/sheet/durathread
-	mats_per_unit = list(/datum/material/cloth/durathread = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/cloth/durathread
 
 /obj/item/stack/sheet/cotton/wool
 	name = "raw wool bundle"
@@ -643,8 +634,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	icon_state = "sheet-wool"
 	merge_type = /obj/item/stack/sheet/cotton/wool
 	loom_result = /obj/item/stack/sheet/cloth
-	mats_per_unit = list(/datum/material/cloth/wool = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/cloth/wool
 
 /*
  * Cardboard

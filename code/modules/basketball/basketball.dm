@@ -8,7 +8,6 @@
 	inhand_icon_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
-	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 20)
 	/// The person dribbling the basketball
 	var/mob/living/wielder
 	/// So the basketball doesn't make sound every step

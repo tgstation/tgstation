@@ -120,7 +120,6 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/head_cowboy
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 2)
 	/// Chance that the hat will catch a bullet for you
 	var/deflect_chance = 2
 

@@ -8,8 +8,6 @@
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
 	abstract_type = /obj/item/stack/sheet/animalhide
-	mats_per_unit = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/leather
 
 /// Subtype of skin to be dropped by carbon mobs as a result of being butchered, potentially inheriting their body color
 /obj/item/stack/sheet/animalhide/carbon
@@ -175,8 +173,6 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	icon_state = "sheet-xeno"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/xeno
-	mats_per_unit = list(/datum/material/leather/xeno_chitin = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/leather/xeno_chitin
 
 GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/costume/xenos, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
@@ -197,8 +193,6 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	icon_state = "sheet-carp"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/carp
-	mats_per_unit = list(/datum/material/leather/carp_scales = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/leather/carp_scales
 
 GLOBAL_LIST_INIT(carp_recipes, list ( \
 	new/datum/stack_recipe("carp costume", /obj/item/clothing/suit/hooded/carp_costume, 4, crafting_flags = NONE, category = CAT_CLOTHING), \
@@ -221,7 +215,6 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	desc = "The claw of a terrible creature."
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "claw"
-	custom_materials = list(/datum/material/leather/xeno_chitin = HALF_SHEET_MATERIAL_AMOUNT)
 
 /*
  * Leather SHeet
@@ -235,8 +228,6 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/leather
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
-	mats_per_unit = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/leather
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, crafting_flags = NONE, category = CAT_CONTAINERS), \
@@ -339,8 +330,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	merge_type = /obj/item/stack/sheet/animalhide/goliath_hide
-	mats_per_unit = list(/datum/material/leather/goliath = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/leather/goliath
 
 /obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide
 	name = "polar bear hides"
@@ -348,8 +337,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon_state = "polar_bear_hide"
 	singular_name = "polar bear hide"
 	merge_type = /obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide
-	mats_per_unit = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/leather
 
 /obj/item/stack/sheet/animalhide/ashdrake
 	name = "ash drake hide"
@@ -363,8 +350,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	merge_type = /obj/item/stack/sheet/animalhide/ashdrake
-	mats_per_unit = list(/datum/material/leather/goliath = SHEET_MATERIAL_AMOUNT)
-	material_type = /datum/material/leather/goliath
 
 /obj/item/stack/sheet/animalhide/ashdrake/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()

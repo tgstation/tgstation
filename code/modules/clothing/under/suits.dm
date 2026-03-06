@@ -109,7 +109,6 @@
 	icon_state = "carpskin_suit"
 	inhand_icon_state = null
 	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
-	custom_materials = list(/datum/material/leather/carp_scales = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/clothing/under/suit/carpskin/Initialize(mapload)
 	. = ..()

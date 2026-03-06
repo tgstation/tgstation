@@ -4,7 +4,6 @@
 	icon_state = "laceups"
 	equip_delay_other = 5 SECONDS
 	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
-	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/shoes/laceup/Initialize(mapload)
 	. = ..()

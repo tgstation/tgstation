@@ -90,7 +90,6 @@
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	custom_materials = list(/datum/material/leather/xeno_chitin = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/head/costume/lobsterhat
 	name = "foam lobster head"

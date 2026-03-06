@@ -8,7 +8,6 @@
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	equip_delay_other = 2 SECONDS
-	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/mask/muzzle/Initialize(mapload)
 	. = ..()

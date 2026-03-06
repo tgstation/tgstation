@@ -6,7 +6,6 @@
 	icon_state = "rag"
 	item_flags = NOBLUDGEON
 	resistance_flags = FLAMMABLE
-	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT)
 	/// How bloody is this rag?
 	var/blood_level = 0
 	/// How many times has this rag been wrung out since last clean?

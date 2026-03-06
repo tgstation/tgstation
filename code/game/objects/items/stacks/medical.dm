@@ -507,7 +507,6 @@
 	heal_begin_sound = SFX_BANDAGE_BEGIN
 	drop_sound = SFX_CLOTH_DROP
 	pickup_sound = SFX_CLOTH_PICKUP
-	custom_materials = list(/datum/material/cloth = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/stack/medical/wrap/gauze/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()

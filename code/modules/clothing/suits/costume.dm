@@ -277,7 +277,6 @@
 	clothing_flags = CARP_STYLE_FACTOR
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/rifle/boltaction/harpoon)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
-	custom_materials = list(/datum/material/leather/carp_scales = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/clothing/suit/hooded/carp_costume/Initialize(mapload)
 	. = ..()
@@ -414,7 +413,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	clothing_flags = THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/shark_hood
-	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT * 5, /datum/material/leather/carp_scales = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/clothing/suit/hooded/shark_costume/Initialize(mapload)
 	. = ..()
@@ -526,7 +524,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDEBELT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
-	custom_materials = list(/datum/material/leather/xeno_chitin = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/suit/costume/nemes
 	name = "pharoah tunic"

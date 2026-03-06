@@ -23,7 +23,6 @@ LINEN BINS
 	resistance_flags = FLAMMABLE
 	dying_key = DYE_REGISTRY_BEDSHEET
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
-	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 3)
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 	/// Custom nouns to act as the subject of dreams
@@ -413,7 +412,6 @@ LINEN BINS
 	icon_state = "double_sheetwhite"
 	worn_icon_state = "sheetwhite"
 	bedsheet_type = BEDSHEET_DOUBLE
-	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 6)
 
 /obj/item/bedsheet/blue/double
 	icon_state = "double_sheetblue"

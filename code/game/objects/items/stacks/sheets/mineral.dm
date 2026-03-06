@@ -84,7 +84,6 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sandbag"
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/emptysandbag/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/ore/glass))
