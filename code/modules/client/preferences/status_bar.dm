@@ -5,4 +5,6 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/status_bar/apply_to_client(client/client, value)
+	if(isnull(client))
+		return
 	winset(client, "mapwindow.status_bar", "is-visible=[value]")
