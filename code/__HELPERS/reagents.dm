@@ -185,7 +185,6 @@
 
 ///Returns a random reagent object, with the option to blacklist reagents.
 /proc/get_random_reagent_id(randomization_flags = REAGENT_SPAWN_RANDOM_PRODUCERS, list/blacklist, list/whitelist)
-	var/static/list/reagent_static_list = list()
 	var/list/reagent_list_to_process
 
 	whitelist ||= subtypesof(/datum/reagent)
