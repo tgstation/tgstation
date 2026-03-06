@@ -62,5 +62,6 @@
   SmArtKar:
   - bugfix: Fixed elder atmosian getting affected by metal hydrogen it is made out
       of
+  - bugfix: Fixed rogue "ING IN" on lobby screen
   maximal08, levels0:
   - bugfix: experimentor wires should now work properly
