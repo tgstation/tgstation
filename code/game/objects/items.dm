@@ -2001,11 +2001,7 @@
 	if (!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
 
-	// [0 ~ 1] is fully insulating, (1 ~ 6] maps to (0 ~ 1] and [6 ~ 10] maps to [1 ~ 2]
-	// 1.18 and 0.15 here are to allow 6 to map to 1 and 10 to map to 2 and are pulled out of my ass (system in the desmos below)
-	// See https://www.desmos.com/calculator/rdbv1x8oty
-	var/conductivity = material.get_property(MATERIAL_ELECTRICAL)
-	var/siemens_modifier = round(max(0, conductivity - 1) ** 1.18 * 0.15, 0.01)
+	var/siemens_modifier = material.get_property(MATERIAL_INSULATION)
 	// Cannot use the base formula as it would make any item with glass not conduct electricity
 	if (siemens_modifier > 1)
 		siemens_coefficient *= 1 + (siemens_modifier - 1) * multiplier
@@ -2015,30 +2011,15 @@
 	if (siemens_coefficient == 0)
 		obj_flags &= ~CONDUCTS_ELECTRICITY
 
-	if (material_flags & MATERIAL_NO_SLOWDOWN)
-		return
-
-	// Density above 6 adds slowdown, density below 3 can reduce existing slowdown
-	var/density = material.get_property(MATERIAL_DENSITY)
-	var/slowdown_change = 0
-
-	if (density > 6)
-		slowdown_change = (density - 6) * MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
-	else if (density < 3)
-		slowdown_change = (3 - density) * -MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
-
-	// Slowdown cannot be reduced below 0 if the item slows you down, or at all if the item speeds you up
-	if (slowdown_change)
-		slowdown = max(slowdown >= 0 ? 0 : slowdown, slowdown + slowdown_change * multiplier)
+	if (!(material_flags & MATERIAL_NO_SLOWDOWN))
+		change_material_slowdown(material, mat_amount, multiplier)
 
 /obj/item/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
 	if (!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
 
-	var/conductivity = material.get_property(MATERIAL_ELECTRICAL)
-	// 0 ~ 1 count as perfect insulators
-	var/siemens_modifier = round(max(conductivity - 1, 0) ** 1.18 * 0.15, 0.01)
+	var/siemens_modifier = material.get_property(MATERIAL_INSULATION)
 	// Cannot use the base formula as it would make any item with glass not conduct electricity
 	if (siemens_modifier > 1)
 		siemens_coefficient /= 1 + (siemens_modifier - 1) * multiplier
@@ -2050,16 +2031,24 @@
 	if (siemens_coefficient > 0 && (initial(obj_flags) & CONDUCTS_ELECTRICITY) && !(obj_flags & CONDUCTS_ELECTRICITY))
 		obj_flags |= CONDUCTS_ELECTRICITY
 
-	if (material_flags & MATERIAL_NO_SLOWDOWN)
-		return
+	if (!(material_flags & MATERIAL_NO_SLOWDOWN))
+		change_material_slowdown(material, mat_amount, multiplier, removing = TRUE)
 
+/obj/item/proc/change_material_slowdown(datum/material/material, mat_amount, multiplier, removing = FALSE)
+	// Density above 6 adds slowdown, density below 3 can reduce existing slowdown
 	var/density = material.get_property(MATERIAL_DENSITY)
 	var/slowdown_change = 0
 
 	if (density > 6)
 		slowdown_change = (density - 6) * MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
-	else if (density < 3)
-		slowdown_change = (3 - density) * -MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
+	else if (density < 4)
+		slowdown_change = (4 - density) * -MATERIAL_DENSITY_SLOWDOWN * mat_amount / SHEET_MATERIAL_AMOUNT
+
+	if (!removing)
+		// Slowdown cannot be reduced below 0 if the item slows you down, or at all if the item speeds you up
+		if (slowdown_change)
+			slowdown = max(slowdown >= 0 ? 0 : slowdown, slowdown + slowdown_change * multiplier)
+		return
 
 	if (slowdown_change > 0)
 		slowdown -= slowdown_change * multiplier

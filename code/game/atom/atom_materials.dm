@@ -311,14 +311,8 @@
 		if(beauty_modifier >= 0.15 && HAS_TRAIT(src, TRAIT_FISHING_BAIT))
 			AddElement(/datum/element/shiny_bait)
 
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !uses_integrity)
-		return
-
-	var/base_modifier = material.get_property(MATERIAL_INTEGRITY)
-	var/integrity_mod = GET_MATERIAL_MODIFIER(base_modifier, multiplier)
-	modify_max_integrity(ceil(max_integrity * integrity_mod))
-	var/list/armor_mods = material.get_armor_modifiers(multiplier)
-	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
+	if((material_flags & MATERIAL_AFFECT_STATISTICS) && uses_integrity)
+		change_material_integrity(material, amount, multiplier)
 
 ///A proc for material effects that only the main material (which the atom's primarly composed of) should apply.
 /atom/proc/apply_main_material_effects(datum/material/main_material, amount, multiplier)
@@ -395,17 +389,8 @@
 		if(beauty_modifier >= 0.15 && HAS_TRAIT(src, TRAIT_FISHING_BAIT))
 			RemoveElement(/datum/element/shiny_bait)
 
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !uses_integrity)
-		return
-
-	var/base_modifier = material.get_property(MATERIAL_INTEGRITY)
-	var/integrity_mod = GET_MATERIAL_MODIFIER(base_modifier, multiplier)
-	modify_max_integrity(floor(max_integrity / integrity_mod))
-	var/list/armor_mods = material.get_armor_modifiers(multiplier)
-	for (var/armor_type, value in armor_mods)
-		if (value != 0) // Needs to be restored to initial values in finalize effects, sorry
-			armor_mods[armor_type] = 1 / value
-	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
+	if((material_flags & MATERIAL_AFFECT_STATISTICS) && uses_integrity)
+		change_material_integrity(material, amount, multiplier, removing = TRUE)
 
 ///A proc to remove the material effects previously applied by the (ex-)main material
 /atom/proc/remove_main_material_effects(datum/material/main_material, amount, multipier)
@@ -430,6 +415,20 @@
 	else if(!(material_flags & MATERIAL_EFFECTS) && new_flags & MATERIAL_EFFECTS)
 		apply_material_effects()
 	material_flags = new_flags
+
+/// Applies changes to integrity and armor from a material
+/atom/proc/change_material_integrity(datum/material/material, amount, multiplier, removing = FALSE)
+	var/base_modifier = material.get_property(MATERIAL_INTEGRITY)
+	var/integrity_mod = GET_MATERIAL_MODIFIER(base_modifier, multiplier)
+	var/integrity_change = removing ? floor(max_integrity / integrity_mod) : ceil(max_integrity * integrity_mod)
+	modify_max_integrity(integrity_change)
+	var/list/armor_mods = material.get_armor_modifiers(multiplier)
+	// Invert if we're removing our material
+	if (removing)
+		for (var/armor_type, value in armor_mods)
+			if (value != 0) // Needs to be restored to initial values in finalize effects, sorry
+				armor_mods[armor_type] = 1 / value
+	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
 
 /// Tries to fetch a material matching a specific slot
 /atom/proc/get_material_from_slot(slot_type)

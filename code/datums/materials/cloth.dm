@@ -8,7 +8,7 @@
 		MATERIAL_HARDNESS = 0,
 		MATERIAL_FLEXIBILITY = 9,
 		MATERIAL_REFLECTIVITY = 0,
-		MATERIAL_ELECTRICAL = 7, // Its an organic compound, its pretty conductive actually
+		MATERIAL_ELECTRICAL = 6, // Its an organic compound, its pretty conductive actually
 		MATERIAL_THERMAL = 2,
 		MATERIAL_CHEMICAL = 0,
 		MATERIAL_FLAMMABILITY = 8,
@@ -59,7 +59,7 @@
 	color = "#AC793E"
 	mat_flags = MATERIAL_CLASS_FABRIC | MATERIAL_CLASS_ORGANIC
 	mat_properties = list(
-		MATERIAL_DENSITY = 2, // Much lighter than cotton, actually
+		MATERIAL_DENSITY = 3,
 		MATERIAL_HARDNESS = 3,
 		MATERIAL_FLEXIBILITY = 8,
 		MATERIAL_REFLECTIVITY = 0,
@@ -77,7 +77,7 @@
 	mat_flags = MATERIAL_CLASS_FABRIC | MATERIAL_CLASS_ORGANIC | MATERIAL_CLASS_POLYMER
 	color = "#34334B"
 	mat_properties = list(
-		MATERIAL_DENSITY = 5,
+		MATERIAL_DENSITY = 6,
 		MATERIAL_HARDNESS = 6,
 		MATERIAL_FLEXIBILITY = 6,
 		MATERIAL_REFLECTIVITY = 6,
@@ -112,11 +112,11 @@
 	desc = "Hide of a deadly beast."
 	color = "#6D252F"
 	mat_properties = list(
-		MATERIAL_DENSITY = 6, // Uncomfortably heavy and rigid
+		MATERIAL_DENSITY = 7, // Uncomfortably heavy and rigid
 		MATERIAL_HARDNESS = 7,
 		MATERIAL_FLEXIBILITY = 6,
 		MATERIAL_REFLECTIVITY = 0,
-		MATERIAL_ELECTRICAL = 4,
+		MATERIAL_ELECTRICAL = 2,
 		MATERIAL_THERMAL = 0,
 		MATERIAL_CHEMICAL = 6,
 	)

@@ -186,7 +186,7 @@
 		affect_user(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living))
 
 /datum/material_slot/handle/proc/affect_user(obj/item/source, mob/living/user, mob/living/initiator)
-	var/datum/material/source_mat = SSmaterials.get_material(source.material_slots[type])
+	var/datum/material/source_mat = SSmaterials.get_material(source.get_material_from_slot(type))
 	var/arm_dir = IS_LEFT_INDEX(user.active_hand_index) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 	if (!ishuman(user))
 		SEND_SIGNAL(source_mat, COMSIG_MATERIAL_EFFECT_TOUCH, source, user, initiator, arm_dir, TRUE)
