@@ -82,6 +82,7 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 // Derived material property IDs
 #define MATERIAL_INTEGRITY "integrity"
 #define MATERIAL_BEAUTY "beauty"
+#define MATERIAL_INSULATION "insulation"
 
 // Flags for signal tracking on materials
 /// Send COMSIG_MATERIAL_EFFECT_X whenever a mob steps onto a material atom/is shoved into this material wall

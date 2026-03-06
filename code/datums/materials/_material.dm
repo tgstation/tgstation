@@ -136,7 +136,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		RegisterSignal(source, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
 		RegisterSignal(source, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(on_item_attack))
 		// Allow recipe crafting for stack items
-		if(!isstack(souce))
+		if(!isstack(source))
 			RegisterSignal(source, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self))
 		RegisterSignal(source, COMSIG_ITEM_ATTACK_ZONE, PROC_REF(on_item_attack_living))
 
