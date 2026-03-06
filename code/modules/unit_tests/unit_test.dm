@@ -293,6 +293,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/atom/movable/looking_holder,
 		//Should not exist outside of holders
 		/obj/effect/decal/cleanable/blood/trail,
+		// Abstract type, controlled by turfs
+		// Literally errors on creation/deletion
+		/atom/movable/lighting_object,
 	)
 
 	// Everything that follows is a typesof() check.

@@ -136,7 +136,16 @@
 
 /obj/structure/transport/linear/proc/add_item_on_transport(datum/source, atom/movable/new_transport_contents)
 	SIGNAL_HANDLER
-	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/transport/linear, /mob/eye, /obj/effect/gravity_fluff_field))
+	var/static/list/blacklisted_types
+	if(isnull(blacklisted_types))
+		blacklisted_types = typecacheof(list(
+			/obj/structure/fluff/tram_rail,
+			/obj/effect/decal/cleanable,
+			/obj/structure/transport/linear,
+			/mob/eye,
+			/obj/effect/gravity_fluff_field,
+			/atom/movable/lighting_object,
+		))
 	if(is_type_in_typecache(new_transport_contents, blacklisted_types) || new_transport_contents.invisibility == INVISIBILITY_ABSTRACT || HAS_TRAIT(new_transport_contents, TRAIT_UNDERFLOOR)) //prevents the tram from stealing things like landmarks
 		return FALSE
 	if(new_transport_contents in transport_contents)
@@ -592,6 +601,9 @@
 		var/list/atom/movable/foreign_contents_in_loc = list()
 
 		for(var/atom/movable/foreign_movable as anything in (turf_loc.contents - original_contents))
+			if(islightingobj(foreign_movable))
+				continue
+
 			if(foreign_objects && ismovable(foreign_movable) && !ismob(foreign_movable) && !istype(foreign_movable, /obj/effect/landmark/transport/nav_beacon))
 				foreign_contents_in_loc += foreign_movable
 				continue
