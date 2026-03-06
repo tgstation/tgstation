@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed elder atmosian getting affected by metal hydrogen it is made out of"
