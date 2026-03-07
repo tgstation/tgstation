@@ -25,6 +25,7 @@
 	verbs.Cut()
 
 	affected_turf = loc
+	layer = affected_turf.z * 0.01
 	if (affected_turf.lighting_object)
 		qdel(affected_turf.lighting_object, force = TRUE)
 		stack_trace("a lighting object was assigned to a turf that already had a lighting object!")
