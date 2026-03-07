@@ -84,6 +84,10 @@
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"
+	if (icon_prefix == SPEAR_CUSTOM_TIP_PREFIX)
+		worn_icon_state = "spearglass0"
+	else
+		worn_icon_state = null
 	return ..()
 
 /obj/item/spear/suicide_act(mob/living/carbon/user)
@@ -154,10 +158,10 @@
 
 /obj/item/spear/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
 	. = ..()
-	if (icon_prefix != SPEAR_CUSTOM_TIP_PREFIX)
+	if (icon_prefix != SPEAR_CUSTOM_TIP_PREFIX || !isinhands)
 		return
 	var/datum/material/tip_material = get_master_material()
-	var/mutable_appearance/tip_overlay = mutable_appearance(icon, "speartip[HAS_TRAIT(src, TRAIT_WIELDED)]", appearance_flags = RESET_COLOR)
+	var/mutable_appearance/tip_overlay = mutable_appearance(icon_file, "speartip[HAS_TRAIT(src, TRAIT_WIELDED)]", appearance_flags = RESET_COLOR)
 	tip_overlay.color = tip_material.color
 	. += tip_overlay
 
@@ -168,14 +172,14 @@
 	return custom_materials[tip_material] ? tip_material : ..()
 
 /obj/item/spear/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(improvised_construction)
+	if(improvised_construction && !QDELETED(src))
 		take_damage(force / 2, sound_effect = FALSE)
 
 /obj/item/spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if (.) //spear was caught
 		return
-	if(improvised_construction)
+	if(improvised_construction && !QDELETED(src))
 		take_damage(throwforce / 2, sound_effect = FALSE)
 
 /obj/item/spear/atom_destruction(damage_flag)
