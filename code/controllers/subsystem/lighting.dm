@@ -113,8 +113,6 @@ SUBSYSTEM_DEF(lighting)
 
 		var/atom/movable/lighting_object/O = queue[i]
 		if(QDELETED(O))
-			queue.Cut(1, i + 1)
-			i -= 1
 			continue
 		O.update()
 		O.needs_update = FALSE
