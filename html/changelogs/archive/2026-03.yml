@@ -65,3 +65,7 @@
   - bugfix: Fixed rogue "ING IN" on lobby screen
   maximal08, levels0:
   - bugfix: experimentor wires should now work properly
+2026-03-07:
+  SapphoQueer:
+  - spellcheck: Heckacious Larincks no longer uses a github-TOS-breaking word as one
+      of it's transforms
