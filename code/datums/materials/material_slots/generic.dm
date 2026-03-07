@@ -72,24 +72,24 @@
 /datum/material_slot/weapon_head/proc/on_item_attack_living(obj/item/source, mob/living/target, mob/living/user, def_zone)
 	SIGNAL_HANDLER
 
-	var/has_contact = TRUE
+	var/skin_contact = body_zone2cover_flags(def_zone)
 	for (var/obj/item/worn_item in target.get_equipped_items(INCLUDE_ABSTRACT))
-		if (worn_item.body_parts_covered & def_zone)
-			has_contact = FALSE
+		skin_contact &= ~worn_item.body_parts_covered
+		if (!skin_contact)
 			break
 
-	affect_target(source, target, user, def_zone, has_contact)
+	affect_target(source, target, user, def_zone, !!skin_contact)
 
 /datum/material_slot/weapon_head/proc/on_throw_impact_living(obj/item/source, mob/living/target, def_zone, blocked, datum/thrownthing/throwing_datum)
 	SIGNAL_HANDLER
 
-	var/has_contact = TRUE
+	var/skin_contact = body_zone2cover_flags(def_zone)
 	for (var/obj/item/worn_item in target.get_equipped_items(INCLUDE_ABSTRACT))
-		if (worn_item.body_parts_covered & def_zone)
-			has_contact = FALSE
+		skin_contact &= ~worn_item.body_parts_covered
+		if (!skin_contact)
 			break
 
-	affect_throw_impact(source, target, astype(throwing_datum.thrower.resolve(), /mob/living), def_zone, has_contact)
+	affect_throw_impact(source, target, astype(throwing_datum.thrower.resolve(), /mob/living), def_zone, !!skin_contact)
 
 /datum/material_slot/weapon_head/proc/affect_target(obj/item/source, atom/target, mob/living/user, def_zone, skin_contact = TRUE)
 	var/datum/material/source_mat = source.get_material_from_slot(type)

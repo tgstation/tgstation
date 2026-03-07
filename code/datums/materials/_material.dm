@@ -205,13 +205,13 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /datum/material/proc/on_item_attack_living(obj/item/source, mob/living/target, mob/living/user, def_zone)
 	SIGNAL_HANDLER
-	var/has_contact = TRUE
+	var/skin_contact = body_zone2cover_flags(def_zone)
 	for (var/obj/item/worn_item in target.get_equipped_items(INCLUDE_ABSTRACT))
-		if (worn_item.body_parts_covered & def_zone)
-			has_contact = FALSE
+		skin_contact &= ~worn_item.body_parts_covered
+		if (!skin_contact)
 			break
 
-	impact_affect_target(source, target, user, def_zone, has_contact)
+	impact_affect_target(source, target, user, def_zone, !!skin_contact)
 
 /datum/material/proc/on_item_attack_self(obj/item/source, mob/living/user)
 	SIGNAL_HANDLER
@@ -227,13 +227,13 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material/proc/on_throw_impact_living(obj/item/source, mob/living/target, def_zone, blocked, datum/thrownthing/throwing_datum)
 	SIGNAL_HANDLER
 
-	var/has_contact = TRUE
+	var/skin_contact = body_zone2cover_flags(def_zone)
 	for (var/obj/item/worn_item in target.get_equipped_items(INCLUDE_ABSTRACT))
-		if (worn_item.body_parts_covered & def_zone)
-			has_contact = FALSE
+		skin_contact &= ~worn_item.body_parts_covered
+		if (!skin_contact)
 			break
 
-	impact_affect_throw_impact(source, target, astype(throwing_datum.thrower.resolve(), /mob/living), def_zone, has_contact)
+	impact_affect_throw_impact(source, target, astype(throwing_datum.thrower.resolve(), /mob/living), def_zone, !!skin_contact)
 
 /datum/material/proc/impact_affect_touch(obj/item/source, mob/living/user, mob/living/initiator)
 	var/arm_dir = IS_LEFT_INDEX(user.active_hand_index) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
