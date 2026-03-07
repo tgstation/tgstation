@@ -267,3 +267,50 @@
 		return FALSE
 
 	return TRUE
+
+//Gets the topmost teleportable container
+/proc/get_teleportable_container(atom/movable/teleportable, container_flags = ALL)
+	while(ismovable(teleportable.loc))
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_STORAGE) && isitem(teleportable))
+			var/obj/item/item = teleportable
+			if(item.item_flags & IN_STORAGE)
+				break
+		var/atom/movable/movable = teleportable.loc
+		if(movable.anchored)
+			break
+		if(isliving(movable))
+			var/mob/living/living = movable
+			if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_INVENTORY))
+				var/list/equipped = living.get_equipped_items(INCLUDE_HELD|INCLUDE_POCKETS)
+				if((teleportable in equipped) && !HAS_TRAIT(teleportable, TRAIT_NODROP))
+					if(istype(teleportable, /obj/item/mod/control) && (container_flags & TELEPORT_CONTAINER_INCLUDE_SEALED_MODSUIT))
+						var/obj/item/mod/control/modsuit = teleportable
+						var/sealed = TRUE
+						for(var/datum/mod_part/part as anything in modsuit.get_part_datums(TRUE))
+							if((part.part_item == modsuit || part.part_item.loc != modsuit) && !part.sealed)
+								sealed = FALSE
+								break
+						if(!sealed)
+							break
+					else
+						break
+			if(living.buckled)
+				if(living.buckled.anchored)
+					break
+				else
+					var/obj/buckled_obj = living.buckled
+					buckled_obj.unbuckle_mob(living)
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_CLOSET) && iscloset(movable))
+			break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_MECH_EQUIPMENT) && istype(movable, /obj/item/mecha_parts/mecha_equipment))
+			break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_VEHICLE) && isvehicle(movable))
+			var/obj/vehicle/vehicle = movable
+			if(vehicle.is_occupant(teleportable))
+				break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_STOMACH) && istype(movable, /obj/item/organ/stomach))
+			var/obj/item/organ/stomach/stomach = movable
+			if(teleportable in stomach.stomach_contents)
+				break
+		teleportable = movable
+	return teleportable

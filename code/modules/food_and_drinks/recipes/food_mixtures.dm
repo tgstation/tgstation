@@ -6,7 +6,7 @@
 		/obj/item/stack/rods,
 		/obj/item/reagent_containers/cup/glass/sillycup,
 	)
-	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENTS | CRAFT_CLEARS_REAGENTS
+	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENT_COMPONENTS | CRAFT_CLEARS_REAGENTS
 	///The food types that are added to the result when the recipe is completed
 	var/added_foodtypes = NONE
 	///The food types that are removed to the result when the recipe is completed

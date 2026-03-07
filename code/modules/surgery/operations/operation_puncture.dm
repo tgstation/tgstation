@@ -108,7 +108,7 @@
 		var/obj/item/gun/energy/laser/lasergun = tool
 		return lasergun.cell?.charge > 0
 
-	return tool.get_temperature() > 0
+	return tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 
 /datum/surgery_operation/limb/seal_veins/state_check(obj/item/bodypart/limb)
 	var/datum/wound/pierce/bleed/pierce_wound = locate() in limb.wounds

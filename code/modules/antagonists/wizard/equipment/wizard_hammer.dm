@@ -102,7 +102,7 @@
 	icon_state = "[base_icon_state]0"
 	return ..()
 
-/obj/item/mjollnir/proc/shock(mob/living/target)
+/obj/item/mjollnir/proc/yeet_shock(mob/living/target)
 	target.Stun(1.5 SECONDS)
 	target.Knockdown(10 SECONDS)
 	var/datum/effect_system/basic/lightning_spread/lightning = new(target.loc, 5, TRUE)
@@ -120,9 +120,9 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		shock(target_mob)
+		yeet_shock(target_mob)
 
 /obj/item/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!QDELETED(hit_atom) && isliving(hit_atom))
-		shock(hit_atom)
+		yeet_shock(hit_atom)

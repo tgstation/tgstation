@@ -213,7 +213,7 @@
 		if(!to_stock) //Nothing for us in the silo
 			continue
 
-		storage_datum.energy += charger.materials.use_materials(list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock), action = "restocked", name = "units", user_data = ID_DATA(robot))
+		storage_datum.energy += charger.materials.use_materials(list(SSmaterials.get_material(storage_datum.mat_type) = to_stock), action = "restocked", name = "units", user_data = ID_DATA(robot))
 		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
 		playsound(charger, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
 		return
@@ -723,7 +723,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/borg/cyborghug/medical,
-		/obj/item/stack/medical/gauze,
+		/obj/item/stack/medical/wrap/gauze,
 		/obj/item/stack/medical/bone_gel,
 		/obj/item/borg/apparatus/organ_storage,
 		/obj/item/borg/lollipop,
@@ -939,7 +939,7 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
-		/obj/item/stack/medical/gauze,
+		/obj/item/stack/medical/wrap/gauze,
 		/obj/item/stack/medical/bone_gel,
 		/obj/item/gun/medbeam,
 		/obj/item/borg/apparatus/organ_storage,

@@ -72,9 +72,9 @@
 	implements = list(
 		TOOL_BONESET = 1,
 		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
-		/obj/item/stack/sticky_tape/super = 2,
-		/obj/item/stack/sticky_tape = 3.33,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1,
+		/obj/item/stack/medical/wrap/sticky_tape/super = 2,
+		/obj/item/stack/medical/wrap/sticky_tape = 3.33,
 	)
 	time = 4 SECONDS
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
@@ -124,9 +124,9 @@
 	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		TOOL_BONESET = 1,
-		/obj/item/stack/sticky_tape/surgical = 1.66,
-		/obj/item/stack/sticky_tape/super = 2.5,
-		/obj/item/stack/sticky_tape = 5,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1.66,
+		/obj/item/stack/medical/wrap/sticky_tape/super = 2.5,
+		/obj/item/stack/medical/wrap/sticky_tape = 5,
 	)
 	time = 6 SECONDS
 	all_surgery_states_required = SURGERY_SKIN_OPEN
@@ -178,9 +178,9 @@
 	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
-		/obj/item/stack/sticky_tape/super = 2,
-		/obj/item/stack/sticky_tape = 3.33,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1,
+		/obj/item/stack/medical/wrap/sticky_tape/super = 2,
+		/obj/item/stack/medical/wrap/sticky_tape = 3.33,
 	)
 	time = 4 SECONDS
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
@@ -275,9 +275,9 @@
 	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
-		/obj/item/stack/sticky_tape/super = 2,
-		/obj/item/stack/sticky_tape = 3.33,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1,
+		/obj/item/stack/medical/wrap/sticky_tape/super = 2,
+		/obj/item/stack/medical/wrap/sticky_tape = 3.33,
 	)
 	time = 4 SECONDS
 

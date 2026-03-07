@@ -243,3 +243,5 @@ sound/effects/goresplat.ogg -- https://freesound.org/people/ThefitzyG/sounds/414
 sound/music/antag/blobalert.ogg and sound/effects/blob/blobattack.ogg -- "SlimeAtk.WAV" by Jamius -- https://freesound.org/people/Jamius/sounds/41530/ -- License: Attribution 4.0
 
 sound/effect/droplet.ogg -- "Drop - Water" By mattfinarelli -- https://freesound.org/people/mattfinarelli/sounds/533146/ -- License: Creative Commons 0
+
+sound/effects/swapper/swap_A.ogg and swap_B.ogg by ArcaneMusic, License: Creative Commons 0, man-made mouth noises, slight cleanup in audacity.

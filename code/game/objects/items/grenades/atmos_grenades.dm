@@ -43,6 +43,7 @@
 		if(turf_fix.blocks_air)
 			continue
 		turf_fix.copy_air(base_mix.copy())
+		turf_fix.air_update_turf(update = FALSE, remove = FALSE)
 	qdel(src)
 
 /obj/item/grenade/gas_crystal/proto_nitrate_crystal
