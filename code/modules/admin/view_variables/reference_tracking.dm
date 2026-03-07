@@ -27,13 +27,6 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 		/datum/card,
 		/datum/chat_payload,
 		/datum/comm_log_entry,
-		/datum/component/action_item_overlay,
-		/datum/component/atom_mounted, // there's a lot of these, and they should always clean up their refs
-		/datum/component/edible,
-		/datum/component/germ_sensitive,
-		/datum/component/redirect_attack_hand_from_turf,
-		/datum/component/wet_floor,
-		/datum/element/decal,
 		/datum/gas_mixture,
 		/datum/greyscale_layer,
 		/datum/icon_transformer,
@@ -54,10 +47,7 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 		// stuff below isn't 100% guaranteed to be ref-free, but they're prolly not an issue
 		/turf,
 		/obj/structure/flora, // icebox and such has a LOT of these
-		/datum/callback,
 		/datum/chatmessage,
-		/datum/component/connect_loc_behalf,
-		/datum/light_source,
 		/datum/lighting_corner,
 		/datum/log_entry, // hopefully nobody's silly enough to accidentally pass a reference to these... right???
 		/datum/reagent/consumable/nutriment,
