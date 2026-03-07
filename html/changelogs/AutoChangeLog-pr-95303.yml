@@ -1,8 +1,0 @@
-author: "ttt, JohnFulpWillard"
-delete-after: True
-changes:
-  - rscadd: "Added a Memory HUD to your UI. In case you didn't know, you get memories of things happening around the station, or important antagonist info such as the nuclear codes."
-  - rscdel: "Removed Borg's \"store\" button, now the cyborg module will behave more similar to a backpack (LMB to store, RMB to open/close)"
-  - bugfix: "Borg material now properly displays how much materials they can afford with their cell's charge."
-  - qol: "Your HUD prefs are respected on more mobs now."
-  - qol: "Improved the HUD of simple/basic animals, as well as Cyborgs, AIs, pAIs and Xenomorphs."
