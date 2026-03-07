@@ -4,6 +4,14 @@
 #ifdef FAST_REFERENCE_TRACKING
 // typecache of types that almost certainly have no refs, and thus can be safely skipped when finding references
 GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
+// empty alist we swap with GLOB.reftracker_skip_typecache whenever someone calls toggle_fast_reftracking
+GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
+
+/proc/toggle_fast_reftracking()
+	var/alist/a = GLOB.reftracker_skip_typecache
+	var/alist/b = GLOB.reftracker_skip_typecache_b
+	GLOB.reftracker_skip_typecache = b
+	GLOB.reftracker_skip_typecache_b = a
 
 /proc/init_reftracker_skip_typecache()
 	. = alist()
