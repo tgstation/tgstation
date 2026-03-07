@@ -203,19 +203,25 @@ SUBSYSTEM_DEF(garbage)
 		switch (level)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
-				// Decides how many refs to look for (potentially)
-				// Based off the remaining and the ones we can account for
-				var/remaining_refs = refcount(D) - REFS_WE_EXPECT
-				if(reference_find_on_fail[text_ref(D)])
-					INVOKE_ASYNC(D, TYPE_PROC_REF(/datum,find_references), remaining_refs)
-					ref_searching = TRUE
-				#ifdef GC_FAILURE_HARD_LOOKUP
-				else
-					INVOKE_ASYNC(D, TYPE_PROC_REF(/datum,find_references), remaining_refs)
-					ref_searching = TRUE
-				#endif
-				reference_find_on_fail -= text_ref(D)
-				#endif
+				#ifdef FAST_REFERENCE_TRACKING
+				var/skip = GLOB.reftracker_skip_typecache[D.type]
+				#else
+				var/skip = FALSE
+				#endif //ifdef FAST_REFERENCE_TRACKING
+				if(!skip)
+					// Decides how many refs to look for (potentially)
+					// Based off the remaining and the ones we can account for
+					var/remaining_refs = refcount(D) - REFS_WE_EXPECT
+					if(reference_find_on_fail[text_ref(D)])
+						INVOKE_ASYNC(D, TYPE_PROC_REF(/datum,find_references), remaining_refs)
+						ref_searching = TRUE
+					#ifdef GC_FAILURE_HARD_LOOKUP
+					else
+						INVOKE_ASYNC(D, TYPE_PROC_REF(/datum,find_references), remaining_refs)
+						ref_searching = TRUE
+					#endif //ifdef GC_FAILURE_HARD_LOOKUP
+					reference_find_on_fail -= text_ref(D)
+				#endif //ifdef REFERENCE_TRACKING
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
 
