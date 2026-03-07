@@ -45,6 +45,7 @@ type singleBounty = {
   shipped: number;
   claimed: BooleanLike;
   maximum: number;
+  type: string;
 }
 
 
@@ -259,6 +260,7 @@ const GlobalBountyBlock = (props) => {
     shipped: 0,
     claimed: false,
     maximum: 0,
+    type: '',
   });
 
   const safeListBounty = Array.isArray(listBounty) ? listBounty : [];
@@ -326,11 +328,8 @@ const GlobalBountyBlock = (props) => {
             tooltip={sending ? 'Stop Sending' : 'Send Goods'}
             selected={sending}
             disabled={!pad || !id_inserted}
-            onClick={() =>
-              
-
-              )
-            }
+            onClick={() => props.act('send', { global: true})}
+            //This behavior is just tacked onto send so no need for a new act
           >
             Send & Claim
           </Button>

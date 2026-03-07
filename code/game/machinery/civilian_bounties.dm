@@ -334,6 +334,7 @@
 				"claimed" = global_bounty.claimed,
 				"shipped" = ship_total,
 				"maximum" = ship_max,
+				"type" = global_bounty.type,
 			))
 
 	return data
@@ -352,7 +353,7 @@
 		if("recalc")
 			recalc()
 		if("send")
-			start_sending()
+			start_sending(params["global"])
 		if("stop")
 			stop_sending()
 		if("pick")
@@ -584,8 +585,8 @@
 			continue
 		printout_text += {"<h3>[current_bounty.name]</h3>
 			<ul>
-			<li>Reward: <b>[current_bounty.reward]</b> cr.</li>
-			<li>Cut: [round(BOUNTY_CUT_STANDARD * current_bounty.reward)] cr.</li>
+			<li>Reward: <b>[current_bounty.get_bounty_reward()]</b> cr.</li>
+			<li>Cut: [round(BOUNTY_CUT_STANDARD * current_bounty.get_bounty_reward())] cr.</li>
 			<li>[!(current_bounty.claimed) ? "Not" : ""] Completed</li>
 			</ul>"}
 	add_raw_text(printout_text.Join("<br />"))

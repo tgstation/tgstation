@@ -1,5 +1,3 @@
-/// How many jobs have bounties, minus the random civ bounties. PLEASE INCREASE THIS NUMBER AS MORE DEPTS ARE ADDED TO BOUNTIES.
-#define MAXIMUM_BOUNTY_JOBS 14
 
 GLOBAL_LIST_EMPTY(bounties_list)
 
