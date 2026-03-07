@@ -179,6 +179,11 @@
 	if (!ismovable(target))
 		return
 
+	var/atom/movable/as_movable = target
+	// Don't teleport airlocks around please
+	if (as_movable.anchored || as_movable.move_resist >= INFINITY)
+		return
+
 	// Floors don't trigger if you're wearing shoes because it'd be too cancer
 	if (isfloorturf(object) && !skin_contact && !source.get_property(MATERIAL_PENETRATING))
 		return
