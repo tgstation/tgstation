@@ -482,7 +482,9 @@
 
 /// Tries to fetch a material matching a specific slot
 /atom/proc/get_material_from_slot(slot_type)
-	return SSmaterials.get_material(material_slots?[slot_type])
+	var/mat_type = material_slots?[slot_type]
+	if (mat_type)
+		return SSmaterials.get_material(mat_type)
 
 /// Fetches a copy of all material slots.
 /atom/proc/get_material_slots()

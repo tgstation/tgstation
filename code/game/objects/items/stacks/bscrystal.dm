@@ -7,7 +7,7 @@
 	singular_name = "bluespace crystal"
 	dye_color = DYE_COSMIC
 	w_class = WEIGHT_CLASS_TINY
-	material_flags = NONE // Handles in-hand/thrown teleports by itself
+	material_flags = MATERIAL_NO_DESCRIPTORS // Handles in-hand/thrown teleports by itself
 	mats_per_unit = list(/datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
 	points = 50
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
