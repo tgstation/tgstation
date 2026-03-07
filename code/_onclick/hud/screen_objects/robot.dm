@@ -94,6 +94,7 @@
 /atom/movable/screen/robot/modpc
 	name = "Modular Interface"
 	icon_state = "template"
+	screen_loc = ui_borg_tablet
 
 /atom/movable/screen/robot/modpc/Click()
 	. = ..()
