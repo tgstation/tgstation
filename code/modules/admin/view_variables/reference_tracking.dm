@@ -151,10 +151,6 @@ GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
 		var/datum/datum_container = potential_container
 		if(datum_container.last_find_references == search_time)
 			return
-#ifdef FAST_REFERENCE_TRACKING
-		if(GLOB.reftracker_skip_typecache[datum_container.type])
-			return
-#endif
 
 		datum_container.last_find_references = search_time
 		var/list/vars_list = datum_container.vars
