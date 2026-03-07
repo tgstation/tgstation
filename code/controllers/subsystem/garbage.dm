@@ -164,6 +164,11 @@ SUBSYSTEM_DEF(garbage)
 // 1 from the hard reference in the queue, and 1 from the variable used before this
 #define REFS_WE_EXPECT 2
 
+	#ifdef FAST_REFERENCE_TRACKING
+	// cache sanic speed yadda yadda yadda
+	var/alist/reftracker_skip_typecache = GLOB.reftracker_skip_typecache
+	#endif // #ifdef FAST_REFERENCE_TRACKING
+
 	//We do this rather then for(var/list/ref_info in queue) because that sort of for loop copies the whole list.
 	//Normally this isn't expensive, but the gc queue can grow to 40k items, and that gets costly/causes overrun.
 	for (var/i in 1 to length(queue))
@@ -204,7 +209,7 @@ SUBSYSTEM_DEF(garbage)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
 				#ifdef FAST_REFERENCE_TRACKING
-				var/skip = GLOB.reftracker_skip_typecache[D.type]
+				var/skip = reftracker_skip_typecache[D.type]
 				#else
 				var/skip = FALSE
 				#endif //ifdef FAST_REFERENCE_TRACKING
