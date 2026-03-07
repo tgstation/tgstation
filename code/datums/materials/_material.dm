@@ -82,18 +82,6 @@ Simple datum which is instanced once per type and is used for every object of sa
 	/// A cached icon for the texture filter
 	var/icon/cached_texture_filter_icon = null
 
-	/// List of atoms we want to monitor entries onto for contacts
-	var/static/list/turf_interactions = typecacheof(list(
-		/turf/open,
-		/obj/structure/platform,
-		/obj/structure/table,
-		/obj/structure/rack,
-		/obj/structure/bed,
-		/obj/structure/closet/crate,
-		/obj/structure/reagent_dispensers,
-		/obj/structure/altar,
-	))
-
 /** Handles initializing the material.
  *
  * Arguments:
@@ -124,6 +112,16 @@ Simple datum which is instanced once per type and is used for every object of sa
 		return
 
 	if (track_flags & MATERIAL_TRACK_CONTACT)
+		var/static/list/turf_interactions = typecacheof(list(
+			/turf/open,
+			/obj/structure/platform,
+			/obj/structure/table,
+			/obj/structure/rack,
+			/obj/structure/bed,
+			/obj/structure/closet/crate,
+			/obj/structure/reagent_dispensers,
+			/obj/structure/altar,
+		))
 		if (is_type_in_typecache(source, turf_interactions))
 			source.AddComponent(/datum/component/material_turf_tracking, src)
 
