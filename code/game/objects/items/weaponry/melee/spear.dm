@@ -266,13 +266,13 @@
 	desc = "A metal rod with some wire attached to one of the ends, waiting for something sharp."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "wireprod"
-	inhand_icon_state = "spearblank"
+	inhand_icon_state = "spearblank0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	icon_angle = -45
 	force = 5
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
