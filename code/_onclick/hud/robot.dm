@@ -13,7 +13,7 @@
 /atom/movable/screen/robot/module/Click(location, control, params)
 	. = ..()
 	var/mob/living/silicon/robot/robot_owner = hud.mymob
-	if((robot_owner.model.type == /obj/item/robot_model))
+	if(robot_owner.model.type == /obj/item/robot_model)
 		if(.)
 			return
 		robot_owner.pick_model()
