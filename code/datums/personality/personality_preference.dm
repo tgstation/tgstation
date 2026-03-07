@@ -3,6 +3,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	can_randomize = TRUE
 	randomize_by_default = FALSE
+	should_update_preview = FALSE
 
 /datum/preference/personality/apply_to_human(mob/living/carbon/human/target, value)
 	if(isdummy(target) || !ishuman(target) || isnull(target.mob_mood))
