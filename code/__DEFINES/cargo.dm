@@ -92,3 +92,5 @@
 #define DEPARTMENTAL_ORDER_REWARD_COEFFICIENT 120
 /// Used for the power of the logarithmic value for the free crate delivery reward
 #define DEPARTMENTAL_ORDER_REWARD_EXPONENT 1.5
+
+#define CIV_BOUNTY_BASELINE 5

@@ -102,19 +102,28 @@
 	status_report += "Not Applicable."
 	playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 
+
 /**
  * This fully rewrites base behavior in order to only check for bounty objects, and no other types of objects like pirate-pads do.
  */
-/obj/machinery/computer/piratepad_control/civilian/send()
+/obj/machinery/computer/piratepad_control/civilian/send(check_global = FALSE)
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 	if(!sending)
 		return
 	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
-	var/datum/bounty/current_bounty = id_account?.civilian_bounty
-	if(!current_bounty)
+
+	// To account for check_global, we're going to construct a list of all bounties we want to check.
+	var/list/datum/bounty/bounty_stack = list()
+
+	if(check_global)
+		bounty_stack = GLOB.bounties_list.Copy()
+	else
+		bounty_stack += id_account?.civilian_bounty
+
+	if(!length(bounty_stack))
 		stop_sending()
 		return FALSE
-	var/active_stack = 0
+	var/active_count = 0
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
 	for(var/atom/movable/possible_shippable in get_turf(pad))
 		if(possible_shippable == pad)
@@ -125,25 +134,36 @@
 			var/obj/item/possible_shippable_item = possible_shippable
 			if(possible_shippable_item.item_flags & ABSTRACT)
 				continue
-		if(current_bounty.applies_to(possible_shippable))
-			active_stack ++
-			current_bounty.ship(possible_shippable)
-			qdel(possible_shippable)
-	if(active_stack >= 1)
-		status_report += "Bounty Target Found x[active_stack]. "
-	else
-		status_report = "No applicable targets found. Aborting."
-		stop_sending()
-	if(current_bounty.can_claim())
-		//Pay for the bounty with the ID's department funds.
-		status_report += " Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
-		SSblackbox.record_feedback("tally", "bounties_completed", 1, current_bounty.type)
-		current_bounty.on_claimed(inserted_scan_id)
-		id_account.reset_bounty(inserted_scan_id)
-		SSeconomy.civ_bounty_tracker++
 
-		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
-		reward.set_up(current_bounty, inserted_scan_id)
+		for(var/datum/bounty/stack_item in bounty_stack)
+			if(stack_item.applies_to(possible_shippable))
+				active_count++
+				stack_item.ship(possible_shippable)
+				qdel(possible_shippable)
+	if(active_count >= 1)
+		status_report += "Bounty Target[active_count > 1 ? "s" : ""] Found x[active_count]. "
+	else
+		status_report = "No applicable target found. Aborting."
+		stop_sending()
+
+	active_count = 0 // We'll just re-use this for the second message setter.
+	for(var/datum/bounty/stack_item in bounty_stack)
+		if(stack_item.can_claim())
+			active_count++
+			//Pay for the bounty with the ID's department funds.
+			SSblackbox.record_feedback("tally", "bounties_completed", 1, stack_item.type)
+			stack_item.on_claimed(inserted_scan_id)
+			id_account.reset_bounty(inserted_scan_id)
+			SSeconomy.civ_bounty_tracker++
+
+			var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
+			reward.set_up(stack_item, inserted_scan_id)
+	if(active_count >= 1)
+		status_report += "x[active_count] Bount[active_count > 1 ? "ies" : "y"] completed!\
+			Please give your bounty cube[active_count > 1 ? "s" : ""] to cargo for your automated payout shortly."
+
+	if(check_global)
+		update_global_bounty_list(round(CIV_BOUNTY_BASELINE + (SSeconomy.civ_bounty_tracker / 3)), FALSE)
 
 	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
@@ -168,97 +188,6 @@
 	COOLDOWN_START(id_account, bounty_timer, (5 MINUTES) - cooldown_reduction)
 	id_account.bounties = crumbs
 
-/**
- * Generates a list of bounties for use with the civilian bounty pad.
- *
- * @param bounty_types the define taken from a job for selection of a random_bounty() proc.
- * @param bounty_rolls the number of bounties to be selected from.
- * @param assistant_failsafe Do we guarentee one assistant bounty per generated list? Used for non-assistant jobs to give an easier alternative to that job's default bounties.
- */
-/datum/id_trim/proc/generate_bounty_list(bounty_rolls = 3, assistant_failsafe = TRUE)
-	var/datum/job/our_job = find_job()
-	var/bounty_type = our_job?.bounty_types || CIV_JOB_RANDOM
-
-	var/list/rolling_list = list()
-	if(assistant_failsafe)
-		var/random_assistant = get_random_bounty_type(CIV_JOB_BASIC)
-		var/datum/bounty/assistant_bounty = new random_assistant()
-		if(assistant_bounty.can_get())
-			rolling_list += assistant_bounty
-		else
-			qdel(assistant_bounty)
-
-	var/attempts = 20
-	while(length(rolling_list) < bounty_rolls && attempts > 0)
-		var/random_job = get_random_bounty_type(attempts <= 5 ? CIV_JOB_BASIC : bounty_type)
-		var/datum/bounty/job_bounty = new random_job()
-		attempts -= 1
-		if(!job_bounty.can_get() || has_duplicate_bounty(rolling_list, job_bounty))
-			qdel(job_bounty)
-			continue
-
-		rolling_list += job_bounty
-
-	return rolling_list
-
-/// Helper to see if there's a duplicate bounty in a list of bounties
-/datum/id_trim/proc/has_duplicate_bounty(list/datum/bounty/bounty_list, datum/bounty/check_bounty)
-	PRIVATE_PROC(TRUE)
-
-	for(var/datum/bounty/existing as anything in bounty_list)
-		if(existing.type != check_bounty.type)
-			continue
-		if(existing.allow_duplicate && check_bounty.allow_duplicate)
-			continue
-		return TRUE
-
-	return FALSE
-
-/// Returns a /datum/bounty typepath for a given bounty type
-/datum/id_trim/proc/get_random_bounty_type(input_bounty_type)
-	if(!input_bounty_type || input_bounty_type == CIV_JOB_RANDOM)
-		input_bounty_type = rand(1, MAXIMUM_BOUNTY_JOBS)
-
-	switch(input_bounty_type)
-		if(CIV_JOB_BASIC)
-			return pick(subtypesof(/datum/bounty/item/assistant))
-		if(CIV_JOB_ROBO)
-			return pick(subtypesof(/datum/bounty/item/mech))
-		if(CIV_JOB_CHEF)
-			return pick(subtypesof(/datum/bounty/item/chef) + subtypesof(/datum/bounty/reagent/chef))
-		if(CIV_JOB_SEC)
-			if(prob(75))
-				return /datum/bounty/patrol
-			return /datum/bounty/item/contraband
-		if(CIV_JOB_DRINK)
-			if(prob(50))
-				return /datum/bounty/reagent/simple_drink
-			return /datum/bounty/reagent/complex_drink
-		if(CIV_JOB_CHEM)
-			if(prob(50))
-				return /datum/bounty/reagent/chemical_simple
-			return/datum/bounty/reagent/chemical_complex
-		if(CIV_JOB_VIRO)
-			return pick(subtypesof(/datum/bounty/virus))
-		if(CIV_JOB_SCI)
-			if(prob(50))
-				return pick(subtypesof(/datum/bounty/item/science))
-			return pick(subtypesof(/datum/bounty/item/slime))
-		if(CIV_JOB_ENG)
-			return pick(subtypesof(/datum/bounty/item/engineering))
-		if(CIV_JOB_MINE)
-			return pick(subtypesof(/datum/bounty/item/mining))
-		if(CIV_JOB_MED)
-			return pick(subtypesof(/datum/bounty/item/medical))
-		if(CIV_JOB_GROW)
-			return pick(subtypesof(/datum/bounty/item/botany))
-		if(CIV_JOB_ATMOS)
-			return pick(subtypesof(/datum/bounty/item/atmospherics))
-		if(CIV_JOB_BITRUN)
-			return pick(subtypesof(/datum/bounty/item/bitrunning))
-
-	stack_trace("Failed to get random bounty type for input type [input_bounty_type]")
-	return null
 
 /**
  * Proc that assigned a civilian bounty to an ID card, from the list of potential bounties that that bank account currently has available.
@@ -334,7 +263,6 @@
 				"claimed" = global_bounty.claimed,
 				"shipped" = ship_total,
 				"maximum" = ship_max,
-				"type" = global_bounty.type,
 			))
 
 	return data
@@ -343,16 +271,19 @@
 	. = ..()
 	if(.)
 		return
+	to_chat(world, "Entered") //todo: kill
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
 	if(!pad)
 		return
 	var/mob/user = ui.user
 	if(!user.can_perform_action(src) || (machine_stat & (NOPOWER|BROKEN)))
 		return
+	to_chat(world, "preswitch") //todo: kill
 	switch(action)
 		if("recalc")
 			recalc()
 		if("send")
+			to_chat(world, "we found [params["global"]]") //todo: kill
 			start_sending(params["global"])
 		if("stop")
 			stop_sending()
@@ -374,7 +305,7 @@
 			COOLDOWN_START(src, sheet_printer_cooldown, 4 SECONDS)
 	. = TRUE
 
-///Self explanitory, holds the ID card in the console for bounty payout and manipulation.
+/// Self explanitory, holds the ID card in the console for bounty payout and manipulation.
 /obj/machinery/computer/piratepad_control/civilian/proc/id_insert(mob/user, obj/item/inserting_item, obj/item/target)
 	var/obj/item/card/id/card_to_insert = inserting_item
 	var/holder_item = FALSE
@@ -440,116 +371,6 @@
 		high_pri.description = "[initial(high_pri.description)] This bounty is marked as <b>high priority</b>, and will reward <b>1.5x</b> the normal payout!"
 	return TRUE
 
-///Upon completion of a civilian bounty, one of these is created. It is sold to cargo to give the cargo budget bounty money, and the person who completed it cash.
-/obj/item/bounty_cube
-	name = "bounty cube"
-	desc = "A bundle of compressed hardlight data, containing a completed bounty. Sell this on the cargo shuttle to claim it!"
-	icon = 'icons/obj/economy.dmi'
-	icon_state = "bounty_cube"
-	///Value of the bounty that this bounty cube sells for.
-	var/bounty_value = 0
-	///Multiplier for the bounty payout received by the Supply budget if the cube is sent without having to nag.
-	var/speed_bonus = 0.2
-	///Multiplier for the bounty payout received by the person who completed the bounty.
-	var/holder_cut = BOUNTY_CUT_STANDARD
-	///Multiplier for the bounty payout received by the person who claims the handling tip.
-	var/handler_tip = 0.1
-	///Time between nags.
-	var/nag_cooldown = 5 MINUTES
-	///How much the time between nags extends each nag.
-	var/nag_cooldown_multiplier = 1.25
-	///Next world tick to nag Supply listeners.
-	var/next_nag_time
-	///Who completed the bounty.
-	var/bounty_holder
-	///What job the bounty holder had.
-	var/bounty_holder_job
-	///What the bounty was for.
-	var/bounty_name
-	///Bank account of the person who completed the bounty.
-	var/datum/bank_account/bounty_holder_account
-	///Bank account of the person who receives the handling tip.
-	var/datum/bank_account/bounty_handler_account
-
-/obj/item/bounty_cube/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_BARCODES, INNATE_TRAIT) // Don't allow anyone to override our pricetag component with a barcode
-
-/obj/item/bounty_cube/examine()
-	. = ..()
-	if(speed_bonus)
-		. += span_notice("<b>[time2text(next_nag_time - world.time,"mm:ss", NO_TIMEZONE)]</b> remains until <b>[bounty_value * speed_bonus]</b> [MONEY_NAME_SINGULAR] speedy delivery bonus lost.")
-	if(handler_tip && !bounty_handler_account)
-		. += span_notice("Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> [MONEY_NAME_SINGULAR] handling tip.")
-
-/obj/item/bounty_cube/process(seconds_per_tick)
-	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
-	if(COOLDOWN_FINISHED(src, next_nag_time) && !is_centcom_level(z) && !is_reserved_level(z))
-		//set up our fallback message, in case of AAS being broken it will be sent to card holders
-		var/nag_message = "[src] is unsent in [get_area(src)]."
-
-		//nag on Supply channel and reduce the speed bonus multiplier to nothing
-		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent, src, list(RADIO_CHANNEL_SUPPLY))
-		if (aas)
-			nag_message = aas.compile_config_message(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area_name(src), "COST" = bounty_value), "Regular Message")
-			if (speed_bonus)
-				aas.announce(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area_name(src), "COST" = bounty_value, "BONUSLOST" = bounty_value * speed_bonus), list(RADIO_CHANNEL_SUPPLY), "When Bonus Lost")
-			else
-				aas.broadcast("[nag_message]", list(RADIO_CHANNEL_SUPPLY))
-		speed_bonus = 0
-
-		//alert the holder
-		bounty_holder_account.bank_card_talk("[nag_message]")
-
-		//if someone has registered for the handling tip, nag them
-		bounty_handler_account?.bank_card_talk(nag_message)
-
-		//increase our cooldown length and start it again
-		nag_cooldown = nag_cooldown * nag_cooldown_multiplier
-		COOLDOWN_START(src, next_nag_time, nag_cooldown)
-
-/obj/item/bounty_cube/proc/set_up(datum/bounty/my_bounty, obj/item/card/id/holder_id)
-	bounty_value = my_bounty.get_bounty_reward()
-	bounty_name = my_bounty.name
-	bounty_holder = holder_id.registered_name
-	bounty_holder_job = holder_id.assignment
-	bounty_holder_account = holder_id.registered_account
-	name = "\improper [bounty_value] [MONEY_SYMBOL] [name]"
-	desc += " The sales tag indicates it was <i>[bounty_holder] ([bounty_holder_job])</i>'s reward for completing the <i>[bounty_name]</i> bounty."
-	AddComponent(/datum/component/pricetag, holder_id.registered_account, holder_cut, FALSE)
-	AddComponent(/datum/component/gps, "[src]")
-	START_PROCESSING(SSobj, src)
-	COOLDOWN_START(src, next_nag_time, nag_cooldown)
-	aas_config_announce(/datum/aas_config_entry/bounty_cube_created, list(
-		"LOCATION" = get_area_name(src),
-		"PERSON" = bounty_holder,
-		"RANK" = bounty_holder_job,
-		"BONUSTIME" = time2text(next_nag_time - world.time,"mm:ss", NO_TIMEZONE),
-		"COST" = bounty_value
-	), src, list(RADIO_CHANNEL_SUPPLY))
-
-//for when you need a REAL bounty cube to test with and don't want to do a bounty each time your code changes
-/obj/item/bounty_cube/debug_cube
-	name = "debug bounty cube"
-	desc = "Use in-hand to set it up with a random bounty. Requires an ID it can detect with a bank account attached. \
-	This will alert Supply over the radio with your name and location, and cargo techs will be dispatched with kill on sight clearance."
-	var/set_up = FALSE
-
-/obj/item/bounty_cube/debug_cube/attack_self(mob/user)
-	if(!isliving(user))
-		to_chat(user, span_warning("You aren't eligible to use this!"))
-		return ..()
-
-	if(!set_up)
-		var/mob/living/squeezer = user
-		if(squeezer.get_bank_account())
-			set_up(random_bounty(), squeezer.get_idcard())
-			set_up = TRUE
-			return ..()
-		to_chat(user, span_notice("It can't detect your bank account."))
-
-	return ..()
-
 ///Beacon to launch a new bounty setup when activated.
 /obj/item/civ_bounty_beacon
 	name = "civilian bounty beacon"
@@ -574,6 +395,7 @@
 
 /obj/item/paper/bounty_printout
 	name = "paper - Bounties"
+	can_become_message_in_bottle = FALSE
 
 /obj/item/paper/bounty_printout/Initialize()
 	. = ..()
@@ -587,33 +409,9 @@
 			<ul>
 			<li>Reward: <b>[current_bounty.get_bounty_reward()]</b> cr.</li>
 			<li>Cut: [round(BOUNTY_CUT_STANDARD * current_bounty.get_bounty_reward())] cr.</li>
-			<li>[!(current_bounty.claimed) ? "Not" : ""] Completed</li>
 			</ul>"}
 	add_raw_text(printout_text.Join("<br />"))
 	update_appearance()
 	return TRUE
-
-/datum/aas_config_entry/bounty_cube_created
-	name = "Cargo Alert: Bounty Cube Created"
-	announcement_lines_map = list(
-		"Message" = "A %COST cr bounty cube has been created in %LOCATION by %PERSON (%RANK). Speedy delivery bonus lost in %BONUSTIME.")
-	vars_and_tooltips_map = list(
-		"LOCATION" = "will be replaced with the location of the cube.",
-		"PERSON" = "with who created the cube.",
-		"RANK" = "with their job.",
-		"BONUSTIME" = "with the time left for speedy delivery tip.",
-		"COST" = "with the cost of the cube.",
-	)
-
-/datum/aas_config_entry/bounty_cube_unsent
-	name = "Cargo Alert: Bounty Cube Unsent"
-	announcement_lines_map = list(
-		"Regular Message" = "The %COST cr bounty cube is unsent in %LOCATION.",
-		"When Bonus Lost" = "The %COST cr bounty cube is unsent in %LOCATION. Speedy delivery bonus of %BONUSLOST credits lost.")
-	vars_and_tooltips_map = list(
-		"LOCATION" = "will be replaced with the location of the cube.",
-		"COST" = "with the cost of the cube.",
-		"BONUSLOST" = "with the lost bonus tip, it will be sent just for When Bonus Lost message!",
-	)
 
 #undef CIV_BOUNTY_SPLIT

@@ -45,7 +45,6 @@ type singleBounty = {
   shipped: number;
   claimed: BooleanLike;
   maximum: number;
-  type: string;
 }
 
 
@@ -260,7 +259,6 @@ const GlobalBountyBlock = (props) => {
     shipped: 0,
     claimed: false,
     maximum: 0,
-    type: '',
   });
 
   const safeListBounty = Array.isArray(listBounty) ? listBounty : [];
@@ -271,7 +269,8 @@ const GlobalBountyBlock = (props) => {
         width="30%"
         >
         <Tabs vertical>
-          <Tabs.Tab
+          {safeListBounty.length < 1 ? (
+            <Tabs.Tab
             onClick={() => act('update_list')}
             backgroundColor="blue"
             textColor="white"
@@ -281,6 +280,8 @@ const GlobalBountyBlock = (props) => {
           >
             Update List
           </Tabs.Tab>
+          ) : null}
+
           <Tabs.Tab
             onClick={() => act('print')}
             backgroundColor="#ffffff70"
@@ -328,7 +329,7 @@ const GlobalBountyBlock = (props) => {
             tooltip={sending ? 'Stop Sending' : 'Send Goods'}
             selected={sending}
             disabled={!pad || !id_inserted}
-            onClick={() => props.act('send', { global: true})}
+            onClick={() => act(sending ? 'stop' : 'send', { global: true})}
             //This behavior is just tacked onto send so no need for a new act
           >
             Send & Claim

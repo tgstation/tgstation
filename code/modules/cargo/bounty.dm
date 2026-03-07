@@ -1,5 +1,5 @@
 
-GLOBAL_LIST_EMPTY(bounties_list)
+GLOBAL_LIST_EMPTY(bounties_list) //todo: kill and move to either shuttle or economy SS, probably economy
 
 /datum/bounty
 	/// A name for the bounty. Displayed on the bounty console/Paper sheets.
