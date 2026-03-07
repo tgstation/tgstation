@@ -463,15 +463,10 @@
 
 	playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -3)
 
-	if(!do_after(user, 5 SECONDS, src))
-		user.balloon_alert(user, "interrupted!")
-		return
-
 	armed = !armed
 	update_appearance()
-	user.dropItemToGround(src)
 
-	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(35))
+	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(25))
 		to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
 		var/hand_zone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
 		spring_trap(user, def_zone = hand_zone)
@@ -484,23 +479,11 @@
 	if(!armed)
 		return ..()
 
-	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-		return TRUE
-
-	if(!do_after(user, 2 SECONDS, src))
-		user.balloon_alert(user, "interrupted!")
-		return TRUE
-
-	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(35))
+	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(25))
 		to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
 		var/hand_zone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
 		spring_trap(user, def_zone = hand_zone)
 		return TRUE
-
-	armed = !armed
-	update_appearance()
-	playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -3)
-	to_chat(user, span_notice("[src] is now [armed ? "armed" : "disarmed"]"))
 
 	return ..()
 
