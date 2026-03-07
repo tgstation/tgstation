@@ -147,6 +147,10 @@
 	)
 	update_appearance()
 
+/obj/item/spear/finalize_material_effects(list/materials)
+	. = ..()
+	update_appearance()
+
 /obj/item/spear/update_overlays()
 	. = ..()
 	if (icon_prefix != SPEAR_CUSTOM_TIP_PREFIX)
@@ -188,6 +192,10 @@
 	if(isliving(loc))
 		loc.balloon_alert(loc, "spear broken!")
 	return ..()
+
+/obj/item/spear/get_material_prefixes(list/materials)
+	var/datum/material/material = get_material_from_slot(/datum/material_slot/weapon_head/speartip)
+	return material?.name
 
 /obj/item/spear/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	reach = 1
@@ -283,10 +291,10 @@
 
 	var/obj/item/spear/spear = new(drop_location())
 	var/datum/material/rod_material = get_master_material()
+	spear.material_flags |= MATERIAL_ADD_PREFIX
 	spear.set_material_slot(/datum/material_slot/handle/spear, get_master_material())
 	spear.set_material_slot(/datum/material_slot/weapon_head/speartip, shard_mat)
 	spear.set_custom_materials(list((rod_material) = custom_materials[rod_material], (shard_mat) = tool.custom_materials[shard_mat]))
-	spear.update_appearance()
 	to_chat(user, span_notice("You attach [tool] to [src]'s tip."))
 
 	if (istype(tool, /obj/item/stack))
