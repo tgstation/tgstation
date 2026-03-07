@@ -3,7 +3,8 @@
 
 /datum/hud/ai/initialize_screen_objects()
 	. = ..()
-	add_screen_object(/atom/movable/screen/language_menu, HUD_MOB_LANGUAGE_MENU, ui_loc = ui_ai_language_menu)
+	add_screen_object(/atom/movable/screen/language_menu, HUD_MOB_LANGUAGE_MENU, HUD_GROUP_STATIC, ui_style, ui_ai_language_menu)
+	add_screen_object(/atom/movable/screen/memories, HUD_MOB_MEMORIES, HUD_GROUP_STATIC, ui_style, ui_ai_memories_menu)
 	add_screen_object(/atom/movable/screen/ai/floor_indicator, HUD_AI_FLOOR_INDICATOR)
 	add_screen_object(/atom/movable/screen/ai/go_up, HUD_AI_GO_UP)
 	add_screen_object(/atom/movable/screen/ai/go_up/down, HUD_AI_GO_DOWN)

@@ -13,3 +13,4 @@
 	add_screen_object(/atom/movable/screen/zone_sel/alien, HUD_MOB_ZONE_SELECTOR)
 	add_screen_object(/atom/movable/screen/healths/alien, HUD_MOB_HEALTH, HUD_GROUP_INFO)
 	add_screen_object(/atom/movable/screen/alien/alien_queen_finder, HUD_ALIEN_QUEEN_FINDER, HUD_GROUP_INFO)
+	add_screen_object(/atom/movable/screen/memories, HUD_MOB_MEMORIES, HUD_GROUP_STATIC, ui_style, ui_alien_memories_menu)

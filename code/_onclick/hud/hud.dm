@@ -364,10 +364,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 			screenmob.client.screen += palette
 
-			if (action_intent)
-				// Restore intent selection to the original position
-				action_intent.screen_loc = initial(action_intent.screen_loc)
-
 		if (HUD_STYLE_REDUCED)
 			hud_shown = FALSE
 
@@ -380,8 +376,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 			if(action_intent)
 				screenmob.client.screen += action_intent
-				// Move this to the alternative position, where zone_select usually is.
-				action_intent.screen_loc = ui_acti_alt
 
 		if (HUD_STYLE_NOHUD)
 			hud_shown = FALSE

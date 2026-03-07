@@ -1,8 +1,12 @@
 
+/datum/hud/pai
+	ui_style = 'icons/hud/screen_pai.dmi'
+
 /datum/hud/pai/initialize_screen_objects()
 	. = ..()
-	add_screen_object(/atom/movable/screen/language_menu, HUD_MOB_LANGUAGE_MENU, ui_loc = ui_pai_language_menu)
-	add_screen_object(/atom/movable/screen/navigate, HUD_MOB_NAVIGATE_MENU, ui_loc = ui_pai_navigate_menu)
+	add_screen_object(/atom/movable/screen/language_menu, HUD_MOB_LANGUAGE_MENU, ui_style, ui_pai_language_menu)
+	add_screen_object(/atom/movable/screen/navigate, HUD_MOB_NAVIGATE_MENU, ui_style, ui_pai_navigate_menu)
+	add_screen_object(/atom/movable/screen/memories, HUD_MOB_MEMORIES, HUD_GROUP_STATIC, ui_style, ui_pai_memories_menu)
 
 	add_screen_object(/atom/movable/screen/pai/software, HUD_PAI_SOFTWARE)
 	add_screen_object(/atom/movable/screen/pai/shell, HUD_PAI_SHELL)

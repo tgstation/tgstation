@@ -174,9 +174,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/language_menu/Click()
 	usr.get_language_holder().open_language_menu(usr)
 
-/atom/movable/screen/language_menu/ghost
-	icon = 'icons/hud/screen_ghost.dmi'
-	screen_loc = ui_ghost_language_menu
+/atom/movable/screen/memories
+	name = "Memories"
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "memories"
+	screen_loc = ui_memories_menu
+	mouse_over_pointer = MOUSE_HAND_POINTER
+
+/atom/movable/screen/memories/Click()
+	if(!isliving(usr))
+		return TRUE
+	var/mob/living/daydreamer = usr
+	daydreamer.open_memory_panel()
 
 /atom/movable/screen/inventory
 	/// The identifier for the slot. It has nothing to do with ID cards.
@@ -330,7 +339,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	name = "toggle combat mode"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "combat_off"
-	screen_loc = ui_combat_toggle
+	screen_loc = ui_acti
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner)
@@ -401,10 +410,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/floor_changer/vertical
 	icon_state = "floor_change_v"
 	vertical = TRUE
-
-/atom/movable/screen/floor_changer/vertical/ghost
-	icon = 'icons/hud/screen_ghost.dmi'
-	screen_loc = ui_ghost_floor_changer
 
 /atom/movable/screen/spacesuit
 	name = "Space suit cell status"
@@ -482,7 +487,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	icon_state = "act_rest"
 	base_icon_state = "act_rest"
 	mouse_over_pointer = MOUSE_HAND_POINTER
-	screen_loc = ui_rest
+	screen_loc = ui_below_throw
 
 /atom/movable/screen/rest/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()

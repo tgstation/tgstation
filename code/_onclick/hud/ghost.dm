@@ -1,3 +1,7 @@
+
+/datum/hud/ghost
+	ui_style = 'icons/hud/screen_ghost.dmi'
+
 /datum/hud/ghost/initialize_screen_objects()
 	. = ..()
 	add_screen_object(/atom/movable/screen/ghost/spawners_menu, HUD_GHOST_SPAWNERS)
@@ -7,8 +11,8 @@
 	add_screen_object(/atom/movable/screen/ghost/teleport, HUD_GHOST_TELEPORT)
 	add_screen_object(/atom/movable/screen/ghost/settings, HUD_GHOST_SETTINGS)
 	add_screen_object(/atom/movable/screen/ghost/minigames_menu, HUD_GHOST_MINIGAMES)
-	add_screen_object(/atom/movable/screen/language_menu/ghost, HUD_MOB_LANGUAGE_MENU)
-	add_screen_object(/atom/movable/screen/floor_changer/vertical/ghost, HUD_MOB_FLOOR_CHANGER)
+	add_screen_object(/atom/movable/screen/language_menu, HUD_MOB_LANGUAGE_MENU, HUD_GROUP_STATIC, ui_style, ui_ghost_language_menu)
+	add_screen_object(/atom/movable/screen/floor_changer/vertical, HUD_MOB_FLOOR_CHANGER, HUD_GROUP_STATIC, ui_style, ui_ghost_floor_changer)
 
 	var/list/hudboxes = valid_subtypesof(/atom/movable/screen/ghost/hudbox)
 	for(var/i in 1 to length(hudboxes))
