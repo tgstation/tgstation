@@ -274,6 +274,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/atom/movable/looking_holder,
 		//Should not exist outside of holders
 		/obj/effect/decal/cleanable/blood/trail,
+		//Should not exist outside of ethereals
+		/obj/item/stock_parts/power_store/cell/ethereal,
 	)
 
 	// Everything that follows is a typesof() check.
