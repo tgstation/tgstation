@@ -120,7 +120,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MATERIAL_APPLIED, source, mat_amount, multiplier, from_slot)
 
-	if (!(source.material_flags & MATERIAL_EFFECTS))
+	if (!(source.material_flags & MATERIAL_EFFECTS) || from_slot)
 		return
 
 	if (track_flags & MATERIAL_TRACK_CONTACT)
