@@ -1,5 +1,6 @@
 GLOBAL_DATUM_INIT(sprite_auditor, /datum/sprite_auditor, new)
 
+/// A global singleton providing a convenient UI for quickly viewing sprites created by players
 /datum/sprite_auditor
 	var/list/entries
 

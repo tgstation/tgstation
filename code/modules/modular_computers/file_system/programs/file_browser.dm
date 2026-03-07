@@ -10,8 +10,8 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 			"typepath" = canvas_type,
 			"width" = width,
 			"height" = height,
-			"check_proc" = GLOBAL_PROC_REF(check_can_print_canvas),
-			"prepare_proc" = GLOBAL_PROC_REF(prepare_canvas_from_file),
+			"check_callback" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(check_can_print_canvas)),
+			"prepare_callback" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(prepare_canvas_from_file)),
 		)))
 	for(var/size in 1 to /obj/item/camera::picture_size_x_max)
 		var/width = ICON_SIZE_X*(size*2-1)
@@ -21,8 +21,8 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 			"typepath" = /obj/item/photo,
 			"width" = width,
 			"height" = height,
-			"check_proc" = GLOBAL_PROC_REF(check_can_print_photo),
-			"prepare_proc" = GLOBAL_PROC_REF(prepare_photo_from_file),
+			"check_callback" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(check_can_print_photo)),
+			"prepare_callback" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(prepare_photo_from_file)),
 		)))
 	return print_types
 
@@ -192,10 +192,12 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 	if(!ISINRANGE(offset_x, min_offset_x, max_offset_x) || !ISINRANGE(offset_y, min_offset_y, max_offset_y))
 		return
 	typepath = text2path(typepath)
-	if(!call(print_type["check_proc"])(typepath, picture, computer, user))
+	var/datum/callback/check_callback = print_type["check_callback"]
+	if(!check_callback.Invoke(typepath, picture, computer, user))
 		return
 	var/obj/item/printed_item = new typepath(computer.physical.drop_location())
-	call(print_type["prepare_proc"])(printed_item, picture, computer, width, height, offset_x, offset_y)
+	var/datum/callback/prepare_callback = print_type["prepare_callback"]
+	prepare_callback.Invoke(printed_item, picture, computer, width, height, offset_x, offset_y)
 	user?.put_in_hands(printed_item)
 	playsound(computer.physical, 'sound/machines/printer.ogg', 100, TRUE)
 

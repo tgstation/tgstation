@@ -27,12 +27,14 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 	var/source_photo_or_painting
 	/// If we have modified this project, store whatever unmodified photo or painting we were made from here.
 	var/source_on_undo_all
+	/// The current color we are painting with
 	var/current_color = "#ffffffff"
+	/// A list of colors we have quick access to
 	var/list/palette = list()
+	/// UI data for a modal dialog to display
 	var/list/dialog
 
 /datum/computer_file/program/nanopaint/ui_static_data(mob/user)
-	. = ..()
 	return list(
 		"templateSizes" = GLOB.canvas_dimensions,
 		"saveableTypes" = list(
@@ -52,7 +54,6 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 	)
 
 /datum/computer_file/program/nanopaint/ui_data(mob/user)
-	. = ..()
 	var/list/data = list()
 	data["dialog"] = dialog
 	var/list/editor_data = list()
@@ -88,7 +89,7 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 
 /datum/computer_file/program/nanopaint/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	var/mob/user = usr
+	var/mob/user = ui.user
 	switch(action)
 		if("spriteEditorCommand")
 			if(!current_workspace)

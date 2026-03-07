@@ -14,6 +14,7 @@
 	var/obj/item/camera/app/internal_camera
 	/// Latest picture taken by the app.
 	var/datum/picture/internal_picture
+	/// A mutable_appearance of the latest picture, for getting an appeance reference for the UI.
 	var/mutable_appearance/picture_appearance
 	/// How many pictures were taken already, used for the camera's TGUI photo display
 	var/picture_number = 1
