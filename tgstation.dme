@@ -6170,6 +6170,7 @@
 #include "code\modules\requests\request_manager.dm"
 #include "code\modules\research\designs.dm"
 #include "code\modules\research\destructive_analyzer.dm"
+#include "code\modules\research\gizmo.dm"
 #include "code\modules\research\part_replacer.dm"
 #include "code\modules\research\rdconsole.dm"
 #include "code\modules\research\rdmachines.dm"

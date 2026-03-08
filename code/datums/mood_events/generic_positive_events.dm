@@ -689,3 +689,8 @@
 	description = "What a night! I can't wait to do it all again!"
 	mood_change = 2
 	timeout = 10 MINUTES
+
+/datum/mood_event/gizmo_positive
+	description = "I hear a voice whispering kind words in my ear!"
+	mood_change = 3
+	timeout = 30 SECONDS
