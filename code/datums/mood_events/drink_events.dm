@@ -88,7 +88,7 @@
 	timeout = 7 MINUTES
 
 /datum/mood_event/sweetcoffee
-	description = "The coffee was not to bitter and a little sweet. Maybe i like it"
+	description = "The bitter sweet taste of coffee was not too bad"
 	mood_change = 2
 	timeout = 5 MINUTES
 
