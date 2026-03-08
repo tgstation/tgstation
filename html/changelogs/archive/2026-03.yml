@@ -58,3 +58,32 @@
   lelandkemble:
   - rscadd: You can now deploy, undeploy, activate & deactivate other people's MODsuit
       via the strip menu
+2026-03-06:
+  SmArtKar:
+  - bugfix: Fixed elder atmosian getting affected by metal hydrogen it is made out
+      of
+  - bugfix: Fixed rogue "ING IN" on lobby screen
+  maximal08, levels0:
+  - bugfix: experimentor wires should now work properly
+2026-03-07:
+  Melbert:
+  - balance: Fish can be scanned for the dna vault.
+  - balance: You need more animals on average to complete a dna vault.
+  - balance: You need less plants on average to complete a dna vault.
+  SapphoQueer:
+  - spellcheck: Heckacious Larincks no longer uses a github-TOS-breaking word as one
+      of it's transforms
+  SyncIt21:
+  - code_imp: reagent transfer & removal operations now have faster cpu performance
+  - code_imp: cleaned up code pertaining to reagent & reaction lookup
+  ttt, JohnFulpWillard:
+  - rscadd: Added a Memory HUD to your UI. In case you didn't know, you get memories
+      of things happening around the station, or important antagonist info such as
+      the nuclear codes.
+  - rscdel: Removed Borg's "store" button, now the cyborg module will behave more
+      similar to a backpack (LMB to store, RMB to open/close)
+  - bugfix: Borg material now properly displays how much materials they can afford
+      with their cell's charge.
+  - qol: Your HUD prefs are respected on more mobs now.
+  - qol: Improved the HUD of simple/basic animals, as well as Cyborgs, AIs, pAIs and
+      Xenomorphs.
