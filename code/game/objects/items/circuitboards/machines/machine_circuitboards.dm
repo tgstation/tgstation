@@ -38,10 +38,14 @@
 
 /obj/item/circuitboard/machine/dna_vault/completion_requirements(obj/structure/frame/install_frame)
 	var/turf/center = get_turf(install_frame)
-	for(var/turf/potential_turf as anything in CORNER_BLOCK_OFFSET(center, 3, 3, -1, -1))
+	var/blocked = FALSE
+	for(var/turf/potential_turf as anything in CORNER_BLOCK_OFFSET(center, 3, 3, -1, -2))
 		if(potential_turf.density)
 			balloon_alert_to_viewers("no room! (3x3)")
-			return FALSE
+			new /obj/effect/temp_visual/point(potential_turf)
+			blocked = TRUE
+	if(blocked)
+		return FALSE
 	return TRUE
 
 //Engineering
