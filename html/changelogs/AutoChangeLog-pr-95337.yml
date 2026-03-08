@@ -1,4 +1,0 @@
-author: "MoondancerPony"
-delete-after: True
-changes:
-  - bugfix: "fixed turfs sometimes not being in any area's contents"

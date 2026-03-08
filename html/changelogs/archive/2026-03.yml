@@ -88,6 +88,8 @@
   - qol: Improved the HUD of simple/basic animals, as well as Cyborgs, AIs, pAIs and
       Xenomorphs.
 2026-03-08:
+  MoondancerPony:
+  - bugfix: fixed turfs sometimes not being in any area's contents
   Y0SH1M4S73R:
   - rscadd: NanoPaint, the paint app for modular computers, is now available for download.
       Use it to create new images, or edit existing ones on your device.
