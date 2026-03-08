@@ -44,6 +44,7 @@
 	warmup_time = 3 SECONDS
 	circuit = /obj/item/circuitboard/computer/bountypad
 	interface_type = "CivCargoHoldTerminal"
+	custom_sending = TRUE
 	///Typecast of an inserted, scanned ID card inside the console, as bounties are held within the ID card.
 	var/obj/item/card/id/inserted_scan_id
 	///Cooldown for printing the bounty sheet, and not breaking people's eardrums.
@@ -154,13 +155,15 @@
 			//Pay for the bounty with the ID's department funds.
 			SSblackbox.record_feedback("tally", "bounties_completed", 1, stack_item.type)
 			stack_item.on_claimed(inserted_scan_id)
-			id_account.reset_bounty(inserted_scan_id)
-			SSeconomy.civ_bounty_tracker++
+			if(check_global)
+				SSeconomy.civ_bounty_tracker++
+			else
+				id_account.reset_bounty(inserted_scan_id)
 
 			var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
 			reward.set_up(stack_item, inserted_scan_id)
 	if(active_count >= 1)
-		status_report += "x[active_count] Bount[active_count > 1 ? "ies" : "y"] completed!\
+		status_report += "x[active_count] Bount[active_count > 1 ? "ies" : "y"] completed! \
 			Please give your bounty cube[active_count > 1 ? "s" : ""] to cargo for your automated payout shortly. "
 
 	if(check_global)
@@ -217,6 +220,9 @@
 	data["sending"] = sending
 	data["status_report"] = status_report
 	data["id_inserted"] = inserted_scan_id
+	data["claimed_bounties"] = SSeconomy.civ_bounty_tracker
+
+// Personal bounty data:
 	if(inserted_scan_id?.registered_account)
 		if(inserted_scan_id.registered_account.civilian_bounty)
 			data["id_bounty_info"] = inserted_scan_id.registered_account.civilian_bounty.description
@@ -235,56 +241,47 @@
 		else
 			data["picking"] = FALSE
 
-// below here
+// Global bounty data:
 	data["listBounty"] = list()
 	for(var/datum/bounty/global_bounty in GLOB.bounties_list)
 		var/ship_total = 0
 		var/ship_max = 1
 
-		if(istype(global_bounty, /datum/bounty/item))
-			var/datum/bounty/item/global_item = global_bounty
-			ship_max = global_item.required_count
-			ship_total = global_item.shipped_count
-
-		else if (istype(global_bounty, /datum/bounty/reagent))
+		if(istype(global_bounty, /datum/bounty/reagent))
 			var/datum/bounty/reagent/global_chems = global_bounty
 			ship_max = global_chems.required_volume
 			ship_total = global_chems.shipped_volume
 
 		if(istype(global_bounty, /datum/bounty/item))
-			var/datum/bounty/item/item_bounty = global_bounty
-			ship_total = item_bounty.shipped_count //Present value as a percentage, we'll handle 0 and 100 as constants
+			var/datum/bounty/item/global_item = global_bounty
+			ship_max = global_item.required_count
+			ship_total = global_item.shipped_count //Present value as a percentage, we'll handle 0 and 100 as constants
 
-			if(data["listBounty"]["name"] == global_bounty.name)
-				continue
-			data["listBounty"] += list(list( //TODO:unfuck this
-				"name" = global_bounty.name,
-				"description" = global_bounty.description,
-				"reward" = global_bounty.get_bounty_reward(),
-				"claimed" = global_bounty.claimed,
-				"shipped" = ship_total,
-				"maximum" = ship_max,
+		if(data["listBounty"]["name"] == global_bounty.name)
+			continue
+		data["listBounty"] += list(list(
+			"name" = global_bounty.name,
+			"description" = global_bounty.description,
+			"reward" = global_bounty.get_bounty_reward(),
+			"claimed" = global_bounty.claimed,
+			"shipped" = ship_total,
+			"maximum" = ship_max,
+			"priority" = global_bounty.high_priority,
 			))
 
 	return data
 
 /obj/machinery/computer/piratepad_control/civilian/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	to_chat(world, "Entered") //todo: kill
+	. = ..()
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
 	if(!pad)
 		return
 	var/mob/user = ui.user
 	if(!user.can_perform_action(src) || (machine_stat & (NOPOWER|BROKEN)))
 		return
-	to_chat(world, "preswitch") //todo: kill
-	switch(action)
-		if("recalc")
-			recalc()
+	switch(action) //several ui_acts are handled on parent by piratepad
 		if("send")
-			to_chat(world, "we found [params["global"]]") //todo: kill
 			start_sending(params["global"])
-		if("stop")
-			stop_sending()
 		if("pick")
 			pick_bounty(params["value"])
 		if("bounty")
@@ -293,14 +290,10 @@
 			id_eject(user, inserted_scan_id)
 			inserted_scan_id = null
 		if("update_list")
-			update_global_bounty_list(enable_high_priority = FALSE)
+			playsound(src, 'sound/machines/data_transmission.ogg', 50) // Should only need to play once per round due to the list auto-updating afterwards.
+			looped_global_update(1 ,CIV_BOUNTY_BASELINE) // Just for visual flair
 		if("print")
-			if(!COOLDOWN_FINISHED(src, sheet_printer_cooldown))
-				balloon_alert(user, "printer spooling!")
-				return FALSE
-			new /obj/item/paper/bounty_printout(loc)
-			playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
-			COOLDOWN_START(src, sheet_printer_cooldown, 4 SECONDS)
+			print_sheet(user)
 	. = TRUE
 
 /// Self explanitory, holds the ID card in the console for bounty payout and manipulation.
@@ -346,7 +339,7 @@
  * The bounties to be added should not share duplicates between job subtypes.
  * @param update_up_to How many new bounties to add to the list, up to the maximum defined by MAXIMUM_BOUNTY_JOBS.
  */
-/obj/machinery/computer/piratepad_control/civilian/proc/update_global_bounty_list(update_up_to = 5, enable_high_priority = FALSE)
+/obj/machinery/computer/piratepad_control/civilian/proc/update_global_bounty_list(update_up_to = CIV_BOUNTY_BASELINE, enable_high_priority = FALSE)
 	//First, clear out completed bounties.
 	for(var/datum/bounty/complete in GLOB.bounties_list)
 		if(complete.claimed)
@@ -361,13 +354,51 @@
 		jobs_picked += job_code
 
 		var/datum/bounty/new_bounty = random_bounty(job_code)
+		if(new_bounty.global_exempt)
+			continue
 		GLOB.bounties_list += new_bounty
 
 	if(enable_high_priority && length(GLOB.bounties_list))
 		var/datum/bounty/high_pri = pick(GLOB.bounties_list)
 		high_pri.high_priority = TRUE
-		high_pri.description = "[initial(high_pri.description)] This bounty is marked as <b>high priority</b>, and will reward <b>1.5x</b> the normal payout!"
+		high_pri.description = "[initial(high_pri.description)]</br>\
+			This bounty is marked as <b>high priority</b>, and will reward <b>1.5x</b> the normal payout!"
 	return TRUE
+
+/// Performs several global bounty updates in a row on a callback loop, adding one each time.
+/obj/machinery/computer/piratepad_control/civilian/proc/looped_global_update(current_count, update_to)
+	update_global_bounty_list(current_count, enable_high_priority = TRUE)
+
+	if(current_count == update_to)
+		return TRUE
+	current_count++
+	addtimer(CALLBACK(src, PROC_REF(looped_global_update), current_count, update_to), 1 SECONDS)
+
+/**
+ * Handles cooldowns and creation of a new cargo bounty sheet.
+ */
+/obj/machinery/computer/piratepad_control/civilian/proc/print_sheet(mob/living/user)
+	if(!COOLDOWN_FINISHED(src, sheet_printer_cooldown))
+		balloon_alert(user, "printer spooling!")
+		return FALSE
+
+	var/obj/item/paper/bounty_printout/printout = new(loc)
+	var/list/printout_text = list()
+	printout_text += "<h2>Nanotrasen Cargo Bounties</h2></br>"
+
+	for(var/datum/bounty/current_bounty in GLOB.bounties_list)
+		if(current_bounty.claimed)
+			continue
+		printout_text += {"<h3>[current_bounty.name]</h3>
+			<ul>
+			<li>Reward: <b>[current_bounty.get_bounty_reward()]</b> cr.</li>
+			<li>Cut: [round(BOUNTY_CUT_STANDARD * current_bounty.get_bounty_reward())] cr.</li>
+			</ul>"}
+	printout.add_raw_text(printout_text.Join("<br />"))
+	printout.update_appearance()
+
+	playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
+	COOLDOWN_START(src, sheet_printer_cooldown, 4 SECONDS)
 
 ///Beacon to launch a new bounty setup when activated.
 /obj/item/civ_bounty_beacon
@@ -394,22 +425,5 @@
 /obj/item/paper/bounty_printout
 	name = "paper - Bounties"
 	can_become_message_in_bottle = FALSE
-
-/obj/item/paper/bounty_printout/Initialize()
-	. = ..()
-	var/list/printout_text = list()
-	printout_text += "<h2>Nanotrasen Cargo Bounties</h2></br>"
-
-	for(var/datum/bounty/current_bounty in GLOB.bounties_list)
-		if(current_bounty.claimed)
-			continue
-		printout_text += {"<h3>[current_bounty.name]</h3>
-			<ul>
-			<li>Reward: <b>[current_bounty.get_bounty_reward()]</b> cr.</li>
-			<li>Cut: [round(BOUNTY_CUT_STANDARD * current_bounty.get_bounty_reward())] cr.</li>
-			</ul>"}
-	add_raw_text(printout_text.Join("<br />"))
-	update_appearance()
-	return TRUE
 
 #undef CIV_BOUNTY_SPLIT

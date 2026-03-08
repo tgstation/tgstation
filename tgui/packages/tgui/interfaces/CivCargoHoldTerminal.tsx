@@ -36,6 +36,7 @@ type Data = {
   id_bounty_values: number[];
 
   listBounty: singleBounty[];
+  claimed_bounties: number;
 };
 
 type singleBounty = {
@@ -45,6 +46,7 @@ type singleBounty = {
   shipped: number;
   claimed: BooleanLike;
   maximum: number;
+  priority: BooleanLike;
 }
 
 
@@ -84,12 +86,9 @@ export const CivCargoHoldTerminal = (props) => {
               </Tabs>
             </Section>
 
-            {tab === 'personal' ?
-              <NoticeBox color={!id_inserted ? 'default' : 'blue'}>
-                {id_inserted ? in_text : out_text}
-              </NoticeBox>
-              : <></>
-            }
+            <NoticeBox color={!id_inserted ? 'default' : 'blue'}>
+              {id_inserted ? in_text : out_text}
+            </NoticeBox>
 
             {tab === 'personal' ?
               <PersonalBountyBlock />
@@ -259,6 +258,7 @@ const GlobalBountyBlock = (props) => {
     shipped: 0,
     claimed: false,
     maximum: 0,
+    priority: false,
   });
 
   const safeListBounty = Array.isArray(listBounty) ? listBounty : [];
@@ -268,7 +268,10 @@ const GlobalBountyBlock = (props) => {
       <Stack.Item
         width="30%"
         >
-        <Tabs vertical>
+        <Tabs
+          vertical
+          fluid
+        >
           {safeListBounty.length < 1 ? (
             <Tabs.Tab
             onClick={() => act('update_list')}
@@ -280,9 +283,18 @@ const GlobalBountyBlock = (props) => {
           >
             Update List
           </Tabs.Tab>
-          ) : null}
+          ) : (
+            <Tabs.Tab
+              backgroundColor="#40638a70"
+              textColor="#ffffffe5"
+              align="center"
+              >
+              {data.claimed_bounties} bount{data.claimed_bounties === 1 ? "y" : "ies"} served{data.claimed_bounties > 0 ? "!" : "."}
+            </Tabs.Tab>
+          )}
 
           <Tabs.Tab
+            mt={0.5}
             onClick={() => act('print')}
             backgroundColor="#ffffff70"
             textColor="white"
@@ -297,9 +309,13 @@ const GlobalBountyBlock = (props) => {
               key={bounty.name}
               pt={0.75}
               pb={0.75}
-              mr={1}
+              mt={0.5}
               width="100%"
+              backgroundColor={bounty.priority ? "#cec328a8" : "#d1d1d170"}
+              textColor="white"
               onClick={() => setBountyData(bounty)}
+              className="Tab_Flash"
+              icon={bounty.priority ? 'star' : ''}
             >
               {bounty.name}
             </Tabs.Tab>
@@ -330,7 +346,6 @@ const GlobalBountyBlock = (props) => {
             selected={sending}
             disabled={!pad || !id_inserted}
             onClick={() => act(sending ? 'stop' : 'send', { global: true})}
-            //This behavior is just tacked onto send so no need for a new act
           >
             Send & Claim
           </Button>

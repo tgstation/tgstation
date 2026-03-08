@@ -222,6 +222,7 @@
 	var/interface_type = "CargoHoldTerminal"
 	///Typecache of things that shouldn't be sold and shouldn't have their contents sold.
 	var/static/list/nosell_typecache
+	var/custom_sending = FALSE
 
 /obj/machinery/computer/piratepad_control/Initialize(mapload)
 	..()
@@ -274,12 +275,13 @@
 			recalc()
 			. = TRUE
 		if("send")
-			start_sending()
-			//We ensure that the holding facility is loaded in time in case we're selling mobs.
-			//This isn't the prettiest place to put it, but 'start_sending()' is also used by civilian bounty computers
-			//And we don't need them to also load the holding facility.
-			SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
-			. = TRUE
+			if(!custom_sending)
+				start_sending()
+				//We ensure that the holding facility is loaded in time in case we're selling mobs.
+				//This isn't the prettiest place to put it, but 'start_sending()' is also used by civilian bounty computers
+				//And we don't need them to also load the holding facility.
+				SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
+				. = TRUE
 		if("stop")
 			stop_sending()
 			. = TRUE

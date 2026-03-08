@@ -13,6 +13,8 @@ GLOBAL_LIST_EMPTY(bounties_list) //todo: kill and move to either shuttle or econ
 	/// The reward for completing the bounty in credits, before being split by cargo/the player.
 	VAR_PROTECTED/reward = CARGO_CRATE_VALUE * 5 // In credits.
 	var/allow_duplicate = FALSE
+	/// Can this bounty be selected got a new global bounty?
+	var/global_exempt = FALSE
 
 /// Can this bounty be claimed right now?
 /datum/bounty/proc/can_claim()
@@ -41,6 +43,7 @@ GLOBAL_LIST_EMPTY(bounties_list) //todo: kill and move to either shuttle or econ
 
 /// Called when this bounty is successfully claimed by the passed ID card
 /datum/bounty/proc/on_claimed(obj/item/card/id/id_card)
+	claimed = TRUE
 	return
 
 /// Called when this bounty is reset from the passed ID card, either from successful claim or from being replaced by another bounty
