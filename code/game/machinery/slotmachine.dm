@@ -6,11 +6,16 @@
 \*******************************/
 
 #define SPIN_PRICE 5
-#define SMALL_PRIZE 400
-#define BIG_PRIZE 1000
-#define JACKPOT 10000
-#define SPIN_TIME 40 // Deciseconds
-#define REEL_DEACTIVATE_DELAY 4
+#define WINNING_NOTHING 0
+#define WINNING_FREESPIN 1
+#define WINNING_SMALL 2
+#define WINNING_BIG 3
+#define WINNING_JACKPOT 4
+#define PRIZE_SMALL 400
+#define PRIZE_BIG 1000
+#define PRIZE_JACKPOT 10000
+#define SPIN_TIME 4 SECONDS
+#define REEL_DEACTIVATE_DELAY 0.4 SECONDS
 #define JACKPOT_SEVENS FA_ICON_7
 #define HOLOCHIP 1
 #define COIN 2
@@ -29,7 +34,7 @@
 	var/money = 3000 // How much money it has CONSUMED
 	var/plays = 0
 	var/working = FALSE
-	var/winning = 0 // 0 - default, 1 - freespin, 2 - prize, 3 - big prize, 4 - jackpot
+	var/winning = WINNING_NOTHING
 	var/balance = 0 // How much money is in the machine, ready to be CONSUMED.
 	var/jackpots = 0
 	var/paymode = HOLOCHIP // toggles between HOLOCHIP/COIN, defined above
@@ -169,7 +174,7 @@
 	var/list/data = list()
 	data["icons"] = icons
 	data["cost"] = SPIN_PRICE
-	data["jackpot"] = JACKPOT
+	data["jackpot"] = PRIZE_JACKPOT
 	return data
 
 /obj/machinery/computer/slot_machine/ui_data(mob/user)
@@ -294,8 +299,8 @@
 		bang.arm_grenade(null, 1 SECONDS)
 
 	else if(check_jackpot(JACKPOT_SEVENS))
-		winning = 4
-		var/prize = money + JACKPOT
+		winning = WINNING_JACKPOT
+		var/prize = money + PRIZE_JACKPOT
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] [MONEY_NAME]!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
 		if(isliving(user) && (user in viewers(src)))
@@ -314,29 +319,29 @@
 				sleep(REEL_DEACTIVATE_DELAY)
 
 	else if(linelength == 5)
-		winning = 3
+		winning = WINNING_BIG
 		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand [MONEY_NAME]!'")
-		give_money(BIG_PRIZE)
+		give_money(PRIZE_BIG)
 		if(isliving(user) && (user in viewers(src)))
 			var/mob/living/living_user = user
 			living_user.add_mood_event("slots", /datum/mood_event/slots/win/big)
 
 	else if(linelength == 4)
-		winning = 2
+		winning = WINNING_SMALL
 		visible_message("<b>[src]</b> says, 'Winner! You win four hundred [MONEY_NAME]!'")
-		give_money(SMALL_PRIZE)
+		give_money(PRIZE_SMALL)
 		if(isliving(user) && (user in viewers(src)))
 			var/mob/living/living_user = user
 			living_user.add_mood_event("slots", /datum/mood_event/slots/win)
 
 	else if(linelength == 3)
-		winning = 1
+		winning = WINNING_FREESPIN
 		to_chat(user, span_notice("You win three free games!"))
 		balance += SPIN_PRICE * 4
 		money = max(money - SPIN_PRICE * 4, money)
 
 	else
-		winning = 0
+		winning = WINNING_NOTHING
 		balloon_alert(user, "no luck!")
 		did_player_win = FALSE
 		if(isliving(user) && (user in viewers(src)))
@@ -355,7 +360,7 @@
 		playsound(src, 'sound/machines/roulette/roulettejackpot.ogg', 50, TRUE)
 
 /obj/machinery/computer/slot_machine/proc/clear_winning()
-	winning = 0
+	winning = WINNING_NOTHING
 
 /// Checks for a jackpot (5 matching icons in the middle row) with the given icon name
 /obj/machinery/computer/slot_machine/proc/check_jackpot(name)
@@ -432,12 +437,17 @@
 	playsound(src, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 50, TRUE)
 	return amount
 
-#undef BIG_PRIZE
-#undef COIN
-#undef HOLOCHIP
-#undef JACKPOT
+#undef SPIN_PRICE
+#undef WINNING_NOTHING
+#undef WINNING_FREESPIN
+#undef WINNING_SMALL
+#undef WINNING_BIG
+#undef WINNING_JACKPOT
+#undef PRIZE_SMALL
+#undef PRIZE_BIG
+#undef PRIZE_JACKPOT
+#undef SPIN_TIME
 #undef REEL_DEACTIVATE_DELAY
 #undef JACKPOT_SEVENS
-#undef SMALL_PRIZE
-#undef SPIN_PRICE
-#undef SPIN_TIME
+#undef HOLOCHIP
+#undef COIN
