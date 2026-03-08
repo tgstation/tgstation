@@ -129,7 +129,7 @@
 
 	//reagent lookup data
 	if(ui_reagent_id)
-		var/datum/reagent/reagent = find_reagent_object_from_type(ui_reagent_id)
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ui_reagent_id]
 		if(!reagent)
 			to_chat(user, "Could not find reagent!")
 			ui_reagent_id = null
@@ -149,8 +149,7 @@
 
 	//reaction lookup data
 	if (ui_reaction_id)
-
-		var/datum/chemical_reaction/reaction = get_chemical_reaction(ui_reaction_id)
+		var/datum/chemical_reaction/reaction = GLOB.chemical_reactions_list[ui_reaction_id]
 		if(!reaction)
 			to_chat(user, "Could not find reaction!")
 			ui_reaction_id = null
@@ -174,7 +173,7 @@
 		//If we do have a product then we find it
 		else
 			//Find out if we have multiple reactions for the same product
-			var/datum/reagent/primary_reagent = find_reagent_object_from_type(reaction.results[1])//We use the first product - though it might be worth changing this
+			var/datum/reagent/primary_reagent = GLOB.chemical_reagents_list[reaction.results[1]]//We use the first product - though it might be worth changing this
 			//If we're syncing from the beaker
 			var/list/sub_reactions = list()
 			if(ui_beaker_sync && reaction_list)
@@ -183,7 +182,7 @@
 					var/ongoing_r = ongoing_eq.reaction
 					sub_reactions += ongoing_r
 			else
-				sub_reactions = get_recipe_from_reagent_product(primary_reagent.type)
+				sub_reactions = GLOB.chemical_reactions_list_product_index[primary_reagent.type]
 			var/sub_reaction_length = length(sub_reactions)
 			var/i = 1
 			for(var/datum/chemical_reaction/sub_reaction in sub_reactions)
@@ -195,21 +194,19 @@
 
 		//Results sweep
 		var/has_reagent = "default"
-		for(var/_reagent in reaction.results)
-			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
-			if(has_reagent(_reagent))
+		for(var/datum/reagent/reagent as anything in reaction.results)
+			if(has_reagent(reagent))
 				has_reagent = "green"
-			data["reagent_mode_recipe"]["products"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.results[reagent.type], "hasReagentCol" = has_reagent))
+			data["reagent_mode_recipe"]["products"] += list(list("name" = reagent::name, "id" = reagent, "ratio" = reaction.results[reagent], "hasReagentCol" = has_reagent))
 
 		//Reactant sweep
-		for(var/_reagent in reaction.required_reagents)
-			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
+		for(var/datum/reagent/reagent as anything in reaction.required_reagents)
 			var/color_r = "default" //If the holder is missing the reagent, it's displayed in orange
-			if(has_reagent(reagent.type))
+			if(has_reagent(reagent))
 				color_r = "green" //It's green if it's present
 			var/tooltip
 			var/tooltip_bool = FALSE
-			var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
+			var/list/sub_reactions = GLOB.chemical_reactions_list_product_index[reagent]
 			//Get sub reaction possibilities, but ignore ones that need a specific holder atom
 			var/sub_index = 0
 			for(var/datum/chemical_reaction/sub_reaction as anything in sub_reactions)
@@ -221,29 +218,26 @@
 			if(sub_index)
 				var/datum/chemical_reaction/sub_reaction = sub_reactions[sub_index]
 				//Subreactions sweep (if any)
-				for(var/_sub_reagent in sub_reaction.required_reagents)
-					var/datum/reagent/sub_reagent = find_reagent_object_from_type(_sub_reagent)
-					tooltip += "[sub_reaction.required_reagents[_sub_reagent]]u [sub_reagent.name]\n" //I forgot the better way of doing this - fix this after this works
+				for(var/datum/reagent/sub_reagent as anything in sub_reaction.required_reagents)
+					tooltip += "[sub_reaction.required_reagents[sub_reagent]]u [sub_reagent::name]\n"
 					tooltip_bool = TRUE
-			data["reagent_mode_recipe"]["reactants"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_reagents[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
+			data["reagent_mode_recipe"]["reactants"] += list(list("name" = reagent::name, "id" = reagent, "ratio" = reaction.required_reagents[reagent], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
 
 		//Catalyst sweep
-		for(var/_reagent in reaction.required_catalysts)
-			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
+		for(var/datum/reagent/reagent as anything in reaction.required_catalysts)
 			var/color_r = "default"
-			if(has_reagent(reagent.type))
+			if(has_reagent(reagent))
 				color_r = "green"
 			var/tooltip
 			var/tooltip_bool = FALSE
-			var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
+			var/list/sub_reactions = GLOB.chemical_reactions_list_product_index[reagent]
 			if(length(sub_reactions))
 				var/datum/chemical_reaction/sub_reaction = sub_reactions[1]
 				//Subreactions sweep (if any)
-				for(var/_sub_reagent in sub_reaction.required_reagents)
-					var/datum/reagent/sub_reagent = find_reagent_object_from_type(_sub_reagent)
-					tooltip += "[sub_reaction.required_reagents[_sub_reagent]]u [sub_reagent.name]\n" //I forgot the better way of doing this - fix this after this works
+				for(var/datum/reagent/sub_reagent as anything in sub_reaction.required_reagents)
+					tooltip += "[sub_reaction.required_reagents[sub_reagent]]u [sub_reagent::name]\n"
 					tooltip_bool = TRUE
-			data["reagent_mode_recipe"]["catalysts"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_catalysts[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
+			data["reagent_mode_recipe"]["catalysts"] += list(list("name" = reagent::name, "id" = reagent, "ratio" = reaction.required_catalysts[reagent], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
 		data["reagent_mode_recipe"]["isColdRecipe"] = reaction.is_cold_recipe
 	else
 		data["reagent_mode_recipe"] = null
@@ -267,7 +261,7 @@
 /datum/reagents/proc/get_reaction_from_indexed_possibilities(path, index = null)
 	if(index)
 		ui_reaction_index = index
-	var/list/sub_reactions = get_recipe_from_reagent_product(path)
+	var/list/sub_reactions = GLOB.chemical_reactions_list_product_index[path]
 	if(!length(sub_reactions))
 		to_chat(usr, "There is no recipe associated with this product.")
 		return FALSE
@@ -293,7 +287,7 @@
 		if("search_reagents")
 			var/input_reagent = tgui_input_list(usr, "Select reagent", "Reagent", GLOB.name2reagent)
 			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
-			var/datum/reagent/reagent = find_reagent_object_from_type(input_reagent)
+			var/datum/reagent/reagent = GLOB.chemical_reagents_list[input_reagent]
 			if(!reagent)
 				to_chat(usr, "Could not find reagent!")
 				return FALSE
@@ -302,7 +296,7 @@
 		if("search_recipe")
 			var/input_reagent = (input("Enter the name of product reagent", "Input") as text|null)
 			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
-			var/datum/reagent/reagent = find_reagent_object_from_type(input_reagent)
+			var/datum/reagent/reagent = GLOB.chemical_reagents_list[input_reagent]
 			if(!reagent)
 				to_chat(usr, "Could not find product reagent!")
 				return
