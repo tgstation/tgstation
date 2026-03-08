@@ -1,0 +1,13 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - rscadd: "NanoPaint, the paint app for modular computers, is now available for download. Use it to create new images, or edit existing ones on your device."
+  - rscadd: "Marlowe Treeby's Art Galaxy now allows you to download paintings to your device as image files."
+  - rscadd: "The File Manager can now be used to print image files to most canvas and photograph formats. Printing a canvas can only be done at a console, however."
+  - qol: "The PDA camera app can take photos at a distance."
+  - qol: "You can now save photos taken with the PDA camera app to your device."
+  - qol: "You can adjust the size of photos you take with the PDA camera app."
+  - qol: "You can change the name, description, and caption of photos taken with the PDA camera app, up to the point of saving them to disk or printing them for the first time"
+  - bugfix: "The Universal Sprite Editor Framework (used for paint canvases and NanoPaint) now uses Bresenham's line drawing algorithm for pencil and eraser operations."
+  - bugfix: "The Universal Sprite Editor Framework correctly saves icons."
+  - admin: "Images created by players using NanoPaint will be logged for admins, and can be viewed using the \"Audit Player-made Sprites\" verb."
