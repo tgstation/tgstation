@@ -195,7 +195,6 @@ const Banner = () => {
 
 type BannerTitleProps = {
   text?: string;
-  winning?: boolean;
 };
 
 const BannerTitle = (props: BannerTitleProps) => {

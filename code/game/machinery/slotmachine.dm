@@ -364,11 +364,10 @@
 
 /// Checks for a jackpot (5 matching icons in the middle row) with the given icon name
 /obj/machinery/computer/slot_machine/proc/check_jackpot(name)
-	return reels[1][2] == name \
-		&& reels[2][2] == name \
-		&& reels[3][2] == name \
-		&& reels[4][2] == name \
-		&& reels[5][2] == name
+	for(var/reel in reels)
+		if(reel[2] != name)
+			return FALSE
+	return TRUE
 
 /// Finds the largest number of consecutive matching icons in a row
 /obj/machinery/computer/slot_machine/proc/get_lines()
