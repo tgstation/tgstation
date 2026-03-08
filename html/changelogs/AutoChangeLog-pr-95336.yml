@@ -1,0 +1,4 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - bugfix: "fixed the game trying to make you sell chemical reactions for a public bounty"
