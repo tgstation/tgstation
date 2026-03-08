@@ -26,7 +26,7 @@
 
 /datum/stacked_metabolization_effect/coffee_oxidise/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
 	if(SPT_PROB(30, seconds_per_tick))
-		return owner.adjust_oxy_loss(-1 * average(reagents_metabolized) * seconds_per_tick, updating_health = FALSE)
+		return owner.adjust_oxy_loss(-2 * average(reagents_metabolized), updating_health = FALSE)
 
 /datum/stacked_metabolization_effect/coffee_oxidise_triple
 	requirements = list(
@@ -37,4 +37,4 @@
 
 /datum/stacked_metabolization_effect/coffee_oxidise_triple/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
 	if(SPT_PROB(70, seconds_per_tick))
-		return owner.adjust_oxy_loss(-1.5 * average(reagents_metabolized) * seconds_per_tick, updating_health = FALSE)
+		return owner.adjust_oxy_loss(-3 * average(reagents_metabolized), updating_health = FALSE)
