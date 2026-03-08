@@ -1,0 +1,4 @@
+author: "BingusTheClown"
+delete-after: True
+changes:
+  - bugfix: "Spy Bootknife now gives slash proc's correctly when equipped."
