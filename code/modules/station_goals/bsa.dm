@@ -106,6 +106,9 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(!has_space())
 		return "Not enough free space!"
 
+/**
+ * Proc to check if the BSA has the required 10 x 1 block space to deploy.
+ */
 /obj/machinery/bsa/middle/proc/has_space()
 	var/cannon_dir = get_cannon_direction()
 	var/width = 10
