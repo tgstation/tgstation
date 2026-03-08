@@ -1419,6 +1419,7 @@
 #include "code\datums\components\plumbing\ductnet.dm"
 #include "code\datums\components\plumbing\hydroponics.dm"
 #include "code\datums\components\plumbing\multidir_components.dm"
+#include "code\datums\components\plumbing\pill_press.dm"
 #include "code\datums\components\plumbing\reaction_chamber.dm"
 #include "code\datums\components\plumbing\simple_components.dm"
 #include "code\datums\components\riding\riding.dm"
