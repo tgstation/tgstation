@@ -1,6 +1,3 @@
-///The max size of the picture taken
-#define CAMERA_PICTURE_SIZE_HARD_LIMIT 4
-
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/art/camera.dmi'
@@ -408,5 +405,3 @@
 	else
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	return CLICK_ACTION_SUCCESS
-
-#undef CAMERA_PICTURE_SIZE_HARD_LIMIT

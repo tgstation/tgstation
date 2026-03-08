@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 			"check_callback" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(check_can_print_canvas)),
 			"prepare_callback" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(prepare_canvas_from_file)),
 		)))
-	for(var/size in 1 to /obj/item/camera::picture_size_x_max)
+	for(var/size in 1 to CAMERA_PICTURE_SIZE_HARD_LIMIT)
 		var/width = ICON_SIZE_X*(size*2-1)
 		var/height = ICON_SIZE_Y*(size*2-1)
 		LAZYADDASSOC(print_types, "[width]x[height]", list("[/obj/item/photo]" = list(

@@ -1,4 +1,3 @@
-
 /obj/item/circuit_component/camera
 	display_name = "Camera"
 	desc = "A polaroid camera that takes pictures when triggered. The picture coordinate ports are relative to the position of the camera."
@@ -59,13 +58,14 @@
 			return
 	camera.attempt_picture(target)
 
-
 /obj/item/circuit_component/mod_program/camera
 	associated_program = /datum/computer_file/program/maintenance/camera
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
 	///A target to take a picture of.
 	var/datum/port/input/picture_target
+	///The size of the photo to take.
+	var/datum/port/input/picture_size
 	///The photographed target
 	var/datum/port/output/photographed
 	/**
@@ -78,6 +78,7 @@
 /obj/item/circuit_component/mod_program/camera/populate_ports()
 	. = ..()
 	picture_target = add_input_port("Picture Target", PORT_TYPE_ATOM)
+	picture_size = add_input_port("Picture Size", PORT_TYPE_NUMBER)
 	photographed = add_output_port("Photographed Entity", PORT_TYPE_ATOM)
 	photo_taken = add_output_port("Photo Taken", PORT_TYPE_SIGNAL)
 
@@ -92,6 +93,8 @@
 	return ..()
 
 /obj/item/circuit_component/mod_program/camera/input_received(datum/port/input/port)
+	if(!COMPONENT_TRIGGERED_BY(port, trigger_input))
+		return
 	var/atom/target = picture_target.value
 	if(!target)
 		var/turf/our_turf = get_location()

@@ -67,7 +67,6 @@
 	QDEL_NULL(picture_appearance)
 	return ..()
 
-
 /datum/computer_file/program/maintenance/camera/tap(atom/tapped_atom, mob/living/user, list/modifiers)
 	. = ..()
 	take_picture(user, get_turf(tapped_atom))
@@ -91,7 +90,7 @@
 /datum/computer_file/program/maintenance/camera/proc/take_picture(mob/user, turf/target)
 	QDEL_NULL(internal_picture)
 	internal_camera.see_ghosts = (locate(/datum/computer_file/program/maintenance/spectre_meter) in computer.stored_files) ?  CAMERA_SEE_GHOSTS_BASIC : CAMERA_NO_GHOSTS
-	internal_camera.attempt_picture(get_turf(tapped_atom), user)
+	internal_camera.attempt_picture(target, user)
 
 /datum/computer_file/program/maintenance/camera/proc/on_image_captured(cam, target, user, datum/picture/picture)
 	SIGNAL_HANDLER
@@ -104,28 +103,6 @@
 	can_edit_metadata = TRUE
 	picture_number++
 
-/datum/computer_file/program/maintenance/camera/proc/save_picture(mob/user)
-	var/datum/computer_file/image/photo_file = new(
-		internal_picture.picture_image,
-		display_name = internal_picture.picture_name || "photo[picture_number]",
-		source_photo_or_painting = internal_picture
-	)
-	if(computer.store_file(photo_file, user))
-		return FALSE
-	commit_metadata()
-	return TRUE
-
-/datum/computer_file/program/maintenance/camera/proc/print_picture(mob/user)
-	if(computer.stored_paper < PHOTO_PAPER_COST)
-		return
-	commit_metadata()
-	var/obj/item/photo/new_photo = new(computer.physical.drop_location())
-	new_photo.set_picture(internal_picture, TRUE, TRUE)
-	user?.put_in_hands(new_photo)
-	playsound(computer.physical, 'sound/machines/printer.ogg', 100, TRUE)
-	computer.stored_paper--
-	computer.visible_message(span_notice("\The [computer] prints out a paper."))
-
 /datum/computer_file/program/maintenance/camera/proc/commit_metadata()
 	if(can_edit_metadata)
 		internal_picture.picture_name = current_picture_name
@@ -134,7 +111,14 @@
 		can_edit_metadata = FALSE
 
 /datum/computer_file/program/maintenance/camera/ui_static_data(mob/user)
-	return list("maxNameLength" = 32, "maxDescLength" = 128, "maxCaptionLength" = 256, "printCost" = 1)
+	return list(
+		"maxNameLength" = 32,
+		"maxDescLength" = 128,
+		"maxCaptionLength" = 256,
+		"printCost" = 1,
+		"minSize" = 1,
+		"maxSize" = CAMERA_PICTURE_SIZE_HARD_LIMIT
+	)
 
 /datum/computer_file/program/maintenance/camera/ui_data(mob/user)
 	var/list/data = list()
@@ -146,93 +130,65 @@
 		data["desc"] = current_picture_desc
 		data["caption"] = current_picture_caption
 		data["storedPaper"] = computer.stored_paper
-	data["size"] = internal_camera.picture_size_x
-	data["minSize"] = internal_camera.picture_size_x_min
-	data["maxSize"] = min(internal_camera.picture_size_x_max, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	data["size"] = max(internal_camera.picture_size_x, internal_camera.picture_size_y)
 
 	return data
 
 /datum/computer_file/program/maintenance/camera/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	if(.)
+		return
+
 	switch(action)
 		if("adjustSize")
-			var/new_size = round(params["value"], 1)
-			if(!ISINRANGE(new_size, internal_camera.picture_size_x_min, min(CAMERA_PICTURE_SIZE_HARD_LIMIT, internal_camera.picture_size_x_max)))
+			var/new_size = text2num(params["value"])
+			if(!new_size)
 				return
+			new_size = clamp(new_size, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 			internal_camera.picture_size_x = new_size
 			internal_camera.picture_size_y = new_size
+			return TRUE
+
 		if("setName")
 			if(!(internal_picture && can_edit_metadata))
-				return
+				return FALSE
 			current_picture_name = trim(params["value"], PREVENT_CHARACTER_TRIM_LOSS(32))
+			return TRUE
+
 		if("setDesc")
 			if(!(internal_picture && can_edit_metadata))
 				return
 			current_picture_desc = trim(params["value"], PREVENT_CHARACTER_TRIM_LOSS(128))
+			return TRUE
+
 		if("setCaption")
 			if(!(internal_picture && can_edit_metadata))
 				return
 			current_picture_caption = trim(params["value"], PREVENT_CHARACTER_TRIM_LOSS(256))
+			return TRUE
+
 		if("savePhoto")
 			if(!internal_picture)
 				return
-			save_picture(ui.user)
+			var/datum/computer_file/image/photo_file = new(
+				internal_picture.picture_image,
+				display_name = internal_picture.picture_name || "photo[picture_number]",
+				source_photo_or_painting = internal_picture
+			)
+			if(computer.store_file(photo_file, ui.user))
+				return FALSE
+			commit_metadata()
+			return TRUE
 		if("printPhoto")
 			if(!internal_picture)
-				return
-			print_picture(ui.user)
-	return TRUE
-
-/obj/item/circuit_component/mod_program/camera
-	associated_program = /datum/computer_file/program/maintenance/camera
-	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
-
-	///A target to take a picture of.
-	var/datum/port/input/picture_target
-	///The size of the photo to take.
-	var/datum/port/input/picture_size
-	///The photographed target
-	var/datum/port/output/photographed
-	/**
-	 * Pinged when the image has been captured.
-	 * I'm not using the default trigger output here because the process is asynced,
-	 * even though I'm mostly sure it only sleeps if there's a set user.
-	 */
-	var/datum/port/output/photo_taken
-
-/obj/item/circuit_component/mod_program/camera/populate_ports()
-	. = ..()
-	picture_target = add_input_port("Picture Target", PORT_TYPE_ATOM)
-	picture_size = add_input_port("Picture Size", PORT_TYPE_NUMBER)
-	photographed = add_output_port("Photographed Entity", PORT_TYPE_ATOM)
-	photo_taken = add_output_port("Photo Taken", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/mod_program/camera/register_shell(atom/movable/shell)
-	. = ..()
-	var/datum/computer_file/program/maintenance/camera/cam = associated_program
-	RegisterSignal(cam.internal_camera, COMSIG_CAMERA_IMAGE_CAPTURED, PROC_REF(on_image_captured))
-
-/obj/item/circuit_component/mod_program/camera/unregister_shell()
-	var/datum/computer_file/program/maintenance/camera/cam = associated_program
-	UnregisterSignal(cam.internal_camera, COMSIG_CAMERA_IMAGE_CAPTURED)
-	return ..()
-
-/obj/item/circuit_component/mod_program/camera/input_received(datum/port/input/port)
-	if(!COMPONENT_TRIGGERED_BY(port, trigger_input))
-		return
-	var/atom/target = picture_target.value
-	if(!target)
-		var/turf/our_turf = get_location()
-		target = locate(our_turf.x, our_turf.y, our_turf.z)
-		if(!target)
-			return
-	var/datum/computer_file/program/maintenance/camera/cam = associated_program
-	if(!cam.internal_camera.can_target(target))
-		return
-	var/pic_size = clamp(round(picture_size.value), 1, cam.internal_camera.picture_size_x_max)-1
-	INVOKE_ASYNC(cam.internal_camera, TYPE_PROC_REF(/obj/item/camera, captureimage), target, null, pic_size, pic_size)
-
-/obj/item/circuit_component/mod_program/camera/proc/on_image_captured(obj/item/camera/source, atom/target, mob/user)
-	SIGNAL_HANDLER
-	photographed.set_output(target)
-	photo_taken.set_output(COMPONENT_SIGNAL)
+				return FALSE
+			if(computer.stored_paper < PHOTO_PAPER_COST)
+				return FALSE
+			commit_metadata()
+			var/obj/item/photo/new_photo = new(computer.physical.drop_location())
+			new_photo.set_picture(internal_picture, TRUE, TRUE)
+			ui.user.put_in_hands(new_photo)
+			playsound(computer.physical, 'sound/machines/printer.ogg', 100, TRUE)
+			computer.stored_paper--
+			computer.visible_message(span_notice("\The [computer] prints out a paper."))
+			return TRUE

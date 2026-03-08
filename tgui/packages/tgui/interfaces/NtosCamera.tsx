@@ -86,7 +86,11 @@ export const NtosCameraContent = (props) => {
               disabled={!canEditMetadata}
               value={name}
               maxLength={maxNameLength}
-              onChange={(value) => act('setName', { value })}
+              onChange={(value) =>
+                act('setName', {
+                  value: value,
+                })
+              }
             />
           </Stack.Item>
           <Stack.Item>
@@ -98,7 +102,11 @@ export const NtosCameraContent = (props) => {
               disabled={!canEditMetadata}
               value={desc}
               maxLength={maxDescLength}
-              onChange={(value) => act('setDesc', { value })}
+              onChange={(value) =>
+                act('setDesc', {
+                  value: value,
+                })
+              }
             />
           </Stack.Item>
           <Stack.Item>
@@ -111,7 +119,11 @@ export const NtosCameraContent = (props) => {
               disabled={!canEditMetadata}
               value={caption}
               maxLength={maxCaptionLength}
-              onChange={(value) => act('setCaption', { value })}
+              onChange={(value) =>
+                act('setCaption', {
+                  value: value,
+                })
+              }
             />
           </Stack.Item>
           <Stack.Item align="center">
@@ -148,7 +160,11 @@ export const NtosCameraContent = (props) => {
           minValue={minSize}
           maxValue={maxSize}
           step={1}
-          onChange={(value) => act('adjustSize', { value })}
+          onChange={(e, value) =>
+            act('adjustSize', {
+              value: value,
+            })
+          }
         />
       </Stack.Item>
     </Stack>
