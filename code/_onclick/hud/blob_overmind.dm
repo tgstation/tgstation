@@ -7,6 +7,6 @@
 	add_screen_object(/atom/movable/screen/blob/blobbernaut, HUD_BLOB_BLOBBERNAUT)
 	add_screen_object(/atom/movable/screen/blob/resource_blob, HUD_BLOB_RESOURCES)
 	add_screen_object(/atom/movable/screen/blob/node_blob, HUD_BLOB_NODE, ui_loc = ui_hand_position(RIGHT_HANDS))
-	add_screen_object(/atom/movable/screen/blob/factory_blob, HUD_BLOB_FACTORY)
+	add_screen_object(/atom/movable/screen/blob/factory_blob, HUD_BLOB_FACTORY, ui_loc = ui_hand_position(LEFT_HANDS))
 	add_screen_object(/atom/movable/screen/blob/readapt_strain, HUD_BLOB_READAPT)
 	add_screen_object(/atom/movable/screen/blob/relocate_core, HUD_BLOB_RELOCATE)
