@@ -107,6 +107,7 @@
  * This fully rewrites base behavior in order to only check for bounty objects, and no other types of objects like pirate-pads do.
  */
 /obj/machinery/computer/piratepad_control/civilian/send(check_global = FALSE)
+	status_report = ""
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 	if(!sending)
 		return
@@ -143,7 +144,7 @@
 	if(active_count >= 1)
 		status_report += "Bounty Target[active_count > 1 ? "s" : ""] Found x[active_count]. "
 	else
-		status_report = "No applicable target found. Aborting."
+		status_report = "No applicable target found. Aborting. "
 		stop_sending()
 
 	active_count = 0 // We'll just re-use this for the second message setter.
@@ -160,7 +161,7 @@
 			reward.set_up(stack_item, inserted_scan_id)
 	if(active_count >= 1)
 		status_report += "x[active_count] Bount[active_count > 1 ? "ies" : "y"] completed!\
-			Please give your bounty cube[active_count > 1 ? "s" : ""] to cargo for your automated payout shortly."
+			Please give your bounty cube[active_count > 1 ? "s" : ""] to cargo for your automated payout shortly. "
 
 	if(check_global)
 		update_global_bounty_list(round(CIV_BOUNTY_BASELINE + (SSeconomy.civ_bounty_tracker / 3)), FALSE)
@@ -268,9 +269,6 @@
 	return data
 
 /obj/machinery/computer/piratepad_control/civilian/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
 	to_chat(world, "Entered") //todo: kill
 	var/obj/machinery/piratepad/civilian/pad = pad_ref?.resolve()
 	if(!pad)
