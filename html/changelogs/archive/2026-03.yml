@@ -88,6 +88,13 @@
   - qol: Improved the HUD of simple/basic animals, as well as Cyborgs, AIs, pAIs and
       Xenomorphs.
 2026-03-08:
+  Absolucy:
+  - admin: Your own ASay messages will no longer trigger your highlights.
+  BingusTheClown:
+  - bugfix: Spy Bootknife now gives slash proc's correctly when equipped.
+  Gboster-0:
+  - bugfix: fixed the game trying to make you sell chemical reactions for a public
+      bounty
   MoondancerPony:
   - bugfix: fixed turfs sometimes not being in any area's contents
   Y0SH1M4S73R:
