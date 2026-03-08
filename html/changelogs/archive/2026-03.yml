@@ -76,3 +76,42 @@
   SyncIt21:
   - code_imp: reagent transfer & removal operations now have faster cpu performance
   - code_imp: cleaned up code pertaining to reagent & reaction lookup
+  ttt, JohnFulpWillard:
+  - rscadd: Added a Memory HUD to your UI. In case you didn't know, you get memories
+      of things happening around the station, or important antagonist info such as
+      the nuclear codes.
+  - rscdel: Removed Borg's "store" button, now the cyborg module will behave more
+      similar to a backpack (LMB to store, RMB to open/close)
+  - bugfix: Borg material now properly displays how much materials they can afford
+      with their cell's charge.
+  - qol: Your HUD prefs are respected on more mobs now.
+  - qol: Improved the HUD of simple/basic animals, as well as Cyborgs, AIs, pAIs and
+      Xenomorphs.
+2026-03-08:
+  Absolucy:
+  - admin: Your own ASay messages will no longer trigger your highlights.
+  BingusTheClown:
+  - bugfix: Spy Bootknife now gives slash proc's correctly when equipped.
+  Gboster-0:
+  - bugfix: fixed the game trying to make you sell chemical reactions for a public
+      bounty
+  MoondancerPony:
+  - bugfix: fixed turfs sometimes not being in any area's contents
+  Y0SH1M4S73R:
+  - rscadd: NanoPaint, the paint app for modular computers, is now available for download.
+      Use it to create new images, or edit existing ones on your device.
+  - rscadd: Marlowe Treeby's Art Galaxy now allows you to download paintings to your
+      device as image files.
+  - rscadd: The File Manager can now be used to print image files to most canvas and
+      photograph formats. Printing a canvas can only be done at a console, however.
+  - qol: The PDA camera app can take photos at a distance.
+  - qol: You can now save photos taken with the PDA camera app to your device.
+  - qol: You can adjust the size of photos you take with the PDA camera app.
+  - qol: You can change the name, description, and caption of photos taken with the
+      PDA camera app, up to the point of saving them to disk or printing them for
+      the first time
+  - bugfix: The Universal Sprite Editor Framework (used for paint canvases and NanoPaint)
+      now uses Bresenham's line drawing algorithm for pencil and eraser operations.
+  - bugfix: The Universal Sprite Editor Framework correctly saves icons.
+  - admin: Images created by players using NanoPaint will be logged for admins, and
+      can be viewed using the "Audit Player-made Sprites" verb.
