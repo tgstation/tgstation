@@ -9,7 +9,7 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = ANTAG_GROUP_CREW
 	pref_flag = ROLE_OBSESSED
-	show_to_ghosts = TRUE
+	show_to_ghosts = FALSE
 	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
