@@ -214,11 +214,11 @@
 		/obj/item/electronics,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/stack/cable_coil,
+		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stock_parts,
 		/obj/item/wallframe/camera,
 		/obj/item/rcd_ammo,
 	), exception_hold_list = list(
-		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stack/sheet,
 		/obj/item/stack/rods,
 	))
