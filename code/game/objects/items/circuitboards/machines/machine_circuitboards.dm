@@ -41,10 +41,10 @@
 	var/blocked = FALSE
 	for(var/turf/potential_turf as anything in CORNER_BLOCK_OFFSET(center, 3, 3, -1, -2))
 		if(potential_turf.density)
-			balloon_alert_to_viewers("no room! (3x3)")
 			new /obj/effect/temp_visual/point(potential_turf)
 			blocked = TRUE
 	if(blocked)
+		balloon_alert_to_viewers("no room! (3x3)")
 		return FALSE
 	return TRUE
 
