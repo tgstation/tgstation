@@ -95,7 +95,7 @@
 	if(!isfloorturf(T))
 		balloon_alert(user, "cannot place here!")
 		return FALSE
-	if(isclosedturf(support) && check_wall_item(T, floor_to_support, wall_external))
+	if(check_wall_item(T, floor_to_support, wall_external))
 		balloon_alert(user, "already something here!")
 		return FALSE
 

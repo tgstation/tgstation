@@ -275,6 +275,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink_frame"
 	desc = "A sink frame, that needs a water recycler to finish construction."
+	wall_external = TRUE
 	result_path = /obj/structure/sink/greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	pixel_shift = 16
@@ -300,6 +301,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 		qdel(tool)
 		result_path = /obj/structure/sink/greyscale/filled
 		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		balloon_alert(user, "water recycler installed!")
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/wallframe/sinkframe/after_attach(obj/structure/sink/greyscale/attached_to)
