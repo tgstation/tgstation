@@ -68,6 +68,7 @@
 			PROC_REF(dimensional_shift),
 			PROC_REF(disguiser),
 			)
+	obj_flags += UNIQUE_RENAME
 
 /obj/item/relic/attack_self(mob/user)
 	if(!activated)
