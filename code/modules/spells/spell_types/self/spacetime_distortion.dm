@@ -27,14 +27,6 @@
 /datum/action/cooldown/spell/spacetime_dist/can_cast_spell(feedback = TRUE)
 	return ..() && ready
 
-/datum/action/cooldown/spell/spacetime_dist/set_statpanel_format()
-	. = ..()
-	if(!islist(.))
-		return
-
-	if(!ready)
-		.[PANEL_DISPLAY_STATUS] = "NOT READY"
-
 /datum/action/cooldown/spell/spacetime_dist/cast(atom/cast_on)
 	. = ..()
 	var/list/turf/to_switcharoo = get_targets_to_scramble(cast_on)

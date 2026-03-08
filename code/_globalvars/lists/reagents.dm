@@ -47,8 +47,6 @@ GLOBAL_LIST(chemical_reactions_list_product_index)
 GLOBAL_LIST_INIT(chemical_reagents_list, init_chemical_reagent_list())
 /// list of all reactions with their associated product and result ids. Used for reaction lookups
 GLOBAL_LIST(chemical_reactions_results_lookup_list)
-/// list of all reagents that are parent types used to define a bunch of children - but aren't used themselves as anything.
-GLOBAL_LIST(fake_reagent_blacklist)
 /// Turfs metalgen can't touch
 GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
 	/turf/closed/indestructible, //indestructible turfs should be indestructible, metalgen transmutation to plasma allows them to be destroyed
@@ -73,9 +71,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 /proc/init_chemical_reagent_list()
 	var/list/reagent_list = list()
 
-	for(var/datum/reagent/path as anything in subtypesof(/datum/reagent))
-		if(path in GLOB.fake_reagent_blacklist)
-			continue
+	for(var/datum/reagent/path as anything in valid_subtypesof(/datum/reagent))
 		var/datum/reagent/target_object = new path()
 		target_object.mass = rand(10, 800)
 		reagent_list[path] = target_object
@@ -152,19 +148,11 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 
 		GLOB.chemical_reactions_list[reaction.type] = reaction
 
-		for(var/reagent_path in reaction.required_reagents)
-			var/datum/reagent/reagent = find_reagent_object_from_type(reagent_path)
-			if(!istype(reagent))
-				stack_trace("Invalid reagent found in [reaction] required_reagents: [reagent_path]")
-				continue
-			reagents += list(list("name" = reagent.name, "id" = reagent.type))
+		for(var/datum/reagent/reagent as anything in reaction.required_reagents)
+			reagents += list(list("name" = reagent::name, "id" = reagent))
 
-		for(var/product in reaction.results)
-			var/datum/reagent/reagent = find_reagent_object_from_type(product)
-			if(!istype(reagent))
-				stack_trace("Invalid reagent found in [reaction] results: [product]")
-				continue
-			product_names += reagent.name
+		for(var/datum/reagent/product as anything in reaction.results)
+			product_names += product::name
 			product_ids += product
 
 		var/product_name
