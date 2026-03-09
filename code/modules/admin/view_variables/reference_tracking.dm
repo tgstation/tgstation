@@ -45,7 +45,11 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 		/datum/z_pillar,
 		/obj/effect/abstract/z_holder,
 		// stuff below isn't 100% guaranteed to be ref-free, but they're prolly not an issue
-		/turf,
+		/turf/closed/mineral,
+		/turf/open/lava,
+		/turf/open/misc/asteroid,
+		/turf/open/openspace,
+		/turf/open/space,
 		/obj/structure/flora, // icebox and such has a LOT of these
 		/datum/chatmessage,
 		/datum/lighting_corner,
