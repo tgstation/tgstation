@@ -4,7 +4,6 @@
 	plane = LIGHTING_PLANE
 	icon = LIGHTING_ICON
 	icon_state = null
-	plane = LIGHTING_PLANE
 	color = null //we manually set color in init instead
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
