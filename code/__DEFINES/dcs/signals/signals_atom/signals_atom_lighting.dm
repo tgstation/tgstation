@@ -39,6 +39,13 @@
 #define COMSIG_ATOM_SET_LIGHT_FLAGS "atom_set_light_flags"
 ///Called right after the atom changes the value of light_flags to a different one, from base of [/atom/proc/set_light_flags]: (old_flags)
 #define COMSIG_ATOM_UPDATE_LIGHT_FLAGS "atom_update_light_flags"
+///Called right before the atom changes the value of light_render_source to a different one, from base [atom/proc/set_light_render_source]: (new_render_source)
+#define COMSIG_ATOM_SET_LIGHT_RENDER_SOURCE "atom_set_light_render_source"
+///Called right after the atom changes the value of light_render_source to a different one, from base of [/atom/proc/set_light_render_source]: (old_render_source)
+#define COMSIG_ATOM_UPDATE_LIGHT_RENDER_SOURCE "atom_update_light_render_source"
 
 ///Called when an atom has a light template applied to it. Frombase of [/datum/light_template/proc/mirror_onto]: ()
 #define COMSIG_ATOM_LIGHT_TEMPLATE_MIRRORED "atom_light_template_mirrored"
+
+///Called when an atom's overlay component modifies its visuals, from base of [/datum/component/overlay_lighting/proc/show_to_holder]: (image/visible_mask, image/cone)
+#define COMSIG_ATOM_OVERLAY_LIGHT_APPLIED "atom_overlay_light_applied"
