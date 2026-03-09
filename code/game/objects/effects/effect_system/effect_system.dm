@@ -65,6 +65,8 @@
 	// Internal use
 	/// The length of the previous assigned moveloop in deciseconds
 	var/last_loop_length = 0
+	/// List of dirs avalible to pick, used to avoid accidential duplicates
+	var/list/pickable_dirs = list()
 
 /datum/effect_system/basic/New(turf/location, amount = null, cardinals_only = null)
 	. = ..()
@@ -91,11 +93,14 @@
 		location = get_turf(holder)
 	var/obj/effect/effect = new effect_type(location)
 	total_effects++
-	var/direction
-	if(cardinals_only)
-		direction = pick(GLOB.cardinals)
-	else
-		direction = pick(GLOB.alldirs)
+
+	if(!length(pickable_dirs))
+		if(cardinals_only)
+			pickable_dirs = GLOB.cardinals.Copy()
+		else
+			pickable_dirs = GLOB.alldirs.Copy()
+	// Try not to reuse dirs if possible to avoid weird stacking
+	var/direction = pick_n_take(pickable_dirs)
 
 	var/step_count = get_step_count()
 	var/datum/move_loop/loop = GLOB.move_manager.move(effect, direction, step_delay, timeout = step_delay * step_count, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
