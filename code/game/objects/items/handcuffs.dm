@@ -466,7 +466,7 @@
 	armed = !armed
 	update_appearance()
 
-	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(25))
+	if(armed && (HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(25))
 		to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
 		var/hand_zone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
 		spring_trap(user, def_zone = hand_zone)
@@ -512,7 +512,7 @@
  * If ignore_movetypes is FALSE, does not trigger on floating / flying / etc. mobs.
  */
 /obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE, hit_prone = FALSE, def_zone = BODY_ZONE_CHEST)
-	if(!armed || !isturf(loc) || !isliving(target))
+	if(!armed || !isliving(target))
 		return
 
 	var/mob/living/victim = target
