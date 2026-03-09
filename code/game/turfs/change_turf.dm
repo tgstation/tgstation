@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms
 	if(isnull(ignored_atoms))
-		ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
+		ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port))
 	var/list/allowed_contents = typecache_filter_list_reverse(get_all_contents_ignoring(ignore_typecache), ignored_atoms)
 	allowed_contents -= src
 	for(var/i in 1 to allowed_contents.len)
@@ -162,9 +162,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if(!space_lit)
 			if(old_lighting_object)
 				lighting_object = old_lighting_object
+				vis_contents |= lighting_object
 			// Should have a lighting object if we never had one
 			else
-				new /atom/movable/lighting_object(src)
+				new /atom/movable/lighting_object(null, src)
 		else if (old_lighting_object)
 			qdel(old_lighting_object, force = TRUE)
 

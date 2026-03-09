@@ -118,8 +118,6 @@
 /datum/component/reflection/proc/check_can_reflect(atom/movable/target)
 	if(target == parent || !(target in view(1, parent)))
 		return FALSE
-	if(islightingobj(target))
-		return FALSE
 	var/atom/movable/mov_parent = parent
 	if(target.loc != mov_parent.loc && get_dir(mov_parent, target) != reflected_dir)
 		return FALSE

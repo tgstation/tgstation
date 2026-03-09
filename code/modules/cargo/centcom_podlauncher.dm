@@ -32,7 +32,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		/obj/effect/pod_landingzone,
 		/obj/effect/client_image_holder,
 		/obj/effect/light_emitter/podbay,
-		/atom/movable/lighting_object,
 	))
 
 	var/turf/oldTurf //Keeps track of where the user was at if they use the "teleport to centcom" button, so they can go back

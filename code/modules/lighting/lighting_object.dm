@@ -3,7 +3,6 @@
 	anchored = TRUE
 	icon = LIGHTING_ICON
 	icon_state = null
-	plane = LIGHTING_PLANE
 	color = null //we manually set color in init instead
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -15,22 +14,36 @@
 	///the turf that our light is applied to
 	var/turf/affected_turf
 
-/atom/movable/lighting_object/Initialize(mapload)
-	if(!isturf(loc))
+/atom/movable/lighting_object/Initialize(mapload, turf/affected_turf)
+	if(!isnull(loc))
+		if(isturf(loc))
+			affected_turf = loc
+			moveToNullspace()
+			stack_trace("a lighting object was improperly initialized - they should have a null loc, with the affected turf being the second argument")
+		else
+			qdel(src, force = TRUE)
+			CRASH("a lighting object tried to be spawned for a non-turf!")
+	if(!isturf(affected_turf))
 		qdel(src, force = TRUE)
-		CRASH("a lighting object was assigned to [loc], a non turf!")
+		CRASH("a lighting object was assigned to [affected_turf], a non turf!")
 
 	. = ..()
 
 	verbs.Cut()
 
-	affected_turf = loc
+	src.affected_turf = affected_turf
 	layer = affected_turf.z * 0.01
+	if(SSmapping.max_plane_offset)
+		// generates the offset lighting plane to use. NOTE: this assumes the turf lighting
+		// plane is ALWAYS offsettable which is technically dependent on a plane master var.
+		// checking for that is slower and this is hot enough that this is a worthwhile risk to take
+		plane = LIGHTING_PLANE - (PLANE_RANGE * GET_Z_PLANE_OFFSET(affected_turf.z))
 	if (affected_turf.lighting_object)
 		qdel(affected_turf.lighting_object, force = TRUE)
 		stack_trace("a lighting object was assigned to a turf that already had a lighting object!")
 
 	affected_turf.lighting_object = src
+	affected_turf.vis_contents += src
 	// Default to fullbright, so things can "see" if they use view() before we update
 	affected_turf.luminosity = 0
 	luminosity = 1
@@ -47,11 +60,8 @@
 	if (!force)
 		return QDEL_HINT_LETMELIVE
 	SSlighting.objects_queue -= src
-	if (loc != affected_turf)
-		var/turf/oldturf = get_turf(affected_turf)
-		var/turf/newturf = get_turf(loc)
-		stack_trace("A lighting object was qdeleted with a different loc then it is suppose to have ([COORD(oldturf)] -> [COORD(newturf)])")
 	if (isturf(affected_turf))
+		affected_turf.vis_contents -= src
 		affected_turf.lighting_object = null
 		affected_turf.luminosity = 1
 	affected_turf = null
@@ -59,15 +69,6 @@
 
 /atom/movable/lighting_object/proc/update()
 	var/turf/affected_turf = src.affected_turf
-
-	if (loc != affected_turf)
-		if (loc)
-			var/turf/oldturf = get_turf(affected_turf)
-			var/turf/newturf = get_turf(loc)
-			warning("A lighting object realised it's loc had changed in update() ([affected_turf]\[[affected_turf ? affected_turf.type : "null"]]([COORD(oldturf)]) -> [loc]\[[ loc ? loc.type : "null"]]([COORD(newturf)]))!")
-
-		qdel(src, force = TRUE)
-		return
 
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"
