@@ -8,6 +8,10 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message",
 		message_admins("[key_name_admin(user)] decided not to answer [ADMIN_LOOKUPFLW(target)]'s prayer")
 		return
 
+	if(QDELETED(target))
+		to_chat(user, span_boldwarning("That player doesn't exist anymore!"))
+		return
+
 	msg = user.reformat_narration(msg)
 
 	target.balloon_alert(target, "you hear a voice")

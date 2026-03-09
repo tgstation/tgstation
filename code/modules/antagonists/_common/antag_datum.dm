@@ -628,3 +628,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Return TRUE to prevent the antag's job from handling the respawn
 /datum/antagonist/proc/on_respawn(mob/new_character)
 	return FALSE
+
+/datum/antagonist/proc/operator""()
+	return "[name]"

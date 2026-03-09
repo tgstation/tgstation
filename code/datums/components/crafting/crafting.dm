@@ -567,6 +567,7 @@
 		movable.forceMove(user.drop_location())
 	to_chat(user, span_notice("[recipe.name] crafted."))
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
+	result.add_fingerprint(user, FALSE)
 	return TRUE
 
 
