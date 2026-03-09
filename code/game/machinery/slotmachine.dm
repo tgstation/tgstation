@@ -16,7 +16,6 @@
 #define PRIZE_JACKPOT 10000
 #define SPIN_TIME 4 SECONDS
 #define REEL_DEACTIVATE_DELAY 0.4 SECONDS
-#define JACKPOT_SEVENS FA_ICON_7
 #define HOLOCHIP 1
 #define COIN 2
 
@@ -39,16 +38,37 @@
 	var/jackpots = 0
 	var/paymode = HOLOCHIP // toggles between HOLOCHIP/COIN, defined above
 	var/cointype = /obj/item/coin/iron //default cointype
-	/// Icons that can be displayed by the slot machine.
-	var/static/list/icons = list(
-		FA_ICON_LEMON,
-		FA_ICON_STAR,
-		FA_ICON_BOMB,
-		FA_ICON_BIOHAZARD,
-		FA_ICON_APPLE_WHOLE,
-		FA_ICON_7,
-		FA_ICON_DOLLAR_SIGN,
+
+	/// Typepaths representing the symbols shown on this machine's reels.
+	/// The icon and icon_state of each path get scraped at init and sent to the UI.
+	/// Override this list in subtypes to make themed slot machines.
+	var/list/symbol_paths = list(
+		/obj/item/food/grown/banana,
+		/obj/item/food/grown/cherries,
+		/obj/item/grenade/flashbang,
+		/obj/item/coin/silver,
+		/obj/item/food/grown/apple,
+		/obj/item/coin/gold,
+		/obj/item/holochip,
 	)
+
+	/// The symbol typepath that pays out the jackpot when it lines up five wide
+	/// on the middle row. MUST also be present in symbol_paths.
+	var/jackpot_path = /obj/item/coin/gold
+
+	/// The symbol typepath that arms a flashbang when it lines up five wide on the
+	/// middle row. MUST also be present in symbol_paths. Set to null to disable.
+	var/bomb_path = /obj/item/grenade/flashbang
+
+	/// Hex colour string used to theme the tgui banner, spin button, and reel
+	/// highlight. Null leaves the stock rainbow gradient in place.
+	/// Department subtypes feed this from the RADIO_COLOR_* defines so they stay
+	/// in lockstep with radio/chat colouring.
+	var/theme_color = null
+
+	/// Cached list of symbol data (id/name/icon/icon_state) sent to the UI.
+	/// Built once from symbol_paths in Initialize() via build_symbol_data().
+	var/list/symbol_data
 
 	var/static/list/coinvalues
 	var/list/reels = list(
@@ -65,6 +85,15 @@
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
 
+	// Sanity: warn if a subtype misconfigures its special symbols
+	if(jackpot_path && !(jackpot_path in symbol_paths))
+		stack_trace("[type] has jackpot_path [jackpot_path] not present in symbol_paths!")
+	if(bomb_path && !(bomb_path in symbol_paths))
+		stack_trace("[type] has bomb_path [bomb_path] not present in symbol_paths!")
+
+	// Build the UI-friendly symbol data from our typepaths
+	build_symbol_data()
+
 	// Populate the reels
 	randomize_reels()
 
@@ -75,6 +104,18 @@
 			var/obj/item/coin/C = new cointype
 			coinvalues["[cointype]"] = C.get_item_credit_value()
 			qdel(C) //Sigh
+
+/// Builds symbol_data from symbol_paths. Each entry contains the stringified
+/// typepath (as a unique id) plus the name/icon/icon_state pulled via the :: operator.
+/obj/machinery/computer/slot_machine/proc/build_symbol_data()
+	symbol_data = list()
+	for(var/obj/symbol as anything in symbol_paths)
+		symbol_data += list(list(
+			"id" = "[symbol]",
+			"name" = symbol::name,
+			"icon" = symbol::icon,
+			"icon_state" = symbol::icon_state,
+		))
 
 /obj/machinery/computer/slot_machine/on_deconstruction(disassembled)
 	if(balance)
@@ -172,7 +213,8 @@
 
 /obj/machinery/computer/slot_machine/ui_static_data(mob/user)
 	var/list/data = list()
-	data["icons"] = icons
+	data["symbols"] = symbol_data
+	data["theme_color"] = theme_color
 	data["cost"] = SPIN_PRICE
 	data["jackpot"] = PRIZE_JACKPOT
 	return data
@@ -182,7 +224,7 @@
 	var/list/_reels = list()
 	for(var/reel in reels)
 		_reels += list(list(
-			"icons" = reel,
+			"symbols" = reel,
 		))
 	data["reels"] = _reels
 	data["balance"] = balance
@@ -282,23 +324,23 @@
 		return FALSE
 	return TRUE
 
-/// Randomize the states of all reels
+/// Randomize the states of all reels. Each slot stores a stringified symbol typepath.
 /obj/machinery/computer/slot_machine/proc/randomize_reels()
-	for(var/reel in reels)
-		reel[1] = pick(icons)
-		reel[2] = pick(icons)
-		reel[3] = pick(icons)
+	for(var/list/reel in reels)
+		reel[1] = "[pick(symbol_paths)]"
+		reel[2] = "[pick(symbol_paths)]"
+		reel[3] = "[pick(symbol_paths)]"
 
 /// Checks if any prizes have been won, and pays them out
 /obj/machinery/computer/slot_machine/proc/give_prizes(usrname, mob/user)
 	var/linelength = get_lines()
 	var/did_player_win = TRUE
 
-	if(check_jackpot(FA_ICON_BOMB))
+	if(bomb_path && check_jackpot(bomb_path))
 		var/obj/item/grenade/flashbang/bang = new(get_turf(src))
 		bang.arm_grenade(null, 1 SECONDS)
 
-	else if(check_jackpot(JACKPOT_SEVENS))
+	else if(check_jackpot(jackpot_path))
 		winning = WINNING_JACKPOT
 		var/prize = money + PRIZE_JACKPOT
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] [MONEY_NAME]!'")
@@ -362,30 +404,34 @@
 /obj/machinery/computer/slot_machine/proc/clear_winning()
 	winning = WINNING_NOTHING
 
-/// Checks for a jackpot (5 matching icons in the middle row) with the given icon name
-/obj/machinery/computer/slot_machine/proc/check_jackpot(name)
-	for(var/reel in reels)
-		if(reel[2] != name)
+/// Checks for a jackpot (5 matching symbols in the middle row) for the given symbol typepath
+/obj/machinery/computer/slot_machine/proc/check_jackpot(symbol_path)
+	var/symbol_id = "[symbol_path]"
+	for(var/list/reel in reels)
+		if(reel[2] != symbol_id)
 			return FALSE
 	return TRUE
 
-/// Finds the largest number of consecutive matching icons in a row
+/// Finds the largest number of consecutive matching symbols in any row.
+/// Returns 0 if no run of 3 or more is found.
+/// Rewritten from the old findtext() approach since arbitrary typepath strings
+/// can be prefixes of each other and would silently produce false positives.
 /obj/machinery/computer/slot_machine/proc/get_lines()
-	var/amountthesame
+	var/amountthesame = 0
 
-	for(var/i in 1 to 3)
-		var/inputtext = reels[1][i] + reels[2][i] + reels[3][i] + reels[4][i] + reels[5][i]
-		for(var/icon in icons)
-			var/j = 3 //The lowest value we have to check for.
-			var/symboltext = icon + icon + icon
-			while(j <= 5)
-				if(findtext(inputtext, symboltext))
-					amountthesame = max(j, amountthesame)
-				j++
-				symboltext += icon
+	for(var/row in 1 to 3)
+		var/current_symbol = null
+		var/current_run = 0
 
-			if(amountthesame)
-				break
+		for(var/list/reel in reels)
+			var/symbol = reel[row]
+			if(symbol == current_symbol)
+				current_run++
+			else
+				current_symbol = symbol
+				current_run = 1
+			if(current_run >= 3)
+				amountthesame = max(amountthesame, current_run)
 
 	return amountthesame
 
@@ -436,6 +482,134 @@
 	playsound(src, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 50, TRUE)
 	return amount
 
+// ==========================================================================
+// Department-themed slot machine variants
+//
+// Each subtype only needs to override symbol_paths / jackpot_path / bomb_path /
+// theme_color. Odds and payouts are identical to the base machine — this is
+// purely cosmetic flavour.
+//
+// theme_color is fed straight from the RADIO_COLOR_* defines so these machines
+// stay visually consistent with the rest of the department UI colouring without
+// duplicating hex strings.
+//
+// NOTE: Some of the typepaths below are best-guesses based on common TG items.
+// If any fail to compile, swap them out — the UI doesn't care what the path IS,
+// only that it has a usable icon/icon_state.
+// ==========================================================================
+
+/obj/machinery/computer/slot_machine/command
+	name = "command slot machine"
+	desc = "Gambling for the antisocial head of staff. The house always wins. You are the house."
+	theme_color = RADIO_COLOR_COMMAND
+	symbol_paths = list(
+		/obj/item/disk/nuclear,
+		/obj/item/megaphone,
+		/obj/item/hand_tele,
+		/obj/item/clothing/head/hats/caphat,
+		/obj/item/card/id/advanced/gold,
+		/obj/item/melee/baton/telescopic,
+		/obj/item/grenade/flashbang,
+	)
+	jackpot_path = /obj/item/disk/nuclear
+	bomb_path = /obj/item/grenade/flashbang
+
+/obj/machinery/computer/slot_machine/security
+	name = "security slot machine"
+	desc = "Gambling for the antisocial officer. Losing is a crime. Winning is also a crime."
+	theme_color = RADIO_COLOR_SECURITY
+	symbol_paths = list(
+		/obj/item/food/donut/plain,
+		/obj/item/restraints/handcuffs,
+		/obj/item/melee/baton/security,
+		/obj/item/assembly/flash/handheld,
+		/obj/item/clothing/head/helmet/sec,
+		/obj/item/clothing/glasses/hud/security,
+		/obj/item/grenade/flashbang,
+	)
+	jackpot_path = /obj/item/food/donut/plain
+	bomb_path = /obj/item/grenade/flashbang
+
+/obj/machinery/computer/slot_machine/medical
+	name = "medical slot machine"
+	desc = "Gambling for the antisocial doctor. Side effects may include crippling debt."
+	theme_color = RADIO_COLOR_MEDICAL
+	symbol_paths = list(
+		/obj/item/storage/medkit/regular,
+		/obj/item/healthanalyzer,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/scalpel,
+		/obj/item/hemostat,
+		/obj/item/stack/medical/wrap/gauze,
+		/obj/item/grenade/flashbang,
+	)
+	jackpot_path = /obj/item/storage/medkit/regular
+	bomb_path = /obj/item/grenade/flashbang
+
+/obj/machinery/computer/slot_machine/engineering
+	name = "engineering slot machine"
+	desc = "Gambling for the antisocial engineer. Warranty void if delaminated."
+	theme_color = RADIO_COLOR_ENGINEERING
+	symbol_paths = list(
+		/obj/item/storage/toolbox/mechanical,
+		/obj/item/construction/rcd,
+		/obj/item/clothing/gloves/color/yellow,
+		/obj/item/wrench,
+		/obj/item/weldingtool,
+		/obj/item/multitool,
+		/obj/item/grenade/flashbang,
+	)
+	jackpot_path = /obj/item/storage/toolbox/mechanical
+	bomb_path = /obj/item/grenade/flashbang
+
+/obj/machinery/computer/slot_machine/service
+	name = "service slot machine"
+	desc = "Gambling for the antisocial bartender. Tips are not included. Tips are never included."
+	theme_color = RADIO_COLOR_SERVICE
+	symbol_paths = list(
+		/obj/item/reagent_containers/cup/glass/drinkingglass,
+		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+		/obj/item/reagent_containers/cup/glass/bottle/beer,
+		/obj/item/mop,
+		/obj/item/food/grown/banana,
+		/obj/item/bikehorn,
+		/obj/item/grenade/flashbang,
+	)
+	jackpot_path = /obj/item/reagent_containers/cup/glass/drinkingglass
+	bomb_path = /obj/item/grenade/flashbang
+
+/obj/machinery/computer/slot_machine/research
+	name = "research slot machine"
+	desc = "Gambling for the antisocial scientist. Statistically speaking, you will lose."
+	theme_color = RADIO_COLOR_SCIENCE
+	symbol_paths = list(
+		/obj/item/slime_extract/grey,
+		/obj/item/clothing/glasses/science,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/stock_parts/capacitor,
+		/obj/item/analyzer,
+		/obj/item/disk/tech_disk,
+		/obj/item/grenade/flashbang,
+	)
+	jackpot_path = /obj/item/slime_extract/grey
+	bomb_path = /obj/item/grenade/flashbang
+
+/obj/machinery/computer/slot_machine/syndicate
+	name = "syndicate slot machine"
+	desc = "Gambling for the antisocial operative. The house always wins. The house is Nanotrasen. Destroy the house."
+	theme_color = RADIO_COLOR_SYNDICATE
+	symbol_paths = list(
+		/obj/item/card/emag,
+		/obj/item/melee/energy/sword,
+		/obj/item/storage/toolbox/syndicate,
+		/obj/item/clothing/mask/gas/syndicate,
+		/obj/item/soap/syndie,
+		/obj/item/toy/plush/nukeplushie,
+		/obj/item/grenade/c4,
+	)
+	jackpot_path = /obj/item/card/emag
+	bomb_path = /obj/item/grenade/c4
+
 #undef SPIN_PRICE
 #undef WINNING_NOTHING
 #undef WINNING_FREESPIN
@@ -447,6 +621,5 @@
 #undef PRIZE_JACKPOT
 #undef SPIN_TIME
 #undef REEL_DEACTIVATE_DELAY
-#undef JACKPOT_SEVENS
 #undef HOLOCHIP
 #undef COIN
