@@ -1,5 +1,6 @@
 ///Percentage of a civilian bounty the civilian will make.
 #define CIV_BOUNTY_SPLIT 30
+#define HIGH_PRIORITY_BOUNTY_ODDS 20
 
 ///Pad for the Civilian Bounty Control.
 /obj/machinery/piratepad/civilian
@@ -358,11 +359,10 @@
 			continue
 		GLOB.bounties_list += new_bounty
 
-	if(enable_high_priority && length(GLOB.bounties_list))
-		var/datum/bounty/high_pri = pick(GLOB.bounties_list)
-		high_pri.high_priority = TRUE
-		high_pri.description = "[initial(high_pri.description)]</br>\
-			This bounty is marked as <b>high priority</b>, and will reward <b>1.5x</b> the normal payout!"
+		if(enable_high_priority && prob(HIGH_PRIORITY_BOUNTY_ODDS))
+			new_bounty.high_priority = TRUE
+			new_bounty.description += "</br>\
+				This bounty is marked as <b>high priority</b>, and will reward <b>1.5x</b> the normal payout!"
 	return TRUE
 
 /// Performs several global bounty updates in a row on a callback loop, adding one each time.
@@ -372,7 +372,7 @@
 	if(current_count == update_to)
 		return TRUE
 	current_count++
-	addtimer(CALLBACK(src, PROC_REF(looped_global_update), current_count, update_to), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(looped_global_update), current_count, update_to), 0.8 SECONDS)
 
 /**
  * Handles cooldowns and creation of a new cargo bounty sheet.
@@ -427,3 +427,4 @@
 	can_become_message_in_bottle = FALSE
 
 #undef CIV_BOUNTY_SPLIT
+#undef HIGH_PRIORITY_BOUNTY_ODDS

@@ -261,6 +261,8 @@ const GlobalBountyBlock = (props) => {
     priority: false,
   });
 
+  const [bountyTab, setBountyTab] = useState(0);
+
   const safeListBounty = Array.isArray(listBounty) ? listBounty : [];
   return (
     <>
@@ -274,7 +276,7 @@ const GlobalBountyBlock = (props) => {
         >
           {safeListBounty.length < 1 ? (
             <Tabs.Tab
-            onClick={() => act('update_list')}
+            onClick={() => { act('update_list'); setBountyTab(0); }}
             backgroundColor="blue"
             textColor="white"
             width="100%"
@@ -285,11 +287,12 @@ const GlobalBountyBlock = (props) => {
           </Tabs.Tab>
           ) : (
             <Tabs.Tab
-              backgroundColor="#40638a70"
               textColor="#ffffffe5"
               align="center"
               >
-              {data.claimed_bounties} bount{data.claimed_bounties === 1 ? "y" : "ies"} served{data.claimed_bounties > 0 ? "!" : "."}
+              <Box className="Marquee">
+                {data.claimed_bounties} bount{data.claimed_bounties === 1 ? "y" : "ies"} served{data.claimed_bounties > 0 ? "!" : "."}
+              </Box>
             </Tabs.Tab>
           )}
 
@@ -313,9 +316,11 @@ const GlobalBountyBlock = (props) => {
               width="100%"
               backgroundColor={bounty.priority ? "#cec328a8" : "#d1d1d170"}
               textColor="white"
-              onClick={() => setBountyData(bounty)}
+              onClick={() => { setBountyData(bounty); setBountyTab(safeListBounty.indexOf(bounty)); }}
               className="Tab_Flash"
+              bold={bountyTab === safeListBounty.indexOf(bounty)}
               icon={bounty.priority ? 'star' : ''}
+              selected={bountyTab === safeListBounty.indexOf(bounty)}
             >
               {bounty.name}
             </Tabs.Tab>
@@ -337,7 +342,7 @@ const GlobalBountyBlock = (props) => {
           <BlockQuote
             my="5%"
             >
-            {localBounty.description}
+              <Box dangerouslySetInnerHTML={{__html:localBounty.description }} />
           </BlockQuote>
           <Button
             width="100%"
@@ -345,7 +350,7 @@ const GlobalBountyBlock = (props) => {
             tooltip={sending ? 'Stop Sending' : 'Send Goods'}
             selected={sending}
             disabled={!pad || !id_inserted}
-            onClick={() => act(sending ? 'stop' : 'send', { global: true})}
+            onClick={() => { act(sending ? 'stop' : 'send', { global: true}); setBountyTab(0); }}
           >
             Send & Claim
           </Button>
