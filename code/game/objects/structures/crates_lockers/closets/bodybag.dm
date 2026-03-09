@@ -511,9 +511,9 @@
 	air_contents = new(mol_count)
 	air_contents.temperature = inner_temp
 
-	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
 	air_contents.adjust_gas(/datum/gas/oxygen, ((ONE_ATMOSPHERE * mol_count) / (R_IDEAL_GAS_EQUATION * inner_temp) * O2STANDARD))
 	air_contents.adjust_gas(/datum/gas/nitrogen, ((ONE_ATMOSPHERE * mol_count) / (R_IDEAL_GAS_EQUATION * inner_temp) * N2STANDARD))
+
 /obj/structure/closet/body_bag/environmental/stasis/examine_status(mob/user)
 	switch(100 * get_integrity_percentage())
 		if(50 to 75)
