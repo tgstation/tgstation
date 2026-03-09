@@ -46,8 +46,7 @@
 	affected_turf.lighting_object = src
 	affected_turf.vis_contents += src
 	// Default to fullbright, so things can "see" if they use view() before we update
-	affected_turf.luminosity = 0
-	luminosity = 1
+	affected_turf.luminosity = 1
 
 	// This path is really hot. this is faster
 	// Really this should be a global var or something, but lets not think about that yes?
