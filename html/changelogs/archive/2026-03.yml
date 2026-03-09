@@ -116,6 +116,9 @@
   - admin: Images created by players using NanoPaint will be logged for admins, and
       can be viewed using the "Audit Player-made Sprites" verb.
 2026-03-09:
+  ArcaneMusic:
+  - qol: After discovering a strange object's behavior, you can now rename it using
+      a pen.
   oranges:
   - rscadd: suicide act for shrink ray
   stylemistake:
