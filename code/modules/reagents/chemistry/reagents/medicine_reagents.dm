@@ -8,6 +8,7 @@
 
 /datum/reagent/medicine
 	taste_description = "bitterness"
+	abstract_type = /datum/reagent/medicine
 
 /datum/reagent/medicine/New()
 	. = ..()
