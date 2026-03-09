@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	var/aggressiveness = AGGR_BAD_COP
 	///Whether the hailer has been broken due to overuse or not
 	var/broken_hailer = FALSE
-	///Whether the hailer is currently` in cooldown for resetting recent_uses
+	///Whether the hailer is currently in cooldown for resetting recent_uses
 	var/overuse_cooldown = FALSE
 	///How many times was the hailer used in the last OVERUSE_COOLDOWN seconds
 	var/recent_uses = 0
