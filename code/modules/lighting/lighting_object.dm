@@ -1,6 +1,7 @@
 /atom/movable/lighting_object
 	name = ""
 	anchored = TRUE
+	plane = LIGHTING_PLANE
 	icon = LIGHTING_ICON
 	icon_state = null
 	color = null //we manually set color in init instead
