@@ -3,6 +3,7 @@
 	savefile_key = "rds_limit"
 	savefile_identifier = PREFERENCE_CHARACTER
 	default_value = FALSE
+	should_update_preview = FALSE
 
 /datum/preference/toggle/rds_limit/apply_to_human(mob/living/carbon/human/target, value)
 	return

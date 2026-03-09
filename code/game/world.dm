@@ -484,8 +484,8 @@ GLOBAL_VAR(restart_counter)
 	LISTASSERTLEN(global_area.turfs_by_zlevel, map_load_z_cutoff, list())
 	for (var/zlevel in 1 to map_load_z_cutoff)
 		var/list/to_add = block(
-			1, old_maxy + 1, 1,
-			maxx, maxy, map_load_z_cutoff
+			1, old_maxy + 1, zlevel,
+			maxx, maxy, zlevel
 		)
 		global_area.turfs_by_zlevel[zlevel] += to_add
 
