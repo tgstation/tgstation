@@ -1,5 +1,7 @@
 /// A single reagent
 /datum/reagent
+	abstract_type = /datum/reagent
+
 	/// datums don't have names by default
 	var/name = ""
 	/// nor do they have descriptions
@@ -101,7 +103,7 @@
 	. = ..()
 
 	if(material)
-		material = GET_MATERIAL_REF(material)
+		material = SSmaterials.get_material(material)
 	if(glass_price)
 		AddElement(/datum/element/venue_price, glass_price)
 	if(!mass)

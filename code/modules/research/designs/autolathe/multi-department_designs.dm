@@ -187,18 +187,31 @@
 	name = "Toolbox"
 	id = "tool_box"
 	build_type = AUTOLATHE
-	materials = list(MAT_CATEGORY_ITEM_MATERIAL =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material_requirement/solid_material = SMALL_MATERIAL_AMOUNT * 5)
 	build_path = /obj/item/storage/toolbox
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
 	)
 
+/datum/design/toolbox/create_result(atom/drop_loc, list/custom_materials, amount)
+	var/obj/item/storage/toolbox/toolbox = ..()
+	if (length(custom_materials) && !istype(custom_materials[1], /datum/material/iron))
+		return toolbox
+
+	// Default and custom material iron toolboxes get a random color assigned rather than being greyscale'd
+	var/toolbox_color = pick("blue", "yellow", "red")
+	toolbox.icon_state = toolbox_color
+	toolbox.inhand_icon_state = "toolbox_[toolbox_color]"
+	toolbox.material_flags &= ~MATERIAL_COLOR
+	toolbox.remove_atom_colour(FIXED_COLOUR_PRIORITY)
+	return toolbox
+
 /datum/design/emergency_oxygen
 	name = "Emergency Oxygen Tank"
 	id = "emergency_oxygen"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/tank/internals/emergency_oxygen/empty
 	category = list(
 		RND_CATEGORY_INITIAL,

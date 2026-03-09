@@ -136,7 +136,7 @@
 	if(!isitem(target))
 		return
 	var/obj/item/I = target
-	if(I.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(I.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		detonate() //If we're touching a hot item we go boom
 		return TRUE
 

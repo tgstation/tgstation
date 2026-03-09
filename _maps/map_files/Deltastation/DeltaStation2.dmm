@@ -14728,6 +14728,7 @@
 /turf/open/floor/wood,
 /area/station/service/electronic_marketing_den)
 "dEm" = (
+/obj/item/wrench/medical,
 /obj/item/reagent_containers/cup/beaker/cryoxadone{
 	pixel_x = -6;
 	pixel_y = 10
@@ -76965,10 +76966,6 @@
 	dir = 4
 	},
 /obj/machinery/newscaster/directional/west,
-/obj/item/wrench/medical{
-	pixel_x = 2;
-	pixel_y = 4
-	},
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

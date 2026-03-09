@@ -35,6 +35,11 @@
 	desc = "A small bottle of cyanide. Bitter almonds?"
 	list_reagents = list(/datum/reagent/toxin/cyanide = 30)
 
+/obj/item/reagent_containers/cup/bottle/anacea
+	name = "anacea bottle"
+	desc = "A small bottle of anacea."
+	list_reagents = list(/datum/reagent/toxin/anacea = 30)
+
 /obj/item/reagent_containers/cup/bottle/spewium
 	name = "spewium bottle"
 	desc = "A small bottle of spewium."

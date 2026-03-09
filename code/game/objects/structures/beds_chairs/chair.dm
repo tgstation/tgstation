@@ -236,6 +236,10 @@
 	max_integrity = 120
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2)
 
+/obj/structure/chair/comfy/shuttle/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
 /obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
 		var/mutable_appearance/echair_overlay = mutable_appearance('icons/obj/chairs.dmi', "echair_over", OBJ_LAYER, src, appearance_flags = KEEP_APART)
@@ -465,7 +469,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
+	else if(custom_materials[SSmaterials.get_material(/datum/material/iron)])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 

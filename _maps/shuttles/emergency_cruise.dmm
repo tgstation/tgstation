@@ -314,6 +314,7 @@
 /obj/effect/turf_decal/bot_white{
 	color = "#52B4E9"
 	},
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 1
 	},
@@ -1244,6 +1245,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 4
 	},
@@ -4638,9 +4640,9 @@ Ux
 En
 dE
 uV
+jt
 en
-en
-en
+jt
 NF
 jt
 vw

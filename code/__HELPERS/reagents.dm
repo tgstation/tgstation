@@ -58,21 +58,6 @@
 	//if we got this far, the longer reaction will be impossible to create if the shorter one is earlier in GLOB.chemical_reactions_list_reactant_index, and will require the reagents to be added in a particular order otherwise
 	return TRUE
 
-/proc/get_chemical_reaction(id)
-	if(!GLOB.chemical_reactions_list_reactant_index)
-		return
-	for(var/reagent in GLOB.chemical_reactions_list_reactant_index)
-		for(var/R in GLOB.chemical_reactions_list_reactant_index[reagent])
-			var/datum/reac = R
-			if(reac.type == id)
-				return R
-
-/proc/remove_chemical_reaction(datum/chemical_reaction/R)
-	if(!GLOB.chemical_reactions_list_reactant_index || !R)
-		return
-	for(var/rid in R.required_reagents)
-		GLOB.chemical_reactions_list_reactant_index[rid] -= R
-
 //see build_chemical_reactions_list in holder.dm for explanations
 /proc/add_chemical_reaction(datum/chemical_reaction/add)
 	if(!GLOB.chemical_reactions_list_reactant_index || !add.required_reagents || !add.required_reagents.len)
@@ -81,6 +66,7 @@
 	if(!GLOB.chemical_reactions_list_reactant_index[rand_reagent])
 		GLOB.chemical_reactions_list_reactant_index[rand_reagent] = list()
 	GLOB.chemical_reactions_list_reactant_index[rand_reagent] += add
+	GLOB.chemical_reactions_list[add.type] = add
 
 //Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
 /datum/reagents/proc/create_foam(foamtype, foam_volume, result_type = null, notification = null, log = FALSE)
@@ -166,22 +152,8 @@
 	if(shortcuts[input_reagent])
 		input_reagent = shortcuts[input_reagent]
 	else
-		input_reagent = find_reagent(input_reagent)
+		input_reagent = get_chem_id(input_reagent)
 	return input_reagent
-
-///Returns reagent datum from typepath
-/proc/find_reagent(input)
-	. = FALSE
-	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
-		return input
-	else
-		return get_chem_id(input)
-
-/proc/find_reagent_object_from_type(input)
-	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
-		return GLOB.chemical_reagents_list[input]
-	else
-		return null
 
 ///Returns a random reagent object, with the option to blacklist reagents.
 /proc/get_random_reagent_id(list/blacklist)
@@ -218,13 +190,6 @@
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
 		if(ckey(chem_name) == ckey(LOWER_TEXT(R.name)))
 			return X
-
-///Takes a type in and returns a list of associated recipes
-/proc/get_recipe_from_reagent_product(input_type)
-	if(!input_type)
-		return
-	var/list/matching_reactions = GLOB.chemical_reactions_list_product_index[input_type]
-	return matching_reactions
 
 /proc/reagent_paths_list_to_text(list/reagents, addendum)
 	var/list/temp = list()

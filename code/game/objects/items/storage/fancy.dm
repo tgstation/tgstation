@@ -270,12 +270,15 @@
 	. = ..()
 	icon_state = "[base_icon_state][contents.len ? null : "_empty"]"
 
+/obj/item/storage/fancy/cigarettes/proc/open_icon_state()
+	return "[icon_state]_open"
+
 /obj/item/storage/fancy/cigarettes/update_overlays()
 	. = ..()
 	if(!open_status || !contents.len)
 		return
 
-	. += "[icon_state]_open"
+	. += open_icon_state()
 
 	if(!display_cigs)
 		return
@@ -546,9 +549,13 @@
 /obj/item/storage/fancy/cigarettes/cigars/havana
 	name = "\improper premium Havanian cigar case"
 	desc = "A case of classy Havanian cigars."
-	icon_state = "cohibacase"
-	base_icon_state = "cohibacase"
+	icon_state = "havanacase"
+	base_icon_state = "havanacase"
 	spawn_type = /obj/item/cigarette/cigar/havana
+
+
+/obj/item/storage/fancy/cigarettes/cigars/havana/open_icon_state()
+	return "cohibacase_open"
 
 /obj/item/storage/fancy/cigarettes/cigars/havana/empty
 	spawn_count = 0

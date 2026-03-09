@@ -1131,10 +1131,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This target has recently been shot by a marksman coin and is very briefly immune to being hit by one again to prevent recursion
 #define TRAIT_RECENTLY_COINED "recently_coined"
 
-/// Receives echolocation images.
-#define TRAIT_ECHOLOCATION_RECEIVER "echolocation_receiver"
-/// Echolocation has a higher range.
-#define TRAIT_ECHOLOCATION_EXTRA_RANGE "echolocation_extra_range"
+/// Mob is an echolocator
+#define TRAIT_ECHOLOCATOR "echolocator"
 
 /// Trait given to a living mob and any observer mobs that stem from them if they suicide.
 /// For clarity, this trait should always be associated/tied to a reference to the mob that suicided- not anything else.
@@ -1238,6 +1236,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ELEVATING_OBJECT "elevating_object"
 /// From [/datum/element/elevation_core] for purpose of checking if the turf has the trait from an instance of the element
 #define TRAIT_ELEVATED_TURF "elevated_turf"
+/// From [/datum/component/defaceable] marks that something has been... marked
+#define TRAIT_DEFACED "defaced"
 
 /// This item is currently under the control of telekinesis
 #define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"

@@ -5,25 +5,20 @@
 	greyscale_color = "#FFFFFF"
 	alpha = 100
 	starlight_color = COLOR_ALMOST_BLACK
-	categories = list(
-		MAT_CATEGORY_RIGID = TRUE,
-		MAT_CATEGORY_BASE_RECIPES = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
-		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
-		)
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_FABRIC // Metal for crafting, and fabric because bedsheets and ghosts... you get it.
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 6,
+		MATERIAL_FLEXIBILITY = 8, // Fabric
+		MATERIAL_REFLECTIVITY = 4,
+		MATERIAL_ELECTRICAL = 4,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 2,
+		MATERIAL_FLAMMABILITY = 6,
+	)
 	sheet_type = /obj/item/stack/sheet/hauntium
+	material_reagent = /datum/reagent/hauntium
 	value_per_unit = 0.05
-	beauty_modifier = 0.25
-	//pretty good but only the undead can actually make use of these modifiers
-	strength_modifier = 1.2
-	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 1, ACID = 0.7)
-	fish_weight_modifier = 1.4
-	fishing_difficulty_modifier = -25 //Only the undead and the coroner can game this.
-	fishing_cast_range = 2
-	fishing_experience_multiplier = 1.5
-	fishing_completion_speed = 1.1
-	fishing_bait_speed_mult = 0.85
-	fishing_gravity_mult = 0.8
 
 /datum/material/hauntium/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()

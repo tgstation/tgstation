@@ -167,7 +167,7 @@
 		var/obj/item/gun/energy/laser/lasergun = tool
 		return lasergun.cell?.charge > 0
 
-	return tool.get_temperature() > 0
+	return tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 
 /datum/surgery_operation/basic/close_skin/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

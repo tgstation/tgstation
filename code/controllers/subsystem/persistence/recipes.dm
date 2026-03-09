@@ -30,7 +30,7 @@
 
 	//asert globchems done
 	for(var/randomized_type in subtypesof(/datum/chemical_reaction/randomized))
-		var/datum/chemical_reaction/randomized/R = get_chemical_reaction(randomized_type) //ew, would be nice to add some simple tracking
+		var/datum/chemical_reaction/randomized/R = GLOB.chemical_reactions_list[randomized_type]
 		if(R?.persistent)
 			var/list/recipe_data = R.SaveOldRecipe()
 			file_data["[R.type]"] = recipe_data
