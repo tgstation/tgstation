@@ -578,7 +578,7 @@
 		qdel(src)
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
-	if(!isturf(loc))
+	if(isturf(loc))
 		spring_trap(user)
 
 	return ..()
