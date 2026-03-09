@@ -20,6 +20,8 @@
 	light_range = 1.5
 	light_power = 0.8
 	light_color = LIGHT_COLOR_FIRE
+	/// Timer id for the timer that will wipe us out
+	var/delete_timer_id = TIMER_ID_NULL
 
 /obj/effect/particle_effect/sparks/Initialize(mapload)
 	..()
@@ -32,7 +34,12 @@
 	var/turf/location = loc
 	if(isturf(location))
 		affect_location(location, just_initialized = TRUE)
-	QDEL_IN(src, 2 SECONDS)
+	decay_in(2 SECONDS)
+
+/// Sets up our death effects given the passed in duration
+/obj/effect/particle_effect/sparks/proc/decay_in(decay_time)
+	deltimer(delete_timer_id)
+	delete_timer_id = QDEL_IN_STOPPABLE(src, decay_time)
 
 /obj/effect/particle_effect/sparks/Destroy()
 	var/turf/location = loc
@@ -90,7 +97,12 @@
 			sparks_touched(src, anything)
 
 /datum/effect_system/basic/spark_spread
+	delete_on_stop = TRUE
 	effect_type = /obj/effect/particle_effect/sparks
+
+/datum/effect_system/basic/spark_spread/generate_effect()
+	var/obj/effect/particle_effect/sparks/spark = ..()
+	spark.decay_in(last_loop_length)
 
 /datum/effect_system/basic/spark_spread/quantum
 	effect_type = /obj/effect/particle_effect/sparks/quantum
@@ -102,4 +114,5 @@
 	icon_state = "electricity"
 
 /datum/effect_system/basic/lightning_spread
+	delete_on_stop = TRUE
 	effect_type = /obj/effect/particle_effect/sparks/electricity
