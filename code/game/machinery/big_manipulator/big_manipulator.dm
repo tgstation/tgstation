@@ -17,13 +17,8 @@
 
 	/// How quickly the manipulator will process it's actions.
 	var/speed_multiplier = 1
-	var/min_speed_multiplier =  MIN_SPEED_MULTIPLIER_TIER_1
-	var/max_speed_multiplier =  MAX_SPEED_MULTIPLIER_TIER_1
-
-	/// The current task.
-	var/current_task = CURRENT_TASK_NONE
-	var/current_task_start_time = 0
-	var/current_task_duration = 0
+	var/min_speed_multiplier = MIN_SPEED_MULTIPLIER_TIER_1
+	var/max_speed_multiplier = MAX_SPEED_MULTIPLIER_TIER_1
 
 	/// The object inside the manipulator.
 	var/datum/weakref/held_object = null
@@ -36,27 +31,28 @@
 	/// Is the power access wire cut? Disables the power button if `TRUE`.
 	var/power_access_wire_cut = FALSE
 
-	/// How many interaction points of each kind can we have?
+	/// How many tasks total we can have.
 	var/interaction_point_limit = MAX_INTERACTION_POINTS_TIER_1
-	/// List of pickup points.
-	var/list/pickup_points = list()
-	/// List of dropoff points.
-	var/list/dropoff_points = list()
 
-	/// Which tasking scenario we use for pickup points?
-	var/pickup_tasking = TASKING_ROUND_ROBIN
-	/// Which tasking scenario we use for dropoff points?
-	var/dropoff_tasking = TASKING_ROUND_ROBIN
+	/// A list of tasks for the manipulator.
+	var/list/tasks = list()
+	/// The task we're currently working on.
+	var/datum/manipulator_task/current_task
+
+	/// State of the machine (moving, interacting, idle...)
+	var/current_task_state = CURRENT_TASK_NONE
+	var/current_task_start_time = 0
+	var/current_task_duration = 0
+
+	/// Which tasking scenario we use for iterating tasks.
+	var/tasking_strategy = TASKING_SEQUENTIAL
+	/// Tasking strategy instance.
+	var/datum/tasking_strategy/master_tasking
 
 	/// List of all HUD icons resembling interaction points.
 	var/list/hud_points = list()
 
-	/// Pickup strategy for tasking.
-	var/datum/tasking_strategy/pickup_strategy
-	/// Dropoff strategy for tasking.
-	var/datum/tasking_strategy/dropoff_strategy
-
-/// Re-creates hud images for the points
+/// Re-creates hud images for the tasks.
 /obj/machinery/big_manipulator/proc/update_hud()
 	LAZYCLEARLIST(hud_points)
 
@@ -65,78 +61,84 @@
 		return
 
 	main_hud.loc = get_turf(src)
-	main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
+	main_hud.appearance = mutable_appearance('icons/effects/tasks.dmi', null, ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
 
 	main_hud.overlays.Cut()
 	var/list/point_overlays = list()
 
-	for(var/i in 1 to length(pickup_points))
-		var/datum/interaction_point/point = pickup_points[i]
-		var/turf/target_turf = point.interaction_turf
-		if(target_turf)
-			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
-			var/turf/manip_turf = get_turf(src)
-			point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
-			point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
-			point_overlays += point_appearance
-
-	for(var/i in 1 to length(dropoff_points))
-		var/datum/interaction_point/point = dropoff_points[i]
-		var/turf/target_turf = point.interaction_turf
-		if(target_turf)
-			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
-			var/turf/manip_turf = get_turf(src)
-			point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
-			point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
-			point_overlays += point_appearance
+	for(var/i in 1 to length(tasks))
+		var/datum/manipulator_task/task = tasks[i]
+		if(!istype(task, /datum/manipulator_task/cargo))
+			continue
+		var/datum/manipulator_task/cargo/cargo_task = task
+		var/turf/target_turf = cargo_task.interaction_turf
+		if(!target_turf)
+			continue
+		var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/tasks.dmi', "[cargo_task.type]_[i]", ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
+		var/turf/manip_turf = get_turf(src)
+		point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
+		point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
+		point_overlays += point_appearance
 
 	main_hud.overlays += point_overlays
 	hud_points += main_hud
 	set_hud_image_active(BIG_MANIP_HUD)
 
-/// Attempts to find a suitable turf near the manipulator
+/// Attempts to find a suitable turf near the manipulator for creating a cargo task.
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
-	var/turf/center = get_turf(src)
-
-	for(var/turf/checked_turf in orange(center, 1))
+	for(var/turf/checked_turf in orange(get_turf(src), 1))
 		if(!isclosedturf(checked_turf))
 			return checked_turf
-
-	// didn't find any :boowomp:
 	return null
 
-/// Attempts to create a new interaction point and assign it to the correct list.
-/obj/machinery/big_manipulator/proc/create_new_interaction_point(mob/user, turf/new_turf, list/new_filters, new_filters_status, new_interaction_mode, transfer_type)
-	if(!new_turf || !isturf(new_turf))
-		new_turf = find_suitable_turf()
-		if(!new_turf)
-			balloon_alert(user, "no suitable turfs found!")
-			return FALSE
-
-	var/list/current_points = (transfer_type == TRANSFER_TYPE_PICKUP) ? pickup_points : dropoff_points
-	var/point_type = (transfer_type == TRANSFER_TYPE_PICKUP) ? "pickup" : "dropoff"
-
-	if(length(current_points) + 1 > interaction_point_limit)
-		balloon_alert(user, "[point_type] point limit reached!")
+/// Attempts to create a new task and assign it to the list.
+/obj/machinery/big_manipulator/proc/create_new_task(mob/user, task_type, turf/new_turf)
+	if(length(tasks) >= interaction_point_limit)
+		balloon_alert(user, "task limit reached!")
 		return FALSE
 
 	var/datum/stock_part/servo/locate_servo = locate() in component_parts
 	var/manipulator_tier = locate_servo ? locate_servo.tier : 1
 
-	var/datum/interaction_point/new_interaction_point = new(new_turf, new_filters, new_filters_status, new_interaction_mode, manipulator_tier)
+	var/datum/manipulator_task/new_task
 
-	if(QDELETED(new_interaction_point)) // if something STILL somehow went wrong
+	switch(task_type)
+		if(TASK_TYPE_PICKUP)
+			if(!new_turf) new_turf = find_suitable_turf()
+			if(!new_turf)
+				balloon_alert(user, "no suitable turfs found!")
+				return FALSE
+			new_task = new /datum/manipulator_task/cargo/pickup(new_turf, manipulator_tier)
+		if(TASK_TYPE_DROPOFF)
+			if(!new_turf) new_turf = find_suitable_turf()
+			if(!new_turf)
+				balloon_alert(user, "no suitable turfs found!")
+				return FALSE
+			new_task = new /datum/manipulator_task/cargo/dropoff(new_turf, manipulator_tier)
+		if(TASK_TYPE_INTERACT)
+			if(!new_turf) new_turf = find_suitable_turf()
+			if(!new_turf)
+				balloon_alert(user, "no suitable turfs found!")
+				return FALSE
+			new_task = new /datum/manipulator_task/cargo/interact(new_turf, manipulator_tier)
+		if(TASK_TYPE_WAIT)
+			new_task = new /datum/manipulator_task/simple/wait()
+		if(TASK_TYPE_SIGNAL)
+			new_task = new /datum/manipulator_task/simple/signal()
+
+	if(!new_task || QDELETED(new_task))
 		return FALSE
 
-	current_points += new_interaction_point
+	tasks += new_task
 
-	if(obj_flags & EMAGGED)
-		new_interaction_point.type_filters += /mob/living
+	if(obj_flags & EMAGGED && istype(new_task, /datum/manipulator_task/cargo))
+		var/datum/manipulator_task/cargo/cargo_task = new_task
+		cargo_task.type_filters += /mob/living
 
 	if(is_operational)
 		update_hud()
 
-	return new_interaction_point
+	return new_task
 
 /obj/machinery/big_manipulator/Initialize(mapload)
 	. = ..()
@@ -189,11 +191,8 @@
 
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * BASE_POWER_USAGE * manipulator_tier
 
-	for(var/datum/interaction_point/each_point in pickup_points)
-		each_point.interaction_priorities = each_point.fill_priority_list(manipulator_tier)
-
-	for(var/datum/interaction_point/each_point in dropoff_points)
-		each_point.interaction_priorities = each_point.fill_priority_list(manipulator_tier)
+	for(var/datum/manipulator_task/cargo/cargo_task in tasks)
+		cargo_task.interaction_priorities = cargo_task.fill_priority_list(manipulator_tier)
 
 /obj/machinery/big_manipulator/examine(mob/user)
 	. = ..()
@@ -234,8 +233,7 @@
 		diag_hud.remove_atom_from_hud(src)
 
 	QDEL_NULL(manipulator_arm)
-	// QDEL_NULL(monkey_worker.resolve())
-	// QDEL_NULL(held_object.resolve())
+	QDEL_LIST(tasks)
 	id_lock = null
 	. = ..()
 
@@ -266,74 +264,58 @@
 	var/dx = new_turf.x - old_turf.x
 	var/dy = new_turf.y - old_turf.y
 
-	if(dx == 0 && dy == 0) // if we rotated for instance
+	if(dx == 0 && dy == 0)
 		return
 
-	for(var/datum/interaction_point/point in pickup_points)
-		update_point_position(point, dx, dy)
-
-	for(var/datum/interaction_point/point in dropoff_points)
-		update_point_position(point, dx, dy)
+	for(var/datum/manipulator_task/cargo/cargo_task in tasks)
+		update_task_position(cargo_task, dx, dy)
 
 	if(is_operational)
 		update_hud()
 
-/// Updates a single interaction point's position by the given offset
-/obj/machinery/big_manipulator/proc/update_point_position(datum/interaction_point/point, dx, dy)
-	if(!point || !point.interaction_turf)
+/// Updates a single cargo task's turf position by the given offset.
+/obj/machinery/big_manipulator/proc/update_task_position(datum/manipulator_task/cargo/task, dx, dy)
+	if(!task || !task.interaction_turf)
 		return
 
-	var/turf/old_turf = point.interaction_turf
-	if(!old_turf)
-		return
-
+	var/turf/old_turf = task.interaction_turf
 	var/turf/manipulator_turf = get_turf(src)
 	if(!manipulator_turf)
 		return
 
 	var/turf/new_turf = locate(old_turf.x + dx, old_turf.y + dy, manipulator_turf.z)
 
-	// if manipulator is not anchored, allow points to be anywhere (even in walls) to not mess up your stuff when moving it
 	if(!anchored)
 		if(new_turf)
-			point.interaction_turf = new_turf
+			task.interaction_turf = new_turf
 		return
 
 	if(!new_turf || isclosedturf(new_turf))
 		new_turf = find_suitable_turf_near(new_turf || old_turf)
 		if(!new_turf)
-			remove_invalid_point(point)
+			remove_invalid_task(task)
 			return
 
 	if(new_turf == old_turf)
 		return
 
-	point.interaction_turf = new_turf
+	task.interaction_turf = new_turf
 
-/// Finds a suitable turf near the given location
+/// Finds a suitable turf near the given location.
 /obj/machinery/big_manipulator/proc/find_suitable_turf_near(turf/center)
 	if(!center)
 		return null
-
-	var/turf/manipulator_turf = get_turf(src)
-	if(!manipulator_turf)
-		return null
-
 	for(var/turf/each in orange(1, src))
 		if(!isclosedturf(each))
 			return each
-
 	return null
 
-/// Removes an invalid interaction point from the lists.
-/obj/machinery/big_manipulator/proc/remove_invalid_point(datum/interaction_point/point)
-	if(!point)
+/// Removes an invalid task from the list.
+/obj/machinery/big_manipulator/proc/remove_invalid_task(datum/manipulator_task/task)
+	if(!task)
 		return
-
-	pickup_points.Remove(point)
-	dropoff_points.Remove(point)
-
-	qdel(point)
+	tasks.Remove(task)
+	qdel(task)
 	if(is_operational)
 		update_hud()
 
@@ -345,10 +327,8 @@
 	balloon_alert(user, "overloaded")
 	obj_flags |= EMAGGED
 
-	for(var/datum/interaction_point/pickup_point in pickup_points)
-		pickup_point.type_filters += /mob/living
-	for(var/datum/interaction_point/dropoff_point in dropoff_points)
-		dropoff_point.type_filters += /mob/living
+	for(var/datum/manipulator_task/cargo/cargo_task in tasks)
+		cargo_task.type_filters += /mob/living
 
 	return TRUE
 
@@ -358,7 +338,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/big_manipulator/can_be_unfasten_wrench(mob/user, silent)
-	if(current_task != CURRENT_TASK_NONE || on)
+	if(current_task_state != CURRENT_TASK_NONE || on)
 		to_chat(user, span_warning("[src] is activated!"))
 		return FAILED_UNFASTEN
 	return ..()
@@ -366,8 +346,8 @@
 /obj/machinery/big_manipulator/default_unfasten_wrench(mob/user, obj/item/wrench, time)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
-		if(anchored) // on anchoring, validate all points and remove invalid ones
-			validate_all_points()
+		if(anchored)
+			validate_all_tasks()
 			update_hud()
 		else
 			remove_all_huds()
@@ -396,7 +376,7 @@
 	process_upgrades()
 
 /obj/machinery/big_manipulator/mouse_drop_dragged(atom/drop_point, mob/user, src_location, over_location, params)
-	if(current_task != CURRENT_TASK_NONE)
+	if(current_task_state != CURRENT_TASK_NONE)
 		balloon_alert(user, "turn it off first!")
 		return
 
@@ -414,7 +394,7 @@
 	poor_monkey.forceMove(drop_point)
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
-	if(current_task != CURRENT_TASK_NONE)
+	if(current_task_state != CURRENT_TASK_NONE)
 		balloon_alert(user, "turn it off first!")
 		return
 
@@ -488,7 +468,7 @@
 			balloon_alert(user, "anchor first!")
 			return
 
-		validate_all_points()
+		validate_all_tasks()
 
 		on = newly_on
 		SStgui.update_uis(src)
@@ -498,25 +478,19 @@
 		drop_held_atom()
 		on = newly_on
 		next_cycle_scheduled = FALSE
-		// Set stopping task instead of ending current task immediately
-		if(current_task != CURRENT_TASK_NONE && current_task != CURRENT_TASK_STOPPING)
-			start_task(CURRENT_TASK_STOPPING, 0)
-			// Schedule automatic completion of stopping task
+		if(current_task_state != CURRENT_TASK_NONE && current_task_state != CURRENT_TASK_STOPPING)
+			start_task_state(CURRENT_TASK_STOPPING, 0)
 			addtimer(CALLBACK(src, PROC_REF(complete_stopping_task)), 1 SECONDS)
 		else
 			end_current_task()
 		SStgui.update_uis(src)
 
-/obj/machinery/big_manipulator/proc/validate_all_points()
-	for(var/datum/interaction_point/point in pickup_points)
-		if(!point.is_valid())
-			pickup_points -= point
-			qdel(point)
-
-	for(var/datum/interaction_point/point in dropoff_points)
-		if(!point.is_valid())
-			dropoff_points -= point
-			qdel(point)
+/// Validates all cargo tasks, removing those on closed turfs.
+/obj/machinery/big_manipulator/proc/validate_all_tasks()
+	for(var/datum/manipulator_task/cargo/cargo_task in tasks)
+		if(!cargo_task.is_valid())
+			tasks.Remove(cargo_task)
+			qdel(cargo_task)
 
 	if(is_operational)
 		update_hud()
@@ -527,8 +501,7 @@
 		balloon_alert(user, "unresponsive!")
 		return
 
-	// Reject activation during stopping task
-	if(current_task == CURRENT_TASK_STOPPING)
+	if(current_task_state == CURRENT_TASK_STOPPING)
 		balloon_alert(user, "stopping in progress!")
 		return
 
@@ -537,14 +510,6 @@
 		balloon_alert(user, "activated")
 	else
 		balloon_alert(user, "deactivated")
-
-/// Drop the held atom.
-/obj/machinery/big_manipulator/proc/drop_held_atom()
-	if(isnull(held_object))
-		return
-	var/obj/obj_resolve = held_object?.resolve()
-	obj_resolve?.forceMove(get_turf(obj_resolve))
-	finish_manipulation(TRANSFER_TYPE_DROPOFF) // MCBALAAM TODO
 
 /obj/machinery/big_manipulator/ui_interact(mob/user, datum/tgui/ui)
 	if(id_lock)
@@ -563,75 +528,63 @@
 /obj/machinery/big_manipulator/ui_data(mob/user)
 	var/list/data = list()
 	data["active"] = on
-	data["current_task"] = current_task
+	data["current_task_state"] = current_task_state
 	data["current_task_duration"] = current_task_duration
 	data["speed_multiplier"] = speed_multiplier
 	data["min_speed_multiplier"] = min_speed_multiplier
 	data["max_speed_multiplier"] = max_speed_multiplier
 	data["manipulator_position"] = "[x],[y]"
-	data["pickup_tasking"] = pickup_tasking
-	data["dropoff_tasking"] = dropoff_tasking
+	data["tasking_strategy"] = tasking_strategy
 
-	var/list/pickup_points_data = list()
-	for(var/datum/interaction_point/point in pickup_points)
-		var/list/point_data = list()
-		point_data["name"] = point.name
-		point_data["id"] = REF(point)
-		var/turf/resolved_turf = point.interaction_turf
-		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
-		point_data["mode"] = "PICK"
-		var/list/filter_names = list()
-		for(var/obj/item/some_path as anything in point.atom_filters)
-			filter_names += some_path::name
-		point_data["item_filters"] = filter_names
-		point_data["filters_status"] = point.should_use_filters
-		point_data["filtering_mode"] = point.filtering_mode
-		point_data["worker_interaction"] = point.worker_interaction
-		point_data["overflow_status"] = point.overflow_status
-		point_data["worker_use_rmb"] = point.worker_use_rmb
-		point_data["worker_combat_mode"] = point.worker_combat_mode
-		point_data["throw_range"] = point.throw_range
+	var/list/tasks_data = list()
+	for(var/datum/manipulator_task/task in tasks)
+		var/list/task_data = list()
+		task_data["name"] = task.name
+		task_data["id"] = REF(task)
+		task_data["task_type"] = task.type
 
-		var/list/settings_list_pick = list()
-		for(var/datum/manipulator_priority/pr_pick in point.interaction_priorities)
-			var/list/entry_pick = list()
-			entry_pick["name"] = pr_pick.name
-			entry_pick["active"] = pr_pick.active
-			settings_list_pick += list(entry_pick)
-		point_data["settings_list"] = settings_list_pick
-		pickup_points_data += list(point_data)
-	data["pickup_points"] = pickup_points_data
+		if(istype(task, /datum/manipulator_task/cargo))
+			var/datum/manipulator_task/cargo/cargo_task = task
+			var/turf/resolved_turf = cargo_task.interaction_turf
+			task_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
+			var/list/filter_names = list()
+			for(var/atom/some_path as anything in cargo_task.atom_filters)
+				filter_names += initial(some_path.name)
+			task_data["item_filters"] = filter_names
+			task_data["filters_status"] = cargo_task.should_use_filters
+			task_data["filtering_mode"] = cargo_task.filtering_mode
 
-	var/list/dropoff_points_data = list()
-	for(var/datum/interaction_point/point in dropoff_points)
-		var/list/point_data = list()
-		point_data["name"] = point.name
-		point_data["id"] = REF(point)
-		var/turf/resolved_turf = point.interaction_turf
-		point_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
-		point_data["mode"] = point.interaction_mode
-		var/list/filter_names = list()
-		for(var/obj/item/some_path as anything in point.atom_filters)
-			filter_names += some_path::name
-		point_data["item_filters"] = filter_names
-		point_data["filters_status"] = point.should_use_filters
-		point_data["filtering_mode"] = point.filtering_mode
-		point_data["worker_interaction"] = point.worker_interaction
-		point_data["overflow_status"] = point.overflow_status
-		point_data["worker_use_rmb"] = point.worker_use_rmb
-		point_data["worker_combat_mode"] = point.worker_combat_mode
-		point_data["throw_range"] = point.throw_range
-		point_data["use_post_interaction"] = point.use_post_interaction
+			if(istype(task, /datum/manipulator_task/cargo/pickup))
+				var/datum/manipulator_task/cargo/pickup/pickup_task = task
+				task_data["pickup_eagerness"] = pickup_task.pickup_eagerness
 
-		var/list/settings_list_drop = list()
-		for(var/datum/manipulator_priority/pr_drop in point.interaction_priorities)
-			var/list/entry_drop = list()
-			entry_drop["name"] = pr_drop.name
-			entry_drop["active"] = pr_drop.active
-			settings_list_drop += list(entry_drop)
-		point_data["settings_list"] = settings_list_drop
-		dropoff_points_data += list(point_data)
-	data["dropoff_points"] = dropoff_points_data
+			if(istype(task, /datum/manipulator_task/cargo/dropoff))
+				var/datum/manipulator_task/cargo/dropoff/dropoff_task = task
+				task_data["interaction_mode"] = dropoff_task.interaction_mode
+				task_data["overflow_status"] = dropoff_task.overflow_status
+				task_data["throw_range"] = dropoff_task.throw_range
+				task_data["worker_interaction"] = dropoff_task.worker_interaction
+				task_data["use_post_interaction"] = dropoff_task.use_post_interaction
+				task_data["worker_use_rmb"] = dropoff_task.worker_use_rmb
+				task_data["worker_combat_mode"] = dropoff_task.worker_combat_mode
+
+			if(istype(task, /datum/manipulator_task/cargo/interact))
+				var/datum/manipulator_task/cargo/interact/interact_task = task
+				task_data["worker_interaction"] = interact_task.worker_interaction
+				task_data["use_post_interaction"] = interact_task.use_post_interaction
+				task_data["worker_use_rmb"] = interact_task.worker_use_rmb
+				task_data["worker_combat_mode"] = interact_task.worker_combat_mode
+
+			var/list/priorities = list()
+			for(var/datum/manipulator_priority/pr in cargo_task.interaction_priorities)
+				var/list/entry = list()
+				entry["name"] = pr.name
+				entry["active"] = pr.active
+				priorities += list(entry)
+			task_data["settings_list"] = priorities
+
+		tasks_data += list(task_data)
+	data["tasks_data"] = tasks_data
 
 	return data
 
@@ -649,33 +602,19 @@
 			drop_held_atom()
 			return TRUE
 
-		if("create_pickup_point")
-			create_new_interaction_point(ui.user, null, list(), FALSE, null, TRANSFER_TYPE_PICKUP)
+		if("create_task")
+			create_new_task(ui.user, params["task_type"])
 			return TRUE
 
-		if("create_dropoff_point")
-			create_new_interaction_point(ui.user, null, list(), FALSE, INTERACT_DROP, TRANSFER_TYPE_DROPOFF)
+		if("reset_tasking_index")
+			master_tasking.current_index = 1
+			balloon_alert(ui.user, "tasking index reset")
 			return TRUE
 
-		if("reset_tasking_Pickup Points")
-			pickup_strategy.current_index = 1
-			balloon_alert(ui.user, "index reset")
-			return TRUE
-
-		if("reset_tasking_Dropoff Points")
-			dropoff_strategy.current_index = 1
-			balloon_alert(ui.user, "index reset")
-			return TRUE
-
-		if("cycle_tasking_schedule")
-			var/new_schedule = params["new_schedule"]
-
-			if(new_schedule in list(TASKING_ROUND_ROBIN, TASKING_STRICT_ROBIN, TASKING_PREFER_FIRST))
-				var/is_pickup = params["is_pickup"]
-				if(is_pickup)
-					pickup_tasking = new_schedule
-				else
-					dropoff_tasking = new_schedule
+		if("cycle_tasking_strategy")
+			var/new_strategy = params["new_strategy"]
+			if(new_strategy in list(TASKING_SEQUENTIAL, TASKING_STRICT))
+				tasking_strategy = new_strategy
 				update_strategies()
 			return TRUE
 
@@ -683,7 +622,6 @@
 			var/new_speed = text2num(params["new_speed"])
 			if(isnull(new_speed))
 				return FALSE
-
 			speed_multiplier = clamp(new_speed, min_speed_multiplier, max_speed_multiplier)
 			return TRUE
 
@@ -692,143 +630,178 @@
 			monkey_worker = null
 			return TRUE
 
-		if("adjust_point_param")
-			return adjust_param_for_point(params["pointId"], params["param"], params["value"], ui.user)
+		if("adjust_task_param")
+			return adjust_param_for_task(params["taskId"], params["param"], params["value"], ui.user)
 
-/obj/machinery/big_manipulator/proc/adjust_param_for_point(point_ref, param, value, mob/user)
-	if(!param) // there may be no value if we're resetting stuff
+/obj/machinery/big_manipulator/proc/adjust_param_for_task(task_ref, param, value, mob/user)
+	if(!param)
 		return FALSE
 
-	var/datum/interaction_point/target_point = locate(point_ref) in (pickup_points + dropoff_points)
-	if(!target_point)
+	var/datum/manipulator_task/target_task = locate(task_ref) in tasks
+	if(!target_task)
 		return FALSE
 
 	switch(param)
 		if("set_name")
-			target_point.name = sanitize_name(value, allow_numbers = TRUE)
+			target_task.name = sanitize_name(value, allow_numbers = TRUE)
 			return TRUE
 
-		if("toggle_priority")
-			return target_point.tick_priority_by_index(value)
-
-		if("remove_point")
-			pickup_points.Remove(target_point)
-			dropoff_points.Remove(target_point) // one'll hit for sure
+		if("remove_task")
+			tasks.Remove(target_task)
+			qdel(target_task)
 			update_hud()
-			qdel(target_point)
 			return TRUE
-
-		if("reset_atom_filters")
-			target_point.atom_filters = list()
-			return TRUE
-
-		if("cycle_dropoff_point_interaction")
-			target_point.interaction_mode = cycle_value(target_point.interaction_mode, monkey_worker ? list(INTERACT_DROP, INTERACT_THROW, INTERACT_USE) : list(INTERACT_DROP, INTERACT_THROW))
-			var/datum/stock_part/servo/locate_servo = locate() in component_parts
-			var/manipulator_tier = locate_servo ? locate_servo.tier : 1
-			target_point.interaction_priorities = target_point.fill_priority_list(manipulator_tier)
-			return TRUE
-
-		if("toggle_filter_skip")
-			target_point.should_use_filters = !target_point.should_use_filters
-			return TRUE
-
-		if("cycle_pickup_point_type")
-			target_point.filtering_mode = cycle_value(target_point.filtering_mode, obj_flags & EMAGGED ? list(TAKE_ITEMS, TAKE_CLOSETS, TAKE_HUMANS) : list(TAKE_ITEMS, TAKE_CLOSETS))
-			return TRUE
-
-		if("cycle_worker_interaction")
-			target_point.worker_interaction = cycle_value(target_point.worker_interaction, list(WORKER_NORMAL_USE, WORKER_SINGLE_USE, WORKER_EMPTY_USE))
-			return TRUE
-
-		if("cycle_overflow_status")
-			target_point.overflow_status = cycle_value(target_point.overflow_status, list(POINT_OVERFLOW_ALLOWED, POINT_OVERFLOW_FILTERS, POINT_OVERFLOW_HELD, POINT_OVERFLOW_FORBIDDEN))
-			return TRUE
-
-		if("cycle_throw_range")
-			target_point.throw_range = cycle_value(target_point.throw_range, list(1, 2, 3, 4, 5, 6, 7))
-			return TRUE
-
-		if("cycle_post_interaction")
-			target_point.use_post_interaction = cycle_value(target_point.use_post_interaction, list(POST_INTERACTION_DROP_AT_POINT, POST_INTERACTION_DROP_AT_MACHINE, POST_INTERACTION_DROP_NEXT_FITTING, POST_INTERACTION_WAIT))
-			return TRUE
-
-		if("add_atom_filter_from_held")
-			var/obj/item/held_item = user.get_active_held_item()
-
-			if(!held_item)
-				return FALSE
-
-			for(var/filter_path in target_point.atom_filters)
-				if(istype(held_item, filter_path))
-					return FALSE
-
-			target_point.atom_filters += held_item.type
-			return TRUE
-
-		if("delete_filter")
-			target_point.atom_filters.Cut(value, value + 1)
-			return TRUE
-
-		if("toggle_worker_rmb")
-			target_point.worker_use_rmb = !target_point.worker_use_rmb
-			return TRUE
-
-		if("toggle_worker_combat")
-			target_point.worker_combat_mode = !target_point.worker_combat_mode
-			return TRUE
-
-		if("priority_move_up")
-			return target_point.move_priority_up_by_index(value)
 
 		if("move_to")
+			if(!istype(target_task, /datum/manipulator_task/cargo))
+				return FALSE
+			var/datum/manipulator_task/cargo/cargo_task = target_task
 			var/button_number = text2num(value["buttonNumber"])
-
 			var/dx = ((button_number - 1) % 3) - 1
 			var/dy = 1 - round((button_number - 1) / 3)
-
 			var/turf/new_turf = locate(x + dx, y + dy, z)
 			if(!new_turf || isclosedturf(new_turf))
 				return FALSE
-
-			target_point.interaction_turf = new_turf
+			cargo_task.interaction_turf = new_turf
 			update_hud()
 			return TRUE
 
-/// Cycles the given value in the given list. Retuns the next value in the list, or the first one if the list isn't long enough.
+		if("toggle_filter_skip")
+			if(!istype(target_task, /datum/manipulator_task/cargo))
+				return FALSE
+			var/datum/manipulator_task/cargo/cargo_task = target_task
+			cargo_task.should_use_filters = !cargo_task.should_use_filters
+			return TRUE
+
+		if("reset_atom_filters")
+			if(!istype(target_task, /datum/manipulator_task/cargo))
+				return FALSE
+			var/datum/manipulator_task/cargo/cargo_task = target_task
+			cargo_task.atom_filters = list()
+			return TRUE
+
+		if("add_atom_filter_from_held")
+			if(!istype(target_task, /datum/manipulator_task/cargo))
+				return FALSE
+			var/datum/manipulator_task/cargo/cargo_task = target_task
+			var/obj/item/held_item = user.get_active_held_item()
+			if(!held_item)
+				return FALSE
+			for(var/filter_path in cargo_task.atom_filters)
+				if(istype(held_item, filter_path))
+					return FALSE
+			cargo_task.atom_filters += held_item.type
+			return TRUE
+
+		if("delete_filter")
+			if(!istype(target_task, /datum/manipulator_task/cargo))
+				return FALSE
+			var/datum/manipulator_task/cargo/cargo_task = target_task
+			cargo_task.atom_filters.Cut(value, value + 1)
+			return TRUE
+
+		if("cycle_filtering_mode")
+			if(!istype(target_task, /datum/manipulator_task/cargo))
+				return FALSE
+			var/datum/manipulator_task/cargo/cargo_task = target_task
+			cargo_task.filtering_mode = cycle_value(cargo_task.filtering_mode, obj_flags & EMAGGED ? list(TAKE_ITEMS, TAKE_CLOSETS, TAKE_HUMANS) : list(TAKE_ITEMS, TAKE_CLOSETS))
+			return TRUE
+
+		if("toggle_priority")
+			if(!istype(target_task, /datum/manipulator_task/cargo))
+				return FALSE
+			var/datum/manipulator_task/cargo/cargo_task = target_task
+			return cargo_task.tick_priority_by_index(value)
+
+		if("priority_move_up")
+			if(!istype(target_task, /datum/manipulator_task/cargo))
+				return FALSE
+			var/datum/manipulator_task/cargo/cargo_task = target_task
+			return cargo_task.move_priority_up_by_index(value)
+
+		if("cycle_pickup_eagerness")
+			if(!istype(target_task, /datum/manipulator_task/cargo/pickup))
+				return FALSE
+			var/datum/manipulator_task/cargo/pickup/pickup_task = target_task
+			pickup_task.pickup_eagerness = cycle_value(pickup_task.pickup_eagerness, list(PICKUP_CAN_WAIT, PICKUP_EAGER))
+			return TRUE
+
+		if("cycle_interaction_mode")
+			if(!istype(target_task, /datum/manipulator_task/cargo/dropoff))
+				return FALSE
+			var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
+			dropoff_task.interaction_mode = cycle_value(dropoff_task.interaction_mode, monkey_worker ? list(INTERACT_DROP, INTERACT_THROW, INTERACT_USE) : list(INTERACT_DROP, INTERACT_THROW))
+			var/datum/stock_part/servo/locate_servo = locate() in component_parts
+			var/manipulator_tier = locate_servo ? locate_servo.tier : 1
+			dropoff_task.interaction_priorities = dropoff_task.fill_priority_list(manipulator_tier)
+			return TRUE
+
+		if("cycle_overflow_status")
+			if(!istype(target_task, /datum/manipulator_task/cargo/dropoff))
+				return FALSE
+			var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
+			dropoff_task.overflow_status = cycle_value(dropoff_task.overflow_status, list(POINT_OVERFLOW_ALLOWED, POINT_OVERFLOW_FILTERS, POINT_OVERFLOW_HELD, POINT_OVERFLOW_FORBIDDEN))
+			return TRUE
+
+		if("cycle_throw_range")
+			if(!istype(target_task, /datum/manipulator_task/cargo/dropoff))
+				return FALSE
+			var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
+			dropoff_task.throw_range = cycle_value(dropoff_task.throw_range, list(1, 2, 3, 4, 5, 6, 7))
+			return TRUE
+
+		if("cycle_worker_interaction")
+			var/list/worker_interaction_values = list(WORKER_NORMAL_USE, WORKER_SINGLE_USE, WORKER_EMPTY_USE)
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff))
+				var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
+				dropoff_task.worker_interaction = cycle_value(dropoff_task.worker_interaction, worker_interaction_values)
+				return TRUE
+			if(istype(target_task, /datum/manipulator_task/cargo/interact))
+				var/datum/manipulator_task/cargo/interact/interact_task = target_task
+				interact_task.worker_interaction = cycle_value(interact_task.worker_interaction, worker_interaction_values)
+				return TRUE
+			return FALSE
+
+		if("cycle_post_interaction")
+			var/list/post_interaction_values = list(POST_INTERACTION_DROP_AT_POINT, POST_INTERACTION_DROP_AT_MACHINE, POST_INTERACTION_DROP_NEXT_FITTING, POST_INTERACTION_WAIT)
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff))
+				var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
+				dropoff_task.use_post_interaction = cycle_value(dropoff_task.use_post_interaction, post_interaction_values)
+				return TRUE
+			if(istype(target_task, /datum/manipulator_task/cargo/interact))
+				var/datum/manipulator_task/cargo/interact/interact_task = target_task
+				interact_task.use_post_interaction = cycle_value(interact_task.use_post_interaction, post_interaction_values)
+				return TRUE
+			return FALSE
+
+		if("toggle_worker_rmb")
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff))
+				var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
+				dropoff_task.worker_use_rmb = !dropoff_task.worker_use_rmb
+				return TRUE
+			if(istype(target_task, /datum/manipulator_task/cargo/interact))
+				var/datum/manipulator_task/cargo/interact/interact_task = target_task
+				interact_task.worker_use_rmb = !interact_task.worker_use_rmb
+				return TRUE
+			return FALSE
+
+		if("toggle_worker_combat")
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff))
+				var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
+				dropoff_task.worker_combat_mode = !dropoff_task.worker_combat_mode
+				return TRUE
+			if(istype(target_task, /datum/manipulator_task/cargo/interact))
+				var/datum/manipulator_task/cargo/interact/interact_task = target_task
+				interact_task.worker_combat_mode = !interact_task.worker_combat_mode
+				return TRUE
+			return FALSE
+
+/// Cycles the given value in the given list.
 /obj/machinery/big_manipulator/proc/cycle_value(current_value, list/possible_values)
 	var/current_index = possible_values.Find(current_value)
 	if(current_index == 0)
 		return possible_values[1]
-
-	var/next_index = (current_index % length(possible_values)) + 1
-	return possible_values[next_index]
-
-/// Begins a new task with the specified type and duration
-/obj/machinery/big_manipulator/proc/start_task(task_type, duration)
-	if(current_task == CURRENT_TASK_STOPPING)
-		return
-
-	end_current_task() // ends any previous task first (momentarily sets IDLE)
-	current_task_start_time = world.time
-	current_task_duration = duration
-	current_task = task_type
-	SStgui.update_uis(src)
-
-/// Ends the current task
-/obj/machinery/big_manipulator/proc/end_current_task()
-	current_task_start_time = 0
-	current_task_duration = 0
-	if(current_task == CURRENT_TASK_STOPPING)
-		current_task = CURRENT_TASK_NONE
-	SStgui.update_uis(src) // Update UI immediately
-
-/// Completes the stopping task and transitions to TASK_NONE
-/obj/machinery/big_manipulator/proc/complete_stopping_task()
-	on = FALSE
-	next_cycle_scheduled = FALSE
-	end_current_task()
-	SStgui.update_uis(src)
+	return possible_values[(current_index % length(possible_values)) + 1]
 
 /obj/machinery/big_manipulator/proc/remove_all_huds()
 	var/image/main_hud = hud_list[BIG_MANIP_HUD]
@@ -840,15 +813,12 @@
 	set_hud_image_inactive(BIG_MANIP_HUD)
 
 /obj/machinery/big_manipulator/proc/update_strategies()
-	pickup_strategy = create_strategy(pickup_tasking)
-	dropoff_strategy = create_strategy(dropoff_tasking)
+	master_tasking = create_strategy(tasking_strategy)
 
-/obj/machinery/big_manipulator/proc/create_strategy(tasking_mode)
-	switch(tasking_mode)
-		if(TASKING_PREFER_FIRST)
-			return new /datum/tasking_strategy/prefer_first()
-		if(TASKING_ROUND_ROBIN)
-			return new /datum/tasking_strategy/round_robin()
-		if(TASKING_STRICT_ROBIN)
-			return new /datum/tasking_strategy/strict_robin()
-	return new /datum/tasking_strategy/prefer_first()
+/obj/machinery/big_manipulator/proc/create_strategy(strategy_mode)
+	switch(strategy_mode)
+		if(TASKING_SEQUENTIAL)
+			return new /datum/tasking_strategy/sequential()
+		if(TASKING_STRICT)
+			return new /datum/tasking_strategy/strict()
+	return new /datum/tasking_strategy/sequential()
