@@ -272,7 +272,7 @@
 			else
 				set_light_angle(var_value)
 			. = TRUE
-		if(NAMEOF(src, light_dir
+		if(NAMEOF(src, light_dir))
 			if(light_system == COMPLEX_LIGHT)
 				set_light(l_dir = var_value)
 			else
@@ -283,7 +283,7 @@
 				set_light(l_height = var_value)
 			else
 				set_light_height(var_value)
-			. = TRU
+			. = TRUE
 		if(NAMEOF(src, smoothing_junction))
 			set_smoothed_icon_state(var_value)
 			. = TRUE

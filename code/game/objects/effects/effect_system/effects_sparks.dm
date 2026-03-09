@@ -12,18 +12,28 @@
 	sparks.autocleanup = TRUE
 	sparks.start()
 
+/obj/effect/abstract/spark_effect
+	name = "spark"
+
 /obj/effect/particle_effect/sparks
 	name = "sparks"
 	icon_state = "sparks"
 	anchored = TRUE
 	light_system = OVERLAY_LIGHT
 	light_range = 1.5
-	light_power = 0.8
+	light_power = 2
 	light_color = LIGHT_COLOR_FIRE
+	/// Should this spark's effect be animated
+	var/animated = TRUE
 	/// Timer id for the timer that will wipe us out
 	var/delete_timer_id = TIMER_ID_NULL
+	/// Middleman object we're using to animate our light
+	var/obj/effect/abstract/spark_effect/middleman
 
 /obj/effect/particle_effect/sparks/Initialize(mapload)
+	if(animated)
+		setup_middleman()
+		RegisterSignal(src, COMSIG_ATOM_OVERLAY_LIGHT_APPLIED, PROC_REF(light_modified))
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -38,8 +48,38 @@
 
 /// Sets up our death effects given the passed in duration
 /obj/effect/particle_effect/sparks/proc/decay_in(decay_time)
-	deltimer(delete_timer_id)
-	delete_timer_id = QDEL_IN_STOPPABLE(src, decay_time)
+	if(delete_timer_id != TIMER_ID_NULL)
+		deltimer(delete_timer_id)
+	delete_timer_id = QDEL_IN_STOPPABLE(src, decay_time + world.tick_lag)
+	if(!animated)
+		return
+	if(decay_time >= 0.7 SECONDS) // duration of all animated spark's actual icon state animation
+		animate(middleman, alpha = 220, time = 0.4 SECONDS)
+		animate(alpha = 0, time = decay_time - 0.4 SECONDS, easing = CIRCULAR_EASING | EASE_IN)
+	else
+		animate(middleman, alpha = 0, time = decay_time)
+
+/obj/effect/particle_effect/sparks/proc/setup_middleman()
+	if(!isnull(middleman) || !animated)
+		return
+	middleman = new(src)
+	vis_contents += middleman
+	var/static/uuid = 0
+	uuid = WRAP_UID(uuid + 1)
+	middleman.render_target = "*spark_[uuid]_target"
+	set_light_render_source(middleman.render_target)
+
+/obj/effect/particle_effect/sparks/proc/light_modified(datum/source, image/visible_mask, image/cone)
+	SIGNAL_HANDLER
+	if(isnull(middleman) || !animated)
+		return
+	var/old_render_target = middleman.render_target
+	middleman.appearance = visible_mask
+	// set ourselves up to render back onto the visible mask
+	middleman.render_source = ""
+	middleman.render_target = old_render_target
+	// Reset our transform because otherwise it will double apply
+	middleman.transform = null
 
 /obj/effect/particle_effect/sparks/Destroy()
 	var/turf/location = loc
@@ -97,12 +137,21 @@
 			sparks_touched(src, anything)
 
 /datum/effect_system/basic/spark_spread
-	delete_on_stop = TRUE
 	effect_type = /obj/effect/particle_effect/sparks
+	step_delay = 0.35 SECONDS // chosen so we will always take at least the duration of our animation to finish
 
 /datum/effect_system/basic/spark_spread/generate_effect()
 	var/obj/effect/particle_effect/sparks/spark = ..()
 	spark.decay_in(last_loop_length)
+
+/datum/effect_system/basic/spark_spread/get_step_count()
+	return rand(2, 3) // never 1 cause 1 looks dumb
+
+/datum/effect_system/basic/spark_spread/move_failed(datum/move_loop/loop, obj/effect/failed)
+	if(QDELETED(failed))
+		return
+	var/obj/effect/particle_effect/sparks/spark = failed
+	spark.decay_in(0.1 SECONDS)
 
 /datum/effect_system/basic/spark_spread/quantum
 	effect_type = /obj/effect/particle_effect/sparks/quantum
@@ -112,6 +161,7 @@
 /obj/effect/particle_effect/sparks/electricity
 	name = "lightning"
 	icon_state = "electricity"
+	animated = FALSE
 
 /datum/effect_system/basic/lightning_spread
 	delete_on_stop = TRUE
