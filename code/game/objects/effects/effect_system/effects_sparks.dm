@@ -71,6 +71,8 @@
 
 /obj/effect/particle_effect/sparks/proc/light_modified(datum/source, image/visible_mask, image/cone)
 	SIGNAL_HANDLER
+	// We bassssically assume this will only ever be called once, which is safe given the circumstances
+	// but wouldn't be normally (would need some way to recover animation progress)
 	if(isnull(middleman) || !animated)
 		return
 	var/old_render_target = middleman.render_target
