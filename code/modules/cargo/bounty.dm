@@ -1,5 +1,5 @@
 
-GLOBAL_LIST_EMPTY(bounties_list) //todo: kill and move to either shuttle or economy SS, probably economy
+GLOBAL_LIST_EMPTY(bounties_list)
 
 /datum/bounty
 	/// A name for the bounty. Displayed on the bounty console/Paper sheets.
@@ -15,6 +15,8 @@ GLOBAL_LIST_EMPTY(bounties_list) //todo: kill and move to either shuttle or econ
 	var/allow_duplicate = FALSE
 	/// Can this bounty be selected got a new global bounty?
 	var/global_exempt = FALSE
+	///A list consisting of the accounts who sent several of the items required for a bounty payout. Used for distributing payout with the payment component.
+	var/list/contribution = list()
 
 /// Can this bounty be claimed right now?
 /datum/bounty/proc/can_claim()
@@ -23,6 +25,10 @@ GLOBAL_LIST_EMPTY(bounties_list) //todo: kill and move to either shuttle or econ
 /// If an item in question can satisfy the bounty.
 /datum/bounty/proc/applies_to(obj/shipped)
 	return FALSE
+
+/// When calculating the contribution breakdown of an object shipped, how much does that object increase that account's cut?
+/datum/bounty/proc/contribution_amount(obj/shipped)
+	return 1
 
 /// Called when an object is sent on the bounty pad.
 /datum/bounty/proc/ship(obj/shipped)

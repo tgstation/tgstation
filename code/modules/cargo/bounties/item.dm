@@ -62,3 +62,8 @@
 	balloon_alert(user, "new bounty acquired!")
 	playsound(src, 'sound/effects/coin2.ogg', 30, TRUE)
 	qdel(src)
+
+/// As above, but it spawns a global bounty for testing.
+/obj/item/bounty_voucher/stationwide
+	name = "stationwide bounty voucher"
+	color = "#ff0000"

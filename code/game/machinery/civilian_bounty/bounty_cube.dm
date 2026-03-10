@@ -12,7 +12,7 @@
 	var/bounty_value = 0
 	///Multiplier for the bounty payout received by the Supply budget if the cube is sent without having to nag.
 	var/speed_bonus = 0.2
-	///Multiplier for the bounty payout received by the person who completed the bounty.
+	///Percentage of the bounty payout received by the people who completed the bounty. Split between multiple people in the event multiple people finished a global bounty.
 	var/holder_cut = BOUNTY_CUT_STANDARD
 	///Multiplier for the bounty payout received by the person who claims the handling tip.
 	var/handler_tip = 0.1
@@ -28,8 +28,8 @@
 	var/bounty_holder_job
 	///What the bounty was for.
 	var/bounty_name
-	///Bank account of the person who completed the bounty.
-	var/datum/bank_account/bounty_holder_account
+	///Bank account of the people who completed the bounty.
+	var/list/datum/bank_account/bounty_holder_accounts
 	///Bank account of the person who receives the handling tip.
 	var/datum/bank_account/bounty_handler_account
 
@@ -61,7 +61,8 @@
 		speed_bonus = 0
 
 		//alert the holder
-		bounty_holder_account.bank_card_talk("[nag_message]")
+		for(var/datum/bank_account/bounty_holder_account in bounty_holder_accounts)
+			bounty_holder_account.bank_card_talk("[nag_message]")
 
 		//if someone has registered for the handling tip, nag them
 		bounty_handler_account?.bank_card_talk(nag_message)
@@ -70,16 +71,21 @@
 		nag_cooldown = nag_cooldown * nag_cooldown_multiplier
 		COOLDOWN_START(src, next_nag_time, nag_cooldown)
 
+/**
+ * Configures the bounty cube's name, value, and annouces to the crew
+ */
 /obj/item/bounty_cube/proc/set_up(datum/bounty/my_bounty, obj/item/card/id/holder_id)
 	bounty_value = my_bounty.get_bounty_reward()
 	bounty_name = my_bounty.name
 	bounty_holder = holder_id.registered_name
 	bounty_holder_job = holder_id.assignment
-	bounty_holder_account = holder_id.registered_account
+	bounty_holder_accounts = my_bounty.contribution
+
 	name = "\improper [bounty_value] [MONEY_SYMBOL] [name]"
 	desc += " The sales tag indicates it was <i>[bounty_holder] ([bounty_holder_job])</i>'s reward for completing the <i>[bounty_name]</i> bounty."
-	AddComponent(/datum/component/pricetag, holder_id.registered_account, holder_cut, FALSE)
+	AddComponent(/datum/component/pricetag, bounty_holder_accounts.Copy(), holder_cut, FALSE)
 	AddComponent(/datum/component/gps, "[src]")
+
 	START_PROCESSING(SSobj, src)
 	COOLDOWN_START(src, next_nag_time, nag_cooldown)
 	aas_config_announce(/datum/aas_config_entry/bounty_cube_created, list(

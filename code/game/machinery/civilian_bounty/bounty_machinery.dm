@@ -108,7 +108,7 @@
 /**
  * This fully rewrites base behavior in order to only check for bounty objects, and no other types of objects like pirate-pads do.
  */
-/obj/machinery/computer/piratepad_control/civilian/send(check_global = FALSE)
+/obj/machinery/computer/piratepad_control/civilian/send(check_global = FALSE, user)
 	status_report = ""
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 	if(!sending)
@@ -141,10 +141,14 @@
 		for(var/datum/bounty/stack_item in bounty_stack)
 			if(stack_item.applies_to(possible_shippable))
 				active_count++
+				LAZYADDASSOC(stack_item.contribution, id_account, stack_item.contribution_amount(possible_shippable))
 				stack_item.ship(possible_shippable)
 				qdel(possible_shippable)
+
 	if(active_count >= 1)
 		status_report += "Bounty Target[active_count > 1 ? "s" : ""] Found x[active_count]. "
+
+		ui_data(user)	//update Ui data to display how much of the bounty remains
 	else
 		status_report = "No applicable target found. Aborting. "
 		stop_sending()
@@ -156,8 +160,14 @@
 			//Pay for the bounty with the ID's department funds.
 			SSblackbox.record_feedback("tally", "bounties_completed", 1, stack_item.type)
 			stack_item.on_claimed(inserted_scan_id)
+			// Unique case: A global bounty is completed, and you have the same bounty as a personal bounty,
+			// it will complete your personal one as well. It will however only increment the tracker by one.
 			if(check_global)
-				SSeconomy.civ_bounty_tracker++
+				SSeconomy.civ_bounty_tracker++ //This is the tracker for adding more global bounties, not for logging purposes.
+				for(var/datum/bank_account/helper in stack_item.contribution)
+					if(istype(helper?.civilian_bounty, stack_item.type))
+						helper.reset_bounty(inserted_scan_id)
+						helper.bank_card_talk("Your [stack_item.name] bounty has been completed for matching the completed station bounty!")
 			else
 				id_account.reset_bounty(inserted_scan_id)
 
@@ -282,7 +292,7 @@
 		return
 	switch(action) //several ui_acts are handled on parent by piratepad
 		if("send")
-			start_sending(params["global"])
+			start_sending(params["global"], user)
 		if("pick")
 			pick_bounty(params["value"])
 		if("bounty")
@@ -292,7 +302,7 @@
 			inserted_scan_id = null
 		if("update_list")
 			playsound(src, 'sound/machines/data_transmission.ogg', 50) // Should only need to play once per round due to the list auto-updating afterwards.
-			looped_global_update(1 ,CIV_BOUNTY_BASELINE) // Just for visual flair
+			looped_global_update(1, CIV_BOUNTY_BASELINE) // Just for visual flair
 		if("print")
 			print_sheet(user)
 	. = TRUE
@@ -340,14 +350,16 @@
  * The bounties to be added should not share duplicates between job subtypes.
  * @param update_up_to How many new bounties to add to the list, up to the maximum defined by MAXIMUM_BOUNTY_JOBS.
  */
-/obj/machinery/computer/piratepad_control/civilian/proc/update_global_bounty_list(update_up_to = CIV_BOUNTY_BASELINE, enable_high_priority = FALSE)
+/obj/machinery/computer/piratepad_control/civilian/proc/update_global_bounty_list(update_up_to = CIV_BOUNTY_BASELINE, enable_high_priority = FALSE, running_jobs)
 	//First, clear out completed bounties.
 	for(var/datum/bounty/complete in GLOB.bounties_list)
 		if(complete.claimed)
 			GLOB.bounties_list -= complete
 
 	//Then, add new bounties up to the limit.
-	var/list/jobs_picked = list()
+	var/list/jobs_picked = running_jobs
+	if(!jobs_picked)
+		jobs_picked = list()
 	while(length(GLOB.bounties_list) < update_up_to)
 		var/job_code = rand(CIV_JOB_BASIC, CIV_JOB_BITRUN) //CIV_JOB_ defines taken from _DEFINES/economy.dm. If new job bounty classes are added, swap out our maximum.
 		if(job_code in jobs_picked)
@@ -357,22 +369,23 @@
 		var/datum/bounty/new_bounty = random_bounty(job_code)
 		if(new_bounty.global_exempt)
 			continue
+
 		GLOB.bounties_list += new_bounty
 
 		if(enable_high_priority && prob(HIGH_PRIORITY_BOUNTY_ODDS))
 			new_bounty.high_priority = TRUE
 			new_bounty.description += "</br>\
 				This bounty is marked as <b>high priority</b>, and will reward <b>1.5x</b> the normal payout!"
-	return TRUE
+	return jobs_picked
 
 /// Performs several global bounty updates in a row on a callback loop, adding one each time.
-/obj/machinery/computer/piratepad_control/civilian/proc/looped_global_update(current_count, update_to)
-	update_global_bounty_list(current_count, enable_high_priority = TRUE)
+/obj/machinery/computer/piratepad_control/civilian/proc/looped_global_update(current_count, update_to, inherited_list)
+	var/jobs_picked = update_global_bounty_list(current_count, enable_high_priority = TRUE, running_jobs = inherited_list)
 
 	if(current_count == update_to)
 		return TRUE
 	current_count++
-	addtimer(CALLBACK(src, PROC_REF(looped_global_update), current_count, update_to), 0.8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(looped_global_update), current_count, update_to, jobs_picked), 0.8 SECONDS)
 
 /**
  * Handles cooldowns and creation of a new cargo bounty sheet.

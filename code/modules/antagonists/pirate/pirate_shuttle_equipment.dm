@@ -306,8 +306,7 @@
 		status_report += "0"
 
 /// Deletes and sells the item
-/obj/machinery/computer/piratepad_control/proc/send(check_global = FALSE)
-	to_chat(world, "in 'da' proc") //todo: kill
+/obj/machinery/computer/piratepad_control/proc/send(check_global = FALSE, user)
 	if(!sending)
 		return
 
@@ -372,7 +371,7 @@
 	return report
 
 /// Prepares to sell the items on the pad
-/obj/machinery/computer/piratepad_control/proc/start_sending(check_global = FALSE)
+/obj/machinery/computer/piratepad_control/proc/start_sending(check_global = FALSE, mob/user)
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	if(!pad)
 		status_report = "No pad detected. Build or link a pad."
@@ -388,7 +387,7 @@
 	status_report = "Sending... "
 	pad.visible_message(span_notice("[pad] starts charging up."))
 	pad.icon_state = pad.warmup_state
-	sending_timer = addtimer(CALLBACK(src, PROC_REF(send), check_global),warmup_time, TIMER_STOPPABLE)
+	sending_timer = addtimer(CALLBACK(src, PROC_REF(send), check_global, user), warmup_time, TIMER_STOPPABLE)
 
 /// Finishes the sending state of the pad
 /obj/machinery/computer/piratepad_control/proc/stop_sending(custom_report)

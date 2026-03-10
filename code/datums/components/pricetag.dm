@@ -11,15 +11,29 @@
 	/// List of bank accounts this pricetag pays out to. Format is payees[bank_account] = profit_ratio.
 	var/list/payees = list()
 
-/datum/component/pricetag/Initialize(pay_to_account, profit_ratio = 1, delete_on_unwrap = TRUE)
+/datum/component/pricetag/Initialize(list/pay_to_account, profit_ratio = 1, delete_on_unwrap = TRUE)
 	if(!isobj(parent)) //Has to account for both objects and sellable structures like crates.
 		return COMPONENT_INCOMPATIBLE
 
 	if(isnull(pay_to_account))
-		stack_trace("[type] component was added to something without a pay_to_account!")
+		stack_trace("[type] component was added to something without a pay_to_account list!")
 		return COMPONENT_INCOMPATIBLE
 
-	payees[pay_to_account] = profit_ratio
+	if(pay_to_account && !length(pay_to_account))
+		stack_trace("[type] component was created with an empty pay_to_account list!")
+		return COMPONENT_INCOMPATIBLE
+
+	var/total_contribution = 0
+	for(var/i as anything in pay_to_account)
+		total_contribution += pay_to_account[i]
+	to_chat(world, "total [total_contribution] cuts")
+
+	for(var/i as anything in pay_to_account)
+		to_chat(world, "profit_ratio of [profit_ratio]")
+		var/individual_cut = profit_ratio * (pay_to_account[i]/ total_contribution)
+		to_chat(world, "cut of [individual_cut] percent")
+		payees[i] = individual_cut
+
 	src.delete_on_unwrap = delete_on_unwrap
 
 /datum/component/pricetag/RegisterWithParent()
@@ -47,10 +61,11 @@
  * (Don't go from non-deleting to deleting)
  */
 /datum/component/pricetag/InheritComponent(datum/component/pricetag/new_comp, i_am_original, pay_to_account, profit_ratio = 1, delete_on_unwrap = TRUE)
-	if(!isnull(payees[pay_to_account]) && payees[pay_to_account] >= profit_ratio) // They're already getting a better ratio, don't scam them
-		return
+	if(length(payees) == 1)
+		if(!isnull(payees[pay_to_account]) && payees[pay_to_account] >= profit_ratio) // They're already getting a better ratio, don't scam them
+			return
 
-	payees[pay_to_account] = profit_ratio
+		payees[pay_to_account] = profit_ratio
 	if(!delete_on_unwrap)
 		src.delete_on_unwrap = delete_on_unwrap
 
@@ -83,6 +98,7 @@
 
 	// Gotta see how much money we've lost by the end of things.
 	var/overall_item_price = item_value
+	var/running_tally = 0
 
 	for(var/datum/bank_account/payee as anything in payees)
 		// Every payee with a ratio gets a cut based on the item's total value
@@ -92,7 +108,7 @@
 
 		payee.adjust_money(payee_cut, "Pricetag: [capitalize(format_text(source.name))] Sale")
 		payee.bank_card_talk("Sale of [source] recorded. [payee_cut] [MONEY_NAME] added to account.")
-
+		running_tally += payee_cut
 	// Update the report with the modified final price
 	report.total_value[export] += overall_item_price
 	report.total_amount[export] += export.get_amount(source) * export.amount_report_multiplier
