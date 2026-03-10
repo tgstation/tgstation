@@ -49,7 +49,7 @@
 	return FALSE
 
 /// Rotates the manipulator arm to face the target task's turf.
-/obj/machinery/big_manipulator/proc/rotate_to_point(datum/manipulator_task/cargo/target_task, callback, type)
+/obj/machinery/big_manipulator/proc/rotate_to_point(datum/manipulator_task/cargo/target_task, callback_object, callback, type)
 	if(IS_STOPPING)
 		return
 
@@ -67,16 +67,16 @@
 	start_task_state(type == CURRENT_TASK_MOVING_PICKUP ? CURRENT_TASK_MOVING_PICKUP : CURRENT_TASK_MOVING_DROPOFF, total_rotation_time)
 
 	if(!num_rotations)
-		addtimer(CALLBACK(src, callback, target_task), BASE_INTERACTION_TIME)
+		addtimer(CALLBACK(callback_object, callback, target_task), BASE_INTERACTION_TIME)
 		return TRUE
 
 	var/rotation_step = 45 * SIGN(angle_diff)
-	do_step_rotation(target_task, callback, current_angle, target_angle, rotation_step, 0, total_rotation_time)
+	do_step_rotation(target_task, callback_object, callback, current_angle, target_angle, rotation_step, 0, total_rotation_time)
 
 	return TRUE
 
 /// Does a 45 degree step, animating the claw
-/obj/machinery/big_manipulator/proc/do_step_rotation(datum/manipulator_task/cargo/target_task, callback, current_angle, target_angle, rotation_step, elapsed_time, total_time)
+/obj/machinery/big_manipulator/proc/do_step_rotation(datum/manipulator_task/cargo/target_task, callback_object, callback, current_angle, target_angle, rotation_step, elapsed_time, total_time)
 	if(IS_STOPPING)
 		return
 
@@ -85,7 +85,7 @@
 		var/matrix/final_matrix = matrix()
 		final_matrix.Turn(target_angle)
 		animate(manipulator_arm, transform = final_matrix, time = BASE_INTERACTION_TIME / speed_multiplier)
-		addtimer(CALLBACK(src, callback, target_task), BASE_INTERACTION_TIME / speed_multiplier)
+		addtimer(CALLBACK(callback_object, callback, target_task), BASE_INTERACTION_TIME / speed_multiplier)
 		return
 
 	var/next_angle = current_angle + rotation_step
@@ -94,7 +94,7 @@
 	animate(manipulator_arm, transform = next_matrix, time = BASE_INTERACTION_TIME / speed_multiplier)
 
 	elapsed_time += BASE_INTERACTION_TIME / speed_multiplier
-	addtimer(CALLBACK(src, PROC_REF(do_step_rotation), target_task, callback, next_angle, target_angle, rotation_step, elapsed_time, total_time), BASE_INTERACTION_TIME / speed_multiplier)
+	addtimer(CALLBACK(src, PROC_REF(do_step_rotation), target_task, callback_object, callback, next_angle, target_angle, rotation_step, elapsed_time, total_time), BASE_INTERACTION_TIME / speed_multiplier)
 
 /obj/machinery/big_manipulator/proc/try_drop_thing(datum/manipulator_task/cargo/dropoff_base/drop/destination_task)
 	var/drop_endpoint = destination_task.find_type_priority()
@@ -208,7 +208,7 @@
 		if(POST_INTERACTION_DROP_NEXT_FITTING)
 			var/datum/manipulator_task/next = master_tasking.get_next_task(tasks, src)
 			if(istype(next, /datum/manipulator_task/cargo/dropoff_base))
-				rotate_to_point(next, TYPE_PROC_REF(/datum/manipulator_task/cargo/dropoff_base, try_dropoff), CURRENT_TASK_MOVING_DROPOFF)
+				rotate_to_point(next, next, TYPE_PROC_REF(/datum/manipulator_task/cargo/dropoff_base, try_dropoff), CURRENT_TASK_MOVING_DROPOFF)
 				return
 			obj_resolve.forceMove(drop_turf)
 			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
@@ -219,6 +219,22 @@
 
 		else
 			schedule_next_cycle()
+
+/obj/machinery/big_manipulator/proc/throw_thing(datum/manipulator_task/cargo/dropoff_base/throw/throw_task)
+	var/drop_turf = throw_task.interaction_turf
+	var/atom/movable/held_atom = held_object?.resolve()
+
+	held_atom.forceMove(drop_turf)
+	do_attack_animation(drop_turf)
+	manipulator_arm.do_attack_animation(drop_turf)
+
+	if(isliving(held_atom) && !(obj_flags & EMAGGED))
+		held_atom.dir = get_dir(get_turf(held_atom), get_turf(src))
+		finish_manipulation()
+		return
+
+	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_turf(held_atom))), throw_task.throw_range, 2)
+	finish_manipulation()
 
 /obj/machinery/big_manipulator/proc/use_thing_with_empty_hand(datum/manipulator_task/cargo/interact/destination_task)
 	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
@@ -257,23 +273,6 @@
 		return
 
 	addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand), destination_task), BASE_INTERACTION_TIME)
-
-/// Throws the held object in the direction of the task's turf.
-/obj/machinery/big_manipulator/proc/throw_thing(datum/manipulator_task/cargo/dropoff_base/throw/throw_task)
-	var/drop_turf = throw_task.interaction_turf
-	var/atom/movable/held_atom = held_object?.resolve()
-
-	held_atom.forceMove(drop_turf)
-	do_attack_animation(drop_turf)
-	manipulator_arm.do_attack_animation(drop_turf)
-
-	if(isliving(held_atom) && !(obj_flags & EMAGGED))
-		held_atom.dir = get_dir(get_turf(held_atom), get_turf(src))
-		finish_manipulation()
-		return
-
-	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_turf(held_atom))), throw_task.throw_range, 2)
-	finish_manipulation()
 
 /// Completes the current manipulation action and schedules the next step.
 /obj/machinery/big_manipulator/proc/finish_manipulation()

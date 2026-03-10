@@ -170,7 +170,7 @@
 	return FALSE
 
 /datum/manipulator_task/cargo/pickup/run_task(obj/machinery/big_manipulator/manipulator)
-	manipulator.rotate_to_point(src, TYPE_PROC_REF(/datum/manipulator_task/cargo/pickup, try_pickup), CURRENT_TASK_MOVING_PICKUP)
+	manipulator.rotate_to_point(src, src, TYPE_PROC_REF(/datum/manipulator_task/cargo/pickup, try_pickup), CURRENT_TASK_MOVING_PICKUP)
 
 /datum/manipulator_task/cargo/pickup/proc/try_pickup(obj/machinery/big_manipulator/manipulator)
 	var/atom/movable/selected = find_pickup_candidate(manipulator)
@@ -202,7 +202,7 @@
 			continue
 		if(!check_filters_for_atom(candidate))
 			continue
-		for(var/datum/manipulator_task/cargo/dropoff_base/dest as anything in manipulator.tasks)
+		for(var/datum/manipulator_task/cargo/dropoff_base/dest in manipulator.tasks)
 			if(dest.can_accept(candidate))
 				candidates += candidate
 				break
@@ -212,11 +212,12 @@
 
 	return manipulator.master_tasking.get_next_candidate(candidates)
 
-// ===== BASE DROPOFF (shared overflow/filter logic) =====
+// ===== BASE DROPOFF =====
+// Базовый тип для всего что принимает held_object: drop, throw, use.
+// Пикап итерирует по этому типу чтобы найти подходящую точку назначения.
 
 /datum/manipulator_task/cargo/dropoff_base
 	name = "dropoff"
-	var/overflow_status = POINT_OVERFLOW_ALLOWED
 
 /datum/manipulator_task/cargo/dropoff_base/proc/can_accept(atom/movable/target)
 	if(!is_valid())
@@ -234,7 +235,7 @@
 	return can_accept(target)
 
 /datum/manipulator_task/cargo/dropoff_base/run_task(obj/machinery/big_manipulator/manipulator)
-	manipulator.rotate_to_point(src, PROC_REF(try_dropoff), CURRENT_TASK_MOVING_DROPOFF)
+	manipulator.rotate_to_point(src, src, TYPE_PROC_REF(/datum/manipulator_task/cargo/dropoff_base, try_dropoff), CURRENT_TASK_MOVING_DROPOFF)
 
 /datum/manipulator_task/cargo/dropoff_base/proc/try_dropoff(obj/machinery/big_manipulator/manipulator)
 	var/obj/actual_held_object = manipulator.held_object?.resolve()
@@ -245,7 +246,6 @@
 	do_dropoff(manipulator)
 	return TRUE
 
-/// Override in subtypes to implement the actual dropoff behaviour.
 /datum/manipulator_task/cargo/dropoff_base/proc/do_dropoff(obj/machinery/big_manipulator/manipulator)
 	return
 
@@ -253,6 +253,7 @@
 
 /datum/manipulator_task/cargo/dropoff_base/drop
 	name = "drop"
+	var/overflow_status = POINT_OVERFLOW_ALLOWED
 
 /datum/manipulator_task/cargo/dropoff_base/drop/fill_priority_list(manipulator_tier)
 	var/list/priorities = new /list(2)
@@ -291,6 +292,14 @@
 	name = "throw"
 	var/throw_range = 1
 
+// throw не проверяет overflow — предмет летит мимо тайла
+/datum/manipulator_task/cargo/dropoff_base/throw/can_accept(atom/movable/target)
+	if(!is_valid())
+		return FALSE
+	if(should_use_filters && !check_filters_for_atom(target))
+		return FALSE
+	return TRUE
+
 /datum/manipulator_task/cargo/dropoff_base/throw/do_dropoff(obj/machinery/big_manipulator/manipulator)
 	manipulator.throw_thing(src)
 
@@ -313,6 +322,7 @@
 		priorities[5] = new /datum/manipulator_priority/interact/with_vehicles
 	return priorities
 
+// use тоже не проверяет overflow
 /datum/manipulator_task/cargo/dropoff_base/use/can_accept(atom/movable/target)
 	if(!is_valid())
 		return FALSE
@@ -348,7 +358,7 @@
 	return find_type_priority() != null
 
 /datum/manipulator_task/cargo/interact/run_task(obj/machinery/big_manipulator/manipulator)
-	manipulator.rotate_to_point(src, PROC_REF(try_interact), CURRENT_TASK_MOVING_DROPOFF)
+	manipulator.rotate_to_point(src, src, TYPE_PROC_REF(/datum/manipulator_task/cargo/interact, try_interact), CURRENT_TASK_MOVING_DROPOFF)
 
 /datum/manipulator_task/cargo/interact/proc/try_interact(obj/machinery/big_manipulator/manipulator)
 	manipulator.start_task_state(CURRENT_TASK_INTERACTING, 0.2 SECONDS)
