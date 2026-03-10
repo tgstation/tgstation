@@ -3057,7 +3057,7 @@
 	taste_description = "intense citrusy bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/aperitivo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+/datum/reagent/consumable/ethanol/aperitivo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //This and some of the cocktails it gets mixed into stimulate the apetite, as an aperitivo should
 	. = ..()
 	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
@@ -3088,7 +3088,7 @@
 	taste_description = "pretentious bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/bartenders_handshake/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+/datum/reagent/consumable/ethanol/bartenders_handshake/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //Heals bartenders brute and burn, disgusts otherwise
 	. = ..()
 	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_BARTENDER_METABOLISM))
@@ -3149,7 +3149,7 @@
 	taste_description = "nutty anise-scented whiskey"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/jungle_bird
+/datum/reagent/consumable/ethanol/jungle_bird //TODO: Something with engineers and poly
 	name = "Jungle Bird"
 	description = "This late-tiki concoction leverages the brilliant combination of bitter liqueur and pineapple juice to make a remarkably well-balanced cocktail."
 	boozepwr = 25
@@ -3158,7 +3158,7 @@
 	taste_description = "pineapple and quinine"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/last_word
+/datum/reagent/consumable/ethanol/last_word //TODO: Something with mimes
 	name = "Last Word"
 	description = "Despite being invented at the turn of the 20th century, this drink fell into obscurity until the cocktail renaissance of the beginning of the 21st, where it then went on to dominate bars and inspire countless twists upon its formula."
 	boozepwr = 50
@@ -3176,7 +3176,7 @@
 	taste_description = "elegant pineapple"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/negroni
+/datum/reagent/consumable/ethanol/negroni //Aperitif that increases hunger
 	name = "Negroni"
 	description = "An iconic Italian aperitif, its simple intensity crowns it as perhaps the ultimate bitter cocktail. Supposedly it was named after an Italian count who wanted a stronger version of a spritz and asked his bartender to replace soda with gin."
 	boozepwr = 50
@@ -3199,7 +3199,7 @@
 	taste_description = "hogo and herbs"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo
+/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo //TODO:Radiation Effect
 	name = "Thermonuclear Daiquiri"
 	description = "A drink for those who enjoy the gnarlier things in life, like high ester rums and Cobalt 60."
 	boozepwr = 80
@@ -3208,7 +3208,7 @@
 	taste_description = "approximately 3.6 roentgen"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/poets_dream
+/datum/reagent/consumable/ethanol/poets_dream //TODO: make it cause heretic dreams
 	name = "Poet's Dream"
 	description = "This cocktail takes a classic martini base and twists it into a deliciously sweet and herbal mode. Nanotrasen regulations state not to drink this too soon before sleep, or risk 'oneiric encroachment,' whatever that means."
 	boozepwr = 50
@@ -3226,7 +3226,7 @@
 	taste_description = "a cascade of varying liqueurs"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/spritz
+/datum/reagent/consumable/ethanol/spritz //Aperitif that increases hunger
 	name = "Spritz" // If someone wants to add an elderflower spritz or something else like that, just rename this to spritz al bitter or whatever
 	description = "This bittersweet and refreshing aperitif brings to mind the beautiful summer sunsets of venice."
 	boozepwr = 20
