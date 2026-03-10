@@ -3115,7 +3115,7 @@
 	taste_description = "sweet juniper"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/garibaldi
+/datum/reagent/consumable/ethanol/garibaldi //Makes revs resitant to wounds and fearless.
 	name = "Garibaldi"
 	description = "Named for the 19th century Italian general, the red-orange color scheme of this drink mimics the shirts of those who followed him into battles all across the world."
 	boozepwr = 15
@@ -3123,6 +3123,22 @@
 	quality = DRINK_GOOD
 	taste_description = "bitter oranges"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/garibaldi/on_mob_metabolize(mob/living/carbon/drinker)
+	. = ..()
+	if(IS_REVOLUTIONARY(drinker))
+		to_chat(drinker, span_warning("You feel your revolutionary spirit surging! You feel like nothing the oppressors could throw at you could wound your pride!"))
+
+/datum/reagent/consumable/ethanol/garibaldi/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(IS_REVOLUTIONARY(drinker))
+		drinker.add_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), type)
+
+/datum/reagent/consumable/ethanol/garibaldi/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.remove_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), type)
+	if(IS_REVOLUTIONARY(drinker))
+		to_chat(drinker, span_notice("You feel your surge of revolutionary zeal fade. You hope you don't get shot in the foot..."))
 
 /datum/reagent/consumable/ethanol/improved_whiskey
 	name = "Improved Whiskey Cocktail"
