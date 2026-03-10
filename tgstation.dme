@@ -4824,6 +4824,7 @@
 #include "code\modules\library\skill_learning\job_skillchips\research_director.dm"
 #include "code\modules\library\skill_learning\job_skillchips\roboticist.dm"
 #include "code\modules\library\skill_learning\job_skillchips\station_engineer.dm"
+#include "code\modules\lighting\light_middleman.dm"
 #include "code\modules\lighting\lighting_area.dm"
 #include "code\modules\lighting\lighting_atom.dm"
 #include "code\modules\lighting\lighting_corner.dm"
