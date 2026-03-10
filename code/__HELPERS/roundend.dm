@@ -757,7 +757,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/award_location
 
 /atom/movable/screen/reboot_timer
-	screen_loc = "CENTER:-120,TOP:-42"
+	screen_loc = "CENTER:-140,TOP:-42"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	maptext_width = 340
 	maptext_height = 64

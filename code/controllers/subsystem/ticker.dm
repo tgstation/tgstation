@@ -209,9 +209,9 @@ SUBSYSTEM_DEF(ticker)
 		if(GAME_STATE_FINISHED)
 			if(ready_for_reboot)
 				if(isnull(reboot_timer))
-					reboot_hud.maptext = "<span class='context'>Server reboot DELAYED</span>"
+					reboot_hud.maptext = MAPTEXT_PIXELLARI("<center>Server reboot \n\ DELAYED</center>")
 				else
-					reboot_hud.maptext = "<span class='context'>Server rebooting in: [DisplayTimeText(timeleft(SSticker.reboot_timer), 1)]</span>"
+					reboot_hud.maptext = MAPTEXT_PIXELLARI("<center>Server rebooting in:\n\ [DisplayTimeText(timeleft(SSticker.reboot_timer), 1)]</center>")
 
 /// Checks if the round should be ending, called every ticker tick
 /datum/controller/subsystem/ticker/proc/check_finished()
