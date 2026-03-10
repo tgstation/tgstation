@@ -230,7 +230,7 @@
 	powermult = 10
 	rangemult = 10
 	refresh_light_color(ethereal)
-	ethereal.apply_damage(20, BRUTE)
+	ethereal.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
 	to_chat(ethereal, span_userdanger("Light pours involuntarily out of your cracked spine!"))
 	// Flash everyone nearby
 	for(var/mob/living/nearby in range(8, ethereal))
