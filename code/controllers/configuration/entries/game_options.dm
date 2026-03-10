@@ -444,8 +444,6 @@
 
 /datum/config_entry/flag/disallow_circuit_sounds
 
-/datum/config_entry/flag/tts_no_whisper
-
 /datum/config_entry/string/tts_http_url
 	protection = CONFIG_ENTRY_LOCKED
 
