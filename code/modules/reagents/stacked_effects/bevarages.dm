@@ -38,3 +38,12 @@
 /datum/stacked_metabolization_effect/coffee_oxidise_triple/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
 	if(SPT_PROB(70, seconds_per_tick))
 		return owner.adjust_oxy_loss(-3 * average(reagents_metabolized), updating_health = FALSE)
+
+/datum/stacked_metabolization_effect/astrotame_cream
+	requirements = list(
+		/datum/reagent/consumable/astrotame = 1,
+		/datum/reagent/consumable/cream = 1,
+	)
+
+/datum/stacked_metabolization_effect/astrotame_cream/apply(list/reagents_metabolized, mob/living/carbon/owner, seconds_per_tick)
+	owner.adjust_disgust(-1.5 * average(reagents_metabolized) * seconds_per_tick)
