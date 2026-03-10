@@ -341,7 +341,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 	var/datum/gas_mixture/stench = new
 
-	stench.adjust_gas(/datum/gas/miasma, MIASMA_CORPSE_MOLES * 2 * seconds_per_tick)
+	stench.set_gas(/datum/gas/miasma, MIASMA_CORPSE_MOLES * 2 * seconds_per_tick)
 	stench.temperature = mob.bodytemperature
 	our_turf.assume_air(stench)
 

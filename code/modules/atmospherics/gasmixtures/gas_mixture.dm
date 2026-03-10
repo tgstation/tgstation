@@ -187,8 +187,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /// amount is added so make it negative to remove
 /datum/gas_mixture/proc/adjust_gas(gas, amount)
 	ASSERT_GAS(gas, src)
-	gases[gas][MOLES] += amount
-	total_moles += amount
+	gases[gas][MOLES] += QUANTIZE(amount)
+	total_moles += QUANTIZE(amount)
 	garbage_collect()
 
 /// Add a specific amount of moles to all the gasses present or add a new gas to the mix
@@ -209,20 +209,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	cached_gases[reactant][MOLES] -= conversion_amount
 	cached_gases[product][MOLES] += conversion_amount
 	garbage_collect()
-
-
-/// Convert the moles of multiple reactant to their respective products
-/// Reactants and products must be PRESENT before calling this proc
-/// Reactants gets subtracted by amount while Products gets added by amount
-/datum/gas_mixture/proc/bulk_gas_conversion(list/reactants, list/products, amount)
-	var/list/cached_gas = gases
-	for(var/reactant_type in reactants)
-		cached_gas[reactant_type] -= amount
-	for(var/product_type in products)
-		cached_gas[product_type] += amount
-	garbage_collect()
-
-
 
 ///Proportionally removes amount of gas from the gas_mixture.
 ///Returns: gas_mixture with the gases removed

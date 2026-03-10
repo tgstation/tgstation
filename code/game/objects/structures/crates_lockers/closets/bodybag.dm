@@ -509,10 +509,10 @@
 	var/inner_temp = T0C - 60
 	air_contents = null
 	air_contents = new(mol_count)
-	air_contents.temperature = inner_temp
+	air_contents.set_temperature(inner_temp)
 
-	air_contents.adjust_gas(/datum/gas/oxygen, ((ONE_ATMOSPHERE * mol_count) / (R_IDEAL_GAS_EQUATION * inner_temp) * O2STANDARD))
-	air_contents.adjust_gas(/datum/gas/nitrogen, ((ONE_ATMOSPHERE * mol_count) / (R_IDEAL_GAS_EQUATION * inner_temp) * N2STANDARD))
+	air_contents.set_gas(/datum/gas/oxygen, ((ONE_ATMOSPHERE * mol_count) / (R_IDEAL_GAS_EQUATION * inner_temp) * O2STANDARD))
+	air_contents.set_gas(/datum/gas/nitrogen, ((ONE_ATMOSPHERE * mol_count) / (R_IDEAL_GAS_EQUATION * inner_temp) * N2STANDARD))
 
 /obj/structure/closet/body_bag/environmental/stasis/examine_status(mob/user)
 	switch(100 * get_integrity_percentage())

@@ -287,7 +287,7 @@
 	if(!gas_mix.gases[gas_type])
 		return
 
-	gas_mix.adjust_gas(gas_type, max(gas_mix.gases[gas_type][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0))
+	gas_mix.set_gas(gas_type, max(gas_mix.gases[gas_type][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0))
 	gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/gas_eater/oxy_eater
