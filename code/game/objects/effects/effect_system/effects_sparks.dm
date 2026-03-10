@@ -29,6 +29,8 @@
 	var/obj/effect/abstract/light_middleman/cone_intercept
 	/// Are we overriding the light already?
 	var/overriding = FALSE
+	/// Weakref to the object we are displaying our effects on
+	var/datum/weakref/holder_ref
 
 /datum/light_middleman/New(atom/parent, unique_string)
 	. = ..()
@@ -69,16 +71,27 @@
 	overriding = FALSE
 	UnregisterSignal(parent, COMSIG_ATOM_OVERLAY_LIGHT_APPLIED)
 	UnregisterSignal(parent, COMSIG_ATOM_OVERLAY_LIGHT_REMOVED)
-	parent.vis_contents -= primary_intercept
-	parent.vis_contents -= cone_intercept
+	var/atom/movable/old_holder = holder_ref?.resolve()
+	if(old_holder)
+		old_holder.vis_contents -= primary_intercept
+		old_holder.vis_contents -= cone_intercept
+		holder_ref = null
 	parent.set_light_render_source("")
 
 /datum/light_middleman/proc/light_applied(datum/source, image/visible_mask, image/cone, atom/movable/light_holder)
 	SIGNAL_HANDLER
+	var/atom/movable/old_holder = holder_ref?.resolve()
+	if(old_holder)
+		old_holder.vis_contents -= primary_intercept
+		old_holder.vis_contents -= cone_intercept
+		holder_ref = null
+
 	light_holder.vis_contents += primary_intercept // how we make sure we're in the client's view
 	// Avoids unneeded effects clientside
 	if(IS_OVERLAY_CONE_LIGHT_SYSTEM(parent.light_system))
 		light_holder.vis_contents += cone_intercept // how we make sure we're in the client's view
+
+	old_holder = WEAKREF(light_holder)
 
 	var/old_target = primary_intercept.render_target
 	var/old_cone_target = cone_intercept.render_target
@@ -109,6 +122,7 @@
 	SIGNAL_HANDLER
 	light_holder.vis_contents -= primary_intercept // how we make sure we're in the client's view
 	light_holder.vis_contents -= cone_intercept // how we make sure we're in the client's view
+	holder_ref = null
 
 /obj/effect/particle_effect/sparks
 	name = "sparks"
