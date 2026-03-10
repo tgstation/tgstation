@@ -207,12 +207,16 @@
 /datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/new_crate)
 	. = ..()
 	var/list/rng_pizza_list = pizza_types.Copy()
+	var/add_romerol = prob(0.2)
 	for(var/i in 1 to 5)
 		if(add_anomalous(new_crate))
 			continue
 		if(add_boombox(new_crate))
 			continue
-		add_normal_pizza(new_crate, rng_pizza_list)
+		var/obj/item/pizzabox/pizzabox = add_normal_pizza(new_crate, rng_pizza_list)
+		if(add_romerol && pizzabox.pizza)
+			pizzabox.pizza.reagents.add_reagent(/datum/reagent/romerol, pizzabox.pizza.slices_left)
+			add_romerol = FALSE
 
 /// adds the chance for an infinite pizza box
 /datum/supply_pack/organic/pizza/proc/add_anomalous(obj/structure/closet/crate/new_crate)
@@ -253,6 +257,7 @@
 	new_pizza_box.boxtag = new_pizza_box.pizza.boxtag
 	new_pizza_box.boxtag_set = TRUE
 	new_pizza_box.update_appearance(UPDATE_ICON | UPDATE_DESC)
+	return new_pizza_box
 
 /// tells crew that an infinite pizza box exists, half of the time, based on a roll in the anamolous box proc
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
@@ -445,4 +450,3 @@
 	contains = list(
 		/obj/item/soil_sack/worm = 3,
 	)
-
