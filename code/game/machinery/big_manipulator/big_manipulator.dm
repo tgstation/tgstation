@@ -56,33 +56,35 @@
 /obj/machinery/big_manipulator/proc/update_hud()
 	LAZYCLEARLIST(hud_points)
 
-	var/image/main_hud = hud_list[BIG_MANIP_HUD]
-	if(!main_hud)
-		return
+	// var/image/main_hud = hud_list[BIG_MANIP_HUD]
+	// if(!main_hud)
+	// 	return
 
-	main_hud.loc = get_turf(src)
-	main_hud.appearance = mutable_appearance('icons/effects/tasks.dmi', null, ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
+	// main_hud.loc = get_turf(src)
+	// main_hud.appearance = mutable_appearance('icons/effects/tasks.dmi', null, ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
 
-	main_hud.overlays.Cut()
-	var/list/point_overlays = list()
+	// main_hud.overlays.Cut()
+	// var/list/point_overlays = list()
 
-	for(var/i in 1 to length(tasks))
-		var/datum/manipulator_task/task = tasks[i]
-		if(!istype(task, /datum/manipulator_task/cargo))
-			continue
-		var/datum/manipulator_task/cargo/cargo_task = task
-		var/turf/target_turf = cargo_task.interaction_turf
-		if(!target_turf)
-			continue
-		var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/tasks.dmi', "[cargo_task.type]_[i]", ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
-		var/turf/manip_turf = get_turf(src)
-		point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
-		point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
-		point_overlays += point_appearance
+	// for(var/i in 1 to length(tasks))
+	// 	var/datum/manipulator_task/task = tasks[i]
+	// 	if(!istype(task, /datum/manipulator_task/cargo))
+	// 		continue
+	// 	var/datum/manipulator_task/cargo/cargo_task = task
+	// 	var/turf/target_turf = cargo_task.interaction_turf
+	// 	if(!target_turf)
+	// 		continue
+	// 	var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/tasks.dmi', "[cargo_task.type]_[i]", ABOVE_ALL_MOB_LAYER, src, GAME_PLANE)
+	// 	var/turf/manip_turf = get_turf(src)
+	// 	point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
+	// 	point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
+	// 	point_overlays += point_appearance
 
-	main_hud.overlays += point_overlays
-	hud_points += main_hud
-	set_hud_image_active(BIG_MANIP_HUD)
+	// main_hud.overlays += point_overlays
+	// hud_points += main_hud
+	// set_hud_image_active(BIG_MANIP_HUD)
+
+	return
 
 /// Attempts to find a suitable turf near the manipulator for creating a cargo task.
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
@@ -101,25 +103,24 @@
 	var/manipulator_tier = locate_servo ? locate_servo.tier : 1
 
 	var/datum/manipulator_task/new_task
+	var/needs_turf = task_type in list(TASK_TYPE_PICKUP, TASK_TYPE_DROP, TASK_TYPE_THROW, TASK_TYPE_USE, TASK_TYPE_INTERACT)
+
+	if(needs_turf)
+		if(!new_turf) new_turf = find_suitable_turf()
+		if(!new_turf)
+			balloon_alert(user, "no suitable turfs found!")
+			return FALSE
 
 	switch(task_type)
 		if(TASK_TYPE_PICKUP)
-			if(!new_turf) new_turf = find_suitable_turf()
-			if(!new_turf)
-				balloon_alert(user, "no suitable turfs found!")
-				return FALSE
 			new_task = new /datum/manipulator_task/cargo/pickup(new_turf, manipulator_tier)
-		if(TASK_TYPE_DROPOFF)
-			if(!new_turf) new_turf = find_suitable_turf()
-			if(!new_turf)
-				balloon_alert(user, "no suitable turfs found!")
-				return FALSE
-			new_task = new /datum/manipulator_task/cargo/dropoff(new_turf, manipulator_tier)
+		if(TASK_TYPE_DROP)
+			new_task = new /datum/manipulator_task/cargo/dropoff_base/drop(new_turf, manipulator_tier)
+		if(TASK_TYPE_THROW)
+			new_task = new /datum/manipulator_task/cargo/dropoff_base/throw(new_turf, manipulator_tier)
+		if(TASK_TYPE_USE)
+			new_task = new /datum/manipulator_task/cargo/dropoff_base/use(new_turf, manipulator_tier)
 		if(TASK_TYPE_INTERACT)
-			if(!new_turf) new_turf = find_suitable_turf()
-			if(!new_turf)
-				balloon_alert(user, "no suitable turfs found!")
-				return FALSE
 			new_task = new /datum/manipulator_task/cargo/interact(new_turf, manipulator_tier)
 		if(TASK_TYPE_WAIT)
 			new_task = new /datum/manipulator_task/simple/wait()
@@ -529,64 +530,109 @@
 	var/list/data = list()
 	data["active"] = on
 	data["current_task_state"] = current_task_state
+	data["current_task_id"] = current_task ? REF(current_task) : null
 	data["current_task_duration"] = current_task_duration
 	data["speed_multiplier"] = speed_multiplier
 	data["min_speed_multiplier"] = min_speed_multiplier
 	data["max_speed_multiplier"] = max_speed_multiplier
 	data["manipulator_position"] = "[x],[y]"
 	data["tasking_strategy"] = tasking_strategy
+	data["has_monkey"] = !isnull(monkey_worker?.resolve())
 
 	var/list/tasks_data = list()
 	for(var/datum/manipulator_task/task in tasks)
-		var/list/task_data = list()
-		task_data["name"] = task.name
-		task_data["id"] = REF(task)
-		task_data["task_type"] = task.type
+		var/list/td = list()
+		td["name"] = task.name
+		td["id"] = REF(task)
 
-		if(istype(task, /datum/manipulator_task/cargo))
-			var/datum/manipulator_task/cargo/cargo_task = task
-			var/turf/resolved_turf = cargo_task.interaction_turf
-			task_data["turf"] = resolved_turf ? "[resolved_turf.x],[resolved_turf.y]" : "0,0"
-			var/list/filter_names = list()
-			for(var/atom/some_path as anything in cargo_task.atom_filters)
-				filter_names += initial(some_path.name)
-			task_data["item_filters"] = filter_names
-			task_data["filters_status"] = cargo_task.should_use_filters
-			task_data["filtering_mode"] = cargo_task.filtering_mode
+		if(istype(task, /datum/manipulator_task/cargo/pickup))
+			td["task_type"] = TASK_TYPE_PICKUP
+			var/datum/manipulator_task/cargo/pickup/t = task
+			var/turf/turf = t.interaction_turf
+			td["turf"] = turf ? "[turf.x],[turf.y]" : "0,0"
+			td["filters_status"] = t.should_use_filters
+			td["filtering_mode"] = t.filtering_mode
+			td["item_filters"] = _collect_filter_names(t.atom_filters)
+			td["settings_list"] = _collect_priorities(t.interaction_priorities)
+			td["pickup_eagerness"] = t.pickup_eagerness
 
-			if(istype(task, /datum/manipulator_task/cargo/pickup))
-				var/datum/manipulator_task/cargo/pickup/pickup_task = task
-				task_data["pickup_eagerness"] = pickup_task.pickup_eagerness
+		else if(istype(task, /datum/manipulator_task/cargo/dropoff_base/drop))
+			td["task_type"] = TASK_TYPE_DROP
+			var/datum/manipulator_task/cargo/dropoff_base/drop/t = task
+			var/turf/turf = t.interaction_turf
+			td["turf"] = turf ? "[turf.x],[turf.y]" : "0,0"
+			td["filters_status"] = t.should_use_filters
+			td["filtering_mode"] = t.filtering_mode
+			td["item_filters"] = _collect_filter_names(t.atom_filters)
+			td["settings_list"] = _collect_priorities(t.interaction_priorities)
+			td["overflow_status"] = t.overflow_status
 
-			if(istype(task, /datum/manipulator_task/cargo/dropoff))
-				var/datum/manipulator_task/cargo/dropoff/dropoff_task = task
-				task_data["interaction_mode"] = dropoff_task.interaction_mode
-				task_data["overflow_status"] = dropoff_task.overflow_status
-				task_data["throw_range"] = dropoff_task.throw_range
-				task_data["worker_interaction"] = dropoff_task.worker_interaction
-				task_data["use_post_interaction"] = dropoff_task.use_post_interaction
-				task_data["worker_use_rmb"] = dropoff_task.worker_use_rmb
-				task_data["worker_combat_mode"] = dropoff_task.worker_combat_mode
+		else if(istype(task, /datum/manipulator_task/cargo/dropoff_base/throw))
+			td["task_type"] = TASK_TYPE_THROW
+			var/datum/manipulator_task/cargo/dropoff_base/throw/t = task
+			var/turf/turf = t.interaction_turf
+			td["turf"] = turf ? "[turf.x],[turf.y]" : "0,0"
+			td["filters_status"] = t.should_use_filters
+			td["filtering_mode"] = t.filtering_mode
+			td["item_filters"] = _collect_filter_names(t.atom_filters)
+			td["settings_list"] = _collect_priorities(t.interaction_priorities)
+			td["throw_range"] = t.throw_range
 
-			if(istype(task, /datum/manipulator_task/cargo/interact))
-				var/datum/manipulator_task/cargo/interact/interact_task = task
-				task_data["worker_interaction"] = interact_task.worker_interaction
-				task_data["use_post_interaction"] = interact_task.use_post_interaction
-				task_data["worker_use_rmb"] = interact_task.worker_use_rmb
-				task_data["worker_combat_mode"] = interact_task.worker_combat_mode
+		else if(istype(task, /datum/manipulator_task/cargo/dropoff_base/use))
+			td["task_type"] = TASK_TYPE_USE
+			var/datum/manipulator_task/cargo/dropoff_base/use/t = task
+			var/turf/turf = t.interaction_turf
+			td["turf"] = turf ? "[turf.x],[turf.y]" : "0,0"
+			td["filters_status"] = t.should_use_filters
+			td["filtering_mode"] = t.filtering_mode
+			td["item_filters"] = _collect_filter_names(t.atom_filters)
+			td["settings_list"] = _collect_priorities(t.interaction_priorities)
+			td["worker_interaction"] = t.worker_interaction
+			td["use_post_interaction"] = t.use_post_interaction
+			td["worker_use_rmb"] = t.worker_use_rmb
+			td["worker_combat_mode"] = t.worker_combat_mode
 
-			var/list/priorities = list()
-			for(var/datum/manipulator_priority/pr in cargo_task.interaction_priorities)
-				var/list/entry = list()
-				entry["name"] = pr.name
-				entry["active"] = pr.active
-				priorities += list(entry)
-			task_data["settings_list"] = priorities
+		else if(istype(task, /datum/manipulator_task/cargo/interact))
+			td["task_type"] = TASK_TYPE_INTERACT
+			var/datum/manipulator_task/cargo/interact/t = task
+			var/turf/turf = t.interaction_turf
+			td["turf"] = turf ? "[turf.x],[turf.y]" : "0,0"
+			td["filters_status"] = t.should_use_filters
+			td["filtering_mode"] = t.filtering_mode
+			td["item_filters"] = _collect_filter_names(t.atom_filters)
+			td["settings_list"] = _collect_priorities(t.interaction_priorities)
+			td["worker_interaction"] = t.worker_interaction
+			td["use_post_interaction"] = t.use_post_interaction
+			td["worker_use_rmb"] = t.worker_use_rmb
+			td["worker_combat_mode"] = t.worker_combat_mode
 
-		tasks_data += list(task_data)
+		else if(istype(task, /datum/manipulator_task/simple/wait))
+			td["task_type"] = TASK_TYPE_WAIT
+			var/datum/manipulator_task/simple/wait/t = task
+			td["time"] = t.time_seconds
+
+		else if(istype(task, /datum/manipulator_task/simple/signal))
+			td["task_type"] = TASK_TYPE_SIGNAL
+
+		tasks_data += list(td)
+
 	data["tasks_data"] = tasks_data
-
 	return data
+
+/obj/machinery/big_manipulator/proc/_collect_filter_names(list/filters)
+	var/list/names = list()
+	for(var/atom/f as anything in filters)
+		names += initial(f.name)
+	return names
+
+/obj/machinery/big_manipulator/proc/_collect_priorities(list/priorities)
+	var/list/out = list()
+	for(var/datum/manipulator_priority/pr in priorities)
+		var/list/entry = list()
+		entry["name"] = pr.name
+		entry["active"] = pr.active
+		out += list(entry)
+	return out
 
 /obj/machinery/big_manipulator/ui_act(action, params, datum/tgui/ui)
 	. = ..()
@@ -652,6 +698,18 @@
 			update_hud()
 			return TRUE
 
+		if("move_up")
+			var/idx = tasks.Find(target_task)
+			if(idx <= 1) return FALSE
+			tasks.Swap(idx, idx - 1)
+			return TRUE
+
+		if("move_down")
+			var/idx = tasks.Find(target_task)
+			if(idx >= length(tasks)) return FALSE
+			tasks.Swap(idx, idx + 1)
+			return TRUE
+
 		if("move_to")
 			if(!istype(target_task, /datum/manipulator_task/cargo))
 				return FALSE
@@ -669,130 +727,120 @@
 		if("toggle_filter_skip")
 			if(!istype(target_task, /datum/manipulator_task/cargo))
 				return FALSE
-			var/datum/manipulator_task/cargo/cargo_task = target_task
-			cargo_task.should_use_filters = !cargo_task.should_use_filters
+			var/datum/manipulator_task/cargo/ct = target_task
+			ct.should_use_filters = !ct.should_use_filters
 			return TRUE
 
 		if("reset_atom_filters")
 			if(!istype(target_task, /datum/manipulator_task/cargo))
 				return FALSE
-			var/datum/manipulator_task/cargo/cargo_task = target_task
-			cargo_task.atom_filters = list()
+			var/datum/manipulator_task/cargo/ct = target_task
+			ct.atom_filters = list()
 			return TRUE
 
 		if("add_atom_filter_from_held")
 			if(!istype(target_task, /datum/manipulator_task/cargo))
 				return FALSE
-			var/datum/manipulator_task/cargo/cargo_task = target_task
+			var/datum/manipulator_task/cargo/ct = target_task
 			var/obj/item/held_item = user.get_active_held_item()
 			if(!held_item)
 				return FALSE
-			for(var/filter_path in cargo_task.atom_filters)
+			for(var/filter_path in ct.atom_filters)
 				if(istype(held_item, filter_path))
 					return FALSE
-			cargo_task.atom_filters += held_item.type
+			ct.atom_filters += held_item.type
 			return TRUE
 
 		if("delete_filter")
 			if(!istype(target_task, /datum/manipulator_task/cargo))
 				return FALSE
-			var/datum/manipulator_task/cargo/cargo_task = target_task
-			cargo_task.atom_filters.Cut(value, value + 1)
+			var/datum/manipulator_task/cargo/ct = target_task
+			ct.atom_filters.Cut(value, value + 1)
 			return TRUE
 
 		if("cycle_filtering_mode")
 			if(!istype(target_task, /datum/manipulator_task/cargo))
 				return FALSE
-			var/datum/manipulator_task/cargo/cargo_task = target_task
-			cargo_task.filtering_mode = cycle_value(cargo_task.filtering_mode, obj_flags & EMAGGED ? list(TAKE_ITEMS, TAKE_CLOSETS, TAKE_HUMANS) : list(TAKE_ITEMS, TAKE_CLOSETS))
+			var/datum/manipulator_task/cargo/ct = target_task
+			ct.filtering_mode = cycle_value(ct.filtering_mode, obj_flags & EMAGGED ? list(TAKE_ITEMS, TAKE_CLOSETS, TAKE_HUMANS) : list(TAKE_ITEMS, TAKE_CLOSETS))
 			return TRUE
 
 		if("toggle_priority")
 			if(!istype(target_task, /datum/manipulator_task/cargo))
 				return FALSE
-			var/datum/manipulator_task/cargo/cargo_task = target_task
-			return cargo_task.tick_priority_by_index(value)
+			var/datum/manipulator_task/cargo/current_task = target_task
+			return current_task.tick_priority_by_index(value)
 
 		if("priority_move_up")
 			if(!istype(target_task, /datum/manipulator_task/cargo))
 				return FALSE
-			var/datum/manipulator_task/cargo/cargo_task = target_task
-			return cargo_task.move_priority_up_by_index(value)
+			var/datum/manipulator_task/cargo/current_task = target_task
+			return current_task.tick_priority_by_index(value)
 
 		if("cycle_pickup_eagerness")
 			if(!istype(target_task, /datum/manipulator_task/cargo/pickup))
 				return FALSE
-			var/datum/manipulator_task/cargo/pickup/pickup_task = target_task
-			pickup_task.pickup_eagerness = cycle_value(pickup_task.pickup_eagerness, list(PICKUP_CAN_WAIT, PICKUP_EAGER))
-			return TRUE
-
-		if("cycle_interaction_mode")
-			if(!istype(target_task, /datum/manipulator_task/cargo/dropoff))
-				return FALSE
-			var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
-			dropoff_task.interaction_mode = cycle_value(dropoff_task.interaction_mode, monkey_worker ? list(INTERACT_DROP, INTERACT_THROW, INTERACT_USE) : list(INTERACT_DROP, INTERACT_THROW))
-			var/datum/stock_part/servo/locate_servo = locate() in component_parts
-			var/manipulator_tier = locate_servo ? locate_servo.tier : 1
-			dropoff_task.interaction_priorities = dropoff_task.fill_priority_list(manipulator_tier)
+			var/datum/manipulator_task/cargo/pickup/t = target_task
+			t.pickup_eagerness = cycle_value(t.pickup_eagerness, list(PICKUP_CAN_WAIT, PICKUP_EAGER))
 			return TRUE
 
 		if("cycle_overflow_status")
-			if(!istype(target_task, /datum/manipulator_task/cargo/dropoff))
+			if(!istype(target_task, /datum/manipulator_task/cargo/dropoff_base/drop))
 				return FALSE
-			var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
-			dropoff_task.overflow_status = cycle_value(dropoff_task.overflow_status, list(POINT_OVERFLOW_ALLOWED, POINT_OVERFLOW_FILTERS, POINT_OVERFLOW_HELD, POINT_OVERFLOW_FORBIDDEN))
+			var/datum/manipulator_task/cargo/dropoff_base/drop/t = target_task
+			t.overflow_status = cycle_value(t.overflow_status, list(POINT_OVERFLOW_ALLOWED, POINT_OVERFLOW_FILTERS, POINT_OVERFLOW_HELD, POINT_OVERFLOW_FORBIDDEN))
 			return TRUE
 
 		if("cycle_throw_range")
-			if(!istype(target_task, /datum/manipulator_task/cargo/dropoff))
+			if(!istype(target_task, /datum/manipulator_task/cargo/dropoff_base/throw))
 				return FALSE
-			var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
-			dropoff_task.throw_range = cycle_value(dropoff_task.throw_range, list(1, 2, 3, 4, 5, 6, 7))
+			var/datum/manipulator_task/cargo/dropoff_base/throw/t = target_task
+			t.throw_range = cycle_value(t.throw_range, list(1, 2, 3, 4, 5, 6, 7))
 			return TRUE
 
 		if("cycle_worker_interaction")
-			var/list/worker_interaction_values = list(WORKER_NORMAL_USE, WORKER_SINGLE_USE, WORKER_EMPTY_USE)
-			if(istype(target_task, /datum/manipulator_task/cargo/dropoff))
-				var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
-				dropoff_task.worker_interaction = cycle_value(dropoff_task.worker_interaction, worker_interaction_values)
+			var/list/vals = list(WORKER_NORMAL_USE, WORKER_SINGLE_USE, WORKER_EMPTY_USE)
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
+				var/datum/manipulator_task/cargo/dropoff_base/use/t = target_task
+				t.worker_interaction = cycle_value(t.worker_interaction, vals)
 				return TRUE
 			if(istype(target_task, /datum/manipulator_task/cargo/interact))
-				var/datum/manipulator_task/cargo/interact/interact_task = target_task
-				interact_task.worker_interaction = cycle_value(interact_task.worker_interaction, worker_interaction_values)
+				var/datum/manipulator_task/cargo/interact/t = target_task
+				t.worker_interaction = cycle_value(t.worker_interaction, vals)
 				return TRUE
 			return FALSE
 
 		if("cycle_post_interaction")
-			var/list/post_interaction_values = list(POST_INTERACTION_DROP_AT_POINT, POST_INTERACTION_DROP_AT_MACHINE, POST_INTERACTION_DROP_NEXT_FITTING, POST_INTERACTION_WAIT)
-			if(istype(target_task, /datum/manipulator_task/cargo/dropoff))
-				var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
-				dropoff_task.use_post_interaction = cycle_value(dropoff_task.use_post_interaction, post_interaction_values)
+			var/list/vals = list(POST_INTERACTION_DROP_AT_POINT, POST_INTERACTION_DROP_AT_MACHINE, POST_INTERACTION_DROP_NEXT_FITTING, POST_INTERACTION_WAIT)
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
+				var/datum/manipulator_task/cargo/dropoff_base/use/t = target_task
+				t.use_post_interaction = cycle_value(t.use_post_interaction, vals)
 				return TRUE
 			if(istype(target_task, /datum/manipulator_task/cargo/interact))
-				var/datum/manipulator_task/cargo/interact/interact_task = target_task
-				interact_task.use_post_interaction = cycle_value(interact_task.use_post_interaction, post_interaction_values)
+				var/datum/manipulator_task/cargo/interact/t = target_task
+				t.use_post_interaction = cycle_value(t.use_post_interaction, vals)
 				return TRUE
 			return FALSE
 
 		if("toggle_worker_rmb")
-			if(istype(target_task, /datum/manipulator_task/cargo/dropoff))
-				var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
-				dropoff_task.worker_use_rmb = !dropoff_task.worker_use_rmb
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
+				var/datum/manipulator_task/cargo/dropoff_base/use/t = target_task
+				t.worker_use_rmb = !t.worker_use_rmb
 				return TRUE
 			if(istype(target_task, /datum/manipulator_task/cargo/interact))
-				var/datum/manipulator_task/cargo/interact/interact_task = target_task
-				interact_task.worker_use_rmb = !interact_task.worker_use_rmb
+				var/datum/manipulator_task/cargo/interact/t = target_task
+				t.worker_use_rmb = !t.worker_use_rmb
 				return TRUE
 			return FALSE
 
 		if("toggle_worker_combat")
-			if(istype(target_task, /datum/manipulator_task/cargo/dropoff))
-				var/datum/manipulator_task/cargo/dropoff/dropoff_task = target_task
-				dropoff_task.worker_combat_mode = !dropoff_task.worker_combat_mode
+			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
+				var/datum/manipulator_task/cargo/dropoff_base/use/t = target_task
+				t.worker_combat_mode = !t.worker_combat_mode
 				return TRUE
 			if(istype(target_task, /datum/manipulator_task/cargo/interact))
-				var/datum/manipulator_task/cargo/interact/interact_task = target_task
-				interact_task.worker_combat_mode = !interact_task.worker_combat_mode
+				var/datum/manipulator_task/cargo/interact/t = target_task
+				t.worker_combat_mode = !t.worker_combat_mode
 				return TRUE
 			return FALSE
 

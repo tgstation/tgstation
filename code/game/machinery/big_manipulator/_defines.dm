@@ -54,17 +54,19 @@
 #define POST_INTERACTION_WAIT "CONTINUE"
 
 // Some macros for interaction checks
-#define IS_STOPPING (current_task == CURRENT_TASK_STOPPING)
-#define IS_BUSY (current_task != CURRENT_TASK_NONE)
+#define IS_STOPPING (current_task_state == CURRENT_TASK_STOPPING)
+#define IS_BUSY (current_task_state != CURRENT_TASK_NONE)
 
 #define PICKUP_EAGER "Always Pick Up"
 #define PICKUP_CAN_WAIT "Wait For Suiting"
 
-#define TASK_TYPE_PICKUP "Pick up"
-#define TASK_TYPE_DROPOFF "Drop"
-#define TASK_TYPE_INTERACT "Interact"
-#define TASK_TYPE_WAIT "Wait"
-#define TASK_TYPE_SIGNAL "Send a signal"
+#define TASK_TYPE_PICKUP "pickup"
+#define TASK_TYPE_DROP "drop"
+#define TASK_TYPE_THROW "throw"
+#define TASK_TYPE_USE "use"
+#define TASK_TYPE_INTERACT "interact"
+#define TASK_TYPE_WAIT "wait"
+#define TASK_TYPE_SIGNAL "signal"
 
 #define TASKING_SEQUENTIAL "Sequential"
 #define TASKING_STRICT "Strict order"

@@ -2,47 +2,52 @@ import type { BooleanLike } from 'tgui-core/react';
 
 export interface PrioritySettings {
   name: string;
-  priority_width: number;
   active: BooleanLike;
 }
 
-export type InteractionPoint = {
+export type TaskType =
+  | 'Pick up...'
+  | 'Drop...'
+  | 'Throw...'
+  | 'Use...'
+  | 'Interact with...'
+  | 'Wait for...'
+  | 'Send a signal...';
+
+export interface ManipulatorTask {
   name: string;
   id: string;
-  turf: string;
-  mode: string;
-  filters: string[];
-  item_filters: string[];
-  filters_status: BooleanLike;
-  filtering_mode: number;
-  overflow_status: string;
-  worker_use_rmb: BooleanLike;
-  worker_combat_mode: BooleanLike;
-  settings_list: PrioritySettings[];
-  throw_range: number;
-  worker_interaction: string;
-  use_post_interaction: string;
-};
+  task_type: string;
+  // cargo fields
+  turf?: string;
+  item_filters?: string[];
+  filters_status?: BooleanLike;
+  filtering_mode?: number;
+  settings_list?: PrioritySettings[];
+  // pickup only
+  pickup_eagerness?: string;
+  // dropoff only
+  interaction_mode?: string;
+  overflow_status?: string;
+  throw_range?: number;
+  worker_interaction?: string;
+  use_post_interaction?: string;
+  worker_use_rmb?: BooleanLike;
+  worker_combat_mode?: BooleanLike;
+  // interact only
+  // (worker_interaction, use_post_interaction, worker_use_rmb, worker_combat_mode shared with dropoff)
+  time?: number;
+}
 
 export interface ManipulatorData {
   active: BooleanLike;
-  current_task: string;
+  current_task_state: string;
+  current_task: ManipulatorTask | null;
   current_task_duration: number;
-
   speed_multiplier: number;
   min_speed_multiplier: number;
   max_speed_multiplier: number;
-  highest_priority: BooleanLike;
-  interaction_mode: string;
-  settings_list: PrioritySettings[];
-  throw_range: number;
-  item_as_filter: string;
-  selected_type: string;
-  delay_step: number;
-
-  pickup_points: InteractionPoint[];
-  dropoff_points: InteractionPoint[];
+  tasks_data: ManipulatorTask[];
   manipulator_position: string;
-  pickup_tasking: string;
-  dropoff_tasking: string;
+  tasking_strategy: string;
 }

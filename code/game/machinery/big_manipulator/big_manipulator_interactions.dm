@@ -10,7 +10,7 @@
 		handle_no_work_available()
 		return
 	current_task = next_task
-	next_task.run(src)
+	next_task.run_task(src)
 
 /// Attempts to launch the work cycle. Should only be ran on pressing the "Run" button.
 /obj/machinery/big_manipulator/proc/try_kickstart(mob/user)
@@ -26,7 +26,7 @@
 	step_tasks()
 
 /// Safely schedules the next step to prevent overlapping.
-/obj/machinery/big_manipulator/proc/schedule_next_cycle()
+/obj/machinery/big_manipulator/proc/schedule_next_cycle(time_seconds = BASE_INTERACTION_TIME)
 	if(next_cycle_scheduled || IS_STOPPING)
 		return
 
@@ -34,7 +34,7 @@
 		return
 
 	next_cycle_scheduled = TRUE
-	addtimer(CALLBACK(src, PROC_REF(step_tasks)), BASE_INTERACTION_TIME)
+	addtimer(CALLBACK(src, PROC_REF(step_tasks)), time_seconds)
 
 /// Handles the common pattern of waiting and scheduling next cycle when no work can be done.
 /obj/machinery/big_manipulator/proc/handle_no_work_available()
@@ -96,8 +96,7 @@
 	elapsed_time += BASE_INTERACTION_TIME / speed_multiplier
 	addtimer(CALLBACK(src, PROC_REF(do_step_rotation), target_task, callback, next_angle, target_angle, rotation_step, elapsed_time, total_time), BASE_INTERACTION_TIME / speed_multiplier)
 
-/// Moves the item onto the turf.
-/obj/machinery/big_manipulator/proc/try_drop_thing(datum/manipulator_task/cargo/dropoff/destination_task)
+/obj/machinery/big_manipulator/proc/try_drop_thing(datum/manipulator_task/cargo/dropoff_base/drop/destination_task)
 	var/drop_endpoint = destination_task.find_type_priority()
 	var/obj/actual_held_object = held_object?.resolve()
 
@@ -114,8 +113,7 @@
 	finish_manipulation()
 	return TRUE
 
-/// Attempts to use the held object on the atoms of the interaction turf.
-/obj/machinery/big_manipulator/proc/try_use_thing(datum/manipulator_task/cargo/dropoff/destination_task, work_done_at_point = FALSE)
+/obj/machinery/big_manipulator/proc/try_use_thing(datum/manipulator_task/cargo/interact/destination_task, work_done_at_point = FALSE)
 	if(IS_STOPPING)
 		return
 
@@ -169,8 +167,7 @@
 
 	check_for_cycle_end_drop(destination_task, TRUE, TRUE)
 
-/// Checks what should we do with the held_object after USE-ing it.
-/obj/machinery/big_manipulator/proc/check_for_cycle_end_drop(datum/manipulator_task/cargo/dropoff/destination_task, item_used_this_iteration, work_done_at_point = FALSE)
+/obj/machinery/big_manipulator/proc/check_for_cycle_end_drop(datum/manipulator_task/cargo/interact/destination_task, item_used_this_iteration, work_done_at_point = FALSE)
 	var/obj/obj_resolve = held_object?.resolve()
 	var/turf/drop_turf = destination_task.interaction_turf
 
@@ -184,7 +181,7 @@
 		finish_manipulation()
 		return
 
-	if(!on || destination_task.interaction_mode != INTERACT_USE)
+	if(!on)
 		finish_manipulation()
 		return
 
@@ -194,8 +191,7 @@
 
 	drop_held_after_use(destination_task)
 
-/// Decides where to drop the held item after exhausting USE targets.
-/obj/machinery/big_manipulator/proc/drop_held_after_use(datum/manipulator_task/cargo/dropoff/destination_task)
+/obj/machinery/big_manipulator/proc/drop_held_after_use(datum/manipulator_task/cargo/interact/destination_task)
 	var/obj/obj_resolve = held_object?.resolve()
 	var/turf/drop_turf = destination_task.interaction_turf
 
@@ -211,8 +207,8 @@
 
 		if(POST_INTERACTION_DROP_NEXT_FITTING)
 			var/datum/manipulator_task/next = master_tasking.get_next_task(tasks, src)
-			if(istype(next, /datum/manipulator_task/cargo/dropoff))
-				rotate_to_point(next, TYPE_PROC_REF(/datum/manipulator_task/cargo/dropoff, try_dropoff), CURRENT_TASK_MOVING_DROPOFF)
+			if(istype(next, /datum/manipulator_task/cargo/dropoff_base))
+				rotate_to_point(next, TYPE_PROC_REF(/datum/manipulator_task/cargo/dropoff_base, try_dropoff), CURRENT_TASK_MOVING_DROPOFF)
 				return
 			obj_resolve.forceMove(drop_turf)
 			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
@@ -224,24 +220,6 @@
 		else
 			schedule_next_cycle()
 
-/// Throws the held object in the direction of the task's turf.
-/obj/machinery/big_manipulator/proc/throw_thing(datum/manipulator_task/cargo/dropoff/drop_task)
-	var/drop_turf = drop_task.interaction_turf
-	var/atom/movable/held_atom = held_object?.resolve()
-
-	held_atom.forceMove(drop_turf)
-	do_attack_animation(drop_turf)
-	manipulator_arm.do_attack_animation(drop_turf)
-
-	if(isliving(held_atom) && !(obj_flags & EMAGGED))
-		held_atom.dir = get_dir(get_turf(held_atom), get_turf(src))
-		finish_manipulation()
-		return
-
-	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_turf(held_atom))), drop_task.throw_range, 2)
-	finish_manipulation()
-
-/// Uses the empty hand to interact with objects
 /obj/machinery/big_manipulator/proc/use_thing_with_empty_hand(datum/manipulator_task/cargo/interact/destination_task)
 	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
 	if(isnull(monkey_resolve))
@@ -269,7 +247,6 @@
 
 	check_end_of_use_for_use_with_empty_hand(destination_task, TRUE)
 
-/// Checks if we should continue using the empty hand after interaction
 /obj/machinery/big_manipulator/proc/check_end_of_use_for_use_with_empty_hand(datum/manipulator_task/cargo/interact/destination_task, item_was_used = TRUE)
 	if(!on || destination_task.worker_interaction != WORKER_EMPTY_USE)
 		finish_manipulation()
@@ -280,6 +257,23 @@
 		return
 
 	addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand), destination_task), BASE_INTERACTION_TIME)
+
+/// Throws the held object in the direction of the task's turf.
+/obj/machinery/big_manipulator/proc/throw_thing(datum/manipulator_task/cargo/dropoff_base/throw/throw_task)
+	var/drop_turf = throw_task.interaction_turf
+	var/atom/movable/held_atom = held_object?.resolve()
+
+	held_atom.forceMove(drop_turf)
+	do_attack_animation(drop_turf)
+	manipulator_arm.do_attack_animation(drop_turf)
+
+	if(isliving(held_atom) && !(obj_flags & EMAGGED))
+		held_atom.dir = get_dir(get_turf(held_atom), get_turf(src))
+		finish_manipulation()
+		return
+
+	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_turf(held_atom))), throw_task.throw_range, 2)
+	finish_manipulation()
 
 /// Completes the current manipulation action and schedules the next step.
 /obj/machinery/big_manipulator/proc/finish_manipulation()
