@@ -217,6 +217,8 @@
 		if(add_romerol && pizzabox.pizza)
 			pizzabox.pizza.reagents.add_reagent(/datum/reagent/romerol, pizzabox.pizza.slices_left)
 			add_romerol = FALSE
+			log_game("A romerol pizza (as [pizzabox.pizza]) was created in a pizza crate delivery.")
+			message_admins("A romerol pizza (as [pizzabox.pizza]) was created in a pizza crate delivery.")
 
 /// adds the chance for an infinite pizza box
 /datum/supply_pack/organic/pizza/proc/add_anomalous(obj/structure/closet/crate/new_crate)
