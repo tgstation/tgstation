@@ -161,19 +161,33 @@
 
 	for(var/obj/item/radio/called_radio as anything in radios)
 		called_radio.on_receive_message(data)
-
+	var/list/message_mods = data["mods"]
 	// From the list of radios, find all mobs who can hear those.
 	var/list/receive = get_hearers_in_radio_ranges(radios)
+	var/list/receive_radios = null
+
+	if (message_mods && message_mods[MODE_TTS_IDENTIFIER]) // only do this if we have a TTS identifier to save on perf
+		receive_radios = get_hearers_in_radio_ranges_track_radios(radios, frequency)
 
 	// Add observers who have ghost radio enabled.
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
 		if(get_chat_toggles(ghost.client) & CHAT_GHOSTRADIO)
 			receive |= ghost
+			if (message_mods && message_mods[MODE_TTS_IDENTIFIER])
+				receive_radios[TTS_GHOST_RADIO] |= ghost
 
 	// Render the message and have everybody hear it.
 	// Always call this on the virtualspeaker to avoid issues.
 	var/spans = data["spans"]
-	var/list/message_mods = data["mods"]
+
+	if(message_mods && message_mods[MODE_TTS_IDENTIFIER])
+		receive_radios[TTS_GHOST_RADIO] = filter_tts_listeners(receive_radios[TTS_GHOST_RADIO], frequency)
+		for(var/radio in receive_radios)
+			if(!LAZYLEN(receive_radios[radio]))
+				continue
+			if(!SStts.queued_radio_messages[message_mods[MODE_TTS_IDENTIFIER]])
+				SStts.queued_radio_messages[message_mods[MODE_TTS_IDENTIFIER]] = list()
+			SStts.queued_radio_messages[message_mods[MODE_TTS_IDENTIFIER]][radio] = receive_radios[radio]
 
 	for(var/atom/movable/hearer as anything in receive)
 		if(!hearer)

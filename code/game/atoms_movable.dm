@@ -109,6 +109,12 @@
 	/// The pitch adjustment that this movable uses when speaking.
 	var/pitch = 0
 
+	/// The base set of blips to use for blip calculation.
+	var/blip_base = "male"
+
+	/// The blip variant to use for blip calculation.
+	var/blip_number = "1"
+
 	/// Datum that keeps all data related to zero-g drifting and handles related code/comsigs
 	var/datum/drift_handler/drift_handler
 

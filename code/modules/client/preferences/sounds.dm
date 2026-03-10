@@ -65,6 +65,23 @@
 /datum/preference/choiced/sound_tts/create_default_value()
 	return TTS_SOUND_ENABLED
 
+/datum/preference/choiced/sound_tts_radio
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_tts_radio"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/choiced/sound_tts_radio/init_possible_values()
+	return list(TTS_SOUND_ALL_RADIO, TTS_SOUND_DEPARTMENTAL_RADIO, TTS_SOUND_NO_RADIO)
+
+/datum/preference/choiced/sound_tts_radio/create_default_value()
+	return TTS_SOUND_ALL_RADIO
+
+/datum/preference/toggle/sound_tts_hear_self_radio
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_tts_hear_self_radio"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = FALSE // turn this on at your own peril
+
 /datum/preference/numeric/volume/sound_tts_volume
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_tts_volume"
