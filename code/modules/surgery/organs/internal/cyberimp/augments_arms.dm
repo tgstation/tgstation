@@ -522,7 +522,7 @@
 		if(ethereal_target.pulledby == source && source.grab_state >= GRAB_NECK)
 			var/datum/species/ethereal/eth_species = ethereal_target.dna.species
 			if(!eth_species.spine_cracked)
-				crack_spine_attempt(source, ethereal_target)
+				INVOKE_ASYNC(src, PROC_REF(crack_spine_attempt), source, ethereal_target)
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(HAS_TRAIT(source, TRAIT_HULK)) //NO HULK
