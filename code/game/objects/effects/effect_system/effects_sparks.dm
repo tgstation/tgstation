@@ -90,9 +90,19 @@
 	primary_intercept.render_target = old_target
 	cone_intercept.render_source = ""
 	cone_intercept.render_target = old_cone_target
-	// Reset our transform because otherwise it will double apply
+	// Dir is important I'm told
+	primary_intercept.vis_flags |= VIS_INHERIT_DIR
+	cone_intercept.vis_flags |= VIS_INHERIT_DIR
+	// Will double apply, here we go gang
 	primary_intercept.transform = null
 	cone_intercept.transform = null
+	primary_intercept.color = null
+	cone_intercept.color = null
+	primary_intercept.alpha = 255
+	cone_intercept.alpha = 255
+	// Sometimes can be BLEND_SUBTRACT, we don't want that
+	primary_intercept.blend_mode = BLEND_ADD
+	cone_intercept.blend_mode = BLEND_ADD
 	SEND_SIGNAL(src, COMSIG_LIGHT_MIDDLEMAN_UPDATED)
 
 /datum/light_middleman/proc/light_removed(datum/source, atom/movable/light_holder)
