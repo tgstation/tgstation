@@ -648,6 +648,7 @@
 		span_hear("You hear a sharp crackling snap!"),
 		COMBAT_MESSAGE_RANGE,
 		source,
+		ignored_mobs = source,
 	)
 	var/datum/species/ethereal/eth_species = ethereal_target.dna.species
 	eth_species.start_spine_crack_overload(ethereal_target)
