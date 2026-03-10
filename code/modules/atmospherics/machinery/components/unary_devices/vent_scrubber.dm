@@ -251,8 +251,8 @@
 				//take this gases portion of removal_ratio of the turfs air, or all of that gas if less than or equal to MINIMUM_MOLES_TO_SCRUB
 				var/transferred_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_gases[gas][MOLES]))
 
-				filtered_out.adjust_gas(gas, transferred_moles)
-				environment.adjust_gas(gas, -transferred_moles)
+				filtered_gases[gas][MOLES] = transferred_moles
+				env_gases[gas][MOLES] -= transferred_moles
 
 			environment.garbage_collect()
 
