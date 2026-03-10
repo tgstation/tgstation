@@ -45,6 +45,7 @@
 	var/rangemult = 1
 	var/flickering = FALSE
 	var/currently_flickered
+	var/spine_cracked = FALSE
 	var/obj/effect/dummy/lighting_obj/ethereal_light
 
 /datum/species/ethereal/Destroy(force)
@@ -223,6 +224,26 @@
 /datum/species/ethereal/proc/stop_flicker(mob/living/carbon/human/ethereal)
 	flickering = FALSE
 	currently_flickered = FALSE
+
+/datum/species/ethereal/proc/start_spine_crack_overload(mob/living/carbon/human/ethereal)
+	spine_cracked = TRUE
+	powermult = 10
+	rangemult = 10
+	refresh_light_color(ethereal)
+	ethereal.apply_damage(20, BRUTE)
+	to_chat(ethereal, span_userdanger("Light pours involuntarily out of your cracked spine!"))
+	// Flash everyone nearby
+	for(var/mob/living/nearby in range(8, ethereal))
+		if(nearby == ethereal)
+			continue
+		nearby.flash_act(intensity = 2, length = 4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(stop_spine_crack_overload), ethereal), 2 MINUTES, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+/datum/species/ethereal/proc/stop_spine_crack_overload(mob/living/carbon/human/ethereal)
+	powermult = 1
+	rangemult = 1
+	refresh_light_color(ethereal)
+	to_chat(ethereal, span_notice("The excess light bleeding from your spine finally fades."))
 
 /datum/species/ethereal/get_features()
 	var/list/features = ..()

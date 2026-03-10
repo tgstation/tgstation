@@ -424,6 +424,7 @@
 	)
 
 #define DOAFTER_SOURCE_STRONGARM_INTERACTION "strongarm interaction"
+#define DOAFTER_SOURCE_STRONGARM_CRACKSPINE "strongarm spine crack"
 
 // Strong-Arm Implant //
 
@@ -515,6 +516,15 @@
 		return NONE
 	if(!isliving(target))
 		return NONE
+
+	if(isethereal(target))
+		var/mob/living/carbon/human/ethereal_target = target
+		if(ethereal_target.pulledby == source && source.grab_state >= GRAB_NECK)
+			var/datum/species/ethereal/eth_species = ethereal_target.dna.species
+			if(!eth_species.spine_cracked)
+				crack_spine_attempt(source, ethereal_target)
+				return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	if(HAS_TRAIT(source, TRAIT_HULK)) //NO HULK
 		return NONE
 	if(!COOLDOWN_FINISHED(src, slam_cooldown) && ishuman(target))
@@ -613,6 +623,35 @@
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
+/// Attempt to crack the spine of a grabbed ethereal
+/obj/item/organ/cyberimp/arm/strongarm/proc/crack_spine_attempt(mob/living/carbon/human/source, mob/living/carbon/human/ethereal_target)
+	if(organ_flags & ORGAN_FAILING)
+		to_chat(source, span_danger("Your arm spasms before you can act!"))
+		return
+	to_chat(source, span_warning("You grip [ethereal_target]'s crystalline spine, preparing to crack it..."))
+	ethereal_target.visible_message(
+		span_danger("[source] seizes [ethereal_target]'s spine with both hands!"),
+		span_userdanger("[source] seizes your crystalline spine with both hands!"),
+	)
+	if(!do_after(source, 3 SECONDS, target = ethereal_target, interaction_key = DOAFTER_SOURCE_STRONGARM_CRACKSPINE))
+		to_chat(source, span_warning("Your grip slips!"))
+		return
+	if(!isethereal(ethereal_target) || QDELETED(ethereal_target) || ethereal_target.pulledby != source || source.grab_state < GRAB_NECK)
+		to_chat(source, span_warning("You lose your grip!"))
+		return
+	log_combat(source, ethereal_target, "cracked the spine of", "strongarm implants")
+	playsound(source, 'sound/effects/snap.ogg', 75, TRUE)
+	to_chat(source, span_danger("You wrench [ethereal_target]'s crystalline spine — light floods out of them!"))
+	ethereal_target.visible_message(
+		span_danger("[source] wrenches [ethereal_target]'s crystalline spine, causing light to burst out!"),
+		span_userdanger("Your crystalline spine cracks as [source] wrenches it, flooding you with light!"),
+		span_hear("You hear a sharp crackling snap!"),
+		COMBAT_MESSAGE_RANGE,
+		source,
+	)
+	var/datum/species/ethereal/eth_species = ethereal_target.dna.species
+	eth_species.start_spine_crack_overload(ethereal_target)
+
 /datum/status_effect/organ_set_bonus/strongarm
 	id = "organ_set_bonus_strongarm"
 	organs_needed = 2
@@ -631,3 +670,4 @@
 	owner.RemoveElement(/datum/element/door_pryer, pry_time = 6 SECONDS, interaction_key = DOAFTER_SOURCE_STRONGARM_INTERACTION)
 
 #undef DOAFTER_SOURCE_STRONGARM_INTERACTION
+#undef DOAFTER_SOURCE_STRONGARM_CRACKSPINE
