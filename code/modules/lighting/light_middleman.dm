@@ -113,3 +113,48 @@
 
 /// Just... cause it's better then not having a bespoke type
 /obj/effect/abstract/light_middleman
+
+// Procs for reuse on multiple types
+/proc/fire_flicker_middleman(datum/light_middleman/middleman)
+	var/obj/effect/abstract/main_light = middleman.primary_intercept
+	// Just in case a subtype is wildin
+	var/obj/effect/abstract/cone_light = middleman.cone_intercept
+
+	/// Applies a nice random flicker to flares and their subtypes which will I hope sell the fire effect better
+	var/list/random_times = list()
+	for(var/i in 1 to 17)
+		// Makes a nice upside down U distribution
+		var/random_down = LERP(-0.075 SECONDS, 0.075 SECONDS, ANCHORED_INVERSE_CAUCHY(0.55))
+		var/random_bottom = LERP(-0.05 SECONDS, 0.05 SECONDS, ANCHORED_INVERSE_CAUCHY(0.55))
+		var/random_up = LERP(-0.075 SECONDS, 0.075 SECONDS, ANCHORED_INVERSE_CAUCHY(0.55))
+		// We want a potentially quite long "top end" so the flicker can be an actual flicker instead of a heartbeat (that's the goal at least)
+		var/random_top = LERP(-0.225 SECONDS, 0.225 SECONDS, ANCHORED_INVERSE_CAUCHY(0.55))
+		random_times += list(list(
+			0.125 SECONDS + random_down,
+			0 SECONDS + random_bottom,
+			0.125 SECONDS + random_up,
+			0.275 SECONDS + random_top,
+		))
+	// Going to loop our alpha high and low semi quickly to mimik a flickering fire/flare
+	var/list/first_time = random_times[1]
+	animate(main_light, alpha = 235, time = first_time[1], easing = CUBIC_EASING|EASE_OUT, loop = -1)
+	animate(alpha = 235, time = first_time[2])
+	animate(alpha = 255, time = first_time[3], easing = CUBIC_EASING|EASE_OUT)
+	animate(alpha = 255, time = first_time[4])
+	for(var/list/time in random_times - first_time)
+		animate(alpha = 235, time = time[1], easing = CUBIC_EASING|EASE_OUT)
+		animate(alpha = 235, time = first_time[2])
+		animate(alpha = 255, time = first_time[3], easing = CUBIC_EASING|EASE_OUT)
+		animate(alpha = 255, time = first_time[4])
+
+	// I'd really love to do both these in the same loop but parallel animations are the devil from the bible
+	// I don't think any of these are directional but just in case
+	animate(cone_light, alpha = 235, time = first_time[1], easing = CUBIC_EASING|EASE_OUT, loop = -1)
+	animate(alpha = 235, time = first_time[2])
+	animate(alpha = 255, time = first_time[3], easing = CUBIC_EASING|EASE_OUT)
+	animate(alpha = 255, time = first_time[4])
+	for(var/list/time in random_times - first_time)
+		animate(alpha = 235, time = time[1], easing = CUBIC_EASING|EASE_OUT)
+		animate(alpha = 235, time = first_time[2])
+		animate(alpha = 255, time = first_time[3], easing = CUBIC_EASING|EASE_OUT)
+		animate(alpha = 255, time = first_time[4])
