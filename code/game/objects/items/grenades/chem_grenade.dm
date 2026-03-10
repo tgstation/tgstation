@@ -549,11 +549,8 @@
 
 /obj/item/grenade/chem_grenade/teargas/instant/Initialize(mapload)
 	. = ..()
-	detonate()
-
-/obj/item/grenade/chem_grenade/teargas/instant/detonate(mob/living/lanced_by)
-	. = ..()
-	qdel(src)
+	if(detonate())
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/grenade/chem_grenade/facid
 	name = "acid grenade"

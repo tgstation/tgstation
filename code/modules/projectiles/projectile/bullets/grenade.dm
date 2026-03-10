@@ -7,8 +7,11 @@
 	damage = 60
 	embed_type = null
 	shrapnel_type = null
+	/// The devastation range on our grenade. Positive values determine the range in which the explosive will gib mobs and destroy plating.
 	var/ex_dev_range = -1
+	/// The light explosion radius of our grenade. Determines the standard explosion range of the grenade.
 	var/ex_light_range = 2
+	/// The flame range, determining the range of the fireball created by the explosion of the grenade.
 	var/ex_flame_range = 3
 
 /obj/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0, pierce_hit)
