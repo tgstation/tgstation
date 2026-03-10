@@ -51,6 +51,16 @@
 		return NONE
 	if(!source.can_unarmed_attack())
 		return COMPONENT_SKIP_ATTACK
+
+	// Hulks can crack an ethereal's spine
+	if(isethereal(target) && ishuman(target))
+		var/mob/living/carbon/human/ethereal_target = target
+		if(ethereal_target.pulledby == source && source.grab_state >= GRAB_NECK)
+			var/datum/species/ethereal/eth_species = ethereal_target.dna.species
+			if(!eth_species.spine_cracked)
+				INVOKE_ASYNC(src, PROC_REF(hulk_crack_spine), source, ethereal_target)
+				return COMPONENT_CANCEL_ATTACK_CHAIN
+
 	if(!target.attack_hulk(owner))
 		return NONE
 
@@ -246,6 +256,33 @@
 		yeeted_person.emote("scream")
 	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE)
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
+
+/// Hulks can like snap spines of ethereals
+/datum/mutation/hulk/proc/hulk_crack_spine(mob/living/carbon/human/source, mob/living/carbon/human/ethereal_target)
+	to_chat(source, span_warning("You seize [ethereal_target]'s crystalline spine in your massive hands..."))
+	ethereal_target.visible_message(
+		span_danger("[source] seizes [ethereal_target]'s spine with both hands!"),
+		span_userdanger("[source] seizes your crystalline spine with both hands!"),
+	)
+	if(!do_after(source, 2 SECONDS, target = ethereal_target))
+		to_chat(source, span_warning("Your grip slips!"))
+		return
+	if(!isethereal(ethereal_target) || QDELETED(ethereal_target) || ethereal_target.pulledby != source || source.grab_state < GRAB_NECK)
+		to_chat(source, span_warning("You lose your grip!"))
+		return
+	log_combat(source, ethereal_target, "cracked the spine of", "hulk powers")
+	playsound(source, 'sound/effects/snap.ogg', 75, TRUE)
+	to_chat(source, span_danger("You wrench [ethereal_target]'s crystalline spine: light floods out of them!"))
+	ethereal_target.visible_message(
+		span_danger("[source] wrenches [ethereal_target]'s crystalline spine, causing light to burst out!"),
+		span_userdanger("Your crystalline spine cracks as [source] wrenches it, flooding you with light!"),
+		span_hear("You hear a sharp crackling snap!"),
+		COMBAT_MESSAGE_RANGE,
+		source,
+		ignored_mobs = source,
+	)
+	var/datum/species/ethereal/eth_species = ethereal_target.dna.species
+	eth_species.start_spine_crack_overload(ethereal_target)
 
 /datum/mutation/hulk/wizardly
 	name = "Hulk (Magical)"
