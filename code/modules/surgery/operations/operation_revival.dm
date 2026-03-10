@@ -15,7 +15,6 @@
 		/obj/item = null,
 	)
 	success_sound = 'sound/machines/defib/defib_zap.ogg'
-	required_biotype = NONE
 	target_zone = BODY_ZONE_HEAD
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
 
@@ -110,10 +109,10 @@
 
 /datum/surgery_operation/basic/revival/mechanic
 	name = "full system reboot"
-	required_biotype = MOB_ROBOTIC
+	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/basic/revival/mechanic/brain_check(obj/item/organ/brain/brain)
-	return !..()
+	return TRUE // We may have an organic brain (in the case of augmentation) or a robotic brain
 
 /datum/surgery_operation/basic/revival/mechanic/mob_check(mob/living/patient)
-	return !..()
+	return TRUE // We may just be an organic with a augmented robotic head, or full android
