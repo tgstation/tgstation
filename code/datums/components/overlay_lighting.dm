@@ -80,7 +80,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/atom/movable/movable_parent = parent
-	if(!force && movable_parent.light_system != OVERLAY_LIGHT && movable_parent.light_system != OVERLAY_LIGHT_DIRECTIONAL && movable_parent.light_system != OVERLAY_LIGHT_BEAM)
+	if(!force && !IS_OVERLAY_LIGHT_SYSTEM(movable_parent.light_system))
 		stack_trace("[type] added to [parent], with [movable_parent.light_system] value for the light_system var. Use [OVERLAY_LIGHT], [OVERLAY_LIGHT_DIRECTIONAL] or [OVERLAY_LIGHT_BEAM] instead.")
 		return COMPONENT_INCOMPATIBLE
 
@@ -227,7 +227,7 @@
 	// Accidentially brick lighting overlays by mutating them
 	var/mutable_appearance/mask_clone = new (visible_mask)
 	var/mutable_appearance/cone_clone = directional ? new /mutable_appearance(cone) : null
-	SEND_SIGNAL(parent, COMSIG_ATOM_OVERLAY_LIGHT_APPLIED, mask_clone, cone_clone)
+	SEND_SIGNAL(parent, COMSIG_ATOM_OVERLAY_LIGHT_APPLIED, mask_clone, cone_clone, current_holder)
 
 /// Removes our overlay from our holder, assuming everything's setup proper
 /// MUST be called before modifying cone or visible_mask, or you will cause stuck lighting
@@ -240,6 +240,7 @@
 	if(directional)
 		current_holder.underlays -= cone
 	currently_displaying = FALSE
+	SEND_SIGNAL(parent, COMSIG_ATOM_OVERLAY_LIGHT_REMOVED, current_holder)
 
 ///Called to change the value of parent_attached_to.
 /datum/component/overlay_lighting/proc/set_parent_attached_to(atom/movable/new_parent_attached_to)

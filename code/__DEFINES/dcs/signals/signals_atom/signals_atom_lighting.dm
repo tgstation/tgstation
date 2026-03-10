@@ -47,5 +47,9 @@
 ///Called when an atom has a light template applied to it. Frombase of [/datum/light_template/proc/mirror_onto]: ()
 #define COMSIG_ATOM_LIGHT_TEMPLATE_MIRRORED "atom_light_template_mirrored"
 
-///Called when an atom's overlay component modifies its visuals, from base of [/datum/component/overlay_lighting/proc/show_to_holder]: (image/visible_mask, image/cone)
+///Called when an atom's overlay component applies visuals, from base of [/datum/component/overlay_lighting/proc/show_to_holder]: (atom/movable/light_holder)
 #define COMSIG_ATOM_OVERLAY_LIGHT_APPLIED "atom_overlay_light_applied"
+
+///Called when an atom's overlay component hides its visuals, from base of [/datum/component/overlay_lighting/proc/hide_from_holder]: (atom/movable/light_holder)
+#define COMSIG_ATOM_OVERLAY_LIGHT_REMOVED "atom_overlay_light_removed"
+
