@@ -124,3 +124,12 @@
   stylemistake:
   - rscadd: Get your freespins TODAY at your local slot machine, with new impressive
       physics-based spinning action!
+2026-03-10:
+  Majkl-J:
+  - bugfix: Parallax layers no longer snap to and from the center of the screen abrubtly
+      when changing the random parallax layer.
+  SmArtKar:
+  - bugfix: Fixed explodable component runtimes
+  Y0SH1M4S73R:
+  - qol: (Most) stacks will no longer fall right out of bags if you put enough in
+      to make the stack normal-sized.

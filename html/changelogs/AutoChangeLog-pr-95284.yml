@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Parallax layers no longer snap to and from the center of the screen abrubtly when changing the random parallax layer."
