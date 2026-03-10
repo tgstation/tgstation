@@ -473,7 +473,9 @@
 	hide_from_holder()
 	visible_mask.render_source = new_source
 	if(directional)
-		var/new_cone_source = "[new_source]_cone"
+		var/new_cone_source = ""
+		if(new_source)
+			new_cone_source = "[new_source]_cone"
 		cone.render_source = new_cone_source
 	show_to_holder()
 
