@@ -45,6 +45,7 @@
 	var/rangemult = 1
 	var/flickering = FALSE
 	var/currently_flickered
+	///Is the ethereal's spine currently cracked?
 	var/spine_cracked = FALSE
 	var/obj/effect/dummy/lighting_obj/ethereal_light
 
