@@ -1,0 +1,9 @@
+author: "Code by NecromancerAnne, Sprites by Simpleton"
+delete-after: True
+changes:
+  - rscadd: "Adds the Pump-Action Grenade Launcher and respective kit to the nuclear operative uplink. It fires 40mm grenade shells."
+  - rscadd: "Adds 40mm Incendiary grenades. Set things ablaze!"
+  - rscadd: "Adds 40mm Titanium Flak shells. It's like buckshot, but more buck."
+  - rscadd: "Adds 40mm Tear Gas grenades. Oppressive AND convenient."
+  - balance: "The caravan grenade launcher has been changed to a M79 break-action grenade launcher. Now comes with some tear gas grenades and a disk for printing more (as well as 40mm rubber puck)."
+  - balance: "40mm Rubber Puck knocks people down, and isn't weak against armor, but does less damage overall. It also bounces off walls."
