@@ -183,6 +183,8 @@
 	var/anomalous_box_provided = FALSE
 	/// one percent chance for a pizza box to be the ininfite pizza box
 	var/infinite_pizza_chance = 1
+	/// chance that any one of the pizzas in the crate will have romerol added to it
+	var/romerol_chance = 0.2
 	///Whether we've provided a bomb pizza box already this shift or not.
 	var/boombox_provided = FALSE
 	/// three percent chance for a pizza box to be the pizza bomb box
@@ -207,7 +209,7 @@
 /datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/new_crate)
 	. = ..()
 	var/list/rng_pizza_list = pizza_types.Copy()
-	var/add_romerol = prob(0.2)
+	var/add_romerol = prob(romerol_chance)
 	for(var/i in 1 to 5)
 		if(add_anomalous(new_crate))
 			continue
