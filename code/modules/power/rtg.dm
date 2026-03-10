@@ -53,7 +53,7 @@
 		. += span_notice("The status display reads: Power generation at <b>[display_power(power_gen, convert = FALSE)]</b>.")
 
 /obj/machinery/power/rtg/screwdriver_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", initial(icon_state), tool))
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, tool))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
