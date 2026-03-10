@@ -129,6 +129,7 @@
 	RegisterSignal(parent, COMSIG_LIGHT_EATER_QUEUE, PROC_REF(on_light_eater))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_parent_moved))
 	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_move))
+	RegisterSignal(parent, COMSIG_ITEM_BEFORE_PICKUP_ANIMATION, PROC_REF(on_pickup_anim))
 	var/atom/movable/movable_parent = parent
 	if(movable_parent.light_flags & LIGHT_ATTACHED)
 		overlay_lighting_flags |= LIGHTING_ATTACHED
@@ -355,6 +356,11 @@
 	if(cone)
 		SET_PLANE_EXPLICIT(cone, O_LIGHTING_VISUAL_PLANE, source)
 	show_to_holder()
+
+// Avoids duplicate overlays (one from our NEXT holder, selected after the animation, one from the pickup animation)
+/datum/component/overlay_lighting/proc/on_pickup_anim(atom/source)
+	SIGNAL_HANDLER
+	hide_from_holder()
 
 ///Called when the current_holder is qdeleted, to remove the light effect.
 /datum/component/overlay_lighting/proc/on_parent_attached_to_qdel(atom/movable/source, force)
