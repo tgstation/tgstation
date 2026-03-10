@@ -58,9 +58,7 @@
 	return ..()
 
 /datum/preference/choiced/tts_blip_base/init_possible_values()
-	if(SStts.tts_enabled)
-		return list("Masculine", "Feminine")
-	return list("invalid")
+	return list("Masculine", "Feminine")
 
 /datum/preference/choiced/tts_blip_base/apply_to_human(mob/living/carbon/human/target, value)
 	if(SStts.tts_enabled)
