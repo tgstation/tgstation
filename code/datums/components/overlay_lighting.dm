@@ -223,7 +223,11 @@
 	if(directional)
 		current_holder.underlays += cone
 	currently_displaying = TRUE
-	SEND_SIGNAL(parent, COMSIG_ATOM_OVERLAY_LIGHT_APPLIED, visible_mask, directional ? cone : null)
+	// These are very intentionally copies so recipients cannot
+	// Accidentially brick lighting overlays by mutating them
+	var/mutable_appearance/mask_clone = new (visible_mask)
+	var/mutable_appearance/cone_clone = directional ? new /mutable_appearance(cone) : null
+	SEND_SIGNAL(parent, COMSIG_ATOM_OVERLAY_LIGHT_APPLIED, mask_clone, cone_clone)
 
 /// Removes our overlay from our holder, assuming everything's setup proper
 /// MUST be called before modifying cone or visible_mask, or you will cause stuck lighting
