@@ -102,6 +102,11 @@
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_REVENANT_INHIBITED),
+		SIGNAL_REMOVETRAIT(TRAIT_REVENANT_INHIBITED),
+		COMSIG_MOVABLE_MOVED,
+	), PROC_REF(update_revenant_abilities))
 	name = generate_random_mob_name()
 
 	GLOB.revenant_relay_mobs |= src
@@ -309,6 +314,7 @@
 		return
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
 	dormant = TRUE
+	update_mob_action_buttons()
 
 	visible_message(
 		span_warning("[src] lets out a waning screech as violet mist swirls around its dissolving body!"),
@@ -398,28 +404,39 @@
 
 	return TRUE
 
-/mob/living/basic/revenant/proc/cast_check(essence_cost)
+/mob/living/basic/revenant/proc/cast_check(essence_cost, deduct_essence = TRUE, silent = FALSE)
 	if(QDELETED(src))
 		return
 
 	var/turf/current = get_turf(src)
 
 	if(isclosedturf(current))
-		to_chat(src, span_revenwarning("You cannot use abilities from inside of a wall."))
+		if(!silent)
+			to_chat(src, span_revenwarning("You cannot use abilities from inside of a wall."))
 		return FALSE
 
 	for(var/obj/thing in current)
 		if(!thing.density || thing.CanPass(src, get_dir(current, src)))
 			continue
-		to_chat(src, span_revenwarning("You cannot use abilities inside of a dense object."))
+		if(!silent)
+			to_chat(src, span_revenwarning("You cannot use abilities inside of a dense object."))
 		return FALSE
+
+	if(dormant)
+		if(!silent)
+			to_chat(src, span_revenwarning("Your powers lie dormant right now!"))
+		return SPELL_CANCEL_CAST
 
 	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED))
-		to_chat(src, span_revenwarning("Your powers have been suppressed by a nullifying energy!"))
+		if(!silent)
+			to_chat(src, span_revenwarning("Your powers have been suppressed by a nullifying energy!"))
 		return FALSE
 
-	if(!change_essence_amount(essence_cost, TRUE))
-		to_chat(src, span_revenwarning("You lack the essence to use that ability."))
+	essence_cost = abs(essence_cost) * -1
+	var/has_essence = deduct_essence ? change_essence_amount(essence_cost, silent = TRUE) : (essence + essence_cost >= 0)
+	if(!has_essence)
+		if(!silent)
+			to_chat(src, span_revenwarning("You lack the essence to use that ability!"))
 		return FALSE
 
 	return TRUE
@@ -443,6 +460,7 @@
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	RemoveInvisibility(type)
 	alpha = 255
+	update_mob_action_buttons()
 
 /mob/living/basic/revenant/proc/change_essence_amount(essence_to_change_by, silent = FALSE, source = null)
 	if(QDELETED(src))
@@ -465,5 +483,18 @@
 		else
 			to_chat(src, span_revenminor("Lost [essence_to_change_by]E [source ? "from [source]":""]."))
 	return TRUE
+
+/mob/living/basic/revenant/mob_negates_gravity()
+	return TRUE // i don't gotta explain shit
+
+/mob/living/basic/revenant/proc/update_revenant_abilities()
+	SIGNAL_HANDLER
+	update_mob_action_buttons()
+
+/mob/living/basic/revenant/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, essence) || vname == NAMEOF(src, max_essence) || vname == NAMEOF(src, essence_excess))
+		update_health_hud()
+		update_mob_action_buttons()
 
 #undef REVENANT_STUNNED_TRAIT
