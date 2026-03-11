@@ -134,6 +134,9 @@
   - qol: (Most) stacks will no longer fall right out of bags if you put enough in
       to make the stack normal-sized.
 2026-03-11:
+  Aliceee2ch:
+  - map: Added bigger version of BYOS.
+  - map: Rogue airless turfs on original BYOS were replaced on those with air.
   Code by NecromancerAnne, Sprites by Simpleton:
   - rscadd: Adds the Pump-Action Grenade Launcher and respective kit to the nuclear
       operative uplink. It fires 40mm grenade shells.
