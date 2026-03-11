@@ -90,7 +90,7 @@
 	addtimer(CALLBACK(src, PROC_REF(create_spores), victim), MUSHROOM_SPORE_COOLDOWN)
 
 /**
- *
+ * This proc cleans up mushroom particles and spawns a new patch of brown mushrooms like glowshrooms do.
  */
 /obj/item/organ/mushroom_cap/proc/create_spores(mob/living/victim)
 	if(QDELETED(victim))
