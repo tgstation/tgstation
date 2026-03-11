@@ -95,18 +95,22 @@
 /mob/living/basic/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SEE_BLESSED_TILES), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SEE_BLESSED_TILES, TRAIT_IGNORE_ELEVATION), INNATE_TRAIT)
 
 	grant_actions_by_list(abilities)
 
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignal(src, COMSIG_REFLECTION_UPDATED, PROC_REF(on_reflect))
 	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_REVENANT_REVEALED),
+		SIGNAL_REMOVETRAIT(TRAIT_REVENANT_REVEALED),
 		SIGNAL_ADDTRAIT(TRAIT_REVENANT_INHIBITED),
 		SIGNAL_REMOVETRAIT(TRAIT_REVENANT_INHIBITED),
-		COMSIG_MOVABLE_MOVED,
-	), PROC_REF(update_revenant_abilities))
+		SIGNAL_ADDTRAIT(TRAIT_NO_TRANSFORM),
+		SIGNAL_REMOVETRAIT(TRAIT_NO_TRANSFORM),
+	), PROC_REF(update_revenant_appearance))
 	name = generate_random_mob_name()
 
 	GLOB.revenant_relay_mobs |= src
@@ -151,8 +155,12 @@
 		essence = min(essence + (essence_regen_amount * change_in_time), max_essence)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 
-	update_appearance(UPDATE_ICON)
 	update_health_hud()
+
+/mob/living/basic/revenant/proc/update_revenant_appearance()
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_ICON)
+	update_mob_action_buttons()
 
 /mob/living/basic/revenant/AltClickOn(atom/target)
 	if(CAN_I_SEE(target))
@@ -496,5 +504,23 @@
 	if(vname == NAMEOF(src, essence) || vname == NAMEOF(src, max_essence) || vname == NAMEOF(src, essence_excess))
 		update_health_hud()
 		update_mob_action_buttons()
+
+/mob/living/basic/revenant/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	update_mob_action_buttons()
+
+/mob/living/basic/revenant/proc/on_reflect(datum/source, atom/movable/reflecting_in, obj/effect/abstract/reflection)
+	SIGNAL_HANDLER
+	// powers are inhibited and we're not revealed so we can't project a reflect
+	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) && !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
+		return
+
+	// otherwise revenants are always visible in reflections even if otherwise invisible
+	reflection.clear_filters()
+	reflection.SetInvisibility(0)
+
+	// but if we're (actually) invisible we look all wibbly and ghostly (unless the mirror is magic)
+	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) && !istype(reflecting_in, /obj/structure/mirror/magic))
+		apply_wibbly_filters(reflection)
 
 #undef REVENANT_STUNNED_TRAIT

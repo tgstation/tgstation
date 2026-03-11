@@ -1,0 +1,4 @@
+author: "Seven"
+delete-after: True
+changes:
+  - bugfix: "Sechailers now block pepperspray when up, not when they are down."

@@ -32,3 +32,127 @@
       on local, speeding up time to open in development.
   - bugfix: GAGS map preview generation no longer silently errors outside of unit
       tests due to a compilation error.
+2026-03-04:
+  Absolucy:
+  - bugfix: Fixed setting a custom chat font screwing up some spans, such as robotic
+      speech.
+  DATA-xPUNGED:
+  - rscadd: AIs can now rotate their hologram by using the "block movement" keybind.
+  SmArtKar:
+  - bugfix: Fixed toilets being able to delete objects
+2026-03-05:
+  Jacquerel:
+  - rscadd: You can draw faces onto some bots using a pen, crayon, or spraycan
+  Melbert:
+  - rscdel: Removed ember particle effects from mob fire
+  - rscadd: Mob fire brightness now scales with how "on fire" it is - the more fire,
+      the brighter the light
+  - rscadd: Mob fire now has a bloom effect and glows a bit
+  - rscadd: The threshold that human fire sprites update from "small" to "big" has
+      been increased (by 10%)
+  - bugfix: Fixed broken frame in monkey fire animation
+  - bugfix: All Xenomorphs now use the generic fire sprite
+  - bugfix: All Xenomorphs no longer lose their fire sprites when resting
+  - bugfix: Large Xenomorphs now offset their fire overlay to the middle of their
+      sprite
+  lelandkemble:
+  - rscadd: You can now deploy, undeploy, activate & deactivate other people's MODsuit
+      via the strip menu
+2026-03-06:
+  SmArtKar:
+  - bugfix: Fixed elder atmosian getting affected by metal hydrogen it is made out
+      of
+  - bugfix: Fixed rogue "ING IN" on lobby screen
+  maximal08, levels0:
+  - bugfix: experimentor wires should now work properly
+2026-03-07:
+  Melbert:
+  - balance: Fish can be scanned for the dna vault.
+  - balance: You need more animals on average to complete a dna vault.
+  - balance: You need less plants on average to complete a dna vault.
+  SapphoQueer:
+  - spellcheck: Heckacious Larincks no longer uses a github-TOS-breaking word as one
+      of it's transforms
+  SyncIt21:
+  - code_imp: reagent transfer & removal operations now have faster cpu performance
+  - code_imp: cleaned up code pertaining to reagent & reaction lookup
+  ttt, JohnFulpWillard:
+  - rscadd: Added a Memory HUD to your UI. In case you didn't know, you get memories
+      of things happening around the station, or important antagonist info such as
+      the nuclear codes.
+  - rscdel: Removed Borg's "store" button, now the cyborg module will behave more
+      similar to a backpack (LMB to store, RMB to open/close)
+  - bugfix: Borg material now properly displays how much materials they can afford
+      with their cell's charge.
+  - qol: Your HUD prefs are respected on more mobs now.
+  - qol: Improved the HUD of simple/basic animals, as well as Cyborgs, AIs, pAIs and
+      Xenomorphs.
+2026-03-08:
+  Absolucy:
+  - admin: Your own ASay messages will no longer trigger your highlights.
+  BingusTheClown:
+  - bugfix: Spy Bootknife now gives slash proc's correctly when equipped.
+  Gboster-0:
+  - bugfix: fixed the game trying to make you sell chemical reactions for a public
+      bounty
+  MoondancerPony:
+  - bugfix: fixed turfs sometimes not being in any area's contents
+  Y0SH1M4S73R:
+  - rscadd: NanoPaint, the paint app for modular computers, is now available for download.
+      Use it to create new images, or edit existing ones on your device.
+  - rscadd: Marlowe Treeby's Art Galaxy now allows you to download paintings to your
+      device as image files.
+  - rscadd: The File Manager can now be used to print image files to most canvas and
+      photograph formats. Printing a canvas can only be done at a console, however.
+  - qol: The PDA camera app can take photos at a distance.
+  - qol: You can now save photos taken with the PDA camera app to your device.
+  - qol: You can adjust the size of photos you take with the PDA camera app.
+  - qol: You can change the name, description, and caption of photos taken with the
+      PDA camera app, up to the point of saving them to disk or printing them for
+      the first time
+  - bugfix: The Universal Sprite Editor Framework (used for paint canvases and NanoPaint)
+      now uses Bresenham's line drawing algorithm for pencil and eraser operations.
+  - bugfix: The Universal Sprite Editor Framework correctly saves icons.
+  - admin: Images created by players using NanoPaint will be logged for admins, and
+      can be viewed using the "Audit Player-made Sprites" verb.
+2026-03-09:
+  ArcaneMusic:
+  - qol: After discovering a strange object's behavior, you can now rename it using
+      a pen.
+  oranges:
+  - rscadd: suicide act for shrink ray
+  stylemistake:
+  - rscadd: Get your freespins TODAY at your local slot machine, with new impressive
+      physics-based spinning action!
+2026-03-10:
+  Majkl-J:
+  - bugfix: Parallax layers no longer snap to and from the center of the screen abrubtly
+      when changing the random parallax layer.
+  SmArtKar:
+  - bugfix: Fixed explodable component runtimes
+  Y0SH1M4S73R:
+  - qol: (Most) stacks will no longer fall right out of bags if you put enough in
+      to make the stack normal-sized.
+2026-03-11:
+  Aliceee2ch:
+  - map: Added bigger version of BYOS.
+  - map: Rogue airless turfs on original BYOS were replaced on those with air.
+  Code by NecromancerAnne, Sprites by Simpleton:
+  - rscadd: Adds the Pump-Action Grenade Launcher and respective kit to the nuclear
+      operative uplink. It fires 40mm grenade shells.
+  - rscadd: Adds 40mm Incendiary grenades. Set things ablaze!
+  - rscadd: Adds 40mm Titanium Flak shells. It's like buckshot, but more buck.
+  - rscadd: Adds 40mm Tear Gas grenades. Oppressive AND convenient.
+  - balance: The caravan grenade launcher has been changed to a M79 break-action grenade
+      launcher. Now comes with some tear gas grenades and a disk for printing more
+      (as well as 40mm rubber puck).
+  - balance: 40mm Rubber Puck knocks people down, and isn't weak against armor, but
+      does less damage overall. It also bounces off walls.
+  RusselNotSCP:
+  - bugfix: Most martian cocktails are no longer all the same color when put into
+      a bottle.
+  SyncIt21:
+  - qol: mixing tea/coffee with sugar gives you a small mood buff. So like do it
+  - qol: astrotame and cream now heals disgust
+  - qol: mixing different types of coffee can heal oxy damage, because you know coffee
+      has antioxidizing properties
