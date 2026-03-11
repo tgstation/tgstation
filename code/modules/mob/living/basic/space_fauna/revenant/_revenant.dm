@@ -492,4 +492,15 @@
 	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) && !istype(reflecting_in, /obj/structure/mirror/magic))
 		apply_wibbly_filters(reflection)
 
+/mob/living/basic/revenant/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(istype(get_area(src), /area/station/service/chapel))
+		if(invisibility)
+			to_chat(src, span_revennotice("Your connection to the world strengthens due to the latent spiritual energy in this area - you are now visible."))
+		SetInvisibility(INVISIBILITY_NONE, id = "chapel")
+	else
+		if(!invisibility)
+			to_chat(src, span_revennotice("Your connection to the world weakens as you leave the spiritual energy of the chapel behind - you are no longer visible."))
+		RemoveInvisibility(id = "chapel")
+
 #undef REVENANT_STUNNED_TRAIT
