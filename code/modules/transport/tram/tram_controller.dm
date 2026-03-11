@@ -368,7 +368,7 @@
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset.")
 	idle_platform = destination_platform
-	playsound(idle_platform, idle_platform.arrival_sound, 70, FALSE, 0, falloff_distance = 7, ignore_walls = TRUE)
+	playsound(idle_platform, idle_platform.arrival_sound, 50, FALSE, 0, falloff_distance = 5, extrarange= 7, ignore_walls = TRUE)
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
