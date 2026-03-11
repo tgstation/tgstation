@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - rscadd: "mushpeople now emit harmless spores upon death, which will grow into mushrooms on the floor and walls for a time."
