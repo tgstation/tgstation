@@ -3149,7 +3149,7 @@
 	taste_description = "nutty anise-scented whiskey"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/jungle_bird //TODO: Something with engineers and poly
+/datum/reagent/consumable/ethanol/jungle_bird 
 	name = "Jungle Bird"
 	description = "This late-tiki concoction leverages the brilliant combination of bitter liqueur and pineapple juice to make a remarkably well-balanced cocktail."
 	boozepwr = 25
@@ -3157,6 +3157,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "pineapple and quinine"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_SUPERMATTER_SOOTHER) //If you have this in your system, you calm down the SM by being near it.
 
 /datum/reagent/consumable/ethanol/last_word //TODO: Something with mimes
 	name = "Last Word"
