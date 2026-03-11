@@ -165,8 +165,18 @@
 /atom/movable/screen/language_menu/Click()
 	usr.get_language_holder().open_language_menu(usr)
 
-/atom/movable/screen/language_menu/ghost
-	icon = 'icons/hud/screen_ghost.dmi'
+/atom/movable/screen/memories
+	name = "Memories"
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "memories"
+	screen_loc = ui_memories_menu
+	mouse_over_pointer = MOUSE_HAND_POINTER
+
+/atom/movable/screen/memories/Click()
+	if(!isliving(usr))
+		return TRUE
+	var/mob/living/daydreamer = usr
+	daydreamer.open_memory_panel()
 
 /atom/movable/screen/inventory
 	/// The identifier for the slot. It has nothing to do with ID cards.
@@ -392,9 +402,6 @@
 /atom/movable/screen/floor_changer/vertical
 	icon_state = "floor_change_v"
 	vertical = TRUE
-
-/atom/movable/screen/floor_changer/vertical/ghost
-	icon = 'icons/hud/screen_ghost.dmi'
 
 /atom/movable/screen/spacesuit
 	name = "Space suit cell status"

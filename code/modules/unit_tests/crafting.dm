@@ -69,6 +69,14 @@
 			new req_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
 
+		// Some recipes might accept an abstract base type as its reqs - e.g. obj/item/food/grown - signifying it can use any item of that type.
+		// Let's not actually create those abstract base types though, and instead pick a random subtype to use.
+		var/datum/req_path_datum = req_path
+		if(req_path_datum.abstract_type == req_path)
+			var/list/subtypes = valid_subtypesof(req_path_datum)
+			if(length(subtypes))
+				req_path = pick(subtypes)
+
 		//it's any other item
 		for(var/iteration in 1 to amount)
 			new req_path(turf)
