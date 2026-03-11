@@ -45,6 +45,7 @@
 	for (var/mob/hearer in hearers)
 		if(HAS_TRAIT(hearer, TRAIT_DEAF))
 			continue
+
 		balloon_alert(hearer, (hearer == src && self_message) || message)
 
 // Do not use.
