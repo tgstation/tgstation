@@ -238,3 +238,11 @@
 
 /// The filter name for the hover outline
 #define HOVER_OUTLINE_FILTER "hover_outline"
+
+// Alert style states
+/// Don't change alert's icon
+#define USER_HUD_STYLE_IGNORE 0
+/// Change the icon to user's current hud's ui_style
+#define USER_HUD_STYLE_INHERIT 1
+/// Change the icon to user's chosen hud style from their prefs
+#define USER_HUD_STYLE_PREFS 2

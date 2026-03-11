@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Keybindings for screenshots now appear in the keybindings options instead of buttons at the top left of your screen."
