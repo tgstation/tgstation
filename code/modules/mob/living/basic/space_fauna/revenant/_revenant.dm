@@ -495,10 +495,6 @@
 /mob/living/basic/revenant/mob_negates_gravity()
 	return TRUE // i don't gotta explain shit
 
-/mob/living/basic/revenant/proc/update_revenant_abilities()
-	SIGNAL_HANDLER
-	update_mob_action_buttons()
-
 /mob/living/basic/revenant/vv_edit_var(vname, vval)
 	. = ..()
 	if(vname == NAMEOF(src, essence) || vname == NAMEOF(src, max_essence) || vname == NAMEOF(src, essence_excess))
