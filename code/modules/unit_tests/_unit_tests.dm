@@ -268,7 +268,6 @@
 #include "rcd.dm"
 #include "reachable_soup.dm"
 #include "reagent_container_defaults.dm"
-#include "reagent_id_typos.dm"
 #include "reagent_mob_expose.dm"
 #include "reagent_mod_procs.dm"
 #include "reagent_names.dm"

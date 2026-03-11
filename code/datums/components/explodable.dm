@@ -128,7 +128,7 @@
 	if(!(item in worn_items))
 		return FALSE
 
-	if(item.body_parts_covered & def_zone)
+	if(item.body_parts_covered & body_zone2cover_flags(def_zone))
 		return TRUE
 	return FALSE
 

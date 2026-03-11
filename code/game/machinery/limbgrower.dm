@@ -117,11 +117,10 @@
 		)
 		for(var/datum/design/found_design in species_categories[category])
 			var/list/all_reagents = list()
-			for(var/reagent_typepath in found_design.reagents_list)
-				var/datum/reagent/reagent_id = find_reagent_object_from_type(reagent_typepath)
+			for(var/datum/reagent/reagent_id as anything in found_design.reagents_list)
 				var/list/reagent_data = list(
-					name = reagent_id.name,
-					amount = (found_design.reagents_list[reagent_typepath] * production_coefficient),
+					name = reagent_id::name,
+					amount = (found_design.reagents_list[reagent_id] * production_coefficient),
 				)
 				all_reagents += list(reagent_data)
 
