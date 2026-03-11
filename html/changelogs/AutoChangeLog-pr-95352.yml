@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "mixing tea/coffee with sugar gives you a small mood buff. So like do it"
+  - qol: "astrotame and cream now heals disgust"
+  - qol: "mixing different types of coffee can heal oxy damage, because you know coffee has antioxidizing properties"
