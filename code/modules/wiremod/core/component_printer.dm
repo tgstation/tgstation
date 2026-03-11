@@ -240,7 +240,7 @@
 
 /obj/machinery/component_printer/update_icon_state()
 	. = ..()
-	panel_open ? "[base_icon_state]-o" : "[base_icon_state]-idle"
+	icon_state = panel_open ? "[base_icon_state]-o" : "[base_icon_state]-idle"
 
 /obj/machinery/component_printer/proc/get_material_cost_data(list/materials, efficiency_coeff)
 	var/list/data = list()
@@ -545,4 +545,4 @@
 
 /obj/machinery/module_duplicator/update_icon_state()
 	. = ..()
-	panel_open ? "[base_icon_state]-o" : "[base_icon_state]-idle"
+	icon_state = panel_open ? "[base_icon_state]-o" : "[base_icon_state]-idle"
