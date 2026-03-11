@@ -480,7 +480,7 @@
 
 /mob/living/basic/revenant/proc/on_reflect(datum/source, atom/movable/reflecting_in, obj/effect/abstract/reflection)
 	SIGNAL_HANDLER
-	// powers are inhibited and we're not revealed so we can't project
+	// powers are inhibited and we're not revealed so we can't project a reflect
 	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) && !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
 		return
 
@@ -488,8 +488,8 @@
 	reflection.clear_filters()
 	reflection.SetInvisibility(0)
 
-	// but if we're (actually) invisible we look all wibbly and ghostly
-	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
+	// but if we're (actually) invisible we look all wibbly and ghostly (unless the mirror is magic)
+	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) && !istype(reflecting_in, /obj/structure/mirror/magic))
 		apply_wibbly_filters(reflection)
 
 #undef REVENANT_STUNNED_TRAIT
