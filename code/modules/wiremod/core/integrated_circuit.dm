@@ -147,36 +147,38 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_LOCKED, new_value)
 	locked = new_value
 
-/obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(istype(I, /obj/item/circuit_component))
-		add_component_manually(I, user)
-		return
+/obj/item/integrated_circuit/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/circuit_component))
+		return add_component_manually(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-	if(istype(I, /obj/item/stock_parts/power_store/cell))
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			balloon_alert(user, "there already is a cell inside!")
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		set_cell(I)
-		I.add_fingerprint(user)
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		set_cell(tool)
+		tool.add_fingerprint(user)
 		user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(isidcard(I))
-		balloon_alert(user, "owner id set for [I]")
-		owner_id = WEAKREF(I)
-		return
+	if(isidcard(tool))
+		balloon_alert(user, "owner id set for [tool]")
+		owner_id = WEAKREF(tool)
+		return ITEM_INTERACT_SUCCESS
 
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!cell)
-			return
-		I.play_tool_sound(src)
-		user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
-		cell.forceMove(drop_location())
-		set_cell(null)
-		return
+/obj/item/integrated_circuit/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!cell)
+		balloon_alert(user, "power cell missing!")
+		return TRUE
+
+	tool.play_tool_sound(src)
+	user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
+	cell.forceMove(drop_location())
+	set_cell(null)
+	return TRUE
 
 /**
  * Registers an movable atom as a shell
@@ -292,7 +294,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
  */
 /obj/item/integrated_circuit/proc/add_component_manually(obj/item/circuit_component/to_add, mob/living/user)
 	if (SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
-		return
+		return FALSE
 
 	return add_component(to_add, user)
 
