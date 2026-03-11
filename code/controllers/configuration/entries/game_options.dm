@@ -450,6 +450,10 @@
 /datum/config_entry/string/tts_http_token
 	protection = CONFIG_ENTRY_LOCKED|CONFIG_ENTRY_HIDDEN
 
+/datum/config_entry/string/tts_tram_announcer_override
+
+/datum/config_entry/string/tts_computer_voice_override
+
 /datum/config_entry/number/tts_max_concurrent_requests
 	default = 4
 	min_val = 1

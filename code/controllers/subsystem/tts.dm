@@ -43,6 +43,10 @@ SUBSYSTEM_DEF(tts)
 	/// For tts messages which time out, it won't keep tracking the tts message and will just assume that the message took
 	/// 7 seconds (or whatever the value of message_timeout is) to receive back a response.
 	var/average_tts_messages_time = 0
+	/// Used as the Tram voice, to keep narration the same across tram devices.
+	var/tram_voice = null
+	/// Used as the Computer voice, to keep narration the same across computers.
+	var/computer_voice = null
 
 /datum/controller/subsystem/tts/vv_edit_var(var_name, var_value)
 	// tts being enabled depends on whether it actually exists
@@ -79,6 +83,14 @@ SUBSYSTEM_DEF(tts)
 			if(available_speakers.Find(voice))
 				log_config("Removed speaker [voice] from the TTS voice pool per config.")
 				available_speakers.Remove(voice)
+	if(CONFIG_GET(string/tts_tram_announcer_override))
+		tram_voice = CONFIG_GET(string/tts_tram_announcer_override)
+	else
+		tram_voice = pick(available_speakers)
+	if(CONFIG_GET(string/tts_computer_voice_override))
+		computer_voice = CONFIG_GET(string/tts_computer_voice_override)
+	else
+		computer_voice = pick(available_speakers)
 	var/datum/http_request/request_pitch = new()
 	var/list/headers_pitch = list()
 	headers_pitch["Authorization"] = CONFIG_GET(string/tts_http_token)
@@ -237,7 +249,7 @@ SUBSYSTEM_DEF(tts)
 		current_request.audio_file = "tmp/tts/[identifier].ogg"
 		current_request.audio_file_blips = "tmp/tts/[identifier]_blips.ogg" // We aren't as concerned about the audio length for blips as we are with actual speech
 		current_request.audio_file_radio = "tmp/tts/[identifier]_radio.ogg"
-		current_request.audio_file_blips_radio = "tmp/tts/[identifier]_radio.ogg"
+		current_request.audio_file_blips_radio = "tmp/tts/[identifier]_blips_radio.ogg"
 		// Don't need the request anymore so we can deallocate it
 		current_request.request = null
 		current_request.request_blips = null

@@ -15,7 +15,7 @@
 	var/speaker = preferences.read_preference(/datum/preference/choiced/voice)
 	var/pitch = preferences.read_preference(/datum/preference/numeric/tts_voice_pitch)
 	var/blip_base = preferences.read_preference(/datum/preference/choiced/tts_blip_base)
-	if(blip_base == "Masculine")
+	if(blip_base == TTS_BLIPS_MASCULINE)
 		blip_base = "male"
 	else
 		blip_base = "female"
@@ -30,7 +30,7 @@
 	var/speaker = preferences.read_preference(/datum/preference/choiced/voice)
 	var/pitch = preferences.read_preference(/datum/preference/numeric/tts_voice_pitch)
 	var/blip_base = preferences.read_preference(/datum/preference/choiced/tts_blip_base)
-	if(blip_base == "Masculine")
+	if(blip_base == TTS_BLIPS_MASCULINE)
 		blip_base = "male"
 	else
 		blip_base = "female"
@@ -45,7 +45,7 @@
 	var/speaker = preferences.read_preference(/datum/preference/choiced/voice)
 	var/pitch = preferences.read_preference(/datum/preference/numeric/tts_voice_pitch)
 	var/blip_base = preferences.read_preference(/datum/preference/choiced/tts_blip_base)
-	if(blip_base == "Masculine")
+	if(blip_base == TTS_BLIPS_MASCULINE)
 		blip_base = "male"
 	else
 		blip_base = "female"

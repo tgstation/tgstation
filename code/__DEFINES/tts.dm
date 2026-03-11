@@ -16,3 +16,5 @@
 #define TTS_SOUND_NO_RADIO "Disabled"
 //Flag for TTS ghost radio
 #define TTS_GHOST_RADIO "GHOST RADIO"
+#define TTS_BLIPS_MASCULINE "Masculine"
+#define TTS_BLIPS_FEMININE "Feminine"

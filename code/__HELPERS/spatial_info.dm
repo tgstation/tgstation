@@ -219,7 +219,9 @@
 	.[TTS_GHOST_RADIO] = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios, indexed by the radio. More expensive, but needed for radio TTS to sound good.
 	for(var/obj/item/radio/radio as anything in radios)
-		.[radio] = filter_tts_listeners(get_hearers_in_LOS(radio.canhear_range, radio), frequency)
+		var/list/possible_hearers = get_hearers_in_LOS(radio.canhear_range, radio)
+		if(LAZYLEN(possible_hearers))
+			.[radio] = filter_tts_listeners(get_hearers_in_LOS(radio.canhear_range, radio), frequency)
 
 
 /// A filter to be applied to get_hearers_in_x, that removes any non-mob hearers, converting them to their relevant mob if one exists (such as dullahan heads).

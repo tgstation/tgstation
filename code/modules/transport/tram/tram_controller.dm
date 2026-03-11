@@ -270,7 +270,7 @@
 		set_status_code(EMERGENCY_STOP, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
-
+	nav_beacon.tram_loop.start()
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		if(transport_module.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
 			return //we don't care to undo cover_locked controls, though, as that will resolve itself
@@ -360,6 +360,7 @@
 /datum/transport_controller/linear/tram/proc/normal_stop()
 	cycle_doors(CYCLE_OPEN)
 	log_transport("TC: [specific_transport_id] trip completed. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
+	nav_beacon.tram_loop.stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 	if((controller_status & SYSTEM_FAULT) && (nav_beacon.loc == destination_platform.loc)) //position matches between controller and tram, we're back on track
 		set_status_code(SYSTEM_FAULT, FALSE)
@@ -367,6 +368,7 @@
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset.")
 	idle_platform = destination_platform
+	playsound(idle_platform, idle_platform.arrival_sound, 70, FALSE, 0, falloff_distance = 7, ignore_walls = TRUE)
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
@@ -379,6 +381,7 @@
 /datum/transport_controller/linear/tram/proc/degraded_stop()
 	crash_fx()
 	log_transport("TC: [specific_transport_id] trip completed with a degraded status. Info: [TC_TS_STATUS] nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
+	nav_beacon.tram_loop.stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
@@ -418,7 +421,7 @@
 		var/throw_direction = travel_direction
 		for(var/obj/structure/transport/linear/tram/module in transport_modules)
 			module.estop_throw(throw_direction)
-
+	nav_beacon.tram_loop.stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
 	idle_platform = null

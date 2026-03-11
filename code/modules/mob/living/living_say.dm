@@ -226,13 +226,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
 
 	var/identifier = "invalid"
-	var/tts_message_to_use = tts_message
-	if(!tts_message_to_use)
-		tts_message_to_use = message
+	var/tts_message_to_use = tts_message || message
 
-	var/list/filter = list()
-	var/list/special_filter = list()
+
 	if(SStts.tts_enabled && voice && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT] && !HAS_TRAIT(src, TRAIT_SIGN_LANG) && !HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE))
+		var/list/filter = list()
+		var/list/special_filter = list()
 		if(length(voice_filter) > 0)
 			filter += voice_filter
 
@@ -430,10 +429,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 					continue
 			listening |= player_mob
 
-	var/tts_message_to_use = tts_message
-	if(!tts_message_to_use)
-		tts_message_to_use = message_raw
-
+	var/tts_message_to_use = tts_message || message_raw
 	var/list/filter = list()
 	var/list/special_filter = list()
 	if(SStts.tts_enabled && voice && !message_mods[MODE_CUSTOM_SAY_ERASE_INPUT] && !HAS_TRAIT(src, TRAIT_SIGN_LANG) && !HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE))

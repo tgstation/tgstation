@@ -58,11 +58,11 @@
 	return ..()
 
 /datum/preference/choiced/tts_blip_base/init_possible_values()
-	return list("Masculine", "Feminine")
+	return list(TTS_BLIPS_MASCULINE, TTS_BLIPS_FEMININE)
 
 /datum/preference/choiced/tts_blip_base/apply_to_human(mob/living/carbon/human/target, value)
 	if(SStts.tts_enabled)
-		if(value == "Masculine")
+		if(value == TTS_BLIPS_MASCULINE)
 			target.blip_base = "male"
 		else
 			target.blip_base = "female"
