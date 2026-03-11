@@ -188,6 +188,11 @@
 			new /obj/effect/temp_visual/revenant/cracks(window.loc)
 	for(var/obj/machinery/light/light in victim)
 		light.flicker(rand(3, 5)) //spooky
+	for(var/obj/structure/mirror/mirror in victim)
+		if(istype(mirror, /obj/structure/mirror/magic))
+			continue
+		new /obj/effect/temp_visual/revenant(mirror.loc)
+		mirror.atom_break("magic")
 
 //Malfunction: Makes bad stuff happen to robots and machines.
 /datum/action/cooldown/spell/aoe/revenant/malfunction
@@ -286,11 +291,6 @@
 		tray.set_pestlevel(rand(8, 10))
 		tray.set_weedlevel(rand(8, 10))
 		tray.set_toxic(rand(45, 55))
-	for(var/obj/structure/mirror/mirror in victim)
-		if(istype(mirror, /obj/structure/mirror/magic))
-			continue
-		new /obj/effect/temp_visual/revenant(mirror.loc)
-		mirror.atom_break("magic")
 
 /datum/action/cooldown/spell/aoe/revenant/haunt_object
 	name = "Haunt Object"
