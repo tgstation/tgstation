@@ -168,17 +168,19 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		balloon_alert(user, "owner id set for [tool]")
 		owner_id = WEAKREF(tool)
 		return ITEM_INTERACT_SUCCESS
+		
+	return NONE
 
 /obj/item/integrated_circuit/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cell)
 		balloon_alert(user, "power cell missing!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
 	user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
 	cell.forceMove(drop_location())
 	set_cell(null)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Registers an movable atom as a shell
