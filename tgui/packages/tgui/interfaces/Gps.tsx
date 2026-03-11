@@ -1,5 +1,4 @@
 import { sortBy } from 'es-toolkit';
-import { map } from 'es-toolkit/compat';
 import { useState } from 'react';
 import {
   Box,
@@ -35,7 +34,7 @@ type GpsSignal = {
   degrees?: number;
 };
 
-const coordsToVec = (coords) => map(coords.split(', '), parseFloat);
+const coordsToVec = (coords: string) => coords.split(', ').map(parseFloat);
 
 export const Gps = () => {
   const { act, data } = useBackend<Data>();
@@ -47,7 +46,7 @@ export const Gps = () => {
   );
   const signals = flow([
     (signals: GpsSignal[]) =>
-      map(signals, (signal, index) => {
+      signals.map((signal, index) => {
         // Calculate distance to the target. BYOND distance is capped to 127,
         // that's why we roll our own calculations here.
         const dist =
