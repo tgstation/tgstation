@@ -65,16 +65,12 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/doppler_array/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", tool))
-		return FALSE
+	. = default_deconstruction_screwdriver(user, tool)
 	power_change()
-	update_appearance()
-	return TRUE
+	return .
 
 /obj/machinery/doppler_array/crowbar_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_crowbar(tool))
-		return FALSE
-	return TRUE
+	return default_deconstruction_crowbar(tool)
 
 /// Printing of a record into a disk.
 /obj/machinery/doppler_array/proc/print(mob/user, datum/data/tachyon_record/record)

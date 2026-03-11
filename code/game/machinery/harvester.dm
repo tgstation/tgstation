@@ -147,24 +147,20 @@
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 
 /obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
-	if(..())
-		return
 	if(occupant)
 		to_chat(user, span_warning("[src] is currently occupied!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(state_open)
 		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
-		return
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
-		return
-	return FALSE
+		return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/harvester/crowbar_act(mob/living/user, obj/item/tool)
 	if(default_pry_open(tool))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	if(default_deconstruction_crowbar(tool))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/machinery/harvester/default_pry_open(obj/item/tool) //wew
 	. = !(state_open || panel_open) && tool.tool_behaviour == TOOL_CROWBAR //We removed is_operational here

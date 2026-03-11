@@ -34,47 +34,51 @@
 		. += span_notice("The status display reads: Charging power: <b>[display_power(charge_rate, convert = FALSE)]</b>.")
 
 /obj/machinery/cell_charger/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(charging)
-		return FALSE
+		return NONE
 	if(default_unfasten_wrench(user, tool))
 		update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/cell_charger/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/stock_parts/power_store/cell) && !panel_open)
-		if(machine_stat & BROKEN)
-			to_chat(user, span_warning("[src] is broken!"))
-			return
-		if(!anchored)
-			to_chat(user, span_warning("[src] isn't attached to the ground!"))
-			return
-		if(charging)
-			to_chat(user, span_warning("There is already a cell in the charger!"))
-			return
-		else
-			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
-			if(!isarea(a))
-				return
-			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				to_chat(user, span_warning("[src] blinks red as you try to insert the cell!"))
-				return
-			if(!user.transferItemToLoc(W,src))
-				return
+/obj/machinery/cell_charger/screwdriver_act(mob/living/user, obj/item/tool)
+	return charging ? NONE : default_deconstruction_screwdriver(user, tool)
 
-			charging = W
-			user.visible_message(span_notice("[user] inserts a cell into [src]."), span_notice("You insert a cell into [src]."))
-			update_appearance()
-	else
-		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, W))
-			return
-		if(default_deconstruction_crowbar(W))
-			return
-		return ..()
+/obj/machinery/cell_charger/crowbar_act(mob/living/user, obj/item/tool)
+	return charging ? NONE : default_deconstruction_crowbar(tool)
+
+/obj/machinery/cell_charger/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell) || panel_open)
+		return NONE
+
+	if(machine_stat & BROKEN)
+		to_chat(user, span_warning("[src] is broken!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!anchored)
+		to_chat(user, span_warning("[src] isn't attached to the ground!"))
+		return ITEM_INTERACT_BLOCKING
+	if(charging)
+		to_chat(user, span_warning("There is already a cell in the charger!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/area/charge_area = get_area(src)
+	if(!isarea(charge_area))
+		return ITEM_INTERACT_BLOCKING
+	if(!charge_area.power_equip) // There's no APC in this area, don't try to cheat power!
+		to_chat(user, span_warning("[src] blinks red as you try to insert the cell!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	charging = tool
+	user.visible_message(
+		span_notice("[user] inserts a cell into [src]."),
+		span_notice("You insert a cell into [src]."),
+	)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cell_charger/on_deconstruction(disassembled)
-	if(charging)
-		charging.forceMove(drop_location())
+	charging?.forceMove(drop_location())
 
 /obj/machinery/cell_charger/Exited(atom/movable/gone, direction)
 	. = ..()

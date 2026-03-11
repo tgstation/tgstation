@@ -58,12 +58,6 @@
 	QDEL_NULL(materials)
 	return ..()
 
-// Stuff for the stripe on the department machines
-/obj/machinery/rnd/production/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	. = ..()
-
-	update_icon(UPDATE_OVERLAYS)
-
 /obj/machinery/rnd/production/update_overlays()
 	. = ..()
 

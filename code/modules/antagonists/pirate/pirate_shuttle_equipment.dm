@@ -174,12 +174,10 @@
 	name = "cargo hold pad"
 	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "lpad-idle-off"
-	///This is the icon_state that this telepad uses when it's not in use.
-	var/idle_state = "lpad-idle-off"
-	///This is the icon_state that this telepad uses when it's warming up for goods teleportation.
-	var/warmup_state = "lpad-idle"
-	///This is the icon_state to flick when the goods are being sent off by the telepad.
-	var/sending_state = "lpad-beam"
+	base_icon_state = "lpad"
+	/// Determines what icon is being shown
+	VAR_PRIVATE/is_sending = FALSE
+
 	///This is the cargo hold ID used by the piratepad_control. Match these two to link them together.
 	var/cargo_hold_id
 
@@ -190,15 +188,36 @@
 		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
-/obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)
-	. = ..()
-	if(!.)
-		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", screw)
+/obj/machinery/piratepad/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return screwdriver_act(user, tool)
+
+/obj/machinery/piratepad/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/piratepad/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	return crowbar_act(user, tool)
+
+/obj/machinery/piratepad/proc/set_is_sending(value)
+	if(is_sending == value)
+		return
+	is_sending = value
+	update_appearance()
+
+/obj/machinery/piratepad/proc/finish_sending()
+	set_is_sending(FALSE)
+	flick("[base_icon_state]-beam", src)
+
+/obj/machinery/piratepad/update_icon_state()
 	. = ..()
-	default_deconstruction_crowbar(tool)
-	return TRUE
+	if(panel_open)
+		icon_state = "[base_icon_state]-idle-open"
+	else if(is_sending)
+		icon_state = "[base_icon_state]-idle"
+	else
+		icon_state = "[base_icon_state]-idle-off"
 
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
@@ -337,8 +356,7 @@
 		status_report += "Nothing"
 
 	pad.visible_message(span_notice("[pad] activates!"))
-	flick(pad.sending_state,pad)
-	pad.icon_state = pad.idle_state
+	pad.finish_sending()
 	sending = FALSE
 
 ///The loop that calculates the value of stuff on a pirate pad, or plain sell them if dry_run is FALSE.
@@ -384,7 +402,7 @@
 	sending = TRUE
 	status_report = "Sending... "
 	pad.visible_message(span_notice("[pad] starts charging up."))
-	pad.icon_state = pad.warmup_state
+	pad.set_is_sending(TRUE)
 	sending_timer = addtimer(CALLBACK(src, PROC_REF(send)),warmup_time, TIMER_STOPPABLE)
 
 /// Finishes the sending state of the pad
@@ -396,7 +414,7 @@
 	if(custom_report)
 		status_report = custom_report
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
-	pad.icon_state = pad.idle_state
+	pad.set_is_sending(FALSE)
 	deltimer(sending_timer)
 
 /datum/export/pirate

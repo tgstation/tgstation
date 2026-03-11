@@ -86,19 +86,17 @@
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active || inserted_tank)
-		return FALSE
-	if(!default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-open", tool))
-		return FALSE
+		return NONE
+
+	. = default_deconstruction_screwdriver(user, tool)
 	change_nodes_connection(panel_open)
-	update_appearance()
-	return TRUE
+	return .
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/crowbar_act(mob/living/user, obj/item/tool)
 	if(active || inserted_tank)
-		return FALSE
-	if(!default_deconstruction_crowbar(tool))
-		return FALSE
-	return TRUE
+		return NONE
+
+	return default_deconstruction_crowbar(tool)
 
 /// Glorified volume pump.
 /obj/machinery/atmospherics/components/binary/tank_compressor/process_atmos()

@@ -54,18 +54,14 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/manufacturing/screwdriver_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/power/manufacturing/setDir(newdir)
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/power/manufacturing/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/power/manufacturing/proc/generate_io_overlays(direction, color, offsets_override)
 	var/list/dir_offset

@@ -78,7 +78,7 @@
 	reset_chem_buttons()
 
 /obj/machinery/sleeper/update_icon_state()
-	icon_state = "[base_icon_state][state_open ? "-open" : null]"
+	icon_state = "[base_icon_state][state_open ? "-open" : panel_open ? "-o" : ""]"
 	return ..()
 
 /obj/machinery/sleeper/container_resist_act(mob/living/user)
@@ -121,30 +121,23 @@
 	close_machine(target)
 
 /obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
 	if(occupant)
 		to_chat(user, span_warning("[src] is currently occupied!"))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	if(state_open)
 		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
-		return TRUE
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-		return TRUE
-	return FALSE
+		return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, I)
 
 /obj/machinery/sleeper/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(default_change_direction_wrench(user, I))
-		return TRUE
-	return FALSE
+	return default_change_direction_wrench(user, I)
 
 /obj/machinery/sleeper/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
 	if(default_pry_open(I))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	if(default_deconstruction_crowbar(I))
-		return TRUE
-	return FALSE
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_FAILURE
 
 /obj/machinery/sleeper/default_pry_open(obj/item/I) //wew
 	. = !(state_open || panel_open) && I.tool_behaviour == TOOL_CROWBAR

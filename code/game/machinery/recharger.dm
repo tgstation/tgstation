@@ -119,9 +119,7 @@
 /obj/machinery/recharger/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!anchored || charging)
 		return ITEM_INTERACT_BLOCKING
-	. = default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
-	if(.)
-		update_appearance()
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/recharger/crowbar_act(mob/living/user, obj/item/tool)
 	return (!anchored || charging) ? ITEM_INTERACT_BLOCKING : default_deconstruction_crowbar(tool)

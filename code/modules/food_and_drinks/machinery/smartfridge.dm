@@ -119,14 +119,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/screwdriver_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		if(panel_open)
-			add_overlay("[base_icon_state]-panel")
-		else
-			cut_overlay("[base_icon_state]-panel")
-		SStgui.update_uis(src)
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/smartfridge/can_be_unfasten_wrench(mob/user, silent)
 	if(welded_down)
@@ -231,6 +224,9 @@
 
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
+
+	if(panel_open)
+		. += "[base_icon_state]-panel"
 
 	var/shown_contents_length = visible_items()
 	if(visible_contents && shown_contents_length)
@@ -556,9 +552,8 @@
 	. = ..()
 	//so we don't drop any of the parent smart fridge parts upon deconstruction
 	clear_components()
-
-/obj/machinery/smartfridge/drying/rack/welder_act_secondary(mob/living/user, obj/item/tool)
-	return NONE // Can't repair wood with welder
+	AddElement(/datum/element/tool_blocker, TOOL_WELDER)
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER)
 
 /obj/machinery/smartfridge/drying/rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
@@ -578,9 +573,6 @@
 	. = ..()
 	. += span_info("The whole rack can be [EXAMINE_HINT("pried")] apart.")
 
-/obj/machinery/smartfridge/drying/rack/default_deconstruction_screwdriver()
-	return NONE
-
 /obj/machinery/smartfridge/drying/rack/exchange_parts()
 	return
 
@@ -588,8 +580,7 @@
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 
 /obj/machinery/smartfridge/drying/rack/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_crowbar(tool, ignore_panel = TRUE))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(tool, ignore_panel = TRUE)
 
 /obj/machinery/smartfridge/drying/rack/update_overlays()
 	. = ..()

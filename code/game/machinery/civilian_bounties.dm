@@ -10,16 +10,6 @@
 	circuit = /obj/item/circuitboard/machine/bountypad
 	var/cooldown_reduction = 0
 
-/obj/machinery/piratepad/civilian/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(!.)
-		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", tool)
-
-/obj/machinery/piratepad/civilian/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(!.)
-		return default_deconstruction_crowbar(tool)
-
 /obj/machinery/piratepad/civilian/RefreshParts()
 	. = ..()
 	var/T = -2
@@ -144,8 +134,7 @@
 		reward.set_up(current_bounty, inserted_scan_id)
 
 	pad.visible_message(span_notice("[pad] activates!"))
-	flick(pad.sending_state,pad)
-	pad.icon_state = pad.idle_state
+	pad.finish_sending()
 	playsound(loc, 'sound/machines/synth/synth_yes.ogg', 30 , TRUE)
 	sending = FALSE
 

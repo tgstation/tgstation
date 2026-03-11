@@ -62,10 +62,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	return ..()
 
 /obj/machinery/announcement_system/screwdriver_act(mob/living/user, obj/item/tool)
-	var/icon_state_assemble = "[base_icon_state]_[is_operational && !(machine_stat & EMPED) ? "On" : "Off"]"
-	if(default_deconstruction_screwdriver(user, "[icon_state_assemble]_Open", icon_state_assemble, tool))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/announcement_system/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()

@@ -5,13 +5,12 @@
 	desc = "A bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations."
 	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "lpad-idle"
+	base_icon_state = "lpad"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
 	interaction_flags_mouse_drop = NEED_DEXTERITY | NEED_HANDS
 	circuit = /obj/item/circuitboard/machine/launchpad
 
-	/// The beam icon
-	var/icon_teleport = "lpad-beam"
 	/// To prevent briefcase pad deconstruction and such
 	var/stationary = TRUE
 	/// What to name the launchpad in the console
@@ -75,16 +74,21 @@
 	balloon_alert(user, "saved to buffer")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/launchpad/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(!stationary)
-		return ..()
+/obj/machinery/launchpad/screwdriver_act(mob/living/user, obj/item/tool)
+	return stationary ? default_deconstruction_screwdriver(user, tool) : NONE
 
-	if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", weapon))
-		update_indicator()
-		return
+/obj/machinery/launchpad/crowbar_act(mob/living/user, obj/item/tool)
+	return stationary ? default_deconstruction_crowbar(tool) : NONE
 
-	if(default_deconstruction_crowbar(weapon))
-		return
+/obj/machinery/launchpad/on_set_is_operational(old_value)
+	update_indicator()
+
+/obj/machinery/launchpad/on_set_panel_open(old_value)
+	update_indicator()
+
+/obj/machinery/launchpad/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-open" : base_icon_state
 
 /obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)
 	. = ..()
@@ -170,7 +174,7 @@
 	var/turf/target = locate(target_x, target_y, z)
 	var/area/A = get_area(target)
 
-	flick(icon_teleport, src)
+	flick("[base_icon_state]-beam", src)
 
 	//Change the indicator's icon to show that we're teleporting
 	if(sending)
@@ -266,7 +270,7 @@
 	name = "briefcase launchpad"
 	desc = "A portable bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations. Controlled via remote."
 	icon_state = "blpad-idle"
-	icon_teleport = "blpad-beam"
+	base_icon_state = "blpad"
 	anchored = FALSE
 	use_power = NO_POWER_USE
 	active_power_usage = 0

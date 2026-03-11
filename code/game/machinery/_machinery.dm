@@ -623,6 +623,10 @@
 	var/old_value = panel_open
 	panel_open = new_value
 	on_set_panel_open(old_value)
+	update_appearance()
+	// if this is a machine that cares about whether the panel is open for UIs, force an update
+	if(interaction_flags_machine & (INTERACT_MACHINE_OPEN_SILICON||INTERACT_MACHINE_OPEN))
+		SStgui.update_uis(src)
 
 ///Called when the value of `panel_open` changes, so we can react to it.
 /obj/machinery/proc/on_set_panel_open(old_value)
@@ -852,9 +856,10 @@
 
 	. = (panel_open || ignore_panel) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!. || custom_deconstruct)
-		return
+		return NONE
 	crowbar.play_tool_sound(src, 50)
 	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/handle_deconstruct(disassembled = TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -970,29 +975,24 @@
 	for(var/atom/atom_part in old_components)
 		qdel(atom_part)
 
-/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, obj/item/screwdriver)
 	if(screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
-		return FALSE
+		return NONE
 
 	screwdriver.play_tool_sound(src, 50)
 	toggle_panel_open()
-	if(panel_open)
-		icon_state = icon_state_open
-		to_chat(user, span_notice("You open the maintenance hatch of [src]."))
-	else
-		icon_state = icon_state_closed
-		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
-	return TRUE
+	balloon_alert(user, "maintenance hatch [panel_open ? "opened" : "closed"]")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/wrench)
 	if(!panel_open || wrench.tool_behaviour != TOOL_WRENCH)
-		return FALSE
+		return NONE
 
 	wrench.play_tool_sound(src, 50)
 	setDir(turn(dir,-90))
 	to_chat(user, span_notice("You rotate [src]."))
 	SEND_SIGNAL(src, COMSIG_MACHINERY_DEFAULT_ROTATE_WRENCH, user, wrench)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
 	if(!istype(replacer_tool) || !component_parts)

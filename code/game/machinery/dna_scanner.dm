@@ -125,19 +125,17 @@
 		return
 	open_machine()
 
-/obj/machinery/dna_scannernew/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/dna_scannernew/screwdriver_act(mob/living/user, obj/item/tool)
+	return occupant ? NONE : default_deconstruction_screwdriver(user, tool)
 
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, item))//sent icon_state is irrelevant...
-		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
-		return
+/obj/machinery/dna_scannernew/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_pry_open(tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
+		return ITEM_INTERACT_SUCCESS
 
-	if(default_pry_open(item, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
-		return
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
 
-	if(default_deconstruction_crowbar(item))
-		return
-
-	return ..()
+	return NONE
 
 /obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)

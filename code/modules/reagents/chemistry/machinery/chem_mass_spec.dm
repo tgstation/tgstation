@@ -173,23 +173,18 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_mass_spec/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
-		return .
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/chem_mass_spec/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
-		return .
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(tool)
 
 
 /**

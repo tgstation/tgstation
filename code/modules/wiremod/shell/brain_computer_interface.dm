@@ -354,18 +354,17 @@
 
 	return ..()
 
-/obj/machinery/bci_implanter/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if (!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-		update_appearance()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/machinery/bci_implanter/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return isnull(occupant) ? default_deconstruction_screwdriver(user, tool) : NONE
 
-	if (default_pry_open(weapon, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/machinery/bci_implanter/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	if (default_pry_open(tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
+		return ITEM_INTERACT_SUCCESS
 
-	if (default_deconstruction_crowbar(weapon))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if (default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return NONE
 
 /obj/machinery/bci_implanter/proc/start_process()
 	if (machine_stat & (NOPOWER|BROKEN))

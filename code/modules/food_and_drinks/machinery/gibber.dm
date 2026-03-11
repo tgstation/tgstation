@@ -3,6 +3,7 @@
 	desc = "The name isn't descriptive enough?"
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"
+	base_icon_state = "grinder"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/gibber
 	anchored_tabletop_offset = 8
@@ -134,17 +135,19 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/gibber/attackby(obj/item/P, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
-		return
+/obj/machinery/gibber/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-	else if(default_pry_open(P, close_after_pry = TRUE))
-		return
+/obj/machinery/gibber/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_pry_open(tool, close_after_pry = TRUE))
+		return ITEM_INTERACT_SUCCESS
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	else if(default_deconstruction_crowbar(P))
-		return
-	else
-		return ..()
+/obj/machinery/gibber/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state
 
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"

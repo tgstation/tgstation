@@ -5,12 +5,12 @@
 	desc = "A large crushing machine used to recycle small items inefficiently. There are lights on the side."
 	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "grinder-o0"
+	base_icon_state = "grinder-o"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	plane = ABOVE_GAME_PLANE
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/recycler
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
-	var/icon_name = "grinder-o"
 	var/bloody = FALSE
 	var/amount_produced = 50
 	var/crush_damage = 1000
@@ -37,7 +37,7 @@
 
 /obj/machinery/recycler/post_machine_initialize()
 	. = ..()
-	update_appearance(UPDATE_ICON)
+	update_appearance()
 	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -76,14 +76,10 @@
 	return SUCCESSFUL_UNFASTEN
 
 /obj/machinery/recycler/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/recycler/screwdriver_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", tool))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/recycler/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -97,11 +93,14 @@
 	return FALSE
 
 /obj/machinery/recycler/update_icon_state()
-	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
-	if(safety_mode)
-		is_powered = FALSE
-	icon_state = icon_name + "[is_powered]"
+	if(panel_open)
+		icon_state = base_icon_state + "Open"
+	else
+		icon_state = base_icon_state + "[is_operational && !safety_mode]"
 	return ..()
+
+/obj/machinery/recycler/on_set_is_operational(old_value)
+	update_appearance()
 
 /obj/machinery/recycler/update_overlays()
 	. = ..()
@@ -301,11 +300,10 @@
 	obj_flags = CAN_BE_HIT | EMAGGED
 	crush_damage = 120
 
-/obj/machinery/recycler/deathtrap/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	return NONE
-
-/obj/machinery/recycler/deathtrap/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	return NONE
+/obj/machinery/recycler/deathtrap/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER)
+	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR)
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"

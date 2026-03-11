@@ -285,25 +285,23 @@
 		set_machine_stat(machine_stat & ~BROKEN)
 		return ITEM_INTERACT_SUCCESS
 
-//opening using screwdriver
+/obj/machinery/power/smes/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : base_icon_state
+
 /obj/machinery/power/smes/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
-		update_appearance(UPDATE_OVERLAYS)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/power/smes/wirecutter_act(mob/living/user, obj/item/item)
-	. = ITEM_INTERACT_FAILURE
 	if(terminal && panel_open)
 		terminal.dismantle(user, item)
 		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-//crowbarring it!
 /obj/machinery/power/smes/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_FAILURE
 	if(terminal)
 		balloon_alert(user, "remove the power terminal!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(default_deconstruction_crowbar(tool))
 		var/turf/ground = get_turf(src)
@@ -311,6 +309,8 @@
 		user.log_message("deconstructed [src]", LOG_GAME)
 		investigate_log("deconstructed by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
 		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
 
 //changing direction using wrench
 /obj/machinery/power/smes/wrench_act(mob/living/user, obj/item/tool)

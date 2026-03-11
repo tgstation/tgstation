@@ -110,7 +110,7 @@
 	if(!panel_open && locked)
 		balloon_alert(user, "locked!")
 		return ITEM_INTERACT_FAILURE
-	return default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/atmos_shield_gen/crowbar_act(mob/user, obj/item/tool)
 	if(on)

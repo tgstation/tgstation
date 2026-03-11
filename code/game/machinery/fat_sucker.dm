@@ -191,23 +191,16 @@
 			nutrients = 0
 
 /obj/machinery/fat_sucker/screwdriver_act(mob/living/user, obj/item/I)
-	. = TRUE
-	if(..())
-		return
 	if(occupant)
 		to_chat(user, span_warning("[src] is currently occupied!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(state_open)
 		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
-		return
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-		update_appearance()
-		return
-	return FALSE
+		return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, I)
 
 /obj/machinery/fat_sucker/crowbar_act(mob/living/user, obj/item/I)
-	if(default_deconstruction_crowbar(I))
-		return TRUE
+	return default_deconstruction_crowbar(I)
 
 /obj/machinery/fat_sucker/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

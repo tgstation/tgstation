@@ -139,17 +139,10 @@
 	calculate_regeneration()
 
 /obj/machinery/modular_shield_generator/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-
-	if(default_deconstruction_screwdriver(user,"[icon_type]_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]open",
-		"[icon_type]_[!(machine_stat & NOPOWER) ? "[recovering ? "recovering_" : "ready_"]" : "no_power_"]closed",  tool))
-		return TRUE
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/modular_shield_generator/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-
-	if(default_deconstruction_crowbar(tool))
-		return TRUE
+	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, list/modifiers)
 

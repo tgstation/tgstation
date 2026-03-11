@@ -161,19 +161,29 @@
 	//we set drop to false to manually call it with an allowlist
 	dump_inventory_contents(list(occupant))
 
-/obj/machinery/dna_infuser/attackby(obj/item/used, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/dna_infuser/screwdriver_act(mob/living/user, obj/item/tool)
+	return infusing ? NONE : default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/dna_infuser/crowbar_act(mob/living/user, obj/item/tool)
 	if(infusing)
-		return
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, used))//sent icon_state is irrelevant...
-		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
-		return
-	if(default_pry_open(used))
-		return
-	if(default_deconstruction_crowbar(used))
-		return
-	if(ismovable(used))
-		add_infusion_item(used, user)
-	return ..()
+		return NONE
+	if(default_pry_open(tool))
+		return ITEM_INTERACT_SUCCESS
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/machinery/dna_infuser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+	// if the machine already has a infusion target, or the target is not valid then no adding.
+	if(!is_valid_infusion(tool, user))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("[tool] is stuck to your hand!"))
+		return ITEM_INTERACT_BLOCKING
+	infusing_from = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/dna_infuser/relaymove(mob/living/user, direction)
 	if(user.stat)
@@ -189,16 +199,6 @@
 	open_machine(drop = FALSE)
 	//we set drop to false to manually call it with an allowlist
 	dump_inventory_contents(list(occupant))
-
-// mostly good for dead mobs that turn into items like dead mice (smack to add).
-/obj/machinery/dna_infuser/proc/add_infusion_item(obj/item/target, mob/user)
-	// if the machine already has a infusion target, or the target is not valid then no adding.
-	if(!is_valid_infusion(target, user))
-		return
-	if(!user.transferItemToLoc(target, src))
-		to_chat(user, span_warning("[target] is stuck to your hand!"))
-		return
-	infusing_from = target
 
 // mostly good for dead mobs like corpses (drag to add).
 /obj/machinery/dna_infuser/mouse_drop_receive(atom/target, mob/user, params)

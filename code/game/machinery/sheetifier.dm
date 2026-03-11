@@ -64,12 +64,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/sheetifier/screwdriver_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), tool))
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_FAILURE
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/sheetifier/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_crowbar(tool)
