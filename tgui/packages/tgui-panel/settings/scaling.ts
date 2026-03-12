@@ -2,6 +2,7 @@
 const ELEMENTS_TO_ADJUST = [
   'infobuttons.options',
   'infobuttons.hotkeys',
+  'infobuttons.emotes',
   'infobuttons.fullscreen-toggle',
   'infobuttons.reconnect',
   'infobuttons.chat',

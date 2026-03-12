@@ -120,7 +120,6 @@
 	if(prefs.lastchangelog != GLOB.changelog_hash)
 		prefs.lastchangelog = GLOB.changelog_hash
 		prefs.save_preferences()
-		winset(src, "infobuttons.changelog", "font-style=;")
 
 /client/verb/hotkeys_help()
 	set name = "Hotkeys Help"
@@ -130,3 +129,15 @@
 		GLOB.hotkeys_tgui = new /datum/hotkeys_help()
 
 	GLOB.hotkeys_tgui.ui_interact(mob)
+
+/client/verb/emote_panel()
+	set name = "Emote Panel"
+	set category = "IC"
+
+	if(!isliving(mob))
+		to_chat(mob, span_notice("You can only use this while you're alive!"))
+		return
+
+	if(!GLOB.emote_panel)
+		GLOB.emote_panel = new /datum/emote_panel()
+	GLOB.emote_panel.ui_interact(mob)

@@ -7,15 +7,14 @@
 	set_stat_panel()
 
 /client/proc/set_stat_panel()
-	if(should_have_stat_panel())
+	if(prefs.read_preference(/datum/preference/toggle/statpanel) || should_have_stat_panel())
 		winset(src, "infowindow.info", "left=statwindow")
 	else
 		winset(src, "infowindow.info", "left=null")
 
 /client/proc/should_have_stat_panel()
-	if(prefs.read_preference(/datum/preference/toggle/statpanel) || holder)
+	if(holder)
 		return TRUE
-	. = list()
-	. += mob.get_status_tab_items()
+	. = mob.get_status_tab_items()
 	. -= .[1] //remove the "offset unique stuff"
 	return !!length(.)

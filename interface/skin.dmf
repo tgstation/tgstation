@@ -132,7 +132,7 @@ window "infobuttons"
 	elem "options"
 		type = BUTTON
 		pos = 0,5
-		size = 87x27
+		size = 88x27
 		anchor1 = 0,0
 		anchor2 = 15,100
 		background-color = none
@@ -149,25 +149,35 @@ window "infobuttons"
 		saved-params = "is-checked"
 		text = "Hotkeys"
 		command = "Hotkeys-Help"
-	elem "fullscreen-toggle"
+	elem "emotes"
 		type = BUTTON
 		pos = 185,5
-		size = 87x27
+		size = 88x27
 		anchor1 = 29,0
 		anchor2 = 43,100
 		background-color = none
 		saved-params = "is-checked"
-		text = "Fullscreen"
-		command = "fullscreen"
-	elem "reconnect"
+		text = "Emotes"
+		command = "Emote-Panel"
+	elem "fullscreen-toggle"
 		type = BUTTON
 		pos = 277,5
-		size = 87x27
+		size = 88x27
 		anchor1 = 43,0
 		anchor2 = 57,100
 		background-color = none
 		saved-params = "is-checked"
-		text = "Reconnect"
+		text = "Fullscreen"
+		command = "fullscreen"
+    elem "reconnect"
+		type = BUTTON
+		pos = 369,5
+		size = 88x27
+		anchor1 = 57,0
+		anchor2 = 71,100
+		background-color = none
+		saved-params = "is-checked"
+        text = "Reconnect"
 		command = ".reconnect"
 	elem "chat"
 		type = BUTTON

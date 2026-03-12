@@ -557,8 +557,6 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		to_chat(src, span_info("You have unread updates in the changelog."))
 		if(CONFIG_GET(flag/aggressive_changelog))
 			changelog()
-		else
-			winset(src, "infobuttons.changelog", "font-style=bold")
 
 	if(ckey in GLOB.clientmessages)
 		for(var/message in GLOB.clientmessages[ckey])

@@ -50,6 +50,8 @@ export function setClientTheme(name): void | Promise<void> {
     'options.text-color': themeColor.TEXT,
     'hotkeys.background-color': themeColor.BUTTON,
     'hotkeys.text-color': themeColor.TEXT,
+    'emotes.background-color': themeColor.BUTTON,
+    'emotes.text-color': themeColor.TEXT,
     'fullscreen-toggle.background-color': themeColor.BUTTON,
     'fullscreen-toggle.text-color': themeColor.TEXT,
     'reconnect.background-color': themeColor.BG_IMPORTANT,
