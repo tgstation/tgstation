@@ -118,6 +118,8 @@
 /datum/component/reflection/proc/check_can_reflect(atom/movable/target)
 	if(target == parent || !(target in view(1, parent)))
 		return FALSE
+	if(target.invisibility >= INVISIBILITY_MAXIMUM)
+		return FALSE
 	var/atom/movable/mov_parent = parent
 	if(target.loc != mov_parent.loc && get_dir(mov_parent, target) != reflected_dir)
 		return FALSE
@@ -200,6 +202,8 @@
 
 	// purely for vv
 	reflection.name = "[target.name]'s reflection"
+
+	SEND_SIGNAL(target, COMSIG_REFLECTION_UPDATED, parent, reflection)
 
 ///Called when the target movable changes its appearance or dir.
 /datum/component/reflection/proc/update_reflection(atom/movable/source)

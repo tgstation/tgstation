@@ -8,7 +8,6 @@ macro "default"
 		name = "SHIFT+UP"
 		command = ".winset :map.right-click=true"
 
-
 window "mainwindow"
 	elem "mainwindow"
 		type = MAIN
