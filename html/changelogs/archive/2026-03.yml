@@ -173,3 +173,7 @@
   - bugfix: Sechailers now block pepperspray when up, not when they are down.
   SmArtKar:
   - bugfix: Fixed ghost poll alerts missing backgrounds
+  timothymtorres:
+  - balance: Beartraps are now much more lethal and can cause wounds. Space OSHA has
+      also issued a warning that any clumsy people should avoid handling them after
+      repeated mishaps.
