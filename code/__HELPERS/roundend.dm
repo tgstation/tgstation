@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 			C?.playtitlemusic(volume_multiplier = 0.5)
 		if(speed_round && was_forced != ADMIN_FORCE_END_ROUND)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
-		C.screen += reboot_hud
+		C?.screen += reboot_hud
 		HandleRandomHardcoreScore(C)
 
 	var/popcount = gather_roundend_feedback()
