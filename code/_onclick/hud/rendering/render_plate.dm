@@ -201,8 +201,11 @@
 	. = ..()
 	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
 	set_light_cutoff(10)
-	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+
+/atom/movable/screen/plane_master/rendering_plate/lighting/set_home(datum/plane_master_group/home)
+	. = ..()
 	if(home.our_hud)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
 		hud_changed(home.our_hud)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/show_to(mob/mymob)
@@ -442,13 +445,13 @@
 	plane = RENDER_PLANE_MASTER
 	render_relay_planes = list()
 
-/atom/movable/screen/plane_master/rendering_plate/master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/rendering_plate/master/set_home(datum/plane_master_group/home)
 	. = ..()
 	// Non 0 offset render plates will relay up to the transparent plane above them, assuming they're not on the same z level as their target of course
 	if(offset == 0)
 		return
-	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
 	if(home.our_hud)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
 		hud_changed(home.our_hud)
 
 /atom/movable/screen/plane_master/rendering_plate/master/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)

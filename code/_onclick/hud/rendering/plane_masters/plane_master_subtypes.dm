@@ -65,10 +65,13 @@
 
 /atom/movable/screen/plane_master/parallax_white/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
-	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
-	if(home.our_hud)
-		hud_changed(home.our_hud)
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE, offset), relay_layer = EMISSIVE_SPACE_LAYER)
+
+/atom/movable/screen/plane_master/parallax_white/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(home.our_hud)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+		hud_changed(home.our_hud)
 
 /atom/movable/screen/plane_master/parallax_white/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
 	SIGNAL_HANDLER
@@ -113,14 +116,17 @@
 		// You aren't the source? don't change yourself
 		critical = PLANE_CRITICAL_FUCKO_PARALLAX
 		return
-	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
-	if(home.our_hud)
-		hud_changed(home.our_hud)
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
 	RegisterSignal(SSdcs, COMSIG_NARSIE_SUMMON_UPDATE, PROC_REF(narsie_modified))
 	if(GLOB.narsie_summon_count >= 1)
 		narsie_start_midway(GLOB.narsie_effect_last_modified) // We assume we're on the start, so we can use this number
 	offset_increase(0, SSmapping.max_plane_offset)
+
+/atom/movable/screen/plane_master/parallax/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(home.our_hud)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+		hud_changed(home.our_hud)
 
 /atom/movable/screen/plane_master/parallax/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
 	SIGNAL_HANDLER
@@ -448,10 +454,10 @@
 	plane = CAMERA_STATIC_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME)
 
-/atom/movable/screen/plane_master/camera_static/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/camera_static/set_home(datum/plane_master_group/home)
 	. = ..()
-	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
 	if(home.our_hud)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
 		hud_changed(home.our_hud)
 
 /atom/movable/screen/plane_master/camera_static/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
