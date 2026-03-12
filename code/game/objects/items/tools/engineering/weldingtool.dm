@@ -71,7 +71,7 @@
 	update_appearance()
 
 /obj/item/weldingtool/Destroy(force)
-	QDEL_NULL(light_system)
+	QDEL_NULL(middleman)
 	return ..()
 
 /obj/item/weldingtool/update_icon_state()
