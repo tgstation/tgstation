@@ -50,6 +50,9 @@
 	x_cutoff = ceil(worldviewsize[1] / 2)
 	z_cutoff = ceil(worldviewsize[2] / 2)
 	for(var/listener in current_listeners)
+		if(!ismob(listener))
+			current_listeners -= current_listeners
+			continue
 		register_listener(listener)
 	starting_listeners = current_listeners
 
