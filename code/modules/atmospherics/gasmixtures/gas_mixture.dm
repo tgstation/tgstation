@@ -206,8 +206,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/convert_gas(datum/gas/reactant, datum/gas/product, conversion_amount)
 	var/list/cached_gases = gases
 	assert_gases(reactant, product)
-	cached_gases[reactant][MOLES] -= conversion_amount
-	cached_gases[product][MOLES] += conversion_amount
+	cached_gases[reactant][MOLES] -= QUANTIZE(conversion_amount)
+	cached_gases[product][MOLES] += QUANTIZE(conversion_amount)
 	garbage_collect()
 
 ///Proportionally removes amount of gas from the gas_mixture.
