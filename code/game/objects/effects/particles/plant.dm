@@ -16,3 +16,13 @@
 	scale = generator(GEN_VECTOR, list(0.3, 0.3), list(1,1), NORMAL_RAND)
 	rotation = 30
 	spin = generator(GEN_NUM, -20, 20)
+
+// Subtype for mushroom spores specific to mushfolk/mushroom people
+/particles/pollen/mushroom
+	icon = 'icons/effects/particles/pollen.dmi'
+	icon_state = "pollen"
+	width = 75
+	height = 75
+	spawning = 6
+	fade = 0.7 SECONDS
+	color = "#b89d44"

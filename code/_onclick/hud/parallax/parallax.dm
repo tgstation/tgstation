@@ -133,17 +133,12 @@
 	// Update the movement direction of the parallax if necessary (for shuttles)
 	set_parallax_movedir(areaobj.parallax_movedir, FALSE, mymob)
 
-	var/force = FALSE
 	if(!displaying_client.previous_turf || (displaying_client.previous_turf.z != posobj.z))
 		displaying_client.previous_turf = posobj
-		force = TRUE
 
 	//Doing it this way prevents parallax layers from "jumping" when you change Z-Levels.
 	var/offset_x = posobj.x - displaying_client.previous_turf.x
 	var/offset_y = posobj.y - displaying_client.previous_turf.y
-
-	if(!offset_x && !offset_y && !force)
-		return
 
 	var/glide_rate = round(ICON_SIZE_ALL / mymob.glide_size * world.tick_lag, world.tick_lag)
 	displaying_client.previous_turf = posobj

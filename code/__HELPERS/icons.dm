@@ -1402,7 +1402,10 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/height = I.Height()
 	for(var/x in 1 to width)
 		for(var/y in 1 to height)
-			grid[y][x] = I.GetPixel(x,height+1-y)
+			var/pixel = I.GetPixel(x,height+1-y)
+			if(length(pixel) == 7)
+				pixel += "ff"
+			grid[y][x] = pixel
 
 // Given a number of frames for an icon state, and the dimensions of the icon, returns the ideal dimensions for a DMI file
 /proc/calculate_optimal_icon_grid_dimensions(width, height, count)
@@ -1435,7 +1438,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		for(var/y in 1 to length(frame))
 			var/list/row = jointext(frame[y], "")
 			var/splice_start = (row_index+y-1)*file_height + column*icon_width + 1
-			linear_pixels = splicetext(splice_start*9, (splice_start+icon_width)*9, row)
+			linear_pixels = splicetext(linear_pixels, (splice_start-1)*9+1, (splice_start+icon_width-1)*9+1, row)
 	var/zero_alpha_regex = regex(@@#(?:(?!a0a0a0)([0-9]|[a-f]){6}00)@, "gi")
 	linear_pixels = replacetext(linear_pixels, zero_alpha_regex, COLOR_DMI_MASK)
 	return linear_pixels
