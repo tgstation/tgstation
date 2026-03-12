@@ -885,6 +885,7 @@
 #include "code\datums\voice_of_god_command.dm"
 #include "code\datums\weakrefs.dm"
 #include "code\datums\world_topic.dm"
+#include "code\datums\3d_sounds\_3d_sound.dm"
 #include "code\datums\achievements\_achievement_data.dm"
 #include "code\datums\achievements\_awards.dm"
 #include "code\datums\achievements\admin_panel.dm"

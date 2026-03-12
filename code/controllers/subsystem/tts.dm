@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(tts)
 		return SS_INIT_FAILURE
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(target, list/listeners, sound/audio, sound/audio_blips, datum/language/language, range = 7, volume_offset = 0, ignore_observers = FALSE, source_speaker = null)
+/datum/controller/subsystem/tts/proc/play_tts(target, list/listeners, sound/audio, sound/audio_blips, datum/language/language, range = 7, volume_offset = 0, ignore_observers = FALSE, source_speaker = null, audio_length = 10 SECONDS, audio_length_blips = 10 SECONDS)
 	var/turf/turf_source = get_turf(target)
 	if(!turf_source && target) // if there's a target, we better have a turf
 		return
@@ -126,6 +126,8 @@ SUBSYSTEM_DEF(tts)
 	var/list/final_listeners = listeners
 	if(!ignore_observers && target)
 		final_listeners += SSmobs.dead_players_by_zlevel[turf_source.z] //observers always hear through walls
+	var/list/blips_hearers = list()
+	var/list/voice_hearers = list()
 	for(var/hearer in final_listeners)
 		if(isnull(hearer))
 			continue
@@ -148,13 +150,17 @@ SUBSYSTEM_DEF(tts)
 		var/sound_volume = ((hearer == target)? 60 : 85) + volume_offset
 		sound_volume = sound_volume*volume_modifier
 		var/datum/language_holder/holder = listening_mob.get_language_holder()
-		var/audio_to_use = (tts_pref == TTS_SOUND_BLIPS) ? audio_blips : audio
+		var/sound/audio_to_use = (tts_pref == TTS_SOUND_BLIPS) ? audio_blips : audio
 		if(!holder.has_language(language))
 			if (tts_pref == TTS_SOUND_OFF)
 				continue
 			else
 				audio_to_use = audio_blips
 		if(target && get_dist(hearer, turf_source) <= range)
+			if(tts_pref == TTS_SOUND_BLIPS || !holder.has_language(language))
+				blips_hearers += listening_mob
+			else
+				voice_hearers += listening_mob
 			listening_mob.playsound_local(
 				turf_source,
 				vol = sound_volume,
@@ -180,6 +186,32 @@ SUBSYSTEM_DEF(tts)
 				distance_multiplier = 1,
 				use_reverb = TRUE
 			)
+	if(target)
+		new /datum/threed_sound(
+			target,
+			audio,
+			voice_hearers,
+			FALSE,
+			85 + volume_offset,
+			SOUND_RANGE,
+			audio_length,
+			channel,
+			/datum/preference/numeric/volume/sound_tts_volume,
+			COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED
+		)
+		new /datum/threed_sound(
+			target,
+			audio_blips,
+			blips_hearers,
+			FALSE,
+			85 + volume_offset,
+			SOUND_RANGE,
+			audio_length_blips,
+			channel,
+			/datum/preference/numeric/volume/sound_tts_volume,
+			COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED
+		)
+
 
 // Need to wait for all HTTP requests to complete here because of a rustg crash bug that causes crashes when dd restarts whilst HTTP requests are ongoing.
 /datum/controller/subsystem/tts/Shutdown()
@@ -224,18 +256,17 @@ SUBSYSTEM_DEF(tts)
 		if(!current_request.requests_completed())
 			continue
 
-		var/datum/http_response/response = current_request.get_primary_response()
 		in_process_http_messages -= current_request
 		average_tts_messages_time = MC_AVERAGE(average_tts_messages_time, world.time - current_request.start_time)
 		var/identifier = current_request.identifier
+		var/datum/http_response/normal_response = current_request.request.into_response()
+		var/datum/http_response/blips_response = current_request.request_blips.into_response()
+		var/datum/http_response/radio_response = current_request.request_radio.into_response()
+		var/datum/http_response/radio_blips_response = current_request.request_blips_radio.into_response()
 		if(current_request.requests_errored())
 			if(queued_radio_messages[identifier])
 				queued_radio_messages.Remove(identifier)
 			current_request.timed_out = TRUE
-			var/datum/http_response/normal_response = current_request.request.into_response()
-			var/datum/http_response/blips_response = current_request.request_blips.into_response()
-			var/datum/http_response/radio_response = current_request.request_radio.into_response()
-			var/datum/http_response/radio_blips_response = current_request.request_blips_radio.into_response()
 			log_tts("TTS HTTP request errored | Normal: [normal_response.error] | Blips: [blips_response.error] | Radio: [radio_response.error] | Radio Blips: [radio_blips_response.error]", list(
 				"normal" = normal_response,
 				"blips" = blips_response,
@@ -243,9 +274,18 @@ SUBSYSTEM_DEF(tts)
 				"radio_blips" = radio_blips_response
 			))
 			continue
-		current_request.audio_length = text2num(response.headers["audio-length"]) * 10
+		current_request.audio_length = text2num(normal_response.headers["audio-length"]) * 10
 		if(!current_request.audio_length)
 			current_request.audio_length = 0
+		current_request.audio_length_blips = text2num(blips_response.headers["audio-length"]) * 10
+		if(!current_request.audio_length_blips)
+			current_request.audio_length_blips = 0
+		current_request.audio_length_radio = text2num(radio_response.headers["audio-length"]) * 10
+		if(!current_request.audio_length_radio)
+			current_request.audio_length_radio = 0
+		current_request.audio_length_blips_radio = text2num(radio_blips_response.headers["audio-length"]) * 10
+		if(!current_request.audio_length_blips_radio)
+			current_request.audio_length_blips_radio = 0
 		current_request.audio_file = "tmp/tts/[identifier].ogg"
 		current_request.audio_file_blips = "tmp/tts/[identifier]_blips.ogg" // We aren't as concerned about the audio length for blips as we are with actual speech
 		current_request.audio_file_radio = "tmp/tts/[identifier]_radio.ogg"
@@ -307,7 +347,7 @@ SUBSYSTEM_DEF(tts)
 			else if(current_target.when_to_play < world.time)
 				audio_file = new(current_target.audio_file)
 				audio_file_blips = new(current_target.audio_file_blips)
-				play_tts(tts_target, current_target.listeners, audio_file, audio_file_blips, current_target.language, current_target.message_range, current_target.volume_offset)
+				play_tts(tts_target, current_target.listeners, audio_file, audio_file_blips, current_target.language, current_target.message_range, current_target.volume_offset, FALSE, null, current_target.audio_length, current_target.audio_length_blips)
 				completed_tts_messages[current_target.identifier] = list("ref" = current_target, "expiry_time" = world.time + 300)
 				if(length(data) != 1)
 					var/datum/tts_request/next_target = data[2]
@@ -339,7 +379,7 @@ SUBSYSTEM_DEF(tts)
 				var/sound/audio_file_blips
 				audio_file = new(tts_request.audio_file_radio)
 				audio_file_blips = new(tts_request.audio_file_blips_radio)
-				play_tts(radio == TTS_GHOST_RADIO ? null : get_turf(radio), hearers, audio_file, audio_file_blips, tts_request.language, INFINITY, tts_request.volume_offset, ignore_observers = TRUE, source_speaker = tts_request.target)
+				play_tts(radio == TTS_GHOST_RADIO ? null : get_turf(radio), hearers, audio_file, audio_file_blips, tts_request.language, INFINITY, tts_request.volume_offset, ignore_observers = TRUE, source_speaker = tts_request.target, audio_length = tts_request.audio_length_radio, audio_length_blips = tts_request.audio_length_blips_radio)
 			queued_radio_messages.Remove(identifier)
 			completed_tts_messages.Remove(identifier)
 
@@ -439,6 +479,9 @@ SUBSYSTEM_DEF(tts)
 	var/sound/audio_file_blips_radio
 	/// The audio length of this tts request.
 	var/audio_length
+	var/audio_length_blips
+	var/audio_length_radio
+	var/audio_length_blips_radio
 	/// When the audio file should play at the minimum
 	var/when_to_play = 0
 	/// Whether this request was timed out or not
@@ -517,7 +560,9 @@ SUBSYSTEM_DEF(tts)
 	else
 		var/datum/http_response/response = request.into_response()
 		var/datum/http_response/response_blips = request_blips.into_response()
-		return response.errored || response_blips.errored
+		var/datum/http_response/response_radio = request_radio.into_response()
+		var/datum/http_response/response_blips_radio = request_blips_radio.into_response()
+		return response.errored || response_blips.errored || response_radio.errored || response_blips_radio.errored
 
 /datum/tts_request/proc/requests_completed()
 	if(local)

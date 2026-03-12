@@ -286,3 +286,6 @@
 
 /// from /mob/eye/camera/remote/assign_user(): (mob/living/new_user, mob/living/old_user)
 #define COMSIG_REMOTE_CAMERA_ASSIGN_USER "remote_camera_assign_user"
+
+///sent to TTS sounds when the volume preference is changed and applied
+#define COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED "tts_volume_preference_applied"

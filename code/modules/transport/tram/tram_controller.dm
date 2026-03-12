@@ -368,7 +368,29 @@
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset.")
 	idle_platform = destination_platform
-	playsound(idle_platform, idle_platform.arrival_sound, 50, FALSE, 0, falloff_distance = 5, extrarange= 7, ignore_walls = TRUE)
+	var/our_channel = SSsounds.random_available_channel()
+	var/sound/jingle = sound(
+		idle_platform.arrival_sound,
+		FALSE,
+		0,
+		our_channel,
+		60
+	)
+	var/list/hearers = playsound(idle_platform, jingle, 50, FALSE, 0, extrarange= 10, ignore_walls = TRUE)
+	new /datum/threed_sound(
+		idle_platform,
+		jingle,
+		hearers,
+		FALSE,
+		60,
+		SOUND_RANGE + 7,
+		12 SECONDS,
+		our_channel,
+		null,
+		null,
+		SOUND_FALLOFF_EXPONENT,
+		5
+	)
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0

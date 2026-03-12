@@ -239,7 +239,7 @@
 			tram.nav_beacon.voice = SStts.tram_voice
 		switch(response_code)
 			if(REQUEST_SUCCESS)
-				tram.nav_beacon.say("The next station is: [response_info]")
+				tram.nav_beacon.say("The next stop is: [response_info]")
 
 			if(REQUEST_FAIL)
 				if(!LAZYFIND(relevant, src))
