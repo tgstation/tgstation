@@ -3200,7 +3200,7 @@
 	taste_description = "hogo and herbs"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo //TODO:Radiation Effect
+/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo
 	name = "Thermonuclear Daiquiri"
 	description = "A drink for those who enjoy the gnarlier things in life, like high ester rums and Cobalt 60."
 	boozepwr = 80
@@ -3208,6 +3208,19 @@
 	quality = DRINK_FANTASTIC
 	taste_description = "approximately 3.6 roentgen"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo/on_mob_add(mob/living/living_mob)
+	. = ..()
+	living_mob.apply_status_effect(/datum/status_effect/cherenkov_radiation) //makes the drinker glow blue, and rarely emit high-energy nuclear particles.
+
+/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo/on_mob_delete(mob/living/living_mob)
+	. = ..()
+	living_mob.remove_status_effect(/datum/status_effect/cherenkov_radiation)
+
+/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	drinker.set_drugginess(100 SECONDS * metabolization_ratio * seconds_per_tick)
+	drinker.set_jitter_if_lower(20 SECONDS * metabolization_ratio * seconds_per_tick)
+	drinker.set_dizzy_if_lower(10 SECONDS * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/consumable/ethanol/poets_dream
 	name = "Poet's Dream"

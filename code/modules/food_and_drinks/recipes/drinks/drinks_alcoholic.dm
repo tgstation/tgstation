@@ -766,7 +766,7 @@
 
 /datum/chemical_reaction/drink/nuclear_daiquiri_thermo
 	results=list(/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/nuclear_daiquiri = 10, /datum/reagent/uranium = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/nuclear_daiquiri = 10, /datum/reagent/uranium = 1, /datum/reagent/hydrogen = 9)
 	mix_message = "As the mixture begins to combine and glow, an ominous metallic taste fills your mouth."		
 
 /datum/chemical_reaction/drink/poets_dream
