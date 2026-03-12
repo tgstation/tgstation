@@ -221,7 +221,7 @@
 	for(var/obj/item/radio/radio as anything in radios)
 		var/list/possible_hearers = get_hearers_in_LOS(radio.canhear_range, radio)
 		if(LAZYLEN(possible_hearers))
-			.[radio] = filter_tts_listeners(get_hearers_in_LOS(radio.canhear_range, radio), frequency)
+			.[radio] = filter_tts_listeners(possible_hearers, frequency)
 
 
 /// A filter to be applied to get_hearers_in_x, that removes any non-mob hearers, converting them to their relevant mob if one exists (such as dullahan heads).
