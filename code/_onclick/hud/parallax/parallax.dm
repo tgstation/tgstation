@@ -372,41 +372,33 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	speed = 1.4
 	layer = 3
 
-/obj/effect/abstract/parallax_holder
-	appearance_flags = APPEARANCE_UI|KEEP_TOGETHER|KEEP_APART
-	render_target = "old_space_parallax"
-
 /atom/movable/screen/parallax_layer/old
 	icon = null
 	icon_state = null // dog there's gonna be so many overlays...
 	speed = 0.6
 	layer = 1 // Draws on its own
-	var/obj/effect/abstract/parallax_holder/holder
-
-/atom/movable/screen/parallax_layer/old/Initialize(mapload, datum/hud/hud_owner, client/owner, template)
-	holder = new(src)
-	. = ..()
-
-/atom/movable/screen/parallax_layer/old/Destroy()
-	QDEL_NULL(holder)
-	return ..()
 
 /atom/movable/screen/parallax_layer/old/tileable_appearance()
 	var/mutable_appearance/copy = mutable_appearance(null, "")
-	copy.render_source = "old_space_parallax"
+	// We have to use render targets to draw one of these flat and reuse it for this because FOR SOME REASON
+	// 16 (tile count) * (14 (animated state count) * 4 (frame count) + 1 (1 is not animated)) 480x480 states
+	// is TOO MUCH for the client. Whatever, see if I care.
+	copy.render_source = "*old_space_parallax"
 	return copy
 
-/atom/movable/screen/parallax_layer/old/update_icon()
+/atom/movable/screen/parallax_layer/old/update_overlays()
 	. = ..()
-	vis_contents |= holder
-
-	var/list/old_states = list("1", "19", "21", "23", "24", "26", "29", "30", "31", "34", "35", "36", "37", "43", "46")
+	var/mutable_appearance/relayed_overlay = mutable_appearance('icons/effects/old_parallax.dmi', "1", appearance_flags = RESET_TRANSFORM|PIXEL_SCALE|KEEP_TOGETHER|KEEP_APART)
+	var/list/old_states = list("19", "21", "23", "24", "26", "29", "30", "31", "34", "35", "36", "37", "43", "46")
 	var/list/holder_overlays = list()
 	for(var/state in old_states)
 		holder_overlays += mutable_appearance('icons/effects/old_parallax.dmi', state)
-	holder.overlays = holder_overlays
-	// Just in case me
-	holder.plane = plane
+	relayed_overlay.overlays = holder_overlays
+	relayed_overlay.render_target = "*old_space_parallax"
+	// Renders the like, "input" appearance we draw to everything else
+	. += relayed_overlay
+	// The 0,0 appearance, can't reuse relayed_overlay for this because otherwise transforms would stack
+	. += tileable_appearance()
 
 /atom/movable/screen/parallax_layer/planet
 	icon_state = "planet"
