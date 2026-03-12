@@ -157,6 +157,8 @@
   - qol: mixing different types of coffee can heal oxy damage, because you know coffee
       has antioxidizing properties
 2026-03-12:
+  Absolucy:
+  - qol: Added a search bar to the GPS interface.
   ArcaneMusic:
   - rscadd: mushpeople now emit harmless spores upon death, which will grow into mushrooms
       on the floor and walls for a time.
