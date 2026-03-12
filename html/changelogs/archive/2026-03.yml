@@ -156,3 +156,20 @@
   - qol: astrotame and cream now heals disgust
   - qol: mixing different types of coffee can heal oxy damage, because you know coffee
       has antioxidizing properties
+2026-03-12:
+  ArcaneMusic:
+  - rscadd: mushpeople now emit harmless spores upon death, which will grow into mushrooms
+      on the floor and walls for a time.
+  Happyowl93:
+  - bugfix: Blood worm can reproduce one hatchling now.
+  JohnFulpWillard:
+  - qol: Keybindings for screenshots now appear in the keybindings options instead
+      of buttons at the top left of your screen.
+  Melbert:
+  - rscadd: Revenants are always visible in mirror reflections, even while invisible.
+  - rscadd: Revenant "Defile" now shatters mirrors.
+  - qol: Revenants no longer elevate over tables.
+  Seven:
+  - bugfix: Sechailers now block pepperspray when up, not when they are down.
+  SmArtKar:
+  - bugfix: Fixed ghost poll alerts missing backgrounds

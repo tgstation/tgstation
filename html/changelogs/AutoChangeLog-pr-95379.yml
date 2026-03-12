@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Revenants are always visible in mirror reflections, even while invisible."
-  - rscadd: "Revenant \"Defile\" now shatters mirrors."
-  - qol: "Revenants no longer elevate over tables."
