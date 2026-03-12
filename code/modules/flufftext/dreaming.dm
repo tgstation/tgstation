@@ -23,11 +23,13 @@
 	set waitfor = FALSE
 	var/datum/dream/chosen_dream
 
-	if ((IS_HERETIC(src) || HAS_TRAIT(src, TRAIT_HERETICAL_DREAMS)) && !mob_mood.get_mood_event("mansus_dream_fatigue") && GLOB.reality_smash_track.smashes.len)
+	var/can_heretic_dream = ((IS_HERETIC(src) || HAS_TRAIT(src, TRAIT_HERETICAL_DREAMS)) && !mob_mood.get_mood_event("mansus_dream_fatigue"))
+
+	if (can_heretic_dream && GLOB.reality_smash_track.smashes.len)
 		/// If someone attempts to have a heretical dream and there is an avaliable influence, one is picked randomly for a dream
 		chosen_dream = new /datum/dream/heretic(pick(GLOB.reality_smash_track.smashes))
-	else if (HAS_TRAIT(src, TRAIT_HERETICAL_DREAMS) && !mob_mood.get_mood_event("mansus_dream_fatigue") && !GLOB.reality_smash_track.smashes.len)
-		/// If a non-heretic attempts to have a heretic dream, but there aren't any influences due to there not being real heretics, they are instead given a fake dream based on a random location.
+	else if (can_heretic_dream && !IS_HERETIC(src) && !GLOB.reality_smash_track.smashes.len)
+		/// If a non-heretic attempts to have a heretic dream, but there aren't any influences due to there not being any real heretics, they are instead given a fake dream based on a random location.
 		chosen_dream = new /datum/dream/heretic(get_safe_random_station_turf_equal_weight())
 	else
 		chosen_dream = pick_weight(GLOB.dreams)
