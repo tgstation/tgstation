@@ -3209,7 +3209,7 @@
 	taste_description = "approximately 3.6 roentgen"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/poets_dream //TODO: make it cause heretic dreams
+/datum/reagent/consumable/ethanol/poets_dream
 	name = "Poet's Dream"
 	description = "This cocktail takes a classic martini base and twists it into a deliciously sweet and herbal mode. Nanotrasen regulations state not to drink this too soon before sleep, or risk 'oneiric encroachment,' whatever that means."
 	boozepwr = 50
@@ -3217,6 +3217,7 @@
 	quality = DRINK_GOOD
 	taste_description = "honeyed herbal gin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_HERETICAL_DREAMS) //Enables non-heretics to have heretical dreams
 
 /datum/reagent/consumable/ethanol/pousse_cafe
 	name = "Pousse Cafe"

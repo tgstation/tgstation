@@ -1216,6 +1216,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dreaming carbon when they are currently doing dreaming stuff
 #define TRAIT_DREAMING "currently_dreaming"
 
+/// Trait that allows non-heretics to have heretical dreams
+#define TRAIT_HERETICAL_DREAMS "heretical_dreams"
+
 /// Whether bots will salute this mob.
 #define TRAIT_COMMISSIONED "commissioned"
 

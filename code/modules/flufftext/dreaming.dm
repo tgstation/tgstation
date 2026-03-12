@@ -23,8 +23,12 @@
 	set waitfor = FALSE
 	var/datum/dream/chosen_dream
 
-	if (IS_HERETIC(src) && !mob_mood.get_mood_event("mansus_dream_fatigue") && GLOB.reality_smash_track.smashes.len)
+	if ((IS_HERETIC(src) || HAS_TRAIT(src, TRAIT_HERETICAL_DREAMS)) && !mob_mood.get_mood_event("mansus_dream_fatigue") && GLOB.reality_smash_track.smashes.len)
+		/// If someone attempts to have a heretical dream and there is an avaliable influence, one is picked randomly for a dream
 		chosen_dream = new /datum/dream/heretic(pick(GLOB.reality_smash_track.smashes))
+	else if (HAS_TRAIT(src, TRAIT_HERETICAL_DREAMS) && !mob_mood.get_mood_event("mansus_dream_fatigue") && !GLOB.reality_smash_track.smashes.len)
+		/// If a non-heretic attempts to have a heretic dream, but there aren't any influences due to there not being real heretics, they are instead given a fake dream based on a random location.
+		chosen_dream = new /datum/dream/heretic(get_safe_random_station_turf_equal_weight())
 	else
 		chosen_dream = pick_weight(GLOB.dreams)
 
@@ -190,8 +194,8 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 /// Heretics can see dreams about random machinery from the perspective of a random unused influence
 /datum/dream/heretic
 	sleep_until_finished = TRUE
-	/// The influence we will be dreaming about
-	var/obj/effect/heretic_influence/influence
+	/// The location of the influence (or lack thereof in the case of a fake dream) we will be dreaming about
+	var/atom/dream_center
 	/// The distance to the objects visible from the influence during the dream
 	var/dream_view_range = 5
 	var/list/what_you_can_see = list(
@@ -223,8 +227,8 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	/// Cached list of allowed typecaches for each type in what_you_can_see
 	var/static/list/allowed_typecaches_by_root_type = null
 
-/datum/dream/heretic/New(obj/effect/heretic_influence/found_influence)
-	influence = found_influence
+/datum/dream/heretic/New(atom/dream_center)
+	src.dream_center = dream_center
 
 /datum/dream/heretic/GenerateDream(mob/living/carbon/dreamer)
 	. = list()
@@ -238,7 +242,7 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 		for(var/type in what_you_can_see)
 			allowed_typecaches_by_root_type[type] = typecacheof(type) - what_you_cant_see
 
-	var/list/all_objects = oview(dream_view_range, influence)
+	var/list/all_objects = oview(dream_view_range, dream_center)
 	var/something_found = FALSE
 	for(var/object_type in allowed_typecaches_by_root_type)
 		var/list/filtered_objects = typecache_filter_list(all_objects, allowed_typecaches_by_root_type[object_type])
