@@ -379,7 +379,7 @@ SUBSYSTEM_DEF(tts)
 				var/sound/audio_file_blips
 				audio_file = new(tts_request.audio_file_radio)
 				audio_file_blips = new(tts_request.audio_file_blips_radio)
-				play_tts(radio == TTS_GHOST_RADIO ? null : get_turf(radio), hearers, audio_file, audio_file_blips, tts_request.language, INFINITY, tts_request.volume_offset, ignore_observers = TRUE, source_speaker = tts_request.target, audio_length = tts_request.audio_length_radio, audio_length_blips = tts_request.audio_length_blips_radio)
+				play_tts(radio == TTS_GHOST_RADIO ? null : radio, hearers, audio_file, audio_file_blips, tts_request.language, INFINITY, tts_request.volume_offset, ignore_observers = TRUE, source_speaker = tts_request.target, audio_length = tts_request.audio_length_radio, audio_length_blips = tts_request.audio_length_blips_radio)
 			queued_radio_messages.Remove(identifier)
 			completed_tts_messages.Remove(identifier)
 
