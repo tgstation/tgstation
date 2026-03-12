@@ -498,7 +498,7 @@
 		if(invisibility)
 			to_chat(src, span_revennotice("Your connection to the world strengthens due to the latent spiritual energy in this area - you are now visible."))
 		SetInvisibility(INVISIBILITY_NONE, id = "chapel")
-	else
+	else if(istype(get_area(old_loc), /area/station/service/chapel))
 		if(!invisibility)
 			to_chat(src, span_revennotice("Your connection to the world weakens as you leave the spiritual energy of the chapel behind - you are no longer visible."))
 		RemoveInvisibility(id = "chapel")
