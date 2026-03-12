@@ -29,41 +29,19 @@
 
 /// Special type of camera for this exact usecase to prevent harddels
 /obj/item/camera/app
-	name = "internal camera"
-	desc = "Specialized internal camera protected from the hellish depths of SSWardrobe. \
-	Yell at coders if you somehow manage to see this"
 	print_picture_on_snap = FALSE
 	cooldown = 1 SECONDS
-	light_system = NONE
-
-/// Special type of component so it does not intefer with the modular computer default lighting system if any
-/datum/component/overlay_lighting/camera
-	dupe_mode = COMPONENT_DUPE_SOURCES
-
-/obj/item/camera/app/Initialize(mapload)
-	. = ..()
-	var/obj/item/modular_computer/target = loc
-	target.AddComponentFrom(REF(src), /datum/component/overlay_lighting/camera, 3, FLASH_LIGHT_POWER, COLOR_WHITE, FALSE, TRUE)
-
-/obj/item/camera/app/Destroy(force)
-	var/obj/item/modular_computer/target = loc
-	target.RemoveComponentSource(REF(src), /datum/component/overlay_lighting/camera)
-	return ..()
-
-/obj/item/camera/app/set_light_on(new_value)
-	var/obj/item/modular_computer/target = loc
-	target.set_light_on(new_value)
+	light_range = 3
 
 /datum/computer_file/program/maintenance/camera/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	internal_camera = new(computer)
-	internal_camera.print_picture_on_snap = FALSE
 	picture_appearance = new()
 	RegisterSignal(internal_camera, COMSIG_CAMERA_IMAGE_CAPTURED, PROC_REF(on_image_captured))
 
 /datum/computer_file/program/maintenance/camera/Destroy()
 	QDEL_NULL(internal_camera)
-	internal_picture = null
+	QDEL_NULL(internal_picture)
 	QDEL_NULL(picture_appearance)
 	return ..()
 
@@ -77,7 +55,7 @@
 /datum/computer_file/program/maintenance/camera/kill_program(mob/user)
 	. = ..()
 	UnregisterSignal(computer, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY)
-	internal_picture = null
+	QDEL_NULL(internal_picture)
 
 /datum/computer_file/program/maintenance/camera/background_program(mob/user)
 	. = ..()

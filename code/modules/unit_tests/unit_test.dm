@@ -268,8 +268,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/mob/dview,
 		//Template type
 		/obj/item/bodypart,
-		//Internal type meant to be created only inside the maintenance camera program
-		/obj/item/camera/app,
 		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
 		/obj/merge_conflict_marker,
 		//Not meant to spawn without the machine wand

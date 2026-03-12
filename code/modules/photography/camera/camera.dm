@@ -8,7 +8,7 @@
 	worn_icon_state = "camera"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	light_system = OVERLAY_LIGHT_DIRECTIONAL //Used as a flash here.
+	light_system = NONE
 	light_range = 6
 	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
@@ -47,11 +47,33 @@
 	var/picture_size_x = 2
 	///height of the picture
 	var/picture_size_y = 2
+	///Internal holder to apply camera light on
+	VAR_PRIVATE/atom/movable/light_holder
+
+/// Special type of component so it does not intefer with the modular computer default lighting system if any
+/datum/component/overlay_lighting/camera
+	dupe_mode = COMPONENT_DUPE_SOURCES
 
 /obj/item/camera/Initialize(mapload)
 	. = ..()
+	/datum/component/overlay_lighting/camera
+	//we do this so if this camera is used as an internal component, the flash will still be visible
+	if(flash_enabled)
+		var/atom/movable/parent = loc
+		light_holder = src
+		while(!(isnull(parent) || ismob(parent) || isturf(parent)))
+			light_holder = parent
+			parent = light_holder.loc
+		light_holder.AddComponentFrom(REF(src), /datum/component/overlay_lighting/camera, light_range, light_power, light_color, FALSE, TRUE, FALSE, TRUE)
+
 	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera, new /obj/item/circuit_component/remotecam/polaroid), SHELL_CAPACITY_SMALL)
 	register_context()
+
+/obj/item/camera/Destroy(force)
+	if(light_holder)
+		light_holder.RemoveComponentSource(REF(src), /datum/component/overlay_lighting/camera)
+		light_holder = null
+	return ..()
 
 /obj/item/camera/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Adjust Zoom"
@@ -109,7 +131,6 @@
 	picture_size_x = clamp(desired_x, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	picture_size_y = clamp(desired_y, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	return TRUE
-
 /// Resets flash to be used again
 /obj/item/camera/proc/cooldown()
 	PRIVATE_PROC(TRUE)
@@ -122,7 +143,7 @@
 /obj/item/camera/proc/flash_end()
 	PRIVATE_PROC(TRUE)
 
-	set_light_on(FALSE)
+	light_holder.set_light_on(FALSE)
 
 /**
  * Turns the flash quickly on and off when picture is taken
@@ -139,7 +160,7 @@
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), cooldown)
 	icon_state = "[base_icon_state]_off"
 	if(flash_enabled)
-		set_light_on(TRUE)
+		light_holder.set_light_on(TRUE)
 		addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /**
