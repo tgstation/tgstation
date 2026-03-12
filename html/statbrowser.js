@@ -321,6 +321,7 @@ function draw_debug() {
   }
   document.getElementById("statcontent").appendChild(table3);
 }
+
 function draw_status() {
   if (!document.getElementById("Status")) {
     createStatusTab("Status");
@@ -826,7 +827,7 @@ Byond.subscribeTo("init_verbs", function (payload) {
 });
 
 Byond.subscribeTo("update_stat", function (payload) {
-  status_tab_parts = [payload.ping_str];
+  status_tab_parts = [];
 
   var parsed = payload.global_data;
 
