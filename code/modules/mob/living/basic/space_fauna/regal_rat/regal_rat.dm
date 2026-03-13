@@ -105,6 +105,9 @@
 	if(miasma_percentage >= 0.25)
 		heal_bodypart_damage(1)
 
+/mob/living/basic/regal_rat/p_their(temp_gender)
+    return "[..()] Majesty" //They're pompous little creatures
+
 /// Triggers an alert to all ghosts that the rat has become player controlled.
 /mob/living/basic/regal_rat/proc/became_player_controlled()
 	notify_ghosts(
