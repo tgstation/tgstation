@@ -2935,6 +2935,7 @@
 	quality = DRINK_GOOD
 	taste_description = "flowery anise-scented whiskey"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/amaretto_sour
 	name = "Amaretto Sour"
@@ -3070,6 +3071,7 @@
 	quality = DRINK_NICE
 	taste_description = "confounding herbaceousness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/maraschino
 	name = "Maraschino Liqueur"
@@ -3123,6 +3125,7 @@
 	quality = DRINK_GOOD
 	taste_description = "bitter oranges"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/garibaldi/on_mob_metabolize(mob/living/carbon/drinker)
 	. = ..()
@@ -3148,6 +3151,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "nutty anise-scented whiskey"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/ethanol/jungle_bird
 	name = "Jungle Bird"
@@ -3197,6 +3201,7 @@
 	quality = DRINK_GOOD
 	taste_description = "bittersweet vermouth"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/negroni/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
@@ -3252,6 +3257,7 @@
 	quality = DRINK_FANTASTIC
 	taste_description = "a cascade of varying liqueurs"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_HIGH
 
 /datum/reagent/consumable/ethanol/spritz //Aperitif that increases hunger
 	name = "Spritz" // If someone wants to add an elderflower spritz or something else like that, just rename this to spritz al bitter or whatever
@@ -3261,6 +3267,7 @@
 	quality = DRINK_GOOD
 	taste_description = "bittersweet refreshment"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/spritz/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
