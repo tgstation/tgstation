@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "The endround timer telling you when a reboot is happening has been taken out of the stat panel and is instead text over your screen (similar to Goon)"
