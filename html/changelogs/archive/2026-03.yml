@@ -134,6 +134,9 @@
   - qol: (Most) stacks will no longer fall right out of bags if you put enough in
       to make the stack normal-sized.
 2026-03-11:
+  Aliceee2ch:
+  - map: Added bigger version of BYOS.
+  - map: Rogue airless turfs on original BYOS were replaced on those with air.
   Code by NecromancerAnne, Sprites by Simpleton:
   - rscadd: Adds the Pump-Action Grenade Launcher and respective kit to the nuclear
       operative uplink. It fires 40mm grenade shells.
@@ -145,3 +148,34 @@
       (as well as 40mm rubber puck).
   - balance: 40mm Rubber Puck knocks people down, and isn't weak against armor, but
       does less damage overall. It also bounces off walls.
+  RusselNotSCP:
+  - bugfix: Most martian cocktails are no longer all the same color when put into
+      a bottle.
+  SyncIt21:
+  - qol: mixing tea/coffee with sugar gives you a small mood buff. So like do it
+  - qol: astrotame and cream now heals disgust
+  - qol: mixing different types of coffee can heal oxy damage, because you know coffee
+      has antioxidizing properties
+2026-03-12:
+  Absolucy:
+  - qol: Added a search bar to the GPS interface.
+  ArcaneMusic:
+  - rscadd: mushpeople now emit harmless spores upon death, which will grow into mushrooms
+      on the floor and walls for a time.
+  Happyowl93:
+  - bugfix: Blood worm can reproduce one hatchling now.
+  JohnFulpWillard:
+  - qol: Keybindings for screenshots now appear in the keybindings options instead
+      of buttons at the top left of your screen.
+  Melbert:
+  - rscadd: Revenants are always visible in mirror reflections, even while invisible.
+  - rscadd: Revenant "Defile" now shatters mirrors.
+  - qol: Revenants no longer elevate over tables.
+  Seven:
+  - bugfix: Sechailers now block pepperspray when up, not when they are down.
+  SmArtKar:
+  - bugfix: Fixed ghost poll alerts missing backgrounds
+  timothymtorres:
+  - balance: Beartraps are now much more lethal and can cause wounds. Space OSHA has
+      also issued a warning that any clumsy people should avoid handling them after
+      repeated mishaps.
