@@ -190,6 +190,16 @@
 		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
+/obj/machinery/piratepad/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!.)
+		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", tool)
+
+/obj/machinery/piratepad/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!.)
+		return default_deconstruction_crowbar(tool)
+
 /obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)
 	. = ..()
 	if(!.)

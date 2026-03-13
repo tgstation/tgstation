@@ -11,16 +11,6 @@
 	circuit = /obj/item/circuitboard/machine/bountypad
 	var/cooldown_reduction = 0
 
-/obj/machinery/piratepad/civilian/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(!.)
-		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", tool)
-
-/obj/machinery/piratepad/civilian/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(!.)
-		return default_deconstruction_crowbar(tool)
-
 /obj/machinery/piratepad/civilian/RefreshParts()
 	. = ..()
 	var/T = -2
