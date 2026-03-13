@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds a 1/500 chance that the grain used to create a pizza in a pizza crate was cursed by an evil lich."
