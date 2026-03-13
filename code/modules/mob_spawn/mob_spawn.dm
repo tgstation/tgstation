@@ -5,6 +5,7 @@
 	//So it shows up in the map editor
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = "mobspawner"
+	abstract_type = /obj/effect/mob_spawn
 	/// Can this spawner be used up?
 	var/infinite_use = FALSE
 	///A forced name of the mob, though can be overridden if a special name is passed as an argument
