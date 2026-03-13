@@ -35,3 +35,22 @@
 		TEST_ASSERT(organ in hollow_boy.organs, "Organ '[organ.name] was put in an empty bodypart that replaced a humans, but the organ did not come with.")
 		TEST_ASSERT(organ.owner == hollow_boy, "Organ '[organ.name]'s owner was not properly updated to the new human after being placed in a replacement bodypart.")
 		TEST_ASSERT(organ.bodypart_owner in hollow_boy.bodyparts, "Organ '[organ.name]'s bodypart_owner was not properly updated to the new bodypart after being placed in a replacement bodypart.")
+
+/// Tests that gibbing results in a head with a brain
+/datum/unit_test/gibbing_organ_transfer
+
+/datum/unit_test/gibbing_organ_transfer/Run()
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
+	var/list/bodyparts_for_cleanup = dummy.bodyparts.Copy()
+	var/list/organs_for_cleanup = dummy.organs.Copy()
+	var/obj/item/organ/brain/original_brain = dummy.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/bodypart/head/original_head = dummy.get_bodypart(BODY_ZONE_HEAD)
+	dummy.gib(ALL)
+
+	TEST_ASSERT(QDELETED(dummy), "Dummy was not deleted after gibbing.")
+	TEST_ASSERT(!QDELETED(original_head), "Original head was deleted after gibbing.")
+	TEST_ASSERT(!QDELETED(original_brain), "Original brain was deleted after gibbing.")
+	TEST_ASSERT(original_brain.loc == original_head, "Original brain was not transferred to the head after gibbing.")
+
+	QDEL_LIST(organs_for_cleanup)
+	QDEL_LIST(bodyparts_for_cleanup)
