@@ -295,7 +295,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return TRUE
 
 /datum/preferences/proc/create_character_preview_view(mob/user)
-	character_preview_view = new(null, src)
+	character_preview_view = new(null, null, src)
 	character_preview_view.generate_view("character_preview_[REF(character_preview_view)]")
 	character_preview_view.update_body()
 
