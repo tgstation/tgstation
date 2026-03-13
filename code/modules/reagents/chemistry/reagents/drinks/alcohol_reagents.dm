@@ -3149,7 +3149,7 @@
 	taste_description = "nutty anise-scented whiskey"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/jungle_bird 
+/datum/reagent/consumable/ethanol/jungle_bird
 	name = "Jungle Bird"
 	description = "This late-tiki concoction leverages the brilliant combination of bitter liqueur and pineapple juice to make a remarkably well-balanced cocktail."
 	boozepwr = 25
@@ -3159,7 +3159,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_SUPERMATTER_SOOTHER) //If you have this in your system, you calm down the SM by being near it.
 
-/datum/reagent/consumable/ethanol/last_word //TODO: Something with mimes
+/datum/reagent/consumable/ethanol/last_word
 	name = "Last Word"
 	description = "Despite being invented at the turn of the 20th century, this drink fell into obscurity until the cocktail renaissance of the beginning of the 21st, where it then went on to dominate bars and inspire countless twists upon its formula."
 	boozepwr = 50
@@ -3167,6 +3167,18 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "herbal finality"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/var/has_ingested = FALSE
+
+/datum/reagent/consumable/ethanol/last_word/expose_mob(mob/living/drinker, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	//Mutes people for 5 seconds on their first sip every 5 minutes. Requires ingest, you can't savor something that's injected into your eyes or whatever.
+	if(!(methods & INGEST) || !iscarbon(drinker) || HAS_TRAIT(drinker, TRAIT_HAD_LAST_WORD))
+		return
+
+	ADD_TRAIT(drinker, TRAIT_HAD_LAST_WORD, type)
+	to_chat(drinker, span_notice("You take a moment to silently savor your drink..."))
+	drinker.set_silence_if_lower(5 SECONDS)
+	addtimer(TRAIT_CALLBACK_REMOVE(drinker, TRAIT_HAD_LAST_WORD, type), 300 SECONDS)
 
 /datum/reagent/consumable/ethanol/mary_pickford
 	name = "Mary Pickford"

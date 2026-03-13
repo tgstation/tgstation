@@ -1219,6 +1219,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that allows non-heretics to have heretical dreams
 #define TRAIT_HERETICAL_DREAMS "heretical_dreams"
 
+/// Trait for if you've recently had a Last Word cocktail
+#define TRAIT_HAD_LAST_WORD "had_last_word"
+
 /// Whether bots will salute this mob.
 #define TRAIT_COMMISSIONED "commissioned"
 
