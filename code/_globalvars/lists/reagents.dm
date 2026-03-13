@@ -1,3 +1,6 @@
+///Maximum number of times to register a randomized reaction before giving up when collisions happen
+#define MAX_RANDOMIZED_REACTION_RETRY_ATTEMPTS 5
+
 //Pills & Patches
 /// List of containers the Chem Master machine can print
 GLOBAL_LIST_INIT(reagent_containers, list(
@@ -104,14 +107,9 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 		json = json_decode(file2text(json_file))
 
 	var/list/datum/chemical_reaction/reactions = list()
-	for(var/path in paths)
-		var/datum/chemical_reaction/reaction
-		if(ispath(reaction, /datum/chemical_reaction/randomized))
-			reaction = new path(json)
-			if(QDELETED(reaction))
-				continue
-		else
-			reaction = new path()
+	for(var/datum/chemical_reaction/reaction as anything in paths)
+		if(!ispath(reaction, /datum/chemical_reaction/randomized))
+			reaction = new reaction
 		reactions += reaction
 
 	// Ok so we're gonna do a thingTM here
@@ -120,24 +118,44 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 	// So instead, we're gonna wing it
 	var/list/reagent_to_react_count = list()
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
-		if(istype(reaction, /datum/chemical_reaction/randomized))
-			continue
-		for(var/reagent_id in reaction.required_reagents)
-			reagent_to_react_count[reagent_id] += 1
+		if(!ispath(reaction, /datum/chemical_reaction/randomized))
+			for(var/reagent_id in reaction.required_reagents)
+				reagent_to_react_count[reagent_id] += 1
 
+	var/randomized_reaction_retry_attempts = 0
 	var/list/reaction_lookup = GLOB.chemical_reactions_list_reactant_index
 	// Create filters based on a random reagent id in the required reagents list - this is used to speed up handle_reactions()
 	// Basically, we only really need to care about ONE reagent, at least when initially filtering, since any others are ignorable
 	// Doing this separately because it relies on the loop above, and this is easier to parse
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
 		//check for collisions
-		if(istype(reaction, /datum/chemical_reaction/randomized))
-			for(var/x in reaction.required_reagents)
-				for(var/datum/chemical_reaction/R in reaction_lookup[x])
-					if(chem_recipes_do_conflict(R, reaction))
-						reactions -= reaction
-						qdel(reaction)
-						continue
+		if(ispath(reaction, /datum/chemical_reaction/randomized))
+			var/target_path = reaction
+			var/index = reactions.Find(reaction)
+			reaction = new target_path(json)
+
+			//failed to init
+			if(QDELETED(reaction))
+				reactions -= target_path
+				continue
+
+			//failed to resolve so retry
+			outer:
+				for(var/x in reaction.required_reagents)
+					for(var/datum/chemical_reaction/R in reaction_lookup[x])
+						if(chem_recipes_do_conflict(R, reaction))
+							reactions -= target_path
+							QDEL_NULL(reaction)
+							if(randomized_reaction_retry_attempts < MAX_RANDOMIZED_REACTION_RETRY_ATTEMPTS)
+								reactions += target_path
+								randomized_reaction_retry_attempts += 1
+							break outer
+
+			//add to list
+			if(!reaction)
+				continue
+			else
+				reactions[index] = reaction
 
 		var/preferred_id = null
 		for(var/reagent_id in reaction.required_reagents)
@@ -222,3 +240,5 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 
 	for(var/datum/stacked_metabolization_effect/effect as anything in valid_subtypesof(/datum/stacked_metabolization_effect))
 		. += new effect()
+
+#undef MAX_RANDOMIZED_REACTION_RETRY_ATTEMPTS
