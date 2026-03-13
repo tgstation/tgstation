@@ -3052,7 +3052,7 @@
 
 /datum/reagent/consumable/ethanol/aperitivo
 	name = "Aperitivo Liqueur"
-	description = "An agressively bittersweet liqueur flavored with cinchona bark and other botanicals. Perfect for stimulating one's appetite or fighting off malaria."
+	description = "An aggressively bittersweet liqueur flavored with cinchona bark and other botanicals. Perfect for stimulating one's appetite or fighting off malaria."
 	boozepwr = 40
 	color = "#bf1038"
 	taste_description = "intense citrusy bitterness"
@@ -3083,7 +3083,7 @@
 
 /datum/reagent/consumable/ethanol/bartenders_handshake
 	name = "Bartender's Handshake"
-	description = "A tradition of somewhat inconsistent providence that may have something to do with an obscure challenge-coin based marketing scheme, this drink is a way for bartenders to greet and test each other's mettle via a drink that only a fellow barkeep could appreciate. While there are nearly as many versions of this drink as there are bars, this version tests one's palate by combining two of the most bitter ingredients you're likely to find in a bar."
+	description = "A tradition of somewhat inconsistent providence, possibly linked to an obscure challenge-coin-based marketing scheme, this drink is a way for bartenders to greet and test each other's mettle via a drink that only a fellow barkeep could appreciate. While there are nearly as many versions of this drink as there are bars, this version tests one's palate by combining two of the most bitter ingredients you're likely to find in a bar."
 	boozepwr = 50
 	color = "#270101"
 	quality = DRINK_VERYGOOD
@@ -3101,7 +3101,7 @@
 
 /datum/reagent/consumable/ethanol/brandy_crusta
 	name = "Brandy Crusta"
-	description = "The far more gussied up ancestor of the Sidecar, this heavily garnished cocktail is the grandparent of many essential drinks served today."
+	description = "The far more gussied-up ancestor of the Sidecar, this heavily garnished cocktail is the grandparent of many essential drinks served today."
 	boozepwr = 30
 	color = "#f8c51c"
 	quality = DRINK_VERYGOOD
@@ -3119,7 +3119,7 @@
 
 /datum/reagent/consumable/ethanol/garibaldi //Makes revs resitant to wounds and fearless.
 	name = "Garibaldi"
-	description = "Named for the 19th century Italian general, the red-orange color scheme of this drink mimics the shirts of those who followed him into battles all across the world."
+	description = "Named for the 19th-century Italian general, the red-orange color scheme of this drink mimics the shirts of those who followed him into battles all across the world."
 	boozepwr = 15
 	color = "#f77e2e"
 	quality = DRINK_GOOD
@@ -3186,7 +3186,7 @@
 
 /datum/reagent/consumable/ethanol/mary_pickford
 	name = "Mary Pickford"
-	description = "Named after an early 20th century film star, this cocktail takes a rum and pineapple flavor profile and presents it in a classier and more elegant form than one would typically expect."
+	description = "Named after an early 20th-century film star, this cocktail takes a rum and pineapple flavor profile and presents it in a classier and more elegant form than one would typically expect."
 	boozepwr = 35
 	color = "#f7b7a7ff"
 	quality = DRINK_GOOD
@@ -3219,7 +3219,7 @@
 
 /datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo
 	name = "Thermonuclear Daiquiri"
-	description = "A drink for those who enjoy the gnarlier things in life, like high ester rums and Cobalt 60."
+	description = "A drink for those who enjoy the gnarlier things in life, like high-ester rums and Cobalt 60."
 	boozepwr = 80
 	color = "#00dd00"
 	quality = DRINK_FANTASTIC

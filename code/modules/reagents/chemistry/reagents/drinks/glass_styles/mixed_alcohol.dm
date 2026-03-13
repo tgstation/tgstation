@@ -1159,14 +1159,14 @@
 /datum/glass_style/drinking_glass/improved_whiskey
 	required_drink_type = /datum/reagent/consumable/ethanol/improved_whiskey
 	name = "Improved Whiskey Cocktail"
-	desc = "A descendent of the old fashioned which also predates the Old Fashioned by about a decade. A student of cocktail histories can resolve this paradox."
+	desc = "A descendent of the old fashioned, which also predates the Old Fashioned by about a decade. A student of cocktail histories can resolve this paradox."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "improved_whiskey"
 
 /datum/glass_style/drinking_glass/jungle_bird
 	required_drink_type = /datum/reagent/consumable/ethanol/jungle_bird
 	name = "Jungle Bird"
-	desc = "Squawk! No drunks in the engine room, Squawk!"
+	desc = "SQUAWK! No drunks in the engine room! SQUAWK!"
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "jungle_bird"
 
