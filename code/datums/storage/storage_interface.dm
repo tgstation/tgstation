@@ -127,24 +127,11 @@
 
 ///Silicon subtype of storage interface used by their model storage.
 /datum/storage_interface/silicon
-	var/atom/movable/screen/robot/store/store
 	var/obj/item/robot_model/robot_model
 
 /datum/storage_interface/silicon/New(ui_style, datum/storage/parent_storage, mob/user)
 	. = ..()
 	robot_model = parent_storage.real_location
-	if(iscyborg(user))
-		store = new(null, user.hud_used)
-
-/datum/storage_interface/silicon/Destroy(force)
-	QDEL_NULL(store)
-	return ..()
-
-/datum/storage_interface/silicon/list_ui_elements(initializing = FALSE)
-	if(initializing || isnull(store))
-		return ..()
-	//we're purposely excluding 'store' from having its icon changed from initialization.
-	return ..() + store
 
 /datum/storage_interface/silicon/add_items(
 	screen_start_x,

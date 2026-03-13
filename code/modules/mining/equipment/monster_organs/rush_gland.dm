@@ -51,7 +51,7 @@
 /atom/movable/screen/alert/status_effect/lobster_rush
 	name = "Lobster Rush"
 	desc = "Adrenaline is surging through you!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "lobster"
 
 /datum/status_effect/lobster_rush/on_apply()

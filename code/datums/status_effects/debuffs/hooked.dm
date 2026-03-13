@@ -22,7 +22,7 @@
 /atom/movable/screen/alert/status_effect/hooked
 	name = "Snagged By Hook"
 	desc = "You're being caught like a fish by some asshat! Click to safely remove the hook or move away far enough to snap it off."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "hooked"
 	clickable_glow = TRUE
 
@@ -59,5 +59,5 @@
 /atom/movable/screen/alert/status_effect/hooked/jaws
 	name = "Snagged By Jaws"
 	desc = "You've been snagged by some sort of beartrap-slash-fishing-hook-gizmo! Click to safely remove the hook or move away far enough to snap it off."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "hooked_jaws"

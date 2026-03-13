@@ -143,7 +143,7 @@
 /atom/movable/screen/alert/status_effect/cuffed_item
 	name = "Cuffed Item"
 	desc = "You've an item firmly cuffed to your arm. You probably won't be accidentally dropping it somewhere anytime soon."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	clickable_glow = TRUE
 	click_master = FALSE
 

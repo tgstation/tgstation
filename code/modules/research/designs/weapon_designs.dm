@@ -562,6 +562,28 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
+/datum/design/tear_gas_40mm
+	name = "40mm Tear Gas Grenade Shell (Less Lethal)"
+	desc = "Looking to stop a riot or put down those damn space hippies in their beat up space caravan? We've got the grenade for you!"
+	id = "tear_gas_shell"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2)
+	build_path = /obj/item/ammo_casing/a40mm/tear_gas
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+
+/datum/design/rubber_40mm
+	name = "40mm Rubber Shell (Less Lethal)"
+	desc = "Launch a rubber puck straight into an assistant's head at high velocities today!"
+	id = "rubber_puck_shell"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
+	build_path = /obj/item/ammo_casing/a40mm/rubber
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+
 /datum/design/suppressor
 	name = "Suppressor"
 	desc = "A reverse-engineered suppressor that fits on most small arms with threaded barrels."

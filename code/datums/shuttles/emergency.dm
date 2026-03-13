@@ -47,11 +47,20 @@
 /datum/map_template/shuttle/emergency/construction
 	suffix = "construction"
 	name = "Build your own shuttle kit"
-	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials. Unlocks the ability to buy shuttle engine crates from cargo, which allow you to speed up shuttle transit time."
+	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
 	admin_notes = "No brig, no medical facilities."
 	credit_cost = CARGO_CRATE_VALUE * 5
 	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CE)
 	occupancy_limit = "Flexible"
+
+/datum/map_template/shuttle/emergency/constructionbig
+	suffix = "constructionbig"
+	name = "Build your own CRUISER kit"
+	description = "This is the big brother of the construction kit, with more space for your shuttle-building ideas! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
+	admin_notes = "No brig, no medical facilities."
+	credit_cost = CARGO_CRATE_VALUE * 30
+	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CE)
+	occupancy_limit = "Flexible and more"
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"

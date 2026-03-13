@@ -10,7 +10,7 @@
 /atom/movable/screen/alert/status_effect/woozy
 	name = "Woozy"
 	desc = "You feel a bit slower than usual, it seems doing things with your hands takes longer than it usually does."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "woozy"
 
 /datum/status_effect/high_blood_pressure
@@ -37,7 +37,7 @@
 /atom/movable/screen/alert/status_effect/high_blood_pressure
 	name = "High blood pressure"
 	desc = "Your blood pressure is real high right now ... You'd probably bleed like a stuck pig."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "highbloodpressure"
 
 /datum/status_effect/seizure
@@ -60,7 +60,7 @@
 /atom/movable/screen/alert/status_effect/seizure
 	name = "Seizure"
 	desc = "FJOIWEHUWQEFGYUWDGHUIWHUIDWEHUIFDUWGYSXQHUIODSDBNJKVBNKDML <--- this is you right now"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "paralysis"
 
 /datum/status_effect/stoned

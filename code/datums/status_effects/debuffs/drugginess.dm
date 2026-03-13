@@ -36,5 +36,5 @@
 /atom/movable/screen/alert/status_effect/high
 	name = "High"
 	desc = "Whoa man, you're tripping balls! Careful you don't get addicted... if you aren't already."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "high"

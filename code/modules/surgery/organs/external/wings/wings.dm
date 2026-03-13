@@ -10,6 +10,7 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings
 
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
+	abstract_type = /obj/item/organ/wings
 
 ///Checks if the wings can soften short falls
 /obj/item/organ/wings/proc/can_soften_fall()

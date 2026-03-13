@@ -71,6 +71,11 @@
 	using.screen_loc = ui_human_area
 	static_inventory += using
 
+	using = new /atom/movable/screen/memories(null, src)
+	using.icon = ui_style
+	using.screen_loc = ui_human_memories_area
+	static_inventory += using
+
 	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
 	action_intent.icon = ui_style
 	action_intent.screen_loc = ui_combat_toggle

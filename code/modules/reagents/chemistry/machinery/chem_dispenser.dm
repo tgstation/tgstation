@@ -244,10 +244,9 @@
 	.["recordingRecipe"] = recording_recipe
 	.["recipeReagents"] = list()
 	if(beaker?.reagents.ui_reaction_id)
-		var/datum/chemical_reaction/reaction = get_chemical_reaction(beaker.reagents.ui_reaction_id)
-		for(var/_reagent in reaction.required_reagents)
-			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
-			.["recipeReagents"] += reagent.name
+		var/datum/chemical_reaction/reaction = GLOB.chemical_reactions_list[beaker.reagents.ui_reaction_id]
+		for(var/datum/reagent/reagent as anything in reaction.required_reagents)
+			.["recipeReagents"] += reagent::name
 
 	var/list/beaker_data = null
 	if(!QDELETED(beaker))

@@ -504,6 +504,11 @@
 	worn_icon_state = "bandolier"
 	storage_type = /datum/storage/bandolier_belt
 
+/obj/item/storage/belt/bandolier/china_lake_extra/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/ammo_casing/a40mm = 12,
+	), src)
+
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
 	desc = "A dorky fannypack for keeping small items in. Concealed enough, or ugly enough to avert their eyes, that others won't see what you put in or take out easily."

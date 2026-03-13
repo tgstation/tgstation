@@ -261,7 +261,6 @@
 	connector_type = null
 	custom_materials = null
 	emp_damage_modifier = 0
-	abstract_type = /obj/item/stock_parts/power_store/cell/ethereal
 
 /obj/item/stock_parts/power_store/cell/ethereal/grind_results()
 	return null

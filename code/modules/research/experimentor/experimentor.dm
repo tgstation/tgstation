@@ -53,7 +53,8 @@
 	if(!banned_typecache)
 		banned_typecache = typecacheof(list(
 			/obj/item/stock_parts/power_store/cell/infinite,
-			/obj/item/grenade/chem_grenade/tuberculosis
+			/obj/item/stock_parts/power_store/cell/ethereal,
+			/obj/item/grenade/chem_grenade/tuberculosis,
 		))
 
 	if(!length(valid_items))

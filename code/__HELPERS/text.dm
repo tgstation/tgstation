@@ -156,8 +156,9 @@
  * * strict - return null immediately instead of filtering out
  * * allow_numbers - allows numbers and common special characters - used for silicon/other weird things names
  * * cap_after_symbols - words like Bob's will be capitalized to Bob'S by default. False is good for titles.
+ * * cap_at_start - capitalize the start of words. False is good for modular computer file names.
  */
-/proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE, cap_after_symbols = TRUE)
+/proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE, cap_after_symbols = TRUE, cap_at_start = TRUE)
 	if(!t_in)
 		return //Rejects the input if it is null
 
@@ -184,7 +185,7 @@
 
 			// a  .. z
 			if(97 to 122) //Lowercase Letters
-				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || cap_after_symbols && last_char_group == SYMBOLS_DETECTED) //start of a word
+				if(((last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED) && cap_at_start) || (cap_after_symbols && last_char_group == SYMBOLS_DETECTED)) //start of a word
 					char = uppertext(char)
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED

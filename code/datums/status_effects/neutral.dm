@@ -67,7 +67,7 @@
 /atom/movable/screen/alert/status_effect/in_love
 	name = "In Love"
 	desc = "You feel so wonderfully in love!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "in_love"
 
 /datum/status_effect/in_love
@@ -170,7 +170,7 @@
 /atom/movable/screen/alert/status_effect/heldup
 	name = "Held Up"
 	desc = "Making any sudden moves would probably be a bad idea!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "aimed"
 
 /datum/status_effect/grouped/heldup/on_apply()
@@ -192,7 +192,7 @@
 /atom/movable/screen/alert/status_effect/holdup
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone. Click to cancel."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "aimed"
 	clickable_glow = TRUE
 
@@ -376,7 +376,7 @@
 /atom/movable/screen/alert/status_effect/surrender
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "surrender"
 	clickable_glow = TRUE
 

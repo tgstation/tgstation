@@ -252,3 +252,7 @@
 		INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
 	computer.update_appearance(UPDATE_ICON)
 	return TRUE
+
+///Called when the program is made the active program.
+/datum/computer_file/program/proc/on_made_active_program(mob/user)
+	return

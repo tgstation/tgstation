@@ -349,12 +349,14 @@
 	name = "M-90gl Carbine Case (Hard)"
 	desc = "A fully-loaded, specialized three-round burst carbine that fires .223 ammunition from a 30 round magazine.\
 		Comes with a 40mm underbarrel grenade launcher. Use secondary-fire to fire the grenade launcher. Also comes with two spare magazines \
-		and a box of 40mm rubber slugs."
+		and a box of 40mm rubber pucks."
 	item = /obj/item/storage/toolbox/guncase/m90gl
 	relevant_child_items = list(
 		/datum/uplink_item/ammo_nuclear/basic/carbine,
 		/datum/uplink_item/ammo_nuclear/special/carbine,
-		/datum/uplink_item/ammo_nuclear/basic/carbine/a40mm,
+		/datum/uplink_item/ammo_nuclear/basic/a40mm,
+		/datum/uplink_item/ammo_nuclear/basic/a40mm/rubber,
+		/datum/uplink_item/ammo_nuclear/ap/a40mm,
 	)
 
 /datum/uplink_item/ammo_nuclear/basic/carbine
@@ -369,13 +371,6 @@
 		These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material. \
 		The name is a misnomer. It doesn't contain any lead whatsoever!"
 	item = /obj/item/ammo_box/magazine/m223/phasic
-
-/datum/uplink_item/ammo_nuclear/basic/carbine/a40mm
-	name = "40mm Grenade Box (M-90gl)"
-	desc = "A box of 40mm HE grenades for use with the M-90gl's under-barrel grenade launcher. \
-		Your teammates will ask you to not shoot these down small hallways. \
-		You'll do it anyway."
-	item = /obj/item/ammo_box/a40mm
 
 // ~~ Anti-Materiel Sniper Rifle ~~
 
@@ -525,10 +520,44 @@
 // ~~ Grenadier's Belt Kit ~~
 
 /datum/uplink_item/weapon_kits/high_cost/grenadier
-	name = "Grenadier's Belt and Grenade Launcher Kit (Hard)"
-	desc = "A belt containing 26 lethally dangerous and destructive grenades, along with a grenade launcher to fire them. Comes with an extra multitool and screwdriver."
+	name = "Grenadier's Belt and Pneumatic Grenade Launcher Kit (Hard)"
+	desc = "A belt containing 26 lethally dangerous and destructive grenades, along with a pneumatic grenade launcher to fire them. Comes with an extra multitool and screwdriver."
 	item = /obj/item/storage/box/syndie_kit/demoman
 	purchasable_from = UPLINK_SERIOUS_OPS
+
+// ~~ Pump-Action Grenade Launcher Kit ~~
+
+/datum/uplink_item/weapon_kits/moderate_cost/china_lake
+	name = "Pump-Action Grenade Launcher Kit (Moderate)"
+	desc = "A weapon case containing a 40mm pump-action grenade launcher and a bandolier of 40mm grenades. Less versatile than the pneumatic grenade launcher kit, but no less dangerous. \
+		Though try to be careful about danger close. If you even care. A favourite of the Tiger Cooperative."
+	item = /obj/item/storage/toolbox/guncase/china_lake
+	purchasable_from = UPLINK_SERIOUS_OPS
+
+/datum/uplink_item/ammo_nuclear/basic/a40mm
+	name = "40mm HE Shell Box (Grenade Launchers)"
+	desc = "A box of 40mm HE grenades for use with ballistic grenade launchers. \
+		Your teammates will ask you to not shoot these down small hallways. \
+		You'll do it anyway."
+	item = /obj/item/ammo_box/a40mm
+
+/datum/uplink_item/ammo_nuclear/basic/a40mm/rubber
+	name = "40mm Rubber Shell Box (Grenade Launchers)"
+	desc = "A box of 40mm rubber grenades for use with ballistic grenade launchers. Launching a giant rubber puck at someone at high velocity is maybe the most \
+		humane thing you are about to do today. For when you're trying to earn some karma points or something."
+	item = /obj/item/ammo_box/a40mm/rubber
+
+/datum/uplink_item/ammo_nuclear/ap/a40mm
+	name = "40mm Titanium Flak Shell Box (Grenade Launchers)"
+	desc = "A box of 40mm titanium flak shells for use with ballistic grenade launchers. Launches an obscene number of titanium ball bearings into your enemies. \
+		For when you want to get up close and personal."
+	item = /obj/item/ammo_box/a40mm
+
+/datum/uplink_item/ammo_nuclear/incendiary/a40mm
+	name = "40mm Incendiary Shell Box (Grenade Launchers)"
+	desc = "A box of 40mm incendiary grenade shells for use with ballistic grenade launchers. Launches a incendiary payload at targets, bursting on contact and \
+		engulfing everything around it in roaring fire. For when you really don't want to leave anything and anyone unscathed. Including possibly your allies."
+	item = /obj/item/ammo_box/a40mm
 
 // ~~ Detonator: In case you lose the old one ~~
 

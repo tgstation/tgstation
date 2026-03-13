@@ -336,6 +336,10 @@
 		amount_to_pick = num_hatchlings
 	)
 
+	// poll_ghost_candidates returns a single mob instead of a list when exactly 1 candidate signs up, even with amount_to_pick > 1.
+	if (!islist(candidates) && candidates)
+		candidates = list(candidates)
+
 	var/num_candidates = length(candidates)
 
 	if (QDELETED(cocoon))

@@ -32,6 +32,10 @@
 ///Slightly slower, higher in memory. Just not optimal
 //#define REFERENCE_TRACKING_DEBUG
 
+///Skips over a bunch of types that are "unlikely" to have any hanging refs,
+///MASSIVELY speeding up finding references. Relatively speaking. The reftracker is still not very fast.
+//#define FAST_REFERENCE_TRACKING
+
 ///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP
@@ -69,6 +73,8 @@
 #define GC_FAILURE_HARD_LOOKUP
 // Log references in their own file
 #define REFERENCE_TRACKING_LOG_APART
+// use fast reftracking
+#define FAST_REFERENCE_TRACKING
 #endif // REFERENCE_DOING_IT_LIVE
 
 /// Sets up the reftracker to be used locally, to hunt for hard deletions

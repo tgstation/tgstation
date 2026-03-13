@@ -61,10 +61,10 @@
 	register_context()
 
 /obj/structure/mirror/proc/can_reflect(atom/movable/target)
-	///I'm doing it this way too, because the signal is sent before the broken variable is set to TRUE.
-	if(atom_integrity <= integrity_failure * max_integrity)
+	// I'm doing it this way too, because the signal is sent before the broken variable is set to TRUE.
+	if(atom_integrity <= integrity_failure * max_integrity || broken)
 		return FALSE
-	if(broken || !isliving(target) || HAS_TRAIT(target, TRAIT_NO_MIRROR_REFLECTION))
+	if(!isliving(target) || HAS_TRAIT(target, TRAIT_NO_MIRROR_REFLECTION))
 		return FALSE
 	return TRUE
 

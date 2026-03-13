@@ -137,8 +137,10 @@
 
 # Time-Green
 
-/code/modules/plumbing/ @Time-Green
-/code/modules/surgery/organs/external/ @Time-Green
+/code/datums/bodypart_overlays @Time-Green
+/code/modules/antagonists/voidwalker @Time-Green
+/code/modules/lost_crew @Time-Green
+/code/modules/shuttle/shuttle_events @Time-Green
 
 # tralezab
 /code/__DEFINES/basic_mobs.dm @tralezab

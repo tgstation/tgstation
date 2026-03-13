@@ -110,7 +110,7 @@
 
 /obj/item/stack/update_name(updates)
 	. = ..()
-	maptext = (ismob(loc) || loc?.atom_storage) ? MAPTEXT("<font color='white'>[amount]</font>") : ""
+	maptext = (ismob(loc) || loc?.atom_storage) ? MAPTEXT("<font color='white'>[get_amount()]</font>") : ""
 
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -571,7 +571,10 @@
 	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return FALSE
 	if(is_cyborg)
-		return source.use_charge(used * cost)
+		if(source.use_charge(used * cost))
+			update_appearance(UPDATE_NAME)
+			return TRUE
+		return FALSE
 	if (amount < used)
 		return FALSE
 	amount -= used

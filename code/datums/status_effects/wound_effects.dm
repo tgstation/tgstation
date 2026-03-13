@@ -3,7 +3,7 @@
 /atom/movable/screen/alert/status_effect/determined
 	name = "Determined"
 	desc = "The serious wounds you've sustained have put your body into fight-or-flight mode! Now's the time to look for an exit!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "wounded"
 
 /datum/status_effect/determined

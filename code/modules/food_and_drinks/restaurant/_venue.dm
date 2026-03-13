@@ -313,6 +313,7 @@
 
 /obj/item/holosign_creator/robot_seat/attack_self(mob/user)
 	return
+
 /obj/structure/holosign/robot_seat
 	density = FALSE
 	desc = "Used to indicate a place to sit for a robot tourist. I better be careful."

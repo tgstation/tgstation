@@ -89,6 +89,26 @@
 	return null
 
 /**
+ * find_file_by_full_name
+ *
+ * Will check all applications in a tablet for files and, if they have \
+ * the same filename AND extension, will return it.
+ * If a computer disk is passed instead, it will check the disk over the computer.
+ */
+/obj/item/modular_computer/proc/find_file_by_full_name(full_path, obj/item/disk/computer/target_disk)
+	if(!istext(full_path))
+		return null
+	if(isnull(target_disk))
+		for(var/datum/computer_file/file as anything in stored_files)
+			if("[file.filename].[file.filetype]" == full_path)
+				return file
+	else
+		for(var/datum/computer_file/file as anything in target_disk.stored_files)
+			if("[file.filename].[file.filetype]" == full_path)
+				return file
+	return null
+
+/**
  * find_file_by_uid
  *
  * Will check all files in this computer and returns the file with the matching uid.
