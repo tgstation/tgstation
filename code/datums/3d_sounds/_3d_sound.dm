@@ -25,7 +25,7 @@
 	var/falloff_exponent
 	var/pressure_affected = TRUE
 
-/datum/threed_sound/New(atom/new_parent, sound/new_sound, list/current_listeners, can_add_new_listeners = TRUE, volume = 50, sound_range = SOUND_RANGE, sound_length = 5 SECONDS, channel, preference_volume, preference_signal, falloff_exponent = SOUND_FALLOFF_EXPONENT, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, pressure_affected = TRUE)
+/datum/threed_sound/New(atom/new_parent, sound/new_sound, list/current_listeners, can_add_new_listeners = FALSE, volume = 50, sound_range = SOUND_RANGE, sound_length = 5 SECONDS, channel, preference_volume, preference_signal, falloff_exponent = SOUND_FALLOFF_EXPONENT, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, pressure_affected = TRUE)
 	if(!ismovable(new_parent) && !isturf(new_parent))
 		stack_trace("[type] created on non-turf or non-movable: [new_parent ? "[new_parent] ([new_parent.type])" : "null"])")
 		qdel(src)
@@ -55,9 +55,6 @@
 			continue
 		register_listener(listener)
 	starting_listeners = current_listeners
-
-	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(check_new_listener))
-	AddComponent(/datum/component/connect_range, parent, connections, max(x_cutoff, z_cutoff))
 
 	RegisterSignal(parent, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
@@ -285,19 +282,6 @@
 /datum/threed_sound/proc/on_enter_area(datum/source, area/area_to_register)
 	SIGNAL_HANDLER
 	set_new_environment(area_to_register.sound_environment || SOUND_ENVIRONMENT_NONE)
-
-/datum/threed_sound/proc/check_new_listener(datum/source, atom/movable/entered)
-	SIGNAL_HANDLER
-
-	if(isnull(our_sound))
-		return
-	if(!ismob(entered))
-		return
-	if((entered in listeners) || (entered in starting_listeners))
-		return
-	if(!can_add_new_listeners && !(entered in starting_listeners))
-		return
-	register_listener(entered)
 
 #undef MUTE_DEAF
 #undef MUTE_RANGE
