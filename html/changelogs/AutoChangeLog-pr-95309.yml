@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Radios can now have their keyslot locked, though no radios currently have a keyslot lock. However, report any bugs with being unable to emag, install, or remove radio keys."

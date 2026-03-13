@@ -180,5 +180,14 @@
       also issued a warning that any clumsy people should avoid handling them after
       repeated mishaps.
 2026-03-13:
+  JohnFulpWillard:
+  - rscadd: The endround timer telling you when a reboot is happening has been taken
+      out of the stat panel and is instead text over your screen (similar to Goon)
+  Melbert:
+  - code_imp: Radios can now have their keyslot locked, though no radios currently
+      have a keyslot lock. However, report any bugs with being unable to emag, install,
+      or remove radio keys.
+  - rscadd: Adds a 1/500 chance that the grain used to create a pizza in a pizza crate
+      was cursed by an evil lich.
   OnlineGirlfriend:
   - spellcheck: gavel hammer and gavel block are now gavel and sound block
