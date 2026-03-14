@@ -11,7 +11,7 @@
 	. = ..()
 	if(!my_map)
 		my_map = new
-		my_map.Initialize()
+		my_map.initialize_tacmap()
 	add_minimap(target)
 
 /obj/item/implant/tacmap/removed(mob/living/source, silent, special)

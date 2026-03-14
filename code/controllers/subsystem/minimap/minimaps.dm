@@ -46,20 +46,9 @@
 	var/minimap_flags = NONE
 
 /// Initialized only when needed
-/datum/tactical_map/proc/Initialize()
+/datum/tactical_map/proc/initialize_tacmap()
 	for(var/datum/space_level/z_level as anything in SSmapping.z_list)
 		load_new_z(null, z_level)
-
-/* XANTODO Check this out?
-/datum/tactical_map/Recover()
-	minimaps_by_z = SSminimaps.minimaps_by_z
-	images_by_source = SSminimaps.images_by_source
-	update_targets = SSminimaps.update_targets
-	update_targets_unsorted = SSminimaps.update_targets_unsorted
-	removal_cbs = SSminimaps.removal_cbs
-	updators_by_datum = SSminimaps.updators_by_datum
-	drawn_images = SSminimaps.drawn_images
-*/
 
 /// Adds our target to the list of viewers
 /datum/tactical_map/proc/add_viewer(viewer)
@@ -82,10 +71,6 @@
 		updator.minimap.overlays = updator.raw_blips
 		depthcount++
 		iteration++
-/* XANTODO Maybe this exists for a reason lol
-		if(MC_TICK_CHECK)
-			return
-*/
 	iteration = 0
 
 ///Creates a minimap for a particular z level
@@ -100,7 +85,7 @@
 
 	var/level = z_level.z_value
 	minimaps_by_z["[level]"] = new /datum/hud_displays
-	if(!is_station_level(level)) //todo: maybe move this around XANTODO Somehow filter specific z levels
+	if(!is_station_level(level))
 		return
 	var/icon/icon_gen = new('icons/ui_icons/minimap/minimap.dmi') //480x480 blank icon template for drawing on the map
 	for(var/xval = 1 to world.maxx)
@@ -247,7 +232,6 @@
 
 	var/turf/target_turf = get_turf(target)
 
-	// XANTODO Probably need initialized check somehow if(!initialized || !(minimaps_by_z["[target.z]"])) //the minimap doesn't exist yet, z level was probably loaded after init
 	if(!(minimaps_by_z["[target_turf.z]"])) //the minimap doesn't exist yet, z level was probably loaded after init
 		for(var/datum/callback/callback as anything in earlyadds["[target_turf.z]"])
 			if(callback.arguments[1] == target)
@@ -484,7 +468,6 @@
 	icon_state = ""
 	layer = MINIMAP_IMAGE_LAYER
 	screen_loc = "1,1"
-	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT XANTODO See if this becomes clickable
 	///assoc list of mob choices by clicking on coords. only exists fleetingly for the wait loop in [/proc/get_coords_from_click]
 	var/list/mob/choices_by_mob
 	///assoc list to determine if get_coords_from_click should stop waiting for an input for that specific mob

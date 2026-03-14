@@ -31,12 +31,20 @@
 
 /datum/action/minimap/map_drawing/toggle_minimap(force_state)
 	. = ..()
-	if(!.)
-		return
+	if(!map_object)
+		map_object = my_map.fetch_minimap_object(editing_z, my_map.minimap_flags)
 
-	if(force_state)
+	if(!active)
+		if(locate(/atom/movable/screen/minimap) in owner.client.screen) //This seems like the most effective way to do this without some wacky code
+			to_chat(owner, span_warning("You already have a minimap open!"))
+			return FALSE
+		active = !active
+		owner.client.screen += map_object
 		owner.client.screen += drawing_tools
 		return
+
+	active = !active
+	owner.client.screen -= map_object
 	owner.client.screen -= drawing_tools
 
 /atom/movable/screen/minimap_tool
@@ -108,6 +116,7 @@
 	desc = "Draw using a color. Drag to draw a line, right click to place a dot. Right click this button to unselect."
 	// color that this draw tool will be drawing in
 	color = COLOR_PINK
+	///last thing this tool has drawn, stored so it can be reverted with right click
 	var/list/last_drawn
 	///temporary existing list used to calculate a line between the start of a click and the end of a click
 	var/list/starting_coords
@@ -133,6 +142,7 @@
 		mona_lisa.DrawBox(color, pixel_coords[1], pixel_coords[2], ++pixel_coords[1], ++pixel_coords[2])
 		drawn_image.icon = mona_lisa
 		log_minimap_drawing("[key_name(source)] has made a dot at [pixel_coords[1]/2], [pixel_coords[2]/2]")
+		my_map.process()
 		return TRUE
 	starting_coords = pixel_coords
 	RegisterSignal(source, COMSIG_CLIENT_MOUSEUP, PROC_REF(on_mouseup))
@@ -147,6 +157,7 @@
 	draw_line(starting_coords, end_coords)
 	last_drawn = list(starting_coords, end_coords)
 	log_minimap_drawing("[key_name(usr)] drew a [color] line from [starting_coords[1]], [starting_coords[2]] to [end_coords[1]], [end_coords[2]]")
+	my_map.process()
 
 /// proc for drawing a line from list(startx, starty) to list(endx, endy) on the screen. yes this is aa ripoff of [/proc/getline]
 /atom/movable/screen/minimap_tool/draw_tool/proc/draw_line(list/start_coords, list/end_coords, draw_color = color)
