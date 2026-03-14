@@ -149,7 +149,7 @@
 	else if(whitelist_weather_reagents)
 		reagent_id = pick_weight_recursive(whitelist_weather_reagents)
 	else if(blacklist_weather_reagents) // randomized
-		reagent_id = get_random_reagent_id(blacklist_weather_reagents)
+		reagent_id = get_random_reagent_id(blacklist = blacklist_weather_reagents)
 
 	if(reagent_id)
 		weather_reagent = GLOB.chemical_reagents_list[reagent_id]

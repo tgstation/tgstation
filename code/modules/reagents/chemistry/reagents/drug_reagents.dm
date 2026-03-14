@@ -16,6 +16,7 @@
 	overdose_threshold = 30
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/hallucinogens = 60)
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -44,6 +45,7 @@
 	overdose_threshold = INFINITY
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/cannabis/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -72,6 +74,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	ph = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/nicotine = 10)
 
 	//Nicotine is used as a pesticide IRL.
@@ -105,6 +108,7 @@
 	overdose_threshold = 20
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/inverse/krokodil
 	addiction_types = list(/datum/addiction/opioids = 30)
@@ -147,6 +151,7 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	ph = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/stimulants = 75)
 	metabolized_traits = list(TRAIT_STIMULATED)
 
@@ -216,6 +221,7 @@
 	addiction_types = list(/datum/addiction/stimulants = 25)
 	ph = 8.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED)
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 
@@ -263,6 +269,7 @@
 	description = "Amps you up, gets you going, and rapidly restores stamina damage. Side effects include breathlessness and toxicity."
 	color = "#78FFF0"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/aranesp
 	addiction_types = list(/datum/addiction/stimulants = 75)
@@ -288,6 +295,7 @@
 	color = "#EE35FF"
 	overdose_threshold = 20
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	taste_description = "paint thinner"
 	inverse_chem_val = 0.4
 	inverse_chem = /datum/reagent/inverse/happiness
@@ -334,6 +342,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/stimulants = 400)
 	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_ANALGESIA, TRAIT_STIMULATED)
 
@@ -398,6 +407,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/maintenance_drugs = 50)
 
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -425,6 +435,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/maintenance_drugs = 300)
 	metabolized_traits = list(TRAIT_HARDLY_WOUNDED, TRAIT_ANALGESIA)
 
@@ -453,6 +464,7 @@
 	color = COLOR_BLACK
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/maintenance_drugs = 120)
 
 /datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -478,6 +490,7 @@
 	ph = 11
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/hallucinogens = 20)
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/psychonaut, seconds_per_tick, metabolization_ratio)
@@ -560,6 +573,7 @@
 	ph = 5
 	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/hallucinogens = 40)
 	metabolized_traits = list(TRAIT_STIMULATED)
 	///How many flips have we done so far?
@@ -685,6 +699,7 @@
 	overdose_threshold = 25
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/maintenance_drugs = 30)
 
 /datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/invisible_man, seconds_per_tick, metabolization_ratio)
@@ -793,6 +808,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/stimulants = 50)
 	metabolized_traits = list(TRAIT_STIMULATED)
 
@@ -907,6 +923,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	ph = 7
 	overdose_threshold = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/hallucinogens = 50)
 	/// Track the active hallucination we're giving out so we don't replace it by accident
 	VAR_PRIVATE/datum/weakref/active_hallucination_weakref
