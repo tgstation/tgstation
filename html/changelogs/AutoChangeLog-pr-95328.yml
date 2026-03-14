@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "The Status bar is now a preference instead of a verb in the OOC tab, which means you can permanently turn it off if you're not a fan (or use tooltips instead)"
