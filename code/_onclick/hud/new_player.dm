@@ -2,6 +2,10 @@
 #define SHUTTER_WAIT_DURATION 0.2 SECONDS
 /// Maximum number of station trait buttons we will display, please think hard before creating scenarios where there are more than this
 #define MAX_STATION_TRAIT_BUTTONS_VERTICAL 3
+#define TRAIT_BUTTON_Y_ORIGIN 397
+#define TRAIT_BUTTON_X_ORIGIN 233
+#define TRAIT_BUTTON_OFFSET 27
+#define SQUARE_VIEWPORT_OFFSET 64
 
 /datum/hud/new_player
 	///Whether the menu is currently on the client's screen or not
@@ -11,10 +15,7 @@
 /datum/hud/new_player/New(mob/owner)
 	. = ..()
 
-	if (!owner || !owner.client)
-		return
-
-	if (owner.client.interviewee)
+	if (!owner?.client || owner.client.interviewee)
 		return
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
@@ -37,6 +38,10 @@
 	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
 
+/datum/hud/new_player/on_viewdata_update()
+	. = ..()
+	place_station_trait_buttons()
+
 /// Load and then display the buttons for relevant station traits
 /datum/hud/new_player/proc/show_station_trait_buttons()
 	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
@@ -57,14 +62,17 @@
 
 /// Display the buttosn for relevant station traits.
 /datum/hud/new_player/proc/place_station_trait_buttons()
+	SIGNAL_HANDLER
 	if(hud_version != HUD_STYLE_STANDARD || !mymob?.client)
 		return
 
-	var/y_offset = 397
-	var/x_offset = 233
-	var/y_button_offset = 27
-	var/x_button_offset = -27
+	var/y_offset = TRAIT_BUTTON_Y_ORIGIN
+	var/x_offset = TRAIT_BUTTON_X_ORIGIN
+	var/y_button_offset = TRAIT_BUTTON_OFFSET
+	var/x_button_offset = -TRAIT_BUTTON_OFFSET
 	var/iteration = 0
+	if(mymob.client.view == SQUARE_VIEWPORT_SIZE)
+		x_offset -= SQUARE_VIEWPORT_OFFSET
 	for(var/trait in shown_station_trait_buttons)
 		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = shown_station_trait_buttons[trait]
 		iteration++
@@ -72,7 +80,7 @@
 		mymob.client.screen |= sign_up_button
 		if (iteration >= MAX_STATION_TRAIT_BUTTONS_VERTICAL)
 			iteration = 0
-			y_offset = 397
+			y_offset = TRAIT_BUTTON_Y_ORIGIN
 			x_offset += x_button_offset
 		else
 			y_offset += y_button_offset
@@ -124,6 +132,7 @@
 /atom/movable/screen/lobby/background
 	icon = 'icons/hud/lobby/background.dmi'
 	icon_state = "background"
+	layer = LOBBY_BACKGROUND_LAYER
 	screen_loc = "TOP,CENTER:-61"
 
 /atom/movable/screen/lobby/button
@@ -200,8 +209,20 @@
 	name = "View Character Setup"
 	screen_loc = "TOP:-70,CENTER:-54"
 	icon = 'icons/hud/lobby/character_setup.dmi'
-	icon_state = "character_setup"
+	icon_state = "character_setup_disabled"
 	base_icon_state = "character_setup"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/character_setup/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	// We need IconForge and the assets to be ready before allowing the menu to open
+	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
+		flick("[base_icon_state]_enabled", src)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_character_setup))
+		RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_character_setup))
 
 /atom/movable/screen/lobby/button/character_setup/Click(location, control, params)
 	. = ..()
@@ -213,6 +234,13 @@
 	preferences.update_static_data(usr)
 	preferences.ui_interact(usr)
 
+/atom/movable/screen/lobby/button/character_setup/proc/enable_character_setup()
+	SIGNAL_HANDLER
+	flick("[base_icon_state]_enabled", src)
+	set_button_status(TRUE)
+	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+
 ///Button that appears before the game has started
 /atom/movable/screen/lobby/button/ready
 	name = "Toggle Readiness"
@@ -220,8 +248,6 @@
 	icon = 'icons/hud/lobby/ready.dmi'
 	icon_state = "not_ready"
 	base_icon_state = "not_ready"
-	///Whether we are readied up for the round or not
-	var/ready = FALSE
 
 /atom/movable/screen/lobby/button/ready/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -251,14 +277,16 @@
 	if(!.)
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
-	ready = !ready
-	if(ready)
+
+	// switch based on the user, if they aren't ready then we change them to ready, and vice versa
+	if(new_player.ready == PLAYER_NOT_READY)
 		new_player.auto_deadmin_on_ready_or_latejoin()
 		new_player.ready = PLAYER_READY_TO_PLAY
 		base_icon_state = "ready"
 	else
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
+
 	update_appearance(UPDATE_ICON)
 	SEND_SIGNAL(hud, COMSIG_HUD_PLAYER_READY_TOGGLE)
 
@@ -373,9 +401,20 @@
 
 /atom/movable/screen/lobby/button/bottom/settings
 	name = "View Game Preferences"
-	icon_state = "settings"
+	icon_state = "settings_disabled"
 	base_icon_state = "settings"
 	screen_loc = "TOP:-122,CENTER:+29"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/bottom/settings/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	// We need IconForge and the assets to be ready before allowing the menu to open
+	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_settings))
+		RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_settings))
 
 /atom/movable/screen/lobby/button/bottom/settings/Click(location, control, params)
 	. = ..()
@@ -386,6 +425,12 @@
 	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
 	preferences.update_static_data(usr)
 	preferences.ui_interact(usr)
+
+/atom/movable/screen/lobby/button/bottom/settings/proc/enable_settings()
+	SIGNAL_HANDLER
+	set_button_status(TRUE)
+	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /atom/movable/screen/lobby/button/bottom/changelog_button
 	name = "View Changelog"
@@ -560,7 +605,7 @@
 	var/blip_icon_state = "ready_blip"
 	if(blip_enabled && hud)
 		var/mob/dead/new_player/new_player = hud.mymob
-		blip_icon_state += "_[new_player.ready ? "" : "not_"]ready"
+		blip_icon_state += "_[new_player.is_ready_to_play() ? "" : "not_"]ready"
 	else
 		blip_icon_state += "_disabled"
 	var/mutable_appearance/ready_blip = mutable_appearance(icon, blip_icon_state)
@@ -632,11 +677,152 @@
 	. = ..()
 	if(!. || !usr.client.is_localhost() || !check_rights_for(usr.client, R_SERVER))
 		return
-	SEND_SOUND(hud.mymob, sound('sound/effects/splat.ogg', volume = 50))
+	SEND_SOUND(hud.mymob, sound('sound/effects/cartoon_sfx/cartoon_splat.ogg', volume = 50))
 	SSticker.start_immediately = TRUE
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))
 
+#define OVERLAY_X_DIFF 12
+#define OVERLAY_Y_DIFF 5
+
+///Lobby screen that appears before the game has started showing how many players there are and who is ready.
+/atom/movable/screen/lobby/new_player_info
+	name = "New Player Info"
+	screen_loc = "EAST-3,CENTER:140"
+	icon = 'icons/hud/lobby/newplayer.dmi'
+	icon_state = null //we only show up when we get update appearance called, cause we need our overlay to not look bad.
+	base_icon_state = "newplayer"
+	maptext_height = 75
+	maptext_width = 80
+	maptext_x = OVERLAY_X_DIFF
+	maptext_y = OVERLAY_Y_DIFF
+
+	///Boolean on whether or not we should have our static overlay, so we 'turn' the TV off when collapsing.
+	var/show_static = TRUE
+	///Static mutable appearance of a job icon we're displaying on the TV for overflow job.
+	var/static/mutable_appearance/job_overlay
+
+/atom/movable/screen/lobby/new_player_info/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	START_PROCESSING(SSnewplayer_info, src)
+	update_text()
+
+	//only go if the station trait is selected, otherwise it'll show "Assistant" every round.
+	var/datum/station_trait/overflow_job_bureaucracy/overflow_job = locate() in SSstation.station_traits
+	if(overflow_job && isnull(job_overlay))
+		var/icon/job_icon = get_job_hud_icon(SSjob.overflow_role)
+		if(isnull(job_icon))
+			stack_trace("[SSjob.overflow_role::title] was selected as the Job Overflow but has no icon!")
+		else
+			job_icon.Scale(ICON_SIZE_X / 2, ICON_SIZE_X / 2)
+			job_overlay = mutable_appearance(job_icon, offset_spokesman = src, alpha = 120, layer = src.layer+0.02)
+			var/matrix/job_matrix = matrix()
+			job_matrix.Translate(6, 14) //this is completely arbitruary just what I thought looked good.
+			job_overlay.transform = job_matrix
+
+	update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/lobby/new_player_info/Destroy()
+	STOP_PROCESSING(SSnewplayer_info, src)
+	return ..()
+
+/atom/movable/screen/lobby/new_player_info/MouseEntered(location, control, params)
+	. = ..()
+	if(QDELETED(src) || isnull(job_overlay))
+		return
+	openToolTip(usr, src, params, title = "[SSjob.overflow_role::title] overflow", content = "The overflow for the round has been set as [SSjob.overflow_role::title].")
+
+/atom/movable/screen/lobby/new_player_info/MouseExited()
+	closeToolTip(usr)
+	return ..()
+
+/atom/movable/screen/lobby/new_player_info/update_icon_state()
+	. = ..()
+	icon_state = base_icon_state
+
+/atom/movable/screen/lobby/new_player_info/update_overlays()
+	. = ..()
+	. += mutable_appearance(icon, "[base_icon_state]_overlay", layer = src.layer+0.01)
+	if(!show_static)
+		return .
+	if(job_overlay)
+		. += job_overlay
+	. += mutable_appearance(icon, "static_base", alpha = 20, layer = src.layer+0.03)
+	//we have this in a separate file because `generate_icon_alpha_mask` puts lighting even on non-existent pixels,
+	//giving the icon a weird background color.
+	var/mutable_appearance/scanline = mutable_appearance(generate_icon_alpha_mask('icons/hud/lobby/newplayer_scanline.dmi', "scanline"), alpha = 20, layer = src.layer+0.04)
+	scanline.pixel_y = OVERLAY_X_DIFF
+	scanline.pixel_x = OVERLAY_Y_DIFF
+	. += scanline
+
+/atom/movable/screen/lobby/new_player_info/process(seconds_per_tick)
+	update_text()
+
+/atom/movable/screen/lobby/new_player_info/collapse_button()
+	show_static = FALSE
+	update_text()
+	//to be in sync with parent, we'll turn the TV off in this time instead.
+	animate(src, appearance = update_appearance(UPDATE_ICON), time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
+	//we go to the right, not up
+	animate(transform = transform.Translate(x = 146, y = 0), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
+
+/atom/movable/screen/lobby/new_player_info/expand_button()
+	. = ..()
+	show_static = TRUE
+	update_appearance(UPDATE_ICON)
+	update_text()
+
+/atom/movable/screen/lobby/new_player_info/proc/update_text()
+	if(!hud || !show_static)
+		maptext = null
+		return
+
+	var/round_started = SSticker.HasRoundStarted()
+	if(!MC_RUNNING())
+		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>[(round_started ? null : "Starting in [time_remaining_str()]<br />")]Loading...</span>")
+		return
+	if(SSticker.IsPostgame())
+		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>Game ended, <br /> \
+			restart soon</span>")
+		return
+
+	var/new_maptext
+	if(round_started)
+		new_maptext = "<span style='text-align: center; vertical-align: middle'>[SSmapping.current_map.map_name]<br /> \
+			[LAZYLEN(GLOB.clients)] player\s online<br /> \
+			[ROUND_TIME()] in<br />"
+		new_maptext += "</span>"
+	else
+
+		if(hud.mymob.client?.holder)
+			new_maptext = "<span style='text-align: center; vertical-align: middle'>Starting in [time_remaining_str()]<br /> \
+				[LAZYLEN(GLOB.clients)] player\s<br /> \
+				[SSticker.totalPlayersReady] players ready<br /> \
+				[SSticker.total_admins_ready] / [length(GLOB.admins)] admins ready</span>"
+		else
+			new_maptext = "<span style='text-align: center; vertical-align: middle; font-size: 18px'>[time_remaining_str()]</span><br /> \
+				<span style='text-align: center; vertical-align: middle'>[LAZYLEN(GLOB.clients)] player\s</span>"
+
+	maptext = MAPTEXT(new_maptext)
+
+/atom/movable/screen/lobby/new_player_info/proc/time_remaining_str()
+	var/time_remaining = SSticker.GetTimeLeft()
+	if(time_remaining > 0)
+		time_remaining = "[round(time_remaining/10)]s"
+	else if(time_remaining == -10)
+		time_remaining = "DELAYED"
+	else
+		time_remaining = "SOON"
+
+	return time_remaining
+
+#undef OVERLAY_X_DIFF
+#undef OVERLAY_Y_DIFF
+
 #undef SHUTTER_MOVEMENT_DURATION
 #undef SHUTTER_WAIT_DURATION
 #undef MAX_STATION_TRAIT_BUTTONS_VERTICAL
+#undef TRAIT_BUTTON_Y_ORIGIN
+#undef TRAIT_BUTTON_X_ORIGIN
+#undef TRAIT_BUTTON_OFFSET
+#undef SQUARE_VIEWPORT_OFFSET

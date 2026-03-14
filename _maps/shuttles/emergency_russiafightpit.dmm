@@ -187,7 +187,7 @@
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aM" = (
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /obj/machinery/door/poddoor{
 	id = "bearsbearsbears"
 	},
@@ -212,7 +212,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aQ" = (
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aR" = (
@@ -433,6 +433,7 @@
 /obj/machinery/stasis{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "iJ" = (
@@ -465,6 +466,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/stasis,
 /obj/machinery/light/small/directional/south,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "km" = (
@@ -497,6 +499,7 @@
 "wq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/optable,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "wM" = (

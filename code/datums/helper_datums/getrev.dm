@@ -41,6 +41,26 @@
 
 	return msg.Join("\n")
 
+/datum/getrev/proc/GetDatabaseCommitSha()
+	. = originmastercommit
+	if (commit == .)
+		return .
+
+	var/gh_url = CONFIG_GET(string/githuburl)
+	if(!gh_url)
+		return .
+
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[gh_url]/commit/[commit]", "", "")
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+
+	if (response.status_code >= 200 && response.status_code < 300)
+		return commit
+
+	return .
+
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
 		return ""
@@ -80,8 +100,7 @@
 	if(world.TgsAvailable())
 		var/datum/tgs_version/version = world.TgsVersion()
 		msg += "<b>TGS version</b>: [version.raw_parameter]"
-		var/datum/tgs_version/api_version = world.TgsApiVersion()
-		msg += "<b>DMAPI version</b>: [api_version.raw_parameter]"
+		msg += "<b>DMAPI version</b>: [TGS_DMAPI_VERSION]"
 
 	// Game mode odds
 	msg += "<br><b>Current Informational Settings:</b>"

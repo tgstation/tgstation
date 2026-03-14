@@ -4,12 +4,13 @@
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "ghost"
 	icon_living = "ghost"
-	mob_biotypes = MOB_SPIRIT
+	mob_biotypes = MOB_SPIRIT | MOB_UNDEAD
 	speak_emote = list("wails", "weeps")
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	combat_mode = TRUE
 	basic_mob_flags = DEL_ON_DEATH
+	status_flags = CANPUSH
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 15
@@ -26,6 +27,7 @@
 	light_range = 2.5 // same glowing as visible player ghosts
 	light_power = 0.6
 	ai_controller = /datum/ai_controller/basic_controller/ghost
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 
 	///What hairstyle will this ghost have
 	var/ghost_hairstyle
@@ -44,8 +46,7 @@
 
 /mob/living/basic/ghost/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/item/ectoplasm)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/ectoplasm)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/ai_retaliate)
 
@@ -64,7 +65,7 @@
 /mob/living/basic/ghost/proc/give_identity()
 	if(random_identity)
 		ghost_hairstyle = random_hairstyle() //This only gives us the hairstyle name, not the icon_state (which we need).
-		ghost_hair_color = "#[random_color()]"
+		ghost_hair_color = random_hair_color()
 
 		if(prob(50)) //Only a chance at also getting facial hair
 			ghost_facial_hairstyle = random_facial_hairstyle()
@@ -101,6 +102,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

@@ -189,7 +189,9 @@
 /obj/item/circuit_component/remotecam/proc/update_camera_location(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 	if(current_camera_state && current_cameranet_state)
-		GLOB.cameranet.updatePortableCamera(shell_camera, 0.5 SECONDS)
+		if(!shell_camera?.can_use())
+			return
+		SScameras.camera_moved(shell_camera, get_turf(old_loc), get_turf(shell_camera), 0.5 SECONDS)
 
 /**
  * Add camera from global cameranet
@@ -197,8 +199,8 @@
 /obj/item/circuit_component/remotecam/proc/cameranet_add()
 	if(current_cameranet_state)
 		return
-	GLOB.cameranet.cameras += shell_camera
-	GLOB.cameranet.addCamera(shell_camera)
+	SScameras.cameras += shell_camera
+	SScameras.add_camera_to_chunk(shell_camera)
 	current_cameranet_state = TRUE
 
 /**
@@ -207,8 +209,8 @@
 /obj/item/circuit_component/remotecam/proc/cameranet_remove()
 	if(!current_cameranet_state)
 		return
-	GLOB.cameranet.removeCamera(shell_camera)
-	GLOB.cameranet.cameras -= shell_camera
+	SScameras.remove_camera_from_chunk(shell_camera)
+	SScameras.cameras -= shell_camera
 	current_cameranet_state = FALSE
 
 /**

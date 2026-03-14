@@ -9,6 +9,7 @@
 /mob
 	density = TRUE
 	layer = MOB_LAYER
+	abstract_type = /mob
 	animate_movement = SLIDE_STEPS
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
@@ -139,6 +140,8 @@
 	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
 	  */
 	var/list/held_items = list()
+	///How many hands this mob has by default, which we divide by to know what y offset to give open inventories.
+	var/default_hand_amount = 2
 
 	//HUD things
 

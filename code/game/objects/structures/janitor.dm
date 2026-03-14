@@ -28,14 +28,14 @@
 
 	return .
 
-/obj/structure/mop_bucket/attackby(obj/item/weapon, mob/user, params)
+/obj/structure/mop_bucket/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/reagent_containers))
 		update_appearance(UPDATE_OVERLAYS)
 		return FALSE // skip attack animation when refilling cart
 
 	return ..()
 
-/obj/structure/mop_bucket/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/structure/mop_bucket/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/mop))
 		if(weapon.reagents.total_volume >= weapon.reagents.maximum_volume)
 			balloon_alert(user, "already soaked!")
@@ -182,7 +182,7 @@
 
 	return . || NONE
 
-/obj/structure/mop_bucket/janitorialcart/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/mop_bucket/janitorialcart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/mop))
 		if(mymop)
 			balloon_alert(user, "already has \a [mymop]!")
@@ -200,7 +200,14 @@
 	if(istype(attacking_item, /obj/item/storage/bag/trash))
 		if(mybag)
 			balloon_alert(user, "already has \a [mybag]!")
-		else if(user.transferItemToLoc(attacking_item, src))
+			return
+
+		var/obj/item/storage/bag/trash/insert = attacking_item
+		if(!insert.insertable)
+			balloon_alert(user, "cannot be inserted!")
+			return
+
+		if(user.transferItemToLoc(attacking_item, src))
 			balloon_alert(user, "attached [attacking_item]")
 		return
 
@@ -241,7 +248,7 @@
 		update_appearance(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/mop_bucket/janitorialcart/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/structure/mop_bucket/janitorialcart/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

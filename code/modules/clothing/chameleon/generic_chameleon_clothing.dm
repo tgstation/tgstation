@@ -3,7 +3,7 @@
 do { \
 	var/datum/action/item_action/chameleon/change/_action = locate() in item.actions; \
 	_action?.emp_randomise(INFINITY); \
-	item.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF); \
+	item.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_NO_EXAMINE); \
 } while(FALSE)
 
 // Cham jumpsuit
@@ -18,15 +18,19 @@ do { \
 /obj/item/clothing/under/chameleon
 	name = "black jumpsuit"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
-	icon_state = "jumpsuit"
-	greyscale_colors = "#3f3f3f"
+	icon = 'icons/map_icons/clothing/under/color.dmi'
+	icon_state = "/obj/item/clothing/under/color"
+	post_init_icon_state = "jumpsuit"
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	greyscale_config = /datum/greyscale_config/jumpsuit
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/inhand_right
+	greyscale_colors = "#3f3f3f"
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	can_adjust = FALSE
 	armor_type = /datum/armor/clothing_under/chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/jumpsuit)
@@ -55,6 +59,7 @@ do { \
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/suit_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/suit)
 	action_slots = ALL
@@ -84,6 +89,7 @@ do { \
 	icon_state = "meson"
 	inhand_icon_state = "meson"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/glasses_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/glasses)
 	action_slots = ALL
@@ -103,13 +109,14 @@ do { \
 	acid = 50
 
 /obj/item/clothing/gloves/chameleon
-	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
+	desc = "These gloves provide protection against electric shock."
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
 	greyscale_colors = null
 
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	body_parts_covered = HANDS|ARMS
 	armor_type = /datum/armor/gloves_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/gloves)
@@ -137,6 +144,7 @@ do { \
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "greysoft"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/head_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/hat)
 	action_slots = ALL
@@ -149,7 +157,6 @@ do { \
 
 /obj/item/clothing/head/chameleon/drone
 	actions_types = list(/datum/action/item_action/chameleon/change/hat, /datum/action/item_action/chameleon/drone/togglehatmask, /datum/action/item_action/chameleon/drone/randomise)
-	action_slots = ALL
 	item_flags = DROPDEL
 	// The camohat, I mean, holographic hat projection, is part of the drone itself.
 	armor_type = /datum/armor/none
@@ -177,18 +184,22 @@ do { \
 	inhand_icon_state = "gas_alt"
 	resistance_flags = NONE
 	armor_type = /datum/armor/mask_chameleon
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | CARP_STYLE_FACTOR
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/chameleon/change/mask)
 	action_slots = ALL
-	/// Is our voice changer enabled or disabled?
-	var/voice_change = TRUE
+	clothing_traits = list(TRAIT_VOICE_MATCHES_ID)
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
-	voice_change = !voice_change
-	to_chat(user, span_notice("The voice changer is now [voice_change ? "on" : "off"]!"))
+	var/on = (TRAIT_VOICE_MATCHES_ID in clothing_traits)
+	if(on)
+		detach_clothing_traits(TRAIT_VOICE_MATCHES_ID)
+	else
+		attach_clothing_traits(TRAIT_VOICE_MATCHES_ID)
+	on = !on
+	to_chat(user, span_notice("The voice changer is now [on ? "on" : "off"]!"))
 
 /obj/item/clothing/mask/chameleon/broken
 
@@ -198,11 +209,10 @@ do { \
 
 /obj/item/clothing/mask/chameleon/drone
 	actions_types = list(/datum/action/item_action/chameleon/change/mask, /datum/action/item_action/chameleon/drone/togglehatmask, /datum/action/item_action/chameleon/drone/randomise)
-	action_slots = ALL
 	item_flags = DROPDEL
 	//Same as the drone chameleon hat, undroppable and no protection
 	armor_type = /datum/armor/none
-	voice_change = FALSE
+	clothing_traits = null
 
 /obj/item/clothing/mask/chameleon/drone/Initialize(mapload)
 	. = ..()
@@ -225,15 +235,18 @@ do { \
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	desc = "A pair of black shoes."
-	icon_state = "sneakers"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	icon_state = "/obj/item/clothing/shoes/chameleon"
+	post_init_icon_state = "sneakers"
 	inhand_icon_state = "sneakers_back"
 	body_parts_covered = FEET|LEGS
-	greyscale_colors = "#545454#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
 	greyscale_config_worn = /datum/greyscale_config/sneakers/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
+	greyscale_colors = "#545454#ffffff"
 	resistance_flags = NONE
+	clothing_flags = CARP_STYLE_FACTOR
 	armor_type = /datum/armor/shoes_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/shoes)
 	action_slots = ALL
@@ -243,12 +256,14 @@ do { \
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/chameleon/broken
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/shoes/chameleon/broken/Initialize(mapload)
 	. = ..()
 	BREAK_CHAMELEON_ACTION(src)
 
 /obj/item/clothing/shoes/chameleon/noslip
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	can_be_bloody = FALSE
 
@@ -262,13 +277,13 @@ do { \
 /obj/item/storage/backpack/chameleon
 	name = "backpack"
 	actions_types = list(/datum/action/item_action/chameleon/change/backpack)
-	action_slots = ALL
 
 /obj/item/storage/backpack/chameleon/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND_BLOCKER, INNATE_TRAIT)
 
 /obj/item/storage/backpack/chameleon/broken
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/storage/backpack/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -279,7 +294,6 @@ do { \
 	name = "toolbelt"
 	desc = "Holds tools."
 	actions_types = list(/datum/action/item_action/chameleon/change/belt)
-	action_slots = ALL
 
 /obj/item/storage/belt/chameleon/Initialize(mapload)
 	. = ..()
@@ -307,9 +321,10 @@ do { \
 /obj/item/modular_computer/pda/chameleon
 	name = "tablet"
 	actions_types = list(/datum/action/item_action/chameleon/change/tablet)
-	action_slots = ALL
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/modular_computer/pda/chameleon/broken
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/modular_computer/pda/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -317,6 +332,7 @@ do { \
 
 // Cham Stamp
 /obj/item/stamp/chameleon
+	icon_state = "stamp-syndicate"
 	actions_types = list(/datum/action/item_action/chameleon/change/stamp)
 	action_slots = ALL
 

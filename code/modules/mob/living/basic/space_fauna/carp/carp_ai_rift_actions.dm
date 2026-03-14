@@ -201,7 +201,7 @@
 		if (!exit_count)
 			continue
 		var/turf/rift_exit = rift.exit_locs[exit_count]
-		if (get_dist(rift_exit, target) >= distance_to_target)
+		if ((get_dist(rift_exit, target) + get_dist(rift, target)) >= distance_to_target)
 			continue
-		controller.queue_behavior(/datum/ai_behavior/travel_towards_atom, get_turf(rift))
+		controller.queue_behavior(/datum/ai_behavior/travel_towards_atom, rift)
 		return SUBTREE_RETURN_FINISH_PLANNING

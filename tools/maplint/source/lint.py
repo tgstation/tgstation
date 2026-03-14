@@ -45,6 +45,7 @@ class AtomNeighbor:
     identical: bool = False
     typepath: Optional[TypepathExtra] = None
     pattern: Optional[re.Pattern] = None
+    ignore: list[TypepathExtra] = []
 
     def __init__(self, typepath, data = {}):
         if typepath.upper() != typepath:
@@ -61,6 +62,11 @@ class AtomNeighbor:
 
         if "pattern" in data:
             self.pattern = re.compile(data.pop("pattern"))
+
+        if "ignore" in data:
+            ignore_data = data.pop("ignore")
+            expect(isinstance(ignore_data, list), "ignore must be a list of typepaths.")
+            self.ignore = [TypepathExtra(tp) for tp in ignore_data]
 
         expect(len(data) == 0, f"Unknown key in banned neighbor: {', '.join(data.keys())}.")
 
@@ -229,8 +235,8 @@ class WhenCondition(ConditionalRule):
                 # If something is a float (number), check it as an int and a float
                 # Hack for integer value parsing
                 if var_edits[var_name] % 1 == 0:
-                    return str(int(var_edits[var_name])).strip() != expected_value.strip()
-            return str(var_edits[var_name]).strip() != expected_value.strip()
+                    return str(int(var_edits[var_name])).strip() != unexpected_value.strip()
+            return str(var_edits[var_name]).strip() != unexpected_value.strip()
 
         elif self.match_like is not None:
             var_name = self.match_like.group(1)
@@ -303,10 +309,17 @@ class Rules:
     banned_neighbors: list[AtomNeighbor] = []
     banned_variables: bool | list[BannedVariable] = []
     required_neighbors: list[AtomNeighbor] = []
+    ignored_neighbors: list[AtomNeighbor] = []
     when: Optional[When] = None
+    skip_files: list[Union[str, re.Pattern]] = []
 
     def __init__(self, data):
         expect(isinstance(data, dict), "Lint rules must be a dictionary.")
+
+        if "ignore" in data:
+            ignored_neighbors_data = data.pop("ignore")
+            expect(isinstance(ignored_neighbors_data, list), "'ignore' must be a list of typepaths.")
+            self.ignored_neighbors = [TypepathExtra(tp) for tp in ignored_neighbors_data]
 
         if "banned" in data:
             self.banned = data.pop("banned")
@@ -347,11 +360,37 @@ class Rules:
         if "when" in data:
             self.when = When(data.pop("when"))
 
+        if "skip_files" in data:
+            skip_files_data = data.pop("skip_files")
+            expect(isinstance(skip_files_data, list), "skip_files must be a list.")
+            self.skip_files = []
+            for entry in skip_files_data:
+                if isinstance(entry, str):
+                    self.skip_files.append(entry)
+                elif isinstance(entry, dict) and "pattern" in entry:
+                    pattern = entry.pop("pattern")
+                    self.skip_files.append(re.compile(pattern))
+                    expect(len(entry) == 0, f"Unknown key in skip_files entry: {', '.join(entry.keys())}.")
+                else:
+                    raise MapParseError("skip_files entries must be strings or dicts with a 'pattern' key.")
+
         expect(len(data) == 0, f"Unknown lint rules: {', '.join(data.keys())}.")
 
     def run(self, identified: Content, contents: list[Content], identified_index) -> list[MaplintError]:
         failures: list[MaplintError] = []
         when_text = self.when.match_string() if self.when is not None else ""
+
+        if self.skip_files:
+            filename = getattr(identified, "filename", None)
+            if filename is not None:
+                norm = str(filename).replace("\\", "/")
+                for entry in self.skip_files:
+                    if isinstance(entry, str):
+                        if entry in norm:
+                            return failures
+                    else:
+                        if entry.search(norm):
+                            return failures
 
         # If a when is present and is unmet, skip evaluation of this rule
         if self.when and not self.when.evaluate(identified):
@@ -361,6 +400,14 @@ class Rules:
             failures.append(fail_content(identified, f"Typepath {identified.path} is banned{when_text}."))
 
         for banned_neighbor in self.banned_neighbors:
+            ignored = False
+            for neighbor in contents[:identified_index] + contents[identified_index + 1:]:
+                if any(ignore.matches_path(neighbor.path) for ignore in self.ignored_neighbors):
+                    ignored = True
+                    break
+            if ignored:
+                continue
+
             for neighbor in contents[:identified_index] + contents[identified_index + 1:]:
                 if not banned_neighbor.matches(identified, neighbor):
                     continue

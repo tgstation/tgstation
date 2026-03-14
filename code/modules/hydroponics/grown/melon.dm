@@ -31,16 +31,18 @@
 	bite_consumption_mod = 2
 	w_class = WEIGHT_CLASS_NORMAL
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/watermelonjuice
 	wine_power = 40
 
+/obj/item/food/grown/watermelon/juice_typepath()
+	return /datum/reagent/consumable/watermelonjuice
+
 /obj/item/food/grown/watermelon/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/watermelonslice, 5, 20, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/watermelonslice, 5, 20, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/grown/watermelon/make_dryable()
 	return //No drying
 
-/obj/item/food/grown/watermelon/attackby(obj/item/I, mob/user, params)
+/obj/item/food/grown/watermelon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/kitchen/spoon))
 		return ..()
 
@@ -95,12 +97,14 @@
 	bite_consumption_mod = 2
 	w_class = WEIGHT_CLASS_NORMAL
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/water/holywater
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
 
+/obj/item/food/grown/holymelon/juice_typepath()
+	return /datum/reagent/water/holywater
+
 /obj/item/food/grown/holymelon/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/holymelonslice, 5, 20, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/holymelonslice, 5, 20, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/grown/holymelon/make_dryable()
 	return //No drying
@@ -110,7 +114,7 @@
 	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_holyness)))
 
 
-/obj/item/food/grown/holymelon/attackby(obj/item/I, mob/user, params)
+/obj/item/food/grown/holymelon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/kitchen/spoon))
 		return ..()
 
@@ -183,7 +187,7 @@
 /obj/item/food/grown/barrelmelon/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/barrelmelonslice, 5, 20, screentip_verb = "Chop")
 
-/obj/item/food/grown/barrelmelon/attackby(obj/item/I, mob/user, params)
+/obj/item/food/grown/barrelmelon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/kitchen/spoon))
 		return ..()
 

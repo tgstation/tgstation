@@ -7,24 +7,30 @@
 	name = "garbage spawner"
 	loot = list(
 		/obj/effect/spawner/random/trash/food_packaging = 20,
-		/obj/item/trash/can = 15,
+		/obj/effect/spawner/random/trash/crushed_can = 15,
 		/obj/item/shard = 10,
 		/obj/effect/spawner/random/trash/cigbutt = 10,
+		/obj/effect/spawner/random/trash/cigpack = 5,
 		/obj/effect/spawner/random/trash/bacteria = 5,
 		/obj/effect/spawner/random/trash/botanical_waste = 5,
-		/obj/item/reagent_containers/cup/glass/drinkingglass = 5,
 		/obj/item/broken_bottle = 5,
 		/obj/item/light/tube/broken = 5,
 		/obj/item/light/bulb/broken = 5,
-		/obj/item/assembly/mousetrap/armed = 5,
-		/obj/item/stack/cable_coil = 5,
-		/obj/item/food/deadmouse = 1,
+		/obj/effect/spawner/random/bureaucracy/paper = 5,
+		/obj/item/assembly/mousetrap = 3,
+		/obj/item/assembly/mousetrap/armed = 3,
+		/obj/item/stack/cable_coil = 3,
+		/obj/item/stack/cable_coil/cut = 3,
+		/obj/item/reagent_containers/syringe = 3,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 2,
+		/obj/item/food/deadmouse = 2,
+		/obj/item/c_tube = 2,
+		/obj/item/plate_shard = 2,
+		/obj/item/lighter/greyscale/empty = 2,
+		/obj/item/lighter/empty = 1,
 		/obj/item/trash/candle = 1,
-		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/trash/flare = 1,
-		/obj/item/popsicle_stick = 1,
-		/obj/item/reagent_containers/syringe = 1,
-		/obj/item/reagent_containers/cup/glass/sillycup = 1,
+		/obj/item/rag = 1,
 		/obj/item/shard/plasma = 1,
 	)
 
@@ -45,9 +51,10 @@
 		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
 		/obj/effect/spawner/random/engineering/tool = 1,
 		/mob/living/basic/mouse = 1,
+		/mob/living/basic/snail = 1,
 		/obj/item/food/grown/cannabis = 1,
-		/obj/item/reagent_containers/cup/rag = 1,
-		/obj/effect/spawner/random/entertainment/drugs= 1,
+		/obj/item/rag = 1,
+		/obj/effect/spawner/random/entertainment/drugs = 1,
 		/obj/item/modular_computer/pda = 1,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/effect/spawner/random/entertainment/cigar = 1,
@@ -58,7 +65,31 @@
 		var/turf/location = get_turf(loc)
 		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
 			loot -= /mob/living/basic/mouse
+			loot -= /mob/living/basic/snail
 	return ..()
+
+/obj/effect/spawner/random/trash/cigpack
+	name = "empty cigarette pack spawner"
+	loot = list(
+		/obj/item/storage/fancy/cigarettes/empty = 5,
+		/obj/item/storage/fancy/cigarettes/cigpack_uplift/empty = 5,
+		/obj/item/storage/fancy/cigarettes/cigpack_robust/empty = 5,
+		/obj/item/storage/fancy/cigarettes/cigpack_robustgold/empty = 5,
+		/obj/item/storage/fancy/cigarettes/cigpack_carp/empty = 5,
+		/obj/item/storage/fancy/cigarettes/cigpack_midori/empty = 5,
+		/obj/item/storage/fancy/rollingpapers/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigars/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigars/cohiba/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigars/havana/empty = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_greytide/empty = 3,
+		/obj/item/storage/fancy/cigarettes/dromedaryco/empty = 2,
+		/obj/item/storage/fancy/cigarettes/cigpack_shadyjims/empty = 2,
+		/obj/item/storage/fancy/cigarettes/cigpack_xeno/empty = 2,
+		/obj/item/storage/fancy/cigarettes/cigpack_candy/empty = 2,
+		/obj/item/storage/fancy/cigarettes/cigpack_cannabis/empty = 1,
+		/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker/empty = 1,
+		/obj/item/storage/fancy/cigarettes/cigpack_syndicate/empty = 1,
+	)
 
 /obj/effect/spawner/random/trash/cigbutt
 	name = "cigarette butt spawner"
@@ -81,20 +112,45 @@
 		/obj/item/trash/sosjerky = 2,
 		/obj/item/trash/pistachios = 2,
 		/obj/item/trash/peanuts = 2,
+		/obj/item/reagent_containers/cup/glass/sillycup = 2,
 		/obj/item/trash/boritos = 1,
 		/obj/item/trash/boritos/green = 1,
 		/obj/item/trash/boritos/purple = 1,
 		/obj/item/trash/boritos/red = 1,
 		/obj/item/trash/can/food/beans = 1,
 		/obj/item/trash/can/food/peaches = 1,
-		/obj/item/trash/can/food/envirochow = 1,
-		/obj/item/trash/popcorn = 1,
-		/obj/item/trash/energybar = 1,
 		/obj/item/trash/can/food/peaches/maint = 1,
+		/obj/item/trash/can/food/tomatoes = 1,
+		/obj/item/trash/can/food/envirochow = 1,
+		/obj/item/trash/can/food/squid_ink = 1,
+		/obj/item/trash/can/food/chap = 1,
+		/obj/item/trash/can/food/jellyfish = 1,
+		/obj/item/trash/can/food/desert_snails = 1,
+		/obj/item/trash/can/food/larvae = 1,
+		/obj/item/trash/can/food/pine_nuts = 1,
+		/obj/item/trash/popcorn = 1,
+		/obj/item/trash/popcorn/salty = 1,
+		/obj/item/trash/energybar = 1,
 		/obj/item/trash/semki = 1,
+		/obj/item/trash/semki/healthy = 1,
 		/obj/item/trash/cnds = 1,
 		/obj/item/trash/syndi_cakes = 1,
 		/obj/item/trash/shrimp_chips = 1,
+		/obj/item/trash/hot_shots = 1,
+		/obj/item/trash/sticko = 1,
+		/obj/item/trash/sticko/matcha = 1,
+		/obj/item/trash/sticko/nutty = 1,
+		/obj/item/trash/sticko/pineapple = 1,
+		/obj/item/trash/sticko/yuyake = 1,
+		/obj/item/trash/shok_roks = 1,
+		/obj/item/trash/shok_roks/citrus = 1,
+		/obj/item/trash/shok_roks/berry = 1,
+		/obj/item/trash/shok_roks/tropical = 1,
+		/obj/item/trash/shok_roks/lanternfruit = 1,
+		/obj/item/trash/fleet_ration = 1,
+		/obj/item/trash/spacers_sidekick = 1,
+		/obj/item/popsicle_stick = 1,
+		/obj/item/trash/ready_donk = 1,
 		/obj/item/trash/tray = 1,
 	)
 
@@ -160,6 +216,7 @@
 	loot = list( // This spawner will scatter garbage around a dirty site.
 		/obj/effect/spawner/random/trash/garbage = 6,
 		/mob/living/basic/cockroach = 5,
+		/mob/living/basic/cockroach/bloodroach = 1,
 		/obj/effect/decal/cleanable/garbage = 4,
 		/obj/effect/decal/cleanable/vomit/old = 3,
 		/obj/effect/spawner/random/trash/cigbutt = 2,
@@ -169,7 +226,7 @@
 	if(mapload)
 		var/turf/location = get_turf(loc)
 		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
-			loot -= /mob/living/basic/cockroach
+			loot -= list(/mob/living/basic/cockroach, /mob/living/basic/cockroach/bloodroach)
 	return ..()
 
 /obj/effect/spawner/random/trash/moisture
@@ -180,8 +237,8 @@
 	loot = list( // This spawner will scatter water related items around a moist site.
 		/obj/item/clothing/head/cone = 7,
 		/obj/item/clothing/suit/caution = 3,
-		/mob/living/basic/frog = 2,
-		/obj/item/reagent_containers/cup/rag = 2,
+		/obj/effect/spawner/random/frog = 2,
+		/obj/item/rag = 2,
 		/obj/item/reagent_containers/cup/bucket = 2,
 		/obj/effect/decal/cleanable/blood/old = 2,
 		/obj/structure/mop_bucket = 2,
@@ -192,8 +249,18 @@
 	if(mapload)
 		var/turf/location = get_turf(loc)
 		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
-			loot -= list(/mob/living/basic/frog, /mob/living/basic/axolotl)
+			loot -= list(/obj/effect/spawner/random/frog, /mob/living/basic/axolotl)
 	return ..()
+
+/obj/effect/spawner/random/frog
+	name = "random frog"
+	desc = "Spawns a frog, or sometimes a RARE frog."
+	icon = 'icons/mob/simple/animal.dmi'
+	icon_state = "frog"
+	loot = list(
+		/mob/living/basic/frog = 99,
+		/mob/living/basic/frog/rare = 1,
+	)
 
 /obj/effect/spawner/random/trash/graffiti
 	name = "random graffiti spawner"
@@ -279,7 +346,8 @@
 	name = "box spawner"
 	icon_state = "box"
 	loot = list(
-		/obj/structure/closet/cardboard = 9,
+		/obj/structure/closet/cardboard = 5,
+		/obj/structure/closet/crate/cardboard = 4,
 		/obj/structure/closet/cardboard/metal = 1,
 	)
 

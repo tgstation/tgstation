@@ -8,6 +8,7 @@
 	attack_verb_simple = list("thump", "whomp", "bump")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
+	floor_placeable = TRUE
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
 	var/stuffed = TRUE //If the plushie has stuffing in it
 	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
@@ -18,13 +19,12 @@
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent //who initiated creation
 	var/obj/item/toy/plush/maternal_parent //who owns, see love()
-	var/static/list/breeding_blacklist = typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp) // you cannot have sexual relations with this plush
 	var/list/scorned = list() //who the plush hates
 	var/list/scorned_by = list() //who hates the plush, to remove external references on Destroy()
 	var/heartbroken = FALSE
 	var/vowbroken = FALSE
 	var/young = FALSE
-///Prevents players from cutting stuffing out of a plushie if true
+	///Prevents players from cutting stuffing out of a plushie if true
 	var/divine = FALSE
 	var/mood_message
 	var/list/love_message
@@ -33,6 +33,9 @@
 	var/list/vowbroken_message
 	var/list/parent_message
 	var/normal_desc
+	/// The type of offspring this plush generates. If not set, it'll default to the type itself on init.
+	var/offspring_type
+
 	//--end of love :'(--
 
 /*
@@ -46,6 +49,7 @@
 	AddComponent(/datum/component/squeak, squeak_override)
 	AddElement(/datum/element/bed_tuckable, mapload, 6, -5, 90)
 	AddElement(/datum/element/toy_talk)
+	AddElement(/datum/element/cuffable_item)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -53,6 +57,9 @@
 			gender = FEMALE
 		else
 			gender = MALE
+
+	if(!offspring_type)
+		offspring_type = type
 
 	love_message = list("\n[src] is so happy, \he could rip a seam!")
 	partner_message = list("\n[src] has a ring on \his finger! It says bound to my dear [partner].")
@@ -124,7 +131,7 @@
 	else
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
 
-/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
+/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(I.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
@@ -289,19 +296,15 @@
 	mood_message = pick(partner_message)
 	update_desc()
 
-/obj/item/toy/plush/proc/plop(obj/item/toy/plush/Daddy)
-	if(partner != Daddy)
+/obj/item/toy/plush/proc/plop(obj/item/toy/plush/daddy)
+	if(partner != daddy)
 		return FALSE //we do not have bastards in our toyshop
 
-	if(is_type_in_typecache(Daddy, breeding_blacklist))
-		return FALSE // some love is forbidden
+	// Ask the RNG if it looks more like mommy or daddy.
+	var/chosen_type = pick(offspring_type, daddy.offspring_type)
 
-	if(prob(50)) //it has my eyes
-		plush_child = new type(get_turf(loc))
-	else //it has your eyes
-		plush_child = new Daddy.type(get_turf(loc))
-
-	plush_child.make_young(src, Daddy)
+	plush_child = new chosen_type(get_turf(loc))
+	plush_child.make_young(src, daddy)
 
 /obj/item/toy/plush/proc/make_young(obj/item/toy/plush/Mama, obj/item/toy/plush/Dada)
 	if(Mama == Dada)
@@ -387,7 +390,9 @@
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
-	icon_state = "map_plushie_carp"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/carpplushie"
+	post_init_icon_state = "map_plushie_carp"
 	greyscale_config = /datum/greyscale_config/plush_carp
 	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
@@ -530,10 +535,16 @@
 // Preset lizard plushie that uses the original lizard plush green. (Or close to it)
 /obj/item/toy/plush/lizard_plushie/green
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/lizard_plushie/green"
+	post_init_icon_state = "map_plushie_lizard"
 	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/lizard_plushie/greyscale
 	desc = "An adorable stuffed toy that resembles a lizardperson. This one has been custom made."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/lizard_plushie/greyscale"
+	post_init_icon_state = "map_plushie_lizard"
 	greyscale_colors = "#d3d3d3#000000"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -548,12 +559,17 @@
 
 /obj/item/toy/plush/lizard_plushie/space/green
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring green lizardperson. To infinity and beyond, little guy. This one fills you with nostalgia and soul."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/lizard_plushie/space/green"
+	post_init_icon_state = "map_plushie_spacelizard"
 	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
-	icon_state = "map_plushie_snake"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/snakeplushie"
+	post_init_icon_state = "map_plushie_snake"
 	greyscale_config = /datum/greyscale_config/plush_snake
 	greyscale_colors = "#99ff99#000000"
 	inhand_icon_state = null
@@ -582,7 +598,9 @@
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
-	icon_state = "map_plushie_slime"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/slimeplushie"
+	post_init_icon_state = "map_plushie_slime"
 	greyscale_config = /datum/greyscale_config/plush_slime
 	greyscale_colors = "#aaaaff#000000"
 	inhand_icon_state = null
@@ -658,64 +676,6 @@
 	attack_verb_simple = list("sting")
 	gender = FEMALE
 	squeak_override = list('sound/mobs/humanoids/moth/scream_moth.ogg'=1)
-
-/obj/item/toy/plush/goatplushie
-	name = "strange goat plushie"
-	icon_state = "goat"
-	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same. Goats never change."
-	squeak_override = list('sound/items/weapons/punch1.ogg'=1)
-	/// Whether or not this goat is currently taking in a monsterous doink
-	var/going_hard = FALSE
-	/// Whether or not this goat has been flattened like a funny pancake
-	var/splat = FALSE
-
-/obj/item/toy/plush/goatplushie/Initialize(mapload)
-	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = PROC_REF(splat),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/item/toy/plush/goatplushie/attackby(obj/item/cigarette/rollie/fat_dart, mob/user, params)
-	if(!istype(fat_dart))
-		return ..()
-	if(splat)
-		to_chat(user, span_notice("[src] doesn't seem to be able to go hard right now."))
-		return
-	if(going_hard)
-		to_chat(user, span_notice("[src] is already going too hard!"))
-		return
-	if(!fat_dart.lit)
-		to_chat(user, span_notice("You'll have to light that first!"))
-		return
-	to_chat(user, span_notice("You put [fat_dart] into [src]'s mouth."))
-	qdel(fat_dart)
-	going_hard = TRUE
-	update_icon(UPDATE_OVERLAYS)
-
-/obj/item/toy/plush/goatplushie/proc/splat(datum/source)
-	SIGNAL_HANDLER
-	if(splat)
-		return
-	if(going_hard)
-		going_hard = FALSE
-		update_icon(UPDATE_OVERLAYS)
-	icon_state = "goat_splat"
-	playsound(src, SFX_DESECRATION, 50, TRUE)
-	visible_message(span_danger("[src] gets absolutely flattened!"))
-	splat = TRUE
-
-/obj/item/toy/plush/goatplushie/examine()
-	. = ..()
-	if(splat)
-		. += span_notice("[src] might need medical attention.")
-	if(going_hard)
-		. += span_notice("[src] is going so hard, feel free to take a picture.")
-
-/obj/item/toy/plush/goatplushie/update_overlays()
-	. = ..()
-	if(going_hard)
-		. += "goat_dart"
 
 /obj/item/toy/plush/moth
 	name = "moth plushie"
@@ -812,3 +772,62 @@
 		'sound/mobs/humanoids/human/scream/malescream_2.ogg' = 10, //10% chance to scream, rare but not abysmal
 		'sound/items/weapons/smash.ogg' = 90,
 		)
+
+/obj/item/toy/plush/horse
+	name = "horse plushie"
+	desc = "A squishy soft horse plushie. This one is bay with white socks."
+	icon_state = "horse"
+	attack_verb_continuous = list("whinnies", "gallops", "prances", "horses")  // Yes I'm using horse as a verb
+	attack_verb_simple = list("whinny", "gallop", "prance", "horse")
+
+/obj/item/toy/plush/unicorn
+	name = "unicorn plushie"
+	desc = "A squishy soft unicorn plushie. It has a magical aura."
+	icon_state = "unicorn"
+	attack_verb_continuous = list("whinnies", "gallops", "prances", "magicks")
+	attack_verb_simple = list("whinny", "gallop", "prance", "magick")
+
+/obj/item/toy/plush/monkey
+	name = "monkey plushie"
+	desc = "The tag reads: 'Oop eek! I'm a chimpanzee!', with 'Now in JUMBO SIZE!' on the flipside."
+	w_class = WEIGHT_CLASS_BULKY
+	throw_range = 2
+	throw_speed = 1
+	icon_state = "monkey"
+	inhand_icon_state = null
+	attack_verb_continuous = list("Oops", "Eeks")
+	attack_verb_simple = list("Oop", "Eek")
+	squeak_override = list(SFX_SCREECH=1)
+	/// if the monkey ate a mimana and has changed nationality
+	var/french = FALSE
+
+/obj/item/toy/plush/monkey/item_interaction(mob/living/feeder, obj/item/food/grown/banana/nana, list/modifiers)
+	if(!istype(nana))
+		return ..()
+	nana.forceMove(src) // go into the cotton stomach
+	to_chat(feeder, span_notice("You hand over the [nana] to [src] and watch as it eats..."))
+	playsound(src, 'sound/items/eatfood.ogg', 75, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(eat), feeder, nana), 3 SECONDS)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/toy/plush/monkey/proc/eat(mob/living/feeder, obj/item/food/grown/banana/nana)
+	if(istype(nana, /obj/item/food/grown/banana/bluespace))
+		do_teleport(src, get_turf(src), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+	else if(istype(nana, /obj/item/food/grown/banana/mime) && !french)
+		name = "peluche de singe"
+		desc = "L'étiquette indique: 'Oop eek! Je suis un chimpanzé!', avec 'Maintenant en TAILLE JUMBO!' sur l'autre face."
+		french = TRUE
+	// throw the peel at a random mob, or a random turf if there are none
+	var/obj/item/grown/bananapeel/peel = new nana.trash_type(get_turf(src))
+	var/list/oviewers = oviewers(peel.throw_range, src)
+	var/throw_src = src
+	// if a player holds the plushie, the throw source will be the player
+	if(isliving(loc))
+		oviewers = oviewers(loc)
+		throw_src = loc
+	if(oviewers.len > 0 && (locate(feeder) in oviewers))
+		oviewers -= feeder // remove feeder from targetables
+	peel.throw_at(oviewers.len == 0 ? get_ranged_target_turf(throw_src, pick(GLOB.alldirs), peel.throw_range) : pick(oviewers), peel.throw_range, peel.throw_speed, quickstart = FALSE)
+	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
+	spasm_animation(5 SECONDS)
+	qdel(nana)

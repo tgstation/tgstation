@@ -8,11 +8,11 @@ import {
   Table,
   Tooltip,
 } from 'tgui-core/components';
-
+import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-type Techweb = {
+export type Techweb = {
   all_servers: string[];
   ref: string;
   selected: number;
@@ -20,17 +20,19 @@ type Techweb = {
   web_org: string;
 };
 
-type ExperimentData = {
+export type ExperimentData = {
   description: string;
   name: string;
   performance_hint: string;
-  progress: Progress[];
+  progress: Stage[];
   ref: string;
-  selected: number;
+  selected?: BooleanLike;
+  completed?: BooleanLike;
   tag: string;
 };
 
-type Progress = [string, string, number, number];
+// Value type, Description, Value, AltValue
+type Stage = [string, string, number, number];
 
 type Data = {
   always_active: boolean;
@@ -39,25 +41,19 @@ type Data = {
   techwebs: Techweb[];
 };
 
-function ExperimentStages(props) {
-  return (
-    <Table ml={2} className="ExperimentStage__Table">
-      {props.children.map((stage, idx) => (
-        <ExperimentStageRow key={idx} {...stage} />
-      ))}
-    </Table>
-  );
-}
+type ExperimentStageRowProps = {
+  stage: Stage;
+};
 
-function ExperimentStageRow(props) {
-  const [type, description, value, altValue] = props;
+function ExperimentStageRow(props: ExperimentStageRowProps) {
+  const [type, description, value, altValue] = props.stage;
 
   // Determine completion based on type of stage
   let completion = false;
   switch (type) {
     case 'bool':
     case 'detail':
-      completion = value;
+      completion = !!value;
       break;
     case 'integer':
       completion = value === altValue;
@@ -89,9 +85,14 @@ function ExperimentStageRow(props) {
   );
 }
 
-function TechwebServer(props) {
+type TechwebServerProps = {
+  techwebs: Techweb[];
+  can_select?: boolean;
+};
+
+export function TechwebServer(props: TechwebServerProps) {
   const { act } = useBackend<Data>();
-  const { techwebs } = props;
+  const { techwebs, can_select = true } = props;
 
   return techwebs.map((server, index) => (
     <Box key={index} m={1} className="ExperimentTechwebServer__Web">
@@ -103,19 +104,21 @@ function TechwebServer(props) {
         <Stack.Item className="ExperimentTechwebServer__WebName">
           {server.web_id} / {server.web_org}
         </Stack.Item>
-        <Stack.Item>
-          <Button
-            onClick={() =>
-              server.selected
-                ? act('clear_server')
-                : act('select_server', { ref: server.ref })
-            }
-            backgroundColor={server.selected ? 'good' : 'rgba(0, 0, 0, 0.4)'}
-            className="ExperimentTechwebServer__ConnectButton"
-          >
-            {server.selected ? 'Disconnect' : 'Connect'}
-          </Button>
-        </Stack.Item>
+        {can_select && (
+          <Stack.Item>
+            <Button
+              onClick={() =>
+                server.selected
+                  ? act('clear_server')
+                  : act('select_server', { ref: server.ref })
+              }
+              backgroundColor={server.selected ? 'good' : 'rgba(0, 0, 0, 0.4)'}
+              className="ExperimentTechwebServer__ConnectButton"
+            >
+              {server.selected ? 'Disconnect' : 'Connect'}
+            </Button>
+          </Stack.Item>
+        )}
       </Stack>
       <Box className="ExperimentTechwebServer__WebContent">
         <span>
@@ -131,41 +134,88 @@ function TechwebServer(props) {
   ));
 }
 
-export function Experiment(props) {
+type ExperimentTitleElementProps = {
+  selected: boolean;
+  ref: string;
+  can_select?: boolean;
+  children?: React.ReactNode;
+};
+
+function ExperimentTitleElement(props: ExperimentTitleElementProps) {
   const { act } = useBackend<Data>();
-  const { exp } = props;
+  const { selected, ref, can_select = true, children } = props;
+
+  if (!can_select) {
+    return (
+      <Box className="ExperimentConfigure__ExperimentNameFakeButton">
+        {children}
+      </Box>
+    );
+  }
+
+  return (
+    <Button
+      fluid
+      onClick={() =>
+        selected
+          ? act('clear_experiment')
+          : act('select_experiment', { ref: ref })
+      }
+      selected={selected}
+      className="ExperimentConfigure__ExperimentName"
+    >
+      {children}
+    </Button>
+  );
+}
+
+type ExperimentProps = {
+  exp: ExperimentData;
+  children?: React.ReactNode;
+  can_select?: boolean;
+};
+
+export function Experiment(props: ExperimentProps) {
+  const { exp, children, can_select } = props;
   const { name, description, tag, selected, progress, performance_hint, ref } =
     exp;
 
   return (
-    <Box m={1} key={ref} className="ExperimentConfigure__ExperimentPanel">
-      <Button
-        fluid
-        onClick={() =>
-          selected
-            ? act('clear_experiment')
-            : act('select_experiment', { ref: ref })
-        }
-        backgroundColor={selected ? 'good' : '#40628a'}
-        className="ExperimentConfigure__ExperimentName"
+    <Box
+      m={1}
+      key={ref}
+      className={`ExperimentConfigure__ExperimentPanel${selected ? '--selected' : ''}`}
+    >
+      <ExperimentTitleElement
+        selected={!!selected}
+        ref={ref}
+        can_select={can_select}
       >
         <Stack>
           <Stack.Item>{name}</Stack.Item>
           <Stack.Item color="rgba(255, 255, 255, 0.5)">
             <div className="ExperimentConfigure__TagContainer">
-              {tag}
-              <Tooltip content={performance_hint} position="bottom-start">
-                <Icon name="question-circle" mx={0.5} />
-                <div className="ExperimentConfigure__PerformanceHint" />
-              </Tooltip>
+              <Stack>
+                <Stack.Item>{tag}</Stack.Item>
+                <Stack.Item>
+                  <Tooltip content={performance_hint} position="bottom-start">
+                    <Icon name="question-circle" mx={0.5} />
+                    <div className="ExperimentConfigure__PerformanceHint" />
+                  </Tooltip>
+                </Stack.Item>
+              </Stack>
             </div>
           </Stack.Item>
         </Stack>
-      </Button>
+      </ExperimentTitleElement>
       <div className="ExperimentConfigure__ExperimentContent">
         <Box mb={1}>{description}</Box>
-        {props.children}
-        <ExperimentStages>{progress}</ExperimentStages>
+        {children}
+        <Table ml={2} className="ExperimentStage__Table">
+          {progress.map((stage, idx) => (
+            <ExperimentStageRow key={idx} stage={stage} />
+          ))}
+        </Table>
       </div>
     </Box>
   );
@@ -175,14 +225,14 @@ export function ExperimentConfigure(props) {
   const { act, data } = useBackend<Data>();
   const { always_active, has_start_callback } = data;
 
-  let techwebs = data.techwebs ?? [];
+  const techwebs = data.techwebs ?? [];
 
   const experiments = data.experiments.sort((a, b) =>
     a.name.localeCompare(b.name),
   );
 
   // Group servers together by web
-  let webs = new Map();
+  const webs = new Map();
   for (const x of techwebs) {
     if (x.web_id !== null) {
       if (!webs.has(x.web_id)) {
@@ -216,32 +266,38 @@ export function ExperimentConfigure(props) {
               <TechwebServer key={techweb} techwebs={techwebs} />
             ))}
         </Section>
+        <Stack vertical>
+          {techwebs.some((e) => e.selected) && (
+            <Stack.Item>
+              <Section
+                title="Experiments"
+                className="ExperimentConfigure__ExperimentsContainer"
+                fill
+              >
+                <Box mb={1} color="label">
+                  {textContent}
+                </Box>
+                {experiments.map((exp, i) => (
+                  <Experiment key={i} exp={exp} />
+                ))}
+              </Section>
+            </Stack.Item>
+          )}
 
-        {techwebs.some((e) => e.selected) && (
-          <Section
-            title="Experiments"
-            className="ExperimentConfigure__ExperimentsContainer"
-          >
-            <Box mb={1} color="label">
-              {textContent}
-            </Box>
-            {experiments.map((exp, i) => (
-              <Experiment key={i} exp={exp} />
-            ))}
-          </Section>
-        )}
-
-        {!!has_start_callback && (
-          <Button
-            fluid
-            className="ExperimentConfigure__PerformExperiment"
-            onClick={() => act('start_experiment_callback')}
-            disabled={!experiments.some((e) => e.selected)}
-            icon="flask"
-          >
-            Perform Experiment
-          </Button>
-        )}
+          {!!has_start_callback && (
+            <Stack.Item>
+              <Button
+                fluid
+                className="ExperimentConfigure__PerformExperiment"
+                onClick={() => act('start_experiment_callback')}
+                disabled={!experiments.some((e) => e.selected)}
+                icon="flask"
+              >
+                Perform Experiment
+              </Button>
+            </Stack.Item>
+          )}
+        </Stack>
       </Window.Content>
     </Window>
   );

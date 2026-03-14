@@ -8,8 +8,10 @@
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 8 SECONDS
+	cooldown_time = 2 SECONDS
+	unset_after_click = FALSE
 
+	// Both of these are changed in before_cast
 	invocation = "Someone raises a wall of rust."
 	invocation_self_message = "You raise a wall of rust."
 	invocation_type = INVOCATION_EMOTE

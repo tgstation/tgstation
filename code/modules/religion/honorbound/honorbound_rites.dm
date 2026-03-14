@@ -1,79 +1,3 @@
-/// how much favor is gained when someone joins the crusade and is deaconized
-#define DEACONIZE_FAVOR_GAIN 300
-
-///Makes the person holy, but they now also have to follow the honorbound code (CBT). Actually earns favor, convincing others to uphold the code (tm) is not easy
-/datum/religion_rites/deaconize
-	name = "Join Crusade"
-	desc = "Converts someone to your sect. They must be willing, so the first invocation will instead prompt them to join. \
-	They will become honorbound like you, and you will gain a massive favor boost!"
-	ritual_length = 30 SECONDS
-	ritual_invocations = list(
-		"A good, honorable crusade against evil is required.",
-		"We need the righteous ...",
-		"... the unflinching ...",
-		"... and the just.",
-		"Sinners must be silenced ...",
-	)
-	invoke_msg = "... And the code must be upheld!"
-	///the invited crusader
-	var/mob/living/carbon/human/new_crusader
-
-/datum/religion_rites/deaconize/perform_rite(mob/living/user, atom/religious_tool)
-	var/datum/religion_sect/honorbound/sect = GLOB.religious_sect
-	if(!ismovable(religious_tool))
-		to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
-		return FALSE
-	var/atom/movable/movable_reltool = religious_tool
-	if(!movable_reltool)
-		return FALSE
-	if(!LAZYLEN(movable_reltool.buckled_mobs))
-		to_chat(user, span_warning("Nothing is buckled to the altar!"))
-		return FALSE
-	for(var/mob/living/carbon/human/possible_crusader in movable_reltool.buckled_mobs)
-		if(possible_crusader.stat != CONSCIOUS)
-			to_chat(user, span_warning("[possible_crusader] needs to be alive and conscious to join the crusade!"))
-			return FALSE
-		if(TRAIT_GENELESS in possible_crusader.dna.species.inherent_traits)
-			to_chat(user, span_warning("This species disgusts [GLOB.deity]! They would never be allowed to join the crusade!"))
-			return FALSE
-		if(possible_crusader in sect.currently_asking)
-			to_chat(user, span_warning("Wait for them to decide on whether to join or not!"))
-			return FALSE
-		if(!(possible_crusader in sect.possible_crusaders))
-			INVOKE_ASYNC(sect, TYPE_PROC_REF(/datum/religion_sect/honorbound, invite_crusader), possible_crusader)
-			to_chat(user, span_notice("They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again."))
-			return FALSE
-		new_crusader = possible_crusader
-		return ..()
-
-/datum/religion_rites/deaconize/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
-	..()
-	var/mob/living/carbon/human/joining_now = new_crusader
-	new_crusader = null
-	if(!(joining_now in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
-		to_chat(user, span_warning("The new member is no longer on the altar!"))
-		return FALSE
-	if(joining_now.stat != CONSCIOUS)
-		to_chat(user, span_warning("The new member has to stay alive for the rite to work!"))
-		return FALSE
-	if(!joining_now.mind)
-		to_chat(user, span_warning("The new member has no mind!"))
-		return FALSE
-	if(joining_now.mind.has_antag_datum(/datum/antagonist/cult))//what the fuck?!
-		to_chat(user, span_warning("[GLOB.deity] has seen a true, dark evil in [joining_now]'s heart, and they have been smitten!"))
-		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
-		joining_now.gib(DROP_ORGANS|DROP_BODYPARTS)
-		return FALSE
-	var/datum/brain_trauma/special/honorbound/honor = user.has_trauma_type(/datum/brain_trauma/special/honorbound)
-	if(joining_now in honor.guilty)
-		honor.guilty -= joining_now
-	GLOB.religious_sect.adjust_favor(DEACONIZE_FAVOR_GAIN, user)
-	to_chat(user, span_notice("[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)"))
-	joining_now.mind.holy_role = HOLY_ROLE_DEACON
-	GLOB.religious_sect.on_conversion(joining_now)
-	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
-	return TRUE
-
 ///Mostly useless funny rite for forgiving someone, making them innocent once again.
 /datum/religion_rites/forgive
 	name = "Forgive"
@@ -178,5 +102,48 @@
 	been allowed as it is a school focused on the light and mending of this world.
 	"}
 	return ..()
+
+/// how much favor is gained when someone is deaconized
+#define DEACONIZE_FAVOR_GAIN 300
+
+/**
+ * Crusader deaconize
+ * Along with making the person holy & being an infinite-use type, it comes with the cost
+ * of enforcing an honorbound code onto convertees.
+ * Earns the church favor per conversion, but convincing others to uphold the code is not easy.
+ * Geneless species are not welcome for reasons
+ * (The actual reason is because the honorbound trauma used to be a mutation which they couldn't get,
+ * maybe it's time we let them join? idk)
+ */
+/datum/religion_rites/deaconize/crusader
+	name = "Join Crusade"
+	desc = "Converts someone to your sect. They must be willing, so the first invocation will instead prompt them to join. \
+	They will become honorbound like you, and you will gain a massive favor boost!"
+	ritual_length = 30 SECONDS
+	ritual_invocations = list(
+		"A good, honorable crusade against evil is required.",
+		"We need the righteous ...",
+		"... the unflinching ...",
+		"... and the just.",
+		"Sinners must be silenced ...",
+	)
+	invoke_msg = "... And the code must be upheld!"
+	rite_flags = RITE_ALLOW_MULTIPLE_PERFORMS
+
+/datum/religion_rites/deaconize/crusader/post_invoke_effects(mob/living/user, atom/religious_tool)
+	. = ..()
+	GLOB.religious_sect.adjust_favor(DEACONIZE_FAVOR_GAIN, user)
+
+/datum/religion_rites/deaconize/crusader/is_valid_for_deacon(mob/living/carbon/human/possible_deacon, mob/living/user)
+	if(TRAIT_GENELESS in possible_deacon.dna.species.inherent_traits)
+		to_chat(user, span_warning("This species disgusts [GLOB.deity]! They would never be allowed to join the crusade!"))
+		return FALSE
+	return ..()
+
+/datum/religion_rites/deaconize/crusader/invite_deacon(mob/living/carbon/human/invited)
+	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
+	if(ask != "Yes")
+		return
+	potential_deacon = invited
 
 #undef DEACONIZE_FAVOR_GAIN

@@ -10,77 +10,6 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/lube = 30)
 
-//COMBAT CLOWN SHOES
-//Clown shoes with combat stats and noslip. Of course they still squeak.
-/obj/item/clothing/shoes/clown_shoes/combat
-	name = "combat clown shoes"
-	desc = "advanced clown shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeak at 100% capacity."
-	clothing_traits = list(TRAIT_NO_SLIP_WATER)
-	slowdown = SHOES_SLOWDOWN
-	body_parts_covered = FEET|LEGS
-	armor_type = /datum/armor/clown_shoes_combat
-	strip_delay = 70
-	resistance_flags = NONE
-
-/datum/armor/clown_shoes_combat
-	melee = 25
-	bullet = 25
-	laser = 25
-	energy = 25
-	bomb = 50
-	bio = 90
-	fire = 70
-	acid = 50
-
-/obj/item/clothing/shoes/clown_shoes/combat/Initialize(mapload)
-	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets/shoes)
-
-/// Recharging rate in PPS (peels per second)
-#define BANANA_SHOES_RECHARGE_RATE 17
-#define BANANA_SHOES_MAX_CHARGE 3000
-
-//The super annoying version
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat
-	name = "mk-honk combat shoes"
-	desc = "The culmination of years of clown combat research, these shoes leave a trail of chaos in their wake. They will slowly recharge themselves over time, or can be manually charged with bananium."
-	slowdown = SHOES_SLOWDOWN
-	armor_type = /datum/armor/banana_shoes_combat
-	strip_delay = 70
-	resistance_flags = NONE
-	always_noslip = TRUE
-	body_parts_covered = FEET|LEGS
-
-/datum/armor/banana_shoes_combat
-	melee = 25
-	bullet = 25
-	laser = 25
-	energy = 25
-	bomb = 50
-	bio = 50
-	fire = 90
-	acid = 50
-
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize(mapload)
-	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets/shoes)
-	bananium.insert_amount_mat(BANANA_SHOES_MAX_CHARGE, /datum/material/bananium)
-
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process(seconds_per_tick)
-	var/bananium_amount = bananium.get_material_amount(/datum/material/bananium)
-	if(bananium_amount < BANANA_SHOES_MAX_CHARGE)
-		bananium.insert_amount_mat(min(BANANA_SHOES_RECHARGE_RATE * seconds_per_tick, BANANA_SHOES_MAX_CHARGE - bananium_amount), /datum/material/bananium)
-
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/attack_self(mob/user)
-	ui_action_click(user)
-
-#undef BANANA_SHOES_RECHARGE_RATE
-#undef BANANA_SHOES_MAX_CHARGE
-
 //BANANIUM SWORD
 
 /obj/item/melee/energy/sword/bananium
@@ -133,7 +62,7 @@
 		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 		slipper.Slip(src, hit_atom)
 
-/obj/item/melee/energy/sword/bananium/attackby(obj/item/weapon, mob/living/user, params)
+/obj/item/melee/energy/sword/bananium/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(COOLDOWN_FINISHED(src, next_trombone_allowed) && istype(weapon, /obj/item/melee/energy/sword/bananium))
 		COOLDOWN_START(src, next_trombone_allowed, 5 SECONDS)
 		to_chat(user, span_warning("You slap the two swords together. Sadly, they do not seem to fit!"))

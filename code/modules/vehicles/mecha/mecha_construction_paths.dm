@@ -1,7 +1,4 @@
-
-////////////////////////////////
-///// Construction datums //////
-////////////////////////////////
+/// Mecha construction
 /datum/component/construction/mecha
 	var/base_icon
 
@@ -31,26 +28,46 @@
 	// Remove default mech power cell, as we replace it with a new one.
 	var/obj/vehicle/sealed/mecha/mech = new result(drop_location(), /* built_manually = */ TRUE)
 	var/obj/item/mecha_parts/chassis/parent_chassis = parent
-	mech.CheckParts(parent_chassis.contents)
+	for(var/atom/movable/content in parent_chassis.contents)
+		content.forceMove(mech)
+	mech.locate_parts()
 	SSblackbox.record_feedback("tally", "mechas_created", 1, mech.name)
-	ADD_TRAIT(mech, TRAIT_MECHA_CREATED_NORMALLY, mech)
+	ADD_TRAIT(mech, TRAIT_MECHA_CREATED_NORMALLY, REF(mech))
 	QDEL_NULL(parent)
 
 // Default proc to generate mech steps.
 // Override if the mech needs an entirely custom process (See HONK mech)
 // Otherwise override specific steps as needed (Ripley, Clarke, Phazon)
 /datum/component/construction/mecha/proc/get_steps()
-	return get_frame_steps() + get_circuit_steps() + (circuit_weapon ? get_circuit_weapon_steps() : list()) + get_stockpart_steps() + get_inner_plating_steps() + get_outer_plating_steps()
+	var/list/all_steps = \
+		get_frame_steps() + \
+		get_circuit_steps() + \
+		get_circuit_weapon_steps() + \
+		get_stockpart_steps() + \
+		get_inner_plating_steps() + \
+		get_outer_plating_steps()
 
-/datum/component/construction/mecha/update_parent(step_index)
-	steps = get_steps()
-	..()
-	// By default, each step in mech construction has a single icon_state:
-	// "[base_icon][index - 1]"
-	// For example, Ripley's step 1 icon_state is "ripley0"
-	var/atom/parent_atom = parent
-	if(!steps[index]["icon_state"] && base_icon)
-		parent_atom.icon_state = "[base_icon][index - 1]"
+	// If you don't set a construction icon state, one will automatically be assigned
+	// based on the index of the step in the step list
+	//
+	// If you do set a custom icon state, it will not be overridden, but the state will still increment.
+	//
+	// You can use skip_state to prevent a step from increasing the index,
+	// useful for steps which don't affect the mech's appearance at all
+	// or for steps which have custom icon states that don't follow the normal pattern.
+	var/state = 0
+	for(var/list/step_data as anything in all_steps)
+		if(step_data["skip_state"])
+			continue
+
+		step_data["icon_state"] ||= "[base_icon][state]"
+		state += 1
+
+	return all_steps
+
+/datum/component/construction/mecha/Initialize()
+	steps ||= get_steps()
+	return ..()
 
 /datum/component/construction/unordered/mecha_chassis/custom_action(obj/item/I, mob/living/user, typepath)
 	. = user.transferItemToLoc(I, parent)
@@ -65,7 +82,7 @@
 	parent_atom.icon = 'icons/mob/rideables/mech_construction.dmi'
 	parent_atom.set_density(TRUE)
 	parent_atom.cut_overlays()
-	..()
+	return ..()
 
 // Default proc for the first steps of mech construction.
 /datum/component/construction/mecha/proc/get_frame_steps()
@@ -80,7 +97,7 @@
 			"back_key" = TOOL_WRENCH,
 			"desc" = "The hydraulic systems are connected, and can be activated with a <b>screwdriver</b>.",
 			"forward_message" = "activated the hydraulic systems",
-			"backward_message" = "disconnected the hydraulic systems"
+			"backward_message" = "disconnected the hydraulic systems",
 		),
 		list(
 			"key" = /obj/item/stack/cable_coil,
@@ -88,14 +105,14 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The hydraulic systems are active, and the frame can be <b>wired</b>.",
 			"forward_message" = "added wiring",
-			"backward_message" = "deactivated the hydraulic systems"
+			"backward_message" = "deactivated the hydraulic systems",
 		),
 		list(
 			"key" = TOOL_WIRECUTTER,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The wiring is added, and can be adjusted with <b>wirecutters</b>.",
 			"forward_message" = "adjusted wiring",
-			"backward_message" = "removed wiring"
+			"backward_message" = "removed wiring",
 		)
 	)
 
@@ -109,14 +126,14 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The wiring is adjusted, and the <b>central control module</b> slot has opened.",
 			"forward_message" = "added central control module",
-			"backward_message" = "disconnected wiring"
+			"backward_message" = "disconnected wiring",
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "Central control module is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured central control module",
-			"backward_message" = "removed central control module"
+			"backward_message" = "removed central control module",
 		),
 		list(
 			"key" = circuit_periph,
@@ -124,37 +141,41 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Central control module is secured, and the <b>peripheral control module</b> slot has opened.",
 			"forward_message" = "added peripheral control module",
-			"backward_message" = "unsecured central control module"
+			"backward_message" = "unsecured central control module",
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "Peripheral control module is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured peripheral control module",
-			"backward_message" = "removed peripheral control module"
+			"backward_message" = "removed peripheral control module",
 		)
 	)
 
 // Default proc for weapon circuitboard steps
 // Used by combat mechs
 /datum/component/construction/mecha/proc/get_circuit_weapon_steps()
+	if(!circuit_weapon)
+		return list()
+
 	return list(
 		list(
 			"key" = circuit_weapon,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Peripherals control module is secured, and the <b>weapon control module<b> slot has opened.",
+			"desc" = "Peripherals control module is secured, and the <b>weapon control module</b> slot has opened.",
 			"forward_message" = "added weapon control module",
-			"backward_message" = "unsecured peripheral control module"
+			"backward_message" = "unsecured peripheral control module",
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "Weapon control module is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured weapon control module",
-			"backward_message" = "removed weapon control module"
+			"backward_message" = "removed weapon control module",
 		)
 	)
+
 
 // Default proc for stock part installation
 // Third set of steps by default
@@ -169,14 +190,14 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = prevstep_text,
 			"forward_message" = "added scanning module",
-			"backward_message" = backward_text
+			"backward_message" = backward_text,
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured scanning module",
-			"backward_message" = "removed scanning module"
+			"backward_message" = "removed scanning module",
 		),
 		list(
 			"key" = /obj/item/stock_parts/capacitor,
@@ -184,14 +205,14 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
 			"forward_message" = "added capacitor",
-			"backward_message" = "unscecured scanning module"
+			"backward_message" = "unscecured scanning module",
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "Capacitor is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured capacitor",
-			"backward_message" = "removed capacitor"
+			"backward_message" = "removed capacitor",
 		),
 		list(
 			"key" = /obj/item/stock_parts/servo,
@@ -199,14 +220,14 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Scanning module is secured, the <b>servo</b> can be added.",
 			"forward_message" = "added servo",
-			"backward_message" = "unsecured capacitor"
+			"backward_message" = "unsecured capacitor",
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "Servo is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured servo",
-			"backward_message" = "removed servo"
+			"backward_message" = "removed servo",
 		),
 		list(
 			"key" = /obj/item/stock_parts/power_store/cell,
@@ -214,14 +235,14 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Servo is secured, and the <b>power cell</b> can be added.",
 			"forward_message" = "added power cell",
-			"backward_message" = "unsecured servo"
+			"backward_message" = "unsecured servo",
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured power cell",
-			"backward_message" = "removed power cell"
+			"backward_message" = "removed power cell",
 		)
 	)
 
@@ -237,7 +258,7 @@
 				"back_key" = TOOL_SCREWDRIVER,
 				"desc" = "The power cell is secured, [inner_plating_amount] sheets of [initial(inner_plating.name)] can be used as inner plating.",
 				"forward_message" = "installed internal armor layer",
-				"backward_message" = "unsecured power cell"
+				"backward_message" = "unsecured power cell",
 			)
 		)
 	else
@@ -248,7 +269,7 @@
 				"back_key" = TOOL_SCREWDRIVER,
 				"desc" = "The power cell is secured, [initial(inner_plating.name)] can be used as inner plating.",
 				"forward_message" = "installed internal armor layer",
-				"backward_message" = "unsecured power cell"
+				"backward_message" = "unsecured power cell",
 			)
 		)
 
@@ -258,14 +279,14 @@
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "Inner plating is installed, and can be <b>wrenched</b> into place.",
 			"forward_message" = "secured internal armor layer",
-			"backward_message" = "pried off internal armor layer"
+			"backward_message" = "pried off internal armor layer",
 		),
 		list(
 			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WRENCH,
 			"desc" = "Inner plating is wrenched, and can be <b>welded</b>.",
 			"forward_message" = "welded internal armor layer",
-			"backward_message" = "unfastened internal armor layer"
+			"backward_message" = "unfastened internal armor layer",
 		)
 	)
 
@@ -281,7 +302,7 @@
 				"back_key" = TOOL_WELDER,
 				"desc" = "Inner plating is welded, [outer_plating_amount] sheets of [initial(outer_plating.name)] can be used as external armor.",
 				"forward_message" = "installed external armor layer",
-				"backward_message" = "cut off internal armor layer"
+				"backward_message" = "cut off internal armor layer",
 			)
 		)
 	else
@@ -292,7 +313,7 @@
 				"back_key" = TOOL_WELDER,
 				"desc" = "Inner plating is welded, [initial(outer_plating.name)] can be used as external armor.",
 				"forward_message" = "installed external armor layer",
-				"backward_message" = "cut off internal armor layer"
+				"backward_message" = "cut off internal armor layer",
 			)
 		)
 
@@ -302,14 +323,14 @@
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "External armor is installed, and can be <b>wrenched</b> into place.",
 			"forward_message" = "secured external armor layer",
-			"backward_message" = "pried off external armor layer"
+			"backward_message" = "pried off external armor layer",
 		),
 		list(
 			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WRENCH,
 			"desc" = "External armor is wrenched, and can be <b>welded</b>.",
 			"forward_message" = "welded external armor layer",
-			"backward_message" = "unfastened external armor layer"
+			"backward_message" = "unfastened external armor layer",
 		)
 	)
 
@@ -320,8 +341,15 @@
 
 	if(diff == FORWARD && steps[index]["forward_message"])
 		user.balloon_alert_to_viewers(steps[index]["forward_message"])
+		var/list/next_step = index == steps.len ? null : steps[index + 1]
+		if(next_step?["desc"])
+			to_chat(user, span_smallnoticeital(next_step["desc"]))
+
 	else if(steps[index]["backward_message"])
 		user.balloon_alert_to_viewers(steps[index]["backward_message"])
+		var/list/last_step = index <= 1 ? null : steps[index - 1]
+		if(last_step?["desc"])
+			to_chat(user, span_smallnoticeital(last_step["desc"]))
 
 	return TRUE
 
@@ -350,22 +378,22 @@
 	outer_plating_amount = 10
 
 /datum/component/construction/mecha/ripley/get_outer_plating_steps()
+	// we yoink the first step of adding plating and modify the flavor a bit
+	var/list/first_step = ..()[1]
+	first_step["desc"] = "Plating is welded, and 10 <b>rods</b> can be used to install the cockpit."
+	first_step["forward_message"] = "installed cockpit"
+	first_step["backward_message"] = "cut off plating"
+
+	// then we add our own second step for welding the cockpit in place
 	return list(
-		list(
-			"key" = /obj/item/stack/rods,
-			"amount" = 10,
-			"back_key" = TOOL_WELDER,
-			"desc" = "Outer plating is welded, and 10 <b>rods</b> can be used to install the cockpit.",
-			"forward_message" = "installed cockpit",
-			"backward_message" = "cut off outer armor layer"
-		),
+		first_step,
 		list(
 			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WIRECUTTER,
 			"desc" = "Cockpit wire screen is installed, and can be <b>welded</b>.",
 			"forward_message" = "welded cockpit",
-			"backward_message" = "cut off cockpit"
-		),
+			"backward_message" = "cut off cockpit",
+		)
 	)
 
 //GYGAX
@@ -582,7 +610,7 @@
 		var/atom/parent_atom = parent
 		parent_atom.icon = 'icons/mob/rideables/mech_construct.dmi'
 		parent_atom.icon_state = "honker_chassis"
-	..()
+	return ..()
 
 /datum/component/construction/mecha/honker/custom_action(obj/item/I, mob/living/user, diff)
 	if(istype(I, /obj/item/bikehorn))
@@ -644,6 +672,18 @@
 	outer_plating = /obj/item/mecha_parts/part/phazon_armor
 	outer_plating_amount = 1
 
+	var/obj/item/required_core = /obj/item/assembly/signaler/anomaly/ectoplasm
+
+/datum/component/construction/mecha/phazon/custom_action(obj/item/I, mob/living/user, diff)
+	if(!..())
+		return FALSE
+
+	if(istype(I, /obj/item/assembly/signaler/anomaly) && !istype(I, required_core))
+		to_chat(user, span_warning("The anomaly core socket only accepts \a [initial(required_core.name)]!"))
+		return FALSE
+
+	return TRUE
+
 /datum/component/construction/mecha/phazon/get_stockpart_steps()
 	return list(
 		list(
@@ -652,14 +692,14 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Weapon control module is secured, and the <b>scanning module</b> can be added.",
 			"forward_message" = "added scanning module",
-			"backward_message" = "unsecured weapon control module"
+			"backward_message" = "unsecured weapon control module",
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured scanning module",
-			"backward_message" = "removed scanning module"
+			"backward_message" = "removed scanning module",
 		),
 		list(
 			"key" = /obj/item/stock_parts/capacitor,
@@ -667,14 +707,14 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Scanning module is secured, and the <b>capacitor</b> can be added.",
 			"forward_message" = "added capacitor",
-			"backward_message" = "unsecured scanning module"
+			"backward_message" = "unsecured scanning module",
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
 			"desc" =  "Capacitor is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured capacitor",
-			"backward_message" = "removed capacitor"
+			"backward_message" = "removed capacitor",
 		),
 		list(
 			"key" = /obj/item/stock_parts/servo,
@@ -682,14 +722,14 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Capacitor is secured, the <b>servo</b> can be added.",
 			"forward_message" = "added servo",
-			"backward_message" = "unsecured capacitor"
+			"backward_message" = "unsecured capacitor",
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "Servo is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured servo",
-			"backward_message" = "removed servo"
+			"backward_message" = "removed servo",
 		),
 		list(
 			"key" = /obj/item/stack/ore/bluespace_crystal,
@@ -697,7 +737,7 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Servo is secured, and the <b>bluespace crystal</b> can be added.",
 			"forward_message" = "added bluespace crystal",
-			"backward_message" = "unsecured servo"
+			"backward_message" = "unsecured servo",
 		),
 		list(
 			"key" = /obj/item/stack/cable_coil,
@@ -705,14 +745,16 @@
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "The bluespace crystal is installed, and can be <b>wired</b> to the mech systems.",
 			"forward_message" = "connected bluespace crystal",
-			"backward_message" = "removed bluespace crystal"
+			"backward_message" = "removed bluespace crystal",
+			"icon_state" = "phazon19",
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_WIRECUTTER,
 			"desc" = "The bluespace crystal is connected, and the system can be engaged with a <b>screwdriver</b>.",
 			"forward_message" = "engaded bluespace crystal",
-			"backward_message" = "disconnected bluespace crystal"
+			"backward_message" = "disconnected bluespace crystal",
+			"icon_state" = "phazon20",
 		),
 		list(
 			"key" = /obj/item/stock_parts/power_store/cell,
@@ -720,52 +762,29 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The bluespace crystal is engaged, and the <b>power cell</b> can be added.",
 			"forward_message" = "added power cell",
-			"backward_message" = "disengaged bluespace crystal"
+			"backward_message" = "disengaged bluespace crystal",
+			"icon_state" = "phazon21",
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",,
+			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured power cell",
 			"backward_message" = "removed power cell",
-			"icon_state" = "phazon19"
-			// This is the point where a step icon is skipped, so "icon_state" had to be set manually starting from here.
+			"icon_state" = "phazon21",
 		)
 	)
 
 /datum/component/construction/mecha/phazon/get_outer_plating_steps()
-	return list(
+	return ..() + list(
 		list(
-			"key" = outer_plating,
-			"amount" = 1,
+			"key" = required_core,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
-			"desc" = "Internal armor is welded, [initial(outer_plating.name)] can be used as external armor.",
-			"forward_message" = "added external armor layer",
-			"backward_message" = "cut off internal armor layer"
-		),
-		list(
-			"key" = TOOL_WRENCH,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "External armor is installed, and can be <b>wrenched</b> into place.",
-			"forward_message" = "secured external armor layer",
-			"backward_message" = "pried off external armor"
-		),
-		list(
-			"key" = TOOL_WELDER,
-			"back_key" = TOOL_WRENCH,
-			"desc" = "External armor is wrenched, and can be <b>welded</b>.",
-			"forward_message" = "welded external armor",
-			"backward_message" = "unfastened external armor layer"
-		),
-		list(
-			"key" = /obj/item/assembly/signaler/anomaly/ectoplasm,
-			"action" = ITEM_DELETE,
-			"back_key" = TOOL_WELDER,
-			"desc" = "The external armor is welded, and the <b>ectoplasm anomaly core</b> socket is open.",
-			"icon_state" = "phazon26",
-			"forward_message" = "inserted ectoplasm anomaly core",
-			"backward_message" = "cut off external armor"
+			"desc" = "The external armor is welded, and the <b>[initial(required_core.name)]</b> socket is open.",
+			"forward_message" = "inserted [initial(required_core.name)]",
+			"backward_message" = "cut off external armor",
+			"skip_state" = TRUE,
 		)
 	)
 
@@ -819,39 +838,3 @@
 
 	outer_plating = /obj/item/stack/sheet/plasteel
 	outer_plating_amount = 5
-
-//Justice
-/datum/component/construction/unordered/mecha_chassis/justice
-	result = /datum/component/construction/mecha/justice
-	steps = list(
-		/obj/item/mecha_parts/part/justice_torso,
-		/obj/item/mecha_parts/part/justice_left_arm,
-		/obj/item/mecha_parts/part/justice_right_arm,
-		/obj/item/mecha_parts/part/justice_left_leg,
-		/obj/item/mecha_parts/part/justice_right_leg
-	)
-
-/datum/component/construction/mecha/justice
-	result = /obj/vehicle/sealed/mecha/justice
-	base_icon = "justice"
-
-	inner_plating = /obj/item/stack/telecrystal
-	inner_plating_amount = 8
-
-	outer_plating = /obj/item/mecha_parts/part/justice_armor
-	outer_plating_amount = 1
-
-/datum/component/construction/mecha/justice/get_circuit_steps()
-	return list()
-
-/datum/component/construction/mecha/justice/get_inner_plating_steps()
-	return list(
-		list(
-			"key" = inner_plating,
-			"amount" = inner_plating_amount,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The power cell is secured, and [inner_plating_amount] <b>telecrystals</b> can be added.",
-			"forward_message" = "added telecrystal",
-			"backward_message" = "unsecured power cell"
-		)
-	)

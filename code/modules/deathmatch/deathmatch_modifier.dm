@@ -64,18 +64,25 @@
 /datum/deathmatch_modifier/health
 	name = "Double-Health"
 	description = "Doubles your starting health"
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/health/triple)
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health/half, /datum/deathmatch_modifier/health/triple)
 	var/multiplier = 2
 
 /datum/deathmatch_modifier/health/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.maxHealth *= multiplier
 	player.health *= multiplier
 
+/datum/deathmatch_modifier/health/half
+	name = "Half-Health"
+	description = "It's your funeral"
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health, /datum/deathmatch_modifier/health/triple)
+	multiplier = 0.5
+
 /datum/deathmatch_modifier/health/triple
 	name = "Triple-Health"
 	description = "When \"Double-Health\" isn't enough..."
 	multiplier = 3
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/health)
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health, /datum/deathmatch_modifier/health/half)
+
 
 /datum/deathmatch_modifier/tenacity
 	name = "Tenacity"
@@ -573,7 +580,7 @@
 	name = "Random martial arts"
 	description = "Everyone learns a random martial art!"
 	blacklisted_maps = list(/datum/lazy_template/deathmatch/meatower)
-	// krav maga excluded because its too common and too simple, mushpunch excluded because its horrible and not even funny
+	// kaza ruk excluded because its too common and too simple, mushpunch excluded because its horrible and not even funny
 	var/static/list/weighted_martial_arts = list(
 		// common
 		/datum/martial_art/cqc = 30,

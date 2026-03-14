@@ -25,7 +25,7 @@
 	/// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 	var/codes_txt = ""
 
-	req_one_access = list(ACCESS_ENGINEERING, ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_CARGO, ACCESS_ENGINEERING, ACCESS_ROBOTICS)
 
 /datum/armor/machinery_navbeacon
 	melee = 70
@@ -115,7 +115,7 @@
 		return TRUE
 	return default_deconstruction_screwdriver(user, "navbeacon1","navbeacon0",tool)
 
-/obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/turf/our_turf = loc
 	if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed

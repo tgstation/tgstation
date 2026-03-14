@@ -4,7 +4,7 @@
 	max_stages = 4
 	spread_text = "On contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
-	cure_text = "Ethanol"
+	cure_text = "Ethanol (Liquid Courage)"
 	cures = list(/datum/reagent/consumable/ethanol)
 	agent = "Excess Lepidopticides"
 	viable_mobtypes = list(/mob/living/carbon/human)
@@ -12,7 +12,7 @@
 	severity = DISEASE_SEVERITY_MINOR
 
 
-/datum/disease/anxiety/stage_act(seconds_per_tick, times_fired)
+/datum/disease/anxiety/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

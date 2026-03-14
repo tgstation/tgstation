@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it } from 'bun:test';
+
 import { ChannelIterator } from './ChannelIterator';
 
 describe('ChannelIterator', () => {

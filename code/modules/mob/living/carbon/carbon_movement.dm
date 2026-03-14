@@ -1,10 +1,12 @@
 /mob/living/carbon/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
 	if(movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return FALSE
+	if(!(loc.handle_slip(src, knockdown_amount, slipped_on, lube_flags, paralyze, daze, force_drop)))
+		return FALSE
 	if(!(lube_flags & SLIDE_ICE))
 		log_combat(src, (slipped_on || get_turf(src)), "slipped on the", null, ((lube_flags & SLIDE) ? "(SLIDING)" : null))
 	..()
-	return loc.handle_slip(src, knockdown_amount, slipped_on, lube_flags, paralyze, daze, force_drop)
+	return TRUE
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()

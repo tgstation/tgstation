@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(time_track)
 	name = "Time Tracking"
 	wait = 100
-	init_order = INIT_ORDER_TIMETRACK
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/time_dilation_current = 0

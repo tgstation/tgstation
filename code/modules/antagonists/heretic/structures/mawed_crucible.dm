@@ -77,38 +77,6 @@
 /obj/structure/destructible/eldritch_crucible/rust_heretic_act()
 	return
 
-/obj/structure/destructible/eldritch_crucible/attacked_by(obj/item/weapon, mob/living/user)
-	if(!iscarbon(user))
-		return ..()
-
-	if(!IS_HERETIC_OR_MONSTER(user))
-		bite_the_hand(user)
-		return TRUE
-
-	if(isbodypart(weapon))
-
-		var/obj/item/bodypart/consumed = weapon
-		if(!IS_ORGANIC_LIMB(consumed))
-			balloon_alert(user, "not organic!")
-			return
-
-		consume_fuel(user, consumed)
-		return TRUE
-
-	if(isorgan(weapon))
-		var/obj/item/organ/consumed = weapon
-		if(!IS_ORGANIC_ORGAN(consumed))
-			balloon_alert(user, "not organic!")
-			return
-		if(consumed.organ_flags & ORGAN_VITAL) // Basically, don't eat organs like brains
-			balloon_alert(user, "invalid organ!")
-			return
-
-		consume_fuel(user, consumed)
-		return TRUE
-
-	return ..()
-
 /obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/melee/touch_attack/mansus_fist))
 		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
@@ -124,10 +92,41 @@
 			balloon_alert(user, "flask is full!")
 			return ITEM_INTERACT_SUCCESS
 		to_fill.reagents.add_reagent(/datum/reagent/eldritch, 50)
-		do_item_attack_animation(src, used_item = tool)
+		do_item_attack_animation(src, used_item = tool, animation_type = ATTACK_ANIMATION_BLUNT)
 		current_mass--
 		balloon_alert(user, "refilled flask")
 		return ITEM_INTERACT_SUCCESS
+
+	if(isbodypart(tool))
+		var/obj/item/bodypart/consumed = tool
+		if(!IS_ORGANIC_LIMB(consumed))
+			balloon_alert(user, "not organic!")
+			return ITEM_INTERACT_BLOCKING
+		if(!IS_HERETIC_OR_MONSTER(user))
+			if(user.combat_mode)
+				return ITEM_INTERACT_SKIP_TO_ATTACK
+			bite_the_hand(user)
+			return ITEM_INTERACT_SUCCESS
+		consume_fuel(user, consumed)
+		return ITEM_INTERACT_SUCCESS
+
+	if(isorgan(tool))
+		var/obj/item/organ/consumed = tool
+		if(!IS_ORGANIC_ORGAN(consumed))
+			balloon_alert(user, "not organic!")
+			return ITEM_INTERACT_BLOCKING
+		if(consumed.organ_flags & ORGAN_VITAL) // Basically, don't eat organs like brains
+			balloon_alert(user, "invalid organ!")
+			return ITEM_INTERACT_BLOCKING
+		if(!IS_HERETIC_OR_MONSTER(user))
+			if(user.combat_mode)
+				return ITEM_INTERACT_SKIP_TO_ATTACK
+			bite_the_hand(user)
+			return ITEM_INTERACT_SUCCESS
+		consume_fuel(user, consumed)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/destructible/eldritch_crucible/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -213,7 +212,7 @@
 	if(QDELETED(arm))
 		return
 
-	to_chat(user, span_userdanger("[src] grabs your [arm.name]!"))
+	to_chat(user, span_userdanger("[src] grabs your [arm.plaintext_zone]!"))
 	arm.dismember()
 	consume_fuel(consumed = arm)
 
@@ -247,10 +246,14 @@
 	desc = "You should never see this"
 	icon = 'icons/obj/antags/eldritch.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 	/// When a heretic examines a mawed crucible, shows a list of possible potions by name + includes this tip to explain what it does.
 	var/crucible_tip = "Doesn't do anything."
 	/// Typepath to the status effect this applies
 	var/status_effect
+	/// If you can drink the same potion while the effect is active
+	var/can_refresh = TRUE
 
 /obj/item/eldritch_potion/examine(mob/user)
 	. = ..()
@@ -265,6 +268,9 @@
 		return
 
 	if(!iscarbon(user))
+		return
+
+	if(!can_refresh && user.has_status_effect(status_effect))
 		return
 
 	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
@@ -295,7 +301,14 @@
 	desc = "A glass bottle containing a bright orange, translucent liquid."
 	icon_state = "crucible_soul"
 	status_effect = /datum/status_effect/crucible_soul
-	crucible_tip = "Allows you to walk through walls. After expiring, you are teleported to your original location. Lasts 15 seconds."
+	crucible_tip = "Allows you to walk through walls. After expiring, you are teleported to your original location. Lasts 40 seconds."
+	can_refresh = FALSE
+
+/obj/item/eldritch_potion/crucible_soul/attack_self(mob/user)
+	if(user.has_status_effect(/datum/status_effect/crucible_soul_cooldown))
+		balloon_alert(user, "on cooldown!")
+		return TRUE
+	return ..()
 
 /obj/item/eldritch_potion/duskndawn
 	name = "brew of dusk and dawn"

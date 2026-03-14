@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  Box,
   Button,
   Dropdown,
   Input,
@@ -14,19 +13,19 @@ import { Window } from '../layouts';
 
 type Data = {
   announce_contents: string;
-  announcer_sounds: string[];
-  command_name: string;
-  command_name_presets: string[];
-  command_report_content: string;
   announcement_color: string;
   announcement_colors: string[];
-  subheader: string;
+  announcer_sounds: string[];
+  command_name_presets: string[];
+  command_name: string;
+  command_report_content: string;
   custom_name: string;
   played_sound: string;
   print_report: string;
+  subheader: string;
 };
 
-export const CommandReport = () => {
+export function CommandReport() {
   return (
     <Window
       title="Create Command Report"
@@ -44,61 +43,57 @@ export const CommandReport = () => {
           <Stack.Item>
             <SubHeader />
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item grow>
             <ReportText />
           </Stack.Item>
         </Stack>
       </Window.Content>
     </Window>
   );
-};
+}
 
 /** Allows the user to set the "sender" of the message via dropdown */
-const CentComName = (props) => {
+function CentComName(props) {
   const { act, data } = useBackend<Data>();
   const { command_name, command_name_presets = [], custom_name } = data;
 
-  const sendName = (value) => {
+  const [name, setName] = useState(command_name);
+
+  function sendName(value) {
+    setName(value);
     act('update_command_name', {
       updated_name: value,
     });
-  };
+  }
 
   return (
     <Section title="Set Central Command name" textAlign="center">
       <Dropdown
         width="100%"
-        selected={command_name}
+        selected={name}
         options={command_name_presets}
-        onSelected={(value) => sendName(value)}
+        onSelected={sendName}
       />
       {!!custom_name && (
-        <Input
-          width="100%"
-          mt={1}
-          value={command_name}
-          placeholder={command_name}
-          onChange={(_, value) => sendName(value)}
-        />
+        <Input fluid mt={1} value={name} onChange={setName} onBlur={sendName} />
       )}
     </Section>
   );
-};
+}
 
 /** Allows the user to set the "sender" of the message via dropdown */
-const SubHeader = (props) => {
+function SubHeader(props) {
   const { act, data } = useBackend<Data>();
   const { subheader } = data;
 
   return (
     <Section title="Set report subheader" textAlign="center">
-      <Box>Keep blank to not include a subheader</Box>
       <Input
-        width="100%"
+        fluid
         mt={1}
         value={subheader}
-        placeholder={subheader}
-        onChange={(_, value) =>
+        placeholder="Keep blank to not include a subheader"
+        onBlur={(value) =>
           act('set_subheader', {
             new_subheader: value,
           })
@@ -106,10 +101,10 @@ const SubHeader = (props) => {
       />
     </Section>
   );
-};
+}
 
 /** Features a section with dropdown for the announcement colour. */
-const AnnouncementColor = (props) => {
+function AnnouncementColor(props) {
   const { act, data } = useBackend<Data>();
   const { announcement_colors = [], announcement_color } = data;
 
@@ -127,10 +122,10 @@ const AnnouncementColor = (props) => {
       />
     </Section>
   );
-};
+}
 
 /** Features a section with dropdown for sounds. */
-const AnnouncementSound = (props) => {
+function AnnouncementSound(props) {
   const { act, data } = useBackend<Data>();
   const { announcer_sounds = [], played_sound } = data;
 
@@ -148,23 +143,26 @@ const AnnouncementSound = (props) => {
       />
     </Section>
   );
-};
+}
 
 /** Creates the report textarea with a submit button. */
-const ReportText = (props) => {
+function ReportText(props) {
   const { act, data } = useBackend<Data>();
   const { announce_contents, print_report, command_report_content } = data;
   const [commandReport, setCommandReport] = useState(command_report_content);
 
   return (
-    <Section title="Set report text" textAlign="center">
-      <TextArea
-        height="200px"
-        mb={1}
-        onChange={(_, value) => setCommandReport(value)}
-        value={commandReport}
-      />
-      <Stack vertical>
+    <Section fill title="Set report text" textAlign="center">
+      <Stack fill vertical>
+        <Stack.Item grow>
+          <TextArea
+            height="100%"
+            fluid
+            onBlur={setCommandReport}
+            value={commandReport}
+            placeholder="Enter report text here..."
+          />
+        </Stack.Item>
         <Stack.Item>
           <Button.Checkbox
             fluid
@@ -173,6 +171,8 @@ const ReportText = (props) => {
           >
             Announce Contents
           </Button.Checkbox>
+        </Stack.Item>
+        <Stack.Item>
           <Button.Checkbox
             fluid
             checked={!!print_report || !announce_contents}
@@ -192,11 +192,12 @@ const ReportText = (props) => {
             fluid
             icon="check"
             textAlign="center"
-            content="Submit Report"
             onClick={() => act('submit_report', { report: commandReport })}
-          />
+          >
+            Submit Report
+          </Button.Confirm>
         </Stack.Item>
       </Stack>
     </Section>
   );
-};
+}

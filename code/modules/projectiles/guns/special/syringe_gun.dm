@@ -19,6 +19,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
+	can_muzzle_flash = FALSE
 	gun_flags = NOT_A_REAL_GUN
 	var/load_sound = 'sound/items/weapons/gun/shotgun/insert_shell.ogg'
 	var/list/syringes = list()
@@ -161,7 +162,7 @@
 	base_pixel_x = 0
 	pixel_x = 0
 	force = 2 //Also very weak because it's smaller
-	suppressed = TRUE //Softer fire sound
+	suppressed = SUPPRESSED_QUIET //Softer fire sound
 	can_unsuppress = FALSE //Permanently silenced
 	syringes = list(new /obj/item/reagent_containers/syringe())
 
@@ -223,10 +224,13 @@
 	pixel_x = 0
 	force = 4
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 10)
+	about_to_shoot_inside_mail_text = "The air in the envelope is rushing out!"
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	. = ..()
+	if(!.)
+		return
 	visible_message(span_danger("[user] shoots the blowgun!"))
-
-	user.adjustStaminaLoss(20, updating_stamina = FALSE)
-	user.adjustOxyLoss(20)
-	return ..()
+	user.adjust_stamina_loss(20, updating_stamina = FALSE)
+	user.adjust_oxy_loss(20)

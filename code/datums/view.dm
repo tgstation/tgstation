@@ -20,9 +20,9 @@
 	/// The client that owns this view packet
 	var/client/chief = null
 
-/datum/view_data/New(client/owner, view_string)
-	default = view_string
+/datum/view_data/New(client/owner)
 	chief = owner
+	default = getScreenSize()
 	apply()
 
 /datum/view_data/Destroy()
@@ -30,7 +30,10 @@
 	return ..()
 
 /datum/view_data/proc/setDefault(string)
-	default = string
+	if(string == VIEWPORT_USE_PREF)
+		default = getScreenSize()
+	else
+		default = string
 	apply()
 
 /datum/view_data/proc/afterViewChange()
@@ -56,6 +59,11 @@
 /datum/view_data/proc/isZooming()
 	return (width || height)
 
+/datum/view_data/proc/getScreenSize()
+	if(chief.prefs.read_preference(/datum/preference/toggle/widescreen))
+		return WIDESCREEN_VIEWPORT_SIZE
+	return SQUARE_VIEWPORT_SIZE
+
 /datum/view_data/proc/resetToDefault()
 	width = 0
 	height = 0
@@ -72,8 +80,8 @@
 	height += shitcode[2]
 	apply()
 
-/datum/view_data/proc/setTo(toAdd)
-	var/list/shitcode = getviewsize(toAdd)  //Backward compatibility to account
+/datum/view_data/proc/setTo(to_set)
+	var/list/shitcode = getviewsize(to_set)  //Backward compatibility to account
 	width = shitcode[1] //for a change in how sizes get calculated. we used to include world.view in
 	height = shitcode[2] //this, but it was jank, so I had to move it
 	apply()
@@ -137,8 +145,3 @@
 		animate(chief, pixel_x = ICON_SIZE_X*_x, pixel_y = ICON_SIZE_Y*_y, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	//Ready for this one?
 	setTo(radius)
-
-/proc/getScreenSize(widescreen)
-	if(widescreen)
-		return CONFIG_GET(string/default_view)
-	return CONFIG_GET(string/default_view_square)

@@ -8,9 +8,9 @@
 	///whoever we teleport our chems to
 	var/obj/machinery/plumbing/receiver/target = null
 
-/obj/machinery/plumbing/sender/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/sender/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_demand, layer)
 
 /obj/machinery/plumbing/sender/multitool_act(mob/living/user, obj/item/multitool/M)
 	if(!istype(M.buffer, /obj/machinery/plumbing/receiver))
@@ -98,7 +98,7 @@
 
 	senders = list()
 
-/obj/machinery/plumbing/receiver/attackby(obj/item/I, mob/user, params)
+/obj/machinery/plumbing/receiver/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, icon_state + "_open", initial(icon_state), I))
 		update_appearance()
 		return

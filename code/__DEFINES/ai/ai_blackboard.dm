@@ -4,6 +4,8 @@
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
 ///time until we should next eat, set by the generic hunger subtree
 #define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
+///When looking for food, ignore drinks
+#define BB_IGNORE_DRINKS "bb_ignore_drinks"
 ///what we're going to eat next
 #define BB_FOOD_TARGET "bb_food_target"
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
@@ -18,6 +20,14 @@
 #define BB_BASIC_HAPPINESS "BB_basic_happiness"
 ///can this mob heal?
 #define BB_BASIC_MOB_HEALER "BB_basic_mob_healer"
+
+//stealing
+///chance we steal something
+#define BB_STEAL_CHANCE "steal_chance"
+///chance we develop a guilty concious and leave our stolen item behind
+#define BB_GUILTY_CONSCIOUS_CHANCE "guilty_concious_rate"
+///the item we will steal
+#define BB_ITEM_TO_STEAL "item_to_steal"
 
 ///the owner we will try to play with
 #define BB_OWNER_TARGET "BB_owner_target"
@@ -61,12 +71,19 @@
 #define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
 ///key that holds the cooldown for our hunting subtree
 #define BB_HUNTING_COOLDOWN(type) "BB_HUNTING_COOLDOWN_[type]"
+
 ///Basic Mob Keys
+
+/// How long to wait before attacking a target in range
+#define BB_BASIC_MOB_MELEE_DELAY "BB_basic_melee_delay"
+/// Key used to store the time we can actually attack
+#define BB_BASIC_MOB_MELEE_COOLDOWN_TIMER "BB_basic_melee_cooldown_timer"
 
 ///Targeting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETING_STRATEGY "targeting_strategy"
+#define BB_HUNT_TARGETING_STRATEGY "hunt_targeting_strategy"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
@@ -157,10 +174,8 @@
 
 ///Mob the MOD is trying to attach to
 #define BB_MOD_TARGET "BB_mod_target"
-///The implant the AI was created from
-#define BB_MOD_IMPLANT "BB_mod_implant"
-///Range for a MOD AI controller.
-#define MOD_AI_RANGE 200
+///The module the AI was created from
+#define BB_MOD_MODULE "BB_mod_module"
 
 ///Only target mobs with these traits
 #define BB_TARGET_ONLY_WITH_TRAITS "BB_target_only_with_traits"
@@ -222,5 +237,3 @@
 // Used to hold state without making bigass lists
 /// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
-
-

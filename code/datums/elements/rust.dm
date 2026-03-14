@@ -19,6 +19,7 @@
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(handle_examine))
 	RegisterSignal (target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_interaction))
 	RegisterSignals(target, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), PROC_REF(secondary_tool_act))
+	RegisterSignal(target, COMSIG_ATOM_EXPOSE_REAGENT, PROC_REF(on_reagent_expose))
 	// Unfortunately registering with parent sometimes doesn't cause an overlay update
 	target.update_appearance()
 
@@ -28,13 +29,14 @@
 	UnregisterSignal(source, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(source, COMSIG_ATOM_ITEM_INTERACTION)
 	UnregisterSignal(source, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
+	UnregisterSignal(source, COMSIG_ATOM_EXPOSE_REAGENT)
 	REMOVE_TRAIT(source, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	source.update_appearance()
 
 /datum/element/rust/proc/handle_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 
-	examine_text += span_notice("[source] is very rusty, you could probably <i>burn</i> or <i>scrape</i> it off.")
+	examine_text += span_notice("[source] is very rusty, you could probably <i>burn</i> or <i>scrape</i> it off, hell maybe even pour some <i>space cola</i> on it to remove the rust.")
 
 /datum/element/rust/proc/apply_rust_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
@@ -75,6 +77,15 @@
 			Detach(source)
 			return
 
+///Immediately removes rust if exposed to space cola.
+/datum/element/rust/proc/on_reagent_expose(atom/source, datum/reagent/reagent_splashed, reac_volume, methods)
+	SIGNAL_HANDLER
+	if(!istype(reagent_splashed, /datum/reagent/consumable/space_cola))
+		return
+	if(methods & INHALE)
+		return
+	Detach(source)
+
 /// Prevents placing floor tiles on rusted turf
 /datum/element/rust/proc/on_interaction(datum/source, mob/user, obj/item/tool, modifiers)
 	SIGNAL_HANDLER
@@ -104,6 +115,13 @@
 /datum/element/rust/heretic/proc/on_entered(turf/source, atom/movable/entered, ...)
 	SIGNAL_HANDLER
 
+	if (HAS_TRAIT(entered, TRAIT_RUSTIMMUNE) || HAS_TRAIT(entered, TRAIT_MAGICALLY_PHASED) || entered.movement_type & (MOVETYPES_NOT_TOUCHING_GROUND | VENTCRAWLING))
+		return
+
+	if(ismecha(entered))
+		var/obj/vehicle/sealed/mecha/victim = entered
+		victim.take_damage(20, armour_penetration = 100)
+		return
 	if(!isliving(entered))
 		return
 	var/mob/living/victim = entered

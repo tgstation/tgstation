@@ -36,8 +36,7 @@
 
 	playsound(turf_target, 'sound/machines/click.ogg', 50, TRUE)
 	new /obj/structure/girder(turf_target)
-	var/atom/stack_to_delete = our_rods.split_stack(owner, 2)
-	qdel(stack_to_delete)
+	our_rods.use(2)
 	StartCooldown()
 	qdel(effect)
 	return TRUE
@@ -54,7 +53,7 @@
 		/obj/item/stack/rods,
 	))
 
-/datum/action/repairbot_resources/Trigger(trigger_flags)
+/datum/action/repairbot_resources/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

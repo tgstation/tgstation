@@ -121,7 +121,7 @@ DEFINE_BITFIELD(foodtypes, list(
 #define FOOD_COMPLEXITY_5 5
 
 /// Labels for food quality
-GLOBAL_LIST_INIT(food_quality_description, list(
+GLOBAL_ALIST_INIT(food_quality_description, alist(
 	FOOD_QUALITY_NORMAL = "okay",
 	FOOD_QUALITY_NICE = "nice",
 	FOOD_QUALITY_GOOD = "good",
@@ -131,19 +131,8 @@ GLOBAL_LIST_INIT(food_quality_description, list(
 	FOOD_QUALITY_TOP = "godlike",
 ))
 
-/// Mood events for food quality
-GLOBAL_LIST_INIT(food_quality_events, list(
-	FOOD_QUALITY_NORMAL = /datum/mood_event/food,
-	FOOD_QUALITY_NICE = /datum/mood_event/food/nice,
-	FOOD_QUALITY_GOOD = /datum/mood_event/food/good,
-	FOOD_QUALITY_VERYGOOD = /datum/mood_event/food/verygood,
-	FOOD_QUALITY_FANTASTIC = /datum/mood_event/food/fantastic,
-	FOOD_QUALITY_AMAZING = /datum/mood_event/food/amazing,
-	FOOD_QUALITY_TOP = /datum/mood_event/food/top,
-))
-
 /// Weighted lists of crafted food buffs randomly given according to crafting_complexity unless the food has a specific buff
-GLOBAL_LIST_INIT(food_buffs, list(
+GLOBAL_ALIST_INIT(food_buffs, alist(
 	FOOD_COMPLEXITY_1 = list(
 		/datum/status_effect/food/haste = 1,
 	),
@@ -233,6 +222,15 @@ DEFINE_BITFIELD(food_flags, list(
 ///Drinks that are made through rare ingredients, or high levels of processing.
 #define DRINK_PRICE_HIGH 200
 
+/// Time spent deep frying an item after which it becomes fried.
+#define FRYING_TIME_FRIED (15 SECONDS)
+/// Time spent deep frying an item after which it becomes fried to perfection.
+#define FRYING_TIME_PERFECT (50 SECONDS)
+/// Time spent deep frying an item after which it becomes burnt.
+#define FRYING_TIME_BURNT (85 SECONDS)
+/// Time spent deep frying an item after which it starts smelling bad.
+#define FRYING_TIME_WARNING (120 SECONDS)
+
 
 /// Flavour defines (also names) for GLOB.ice_cream_flavours list access. Safer from mispelling than plain text.
 #define ICE_CREAM_VANILLA "vanilla"
@@ -271,3 +269,10 @@ DEFINE_BITFIELD(food_flags, list(
 
 /// How much milk is needed to make butter on a reagent grinder
 #define MILK_TO_BUTTER_COEFF 25
+
+/// How much material one slab of meat usually contains
+#define MEATSLAB_MATERIAL_AMOUNT SHEET_MATERIAL_AMOUNT * 4
+/// How many cutlets or meatballs one slab gives when processed
+#define MEATSLAB_PROCESSED_AMOUNT 3
+/// This should be 1/3 of the amount found in a slab (a portion will be lost when rounding but it's negligible)
+#define MEATDISH_MATERIAL_AMOUNT (MEATSLAB_MATERIAL_AMOUNT / MEATSLAB_PROCESSED_AMOUNT)

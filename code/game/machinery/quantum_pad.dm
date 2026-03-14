@@ -23,9 +23,7 @@
 	if(map_pad_id)
 		mapped_quantum_pads[map_pad_id] = src
 
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/quantumpad,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/quantumpad), only_root_path = TRUE))
 
 /obj/machinery/quantumpad/Destroy()
 	mapped_quantum_pads -= map_pad_id
@@ -71,7 +69,7 @@
 	balloon_alert(user, "no quantum pad data found!")
 	return NONE
 
-/obj/machinery/quantumpad/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/quantumpad/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", weapon))
 		return
 
@@ -92,8 +90,10 @@
 	return ..()
 
 /obj/machinery/quantumpad/interact(mob/user, obj/machinery/quantumpad/target_pad = linked_pad)
-	if(!target_pad || QDELETED(target_pad))
-		if(!map_pad_link_id || !initMappedLink())
+	if(QDELETED(target_pad))
+		if(map_pad_link_id && initMappedLink())
+			target_pad = linked_pad
+		else
 			to_chat(user, span_warning("Target pad not found!"))
 			return
 
@@ -116,9 +116,7 @@
 	doteleport(user, target_pad)
 
 /obj/machinery/quantumpad/proc/sparks()
-	var/datum/effect_system/spark_spread/quantum/s = new /datum/effect_system/spark_spread/quantum
-	s.set_up(5, 1, get_turf(src))
-	s.start()
+	do_sparks(5, TRUE, src, spark_type = /datum/effect_system/basic/spark_spread/quantum)
 
 /obj/machinery/quantumpad/attack_ghost(mob/dead/observer/ghost)
 	. = ..()
@@ -242,5 +240,3 @@
 			failed.set_output(COMPONENT_SIGNAL)
 			return
 		attached_pad.doteleport(target_pad = attached_pad.linked_pad)
-
-

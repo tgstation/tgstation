@@ -23,7 +23,7 @@
 		return modifier * damage_coeff[damage_type]
 	return modifier
 
-/mob/living/basic/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/basic/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
 	if(forced)
@@ -31,7 +31,7 @@
 	else if(damage_coeff[BRUTE])
 		. = adjust_health(amount * damage_coeff[BRUTE] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/basic/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/basic/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_fire_loss(amount, forced, required_bodytype))
 		return 0
 	if(forced)
@@ -39,7 +39,7 @@
 	else if(damage_coeff[BURN])
 		. = adjust_health(amount * damage_coeff[BURN] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/basic/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type)
+/mob/living/basic/adjust_oxy_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type)
 	if(!can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type))
 		return 0
 	if(forced)
@@ -47,7 +47,7 @@
 	else if(damage_coeff[OXY])
 		. = adjust_health(amount * damage_coeff[OXY] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/basic/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
+/mob/living/basic/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!can_adjust_tox_loss(amount, forced, required_biotype))
 		return 0
 	if(forced)
@@ -55,17 +55,28 @@
 	else if(damage_coeff[TOX])
 		. = adjust_health(amount * damage_coeff[TOX] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/basic/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
+/mob/living/basic/adjust_stamina_loss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
 	if(!can_adjust_stamina_loss(amount, forced, required_biotype))
 		return 0
 	. = staminaloss
-	if(forced)
-		staminaloss = max(0, min(BASIC_MOB_MAX_STAMINALOSS, staminaloss + amount))
-	else
-		staminaloss = max(0, min(BASIC_MOB_MAX_STAMINALOSS, staminaloss + (amount * damage_coeff[STAMINA])))
-	if(updating_stamina)
+
+	var/stamina_delta = forced ? amount : amount * damage_coeff[STAMINA]
+	staminaloss = max(0, min(max_stamina, staminaloss + stamina_delta))
+
+	if(stamina_delta > 0)
+		received_stamina_damage(staminaloss, -1 * stamina_delta, amount)
+	if(updating_stamina && stamina_delta)
 		update_stamina()
 	. -= staminaloss
 
 /mob/living/basic/received_stamina_damage(current_level, amount_actual, amount)
-	return
+	if (stamina_recovery == 0)
+		return ..()
+
+/mob/living/basic/received_stamina_damage(current_level, amount_actual, amount)
+	. = ..()
+	if (stat == DEAD || stamina_crit_threshold == BASIC_MOB_NO_STAMCRIT)
+		return
+
+	if (100 / (max_stamina / current_level) >= stamina_crit_threshold)
+		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)

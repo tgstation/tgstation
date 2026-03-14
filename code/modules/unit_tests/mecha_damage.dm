@@ -26,7 +26,7 @@
 	// The energy axe is chosen here due to having a high base force, to make sure we get over the equipment DT.
 	var/obj/item/dummy_melee = allocate(/obj/item/melee/energy/axe)
 	dummy_melee.force = 150
-	var/expected_melee_damage = round(dummy_melee.force * (1 - expected_melee_armor / 100) * dummy_melee.demolition_mod * demo_mech.facing_modifiers[MECHA_FRONT_ARMOUR], DAMAGE_PRECISION)
+	var/expected_melee_damage = round(dummy_melee.force * (1 - expected_melee_armor / 100) * dummy_melee.get_demolition_modifier(demo_mech) * demo_mech.facing_modifiers[MECHA_FRONT_ARMOUR], DAMAGE_PRECISION)
 
 	// Get a sample laser weapon.
 	// The captain's laser gun here is chosen primarily because it deals more damage than normal lasers.

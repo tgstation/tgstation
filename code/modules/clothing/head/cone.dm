@@ -13,11 +13,18 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("warns", "cautions", "smashes")
 	attack_verb_simple = list("warn", "caution", "smash")
+	pickup_sound = 'sound/items/handling/materials/plastic_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/plastic_drop.ogg'
 	resistance_flags = NONE
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
+
+/obj/item/clothing/head/cone/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/floor_placeable)
 
 /obj/item/clothing/head/cone/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 

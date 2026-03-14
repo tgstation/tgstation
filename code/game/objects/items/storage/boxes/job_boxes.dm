@@ -47,7 +47,7 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
 		new /obj/item/storage/pill_bottle/potassiodide(src)
 
-	if(give_hook && length(SSmapping.levels_by_trait(ZTRAIT_STATION)) > 1)
+	if(give_hook && length(SSmapping.levels_by_trait(ZTRAIT_STATION)) > 1 && SSmapping.current_map.give_players_hooks)
 		new /obj/item/climbing_hook/emergency(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
@@ -190,16 +190,18 @@
 		return ITEM_INTERACT_BLOCKING
 	qdel(tool)
 	loc.balloon_alert(user, "wheels added, honk!")
-	var/obj/item/bot_assembly/honkbot/A = new
+	var/obj/item/bot_assembly/honkbot/assembly = new(drop_location())
+	var/held_index = user.is_holding(src)
 	qdel(src)
-	user.put_in_hands(A)
+	if (held_index)
+		user.put_in_hand(assembly, held_index)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/box/clown/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(user, 'sound/misc/scary_horn.ogg', 70, vary = TRUE)
 	forceMove(user.drop_location())
-	var/obj/item/clothing/head/mob_holder/consumed = new(src, user)
+	var/obj/item/mob_holder/consumed = new(src, user)
 	consumed.desc = "It's [user.real_name]! It looks like [user.p_they()] committed suicide!"
 	return OXYLOSS
 
@@ -271,7 +273,10 @@
 
 /obj/item/storage/box/miner_modkits/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/borg/upgrade/modkit, /obj/item/crusher_trophy))
+	atom_storage.set_holdable(list(
+		/obj/item/borg/upgrade/modkit,
+		/obj/item/crusher_trophy
+	))
 	atom_storage.numerical_stacking = TRUE
 
 /obj/item/storage/box/miner_modkits/PopulateContents()
@@ -306,3 +311,12 @@
 /obj/item/storage/box/skillchips/engineering/PopulateContents()
 	new/obj/item/skillchip/job/engineer(src)
 	new/obj/item/skillchip/job/engineer(src)
+
+/obj/item/storage/box/contractor/fulton_extraction
+	name = "Fulton Extraction Kit"
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/contractor/fulton_extraction/PopulateContents()
+	new /obj/item/extraction_pack/syndicate(src)
+	new /obj/item/fulton_core(src)

@@ -79,7 +79,7 @@
 /**
  * Hooks on attack to try and run an experiment (When using a handheld handler)
  */
-/datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, params)
+/datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	if (!should_run_handheld_experiment(source, target, user))
 		return
@@ -89,7 +89,7 @@
 /**
  * Provides feedback when an item isn't related to an experiment, and has fully passed the attack chain
  */
-/datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, params)
+/datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	if ((isnull(selected_experiment) && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)) || (config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		return
@@ -162,20 +162,6 @@
 	if (action_experiment(source, target))
 		playsound(source, 'sound/machines/ping.ogg', 25)
 		source.say("New unique autopsy successfully catalogued.")
-
-
-/**
- * Announces a message to all experiment handlers
- *
- * Arguments:
- * * message - The message to announce
- */
-/datum/component/experiment_handler/proc/announce_message_to_all(message)
-	for(var/datum/component/experiment_handler/experi_handler as anything in GLOB.experiment_handlers)
-		if(experi_handler.linked_web != linked_web)
-			continue
-		var/atom/movable/experi_parent = experi_handler.parent
-		experi_parent.say(message)
 
 /**
  * Announces a message to this experiment handler
@@ -292,16 +278,23 @@
  * * experiment - The experiment to check
  */
 /datum/component/experiment_handler/proc/can_select_experiment(datum/experiment/experiment)
+	// Check that this experiment is visible currently
+	if (!(experiment in linked_web?.available_experiments))
+		return FALSE
+
+	return is_compatible_experiment(experiment)
+
+/**
+ * Checks if an experiment could be selected by the handler if it were available in the linked web.
+ * Basically, it skips the available_experiments check, unlike can_select_experiment.
+ */
+/datum/component/experiment_handler/proc/is_compatible_experiment(datum/experiment/experiment)
 	// Check that this experiments has no disallowed traits
 	if (experiment.traits & disallowed_traits)
 		return FALSE
 
 	// Check against the list of allowed experimentors
 	if (length(experiment.allowed_experimentors) && !is_type_in_list(parent, experiment.allowed_experimentors))
-		return FALSE
-
-	// Check that this experiment is visible currently
-	if (!(experiment in linked_web?.available_experiments))
 		return FALSE
 
 	// Check that this experiment type isn't blacklisted
@@ -344,16 +337,7 @@
 		for (var/datum/experiment/experiment as anything in linked_web.available_experiments)
 			if(!can_select_experiment(experiment))
 				continue
-			var/list/data = list(
-				name = experiment.name,
-				description = experiment.description,
-				tag = experiment.exp_tag,
-				selected = selected_experiment == experiment,
-				progress = experiment.check_progress(),
-				performance_hint = experiment.performance_hint,
-				ref = REF(experiment)
-			)
-			.["experiments"] += list(data)
+			.["experiments"] += list(list("selected" = selected_experiment == experiment) + experiment.to_ui_data())
 
 /datum/component/experiment_handler/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

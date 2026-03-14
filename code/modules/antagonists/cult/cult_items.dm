@@ -13,6 +13,7 @@
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "render"
 	inhand_icon_state = "cultdagger"
+	worn_icon = null
 	worn_icon_state = "render"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -25,12 +26,15 @@
 	throwforce = 25
 	block_chance = 25
 	wound_bonus = -10
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	armour_penetration = 35
 	block_sound = 'sound/items/weapons/parry.ogg'
+	///Reference to a boomerang component we add when a non-cultist throws us.
+	var/datum/component/boomerang/boomerang_component
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 	var/image/silicon_image = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_dagger", silicon_image)
@@ -43,17 +47,41 @@ Striking a noncultist, however, will tear their flesh."}
 
 	AddComponent(/datum/component/cult_ritual_item, span_cult(examine_text))
 
+/obj/item/melee/cultblade/dagger/Destroy(force)
+	QDEL_NULL(boomerang_component)
+	return ..()
+
 /obj/item/melee/cultblade/dagger/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	var/block_message = "[owner] parries [attack_text] with [src]"
 	if(owner.get_active_held_item() != src)
 		block_message = "[owner] parries [attack_text] with [src] in their offhand"
 
-	if(IS_CULTIST(owner) && prob(final_block_chance) && attack_type != PROJECTILE_ATTACK)
+	if(IS_CULTIST(owner) && prob(final_block_chance) && (attack_type != PROJECTILE_ATTACK || attack_type != OVERWHELMING_ATTACK))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(span_danger("[block_message]"))
 		return TRUE
 	else
 		return FALSE
+
+/obj/item/melee/cultblade/dagger/on_thrown(mob/living/carbon/user, atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(IS_CULTIST(user))
+		if(boomerang_component)
+			REMOVE_TRAIT(src, TRAIT_UNCATCHABLE, HELD_ITEM_TRAIT)
+			QDEL_NULL(boomerang_component)
+	else if(isnull(boomerang_component))
+		ADD_TRAIT(src, TRAIT_UNCATCHABLE, HELD_ITEM_TRAIT)
+		boomerang_component = AddComponent(/datum/component/boomerang, throw_range)
+
+///Called when the dagger is impacting someone, we cancel if the person hit isn't the person who threw us, if we're boomeranging.
+/obj/item/melee/cultblade/dagger/proc/on_impact_zone(atom/source, mob/living/hitby, zone, blocked, datum/thrownthing/throwingdatum)
+	SIGNAL_HANDLER
+
+	var/mob/living/thrower = throwingdatum?.get_thrower()
+	if(!isnull(boomerang_component) && hitby != thrower)
+		return MOVABLE_IMPACT_ZONE_OVERRIDE
 
 /obj/item/melee/cultblade
 	name = "eldritch longsword"
@@ -61,6 +89,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "cultblade"
 	inhand_icon_state = "cultblade"
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "cultblade"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
@@ -74,7 +103,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 10
 	block_chance = 50 // now it's officially a cult esword
 	wound_bonus = -50
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	block_sound = 'sound/items/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
@@ -87,8 +116,8 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, \
-	speed = 4 SECONDS, \
-	effectiveness = 100, \
+		speed = 4 SECONDS, \
+		effectiveness = 100, \
 	)
 	alt_continuous = string_list(alt_continuous)
 	alt_simple = string_list(alt_simple)
@@ -96,6 +125,9 @@ Striking a noncultist, however, will tear their flesh."}
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
@@ -113,7 +145,7 @@ Striking a noncultist, however, will tear their flesh."}
 			var/mob/living/carbon/human/miscreant = user
 			miscreant.apply_damage(rand(force/2, force), BRUTE, pick(GLOB.arm_zones))
 		else
-			user.adjustBruteLoss(rand(force/2,force))
+			user.adjust_brute_loss(rand(force/2,force))
 		return
 	..()
 
@@ -131,7 +163,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 25
 	block_chance = 55
 	wound_bonus = -25
-	bare_wound_bonus = 30
+	exposed_wound_bonus = 30
 	free_use = TRUE
 	light_color = COLOR_HERETIC_GREEN
 	light_range = 3
@@ -192,7 +224,7 @@ Striking a noncultist, however, will tear their flesh."}
 		// Moon
 		PATH_MOON = list(
 			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/moon_parade),
-			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/moon_smile),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/mind_gate),
 			SWORD_PREFIX = "shimmering",
 		),
 		// Starter
@@ -382,7 +414,7 @@ Striking a noncultist, however, will tear their flesh."}
 	fling_act.Grant(trapped_entity)
 
 	// Set the sword's path for spell selection.
-	heretic_path = heretic_holder.heretic_path
+	heretic_path = heretic_holder.heretic_path.route || PATH_START
 
 	// Copy the objectives to keep for roundend, remove the datum as neither us nor the heretic need it anymore
 	var/list/copied_objectives = heretic_holder.objectives.Copy()
@@ -442,25 +474,23 @@ Striking a noncultist, however, will tear their flesh."}
 
 	// on bound
 	if(bound)
+		remove_filter("unbound_ray", update = FALSE)
 		add_filter("bind_glow", 2, list("type" = "outline", "color" = h_color, "size" = 0.1))
-		remove_filter("unbound_ray")
-		update_filters()
-	// on unbound
-	else
-		// we re-add this every time it's picked up or dropped
-		remove_filter("unbound_ray")
-		add_filter(name = "unbound_ray", priority = 1, params = list(
-			type = "rays",
-			size = 16,
-			color = COLOR_HERETIC_GREEN, // the sickly green of the heretic leaking through
-			density = 16,
-		))
-		// because otherwise the animations stack and it looks ridiculous
-		var/ray_filter = get_filter("unbound_ray")
-		animate(ray_filter, offset = 100, time = 2 MINUTES, loop = -1, flags = ANIMATION_PARALLEL) // Absurdly long animate so nobody notices it hitching when it loops
-		animate(offset = 0, time = 2 MINUTES) // I sure hope duration of animate doesnt have any performance effect
+		return
 
-	update_filters()
+	// on unbound
+	// we re-add this every time it's picked up or dropped
+	remove_filter("bind_glow", update = FALSE)
+	add_filter(name = "unbound_ray", priority = 1, params = list(
+		type = "rays",
+		size = 16,
+		color = COLOR_HERETIC_GREEN, // the sickly green of the heretic leaking through
+		density = 16,
+	))
+	// because otherwise the animations stack and it looks ridiculous
+	var/ray_filter = get_filter("unbound_ray")
+	animate(ray_filter, offset = 100, time = 2 MINUTES, loop = -1, flags = ANIMATION_PARALLEL) // Absurdly long animate so nobody notices it hitching when it loops
+	animate(offset = 0, time = 2 MINUTES) // I sure hope duration of animate doesnt have any performance effect
 
 /obj/item/melee/cultblade/haunted/proc/start_glow_loop()
 	var/filter = get_filter("bind_glow")
@@ -540,179 +570,6 @@ Striking a noncultist, however, will tear their flesh."}
 		return
 	. = ..()
 
-
-/obj/item/clothing/head/hooded/cult_hoodie
-	name = "ancient cultist hood"
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	icon_state = "culthood"
-	inhand_icon_state = "culthood"
-	desc = "A torn, dust-caked hood. Strange letters line the inside."
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
-	flags_cover = HEADCOVERSEYES
-	armor_type = /datum/armor/hooded_cult_hoodie
-	cold_protection = HEAD
-	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
-	heat_protection = HEAD
-	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
-
-/datum/armor/hooded_cult_hoodie
-	melee = 40
-	bullet = 30
-	laser = 40
-	energy = 40
-	bomb = 25
-	bio = 10
-	fire = 10
-	acid = 10
-
-/obj/item/clothing/suit/hooded/cultrobes
-	name = "ancient cultist robes"
-	desc = "A ragged, dusty set of robes. Strange letters line the inside."
-	icon_state = "cultrobes"
-	icon = 'icons/obj/clothing/suits/armor.dmi'
-	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
-	inhand_icon_state = "cultrobes"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/melee/sickly_blade/cursed)
-	armor_type = /datum/armor/hooded_cultrobes
-	flags_inv = HIDEJUMPSUIT
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	heat_protection = CHEST|GROIN|LEGS|ARMS
-	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
-	/// Whether the hood is flipped up
-	var/hood_up = FALSE
-
-/// Called when the hood is worn
-/obj/item/clothing/suit/hooded/cultrobes/on_hood_up(obj/item/clothing/head/hooded/hood)
-	hood_up = TRUE
-
-/// Called when the hood is hidden
-/obj/item/clothing/suit/hooded/cultrobes/on_hood_down(obj/item/clothing/head/hooded/hood)
-	hood_up = FALSE
-
-/datum/armor/hooded_cultrobes
-	melee = 40
-	bullet = 30
-	laser = 40
-	energy = 40
-	bomb = 25
-	bio = 10
-	fire = 10
-	acid = 10
-
-/obj/item/clothing/head/hooded/cult_hoodie/alt
-	name = "cultist hood"
-	desc = "An armored hood worn by the followers of Nar'Sie."
-	icon_state = "cult_hoodalt"
-	inhand_icon_state = null
-
-/obj/item/clothing/suit/hooded/cultrobes/alt
-	name = "cultist robes"
-	desc = "An armored set of robes worn by the followers of Nar'Sie."
-	icon_state = "cultrobesalt"
-	inhand_icon_state = null
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/alt
-
-/obj/item/clothing/suit/hooded/cultrobes/alt/ghost
-	item_flags = DROPDEL
-
-/obj/item/clothing/suit/hooded/cultrobes/alt/ghost/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
-
-/obj/item/clothing/head/wizard/magus
-	name = "magus helm"
-	icon_state = "magus"
-	inhand_icon_state = null
-	desc = "A helm worn by the followers of Nar'Sie."
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
-	armor_type = /datum/armor/wizard_magus
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-
-/datum/armor/wizard_magus
-	melee = 50
-	bullet = 30
-	laser = 50
-	energy = 50
-	bomb = 25
-	bio = 10
-	fire = 10
-	acid = 10
-
-/obj/item/clothing/suit/magusred
-	name = "magus robes"
-	desc = "A set of armored robes worn by the followers of Nar'Sie."
-	icon_state = "magusred"
-	icon = 'icons/obj/clothing/suits/wizard.dmi'
-	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
-	inhand_icon_state = null
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor_type = /datum/armor/suit_magusred
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-
-/datum/armor/suit_magusred
-	melee = 50
-	bullet = 30
-	laser = 50
-	energy = 50
-	bomb = 25
-	bio = 10
-	fire = 10
-	acid = 10
-
-/obj/item/clothing/suit/hooded/cultrobes/hardened
-	name = "\improper Nar'Sien hardened armor"
-	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
-	icon_state = "cult_armor"
-	inhand_icon_state = null
-	w_class = WEIGHT_CLASS_BULKY
-	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals)
-	armor_type = /datum/armor/cultrobes_hardened
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/hardened
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
-	flags_inv = HIDEGLOVES | HIDEJUMPSUIT
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	resistance_flags = NONE
-
-/datum/armor/cultrobes_hardened
-	melee = 50
-	bullet = 40
-	laser = 50
-	energy = 60
-	bomb = 50
-	bio = 100
-	fire = 100
-	acid = 100
-
-/obj/item/clothing/head/hooded/cult_hoodie/hardened
-	name = "\improper Nar'Sien hardened helmet"
-	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
-	icon_state = "cult_helmet"
-	inhand_icon_state = null
-	armor_type = /datum/armor/cult_hoodie_hardened
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flash_protect = FLASH_PROTECTION_WELDER
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	resistance_flags = NONE
-
-/datum/armor/cult_hoodie_hardened
-	melee = 50
-	bullet = 40
-	laser = 50
-	energy = 60
-	bomb = 50
-	bio = 100
-	fire = 100
-	acid = 100
-
 /obj/item/sharpener/cult
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
@@ -727,124 +584,6 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "cult_sharpener[(uses == 0) ? "_used" : ""]"
 	return ..()
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield
-	name = "empowered cultist armor"
-	desc = "Empowered armor which creates a powerful shield around the user."
-	icon_state = "cult_armor"
-	inhand_icon_state = null
-	w_class = WEIGHT_CLASS_BULKY
-	armor_type = /datum/armor/cultrobes_cult_shield
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
-
-/datum/armor/cultrobes_cult_shield
-	melee = 50
-	bullet = 40
-	laser = 50
-	energy = 50
-	bomb = 50
-	bio = 30
-	fire = 50
-	acid = 60
-
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/Initialize(mapload)
-	. = ..()
-	AddComponent( \
-		/datum/component/shielded, \
-		recharge_start_delay = 0 SECONDS, \
-		shield_icon_file = 'icons/effects/cult.dmi', \
-		shield_icon = "shield-cult", \
-		run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)), \
-	)
-
-/// A proc for callback when the shield breaks, since cult robes are stupid and have different effects
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
-	wearer.visible_message(span_danger("[wearer]'s robes neutralize [attack_text] in a burst of blood-red sparks!"))
-	new /obj/effect/temp_visual/cult/sparks(get_turf(wearer))
-	if(new_current_charges == 0)
-		wearer.visible_message(span_danger("The runed shield around [wearer] suddenly disappears!"))
-
-/obj/item/clothing/head/hooded/cult_hoodie/cult_shield
-	name = "empowered cultist helmet"
-	desc = "Empowered helmet which creates a powerful shield around the user."
-	icon_state = "cult_hoodalt"
-	armor_type = /datum/armor/cult_hoodie_cult_shield
-
-/datum/armor/cult_hoodie_cult_shield
-	melee = 50
-	bullet = 40
-	laser = 50
-	energy = 50
-	bomb = 50
-	bio = 30
-	fire = 50
-	acid = 60
-
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
-	..()
-	if(!IS_CULTIST(user))
-		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
-		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
-		user.dropItemToGround(src, TRUE)
-		user.set_dizzy_if_lower(1 MINUTES)
-		user.Paralyze(100)
-
-/obj/item/clothing/suit/hooded/cultrobes/berserker
-	name = "flagellant's robes"
-	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage. Provides an even greater speed boost if its hood is worn."
-	armor_type = /datum/armor/cultrobes_berserker
-	slowdown = -0.3 //the hood gives an additional -0.3 if you have it flipped up, for a total of -0.6
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
-
-/datum/armor/cultrobes_berserker
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
-
-/obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
-	name = "flagellant's hood"
-	desc = "A blood-soaked hood infused with dark magic."
-	armor_type = /datum/armor/cult_hoodie_berserkerhood
-	slowdown = -0.3
-
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
-
-/obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
-	..()
-	if(!IS_CULTIST(user))
-		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
-		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
-		user.dropItemToGround(src, TRUE)
-		user.set_dizzy_if_lower(1 MINUTES)
-		user.Paralyze(100)
-
-/obj/item/clothing/glasses/hud/health/night/cultblind
-	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
-	flags_cover = GLASSESCOVERSEYES
-	name = "zealot's blindfold"
-	icon_state = "blindfold"
-	inhand_icon_state = "blindfold"
-	flash_protect = FLASH_PROTECTION_WELDER
-	actions_types = null
-	color_cutoffs = list(40, 0, 0) //red
-	glass_colour_type = null
-	forced_glass_color = FALSE
-
-/obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
-	..()
-	if(user.stat != DEAD && !IS_CULTIST(user) && (slot & ITEM_SLOT_EYES))
-		to_chat(user, span_cult_large("\"You want to be blind, do you?\""))
-		user.dropItemToGround(src, TRUE)
-		user.set_dizzy_if_lower(1 MINUTES)
-		user.Paralyze(100)
-		user.adjust_temp_blindness(60 SECONDS)
-
 /obj/item/reagent_containers/cup/beaker/unholywater
 	name = "flask of unholy water"
 	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
@@ -854,13 +593,12 @@ Striking a noncultist, however, will tear their flesh."}
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
+	can_lid = FALSE
 
 /obj/item/reagent_containers/cup/beaker/unholywater/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
-///how many times can the shuttle be cursed?
-#define MAX_SHUTTLE_CURSES 3
 ///if the max number of shuttle curses are used within this duration, the entire cult gets an achievement
 #define SHUTTLE_CURSE_OMFG_TIMESPAN (10 SECONDS)
 
@@ -937,8 +675,6 @@ Striking a noncultist, however, will tear their flesh."}
 
 		qdel(src)
 
-#undef MAX_SHUTTLE_CURSES
-
 #define GATEWAY_TURF_SCAN_RANGE 40
 
 /obj/item/proteon_orb
@@ -953,7 +689,7 @@ Striking a noncultist, however, will tear their flesh."}
 	. = ..()
 	if(!IS_CULTIST(user) && isliving(user))
 		var/mob/living/living_user = user
-		living_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+		living_user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5)
 		. += span_danger("It hurts just to look at it. Better keep away.")
 	else
 		. += span_cult("It can be used to create a gateway to Nar'Sie's domain, which will summon weak, sentient constructs over time.")
@@ -1072,65 +808,6 @@ Striking a noncultist, however, will tear their flesh."}
 	playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-/obj/item/flashlight/flare/culttorch
-	name = "void torch"
-	desc = "Used by veteran cultists to instantly transport items to their needful brethren."
-	w_class = WEIGHT_CLASS_SMALL
-	light_range = 1
-	icon_state = "torch"
-	inhand_icon_state = "torch"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	color = "#ff0000"
-	on_damage = 15
-	slot_flags = null
-	var/charges = 5
-	start_on = TRUE
-
-/obj/item/flashlight/flare/culttorch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	var/datum/antagonist/cult/cult = user.mind.has_antag_datum(/datum/antagonist/cult)
-	var/datum/team/cult/cult_team = cult?.get_team()
-	if(isnull(cult_team))
-		to_chat(user, span_warning("That doesn't seem to do anything useful."))
-		return ITEM_INTERACT_BLOCKING
-
-	if(!isitem(interacting_with))
-		to_chat(user, span_warning("[src] can only transport items!"))
-		return ITEM_INTERACT_BLOCKING
-
-	var/list/mob/living/cultists = list()
-	for(var/datum/mind/cult_mind as anything in cult_team.members)
-		if(cult_mind == user.mind)
-			continue
-		if(cult_mind.current?.stat != DEAD)
-			cultists |= cult_mind.current
-
-	var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
-	if(QDELETED(src) || loc != user || user.incapacitated)
-		return ITEM_INTERACT_BLOCKING
-	if(isnull(cultist_to_receive))
-		to_chat(user, span_cult_italic("You require a destination!"))
-		return ITEM_INTERACT_BLOCKING
-	if(cultist_to_receive.stat == DEAD)
-		to_chat(user, span_cult_italic("[cultist_to_receive] has died!"))
-		return ITEM_INTERACT_BLOCKING
-	if(!(cultist_to_receive.mind in cult_team.members))
-		to_chat(user, span_cult_italic("[cultist_to_receive] is not a follower of the Geometer!"))
-		return ITEM_INTERACT_BLOCKING
-	if(!isturf(interacting_with.loc))
-		to_chat(user, span_cult_italic("[interacting_with] must be on a surface in order to teleport it!"))
-		return ITEM_INTERACT_BLOCKING
-
-	to_chat(user, span_cult_italic("You ignite [interacting_with] with [src], turning it to ash, \
-		but through the torch's flames you see that [interacting_with] has reached [cultist_to_receive]!"))
-	user.log_message("teleported [interacting_with] to [cultist_to_receive] with [src].", LOG_GAME)
-	cultist_to_receive.put_in_hands(interacting_with)
-	charges--
-	to_chat(user, span_notice("[src] now has [charges] charge\s."))
-	if(charges <= 0)
-		qdel(src)
-	return ITEM_INTERACT_SUCCESS
-
 /obj/item/melee/cultblade/halberd
 	name = "bloody halberd"
 	desc = "A halberd with a volatile axehead made from crystallized blood. It seems linked to its creator. And, admittedly, more of a poleaxe than a halberd."
@@ -1204,6 +881,8 @@ Striking a noncultist, however, will tear their flesh."}
 	qdel(src)
 
 /obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		final_block_chance *= 2
 	if(IS_CULTIST(owner) && prob(final_block_chance))
@@ -1393,7 +1072,7 @@ Striking a noncultist, however, will tear their flesh."}
 					var/mob/living/L = target
 					if(L.density)
 						L.Paralyze(20)
-						L.adjustBruteLoss(45)
+						L.adjust_brute_loss(45)
 						playsound(L, 'sound/effects/hallucinations/wail.ogg', 50, TRUE)
 						L.emote("scream")
 		user.Beam(temp_target, icon_state="blood_beam", time = 7, beam_type = /obj/effect/ebeam/blood)
@@ -1422,45 +1101,44 @@ Striking a noncultist, however, will tear their flesh."}
 	var/illusions = 2
 
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(IS_CULTIST(owner))
-		if(attack_type == PROJECTILE_ATTACK)
-			if(damage_type == BRUTE || damage_type == BURN)
-				if(damage >= 30)
-					var/turf/T = get_turf(owner)
-					T.visible_message(span_warning("The sheer force from [hitby] shatters the mirror shield!"))
-					new /obj/effect/temp_visual/cult/sparks(T)
-					playsound(T, 'sound/effects/glass/glassbr3.ogg', 100)
-					owner.Paralyze(25)
-					qdel(src)
-					return FALSE
-			var/obj/projectile/projectile = hitby
-			if(projectile.reflectable)
-				return FALSE //To avoid reflection chance double-dipping with block chance
-		. = ..()
-		if(.)
-			if(illusions > 0)
-				illusions--
-				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
-				if(prob(60))
-					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
-					M.faction = list(FACTION_CULT)
-					M.Copy_Parent(owner, 70, 10, 5)
-					M.move_to_delay = owner.cached_multiplicative_slowdown
-				else
-					var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
-					E.Copy_Parent(owner, 70, 10)
-					E.GiveTarget(owner)
-					E.Goto(owner, owner.cached_multiplicative_slowdown, E.minimum_distance)
-			return TRUE
-	else
+	if(!IS_CULTIST(owner))
 		if(prob(50))
-			var/mob/living/simple_animal/hostile/illusion/H = new(owner.loc)
-			H.Copy_Parent(owner, 100, 20, 5)
-			H.faction = list(FACTION_CULT)
-			H.GiveTarget(owner)
-			H.move_to_delay = owner.cached_multiplicative_slowdown
-			to_chat(owner, span_danger("<b>[src] betrays you!</b>"))
+			var/mob/living/basic/illusion/bizarro = new(owner.loc)
+			bizarro.full_setup(owner, target_mob = owner, faction_override = list(FACTION_CULT), life = 10 SECONDS, damage = 20, replicate = 5)
+
+			to_chat(owner, span_bolddanger("You're betrayed by \"yourself\"!"))
 		return FALSE
+
+	if(attack_type == PROJECTILE_ATTACK)
+		if(damage_type == BRUTE || damage_type == BURN)
+			if(damage >= 30)
+				var/turf/T = get_turf(owner)
+				T.visible_message(span_warning("The sheer force from [hitby] shatters the mirror shield!"))
+				new /obj/effect/temp_visual/cult/sparks(T)
+				playsound(T, 'sound/effects/glass/glassbr3.ogg', 100)
+				owner.Paralyze(25)
+				qdel(src)
+				return FALSE
+		var/obj/projectile/projectile = hitby
+		if(projectile.reflectable)
+			return FALSE //To avoid reflection chance double-dipping with block chance
+
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(illusions > 0)
+		illusions--
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
+		if(prob(60)) // make a potentially slower, but replicable apparation
+			var/mob/living/basic/illusion/apparation = new(owner.loc)
+			apparation.full_setup(owner, target_mob = null, faction_override = list(FACTION_CULT), life = 7 SECONDS, damage = 10, replicate = 5)
+			apparation.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
+		else // normal apparation designed to escape
+			var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
+			decoy.full_setup(owner, target_mob = owner, faction_override = list(FACTION_CULT), life = 7 SECONDS, damage = 10) // Damage for retaliation
+	return TRUE
+
 
 /obj/item/shield/mirror/proc/readd()
 	illusions++

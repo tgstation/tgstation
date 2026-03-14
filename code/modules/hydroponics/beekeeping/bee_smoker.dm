@@ -75,7 +75,7 @@
 
 	return .
 
-/obj/item/bee_smoker/attackby(obj/item/herb, mob/living/carbon/human/user, list/modifiers)
+/obj/item/bee_smoker/attackby(obj/item/herb, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return

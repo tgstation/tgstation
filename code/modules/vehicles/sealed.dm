@@ -41,7 +41,7 @@
 	if(istype(A, /obj/machinery/door))
 		var/obj/machinery/door/conditionalwall = A
 		for(var/mob/occupant as anything in return_controllers_with_flag(access_provider_flags))
-			if(conditionalwall.try_safety_unlock(occupant))
+			if(conditionalwall.try_safety_unlock(occupant) || !conditionalwall.can_open_with_hands)
 				return
 			conditionalwall.bumpopen(occupant)
 
@@ -108,7 +108,7 @@
 /obj/vehicle/sealed/proc/exit_location(M)
 	return drop_location()
 
-/obj/vehicle/sealed/attackby(obj/item/I, mob/user, params)
+/obj/vehicle/sealed/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(key_type && !is_key(inserted_key) && is_key(I))
 		if(user.transferItemToLoc(I, src))
 			to_chat(user, span_notice("You insert [I] into [src]."))

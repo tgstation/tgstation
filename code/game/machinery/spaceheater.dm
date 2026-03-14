@@ -39,8 +39,8 @@
 	var/settable_temperature_median = 30 + T0C
 	///Range of temperatures above and below the median that we can set our target temperature (increase by upgrading the capacitors)
 	var/settable_temperature_range = 30
-	///Should we add an overlay for open spaceheaters
-	var/display_panel = TRUE
+	/// The icon_state of the emissive, because improvised heaters are special and don't follow along with the modes
+	var/emissive_state
 
 /datum/armor/machinery_space_heater
 	fire = 80
@@ -118,8 +118,12 @@
 
 /obj/machinery/space_heater/update_overlays()
 	. = ..()
-	if(panel_open && display_panel)
+
+	if(on)
+		. += emissive_appearance(icon, "[emissive_state ? emissive_state : base_icon_state + "-" + mode]-emissive", src, alpha = src.alpha)
+	if(panel_open)
 		. += "[base_icon_state]-open"
+		. += emissive_blocker(icon, "[base_icon_state]-open", src, alpha = src.alpha)
 
 /obj/machinery/space_heater/on_set_panel_open()
 	update_appearance()
@@ -202,7 +206,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
+/obj/machinery/space_heater/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -313,16 +317,14 @@
 
 ///For use with heating reagents in a ghetto way
 /obj/machinery/space_heater/improvised_chem_heater
-	icon = 'icons/obj/medical/chemical.dmi'
-	icon_state = "sheater-off"
-	name = "Improvised chem heater"
-	desc = "A space heater hacked to reroute heating to a water bath on the top."
+	name = "improvised chem heater"
+	desc = "A space heater fashioned to reroute heating to a water bath on top."
 	panel_open = TRUE //This is always open - since we've injected wires in the panel
 	//We inherit the cell from the heater prior
 	cell = null
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
-	display_panel = FALSE
 	settable_temperature_range = 50
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	///The beaker within the heater
 	var/obj/item/reagent_containers/beaker = null
 	/// How quickly it delivers heat to the reagents. In watts per joule of the thermal energy difference of the reagent from the temperature difference of the current and target temperatures.
@@ -337,6 +339,18 @@
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
 	. = ..()
 	QDEL_NULL(beaker)
+
+/obj/machinery/space_heater/improvised_chem_heater/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	if(!isliving(crafter))
+		return
+	var/mob/living/user = crafter
+	var/obj/item/stock_parts/power_store/cell/cell = (locate() in range(1)) || user.is_holding_item_of_type(/obj/item/stock_parts/power_store/cell)
+	if(!cell)
+		return
+	var/turf/turf = get_turf(cell)
+	forceMove(turf)
+	attackby(cell, user) //puts it into the heater
 
 /obj/machinery/space_heater/improvised_chem_heater/heating_examine()
 	. = ..()
@@ -402,7 +416,7 @@
 			. = TRUE
 
 ///Slightly modified to ignore the open_hatch - it's always open, we hacked it.
-/obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/item, mob/user, params)
+/obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(default_deconstruction_crowbar(item))
 		return
@@ -467,14 +481,24 @@
 	. = ..()
 	if(!on || !beaker || !cell)
 		icon_state = "sheater-off"
+		emissive_state = null
 		return
 	if(target_temperature < beaker.reagents.chem_temp)
 		icon_state = "sheater-cool"
+		emissive_state = icon_state
 		return
 	if(target_temperature > beaker.reagents.chem_temp)
 		icon_state = "sheater-heat"
+		emissive_state = icon_state
 		return
 	icon_state = "sheater-off"
+	emissive_state = null
+
+/obj/machinery/space_heater/improvised_chem_heater/update_overlays()
+	. += ..()
+	. += "[icon_state]-beaker"
+	. += "[base_icon_state]-rigged"
+	. += emissive_blocker(icon, "[base_icon_state]-rigged", src, alpha = src.alpha)
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()
 	. = ..()

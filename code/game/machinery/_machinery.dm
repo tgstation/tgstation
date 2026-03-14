@@ -88,6 +88,7 @@
 	name = "machinery"
 	icon = 'icons/obj/machines/fax.dmi'
 	desc = "Some kind of machine."
+	abstract_type = /obj/machinery
 	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 15
@@ -118,7 +119,7 @@
 	var/is_operational = TRUE
 	///list of all the parts used to build it, if made from certain kinds of frames.
 	var/list/component_parts = null
-	///Is the machines maintainence panel open.
+	///Is the machines maintenance panel open.
 	var/panel_open = FALSE
 	///Is the machine open or closed
 	var/state_open = FALSE
@@ -160,12 +161,22 @@
 	fire = 50
 	acid = 70
 
+///Needed by machine frame & flatpacker i.e the named arg board
+/obj/machinery/New(location, obj/item/circuitboard/board, ...)
+	if(istype(board))
+		circuit = board
+		//we don't want machines that override Initialize() have the board passed as a param e.g. atmos
+		return ..(location)
+
+	return ..()
+
 /obj/machinery/Initialize(mapload)
 	. = ..()
 	SSmachines.register_machine(src)
 
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit(src)
+	if(istype(circuit))
 		circuit.apply_default_parts(src)
 
 	if(processing_flags & START_PROCESSING_ON_INIT)
@@ -197,6 +208,8 @@
 /obj/machinery/proc/post_machine_initialize()
 	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
+
+	find_and_mount_on_atom(late_init = TRUE)
 
 	power_change()
 	if(use_power == NO_POWER_USE)
@@ -298,7 +311,11 @@
 	set waitfor = FALSE
 	return PROCESS_KILL
 
-/obj/machinery/proc/process_atmos()//If you dont use process why are you here
+/**
+ * Process but for machines interacting with atmospherics.
+ * Like process, anything sensitive to changes in the wait time between process ticks should account for seconds_per_tick.
+**/
+/obj/machinery/proc/process_atmos(seconds_per_tick)//If you dont touch atmos why are you here
 	set waitfor = FALSE
 	return PROCESS_KILL
 
@@ -385,7 +402,7 @@
 	var/turf/this_turf = get_turf(src)
 	for(var/atom/movable/movable_atom in contents)
 		//so machines like microwaves dont dump out signalers after cooking
-		if(wires && (movable_atom in flatten_list(wires.assemblies)))
+		if(wires && (movable_atom in assoc_to_values(wires.assemblies)))
 			continue
 
 		if(subset && !(movable_atom in subset))
@@ -409,8 +426,9 @@
  * * object (obj) The object to be moved in to the users hand.
  * * user (mob/living) The user to recive the object
  */
-/obj/machinery/proc/try_put_in_hand(obj/object, mob/living/user)
+/obj/machinery/proc/try_put_in_hand(obj/item/object, mob/living/user)
 	if(!issilicon(user) && in_range(src, user))
+		object.do_pickup_animation(user, src)
 		user.put_in_hands(object)
 	else
 		object.forceMove(drop_location())
@@ -625,7 +643,8 @@
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
 
-	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
+	var/try_use_signal = SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) | SEND_SIGNAL(src, COMSIG_TRY_USE_MACHINE, user)
+	if(try_use_signal & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
 
 	if(isAdminGhostAI(user))
@@ -671,49 +690,6 @@
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
 
-/**
- * Checks for NAP non aggression principle, an anarcho capitalist event triggered by admins
- * where using machines cost money
- */
-/obj/machinery/proc/check_nap_violations()
-	PROTECTED_PROC(TRUE)
-	SHOULD_NOT_OVERRIDE(TRUE)
-
-	if(!SSeconomy.full_ancap)
-		return TRUE
-	if(!occupant || state_open)
-		return TRUE
-	var/mob/living/occupant_mob = occupant
-	var/obj/item/card/id/occupant_id = occupant_mob.get_idcard(TRUE)
-	if(!occupant_id)
-		say("Customer NAP Violation: No ID card found.")
-		nap_violation(occupant_mob)
-		return FALSE
-	var/datum/bank_account/insurance = occupant_id.registered_account
-	if(!insurance)
-		say("Customer NAP Violation: No bank account found.")
-		nap_violation(occupant_mob)
-		return FALSE
-	if(!insurance.adjust_money(-fair_market_price))
-		say("Customer NAP Violation: Unable to pay.")
-		nap_violation(occupant_mob)
-		return FALSE
-	var/datum/bank_account/department_account = SSeconomy.get_dep_account(payment_department)
-	if(department_account)
-		department_account.adjust_money(fair_market_price)
-	return TRUE
-
-/**
- * Actions to take in case of NAP violation
- * Arguments
- *
- * * mob/violator - the mob who violated the NAP aggrement
- */
-/obj/machinery/proc/nap_violation(mob/violator)
-	PROTECTED_PROC(TRUE)
-
-	return
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 //Return a non FALSE value to interrupt attack_hand propagation to subtypes.
@@ -725,7 +701,7 @@
 	var/mob/user = ui.user
 	add_fingerprint(user)
 	update_last_used(user)
-	if(isAI(user) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
+	if(isAI(user) && !SScameras.is_visible_by_cameras(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
 		to_chat(user, span_warning("You can no longer connect to this device!"))
 		return FALSE
 	return ..()
@@ -794,7 +770,7 @@
 /obj/machinery/attack_ai(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
 		return FALSE
-	if(!(ROLE_SYNDICATE in user.faction))
+	if(!user.has_faction(ROLE_SYNDICATE))
 		if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
 			return FALSE
 		if((onSyndieBase() && loc != user))
@@ -803,13 +779,13 @@
 		return attack_robot(user)
 	return _try_interact(user)
 
-/obj/machinery/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return
 	update_last_used(user)
 
-/obj/machinery/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/machinery/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return
@@ -835,8 +811,8 @@
 		return TRUE
 	return ..()
 
-/obj/machinery/CheckParts(list/parts_list)
-	..()
+/obj/machinery/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
 	RefreshParts()
 
 /obj/machinery/proc/RefreshParts()
@@ -1043,7 +1019,7 @@
 	var/list/part_list = replacer_tool.get_sorted_parts(ignore_stacks = TRUE)
 	if(!part_list.len)
 		return FALSE
-	for(var/primary_part_base as anything in component_parts)
+	for(var/primary_part_base in component_parts)
 		//we exchanged all we could time to bail
 		if(!part_list.len)
 			break
@@ -1073,9 +1049,7 @@
 			if(istype(secondary_part, /obj/item/stock_parts/power_store/cell) && works_from_distance)
 				var/obj/item/stock_parts/power_store/cell/checked_cell = secondary_part
 				// If it's rigged or corrupted, max the charge. Then explode it.
-				if(checked_cell.rigged || checked_cell.corrupted)
-					checked_cell.charge = checked_cell.maxcharge
-					checked_cell.explode()
+				if(checked_cell.try_explode(max_charge = TRUE))
 					break
 			if(secondary_part.get_part_rating() > current_rating)
 				//store name of part incase we qdel it below
@@ -1111,7 +1085,7 @@
 	RefreshParts()
 
 	if(shouldplaysound)
-		replacer_tool.play_rped_sound()
+		replacer_tool.play_rped_effect()
 	return TRUE
 
 /obj/machinery/proc/display_parts(mob/user)
@@ -1143,7 +1117,7 @@
 		// we infer the required stack stuff inside the machine from the circuitboards requested components
 		if(istype(component_ref, /obj/item/circuitboard/machine))
 			var/obj/item/circuitboard/machine/board = component_ref
-			for(var/component as anything in board.req_components)
+			for(var/component in board.req_components)
 				if(!ispath(component, /obj/item/stack))
 					continue
 				part_count[component] = board.req_components[component]
@@ -1190,7 +1164,7 @@
 /obj/machinery/examine_more(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) && component_parts)
-		. += display_parts(user, TRUE)
+		. += display_parts(user)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction(mob/user)
@@ -1224,8 +1198,9 @@
 	dropped_atom.pixel_x = -8 + ((.%3)*8)
 	dropped_atom.pixel_y = -8 + (round( . / 3)*8)
 
-/obj/machinery/rust_heretic_act()
-	take_damage(500, BRUTE, MELEE, 1)
+/obj/machinery/rust_heretic_act(rust_strength)
+	var/damage = 500 + rust_strength * 200
+	take_damage(damage, BRUTE, BOMB, 1)
 
 /obj/machinery/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, occupant))

@@ -4,7 +4,9 @@ SUBSYSTEM_DEF(unplanned_controllers)
 	name = "Unplanned AI Controllers"
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
 	priority = FIRE_PRIORITY_UNPLANNED_NPC
-	init_order = INIT_ORDER_AI_CONTROLLERS
+	dependencies = list(
+		/datum/controller/subsystem/movement/ai_movement,
+	)
 	wait = 0.25 SECONDS
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	///what ai status are we interested in
@@ -21,7 +23,7 @@ SUBSYSTEM_DEF(unplanned_controllers)
 	return ..()
 
 /datum/controller/subsystem/unplanned_controllers/stat_entry(msg)
-	msg = "Planning AIs:[length(GLOB.unplanned_controllers[target_status])]"
+	msg = "\n  Planning AIs:[length(GLOB.unplanned_controllers[target_status])]"
 	return ..()
 
 /datum/controller/subsystem/unplanned_controllers/fire(resumed)

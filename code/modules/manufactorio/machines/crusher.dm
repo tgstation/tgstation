@@ -77,7 +77,7 @@
 					return
 	else if(isliving(victim))
 		var/mob/living/poor_sap = victim
-		poor_sap.adjustBruteLoss(95, TRUE)
+		poor_sap.adjust_brute_loss(95, TRUE)
 		if(!send_resource(poor_sap, dir))
 			withholding = poor_sap
 			return

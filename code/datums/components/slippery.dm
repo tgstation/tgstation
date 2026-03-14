@@ -33,8 +33,8 @@
 	var/datum/callback/on_slip_callback
 	/// If parent is an item, this is the person currently holding/wearing the parent (or the parent if no one is holding it)
 	var/mob/living/holder
-	/// Whitelist of item slots the parent can be equipped in that make the holder slippery. If null or empty, it will always make the holder slippery.
-	var/list/slot_whitelist = list(ITEM_SLOT_OCLOTHING, ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_BELT, ITEM_SLOT_NECK)
+	/// Whitelist bitfields of item slots bitflags the parent can be equipped in that make the holder slippery. If null or empty, it will always make the holder slippery.
+	var/slot_whitelist = ITEM_SLOT_OCLOTHING | ITEM_SLOT_ICLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_HEAD | ITEM_SLOT_MASK | ITEM_SLOT_BELT | ITEM_SLOT_NECK
 	///what we give to connect_loc by default, makes slippable mobs moving over us slip
 	var/static/list/default_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(Slip),
@@ -191,7 +191,7 @@
 /datum/component/slippery/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if((!LAZYLEN(slot_whitelist) || (slot in slot_whitelist)) && isliving(equipper))
+	if((!slot || (slot & slot_whitelist)) && isliving(equipper))
 		holder = equipper
 		qdel(GetComponent(/datum/component/connect_loc_behalf))
 		AddComponent(/datum/component/connect_loc_behalf, holder, mob_connections)

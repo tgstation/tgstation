@@ -16,38 +16,13 @@
 		"You'll never get anywhere in life without a degree."
 	],
 
-	"expense": [
-		"A car",
-		"A house",
-		"College",
-		"Food",
-		"Healthcare"
-	],
+	"expense": ["A car", "A house", "College", "Food", "Healthcare"],
 
-	"kids": [
-		"kids",
-		"millennials",
-		"snowflakes"
-	],
+	"kids": ["kids", "millennials", "snowflakes"],
 
-	"file": [
-		"DMI",
-		"JPEG",
-		"JSON",
-		"PDF"
-	],
+	"file": ["DMI", "JPEG", "JSON", "PDF"],
 
-	"sad": [
-		"depressed",
-		"sad and depressed",
-		"sad"
-	],
+	"sad": ["depressed", "sad and depressed", "sad"],
 
-	"impossible": [
-		"house",
-		"job and a house",
-		"job",
-		"life"
-	]
-
+	"impossible": ["house", "job and a house", "job", "life"]
 }

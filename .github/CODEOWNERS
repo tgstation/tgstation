@@ -82,6 +82,10 @@
 
 /code/modules/hydroponics/ @MrMelbert
 
+# necromanceranne
+
+/code/modules/uplink/ @necromanceranne
+
 # ninjanomnom
 
 /code/controllers/subsystem/dcs.dm @ninjanomnom
@@ -133,8 +137,10 @@
 
 # Time-Green
 
-/code/modules/plumbing/ @Time-Green
-/code/modules/surgery/organs/external/ @Time-Green
+/code/datums/bodypart_overlays @Time-Green
+/code/modules/antagonists/voidwalker @Time-Green
+/code/modules/lost_crew @Time-Green
+/code/modules/shuttle/shuttle_events @Time-Green
 
 # tralezab
 /code/__DEFINES/basic_mobs.dm @tralezab
@@ -160,6 +166,10 @@
 
 # CONTRIBUTORS
 
+# grungussuss
+
+/sound/ @grungussuss
+
 # Jordie0608
 
 /code/controllers/subsystem/dbcore.dm @Jordie0608
@@ -172,10 +182,14 @@
 /code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
 /code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
 
+# loganuk
+
+/_maps/map_files/CatwalkStation/ @loganuk
+
 # NamelessFairy
 
 /code/modules/capture_the_flag/ @NamelessFairy
-/_maps/map_files/CTF/ @NamelessFairy
+/_maps/minigame/CTF/ @NamelessFairy
 
 # Pickle-Coding
 
@@ -184,13 +198,13 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
-# Sadboysuss
-
-/sound/ @Sadboysuss
+# FalloutFalcon
+/code/__HELPERS/abstract_types.dm @FalloutFalcon
+/code/__HELPERS/random_items.dm @FalloutFalcon
 
 # MULTIPLE OWNERS
 
-/SQL/ @Jordie0608 @scriptis
+/SQL/ @Jordie0608 @strandsofivy
 
 /_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
 
@@ -213,13 +227,15 @@
 
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
 
-/tools/build/ @scriptis @stylemistake
-/tools/tgs_scripts/ @Cyberboss @scriptis
+/tools/build/ @strandsofivy @stylemistake
+/tools/tgs_scripts/ @Cyberboss @strandsofivy
+
+/code/modules/antagonists/heretic @Xander3359 @EnterTheJake
 
 # Host Hell
 
-/code/controllers/configuration/entries @scriptis
-/config/ @scriptis
+/code/controllers/configuration/entries @strandsofivy
+/config/ @strandsofivy
 
 # Expensive files that touching basically always cause performance problems
 ## Init times

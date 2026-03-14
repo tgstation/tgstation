@@ -9,7 +9,6 @@ import {
   KEY_Z,
 } from 'tgui-core/keycodes';
 
-import { useBackend } from '../../backend';
 import { InputButtons } from '../common/InputButtons';
 
 type ListInputModalProps = {
@@ -141,17 +140,21 @@ export const ListInputModal = (props: ListInputModalProps) => {
           <ListDisplay
             filteredItems={filteredItems}
             onClick={onClick}
+            onDoubleClick={on_selected}
             onFocusSearch={onFocusSearch}
             searchBarVisible={searchBarVisible}
             selected={selected}
           />
         </Stack.Item>
         {searchBarVisible && (
-          <SearchBar
-            filteredItems={filteredItems}
-            onSearch={onSearch}
-            searchQuery={searchQuery}
-            selected={selected}
+          <Input
+            autoFocus
+            autoSelect
+            fluid
+            onEnter={() => on_selected(filteredItems[selected])}
+            onChange={onSearch}
+            placeholder="Search..."
+            value={searchQuery}
           />
         )}
         <Stack.Item>
@@ -166,72 +169,57 @@ export const ListInputModal = (props: ListInputModalProps) => {
   );
 };
 
+interface ListDisplayProps {
+  filteredItems: string[];
+  onClick: (itemIndex: number) => void;
+  onDoubleClick: (entry: string) => void;
+  onFocusSearch: () => void;
+  searchBarVisible: boolean;
+  selected: number;
+}
+
 /**
  * Displays the list of selectable items.
  * If a search query is provided, filters the items.
  */
-const ListDisplay = (props) => {
-  const { act } = useBackend();
-  const { filteredItems, onClick, onFocusSearch, searchBarVisible, selected } =
-    props;
+const ListDisplay = (props: ListDisplayProps) => {
+  const {
+    filteredItems,
+    onClick,
+    onDoubleClick,
+    onFocusSearch,
+    searchBarVisible,
+    selected,
+  } = props;
 
   return (
     <Section fill scrollable>
       <Autofocus />
-      {filteredItems.map((item, index) => {
-        return (
-          <Button
-            className="candystripe"
-            color="transparent"
-            fluid
-            id={index}
-            key={index}
-            onClick={() => onClick(index)}
-            onDoubleClick={(event) => {
+      {filteredItems.map((item, index) => (
+        <Button
+          className="candystripe"
+          color="transparent"
+          fluid
+          id={`${index}`}
+          key={index}
+          onClick={() => onClick(index)}
+          onDoubleClick={() => onDoubleClick(item)}
+          onKeyDown={(event) => {
+            const keyCode = window.event ? event.which : event.keyCode;
+            if (searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
               event.preventDefault();
-              act('submit', { entry: filteredItems[selected] });
-            }}
-            onKeyDown={(event) => {
-              const keyCode = window.event ? event.which : event.keyCode;
-              if (searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
-                event.preventDefault();
-                onFocusSearch();
-              }
-            }}
-            selected={index === selected}
-            style={{
-              animation: 'none',
-              transition: 'none',
-            }}
-          >
-            {item.replace(/^\w/, (c) => c.toUpperCase())}
-          </Button>
-        );
-      })}
+              onFocusSearch();
+            }
+          }}
+          selected={index === selected}
+          style={{
+            animation: 'none',
+            transition: 'none',
+          }}
+        >
+          {item.replace(/^\w/, (c) => c.toUpperCase())}
+        </Button>
+      ))}
     </Section>
-  );
-};
-
-/**
- * Renders a search bar input.
- * Closing the bar defaults input to an empty string.
- */
-const SearchBar = (props) => {
-  const { act } = useBackend();
-  const { filteredItems, onSearch, searchQuery, selected } = props;
-
-  return (
-    <Input
-      autoFocus
-      autoSelect
-      fluid
-      onEnter={(event) => {
-        event.preventDefault();
-        act('submit', { entry: filteredItems[selected] });
-      }}
-      onInput={(_, value) => onSearch(value)}
-      placeholder="Search..."
-      value={searchQuery}
-    />
   );
 };

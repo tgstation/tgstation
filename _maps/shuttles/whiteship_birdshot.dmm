@@ -201,12 +201,12 @@
 	amount = 10
 	},
 /obj/structure/cable,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/engine)
 "gv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/textured,
 /area/shuttle/abandoned/cargo)
@@ -240,7 +240,7 @@
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 1
 	},
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/engine)
 "iB" = (
@@ -286,7 +286,7 @@
 "jY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/iron/smooth,
 /area/shuttle/abandoned/crew)
 "ku" = (
@@ -836,7 +836,7 @@
 /area/shuttle/abandoned/cargo)
 "BZ" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -847,7 +847,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
 "Cz" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -1038,7 +1038,7 @@
 /obj/item/tank/internals/anesthetic{
 	pixel_x = -3
 	},
-/obj/item/stack/sticky_tape/surgical,
+/obj/item/stack/medical/wrap/sticky_tape/surgical,
 /obj/item/clothing/mask/breath/medical{
 	pixel_y = 3
 	},
@@ -1238,7 +1238,7 @@
 /area/shuttle/abandoned/crew)
 "PC" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -1376,7 +1376,6 @@
 "UK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/turretid{
-	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
 	pixel_y = 28;
@@ -1425,7 +1424,7 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /turf/open/floor/carpet/green,
 /area/shuttle/abandoned/bar)
 "WW" = (
@@ -1461,7 +1460,7 @@
 /area/shuttle/abandoned/engine)
 "XX" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -1474,7 +1473,7 @@
 /area/shuttle/abandoned/crew)
 "YJ" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_bridge"
 	},
 /turf/open/floor/plating,

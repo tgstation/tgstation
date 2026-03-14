@@ -33,7 +33,7 @@ const PacketInfo = (props) => {
       <LabeledList>
         <LabeledList.Item label="Data Type">{packet.type}</LabeledList.Item>
         <LabeledList.Item label="Source">
-          {packet.source + (packet.job ? ' (' + packet.job + ')' : '')}
+          {packet.source + (packet.job ? ` (${packet.job})` : '')}
         </LabeledList.Item>
         <LabeledList.Item label="Class">{packet.race}</LabeledList.Item>
         <LabeledList.Item label="Contents">{packet.message}</LabeledList.Item>
@@ -65,8 +65,8 @@ const ServerScreen = (props) => {
             <LabeledList.Item label="Server">{server.name}</LabeledList.Item>
             <LabeledList.Item label="Total Recorded Traffic">
               {server.traffic >= 1024
-                ? server.traffic / 1024 + ' TB'
-                : server.traffic + ' GB'}
+                ? `${server.traffic / 1024} TB`
+                : `${server.traffic} GB`}
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -95,8 +95,9 @@ const MainScreen = (props) => {
         <Section>
           <Input
             value={networkId}
-            onChange={(e, value) => setNetworkId(value)}
+            onChange={setNetworkId}
             placeholder="Network ID"
+            onEnter={() => act('scan_network', { network_id: networkId })}
           />
           <Button
             content="Scan"

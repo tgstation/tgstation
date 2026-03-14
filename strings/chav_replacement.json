@@ -1,6 +1,5 @@
 {
-
-    "chav": {
+	"chav": {
 		"fucking": "bloody",
 		"dick": "knob",
 		"dickhead": "bellend",
@@ -31,50 +30,16 @@
 		"hair": "mop",
 		"nothing": "bugger all",
 		"food": "scran",
-		"security": [
-			"coppers",
-			"bobbies"
-		],
-		"friend": [
-			"mate",
-			"bruv",
-			"lad"
-		],
-		"great": [
-			"bangin'",
-			"sound"
-		],
-		"man": [
-			"mate",
-			"mans",
-			"bloke"
-		],
-		"isnt": [
-			"innit",
-			"aint it"
-		],
-		"dumb": [
-			"daft",
-			"stupid"
-		],
-		"idiot": [
-			"wanker",
-			"tosser",
-			"prick"
-		],
-		"little": [
-			"tad",
-			"wee"
-		],
-		"credits": [
-			"pounds",
-			"quid"
-		],
-		"drunk": [
-			"shitfaced",
-			"pissed"
-		],
+		"security": ["coppers", "bobbies"],
+		"friend": ["mate", "bruv", "lad"],
+		"great": ["bangin'", "sound"],
+		"man": ["mate", "mans", "bloke"],
+		"isnt": ["innit", "aint it"],
+		"dumb": ["daft", "stupid"],
+		"idiot": ["wanker", "tosser", "prick"],
+		"little": ["tad", "wee"],
+		"credits": ["pounds", "quid"],
+		"drunk": ["shitfaced", "pissed"],
 		"tough": "big"
 	}
-
 }

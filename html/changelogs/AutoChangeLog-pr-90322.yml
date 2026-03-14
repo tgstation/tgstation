@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "lockboxes & fancy storages spawned at round start with items in them don't have issues anymore"

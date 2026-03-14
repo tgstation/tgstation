@@ -14,6 +14,8 @@
 #define ALERT_TOO_MUCH_NITRO "too_much_nitro"
 #define ALERT_NOT_ENOUGH_NITRO "not_enough_nitro"
 
+#define ALERT_BRONCHODILATION "bronchodilation"
+
 #define ALERT_NOT_ENOUGH_WATER "not_enough_water"
 
 /** Mob related */
@@ -71,3 +73,5 @@
 #define ALERT_BITRUNNER_THREAT "bitrunning_threat"
 #define ALERT_BITRUNNER_BREACH "bitrunning_breach"
 #define ALERT_BITRUNNER_GLITCH "bitrunning_glitch"
+
+#define ALERT_SILICON_RECORDING "silicon_recording"

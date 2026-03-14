@@ -47,7 +47,7 @@
 	damage = 60
 	armour_penetration = 50
 	wound_bonus = -20
-	bare_wound_bonus = 80
+	exposed_wound_bonus = 80
 	embed_type = /datum/embedding/harpoon
 	wound_falloff_tile = -5
 	shrapnel_type = null
@@ -71,7 +71,7 @@
 	dismemberment = 1 //because a 1 in 100 chance to just blow someones arm off is enough to be cool but also not enough to be reliable
 	armour_penetration = 10
 	wound_bonus = -20
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	embed_type = /datum/embedding/rebar
 	embed_falloff_tile = -5
 	wound_falloff_tile = -2
@@ -96,7 +96,7 @@
 	dismemberment = 2 //It's a budget sniper rifle.
 	armour_penetration = 20 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
 	wound_bonus = 10
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	embed_falloff_tile = -3
 	embed_type = /datum/embedding/rebar_syndie
 	shrapnel_type = /obj/item/ammo_casing/rebar/syndie
@@ -121,7 +121,7 @@
 	eyeblur = 5
 	armour_penetration = 20 // not nearly as good, as its not as sharp.
 	wound_bonus = 10
-	bare_wound_bonus = 40
+	exposed_wound_bonus = 40
 	embed_type = /datum/embedding/rebar_zaukerite
 	embed_falloff_tile = 0 // very spiky.
 	shrapnel_type = /obj/item/ammo_casing/rebar/zaukerite
@@ -149,7 +149,7 @@
 	damage_type = BRUTE
 	armour_penetration = 30 //very pointy.
 	wound_bonus = -100
-	bare_wound_bonus = 0
+	exposed_wound_bonus = 0
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 	embed_type = /datum/embedding/rebar_hydrogen
 	embed_falloff_tile = -3
@@ -175,23 +175,20 @@
 	damage_type = BRUTE
 	armour_penetration = 100
 	wound_bonus = -100
-	bare_wound_bonus = -100
-	embed_type = null
+	exposed_wound_bonus = -100
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/healium
+	embed_type = /datum/embedding/rebar_healium
+	/// Amount of heals left in our bolt, so we can track it between embeds/misses
+	var/heals_left = 6 SECONDS
 
-/obj/projectile/bullet/rebar/healium/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/bullet/rebar/healium/Initialize(mapload)
 	. = ..()
-	if(!iscarbon(target))
-		return BULLET_ACT_HIT
-	var/mob/living/breather = target
-	breather.SetSleeping(3 SECONDS)
-	breather.adjustFireLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
-	breather.adjustToxLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC)
-	breather.adjustBruteLoss(-30, updating_health = TRUE, required_bodytype = BODYTYPE_ORGANIC)
-	breather.adjustOxyLoss(-30, updating_health = TRUE, required_biotype = BODYTYPE_ORGANIC, required_respiration_type = ALL)
+	RegisterSignals(src, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED), PROC_REF(on_spawn_embedded))
 
-	return BULLET_ACT_HIT
+/obj/projectile/bullet/rebar/healium/proc/on_spawn_embedded(datum/source, obj/item/ammo_casing/rebar/healium/rebar)
+	SIGNAL_HANDLER
+	rebar.heals_left = heals_left
 
 /obj/projectile/bullet/rebar/supermatter
 	name = "supermatter bolt"

@@ -1,7 +1,7 @@
-import { range } from 'common/collections';
-import { PropsWithChildren } from 'react';
+import { range } from 'es-toolkit';
+import type { PropsWithChildren } from 'react';
 import { Box, Button, FitText, Stack } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

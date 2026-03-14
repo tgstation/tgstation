@@ -1,5 +1,6 @@
 
 /obj
+	abstract_type = /obj
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
@@ -22,9 +23,10 @@
 	/// How good a given object is at causing wounds on carbons. Higher values equal better shots at creating serious wounds.
 	var/wound_bonus = 0
 	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
-	var/bare_wound_bonus = 0
+	var/exposed_wound_bonus = 0
 
 	/// A multiplier to an object's force when used against a structure, vehicle, machine, or robot.
+	/// Use [/obj/proc/get_demolition_modifier] to get the value.
 	var/demolition_mod = 1
 
 	/// Cached custom fire overlay
@@ -62,43 +64,59 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 	if (id_tag)
 		GLOB.objects_by_id_tag[id_tag] = src
+	if(opacity)
+		SScameras.update_visibility(src)
 
 /obj/Destroy(force)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+	if(opacity)
+		SScameras.update_visibility(src)
 	SStgui.close_uis(src)
 	GLOB.objects_by_id_tag -= id_tag
 	. = ..()
 
-/obj/attacked_by(obj/item/attacking_item, mob/living/user)
+/obj/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!attacking_item.force)
-		return
+		return 0
 
-	var/total_force = (attacking_item.force * attacking_item.demolition_mod)
+	var/demo_mod = attacking_item.get_demolition_modifier(src)
+	var/total_force = CALCULATE_FORCE(attacking_item, attack_modifiers) * demo_mod
 	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, TRUE, get_dir(src, user), attacking_item.armour_penetration)
 
-	// Sanity in case one is null for some reason
-	var/picked_index = rand(max(length(attacking_item.attack_verb_simple), length(attacking_item.attack_verb_continuous)))
+	if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
+		// Sanity in case one is null for some reason
+		var/picked_index = rand(max(length(attacking_item.attack_verb_simple), length(attacking_item.attack_verb_continuous)))
 
-	var/message_verb_continuous = "attacks"
-	var/message_verb_simple = "attack"
-	// Sanity in case one is... longer than the other?
-	if (picked_index && length(attacking_item.attack_verb_continuous) >= picked_index)
-		message_verb_continuous = attacking_item.attack_verb_continuous[picked_index]
-	if (picked_index && length(attacking_item.attack_verb_simple) >= picked_index)
-		message_verb_simple = attacking_item.attack_verb_simple[picked_index]
+		var/message_verb_continuous = "attacks"
+		var/message_verb_simple = "attack"
+		// Sanity in case one is... longer than the other?
+		if (picked_index && length(attacking_item.attack_verb_continuous) >= picked_index)
+			message_verb_continuous = attacking_item.attack_verb_continuous[picked_index]
+		if (picked_index && length(attacking_item.attack_verb_simple) >= picked_index)
+			message_verb_simple = attacking_item.attack_verb_simple[picked_index]
 
-	if(attacking_item.demolition_mod > 1 && prob(damage * 5))
-		message_verb_simple = "pulverise"
-		message_verb_continuous = "pulverises"
+		if(demo_mod > 1 && prob(damage * 5))
+			if(HAS_TRAIT(src, TRAIT_INVERTED_DEMOLITION))
+				message_verb_simple = "shred"
+				message_verb_continuous = "shreds"
+			else
+				message_verb_simple = "pulverise"
+				message_verb_continuous = "pulverises"
 
-	if(attacking_item.demolition_mod < 1)
-		message_verb_simple = "ineffectively " + message_verb_simple
-		message_verb_continuous = "ineffectively " + message_verb_continuous
+		if(demo_mod < 1)
+			message_verb_simple = "ineffectively " + message_verb_simple
+			message_verb_continuous = "ineffectively " + message_verb_continuous
 
-	user.visible_message(span_danger("[user] [message_verb_continuous] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), \
-		span_danger("You [message_verb_simple] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), null, COMBAT_MESSAGE_RANGE)
+		user.visible_message(
+			span_danger("[user] [message_verb_continuous] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"),
+			span_danger("You [message_verb_simple] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"),
+			null,
+			COMBAT_MESSAGE_RANGE,
+		)
+
 	log_combat(user, src, "attacked", attacking_item)
+	return damage
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
@@ -209,6 +227,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(obj_flags & UNIQUE_RENAME)
 		.["renameable"] = "Use a pen on it to rename it or change its description."
+	if(obj_flags & CONDUCTS_ELECTRICITY)
+		.["conductive"] = "It appears to be a good conductor of electricity."
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))
@@ -261,7 +281,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	return SUCCESSFUL_UNFASTEN
 
 /// Try to unwrench an object in a WONDERFUL DYNAMIC WAY
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench, time = 20)
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench, time = 2 SECONDS)
 	if(wrench.tool_behaviour != TOOL_WRENCH)
 		return CANT_UNFASTEN
 
@@ -286,7 +306,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	set_anchored(!anchored)
 	check_on_table()
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
 	return SUCCESSFUL_UNFASTEN
 
 /// For the do_after, this checks if unfastening conditions are still valid
@@ -313,23 +332,76 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
-	modify_max_integrity(ceil(max_integrity * integrity_mod))
-	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
-	force *= strength_mod
-	throwforce *= strength_mod
-	var/list/armor_mods = material.get_armor_modifiers(multiplier)
-	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
+	change_material_strength(material, mat_amount, multiplier)
 
-///This proc is called when the material is removed from an object specifically.
 /obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
-	modify_max_integrity(floor(max_integrity / integrity_mod))
-	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
-	force /= strength_mod
-	throwforce /= strength_mod
-	var/list/armor_mods = material.get_armor_modifiers(1 / multiplier)
-	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
+	change_material_strength(material, mat_amount, multiplier, remove = TRUE)
+
+/// Changes force and throwforce of an item based on its properties. Split into a separate proc as to allow items to change theirs based on sharpness and behavior
+/obj/proc/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/hardness = material.get_property(MATERIAL_HARDNESS)
+	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
+	// Dense and hard objects make for good melee weapons, bendy ones not so much
+	var/force_mod = (1 + (density - 4) * 0.05 + (hardness - 4) * 0.05) * (1 - flexibility * 0.1)
+	// Hardness doesn't matter much when we're just whacking someone in the back of the head
+	var/throwforce_mod = 1 + (density - 4) * 0.1 - flexibility * 0.1
+
+	if (!remove)
+		force *= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce *= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
+	else
+		force /= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce /= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
+
+/// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
+/obj/proc/get_demolition_modifier(obj/target)
+	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
+		return (1 / demolition_mod)
+	return demolition_mod
+
+/// Checks performed by a renamable object(through UNIQUE_RENAME obj_flag) before renaming begins.
+/obj/proc/rename_checks(mob/living/user)
+	return TRUE
+
+/// Returns the final name of the object, and does any side effects of renaming, such as sounds.
+/obj/proc/nameformat(input, mob/living/user)
+	return input
+
+/// Same as nameformat, but for desc.
+/obj/proc/descformat(input, mob/living/user)
+	return input
+
+/// Called when UNIQUE_RENAME is reset
+/obj/proc/rename_reset()
+	return
+
+/**
+ * Used to deliver a shock to a mob from this object
+ * The target must be adjacent to this object, or else the shock will fail
+ *
+ * * shocking - who are we zapping
+ * * chance - probability the shock succeeds
+ * defaults to 100 (guaranteed to shock)
+ * * shock_source - used for determining where to get the power to zap them.
+ * can be an apc, a cable, an area, a cell, or even a powernet datum
+ * subtypes may override this proc to pass this up to the parent
+ * defaults to our cell or our current area/apc
+ * * siemens_coeff - multiplier to how much shock is delivered
+ * default to a 1x modifier
+ *
+ * Returns TRUE if the shock was successfully delivered
+ * Returns FALSE if the shock failed for any reason
+ */
+/obj/proc/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1)
+	SHOULD_CALL_PARENT(TRUE)
+	if(!isliving(shocking))
+		return FALSE
+	if(!prob(chance))
+		return FALSE // you lucked out, no shock for you
+
+	do_sparks(5, TRUE, src)
+	return electrocute_mob(shocking, shock_source || get_cell() || get_area(src), src, siemens_coeff, TRUE)

@@ -157,7 +157,6 @@
 		player_mob.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = new_member_mind, \
-			old_body = new_member_mind.current, \
 		)
 
 	player_mob.ckey = new_team_member.ckey
@@ -166,12 +165,12 @@
 		ctf_game.add_player(team, player_mob.ckey, player_component)
 	else
 		player_mob.mind.TakeComponent(ctf_player_component)
-	player_mob.faction += team
+	player_mob.add_faction(team)
 	player_mob.equipOutfit(chosen_class)
 	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT)
 	return player_mob //used in medisim_game.dm
 
-/obj/machinery/ctf/spawner/attackby(obj/item/item, mob/user, params)
+/obj/machinery/ctf/spawner/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/ctf_flag))
 		var/obj/item/ctf_flag/flag = item
 		if(flag.team != team)
@@ -249,7 +248,7 @@
 	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, span_warning("Non-players shouldn't be moving the flag!"))
 		return
-	if(team in user.faction)
+	if(user.has_faction(team))
 		to_chat(user, span_warning("You can't move your own flag!"))
 		return
 	if(loc == user)
@@ -268,7 +267,7 @@
 	user.set_anchored(TRUE)
 	user.status_flags &= ~CANPUSH
 
-/obj/item/ctf_flag/attackby(obj/item/item, mob/user, params)
+/obj/item/ctf_flag/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(item, /obj/item/ctf_flag))
 		return ..()
 
@@ -367,7 +366,7 @@
 			scores += UNLINT("<span style='color: [ctf_team.team_color]'>[ctf_team.team_color] - [ctf_team.points]/[ctf_game.points_to_win]</span>\n")
 		balloon_alert_to_viewers(scores)
 
-/obj/machinery/ctf/control_point/attackby(obj/item/item, mob/user, params)
+/obj/machinery/ctf/control_point/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	capture(user)
 
 /obj/machinery/ctf/control_point/attack_hand(mob/user, list/modifiers)
@@ -408,7 +407,7 @@
 /obj/structure/trap/ctf/trap_effect(mob/living/living)
 	if(!is_ctf_target(living))
 		return
-	if(!(src.team in living.faction))
+	if(!living.has_faction(team))
 		to_chat(living, span_bolddanger("Stay out of the enemy spawn!"))
 		living.investigate_log("has died from entering the enemy spawn in CTF.", INVESTIGATE_DEATHS)
 		living.apply_damage(200) //Damage instead of instant death so we trigger the damage signal.
@@ -433,8 +432,6 @@
 /obj/structure/barricade/security/ctf
 	name = "barrier"
 	desc = "A barrier. Provides cover in fire fights."
-	deploy_time = 0
-	deploy_message = 0
 
 /obj/structure/barricade/security/ctf/make_debris()
 	new /obj/effect/ctf/dead_barricade(get_turf(src))

@@ -5,8 +5,8 @@ import {
   Button,
   ColorBox,
   Divider,
-  DmIcon,
   Icon,
+  ImageButton,
   LabeledList,
   NumberInput,
   ProgressBar,
@@ -15,12 +15,12 @@ import {
   Table,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Beaker, BeakerReagent } from './common/BeakerDisplay';
+import type { Beaker, BeakerReagent } from './common/BeakerDisplay';
 
 type Container = {
   icon: string;
@@ -65,6 +65,7 @@ type Data = {
   selectedContainerRef: string;
   selectedContainerVolume: number;
   selectedContainerCategory?: string;
+  hasBeakerInHand: BooleanLike;
 };
 
 export const ChemMaster = (props) => {
@@ -107,6 +108,7 @@ const ChemMasterContent = (props: {
     categories,
     selectedContainerVolume,
     selectedContainerCategory,
+    hasBeakerInHand,
   } = data;
 
   const [itemCount, setItemCount] = useState<number>(1);
@@ -119,7 +121,7 @@ const ChemMasterContent = (props: {
       <Section
         title="Beaker"
         buttons={
-          beaker && (
+          beaker ? (
             <Box>
               <Box inline color="label" mr={2}>
                 <AnimatedNumber value={beaker.currentVolume} initial={0} />
@@ -129,6 +131,20 @@ const ChemMasterContent = (props: {
                 Eject
               </Button>
             </Box>
+          ) : (
+            <Button
+              icon="eject"
+              onClick={() => act('insert')}
+              style={{
+                opacity: hasBeakerInHand ? 1 : 0.5,
+              }}
+              tooltip={
+                !hasBeakerInHand && 'You need to hold a container in your hand'
+              }
+              tooltipPosition="bottom-start"
+            >
+              Insert
+            </Button>
           )
         }
       >
@@ -214,10 +230,10 @@ const ChemMasterContent = (props: {
                 />
                 {selectedContainerCategory === 'pills' && (
                   <NumberInput
-                    unit={'s'}
+                    unit="s"
                     step={1}
                     value={selectedPillDuration}
-                    minValue={1}
+                    minValue={0}
                     maxValue={maxPillDuration}
                     onChange={(value) => {
                       act('setPillDuration', {
@@ -406,38 +422,30 @@ const ContainerButton = (props: CategoryButtonProps) => {
       key={container.ref}
       content={`${capitalize(container.name)}\xa0(${container.volume}u)`}
     >
-      <Button
-        overflow="hidden"
-        color={'transparent'}
-        backgroundColor={
+      <ImageButton
+        dmIcon={container.icon}
+        dmIconState={container.icon_state}
+        dmFallback={isPillPatch ? fallbackPillPatch : fallback}
+        imageSize={isPillPatch ? 48 : 64}
+        color={
           showPreferredContainer &&
           selectedContainerRef !== suggestedContainerRef && // if we selected the same container as the suggested then don't override color
           container.ref === suggestedContainerRef
             ? 'blue'
             : 'transparent'
         }
-        width={isPillPatch ? '32px' : '48px'}
-        height={isPillPatch ? '32px' : '48px'}
         selected={container.ref === selectedContainerRef}
         disabled={isPrinting}
+        m={isPillPatch ? '4px' : '2px'}
         p={0}
         onClick={() => {
           act('selectContainer', {
             ref: container.ref,
           });
         }}
-      >
-        <DmIcon
-          m={isPillPatch ? '-16px' : '-8px'}
-          fallback={isPillPatch ? fallbackPillPatch : fallback}
-          icon={container.icon}
-          icon_state={container.icon_state}
-          height="64px"
-          width="64px"
-        />
-      </Button>
+      />
     </Tooltip>
-  ) as any;
+  );
 };
 
 const AnalysisResults = (props: {
@@ -517,5 +525,5 @@ const GroupTitle = ({ title }) => {
         <Divider />
       </Stack.Item>
     </Stack>
-  ) as any;
+  );
 };

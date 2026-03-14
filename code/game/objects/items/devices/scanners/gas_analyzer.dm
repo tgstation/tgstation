@@ -16,7 +16,6 @@
 	throw_range = 7
 	tool_behaviour = TOOL_ANALYZER
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.2)
-	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
 	pickup_sound = 'sound/items/handling/gas_analyzer/gas_analyzer_pickup.ogg'
 	drop_sound = 'sound/items/handling/gas_analyzer/gas_analyzer_drop.ogg'
@@ -43,6 +42,9 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+/obj/item/analyzer/grind_results()
+	return list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 
 /obj/item/analyzer/equipped(mob/user, slot, initial)
 	. = ..()
@@ -80,7 +82,7 @@
 
 	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
-		if(W.barometer_predictable && (T.z in W.impacted_z_levels) && W.area_type == user_area.type && !(W.stage == END_STAGE))
+		if((W.weather_flags & WEATHER_BAROMETER) && (T.z in W.impacted_z_levels) && W.area_type == user_area.type && !(W.stage == END_STAGE))
 			ongoing_weather = W
 			break
 
@@ -90,7 +92,7 @@
 			return CLICK_ACTION_BLOCKING
 
 		to_chat(user, span_notice("The next [ongoing_weather] will hit in [butchertime(ongoing_weather.next_hit_time - world.time)]."))
-		if(ongoing_weather.aesthetic)
+		if(!(ongoing_weather.weather_flags & FUNCTIONAL_WEATHER))
 			to_chat(user, span_warning("[src]'s barometer function says that the next storm will breeze on by."))
 	else
 		var/next_hit = SSweather.next_hit_by_zlevel["[T.z]"]
@@ -148,6 +150,10 @@
 	ui_interact(user)
 
 /obj/item/analyzer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/effect/anomaly) && can_see(user, interacting_with, ranged_scan_distance))
+		var/obj/effect/anomaly/ranged_anomaly = interacting_with
+		ranged_anomaly.analyzer_act(user, src)
+		return ITEM_INTERACT_SUCCESS
 	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -230,5 +236,7 @@
 	worn_icon_state = "analyzer"
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2, /datum/material/gold = SMALL_MATERIAL_AMOUNT*3, /datum/material/bluespace=SMALL_MATERIAL_AMOUNT*2)
-	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	ranged_scan_distance = 15
+
+/obj/item/analyzer/ranged/grind_results()
+	return list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)

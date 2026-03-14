@@ -59,8 +59,9 @@
 
 	if(!advanced)
 		return
-	render_list += conditional_tooltip("<span class='info ml-1'>Subject is hallucinating.</span>", "Supply antipsychotic medication, such as [/datum/reagent/medicine/haloperidol::name] or [/datum/reagent/medicine/synaptizine::name].", tochat)
-	render_list += "<br>"
+	render_list += "<span class='info ml-1'>"
+	render_list += conditional_tooltip("Subject is hallucinating.", "Supply antipsychotic medication, such as [/datum/reagent/medicine/haloperidol::name] or [/datum/reagent/medicine/synaptizine::name].", tochat)
+	render_list += "</span><br>"
 
 /// Signal proc for [COMSIG_CARBON_CHECKING_BODYPART],
 /// checking bodyparts while hallucinating can cause them to appear more damaged than they are
@@ -92,8 +93,8 @@
 
 	var/lower_cd = lower_tick_interval
 	var/upper_cd = upper_tick_interval
-	if(!variable_tier)
-		var/seconds_left = (duration - world.time) / 10
+	if(variable_tier)
+		var/seconds_left = duration / 10
 		switch(seconds_left)
 			if(0 to 20)
 				max_hallucination_tier = HALLUCINATION_TIER_COMMON

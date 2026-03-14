@@ -2,14 +2,12 @@
 /obj/item/aiupgrade
 	name = "ai upgrade disk"
 	desc = "You really shouldn't be seeing this"
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/floppy_disks.dmi'
 	icon_state = "datadisk3"
 	///The upgrade that will be applied to the AI when installed
 	var/datum/ai_module/to_gift = /datum/ai_module
 
-/obj/item/aiupgrade/pre_attack(atom/target, mob/living/user, proximity)
-	if(!proximity)
-		return ..()
+/obj/item/aiupgrade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!isAI(target))
 		return ..()
 	var/mob/living/silicon/ai/AI = target
@@ -46,16 +44,14 @@
 /obj/item/malf_upgrade
 	name = "combat software upgrade"
 	desc = "A highly illegal, highly dangerous upgrade for artificial intelligence units, granting them a variety of powers as well as the ability to hack APCs.<br>This upgrade does not override any active laws, and must be applied directly to an active AI core."
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/floppy_disks.dmi'
 	icon_state = "datadisk3"
 
 /obj/item/malf_upgrade/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
-/obj/item/malf_upgrade/pre_attack(atom/A, mob/living/user, proximity)
-	if(!proximity)
-		return ..()
+/obj/item/malf_upgrade/pre_attack(atom/A, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!isAI(A))
 		return ..()
 	var/mob/living/silicon/ai/AI = A
@@ -89,7 +85,3 @@
 	name = "power transfer upgrade"
 	desc = "A legal upgrade that allows an artificial intelligence to directly provide power to APCs from a distance"
 	to_gift = /datum/ai_module/power_apc
-
-
-
-

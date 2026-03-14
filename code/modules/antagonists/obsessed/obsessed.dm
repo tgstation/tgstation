@@ -8,12 +8,12 @@
 	name = "Obsessed"
 	show_in_antagpanel = TRUE
 	antagpanel_category = ANTAG_GROUP_CREW
-	job_rank = ROLE_OBSESSED
+	pref_flag = ROLE_OBSESSED
 	show_to_ghosts = TRUE
 	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_SKIP_GLOBAL_LIST
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
 	suicide_cry = "FOR MY LOVE!!"
 	preview_outfit = /datum/outfit/obsessed
@@ -31,10 +31,9 @@
 	show_name_in_check_antagonists = TRUE
 	antagpanel_category = ANTAG_GROUP_CREW
 	show_in_roundend = FALSE
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
 	silent = TRUE
 	can_elimination_hijack = ELIMINATION_PREVENT
-	antag_flags = FLAG_FAKE_ANTAG
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/C = new_owner.current
@@ -59,17 +58,15 @@
 	. = ..()
 
 /datum/antagonist/obsessed/get_preview_icon()
-	var/mob/living/carbon/human/dummy/consistent/victim_dummy = new
-	victim_dummy.set_haircolor("#bb9966", update = FALSE)
-	victim_dummy.set_hairstyle("Messy", update = TRUE)
+	var/datum/universal_icon/obsessed_icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/blood_icon = uni_icon('icons/effects/blood.dmi', "uniformblood")
+	blood_icon.blend_color(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	obsessed_icon.blend_icon(blood_icon, ICON_OVERLAY)
 
-	var/icon/obsessed_icon = render_preview_outfit(preview_outfit)
-	obsessed_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+	var/datum/universal_icon/final_icon = finish_preview_icon(obsessed_icon)
 
-	var/icon/final_icon = finish_preview_icon(obsessed_icon)
-
-	final_icon.Blend(
-		icon('icons/ui/antags/obsessed.dmi', "obsession"),
+	final_icon.blend_icon(
+		uni_icon('icons/ui/antags/obsessed.dmi', "obsession"),
 		ICON_OVERLAY,
 		ANTAGONIST_PREVIEW_ICON_SIZE - 30,
 		20,
@@ -188,7 +185,7 @@
 /datum/objective/assassinate/obsessed/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
+		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role.title : english_list(target.get_special_roles())]."
 	else
 		message_admins("WARNING! [ADMIN_LOOKUPFLW(owner)] obsessed objectives forged without an obsession!")
 		explanation_text = "Free Objective"

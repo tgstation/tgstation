@@ -4,7 +4,8 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus
 	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
-	icon_state = "core_off"
+	icon_state = "core"
+	base_icon_state = "core"
 
 	name = "thermomachine"
 	desc = "Heats or cools gas in connected pipes."
@@ -15,10 +16,6 @@
 	layer = OBJ_LAYER
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	circuit = /obj/item/circuitboard/machine/thermomachine
-	///Vars for the state of the icon of the object (open, off, active)
-	var/icon_state_open
-	var/icon_state_off
-	var/icon_state_active
 	///Check if the machine has been activated
 	var/active = FALSE
 	///Check if fusion has started
@@ -34,9 +31,9 @@
 	. = ..()
 	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
-/obj/machinery/atmospherics/components/unary/hypertorus/attackby(obj/item/I, mob/user, params)
+/obj/machinery/atmospherics/components/unary/hypertorus/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!fusion_started)
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", base_icon_state, I))
 			return
 	if(default_change_direction_wrench(user, I))
 		return
@@ -51,28 +48,25 @@
 	if(tool.use_tool(src, user, 10 SECONDS, volume=30))
 		balloon_alert(user, "repaired")
 		cracked = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/crowbar_act(mob/living/user, obj/item/tool)
 	return crowbar_deconstruction_act(user, tool)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_icon_state()
 	if(panel_open)
-		icon_state = icon_state_open
+		icon_state = "[base_icon_state]_open"
 		return ..()
-	if(active)
-		icon_state = icon_state_active
-		return ..()
-	icon_state = icon_state_off
+	icon_state = base_icon_state
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_overlays()
 	. = ..()
-	if(!cracked)
-		return
-	var/image/crack = image(icon, icon_state = "crack")
-	crack.dir = dir
-	. += crack
+	if(cracked)
+		. += image(icon, "crack", dir = src.dir)
+	if(active)
+		. += "[base_icon_state]_active"
+		. += emissive_appearance(icon, "[base_icon_state]_active", src, alpha = src.alpha)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_layer()
 	return
@@ -80,28 +74,22 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 	name = "HFR fuel input port"
 	desc = "Input port for the Hypertorus Fusion Reactor, designed to take in fuels with the optimal fuel mix being a 50/50 split."
-	icon_state = "fuel_input_off"
-	icon_state_open = "fuel_input_open"
-	icon_state_off = "fuel_input_off"
-	icon_state_active = "fuel_input_active"
+	icon_state = "fuel_input"
+	base_icon_state = "fuel_input"
 	circuit = /obj/item/circuitboard/machine/HFR_fuel_input
 
 /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
 	name = "HFR waste output port"
 	desc = "Waste port for the Hypertorus Fusion Reactor, designed to output the hot waste gases coming from the core of the machine."
-	icon_state = "waste_output_off"
-	icon_state_open = "waste_output_open"
-	icon_state_off = "waste_output_off"
-	icon_state_active = "waste_output_active"
+	icon_state = "waste_output"
+	base_icon_state = "waste_output"
 	circuit = /obj/item/circuitboard/machine/HFR_waste_output
 
 /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
 	name = "HFR moderator input port"
 	desc = "Moderator port for the Hypertorus Fusion Reactor, designed to move gases inside the machine to cool and control the flow of the reaction."
-	icon_state = "moderator_input_off"
-	icon_state_open = "moderator_input_open"
-	icon_state_off = "moderator_input_off"
-	icon_state_active = "moderator_input_active"
+	icon_state = "moderator_input"
+	base_icon_state = "moderator_input"
 	circuit = /obj/item/circuitboard/machine/HFR_moderator_input
 
 /*
@@ -111,7 +99,8 @@
 	name = "hypertorus_core"
 	desc = "hypertorus_core"
 	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
-	icon_state = "core_off"
+	icon_state = "core"
+	base_icon_state = "core"
 	move_resist = INFINITY
 	anchored = TRUE
 	density = TRUE
@@ -119,18 +108,15 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	power_channel = AREA_USAGE_ENVIRON
 	var/active = FALSE
-	var/icon_state_open
-	var/icon_state_off
-	var/icon_state_active
 	var/fusion_started = FALSE
 
 /obj/machinery/hypertorus/examine(mob/user)
 	. = ..()
 	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
-/obj/machinery/hypertorus/attackby(obj/item/I, mob/user, params)
+/obj/machinery/hypertorus/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!fusion_started)
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", base_icon_state, I))
 			return
 	if(default_change_direction_wrench(user, I))
 		return
@@ -140,22 +126,23 @@
 
 /obj/machinery/hypertorus/update_icon_state()
 	if(panel_open)
-		icon_state = icon_state_open
+		icon_state = "[base_icon_state]_open"
 		return ..()
-	if(active)
-		icon_state = icon_state_active
-		return ..()
-	icon_state = icon_state_off
+	icon_state = base_icon_state
 	return ..()
+
+/obj/machinery/hypertorus/update_overlays()
+	. = ..()
+	if(active)
+		. += "[base_icon_state]_active"
+		. += emissive_appearance(icon, "[base_icon_state]_active", src, alpha = src.alpha)
 
 /obj/machinery/hypertorus/interface
 	name = "HFR interface"
 	desc = "Interface for the HFR to control the flow of the reaction."
-	icon_state = "interface_off"
+	icon_state = "interface"
+	base_icon_state = "interface"
 	circuit = /obj/item/circuitboard/machine/HFR_interface
-	icon_state_off = "interface_off"
-	icon_state_open = "interface_open"
-	icon_state_active = "interface_active"
 	/// Have we been activated at least once?
 	var/activated = FALSE
 	/// Reference to the core of our machine
@@ -393,11 +380,9 @@
 /obj/machinery/hypertorus/corner
 	name = "HFR corner"
 	desc = "Structural piece of the machine."
-	icon_state = "corner_off"
+	icon_state = "corner"
+	base_icon_state = "corner"
 	circuit = /obj/item/circuitboard/machine/HFR_corner
-	icon_state_off = "corner_off"
-	icon_state_open = "corner_open"
-	icon_state_active = "corner_active"
 
 /obj/item/paper/guides/jobs/atmos/hypertorus
 	name = "paper- 'Quick guide to safe handling of the HFR'"

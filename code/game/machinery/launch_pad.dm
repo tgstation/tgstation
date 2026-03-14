@@ -38,8 +38,8 @@
 /obj/machinery/launchpad/Initialize(mapload)
 	. = ..()
 	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_atom_to_hud(src)
 
 	update_hud()
 
@@ -57,8 +57,8 @@
 	return ..()
 
 /obj/machinery/launchpad/Destroy()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_atom_from_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_atom_from_hud(src)
 	return ..()
 
 /obj/machinery/launchpad/examine(mob/user)
@@ -75,7 +75,7 @@
 	balloon_alert(user, "saved to buffer")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/launchpad/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/launchpad/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(!stationary)
 		return ..()
 
@@ -104,9 +104,7 @@
 	update_indicator()
 
 	if(stationary)
-		AddComponent(/datum/component/usb_port, list(
-			/obj/item/circuit_component/bluespace_launchpad,
-		))
+		AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/bluespace_launchpad), only_root_path = TRUE))
 
 /// Whether this launchpad can send or receive.
 /obj/machinery/launchpad/proc/is_available()
@@ -186,9 +184,7 @@
 
 	if(!hidden)
 		playsound(target, 'sound/items/weapons/flash.ogg', 25, TRUE)
-		var/datum/effect_system/spark_spread/quantum/spark_system = new /datum/effect_system/spark_spread/quantum()
-		spark_system.set_up(5, TRUE, target)
-		spark_system.start()
+		do_sparks(5, TRUE, target, spark_type = /datum/effect_system/basic/spark_spread/quantum)
 
 	sleep(teleport_speed)
 
@@ -312,55 +308,15 @@
 			closed = TRUE
 			update_indicator()
 
-/obj/machinery/launchpad/briefcase/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/L = I
-		if(L.pad == WEAKREF(src)) //do not attempt to link when already linked
+/obj/machinery/launchpad/briefcase/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(item, /obj/item/launchpad_remote))
+		var/obj/item/launchpad_remote/launch = item
+		if(IS_WEAKREF_OF(src, launch.pad)) //do not attempt to link when already linked
 			return ..()
-		L.pad = WEAKREF(src)
-		to_chat(user, span_notice("You link [src] to [L]."))
+		launch.pad = WEAKREF(src)
+		to_chat(user, span_notice("You link [src] to [launch]."))
 	else
 		return ..()
-
-//Briefcase item that contains the launchpad.
-/obj/item/storage/briefcase/launchpad
-	var/obj/machinery/launchpad/briefcase/pad
-
-/obj/item/storage/briefcase/launchpad/Initialize(mapload)
-	pad = new(null, src) //spawns pad in nullspace to hide it from briefcase contents
-	. = ..()
-
-/obj/item/storage/briefcase/launchpad/Destroy()
-	if(!QDELETED(pad))
-		qdel(pad)
-	pad = null
-	return ..()
-
-/obj/item/storage/briefcase/launchpad/PopulateContents()
-	new /obj/item/pen(src)
-	new /obj/item/launchpad_remote(src, pad)
-
-/obj/item/storage/briefcase/launchpad/attack_self(mob/user)
-	if(!isturf(user.loc)) //no setting up in a locker
-		return
-	add_fingerprint(user)
-	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
-	if(do_after(user, 3 SECONDS, target = user))
-		pad.forceMove(get_turf(src))
-		pad.update_indicator()
-		pad.closed = FALSE
-		user.transferItemToLoc(src, pad, TRUE)
-		atom_storage.close_all()
-
-/obj/item/storage/briefcase/launchpad/tool_act(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/launchpad_remote))
-		return ..()
-	var/obj/item/launchpad_remote/remote = tool
-	if(remote.pad == WEAKREF(src.pad))
-		return ..()
-	remote.pad = WEAKREF(src.pad)
-	to_chat(user, span_notice("You link [pad] to [remote]."))
-	return ITEM_INTERACT_BLOCKING
 
 /obj/item/launchpad_remote
 	name = "folder"
@@ -394,7 +350,7 @@
 
 /obj/item/launchpad_remote/ui_data(mob/user)
 	var/list/data = list()
-	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
+	var/obj/machinery/launchpad/briefcase/our_pad = pad?.resolve()
 	data["has_pad"] = our_pad ? TRUE : FALSE
 	if(our_pad)
 		data["pad_closed"] = our_pad.closed
@@ -421,10 +377,11 @@
 	. = ..()
 	if(.)
 		return
-	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
+	var/obj/machinery/launchpad/briefcase/our_pad = pad?.resolve()
 	if(!our_pad)
 		pad = null
 		return TRUE
+	var/mob/user = ui.user
 	switch(action)
 		if("set_pos")
 			var/new_x = text2num(params["x"])
@@ -449,15 +406,15 @@
 			our_pad.display_name = new_name
 		if("remove")
 			. = TRUE
-			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("Confirm", "Abort")) == "I'm Sure")
-				our_pad = null
+			if(tgui_alert(user, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) == "I'm Sure")
+				pad = null
 		if("launch")
 			sending = TRUE
-			teleport(usr, our_pad)
+			teleport(user, our_pad)
 			. = TRUE
 		if("pull")
 			sending = FALSE
-			teleport(usr, our_pad)
+			teleport(user, our_pad)
 			. = TRUE
 
 #undef BEAM_FADE_TIME

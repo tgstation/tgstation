@@ -17,6 +17,10 @@
 
 /datum/mood_event/hungry
 	description = "I'm getting a bit hungry."
+	mood_change = -3
+
+/datum/mood_event/hungry_very
+	description = "I'm hungry!"
 	mood_change = -6
 
 /datum/mood_event/starving
@@ -69,6 +73,14 @@
 	description = "That was too dirty to eat..."
 	mood_change = -6
 	timeout = 4 MINUTES
+
+/datum/mood_event/disgust/dirty_food/add_effects(...)
+	if(HAS_PERSONALITY(owner, /datum/personality/ascetic))
+		mood_change *= 0.25
+		description = "That food was dirty, but edible."
+	if(HAS_PERSONALITY(owner, /datum/personality/gourmand))
+		mood_change *= 1.5
+		description = "That food was filthy, was it made in a dumpster?!"
 
 //Generic needs events
 /datum/mood_event/shower

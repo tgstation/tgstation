@@ -62,12 +62,7 @@
 	var/turf/screen_location = get_turf(screenmob)
 
 	if(SSmapping.level_trait(screen_location?.z, ZTRAIT_NOPARALLAX))
-		for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
-			white_space.hide_plane(screenmob)
 		return FALSE
-
-	for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
-		white_space.unhide_plane(screenmob)
 
 	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(viewmob, TRAIT_BYPASS_MEASURES))
 		return FALSE
@@ -180,17 +175,12 @@
 	// Update the movement direction of the parallax if necessary (for shuttles)
 	set_parallax_movedir(areaobj.parallax_movedir, FALSE, screenmob)
 
-	var/force = FALSE
 	if(!C.previous_turf || (C.previous_turf.z != posobj.z))
 		C.previous_turf = posobj
-		force = TRUE
 
 	//Doing it this way prevents parallax layers from "jumping" when you change Z-Levels.
 	var/offset_x = posobj.x - C.previous_turf.x
 	var/offset_y = posobj.y - C.previous_turf.y
-
-	if(!offset_x && !offset_y && !force)
-		return
 
 	var/glide_rate = round(ICON_SIZE_ALL / screenmob.glide_size * world.tick_lag, world.tick_lag)
 	C.previous_turf = posobj

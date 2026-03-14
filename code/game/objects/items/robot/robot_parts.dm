@@ -166,21 +166,20 @@
 	return TRUE
 
 //ADD
-/obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
+/obj/item/robot_suit/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/M = W
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
-			if (M.use(1))
-				var/obj/item/bot_assembly/ed209/B = new
-				B.forceMove(drop_location())
-				to_chat(user, span_notice("You arm the robot frame."))
-				var/holding_this = user.get_inactive_held_item() == src
-				qdel(src)
-				if (holding_this)
-					user.put_in_inactive_hand(B)
-			else
+			if (!M.use(1))
 				to_chat(user, span_warning("You need one sheet of iron to start building ED-209!"))
 				return
+			var/obj/item/bot_assembly/ed209/assembly = new(drop_location())
+			to_chat(user, span_notice("You arm the robot frame."))
+			var/held_index = user.is_holding(src)
+			qdel(src)
+			if (held_index)
+				user.put_in_hand(assembly, held_index)
+
 	else if(istype(W, /obj/item/bodypart/leg/left/robot))
 		if(l_leg)
 			return
@@ -321,7 +320,7 @@
 			brainmob.mind.transfer_to(O)
 			playsound(O.loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
 
-			if(O.mind && O.mind.special_role)
+			if(O.is_antag())
 				to_chat(O, span_userdanger("You have been robotized!"))
 				to_chat(O, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))
 

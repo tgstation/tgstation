@@ -14,7 +14,7 @@
 
 /obj/item/clothing/gloves/botanic_leather/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddElement(/datum/element/adjust_fishing_difficulty, -4)
 
 /datum/armor/gloves_botanic_leather
 	bio = 50

@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	default_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
-	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE
+	area_flags = NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE
 
 /// Mini car where people drive around in in their mangled corpse to heal a bit before they get dumped back on station
 /obj/effect/wisp_mobile
@@ -93,7 +93,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	. = ..()
 
 	gone.remove_traits(wisp_driver_traits, REF(src))
-	to_chat(gone, span_boldwarning("You feel it would be very bad to get caught again."))
+	to_chat(gone, span_boldwarning("You feel watched."))
 	qdel(src)
 
 /// Loop us around, maybe, if we're going to bump into a wall

@@ -47,11 +47,6 @@ type ByondType = {
   IS_BYOND: boolean;
 
   /**
-   * Version of Trident engine of Internet Explorer. Null if N/A.
-   */
-  TRIDENT: number | null;
-
-  /**
    * Version of Blink engine of WebView2. Null if N/A.
    */
   BLINK: number | null;
@@ -67,6 +62,11 @@ type ByondType = {
    * It is recommended that you keep this ON to detect hard to find bugs.
    */
   strictMode: boolean;
+
+  /**
+   * The external URL for the IndexedDB IFrame to use as the origin
+   */
+  storageCdn: string;
 
   /**
    * Makes a BYOND call.
@@ -177,7 +177,7 @@ type ByondType = {
   /**
    * Maps icons to their ref
    */
-  iconRefMap: Record<string, string>;
+  iconRefMap: Record<string, string | undefined>;
 
   /**
    * Downloads a blob, platform-agnostic
@@ -189,12 +189,11 @@ type ByondType = {
  * Object that provides access to Byond Skin API and is available in
  * any tgui application.
  */
-const Byond: ByondType;
+const Byond: ByondType = {};
 
 interface Window {
   Byond: ByondType;
-  __store__: Store<unknown, AnyAction>;
-  __augmentStack__: (store: Store) => StackAugmentor;
+  __augmentStack__: (stack: string, error?: Error) => string;
 
   // IE IndexedDB stuff.
   msIndexedDB: IDBFactory;
@@ -204,4 +203,6 @@ interface Window {
   hubStorage: Storage;
   domainStorage: Storage;
   serverStorage: Storage;
+
+  __chatRenderer__: any;
 }

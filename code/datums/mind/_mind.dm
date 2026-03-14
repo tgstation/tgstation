@@ -48,8 +48,6 @@
 
 	/// Job datum indicating the mind's role. This should always exist after initialization, as a reference to a singleton.
 	var/datum/job/assigned_role
-	var/special_role
-	var/list/restricted_roles = list()
 
 	/// List of antag datums on this mind
 	var/list/antag_datums
@@ -89,7 +87,9 @@
 	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
 	var/list/experience_multiplier_reasons = list()
 
-	/// A lazy list of statuses to add next to this mind in the traitor panel
+	/// A lazy list of roles to display that this mind has, stuff like "Traitor" or "Special Creature"
+	var/list/special_roles
+	/// A lazy list of statuses to display that this mind has, stuff like "Infected" or "Mindshielded"
 	var/list/special_statuses
 
 	///Assoc list of addiction values, key is the type of withdrawal (as singleton type), and the value is the amount of addiction points (as number)
@@ -101,6 +101,12 @@
 	/// A list to keep track of which books a person has read (to prevent people from reading the same book again and again for positive mood events)
 	var/list/book_titles_read
 
+	/// How desensitized are we to death - multiplier to magnitude of death moodlet.
+	/// Doesn't go beneath 0.1 (but could go above 1.0 if you really wanted)
+	var/desensitized_level = 1
+	/// Counts how many humanoid deaths we've seen
+	var/deaths_witnessed = 0
+
 /datum/mind/New(_key)
 	key = _key
 	init_known_skills()
@@ -109,7 +115,7 @@
 /datum/mind/Destroy()
 	SSticker.minds -= src
 	QDEL_NULL(antag_hud)
-	QDEL_LIST(memories)
+	QDEL_LIST_ASSOC_VAL(memories)
 	QDEL_NULL(memory_panel)
 	QDEL_LIST(antag_datums)
 	set_current(null)
@@ -124,7 +130,7 @@
 	.["memories"] = memories
 	.["antag_datums"] = antag_datums
 	.["holy_role"] = holy_role
-	.["special_role"] = special_role
+	.["special_role"] = jointext(get_special_roles(), " | ")
 	.["assigned_role"] = assigned_role.title
 	.["current"] = current
 
@@ -138,6 +144,9 @@
 	switch(var_name)
 		if(NAMEOF(src, assigned_role))
 			set_assigned_role(var_value)
+			. = TRUE
+		if(NAMEOF(src, holy_role))
+			set_holy_role(var_value)
 			. = TRUE
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
@@ -208,9 +217,9 @@
 		new_character.client.init_verbs() // re-initialize character specific verbs
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
-	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO, old_current)
+	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO, old_current, src)
 	if(!isnull(old_current))
-		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current)
+		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current, src)
 
 //I cannot trust you fucks to do this properly
 /datum/mind/proc/set_original_character(new_original_character)
@@ -472,25 +481,19 @@
 
 ///Adds addiction points to the specified addiction
 /datum/mind/proc/add_addiction_points(type, amount)
+	var/last_amount = LAZYACCESS(addiction_points, type) || 0
 	LAZYSET(addiction_points, type, min(LAZYACCESS(addiction_points, type) + amount, MAX_ADDICTION_POINTS))
-	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
-	return affected_addiction.on_gain_addiction_points(src)
+	var/new_amount = LAZYACCESS(addiction_points, type)
+	return GLOB.addictions[type].on_gain_addiction_points(src, new_amount, last_amount)
 
 ///Adds addiction points to the specified addiction
 /datum/mind/proc/remove_addiction_points(type, amount)
+	var/last_amount = LAZYACCESS(addiction_points, type) || 0
 	LAZYSET(addiction_points, type, max(LAZYACCESS(addiction_points, type) - amount, 0))
-	var/datum/addiction/affected_addiction = SSaddiction.all_addictions[type]
-	return affected_addiction.on_lose_addiction_points(src)
-
-/// Whether or not we can roll for midrounds, specifically checking if we have any major antag datums that should block it
-/datum/mind/proc/can_roll_midround(datum/antagonist/antag_type)
-	if(SEND_SIGNAL(current, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, src, antag_type) & CANCEL_ROLL)
-		return FALSE
-	for(var/datum/antagonist/antag as anything in antag_datums)
-		if(antag.block_midrounds)
-			return FALSE
-
-	return TRUE
+	var/new_amount = LAZYACCESS(addiction_points, type)
+	if(new_amount <= 0)
+		LAZYREMOVE(addiction_points, type)
+	return GLOB.addictions[type].on_lose_addiction_points(src, new_amount, last_amount)
 
 /// Setter for the assigned_role job datum.
 /datum/mind/proc/set_assigned_role(datum/job/new_role)
@@ -500,6 +503,24 @@
 		CRASH("set_assigned_role called with invalid role: [isnull(new_role) ? "null" : new_role]")
 	. = assigned_role
 	assigned_role = new_role
+	if(!isnull(current))
+		SEND_SIGNAL(current, COMSIG_MOB_MIND_SET_ROLE, new_role)
+
+///Sets your holy role, giving/taking away traits related to if you're gaining/losing it.
+/datum/mind/proc/set_holy_role(new_holy_role)
+	if(holy_role == new_holy_role)
+		return
+	var/was_holy = holy_role
+	holy_role = new_holy_role
+	if(holy_role)
+		ADD_TRAIT(src, TRAIT_SEE_BLESSED_TILES, HOLY_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_SEE_BLESSED_TILES, HOLY_TRAIT)
+	SEND_SIGNAL(current, COMSIG_MOB_MIND_SET_HOLY_ROLE, new_holy_role)
+	//the signal stops tracking when losing holy roles, but since we're gaining it, give us our HUDs if we're becoming holy.
+	if(!was_holy && holy_role)
+		for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+			blessed_hud.check_hud(current)
 
 /// Sets us to the passed job datum, then greets them to their new job.
 /// Use this one for when you're assigning this mind to a new job for the first time,
@@ -522,3 +543,30 @@
 
 /mob/dead/observer/sync_mind()
 	return
+
+/// Iterates over this mind's assigned role's departments and returns a list of their primary work areas.
+/datum/mind/proc/get_work_areas()
+	var/list/work_areas = list()
+	for(var/department in assigned_role.departments_list)
+		var/datum/job_department/dep = SSjob.joinable_departments_by_type[department]
+		if(dep.primary_work_area)
+			work_areas += dep.primary_work_area
+
+	return work_areas
+
+/// Called when we witness the death of a humanoid mob.
+/datum/mind/proc/witnessed_death(mob/living/dead_mob)
+	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB) || !ishuman(dead_mob) || (dead_mob.flags_1 & ADMIN_SPAWNED_1))
+		return
+
+	// every humanoid death gives us % resistance to the next one
+	desensitized_level = max(desensitized_level - DESENSITIZED_REDUCTION_PER_DEATH, DESENSITIZED_MINIMUM)
+	deaths_witnessed += 1
+
+	// if you manage to gain 90% resistance to death moodlets in one shift, you get an "achievement"
+	if(deaths_witnessed * DESENSITIZED_REDUCTION_PER_DEATH >= (1.0 - DESENSITIZED_MINIMUM))
+		current.client?.give_award(/datum/award/achievement/misc/desensitized, current)
+
+/// Called when this mob is killed, but not gibbed or dusted
+/datum/mind/proc/experienced_death()
+	witnessed_death(current) // you get desensitized for your own death!

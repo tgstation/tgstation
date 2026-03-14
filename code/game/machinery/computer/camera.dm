@@ -7,6 +7,7 @@
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/security
 	light_color = COLOR_SOFT_RED
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_SIGHT
 
 	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/active_camera
@@ -16,8 +17,6 @@
 
 	// Stuff needed to render the map
 	var/atom/movable/screen/map_view/camera/cam_screen
-
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/security/Initialize(mapload)
 	. = ..()
@@ -90,7 +89,7 @@
 	var/list/data = list()
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
-	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
+	data["cameras"] = SScameras.get_available_cameras_data(network)
 	return data
 
 /obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -99,12 +98,14 @@
 		return
 
 	if(action == "switch_camera")
-		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
+		active_camera?.on_stop_watching(src)
+		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
 		active_camera = selected_camera
 
 		if(isnull(active_camera))
 			return TRUE
 
+		active_camera.on_start_watching(src)
 		update_active_camera_screen()
 
 		return TRUE
@@ -149,9 +150,10 @@
 	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
 	// Unregister map objects
-	cam_screen.hide_from(user)
+	cam_screen?.hide_from(user)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
+		active_camera?.on_stop_watching(src)
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)

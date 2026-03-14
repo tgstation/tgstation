@@ -93,7 +93,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/seed_extractor/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/seed_extractor/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!isliving(user) || user.combat_mode)
 		return ..()
 
@@ -125,7 +125,7 @@
 
 	var/list/generated_seeds = seedify(attacking_item, -1, src, user)
 	if(!isnull(generated_seeds))
-		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			//find all seeds lying on the turf and add them to the machine
 			for(var/obj/item/seeds/seed as anything in generated_seeds)
 				//machine is full
@@ -214,10 +214,10 @@
 			var/obj/item/food/grown/product = new to_add.product
 			var/datum/reagent/product_distill_reagent = product.distill_reagent
 			seed_data["distill_reagent"] = initial(product_distill_reagent.name)
-			var/datum/reagent/product_juice_typepath = product.juice_typepath
+			var/datum/reagent/product_juice_typepath = product.juice_typepath()
 			seed_data["juice_name"] = initial(product_juice_typepath.name)
 			seed_data["grind_results"] = list()
-			for(var/datum/reagent/reagent as anything in product.grind_results)
+			for(var/datum/reagent/reagent as anything in product.grind_results())
 				seed_data["grind_results"] += initial(reagent.name)
 			qdel(product)
 

@@ -141,7 +141,7 @@
 		var/move_mode = old_turfs[oldT]
 
 		if(move_mode & MOVE_TURF)
-			oldT.onShuttleMove(newT, movement_force, movement_direction) //turfs
+			oldT.onShuttleMove(newT, movement_force, movement_direction, move_mode & MOVE_AREA) //turfs
 
 		if(move_mode & MOVE_AREA)
 			var/area/shuttle_area = oldT.loc
@@ -154,6 +154,9 @@
 					continue
 				moving_atom.onShuttleMove(newT, oldT, movement_force, movement_direction, old_dock, src) //atoms
 				moved_atoms[moving_atom] = oldT
+
+		if(move_mode & MOVE_SPECIAL)
+			SEND_SIGNAL(oldT, COMSIG_SHUTTLE_TURF_ON_MOVE_SPECIAL, newT, movement_force, movement_direction, old_dock, src)
 
 
 /obj/docking_port/mobile/proc/cleanup_runway(obj/docking_port/stationary/new_dock, list/old_turfs, list/new_turfs, list/areas_to_move, list/underlying_areas, list/moved_atoms, rotation, movement_direction, area/fallback_area)
@@ -221,7 +224,7 @@
 
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
-		if(!(old_turfs[old_turfs[i]] & MOVE_CONTENTS | MOVE_TURF))
+		if(!(old_turfs[old_turfs[i]] & (MOVE_CONTENTS|MOVE_TURF)))
 			continue
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]

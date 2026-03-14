@@ -25,7 +25,7 @@
 /atom/proc/balloon_alert_to_viewers(message, self_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	var/list/hearers = get_hearers_in_view(vision_distance, src)
+	var/list/hearers = get_hearers_in_view(vision_distance, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 	hearers -= ignored_mobs
 
 	for (var/mob/hearer in hearers)
@@ -42,6 +42,10 @@
 
 	var/client/viewer_client = viewer?.client
 	if (isnull(viewer_client))
+		return
+
+	if(!runechat_prefs_check(viewer, EMOTE_MESSAGE))
+		to_chat(viewer, span_emote("[icon2html(src, viewer)] [src.name]: [text]"))
 		return
 
 	var/image/balloon_alert = image(loc = isturf(src) ? src : get_atom_on_turf(src), layer = ABOVE_MOB_LAYER)

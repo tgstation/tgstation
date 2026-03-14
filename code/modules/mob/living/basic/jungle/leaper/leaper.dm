@@ -25,7 +25,7 @@
 
 	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	status_flags = NONE
+	status_flags = CANSTUN
 	lighting_cutoff_red = 5
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 25
@@ -42,7 +42,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/move,
 		/datum/pet_command/free,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/untargeted_ability/blood_rain,
 		/datum/pet_command/untargeted_ability/summon_toad,
 		/datum/pet_command/attack,

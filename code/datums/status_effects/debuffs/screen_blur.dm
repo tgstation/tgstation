@@ -49,7 +49,7 @@
 		game_plane_master_controller.remove_filter("eye_blur")
 		return
 
-	var/time_left_in_seconds = (duration - world.time) / (1 SECONDS)
+	var/time_left_in_seconds = duration / 10
 	var/amount_of_blur = clamp(time_left_in_seconds * BLUR_DURATION_TO_INTENSITY, 0.6, 3)
 	game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(amount_of_blur))
 

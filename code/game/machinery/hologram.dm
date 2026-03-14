@@ -189,13 +189,13 @@ Possible to do for anyone motivated enough:
 	for(var/datum/holocall/holocall_to_disconnect as anything in holo_calls)
 		holocall_to_disconnect.ConnectionFailure(src)
 
-	for (var/I in masters)
-		clear_holo(I)
-
 	if(replay_mode)
 		replay_stop()
 	if(record_mode)
 		record_stop()
+
+	for (var/I in masters)
+		clear_holo(I)
 
 	QDEL_NULL(disk)
 
@@ -216,6 +216,11 @@ Possible to do for anyone motivated enough:
 	. = ..()
 	if(outgoing_call)
 		outgoing_call.ConnectionFailure(src)
+
+/obj/machinery/holopad/on_deconstruction(dissassembled)
+	disk?.forceMove(drop_location())
+	disk = null
+	return ..()
 
 /obj/machinery/holopad/RefreshParts()
 	. = ..()
@@ -258,24 +263,24 @@ Possible to do for anyone motivated enough:
 	if(record_mode)
 		record_stop()
 
-/obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
+/obj/machinery/holopad/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", item))
 		return
 
-	if(default_pry_open(P, close_after_pry = TRUE, closed_density = FALSE))
+	if(default_pry_open(item, close_after_pry = TRUE, closed_density = FALSE))
 		return
 
-	if(default_deconstruction_crowbar(P))
+	if(default_deconstruction_crowbar(item))
 		return
 
-	if(istype(P,/obj/item/disk/holodisk))
+	if(istype(item, /obj/item/disk/holodisk))
 		if(disk)
 			to_chat(user,span_warning("There's already a disk inside [src]!"))
 			return
-		if (!user.transferItemToLoc(P,src))
+		if (!user.transferItemToLoc(item, src))
 			return
-		to_chat(user,span_notice("You insert [P] into [src]."))
-		disk = P
+		to_chat(user,span_notice("You insert [item] into [src]."))
+		disk = item
 		return
 
 	return ..()
@@ -575,22 +580,22 @@ Possible to do for anyone motivated enough:
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+/obj/machinery/holopad/Hear(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(speaker && LAZYLEN(masters) && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				master.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
+				master.relay_speech(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 	for(var/datum/holocall/holocall_to_update as anything in holo_calls)
 		if(holocall_to_update.connected_holopad == src)//if we answered this call originating from another holopad
 			if(speaker == holocall_to_update.hologram && holocall_to_update.user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 				holocall_to_update.user.create_chat_message(speaker, message_language, raw_message, spans)
 			else
-				holocall_to_update.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, message_range = INFINITY)
+				holocall_to_update.user.Hear(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range = INFINITY)
 
 	if(outgoing_call?.hologram && speaker == outgoing_call.user)
-		outgoing_call.hologram.say(raw_message, sanitize = FALSE)
+		outgoing_call.hologram.say(raw_message, spans = spans, sanitize = FALSE, language = message_language, message_mods = message_mods)
 
 	if(record_mode && speaker == record_user)
 		record_message(speaker, raw_message, message_language)
@@ -870,6 +875,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	initial_language_holder = /datum/language_holder/universal
 	var/mob/living/Impersonation
 	var/datum/holocall/HC
+
+/obj/effect/overlay/holo_pad_hologram/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/holographic_nature)
 
 /obj/effect/overlay/holo_pad_hologram/Destroy()
 	Impersonation = null

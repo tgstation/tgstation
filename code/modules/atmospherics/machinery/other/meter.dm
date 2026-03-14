@@ -1,8 +1,9 @@
 /obj/machinery/meter
 	name = "gas flow meter"
 	desc = "It measures something."
-	icon = 'icons/obj/pipes_n_cables/meter.dmi'
-	icon_state = "meter"
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/meter"
+	post_init_icon_state = "meter"
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
@@ -35,9 +36,11 @@
 
 	if(!target)
 		reattach_to_layer()
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/atmos_meter,
-	))
+	AddComponent(/datum/component/usb_port, \
+		typecacheof(list(
+			/obj/item/circuit_component/atmos_meter,
+		), only_root_path = TRUE) \
+	)
 	return ..()
 
 /obj/machinery/meter/proc/reattach_to_layer()
@@ -198,12 +201,15 @@
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 // why are you yelling?
 /obj/machinery/meter/turf
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/meter/turf/reattach_to_layer()
 	target = loc
 
 /obj/machinery/meter/layer2
 	target_layer = 2
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/meter/layer4
 	target_layer = 4
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1

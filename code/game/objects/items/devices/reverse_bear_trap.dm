@@ -101,14 +101,14 @@
 	if(!do_after(user, 3 SECONDS, target = target) || target.get_item_by_slot(ITEM_SLOT_HEAD))
 		return
 	target.visible_message(span_warning("[user] forces and locks [src] onto [target]'s head!"), \
-		span_userdanger("[target] locks [src] onto your head!"), "<i>You hear a click, and then a timer ticking down.</i>")
+		span_userdanger("[user] locks [src] onto your head!"), "<i>You hear a click, and then a timer ticking down.</i>")
 	to_chat(user, span_danger("You force [src] onto [target]'s head and click the padlock shut."))
 
 	user.dropItemToGround(src)
 	target.equip_to_slot_if_possible(src, ITEM_SLOT_HEAD)
 	arm()
 	notify_ghosts(
-		"[user] put a reverse bear trap on [target]!",
+		"[user.real_name] put a reverse bear trap on [target.real_name]!",
 		source = src,
 		header = "Reverse bear trap armed",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,

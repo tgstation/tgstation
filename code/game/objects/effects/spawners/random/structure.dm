@@ -116,6 +116,7 @@
 	icon_state = "crate"
 	loot = list(
 		/obj/structure/closet/crate = 20,
+		/obj/structure/closet/crate/cardboard = 5,
 		/obj/structure/closet/crate/wooden = 1,
 		/obj/structure/closet/crate/internals = 1,
 		/obj/structure/closet/crate/medical = 1,
@@ -208,6 +209,11 @@
 		/obj/structure/barricade/wooden,
 		/obj/structure/barricade/wooden/crude,
 	)
+
+/obj/effect/spawner/random/structure/barricade/crude
+	name = "crude barricade spawner"
+	icon_state = "barricade_crude"
+	loot = list(/obj/structure/barricade/wooden/crude)
 
 /obj/effect/spawner/random/structure/billboard
 	name = "billboard spawner"

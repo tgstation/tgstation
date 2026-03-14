@@ -47,6 +47,9 @@
 ///The base modifier a boulder's size grants to the mining skill.
 #define MINING_SKILL_BOULDER_SIZE_XP 10
 
+///The base modifier for how much experience is earned from misc athletics interactions
+#define ATHLETICS_SKILL_MISC_EXP 5
+
 // Skillchip categories
 //Various skillchip categories. Use these when setting which categories a skillchip restricts being paired with
 //while using the SKILLCHIP_RESTRICTED_CATEGORIES flag

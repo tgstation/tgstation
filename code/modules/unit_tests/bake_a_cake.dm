@@ -32,16 +32,31 @@
 	human.mind = new /datum/mind(null) // Add brain for the food buff
 
 	// It's a piece of cake to bake a pretty cake
+	var/sanity = 0
 	while(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/sugar) < sugar_required && beaker.reagents.total_volume < total_volume)
 		sugar_bag.melee_attack_chain(human, beaker)
+		sanity++
+		if(sanity > 50)
+			TEST_FAIL("Failed to add sugar to beaker!")
+			return
+	sanity = 0
 	while(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/flour) < flour_required && beaker.reagents.total_volume < total_volume)
 		flour_bag.melee_attack_chain(human, beaker)
+		sanity++
+		if(sanity > 50)
+			TEST_FAIL("Failed to add flour to beaker!")
+			return
+	sanity = 0
 	while((beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk) < eggyolk_required \
 	|| beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggwhite) < eggwhite_required) \
 	&& beaker.reagents.total_volume < total_volume \
 	&& beaker.reagents.total_volume >= (sugar_required + flour_required)) // Make sure that we won't miss the reaction
 		var/obj/item/egg = egg_box.contents[1]
-		egg.melee_attack_chain(human, beaker, RIGHT_CLICK)
+		egg.melee_attack_chain(human, beaker, list(RIGHT_CLICK = TRUE))
+		sanity++
+		if(sanity > 50)
+			TEST_FAIL("Failed to add egg to beaker!")
+			return
 	var/obj/item/food/cake_batter = locate(/obj/item/food/cakebatter) in table_loc
 	TEST_ASSERT_NOTNULL(cake_batter, "Failed making cake batter!")
 	TEST_ASSERT_EQUAL(beaker.reagents.total_volume, 0, "Cake batter did not consume all beaker reagents!")
@@ -54,14 +69,14 @@
 	the_oven.attack_hand(human)
 	var/obj/item/plate/oven_tray/oven_tray = locate(/obj/item/plate/oven_tray) in the_oven.contents
 	TEST_ASSERT_NOTNULL(oven_tray, "The oven doesn't have a tray!")
-	cake_batter.melee_attack_chain(human, oven_tray, list2params(list(ICON_X = 0, ICON_Y = 0)))
+	cake_batter.melee_attack_chain(human, oven_tray, list(ICON_X = "0", ICON_Y = "0"))
 	the_oven.attack_hand(human)
 	the_oven.process(90 SECONDS) // Bake it
 	the_oven.attack_hand(human)
 	var/obj/item/food/cake/plain/cake = locate(/obj/item/food/cake/plain) in oven_tray.contents
 	TEST_ASSERT_NOTNULL(cake, "Didn't manage to bake a cake!")
 
-	cake.melee_attack_chain(human, the_table, list2params(list(ICON_X = 0, ICON_Y = 0)))
+	cake.melee_attack_chain(human, the_table, list(ICON_X = "0", ICON_Y = "0"))
 	a_knife.melee_attack_chain(human, cake)
 	var/obj/item/food/cakeslice/plain/cake_slice = locate(/obj/item/food/cakeslice/plain) in table_loc
 	TEST_ASSERT_NOTNULL(cake_slice, "Didn't manage to cut the cake!")

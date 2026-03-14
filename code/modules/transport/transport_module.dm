@@ -42,7 +42,7 @@
 	var/list/atom/movable/changed_gliders = list()
 
 	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag. only used to give to the transport_controller
-	var/speed_limiter = 0.5
+	var/internal_movement_delay = 0.5
 
 	///master datum that controls our movement. in general /transport/linear subtypes control moving themselves, and
 	/// /datum/transport_controller instances control moving the entire tram and any behavior associated with that.
@@ -136,7 +136,7 @@
 
 /obj/structure/transport/linear/proc/add_item_on_transport(datum/source, atom/movable/new_transport_contents)
 	SIGNAL_HANDLER
-	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/transport/linear, /mob/eye))
+	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/transport/linear, /mob/eye, /obj/effect/gravity_fluff_field))
 	if(is_type_in_typecache(new_transport_contents, blacklisted_types) || new_transport_contents.invisibility == INVISIBILITY_ABSTRACT || HAS_TRAIT(new_transport_contents, TRAIT_UNDERFLOOR)) //prevents the tram from stealing things like landmarks
 		return FALSE
 	if(new_transport_contents in transport_contents)
@@ -415,11 +415,13 @@
 			for(var/mob/living/victim_living in dest_turf.contents)
 				var/damage_multiplier = victim_living.maxHealth * 0.01
 				var/extra_ouch = FALSE // if emagged you're gonna have a really bad time
-				if(speed_limiter == 0.5) // slow trams don't cause extra damage
+				if(internal_movement_delay <= 1) // slow trams don't cause extra damage
 					for(var/obj/structure/tram/spoiler/my_spoiler in transport_contents)
+						if(istype(victim_living.buckled, /obj/structure/fluff/tram_rail))
+							extra_ouch = TRUE
+							break
 						if(get_dist(my_spoiler, victim_living) != 1)
 							continue
-
 						if(my_spoiler.deployed)
 							extra_ouch = TRUE
 							break
@@ -427,31 +429,31 @@
 				if(transport_controller_datum.ignored_smashthroughs[victim_living.type])
 					continue
 				to_chat(victim_living, span_userdanger("[src] collides into you!"))
+				SEND_SIGNAL(victim_living, COMSIG_LIVING_HIT_BY_TRAM, src)
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 				var/damage = 0
-				switch(extra_ouch)
-					if(TRUE)
-						playsound(src, 'sound/effects/grillehit.ogg', 50, TRUE)
-						var/obj/item/bodypart/head/head = victim_living.get_bodypart("head")
-						if(head)
-							log_combat(src, victim_living, "beheaded")
-							head.dismember()
-							victim_living.regenerate_icons()
-							add_overlay(mutable_appearance(icon, "blood_overlay"))
-							register_collision(points = 3)
 
-					if(FALSE)
-						log_combat(src, victim_living, "collided with")
-						if(prob(15)) //sorry buddy, luck wasn't on your side
-							damage = 29 * collision_lethality * damage_multiplier
-						else
-							damage = rand(7, 21) * collision_lethality * damage_multiplier
-						victim_living.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
-						victim_living.apply_damage(3 * damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = 21)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 14)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 14)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 14)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
+				log_combat(src, victim_living, "collided with")
+				if(prob(15)) //sorry buddy, luck wasn't on your side
+					damage = 29 * collision_lethality * damage_multiplier
+				else
+					damage = rand(7, 21) * collision_lethality * damage_multiplier
+				victim_living.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+				victim_living.apply_damage(3 * damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = 21)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 14)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 14)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 14)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
+
+				if (extra_ouch)
+					playsound(src, 'sound/effects/grillehit.ogg', 50, TRUE)
+					var/obj/item/bodypart/head/head = victim_living.get_bodypart("head")
+					if(head)
+						log_combat(src, victim_living, "beheaded")
+						head.dismember()
+						victim_living.regenerate_icons()
+						add_overlay(mutable_appearance(icon, "blood_overlay"))
+						register_collision(points = 3)
 
 				if(QDELETED(victim_living)) //in case it was a mob that dels on death
 					continue
@@ -743,7 +745,7 @@
 
 	return open_lift_radial(user)
 
-/obj/structure/transport/linear/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/transport/linear/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!radial_travel)
 		return ..()
 
@@ -910,7 +912,6 @@
 			UnregisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 
 	src.travelling = travelling
-	SEND_SIGNAL(src, COMSIG_TRANSPORT_ACTIVE, travelling)
 
 /obj/structure/transport/linear/tram/set_currently_z_moving()
 	return FALSE //trams can never z fall and shouldnt waste any processing time trying to do so
@@ -970,4 +971,3 @@
 
 /obj/structure/transport/linear/tram/slow
 	transport_controller_type = /datum/transport_controller/linear/tram/slow
-	speed_limiter = /datum/transport_controller/linear/tram/slow::speed_limiter

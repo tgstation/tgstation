@@ -43,7 +43,7 @@
 			[length(type_initial_names) ? ", such as [english_list(type_initial_names, and_text = "or ", final_comma_text = ", ")]" : ""].")
 
 
-/obj/item/ammo_casing/foam_dart/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/ammo_casing/foam_dart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (attacking_item.tool_behaviour != TOOL_SCREWDRIVER || modified)
 		return ..()
 

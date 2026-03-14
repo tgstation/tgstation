@@ -2,11 +2,11 @@
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
-///from base of atom/attackby(): (/obj/item, /mob/living, params)
+///from base of atom/attackby(): (/obj/item, /mob/living, list/modifiers)
 #define COMSIG_ATOM_ATTACKBY "atom_attackby"
-/// From base of [atom/proc/attacby_secondary()]: (/obj/item/weapon, /mob/user, params)
+/// From base of [atom/proc/attacby_secondary()]: (/obj/item/weapon, /mob/user, list/modifiers)
 #define COMSIG_ATOM_ATTACKBY_SECONDARY "atom_attackby_secondary"
-/// From [/item/attack()], sent by an atom which was just attacked by an item: (/obj/item/weapon, /mob/user, proximity_flag, click_parameters)
+/// From [/item/attack()], sent by an atom which was just attacked by an item: (/obj/item/weapon, /mob/user, list/modifiers)
 #define COMSIG_ATOM_AFTER_ATTACKEDBY "atom_after_attackby"
 /// From base of [/atom/proc/attack_hand_secondary]: (mob/user, list/modifiers) - Called when the atom receives a secondary unarmed attack.
 #define COMSIG_ATOM_ATTACK_HAND_SECONDARY "atom_attack_hand_secondary"
@@ -14,7 +14,7 @@
 	#define COMPONENT_NO_AFTERATTACK (1<<0)
 ///from base of atom/attack_hulk(): (/mob/living/carbon/human)
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"
-///from base of atom/animal_attack(): (/mob/user)
+///from base of atom/animal_attack(): (/mob/user, list/modifiers)
 #define COMSIG_ATOM_ATTACK_ANIMAL "attack_animal"
 //from base of atom/attack_basic_mob(): (/mob/user)
 #define COMSIG_ATOM_ATTACK_BASIC_MOB "attack_basic_mob"
@@ -43,14 +43,18 @@
 #define COMSIG_ATOM_ATTACK_GHOST "atom_attack_ghost"
 ///from base of atom/attack_hand(): (mob/user, list/modifiers)
 #define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"
-///from base of atom/attack_paw(): (mob/user)
+///from base of atom/attack_paw(): (mob/user, list/modifiers)
 #define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
 ///from base of atom/mech_melee_attack(): (obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 #define COMSIG_ATOM_ATTACK_MECH "atom_attack_mech"
-/// from base of atom/attack_robot(): (mob/user)
+/// from base of atom/attack_robot(): (mob/user, list/modifiers)
 #define COMSIG_ATOM_ATTACK_ROBOT "atom_attack_robot"
 /// from base of atom/attack_robot_secondary(): (mob/user)
 #define COMSIG_ATOM_ATTACK_ROBOT_SECONDARY "atom_attack_robot_secondary"
+/// from base of atom/attack_ai(): (mob/user, params)
+#define COMSIG_ATOM_ATTACK_AI "atom_attack_ai"
+/// from base of atom/attack_larva(): (mob/user, list/modifiers)
+#define COMSIG_ATOM_ATTACK_LARVA "atom_attack_larva"
 ///from relay_attackers element: (atom/attacker, attack_flags)
 #define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"
 ///Called before a atom gets something tilted on them. If [COMPONENT_IMMUNE_TO_TILT_AND_CRUSH] is returned in a signal, the atom will be unaffected: (atom/target, atom/source)
@@ -70,3 +74,10 @@
 
 /// Called on the atom being hit, from /datum/component/anti_magic/on_attack() : (obj/item/weapon, mob/user, antimagic_flags)
 #define COMSIG_ATOM_HOLYATTACK "atom_holyattacked"
+
+/// Called from [/mob/living/proc/send_item_attack_message()]: (obj/item/weapon, /mob/living/victim, mob/living/attacker)
+#define COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT "send_item_attack_message_object"
+/// Called from [/mob/living/proc/send_item_attack_message()]: (mob/living/victim, obj/item/weapon, mob/living/user)
+#define COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON "send_item_attack_message_carbon"
+	/// Return value if the hitby messages are changed.
+	#define SIGNAL_MESSAGE_MODIFIED (1<<0)

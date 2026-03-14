@@ -4,6 +4,7 @@
 // Sorted alphabetically
 #define span_abductor(str) ("<span class='abductor'>" + str + "</span>")
 #define span_admin(str) ("<span class='admin'>" + str + "</span>")
+#define span_adminprefix(str) ("<span class='admin prefix'>" + str + "</span>")
 #define span_adminhelp(str) ("<span class='adminhelp'>" + str + "</span>")
 #define span_adminnotice(str) ("<span class='adminnotice'>" + str + "</span>")
 #define span_adminobserverooc(str) ("<span class='adminobserverooc'>" + str + "</span>")
@@ -145,11 +146,15 @@
 #define span_tinydanger(str) ("<span class='tinydanger'>" + str + "</span>")
 #define span_tinynotice(str) ("<span class='tinynotice'>" + str + "</span>")
 #define span_tinynoticeital(str) ("<span class='tinynoticeital'>" + str + "</span>")
+#define span_tinynicegreen(str)	("<span class='tinynicegreen'>" + str + "</span>")
 #define span_unconscious(str) ("<span class='unconscious'>" + str + "</span>")
 #define span_userdanger(str) ("<span class='userdanger'>" + str + "</span>")
 #define span_warning(str) ("<span class='warning'>" + str + "</span>")
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
+#define span_notice_ml(text) "<span class='notice ml-1'>[text]</span>"
+#define span_danger_ml(text) "<span class='danger ml-1'>[text]</span>"
+#define span_info_ml(text) "<span class='info ml-1'>[text]</span>"
 
 // Spans that use embedded tgui components:
 // Sorted alphabetically

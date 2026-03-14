@@ -14,7 +14,7 @@
 	response_disarm_simple = "gently push aside"
 	initial_language_holder = /datum/language_holder/spider
 	melee_attack_cooldown = CLICK_CD_MELEE
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 3, STAMINA = 1, OXY = 1)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
 	unsuitable_cold_damage = 4
@@ -30,6 +30,11 @@
 	lighting_cutoff_red = 22
 	lighting_cutoff_green = 5
 	lighting_cutoff_blue = 5
+	max_stamina = 200
+	stamina_crit_threshold = BASIC_MOB_NO_STAMCRIT
+	stamina_recovery = 5
+	max_stamina_slowdown = 12
+
 	/// Speed modifier to apply if controlled by a human player
 	var/player_speed_modifier = -4
 	/// What reagent the mob injects targets with
@@ -50,6 +55,7 @@
 	var/apply_spider_antag = TRUE
 
 /datum/emote/spider
+	abstract_type = /datum/emote/spider
 	mob_type_allowed_typecache = /mob/living/basic/spider
 	mob_type_blacklist_typecache = list()
 
@@ -147,11 +153,11 @@
 
 	var/mob/living/basic/spider/giant/grown = change_mob_type(grow_as, get_turf(src), initial(grow_as.name))
 	ADD_TRAIT(grown, TRAIT_WAS_EVOLVED, REF(src))
-	grown.faction = faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM(grown, src)
 	grown.directive = directive
 	grown.set_name()
-	grown.setBruteLoss(getBruteLoss())
-	grown.setFireLoss(getFireLoss())
+	grown.set_brute_loss(get_brute_loss())
+	grown.set_fire_loss(get_fire_loss())
 	qdel(src)
 
 /**
@@ -188,7 +194,7 @@
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/perform_trick_sequence,
 	)
 

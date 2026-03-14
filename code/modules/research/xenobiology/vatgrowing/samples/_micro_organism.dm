@@ -29,6 +29,8 @@
 	var/atom/resulting_atom
 	///The number of resulting atoms
 	var/resulting_atom_count = 1
+	/// Counts how many times this cell line has been grown successfully
+	VAR_FINAL/grow_count = 0
 
 ///Handles growth of the micro_organism. This only runs if the micro organism is in the growing vat. Reagents is the growing vats reagents
 /datum/micro_organism/cell_line/proc/handle_growth(obj/machinery/vatgrower/vat)
@@ -75,40 +77,27 @@
 
 ///Called once a cell line reaches 100 growth. Then we check if any cell_line is too far so we can perform an epic fail roll
 /datum/micro_organism/cell_line/proc/finish_growing(obj/machinery/vatgrower/vat)
-	var/risk = 0 //Penalty for failure, goes up based on how much growth the other cell_lines have
-
-	for(var/datum/micro_organism/cell_line/cell_line in vat.biological_sample.micro_organisms)
-		if(cell_line == src) //well duh
-			continue
-		if(cell_line.growth >= VATGROWING_DANGER_MINIMUM)
-			risk += cell_line.growth * 0.6 //60% per cell_line potentially. Kryson should probably tweak this
 	playsound(vat, 'sound/effects/splat.ogg', 50, TRUE)
-	if(rand(1, 100) < risk) //Fail roll!
-		fuck_up_growing(vat)
-
-		return FALSE
 	succeed_growing(vat)
+	SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+	grow_count += 1
 	return TRUE
 
-/datum/micro_organism/cell_line/proc/fuck_up_growing(obj/machinery/vatgrower/vat)
-	vat.visible_message(span_warning("The biological sample in [vat] seems to have dissipated!"))
-	if(prob(50))
-		new /obj/effect/gibspawner/generic(get_turf(vat)) //Spawn some gibs.
-	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
-		return
-	QDEL_NULL(vat.biological_sample)
-
 /datum/micro_organism/cell_line/proc/succeed_growing(obj/machinery/vatgrower/vat)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = vat, location = vat.loc)
-	smoke.start()
+	do_smoke(0, vat, vat.loc)
 	for(var/x in 1 to resulting_atom_count)
 		var/atom/thing = new resulting_atom(get_turf(vat))
 		ADD_TRAIT(thing, TRAIT_VATGROWN, "vatgrowing")
 		vat.visible_message(span_nicegreen("[thing] pops out of [vat]!"))
-	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
-		return
-	QDEL_NULL(vat.biological_sample)
+		//We maybe add some color. the chance is static for now, but idewally we would be able to manipulate it in the future.
+		if(prob(CYTO_SHINY_CHANCE) && isbasicmob(thing))
+			var/mob/living/basic/vat_creature = thing
+			//if the mob has a special mutation interaction don't do any other mutations.
+			// Once we add more mutations that are stackable with shiny we should probably roll for each type independently.
+			if(!vat_creature.mutate())
+				mutate_color(thing)
+
+		SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_DEPOSITED, thing)
 
 ///Overriden to show more info like needs, supplementary and supressive reagents and also growth.
 /datum/micro_organism/cell_line/get_details(show_details)
@@ -127,3 +116,45 @@
 		var/datum/reagent/reagent = i
 		reagent_names += initial(reagent.name)
 	return span_notice("[prefix_text] [jointext(reagent_names, ", ")]")
+
+//Adds a hue shift filter and affix to an atom.
+/datum/micro_organism/cell_line/proc/mutate_color(atom/beautiful_mutant)
+	//This determines how much the hue of the atom is shifted, 0.5 is the most extreme, respresenting a 180° hue shift.
+	var/hue_shift = 1
+	//This affix is added to the name of the atom, to help players understand and converse about the different rarity levels.
+	var/rarity_affix = "glitched"
+	// for adding some unique effects for subtypes, should you wish to do so
+	var/strength_factor = 1
+
+	switch(rand(1, 100))
+		if(1 to 35) //35% chance : painted
+			hue_shift = 0.15
+			rarity_affix = "painted"
+			strength_factor = 1.2
+		if(36 to 70) //35% chance : mutant
+			hue_shift = 0.85 //this value is equivalent in distance as the painted tier, just in the other direction.
+			rarity_affix = "mutant"
+			strength_factor = 1.4
+		if(71 to 83) //13% chance : rare
+			hue_shift = 0.3
+			rarity_affix = "rare"
+			strength_factor = 1.6
+		if(84 to 95) //12% chance : shiny
+			hue_shift = 0.7
+			rarity_affix = "shiny"
+			strength_factor = 2
+		if(96 to 100) //5% chance : mutant king
+			hue_shift = 0.5 //Best in show, most extreme color change.
+			rarity_affix = "mutant king" //The name is up to debate, since cyto is all about freaky creatures I thought it was good choice over something like "cosmic" or "regal".
+			strength_factor = 2.5
+
+	var/list/mutant_shift_matrix = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, hue_shift,0,0,0) //matrix for our colour shifting.
+
+	//Here we make the changes for the atom, we apply a filter and change the name to indicate rarity.
+	beautiful_mutant.add_filter("shiny mutation", 15, color_matrix_filter(mutant_shift_matrix, FILTER_COLOR_HSL))
+	beautiful_mutant.name = "[rarity_affix] [beautiful_mutant.name]"
+	if(isliving(beautiful_mutant)) //update the real name var if it's actually a living mob
+		var/mob/living/living_mutie = beautiful_mutant
+		living_mutie.real_name = living_mutie.name
+
+	return strength_factor

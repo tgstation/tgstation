@@ -8,6 +8,7 @@
 	desc = "A heavy wooden box, which can be filled with a lot of ores or boulders"
 	density = TRUE
 	pressure_resistance = 5 * ONE_ATMOSPHERE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/structure/ore_box/Initialize(mapload)
 	. = ..()
@@ -55,7 +56,7 @@
 		deconstruct(TRUE)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/structure/ore_box/attackby(obj/item/weapon, mob/user, params)
+/obj/structure/ore_box/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/stack/ore) || istype(weapon, /obj/item/boulder))
 		user.transferItemToLoc(weapon, src)
 		return TRUE

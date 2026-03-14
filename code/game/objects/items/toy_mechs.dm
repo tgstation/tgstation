@@ -19,6 +19,7 @@
 	verb_exclaim = "beeps"
 	verb_yell = "beeps"
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	/// Timer when it'll be off cooldown
 	var/timer = 0
 	/// Cooldown between play sessions
@@ -99,7 +100,7 @@
 		if(attacker_controller.incapacitated)
 			return FALSE
 		//if the attacker_controller isn't next to the attacking toy (and doesn't have telekinesis), the battle ends
-		if(!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/human/telekinesis)))
+		if(!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/telekinesis)))
 			attacker_controller.visible_message(span_notice("[attacker_controller.name] separates from [attacker], ending the battle."), \
 								span_notice("You separate from [attacker], ending the battle."))
 			return FALSE
@@ -108,13 +109,13 @@
 		if(opponent)
 			if(opponent.incapacitated)
 				return FALSE
-			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(/datum/mutation/human/telekinesis)))
+			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(/datum/mutation/telekinesis)))
 				opponent.visible_message(span_notice("[opponent.name] separates from [src], ending the battle."), \
 							span_notice("You separate from [src], ending the battle."))
 				return FALSE
 		//if it's not PVP and the attacker_controller isn't next to the defending toy (and doesn't have telekinesis), the battle ends
 		else
-			if (!in_range(src, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/human/telekinesis)))
+			if (!in_range(src, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/telekinesis)))
 				attacker_controller.visible_message(span_notice("[attacker_controller.name] separates from [src] and [attacker], ending the battle."), \
 									span_notice("You separate [attacker] and [src], ending the battle."))
 				return FALSE
@@ -225,15 +226,15 @@
 			if(1, 3)
 				SpinAnimation(5, 0)
 				playsound(src, 'sound/vehicles/mecha/mechstep.ogg', 30, TRUE)
-				user.adjustBruteLoss(25)
-				user.adjustStaminaLoss(50)
+				user.adjust_brute_loss(25)
+				user.adjust_stamina_loss(50)
 			if(2)
 				user.SpinAnimation(5, 0)
 				playsound(user, 'sound/items/weapons/smash.ogg', 20, TRUE)
 				combat_health-- //we scratched it!
 			if(4)
 				say(special_attack_cry + "!!")
-				user.adjustStaminaLoss(25)
+				user.adjust_stamina_loss(25)
 
 		if(!combat_sleep(1 SECONDS, null, user))
 			say("PATHETIC.")
@@ -242,7 +243,7 @@
 			return SHAME
 
 	sleep(0.5 SECONDS)
-	user.adjustBruteLoss(450)
+	user.adjust_brute_loss(450)
 
 	in_combat = FALSE
 	say("AN EASY WIN. MY POWER INCREASES.") // steal a soul, become swole

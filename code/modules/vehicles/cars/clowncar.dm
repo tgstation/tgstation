@@ -17,7 +17,7 @@
 	///list of headlight colors we use to pick through when we have party mode due to emag
 	var/headlight_colors = list(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_LIME, COLOR_BRIGHT_BLUE, COLOR_CYAN, COLOR_PURPLE)
 	///Cooldown time inbetween [/obj/vehicle/sealed/car/clowncar/proc/roll_the_dice()] usages
-	var/dice_cooldown_time = 150
+	var/dice_cooldown_time = 15 SECONDS
 	///How many times kidnappers in the clown car said thanks
 	var/thankscount = 0
 	///Current status of the cannon, alternates between CLOWN_CANNON_INACTIVE, CLOWN_CANNON_BUSY and CLOWN_CANNON_READY
@@ -97,53 +97,38 @@
 	. = ..()
 	if(prob(33))
 		visible_message(span_danger("[src] spews out a ton of space lube!"))
-		var/datum/effect_system/fluid_spread/foam/foam = new
-		var/datum/reagents/foamreagent = new /datum/reagents(25)
-		foamreagent.add_reagent(/datum/reagent/lube, 25)
-		foam.set_up(4, holder = src, location = loc, carry = foamreagent)
-		foam.start()
+		do_foam(4, src, loc, /datum/reagent/lube, 25)
 
-/obj/vehicle/sealed/car/clowncar/attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if(!istype(I, /obj/item/food/grown/banana))
+/obj/vehicle/sealed/car/clowncar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/food/grown/banana))
 		return
-	var/obj/item/food/grown/banana/banana = I
-	atom_integrity += min(banana.seed.potency, max_integrity-atom_integrity)
-	to_chat(user, span_danger("You use the [banana] to repair [src]!"))
+	var/obj/item/food/grown/banana/banana = tool
+	repair_damage(banana.seed.potency)
+	to_chat(user, span_danger("You use [banana] to repair [src]!"))
 	qdel(banana)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
 	. = ..()
-	if(isliving(bumped))
-		if(ismegafauna(bumped))
-			return
-		var/mob/living/hittarget_living = bumped
+	if(isclosedturf(bumped))
+		visible_message(span_warning("[src] rams into [bumped] and crashes!"))
+		playsound(src, pick(
+			'sound/vehicles/clown_car/clowncar_crash1.ogg',
+			'sound/vehicles/clown_car/clowncar_crash2.ogg',
+			), 75)
+		playsound(src, 'sound/vehicles/clown_car/clowncar_crashpins.ogg', 75)
+		dump_mobs(TRUE)
+		log_combat(src, bumped, "crashed into", null, "dumping all passengers")
 
-		if(istype(hittarget_living, /mob/living/basic/deer))
-			visible_message(span_warning("[src] careens into [hittarget_living]! Oh the humanity!"))
-			for(var/mob/living/carbon/carbon_occupant in occupants)
-				if(prob(35)) //Note: The randomstep on dump_mobs throws occupants into each other and often causes wounds regardless.
-					continue
-				for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
-					var/pick_mode = text2num(pick(list(
-						"[WOUND_PICK_LOWEST_SEVERITY]",
-						"[WOUND_PICK_HIGHEST_SEVERITY]"
-					)))
-					carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
-					carbon_occupant.playsound_local(src, 'sound/items/weapons/flash_ring.ogg', 50)
-					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
+	if(!isliving(bumped) || ismegafauna(bumped))
+		return
 
-			hittarget_living.adjustBruteLoss(200)
-			new /obj/effect/decal/cleanable/blood/splatter(get_turf(hittarget_living))
-
-			log_combat(src, hittarget_living, "rammed into", null, "injuring all passengers and killing the [hittarget_living]")
-			dump_mobs(TRUE)
-			playsound(src, 'sound/vehicles/car_crash.ogg', 100)
-			return
-
+	var/mob/living/hittarget_living = bumped
+	if(!istype(hittarget_living, /mob/living/basic/deer))
 		if(iscarbon(hittarget_living))
 			var/mob/living/carbon/carb = hittarget_living
 			carb.Paralyze(4 SECONDS) //I play to make sprites go horizontal
+
 		hittarget_living.visible_message(span_warning("[src] rams into [hittarget_living] and sucks [hittarget_living.p_them()] up!")) //fuck off shezza this isn't ERP.
 		mob_forced_enter(hittarget_living)
 		playsound(src, pick(
@@ -153,16 +138,25 @@
 			), 75)
 		log_combat(src, hittarget_living, "sucked up")
 		return
-	if(!isclosedturf(bumped))
-		return
-	visible_message(span_warning("[src] rams into [bumped] and crashes!"))
-	playsound(src, pick(
-		'sound/vehicles/clown_car/clowncar_crash1.ogg',
-		'sound/vehicles/clown_car/clowncar_crash2.ogg',
-		), 75)
-	playsound(src, 'sound/vehicles/clown_car/clowncar_crashpins.ogg', 75)
+
+	visible_message(span_warning("[src] careens into [hittarget_living]! Oh the humanity!"))
+	for(var/mob/living/carbon/carbon_occupant in occupants)
+		if(prob(35)) //Note: The randomstep on dump_mobs throws occupants into each other and often causes wounds regardless.
+			continue
+		for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
+			var/pick_mode = text2num(pick(list(
+				"[WOUND_PICK_LOWEST_SEVERITY]",
+				"[WOUND_PICK_HIGHEST_SEVERITY]"
+			)))
+			carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
+			carbon_occupant.playsound_local(src, 'sound/items/weapons/flash_ring.ogg', 50)
+			carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
+
+	hittarget_living.add_splatter_floor(small_drip = FALSE)
+	hittarget_living.adjust_brute_loss(200)
+	log_combat(src, hittarget_living, "rammed into", null, "injuring all passengers and killing the [hittarget_living]")
 	dump_mobs(TRUE)
-	log_combat(src, bumped, "crashed into", null, "dumping all passengers")
+	playsound(src, 'sound/vehicles/car_crash.ogg', 100)
 
 /obj/vehicle/sealed/car/clowncar/proc/check_crossed(datum/source, atom/movable/crossed)
 	SIGNAL_HANDLER
@@ -220,12 +214,7 @@
 			new /obj/item/grown/bananapeel/specialpeel(loc)
 		if(2)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and unknown chemicals flood out of it."))
-			var/datum/reagents/randomchems = new/datum/reagents(300)
-			randomchems.my_atom = src
-			randomchems.add_reagent(get_random_reagent_id(), 100)
-			var/datum/effect_system/fluid_spread/foam/foam = new
-			foam.set_up(200, holder = src, location = loc, carry = randomchems)
-			foam.start(log = TRUE)
+			do_foam(200, src, loc, get_random_reagent_id(), 100, log = TRUE)
 		if(3)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car turns on its singularity disguise system."))
 			icon = 'icons/obj/machines/engine/singularity.dmi'
@@ -233,13 +222,8 @@
 			addtimer(CALLBACK(src, PROC_REF(reset_icon)), 10 SECONDS)
 		if(4)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car spews out a cloud of laughing gas."))
-			var/datum/reagents/funnychems = new/datum/reagents(300)
-			funnychems.my_atom = src
-			funnychems.add_reagent(/datum/reagent/consumable/superlaughter, 50)
-			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
-			smoke.set_up(4, holder = src, location = src, carry = funnychems)
-			smoke.attach(src)
-			smoke.start(log = TRUE)
+			do_chem_smoke(4, src, src, /datum/reagent/consumable/superlaughter, 50, log = TRUE)
+
 		if(5)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car starts dropping an oil trail."))
 			RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(cover_in_oil))
@@ -260,7 +244,7 @@
 ///Deploys oil when the clowncar moves in oil deploy mode
 /obj/vehicle/sealed/car/clowncar/proc/cover_in_oil()
 	SIGNAL_HANDLER
-	new /obj/effect/decal/cleanable/oil/slippery(loc)
+	new /obj/effect/decal/cleanable/blood/oil/slippery(loc)
 
 ///Stops dropping oil after the time has run up
 /obj/vehicle/sealed/car/clowncar/proc/stop_dropping_oil()

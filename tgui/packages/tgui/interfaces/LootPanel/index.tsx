@@ -1,24 +1,21 @@
-import { useState } from 'react';
-import { useMemo } from 'react';
-import { Box, Button, Input, Section } from 'tgui-core/components';
+import { useMemo, useState } from 'react';
+import { Button, Input, Section, Stack } from 'tgui-core/components';
 import { isEscape } from 'tgui-core/keys';
 import { clamp } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { GroupedContents } from './GroupedContents';
 import { RawContents } from './RawContents';
-import { SearchItem } from './types';
+import type { SearchItem } from './types';
 
 type Data = {
   contents: SearchItem[];
-  searching: BooleanLike;
 };
 
 export function LootPanel(props) {
-  const { act, data } = useBackend<Data>();
-  const { contents = [], searching } = data;
+  const { data } = useBackend<Data>();
+  const { contents = [] } = data;
 
   // limitations: items with different stack counts, charges etc.
   const contentsByPathName = useMemo(() => {
@@ -58,23 +55,20 @@ export function LootPanel(props) {
       width={300}
       height={height}
       buttons={
-        <Box align={'left'}>
+        <Stack align="center">
           <Input
-            onInput={(event, value) => setSearchText(value)}
-            placeholder={`Search items...`}
+            onChange={setSearchText}
+            placeholder="Search items..."
+            value={searchText}
           />
           <Button
+            m={0}
             icon={grouping ? 'layer-group' : 'object-ungroup'}
             selected={grouping}
             onClick={() => setGrouping(!grouping)}
             tooltip="Toggle Grouping"
           />
-          <Button
-            icon="sync"
-            onClick={() => act('refresh')}
-            tooltip="Refresh"
-          />
-        </Box>
+        </Stack>
       }
     >
       <Window.Content

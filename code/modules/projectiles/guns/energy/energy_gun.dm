@@ -8,6 +8,7 @@
 	modifystate = TRUE
 	ammo_x_offset = 3
 	dual_wield_spread = 60
+	light_color = LIGHT_COLOR_CYAN
 
 /obj/item/gun/energy/e_gun/Initialize(mapload)
 	. = ..()
@@ -85,16 +86,23 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
 /obj/item/gun/energy/e_gun/dragnet
-	name = "\improper DRAGnet"
-	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology. Can be synced with a DRAGnet beacon to set a teleport destination for snare rounds."
+	name = "\improper DRAGnet translocation shotgun"
+	desc = "The \"Dynamic Rapid-Apprehension of the Guilty Network\" translocation shotgun (or DRAGnet for short) is a revolution in law enforcement technology. \
+		By syncing the weapon to a DRAGnet beacon, the bluespace transportation fields produced by the weapon's 'snare' function can rapidly exfiltrate an entire \
+		security squad, with criminal in tow. Otherwise, the weapon is an entirely nonlethal apprehension tool. Exceptionally useful for nonlethal close-quarters battle."
 	icon_state = "dragnet"
-	inhand_icon_state = "dragnet"
+	worn_icon_state = "dragnet"
+	base_icon_state = "dragnet"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
-	modifystate = FALSE
-	w_class = WEIGHT_CLASS_NORMAL
-	ammo_x_offset = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/scatter, /obj/item/ammo_casing/energy/snare)
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
+	slot_flags = ITEM_SLOT_BACK
+	ammo_y_offset = 1
+	ammo_x_offset = 0
+	charge_sections = 3
+	shot_type_fluff_overlay = TRUE
 	///A dragnet beacon set to be the teleport destination for snare teleport rounds.
 	var/obj/item/dragnet_beacon/linked_beacon
 
@@ -124,11 +132,6 @@
 	visible_message(span_warning("A light on the [src] flashes, indicating that it is no longer linked with a DRAGnet beacon!"))
 	linked_beacon = null
 
-/obj/item/gun/energy/e_gun/dragnet/snare
-	name = "Energy Snare Launcher"
-	desc = "Fires an energy snare that slows the target down."
-	ammo_type = list(/obj/item/ammo_casing/energy/trap)
-
 /obj/item/gun/energy/e_gun/turret
 	name = "hybrid turret gun"
 	desc = "A heavy hybrid energy cannon with two settings: Stun and kill."
@@ -154,6 +157,12 @@
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT,
+	)
 	var/reactor_overloaded
 	var/fail_tick = 0
 	var/fail_chance = 0
@@ -174,11 +183,11 @@
 		switch(fail_tick)
 			if(0 to 200)
 				fail_tick += (2*(fail_chance))
-				M.adjustFireLoss(3)
+				M.adjust_fire_loss(3)
 				to_chat(M, span_userdanger("Your [name] feels warmer."))
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
-				M.adjustFireLoss(10)
+				M.adjust_fire_loss(10)
 				reactor_overloaded = TRUE
 				to_chat(M, span_userdanger("Your [name]'s reactor overloads!"))
 

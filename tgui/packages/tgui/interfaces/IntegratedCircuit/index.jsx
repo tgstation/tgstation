@@ -94,8 +94,8 @@ export class IntegratedCircuit extends Component {
     position.color = port.color;
 
     if (
-      isNaN(position.x) ||
-      isNaN(position.y) ||
+      Number.isNaN(position.x) ||
+      Number.isNaN(position.y) ||
       (lastPosition &&
         lastPosition.x === position.x &&
         lastPosition.y === position.y)
@@ -348,8 +348,8 @@ export class IntegratedCircuit extends Component {
     act('add_setter_or_getter', {
       variable: draggingVariable,
       is_setter: variableIsSetter,
-      rel_x: xPos * Math.pow(zoom, -1),
-      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+      rel_x: xPos * zoom ** -1,
+      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * zoom ** -1,
     });
   }
 
@@ -384,8 +384,8 @@ export class IntegratedCircuit extends Component {
 
     act('print_component', {
       component_to_print: draggingComponent.type,
-      rel_x: xPos * Math.pow(zoom, -1),
-      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+      rel_x: xPos * zoom ** -1,
+      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * zoom ** -1,
     });
   }
 
@@ -429,7 +429,7 @@ export class IntegratedCircuit extends Component {
         for (const output of input.connected_to) {
           const output_port = locations[output];
           connections.push({
-            color: (output_port && output_port.color) || 'blue',
+            color: output_port?.color || 'blue',
             from: output_port,
             to: locations[input.ref],
           });
@@ -442,11 +442,11 @@ export class IntegratedCircuit extends Component {
       const isOutput = selectedPort.is_output;
       const portLocation = locations[selectedPort.ref];
       const mouseCoords = {
-        x: mouseX * Math.pow(zoom, -1),
-        y: (mouseY + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+        x: mouseX * zoom ** -1,
+        y: (mouseY + ABSOLUTE_Y_OFFSET) * zoom ** -1,
       };
       connections.push({
-        color: (portLocation && portLocation.color) || 'blue',
+        color: portLocation?.color || 'blue',
         from: isOutput ? portLocation : mouseCoords,
         to: isOutput ? mouseCoords : portLocation,
       });
@@ -457,72 +457,61 @@ export class IntegratedCircuit extends Component {
         width={1200}
         height={800}
         buttons={
-          <Box width="160px" position="absolute" top="5px" height="22px">
-            <Stack>
-              <Stack.Item grow>
-                <Input
-                  fluid
-                  placeholder="Name"
-                  value={display_name}
-                  onChange={(e, value) =>
-                    act('set_display_name', { display_name: value })
-                  }
-                />
-              </Stack.Item>
-              <Stack.Item basis="24px">
+          <Stack>
+            <Stack.Item>
+              <Input
+                placeholder="Name"
+                value={display_name}
+                onBlur={(value) =>
+                  act('set_display_name', { display_name: value })
+                }
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color="transparent"
+                tooltip="Show Variables Menu"
+                icon="cog"
+                selected={variableMenuOpen}
+                onClick={() =>
+                  this.setState((state) => ({
+                    variableMenuOpen: !state.variableMenuOpen,
+                  }))
+                }
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color="transparent"
+                tooltip="Show Components Menu"
+                icon="plus"
+                selected={componentMenuOpen}
+                onClick={() =>
+                  this.setState((state) => ({
+                    componentMenuOpen: !state.componentMenuOpen,
+                  }))
+                }
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color="transparent"
+                tooltip="Enable Grid Aligning"
+                icon="th-large"
+                selected={grid_mode}
+                onClick={() => act('toggle_grid_mode')}
+              />
+            </Stack.Item>
+            {!!is_admin && (
+              <Stack.Item>
                 <Button
-                  position="absolute"
-                  top={0}
                   color="transparent"
-                  tooltip="Show Variables Menu"
-                  icon="cog"
-                  selected={variableMenuOpen}
-                  onClick={() =>
-                    this.setState((state) => ({
-                      variableMenuOpen: !state.variableMenuOpen,
-                    }))
-                  }
+                  onClick={() => act('save_circuit')}
+                  icon="save"
                 />
               </Stack.Item>
-              <Stack.Item basis="24px">
-                <Button
-                  position="absolute"
-                  top={0}
-                  color="transparent"
-                  tooltip="Show Components Menu"
-                  icon="plus"
-                  selected={componentMenuOpen}
-                  onClick={() =>
-                    this.setState((state) => ({
-                      componentMenuOpen: !state.componentMenuOpen,
-                    }))
-                  }
-                />
-              </Stack.Item>
-              <Stack.Item basis="24px">
-                <Button
-                  position="absolute"
-                  top={0}
-                  color="transparent"
-                  tooltip="Enable Grid Aligning"
-                  icon="th-large"
-                  selected={grid_mode}
-                  onClick={() => act('toggle_grid_mode')}
-                />
-              </Stack.Item>
-              {!!is_admin && (
-                <Stack.Item>
-                  <Button
-                    position="absolute"
-                    top={0}
-                    color="transparent"
-                    onClick={() => act('save_circuit')}
-                    icon="save"
-                  />
-                </Stack.Item>
-              )}
-            </Stack>
-          </Box>
+            )}
+          </Stack>
         }
       >
         <Window.Content

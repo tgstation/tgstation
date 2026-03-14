@@ -1,7 +1,6 @@
 /datum/job/bartender
 	title = JOB_BARTENDER
 	description = "Serve booze, mix drinks, keep the crew drunk."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -20,7 +19,7 @@
 		/datum/job_department/service,
 		)
 
-	family_heirlooms = list(/obj/item/reagent_containers/cup/rag, /obj/item/clothing/head/hats/tophat, /obj/item/reagent_containers/cup/glass/shaker)
+	family_heirlooms = list(/obj/item/rag, /obj/item/clothing/head/hats/tophat, /obj/item/reagent_containers/cup/glass/shaker)
 
 	mail_goodies = list(
 		/obj/item/storage/box/rubbershot = 30,

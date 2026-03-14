@@ -3,7 +3,6 @@
 	desc = "Fishing anywhere, anytime... anyway what was I talking about?"
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "portal"
-	idle_power_usage = 0
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	anchored = FALSE
 	density = TRUE
@@ -225,8 +224,7 @@
 
 	active = AddComponent(/datum/component/fishing_spot, selected_source)
 	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
-	if(use_power != NO_POWER_USE)
-		use_power = ACTIVE_POWER_USE
+	update_use_power(ACTIVE_POWER_USE)
 	update_icon()
 
 /obj/machinery/fishing_portal_generator/proc/deactivate()
@@ -241,8 +239,7 @@
 
 	REMOVE_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	if(!QDELETED(src))
-		if(use_power != NO_POWER_USE)
-			use_power = IDLE_POWER_USE
+		update_use_power(IDLE_POWER_USE)
 		update_icon()
 
 /obj/machinery/fishing_portal_generator/proc/on_fishing_spot_z_level_changed(atom/spot, turf/old_turf, turf/new_turf, same_z_layer)

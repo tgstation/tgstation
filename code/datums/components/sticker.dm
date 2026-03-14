@@ -84,6 +84,7 @@
 	var/atom/parent_atom = parent
 
 	sticker_overlay = mutable_appearance(icon = our_sticker.icon, icon_state = our_sticker.icon_state, layer = parent_atom.layer + 0.01, appearance_flags = RESET_COLOR)
+	sticker_overlay.color = our_sticker.color
 	sticker_overlay.pixel_w = px - ICON_SIZE_X / 2
 	sticker_overlay.pixel_z = py - ICON_SIZE_Y / 2
 
@@ -111,9 +112,11 @@
 /datum/component/sticker/proc/on_clean(datum/source, clean_types)
 	SIGNAL_HANDLER
 
+	. = NONE
+
 	peel()
 
-	return COMPONENT_CLEANED
+	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /datum/component/sticker/proc/on_turf_expose(datum/source, datum/gas_mixture/air, exposed_temperature)
 	SIGNAL_HANDLER

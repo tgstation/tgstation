@@ -7,6 +7,7 @@
 	worn_icon_state = "utility"
 	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
+	abstract_type = /obj/item/storage/belt
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines")
 	attack_verb_simple = list("whip", "lash", "discipline")
@@ -41,17 +42,7 @@
 	custom_premium_price = PAYCHECK_CREW * 2
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-
-/obj/item/storage/belt/utility/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 21
-	atom_storage.set_holdable(GLOB.tool_items + list(
-		/obj/item/clothing/gloves,
-		/obj/item/radio,
-		/obj/item/melee/sickly_blade/lock,
-		/obj/item/reagent_containers/cup/soda_cans,
-	))
+	storage_type = /datum/storage/utility_belt
 
 /obj/item/storage/belt/utility/chief
 	name = "chief engineer's toolbelt"
@@ -205,67 +196,7 @@
 	worn_icon_state = "medical"
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-
-/obj/item/storage/belt/medical/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 21
-	atom_storage.set_holdable(list(
-		/obj/item/bikehorn/rubberducky,
-		/obj/item/blood_filter,
-		/obj/item/bonesetter,
-		/obj/item/cautery,
-		/obj/item/circular_saw,
-		/obj/item/clothing/glasses,
-		/obj/item/clothing/gloves,
-		/obj/item/clothing/neck/stethoscope,
-		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/muzzle,
-		/obj/item/clothing/mask/surgical,
-		/obj/item/clothing/head/utility/surgerycap,
-		/obj/item/construction/plumbing,
-		/obj/item/dnainjector,
-		/obj/item/extinguisher/mini,
-		/obj/item/flashlight/pen,
-		/obj/item/geiger_counter,
-		/obj/item/gun/syringe/syndicate,
-		/obj/item/healthanalyzer,
-		/obj/item/hemostat,
-		/obj/item/holosign_creator/medical,
-		/obj/item/implant,
-		/obj/item/implantcase,
-		/obj/item/implanter,
-		/obj/item/lazarus_injector,
-		/obj/item/lighter,
-		/obj/item/pinpointer/crew,
-		/obj/item/plunger,
-		/obj/item/radio,
-		/obj/item/reagent_containers/blood,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/medigel,
-		/obj/item/reagent_containers/applicator,
-		/obj/item/reagent_containers/spray,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/retractor,
-		/obj/item/scalpel,
-		/obj/item/shears,
-		/obj/item/stack/medical,
-		/obj/item/stack/sticky_tape, //surgical tape
-		/obj/item/stamp,
-		/obj/item/sensor_device,
-		/obj/item/storage/fancy/cigarettes,
-		/obj/item/storage/pill_bottle,
-		/obj/item/surgical_drapes, //for true paramedics
-		/obj/item/surgicaldrill,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/wrench/medical,
-		/obj/item/knife/ritual,
-		/obj/item/flesh_shears,
-	))
+	storage_type = /datum/storage/medical_belt
 
 /obj/item/storage/belt/medical/paramedic
 	name = "EMT belt"
@@ -276,9 +207,9 @@
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/sensor_device, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
-	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/wrap/gauze/twelve, src)
+	SSwardrobe.provide_type(/obj/item/tourniquet, src)
+	SSwardrobe.provide_type(/obj/item/bonesetter, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/ammoniated_mercury, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
@@ -287,9 +218,9 @@
 /obj/item/storage/belt/medical/paramedic/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/sensor_device
-	to_preload += /obj/item/stack/medical/gauze/twelve
-	to_preload += /obj/item/stack/medical/bone_gel
-	to_preload += /obj/item/stack/sticky_tape/surgical
+	to_preload += /obj/item/stack/medical/wrap/gauze/twelve
+	to_preload += /obj/item/tourniquet
+	to_preload += /obj/item/bonesetter
 	to_preload += /obj/item/reagent_containers/syringe
 	to_preload += /obj/item/reagent_containers/cup/bottle/ammoniated_mercury
 	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
@@ -329,31 +260,7 @@
 	inhand_icon_state = "security"//Could likely use a better one.
 	worn_icon_state = "security"
 	content_overlays = TRUE
-
-/obj/item/storage/belt/security/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 5
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_box,
-		/obj/item/ammo_casing/shotgun,
-		/obj/item/assembly/flash/handheld,
-		/obj/item/clothing/glasses,
-		/obj/item/clothing/gloves,
-		/obj/item/flashlight/seclite,
-		/obj/item/food/donut,
-		/obj/item/grenade,
-		/obj/item/holosign_creator/security,
-		/obj/item/knife/combat,
-		/obj/item/melee/baton,
-		/obj/item/radio,
-		/obj/item/reagent_containers/spray/pepper,
-		/obj/item/restraints/handcuffs,
-		/obj/item/restraints/legcuffs/bola,
-	))
-	atom_storage.open_sound = 'sound/items/handling/holster_open.ogg'
-	atom_storage.open_sound_vary = TRUE
-	atom_storage.rustle_sound = null
+	storage_type = /datum/storage/security_belt
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
@@ -371,10 +278,7 @@
 	worn_icon_state = "securitywebbing"
 	content_overlays = FALSE
 	custom_premium_price = PAYCHECK_COMMAND * 3
-
-/obj/item/storage/belt/security/webbing/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 6
+	storage_type = /datum/storage/security_belt/webbing
 
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"
@@ -383,54 +287,7 @@
 	inhand_icon_state = "explorer1"
 	worn_icon_state = "explorer1"
 	w_class = WEIGHT_CLASS_BULKY
-
-/obj/item/storage/belt/mining/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 6
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 20
-	atom_storage.set_holdable(list(
-		/obj/item/analyzer,
-		/obj/item/clothing/gloves,
-		/obj/item/crowbar,
-		/obj/item/extinguisher/mini,
-		/obj/item/flashlight,
-		/obj/item/gps,
-		/obj/item/mining_stabilizer,
-		/obj/item/key/lasso,
-		/obj/item/knife,
-		/obj/item/lighter,
-		/obj/item/mining_scanner,
-		/obj/item/multitool,
-		/obj/item/organ/monster_core,
-		/obj/item/pickaxe,
-		/obj/item/radio,
-		/obj/item/reagent_containers/cup/glass,
-		/obj/item/reagent_containers/cup/glass/bottle,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/applicator/pill,
-		/obj/item/resonator,
-		/obj/item/screwdriver,
-		/obj/item/shovel,
-		/obj/item/stack/cable_coil,
-		/obj/item/stack/marker_beacon,
-		/obj/item/stack/medical,
-		/obj/item/stack/ore,
-		/obj/item/stack/sheet/animalhide,
-		/obj/item/stack/sheet/bone,
-		/obj/item/stack/sheet/sinew,
-		/obj/item/storage/bag/ore,
-		/obj/item/storage/fancy/cigarettes,
-		/obj/item/storage/pill_bottle,
-		/obj/item/survivalcapsule,
-		/obj/item/t_scanner/adv_mining_scanner,
-		/obj/item/weldingtool,
-		/obj/item/wirecutters,
-		/obj/item/wrench,
-		/obj/item/wormhole_jaunter,
-		/obj/item/skeleton_key,
-	))
-
+	storage_type = /datum/storage/mining_belt
 
 /obj/item/storage/belt/mining/vendor/PopulateContents()
 	new /obj/item/survivalcapsule(src)
@@ -455,10 +312,7 @@
 	icon_state = "ebelt"
 	inhand_icon_state = "ebelt"
 	worn_icon_state = "ebelt"
-
-/obj/item/storage/belt/mining/primitive/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 5
+	storage_type = /datum/storage/mining_belt/primitive
 
 /obj/item/storage/belt/soulstone
 	name = "soul stone belt"
@@ -468,11 +322,7 @@
 	worn_icon_state = "soulstonebelt"
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-
-/obj/item/storage/belt/soulstone/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 6
-	atom_storage.set_holdable(/obj/item/soulstone)
+	storage_type = /datum/storage/soulstone_belt
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
@@ -489,12 +339,12 @@
 	inhand_icon_state = "championbelt"
 	worn_icon_state = "championbelt"
 	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT *4)
+	storage_type = /datum/storage/champion_belt
 
 /obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 1
-	atom_storage.set_holdable(/obj/item/clothing/mask/luchador)
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+
+	AddElement(/datum/element/adjust_fishing_difficulty, -2)
 
 /obj/item/storage/belt/military
 	name = "chest rig"
@@ -503,26 +353,16 @@
 	inhand_icon_state = "militarywebbing"
 	worn_icon_state = "militarywebbing"
 	resistance_flags = FIRE_PROOF
-
-/obj/item/storage/belt/military/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	storage_type = /datum/storage/military_belt
 
 /obj/item/storage/belt/military/snack
 	name = "tactical snack rig"
+	storage_type = /datum/storage/military_belt/snack
 
 /obj/item/storage/belt/military/snack/Initialize(mapload)
 	. = ..()
 	var/sponsor = pick("Donk Co.", "Waffle Corp.", "Roffle Co.", "Gorlex Marauders", "Tiger Cooperative")
 	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."
-	atom_storage.max_slots = 6
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.set_holdable(list(
-		/obj/item/food,
-		/obj/item/reagent_containers/cup/glass,
-	))
-
-/obj/item/storage/belt/military/snack/full
 
 /obj/item/storage/belt/military/snack/full/Initialize(mapload)
 	. = ..()
@@ -586,10 +426,7 @@
 	icon_state = "assault"
 	inhand_icon_state = "security"
 	worn_icon_state = "assault"
-
-/obj/item/storage/belt/military/assault/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 6
+	storage_type = /datum/storage/military_belt/assault
 
 /obj/item/storage/belt/military/assault/full/PopulateContents()
 	generate_items_inside(list(
@@ -605,23 +442,7 @@
 	worn_icon_state = "grenadebeltnew"
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-
-/obj/item/storage/belt/grenade/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 30
-	atom_storage.numerical_stacking = TRUE
-	atom_storage.max_total_storage = 60
-	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(list(
-		/obj/item/food/grown/cherry_bomb,
-		/obj/item/food/grown/firelemon,
-		/obj/item/grenade,
-		/obj/item/grenade/c4,
-		/obj/item/lighter,
-		/obj/item/multitool,
-		/obj/item/reagent_containers/cup/glass/bottle/molotov,
-		/obj/item/screwdriver,
-	))
+	storage_type = /datum/storage/grenade_belt
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
 	generate_items_inside(list(
@@ -634,7 +455,7 @@
 		/obj/item/grenade/syndieminibomb = 2,
 		/obj/item/multitool = 1,
 		/obj/item/screwdriver = 1,
-	),src)
+	), src)
 
 
 /obj/item/storage/belt/wands
@@ -643,11 +464,7 @@
 	icon_state = "soulstonebelt"
 	inhand_icon_state = "soulstonebelt"
 	worn_icon_state = "soulstonebelt"
-
-/obj/item/storage/belt/wands/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 7
-	atom_storage.set_holdable(/obj/item/gun/magic/wand)
+	storage_type = /datum/storage/wands_belt
 
 /obj/item/storage/belt/wands/full/PopulateContents()
 	new /obj/item/gun/magic/wand/death(src)
@@ -670,29 +487,7 @@
 	worn_icon_state = "janibelt"
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-
-/obj/item/storage/belt/janitor/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 6
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
-	atom_storage.set_holdable(list(
-		/obj/item/access_key,
-		/obj/item/assembly/mousetrap,
-		/obj/item/clothing/gloves,
-		/obj/item/flashlight,
-		/obj/item/forcefield_projector,
-		/obj/item/grenade/chem_grenade,
-		/obj/item/holosign_creator,
-		/obj/item/key/janitor,
-		/obj/item/lightreplacer,
-		/obj/item/melee/flyswatter,
-		/obj/item/paint/paint_remover,
-		/obj/item/plunger,
-		/obj/item/pushbroom,
-		/obj/item/reagent_containers/spray,
-		/obj/item/soap,
-		/obj/item/wirebrush,
-	))
+	storage_type = /datum/storage/janitor_belt
 
 /obj/item/storage/belt/janitor/full/PopulateContents()
 	new /obj/item/lightreplacer(src)
@@ -707,21 +502,12 @@
 	icon_state = "bandolier"
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
+	storage_type = /datum/storage/bandolier_belt
 
-/obj/item/storage/belt/bandolier/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 24
-	atom_storage.max_total_storage = 24
-	atom_storage.numerical_stacking = TRUE
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.allow_quick_empty = TRUE
-	atom_storage.numerical_stacking = TRUE
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/strilka310,
-		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_casing/c357,
-		/obj/item/ammo_casing/junk,
-	))
+/obj/item/storage/belt/bandolier/china_lake_extra/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/ammo_casing/a40mm = 12,
+	), src)
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
@@ -731,12 +517,7 @@
 	worn_icon_state = "fannypack_leather"
 	dying_key = DYE_REGISTRY_FANNYPACK
 	custom_price = PAYCHECK_CREW * 2
-
-/obj/item/storage/belt/fannypack/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 3
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.silent = TRUE
+	storage_type = /datum/storage/fanny_pack
 
 /obj/item/storage/belt/fannypack/black
 	name = "black fannypack"
@@ -795,97 +576,319 @@
 	inhand_icon_state = null
 	worn_icon_state = "cummerbund"
 
-/obj/item/storage/belt/sabre
+/obj/item/storage/belt/fannypack/yellow/bee_terrorist/PopulateContents()
+	new /obj/item/grenade/c4 (src)
+	new /obj/item/reagent_containers/applicator/pill/cyanide(src)
+	new /obj/item/grenade/chem_grenade/facid(src)
+
+/obj/item/storage/belt/fannypack/black/rogue
+	name = "fannypack of ULTIMATE DESPAIR"
+
+/obj/item/storage/belt/fannypack/black/rogue/PopulateContents()
+	new /obj/item/food/drug/saturnx(src)
+	new /obj/item/reagent_containers/cup/blastoff_ampoule(src)
+	new /obj/item/reagent_containers/hypospray/medipen/methamphetamine(src)
+
+/obj/item/storage/belt/sheath
+	desc = "holds like, blades and stuff. You should not be seeing this."
+	w_class = WEIGHT_CLASS_BULKY
+	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
+	var/stored_blade
+	actions_types = list(/datum/action/innate/blade_counter)
+	action_slots = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
+	COOLDOWN_DECLARE(resheath_cooldown)
+	COOLDOWN_DECLARE(full_ability_cooldown)
+
+/obj/item/storage/belt/sheath/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob, action_slots)
+	RegisterSignal(src, COMSIG_ATOM_STORED_ITEM, PROC_REF(post_resheath))
+
+/obj/item/storage/belt/sheath/Destroy(force)
+	. = ..()
+	UnregisterSignal(src, COMSIG_ATOM_STORED_ITEM)
+
+/obj/item/storage/belt/sheath/examine(mob/user)
+	. = ..()
+	if(length(contents))
+		. += span_notice("Alt-click it to quickly draw the blade.")
+
+/obj/item/storage/belt/sheath/click_alt(mob/user)
+	if(!length(contents))
+		balloon_alert(user, "it's empty!")
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/stored_item = contents[1]
+	user.visible_message(span_notice("[user] takes [stored_item] out of [src]."), span_notice("You take [stored_item] out of [src]."))
+	user.put_in_hands(stored_item)
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/storage/belt/sheath/update_icon_state()
+	icon_state = initial(icon_state)
+	inhand_icon_state = initial(inhand_icon_state)
+	worn_icon_state = initial(worn_icon_state)
+	if(contents.len)
+		icon_state += "-full"
+		inhand_icon_state += "-full"
+		worn_icon_state += "-full"
+	return ..()
+
+/obj/item/storage/belt/sheath/PopulateContents()
+	if(stored_blade)
+		new stored_blade(src)
+		update_appearance()
+
+/obj/item/storage/belt/sheath/proc/post_resheath()
+	SIGNAL_HANDLER
+	COOLDOWN_START(src, resheath_cooldown, 10 SECONDS)
+
+/datum/action/innate/blade_counter
+	name = "Counterattack"
+	desc = "Anticipate an enemy's attack and strike back with your sheathed blade."
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "declaration"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/honorbound.dmi'
+
+	enable_text = "You prepare to counterattack a target..."
+	disable_text = "You relax your stance."
+
+	click_action = TRUE
+
+	var/datum/weakref/eyed_fool
+
+/datum/action/innate/blade_counter/IsAvailable(feedback = TRUE)
+	if(!isliving(owner))
+		return FALSE
+	var/obj/item/storage/belt/sheath/owners_sheath = target
+	if(!COOLDOWN_FINISHED(owners_sheath, full_ability_cooldown))
+		if(feedback)
+			to_chat(owner, span_warning("You failed a counterattack too recently!"))
+		return FALSE
+	if(!length(owners_sheath.contents))
+		if(feedback)
+			to_chat(owner, span_warning("Your sheath is empty!"))
+		return FALSE
+	if(!COOLDOWN_FINISHED(owners_sheath, resheath_cooldown))
+		if(feedback)
+			to_chat(owner, span_warning("You only just resheathed your blade!"))
+		return FALSE
+	return TRUE
+
+/datum/action/innate/blade_counter/proc/final_checks(atom/cast_on)
+	if(!isliving(cast_on))
+		return FALSE
+	if(owner == cast_on)
+		to_chat(owner, span_warning("You can't counterattack yourself!"))
+		return FALSE
+	var/mob/living/target = cast_on
+	if(!target.mind)
+		to_chat(owner, span_warning("They are too unpredictable to counterattack!"))
+		return FALSE
+	var/obj/item/storage/belt/sheath/oursheath = target
+	if(!length(oursheath.contents))
+		return FALSE
+	return TRUE
+
+/datum/action/innate/blade_counter/do_ability(mob/living/swordsman, mob/living/cast_on)
+	if(!final_checks(cast_on))
+		return TRUE
+	var/obj/item/storage/belt/sheath/used_sheath = target
+	RegisterSignal(swordsman, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(counter_attack))
+	swordsman.Immobilize(1 SECONDS)
+	eyed_fool = WEAKREF(cast_on)
+	swordsman.visible_message(span_danger("[swordsman] widens [swordsman.p_their()] stance, [swordsman.p_their()] hand hovering over \the [used_sheath]!"), span_notice("You prepare to counterattack [cast_on]!"))
+	addtimer(CALLBACK(src, PROC_REF(relax), swordsman, used_sheath), 1 SECONDS)
+	COOLDOWN_START(used_sheath, full_ability_cooldown, 60 SECONDS)
+	unset_ranged_ability(swordsman)
+	return TRUE
+
+#define COUNTERMULTIPLIER 3
+
+/datum/action/innate/blade_counter/proc/counter_attack(mob/living/forward_thinker, atom/attackingthing, damage, attack_text, attack_type)
+	SIGNAL_HANDLER
+	var/obj/item/storage/belt/sheath/used_sheath = target
+	if(!used_sheath || !length(used_sheath.contents) || (attack_type != MELEE_ATTACK && attack_type != UNARMED_ATTACK))
+		return FAILED_BLOCK
+
+	var/obj/item/justicetool = used_sheath.contents[1]
+	var/mob/living/fool = isliving(attackingthing) ? attackingthing : attackingthing.loc
+	if(used_sheath.loc != forward_thinker || fool != eyed_fool.resolve() || !forward_thinker.put_in_active_hand(justicetool))
+		return FAILED_BLOCK
+	do_strike(fool, forward_thinker, justicetool)
+	playsound(forward_thinker, 'sound/items/unsheath.ogg', 50, TRUE)
+	COOLDOWN_RESET(used_sheath, full_ability_cooldown)
+	return SUCCESSFUL_BLOCK
+
+/datum/action/innate/blade_counter/proc/do_strike(mob/living/fool, mob/living/forward_thinker, obj/item/justicetool)
+	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
+	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [fool.p_their()] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
+	fool.apply_damage(
+		damage = justicetool.force * COUNTERMULTIPLIER,
+		damagetype = justicetool.damtype,
+		def_zone = offending_hand,
+		blocked = fool.run_armor_check(offending_hand, MELEE, armour_penetration = justicetool.armour_penetration, silent = TRUE),
+		wound_bonus = justicetool.wound_bonus * COUNTERMULTIPLIER,
+		exposed_wound_bonus = justicetool.exposed_wound_bonus * COUNTERMULTIPLIER,
+		sharpness = justicetool.sharpness,
+		attack_direction = get_dir(forward_thinker, fool),
+		attacking_item = justicetool,
+	)
+
+
+/datum/action/innate/blade_counter/proc/relax(mob/living/holder, obj/item/storage/belt/sheath/active_sheath)
+	UnregisterSignal(holder, COMSIG_LIVING_CHECK_BLOCK)
+
+/datum/action/innate/blade_counter/gunpowered
+	name = "Powered Counterattack"
+	desc = "Anticipate an enemy's attack and attempt to strike back, at great risk to yourself. The firing angle requires it be held on your hip."
+
+	/// Whether the currently relevant counterattack succeeded.
+	var/succeeded_attempt = FALSE
+
+/datum/action/innate/blade_counter/gunpowered/do_ability(mob/living/swordsman, mob/living/cast_on)
+	. = ..()
+	succeeded_attempt = FALSE
+
+
+/datum/action/innate/blade_counter/gunpowered/do_strike(mob/living/fool, mob/living/forward_thinker, obj/item/justicetool)
+	if(forward_thinker.get_slot_by_item(target) == ITEM_SLOT_SUITSTORE)
+		return ..()
+	succeeded_attempt = TRUE
+	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
+	var/obj/item/bodypart/risked_hand = forward_thinker.get_active_hand()
+	if(iscarbon(fool) && offending_hand.dismember(BRUTE, FALSE, WOUND_SLASH))
+		forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [fool.p_their()] attack, sending [fool.p_their()] arm flying!"),
+										span_notice("You swiftly draw \the [justicetool] and cut off [fool]'s arm!"))
+	else
+		fool.apply_damage(
+			damage = justicetool.force * COUNTERMULTIPLIER,
+			damagetype = justicetool.damtype,
+			def_zone = offending_hand,
+			blocked = fool.run_armor_check(offending_hand, MELEE, armour_penetration = justicetool.armour_penetration, silent = TRUE),
+			wound_bonus = justicetool.wound_bonus * COUNTERMULTIPLIER,
+			exposed_wound_bonus = justicetool.exposed_wound_bonus * COUNTERMULTIPLIER,
+			sharpness = justicetool.sharpness,
+			attack_direction = get_dir(forward_thinker, fool),
+			attacking_item = justicetool,
+		)
+		forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [fool.p_their()] attack!"),
+										span_notice("You swiftly draw \the [justicetool] and strike them mid-attack!"))
+	if(!IS_ROBOTIC_LIMB(risked_hand))
+		forward_thinker.visible_message(span_danger("[forward_thinker]'s arm is unable to withstand the force of the attack!"),
+										span_danger("You feel a sharp pain as your arm is mutilated by the force of the attack!"))
+		forward_thinker.apply_damage(
+		damage = 50,
+		damagetype = BRUTE,
+		def_zone = risked_hand,
+		wound_bonus = 50,
+		wound_clothing = FALSE,
+	)
+
+
+/datum/action/innate/blade_counter/gunpowered/relax(mob/living/holder, obj/item/storage/belt/sheath/active_sheath)
+	..()
+	if(succeeded_attempt || holder.get_slot_by_item(target) == ITEM_SLOT_SUITSTORE)
+		return
+
+	if(length(active_sheath.contents))
+		var/obj/item/denied_weapon = active_sheath.contents[1]
+		denied_weapon.forceMove(get_turf(holder))
+		denied_weapon.throw_at(pick(RANGE_TURFS(3, denied_weapon)), 3, 3)
+
+	// We can assume that the holder is a carbon, and thus has an actual arm, because they have a belt slot.
+	var/obj/item/bodypart/worthless_hand = holder.get_active_hand()
+	if(!worthless_hand)
+		worthless_hand = holder.get_inactive_hand()
+		if(!worthless_hand)
+			holder.visible_message(span_danger("[holder]'s sheath misfires, sending their blade flying!"),
+									span_danger("Your sheath misfires, sending your blade flying!"))
+			return
+
+	if(IS_ROBOTIC_LIMB(worthless_hand) || !worthless_hand.dismember(BRUTE, FALSE, WOUND_BLUNT))
+		holder.visible_message(span_danger("[holder]'s arm is mutilated as they misfire [holder.p_their()] sheathed blade!"),
+								span_danger("Your arm is mutilated as you fail to safely fire your blade!"))
+		holder.apply_damage(
+			damage = 50,
+			damagetype = BRUTE,
+			def_zone = worthless_hand,
+			wound_bonus = 50,
+			wound_clothing = FALSE,
+		)
+		return
+
+	holder.visible_message(span_danger("[holder]'s arm is violently torn off as they misfire [holder.p_their()] sheathed blade!"),
+							span_danger("Your arm is torn off as you fail to safely fire your blade!"))
+
+#undef COUNTERMULTIPLIER
+
+/obj/item/storage/belt/sheath/sabre
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
-	w_class = WEIGHT_CLASS_BULKY
-	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
+	storage_type = /datum/storage/sabre_belt
+	stored_blade = /obj/item/melee/sabre
 
-/obj/item/storage/belt/sabre/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-
-	atom_storage.max_slots = 1
-	atom_storage.do_rustle = FALSE
-	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(/obj/item/melee/sabre)
-	atom_storage.click_alt_open = FALSE
-
-/obj/item/storage/belt/sabre/examine(mob/user)
-	. = ..()
-	if(length(contents))
-		. += span_notice("Alt-click it to quickly draw the blade.")
-
-/obj/item/storage/belt/sabre/click_alt(mob/user)
-	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
-		user.put_in_hands(I)
-		update_appearance()
-	else
-		balloon_alert(user, "it's empty!")
-	return CLICK_ACTION_SUCCESS
-
-/obj/item/storage/belt/sabre/update_icon_state()
-	icon_state = initial(inhand_icon_state)
-	inhand_icon_state = initial(inhand_icon_state)
-	worn_icon_state = initial(worn_icon_state)
-	if(contents.len)
-		icon_state += "-sabre"
-		inhand_icon_state += "-sabre"
-		worn_icon_state += "-sabre"
-	return ..()
-
-/obj/item/storage/belt/sabre/PopulateContents()
-	new /obj/item/melee/sabre(src)
-	update_appearance()
-
-/obj/item/storage/belt/grass_sabre
+/obj/item/storage/belt/sheath/grass_sabre
 	name = "sabre sheath"
 	desc = "A simple grass sheath designed to hold a sabre of... some sort. An actual metal one might be too sharp, though..."
 	icon_state = "grass_sheath"
 	inhand_icon_state = "grass_sheath"
 	worn_icon_state = "grass_sheath"
-	w_class = WEIGHT_CLASS_BULKY
-	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
+	storage_type = /datum/storage/green_sabre_belt
 
-/obj/item/storage/belt/grass_sabre/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+/obj/item/storage/belt/sheath/gladius
+	name = "gladius scabbard"
+	desc = "A fun-sized sheath for a fun-sized sword."
+	icon_state = "gladius_sheath"
+	inhand_icon_state = "gladius_sheath"
+	worn_icon_state = "gladius_sheath"
+	storage_type = /datum/storage/gladius_belt
+	stored_blade = /obj/item/claymore/gladius
 
-	atom_storage.max_slots = 1
-	atom_storage.do_rustle = FALSE
-	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(/obj/item/melee/parsnip_sabre)
-	atom_storage.click_alt_open = FALSE
+/obj/item/storage/belt/sheath/katana
+	name = "katana sheath"
+	desc = "A sheath that houses the nimble katana."
+	icon_state = "katana_sheath"
+	inhand_icon_state = "katana_sheath"
+	worn_icon_state = "katana_sheath"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	storage_type = /datum/storage/katana_sheath
+	stored_blade = /obj/item/katana
 
-/obj/item/storage/belt/grass_sabre/examine(mob/user)
-	. = ..()
-	if(length(contents))
-		. += span_notice("Alt-click it to quickly draw the blade.")
+/obj/item/storage/belt/sheath/katana/empty
+	stored_blade = NONE
 
-/obj/item/storage/belt/grass_sabre/click_alt(mob/user)
-	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
-		user.put_in_hands(I)
-		update_appearance()
-	else
-		balloon_alert(user, "it's empty!")
-	return CLICK_ACTION_SUCCESS
+/obj/item/storage/belt/sheath/katana/toy
+	action_slots = NONE
+	storage_type = /datum/storage/toy_sheath
+	stored_blade = /obj/item/toy/katana
 
-/obj/item/storage/belt/grass_sabre/update_icon_state()
-	icon_state = initial(inhand_icon_state)
-	inhand_icon_state = initial(inhand_icon_state)
-	worn_icon_state = initial(worn_icon_state)
-	if(contents.len)
-		icon_state += "-sabre"
-		inhand_icon_state += "-sabre"
-		worn_icon_state += "-sabre"
-	return ..()
+/obj/item/storage/belt/sheath/katana/toy/empty
+	stored_blade = NONE
+
+/obj/item/storage/belt/sheath/ninja
+	name = "energy katana sheath"
+	desc = "A high tech katana sheath that allows for quick blade movements."
+	icon_state = "ninja_sheath"
+	inhand_icon_state = "ninja_sheath"
+	worn_icon_state = "ninja_sheath"
+	storage_type = /datum/storage/ninja_sheath
+	stored_blade = /obj/item/energy_katana
+
+/obj/item/storage/belt/sheath/hanzo_katana
+	name = "hanzo katana sheath"
+	desc = "A normal black sheath meant to house the legendary hanzo steel."
+	icon_state = "hanzo_sheath"
+	inhand_icon_state = "hanzo_sheath"
+	worn_icon_state = "hanzo_sheath"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	storage_type = /datum/storage/hanzo_sheath
+	stored_blade = /obj/item/nullrod/claymore/katana
+
+/obj/item/storage/belt/sheath/hanzo_katana/empty
+	stored_blade = NONE
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"
@@ -894,24 +897,17 @@
 	inhand_icon_state = "utility"
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
+	storage_type = /datum/storage/plant_belt
 
-/obj/item/storage/belt/plant/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 6
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.set_holdable(list(
-		/obj/item/cultivator,
-		/obj/item/geneshears,
-		/obj/item/graft,
-		/obj/item/gun/energy/floragun,
-		/obj/item/hatchet,
-		/obj/item/plant_analyzer,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/spray/pestspray,
-		/obj/item/reagent_containers/spray/plantbgone,
-		/obj/item/secateurs,
-		/obj/item/seeds,
-		/obj/item/shovel/spade,
-	))
+/obj/item/storage/belt/sheath/sabre/gunpowered
+	name = "modified sabre sheath"
+	desc = "An imitation of a design made by the infamous Cold Space Wind. Has a trigger mechanism to more forcefully draw the blade."
+	icon_state = "gunsheath"
+	actions_types = list(/datum/action/innate/blade_counter/gunpowered)
+	stored_blade = null
+
+/obj/item/storage/belt/sheath/grass_sabre/gunpowered
+	name = "modified sabre sheath"
+	desc = "An imitation of a design grown by the infamous Tiziran Plasma Fire. Has a trigger mechanism to more forcefully draw the blade."
+	icon_state = "grass_gunsheath"
+	actions_types = list(/datum/action/innate/blade_counter/gunpowered)

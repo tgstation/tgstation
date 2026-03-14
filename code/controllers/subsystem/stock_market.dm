@@ -2,7 +2,6 @@
 SUBSYSTEM_DEF(stock_market)
 	name = "Stock Market"
 	wait = 60 SECONDS
-	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME
 
 	/// Associated list of materials and their prices at the given time.
@@ -21,16 +20,9 @@ SUBSYSTEM_DEF(stock_market)
 /datum/controller/subsystem/stock_market/Initialize()
 	for(var/datum/material/possible_market as anything in subtypesof(/datum/material)) // I need to make this work like this, but lets hardcode it for now
 		if(possible_market.tradable)
-			materials_prices += possible_market
 			materials_prices[possible_market] = possible_market.value_per_unit * SHEET_MATERIAL_AMOUNT
-
-			materials_trends += possible_market
 			materials_trends[possible_market] = rand(MARKET_TREND_DOWNWARD,MARKET_TREND_UPWARD) //aka -1 to 1
-
-			materials_trend_life += possible_market
 			materials_trend_life[possible_market] = rand(1,3)
-
-			materials_quantity += possible_market
 			materials_quantity[possible_market] = possible_market.tradable_base_quantity + (rand(-(possible_market.tradable_base_quantity) * 0.5, possible_market.tradable_base_quantity * 0.5))
 	return SS_INIT_SUCCESS
 
@@ -42,7 +34,7 @@ SUBSYSTEM_DEF(stock_market)
 
 ///Adjust the price of a material(either through buying or selling) ensuring it stays within limits
 /datum/controller/subsystem/stock_market/proc/adjust_material_price(datum/material/mat, delta)
-	mat = GET_MATERIAL_REF(mat)
+	mat = SSmaterials.get_material(mat)
 
 	//adjust the price
 	var/new_price = materials_prices[mat.type] + delta
@@ -59,7 +51,7 @@ SUBSYSTEM_DEF(stock_market)
 
 ///Adjust the amount of material(either through buying or selling) ensuring it stays within limits
 /datum/controller/subsystem/stock_market/proc/adjust_material_quantity(datum/material/mat, delta)
-	mat = GET_MATERIAL_REF(mat)
+	mat = SSmaterials.get_material(mat)
 
 	//adjust the quantity
 	var/new_quantity = materials_quantity[mat.type] + delta

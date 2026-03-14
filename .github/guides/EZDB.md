@@ -1,4 +1,5 @@
 # Quickly setting up a development database with ezdb
+
 While you do not need a database to code for tgstation, it is a prerequisite to many important features, especially on the admin side. Thus, if you are working in any code that benefits from it, it can be helpful to have one handy.
 
 **ezdb** is a tool for quickly setting up an isolated development database. It will manage downloading MariaDB, creating the database, setting it up, and updating it when the code evolves. It is not recommended for use in production servers, but is perfect for quick development.

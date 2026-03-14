@@ -62,7 +62,7 @@
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(start_chemming))
 	return PROCESS_KILL
 
-/obj/structure/geyser/attackby(obj/item/item, mob/user, params)
+/obj/structure/geyser/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		return ..() //this runs the plunger code
@@ -108,6 +108,12 @@
 	reagent_id = /datum/reagent/water/hollowwater
 	true_name = "hollow water geyser"
 
+/obj/structure/geyser/chiral_buffer
+	reagent_id = /datum/reagent/reaction_agent/inversing_buffer
+	point_value = 250
+	true_name = "chiral inversing geyser"
+	discovery_message = "It's a rare chiral inversing geyser! This could be very powerful in the right hands... "
+
 /obj/structure/geyser/random
 	point_value = 500
 
@@ -143,12 +149,12 @@
 	///What layer we set it to
 	var/target_layer = DUCT_LAYER_DEFAULT
 
-/obj/item/plunger/attack_atom(obj/O, mob/living/user, params)
+/obj/item/plunger/attack_atom(obj/attacked_obj, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(layer_mode)
-		SEND_SIGNAL(O, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, O, target_layer)
+		SEND_SIGNAL(attacked_obj, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, attacked_obj, target_layer)
 		return ..()
 	else
-		if(!O.plunger_act(src, user, reinforced))
+		if(!attacked_obj.plunger_act(src, user, reinforced))
 			return ..()
 
 /obj/item/plunger/throw_impact(atom/hit_atom, datum/thrownthing/tt)
@@ -193,7 +199,3 @@
 	layer_mode_sprite = "reinforced_plunger_layer"
 
 	custom_premium_price = PAYCHECK_CREW * 8
-
-/obj/item/plunger/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)

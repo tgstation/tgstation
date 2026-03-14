@@ -78,11 +78,6 @@
 	for(var/turf/visible_turf in view(cam_range, get_turf(src)))//fuck you usr
 		cam_screen.vis_contents += visible_turf
 
-//it needs to be linked, hence a kit.
-/obj/item/storage/box/rxglasses/spyglasskit
-	name = "spyglass kit"
-	desc = "this box contains <i>cool</i> nerd glasses; with built-in displays to view a linked camera."
-
 /obj/item/paper/fluff/nerddocs
 	name = "Espionage For Dummies"
 	color = COLOR_YELLOW
@@ -98,9 +93,3 @@ My SpySpeks <small>tm</small> Make a shrill beep while attempting to use!
 A shrill beep coming from your SpySpeks means that they can't connect to the included ProfitProtektor <small>tm</small>, please make sure your ProfitProtektor is still active, and functional!
 	"}
 
-/obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
-	var/obj/item/clothing/accessory/spy_bug/newbug = new(src)
-	var/obj/item/clothing/glasses/sunglasses/spy/newglasses = new(src)
-	newbug.linked_glasses = newglasses
-	newglasses.linked_bug = newbug
-	new /obj/item/paper/fluff/nerddocs(src)

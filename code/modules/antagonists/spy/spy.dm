@@ -3,7 +3,7 @@
 	roundend_category = "spies"
 	antagpanel_category = "Spy"
 	antag_hud_name = "spy"
-	job_rank = ROLE_SPY
+	pref_flag = ROLE_SPY
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 1
 	ui_name = "AntagInfoSpy"
@@ -196,7 +196,9 @@
 	var/mob/living/carbon/human/dummy/consistent/dummy = new()
 	dummy.set_haircolor(COLOR_SILVER, update = FALSE)
 	dummy.set_hairstyle("CIA", update = FALSE)
-	return finish_preview_icon(render_preview_outfit(preview_outfit, dummy))
+	var/datum/universal_icon/dummy_icon = render_preview_outfit(preview_outfit, dummy)
+	qdel(dummy)
+	return finish_preview_icon(dummy_icon)
 
 /datum/outfit/spy
 	name = "Spy (Preview only)"
@@ -205,7 +207,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
 	head = /obj/item/clothing/head/fedora
-	suit = /obj/item/clothing/suit/jacket/trenchcoat
+	suit = /obj/item/clothing/suit/jacket/leather_trenchcoat
 	glasses = /obj/item/clothing/glasses/osi
 	ears = /obj/item/radio/headset
 
@@ -224,7 +226,7 @@
 		stack_trace("[type] created on invalid target [Target || "null"]")
 		qdel(src)
 
-/datum/action/backup_uplink/Trigger(trigger_flags)
+/datum/action/backup_uplink/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

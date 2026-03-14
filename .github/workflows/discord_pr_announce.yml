@@ -1,11 +1,11 @@
-name: 'New PR Notification'
+name: "Discord PR Notification"
 on:
   pull_request_target:
     types: [opened, closed]
 
 jobs:
   notify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: "Check for DISCORD_WEBHOOK"
         id: secrets_set
@@ -25,7 +25,7 @@ jobs:
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           title: ${{ github.event.pull_request.user.login }} - ${{ github.event.pull_request.title }}
-          message: "GET_ACTION"
+          message: GET_ACTION
           include_image: false
           show_author: false
           avatar_url: https://avatars.githubusercontent.com/u/1363778?s=200&v=4

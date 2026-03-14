@@ -1,6 +1,5 @@
 {
-
-    "canadian": {
+	"canadian": {
 		"about": "aboot",
 		"alcohol": "mickey",
 		"armor": "armour",
@@ -39,7 +38,5 @@
 		"toilet": "washroom",
 		"tumor": "tumour",
 		"yard": "metre"
-		}
-
-
+	}
 }

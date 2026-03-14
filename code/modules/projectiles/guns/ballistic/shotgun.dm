@@ -46,10 +46,36 @@
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
 	inhand_icon_state = "shotgun"
-	fire_delay = 8
+	fire_delay = 8 DECISECONDS
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off = TRUE
+	chambered_attack_block = TRUE // necessary for riot shotgun due to fire_delay and wanting to shoot point blank without accidental melee
+
+//component for seclight attachment
+/obj/item/gun/ballistic/shotgun/riot/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 20, \
+		overlay_y = 11)
+
+// Pump-Action Grenade Launcher //
+
+/obj/item/gun/ballistic/shotgun/china_lake
+	name = "pump-action grenade launcher"
+	desc = "A pump-action grenade launcher. Typically found in the hands of space pirate raiders. The weight leaves a lot to be desired, but the high ammo capacity makes \
+		up for the bulk."
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	icon_state = "china_lake"
+	inhand_icon_state = "china_lake"
+	worn_icon_state = "riotshotgun"
+	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/lake
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	pb_knockback = 4 // Not advised.
 
 // Automatic Shotguns//
 
@@ -62,16 +88,33 @@
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
 	inhand_icon_state = "shotgun_combat"
-	fire_delay = 5
+	projectile_damage_multiplier = 1.5
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 
+//component for seclight attachment
+/obj/item/gun/ballistic/shotgun/automatic/combat/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 20, \
+		overlay_y = 11)
+
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
-	name = "compact shotgun"
-	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
+	name = "compact combat shotgun"
+	desc = "A compact version of the semi automatic combat shotgun. Lower magazine capacity, but more easily carried."
 	icon_state = "cshotgunc"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
 	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
+
+//component for seclight attachment
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 16, \
+		overlay_y = 11)
 
 //Dual Feed Shotgun
 
@@ -86,7 +129,6 @@
 	inhand_y_dimension = 32
 	worn_icon_state = "cshotgun"
 	w_class = WEIGHT_CLASS_HUGE
-	semi_auto = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// If defined, the secondary tube is this type, if you want different shell loads
@@ -119,7 +161,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/attack_self(mob/living/user)
-	if(!chambered && magazine.contents.len)
+	if(!chambered && get_ammo())
 		rack()
 	else
 		toggle_tube(user)
@@ -259,6 +301,36 @@
 
 /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	pin = /obj/item/firing_pin
+
+// Double barrel shotgun skins
+/datum/atom_skin/bar_shotgun
+	abstract_type = /datum/atom_skin/bar_shotgun
+	change_base_icon_state = TRUE
+
+/datum/atom_skin/bar_shotgun/default
+	preview_name = "Standard Finish"
+	new_icon_state = "dshotgun"
+
+/datum/atom_skin/bar_shotgun/dark_red
+	preview_name = "Dark Red Finish"
+	new_icon_state = "dshotgun_d"
+
+/datum/atom_skin/bar_shotgun/ash
+	preview_name = "Ash"
+	new_icon_state = "dshotgun_f"
+
+/datum/atom_skin/bar_shotgun/faded_grey
+	preview_name = "Faded Grey"
+	new_icon_state = "dshotgun_g"
+
+/datum/atom_skin/bar_shotgun/maple
+	preview_name = "Maple"
+	new_icon_state = "dshotgun_l"
+
+/datum/atom_skin/bar_shotgun/rosewood
+	preview_name = "Rosewood"
+	new_icon_state = "dshotgun_p"
+
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
 /////////////////////////////
@@ -278,17 +350,13 @@
 	sawn_desc = "Omar's coming!"
 	obj_flags = UNIQUE_RENAME
 	rack_sound_volume = 0
-	unique_reskin = list("Default" = "dshotgun",
-						"Dark Red Finish" = "dshotgun_d",
-						"Ash" = "dshotgun_f",
-						"Faded Grey" = "dshotgun_g",
-						"Maple" = "dshotgun_l",
-						"Rosewood" = "dshotgun_p"
-						)
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/bar_shotgun)
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
 	. = ..()

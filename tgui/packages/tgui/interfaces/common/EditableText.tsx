@@ -22,7 +22,7 @@ type Props = {
  */
 export const EditableText = (props: Props) => {
   const { color, field, target_ref, text } = props;
-  if (!field) return <> </>;
+  if (!field) return;
 
   const { act } = useBackend();
   const [editing, setEditing] = useState(false);
@@ -34,7 +34,7 @@ export const EditableText = (props: Props) => {
       width="50%"
       maxLength={512}
       onEscape={() => setEditing(false)}
-      onEnter={(event, value) => {
+      onEnter={(value) => {
         setEditing(false);
         act('edit_field', { field: field, ref: target_ref, value: value });
       }}

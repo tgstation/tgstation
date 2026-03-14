@@ -4,6 +4,14 @@ GLOBAL_LIST_EMPTY(blob_cores)
 GLOBAL_LIST_EMPTY(overminds)
 GLOBAL_LIST_EMPTY(blob_nodes)
 
+/// Clean up blob references after overmind is destroyed - called asynchronously to avoid blocking Destroy()
+/proc/cleanup_overmind_blobs(mob/eye/blob/dead_overmind)
+	// Clear overmind reference from global blobs
+	for(var/obj/structure/blob/blob_structure as anything in GLOB.blobs)
+		if(blob_structure && blob_structure.overmind == dead_overmind)
+			blob_structure.overmind = null
+			blob_structure.update_appearance() //reset anything that was ours
+
 
 /mob/eye/blob
 	name = "Blob Overmind"
@@ -53,6 +61,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	/// The list of strains the blob can reroll for.
 	var/list/strain_choices
 
+	///The HUD given to blobs with their power
+	var/atom/movable/screen/blob_power_display/blob_power_hud
+
 /mob/eye/blob/Initialize(mapload, starting_points = OVERMIND_STARTING_POINTS)
 	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
 	validate_location()
@@ -73,6 +84,14 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs |= src
+
+/mob/eye/blob/create_mob_hud()
+	. = ..()
+	if(!.)
+		return
+	blob_power_hud = new(null, src)
+	hud_used.infodisplay += blob_power_hud
+	hud_used.show_hud(hud_used.hud_version)
 
 /mob/eye/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
@@ -146,11 +165,19 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		else
 			// If we get here, it means yes: the blob is kill
 			SSticker.news_report = BLOB_DESTROYED
+
+			// Clear the biohazard emergency display when blob is defeated - async to avoid blocking
+			INVOKE_ASYNC(src, PROC_REF(clear_biohazard_display))
+
 			qdel(src)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
 		victory_in_progress = TRUE
 		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+
+		// Set status displays to biohazard alert - critical level
+		send_status_display_biohazard_alert()
+
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, PROC_REF(victory)), 45 SECONDS)
@@ -163,30 +190,42 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	if(announcement_time && (world.time >= announcement_time || blobs_legit.len >= announcement_size) && !has_announced)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
+
+		// Set status displays to biohazard alert
+		send_status_display_biohazard_alert()
+
 		has_announced = TRUE
 
 /// Create a blob spore and link it to us
 /mob/eye/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_minion/spore/minion)
-	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf)
-	assume_direct_control(spore)
+	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf, blob_borne = TRUE)
+	spore.AddComponent(/datum/component/blob_minion, src)
 	return spore
-
-/// Give our new minion the properties of a minion
-/mob/eye/blob/proc/assume_direct_control(mob/living/minion)
-	minion.AddComponent(/datum/component/blob_minion, src)
 
 /// Add something to our list of mobs and wait for it to die
 /mob/eye/blob/proc/register_new_minion(mob/living/minion)
 	blob_mobs |= minion
-	if (!istype(minion, /mob/living/basic/blob_minion/blobbernaut))
-		RegisterSignal(minion, COMSIG_LIVING_DEATH, PROC_REF(on_minion_death))
 
-/// When a spore (or zombie) dies then we do this
-/mob/eye/blob/proc/on_minion_death(mob/living/spore)
-	SIGNAL_HANDLER
-	blobstrain.on_sporedeath(spore)
+/// Clear biohazard emergency display when blob is defeated
+/mob/eye/blob/proc/clear_biohazard_display()
+	clear_status_display_biohazard()
 
 /mob/eye/blob/proc/victory()
+	// Set victory flags immediately
+	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
+	if(B)
+		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
+		if(main_objective)
+			main_objective.completed = TRUE
+
+	to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
+	SSticker.news_report = BLOB_WIN
+	SSticker.force_ending = FORCE_END_ROUND
+
+	// Handle the heavy victory operations asynchronously
+	INVOKE_ASYNC(src, PROC_REF(victory_sequence))
+
+/mob/eye/blob/proc/victory_sequence()
 	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)
 	sleep(10 SECONDS)
 	for(var/mob/living/live_guy as anything in GLOB.mob_living_list)
@@ -201,7 +240,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(!(blob_area.area_flags & BLOBS_ALLOWED))
 			continue
 
-		if(!(ROLE_BLOB in live_guy.faction))
+		if(!live_guy.has_faction(ROLE_BLOB))
 			playsound(live_guy, 'sound/effects/splat.ogg', 50, TRUE)
 			if(live_guy.stat != DEAD)
 				live_guy.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
@@ -222,24 +261,11 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		check_area.SetInvisibility(INVISIBILITY_NONE)
 		check_area.blend_mode = 0
 
-	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
-	if(B)
-		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
-		if(main_objective)
-			main_objective.completed = TRUE
-	to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
-	SSticker.news_report = BLOB_WIN
-	SSticker.force_ending = FORCE_END_ROUND
-
 /mob/eye/blob/Destroy()
 	QDEL_NULL(blobstrain)
-	for(var/BL in GLOB.blobs)
-		var/obj/structure/blob/B = BL
-		if(B && B.overmind == src)
-			B.overmind = null
-			B.update_appearance() //reset anything that was ours
-	for(var/obj/structure/blob/blob_structure as anything in all_blobs)
-		blob_structure.overmind = null
+	QDEL_NULL(blob_power_hud)
+
+	// Clear references immediately without iterating to avoid blocking
 	all_blobs = null
 	resource_blobs = null
 	factory_blobs = null
@@ -251,6 +277,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	SSshuttle.clearHostileEnvironment(src)
 	STOP_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs -= src
+
+	// Handle blob cleanup asynchronously to avoid blocking Destroy()
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(cleanup_overmind_blobs), src)
 
 	return ..()
 
@@ -274,16 +303,16 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(!blob_core)
 		return FALSE
 	var/current_health = round((blob_core.get_integrity() / blob_core.max_integrity) * 100)
-	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
+	var/new_maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
+	hud_used.healths.maptext = new_maptext
 	for(var/mob/living/basic/blob_minion/blobbernaut/blobbernaut in blob_mobs)
-		var/datum/hud/using_hud = blobbernaut.hud_used
-		if(!using_hud?.blobpwrdisplay)
+		if(isnull(blobbernaut.overmind_hud))
 			continue
-		using_hud.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
+		blobbernaut.overmind_hud.maptext = new_maptext
 
 /mob/eye/blob/proc/add_points(points)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
-	hud_used.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
+	blob_power_hud.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
 
 /mob/eye/blob/say(
 	message,
@@ -320,10 +349,11 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if (!message)
 		return
 
-	src.log_talk(message, LOG_SAY)
-
-	var/message_a = say_quote(message)
-	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]"))
+	var/list/message_mods = list()
+	var/adjusted_message = check_for_custom_say_emote(message, message_mods)
+	log_sayverb_talk(message, message_mods, tag = "blob hivemind telepathy")
+	var/messagepart = generate_messagepart(adjusted_message, message_mods = message_mods)
+	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [messagepart]"))
 	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src, MESSAGE_TYPE_RADIO)
 
 /mob/eye/blob/blob_act(obj/structure/blob/B)

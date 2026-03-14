@@ -1,6 +1,5 @@
 VERB_MANAGER_SUBSYSTEM_DEF(input)
 	name = "Input"
-	init_order = INIT_ORDER_INPUT
 	init_stage = INITSTAGE_EARLY
 	flags = SS_TICKER
 	priority = FIRE_PRIORITY_INPUT
@@ -34,11 +33,11 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 // This is for when macro sets are eventually datumized
 /datum/controller/subsystem/verb_manager/input/proc/setup_default_macro_sets()
 	macro_set = list(
-	"Any" = "\"KeyDown \[\[*\]\]\"",
-	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
-	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
-	"Tab" = "\".winset \\\"input.focus=true?map.focus=true:input.focus=true\\\"\"",
-	"Escape" = "Open-Escape-Menu",
+		"Any" = "\"KeyDown \[\[*\]\] \[\[map.mouse-pos\]\] \[\[map.size\]\]\"",
+		"Any+UP" = "\"KeyUp \[\[*\]\] \[\[map.mouse-pos\]\] \[\[map.size\]\]\"",
+		"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+		"Tab" = "\".winset \\\"input.focus=true?map.focus=true:input.focus=true\\\"\"",
+		"Escape" = "Open-Escape-Menu",
 	)
 
 // Badmins just wanna have fun ♪
@@ -95,6 +94,5 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	current_clicks = 0
 
 /datum/controller/subsystem/verb_manager/input/stat_entry(msg)
-	. = ..()
-	. += "M/S:[round(movements_per_second,0.01)] | C/S:[round(clicks_per_second,0.01)] ([round(delayed_clicks_per_second,0.01)] | CD: [round(average_click_delay / (1 SECONDS),0.01)])"
-
+	msg = "\n  M/S:[round(movements_per_second,0.01)] | C/S:[round(clicks_per_second,0.01)] ([round(delayed_clicks_per_second,0.01)] | CD: [round(average_click_delay / (1 SECONDS),0.01)])"
+	return ..()

@@ -31,7 +31,7 @@
 "aG" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/template_noop)
+/area/space/nearstation)
 "aI" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/curtain/cloth/fancy,
@@ -80,6 +80,19 @@
 	dir = 8
 	},
 /area/ruin/space/has_grav/film_studio/starboard)
+"bu" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table,
+/obj/item/rag,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/siding/dark_green{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/film_studio/dorms)
 "bx" = (
 /obj/structure/railing/corner/end/flip,
 /turf/open/floor/iron/white/smooth_large,
@@ -114,10 +127,6 @@
 /obj/machinery/light/dim/directional/east,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
-"cx" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/ruin/space/has_grav/film_studio/solars)
 "cC" = (
 /obj/machinery/door/window/right/directional/west,
 /turf/open/floor/pod/light,
@@ -173,7 +182,7 @@
 /area/ruin/space/has_grav/film_studio/director)
 "dd" = (
 /turf/open/space/basic,
-/area/template_noop)
+/area/space/nearstation)
 "dg" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/film_studio/starboard)
@@ -339,6 +348,7 @@
 	name = "Cabin 3"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/dorms)
 "gl" = (
@@ -864,7 +874,7 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/film_studio/dorms)
 "qL" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/pod/light,
@@ -903,19 +913,6 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/large,
 /area/ruin/space/has_grav/film_studio/starboard)
-"rQ" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table,
-/obj/item/reagent_containers/cup/rag,
-/obj/item/reagent_containers/cup/glass/bottle/beer{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/effect/turf_decal/siding/dark_green{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/film_studio/dorms)
 "rZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -2054,7 +2051,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/film_studio/dorms)
 "Ki" = (
-/obj/item/clothing/head/frenchberet{
+/obj/item/clothing/head/beret/frenchberet{
 	pixel_x = 15
 	},
 /turf/open/floor/plating,
@@ -2267,7 +2264,6 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/director)
 "Np" = (
@@ -2627,7 +2623,7 @@
 /turf/open/space/basic,
 /area/ruin/space)
 "Te" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/structure/filingcabinet/white,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/pod/light,
 /area/ruin/space/has_grav/film_studio/starboard)
@@ -2889,7 +2885,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/backstage)
 "Xk" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/film_studio/director)
 "Xl" = (
@@ -3581,13 +3577,13 @@ dd
 XK
 bA
 NB
-NB
+Zd
 xd
 NB
-NB
+Zd
 On
 pY
-NB
+Zd
 gW
 NB
 aO
@@ -3955,7 +3951,7 @@ MU
 hY
 XK
 tq
-rQ
+bu
 XY
 vD
 LG
@@ -5206,7 +5202,7 @@ WC
 KP
 dg
 DP
-Wy
+zL
 zL
 ST
 Ym
@@ -5250,7 +5246,7 @@ dd
 dd
 BK
 BK
-cx
+BK
 fu
 uc
 Ei

@@ -8,7 +8,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -164,9 +164,9 @@ const FloorPanel = (props) => {
   const { current_floor, currently_moving, currently_moving_to_floor } = data;
 
   return (
-    <Stack width="50%" backgroundColor="black">
+    <Stack width="50%" backgroundColor="black" align="center">
       <Stack.Item ml={2} mr={1} mt={1} mb={1}>
-        <Stack vertical align="center">
+        <Stack vertical>
           <Stack.Item>
             <ArrowIcon
               icon="arrow-up"
@@ -189,7 +189,7 @@ const FloorPanel = (props) => {
           </Stack.Item>
         </Stack>
       </Stack.Item>
-      <Stack.Item mt={1}>
+      <Stack.Item>
         <Box
           textColor="white"
           style={{

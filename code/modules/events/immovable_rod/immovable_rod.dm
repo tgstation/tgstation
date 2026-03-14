@@ -131,7 +131,8 @@
 		// Did we reach our destination? We're probably on Icebox. Let's get rid of ourselves.
 		// Ordinarily this won't happen as the average destination is the edge of the map and
 		// the rod will auto transition to a new z-level.
-		if(loc == destination_turf)
+		// If the rod is parallel to the destination at the world border, it is likely stuck (once again, icebox)
+		if((loc == destination_turf) || ((y == destination_turf.y || x == destination_turf.x) && (y == world.maxy || x == world.maxx || x == 1 || y == 1)))
 			qdel(src)
 			return
 
@@ -163,9 +164,7 @@
 	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
 		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(2, holder = src, location = get_turf(src))
-		smoke.start()
+		do_smoke(2, src, get_turf(src))
 		var/obj/singularity/bad_luck = new(get_turf(src))
 		bad_luck.energy = 800
 		qdel(clong)

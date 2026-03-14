@@ -181,7 +181,7 @@
 		span_warning("[cultist] strikes [cult_girder] with [parent]!"),
 		span_notice("You demolish [cult_girder].")
 		)
-	new /obj/item/stack/sheet/runed_metal(cult_girder.drop_location(), 1)
+	new /obj/item/stack/sheet/runed_metal(cult_girder.drop_location())
 	qdel(cult_girder)
 
 /*
@@ -298,13 +298,16 @@
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(!scribe_narsie_rune(cultist, user_team))
 			return
+		our_turf = get_turf(cultist) //we may have moved. adjust as needed...
+
+	var/can_have_blood = CAN_HAVE_BLOOD(cultist)
 
 	cultist.visible_message(
-		span_warning("[cultist] [cultist.blood_volume ? "cuts open [cultist.p_their()] arm and begins writing in [cultist.p_their()] own blood":"begins sketching out a strange design"]!"),
-		span_cult("You [cultist.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.")
+		span_warning("[cultist] [can_have_blood ? "cuts open [cultist.p_their()] arm and begins writing in [cultist.p_their()] own blood":"begins sketching out a strange design"]!"),
+		span_cult("You [can_have_blood ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.")
 		)
 
-	if(cultist.blood_volume)
+	if(can_have_blood)
 		cultist.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(GLOB.arm_zones), wound_bonus = CANT_WOUND) // *cuts arm* *bone explodes* ever have one of those days?
 
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
@@ -331,7 +334,7 @@
 		return FALSE
 
 	cultist.visible_message(
-		span_warning("[cultist] creates a strange circle[cultist.blood_volume ? " in [cultist.p_their()] own blood":""]."),
+		span_warning("[cultist] creates a strange circle[can_have_blood ? " in [cultist.p_their()] own blood":""]."),
 		span_cult("You finish drawing the arcane markings of the Geometer.")
 		)
 
@@ -369,17 +372,19 @@
 	if(!check_if_in_ritual_site(cultist, cult_team))
 		return FALSE
 	var/area/summon_location = get_area(cultist)
+	var/static/cult_music_played = FALSE
 	priority_announce(
 		text = "Figments from an eldritch god are being summoned by [cultist.real_name] into [summon_location.get_original_area_name()] from an unknown dimension. Disrupt the ritual at all costs!",
-		sound = 'sound/music/antag/bloodcult/bloodcult_scribe.ogg',
+		sound = cult_music_played ? 'sound/announcer/notice/notice3.ogg' : 'sound/music/antag/bloodcult/bloodcult_scribe.ogg',
 		sender_override = "[command_name()] Higher Dimensional Affairs",
 		has_important_message = TRUE,
 	)
+	cult_music_played = TRUE
 	for(var/shielded_turf in spiral_range_turfs(1, cultist, 1))
 		LAZYADD(shields, new /obj/structure/emergency_shield/cult/narsie(shielded_turf))
 
 	notify_ghosts(
-		"[cultist] has begun scribing a Nar'Sie rune!",
+		"[cultist.real_name] has begun scribing a Nar'Sie rune!",
 		source = cultist,
 		header = "Maranax Infirmux!",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,

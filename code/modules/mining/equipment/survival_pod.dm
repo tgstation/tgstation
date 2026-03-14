@@ -5,7 +5,7 @@
 	static_lighting = TRUE
 	requires_power = FALSE
 	default_gravity = STANDARD_GRAVITY
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = BLOBS_ALLOWED
 	flags_1 = CAN_BE_DIRTY_1
 
 //Survival Capsule
@@ -202,6 +202,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
+	can_flip = FALSE
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod

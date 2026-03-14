@@ -30,14 +30,11 @@
 	can_repair = TRUE
 	can_repair_self = TRUE
 	smashes_walls = TRUE
-	///The health HUD applied to this mob.
-	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
 /mob/living/basic/construct/artificer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
-	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
-	datahud.show_to(src)
+	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
 
 /// Hostile NPC version. Heals nearby constructs and cult structures, avoids targets that aren't extremely hurt.
 /mob/living/basic/construct/artificer/hostile
@@ -48,6 +45,7 @@
 // Alternate artificer themes
 /mob/living/basic/construct/artificer/angelic
 	desc = "A bulbous construct dedicated to building and maintaining holy armies."
+	faction = list(FACTION_HOLY)
 	theme = THEME_HOLY
 	construct_spells = list(
 		/datum/action/cooldown/spell/conjure/soulstone/purified,
@@ -61,6 +59,7 @@
 	ADD_TRAIT(src, TRAIT_ANGELIC, INNATE_TRAIT)
 
 /mob/living/basic/construct/artificer/mystic
+	faction = list(ROLE_WIZARD)
 	theme = THEME_WIZARD
 	construct_spells = list(
 		/datum/action/cooldown/spell/conjure/cult_floor,

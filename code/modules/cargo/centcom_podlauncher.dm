@@ -65,7 +65,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	var/map_name
 	var/atom/movable/screen/map_view/camera/cam_screen
 	var/tabIndex = 1
-	var/renderLighting = FALSE
 	var/static/list/pod_style_info
 	var/static/list/pod_style_lookup
 
@@ -99,20 +98,21 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	refreshBay()
 	ui_interact(holder.mob)
 
-/datum/centcom_podlauncher/proc/initMap()
-	if(map_name)
-		holder.clear_map(map_name)
+/datum/centcom_podlauncher/proc/initMap(datum/tgui/ui)
+	if(cam_screen)
+		QDEL_NULL(cam_screen)
 
 	map_name = "admin_supplypod_bay_[REF(src)]_map"
 	// Initialize map objects
 	cam_screen = new
 	cam_screen.generate_view(map_name)
-
+	cam_screen.clear_with_screen = FALSE
+	cam_screen.cam_background.clear_with_screen = FALSE
 	// display_to doesn't send the planes to the client, so we have to do it via display_to_client
-	var/datum/plane_master_group/planes = cam_screen.display_to_client(holder)
-	if(!renderLighting)
-		for(var/atom/movable/screen/plane_master/instance as anything in holder.mob.hud_used.get_true_plane_masters(LIGHTING_PLANE, planes.key))
-			instance.set_alpha(100)
+
+	if (!ui)
+		ui = ui_interact(holder.mob)
+	cam_screen.display_to(holder.mob, ui.window)
 
 	refreshView()
 
@@ -133,6 +133,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		ui = new(user, src, "CentcomPodLauncher")
 		ui.open()
 		refreshView()
+	return ui
 
 /datum/centcom_podlauncher/ui_static_data(mob/user)
 	var/list/data = list()
@@ -148,12 +149,12 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	data["oldArea"] = (oldTurf ? get_area(oldTurf) : null) //Holds the name of the area that the user was in before using the teleportCentcom action
 	data["picking_dropoff_turf"] = picking_dropoff_turf //If we're picking or have picked a dropoff turf. Only works when pod is in reverse mode
 	data["customDropoff"] = customDropoff
-	data["renderLighting"] = renderLighting
 	data["launchClone"] = launchClone //Do we launch the actual items in the bay or just launch clones of them?
 	data["launchRandomItem"] = launchRandomItem //Do we launch a single random item instead of everything on the turf?
 	data["launchChoice"] = launchChoice //Launch turfs all at once (0), ordered (1), or randomly(1)
 	data["explosionChoice"] = explosionChoice //An explosion that occurs when landing. Can be no explosion (0), custom explosion (1), or maxcap (2)
 	data["damageChoice"] = damageChoice //Damage that occurs to any mob under the pod when it lands. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
+	data["explosionSize"] = temp_pod.explosionSize // List of 4 or 5 explosion range vars: devast, heavy, light, fire, flash
 	data["delays"] = temp_pod.delays
 	data["rev_delays"] = temp_pod.reverse_delays
 	data["custom_rev_delay"] = temp_pod.custom_rev_delay
@@ -290,7 +291,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 				explosionChoice = 0
 				temp_pod.explosionSize = list(0,0,0,0)
 				return
-			var/list/expNames = list("Devastation", "Heavy Damage", "Light Damage", "Flame") //Explosions have a range of different types of damage
+			var/list/expNames = list("Devastation", "Heavy Damage", "Light Damage", "Flame", "Flash") //Explosions have a range of different types of damage
 			var/list/boomInput = list()
 			for (var/i=1 to length(expNames)) //Gather input from the user for the value of each type of damage
 				boomInput.Add(input("Enter the [expNames[i]] range of the explosion. WARNING: This ignores the bomb cap!", "[expNames[i]] Range",  0) as null|num)
@@ -334,10 +335,10 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			temp_pod.damage = 5000
 			temp_pod.effectGib = TRUE //Gibs whoever is under the pod when it lands
 			. = TRUE
-		if("effectName") //Give the supplypod a custom name. Supplypods automatically get their name based on their style (see supplypod/setStyle() proc), so doing this overrides that.
+		if("effectName") //Give the supplypod a custom name. Supplypods automatically get their name based on their style (see supplypod/set_style() proc), so doing this overrides that.
 			if (temp_pod.adminNamed) //If we're already adminNamed, set the name of the pod back to default
 				temp_pod.adminNamed = FALSE
-				temp_pod.setStyle(temp_pod.style) //This resets the name of the pod based on its current style (see supplypod/setStyle() proc)
+				temp_pod.set_style(temp_pod.style) //This resets the name of the pod based on its current style (see supplypod/set_style() proc)
 				return
 			var/nameInput= tgui_input_text(usr, "Enter a custom name", "Custom name", temp_pod.style::name, max_length = MAX_NAME_LEN)
 			if (isnull(nameInput))
@@ -347,7 +348,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 				return
 			temp_pod.name = nameInput
 			temp_pod.desc = descInput
-			temp_pod.adminNamed = TRUE //This variable is checked in the supplypod/setStyle() proc
+			temp_pod.adminNamed = TRUE //This variable is checked in the supplypod/set_style() proc
 			. = TRUE
 		if("effectShrapnel") //Creates a cloud of shrapnel on landing
 			if (temp_pod.effectShrapnel == TRUE) //If already doing custom damage, set back to default (no shrapnel)
@@ -453,11 +454,11 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 				temp_pod.fallingSound = initial(temp_pod.fallingSound)
 				temp_pod.fallingSoundLength = initial(temp_pod.fallingSoundLength)
 				return
-			var/soundInput = input(holder, "Please pick a sound file to play when the pod lands! Sound will start playing and try to end when the pod lands", "Pick a Sound File") as null|sound
+			var/soundInput = input(holder, "Please pick a sound file to play when the pod lands! Sound will start playing and try to end when the pod lands.\nSound MUST be shorter then sum of FALL and PRE.", "Pick a Sound File") as null|sound
 			if (isnull(soundInput))
 				return
 			var/sound/tempSound = sound(soundInput)
-			playsound(holder.mob, tempSound, 1)
+			playsound(holder.mob, tempSound, 5)
 			var/list/sounds_list = holder.SoundQuery()
 			var/soundLen = 0
 			for (var/playing_sound in sounds_list)
@@ -466,7 +467,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 					continue
 				var/sound/found = playing_sound
 				if (found.file == tempSound.file)
-					soundLen = length(found)
+					soundLen = rustg_sound_length(found.file)
 			if (!soundLen)
 				soundLen = input(holder, "Couldn't auto-determine sound file length. What is the exact length of the sound file, in seconds. This number will be used to line the sound up so that it finishes right as the pod lands!", "Pick a Sound File", 0.3) as null|num
 				if (isnull(soundLen))
@@ -474,7 +475,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 				if (!isnum(soundLen))
 					tgui_alert(usr, "That wasn't a number! Value set to default ([initial(temp_pod.fallingSoundLength)*0.1]) instead.")
 			temp_pod.fallingSound = soundInput
-			temp_pod.fallingSoundLength = 10 * soundLen
+			temp_pod.fallingSoundLength = soundLen
 			. = TRUE
 		if("landingSound") //Admin sound from a local file that plays when the pod lands
 			if (!isnull(temp_pod.landingSound))
@@ -507,7 +508,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			if (temp_pod.soundVolume != initial(temp_pod.soundVolume))
 				temp_pod.soundVolume = initial(temp_pod.soundVolume)
 				return
-			var/soundInput = input(holder, "Please pick a volume. Default is between 1 and 100 with 50 being average, but pick whatever. I'm a notification, not a cop. If you still cant hear your sound, consider turning on the Quiet effect. It will silence all pod sounds except for the custom admin ones set by the previous three buttons.", "Pick Admin Sound Volume") as null|num
+			var/soundInput = input(holder, "Please pick a volume. Default is between 4 and 100 with 50 being average, but pick whatever. I'm a notification, not a cop. If you still cant hear your sound, consider turning on the Quiet effect. It will silence all pod sounds except for the custom admin ones set by the previous three buttons.", "Pick Admin Sound Volume") as null|num
 			if (isnull(soundInput))
 				return
 			temp_pod.soundVolume = soundInput
@@ -519,14 +520,11 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			refreshView()
 			. = TRUE
 		if("refreshView")
-			initMap()
-			. = TRUE
-		if("renderLighting")
-			renderLighting = !renderLighting
+			initMap(ui)
 			. = TRUE
 		if("setStyle")
 			var/chosenStyle = params["style"]
-			temp_pod.setStyle(pod_style_lookup[chosenStyle])
+			temp_pod.set_style(pod_style_lookup[chosenStyle])
 			. = TRUE
 		if("refresh") //Refresh the Pod bay. User should press this if they spawn something new in the centcom bay. Automatically called whenever the user launches a pod
 			refreshBay()
@@ -546,7 +544,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 
 /datum/centcom_podlauncher/ui_close(mob/user) //Uses the destroy() proc. When the user closes the UI, we clean up the temp_pod and supplypod_selector variables.
 	QDEL_NULL(temp_pod)
-	QDEL_NULL(cam_screen)
 	qdel(src)
 
 /datum/centcom_podlauncher/proc/setupViewPod()
@@ -780,22 +777,20 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 
 /datum/centcom_podlauncher/proc/clearBay() //Clear all objs and mobs from the selected bay
 	for (var/obj/object in bay.get_all_contents())
-		if (istype(object.type, /obj/effect/light_emitter/podbay))
+		if (istype(object, /obj/effect/light_emitter/podbay))
 			continue
 		qdel(object)
-	for (var/mob/mob in bay.get_all_contents())
+	for (var/mob/living/mob in bay.get_all_contents())
+		mob.ghostize(FALSE)
 		qdel(mob)
-	for (var/bayturf in bay)
-		var/turf/turf_to_clear = bayturf
-		if (istype(turf_to_clear, /obj/effect/light_emitter/podbay))
-			continue
+	for (var/turf/turf_to_clear in bay)
 		turf_to_clear.ChangeTurf(/turf/open/floor/iron)
 
 /datum/centcom_podlauncher/Destroy() //The Destroy() proc. This is called by ui_close proc, or whenever the user leaves the game
 	updateCursor(TRUE) //Make sure our moues cursor resets to default. False means we are not in launch mode
-	QDEL_NULL(temp_pod) //Delete the temp_pod
 	QDEL_NULL(selector) //Delete the selector effect
 	QDEL_NULL(indicator)
+	QDEL_NULL(cam_screen)
 	return ..()
 
 /datum/centcom_podlauncher/proc/supplypod_punish_log(list/whoDyin)
@@ -814,16 +809,16 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 /datum/centcom_podlauncher/proc/loadData(list/dataToLoad)
 	bayNumber = dataToLoad["bayNumber"]
 	customDropoff = dataToLoad["customDropoff"]
-	renderLighting = dataToLoad["renderLighting"]
 	launchClone = dataToLoad["launchClone"] //Do we launch the actual items in the bay or just launch clones of them?
 	launchRandomItem = dataToLoad["launchRandomItem"] //Do we launch a single random item instead of everything on the turf?
 	launchChoice = dataToLoad["launchChoice"] //Launch turfs all at once (0), ordered (1), or randomly(1)
 	explosionChoice = dataToLoad["explosionChoice"] //An explosion that occurs when landing. Can be no explosion (0), custom explosion (1), or maxcap (2)
 	damageChoice = dataToLoad["damageChoice"] //Damage that occurs to any mob under the pod when it lands. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
+	temp_pod.explosionSize = dataToLoad["explosionSize"] // List of 4 or 5 explosion range vars: devast, heavy, light, fire, flash
 	temp_pod.delays = dataToLoad["delays"]
 	temp_pod.reverse_delays = dataToLoad["rev_delays"]
 	temp_pod.custom_rev_delay = dataToLoad["custom_rev_delay"]
-	temp_pod.setStyle(dataToLoad["styleChoice"])  //Style is a variable that keeps track of what the pod is supposed to look like.
+	temp_pod.set_style(dataToLoad["styleChoice"])  //Style is a variable that keeps track of what the pod is supposed to look like.
 	temp_pod.effectShrapnel = dataToLoad["effectShrapnel"] //If true, creates a cloud of shrapnel of a decided type and magnitude on landing
 	temp_pod.shrapnel_type = text2path(dataToLoad["shrapnelType"])
 	temp_pod.shrapnel_magnitude = dataToLoad["shrapnelMagnitude"]

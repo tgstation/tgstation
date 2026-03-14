@@ -1,7 +1,3 @@
-/mob/living/carbon/update_obscured_slots(obscured_flags)
-	..()
-	update_body()
-
 /// Updates features and clothing attached to a specific limb with limb-specific offsets
 /mob/living/carbon/proc/update_features(feature_key)
 	switch(feature_key)
@@ -24,7 +20,7 @@
 		if(OFFSET_HEAD)
 			update_worn_head()
 		if(OFFSET_FACE)
-			dna?.species?.handle_body(src) // updates eye icon
+			update_face_offset() // updates eye and lipstick icon
 			update_worn_mask()
 		if(OFFSET_BELT)
 			update_worn_belt()
@@ -53,7 +49,6 @@
 	SEND_SIGNAL(src, COMSIG_CARBON_REMOVE_OVERLAY, cache_index, I)
 
 /mob/living/carbon/update_body(is_creating = FALSE)
-	dna?.species.handle_body(src)
 	update_body_parts(is_creating)
 
 /mob/living/carbon/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -300,9 +295,12 @@
 			continue
 		if(isnull(damage_overlay) && (iter_part.brutestate || iter_part.burnstate))
 			damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "blank", -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
-			damage_overlay.color = iter_part.damage_overlay_color
 		if(iter_part.brutestate)
-			damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0") //we're adding icon_states of the base image as overlays
+			var/mutable_appearance/blood_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0", appearance_flags = RESET_COLOR) //we're adding icon_states of the base image as overlays
+			blood_damage_overlay.color = get_bloodtype()?.get_damage_color(src)
+			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0_overlay", appearance_flags = RESET_COLOR)
+			blood_damage_overlay.overlays += brute_damage_overlay
+			damage_overlay.add_overlay(blood_damage_overlay)
 		if(iter_part.burnstate)
 			damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_0[iter_part.burnstate]")
 
@@ -312,13 +310,20 @@
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 	apply_overlay(DAMAGE_LAYER)
 
-/mob/living/carbon/update_wound_overlays()
+/// Handles bleeding overlays
+/mob/living/carbon/proc/update_wound_overlays()
 	remove_overlay(WOUND_LAYER)
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if(!blood_type || !can_bleed())
+		return
 
 	var/mutable_appearance/wound_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.bleed_overlay_icon)
-			wound_overlay ||= mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
+			blood_overlay.color = blood_type.get_wound_color(src)
+			wound_overlay ||= blood_overlay
 			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
 
 	if(isnull(wound_overlay))
@@ -327,7 +332,7 @@
 	overlays_standing[WOUND_LAYER] = wound_overlay
 	apply_overlay(WOUND_LAYER)
 
-/mob/living/carbon/update_worn_mask(update_obscured = TRUE)
+/mob/living/carbon/update_worn_mask()
 	remove_overlay(FACEMASK_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -338,15 +343,13 @@
 		inv.update_appearance()
 
 	if(wear_mask)
-		if(update_obscured)
-			update_obscured_slots(wear_mask.flags_inv)
-		if(!(check_obscured_slots() & ITEM_SLOT_MASK))
+		if(!(obscured_slots & HIDEMASK))
 			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
 		update_hud_wear_mask(wear_mask)
 
 	apply_overlay(FACEMASK_LAYER)
 
-/mob/living/carbon/update_worn_neck(update_obscured = TRUE)
+/mob/living/carbon/update_worn_neck()
 	remove_overlay(NECK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
@@ -354,15 +357,13 @@
 		inv.update_appearance()
 
 	if(wear_neck)
-		if(update_obscured)
-			update_obscured_slots(wear_neck.flags_inv)
-		if(!(check_obscured_slots() & ITEM_SLOT_NECK))
+		if(!(obscured_slots & HIDENECK))
 			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi')
 		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
 
-/mob/living/carbon/update_worn_back(update_obscured = TRUE)
+/mob/living/carbon/update_worn_back()
 	remove_overlay(BACK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
@@ -370,48 +371,40 @@
 		inv.update_appearance()
 
 	if(back)
-		if(update_obscured)
-			update_obscured_slots(back.flags_inv)
 		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi')
 		update_hud_back(back)
 
 	apply_overlay(BACK_LAYER)
 
-/mob/living/carbon/update_worn_legcuffs(update_obscured = TRUE)
+/mob/living/carbon/update_worn_legcuffs()
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		if(update_obscured)
-			update_obscured_slots(legcuffed.flags_inv)
 		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
-/mob/living/carbon/update_worn_head(update_obscured = TRUE)
+/mob/living/carbon/update_worn_head()
 	remove_overlay(HEAD_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
+	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1])
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
 		inv.update_appearance()
 
 	if(head)
-		if(update_obscured)
-			update_obscured_slots(head.flags_inv)
-		if(!(check_obscured_slots() & ITEM_SLOT_HEAD))
+		if(!(obscured_slots & HIDEHEADGEAR))
 			overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)
 
 
-/mob/living/carbon/update_worn_handcuffs(update_obscured = TRUE)
+/mob/living/carbon/update_worn_handcuffs()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
-		if(update_obscured)
-			update_obscured_slots(handcuffed.flags_inv)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
 			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
@@ -455,7 +448,7 @@
 
 	. = list()
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
-		. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
+		. += emissive_blocker(standing.icon, standing.icon_state, src)
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
 
 /// worn_overlays to use when you'd want to use KEEP_APART. Don't use KEEP_APART neither there nor here, as it would break floating overlays
@@ -496,12 +489,11 @@
 	var/list/new_limbs = list()
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		if(limb in needs_update)
-			var/bodypart_icon = limb.get_limb_icon()
+			var/bodypart_icon = limb.get_limb_icon(dropped = FALSE, update_on = src)
 			new_limbs += bodypart_icon
 			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
 		else
 			new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]] //Pulls existing sprites from the cache
-
 
 	remove_overlay(BODYPARTS_LAYER)
 
@@ -509,6 +501,9 @@
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 
 	apply_overlay(BODYPARTS_LAYER)
+
+/mob/living/carbon/proc/update_face_offset()
+	return
 
 /////////////////////////
 // Limb Icon Cache 2.0 //
@@ -535,12 +530,13 @@
 	if(is_invisible)
 		. += "-invisible"
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-		if(!overlay.can_draw_on_bodypart(src, owner))
+		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
 			continue
 		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.mob_height]"
+	SEND_SIGNAL(src, COMSIG_BODYPART_GENERATE_ICON_KEY, .)
 	return .
 
 ///Generates a cache key specifically for husks
@@ -551,6 +547,17 @@
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"
+	if(is_invisible)
+		. += "-invisible"
+	var/list/blood_dna = blood_dna_info || owner?.get_blood_dna_list()
+	if (LAZYLEN(blood_dna))
+		. += "-[get_color_from_blood_list(blood_dna)]"
+	else
+		. += "-[BLOOD_COLOR_RED]"
+	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
+		if(!overlay.can_draw_on_bodypart(src, owner, TRUE))
+			continue
+		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.mob_height]"
@@ -568,9 +575,10 @@
 		. += "-[facial_hairstyle]"
 		. += "-[override_hair_color || fixed_hair_color || facial_hair_color]"
 		. += "-[facial_hair_alpha]"
-		if(gradient_styles?[GRADIENT_FACIAL_HAIR_KEY])
-			. += "-[gradient_styles[GRADIENT_FACIAL_HAIR_KEY]]"
-			. += "-[gradient_colors[GRADIENT_FACIAL_HAIR_KEY]]"
+		var/facial_hair_gradient_style = get_hair_gradient_style(GRADIENT_FACIAL_HAIR_KEY)
+		if(facial_hair_gradient_style)
+			. += "-[facial_hair_gradient_style]"
+			. += "-[get_hair_gradient_color(GRADIENT_FACIAL_HAIR_KEY)]"
 
 	if(show_eyeless)
 		. += "-SHOW_EYELESS"
@@ -584,9 +592,10 @@
 		. += "-[hairstyle]"
 		. += "-[override_hair_color || fixed_hair_color || hair_color]"
 		. += "-[hair_alpha]"
-		if(gradient_styles?[GRADIENT_HAIR_KEY])
-			. += "-[gradient_styles[GRADIENT_HAIR_KEY]]"
-			. += "-[gradient_colors[GRADIENT_HAIR_KEY]]"
+		var/hair_gradient_style = get_hair_gradient_style(GRADIENT_HAIR_KEY)
+		if(hair_gradient_style)
+			. += "-[hair_gradient_style]"
+			. += "-[get_hair_gradient_color(GRADIENT_HAIR_KEY)]"
 		if(LAZYLEN(hair_masks))
 			. += "-[jointext(hair_masks, "-")]"
 
@@ -603,7 +612,7 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
  * * limb_overlay - The limb image being masked, not necessarily the original limb image as it could be an overlay on top of it
  * Returns the list of masked images, or `null` if the limb_overlay didn't exist
  */
-/obj/item/bodypart/leg/proc/generate_masked_leg(mutable_appearance/limb_overlay)
+/obj/item/bodypart/leg/proc/generate_masked_leg(image/limb_overlay)
 	RETURN_TYPE(/list)
 	if(!limb_overlay)
 		return
@@ -629,12 +638,66 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 	new_leg_icon_lower = GLOB.masked_leg_icons_cache[icon_cache_key][2]
 
 	//this could break layering in oddjob cases, but i'm sure it will work fine most of the time... right?
-	var/mutable_appearance/new_leg_appearance = new(limb_overlay)
+	var/image/new_leg_appearance = new(limb_overlay)
 	new_leg_appearance.icon = new_leg_icon
 	new_leg_appearance.layer = -BODYPARTS_LAYER
 	. += new_leg_appearance
-	var/mutable_appearance/new_leg_appearance_lower = new(limb_overlay)
+	var/image/new_leg_appearance_lower = new(limb_overlay)
 	new_leg_appearance_lower.icon = new_leg_icon_lower
 	new_leg_appearance_lower.layer = -BODYPARTS_LOW_LAYER
 	. += new_leg_appearance_lower
 	return .
+
+/proc/get_default_icon_by_slot(slot_flag)
+	switch(slot_flag)
+		if(ITEM_SLOT_HEAD)
+			return 'icons/mob/clothing/head/default.dmi'
+		if(ITEM_SLOT_EYES)
+			return 'icons/mob/clothing/eyes.dmi'
+		if(ITEM_SLOT_EARS)
+			return 'icons/mob/clothing/ears.dmi'
+		if(ITEM_SLOT_MASK)
+			return 'icons/mob/clothing/mask.dmi'
+		if(ITEM_SLOT_NECK)
+			return 'icons/mob/clothing/neck.dmi'
+		if(ITEM_SLOT_BACK)
+			return 'icons/mob/clothing/back.dmi'
+		if(ITEM_SLOT_BELT)
+			return 'icons/mob/clothing/belt.dmi'
+		if(ITEM_SLOT_ID)
+			return 'icons/mob/clothing/id.dmi'
+		if(ITEM_SLOT_ICLOTHING)
+			return DEFAULT_UNIFORM_FILE
+		if(ITEM_SLOT_OCLOTHING)
+			return DEFAULT_SUIT_FILE
+		if(ITEM_SLOT_GLOVES)
+			return 'icons/mob/clothing/hands.dmi'
+		if(ITEM_SLOT_FEET)
+			return DEFAULT_SHOES_FILE
+
+/proc/get_default_layer_by_slot(slot_flag)
+	switch(text2num(slot_flag))
+		if(ITEM_SLOT_HEAD)
+			return HEAD_LAYER
+		if(ITEM_SLOT_EYES)
+			return GLASSES_LAYER
+		if(ITEM_SLOT_EARS)
+			return EARS_LAYER
+		if(ITEM_SLOT_MASK)
+			return FACEMASK_LAYER
+		if(ITEM_SLOT_NECK)
+			return NECK_LAYER
+		if(ITEM_SLOT_BACK)
+			return BACK_LAYER
+		if(ITEM_SLOT_BELT)
+			return BELT_LAYER
+		if(ITEM_SLOT_ID)
+			return ID_LAYER
+		if(ITEM_SLOT_ICLOTHING)
+			return UNIFORM_LAYER
+		if(ITEM_SLOT_OCLOTHING)
+			return SUIT_LAYER
+		if(ITEM_SLOT_GLOVES)
+			return GLOVES_LAYER
+		if(ITEM_SLOT_FEET)
+			return SHOES_LAYER

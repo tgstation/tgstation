@@ -23,7 +23,7 @@
 		else
 			qdel(GetComponent(/datum/component/action_item_overlay))
 
-/datum/action/item_action/Trigger(trigger_flags)
+/datum/action/item_action/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE

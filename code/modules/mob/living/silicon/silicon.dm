@@ -1,10 +1,11 @@
 /mob/living/silicon
 	gender = NEUTER
+	abstract_type = /mob/living/silicon
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
-	initial_language_holder = /datum/language_holder/synthetic
+	initial_language_holder = /datum/language_holder/synthetic/silicon
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
 	death_sound = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg'
@@ -37,11 +38,10 @@
 
 	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
-	var/list/silicon_huds = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_SECURITY_ADVANCED, DATA_HUD_DIAGNOSTIC)
+	var/list/silicon_huds = list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, TRAIT_DIAGNOSTIC_HUD)
 
 	var/law_change_counter = 0
-	var/obj/machinery/camera/builtInCamera = null
-	var/updating = FALSE //portable camera camerachunk update
+	var/obj/machinery/camera/silicon/builtInCamera
 	///Whether we have been emagged
 	var/emagged = FALSE
 	var/hack_software = FALSE //Will be able to use hacking actions
@@ -56,11 +56,11 @@
 	if(SStts.tts_enabled)
 		voice = pick(SStts.available_speakers)
 	GLOB.silicon_mobs += src
-	faction += FACTION_SILICON
+	add_faction(FACTION_SILICON)
 	if(ispath(radio))
 		radio = new radio(src)
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_atom_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
 	add_sensors()
@@ -82,6 +82,7 @@
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ANOSMIA, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_silicon_shocked))
 
 /mob/living/silicon/Destroy()
@@ -93,6 +94,16 @@
 	QDEL_NULL(modularInterface)
 	GLOB.silicon_mobs -= src
 	return ..()
+
+///Sets cyborg gender from preferences. Expects a client.
+/mob/living/silicon/proc/set_gender(client/player_client)
+	var/silicon_pronouns = player_client.prefs.read_preference(/datum/preference/choiced/silicon_gender)
+	if(silicon_pronouns == /datum/preference/choiced/silicon_gender::use_character_gender)
+		gender = player_client.prefs.read_preference(/datum/preference/choiced/gender)
+		return
+	var/silicon_gender = /datum/preference/choiced/silicon_gender::pronouns_to_genders[silicon_pronouns]
+	if(!isnull(silicon_gender))
+		gender = silicon_gender
 
 /mob/living/silicon/proc/on_silicon_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
 	SIGNAL_HANDLER
@@ -375,10 +386,6 @@
 /mob/living/silicon/proc/ai_roster()
 	if(!client)
 		return
-	if(world.time < client.crew_manifest_delay)
-		return
-	client.crew_manifest_delay = world.time + (1 SECONDS)
-
 	GLOB.manifest.ui_interact(src)
 
 /mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).
@@ -409,15 +416,16 @@
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
 	return -10
 
+/// Innate, toggleable silicon HUDs
+#define SILICON_HUD_TRAIT "silicon_hud"
+
 /mob/living/silicon/proc/remove_sensors()
-	for (var/hud_type in silicon_huds)
-		var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
-		silicon_hud.hide_from(src)
+	remove_traits(silicon_huds, SILICON_HUD_TRAIT)
 
 /mob/living/silicon/proc/add_sensors()
-	for (var/hud_type in silicon_huds)
-		var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
-		silicon_hud.show_to(src)
+	add_traits(silicon_huds, SILICON_HUD_TRAIT)
+
+#undef SILICON_HUD_TRAIT
 
 /mob/living/silicon/proc/toggle_sensors()
 	if(incapacitated)
@@ -437,11 +445,11 @@
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE
 
-/mob/living/silicon/handle_high_gravity(gravity, seconds_per_tick, times_fired)
+/mob/living/silicon/handle_high_gravity(gravity, seconds_per_tick)
 	return
 
 /mob/living/silicon/rust_heretic_act()
-	adjustBruteLoss(500)
+	adjust_brute_loss(500)
 
 /mob/living/silicon/on_floored_start()
 	return // Silicons are always standing by default.

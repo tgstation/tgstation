@@ -3,7 +3,7 @@
 		BB_STATIONARY_MOVE_TO_TARGET = TRUE,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
@@ -44,7 +44,7 @@
 	target_key = BB_DEER_GRASS_TARGET
 	finding_behavior = /datum/ai_behavior/find_and_set/in_list/turf_types
 	hunting_behavior = /datum/ai_behavior/hunt_target/eat_grass
-	hunt_targets = list(/turf/open/floor/grass)
+	hunt_targets = list(/turf/open/floor/grass, /turf/open/misc/grass)
 	hunt_range = 7
 	hunt_chance = 45
 

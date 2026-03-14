@@ -6,7 +6,7 @@
 	cooldown_time = 25 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
 
-	invocation = "CAVERE INSIDIAS"
+	invocation = "CAVERE INSIDIAS!"
 	invocation_type = INVOCATION_SHOUT
 
 	summon_radius = 3

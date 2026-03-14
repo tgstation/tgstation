@@ -25,7 +25,7 @@
 ///returns /datum/infuser_entry that matches an item being used for infusion, returns a fly mutation on failure
 /atom/movable/proc/get_infusion_entry() as /datum/infuser_entry
 	var/datum/infuser_entry/found
-	for(var/datum/infuser_entry/entry as anything in flatten_list(GLOB.infuser_entries))
+	for(var/datum/infuser_entry/entry as anything in assoc_to_values(GLOB.infuser_entries))
 		if(entry.tier == DNA_MUTANT_UNOBTAINABLE)
 			continue
 		if(is_type_in_list(src, entry.input_obj_or_mob))
@@ -47,6 +47,7 @@
 	// Valid organ successfully picked.
 	new_organ = new new_organ()
 	new_organ.replace_into(src)
+	new_organ.organ_flags |= ORGAN_MUTANT
 	return TRUE
 
 /// Picks a random mutated organ from the given infuser entry which is also compatible with this human.

@@ -481,7 +481,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			if(user.stat != DEAD)
 				user.investigate_log("has died from being cremated.", INVESTIGATE_DEATHS)
 			M.death(TRUE)
-			if(M) //some animals get automatically deleted on death.
+			if(!QDELETED(M)) //some animals get automatically deleted on death.
 				M.ghostize()
 				qdel(M)
 
@@ -554,7 +554,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		to_chat(user, span_warning("That's not connected to anything!"))
 	add_fingerprint(user)
 
-/obj/structure/tray/attackby(obj/P, mob/user, params)
+/obj/structure/tray/attackby(obj/P, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(P, /obj/item/riding_offhand))
 		return ..()
 

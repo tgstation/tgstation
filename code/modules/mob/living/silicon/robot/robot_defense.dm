@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			balloon_alert(user, "expose the wires first!")
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/stack/cable_coil/coil = tool
-		if (getFireLoss() <= 0)
+		if (get_fire_loss() <= 0)
 			balloon_alert(user, "wires are fine!")
 			return ITEM_INTERACT_BLOCKING
 		if(src == user)
@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if (!coil.use(1))
 			balloon_alert(user, "not enough cable!")
 			return ITEM_INTERACT_BLOCKING
-		adjustFireLoss(-30)
+		adjust_fire_loss(-30)
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		balloon_alert(user, "wires repaired")
 		user.visible_message(
@@ -109,6 +109,24 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 
+	if(istype(tool, /obj/item/storage/part_replacer))
+		var/obj/item/storage/part_replacer/replacer = tool
+		if(!opened)
+			balloon_alert(user, "chassis cover is closed!")
+			return ITEM_INTERACT_BLOCKING
+		if(!istype(model, /obj/item/robot_model/engineering))
+			balloon_alert(user, "wrong cyborg model!")
+			return ITEM_INTERACT_BLOCKING
+		if(locate(/obj/item/borg/upgrade/rped) in src)
+			balloon_alert(user, "already has a RPED!")
+			return ITEM_INTERACT_BLOCKING
+		qdel(tool)
+		var/obj/item/borg/upgrade/smallrped/lilrped = new
+		if(apply_upgrade(lilrped, user))
+			balloon_alert(user, "[replacer] installed")
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
 	if(istype(tool, /obj/item/ai_module))
 		if(!opened)
 			balloon_alert(user, "chassis cover is closed!")
@@ -172,7 +190,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		balloon_alert(user, "toner filled")
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/flashlight))
+	if(istype(tool, /obj/item/flashlight) && !istype(tool, /obj/item/flashlight/emp)) //subtypes my behated. OOP was a dumb idea
+		if(user.combat_mode)
+			return NONE
 		if(!opened)
 			balloon_alert(user, "open the chassis cover first!")
 			return ITEM_INTERACT_BLOCKING
@@ -186,7 +206,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		balloon_alert(user, "headlamp repaired")
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/computer_disk))
+	if(istype(tool, /obj/item/disk/computer))
 		if(!modularInterface)
 			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()
@@ -207,7 +227,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return ITEM_INTERACT_BLOCKING
 	locked = !locked
 	update_icons()
-	balloon_alert(user, "chassis cover lock [emagged ? "glitches" : "toggled"]")
+	balloon_alert(user, "chassis cover [emagged ? "lock glitches" : "[locked ? "locked" : "unlocked"]"]")
 	logevent("[emagged ? "ChÃ¥vÃis" : "Chassis"] cover lock has been [locked ? "engaged" : "released"]")
 	return ITEM_INTERACT_SUCCESS
 
@@ -251,25 +271,24 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 #undef MODERATE_DAMAGE_UPPER_BOUND
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	if (LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(body_position == STANDING_UP)
-			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			var/obj/item/I = get_active_held_item()
-			if(I)
-				uneq_active()
-				visible_message(span_danger("[user] disarmed [src]!"), \
-					span_userdanger("[user] has disabled [src]'s active module!"), null, COMBAT_MESSAGE_RANGE)
-				log_combat(user, src, "disarmed", "[I ? " removing \the [I]" : ""]")
-			else
-				Stun(40)
-				step(src,get_dir(user,src))
-				log_combat(user, src, "pushed")
-				visible_message(span_danger("[user] forces back [src]!"), \
-					span_userdanger("[user] forces back [src]!"), null, COMBAT_MESSAGE_RANGE)
-			playsound(loc, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
+	if (!LAZYACCESS(modifiers, RIGHT_CLICK))
+		return ..()
+	if(body_position != STANDING_UP)
+		return
+	user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
+	var/obj/item/I = get_active_held_item()
+	if(I)
+		uneq_active()
+		visible_message(span_danger("[user] disarmed [src]!"), \
+			span_userdanger("[user] has disabled [src]'s active module!"), null, COMBAT_MESSAGE_RANGE)
+		log_combat(user, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 	else
-		..()
-	return
+		Stun(40)
+		step(src,get_dir(user,src))
+		visible_message(span_danger("[user] forces back [src]!"), \
+			span_userdanger("[user] forces you back!"), null, COMBAT_MESSAGE_RANGE)
+		log_combat(user, src, "pushed")
+	playsound(loc, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
 
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	add_fingerprint(user)
@@ -302,7 +321,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return NONE
 
 	user.changeNext_move(CLICK_CD_MELEE)
-	if (!getBruteLoss())
+	if (!get_brute_loss())
 		balloon_alert(user, "no dents to fix!")
 		return ITEM_INTERACT_BLOCKING
 	if (!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED)) //The welder has 1u of fuel consumed by its afterattack, so we don't need to worry about taking any away.
@@ -312,10 +331,10 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!tool.use_tool(src, user, delay = 5 SECONDS, amount = 1, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 	else
-		if(!tool.use_tool(src, user, delay = 0 SECONDS, amount = 1, volume = 50))
+		if(!tool.use_tool(src, user, delay = 0.5 SECONDS, amount = 1, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 
-	adjustBruteLoss(-30)
+	adjust_brute_loss(-30)
 	add_fingerprint(user)
 	balloon_alert(user, "dents fixed")
 	user.visible_message(
@@ -434,17 +453,19 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		ResetModel()
 		return TRUE
 
-	SetEmagged(1)
-	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
+	SetEmagged(TRUE)
+	SetStun(10 SECONDS) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = FALSE
 	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
 	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)]. Laws overridden.")
-	var/time = time2text(world.realtime,"hh:mm:ss")
+	var/time = time2text(world.realtime,"hh:mm:ss", TIMEZONE_UTC)
 	if(user)
 		GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 	else
 		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
+
+	model.rebuild_modules()
 
 	INVOKE_ASYNC(src, PROC_REF(borg_emag_end), user)
 	return TRUE
@@ -477,7 +498,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/blob_act(obj/structure/blob/B)
 	if(stat != DEAD)
-		adjustBruteLoss(30)
+		adjust_brute_loss(30)
 	else
 		investigate_log("has been gibbed by a blob.", INVESTIGATE_DEATHS)
 		gib(DROP_ALL_REMAINS)
@@ -491,11 +512,11 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return TRUE
 		if(EXPLODE_HEAVY)
 			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
+				adjust_brute_loss(60)
+				adjust_fire_loss(60)
 		if(EXPLODE_LIGHT)
 			if (stat != DEAD)
-				adjustBruteLoss(30)
+				adjust_brute_loss(30)
 
 	return TRUE
 
@@ -514,3 +535,25 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		spark_system.start()
 		. = TRUE
 	return ..() || .
+
+/mob/living/silicon/robot/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
+	var/mob/living/silicon/robot/borg = src
+	var/obj/item/shield_module/shield = locate() in borg
+	if(!shield)
+		return ..()
+	if(borg.cell.charge <= 0.4 * STANDARD_CELL_CHARGE)
+		balloon_alert(borg, "not enough energy!")
+		if(shield.active)
+			shield.active = FALSE
+			playsound(src, 'sound/vehicles/mecha/mech_shield_drop.ogg', 50, FALSE)
+			borg.cut_overlay(shield.shield_overlay)
+			return
+	if(shield && shield.active)
+		if(!lavaland_equipment_pressure_check(get_turf(borg)))
+			balloon_alert(borg, "the shield didn't absorb the damage!")
+			return ..()
+		playsound(src, 'sound/vehicles/mecha/mech_shield_deflect.ogg', 100, TRUE)
+		balloon_alert(borg, "absorbed!")
+		borg.cell.use(damage * (STANDARD_CELL_CHARGE / 15), force = TRUE)
+		damage *= 0.5
+	return ..()

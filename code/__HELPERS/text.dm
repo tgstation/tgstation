@@ -156,8 +156,9 @@
  * * strict - return null immediately instead of filtering out
  * * allow_numbers - allows numbers and common special characters - used for silicon/other weird things names
  * * cap_after_symbols - words like Bob's will be capitalized to Bob'S by default. False is good for titles.
+ * * cap_at_start - capitalize the start of words. False is good for modular computer file names.
  */
-/proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE, cap_after_symbols = TRUE)
+/proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE, cap_after_symbols = TRUE, cap_at_start = TRUE)
 	if(!t_in)
 		return //Rejects the input if it is null
 
@@ -184,7 +185,7 @@
 
 			// a  .. z
 			if(97 to 122) //Lowercase Letters
-				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || cap_after_symbols && last_char_group == SYMBOLS_DETECTED) //start of a word
+				if(((last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED) && cap_at_start) || (cap_after_symbols && last_char_group == SYMBOLS_DETECTED)) //start of a word
 					char = uppertext(char)
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
@@ -1028,7 +1029,11 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	return corrupted_text
 
-#define is_alpha(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
+/// Checks if the char is lowercase
+#define is_lowercase_character(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
+/// Checks if the char is uppercase
+#define is_uppercase_character(X) ((text2ascii(X) <= 90) && (text2ascii(X) >= 65))
+/// Checks if the char is a digit
 #define is_digit(X) ((length(X) == 1) && (length(text2num(X)) == 1))
 
 //json decode that will return null on parse error instead of runtiming.
@@ -1233,3 +1238,38 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	for(var/iteration in 1 to length_char(text))
 		grawlix += pick("@", "$", "?", "!", "#", "§", "*", "£", "%", "☠", "★", "☆", "¿", "⚡")
 	return grawlix
+
+/// All punctuation that can be stripped in strip_outer_punctuation()
+#define STRIPPED_PUNCTUATION (REGEX_QUOTE("!?.~;:,|+_`-"))
+
+/// Removes all punctuation sequences from the beginning and the end of the input string.
+/// Includes emphasis (|, +, _) and whitespace.
+/// Anything punctuation in the middle of the input will be maintained.
+/proc/strip_outer_punctuation(input)
+	var/static/regex/pre_word_regex = new("^(?:\[[STRIPPED_PUNCTUATION]\]{0,3})(.*)", "m")
+	if(pre_word_regex.Find(input))
+		input = pre_word_regex.group[1]
+
+	var/static/regex/post_word_regex = new("^(.*?)(?:\[[STRIPPED_PUNCTUATION]\]{0,3})$", "m")
+	if(post_word_regex.Find(input))
+		return trim(post_word_regex.group[1])
+
+	return trim(input)
+
+#undef STRIPPED_PUNCTUATION
+
+/// Find what punctuation is at the end of the input, returns it.
+/// Ignores emphasis (|, +, _)
+/proc/find_last_punctuation(input)
+	var/static/regex/punctuation_regex = new(@"([!?.~;:,-]{1,3})[|+_\s]*$", "m")
+	if(punctuation_regex.Find(input))
+		return punctuation_regex.group[1]
+
+	return ""
+
+/// Checks if the passed string is all uppercase, ignoring punctuation and numbers and symbols
+/proc/is_uppercase(input)
+	var/static/regex/lowercase_regex = new(@"[a-z]", "g")
+	if(lowercase_regex.Find(input))
+		return FALSE
+	return TRUE

@@ -17,13 +17,33 @@
 	end_message = span_notice("The air seems to be cooling off again.")
 
 	area_type = /area
-	protected_areas = list(/area/station/maintenance, /area/station/ai_monitored/turret_protected/ai_upload, /area/station/ai_monitored/turret_protected/ai_upload_foyer,
-							/area/station/ai_monitored/turret_protected/aisat/maint, /area/station/ai_monitored/command/storage/satellite,
-							/area/station/ai_monitored/turret_protected/ai, /area/station/commons/storage/emergency/starboard, /area/station/commons/storage/emergency/port,
-							/area/shuttle, /area/station/security/prison/safe, /area/station/security/prison/toilet, /area/mine/maintenance, /area/icemoon/underground, /area/ruin/comms_agent/maint)
+	protected_areas = list(
+		// General areas
+		/area/station/maintenance, // This is where we tell people to go
+		/area/shuttle, // Would be quite rude
+
+		// AI
+		/area/station/ai/satellite/maintenance, // Duh...
+		/area/station/ai/upload,
+		/area/station/ai/satellite/chamber,
+
+		// Rad shelters
+		/area/station/commons/storage/emergency/starboard,
+		/area/station/commons/storage/emergency/port,
+
+		// Prison
+		/area/station/security/prison/safe,
+		/area/station/security/prison/toilet,
+
+		// Off-station
+		/area/mine/maintenance,
+		/area/ruin/comms_agent/maint,
+		/area/icemoon/underground,
+	)
 	target_trait = ZTRAIT_STATION
 
 	immunity_type = TRAIT_RADSTORM_IMMUNE
+	weather_flags = (WEATHER_MOBS | WEATHER_INDOORS)
 	/// Chance we get a negative mutation, if we fail we get a positive one
 	var/negative_mutation_chance = 90
 	/// Chance we mutate
@@ -34,7 +54,7 @@
 	status_alarm(TRUE)
 
 
-/datum/weather/rad_storm/weather_act(mob/living/living)
+/datum/weather/rad_storm/weather_act_mob(mob/living/living)
 	if(!prob(mutate_chance))
 		return
 
@@ -57,6 +77,8 @@
 	if(prob(50))
 		do_mutate(human)
 
+	return ..()
+
 /datum/weather/rad_storm/end()
 	if(..())
 		return
@@ -71,36 +93,24 @@
 	mutant.domutcheck()
 
 /datum/weather/rad_storm/proc/status_alarm(active) //Makes the status displays show the radiation warning for those who missed the announcement.
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-	if(!frequency)
-		return
-
-	var/datum/signal/signal = new
 	if (active)
-		signal.data["command"] = "alert"
-		signal.data["picture_state"] = "radiation"
+		send_status_display_radiation_alert()
 	else
-		signal.data["command"] = "shuttle"
-
-	var/atom/movable/virtualspeaker/virtual_speaker = new(null)
-	frequency.post_signal(virtual_speaker, signal)
+		clear_status_display_radiation()
 
 /// Used by the radioactive nebula when the station doesnt have enough shielding
 /datum/weather/rad_storm/nebula
 	protected_areas = list(/area/shuttle, /area/station/maintenance/radshelter)
 
 	weather_overlay = "nebula_radstorm"
-	weather_duration_lower = 100 HOURS
-	weather_duration_upper = 100 HOURS
-
 	end_message = null
+	weather_flags = parent_type::weather_flags | WEATHER_ENDLESS
 
 	mutate_chance = 0.1
-
 	///Chance we pulse a living during the storm
 	var/radiation_chance = 5
 
-/datum/weather/rad_storm/nebula/weather_act(mob/living/living)
+/datum/weather/rad_storm/nebula/weather_act_mob(mob/living/living)
 	..()
 
 	if(!prob(radiation_chance))

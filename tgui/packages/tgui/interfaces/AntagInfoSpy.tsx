@@ -1,10 +1,10 @@
 import { Section, Stack } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import {
-  Objective,
+  type Objective,
   ObjectivePrintout,
   ReplaceObjectivesButton,
 } from './common/Objectives';
@@ -56,7 +56,9 @@ export const AntagInfoSpy = () => {
             </Stack.Item>
             <Stack.Item>
               Work together or work against them: The choice is yours, but{' '}
-              <span style={redText}>you cannot share the rewards.</span>
+              <span style={redText}>
+                the same bounty cannot be claimed twice.
+              </span>
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>

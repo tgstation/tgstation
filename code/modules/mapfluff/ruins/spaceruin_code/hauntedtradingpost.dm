@@ -85,10 +85,10 @@
 /obj/structure/aquarium/donkfish
 	name = "office aquarium"
 	desc = "A home for captive fish. This one has 'DONK CO' engraved on the glass."
+	init_mode = AQUARIUM_MODE_SAFE
 
 /obj/structure/aquarium/donkfish/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	new /obj/item/aquarium_prop/rocks(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 	new /obj/item/fish/donkfish(src)
@@ -169,6 +169,9 @@
 	COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/machinery/button/door/invisible_tripwire/find_and_mount_on_atom(mark_for_late_init, late_init)
+	return //these exist independently on an turf
 
 /obj/machinery/button/door/invisible_tripwire/post_machine_initialize()
 	. = ..()
@@ -325,7 +328,7 @@
 	desc = "A ballistic machine gun auto-turret with Donk Co. branding. It uses 9mm rounds."
 	armor_type = /datum/armor/donk_turret
 	scan_range = 6
-	shot_delay = 10
+	shot_delay = 1 SECONDS
 
 /datum/armor/donk_turret
 	melee = 20
@@ -352,7 +355,7 @@
 	desc = "An energy gun auto-turret with Cybersun branding. It fires high-energy plasma beams that do a lot of damage, but it can be fairly slow."
 	armor_type = /datum/armor/syndicate_shuttle
 	scan_range = 6
-	shot_delay = 50
+	shot_delay = 5 SECONDS
 	always_up = FALSE
 	has_cover = TRUE
 

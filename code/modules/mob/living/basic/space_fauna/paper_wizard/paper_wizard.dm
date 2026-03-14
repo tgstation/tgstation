@@ -13,6 +13,7 @@
 	response_disarm_simple = "push"
 	basic_mob_flags = DEL_ON_DEATH
 
+	status_flags = CANPUSH
 	maxHealth = 1000
 	health = 1000
 	melee_damage_lower = 10
@@ -20,13 +21,12 @@
 	obj_damage = 50
 	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/paper_wizard
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	unsuitable_atmos_damage = 0
 	///spell to summon minions
 	var/datum/action/cooldown/spell/conjure/wizard_summon_minions/summon
 	///spell to summon clones
 	var/datum/action/cooldown/spell/pointed/wizard_mimic/mimic
-	///the loot we will drop
-	var/static/list/dropped_loot = list(/obj/effect/temp_visual/paperwiz_dying)
-
 
 /mob/living/basic/paper_wizard/Initialize(mapload)
 	. = ..()
@@ -44,7 +44,7 @@
 	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/paper_wizard/proc/grant_loot()
-	AddElement(/datum/element/death_drops, dropped_loot)
+	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/paperwiz_dying)
 
 /datum/ai_controller/basic_controller/paper_wizard
 	blackboard = list(
@@ -59,6 +59,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/wizard_mimic,
 		/datum/ai_planning_subtree/use_mob_ability/wizard_summon_minions,
@@ -87,7 +88,7 @@
 /datum/ai_behavior/find_and_set/empty_paper
 	action_cooldown = 10 SECONDS
 
-/datum/ai_behavior/find_and_set/empty_paper/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/empty_paper/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/empty_papers = list()
 
 	for(var/obj/item/paper/target_paper in oview(search_range, controller.pawn))
@@ -123,7 +124,7 @@
 	SIGNAL_HANDLER
 
 	if(!(attack_flags & (ATTACKER_STAMINA_ATTACK|ATTACKER_SHOVING)))
-		attacker.adjustBruteLoss(20)
+		attacker.adjust_brute_loss(20)
 		to_chat(attacker, span_warning("The clone casts a spell to damage you before he dies!"))
 
 

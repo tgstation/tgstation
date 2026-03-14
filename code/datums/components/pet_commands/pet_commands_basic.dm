@@ -47,6 +47,8 @@
 	callout_type = /datum/callout_option/move
 	///the behavior we use to follow
 	var/follow_behavior = /datum/ai_behavior/pet_follow_friend
+	///should we activate immediately if we're doing nothing else and gain a friend?
+	var/activate_on_befriend = FALSE
 
 /datum/pet_command/follow/set_command_active(mob/living/parent, mob/living/commander)
 	. = ..()
@@ -58,6 +60,18 @@
 /datum/pet_command/follow/execute_action(datum/ai_controller/controller)
 	controller.queue_behavior(follow_behavior, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/pet_command/follow/add_new_friend(mob/living/tamer)
+	. = ..()
+	var/mob/living/parent = weak_parent.resolve()
+	if (!parent)
+		return
+	if (activate_on_befriend && !parent.ai_controller.blackboard_key_exists(BB_ACTIVE_PET_COMMAND))
+		try_activate_command(tamer)
+
+/// Like follow but start active
+/datum/pet_command/follow/start_active
+	activate_on_befriend = TRUE
 
 /**
  * # Pet Command: Play Dead
@@ -262,6 +276,9 @@
 /datum/pet_command/protect_owner/execute_action(datum/ai_controller/controller)
 	var/mob/living/victim = controller.blackboard[BB_CURRENT_PET_TARGET]
 	if(QDELETED(victim))
+		return
+	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
+	if(!targeter.can_attack(controller.pawn, victim))
 		return
 	// cancel the action if they're below our given crit stat, OR if we're trying to attack ourselves (this can happen on tamed mobs w/ protect subtree rarely)
 	if(victim.stat > controller.blackboard[BB_TARGET_MINIMUM_STAT] || victim == controller.pawn)

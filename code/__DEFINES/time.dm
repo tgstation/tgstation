@@ -2,13 +2,16 @@
 #define MIDNIGHT_ROLLOVER 864000
 
 ///displays the current time into the round, with a lot of extra code just there for ensuring it looks okay after an entire day passes
-#define ROUND_TIME(...) ( "[world.time - SSticker.round_start_time > MIDNIGHT_ROLLOVER ? "[round((world.time - SSticker.round_start_time)/MIDNIGHT_ROLLOVER)]:[worldtime2text()]" : worldtime2text()]" )
+#define ROUND_TIME(...) ( "[STATION_TIME_PASSED() > MIDNIGHT_ROLLOVER ? "[round(STATION_TIME_PASSED()/MIDNIGHT_ROLLOVER)]:[gameTimestamp(wtime = STATION_TIME_PASSED())]" : gameTimestamp(wtime = STATION_TIME_PASSED())]" )
 
 ///Returns the time that has passed since the game started
 #define STATION_TIME_PASSED(...) (world.time - SSticker.round_start_time)
 
 /// Define that just has the current in-universe year for use in whatever context you might want to display that in. (For example, 2022 -> 2562 given a 540 year offset)
 #define CURRENT_STATION_YEAR (GLOB.year_integer + STATION_YEAR_OFFSET)
+
+/// Used in the GLOB year and tgui PreInit
+#define UTC_YEAR time2text(world.realtime,"YYYY",NO_TIMEZONE)
 
 /// In-universe, SS13 is set 540 years in the future from the real-world day, hence this number for determining the year-offset for the in-game year.
 #define STATION_YEAR_OFFSET 540
@@ -174,3 +177,6 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 
 /// Anywhere on Earth
 #define TIMEZONE_ANYWHERE_ON_EARTH -12
+
+/// in the grim darkness of the thirteenth space station there is no timezones, since they break IC game times. Use this for all IC/round time values
+#define NO_TIMEZONE 0

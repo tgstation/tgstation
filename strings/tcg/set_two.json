@@ -1,6 +1,6 @@
 {
 	"templates": [
-		{ 
+		{
 			"template": "default",
 			"icon": "icons/runtime/tcg/xenos.dmi",
 			"series": "resinfront",
@@ -276,7 +276,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
 			"rarity": "rare",
-			"summon_icon_state" :"xenoshrike"
+			"summon_icon_state": "xenoshrike"
 		},
 		{
 			"id": "bull",

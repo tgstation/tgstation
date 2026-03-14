@@ -165,7 +165,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Hue shift of the zaps color based on the power of the crystal
 	var/hue_angle_shift = 0
 	///Reference to the warp effect
-	var/atom/movable/supermatter_warp_effect/warp
+	var/atom/movable/warp_effect/warp
 	///The power threshold required to transform the powerloss function into a linear function from a cubic function.
 	var/powerloss_linear_threshold = 0
 	///The offset of the linear powerloss function set so the transition is differentiable.
@@ -366,6 +366,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	update_appearance()
 	delamination_strategy.lights(src)
 	delamination_strategy.filters(src)
+	absorption_ratio = clamp(absorption_ratio - 0.05, 0.15, 1)
 	return TRUE
 
 // SupermatterMonitor UI for ghosts only. Inherited attack_ghost will call this.
@@ -1050,8 +1051,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//This gotdamn variable is a boomer and keeps giving me problems
 	var/turf/target_turf = get_turf(target)
 	var/pressure = 1
+	// Calculate pressure and do electrolysis.
 	if(target_turf?.return_air())
-		pressure = max(1,target_turf.return_air().return_pressure())
+		var/datum/gas_mixture/air_mixture = target_turf.return_air()
+		pressure = max(1, air_mixture.return_pressure())
+		air_mixture.electrolyze(working_power = zap_str / 200, electrolyzer_args = list(ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER = power_level))
+		target_turf.air_update_turf()
 	//We get our range with the strength of the zap and the pressure, the higher the former and the lower the latter the better
 	var/new_range = clamp(zap_str / pressure * 10, 2, 7)
 	var/zap_count = 1
@@ -1094,6 +1099,54 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/holiday_hat_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_info("There's a santa hat placed atop it. How it got there without being dusted is a mystery.")
+
+// Warp Effect //
+
+/atom/movable/warp_effect
+	plane = DISPLACEMENT_PLANE
+	appearance_flags = PIXEL_SCALE|LONG_GLIDE // no tile bound so you can see it around corners and so
+	icon = 'icons/effects/light_overlays/light_352.dmi'
+	icon_state = "light"
+	pixel_x = -176
+	pixel_y = -176
+
+/atom/movable/warp_effect/Initialize(mapload)
+	. = ..()
+	var/turf/new_turf = get_turf(src)
+	if(new_turf)
+		var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
+		ADD_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(new_offset), ref(src))
+
+/atom/movable/warp_effect/Destroy(force)
+	// Just in case I've forgotten how the movement api works
+	var/offset = GET_TURF_PLANE_OFFSET(loc)
+	REMOVE_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(offset), ref(src))
+	return ..()
+
+/atom/movable/warp_effect/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	var/turf/new_turf = get_turf(src)
+	var/turf/old_turf = get_turf(old_loc)
+	if(!new_turf)
+		var/old_offset = GET_TURF_PLANE_OFFSET(old_turf)
+		REMOVE_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(old_offset), ref(src))
+		return
+	else if(get_turf(old_loc))
+		return
+	// If we're in a thing on a turf we COUNT as a distortion source
+	var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
+	ADD_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(new_offset), ref(src))
+
+/atom/movable/warp_effect/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	if(old_turf)
+		var/old_offset = GET_TURF_PLANE_OFFSET(old_turf)
+		REMOVE_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(old_offset), ref(src))
+	if(new_turf)
+		var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
+		ADD_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(new_offset), ref(src))
 
 #undef BIKE
 #undef COIL

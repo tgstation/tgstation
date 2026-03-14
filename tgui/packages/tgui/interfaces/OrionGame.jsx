@@ -132,14 +132,12 @@ const AdventureStatus = (props) => {
         )
       }
     >
-      <Stack mb={-1} fill>
-        <Stack.Item grow mb={-0.5}>
+      <Stack fill g={0}>
+        <Stack.Item grow>
           {settlers?.map((settler) => (
-            <Stack key={settler}>
-              <Stack.Item grow mt={0.9}>
-                {settler}
-              </Stack.Item>
-              <Stack.Item mt={0.9}>
+            <Stack key={settler} align="center">
+              <Stack.Item grow>{settler}</Stack.Item>
+              <Stack.Item>
                 <Button
                   fluid
                   color="red"
@@ -154,22 +152,20 @@ const AdventureStatus = (props) => {
                   }
                 />
               </Stack.Item>
-              <Stack.Item mr={0}>
-                <Box
-                  className={'moods32x32 mood' + (settlermoods[settler] + 1)}
-                />
-              </Stack.Item>
+              <Stack.Item
+                className={`moods32x32 mood${settlermoods[settler] + 1}`}
+              />
             </Stack>
           ))}
         </Stack.Item>
         <Divider vertical />
         <Stack.Item>
-          <Stack vertical fill>
+          <Stack vertical fill justify="center">
             <Stack.Item>
               <Button
                 fluid
                 icon="hamburger"
-                content={'Food Left: ' + food}
+                content={`Food Left: ${food}`}
                 color="green"
               />
             </Stack.Item>
@@ -177,7 +173,7 @@ const AdventureStatus = (props) => {
               <Button
                 fluid
                 icon="gas-pump"
-                content={'Fuel Left: ' + fuel}
+                content={`Fuel Left: ${fuel}`}
                 color="olive"
               />
             </Stack.Item>
@@ -185,7 +181,7 @@ const AdventureStatus = (props) => {
               <Button
                 fluid
                 icon="wrench"
-                content={'Hull Parts: ' + hull}
+                content={`Hull Parts: ${hull}`}
                 color="average"
               />
             </Stack.Item>
@@ -193,15 +189,15 @@ const AdventureStatus = (props) => {
               <Button
                 fluid
                 icon="server"
-                content={'Electronics: ' + electronics}
+                content={`Electronics: ${electronics}`}
                 color="blue"
               />
             </Stack.Item>
-            <Stack.Item mb={1}>
+            <Stack.Item>
               <Button
                 fluid
                 icon="rocket"
-                content={'Engine Parts: ' + engine}
+                content={`Engine Parts: ${engine}`}
                 color="violet"
               />
             </Stack.Item>
@@ -270,14 +266,12 @@ const ORION_STATUS_INSTRUCTIONS = (props) => {
         </Box>
       </Section>
       <Section title="Status Example">
-        <Stack mb={-1}>
-          <Stack.Item basis={70} grow mb={-0.5}>
+        <Stack>
+          <Stack.Item basis={70} grow align="center">
             {fake_settlers?.map((settler) => (
-              <Stack key={settler}>
-                <Stack.Item grow mt={0.9}>
-                  {settler}
-                </Stack.Item>
-                <Stack.Item mt={0.9}>
+              <Stack key={settler} align="center">
+                <Stack.Item grow>{settler}</Stack.Item>
+                <Stack.Item>
                   <Button
                     fluid
                     color="red"
@@ -286,9 +280,7 @@ const ORION_STATUS_INSTRUCTIONS = (props) => {
                     content="KILL"
                   />
                 </Stack.Item>
-                <Stack.Item mr={0}>
-                  <Box className={'moods32x32 mood5'} />
-                </Stack.Item>
+                <Stack.Item className={'moods32x32 mood5'} />
               </Stack>
             ))}
           </Stack.Item>
@@ -307,7 +299,7 @@ const ORION_STATUS_INSTRUCTIONS = (props) => {
       </Section>
       <Section title="Resources">
         <Stack>
-          <Stack.Item grow mt={-1}>
+          <Stack.Item grow>
             If you want to make it to <span style={goodstyle}>Orion</span>,
             you&apos;ll need to manage your resources:
             <br />
@@ -322,7 +314,7 @@ const ORION_STATUS_INSTRUCTIONS = (props) => {
           </Stack.Item>
           <Divider vertical />
           <Stack.Item>
-            <Stack vertical fill>
+            <Stack vertical fill justify="center">
               <Stack.Item>
                 <Button
                   fluid
@@ -648,7 +640,7 @@ export const OrionGame = (props) => {
   const GameStatusComponent = STATUS2COMPONENT[gamestatus].component();
   const MarketRaid = STATUS2COMPONENT[2].component();
   return (
-    <Window title={gamename} width={420} height={510}>
+    <Window title={gamename} width={420} height={535}>
       <Window.Content scrollable>
         {(eventname === 'Space Port Raid' && <MarketRaid />) || (
           <GameStatusComponent />

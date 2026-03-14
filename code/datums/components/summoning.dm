@@ -49,7 +49,7 @@
 /datum/component/summoning/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 
-/datum/component/summoning/proc/item_afterattack(obj/item/source, atom/target, mob/user, click_parameters)
+/datum/component/summoning/proc/item_afterattack(obj/item/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 
 	do_spawn_mob(get_turf(target), user)
@@ -76,8 +76,8 @@
 		var/mob/living/simple_animal/hostile/angry_boy = summoned
 		angry_boy.friends |= summoner // do not attack our summon boy
 	spawned_mobs |= summoned
-	if(faction != null)
-		summoned.faction = faction.Copy()
+	if(faction)
+		summoned.set_faction(faction)
 	RegisterSignals(summoned, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_spawned_death))
 	spawn_location.visible_message(span_danger("[summoned] [spawn_text]!"))
 

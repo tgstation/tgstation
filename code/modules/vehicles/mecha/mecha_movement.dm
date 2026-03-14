@@ -108,7 +108,7 @@
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
-	if(!use_energy(step_energy_drain))
+	if((step_energy_drain != 0) && !use_energy(step_energy_drain))
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Insufficient power to move!")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
@@ -186,25 +186,8 @@
 //We only call a camera static update if we have successfully moved and have a camera installed
 /obj/vehicle/sealed/mecha/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	if(chassis_camera)
-		update_camera_location(old_loc)
-
-/obj/vehicle/sealed/mecha/proc/update_camera_location(oldLoc)
-	oldLoc = get_turf(oldLoc)
-	if(!updating && oldLoc != get_turf(src))
-		updating = TRUE
-		do_camera_update(oldLoc)
-
-///The static update delay on movement of the camera in a mech we use
-#define MECH_CAMERA_BUFFER 0.5 SECONDS
-
-/**
- * The actual update - also passes our unique update buffer. This makes our static update faster than stationary cameras,
- * helping us to avoid running out of the camera's FoV. An EMPd mecha with a lowered view_range on its camera can still
- * sometimes run out into static before updating, however.
-*/
-/obj/vehicle/sealed/mecha/proc/do_camera_update(oldLoc)
-	if(oldLoc != get_turf(src))
-		GLOB.cameranet.updatePortableCamera(chassis_camera, MECH_CAMERA_BUFFER)
-	updating = FALSE
-#undef MECH_CAMERA_BUFFER
+	if(!chassis_camera?.can_use())
+		return
+	// Delay's a bit faster then standard cameras to "avoid running out of the camera's fov" whatever that means
+	// An EMPd mecha with a lowered view_range on its camera can still sometimes run out into static before updating, however.
+	SScameras.camera_moved(chassis_camera, get_turf(old_loc), get_turf(chassis_camera), 0.5 SECONDS)

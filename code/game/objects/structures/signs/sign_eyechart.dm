@@ -28,13 +28,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/eyechart, 32)
 		. += span_warning("...But it's too dark to make out anything.")
 		return
 
-	var/colorblind = FALSE
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		colorblind = !!carbon_user.has_trauma_type(/datum/brain_trauma/mild/color_blindness)
-	else if(isdog(user) || iscat(user))
-		colorblind = TRUE // i know these pets are not colorblind in the conventional sense, but it's an easter egg, ok?
-
+	var/colorblind = HAS_TRAIT(user, TRAIT_COLORBLIND)
 	var/obj/item/organ/eyes/eye = user.get_organ_slot(ORGAN_SLOT_EYES)
 	// eye null checks here are for mobs without eyes.
 	// humans missing eyes will be caught by the is_blind check above.

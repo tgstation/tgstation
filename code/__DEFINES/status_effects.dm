@@ -11,6 +11,8 @@
 #define STATUS_EFFECT_PERMANENT -1
 /// Use in status effect "tick_interval" to prevent it from calling tick()
 #define STATUS_EFFECT_NO_TICK -1
+/// Use in status effect "tick_interval" to guarantee that tick() gets called on every process()
+#define STATUS_EFFECT_AUTO_TICK 0
 
 /// Indicates this status effect is an abstract type, ie not instantiated
 /// Doesn't actually do anything in practice, primarily just a marker / used in unit tests,
@@ -50,12 +52,11 @@
 /// Max amounts of fire stacks a mob can get
 #define MAX_FIRE_STACKS 20
 /// If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
-#define MOB_BIG_FIRE_STACK_THRESHOLD 3
+#define MOB_BIG_FIRE_STACK_THRESHOLD 5
 
 // Grouped effect sources, see also code/__DEFINES/traits.dm
 
 #define STASIS_MACHINE_EFFECT "stasis_machine"
-#define STASIS_CHEMICAL_EFFECT "stasis_chemical"
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
 #define STASIS_ADMIN "stasis_admin"
 #define STASIS_LEGION_EATEN "stasis_eaten"
@@ -63,6 +64,11 @@
 #define STASIS_ELDRITCH_ETHER "stasis_eldritch_ether"
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
+
+// Defines for the ballmer peak.
+#define BALLMER_PEAK_LOW_END 12.9
+#define BALLMER_PEAK_HIGH_END 13.8
+#define BALLMER_PEAK_WINDOWS_ME 26
 
 /// Causes the mob to become blind via the passed source
 #define become_blind(source) apply_status_effect(/datum/status_effect/grouped/blindness, source)

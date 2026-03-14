@@ -16,10 +16,10 @@
 	QDEL_NULL(cell)
 	return ..()
 
-/obj/item/organ/stomach/ethereal/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/stomach/ethereal/on_life(seconds_per_tick)
 	. = ..()
 	adjust_charge(-ETHEREAL_DISCHARGE_RATE * seconds_per_tick)
-	handle_charge(owner, seconds_per_tick, times_fired)
+	handle_charge(owner, seconds_per_tick)
 
 /obj/item/organ/stomach/ethereal/on_mob_insert(mob/living/carbon/stomach_owner)
 	. = ..()
@@ -58,7 +58,7 @@
 	var/amount_changed = clamp(amount, ETHEREAL_CHARGE_NONE - cell.charge(), ETHEREAL_CHARGE_DANGEROUS - cell.charge())
 	return cell.change(amount_changed)
 
-/obj/item/organ/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick, times_fired)
+/obj/item/organ/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick)
 	switch(cell.charge())
 		if(-INFINITY to ETHEREAL_CHARGE_NONE)
 			carbon.add_mood_event("charge", /datum/mood_event/decharged)
@@ -103,7 +103,7 @@
 			var/mob/living/carbon/human/human = carbon
 			if(human.dna?.species)
 				//fixed_mut_color is also ethereal color (for some reason)
-				carbon.flash_lighting_fx(5, 7, human.dna.species.fixed_mut_color ? human.dna.species.fixed_mut_color : human.dna.features["mcolor"])
+				carbon.flash_lighting_fx(5, 7, human.dna.species.fixed_mut_color ? human.dna.species.fixed_mut_color : human.dna.features[FEATURE_MUTANT_COLOR])
 
 		playsound(carbon, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		carbon.cut_overlay(overcharge)
@@ -113,8 +113,7 @@
 		carbon.visible_message(span_danger("[carbon] violently discharges energy!"), span_warning("You violently discharge energy!"))
 
 		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
-			var/datum/disease/D = new /datum/disease/heart_failure
-			carbon.ForceContractDisease(D)
+			carbon.apply_status_effect(/datum/status_effect/heart_attack)
 			to_chat(carbon, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 			carbon.playsound_local(carbon, 'sound/effects/singlebeat.ogg', 100, 0)
 

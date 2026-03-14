@@ -8,7 +8,7 @@
 /obj/item/dyespray/attack_self(mob/user)
 	dye(user, user)
 
-/obj/item/dyespray/pre_attack(atom/target, mob/living/user, params)
+/obj/item/dyespray/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	dye(target, user)
 	return ..()
 
@@ -46,7 +46,7 @@
 	if(!what_to_dye || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
 
-	if(what_to_dye == "External Bodyparts/Organs")
+	if(what_to_dye == "External Body Parts")
 		dye_organ(target, user)
 		return
 
@@ -57,8 +57,9 @@
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 
-	var/new_grad_color = input(user, "Choose a secondary hair color:", "Character Preference",human_target.grad_color) as color|null
-	if(!new_grad_color || !user.can_perform_action(src, NEED_DEXTERITY) || !user.CanReach(target))
+	var/hair_key = what_to_dye == "Hair" ? GRADIENT_HAIR_KEY : GRADIENT_FACIAL_HAIR_KEY
+	var/new_grad_color = tgui_color_picker(user, "Choose a secondary hair color:", "Character Preference", human_target.get_hair_gradient_color(hair_key))
+	if(!new_grad_color || !user.can_perform_action(src, NEED_DEXTERITY) || !target.IsReachableBy(user))
 		return
 
 	to_chat(user, span_notice("You start applying the hair dye..."))
@@ -105,7 +106,7 @@
 			return
 
 	var/default_color = overlay.dye_color || overlay.draw_color
-	var/new_color = input(user, "Choose a color for [selected]:", "Character Preference", default_color) as color|null
+	var/new_color = tgui_color_picker(user, "Choose a color for [selected]:", "Character Preference", default_color)
 	if(isnull(new_color) || new_color == default_color || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	if(QDELETED(selected) || !(selected in target.organs))

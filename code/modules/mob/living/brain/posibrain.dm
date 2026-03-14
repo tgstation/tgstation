@@ -77,10 +77,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/click_alt(mob/living/user)
 	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, max_length = MAX_NAME_LEN)
-	if(isnull(input_seed))
+	if(isnull(input_seed) || !user.can_perform_action(src))
 		return CLICK_ACTION_BLOCKING
-	if(!user.can_perform_action(src))
-		return
 	to_chat(user, span_notice("You set the personality seed to \"[input_seed]\"."))
 	ask_role = input_seed
 	update_appearance()
@@ -162,6 +160,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		to_chat(brainmob, policy)
 	brainmob.mind.set_assigned_role(SSjob.get_job_type(posibrain_job_path))
 	brainmob.set_stat(CONSCIOUS)
+	brainmob.grant_language(/datum/language/machine, source = LANGUAGE_ATOM)
 
 	visible_message(new_mob_message)
 	check_success()
@@ -210,7 +209,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	icon_state = "[base_icon_state]"
 	return
 
-/obj/item/mmi/posibrain/attackby(obj/item/O, mob/user, params)
+/obj/item/mmi/posibrain/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/item/mmi/posibrain/add_mmi_overlay()

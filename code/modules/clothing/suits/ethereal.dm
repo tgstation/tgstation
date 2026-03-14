@@ -1,9 +1,10 @@
 /obj/item/clothing/suit/hooded/ethereal_raincoat
 	name = "ethereal raincoat"
 	desc = " A raincoat commonly worn by travelers or tourists not too fond of Sprout's rainy weather."
-	icon = 'icons/obj/clothing/suits/ethereal.dmi'
-	icon_state = "eth_raincoat"
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	worn_icon = 'icons/mob/clothing/suits/ethereal.dmi'
+	icon_state = "/obj/item/clothing/suit/hooded/ethereal_raincoat"
+	post_init_icon_state = "eth_raincoat"
 	greyscale_config = /datum/greyscale_config/eth_raincoat
 	greyscale_config_worn = /datum/greyscale_config/eth_raincoat/worn
 	greyscale_colors = "#4e7cc7"
@@ -14,7 +15,7 @@
 /obj/item/clothing/suit/hooded/ethereal_raincoat/Initialize(mapload)
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
-	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -28,12 +29,13 @@
 /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden
 	name = "trailwarden oilcoat"
 	desc = "A masterfully handcrafted oilslick coat, supposedly makes for excellent camouflage among Sprout's vegetation. You can hear a faint electrical buzz emanating from the luminescent pattern."
+	icon_state = "/obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden"
 	greyscale_colors = "#32a87d"
 	hoodtype = /obj/item/clothing/head/hooded/ethereal_rainhood/trailwarden
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -7)
+	AddElement(/datum/element/adjust_fishing_difficulty, -7)
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden/equipped(mob/living/user, slot)
 	. = ..()
@@ -56,4 +58,4 @@
 
 /obj/item/clothing/head/hooded/ethereal_rainhood/trailwarden/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
+	AddElement(/datum/element/adjust_fishing_difficulty, -6)

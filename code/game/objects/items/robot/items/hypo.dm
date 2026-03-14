@@ -6,7 +6,7 @@
 		/datum/reagent/medicine/c2/libital,\
 		/datum/reagent/medicine/c2/multiver,\
 		/datum/reagent/medicine/salglu_solution,\
-		/datum/reagent/medicine/spaceacillin\
+		/datum/reagent/medicine/spaceacillin,\
 	)
 #define EXPANDED_MEDICAL_REAGENTS list(\
 		/datum/reagent/medicine/haloperidol,\
@@ -17,7 +17,7 @@
 		/datum/reagent/medicine/oxandrolone,\
 		/datum/reagent/medicine/pen_acid,\
 		/datum/reagent/medicine/rezadone,\
-		/datum/reagent/medicine/sal_acid\
+		/datum/reagent/medicine/sal_acid,\
 	)
 #define HACKED_MEDICAL_REAGENTS list(\
 		/datum/reagent/toxin/cyanide,\
@@ -25,49 +25,52 @@
 		/datum/reagent/toxin/heparin,\
 		/datum/reagent/toxin/lexorin,\
 		/datum/reagent/toxin/mutetoxin,\
-		/datum/reagent/toxin/sodium_thiopental\
+		/datum/reagent/toxin/sodium_thiopental,\
 	)
 #define BASE_PEACE_REAGENTS list(\
 		/datum/reagent/peaceborg/confuse,\
 		/datum/reagent/pax/peaceborg,\
-		/datum/reagent/peaceborg/tire\
+		/datum/reagent/peaceborg/tire,\
 	)
 #define HACKED_PEACE_REAGENTS list(\
 		/datum/reagent/toxin/cyanide,\
 		/datum/reagent/toxin/fentanyl,\
 		/datum/reagent/toxin/sodium_thiopental,\
 		/datum/reagent/toxin/staminatoxin,\
-		/datum/reagent/toxin/sulfonal\
+		/datum/reagent/toxin/sulfonal,\
 	)
 #define BASE_CLOWN_REAGENTS list(\
-		/datum/reagent/consumable/laughter\
+		/datum/reagent/consumable/laughter,\
 	)
 #define HACKED_CLOWN_REAGENTS list(\
-		/datum/reagent/consumable/superlaughter\
+		/datum/reagent/consumable/superlaughter,\
 	)
 #define BASE_SYNDICATE_REAGENTS list(\
 		/datum/reagent/medicine/inacusiate,\
 		/datum/reagent/medicine/morphine,\
 		/datum/reagent/medicine/potass_iodide,\
-		/datum/reagent/medicine/syndicate_nanites\
+		/datum/reagent/medicine/syndicate_nanites,\
 	)
 #define BASE_SERVICE_REAGENTS list(/datum/reagent/consumable/applejuice, /datum/reagent/consumable/banana,\
 		/datum/reagent/consumable/berryjuice, /datum/reagent/consumable/cherryjelly, /datum/reagent/consumable/coffee,\
 		/datum/reagent/consumable/cream, /datum/reagent/consumable/dr_gibb, /datum/reagent/consumable/grenadine,\
 		/datum/reagent/consumable/ice, /datum/reagent/consumable/lemon_lime, /datum/reagent/consumable/limejuice,\
-		/datum/reagent/consumable/lemonjuice, /datum/reagent/consumable/menthol, /datum/reagent/consumable/nothing,\
-		/datum/reagent/consumable/milk, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/peachjuice,\
-		/datum/reagent/consumable/pineapplejuice, /datum/reagent/consumable/pwr_game, /datum/reagent/consumable/shamblers,\
-		/datum/reagent/consumable/sodawater, /datum/reagent/consumable/sol_dry, /datum/reagent/consumable/soymilk,\
-		/datum/reagent/consumable/space_cola, /datum/reagent/consumable/spacemountainwind, /datum/reagent/consumable/space_up,\
-		/datum/reagent/consumable/tea, /datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/tonic,\
-		/datum/reagent/consumable/vinegar, /datum/reagent/water,\
-		/datum/reagent/consumable/ethanol/ale, /datum/reagent/consumable/ethanol/applejack, /datum/reagent/consumable/ethanol/beer,\
-		/datum/reagent/consumable/ethanol/champagne, /datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_coconut,\
-		/datum/reagent/consumable/ethanol/creme_de_cacao, /datum/reagent/consumable/ethanol/creme_de_menthe, /datum/reagent/consumable/ethanol/gin,\
-		/datum/reagent/consumable/ethanol/kahlua, /datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/sake,\
-		/datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth,\
-		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine\
+		/datum/reagent/consumable/lemonjuice, /datum/reagent/consumable/melon_soda, /datum/reagent/consumable/menthol,\
+		/datum/reagent/consumable/milk, /datum/reagent/consumable/nothing, /datum/reagent/consumable/orangejuice,\
+		/datum/reagent/consumable/peachjuice, /datum/reagent/consumable/pineapplejuice, /datum/reagent/consumable/pwr_game,\
+		/datum/reagent/consumable/shamblers, /datum/reagent/consumable/sodawater, /datum/reagent/consumable/sol_dry,\
+		/datum/reagent/consumable/soymilk, /datum/reagent/consumable/space_cola, /datum/reagent/consumable/spacemountainwind,\
+		/datum/reagent/consumable/space_up, /datum/reagent/consumable/tea, /datum/reagent/consumable/tomatojuice,\
+		/datum/reagent/consumable/tonic, /datum/reagent/consumable/vinegar, /datum/reagent/water,\
+		/datum/reagent/consumable/ethanol/absinthe, /datum/reagent/consumable/ethanol/ale, /datum/reagent/consumable/ethanol/applejack,\
+		/datum/reagent/consumable/ethanol/beer, /datum/reagent/consumable/ethanol/champagne, /datum/reagent/consumable/ethanol/coconut_rum,\
+		/datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_coconut, /datum/reagent/consumable/ethanol/creme_de_cacao,\
+		/datum/reagent/consumable/ethanol/creme_de_menthe, /datum/reagent/consumable/ethanol/curacao, /datum/reagent/consumable/ethanol/gin,\
+		/datum/reagent/consumable/ethanol/hcider, /datum/reagent/consumable/ethanol/kahlua, /datum/reagent/consumable/ethanol/beer/maltliquor,\
+		/datum/reagent/consumable/ethanol/navy_rum, /datum/reagent/consumable/ethanol/rice_beer, /datum/reagent/consumable/ethanol/rum,\
+		/datum/reagent/consumable/ethanol/sake, /datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/triple_sec,\
+		/datum/reagent/consumable/ethanol/vermouth, /datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey,\
+		/datum/reagent/consumable/ethanol/wine, /datum/reagent/consumable/ethanol/yuyake,\
 	)
 #define EXPANDED_SERVICE_REAGENTS list(\
 	/datum/reagent/consumable/blackpepper,\
@@ -109,13 +112,13 @@
 	 * In most places we add + 1 because we're secretly keeping [max_volume_per_reagent + 1]
 	 * units, so that when this reagent runs out it's not wholesale removed from the reagents
 	 */
-	var/max_volume_per_reagent = 30
+	var/max_volume_per_reagent = 25
 	/// Cell cost for charging a reagent
-	var/charge_cost = 0.05 * STANDARD_CELL_CHARGE
+	var/charge_cost = 0.075 * STANDARD_CELL_CHARGE
 	/// Counts up to the next time we charge
 	var/charge_timer = 0
 	/// Time it takes for shots to recharge (in seconds)
-	var/recharge_time = 10
+	var/recharge_time = 12
 	///Optional variable to override the temperature add_reagent() will use
 	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE
 	/// If the hypospray can go through armor or thick material
@@ -134,6 +137,8 @@
 	var/datum/reagent/selected_reagent
 	/// The theme for our UI (hacked hypos get syndicate UI)
 	var/tgui_theme = "ntos"
+	/// Whether this hypo should be upgradable to enable piercing
+	var/allow_piercing = TRUE
 
 /obj/item/reagent_containers/borghypo/Initialize(mapload)
 	. = ..()
@@ -172,32 +177,34 @@
 					cyborg.cell.use(charge_cost)
 					stored_reagents.add_reagent(reagent_to_regen, 5, reagtemp = dispensed_temperature, no_react = TRUE)
 
-/obj/item/reagent_containers/borghypo/attack(mob/living/carbon/injectee, mob/user)
-	if(!istype(injectee))
-		return
+/obj/item/reagent_containers/borghypo/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iscarbon(interacting_with))
+		return NONE
+
+	var/mob/living/carbon/injectee = interacting_with
 	if(!selected_reagent)
 		balloon_alert(user, "no reagent selected!")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
 		balloon_alert(user, "not enough [selected_reagent.name]!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(injectee.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : 0)))
-		// This is the in-between where we're storing the reagent we're going to inject the injectee with
-		// because we cannot specify a singular reagent to transfer in trans_to
-		var/datum/reagents/hypospray_injector = new()
-		stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
-		hypospray_injector.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
-
-		to_chat(injectee, span_warning("You feel a tiny prick!"))
-		to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent.name])."))
-
-		if(injectee.reagents)
-			hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
-			balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
-			log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
-	else
+	if(!injectee.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : 0)))
 		balloon_alert(user, "[injectee.parse_zone_with_bodypart(user.zone_selected)] is blocked!")
+		return ITEM_INTERACT_BLOCKING
+
+	if (!injectee.reagents)
+		balloon_alert(user, "unable to inject!")
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(injectee, span_warning("You feel a tiny prick!"))
+	to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent.name])."))
+	user.changeNext_move(CLICK_CD_MELEE)
+	stored_reagents.trans_to(injectee, amount_per_transfer_from_this, target_id = selected_reagent.type, transferred_by = user, methods = INJECT)
+	balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
+	log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/borghypo/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -208,12 +215,11 @@
 /obj/item/reagent_containers/borghypo/ui_data(mob/user)
 	var/list/available_reagents = list()
 	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
-		if(reagent)
-			available_reagents.Add(list(list(
-				"name" = reagent.name,
-				"volume" = round(reagent.volume, 0.01) - 1,
-				"description" = reagent.description,
-			))) // list in a list because Byond merges the first list...
+		available_reagents.Add(list(list(
+			"name" = reagent.name,
+			"volume" = round(reagent.volume, 0.01) - 1,
+			"description" = reagent.description,
+		))) // list in a list because Byond merges the first list...
 
 	var/data = list()
 	data["theme"] = tgui_theme
@@ -328,6 +334,7 @@
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP //Water stays wet, ice stays ice
 	default_reagent_types = BASE_SERVICE_REAGENTS
 	expanded_reagent_types = EXPANDED_SERVICE_REAGENTS
+	allow_piercing = FALSE // Can't be used on carbons, so this prevents applying the piercing hypo upgrade to no effect.
 	var/reagent_search_container = REAGENT_CONTAINER_BEVAPPARATUS
 
 /obj/item/reagent_containers/borghypo/borgshaker/ui_interact(mob/user, datum/tgui/ui)
@@ -392,9 +399,6 @@
 			data["apparatusHasItem"] = !isnull(beverage_apparatus.stored)
 	return data
 
-/obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
-	return //Can't inject stuff with a shaker, can we? //not with that attitude
-
 /obj/item/reagent_containers/borghypo/borgshaker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!interacting_with.is_refillable())
 		return NONE
@@ -430,6 +434,7 @@
 	recharge_time = 6 //Double the recharge time too, for the same reason.
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = EXPANDED_SERVICE_REAGENTS
+	allow_piercing = FALSE // Can't be used on carbons, so this prevents applying the piercing hypo upgrade to no effect.
 
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -440,12 +445,11 @@
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_data(mob/user)
 	var/list/condiments = list()
 	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
-		if(reagent)
-			condiments.Add(list(list(
-				"name" = reagent.name,
-				"volume" = round(reagent.volume, 0.01) - 1,
-				"description" = reagent.description,
-			))) // list in a list because Byond merges the first list...
+		condiments.Add(list(list(
+			"name" = reagent.name,
+			"volume" = round(reagent.volume, 0.01) - 1,
+			"description" = reagent.description,
+		))) // list in a list because Byond merges the first list...
 
 	var/data = list()
 	data["theme"] = tgui_theme
@@ -454,9 +458,6 @@
 	data["reagents"] = condiments
 	data["selectedReagent"] = selected_reagent?.name
 	return data
-
-/obj/item/reagent_containers/borghypo/condiment_synthesizer/attack(mob/M, mob/user)
-	return
 
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!interacting_with.is_refillable())

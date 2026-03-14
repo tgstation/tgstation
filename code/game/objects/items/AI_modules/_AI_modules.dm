@@ -89,7 +89,7 @@
 	else
 		to_chat(user, span_notice("Upload complete."))
 
-	var/time = time2text(world.realtime,"hh:mm:ss")
+	var/time = time2text(world.realtime,"hh:mm:ss", TIMEZONE_UTC)
 	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
 	var/aikey = law_datum.owner ? law_datum.owner.ckey : "null"
 

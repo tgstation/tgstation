@@ -16,7 +16,7 @@
 	health_doll_icon = "Fugu0"
 	pixel_x = -16
 	base_pixel_x = -16
-	status_flags = NONE
+	status_flags = CANSTUN
 	gold_core_spawnable = HOSTILE_SPAWN
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	mob_size = MOB_SIZE_SMALL
@@ -51,8 +51,7 @@
 /mob/living/basic/wumborian_fugu/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seethrough_mob)
-	var/static/list/death_loot = list(/obj/item/fugu_gland)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/fugu_gland)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), ROUNDSTART_TRAIT)
 	expand = new(src)
 	expand.Grant(src)

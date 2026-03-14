@@ -49,7 +49,7 @@
 
 	for (var/outfit_type in outfits_to_check)
 		// Only make one human and keep undressing it because it's much faster
-		for (var/obj/item/I in H.get_equipped_items(INCLUDE_POCKETS))
+		for (var/obj/item/I in H.get_equipped_items(INCLUDE_POCKETS|INCLUDE_ABSTRACT))
 			qdel(I)
 
 		var/datum/outfit/outfit = new outfit_type
@@ -84,7 +84,7 @@
 			for (var/path in backpack_contents)
 				var/number = backpack_contents[path] || 1
 				for (var/_ in 1 to number)
-					if (!H.equip_to_slot_or_del(new path(H), ITEM_SLOT_BACKPACK, TRUE, indirect_action = TRUE))
+					if (!H.equip_to_storage(new path(H), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE))
 						TEST_FAIL("[outfit.name]'s backpack_contents are invalid! Couldn't add [path] to backpack.")
 
 		if (outfit.belt_contents)
@@ -92,7 +92,7 @@
 			for (var/path in belt_contents)
 				var/number = belt_contents[path] || 1
 				for (var/_ in 1 to number)
-					if (!H.equip_to_slot_or_del(new path(H), ITEM_SLOT_BELTPACK, TRUE, indirect_action = TRUE))
+					if (!H.equip_to_storage(new path(H), ITEM_SLOT_BELT, indirect_action = TRUE, del_on_fail = TRUE))
 						TEST_FAIL("[outfit.name]'s belt_contents are invalid! Couldn't add [path] to backpack.")
 
 

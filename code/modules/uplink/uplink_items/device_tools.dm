@@ -14,12 +14,28 @@
 	surplus = 50
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
-/datum/uplink_item/device_tools/surgerybag
-	name = "Syndicate Surgery Duffel Bag"
-	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
-			a Syndicate brand MMI, a straitjacket, and a muzzle."
-	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
-	cost = 4
+/datum/uplink_item/device_tools/duffelbag
+	name = "Suspicous Duffel Bag"
+	desc = "A large duffel bag for holding extra tactical supplies. It contains an oiled plastitanium zipper for maximum speed tactical zipping, \
+			and is better balanced on your back than an average duffelbag. Can hold two bulky items!"
+	item = /obj/item/storage/backpack/duffelbag/syndie
+	cost = 2
+	surplus = 50
+
+/datum/uplink_item/device_tools/tactical_medkit
+	name = "combat first aid kit"
+	desc = "An medkit meant for combat support, it contains. Two medicated sutures and mesh, Gauze, Advanced health analyzer, And as last atropine medipen"
+	item = /obj/item/storage/medkit/tactical_lite
+	cost = 3
+	surplus = 72
+	purchasable_from = UPLINK_TRAITORS
+
+/datum/uplink_item/device_tools/surgery_syndie
+	name = "Full Syndicate Surgery Medkit"
+	desc = "The Syndicate surgery medkit is a toolkit containing all surgery tools, surgical drapes, \
+			a syringe, and some sedatives."
+	item = /obj/item/storage/medkit/surgery_syndie
+	cost = 3
 	surplus = 66
 
 /datum/uplink_item/device_tools/encryptionkey
@@ -88,7 +104,7 @@
 /datum/uplink_item/device_tools/camera_app
 	name = "SyndEye Program"
 	desc = "A data disk containing a unique PC app that allows you to watch cameras and track crewmembers."
-	item = /obj/item/computer_disk/syndicate/camera_app
+	item = /obj/item/disk/computer/syndicate/camera_app
 	cost = 1
 	surplus = 90
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
@@ -121,14 +137,14 @@
 			when used cause the targeted tablet to become a new uplink with zero TCs, and immediately become unlocked. \
 			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
-	item = /obj/item/computer_disk/virus/frame
+	item = /obj/item/disk/computer/virus/frame
 	cost = 4
 	restricted = TRUE
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
-	var/obj/item/computer_disk/virus/frame/target = .
+	var/obj/item/disk/computer/virus/frame/target = .
 	if(!target)
 		return
 	target.current_progression = uplink_handler.progression_points
@@ -215,7 +231,7 @@
 	name = "Super Pointy Tape"
 	desc = "An all-purpose super pointy tape roll. The tape is built with hundreds of tiny metal needles, the roll comes with in 5 pieces. When added to items the \
 			item that was taped will embed when thrown at people. Taping people's mouthes with it will hurt them if pulled off by someone else."
-	item = /obj/item/stack/sticky_tape/pointy/super
+	item = /obj/item/stack/medical/wrap/sticky_tape/pointy/super
 	cost = 1
 
 /datum/uplink_item/device_tools/hacked_module
@@ -258,6 +274,7 @@
 	progression_minimum = 20 MINUTES
 	item = /obj/item/powersink
 	cost = 11
+	limited_stock = 1
 
 /datum/uplink_item/device_tools/syndicate_contacts
 	name = "Polarized Contact Lenses"

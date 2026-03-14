@@ -122,6 +122,9 @@
 
 	SET_PLANE_IMPLICIT(src, plane)
 
+	if(LAZYLEN(hud_possible))
+		hud_possible = string_assoc_list(hud_possible)
+
 	if(greyscale_config && greyscale_colors) //we'll check again at item/init for inhand/belt/worn configs.
 		update_greyscale()
 
@@ -131,6 +134,9 @@
 
 	if (light_system == COMPLEX_LIGHT && light_power && light_range)
 		update_light()
+
+	if(post_init_icon_state)
+		icon_state = post_init_icon_state
 
 	SETUP_SMOOTHING()
 
@@ -147,6 +153,8 @@
 
 	if(ispath(ai_controller))
 		ai_controller = new ai_controller(src)
+
+	setup_reskins()
 
 	return INITIALIZE_HINT_NORMAL
 

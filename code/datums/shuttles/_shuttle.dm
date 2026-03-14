@@ -56,8 +56,23 @@
 	. = ..()
 	if(!.)
 		return
-	var/list/turfs = block( .[MAP_MINX], .[MAP_MINY], .[MAP_MINZ],
-							.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ])
+
+	var/list/turfs = block(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ], \
+					.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ])
+
+	dispatch(turfs, register)
+
+/datum/map_template/shuttle/proc/dispatch(list/turfs, register=TRUE)
+	while(TRUE)
+		var/found = FALSE
+		for(var/turf/current_turf in turfs)
+			if(is_type_on_turf(current_turf, /obj/modular_map_root))
+				found = TRUE
+		if(found)
+			sleep(5 DECISECONDS)
+		else
+			break
+
 	for(var/i in 1 to turfs.len)
 		var/turf/place = turfs[i]
 		if(isspaceturf(place)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.

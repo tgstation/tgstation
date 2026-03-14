@@ -2,7 +2,7 @@
 	name = "\improper Space Dragon"
 	roundend_category = "space dragons"
 	antagpanel_category = ANTAG_GROUP_LEVIATHANS
-	job_rank = ROLE_SPACE_DRAGON
+	pref_flag = ROLE_SPACE_DRAGON
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
@@ -66,12 +66,10 @@
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
 	rift_ability = new()
-	owner.special_role = ROLE_SPACE_DRAGON
 	owner.set_assigned_role(SSjob.get_job_type(/datum/job/space_dragon))
 	return ..()
 
 /datum/antagonist/space_dragon/on_removal()
-	owner.special_role = null
 	owner.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
 	return ..()
 
@@ -79,7 +77,7 @@
 	var/mob/living/antag = mob_override || owner.current
 	RegisterSignal(antag, COMSIG_LIVING_LIFE, PROC_REF(rift_checks))
 	RegisterSignal(antag, COMSIG_LIVING_DEATH, PROC_REF(destroy_rifts))
-	antag.faction |= FACTION_CARP
+	antag.add_faction(FACTION_CARP)
 	// Give the ability over if we have one
 	rift_ability?.Grant(antag)
 	wavespeak = antag.AddComponent( \
@@ -96,7 +94,7 @@
 	var/mob/living/antag = mob_override || owner.current
 	UnregisterSignal(antag, COMSIG_LIVING_LIFE)
 	UnregisterSignal(antag, COMSIG_LIVING_DEATH)
-	antag.faction -= FACTION_CARP
+	antag.remove_faction(FACTION_CARP)
 	rift_ability?.Remove(antag)
 	QDEL_NULL(wavespeak)
 
@@ -109,13 +107,13 @@
 	return ..()
 
 /datum/antagonist/space_dragon/get_preview_icon()
-	var/icon/icon = icon('icons/mob/nonhuman-player/spacedragon.dmi', "spacedragon")
+	var/datum/universal_icon/icon = uni_icon('icons/mob/nonhuman-player/spacedragon.dmi', "spacedragon")
 
-	icon.Blend(COLOR_STRONG_VIOLET, ICON_MULTIPLY)
-	icon.Blend(icon('icons/mob/nonhuman-player/spacedragon.dmi', "spacedragon_overlay_base"), ICON_OVERLAY)
+	icon.blend_color(COLOR_STRONG_VIOLET, ICON_MULTIPLY)
+	icon.blend_icon(uni_icon('icons/mob/nonhuman-player/spacedragon.dmi', "spacedragon_overlay_base"), ICON_OVERLAY)
 
-	icon.Crop(10, 9, 54, 53)
-	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	icon.crop(10, 9, 54, 53)
+	icon.scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon
 

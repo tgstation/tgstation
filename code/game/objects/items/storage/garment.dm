@@ -5,6 +5,7 @@
 	desc = "A bag for storing extra clothes and shoes."
 	slot_flags = NONE
 	resistance_flags = FLAMMABLE
+	storage_type = /datum/storage/bag/garment
 
 /obj/item/storage/bag/garment/captain
 	name = "captain's garment bag"
@@ -38,14 +39,9 @@
 	name = "quartermasters's garment bag"
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the quartermaster."
 
-/obj/item/storage/bag/garment/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.numerical_stacking = FALSE
-	atom_storage.max_total_storage = 200
-	atom_storage.max_slots = 15
-	atom_storage.insert_preposition = "in"
-	atom_storage.set_holdable(/obj/item/clothing)
+/obj/item/storage/bag/garment/paramedic
+	name = "EMT's garment bag"
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the emergency medical team."
 
 /obj/item/storage/bag/garment/captain/PopulateContents()
 	new /obj/item/clothing/under/rank/captain(src)
@@ -62,6 +58,10 @@
 	new /obj/item/clothing/head/hats/caphat/parade(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
 	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/storage/backpack/captain(src)
+	new /obj/item/storage/backpack/satchel/cap(src)
+	new /obj/item/storage/backpack/duffelbag/captain(src)
+	new /obj/item/storage/backpack/messenger/cap(src)
 
 /obj/item/storage/bag/garment/hop/PopulateContents()
 	new /obj/item/clothing/under/rank/civilian/head_of_personnel(src)
@@ -74,6 +74,7 @@
 	new /obj/item/clothing/shoes/laceup(src)
 
 /obj/item/storage/bag/garment/hos/PopulateContents()
+	new /obj/item/clothing/under/rank/security/head_of_security(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/skirt(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/alt(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/alt/skirt(src)
@@ -96,11 +97,12 @@
 	new /obj/item/clothing/suit/armor/vest/warden(src)
 	new /obj/item/clothing/head/hats/warden(src)
 	new /obj/item/clothing/head/hats/warden/drill(src)
+	new /obj/item/clothing/head/hats/warden/red(src)
 	new /obj/item/clothing/head/beret/sec/navywarden(src)
 	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
 	new /obj/item/clothing/under/rank/security/warden/formal(src)
 	new /obj/item/clothing/under/rank/security/warden/skirt(src)
-	new /obj/item/clothing/gloves/krav_maga/sec(src)
+	new /obj/item/clothing/gloves/kaza_ruk/sec(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
 
@@ -129,7 +131,11 @@
 	new /obj/item/clothing/head/beret/medical/cmo(src)
 	new /obj/item/clothing/head/utility/surgerycap/cmo(src)
 	new /obj/item/clothing/neck/cloak/cmo(src)
-	new /obj/item/clothing/shoes/sneakers/blue (src)
+	new /obj/item/clothing/shoes/sneakers/white(src)
+	new /obj/item/storage/backpack/chief_medic(src)
+	new /obj/item/storage/backpack/satchel/chief_medic(src)
+	new /obj/item/storage/backpack/duffelbag/chief_medic(src)
+	new /obj/item/storage/backpack/messenger/chief_medic(src)
 
 /obj/item/storage/bag/garment/engineering_chief/PopulateContents()
 	new /obj/item/clothing/under/rank/engineering/chief_engineer(src)
@@ -142,7 +148,7 @@
 	new /obj/item/clothing/head/utility/hardhat/white(src)
 	new /obj/item/clothing/head/utility/hardhat/welding/white(src)
 	new /obj/item/clothing/neck/cloak/ce(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/shoes/workboots(src)
 
 /obj/item/storage/bag/garment/quartermaster/PopulateContents()
 	new /obj/item/clothing/under/rank/cargo/qm(src)
@@ -155,3 +161,10 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/neck/cloak/qm(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
+
+/obj/item/storage/bag/garment/paramedic/PopulateContents()
+	new /obj/item/clothing/under/rank/medical/paramedic(src)
+	new /obj/item/clothing/under/rank/medical/paramedic/skirt(src)
+	new /obj/item/clothing/gloves/latex/nitrile(src)
+	new /obj/item/clothing/shoes/workboots/black(src)
+	new /obj/item/clothing/glasses/hud/health(src)

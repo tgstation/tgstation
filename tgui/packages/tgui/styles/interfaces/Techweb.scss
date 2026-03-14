@@ -1,78 +1,68 @@
-@use '../colors.scss';
-
 .Techweb__NodeProgress {
-  margin-bottom: 1rem;
-}
-
-.Techweb__NodeProgress > *:not(:last-child) {
-  margin-right: 0.4rem;
+  margin-bottom: var(--space-xl);
 }
 
 .Techweb__DesignIcon {
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
+  margin: 0 var(--space-s);
 }
 
 .Techweb__OverviewNodes {
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 6px;
-  padding-top: 4px;
+  padding-top: var(--space-m);
 }
 
 .Techweb__HeaderContent {
-  background-color: black;
-  padding: 6px;
-  border: 1px solid hsl(210, 33%, 41%);
+  padding: var(--space-m);
+  background-color: var(--color-black);
+  border: var(--border-thickness-tiny) solid var(--color-primary);
 }
 
 .Techweb__HeaderContent > * > :not(:last-child) {
-  margin-bottom: 5px;
+  margin-bottom: var(--space-m);
 }
 
 .Techweb__HeaderSectionTabs {
-  margin-top: 8px;
-  background-color: black;
-  border: 1px solid hsl(210, 33%, 41%);
-  padding-left: 5px;
-  padding-right: 5px;
+  margin-top: var(--space-l);
+  background-color: var(--color-black);
+  border: var(--border-thickness-tiny) solid var(--color-primary);
+  padding-left: var(--space-m);
+  padding-right: var(--space-m);
 }
 
 .Techweb__HeaderTabTitle {
-  border-right: 1px solid hsl(210, 33%, 41%);
-  padding-right: 0.5em;
-  margin-right: 0.5em;
+  border-right: var(--border-thickness-tiny) solid var(--color-primary);
+  padding-right: var(--space-m);
+  margin-right: var(--space-m);
   font-weight: bold;
 }
 
 .Techweb__HeaderSectionTabs input {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: hsla(0, 0%, 100%, 0.05);
 }
 
 .Techweb__PointSummary {
   list-style: none;
-  margin: 0.4em 0 0 1em;
+  margin: var(--space-m) 0 0 var(--space-l);
   padding: 0;
 }
 
 .Techweb__SecProtocol {
-  color: colors.$bad;
-  margin-left: 0.2em;
+  color: var(--color-bad);
+  margin-left: var(--space-s);
 }
 
 .Techweb__SecProtocol.engaged {
-  color: colors.$good;
+  color: var(--color-good);
 }
 
 .Techweb__DesignModal > :not(:last-child) {
-  margin-bottom: 0.5em;
+  margin-bottom: var(--space-m);
 }
 
 .Techweb__LockedModal > :not(:last-child) {
-  margin-bottom: 0.5em;
+  margin-bottom: var(--space-m);
 }
 
 .Techweb__ExperimentDiscount {
-  color: colors.$label;
-  margin: 0.5em 0;
+  color: var(--color-label);
+  margin: var(--space-m) 0;
 }

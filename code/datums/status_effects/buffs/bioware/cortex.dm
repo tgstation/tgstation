@@ -2,19 +2,15 @@
 /datum/status_effect/bioware/cortex
 	id = "cortex"
 
-// Folded brain - Grants a bonus chance to getting special traumas via lobotomy
-/datum/status_effect/bioware/cortex/folded
-
-/datum/status_effect/bioware/cortex/folded/bioware_gained()
-	ADD_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, TRAIT_STATUS_EFFECT(id))
-
-/datum/status_effect/bioware/cortex/folded/bioware_lost()
-	REMOVE_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, TRAIT_STATUS_EFFECT(id))
+// All cortex bioware removes the trauma boost as it is not granted via a status
+/datum/status_effect/bioware/cortex/bioware_gained()
+	REMOVE_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, BIOWARE_TRAIT)
 
 // Imprinted brain - Cures basic traumas continuously
 /datum/status_effect/bioware/cortex/imprinted
 
 /datum/status_effect/bioware/cortex/imprinted/bioware_gained()
+	. = ..()
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.cure_all_traumas(resilience = TRAUMA_RESILIENCE_BASIC)
 	RegisterSignal(human_owner, COMSIG_CARBON_GAIN_TRAUMA, PROC_REF(on_gain_trauma))

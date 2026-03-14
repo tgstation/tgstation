@@ -75,14 +75,14 @@
 		return
 
 	//normal cooldown spell has
-	var/cooldown_remaining = spell.next_use_time - world.time
+	var/cooldown_remaining = max(spell.next_use_time - world.time,0)
 	//how much we discount, we make the spell cost 1/10th of its actual cooldown
 	var/new_cooldown = cooldown_remaining / 10
 	//convert how much cooldown that spell saved into blood cost
 	var/blood_cost = (cooldown_remaining - new_cooldown ) * COOLDOWN_TO_BLOOD_RATIO
 
 	spell.StartCooldown(new_cooldown)
-	source.blood_volume -= blood_cost
+	source.adjust_blood_volume(-blood_cost)
 
 	var/cost_desc
 

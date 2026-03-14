@@ -127,7 +127,7 @@ SUBSYSTEM_DEF(throwing)
 
 	qdel(src)
 
-/// Returns the mob thrower, or null
+/// Returns the thrower, or null
 /datum/thrownthing/proc/get_thrower()
 	. = thrower?.resolve()
 	if(isnull(.))
@@ -144,11 +144,11 @@ SUBSYSTEM_DEF(throwing)
 		return
 
 	var/atom/movable/actual_target = initial_target?.resolve()
-	var/mob/mob_thrower = get_thrower()
+	var/atom/thrower = get_thrower()
 
 	if(dist_travelled) //to catch sneaky things moving on our tile while we slept
 		for(var/atom/movable/obstacle as anything in get_turf(thrownthing))
-			if (obstacle == thrownthing || (obstacle == mob_thrower && !ismob(thrownthing)))
+			if(obstacle == thrownthing || (obstacle == thrower && !ismob(thrownthing)))
 				continue
 			if(ismob(obstacle) && thrownthing.pass_flags & PASSMOB && (obstacle != actual_target))
 				continue
@@ -232,6 +232,9 @@ SUBSYSTEM_DEF(throwing)
 
 	if (callback)
 		callback.Invoke()
+		// Same can happen in the callback
+		if(QDELETED(thrownthing))
+			return
 
 	if(!thrownthing.currently_z_moving) // I don't think you can zfall while thrown but hey, just in case.
 		var/turf/T = get_turf(thrownthing)

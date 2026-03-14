@@ -86,7 +86,7 @@ export function LightSpawn(props) {
                         align="center"
                         className={classes([
                           'lights32x32',
-                          'light_fantastic_' + id,
+                          `light_fantastic_${id}`,
                         ])}
                       />
                       <Stack.Item fontSize="14px" textColor="#cee" nowrap>

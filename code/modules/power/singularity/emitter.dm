@@ -27,6 +27,10 @@
 	var/maximum_fire_delay = 10 SECONDS
 	///Min delay before firing
 	var/minimum_fire_delay = 2 SECONDS
+	///Modifier to the preceeding two numbers
+	var/fire_rate_mod = 1
+	///Deactivates the "pause every 3 shots" system
+	var/no_shot_counter = FALSE
 	///When was the last shot
 	var/last_shot = 0
 	///Number of shots made (gets reset every few shots)
@@ -42,7 +46,7 @@
 	///What's the projectile sound?
 	var/projectile_sound = 'sound/items/weapons/emitter.ogg'
 	///Sparks emitted with every shot
-	var/datum/effect_system/spark_spread/sparks
+	var/datum/effect_system/basic/spark_spread/sparks
 	///Stores the type of gun we are using inside the emitter
 	var/obj/item/gun/energy/gun
 	///List of all the properties of the inserted gun
@@ -57,22 +61,22 @@
 	var/charge = 0
 	///stores the direction and orientation of the last projectile
 	var/last_projectile_params
+	//the disk in the gun
+	var/obj/item/emitter_disk/diskie
 
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
 	//Add to the early process queue to prioritize power draw
 	SSmachines.processing_early += src
-	RefreshParts()
 	set_wires(new /datum/wires/emitter(src))
 	if(welded)
 		if(!anchored)
 			set_anchored(TRUE)
 		connect_to_network()
 
-	sparks = new
+	sparks = new(src, 5, TRUE)
 	sparks.attach(src)
-	sparks.set_up(5, TRUE, src)
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/power/emitter/welded/Initialize(mapload)
@@ -126,7 +130,7 @@
 	else if(!powered)
 		. += span_notice("Its status display is glowing faintly.")
 	else
-		. += span_notice("Its status display reads: Emitting one beam between <b>[DisplayTimeText(minimum_fire_delay)]</b> and <b>[DisplayTimeText(maximum_fire_delay)]</b>.")
+		. += span_notice("Its status display reads: Emitting one beam between <b>[DisplayTimeText(minimum_fire_delay * fire_rate_mod)]</b> and <b>[DisplayTimeText(maximum_fire_delay * fire_rate_mod)]</b>.")
 		. += span_notice("Power consumption at <b>[display_power(active_power_usage, convert = FALSE)]</b>.")
 
 /obj/machinery/power/emitter/should_have_node()
@@ -141,14 +145,25 @@
 	QDEL_NULL(sparks)
 	return ..()
 
+/obj/machinery/power/emitter/update_overlays()
+	. = ..()
+	if(!active)
+		return
+	var/laser_color = COLOR_VIBRANT_LIME
+	if (!powered)
+		laser_color = COLOR_ORANGE //stank low power orange
+	else if (diskie)
+		laser_color = diskie.laser_color
+	var/mutable_appearance/overlay = mutable_appearance(icon, "emitter_overlay")
+	overlay.color = laser_color
+	. += overlay
+	. += emissive_appearance(icon, "emitter_overlay", src, alpha = src.alpha)
+
 /obj/machinery/power/emitter/update_icon_state()
-	if(!active || !powernet)
-		icon_state = base_icon_state
-		return ..()
 	if(panel_open)
 		icon_state = "[base_icon_state]_open"
-		return ..()
-	icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
+	else
+		icon_state = base_icon_state
 	return ..()
 
 /obj/machinery/power/emitter/interact(mob/user)
@@ -247,11 +262,11 @@
 		projectile.fire(dir2angle(dir))
 	if(!manual)
 		last_shot = world.time
-		if(shot_number < 3)
-			fire_delay = 20
+		if(shot_number < 3 || no_shot_counter)
+			fire_delay = 20 * fire_rate_mod
 			shot_number ++
 		else
-			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+			fire_delay = rand(minimum_fire_delay,maximum_fire_delay) * fire_rate_mod
 			shot_number = 0
 	return projectile
 
@@ -312,6 +327,8 @@
 /obj/machinery/power/emitter/crowbar_act(mob/living/user, obj/item/item)
 	if(panel_open && gun)
 		return remove_gun(user)
+	if(panel_open && diskie)
+		return remove_disk(user)
 	default_deconstruction_crowbar(item)
 	return TRUE
 
@@ -335,7 +352,7 @@
 	locked = !locked
 	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
 
-/obj/machinery/power/emitter/attackby(obj/item/item, mob/user, params)
+/obj/machinery/power/emitter/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(item.GetID())
 		togglelock(user)
 		return
@@ -344,8 +361,31 @@
 		wires.interact(user)
 		return
 	if(panel_open && !gun && istype(item,/obj/item/gun/energy))
+		if(diskie)
+			to_chat(user, span_warning("Remove the Diode Disk before inserting a gun."))
+			return
 		if(integrate(item,user))
 			return
+	if(panel_open && !gun && istype(item,/obj/item/emitter_disk))
+		var/obj/item/emitter_disk/config_disk = item
+		if(!user.transferItemToLoc(config_disk, src))
+			balloon_alert(user, "stuck in hand!")
+			return
+		if(diskie)
+			user.put_in_hands(diskie)
+			balloon_alert(user, "disks swapped!")
+		else
+			balloon_alert(user, "disk inserted")
+		diskie = config_disk
+		projectile_type = diskie.stored_proj
+		projectile_sound = diskie.stored_sound
+		fire_rate_mod = diskie.fire_rate_mod
+		no_shot_counter = diskie.no_shot_counter
+		playsound(src, 'sound/machines/card_slide.ogg', 50)
+		to_chat(user, span_notice("You update the [src]'s diode configuration with the [config_disk]."))
+		update_appearance()
+		if(diskie.consumable)
+			qdel(diskie)
 	return ..()
 
 
@@ -353,6 +393,9 @@
 	if(!istype(energy_gun, /obj/item/gun/energy))
 		return
 	if(!user.transferItemToLoc(energy_gun, src))
+		return
+	if(energy_gun.gun_flags & TURRET_INCOMPATIBLE)
+		user.balloon_alert(user, "[energy_gun] won't fit!")
 		return
 	gun = energy_gun
 	gun_properties = gun.get_turret_properties()
@@ -369,6 +412,20 @@
 	set_projectile()
 	return TRUE
 
+/obj/machinery/power/emitter/proc/remove_disk(mob/user)
+	if(!diskie)
+		return
+	if(diskie.consumed_on_removal)
+		qdel(diskie)
+	else
+		user.put_in_hands(diskie)
+	diskie = null
+	playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
+	update_appearance()
+	set_projectile()
+	return TRUE
+
+
 /obj/machinery/power/emitter/proc/set_projectile()
 	if(LAZYLEN(gun_properties))
 		if(mode || !gun_properties["lethal_projectile"])
@@ -380,6 +437,8 @@
 		return
 	projectile_type = initial(projectile_type)
 	projectile_sound = initial(projectile_sound)
+	fire_rate_mod = initial(fire_rate_mod)
+	no_shot_counter = initial(no_shot_counter)
 
 /obj/machinery/power/emitter/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -565,3 +624,67 @@
 	req_access = list("science")
 	welded = TRUE
 	use_power = NO_POWER_USE
+
+/obj/item/emitter_disk
+	name = "\improper Diode Disk: Debugger"
+	desc = "This disk can be used on an emitter with an open panel to reset its projectile. Unless this was handed to you by an admin, you should report this on github."
+	icon = 'icons/obj/devices/floppy_disks.dmi'
+	icon_state = "datadisk6"
+	var/laser_color = COLOR_VIBRANT_LIME
+	var/stored_proj = /obj/projectile/beam/emitter/hitscan
+	var/stored_sound = 'sound/items/weapons/emitter.ogg'
+	var/consumed_on_removal = TRUE
+	var/consumable = TRUE
+	var/fire_rate_mod = 1
+	var/no_shot_counter = FALSE
+
+/obj/item/emitter_disk/stamina
+	name = "\improper Diode Disk: Electrodisruptive"
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will increase the integrity of supermatter crystals and exhaust living creatures. The disk will be consumed in the process."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/bluelens
+	consumed_on_removal = FALSE
+	consumable = FALSE
+	laser_color = COLOR_TRUE_BLUE
+
+/obj/item/emitter_disk/healing
+	name = "\improper Diode Disk: Bioregenerative"
+	desc = "This disk can be installed into an emitter with an open panel to make it shoot lasers which will heal the physical damages of living creatures."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/bioregen
+	consumed_on_removal = FALSE
+	consumable = FALSE
+	laser_color = COLOR_YELLOW
+
+/obj/item/emitter_disk/incendiary
+	name = "\improper Diode Disk: Conflagratory"
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will set living creatures ablaze."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/incend
+	consumed_on_removal = FALSE
+	consumable = FALSE
+	laser_color = COLOR_RED_LIGHT
+
+
+/obj/item/emitter_disk/sanity
+	name = "\improper Diode Disk: Psychosiphoning"
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will depress living creatures and calm supermatter crystals."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/psy
+	consumed_on_removal = FALSE
+	consumable = FALSE
+	laser_color = COLOR_TONGUE_PINK
+
+
+/obj/item/emitter_disk/magnetic
+	name = "\improper Diode Disk: Magnetogenerative"
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will attract nearby objects."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/magnetic
+	consumed_on_removal = FALSE
+	consumable = FALSE
+	laser_color = COLOR_SILVER
+
+/obj/item/emitter_disk/blast
+	name = "\improper Diode Disk: Hyperconcussive"
+	desc = "This disk, loaded with proprietary syndicate firmware, can be used on an emitter with an open panel to make it shoot beams of concussive force which will cause small explosions."
+	stored_proj = /obj/projectile/beam/emitter/hitscan/blast
+	consumed_on_removal = FALSE
+	consumable = FALSE
+	laser_color = COLOR_SYNDIE_RED //magnetic is already grey
+	fire_rate_mod = 2

@@ -4,13 +4,13 @@
 			"type": "icon_state",
 			"icon_state": "hawaiianbase",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "hawaiianflowers",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	]
 }

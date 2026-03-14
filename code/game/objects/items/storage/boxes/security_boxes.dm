@@ -93,7 +93,7 @@
 
 /obj/item/storage/box/seccarts/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/computer_disk/security(src)
+		new /obj/item/disk/computer/security(src)
 
 /obj/item/storage/box/firingpins
 	name = "box of standard firing pins"
@@ -108,11 +108,18 @@
 /obj/item/storage/box/firingpins/paywall
 	name = "box of paywall firing pins"
 	desc = "A box full of paywall firing pins, to allow newly-developed firearms to operate behind a custom-set paywall."
-	illustration = "firingpin"
 
 /obj/item/storage/box/firingpins/paywall/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/firing_pin/paywall(src)
+
+/obj/item/storage/box/firingpins/syndicate
+	name = "box of syndicate firing pins"
+	desc = "A box full of special syndicate firing pins which allow only syndicate operatives to use weapons with those firing pins."
+
+/obj/item/storage/box/firingpins/syndicate/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/firing_pin/implant/pindicate(src)
 
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
@@ -212,7 +219,7 @@
 
 /obj/item/storage/box/large_dart
 	name = "box of XL shotgun darts"
-	name = "A box full of shotgun darts with increased chemical storage capacity."
+	desc = "A box full of shotgun darts with increased chemical storage capacity."
 	icon_state = "shotdart_box"
 	illustration = null
 
@@ -278,3 +285,11 @@
 /obj/item/storage/box/sparklers/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/sparkler(src)
+
+/obj/item/storage/box/evidence
+	name = "evidence bag box"
+	desc = "A box claiming to contain evidence bags."
+
+/obj/item/storage/box/evidence/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/evidencebag(src)

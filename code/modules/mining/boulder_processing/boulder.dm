@@ -1,4 +1,5 @@
 
+#define PLATFORM_WARNING_MODIFIER 5 SECONDS
 
 /**
  * The objects that ore vents produce, which is refined into minerals.
@@ -25,6 +26,8 @@
 	var/boulder_size = BOULDER_SIZE_SMALL
 	/// Used in inheriting the icon_state from our parent vent in update_icon.
 	var/boulder_string = "boulder"
+	/// If the boulder is converted into a platform, how long will it last? Default is 10 seconds unless overwritten by a vent.
+	var/platform_lifespan = PLATFORM_LIFE_DEFAULT
 
 /obj/item/boulder/Initialize(mapload)
 	. = ..()
@@ -39,8 +42,14 @@
 	return ..()
 
 /obj/item/boulder/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(held_item?.tool_behaviour == TOOL_MINING || HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		context[SCREENTIP_CONTEXT_RMB] = "Crush boulder into ore"
+	if(held_item && (held_item.tool_behaviour == TOOL_MINING || HAS_TRAIT(held_item, TRAIT_BOULDER_BREAKER)))
+		context[SCREENTIP_CONTEXT_LMB] = "Crush boulder into ore"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		if(isbasicmob(user))
+			context[SCREENTIP_CONTEXT_LMB] = "Crush boulder into ore"
+		else
+			context[SCREENTIP_CONTEXT_RMB] = "Crush boulder into ore"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/boulder/examine(mob/user)
@@ -80,21 +89,20 @@
 
 /obj/item/boulder/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+	if(.)
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER) || HAS_TRAIT(weapon, TRAIT_BOULDER_BREAKER))
-		manual_process(weapon, user, INATE_BOULDER_SPEED_MULTIPLIER)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(weapon.tool_behaviour == TOOL_MINING)
-		manual_process(weapon, user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return ..()
+/obj/item/boulder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (HAS_TRAIT(tool, TRAIT_BOULDER_BREAKER))
+		manual_process(tool, user, INATE_BOULDER_SPEED_MULTIPLIER)
+		return ITEM_INTERACT_SUCCESS
+	if (tool.tool_behaviour == TOOL_MINING)
+		manual_process(tool, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/boulder/attack_basic_mob(mob/user, list/modifiers)
 	. = ..()
@@ -102,7 +110,36 @@
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER) //A little hacky but it works around the speed of the blackboard task selection process for now.
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/boulder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(istype(interacting_with, /turf/open/lava))
+		if(!create_platform(interacting_with, user, null))
+			return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/boulder/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback, force, gentle, quickstart, throw_type_path)
+	. = ..()
+	if(istype(target, /turf/open/lava))
+		if(!create_platform(target, thrower))
+			return FALSE
+
+/obj/item/boulder/proc/create_platform(atom/interacting_with, mob/living/user, timer_override = null)
+	if(locate(/obj/structure/lattice/catwalk/boulder, interacting_with))
+		if(user)
+			to_chat(user, span_warning("There is already a boulder platform here!"))
+		return null
+
+	var/active_platform_lifespan = platform_lifespan //Default to the assigned value.
+	if(timer_override)
+		active_platform_lifespan = timer_override
+
+	var/obj/structure/lattice/catwalk/boulder/platform = new(interacting_with)
+	addtimer(CALLBACK(platform, TYPE_PROC_REF(/obj/structure/lattice/catwalk/boulder, pre_self_destruct)), active_platform_lifespan)
+	// See Lattice.dm for more info
+	visible_message(span_notice("\The [src] floats on \the [interacting_with], forming a temporary platform!"))
+	qdel(src)
+	return platform
 
 /**
  * This is called when a boulder is processed by a mob or tool, and reduces the durability of the boulder.
@@ -185,3 +222,5 @@
 		for(var/obj/item/content as anything in contents)
 			content.forceMove(get_turf(src))
 	qdel(src)
+
+#undef PLATFORM_WARNING_MODIFIER

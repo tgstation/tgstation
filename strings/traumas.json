@@ -23,7 +23,7 @@
 		"@pick(servers) is down!! @pick(bug)",
 		">my face",
 		"Bi is THE BEST OF BOTH WORLDS>",
-	"built DIFFERENT. I Stack Paper!",
+		"built DIFFERENT. I Stack Paper!",
 		"can u give me @pick(mutations)?",
 		"closd for merbegging",
 		"dem dwarfs man, dem dwarfs",
@@ -42,7 +42,7 @@
 		"lifelike texture ;_;",
 		"lol2cat",
 		"luv can bloooom",
-	"MAKE JIANT CRISTAL BURN I KEPT THROWING WELDERS IT WOOD LIGHT",
+		"MAKE JIANT CRISTAL BURN I KEPT THROWING WELDERS IT WOOD LIGHT",
 		"NO I'M ONNA KILL YOU MOTHERFUCKER OLD STYLE",
 		"PACKETS!!!",
 		"parasteng was best",
@@ -82,30 +82,12 @@
 		"telikesis"
 	],
 
-	"george": [
-		"gdoruge",
-		"george",
-		"gorge",
-		"joerge"
-	],
+	"george": ["gdoruge", "george", "gorge", "joerge"],
 
-	"mellens": [
-		"mellens",
-		"melons",
-		"mwrlins"
-	],
-	"random_gibberish": [
-		"g",
-		"squid",
-		"r",
-		"carbon dioxide"
-	],
+	"mellens": ["mellens", "melons", "mwrlins"],
+	"random_gibberish": ["g", "squid", "r", "carbon dioxide"],
 
-	"y_replacements": [
-		"y",
-		"i",
-		"e"
-	],
+	"y_replacements": ["y", "i", "e"],
 
 	"servers": [
 		"bager",
@@ -120,13 +102,7 @@
 		"camel"
 	],
 
-	"create_verbs": [
-		"creat",
-		"gib",
-		"MAke me",
-		"spawn",
-		"tc trade me"
-	],
+	"create_verbs": ["creat", "gib", "MAke me", "spawn", "tc trade me"],
 
 	"create_nouns": [
 		"abdoocters",
@@ -142,18 +118,9 @@
 		"zenomorfs"
 	],
 
-	"bug": [
-		"",
-		"BUG!!!",
-		"IS TIS A BUG??",
-		"SI IST A BUGG/"
-	],
+	"bug": ["", "BUG!!!", "IS TIS A BUG??", "SI IST A BUGG/"],
 
-	"semicolon": [
-		"",
-		";",
-		".h"
-	],
+	"semicolon": ["", ";", ".h"],
 
 	"god_foe": [
 		"BLASPHEMERS",
@@ -204,5 +171,4 @@
 		"YOU WILL LIVE TO SEE ANOTHER DAY.",
 		"YOUR LIFE IS IMPORTANT. KEEP IT."
 	]
-
 }

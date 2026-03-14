@@ -16,9 +16,10 @@
 	name = "goliath eyes"
 	desc = "goliath DNA infused into what was once some normal eyes."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "eyes"
 	iris_overlay = null
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/eyes/night_vision/goliath"
+	post_init_icon_state = "eyes"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
@@ -40,8 +41,9 @@
 	name = "mutated goliath-lungs"
 	desc = "goliath DNA infused into what was once some normal lungs."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "lungs"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/lungs/lavaland/goliath"
+	post_init_icon_state = "lungs"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
@@ -55,11 +57,13 @@
 	name = "mutated goliath-brain"
 	desc = "goliath DNA infused into what was once a normal brain."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "brain"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/brain/goliath"
+	post_init_icon_state = "brain"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 	can_smoothen_out = FALSE
+	shade_color = "garnet"
 
 	var/obj/item/goliath_infuser_hammer/hammer
 
@@ -128,7 +132,7 @@
 	. = ..()
 	. += "You can use your tendril hammer arm to deliver a devastating blow against mining fauna, but only once every two seconds."
 
-/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, click_parameters)
+/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	//If we're on cooldown, we'll do a normal attack.
@@ -142,7 +146,7 @@
 	var/mob/living/fresh_pancake = target
 
 	// Check for nemesis factions on the target.
-	if(!(FACTION_MINING in fresh_pancake.faction) && !(FACTION_BOSS in fresh_pancake.faction))
+	if(!fresh_pancake.has_faction(list(FACTION_MINING, FACTION_BOSS)))
 		// Target is not a nemesis, so attack normally.
 		return
 
@@ -165,8 +169,9 @@
 	name = "mutated goliath-heart"
 	desc = "goliath DNA infused into what was once a normal heart."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "heart"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/heart/goliath"
+	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 

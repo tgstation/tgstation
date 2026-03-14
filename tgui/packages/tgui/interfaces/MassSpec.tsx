@@ -8,7 +8,7 @@ import {
   Table,
 } from 'tgui-core/components';
 import { round } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -37,6 +37,7 @@ type Data = {
   peakHeight: number;
   beaker1: Beaker;
   beaker2: Beaker;
+  hasBeakerInHand: BooleanLike;
 };
 
 const GRAPH_MAX_WIDTH = 1060;
@@ -53,6 +54,7 @@ export const MassSpec = (props) => {
     peakHeight,
     beaker1,
     beaker2,
+    hasBeakerInHand,
   } = data;
 
   const centerValue = (lowerRange + upperRange) / 2;
@@ -64,7 +66,7 @@ export const MassSpec = (props) => {
         {!!processing && (
           <Dimmer fontSize="32px">
             <Icon name="cog" spin={1} />
-            {' Purifying... ' + round(eta, 0) + 's'}
+            {` Purifying... ${round(eta, 0)}s`}
           </Dimmer>
         )}
         <Section
@@ -106,17 +108,30 @@ export const MassSpec = (props) => {
         <Section
           title="Input beaker"
           buttons={
-            !!beaker1 && (
+            beaker1 ? (
               <>
-                {
-                  <Box inline color="label" mr={2}>
-                    {beaker1.currentVolume} / {beaker1.maxVolume} units
-                  </Box>
-                }
+                <Box inline color="label" mr={2}>
+                  {beaker1.currentVolume} / {beaker1.maxVolume} units
+                </Box>
                 <Button icon="eject" onClick={() => act('eject1')}>
                   Eject
                 </Button>
               </>
+            ) : (
+              <Button
+                icon="eject"
+                onClick={() => act('insert1')}
+                style={{
+                  opacity: hasBeakerInHand ? 1 : 0.5,
+                }}
+                tooltip={
+                  !hasBeakerInHand &&
+                  'You need to hold a container in your hand'
+                }
+                tooltipPosition="bottom-start"
+              >
+                Insert
+              </Button>
             )
           }
         >
@@ -126,23 +141,36 @@ export const MassSpec = (props) => {
             beaker={beaker1}
           />
           {!!beaker_1_has_contents && (
-            <Box>{'Eta of selection: ' + round(eta, 0) + ' seconds'}</Box>
+            <Box>{`Eta of selection: ${round(eta, 0)} seconds`}</Box>
           )}
         </Section>
         <Section
           title="Output beaker"
           buttons={
-            !!beaker2 && (
+            beaker2 ? (
               <>
-                {
-                  <Box inline color="label" mr={2}>
-                    {beaker2.currentVolume} / {beaker2.maxVolume} units
-                  </Box>
-                }
+                <Box inline color="label" mr={2}>
+                  {beaker2.currentVolume} / {beaker2.maxVolume} units
+                </Box>
                 <Button icon="eject" onClick={() => act('eject2')}>
                   Eject
                 </Button>
               </>
+            ) : (
+              <Button
+                icon="eject"
+                onClick={() => act('insert2')}
+                style={{
+                  opacity: hasBeakerInHand ? 1 : 0.5,
+                }}
+                tooltip={
+                  !hasBeakerInHand &&
+                  'You need to hold a container in your hand'
+                }
+                tooltipPosition="bottom-start"
+              >
+                Insert
+              </Button>
             )
           }
         >
@@ -401,15 +429,14 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
       {/* Sliders */}
       <Slider
         step={graphUpperRange / base_width}
-        suppressFlicker
         height={17.2}
         format={(value: number) => round(value, 2).toString()}
-        width={(centerValue / graphUpperRange) * base_width + 'px'}
+        width={`${(centerValue / graphUpperRange) * base_width}px`}
         value={lowerRange}
         minValue={graphLowerRange}
         maxValue={centerValue}
         color={'invisible'}
-        onDrag={(e, value) =>
+        onChange={(e, value) =>
           act('leftSlider', {
             value: value,
           })
@@ -417,15 +444,14 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
       />
       <Slider
         height={17.2}
-        suppressFlicker
         format={(value: number) => round(value, 2).toString()}
         step={graphUpperRange / base_width}
-        width={base_width - (centerValue / graphUpperRange) * base_width + 'px'}
+        width={`${base_width - (centerValue / graphUpperRange) * base_width}px`}
         value={upperRange}
         minValue={centerValue}
         maxValue={graphUpperRange}
         color={'invisible'}
-        onDrag={(e, value) =>
+        onChange={(e, value) =>
           act('rightSlider', {
             value: value,
           })
@@ -433,16 +459,15 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
       />
       <Slider
         step={graphUpperRange / base_width}
-        suppressFlicker
         mt={1.2}
         value={centerValue}
         height={1.9}
         format={(value: number) => round(value, 2).toString()}
-        width={base_width + 'px'}
+        width={`${base_width}px`}
         minValue={graphLowerRange + 1}
         maxValue={graphUpperRange - 1}
         color={'invisible'}
-        onDrag={(e, value) =>
+        onChange={(e, value) =>
           act('centerSlider', {
             value: value,
           })

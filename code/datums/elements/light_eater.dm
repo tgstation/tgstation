@@ -128,6 +128,12 @@
 /datum/element/light_eater/proc/on_interacting_with(obj/item/source, mob/living/user, atom/target)
 	SIGNAL_HANDLER
 	if(eat_lights(target, source))
+		if (ismob(target))
+			var/mob/hit_user = target
+			if (hit_user.pulling)
+				var/atom/pulled_thing = hit_user.pulling // potentially dragging a light
+				if (!isliving(pulled_thing)) // we don't want conga lines to be affected
+					eat_lights(pulled_thing, source)
 		// do a "pretend" attack if we're hitting something that can't normally be
 		if(isobj(target))
 			var/obj/smacking = target
@@ -195,7 +201,7 @@
  * - [target][/atom]: The atom that was exposed to the light reater reagents
  * - reac_volume: The volume of the reagents the target was exposed to
  */
-/datum/element/light_eater/proc/on_expose_atom(datum/reagent/source, atom/target, reac_volume)
+/datum/element/light_eater/proc/on_expose_atom(datum/reagent/source, atom/target, reac_volume, methods)
 	SIGNAL_HANDLER
 	eat_lights(target, source)
 	return NONE

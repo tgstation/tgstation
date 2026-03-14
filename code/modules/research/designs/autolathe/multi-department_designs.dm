@@ -9,6 +9,21 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MISC,
 	)
 
+/datum/design/flare
+	name = "Flare"
+	id = "flare"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.5,
+	)
+	build_path = /obj/item/flashlight/flare
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MISC,
+	)
+
 /datum/design/crowbar
 	name = "Pocket Crowbar"
 	id = "crowbar"
@@ -25,7 +40,10 @@
 	name = "Multitool"
 	id = "multitool"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
+	materials = list(
+		/datum/material/iron =SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.2
+		)
 	build_path = /obj/item/multitool
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -168,19 +186,32 @@
 /datum/design/toolbox
 	name = "Toolbox"
 	id = "tool_box"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(MAT_CATEGORY_ITEM_MATERIAL =SMALL_MATERIAL_AMOUNT*5)
+	build_type = AUTOLATHE
+	materials = list(/datum/material_requirement/solid_material = SMALL_MATERIAL_AMOUNT * 5)
 	build_path = /obj/item/storage/toolbox
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
 	)
 
+/datum/design/toolbox/create_result(atom/drop_loc, list/custom_materials, amount)
+	var/obj/item/storage/toolbox/toolbox = ..()
+	if (length(custom_materials) && !istype(custom_materials[1], /datum/material/iron))
+		return toolbox
+
+	// Default and custom material iron toolboxes get a random color assigned rather than being greyscale'd
+	var/toolbox_color = pick("blue", "yellow", "red")
+	toolbox.icon_state = toolbox_color
+	toolbox.inhand_icon_state = "toolbox_[toolbox_color]"
+	toolbox.material_flags &= ~MATERIAL_COLOR
+	toolbox.remove_atom_colour(FIXED_COLOUR_PRIORITY)
+	return toolbox
+
 /datum/design/emergency_oxygen
 	name = "Emergency Oxygen Tank"
 	id = "emergency_oxygen"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/tank/internals/emergency_oxygen/empty
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -267,6 +298,18 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
 	)
 	build_path = /obj/item/reagent_containers/cup/beaker/large
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/jerrycan
+	name = "Jerrycan"
+	id = "jerrycan"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT * 2)
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY,
+	)
+	build_path = /obj/item/reagent_containers/cup/jerrycan
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/igniter
@@ -483,6 +526,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/suit_sensor
+	name = "Suit Sensor"
+	id = "suit_sensor"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/suit_sensor
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_ASSEMBLIES,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/conveyor_belt
 	name = "Conveyor Belt"
 	id = "conveyor_belt"
@@ -536,7 +591,7 @@
 	name = "Paper Biscuit"
 	desc = "A paper biscuit which can seal paperwork inside. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permanently open. Not actually a biscuit."
 	id = "biscuit"
-	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/folder/biscuit/unsealed
 	category = list(
@@ -549,7 +604,7 @@
 	name = "Confidential Paper Biscuit"
 	desc = "A paper biscuit which can seal paperwork inside, this one is used for confidential Nanotrasen documents. After sealing it the only way to open is through cracking it, cracking is irreversible and makes it permanently open. Not actually a biscuit."
 	id = "confidential_biscuit"
-	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT*0.3)
 	build_path = /obj/item/folder/biscuit/unsealed/confidential
 	category = list(

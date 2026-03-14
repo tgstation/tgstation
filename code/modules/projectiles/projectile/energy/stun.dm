@@ -210,7 +210,7 @@
 
 	taser = null
 	firer = null
-	if(!QDELING(tase_line))
+	if(!QDELETED(tase_line))
 		QDEL_NULL(tase_line)
 	else
 		tase_line = null
@@ -371,7 +371,8 @@
 /atom/movable/screen/alert/tazed
 	name = "Tased!"
 	desc = "You're being tased! You can click this or resist to attempt to stop it, assuming you've not already collapsed."
-	icon_state = "stun"
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
+	overlay_state = "stun"
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/tazed/Click(location, control, params)

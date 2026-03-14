@@ -117,7 +117,7 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Medical Maintenance Access"
 	},
-/obj/effect/mapping_helpers/airlock/unres,
+/obj/effect/mapping_helpers/airlock/unres/delayed,
 /obj/effect/mapping_helpers/airlock/access/any/medical/morgue,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/modular_map_connector,
@@ -292,6 +292,9 @@
 "II" = (
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
+"IV" = (
+/turf/closed/wall,
+/area/station/asteroid)
 "Kw" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -369,7 +372,7 @@
 	name = "Medical Maintenance Hatch"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
-/obj/effect/mapping_helpers/airlock/unres{
+/obj/effect/mapping_helpers/airlock/unres/delayed{
 	dir = 4
 	},
 /turf/open/floor/catwalk_floor,
@@ -1300,7 +1303,7 @@ nm
 cn
 vr
 Vh
-tD
+IV
 tD
 tD
 Mf

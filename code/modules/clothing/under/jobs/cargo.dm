@@ -1,6 +1,7 @@
 /obj/item/clothing/under/rank/cargo
 	icon = 'icons/obj/clothing/under/cargo.dmi'
 	worn_icon = 'icons/mob/clothing/under/cargo.dmi'
+	abstract_type = /obj/item/clothing/under/rank/cargo
 
 /obj/item/clothing/under/rank/cargo/qm
 	name = "quartermaster's uniform"
@@ -16,6 +17,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/cargo/tech
 	name = "cargo technician's uniform"

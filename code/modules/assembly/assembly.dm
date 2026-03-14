@@ -25,7 +25,9 @@
 	var/obj/item/assembly_holder/holder = null
 	var/assembly_behavior = ASSEMBLY_FUNCTIONAL_OUTPUT // how does the assembly behave with respect to what it's connected to
 	var/datum/wires/connected = null
-	var/next_activate = 0 //When we're next allowed to activate - for spam control
+	COOLDOWN_DECLARE(next_activate)
+	/// Length of the cooldown between activations
+	var/activation_cooldown = 3 SECONDS
 
 /obj/item/assembly/Destroy()
 	holder = null
@@ -99,9 +101,9 @@
 
 /// What the device does when turned on
 /obj/item/assembly/proc/activate(mob/activator)
-	if(QDELETED(src) || !secured || (next_activate > world.time))
+	if(QDELETED(src) || !secured || !COOLDOWN_FINISHED(src, next_activate))
 		return FALSE
-	next_activate = world.time + 30
+	COOLDOWN_START(src, next_activate, activation_cooldown)
 	return TRUE
 
 /obj/item/assembly/proc/toggle_secure()
@@ -118,7 +120,7 @@
 		return
 	. = ..()
 
-/obj/item/assembly/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(isassembly(attacking_item))
 		var/obj/item/assembly/new_assembly = attacking_item
 		// Check both our's and their's assembly flags to see if either should not duplicate

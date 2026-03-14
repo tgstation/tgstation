@@ -44,6 +44,8 @@
 		wield_callback = CALLBACK(src, PROC_REF(on_wielded)),\
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwielded)),\
 	)
+	AddElement(/datum/element/burn_on_item_ignition)
+	RegisterSignal(src, COMSIG_ATOM_IGNITED_BY_ITEM, PROC_REF(close_paper_ui))
 	creation_time = GLOB.news_network.last_action
 	for(var/datum/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
 		news_content += iterated_feed_channel
@@ -60,9 +62,13 @@
 		if(IS_WRITING_UTENSIL(held_item))
 			context[SCREENTIP_CONTEXT_LMB] = "Scribble"
 			return CONTEXTUAL_SCREENTIP_SET
-		if(held_item.get_temperature())
+		if(held_item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			context[SCREENTIP_CONTEXT_LMB] = "Burn"
 			return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/newspaper/proc/close_paper_ui()
+	SIGNAL_HANDLER
+	SStgui.close_uis(src)
 
 /obj/item/newspaper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(\
@@ -77,10 +83,6 @@
 	return TOXLOSS
 
 /obj/item/newspaper/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if (burn_paper_product_attackby_check(tool, user))
-		SStgui.close_uis(src)
-		return ITEM_INTERACT_SKIP_TO_ATTACK
-
 	if (tool.tool_behaviour == TOOL_SCREWDRIVER || tool.tool_behaviour == TOOL_WIRECUTTER || tool.sharpness)
 		if (punctured)
 			balloon_alert(user, "already has holes!")
@@ -104,7 +106,7 @@
 			owner.update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
-	if (!user.can_write(tool))
+	if (!user.can_write(tool, TRUE))
 		return NONE
 
 	if (scribble_page == current_page)
@@ -148,18 +150,22 @@
 	RegisterSignal(user, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(holder_updated_overlays))
 	RegisterSignal(user, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(holder_checked_name))
 	user.update_appearance(UPDATE_OVERLAYS)
-	user.name = user.get_visible_name()
 	if (!punctured)
 		user.add_fov_trait(REF(src), FOV_REVERSE_270_DEGRESS)
+	if (ishuman(user))
+		var/mob/living/carbon/human/as_human = user
+		as_human.update_visible_name()
 
 /// Called when you stop doing that
 /obj/item/newspaper/proc/on_unwielded(obj/item/source, mob/living/user)
 	REMOVE_TRAIT(user, TRAIT_FACE_COVERED, REF(src))
 	UnregisterSignal(user, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_HUMAN_GET_VISIBLE_NAME))
 	user.update_appearance(UPDATE_OVERLAYS)
-	user.name = user.get_visible_name()
 	if (!punctured)
 		user.remove_fov_trait(REF(src), FOV_REVERSE_270_DEGRESS)
+	if (ishuman(user))
+		var/mob/living/carbon/human/as_human = user
+		as_human.update_visible_name()
 
 /// Called when we're being read and overlays are updated, we should show a big newspaper over the reader
 /obj/item/newspaper/proc/holder_updated_overlays(atom/reader, list/overlays)
@@ -190,6 +196,8 @@
 	identity[VISIBLE_NAME_ID] = ""
 
 /obj/item/newspaper/ui_interact(mob/user, datum/tgui/ui)
+	if(resistance_flags & ON_FIRE)
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(ui)
 		return
@@ -254,16 +262,15 @@
 		channel_data["channel_messages"] = list()
 		for(var/datum/feed_message/feed_messages as anything in current_channel.messages)
 			if(feed_messages.creation_time > creation_time)
-				data["channel_has_messages"] = FALSE
-				break
+				continue
 			data["channel_has_messages"] = TRUE
 			var/has_image = FALSE
 			if(feed_messages.img)
 				has_image = TRUE
-				user << browse_rsc(feed_messages.img, "tmp_photo[feed_messages.message_ID].png")
+				user << browse_rsc(feed_messages.img, "tmp_photo[feed_messages.message_id].png")
 			channel_data["channel_messages"] += list(list(
 				"message" = "-[feed_messages.return_body(censored_check(feed_messages.body_censor_time))]",
-				"photo" = (has_image ? "tmp_photo[feed_messages.message_ID].png" : null),
+				"photo" = (has_image ? "tmp_photo[feed_messages.message_id].png" : null),
 				"author" = feed_messages.return_author(censored_check(feed_messages.author_censor_time)),
 			))
 	data["channel_data"] = list(channel_data)

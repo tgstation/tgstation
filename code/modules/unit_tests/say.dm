@@ -90,7 +90,7 @@
 	var/surfer_quote = "surfing in the USA"
 
 	host_mob.grant_language(/datum/language/beachbum, SPOKEN_LANGUAGE) // can speak but can't understand
-	host_mob.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
+	host_mob.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, source = LANGUAGE_STONER)
 	TEST_ASSERT_NOTEQUAL(surfer_quote, host_mob.translate_language(host_mob, /datum/language/beachbum, surfer_quote), "Language test failed. Mob was supposed to understand: [surfer_quote]")
 
 	host_mob.grant_language(/datum/language/beachbum, ALL) // can now understand
@@ -125,9 +125,6 @@
 /datum/unit_test/speech/proc/handle_hearing(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 
-	// So it turns out that the `message` arg for COMSIG_MOVABLE_HEAR is super redundant and should probably
-	// be gutted out of both the Hear() proc and signal since it's never used
-	//TEST_ASSERT(hearing_args[HEARING_MESSAGE], "Handle hearing signal does not have a message arg")
 	TEST_ASSERT(hearing_args[HEARING_SPEAKER], "Handle hearing signal does not have a speaker arg")
 	TEST_ASSERT(hearing_args[HEARING_LANGUAGE], "Handle hearing signal does not have a language arg")
 	TEST_ASSERT(hearing_args[HEARING_RAW_MESSAGE], "Handle hearing signal does not have a raw message arg")
@@ -166,7 +163,7 @@
 	var/datum/client_interface/mock_client = new()
 	listener.mock_client = mock_client
 
-	RegisterSignal(speaker, COMSIG_MOB_SAY, PROC_REF(handle_speech)) //
+	RegisterSignal(speaker, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	RegisterSignal(speaker_radio, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(handle_radio_hearing))
 
 	RegisterSignal(listener, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))

@@ -1,17 +1,30 @@
 import { marked } from 'marked';
+import { baseUrl } from 'marked-base-url';
+import { markedSmartypants } from 'marked-smartypants';
 
 import { sanitizeText } from './sanitize';
 
-export const processedText = (value) => {
-  const textHtml = {
-    __html: sanitizeText(
-      marked(value, {
+type ProcessedText = {
+  __html: string;
+};
+
+export function processedText(value: string | null): ProcessedText {
+  if (!value) {
+    return { __html: '' };
+  }
+
+  const parsed = marked
+    .use(
+      {
         breaks: true,
-        smartypants: true,
-        smartLists: true,
-        baseUrl: 'thisshouldbreakhttp',
-      }),
-    ),
+      },
+      markedSmartypants(),
+      baseUrl('thisshouldbreakhttp'),
+    )
+    .parse(value, { async: false });
+
+  const textHtml = {
+    __html: sanitizeText(parsed),
   };
   return textHtml;
-};
+}

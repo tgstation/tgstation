@@ -1,6 +1,10 @@
 /// Manages library data, loading bookselves, etc
 SUBSYSTEM_DEF(library)
 	name = "Library Loading"
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/mapping,
+	)
 	flags = SS_NO_FIRE
 
 	/// List of bookselves to prefill with books
@@ -54,7 +58,7 @@ SUBSYSTEM_DEF(library)
 /datum/controller/subsystem/library/proc/prepare_official_posters()
 	printable_posters = list()
 	for(var/obj/structure/sign/poster/official/poster_type as anything in subtypesof(/obj/structure/sign/poster/official))
-		if (initial(poster_type.printable) == TRUE) //Mostly this check exists to keep directionals from ending up in the printable list
+		if (initial(poster_type.pixel_x) == 0 && initial(poster_type.pixel_y) == 0) //Anything with an initial pixel offset is a directional subtype, keep it out the list
 			printable_posters[initial(poster_type.name)] = poster_type
 
 /datum/controller/subsystem/library/proc/prepare_library_areas()

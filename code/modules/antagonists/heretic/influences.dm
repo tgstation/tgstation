@@ -110,10 +110,13 @@
 
 	var/mob/living/carbon/human/human_user = user
 	var/obj/item/bodypart/their_poor_arm = human_user.get_active_hand()
+	if (!their_poor_arm)
+		return TRUE
+
 	if(prob(25))
 		to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
-		their_poor_arm.dismember()
-		forceMove(their_poor_arm, src) // stored for later fishage
+		if (their_poor_arm.dismember())
+			their_poor_arm.forceMove(src) // stored for later fishage
 	else
 		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existence itself!"))
 	return TRUE
@@ -139,14 +142,12 @@
 	// A very elaborate way to suicide
 	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [user.p_their()] head off!"))
 	var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
-	if(head)
-		head.dismember()
-		forceMove(head, src) // stored for later fishage
+	if(head?.dismember())
+		head.forceMove(src) // stored for later fishage
 	else
 		human_user.gib(DROP_ALL_REMAINS)
 	human_user.investigate_log("has died from using telekinesis on a heretic influence.", INVESTIGATE_DEATHS)
-	var/datum/effect_system/reagents_explosion/explosion = new()
-	explosion.set_up(1, get_turf(human_user), TRUE, 0)
+	var/datum/effect_system/reagents_explosion/explosion = new(get_turf(human_user), 1, 1, 1)
 	explosion.start(src)
 
 /obj/effect/visible_heretic_influence/examine(mob/living/user)
@@ -156,7 +157,7 @@
 		return
 
 	. += span_userdanger("Your mind burns as you stare at the tear!")
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10, 190)
 	user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/heretic_influence
@@ -170,6 +171,8 @@
 	var/being_drained = FALSE
 	/// The icon state applied to the image created for this influence.
 	var/real_icon_state = "reality_smash"
+	/// Proximity monitor that gives any nearby heretics x-ray vision
+	var/datum/proximity_monitor/influence_monitor/monitor
 
 /obj/effect/heretic_influence/Initialize(mapload)
 	. = ..()
@@ -182,12 +185,14 @@
 	AddElement(/datum/element/block_turf_fingerprints)
 	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
 	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift])
+	monitor = new(src, 7)
 
 /obj/effect/heretic_influence/proc/verify_user_can_see(mob/user)
 	return (user.mind in GLOB.reality_smash_track.tracked_heretics)
 
 /obj/effect/heretic_influence/Destroy()
 	GLOB.reality_smash_track.smashes -= src
+	QDEL_NULL(monitor)
 	return ..()
 
 /obj/effect/heretic_influence/attack_hand_secondary(mob/user, list/modifiers)
@@ -201,7 +206,7 @@
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/effect/heretic_influence/attackby(obj/item/weapon, mob/user, params)
+/obj/effect/heretic_influence/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return
@@ -224,21 +229,29 @@
  *
  * If successful, the influence is drained and deleted.
  */
-/obj/effect/heretic_influence/proc/drain_influence(mob/living/user, knowledge_to_gain, drain_speed = 10 SECONDS)
+/obj/effect/heretic_influence/proc/drain_influence(mob/living/user, knowledge_to_gain, drain_speed = HERETIC_RIFT_DEFAULT_DRAIN_SPEED)
 
 	being_drained = TRUE
 	loc.balloon_alert(user, "draining influence...")
 
+	// Only gives you the dripping eye effect if you have faster drain speed than default
+	var/mutable_appearance/draining_overlay = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_eye_dripping")
+	if(drain_speed < HERETIC_RIFT_DEFAULT_DRAIN_SPEED)
+		draining_overlay.pixel_y = 16
+		user.add_overlay(draining_overlay)
+
 	if(!do_after(user, drain_speed, src, hidden = TRUE))
 		being_drained = FALSE
 		loc.balloon_alert(user, "interrupted!")
+		user.cut_overlay(draining_overlay)
 		return
 
 	// We don't need to set being_drained back since we delete after anyways
 	loc.balloon_alert(user, "influence drained")
+	user.cut_overlay(draining_overlay)
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
-	heretic_datum.knowledge_points += knowledge_to_gain
+	heretic_datum.adjust_knowledge_points(knowledge_to_gain)
 
 	// Aaand now we delete it
 	after_drain(user)
@@ -269,3 +282,19 @@
 /datum/atom_hud/alternate_appearance/basic/has_antagonist/heretic
 	antag_datum_type = /datum/antagonist/heretic
 	add_ghost_version = TRUE
+
+/datum/proximity_monitor/influence_monitor
+	/// Cooldown before we can give another heretic xray
+	COOLDOWN_DECLARE(xray_cooldown)
+
+/datum/proximity_monitor/influence_monitor/on_entered(atom/source, atom/movable/arrived, turf/old_loc)
+	. = ..()
+	if(!isliving(arrived))
+		return
+	if(!COOLDOWN_FINISHED(src, xray_cooldown))
+		return
+	var/mob/living/arrived_living = arrived
+	if(!IS_HERETIC(arrived_living))
+		return
+	arrived_living.apply_status_effect(/datum/status_effect/temporary_xray/eldritch)
+	COOLDOWN_START(src, xray_cooldown, 3 MINUTES)

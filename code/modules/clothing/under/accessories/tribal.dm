@@ -4,12 +4,16 @@
 	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
 	icon_state = "talisman"
 	attachment_slot = NONE
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/accessory/skullcodpiece
 	name = "skull codpiece"
 	desc = "A skull shaped ornament, intended to protect the important things in life."
 	icon_state = "skull"
 	attachment_slot = GROIN
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/accessory/skilt
 	name = "sinew skirt"
@@ -17,3 +21,5 @@
 	icon_state = "skilt"
 	minimize_when_attached = FALSE
 	attachment_slot = GROIN
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT)

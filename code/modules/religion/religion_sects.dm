@@ -31,7 +31,7 @@
 	/// Autopopulated by `desired_items`
 	var/list/desired_items_typecache
 	/// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
-	var/list/rites_list
+	var/list/rites_list = list()
 	/// Changes the Altar of Gods icon
 	var/altar_icon
 	/// Changes the Altar of Gods icon_state
@@ -47,6 +47,8 @@
 	. = ..()
 	if(desired_items)
 		desired_items_typecache = typecacheof(desired_items)
+	if(!locate(/datum/religion_rites/deaconize) in rites_list)
+		rites_list += list(/datum/religion_rites/deaconize)
 	on_select()
 
 /// Activates once selected
@@ -59,6 +61,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	to_chat(chap, span_boldnotice("\"[quote]\""))
 	to_chat(chap, span_notice("[desc]"))
+	chap.add_faction(FACTION_HOLY)
 
 /// Activates if religious sect is reset by admins, should clean up anything you added on conversion.
 /datum/religion_sect/proc/on_deconversion(mob/living/chap)
@@ -66,6 +69,7 @@
 	to_chat(chap, span_boldnotice("You have lost the approval of \the [name]."))
 	if(chap.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(chap, span_notice("Return to an altar to reform your sect."))
+	chap.remove_faction(FACTION_HOLY)
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/sacrifice, mob/living/chap)
@@ -231,11 +235,10 @@
 /datum/religion_sect/pyre/on_select()
 	. = ..()
 	AddComponent(/datum/component/sect_nullrod_bonus, list(
-		/obj/item/gun/ballistic/bow/divine/with_quiver = list(
+		/obj/item/gun/ballistic/bow/divine = list(
 			/datum/religion_rites/blazing_star,
 		),
 	))
-
 
 /datum/religion_sect/pyre/on_sacrifice(obj/item/flashlight/flare/candle/offering, mob/living/user)
 	if(!istype(offering))
@@ -273,7 +276,7 @@
 		return BLESSING_IGNORED
 
 	if(account.account_balance < GREEDY_HEAL_COST)
-		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!"))
+		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] [MONEY_NAME] for 30 health!"))
 		return BLESSING_IGNORED
 
 	var/mob/living/carbon/human/blessed = blessed_living
@@ -368,32 +371,29 @@
 			target.cure_husk(BURN)
 			chaplain.become_husk(BURN)
 
-	var/toxin_damage = target.getToxLoss()
+	var/toxin_damage = target.get_tox_loss()
 	if(toxin_damage && !HAS_TRAIT(chaplain, TRAIT_TOXIMMUNE))
 		transferred = TRUE
-		target.adjustToxLoss(-toxin_damage)
-		chaplain.adjustToxLoss(toxin_damage * burden_modifier, forced = TRUE)
+		target.adjust_tox_loss(-toxin_damage)
+		chaplain.adjust_tox_loss(toxin_damage * burden_modifier, forced = TRUE)
 
-	var/suffocation_damage = target.getOxyLoss()
+	var/suffocation_damage = target.get_oxy_loss()
 	if(suffocation_damage && !HAS_TRAIT(chaplain, TRAIT_NOBREATH))
 		transferred = TRUE
-		target.adjustOxyLoss(-suffocation_damage)
-		chaplain.adjustOxyLoss(suffocation_damage * burden_modifier, forced = TRUE)
+		target.adjust_oxy_loss(-suffocation_damage)
+		chaplain.adjust_oxy_loss(suffocation_damage * burden_modifier, forced = TRUE)
 
-	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
-		if(target.blood_volume < BLOOD_VOLUME_SAFE)
-			var/target_blood_data = target.get_blood_data(target.get_blood_id())
-			var/chaplain_blood_data = chaplain.get_blood_data(chaplain.get_blood_id())
-			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
-			if(transferred_blood_amount && (chaplain_blood_data["blood_type"] in get_safe_blood(target_blood_data["blood_type"])))
-				transferred = TRUE
-				chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
-		if(target.blood_volume > BLOOD_VOLUME_EXCESS)
-			target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
+	var/cached_blood_volume = target.get_blood_volume()
+	if (cached_blood_volume < BLOOD_VOLUME_SAFE)
+		if (target.get_blood_compatibility(chaplain))
+			var/amount_to_transfer = BLOOD_VOLUME_SAFE - cached_blood_volume
+			transferred |= chaplain.transfer_blood_to(target, amount_to_transfer, ignore_low_blood = TRUE)
+	else if (cached_blood_volume > BLOOD_VOLUME_EXCESS)
+		transferred |= target.transfer_blood_to(chaplain, cached_blood_volume - BLOOD_VOLUME_EXCESS)
 
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()
-	if(transferred)
+	if(!transferred)
 		to_chat(chaplain, span_warning("They hold no burden!"))
 		return BLESSING_IGNORED
 
@@ -414,22 +414,7 @@
 	tgui_icon = "scroll"
 	altar_icon_state = "convertaltar-white"
 	alignment = ALIGNMENT_GOOD
-	rites_list = list(/datum/religion_rites/deaconize, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
-	///people who have agreed to join the crusade, and can be deaconized
-	var/list/possible_crusaders = list()
-	///people who have been offered an invitation, they haven't finished the alert though.
-	var/list/currently_asking = list()
-
-/**
- * Called by deaconize rite, this async'd proc waits for a response on joining the sect.
- * If yes, the deaconize rite can now recruit them instead of just offering invites
- */
-/datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited)
-	currently_asking += invited
-	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
-	currently_asking -= invited
-	if(ask == "Yes")
-		possible_crusaders += invited
+	rites_list = list(/datum/religion_rites/deaconize/crusader, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
 
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	..()

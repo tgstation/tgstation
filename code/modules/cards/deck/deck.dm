@@ -16,16 +16,16 @@
 	var/shuffle_time = DECK_SHUFFLE_TIME
 	/// Deck shuffling cooldown.
 	COOLDOWN_DECLARE(shuffle_cooldown)
-	/// If the deck is the standard 52 playing card deck (used for poker and blackjack)
-	var/is_standard_deck = TRUE
 	/// The amount of cards to spawn in the deck (optional)
-	var/decksize = INFINITY
+	var/decksize = 54
 	/// The description of the cardgame that is played with this deck (used for memories)
 	var/cardgame_desc = "card game"
 	/// The holodeck computer used to spawn a holographic deck (see /obj/item/toy/cards/deck/syndicate/holographic)
 	var/obj/machinery/computer/holodeck/holodeck
 	/// If the cards in the deck have different card faces icons (blank and CAS decks do not)
 	var/has_unique_card_icons = TRUE
+	/// The base sprite for the deck.
+	var/deck_base_icon = "deck_"
 	/// The art style of deck used (determines both deck and card icons used)
 	var/deckstyle = "nanotrasen"
 
@@ -35,10 +35,14 @@
 	AddComponent(/datum/component/two_handed, attacksound='sound/items/cards/cardflip.ogg')
 	register_context()
 
-	if(!is_standard_deck)
-		return
+	initialize_cards()
 
-	// generate a normal playing card deck
+	if(length(initial_cards))
+		card_limit = length(initial_cards)
+
+/// Generates the cards in this deck. If not overridden, generates a standard 52-card deck (and 2 jokers).
+/obj/item/toy/cards/deck/proc/initialize_cards()
+	SHOULD_CALL_PARENT(FALSE) // you should be overriding this for subtypes, probably
 	initial_cards += "Joker Clown"
 	initial_cards += "Joker Mime"
 	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
@@ -107,6 +111,16 @@
 	user.balloon_alert_to_viewers("shuffles the deck")
 	addtimer(CALLBACK(src, PROC_REF(CardgameEvent), user), 60 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
+/**
+ * Grabs the top card in the deck, but does not actually manipulate the deck.
+ */
+/obj/item/toy/cards/deck/proc/get_top_card(mob/living/user)
+	if(count_cards() == 0)
+		to_chat(user, span_warning("There are no more cards to draw!"))
+		return
+	var/list/cards = fetch_card_atoms()
+	return cards[1]
+
 /// This checks if nearby mobs are playing a cardgame and triggers a mood and memory
 /obj/item/toy/cards/deck/proc/CardgameEvent(mob/living/dealer)
 	var/card_players = list()
@@ -157,33 +171,35 @@
 /obj/item/toy/cards/deck/update_icon_state()
 	switch(count_cards())
 		if(27 to INFINITY)
-			icon_state = "deck_[deckstyle]_full"
+			icon_state = "[deck_base_icon][deckstyle]_full"
 		if(11 to 27)
-			icon_state = "deck_[deckstyle]_half"
+			icon_state = "[deck_base_icon][deckstyle]_half"
 		if(1 to 11)
-			icon_state = "deck_[deckstyle]_low"
+			icon_state = "[deck_base_icon][deckstyle]_low"
 		else
-			icon_state = "deck_[deckstyle]_empty"
+			icon_state = "[deck_base_icon][deckstyle]_empty"
 	return ..()
 
 /obj/item/toy/cards/deck/insert(obj/item/toy/card_item)
+	var/list/cards = ..()
+	if (!length(cards))
+		return null
 	// any card inserted into the deck is always facedown
-	if(istype(card_item, /obj/item/toy/singlecard))
-		var/obj/item/toy/singlecard/card = card_item
+	for(var/obj/item/toy/singlecard/card in cards)
 		card.Flip(CARD_FACEDOWN)
-	if(istype(card_item, /obj/item/toy/cards/cardhand))
-		var/obj/item/toy/cards/cardhand/cardhand = card_item
-		for(var/obj/item/toy/singlecard/card in cardhand.fetch_card_atoms())
-			card.Flip(CARD_FACEDOWN)
-	. = ..()
+	return cards
 
-/obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/toy/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
-		insert(item)
-		var/card_grammar = istype(item, /obj/item/toy/singlecard) ? "card" : "cards"
-		user.balloon_alert_to_viewers("puts [card_grammar] in deck")
-		return
-	return ..()
+/obj/item/toy/cards/deck/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/toy/singlecard) && !istype(tool, /obj/item/toy/cards/cardhand))
+		return NONE
+
+	if (!insert(tool))
+		to_chat(user, span_warning("\The [src] is stacked too high!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/card_grammar = istype(tool, /obj/item/toy/singlecard) ? "card" : "cards"
+	user.balloon_alert_to_viewers("puts [card_grammar] in deck")
+	return ITEM_INTERACT_SUCCESS
 
 /// This is how we play 52 card pickup
 /obj/item/toy/cards/deck/throw_impact(mob/living/target, datum/thrownthing/throwingdatum)
@@ -192,7 +208,7 @@
 		return .
 
 	var/mob/living/thrower = throwingdatum?.get_thrower()
-	if(!thrower) // if a mob didn't throw it (need two people to play 52 pickup)
+	if(!istype(thrower)) // if a mob didn't throw it (need two people to play 52 pickup)
 		return
 
 	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
@@ -216,6 +232,20 @@
 	attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
 	resistance_flags = NONE
 	shuffle_time = DECK_SYNDIE_SHUFFLE_TIME
+
+/// A card shoe. For holding a lot of cards, but not for committing card-based psychological warfare (crashing people by throwing 100+ cards at them).
+/obj/item/toy/cards/deck/cardshoe
+	name = "card shoe"
+	desc = "A clear plastic card dispenser for holding a large amount of cards. For better or for worse, \
+		the dispenser is designed to prevent a haphazard scattering of cards if thrown."
+	icon_state = "deckshoe_empty" // woe, codersprites upon thee
+	card_limit = 432 // 8 decks of 54 cards. if... you somehow need to do that much card gaming.
+	can_play_52_card_pickup = FALSE
+	deck_base_icon = "deckshoe"
+	deckstyle = "" // no deck style because it wouldn't matter
+
+/obj/item/toy/cards/deck/cardshoe/initialize_cards()
+	return
 
 #undef DECK_SHUFFLE_TIME
 #undef DECK_SYNDIE_SHUFFLE_TIME

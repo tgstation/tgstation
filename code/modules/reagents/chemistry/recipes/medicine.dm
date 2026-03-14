@@ -157,6 +157,51 @@
 	required_reagents = list(/datum/reagent/medicine/sal_acid = 1, /datum/reagent/lithium = 1, /datum/reagent/aluminium = 1, /datum/reagent/bromine = 1, /datum/reagent/ammonia = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OXY
 
+/datum/chemical_reaction/medicine/albuterol_creation
+	results = list(/datum/reagent/medicine/albuterol = 15)
+	required_reagents = list(/datum/reagent/lithium = 3, /datum/reagent/aluminium = 3, /datum/reagent/bromine = 3, /datum/reagent/medicine/c2/convermol = 1)
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER
+	required_temp = 400
+	optimal_temp = 600
+	overheat_temp = 900
+
+/datum/chemical_reaction/medicine/salbutamol_to_albuterol
+	results = list(/datum/reagent/medicine/albuterol = 4, /datum/reagent/medicine/sal_acid = 0.5, /datum/reagent/ammonia = 0.5)
+	required_catalysts = list(/datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/medicine/salbutamol = 5, /datum/reagent/medicine/c2/convermol = 1)
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER | REACTION_TAG_ACTIVE
+	required_temp = 500
+	optimal_temp = 610
+	overheat_temp = 980
+	thermic_constant = 75
+	rate_up_lim = 10
+	mix_message = "The solution rapidly changes colors, boiling into a pale blue."
+
+/datum/chemical_reaction/medicine/albuterol_to_salbutamol
+	results = list(/datum/reagent/medicine/salbutamol = 2, /datum/reagent/ammonia = 1)
+	required_catalysts = list(/datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/medicine/albuterol = 3, /datum/reagent/oxygen = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_ORGAN | REACTION_TAG_OTHER | REACTION_TAG_ACTIVE
+	required_temp = 300
+	optimal_temp = 500
+	overheat_temp = 800
+	mix_message = "The solution breaks apart, turning a deeper blue."
+
+/datum/chemical_reaction/medicine/albuterol_to_convermol
+	results = list(/datum/reagent/medicine/c2/convermol = 1, /datum/reagent/lithium = 3, /datum/reagent/aluminium = 3, /datum/reagent/bromine = 3)
+	required_catalysts = list(/datum/reagent/toxin/acid/fluacid = 1)
+	required_reagents = list(/datum/reagent/medicine/albuterol = 5)
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER | REACTION_TAG_ACTIVE
+	required_temp = 900
+	optimal_temp = 920
+	overheat_temp = 990
+	thermic_constant = 25
+	mix_message = "The solution rapidly breaks apart, turning a mix of colors."
+
+/datum/chemical_reaction/medicine/albuterol_to_convermol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
+	var/bonus = impure ? 2 : 1
+	explode_smoke(holder, equilibrium, 7.5 * bonus, TRUE, TRUE)
+
 /datum/chemical_reaction/medicine/ephedrine
 	results = list(/datum/reagent/medicine/ephedrine = 4)
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/fuel/oil = 1, /datum/reagent/hydrogen = 1, /datum/reagent/diethylamine = 1)
@@ -177,10 +222,10 @@
 	purity_min = 0.32
 
 /datum/chemical_reaction/medicine/ephedrine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
-	default_explode(holder, equilibrium.reacted_vol, 0, 25)
+	reagent_explode(holder, equilibrium.reacted_vol, 0, 25)
 
 /datum/chemical_reaction/medicine/ephedrine/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
-	default_explode(holder, equilibrium.reacted_vol, 0, 20)
+	reagent_explode(holder, equilibrium.reacted_vol, 0, 20)
 
 /datum/chemical_reaction/medicine/diphenhydramine
 	results = list(/datum/reagent/medicine/diphenhydramine = 4)
@@ -354,34 +399,28 @@
 ///medical stacks
 
 /datum/chemical_reaction/medicine/medsuture
-	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/toxin/formaldehyde = 20, /datum/reagent/medicine/polypyr = 15) //This might be a bit much, reagent cost should be reviewed after implementation.
+	required_reagents = list(/datum/reagent/cellulose = 2, /datum/reagent/toxin/formaldehyde = 4, /datum/reagent/medicine/polypyr = 3) //This might be a bit much, reagent cost should be reviewed after implementation.
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/medicine/medsuture/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/medical/suture/medicated(location)
+	new /obj/item/stack/medical/suture/medicated(get_turf(holder.my_atom), round(created_volume * 4))
 
 /datum/chemical_reaction/medicine/medmesh
-	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/consumable/aloejuice = 20, /datum/reagent/space_cleaner/sterilizine = 10)
+	required_reagents = list(/datum/reagent/cellulose = 2, /datum/reagent/consumable/aloejuice = 4, /datum/reagent/space_cleaner/sterilizine = 2)
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/medicine/medmesh/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/medical/mesh/advanced(location)
+	new /obj/item/stack/medical/mesh/advanced(get_turf(holder.my_atom), round(created_volume * 3))
 
 /datum/chemical_reaction/medicine/poultice
-	required_reagents = list(/datum/reagent/toxin/bungotoxin = 20, /datum/reagent/cellulose = 20, /datum/reagent/consumable/aloejuice = 20)
+	required_reagents = list(/datum/reagent/toxin/bungotoxin = 4, /datum/reagent/cellulose = 4, /datum/reagent/consumable/aloejuice = 4	)
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE | REACTION_TAG_BURN
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE | REACTION_TAG_BURN | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/medicine/poultice/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/medical/poultice(location)
+	new /obj/item/stack/medical/poultice(get_turf(holder.my_atom), round(created_volume * 3))
 
 /datum/chemical_reaction/medicine/seraka_destroy //seraka extract is destroyed by sodium hydroxide
 	results = list(/datum/reagent/consumable/sugar = 1)
@@ -394,3 +433,8 @@
 	required_catalysts = list(/datum/reagent/consumable/ethanol = 3)
 	optimal_ph_max = 11
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER | REACTION_TAG_DRUG
+
+/datum/chemical_reaction/medicine/naloxone
+	results = list(/datum/reagent/medicine/naloxone = 4)
+	required_reagents = list(/datum/reagent/medicine/morphine = 1, /datum/reagent/hydrogen_peroxide = 1, /datum/reagent/bromine = 1, /datum/reagent/consumable/ethanol = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER

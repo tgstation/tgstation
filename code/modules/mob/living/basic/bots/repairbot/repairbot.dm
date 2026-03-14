@@ -8,9 +8,10 @@
 	pass_flags = parent_type::pass_flags | PASSTABLE
 	layer = BELOW_MOB_LAYER
 	anchored = FALSE
-	health = 100
+	health = 35
 	can_be_held = TRUE
-	maxHealth = 100
+	maxHealth = 35
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	path_image_color = "#80dae7"
 	bot_ui = "RepairBot"
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_ENGINEERING)
@@ -98,7 +99,7 @@
 	toolbox_color = new_color
 	update_appearance()
 
-/mob/living/basic/bot/repairbot/attackby(obj/item/potential_stack, mob/living/carbon/human/user, list/modifiers)
+/mob/living/basic/bot/repairbot/attackby(obj/item/potential_stack, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	if(!istype(potential_stack, /obj/item/stack))
 		return ..()
 	attempt_merge(potential_stack, user)
@@ -113,7 +114,7 @@
 			if(!user.transferItemToLoc(potential_stack, src))
 				user.balloon_alert(user, "stuck to your hand!")
 				return
-			balloon_alert(src, "inserted")
+			balloon_alert(user, "inserted")
 			return
 		if(our_sheet.amount >= our_sheet.max_amount)
 			user?.balloon_alert(user, "full!")
@@ -121,11 +122,9 @@
 		if(!our_sheet.can_merge(potential_stack))
 			user?.balloon_alert(user, "not suitable!")
 			return
-		var/atom/movable/to_move = potential_stack.split_stack(user, min(our_sheet.max_amount - our_sheet.amount, potential_stack.amount))
-		if(!user.transferItemToLoc(to_move, src))
-			user.balloon_alert(user, "stuck to your hand!")
-			return
-		balloon_alert(src, "inserted")
+		var/atom/movable/to_move = potential_stack.split_stack(min(our_sheet.max_amount - our_sheet.amount, potential_stack.amount))
+		to_move.forceMove(src)
+		balloon_alert(user, "inserted")
 		return
 
 /mob/living/basic/bot/repairbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)

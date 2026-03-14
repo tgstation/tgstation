@@ -22,7 +22,7 @@
 	health = 50
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/pony
 	/// Do we register a unique rider?
 	var/unique_tamer = FALSE
@@ -34,6 +34,7 @@
 	var/list/ponycolors = list("#cc8c5d", "#cc8c5d")
 
 /datum/emote/pony
+	abstract_type = /datum/emote/pony
 	mob_type_allowed_typecache = /mob/living/basic/pony
 	mob_type_blacklist_typecache = list()
 
@@ -67,7 +68,7 @@
 	ai_controller.replace_planning_subtrees(list(
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/random_speech/pony/tamed
+		/datum/ai_planning_subtree/random_speech/pony/tamed,
 	))
 
 	if(unique_tamer)
@@ -122,7 +123,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
@@ -131,7 +132,7 @@
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/pony
+		/datum/ai_planning_subtree/random_speech/pony,
 	)
 
 // A stronger horse is required for our strongest cowboys.
@@ -164,5 +165,30 @@
 	ponycolors = list("#5d566f", pick_weight(mane_colors))
 	name = pick("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
 	// Only one person can tame these fellas, and they only need one apple
+	var/static/list/food_types = list(/obj/item/food/grown/apple)
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100, bonus_tame_chance = 15, unique = unique_tamer)
+
+/mob/living/basic/pony/dangerous
+	health = 300
+	maxHealth = 300
+	desc = "A special breed of horse engineered by the syndicate to be capable of surviving in the deep reaches of space. A modern outlaw's best friend."
+	faction = list(ROLE_SYNDICATE)
+	ponycolors = list("#666666", COLOR_ORANGE)
+	pressure_resistance = 200
+	habitable_atmos = null
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 1500
+	unique_tamer = TRUE
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	armour_penetration = 100
+	sentience_type = SENTIENCE_PONY
+	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/pony/dangerous/Initialize(mapload)
+	. = ..()
+	var/mane_colors = list(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW)
+	ponycolors = list("#666666", pick(mane_colors))
+	name = pick("S-Horse", "Plotva", "Horsekk", "Agro", "Hons")
 	var/static/list/food_types = list(/obj/item/food/grown/apple)
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100, bonus_tame_chance = 15, unique = unique_tamer)

@@ -2,9 +2,9 @@ import { useBackend } from 'tgui/backend';
 import { Button, Stack } from 'tgui-core/components';
 
 import { RandomizationButton } from '../../components/RandomizationButton';
-import { PreferencesMenuData, RandomSetting } from '../../types';
+import { type PreferencesMenuData, RandomSetting } from '../../types';
 import { useRandomToggleState } from '../../useRandomToggleState';
-import { CheckboxInput, Feature, FeatureToggle } from './base';
+import { CheckboxInput, type Feature, type FeatureToggle } from './base';
 
 export const random_body: Feature<RandomSetting> = {
   name: 'Random body',
@@ -73,7 +73,7 @@ export const random_species: Feature<RandomSetting> = {
   component: (props) => {
     const { act, data } = useBackend<PreferencesMenuData>();
 
-    const species = data.character_preferences.randomization['species'];
+    const species = data.character_preferences.randomization.species;
 
     return (
       <RandomizationButton

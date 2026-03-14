@@ -172,3 +172,11 @@
 	description = "A small 2x2 puddle of not-safe-for-live plasma. You can catch lava loops and arctic chrabs here."
 	radial_icon = "plasma"
 	safe = FALSE
+
+/datum/map_template/shelter/fishing/depths
+	name = "Deep Ocean Fishing Spot"
+	shelter_id = "fishing_depths"
+	mappath = "_maps/templates/fishing_depths.dmm"
+	description = "A 3x3 pool of deep water, enough that it's tiring to wade across. You can catch ocean fish here."
+	radial_icon = "depths"
+	safe = FALSE

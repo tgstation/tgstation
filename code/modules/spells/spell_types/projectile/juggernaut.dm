@@ -12,3 +12,8 @@
 	spell_requirements = NONE
 
 	projectile_type = /obj/projectile/magic/aoe/juggernaut
+
+/datum/action/cooldown/spell/basic_projectile/juggernaut/fire_projectile(atom/target, mob/caster)
+	var/obj/projectile/magic/aoe/juggernaut/to_fire = ..()
+	SET_FACTION_AND_ALLIES_FROM(to_fire, caster)
+	return to_fire

@@ -58,7 +58,7 @@
 
 /obj/structure/emergency_shield/regenerating/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_NO_EXAMINE)
 
 /obj/structure/emergency_shield/regenerating/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -84,7 +84,7 @@
 
 /obj/structure/emergency_shield/cult/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_NO_EXAMINE)
 
 /obj/structure/emergency_shield/cult/narsie
 	name = "sanguine barrier"
@@ -236,7 +236,7 @@
 		set_anchored(FALSE)
 
 
-/obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
+/obj/machinery/shieldgen/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
@@ -460,7 +460,7 @@
 		return
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))

@@ -15,6 +15,7 @@
 	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
 	integrity_failure = 0.4
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
 	/// Whether or not we're disappearing but dramatically
@@ -40,15 +41,17 @@
 	update_appearance()
 
 /obj/structure/grille/update_appearance(updates)
-	if(QDELETED(src) || broken)
+	if(QDELETED(src))
 		return
-
 	. = ..()
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & USES_SMOOTHING))
 		QUEUE_SMOOTH(src)
 
 /obj/structure/grille/update_icon_state()
-	icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
+	if (broken)
+		icon_state = "broken[base_icon_state]"
+	else
+		icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
 	return ..()
 
 /obj/structure/grille/examine(mob/user)
@@ -90,7 +93,7 @@
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_DECONSTRUCT)
 			qdel(src)
 			return TRUE
@@ -104,7 +107,7 @@
 			if(!clear_tile(user))
 				return FALSE
 
-			var/obj/structure/window/window_path = rcd_data["[RCD_DESIGN_PATH]"]
+			var/obj/structure/window/window_path = rcd_data[RCD_DESIGN_PATH]
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
 
@@ -217,7 +220,7 @@
 		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/grille/attackby(obj/item/W, mob/user, params)
+/obj/structure/grille/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/stack/rods) && broken && do_after(user, 1 SECONDS, target = src))
 		if(shock(user, 90))
@@ -298,50 +301,42 @@
 
 /obj/structure/grille/atom_break()
 	. = ..()
-	if(!broken)
-		icon_state = "brokengrille"
-		set_density(FALSE)
-		atom_integrity = 20
-		broken = TRUE
-		rods_amount = 1
-		var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
-		transfer_fingerprints_to(dropped_rods)
+	if(broken)
+		return
+	set_density(FALSE)
+	atom_integrity = 20
+	broken = TRUE
+	rods_amount = 1
+	var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
+	transfer_fingerprints_to(dropped_rods)
+	update_appearance()
 
 /obj/structure/grille/proc/repair_grille()
-	if(broken)
-		icon_state = "grille"
-		set_density(TRUE)
-		atom_integrity = max_integrity
-		broken = FALSE
-		rods_amount = 2
-		return TRUE
-	return FALSE
+	if(!broken)
+		return FALSE
 
-// shock user with probability prb (if all connections & power are working)
-// returns 1 if shocked, 0 otherwise
+	set_density(TRUE)
+	atom_integrity = max_integrity
+	broken = FALSE
+	rods_amount = 2
+	update_appearance()
+	return TRUE
 
-/obj/structure/grille/proc/shock(mob/user, prb)
+/obj/structure/grille/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1)
 	if(!anchored || broken) // anchored/broken grilles are never connected
 		return FALSE
-	if(!prob(prb))
+	var/turf/grill_loc = get_turf(src)
+	if(grill_loc.overfloor_placed)//cant be a floor in the way!
 		return FALSE
-	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
+	var/obj/structure/cable/grill_cable = grill_loc.get_cable_node()
+	if(isnull(grill_cable))
 		return FALSE
-	var/turf/T = get_turf(src)
-	if(T.overfloor_placed)//cant be a floor in the way!
+	shock_source = grill_cable
+	if(!..())
 		return FALSE
-
-	var/obj/structure/cable/cable_node = T.get_cable_node()
-	if(isnull(cable_node))
-		return FALSE
-	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
-		return FALSE
-	if(prob(50)) // Shocking hurts the grille (to weaken monkey powersinks)
+	// Shocking hurts the grille (to weaken monkey powersinks)
+	if(prob(50))
 		take_damage(1, BURN, FIRE, sound_effect = FALSE)
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(3, 1, src)
-	sparks.start()
-
 	return TRUE
 
 /obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature)

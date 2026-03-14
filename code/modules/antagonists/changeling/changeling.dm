@@ -5,8 +5,8 @@
 	name = "\improper Changeling"
 	roundend_category = "changelings"
 	antagpanel_category = "Changeling"
-	job_rank = ROLE_CHANGELING
-	antag_moodlet = /datum/mood_event/focused
+	pref_flag = ROLE_CHANGELING
+	antag_moodlet = /datum/mood_event/ling
 	antag_hud_name = "changeling"
 	hijack_speed = 0.5
 	ui_name = "AntagInfoChangeling"
@@ -142,8 +142,11 @@
 	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	RegisterSignal(living_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fullhealed))
 	RegisterSignal(living_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	RegisterSignal(living_mob, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(new_brain))
 	RegisterSignals(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), PROC_REF(on_click_sting))
 	ADD_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
+	ADD_TRAIT(living_mob, TRAIT_BRAINLESS_CARBON, CHANGELING_TRAIT)
+	ADD_TRAIT(living_mob, TRAIT_CHANGELING_HIVEMIND, CHANGELING_TRAIT)
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
@@ -198,11 +201,32 @@
 
 	ling_hud.show_hud(ling_hud.hud_version)
 
+/datum/antagonist/changeling/proc/new_brain(mob/living/carbon/ling, obj/item/organ/new_brain)
+	SIGNAL_HANDLER
+
+	if(!istype(new_brain, /obj/item/organ/brain))
+		return
+	make_brain_decoy(ling)
+
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/living_mob = mob_override || owner.current
 	handle_clown_mutation(living_mob, removing = FALSE)
-	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
+	UnregisterSignal(living_mob, list(
+		COMSIG_MOB_LOGIN,
+		COMSIG_LIVING_LIFE,
+		COMSIG_LIVING_POST_FULLY_HEAL,
+		COMSIG_MOB_GET_STATUS_TAB_ITEMS,
+		COMSIG_MOB_MIDDLECLICKON,
+		COMSIG_MOB_ALTCLICKON,
+		COMSIG_MOB_HUD_CREATED,
+		COMSIG_CARBON_GAIN_ORGAN,
+	))
 	REMOVE_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
+	REMOVE_TRAIT(living_mob, TRAIT_BRAINLESS_CARBON, CHANGELING_TRAIT)
+	REMOVE_TRAIT(living_mob, TRAIT_CHANGELING_HIVEMIND, CHANGELING_TRAIT)
+
+	for(var/mob/eye/imaginary_friend/hivemind/hivemind_member in living_mob.imaginary_group)
+		qdel(hivemind_member)
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
@@ -219,7 +243,8 @@
 	return ..()
 
 /datum/antagonist/changeling/farewell()
-	to_chat(owner.current, span_userdanger("You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!"))
+	if(owner.current)
+		to_chat(owner.current, span_userdanger("You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!"))
 
 /*
  * Instantiate the cellular emporium for the changeling.
@@ -261,7 +286,7 @@
  * Signal proc for [COMSIG_LIVING_LIFE].
  * Handles regenerating chemicals on life ticks.
  */
-/datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick, times_fired)
+/datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)
@@ -737,7 +762,7 @@
 		return
 
 	var/mob/living/carbon/carbon_owner = owner.current
-	first_profile.dna.transfer_identity(carbon_owner, transfer_SE = TRUE)
+	first_profile.dna.copy_dna(carbon_owner.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	carbon_owner.real_name = first_profile.name
 	carbon_owner.updateappearance(mutcolor_update = TRUE)
 	carbon_owner.domutcheck()
@@ -774,7 +799,7 @@
 	user.voice = chosen_profile.voice
 	user.voice_filter = chosen_profile.voice_filter
 
-	chosen_dna.transfer_identity(user, TRUE)
+	chosen_dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
 	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
 		limb.update_limb(is_creating = TRUE)
@@ -990,16 +1015,16 @@
 	return parts.Join("<br>")
 
 /datum/antagonist/changeling/get_preview_icon()
-	var/icon/final_icon = render_preview_outfit(/datum/outfit/changeling)
-	var/icon/split_icon = render_preview_outfit(/datum/outfit/job/engineer)
+	var/datum/universal_icon/final_icon = render_preview_outfit(/datum/outfit/changeling)
+	var/datum/universal_icon/split_icon = render_preview_outfit(/datum/outfit/job/engineer)
 
-	final_icon.Shift(WEST, ICON_SIZE_X / 2)
-	final_icon.Shift(EAST, ICON_SIZE_X / 2)
+	final_icon.shift(WEST, ICON_SIZE_X / 2)
+	final_icon.shift(EAST, ICON_SIZE_X / 2)
 
-	split_icon.Shift(EAST, ICON_SIZE_X / 2)
-	split_icon.Shift(WEST, ICON_SIZE_X / 2)
+	split_icon.shift(EAST, ICON_SIZE_X / 2)
+	split_icon.shift(WEST, ICON_SIZE_X / 2)
 
-	final_icon.Blend(split_icon, ICON_OVERLAY)
+	final_icon.blend_icon(split_icon, ICON_OVERLAY)
 
 	return finish_preview_icon(final_icon)
 
@@ -1022,7 +1047,7 @@
 	name = "\improper Headslug Changeling"
 	show_in_antagpanel = FALSE
 	give_objectives = FALSE
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_SKIP_GLOBAL_LIST
 
 	genetic_points = 5
 	total_genetic_points = 5
@@ -1039,7 +1064,7 @@
 	name = "\improper Space Changeling"
 
 /datum/antagonist/changeling/space/get_preview_icon()
-	var/icon/final_icon = render_preview_outfit(/datum/outfit/changeling_space)
+	var/datum/universal_icon/final_icon = render_preview_outfit(/datum/outfit/changeling_space)
 	return finish_preview_icon(final_icon)
 
 /datum/antagonist/changeling/space/greet()

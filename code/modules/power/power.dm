@@ -177,7 +177,7 @@
 	if((amount > grid_used) && !ignore_apc && !QDELETED(local_apc.cell)) // Use from the APC's cell if there isn't enough energy from the grid.
 		apc_used = local_apc.cell.use(amount - grid_used, force = force)
 
-	if(!force && (amount < grid_used + apc_used)) // If we aren't forcing it and there isn't enough energy to supply demand, return nothing.
+	if(!force && (amount > grid_used + apc_used)) // If we aren't forcing it and there isn't enough energy to supply demand, return nothing.
 		return FALSE
 
 	// Use the grid's and APC's energy.
@@ -324,7 +324,7 @@
 
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
-/obj/machinery/power/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc

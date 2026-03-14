@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed weather from Z levels above rendering over players' UI"
-  - qol: "Multi-Z Detail setting has been renamed to Multi-Z Depth with an explanation on what it does. \"Standard\" setting has been renamed to \"No Culling\""

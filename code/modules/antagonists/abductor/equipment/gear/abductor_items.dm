@@ -2,13 +2,13 @@
 	icon = 'icons/obj/antags/abductor.dmi'
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
+	abstract_type = /obj/item/abductor
 
 /obj/item/proc/AbductorCheck(mob/user)
-	if (HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
+	if (HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
 		return TRUE
-	if (istype(user) && HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
-		return TRUE
-	to_chat(user, span_warning("You can't figure out how this works!"))
+
+	balloon_alert(user, "no idea how this works!")
 	return FALSE
 
 /obj/item/abductor/proc/ScientistCheck(mob/user)
@@ -261,9 +261,23 @@
 	inhand_icon_state = "shrink_ray"
 	icon_state = "shrink_ray"
 	automatic_charge_overlays = FALSE
-	fire_delay = 30
+	fire_delay = 3 SECONDS
 	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
+
+/obj/item/gun/energy/shrink_ray/suicide_act(mob/living/user)
+	. = ..()
+	user.visible_message(span_suicide("[user] points [src] at [user.p_their()] head, it looks like [user.p_theyre()] going to commit suicide!"))
+	// we want an animation, so lets manually handle suicide.
+	addtimer(CALLBACK(src, PROC_REF(shrink_death), user), 0)
+	return MANUAL_SUICIDE
+
+/obj/item/gun/energy/shrink_ray/proc/shrink_death(mob/living/user)
+	var/shrink = user.transform.Scale(0.1,0.1)
+	animate(user, 30 SECONDS, transform=shrink)
+	// Have to wait until the animate is done
+	sleep(30 SECONDS)
+	user.gib(DROP_ALL_REMAINS)
 
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
@@ -274,10 +288,10 @@
 <br>
 1.Acquire fresh specimen.<br>
 2.Put the specimen on operating table.<br>
-3.Apply surgical drapes, preparing for experimental dissection.<br>
+3.Apply surgical drapes, preparing for experimental organ manipulation.<br>
 4.Apply scalpel to specimen's torso.<br>
-5.Clamp bleeders on specimen's torso with a hemostat.<br>
-6.Retract skin of specimen's torso with a retractor.<br>
+5.Retract skin of specimen's torso with a retractor.<br>
+6.Clamp bleeders on specimen's torso with a hemostat.<br>
 7.Apply scalpel again to specimen's torso.<br>
 8.Search through the specimen's torso with your hands to remove any superfluous organs.<br>
 9.Insert replacement gland (Retrieve one from gland storage).<br>
@@ -286,7 +300,20 @@
 12.Choose one of the machine options. The target will be analyzed and teleported to the selected drop-off point.<br>
 13.You will receive one supply credit, and the subject will be counted towards your quota.<br>
 <br>
-Congratulations! You are now trained for invasive xenobiology research!"}
+Congratulations! You are now trained for invasive xenobiology research!<br>
+<br>
+Addendum for more exotic biomechanical specimens:<br>
+1.Acquire less conventional surgical instruments from your collaborator.<br>
+2.Apply surgical drapes, preparing for hardware manipulation.<br>
+3.Use screwdriver to unscrew specimen's shell.<br>
+4.Open hatch with your hands.<br>
+5.Use wrench to unwrench bolts of specimen's torso.<br>
+6.Use multitool to prepare the mechanical parts for removal.<br>
+7.Remove circulatory mechanism with hemostat.<br>
+8.Insert replacement gland (Retrieve one from gland storage).<br>
+9.Use wrench to secure bolts again.<br>
+10.Use screwdriver to resecure specimen's shell.<br>
+Return to step 11 of normal process."}
 
 /obj/item/paper/guides/antag/abductor/click_alt()
 	return CLICK_ACTION_BLOCKING //otherwise it would fold into a paperplane.
@@ -343,7 +370,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	affect_cyborg = is_stun_mode
 	log_stun_attack = is_stun_mode // other modes have their own log entries.
-	stun_animation = is_stun_or_sleep
 	on_stun_sound = is_stun_or_sleep ? 'sound/items/weapons/egloves.ogg' : null
 
 	to_chat(usr, span_notice("You switch the baton to [txt] mode."))
@@ -365,16 +391,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			icon_state = "wonderprodProbe"
 			inhand_icon_state = "wonderprodProbe"
 
-/obj/item/melee/baton/abductor/baton_attack(mob/target, mob/living/user, modifiers)
-	if(!AbductorCheck(user))
-		return BATON_ATTACK_DONE
-	return ..()
+/obj/item/melee/baton/abductor/try_stun(mob/living/target, mob/living/user, harmbatonning)
+	return AbductorCheck(user) && ..()
 
-/obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override, clumsy)
 	switch (mode)
 		if(BATON_STUN)
 			target.visible_message(span_danger("[user] stuns [target] with [src]!"),
-				span_userdanger("[user] stuns you with [src]!"))
+				span_userdanger("[user] stuns you with [src]!"), visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
 			target.set_jitter_if_lower(40 SECONDS)
 			target.set_confusion_if_lower(10 SECONDS)
 			target.set_stutter_if_lower(16 SECONDS)
@@ -432,8 +456,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
 			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())
 				if(!carbon_victim.handcuffed)
-					carbon_victim.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(carbon_victim))
-					carbon_victim.update_handcuffed()
+					carbon_victim.set_handcuffed(new /obj/item/restraints/handcuffs/energy(carbon_victim))
 					to_chat(user, span_notice("You restrain [carbon_victim]."))
 					log_combat(user, carbon_victim, "handcuffed")
 			else
@@ -469,22 +492,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
 	icon_state = "cuff" // Needs sprite
-	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	breakouttime = 45 SECONDS
-	trashtype = /obj/item/restraints/handcuffs/energy/used
 	flags_1 = NONE
 
-/obj/item/restraints/handcuffs/energy/used
-	item_flags = DROPDEL
-
-/obj/item/restraints/handcuffs/energy/used/dropped(mob/user)
-	user.visible_message(span_danger("[user]'s [name] breaks in a discharge of energy!"), \
-							span_userdanger("[user]'s [name] breaks in a discharge of energy!"))
-	var/datum/effect_system/spark_spread/sparks = new
-	sparks.set_up(4,0,user.loc)
-	sparks.start()
+/obj/item/restraints/handcuffs/energy/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
+	wearer.visible_message(span_danger("[wearer]'s [name] breaks in a discharge of energy!"), span_userdanger("[wearer]'s [name] breaks in a discharge of energy!"))
+	do_sparks(4, FALSE, wearer.loc)
+	qdel(src)
 
 /obj/item/melee/baton/abductor/examine(mob/user)
 	. = ..()
@@ -508,7 +523,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection)
 	make_syndie()
 
 // Stops humans from disassembling abductor headsets.

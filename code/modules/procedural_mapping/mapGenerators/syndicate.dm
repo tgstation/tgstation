@@ -6,7 +6,7 @@
 
 /datum/map_generator_module/border/syndie_walls
 	spawnableAtoms = list()
-	spawnableTurfs = list(/turf/closed/wall/r_wall/syndicate = 100)
+	spawnableTurfs = list(/turf/closed/wall/r_wall/plastitanium/syndicate = 100)
 
 
 /datum/map_generator_module/syndie_furniture

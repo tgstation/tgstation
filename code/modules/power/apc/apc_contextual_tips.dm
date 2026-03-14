@@ -20,7 +20,7 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Open the cover"
 		else if ((opened == APC_COVER_OPENED && has_electronics == APC_ELECTRONICS_SECURED) && !(machine_stat & BROKEN))
 			context[SCREENTIP_CONTEXT_LMB] = "Close and lock"
-		else if (machine_stat & BROKEN|(machine_stat & EMAGGED| malfhack))
+		else if (malfhack || (machine_stat & (BROKEN|EMAGGED)))
 			context[SCREENTIP_CONTEXT_LMB] = "Remove damaged board"
 		else
 			context[SCREENTIP_CONTEXT_LMB] = "Remove board"

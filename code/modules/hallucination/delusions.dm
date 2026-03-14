@@ -56,13 +56,13 @@
 
 /datum/hallucination/delusion/Destroy()
 	if(!QDELETED(hallucinator) && LAZYLEN(delusions))
-		hallucinator.client?.images -= flatten_list(delusions)
+		hallucinator.client?.images -= assoc_to_values(delusions)
 		LAZYNULL(delusions)
 
 	return ..()
 
 /datum/hallucination/delusion/start()
-	if(!hallucinator.client)
+	if(!hallucinator.client || hallucinator.stat >= UNCONSCIOUS)
 		return FALSE
 
 	feedback_details += "Delusion: [delusion_name]"

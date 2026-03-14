@@ -17,6 +17,7 @@
 	anchored = TRUE
 	buckle_lying = 0
 	pass_flags_self = PASSTABLE | LETPASSTHROW
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 	/// is the bonfire lit?
 	var/burning = FALSE
 	/// icon for the bonfire while on. for a softer more burning embers icon, use "bonfire_warm"
@@ -39,7 +40,7 @@
 	QDEL_NULL(burning_loop)
 	. = ..()
 
-/obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, params)
+/obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(used_item, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/rods = used_item
 		var/choice = tgui_alert(user, "What would you like to construct?", "Bonfire", list("Stake","Grill"))
@@ -60,7 +61,7 @@
 				add_overlay("bonfire_grill")
 			else
 				return ..()
-	if(used_item.get_temperature())
+	if(used_item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		start_burning()
 	if(grill)
 		if(istype(used_item, /obj/item/melee/roastingstick))
@@ -68,7 +69,6 @@
 		if(!user.combat_mode && !(used_item.item_flags & ABSTRACT))
 			if(user.temporarilyRemoveItemFromInventory(used_item))
 				used_item.forceMove(get_turf(src))
-				var/list/modifiers = params2list(params)
 				//Center the icon where the user clicked.
 				if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 					return
@@ -91,7 +91,7 @@
 			bonfire_log.pixel_x += rand(1,4)
 			bonfire_log.pixel_y += rand(1,4)
 		if(can_buckle || grill)
-			new /obj/item/stack/rods(loc, 1)
+			new /obj/item/stack/rods(loc)
 		qdel(src)
 		return
 

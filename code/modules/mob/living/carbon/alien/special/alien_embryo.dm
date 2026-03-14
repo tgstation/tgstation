@@ -25,7 +25,7 @@
 		if(prob(10))
 			attempt_grow(gib_on_success = FALSE)
 
-/obj/item/organ/body_egg/alien_embryo/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/body_egg/alien_embryo/on_life(seconds_per_tick)
 	. = ..()
 	if(QDELETED(src) || QDELETED(owner))
 		return
@@ -52,10 +52,10 @@
 			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(owner, span_danger("Your stomach hurts."))
 				if(prob(20))
-					owner.adjustToxLoss(1)
+					owner.adjust_tox_loss(1)
 		if(6)
 			to_chat(owner, span_danger("You feel something tearing its way out of your chest..."))
-			owner.adjustToxLoss(5 * seconds_per_tick) // Why is this [TOX]?
+			owner.adjust_tox_loss(5 * seconds_per_tick) // Why is this [TOX]?
 
 /// Controls Xenomorph Embryo growth. If embryo is fully grown (or overgrown), stop the proc. If not, increase the stage by one and if it's not fully grown (stage 6), add a timer to do this proc again after however long the growth time variable is.
 /obj/item/organ/body_egg/alien_embryo/proc/advance_embryo_stage()
@@ -70,19 +70,15 @@
 				slowdown *= 2 // spaceacillin doubles the time it takes to grow
 			if(owner.has_status_effect(/datum/status_effect/nest_sustenance))
 				slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
+			if(HAS_TRAIT(owner, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
+				slowdown *= 0.5 //terrible immune system = doubled parasite growth
 
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
-		for(var/datum/surgery/operations as anything in owner.surgeries)
-			if(operations.location != BODY_ZONE_CHEST)
-				continue
-			if(!ispath(operations.steps[operations.status], /datum/surgery_step/manipulate_organs/internal))
-				continue
-			attempt_grow(gib_on_success = FALSE)
-			return
-		attempt_grow()
+		// If we are mid surgery we won't gib the mob, isn't that neat?
+		attempt_grow(gib_on_success = !LIMB_HAS_SURGERY_STATE(bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
 
 /// Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
 /obj/item/organ/body_egg/alien_embryo/proc/attempt_grow(gib_on_success = TRUE)
@@ -141,7 +137,7 @@
 	else
 		new_xeno.visible_message(span_danger("[new_xeno] wriggles out of [owner]!"), span_userdanger("You exit [owner], your previous host."))
 		owner.log_message("had an alien larva within them escape (without being gibbed).", LOG_ATTACK, log_globally = FALSE)
-		owner.adjustBruteLoss(40)
+		owner.adjust_brute_loss(40)
 		owner.cut_overlay(overlay)
 	qdel(src)
 
@@ -161,7 +157,9 @@ Des: Removes all images from the mob infected by this embryo
 ----------------------------------------*/
 /obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages()
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
-		for(var/image/I in alien.client?.images)
+		var/list/image/to_remove = list()
+		for(var/image/client_image in alien.client?.images)
 			var/searchfor = "infected"
-			if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
-				qdel(I)
+			if(client_image.loc == owner && findtext(client_image.icon_state, searchfor, 1, length(searchfor) + 1))
+				to_remove += client_image
+		alien.client?.images -= to_remove

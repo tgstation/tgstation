@@ -24,6 +24,7 @@
 	gun = new(src)
 	battery = new(src)
 	START_PROCESSING(SSobj, src)
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/minigunpack/Destroy()
 	if(!QDELETED(gun))
@@ -53,7 +54,7 @@
 	else
 		..()
 
-/obj/item/minigunpack/attackby(obj/item/W, mob/user, params)
+/obj/item/minigunpack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
 		user.dropItemToGround(gun, TRUE)
 	else
@@ -63,15 +64,6 @@
 	. = ..()
 	if(armed)
 		user.dropItemToGround(gun, TRUE)
-
-/obj/item/minigunpack/mouse_drop_dragged(atom/over_object, mob/user)
-	if(armed)
-		return
-
-	if(iscarbon(user))
-		if(istype(over_object, /atom/movable/screen/inventory/hand))
-			var/atom/movable/screen/inventory/hand/H = over_object
-			user.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/minigunpack/update_icon_state()
 	icon_state = armed ? "notholstered" : "holstered"
@@ -99,6 +91,7 @@
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
+	spawn_blacklisted = TRUE
 	custom_materials = null
 	weapon_weight = WEAPON_HEAVY
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/minigun)
@@ -135,7 +128,9 @@
 	if(ammo_pack && ammo_pack.overheat >= ammo_pack.overheat_max)
 		to_chat(user, span_warning("The gun's heat sensor locked the trigger to prevent lens damage!"))
 		return
-	..()
+	. = ..()
+	if(!.)
+		return
 	ammo_pack.overheat++
 	if(ammo_pack.battery)
 		var/transferred = ammo_pack.battery.use(cell.maxcharge - cell.charge, force = TRUE)

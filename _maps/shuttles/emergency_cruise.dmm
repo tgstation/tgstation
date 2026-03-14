@@ -314,6 +314,7 @@
 /obj/effect/turf_decal/bot_white{
 	color = "#52B4E9"
 	},
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 1
 	},
@@ -384,7 +385,7 @@
 	pixel_x = 4;
 	pixel_y = -1
 	},
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -558,22 +559,6 @@
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
-/area/shuttle/escape)
-"hB" = (
-/obj/structure/table/wood/shuttle_bar{
-	boot_dir = 4
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/turf/open/floor/wood/large,
 /area/shuttle/escape)
 "hG" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -891,7 +876,7 @@
 /area/shuttle/escape)
 "lz" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/stack/medical/gauze/twelve{
+/obj/item/stack/medical/wrap/gauze/twelve{
 	pixel_x = -2;
 	pixel_y = 6
 	},
@@ -948,7 +933,7 @@
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
 	},
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -959,6 +944,22 @@
 	},
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron/white,
+/area/shuttle/escape)
+"mr" = (
+/obj/structure/table/wood/shuttle_bar{
+	boot_dir = 4
+	},
+/obj/item/rag{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
 /area/shuttle/escape)
 "ms" = (
 /obj/structure/table/reinforced,
@@ -1244,6 +1245,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 4
 	},
@@ -2054,7 +2056,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "Cu" = (
@@ -2327,10 +2329,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape/brig)
 "Fq" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32;
-	pixel_y = 32
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "FC" = (
@@ -3196,14 +3195,6 @@
 /obj/effect/turf_decal/tile/neutral/half,
 /turf/open/floor/iron/edge,
 /area/shuttle/escape)
-"Ra" = (
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor5"
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "Rz" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -3391,6 +3382,14 @@
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 1
 	},
+/area/shuttle/escape)
+"Uf" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil{
+	icon_state = "floor5"
+	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "Um" = (
 /obj/structure/sink/directional/west,
@@ -3952,7 +3951,7 @@ qt
 qt
 QQ
 jt
-Ra
+Uf
 vb
 Td
 zP
@@ -3966,7 +3965,7 @@ kd
 jt
 nb
 BD
-hB
+mr
 XP
 Jj
 aD
@@ -4348,7 +4347,7 @@ bP
 bj
 QI
 hp
-Fq
+La
 nk
 gv
 Ks
@@ -4395,7 +4394,7 @@ jt
 jt
 jt
 uV
-La
+Fq
 nk
 fI
 uu
@@ -4641,9 +4640,9 @@ Ux
 En
 dE
 uV
+jt
 en
-en
-en
+jt
 NF
 jt
 vw

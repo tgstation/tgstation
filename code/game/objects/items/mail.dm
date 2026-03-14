@@ -98,7 +98,7 @@
 		postmark_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		. += postmark_image
 
-/obj/item/mail/attackby(obj/item/W, mob/user, params)
+/obj/item/mail/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	// Destination tagging
 	if(istype(W, /obj/item/dest_tagger))
 		var/obj/item/dest_tagger/destination_tag = W
@@ -196,6 +196,10 @@
 			if(LAZYLEN(quirk.mail_goodies))
 				var/quirk_goodie = pick(quirk.mail_goodies)
 				goodies[quirk_goodie] = 5
+
+		if(LAZYLEN(GLOB.holiday_mail))
+			var/holiday_goodie = pick(GLOB.holiday_mail)
+			goodies[holiday_goodie] = 5
 
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)
@@ -345,18 +349,7 @@
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
 	custom_premium_price = PAYCHECK_LOWER
-
-/obj/item/storage/bag/mail/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 42
-	atom_storage.max_slots = 21
-	atom_storage.numerical_stacking = FALSE
-	atom_storage.set_holdable(list(
-		/obj/item/mail,
-		/obj/item/delivery/small,
-		/obj/item/paper
-	))
+	storage_type = /datum/storage/bag/mail
 
 /obj/item/paper/fluff/junkmail_redpill
 	name = "smudged paper"
@@ -407,10 +400,18 @@
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
 	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
-		if(user.put_in_hands(stuff) && armed)
-			var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
-			log_bomber(user, "opened armed mail made by [whomst], activating", stuff)
-			INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
+		if(!armed)
+			continue
+		var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
+		log_bomber(user, "opened armed mail made by [whomst], activating", stuff)
+
+		if(SEND_SIGNAL(stuff, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, user, src) & COMPONENT_TRAITOR_MAIL_HANDLED)
+			continue
+
+		if(!user.put_in_hands(stuff))
+			continue
+
+		INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
 	qdel(src)
 	return TRUE
 
@@ -425,20 +426,18 @@
 		playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
 		armed = FALSE
 		return TRUE
-	else
-		balloon_alert(user, "tinkering with something...")
+	balloon_alert(user, "tinkering with something...")
 
-		if(!do_after(user, 2 SECONDS, target = src))
-			after_unwrap(user)
-			return FALSE
-		if(prob(50))
-			balloon_alert(user, "disarmed something...?")
-			playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
-			armed = FALSE
-			return TRUE
-		else
-			after_unwrap(user)
-			return TRUE
+	if(!do_after(user, 2 SECONDS, target = src))
+		after_unwrap(user)
+		return FALSE
+	if(prob(50))
+		balloon_alert(user, "disarmed something...?")
+		playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
+		armed = FALSE
+		return TRUE
+	after_unwrap(user)
+	return TRUE
 
 ///Generic mail used in the mail strike shuttle loan event
 /obj/item/mail/mail_strike
@@ -495,12 +494,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "mail_counterfeit_device"
-
-/obj/item/storage/mail_counterfeit_device/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 1
-	atom_storage.allow_big_nesting = TRUE
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	storage_type = /datum/storage/mail_counterfeit
 
 /obj/item/storage/mail_counterfeit_device/examine_more(mob/user)
 	. = ..()
@@ -572,19 +566,17 @@
 /// Unobtainable item mostly for (b)admin purposes.
 /obj/item/storage/mail_counterfeit_device/advanced
 	name = "GLA-MACRO mail counterfeit device"
+	storage_type = /datum/storage/mail_counterfeit/advanced
 
 /obj/item/storage/mail_counterfeit_device/advanced/Initialize(mapload)
 	. = ..()
 	desc += " This model is highly advanced and capable of compressing items, making mail's storage space comparable to standard backpack."
-	create_storage(max_slots = 21, max_total_storage = 21)
-	atom_storage.allow_big_nesting = TRUE
 
 /// Unobtainable item mostly for (b)admin purposes.
 /obj/item/storage/mail_counterfeit_device/bluespace
 	name = "GLA-ULTRA mail counterfeit device"
+	storage_type = /datum/storage/mail_counterfeit/bluespace
 
 /obj/item/storage/mail_counterfeit_device/bluespace/Initialize(mapload)
 	. = ..()
 	desc += " This model is the most advanced and capable of performing crazy bluespace compressions, making mail's storage space comparable to bluespace backpack."
-	create_storage(max_specific_storage = WEIGHT_CLASS_GIGANTIC, max_total_storage = 35, max_slots = 30)
-	atom_storage.allow_big_nesting = TRUE

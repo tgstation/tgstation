@@ -35,7 +35,7 @@
 		if(WIRE_AI) // Pulse to pick a new AI.
 			if(!R.emagged)
 				var/new_ai
-				var/is_a_syndi_borg = (ROLE_SYNDICATE in R.faction)
+				var/is_a_syndi_borg = R.has_faction(ROLE_SYNDICATE)
 				if(user)
 					new_ai = select_active_ai(user, R.z, !is_a_syndi_borg, is_a_syndi_borg)
 				else
@@ -79,7 +79,7 @@
 				if(R.shell)
 					R.undeploy()
 				R.set_connected_ai(null)
-			R.logevent("AI connection fault [mend?"cleared":"detected"]")
+			R.logevent("AI connection fault [mend ? "cleared" : "detected"]")
 		if(WIRE_LAWSYNC) // Cut the law wire, and the borg will no longer receive law updates from its AI. Repair and it will re-sync.
 			if(mend)
 				if(!R.emagged)
@@ -91,11 +91,12 @@
 			R.logevent("Lawsync Module fault [mend ? "cleared" : "detected"]")
 		if (WIRE_CAMERA) // Disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
-				R.builtInCamera.camera_enabled = mend
+				var/fixing_camera = !mend
+				R.builtInCamera.camera_enabled = fixing_camera
 				R.builtInCamera.toggle_cam(usr, 0)
 				R.visible_message(span_notice("[R]'s camera lens focuses loudly."), span_notice("Your camera lens focuses loudly."))
-				R.logevent("Camera Module fault [mend?"cleared":"detected"]")
-				log_silicon("[key_name(usr)] [mend ? "enabled" : "disabled"] [key_name(R)]'s camera via wire")
+				R.logevent("Camera Module fault [fixing_camera ? "cleared" : "detected"]")
+				log_silicon("[key_name(usr)] [fixing_camera ? "enabled" : "disabled"] [key_name(R)]'s camera via wire")
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)
 			R.logevent("Motor Controller fault [mend?"cleared":"detected"]")

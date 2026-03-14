@@ -7,10 +7,12 @@
 	var/charges
 	/// The inventory slot the object must be located at in order to activate
 	var/inventory_flags
-	/// The callback invoked when we have been drained a antimagic charge
-	var/datum/callback/drain_antimagic
+	/// The callback invoked when we block magic
+	var/datum/callback/block_magic
 	/// The callback invoked when twe have been depleted of all charges
 	var/datum/callback/expiration
+	/// Callback to invoke to see if we can block magic
+	var/datum/callback/check_blocking
 	/// Whether we should, on equipping, alert the caster that this item can block any of their spells
 	/// This changes between true and false on equip and drop, don't set it outright to something
 	var/alert_caster_on_equip = TRUE
@@ -25,8 +27,9 @@
  * * antimagic_flags (optional) A bitflag with the types of magic resistance on the object
  * * charges (optional) The amount of times the object can protect the user from magic
  * * inventory_flags (optional) The inventory slot the object must be located at in order to activate
- * * drain_antimagic (optional) The proc that is triggered when an object has been drained a antimagic charge
+ * * block_magic (optional) The proc that is triggered when an object blocks magic
  * * expiration (optional) The proc that is triggered when the object is depleted of charges
+ * * check_blocking (optional) The proc that is triggered to check if we can block magic
  * *
  * antimagic bitflags: (see code/__DEFINES/magic.dm)
  * * MAGIC_RESISTANCE - Default magic resistance that blocks normal magic (wizard, spells, staffs)
@@ -36,11 +39,11 @@
 /datum/component/anti_magic/Initialize(
 		antimagic_flags = MAGIC_RESISTANCE,
 		charges = INFINITY,
-		inventory_flags = ~ITEM_SLOT_BACKPACK, // items in a backpack won't activate, anywhere else is fine
-		datum/callback/drain_antimagic,
+		inventory_flags = ALL,
+		datum/callback/block_magic,
 		datum/callback/expiration,
+		datum/callback/check_blocking,
 	)
-
 
 	var/atom/movable/movable = parent
 	if(!istype(movable))
@@ -50,6 +53,7 @@
 	if(isitem(movable))
 		RegisterSignal(movable, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 		RegisterSignal(movable, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+		RegisterSignal(movable, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(get_examine_tags))
 		RegisterSignals(movable, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_ATOM), PROC_REF(on_attack))
 		compatible = TRUE
 	else if(ismob(movable))
@@ -67,11 +71,12 @@
 	src.antimagic_flags = antimagic_flags
 	src.charges = charges
 	src.inventory_flags = inventory_flags
-	src.drain_antimagic = drain_antimagic
+	src.block_magic = block_magic
 	src.expiration = expiration
+	src.check_blocking = check_blocking
 
 /datum/component/anti_magic/Destroy(force)
-	drain_antimagic = null
+	block_magic = null
 	expiration = null
 	return ..()
 
@@ -89,6 +94,20 @@
 /datum/component/anti_magic/proc/on_unbuckle(atom/movable/source, mob/living/bucklee)
 	SIGNAL_HANDLER
 	unregister_antimagic_signals(bucklee)
+
+/datum/component/anti_magic/proc/get_examine_tags(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(antimagic_flags == ALL_MAGIC_RESISTANCE)
+		examine_list["magic-proof"] = "It is thoroughly shielded against all known forms of magic."
+		return
+
+	if(antimagic_flags & MAGIC_RESISTANCE)
+		examine_list["warded"] = "It possesses a general resistance to regular spells and magic."
+	if(antimagic_flags & MAGIC_RESISTANCE_MIND)
+		examine_list["telepathy-proof"] = "It appears to be insulated against telepathic or mental influence."
+	if(antimagic_flags & MAGIC_RESISTANCE_HOLY)
+		examine_list["blessed"] = "It is protected by a divine shield against unholy and dark forms of magic."
 
 /datum/component/anti_magic/proc/on_equip(atom/movable/source, mob/equipper, slot)
 	SIGNAL_HANDLER
@@ -124,6 +143,9 @@
 /datum/component/anti_magic/proc/block_receiving_magic(mob/living/carbon/source, casted_magic_flags, charge_cost, list/antimagic_sources)
 	SIGNAL_HANDLER
 
+	if(check_blocking && !check_blocking.Invoke())
+		return NONE
+
 	// We do not block this type of magic, good day
 	if(!(casted_magic_flags & antimagic_flags))
 		return NONE
@@ -135,8 +157,8 @@
 	// Block success! Add this parent to the list of antimagic sources
 	antimagic_sources += parent
 
+	block_magic?.Invoke(source, parent)
 	if((charges != INFINITY) && charge_cost > 0)
-		drain_antimagic?.Invoke(source, parent)
 		charges -= charge_cost
 		if(charges <= 0)
 			expiration?.Invoke(source, parent)

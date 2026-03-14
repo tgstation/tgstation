@@ -161,7 +161,7 @@
 	//we set drop to false to manually call it with an allowlist
 	dump_inventory_contents(list(occupant))
 
-/obj/machinery/dna_infuser/attackby(obj/item/used, mob/user, params)
+/obj/machinery/dna_infuser/attackby(obj/item/used, mob/user, list/modifiers, list/attack_modifiers)
 	if(infusing)
 		return
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, used))//sent icon_state is irrelevant...
@@ -226,10 +226,10 @@
 /obj/machinery/dna_infuser/click_alt(mob/user)
 	if(infusing)
 		balloon_alert(user, "not while it's on!")
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!infusing_from)
 		balloon_alert(user, "no sample to eject!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "ejected sample")
 	infusing_from.forceMove(get_turf(src))
 	infusing_from = null

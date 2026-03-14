@@ -52,14 +52,6 @@
 /datum/action/cooldown/spell/touch/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return !!attached_hand
 
-/datum/action/cooldown/spell/touch/set_statpanel_format()
-	. = ..()
-	if(!islist(.))
-		return
-
-	if(attached_hand)
-		.[PANEL_DISPLAY_STATUS] = "ACTIVE"
-
 /datum/action/cooldown/spell/touch/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
@@ -169,7 +161,7 @@
  *
  * When our hand hits an atom, we can cast do_hand_hit() on them.
  */
-/datum/action/cooldown/spell/touch/proc/on_hand_hit(datum/source, mob/living/caster, atom/target, click_parameters)
+/datum/action/cooldown/spell/touch/proc/on_hand_hit(datum/source, mob/living/caster, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE) // DEFINITELY don't put effects here, put them in cast_on_hand_hit
 
@@ -183,7 +175,7 @@
  *
  * When our hand hits an atom, we can cast do_hand_hit() on them.
  */
-/datum/action/cooldown/spell/touch/proc/on_hand_hit_secondary(datum/source, mob/living/caster, atom/target, click_parameters)
+/datum/action/cooldown/spell/touch/proc/on_hand_hit_secondary(datum/source, mob/living/caster, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE)
 

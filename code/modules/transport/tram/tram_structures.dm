@@ -163,7 +163,7 @@
 		update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/tram/attackby_secondary(obj/item/tool, mob/user, params)
+/obj/structure/tram/attackby_secondary(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	switch(state)
 		if(TRAM_SCREWED_TO_FRAME)
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
@@ -218,28 +218,10 @@
 		for(var/i in 1 to mineral_amount)
 			new mineral(loc)
 
-/obj/structure/tram/attackby(obj/item/item, mob/user, params)
-	. = ..()
-
-	if(istype(item, /obj/item/wallframe/tram))
-		try_wallmount(item, user)
-
-/obj/structure/tram/proc/try_wallmount(obj/item/wallmount, mob/user)
-	if(!istype(wallmount, /obj/item/wallframe/tram))
-		return
-
-	var/obj/item/wallframe/frame = wallmount
-	if(frame.try_build(src, user))
-		frame.attach(src, user)
-
-	return
-
 /*
  * Other misc tramwall types
  */
-
 /obj/structure/tram/alt
-
 
 /obj/structure/tram/alt/titanium
 	name = "solid tram"
@@ -353,7 +335,7 @@
 	/// The last time a radiation pulse was performed
 	var/last_event = 0
 
-/obj/structure/tram/alt/uranium/attackby(obj/item/W, mob/user, params)
+/obj/structure/tram/alt/uranium/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	radiate()
 	return ..()
 
@@ -423,7 +405,7 @@
 	icon_state = "bamboo_wall-0"
 	base_icon_state = "wall"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_WALLS  + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BAMBOO_WALLS
 	mineral = /obj/item/stack/sheet/mineral/bamboo
 	tram_wall_type = /obj/structure/tram/alt/bamboo
@@ -485,7 +467,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/tram/spoiler/LateInitialize()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(set_spoiler))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(set_spoiler))
 
 /obj/structure/tram/spoiler/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -608,22 +590,27 @@
 /obj/structure/chair/sofa/bench/tram
 	name = "bench"
 	desc = "Perfectly designed to be comfortable to sit on, and hellish to sleep on."
-	icon_state = "bench_middle"
+	icon_state = "/obj/structure/chair/sofa/bench/tram"
+	post_init_icon_state = "bench_middle"
 	greyscale_config = /datum/greyscale_config/bench_middle
 	greyscale_colors = COLOR_TRAM_BLUE
 
 /obj/structure/chair/sofa/bench/tram/left
-	icon_state = "bench_left"
+	icon_state = "/obj/structure/chair/sofa/bench/tram/left"
+	post_init_icon_state = "bench_left"
 	greyscale_config = /datum/greyscale_config/bench_left
 
 /obj/structure/chair/sofa/bench/tram/right
-	icon_state = "bench_right"
+	icon_state = "/obj/structure/chair/sofa/bench/tram/right"
+	post_init_icon_state = "bench_right"
 	greyscale_config = /datum/greyscale_config/bench_right
 
 /obj/structure/chair/sofa/bench/tram/corner
-	icon_state = "bench_corner"
+	icon_state = "/obj/structure/chair/sofa/bench/tram/corner"
+	post_init_icon_state = "bench_corner"
 	greyscale_config = /datum/greyscale_config/bench_corner
 
 /obj/structure/chair/sofa/bench/tram/solo
-	icon_state = "bench_solo"
+	icon_state = "/obj/structure/chair/sofa/bench/tram/solo"
+	post_init_icon_state = "bench_solo"
 	greyscale_config = /datum/greyscale_config/bench_solo

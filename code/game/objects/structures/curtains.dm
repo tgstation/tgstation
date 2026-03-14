@@ -12,6 +12,7 @@
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	/// used in making the icon state
 	var/icon_type = "bathroom"
 	var/open = TRUE
@@ -22,7 +23,8 @@
 	// see-through curtains should let emissives shine through
 	if(!opaque_closed)
 		blocks_emissive = EMISSIVE_BLOCK_NONE
-	return ..()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_INVERTED_DEMOLITION, INNATE_TRAIT)
 
 /obj/structure/curtain/proc/toggle()
 	open = !open
@@ -42,7 +44,7 @@
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
-		color = input(user,"","Choose Color",color) as color
+		color = tgui_color_picker(user, "", "Choose Color", color)
 	else
 		return ..()
 
@@ -75,7 +77,7 @@
 /obj/structure/curtain/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/cloth (loc, 2)
 	new /obj/item/stack/sheet/plastic (loc, 2)
-	new /obj/item/stack/rods (loc, 1)
+	new /obj/item/stack/rods (loc)
 
 /obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -106,10 +108,11 @@
 	color = null
 	alpha = 255
 	opaque_closed = TRUE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/curtain/cloth/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/cloth (loc, 4)
-	new /obj/item/stack/rods (loc, 1)
+	new /obj/item/stack/rods (loc)
 
 /obj/structure/curtain/cloth/fancy
 	icon_type = "cur_fancy"

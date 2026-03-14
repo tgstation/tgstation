@@ -15,7 +15,7 @@
 	visibility_flags = HIDDEN_PANDEMIC
 	bypasses_immunity = TRUE
 
-/datum/disease/adrenal_crisis/stage_act(seconds_per_tick, times_fired)
+/datum/disease/adrenal_crisis/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

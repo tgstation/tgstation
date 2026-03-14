@@ -7,9 +7,9 @@ const Z_INDEX_STAMP_PREVIEW = 2;
 export function Stamp(props) {
   const { activeStamp, sprite, x, y, rotation, opacity, yOffset = 0 } = props;
   const stamp_transform = {
-    left: x + 'px',
-    top: y + yOffset + 'px',
-    transform: 'rotate(' + rotation + 'deg)',
+    left: `${x}px`,
+    top: `${y + yOffset}px`,
+    transform: `rotate(${rotation}deg)`,
     opacity: opacity || 1.0,
     zIndex: activeStamp ? Z_INDEX_STAMP_PREVIEW : Z_INDEX_STAMP,
   };

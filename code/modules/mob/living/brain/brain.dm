@@ -9,7 +9,7 @@
 /mob/living/brain/Initialize(mapload)
 	. = ..()
 	create_dna(src)
-	stored_dna.initialize_dna(random_blood_type())
+	stored_dna.initialize_dna(random_human_blood_type())
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
 		OB.brainmob = src
@@ -58,10 +58,10 @@
 	return
 
 /mob/living/brain/get_eye_protection()//no eyes
-	return 2
+	return FLASH_PROTECTION_WELDER
 
-/mob/living/brain/get_ear_protection()//no ears
-	return 2
+/mob/living/brain/get_ear_protection(ignore_deafness = FALSE)
+	return ..() + EAR_PROTECTION_HEAVY
 
 /mob/living/brain/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	return // no eyes, no flashing

@@ -1,6 +1,65 @@
 #ifdef REFERENCE_TRACKING
 #define REFSEARCH_RECURSE_LIMIT 64
 
+#ifdef FAST_REFERENCE_TRACKING
+// typecache of types that almost certainly have no refs, and thus can be safely skipped when finding references
+GLOBAL_ALIST_INIT(reftracker_skip_typecache, init_reftracker_skip_typecache())
+// empty alist we swap with GLOB.reftracker_skip_typecache whenever someone calls toggle_fast_reftracking
+GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
+
+/proc/toggle_fast_reftracking()
+	var/alist/a = GLOB.reftracker_skip_typecache
+	var/alist/b = GLOB.reftracker_skip_typecache_b
+	GLOB.reftracker_skip_typecache = b
+	GLOB.reftracker_skip_typecache_b = a
+
+/proc/init_reftracker_skip_typecache()
+	. = alist()
+	for(var/base_type in list(
+		/icon,
+		/matrix,
+		/regex,
+		/atom/movable/mirage_holder,
+		/atom/movable/render_step/emissive_blocker,
+		/datum/armor,
+		/datum/asset_cache_item,
+		/datum/book_info,
+		/datum/card,
+		/datum/chat_payload,
+		/datum/comm_log_entry,
+		/datum/gas_mixture,
+		/datum/greyscale_layer,
+		/datum/icon_transformer,
+		/datum/instrument_key,
+		/datum/lighting_object, // only contains turf and MA refs
+		/datum/movespeed_modifier,
+		/datum/painting,
+		/datum/paper_input,
+		/datum/physiology,
+		/datum/plant_gene/reagent,
+		/datum/qdel_item,
+		/datum/stack_recipe,
+		/datum/tlv,
+		/datum/universal_icon,
+		/datum/weakref,
+		/datum/z_pillar,
+		/obj/effect/abstract/z_holder,
+		// stuff below isn't 100% guaranteed to be ref-free, but they're prolly not an issue
+		/turf/closed/mineral,
+		/turf/open/lava,
+		/turf/open/misc/asteroid,
+		/turf/open/openspace,
+		/turf/open/space,
+		/obj/structure/flora, // icebox and such has a LOT of these
+		/datum/chatmessage,
+		/datum/lighting_corner,
+		/datum/log_entry, // hopefully nobody's silly enough to accidentally pass a reference to these... right???
+		/datum/reagent/consumable/nutriment,
+	))
+		for(var/type in typesof(base_type))
+			.[type] = TRUE
+#endif
+
 /datum/proc/find_references(references_to_clear = INFINITY)
 	if(usr?.client)
 		if(tgui_alert(usr,"Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", list("Yes", "No")) != "Yes")
@@ -36,7 +95,15 @@
 	if(src.references_to_clear == 0)
 		return
 
+#ifdef FAST_REFERENCE_TRACKING
+	var/alist/skip_types = GLOB.reftracker_skip_typecache
+#endif
+
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
+#ifdef FAST_REFERENCE_TRACKING
+		if(skip_types[thing.type])
+			continue
+#endif
 		DoSearchVar(thing, "World -> [thing.type]", starting_time)
 		if(src.references_to_clear == 0)
 			break
@@ -45,6 +112,10 @@
 		return
 
 	for(var/datum/thing) //datums
+#ifdef FAST_REFERENCE_TRACKING
+		if(skip_types[thing.type])
+			continue
+#endif
 		DoSearchVar(thing, "Datums -> [thing.type]", starting_time)
 		if(src.references_to_clear == 0)
 			break
@@ -126,6 +197,7 @@
 
 	else if(islist(potential_container))
 		var/list/potential_cache = potential_container
+		var/is_alist = istype(potential_cache, /alist)
 		for(var/element_in_list in potential_cache)
 			//Check normal sublists
 			if(islist(element_in_list))
@@ -162,7 +234,7 @@
 					log_reftracker("All references to [type] [text_ref(src)] found, exiting.")
 					return
 
-			if(!isnum(element_in_list) && !is_special_list)
+			if((!isnum(element_in_list) || is_alist) && !is_special_list)
 				// This exists to catch an error that throws when we access a special list
 				// is_special_list is a hint, it can be wrong
 				try

@@ -5,11 +5,10 @@
 	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "fish_feed"
 	w_class = WEIGHT_CLASS_TINY
-	spillable = FALSE
 	volume = 5
 	amount_per_transfer_from_this = 2.5
 	has_variable_transfer_amount = FALSE
-	reagent_flags = OPENCONTAINER
+	initial_reagent_flags = TRANSPARENT
 	reagent_container_liquid_sound = null
 	list_reagents = list(/obj/item/fish::food = 2.5) //Default fish diet
 	gulp_size = 1
@@ -183,13 +182,3 @@
 	desc = "A very small plastic treaure chest, with nothing inside. You could put this in an aquarium, and it'll look like very small pirates hid treasure in there. Wouldn't that be nice?"
 	icon_state = "treasure"
 	layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
-
-/obj/item/storage/box/aquarium_props
-	name = "aquarium props box"
-	desc = "All you need to make your aquarium look good."
-	illustration = "fish"
-	custom_price = PAYCHECK_LOWER
-
-/obj/item/storage/box/aquarium_props/PopulateContents()
-	for(var/prop_type in subtypesof(/obj/item/aquarium_prop))
-		new prop_type(src)

@@ -11,7 +11,7 @@
 	max_integrity = 5000 // To make attacking it not instantly break it
 	throwforce = 2
 	interaction_flags_mouse_drop = NEED_HANDS
-
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	/// The amount of times this bell has been rang, used to check the chance it breaks
 	var/times_rang = 0
 	/// Is this bell broken?
@@ -57,7 +57,7 @@
 /obj/structure/desk_bell/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/structure/desk_bell/attackby(obj/item/weapon, mob/living/user, params)
+/obj/structure/desk_bell/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	times_rang += weapon.force
 	ring_bell(user)

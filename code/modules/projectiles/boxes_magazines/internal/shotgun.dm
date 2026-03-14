@@ -3,7 +3,8 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = CALIBER_SHOTGUN
 	max_ammo = 4
-	multiload = FALSE
+	// this inherits regular magazines' AMMO_BOX_MULTILOAD_IN, which means that regular shotguns shouldn't be multiloading from Bulldog magazines
+	// if someone has the bright idea to add shotgun speedloaders, i certainly hope they know what they're inviting by doing so
 
 /obj/item/ammo_box/magazine/internal/shot/tube
 	name = "dual feed shotgun internal tube"
@@ -11,7 +12,7 @@
 	max_ammo = 4
 
 /obj/item/ammo_box/magazine/internal/shot/tube/fire
-	ammo_type = /obj/projectile/bullet/incendiary/shotgun/no_trail
+	ammo_type = /obj/item/ammo_casing/shotgun/incendiary/no_trail
 
 /obj/item/ammo_box/magazine/internal/shot/tube/buckshot
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
@@ -24,7 +25,7 @@
 
 /obj/item/ammo_box/magazine/internal/shot/com
 	name = "combat shotgun internal magazine"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/shot/com/compact
@@ -47,6 +48,12 @@
 	name = "riot shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 	max_ammo = 6
+
+/obj/item/ammo_box/magazine/internal/shot/lake
+	name = "pump-action grenade launcher internal magazine"
+	ammo_type = /obj/item/ammo_casing/a40mm
+	caliber = CALIBER_40MM
+	max_ammo = 3
 
 /obj/item/ammo_box/magazine/internal/shot/bounty
 	name = "triple-barrel shotgun internal magazine"

@@ -32,8 +32,8 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	var/show_result_on_wiki = TRUE
 
 /datum/fish_evolution/New()
-	..()
 	SHOULD_CALL_PARENT(TRUE)
+	..()
 	if(!ispath(new_fish_type, /obj/item/fish))
 		stack_trace("[type] instantiated with a new fish type of [new_fish_type]. That's not a fish, hun, things will break.")
 	if(!name)
@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 /datum/fish_evolution/proc/growth_checks(obj/item/fish/source, seconds_per_tick, growth)
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
-	if(source.health < initial(source.health) * 0.5)
+	if(source.get_health_percentage() < 0.5)
 		return COMPONENT_DONT_GROW
 	if(source.get_hunger() >= 0.5) //too hungry to grow
 		return COMPONENT_DONT_GROW

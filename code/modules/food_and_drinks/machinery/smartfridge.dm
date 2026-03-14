@@ -260,7 +260,7 @@
 	playsound(src, SFX_SHATTER, 50, TRUE)
 	return ..()
 
-/obj/machinery/smartfridge/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/smartfridge/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!machine_stat)
 		var/shown_contents_length = visible_items()
 		if(shown_contents_length >= max_n_of_items)
@@ -550,6 +550,7 @@
 	base_build_path = /obj/machinery/smartfridge/drying/rack
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 
 /obj/machinery/smartfridge/drying/rack/Initialize(mapload)
 	. = ..()

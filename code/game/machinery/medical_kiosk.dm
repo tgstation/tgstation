@@ -10,8 +10,6 @@
 /// Shows if the machine is being used for a reagent scan.
 #define KIOSK_SCANNING_REAGENTS (1<<3)
 
-
-
 /obj/machinery/medical_kiosk
 	name = "medical kiosk"
 	desc = "A freestanding medical kiosk, which can provide a wide range of medical analysis for diagnosis."
@@ -23,9 +21,7 @@
 	payment_department = ACCOUNT_MED
 	var/obj/item/scanner_wand
 	/// How much it costs to use the kiosk by default.
-	var/default_price = 15          //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
-	/// How much it currently costs to use the kiosk.
-	var/active_price = 15           //Change by using a multitool on the board.
+	var/default_price = 15
 	/// Makes the TGUI display gibberish and/or incorrect/erratic information.
 	var/pandemonium = FALSE //AKA: Emag mode.
 
@@ -42,7 +38,7 @@
 
 /obj/machinery/medical_kiosk/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
-	AddComponent(/datum/component/payment, active_price, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
+	AddComponent(/datum/component/payment, get_cost(), SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
 	register_context()
 	scanner_wand = new/obj/item/scanner_wand(src)
 
@@ -78,7 +74,6 @@
 		use_energy(active_power_usage)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
-		RefreshParts()
 		return
 	var/bonus_fee = pandemonium ? rand(10,30) : 0
 	if(attempt_charge(src, paying, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
@@ -87,7 +82,6 @@
 	paying_customer = TRUE
 	icon_state = "[base_icon_state]_active"
 	say("Thank you for your patronage!")
-	RefreshParts()
 	return
 
 /obj/machinery/medical_kiosk/proc/clearScans() //Called it enough times to be it's own proc
@@ -110,41 +104,48 @@
 	default_unfasten_wrench(user, tool, time = 0.1 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/medical_kiosk/RefreshParts()
-	. = ..()
+///Returns the active cost of the board
+/obj/machinery/medical_kiosk/proc/get_cost()
+	PRIVATE_PROC(TRUE)
+
 	var/obj/item/circuitboard/machine/medical_kiosk/board = circuit
-	if(board)
-		active_price = board.custom_cost
-	return
 
-/obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", O))
-		return
-	else if(default_deconstruction_crowbar(O))
-		return
+	return board.custom_cost
 
-	if(istype(O, /obj/item/scanner_wand))
-		var/obj/item/scanner_wand/W = O
-		if(scanner_wand)
-			balloon_alert(user, "already has a wand!")
-			return
-		if(HAS_TRAIT(O, TRAIT_NODROP) || !user.transferItemToLoc(O, src))
-			balloon_alert(user, "stuck to your hand!")
-			return
-		user.visible_message(span_notice("[user] snaps [O] onto [src]!"))
-		balloon_alert(user, "wand returned")
-		//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
-		if(W.selected_target)
-			var/datum/weakref/target_ref = WEAKREF(W.return_patient())
-			if(patient_ref != target_ref)
-				clearScans()
-			patient_ref = target_ref
-			user.visible_message(span_notice("[W.return_patient()] has been set as the current patient."))
-			W.selected_target = null
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		scanner_wand = O
-		return
-	return ..()
+/obj/machinery/medical_kiosk/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/medical_kiosk/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/medical_kiosk/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/scanner_wand))
+		return NONE
+
+	var/obj/item/scanner_wand/wand = tool
+	if(scanner_wand)
+		balloon_alert(user, "already has a wand!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		balloon_alert(user, "stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] snaps [tool] onto [src]!"))
+	balloon_alert(user, "wand returned")
+	//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
+	if(wand.selected_target)
+		var/datum/weakref/target_ref = WEAKREF(wand.return_patient())
+		if(patient_ref != target_ref)
+			clearScans()
+		patient_ref = target_ref
+		user.visible_message(span_notice("[wand.return_patient()] has been set as the current patient."))
+		wand.selected_target = null
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	scanner_wand = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medical_kiosk/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -212,7 +213,6 @@
 		ui = new(user, src, "MedicalKiosk", name)
 		ui.open()
 		icon_state = "[base_icon_state]_active"
-		RefreshParts()
 		var/mob/living/carbon/human/paying = user
 		paying_ref = WEAKREF(paying)
 
@@ -225,10 +225,10 @@
 	var/patient_status = "Alive."
 	var/max_health = patient.maxHealth
 	var/total_health = patient.health
-	var/brute_loss = patient.getBruteLoss()
-	var/fire_loss = patient.getFireLoss()
-	var/tox_loss = patient.getToxLoss()
-	var/oxy_loss = patient.getOxyLoss()
+	var/brute_loss = patient.get_brute_loss()
+	var/fire_loss = patient.get_fire_loss()
+	var/tox_loss = patient.get_tox_loss()
+	var/oxy_loss = patient.get_oxy_loss()
 	var/chaos_modifier = 0
 
 	var/sickness = "Patient does not show signs of disease."
@@ -236,8 +236,9 @@
 
 	var/bleed_status = "Patient is not currently bleeding."
 	var/blood_status = " Patient either has no blood, or does not require it to function."
-	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
-	var/blood_type = patient.dna.blood_type
+	var/blood_percent = round((patient.get_blood_volume(apply_modifiers = TRUE) / BLOOD_VOLUME_NORMAL) * 100)
+	var/datum/blood_type/blood_type = patient.get_bloodtype()
+	var/blood_name = "error"
 	var/blood_warning = " "
 	var/blood_alcohol = patient.get_blood_alcohol_content()
 
@@ -247,14 +248,30 @@
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
-	if(!HAS_TRAIT(patient, TRAIT_GENELESS) && !HAS_TRAIT(patient, TRAIT_NOBLOOD)) //Blood levels Information
+	if(patient.can_bleed()) //Blood levels Information
+		blood_name = LOWER_TEXT(blood_type.get_blood_name())
 		if(patient.is_bleeding())
-			bleed_status = "Patient is currently bleeding!"
+			bleed_status = " Patient is currently bleeding!"
+
 		if(blood_percent <= 80)
-			blood_warning = " Patient has low blood levels. Seek a large meal, or iron supplements."
-		if(blood_percent <= 60)
-			blood_warning = " Patient has DANGEROUSLY low blood levels. Seek a blood transfusion, iron supplements, or saline glucose immedietly. Ignoring treatment may lead to death!"
-		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type] type blood. [blood_warning]"
+			blood_warning = " Patient has [blood_percent <= 60 ? "DANGEROUSLY low" : "low"] [blood_name] levels."
+			var/list/treatments = list()
+			if(blood_percent <= 60)
+				treatments += "[blood_name] transfusion"
+			else if(!HAS_TRAIT(patient, TRAIT_NOHUNGER))
+				treatments += "a large meal"
+			if(blood_type.restoration_chem)
+				treatments += "[LOWER_TEXT(blood_type.restoration_chem::name)] supplements"
+				if(blood_percent <= 60 && blood_type.restoration_chem == /datum/reagent/iron)
+					treatments += "saline-glucose immediately"
+
+			if (length(treatments))
+				blood_warning += " Seek [english_list(treatments, and_text = " or ")]"
+
+			if (blood_percent <= 60)
+				blood_warning += " Ignoring treatment may lead to death!"
+
+		blood_status = "Patient [blood_name] levels are currently reading [blood_percent]%.[blood_type.get_type() ? " Patient has [blood_type.get_type()] type [blood_name]." : ""][blood_warning]"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)
@@ -339,7 +356,7 @@
 	else if(user.has_status_effect(/datum/status_effect/hallucination))
 		chaos_modifier = 0.3
 
-	data["kiosk_cost"] = active_price + (chaos_modifier * (rand(1,25)))
+	data["kiosk_cost"] = get_cost() + (chaos_modifier * (rand(1,25)))
 	data["patient_name"] = patient_name
 	data["patient_health"] = round(((total_health - (chaos_modifier * (rand(1,50)))) / max_health) * 100, 0.001)
 	data["brute_health"] = round(brute_loss+(chaos_modifier * (rand(1,30))),0.001) //To break this down for easy reading, all health values are rounded to the .001 place
@@ -353,6 +370,7 @@
 	data["patient_illness"] = sickness
 	data["illness_info"] = sickness_data
 	data["bleed_status"] = bleed_status
+	data["blood_name"] = capitalize(blood_name)
 	data["blood_levels"] = blood_percent - (chaos_modifier * (rand(1,35)))
 	data["blood_status"] = blood_status
 	data["blood_alcohol"] = blood_alcohol

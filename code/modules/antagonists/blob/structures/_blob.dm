@@ -242,7 +242,7 @@
 /obj/structure/blob/hulk_damage()
 	return 15
 
-/obj/structure/blob/attackby(obj/item/I, mob/user, params)
+/obj/structure/blob/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_ANALYZER)
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
@@ -274,7 +274,7 @@
 
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(ROLE_BLOB in user.faction) //sorry, but you can't kill the blob as a blobbernaut
+	if(user.has_faction(ROLE_BLOB)) //sorry, but you can't kill the blob as a blobbernaut
 		return
 	..()
 

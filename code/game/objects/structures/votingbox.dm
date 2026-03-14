@@ -9,7 +9,7 @@
 	icon_state = "votebox_maint"
 
 	anchored = TRUE
-
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15)
 	var/obj/item/card/id/owner //Slapping the box with this ID starts/ends the vote.
 
 	var/voting_active = FALSE //Voting or Maintenance Mode
@@ -19,7 +19,7 @@
 	var/list/voted //List of ID's that already voted.
 	COOLDOWN_DECLARE(vote_print_cooldown)
 
-/obj/structure/votebox/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/votebox/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(I,/obj/item/card/id))
 		if(!owner)
 			register_owner(I,user)

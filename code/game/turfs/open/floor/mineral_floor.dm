@@ -15,7 +15,7 @@
 	material_flags = MATERIAL_EFFECTS
 	rust_resistance = RUST_RESISTANCE_BASIC
 	var/list/icons
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 
 
@@ -199,7 +199,7 @@
 	if(isliving(arrived))
 		squeak()
 
-/turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, params)
+/turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		honk()
@@ -257,7 +257,7 @@
 	if(isliving(arrived))
 		radiate()
 
-/turf/open/floor/mineral/uranium/attackby(obj/item/W, mob/user, params)
+/turf/open/floor/mineral/uranium/attackby(obj/item/W, mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		radiate()

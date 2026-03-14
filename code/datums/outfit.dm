@@ -24,20 +24,20 @@
 	var/id_trim = null
 
 	/// Type path of item to go in uniform slot
-	var/uniform = null
+	var/obj/item/uniform = null
 
 	/// Type path of item to go in suit slot
-	var/suit = null
+	var/obj/item/suit = null
 
 	/**
 	  * Type path of item to go in suit storage slot
 	  *
 	  * (make sure it's valid for that suit)
 	  */
-	var/suit_store = null
+	var/obj/item/suit_store = null
 
 	/// Type path of item to go in back slot
-	var/back = null
+	var/obj/item/back = null
 
 	/**
 	  * list of items that should go in the backpack of the user
@@ -47,7 +47,7 @@
 	var/list/backpack_contents = null
 
 	/// Type path of item to go in belt slot
-	var/belt = null
+	var/obj/item/belt = null
 
 	/**
 	  * list of items that should go in the belt of the user
@@ -213,7 +213,7 @@
 			if(id_trim)
 				if(!SSid_access.apply_trim_to_card(id_card, id_trim))
 					WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
-				user.sec_hud_set_ID()
+				user.update_ID_card()
 
 	if(suit_store)
 		EQUIP_OUTFIT_ITEM(suit_store, ITEM_SLOT_SUITSTORE)
@@ -231,7 +231,7 @@
 		var/obj/item/clothing/under/U = user.w_uniform
 		if(U)
 			U.attach_accessory(SSwardrobe.provide_type(accessory, user))
-		else
+		else if(!visuals_only)
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
@@ -257,7 +257,7 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					EQUIP_OUTFIT_ITEM(path, ITEM_SLOT_BACKPACK)
+					user.equip_to_storage(SSwardrobe.provide_type(path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
 
 		if(belt_contents)
 			for(var/path in belt_contents)
@@ -265,7 +265,7 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					EQUIP_OUTFIT_ITEM(path, ITEM_SLOT_BELTPACK)
+					user.equip_to_storage(SSwardrobe.provide_type(path, user), ITEM_SLOT_BELT, indirect_action = TRUE, del_on_fail = TRUE)
 
 	post_equip(user, visuals_only)
 
@@ -505,7 +505,7 @@
 	for(var/item in beltpack)
 		var/itype = text2path(item)
 		if(itype)
-			belt_contents[itype] = belt[item]
+			belt_contents[itype] = beltpack[item]
 	box = text2path(outfit_data["box"])
 	var/list/impl = outfit_data["implants"]
 	implants = list()

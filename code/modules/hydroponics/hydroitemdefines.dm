@@ -64,7 +64,7 @@
 	attack_verb_continuous = list("slashes", "slices", "bashes", "claws")
 	attack_verb_simple = list("slash", "slice", "bash", "claw")
 	hitsound = null
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 
@@ -188,7 +188,7 @@
 			playsound(src, SFX_DESECRATION ,50, TRUE, -1)
 	return BRUTELOSS
 
-/obj/item/scythe/pre_attack(atom/target, mob/living/user, params)
+/obj/item/scythe/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(target, /obj/structure/alien/resin/flower_bud) && !istype(target, /obj/structure/spacevine))
 		return ..()
 	if(swiping || get_turf(target) == get_turf(user))

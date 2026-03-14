@@ -27,14 +27,6 @@
 /datum/action/cooldown/spell/spacetime_dist/can_cast_spell(feedback = TRUE)
 	return ..() && ready
 
-/datum/action/cooldown/spell/spacetime_dist/set_statpanel_format()
-	. = ..()
-	if(!islist(.))
-		return
-
-	if(!ready)
-		.[PANEL_DISPLAY_STATUS] = "NOT READY"
-
 /datum/action/cooldown/spell/spacetime_dist/cast(atom/cast_on)
 	. = ..()
 	var/list/turf/to_switcharoo = get_targets_to_scramble(cast_on)
@@ -149,7 +141,7 @@
 	if(!busy)
 		walk_link(AM)
 
-/obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, params)
+/obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(user.temporarilyRemoveItemFromInventory(W))
 		walk_link(W)
 	else

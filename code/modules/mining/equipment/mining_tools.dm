@@ -73,14 +73,9 @@
 	hitsound = 'sound/items/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
 
-/obj/item/pickaxe/drill/cyborg
-	name = "cyborg mining drill"
-	desc = "An integrated electric mining drill."
-	flags_1 = NONE
-
-/obj/item/pickaxe/drill/cyborg/Initialize(mapload)
+/obj/item/pickaxe/drill/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	AddElement(/datum/element/cuffable_item) //closed handle
 
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
@@ -88,12 +83,6 @@
 	inhand_icon_state = "diamonddrill"
 	toolspeed = 0.2
 	desc = "Yours is the drill that will pierce the heavens!"
-
-/obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
-	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
-	icon_state = "diamonddrill"
-	inhand_icon_state = "diamonddrill"
-	toolspeed = 0.2
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
@@ -192,6 +181,7 @@
 	attack_verb_simple = list("slash", "impale", "stab", "slice")
 	sharpness = SHARP_EDGED
 	item_flags = CRUEL_IMPLEMENT
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/shovel/serrated/Initialize(mapload)
 	. = ..()
@@ -333,6 +323,7 @@
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.6, /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5)
 	/// The factor at which the recoil becomes less.
 	var/recoil_factor = 3
 	/// Wether we knock down and launch away out enemies when we attack.
@@ -388,7 +379,7 @@
 		var/atom/throw_target = get_edge_target_turf(target_mob, get_dir(user, get_step_away(target_mob, user)))
 		target_mob.throw_at(throw_target, 2, 2, user, gentle = TRUE)
 		target_mob.Knockdown(2 SECONDS)
-	var/body_zone = pick(GLOB.all_body_zones)
+	var/body_zone = pick(user.get_all_limbs())
 	user.apply_damage(force / recoil_factor, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
 	to_chat(user, span_danger("The weight of the Big Slappy recoils!"))
 	log_combat(user, user, "recoiled Big Slappy into")

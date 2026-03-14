@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
   Box,
@@ -11,7 +11,7 @@ import {
   Table,
   Tabs,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -81,7 +81,7 @@ function ApcLoggedOut(props) {
             <Stack.Item color="label">Copyright 2526 Nanotrasen</Stack.Item>
           </Stack>
         </Stack.Item>
-        <Stack.Item color="#2a2a2a" mb={1}>
+        <Stack.Item color="#2a2a2a">
           Nanotrasen and its affiliates do not endorse this product. Risk of
           serious bodily injury or death is inherent in the use of any device
           that generates electricity. Nanotrasen is not responsible for any
@@ -89,7 +89,13 @@ function ApcLoggedOut(props) {
         </Stack.Item>
         <Stack.Item>
           <NoticeBox
-            style={{ display: 'flex', justifyContent: 'space-between' }}
+            m={0}
+            mt={1}
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
           >
             Authorized personnel only.
             <Button
@@ -114,8 +120,8 @@ function ApcLoggedIn(props) {
   const sortByState = useState('name');
 
   return (
-    <Stack fill vertical>
-      <Stack.Item mb={-1}>
+    <Stack fill vertical g={0}>
+      <Stack.Item>
         <Tabs>
           <Tabs.Tab
             selected={tabIndex === Screen.ControlPanel}
@@ -145,12 +151,13 @@ function ApcLoggedIn(props) {
       )}
       <Stack.Item grow>
         {tabIndex === Screen.ControlPanel && (
-          <Stack fill vertical>
+          <Stack fill vertical g={0}>
             <Stack.Item height={3}>
               <Section>
                 <ControlPanel sortByState={sortByState} />
               </Section>
             </Stack.Item>
+            <Stack.Divider />
             <Stack.Item grow={4}>
               <Section fill scrollable>
                 <ApcControlScene sortByState={sortByState} />
@@ -241,15 +248,14 @@ function ApcControlScene(props) {
 
   let sorted: WithIndex[] = [];
   if (sortByField === 'name') {
-    sorted = sortBy(withIndex, (apc) => apc.name);
+    sorted = sortBy(withIndex, [(apc) => apc.name]);
   } else if (sortByField === 'charge') {
-    sorted = sortBy(withIndex, (apc) => -apc.charge);
+    sorted = sortBy(withIndex, [(apc) => -apc.charge]);
   } else if (sortByField === 'draw') {
-    sorted = sortBy(
-      withIndex,
+    sorted = sortBy(withIndex, [
       (apc) => -powerRank(apc.load),
       (apc) => -parseFloat(apc.load),
-    );
+    ]);
   }
 
   return (
@@ -280,6 +286,8 @@ function ApcControlScene(props) {
           </Table.Cell>
           <Table.Cell>
             <Button
+              fluid
+              color="transparent"
               onClick={() =>
                 act('access-apc', {
                   ref: apc.ref,

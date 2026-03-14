@@ -6,10 +6,9 @@
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	antagpanel_category = ANTAG_GROUP_HUNTERS
-	prevent_roundtype_conversion = FALSE
 	antag_hud_name = "fugitive_hunter"
 	suicide_cry = "FOR GLORY!!"
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_SKIP_GLOBAL_LIST
 	var/datum/team/fugitive_hunters/hunter_team
 	var/backstory = "error"
 
@@ -79,7 +78,6 @@
 /datum/antagonist/fugitive_hunter/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/owner_mob = mob_override || owner.current
 	owner_mob.remove_language(/datum/language/spinwarder, source = LANGUAGE_BOUNTYHUNTER)
-	return ..()
 
 /datum/team/fugitive_hunters
 	var/backstory = "error"

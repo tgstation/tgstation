@@ -41,7 +41,7 @@
 	// This is weird but basically we're calling this proc once the cooldown ends in case our wearer gets set on fire again during said cooldown
 	// This is why we're ignoring source and instead checking by loc
 	var/mob/living/carbon/human/owner = loc
-	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, alt_flags = TRUE))
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE))
 		return
 
 	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
@@ -59,11 +59,11 @@
 	if (!istype(tool, /obj/item/extinguisher_refill))
 		return
 
-	if (extinguishes_left == 5)
+	if (extinguishes_left == initial(extinguishes_left))
 		to_chat(user, span_notice("The inbuilt extinguisher is full."))
 		return ITEM_INTERACT_BLOCKING
 
-	extinguishes_left = 5
+	extinguishes_left = initial(extinguishes_left)
 	to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
 	check_fire_state()
 	qdel(tool)
@@ -78,7 +78,7 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
 	icon_state = "plasmaman-helm"
 	inhand_icon_state = "plasmaman-helm"
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
 	armor_type = /datum/armor/space_plasmaman
@@ -94,7 +94,6 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
 	visor_flags_inv = HIDEEYES|HIDEFACE
-	slowdown = 0
 	visor_dirt = null
 	var/helmet_on = FALSE
 	var/smile = FALSE
@@ -124,8 +123,8 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/head/helmet/space/plasmaman/click_alt(mob/user)
-	if(user.can_perform_action(src))
-		adjust_visor(user)
+	adjust_visor(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_welding_screen))
@@ -192,11 +191,12 @@
 		. += smiley
 
 /obj/item/clothing/head/helmet/space/plasmaman/wash(clean_types)
-	. = ..()
+	. = NONE
 	if(smile && (clean_types & CLEAN_TYPE_HARD_DECAL))
 		smile = FALSE
-		update_appearance()
-		return TRUE
+		update_appearance(UPDATE_OVERLAYS)
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
+	. |= ..()
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	helmet_on = !helmet_on

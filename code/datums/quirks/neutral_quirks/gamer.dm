@@ -21,7 +21,7 @@
 	RegisterSignal(quirk_holder, COMSIG_MOB_LOST_VIDEOGAME, PROC_REF(lost_game))
 	RegisterSignal(quirk_holder, COMSIG_MOB_PLAYED_VIDEOGAME, PROC_REF(gamed))
 
-/datum/quirk/gamer/add_unique(client/client_source)
+/datum/quirk/gamer/post_add()
 	// The gamer starts off quelled
 	gaming_withdrawal_timer = addtimer(CALLBACK(src, PROC_REF(enter_withdrawal)), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
 

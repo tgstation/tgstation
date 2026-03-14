@@ -20,11 +20,12 @@
 	var/sent_assets = list()
 	// Vars passed to initialize proc (and saved for later)
 	var/initial_strict_mode
-	var/initial_fancy
 	var/initial_assets
 	var/initial_inline_html
 	var/initial_inline_js
 	var/initial_inline_css
+
+	var/list/oversized_payloads = list()
 
 /**
  * public
@@ -50,7 +51,6 @@
  * will be put into the queue until the window finishes loading.
  *
  * optional strict_mode bool - Enables strict error handling and BSOD.
- * optional fancy bool - If TRUE and if this is NOT a panel, will hide the window titlebar.
  * optional assets list - List of assets to load during initialization.
  * optional inline_html string - Custom HTML to inject.
  * optional inline_js string - Custom JS to inject.
@@ -58,7 +58,6 @@
  */
 /datum/tgui_window/proc/initialize(
 		strict_mode = FALSE,
-		fancy = FALSE,
 		assets = list(),
 		inline_html = "",
 		inline_js = "",
@@ -68,7 +67,6 @@
 		window = src)
 	if(!client)
 		return
-	src.initial_fancy = fancy
 	src.initial_assets = assets
 	src.initial_inline_html = inline_html
 	src.initial_inline_js = inline_js
@@ -76,12 +74,7 @@
 	status = TGUI_WINDOW_LOADING
 	fatally_errored = FALSE
 	// Build window options
-	var/options = "file=[id].html;can_minimize=0;auto_format=0;"
-	// Remove titlebar and resize handles for a fancy window
-	if(fancy)
-		options += "titlebar=0;can_resize=0;"
-	else
-		options += "titlebar=1;can_resize=1;"
+	var/options = "file=[id].html;can_minimize=0;auto_format=0;titlebar=0;can_resize=0;"
 	// Generate page html
 	var/html = SStgui.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
@@ -128,7 +121,6 @@
 /datum/tgui_window/proc/reinitialize()
 	initialize(
 		strict_mode = initial_strict_mode,
-		fancy = initial_fancy,
 		assets = initial_assets,
 		inline_html = initial_inline_html,
 		inline_js = initial_inline_js,
@@ -380,6 +372,46 @@
 			reinitialize()
 		if("chat/resend")
 			SSchat.handle_resend(client, payload)
+		if("oversizedPayloadRequest")
+			var/payload_id = payload["id"]
+			var/chunk_count = payload["chunkCount"]
+			var/permit_payload = chunk_count <= CONFIG_GET(number/tgui_max_chunk_count)
+			if(permit_payload)
+				create_oversized_payload(payload_id, payload["type"], chunk_count)
+			send_message("oversizePayloadResponse", list("allow" = permit_payload, "id" = payload_id))
+		if("payloadChunk")
+			var/payload_id = payload["id"]
+			append_payload_chunk(payload_id, payload["chunk"])
+			send_message("acknowledgePayloadChunk", list("id" = payload_id))
 
 /datum/tgui_window/vv_edit_var(var_name, var_value)
 	return var_name != NAMEOF(src, id) && ..()
+
+/datum/tgui_window/proc/create_oversized_payload(payload_id, message_type, chunk_count)
+	if(oversized_payloads[payload_id])
+		stack_trace("Attempted to create oversized tgui payload with duplicate ID.")
+		return
+	oversized_payloads[payload_id] = list(
+		"type" = message_type,
+		"count" = chunk_count,
+		"chunks" = list(),
+		"timeout" = addtimer(CALLBACK(src, PROC_REF(remove_oversized_payload), payload_id), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+	)
+
+/datum/tgui_window/proc/append_payload_chunk(payload_id, chunk)
+	var/list/payload = oversized_payloads[payload_id]
+	if(!payload)
+		return
+	var/list/chunks = payload["chunks"]
+	chunks += chunk
+	if(length(chunks) >= payload["count"])
+		deltimer(payload["timeout"])
+		var/message_type = payload["type"]
+		var/final_payload = chunks.Join()
+		remove_oversized_payload(payload_id)
+		on_message(message_type, json_decode(final_payload), list("type" = message_type, "payload" = final_payload, "tgui" = TRUE, "window_id" = id))
+	else
+		payload["timeout"] = addtimer(CALLBACK(src, PROC_REF(remove_oversized_payload), payload_id), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+
+/datum/tgui_window/proc/remove_oversized_payload(payload_id)
+	oversized_payloads -= payload_id

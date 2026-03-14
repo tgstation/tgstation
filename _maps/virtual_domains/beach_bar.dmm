@@ -173,7 +173,7 @@
 /obj/structure/table,
 /obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/cup/glass/shaker,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
@@ -648,7 +648,7 @@
 /area/virtual_domain/fullbright)
 "CA" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/mob_spawn/ghost_role/human/beach/lifeguard,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/beach/lifeguard,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "CO" = (
@@ -806,8 +806,9 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "Kd" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/mineral/sandstone,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/sign/warning/secure_area/directional/west,
+/turf/open/floor/plating,
 /area/virtual_domain/fullbright)
 "KH" = (
 /obj/structure/mineral_door/wood{
@@ -875,7 +876,7 @@
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/virtual_domain/fullbright)
 "OE" = (
-/obj/effect/mob_spawn/ghost_role/human/beach{
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/beach{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -906,7 +907,7 @@
 /area/virtual_domain/fullbright)
 "Pg" = (
 /obj/structure/sign/poster/official/high_class_martini/directional/west,
-/obj/effect/mob_spawn/ghost_role/human/bartender{
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/beach/bartender{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -1609,7 +1610,7 @@ LD
 LD
 Fn
 Fn
-Kd
+Fn
 Fn
 Fn
 bQ
@@ -1652,7 +1653,7 @@ pT
 LD
 EC
 LD
-pT
+Kd
 PM
 wD
 wD

@@ -6,12 +6,11 @@
 	button_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "invisible_wall"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED|AB_CHECK_INCAPACITATED
-	panel = "Mime"
 	sound = null
 
 	school = SCHOOL_MIME
 	cooldown_time = 30 SECONDS
-	invocation = "Someone does a weird gesture." // Overriden in before cast
+	invocation = span_notice("<b>%CASTER</b> looks as if a wall is in front of %PRONOUN_them.")
 	invocation_self_message = span_notice("You form a wall in front of yourself.")
 	invocation_type = INVOCATION_EMOTE
 
@@ -22,7 +21,3 @@
 	summon_radius = 0
 	summon_type = list(/obj/effect/forcefield/mime)
 	summon_lifespan = 30 SECONDS
-
-/datum/action/cooldown/spell/conjure/invisible_wall/before_cast(atom/cast_on)
-	. = ..()
-	invocation = span_notice("<b>[cast_on]</b> looks as if a wall is in front of [cast_on.p_them()].")

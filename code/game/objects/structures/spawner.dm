@@ -39,7 +39,7 @@
 	else
 		. += span_notice("It looks like you could probably scan and tag it with a <b>[scanner_descriptor]</b>.")
 
-/obj/structure/spawner/attackby(obj/item/item, mob/user, params)
+/obj/structure/spawner/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE
@@ -76,7 +76,7 @@
 	)
 
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(faction_check(faction, user.faction, FALSE) && !user.client)
+	if(faction_check_atom(user) && !user.client)
 		return
 	return ..()
 
@@ -220,16 +220,15 @@
 
 /obj/structure/spawner/nether/process(seconds_per_tick)
 	for(var/mob/living/living_mob in contents)
-		if(living_mob)
-			playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
-			living_mob.adjustBruteLoss(60 * seconds_per_tick)
-			new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
-			if(living_mob.stat == DEAD)
-				var/mob/living/basic/blankbody/newmob = new(loc)
-				newmob.name = "[living_mob]"
-				newmob.desc = "It's [living_mob], but [living_mob.p_their()] flesh has an ashy texture, and [living_mob.p_their()] face is featureless save an eerie smile."
-				src.visible_message(span_warning("[living_mob] reemerges from the link!"))
-				qdel(living_mob)
+		playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
+		living_mob.adjust_brute_loss(60 * seconds_per_tick)
+		new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
+		if(living_mob.stat == DEAD)
+			var/mob/living/basic/blankbody/newmob = new(loc)
+			newmob.name = "[living_mob]"
+			newmob.desc = "It's [living_mob], but [living_mob.p_their()] flesh has an ashy texture, and [living_mob.p_their()] face is featureless save an eerie smile."
+			src.visible_message(span_warning("[living_mob] reemerges from the link!"))
+			qdel(living_mob)
 
 /obj/structure/spawner/sentient
 	var/role_name = "A sentient mob"
@@ -281,7 +280,7 @@
 	. = ..()
 	if(!IS_CULTIST(user) && isliving(user))
 		var/mob/living/living_user = user
-		living_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15)
+		living_user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15)
 		. += span_danger("The voices of the damned echo relentlessly in your mind, continously rebounding on the walls of your self the more you focus on [src]. Your head pounds, better keep away...")
 	else
 		. += span_cult("The gateway will create one weak proteon construct every [spawn_time * 0.1] seconds, up to a total of [max_mobs], that may be controlled by the spirits of the dead.")

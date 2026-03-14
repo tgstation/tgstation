@@ -15,7 +15,9 @@
 	desc = "An unfinished covered turret frame."
 	anchored = FALSE
 	density = TRUE
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	use_power = NO_POWER_USE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret" //the name applied to the product turret
 	var/obj/item/gun/installed_gun = null
@@ -40,7 +42,7 @@
 		if(PTURRET_START_EXTERNAL_ARMOUR)
 			. += span_notice("The turret's armor needs to be <b>welded</b> in place, the armor looks like it could be <i>pried</i> off.")
 
-/obj/machinery/porta_turret_construct/attackby(obj/item/used, mob/user, params)
+/obj/machinery/porta_turret_construct/attackby(obj/item/used, mob/user, list/modifiers, list/attack_modifiers)
 	//this is a bit unwieldy but self-explanatory
 	switch(build_step)
 		if(PTURRET_UNSECURED) //first step
@@ -192,6 +194,12 @@
 		return
 	return ..()
 
+/obj/machinery/porta_turret_construct/nameformat(input, user)
+	finish_name = input
+	return input
+
+/obj/machinery/porta_turret_construct/rename_reset()
+	finish_name = initial(finish_name)
 
 /obj/machinery/porta_turret_construct/attack_hand(mob/user, list/modifiers)
 	. = ..()

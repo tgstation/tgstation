@@ -32,7 +32,6 @@
 		/datum/ai_planning_subtree/minebot_mining,
 		/datum/ai_planning_subtree/locate_dead_humans,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
 
 /datum/ai_planning_subtree/launch_missiles
 
@@ -48,7 +47,7 @@
 
 /datum/ai_behavior/find_and_set/clear_bombing_zone
 
-/datum/ai_behavior/find_and_set/clear_bombing_zone/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/clear_bombing_zone/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/obj/effect/temp_visual/minebot_target/target in oview(search_range, controller.pawn))
 		if(isclosedturf(get_turf(target)))
 			continue
@@ -63,7 +62,7 @@
 
 /datum/ai_behavior/find_and_set/miner_to_befriend
 
-/datum/ai_behavior/find_and_set/miner_to_befriend/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/miner_to_befriend/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
 		if(HAS_TRAIT(target, TRAIT_ROCK_STONER))
 			return target
@@ -75,7 +74,7 @@
 		controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_DRONE_DEFEND, /mob/living/basic/node_drone)
 		return
 	var/mob/living/living_pawn = controller.pawn
-	if(!living_pawn.faction.Find(REF(target)))
+	if(!living_pawn.has_ally(target))
 		controller.queue_behavior(/datum/ai_behavior/befriend_target, BB_DRONE_DEFEND)
 		return
 	if(target.health < (target.maxHealth * 0.75) && controller.blackboard[BB_MINEBOT_REPAIR_DRONE])
@@ -113,7 +112,7 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/unconscious_human, BB_NEARBY_DEAD_MINER, /mob/living/carbon/human)
 
-/datum/ai_behavior/find_and_set/unconscious_human/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/unconscious_human/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
 		if(target.stat >= UNCONSCIOUS && target.mind)
 			return target
@@ -327,7 +326,7 @@
 	radial_icon_state = "mech_eject"
 	ability_key = BB_MINEBOT_DUMP_ABILITY
 
-/datum/pet_command/minebot_ability/light/retrieve_command_text(atom/living_pet, atom/target)
+/datum/pet_command/minebot_ability/dump/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to dump its ore!"
 
 /datum/pet_command/attack/minebot

@@ -189,13 +189,14 @@
 		return
 	return ..()
 
-/obj/structure/trap/eldritch/attacked_by(obj/item/weapon, mob/living/user)
-	if(istype(weapon, /obj/item/melee/rune_carver) || istype(weapon, /obj/item/nullrod))
+/obj/structure/trap/eldritch/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/melee/rune_carver) || HAS_TRAIT(tool, TRAIT_NULLROD_ITEM))
 		loc.balloon_alert(user, "carving dispelled")
 		playsound(src, 'sound/items/sheath.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 		qdel(src)
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/structure/trap/eldritch/alert
 	name = "alert carving"
@@ -238,7 +239,7 @@
 	if(!iscarbon(victim))
 		return
 	var/mob/living/carbon/carbon_victim = victim
-	carbon_victim.adjustStaminaLoss(80)
+	carbon_victim.adjust_stamina_loss(80)
 	carbon_victim.adjust_silence(20 SECONDS)
 	carbon_victim.adjust_stutter(1 MINUTES)
 	carbon_victim.adjust_confusion(5 SECONDS)

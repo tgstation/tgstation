@@ -10,6 +10,8 @@
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/cardboard_box/cardboardbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/cardboard_box/cardboardbox_pickup.ogg'
+	storage_type = /datum/storage/box
+
 	/// What material do we get when we fold this box?
 	var/foldable_result = /obj/item/stack/sheet/cardboard
 	/// What drawing will we get on the face of the box?
@@ -17,17 +19,16 @@
 
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	if(foldable_result == /obj/item/stack/sheet/cardboard)
+		set_custom_materials(list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT))
 	update_appearance()
-	atom_storage.open_sound = 'sound/items/handling/cardboard_box/cardboard_box_open.ogg'
-	atom_storage.rustle_sound = 'sound/items/handling/cardboard_box/cardboard_box_rustle.ogg'
 
 /obj/item/storage/box/suicide_act(mob/living/carbon/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(myhead)
 		user.visible_message(span_suicide("[user] puts [user.p_their()] head into \the [src] and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!"))
-		myhead.dismember()
-		myhead.forceMove(src) //force your enemies to kill themselves with your head collection box!
+		if (myhead.dismember())
+			myhead.forceMove(src) //force your enemies to kill themselves with your head collection box!
 		playsound(user, "desecration-01.ogg", 50, TRUE, -1)
 		return BRUTELOSS
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

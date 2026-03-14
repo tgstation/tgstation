@@ -24,6 +24,8 @@
 	var/smashes_tables = FALSE
 	/// If TRUE, a combo meter will be displayed on the HUD for the current streak
 	var/display_combos = FALSE
+	///The Combo HUD given to display comboes, if we're set to display them.
+	var/atom/movable/screen/combo/combo_display
 	/// The length of time until streaks are auto-reset.
 	var/combo_timer = 6 SECONDS
 	/// Timer ID for the combo reset timer.
@@ -33,6 +35,15 @@
 	/// If TRUE, the user is locked to using this martial art, and can't swap to other ones they know.
 	/// If the mob has two locked martial arts, it's first come first serve.
 	var/locked_to_use = FALSE
+	/// A modifier to the effective grab state for resist grabs of users of this martial art.
+	/// IE: grab_state_modifier = 1 means passive grabs are aggro grab difficulty, and aggro grabs are neckgrab difficulty.
+	var/grab_state_modifier = 0
+	/// A modifier to the damage dealt on a failed grab resist.
+	/// IE: grab_damage_modifier = 10 means 10 more stamina damage dealt
+	var/grab_damage_modifier = 0
+	/// A modifier to the chance of escaping a grab.
+	/// IE: grab_escape_chance_modifier = -10 means 10% less chance to escape a grab
+	var/grab_escape_chance_modifier = 0
 
 /datum/martial_art/serialize_list(list/options, list/semvers)
 	. = ..()
@@ -216,6 +227,43 @@
 	return TRUE
 
 /**
+ * Gets what limb is being used going when punching with this martial art.
+ *
+ * Override get_prefered_attacking_limb() to change the limb used.
+ *
+ * Arguments
+ * * mob/living/martial_artist - The mob using the martial art
+ * * mob/living/target - The target of the attack
+ *
+ * Returns
+ * A bodypart, or null if we want to use default behavior (brain determines, or active hand).
+ */
+/datum/martial_art/proc/get_attacking_limb(mob/living/martial_artist, mob/living/target)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!can_use(martial_artist))
+		return null
+	var/preferred_zone = get_prefered_attacking_limb(martial_artist, target)
+	if(!preferred_zone)
+		return null
+	return martial_artist.get_bodypart(preferred_zone)
+
+/**
+ * Allows martial arts to have a say which limb the user should be striking with.
+ *
+ *
+ * Arguments
+ * * mob/living/martial_artist - The mob using the martial art
+ * * mob/living/target - The target of the attack
+ *
+ * Returns
+ * * A body zone, or null if we have no preference.
+ */
+/datum/martial_art/proc/get_prefered_attacking_limb(mob/living/martial_artist, mob/living/target)
+	SHOULD_CALL_PARENT(FALSE)
+	PROTECTED_PROC(TRUE)
+	return null
+
+/**
  * Adds the passed element to the current streak, resetting it if the target is not the same as the last target.
  *
  * Arguments
@@ -230,7 +278,7 @@
 		streak = copytext(streak, 1 + length(streak[1]))
 	if(display_combos)
 		timerid = addtimer(CALLBACK(src, PROC_REF(reset_streak), null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
-		holder.hud_used?.combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
+		combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
 
 /**
  * Resets the current streak.
@@ -245,7 +293,7 @@
 	current_target = WEAKREF(new_target)
 	streak = ""
 	if(display_combos && update_icon)
-		holder.hud_used?.combo_display.update_icon_state(streak)
+		combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/smash_table(mob/living/source, mob/living/pushed_mob, obj/structure/table/table)
 	SIGNAL_HANDLER
@@ -334,6 +382,11 @@
 	RegisterSignal(new_holder, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
 	RegisterSignal(new_holder, COMSIG_LIVING_GRAB, PROC_REF(attempt_grab))
 	RegisterSignals(new_holder, list(COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING), PROC_REF(smash_table))
+	if(display_combos)
+		if(new_holder.hud_used)
+			on_hud_created(new_holder)
+		else
+			RegisterSignal(new_holder, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /**
  * Called when this martial art is removed from a mob.
@@ -344,6 +397,19 @@
 	if(help_verb)
 		remove_verb(remove_from, help_verb)
 	UnregisterSignal(remove_from, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING))
+	if(!isnull(combo_display))
+		var/datum/hud/hud_used = remove_from.hud_used
+		hud_used.infodisplay -= combo_display
+		hud_used.show_hud(hud_used.hud_version)
+		QDEL_NULL(combo_display)
+
+///Gives the owner of the martial art the combo HUD.
+/datum/martial_art/proc/on_hud_created(mob/source)
+	SIGNAL_HANDLER
+	var/datum/hud/hud_used = source.hud_used
+	combo_display = new(null, hud_used)
+	hud_used.infodisplay += combo_display
+	hud_used.show_hud(hud_used.hud_version)
 
 /mob/living/proc/verb_switch_style()
 	set name = "Swap Style"

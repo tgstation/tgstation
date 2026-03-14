@@ -1,103 +1,154 @@
-/*!
- * Contains crusher trophies that are not obtained from fauna
- */
+// Alternate PKC skins
+/datum/atom_skin/crusher_skin
+	abstract_type = /datum/atom_skin/crusher_skin
+	change_base_icon_state = TRUE
+	new_icon = 'icons/obj/mining.dmi'
+	new_icon_state = "ipickaxe"
+	new_inhand_icon_state = "ipickaxe"
+	/// Specifies the icon file in which the crusher's projectile sprite is located.
+	var/new_projectile_icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	/// For if the retool kit changes the projectile's appearance.
+	var/new_projectile_icon_state
+	/// Specifies the X dimensions of the new inhand, only relevant with different inhand files.
+	var/new_inhandx
+	/// Specifies the Y dimensions of the new inhand, only relevant with different inhand files.
+	var/new_inhandy
 
-//cosmetic items for changing the crusher's look
+/datum/atom_skin/crusher_skin/apply(obj/item/kinetic_crusher/apply_to)
+	. = ..()
+	APPLY_VAR_OR_RESET_INITIAL(apply_to, projectile_icon, new_projectile_icon, reset_missing)
+	APPLY_VAR_OR_RESET_INITIAL(apply_to, projectile_icon_state, new_projectile_icon_state, reset_missing)
+	APPLY_VAR_OR_RESET_INITIAL(apply_to, inhand_x_dimension, new_inhandx, reset_missing)
+	APPLY_VAR_OR_RESET_INITIAL(apply_to, inhand_y_dimension, new_inhandy, reset_missing)
 
+/datum/atom_skin/crusher_skin/clear_skin(obj/item/kinetic_crusher/clear_from)
+	. = ..()
+	RESET_INITIAL_IF_SET(clear_from, projectile_icon, new_projectile_icon)
+	RESET_INITIAL_IF_SET(clear_from, projectile_icon_state, new_projectile_icon_state)
+	RESET_INITIAL_IF_SET(clear_from, inhand_x_dimension, new_inhandx)
+	RESET_INITIAL_IF_SET(clear_from, inhand_y_dimension, new_inhandy)
+
+/datum/atom_skin/crusher_skin/sword
+	new_name = "proto-kinetic sword"
+	preview_name = "Sword"
+	new_icon_state = "crusher_sword"
+	new_inhand_icon_state = "crusher_sword"
+
+/datum/atom_skin/crusher_skin/harpoon
+	new_name = "proto-kinetic harpoon"
+	preview_name = "Harpoon"
+	new_icon_state = "crusher_harpoon"
+	new_inhand_icon_state = "crusher_harpoon"
+	new_projectile_icon_state = "pulse_harpoon"
+
+/datum/atom_skin/crusher_skin/harpoon/apply(atom/apply_to, mob/user)
+	. = ..()
+	RegisterSignal(apply_to, COMSIG_ITEM_ATTACK_ANIMATION, PROC_REF(on_attack_animation))
+
+/datum/atom_skin/crusher_skin/harpoon/clear_skin(atom/clear_from, mob/user)
+	. = ..()
+	UnregisterSignal(clear_from, COMSIG_ITEM_ATTACK_ANIMATION)
+
+/datum/atom_skin/crusher_skin/harpoon/proc/on_attack_animation(obj/item/source, atom/movable/attacker, atom/attacked_atom, animation_type, list/image_override, list/animation_override)
+	SIGNAL_HANDLER
+
+	// If nothing is forcing an animation type, attack with a piercing animation because we're a harpoon
+	if (!animation_type)
+		animation_override += ATTACK_ANIMATION_PIERCE
+
+/datum/atom_skin/crusher_skin/dagger
+	new_name = "proto-kinetic dual dagger and blaster"
+	preview_name = "Dagger and Blaster"
+	new_icon_state = "crusher_dagger"
+	new_inhand_icon_state = "crusher_dagger"
+
+/datum/atom_skin/crusher_skin/dagger/apply(atom/apply_to, mob/user)
+	. = ..()
+	RegisterSignal(apply_to, COMSIG_ITEM_ATTACK_ANIMATION, PROC_REF(on_attack_animation))
+	RegisterSignal(apply_to, COMSIG_CRUSHER_FIRED_BLAST, PROC_REF(on_fired_blast))
+
+/datum/atom_skin/crusher_skin/dagger/clear_skin(atom/clear_from, mob/user)
+	. = ..()
+	UnregisterSignal(clear_from, COMSIG_ITEM_ATTACK_ANIMATION)
+	UnregisterSignal(clear_from, COMSIG_CRUSHER_FIRED_BLAST)
+
+/datum/atom_skin/crusher_skin/dagger/proc/on_attack_animation(obj/item/kinetic_crusher/source, atom/movable/attacker, atom/attacked_atom, animation_type, list/image_override, list/animation_override, list/angle_override)
+	SIGNAL_HANDLER
+
+	// If we've been forcefully assigned an animation type already, we shouldn't do the custom attack animation logic
+	if (animation_type)
+		return
+
+	if (isliving(attacked_atom))
+		var/mob/living/target = attacked_atom
+		if (source.last_projectile_pb)
+			image_override += image(icon = 'icons/obj/mining.dmi', icon_state = "crusher_dagger_blaster")
+			angle_override += 0
+			animation_override += ATTACK_ANIMATION_PIERCE
+			source.last_projectile_pb = FALSE
+			return
+
+		if (target.has_status_effect(/datum/status_effect/crusher_mark))
+			animation_override += ATTACK_ANIMATION_PIERCE
+
+	image_override += image(icon = 'icons/obj/mining.dmi', icon_state = "crusher_dagger_melee")
+
+/datum/atom_skin/crusher_skin/dagger/proc/on_fired_blast(obj/item/kinetic_crusher/source, atom/target, mob/living/user, obj/projectile/destabilizer/destabilizer)
+	SIGNAL_HANDLER
+
+	if (isliving(target) && get_dist(target, user) <= 1)
+		user.do_item_attack_animation(target, used_item = source)
+
+/datum/atom_skin/crusher_skin/glaive
+	new_name = "proto-kinetic glaive"
+	preview_name = "Glaive"
+	new_icon_state = "crusher_glaive"
+	new_inhand_icon_state = "crusher_glaive"
+	new_lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	new_righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	new_inhandx = 64
+	new_inhandy = 64
+
+// Locked skins that cannot be selected normally
+/datum/atom_skin/crusher_skin/locked
+	abstract_type = /datum/atom_skin/crusher_skin/locked
+
+/datum/atom_skin/crusher_skin/locked/ashen_skull
+	preview_name = "Skull"
+	new_icon_state = "crusher_skull"
+	new_inhand_icon_state = "crusher_skull"
+	new_projectile_icon_state = "pulse_skull"
+
+/// Unlockable (or forced) skins
 /obj/item/crusher_trophy/retool_kit
-	name = "crusher sword retool kit"
-	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a sword."
+	name = "crusher retool kit"
+	desc = "A toolkit for changing the crusher's appearance without affecting the device's function."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "retool_kit"
 	denied_type = /obj/item/crusher_trophy/retool_kit
-	/// Specifies the icon file in which the crusher's new state is stored.
-	var/retool_icon = 'icons/obj/mining.dmi'
-	///Specifies the sprite/icon state which the crusher is changed to as an item. Should appear in the icons/obj/mining.dmi file with accompanying "lit" and "recharging" sprites
-	var/retool_icon_state = "crusher_sword"
-	///Specifies the icon state for the crusher's appearance in hand. Should appear in both retool_lefthand_file and retool_righthand_file.
-	var/retool_inhand_icon = "crusher_sword"
-	///For if the retool kit changes the projectile's appearance. The sprite should be in icons/obj/weapons/guns/projectiles.dmi.
-	var/retool_projectile_icon = "pulse1"
-	/// Specifies the left hand inhand icon file. Don't forget to set the right hand file as well.
-	var/retool_lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
-	/// Specifies the right hand inhand icon file. Don't forget to set the left hand file as well.
-	var/retool_righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
-	/// Specifies the X dimensions of the new inhand, only relevant with different inhand files.
-	var/retool_inhand_x = 32
-	/// Specifies the Y dimensions of the new inhand, only relevant with different inhand files.
-	var/retool_inhand_y = 32
+
+	/// What skin do we apply when attached
+	var/datum/atom_skin/crusher_skin/forced_skin
 
 /obj/item/crusher_trophy/retool_kit/effect_desc()
-	return "the crusher to have the appearance of a sword"
+	return "the crusher to have the appearance of \a [forced_skin::preview_name]"
 
 /obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/pkc, mob/user)
 	. = ..()
 	if(!.)
 		return
 
-	pkc.icon = retool_icon
-	pkc.icon_state = retool_icon_state
-	pkc.current_inhand_icon_state = retool_inhand_icon
-	pkc.projectile_icon = retool_projectile_icon
-	pkc.lefthand_file = retool_lefthand_file
-	pkc.righthand_file = retool_righthand_file
-	pkc.inhand_x_dimension = retool_inhand_x
-	pkc.inhand_y_dimension = retool_inhand_y
-	pkc.update_appearance()
-	pkc.update_slot_icon()
+	pkc.update_reskin(forced_skin)
 
 /obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/pkc)
-	pkc.icon = initial(pkc.icon)
-	pkc.icon_state = initial(pkc.icon_state)
-	pkc.current_inhand_icon_state = initial(pkc.current_inhand_icon_state)
-	pkc.projectile_icon = initial(pkc.projectile_icon)
-	pkc.lefthand_file = initial(pkc.lefthand_file)
-	pkc.righthand_file = initial(pkc.righthand_file)
-	pkc.inhand_x_dimension = initial(pkc.inhand_x_dimension)
-	pkc.inhand_y_dimension = initial(pkc.inhand_y_dimension)
-	pkc.update_appearance()
-	pkc.update_slot_icon()
+	pkc.update_reskin(null) // resets reskin component
 	return ..()
-
-/obj/item/crusher_trophy/retool_kit/harpoon
-	name = "crusher harpoon retool kit"
-	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a harpoon."
-	retool_icon_state = "crusher_harpoon"
-	retool_inhand_icon = "crusher_harpoon"
-	retool_projectile_icon = "pulse_harpoon"
-
-/obj/item/crusher_trophy/retool_kit/harpoon/effect_desc()
-	return "the crusher to have the appearance of a harpoon"
-
-/obj/item/crusher_trophy/retool_kit/dagger
-	name = "crusher dagger retool kit"
-	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a dual dagger and mini-blaster on a chain."
-	retool_icon_state = "crusher_dagger"
-	retool_inhand_icon = "crusher_dagger"
-
-/obj/item/crusher_trophy/retool_kit/dagger/effect_desc()
-	return "the crusher to have the appearance of a dual dagger and blaster"
-
-/obj/item/crusher_trophy/retool_kit/glaive
-	name = "crusher glaive retool kit"
-	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a glaive, with a longer, thinner blade."
-	retool_icon_state = "crusher_glaive"
-	retool_inhand_icon = "crusher_glaive"
-	retool_lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
-	retool_righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
-	retool_inhand_x = 64
-	retool_inhand_y = 64
-
-/obj/item/crusher_trophy/retool_kit/glaive/effect_desc()
-	return "the crusher to have the appearance of a glaive"
 
 /obj/item/crusher_trophy/retool_kit/ashenskull
 	name = "ashen skull"
 	desc = "It burns with the flame of the necropolis, whispering in your ear. It demands to be bound to a suitable weapon."
 	icon_state = "retool_kit_skull"
-	retool_icon_state = "crusher_skull"
-	retool_inhand_icon = "crusher_skull"
-	retool_projectile_icon = "pulse_skull"
+	forced_skin = /datum/atom_skin/crusher_skin/locked/ashen_skull
 
 /obj/item/crusher_trophy/retool_kit/ashenskull/effect_desc()
 	return "the crusher to appear corrupted by infernal powers"

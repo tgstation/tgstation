@@ -80,25 +80,30 @@
 	if(href_list[VV_HK_ARMOR_MOD])
 		if(!check_rights(NONE))
 			return
-		var/list/pickerlist = list()
-		var/list/armorlist = get_armor().get_rating_list()
-		for (var/i in armorlist)
-			pickerlist += list(list("value" = armorlist[i], "name" = i))
-		var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [src]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, inputtype = "text", values = pickerlist)
-		var/list/armor_all = ARMOR_LIST_ALL()
-		if(islist(result))
-			if(result["button"] != 2) // If the user pressed the cancel button
-				// text2num conveniently returns a null on invalid values
-				var/list/converted = list()
-				for(var/armor_key in armor_all)
-					converted[armor_key] = text2num(result["values"][armor_key])
-				set_armor(get_armor().generate_new_with_specific(converted))
-				var/message = "[key_name(usr)] modified the armor on [src] ([type]) to: "
-				for(var/armor_key in armor_all)
-					message += "[armor_key]=[get_armor_rating(armor_key)],"
-				message = copytext(message, 1, -1)
-				log_admin(span_notice(message))
-				message_admins(span_notice(message))
+		var/list/picker_list = list()
+		var/list/armor_list = get_armor().get_rating_list()
+		for (var/rating in armor_list)
+			picker_list += list(list("value" = armor_list[rating], "name" = rating))
+
+		var/list/result = present_picker(usr, "Modify armor", "Modify armor: [src]", button_1 = "Save", button_2 = "Cancel", timeout = FALSE, input_type = "text", values = picker_list)
+		if(!islist(result))
+			return
+		if(result["button"] == 2) // If the user pressed the cancel button
+			return
+
+		var/list/armor_all = ARMOR_LIST_ALL
+		// text2num conveniently returns a null on invalid values
+		var/list/converted = list()
+		for(var/armor_key in armor_all)
+			converted[armor_key] = text2num(result["values"][armor_key])
+		set_armor(get_armor().generate_new_with_specific(converted))
+
+		var/message = "[key_name(usr)] modified the armor on [src] ([type]) to: "
+		for(var/armor_key in armor_all)
+			message += "[armor_key]=[get_armor_rating(armor_key)],"
+		message = copytext(message, 1, -1)
+		log_admin(span_notice(message))
+		message_admins(span_notice(message))
 
 	if(href_list[VV_HK_ADD_AI])
 		if(!check_rights(R_VAREDIT))
@@ -209,7 +214,7 @@
  * At the atom level, if you edit a var named "color" it will add the atom colour with
  * admin level priority to the atom colours list
  *
- * Also, if GLOB.Debug2 is FALSE, it sets the [ADMIN_SPAWNED_1] flag on [flags_1][/atom/var/flags_1], which signifies
+ * Also, if GLOB.debugging_enabled is FALSE, it sets the [ADMIN_SPAWNED_1] flag on [flags_1][/atom/var/flags_1], which signifies
  * the object has been admin edited
  */
 /atom/vv_edit_var(var_name, var_value)
@@ -282,7 +287,7 @@
 		datum_flags |= DF_VAR_EDITED
 		return
 
-	if(!GLOB.Debug2)
+	if(!GLOB.debugging_enabled)
 		flags_1 |= ADMIN_SPAWNED_1
 
 	. = ..()

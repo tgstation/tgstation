@@ -1,10 +1,11 @@
 // Pizza (Whole)
 /obj/item/food/pizza
-	name = "pizza"
+	name = "bugged pizza"
+	desc = "This pizza should not be."
 	icon = 'icons/obj/food/pizza.dmi'
+	abstract_type = /obj/item/food/pizza
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 80
-	icon_state = "pizzamargherita"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 28,
 		/datum/reagent/consumable/nutriment/protein = 3,
@@ -72,7 +73,7 @@
 	. = ..()
 	if(!sliced)
 		return
-	user.visible_message(span_notice("You take a slice of [src]."), span_notice("[user] takes a slice of [src]."))
+	user.visible_message(span_notice("[user] takes a slice of [src]."), span_notice("You take a slice of [src]."))
 	produce_slice(user)
 
 /obj/item/food/pizza/proc/get_slices_filter() //to not repeat code
@@ -102,6 +103,10 @@
 	slice.pixel_x += rand(-6, 6)
 	slice.pixel_y += rand(-6, 6)
 	user?.put_in_active_hand(slice)
+
+	slice.reagents.remove_all()
+	reagents.trans_to(slice, amount = reagents.total_volume / slices_left, no_react = TRUE)
+
 	slices_left--
 	if(slices_left <= 0)
 		qdel(src)
@@ -122,17 +127,18 @@
 
 // Pizza Slice
 /obj/item/food/pizzaslice
-	name = "pizza slice"
+	name = "bugged pizza slice"
+	desc = "This slice of pizza should not be"
 	icon = 'icons/obj/food/pizza.dmi'
+	abstract_type = /obj/item/food/pizzaslice
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
-	icon_state = "pizzamargheritaslice"
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	decomp_type = /obj/item/food/pizzaslice/moldy
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pizzaslice/make_processable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten", sound_to_play = SFX_ROLLING_PIN_ROLLING)
 
 /obj/item/food/pizza/margherita
 	name = "pizza margherita"
@@ -178,7 +184,7 @@
 
 /obj/item/food/pizzaslice/margherita/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 12)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 12)
 
 /obj/item/food/pizza/meat
 	name = "meatpizza"
@@ -194,6 +200,7 @@
 	slice_type = /obj/item/food/pizzaslice/meat
 	boxtag = "Meatlovers' Supreme"
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 4)
 
 /obj/item/food/pizza/meat/raw
 	name = "raw meatpizza"
@@ -301,6 +308,7 @@
 	slice_type = /obj/item/food/pizzaslice/donkpocket
 	boxtag = "Bangin' Donk"
 	crafting_complexity = FOOD_COMPLEXITY_3
+	intrinsic_food_materials = list(/datum/material/meat) //default donkpockets do not contain meat but homemade ones do.
 
 /obj/item/food/pizza/donkpocket/raw
 	name = "raw donkpocket pizza"
@@ -317,6 +325,7 @@
 	icon_state = "donkpocketpizzaslice"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "umami" = 1, "laziness" = 1)
 	foodtypes = GRAIN|VEGETABLES|DAIRY|JUNKFOOD
+	intrinsic_food_materials = list(/datum/material/meat) //default donkpockets do not contain meat but homemade ones do.
 
 /obj/item/food/pizza/dank
 	name = "dank pizza"
@@ -328,7 +337,7 @@
 		/datum/reagent/consumable/tomatojuice = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "weed" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/dank
 	boxtag = "Fresh Herb"
@@ -347,7 +356,7 @@
 	name = "dank pizza slice"
 	desc = "So good, man..."
 	icon_state = "dankpizzaslice"
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "weed" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 
 /obj/item/food/pizza/sassysage
@@ -365,6 +374,7 @@
 	slice_type = /obj/item/food/pizzaslice/sassysage
 	boxtag = "Sausage Lovers"
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pizza/sassysage/raw
 	name = "raw sassysage pizza"
@@ -399,6 +409,7 @@
 	slice_type = /obj/item/food/pizzaslice/pineapple
 	boxtag = "Honolulu Chew"
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/pizza/pineapple/raw
 	name = "raw Hawaiian pizza"
@@ -460,6 +471,7 @@
 	boxtag = "9mm Pepperoni"
 	foodtypes = MEAT|GRAIN|DAIRY|VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 8, /datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/pizza/arnold/raw
 	name = "raw Arnold pizza"
@@ -543,6 +555,7 @@
 	foodtypes = GRAIN|TOXIC
 	boxtag = "24 Hour Energy"
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.4, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/food/pizza/energy/raw
 	name = "raw energy pizza"
@@ -574,6 +587,7 @@
 	foodtypes = GRAIN|VEGETABLES|DAIRY|MEAT|RAW
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/raw_meat_calzone/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/meat_calzone, rand(20 SECONDS, 40 SECONDS), TRUE, TRUE)
@@ -591,6 +605,7 @@
 	foodtypes = GRAIN|VEGETABLES|DAIRY|MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/raw_vegetarian_calzone
 	name = "raw vegetarian calzone"

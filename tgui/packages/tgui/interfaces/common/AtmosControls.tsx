@@ -4,7 +4,7 @@ import {
   NumberInput,
   Section,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
@@ -219,7 +219,7 @@ export const Scrubber = (props: ScrubberProps) => {
         <LabeledList.Item label="Mode">
           <Button
             icon={scrubbing ? 'filter' : 'sign-in-alt'}
-            color={scrubbing || 'danger'}
+            color={!scrubbing && 'danger'}
             content={scrubbing ? 'Scrubbing' : 'Siphoning'}
             onClick={() =>
               act('scrubbing', {

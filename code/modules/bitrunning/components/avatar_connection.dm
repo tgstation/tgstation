@@ -11,6 +11,8 @@
 	var/datum/weakref/server_ref
 	/// The netpod the avatar is in
 	var/datum/weakref/netpod_ref
+	/// If we've taken any damage, is set to FALSE - for tracking nohit bonus
+	var/nohit = TRUE
 
 /datum/component/avatar_connection/Initialize(
 	datum/mind/old_mind,
@@ -18,6 +20,7 @@
 	obj/machinery/quantum_server/server,
 	obj/machinery/netpod/pod,
 	help_text,
+	copy_body,
 	)
 
 	if(!isliving(parent) || !isliving(old_body) || !old_mind || !server.is_operational || !pod.is_operational)
@@ -65,8 +68,18 @@
 
 	if(alias && avatar.real_name != alias)
 		avatar.fully_replace_character_name(newname = alias)
+		avatar.voice = old_body.voice
+		avatar.voice_filter = old_body.voice_filter
+		if(ishuman(avatar) && ishuman(old_body) && copy_body)
+			var/mob/living/carbon/human/human_avatar = avatar
+			var/mob/living/carbon/human/human_old_body = old_body
+			human_avatar.dna.unique_identity = human_old_body.dna.unique_identity
+			human_avatar.physique = human_old_body.physique
+			human_avatar.updateappearance(mutcolor_update = TRUE)
+
 
 	update_avatar_id()
+	avatar.mind.set_assigned_role(SSjob.get_job_type(/datum/job/bit_avatar))
 
 	for(var/skill_type in old_mind.known_skills)
 		avatar.mind.set_experience(skill_type, old_mind.get_skill_exp(skill_type), silent = TRUE)
@@ -179,6 +192,7 @@
 	if(old_body.stat > SOFT_CRIT) // KO!
 		full_avatar_disconnect(cause_damage = TRUE)
 
+	nohit = FALSE
 
 /// Handles minds being swapped around in subsequent avatars
 /datum/component/avatar_connection/proc/on_mind_transfer(datum/mind/source, mob/living/previous_body)
