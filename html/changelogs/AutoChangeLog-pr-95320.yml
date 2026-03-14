@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - bugfix: "Fixes beebox and traitor bees not obeying the reagent blacklist"
+  - balance: "Maintenance pills (the achievement variety that only spawns in maint) can now generate with xenomorph microbes and cyborg nanites"
