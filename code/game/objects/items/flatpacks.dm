@@ -173,8 +173,8 @@
 	custom_premium_price = PAYCHECK_COMMAND
 
 /obj/item/flatpack/shuttle_engine
-	name = "shuttle engine"
-	board = /obj/item/circuitboard/machine/shuttle_engine
+	name = "shuttle propulsion engine"
+	board = /obj/item/circuitboard/machine/engine/propulsion
 	custom_premium_price = PAYCHECK_CREW * 2
 
 // Cargo flatpacks
