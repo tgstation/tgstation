@@ -583,7 +583,7 @@
 /atom/movable/screen/alert/penthrite
 	name = "Strong Heartbeat"
 	desc = "Your heart beats with great force!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_icon = 'icons/obj/medical/syringe.dmi'
 	overlay_state = "luxpen"
 

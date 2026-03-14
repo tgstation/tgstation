@@ -88,6 +88,13 @@
   - qol: Improved the HUD of simple/basic animals, as well as Cyborgs, AIs, pAIs and
       Xenomorphs.
 2026-03-08:
+  Absolucy:
+  - admin: Your own ASay messages will no longer trigger your highlights.
+  BingusTheClown:
+  - bugfix: Spy Bootknife now gives slash proc's correctly when equipped.
+  Gboster-0:
+  - bugfix: fixed the game trying to make you sell chemical reactions for a public
+      bounty
   MoondancerPony:
   - bugfix: fixed turfs sometimes not being in any area's contents
   Y0SH1M4S73R:
@@ -108,3 +115,79 @@
   - bugfix: The Universal Sprite Editor Framework correctly saves icons.
   - admin: Images created by players using NanoPaint will be logged for admins, and
       can be viewed using the "Audit Player-made Sprites" verb.
+2026-03-09:
+  ArcaneMusic:
+  - qol: After discovering a strange object's behavior, you can now rename it using
+      a pen.
+  oranges:
+  - rscadd: suicide act for shrink ray
+  stylemistake:
+  - rscadd: Get your freespins TODAY at your local slot machine, with new impressive
+      physics-based spinning action!
+2026-03-10:
+  Majkl-J:
+  - bugfix: Parallax layers no longer snap to and from the center of the screen abrubtly
+      when changing the random parallax layer.
+  SmArtKar:
+  - bugfix: Fixed explodable component runtimes
+  Y0SH1M4S73R:
+  - qol: (Most) stacks will no longer fall right out of bags if you put enough in
+      to make the stack normal-sized.
+2026-03-11:
+  Aliceee2ch:
+  - map: Added bigger version of BYOS.
+  - map: Rogue airless turfs on original BYOS were replaced on those with air.
+  Code by NecromancerAnne, Sprites by Simpleton:
+  - rscadd: Adds the Pump-Action Grenade Launcher and respective kit to the nuclear
+      operative uplink. It fires 40mm grenade shells.
+  - rscadd: Adds 40mm Incendiary grenades. Set things ablaze!
+  - rscadd: Adds 40mm Titanium Flak shells. It's like buckshot, but more buck.
+  - rscadd: Adds 40mm Tear Gas grenades. Oppressive AND convenient.
+  - balance: The caravan grenade launcher has been changed to a M79 break-action grenade
+      launcher. Now comes with some tear gas grenades and a disk for printing more
+      (as well as 40mm rubber puck).
+  - balance: 40mm Rubber Puck knocks people down, and isn't weak against armor, but
+      does less damage overall. It also bounces off walls.
+  RusselNotSCP:
+  - bugfix: Most martian cocktails are no longer all the same color when put into
+      a bottle.
+  SyncIt21:
+  - qol: mixing tea/coffee with sugar gives you a small mood buff. So like do it
+  - qol: astrotame and cream now heals disgust
+  - qol: mixing different types of coffee can heal oxy damage, because you know coffee
+      has antioxidizing properties
+2026-03-12:
+  Absolucy:
+  - qol: Added a search bar to the GPS interface.
+  ArcaneMusic:
+  - rscadd: mushpeople now emit harmless spores upon death, which will grow into mushrooms
+      on the floor and walls for a time.
+  Happyowl93:
+  - bugfix: Blood worm can reproduce one hatchling now.
+  JohnFulpWillard:
+  - qol: Keybindings for screenshots now appear in the keybindings options instead
+      of buttons at the top left of your screen.
+  Melbert:
+  - rscadd: Revenants are always visible in mirror reflections, even while invisible.
+  - rscadd: Revenant "Defile" now shatters mirrors.
+  - qol: Revenants no longer elevate over tables.
+  Seven:
+  - bugfix: Sechailers now block pepperspray when up, not when they are down.
+  SmArtKar:
+  - bugfix: Fixed ghost poll alerts missing backgrounds
+  timothymtorres:
+  - balance: Beartraps are now much more lethal and can cause wounds. Space OSHA has
+      also issued a warning that any clumsy people should avoid handling them after
+      repeated mishaps.
+2026-03-13:
+  JohnFulpWillard:
+  - rscadd: The endround timer telling you when a reboot is happening has been taken
+      out of the stat panel and is instead text over your screen (similar to Goon)
+  Melbert:
+  - code_imp: Radios can now have their keyslot locked, though no radios currently
+      have a keyslot lock. However, report any bugs with being unable to emag, install,
+      or remove radio keys.
+  - rscadd: Adds a 1/500 chance that the grain used to create a pizza in a pizza crate
+      was cursed by an evil lich.
+  OnlineGirlfriend:
+  - spellcheck: gavel hammer and gavel block are now gavel and sound block
