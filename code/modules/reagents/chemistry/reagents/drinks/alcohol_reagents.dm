@@ -3171,7 +3171,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "herbal finality"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	/var/has_ingested = FALSE
+	var/has_ingested = FALSE
 
 /datum/reagent/consumable/ethanol/last_word/expose_mob(mob/living/drinker, methods, reac_volume, show_message, touch_protection)
 	. = ..()
