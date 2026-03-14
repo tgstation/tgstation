@@ -22,6 +22,7 @@
 		main_image.color = limb.husk_color
 	else
 		color_image(main_image, layer, limb)
+	offset_image(main_image, limb)
 
 	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
 		return main_image
@@ -44,6 +45,10 @@
 
 ///Color the image
 /datum/bodypart_overlay/proc/color_image(image/overlay, layer, obj/item/bodypart/limb)
+	return
+
+///Offset the image
+/datum/bodypart_overlay/proc/offset_image(image/overlay, obj/item/bodypart/limb)
 	return
 
 ///Called on being added to a limb

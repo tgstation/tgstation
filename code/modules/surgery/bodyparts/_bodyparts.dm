@@ -231,6 +231,8 @@
 	var/static/list/butcher_drop_cache = list()
 	/// What state is the bodypart in for determining surgery availability
 	VAR_FINAL/surgery_state = NONE
+	/// What offsets to apply to mutant features by feature key
+	var/list/mutant_feature_offsets
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()

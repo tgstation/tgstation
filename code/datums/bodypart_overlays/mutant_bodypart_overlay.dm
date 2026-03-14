@@ -44,6 +44,14 @@
 	inherit_color(limb) // If draw_color is not set yet, go ahead and do that
 	return ..()
 
+/datum/bodypart_overlay/mutant/offset_image(image/overlay, obj/item/bodypart/limb)
+	if(!limb)
+		return
+	var/list/offsets = LAZYACCESS(limb.mutant_feature_offsets, feature_key)
+	if(offsets)
+		overlay.pixel_x = offsets[1]
+		overlay.pixel_y = offsets[2]
+
 ///Completely random image and color generation (obeys what a player can choose from)
 /datum/bodypart_overlay/mutant/proc/randomize_appearance()
 	randomize_sprite()

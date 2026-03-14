@@ -7,6 +7,10 @@
 	should_draw_greyscale = TRUE
 	head_flags = HEAD_LIPS|HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN
 	teeth_count = 72
+	mutant_feature_offsets = list(
+		FEATURE_HORNS = list(0, -1),
+		FEATURE_MOTH_ANTENNAE = list(0, -1),
+	)
 
 /obj/item/bodypart/chest/monkey/kobold
 	icon = 'icons/mob/human/species/kobold/bodyparts.dmi'
