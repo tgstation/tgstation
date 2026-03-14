@@ -5,6 +5,8 @@
 /// If we're under load we want to allow for cycling, but if not we want to preserve already generated docks for use
 #define SOFT_TRANSIT_RESERVATION_THRESHOLD (100 ** 2)
 
+GLOBAL_LIST_EMPTY(cargo_shuttle_fan_landmarks)
+
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
@@ -148,6 +150,9 @@ SUBSYSTEM_DEF(shuttle)
 
 	/// List of express consoles that are waiting for pack initialization
 	var/list/obj/machinery/computer/cargo/express/express_consoles = list()
+
+	/// Has the crew purchased a fan upgrade this shift? Installs tiny fans into the fan landmarks on the cargo shuttles.
+	var/fans_installed = FALSE
 
 /datum/controller/subsystem/shuttle/Initialize()
 	order_number = rand(1, 9000)

@@ -576,6 +576,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		return created_joining_mob
 	return created_joining_mob
 
+/obj/effect/landmark/fan_install
+	name = "tiny fan install point"
+	icon_state = "fan-install"
+
+/obj/effect/landmark/fan_install/Initialize(mapload)
+	. = ..()
+	GLOB.cargo_shuttle_fan_landmarks += src
+	return
+
 //Landmark that creates destinations for the navigate verb to path to
 /obj/effect/landmark/navigate_destination
 	name = "navigate verb destination"

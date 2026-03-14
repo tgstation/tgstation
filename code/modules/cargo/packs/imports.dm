@@ -364,3 +364,32 @@
 		/obj/item/stack/ore/bluespace_crystal/artificial = 2,
 		/obj/item/stock_parts/subspace/ansible,
 	)
+
+/datum/supply_pack/imports/fan_upgrade
+	name = "Cargo Shuttle Upgrade: Tiny Fans"
+	desc = "Do you or your coworkers have a bad habit of leaving your cargo shuttle shutter doors open to the cold, cold, vaccuum of space?\
+		With this handy engineering retrofit, your shuttle will now be equip with a few handy auto-recycling fans. No refunds."
+	cost = CARGO_CRATE_VALUE * 40 // HELLA expensive.
+	order_flags = ORDER_NOT_DEPARTMENTAL
+	access_view = ACCESS_CARGO
+	contains = list(
+		/obj/item/paper/fluff/certificate,
+	)
+
+/datum/supply_pack/imports/fan_upgrade/generate(atom/A, datum/bank_account/paying_account)
+	if(SSshuttle.fans_installed)
+		return ..()
+
+	for(var/obj/spawnpoint as anything in GLOB.cargo_shuttle_fan_landmarks)
+		new /obj/structure/fans/tiny(spawnpoint.loc)
+		SSshuttle.fans_installed = TRUE
+		order_flags = ORDER_INVISIBLE
+	return ..()
+
+/obj/item/paper/fluff/certificate
+	name = "Certificate of Shuttle Upgrade"
+	color = COLOR_LIGHT_ORANGE
+	desc = "A note from the Nanotrasen Mechanics Society detailing your new shuttle upgrade."
+	default_raw_text = "Hey, we installed those tiny fans like you asked. Took about 30 seconds, but it's expert labor so that's where the price comes from.\
+		Also the fact that these bad boys were outlawed for civilain transport about 8 years ago but really who's checking? Anyway, these things work automatically,\
+		but don't unwrench em or nothing or else they'll fall to shit, and we can't order replacements. Good luck."

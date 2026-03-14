@@ -43,6 +43,10 @@
 "l" = (
 /turf/open/floor/iron/stairs/left,
 /area/shuttle/supply)
+"n" = (
+/obj/effect/landmark/fan_install,
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
 "o" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/smooth_large,
@@ -224,9 +228,9 @@ f
 a
 a
 g
-F
+n
 H
-F
+n
 u
 M
 Z

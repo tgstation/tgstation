@@ -48,6 +48,7 @@
 /area/shuttle/supply)
 "q" = (
 /obj/machinery/light/directional/east,
+/obj/effect/landmark/fan_install,
 /turf/open/floor/iron/dark,
 /area/shuttle/supply)
 "s" = (
@@ -138,6 +139,10 @@
 	dir = 1
 	},
 /area/shuttle/supply)
+"O" = (
+/obj/effect/landmark/fan_install,
+/turf/open/floor/iron/dark,
+/area/shuttle/supply)
 "R" = (
 /obj/docking_port/mobile/supply{
 	dir = 4;
@@ -189,7 +194,7 @@ I
 g
 s
 X
-w
+O
 K
 X
 t

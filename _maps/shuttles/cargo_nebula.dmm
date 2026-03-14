@@ -208,6 +208,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},

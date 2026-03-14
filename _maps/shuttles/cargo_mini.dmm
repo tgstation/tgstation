@@ -9,6 +9,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
+"j" = (
+/obj/effect/landmark/fan_install,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
 "r" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
@@ -102,9 +106,9 @@ r
 d
 r
 a
-a
+j
 X
-a
+j
 a
 a
 r

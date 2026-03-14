@@ -131,6 +131,14 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
+"E" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/landmark/fan_install,
+/turf/open/floor/iron/smooth,
+/area/shuttle/supply)
 "G" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -183,6 +191,14 @@
 	dir = 9;
 	id = "QMLoad"
 	},
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/supply)
+"U" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/supply)
 "V" = (
@@ -270,9 +286,9 @@ u
 (5,1,1) = {"
 h
 c
-j
+U
 d
-B
+E
 B
 B
 V

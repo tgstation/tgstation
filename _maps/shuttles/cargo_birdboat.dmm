@@ -140,6 +140,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
+"B" = (
+/obj/effect/landmark/fan_install,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
 "C" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
@@ -234,9 +238,9 @@ b
 f
 i
 k
-n
+B
 p
-n
+B
 g
 b
 z
