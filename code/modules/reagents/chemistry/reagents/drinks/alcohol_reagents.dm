@@ -3235,6 +3235,7 @@
 	living_mob.remove_status_effect(/datum/status_effect/cherenkov_radiation)
 
 /datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
 	drinker.set_drugginess(100 SECONDS * metabolization_ratio * seconds_per_tick)
 	drinker.set_jitter_if_lower(20 SECONDS * metabolization_ratio * seconds_per_tick)
 	drinker.set_dizzy_if_lower(10 SECONDS * metabolization_ratio * seconds_per_tick)
