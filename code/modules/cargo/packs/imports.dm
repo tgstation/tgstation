@@ -390,6 +390,6 @@
 	name = "Certificate of Shuttle Upgrade"
 	color = COLOR_LIGHT_ORANGE
 	desc = "A note from the Nanotrasen Mechanics Society detailing your new shuttle upgrade."
-	default_raw_text = "Hey, we installed those tiny fans like you asked. Took about 30 seconds, but it's expert labor so that's where the price comes from.\
-		Also the fact that these bad boys were outlawed for civilain transport about 8 years ago but really who's checking? Anyway, these things work automatically,\
-		but don't unwrench em or nothing or else they'll fall to shit, and we can't order replacements. Good luck."
+	default_raw_text = "Hey boss. We got those tiny fans installed for ya, nothing to it really. You'll find 'em under the blast doors or the exits, \
+		whichever the mechanics were able to get to. They're all set to go without any tweaking, so don't futz with them. Otherwise, you let us know \
+		if anything seems out of place."
