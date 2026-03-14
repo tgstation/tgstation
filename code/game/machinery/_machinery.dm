@@ -840,42 +840,70 @@
 	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS)
 
 /**
+ * Checks if the machine is in a state where it can be pried open with a crowbar,
+ * which is used by the default crowbar pry open method.
+ */
+/obj/machinery/proc/can_crowbar_pry_open()
+	PROTECTED_PROC(TRUE)
+	return !state_open && !panel_open && !is_operational
+
+/**
  * Default method for prying a machine open, setting it to open state
  *
  * * crowbar - The crowbar being used to pry the machine open.
+ * You do not have to assert the crowbar is a crowbar, it is checked for you.
  * * close_after_pry - If TRUE, the machine will immediately close after being pried open. Defaults to FALSE.
  * Best used for machines that don't have a real open state, effectively making this proc a "dump contents on crowbar" action.
  * * open_density - If TRUE, the machine will be set to dense when pried open. Defaults to FALSE.
  * * closed_density - If TRUE, the machine will be set to dense when closed after being pried open. Defaults to TRUE.
  * Only applies if close_after_pry is TRUE.
+ *
+ * Returns NONE on failure
+ * Returns ITEM_INTERACT_SUCCESS on success
  */
-/obj/machinery/proc/default_pry_open(obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
+/obj/machinery/proc/default_pry_open(mob/living/user, obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
 	PROTECTED_PROC(TRUE)
 
-	. = !(state_open || panel_open || is_operational) && crowbar.tool_behaviour == TOOL_CROWBAR
-	if(!.)
-		return
+	if(crowbar.tool_behaviour != TOOL_CROWBAR)
+		return NONE
+	if(!can_crowbar_pry_open())
+		return ITEM_INTERACT_BLOCKING
+
 	crowbar.play_tool_sound(src, 50)
-	visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
+	user.visible_message(span_notice("[user] pries open [src]."), span_notice("You pry open [src]."))
 	open_machine(density_to_set = open_density)
 	if (close_after_pry) //Should it immediately close after prying? (If not, it must be closed elsewhere)
 		close_machine(density_to_set = closed_density)
+	return ITEM_INTERACT_SUCCESS
+
+/**
+ * Checks if the machine is in a state where it can be deconstructed with a crowbar,
+ * which is used by the default crowbar deconstruction method.
+ */
+/obj/machinery/proc/can_crowbar_deconstruct()
+	PROTECTED_PROC(TRUE)
+	return panel_open
 
 /**
  * Default method of deconstructing a machine with a crowbar
- * Requires panel be open, unless ignore_panel is set to TRUE.
+ * Requires panel be open to work, unless ignore_panel is set to TRUE.
  *
  * * crowbar - The crowbar being used to deconstruct the machine.
- * * ignore_panel - If TRUE, the machine will be deconstructed even if the panel is not open. Defaults to FALSE.
- * * custom_deconstruct - If TRUE, the machine will not be deconstructed by this proc
+ * You do not have to assert the crowbar is a crowbar, it is checked for you.
+ *
+ * Returns NONE on failure, or if custom_deconstruct is set to TRUE.
+ * Returns ITEM_INTERACT_SUCCESS on success.
  */
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
+/obj/machinery/proc/default_deconstruction_crowbar(mob/living/user, obj/item/crowbar)
 	PROTECTED_PROC(TRUE)
 
-	. = (panel_open || ignore_panel) && crowbar.tool_behaviour == TOOL_CROWBAR
-	if(!. || custom_deconstruct)
+	if(crowbar.tool_behaviour != TOOL_CROWBAR)
 		return NONE
+	if(!can_crowbar_deconstruct())
+		return ITEM_INTERACT_BLOCKING
+
 	crowbar.play_tool_sound(src, 50)
+	// user.visible_message(span_notice("[user] deconstructs [src]."), span_notice("You deconstruct [src]."))
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
@@ -993,6 +1021,16 @@
 	for(var/atom/atom_part in old_components)
 		qdel(atom_part)
 
+/**
+ * Default method of opening a machine's maintenance panel with a screwdriver
+ *
+ * * user - The mob using the screwdriver
+ * * screwdriver - The screwdriver being used to open the panel.
+ * You do not have to assert the screwdriver is a screwdriver, it is checked for you.
+ *
+ * Returns NONE on failure
+ * Returns ITEM_INTERACT_SUCCESS on success
+ */
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, obj/item/screwdriver)
 	if(screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
 		return NONE
@@ -1002,6 +1040,17 @@
 	balloon_alert(user, "maintenance hatch [panel_open ? "opened" : "closed"]")
 	return ITEM_INTERACT_SUCCESS
 
+/**
+ * Default method of rotating a machine with a wrench
+ * Requires panel to be opened to work.
+ *
+ * * user - The mob using the wrench
+ * * wrench - The wrench being used to rotate the machine
+ * You do not have to assert the wrench is a wrench, it is checked for you.
+ *
+ * Returns NONE on failure
+ * Returns ITEM_INTERACT_SUCCESS on success
+ */
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/wrench)
 	if(!panel_open || wrench.tool_behaviour != TOOL_WRENCH)
 		return NONE

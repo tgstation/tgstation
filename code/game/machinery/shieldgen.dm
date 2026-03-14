@@ -459,7 +459,7 @@
 	if(active)
 		return ITEM_INTERACT_BLOCKING
 
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()

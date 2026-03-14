@@ -111,9 +111,9 @@
 	return state_open ? NONE : default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/recharge_station/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
+	if(default_pry_open(user, tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(tool))
+	if(default_deconstruction_crowbar(user, tool))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 

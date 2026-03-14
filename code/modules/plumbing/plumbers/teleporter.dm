@@ -103,9 +103,9 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/plumbing/receiver/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(tool))
+	if(default_pry_open(user, tool))
 		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(tool))
+	if(default_deconstruction_crowbar(user, tool))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 

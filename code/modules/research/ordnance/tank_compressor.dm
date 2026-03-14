@@ -96,7 +96,7 @@
 	if(active || inserted_tank)
 		return NONE
 
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /// Glorified volume pump.
 /obj/machinery/atmospherics/components/binary/tank_compressor/process_atmos()

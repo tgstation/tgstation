@@ -184,7 +184,7 @@
 		balloon_alert(user, "still processing!")
 		return ITEM_INTERACT_BLOCKING
 
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 
 /**

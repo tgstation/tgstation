@@ -142,7 +142,7 @@
 		balloon_alert(user, "turn off first!")
 		return ITEM_INTERACT_BLOCKING
 
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/smoke_machine/process()
 	if(!reagents.total_volume || !anchored || !on || !is_operational)

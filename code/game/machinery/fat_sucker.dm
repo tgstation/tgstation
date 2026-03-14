@@ -200,7 +200,7 @@
 	return default_deconstruction_screwdriver(user, I)
 
 /obj/machinery/fat_sucker/crowbar_act(mob/living/user, obj/item/I)
-	return default_deconstruction_crowbar(I)
+	return default_deconstruction_crowbar(user, I)
 
 /obj/machinery/fat_sucker/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

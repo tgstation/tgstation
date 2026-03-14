@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/exoscanner/crowbar_act(mob/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/exoscanner/proc/scan_change()
 	SIGNAL_HANDLER

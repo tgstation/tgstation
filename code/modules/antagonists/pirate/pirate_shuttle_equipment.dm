@@ -195,7 +195,7 @@
 	return screwdriver_act(user, tool)
 
 /obj/machinery/piratepad/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/piratepad/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	return crowbar_act(user, tool)

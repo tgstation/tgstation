@@ -214,7 +214,7 @@
 	return .
 
 /obj/machinery/space_heater/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/space_heater/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
@@ -423,7 +423,7 @@
 ///Slightly modified to ignore the open_hatch - it's always open, we hacked it.
 /obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(default_deconstruction_crowbar(item))
+	if(default_deconstruction_crowbar(user, item))
 		return
 	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		if(cell)

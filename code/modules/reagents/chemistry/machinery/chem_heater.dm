@@ -116,7 +116,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/chem_heater/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/chem_heater/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

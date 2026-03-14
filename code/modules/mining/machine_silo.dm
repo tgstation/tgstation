@@ -162,7 +162,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/ore_silo/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
 	I.set_buffer(src)

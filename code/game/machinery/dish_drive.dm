@@ -84,7 +84,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/dish_drive/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/dish_drive/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(is_type_in_list(tool, collectable_items) && !user.combat_mode)

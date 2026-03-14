@@ -44,7 +44,10 @@
 	return charging ? NONE : default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/cell_charger/crowbar_act(mob/living/user, obj/item/tool)
-	return charging ? NONE : default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/cell_charger/can_crowbar_deconstruct()
+	return ..() && !charging
 
 /obj/machinery/cell_charger/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/stock_parts/power_store/cell) || panel_open)

@@ -697,7 +697,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/libraryscanner/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/libraryscanner/update_icon_state()
 	. = ..()
@@ -784,7 +784,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/bookbinder/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/bookbinder/update_icon_state()
 	. = ..()

@@ -140,7 +140,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(tool, close_after_pry = TRUE))
+	if(default_pry_open(user, tool, close_after_pry = TRUE))
 		return ITEM_INTERACT_SUCCESS
 
 	if(welded_down)
@@ -580,7 +580,10 @@
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 
 /obj/machinery/smartfridge/drying/rack/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool, ignore_panel = TRUE)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/smartfridge/drying/rack/can_crowbar_deconstruct()
+	return TRUE
 
 /obj/machinery/smartfridge/drying/rack/update_overlays()
 	. = ..()

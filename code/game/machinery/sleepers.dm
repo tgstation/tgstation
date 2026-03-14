@@ -133,18 +133,14 @@
 	return default_change_direction_wrench(user, I)
 
 /obj/machinery/sleeper/crowbar_act(mob/living/user, obj/item/I)
-	if(default_pry_open(I))
+	if(default_pry_open(user, I))
 		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(user, I))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_FAILURE
 
-/obj/machinery/sleeper/default_pry_open(obj/item/I) //wew
-	. = !(state_open || panel_open) && I.tool_behaviour == TOOL_CROWBAR
-	if(.)
-		I.play_tool_sound(src, 50)
-		visible_message(span_notice("[usr] pries open [src]."), span_notice("You pry open [src]."))
-		open_machine()
+/obj/machinery/sleeper/can_crowbar_pry_open()
+	return !state_open && !panel_open
 
 /obj/machinery/sleeper/ui_state(mob/user)
 	if(!controls_inside)

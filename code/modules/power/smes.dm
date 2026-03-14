@@ -303,7 +303,7 @@
 		balloon_alert(user, "remove the power terminal!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_crowbar(tool))
+	if(default_deconstruction_crowbar(user, tool))
 		var/turf/ground = get_turf(src)
 		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(ground)].")
 		user.log_message("deconstructed [src]", LOG_GAME)

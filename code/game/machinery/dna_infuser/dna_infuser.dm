@@ -167,9 +167,9 @@
 /obj/machinery/dna_infuser/crowbar_act(mob/living/user, obj/item/tool)
 	if(infusing)
 		return NONE
-	if(default_pry_open(tool))
+	if(default_pry_open(user, tool))
 		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(tool))
+	if(default_deconstruction_crowbar(user, tool))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 

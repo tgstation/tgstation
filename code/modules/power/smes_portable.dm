@@ -241,7 +241,7 @@
 		balloon_alert(user, "disconnect from [connected_port] first!")
 		return ITEM_INTERACT_FAILURE
 
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /**
  * Attempt to connect the portable SMES to a given connector. Adapted from portable atmos connection code.

@@ -295,7 +295,7 @@
 		balloon_alert(user, "still operating!")
 		return ITEM_INTERACT_BLOCKING
 
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/reagentgrinder/proc/on_storage_dump(datum/source, datum/storage/storage, mob/user)
 	SIGNAL_HANDLER

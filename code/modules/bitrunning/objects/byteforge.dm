@@ -50,7 +50,7 @@
 	return default_deconstruction_screwdriver(user, screwdriver)
 
 /obj/machinery/byteforge/crowbar_act(mob/living/user, obj/item/crowbar)
-	return default_deconstruction_crowbar(crowbar)
+	return default_deconstruction_crowbar(user, crowbar)
 
 /obj/machinery/byteforge/update_icon_state()
 	. = ..()

@@ -515,7 +515,7 @@
 		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return NONE
 
-	return default_deconstruction_crowbar(I)
+	return default_deconstruction_crowbar(user, I)
 
 /obj/machinery/mecha_part_fabricator/maint
 	link_on_init = FALSE

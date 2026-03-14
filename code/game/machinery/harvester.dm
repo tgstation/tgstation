@@ -156,18 +156,14 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/harvester/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(tool))
+	if(default_pry_open(user, tool))
 		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(tool))
+	if(default_deconstruction_crowbar(user, tool))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/obj/machinery/harvester/default_pry_open(obj/item/tool) //wew
-	. = !(state_open || panel_open) && tool.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
-	if(.)
-		tool.play_tool_sound(src, 50)
-		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open [src]."))
-		open_machine()
+/obj/machinery/harvester/can_crowbar_pry_open()
+	return !state_open && !panel_open
 
 /obj/machinery/harvester/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

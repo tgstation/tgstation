@@ -233,7 +233,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/hydroponics/constructable/crowbar_act(mob/living,user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/hydroponics/bullet_act(obj/projectile/proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)

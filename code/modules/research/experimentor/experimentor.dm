@@ -150,9 +150,9 @@
 		. += span_notice("Malfunction probability reduced by [span_bold("[malfunction_probability_coeff]")].")
 		. += span_notice("Cooldown interval between experiments at [span_bold("[cooldown]")] seconds.")
 
-/obj/machinery/rnd/experimentor/default_deconstruction_crowbar(obj/item/crowbar)
+/obj/machinery/rnd/experimentor/on_deconstruction(disassembled)
+	. = ..()
 	item_eject()
-	return ..()
 
 /obj/machinery/rnd/experimentor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

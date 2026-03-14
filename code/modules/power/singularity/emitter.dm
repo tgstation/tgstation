@@ -329,7 +329,7 @@
 		return remove_gun(user)
 	if(panel_open && diskie)
 		return remove_disk(user)
-	return default_deconstruction_crowbar(item)
+	return default_deconstruction_crowbar(user, item)
 
 /obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/item)
 	return default_deconstruction_screwdriver(user, item)

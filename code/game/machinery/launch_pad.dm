@@ -78,7 +78,10 @@
 	return stationary ? default_deconstruction_screwdriver(user, tool) : NONE
 
 /obj/machinery/launchpad/crowbar_act(mob/living/user, obj/item/tool)
-	return stationary ? default_deconstruction_crowbar(tool) : NONE
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/launchpad/can_crowbar_deconstruct()
+	return ..() && stationary
 
 /obj/machinery/launchpad/on_set_is_operational(old_value)
 	update_indicator()

@@ -198,7 +198,7 @@
 		balloon_alert(user, "still printing!")
 		return ITEM_INTERACT_BLOCKING
 
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /**
  * Insert, remove, replace the existig beaker. Returns TRUE on success.

@@ -61,7 +61,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/power/manufacturing/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/power/manufacturing/proc/generate_io_overlays(direction, color, offsets_override)
 	var/list/dir_offset

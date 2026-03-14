@@ -166,7 +166,7 @@
 	if(length(avatar_connection_refs))
 		balloon_alert(user, "all clients must disconnect!")
 		return ITEM_INTERACT_FAILURE
-	return default_deconstruction_crowbar(crowbar)
+	return default_deconstruction_crowbar(user, crowbar)
 
 /obj/machinery/quantum_server/screwdriver_act(mob/living/user, obj/item/screwdriver)
 	if(!is_ready)

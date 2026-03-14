@@ -25,7 +25,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/botpad/crowbar_act(mob/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/botpad/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!panel_open)

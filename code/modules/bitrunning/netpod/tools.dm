@@ -3,7 +3,7 @@
 		attack_hand(user)
 		return ITEM_INTERACT_SUCCESS
 
-	if(default_pry_open(tool, user) || default_deconstruction_crowbar(tool))
+	if(default_pry_open(user, tool) || default_deconstruction_crowbar(user, tool))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE

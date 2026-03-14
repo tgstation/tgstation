@@ -264,9 +264,9 @@ Possible to do for anyone motivated enough:
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/holopad/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(tool, close_after_pry = TRUE, closed_density = FALSE))
+	if(default_pry_open(user, tool, close_after_pry = TRUE, closed_density = FALSE))
 		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(tool))
+	if(default_deconstruction_crowbar(user, tool))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 

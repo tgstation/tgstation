@@ -121,7 +121,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/transport/crossing_signal/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/transport/crossing_signal/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -516,7 +516,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/transport/guideway_sensor/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/transport/guideway_sensor/proc/pair_sensor()
 	set_machine_stat(machine_stat | MAINT)

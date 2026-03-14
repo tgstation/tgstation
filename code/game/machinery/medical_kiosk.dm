@@ -116,7 +116,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/medical_kiosk/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/medical_kiosk/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/scanner_wand))

@@ -16,7 +16,7 @@
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
 	if(!component_parts)
 		return ITEM_INTERACT_FAILURE
-	return default_deconstruction_crowbar(attack_item)
+	return default_deconstruction_crowbar(user, attack_item)
 
 /obj/machinery/vending/wrench_act(mob/living/user, obj/item/tool)
 	. = NONE

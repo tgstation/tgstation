@@ -107,7 +107,7 @@
 		GLOB.deliverybeacontags += location
 
 /obj/machinery/navbeacon/crowbar_act(mob/living/user, obj/item/I)
-	return default_deconstruction_crowbar(I)
+	return default_deconstruction_crowbar(user, I)
 
 /obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!panel_open && cover_locked)

@@ -84,7 +84,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/mech_bay_recharge_port/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/mech_bay_recharge_port/wrench_act(mob/living/user, obj/item/tool)
 	. = default_change_direction_wrench(user, tool)

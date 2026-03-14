@@ -51,7 +51,7 @@
 
 /// Deconstructing the mail sorter.
 /obj/machinery/mailsorter/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/mailsorter/examine(mob/user)
 	. = ..()

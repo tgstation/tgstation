@@ -142,7 +142,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/modular_shield_generator/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, list/modifiers)
 
@@ -536,10 +536,7 @@
 	return TRUE
 
 /obj/machinery/modular_shield/module/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-
-	if(default_deconstruction_crowbar(tool))
-		return TRUE
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/modular_shield/module/setDir(new_dir)
 	. = ..()

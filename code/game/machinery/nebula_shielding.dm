@@ -110,7 +110,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/nebula_shielding/radiation/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 ///Emergency shielding so people aren't permanently in a radstorm if shit goes very wrong in engineering
 /obj/machinery/nebula_shielding/emergency/radiation

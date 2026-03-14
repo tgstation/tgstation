@@ -291,9 +291,7 @@
 
 	var/deconstruct = FALSE
 	if(!default_pry_open(tool))
-		if(!default_deconstruction_crowbar(tool, custom_deconstruct = TRUE))
-			return ITEM_INTERACT_BLOCKING
-		deconstruct = TRUE
+		deconstruct = can_crowbar_deconstruct()
 
 	if(unsafe_release)
 		internal_connector.gas_connector.unsafe_pressure_release(user, internal_pressure)

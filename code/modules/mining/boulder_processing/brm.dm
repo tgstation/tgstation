@@ -95,7 +95,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/brm/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 ///To allow boulders on a conveyor belt to move unobstructed if multiple machines are made on a single line
 /obj/machinery/brm/CanAllowThrough(atom/movable/mover, border_dir)

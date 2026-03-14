@@ -103,9 +103,9 @@
 		to_chat(user, span_warning("[src] is in the process of processing!"))
 		return ITEM_INTERACT_BLOCKING
 
-	if(default_pry_open(tool, close_after_pry = TRUE))
+	if(default_pry_open(user, tool, close_after_pry = TRUE))
 		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(tool))
+	if(default_deconstruction_crowbar(user, tool))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 

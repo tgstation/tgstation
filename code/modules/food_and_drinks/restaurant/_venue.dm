@@ -271,7 +271,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/restaurant_portal/crowbar_act(mob/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/restaurant_portal/wrench_act(mob/living/user, obj/item/tool)
 	if(!panel_open)

@@ -419,7 +419,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/chem_dispenser/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/chem_dispenser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!tool.can_insert_container(user, src))

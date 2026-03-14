@@ -668,7 +668,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/photocopier/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

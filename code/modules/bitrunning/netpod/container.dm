@@ -36,7 +36,7 @@
 	enter_matrix()
 
 
-/obj/machinery/netpod/default_pry_open(obj/item/crowbar, mob/living/pryer)
+/obj/machinery/netpod/default_pry_open(mob/living/user, obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
 	if(isnull(occupant) || !iscarbon(occupant))
 		if(!state_open)
 			if(panel_open)

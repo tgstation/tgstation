@@ -46,7 +46,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/power/rtg/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/power/rtg/advanced
 	desc = "An advanced RTG capable of moderating isotope decay, increasing power output but reducing lifetime. It uses plasma-fueled radiation collectors to increase output even further."
@@ -152,10 +152,12 @@
 	if(. & ITEM_INTERACT_SUCCESS)
 		to_chat(user, span_warning("You feel [src] crumbling under your hands!"))
 
-/obj/machinery/power/rtg/old_station/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct, mob/user)
-	to_chat(user,span_warning("It's starting to fall off!"))
-	if(!do_after(user, 3 SECONDS, src))
-		return TRUE
-	to_chat(user,span_notice("You feel like you made a mistake"))
-	new /obj/effect/decal/cleanable/ash/large(loc)
-	qdel(src)
+/obj/machinery/power/rtg/old_station/default_deconstruction_crowbar(mob/living/user, obj/item/crowbar, ignore_panel, custom_deconstruct)
+	to_chat(user, span_warning("As you pry, [src] starts to fall apart!"))
+	if(!crowbar.use_tool(src, user, 3 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_warning("You feel like you made a mistake."))
+	new /obj/effect/decal/cleanable/ash/large(drop_location())
+	deconstruct(FALSE)
+	return ITEM_INTERACT_SUCCESS

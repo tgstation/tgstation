@@ -56,7 +56,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/teleport/hub/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/teleport/hub/on_set_panel_open(old_value)
 	if(panel_open && power_station?.engaged)
@@ -183,7 +183,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/teleport/station/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/teleport/station/interact(mob/user)
 	toggle(user)

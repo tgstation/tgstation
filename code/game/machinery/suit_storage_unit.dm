@@ -735,7 +735,7 @@
 			default_deconstruction_crowbar(tool)
 			return ITEM_INTERACT_SUCCESS
 
-	if(default_pry_open(tool))
+	if(default_pry_open(user, tool))
 		dump_inventory_contents()
 		return ITEM_INTERACT_SUCCESS
 
@@ -746,23 +746,17 @@
 /obj/machinery/suit_storage_unit/screwdriver_act(mob/living/user, obj/item/tool)
 	if(state_open)
 		return NONE
-	if((uv || locked))
+	if(uv || locked)
 		to_chat(user, span_warning("You can't open the panel while its [locked ? "locked" : "decontaminating"]"))
 		return ITEM_INTERACT_BLOCKING
 
 	return default_deconstruction_screwdriver(user, tool)
 
-/obj/machinery/suit_storage_unit/default_pry_open(obj/item/crowbar)//needs to check if the storage is locked.
-	. = !(state_open || panel_open || is_operational || locked) && crowbar.tool_behaviour == TOOL_CROWBAR
-	if(.)
-		crowbar.play_tool_sound(src, 50)
-		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
-		open_machine()
+/obj/machinery/suit_storage_unit/can_crowbar_pry_open()
+	return ..() && !locked
 
-/obj/machinery/suit_storage_unit/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	. = (!locked && panel_open && crowbar.tool_behaviour == TOOL_CROWBAR)
-	if(.)
-		return ..()
+/obj/machinery/suit_storage_unit/can_crowbar_deconstruct()
+	return ..() && !locked
 
 /obj/machinery/suit_storage_unit/rename_checks(mob/living/user)
 	. = TRUE

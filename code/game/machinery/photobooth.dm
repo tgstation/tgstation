@@ -105,7 +105,7 @@
 	return has_buckled_mobs() ? NONE : default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/photobooth/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/photobooth/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

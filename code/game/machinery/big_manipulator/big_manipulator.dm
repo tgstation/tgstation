@@ -376,7 +376,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/big_manipulator/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/big_manipulator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)

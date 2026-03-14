@@ -320,7 +320,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/microwave/screwdriver_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_screwdriver(user, tool)

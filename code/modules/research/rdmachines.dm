@@ -98,7 +98,7 @@
 	icon_state = panel_open ? "[base_icon_state || initial(icon_state)]_t" : (base_icon_state || initial(icon_state))
 
 /obj/machinery/rnd/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/rnd/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	return crowbar_act(user, tool)

@@ -238,24 +238,19 @@
 	return NONE
 
 /obj/machinery/grill/wrench_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
 	. = ITEM_INTERACT_BLOCKING
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/grill/crowbar_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
-	. = ITEM_INTERACT_BLOCKING
 	if(anchored)
 		balloon_alert(user, "unanchor first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_crowbar(tool, ignore_panel = TRUE))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/grill/can_crowbar_deconstruct()
+	return !anchored // melbert todo
 
 /obj/machinery/grill/process(seconds_per_tick)
 	if(!anchored)
