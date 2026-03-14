@@ -395,7 +395,7 @@
 	if(istype(tool, /obj/item/hatchet) || istype(tool, /obj/item/fireaxe))
 		duration /= 4 //Much better with hatchets and axes.
 	to_chat(user, span_notice("You begin breaking down [src]."))
-	if(do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
+	if(!do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
 		return ITEM_INTERACT_BLOCKING
 	deconstruct(disassembled = FALSE)
 	return ITEM_INTERACT_SUCCESS
