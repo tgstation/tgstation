@@ -18,20 +18,20 @@
 		/atom/movable/screen/minimap_tool/clear,
 	)
 
-/datum/action/minimap/map_drawing/New(Target, new_minimap_flags, new_marker_flags, tactical_map)
-	. = ..()
-	var/list/atom/movable/screen/actions = list()
-	for(var/path in drawing_tools)
-		actions += new path(null, null, current_z_shown, my_map)
-	drawing_tools = actions
-
 /datum/action/minimap/map_drawing/Destroy()
 	QDEL_LIST(drawing_tools)
 	return ..()
 
+/datum/action/minimap/map_drawing/Grant(mob/grant_to)
+	. = ..()
+	var/list/atom/movable/screen/actions = list()
+	for(var/path in drawing_tools)
+		actions += new path(FALSE, grant_to, current_z_shown, my_map)
+	drawing_tools = actions
+
 /datum/action/minimap/map_drawing/toggle_minimap(force_state)
 	. = ..()
-	if(!force_state)
+	if(minimap_displayed)
 		owner.client.screen += drawing_tools
 		return
 	owner.client.screen -= drawing_tools

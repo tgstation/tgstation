@@ -29,6 +29,8 @@
 	var/datum/tactical_map/my_map
 	/// Current z-level that we are showing on the minimap
 	var/current_z_shown
+	/// minimap state, if it's open or not
+	var/active = FALSE
 
 /datum/action/minimap/New(Target, new_minimap_flags, new_marker_flags, tactical_map)
 	. = ..()
