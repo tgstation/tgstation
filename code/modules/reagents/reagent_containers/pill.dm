@@ -353,9 +353,25 @@
 	name = "maintenance pill"
 	desc = "A strange pill found in the depths of maintenance."
 	icon_state = "pill21"
-	var/static/list/names = list("maintenance pill", "floor pill", "mystery pill", "suspicious pill", "strange pill", "lucky pill", "ominous pill", "eerie pill")
-	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
-	, "Surely, there's no way this could go bad.", "Winners don't do dr- oh what the heck!", "Free pills? At no cost, how could I lose?")
+	///Boolean on whether this will count towards your achievement score if you consume it.
+	var/count_towards_achievement = FALSE
+	var/static/list/names = list(
+		"maintenance pill",
+		"floor pill",
+		"mystery pill",
+		"suspicious pill",
+		"strange pill",
+		"lucky pill",
+		"ominous pill",
+		"eerie pill",
+	)
+	var/static/list/descs = list(
+		"Your feeling is telling you no, but...",
+		"Drugs are expensive, you can't afford not to eat any pills that you find.",
+		"Surely, there's no way this could go bad.",
+		"Winners don't do dr- oh what the heck!",
+		"Free pills? At no cost, how could I lose?",
+	)
 
 /obj/item/reagent_containers/applicator/pill/maintenance/Initialize(mapload)
 	list_reagents = list(get_random_reagent_id() = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
@@ -363,10 +379,20 @@
 	name = pick(names)
 	if(prob(30))
 		desc = pick(descs)
+	RegisterSignal(src, COMSIG_ON_REAGENT_SCAN, PROC_REF(on_chemical_scan))
 
-/obj/item/reagent_containers/applicator/pill/maintenance/achievement/on_consumption(mob/consumer, mob/user)
+/obj/item/reagent_containers/applicator/pill/maintenance/on_consumption(mob/consumer, mob/user)
 	. = ..()
-	consumer.client?.give_award(/datum/award/score/maintenance_pill, consumer)
+	if(count_towards_achievement)
+		consumer.client?.give_award(/datum/award/score/maintenance_pill, consumer)
+
+///called when we are chemically scanned, we no longer grant an achievement.
+/obj/item/reagent_containers/pill/maintenance/achievement/proc/on_chemical_scan(atom/source, mob/user)
+	SIGNAL_HANDLER
+	count_towards_achievement = FALSE
+
+/obj/item/reagent_containers/applicator/pill/maintenance/achievement
+	count_towards_achievement = TRUE
 
 /obj/item/reagent_containers/applicator/pill/potassiodide
 	name = "potassium iodide pill"
