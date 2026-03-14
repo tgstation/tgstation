@@ -49,6 +49,7 @@
 	dir = 4;
 	id = "QMLoad"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/supply)
 "h" = (
@@ -177,7 +178,6 @@
 	name = "Supply Shuttle Airlock"
 	},
 /obj/docking_port/mobile/supply,
-/obj/effect/landmark/fan_install,
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/supply)
 "Q" = (
