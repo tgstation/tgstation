@@ -89,7 +89,7 @@
 	desc = "Some sort of bizarre assembly."
 	icon_state = "ed209_frame"
 	inhand_icon_state = null
-	created_name = "ED-209 Security Robot" //To preserve the name if it's a unique securitron tool guess
+	created_name = "ED-209 Security Robot" //To preserve the name if it's a unique securitron I guess
 	var/lasercolor = ""
 	var/vest_type = /obj/item/clothing/suit/armor/vest
 
@@ -128,7 +128,7 @@
 		if(ASSEMBLY_FOURTH_STEP)
 			if(tool.tool_behaviour != TOOL_WELDER)
 				return NONE
-			if(tool.use_tool(src, user, 0, volume=40))
+			if(!tool.use_tool(src, user, 0, volume=40))
 				return ITEM_INTERACT_BLOCKING
 			name = "shielded frame assembly"
 			to_chat(user, span_notice("You weld the vest to [src]."))
@@ -273,7 +273,7 @@
 	desc = "A first aid kit with a robot arm permanently grafted to it."
 	icon_state = "medbot_assembly_generic"
 	base_icon_state = "medbot_assembly"
-	created_name = "Medibot" //To preserve the name if it's a unique medbot tool guess
+	created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
 	var/healthanalyzer = /obj/item/healthanalyzer
 	var/medkit_type = /obj/item/storage/medkit
@@ -358,7 +358,7 @@
 	inhand_icon_state = "helmet"
 	lefthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
-	created_name = "Securitron" // To preserve the name if it's a unique securitron tool guess
+	created_name = "Securitron" // To preserve the name if it's a unique securitron I guess
 	/// If you're converting it into a grievousbot, how many swords have you attached
 	var/swordamt = 0
 	/// Honk
