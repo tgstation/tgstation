@@ -792,7 +792,7 @@
 	animate(src, alpha = max_alpha, time = duration * 0.6, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, time = duration * 0.4)
 	apply_wibbly_filters(src)
-	color |= color
+	color ||= color
 	return ..()
 
 /obj/effect/temp_visual/circle_wave/bioscrambler
