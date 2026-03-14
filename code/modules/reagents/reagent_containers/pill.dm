@@ -353,8 +353,6 @@
 	name = "maintenance pill"
 	desc = "A strange pill found in the depths of maintenance."
 	icon_state = "pill21"
-	///Boolean on whether this will count towards your achievement score if you consume it.
-	var/count_towards_achievement = FALSE
 	var/static/list/names = list(
 		"maintenance pill",
 		"floor pill",
@@ -379,20 +377,24 @@
 	name = pick(names)
 	if(prob(30))
 		desc = pick(descs)
+
+/obj/item/reagent_containers/applicator/pill/maintenance/achievement
+	///Boolean on whether this will count towards your achievement score if you consume it.
+	var/count_towards_achievement = TRUE
+
+/obj/item/reagent_containers/applicator/pill/maintenance/achievement/Initialize(mapload)
+	. = ..()
 	RegisterSignal(src, COMSIG_ON_REAGENT_SCAN, PROC_REF(on_chemical_scan))
 
-/obj/item/reagent_containers/applicator/pill/maintenance/on_consumption(mob/consumer, mob/user)
+/obj/item/reagent_containers/applicator/pill/maintenance/achievement/on_consumption(mob/consumer, mob/user)
 	. = ..()
 	if(count_towards_achievement)
 		consumer.client?.give_award(/datum/award/score/maintenance_pill, consumer)
 
 ///called when we are chemically scanned, we no longer grant an achievement.
-/obj/item/reagent_containers/pill/maintenance/achievement/proc/on_chemical_scan(atom/source, mob/user)
+/obj/item/reagent_containers/applicator/pill/maintenance/achievement/proc/on_chemical_scan(atom/source, mob/user)
 	SIGNAL_HANDLER
 	count_towards_achievement = FALSE
-
-/obj/item/reagent_containers/applicator/pill/maintenance/achievement
-	count_towards_achievement = TRUE
 
 /obj/item/reagent_containers/applicator/pill/potassiodide
 	name = "potassium iodide pill"
