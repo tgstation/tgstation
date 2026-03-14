@@ -226,11 +226,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			return 200
 		if(SLIME_ACTIVATE_MAJOR)
 			var/drink_type = get_random_drink()
-			var/obj/tool = new drink_type
-			if(!user.put_in_active_hand(tool))
-				tool.forceMove(user.drop_location())
+			var/obj/O = new drink_type
+			if(!user.put_in_active_hand(O))
+				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [tool]!"), span_notice("You spit out [tool]!"))
+			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
 			return 200
 
 /obj/item/slime_extract/metal
@@ -241,19 +241,19 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/metal/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			var/obj/item/stack/sheet/glass/tool = new(null, 5)
-			if(!user.put_in_active_hand(tool))
-				tool.forceMove(user.drop_location())
+			var/obj/item/stack/sheet/glass/O = new(null, 5)
+			if(!user.put_in_active_hand(O))
+				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [tool]!"), span_notice("You spit out [tool]!"))
+			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/obj/item/stack/sheet/iron/tool = new(null, 5)
-			if(!user.put_in_active_hand(tool))
-				tool.forceMove(user.drop_location())
+			var/obj/item/stack/sheet/iron/O = new(null, 5)
+			if(!user.put_in_active_hand(O))
+				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [tool]!"), span_notice("You spit out [tool]!"))
+			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
 			return 200
 
 /obj/item/slime_extract/purple
@@ -282,11 +282,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/darkpurple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			var/obj/item/stack/sheet/mineral/plasma/tool = new(null, 1)
-			if(!user.put_in_active_hand(tool))
-				tool.forceMove(user.drop_location())
+			var/obj/item/stack/sheet/mineral/plasma/O = new(null, 1)
+			if(!user.put_in_active_hand(O))
+				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [tool]!"), span_notice("You spit out [tool]!"))
+			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -455,19 +455,19 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/lightpink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			var/obj/item/slimepotion/renaming/tool = new(null, 1)
-			if(!user.put_in_active_hand(tool))
-				tool.forceMove(user.drop_location())
+			var/obj/item/slimepotion/renaming/O = new(null, 1)
+			if(!user.put_in_active_hand(O))
+				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [tool]!"), span_notice("You spit out [tool]!"))
+			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/obj/item/slimepotion/sentience/tool = new(null, 1)
-			if(!user.put_in_active_hand(tool))
-				tool.forceMove(user.drop_location())
+			var/obj/item/slimepotion/sentience/O = new(null, 1)
+			if(!user.put_in_active_hand(O))
+				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [tool]!"), span_notice("You spit out [tool]!"))
+			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
 			return 450
 
 /obj/item/slime_extract/black
@@ -586,21 +586,21 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			var/chosen = pick(difflist(subtypesof(/obj/item/toy/crayon),typesof(/obj/item/toy/crayon/spraycan)))
-			var/obj/item/tool = new chosen(null)
-			if(!user.put_in_active_hand(tool))
-				tool.forceMove(user.drop_location())
+			var/obj/item/O = new chosen(null)
+			if(!user.put_in_active_hand(O))
+				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [tool]!"), span_notice("You spit out [tool]!"))
+			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
 			var/blacklisted_cans = list(/obj/item/toy/crayon/spraycan/borg, /obj/item/toy/crayon/spraycan/infinite)
 			var/chosen = pick(subtypesof(/obj/item/toy/crayon/spraycan) - blacklisted_cans)
-			var/obj/item/tool = new chosen(null)
-			if(!user.put_in_active_hand(tool))
-				tool.forceMove(user.drop_location())
+			var/obj/item/O = new chosen(null)
+			if(!user.put_in_active_hand(O))
+				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [tool]!"), span_notice("You spit out [tool]!"))
+			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
 			return 250
 
 /obj/item/slime_extract/cerulean
@@ -630,11 +630,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/sepia/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			var/obj/item/camera/tool = new(null, 1)
-			if(!user.put_in_active_hand(tool))
-				tool.forceMove(user.drop_location())
+			var/obj/item/camera/O = new(null, 1)
+			if(!user.put_in_active_hand(O))
+				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [tool]!"), span_notice("You spit out [tool]!"))
+			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -660,11 +660,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 		if(SLIME_ACTIVATE_MAJOR)
 			var/chosen = pick(subtypesof(/obj/item/slime_extract))
-			var/obj/item/tool = new chosen(null)
-			if(!user.put_in_active_hand(tool))
-				tool.forceMove(user.drop_location())
+			var/obj/item/O = new chosen(null)
+			if(!user.put_in_active_hand(O))
+				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [tool]!"), span_notice("You spit out [tool]!"))
+			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
 			return 150
 
 ////Slime-derived potions///
