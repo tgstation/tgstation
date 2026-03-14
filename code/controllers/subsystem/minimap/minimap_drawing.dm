@@ -31,20 +31,9 @@
 
 /datum/action/minimap/map_drawing/toggle_minimap(force_state)
 	. = ..()
-	if(!map_object)
-		map_object = my_map.fetch_minimap_object(editing_z, my_map.minimap_flags)
-
-	if(!active)
-		if(locate(/atom/movable/screen/minimap) in owner.client.screen) //This seems like the most effective way to do this without some wacky code
-			to_chat(owner, span_warning("You already have a minimap open!"))
-			return FALSE
-		active = !active
-		owner.client.screen += map_object
+	if(!force_state)
 		owner.client.screen += drawing_tools
 		return
-
-	active = !active
-	owner.client.screen -= map_object
 	owner.client.screen -= drawing_tools
 
 /atom/movable/screen/minimap_tool
