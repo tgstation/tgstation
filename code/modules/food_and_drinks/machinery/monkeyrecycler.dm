@@ -5,6 +5,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	desc = "A machine used for recycling dead monkeys into monkey cubes."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"
+	base_icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
 	interaction_flags_mouse_drop = NEED_DEXTERITY
 	density = TRUE
@@ -42,20 +43,19 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 		power_change()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
-		return
+/obj/machinery/monkey_recycler/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-	if(default_pry_open(O, close_after_pry = TRUE))
-		return
+/obj/machinery/monkey_recycler/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_pry_open(tool, close_after_pry = TRUE))
+		return ITEM_INTERACT_SUCCESS
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	if(default_deconstruction_crowbar(O))
-		return
-
-	if(machine_stat) //NOPOWER etc
-		return
-	else
-		return ..()
+/obj/machinery/monkey_recycler/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state
 
 /obj/machinery/monkey_recycler/mouse_drop_receive(mob/living/target, mob/living/user, params)
 	if(!istype(target))

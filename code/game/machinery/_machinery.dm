@@ -839,6 +839,16 @@
 	update_current_power_usage()
 	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS)
 
+/**
+ * Default method for prying a machine open, setting it to open state
+ *
+ * * crowbar - The crowbar being used to pry the machine open.
+ * * close_after_pry - If TRUE, the machine will immediately close after being pried open. Defaults to FALSE.
+ * Best used for machines that don't have a real open state, effectively making this proc a "dump contents on crowbar" action.
+ * * open_density - If TRUE, the machine will be set to dense when pried open. Defaults to FALSE.
+ * * closed_density - If TRUE, the machine will be set to dense when closed after being pried open. Defaults to TRUE.
+ * Only applies if close_after_pry is TRUE.
+ */
 /obj/machinery/proc/default_pry_open(obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
 	PROTECTED_PROC(TRUE)
 
@@ -851,6 +861,14 @@
 	if (close_after_pry) //Should it immediately close after prying? (If not, it must be closed elsewhere)
 		close_machine(density_to_set = closed_density)
 
+/**
+ * Default method of deconstructing a machine with a crowbar
+ * Requires panel be open, unless ignore_panel is set to TRUE.
+ *
+ * * crowbar - The crowbar being used to deconstruct the machine.
+ * * ignore_panel - If TRUE, the machine will be deconstructed even if the panel is not open. Defaults to FALSE.
+ * * custom_deconstruct - If TRUE, the machine will not be deconstructed by this proc
+ */
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
 	PROTECTED_PROC(TRUE)
 

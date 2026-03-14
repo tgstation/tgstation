@@ -93,6 +93,10 @@
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
 
+/obj/machinery/rnd/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state || initial(icon_state)]_t" : (base_icon_state || initial(icon_state))
+
 /obj/machinery/rnd/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
@@ -100,7 +104,7 @@
 	return crowbar_act(user, tool)
 
 /obj/machinery/rnd/screwdriver_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), tool)
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/rnd/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	return screwdriver_act(user, tool)

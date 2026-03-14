@@ -6,6 +6,7 @@
 	desc = "A simple nuclear power generator, used in small outposts to reliably provide power for decades."
 	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "rtg"
+	base_icon_state = "rtg"
 	density = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/rtg
@@ -37,12 +38,15 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Power generation at <b>[display_power(power_gen, convert = FALSE)]</b>.")
 
-/obj/machinery/power/rtg/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
-		return
-	else if(default_deconstruction_crowbar(I))
-		return
-	return ..()
+/obj/machinery/power/rtg/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-open" : base_icon_state
+
+/obj/machinery/power/rtg/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/power/rtg/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/power/rtg/advanced
 	desc = "An advanced RTG capable of moderating isotope decay, increasing power output but reducing lifetime. It uses plasma-fueled radiation collectors to increase output even further."
@@ -56,6 +60,7 @@
 	name = "Void Core"
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "core"
+	base_icon_state = "core"
 	desc = "An alien power source that produces energy seemingly out of nowhere."
 	circuit = /obj/item/circuitboard/machine/abductor/core
 	power_gen = 20000 // 280 000 at T1, 400 000 at T4. Starts at T4.
@@ -142,13 +147,10 @@
 	power_gen = 750
 	anchored = TRUE
 
-/obj/machinery/power/rtg/old_station/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
-		to_chat(user,span_warning("You feel it crumbling under your hands!"))
-		return
-	else if(default_deconstruction_crowbar(I, user = user))
-		return
-	return ..()
+/obj/machinery/power/rtg/old_station/default_deconstruction_screwdriver(mob/user, obj/item/screwdriver)
+	. = ..()
+	if(. & ITEM_INTERACT_SUCCESS)
+		to_chat(user, span_warning("You feel [src] crumbling under your hands!"))
 
 /obj/machinery/power/rtg/old_station/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct, mob/user)
 	to_chat(user,span_warning("It's starting to fall off!"))

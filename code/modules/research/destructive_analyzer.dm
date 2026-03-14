@@ -61,8 +61,11 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/rnd/destructive_analyzer/update_icon_state()
-	icon_state = "[base_icon_state][loaded_item ? "_l" : panel_open ? "_t" : null]"
-	return ..()
+	. = ..()
+	if(panel_open && !loaded_item)
+		return // use parent call state
+
+	icon_state = "[base_icon_state][loaded_item ? "_l" : ""]"
 
 /obj/machinery/rnd/destructive_analyzer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
