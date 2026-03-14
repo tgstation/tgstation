@@ -137,7 +137,7 @@
 		return ITEM_INTERACT_SUCCESS
 	if(default_deconstruction_crowbar(user, I))
 		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_FAILURE
+	return NONE
 
 /obj/machinery/sleeper/can_crowbar_pry_open()
 	return !state_open && !panel_open

@@ -65,9 +65,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/announcement_system/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(default_deconstruction_crowbar(user, tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/announcement_system/multitool_act(mob/living/user, obj/item/tool)
 	if(!panel_open || !(machine_stat & EMPED))
