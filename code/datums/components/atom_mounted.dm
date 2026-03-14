@@ -60,7 +60,8 @@
 		if(reload)
 			var/obj/target = parent
 			qdel(src)
-			addtimer(CALLBACK(target, TYPE_PROC_REF(/obj, find_and_mount_on_atom)), 0.1 SECONDS)
+			spawn(0)
+				target.find_and_mount_on_atom()
 			return
 
 	drop_wallmount()
