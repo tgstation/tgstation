@@ -77,9 +77,8 @@
 
 	if(isnull(all_reaction_list))
 		all_reaction_list = list()
-		for(var/datum/reagent/reagent as anything in GLOB.chemical_reactions_list_reactant_index)
-			for(var/datum/chemical_reaction/reaction as anything in GLOB.chemical_reactions_list_reactant_index[reagent])
-				all_reaction_list[extract_reaction_name(reaction)] = reaction
+		for(var/reaction, datum in GLOB.chemical_reactions_list)
+			all_reaction_list[extract_reaction_name(datum)] = datum
 
 /obj/machinery/chem_recipe_debug/Destroy()
 	reactions_to_test.Cut()

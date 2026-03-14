@@ -1,6 +1,3 @@
-
-#define CAMERA_PICTURE_SIZE_HARD_LIMIT 21
-
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/art/camera.dmi'
@@ -424,5 +421,3 @@
 		if(!target)
 			return
 	INVOKE_ASYNC(camera, TYPE_PROC_REF(/obj/item/camera, attempt_picture), target)
-
-#undef CAMERA_PICTURE_SIZE_HARD_LIMIT
