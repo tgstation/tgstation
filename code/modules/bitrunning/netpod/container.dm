@@ -37,7 +37,7 @@
 
 
 /obj/machinery/netpod/default_pry_open(mob/living/user, obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
-	if(isnull(occupant) || !iscarbon(occupant))
+	if(!iscarbon(occupant))
 		if(!state_open)
 			if(panel_open)
 				return FALSE
@@ -47,16 +47,16 @@
 
 		return TRUE
 
-	pryer.visible_message(
-		span_danger("[pryer] starts prying open [src]!"),
+	user.visible_message(
+		span_danger("[user] starts prying open [src]!"),
 		span_notice("You start to pry open [src]."),
 		span_notice("You hear loud prying on metal.")
 	)
 	playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_CROWBAR_ALERT, pryer)
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_CROWBAR_ALERT, user)
 
-	if(do_after(pryer, 15 SECONDS, src))
+	if(crowbar.use_tool(src, user, 15 SECONDS, volume = 50))
 		if(!state_open)
 			sever_connection()
 			open_machine()
