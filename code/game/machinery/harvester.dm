@@ -31,6 +31,9 @@
 	interval = max(max_time,1)
 
 /obj/machinery/harvester/update_icon_state()
+	if(panel_open)
+		icon_state = "[base_icon_state]-o"
+		return ..()
 	if(state_open)
 		icon_state = "[base_icon_state]-open"
 		return ..()
