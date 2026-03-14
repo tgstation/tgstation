@@ -185,18 +185,15 @@
 
 ///Returns a random reagent object, with the option to blacklist reagents.
 /proc/get_random_reagent_id(randomization_flags = REAGENT_SPAWN_RANDOM_PRODUCERS, list/blacklist, list/whitelist)
-	var/list/reagent_list_to_process
+	var/list/reagent_list_to_process = list()
 
 	whitelist ||= subtypesof(/datum/reagent)
 
-	if(!reagent_list_to_process)
-		reagent_list_to_process = list()
-
-		for(var/datum/reagent/reagent_path as anything in whitelist)
-			if(is_path_in_list(reagent_path, blacklist))
-				continue
-			if(reagent_path::randomized_spawns & randomization_flags)
-				reagent_list_to_process += reagent_path
+	for(var/datum/reagent/reagent_path as anything in whitelist)
+		if(is_path_in_list(reagent_path, blacklist))
+			continue
+		if(reagent_path::randomized_spawns & randomization_flags)
+			reagent_list_to_process += reagent_path
 	return pick(reagent_list_to_process)
 
 ///Returns reagent datum from reagent name string
