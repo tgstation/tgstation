@@ -3253,6 +3253,7 @@
 	color = "#bf1038"
 	taste_description = "intense citrusy bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/consumable/ethanol/aperitivo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //This and some of the cocktails it gets mixed into stimulate the apetite, as an aperitivo should
 	. = ..()
@@ -3267,6 +3268,7 @@
 	quality = DRINK_NICE
 	taste_description = "confounding herbaceousness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/maraschino
@@ -3276,6 +3278,7 @@
 	color = "#DDDDDD"
 	taste_description = "nutty sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/consumable/ethanol/bartenders_handshake
 	name = "Bartender's Handshake"
@@ -3285,6 +3288,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "pretentious bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/consumable/ethanol/bartenders_handshake/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //Heals bartenders brute and burn, disgusts otherwise
 	. = ..()
@@ -3303,6 +3307,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "orangy sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/consumable/ethanol/casino
 	name = "Casino"
@@ -3312,6 +3317,7 @@
 	quality = DRINK_GOOD
 	taste_description = "sweet juniper"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/consumable/ethanol/garibaldi //Makes revs resitant to wounds and fearless.
 	name = "Garibaldi"
@@ -3321,6 +3327,7 @@
 	quality = DRINK_GOOD
 	taste_description = "bitter oranges"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/garibaldi/on_mob_metabolize(mob/living/carbon/drinker)
@@ -3347,6 +3354,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "nutty anise-scented whiskey"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/ethanol/jungle_bird
@@ -3357,6 +3365,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "pineapple and quinine"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_SUPERMATTER_SOOTHER) //If you have this in your system, you calm down the SM by being near it.
 
 /datum/reagent/consumable/ethanol/last_word
@@ -3367,6 +3376,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "herbal finality"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	var/has_ingested = FALSE
 
 /datum/reagent/consumable/ethanol/last_word/expose_mob(mob/living/drinker, methods, reac_volume, show_message, touch_protection)
@@ -3388,6 +3398,7 @@
 	quality = DRINK_GOOD
 	taste_description = "elegant pineapple"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/consumable/ethanol/negroni //Aperitif that increases hunger
 	name = "Negroni"
@@ -3397,6 +3408,7 @@
 	quality = DRINK_GOOD
 	taste_description = "bittersweet vermouth"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/negroni/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
@@ -3412,6 +3424,7 @@
 	quality = DRINK_GOOD
 	taste_description = "hogo and herbs"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo
 	name = "Thermonuclear Daiquiri"
@@ -3421,6 +3434,7 @@
 	quality = DRINK_FANTASTIC
 	taste_description = "approximately 3.6 roentgen"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo/on_mob_add(mob/living/living_mob)
 	. = ..()
@@ -3444,6 +3458,7 @@
 	quality = DRINK_GOOD
 	taste_description = "honeyed herbal gin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_HERETICAL_DREAMS) //Enables non-heretics to have heretical dreams
 
 /datum/reagent/consumable/ethanol/pousse_cafe
@@ -3453,6 +3468,7 @@
 	color = "#93cf33"
 	quality = DRINK_FANTASTIC
 	taste_description = "a cascade of varying liqueurs"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_HIGH
 
@@ -3463,6 +3479,7 @@
 	color = "#ee714b"
 	quality = DRINK_GOOD
 	taste_description = "bittersweet refreshment"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
 
@@ -3478,6 +3495,7 @@
 	color = "#b43110"
 	quality = DRINK_VERYGOOD
 	taste_description = "Creole hospitality"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 #undef ALCOHOL_EXPONENT
