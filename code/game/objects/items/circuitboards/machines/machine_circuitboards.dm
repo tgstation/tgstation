@@ -63,6 +63,12 @@
 	req_components = list(
 		/datum/stock_part/servo = 1,)
 
+/obj/item/circuitboard/machine/shuttle_engine
+	name = "Shuttle Engine"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/shuttle_engine/propulsion/burst
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

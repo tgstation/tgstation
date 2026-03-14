@@ -172,6 +172,11 @@
 	board = /obj/item/circuitboard/machine/flatpacker
 	custom_premium_price = PAYCHECK_COMMAND
 
+/obj/item/flatpack/shuttle_engine
+	name = "shuttle engine"
+	board = /obj/item/circuitboard/machine/shuttle_engine
+	custom_premium_price = PAYCHECK_CREW * 2
+
 // Cargo flatpacks
 
 /obj/item/flatpack/mailsorter // to have a roundstart mail sorter at cargo
