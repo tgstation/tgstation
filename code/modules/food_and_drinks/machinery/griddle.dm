@@ -40,11 +40,12 @@
 	. = default_deconstruction_crowbar(user, I)
 	if(.)
 		return
+	// this is dead code... default_deconstruction_crowbar will never fail
 	variant = rand(1, 3)
 	update_appearance()
 
 /obj/machinery/griddle/can_crowbar_deconstruct()
-	return TRUE // melbert todo
+	return TRUE
 
 /obj/machinery/griddle/IsContainedAtomAccessible(atom/contained, atom/movable/user)
 	return ..() || (contained in griddled_objects)

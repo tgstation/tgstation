@@ -250,7 +250,7 @@
 	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/grill/can_crowbar_deconstruct()
-	return !anchored // melbert todo
+	return !anchored
 
 /obj/machinery/grill/process(seconds_per_tick)
 	if(!anchored)
