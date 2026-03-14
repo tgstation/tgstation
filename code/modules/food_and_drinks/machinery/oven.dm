@@ -236,7 +236,7 @@
 	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/oven/can_crowbar_deconstruct()
-	return TRUE /
+	return TRUE
 
 /obj/machinery/oven/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool, time = 2 SECONDS)
