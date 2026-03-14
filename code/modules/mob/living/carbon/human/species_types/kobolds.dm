@@ -33,12 +33,12 @@
 	species_cookie = /obj/item/food/meat/slab
 	species_language_holder = /datum/language_holder/kobold
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/kobold,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/kobold,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/kobold,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/kobold,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/kobold,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/kobold,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey/kobold,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/monkey/kobold,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/monkey/kobold,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/monkey/kobold,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey/kobold,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey/kobold,
 	)
 	exotic_bloodtype = "L"
 	payday_modifier = 1.35
@@ -59,7 +59,7 @@
 /datum/species/monkey/kobold/get_species_description()
 	return "Kobolds are diminutive, reptilian creatures as related to Lizardpeople as monkeys are to humans."
 
-/datum/species/monkey/get_species_lore()
+/datum/species/monkey/kobold/get_species_lore()
 	return list(
 		"Please, gently the kobolds.",
 	)

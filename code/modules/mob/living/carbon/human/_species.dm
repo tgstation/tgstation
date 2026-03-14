@@ -179,6 +179,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///A list containing outfits that will be overridden in the species_equip_outfit proc. [Key = Typepath passed in] [Value = Typepath of outfit you want to equip for this specific species instead].
 	var/list/outfit_override_registry = list()
 
+	///The species this one will turn into when given the monkified gene (/datum/mutation/race)
 	var/monkey_species = /datum/species/monkey
 
 ///////////
