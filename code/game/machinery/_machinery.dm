@@ -625,7 +625,7 @@
 	on_set_panel_open(old_value)
 	update_appearance()
 	// if this is a machine that cares about whether the panel is open for UIs, force an update
-	if(interaction_flags_machine & (INTERACT_MACHINE_OPEN_SILICON||INTERACT_MACHINE_OPEN))
+	if(interaction_flags_machine & (INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_OPEN))
 		SStgui.update_uis(src)
 
 ///Called when the value of `panel_open` changes, so we can react to it.
