@@ -60,8 +60,7 @@
 		if(reload)
 			var/obj/target = parent
 			qdel(src)
-			spawn(0)
-				target.find_and_mount_on_atom()
+			post_change_callbacks += CALLBACK(target, TYPE_PROC_REF(/obj, remount))
 			return
 
 	drop_wallmount()
@@ -198,8 +197,8 @@
 		obj_flags |= MOUNT_ON_LATE_INITIALIZE
 	return FALSE
 
-///Used to remount an object after shuttle move
-/obj/proc/remount(datum/source, oldT)
+///Used to remount an object in special cases
+/obj/proc/remount()
 	SIGNAL_HANDLER
 	PRIVATE_PROC(TRUE)
 
