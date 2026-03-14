@@ -13,9 +13,9 @@
 	)
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanteyes = /obj/item/organ/eyes/lizard
-	skinned_type = /obj/item/stack/sheet/animalhide/lizard
+	skinned_type = /obj/item/stack/sheet/animalhide/carbon/lizard
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
-	knife_butcher_results = list(/obj/item/food/meat/slab/human/mutant/lizard = 5, /obj/item/stack/sheet/animalhide/lizard = 1)
+	knife_butcher_results = list(/obj/item/food/meat/slab/human/mutant/lizard = 5, /obj/item/stack/sheet/animalhide/carbon/lizard = 1)
 	inherent_traits = list(
 		TRAIT_NO_AUGMENTS,
 		TRAIT_NO_BLOOD_OVERLAY,
