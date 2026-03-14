@@ -25,6 +25,7 @@
 	dir = 8;
 	id = "cargounload"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "i" = (
@@ -42,10 +43,6 @@
 /area/shuttle/supply)
 "l" = (
 /turf/open/floor/iron/stairs/left,
-/area/shuttle/supply)
-"n" = (
-/obj/effect/landmark/fan_install,
-/turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "o" = (
 /obj/effect/turf_decal/delivery,
@@ -111,6 +108,7 @@
 	dir = 4;
 	id = "cargoload"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "H" = (
@@ -228,9 +226,9 @@ f
 a
 a
 g
-n
+F
 H
-n
+F
 u
 M
 Z

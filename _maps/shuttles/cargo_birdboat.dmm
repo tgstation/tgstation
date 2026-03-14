@@ -67,6 +67,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "n" = (
@@ -114,6 +115,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "w" = (
@@ -139,10 +141,6 @@
 	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/supply)
-"B" = (
-/obj/effect/landmark/fan_install,
-/turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "C" = (
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -238,9 +236,9 @@ b
 f
 i
 k
-B
+n
 p
-B
+n
 g
 b
 z

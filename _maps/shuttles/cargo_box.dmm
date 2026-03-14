@@ -14,6 +14,7 @@
 	id = "QMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "g" = (
@@ -40,6 +41,7 @@
 	id = "QMLoaddoor";
 	name = "Supply Dock Loading Door"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "l" = (
@@ -84,10 +86,6 @@
 	name = "Loading Doors";
 	pixel_y = -8
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/supply)
-"L" = (
-/obj/effect/landmark/fan_install,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 
@@ -166,9 +164,9 @@ b
 e
 e
 e
-L
+e
 F
-L
+e
 e
 C
 l

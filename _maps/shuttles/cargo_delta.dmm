@@ -33,7 +33,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/landmark/fan_install,
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "h" = (
@@ -61,6 +60,7 @@
 	id = "cargounload";
 	name = "Supply Dock Unloading Door"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "l" = (
@@ -92,13 +92,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/supply)
-"p" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/landmark/fan_install,
-/turf/open/floor/iron,
-/area/shuttle/supply)
 "q" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -123,6 +116,7 @@
 	dir = 4;
 	id = "cargoload"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "u" = (
@@ -235,7 +229,7 @@ g
 o
 X
 o
-p
+o
 T
 a
 a

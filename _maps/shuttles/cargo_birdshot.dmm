@@ -16,6 +16,7 @@
 	id = "QMLoaddoor";
 	name = "Supply Dock Loading Door"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "d" = (
@@ -28,6 +29,7 @@
 	id = "QMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "e" = (
@@ -53,7 +55,6 @@
 /obj/effect/turf_decal/caution{
 	dir = 8
 	},
-/obj/effect/landmark/fan_install,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "l" = (
@@ -177,7 +178,6 @@
 /obj/effect/turf_decal/caution{
 	dir = 4
 	},
-/obj/effect/landmark/fan_install,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "Q" = (

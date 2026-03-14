@@ -9,10 +9,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"j" = (
-/obj/effect/landmark/fan_install,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/supply)
 "r" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
@@ -22,6 +18,7 @@
 	},
 /obj/docking_port/mobile/supply,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/effect/landmark/fan_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "v" = (
@@ -40,6 +37,7 @@
 	name = "Supply Shuttle Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/effect/landmark/fan_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "X" = (
@@ -106,9 +104,9 @@ r
 d
 r
 a
-j
+a
 X
-j
+a
 a
 a
 r

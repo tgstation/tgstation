@@ -131,14 +131,6 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"E" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/landmark/fan_install,
-/turf/open/floor/iron/smooth,
-/area/shuttle/supply)
 "G" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -166,6 +158,7 @@
 	id = "QMLoaddoor";
 	name = "Supply Dock Loading Door"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/supply)
 "M" = (
@@ -184,6 +177,7 @@
 	name = "Supply Shuttle Airlock"
 	},
 /obj/docking_port/mobile/supply,
+/obj/effect/landmark/fan_install,
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/supply)
 "Q" = (
@@ -191,14 +185,6 @@
 	dir = 9;
 	id = "QMLoad"
 	},
-/turf/open/floor/catwalk_floor/iron_smooth,
-/area/shuttle/supply)
-"U" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "QMLoad"
-	},
-/obj/effect/landmark/fan_install,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/supply)
 "V" = (
@@ -286,9 +272,9 @@ u
 (5,1,1) = {"
 h
 c
-U
+j
 d
-E
+B
 B
 B
 V

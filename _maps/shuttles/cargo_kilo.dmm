@@ -58,6 +58,7 @@
 	id = "QMLoad";
 	name = "off ramp"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "j" = (
@@ -104,7 +105,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/effect/landmark/fan_install,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "o" = (
@@ -155,7 +155,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/effect/landmark/fan_install,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "t" = (
@@ -168,6 +167,7 @@
 	id = "QMLoad2";
 	name = "on ramp"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "u" = (

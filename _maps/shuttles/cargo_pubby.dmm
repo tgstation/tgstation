@@ -38,6 +38,7 @@
 	dir = 4;
 	id = "ShuttleLoad"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "m" = (
@@ -48,7 +49,6 @@
 /area/shuttle/supply)
 "q" = (
 /obj/machinery/light/directional/east,
-/obj/effect/landmark/fan_install,
 /turf/open/floor/iron/dark,
 /area/shuttle/supply)
 "s" = (
@@ -132,16 +132,13 @@
 	dir = 8;
 	id = "ShuttleUnload"
 	},
+/obj/effect/landmark/fan_install,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "K" = (
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
-/area/shuttle/supply)
-"O" = (
-/obj/effect/landmark/fan_install,
-/turf/open/floor/iron/dark,
 /area/shuttle/supply)
 "R" = (
 /obj/docking_port/mobile/supply{
@@ -194,7 +191,7 @@ I
 g
 s
 X
-O
+w
 K
 X
 t
