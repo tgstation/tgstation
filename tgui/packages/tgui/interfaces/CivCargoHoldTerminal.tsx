@@ -17,7 +17,6 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useState } from 'react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Tool } from './common/SpriteEditor/Types/Tool';
 
 
 // Main window content.
@@ -147,9 +146,7 @@ const PersonalBountyBlock = (props) => {
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <>
-        {picking ? <BountyPickBox /> : <BountyTextBox />}
-      </>
+      {picking ? <BountyPickBox /> : <BountyTextBox />}
     </>
   );
 };
@@ -267,7 +264,6 @@ const GlobalBountyBlock = (props) => {
 
   const safeListBounty = Array.isArray(listBounty) ? listBounty : [];
   return (
-    <>
     <Stack fill>
       <Stack.Item
         width="30%"
@@ -333,7 +329,6 @@ const GlobalBountyBlock = (props) => {
       </Stack.Item>
       <Stack.Item grow>
         {localBounty.reward !== 0 ? (
-          <>
             <Section
               title={localBounty.name}
               >
@@ -359,17 +354,13 @@ const GlobalBountyBlock = (props) => {
             Send & Claim
           </Button>
         </Section>
-        </>
         ) : (
-          <>
-            <NoticeBox
-              width="100%">
-              Please select a bounty from the list.
-            </NoticeBox>
-          </>
+          <NoticeBox
+            width="100%">
+            Please select a bounty from the list.
+          </NoticeBox>
         )}
       </Stack.Item>
     </Stack>
-    </>
   )
 }
