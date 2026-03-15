@@ -14,7 +14,7 @@ jobs:
       pull-requests: write # for actions/stale to close stale PRs
     runs-on: ubuntu-24.04
     outputs:
-      staled_prs: ${{ steps.filter-prs.outputs.result }}
+      staled_prs: ${{ steps.filter-prs.outputs.STALED_PRS }}
 
     steps:
       - name: Mark stale issues and pull requests
@@ -37,10 +37,9 @@ jobs:
           operations-per-run: 300
       - name: Filter staled pull requests for announcement
         id: filter-prs
-        uses: actions/github-script@v8
-        with:
-          script: |
-            return JSON.parse(steps.stale.outputs.staled-issues-prs).filter(issue => !!issue.pull_request)
+        run: |
+          STALED_PRS = JSON.parse(steps.stale.outputs.staled-issues-prs).filter(issue => !!issue.pull_request)
+          echo "STALED_PRS=$STALED_PRS" >> $GITHUB_OUTPUT
 
   announce:
     runs-on: ubuntu-24.04
