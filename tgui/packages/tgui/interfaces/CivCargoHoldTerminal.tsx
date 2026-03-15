@@ -10,12 +10,14 @@ import {
   Section,
   Stack,
   Tabs,
+  Tooltip
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useState } from 'react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { Tool } from './common/SpriteEditor/Types/Tool';
 
 
 // Main window content.
@@ -290,9 +292,11 @@ const GlobalBountyBlock = (props) => {
               textColor="#ffffffe5"
               align="center"
               >
-              <Box className="Marquee">
-                {data.claimed_bounties} bount{data.claimed_bounties === 1 ? "y" : "ies"} served{data.claimed_bounties > 0 ? "!" : "."}
-              </Box>
+              <Tooltip content="The total number of global bounties will go up by 1 for every 3 completed!">
+                <Box className="Marquee">
+                  {data.claimed_bounties} bount{data.claimed_bounties === 1 ? "y" : "ies"} served{data.claimed_bounties > 0 ? "!" : "."}
+                </Box>
+              </Tooltip>
             </Tabs.Tab>
           )}
 
