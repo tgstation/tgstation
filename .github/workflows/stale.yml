@@ -38,7 +38,7 @@ jobs:
       - name: Filter staled pull requests for announcement
         id: filter-prs
         run: |
-          echo "STALED_PRS=$(JSON.parse(steps.stale.outputs.staled-issues-prs).filter(issue => !!issue.pull_request))" >> $GITHUB_OUTPUT
+          echo "STALED_PRS=$(JSON.parse(${{steps.stale.outputs.staled-issues-prs}}).filter(issue => !!issue.pull_request))" >> $GITHUB_OUTPUT
 
   announce:
     runs-on: ubuntu-24.04
