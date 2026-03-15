@@ -204,9 +204,9 @@
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/set_home(datum/plane_master_group/home)
 	. = ..()
-	if(home?.our_hud)
+	if(home)
 		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
-		hud_changed(home.our_hud)
+		hud_changed(null, null, home.our_hud)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/show_to(mob/mymob)
 	. = ..()
@@ -450,9 +450,9 @@
 	// Non 0 offset render plates will relay up to the transparent plane above them, assuming they're not on the same z level as their target of course
 	if(offset == 0)
 		return
-	if(home?.our_hud)
+	if(home)
 		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
-		hud_changed(home.our_hud)
+		hud_changed(null, null, home.our_hud)
 
 /atom/movable/screen/plane_master/rendering_plate/master/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
 	SIGNAL_HANDLER

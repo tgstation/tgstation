@@ -69,9 +69,9 @@
 
 /atom/movable/screen/plane_master/parallax_white/set_home(datum/plane_master_group/home)
 	. = ..()
-	if(home?.our_hud)
+	if(home)
 		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
-		hud_changed(home.our_hud)
+		hud_changed(null, null, home.our_hud)
 
 /atom/movable/screen/plane_master/parallax_white/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
 	SIGNAL_HANDLER
@@ -124,9 +124,9 @@
 
 /atom/movable/screen/plane_master/parallax/set_home(datum/plane_master_group/home)
 	. = ..()
-	if(home?.our_hud)
+	if(home)
 		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
-		hud_changed(home.our_hud)
+		hud_changed(null, null, home.our_hud)
 
 /atom/movable/screen/plane_master/parallax/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
 	SIGNAL_HANDLER
@@ -456,9 +456,9 @@
 
 /atom/movable/screen/plane_master/camera_static/set_home(datum/plane_master_group/home)
 	. = ..()
-	if(home?.our_hud)
+	if(home)
 		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
-		hud_changed(home.our_hud)
+		hud_changed(null, null, home.our_hud)
 
 /atom/movable/screen/plane_master/camera_static/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
 	SIGNAL_HANDLER
