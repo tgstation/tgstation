@@ -26,12 +26,9 @@
 	var/total_contribution = 0
 	for(var/i as anything in pay_to_account)
 		total_contribution += pay_to_account[i]
-	to_chat(world, "total [total_contribution] cuts")
 
 	for(var/i as anything in pay_to_account)
-		to_chat(world, "profit_ratio of [profit_ratio]")
 		var/individual_cut = profit_ratio * (pay_to_account[i]/ total_contribution)
-		to_chat(world, "cut of [individual_cut] percent")
 		payees[i] = individual_cut
 
 	src.delete_on_unwrap = delete_on_unwrap
