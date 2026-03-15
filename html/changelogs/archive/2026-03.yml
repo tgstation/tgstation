@@ -203,3 +203,8 @@
   - bugfix: Fixes beebox and traitor bees not obeying the reagent blacklist
   - balance: Maintenance pills (the achievement variety that only spawns in maint)
       can now generate with xenomorph microbes and cyborg nanites
+2026-03-15:
+  JohnFulpWillard:
+  - bugfix: Chem scanning a maintenance pill removes the achievement value.
+  timothymtorres:
+  - balance: Sticky spider webs now drain stamina when mobs enter the turf
