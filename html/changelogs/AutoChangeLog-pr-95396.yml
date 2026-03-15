@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "The cargo shuttle can no longer qdel your ghost mob."
