@@ -191,8 +191,15 @@
 
 /// Take a shot
 /obj/effect/watcher_orbiter/proc/shoot_at(atom/target)
+	var/list/ignore_targets = list(parent)
+	if(isliving(parent))
+		var/mob/living/living_parent = parent
+		if(LAZYLEN(living_parent.buckled_mobs))
+			ignore_targets += living_parent.buckled_mobs
+		if(living_parent.buckled)
+			ignore_targets += living_parent.buckled
 	COOLDOWN_START(src, shot_cooldown, fire_delay)
-	fire_projectile(projectile_type, target, projectile_sound, ignore_targets = list(parent))
+	fire_projectile(projectile_type, target, projectile_sound, ignore_targets = ignore_targets)
 
 /// Set ourselves up to track and orbit around a guy
 /obj/effect/watcher_orbiter/proc/follow(atom/movable/target)
