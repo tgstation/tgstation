@@ -126,8 +126,9 @@
 
 			for (var/i in 1 to rand(min_vein_size ** 2, max_vein_size ** 2))
 				var/turf/closed/mineral/rock = pick_n_take(rocks)
-				rock.change_ore(ore_path, FALSE)
-				rock.mineral_amt = 1
+				if (istype(rock))
+					rock.change_ore(ore_path, FALSE)
+					rock.mineral_amt = 1
 
 		if (ORE_VEIN_PLAIN)
 			var/list/turf/closed/mineral/rocks = list()
@@ -372,7 +373,7 @@
 
 /turf/closed/mineral/random
 	/// What are the base odds that this turf spawns a mineral in the wall on initialize?
-	var/mineral_chance = 13
+	var/mineral_chance = 7
 	/// Does this turf's chance of spawning ore increase with distance to open air?
 	var/exposure_based = FALSE
 	/// Chance of spawning a specific mineral per type, cached for speed
@@ -388,12 +389,12 @@
 	return list(
 		/obj/item/stack/ore/bananium = check_holidays(APRIL_FOOLS) ? 3 : 0,
 		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/item/stack/ore/diamond = 1,
-		/obj/item/stack/ore/gold = 10,
-		/obj/item/stack/ore/iron = 40,
-		/obj/item/stack/ore/plasma = 20,
-		/obj/item/stack/ore/silver = 12,
-		/obj/item/stack/ore/titanium = 11,
+		/obj/item/stack/ore/diamond = 2,
+		/obj/item/stack/ore/gold = 8,
+		/obj/item/stack/ore/iron = 18, // Iron and plasma are this low due to how much they spread into veins
+		/obj/item/stack/ore/plasma = 12,
+		/obj/item/stack/ore/silver = 8,
+		/obj/item/stack/ore/titanium = 8,
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite = 4,
 	)
@@ -502,7 +503,7 @@
 
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"
-	mineral_chance = 25
+	mineral_chance = 14
 	exposure_based = FALSE
 
 /turf/closed/mineral/random/high_chance/mineral_chances()
@@ -537,15 +538,15 @@
 
 /turf/closed/mineral/random/low_chance
 	icon_state = "rock_lowchance"
-	mineral_chance = 6
+	mineral_chance = 2
 
 /turf/closed/mineral/random/low_chance/mineral_chances()
 	return list(
 		/obj/item/stack/ore/bluespace_crystal = 1,
 		/obj/item/stack/ore/diamond = 1,
 		/obj/item/stack/ore/gold = 4,
-		/obj/item/stack/ore/iron = 40,
-		/obj/item/stack/ore/plasma = 15,
+		/obj/item/stack/ore/iron = 30,
+		/obj/item/stack/ore/plasma = 10,
 		/obj/item/stack/ore/silver = 6,
 		/obj/item/stack/ore/titanium = 4,
 		/obj/item/stack/ore/uranium = 2,
@@ -555,13 +556,13 @@
 //extremely low chance of rare ores, meant mostly for populating stations with large amounts of asteroid
 /turf/closed/mineral/random/stationside
 	icon_state = "rock_nochance"
-	mineral_chance = 4
+	mineral_chance = 1
 
 /turf/closed/mineral/random/stationside/mineral_chances()
 	return list(
 		/obj/item/stack/ore/diamond = 1,
 		/obj/item/stack/ore/gold = 3,
-		/obj/item/stack/ore/iron = 50,
+		/obj/item/stack/ore/iron = 30,
 		/obj/item/stack/ore/plasma = 3,
 		/obj/item/stack/ore/silver = 4,
 		/obj/item/stack/ore/titanium = 5,
@@ -575,18 +576,18 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
 	exposure_based = TRUE
-	mineral_chance = 13 // N% functionally, 7.17% default, accounts for ~65% turfs
+	mineral_chance = 7 // N% functionally, 7.17% default, accounts for ~65% turfs
 
 /turf/closed/mineral/random/volcanic/mineral_chances()
 	// Comments are value with distance accounting for turf distribution (not average!)
 	// Values of these across rock types should roughly sum up to default values when corrected for vein spreading
 	return list(
 		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/item/stack/ore/diamond = 1,
-		/obj/item/stack/ore/gold = 10,
-		/obj/item/stack/ore/iron = 30,
-		/obj/item/stack/ore/plasma = 16,
-		/obj/item/stack/ore/silver = 12,
+		/obj/item/stack/ore/diamond = 2,
+		/obj/item/stack/ore/gold = 8,
+		/obj/item/stack/ore/iron = 16,
+		/obj/item/stack/ore/plasma = 10,
+		/obj/item/stack/ore/silver = 8,
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite/volcanic = 2,
@@ -637,16 +638,16 @@
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_RED_ROCK_WALLS
 	canSmoothWith = SMOOTH_GROUP_RED_ROCK_WALLS
 	tool_mine_speed = 5 SECONDS // 25% harder than basalt
-	mineral_chance = 13 // N% functionally, 6.67% default, accounts for ~22% turfs
+	mineral_chance = 8 // N% functionally, 6.67% default, accounts for ~22% turfs
 
 /turf/closed/mineral/random/volcanic/red_rock/mineral_chances()
 	return list(
 		/obj/item/stack/ore/bluespace_crystal = 0.7,
-		/obj/item/stack/ore/diamond = 0.8,
+		/obj/item/stack/ore/diamond = 1.6,
 		/obj/item/stack/ore/gold = 6,
-		/obj/item/stack/ore/iron = 58,
-		/obj/item/stack/ore/plasma = 12,
-		/obj/item/stack/ore/silver = 12,
+		/obj/item/stack/ore/iron = 32, // Iron and plasma are this low due to how much they spread into veins
+		/obj/item/stack/ore/plasma = 6,
+		/obj/item/stack/ore/silver = 8,
 		/obj/item/stack/ore/titanium = 25,
 		/obj/item/stack/ore/uranium = 3,
 		/turf/closed/mineral/gibtonite/volcanic/red_rock = 1,
@@ -677,15 +678,15 @@
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_SHALE_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHALE_WALLS
 	tool_mine_speed = 7 SECONDS // 75% harder than basalt
-	mineral_chance = 13 // N% functionally, 7.01% default, accounts for ~13% turfs
+	mineral_chance = 9 // N% functionally, 7.01% default, accounts for ~13% turfs
 
 /turf/closed/mineral/random/volcanic/shale/mineral_chances()
 	return list(
 		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/item/stack/ore/diamond = 1,
+		/obj/item/stack/ore/diamond = 2,
 		/obj/item/stack/ore/gold = 8,
-		/obj/item/stack/ore/iron = 20,
-		/obj/item/stack/ore/plasma = 35,
+		/obj/item/stack/ore/iron = 16, // Iron and plasma are this low due to how much they spread into veins
+		/obj/item/stack/ore/plasma = 32,
 		/obj/item/stack/ore/silver = 8,
 		/obj/item/stack/ore/titanium = 8,
 		/obj/item/stack/ore/uranium = 16,
@@ -733,11 +734,11 @@
 /turf/closed/mineral/random/snow/mineral_chances()
 	return list(
 		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/item/stack/ore/diamond = 1,
-		/obj/item/stack/ore/gold = 10,
-		/obj/item/stack/ore/iron = 40,
-		/obj/item/stack/ore/plasma = 20,
-		/obj/item/stack/ore/silver = 12,
+		/obj/item/stack/ore/diamond = 2,
+		/obj/item/stack/ore/gold = 8,
+		/obj/item/stack/ore/iron = 22,
+		/obj/item/stack/ore/plasma = 12,
+		/obj/item/stack/ore/silver = 8,
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
@@ -752,7 +753,7 @@
 /turf/closed/mineral/random/snow/underground
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	// abundant ore
-	mineral_chance = 20
+	mineral_chance = 11
 
 /turf/closed/mineral/random/snow/underground/mineral_chances()
 	return list(
@@ -760,8 +761,8 @@
 		/obj/item/stack/ore/bluespace_crystal = 2,
 		/obj/item/stack/ore/diamond = 4,
 		/obj/item/stack/ore/gold = 20,
-		/obj/item/stack/ore/iron = 20,
-		/obj/item/stack/ore/plasma = 20,
+		/obj/item/stack/ore/iron = 10, // Iron and plasma are this low due to how much they spread into veins,
+		/obj/item/stack/ore/plasma = 14,
 		/obj/item/stack/ore/silver = 24,
 		/obj/item/stack/ore/titanium = 22,
 		/obj/item/stack/ore/uranium = 10,
