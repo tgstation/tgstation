@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - balance: "Sticky spider webs now drain stamina when mobs enter the turf"
