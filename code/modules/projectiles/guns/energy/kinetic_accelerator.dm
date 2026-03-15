@@ -491,7 +491,8 @@
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
 	turf_aoe = TRUE
-	modifier = -4
+	// Negates one CD modifier
+	modifier = -/obj/item/borg/upgrade/modkit/cooldown::modifier
 
 /obj/item/borg/upgrade/modkit/cooldown/aoe/mobs
 	name = "offensive explosion"
@@ -502,7 +503,7 @@
 	name = "offensive mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock and damage mobs in an AoE."
 	turf_aoe = TRUE
-	modifier = -2 // Slightly better than normal turf AOE as its a rare find
+	modifier = -1 // Slightly better than normal turf AOE as its a rare find
 
 // Minebot passthrough
 /obj/item/borg/upgrade/modkit/minebot_passthrough

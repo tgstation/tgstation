@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 /datum/raptor_color/green/setup_adult(mob/living/basic/raptor/raptor)
 	. = ..()
 	var/ability_scale = 1 - INVERSE_LERP(RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER, raptor.inherited_stats.ability_modifier)
-	var/mining_mod = round(ability_scale * 0.2, 0.025)
+	var/mining_mod = round(ability_scale * 0.1, 0.025)
 	if (ability_scale >= 0.75)
 		mining_mod = 0
 	raptor.AddComponent(/datum/component/proficient_miner, mining_mod, TRUE)
@@ -435,7 +435,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	. = ..()
 	// Slightly worse than greens at this
 	var/ability_scale = 1 - INVERSE_LERP(RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER, raptor.inherited_stats.ability_modifier)
-	var/mining_mod = round(ability_scale * 0.3, 0.025)
+	var/mining_mod = round(ability_scale * 0.2, 0.025)
 	if (ability_scale >= 0.8)
 		mining_mod = 0
 	raptor.AddComponent(/datum/component/proficient_miner, mining_mod, TRUE)

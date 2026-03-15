@@ -209,7 +209,7 @@
 	if (!istype(module, /obj/item/mod/module/sphere_transform))
 		return
 	// In sphere mode we get faster mining and halved power drain
-	toolspeed = 0.1
+	toolspeed = 0.05
 	use_energy_cost *= 0.5
 	exp_multiplier *= 0.2
 	if (!active)
@@ -750,8 +750,9 @@
 /obj/structure/mining_bomb/proc/boom(atom/movable/firer)
 	visible_message(span_danger("[src] explodes!"))
 	playsound(src, 'sound/effects/magic/magic_missile.ogg', 200, vary = TRUE)
-	for(var/turf/closed/mineral/rock in RANGE_TURFS(src, 1))
-		if (get_turf(src))
+	var/turf/our_turf = get_turf(src)
+	for(var/turf/closed/mineral/rock in RANGE_TURFS(1, src))
+		if (rock == our_turf)
 			rock.gets_drilled(firer, 0)
 		else
 			rock.drill_aoe(firer, 0)
