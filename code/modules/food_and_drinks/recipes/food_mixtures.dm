@@ -6,7 +6,7 @@
 		/obj/item/stack/rods,
 		/obj/item/reagent_containers/cup/glass/sillycup,
 	)
-	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENTS | CRAFT_CLEARS_REAGENTS
+	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENT_COMPONENTS | CRAFT_CLEARS_REAGENTS
 	///The food types that are added to the result when the recipe is completed
 	var/added_foodtypes = NONE
 	///The food types that are removed to the result when the recipe is completed
@@ -209,6 +209,7 @@
 
 /datum/chemical_reaction/food/cakebatter/vegan
 	required_reagents = list(/datum/reagent/consumable/soymilk = 15, /datum/reagent/consumable/flour = 15, /datum/reagent/consumable/sugar = 5)
+	resulting_food_path = /obj/item/food/cakebatter/vegan
 
 /datum/chemical_reaction/food/pancakebatter
 	results = list(/datum/reagent/consumable/pancakebatter = 15)

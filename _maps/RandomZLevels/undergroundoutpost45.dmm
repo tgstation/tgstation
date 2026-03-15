@@ -7785,8 +7785,8 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "Yk" = (
 /obj/structure/table,
-/obj/item/computer_disk/ordnance,
-/obj/item/computer_disk/ordnance,
+/obj/item/disk/computer/ordnance,
+/obj/item/disk/computer/ordnance,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria{
 	dir = 5

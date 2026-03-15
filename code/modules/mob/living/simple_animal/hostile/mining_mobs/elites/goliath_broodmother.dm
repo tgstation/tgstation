@@ -135,7 +135,7 @@
 			return
 		var/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/new_child = new /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child(loc)
 		new_child.GiveTarget(target)
-		new_child.faction = faction.Copy()
+		SET_FACTION_AND_ALLIES_FROM(new_child, src)
 		visible_message(span_boldwarning("[new_child] appears below [src]!"))
 		register_child(new_child)
 

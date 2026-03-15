@@ -73,7 +73,7 @@
 
 	materials = new ( \
 		src, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+		SSmaterials.get_materials_by_flag(MATERIAL_SILO_STORED), \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
 		container_signals = list( \
@@ -125,7 +125,7 @@
 /obj/machinery/ore_silo/examine(mob/user)
 	. = ..()
 	. += span_notice("It can be linked to techfabs, circuit printers and protolathes with a multitool.")
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
 

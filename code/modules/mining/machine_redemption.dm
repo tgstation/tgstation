@@ -91,15 +91,14 @@
 		points += gathered_ore.points * point_upgrade * gathered_ore.amount
 
 /// Returns the amount of a specific alloy design, based on the accessible materials
-/obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
+/obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/design)
 	var/datum/material_container/mat_container = materials.mat_container
-	if(!mat_container || D.make_reagent)
+	if(!mat_container || design.make_reagent)
 		return FALSE
 
 	var/build_amount = 0
 
-	for(var/mat in D.materials)
-		var/amount = D.materials[mat]
+	for(var/mat, amount in design.materials)
 		var/datum/material/redemption_mat_amount = mat_container.materials[mat]
 
 		if(!amount || !redemption_mat_amount)
@@ -371,11 +370,11 @@
 				if(amount < 1) //no negative mats
 					return
 				materials.use_materials(alloy.materials, multiplier = amount, action = "withdrawn", name = "sheets", user_data = ID_DATA(usr))
-				var/output
+				var/atom/movable/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
-					output = new alloy.build_path(src, amount)
+					output = alloy.create_result(src, amount = amount)
 				else
-					output = new alloy.build_path(src)
+					output = alloy.create_result(src)
 				unload_mineral(output)
 			else
 				to_chat(usr, span_warning("Required access not found."))

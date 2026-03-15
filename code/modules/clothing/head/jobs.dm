@@ -647,7 +647,7 @@
 
 /obj/item/clothing/head/utility/surgerycap/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
+	AddElement(/datum/element/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/head/utility/surgerycap/attack_self(mob/user)
 	. = ..()
@@ -696,7 +696,7 @@
 
 /obj/item/clothing/head/utility/head_mirror/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
+	AddElement(/datum/element/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/head/utility/head_mirror/examine(mob/user)
 	. = ..()

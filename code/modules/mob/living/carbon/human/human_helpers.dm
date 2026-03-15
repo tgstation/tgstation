@@ -50,11 +50,11 @@
 		return signal_face // no need to null-check, because force_set will always set a signal_face
 
 	var/face_name = isnull(signal_face) ? get_face_name("") : signal_face
-	var/id_name = isnull(signal_id) ? get_id_name("",  honorifics = TRUE) : signal_id
+	var/id_name = isnull(signal_id) ? get_id_name("",  honorifics = add_id_name) : signal_id
 
 	// We need to account for real name
 	if(force_real_name)
-		var/disguse_name = get_visible_name(add_id_name = TRUE, force_real_name = FALSE)
+		var/disguse_name = get_visible_name(add_id_name = add_id_name, force_real_name = FALSE)
 		return "[real_name][disguse_name == real_name ? "" : " (as [disguse_name])"]"
 
 	// We're just some unknown guy
@@ -91,7 +91,7 @@
 	if(obscured_slots & HIDEFACE)
 		return TRUE
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
-	if(isnull(head) || HAS_TRAIT(src, TRAIT_DISFIGURED) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
+	if(isnull(head) || HAS_TRAIT(head, TRAIT_DISFIGURED) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
 		return TRUE
 	return FALSE
 

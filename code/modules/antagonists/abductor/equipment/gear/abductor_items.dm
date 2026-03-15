@@ -265,6 +265,20 @@
 	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
 
+/obj/item/gun/energy/shrink_ray/suicide_act(mob/living/user)
+	. = ..()
+	user.visible_message(span_suicide("[user] points [src] at [user.p_their()] head, it looks like [user.p_theyre()] going to commit suicide!"))
+	// we want an animation, so lets manually handle suicide.
+	addtimer(CALLBACK(src, PROC_REF(shrink_death), user), 0)
+	return MANUAL_SUICIDE
+
+/obj/item/gun/energy/shrink_ray/proc/shrink_death(mob/living/user)
+	var/shrink = user.transform.Scale(0.1,0.1)
+	animate(user, 30 SECONDS, transform=shrink)
+	// Have to wait until the animate is done
+	sleep(30 SECONDS)
+	user.gib(DROP_ALL_REMAINS)
+
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
@@ -484,9 +498,7 @@ Return to step 11 of normal process."}
 /obj/item/restraints/handcuffs/energy/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
 	wearer.visible_message(span_danger("[wearer]'s [name] breaks in a discharge of energy!"), span_userdanger("[wearer]'s [name] breaks in a discharge of energy!"))
-	var/datum/effect_system/spark_spread/sparks = new
-	sparks.set_up(4,0,wearer.loc)
-	sparks.start()
+	do_sparks(4, FALSE, wearer.loc)
 	qdel(src)
 
 /obj/item/melee/baton/abductor/examine(mob/user)

@@ -20,5 +20,6 @@
 			"Baseturf": "/turf/open/openspace",
 			"Linkage": "Cross"
 		}
-	]
+	],
+	"bonus_weakpoints": 2
 }

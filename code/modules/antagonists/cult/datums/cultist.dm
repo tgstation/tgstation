@@ -8,6 +8,7 @@
 	pref_flag = ROLE_CULTIST
 	antag_hud_name = "cult"
 	stinger_sound = 'sound/music/antag/bloodcult/bloodcult_gain.ogg'
+	desensitized_modifier = DESENSITIZED_THRESHOLD
 
 	///Boolean on whether the starting equipment should be given to their inventory.
 	var/give_equipment = FALSE
@@ -56,7 +57,7 @@
 	. = ..()
 	var/mob/living/current = owner.current || mob_override
 	handle_clown_mutation(current, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-	current.faction |= FACTION_CULT
+	current.add_faction(FACTION_CULT)
 	current.grant_language(/datum/language/narsie, source = LANGUAGE_CULTIST)
 
 	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
@@ -65,7 +66,6 @@
 
 	if(cult_team.cult_risen)
 		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
-		ADD_TRAIT(current, TRAIT_DESENSITIZED, CULT_TRAIT)
 	if(cult_team.cult_ascendent)
 		current.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
 
@@ -76,7 +76,7 @@
 	. = ..()
 	var/mob/living/current = owner.current || mob_override
 	handle_clown_mutation(current, removing = FALSE)
-	current.faction -= FACTION_CULT
+	current.remove_faction(FACTION_CULT)
 	current.remove_language(/datum/language/narsie, source = LANGUAGE_CULTIST)
 
 	current.clear_alert("bloodsense")
@@ -88,7 +88,6 @@
 	if (HAS_TRAIT(current, TRAIT_CULT_HALO))
 		current.RemoveElement(/datum/element/cult_halo)
 
-	REMOVE_TRAIT(current, TRAIT_DESENSITIZED, CULT_TRAIT)
 	REMOVE_TRAIT(current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
 
 /datum/antagonist/cult/on_mindshield(mob/implanter)
@@ -256,21 +255,21 @@
 		to_chat(cult_mind, span_cult_large("The Cult's Master, [owner.current.name], has fallen in \the [current_area]!"))
 
 /datum/antagonist/cult/get_preview_icon()
-	var/icon/icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/icon = render_preview_outfit(preview_outfit)
 
 	// The longsword is 64x64, but getFlatIcon crunches to 32x32.
 	// So I'm just going to add it in post, screw it.
 
 	// Center the dude, because item icon states start from the center.
 	// This makes the image 64x64.
-	icon.Crop(-15, -15, 48, 48)
+	icon.crop(-15, -15, 48, 48)
 
-	var/obj/item/melee/cultblade/longsword = new
-	icon.Blend(icon(longsword.lefthand_file, longsword.inhand_icon_state), ICON_OVERLAY)
-	qdel(longsword)
+	var/obj/item/melee/cultblade/blade_type = /obj/item/melee/cultblade
+	var/datum/universal_icon/blade_icon = uni_icon(blade_type::lefthand_file, blade_type::inhand_icon_state)
+	icon.blend_icon(blade_icon, ICON_OVERLAY)
 
 	// Move the guy back to the bottom left, 32x32.
-	icon.Crop(17, 17, 48, 48)
+	icon.crop(17, 17, 48, 48)
 
 	return finish_preview_icon(icon)
 

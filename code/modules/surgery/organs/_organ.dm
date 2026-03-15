@@ -171,6 +171,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
 
 /obj/item/organ/proc/on_life(seconds_per_tick) //repair organ damage if the organ is not failing
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(organ_flags & ORGAN_FAILING)
 		handle_failing_organs(seconds_per_tick)
 		return

@@ -157,7 +157,9 @@ Des: Removes all images from the mob infected by this embryo
 ----------------------------------------*/
 /obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages()
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
-		for(var/image/I in alien.client?.images)
+		var/list/image/to_remove = list()
+		for(var/image/client_image in alien.client?.images)
 			var/searchfor = "infected"
-			if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
-				qdel(I)
+			if(client_image.loc == owner && findtext(client_image.icon_state, searchfor, 1, length(searchfor) + 1))
+				to_remove += client_image
+		alien.client?.images -= to_remove

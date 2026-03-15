@@ -25,7 +25,7 @@
 	result = /obj/item/weaponcrafting/receiver
 	reqs = list(
 		/obj/item/stack/sheet/iron = 5,
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 		/obj/item/screwdriver = 1,
 		/obj/item/assembly/mousetrap = 1,
 	)
@@ -38,7 +38,7 @@
 	result = /obj/item/weaponcrafting/stock
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 8,
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 	)
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
@@ -49,7 +49,7 @@
 	result = /obj/item/gun_maintenance_supplies/makeshift
 	reqs = list(
 		/obj/item/stack/sheet/iron = 5,
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/cloth = 2,
 	)
@@ -67,8 +67,8 @@
 	category = CAT_WEAPON_RANGED
 
 /datum/crafting_recipe/advancedegun/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/e_gun)
+	LAZYADD(blacklist, typecacheof(/obj/item/gun/energy/e_gun, ignore_root_path = TRUE))
+	return ..()
 
 /datum/crafting_recipe/tempgun
 	name = "Temperature Gun"
@@ -81,8 +81,8 @@
 	category = CAT_WEAPON_RANGED
 
 /datum/crafting_recipe/tempgun/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/e_gun)
+	LAZYADD(blacklist, typecacheof(/obj/item/gun/energy/e_gun, ignore_root_path = TRUE))
+	return ..()
 
 /datum/crafting_recipe/beam_rifle
 	name = "Event Horizon Anti-Existential Beam Rifle"
@@ -108,7 +108,18 @@
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/xraylaser
+/datum/crafting_recipe/laser
+	abstract_type = /datum/crafting_recipe/laser
+	/// We will use the same blacklist for every type here to avoid repeating lists
+	var/static/list/laser_blacklist
+
+/datum/crafting_recipe/laser/New()
+	if(isnull(laser_blacklist))
+		laser_blacklist = typecacheof(/obj/item/gun/energy/laser, ignore_root_path = TRUE)
+	blacklist = laser_blacklist
+	return ..()
+
+/datum/crafting_recipe/laser/xraylaser
 	name = "X-ray Laser Gun"
 	result = /obj/item/gun/energy/laser/xray
 	reqs = list(
@@ -118,11 +129,7 @@
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/xraylaser/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/laser)
-
-/datum/crafting_recipe/hellgun
+/datum/crafting_recipe/laser/hellgun
 	name = "Hellfire Laser Gun"
 	result = /obj/item/gun/energy/laser/hellgun
 	reqs = list(
@@ -132,11 +139,7 @@
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/hellgun/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/laser)
-
-/datum/crafting_recipe/ioncarbine
+/datum/crafting_recipe/laser/ioncarbine
 	name = "Ion Carbine"
 	result = /obj/item/gun/energy/ionrifle/carbine
 	reqs = list(
@@ -145,10 +148,6 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/ioncarbine/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/laser)
 
 /datum/crafting_recipe/teslacannon
 	name = "Tesla Cannon"
@@ -196,7 +195,7 @@
 		/obj/item/pipe = 2,
 		/obj/item/weaponcrafting/stock = 1,
 		/obj/item/storage/toolbox = 1, // for the screws
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 5 SECONDS
@@ -211,7 +210,7 @@
 		/obj/item/stock_parts/servo = 2,
 		/obj/item/stack/sheet/mineral/wood = 4,
 		/obj/item/storage/toolbox = 1, // for the screws
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 	)
 	tool_paths = list(/obj/item/hatchet)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
@@ -241,8 +240,8 @@
 		/obj/item/gun/ballistic/rifle/rebarxbow = 1,
 	)
 	blacklist = list(
-	/obj/item/gun/ballistic/rifle/rebarxbow/forced,
-	/obj/item/gun/ballistic/rifle/rebarxbow/syndie,
+		/obj/item/gun/ballistic/rifle/rebarxbow/forced,
+		/obj/item/gun/ballistic/rifle/rebarxbow/syndie,
 	)
 	tool_behaviors = list(TOOL_CROWBAR)
 	time = 1 SECONDS
@@ -289,8 +288,8 @@
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/deagle_prime/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/ballistic/automatic/pistol)
+	LAZYADD(blacklist, typecacheof(/obj/item/gun/ballistic/automatic/pistol, ignore_root_path = TRUE))
+	return ..()
 
 /datum/crafting_recipe/deagle_prime_mag
 	name = "Regal Condor Magazine (10mm Reaper)"
@@ -329,7 +328,7 @@
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY
 
-/datum/crafting_recipe/Ratvarian_Repeater
+/datum/crafting_recipe/ratvarian_repeater
 	name = "Emplaced Ratvarian Repeater"
 	tool_behaviors = list(TOOL_SCREWDRIVER,TOOL_WRENCH)
 	result = /obj/structure/mounted_gun/ratvarian_repeater
@@ -345,7 +344,7 @@
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY
 
-/datum/crafting_recipe/Detached_Ratvarian_Repeater
+/datum/crafting_recipe/detached_ratvarian_repeater
 	name = "Iconoclast's Repeater"
 	tool_behaviors = list(TOOL_WELDER)
 	result = /obj/item/gun/energy/laser/musket/repeater

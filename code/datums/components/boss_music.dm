@@ -1,5 +1,5 @@
 /**
- * Attaches to a hostile simplemob and plays that music while they have a target.
+ * Attaches to a mob and plays that music while they have a target.
  */
 /datum/component/boss_music
 	///The music track we will play to players.
@@ -12,11 +12,16 @@
 	///List of callback timers, used to clear out mobs listening to boss music after `track_duration`.
 	var/list/music_callbacks = list()
 
-/datum/component/boss_music/Initialize(boss_track)
+	/// Signal that we listen to on our parent to know when to start boss music.
+	/// On basic mobs, the signal should be a variant of `COMSIG_AI_BLACKBOARD_KEY_SET()`, feeding in whatever key you want.
+	var/signal = null
+
+/datum/component/boss_music/Initialize(boss_track, signal)
 	. = ..()
-	if(!ishostile(parent))
+	if(!ismob(parent) || isnull(signal))
 		return COMPONENT_INCOMPATIBLE
 	src.boss_track = boss_track
+	src.signal = signal
 	track_duration = SSsounds.get_sound_length(boss_track)
 
 /datum/component/boss_music/Destroy(force)
@@ -31,16 +36,26 @@
 
 /datum/component/boss_music/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_HOSTILE_FOUND_TARGET, PROC_REF(on_target_found))
+	if(isbasicmob(parent))
+		RegisterSignal(parent, signal, PROC_REF(basic_target_found))
+	else
+		RegisterSignal(parent, signal, PROC_REF(on_target_found))
 
 /datum/component/boss_music/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_HOSTILE_FOUND_TARGET)
+	UnregisterSignal(parent, signal)
 	return ..()
+
+/// Handler wrapper for basic mobs getting a target. The signal we pass to basic mobs passes along the blackboard key which we can access off parent.
+/datum/component/boss_music/proc/basic_target_found(mob/source, key)
+	SIGNAL_HANDLER
+	var/mob/new_target = source.ai_controller.blackboard[key]
+	on_target_found(source, new_target)
 
 ///Handles giving the boss music to a new target the fauna has received.
 ///Keeps track of them to not repeatedly overwrite its own track.
-/datum/component/boss_music/proc/on_target_found(atom/source, mob/new_target)
+/datum/component/boss_music/proc/on_target_found(mob/source, mob/new_target)
 	SIGNAL_HANDLER
+
 	if(QDELETED(source) || !istype(new_target))
 		return
 

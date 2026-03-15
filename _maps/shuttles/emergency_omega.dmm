@@ -307,6 +307,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bk" = (
@@ -451,10 +452,10 @@
 	pixel_y = 3
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/status_display/evac/directional/east,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "iz" = (
@@ -796,7 +797,7 @@ aH
 Ge
 aZ
 aZ
-sY
+aZ
 aZ
 aZ
 br

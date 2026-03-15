@@ -10,7 +10,8 @@
 	)
 	time = 3.2 SECONDS
 	operation_flags = OPERATION_STANDING_ALLOWED | OPERATION_PRIORITY_NEXT_STEP | OPERATION_NOTABLE | OPERATION_IGNORE_CLOTHES
-	all_surgery_states_required = SURGERY_SKIN_OPEN | SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 	/// List of items that are always allowed to be an arm replacement, even if they fail another requirement.
 	var/list/always_accepted_prosthetics = list(
 		/obj/item/chainsaw, // the OG, too large otherwise
@@ -49,7 +50,10 @@
 
 	return option
 
-/datum/surgery_operation/prosthetic_replacement/get_operation_target(mob/living/patient, body_zone)
+/datum/surgery_operation/prosthetic_replacement/get_operation_target(atom/movable/operating_on, body_zone)
+	if (!isliving(operating_on))
+		return null
+	var/mob/living/patient = operating_on
 	// We always operate on the chest even if we're targeting left leg or w/e
 	return patient.get_bodypart(BODY_ZONE_CHEST)
 
@@ -165,17 +169,17 @@
 	desc = "Ensure that an arbitrary prosthetic is properly attached to a patient's body."
 	implements = list(
 		/obj/item/stack/medical/suture = 1,
-		/obj/item/stack/sticky_tape/surgical = 1.25,
-		/obj/item/stack/sticky_tape = 2,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1.25,
+		/obj/item/stack/medical/wrap/sticky_tape = 2,
 	)
 	time = 4.8 SECONDS
-	operation_flags = OPERATION_SELF_OPERABLE | OPERATION_STANDING_ALLOWED
+	operation_flags = OPERATION_SELF_OPERABLE | OPERATION_STANDING_ALLOWED | OPERATION_IGNORE_CLOTHES
 	all_surgery_states_required = SURGERY_PROSTHETIC_UNSECURED
 
 /datum/surgery_operation/limb/secure_arbitrary_prosthetic/get_default_radial_image()
 	return image(/obj/item/stack/medical/suture)
 
-/datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)
+/datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/medical/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -186,7 +190,7 @@
 	var/obj/item/bodypart/chest = limb.owner.get_bodypart(BODY_ZONE_CHEST)
 	display_pain(limb.owner, "[surgeon] begins to [tool.singular_name] [limb] to your body!", IS_ROBOTIC_LIMB(chest))
 
-/datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)
+/datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/medical/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,

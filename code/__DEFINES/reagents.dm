@@ -126,6 +126,16 @@
 /// Supercedes [REAGENT_REVERSE_METABOLISM].
 #define REAGENT_UNAFFECTED_BY_METABOLISM (1<<10)
 
+/// Spawn from features that can produce an infinite amount of something, like geysers, strange seeds and bees
+#define REAGENT_SPAWN_RANDOM_PRODUCERS (1<<0)
+/// Spawn from maintpills (only real maintpills, not the fake mapped or purchased kind)
+#define REAGENT_SPAWN_MAINTENANCE_PILL (1<<1)
+
+/// Do not ever spawn in anything random
+#define REAGENT_SPAWN_NO_RANDOM NONE
+/// Just spawn in everything, we don't care
+#define REAGENT_SPAWN_ALL_RANDOM_SPAWNS ALL
+
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion
 #define REACTION_CLEAR_IMPURE (1<<0)
@@ -296,3 +306,23 @@
 
 /// Cooldown between patch reagent messages
 #define PATCH_MESSAGE_COOLDOWN 10 SECONDS
+
+// on_spark_act returns
+/// We caused a non-destructive reaction
+#define SPARK_ACT_NON_DESTRUCTIVE (1 << 0)
+/// We caused a destructive action or an explosion, the holder should probably delete itself
+#define SPARK_ACT_DESTRUCTIVE (1 << 1)
+/// Don't remove this reagent, even if it reacted to spark_act
+#define SPARK_ACT_KEEP_REAGENT (1 << 2)
+/// Remove all reagents even if they didn't react and stop the processing
+/// Usually means an explosion or a destroyed parent
+#define SPARK_ACT_CLEAR_ALL (1 << 3)
+
+/// Valid values to be returned from reagent holder's spark_act
+#define SPARK_ACT_RETURNS (SPARK_ACT_NON_DESTRUCTIVE | SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL)
+
+// spark_flags values
+/// We're reacting in an enclosed container
+#define SPARK_ACT_ENCLOSED (1 << 0)
+/// We're in a large container or something, so decrease the power of bootleg explosives like welding fuel
+#define SPARK_ACT_WEAKEN_COMMON (1 << 1)

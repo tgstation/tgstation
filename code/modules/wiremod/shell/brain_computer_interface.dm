@@ -45,40 +45,15 @@
 
 /obj/item/organ/cyberimp/bci/proc/action_comp_registered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
-	LAZYADD(actions, new/datum/action/innate/bci_action(src, action_comp))
+	LAZYADD(actions, new/datum/action/innate/circuit_equipment_action(src, action_comp))
 
 /obj/item/organ/cyberimp/bci/proc/action_comp_unregistered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
-	var/datum/action/innate/bci_action/action = action_comp.granted_to[REF(src)]
+	var/datum/action/innate/circuit_equipment_action/action = action_comp.granted_to[REF(src)]
 	if(!istype(action))
 		return
 	LAZYREMOVE(actions, action)
 	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
-
-/datum/action/innate/bci_action
-	name = "Action"
-	button_icon = 'icons/mob/actions/actions_items.dmi'
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "bci_power"
-
-	var/obj/item/organ/cyberimp/bci/bci
-	var/obj/item/circuit_component/equipment_action/circuit_component
-
-/datum/action/innate/bci_action/New(obj/item/organ/cyberimp/bci/_bci, obj/item/circuit_component/equipment_action/circuit_component)
-	..()
-	bci = _bci
-	circuit_component.granted_to[REF(_bci)] = src
-	src.circuit_component = circuit_component
-
-/datum/action/innate/bci_action/Destroy()
-	circuit_component.granted_to -= REF(bci)
-	circuit_component = null
-
-	return ..()
-
-/datum/action/innate/bci_action/Activate()
-	circuit_component.user.set_output(owner)
-	circuit_component.signal.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/bci_core
 	display_name = "BCI Core"

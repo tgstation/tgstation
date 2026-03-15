@@ -43,7 +43,7 @@
 		return
 	if (HAS_TRAIT(liver_organ, TRAIT_MEDICAL_METABOLISM))
 		einstein.apply_damage(2, BRUTE, throwingdatum.target_zone)
-	else if (HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && throwingdatum.target_zone == BODY_ZONE_HEAD && prob(2))
+	else if (HAS_TRAIT(liver_organ, TRAIT_SCIENTIST_LIVER) && throwingdatum.target_zone == BODY_ZONE_HEAD && prob(2))
 		gravity_reminder(einstein)
 
 /obj/item/food/grown/apple/onZImpact(turf/impacted_turf, levels, impact_flags)
@@ -52,7 +52,7 @@
 	if (isnull(einstein))
 		return
 	var/obj/item/organ/liver/liver_organ = einstein.get_organ_slot(ORGAN_SLOT_LIVER)
-	if (liver_organ && HAS_TRAIT(liver_organ, TRAIT_BALLMER_SCIENTIST) && prob(40))
+	if (liver_organ && HAS_TRAIT(liver_organ, TRAIT_SCIENTIST_LIVER) && prob(40))
 		gravity_reminder(einstein)
 
 /// Provide an important insight

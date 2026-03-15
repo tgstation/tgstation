@@ -98,7 +98,7 @@
 			. += span_info("Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>.")
 		if(HAS_TRAIT(src, TRAIT_ENGINEER_METABOLISM))
 			. += span_info("Signs of radiation exposure and space adaption, implies that this is the liver of an <em>engineer</em>.")
-		if(HAS_TRAIT(src, TRAIT_BALLMER_SCIENTIST))
+		if(HAS_TRAIT(src, TRAIT_SCIENTIST_LIVER))
 			. += span_info("Strange glowing residues, sprinklings of congealed solid plasma, and what seem to be tumors indicate this is the radiated liver of a <em>scientist</em>.")
 		if(HAS_TRAIT(src, TRAIT_MAINTENANCE_METABOLISM))
 			. += span_info("A half-digested rat's tail (somehow), disgusting sludge, and the faint smell of Grey Bull imply this is what remains of an <em>assistant</em>'s liver.")
@@ -304,7 +304,7 @@
 	if(!(organ_owner.mob_biotypes & MOB_PLANT))
 		return
 	if(chem.type == /datum/reagent/toxin/plantbgone)
-		organ_owner.adjust_tox_loss(3 * REM * seconds_per_tick)
+		organ_owner.adjust_tox_loss(1.5 * seconds_per_tick)
 
 /obj/item/organ/liver/snail
 	name = "snail liver"
@@ -330,7 +330,7 @@
 		return
 	if(istype(chem, /datum/reagent/consumable/salt))
 		playsound(organ_owner, SFX_SEAR, 30, TRUE)
-		organ_owner.adjust_fire_loss(2 * REM * seconds_per_tick)
+		organ_owner.adjust_fire_loss(1 * seconds_per_tick)
 		organ_owner.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_TICK
 

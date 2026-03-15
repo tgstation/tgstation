@@ -106,7 +106,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "eL" = (
-/obj/item/infuser_book,
+/obj/item/tgui_book/manual/infuser,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)

@@ -94,8 +94,11 @@
 
 /obj/item/gun/energy/recharge/update_icon_state()
 	. = ..()
-	if(no_charge_state && !can_shoot())
-		icon_state = no_charge_state
+	if(no_charge_state)
+		if(can_shoot())
+			icon_state = base_icon_state
+		else
+			icon_state = no_charge_state
 
 /obj/item/gun/energy/recharge/ebow
 	name = "mini energy crossbow"

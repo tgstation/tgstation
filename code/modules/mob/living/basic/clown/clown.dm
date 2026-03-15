@@ -149,7 +149,7 @@
 		/obj/effect/gibspawner/human,
 		/obj/item/clothing/mask/gas/clown_hat,
 		/obj/item/food/meatclown,
-		/obj/item/stack/sheet/animalhide/human,
+		/obj/item/stack/sheet/animalhide/carbon/human,
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list(

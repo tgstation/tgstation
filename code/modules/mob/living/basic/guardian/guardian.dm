@@ -15,7 +15,6 @@
 	mob_biotypes = MOB_SPECIAL
 	sentience_type = SENTIENCE_HUMANOID
 	hud_type = /datum/hud/guardian
-	faction = list()
 	speed = 0
 	status_flags = CANPUSH
 	maxHealth = INFINITY // The spirit itself is invincible and passes damage to its host
@@ -200,7 +199,7 @@
 /mob/living/basic/guardian/gib()
 	death(TRUE)
 
-/mob/living/basic/guardian/dust(just_ash, drop_items, force)
+/mob/living/basic/guardian/dust(just_ash, drop_items, give_moodlet, force)
 	death(TRUE)
 
 /// Link up with a summoner mob.
@@ -225,8 +224,9 @@
 		if (mind)
 			mind.enslave_mind_to_creator(to_who)
 		else //mindless guardian, manually give them factions
-			faction += summoner.faction
-			summoner.faction += "[REF(src)]"
+			add_faction(summoner.get_faction())
+			add_ally(summoner.allies)
+			summoner.add_ally(src)
 	remove_all_languages(LANGUAGE_MASTER)
 	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
 	RegisterSignal(to_who, COMSIG_QDELETING, PROC_REF(on_summoner_deletion))
@@ -251,8 +251,8 @@
 	unleash()
 	UnregisterSignal(summoner, list(COMSIG_QDELETING, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 	if (different_person)
-		summoner.faction -= "[REF(src)]"
-		faction -= summoner.faction
+		summoner.remove_ally(src)
+		remove_faction(summoner.get_faction())
 		mind?.remove_all_antag_datums()
 	if (!length(summoner.get_all_linked_holoparasites() - src))
 		for (var/action_type in control_actions)

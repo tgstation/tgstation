@@ -7,7 +7,7 @@
 
 /obj/item/clothing/head/costume/pirate/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
 /obj/item/clothing/head/costume/pirate/equipped(mob/user, slot)
 	. = ..()

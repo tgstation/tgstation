@@ -118,14 +118,13 @@
 	stamina = 20
 	weak_against_armour = FALSE
 
-/obj/projectile/beam/laser/musket/repeater
+/obj/projectile/beam/laser/repeater
 	name = "clockwork laser"
 	icon_state = "laser_repeater"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
-	damage = 28
-	stamina = 35
-	weak_against_armour = TRUE
+	damage = 15
 	light_color = COLOR_DARK_ORANGE
+	weak_against_armour = TRUE
 
 /obj/projectile/beam/weak
 	damage = 15

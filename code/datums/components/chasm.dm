@@ -6,7 +6,7 @@
 	var/oblivion_message = "You stumble and stare into the abyss before you. It stares back, and you fall into the enveloping dark."
 
 	/// List of refs to falling objects -> how many levels deep we've fallen
-	var/static/list/falling_atoms = list()
+	var/static/list/falling_atoms
 	var/static/list/forbidden_types = typecacheof(list(
 		/obj/docking_port,
 		/obj/effect/abstract,
@@ -106,7 +106,8 @@
 /datum/component/chasm/proc/droppable(atom/movable/dropped_thing)
 	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
 	// avoid an infinite loop, but allow falling a large distance
-	if(falling_atoms[falling_ref] && falling_atoms[falling_ref] > 30)
+	var/falling_atom = LAZYACCESS(falling_atoms, falling_ref)
+	if(falling_atom && falling_atom > 30)
 		return CHASM_NOT_DROPPING
 	if(is_type_in_typecache(dropped_thing, forbidden_types) || (!isliving(dropped_thing) && !isobj(dropped_thing)))
 		return CHASM_NOT_DROPPING
@@ -133,14 +134,14 @@
 	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
 	//Make sure the item is still there after our sleep
 	if(!dropped_thing || !falling_ref?.resolve())
-		falling_atoms -= falling_ref
+		LAZYREMOVE(falling_atoms, falling_ref)
 		return
 
-	falling_atoms[falling_ref] = (falling_atoms[falling_ref] || 0) + 1
+	LAZYSET(falling_atoms, falling_ref, (falling_atoms[falling_ref] || 0) + 1)
 	var/turf/below_turf = target_turf
 	var/atom/parent = src.parent
 
-	if(falling_atoms[falling_ref] > 1)
+	if(LAZYACCESS(falling_atoms, falling_ref) > 1)
 		return // We're already handling this
 
 	if(SEND_SIGNAL(dropped_thing, COMSIG_MOVABLE_CHASM_DROPPED, parent) & COMPONENT_NO_CHASM_DROP)
@@ -164,7 +165,7 @@
 			var/mob/living/fallen = dropped_thing
 			fallen.Paralyze(100)
 			fallen.adjust_brute_loss(30)
-		falling_atoms -= falling_ref
+		LAZYREMOVE(falling_atoms, falling_ref)
 		return
 
 	// send to oblivion
@@ -235,7 +236,7 @@
 			fallen_mob.death(TRUE)
 			fallen_mob.apply_damage(300)
 
-	falling_atoms -= falling_ref
+	LAZYREMOVE(falling_atoms, falling_ref)
 
 /**
  * Called when something has left the chasm depths storage.

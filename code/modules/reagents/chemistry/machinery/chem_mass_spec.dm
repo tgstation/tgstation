@@ -1,5 +1,5 @@
 /obj/machinery/chem_mass_spec
-	name = "High-performance liquid chromatography machine"
+	name = "high-performance liquid chromatography machine"
 	desc = "Allows you to purify reagents & separate out inverse reagents"
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "HPLC"
@@ -102,7 +102,7 @@
 		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
 	else
 		. += span_warning("Needs to be [EXAMINE_HINT("wrenched")] to use.")
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 

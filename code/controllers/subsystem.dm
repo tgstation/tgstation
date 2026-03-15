@@ -307,7 +307,7 @@
 		if (SS_SLEEPING)
 			. = "S"
 		if (SS_IDLE)
-			. = "  "
+			. = " "
 
 /// Causes the next "cycle" fires to be missed. Effect is accumulative but can reset by calling update_nextfire(reset_time = TRUE)
 /datum/controller/subsystem/proc/postpone(cycles = 1)

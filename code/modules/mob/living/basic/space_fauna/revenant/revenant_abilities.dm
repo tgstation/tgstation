@@ -4,7 +4,6 @@
 //Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob
 /datum/action/cooldown/spell/list_target/telepathy/revenant
 	name = "Revenant Transmit"
-	panel = "Revenant Abilities"
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
 
@@ -14,7 +13,6 @@
 	antimagic_flags = MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND
 
 /datum/action/cooldown/spell/aoe/revenant
-	panel = "Revenant Abilities (Locked)"
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
 	button_icon = 'icons/mob/actions/actions_revenant.dmi'
@@ -80,7 +78,6 @@
 
 		name = "[initial(name)] ([cast_amount]E)"
 		to_chat(cast_on, span_revennotice("You have unlocked [initial(name)]!"))
-		panel = "Revenant Abilities"
 		locked = FALSE
 		reset_spell_cooldown()
 		return . | SPELL_CANCEL_CAST
@@ -119,9 +116,7 @@
 			continue
 
 		light.visible_message(span_boldwarning("[light] suddenly flares brightly and begins to spark!"))
-		var/datum/effect_system/spark_spread/light_sparks = new /datum/effect_system/spark_spread()
-		light_sparks.set_up(4, 0, light)
-		light_sparks.start()
+		do_sparks(4, FALSE, light)
 		new /obj/effect/temp_visual/revenant(get_turf(light))
 		addtimer(CALLBACK(src, PROC_REF(overload_shock), light, caster), 2 SECONDS)
 
@@ -193,6 +188,11 @@
 			new /obj/effect/temp_visual/revenant/cracks(window.loc)
 	for(var/obj/machinery/light/light in victim)
 		light.flicker(rand(3, 5)) //spooky
+	for(var/obj/structure/mirror/mirror in victim)
+		if(istype(mirror, /obj/structure/mirror/magic))
+			continue
+		new /obj/effect/temp_visual/revenant(mirror.loc)
+		mirror.atom_break("magic")
 
 //Malfunction: Makes bad stuff happen to robots and machines.
 /datum/action/cooldown/spell/aoe/revenant/malfunction

@@ -5,6 +5,7 @@
 	helptext = "Allows us to darken and change the translucency of our pigmentation, and adapt our eyes to see in dark conditions, \
 		The translucent effect works best in dark enviroments and garments. Can be toggled on and off."
 	button_icon_state = "darkness_adaptation"
+	category = "stealth"
 	dna_cost = 2
 	chemical_cost = 15
 	/// How much we slow chemical regeneration while active, in chems per second

@@ -3,14 +3,14 @@
  */
 /obj/item/light_eater
 	name = "light eater" //as opposed to heavy eater
-	icon = 'icons/obj/weapons/changeling_items.dmi'
-	icon_state = "arm_blade"
-	inhand_icon_state = "arm_blade"
+	icon = 'icons/obj/weapons/nightmare_items.dmi'
+	icon_state = "light_eater"
+	inhand_icon_state = "light_eater"
 	icon_angle = 180
 	force = 25
 	armour_penetration = 35
-	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/antag/nightmare_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/nightmare_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FIRE_PROOF | LAVA_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_HUGE

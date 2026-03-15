@@ -31,8 +31,13 @@
 			if(istype(teleatom, /obj/item/storage/backpack/holding))
 				precision = rand(1,100)
 
-			var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding)
+			var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding, /obj/item/mod/control, /obj/item/mod/module/storage)
 			var/list/bagholding = typecache_filter_list(teleatom.get_all_contents(), bag_cache)
+			for(var/obj/item/mod/modsuit_or_module in bagholding)
+				var/datum/storage/storage = modsuit_or_module.atom_storage
+				if(istype(storage, /datum/storage/bag_of_holding) && storage.real_location == storage.parent)
+					continue
+				bagholding -= modsuit_or_module
 			if(bagholding.len)
 				precision = max(rand(1,100)*bagholding.len,100)
 				if(isliving(teleatom))
@@ -41,8 +46,7 @@
 
 			// if effects are not specified and not explicitly disabled, sparks
 			if((!effectin || !effectout) && !no_effects)
-				var/datum/effect_system/spark_spread/sparks = new
-				sparks.set_up(5, 1, teleatom)
+				var/datum/effect_system/basic/spark_spread/sparks = new(teleatom, 5, TRUE)
 				if (!effectin)
 					effectin = sparks
 				if (!effectout)
@@ -50,8 +54,7 @@
 		if(TELEPORT_CHANNEL_QUANTUM)
 			// if effects are not specified and not explicitly disabled, rainbow sparks
 			if ((!effectin || !effectout) && !no_effects)
-				var/datum/effect_system/spark_spread/quantum/sparks = new
-				sparks.set_up(5, 1, teleatom)
+				var/datum/effect_system/basic/spark_spread/quantum/sparks = new(teleatom, 5, TRUE)
 				if (!effectin)
 					effectin = sparks
 				if (!effectout)
@@ -122,8 +125,7 @@
 	if(sound)
 		playsound(location, sound, 60, TRUE)
 	if(effect)
-		effect.attach(location)
-		effect.start()
+		effect.attach(location).start()
 
 /**
  * Attempts to find a "safe" floor turf within some given z-levels
@@ -265,3 +267,50 @@
 		return FALSE
 
 	return TRUE
+
+//Gets the topmost teleportable container
+/proc/get_teleportable_container(atom/movable/teleportable, container_flags = ALL)
+	while(ismovable(teleportable.loc))
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_STORAGE) && isitem(teleportable))
+			var/obj/item/item = teleportable
+			if(item.item_flags & IN_STORAGE)
+				break
+		var/atom/movable/movable = teleportable.loc
+		if(movable.anchored)
+			break
+		if(isliving(movable))
+			var/mob/living/living = movable
+			if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_INVENTORY))
+				var/list/equipped = living.get_equipped_items(INCLUDE_HELD|INCLUDE_POCKETS)
+				if((teleportable in equipped) && !HAS_TRAIT(teleportable, TRAIT_NODROP))
+					if(istype(teleportable, /obj/item/mod/control) && (container_flags & TELEPORT_CONTAINER_INCLUDE_SEALED_MODSUIT))
+						var/obj/item/mod/control/modsuit = teleportable
+						var/sealed = TRUE
+						for(var/datum/mod_part/part as anything in modsuit.get_part_datums(TRUE))
+							if((part.part_item == modsuit || part.part_item.loc != modsuit) && !part.sealed)
+								sealed = FALSE
+								break
+						if(!sealed)
+							break
+					else
+						break
+			if(living.buckled)
+				if(living.buckled.anchored)
+					break
+				else
+					var/obj/buckled_obj = living.buckled
+					buckled_obj.unbuckle_mob(living)
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_CLOSET) && iscloset(movable))
+			break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_MECH_EQUIPMENT) && istype(movable, /obj/item/mecha_parts/mecha_equipment))
+			break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_VEHICLE) && isvehicle(movable))
+			var/obj/vehicle/vehicle = movable
+			if(vehicle.is_occupant(teleportable))
+				break
+		if(!(container_flags & TELEPORT_CONTAINER_INCLUDE_STOMACH) && istype(movable, /obj/item/organ/stomach))
+			var/obj/item/organ/stomach/stomach = movable
+			if(teleportable in stomach.stomach_contents)
+				break
+		teleportable = movable
+	return teleportable

@@ -9,7 +9,7 @@
 		TOOL_WIRECUTTER = 2.5,
 	)
 	time = 3 SECONDS
-	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_LOOPING | OPERATION_PRIORITY_NEXT_STEP
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_LOOPING | OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED
 	preop_sound = list(
 		TOOL_SCALPEL = 'sound/items/handling/surgery/scalpel1.ogg',
 		TOOL_HEMOSTAT = 'sound/items/handling/surgery/hemostat1.ogg',
@@ -21,6 +21,12 @@
 	var/infestation_removed = 4
 	/// How much sanitization is added per step
 	var/sanitization_added = 0.5 // just enough to stop infestation from worsening
+
+/datum/surgery_operation/limb/debride/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/burn/flesh/wound in limb.wounds)
+		if(HAS_TRAIT(wound, TRAIT_WOUND_SCANNED))
+			. *= 0.5
 
 /datum/surgery_operation/limb/debride/get_default_radial_image()
 	return image(/obj/item/reagent_containers/applicator/patch/aiuri)
@@ -56,9 +62,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to excise infected flesh from [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to excise infected flesh from [limb.owner]'s [limb.plaintext_zone] with [tool]."),
-		span_notice("[surgeon] begins to excise infected flesh from [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to excise infected flesh from [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to excise infected flesh from [FORMAT_LIMB_OWNER(limb)] with [tool]."),
+		span_notice("[surgeon] begins to excise infected flesh from [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "The infection in your [limb.plaintext_zone] stings like hell! It feels like you're being stabbed!")
 
@@ -70,17 +76,17 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully excise some of the infected flesh from [limb.owner]'s [limb.plaintext_zone][get_progress(wound)]."),
-		span_notice("[surgeon] successfully excises some of the infected flesh from [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
-		span_notice("[surgeon] successfully excises some of the infected flesh from  [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You successfully excise some of the infected flesh from [FORMAT_LIMB_OWNER(limb)][get_progress(wound)]."),
+		span_notice("[surgeon] successfully excises some of the infected flesh from [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+		span_notice("[surgeon] successfully excises some of the infected flesh from  [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 
 /datum/surgery_operation/limb/debride/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You carve away some of the healthy flesh from [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] carves away some of the healthy flesh from [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
-		span_notice("[surgeon] carves away some of the healthy flesh from  [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You carve away some of the healthy flesh from [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] carves away some of the healthy flesh from [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+		span_notice("[surgeon] carves away some of the healthy flesh from  [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 	limb.receive_damage(rand(4, 8), wound_bonus = CANT_WOUND, sharpness = tool.get_sharpness(), damage_source = tool)

@@ -32,9 +32,5 @@
 	var/turf/tile = parent
 	var/obj/structure/closet/crate/secure/bitrunning/encrypted/crate = new()
 	crate.forceMove(tile) // Triggers any on-move effects on that turf
-
-	var/datum/effect_system/spark_spread/quantum/sparks = new(tile)
-	sparks.set_up(number = 5, location = tile)
-	sparks.start()
-
+	do_sparks(5, FALSE, tile, spark_type = /datum/effect_system/basic/spark_spread/quantum)
 	qdel(src)

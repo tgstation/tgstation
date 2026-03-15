@@ -32,9 +32,9 @@
 ///from /obj/item/bodypart/proc/receive_damage, sent from the limb owner (limb, brute, burn)
 #define COMSIG_CARBON_LIMB_DAMAGED "carbon_limb_damaged"
 	#define COMPONENT_PREVENT_LIMB_DAMAGE (1 << 0)
-/// from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze): (/obj/item/stack/medical/gauze/applied_gauze, /obj/item/stack/medical/gauze/stack_used)
+/// from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze): (/obj/item/stack/medical/wrap/gauze/applied_gauze, /obj/item/stack/medical/wrap/gauze/stack_used)
 #define COMSIG_BODYPART_GAUZED "bodypart_gauzed"
-/// from /obj/item/stack/medical/gauze/Destroy(): (/obj/item/stack/medical/gauze/removed_gauze)
+/// from /obj/item/stack/medical/wrap/gauze/Destroy(): (/obj/item/stack/medical/wrap/gauze/removed_gauze)
 #define COMSIG_BODYPART_UNGAUZED "bodypart_ungauzed"
 
 /// Called from bodypart changing owner, which could be on attach or detachment. Either argument can be null. (mob/living/carbon/new_owner, mob/living/carbon/old_owner)
@@ -59,6 +59,15 @@
 #define COMSIG_CARBON_POST_REMOVE_LIMB "carbon_post_remove_limb"
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
+
+/// Sent to a limb when something *attempts* to change its surgery state (old_state, new_state, changed_states)
+#define COMSIG_BODYPART_UPDATING_SURGERY_STATE "bodypart_updating_surgery_state"
+
+/// Called from /obj/item/bodypart/proc/get_limb_icon(dropped, mob/living/carbon/update_on) : (list/limb_icons, dropped, mob/living/carbon/update_on)
+#define COMSIG_BODYPART_GET_LIMB_ICON "bodypart_get_limb_icon"
+
+/// Called from /obj/item/bodypart/proc/generate_icon_key() : (list/icon_keys)
+#define COMSIG_BODYPART_GENERATE_ICON_KEY "bodypart_generate_icon_key"
 
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
 #define COMSIG_CARBON_GAIN_ORGAN "carbon_gain_organ"

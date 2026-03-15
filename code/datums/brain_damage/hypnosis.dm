@@ -2,6 +2,8 @@
 	name = "Hypnosis"
 	desc = "Patient's unconscious is completely enthralled by a word or sentence, focusing their thoughts and actions on it."
 	scan_desc = "looping thought pattern"
+	symptoms = "Fixates on a specific word or phrase. This fixation can lead to altered behavior, \
+		such as prioritizing actions related to the phrase over other tasks while neglecting work, needs, or social interactions."
 	gain_text = ""
 	lose_text = ""
 	resilience = TRAUMA_RESILIENCE_SURGERY
@@ -74,6 +76,6 @@
 			)
 
 /datum/brain_trauma/hypnosis/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
 		return
 	hearing_args[HEARING_RAW_MESSAGE] = target_phrase.Replace(hearing_args[HEARING_RAW_MESSAGE], span_hypnophrase("$1"))

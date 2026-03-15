@@ -44,6 +44,7 @@
 
 /datum/bodypart_overlay/augment
 	layers = EXTERNAL_ADJACENT
+	draw_on_husks = HUSK_OVERLAY_NORMAL
 	/// Implant that owns this overlay
 	var/obj/item/organ/cyberimp/implant
 
@@ -210,9 +211,7 @@
 	owner.set_stamina_loss(0)
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, set_stamina_loss), 0), stun_resistance_time)
 
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(5, 1, src)
-	sparks.start()
+	do_sparks(5, TRUE, src)
 
 	give_stun_buffs(owner)
 	addtimer(CALLBACK(src, PROC_REF(remove_stun_buffs), owner), stun_resistance_time)
@@ -260,7 +259,7 @@
 		return
 
 	if(organ_flags & ORGAN_FAILING)
-		var/holy_shit_my_brain = remove_brain()
+		var/holy_shit_my_brain = remove_brain(owner.get_organ_by_type(ORGAN_SLOT_BRAIN))
 		if(holy_shit_my_brain)
 			to_chat(owner, span_warning("You take [holy_shit_my_brain] out of [src]. You stare at it for a moment in confusion."))
 		return
@@ -324,7 +323,7 @@
 			skillchip.forceMove(owner.drop_location())
 			playsound(owner, 'sound/machines/terminal/terminal_eject.ogg', 25, TRUE)
 		else
-			remove_brain()
+			remove_brain(chippy_brain, severity == EMP_LIGHT ? 1 : 2)
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/connector/proc/remove_brain(obj/item/organ/brain/chippy_brain, severity = 1)
@@ -405,7 +404,7 @@
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_LIVING_OPERATING_ON)
 
-/obj/item/organ/cyberimp/brain/surgical_processor/proc/check_surgery(datum/source, mob/living/patient, list/operations)
+/obj/item/organ/cyberimp/brain/surgical_processor/proc/check_surgery(datum/source, atom/movable/operating_on, list/operations)
 	SIGNAL_HANDLER
 
 	if(organ_flags & (ORGAN_FAILING|ORGAN_EMP))

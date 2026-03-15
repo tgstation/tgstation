@@ -629,7 +629,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	var/turf/final_turf = length(open_turfs) ? pick(open_turfs) : drop_location()
 	var/mob/living/startled_animal = new contained_animal(drop_location())
 	startled_animal.Move(final_turf)
-	visible_message(span_notice("A startled [startled_animal] jumps out of [src]"))
+	visible_message(span_notice("A startled [startled_animal] jumps out of [src]."))
 	contained_animal = null
 
 /// Initiates flushing

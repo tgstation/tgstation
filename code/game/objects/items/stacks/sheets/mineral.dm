@@ -29,6 +29,9 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	new/datum/stack_recipe("Breakdown into sand", /obj/item/stack/ore/glass, 1, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_NO_MATERIALS, category = CAT_MISC), \
 ))
 
+/obj/item/stack/sheet/mineral
+	abstract_type = /obj/item/stack/sheet/mineral
+
 /obj/item/stack/sheet/mineral/sandstone
 	name = "sandstone brick"
 	desc = "This appears to be a combination of both sand and stone."
@@ -114,9 +117,6 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	new/datum/stack_recipe("diamond tile", /obj/item/stack/tile/mineral/diamond, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES),  \
 	))
 
-/obj/item/stack/sheet/mineral/diamond/grind_results()
-	return list(/datum/reagent/carbon = 20)
-
 /obj/item/stack/sheet/mineral/diamond/get_main_recipes()
 	. = ..()
 	. += GLOB.diamond_recipes
@@ -148,9 +148,6 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	new/datum/stack_recipe("uranium tile", /obj/item/stack/tile/mineral/uranium, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
 	))
 
-/obj/item/stack/sheet/mineral/uranium/grind_results()
-	return list(/datum/reagent/uranium = 20)
-
 /obj/item/stack/sheet/mineral/uranium/get_main_recipes()
 	. = ..()
 	. += GLOB.uranium_recipes
@@ -180,9 +177,6 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/plasma
 	material_type = /datum/material/plasma
 	walltype = /turf/closed/wall/mineral/plasma
-
-/obj/item/stack/sheet/mineral/plasma/grind_results()
-	return list(/datum/reagent/toxin/plasma = 20)
 
 /obj/item/stack/sheet/mineral/plasma/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins licking \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -229,9 +223,6 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	new/datum/stack_recipe("Simple Crown", /obj/item/clothing/head/costume/crown, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
 	))
 
-/obj/item/stack/sheet/mineral/gold/grind_results()
-	return list(/datum/reagent/gold = 20)
-
 /obj/item/stack/sheet/mineral/gold/get_main_recipes()
 	. = ..()
 	. += GLOB.gold_recipes
@@ -261,9 +252,6 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	new/datum/stack_recipe("silver tile", /obj/item/stack/tile/mineral/silver, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
 	))
 
-/obj/item/stack/sheet/mineral/silver/grind_results()
-	return list(/datum/reagent/silver = 20)
-
 /obj/item/stack/sheet/mineral/silver/get_main_recipes()
 	. = ..()
 	. += GLOB.silver_recipes
@@ -289,9 +277,6 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	new/datum/stack_recipe("bananium tile", /obj/item/stack/tile/mineral/bananium, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
 	))
-
-/obj/item/stack/sheet/mineral/bananium/grind_results()
-	return list(/datum/reagent/consumable/banana = 20)
 
 /obj/item/stack/sheet/mineral/bananium/get_main_recipes()
 	. = ..()
@@ -414,9 +399,6 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 	. = ..()
 	AddComponent(/datum/component/storm_hating)
 
-/obj/item/stack/sheet/mineral/snow/grind_results()
-	return list(/datum/reagent/consumable/ice = 20)
-
 /obj/item/stack/sheet/mineral/snow/get_main_recipes()
 	. = ..()
 	. += GLOB.snow_recipes
@@ -517,7 +499,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	return list(/datum/reagent/carbon = 20)
 
 /obj/item/stack/sheet/mineral/coal/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
+	if(W.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //If the temperature of the object is hot enough to start a fire, then ignite
 		var/turf/T = get_turf(src)
 		message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		user.log_message("ignited coal", LOG_GAME)

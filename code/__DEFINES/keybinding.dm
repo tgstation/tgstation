@@ -3,6 +3,7 @@
 //General
 #define COMSIG_KB_ACTIVATED (1<<0)
 #define COMSIG_KB_EMOTE "keybinding_emote_down"
+#define UNBOUND_KEY "Unbound"
 
 ///Signal sent when a keybind is deactivated
 #define DEACTIVATE_KEYBIND(A) "[A]_DEACTIVATED"
@@ -26,6 +27,7 @@
 //Client
 #define COMSIG_KB_CLIENT_GETHELP_DOWN "keybinding_client_gethelp_down"
 #define COMSIG_KB_CLIENT_SCREENSHOT_DOWN "keybinding_client_screenshot_down"
+#define COMSIG_KB_CLIENT_SCREENSHOT_AS_DOWN "keybinding_client_screenshot_as_down"
 #define COMSIG_KB_CLIENT_FULLSCREEN_DOWN "keybinding_client_fullscreen_down"
 #define COMSIG_KB_CLIENT_MINIMALHUD_DOWN "keybinding_client_minimalhud_down"
 #define COMSIG_KB_CLIENT_CLOSEUI_DOWN "keybinding_client_closeui_down"

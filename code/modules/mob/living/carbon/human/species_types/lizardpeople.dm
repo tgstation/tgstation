@@ -26,7 +26,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_cookie = /obj/item/food/meat/slab
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
-	skinned_type = /obj/item/stack/sheet/animalhide/lizard
+	skinned_type = /obj/item/stack/sheet/animalhide/carbon/lizard
 	exotic_bloodtype = BLOOD_TYPE_LIZARD
 	inert_mutation = /datum/mutation/firebreath
 	death_sound = 'sound/mobs/humanoids/lizard/deathsound.ogg'

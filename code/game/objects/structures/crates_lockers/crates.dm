@@ -41,7 +41,7 @@
 /obj/structure/closet/crate/Initialize(mapload)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
 	if(elevation)
-		AddComponent(/datum/component/climb_walkable)
+		AddElement(/datum/element/climb_walkable)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	. = ..()
 
@@ -500,3 +500,25 @@
 	icon_state = "lavender"
 	base_icon_state = "lavender"
 	glitter_color = "#db80ff"
+
+/obj/structure/closet/crate/market
+	name = "shield bubble"
+	desc = "A rippling blue energy bubble, capable of sustaining itself until it hits a solid wall."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shield2"
+	base_icon_state = "shield2"
+
+/obj/structure/closet/crate/market/after_open(mob/living/user, force)
+	. = ..()
+	visible_message(span_notice("[src] pops as [user] touches it!"))
+	pop_crate()
+
+/obj/structure/closet/crate/market/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	pop_crate()
+
+/// Called when the bubble either arrives at the station, or is interacted with someone/something.
+/obj/structure/closet/crate/market/proc/pop_crate()
+	do_sparks(1, TRUE, get_turf(src))
+	dump_contents()
+	qdel(src)

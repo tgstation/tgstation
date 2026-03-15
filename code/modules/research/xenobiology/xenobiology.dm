@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			user.visible_message(span_warning("[user] starts shaking!"),span_notice("Your [name] starts pulsing gently..."))
 			if(do_after(user, 4 SECONDS, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
-				spawned_mob.faction |= FACTION_NEUTRAL
+				spawned_mob.add_faction(FACTION_NEUTRAL)
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_notice("You spit out [spawned_mob]!"))
 				return 300
@@ -198,9 +198,9 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(do_after(user, 5 SECONDS, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
 				if(!user.combat_mode)
-					spawned_mob.faction |= FACTION_NEUTRAL
+					spawned_mob.add_faction(FACTION_NEUTRAL)
 				else
-					spawned_mob.faction |= FACTION_SLIME
+					spawned_mob.add_faction(FACTION_SLIME)
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_warning("You spit out [spawned_mob]!"))
 				return 600
@@ -871,7 +871,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 	user.mind.transfer_to(switchy_mob)
 	SEND_SIGNAL(switchy_mob, COMSIG_SIMPLEMOB_TRANSFERPOTION, user)
-	switchy_mob.faction = user.faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM( switchy_mob, user)
 	switchy_mob.copy_languages(user, LANGUAGE_MIND)
 	user.death()
 	to_chat(switchy_mob, span_notice("In a quick flash, you feel your consciousness flow into [switchy_mob]!"))

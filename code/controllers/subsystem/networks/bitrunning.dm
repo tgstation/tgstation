@@ -21,8 +21,8 @@ SUBSYSTEM_DEF(bitrunning)
 	for(var/datum/lazy_template/virtual_domain/domain as anything in all_domains)
 		if(domain.domain_flags & DOMAIN_TEST_ONLY)
 			continue
-		var/can_view = domain.difficulty < scanner_tier && domain.cost <= points + 5
-		var/can_view_reward = domain.difficulty < (scanner_tier + 1) && domain.cost <= points + 3
+		var/can_view = domain.can_view_name(scanner_tier, points)
+		var/can_view_reward = domain.can_view_reward(scanner_tier, points)
 
 		UNTYPED_LIST_ADD(levels, list(
 			"announce_ghosts" = domain.announce_to_ghosts,

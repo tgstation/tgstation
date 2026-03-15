@@ -2,10 +2,10 @@
 	demand_connects = NORTH
 	supply_connects = SOUTH
 
-/datum/component/plumbing/reaction_chamber/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
-	. = ..()
+/datum/component/plumbing/reaction_chamber/Initialize(ducting_layer)
 	if(!istype(parent, /obj/machinery/plumbing/reaction_chamber))
 		return COMPONENT_INCOMPATIBLE
+	return ..()
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
 	. = FALSE
@@ -66,20 +66,37 @@
 	if(chamber.emptying) //if we are still emptying then keep checking for reagents until we are emptied out
 		chamber.RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, TYPE_PROC_REF(/obj/machinery/plumbing/reaction_chamber, on_reagent_change))
 
+/datum/component/plumbing/buffered
+	///The reagent to request into this buffer
+	VAR_PROTECTED/datum/reagent/request
+	///The buffer meant to store reagents
+	VAR_PRIVATE/datum/reagents/buffer
+
+/datum/component/plumbing/buffered/Initialize(ducting_layer)
+	. = ..()
+	buffer = new (maximum = 50, new_flags = NO_REACT)
+	buffer.my_atom = parent
+
+/datum/component/plumbing/buffered/Destroy()
+	QDEL_NULL(buffer)
+	return ..()
+
+/datum/component/plumbing/buffered/recipient_reagents_holder()
+	return buffer
+
+/datum/component/plumbing/buffered/send_request(dir)
+	process_request(reagent = request, dir = dir)
+
 ///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal acid container
-/datum/component/plumbing/acidic_input
+/datum/component/plumbing/buffered/acidic_input
 	demand_connects = WEST
 	demand_color = COLOR_YELLOW
 	ducting_layer = SECOND_DUCT_LAYER
-
-/datum/component/plumbing/acidic_input/send_request(dir)
-	process_request(reagent = /datum/reagent/reaction_agent/acidic_buffer, dir = dir)
+	request = /datum/reagent/reaction_agent/acidic_buffer
 
 ///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal base container
-/datum/component/plumbing/alkaline_input
+/datum/component/plumbing/buffered/alkaline_input
 	demand_connects = EAST
 	demand_color = COLOR_VIBRANT_LIME
 	ducting_layer = FOURTH_DUCT_LAYER
-
-/datum/component/plumbing/alkaline_input/send_request(dir)
-	process_request(reagent = /datum/reagent/reaction_agent/basic_buffer, dir = dir)
+	request = /datum/reagent/reaction_agent/basic_buffer

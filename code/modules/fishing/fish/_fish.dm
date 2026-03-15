@@ -138,9 +138,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	/// The maximum size this fish can reach, calculated the first time update_size_and_weight() is called.
 	var/maximum_size
 
-	/// Weight in grams. Null until update_size_and_weight is called. Grind results scale with it. Don't think too hard how a trout could fit in a blender.
+	/// Weight in "kiloclam". Null until update_size_and_weight is called. Grind results scale with it. Don't think too hard how a trout could fit in a blender.
 	var/weight
-	/// Average weight for this fish type in grams
+	/// Average weight for this fish type in "kiloclam"
 	var/average_weight = 1000
 	/// Temporarily stores the new weight of the fish from randomize_size_and_weight() to be used by update_size_weight() later, so that it can be deferred.
 	var/temp_weight
@@ -549,7 +549,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
 		. += span_notice("[p_theyre(TRUE)] [size] cm long.")
-		. += span_notice("[p_they(TRUE)] weighs [weight] g.")
+		. += span_notice("[p_they(TRUE)] weighs [weight] [span_tooltip("the standard unit of measurement for space age fish", "kiloclam")].")
 
 		if(HAS_TRAIT(src, TRAIT_FISH_GENEGUNNED))
 			. += span_warning("[p_theyve(TRUE)] been edited by a fish genegun. [p_they(TRUE)]'ll die if edited again.")
@@ -702,8 +702,8 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		var/multiplier = 1 / mats_len
 		var/unmodified_weight = weight
 		for(var/mat_type in custom_materials)
-			var/datum/material/material = GET_MATERIAL_REF(mat_type)
-			unmodified_weight /= GET_MATERIAL_MODIFIER(material.fish_weight_modifier, multiplier)
+			var/datum/material/material = SSmaterials.get_material(mat_type)
+			unmodified_weight /= GET_MATERIAL_MODIFIER(1 + (material.get_property(MATERIAL_DENSITY) - 4) * 0.1, multiplier)
 		multiplier = unmodified_weight / weight
 		for(var/mat_type in new_mats_list)
 			new_mats_list[mat_type] *= multiplier
@@ -755,12 +755,16 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(bonus_malus)
 		calculate_fish_force_bonus(bonus_malus)
 
+	throwforce = force
+
 	if(material_flags & MATERIAL_EFFECTS && length(custom_materials)) //struck by metal gen or something.
-		var/multiplier = 1 / length(custom_materials)
 		if(material_flags & MATERIAL_AFFECT_STATISTICS)
+			var/index = 1
 			for(var/current_material in custom_materials)
-				var/datum/material/material = GET_MATERIAL_REF(current_material)
-				force *= GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+				var/datum/material/material = SSmaterials.get_material(current_material)
+				change_material_strength(material, custom_materials[material], get_material_multiplier(material, custom_materials, index))
+				index += 1
+
 		var/datum/material/master = get_master_material()
 		if(master?.item_sound_override)
 			hitsound = master.item_sound_override
@@ -771,10 +775,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 			drop_sound = master.item_sound_override
 
 	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
-
-	throwforce = force
-
-	if(force >=15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
+	if(force >= 15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
 		hitsound = SFX_ALT_FISH_SLAP // do more damage - do heavier slap sound
 
 ///A proc that makes the fish slightly stronger or weaker if there's a noticeable discrepancy between size and weight.
@@ -805,9 +806,8 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/apply_single_mat_effect(datum/material/custom_material, amount, multiplier)
 	. = ..()
 	//The materials are being increased/decreased along with the weight.
-	if(fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT)
-		return
-	material_weight_mult *= GET_MATERIAL_MODIFIER(custom_material.fish_weight_modifier, multiplier)
+	if(!(fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT))
+		material_weight_mult *= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_DENSITY) - 4) * 0.1, multiplier)
 
 /obj/item/fish/apply_material_effects()
 	. = ..()
@@ -1378,6 +1378,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 ///The timeout multiplier for offspring fish, the ones generated when two compatible fish are coupled
 #define OFFSPRING_FISH_BREEDING_TIMEOUT_MULT 2
 
+/// A product of fish breeding is spawned, and it's inherited traits are handled here.
 /obj/item/fish/proc/create_offspring(chosen_type, obj/item/fish/partner, datum/fish_evolution/evolution)
 	var/obj/item/fish/new_fish = new chosen_type (loc, FALSE)
 	//Try to pass down compatible traits based on inheritability
@@ -1416,6 +1417,10 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		new_fish.set_custom_materials(new_mats) // apply_material_effects() will call update_size_and_weight()
 	else
 		new_fish.update_size_and_weight(new_fish.temp_size, new_fish.temp_weight)
+
+
+	var/list/fishing_data = list(new_fish.size, new_fish.weight, new_fish.custom_materials)
+	log_fish("[new_fish] has been bred at [new_fish.drop_location()] from [partner].", fishing_data)
 
 	breeding_wait = world.time + breeding_timeout
 
@@ -1518,10 +1523,10 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 ///Returns the price of this fish, for the fish export.
 /obj/item/fish/proc/get_export_price(price)
-	var/size_weight_exponentation = (size * weight * FISH_PRICE_MULTIPLIER)^FISH_PRICE_CURVE_EXPONENT
+	var/size_weight_exponentation = (size * weight * FISH_PRICE_MULTIPLIER)**FISH_PRICE_CURVE_EXPONENT
 	var/raw_price = price + size_weight_exponentation
 	if(raw_price >= FISH_PRICE_SOFT_CAP_THRESHOLD + 1)
-		var/soft_cap = (raw_price - FISH_PRICE_SOFT_CAP_THRESHOLD)^FISH_PRICE_SOFT_CAP_EXPONENT
+		var/soft_cap = (raw_price - FISH_PRICE_SOFT_CAP_THRESHOLD)**FISH_PRICE_SOFT_CAP_EXPONENT
 		raw_price = FISH_PRICE_SOFT_CAP_THRESHOLD + soft_cap
 	if(HAS_TRAIT(src, TRAIT_FISH_LOW_PRICE)) //Avoid printing money by simply ordering fish and sending it back.
 		raw_price *= 0.05

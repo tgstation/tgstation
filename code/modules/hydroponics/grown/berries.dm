@@ -68,8 +68,10 @@
 	lifespan = 30
 	potency = 50
 	mutatelist = null
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/tox_resistance)
 	reagents_add = list(/datum/reagent/toxin/coniine = 0.08, /datum/reagent/toxin/staminatoxin = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 30
+	graft_gene = /datum/plant_gene/trait/tox_resistance
 
 /obj/item/food/grown/berries/death
 	seed = /obj/item/seeds/berry/death

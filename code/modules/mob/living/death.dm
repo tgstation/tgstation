@@ -91,19 +91,20 @@
  * * drop_items - Should the mob drop their items before dusting?
  * * force - Should this mob be FORCABLY dusted?
 */
-/atom/movable/proc/dust(just_ash, drop_items, force)
+/atom/movable/proc/dust(just_ash, drop_items, give_moodlet, force)
 	dust_animation()
 	// since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play.
 	// Looks much nicer and doesn't cause multiple runtimes.
 	QDEL_IN(src, DUST_ANIMATION_TIME)
 
-/mob/living/dust(just_ash, drop_items, force)
+/mob/living/dust(just_ash, drop_items, give_moodlet = TRUE, force)
 	..()
 	if(body_position == STANDING_UP)
 		// keep us upright so the animation fits.
 		ADD_TRAIT(src, TRAIT_FORCED_STANDING, TRAIT_GENERIC)
 
-	send_death_moodlets(dusted = TRUE)
+	if(give_moodlet)
+		send_death_moodlets(dusted = TRUE)
 
 	if(drop_items)
 		unequip_everything()
@@ -179,9 +180,13 @@
 		return
 
 	for(var/mob/living/nearby in viewers(src))
-		if(nearby.stat >= UNCONSCIOUS || nearby.is_blind())
+		if(nearby == src || nearby.stat >= UNCONSCIOUS || nearby.is_blind())
 			continue
 		nearby.add_mood_event("saw_death", /datum/mood_event/conditional/see_death, src, dusted, gibbed)
+		nearby.mind?.witnessed_death(src)
+
+	if(!gibbed && !dusted)
+		mind?.experienced_death()
 
 /mob/living/silicon/send_death_moodlets(dusted = FALSE, gibbed = FALSE)
 	return // You are a machine (Future todo, roboticists feel sad though)

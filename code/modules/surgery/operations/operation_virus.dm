@@ -27,7 +27,7 @@
 	. = ..()
 	. += "the patient must have a virus to bond"
 	for(var/datum/reagent/chem as anything in required_chems)
-		. += "the patient must be dosed with >1u [chem::name]"
+		. += "the patient must be dosed with >=1u [chem::name]"
 
 /datum/surgery_operation/basic/viral_bonding/get_default_radial_image()
 	return image(/obj/item/clothing/mask/surgical)
@@ -42,7 +42,7 @@
 	return FALSE
 
 /datum/surgery_operation/basic/viral_bonding/tool_check(obj/item/tool)
-	return tool.get_temperature() > 0
+	return tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 
 /datum/surgery_operation/basic/viral_bonding/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

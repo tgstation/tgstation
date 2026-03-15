@@ -50,6 +50,13 @@
 		return FALSE
 	return TRUE
 
+/datum/surgery_operation/limb/replace_limb/pre_preop(atom/movable/operating_on, mob/living/surgeon, obj/item/bodypart/tool, list/operation_args)
+	if(!length(tool.contents))
+		return TRUE
+	// Prevents quickly filling someone with high-tier organs by augmenting them with a pre-stuffed limb
+	to_chat(surgeon, span_warning("[tool] needs to be empty in order to be attached!"))
+	return FALSE
+
 /datum/surgery_operation/limb/replace_limb/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool, list/operation_args)
 	// purposefully doesn't use plaintext zone for more context on what is being replaced with what
 	display_results(

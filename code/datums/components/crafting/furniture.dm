@@ -96,7 +96,7 @@
 
 /datum/crafting_recipe/lamp/New()
 	. = ..()
-	blacklist += subtypesof(/obj/item/flashlight)
+	LAZYADD(blacklist, subtypesof(/obj/item/flashlight))
 
 /datum/crafting_recipe/lamp/green
 	name = "Green Desk Lamp"

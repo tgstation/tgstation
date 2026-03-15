@@ -1,7 +1,7 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
 	abstract_type = /mob/living
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,BLOOD_HUD,ANTAG_HUD)
 	pressure_resistance = 10
 	hud_type = /datum/hud/living
 	interaction_flags_click = ALLOW_RESTING
@@ -169,6 +169,9 @@
 	var/blood_volume = 0
 	/// The default blood volume of the mob. Used primarily for healing bloodloss.
 	var/default_blood_volume = 0
+	/// Lazylist of blood volume modifiers. These multiply blood volume when get_blood_volume(apply_modifiers = TRUE) is used.
+	/// Use set_blood_volume_modifier(multiplier, source) and remove_blood_volume_modifier(source) to modify this.
+	var/list/blood_volume_modifiers = null
 
 	///a list of all status effects the mob has
 	var/list/status_effects
@@ -256,3 +259,6 @@
 
 	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
 	var/reach_length = 1
+
+	/// Lazy assoc list of currently applied fishing difficulty modifiers keyed to their source
+	var/list/fishing_difficulty_mods_by_source

@@ -1,4 +1,3 @@
-import { storage } from 'common/storage';
 import { store } from '../events/store';
 import {
   chatPagesAtom,
@@ -7,6 +6,7 @@ import {
   mainPage,
   versionAtom,
 } from './atom';
+import { saveChatState } from './helpers';
 import { chatRenderer } from './renderer';
 import {
   type Page,
@@ -193,7 +193,6 @@ export function startChatStateMigration(state: StoredChatSettings): void {
   if (wasInconsistent) {
     console.error('Chat settings were inconsistent, rewriting to storage');
     console.log('Comparison, stored vs update:', state, loaded);
-    storage.set('chat-state', loaded);
   }
 
   store.set(versionAtom, loaded.version);
@@ -203,5 +202,6 @@ export function startChatStateMigration(state: StoredChatSettings): void {
 
   chatRenderer.changePage(loaded.pageById[loaded.currentPageId]);
 
+  saveChatState(loaded);
   console.log('Restored chat settings:', loaded);
 }

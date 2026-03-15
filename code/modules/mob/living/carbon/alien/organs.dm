@@ -50,6 +50,8 @@
 	actions_types = list(/datum/action/cooldown/alien/transfer)
 
 /obj/item/organ/alien/plasmavessel/on_life(seconds_per_tick)
+	. = ..()
+
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)
 	//Instantly healing to max health in a single tick would be silly. If it takes 8 seconds to fire, then something's fucked.
 	var/delta_time_capped = min(delta_time, 8)
@@ -101,11 +103,11 @@
 
 /obj/item/organ/alien/hivenode/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
-	organ_owner.faction |= ROLE_ALIEN
+	organ_owner.add_faction(ROLE_ALIEN)
 
 /obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	if(organ_owner)
-		organ_owner.faction -= ROLE_ALIEN
+		organ_owner.remove_faction(ROLE_ALIEN)
 	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.

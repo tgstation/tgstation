@@ -53,7 +53,7 @@
 /mob/living/basic/vatbeast/tamed(mob/living/tamer, obj/item/food)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
-	faction = list(FACTION_NEUTRAL)
+	set_faction(list(FACTION_NEUTRAL))
 
 /mob/living/basic/vatbeast/proc/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

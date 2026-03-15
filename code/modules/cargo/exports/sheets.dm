@@ -13,13 +13,13 @@
 /datum/export/stack/monkey
 	cost = CARGO_CRATE_VALUE * 0.25
 	unit_name = "monkey hide"
-	export_types = list(/obj/item/stack/sheet/animalhide/monkey)
+	export_types = list(/obj/item/stack/sheet/animalhide/carbon/monkey)
 
 /datum/export/stack/human
 	cost = CARGO_CRATE_VALUE * 0.5
 	unit_name = "piece"
 	message = "of human skin"
-	export_types = list(/obj/item/stack/sheet/animalhide/human)
+	export_types = list(/obj/item/stack/sheet/animalhide/carbon/human)
 
 /datum/export/stack/goliath_hide
 	cost = CARGO_CRATE_VALUE
@@ -39,7 +39,7 @@
 /datum/export/stack/lizard
 	cost = CARGO_CRATE_VALUE * 0.75
 	unit_name = "lizard hide"
-	export_types = list(/obj/item/stack/sheet/animalhide/lizard)
+	export_types = list(/obj/item/stack/sheet/animalhide/carbon/lizard)
 
 /datum/export/stack/gondola
 	cost = CARGO_CRATE_VALUE * 10

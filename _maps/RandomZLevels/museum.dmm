@@ -5535,7 +5535,7 @@
 "Ux" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/table,
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	name = "plant data disk";
 	icon_state = "datadisk_hydro"
 	},
@@ -6029,7 +6029,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/broken_flooring/side/directional/east,
 /obj/machinery/door/airlock/atmos/glass,
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/away/generic3,
 /turf/open/indestructible/plating,

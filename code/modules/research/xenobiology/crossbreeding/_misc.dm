@@ -196,7 +196,7 @@ Slimecrossing Items
 		else
 			to_chat(user, span_warning("[pokemon] refused to enter the device."))
 			return
-	else if(!(FACTION_NEUTRAL in pokemon.faction))
+	else if(!pokemon.has_faction(FACTION_NEUTRAL))
 		to_chat(user, span_warning("This creature is too aggressive to capture."))
 		return
 	to_chat(user, span_notice("You store [pokemon] in the capture device."))

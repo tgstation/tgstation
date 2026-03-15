@@ -40,6 +40,16 @@
 	///Do we tell people when they activated it?
 	var/announce_activation = TRUE
 
+	implant_info = "Activates upon death or encoded signal. Triggers an electrically-detonated microexplosive. \
+		Can sync with other microbombs to increase explosive yield, but this makes detonation non-instant."
+
+	implant_lore = "The Robust Corp RX-78 Employee Management Implant is an electrically-detonated microexplosive, \
+		designed to motivate employees (for organizations with questionable ethics) and/or prevent recovery of \
+		equipment and/or evidence (for non-state actors). \
+		The microexplosive arms upon cessation of vital signs or manual activation. \
+		Upon arming, attempts to sync with any other detected microexplosives for increased detonation yield; \
+		the handshake process between microbombs, however, takes a bit, and only gets longer as more microbombs are detected."
+
 /obj/item/implant/explosive/proc/on_death(datum/source, gibbed)
 	SIGNAL_HANDLER
 
@@ -48,16 +58,6 @@
 	// signal handlers at least finish. Also, the "delayed explosion"
 	// uses sleeps, which is bad for signal handlers to do.
 	INVOKE_ASYNC(src, PROC_REF(activate), "death")
-
-/obj/item/implant/explosive/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR> \
-		<b>Life:</b> Activates upon death.<BR> \
-		<b>Important Notes:</b> Explodes<BR> \
-		<HR> \
-		<b>Implant Details:</b><BR> \
-		<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR> \
-		<b>Special Features:</b> Explodes<BR>"
 
 /obj/item/implant/explosive/activate(cause)
 	. = ..()
@@ -182,6 +182,12 @@
 	explosion_light = 10 * MICROBOMB_EXPLOSION_LIGHT
 	explosion_heavy = 10 * MICROBOMB_EXPLOSION_HEAVY
 	explosion_devastate = 10 * MICROBOMB_EXPLOSION_DEVASTATE
+	implant_lore = "The Robust Corp RX-78/M Employee Management Implant is an electrically-detonated explosive, \
+		designed to maximize the prevention of recovery of equipment and/or evidence by virtue of being ten microbombs all connected to one implant. \
+		Unfortunately, the handshake sequence between microbombs remains an issue. \
+		The microexplosives arm upon cessation of vital signs or manual activation. \
+		Upon arming, attempts to sync with any other detected microexplosives for increased detonation yield; \
+		the handshake process between microbombs, however, takes a bit, and only gets longer as more microbombs are detected."
 
 ///Microbomb which prevents you from going into critical condition but also explodes after a timer when you reach critical condition in the first place.
 /obj/item/implant/explosive/deniability
@@ -191,6 +197,18 @@
 	panic_beep_sound = TRUE
 	no_paralyze = TRUE
 	master_implant = TRUE
+
+	implant_info = parent_type::implant_info + "While implanted, prevents unconsciousness from excessive trauma. \
+		Does not prevent death from excessive trauma, nor being stunned. \
+		Also delays detonation of other implanted microbombs by ten seconds."
+
+	implant_lore = "The Robust Corp RX-78/T Tactical Deniability Implant is an electrically-detonated microexplosive and \
+		paired neural override lattice, designed to prevent recovery of equipment and/or evidence for non-state actors, \
+		and prevent the reception of pain signals upon excessive trauma (colloquially, \"entering critical condition\"). \
+		The microexplosive arms upon cessation of vital signs or manual activation. \
+		Upon arming, attempts to sync with any other detected microexplosives for increased detonation yield; \
+		the handshake process between microbombs, however, takes a bit, and only gets longer as more microbombs are detected. \
+		The tactical deniability implant introduces a ten-second delay by itself in order to allow operators one last hurrah before death."
 
 /obj/item/implant/explosive/deniability/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()

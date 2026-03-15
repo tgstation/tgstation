@@ -46,7 +46,7 @@
 	///What's the projectile sound?
 	var/projectile_sound = 'sound/items/weapons/emitter.ogg'
 	///Sparks emitted with every shot
-	var/datum/effect_system/spark_spread/sparks
+	var/datum/effect_system/basic/spark_spread/sparks
 	///Stores the type of gun we are using inside the emitter
 	var/obj/item/gun/energy/gun
 	///List of all the properties of the inserted gun
@@ -74,9 +74,8 @@
 			set_anchored(TRUE)
 		connect_to_network()
 
-	sparks = new
+	sparks = new(src, 5, TRUE)
 	sparks.attach(src)
-	sparks.set_up(5, TRUE, src)
 	AddElement(/datum/element/simple_rotation)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
@@ -158,6 +157,7 @@
 	var/mutable_appearance/overlay = mutable_appearance(icon, "emitter_overlay")
 	overlay.color = laser_color
 	. += overlay
+	. += emissive_appearance(icon, "emitter_overlay", src, alpha = src.alpha)
 
 /obj/machinery/power/emitter/update_icon_state()
 	if(panel_open)
@@ -628,7 +628,7 @@
 /obj/item/emitter_disk
 	name = "\improper Diode Disk: Debugger"
 	desc = "This disk can be used on an emitter with an open panel to reset its projectile. Unless this was handed to you by an admin, you should report this on github."
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/floppy_disks.dmi'
 	icon_state = "datadisk6"
 	var/laser_color = COLOR_VIBRANT_LIME
 	var/stored_proj = /obj/projectile/beam/emitter/hitscan

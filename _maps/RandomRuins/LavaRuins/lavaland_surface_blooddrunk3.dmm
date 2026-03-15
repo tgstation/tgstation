@@ -2,9 +2,6 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
-"b" = (
-/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
-/area/template_noop)
 "c" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -97,14 +94,6 @@
 /obj/structure/stone_tile/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"n" = (
-/obj/structure/stone_tile/surrounding/cracked{
-	dir = 6
-	},
-/obj/structure/stone_tile/center,
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "o" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
@@ -156,15 +145,30 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "z" = (
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/template_noop)
+"A" = (
+/obj/structure/stone_tile/burnt{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"I" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 6
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 8
-	},
+/mob/living/basic/boss/blood_drunk_miner/hunter,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"F" = (
+"N" = (
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
@@ -173,7 +177,7 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"G" = (
+"R" = (
 /obj/structure/stone_tile{
 	dir = 8
 	},
@@ -182,11 +186,13 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"Q" = (
-/obj/structure/stone_tile/burnt{
-	dir = 1
+"W" = (
+/obj/structure/stone_tile/block{
+	dir = 4
 	},
-/obj/structure/stone_tile,
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 
@@ -210,47 +216,47 @@ a
 "}
 (2,1,1) = {"
 a
-b
-b
-b
+z
+z
+z
 a
 a
-b
-b
-b
+z
+z
+z
 c
 c
 a
-b
-b
+z
+z
 a
 a
 "}
 (3,1,1) = {"
-b
-b
-b
-b
-b
-b
-b
-b
+z
+z
+z
+z
+z
+z
+z
+z
 c
 g
 m
 c
 c
-b
-b
+z
+z
 a
 "}
 (4,1,1) = {"
-b
+z
 c
 c
-b
-b
-b
+z
+z
+z
 c
 c
 g
@@ -259,8 +265,8 @@ h
 q
 c
 c
-b
-b
+z
+z
 "}
 (5,1,1) = {"
 a
@@ -273,12 +279,12 @@ c
 g
 i
 c
-G
+R
 h
 s
 c
 c
-b
+z
 "}
 (6,1,1) = {"
 a
@@ -290,13 +296,13 @@ f
 d
 f
 e
-F
-n
-z
+N
+I
+W
 d
 t
 c
-b
+z
 "}
 (7,1,1) = {"
 a
@@ -309,17 +315,17 @@ c
 h
 j
 c
-Q
+A
 o
 u
 c
-b
-b
+z
+z
 "}
 (8,1,1) = {"
 a
-b
-b
+z
+z
 c
 c
 c
@@ -330,16 +336,16 @@ l
 o
 r
 c
-b
-b
-b
+z
+z
+z
 "}
 (9,1,1) = {"
 a
-b
-b
-b
-b
+z
+z
+z
+z
 c
 c
 c
@@ -348,18 +354,18 @@ h
 p
 c
 c
-b
-b
+z
+z
 a
 "}
 (10,1,1) = {"
 a
 a
 a
-b
-b
-b
-b
+z
+z
+z
+z
 a
 c
 c

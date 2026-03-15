@@ -42,13 +42,13 @@
 #define ARMOR_ALL "all_damage_types"
 
 /// Armor values that are used for damage
-#define ARMOR_LIST_DAMAGE(...) list(BIO, BOMB, BULLET, ENERGY, LASER, MELEE, WOUND)
+#define ARMOR_LIST_DAMAGE list(BIO, BOMB, BULLET, ENERGY, LASER, MELEE, WOUND)
 
 /// Armor values that are used for durability
-#define ARMOR_LIST_DURABILITY(...) list(ACID, FIRE)
+#define ARMOR_LIST_DURABILITY list(ACID, FIRE)
 
 /// All armors, preferable in the order as seen above
-#define ARMOR_LIST_ALL(...) list(ACID, BIO, BOMB, BULLET, CONSUME, ENERGY, FIRE, LASER, MELEE, WOUND)
+#define ARMOR_LIST_ALL list(ACID, BIO, BOMB, BULLET, CONSUME, ENERGY, FIRE, LASER, MELEE, WOUND)
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS (1<<0)
@@ -355,7 +355,7 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 /// Armor can't block more than this as a percentage
 #define ARMOR_MAX_BLOCK 90
 /// Calculates the new armour value after armour penetration. Can return negative values, and those must be caught.
-#define PENETRATE_ARMOUR(armour, penetration) (penetration == 100 ? 0 : 100 * (armour - penetration) / (100 - penetration))
+#define PENETRATE_ARMOUR(armour, penetration) (penetration >= 100 ? 0 : 100 * (armour - penetration) / (100 - penetration))
 
 // Defines for combo attack component
 /// LMB Attack

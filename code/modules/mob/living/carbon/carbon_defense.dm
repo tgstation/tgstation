@@ -30,9 +30,7 @@
 
 /mob/living/carbon/get_ear_protection(ignore_deafness = FALSE)
 	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
-	if(!ears)
-		return INFINITY
-	return ..() + ears.bang_protect
+	return ..() + ears?.bang_protect
 
 /mob/living/carbon/is_mouth_covered(check_flags = ALL)
 	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSMOUTH))
@@ -73,9 +71,9 @@
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/proj, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && affecting.can_dismember() && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.get_damage() >= (affecting.max_damage - proj.dismemberment))
-		affecting.dismember(proj.damtype)
-		if(proj.catastropic_dismemberment)
-			apply_damage(proj.damage, proj.damtype, BODY_ZONE_CHEST, wound_bonus = proj.wound_bonus) //stops a projectile blowing off a limb effectively doing no damage. Mostly relevant for sniper rifles.
+		if(!affecting.dismember(proj.damtype) || !proj.catastropic_dismemberment)
+			return
+		apply_damage(proj.damage, proj.damtype, BODY_ZONE_CHEST, wound_bonus = proj.wound_bonus) //stops a projectile blowing off a limb effectively doing no damage. Mostly relevant for sniper rifles.
 
 /mob/living/carbon/try_catch_item(obj/item/item, skip_throw_mode_check = FALSE, try_offhand = FALSE)
 	. = ..()
@@ -281,11 +279,17 @@
 			C.electrocute_act(shock_damage*0.75, src, 1, flags, jitter_time, stutter_time, stun_duration)
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
-	var/paralyze = !(flags & SHOCK_KNOCKDOWN)
+	var/stun = !(flags & SHOCK_KNOCKDOWN)
 	var/immediately_stun = should_stun && !(flags & SHOCK_DELAY_STUN)
 	if (immediately_stun)
-		if (paralyze)
-			Paralyze(stun_duration)
+		if (stun)
+			// intended effect here is to floor you immediately if you are shocked twice in quick succession
+			// or to keep you floored if you are already incapacitated otherwise
+			if(incapacitated)
+				Paralyze(stun_duration)
+			// otherwise it just stuns you upright - until the second shock, which floors you
+			else
+				Stun(stun_duration)
 		else
 			Knockdown(stun_duration)
 	//Jitter and other fluff.
@@ -293,12 +297,12 @@
 	adjust_jitter(jitter_time)
 	adjust_stutter(stutter_time)
 	if (should_stun)
-		addtimer(CALLBACK(src, PROC_REF(secondary_shock), paralyze, stun_duration * 1.5), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(secondary_shock), stun, stun_duration * 1.5), 2 SECONDS)
 	return shock_damage
 
 ///Called slightly after electrocute act to apply a secondary stun.
-/mob/living/carbon/proc/secondary_shock(paralyze, stun_duration)
-	if (paralyze)
+/mob/living/carbon/proc/secondary_shock(stun, stun_duration)
+	if (stun)
 		Paralyze(stun_duration)
 	else
 		Knockdown(stun_duration)
@@ -528,15 +532,6 @@
 			hit_clothes = head
 		if(hit_clothes)
 			hit_clothes.take_damage(damage_amount, damage_type, damage_flag, 0)
-
-/mob/living/carbon/can_hear()
-	. = FALSE
-	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
-	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
-		. = TRUE
-	if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
-		. = FALSE
-
 
 /mob/living/carbon/adjust_oxy_loss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
 	if(!forced && HAS_TRAIT(src, TRAIT_NOBREATH))

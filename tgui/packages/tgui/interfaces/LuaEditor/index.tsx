@@ -222,19 +222,6 @@ export const LuaEditor = () => {
                           value={scriptInput}
                           fontFamily="Consolas"
                           onChange={setScriptInput}
-                          /* displayedValue={
-                          <Box
-                            style={{
-                              pointerEvents: 'none',
-                            }}
-                            dangerouslySetInnerHTML={{
-                              __html: hljs.highlight(scriptInput, {
-                                language: 'lua',
-                              }).value,
-                            }}
-                          />
-                        }*/
-
                           onDrop={onDropHandler}
                         />
                       </Stack.Item>

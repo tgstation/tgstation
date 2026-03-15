@@ -67,6 +67,9 @@
 #define BODYPART_OVERLAY_CSS_SUICIDE 3
 #define BODYPART_OVERLAY_VOIDWALKER_CURSE 4
 
+/// This limb cannot be disabled via damage thresholds
+#define LIMB_NO_DISABLE -1
+
 // Bodypart surgery state
 /// An incision has been made into the skin
 #define SURGERY_SKIN_CUT (1<<0)
@@ -174,3 +177,21 @@ DEFINE_BITFIELD(surgery_state, list(
 #define BIOSTATE_HAS_VESSELS (BIO_BLOODED|BIO_WIRED)
 /// Checks if a bodypart lacks both blood and wires, meaning it has no vessels to manipulate.
 #define LIMB_HAS_VESSELS(limb) (limb?.biological_state & BIOSTATE_HAS_VESSELS)
+
+/// How much blood is lost from unclamped vessels?
+#define UNCLAMPED_VESSELS_BLEEDING 1.5
+/// How much blood is lost from clamped vessels or cut organs?
+#define CLAMPED_VESSELS_BLEEDING 0.2
+
+/// Do not draw this bodypart overlay on husks
+#define HUSK_OVERLAY_NONE 0
+/// Draw this overlay on husks but grayscale it
+#define HUSK_OVERLAY_GRAYSCALE 1
+/// Draw this overlay on husks as normal
+#define HUSK_OVERLAY_NORMAL 2
+
+// Limb item categories
+/// Gauze slot, asserted to be wrap items
+#define LIMB_ITEM_GAUZE "gauze"
+/// Tourniquet slot
+#define LIMB_ITEM_TOURNIQUET "tourniquet"

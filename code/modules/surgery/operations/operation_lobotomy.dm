@@ -3,7 +3,7 @@
 	rnd_name = "Lobotomy (Lobotomy)"
 	desc = "Repair most of a patient's brain traumas, with the risk of causing new permanent traumas."
 	rnd_desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
-	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_LOCKED | OPERATION_NOTABLE
+	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_LOCKED | OPERATION_NOTABLE | OPERATION_NO_PATIENT_REQUIRED
 	implements = list(
 		TOOL_SCALPEL = 1.15,
 		/obj/item/melee/energy/sword = 0.55,
@@ -16,7 +16,8 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 
 /datum/surgery_operation/organ/lobotomy/get_any_tool()
 	return "Any sharp edged item"
@@ -29,9 +30,9 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You begin to perform a lobotomy on [organ.owner]'s brain..."),
-		span_notice("[surgeon] begins to perform a lobotomy on [organ.owner]'s brain."),
-		span_notice("[surgeon] begins to perform surgery on [organ.owner]'s brain."),
+		span_notice("You begin to perform a lobotomy on [FORMAT_ORGAN_OWNER(organ)]'s brain..."),
+		span_notice("[surgeon] begins to perform a lobotomy on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
+		span_notice("[surgeon] begins to perform surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
 	)
 	display_pain(organ.owner, "Your head pounds with unimaginable pain!")
 
@@ -39,21 +40,26 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You successfully perform a lobotomy on [organ.owner]!"),
-		span_notice("[surgeon] successfully lobotomizes [organ.owner]!"),
-		span_notice("[surgeon] finishes performing surgery on [organ.owner]'s brain."),
+		span_notice("You successfully perform a lobotomy on [FORMAT_ORGAN_OWNER(organ)]!"),
+		span_notice("[surgeon] successfully lobotomizes [FORMAT_ORGAN_OWNER(organ)]!"),
+		span_notice("[surgeon] finishes performing surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
 	)
 	display_pain(organ.owner, "Your head goes totally numb for a moment, the pain is overwhelming!")
 
 	organ.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
-	organ.owner.mind?.remove_antag_datum(/datum/antagonist/brainwashed)
+	if (organ.owner)
+		organ.owner.mind?.remove_antag_datum(/datum/antagonist/brainwashed)
+	else if (organ.brainmob)
+		organ.brainmob.mind?.remove_antag_datum(/datum/antagonist/brainwashed)
+
 	if(!prob(75))
 		return
+
 	switch(rand(1, 3))//Now let's see what hopefully-not-important part of the brain we cut off
 		if(1)
 			organ.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
 		if(2)
-			if(HAS_TRAIT(organ.owner, TRAIT_SPECIAL_TRAUMA_BOOST) && prob(50))
+			if(HAS_TRAIT(organ, TRAIT_SPECIAL_TRAUMA_BOOST) && prob(50))
 				organ.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
 			else
 				organ.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_MAGIC)
@@ -65,21 +71,21 @@
 		surgeon,
 		organ.owner,
 		span_warning("You remove the wrong part, causing more damage!"),
-		span_notice("[surgeon] unsuccessfully attempts to lobotomize [organ.owner]!"),
-		span_notice("[surgeon] completes the surgery on [organ.owner]'s brain."),
+		span_notice("[surgeon] unsuccessfully attempts to lobotomize [FORMAT_ORGAN_OWNER(organ)]!"),
+		span_notice("[surgeon] completes the surgery on [FORMAT_ORGAN_OWNER(organ)]'s brain."),
 	)
 	display_pain(organ.owner, "The pain in your head only seems to get worse!")
 	organ.apply_organ_damage(80)
 	switch(rand(1, 3))
 		if(1)
-			organ.owner.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
+			organ.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
 		if(2)
-			if(HAS_TRAIT(organ.owner, TRAIT_SPECIAL_TRAUMA_BOOST) && prob(50))
-				organ.owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
+			if(HAS_TRAIT(organ, TRAIT_SPECIAL_TRAUMA_BOOST) && prob(50))
+				organ.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
 			else
-				organ.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_MAGIC)
+				organ.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_MAGIC)
 		if(3)
-			organ.owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
+			organ.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
 
 /datum/surgery_operation/organ/lobotomy/mechanic
 	name = "execute neural defragging"

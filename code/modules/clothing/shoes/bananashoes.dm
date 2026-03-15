@@ -10,13 +10,15 @@
 	/// If TRUE, we will always have the noslip trait no matter whether they're on or off
 	var/always_noslip = FALSE
 	/// How many materials we consume per banana created
-	var/material_per_banana =SMALL_MATERIAL_AMOUNT
+	var/material_per_banana = SMALL_MATERIAL_AMOUNT
 	/// Typepath of created banana
 	var/banana_type = /obj/item/grown/bananapeel/specialpeel
 	/// Material container for bananium
 	var/datum/material_container/bananium
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize(mapload)
+	if(always_noslip)
+		LAZYOR(clothing_traits, TRAIT_NO_SLIP_WATER)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	bananium = new (
@@ -28,8 +30,6 @@
 	)
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75, falloff_exponent = 20)
 	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(on_step))
-	if(always_noslip)
-		LAZYOR(clothing_traits, TRAIT_NO_SLIP_WATER)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Destroy()
 	QDEL_NULL(bananium)

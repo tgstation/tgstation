@@ -39,7 +39,7 @@
 	speech_args[SPEECH_SPANS] |= SPAN_SANS
 
 /datum/mutation/heckacious
-	name = "heckacious larincks"
+	name = "Heckacious Larincks"
 	desc = "duge what is WISH your words man..........."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_sans("aw SHIT man. your throat feels like FUCKASS.")

@@ -247,8 +247,24 @@
 	name = "cortex folding"
 	rnd_name = "Encephalofractoplasty (Cortex Folding)" // it's a stretch - "brain fractal reshaping"
 	desc = "A biological upgrade which folds a patient's cerebral cortex into a fractal pattern, increasing neural density and flexibility."
-	status_effect_gained = /datum/status_effect/bioware/cortex/folded
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE | OPERATION_MORBID | OPERATION_LOCKED | OPERATION_NO_PATIENT_REQUIRED
+	status_effect_gained = /datum/status_effect/bioware/cortex // Not actually applied, simply for compatibility checks
 	required_zone = BODY_ZONE_HEAD
+
+/datum/surgery_operation/limb/bioware/cortex_folding/state_check(obj/item/bodypart/limb)
+	. = ..()
+	if (!.)
+		return
+	var/obj/item/organ/brain/brain = locate() in limb
+	if(isnull(brain))
+		return FALSE
+	return !HAS_TRAIT_FROM(brain, TRAIT_SPECIAL_TRAUMA_BOOST, BIOWARE_TRAIT)
+
+/datum/surgery_operation/limb/bioware/cortex_folding/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
+	. = ..()
+	var/obj/item/organ/brain/brain = locate() in limb
+	if(!isnull(brain))
+		ADD_TRAIT(brain, TRAIT_SPECIAL_TRAUMA_BOOST, BIOWARE_TRAIT)
 
 /datum/surgery_operation/limb/bioware/cortex_folding/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
@@ -272,7 +288,8 @@
 	display_pain(limb.owner, "Your brain feels stronger... and more flexible!")
 
 /datum/surgery_operation/limb/bioware/cortex_folding/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool)
-	if(!limb.owner.get_organ_slot(ORGAN_SLOT_BRAIN))
+	var/obj/item/organ/brain/brain = locate() in limb
+	if(isnull(brain))
 		return ..()
 	display_results(
 		surgeon,
@@ -282,8 +299,8 @@
 		span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
 	)
 	display_pain(limb.owner, "Your head throbs with excruciating pain!")
-	limb.owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 60)
-	limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
+	brain.apply_organ_damage(60)
+	brain.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/surgery_operation/limb/bioware/cortex_folding/mechanic
 	rnd_name = "Wetware OS Labyrinthian Programming (Cortex Folding)"

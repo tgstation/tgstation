@@ -5,6 +5,7 @@
 #define POLL_IGNORE_ASH_SPIRIT "ash_spirit"
 #define POLL_IGNORE_ASHWALKER "ashwalker"
 #define POLL_IGNORE_BLOB "blob"
+#define POLL_IGNORE_BLOOD_WORM "blood_worm"
 #define POLL_IGNORE_BOTS "bots"
 #define POLL_IGNORE_CARGORILLA "cargorilla"
 #define POLL_IGNORE_CONSTRUCT "construct"

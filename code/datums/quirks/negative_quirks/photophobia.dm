@@ -8,7 +8,9 @@
 	gain_text = span_danger("The safety of light feels off...")
 	lose_text = span_notice("Enlightening.")
 	medical_record_text = "Patient has acute phobia of light, and insists it is physically harmful."
+	medical_symptom_text = "Exhibits heightened sensitivity to bright lights, leading to discomfort and avoidance behaviors."
 	hardcore_value = 4
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_TRAUMALIKE
 	mail_goodies = list(
 		/obj/item/flashlight/flashdark,
 		/obj/item/food/grown/mushroom/glowshroom/shadowshroom,

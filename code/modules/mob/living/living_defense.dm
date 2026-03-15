@@ -142,7 +142,7 @@
 		apply_projectile_effects(proj, def_zone, blocked)
 
 /mob/living/proc/apply_projectile_effects(obj/projectile/proj, def_zone, armor_check)
-	apply_damage(
+	var/damage_dealt = apply_damage(
 		damage = proj.damage,
 		damagetype = proj.damage_type,
 		def_zone = def_zone,
@@ -153,6 +153,10 @@
 		attack_direction = get_dir(proj.starting, src),
 		attacking_item = proj,
 	)
+
+	if(proj.damage_type == BRUTE && damage_dealt >= 10 && proj.speed >= 1 && prob(0.1))
+		var/obj/item/organ/brain/a_brain = locate() in get_bodypart(def_zone)
+		a_brain?.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
 
 	apply_effects(
 		stun = proj.stun,
@@ -174,6 +178,10 @@
 
 	if (proj.damage && armor_check < 100)
 		create_projectile_hit_effects(proj, def_zone, armor_check)
+
+	if(proj.fired_from)
+		SEND_SIGNAL(proj.fired_from, COMSIG_PROJECTILE_POST_HIT_LIVING, src, def_zone, armor_check)
+	SEND_SIGNAL(proj, COMSIG_PROJECTILE_SELF_POST_HIT_LIVING, src, def_zone, armor_check)
 
 /mob/living/proc/create_projectile_hit_effects(obj/projectile/proj, def_zone, blocked)
 	if (proj.damage_type != BRUTE)
@@ -473,7 +481,7 @@
 	if(.)
 		return TRUE
 
-	if(!combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
+	if(!user.combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
 		return TRUE
 
 	return FALSE
@@ -668,7 +676,7 @@
 	return TRUE
 
 //called when the mob receives a loud bang
-/mob/living/proc/soundbang_act(intensity = SOUNDBANG_NORMAL, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15, ignore_deafness = FALSE, send_sound = TRUE)
+/mob/living/proc/soundbang_act(intensity = SOUNDBANG_NORMAL, stun_pwr = 2 SECONDS, damage_pwr = 5, deafen_pwr = 1.5 SECONDS, ignore_deafness = FALSE, send_sound = TRUE)
 	var/protection = get_ear_protection(ignore_deafness)
 	if(protection >= intensity)
 		return FALSE
@@ -800,7 +808,7 @@
 			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
 				shove_flags |= SHOVE_DIRECTIONAL_BLOCKED
 				break
-		if(target_turf != target_shove_turf && !(shove_flags && SHOVE_DIRECTIONAL_BLOCKED)) //Make sure that we don't run the exact same check twice on the same tile
+		if(target_turf != target_shove_turf && !(shove_flags & SHOVE_DIRECTIONAL_BLOCKED)) //Make sure that we don't run the exact same check twice on the same tile
 			for(var/obj/obj_content in target_shove_turf)
 				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == REVERSE_DIR(shove_dir) && obj_content.density)
 					shove_flags |= SHOVE_DIRECTIONAL_BLOCKED

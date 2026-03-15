@@ -7,6 +7,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket)
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
+	weapon_weight = WEAPON_HEAVY
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.2, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2)
 	light_color = COLOR_PURPLE
 
@@ -152,13 +153,15 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
 
 /obj/item/gun/energy/laser/musket/repeater
-	name = "Iconoclast's Repeater"
+	name = "iconoclast's repeater"
 	desc = "A weapon of incredible bulk, this ratvarian repeater has been permanently severed from its stand to be carried by hand. Cumbersome, Yes - but powerful."
 	icon_state = "repeater"
 	inhand_icon_state = "repeater"
 	slowdown = 1
+	burst_size = 2
+	fire_delay = 0.5
 	w_class = WEIGHT_CLASS_HUGE
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/repeater)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/repeater/handheld)
 	spread = 20
 	charge_sections = 1
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
@@ -173,13 +176,16 @@
 	AddComponent( \
 		/datum/component/crank_recharge, \
 		charging_cell = get_cell(), \
-		charge_amount = STANDARD_CELL_CHARGE, \
-		cooldown_time = 3 SECONDS, \
+		charge_amount = LASER_SHOTS(6, STANDARD_CELL_CHARGE), \
+		cooldown_time = 0.4 SECONDS, \
 		charge_sound = 'sound/machines/clockcult/integration_cog_install.ogg', \
 		charge_sound_cooldown_time = 3 SECONDS, \
-		charge_move = IGNORE_USER_LOC_CHANGE, \
 	)
 	AddComponent(/datum/component/automatic_fire, 0.5 SECONDS)
+
+/obj/item/gun/energy/laser/musket/repeater/add_deep_lore()
+	return
+
 // The Deep Lore //
 
 // Laser Musket
