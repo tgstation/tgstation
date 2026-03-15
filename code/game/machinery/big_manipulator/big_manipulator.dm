@@ -32,7 +32,7 @@
 	var/power_access_wire_cut = FALSE
 
 	/// How many tasks total we can have.
-	var/interaction_point_limit = MAX_INTERACTION_POINTS_TIER_1
+	var/interaction_point_limit = MAX_TASKS_TIER_1
 
 	/// A list of tasks for the manipulator.
 	var/list/tasks = list()
@@ -168,25 +168,25 @@
 		if(-INFINITY to 1)
 			min_speed_multiplier = MIN_SPEED_MULTIPLIER_TIER_1
 			max_speed_multiplier = MAX_SPEED_MULTIPLIER_TIER_1
-			interaction_point_limit = MAX_INTERACTION_POINTS_TIER_1
+			interaction_point_limit = MAX_TASKS_TIER_1
 			set_greyscale(COLOR_YELLOW)
 			manipulator_arm?.set_greyscale(COLOR_YELLOW)
 		if(2)
 			min_speed_multiplier = MIN_SPEED_MULTIPLIER_TIER_2
 			max_speed_multiplier = MAX_SPEED_MULTIPLIER_TIER_2
-			interaction_point_limit = MAX_INTERACTION_POINTS_TIER_2
+			interaction_point_limit = MAX_TASKS_TIER_2
 			set_greyscale(COLOR_ORANGE)
 			manipulator_arm?.set_greyscale(COLOR_ORANGE)
 		if(3)
 			min_speed_multiplier = MIN_SPEED_MULTIPLIER_TIER_3
 			max_speed_multiplier = MAX_SPEED_MULTIPLIER_TIER_3
-			interaction_point_limit = MAX_INTERACTION_POINTS_TIER_3
+			interaction_point_limit = MAX_TASKS_TIER_3
 			set_greyscale(COLOR_RED)
 			manipulator_arm?.set_greyscale(COLOR_RED)
 		if(4 to INFINITY)
 			min_speed_multiplier = MIN_SPEED_MULTIPLIER_TIER_4
 			max_speed_multiplier = MAX_SPEED_MULTIPLIER_TIER_4
-			interaction_point_limit = MAX_INTERACTION_POINTS_TIER_4
+			interaction_point_limit = MAX_TASKS_TIER_4
 			set_greyscale(COLOR_PURPLE)
 			manipulator_arm?.set_greyscale(COLOR_PURPLE)
 

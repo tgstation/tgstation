@@ -18,10 +18,10 @@
 #define MAX_SPEED_MULTIPLIER_TIER_3 5
 #define MAX_SPEED_MULTIPLIER_TIER_4 6
 
-#define MAX_INTERACTION_POINTS_TIER_1 2
-#define MAX_INTERACTION_POINTS_TIER_2 4
-#define MAX_INTERACTION_POINTS_TIER_3 6
-#define MAX_INTERACTION_POINTS_TIER_4 8
+#define MAX_TASKS_TIER_1 6
+#define MAX_TASKS_TIER_2 12
+#define MAX_TASKS_TIER_3 24
+#define MAX_TASKS_TIER_4 32
 
 #define CURRENT_TASK_NONE "NO TASK" // manipulator is off
 #define CURRENT_TASK_IDLE "IDLE" // manipulator is skipping a cycle because it has nothing to do

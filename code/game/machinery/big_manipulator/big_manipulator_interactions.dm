@@ -67,7 +67,7 @@
 	start_task_state(type == CURRENT_TASK_MOVING_PICKUP ? CURRENT_TASK_MOVING_PICKUP : CURRENT_TASK_MOVING_DROPOFF, total_rotation_time)
 
 	if(!num_rotations)
-		addtimer(CALLBACK(callback_object, callback, target_task), BASE_INTERACTION_TIME)
+		CALLBACK(callback_object, callback, src)
 		return TRUE
 
 	var/rotation_step = 45 * SIGN(angle_diff)
@@ -85,7 +85,7 @@
 		var/matrix/final_matrix = matrix()
 		final_matrix.Turn(target_angle)
 		animate(manipulator_arm, transform = final_matrix, time = BASE_INTERACTION_TIME / speed_multiplier)
-		addtimer(CALLBACK(callback_object, callback, target_task), BASE_INTERACTION_TIME / speed_multiplier)
+		addtimer(CALLBACK(callback_object, callback, src), BASE_INTERACTION_TIME / speed_multiplier)
 		return
 
 	var/next_angle = current_angle + rotation_step
