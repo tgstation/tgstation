@@ -78,7 +78,7 @@
 	var/datum/bounty/new_chore = text2path("[choice]")
 	if(new_chore.global_exempt)
 		to_chat(user, span_warning("Can't use that one, try another!"))
-		continue
+		return
 	GLOB.bounties_list += new_chore
 	balloon_alert(user, "new bounty provided to the crew!")
 	playsound(src, 'sound/effects/coin2.ogg', 30, TRUE)
