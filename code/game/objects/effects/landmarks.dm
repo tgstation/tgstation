@@ -585,6 +585,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.cargo_shuttle_fan_landmarks += src
 	return
 
+/obj/effect/landmark/fan_install/Destroy()
+	. = ..()
+	GLOB.cargo_shuttle_fan_landmarks -= src
+	return
+
 //Landmark that creates destinations for the navigate verb to path to
 /obj/effect/landmark/navigate_destination
 	name = "navigate verb destination"
