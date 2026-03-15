@@ -353,16 +353,21 @@
 	name = "maintenance pill"
 	desc = "A strange pill found in the depths of maintenance."
 	icon_state = "pill21"
+	/// From which randomisation pool to pull reagents from
+	var/random_reagent_flag = REAGENT_SPAWN_RANDOM_PRODUCERS
 	var/static/list/names = list("maintenance pill", "floor pill", "mystery pill", "suspicious pill", "strange pill", "lucky pill", "ominous pill", "eerie pill")
 	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
 	, "Surely, there's no way this could go bad.", "Winners don't do dr- oh what the heck!", "Free pills? At no cost, how could I lose?")
 
 /obj/item/reagent_containers/applicator/pill/maintenance/Initialize(mapload)
-	list_reagents = list(get_random_reagent_id() = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
+	list_reagents = list(get_random_reagent_id(random_reagent_flag) = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
 	. = ..()
 	name = pick(names)
 	if(prob(30))
 		desc = pick(descs)
+
+/obj/item/reagent_containers/applicator/pill/maintenance/achievement
+	random_reagent_flag = REAGENT_SPAWN_MAINTENANCE_PILL //none of that fake shit
 
 /obj/item/reagent_containers/applicator/pill/maintenance/achievement/on_consumption(mob/consumer, mob/user)
 	. = ..()
