@@ -142,6 +142,7 @@
 			log_entry.add_data_entry(DETSCAN_CATEGORY_FINGERS, atom_fingerprints.Copy())
 
 		// Only get reagents from non-mobs.
+		SEND_SIGNAL(scanned_atom, COMSIG_ON_REAGENT_SCAN, user)
 		for(var/datum/reagent/present_reagent as anything in scanned_atom.reagents?.reagent_list)
 			log_entry.add_data_entry(DETSCAN_CATEGORY_REAGENTS, list(present_reagent.name = present_reagent.volume))
 
