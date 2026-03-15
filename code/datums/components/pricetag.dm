@@ -24,12 +24,12 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/total_contribution = 0
-	for(var/i as anything in pay_to_account)
-		total_contribution += pay_to_account[i]
+	for(var/totaler in pay_to_account)
+		total_contribution += pay_to_account[totaler]
 
-	for(var/i as anything in pay_to_account)
-		var/individual_cut = profit_ratio * (pay_to_account[i]/ total_contribution)
-		payees[i] = individual_cut
+	for(var/individual in pay_to_account)
+		var/individual_cut = profit_ratio * (pay_to_account[individual]/ total_contribution)
+		payees[individual] = individual_cut
 
 	src.delete_on_unwrap = delete_on_unwrap
 
