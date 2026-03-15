@@ -263,6 +263,7 @@
 #include "preference_species.dm"
 #include "preferences.dm"
 #include "projectiles.dm"
+#include "punpun.dm"
 #include "quirks.dm"
 #include "range_return.dm"
 #include "rcd.dm"
