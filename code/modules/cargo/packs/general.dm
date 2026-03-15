@@ -159,7 +159,7 @@
 	crate_type = null
 	special_pod = /obj/structure/closet/supplypod/bluespacepod
 
-/datum/supply_pack/misc/empty/generate(atom/A, datum/bank_account/paying_account)
+/datum/supply_pack/misc/empty/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	return
 
 /datum/supply_pack/misc/religious_supplies

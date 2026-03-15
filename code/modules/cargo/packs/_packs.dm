@@ -54,7 +54,7 @@
  * @ datum/bank_account/paying_account: The account to associate the supply pack with when going and generating the crate. Only the paying account can open said secure crate/case.
  * @ crate_override: If defined, we will fill our supply pack with this object. This is used for when we need to spawn a random crate but the contents are goodies or we don't need a full crate.
  */
-/datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account, crate_override = null)
+/datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	var/obj/structure/closet/crate/C
 	if(paying_account)
 		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)

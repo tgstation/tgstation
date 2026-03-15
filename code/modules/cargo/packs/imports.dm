@@ -89,7 +89,7 @@
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
 
-/datum/supply_pack/imports/dumpstercorpse/generate()
+/datum/supply_pack/imports/dumpstercorpse/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	. = ..()
 	var/mob/living/carbon/human/corpse = locate() in .
 	corpse.death()
