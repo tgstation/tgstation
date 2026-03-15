@@ -366,9 +366,9 @@
 	)
 
 /datum/supply_pack/imports/fan_upgrade
-	name = "Cargo Shuttle Upgrade: Tiny Fans"
+	name = "Cargo Shuttle Upgrade: Air Renewal"
 	desc = "Do you or your coworkers have a bad habit of leaving your cargo shuttle shutter doors open to the cold, cold, vaccuum of space?\
-		With this handy engineering retrofit, your shuttle will now be equip with a few handy auto-recycling fans. No refunds."
+		With this handy engineering retrofit, your shuttle will now be equip with a few handy plastic flaps and a subscription for air refills."
 	cost = CARGO_CRATE_VALUE * 40 // HELLA expensive.
 	order_flags = ORDER_NOT_DEPARTMENTAL
 	access_view = ACCESS_CARGO
@@ -377,12 +377,12 @@
 	)
 
 /datum/supply_pack/imports/fan_upgrade/generate(atom/A, datum/bank_account/paying_account)
-	if(SSshuttle.fans_installed)
+	if(SSshuttle.renew_cargo_air)
 		return ..()
 
-	for(var/obj/spawnpoint as anything in GLOB.cargo_shuttle_fan_landmarks)
-		new /obj/structure/fans/tiny(spawnpoint.loc)
-		SSshuttle.fans_installed = TRUE
+	for(var/obj/spawnpoint as anything in GLOB.cargo_shuttle_flaps_landmarks)
+		new /obj/structure/plasticflaps(spawnpoint.loc)
+		SSshuttle.renew_cargo_air = TRUE
 		order_flags = ORDER_INVISIBLE
 	return ..()
 

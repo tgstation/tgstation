@@ -60,7 +60,7 @@
 	id = "cargounload";
 	name = "Supply Dock Unloading Door"
 	},
-/obj/effect/landmark/fan_install,
+/obj/effect/landmark/flaps_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "l" = (
@@ -116,7 +116,7 @@
 	dir = 4;
 	id = "cargoload"
 	},
-/obj/effect/landmark/fan_install,
+/obj/effect/landmark/flaps_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "u" = (

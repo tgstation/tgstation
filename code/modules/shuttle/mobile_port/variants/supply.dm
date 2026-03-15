@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 #define GOODY_FREE_SHIPPING_MAX 5
 /// How much to charge oversized goody orders
 #define CRATE_TAX 700
+#define REFILL_RANGE_DEFAULT 10
 
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
@@ -123,11 +124,16 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	if(getDockedId() == "cargo_away") // Buy when we leave home.
 		buy()
 		create_mail()
+		if(SSshuttle.renew_cargo_air)
+			refill_air()
 	. = ..() // Fly/enter transit.
 	if(. != DOCKING_SUCCESS)
 		return
 	if(getDockedId() == "cargo_away") // Sell when we get home
 		sell()
+		if(SSshuttle.renew_cargo_air)
+			refill_air()
+
 
 /obj/docking_port/mobile/supply/proc/buy()
 	SEND_SIGNAL(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY)
@@ -340,5 +346,21 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	return similar_count
 
+
+/**
+ * Largely remade off of the admin fix air verb, this will shotgun more air into the shuttle.
+ */
+/obj/docking_port/mobile/supply/proc/refill_air()
+	var/turf/refill_spot = get_turf(pick(GLOB.cargo_shuttle_flaps_landmarks))
+	for(var/turf/open/valid_range_turf in range(REFILL_RANGE_DEFAULT, refill_spot))
+		if(valid_range_turf.blocks_air)
+		//skip walls
+			continue
+		var/datum/gas_mixture/GM = SSair.parse_gas_string(valid_range_turf.initial_gas_mix, /datum/gas_mixture/turf)
+		valid_range_turf.copy_air(GM)
+		valid_range_turf.temperature = initial(valid_range_turf.temperature)
+		valid_range_turf.update_visuals()
+
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX
+#undef REFILL_RANGE_DEFAULT

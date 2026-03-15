@@ -576,18 +576,18 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		return created_joining_mob
 	return created_joining_mob
 
-/obj/effect/landmark/fan_install
-	name = "tiny fan install point"
-	icon_state = "fan-install"
+/obj/effect/landmark/flaps_install
+	name = "plastic flaps install point"
+	icon_state = "flap-install"
 
-/obj/effect/landmark/fan_install/Initialize(mapload)
+/obj/effect/landmark/flaps_install/Initialize(mapload)
 	. = ..()
-	GLOB.cargo_shuttle_fan_landmarks += src
+	GLOB.cargo_shuttle_flaps_landmarks += src
 	return
 
-/obj/effect/landmark/fan_install/Destroy()
+/obj/effect/landmark/flaps_install/Destroy()
 	. = ..()
-	GLOB.cargo_shuttle_fan_landmarks -= src
+	GLOB.cargo_shuttle_flaps_landmarks -= src
 	return
 
 //Landmark that creates destinations for the navigate verb to path to

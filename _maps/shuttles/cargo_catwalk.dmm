@@ -25,7 +25,7 @@
 	dir = 8;
 	id = "cargounload"
 	},
-/obj/effect/landmark/fan_install,
+/obj/effect/landmark/flaps_install,
 /turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "i" = (
@@ -108,7 +108,7 @@
 	dir = 4;
 	id = "cargoload"
 	},
-/obj/effect/landmark/fan_install,
+/obj/effect/landmark/flaps_install,
 /turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "H" = (
