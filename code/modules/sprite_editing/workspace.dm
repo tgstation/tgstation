@@ -202,7 +202,12 @@
 						bottom_layer["[dir]"][y][x] = blend_color(bottom_layer["[dir]"][y][x], top_layer["[dir]"][y][x])
 			layers.Cut(layer, layer+1)
 		if("addLayer")
-			layers += list(list("name" = "New Layer", "visible" = TRUE, "data" = create_layer_data()))
+			var/layer_name = "New Layer"
+			var/dupe_count = 1
+			for(var/list/layer in layers)
+				if(layer["name"] == layer_name)
+					layer_name = "New Layer [++dupe_count]"
+			layers += list(list("name" = layer_name, "visible" = TRUE, "data" = create_layer_data()))
 		if("deleteLayer")
 			var/layer = transaction["layer"]
 			layers.Cut(layer, layer+1)

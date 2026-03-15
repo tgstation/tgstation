@@ -68,6 +68,7 @@
 			PROC_REF(dimensional_shift),
 			PROC_REF(disguiser),
 			)
+	obj_flags |= UNIQUE_RENAME
 
 /obj/item/relic/attack_self(mob/user)
 	if(!activated)
@@ -183,7 +184,7 @@
 
 /obj/item/relic/proc/dispense_drink(obj/item/reagent_containers/cup/glass/glasser)
 	playsound(glasser, 'sound/effects/phasein.ogg', rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	glasser.reagents.add_reagent(get_random_drink_id(), rand(glasser.volume * 0.3, glasser.volume))
+	glasser.reagents.add_reagent(get_random_reagent_id(whitelist = subtypesof(/datum/reagent/consumable/ethanol)), rand(glasser.volume * 0.3, glasser.volume))
 	throw_smoke(get_turf(glasser))
 
 // Scrambles your organs. 33% chance to delete after use.

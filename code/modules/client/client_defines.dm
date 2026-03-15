@@ -175,9 +175,6 @@
 	/// Messages currently seen by this client
 	var/list/seen_messages
 
-	//Hide status bar (bottom left)
-	var/show_status_bar = TRUE
-
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
 
@@ -186,8 +183,6 @@
 
 	/// list of all tabs
 	var/list/panel_tabs = list()
-	/// list of tabs containing spells and abilities
-	var/list/spell_tabs = list()
 	///A lazy list of atoms we've examined in the last RECENT_EXAMINE_MAX_WINDOW (default 2) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
 
