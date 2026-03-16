@@ -60,6 +60,15 @@
 	name = "deluxe codespeak manual"
 	charges = INFINITY
 
+/obj/item/language_manual/narsie
+	name = "arcane tome"
+	icon = 'icons/obj/antags/cult/items.dmi'
+	icon_state = "tome"
+	desc = "A book filled with arcane knowledge and mystical symbols."
+	language = /datum/language/narsie
+	flavour_text = "you feel a surge of arcane knowledge flood your mind as you read the tome"
+	charges = 1
+
 /obj/item/language_manual/roundstart_species
 
 /obj/item/language_manual/roundstart_species/Initialize(mapload)

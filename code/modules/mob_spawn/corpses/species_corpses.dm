@@ -6,6 +6,18 @@
 	name = "skeleton"
 	mob_species = /datum/species/skeleton
 
+/obj/effect/mob_spawn/corpse/human/skeleton/chaplain
+	name = "skeleton"
+	outfit = /datum/outfit/chaplain_corpse
+
+/datum/outfit/chaplain_corpse
+	name = "chaplain corpse(caves)"
+	uniform = /obj/item/clothing/under/rank/civilian/chaplain
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	head = /obj/item/clothing/head/helmet/chaplain
+	suit = /obj/item/clothing/suit/chaplainsuit/armor/templar
+	l_pocket = /obj/item/soulstone/anybody/purified
+
 /obj/effect/mob_spawn/corpse/human/zombie
 	mob_species = /datum/species/zombie
 
