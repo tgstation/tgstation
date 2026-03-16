@@ -29,8 +29,8 @@
 	desc = "A wand which spits bolts of hallucinogenic magic which can do almost anything, or at least make the victim think so."
 	school = SCHOOL_FORBIDDEN
 	ammo_type = /obj/item/ammo_casing/magic/hallucination
-	icon_state = "polywand"
-	base_icon_state = "polywand"
+	icon_state = "chaoswand"
+	base_icon_state = "chaoswand"
 	fire_sound = 'sound/effects/magic/staff_chaos.ogg'
 	max_charges = 20
 
