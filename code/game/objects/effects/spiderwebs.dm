@@ -41,8 +41,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB
 	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
-	///Whether or not the web is from the genetics power
-	var/genetic = FALSE
 	///Whether or not the web is a sealed web
 	var/sealed = FALSE
 	///Do we need to offset this based on a sprite frill?
@@ -86,16 +84,16 @@
 		return prob(projectile_stuck_chance)
 	return .
 
+/obj/structure/spider/stickyweb/proc/is_whitelisted(mob/candidate)
+	return HAS_TRAIT(candidate, TRAIT_WEB_SURFER)
+
 /obj/structure/spider/stickyweb/proc/on_entered(datum/source, atom/movable/victim, old_loc)
 	SIGNAL_HANDLER
 
 	if(!isliving(victim))
 		return
-	if(HAS_TRAIT(victim, TRAIT_WEB_SURFER))
+	if(is_whitelisted(victim) || victim.pulledby && is_whitelisted(victim.pulledby))
 		return
-	if(victim.pulledby && HAS_TRAIT(victim.pulledby, TRAIT_WEB_SURFER))
-		return
-
 	if(prob(stuck_chance))
 		stuck_react(victim)
 
@@ -129,18 +127,8 @@
 	allowed_mob = allowedmob
 	return ..()
 
-/obj/structure/spider/stickyweb/genetic/on_entered(datum/source, atom/movable/victim, old_loc)
-	SIGNAL_HANDLER
-
-	if(!isliving(victim))
-		return
-	if(victim == allowed_mob)
-		return
-	if(victim.pulledby == allowed_mob)
-		return
-
-	if(prob(stuck_chance))
-		stuck_react(victim)
+/obj/structure/spider/stickyweb/genetic/is_whitelisted(mob/candidate)
+	return candidate == allowed_mob
 
 /// Web with a 100% chance to intercept movement
 /obj/structure/spider/stickyweb/very_sticky
