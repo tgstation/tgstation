@@ -2,25 +2,34 @@
 /obj/machinery/gizmo
 	name = "gizmo"
 	desc = "Does a function when you put the jigger at the other ends thing."
-	icon = 'icons/obj/devices/artefacts.dmi'
-	icon_state = "debug_artefact"
+	icon = 'icons/obj/devices/gizmos.dmi'
 
 	panel_open = TRUE
 	density = TRUE
 	anchored = FALSE
 
-	var/datum/gizmo_interface/interface
+	var/list/icon_states = list("gizmo_0", "gizmo_1", "gizmo_2", "gizmo_3", "gizmo_4", "gizmo_5")
+	var/datum/gizmo_interface/interface = /datum/gizmo_interface
+
+	var/do_voice_instead = FALSE
 
 /obj/machinery/gizmo/Initialize(mapload)
 	. = ..()
 
+	if(icon_states)
+		base_icon_state = pick(icon_states)
+		icon_state = base_icon_state
+
 	var/list/trigger_callbacks = list()
-	interface = new (src, trigger_callbacks)
+	interface = new interface(src, trigger_callbacks)
 
-	set_wires(new /datum/wires/gizmo(src, interface.puzzles[1]))
+	if(do_voice_instead)
+		AddComponent(/datum/component/gizmo_voice, interface.puzzles[1])
+	else
+		set_wires(new /datum/wires/gizmo(src, interface.puzzles[1]))
 
-/obj/machinery/gizmo/proc/activate_gizmo(code_sequence_number)
-	to_chat(world, "WOOOOOOO, its sequence numba [code_sequence_number]")
+	RegisterSignal(src, COMSIG_GIZMO_START_MOVING, PROC_REF(start_moving))
+	RegisterSignal(src, COMSIG_GIZMO_STOP_MOVING, PROC_REF(stop_moving))
 
 /obj/machinery/gizmo/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
@@ -29,31 +38,83 @@
 		attempt_wire_interaction(user)
 		return
 
-/datum/wires/gizmo
-	randomize = TRUE
+/obj/machinery/gizmo/proc/start_moving(datum/gizpulse/pulse)
+	SIGNAL_HANDLER
 
-	/// Might as well keep it broad, it's all signals anyway
-	holder_type = /obj
+	on_start_moving(pulse)
 
-	/// The wires we need to pulse for cracking the code
-	var/list/cryptic_wires = list(
-		CRYPTIC_WIRE_1,
-		CRYPTIC_WIRE_2,
-		CRYPTIC_WIRE_3,
-		CRYPTIC_WIRE_4,
-		CRYPTIC_WIRE_5,
-		CRYPTIC_WIRE_6,
-		CRYPTIC_WIRE_7,
-		CRYPTIC_WIRE_8,
-	)
+/obj/machinery/gizmo/proc/stop_moving(datum/gizpulse/pulse)
+	SIGNAL_HANDLER
 
-	var/datum/gizmo_puzzle/puzzle
+	on_stop_moving(pulse)
 
-/datum/wires/gizmo/New(atom/holder, datum/gizmo_puzzle/_puzzle)
-	wires = cryptic_wires
-	puzzle = _puzzle
+/obj/machinery/gizmo/proc/on_start_moving(datum/gizpulse/pulse)
+	return
 
-	..()
+/obj/machinery/gizmo/proc/on_stop_moving(datum/gizpulse/pulse)
+	return
 
-/datum/wires/gizmo/on_pulse(wire, mob/living/user)
-	puzzle.on_pulse(cryptic_wires.Find(wire), user, holder)
+/obj/machinery/gizmo/beyblade
+
+	icon_state = "beyblade"
+
+	interface = /datum/gizmo_interface/beyblade
+
+	var/moving = FALSE
+
+
+/obj/machinery/gizmo/beyblade/update_icon(updates)
+	. = ..()
+
+	icon_state = base_icon_state + (moving ? "_spinning" : "")
+
+/obj/machinery/gizmo/beyblade/on_start_moving(datum/gizpulse/pulse)
+	AddElement(/datum/element/moving_randomly)
+	density = TRUE
+
+	moving = TRUE
+	update_icon()
+
+
+/obj/machinery/gizmo/beyblade/on_stop_moving(datum/gizpulse/pulse)
+	RemoveElement(/datum/element/moving_randomly)
+	density = FALSE
+
+	moving = FALSE
+	update_icon()
+
+/// A gizmo with some sort of "on" state. Really only for visuals
+/obj/machinery/gizmo/toggle
+
+	icon_state = "gizmo_light"
+
+	interface = /datum/gizmo_interface/toggle
+
+	icon_states = list("gizmo_active_0", "gizmo_active_1", "gizmo_active_2", "gizmo_active_3", "gizmo_active_4")
+
+	do_voice_instead = TRUE
+
+	var/on_state = FALSE
+
+/obj/machinery/gizmo/toggle/Initialize(mapload)
+	. = ..()
+
+	RegisterSignal(src, COMSIG_GIZMO_ON_STATE, PROC_REF(on_state))
+	RegisterSignal(src, COMSIG_GIZMO_OFF_STATE, PROC_REF(off_state))
+
+/obj/machinery/gizmo/toggle/update_icon(updates)
+	. = ..()
+
+	icon_state = base_icon_state + (on_state ? "_on" : "")
+
+/obj/machinery/gizmo/toggle/proc/on_state(datum/gizpulse/pulse)
+	SIGNAL_HANDLER
+
+	on_state = TRUE
+	update_icon()
+
+/obj/machinery/gizmo/toggle/proc/off_state(datum/gizpulse/pulse)
+	SIGNAL_HANDLER
+
+	on_state = FALSE
+	update_icon()

@@ -781,7 +781,6 @@
 	pixel_x = -16
 	pixel_y = -16
 	duration = 0.5 SECONDS
-	color = COLOR_LIME
 	var/max_alpha = 255
 	///How far the effect would scale in size
 	var/amount_to_scale = 2
@@ -792,7 +791,7 @@
 	animate(src, alpha = max_alpha, time = duration * 0.6, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, time = duration * 0.4)
 	apply_wibbly_filters(src)
-	color ||= color
+	color ||= _color
 	return ..()
 
 /obj/effect/temp_visual/circle_wave/bioscrambler

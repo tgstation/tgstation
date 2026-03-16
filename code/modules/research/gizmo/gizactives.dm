@@ -7,9 +7,13 @@
 		/datum/gizpulse/mode_controle/select_mode,
 		/datum/gizpulse/mode_controle/cycle_mode,
 		/datum/gizpulse/mode_controle/direct_activate,
+		/datum/gizpulse/mode_controle/cycle_mode/activate,
 	)
 
 	var/datum/gizpulse/mode_controle/mode_pulse
+
+	var/cooldown_time = 1 SECONDS
+	COOLDOWN_DECLARE(cooldown_timer)
 
 /datum/gizmodes/proc/generate_modes(list/trigger_callbacks)
 	for(var/path in possible_active_modes)
@@ -22,9 +26,14 @@
 	mode_pulse.setup_mode_controle(src, active_modes, trigger_callbacks)
 
 /datum/gizmodes/proc/activate(atom/movable/holder)
+	if(!COOLDOWN_FINISHED(src, cooldown_timer))
+		return
+
+	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	current_active.activate(holder)
 
 /datum/gizpulse/proc/activate(atom/movable/holder)
+	return
 
 /datum/gizpulse/mode_controle/proc/setup_mode_controle(datum/gizmodes/master, list/active_modes, list/trigger_callbacks)
 	return
@@ -48,6 +57,13 @@
 
 /datum/gizpulse/mode_controle/direct_activate/proc/switch_and_activate(datum/gizmodes/master, datum/gizpulse/active, atom/movable/holder)
 	master.current_active = active
+	master.activate(holder)
+
+/datum/gizpulse/mode_controle/cycle_mode/activate/setup_mode_controle(datum/gizmodes/master, list/active_modes, list/trigger_callbacks)
+	trigger_callbacks += CALLBACK(src, PROC_REF(cycle_mode), master)
+
+/datum/gizpulse/mode_controle/cycle_mode/cycle_mode(datum/gizmodes/master, atom/movable/holder)
+	..()
 	master.activate(holder)
 
 /datum/gizmodes/mood_pulser
@@ -74,3 +90,29 @@
 	mood = /datum/mood_event/gizmo_negative
 	ring_color = COLOR_RED
 
+/datum/gizmodes/mover
+	possible_active_modes = list(/datum/gizpulse/start_moving, /datum/gizpulse/stop_moving)
+
+/datum/gizpulse/start_moving/activate(atom/movable/holder)
+	SEND_SIGNAL(holder, COMSIG_GIZMO_START_MOVING)
+
+/datum/gizpulse/stop_moving/activate(atom/movable/holder)
+	SEND_SIGNAL(holder, COMSIG_GIZMO_STOP_MOVING)
+
+/datum/gizmodes/lights
+	possible_active_modes = list(/datum/gizpulse/lights_on, /datum/gizpulse/lights_off)
+	mode_pulses = list(
+		/datum/gizpulse/mode_controle/direct_activate,
+		/datum/gizpulse/mode_controle/cycle_mode/activate,
+	)
+
+/datum/gizpulse/lights_on/activate(atom/movable/holder)
+	SEND_SIGNAL(holder, COMSIG_GIZMO_ON_STATE)
+	holder.light_power = 2
+	holder.light_range = 3
+	holder.light_color = LIGHT_COLOR_INTENSE_RED
+	holder.light_on = TRUE
+
+/datum/gizpulse/lights_off/activate(atom/movable/holder)
+	SEND_SIGNAL(holder, COMSIG_GIZMO_OFF_STATE)
+	holder.light_on = FALSE

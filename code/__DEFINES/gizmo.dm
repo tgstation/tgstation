@@ -7,3 +7,13 @@
 #define GIZMO_PULSE_6 "Gizmo Pulse 6"
 #define GIZMO_PULSE_7 "Gizmo Pulse 7"
 #define GIZMO_PULSE_8 "Gizmo Pulse 8"
+
+/// From base of /datum/gizactive/start_moving/activate(): ()
+#define COMSIG_GIZMO_START_MOVING "gizmo_start_moving"
+/// From base of /datum/gizactive/stop_moving/activate(): ()
+#define COMSIG_GIZMO_STOP_MOVING "gizmo_stop_moving"
+
+/// From base of /datum/gizactive/lights_on/activate(): ()
+#define COMSIG_GIZMO_ON_STATE "gizmo_on_state"
+/// From base of /datum/gizactive/lights_off/activate(): ()
+#define COMSIG_GIZMO_OFF_STATE "gizmo_off_state"
