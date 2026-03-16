@@ -43,7 +43,7 @@
 	reqs = list(
 		/obj/item/crowbar = 1,
 		/obj/item/knife = 1,
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 	)
 	result = /obj/item/pickaxe/improvised
 	category = CAT_TOOLS
@@ -142,4 +142,3 @@
 	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	category = CAT_TOOLS
-

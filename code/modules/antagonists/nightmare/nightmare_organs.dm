@@ -78,11 +78,11 @@
 	name = "heart of darkness"
 	desc = "An alien organ that twists and writhes when exposed to light."
 	visual = TRUE
-	icon_state = "demon_heart-on"
-	base_icon_state = "demon_heart"
+	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+	icon_state = "dark_heart-on"
+	base_icon_state = "dark_heart"
 
 	beat_noise = "the writhing pulses of a fear given form" // evil schmeevil
-	color = COLOR_CRAYON_BLACK
 	decay_factor = 0
 	// No love is to be found in a heart so twisted.
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5)

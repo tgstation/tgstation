@@ -209,10 +209,9 @@
  *
  * * [reagent_type][datum/reagent] - the type of reagent
  * * amount - the volume to remove
- * * safety - if FALSE will initiate reactions upon removing. used for trans_id_to
  * * include_subtypes - if TRUE will remove the specified amount from all subtypes of reagent_type as well
  */
-/datum/reagents/proc/remove_reagent(datum/reagent/reagent_type, amount, safety = TRUE, include_subtypes = FALSE)
+/datum/reagents/proc/remove_reagent(datum/reagent/reagent_type, amount, include_subtypes = FALSE)
 	if(!ispath(reagent_type))
 		stack_trace("invalid reagent passed to remove reagent [reagent_type]")
 		return FALSE
@@ -248,8 +247,6 @@
 
 	//update the holder & handle reactions
 	update_total()
-	if(!safety)
-		handle_reactions()
 
 	return total_removed_amount
 
@@ -294,7 +291,6 @@
 
 		total_removed_amount += remove_amount
 	update_total()
-	handle_reactions()
 
 	return round(total_removed_amount, CHEMICAL_QUANTISATION_LEVEL)
 
@@ -537,9 +533,6 @@
 		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [english_list(transfer_log)]")
 
 	if(!no_react)
-		transfer_reactions(target_holder)
-		if(!copy_only)
-			handle_reactions()
 		target_holder.handle_reactions()
 
 	return total_transfered_amount
@@ -788,6 +781,34 @@
 	set_temperature(round(chem_temp))
 	handle_reactions()
 
+/*
+ * Call in case of electrical current exposure, rapid heating or blunt force, things that would set off explosives and alike
+ * Arguments:
+ * * power_charge - If we were triggered from electric current, how much power was dumped into us?
+ * * spark_flags - Set of flags describing the interaction
+ * * banned_reagents - List of reagent types which we may want to have custom handling for and should avoid checking in here
+ */
+/datum/reagents/proc/spark_act(power_charge, spark_flags, list/banned_reagents)
+	if (!islist(banned_reagents))
+		banned_reagents = list(banned_reagents)
+	var/result = NONE
+	var/update = FALSE
+	for (var/datum/reagent/reagent as anything in reagent_list)
+		if (is_type_in_list(reagent, banned_reagents))
+			continue
+		var/reagent_result = reagent.on_spark_act(power_charge, spark_flags)
+		if (!reagent_result)
+			continue
+		result |= (reagent_result & SPARK_ACT_RETURNS)
+		if (!(reagent_result & SPARK_ACT_KEEP_REAGENT))
+			reagent.volume = 0
+			update = TRUE
+
+	if (result & SPARK_ACT_CLEAR_ALL)
+		clear_reagents()
+	else if (update)
+		update_total()
+	return result
 
 //===============================Logging==========================================
 /// Outputs a log-friendly list of reagents based on the internal reagent_list.

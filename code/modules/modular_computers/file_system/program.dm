@@ -64,7 +64,7 @@
  * It probably doesn't look badass, but it's a decent way of doing it without taining the component with
  * oddities like this.
  */
-/datum/computer_file/program/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+/datum/computer_file/program/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	if(isnull(circuit_comp_type) || isnull(computer.shell))
 		return
@@ -252,3 +252,7 @@
 		INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
 	computer.update_appearance(UPDATE_ICON)
 	return TRUE
+
+///Called when the program is made the active program.
+/datum/computer_file/program/proc/on_made_active_program(mob/user)
+	return

@@ -194,7 +194,7 @@
 		return null
 
 	var/mob/living/living_pawn = controller.pawn
-	var/potential_friend = living_pawn.faction.Find(REF(friend)) ? friend : null
+	var/potential_friend = living_pawn.has_ally(friend) ? friend : null
 	return potential_friend
 
 

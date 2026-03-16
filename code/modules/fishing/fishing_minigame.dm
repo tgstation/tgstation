@@ -385,10 +385,10 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 
 	if(valid_achievement_catch)
 		var/obj/item/fish/fish_reward = reward_path
-		var/obj/item/fish/redirect_path = initial(fish_reward.fish_id_redirect_path)
-		var/fish_id = ispath(redirect_path, /obj/item/fish) ? initial(redirect_path.fish_id) : initial(fish_reward.fish_id)
+		var/obj/item/fish/path_to_use = initial(fish_reward.fish_id_redirect_path) || fish_reward
+		var/fish_id = initial(path_to_use.fish_id)
 		if(fish_id)
-			user.client?.give_award(/datum/award/score/progress/fish, user, fish_id)
+			user.client?.give_award(/datum/award/score/progress/fish, user, fish_id, initial(path_to_use.name))
 
 	SEND_SIGNAL(user, COMSIG_MOB_COMPLETE_FISHING, src, TRUE)
 	if(!QDELETED(src))

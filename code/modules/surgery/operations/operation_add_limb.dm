@@ -169,17 +169,17 @@
 	desc = "Ensure that an arbitrary prosthetic is properly attached to a patient's body."
 	implements = list(
 		/obj/item/stack/medical/suture = 1,
-		/obj/item/stack/sticky_tape/surgical = 1.25,
-		/obj/item/stack/sticky_tape = 2,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1.25,
+		/obj/item/stack/medical/wrap/sticky_tape = 2,
 	)
 	time = 4.8 SECONDS
-	operation_flags = OPERATION_SELF_OPERABLE | OPERATION_STANDING_ALLOWED
+	operation_flags = OPERATION_SELF_OPERABLE | OPERATION_STANDING_ALLOWED | OPERATION_IGNORE_CLOTHES
 	all_surgery_states_required = SURGERY_PROSTHETIC_UNSECURED
 
 /datum/surgery_operation/limb/secure_arbitrary_prosthetic/get_default_radial_image()
 	return image(/obj/item/stack/medical/suture)
 
-/datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)
+/datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/medical/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -190,7 +190,7 @@
 	var/obj/item/bodypart/chest = limb.owner.get_bodypart(BODY_ZONE_CHEST)
 	display_pain(limb.owner, "[surgeon] begins to [tool.singular_name] [limb] to your body!", IS_ROBOTIC_LIMB(chest))
 
-/datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)
+/datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/medical/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,

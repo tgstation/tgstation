@@ -13,3 +13,10 @@ help: "Please use crude barricades on top of dense objects."
     /obj/machinery/door/poddoor/shutters:
     FULLTILE_WINDOW:
       pattern: ^/obj/structure/window[/\w]*?fulltile$
+=/obj/effect/spawner/random/structure/barricade:
+  banned_neighbors:
+    /obj/machinery/door/airlock:
+    /obj/effect/spawner/structure/window:
+    /obj/machinery/door/poddoor/shutters:
+    FULLTILE_WINDOW:
+      pattern: ^/obj/structure/window[/\w]*?fulltile$

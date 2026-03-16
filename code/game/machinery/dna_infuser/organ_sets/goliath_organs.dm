@@ -146,7 +146,7 @@
 	var/mob/living/fresh_pancake = target
 
 	// Check for nemesis factions on the target.
-	if(!(FACTION_MINING in fresh_pancake.faction) && !(FACTION_BOSS in fresh_pancake.faction))
+	if(!fresh_pancake.has_faction(list(FACTION_MINING, FACTION_BOSS)))
 		// Target is not a nemesis, so attack normally.
 		return
 

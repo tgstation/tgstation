@@ -222,10 +222,10 @@
 	purity_min = 0.32
 
 /datum/chemical_reaction/medicine/ephedrine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
-	default_explode(holder, equilibrium.reacted_vol, 0, 25)
+	reagent_explode(holder, equilibrium.reacted_vol, 0, 25)
 
 /datum/chemical_reaction/medicine/ephedrine/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
-	default_explode(holder, equilibrium.reacted_vol, 0, 20)
+	reagent_explode(holder, equilibrium.reacted_vol, 0, 20)
 
 /datum/chemical_reaction/medicine/diphenhydramine
 	results = list(/datum/reagent/medicine/diphenhydramine = 4)

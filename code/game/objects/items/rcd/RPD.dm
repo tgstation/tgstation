@@ -40,7 +40,7 @@
 	pickup_sound = 'sound/items/handling/tools/rpd_pickup.ogg'
 	sound_vary = TRUE
 	///Sparks system used when changing device in the UI
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	///Direction of the device we are going to spawn, set up in the UI
 	var/p_dir = NORTH
 	///Initial direction of the smart pipe we are going to spawn, set up in the UI
@@ -80,8 +80,7 @@
 
 /obj/item/pipe_dispenser/Initialize(mapload)
 	. = ..()
-	spark_system = new
-	spark_system.set_up(5, 0, src)
+	spark_system = new(src, 5, FALSE)
 	spark_system.attach(src)
 	if(!first_atmos)
 		first_atmos = GLOB.atmos_pipe_recipes[GLOB.atmos_pipe_recipes[1]][1]

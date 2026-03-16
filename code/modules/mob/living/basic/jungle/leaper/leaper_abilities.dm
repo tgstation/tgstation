@@ -247,4 +247,4 @@
 /datum/action/cooldown/spell/conjure/limit_summons/create_suicide_toads/post_summon(atom/summoned_object, atom/cast_on)
 	. = ..()
 	var/mob/living/summoned_toad = summoned_object
-	summoned_toad.faction = owner.faction ///so they dont attack the leaper or the wizard master
+	SET_FACTION_AND_ALLIES_FROM(summoned_toad, owner) // so they dont attack the leaper or the wizard master

@@ -267,7 +267,6 @@
 	if (!istype(detached_head))
 		return // It's so over
 	detached_head.real_name = headless.real_name
-	detached_head.name = headless.real_name
 	name = headless.real_name
 	detached_head.voice = headless.voice
 	detached_head.pitch = pitch

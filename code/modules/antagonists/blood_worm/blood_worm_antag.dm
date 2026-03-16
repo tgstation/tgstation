@@ -52,7 +52,7 @@
 	add_team_hud(target)
 
 	if (!istype(target, /mob/living/basic/blood_worm))
-		target.faction |= FACTION_BLOOD_WORM
+		target.add_faction(FACTION_BLOOD_WORM)
 
 	// Apathy and fearlessness are traits inherent to the very mind of a blood worm.
 	// Being immune to hunger, withdrawals, etc. are physical traits of blood worm hosts.
@@ -62,7 +62,7 @@
 	var/mob/living/target = mob_override || owner.current
 
 	if (!istype(target, /mob/living/basic/blood_worm))
-		target.faction -= FACTION_BLOOD_WORM
+		target.remove_faction(FACTION_BLOOD_WORM)
 
 	REMOVE_TRAITS_IN(target, REF(src))
 
@@ -81,11 +81,11 @@
 	return ..()
 
 /datum/antagonist/blood_worm/get_preview_icon()
-	var/icon/icon = icon('icons/mob/nonhuman-player/blood_worm_32x32.dmi', "juvenile")
+	var/datum/universal_icon/icon = uni_icon('icons/mob/nonhuman-player/blood_worm_32x32.dmi', "juvenile")
 
-	icon.Crop(1, 1, 32, 32)
-	icon.Shift(SOUTH, 4)
-	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	icon.crop(1, 1, 32, 32)
+	icon.shift(SOUTH, 4)
+	icon.scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon
 

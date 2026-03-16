@@ -24,15 +24,22 @@
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
-	var/sheet_type = /obj/item/stack/sheet/iron
-	var/sheet_amount = 2
-	var/girder_type = /obj/structure/girder
 	/// A turf that will replace this turf when this turf is destroyed
 	var/decon_type
 	/// If we added a leaning component to ourselves
 	var/added_leaning = FALSE
-
 	var/list/dent_decals
+
+	/// The type of sheet this wall requires for construction and drops upon deconstruction.
+	var/sheet_type = /obj/item/stack/sheet/iron
+	/// The amount of sheets this wall requires for construction and drops upon deconstruction.
+	var/sheet_amount = 2
+	/// The type of girder this wall requires for construction and drops upon deconstruction.
+	var/girder_type = /obj/structure/girder
+	/// The girder state this wall requires for construction and drops upon deconstruction.
+	var/girder_state = GIRDER_NORMAL
+	/// How long this wall takes to make by using its sheet type on a girder.
+	var/make_delay = 4 SECONDS
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()

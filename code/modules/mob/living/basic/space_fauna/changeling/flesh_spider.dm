@@ -33,7 +33,6 @@
 	unsuitable_cold_damage = 4
 	unsuitable_heat_damage = 4
 	combat_mode = TRUE
-	faction = list() // No allies but yourself
 	pass_flags = PASSTABLE
 	unique_name = TRUE
 	lighting_cutoff_red = 22

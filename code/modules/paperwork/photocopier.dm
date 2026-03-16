@@ -423,9 +423,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(get_paper_count(created_paper) < paper_use * copies_amount)
 		copies_amount = FLOOR(get_paper_count(created_paper) / paper_use, 1)
 		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\"")
-	if(!(obj_flags & EMAGGED) && (copies_amount > 0) && (attempt_charge(src, user, (copies_amount - 1) * usage_cost) & COMPONENT_OBJ_CANCEL_CHARGE))
-		copies_amount = 0
-		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Failed to charge bank account. Aborting.\"")
 
 	copies_left = copies_amount
 
@@ -438,6 +435,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		to_chat(user, error_message)
 
 	// if you managed to cancel the copy operation, tough luck. you aren't getting your money back.
+	var/list/copies_made = list()
 	for(var/i in 1 to copies_amount)
 		if(machine_stat & (BROKEN|NOPOWER))
 			break
@@ -454,9 +452,21 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		sleep(time_to_print)
 
 		// reveal our copied item
-		copied_obj.forceMove(drop_location())
-		give_pixel_offset(copied_obj)
+		if(!QDELETED(copied_obj))
+			copied_obj.forceMove(drop_location())
+			give_pixel_offset(copied_obj)
+			copies_made += copied_obj
 		copies_left--
+
+	if(copies_made.len)
+		if(!(obj_flags & EMAGGED) && attempt_charge(src, user, (copies_made.len - 1) * usage_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
+			visible_message(
+				span_warning("An error message flashes across \the [src]'s screen."), \
+				span_warning("Failed to charge bank account. Scrapping copies.") \
+			)
+			QDEL_LIST(copies_made)
+	else
+		to_chat(user, span_warning("Failed to copy object!"))
 
 	copies_left = 0
 	reset_busy()

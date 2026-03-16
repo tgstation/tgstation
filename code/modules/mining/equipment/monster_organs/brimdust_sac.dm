@@ -47,7 +47,7 @@
 /// Make a cloud which applies brimdust to everyone nearby
 /obj/item/organ/monster_core/brimdust_sac/on_triggered_internal()
 	var/turf/origin_turf = get_turf(owner)
-	do_smoke(range = 2, holder = owner, location = origin_turf, smoke_type = /obj/effect/particle_effect/fluid/smoke/bad/brimdust)
+	do_smoke(2, owner, origin_turf, effect_type = /obj/effect/particle_effect/fluid/smoke/bad/brimdust)
 
 /// Smoke which applies brimdust to you, and is also bad for your lungs
 /obj/effect/particle_effect/fluid/smoke/bad/brimdust
@@ -93,7 +93,7 @@
 	desc = "You %STACKS% explosive dust, kinetic impacts will cause it to detonate! \
 		The explosion will not harm you as long as you're not under atmospheric pressure. \
 		Click this alert to shake off the dust."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "brimdemon_1"
 
 /atom/movable/screen/alert/status_effect/brimdust_coating/MouseEntered(location,control,params)

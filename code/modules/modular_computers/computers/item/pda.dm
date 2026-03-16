@@ -247,6 +247,14 @@
 	if(new_ringtone && (new_ringtone != MESSENGER_RINGTONE_DEFAULT))
 		update_ringtone(new_ringtone)
 
+	var/datum/computer_file/program/themeify/theme_app = locate() in stored_files
+	if(theme_app)
+		var/list/unlocked_themes = owner_client.get_award_status(/datum/award/score/progress/pda_themes)
+		for(var/theme_id in unlocked_themes)
+			var/theme_name = GLOB.pda_id_to_name[theme_id]
+			if(theme_name)
+				LAZYOR(theme_app.imported_themes, theme_name)
+
 	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
 	if(new_theme)
 		device_theme = GLOB.pda_name_to_theme[new_theme]

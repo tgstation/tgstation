@@ -38,13 +38,13 @@
 	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_holder, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	RegisterSignal(new_holder, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_dodge))
-	new_holder.faction |= FACTION_CARP //:D
+	new_holder.add_faction(FACTION_CARP) //:D
 	new_holder.grant_language(/datum/language/carptongue, ALL, type)
 
 /datum/martial_art/the_sleeping_carp/deactivate_style(mob/living/remove_from)
 	remove_from.remove_traits(scarp_traits, SLEEPING_CARP_TRAIT)
 	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_PRE_BULLET_ACT, COMSIG_LIVING_CHECK_BLOCK))
-	remove_from.faction -= FACTION_CARP //:(
+	remove_from.remove_faction(FACTION_CARP) //:(
 	if (!QDELING(remove_from))
 		remove_from.remove_language(/datum/language/carptongue, ALL, type)
 	return ..()

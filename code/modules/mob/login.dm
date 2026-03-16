@@ -100,7 +100,7 @@
 	update_mouse_pointer()
 	update_ambience_area(get_area(src))
 
-	if(!can_hear())
+	if(HAS_TRAIT(src, TRAIT_DEAF))
 		stop_sound_channel(CHANNEL_AMBIENCE)
 
 	if(client)
@@ -133,6 +133,9 @@
 	AddElement(/datum/element/weather_listener, /datum/weather/snow_storm, ZTRAIT_SNOWSTORM, GLOB.snowstorm_sounds)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_LOGGED_IN, src)
+
+	if(SSticker.IsPostgame())
+		client.screen += SSticker.reboot_hud
 
 	return TRUE
 

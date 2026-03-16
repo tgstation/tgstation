@@ -250,7 +250,7 @@
 			if (reagents_in_produced)
 				if (target.owner.reagents)
 					target.owner.reagents.trans_to(result, target.owner.reagents.total_volume / reagents_in_produced / length(target.owner.bodyparts), remove_blacklisted = TRUE)
-				result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, target.owner.nutrition / 15 / reagents_in_produced)
+				result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, target.owner.nutrition / /datum/reagent/consumable/nutriment/fat::nutriment_factor / reagents_in_produced)
 
 			if(LAZYLEN(diseases))
 				var/list/datum/disease/diseases_to_add = list()
@@ -266,7 +266,7 @@
 
 		for (var/obj/item/food/meat/meat in results)
 			meat.name = "[target.owner.real_name]'s [meat.name]"
-			meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, target.owner) = 4 * SHEET_MATERIAL_AMOUNT))
+			meat.set_custom_materials(list(SSmaterials.get_material(/datum/material/meat/mob_meat, target.owner) = 4 * SHEET_MATERIAL_AMOUNT))
 			meat.subjectname = target.owner.real_name
 			meat.subjectjob = target.owner.job
 
@@ -450,7 +450,7 @@
 		var/list/meat_mats = carrion.has_material_type(/datum/material/meat)
 		if (!length(meat_mats))
 			continue
-		carrion.set_custom_materials((carrion.custom_materials - meat_mats) + list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, target) = counterlist_sum(meat_mats)))
+		carrion.set_custom_materials((carrion.custom_materials - meat_mats) + list(SSmaterials.get_material(/datum/material/meat/mob_meat, target) = counterlist_sum(meat_mats)))
 
 	// Transfer delicious reagents to meat
 	if (target.reagents)

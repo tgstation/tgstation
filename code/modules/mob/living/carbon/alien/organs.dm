@@ -103,11 +103,11 @@
 
 /obj/item/organ/alien/hivenode/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
-	organ_owner.faction |= ROLE_ALIEN
+	organ_owner.add_faction(ROLE_ALIEN)
 
 /obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	if(organ_owner)
-		organ_owner.faction -= ROLE_ALIEN
+		organ_owner.remove_faction(ROLE_ALIEN)
 	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.

@@ -142,7 +142,7 @@
 	visible_message(
 		span_notice("[src] attempts to close [p_their()] own [limb.plaintext_zone] with [tool]..."),
 		span_notice("You attempt to close your own [limb.plaintext_zone] with [tool]..."),
-		span_hear("You hear singing."),
+		span_hear("You hear [tool?.get_temperature() ? "singeing" : "stitching"] sounds."),
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
@@ -158,7 +158,7 @@
 	visible_message(
 		span_notice("[src] closes [p_their()] own [limb.plaintext_zone] with [tool]."),
 		span_notice("You close your own [limb.plaintext_zone] with [tool]."),
-		span_hear("You hear singing."),
+		span_hear("You hear [tool?.get_temperature() ? "singeing" : "stitching"] sounds."),
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
@@ -185,7 +185,7 @@
 		if(suture_tool.amount <= 0)
 			return FALSE
 	else if(tool.tool_behaviour != TOOL_CAUTERY)
-		if(tool.get_temperature() <= 0)
+		if(tool.get_temperature() <= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			return FALSE
 
 	// we need to have a surgery state worth closing
@@ -742,17 +742,17 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	// Ignore alllll the penalties (but also all the bonuses)
 	if(!HAS_TRAIT(surgeon, TRAIT_IGNORE_SURGERY_MODIFIERS))
 		var/mob/living/patient = get_patient(operating_on)
-		total_mod *= get_surgeon_surgery_speed_mod(surgeon, tool)
+		total_mod *= get_surgeon_surgery_speed_mod(patient, surgeon, tool)
 		if(!isnull(patient)) // Some surgeries can lack patients
-			total_mod *= get_location_modifier(get_turf(patient))
-			total_mod *= get_mob_surgery_speed_mod(patient)
+			total_mod *= get_location_modifier(get_turf(patient), patient, surgeon, tool)
+			total_mod *= get_mob_surgery_speed_mod(patient, surgeon, tool)
 		// Using TRAIT_SELF_SURGERY on a surgery which doesn't normally allow self surgery imparts a penalty
 		if(operating_on == surgeon && HAS_TRAIT(surgeon, TRAIT_SELF_SURGERY) && !(operation_flags & OPERATION_SELF_OPERABLE))
 			total_mod *= 1.5
 	return round(total_mod, 0.01)
 
 /// Returns a time modifier based on the mob's status
-/datum/surgery_operation/proc/get_mob_surgery_speed_mod(mob/living/patient)
+/datum/surgery_operation/proc/get_mob_surgery_speed_mod(mob/living/patient, mob/living/surgeon, tool)
 	PROTECTED_PROC(TRUE)
 	var/basemod = 1.0
 	for(var/mod_id, mod_amt in patient.mob_surgery_speed_mods)
@@ -764,7 +764,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	return basemod
 
 /// Returns a time modifier based on the surgeon's status
-/datum/surgery_operation/proc/get_surgeon_surgery_speed_mod(mob/living/surgeon, tool)
+/datum/surgery_operation/proc/get_surgeon_surgery_speed_mod(mob/living/patient, mob/living/surgeon, tool)
 	PROTECTED_PROC(TRUE)
 	var/basemod = 1.0
 	if((operation_flags & OPERATION_MORBID) && HAS_MIND_TRAIT(surgeon, TRAIT_MORBID) && isitem(tool))
@@ -782,7 +782,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	return basemod
 
 /// Gets the surgery speed modifier for a given mob, based off what sort of table/bed/whatever is on their turf.
-/datum/surgery_operation/proc/get_location_modifier(turf/operation_turf)
+/datum/surgery_operation/proc/get_location_modifier(turf/operation_turf, mob/living/patient, mob/living/surgeon, tool)
 	PROTECTED_PROC(TRUE)
 	// Technically this IS a typecache, just not the usual kind :3
 	// The order of the modifiers matter, latter entries override earlier ones
@@ -836,6 +836,12 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	if(!check_availability(patient, operating_on, surgeon, tool, operation_args[OPERATION_TARGET_ZONE]))
 		return ITEM_INTERACT_BLOCKING
+
+	if(isitem(tool))
+		var/obj/item/realtool = tool
+		var/tool_return = SEND_SIGNAL(realtool, COMSIG_ITEM_USED_IN_SURGERY, src, operating_on, surgeon)
+		if(tool_return & ITEM_INTERACT_ANY_BLOCKER)
+			return tool_return
 
 	if(!start_operation(operating_on, surgeon, tool, operation_args))
 		return ITEM_INTERACT_BLOCKING
@@ -1136,7 +1142,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	if(operation_flags & OPERATION_NOTABLE)
 		SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
-		surgeon.add_mob_memory(/datum/memory/surgery, deuteragonist = surgeon, surgery_type = name)
+		surgeon.add_mob_memory(/datum/memory/surgery, deuteragonist = get_patient(operating_on) || operating_on, surgery_type = name)
 
 	SEND_SIGNAL(surgeon, COMSIG_ATOM_SURGERY_SUCCESS, src, operating_on, tool)
 	play_operation_sound(operating_on, surgeon, tool, success_sound)

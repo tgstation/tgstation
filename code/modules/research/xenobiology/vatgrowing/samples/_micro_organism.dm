@@ -29,6 +29,8 @@
 	var/atom/resulting_atom
 	///The number of resulting atoms
 	var/resulting_atom_count = 1
+	/// Counts how many times this cell line has been grown successfully
+	VAR_FINAL/grow_count = 0
 
 ///Handles growth of the micro_organism. This only runs if the micro organism is in the growing vat. Reagents is the growing vats reagents
 /datum/micro_organism/cell_line/proc/handle_growth(obj/machinery/vatgrower/vat)
@@ -75,43 +77,26 @@
 
 ///Called once a cell line reaches 100 growth. Then we check if any cell_line is too far so we can perform an epic fail roll
 /datum/micro_organism/cell_line/proc/finish_growing(obj/machinery/vatgrower/vat)
-	var/risk = 0 //Penalty for failure, goes up based on how much growth the other cell_lines have
-
-	for(var/datum/micro_organism/cell_line/cell_line in vat.biological_sample.micro_organisms)
-		if(cell_line == src) //well duh
-			continue
-		if(cell_line.growth >= VATGROWING_DANGER_MINIMUM)
-			risk += cell_line.growth * 0.6 //60% per cell_line potentially. Kryson should probably tweak this
 	playsound(vat, 'sound/effects/splat.ogg', 50, TRUE)
-	if(rand(1, 100) < risk) //Fail roll!
-		fuck_up_growing(vat)
-		. = FALSE
-	else
-		succeed_growing(vat)
-		. = TRUE
+	succeed_growing(vat)
 	SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
-
-/datum/micro_organism/cell_line/proc/fuck_up_growing(obj/machinery/vatgrower/vat)
-	vat.visible_message(span_warning("The biological sample in [vat] seems to have dissipated!"))
-	if(prob(50))
-		new /obj/effect/gibspawner/generic(get_turf(vat)) //Spawn some gibs.
+	grow_count += 1
+	return TRUE
 
 /datum/micro_organism/cell_line/proc/succeed_growing(obj/machinery/vatgrower/vat)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = vat, location = vat.loc)
-	smoke.start()
+	do_smoke(0, vat, vat.loc)
 	for(var/x in 1 to resulting_atom_count)
 		var/atom/thing = new resulting_atom(get_turf(vat))
 		ADD_TRAIT(thing, TRAIT_VATGROWN, "vatgrowing")
 		vat.visible_message(span_nicegreen("[thing] pops out of [vat]!"))
 		//We maybe add some color. the chance is static for now, but idewally we would be able to manipulate it in the future.
-		if(prob(CYTO_SHINY_CHANCE))
-			if(isbasicmob(thing))
-				var/mob/living/basic/vat_creature = thing
-				//if the mob has a special mutation interaction don't do any other mutations. Once we add more mutations that are stackable with shiny we should probably roll for each type independently.
-				if(vat_creature.mutate())
-					return
-			mutate_color(thing)
+		if(prob(CYTO_SHINY_CHANCE) && isbasicmob(thing))
+			var/mob/living/basic/vat_creature = thing
+			//if the mob has a special mutation interaction don't do any other mutations.
+			// Once we add more mutations that are stackable with shiny we should probably roll for each type independently.
+			if(!vat_creature.mutate())
+				mutate_color(thing)
+
 		SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_DEPOSITED, thing)
 
 ///Overriden to show more info like needs, supplementary and supressive reagents and also growth.

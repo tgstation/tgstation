@@ -119,7 +119,6 @@
 	living_staff.ai_controller=  new /datum/ai_controller/basic_controller/mimic_copy/gun/animator(living_staff)
 	return living_staff
 
-
 /// Heals people and even raises the dead
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
@@ -305,7 +304,7 @@
 /obj/item/gun/magic/staff/door/do_suicide(mob/living/user)
 	. = ..()
 	var/obj/machinery/door/airlock/material/door = new(user.drop_location())
-	door.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
+	door.set_custom_materials(list(SSmaterials.get_material(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
 	door.update_appearance(updates = UPDATE_ICON)
 	door.name = user.real_name
 	addtimer(CALLBACK(door, TYPE_PROC_REF(/obj/machinery/door, open)), 1.5 SECONDS)

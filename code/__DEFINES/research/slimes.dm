@@ -62,5 +62,8 @@
 #define SLIME_TYPE_SILVER "silver"
 #define SLIME_TYPE_YELLOW "yellow"
 
+// Not a real slime type, used to create random slimes
+#define SLIME_TYPE_RANDOM "random"
+
 // The alpha value of transperent slime types
 #define SLIME_TRANSPARENCY_ALPHA 180

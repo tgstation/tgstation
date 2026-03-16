@@ -29,7 +29,7 @@
 	living.visible_message(span_warning("[living]'s skin rapidly turns to marble!"), span_userdanger("Your body freezes up! Can't... move... can't... think..."))
 	living.forceMove(src)
 	living.add_traits(list(TRAIT_GODMODE, TRAIT_MUTE, TRAIT_NOBLOOD), STATUE_MUTE)
-	living.faction |= FACTION_MIMIC //Stops mimics from instaqdeling people in statues
+	living.add_faction(FACTION_MIMIC) //Stops mimics from instaqdeling people in statues
 	atom_integrity = living.health + 100 //stoning damaged mobs will result in easier to shatter statues
 	max_integrity = atom_integrity
 	START_PROCESSING(SSobj, src)
@@ -52,7 +52,7 @@
 		petrified_mob.remove_traits(list(TRAIT_GODMODE, TRAIT_MUTE, TRAIT_NOBLOOD), STATUE_MUTE)
 		petrified_mob.Paralyze(10 SECONDS)
 		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transferred to the mob
-		petrified_mob.faction -= FACTION_MIMIC
+		petrified_mob.remove_faction(FACTION_MIMIC)
 		petrified_mob = null
 
 /obj/structure/statue/petrified/Destroy()

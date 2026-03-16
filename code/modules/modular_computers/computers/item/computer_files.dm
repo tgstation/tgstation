@@ -3,8 +3,9 @@
  *
  * Adds an already initialized file to the computer, checking if one already exists.
  * Returns TRUE if successfully stored, FALSE otherwise.
+ * user is optional: If set, the action was done by a mob/player
  */
-/obj/item/modular_computer/proc/store_file(datum/computer_file/file_storing)
+/obj/item/modular_computer/proc/store_file(datum/computer_file/file_storing, mob/user)
 	if(!file_storing || !istype(file_storing))
 		return FALSE
 	if(!can_store_file(file_storing))
@@ -16,8 +17,8 @@
 
 	file_storing.computer = src
 	used_capacity += file_storing.size
-	SEND_SIGNAL(file_storing, COMSIG_COMPUTER_FILE_STORE, src)
-	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_FILE_STORE, file_storing)
+	SEND_SIGNAL(file_storing, COMSIG_COMPUTER_FILE_STORE, src, user)
+	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_FILE_STORE, file_storing, user)
 	return TRUE
 
 /**
@@ -84,6 +85,26 @@
 	else
 		for(var/datum/computer_file/file as anything in target_disk.stored_files)
 			if(file.filename == filename)
+				return file
+	return null
+
+/**
+ * find_file_by_full_name
+ *
+ * Will check all applications in a tablet for files and, if they have \
+ * the same filename AND extension, will return it.
+ * If a computer disk is passed instead, it will check the disk over the computer.
+ */
+/obj/item/modular_computer/proc/find_file_by_full_name(full_path, obj/item/disk/computer/target_disk)
+	if(!istext(full_path))
+		return null
+	if(isnull(target_disk))
+		for(var/datum/computer_file/file as anything in stored_files)
+			if("[file.filename].[file.filetype]" == full_path)
+				return file
+	else
+		for(var/datum/computer_file/file as anything in target_disk.stored_files)
+			if("[file.filename].[file.filetype]" == full_path)
 				return file
 	return null
 

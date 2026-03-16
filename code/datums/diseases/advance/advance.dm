@@ -24,6 +24,7 @@
 	max_stages = 5
 	spread_text = "Unknown"
 	viable_mobtypes = list(/mob/living/carbon/human)
+	cures = null
 
 	// NEW VARS
 	var/list/properties = list()
@@ -31,78 +32,6 @@
 	var/id = ""
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
-	var/oldres //To prevent setting new cures unless resistance changes.
-
-	///Lists of cures and how hard we expect them to be to cure. Sentient diseases will pick two from 6+
-	var/static/list/advance_cures = list(
-		list( // level 1
-			/datum/reagent/carbon,
-			/datum/reagent/copper,
-			/datum/reagent/iodine,
-			/datum/reagent/iron,
-			/datum/reagent/silver,
-		),
-		list( // level 2
-			/datum/reagent/consumable/ethanol,
-			/datum/reagent/acetone,
-			/datum/reagent/bromine,
-			/datum/reagent/lithium,
-			/datum/reagent/potassium,
-			/datum/reagent/silicon,
-		),
-		list( // level 3
-			/datum/reagent/consumable/milk,
-			/datum/reagent/consumable/orangejuice,
-			/datum/reagent/consumable/salt,
-			/datum/reagent/consumable/sugar,
-			/datum/reagent/consumable/tomatojuice,
-		),
-		list( //level 4
-			/datum/reagent/fuel/oil,
-			/datum/reagent/medicine/c2/multiver,
-			/datum/reagent/medicine/epinephrine,
-			/datum/reagent/medicine/haloperidol,
-			/datum/reagent/medicine/mine_salve,
-			/datum/reagent/medicine/salglu_solution,
-		),
-		list( //level 5
-			/datum/reagent/drug/space_drugs,
-			/datum/reagent/medicine/mannitol,
-			/datum/reagent/medicine/synaptizine,
-			/datum/reagent/cryptobiolin,
-		),
-		list( // level 6
-			/datum/reagent/medicine/antihol,
-			/datum/reagent/medicine/inacusiate,
-			/datum/reagent/medicine/oculine,
-			/datum/reagent/phenol,
-		),
-		list( // level 7
-			/datum/reagent/medicine/higadrite,
-			/datum/reagent/medicine/leporazine,
-			/datum/reagent/toxin/mindbreaker,
-			/datum/reagent/acetaldehyde,
-		),
-		list( // level 8
-			/datum/reagent/drug/happiness,
-			/datum/reagent/medicine/ephedrine,
-			/datum/reagent/pax,
-		),
-		list( // level 9
-			/datum/reagent/medicine/sal_acid,
-			/datum/reagent/toxin/chloralhydrate,
-			/datum/reagent/toxin/lipolicide,
-		),
-		list( // level 10
-			/datum/reagent/drug/aranesp,
-			/datum/reagent/medicine/diphenhydramine,
-			/datum/reagent/pentaerythritol,
-		),
-		list( //level 11
-			/datum/reagent/medicine/c2/tirimol,
-			/datum/reagent/medicine/modafinil,
-		),
-	)
 
 /*
 
@@ -140,6 +69,8 @@
 	infect(infectee, make_copy)
 	return TRUE
 
+/datum/disease/advance/get_recovery_failure_chance()
+	return clamp((properties["resistance"] * 1.5), 0, 50)
 
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act(seconds_per_tick)
@@ -189,9 +120,23 @@
 	A.properties = properties.Copy()
 	A.id = id
 	A.mutable = mutable
-	A.oldres = oldres
+	A.cure_text = cure_text
 	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
+
+/datum/disease/advance/has_cure()
+	if(!(disease_flags & (CURABLE | CHRONIC)))
+		return FALSE
+	var/remedied_symptoms = 0
+	var/non_remedied_symptoms = 0
+	for(var/datum/symptom/each_symptom as anything in symptoms)
+		if(each_symptom.remedied) // Neutered symptoms can't be remedied, so don't worry about that here
+			remedied_symptoms++
+		else if(!each_symptom.neutered)
+			non_remedied_symptoms++
+	if(remedied_symptoms+non_remedied_symptoms == 0) // In case all symptoms are neutered, we don't want to divide by 0
+		return 0
+	return remedied_symptoms/(remedied_symptoms+non_remedied_symptoms)
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
@@ -286,10 +231,10 @@
 			set_spread(DISEASE_SPREAD_BLOOD)
 
 		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
-		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 1, 10) // can be between 1 and 10
-		stage_prob = max(0.3 * properties["stage_rate"], 1)
+		cure_chance = clamp(10 * (0.94 ** properties["resistance"]), 3.5, 12) // Capped at between -3 and 17 resistance
+		stage_prob = max(0.2 * properties["stage_rate"], 0) + 1.5
 		set_severity(round(properties["severity"]), 1)
-		generate_cure(properties)
+		cure_text = "If you can see this, something has gone wrong."
 	else
 		CRASH("Our properties were empty or null!")
 
@@ -336,19 +281,6 @@
 			severity = DISEASE_SEVERITY_BIOHAZARD
 		else
 			severity = "Unknown"
-
-
-// Will generate a random cure, the more resistance the symptoms have, the harder the cure.
-/datum/disease/advance/proc/generate_cure()
-	if(properties?.len)
-		var/res = clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
-		if(res == oldres)
-			return
-		cures = list(pick(advance_cures[res]))
-		oldres = res
-		// Get the cure name from the cure_id
-		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]
-		cure_text = D.name
 
 // Randomly generate a symptom, has a chance to lose or gain a symptom.
 /datum/disease/advance/proc/Evolve(min_level, max_level, ignore_mutable = FALSE)

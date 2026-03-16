@@ -1287,11 +1287,11 @@
 	)
 
 /datum/armor/mod_theme_syndicate
-	melee = 40
+	melee = 50
 	bullet = 50
-	laser = 30
-	energy = 30
-	bomb = 35
+	laser = 40
+	energy = 50
+	bomb = 40
 	bio = 100
 	fire = 50
 	acid = 90
@@ -1433,11 +1433,11 @@
 	)
 
 /datum/armor/mod_theme_infiltrator
-	melee = 50
+	melee = 40
 	bullet = 50
-	laser = 40
-	energy = 50
-	bomb = 40
+	laser = 30
+	energy = 30
+	bomb = 35
 	fire = 100
 	acid = 100
 	wound = 25

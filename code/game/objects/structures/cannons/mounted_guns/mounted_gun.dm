@@ -148,9 +148,13 @@
 /obj/structure/mounted_gun/atom_deconstruct(disassembled = TRUE)
 	. = ..()
 	dump_contents()
+	var/droploc = drop_location()
 	for (var/type in debris)
+		if(ispath(type, /obj/item/stack))
+			new type(droploc, debris[type])
+			continue
 		for (var/i in 1 to debris[type])
-			new type(drop_location())
+			new type(droploc)
 
 /obj/structure/mounted_gun/dump_contents()
 	return // Generally we don't have contents to dump but some children do.

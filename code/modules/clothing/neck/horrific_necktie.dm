@@ -117,7 +117,6 @@
 	name = "horrific necktie"
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
-	faction = list()
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 	unsuitable_atmos_damage = 0
