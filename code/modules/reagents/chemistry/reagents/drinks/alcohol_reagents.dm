@@ -3330,21 +3330,11 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	glass_price = DRINK_PRICE_EASY
 
-/datum/reagent/consumable/ethanol/garibaldi/on_mob_metabolize(mob/living/carbon/drinker)
-	. = ..()
-	if(IS_REVOLUTIONARY(drinker))
-		to_chat(drinker, span_warning("You feel your revolutionary spirit surging! You feel like nothing the oppressors could throw at you could wound your pride!"))
-
 /datum/reagent/consumable/ethanol/garibaldi/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(IS_REVOLUTIONARY(drinker))
-		drinker.add_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), type)
-
-/datum/reagent/consumable/ethanol/garibaldi/on_mob_end_metabolize(mob/living/drinker)
-	. = ..()
-	drinker.remove_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), type)
-	if(IS_REVOLUTIONARY(drinker))
-		to_chat(drinker, span_notice("You feel your surge of revolutionary zeal fade. You hope you don't get shot in the foot..."))
+		//status effect has a duration of 5 seconds which gets refreshed by this, falls off on it's own in case of running out of drink or deconversion
+		drinker.apply_status_effect(/datum/status_effect/rev_resilience)
 
 /datum/reagent/consumable/ethanol/improved_whiskey
 	name = "Improved Whiskey Cocktail"
