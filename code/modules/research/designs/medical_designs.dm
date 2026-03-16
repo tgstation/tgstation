@@ -1400,7 +1400,7 @@
 		Links to stasis beds, operating tables, and other machines that can hold patients \
 		such as cryo cells, sleepers, and more."
 	id = "vitals_monitor"
-	build_type = PROTOLATHE | AWAY_LATHE
+	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2,
