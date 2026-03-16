@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Rewrote dispenser bots to use item_interaction"
