@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "plumbing pill press won't store reagents & products if the total capacity for both is reached thus stopping faulty product creation (imbalanced reagent ratios) and power consumption"
