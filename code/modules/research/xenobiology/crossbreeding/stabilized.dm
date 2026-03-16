@@ -189,13 +189,18 @@ Stabilized extracts:
 /obj/item/slimecross/stabilized/rainbow
 	colour = SLIME_TYPE_RAINBOW
 	effect_desc = "Accepts a regenerative extract and automatically uses it if the owner enters a critical condition."
+	/// Regenerative crossbreed stored to be autoused on critted owner
 	var/obj/item/slimecross/regenerative/regencore
 
-/obj/item/slimecross/stabilized/rainbow/attackby(obj/item/O, mob/user)
-	var/obj/item/slimecross/regenerative/regen = O
-	if(istype(regen) && !regencore)
-		to_chat(user, span_notice("You place [O] in [src], prepping the extract for automatic application!"))
-		regencore = regen
-		regen.forceMove(src)
-		return
-	return ..()
+/obj/item/slimecross/stabilized/rainbow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/slimecross/regenerative))
+		return NONE
+
+	if(regencore)
+		to_chat(user, span_warning("[src] already has a regenerative crossbreed stored in it!"))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You place [tool] in [src], prepping the extract for automatic application!"))
+	regencore = tool
+	tool.forceMove(src)
+	return ITEM_INTERACT_SUCCESS

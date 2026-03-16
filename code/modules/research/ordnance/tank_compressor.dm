@@ -42,33 +42,35 @@
 	var/list/gas_data = list()
 	var/timestamp
 
-/obj/machinery/atmospherics/components/binary/tank_compressor/attackby(obj/item/item, mob/living/user)
-	if (panel_open)
-		return ..()
+/obj/machinery/atmospherics/components/binary/tank_compressor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (user.combat_mode || panel_open)
+		return NONE
 
-	if(istype(item, /obj/item/tank))
-		var/obj/item/tank/tank_item = item
-		if(inserted_tank)
-			if(!eject_tank(user))
-				balloon_alert(user, "it's stuck inside!")
-				return ..()
-		if(!user.transferItemToLoc(tank_item, src))
-			balloon_alert(user, "it's stuck to your hand!")
-			return ..()
-		inserted_tank = tank_item
-		last_recorded_pressure = 0
-		RegisterSignal(inserted_tank, COMSIG_QDELETING, PROC_REF(tank_destruction))
-		update_appearance()
-		return
-	if(istype(item, /obj/item/disk/computer))
-		var/obj/item/disk/computer/attacking_disk = item
+	if(istype(tool, /obj/item/disk/computer))
 		eject_disk(user)
-		if(user.transferItemToLoc(attacking_disk, src))
-			inserted_disk = attacking_disk
-		else
+		if(user.transferItemToLoc(tool, src))
 			balloon_alert(user, "it's stuck to your hand!")
-		return
-	return ..()
+			return ITEM_INTERACT_BLOCKING
+		inserted_disk = tool
+		return ITEM_INTERACT_SUCCESS
+
+	if(!istype(tool, /obj/item/tank))
+		return NONE
+
+	if(inserted_tank)
+		if(!eject_tank(user))
+			balloon_alert(user, "it's stuck inside!")
+			return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		balloon_alert(user, "it's stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+
+	inserted_tank = tool
+	last_recorded_pressure = 0
+	RegisterSignal(inserted_tank, COMSIG_QDELETING, PROC_REF(tank_destruction))
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/wrench_act(mob/living/user, obj/item/tool)
 	if(active || inserted_tank)
