@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "If your pay gets docked by Central Command, it is noted in audit and transaction log"
+  - qol: "If your pay gets docked by Central Command, you will always be notified, regardless of bank alert preference"
+  - admin: "Dock Pay smite supports negatives better (for an easy way to give someone money)"
