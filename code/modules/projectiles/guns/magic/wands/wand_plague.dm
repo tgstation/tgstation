@@ -4,8 +4,8 @@
 	desc = "A vile implement which forces its victims' bodies to disgorge frogs and insects."
 	school = SCHOOL_CONJURATION
 	ammo_type = /obj/item/ammo_casing/magic/plague
-	icon_state = "revivewand"
-	base_icon_state = "revivewand"
+	icon_state = "plaguewand"
+	base_icon_state = "plaguewand"
 	fire_sound = 'sound/effects/smoke.ogg'
 	max_charges = 6
 
