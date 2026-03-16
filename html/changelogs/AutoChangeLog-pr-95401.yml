@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Converted autosurgeons/robot bodyparts/dissection notes to item_interaction"

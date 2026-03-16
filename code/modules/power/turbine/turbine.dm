@@ -9,6 +9,7 @@
 	resistance_flags = FIRE_PROOF
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	processing_flags = START_PROCESSING_MANUALLY
+	abstract_type = /obj/machinery/power/turbine
 
 	///The cached efficiency of this turbines installed part
 	var/efficiency = 0

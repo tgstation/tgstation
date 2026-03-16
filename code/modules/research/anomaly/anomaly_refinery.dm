@@ -73,41 +73,49 @@
 	var/radius = clamp(round(MIN_RADIUS_REQUIRED + radius_increase_per_core * already_made, 1), MIN_RADIUS_REQUIRED, MAX_RADIUS_REQUIRED)
 	return radius
 
-/obj/machinery/research/anomaly_refinery/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/research/anomaly_refinery/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(active)
 		to_chat(user, span_warning("You can't insert [tool] into [src] while [p_theyre()] currently active."))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	if(istype(tool, /obj/item/raw_anomaly_core))
 		if(inserted_core)
 			to_chat(user, span_warning("There is already a core in [src]."))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		if(!user.transferItemToLoc(tool, src))
 			to_chat(user, span_warning("[tool] is stuck to your hand."))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		var/obj/item/raw_anomaly_core/raw_core = tool
 		if(!get_required_radius(raw_core.anomaly_type))
 			say("Unfortunately, due to diminishing supplies of condensed anomalous matter, [raw_core] and any cores of its type are no longer of a sufficient quality level to be compressed into a working core.")
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		inserted_core = raw_core
 		to_chat(user, span_notice("You insert [raw_core] into [src]."))
-		return
-	if(istype(tool, /obj/item/transfer_valve))
-		if(inserted_bomb)
-			to_chat(user, span_warning("There is already a bomb in [src]."))
-			return
-		var/obj/item/transfer_valve/valve = tool
-		if(!valve.ready())
-			to_chat(user, span_warning("[valve] is incomplete."))
-			return
-		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck to your hand."))
-			return
-		inserted_bomb = tool
-		tank_to_target = inserted_bomb.tank_two
-		to_chat(user, span_notice("You insert [tool] into [src]"))
-		return
-	update_appearance()
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	if(!istype(tool, /obj/item/transfer_valve))
+		return NONE
+
+	if(inserted_bomb)
+		to_chat(user, span_warning("There is already a bomb in [src]."))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/transfer_valve/valve = tool
+	if(!valve.ready())
+		to_chat(user, span_warning("[valve] is incomplete."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("[tool] is stuck to your hand."))
+		return ITEM_INTERACT_BLOCKING
+
+	inserted_bomb = tool
+	tank_to_target = inserted_bomb.tank_two
+	to_chat(user, span_notice("You insert [tool] into [src]"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/research/anomaly_refinery/update_icon_state()
 	. = ..()

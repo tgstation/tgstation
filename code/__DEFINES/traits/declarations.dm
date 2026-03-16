@@ -1235,6 +1235,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ELEVATING_OBJECT "elevating_object"
 /// From [/datum/element/elevation_core] for purpose of checking if the turf has the trait from an instance of the element
 #define TRAIT_ELEVATED_TURF "elevated_turf"
+/// From [/datum/component/defaceable] marks that something has been... marked
+#define TRAIT_DEFACED "defaced"
 
 /// This item is currently under the control of telekinesis
 #define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"
@@ -1459,6 +1461,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STUBBY_BODY "stubby_body" // you have a stubby body that lessens your agility
 #define TRAIT_BEAST_EMPATHY "beast_empathy" // you're good with animals, such as with taming them
 #define TRAIT_STURDY_FRAME "sturdy_frame" // you suffer much lesser effects from equipment that slows you down
+
+/// Has this mob been tamed?
+#define TRAIT_TAMED "tamed"
 
 /// This item cannot be selected for or used by a theft objective (Spies, Traitors, etc.)
 #define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked"

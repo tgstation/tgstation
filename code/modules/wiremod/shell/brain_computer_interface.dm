@@ -332,27 +332,24 @@
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/bci_implanter/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	var/obj/item/organ/cyberimp/bci/new_bci = weapon
-	if (istype(new_bci))
-		if (!(locate(/obj/item/integrated_circuit) in new_bci))
-			balloon_alert(user, "bci has no circuit!")
-			return
+/obj/machinery/bci_implanter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/organ/cyberimp/bci))
+		return NONE
 
-		var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant
+	var/obj/item/organ/cyberimp/bci/new_bci = tool
+	if (!(locate(/obj/item/integrated_circuit) in new_bci))
+		balloon_alert(user, "bci has no circuit!")
+		return ITEM_INTERACT_BLOCKING
 
-		user.transferItemToLoc(weapon, src)
-		bci_to_implant = weapon
-
-		if (isnull(previous_bci_to_implant))
-			balloon_alert(user, "inserted bci")
-		else
-			balloon_alert(user, "swapped bci")
-			user.put_in_hands(previous_bci_to_implant)
-
-		return
-
-	return ..()
+	var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant
+	user.transferItemToLoc(new_bci, src)
+	bci_to_implant = new_bci
+	if (isnull(previous_bci_to_implant))
+		balloon_alert(user, "inserted bci")
+	else
+		balloon_alert(user, "swapped bci")
+		user.put_in_hands(previous_bci_to_implant)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bci_implanter/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	return isnull(occupant) ? default_deconstruction_screwdriver(user, tool) : NONE

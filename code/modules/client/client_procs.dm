@@ -1242,17 +1242,6 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
 	attempt_auto_fit_viewport()
 
-/client/verb/toggle_status_bar()
-	set name = "Toggle Status Bar"
-	set category = "OOC"
-
-	show_status_bar = !show_status_bar
-
-	if (show_status_bar)
-		winset(src, "mapwindow.status_bar", "is-visible=true")
-	else
-		winset(src, "mapwindow.status_bar", "is-visible=false")
-
 /// Clears the client's screen, aside from ones that opt out
 /client/proc/clear_screen()
 	for (var/object in screen)

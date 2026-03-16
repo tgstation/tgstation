@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Converted tram objects to item_interaction/tool_act"
