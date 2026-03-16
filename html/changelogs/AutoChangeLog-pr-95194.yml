@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscadd: "Spiders can now be tamed and ridden. They eat mouse, lizard, moth, fly, and worm meat and can only be tamed when they are spiderlings or young."
-  - code_imp: "Refactored tameable code to use TRAIT_TAMED instead of setting individual variables on each mob."
