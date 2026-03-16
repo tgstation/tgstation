@@ -80,8 +80,6 @@
 
 /obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(genetic)
-		return
 	if(sealed)
 		return FALSE
 	if(isprojectile(mover))
@@ -118,7 +116,6 @@
 
 /// Web made by geneticists, needs special handling to allow them to pass through their own webs
 /obj/structure/spider/stickyweb/genetic
-	genetic = TRUE
 	desc = "It's stringy, sticky, and came out of your coworker."
 	/// Mob with special permission to cross this web
 	var/mob/living/allowed_mob
@@ -132,19 +129,18 @@
 	allowed_mob = allowedmob
 	return ..()
 
-/obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(mover == allowed_mob)
-		return TRUE
-	else if(isliving(mover)) //we change the spider to not be able to go through here
-		if(mover.pulledby == allowed_mob)
-			return TRUE
-		if(prob(50))
-			stuck_react(mover)
-			return FALSE
-	else if(isprojectile(mover))
-		return prob(30)
-	return .
+/obj/structure/spider/stickyweb/genetic/on_entered(datum/source, atom/movable/victim, old_loc)
+	SIGNAL_HANDLER
+
+	if(!isliving(victim))
+		return
+	if(victim == allowed_mob)
+		return
+	if(victim.pulledby == allowed_mob)
+		return
+
+	if(prob(stuck_chance))
+		stuck_react(victim)
 
 /// Web with a 100% chance to intercept movement
 /obj/structure/spider/stickyweb/very_sticky
