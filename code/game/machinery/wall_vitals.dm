@@ -32,7 +32,7 @@
 	density = FALSE
 	layer = ABOVE_WINDOW_LAYER
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
-	use_power = IDLE_POWER_USE
+	use_power = NO_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	processing_flags = START_PROCESSING_MANUALLY
