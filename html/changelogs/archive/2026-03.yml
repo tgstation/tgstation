@@ -224,6 +224,8 @@
   - rscadd: Booze on the other hand will make a monkey even angrier (though only if
       they are already upset with someone)
   - bugfix: Pun Pun is Pun Pun again
+  - bugfix: Removes white pixel from airlock EA animation
+  - bugfix: Removes white pixel from firelock open animation
   SmArtKar:
   - refactor: Converted vehicles to use item_interaction/tool_acts
   - refactor: Rewrote dispenser bots to use item_interaction

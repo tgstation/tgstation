@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Removes white pixel from airlock EA animation"
-  - bugfix: "Removes white pixel from firelock open animation"
