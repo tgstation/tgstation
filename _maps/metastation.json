@@ -9,12 +9,33 @@
 		"whiteship": "whiteship_meta",
 		"emergency": "emergency_meta"
 	},
+	"traits": [
+		{
+			"Gravity": true
+		}
+	],
 	"job_changes": {
 		"Cook": {
 			"additional_cqc_areas": [
 				"/area/station/service/bar",
 				"/area/station/commons/lounge"
 			]
+		},
+		"Coroner": {
+			"total_positions": 0,
+			"spawn_positions": 0
+		},
+		"Paramedic": {
+			"total_positions": 0,
+			"spawn_positions": 0
+		},
+		"Psychologist": {
+			"total_positions": 0,
+			"spawn_positions": 0
+		},
+		"Bitrunner": {
+			"total_positions": 0,
+			"spawn_positions": 0
 		}
 	}
 }
