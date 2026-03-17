@@ -22,6 +22,9 @@
 	///The action verb to display to players
 	var/action = "processing"
 
+	/// What reagent should be produced when a boost chemical is replaced by the booster_reagent? todo: replace with industrial_waste
+	var/datum/reagent/waste_chemical = /datum/reagent/water
+
 	/// Cooldown associated with the sound played for collecting mining points.
 	COOLDOWN_DECLARE(sound_cooldown)
 	/// Cooldown associated with taking in boulds.
@@ -342,7 +345,7 @@
 
 	//if boulders are kept inside because there is no space to eject them, then they could be reprocessed, lets avoid that
 	if(!chosen_boulder.processed_by)
-		check_for_boosts()
+		var/post_boost_check = check_for_boosts() //if the proc returns that the machine is boosting in any way, we'll generate some waste_chemical after
 
 		//here we loop through the boulder's ores
 		var/list/rejected_mats = list()
@@ -391,7 +394,7 @@
 		breakdown_boulder(potential_boulder)
 		boulders_found = FALSE
 
-	//when the boulder is removed it plays sound and  displays a balloon alert. don't overlap when that happens
+	//when the boulder is removed it plays sound and displays a balloon alert. Don't overlap when that happens
 	if(boulders_found)
 		playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		balloon_alert_to_viewers(action)
