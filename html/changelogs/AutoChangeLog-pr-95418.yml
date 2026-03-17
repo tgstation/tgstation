@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - code_imp: "fixed a runtime when something other than a player breaks an airlock"
