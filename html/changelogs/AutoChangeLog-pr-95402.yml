@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Converted crossbreeds/anomacores/RND machinery to item_interaction"
