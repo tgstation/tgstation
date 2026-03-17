@@ -1,0 +1,5 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - qol: "Shuttle engine access requirement changed from CE access to Engineering access."
+  - qol: "Shuttle engine now comes in a flatpack box (it does not come with a multitool)"
