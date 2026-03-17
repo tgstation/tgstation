@@ -147,7 +147,7 @@
 	pixel_y = 22
 	alpha = 0
 	/// Who are we following?
-	var/atom/parent
+	var/atom/movable/parent
 	/// Datum which keeps us hanging out with our parent
 	var/datum/movement_detector/tracker
 	/// Type of projectile we fire
