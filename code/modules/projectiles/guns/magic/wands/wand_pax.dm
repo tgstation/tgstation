@@ -6,8 +6,8 @@
 	desc = "A wand which supernaturally connects victim and target, which renders both unable to fight and makes them feel a little better."
 	school = SCHOOL_RESTORATION
 	ammo_type = /obj/item/ammo_casing/magic/pax
-	icon_state = "revivewand"
-	base_icon_state = "revivewand"
+	icon_state = "peacewand"
+	base_icon_state = "peacewand"
 	fire_sound = 'sound/effects/emotes/kiss.ogg'
 	max_charges = 12
 
