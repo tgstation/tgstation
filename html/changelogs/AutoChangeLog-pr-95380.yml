@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Revenant abilities indicate if they are locked, and better indicate if they are currently usable"
-  - qol: "Revenants are no longer alerted that they have no gravity (they always have gravity)"
-  - refactor: "Refactored Revenant abilities, report any oddities with them."
