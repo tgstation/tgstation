@@ -1,5 +1,7 @@
 /// A single reagent
 /datum/reagent
+	abstract_type = /datum/reagent
+
 	/// datums don't have names by default
 	var/name = ""
 	/// nor do they have descriptions
@@ -95,6 +97,8 @@
 	var/fallback_icon_state
 	/// When ordered in a restaurant, what custom order do we create?
 	var/restaurant_order = /datum/custom_order/reagent/drink
+	/// How we interact with random generators
+	var/randomized_spawns = REAGENT_SPAWN_NO_RANDOM
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)

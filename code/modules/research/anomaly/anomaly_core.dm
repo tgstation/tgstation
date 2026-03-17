@@ -31,10 +31,9 @@
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return
 
-/obj/item/assembly/signaler/anomaly/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_ANALYZER)
-		to_chat(user, span_notice("Analyzing... [src]'s stabilized field is fluctuating along frequency [format_frequency(frequency)], code [code]."))
-	return ..()
+/obj/item/assembly/signaler/anomaly/analyzer_act(mob/living/user, obj/item/analyzer/tool)
+	to_chat(user, span_notice("Analyzing... [src]'s stabilized field is fluctuating along frequency [format_frequency(frequency)], code [code]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/assembly/signaler/anomaly/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
 	return NONE
