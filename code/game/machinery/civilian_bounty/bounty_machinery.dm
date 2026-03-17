@@ -149,6 +149,7 @@
 			active_count++
 			//Pay for the bounty with the ID's department funds.
 			SSblackbox.record_feedback("tally", "bounties_completed", 1, stack_item.type)
+			stack_item.claimed = TRUE
 			stack_item.on_claimed(inserted_scan_id)
 			// Unique case: A global bounty is completed, and you have the same bounty as a personal bounty,
 			// it will complete your personal one as well. It will however only increment the tracker by one.

@@ -49,7 +49,6 @@ GLOBAL_LIST_EMPTY(bounties_list)
 
 /// Called when this bounty is successfully claimed by the passed ID card
 /datum/bounty/proc/on_claimed(obj/item/card/id/id_card)
-	claimed = TRUE
 	return
 
 /// Called when this bounty is reset from the passed ID card, either from successful claim or from being replaced by another bounty
