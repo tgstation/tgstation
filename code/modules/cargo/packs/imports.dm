@@ -367,7 +367,7 @@
 
 /datum/supply_pack/imports/fan_upgrade
 	name = "Cargo Shuttle Upgrade: Air Renewal"
-	desc = "Do you or your coworkers have a bad habit of leaving your cargo shuttle shutter doors open to the cold, cold, vaccuum of space?\
+	desc = "Do you or your coworkers have a bad habit of leaving your cargo shuttle shutter doors open to the cold, cold, vaccuum of space? \
 		With this handy engineering retrofit, your shuttle will now be equip with a few handy plastic flaps and a subscription for air refills."
 	cost = CARGO_CRATE_VALUE * 40 // HELLA expensive.
 	order_flags = ORDER_NOT_DEPARTMENTAL
@@ -390,6 +390,6 @@
 	name = "Certificate of Shuttle Upgrade"
 	color = COLOR_LIGHT_ORANGE
 	desc = "A note from the Nanotrasen Mechanics Society detailing your new shuttle upgrade."
-	default_raw_text = "Hey boss. We got those tiny fans installed for ya, nothing to it really. You'll find 'em under the blast doors or the exits, \
+	default_raw_text = "Hey boss. We got those flaps installed for ya, nothing to it really. You'll find 'em over the blast doors or the exits, \
 		whichever the mechanics were able to get to. They're all set to go without any tweaking, so don't futz with them. Otherwise, you let us know \
 		if anything seems out of place."
