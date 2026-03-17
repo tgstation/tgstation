@@ -6,8 +6,8 @@
 	desc = "The incredible power of this wand transforms certain objects and surfaces into edible pizza."
 	school = SCHOOL_TRANSMUTATION
 	ammo_type = /obj/item/ammo_casing/magic/pizza
-	icon_state = "polywand"
-	base_icon_state = "polywand"
+	icon_state = "pizzawand"
+	base_icon_state = "pizzawand"
 	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	max_charges = 20
 
