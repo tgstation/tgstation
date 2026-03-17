@@ -40,7 +40,7 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            return JSON.parse("${{steps.stale.outputs.staled-issues-prs}}").filter(issue => !!issue.pull_request)
+            return JSON.parse('${{steps.stale.outputs.staled-issues-prs}}').filter(issue => !!issue.pull_request)
 
   announce:
     runs-on: ubuntu-24.04
