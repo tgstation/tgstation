@@ -250,5 +250,10 @@
   - refactor: Converted autosurgeons/robot bodyparts/dissection notes to item_interaction
   - refactor: Converted crossbreeds/anomacores/RND machinery to item_interaction
   - refactor: Converted tram objects to item_interaction/tool_act
+  kittysmooch:
+  - rscadd: 'Added new sprites for baseball bats, metal bats, the homerun bat, the
+      cricket bat, and the baseball itself!
+
+      :cl:'
   lelandkemble:
   - bugfix: No more infinite free grenade launchers for nukeops
