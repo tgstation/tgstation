@@ -8,7 +8,7 @@
  */
 SUBSYSTEM_DEF(area_contents)
 	name = "Area Contents"
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	runlevels = RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	var/list/currentrun
 	var/list/area/marked_for_clearing = list()

@@ -137,8 +137,7 @@ DEFINE_BITFIELD(disease_flags, list(
 	"CURABLE" = CURABLE,
 ))
 
-/// controllers get to own the flags varname apperantly go off or whatever
-DEFINE_BITFIELD(flags, list(
+DEFINE_BITFIELD(ss_flags, list(
 	"SS_NO_INIT" = SS_NO_INIT,
 	"SS_NO_FIRE" = SS_NO_FIRE,
 	"SS_BACKGROUND" = SS_BACKGROUND,

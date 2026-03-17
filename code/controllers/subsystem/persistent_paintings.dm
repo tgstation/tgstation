@@ -93,7 +93,7 @@
 
 SUBSYSTEM_DEF(persistent_paintings)
 	name = "Persistent Paintings"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 	dependencies = list(
 		/datum/controller/subsystem/persistence,
 	)
