@@ -208,3 +208,80 @@
   - bugfix: Chem scanning a maintenance pill removes the achievement value.
   timothymtorres:
   - balance: Sticky spider webs now drain stamina when mobs enter the turf
+2026-03-16:
+  ArcaneMusic:
+  - bugfix: The cargo shuttle can no longer qdel your ghost mob.
+  Melbert:
+  - qol: Revenant abilities indicate if they are locked, and better indicate if they
+      are currently usable
+  - qol: Revenants are no longer alerted that they have no gravity (they always have
+      gravity)
+  - refactor: Refactored Revenant abilities, report any oddities with them.
+  - rscadd: Cannabis will calm down an angry monkey, eventually even turning them
+      docile (not pacifist!) temporarily
+  - rscadd: Nicotine will also calm down an angry monkey, albiet slower than Cannabis
+      and will never turn them entirely docile
+  - rscadd: Booze on the other hand will make a monkey even angrier (though only if
+      they are already upset with someone)
+  - bugfix: Pun Pun is Pun Pun again
+  - bugfix: Removes white pixel from airlock EA animation
+  - bugfix: Removes white pixel from firelock open animation
+  SmArtKar:
+  - refactor: Converted vehicles to use item_interaction/tool_acts
+  - refactor: Rewrote dispenser bots to use item_interaction
+  - refactor: Rewrote integrated circuits to use item_interaction and screwdriver_act
+  - refactor: Converted circuit printers/duplicators to item_interaction
+  - refactor: Rewrote BCI implanters to use item_interaction
+  - refactor: Converted bot construction to item_interaction
+  timothymtorres:
+  - rscadd: Spiders can now be tamed and ridden. They eat mouse, lizard, moth, fly,
+      and worm meat and can only be tamed when they are spiderlings or young.
+  - code_imp: Refactored tameable code to use TRAIT_TAMED instead of setting individual
+      variables on each mob.
+2026-03-17:
+  Melbert:
+  - qol: If your pay gets docked by Central Command, it is noted in audit and transaction
+      log
+  - qol: If your pay gets docked by Central Command, you will always be notified,
+      regardless of bank alert preference
+  - admin: Dock Pay smite supports negatives better (for an easy way to give someone
+      money)
+  SmArtKar:
+  - refactor: Converted autosurgeons/robot bodyparts/dissection notes to item_interaction
+  - refactor: Converted crossbreeds/anomacores/RND machinery to item_interaction
+  - refactor: Converted tram objects to item_interaction/tool_act
+  kittysmooch:
+  - rscadd: 'Added new sprites for baseball bats, metal bats, the homerun bat, the
+      cricket bat, and the baseball itself!
+
+      :cl:'
+  lelandkemble:
+  - bugfix: No more infinite free grenade launchers for nukeops
+2026-03-18:
+  Absolucy:
+  - qol: Watcher Hatchling projectiles should no longer hit people buckled to you,
+      or anything you're buckled to, i.e a raptor mount.
+  ArcaneMusic:
+  - bugfix: The gas compressor once again can perform disk operations.
+  Ezel:
+  - qol: Shuttle engine access requirement changed from CE access to Engineering access.
+  - qol: Shuttle engine now comes in a flatpack box (it does not come with a multitool)
+  Generalcamo:
+  - rscadd: Added `balloon_alert_to_hearers`, which is similar to `balloon_alert_to_viewers`
+      but for audible things.
+  - qol: Existing instances of `balloon_alert_to_viewers` which covered sounds, now
+      uses `balloon_alert_to_hearers`.
+  Iajret:
+  - bugfix: Fixed runtimes from buckling basic mobs to operating tables
+  - bugfix: free_operation is now applied to animals when you buckle them to operating
+      tables
+  - bugfix: This in turn fixed vitals monitors being stuck always displaying basic
+      mob's health if you try to buckle one to operating table
+  Melbert:
+  - bugfix: Fix cargo ordering app (on pdas and modular computers) from being unable
+      to order some things
+  TealSeer:
+  - code_imp: added a unit test macro for running the same test multiple times
+  lelandkemble:
+  - code_imp: fixed a runtime when something other than a player breaks an airlock
+  - bugfix: Flux & Gravity anomaly cores work with assembly activation
