@@ -52,25 +52,13 @@
 	)
 
 	/// Used to determine the 1st name of the slot machine [adjective] [noun]
-	var/list/slot_adjectives = list(
-		"Atomic", "Blazing", "Bonus", "Cosmic", "Diamond",
-		"Double", "Golden", "Grand", "Greedy", "Honking",
-		"Jumbo", "Lucky", "Mega", "Platinum", "Robust",
-		"Royal", "Spess", "Super", "Triple", "Turbo",
-		"Wild"
-	)
-
+	var/list/slot_adjectives = list("Blazing", "Bonus", "Grand", "Greedy", "Jumbo", "Platinum", "Lucky", "Mega", "Robust", "Super", "Turbo", "Wild")
 	/// Used to determine the 2nd name of the slot machine [adjective] [noun]
-	var/slot_nouns = list(
-		"Bankroll", "Bonanza", "Bounty", "Cashout", "Cherries",
-		"Fortune", "Jackpot", "Luck", "Moolah", "Payday",
-		"Reels", "Riches", "Sevens", "Spinner", "Spins",
-		"Strike", "Treasure", "Windfall"
-	)
+	var/list/slot_nouns = list("Bankroll", "Cashout", "Fortune", "Jackpot", "Luck", "Money", "Payday", "Reels", "Riches", "Spinner", "Spins", "Strike", "Treasure", "Spess")
 
 	/// The symbol typepath that pays out the jackpot when it lines up five wide
 	/// on the middle row. MUST also be present in symbol_paths.
-	var/jackpot_path = /obj/item/coin/gold
+	var/jackpot_path = /obj/item/rupee
 
 	/// The symbol typepath that arms a flashbang when it lines up five wide on the
 	/// middle row. MUST also be present in symbol_paths. Set to null to disable.
@@ -523,145 +511,211 @@
 
 /obj/machinery/computer/slot_machine/command
 	name = "command slot machine"
-	desc = "Gambling for the antisocial head of staff. The house always wins. You are the house."
+	desc = "The handle is made of solid gold, and the screen is polished with the tears of overworked assistants."
 	theme_color = RADIO_COLOR_COMMAND
 	symbol_paths = list(
 		/obj/item/disk/nuclear,
-		/obj/item/megaphone,
+		/obj/item/clothing/accessory/medal/gold,
 		/obj/item/hand_tele,
-		/obj/item/clothing/head/hats/caphat,
+		/mob/living/basic/pet/dog/corgi,
 		/obj/item/card/id/advanced/gold,
-		/obj/item/melee/baton/telescopic,
-		/obj/item/grenade/flashbang,
+		/obj/item/melee/sabre,
+		/obj/item/grenade/syndieminibomb
 	)
-	jackpot_path = /obj/item/disk/nuclear
-	bomb_path = /obj/item/grenade/flashbang
+	jackpot_path = /obj/item/clothing/accessory/medal/gold
+	bomb_path = /obj/item/grenade/syndieminibomb
+
+/obj/machinery/computer/slot_machine/command/Initialize(mapload)
+	slot_adjectives += list("Royal", "Regal", "Golden", "Certified", "Authorized", "Captain's", "Glorious")
+	slot_nouns += list("Medal", "Ransom", "Charter", "Authority", "Command", "Nanotrasen")
+	. = ..()
 
 /obj/machinery/computer/slot_machine/security
 	name = "security slot machine"
-	desc = "Gambling for the antisocial officer. Losing is a crime. Winning is also a crime."
+	desc = "Repurposed from a confiscated syndicate gambling ring. Losing is a crime. Winning is also a crime."
 	theme_color = RADIO_COLOR_SECURITY
 	symbol_paths = list(
-		/obj/item/food/donut/plain,
-		/obj/item/restraints/handcuffs,
-		/obj/item/melee/baton/security,
-		/obj/item/assembly/flash/handheld,
+		/obj/item/food/donut/choco,
+		/mob/living/simple_animal/bot/secbot/beepsky,
+		/obj/item/melee/baton/security/loaded,
+		/obj/item/gun/energy/disabler,
 		/obj/item/clothing/head/helmet/sec,
-		/obj/item/clothing/glasses/hud/security,
-		/obj/item/grenade/flashbang,
+		/obj/item/clothing/glasses/hud/security/sunglasses,
+		/obj/item/grown/bananapeel
 	)
-	jackpot_path = /obj/item/food/donut/plain
-	bomb_path = /obj/item/grenade/flashbang
+	jackpot_path = /obj/item/food/donut/choco
+	bomb_path = /obj/item/grown/bananapeel
+
+/obj/machinery/computer/slot_machine/security/Initialize(mapload)
+	slot_adjectives += list("Stunned", "Flashed", "Confiscated", "Loyal", "Arrested")
+	slot_nouns += list("Baton", "Donut", "Contraband", "Brig", "Security")
+	. = ..()
 
 /obj/machinery/computer/slot_machine/medical
 	name = "medical slot machine"
-	desc = "Gambling for the antisocial doctor. Side effects may include crippling debt."
+	desc = "A miracle of modern medicine! It cures boredom, but causes acute financial necrosis."
 	theme_color = RADIO_COLOR_MEDICAL
 	symbol_paths = list(
 		/obj/item/storage/medkit/regular,
 		/obj/item/healthanalyzer,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/scalpel,
-		/obj/item/hemostat,
-		/obj/item/stack/medical/wrap/gauze,
-		/obj/item/grenade/flashbang,
+		/obj/item/clothing/glasses/hud/health,
+		/mob/living/basic/pet/cat/runtime,
+		/obj/item/defibrillator/loaded,
+		/obj/item/clothing/neck/stethoscope,
+		/obj/machinery/syndicatebomb,
 	)
-	jackpot_path = /obj/item/storage/medkit/regular
-	bomb_path = /obj/item/grenade/flashbang
+	jackpot_path = /obj/item/clothing/neck/stethoscope
+	bomb_path = /obj/machinery/syndicatebomb
+
+/obj/machinery/computer/slot_machine/medical/Initialize(mapload)
+	slot_adjectives += list("Mutated", "Cloned", "Spliced", "Overdosed", "Infectious", "Healing", "Husked")
+	slot_nouns += list("Clone", "Medkit", "Defib", "Patient", "Doctor", "Cure")
+	. = ..()
 
 /obj/machinery/computer/slot_machine/engineering
 	name = "engineering slot machine"
-	desc = "Gambling for the antisocial engineer. Warranty void if delaminated."
+	desc = "Gambling for those who think wearing insulated gloves makes them invincible. Ground yourself before playing."
 	theme_color = RADIO_COLOR_ENGINEERING
 	symbol_paths = list(
 		/obj/item/storage/toolbox/mechanical,
-		/obj/item/construction/rcd,
+		/obj/item/blueprints,
 		/obj/item/clothing/gloves/color/yellow,
-		/obj/item/wrench,
-		/obj/item/weldingtool,
-		/obj/item/multitool,
-		/obj/item/grenade/flashbang,
+		/obj/item/clothing/head/utility/welding,
+		/obj/item/clothing/glasses/meson,
+		/mob/living/basic/parrot/poly,
+		/obj/singularity,
 	)
-	jackpot_path = /obj/item/storage/toolbox/mechanical
-	bomb_path = /obj/item/grenade/flashbang
+	jackpot_path = /obj/item/blueprints
+	bomb_path = /obj/singularity
+
+/obj/machinery/computer/slot_machine/engineering/Initialize(mapload)
+	slot_adjectives += list("Supercharged", "Pressurized", "Radioactive", "Overloaded", "Delaminating", "Insulated")
+	slot_nouns += list("Toolbox", "Emitter", "Supermatter", "Engineer", "SMES", "Radiation")
+	. = ..()
+
+/obj/machinery/computer/slot_machine/cargo
+	name = "cargo slot machine"
+	desc = "Every credit spent here is a credit that won't be spent on 'useless' things, like food or medicine."
+	theme_color = RADIO_COLOR_SUPPLY
+	symbol_paths = list(
+		/obj/item/bounty_cube,
+		/obj/structure/closet/crate,
+		/mob/living/simple_animal/bot/mulebot,
+		/mob/living/basic/sloth,
+		/obj/machinery/materials_market,
+		/obj/item/stamp/granted,
+		/obj/item/suspiciousphone,
+	)
+	jackpot_path = /obj/item/stamp/granted
+	bomb_path = /obj/item/suspiciousphone
+
+/obj/machinery/computer/slot_machine/cargo/Initialize(mapload)
+	slot_adjectives += list("Logistical", "Express", "Tax-Free", "Smuggled", "Stolen", "Overdue", "Expedited", "Crated", "Subsidized", "Manifested")
+	slot_nouns += list("Bounty", "Crate", "Manifest", "Quartermaster", "MULE", "Stamp", "Logistics", "Profit", "Deficit", "Shuttle")
+	. = ..()
 
 /obj/machinery/computer/slot_machine/service
 	name = "service slot machine"
-	desc = "Gambling for the antisocial bartender. Tips are not included. Tips are never included."
+	desc = "The handle is a repurposed rolling pin. Every loss is just another ingredient for the daily special."
 	theme_color = RADIO_COLOR_SERVICE
 	symbol_paths = list(
-		/obj/item/reagent_containers/cup/glass/drinkingglass,
-		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
-		/obj/item/reagent_containers/cup/glass/bottle/beer,
-		/obj/item/mop,
-		/obj/item/food/grown/banana,
-		/obj/item/bikehorn,
-		/obj/item/grenade/flashbang,
+		/obj/item/clothing/head/hats/tophat,
+		/obj/item/reagent_containers/cup/watering_can,
+		/obj/item/clothing/shoes/galoshes,
+		/mob/living/basic/goat/pete,
+		/obj/item/book/manual/chef_recipes,
+		/obj/item/kitchen/rollingpin,
+		/obj/item/seeds/random,
 	)
-	jackpot_path = /obj/item/reagent_containers/cup/glass/drinkingglass
-	bomb_path = /obj/item/grenade/flashbang
+	jackpot_path = /obj/item/seeds/random
+	bomb_path = /mob/living/basic/goat/pete
+
+/obj/machinery/computer/slot_machine/service/Initialize(mapload)
+	slot_adjectives += list("Fermented", "Garnished", "Seasoned", "Tipsy", "Botanical", "Cleaned", "Organic", "Culinary", "Refreshing", "Brimming")
+	slot_nouns += list("Recipe", "Garnish", "Cocktail", "Tip", "Harvest", "Entree", "Dish", "Platter", "Scrubber", "Janitor", "Waiter", "Chef")
+	. = ..()
 
 /obj/machinery/computer/slot_machine/research
 	name = "research slot machine"
-	desc = "Gambling for the antisocial scientist. Statistically speaking, you will lose."
+	desc = "The reels seem to exist in multiple dimensions at once. It still takes your money in all of them."
 	theme_color = RADIO_COLOR_SCIENCE
 	symbol_paths = list(
-		/obj/item/slime_extract/grey,
-		/obj/item/clothing/glasses/science,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/stock_parts/capacitor,
-		/obj/item/analyzer,
-		/obj/item/disk/tech_disk,
-		/obj/item/grenade/flashbang,
+		/obj/item/stack/sheet/mineral/gold,
+		/obj/item/stack/sheet/mineral/silver,
+		/obj/item/stack/sheet/mineral/uranium,
+		/obj/item/stack/sheet/mineral/plasma,
+		/obj/item/stack/sheet/mineral/diamond,
+		/obj/item/clothing/mask/facehugger/lamarr,
+		/obj/item/gibtonite,
 	)
-	jackpot_path = /obj/item/slime_extract/grey
-	bomb_path = /obj/item/grenade/flashbang
+	jackpot_path = /obj/item/stack/sheet/mineral/diamond
+	bomb_path = /obj/item/gibtonite
+
+/obj/machinery/computer/slot_machine/research/Initialize(mapload)
+	slot_adjectives += list("Atomic", "Bluespace", "Cosmic", "Golden", "Diamond", "Silver", "Uranium", "Quantum", "Phazon", "Anomalous", "Plasma", "Experimental", "Robotic")
+	slot_nouns += list("Anomaly", "Artifact", "Slime", "Extract", "Circuit", "Node", "Discovery", "Explosion")
+	. = ..()
 
 /obj/machinery/computer/slot_machine/clown
-	desc = "Gambling is fun. Smells faintly of banana and regret. HONK!"
+	desc = "Gambling is fun! Smells like bananas, wet shoes, and regret. HONK!"
 	theme_color = "#ff47a5"
 	symbol_paths = list(
 		/obj/item/food/grown/banana,
-		/obj/item/bikehorn,
-		/obj/item/food/pie/cream,
-		/obj/item/clothing/shoes/clown_shoes,
+		/obj/item/instrument/bikehorn,
+		/obj/item/card/id/advanced/rainbow,
+		/obj/vehicle/sealed/mecha/honker,
 		/obj/item/clothing/mask/gas/clown_hat,
-		/obj/item/reagent_containers/spray/waterflower,
-		/obj/item/grenade/chem_grenade/glitter/pink,
+		/obj/item/storage/backpack/clown,
+		/obj/item/restraints/handcuffs,
 	)
-	jackpot_path = /obj/item/food/grown/banana
-	bomb_path = /obj/item/grenade/chem_grenade/glitter/pink
+	jackpot_path = /obj/vehicle/sealed/mecha/honker
+	bomb_path = /obj/item/restraints/handcuffs
+
+/obj/machinery/computer/slot_machine/clown/Initialize(mapload)
+	slot_adjectives += list("Honking", "Slippery", "Pranked", "Squeaky", "Hilarious", "Giggling")
+	slot_nouns += list("Banana", "Peel", "Prank", "Joke", "Punchline", "Clown", "Candy")
+	. = ..()
 
 /obj/machinery/computer/slot_machine/mime
-	desc = "Gambling is boring. It is completely silent."
+	desc = "Gambling is a silent tragedy. The machine stares back at you with a cold indifference."
 	theme_color = "#7c7c7c"
 	symbol_paths = list(
-		/obj/item/clothing/head/beret,
+		/obj/item/clothing/head/beret/frenchberet,
 		/obj/item/clothing/mask/gas/mime,
 		/obj/item/food/baguette,
 		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
 		/obj/item/clothing/gloves/color/white,
-		/obj/item/clothing/under/rank/civilian/mime,
-		/obj/item/grenade/flashbang,
+		/obj/item/storage/backpack/mime,
+		/obj/item/restraints/handcuffs,
 	)
-	jackpot_path = /obj/item/clothing/head/beret
-	bomb_path = /obj/item/grenade/flashbang
+	jackpot_path = /obj/item/food/baguette
+	bomb_path = /obj/item/restraints/handcuffs
+
+/obj/machinery/computer/slot_machine/mime/Initialize(mapload)
+	slot_adjectives += list("Silent", "Noiseless", "Tongueless", "Transparent", "Unspeakable", "Voiceless", "Mysterious", "Quiet", "Hushed", "Mute", "Invisible", "Imaginary", "Untouchable")
+	slot_nouns += list("Silence", "Mime", "Tragedy", "Sorrow", "Wonder", "Baguette")
+	. = ..()
 
 /obj/machinery/computer/slot_machine/syndicate
 	name = "syndicate slot machine"
-	desc = "Gambling for the antisocial operative. The house always wins. The house is Nanotrasen. Destroy the house."
+	desc = "Gambling for the operative who's already lost everything. Death to Nanotrasen, and death to your wallet."
 	theme_color = RADIO_COLOR_SYNDICATE
 	symbol_paths = list(
+		/obj/item/disk/nuclear,
 		/obj/item/card/emag,
-		/obj/item/melee/energy/sword,
 		/obj/item/storage/toolbox/syndicate,
 		/obj/item/clothing/mask/gas/syndicate,
 		/obj/item/soap/syndie,
-		/obj/item/toy/plush/nukeplushie,
-		/obj/item/grenade/c4,
+		/obj/machinery/syndicatebomb,
+		/obj/item/restraints/handcuffs,
 	)
-	jackpot_path = /obj/item/card/emag
-	bomb_path = /obj/item/grenade/c4
+	jackpot_path = /obj/item/disk/nuclear
+	bomb_path = /obj/item/restraints/handcuffs
+
+/obj/machinery/computer/slot_machine/syndicate/Initialize(mapload)
+	slot_adjectives += list("Emagged", "Covert", "Nuclear", "Suspicious", "Bloody", "Syndie", "Sabotaged", "Clandestine", "Illicit", "Traitorous")
+	slot_nouns += list("Telecrystal", "Uplink", "Bomb", "Operative", "Disk", "Nuke", "Syndicate", "Traitor")
+	. = ..()
 
 #undef SPIN_PRICE
 #undef WINNING_NOTHING
