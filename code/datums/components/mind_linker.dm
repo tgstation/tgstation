@@ -22,6 +22,8 @@
 	var/speech_action_background_icon_state = "bg_alien"
 	/// The border icon state for the speech action handed out.
 	var/speech_action_overlay_state = "bg_alien_border"
+	/// Whether messages should show a balloon alert or not.
+	var/show_balloon_alert = FALSE
 	/// The master's speech action. The owner of the link shouldn't lose this as long as the link remains.
 	VAR_FINAL/datum/action/innate/linked_speech/master_speech
 	/// An assoc list of [mob/living]s to [datum/action/innate/linked_speech]s. All the mobs that are linked to our network.
@@ -38,6 +40,7 @@
 	// Optional
 	signals_which_destroy_us,
 	datum/callback/post_unlink_callback,
+	show_balloon_alert,
 )
 
 	if(!isliving(parent))
@@ -55,6 +58,8 @@
 		src.signals_which_destroy_us = signals_which_destroy_us
 	if(post_unlink_callback)
 		src.post_unlink_callback = post_unlink_callback
+	if(isnull(show_balloon_alert))
+		src.show_balloon_alert = show_balloon_alert
 
 	master_speech = new(src)
 	master_speech.Grant(owner)
@@ -156,6 +161,7 @@
 	// Optional
 	signals_which_destroy_us,
 	datum/callback/post_unlink_callback,
+	show_balloon_alert,
 	// Optional for this subtype
 	link_message,
 	unlink_message,
@@ -258,6 +264,8 @@
 	for(var/mob/living/recipient as anything in all_who_can_hear)
 		var/avoid_highlighting = (recipient == owner) || (recipient == linker_parent)
 		to_chat(recipient, formatted_message, type = MESSAGE_TYPE_RADIO, avoid_highlighting = avoid_highlighting)
+		if(linker.show_balloon_alert && recipient != owner)
+			recipient.balloon_alert(recipient, "you hear a voice from your [linker.network_name]")
 
 	for(var/mob/recipient as anything in GLOB.dead_mob_list)
 		to_chat(recipient, "[FOLLOW_LINK(recipient, owner)] [formatted_message]", type = MESSAGE_TYPE_RADIO)
