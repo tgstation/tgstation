@@ -28,8 +28,10 @@
 	icon_screen = "slots_screen"
 	density = TRUE
 	circuit = /obj/item/circuitboard/computer/slot_machine
-	light_color = LIGHT_COLOR_BROWN
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON // don't need to be literate to play slots
+	greyscale_config = /datum/greyscale_config/slot_machine
+	light_color = CIRCUIT_COLOR_GENERIC
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	var/money = 3000 // How much money it has CONSUMED
 	var/plays = 0
 	var/working = FALSE
@@ -524,6 +526,8 @@
 	)
 	jackpot_path = /obj/item/clothing/accessory/medal/gold
 	trap_path = /obj/item/grenade/syndieminibomb
+	light_color = CIRCUIT_COLOR_COMMAND
+	greyscale_colors = CIRCUIT_COLOR_COMMAND
 
 /obj/machinery/computer/slot_machine/command/Initialize(mapload)
 	slot_adjectives += list("Royal", "Regal", "Golden", "Certified", "Authorized", "Captain's", "Glorious")
@@ -545,6 +549,8 @@
 	)
 	jackpot_path = /obj/item/food/donut/choco
 	trap_path = /obj/item/grown/bananapeel
+	light_color = CIRCUIT_COLOR_SECURITY
+	greyscale_colors = CIRCUIT_COLOR_SECURITY
 
 /obj/machinery/computer/slot_machine/security/Initialize(mapload)
 	slot_adjectives += list("Stunned", "Flashed", "Confiscated", "Loyal", "Arrested")
@@ -566,6 +572,8 @@
 	)
 	jackpot_path = /obj/item/clothing/neck/stethoscope
 	trap_path = /obj/machinery/syndicatebomb
+	light_color = CIRCUIT_COLOR_MEDICAL
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 
 /obj/machinery/computer/slot_machine/medical/Initialize(mapload)
 	slot_adjectives += list("Mutated", "Cloned", "Spliced", "Overdosed", "Infectious", "Healing", "Husked")
@@ -587,6 +595,8 @@
 	)
 	jackpot_path = /obj/item/blueprints
 	trap_path = /obj/singularity
+	light_color = CIRCUIT_COLOR_ENGINEERING
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 
 /obj/machinery/computer/slot_machine/engineering/Initialize(mapload)
 	slot_adjectives += list("Supercharged", "Pressurized", "Radioactive", "Overloaded", "Delaminating", "Insulated")
@@ -608,6 +618,8 @@
 	)
 	jackpot_path = /obj/item/stamp/granted
 	trap_path = /obj/item/suspiciousphone
+	light_color = CIRCUIT_COLOR_SUPPLY
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 
 /obj/machinery/computer/slot_machine/cargo/Initialize(mapload)
 	slot_adjectives += list("Logistical", "Express", "Tax-Free", "Smuggled", "Stolen", "Overdue", "Expedited", "Crated", "Subsidized", "Manifested")
@@ -629,6 +641,8 @@
 	)
 	jackpot_path = /obj/item/seeds/random
 	trap_path = /mob/living/basic/goat/pete
+	light_color = CIRCUIT_COLOR_SERVICE
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
 
 /obj/machinery/computer/slot_machine/service/Initialize(mapload)
 	slot_adjectives += list("Fermented", "Garnished", "Seasoned", "Tipsy", "Botanical", "Cleaned", "Organic", "Culinary", "Refreshing", "Brimming")
@@ -650,6 +664,8 @@
 	)
 	jackpot_path = /obj/item/stack/sheet/mineral/diamond
 	trap_path = /obj/item/gibtonite
+	light_color = CIRCUIT_COLOR_SCIENCE
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 
 /obj/machinery/computer/slot_machine/research/Initialize(mapload)
 	slot_adjectives += list("Atomic", "Bluespace", "Cosmic", "Golden", "Diamond", "Silver", "Uranium", "Quantum", "Phazon", "Anomalous", "Plasma", "Experimental", "Robotic")
@@ -670,6 +686,8 @@
 	)
 	jackpot_path = /obj/vehicle/sealed/mecha/honker
 	trap_path = /obj/item/restraints/handcuffs
+	light_color = COLOR_LIGHT_PINK
+	greyscale_colors = COLOR_LIGHT_PINK
 
 /obj/machinery/computer/slot_machine/clown/Initialize(mapload)
 	slot_adjectives += list("Honking", "Slippery", "Pranked", "Squeaky", "Hilarious", "Giggling")
@@ -690,6 +708,8 @@
 	)
 	jackpot_path = /obj/item/food/baguette
 	trap_path = /obj/item/restraints/handcuffs
+	light_color = COLOR_SLIME_METAL
+	greyscale_colors = COLOR_SLIME_METAL
 
 /obj/machinery/computer/slot_machine/mime/Initialize(mapload)
 	slot_adjectives += list("Silent", "Noiseless", "Tongueless", "Transparent", "Unspeakable", "Voiceless", "Mysterious", "Quiet", "Hushed", "Mute", "Invisible", "Imaginary", "Untouchable")
@@ -711,6 +731,8 @@
 	)
 	jackpot_path = /obj/machinery/nuclearbomb
 	trap_path = /obj/item/restraints/handcuffs
+	light_color = COLOR_SYNDIE_RED
+	greyscale_colors = COLOR_SYNDIE_RED
 
 /obj/machinery/computer/slot_machine/syndicate/Initialize(mapload)
 	slot_adjectives += list("Emagged", "Covert", "Nuclear", "Suspicious", "Bloody", "Syndie", "Sabotaged", "Clandestine", "Illicit", "Traitorous")
