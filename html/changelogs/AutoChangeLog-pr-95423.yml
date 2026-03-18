@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fix cargo ordering app (on pdas and modular computers) from being unable to order some things"
