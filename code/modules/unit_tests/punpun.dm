@@ -3,6 +3,3 @@
 /datum/unit_test/punpun_name/Run()
 	var/mob/living/carbon/human/species/monkey/punpun/test/punpun = EASY_ALLOCATE()
 	TEST_ASSERT_EQUAL(punpun.name, /mob/living/carbon/human/species/monkey/punpun/test::name, "Pun Pun did not have [punpun.p_their()] name set")
-
-/mob/living/carbon/human/species/monkey/punpun/test
-	keep_punpun_name = TRUE

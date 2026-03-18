@@ -39,8 +39,6 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	unique_name = FALSE
 	use_random_name = FALSE
 	ai_controller = /datum/ai_controller/monkey/pun_pun
-	/// If FALSE, Pun Pun's name can be randomized into a monkey adjacent rare name
-	var/keep_punpun_name = FALSE
 	/// If we had one of the rare names in a past life
 	var/ancestor_name
 	/// The number of times Pun Pun has died since he was last gibbed
@@ -132,17 +130,18 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 /mob/living/carbon/human/species/monkey/punpun/proc/give_special_name()
 	var/name_to_use = initial(name)
 
-	if(!keep_punpun_name)
-		if(ancestor_name)
-			name_to_use = ancestor_name
-			if(ancestor_chain > 1)
-				name_to_use += " \Roman[ancestor_chain]"
+#ifndef UNIT_TESTS
+	if(ancestor_name)
+		name_to_use = ancestor_name
+		if(ancestor_chain > 1)
+			name_to_use += " \Roman[ancestor_chain]"
 
-		else if(prob(10))
-			name_to_use = pick(list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky"))
-			if(name_to_use == "Furious George")
-				qdel(ai_controller)
-				ai_controller = new /datum/ai_controller/monkey/angry(src) //hes always mad
+	else if(prob(10))
+		name_to_use = pick(list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky"))
+		if(name_to_use == "Furious George")
+			qdel(ai_controller)
+			ai_controller = new /datum/ai_controller/monkey/angry(src) //hes always mad
+#endif
 
 	fully_replace_character_name(real_name, name_to_use)
 
