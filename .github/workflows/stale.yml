@@ -45,7 +45,7 @@ jobs:
                        .map(pr => ({
                           title: pr.title,
                           number: pr.number,
-                          url: pr.pull_request.html_url,
+                          html_url: pr.pull_request.html_url,
                       }));
 
   announce:
@@ -76,4 +76,4 @@ jobs:
           show_author: false
           avatar_url: https://avatars.githubusercontent.com/u/1363778?s=200&v=4
           username: GitHub
-          title_url: "${{ matrix.pull_request.url }}"
+          title_url: "${{ matrix.pull_request.html_url }}"
