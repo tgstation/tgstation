@@ -99,6 +99,8 @@
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
 
+	name = make_machine_name()
+
 	// Sanity: warn if a subtype misconfigures its special symbols
 	if(jackpot_path && !(jackpot_path in symbol_paths))
 		stack_trace("[type] has jackpot_path [jackpot_path] not present in symbol_paths!")
@@ -118,6 +120,13 @@
 			var/obj/item/coin/C = new cointype
 			coinvalues["[cointype]"] = C.get_item_credit_value()
 			qdel(C) //Sigh
+
+/// Generates a randomised slot name by pulling an adjective and a noun
+/// Produces things like "Lucky Sevens", "Robust Payday", "Honking Bonanza", etc.
+/obj/machinery/computer/slot_machine/proc/make_machine_name()
+	var/adjective = pick(slot_adjectives)
+	var/noun = pick(slot_nouns)
+	return "[adjective] [noun]"
 
 /// Builds symbol_data from symbol_paths. Each entry contains the stringified
 /// typepath (as a unique id) plus the name/icon/icon_state pulled via the :: operator.
