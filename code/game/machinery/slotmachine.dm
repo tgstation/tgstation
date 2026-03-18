@@ -62,7 +62,7 @@
 
 	/// The symbol typepath that arms a flashbang when it lines up five wide on the
 	/// middle row. MUST also be present in symbol_paths. Set to null to disable.
-	var/bomb_path = /obj/item/grenade/flashbang
+	var/trap_path = /obj/item/grenade/flashbang
 
 	/// Hex colour string used to theme the tgui banner, spin button, and reel
 	/// highlight. Null leaves the stock rainbow gradient in place.
@@ -92,8 +92,8 @@
 	// Sanity: warn if a subtype misconfigures its special symbols
 	if(jackpot_path && !(jackpot_path in symbol_paths))
 		stack_trace("[type] has jackpot_path [jackpot_path] not present in symbol_paths!")
-	if(bomb_path && !(bomb_path in symbol_paths))
-		stack_trace("[type] has bomb_path [bomb_path] not present in symbol_paths!")
+	if(trap_path && !(trap_path in symbol_paths))
+		stack_trace("[type] has trap_path [trap_path] not present in symbol_paths!")
 
 	// Build the UI-friendly symbol data from our typepaths
 	build_symbol_data()
@@ -347,7 +347,7 @@
 	var/linelength = get_lines()
 	var/did_player_win = TRUE
 
-	if(bomb_path && check_jackpot(bomb_path))
+	if(trap_path && check_jackpot(trap_path))
 		var/obj/item/grenade/flashbang/bang = new(get_turf(src))
 		bang.arm_grenade(null, 1 SECONDS)
 
@@ -496,7 +496,7 @@
 // ==========================================================================
 // Department-themed slot machine variants
 //
-// Each subtype only needs to override symbol_paths / jackpot_path / bomb_path /
+// Each subtype only needs to override symbol_paths / jackpot_path / trap_path /
 // theme_color. Odds and payouts are identical to the base machine — this is
 // purely cosmetic flavour.
 //
@@ -523,7 +523,7 @@
 		/obj/item/grenade/syndieminibomb
 	)
 	jackpot_path = /obj/item/clothing/accessory/medal/gold
-	bomb_path = /obj/item/grenade/syndieminibomb
+	trap_path = /obj/item/grenade/syndieminibomb
 
 /obj/machinery/computer/slot_machine/command/Initialize(mapload)
 	slot_adjectives += list("Royal", "Regal", "Golden", "Certified", "Authorized", "Captain's", "Glorious")
@@ -544,7 +544,7 @@
 		/obj/item/grown/bananapeel
 	)
 	jackpot_path = /obj/item/food/donut/choco
-	bomb_path = /obj/item/grown/bananapeel
+	trap_path = /obj/item/grown/bananapeel
 
 /obj/machinery/computer/slot_machine/security/Initialize(mapload)
 	slot_adjectives += list("Stunned", "Flashed", "Confiscated", "Loyal", "Arrested")
@@ -565,7 +565,7 @@
 		/obj/machinery/syndicatebomb,
 	)
 	jackpot_path = /obj/item/clothing/neck/stethoscope
-	bomb_path = /obj/machinery/syndicatebomb
+	trap_path = /obj/machinery/syndicatebomb
 
 /obj/machinery/computer/slot_machine/medical/Initialize(mapload)
 	slot_adjectives += list("Mutated", "Cloned", "Spliced", "Overdosed", "Infectious", "Healing", "Husked")
@@ -586,7 +586,7 @@
 		/obj/singularity,
 	)
 	jackpot_path = /obj/item/blueprints
-	bomb_path = /obj/singularity
+	trap_path = /obj/singularity
 
 /obj/machinery/computer/slot_machine/engineering/Initialize(mapload)
 	slot_adjectives += list("Supercharged", "Pressurized", "Radioactive", "Overloaded", "Delaminating", "Insulated")
@@ -607,7 +607,7 @@
 		/obj/item/suspiciousphone,
 	)
 	jackpot_path = /obj/item/stamp/granted
-	bomb_path = /obj/item/suspiciousphone
+	trap_path = /obj/item/suspiciousphone
 
 /obj/machinery/computer/slot_machine/cargo/Initialize(mapload)
 	slot_adjectives += list("Logistical", "Express", "Tax-Free", "Smuggled", "Stolen", "Overdue", "Expedited", "Crated", "Subsidized", "Manifested")
@@ -628,7 +628,7 @@
 		/obj/item/seeds/random,
 	)
 	jackpot_path = /obj/item/seeds/random
-	bomb_path = /mob/living/basic/goat/pete
+	trap_path = /mob/living/basic/goat/pete
 
 /obj/machinery/computer/slot_machine/service/Initialize(mapload)
 	slot_adjectives += list("Fermented", "Garnished", "Seasoned", "Tipsy", "Botanical", "Cleaned", "Organic", "Culinary", "Refreshing", "Brimming")
@@ -649,7 +649,7 @@
 		/obj/item/gibtonite,
 	)
 	jackpot_path = /obj/item/stack/sheet/mineral/diamond
-	bomb_path = /obj/item/gibtonite
+	trap_path = /obj/item/gibtonite
 
 /obj/machinery/computer/slot_machine/research/Initialize(mapload)
 	slot_adjectives += list("Atomic", "Bluespace", "Cosmic", "Golden", "Diamond", "Silver", "Uranium", "Quantum", "Phazon", "Anomalous", "Plasma", "Experimental", "Robotic")
@@ -669,7 +669,7 @@
 		/obj/item/restraints/handcuffs,
 	)
 	jackpot_path = /obj/vehicle/sealed/mecha/honker
-	bomb_path = /obj/item/restraints/handcuffs
+	trap_path = /obj/item/restraints/handcuffs
 
 /obj/machinery/computer/slot_machine/clown/Initialize(mapload)
 	slot_adjectives += list("Honking", "Slippery", "Pranked", "Squeaky", "Hilarious", "Giggling")
@@ -689,7 +689,7 @@
 		/obj/item/restraints/handcuffs,
 	)
 	jackpot_path = /obj/item/food/baguette
-	bomb_path = /obj/item/restraints/handcuffs
+	trap_path = /obj/item/restraints/handcuffs
 
 /obj/machinery/computer/slot_machine/mime/Initialize(mapload)
 	slot_adjectives += list("Silent", "Noiseless", "Tongueless", "Transparent", "Unspeakable", "Voiceless", "Mysterious", "Quiet", "Hushed", "Mute", "Invisible", "Imaginary", "Untouchable")
@@ -701,16 +701,16 @@
 	desc = "Gambling for the operative who's already lost everything. Death to Nanotrasen, and death to your wallet."
 	theme_color = RADIO_COLOR_SYNDICATE
 	symbol_paths = list(
-		/obj/item/disk/nuclear,
+		/obj/machinery/nuclearbomb,
 		/obj/item/card/emag,
 		/obj/item/storage/toolbox/syndicate,
 		/obj/item/clothing/mask/gas/syndicate,
 		/obj/item/soap/syndie,
-		/obj/machinery/syndicatebomb,
+		/obj/item/gun/energy/recharge/ebow,
 		/obj/item/restraints/handcuffs,
 	)
-	jackpot_path = /obj/item/disk/nuclear
-	bomb_path = /obj/item/restraints/handcuffs
+	jackpot_path = /obj/machinery/nuclearbomb
+	trap_path = /obj/item/restraints/handcuffs
 
 /obj/machinery/computer/slot_machine/syndicate/Initialize(mapload)
 	slot_adjectives += list("Emagged", "Covert", "Nuclear", "Suspicious", "Bloody", "Syndie", "Sabotaged", "Clandestine", "Illicit", "Traitorous")
