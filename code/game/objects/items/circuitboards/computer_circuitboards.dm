@@ -321,6 +321,7 @@
 		"Security" = /obj/machinery/computer/slot_machine/security,
 		"Medical" = /obj/machinery/computer/slot_machine/medical,
 		"Engineering" = /obj/machinery/computer/slot_machine/engineering,
+		"Cargo" = /obj/machinery/computer/slot_machine/cargo,
 		"Service" = /obj/machinery/computer/slot_machine/service,
 		"Research" = /obj/machinery/computer/slot_machine/research,
 		"Clown" = /obj/machinery/computer/slot_machine/clown,
