@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Watcher Hatchling projectiles should no longer hit people buckled to you, or anything you're buckled to, i.e a raptor mount."
