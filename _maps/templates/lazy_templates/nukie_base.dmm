@@ -3633,6 +3633,7 @@
 /area/centcom/syndicate_mothership/control)
 "Ni" = (
 /obj/machinery/light/small/directional/north,
+/obj/machinery/computer/slot_machine/syndicate,
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
 "No" = (
