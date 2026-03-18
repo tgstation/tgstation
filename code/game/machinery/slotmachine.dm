@@ -23,7 +23,8 @@
 	name = "slot machine"
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/machines/computer.dmi'
-	icon_state = "slots"
+	icon_state = "/obj/machinery/computer/slot_machine"
+	post_init_icon_state = "slots"
 	icon_keyboard = null
 	icon_screen = "slots_screen"
 	density = TRUE
