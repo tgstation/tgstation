@@ -24,7 +24,7 @@
 		/obj/machinery/computer/slot_machine/engineering = 5,
 		/obj/machinery/computer/slot_machine/cargo = 5,
 		/obj/machinery/computer/slot_machine/service = 5,
-		/obj/machinery/computer/slot_machine/research = 5,
+		/obj/machinery/computer/slot_machine/science = 5,
 		/obj/machinery/computer/slot_machine/clown = 2,
 		/obj/machinery/computer/slot_machine/mime = 2,
 	)

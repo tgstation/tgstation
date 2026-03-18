@@ -649,7 +649,7 @@
 	slot_nouns += list("Recipe", "Garnish", "Cocktail", "Tip", "Harvest", "Entree", "Dish", "Platter", "Scrubber", "Janitor", "Waiter", "Chef")
 	. = ..()
 
-/obj/machinery/computer/slot_machine/research
+/obj/machinery/computer/slot_machine/science
 	name = "research slot machine"
 	desc = "The reels seem to exist in multiple dimensions at once. It still takes your money in all of them."
 	theme_color = RADIO_COLOR_SCIENCE
@@ -667,7 +667,7 @@
 	light_color = CIRCUIT_COLOR_SCIENCE
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 
-/obj/machinery/computer/slot_machine/research/Initialize(mapload)
+/obj/machinery/computer/slot_machine/science/Initialize(mapload)
 	slot_adjectives += list("Atomic", "Bluespace", "Cosmic", "Golden", "Diamond", "Silver", "Uranium", "Quantum", "Phazon", "Anomalous", "Plasma", "Experimental", "Robotic")
 	slot_nouns += list("Anomaly", "Artifact", "Slime", "Extract", "Circuit", "Node", "Discovery", "Explosion")
 	. = ..()
@@ -708,8 +708,8 @@
 	)
 	jackpot_path = /obj/item/food/baguette
 	trap_path = /obj/item/restraints/handcuffs
-	light_color = COLOR_SLIME_METAL
-	greyscale_colors = COLOR_SLIME_METAL
+	light_color = COLOR_VERY_LIGHT_GRAY
+	greyscale_colors = COLOR_VERY_LIGHT_GRAY
 
 /obj/machinery/computer/slot_machine/mime/Initialize(mapload)
 	slot_adjectives += list("Silent", "Noiseless", "Tongueless", "Transparent", "Unspeakable", "Voiceless", "Mysterious", "Quiet", "Hushed", "Mute", "Invisible", "Imaginary", "Untouchable")
