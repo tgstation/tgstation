@@ -40,16 +40,32 @@
 	var/cointype = /obj/item/coin/iron //default cointype
 
 	/// Typepaths representing the symbols shown on this machine's reels.
-	/// The icon and icon_state of each path get scraped at init and sent to the UI.
 	/// Override this list in subtypes to make themed slot machines.
 	var/list/symbol_paths = list(
-		/obj/item/food/grown/banana,
+		/obj/item/food/grown/bluecherries,
 		/obj/item/food/grown/cherries,
 		/obj/item/grenade/flashbang,
-		/obj/item/coin/silver,
-		/obj/item/food/grown/apple,
-		/obj/item/coin/gold,
-		/obj/item/holochip,
+		/obj/item/rupee,
+		/obj/item/food/grown/chili,
+		/obj/item/food/grown/icepepper,
+		/obj/item/stack/spacecash/c20,
+	)
+
+	/// Used to determine the 1st name of the slot machine [adjective] [noun]
+	var/list/slot_adjectives = list(
+		"Atomic", "Blazing", "Bonus", "Cosmic", "Diamond",
+		"Double", "Golden", "Grand", "Greedy", "Honking",
+		"Jumbo", "Lucky", "Mega", "Platinum", "Robust",
+		"Royal", "Spess", "Super", "Triple", "Turbo",
+		"Wild"
+	)
+
+	/// Used to determine the 2nd name of the slot machine [adjective] [noun]
+	var/slot_nouns = list(
+		"Bankroll", "Bonanza", "Bounty", "Cashout", "Cherries",
+		"Fortune", "Jackpot", "Luck", "Moolah", "Payday",
+		"Reels", "Riches", "Sevens", "Spinner", "Spins",
+		"Strike", "Treasure", "Windfall"
 	)
 
 	/// The symbol typepath that pays out the jackpot when it lines up five wide
