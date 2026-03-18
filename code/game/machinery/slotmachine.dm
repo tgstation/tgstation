@@ -22,7 +22,7 @@
 /obj/machinery/computer/slot_machine
 	name = "slot machine"
 	desc = "Gambling for the antisocial."
-	icon = 'icons/obj/machines/computer.dmi'
+	icon = 'icons/map_icons/objects.dmi'
 	icon_state = "/obj/machinery/computer/slot_machine"
 	post_init_icon_state = "slots"
 	icon_keyboard = null
@@ -515,6 +515,7 @@
 /obj/machinery/computer/slot_machine/command
 	name = "command slot machine"
 	desc = "The handle is made of solid gold, and the screen is polished with the tears of overworked assistants."
+	icon_state = "/obj/machinery/computer/slot_machine/command"
 	theme_color = RADIO_COLOR_COMMAND
 	symbol_paths = list(
 		/obj/item/disk/nuclear,
@@ -538,6 +539,7 @@
 /obj/machinery/computer/slot_machine/security
 	name = "security slot machine"
 	desc = "Repurposed from a confiscated syndicate gambling ring. Losing is a crime. Winning is also a crime."
+	icon_state = "/obj/machinery/computer/slot_machine/security"
 	theme_color = RADIO_COLOR_SECURITY
 	symbol_paths = list(
 		/obj/item/food/donut/choco,
@@ -561,6 +563,7 @@
 /obj/machinery/computer/slot_machine/medical
 	name = "medical slot machine"
 	desc = "A miracle of modern medicine! It cures boredom, but causes acute financial necrosis."
+	icon_state = "/obj/machinery/computer/slot_machine/medical"
 	theme_color = RADIO_COLOR_MEDICAL
 	symbol_paths = list(
 		/obj/item/storage/medkit/regular,
@@ -584,6 +587,7 @@
 /obj/machinery/computer/slot_machine/engineering
 	name = "engineering slot machine"
 	desc = "Gambling for those who think wearing insulated gloves makes them invincible. Ground yourself before playing."
+	icon_state = "/obj/machinery/computer/slot_machine/engineering"
 	theme_color = RADIO_COLOR_ENGINEERING
 	symbol_paths = list(
 		/obj/item/storage/toolbox/mechanical,
@@ -607,6 +611,7 @@
 /obj/machinery/computer/slot_machine/cargo
 	name = "cargo slot machine"
 	desc = "Every credit spent here is a credit that won't be spent on 'useless' things, like food or medicine."
+	icon_state = "/obj/machinery/computer/slot_machine/cargo"
 	theme_color = RADIO_COLOR_SUPPLY
 	symbol_paths = list(
 		/obj/item/bounty_cube,
@@ -630,6 +635,7 @@
 /obj/machinery/computer/slot_machine/service
 	name = "service slot machine"
 	desc = "The handle is a repurposed rolling pin. Every loss is just another ingredient for the daily special."
+	icon_state = "/obj/machinery/computer/slot_machine/service"
 	theme_color = RADIO_COLOR_SERVICE
 	symbol_paths = list(
 		/obj/item/clothing/head/hats/tophat,
@@ -653,6 +659,7 @@
 /obj/machinery/computer/slot_machine/science
 	name = "research slot machine"
 	desc = "The reels seem to exist in multiple dimensions at once. It still takes your money in all of them."
+	icon_state = "/obj/machinery/computer/slot_machine/science"
 	theme_color = RADIO_COLOR_SCIENCE
 	symbol_paths = list(
 		/obj/item/stack/sheet/mineral/gold,
@@ -675,6 +682,7 @@
 
 /obj/machinery/computer/slot_machine/clown
 	desc = "Gambling is fun! Smells like bananas, wet shoes, and regret. HONK!"
+	icon_state = "/obj/machinery/computer/slot_machine/clown"
 	theme_color = "#ff47a5"
 	symbol_paths = list(
 		/obj/item/food/grown/banana,
@@ -697,6 +705,7 @@
 
 /obj/machinery/computer/slot_machine/mime
 	desc = "Gambling is a silent tragedy. The machine stares back at you with a cold indifference."
+	icon_state = "/obj/machinery/computer/slot_machine/mime"
 	theme_color = "#7c7c7c"
 	symbol_paths = list(
 		/obj/item/clothing/head/beret/frenchberet,
@@ -720,6 +729,7 @@
 /obj/machinery/computer/slot_machine/syndicate
 	name = "syndicate slot machine"
 	desc = "Gambling for the operative who's already lost everything. Death to Nanotrasen, and death to your wallet."
+	icon_state = "/obj/machinery/computer/slot_machine/syndicate"
 	theme_color = RADIO_COLOR_SYNDICATE
 	symbol_paths = list(
 		/obj/machinery/nuclearbomb,
