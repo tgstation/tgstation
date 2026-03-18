@@ -617,6 +617,36 @@
 	jackpot_path = /obj/item/slime_extract/grey
 	bomb_path = /obj/item/grenade/flashbang
 
+/obj/machinery/computer/slot_machine/clown
+	desc = "Gambling is fun. Smells faintly of banana and regret. HONK!"
+	theme_color = "#ff47a5"
+	symbol_paths = list(
+		/obj/item/food/grown/banana,
+		/obj/item/bikehorn,
+		/obj/item/food/pie/cream,
+		/obj/item/clothing/shoes/clown_shoes,
+		/obj/item/clothing/mask/gas/clown_hat,
+		/obj/item/reagent_containers/spray/waterflower,
+		/obj/item/grenade/chem_grenade/glitter/pink,
+	)
+	jackpot_path = /obj/item/food/grown/banana
+	bomb_path = /obj/item/grenade/chem_grenade/glitter/pink
+
+/obj/machinery/computer/slot_machine/mime
+	desc = "Gambling is boring. It is completely silent."
+	theme_color = "#7c7c7c"
+	symbol_paths = list(
+		/obj/item/clothing/head/beret,
+		/obj/item/clothing/mask/gas/mime,
+		/obj/item/food/baguette,
+		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
+		/obj/item/clothing/gloves/color/white,
+		/obj/item/clothing/under/rank/civilian/mime,
+		/obj/item/grenade/flashbang,
+	)
+	jackpot_path = /obj/item/clothing/head/beret
+	bomb_path = /obj/item/grenade/flashbang
+
 /obj/machinery/computer/slot_machine/syndicate
 	name = "syndicate slot machine"
 	desc = "Gambling for the antisocial operative. The house always wins. The house is Nanotrasen. Destroy the house."
