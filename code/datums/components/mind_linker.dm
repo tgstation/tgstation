@@ -58,7 +58,7 @@
 		src.signals_which_destroy_us = signals_which_destroy_us
 	if(post_unlink_callback)
 		src.post_unlink_callback = post_unlink_callback
-	if(isnull(show_balloon_alert))
+	if(!isnull(show_balloon_alert))
 		src.show_balloon_alert = show_balloon_alert
 
 	master_speech = new(src)
