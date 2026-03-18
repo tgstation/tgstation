@@ -1,6 +1,0 @@
-author: "Iajret"
-delete-after: True
-changes:
-  - bugfix: "Fixed runtimes from buckling basic mobs to operating tables"
-  - bugfix: "free_operation is now applied to animals when you buckle them to operating tables"
-  - bugfix: "This in turn fixed vitals monitors being stuck always displaying basic mob's health if you try to buckle one to operating table"

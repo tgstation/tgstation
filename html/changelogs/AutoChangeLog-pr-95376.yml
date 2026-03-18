@@ -1,5 +1,0 @@
-author: "Generalcamo"
-delete-after: True
-changes:
-  - rscadd: "Added `balloon_alert_to_hearers`, which is similar to `balloon_alert_to_viewers` but for audible things."
-  - qol: "Existing instances of `balloon_alert_to_viewers` which covered sounds, now uses `balloon_alert_to_hearers`."

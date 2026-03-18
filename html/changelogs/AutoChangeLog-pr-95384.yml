@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - code_imp: "added a unit test macro for running the same test multiple times"
