@@ -78,8 +78,6 @@
 
 	/// Hex colour string used to theme the tgui banner, spin button, and reel
 	/// highlight. Null leaves the stock rainbow gradient in place.
-	/// Department subtypes feed this from the RADIO_COLOR_* defines so they stay
-	/// in lockstep with radio/chat colouring.
 	var/theme_color = null
 
 	/// Cached list of symbol data (id/name/icon/icon_state) sent to the UI.
