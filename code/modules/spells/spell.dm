@@ -299,6 +299,10 @@
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
 
+	// If the owner is being deleted, we shouldn't be able to cast a spell
+	if(QDELETED(owner))
+		return SPELL_CANCEL_CAST
+
 	// Bonus invocation check done here:
 	// If the caster has no tongue and it's a verbal spell,
 	// Or has no hands and is a gesture spell - cancel it,
@@ -323,10 +327,6 @@
 					to_chat(caster, span_warning("You can't position your hands correctly to invoke [src][caster.num_hands > 0 ? "" : ", as you have none"]..."))
 					StartCooldown(2 SECONDS)
 					return SPELL_CANCEL_CAST
-
-	// If the owner is being deleted, we shouldn't be able to cast a spell
-	if(QDELETED(owner))
-		return SPELL_CANCEL_CAST
 
 	var/sig_return = SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST, cast_on)
 	if(owner)
