@@ -324,6 +324,10 @@
 					StartCooldown(2 SECONDS)
 					return SPELL_CANCEL_CAST
 
+	// If the owner is being deleted, we shouldn't be able to cast a spell
+	if(QDELETED(owner))
+		return SPELL_CANCEL_CAST
+
 	var/sig_return = SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST, cast_on)
 	if(owner)
 		sig_return |= SEND_SIGNAL(owner, COMSIG_MOB_BEFORE_SPELL_CAST, src, cast_on)
