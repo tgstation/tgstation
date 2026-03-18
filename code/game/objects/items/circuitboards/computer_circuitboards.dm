@@ -323,7 +323,7 @@
 		"Engineering" = /obj/machinery/computer/slot_machine/engineering,
 		"Cargo" = /obj/machinery/computer/slot_machine/cargo,
 		"Service" = /obj/machinery/computer/slot_machine/service,
-		"Research" = /obj/machinery/computer/slot_machine/research,
+		"Science" = /obj/machinery/computer/slot_machine/science,
 		"Clown" = /obj/machinery/computer/slot_machine/clown,
 		"Mime" = /obj/machinery/computer/slot_machine/mime,
 	)
