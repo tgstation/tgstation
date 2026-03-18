@@ -313,6 +313,49 @@
 	name = "Slot Machine"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/slot_machine
+	desc = "You can change the theme using a screwdriver."
+	// List of pickable slot machiens
+	var/static/list/slot_themes = list(
+		"Default" = /obj/machinery/computer/slot_machine,
+		"Command" = /obj/machinery/computer/slot_machine/command,
+		"Security" = /obj/machinery/computer/slot_machine/security,
+		"Medical" = /obj/machinery/computer/slot_machine/medical,
+		"Engineering" = /obj/machinery/computer/slot_machine/engineering,
+		"Service" = /obj/machinery/computer/slot_machine/service,
+		"Research" = /obj/machinery/computer/slot_machine/research,
+		"Clown" = /obj/machinery/computer/slot_machine/clown,
+		"Mime" = /obj/machinery/computer/slot_machine/mime,
+	)
+
+/obj/item/circuitboard/computer/slot_machine/examine(mob/user)
+	. = ..()
+	var/current_theme = "Unknown"
+	for(var/theme_name in slot_themes)
+		if(slot_themes[theme_name] == build_path)
+			current_theme = theme_name
+			break
+	. += span_info("[src] is set to the [current_theme] theme. You can use a screwdriver to reconfigure it.")
+
+/obj/item/circuitboard/computer/slot_machine/screwdriver_act(mob/living/user, obj/item/tool)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "board mode is broken!")
+		return FALSE
+
+	var/choice = tgui_input_list(user, "Choose a slot machine theme", "Theme Selection", slot_themes)
+	if(isnull(choice))
+		return ITEM_INTERACT_BLOCKING
+	build_path = slot_themes[choice]
+	to_chat(user, span_notice("You set the board to the [choice] theme."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/circuitboard/computer/slot_machine/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+
+	obj_flags |= EMAGGED
+	build_path = /obj/machinery/computer/slot_machine/syndicate
+	balloon_alert(user, "illegal slot machine loaded")
+	return TRUE
 
 /obj/item/circuitboard/computer/swfdoor
 	name = "Magix"
