@@ -40,9 +40,9 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            return JSON.parse('${{steps.stale.outputs.staled-issues-prs}}').
-                        filter(issue => !!issue.pull_request).
-                        map(pr => ({
+            return JSON.parse('${{steps.stale.outputs.staled-issues-prs}}')
+                       .filter(issue => !!issue.pull_request)
+                       .map(pr => ({
                           title: pr.title,
                           number: pr.number,
                           url: pr.pull_request.html_url,
