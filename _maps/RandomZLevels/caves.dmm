@@ -144,13 +144,8 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/bmp_asteroid/level_three)
-"aZ" = (
-/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
-/turf/open/floor/engine/cult,
-/area/awaymission/caves/bmp_asteroid/level_four)
 "ba" = (
 /obj/structure/table/wood/fancy,
-/obj/item/clothing/gloves/kaza_ruk/combatglovesplus,
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bf" = (
@@ -1105,7 +1100,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "sE" = (
-/obj/item/greentext,
+/obj/item/clothing/gloves/kaza_ruk/combatglovesplus,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_three)
 "sI" = (
@@ -1172,10 +1167,6 @@
 /area/awaymission/caves/bmp_asteroid/level_two)
 "wT" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/misc/asteroid/basalt,
-/area/awaymission/caves/bmp_asteroid/level_four)
-"xs" = (
-/obj/item/bedsheet/patriot,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_four)
 "yg" = (
@@ -1365,10 +1356,6 @@
 /obj/item/clothing/head/collectable/wizard,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_three)
-"Jk" = (
-/obj/item/storage/box/ingredients/american,
-/turf/open/misc/asteroid/basalt,
-/area/awaymission/caves/bmp_asteroid/level_four)
 "JD" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/basalt,
@@ -1438,10 +1425,6 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/misc/asteroid/basalt,
 /area/awaymission/caves/bmp_asteroid/level_two)
-"OA" = (
-/obj/item/food/burger,
-/turf/open/misc/asteroid/basalt,
-/area/awaymission/caves/bmp_asteroid/level_four)
 "OX" = (
 /turf/closed/indestructible/oldshuttle{
 	desc = "Go through.";
@@ -1497,11 +1480,6 @@
 /obj/item/reagent_containers/blood/o_plus,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
-"UT" = (
-/obj/effect/decal/remains/human,
-/obj/item/clothing/under/misc/patriotsuit,
-/turf/open/misc/asteroid/basalt,
-/area/awaymission/caves/bmp_asteroid/level_four)
 "VK" = (
 /obj/effect/mob_spawn/ghost_role/human/skeleton{
 	name = "spooky skeleton remains"
@@ -24588,7 +24566,7 @@ ad
 ad
 rv
 rv
-Jk
+rv
 rv
 rv
 rv
@@ -24814,8 +24792,8 @@ ad
 ad
 rv
 rv
-OA
-xs
+rv
+rv
 rv
 rv
 ad
@@ -25039,7 +25017,7 @@ ad
 ad
 rv
 rv
-UT
+Rm
 rv
 rv
 ad
@@ -36043,7 +36021,7 @@ ad
 rv
 rv
 rv
-aZ
+ao
 ao
 rv
 ad
