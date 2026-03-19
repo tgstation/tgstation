@@ -302,7 +302,7 @@
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)
 	var/mob/living/carbon/human/human = user
-	if(!show_hud || human.wear_suit != src)
+	if(!show_hud || human.wear_suit != src || !human.hud_used)
 		return
 
 	if(!cell)
