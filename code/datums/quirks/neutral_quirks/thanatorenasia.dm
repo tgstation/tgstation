@@ -22,7 +22,7 @@
 	SIGNAL_HANDLER
 
 	var/whomst = source.real_name
-	if(source.mind && !is_unassigned_job(source.mind?.assigned_role))
+	if(source.mind && !is_unassigned_job(source.mind.assigned_role))
 		whomst += "Job: [span_notice(source.mind.assigned_role.title)]."
 	if(length(source.mind?.get_special_roles()))
 		whomst += "Status: [span_boldnotice(english_list(source.mind?.get_special_roles()))]."
