@@ -445,15 +445,12 @@
 			if(SPACESUIT_NO_ICON)
 				icon_state = null
 				maptext = null
-				cached_thermal_on = TRUE
+				cached_thermal_on = TRUE //for next use
 				update_appearance(UPDATE_ICON)
 				return
 			if(SPACESUIT_MISSING_CELL, SPACESUIT_CELL_EMPTY)
 				icon_state = "spacesuit_[cell_state]"
 				maptext = null
-				cached_thermal_on = TRUE
-				update_appearance(UPDATE_ICON)
-				return
 			else
 				icon_state = "spacesuit_[cell_state]"
 	if(cell_percent && hovering)
