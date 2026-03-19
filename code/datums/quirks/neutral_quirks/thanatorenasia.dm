@@ -10,6 +10,16 @@
 		they may experience memory loss or a change in personality."
 	quirk_flags = QUIRK_NO_TRANSFER
 
+	// Used the the spawners menu to describe the quirk
+	var/you_are_text = "You are a deceased crewmember, afflicted with Thanatorenasia - \
+		a condition which alters personality and causes memory loss upon death and revival."
+	var/flavor_text = "Something feels... different. \
+		You're not entirely sure who you are or what happened - All you remember is your name and that you work here. \
+		Oh well, better get back to work - the last thing you want is to be both unemployed AND an amnesiac."
+	var/important_text = "Resume your assigned duty. \
+		If you choose to \"Do Not Resuscitate\" upon death, another ghost will be allowed to take over the body. \
+		You still roll for midround antagonists."
+
 /datum/quirk/death_dnr_poll/add_unique(client/client_source)
 	. = ..()
 	RegisterSignal(quirk_holder, COMSIG_LIVING_DNR, PROC_REF(mob_died))
@@ -31,11 +41,15 @@
 		refuse_revival_if_failed = TRUE, \
 		on_successful_revive = CALLBACK(src, PROC_REF(on_successful_revive)), \
 		revive_title = whomst, \
+		spawn_text = "Deceased Crew", \
+		you_are_text = src.you_are_text, \
+		flavor_text = src.flavor_text, \
+		important_text = src.important_text, \
 	)
-	source.log_message("was made ghostrole pollable by [name] quirk.", LOG_GAME, color = COLOR_GREEN)
+	source.log_message("was made ghostrole pollable by [name] quirk.", LOG_GAME, color = COLOR_PURPLE)
 
 /datum/quirk/death_dnr_poll/proc/on_successful_revive()
-	quirk_holder.log_message("has had their body taken over by a ghost due to their [name] quirk.", LOG_GAME, color = COLOR_GREEN)
+	quirk_holder.log_message("has had their body taken over by a ghost due to the [name] quirk.", LOG_GAME, color = COLOR_PURPLE)
 	var/welcome_msg = boxed_message(span_notice("<b>[quirk_holder.real_name]</b> has <i>[name]</i> - you are [quirk_holder.p_their()] new owner.<br>\
 		If you choose to <b>\"Do Not Resuscitate\"</b> upon death, another ghost will take over the body once again."))
 	addtimer(CALLBACK(src, GLOBAL_PROC_REF(to_chat), quirk_holder, welcome_msg), 2 SECONDS)
