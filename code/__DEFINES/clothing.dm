@@ -71,7 +71,7 @@
 
 //Defines for space suits. The respective define is also an icon.
 #define SPACESUIT_NO_ICON "none"
-#define SPACESUIT_MISSING_CELL "missing"
+#define SPACESUIT_CELL_MISSING "missing"
 #define SPACESUIT_CELL_EMPTY "empty"
 #define SPACESUIT_CELL_HIGH "high"
 #define SPACESUIT_CELL_MID "mid"

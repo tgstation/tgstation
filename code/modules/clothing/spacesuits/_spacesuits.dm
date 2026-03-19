@@ -306,7 +306,7 @@
 		return
 
 	if(!cell)
-		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_MISSING_CELL, 0, thermal_on)
+		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_MISSING, 0, thermal_on)
 		return
 
 	var/cell_percent = cell.percent()

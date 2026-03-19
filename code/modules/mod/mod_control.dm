@@ -726,7 +726,7 @@
 	else
 		state_to_use = core.get_charge_icon_state()
 
-	wearer.hud_used.spacesuit_hud.update_spacesuit_hud_icon(state_to_use || SPACESUIT_NO_ICON)
+	wearer.hud_used.spacesuit_hud.update_spacesuit_hud_icon(state_to_use || SPACESUIT_NO_ICON, thermal_on = )
 
 /obj/item/mod/control/proc/update_speed()
 	var/total_slowdown = 0

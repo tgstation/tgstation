@@ -448,7 +448,7 @@
 				cached_thermal_on = TRUE //for next use
 				update_appearance(UPDATE_ICON)
 				return
-			if(SPACESUIT_MISSING_CELL, SPACESUIT_CELL_EMPTY)
+			if(SPACESUIT_CELL_MISSING, SPACESUIT_CELL_EMPTY)
 				icon_state = "spacesuit_[cell_state]"
 				maptext = null
 			else
