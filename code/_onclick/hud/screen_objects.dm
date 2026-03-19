@@ -436,9 +436,6 @@
 	var/mob/living/carbon/human/wearer = hud?.mymob
 	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.update_hud_icon(usr)
 
-#define SUIT_COLOR_VISIBLE rgb(255,255,255,255)
-#define SUIT_COLOR_INACTIVE rgb(128,0,0)
-
 /atom/movable/screen/spacesuit/proc/update_spacesuit_hud_icon(cell_state, cell_percent, thermal_on = TRUE)
 	if(cell_state)
 		switch(cell_state)
@@ -465,9 +462,6 @@
 	. = ..()
 	if(!cached_thermal_on && icon_state)
 		. |= off_overlay
-
-#undef SUIT_COLOR_VISIBLE
-#undef SUIT_COLOR_INACTIVE
 
 /atom/movable/screen/mov_intent
 	name = "run/walk toggle"
