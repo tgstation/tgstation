@@ -122,7 +122,7 @@
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	var/mob/living/carbon/human/human_user = user
-	if(istype(human_user))
+	if(istype(human_user) && human_user.hud_used)
 		human_user.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
 
 // Space Suit temperature regulation and power usage
@@ -158,7 +158,7 @@
 	if(isatom(cell))
 		QDEL_NULL(cell)
 	var/mob/living/carbon/human/human = src.loc
-	if(istype(human))
+	if(istype(human) && human.hud_used)
 		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
