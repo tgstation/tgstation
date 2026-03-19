@@ -116,21 +116,14 @@
 	if(slot & ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
 		update_hud_icon(user) // update the hud
-		RegisterSignal(user, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 // On removal stop processing, save battery
 /obj/item/clothing/suit/space/dropped(mob/living/user)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	UnregisterSignal(user, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 	var/mob/living/carbon/carbon_user = user
 	if(istype(carbon_user))
 		carbon_user.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
-
-/obj/item/clothing/suit/space/proc/get_status_tab_item(mob/living/source, list/items)
-	SIGNAL_HANDLER
-	items += "Thermal Regulator: [thermal_on ? "On" : "Off"]"
-	items += "Cell Charge: [cell ? "[round(cell.percent(), 0.1)]%" : "No Cell!"]"
 
 // Space Suit temperature regulation and power usage
 /obj/item/clothing/suit/space/process(seconds_per_tick)
