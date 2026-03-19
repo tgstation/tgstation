@@ -312,7 +312,7 @@ SUBSYSTEM_DEF(tts)
 		queued_http_messages.insert(current_request)
 
 /// Helper to get a random TTS voice for a certain gender. Passing no gender just results in a random voice.
-/datum/controller/subsystem/tts/proc/random_tts_voice(gender)
+/datum/controller/subsystem/tts/proc/random_tts_voice(gender = NEUTER)
 	if(!tts_enabled)
 		return null
 
