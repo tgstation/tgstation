@@ -17,8 +17,8 @@
 		RegisterSignal(vending_machine, COMSIG_VENDING_DISPENSED, PROC_REF(on_vended_item))
 
 
-/datum/lazy_template/virtual_domain/beach_bar/proc/on_vended_item(obj/item/vended_item)
-	if(istype(vended_item, obj/item/reagent_containers/cup/glass))
+/datum/lazy_template/virtual_domain/beach_bar/proc/on_vended_item(obj/machinery/vending/vending_machine, obj/item/vended_item)
+	if(istype(vended_item, /obj/item/reagent_containers/cup/glass))
 		RegisterSignal(vended_item, COMSIG_GLASS_DRANK, PROC_REF(on_drink_drank))
 
 
