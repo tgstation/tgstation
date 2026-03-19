@@ -94,7 +94,14 @@
 
 	var/list/jobbans = list(ROLE_RECOVERED_CREW)
 	if(aliver.mind)
-		jobbans += aliver.mind.assigned_role.title
+		jobbans |= aliver.mind.assigned_role.title
+		for(var/datum/antagonist/antag as anything in aliver.mind.antag_datums)
+			if(antag.jobban_flag)
+				jobbans |= antag.jobban_flag
+			if(antag.pref_flag)
+				jobbans |= antag.pref_flag
+			if(!(antag.antag_flags & ANTAG_FAKE))
+				jobbans |= ROLE_SYNDICATE
 
 	var/mob/dead/observer/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Would you like to play as [revive_title]?",
