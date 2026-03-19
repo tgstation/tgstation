@@ -671,7 +671,7 @@
 		hud_used.healths.icon_state = "health6"
 
 #define SUIT_COLOR_VISIBLE rgb(255,255,255,255)
-#define SUIT_COLOR_INACTIVE rgb(128,0,0,128)
+#define SUIT_COLOR_INACTIVE rgb(128,0,0)
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state, cell_percent, thermal_on = TRUE)
 	if(cell_state)
