@@ -524,8 +524,7 @@
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_SPECIES_GAIN, COMSIG_MOB_CLICKON))
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
-	if(wearer.hud_used)
-		wearer.hud_used.spacesuit_hud.update_spacesuit_hud_icon()
+	wearer.hud_used?.spacesuit_hud.update_spacesuit_hud_icon()
 	wearer = null
 
 /obj/item/mod/control/proc/get_sealed_slots(list/parts)
