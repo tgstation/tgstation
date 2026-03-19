@@ -161,7 +161,7 @@ const FakePage = <Type,>(props: FakePageProps<Type>) => {
         {!tocDisplay?.length &&
           !entryDisplay?.length &&
           (blankPage || (
-            <Stack.Item>This page intentionally left blank.</Stack.Item>
+            <Stack.Item italic>This page intentionally left blank.</Stack.Item>
           ))}
       </Stack>
     </Section>
