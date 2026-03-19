@@ -248,4 +248,4 @@
 /obj/item/storage/belt/holster/psyker/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 5
-	atom_storage.max_total_storage = /obj/item/gun/ballistic/revolver/c38:w_class + (4 * /obj/item/ammo_box/speedloader/c38::w_class)
+	atom_storage.max_total_storage = /obj/item/gun/ballistic/revolver/c38::w_class + (4 * /obj/item/ammo_box/speedloader/c38::w_class)
