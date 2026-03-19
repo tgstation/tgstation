@@ -1016,9 +1016,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 		if(need_mob_update)
 			. = UPDATE_MOB_HEALTH
+		return
 
-	else if(SPT_PROB(10, seconds_per_tick))
+	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.emote(pick("screech","scratch","jump","look"))
+
+	QDEL_NULL(jungle_arts)
+	affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
 
 /datum/reagent/inverse/aranesp
 	name = "Epoetin Alfa"
