@@ -276,7 +276,8 @@
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 
 	update_item_action_buttons()
-	update_hud_icon(toggler)
+	if(isnull(toggler) && ishuman(loc))
+		update_hud_icon(loc)
 
 	if(!toggler)
 		return
