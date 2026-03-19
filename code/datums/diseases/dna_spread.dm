@@ -6,7 +6,7 @@
 	cure_text = /datum/reagent/medicine/mutadone::name
 	cures = list(/datum/reagent/medicine/mutadone)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
-	agent = "S4E1 retrovirus"
+	agent = "S4E1 Retrovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	var/datum/dna/original_dna = null
 	var/transformed = 0

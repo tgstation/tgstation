@@ -1,5 +1,5 @@
 /datum/disease/anaphylaxis
-	form = "Shock"
+	form = "Condition"
 	name = "Anaphylaxis"
 	desc = "Patient is undergoing a life-threatening allergic reaction and will die if not treated."
 	max_stages = 3

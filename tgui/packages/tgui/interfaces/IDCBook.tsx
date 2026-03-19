@@ -18,6 +18,23 @@ type DiseaseData = {
   diseases: Disease[];
 };
 
+function isSymptom(entry: BookEntry<Disease>) {
+  return entry.form.toLowerCase() === 'symptom';
+}
+
+function formToColor(form: string) {
+  switch (form.toLowerCase()) {
+    case 'symptom':
+      return 'lightgreen';
+    case 'condition':
+    case 'infection':
+    case 'parasite':
+      return 'lightsalmon';
+    default:
+      return 'lightblue';
+  }
+}
+
 function formatSpreadBy(spread_by: string) {
   switch (spread_by.toLowerCase()) {
     case 'airborne':
@@ -39,12 +56,21 @@ function formatSpreadBy(spread_by: string) {
           </Stack.Item>
         </Stack>
       );
-    case 'liquids':
+    case 'fluid contact':
       return (
         <Stack align="end">
           <Stack.Item>Liquids</Stack.Item>
           <Stack.Item fontSize="10px" pb={0.2}>
-            (e.g. blood, saliva)
+            (e.g. touching contaminated fluids)
+          </Stack.Item>
+        </Stack>
+      );
+    case 'blood':
+      return (
+        <Stack align="end">
+          <Stack.Item>Blood</Stack.Item>
+          <Stack.Item fontSize="10px" pb={0.2}>
+            (e.g. tranfusion of infected blood)
           </Stack.Item>
         </Stack>
       );
@@ -53,7 +79,7 @@ function formatSpreadBy(spread_by: string) {
         <Stack align="end">
           <Stack.Item>None</Stack.Item>
           <Stack.Item fontSize="10px" pb={0.2}>
-            (not contagious)
+            (non-contagious)
           </Stack.Item>
         </Stack>
       );
@@ -65,7 +91,7 @@ function formatSpreadBy(spread_by: string) {
 function estimateHeight(entry: BookEntry<Disease>) {
   const title_height = 40;
   const extra_spacing = 40;
-  if (entry.form === 'Symptom') {
+  if (isSymptom(entry)) {
     const desc_height = Math.ceil(entry.desc.length / 50) * 14;
     const illness_height = entry.illness !== 'Unidentified' ? 10 : 0;
     const cured_by_height = 10;
@@ -110,8 +136,8 @@ function renderDSMEntry(entry: BookEntry<Disease>) {
         </Stack>
       }
     >
-      <Stack vertical backgroundColor="white" p={1}>
-        {entry.form === 'Symptom' ? (
+      <Stack vertical backgroundColor={formToColor(entry.form)} p={1}>
+        {isSymptom(entry) ? (
           <>
             <Stack.Item>
               <Box inline color="label">

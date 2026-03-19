@@ -5,7 +5,7 @@
 	cure_text = /datum/reagent/medicine/spaceacillin::name + " or common Flu antibodies"
 	cures = list(/datum/reagent/medicine/spaceacillin)
 	cure_chance = 5
-	agent = "1nqu1s1t10n flu virion"
+	agent = "1nqu1s1t10n Flu Virion"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spreading_modifier = 0.75
 	desc = "An adaptation of the common flu, slightly more dangerous in nature. \

@@ -5,7 +5,7 @@
 	cure_text = /datum/reagent/medicine/spaceacillin::name + ", abated by rest"
 	cures = list(/datum/reagent/medicine/spaceacillin)
 	cure_chance = 5
-	agent = "H13N1 flu virion"
+	agent = "H13N1 Flu Virion"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spreading_modifier = 0.75
 	desc = "A common, mildly annoying contagion. If left untreated the subject will feel quite unwell."

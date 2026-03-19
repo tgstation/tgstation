@@ -5,7 +5,7 @@
 	spread_text = "None"
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	cure_text = /datum/reagent/consumable/salt::name + " & " + /datum/reagent/medicine/mutadone::name
-	agent = "Agent S and DNA restructuring"
+	agent = "Agent S and DNA Restructuring"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	stage_prob = 0.5
 	disease_flags = CURABLE

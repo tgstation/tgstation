@@ -1,6 +1,6 @@
 /datum/disease/anxiety
 	name = "Severe Anxiety"
-	form = "Condition"
+	form = "Infection"
 	max_stages = 4
 	spread_text = "Skin contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS

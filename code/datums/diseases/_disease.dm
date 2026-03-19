@@ -430,5 +430,5 @@
 	if(spread_flags & DISEASE_SPREAD_BLOOD)
 		return "Blood"
 	if(spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS)
-		return "None (Non-contagious)"
+		return "None"
 	return "Unknown"
