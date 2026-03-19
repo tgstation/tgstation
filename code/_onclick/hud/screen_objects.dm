@@ -408,6 +408,13 @@
 	icon_state = "spacesuit_0"
 	screen_loc = ui_spacesuit
 
+/atom/movable/screen/spacesuit/Click(location, control, params)
+	. = ..()
+	if(usr != get_mob())
+		return
+	var/mob/living/carbon/human/wearer = hud?.mymob
+	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.toggle_spacesuit(wearer, manual_toggle = TRUE)
+
 /atom/movable/screen/mov_intent
 	name = "run/walk toggle"
 	icon = 'icons/hud/screen_midnight.dmi'

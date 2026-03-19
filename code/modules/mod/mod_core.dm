@@ -52,7 +52,7 @@
 
 /// Returns what icon state to display on the HUD for the charge level of this core
 /obj/item/mod/core/proc/get_charge_icon_state()
-	return "0"
+	return SPACESUIT_NO_ICON
 
 /// Gets what the UI should use for the charge bar color.
 /obj/item/mod/core/proc/get_chargebar_color()

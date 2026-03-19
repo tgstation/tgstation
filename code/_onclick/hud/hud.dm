@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/healths
 	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll/healthdoll
-	var/atom/movable/screen/spacesuit
+	var/atom/movable/screen/spacesuit/spacesuit_hud
 	var/atom/movable/screen/hunger/hunger
 
 	/// Subtypes can override this to force a specific UI style
@@ -245,7 +245,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	healths = null
 	stamina = null
 	healthdoll = null
-	spacesuit = null
+	spacesuit_hud = null
 	hunger = null
 	alien_plasma_display = null
 	alien_queen_finder = null

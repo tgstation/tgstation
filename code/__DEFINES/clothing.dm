@@ -68,3 +68,9 @@
 #define GMESSENGER "Grey Messenger Bag"
 /// Backpack type: Leather satchel
 #define LSATCHEL "Leather Satchel"
+
+//Defines for space suits. The respective define is also an icon.
+#define SPACESUIT_NO_ICON "none"
+#define SPACESUIT_MISSING_CELL "missing"
+#define SPACESUIT_CELL_EMPTY "empty"
+#define SPACESUIT_CELL_POWERED "powered"
