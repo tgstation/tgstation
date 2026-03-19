@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Intelligence vendors (from the event) have a 50% chance to deny users who are not wealthy. When the vendors awake and start moving, they instead get a 100% chance to deny anyone."
