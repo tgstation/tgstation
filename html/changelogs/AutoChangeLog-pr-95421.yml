@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Added screentips for scanning raptors with the RaptorDex PDA app and standalone handheld RaptorDex."
-  - bugfix: "Fixed the handheld RaptorDex not showing the \"scanned\" balloon alert when scanning a raptor."
