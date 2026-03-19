@@ -169,12 +169,16 @@
 
 /datum/id_trim/bounty_hunter/psykers
 	assignment = "Psyker-gang Shikari"
+	honorifics = list("Psyker-Shikari")
+	honorific_positions = HONORIFIC_POSITION_FIRST_FULL
 
 /datum/id_trim/bounty_hunter/psykers/captain
 	assignment = "Psyker-gang Shikari Captain"
+	honorifics = list("Psyker-Shikari Captain")
 
 /datum/id_trim/bounty_hunter/psykers/seer
 	assignment = "Psyker-gang Shikari Seer"
+	honorifics = list("Psyker-Shikari Seer")
 
 /datum/outfit/psyker/captain
 	name = "Psyker-Shikari Leader"
@@ -203,6 +207,11 @@
 /datum/outfit/psyker/post_equip(mob/living/carbon/human/equipped)
 	. = ..()
 	equipped.psykerize()
+	var/obj/item/card/id/wearing = equipped.wear_id
+	wearing.registered_name = equipped.real_name
+	wearing.chosen_honorific = LAZYACCESS(wearing.trim.honorifics, 1)
+	wearing.honorific_position = (wearing.trim.honorific_positions & HONORIFIC_POSITION_FIRST_FULL)
+	wearing.update_label()
 
 /datum/outfit/psyker_seer
 	name = "Psyker-Shikari Seer"
@@ -217,6 +226,14 @@
 	id = /obj/item/card/id/advanced/bountyhunter
 
 	id_trim = /datum/id_trim/bounty_hunter/psykers/seer
+
+/datum/outfit/psyker_seer/post_equip(mob/living/carbon/human/equipped)
+	. = ..()
+	var/obj/item/card/id/wearing = equipped.wear_id
+	wearing.registered_name = equipped.real_name
+	wearing.chosen_honorific = LAZYACCESS(wearing.trim.honorifics, 1)
+	wearing.honorific_position = (wearing.trim.honorific_positions & HONORIFIC_POSITION_FIRST_FULL)
+	wearing.update_label()
 
 /datum/outfit/mi13_hunter
 	name = "\improper MI13 Fugitive Retrieval Agent"
