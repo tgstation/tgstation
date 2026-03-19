@@ -407,8 +407,11 @@
 	name = "Space suit cell status"
 	icon_state = "spacesuit_0"
 	screen_loc = ui_spacesuit
+	var/static/mutable_appearance/off_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "off")
 	///Boolean on whether a mouse is being hovered over us right now.
 	var/hovering = FALSE
+	///Boolean on whether or not the space suit's thermal mode is on. Start at TRUE so we auto-update when we are first equipped.
+	var/cached_thermal_on = TRUE
 
 /atom/movable/screen/spacesuit/Click(location, control, params)
 	. = ..()
@@ -442,11 +445,14 @@
 			if(SPACESUIT_NO_ICON)
 				icon_state = null
 				maptext = null
+				cached_thermal_on = TRUE
+				update_appearance(UPDATE_ICON)
 				return
 			if(SPACESUIT_MISSING_CELL, SPACESUIT_CELL_EMPTY)
 				icon_state = "spacesuit_[cell_state]"
 				maptext = null
-				color = SUIT_COLOR_VISIBLE //let them see the custom icons.
+				cached_thermal_on = TRUE
+				update_appearance(UPDATE_ICON)
 				return
 			else
 				icon_state = "spacesuit_[cell_state]"
@@ -454,7 +460,14 @@
 		maptext = MAPTEXT("<div align='right'>[round(cell_percent, 0.1)]</div>")
 	else
 		maptext = null
-	color = thermal_on ? SUIT_COLOR_VISIBLE : SUIT_COLOR_INACTIVE
+	if(thermal_on != cached_thermal_on)
+		cached_thermal_on = thermal_on
+		update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/spacesuit/update_overlays()
+	. = ..()
+	if(!cached_thermal_on && icon_state)
+		. |= off_overlay
 
 #undef SUIT_COLOR_VISIBLE
 #undef SUIT_COLOR_INACTIVE
