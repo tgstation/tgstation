@@ -64,6 +64,7 @@ type Info = {
   memories: Memory[];
   objectives: Objective[];
   can_change_objective: BooleanLike;
+  absorbed_dna: number;
 };
 
 export const AntagInfoChangeling = (props) => {
@@ -130,9 +131,29 @@ const HivemindSection = (props) => {
 
 const IntroductionSection = (props) => {
   const { act, data } = useBackend<Info>();
-  const { true_name, hive_name, objectives, can_change_objective } = data;
+  const {
+    true_name,
+    hive_name,
+    objectives,
+    can_change_objective,
+    absorbed_dna,
+  } = data;
   return (
-    <Section fill title="Intro" style={{ overflowY: 'auto' }}>
+    <Section
+      fill
+      title="Intro"
+      style={{ overflowY: 'auto' }}
+      buttons={
+        <Button
+          icon="dna"
+          tooltipPosition="left"
+          tooltip={`Absorbed DNA`}
+          color="purple"
+        >
+          {absorbed_dna}
+        </Button>
+      }
+    >
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
           You are {true_name} from the

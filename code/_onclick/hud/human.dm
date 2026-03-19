@@ -37,6 +37,32 @@
 	name = "chemical storage"
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
+	///Boolean on whether a mouse is being hovered over us right now.
+	var/hovering = FALSE
+
+/atom/movable/screen/ling/chems/Click(location, control, params)
+	. = ..()
+	to_chat(usr, span_notice("Shows you how many chemicals you have. While hovering over this, it will show the max amount of chemicals you can hold."))
+
+/atom/movable/screen/ling/chems/MouseEntered(location,control,params)
+	if(usr != get_mob())
+		return
+	var/datum/antagonist/changeling/antagonist_datum = IS_CHANGELING(hud.mymob)
+	if(!antagonist_datum)
+		return
+	. = ..()
+	hovering = TRUE
+	antagonist_datum.update_chemical_hud()
+
+/atom/movable/screen/ling/chems/MouseExited(location, control, params)
+	if(usr != get_mob())
+		return
+	var/datum/antagonist/changeling/antagonist_datum = IS_CHANGELING(hud.mymob)
+	if(!antagonist_datum)
+		return
+	. = ..()
+	hovering = FALSE
+	antagonist_datum.update_chemical_hud(antagonist_datum.chem_charges)
 
 /atom/movable/screen/ling/sting
 	name = "current sting"
