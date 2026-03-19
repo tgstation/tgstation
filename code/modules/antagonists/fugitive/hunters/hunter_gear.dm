@@ -213,7 +213,39 @@
 	desc = "A headset designed to boost psychic waves. Protects ears from flashbangs."
 	icon_state = "psyker_headset"
 	worn_icon_state = "syndie_headset"
+	freerange = TRUE
 
 /obj/item/radio/headset/psyker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection)
+	set_frequency(FREQ_FUGITIVE_HUNTER)
+
+/obj/item/radio/headset/psyker/equipped(mob/user, slot, initial)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_ECHOLOCATOR))
+		ADD_TRAIT(user, TRAIT_SIGHT_BYPASS, REF(src))
+	else
+		REMOVE_TRAIT(user, TRAIT_SIGHT_BYPASS, REF(src))
+
+/obj/item/radio/headset/psyker/dropped(mob/user, silent)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_SIGHT_BYPASS, REF(src))
+
+/obj/item/radio/headset/psyker_seer
+	name = "psychic seer headset"
+	desc = "A psychic headset designed for the elite psyker seers."
+	icon_state = "med_headset_alt"
+	worn_icon_state = "med_headset_alt"
+	freerange = TRUE
+
+/obj/item/radio/headset/psyker_seer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection)
+	set_frequency(FREQ_FUGITIVE_HUNTER)
+
+/obj/item/storage/belt/holster/psyker
+
+/obj/item/storage/belt/holster/psyker/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 5
+	atom_storage.max_total_storage = /obj/item/gun/ballistic/revolver/c38:w_class + (4 * /obj/item/ammo_box/speedloader/c38::w_class)

@@ -179,6 +179,7 @@
 /datum/outfit/psyker/captain
 	name = "Psyker-Shikari Leader"
 
+	glasses = /obj/item/clothing/glasses/red
 	id_trim = /datum/id_trim/bounty_hunter/psykers/captain
 	suit = /obj/item/clothing/suit/armor/reactive/psykerboost
 	uniform = /obj/item/clothing/under/pants/camo
@@ -187,6 +188,7 @@
 	name = "Psyker-Shikari Hunter"
 	glasses = null
 	head = null
+	glasses = /obj/item/clothing/glasses/trickblindfold
 	ears = /obj/item/radio/headset/psyker
 	uniform = /obj/item/clothing/under/pants/track
 	gloves = /obj/item/clothing/gloves/fingerless
@@ -204,8 +206,8 @@
 
 /datum/outfit/psyker_seer
 	name = "Psyker-Shikari Seer"
-	glasses = /obj/item/clothing/glasses/regular/thin
-	ears = /obj/item/radio/headset
+	glasses = /obj/item/clothing/glasses/thermal/monocle
+	ears = /obj/item/radio/headset/psyker_seer
 	uniform = /obj/item/clothing/under/pants/jeans
 	suit = /obj/item/clothing/suit/hazardvest
 	gloves = /obj/item/clothing/gloves/fingerless
