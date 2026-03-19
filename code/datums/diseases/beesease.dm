@@ -1,6 +1,6 @@
 /datum/disease/beesease
 	name = "Beesease"
-	form = "Infection"
+	form = "Parasite"
 	max_stages = 4
 	spread_text = "Skin contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS

@@ -1,5 +1,5 @@
 /datum/disease/tuberculosis
-	form = "Bacteria"
+	form = "Fungus"
 	name = "Fungal Tuberculosis"
 	max_stages = 5
 	spread_text = "Airborne"
@@ -8,7 +8,7 @@
 	agent = "Fungal Tubercle Bacillus Cosmosis"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 2.5 //like hell are you getting out of hell
-	desc = "A rare and highly transmissible virulent bacteria. \
+	desc = "A rare and highly transmissible virulent fungus. \
 		Few samples exist, rumoured to be carefully grown and cultured by clandestine bio-weapon specialists. \
 		Causes fever, blood vomiting, lung damage, weight loss, fatigue, and eventually death."
 	required_organ = ORGAN_SLOT_LUNGS

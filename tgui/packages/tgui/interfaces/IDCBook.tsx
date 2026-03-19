@@ -30,8 +30,12 @@ function formToColor(form: string) {
     case 'infection':
     case 'parasite':
       return 'lightsalmon';
-    default:
+    case 'virus':
+    case 'bacteria':
+    case 'fungus':
       return 'lightblue';
+    default:
+      return 'white';
   }
 }
 
