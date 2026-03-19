@@ -116,6 +116,10 @@
 
 /datum/config_entry/flag/allow_latejoin_antagonists // If late-joining players can be traitor/changeling
 
+/// Require living midround antagonist offers to be opt-in via a prompt, rerolling on decline.
+/datum/config_entry/flag/opt_in_midround_from_living
+	default = TRUE
+
 /datum/config_entry/number/shuttle_refuel_delay
 	default = 12000
 	integer = FALSE

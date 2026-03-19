@@ -1053,6 +1053,8 @@
 	min_antag_cap = 1
 	max_antag_cap = 1
 	repeatable = TRUE
+	/// If TRUE in config, candidates will be asked to opt-in before being assigned
+	var/force_opt_in = FALSE
 
 /datum/dynamic_ruleset/midround/from_living/set_config_value(nvar, nval)
 	if(nvar == NAMEOF(src, min_antag_cap) || nvar == NAMEOF(src, max_antag_cap))
@@ -1064,8 +1066,61 @@
 		return FALSE
 	return ..()
 
+/datum/dynamic_ruleset/midround/from_living/New(list/dynamic_config)
+	. = ..()
+	force_opt_in = CONFIG_GET(flag/opt_in_midround_from_living)
+
 /datum/dynamic_ruleset/midround/from_living/collect_candidates()
 	return GLOB.alive_player_list
+
+/datum/dynamic_ruleset/midround/from_living/prepare_execution(population_size = 0, list/mob/antag_candidates = list())
+	if(!force_opt_in)
+		return ..()
+
+	var/max_candidates = get_antag_cap(population_size, max_antag_cap || min_antag_cap)
+	var/min_candidates = get_antag_cap(population_size, min_antag_cap)
+
+	if(max_candidates > 1 || min_candidates > 1)
+		return ..()
+
+	// !! THIS SLEEPS !!
+	load_templates()
+
+	if(!can_be_selected())
+		log_data = "Reason: Ruleset cannot be selected."
+		return FALSE
+
+	var/list/candidate_pool = shuffle(trim_candidates(antag_candidates)) || list()
+	while(candidate_pool.len && length(selected_minds) < max_candidates)
+		var/mob/candidate = pick_n_take(candidate_pool)
+		if(isnull(candidate) || !candidate.client || candidate.stat == DEAD)
+			continue
+		if(!is_valid_candidate(candidate, candidate.client))
+			continue
+
+		var/response = tgui_alert(
+			candidate,
+			"You've been offered the [lowertext(name)] midround antagonist slot. Accept to become it; decline to pass to another player.",
+			"Midround Antagonist Offer",
+			list("Accept", "Decline"),
+			timeout = 20 SECONDS,
+		)
+
+		if(response != "Accept")
+			continue
+
+		var/datum/mind/candidate_mind = get_candidate_mind(candidate)
+		prepare_for_role(candidate_mind)
+		LAZYADDASSOC(SSjob.prevented_occupations, candidate_mind, get_blacklisted_roles())
+		selected_minds += candidate_mind
+		antag_candidates -= candidate
+
+	if(length(selected_minds) < min_candidates)
+		log_data = "Reason: Not enough willing candidates. Have: [length(selected_minds)], Need: [min_candidates]"
+		selected_minds.Cut()
+		return FALSE
+
+	return TRUE
 
 /datum/dynamic_ruleset/midround/from_living/is_valid_candidate(mob/candidate, client/candidate_client)
 	if(candidate.stat == DEAD || isnull(candidate.mind))
