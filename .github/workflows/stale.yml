@@ -56,7 +56,7 @@ jobs:
     if: ${{ needs.stale.outputs.staled_prs != '[]' }}
     strategy:
      matrix:
-      pull_request: ${{ fromJson(needs.stale.outputs.staled_prs) }}
+      pull_request: ${{ fromJSON(needs.stale.outputs.staled_prs) }}
     steps:
       - name: "Check for DISCORD_WEBHOOK"
         id: secrets_set
