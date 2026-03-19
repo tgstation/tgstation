@@ -24,6 +24,7 @@
 	name = ".310 Strilka phasic bullet casing"
 	desc = "A phasic .310 Strilka bullet casing."
 	projectile_type = /obj/projectile/bullet/strilka310/phasic
+
 // .223 (M-90gl Carbine)
 
 /obj/item/ammo_casing/a223
@@ -45,7 +46,7 @@
 
 /obj/item/ammo_casing/a40mm
 	name = "40mm HE shell"
-	desc = "A cased high explosive grenade that can only be activated once fired out of a grenade launcher."
+	desc = "A cased high explosive grenade that can only be activated once fired out of a ballistic grenade launcher."
 	caliber = CALIBER_40MM
 	icon_state = "40mmHE"
 	projectile_type = /obj/projectile/bullet/a40mm
@@ -53,8 +54,36 @@
 
 /obj/item/ammo_casing/a40mm/rubber
 	name = "40mm rubber shell"
-	desc = "A cased rubber slug. The big brother of the beanbag slug, this thing will knock someone out in one. Doesn't do so great against anyone in armor."
+	desc = "A cased rubber puck. The big brother of the beanbag slug. Made for stopping someone dead in their tracks."
 	projectile_type = /obj/projectile/bullet/shotgun_beanbag/a40mm
+
+/obj/item/ammo_casing/a40mm/flak
+	name = "40mm titanium flak shell"
+	desc = "An oversized shotgun case. The big brother of buckshot, this shell launches dense titanium shells for immense damage to armor and flesh alike."
+	pellets = 8
+	variance = 10
+	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/milspec/flak
+
+/obj/item/ammo_casing/a40mm/incendiary
+	name = "40mm incendiary shell"
+	desc = "A cased incendiary explosive grenade that can only be activated once fired out of a ballistic grenade launcher. Creates a mighty conflagration. A favourite of inquisitors."
+	projectile_type = /obj/projectile/bullet/a40mm/incendiary
+
+/obj/item/ammo_casing/a40mm/tear_gas
+	name = "40mm tear gas shell"
+	desc = "A cased tear gas grenade that can only be activated once fired out of a ballistic grenade launcher. Spreads a large amount of tear gas into the air upon impact. \
+		Great for suppressing riots, protests and birthday parties!"
+	projectile_type = /obj/projectile/bullet/a40mm/tear_gas
+
+/obj/item/disk/design_disk/tear_gas_40mm
+	name = "40mm riot suppression grenade shells design disk"
+
+/obj/item/disk/design_disk/liberator/Initialize(mapload)
+	. = ..()
+	blueprints += new /datum/design/tear_gas_40mm
+	blueprints += new /datum/design/rubber_40mm
+
+// Rebar Bolts
 
 /obj/item/ammo_casing/rebar
 	name = "Sharpened Iron Rod"

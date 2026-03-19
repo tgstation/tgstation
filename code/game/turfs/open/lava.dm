@@ -353,7 +353,7 @@
  */
 /turf/open/lava/proc/drop_contents_into_lava()
 	SIGNAL_HANDLER
-	balloon_alert_to_viewers("[pick("splash","pshhhh","hiss","blorble")]!")
+	balloon_alert_to_hearers("[pick("splash","pshhhh","hiss","blorble")]!")
 	playsound(src, 'sound/items/match_strike.ogg', 15, TRUE)
 	for(var/atom/movable/each_content as anything in contents)
 		on_atom_inited(src, each_content)

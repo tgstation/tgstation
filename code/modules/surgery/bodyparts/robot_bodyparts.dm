@@ -295,28 +295,29 @@
 			TRAIT_RESISTHIGHPRESSURE,
 			), AUGMENTATION_TRAIT)
 
-/obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/stock_parts/power_store/cell))
+/obj/item/bodypart/chest/robot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(cell)
-			to_chat(user, span_warning("You have already inserted a cell!"))
-			return
-		else
-			if(!user.transferItemToLoc(weapon, src))
-				return
-			cell = weapon
-			to_chat(user, span_notice("You insert the cell."))
-	else if(istype(weapon, /obj/item/stack/cable_coil))
+			to_chat(user, span_warning("A cell is already present in [src]!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		cell = tool
+		to_chat(user, span_notice("You insert [cell] into [src]."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/cable_coil))
 		if(wired)
-			to_chat(user, span_warning("You have already inserted wire!"))
-			return
-		var/obj/item/stack/cable_coil/coil = weapon
-		if (coil.use(1))
-			wired = TRUE
-			to_chat(user, span_notice("You insert the wire."))
-		else
+			to_chat(user, span_warning("[src] is already wired up!"))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stack/cable_coil/coil = tool
+		if (!coil.use(1))
 			to_chat(user, span_warning("You need one length of coil to wire it!"))
-	else
-		return ..()
+			return ITEM_INTERACT_BLOCKING
+		wired = TRUE
+		to_chat(user, span_notice("You wire the cell inside of [src]."))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/bodypart/chest/robot/wirecutter_act(mob/living/user, obj/item/cutter)
 	. = ..()
@@ -440,25 +441,28 @@
 			. += "It has two eye sockets occupied by flashes."
 		. += span_notice("You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.")
 
-/obj/item/bodypart/head/robot/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/flash = weapon
-		if(flash1 && flash2)
-			to_chat(user, span_warning("You have already inserted the eyes!"))
-			return
-		else if(flash.burnt_out)
-			to_chat(user, span_warning("You can't use a broken flash!"))
-			return
-		else
-			if(!user.transferItemToLoc(flash, src))
-				return
-			if(flash1)
-				flash2 = flash
-			else
-				flash1 = flash
-			to_chat(user, span_notice("You insert the flash into the eye socket."))
-			return
-	return ..()
+/obj/item/bodypart/head/robot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/assembly/flash/handheld))
+		return NONE
+
+	var/obj/item/assembly/flash/handheld/flash = tool
+	if(flash1 && flash2)
+		to_chat(user, span_warning("[src] already has both flash-eyes present!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(flash.burnt_out)
+		to_chat(user, span_warning("You can't use a broken flash!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(flash, src))
+		return ITEM_INTERACT_BLOCKING
+
+	if(flash1)
+		flash2 = flash
+	else
+		flash1 = flash
+	to_chat(user, span_notice("You insert the flash into the eye socket."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/bodypart/head/robot/crowbar_act(mob/living/user, obj/item/prytool)
 	..()
