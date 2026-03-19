@@ -13,7 +13,7 @@
 	/// The description of what the disease is and does
 	var/desc = ""
 	/// The agent that causes the disease, for example "virus", "bacteria", "parasite", "curse"
-	var/agent = "some microbes"
+	var/agent = "Unknown"
 	/// A string describing how the disease spreads, for example "Airborne", "Blood", "Skin contact", "Magic"
 	/// (Keep this strictly for how it spreads BETWEEN hosts, NOT how it affected the initial host. Use agent var for that)
 	var/spread_text = ""

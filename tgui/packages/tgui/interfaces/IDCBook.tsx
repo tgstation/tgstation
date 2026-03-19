@@ -7,10 +7,10 @@ type Disease = {
   name: string; // used by symptoms and diseases - name of the disease or symptom
   desc: string; // used by symptoms and diseases - description of the disease or symptom
   form: string; // used by symptoms and diseases - something like symptom, virus, bacteria, etc
-  agent?: string; // used by diseases - the agent that causes the disease, like a virus or bacteria name
-  spread_by?: string; // used by diseases - how the disease is spread, like "Airborne" or "Contact"
+  agent: string; // used by diseases - the agent that causes the disease, like a virus or bacteria name
+  spread_by: string; // used by diseases - how the disease is spread, like "Airborne" or "Contact"
   cured_by: string; // used by symptoms and diseases - how the disease or symptom is cured, like a medicine name or "Unknown"
-  illness?: string; // used by symptoms - the common illness associated with the symptom, like "Flu" for "Fever"
+  illness: string; // used by symptoms - the common illness associated with the symptom, like "Flu" for "Fever"
   id: string;
 };
 
@@ -161,7 +161,7 @@ function renderDSMEntry(entry: BookEntry<Disease>) {
               <Box inline color="label">
                 Common cures:
               </Box>{' '}
-              {entry.cured_by || 'Unknown'}
+              {entry.cured_by}
             </Stack.Item>
           </>
         ) : (
@@ -182,13 +182,13 @@ function renderDSMEntry(entry: BookEntry<Disease>) {
               <Box inline color="label">
                 Spread By:
               </Box>{' '}
-              <Box inline>{formatSpreadBy(entry.spread_by || 'Unknown')}</Box>
+              <Box inline>{formatSpreadBy(entry.spread_by)}</Box>
             </Stack.Item>
             <Stack.Item>
               <Box inline color="label">
                 Cured By:
               </Box>{' '}
-              {entry.cured_by || 'No known cure'}
+              {entry.cured_by}
             </Stack.Item>
           </>
         )}
