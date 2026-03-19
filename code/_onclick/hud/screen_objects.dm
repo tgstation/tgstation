@@ -407,6 +407,8 @@
 	name = "Space suit cell status"
 	icon_state = "spacesuit_0"
 	screen_loc = ui_spacesuit
+	mouse_over_pointer = MOUSE_HAND_POINTER
+	///The overlay added on top of the HUD when the thermal regulator is off.
 	var/static/mutable_appearance/off_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "off")
 	///Boolean on whether a mouse is being hovered over us right now.
 	var/hovering = FALSE
@@ -414,9 +416,9 @@
 	var/cached_thermal_on = TRUE
 
 /atom/movable/screen/spacesuit/Click(location, control, params)
-	. = ..()
 	if(usr != get_mob())
 		return
+	. = ..()
 	var/mob/living/carbon/human/wearer = hud?.mymob
 	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.toggle_spacesuit(wearer, manual_toggle = TRUE)
 
