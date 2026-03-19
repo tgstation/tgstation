@@ -670,27 +670,6 @@
 	else
 		hud_used.healths.icon_state = "health6"
 
-#define SUIT_COLOR_VISIBLE rgb(255,255,255,255)
-#define SUIT_COLOR_INACTIVE rgb(128,0,0)
-
-/mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state, cell_percent, thermal_on = TRUE)
-	if(cell_state)
-		switch(cell_state)
-			if(SPACESUIT_NO_ICON)
-				hud_used?.spacesuit_hud?.icon_state = null
-				hud_used?.spacesuit_hud?.maptext = null
-				return
-			if(SPACESUIT_MISSING_CELL, SPACESUIT_CELL_EMPTY)
-				hud_used?.spacesuit_hud?.icon_state = "spacesuit_[cell_state]"
-				hud_used?.spacesuit_hud?.maptext = null
-				hud_used?.spacesuit_hud?.color = SUIT_COLOR_VISIBLE //let them see the custom icons.
-				return
-			else
-				hud_used?.spacesuit_hud?.icon_state = "spacesuit_[cell_state]"
-	if(cell_percent)
-		hud_used?.spacesuit_hud?.maptext = MAPTEXT("<div align='right'>[round(cell_percent, 0.1)]</div>")
-	hud_used?.spacesuit_hud?.color = thermal_on ? SUIT_COLOR_VISIBLE : SUIT_COLOR_INACTIVE
-
 /mob/living/carbon/set_health(new_value)
 	. = ..()
 	if(. > hardcrit_threshold)

@@ -415,6 +415,30 @@
 	var/mob/living/carbon/human/wearer = hud?.mymob
 	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.toggle_spacesuit(wearer, manual_toggle = TRUE)
 
+#define SUIT_COLOR_VISIBLE rgb(255,255,255,255)
+#define SUIT_COLOR_INACTIVE rgb(128,0,0)
+
+/atom/movable/screen/spacesuit/proc/update_spacesuit_hud_icon(cell_state, cell_percent, thermal_on = TRUE)
+	if(cell_state)
+		switch(cell_state)
+			if(SPACESUIT_NO_ICON)
+				icon_state = null
+				maptext = null
+				return
+			if(SPACESUIT_MISSING_CELL, SPACESUIT_CELL_EMPTY)
+				icon_state = "spacesuit_[cell_state]"
+				maptext = null
+				color = SUIT_COLOR_VISIBLE //let them see the custom icons.
+				return
+			else
+				icon_state = "spacesuit_[cell_state]"
+	if(cell_percent)
+		maptext = MAPTEXT("<div align='right'>[round(cell_percent, 0.1)]</div>")
+	color = thermal_on ? SUIT_COLOR_VISIBLE : SUIT_COLOR_INACTIVE
+
+#undef SUIT_COLOR_VISIBLE
+#undef SUIT_COLOR_INACTIVE
+
 /atom/movable/screen/mov_intent
 	name = "run/walk toggle"
 	icon = 'icons/hud/screen_midnight.dmi'

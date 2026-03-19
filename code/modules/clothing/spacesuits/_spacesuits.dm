@@ -121,9 +121,9 @@
 /obj/item/clothing/suit/space/dropped(mob/living/user)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	var/mob/living/carbon/carbon_user = user
-	if(istype(carbon_user))
-		carbon_user.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
+	var/mob/living/carbon/human/human_user = user
+	if(istype(human_user))
+		human_user.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
 
 // Space Suit temperature regulation and power usage
 /obj/item/clothing/suit/space/process(seconds_per_tick)
@@ -159,7 +159,7 @@
 		QDEL_NULL(cell)
 	var/mob/living/carbon/human/human = src.loc
 	if(istype(human))
-		human.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
+		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -306,7 +306,7 @@
 		return
 
 	if(!cell)
-		human.update_spacesuit_hud_icon(SPACESUIT_MISSING_CELL, 0, thermal_on)
+		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_MISSING_CELL, 0, thermal_on)
 		return
 
 	var/cell_percent = cell.percent()
@@ -314,9 +314,9 @@
 	// if there is, whethere the cell's capacity indicates high, medium or low
 	// charge based on it.
 	if(cell.charge >= THERMAL_REGULATOR_COST)
-		human.update_spacesuit_hud_icon(SPACESUIT_CELL_POWERED, cell_percent, thermal_on)
+		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_POWERED, cell_percent, thermal_on)
 		return
-	human.update_spacesuit_hud_icon(SPACESUIT_CELL_EMPTY, cell_percent, thermal_on)
+	human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_EMPTY, cell_percent, thermal_on)
 
 // zap the cell if we get hit with an emp
 /obj/item/clothing/suit/space/emp_act(severity)

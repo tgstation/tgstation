@@ -524,7 +524,7 @@
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_SPECIES_GAIN, COMSIG_MOB_CLICKON))
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
-	wearer.update_spacesuit_hud_icon()
+	wearer.hud_used.spacesuit_hud.update_spacesuit_hud_icon()
 	wearer = null
 
 /obj/item/mod/control/proc/get_sealed_slots(list/parts)
@@ -725,7 +725,7 @@
 	else
 		state_to_use = core.get_charge_icon_state()
 
-	wearer.update_spacesuit_hud_icon(state_to_use || SPACESUIT_NO_ICON)
+	wearer.hud_used.spacesuit_hud.update_spacesuit_hud_icon(state_to_use || SPACESUIT_NO_ICON)
 
 /obj/item/mod/control/proc/update_speed()
 	var/total_slowdown = 0
