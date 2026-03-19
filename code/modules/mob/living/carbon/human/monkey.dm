@@ -130,6 +130,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 /mob/living/carbon/human/species/monkey/punpun/proc/give_special_name()
 	var/name_to_use = initial(name)
 
+#ifndef UNIT_TESTS
 	if(ancestor_name)
 		name_to_use = ancestor_name
 		if(ancestor_chain > 1)
@@ -140,6 +141,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		if(name_to_use == "Furious George")
 			qdel(ai_controller)
 			ai_controller = new /datum/ai_controller/monkey/angry(src) //hes always mad
+#endif
 
 	fully_replace_character_name(real_name, name_to_use)
 

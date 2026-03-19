@@ -34,7 +34,7 @@
 		/turf/open/misc/snow,
 	))
 	if(severity < required_strength)
-		balloon_alert_to_viewers("crack!")
+		balloon_alert_to_hearers("*crack*")
 		playsound(source = src, soundin = SFX_HULL_CREAKING, vol = 50, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
 		return //return ominous sounds when we're under the threshold.
 
