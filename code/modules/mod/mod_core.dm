@@ -181,7 +181,7 @@
 		if(0.25 to 0.5)
 			return SPACESUIT_CELL_LOW
 		if(0.02 to 0.25)
-			return "very_low"
+			return SPACESUIT_CELL_VERY_LOW
 
 	return SPACESUIT_CELL_EMPTY
 
@@ -411,7 +411,7 @@
 		if(0.25 to 0.5)
 			return SPACESUIT_CELL_LOW
 		if(0.02 to 0.25)
-			return "very_low"
+			return SPACESUIT_CELL_VERY_LOW
 
 	return SPACESUIT_CELL_EMPTY
 
@@ -654,7 +654,7 @@
 		if(0.25 to 0.5)
 			return SPACESUIT_CELL_LOW
 		if(0.02 to 0.25)
-			return "very_low"
+			return SPACESUIT_CELL_VERY_LOW
 
 	return SPACESUIT_CELL_EMPTY
 

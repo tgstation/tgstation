@@ -313,16 +313,18 @@
 	// Check if there's enough charge to trigger a thermal regulator tick and
 	// if there is, whethere the cell's capacity indicates high, medium or low
 	// charge based on it.
-	if(cell.charge >= THERMAL_REGULATOR_COST)
-		if(cell_percent > 60)
-			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_HIGH, cell_percent, thermal_on)
-			return
-		if(cell_percent > 20)
-			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_MID, cell_percent, thermal_on)
-			return
-		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_LOW, cell_percent, thermal_on)
+	if(cell.charge < THERMAL_REGULATOR_COST)
+		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_EMPTY, cell_percent, thermal_on)
 		return
-	human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_EMPTY, cell_percent, thermal_on)
+	switch(cell_percent)
+		if(0 to 20)
+			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_VERY_LOW, cell_percent, thermal_on)
+		if(21 to 40)
+			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_LOW, cell_percent, thermal_on)
+		if(41 to 60)
+			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_MID, cell_percent, thermal_on)
+		if(61 to 100)
+			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_HIGH, cell_percent, thermal_on)
 
 // zap the cell if we get hit with an emp
 /obj/item/clothing/suit/space/emp_act(severity)

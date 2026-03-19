@@ -76,3 +76,4 @@
 #define SPACESUIT_CELL_HIGH "high"
 #define SPACESUIT_CELL_MID "mid"
 #define SPACESUIT_CELL_LOW "low"
+#define SPACESUIT_CELL_VERY_LOW "very_low"
