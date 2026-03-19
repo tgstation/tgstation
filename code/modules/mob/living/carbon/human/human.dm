@@ -638,10 +638,8 @@
 	// If we have a species, we need to handle mutant parts and stuff
 	if(dna?.species)
 		add_atom_colour(COLOR_BLACK, TEMPORARY_COLOUR_PRIORITY)
-		var/static/mutable_appearance/shock_animation_dna
-		if(!shock_animation_dna)
-			shock_animation_dna = mutable_appearance(icon, "electrocuted_base")
-			shock_animation_dna.appearance_flags |= RESET_COLOR|KEEP_APART
+		var/mutable_appearance/shock_animation_dna = mutable_appearance(icon, "electrocuted_base", appearance_flags = RESET_COLOR|KEEP_APART)
+		apply_height_filters(shock_animation_dna)
 		zap_appearance = shock_animation_dna
 
 	// Otherwise do a generic animation
