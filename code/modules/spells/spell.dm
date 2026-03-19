@@ -153,6 +153,9 @@
 	if(!owner)
 		CRASH("[type] - can_cast_spell called on a spell without an owner!")
 
+	if(SEND_SIGNAL(src, COMSIG_SPELL_CAN_CAST_CHECK, feedback) & SPELL_CANCEL_CAST)
+		return FALSE
+
 	// Certain spells are not allowed on the centcom zlevel
 	var/turf/caster_turf = get_turf(owner)
 	// Spells which require being on the station
