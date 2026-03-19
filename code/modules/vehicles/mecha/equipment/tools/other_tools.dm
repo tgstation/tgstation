@@ -339,11 +339,11 @@
 			log_message("Deactivated.", LOG_MECHA)
 		return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(!istype(weapon, fuel))
-		return FALSE
-	load_fuel(weapon, user)
+/obj/item/mecha_parts/mecha_equipment/generator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, fuel))
+		load_fuel(tool, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/mecha_parts/mecha_equipment/generator/process(seconds_per_tick)
 	if(!chassis)
