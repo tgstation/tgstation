@@ -688,7 +688,7 @@
 			else
 				hud_used?.spacesuit_hud?.icon_state = "spacesuit_[cell_state]"
 	if(cell_percent)
-		hud_used?.spacesuit_hud?.maptext = MAPTEXT("<div align='center' align='right'><font color='#dd2828'>[round(cell_percent, 0.1)]</font></div>")
+		hud_used?.spacesuit_hud?.maptext = MAPTEXT("<div align='right'>[round(cell_percent, 0.1)]</div>")
 	hud_used?.spacesuit_hud?.color = thermal_on ? SUIT_COLOR_VISIBLE : SUIT_COLOR_INACTIVE
 
 /mob/living/carbon/set_health(new_value)
