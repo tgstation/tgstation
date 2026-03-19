@@ -302,7 +302,7 @@
 	if(!data_list[data_field]) { stack_trace("[type] - [data_list["id"]] lacks [data_field] information!"); }
 
 /obj/item/tgui_book/manual/dsm
-	name = "\improper SDSM-35"
+	name = "\improper SDSM-35" // 35 was picked based on the current edition plus the average years between edition divided by 500
 	desc = "The Space Diagnostic and Statistical Manual of Mental Disorders, \
 		a comprehensive book on all known mental disorders. \
 		On its 35th edition - though it's due for an update..."
@@ -380,7 +380,7 @@
 	return data
 
 /obj/item/tgui_book/manual/idc
-	name = "\improper IDC-27"
+	name = "\improper IDC-27" // 27 was picked based on the current edition plus the average years between edition divided by 500
 	desc = "The Interplanetary Classification of Diseases, \
 		a comprehensive book on all known diseases and ailments. \
 		On its 27th edition - though it's due for an update..."
