@@ -6,14 +6,18 @@
 	var/datum/callback/on_successful_revive
 	/// The chance to twitch when orbiting the spawn
 	var/twitch_chance = 30
+	/// The title shown to ghosts when polled to enter the body
+	var/revive_title
 
-/datum/component/ghostrole_on_revive/Initialize(refuse_revival_if_failed, on_successful_revive)
+/datum/component/ghostrole_on_revive/Initialize(refuse_revival_if_failed, on_successful_revive, revive_title = "a recovered crewmember")
 	. = ..()
 
 	src.refuse_revival_if_failed = refuse_revival_if_failed
 	src.on_successful_revive = on_successful_revive
+	src.revive_title = revive_title
 
 	ADD_TRAIT(parent, TRAIT_GHOSTROLE_ON_REVIVE, REF(src)) //for adding an alternate examination
+	RegisterSignal(parent, COMSIG_MOB_REAGENT_TICK, PROC_REF(block_formaldehyde_metabolism))
 
 	if(ismob(parent))
 		prepare_mob(parent)
@@ -88,22 +92,19 @@
 			soul_eyes = new /datum/bodypart_overlay/simple/soul_pending_eyes()
 			head.add_bodypart_overlay(soul_eyes)
 
-	// So during the potentially short period of time we're revived, we don't metabolize formaldehyde
-	// Really just a QOL for coroners, so we dont suddenly start decaying
-	ADD_TRAIT(aliver, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM, type)
+	var/list/jobbans = list(ROLE_RECOVERED_CREW)
+	if(aliver.mind)
+		jobbans += aliver.mind.assigned_role.title
 
 	var/mob/dead/observer/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = "Would you like to play as a recovered crewmember?",
-		role = null,
-		check_jobban = ROLE_RECOVERED_CREW,
+		question = "Would you like to play as [revive_title]?",
+		check_jobban = jobbans,
 		poll_time = 15 SECONDS,
 		checked_target = aliver,
 		ignore_category = POLL_IGNORE_RECOVERED_CREW,
 		alert_pic = aliver,
-		role_name_text = "recovered crew",
+		role_name_text = revive_title,
 	)
-
-	REMOVE_TRAIT(aliver, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM, type)
 
 	if(head)
 		head.remove_bodypart_overlay(soul_eyes)
@@ -143,8 +144,16 @@
 
 	UnregisterSignal(living, COMSIG_LIVING_GHOSTROLE_INFO)
 
+// Block formaldehyde from being metabolized, Coroner QoL
+/datum/component/ghostrole_on_revive/proc/block_formaldehyde_metabolism(mob/living/source, datum/reagent/chem)
+	SIGNAL_HANDLER
+
+	if(istype(chem, /datum/reagent/toxin/formaldehyde))
+		return COMSIG_MOB_STOP_REAGENT_TICK
+
 /datum/component/ghostrole_on_revive/Destroy(force)
 	REMOVE_TRAIT(parent, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
+	UnregisterSignal(parent, COMSIG_MOB_REAGENT_TICK)
 
 	var/mob/living/living
 	if(isliving(parent))

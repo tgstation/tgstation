@@ -1952,6 +1952,7 @@
 #include "code\datums\quirks\neutral_quirks\pineapple_hater.dm"
 #include "code\datums\quirks\neutral_quirks\pineapple_liker.dm"
 #include "code\datums\quirks\neutral_quirks\shifty_eyes.dm"
+#include "code\datums\quirks\neutral_quirks\thanatorenasia.dm"
 #include "code\datums\quirks\neutral_quirks\transhumanist.dm"
 #include "code\datums\quirks\neutral_quirks\vegetarian.dm"
 #include "code\datums\quirks\positive_quirks\alcohol_tolerance.dm"
