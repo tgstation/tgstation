@@ -407,6 +407,8 @@
 	name = "Space suit cell status"
 	icon_state = "spacesuit_0"
 	screen_loc = ui_spacesuit
+	///Boolean on whether a mouse is being hovered over us right now.
+	var/hovering = FALSE
 
 /atom/movable/screen/spacesuit/Click(location, control, params)
 	. = ..()
@@ -414,6 +416,22 @@
 		return
 	var/mob/living/carbon/human/wearer = hud?.mymob
 	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.toggle_spacesuit(wearer, manual_toggle = TRUE)
+
+/atom/movable/screen/spacesuit/MouseEntered(location,control,params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	hovering = TRUE
+	var/mob/living/carbon/human/wearer = hud?.mymob
+	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.update_hud_icon(usr)
+
+/atom/movable/screen/spacesuit/MouseExited(location, control, params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	hovering = FALSE
+	var/mob/living/carbon/human/wearer = hud?.mymob
+	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.update_hud_icon(usr)
 
 #define SUIT_COLOR_VISIBLE rgb(255,255,255,255)
 #define SUIT_COLOR_INACTIVE rgb(128,0,0)
@@ -432,8 +450,10 @@
 				return
 			else
 				icon_state = "spacesuit_[cell_state]"
-	if(cell_percent)
+	if(cell_percent && hovering)
 		maptext = MAPTEXT("<div align='right'>[round(cell_percent, 0.1)]</div>")
+	else
+		maptext = null
 	color = thermal_on ? SUIT_COLOR_VISIBLE : SUIT_COLOR_INACTIVE
 
 #undef SUIT_COLOR_VISIBLE

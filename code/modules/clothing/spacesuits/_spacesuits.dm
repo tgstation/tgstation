@@ -314,7 +314,13 @@
 	// if there is, whethere the cell's capacity indicates high, medium or low
 	// charge based on it.
 	if(cell.charge >= THERMAL_REGULATOR_COST)
-		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_POWERED, cell_percent, thermal_on)
+		if(cell_percent > 60)
+			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_HIGH, cell_percent, thermal_on)
+			return
+		if(cell_percent > 20)
+			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_MID, cell_percent, thermal_on)
+			return
+		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_LOW, cell_percent, thermal_on)
 		return
 	human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_EMPTY, cell_percent, thermal_on)
 

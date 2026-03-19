@@ -73,4 +73,6 @@
 #define SPACESUIT_NO_ICON "none"
 #define SPACESUIT_MISSING_CELL "missing"
 #define SPACESUIT_CELL_EMPTY "empty"
-#define SPACESUIT_CELL_POWERED "powered"
+#define SPACESUIT_CELL_HIGH "high"
+#define SPACESUIT_CELL_MID "mid"
+#define SPACESUIT_CELL_LOW "low"
