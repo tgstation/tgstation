@@ -13,6 +13,14 @@
 
 	for(var/obj/item/reagent_containers/cup/glass/drink in created_atoms)
 		RegisterSignal(drink, COMSIG_GLASS_DRANK, PROC_REF(on_drink_drank))
+	for(var/obj/machinery/vending/vending_machine in created_atoms)
+		RegisterSignal(vending_machine, COMSIG_VENDING_DISPENSED, PROC_REF(on_vended_item))
+
+
+/datum/lazy_template/virtual_domain/beach_bar/proc/on_vended_item(obj/item/vended_item)
+	if(istype(vended_item, obj/item/reagent_containers/cup/glass))
+		RegisterSignal(vended_item, COMSIG_GLASS_DRANK, PROC_REF(on_drink_drank))
+
 
 /// Eventually reveal the cache
 /datum/lazy_template/virtual_domain/beach_bar/proc/on_drink_drank(datum/source)
