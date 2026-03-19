@@ -95,19 +95,18 @@
 	var/mutable_appearance/pedestal = mutable_appearance(icon, "pedestal_[material]")
 	pedestal.pixel_z = -3
 	. += pedestal
-	var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[underwear_name]
-	var/mutable_appearance/underwear_overlay = underwear?.make_appearance(species_human)
+	var/datum/sprite_accessory/clothing/underwear/underwear = SSaccessories.underwear_list[underwear_name]
+	var/mutable_appearance/underwear_overlay = underwear?.make_appearance(COLOR_WHITE, body_type, BODYSHAPE_HUMANOID)
 	if(underwear_overlay)
 		. += underwear_overlay
-	var/datum/sprite_accessory/undershirt/undershirt = SSaccessories.undershirt_list[undershirt_name]
-	if(undershirt)
-		if(body_type == FEMALE)
-			. += mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
-		else
-			. += mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
-	var/datum/sprite_accessory/socks/socks = SSaccessories.socks_list[socks_name]
-	if(socks)
-		. += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+	var/datum/sprite_accessory/clothing/undershirt/undershirt = SSaccessories.undershirt_list[undershirt_name]
+	var/mutable_appearance/undershirt_overlay = undershirt?.make_appearance(COLOR_WHITE, body_type, BODYSHAPE_HUMANOID)
+	if(undershirt_overlay)
+		. += undershirt_overlay
+	var/datum/sprite_accessory/clothing/socks/socks = SSaccessories.socks_list[socks_name]
+	var/mutable_appearance/socks_overlay = socks?.make_appearance(COLOR_WHITE, body_type, BODYSHAPE_HUMANOID)
+	if(socks_overlay)
+		. += socks_overlay
 	for(var/slot_flag in worn_items)
 		var/obj/item/worn_item = worn_items[slot_flag]
 		if(!worn_item)
