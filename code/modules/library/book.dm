@@ -369,3 +369,45 @@
 
 	data["traumas"] = trauma_info
 	return data
+
+/obj/item/tgui_book/manual/idc
+	name = "\improper IDC-27"
+	desc = "The Interplanetary Classification of Diseases, \
+		a comprehensive book on all known diseases and ailments. \
+		On its 27th edition - though it's due for an update..."
+	icon_state = "book7"
+	ui_name = "IDCBook"
+
+/obj/item/tgui_book/manual/idc/ui_static_data(mob/user)
+	var/list/data = list()
+
+	var/static/list/disease_info
+	if(!disease_info)
+		disease_info = list()
+
+		for(var/datum/disease/disease_type as anything in valid_subtypesof(/datum/disease))
+			if(disease_type::visibility_flags & HIDDEN_BOOK)
+				continue
+
+			var/list/disease_data = list()
+			disease_data["form"] = disease_type::form
+			disease_data["agent"] = disease_type::agent
+			disease_data["name"] = disease_type::name
+			disease_data["desc"] = disease_type::desc
+			disease_data["spread_by"] = disease_type::spread_text || get_disease_spread_text(disease_type::spread_flags)
+			disease_data["cured_by"] = disease_type::cure_text
+			disease_data["id"] = disease_type
+			disease_info += list(disease_data)
+
+		for(var/datum/symptom/symptom_type as anything in valid_subtypesof(/datum/symptom))
+			var/list/symptom_data = list()
+			symptom_data["form"] = "Symptom"
+			symptom_data["name"] = symptom_type::name
+			symptom_data["desc"] = symptom_type::desc
+			symptom_data["illness"] = symptom_type::illness
+			symptom_data["cured_by"] = symptom_type::symptom_cure::name
+			symptom_data["id"] = symptom_type
+			disease_info += list(symptom_data)
+
+	data["diseases"] = disease_info
+	return data

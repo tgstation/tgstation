@@ -2,15 +2,22 @@
 	name = "Spanish inquisition Flu"
 	max_stages = 3
 	spread_text = "Airborne"
-	cure_text = "Spaceacillin & Anti-bodies to the common flu"
+	cure_text = /datum/reagent/medicine/spaceacillin::name + " or common Flu antibodies"
 	cures = list(/datum/reagent/medicine/spaceacillin)
 	cure_chance = 5
 	agent = "1nqu1s1t10n flu virion"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spreading_modifier = 0.75
-	desc = "If left untreated the subject will burn to death for being a heretic."
+	desc = "An adaptation of the common flu, slightly more dangerous in nature. \
+		If left untreated the subject will burn to death for being a heretic."
 	severity = DISEASE_SEVERITY_DANGEROUS
 	required_organ = ORGAN_SLOT_LUNGS
+
+/datum/disease/fluspanish/cure(add_resistance)
+	// buy one, get one free
+	if(add_resistance && affected_mob)
+		LAZYOR(affected_mob.disease_resistances, "[/datum/disease/flu]")
+	return ..()
 
 /datum/disease/fluspanish/stage_act(seconds_per_tick)
 	. = ..()
