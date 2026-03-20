@@ -105,8 +105,6 @@
 		return
 
 	if(href_list[VV_HK_WEAKREF_RESOLVE])
-		if(!check_rights(NONE))
-			return
 		var/datum/R = resolve()
 		if(R)
 			usr.client.debug_variables(R)

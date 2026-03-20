@@ -528,6 +528,4 @@
 		return
 
 	if(href_list[VV_HK_TO_OUTFIT_EDITOR])
-		if(!check_rights(NONE))
-			return
 		usr.client.open_outfit_editor(src)
