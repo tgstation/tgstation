@@ -6,6 +6,8 @@
 	var/datum/action/minimap/minimap_type = /datum/action/minimap
 	/// Reference to the minimap datum
 	var/datum/tactical_map/my_map
+	// reference to the minimap action given to the user
+	var/datum/action/minimap/minimap_action
 
 /obj/item/implant/tacmap/implant(mob/living/target, mob/user, silent, force)
 	. = ..()
@@ -26,16 +28,21 @@
 /// Adds a minimap to the mob, starts the subsystem if it hasnt already
 /obj/item/implant/tacmap/proc/add_minimap(mob/user)
 	remove_minimap(user)
-	var/datum/action/minimap/mini = new minimap_type(tactical_map = my_map)
-	mini.Grant(user)
+	minimap_action = new minimap_type(tactical_map = my_map)
+	minimap_action.Grant(user)
 	addtimer(CALLBACK(src, PROC_REF(update_minimap_icon), user), 0.1 SECONDS) //Mobs are spawned inside nullspace sometimes so this is to avoid that hijinks
+	RegisterSignal(minimap_action, COMSIG_QDELETING, PROC_REF(cleanup_self))
+
+/obj/item/implant/tacmap/proc/cleanup_self()
+	SIGNAL_HANDLER
+	if(imp_in)
+		remove_minimap(imp_in)
+	qdel(src)
 
 ///Remove all action of type minimap from the wearer, and make him disappear from the minimap
 /obj/item/implant/tacmap/proc/remove_minimap(mob/user)
 	my_map?.remove_marker(user)
-	for(var/datum/action/action as anything in user.actions)
-		if(istype(action, /datum/action/minimap))
-			action.Remove(user)
+	minimap_action?.Remove(user)
 
 ///Updates the wearer's minimap icon
 /obj/item/implant/tacmap/proc/update_minimap_icon(mob/wearer)
@@ -99,15 +106,11 @@
 		return ..()
 	var/datum/team/nuclear/nukie_team = nukie.get_team()
 	my_map = nukie_team.nuclear_tacmap // Specify that we are using the nukeop map before calling parent
-	my_map.minimap_flags |= MINIMAP_FLAG_NUCLEAR
+
 	return ..()
 
 /obj/item/implant/tacmap/nuclear/leader // Leader subtype lets him draw on the map
-
-/obj/item/implant/tacmap/nuclear/leader/implant(mob/living/target, mob/user, silent, force)
-	. = ..()
-	var/datum/action/minimap/map_drawing/draw_action = new(tactical_map = my_map)
-	draw_action.Grant(target)
+	minimap_type = /datum/action/minimap/map_drawing/nuclear
 
 /obj/item/implanter/tacmap
 	name = "implanter (minimap)"

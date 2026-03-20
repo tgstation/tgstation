@@ -1,5 +1,5 @@
-/// range that we can remove labels when we click near them with the removal tool
-#define LABEL_REMOVE_RANGE 20
+/// pixel radius that right-click label removal checks around the cursor
+#define LABEL_REMOVE_PIXEL_RANGE 5
 #define MINIMAP_DRAW_OFFSET 8
 
 /// Action that lets you draw on a minimap
@@ -26,7 +26,7 @@
 	. = ..()
 	var/list/atom/movable/screen/actions = list()
 	for(var/path in drawing_tools)
-		actions += new path(FALSE, grant_to, current_z_shown, my_map)
+		actions += new path(FALSE, grant_to, current_z_shown, my_map, minimap_flags)
 	drawing_tools = actions
 
 /datum/action/minimap/map_drawing/toggle_minimap(force_state)
@@ -35,6 +35,11 @@
 		owner.client.screen += drawing_tools
 		return
 	owner.client.screen -= drawing_tools
+
+/datum/action/minimap/map_drawing/change_z_shown(newz)
+	. = ..()
+	for(var/atom/movable/screen/minimap_tool/tool as anything in drawing_tools)
+		tool.set_zlevel(newz)
 
 /atom/movable/screen/minimap_tool
 	icon = 'icons/ui_icons/minimap/minimap_buttons.dmi'
@@ -50,11 +55,14 @@
 	var/datum/tactical_map/my_map
 	/// reference to the icon we are manipulating when drawing, fetched during initialize
 	var/image/drawn_image
+	/// minimap flags this tool draws onto
+	var/minimap_flags
 
-/atom/movable/screen/minimap_tool/Initialize(mapload, datum/hud/hud_owner, zlevel, datum/tactical_map/map)
+/atom/movable/screen/minimap_tool/Initialize(mapload, datum/hud/hud_owner, zlevel, datum/tactical_map/map, minimap_flags)
 	. = ..()
 	my_map = map
 	src.zlevel = zlevel
+	src.minimap_flags = minimap_flags
 	if(my_map)
 		set_zlevel(zlevel)
 		return
@@ -62,9 +70,12 @@
 
 ///Setter for the offsets of the x and y of drawing based on the input z, and the drawn_image
 /atom/movable/screen/minimap_tool/proc/set_zlevel(zlevel)
+	if(!my_map?.minimaps_by_z["[zlevel]"])
+		return
+	src.zlevel = zlevel
 	x_offset = my_map.minimaps_by_z["[zlevel]"].x_offset
 	y_offset = my_map.minimaps_by_z["[zlevel]"].y_offset
-	drawn_image = my_map.get_drawing_image(zlevel, my_map.minimap_flags)
+	drawn_image = my_map.get_drawing_image(zlevel, minimap_flags)
 
 /atom/movable/screen/minimap_tool/MouseEntered(location, control, params)
 	. = ..()
@@ -83,7 +94,7 @@
 	if(modifiers[BUTTON] == LEFT_CLICK)
 		RegisterSignal(usr.client, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(on_mousedown))
 		usr.client.mouse_pointer_icon = active_mouse_icon
-		my_map?.updator_add(drawn_image, my_map.minimap_flags)
+		my_map?.updator_add(drawn_image, minimap_flags, zlevel)
 
 /**
  * handles actions when the mouse is held down while the tool is active.
@@ -105,6 +116,8 @@
 	desc = "Draw using a color. Drag to draw a line, right click to place a dot. Right click this button to unselect."
 	// color that this draw tool will be drawing in
 	color = COLOR_PINK
+	/// pixel radius used when this tool erases (ignored while drawing colors)
+	var/erase_pixel_range = 0
 	///last thing this tool has drawn, stored so it can be reverted with right click
 	var/list/last_drawn
 	///temporary existing list used to calculate a line between the start of a click and the end of a click
@@ -128,7 +141,7 @@
 	if(modifiers[BUTTON] == RIGHT_CLICK)
 		var/icon/mona_lisa = icon(drawn_image.icon)
 		pixel_coords = list(pixel_coords[1]-MINIMAP_DRAW_OFFSET, pixel_coords[2]+MINIMAP_DRAW_OFFSET)
-		mona_lisa.DrawBox(color, pixel_coords[1], pixel_coords[2], ++pixel_coords[1], ++pixel_coords[2])
+		draw_pixel(mona_lisa, color, pixel_coords[1], pixel_coords[2])
 		drawn_image.icon = mona_lisa
 		log_minimap_drawing("[key_name(source)] has made a dot at [pixel_coords[1]/2], [pixel_coords[2]/2]")
 		my_map.process()
@@ -148,6 +161,16 @@
 	log_minimap_drawing("[key_name(usr)] drew a [color] line from [starting_coords[1]], [starting_coords[2]] to [end_coords[1]], [end_coords[2]]")
 	my_map.process()
 
+/atom/movable/screen/minimap_tool/draw_tool/proc/draw_pixel(icon/map_icon, draw_color, pixel_x, pixel_y)
+	draw_box(map_icon, draw_color, pixel_x, pixel_y, pixel_x + 1, pixel_y + 1, 1)
+
+/atom/movable/screen/minimap_tool/draw_tool/proc/draw_box(icon/map_icon, box_color, start_x, start_y, end_x, end_y, erase_padding_multiplier = 0)
+	if(!isnull(box_color) || !erase_padding_multiplier)
+		map_icon.DrawBox(box_color, start_x, start_y, end_x, end_y)
+		return
+	var/padding = erase_pixel_range * erase_padding_multiplier
+	map_icon.DrawBox(box_color, start_x - padding, start_y - padding, end_x + padding, end_y + padding)
+
 /// proc for drawing a line from list(startx, starty) to list(endx, endy) on the screen. yes this is aa ripoff of [/proc/getline]
 /atom/movable/screen/minimap_tool/draw_tool/proc/draw_line(list/start_coords, list/end_coords, draw_color = color)
 	// converts these into the unscaled minimap version so we have to do less calculating
@@ -160,15 +183,25 @@
 
 	//special case 1, straight line
 	if(start_x == end_x)
-		mona_lisa.DrawBox(draw_color, start_x*2, start_y*2, start_x*2 + 1, end_y*2 + 1)
+		var/start_line_y = min(start_y, end_y)
+		var/end_line_y = max(start_y, end_y)
+		if(isnull(draw_color))
+			draw_box(mona_lisa, null, start_x*2, start_line_y*2, start_x*2 + 1, end_line_y*2 + 1, 1)
+		else
+			draw_box(mona_lisa, draw_color, start_x*2, start_line_y*2, start_x*2 + 1, end_line_y*2 + 1)
 		drawn_image.icon = mona_lisa
 		return
 	if(start_y == end_y)
+		var/start_line_x = min(start_x, end_x)
+		var/end_line_x = max(start_x, end_x)
 		drawn_image.icon = mona_lisa
-		mona_lisa.DrawBox(draw_color, start_x*2, start_y*2, end_x*2 + 1, start_y*2 + 1)
+		if(isnull(draw_color))
+			draw_box(mona_lisa, null, start_line_x*2, start_y*2, end_line_x*2 + 1, start_y*2 + 1, 1)
+		else
+			draw_box(mona_lisa, draw_color, start_line_x*2, start_y*2, end_line_x*2 + 1, start_y*2 + 1)
 		return
 
-	mona_lisa.DrawBox(draw_color, start_x*2, start_y*2, start_x*2 + 1, start_y*2 + 1)
+	draw_pixel(mona_lisa, draw_color, start_x*2, start_y*2)
 
 	var/abs_dx = abs(end_x - start_x)
 	var/abs_dy = abs(end_y - start_y)
@@ -180,7 +213,7 @@
 		for(var/j = 1 to abs_dx)
 			start_x += sign_dx
 			start_y += sign_dy
-			mona_lisa.DrawBox(draw_color, start_x*2, start_y*2, start_x*2 + 1, start_y*2 + 1)
+			draw_pixel(mona_lisa, draw_color, start_x*2, start_y*2)
 		drawn_image.icon = mona_lisa
 		return
 
@@ -196,7 +229,7 @@
 				y_error -= abs_dx
 				start_y += sign_dy
 			start_x += sign_dx
-			mona_lisa.DrawBox(draw_color, start_x*2, start_y*2, start_x*2 + 1, start_y*2 + 1)
+			draw_pixel(mona_lisa, draw_color, start_x*2, start_y*2)
 	else
 		var/x_error = -(abs_dy >> 1)
 		var/steps = abs_dy
@@ -206,7 +239,7 @@
 				x_error -= abs_dy
 				start_x += sign_dx
 			start_y += sign_dy
-			mona_lisa.DrawBox(draw_color, start_x*2, start_y*2, start_x*2 + 1, start_y*2 + 1)
+			draw_pixel(mona_lisa, draw_color, start_x*2, start_y*2)
 	drawn_image.icon = mona_lisa
 
 /atom/movable/screen/minimap_tool/draw_tool/red
@@ -235,6 +268,7 @@
 	active_mouse_icon = 'icons/ui_icons/minimap/minimap_mouse/draw_erase.dmi'
 	screen_loc = "16,10"
 	color = null
+	erase_pixel_range = 5
 
 /atom/movable/screen/minimap_tool/label
 	icon_state = "label"
@@ -243,6 +277,11 @@
 	screen_loc = "16,8"
 	/// List of turfs that have labels attached to them. kept around so it can be cleared
 	var/list/turf/labelled_turfs = list()
+
+/atom/movable/screen/minimap_tool/label/New(loc, ...)
+	. = ..()
+	if(!minimap_flags)
+		CRASH("[src] created with no minimap flags")
 
 /atom/movable/screen/minimap_tool/label/Click(location, control, params)
 	. = ..()
@@ -255,6 +294,7 @@
 	log_minimap_drawing("[key_name(usr)] has cleared current labels")
 	for(var/turf/label as anything in labelled_turfs)
 		my_map.remove_marker(label)
+	labelled_turfs.Cut()
 
 /atom/movable/screen/minimap_tool/label/on_mousedown(client/source, atom/object, location, control, params)
 	. = ..()
@@ -274,17 +314,20 @@
 	var/c_y = clamp(CEILING(y, 1), 1, world.maxy)
 	var/turf/target = locate(c_x, c_y, zlevel)
 	if(modifiers[BUTTON] == RIGHT_CLICK)
-		var/curr_dist
+		var/curr_dist_sq
 		var/turf/nearest
 		for(var/turf/label as anything in labelled_turfs)
-			var/dist = get_dist_euclidean(label, target)
-			if(dist > LABEL_REMOVE_RANGE)
+			var/dx = MINIMAP_PIXEL_FROM_WORLD(label.x) - MINIMAP_PIXEL_FROM_WORLD(target.x)
+			var/dy = MINIMAP_PIXEL_FROM_WORLD(label.y) - MINIMAP_PIXEL_FROM_WORLD(target.y)
+			var/dist_sq = dx * dx + dy * dy
+			if(dist_sq > (LABEL_REMOVE_PIXEL_RANGE * LABEL_REMOVE_PIXEL_RANGE))
 				continue
-			if(!curr_dist || curr_dist > dist)
-				curr_dist = dist
+			if(isnull(curr_dist_sq) || curr_dist_sq > dist_sq)
+				curr_dist_sq = dist_sq
 				nearest = label
 		if(nearest)
 			my_map.remove_marker(nearest)
+			labelled_turfs -= nearest
 		return
 	var/label_text = MAPTEXT(tgui_input_text(source, title = "Label Name", max_length = 35))
 	var/filter_result = is_ic_filtered(label_text)
@@ -296,7 +339,7 @@
 		return
 	if(!label_text)
 		return
-	var/atom/movable/screen/minimap/mini = my_map.fetch_minimap_object(zlevel, my_map.minimap_flags)
+	var/atom/movable/screen/minimap/mini = my_map.fetch_minimap_object(zlevel, minimap_flags)
 	if(!locate(mini) in source?.screen)
 		return
 
@@ -309,7 +352,7 @@
 	labelled_turfs += target
 	var/image/blip = image('icons/ui_icons/minimap/map_blips.dmi', null, "label", MINIMAP_LABELS_LAYER)
 	blip.overlays += textbox
-	my_map.add_marker(target, my_map.minimap_flags, blip)
+	my_map.add_marker(target, minimap_flags, blip)
 	log_minimap_drawing("[key_name(source.ckey)] has added the label [label_text] at [c_x], [c_y]")
 
 /atom/movable/screen/minimap_tool/clear
@@ -323,5 +366,5 @@
 	labels?.clear_labels(usr)
 	log_minimap_drawing("[key_name(usr)] has cleared the minimap")
 
-#undef LABEL_REMOVE_RANGE
+#undef LABEL_REMOVE_PIXEL_RANGE
 #undef MINIMAP_DRAW_OFFSET

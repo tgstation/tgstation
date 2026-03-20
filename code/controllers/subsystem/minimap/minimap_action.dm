@@ -31,6 +31,11 @@
 	var/current_z_shown
 	/// minimap state, if it's open or not
 	var/active = FALSE
+	/// list of z-trait overrides to show another z-trait's map
+	var/list/minimap_ztrait_overrides = list(
+		ZTRAIT_CENTCOM = ZTRAIT_STATION,
+		ZTRAIT_RESERVED = ZTRAIT_STATION
+	)
 
 /datum/action/minimap/New(Target, new_minimap_flags, new_marker_flags, tactical_map)
 	. = ..()
@@ -80,13 +85,11 @@
 			to_chat(owner, span_warning("You already have a minimap open!"))
 			return FALSE
 		owner.client.screen += map_object
-		owner.client.screen += locator
-		if(length(SSmapping.get_connected_levels(tracking.z)) > 1)
+		if(length(SSmapping.get_connected_levels(map_object.tracked_z)) > 1)
 			owner.client.screen += z_indicator
 			owner.client.screen += z_up
 			owner.client.screen += z_down
-		locator.update(tracking)
-		locator.RegisterSignal(tracking, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/movable/screen/minimap_locator, update))
+		update_locator_visibility(tracking, map_object.tracked_z)
 		my_map.process()
 		my_map.add_viewer(owner)
 	else
@@ -155,16 +158,14 @@
 		if(owner_turf.z != locator_override.z)
 			on_owner_z_change(owner, locator_override.z, owner_turf.z)
 	if(minimap_displayed)
-		locator.UnregisterSignal(locator_override, COMSIG_MOVABLE_MOVED)
-		locator.RegisterSignal(owner, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/movable/screen/minimap_locator, update))
-		locator.update(owner)
+		update_locator_visibility(owner, current_z_shown)
 	locator_override = null
 
 /datum/action/minimap/Grant(mob/grant_to)
 	. = ..()
 	var/atom/movable/tracking = locator_override ? locator_override : grant_to
 	RegisterSignal(tracking, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_owner_z_change))
-	var/shown_z = default_overwatch_level ? default_overwatch_level : tracking.z
+	var/shown_z = default_overwatch_level ? default_overwatch_level : get_overridden_map_z(tracking.z)
 	z_indicator.set_indicated_z(shown_z)
 	current_z_shown = shown_z
 	if(default_overwatch_level)
@@ -196,7 +197,7 @@
 	var/old_map_z = map_object?.tracked_z
 	map_object = null
 
-	var/new_z_shown = newz
+	var/new_z_shown = get_overridden_map_z(newz)
 	if(minimap_displayed)
 		var/new_z_is_multiz = length(SSmapping.get_connected_levels(new_z_shown)) > 1
 		var/old_z_is_multiz = old_map_z ? length(SSmapping.get_connected_levels(old_map_z)) > 1 : FALSE
@@ -222,5 +223,35 @@
 	if(minimap_displayed)
 		if(owner.client)
 			owner.client.screen += map_object
+			update_locator_visibility(tracking, new_z_shown)
 		else
 			minimap_displayed = FALSE
+
+/// Returns TRUE when the locator should be displayed for the currently shown map z-level.
+/datum/action/minimap/proc/should_show_locator(atom/movable/tracking, shown_z)
+	return tracking?.z == shown_z
+
+/// Updates locator visibility and movement signal registration based on the shown z-level.
+/datum/action/minimap/proc/update_locator_visibility(atom/movable/tracking, shown_z)
+	if(!owner?.client)
+		return
+	locator.UnregisterSignal(tracking, COMSIG_MOVABLE_MOVED)
+	if(!should_show_locator(tracking, shown_z))
+		owner.client.screen -= locator
+		return
+	owner.client.screen += locator
+	locator.update(tracking)
+	locator.RegisterSignal(tracking, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/movable/screen/minimap_locator, update))
+
+			/// Returns the z-level that should be displayed on minimap after applying trait-based overrides.
+/datum/action/minimap/proc/get_overridden_map_z(z_level)
+	for(var/source_trait in minimap_ztrait_overrides)
+		if(!SSmapping.level_trait(z_level, source_trait))
+			continue
+		var/target_trait = minimap_ztrait_overrides[source_trait]
+		var/list/target_levels = SSmapping.levels_by_trait(target_trait)
+		if(!length(target_levels))
+			return z_level
+		target_levels = sort_list(target_levels, /proc/cmp_numeric_asc)
+		return target_levels[1]
+	return z_level

@@ -446,20 +446,24 @@
 	hashed_minimaps[hash] = map
 	return map
 
-///fetches the drawing icon for a minimap flag and returns it, creating it if needed. assumes minimap_flag is ONE flag
+///fetches the drawing icon for minimap flags and returns it, creating it if needed
 /datum/tactical_map/proc/get_drawing_image(zlevel, minimap_flag)
 	var/hash = "[zlevel]-[minimap_flag]"
 	if(drawn_images[hash])
 		return drawn_images[hash]
 	var/image/blip = new // could use MA but yolo
 	blip.icon = icon('icons/ui_icons/minimap/minimap.dmi')
-	minimaps_by_z["[zlevel]"].images_raw["[minimap_flag]"] += blip
+	for(var/flag in bitfield2list(minimap_flag))
+		minimaps_by_z["[zlevel]"].images_raw["[flag]"] += blip
 	drawn_images[hash] = blip
 	return blip
 
-/datum/tactical_map/proc/updator_add(image/blip, flag)
-	for(var/datum/minimap_updator/updator as anything in update_targets["[flag]"])
-		updator.raw_blips |= blip
+/datum/tactical_map/proc/updator_add(image/blip, flags, zlevel)
+	for(var/flag in bitfield2list(flags))
+		for(var/datum/minimap_updator/updator as anything in update_targets["[flag]"])
+			if(updator.ztarget != zlevel || (blip in updator.raw_blips))
+				continue
+			updator.raw_blips += blip
 
 ///Default HUD screen minimap object
 /atom/movable/screen/minimap
@@ -594,7 +598,7 @@
 /atom/movable/screen/minimap_extras/minimap_z_indicator
 	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "zindicator"
-	screen_loc = ui_ai_floor_indicator
+	screen_loc = "BOTTOM+5,RIGHT"
 
 ///sets the currently indicated relative floor
 /atom/movable/screen/minimap_extras/minimap_z_indicator/proc/set_indicated_z(newz)
@@ -613,7 +617,7 @@
 	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "up"
 	mouse_over_pointer = MOUSE_HAND_POINTER
-	screen_loc = ui_ai_godownup
+	screen_loc = "BOTTOM+5,RIGHT-1"
 
 /atom/movable/screen/minimap_extras/minimap_z_up/Click(location,control,params)
 	flick("uppressed",src)
@@ -634,7 +638,7 @@
 	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "down"
 	mouse_over_pointer = MOUSE_HAND_POINTER
-	screen_loc = ui_ai_godownup
+	screen_loc = "BOTTOM+5,RIGHT-1"
 
 /atom/movable/screen/minimap_extras/minimap_z_down/Click(location,control,params)
 	flick("downpressed",src)
