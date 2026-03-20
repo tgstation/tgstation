@@ -117,15 +117,15 @@
 	SStransport.crossing_signals -= src
 	. = ..()
 
-/obj/machinery/transport/crossing_signal/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!user.combat_mode)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-			return
+/obj/machinery/transport/crossing_signal/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-		if(default_deconstruction_crowbar(weapon))
-			return
-
-	return ..()
+/obj/machinery/transport/crossing_signal/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/machinery/transport/crossing_signal/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -516,15 +516,15 @@
 			. += span_notice("The red [EXAMINE_HINT("local fault")] light is on.")
 			. += span_notice("The status display reads: Repair required.")
 
-/obj/machinery/transport/guideway_sensor/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if (!user.combat_mode)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-			return
+/obj/machinery/transport/guideway_sensor/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-		if(default_deconstruction_crowbar(weapon))
-			return
-
-	return ..()
+/obj/machinery/transport/guideway_sensor/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/machinery/transport/guideway_sensor/proc/pair_sensor()
 	set_machine_stat(machine_stat | MAINT)

@@ -134,6 +134,9 @@
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_LOGGED_IN, src)
 
+	if(SSticker.IsPostgame())
+		client.screen += SSticker.reboot_hud
+
 	return TRUE
 
 

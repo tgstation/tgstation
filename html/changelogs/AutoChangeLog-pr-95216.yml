@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "reagent transfer & removal operations now have faster cpu performance"
