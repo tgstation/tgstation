@@ -399,6 +399,7 @@
 		apply_category = LIMB_ITEM_GAUZE, \
 		override_existing = TRUE, \
 		can_apply = CALLBACK(src, PROC_REF(can_gauze_limb)), \
+		do_apply = CALLBACK(src, PROC_REF(do_gauze_limb)), \
 		on_apply = CALLBACK(src, PROC_REF(on_gauze_limb)), \
 	)
 	RegisterSignals(src, list(COMSIG_ITEM_APPLIED_TO_LIMB, COMSIG_ITEM_UNAPPLIED_FROM_LIMB), PROC_REF(update_wounds))
@@ -412,16 +413,14 @@
 
 /// Callback for limb applicability component
 /obj/item/stack/medical/wrap/proc/can_gauze_limb(mob/user, mob/living/patient, obj/item/bodypart/limb)
-	var/wound_tracker = LACKS_WOUND
-	for(var/datum/wound/woundies as anything in limb.wounds)
-		if(!(woundies.wound_flags & ACCEPTS_GAUZE))
+	var/can_gauze = FALSE
+	for(var/datum/wound/wound as anything in limb.wounds)
+		if(!(wound.wound_flags & ACCEPTS_GAUZE))
 			continue
-		if(HAS_TRAIT(woundies, TRAIT_WOUND_SCANNED))
-			wound_tracker = HAS_SCANNED_WOUND
-			break
-		wound_tracker = HAS_WOUND
+		can_gauze = TRUE
+		break
 
-	if(wound_tracker == LACKS_WOUND)
+	if(!can_gauze)
 		patient.balloon_alert(user, LAZYLEN(limb.wounds) ? "can't gauze!" : "no wounds!")
 		return FALSE
 
@@ -430,8 +429,20 @@
 		patient.balloon_alert(user, pick("already bandaged!", "bandage is clean!")) // good enough
 		return FALSE
 
+	return TRUE
+
+/// Callback for limb applicability component
+/obj/item/stack/medical/wrap/proc/do_gauze_limb(mob/user, mob/living/patient, obj/item/bodypart/limb)
+
+	var/scanned_wound = FALSE
+	for(var/datum/wound/wound as anything in limb.wounds)
+		if(!HAS_TRAIT(wound, TRAIT_WOUND_SCANNED))
+			continue
+		scanned_wound = TRUE
+		break
+
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
-	if(wound_tracker == HAS_SCANNED_WOUND)
+	if(scanned_wound)
 		treatment_delay *= 0.5
 		if(user == patient)
 			user.visible_message(
