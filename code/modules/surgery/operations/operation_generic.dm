@@ -459,7 +459,7 @@
 
 /datum/surgery_operation/limb/incise_organs
 	name = "incise organs"
-	desc = "Make an incision in patient's internal organ tissue to allow for manipulation or repair. \
+	desc = "Make an incision in the patient's internal organ tissue to allow for manipulation or repair. \
 		Causes \"organs cut\" surgical state."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	operation_flags = OPERATION_NO_PATIENT_REQUIRED
