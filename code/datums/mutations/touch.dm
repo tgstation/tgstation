@@ -226,7 +226,7 @@
 
 	// Get at least organic limb to transfer the damage to
 	var/list/mendicant_organic_limbs = list()
-	for(var/obj/item/bodypart/possible_limb in mendicant.bodyparts)
+	for(var/obj/item/bodypart/possible_limb in mendicant.get_bodyparts())
 		if(IS_ORGANIC_LIMB(possible_limb))
 			mendicant_organic_limbs += possible_limb
 	// None? Gtfo
@@ -258,7 +258,7 @@
 	// Get the hurtguy's limbs and the mendicant's limbs to attempt a 1-1 transfer.
 	var/list/hurt_limbs = hurtguy.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC) + hurtguy.get_wounded_bodyparts(BODYTYPE_ORGANIC)
 	var/list/mendicant_organic_limbs = list()
-	for(var/obj/item/bodypart/possible_limb in mendicant.bodyparts)
+	for(var/obj/item/bodypart/possible_limb in mendicant.get_bodyparts())
 		if(IS_ORGANIC_LIMB(possible_limb))
 			mendicant_organic_limbs += possible_limb
 

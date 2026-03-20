@@ -63,7 +63,7 @@
 		if(iscarbon(defibber))
 			var/removed_arms = 0
 			var/mob/living/carbon/carbon_defibber = defibber
-			for(var/obj/item/bodypart/arm/limb in carbon_defibber.bodyparts)
+			for(var/obj/item/bodypart/arm/limb in carbon_defibber.get_bodyparts())
 				if(limb.dismember(silent = FALSE))
 					removed_arms++
 					qdel(limb)

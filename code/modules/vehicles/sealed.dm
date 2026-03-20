@@ -108,18 +108,20 @@
 /obj/vehicle/sealed/proc/exit_location(M)
 	return drop_location()
 
-/obj/vehicle/sealed/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(key_type && !is_key(inserted_key) && is_key(I))
-		if(user.transferItemToLoc(I, src))
-			to_chat(user, span_notice("You insert [I] into [src]."))
-			if(inserted_key) //just in case there's an invalid key
-				inserted_key.forceMove(drop_location())
-			inserted_key = I
-			inserted_key.forceMove(src)
-		else
-			to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
-		return
-	return ..()
+/obj/vehicle/sealed/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!key_type || is_key(inserted_key) || !is_key(tool))
+		return NONE
+
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("[tool] seems to be stuck to your hand!"))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You insert [tool] into [src]."))
+	if(inserted_key) // Just in case there's an invalid key
+		inserted_key.forceMove(drop_location())
+	inserted_key = tool
+	inserted_key.forceMove(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/sealed/proc/remove_key(mob/user)
 	if(!inserted_key)

@@ -63,7 +63,7 @@
 	icon_state = "beebox"
 	var/datum/reagent/custom_reagent = null
 	if(random_reagent)
-		custom_reagent = pick(subtypesof(/datum/reagent))
+		custom_reagent = get_random_reagent_id()
 		custom_reagent = GLOB.chemical_reagents_list[custom_reagent]
 
 	queen_bee = new(src)

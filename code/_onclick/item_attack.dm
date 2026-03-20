@@ -408,7 +408,7 @@
 	return TRUE
 
 /mob/living/carbon/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
-	var/obj/item/bodypart/hit_bodypart = get_bodypart(hit_zone) || bodyparts[1]
+	var/obj/item/bodypart/hit_bodypart = get_bodypart(hit_zone) || get_bodypart()
 	if(!hit_bodypart.can_bleed())
 		return FALSE
 

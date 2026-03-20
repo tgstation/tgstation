@@ -99,7 +99,7 @@
 
 	// If we have a team skincolor, apply it here. Applied by admins or 2% chance of natural occurance
 	if(!isnull(team.team_skincolor))
-		for(var/obj/item/bodypart/part as anything in new_abductor.bodyparts)
+		for(var/obj/item/bodypart/part as anything in new_abductor.get_bodyparts())
 			part.should_draw_greyscale = TRUE
 			part.add_color_override(team.team_skincolor, LIMB_COLOR_AYYLMAO)
 

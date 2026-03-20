@@ -219,7 +219,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/carbontarget = target
 		var/any_damage = brute_loss > 0 || fire_loss > 0 || oxy_loss > 0 || tox_loss > 0 || fire_loss > 0
-		var/any_missing = length(carbontarget.bodyparts) < (carbontarget.dna?.species?.max_bodypart_count || 6)
+		var/any_missing = length(carbontarget.get_missing_limbs())
 		var/any_wounded = length(carbontarget.all_wounds)
 		var/any_embeds = carbontarget.has_embedded_objects()
 		if(any_damage || (mode == SCANNER_VERBOSE && (any_missing || any_wounded || any_embeds)))

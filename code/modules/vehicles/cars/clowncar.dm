@@ -143,14 +143,16 @@
 	for(var/mob/living/carbon/carbon_occupant in occupants)
 		if(prob(35)) //Note: The randomstep on dump_mobs throws occupants into each other and often causes wounds regardless.
 			continue
-		for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
-			var/pick_mode = text2num(pick(list(
-				"[WOUND_PICK_LOWEST_SEVERITY]",
-				"[WOUND_PICK_HIGHEST_SEVERITY]"
-			)))
-			carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
-			carbon_occupant.playsound_local(src, 'sound/items/weapons/flash_ring.ogg', 50)
-			carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
+		var/obj/item/bodypart/head/head_to_wound = carbon_occupant.get_bodypart(BODY_ZONE_HEAD)
+		if(isnull(head_to_wound))
+			return
+		var/pick_mode = text2num(pick(list(
+			"[WOUND_PICK_LOWEST_SEVERITY]",
+			"[WOUND_PICK_HIGHEST_SEVERITY]"
+		)))
+		carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
+		carbon_occupant.playsound_local(src, 'sound/items/weapons/flash_ring.ogg', 50)
+		carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 
 	hittarget_living.add_splatter_floor(small_drip = FALSE)
 	hittarget_living.adjust_brute_loss(200)

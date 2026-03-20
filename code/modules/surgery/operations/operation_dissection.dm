@@ -115,14 +115,14 @@
 	. = ..()
 	. += span_notice("It is worth [value] research points.")
 
-/obj/item/research_notes/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/research_notes))
-		var/obj/item/research_notes/notes = attacking_item
-		value = value + notes.value
-		change_vol()
-		qdel(notes)
-		return
-	return ..()
+/obj/item/research_notes/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/research_notes))
+		return NONE
+	var/obj/item/research_notes/notes = tool
+	value = value + notes.value
+	change_vol()
+	qdel(notes)
+	return ITEM_INTERACT_SUCCESS
 
 /// proc that changes name and icon depending on value
 /obj/item/research_notes/proc/change_vol()

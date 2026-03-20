@@ -413,6 +413,8 @@
 				new_bodypart = newBodyPart(BODY_ZONE_L_ARM)
 
 			new_bodypart.held_index = i
+			if(i >= 3) // start indexing them as right_arm2 and so on
+				new_bodypart.body_zone = "[new_bodypart.body_zone]_[ceil(i / 2)]"
 			new_bodypart.try_attach_limb(src, TRUE)
 			hand_bodyparts[i] = new_bodypart
 	..() //Don't redraw hands until we have organs for them

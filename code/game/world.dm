@@ -276,6 +276,12 @@ GLOBAL_VAR(restart_counter)
 		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
 #endif
 
+/// The world.time we last ran maptick, used for stupid reasons
+GLOBAL_VAR_INIT(last_maptick_time, 0)
+/world/Tick()
+	// We need a hook for if maptick has happen yet
+	GLOB.last_maptick_time = world.time
+
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC //redirect to server tools if necessary
 

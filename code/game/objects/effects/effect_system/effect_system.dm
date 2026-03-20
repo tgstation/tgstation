@@ -57,6 +57,16 @@
 	var/total_effects = 0
 	/// Should the system delete itself after finishing?
 	var/autocleanup = FALSE
+	/// Should the system delete effects that stop moving?
+	var/delete_on_stop = FALSE
+	/// How frequently (in deciseconds) should we move our particles?
+	var/step_delay = 0.5 SECONDS
+
+	// Internal use
+	/// The length of the previous assigned moveloop in deciseconds
+	var/last_loop_length = 0
+	/// List of dirs avalible to pick, used to avoid accidential duplicates
+	var/list/pickable_dirs = list()
 
 /datum/effect_system/basic/New(turf/location, amount = null, cardinals_only = null)
 	. = ..()
@@ -73,25 +83,48 @@
 			return
 		generate_effect()
 
+/// Returns how many steps to attempt to move a generated effect
+/datum/effect_system/basic/proc/get_step_count()
+	return rand(1, 3)
+
+/// Generates a effect for our system to control, returns the generated effect
 /datum/effect_system/basic/proc/generate_effect()
 	if(holder)
 		location = get_turf(holder)
 	var/obj/effect/effect = new effect_type(location)
 	total_effects++
-	var/direction
-	if(cardinals_only)
-		direction = pick(GLOB.cardinals)
-	else
-		direction = pick(GLOB.alldirs)
 
-	var/step_amt = rand(1, 3)
-	var/step_delay = 5
-	var/datum/move_loop/loop = GLOB.move_manager.move(effect, direction, step_delay, timeout = step_delay * step_amt, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(decrement_total_effect))
+	if(!length(pickable_dirs))
+		if(cardinals_only)
+			pickable_dirs = GLOB.cardinals.Copy()
+		else
+			pickable_dirs = GLOB.alldirs.Copy()
+	// Try not to reuse dirs if possible to avoid weird stacking
+	var/direction = pick_n_take(pickable_dirs)
 
-/datum/effect_system/basic/proc/decrement_total_effect(datum/source)
+	var/step_count = get_step_count()
+	var/datum/move_loop/loop = GLOB.move_manager.move(effect, direction, step_delay, timeout = step_delay * step_count, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
+	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(loop_end))
+	last_loop_length = loop.lifetime
+	return effect
+
+/datum/effect_system/basic/proc/post_move(datum/move_loop/source, result, visual_delay)
+	SIGNAL_HANDLER
+	if(result == MOVELOOP_FAILURE)
+		move_failed(source, source.moving)
+
+/// Allows us to hook into being unable to automatically move
+/datum/effect_system/basic/proc/move_failed(datum/move_loop/loop, obj/effect/failed)
+	if(QDELETED(failed) || !delete_on_stop)
+		return
+	qdel(failed)
+
+/datum/effect_system/basic/proc/loop_end(datum/move_loop/source)
 	SIGNAL_HANDLER
 	total_effects--
+	if(delete_on_stop && !QDELETED(source.moving))
+		qdel(source.moving)
 	if(autocleanup && total_effects == 0)
 		QDEL_IN(src, 2 SECONDS)
 

@@ -13,7 +13,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 
 /// Increments every time WE update the library db table, causes all existing consoles to repull when they next check
 /proc/library_updated()
-	GLOB.library_table_modified = (GLOB.library_table_modified + 1) % (SHORT_REAL_LIMIT - 1)
+	GLOB.library_table_modified = WRAP_UID(GLOB.library_table_modified + 1)
 
 /*
  * Library Public Computer

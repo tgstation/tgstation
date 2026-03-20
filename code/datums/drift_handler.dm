@@ -23,7 +23,7 @@
 	parent.drift_handler = src
 	var/flags = MOVEMENT_LOOP_OUTSIDE_CONTROL
 	if(instant)
-		flags |= MOVEMENT_LOOP_START_FAST
+		flags |= MOVEMENT_LOOP_START_INSTANT
 	src.drift_force = drift_force
 	drifting_loop = GLOB.move_manager.smooth_move(moving = parent, angle = inertia_angle, delay = get_loop_delay(parent), subsystem = SSnewtonian_movement, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
 

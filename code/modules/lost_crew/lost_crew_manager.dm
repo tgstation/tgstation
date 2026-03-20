@@ -36,9 +36,12 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	var/datum/corpse_damage_class/scenario = forced_class || pick_weight(scenarios)
 	scenario = new scenario ()
 
+	new_body.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
 	scenario.apply_character(new_body, protected_items, recovered_items, on_revive_and_player_occupancy, body_data)
 	scenario.apply_injuries(new_body, recovered_items, on_revive_and_player_occupancy, body_data)
 	scenario.death_lore += "I should get a formalized assignment!"
+	new_body.living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
+	new_body.update_body_parts()
 
 	. = new_body
 	// so bodies can also be used for runes, morgue, etc

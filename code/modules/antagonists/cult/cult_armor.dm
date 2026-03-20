@@ -151,7 +151,7 @@
 		return
 	if(!SPT_PROB(15, seconds_per_tick))
 		return
-	var/obj/item/bodypart/bone_to_wound = pick(wearer.bodyparts)
+	var/obj/item/bodypart/bone_to_wound = pick(wearer.get_bodyparts())
 	var/wound_type = pick(list(
 		/datum/wound/blunt/bone/moderate,
 		/datum/wound/pierce/bleed/moderate,

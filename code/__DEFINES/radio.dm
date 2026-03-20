@@ -96,6 +96,7 @@
 #define FREQ_ENGINEERING 1357 // Engineering comms frequency, orange
 #define FREQ_SECURITY 1359 // Security comms frequency, red
 #define FREQ_ENTERTAINMENT 1415 // Used by entertainment monitors, cyan
+#define FREQ_INTERROGATION 1423
 #define FREQ_HOLOGRID_SOLUTION 1433
 #define FREQ_STATUS_DISPLAYS 1435
 
@@ -113,6 +114,7 @@
 #define FREQ_COMMON 1459 // Common comms frequency, dark green
 
 #define MIN_UNUSED_FREQ 1461 // Prevents rolling AI Private or Common
+#define FREQ_CONFESSIONAL 1481
 
 #define MAX_FREQ 1489 // ------------------------------------------------------
 
@@ -152,6 +154,13 @@
 #define RADIO_FREQENCY_LOCKED 1
 /// Radio frequency is locked and unchangeable, but can be unlocked by an emag
 #define RADIO_FREQENCY_EMAGGABLE_LOCK 2
+
+/// Keyslot is unlocked and can be removed by anyone
+#define RADIO_KEYSLOT_UNLOCKED 0
+/// Keyslot is locked, unchangeable by players
+#define RADIO_KEYSLOT_LOCKED 1
+/// Keyslot is locked and unchangeable, but can be unlocked by an emag
+#define RADIO_KEYSLOT_EMAGGABLE_LOCK 2
 
 ///Bitflag for if a headset can use the syndicate radio channel
 #define RADIO_SPECIAL_SYNDIE (1<<0)

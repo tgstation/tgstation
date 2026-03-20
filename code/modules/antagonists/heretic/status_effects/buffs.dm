@@ -87,7 +87,7 @@
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/drinker = owner
-	for(var/obj/item/bodypart/potentially_wounded as anything in drinker.bodyparts)
+	for(var/obj/item/bodypart/potentially_wounded as anything in drinker.get_bodyparts())
 		for(var/datum/wound/found_wound as anything in potentially_wounded.wounds)
 			found_wound.remove_wound()
 	if(length(drinker.get_missing_limbs()))
@@ -102,7 +102,7 @@
 
 	carbie.adjust_brute_loss(-0.5 * seconds_between_ticks, updating_health = FALSE)
 	carbie.adjust_fire_loss(-0.5 * seconds_between_ticks, updating_health = FALSE)
-	for(var/BP in carbie.bodyparts)
+	for(var/BP in carbie.get_bodyparts())
 		var/obj/item/bodypart/part = BP
 		for(var/W in part.wounds)
 			var/datum/wound/wound = W

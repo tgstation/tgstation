@@ -95,7 +95,7 @@
 			addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
 		victim.update_damage_hud()
 		victim.adjust_disgust(5)
-		for(var/obj/item/bodypart/robotic_limb in victim.bodyparts)
+		for(var/obj/item/bodypart/robotic_limb in victim.get_bodyparts())
 			if(robotic_limb.biological_state & BIO_ROBOTIC)
 				robotic_limb.receive_damage(5, 5)
 	if(methods & INGEST)

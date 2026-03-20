@@ -105,7 +105,7 @@
 	RegisterSignal(carbon_owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb))
 	RegisterSignal(carbon_owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
 
-	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in carbon_owner.get_bodyparts())
 		if (!(limb.bodytype & BODYTYPE_ORGANIC))
 			continue
 		limb.add_bodypart_overlay(new limb_overlay(), update = FALSE)
@@ -139,7 +139,7 @@
 	if(QDELETED(carbon_owner))
 		return
 
-	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in carbon_owner.get_bodyparts())
 		var/overlay = locate(limb_overlay) in limb.bodypart_overlays
 		if(!overlay)
 			continue

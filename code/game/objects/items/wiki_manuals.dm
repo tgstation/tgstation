@@ -213,7 +213,7 @@
 	var/obj/item/bodypart/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		ADD_TRAIT(head, TRAIT_DISFIGURED, TRAIT_GENERIC)
-	for(var/obj/item/bodypart/part as anything in H.bodyparts)
+	for(var/obj/item/bodypart/part as anything in H.get_bodyparts())
 		part.adjustBleedStacks(5)
 	H.gib_animation()
 	sleep(0.3 SECONDS)

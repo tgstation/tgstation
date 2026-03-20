@@ -115,7 +115,7 @@
 	if(!iscarbon(user))
 		return ..()
 
-	for(var/obj/item/bodypart/limb in user.bodyparts)
+	for(var/obj/item/bodypart/limb in user.get_bodyparts())
 		limb.add_color_override(COLOR_WHITE, LIMB_COLOR_CS_SOURCE_SUICIDE)
 		limb.add_bodypart_overlay(new /datum/bodypart_overlay/texture/checkered(), update = FALSE)
 

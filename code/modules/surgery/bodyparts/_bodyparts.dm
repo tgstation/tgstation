@@ -231,6 +231,8 @@
 	var/static/list/butcher_drop_cache = list()
 	/// What state is the bodypart in for determining surgery availability
 	VAR_FINAL/surgery_state = NONE
+	/// Typepath of this limb as a stump
+	var/stump_typepath
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -625,8 +627,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/atom/drop_loc = drop_location()
-	if(IS_ORGANIC_LIMB(src))
-		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
+	var/play_sfx = FALSE
 
 	for(var/obj/item/organ/bodypart_organ in contents)
 		if(bodypart_organ.organ_flags & ORGAN_UNREMOVABLE)
@@ -643,10 +644,15 @@
 
 		if(drop_loc) //can be null if being deleted
 			bodypart_organ.forceMove(get_turf(drop_loc))
+			play_sfx = TRUE
 
 	if(drop_loc) //can be null during deletion
 		for(var/atom/movable/movable as anything in src)
 			movable.forceMove(drop_loc)
+			play_sfx = TRUE
+
+	if(play_sfx && IS_ORGANIC_LIMB(src))
+		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
 
 	update_icon_dropped()
 
@@ -1261,7 +1267,7 @@
 		update_icon_dropped()
 
 ///Generates an /image for the limb to be used as an overlay
-/obj/item/bodypart/proc/get_limb_icon(dropped, mob/living/carbon/update_on)
+/obj/item/bodypart/proc/get_limb_icon(dropped)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
 
@@ -1275,7 +1281,7 @@
 	// Handles invisibility (not alpha or actual invisibility but invisibility)
 	if(is_invisible)
 		. += image(icon_invisible, "invisible_[body_zone]", -BODYPARTS_LAYER, dir = image_dir)
-		SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped, update_on)
+		SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
 		return .
 
 	// Normal non-husk handling
@@ -1303,7 +1309,7 @@
 		if(brutestate)
 			// divided into two overlays: one that gets colored and one that doesn't.
 			var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, dir = SOUTH)
-			brute_blood_overlay.color = get_color_from_blood_list(update_on ? update_on.get_blood_dna_list() : blood_dna_info) // living mobs can just get it fresh, dropped limbs use blood_dna_info
+			brute_blood_overlay.color = get_color_from_blood_list(blood_dna_info)
 			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
 			if(brute_damage_overlay)
 				brute_blood_overlay.overlays += brute_damage_overlay
@@ -1384,7 +1390,7 @@
 		for(var/datum/layer in .)
 			overlay.modify_bodypart_appearance(layer)
 
-	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped, update_on)
+	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
 	return .
 
 /obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
@@ -1396,11 +1402,7 @@
 	husk_blood.blend_mode = BLEND_INSET_OVERLAY
 	husk_blood.dir = thing_to_husk.dir
 	husk_blood.layer = thing_to_husk.layer
-	var/list/blood_dna = blood_dna_info || owner?.get_blood_dna_list()
-	if (LAZYLEN(blood_dna))
-		husk_blood.color = get_color_from_blood_list(blood_dna)
-	else
-		husk_blood.color = BLOOD_COLOR_RED
+	husk_blood.color = LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED
 	return husk_blood
 
 ///Add a bodypart overlay and call the appropriate update procs

@@ -119,6 +119,7 @@
 	var/obj/item/reagent_containers/cont = interacting_with
 	if(!LAZYLEN(cont.reagents.reagent_list))
 		return NONE
+	SEND_SIGNAL(interacting_with, COMSIG_ON_REAGENT_SCAN, user)
 	var/list/out_message = list()
 	to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
 	out_message += "<b>Total volume: [round(cont.volume, 0.01)] Current temperature: [round(cont.reagents.chem_temp, 0.1)]K Total pH: [round(cont.reagents.ph, 0.01)]\n"

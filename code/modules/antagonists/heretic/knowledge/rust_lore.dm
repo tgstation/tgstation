@@ -81,7 +81,7 @@
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		for(var/obj/item/bodypart/robotic_limb as anything in carbon_target.bodyparts)
+		for(var/obj/item/bodypart/robotic_limb as anything in carbon_target.get_bodyparts())
 			if(IS_ROBOTIC_LIMB(robotic_limb))
 				robotic_limb.receive_damage(500)
 

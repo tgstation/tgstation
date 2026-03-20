@@ -909,7 +909,7 @@
 	can_flip = FALSE
 	slam_gently = TRUE
 	/// Mob currently lying on the table
-	var/mob/living/carbon/patient = null
+	var/mob/living/patient = null
 	/// Operating computer we're linked to, to sync operations from
 	var/obj/machinery/computer/operating/computer = null
 	/// Tank attached under the table
@@ -1088,7 +1088,8 @@
 
 	set_patient(found_replacement)
 
-/obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
+/// Updates [var/patient] with out new patient, re-registers surgery related signals, updates UI data for operation computers and vital monitors if those connected.
+/obj/structure/table/optable/proc/set_patient(mob/living/new_patient)
 	if (patient)
 		UnregisterSignal(patient, list(
 			SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE),
@@ -1097,8 +1098,10 @@
 			COMSIG_ATOM_SURGERY_FINISHED,
 			COMSIG_LIVING_UPDATING_SURGERY_STATE,
 		))
-		if (patient.external && patient.external == air_tank)
-			patient.close_externals()
+
+		var/mob/living/carbon/breather_patient = patient
+		if (iscarbon(breather_patient) && breather_patient.external && breather_patient.external == air_tank)
+			breather_patient.close_externals()
 
 	SEND_SIGNAL(src, COMSIG_OPERATING_TABLE_SET_PATIENT, new_patient)
 	patient = new_patient
@@ -1194,8 +1197,10 @@
 	balloon_alert(user, "tank detached")
 	if (air_tank.IsReachableBy(user))
 		user.put_in_hands(air_tank)
-	if (patient?.external && patient.external == air_tank)
-		patient.close_externals()
+
+	var/mob/living/carbon/carbon_patient = patient
+	if (iscarbon(carbon_patient) && carbon_patient?.external && carbon_patient.external == air_tank)
+		carbon_patient.close_externals()
 	air_tank = null
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -1240,14 +1245,20 @@
 	return TRUE
 
 /obj/structure/table/optable/mouse_drop_dragged(atom/over, mob/living/user, src_location, over_location, params)
+
 	if (over != patient || !istype(user) || !IsReachableBy(user) || !user.can_interact_with(src))
+		return
+
+	if(!iscarbon(patient))
+		balloon_alert(user, "no internals connector!")
 		return
 
 	if (!air_tank)
 		balloon_alert(user, "no tank attached!")
 		return
 
-	var/internals = patient.can_breathe_internals()
+	var/mob/living/carbon/carbon_patient = patient
+	var/internals = carbon_patient.can_breathe_internals()
 	if (!internals)
 		balloon_alert(user, "no internals connector!")
 		return
@@ -1258,10 +1269,10 @@
 	if (!do_after(user, 4 SECONDS, patient))
 		return
 
-	if (!air_tank || patient != over || !patient.can_breathe_internals())
+	if (!air_tank || patient != over || !carbon_patient.can_breathe_internals())
 		return
 
-	patient.open_internals(air_tank, is_external = TRUE)
+	carbon_patient.open_internals(air_tank, is_external = TRUE)
 	to_chat(user, span_notice("You connect [src]'s [air_tank] to [patient]'s [internals]."))
 	to_chat(patient, span_userdanger("[user] connects [src]'s [air_tank] to your [internals]!"))
 

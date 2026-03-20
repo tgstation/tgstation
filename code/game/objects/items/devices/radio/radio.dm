@@ -56,6 +56,8 @@
 	var/subspace_switchable = FALSE
 	/// Frequency lock to stop the user from untuning specialist radios.
 	var/freqlock = RADIO_FREQENCY_UNLOCKED
+	/// Locks the keyslot to prevent removing the encryption key from specialist radios.
+	var/keylock = RADIO_KEYSLOT_UNLOCKED
 	/// If true, broadcasts will be large and BOLD.
 	var/use_command = FALSE
 	/// If true, use_command can be toggled at will.
@@ -599,6 +601,14 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
+	switch(keylock)
+		if(RADIO_KEYSLOT_LOCKED)
+			to_chat(user, span_warning("The screws locking [src]'s keyslot are stripped, and can't be removed."))
+			return ITEM_INTERACT_BLOCKING
+		if(RADIO_KEYSLOT_EMAGGABLE_LOCK)
+			to_chat(user, span_warning("The screws locking [src]'s keyslot are fastened tight, and likely can't be removed without some kind of magnet..."))
+			return ITEM_INTERACT_BLOCKING
+
 	var/list/removed_keys = remove_keys(user)
 	if(length(removed_keys) > 1)
 		to_chat(user, span_notice("You remove the encryption keys from [src]."))
@@ -631,7 +641,7 @@
 	if(keyslot)
 		loc.balloon_alert(user, "cannot hold a second key!")
 		return ITEM_INTERACT_BLOCKING
-	if(freqlock)
+	if(freqlock || keylock)
 		loc.balloon_alert(user, "keyslot is locked!")
 		return ITEM_INTERACT_BLOCKING
 

@@ -51,6 +51,7 @@
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(enjoyed_food))
 
 /mob/living/basic/vatbeast/tamed(mob/living/tamer, obj/item/food)
+	. = ..()
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
 	set_faction(list(FACTION_NEUTRAL))

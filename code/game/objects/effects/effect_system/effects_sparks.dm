@@ -18,11 +18,20 @@
 	anchored = TRUE
 	light_system = OVERLAY_LIGHT
 	light_range = 1.5
-	light_power = 0.8
+	light_power = 2
 	light_color = LIGHT_COLOR_FIRE
+	/// Should this spark's effect be animated
+	var/animated = TRUE
+	/// Timer id for the timer that will wipe us out
+	var/delete_timer_id = TIMER_ID_NULL
+	/// Middleman object we're using to animate our light
+	var/datum/light_middleman/middleman
 
 /obj/effect/particle_effect/sparks/Initialize(mapload)
 	..()
+	if(animated)
+		middleman = new(src, "sparks")
+		middleman.being_overriding_light()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/particle_effect/sparks/LateInitialize()
@@ -32,7 +41,29 @@
 	var/turf/location = loc
 	if(isturf(location))
 		affect_location(location, just_initialized = TRUE)
-	QDEL_IN(src, 2 SECONDS)
+	decay_in(2 SECONDS)
+
+/obj/effect/particle_effect/sparks/Destroy()
+	if(!isnull(middleman))
+		QDEL_NULL(middleman)
+	return ..()
+
+/// Sets up our death effects given the passed in duration
+/obj/effect/particle_effect/sparks/proc/decay_in(decay_time)
+	if(delete_timer_id != TIMER_ID_NULL)
+		deltimer(delete_timer_id)
+	delete_timer_id = QDEL_IN_STOPPABLE(src, decay_time + world.tick_lag)
+	if(!animated)
+		return
+	var/obj/effect/abstract/main_light = middleman.primary_intercept
+	// We're going to fade our light out so it's less jarring when we fully disappear
+	// Note, a refresh of the overlay light would break this, we're basically just sorta assuming that won't happen
+	// Would need to track time and sort of "replay" where we should be otherwise
+	if(decay_time >= 0.7 SECONDS) // duration of all animated spark's actual icon state animation
+		animate(main_light, alpha = 220, time = 0.4 SECONDS)
+		animate(alpha = 0, time = decay_time - 0.4 SECONDS, easing = CIRCULAR_EASING | EASE_IN)
+	else
+		animate(main_light, alpha = 0, time = decay_time)
 
 /obj/effect/particle_effect/sparks/Destroy()
 	var/turf/location = loc
@@ -91,6 +122,20 @@
 
 /datum/effect_system/basic/spark_spread
 	effect_type = /obj/effect/particle_effect/sparks
+	step_delay = 0.35 SECONDS // chosen so we will always take at least the duration of our animation to finish
+
+/datum/effect_system/basic/spark_spread/generate_effect()
+	var/obj/effect/particle_effect/sparks/spark = ..()
+	spark.decay_in(last_loop_length)
+
+/datum/effect_system/basic/spark_spread/get_step_count()
+	return rand(2, 3) // never 1 cause 1 looks dumb
+
+/datum/effect_system/basic/spark_spread/move_failed(datum/move_loop/loop, obj/effect/failed)
+	if(QDELETED(failed))
+		return
+	var/obj/effect/particle_effect/sparks/spark = failed
+	spark.decay_in(0.1 SECONDS)
 
 /datum/effect_system/basic/spark_spread/quantum
 	effect_type = /obj/effect/particle_effect/sparks/quantum
@@ -100,6 +145,8 @@
 /obj/effect/particle_effect/sparks/electricity
 	name = "lightning"
 	icon_state = "electricity"
+	animated = FALSE
 
 /datum/effect_system/basic/lightning_spread
+	delete_on_stop = TRUE
 	effect_type = /obj/effect/particle_effect/sparks/electricity

@@ -547,6 +547,7 @@
 	throwforce = 25 // It's also a potent weapon
 	show_organs_on_examine = FALSE
 	speech_span = null
+	stump_typepath = null
 
 /obj/item/bodypart/head/dullahan/Entered(obj/item/organ/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()

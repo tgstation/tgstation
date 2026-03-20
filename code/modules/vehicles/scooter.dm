@@ -12,10 +12,10 @@
 /obj/vehicle/ridden/scooter/proc/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter)
 
-/obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/I)
+/obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/tool)
 	..()
 	to_chat(user, span_notice("You begin to remove the handlebars..."))
-	if(!I.use_tool(src, user, 40, volume=50))
+	if(!tool.use_tool(src, user, 40, volume=50))
 		return TRUE
 	var/obj/vehicle/ridden/scooter/skateboard/improvised/skater = new(drop_location())
 	new /obj/item/stack/rods(drop_location(), 2)
@@ -248,37 +248,40 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
-/obj/item/scooter_frame/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(I, /obj/item/stack/sheet/iron))
-		return ..()
-	if(!I.tool_start_check(user, amount=5))
-		return
+/obj/item/scooter_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/sheet/iron))
+		return NONE
+	if(!tool.tool_start_check(user, amount=5))
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You begin to add wheels to [src]."))
-	if(!I.use_tool(src, user, 80, volume=50, amount=5))
-		return
+	if(!tool.use_tool(src, user, 80, volume = 50, amount = 5))
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You finish making wheels for [src]."))
 	new /obj/vehicle/ridden/scooter/skateboard/improvised(user.loc)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/scooter_frame/wrench_act(mob/living/user, obj/item/I)
-	..()
+/obj/item/scooter_frame/wrench_act(mob/living/user, obj/item/tool)
 	to_chat(user, span_notice("You deconstruct [src]."))
 	new /obj/item/stack/rods(drop_location(), 10)
-	I.play_tool_sound(src)
+	tool.play_tool_sound(src)
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
-/obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
+/obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/tool)
 	return
 
-/obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(I, /obj/item/stack/rods))
-		return ..()
-	if(!I.tool_start_check(user, amount=2))
+/obj/vehicle/ridden/scooter/skateboard/improvised/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if (.)
 		return
+	if(!istype(tool, /obj/item/stack/rods))
+		return NONE
+	if(!tool.tool_start_check(user, amount=2))
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You begin making handlebars for [src]."))
-	if(!I.use_tool(src, user, 25, volume=50, amount=2))
-		return
+	if(!tool.use_tool(src, user, 25, volume=50, amount=2))
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You add the rods to [src], creating handlebars."))
 	var/obj/vehicle/ridden/scooter/skaterskoot = new(loc)
 	if(has_buckled_mobs())
@@ -286,14 +289,15 @@
 		unbuckle_mob(skaterboy)
 		skaterskoot.buckle_mob(skaterboy)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/vehicle/ridden/scooter/skateboard/improvised/screwdriver_act(mob/living/user, obj/item/I)
+/obj/vehicle/ridden/scooter/skateboard/improvised/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(.)
 		return
 	to_chat(user, span_notice("You begin to deconstruct and remove the wheels on [src]..."))
-	if(!I.use_tool(src, user, 20, volume=50))
-		return
+	if(!tool.use_tool(src, user, 20, volume=50))
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You deconstruct the wheels on [src]."))
 	new /obj/item/stack/sheet/iron(drop_location(), 5)
 	new /obj/item/scooter_frame(drop_location())
@@ -301,7 +305,7 @@
 		var/mob/living/carbon/skatergirl = buckled_mobs[1]
 		unbuckle_mob(skatergirl)
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 //Wheelys
 /obj/vehicle/ridden/scooter/skateboard/wheelys

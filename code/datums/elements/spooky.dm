@@ -52,7 +52,7 @@
 	if(isskeleton(human))
 		return FALSE //undeads are unaffected by the spook-pocalypse.
 	var/bone_amount = 0
-	for(var/obj/item/bodypart/part as anything in human.bodyparts)
+	for(var/obj/item/bodypart/part as anything in human.get_bodyparts())
 		if((part.biological_state & BIO_FLESH_BONE) == BIO_FLESH_BONE)
 			bone_amount++
 	if(bone_amount)

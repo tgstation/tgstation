@@ -26,3 +26,6 @@
 #define COMSIG_LIVING_OPERATING_ON "living_operating_on"
 /// Sent from /mob/living/perform_surgery: (mob/living/surgeon, list/possible_operations)
 #define COMSIG_ATOM_BEING_OPERATED_ON "atom_being_operated_on"
+
+/// From /obj/item/ph_meter/interact_with_atom(): (atom/source, mob/user)
+#define COMSIG_ON_REAGENT_SCAN "on_reagent_scan"
