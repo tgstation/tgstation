@@ -49,7 +49,6 @@
 		user.investigate_log("has unwrapped a present containing [thing.type].", INVESTIGATE_PRESENTS)
 		user.put_in_hands(thing)
 		thing.add_fingerprint(user)
-		SEND_SIGNAL(thing, COMSIG_ITEM_OPENED_FROM_GIFT, user)
 
 	qdel(src)
 
