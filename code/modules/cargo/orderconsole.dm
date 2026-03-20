@@ -294,9 +294,10 @@
 			if(!id_card || !living_user || !access)
 				living_user = user
 				id_card = living_user.get_idcard(TRUE)
-			if(pack.access_view && !(pack.access_view in access) && personal_department)
+			if(pack.access_view && !(pack.access_view in access) && personal_department && !self_paid)
 				// We want to block cargo requests when a player is requesting a restricted pack that they don't have access to.
 				// BUT only when it's requested with non-cargo funds, as cargo had direct oversight over their own purchases with their own budget.
+				// HOWEVER, this shouldn't prevent someone from buying something using their own personal funds.
 				say("ERROR: User lacks the requisite access for this purchase request.")
 				return
 
