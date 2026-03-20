@@ -614,7 +614,6 @@
 	color = COLOR_MAGENTA // rgb: 255, 0, 255
 	taste_description = "childhood whimsy"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	// Troutstation edit (added default container)
 	default_container = /obj/item/reagent_containers/condiment/sprinkles // troutstation edit
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
