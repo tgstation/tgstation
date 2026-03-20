@@ -453,7 +453,7 @@
 			else
 				icon_state = "spacesuit_[cell_state]"
 	if(cell_percent && hovering)
-		maptext = MAPTEXT("<div align='right'>[round(cell_percent, 0.1)]</div>")
+		maptext = MAPTEXT("<div align='right'>[round(cell_percent, 0.1)]%</div>")
 	else
 		maptext = null
 	if(thermal_on != cached_thermal_on)
