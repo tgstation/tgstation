@@ -1,4 +1,0 @@
-author: "levels0"
-delete-after: True
-changes:
-  - bugfix: "webbing production webs no longer harm their maker"
