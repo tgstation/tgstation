@@ -695,8 +695,8 @@
 	)
 	jackpot_path = /obj/vehicle/sealed/mecha/honker
 	trap_path = /obj/item/restraints/handcuffs
-	light_color = COLOR_LIGHT_PINK
-	greyscale_colors = COLOR_LIGHT_PINK
+	light_color = COLOR_BLUSH_PINK
+	greyscale_colors = COLOR_BLUSH_PINK
 
 /obj/machinery/computer/slot_machine/clown/Initialize(mapload)
 	slot_adjectives += list("Honking", "Slippery", "Pranked", "Squeaky", "Hilarious", "Giggling")
