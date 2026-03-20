@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Relics found from cracking boulders now have a (mostly) unique set of mining and cultish related effects."
+  - rscadd: "Relics found in gift boxes no longer need to be discovered first in science."
