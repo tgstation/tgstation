@@ -266,7 +266,7 @@ window "inputbuttons"
 		pos = 0,0
 		size = 40x20
 		anchor1 = 0,0
-		anchor2 = 25,100
+		anchor2 = 33,100
 		font-size = 4
 		border = line
 		saved-params = "is-checked"
@@ -276,10 +276,10 @@ window "inputbuttons"
 		button-type = pushbox
 	elem "mebutton"
 		type = BUTTON
-		pos = 20,0
+		pos = 40,0
 		size = 40x20
-		anchor1 = 25,0
-		anchor2 = 50,100
+		anchor1 = 33,0
+		anchor2 = 66,100
 		font-size = 4
 		border = line
 		saved-params = "is-checked"
@@ -289,10 +289,10 @@ window "inputbuttons"
 		button-type = pushbox
 	elem "oocbutton"
 		type = BUTTON
-		pos = 40,0
+		pos = 80,0
 		size = 40x20
-		anchor1 = 50,0
-		anchor2 = 75,100
+		anchor1 = 66,0
+		anchor2 = 100,100
 		font-size = 4
 		border = line
 		saved-params = "is-checked"
@@ -300,11 +300,11 @@ window "inputbuttons"
 		command = ".winset \"oocbutton.is-checked=true ? input.command=\"!ooc \\\"\" : input.command=\"\"oocbutton.is-checked=true ? mebutton.is-checked=false\"\"oocbutton.is-checked=true ? saybutton.is-checked=false\"\"oocbutton.is-checked=true ? whisperbutton.is-checked=false\""
 		is-flat = true
 		button-type = pushbox
-    elem "whisperbutton"
+	elem "whisperbutton"
 		type = BUTTON
 		pos = 80,0
 		size = 40x20
-		anchor1 = 75,0
+		anchor1 = 66,0
 		anchor2 = 100,100
 		font-size = 4
 		border = line
