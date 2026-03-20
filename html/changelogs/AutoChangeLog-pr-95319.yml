@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "you can pry out/deconstruct floor tiles/reinforced tiles etc without destroying any floor lights/sinks mounted on as long as there is plating underneath that turf"
