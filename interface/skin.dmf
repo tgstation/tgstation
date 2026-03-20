@@ -224,27 +224,27 @@ window "input_and_buttons"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #ffc41f
-		saved-params = "splitter"
+		saved-params = ""
 		left = "inputwindow"
 		right = "inputbuttons"
 		is-vert = true
-		splitter = 80
+		splitter = 70
 		show-splitter = false
 
 window "inputwindow"
 	elem "inputwindow"
 		type = MAIN
 		pos = 575,0
-		size = 520x25
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		size = 480x25
+		anchor1 = 0,0
+		anchor2 = 70,100
 		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "input"
 		type = INPUT
 		pos = 0,0
-		size = 520x20
+		size = 480x20
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
@@ -256,15 +256,15 @@ window "inputbuttons"
 	elem "inputbuttons"
 		type = MAIN
 		pos = 291,0
-		size = 120x25
-		anchor1 = 0,0
+		size = 160x25
+        anchor1 = 70,0
 		anchor2 = 100,100
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "saybutton"
 		type = BUTTON
 		pos = 0,0
-		size = 30x20
+		size = 40x20
 		anchor1 = 0,0
 		anchor2 = 25,100
 		font-size = 4
@@ -276,8 +276,8 @@ window "inputbuttons"
 		button-type = pushbox
 	elem "mebutton"
 		type = BUTTON
-		pos = 30,0
-		size = 30x20
+		pos = 40,0
+		size = 40x20
 		anchor1 = 25,0
 		anchor2 = 50,100
 		font-size = 4
@@ -289,8 +289,8 @@ window "inputbuttons"
 		button-type = pushbox
 	elem "oocbutton"
 		type = BUTTON
-		pos = 60,0
-		size = 30x20
+		pos = 80,0
+		size = 40x20
 		anchor1 = 50,0
 		anchor2 = 75,100
 		font-size = 4
@@ -302,8 +302,8 @@ window "inputbuttons"
 		button-type = pushbox
 	elem "whisperbutton"
 		type = BUTTON
-		pos = 90,0
-		size = 30x20
+		pos = 120,0
+		size = 40x20
 		anchor1 = 75,0
 		anchor2 = 100,100
 		font-size = 4
