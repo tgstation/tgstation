@@ -257,7 +257,7 @@ window "inputbuttons"
 		type = MAIN
 		pos = 291,0
 		size = 160x25
-        anchor1 = 70,0
+		anchor1 = 70,0
 		anchor2 = 100,100
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
