@@ -61,6 +61,7 @@
 	hotkey_keys = list("P")
 	name = PRAY_CHANNEL
 	full_name = "Pray"
+	description = "Allows you to directly send a message to your deity (Admins) in an IC manner."
 	keybind_signal = COMSIG_KB_CLIENT_PRAY_DOWN
 
 /datum/keybinding/client/communication/pray/down(client/user, turf/target, mousepos_x, mousepos_y)
