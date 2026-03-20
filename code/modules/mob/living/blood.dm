@@ -662,7 +662,7 @@
  * * splatter_direction: Which direction the blood is flying
  * * splatter_strength: How many tiles it can go, and how many items it can pass over and dirty
  */
-/mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
+/mob/living/proc/spray_blood(splatter_direction, splatter_strength = 3)
 	// Check if we can bleed and if our splatter can even go anywhere
 	if(!isturf(loc) || can_bleed(BLOOD_COVER_TURFS) != BLEED_SPLATTER)
 		return
