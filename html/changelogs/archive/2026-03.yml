@@ -321,5 +321,9 @@
   - refactor: Missing limbs are now represented as limb stumps. In practice this should
       change nothing (for now), as no features were rewritten to make use of these
       besides surgery. Please report any oddities with missing limbs, however.
+  SyncIt21:
+  - bugfix: you can pry out/deconstruct floor tiles/reinforced tiles etc without destroying
+      any floor lights/sinks mounted on as long as there is plating underneath that
+      turf
   levels0:
   - bugfix: webbing production webs no longer harm their maker
