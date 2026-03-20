@@ -521,10 +521,8 @@ SUBSYSTEM_DEF(tts)
 	if(local)
 		if(use_blips || force_blips)
 			request_blips.begin_async()
-			request_blips_radio.begin_async()
 		else
 			request.begin_async()
-			request_radio.begin_async()
 	else
 		request.begin_async()
 		request_blips.begin_async()
@@ -567,9 +565,9 @@ SUBSYSTEM_DEF(tts)
 /datum/tts_request/proc/requests_completed()
 	if(local)
 		if(use_blips || force_blips)
-			return request_blips.is_complete() && request_blips_radio.is_complete()
+			return request_blips.is_complete()
 		else
-			return request.is_complete() && request_radio.is_complete()
+			return request.is_complete()
 	else
 		return request.is_complete() && request_blips.is_complete() && request_blips_radio.is_complete() && request_radio.is_complete()
 
