@@ -345,7 +345,7 @@
 
 	//if boulders are kept inside because there is no space to eject them, then they could be reprocessed, lets avoid that
 	if(!chosen_boulder.processed_by)
-		var/post_boost_check = check_for_boosts() //if the proc returns that the machine is boosting in any way, we'll generate some waste_chemical after
+		check_for_boosts() //Handles the mineral boosting, as well as creating waste.
 
 		//here we loop through the boulder's ores
 		var/list/rejected_mats = list()

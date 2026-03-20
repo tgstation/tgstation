@@ -12,7 +12,7 @@
 	action = "crushing"
 
 	/// What list of reagents should we look at when we boost the effectiveness of this machinery?
-	var/static/booster_list = list(
+	var/list/booster_list = list(
 		/datum/reagent/toxin/acid = 1,
 		/datum/reagent/toxin/acid/nitracid = 2,
 		/datum/reagent/teslium = 5,
@@ -53,8 +53,7 @@
 
 /obj/machinery/bouldertech/refinery/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand)
-	AddComponent(/datum/component/plumbing/simple_supply)
+	AddComponent(/datum/component/plumbing/boulder_reactions)
 
 // /obj/machinery/bouldertech/refinery/process()
 // 	for(var/datum/reagent/a in reagents.list)
