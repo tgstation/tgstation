@@ -264,9 +264,9 @@ window "inputbuttons"
 	elem "saybutton"
 		type = BUTTON
 		pos = 0,0
-		size = 40x20
+		size = 30x20
 		anchor1 = 0,0
-		anchor2 = 33,100
+		anchor2 = 25,100
 		font-size = 4
 		border = line
 		saved-params = "is-checked"
@@ -276,10 +276,10 @@ window "inputbuttons"
 		button-type = pushbox
 	elem "mebutton"
 		type = BUTTON
-		pos = 40,0
-		size = 40x20
-		anchor1 = 33,0
-		anchor2 = 66,100
+		pos = 30,0
+		size = 30x20
+		anchor1 = 25,0
+		anchor2 = 50,100
 		font-size = 4
 		border = line
 		saved-params = "is-checked"
@@ -289,10 +289,10 @@ window "inputbuttons"
 		button-type = pushbox
 	elem "oocbutton"
 		type = BUTTON
-		pos = 80,0
-		size = 40x20
-		anchor1 = 66,0
-		anchor2 = 100,100
+		pos = 60,0
+		size = 30x20
+		anchor1 = 50,0
+		anchor2 = 75,100
 		font-size = 4
 		border = line
 		saved-params = "is-checked"
@@ -302,9 +302,9 @@ window "inputbuttons"
 		button-type = pushbox
 	elem "whisperbutton"
 		type = BUTTON
-		pos = 80,0
-		size = 40x20
-		anchor1 = 66,0
+		pos = 90,0
+		size = 30x20
+		anchor1 = 75,0
 		anchor2 = 100,100
 		font-size = 4
 		border = line
