@@ -244,7 +244,14 @@
 
 // Language menu
 	using = new /atom/movable/screen/language_menu(null, src)
+	using.icon = ui_style
 	using.screen_loc = ui_ai_language_menu
+	static_inventory += using
+
+// Memories
+	using = new /atom/movable/screen/memories(null, src)
+	using.icon = ui_style
+	using.screen_loc = ui_ai_memories_menu
 	static_inventory += using
 
 // Z-level floor change

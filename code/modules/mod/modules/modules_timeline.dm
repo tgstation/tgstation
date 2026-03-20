@@ -39,10 +39,12 @@
 /obj/item/mod/module/eradication_lock/proc/on_mod_activation(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(true_owner_ckey && user.ckey != true_owner_ckey)
+	if(!true_owner_ckey || user.ckey == true_owner_ckey)
+		return NONE
+	if(user == mod.wearer)
 		to_chat(mod.wearer, span_userdanger("\"MODsuit compromised by timeline inhabitant! Eradicating...\""))
 		new /obj/structure/chrono_field(user.loc, user)
-		return MOD_CANCEL_ACTIVATE
+	return MOD_CANCEL_ACTIVATE
 
 ///Signal fired when the modsuit tries removing a module.
 /obj/item/mod/module/eradication_lock/proc/on_mod_removal(datum/source, mob/user)

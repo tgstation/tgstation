@@ -657,3 +657,6 @@
 
 /// Send to items that have been unwrapped from a gift
 #define COMSIG_ITEM_OPENED_FROM_GIFT "gift_opened"
+
+/// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
+#define COMSIG_REFLECTION_UPDATED "reflection_updated"

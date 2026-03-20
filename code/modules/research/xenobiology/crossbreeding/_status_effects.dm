@@ -8,21 +8,19 @@
 	duration = 100
 	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
 	show_duration = TRUE
-	var/originalcolor
 
 /datum/status_effect/rainbow_protection/on_apply()
 	owner.add_traits(list(TRAIT_GODMODE, TRAIT_PACIFISM), TRAIT_STATUS_EFFECT(id))
 	owner.visible_message(span_warning("[owner] shines with a brilliant rainbow light."),
 		span_notice("You feel protected by an unknown force!"))
-	originalcolor = owner.color
 	return ..()
 
 /datum/status_effect/rainbow_protection/tick(seconds_between_ticks)
-	owner.color = rgb(rand(0,255),rand(0,255),rand(0,255))
+	owner.add_atom_colour(RANDOM_COLOUR, TEMPORARY_COLOUR_PRIORITY)
 	return ..()
 
 /datum/status_effect/rainbow_protection/on_remove()
-	owner.color = originalcolor
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	owner.remove_traits(list(TRAIT_GODMODE, TRAIT_PACIFISM), TRAIT_STATUS_EFFECT(id))
 	owner.visible_message(span_notice("[owner] stops glowing, the rainbow light fading away."),
 		span_warning("You no longer feel protected..."))
@@ -37,11 +35,9 @@
 	duration = 300
 	alert_type = /atom/movable/screen/alert/status_effect/slimeskin
 	show_duration = TRUE
-	var/originalcolor
 
 /datum/status_effect/slimeskin/on_apply()
-	originalcolor = owner.color
-	owner.color = "#3070CC"
+	owner.add_atom_colour("#3070CC", TEMPORARY_COLOUR_PRIORITY)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance += 10
@@ -50,7 +46,7 @@
 	return ..()
 
 /datum/status_effect/slimeskin/on_remove()
-	owner.color = originalcolor
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance -= 10
@@ -185,6 +181,10 @@
 	duration = STATUS_EFFECT_PERMANENT
 	alert_type = /atom/movable/screen/alert/status_effect/clone_decay
 
+/datum/status_effect/slime_clone_decay/on_apply()
+	owner.add_atom_colour("#007BA7", FIXED_COLOUR_PRIORITY)
+	return TRUE
+
 /datum/status_effect/slime_clone_decay/tick(seconds_between_ticks)
 	var/need_mob_update
 	need_mob_update = owner.adjust_tox_loss(1, updating_health = FALSE)
@@ -193,12 +193,11 @@
 	need_mob_update += owner.adjust_fire_loss(1, updating_health = FALSE)
 	if(need_mob_update)
 		owner.updatehealth()
-	owner.color = "#007BA7"
 
 /atom/movable/screen/alert/status_effect/bloodchill
 	name = "Bloodchilled"
 	desc = "You feel a shiver down your spine after getting hit with a glob of cold blood. You'll move slower and get frostbite for a while!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "bloodchill"
 
 /datum/status_effect/bloodchill
@@ -241,7 +240,7 @@
 /atom/movable/screen/alert/status_effect/bonechill
 	name = "Bonechilled"
 	desc = "You feel a shiver down your spine after hearing the haunting noise of bone rattling. You'll move slower and get frostbite for a while!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "bloodchill"
 
 /datum/status_effect/rebreathing
@@ -795,18 +794,13 @@
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
 	colour = SLIME_TYPE_PYRITE
-	var/originalcolor
-
-/datum/status_effect/stabilized/pyrite/on_apply()
-	originalcolor = owner.color
-	return ..()
 
 /datum/status_effect/stabilized/pyrite/tick(seconds_between_ticks)
-	owner.color = rgb(rand(0,255),rand(0,255),rand(0,255))
+	owner.add_atom_colour(RANDOM_COLOUR, TEMPORARY_COLOUR_PRIORITY)
 	return ..()
 
 /datum/status_effect/stabilized/pyrite/on_remove()
-	owner.color = originalcolor
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 
 /datum/status_effect/stabilized/red
 	id = "stabilizedred"
