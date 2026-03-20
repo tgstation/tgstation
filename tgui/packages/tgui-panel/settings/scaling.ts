@@ -11,6 +11,7 @@ const ELEMENTS_TO_ADJUST = [
   'inputbuttons.saybutton',
   'inputbuttons.mebutton',
   'inputbuttons.oocbutton',
+  'inputbuttons.whisperbutton',
   'mapwindow.status_bar',
 ];
 
