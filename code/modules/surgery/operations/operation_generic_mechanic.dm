@@ -16,6 +16,7 @@
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
 	any_surgery_states_blocked = ALL_SURGERY_SKIN_STATES
+	allow_stumps = TRUE
 
 /datum/surgery_operation/limb/mechanical_incision/get_any_tool()
 	return "Any sharp item"
@@ -56,6 +57,7 @@
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
 	all_surgery_states_required = SURGERY_SKIN_CUT
+	allow_stumps = TRUE
 
 /datum/surgery_operation/limb/mechanical_open/get_default_radial_image()
 	return image('icons/hud/screen_gen.dmi', "arrow_large_still")
@@ -93,6 +95,7 @@
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
 	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
+	allow_stumps = TRUE
 
 /datum/surgery_operation/limb/mechanical_close/get_any_tool()
 	return "Any sharp item"
@@ -137,6 +140,7 @@
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_ORGANS_CUT
+	allow_stumps = TRUE
 
 /datum/surgery_operation/limb/prepare_electronics/get_default_radial_image()
 	return image(/obj/item/multitool)
@@ -170,6 +174,7 @@
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
+	allow_stumps = TRUE
 
 /datum/surgery_operation/limb/mechanic_unwrench/get_default_radial_image()
 	return image(/obj/item/wrench)
@@ -198,10 +203,11 @@
 		TOOL_WRENCH = 1,
 		TOOL_RETRACTOR = 1.33,
 	)
-	operation_flags = OPERATION_SELF_OPERABLE | OPERATION_MECHANIC
+	operation_flags = OPERATION_SELF_OPERABLE | OPERATION_MECHANIC | OPERATION_NO_PATIENT_REQUIRED
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED | OPERATION_NO_PATIENT_REQUIRED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	allow_stumps = TRUE
 
 /datum/surgery_operation/limb/mechanic_wrench/state_check(obj/item/bodypart/limb)
 	return LIMB_HAS_BONES(limb)
