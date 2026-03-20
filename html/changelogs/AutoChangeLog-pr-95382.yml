@@ -1,0 +1,6 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - rscadd: "Added an option for rendering space parallax with old space sprites (the ones from before we invented parallax), they're animated and I feel quite pretty."
+  - bugfix: "Space parallax should hopefully behave a little more consistently now"
+  - refactor: "Rewrote a lot of how space parallax handled itself, please yell at me if any bugs make themselves known"

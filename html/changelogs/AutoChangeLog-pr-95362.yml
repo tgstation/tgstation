@@ -1,0 +1,7 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - rscadd: "Reworks how sparks render. They're now a bit brighter, will fade out as they move/if they hit something, will stack with each other less and also won't start hang in the air on spawn."
+  - rscadd: "Added a flickering effect to lighters, welding tools, flares, torches and candles (since they're flames)."
+  - bugfix: "Overlay based lights (think flashlights) will no longer flash to double intensity while being picked up."
+  - refactor: "Reworked how some effects (explosion particles, sparks, some reagent stuff) function, report any bugs!"
