@@ -28,7 +28,7 @@
 	return ..()
 
 /mob/living/carbon/get_gibs_type(drop_bitflags = NONE)
-	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST) || (length(bodyparts) ? bodyparts[1] : null)
+	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST) || get_bodypart()
 	if (!istype(chest)) // what
 		return ..()
 
@@ -74,13 +74,22 @@
 		qdel(organ)
 
 /mob/living/carbon/spread_bodyparts(drop_bitflags=NONE)
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
+		if(part.body_zone == BODY_ZONE_CHEST)
+			continue // never drop this
 		if(!(drop_bitflags & DROP_BRAIN) && part.body_zone == BODY_ZONE_HEAD)
-			continue
-		else if(part.body_zone == BODY_ZONE_CHEST)
-			continue
-		part.drop_limb()
+			continue // don't drop head if we aren't dropping a brain
+
+		var/list/leftover_organs = list()
+		for(var/obj/item/organ/leftover in part)
+			leftover_organs += leftover
+
+		part.drop_limb(TRUE)
 		part.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
+		// any organs that weren't throw out already about need to follow the bodypart out
+		for(var/obj/item/organ/leftover as anything in leftover_organs)
+			leftover.Remove(src, TRUE)
+			leftover.bodypart_insert(part)
 
 /mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
 	. = ..()

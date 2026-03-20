@@ -118,6 +118,7 @@
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 5)
 
 /mob/living/basic/mining/goldgrub/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	new /obj/effect/temp_visual/heart(src.loc)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/goldgrub)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
