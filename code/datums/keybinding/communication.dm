@@ -56,3 +56,17 @@
 	winset(user, null, "command=[user.tgui_say_create_open_command(ME_CHANNEL)]")
 	winset(user, "tgui_say.browser", "focus=true")
 	return TRUE
+
+/datum/keybinding/client/communication/pray
+	hotkey_keys = list("P")
+	name = PRAY_CHANNEL
+	full_name = "Pray"
+	keybind_signal = COMSIG_KB_CLIENT_PRAY_DOWN
+
+/datum/keybinding/client/communication/pray/down(client/user, turf/target, mousepos_x, mousepos_y)
+	. = ..()
+	if(.)
+		return
+	winset(user, null, "command=[user.tgui_say_create_open_command(PRAY_CHANNEL)];")
+	winset(user, "tgui_say.browser", "focus=true")
+	return TRUE
