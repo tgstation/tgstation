@@ -73,7 +73,6 @@
 							continue
 					else if(cached_my_atom.type != reaction.required_container)
 						continue
-
 				if(isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 					continue
 			else if(reaction.required_container)
