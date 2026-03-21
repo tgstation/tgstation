@@ -59,7 +59,6 @@
 	thermic_constant = 0
 	H_ion_release = 0
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
-	required_other = TRUE
 
 	/// Typepath of food that is created on reaction
 	var/atom/resulting_food_path

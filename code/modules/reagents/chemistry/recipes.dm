@@ -17,8 +17,6 @@
 	var/required_container_accepts_subtypes = FALSE
 	/// If required_container_accepts_subtypes is FALSE, the exact type of what container this reaction can take place in. Otherwise, what type including subtypes are acceptable.
 	var/atom/required_container
-	/// Set this to true to call pre_reaction_other_checks() on react and do some more interesting reaction logic
-	var/required_other = FALSE
 
 	///Determines if a chemical reaction can occur inside a mob
 	var/mob_react = TRUE
