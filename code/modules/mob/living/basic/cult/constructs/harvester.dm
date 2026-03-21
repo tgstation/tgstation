@@ -46,7 +46,7 @@
 		return ..()
 	var/mob/living/carbon/carbon_target = attack_target
 
-	for(var/obj/item/bodypart/limb as anything in carbon_target.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in carbon_target.get_bodyparts())
 		if(limb.body_part == HEAD || limb.body_part == CHEST)
 			continue
 		return ..() //if any arms or legs exist, attack

@@ -90,7 +90,7 @@
 	. = ..()
 	if (!.)
 		return
-	var/obj/item/bodypart/affecting = victim.get_bodypart(hit_zone) || victim.bodyparts[1]
+	var/obj/item/bodypart/affecting = victim.get_bodypart(hit_zone) || victim.get_bodypart()
 	if (!IS_ORGANIC_LIMB(affecting))
 		return FALSE
 	return TRUE

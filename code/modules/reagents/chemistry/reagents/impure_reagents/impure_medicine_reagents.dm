@@ -1264,7 +1264,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	for (var/obj/item/organ/organ as anything in exposed_carbon.organs)
 		organ.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
 
-	for (var/obj/item/bodypart/part as anything in exposed_carbon.bodyparts)
+	for (var/obj/item/bodypart/part as anything in exposed_carbon.get_bodyparts())
 		part.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
 
 /datum/reagent/inverse/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -1313,22 +1313,22 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 	switch(current_cycle)
 		if(10)
-			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_MODERATE)
 			to_chat(affected_mob, span_warning("Your legs start to cave in to your overwhelming gravity!"))
 
 		if(20)
-			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_SEVERE)
 			to_chat(affected_mob, span_warning("Your bones fragment horribly as the gravity pounds on you!"))
 
 		if(30)
-			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_CRITICAL)
 			to_chat(affected_mob, span_warning("The gravity of this situation makes your bones snap like popsicle sticks!"))
 
 /datum/reagent/inverse/gravitum/overdose_start(mob/living/carbon/affected_mob, metabolization_ratio)
 	. = ..()
 	affected_mob.AddElement(/datum/element/squish, 120 SECONDS)
-	for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+	for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 		affected_mob.cause_wound_of_type_and_severity(WOUND_SLASH, leg, WOUND_SEVERITY_SEVERE)
