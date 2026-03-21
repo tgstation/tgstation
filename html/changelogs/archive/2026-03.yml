@@ -333,3 +333,5 @@
   ArcaneMusic:
   - bugfix: the BSA cannot be built half-into a wall.
   - qol: building the DNA vault and BSA points to the tiles blocking it's construction.
+  Melbert:
+  - image: Generic surgical operations now have unique surgery radial icons
