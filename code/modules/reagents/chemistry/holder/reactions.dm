@@ -66,9 +66,6 @@
 			else if(reaction.required_container)
 				continue
 
-			if(!reaction.pre_reaction_other_checks(src))
-				continue
-
 			// At this point, we've passed all the hard restrictions and entered into just the soft ones
 			// So we're gonna start tracking reactions that COULD be completed on continue, instead of just exiting
 			var/required_temp = reaction.required_temp
@@ -88,6 +85,9 @@
 					if(ispath(E_exist.reaction.type, reaction.type)) //Don't add duplicates
 						exists = TRUE
 				if(exists)
+					continue
+
+				if(!reaction.pre_reaction_other_checks(src))
 					continue
 
 				var/datum/equilibrium/equilibrium = new (reaction, src) //Otherwise we add them to the processing list.
