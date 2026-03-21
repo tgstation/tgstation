@@ -15,7 +15,7 @@
 
 ///Returns TRUE if the player has something that necessitates the stat panel.
 /client/proc/needs_stat_panel()
-	if(holder)
+	if(holder || interviewee)
 		return TRUE
 	. = mob.get_status_tab_items()
 	return length(.) >= 2
