@@ -1337,9 +1337,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 /// Returns the stripped appearance.
 /proc/strip_appearance_underlays(mutable_appearance/appearance) as /mutable_appearance
 	var/base_plane = PLANE_TO_TRUE(appearance.plane)
-	for(var/mutable_appearance/underlay as anything in appearance.underlays)
-		if(isnull(underlay))
-			continue
+	for(var/mutable_appearance/underlay in appearance.underlays)
 		if(PLANE_TO_TRUE(underlay.plane) != base_plane)
 			appearance.underlays -= underlay
 	return appearance
@@ -1356,9 +1354,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
 	var/list/overlays_to_keep = list()
-	for(var/mutable_appearance/special_overlay as anything in copy.overlays)
-		if(isnull(special_overlay))
-			continue
+	for(var/mutable_appearance/special_overlay in copy.overlays)
 		var/mutable_appearance/real = new()
 		real.appearance = special_overlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
@@ -1366,9 +1362,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	copy.overlays = overlays_to_keep
 
 	var/list/underlays_to_keep = list()
-	for(var/mutable_appearance/special_underlay as anything in copy.underlays)
-		if(isnull(special_underlay))
-			continue
+	for(var/mutable_appearance/special_underlay in copy.underlays)
 		var/mutable_appearance/real = new()
 		real.appearance = special_underlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
