@@ -2131,7 +2131,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /living ---")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_SPEECH_IMPEDIMENT, "Impede Speech (Slurring, stuttering, etc)")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_MOOD, "Add Mood Event")
 	VV_DROPDOWN_OPTION(VV_HK_REMOVE_MOOD, "Remove Mood Event")

@@ -1729,7 +1729,7 @@
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /movable ---")
 	VV_DROPDOWN_OPTION(VV_HK_OBSERVE_FOLLOW, "Observe Follow")
 	VV_DROPDOWN_OPTION(VV_HK_GET_MOVABLE, "Get Movable")
 	VV_DROPDOWN_OPTION(VV_HK_GET_FACTIONS, "Get Factions")

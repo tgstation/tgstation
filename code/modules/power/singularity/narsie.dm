@@ -128,7 +128,7 @@
 
 /obj/narsie/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /narsie ---")
 	VV_DROPDOWN_OPTION(VV_HK_BEGIN_NARSIE_ROUNDEND, "Begin Nar'Sie Roundender")
 
 /obj/narsie/vv_do_topic(list/href_list)

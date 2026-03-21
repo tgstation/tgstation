@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
+	VV_DROPDOWN_OPTION("", "--- /spacevine_controller ---")
 	VV_DROPDOWN_OPTION(VV_HK_SPACEVINE_PURGE, "Delete Vines")
 
 /datum/spacevine_controller/vv_do_topic(href_list)
