@@ -53,8 +53,8 @@
 				granularity = CHEMICAL_QUANTISATION_LEVEL
 			var/present_volume = 0
 			var/list/datum/reagent/requirements = reaction.required_reagents
-			if(length(reactions.required_catalysts))
-				requirements |= reactions.required_catalysts
+			if(length(reaction.required_catalysts))
+				requirements |= reaction.required_catalysts
 			for(var/datum/reagent/requirement as anything in requirements)
 				present_volume = cached_reagents[requirement]
 				if(!present_volume)
