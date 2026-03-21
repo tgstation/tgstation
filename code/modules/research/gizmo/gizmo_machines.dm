@@ -2,16 +2,16 @@
 /obj/machinery/gizmo
 	name = "gizmo"
 	desc = "Does a function when you put the jigger at the other ends thing."
-	icon = 'icons/obj/devices/gizmos.dmi'
+	icon = 'icons/obj/science/gizmos.dmi'
+
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	panel_open = TRUE
 	density = TRUE
 	anchored = FALSE
 
-	var/list/icon_states = list("gizmo_0", "gizmo_1", "gizmo_2", "gizmo_3", "gizmo_4", "gizmo_5")
-	var/datum/gizmo_interface/interface = /datum/gizmo_interface
-
-	var/do_voice_instead = FALSE
+	var/list/icon_states = list("gizmo_0", "gizmo_1", "gizmo_2", "gizmo_3", "gizmo_4")
+	var/datum/gizmo_controller/controller = /datum/gizmo_controller
 
 /obj/machinery/gizmo/Initialize(mapload)
 	. = ..()
@@ -20,13 +20,8 @@
 		base_icon_state = pick(icon_states)
 		icon_state = base_icon_state
 
-	var/list/trigger_callbacks = list()
-	interface = new interface(src, trigger_callbacks)
-
-	if(do_voice_instead)
-		AddComponent(/datum/component/gizmo_voice, interface.puzzles[1])
-	else
-		set_wires(new /datum/wires/gizmo(src, interface.puzzles[1]))
+	controller = new controller(src)
+	controller.generate_interfaces(src)
 
 	RegisterSignal(src, COMSIG_GIZMO_START_MOVING, PROC_REF(start_moving))
 	RegisterSignal(src, COMSIG_GIZMO_STOP_MOVING, PROC_REF(stop_moving))
@@ -55,13 +50,11 @@
 	return
 
 /obj/machinery/gizmo/beyblade
+	icon_states = list("beyblade")
 
-	icon_state = "beyblade"
-
-	interface = /datum/gizmo_interface/beyblade
+	controller = /datum/gizmo_controller/beyblade
 
 	var/moving = FALSE
-
 
 /obj/machinery/gizmo/beyblade/update_icon(updates)
 	. = ..()
@@ -75,7 +68,6 @@
 	moving = TRUE
 	update_icon()
 
-
 /obj/machinery/gizmo/beyblade/on_stop_moving(datum/gizpulse/pulse)
 	RemoveElement(/datum/element/moving_randomly)
 	density = FALSE
@@ -85,14 +77,9 @@
 
 /// A gizmo with some sort of "on" state. Really only for visuals
 /obj/machinery/gizmo/toggle
+	controller = /datum/gizmo_controller/toggle
 
-	icon_state = "gizmo_light"
-
-	interface = /datum/gizmo_interface/toggle
-
-	icon_states = list("gizmo_active_0", "gizmo_active_1", "gizmo_active_2", "gizmo_active_3", "gizmo_active_4")
-
-	do_voice_instead = TRUE
+	icon_states = list("gizmo_active_0", "gizmo_active_1", "gizmo_active_2", "gizmo_active_3", "gizmo_active_4", "gizmo_active_5")
 
 	var/on_state = FALSE
 
@@ -118,3 +105,6 @@
 
 	on_state = FALSE
 	update_icon()
+
+/obj/machinery/gizmo/voice
+	controller = /datum/gizmo_controller/voice

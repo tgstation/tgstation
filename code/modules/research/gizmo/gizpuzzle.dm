@@ -1,7 +1,4 @@
 /datum/gizmo_puzzle
-	var/complexity
-
-/datum/gizmo_puzzle
 	/// The wires we need to pulse for cracking the code
 	var/list/cryptic_pulse = list(
 		GIZMO_PULSE_1,
@@ -23,7 +20,18 @@
 	/// List of callbacks that the solutions will call on succes
 	var/list/solution_callbacks
 
-/datum/gizmo_puzzle/New()
+	var/datum/callback/pulsed_callback
+
+	COOLDOWN_DECLARE(feedback_cooldown)
+
+	var/feedback_cooldown_time = 0.2 SECONDS
+
+
+/datum/gizmo_puzzle/New(datum/callback/pulsed)
+	if(pulsed)
+		pulsed_callback = pulsed
+	else
+		pulsed_callback = CALLBACK(src, PROC_REF(default_on_pulsed))
 	return ..()
 
 /datum/gizmo_puzzle/proc/generate_code_sequences(list/_solution_callbacks)
@@ -37,6 +45,7 @@
 
 /datum/gizmo_puzzle/proc/on_pulse(pulse_number, mob/living/user, atom/movable/holder)
 	current_sequence += cryptic_pulse[pulse_number]
+	. = GIZMO_PUZZLE_CORRECT
 
 	var/succeeded = FALSE
 
@@ -51,13 +60,30 @@
 				var/datum/callback/callback = solution_callbacks[i]
 				callback.Invoke(holder)
 				current_sequence.Cut()
+				. = GIZMO_PUZZLE_SOLVED
 				break
 
-	if(succeeded)
-		holder.balloon_alert(user, "ping")
-		playsound(holder, 'sound/machines/ping.ogg', 30, FALSE)
-
-	else
-		holder.balloon_alert(user, "buzz")
-		playsound(holder, 'sound/machines/buzz/buzz-sigh.ogg', 30, FALSE)
+	if(!succeeded)
 		current_sequence.Cut()
+		. = GIZMO_PUZZLE_WRONG
+
+	pulsed_callback?.Invoke(holder, user, .)
+
+/datum/gizmo_puzzle/proc/default_on_pulsed(atom/movable/holder, mob/living/user, solved_type)
+	if(!COOLDOWN_FINISHED(src, feedback_cooldown) || !isliving(user))
+		return
+
+	COOLDOWN_START(src, feedback_cooldown, feedback_cooldown_time)
+
+	switch(solved_type)
+		if(GIZMO_PUZZLE_WRONG)
+			holder.balloon_alert(user, "buzz")
+			playsound(holder, 'sound/machines/buzz/buzz-sigh.ogg', 30, FALSE)
+		if(GIZMO_PUZZLE_CORRECT)
+			holder.balloon_alert(user, "ping")
+			playsound(holder, 'sound/machines/ping.ogg', 30, FALSE)
+		if(GIZMO_PUZZLE_SOLVED)
+			holder.balloon_alert(user, "creak")
+			playsound(holder, 'sound/machines/creak.ogg', 30, FALSE)
+
+/datum/gizmo_puzzle/voice

@@ -30,17 +30,25 @@ GLOBAL_LIST_INIT(gizmo_words, world.file2list("strings/gizmo_words.txt"))
 
 	var/haystack = hearing_args[HEARING_RAW_MESSAGE]
 	var/list/text_position_index = list()
-	for(var/needle in active_words)
-		var/position = findtext(haystack, needle)
-		// fix having multiple same keywords in a sleuth
-		if(!position)
-			continue
 
-		text_position_index[needle] = position
+	for(var/needle in active_words)
+		var/position = 1
+		// we can have multiple of the same keyword in one sequence
+		for(var/i in 1 to puzzle.code_length)
+			position = findtext(haystack, needle, position)
+
+			if(!position)
+				break
+
+			text_position_index[needle] = position
+			// So for the next loop we dont find the exact same word again
+			position++
 
 	if(!text_position_index.len)
 		return
 
 	text_position_index = sortTim(text_position_index, associative = TRUE)
-	for(var/THING in text_position_index)
-		puzzle.on_pulse(active_words.Find(THING), hearing_args[HEARING_SPEAKER], parent)
+	for(var/thing in text_position_index)
+		// Only one solved per speech packet
+		if(puzzle.on_pulse(active_words.Find(thing), hearing_args[HEARING_SPEAKER], parent) == GIZMO_PUZZLE_SOLVED)
+			return
