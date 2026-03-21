@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "the BSA cannot be built half-into a wall."
+  - qol: "building the DNA vault and BSA points to the tiles blocking it's construction."
