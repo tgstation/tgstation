@@ -34,11 +34,23 @@
 	. = 0
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		for(var/datum/chemical_reaction/reaction as anything in cached_reactions[reagent]) // Was a big list but now it should be smaller since we filtered it with our reagent id
+			//is this reaction already going on?
+			var/next_reaction = FALSE
+			for(var/datum/equilibrium/E_exist as anything in reaction_list)
+				if(ispath(E_exist.reaction.type, reaction.type)) //Don't add duplicates
+					next_reaction = TRUE
+					break
+			if(next_reaction)
+				continue
+
+			//user defined checks so we don't waste time doing other checks
+			if(!reaction.pre_reaction_other_checks(src))
+				continue
+
+			//do we have the required reagents?
 			var/granularity = 1
 			if(!(reaction.reaction_flags & REACTION_INSTANT))
 				granularity = CHEMICAL_QUANTISATION_LEVEL
-
-			var/next_reaction = FALSE
 			var/present_volume = 0
 			var/list/datum/reagent/requirements = reaction.required_reagents | reaction.required_catalysts
 			for(var/datum/reagent/requirement as anything in requirements)
@@ -53,6 +65,7 @@
 			if(next_reaction)
 				continue
 
+			//do we have the required container?
 			if(cached_my_atom)
 				if(reaction.required_container)
 					if(reaction.required_container_accepts_subtypes)
@@ -66,30 +79,21 @@
 			else if(reaction.required_container)
 				continue
 
-			// At this point, we've passed all the hard restrictions and entered into just the soft ones
-			// So we're gonna start tracking reactions that COULD be completed on continue, instead of just exiting
+			//do we have the required temps?
 			var/required_temp = reaction.required_temp
 			var/is_cold_recipe = reaction.is_cold_recipe
 			if(required_temp != 0 && (is_cold_recipe && chem_temp > required_temp) || (!is_cold_recipe && chem_temp < required_temp))
 				continue
 
+			//do we have the required ph? in range of min - ph_range & max + ph_range
 			if(ph < reaction.optimal_ph_min - reaction.determin_ph_range && ph > reaction.optimal_ph_max + reaction.determin_ph_range)
 				continue
 
+			//do the actual reactions
 			if((reaction.reaction_flags & REACTION_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT) || !length(reaction.results)) //If we have instant reactions, we process them here
 				instant_react(reaction)
 				.++
 			else
-				var/exists = FALSE
-				for(var/datum/equilibrium/E_exist as anything in reaction_list)
-					if(ispath(E_exist.reaction.type, reaction.type)) //Don't add duplicates
-						exists = TRUE
-				if(exists)
-					continue
-
-				if(!reaction.pre_reaction_other_checks(src))
-					continue
-
 				var/datum/equilibrium/equilibrium = new (reaction, src) //Otherwise we add them to the processing list.
 				if(equilibrium.to_delete)//failed startup checks
 					qdel(equilibrium)
