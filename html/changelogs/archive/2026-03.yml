@@ -296,6 +296,8 @@
       who are not wealthy. When the vendors awake and start moving, they instead get
       a 100% chance to deny anyone.
 2026-03-20:
+  Absolucy:
+  - balance: The Staff of Storms is now normal-sized, and fits in a backpack.
   LemonInTheDark:
   - rscadd: Added an option for rendering space parallax with old space sprites (the
       ones from before we invented parallax), they're animated and I feel quite pretty.
@@ -327,3 +329,9 @@
       turf
   levels0:
   - bugfix: webbing production webs no longer harm their maker
+2026-03-21:
+  ArcaneMusic:
+  - bugfix: the BSA cannot be built half-into a wall.
+  - qol: building the DNA vault and BSA points to the tiles blocking it's construction.
+  Melbert:
+  - image: Generic surgical operations now have unique surgery radial icons
