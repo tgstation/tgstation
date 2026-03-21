@@ -329,3 +329,7 @@
       turf
   levels0:
   - bugfix: webbing production webs no longer harm their maker
+2026-03-21:
+  ArcaneMusic:
+  - bugfix: the BSA cannot be built half-into a wall.
+  - qol: building the DNA vault and BSA points to the tiles blocking it's construction.
