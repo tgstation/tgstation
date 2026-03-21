@@ -101,7 +101,7 @@
 			header = "Gruesome!",
 		)
 
-	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
+	operation_order = reverse_range(carbon_occupant.get_bodyparts())   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	warming_up = TRUE
 	harvesting = TRUE
 	visible_message(span_notice("\The [src] begins warming up!"))
