@@ -70,26 +70,27 @@
 
 	if(isnull(applying_to))
 		target.balloon_alert(user, "no bodypart!")
-		return NONE
+		return ITEM_INTERACT_BLOCKING
 
 	if(!(applying_to.body_zone in valid_zones))
 		target.balloon_alert(user, "can't be applied there!")
-		return NONE
+		return ITEM_INTERACT_BLOCKING
 
 	if(!override_existing)
 		var/obj/item/existing = LAZYACCESS(applying_to.applied_items, apply_category)
 		if(!isnull(existing))
 			target.balloon_alert(user, "something is already there!")
-			return NONE
+			return ITEM_INTERACT_BLOCKING
 
-	if(can_apply && !can_apply.Invoke(user, target, applying_to))
-		return NONE
+	if(can_apply)
+		var/try_apply = can_apply.Invoke(user, target, applying_to)
+		if(try_apply & LIMB_APPLICABLE_BLOCK_APPLICATION)
+			return (try_apply & LIMB_APPLICABLE_BLOCK_ITEM_INTERACTION) ? ITEM_INTERACT_BLOCKING : NONE
 
 	INVOKE_ASYNC(src, PROC_REF(on_apply_async), user, interacting_with, applying_to)
 	return ITEM_INTERACT_BLOCKING
 
-/datum/component/limb_applicable/proc/on_apply_async(mob/user, atom/interacting_with, obj/item/bodypart/applying_to)
-	var/mob/living/target = interacting_with
+/datum/component/limb_applicable/proc/on_apply_async(mob/user, mob/living/target, obj/item/bodypart/applying_to)
 	if(!do_apply?.Invoke(user, target, applying_to))
 		return
 	var/obj/item/applying = parent
