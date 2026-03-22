@@ -416,22 +416,23 @@
 		can_gauze = TRUE
 		break
 
+	. = NONE
 	var/surgery_prepped = HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE)
 	if(!surgery_prepped)
-		. += LIMB_APPLICABLE_BLOCK_ITEM_INTERACTION
+		. |= LIMB_APPLICABLE_BLOCK_ITEM_INTERACTION
 
 	if(!can_gauze)
 		if(!surgery_prepped)
 			patient.balloon_alert(user, LAZYLEN(limb.wounds) ? "can't gauze!" : "no wounds!")
-		. += LIMB_APPLICABLE_BLOCK_APPLICATION
-		return
+		. |= LIMB_APPLICABLE_BLOCK_APPLICATION
+		return .
 
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 	if(current_gauze && (current_gauze.absorption_capacity * 1.2 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
 		if(!surgery_prepped)
 			patient.balloon_alert(user, pick("already bandaged!", "bandage is clean!")) // good enough
-		. += LIMB_APPLICABLE_BLOCK_APPLICATION
-		return
+		. |= LIMB_APPLICABLE_BLOCK_APPLICATION
+		return .
 
 /// Callback for limb applicability component
 /obj/item/stack/medical/wrap/proc/do_gauze_limb(mob/user, mob/living/patient, obj/item/bodypart/limb)
