@@ -49,6 +49,12 @@
 	fade = 0.5 SECONDS
 	position = list(-1, 12, 0)
 
+/particles/smoke/steam/toxic
+	icon_state = list("steam_1" = 1, "smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 1)
+	spawning = 3
+	velocity = list(0, 0.25, 0)
+	color = "#18ff037e"
+
 /particles/smoke/cig
 	icon_state = list("steam_1" = 2, "steam_2" = 1, "steam_3" = 1)
 	count = 1

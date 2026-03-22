@@ -1575,3 +1575,79 @@
 	description = "A poison produced by the rare and elusive gatfruit plant."
 	liver_damage_multiplier = 0
 	toxpwr = 1
+
+#define WASTE_REACTION_THRESHOLD 5
+
+/datum/reagent/toxin/acid/industrial_waste
+	name = "Industrial Waste"
+	description = "Industrial Waste produced as a side effect of efficient boulder refining. Highly toxic, corrosive, and hard to get rid of."
+	color = "#1eff00"
+	penetrates_skin = TOUCH|VAPOR
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
+	toxpwr = 2
+	acidpwr = 30.0
+	ph = 0.0
+
+// /datum/reagent/toxin/acid/industrial_waste/on_transfer(atom/A, methods, trans_volume)
+// 	. = ..()
+// 	if(!trans_volume)
+// 		return
+// 	if(istype(A, /obj/item/reagent_containers))
+// 		var/obj/item/reagent_containers/container = A
+// 		if(container.has_material_type(/datum/material/plastic))
+// 			return
+// 		spew_waste(spew_source = A, transfer_volume = trans_volume, spew_range = 1)
+// 	if(istype(A, /obj/machinery/plumbing/disposer) || istype(A, /obj/machinery/plumbing/output))
+// 		spew_waste(spew_source = A, transfer_volume = trans_volume, spew_range = 2)
+
+/datum/reagent/toxin/acid/industrial_waste/intercept_reagents_transfer(datum/reagents/target)
+	if(target.total_volume >= target.maximum_volume)
+		spew_waste(round(volume / WASTE_REACTION_THRESHOLD))
+		return TRUE
+	return ..()
+
+/datum/reagent/toxin/acid/industrial_waste/burn(datum/reagents/holder)
+	. = ..()
+	spew_waste(spew_range = 2)
+
+/datum/reagent/toxin/acid/industrial_waste/expose_obj(obj/exposed_obj, reac_volume)
+	. = ..()
+	if(reac_volume < WASTE_REACTION_THRESHOLD)
+		return // The waste is too small to do anything.
+	if(istype(exposed_obj, /obj/effect/decal/cleanable/greenglow/waste))
+		var/obj/effect/decal/cleanable/greenglow/waste/goo = exposed_obj
+		goo.visible_message(span_warning("\The new waste reactivates \the [goo]!"))
+		goo.pre_eat(FALSE)
+		if(prob(25))
+			goo.balloon_alert_to_viewers("Hisss!")
+
+/datum/reagent/toxin/acid/industrial_waste/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	if(volume < WASTE_REACTION_THRESHOLD)
+		return // The waste is too small to do anything.
+	var/obj/effect/decal/cleanable/greenglow/waste/goo
+	goo = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste)
+	if(!QDELETED(goo))
+		goo.reagents.add_reagent(type, reac_volume)
+
+/**
+ * Pick a random turf in the spew range and split our total amount of waste there.
+ */
+/datum/reagent/toxin/acid/industrial_waste/proc/spew_waste(spew_range = 1)
+	var/atom/atom_holder = holder.my_atom
+	var/turf/dropturf = get_turf(atom_holder)
+	var/list/turfs = TURF_NEIGHBORS(dropturf)
+	while(length(turfs))
+		var/turf/turf_options = pick(turfs)
+		if(turf_options.is_blocked_turf(TRUE))
+			turfs -= turf_options
+			continue
+		else
+			dropturf = turf_options
+			break
+
+	expose_turf(dropturf, volume/2)
+	volume = volume/2
+
+#undef WASTE_REACTION_THRESHOLD

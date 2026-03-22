@@ -5,14 +5,15 @@
  */
 /obj/machinery/bouldertech/refinery
 	name = "boulder refinery"
-	desc = "BR for short. Accepts boulders and refines non-metallic ores into sheets using internal chemicals."
+	desc = "Accepts boulders and refines non-metallic ores into sheets using internal chemicals."
 	icon_state = "stacker"
 	circuit = /obj/item/circuitboard/machine/refinery
 	usage_sound = 'sound/machines/mining/refinery.ogg'
 	action = "crushing"
+	waste_chemical = /datum/reagent/toxin/acid/industrial_waste
 
 	/// What list of reagents should we look at when we boost the effectiveness of this machinery?
-	var/list/booster_list = list(
+	booster_list = list(
 		/datum/reagent/toxin/acid = 1,
 		/datum/reagent/toxin/acid/nitracid = 2,
 		/datum/reagent/teslium = 5,
@@ -54,28 +55,29 @@
 /obj/machinery/bouldertech/refinery/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/plumbing/boulder_reactions)
-
-// /obj/machinery/bouldertech/refinery/process()
-// 	for(var/datum/reagent/a in reagents.list)
-// 		if(booster_list[a])
-
-// 	. = ..()
+	AddElement(/datum/element/simple_rotation)
 
 /obj/machinery/bouldertech/refinery/check_for_boosts()
 	. = ..() //resets to 1.00 efficiency in the parent
 	var/highest_boost = 0
-	var/biggest_booster
-	for(var/datum/reagent/a in reagents.reagent_list)
-		if(booster_list[a])
-			if(!reagents.has_reagent(a, booster_list[a])) //check that we have the associated quantity of the chem in order to perform the boost.
+	var/datum/reagent/biggest_booster
+	for(var/datum/reagent/chem in reagents.reagent_list)
+		to_chat(world, "We found [chem] in reagents, with a boost of [booster_list[chem.type]]") //todo: kill all these debugs
+		if(booster_list[chem.type])
+			if(!reagents.has_reagent(chem.type, booster_list[a.type])) //check that we have the associated quantity of the chem in order to perform the boost.
 				continue
-			if(booster_list[a] > highest_boost)
-				highest_boost = booster_list[a]
-				biggest_booster = a
+			if(booster_list[chem.type] > highest_boost)
+				highest_boost = booster_list[chem.type]
+				biggest_booster = chem.type
+				to_chat(world, "new highest boost found of [highest_boost] from [biggest_booster]!")
+
+	if(!biggest_booster)
+		return
 
 	reagents.remove_reagent(biggest_booster, highest_boost) //remove the associated amount from the reagents
 	refining_efficiency = 1 + (highest_boost / 10) //Results in a boost from 10-30%
 	reagents.add_reagent(waste_chemical, highest_boost)
+	to_chat(world, "Final modifier of [refining_efficiency]!?")
 
 /obj/machinery/bouldertech/refinery/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	. = ..()
@@ -93,7 +95,7 @@
  */
 /obj/machinery/bouldertech/refinery/smelter
 	name = "boulder smelter"
-	desc = "BS for short. Accept boulders and refines metallic ores into sheets."
+	desc = "Accept boulders and refines metallic ores into sheets."
 	icon_state = "smelter"
 	light_system = OVERLAY_LIGHT
 	light_range = 2
