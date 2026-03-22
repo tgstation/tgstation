@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Monkey dust now properly removes anti-stun properties when its imbiber is no longer a monkey"
