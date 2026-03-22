@@ -98,6 +98,8 @@
 
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(target_mob != user)
+		if(DOING_INTERACTION_WITH_TARGET(user, target_mob))
+			return ITEM_INTERACT_BLOCKING
 		target_mob.visible_message(
 			span_danger("[user] attempts to feed [target_mob] something from [src]."),
 			span_userdanger("[user] attempts to feed you something from [src]."),
@@ -116,6 +118,8 @@
 
 	else
 		if(loop_drink)
+			if(DOING_INTERACTION_WITH_TARGET(user, user))
+				return ITEM_INTERACT_BLOCKING
 			user.visible_message(
 				span_danger("[user] attempts to drink from [src]."),
 				span_userdanger("[user] attempts to drink from [src]."),
