@@ -1,6 +1,8 @@
 
 /// The number of influences spawned per heretic
 #define NUM_INFLUENCES_PER_HERETIC 5
+/// How often the tracker attempts to create a new influence.
+#define INFLUENCE_SPAWN_INTERVAL (10 MINUTES)
 
 /**
  * #Reality smash tracker
@@ -20,27 +22,31 @@
 	var/list/obj/effect/heretic_influence/smashes = list()
 	/// List of minds with the ability to see influences
 	var/list/datum/mind/tracked_heretics = list()
+	/// Shared timer for periodic influence spawning.
+	var/spawn_timer_id
 
 /datum/reality_smash_tracker/Destroy(force)
 	if(GLOB.reality_smash_track == src)
 		stack_trace("[type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
 		message_admins("The [type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
+	if(spawn_timer_id)
+		deltimer(spawn_timer_id)
+		spawn_timer_id = null
 	QDEL_LIST(smashes)
 	tracked_heretics.Cut()
 	return ..()
 
-/**
- * Generates a set amount of reality smashes
- * based on the number of already existing smashes
- * and the number of minds we're tracking.
- */
-/datum/reality_smash_tracker/proc/generate_new_influences()
-	var/how_many_can_we_make = 0
+/// Calculates how many influences this tracker should support at most.
+/datum/reality_smash_tracker/proc/get_influence_cap()
+	var/influence_cap = 0
 	for(var/heretic_number in 1 to length(tracked_heretics))
-		how_many_can_we_make += max(NUM_INFLUENCES_PER_HERETIC - heretic_number + 1, 1)
+		influence_cap += max(NUM_INFLUENCES_PER_HERETIC - heretic_number + 1, 1)
+	return influence_cap
 
+/// Tries to create one influence at a safe station location.
+/datum/reality_smash_tracker/proc/try_generate_influence()
 	var/location_sanity = 0
-	while((length(smashes) + num_drained) < how_many_can_we_make && location_sanity < 100)
+	while(location_sanity < 100)
 		var/turf/chosen_location = get_safe_random_station_turf_equal_weight()
 
 		// We don't want them close to each other - at least 1 tile of separation
@@ -52,6 +58,25 @@
 			continue
 
 		new /obj/effect/heretic_influence(chosen_location)
+		return TRUE
+
+	return FALSE
+
+/// Returns true if any tracked heretic is currently eligible for influence spawning.
+/datum/reality_smash_tracker/proc/has_spawn_eligible_heretic()
+	for(var/datum/mind/heretic as anything in tracked_heretics)
+		if(ishuman(heretic.current) && !is_centcom_level(heretic.current.z))
+			return TRUE
+	return FALSE
+
+/datum/reality_smash_tracker/proc/handle_spawn_tick()
+	if(!length(tracked_heretics))
+		return
+	if((length(smashes) + num_drained) >= get_influence_cap())
+		return
+	if(!has_spawn_eligible_heretic())
+		return
+	try_generate_influence()
 
 /**
  * Adds a mind to the list of people that can see the reality smashes
@@ -60,10 +85,8 @@
  */
 /datum/reality_smash_tracker/proc/add_tracked_mind(datum/mind/heretic)
 	tracked_heretics |= heretic
-
-	// If our heretic's on station, generate some new influences
-	if(ishuman(heretic.current) && !is_centcom_level(heretic.current.z))
-		generate_new_influences()
+	if(!spawn_timer_id)
+		spawn_timer_id = addtimer(CALLBACK(src, PROC_REF(handle_spawn_tick)), INFLUENCE_SPAWN_INTERVAL, TIMER_LOOP|TIMER_STOPPABLE)
 
 /**
  * Removes a mind from the list of people that can see the reality smashes
@@ -72,6 +95,9 @@
  */
 /datum/reality_smash_tracker/proc/remove_tracked_mind(datum/mind/heretic)
 	tracked_heretics -= heretic
+	if(!length(tracked_heretics) && spawn_timer_id)
+		deltimer(spawn_timer_id)
+		spawn_timer_id = null
 
 /obj/effect/visible_heretic_influence
 	name = "pierced reality"
@@ -277,6 +303,7 @@
 	name = "\improper" + pick_list(HERETIC_INFLUENCE_FILE, "prefix") + " " + pick_list(HERETIC_INFLUENCE_FILE, "postfix")
 
 #undef NUM_INFLUENCES_PER_HERETIC
+#undef INFLUENCE_SPAWN_INTERVAL
 
 /// Hud used for heretics to see influences
 /datum/atom_hud/alternate_appearance/basic/has_antagonist/heretic

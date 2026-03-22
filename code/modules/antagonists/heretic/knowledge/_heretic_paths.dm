@@ -307,10 +307,15 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 			"parent_knowledge" = knowledge_tier4,
 			"probabilities" = list("1" = 0, "2" = 0, "3" = 0, "4" = 0, "5" = 100),
 			HKT_DEPTH = HKT_DEPTH_DRAFT_4,
+			"allowed_routes" = list(PATH_LOCK)
 		)
 	)
 	/// generate 3 drafts for each draft tier, while banning you from picking multiple drafts
 	for(var/draft in drafts)
+		var/list/allowed_routes = draft["allowed_routes"]
+		if(!isnull(allowed_routes) && !is_path_in_list(route, allowed_routes))
+			continue
+
 		var/parent_knowledge_path = draft["parent_knowledge"]
 		var/datum/heretic_knowledge/guaranteed_draft = draft["guaranteed_knowledge"]
 		var/list/probabilities = draft["probabilities"]

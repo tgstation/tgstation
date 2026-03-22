@@ -64,8 +64,8 @@
 		return TRUE
 
 	carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
-	carbon_hit.AdjustKnockdown(5 SECONDS, daze_amount = 3 SECONDS)
-	carbon_hit.adjust_stamina_loss(80)
+	carbon_hit.set_timed_status_effect(10 SECONDS, /datum/status_effect/mansus_slowdown)
+	carbon_hit.AdjustKnockdown(5 SECONDS)
 
 	return TRUE
 
