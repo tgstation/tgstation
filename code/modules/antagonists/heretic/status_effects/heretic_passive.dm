@@ -356,7 +356,10 @@
 	name = "Open Invitation"
 	id = "lock_passive"
 	passive_descriptions = list(
-		"Shock insulation, all knowledges researched from the shop are cheaper",
+		"Shock insulation, \n\
+			all knowledges researched from the shop are cheaper, \n\
+			you can unlock and purchase from the tier 5 shop knowledges and\n\
+			you do not gain a heretic aura.",
 		"X-ray vision, you can see through walls and objects.",
 		"Grasp no longer goes on cooldown when used to open a door or locker."
 	)
