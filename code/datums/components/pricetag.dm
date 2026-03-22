@@ -25,6 +25,9 @@
 
 	var/total_contribution = 0
 	for(var/totaler in pay_to_account)
+		if(!pay_to_account[totaler])
+			pay_to_account[totaler] = 1 //In case we just want a list with one item to prevent things from getting fucked up.
+
 		total_contribution += pay_to_account[totaler]
 
 	for(var/individual in pay_to_account)

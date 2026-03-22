@@ -293,7 +293,9 @@
 			inserted_scan_id = null
 		if("update_list")
 			playsound(src, 'sound/machines/data_transmission.ogg', 50) // Should only need to play once per round due to the list auto-updating afterwards.
-			looped_global_update(1, CIV_BOUNTY_BASELINE) // Just for visual flair
+
+			var/bonus_bounties = clamp(round(GLOB.alive_mob_list / 8), 0, 5) // The number of bounties to be generated is 5 + 1-per every 8 living player on the server, up toa max of 10 total.
+			looped_global_update(1, CIV_BOUNTY_BASELINE + bonus_bounties) // Just for visual flair
 		if("print")
 			print_sheet(user)
 	. = TRUE
