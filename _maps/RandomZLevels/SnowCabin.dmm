@@ -3361,8 +3361,8 @@
 	pixel_x = -1;
 	pixel_y = 16
 	},
-/obj/item/gun/magic/wand/fake_resurrection{
-	    pixel_y = -2    
+/obj/item/gun/magic/wand/nothing/fake_resurrection{
+	    pixel_y = -2
 	},
 /obj/effect/light_emitter{
 	set_cap = 3;
