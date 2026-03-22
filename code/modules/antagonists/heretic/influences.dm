@@ -72,11 +72,14 @@
 /datum/reality_smash_tracker/proc/handle_spawn_tick()
 	if(!length(tracked_heretics))
 		return
-	if((length(smashes) + num_drained) >= get_influence_cap())
+	if(total_influences() >= get_influence_cap())
 		return
 	if(!has_spawn_eligible_heretic())
 		return
 	try_generate_influence()
+
+/datum/reality_smash_tracker/proc/total_influences()
+	return length(smashes) + num_drained
 
 /**
  * Adds a mind to the list of people that can see the reality smashes
@@ -87,6 +90,8 @@
 	tracked_heretics |= heretic
 	if(!spawn_timer_id)
 		spawn_timer_id = addtimer(CALLBACK(src, PROC_REF(handle_spawn_tick)), INFLUENCE_SPAWN_INTERVAL, TIMER_LOOP|TIMER_STOPPABLE)
+	if(!total_influences())
+		try_generate_influence()
 
 /**
  * Removes a mind from the list of people that can see the reality smashes
