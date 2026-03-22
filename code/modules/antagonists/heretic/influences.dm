@@ -2,7 +2,7 @@
 /// The number of influences spawned per heretic
 #define NUM_INFLUENCES_PER_HERETIC 5
 /// How often the tracker attempts to create a new influence.
-#define INFLUENCE_SPAWN_INTERVAL (10 MINUTES)
+#define INFLUENCE_SPAWN_INTERVAL (5 MINUTES)
 
 /**
  * #Reality smash tracker
@@ -44,9 +44,9 @@
 	return influence_cap
 
 /// Tries to create one influence at a safe station location.
-/datum/reality_smash_tracker/proc/try_generate_influence()
+/datum/reality_smash_tracker/proc/try_generate_influence(how_many_can_we_make = 1)
 	var/location_sanity = 0
-	while(location_sanity < 100)
+	while(length(smashes) + num_drained < how_many_can_we_make && location_sanity < 100)
 		var/turf/chosen_location = get_safe_random_station_turf_equal_weight()
 
 		// We don't want them close to each other - at least 1 tile of separation
@@ -58,6 +58,7 @@
 			continue
 
 		new /obj/effect/heretic_influence(chosen_location)
+
 		return TRUE
 
 	return FALSE
@@ -76,7 +77,7 @@
 		return
 	if(!has_spawn_eligible_heretic())
 		return
-	try_generate_influence()
+	try_generate_influence(length(tracked_heretics))
 
 /datum/reality_smash_tracker/proc/total_influences()
 	return length(smashes) + num_drained
