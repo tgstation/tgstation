@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - spellcheck: "Shoving someone into another person no longer sends the \"you shoved\" message to the person who was shoved into"
