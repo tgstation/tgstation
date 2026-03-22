@@ -43,10 +43,6 @@
 			if(next_reaction)
 				continue
 
-			//user defined checks so we don't waste time doing other checks
-			if(!reaction.pre_reaction_other_checks(src))
-				continue
-
 			//do we have the required reagents?
 			var/granularity = 1
 			if(!(reaction.reaction_flags & REACTION_INSTANT))
@@ -88,6 +84,10 @@
 
 			//do we have the required ph? in range of min - ph_range & max + ph_range
 			if(ph < reaction.optimal_ph_min - reaction.determin_ph_range && ph > reaction.optimal_ph_max + reaction.determin_ph_range)
+				continue
+
+			//user defined checks
+			if(!reaction.pre_reaction_other_checks(src))
 				continue
 
 			//do the actual reactions
