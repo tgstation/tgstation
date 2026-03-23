@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Blue raptors had their HP increased from 220 to 300"
-  - balance: "Purple raptors now automatically start flying if the owner is about to fall into a chasm."
-  - bugfix: "Fixed 2 exploits which would render you immune to falling down a specific chasm."
