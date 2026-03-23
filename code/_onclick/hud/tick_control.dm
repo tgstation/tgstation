@@ -201,7 +201,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			mc_options += "None in particular"
 			mc_options += "Internal"
 			for(var/datum/controller/subsystem/subsystem_path as anything in sortTim(subtypesof(/datum/controller/subsystem), GLOBAL_PROC_REF(cmp_text_asc)))
-				if(subsystem_path::flags & SS_NO_FIRE)
+				if(subsystem_path::ss_flags & SS_NO_FIRE)
 					continue
 				mc_options += subsystem_path
 			var/focused_entry = tgui_input_list(usr, "What part of the MC do you want to focus on?", "Focused Entry?", mc_options)

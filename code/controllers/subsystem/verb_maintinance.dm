@@ -1,7 +1,7 @@
 /// Keeps GLOB.average_verb_cost to a limited size, killing old data or entries which are redundant (they don't actually save time if queued)
 SUBSYSTEM_DEF(verb_maintinance)
 	name = "Verb Maintienance"
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	wait = 10 SECONDS
 	priority = FIRE_PRIORITY_VERB_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
