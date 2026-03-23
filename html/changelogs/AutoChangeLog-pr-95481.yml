@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Nonhuman mobs with hands can now pick up other mobs that are smaller than them and can usually be picked up"
