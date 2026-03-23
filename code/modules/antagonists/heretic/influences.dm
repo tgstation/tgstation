@@ -44,9 +44,18 @@
 	return influence_cap
 
 /// Tries to create one influence at a safe station location.
-/datum/reality_smash_tracker/proc/try_generate_influence(how_many_can_we_make = 1)
+/datum/reality_smash_tracker/proc/try_generate_influence(amount = 1)
+	var/influence_cap = get_influence_cap()
+	if(num_drained >= influence_cap)
+		return
+
+	var/amount_to_make = min(amount, influence_cap - total_influences())
+	if(amount_to_make <= 0)
+		return
+
 	var/location_sanity = 0
-	while(length(smashes) + num_drained < how_many_can_we_make && location_sanity < 100)
+	var/generated = 0
+	while(generated < amount_to_make && location_sanity < 100)
 		var/turf/chosen_location = get_safe_random_station_turf_equal_weight()
 
 		// We don't want them close to each other - at least 1 tile of separation
@@ -58,10 +67,8 @@
 			continue
 
 		new /obj/effect/heretic_influence(chosen_location)
+		generated++
 
-		return TRUE
-
-	return FALSE
 
 /// Returns true if any tracked heretic is currently eligible for influence spawning.
 /datum/reality_smash_tracker/proc/has_spawn_eligible_heretic()
@@ -71,10 +78,6 @@
 	return FALSE
 
 /datum/reality_smash_tracker/proc/handle_spawn_tick()
-	if(!length(tracked_heretics))
-		return
-	if(total_influences() >= get_influence_cap())
-		return
 	if(!has_spawn_eligible_heretic())
 		return
 	try_generate_influence(length(tracked_heretics))
@@ -88,11 +91,12 @@
  * Use this whenever you want to add someone to the list
  */
 /datum/reality_smash_tracker/proc/add_tracked_mind(datum/mind/heretic)
+	if(heretic in tracked_heretics)
+		return
 	tracked_heretics |= heretic
 	if(!spawn_timer_id)
 		spawn_timer_id = addtimer(CALLBACK(src, PROC_REF(handle_spawn_tick)), INFLUENCE_SPAWN_INTERVAL, TIMER_LOOP|TIMER_STOPPABLE)
-	if(!total_influences())
-		try_generate_influence()
+	try_generate_influence()
 
 /**
  * Removes a mind from the list of people that can see the reality smashes
