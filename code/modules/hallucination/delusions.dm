@@ -120,7 +120,7 @@
 	// copies over lighting underlays
 	for(var/image/underlay as anything in over_who.underlays)
 		if(PLANE_TO_TRUE(underlay.plane) == O_LIGHTING_VISUAL_PLANE)
-			funny_image.underlays |= underlay
+			funny_image.underlays |= new mutable_appearance(underlay)
 	return funny_image
 
 /datum/hallucination/delusion/proc/on_mob_delete(mob/living/carbon/human/source)
