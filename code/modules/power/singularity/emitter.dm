@@ -471,7 +471,7 @@
 
 /obj/item/circuit_component/emitter
 	display_name = "Emitter"
-	desc = "Allows you to manually fire and get the ready status of an emitter."
+	desc = "Allows you to manually fire and get the ready status of an emitter. Must be unlocked to use fired signal."
 
 	///Manually trigger the emitter
 	var/datum/port/input/fire
@@ -519,6 +519,8 @@
 /obj/item/circuit_component/emitter/proc/fire_emitter()
 	CIRCUIT_TRIGGER
 	if(!attached_emitter)
+		return
+	if(attached_emitter.locked) // do not fire if emitter is locked
 		return
 	attached_emitter.fire_beam_pulse()
 
