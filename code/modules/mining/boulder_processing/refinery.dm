@@ -62,14 +62,12 @@
 	var/highest_boost = 0
 	var/datum/reagent/biggest_booster
 	for(var/datum/reagent/chem in reagents.reagent_list)
-		to_chat(world, "We found [chem] in reagents, with a boost of [booster_list[chem.type]]") //todo: kill all these debugs
 		if(booster_list[chem.type])
-			if(!reagents.has_reagent(chem.type, booster_list[a.type])) //check that we have the associated quantity of the chem in order to perform the boost.
+			if(!reagents.has_reagent(chem.type, booster_list[chem.type])) //check that we have the associated quantity of the chem in order to perform the boost.
 				continue
 			if(booster_list[chem.type] > highest_boost)
 				highest_boost = booster_list[chem.type]
 				biggest_booster = chem.type
-				to_chat(world, "new highest boost found of [highest_boost] from [biggest_booster]!")
 
 	if(!biggest_booster)
 		return
@@ -77,7 +75,6 @@
 	reagents.remove_reagent(biggest_booster, highest_boost) //remove the associated amount from the reagents
 	refining_efficiency = 1 + (highest_boost / 10) //Results in a boost from 10-30%
 	reagents.add_reagent(waste_chemical, highest_boost)
-	to_chat(world, "Final modifier of [refining_efficiency]!?")
 
 /obj/machinery/bouldertech/refinery/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	. = ..()

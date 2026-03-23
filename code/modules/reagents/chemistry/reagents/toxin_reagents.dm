@@ -1577,6 +1577,7 @@
 	toxpwr = 1
 
 #define WASTE_REACTION_THRESHOLD 5
+#define CRITICAL_CAPACITY 45
 
 /datum/reagent/toxin/acid/industrial_waste
 	name = "Industrial Waste"
@@ -1589,17 +1590,13 @@
 	acidpwr = 30.0
 	ph = 0.0
 
-// /datum/reagent/toxin/acid/industrial_waste/on_transfer(atom/A, methods, trans_volume)
-// 	. = ..()
-// 	if(!trans_volume)
-// 		return
-// 	if(istype(A, /obj/item/reagent_containers))
-// 		var/obj/item/reagent_containers/container = A
-// 		if(container.has_material_type(/datum/material/plastic))
-// 			return
-// 		spew_waste(spew_source = A, transfer_volume = trans_volume, spew_range = 1)
-// 	if(istype(A, /obj/machinery/plumbing/disposer) || istype(A, /obj/machinery/plumbing/output))
-// 		spew_waste(spew_source = A, transfer_volume = trans_volume, spew_range = 2)
+/datum/reagent/toxin/acid/industrial_waste/on_merge(list/mix_data, amount)
+	. = ..()
+	var/merged_total = amount + volume
+	if(merged_total >= CRITICAL_CAPACITY)
+		spew_waste(4) //Sure as HELL can't store it.
+		var/atom/container = holder.my_atom
+		container.take_damage(round(merged_total/10), BURN, BIO) //It's an unusual combination of damage type and flags, but we need to intentionally bypass beakers acid immunity.
 
 /datum/reagent/toxin/acid/industrial_waste/intercept_reagents_transfer(datum/reagents/target)
 	if(target.total_volume >= target.maximum_volume)
@@ -1609,7 +1606,12 @@
 
 /datum/reagent/toxin/acid/industrial_waste/burn(datum/reagents/holder)
 	. = ..()
-	spew_waste(spew_range = 2)
+	spew_waste(2) //Can't burn it...
+
+/datum/reagent/toxin/acid/industrial_waste/on_spark_act(power_charge, spark_flags)
+	if((spark_flags & SPARK_ACT_ENCLOSED) && !ismob(holder.my_atom))
+		return
+	spew_waste(2) //Can't electrify it...
 
 /datum/reagent/toxin/acid/industrial_waste/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -1627,17 +1629,28 @@
 	if(volume < WASTE_REACTION_THRESHOLD)
 		return // The waste is too small to do anything.
 	var/obj/effect/decal/cleanable/greenglow/waste/goo
-	goo = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste)
-	if(!QDELETED(goo))
+	goo = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste) //Following similar logic to how ants spawn their cleanables.
+	if(QDELETED(goo))
+		return
+
+	goo.decal_reagent = type
+	var/rounded_volume = round(reac_volume, 1)
+	goo.reagent_amount = rounded_volume
+
+	if(goo.lazy_init_reagents())
+		goo.reagents.maximum_volume = min(goo.reagents.maximum_volume + rounded_volume, 300)
 		goo.reagents.add_reagent(type, reac_volume)
 
 /**
  * Pick a random turf in the spew range and split our total amount of waste there.
  */
 /datum/reagent/toxin/acid/industrial_waste/proc/spew_waste(spew_range = 1)
+	if(!spew_range)
+		return
+
 	var/atom/atom_holder = holder.my_atom
 	var/turf/dropturf = get_turf(atom_holder)
-	var/list/turfs = TURF_NEIGHBORS(dropturf)
+	var/list/turfs = oview(spew_range, dropturf)
 	while(length(turfs))
 		var/turf/turf_options = pick(turfs)
 		if(turf_options.is_blocked_turf(TRUE))

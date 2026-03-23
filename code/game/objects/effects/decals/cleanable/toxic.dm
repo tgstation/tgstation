@@ -7,6 +7,7 @@
 	beauty = -300
 	clean_type = CLEAN_TYPE_ACID
 	decal_reagent = /datum/reagent/toxin/acid/industrial_waste
+	reagent_amount = 5
 	alpha = 0
 	var/datum/looping_sound/soup/bubbling_audio //It's really just bubbling liquid audio, which is what I need here.
 
@@ -17,12 +18,12 @@
 	bubbling_audio = new /datum/looping_sound/soup(src)
 	bubbling_audio.start()
 	pre_eat()
-	add_shared_particles(/particles/smoke/steam/toxic)
+	add_shared_particles(/particles/acid)
 
 /obj/effect/decal/cleanable/greenglow/waste/Destroy()
 	. = ..()
 	QDEL_NULL(bubbling_audio)
-	remove_shared_particles(/particles/smoke/steam/toxic)
+	remove_shared_particles(/particles/acid)
 
 /obj/effect/decal/cleanable/greenglow/waste/proc/pre_eat(display_message = TRUE)
 	if(display_message)

@@ -11,13 +11,13 @@
 	return ..()
 
 /datum/component/plumbing/boulder_reactions/can_give(amount, reagent, datum/ductnet/net)
-	if(amount <= 0 || !reagents.total_volume)
+	if(amount <= 0 || !reagents.total_volume || !reagent)
 		return
 
 	var/obj/machinery/bouldertech/refinery/the_refinery = parent
 	var/list/datum/reagents/boosters = the_refinery.booster_list
-	var/datum/the_reagent = reagent
 
-	if(boosters[the_reagent.type]) //We don't want to toss out boosting reagents in case we want to use them for actually boosting the machine.
+	if(is_path_in_list(reagent, boosters))
 		return FALSE
+
 	return ..()
