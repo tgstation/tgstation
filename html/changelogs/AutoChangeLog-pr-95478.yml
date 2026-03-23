@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Cargo goodies are now visible in the ordering and request consoles."
