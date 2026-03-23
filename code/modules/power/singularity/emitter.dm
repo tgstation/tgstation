@@ -78,6 +78,7 @@
 	sparks.attach(src)
 	AddElement(/datum/element/simple_rotation)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/emitter), only_root_path = TRUE))
 
 /obj/machinery/power/emitter/welded/Initialize(mapload)
 	welded = TRUE
@@ -190,6 +191,7 @@
 	log_game("[src] turned [active ? "ON" : "OFF"] by [key_name(user)] in [AREACOORD(src)]")
 	investigate_log("turned [active ? "ON" : "OFF"] by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_ENGINE)
 	update_appearance()
+	SEND_SIGNAL(src, COMSIG_EMITTER_MACHINE_SET_ON, active ? TRUE : FALSE)
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(ismegafauna(user) && anchored)
@@ -268,6 +270,7 @@
 		else
 			fire_delay = rand(minimum_fire_delay,maximum_fire_delay) * fire_rate_mod
 			shot_number = 0
+	SEND_SIGNAL(src, COMSIG_EMITTER_MACHINE_ON_FIRE)
 	return projectile
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
@@ -462,6 +465,62 @@
 	var/view_range = 4.5
 	///Grants the buckled mob the action button
 	var/datum/action/innate/proto_emitter/firing/auto
+
+
+//	USB
+
+/obj/item/circuit_component/emitter
+	display_name = "Emitter"
+	desc = "Allows you to manually fire and get the ready status of an emitter."
+
+	///Manually trigger the emitter
+	var/datum/port/input/fire
+
+	///Send a signal when the emitter is turned on
+	var/datum/port/output/turned_on
+	///Send a signal when the emitter is turned off
+	var/datum/port/output/turned_off
+	///Send a signal when the emitter has fired
+	var/datum/port/output/has_fired
+
+	var/obj/machinery/power/emitter/attached_emitter
+
+/obj/item/circuit_component/emitter/populate_ports()
+	fire = add_input_port("Fire", PORT_TYPE_SIGNAL, trigger = PROC_REF(fire_emitter))
+
+	turned_on = add_output_port("Turned On", PORT_TYPE_SIGNAL)
+	turned_off = add_output_port("Turned Off", PORT_TYPE_SIGNAL)
+	has_fired = add_output_port("Has Fired", PORT_TYPE_SIGNAL)
+
+/obj/item/circuit_component/emitter/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/power/emitter))
+		attached_emitter = parent
+		RegisterSignal(attached_emitter, COMSIG_EMITTER_MACHINE_SET_ON, PROC_REF(handle_emitter_activation))
+		RegisterSignal(attached_emitter, COMSIG_EMITTER_MACHINE_ON_FIRE, PROC_REF(handle_emitter_on_fire))
+
+/obj/item/circuit_component/emitter/unregister_usb_parent(atom/movable/parent)
+	UnregisterSignal(attached_emitter, COMSIG_EMITTER_MACHINE_SET_ON)
+	UnregisterSignal(attached_emitter, COMSIG_EMITTER_MACHINE_ON_FIRE)
+	attached_emitter = null
+	return ..()
+
+/obj/item/circuit_component/emitter/proc/handle_emitter_activation(datum/source, active)
+	SIGNAL_HANDLER
+	if(active)
+		turned_on.set_output(COMPONENT_SIGNAL)
+	else
+		turned_off.set_output(COMPONENT_SIGNAL)
+
+/obj/item/circuit_component/emitter/proc/handle_emitter_on_fire(datum/source, active)
+	SIGNAL_HANDLER
+	has_fired.set_output(COMPONENT_SIGNAL)
+
+/obj/item/circuit_component/emitter/proc/fire_emitter()
+	CIRCUIT_TRIGGER
+	if(!attached_emitter)
+		return
+	attached_emitter.fire_beam_pulse()
 
 //BUCKLE HOOKS
 
