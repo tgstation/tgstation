@@ -43,7 +43,8 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize(mapload)
 	. = ..()
 	update_appearance(UPDATE_ICON)
-	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/thermomachine), only_root_path = TRUE))
+	if(interactive)
+		AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/thermomachine), only_root_path = TRUE))
 	register_context()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
