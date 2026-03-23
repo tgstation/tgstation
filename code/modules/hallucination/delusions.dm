@@ -95,6 +95,7 @@
 		if(found_human != hallucinator)
 			RegisterSignal(found_human, COMSIG_QDELETING, PROC_REF(on_mob_delete))
 		RegisterSignal(found_human, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
+		// ensures the delusion image's lighting updates if the mob's lighting changes
 		RegisterSignal(found_human, COMSIG_ATOM_HOLDER_OVERLAY_LIGHT_APPLIED, PROC_REF(on_mob_light_add))
 		RegisterSignal(found_human, COMSIG_ATOM_HOLDER_OVERLAY_LIGHT_REMOVED, PROC_REF(on_mob_light_remove))
 		LAZYSET(delusions, found_human, funny_image)
@@ -120,7 +121,7 @@
 	// copies over lighting underlays
 	for(var/image/underlay as anything in over_who.underlays)
 		if(PLANE_TO_TRUE(underlay.plane) == O_LIGHTING_VISUAL_PLANE)
-			funny_image.underlays |= new /mutable_appearance(underlay)
+			funny_image.underlays += underlay
 	return funny_image
 
 /datum/hallucination/delusion/proc/on_mob_delete(mob/living/carbon/human/source)
