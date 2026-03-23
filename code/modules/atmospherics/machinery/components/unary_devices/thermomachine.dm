@@ -419,7 +419,7 @@
 	var/obj/machinery/atmospherics/components/unary/thermomachine/connected_machine
 
 /obj/item/circuit_component/thermomachine/populate_ports()
-	temperature = add_input_port("New Temperature", PORT_TYPE_NUMBER, trigger = PROC_REF(set_temperature))
+	temperature = add_input_port("Set Temperature", PORT_TYPE_NUMBER, trigger = PROC_REF(set_temperature))
 	on = add_input_port("Turn On", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_machine_on))
 	off = add_input_port("Turn Off", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_machine_off))
 	request_data = add_input_port("Request Port Data", PORT_TYPE_SIGNAL, trigger = PROC_REF(request_pump_data))

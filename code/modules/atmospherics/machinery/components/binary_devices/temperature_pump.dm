@@ -169,12 +169,12 @@
 	var/obj/machinery/atmospherics/components/binary/temperature_pump/connected_pump
 
 /obj/item/circuit_component/atmos_temperature_pump/populate_ports()
-	heat_transfer_rate = add_input_port("New heat transfer rate", PORT_TYPE_NUMBER, trigger = PROC_REF(set_pump_heat_rate))
+	heat_transfer_rate = add_input_port("New Heat Transfer Rate", PORT_TYPE_NUMBER, trigger = PROC_REF(set_pump_heat_rate))
 	on = add_input_port("Turn On", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_pump_on))
 	off = add_input_port("Turn Off", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_pump_off))
 	request_data = add_input_port("Request Port Data", PORT_TYPE_SIGNAL, trigger = PROC_REF(request_pump_data))
 
-	heat_transfer_rate_state = add_output_port("Heat transfer rate", PORT_TYPE_NUMBER)
+	heat_transfer_rate_state = add_output_port("Heat Transfer Rate", PORT_TYPE_NUMBER)
 	input_pressure = add_output_port("Input Pressure", PORT_TYPE_NUMBER)
 	output_pressure = add_output_port("Output Pressure", PORT_TYPE_NUMBER)
 	input_temperature = add_output_port("Input Temperature", PORT_TYPE_NUMBER)
