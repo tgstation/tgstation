@@ -12,6 +12,10 @@
 		CRASH("Could not find lib[library].so")
 
 #define AUXCPU_DLL (world.system_type == MS_WINDOWS ? "auxcpu_byondapi.dll" : __detect_auxtools("auxcpu_byondapi"))
+
+// uncomment the define below if you want support for "true" world.map_cpu (true_maptick)
+//#define MAPTICK_HOOK
+
 /proc/current_true_cpu()
 	var/static/__current_true_cpu
 #ifndef OPENDREAM
@@ -42,11 +46,29 @@
 	return call_ext(__cpu_values)()
 #endif
 
+
+#ifdef MAPTICK_HOOK
+// NOTE: THIS IS IN DECISECONDS
+/proc/true_maptick()
+	var/static/__true_maptick
+#ifndef OPENDREAM
+	__true_maptick ||= load_ext(AUXCPU_DLL, "byond:maptick")
+	return call_ext(__true_maptick)()
+#endif
+#endif
+
 /world/proc/setup_external_cpu()
+	. = FALSE
 	if(!call_ext(AUXCPU_DLL, "byond:find_signatures")())
-		world.log << "auxcpu failed to find signatures"
-		return FALSE
-	world.log << "signatures found"
+		CRASH("auxcpu failed to find signatures")
+	world.log << "auxcpu signatures found"
+
+#ifdef MAPTICK_HOOK
+	var/maptick_err = call_ext(AUXCPU_DLL, "byond:maptick_init")()
+	if(maptick_err)
+		CRASH("auxcpu failed to hook maptick: [maptick_err]")
+	world.log << "auxcpu hooked maptick"
+#endif
 	return TRUE
 
 /world/proc/cleanup_external_cpu()
