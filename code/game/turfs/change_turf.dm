@@ -161,8 +161,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			if(old_lighting_object)
 				lighting_object = old_lighting_object
 				vis_contents |= lighting_object
-				if(!lighting_object.needs_update)
-					lighting_object.update()
 			// Should have a lighting object if we never had one
 			else
 				new /atom/movable/lighting_object(null, src)
@@ -171,6 +169,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 		directional_opacity = old_directional_opacity
 		recalculate_directional_opacity()
+
+		if(lighting_object && !lighting_object.needs_update)
+			lighting_object.update()
 
 	// If we're space, then we're either lit, or not, and impacting our neighbors, or not
 	if(isspaceturf(src))
