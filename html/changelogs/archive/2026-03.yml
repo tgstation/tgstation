@@ -342,6 +342,17 @@
   - admin: Subsystem flags are now displayed as flags instead of raw numbers in vv
   Melbert:
   - qol: Audit log formats vendors without "the"
+  - rscadd: Adds Thanatorenasia, a 0 point neutral quirk that turns your body into
+      a "recovered crewmember" if you choose to DNR - meaning if revived, any ghost
+      could take control of it
+  - refactor: Refactored "ghostrol on revive" behavior a fair bit, report any oddities
+      with it / the spawners menu
+  SmArtKar:
+  - balance: Blue raptors had their HP increased from 220 to 300
+  - balance: Purple raptors now automatically start flying if the owner is about to
+      fall into a chasm.
+  - bugfix: Fixed 2 exploits which would render you immune to falling down a specific
+      chasm.
   lelandkemble:
   - bugfix: Monkey dust now properly removes anti-stun properties when its imbiber
       is no longer a monkey
