@@ -1,8 +1,8 @@
 
 /// The number of influences spawned per heretic
-#define NUM_INFLUENCES_PER_HERETIC 5
+#define NUM_INFLUENCES_PER_HERETIC 4
 /// How often the tracker attempts to create a new influence.
-#define INFLUENCE_SPAWN_INTERVAL (5 MINUTES)
+#define INFLUENCE_SPAWN_INTERVAL (7.5 MINUTES)
 
 /**
  * #Reality smash tracker
@@ -38,12 +38,9 @@
 
 /// Calculates how many influences this tracker should support at most.
 /datum/reality_smash_tracker/proc/get_influence_cap()
-	var/influence_cap = 0
-	for(var/heretic_number in 1 to length(tracked_heretics))
-		influence_cap += max(NUM_INFLUENCES_PER_HERETIC - heretic_number + 1, 1)
-	return influence_cap
+	return length(tracked_heretics) * NUM_INFLUENCES_PER_HERETIC
 
-/// Tries to create one influence at a safe station location.
+/// Tries to create one influeSZnce at a safe station location.
 /datum/reality_smash_tracker/proc/try_generate_influence(amount = 1)
 	var/influence_cap = get_influence_cap()
 	if(num_drained >= influence_cap)
