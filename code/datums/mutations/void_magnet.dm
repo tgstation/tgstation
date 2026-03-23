@@ -57,7 +57,7 @@
 	return ..()
 
 /// Signal proc for [COMSIG_LIVING_LIFE]. Has a chance of casting itself randomly.
-/datum/action/cooldown/spell/void/cursed/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
+/datum/action/cooldown/spell/void/cursed/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	if(!isliving(source) || HAS_TRAIT(source, TRAIT_STASIS) || source.stat == DEAD || HAS_TRAIT(source, TRAIT_NO_TRANSFORM))

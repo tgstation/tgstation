@@ -677,6 +677,7 @@ DEFINE_VERB(/mob, quick_equip, "quick-equip", "", TRUE, "")
 
 	if(hud_used)
 		hud_used.build_hand_slots()
+		hud_used.healthdoll.update_body_zones()
 
 //GetAllContents that is reasonable and not stupid
 /mob/living/proc/get_all_gear(equipment_flags = INCLUDE_ACCESSORIES|INCLUDE_PROSTHETICS, recursive = TRUE)

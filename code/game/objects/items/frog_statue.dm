@@ -146,7 +146,7 @@
 	new_frog.name = frog_name
 
 /obj/item/frog_contract/proc/select_frog_color(mob/user, mob/living/basic/leaper/new_frog)
-	var/frog_color  = input(user, "Select your frog's color!" , "Pet toad color", COLOR_GREEN) as color|null
+	var/frog_color = tgui_color_picker(user, "Select your frog's color!" , "Pet toad color", COLOR_GREEN)
 	if(isnull(frog_color))
 		to_chat(user, span_warning("Please choose a valid color."))
 		select_frog_color(user, new_frog)

@@ -67,7 +67,7 @@
 /mob/living/basic/lightgeist/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	. = ..()
 	if (. && isliving(target))
-		faction |= REF(target) // Anyone we heal will treat us as a friend
+		add_ally(target) // Anyone we heal will treat us as a friend
 
 /mob/living/basic/lightgeist/ghost_yourself()
 	. = ..()
@@ -103,7 +103,7 @@
 	if (!iscarbon(target))
 		return target.get_brute_loss() > 0 || target.get_fire_loss() > 0
 	var/mob/living/carbon/carbon_target = target
-	for (var/obj/item/bodypart/part in carbon_target.bodyparts)
+	for (var/obj/item/bodypart/part in carbon_target.get_bodyparts())
 		if (!part.brute_dam && !part.burn_dam)
 			continue
 		if (!(part.bodytype & required_bodytype))

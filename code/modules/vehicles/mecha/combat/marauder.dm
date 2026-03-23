@@ -133,7 +133,7 @@
 	armor_type = /datum/armor/mecha_mauler
 	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
-	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | AI_COMPATIBLE
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,

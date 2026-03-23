@@ -66,6 +66,10 @@
 /// log login/logout
 /datum/config_entry/flag/log_access
 
+/// log blood worm actions like entering/leaving hosts
+/datum/config_entry/flag/log_blood_worm
+	default = TRUE
+
 /// Config entry which special logging of failed logins under suspicious circumstances.
 /datum/config_entry/flag/log_suspicious_login
 
@@ -162,6 +166,9 @@
 /// log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
 /datum/config_entry/flag/log_shuttle
 
+/// log image authoring, such as using the modular computer paint app
+/datum/config_entry/flag/log_image
+
 /// logs all timers in buckets on automatic bucket reset (Useful for timer debugging)
 /datum/config_entry/flag/log_timers_on_bucket_reset
 
@@ -180,11 +187,6 @@
 
 /// allow votes to change map
 /datum/config_entry/flag/allow_vote_map
-
-/// the number of times we allow players to rock the vote
-/datum/config_entry/number/max_rocking_votes
-	default = 1
-	min_val = 1
 
 /// minimum time between voting sessions (deciseconds, 10 minute default)
 /datum/config_entry/number/vote_delay
@@ -773,6 +775,12 @@
 	min_val = 0
 	max_val = 100
 
+/// Pop requirement to exclude recently played maps from votes.
+/datum/config_entry/number/map_vote_minimum_pop_to_remember_maps
+	default = 0 //0 means disabled
+	integer = TRUE
+	min_val = 0
+
 /// If admins with +DEBUG can initialize byond-tracy midround.
 /datum/config_entry/flag/allow_tracy_start
 	protection = CONFIG_ENTRY_LOCKED
@@ -797,3 +805,5 @@
 /datum/config_entry/number/minimum_ascension_time
 	default = 0 // 1 minute
 	min_val = 0
+
+/datum/config_entry/flag/fishing

@@ -16,7 +16,7 @@
 	bypasses_immunity = TRUE
 	required_organ = ORGAN_SLOT_STOMACH
 
-/datum/disease/death_sandwich_poisoning/stage_act(seconds_per_tick, times_fired)
+/datum/disease/death_sandwich_poisoning/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

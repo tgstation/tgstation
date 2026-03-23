@@ -392,7 +392,6 @@
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2)
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The BR-38 is Nanotrasen's latest foray into entirely in-house, standard-issue-ready, accelerator-assisted ballistic firearms.<br>\
 		<br>\
 		The acceleration rail built into the barrel assembly boosts fired projectiles to higher velocities than unassisted bullets, \
@@ -473,7 +472,7 @@
 
 /obj/item/gun/ballistic/automatic/battle_rifle/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(chambered.loaded_projectile && prob(75) && (emp_malfunction || degradation_stage == degradation_stage_max))
-		balloon_alert_to_viewers("*click*")
+		balloon_alert_to_hearers("*click*")
 		playsound(src, dry_fire_sound, dry_fire_sound_volume, TRUE)
 		return
 

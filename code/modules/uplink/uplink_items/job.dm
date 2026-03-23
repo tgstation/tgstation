@@ -14,7 +14,7 @@
 	cost = 2
 	restricted_roles = list(JOB_CURATOR)
 	limited_stock = 1 //please don't spam deadchat
-	surplus = 5
+	surplus = 1 
 
 /datum/uplink_item/role_restricted/mail_counterfeit_kit
 	name = "GLA Brand Mail Counterfeit Kit"
@@ -237,7 +237,7 @@
 	cost = 12
 	item = /obj/item/storage/box/syndie_kit/mimery
 	restricted_roles = list(JOB_MIME)
-	surplus = 0
+	surplus = 10
 
 /datum/uplink_item/role_restricted/laser_arm
 	name = "Laser Arm Implant"
@@ -361,6 +361,7 @@
 	item = /obj/item/bee_smoker
 	cost = 4
 	restricted_roles = list(JOB_BOTANIST)
+	surplus = 0 //requires too much setup to be worth including in surplus crates
 
 /datum/uplink_item/role_restricted/monkey_agent
 	name = "Simian Agent Reinforcements"

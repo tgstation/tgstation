@@ -69,13 +69,13 @@
 
 	return ..()
 
-/datum/wound/blunt/bone/remove_wound(ignore_limb, replaced)
+/datum/wound/blunt/bone/remove_wound(ignore_limb, replaced, destroying)
 	limp_slowdown = 0
 	limp_chance = 0
 	QDEL_NULL(active_trauma)
 	return ..()
 
-/datum/wound/blunt/bone/handle_process(seconds_per_tick, times_fired)
+/datum/wound/blunt/bone/handle_process(seconds_per_tick)
 	. = ..()
 
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
@@ -88,7 +88,7 @@
 			active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
-	var/is_bone_limb = ((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
+	var/is_bone_limb = ((limb.biological_state & BIO_BONE) && !(limb.biological_state & (BIO_FLESH|BIO_CHITIN)))
 	if(!gelled || (!taped && !is_bone_limb))
 		return
 
@@ -163,7 +163,7 @@
 		victim.apply_damage(rand(1, 3) * (severity - 1) * gun.weapon_weight, BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 
 	if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
-		bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (15 * severity * (limb.current_gauze?.splint_factor || 1))
+		bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (15 * severity * limb.get_splint_factor())
 
 /datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE || !victim.can_bleed())
@@ -202,7 +202,8 @@
 /datum/wound/blunt/bone/modify_desc_before_span(desc)
 	. = ..()
 
-	if (!limb.current_gauze)
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if (!current_gauze)
 		if(taped)
 			. += ", [span_notice("and appears to be reforming itself under some surgical tape!")]"
 		else if(gelled)
@@ -381,7 +382,7 @@
 	limp_slowdown = 6
 	limp_chance = 60
 	series_threshold_penalty = 30
-	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
+	treatable_by = list(/obj/item/stack/medical/wrap/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/severe
 	scar_keyword = "bluntsevere"
 	brain_trauma_group = BRAIN_TRAUMA_MILD
@@ -422,7 +423,7 @@
 	sound_effect = 'sound/effects/wounds/crack2.ogg'
 	threshold_penalty = 15
 	disabling = TRUE
-	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
+	treatable_by = list(/obj/item/stack/medical/wrap/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/critical
 	scar_keyword = "bluntcritical"
 	brain_trauma_group = BRAIN_TRAUMA_SEVERE
@@ -430,10 +431,14 @@
 	internal_bleeding_chance = 60
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_INTERIOR)
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
+	surgery_states = SURGERY_SKIN_CUT | SURGERY_BONE_SAWED // Bad enough to count as a busted skull/ribcage
 
 	simple_desc = "Patient's bones have effectively shattered completely, causing total immobilization of the limb."
 	simple_treat_text = "<b>Bandaging</b> the wound will slightly reduce its impact until <b>surgically treated</b> with bone gel and surgical tape."
 	homemade_treat_text = "Although this is extremely difficult and slow to function, <b>Bone gel and surgical tape</b> may be applied directly to the wound, though this is nigh-impossible for most people to do so individually unless they've dosed themselves with one or more <b>painkillers</b> (Morphine and Miner's Salve have been known to help)"
+
+	/// Tracks if a surgeon has reset the bone (part one of the surgical treatment process)
+	VAR_FINAL/reset = FALSE
 
 /datum/wound_pregen_data/bone/compound
 	abstract = FALSE
@@ -452,7 +457,7 @@
 /// if someone is using bone gel on our wound
 /datum/wound/blunt/bone/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
 	// skellies get treated nicer with bone gel since their "reattach dismembered limbs by hand" ability sucks when it's still critically wounded
-	if((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
+	if((limb.biological_state & BIO_BONE) && !(limb.biological_state & (BIO_FLESH|BIO_CHITIN)))
 		return skelly_gel(I, user)
 
 	if(gelled)
@@ -505,7 +510,7 @@
 	return TRUE
 
 /// if someone is using surgical tape on our wound
-/datum/wound/blunt/bone/proc/tape(obj/item/stack/sticky_tape/surgical/I, mob/user)
+/datum/wound/blunt/bone/proc/tape(obj/item/stack/medical/wrap/sticky_tape/surgical/I, mob/user)
 	if(!gelled)
 		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] must be coated with bone gel to perform this emergency operation!"))
 		return TRUE
@@ -532,10 +537,14 @@
 	processes = TRUE
 	return TRUE
 
+/datum/wound/blunt/bone/item_can_treat(obj/item/potential_treater, mob/user)
+	// assume that - if working on a ready-to-operate limb - the surgery wants to do the real surgery instead of bone regeneration
+	return ..() && !HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE)
+
 /datum/wound/blunt/bone/treat(obj/item/tool, mob/user)
 	if(istype(tool, /obj/item/stack/medical/bone_gel))
 		gel(tool, user)
-	if(istype(tool, /obj/item/stack/sticky_tape/surgical))
+	if(istype(tool, /obj/item/stack/medical/wrap/sticky_tape/surgical))
 		tape(tool, user)
 
 /datum/wound/blunt/bone/get_scanner_description(mob/user)
@@ -544,7 +553,7 @@
 	. += "<div class='ml-3'>"
 
 	if(severity > WOUND_SEVERITY_MODERATE)
-		if((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
+		if((limb.biological_state & BIO_BONE) && !(limb.biological_state & (BIO_FLESH|BIO_CHITIN)))
 			if(!gelled)
 				. += "Recommended Treatment: Apply bone gel directly to injured limb. Creatures of pure bone don't seem to mind bone gel application nearly as much as fleshed individuals. Surgical tape will also be unnecessary.\n"
 			else

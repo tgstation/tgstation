@@ -51,6 +51,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/succeeded = TRUE
 	var/list/allocated
 	var/list/fail_reasons
+	var/times_to_run = 1
 
 	/// List of atoms that we don't want to ever initialize in an agnostic context, like for Create and Destroy. Stored on the base datum for usability in other relevant tests that need this data.
 	var/static/list/uncreatables = null
@@ -258,45 +259,29 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// It is appreciated to add the reason why the atom shouldn't be initialized if you add it to this list.
 /datum/unit_test/proc/build_list_of_uncreatables()
 	RETURN_TYPE(/list)
-	var/list/returnable_list = list()
-	// The following are just generic, singular types.
-	returnable_list = list(
-		//Never meant to be created, errors out the ass for mobcode reasons
-		/mob/living/carbon,
-		//And another
-		/obj/item/slimecross/recurring,
-		//This should be obvious
-		/obj/machinery/doomsday_device,
+	// The following are just generic, singular types
+	var/list/returnable_list = list(
 		//Yet more templates
 		/obj/machinery/restaurant_portal,
-		//Template type
-		/obj/machinery/power/turbine,
-		//Template type
-		/obj/effect/mob_spawn,
 		//Template type
 		/obj/structure/holosign/robot_seat,
 		//Singleton
 		/mob/dview,
-		//Template type
-		/obj/item/bodypart,
 		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
 		/obj/merge_conflict_marker,
-		//briefcase launchpads erroring
-		/obj/machinery/launchpad/briefcase,
-		//Wings abstract path
-		/obj/item/organ/wings,
 		//Not meant to spawn without the machine wand
 		/obj/effect/bug_moving,
-		//The abstract grown item expects a seed, but doesn't have one
-		/obj/item/food/grown,
 		//Single use case holder atom requiring a user
 		/atom/movable/looking_holder,
 		//Should not exist outside of holders
 		/obj/effect/decal/cleanable/blood/trail,
+		//Should not exist outside of ethereals
+		/obj/item/stock_parts/power_store/cell/ethereal,
 	)
 
 	// Everything that follows is a typesof() check.
-
+	returnable_list += typesof(/obj/machinery/doomsday_device) //This should be obvious
+	returnable_list += typesof(/obj/machinery/launchpad/briefcase) //briefcase launchpads erroring
 	//Say it with me now, type template
 	returnable_list += typesof(/obj/effect/mapping_helpers)
 	//This turf existing is an error in and of itself
@@ -396,9 +381,11 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	//Hell code, we're bound to end the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
-	for(var/unit_path in tests_to_run)
-		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
-		RunUnitTest(unit_path, test_results)
+	for(var/datum/unit_test/unit_path as anything in tests_to_run)
+		var/loop_count = unit_path::times_to_run
+		for(var/i in 1 to loop_count)
+			CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
+			RunUnitTest(unit_path, test_results)
 	SSticker.delay_end = FALSE
 
 	log_world("::group::Expensive Unit Test Times")

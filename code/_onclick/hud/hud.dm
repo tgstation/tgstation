@@ -349,9 +349,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += open_containers
 			screenmob.client.screen += toggle_palette
 
-			if(action_intent)
-				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
-
 		if(HUD_STYLE_REDUCED) //Reduced HUD
 			hud_shown = FALSE //Governs behavior of other procs
 			if(static_inventory.len)
@@ -396,7 +393,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	screenmob.reload_fullscreen()
 
 	if(screenmob == mymob)
-		update_parallax_pref(screenmob)
+		update_parallax_pref()
 	else
 		viewmob.hud_used.update_parallax_pref()
 
@@ -408,6 +405,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		for(var/M in mymob.observers)
 			show_hud(hud_version, M)
 	else if (viewmob.hud_used)
+		viewmob.hide_other_mob_action_buttons(mymob)
 		viewmob.hud_used.plane_masters_update()
 		viewmob.show_other_mob_action_buttons(mymob)
 

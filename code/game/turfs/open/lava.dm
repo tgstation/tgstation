@@ -23,6 +23,7 @@
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
 	rust_resistance = RUST_RESISTANCE_ABSOLUTE
+	turf_flags = NO_RUST
 	/// How much fire damage we deal to living mobs stepping on us
 	var/lava_damage = 20
 	/// How many firestacks we add to living mobs stepping on us
@@ -352,7 +353,7 @@
  */
 /turf/open/lava/proc/drop_contents_into_lava()
 	SIGNAL_HANDLER
-	balloon_alert_to_viewers("[pick("splash","pshhhh","hiss","blorble")]!")
+	balloon_alert_to_hearers("[pick("splash","pshhhh","hiss","blorble")]!")
 	playsound(src, 'sound/items/match_strike.ogg', 15, TRUE)
 	for(var/atom/movable/each_content as anything in contents)
 		on_atom_inited(src, each_content)
@@ -436,7 +437,7 @@
 	var/list/immune_parts = list() // Parts we can't transform because they're not organic or can't be dismembered
 	var/list/transform_parts = list() // Parts we want to transform
 
-	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
+	for(var/obj/item/bodypart/burn_limb as anything in burn_human.get_bodyparts())
 		if(!IS_ORGANIC_LIMB(burn_limb) || !burn_limb.can_dismember())
 			immune_parts += burn_limb
 			continue

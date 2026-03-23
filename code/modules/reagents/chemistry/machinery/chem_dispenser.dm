@@ -244,10 +244,9 @@
 	.["recordingRecipe"] = recording_recipe
 	.["recipeReagents"] = list()
 	if(beaker?.reagents.ui_reaction_id)
-		var/datum/chemical_reaction/reaction = get_chemical_reaction(beaker.reagents.ui_reaction_id)
-		for(var/_reagent in reaction.required_reagents)
-			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
-			.["recipeReagents"] += reagent.name
+		var/datum/chemical_reaction/reaction = GLOB.chemical_reactions_list[beaker.reagents.ui_reaction_id]
+		for(var/datum/reagent/reagent as anything in reaction.required_reagents)
+			.["recipeReagents"] += reagent::name
 
 	var/list/beaker_data = null
 	if(!QDELETED(beaker))
@@ -375,7 +374,7 @@
 		if("save_recording")
 			if(!is_operational)
 				return
-			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name", max_length = MAX_NAME_LEN)
+			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name", max_length = MAX_NAME_LEN, encode = FALSE)
 			if(!ui.user.can_perform_action(src, ALLOW_SILICON_REACH))
 				return
 			if(saved_recipes[name] && tgui_alert(ui.user, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
@@ -639,7 +638,7 @@
 	if(emagged_reagents != null && !emagged_reagents.len)
 		emagged_reagents = drink_emagged_reagents
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 
 /obj/machinery/chem_dispenser/drinks/setDir()
 	var/old = dir

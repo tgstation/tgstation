@@ -41,6 +41,8 @@
 	var/internal_bleeding_chance
 	/// If we let off blood when hit, the max blood lost is this * the incoming damage
 	var/internal_bleeding_coefficient
+	/// If TRUE we are ready to be mended in surgery
+	VAR_FINAL/mend_state = FALSE
 
 /datum/wound/pierce/bleed/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	set_blood_flow(initial_flow)
@@ -52,9 +54,7 @@
 /datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(victim.stat == DEAD || (wounding_dmg < 5) || !limb.can_bleed() || !victim.get_blood_volume() || !prob(internal_bleeding_chance + wounding_dmg))
 		return
-	if(limb.current_gauze?.splint_factor)
-		wounding_dmg *= (1 - limb.current_gauze.splint_factor)
-	var/blood_bled = rand(1, wounding_dmg * internal_bleeding_coefficient) // 12 brute toolbox can cause up to 15/18/21 bloodloss on mod/sev/crit
+	var/blood_bled = rand(1, limb.get_splint_factor() * internal_bleeding_coefficient) // 12 brute toolbox can cause up to 15/18/21 bloodloss on mod/sev/crit
 	switch(blood_bled)
 		if(1 to 6)
 			victim.bleed(blood_bled, TRUE)
@@ -89,13 +89,13 @@
 		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 		return BLOOD_FLOW_INCREASING
-	if(limb.current_gauze || clot_rate > 0)
+	if(LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE) || clot_rate > 0)
 		return BLOOD_FLOW_DECREASING
 	if(clot_rate < 0)
 		return BLOOD_FLOW_INCREASING
 	return BLOOD_FLOW_STEADY
 
-/datum/wound/pierce/bleed/handle_process(seconds_per_tick, times_fired)
+/datum/wound/pierce/bleed/handle_process(seconds_per_tick)
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
@@ -112,12 +112,11 @@
 			adjust_blood_flow(0.25 * seconds_per_tick) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	//gauze always reduces blood flow, even for non bleeders
-	if(limb.current_gauze)
-		if(clot_rate > 0)
-			adjust_blood_flow(-clot_rate * seconds_per_tick)
-		var/gauze_power = limb.current_gauze.absorption_rate
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if(current_gauze)
+		var/gauze_power = current_gauze.absorption_rate
 		limb.seep_gauze(gauze_power * seconds_per_tick)
-		adjust_blood_flow(-gauze_power * gauzed_clot_rate * seconds_per_tick)
+		adjust_blood_flow((-clot_rate * seconds_per_tick) + (-gauze_power * gauzed_clot_rate * seconds_per_tick))
 	//otherwise, only clot if it's a bleeder
 	else if(limb.can_bleed())
 		adjust_blood_flow(-clot_rate * seconds_per_tick)
@@ -133,10 +132,10 @@
 /datum/wound/pierce/bleed/check_grab_treatments(obj/item/tool, mob/user)
 	// if we're using something hot but not a cautery, we need to be aggro grabbing them first,
 	// so we don't try treating someone we're eswording
-	return tool.get_temperature()
+	return tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 
 /datum/wound/pierce/bleed/treat(obj/item/tool, mob/user)
-	if(tool.tool_behaviour == TOOL_CAUTERY || tool.get_temperature())
+	if(tool.tool_behaviour == TOOL_CAUTERY || tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		tool_cauterize(tool, user)
 
 /datum/wound/pierce/bleed/on_xadone(power)
@@ -184,7 +183,7 @@
 /datum/wound_pregen_data/flesh_pierce
 	abstract = TRUE
 
-	required_limb_biostate = (BIO_FLESH)
+	required_limb_biostate = BIO_FLESH
 	required_wounding_type = WOUND_PIERCE
 
 	wound_series = WOUND_SERIES_FLESH_PUNCTURE_BLEED
@@ -339,7 +338,7 @@
 	RegisterSignal(limb, COMSIG_BODYPART_UPDATE_WOUND_OVERLAY, PROC_REF(wound_overlay))
 	limb.update_part_wound_overlay()
 
-/datum/wound/pierce/bleed/severe/eye/remove_wound(ignore_limb, replaced)
+/datum/wound/pierce/bleed/severe/eye/remove_wound(ignore_limb, replaced, destroying)
 	if (!isnull(limb))
 		UnregisterSignal(limb, COMSIG_BODYPART_UPDATE_WOUND_OVERLAY)
 	return ..()
@@ -402,6 +401,7 @@
 	threshold_penalty = 15
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
+	surgery_states = SURGERY_SKIN_CUT | SURGERY_VESSELS_UNCLAMPED // Bad enough to count
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
 
 	simple_treat_text = "<b>Bandaging</b> the wound is of utmost importance, as is seeking direct medical attention - <b>Death</b> will ensue if treatment is delayed whatsoever, with lack of <b>oxygen</b> killing the patient, thus <b>Food, Iron, and saline solution</b> is always recommended after treatment. This wound will not naturally seal itself."

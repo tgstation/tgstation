@@ -47,7 +47,7 @@
 		old_vampire.hud_used.infodisplay -= blood_display
 		QDEL_NULL(blood_display)
 
-/datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
+/datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick)
 	. = ..()
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
 		var/need_mob_update = FALSE

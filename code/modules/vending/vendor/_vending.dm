@@ -234,6 +234,7 @@
 					all_products_free = TRUE
 			if(circuit)
 				circuit.all_products_free = all_products_free //sync up the circuit so the pricing schema is carried over if it's reconstructed.
+				circuit.desc = "This board's card reader component has been cut out, along with its brand selection dial."
 
 	else if(circuit)
 		all_products_free = circuit.all_products_free //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
@@ -359,7 +360,7 @@
 	if(isnull(refill_canister))
 		return // you can add the comment here instead
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"]")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("The machine may be [EXAMINE_HINT("pried")] apart.")
 

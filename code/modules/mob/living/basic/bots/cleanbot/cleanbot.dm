@@ -19,6 +19,7 @@
 	possessed_message = "You are a cleanbot! Clean the station to the best of your ability!"
 	ai_controller = /datum/ai_controller/basic_controller/bot/cleanbot
 	path_image_color = "#993299"
+	facepaint_overlays = list("cleanbot" = FALSE, "cleanbot_highlight" = TRUE)
 	///the bucket used to build us.
 	var/obj/item/reagent_containers/cup/bucket/build_bucket
 	///Flags indicating what kind of cleanables we should scan for to set as our target to clean.
@@ -161,9 +162,9 @@
 
 /mob/living/basic/bot/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(istype(arrived, /obj/item/reagent_containers/cup/bucket) && isnull(build_bucket))
+	if(istype(arrived, /obj/item/reagent_containers/cup/bucket))
+		QDEL_NULL(build_bucket)
 		build_bucket = arrived
-		return
 
 	if(istype(arrived, /obj/item/mop) && isnull(our_mop))
 		our_mop = arrived
@@ -208,7 +209,7 @@
 
 /mob/living/basic/bot/cleanbot/explode()
 	var/atom/drop_loc = drop_location()
-	build_bucket.forceMove(drop_loc)
+	build_bucket?.forceMove(drop_loc)
 	new /obj/item/assembly/prox_sensor(drop_loc)
 	if(weapon)
 		weapon.force = initial(weapon.force)
@@ -255,11 +256,6 @@
 	QDEL_NULL(our_mop)
 	GLOB.janitor_devices -= src
 	return ..()
-
-/mob/living/basic/bot/cleanbot/proc/apply_custom_bucket(obj/item/custom_bucket)
-	if(!isnull(build_bucket))
-		QDEL_NULL(build_bucket)
-	custom_bucket.forceMove(src)
 
 /mob/living/basic/bot/cleanbot/proc/on_attack_by(datum/source, obj/item/used_item, mob/living/user)
 	SIGNAL_HANDLER

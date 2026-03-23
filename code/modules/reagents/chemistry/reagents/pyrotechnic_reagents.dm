@@ -3,6 +3,7 @@
 	name = "Thermite"
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	color = "#550000"
 	taste_description = "sweet tasting metal"
 
@@ -11,9 +12,9 @@
 	if(reac_volume >= 1)
 		exposed_turf.AddComponent(/datum/component/thermite, reac_volume)
 
-/datum/reagent/thermite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/thermite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_fire_loss(1 * REM * seconds_per_tick, updating_health = FALSE))
+	if(affected_mob.adjust_fire_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/nitroglycerin
@@ -23,11 +24,16 @@
 	color = COLOR_GRAY
 	taste_description = "oil"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/nitroglycerin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/nitroglycerin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, -0.5 * metabolization_ratio * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
+
+/datum/reagent/nitroglycerin/on_spark_act(power_charge, spark_flags)
+	reagent_explode(holder, volume, strengthdiv = 2, clear_holder_reagents = FALSE, flame_factor = 1)
+	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/stabilizing_agent
 	name = "Stabilizing Agent"
@@ -35,6 +41,7 @@
 	color = COLOR_YELLOW
 	taste_description = "metal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 //It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
 /datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -48,11 +55,12 @@
 	taste_description = "burning"
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/clf3/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/clf3/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_fire_stacks(2 * REM * seconds_per_tick)
-	if(affected_mob.adjust_fire_loss(0.3 * max(affected_mob.fire_stacks, 1) * REM * seconds_per_tick, updating_health = FALSE))
+	affected_mob.adjust_fire_stacks(0.1 * metabolization_ratio * seconds_per_tick)
+	if(affected_mob.adjust_fire_loss(0.015 * max(affected_mob.fire_stacks, 1) * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/clf3/expose_turf(turf/exposed_turf, reac_volume)
@@ -84,6 +92,12 @@
 	color = "#5A64C8"
 	taste_description = "air and bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/sorium/on_spark_act(power_charge, spark_flags)
+	var/range = clamp(sqrt(volume), 1, 6)
+	goonchem_vortex(get_turf(holder.my_atom), 1, range)
+	return SPARK_ACT_NON_DESTRUCTIVE
 
 /datum/reagent/liquid_dark_matter
 	name = "Liquid Dark Matter"
@@ -91,6 +105,12 @@
 	color = "#210021"
 	taste_description = "compressed bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/liquid_dark_matter/on_spark_act(power_charge, spark_flags)
+	var/range = clamp(sqrt(volume / 2), 1, 6)
+	goonchem_vortex(get_turf(holder.my_atom), 0, range)
+	return SPARK_ACT_NON_DESTRUCTIVE
 
 /datum/reagent/gunpowder
 	name = "Gunpowder"
@@ -99,6 +119,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/gunpowder/on_new(data)
 	. = ..()
@@ -115,10 +136,28 @@
 	if(source.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)
 		return
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(1 + round(volume/6, 1), location, 0, 0, message = 0)
-	e.start(holder.my_atom)
+	var/datum/effect_system/reagents_explosion/expl = new(location, 1 + round(volume / 6, 1), message = FALSE)
+	expl.start(holder.my_atom)
 	holder.clear_reagents()
+
+/datum/reagent/gunpowder/on_spark_act(power_charge, spark_flags)
+	// Gunpowder doesn't blow in presence of stabilizing agent but instead consumes it every time it'd get triggered
+	var/agent_volume = holder.get_reagent_amount(/datum/reagent/stabilizing_agent)
+	if (agent_volume)
+		var/sapped_amt = 0.1 + round(power_charge / (0.1 * STANDARD_CELL_CHARGE), 0.01)
+		holder.remove_reagent(/datum/reagent/stabilizing_agent, sapped_amt)
+		if (agent_volume > sapped_amt)
+			return
+
+	if (power_charge >= STANDARD_CELL_CHARGE || holder.chem_temp >= 474)
+		reagent_explode(holder, volume, modifier = 5, strengthdiv = 10, clear_holder_reagents = FALSE, flame_factor = 1)
+		return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
+
+	holder.my_atom.visible_message(span_boldnotice("Sparks start flying around the gunpowder!"))
+	if (!(spark_flags & SPARK_ACT_ENCLOSED))
+		do_sparks(2, TRUE, get_turf(holder.my_atom))
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reagent_explode), holder, volume, 5, 10), rand(5 SECONDS, 10 SECONDS))
+	return SPARK_ACT_NON_DESTRUCTIVE // just wait a bit...
 
 /datum/reagent/rdx
 	name = "RDX"
@@ -126,6 +165,18 @@
 	color = COLOR_WHITE
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/rdx/on_spark_act(power_charge, spark_flags)
+	if (power_charge)
+		// Okay but what if we made a REALLY big boom?
+		var/power_coeff = log(2, power_charge / STANDARD_CELL_CHARGE)
+		reagent_explode(holder, volume, modifier = min(2 * power_coeff, 8), strengthdiv = 7 / min(power_coeff, 4), clear_holder_reagents = FALSE, flame_factor = 1)
+	else if (holder.chem_temp >= 474)
+		reagent_explode(holder, volume, modifier = 2, strengthdiv = 7, clear_holder_reagents = FALSE, flame_factor = 1)
+	else
+		reagent_explode(holder, volume, strengthdiv = 8, clear_holder_reagents = FALSE, flame_factor = 1)
+	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/tatp
 	name = "TaTP"
@@ -133,6 +184,11 @@
 	color = COLOR_WHITE
 	taste_description = "death"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/tatp/on_spark_act(power_charge, spark_flags)
+	reagent_explode(holder, volume, strengthdiv = 1.5 + rand() * 1.5, clear_holder_reagents = FALSE, flame_factor = 1)
+	return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/flash_powder
 	name = "Flash Powder"
@@ -140,6 +196,30 @@
 	color = "#C8C8C8"
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/flash_powder/on_spark_act(power_charge, spark_flags)
+	// Even weaker version of the normal flash effect
+	var/turf/location = get_turf(holder.my_atom)
+	if (!(spark_flags & SPARK_ACT_ENCLOSED))
+		do_sparks(2, TRUE, location)
+	else if (!(holder.flags & TRANSPARENT) || (!isturf(holder.my_atom.loc) && !ismob(holder.my_atom.loc))) // nope
+		return SPARK_ACT_NON_DESTRUCTIVE
+
+	var/range = round(volume / 15, 1)
+	holder.my_atom.flash_lighting_fx(range = (range + 2))
+	for(var/mob/living/victim in get_hearers_in_view(range, location))
+		if(!victim.flash_act(affect_silicon = TRUE))
+			continue
+		var/distance = get_dist(location, victim)
+		if(distance <= 4 || issilicon(victim))
+			victim.Paralyze(max(2 SECONDS / max(1, distance), 0.5 SECONDS))
+			victim.Knockdown(max(20 SECONDS / max(1, distance), 6 SECONDS))
+		else
+			victim.adjust_dizzy_up_to(max(20 SECONDS / max(1, distance), 0.5 SECONDS), 20 SECONDS)
+		victim.dropItemToGround(victim.get_active_held_item())
+		victim.dropItemToGround(victim.get_inactive_held_item())
+	return SPARK_ACT_NON_DESTRUCTIVE
 
 /datum/reagent/smoke_powder
 	name = "Smoke Powder"
@@ -147,6 +227,22 @@
 	color = "#C8C8C8"
 	taste_description = "smoke"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/smoke_powder/on_spark_act(power_charge, spark_flags)
+	// Can't really make a cloud of smoke if we're inside of an enclosed container
+	// ...unless we're a mob, in which case this is pretty cursed
+	if ((spark_flags & SPARK_ACT_ENCLOSED) && !ismob(holder.my_atom))
+		return
+	var/location = get_turf(holder.my_atom)
+	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+	if (iscarbon(holder.my_atom))
+		var/mob/living/carbon/victim = holder.my_atom
+		if (victim.stat != DEAD)
+			victim.visible_message(span_warning("[victim] starts violently coughing up smoke!"))
+		victim.adjust_organ_loss(ORGAN_SLOT_LUNGS, volume / 15)
+	do_chem_smoke(amount = volume / 1.5, holder = holder.my_atom, location = location, carry = holder, silent = FALSE, log = TRUE)
+	return SPARK_ACT_NON_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
 /datum/reagent/sonic_powder
 	name = "Sonic Powder"
@@ -154,6 +250,15 @@
 	color = "#C8C8C8"
 	taste_description = "loud noises"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/sonic_powder/on_spark_act(power_charge, spark_flags)
+	// Even weaker version of the normal flash effect
+	var/turf/location = get_turf(holder.my_atom)
+	var/range = round(volume / 15, 1)
+	for(var/mob/living/victim in get_hearers_in_view(range, location))
+		victim.soundbang_act(1, 10 SECONDS, rand(0, 0.5 SECONDS))
+	return SPARK_ACT_NON_DESTRUCTIVE
 
 /datum/reagent/phlogiston
 	name = "Phlogiston"
@@ -162,20 +267,33 @@
 	taste_description = "burning"
 	self_consuming = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/phlogiston/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	exposed_mob.adjust_fire_stacks(1)
-	var/burndmg = max(0.3*exposed_mob.fire_stacks * (1 - touch_protection), 0.3)
+	var/burndmg = max(0.3 * exposed_mob.fire_stacks * (1 - touch_protection), 0.3)
 	if(burndmg)
 		exposed_mob.adjust_fire_loss(burndmg, 0)
 	exposed_mob.ignite_mob()
 
-/datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
+/datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	metabolizer.adjust_fire_stacks(1 * REM * seconds_per_tick)
-	if(metabolizer.adjust_fire_loss(0.3 * max(metabolizer.fire_stacks, 0.15) * REM * seconds_per_tick, updating_health = FALSE))
+	metabolizer.adjust_fire_stacks(0.5 * metabolization_ratio * seconds_per_tick)
+	if(metabolizer.adjust_fire_loss(0.15 * max(metabolizer.fire_stacks, 0.15) * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
+
+/datum/reagent/phlogiston/on_spark_act(power_charge, spark_flags)
+	if ((spark_flags & SPARK_ACT_ENCLOSED) && !ismob(holder.my_atom))
+		if (!holder.my_atom.uses_integrity)
+			return
+		// Spicy!
+		holder.my_atom.take_damage(volume / 3, BURN, FIRE, FALSE)
+		return SPARK_ACT_NON_DESTRUCTIVE | SPARK_ACT_KEEP_REAGENT
+
+	var/turf/our_turf = get_turf(holder.my_atom)
+	our_turf?.hotspot_expose(holder.chem_temp * 50, volume)
+	return SPARK_ACT_NON_DESTRUCTIVE
 
 /datum/reagent/napalm
 	name = "Napalm"
@@ -185,6 +303,7 @@
 	self_consuming = TRUE
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 // why, just why
 /datum/reagent/napalm/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -194,14 +313,26 @@
 
 	mytray.adjust_weedlevel(-rand(5,9)) //At least give them a small reward if they bother.
 
-/datum/reagent/napalm/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/napalm/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	affected_mob.adjust_fire_stacks(1 * REM * seconds_per_tick)
+	affected_mob.adjust_fire_stacks(0.5 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/napalm/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(istype(exposed_mob) && (methods & (TOUCH|VAPOR|PATCH)))
-		exposed_mob.adjust_fire_stacks(min(reac_volume/4, 20))
+		exposed_mob.adjust_fire_stacks(min(reac_volume / 4, 20))
+
+/datum/reagent/napalm/on_spark_act(power_charge, spark_flags)
+	if ((spark_flags & SPARK_ACT_ENCLOSED) && !ismob(holder.my_atom))
+		if (!holder.my_atom.uses_integrity)
+			return
+		// Spicy!
+		holder.my_atom.take_damage(volume / 5, BURN, FIRE, FALSE)
+		return SPARK_ACT_NON_DESTRUCTIVE | SPARK_ACT_KEEP_REAGENT
+
+	var/turf/our_turf = get_turf(holder.my_atom)
+	our_turf?.hotspot_expose(round(holder.chem_temp * 30 * (1 + sqrt(power_charge / STANDARD_CELL_CHARGE)), 1), volume)
+	return SPARK_ACT_NON_DESTRUCTIVE
 
 #define CRYO_SPEED_PREFACTOR 0.4
 #define CRYO_SPEED_CONSTANT 0.1
@@ -219,6 +350,7 @@
 	inverse_chem = /datum/reagent/inverse/cryostylane
 	burning_volume = 0.05
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/cryostylane/burn(datum/reagents/holder)
 	if(holder.has_reagent(/datum/reagent/oxygen))
@@ -228,28 +360,29 @@
 
 /datum/reagent/cryostylane/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
-	affected_mob.mob_surgery_speed_mod = 1-((CRYO_SPEED_PREFACTOR * (1 - creation_purity))+CRYO_SPEED_CONSTANT) //10% - 30% slower
+	// Between a 1.1x and a 1.5x to surgery time depending on purity
+	affected_mob.add_surgery_speed_mod(type, 1 + ((CRYO_SPEED_PREFACTOR * (1 - creation_purity)) + CRYO_SPEED_CONSTANT), min(amount * 1 MINUTES, 5 MINUTES))
 	affected_mob.color = COLOR_CYAN
 
 /datum/reagent/cryostylane/on_mob_delete(mob/living/affected_mob)
 	. = ..()
-	affected_mob.mob_surgery_speed_mod = 1
+	affected_mob.remove_surgery_speed_mod(type)
 	affected_mob.color = COLOR_WHITE
 
 //Pauses decay! Does do something, I promise.
-/datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
+/datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	metabolization_rate = 0.05 * REM //slower consumption when dead
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM //slower consumption when dead
 
-/datum/reagent/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	metabolization_rate = 0.25 * REM//faster consumption when alive
+	metabolization_rate = 0.625 * REAGENTS_METABOLISM //faster consumption when alive
 	if(affected_mob.reagents.has_reagent(/datum/reagent/oxygen))
-		affected_mob.reagents.remove_reagent(/datum/reagent/oxygen, 0.5 * REM * seconds_per_tick)
-		affected_mob.adjust_bodytemperature(-15 * REM * seconds_per_tick)
+		affected_mob.reagents.remove_reagent(/datum/reagent/oxygen, 1 * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_bodytemperature(-30 * metabolization_ratio * seconds_per_tick)
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/humi = affected_mob
-			humi.adjust_coretemperature(-15 * REM * seconds_per_tick)
+			humi.adjust_coretemperature(-30 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/cryostylane/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -271,15 +404,16 @@
 	burning_temperature = null
 	burning_volume = 0.05
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/pyrosium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/pyrosium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(holder.has_reagent(/datum/reagent/oxygen))
-		holder.remove_reagent(/datum/reagent/oxygen, 0.5 * REM * seconds_per_tick)
-		affected_mob.adjust_bodytemperature(15 * REM * seconds_per_tick)
+		holder.remove_reagent(/datum/reagent/oxygen, 0.5 * metabolization_ratio * seconds_per_tick)
+		affected_mob.adjust_bodytemperature(15 * metabolization_ratio * seconds_per_tick)
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/affected_human = affected_mob
-			affected_human.adjust_coretemperature(15 * REM * seconds_per_tick)
+			affected_human.adjust_coretemperature(15 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/pyrosium/burn(datum/reagents/holder)
 	if(holder.has_reagent(/datum/reagent/oxygen))
@@ -296,8 +430,9 @@
 	self_consuming = TRUE
 	var/shock_timer = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/teslium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/teslium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	shock_timer++
 	if(shock_timer >= rand(5, 30)) //Random shocks are wildly unpredictable
@@ -327,23 +462,29 @@
 	var/mob/living/carbon/human/affected_human = affected_mob
 	affected_human.physiology.siemens_coeff *= 0.5
 
+/datum/reagent/teslium/on_spark_act(power_charge, spark_flags)
+	tesla_zap(source = holder.my_atom, zap_range = round(volume / 5, 1), power = volume * 20 + power_charge, cutoff = 1 KILO JOULES, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN)
+	playsound(holder.my_atom, 'sound/machines/defib/defib_zap.ogg', 50, TRUE)
+	return SPARK_ACT_NON_DESTRUCTIVE
+
 /datum/reagent/teslium/energized_jelly
 	name = "Energized Jelly"
 	description = "Electrically-charged jelly. Boosts jellypeople's nervous system, but only shocks other lifeforms."
 	color = "#CAFF43"
 	taste_description = "jelly"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	if(!isjellyperson(affected_mob)) //everyone but jellypeople get shocked as normal.
 		return ..()
-	affected_mob.AdjustAllImmobility(-40  *REM * seconds_per_tick)
-	if(affected_mob.adjust_stamina_loss(-10 * REM * seconds_per_tick, updating_stamina = FALSE))
+	affected_mob.AdjustAllImmobility(-20  * metabolization_ratio * seconds_per_tick)
+	if(affected_mob.adjust_stamina_loss(-5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 	if(is_species(affected_mob, /datum/species/jelly/luminescent))
 		var/mob/living/carbon/human/affected_human = affected_mob
 		var/datum/species/jelly/luminescent/slime_species = affected_human.dna.species
-		slime_species.extract_cooldown = max(slime_species.extract_cooldown - (2 SECONDS * REM * seconds_per_tick), 0)
+		slime_species.extract_cooldown = max(slime_species.extract_cooldown - (1 SECONDS * metabolization_ratio * seconds_per_tick), 0)
 
 /datum/reagent/firefighting_foam
 	name = "Firefighting Foam"
@@ -351,6 +492,7 @@
 	color = "#A6FAFF55"
 	taste_description = "the inside of a fire extinguisher"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/firefighting_foam/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()

@@ -117,7 +117,7 @@
 	/// Is our factory dead?
 	var/orphaned = FALSE
 
-/mob/living/basic/blob_minion/blobbernaut/minion/Life(seconds_per_tick, times_fired)
+/mob/living/basic/blob_minion/blobbernaut/minion/Life(seconds_per_tick)
 	. = ..()
 	if (!.)
 		return FALSE

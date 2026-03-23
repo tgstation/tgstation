@@ -185,7 +185,7 @@
 		return
 	tangle_ability.Trigger(target = victim)
 
-/mob/living/basic/venus_human_trap/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/venus_human_trap/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.)
 		return FALSE

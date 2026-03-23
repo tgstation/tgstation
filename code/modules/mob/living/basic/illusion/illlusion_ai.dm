@@ -20,6 +20,7 @@
 /datum/ai_controller/basic_controller/illusion/escape
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // we don't need the special illusion one here
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = DEFAULT_AI_FLAGS

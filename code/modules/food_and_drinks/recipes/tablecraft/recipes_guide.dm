@@ -52,7 +52,7 @@
  */
 /datum/crafting_recipe/food/reaction/proc/setup_chemical_reaction_details(datum/chemical_reaction/chemical_reaction)
 	reqs = chemical_reaction.required_reagents?.Copy()
-	chem_catalysts = chemical_reaction.required_catalysts?.Copy()
+	chem_catalysts = LAZYLISTDUPLICATE(chemical_reaction.required_catalysts)
 	if(isnull(result) && length(chemical_reaction.results))
 		result = chemical_reaction.results[1]
 		result_amount = chemical_reaction.results[result]
@@ -131,6 +131,7 @@
 /datum/crafting_recipe/food/reaction/cakebatter/vegan
 	name = "Cake batter (vegan)"
 	reaction = /datum/chemical_reaction/food/cakebatter/vegan
+	result = /obj/item/food/cakebatter/vegan
 
 /datum/crafting_recipe/food/reaction/pancakebatter
 	result = /datum/reagent/consumable/pancakebatter

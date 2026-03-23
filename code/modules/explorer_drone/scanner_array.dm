@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
 
 /obj/machinery/exoscanner
-	name = "Scanner array"
+	name = "scanner array"
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "scanner_off"
 	desc = "A sophisticated scanning array. Easily influenced by its environment."

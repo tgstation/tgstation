@@ -74,6 +74,7 @@
 	charge.Trigger(target = atom_target)
 
 /mob/living/basic/mining/lobstrosity/tamed(mob/living/tamer, obj/item/food)
+	. = ..()
 	new /obj/effect/temp_visual/heart(loc)
 	/// Pet commands for this mob, however you'll have to tame juvenile lobstrosities to a trained adult one.
 	var/list/pet_commands = list(
@@ -97,8 +98,8 @@
 	. = ..()
 	if(isnull(.))
 		return
-	faction |= new_friend.faction
-	faction -= FACTION_MINING
+	APPLY_FACTION_AND_ALLIES_FROM(src, new_friend)
+	remove_faction(FACTION_MINING)
 
 /mob/living/basic/mining/lobstrosity/mind_initialize()
 	. = ..()
@@ -167,10 +168,9 @@
 	base_fishing_level = SKILL_LEVEL_NOVICE
 	/// What do we become when we grow up?
 	var/mob/living/basic/mining/lobstrosity/grow_type = /mob/living/basic/mining/lobstrosity
-	/// Were we tamed? If yes, tame the mob we become when we grow up too.
-	var/was_tamed = FALSE
 
 /datum/emote/lobstrosity_juvenile
+	abstract_type = /datum/emote/lobstrosity_juvenile
 	mob_type_allowed_typecache = /mob/living/basic/mining/lobstrosity/juvenile
 	mob_type_blacklist_typecache = list()
 
@@ -225,7 +225,6 @@
 
 /mob/living/basic/mining/lobstrosity/juvenile/tamed(mob/living/tamer, obj/item/food)
 	. = ..()
-	was_tamed = TRUE
 	// They are more pettable I guess
 	AddElement(/datum/element/pet_bonus, "chitter")
 	REMOVE_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT)
@@ -236,7 +235,7 @@
 /mob/living/basic/mining/lobstrosity/juvenile/proc/grow_up()
 	var/name_to_use = name == initial(name) ? grow_type::name : name
 	var/mob/living/basic/mining/lobstrosity/grown = change_mob_type(grow_type, get_turf(src), name_to_use)
-	if(was_tamed)
+	if(HAS_TRAIT(src, TRAIT_TAMED))
 		grown.tamed()
 	for(var/friend in ai_controller?.blackboard?[BB_FRIENDS_LIST])
 		grown.befriend(friend)

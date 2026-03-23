@@ -936,7 +936,7 @@
 		{
 			"id": "drone_pai",
 			"name": "Personal AI Device (Drone Shell)",
-			"desc": "The most basic Personal AI shell, the Drone Shell resembles the old maintainance drones used on Nanotrasen Stations prior to 'the incident', and is perfect for the tech-savvy AI-owner.",
+			"desc": "The most basic Personal AI shell, the Drone Shell resembles the old maintenance drones used on Nanotrasen Stations prior to 'the incident', and is perfect for the tech-savvy AI-owner.",
 			"rules": "Tap this card: Add a silicon card from your discard pile to your hand.",
 			"icon_state": "pai_drone",
 			"power": "2",

@@ -30,7 +30,7 @@ GLOBAL_VAR(restart_counter)
  *   - config.Load()
  *   - world.InitTgs() =>
  *     - TgsNew() *may sleep
- *     - GLOB.rev_data.load_tgs_info()
+ *     - GLOB.rev_data.load_tgs_info() *may sleep
  *   - world.ConfigLoaded() =>
  *     - SSdbcore.InitializeRound()
  *     - world.SetupLogs()
@@ -190,6 +190,10 @@ GLOBAL_VAR(restart_counter)
 	setup_autowiki()
 	#endif
 
+	#ifdef PERFORMANCE_TESTS
+	queue_performance_tests()
+	#endif
+
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
 	Master.sleep_offline_after_initializations = FALSE
@@ -202,6 +206,25 @@ GLOBAL_VAR(restart_counter)
 	cb = VARSET_CALLBACK(SSticker, force_ending, ADMIN_FORCE_END_ROUND)
 #endif
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
+
+/world/proc/queue_performance_tests()
+	//trigger things to run the whole process
+	Master.sleep_offline_after_initializations = FALSE
+	SSticker.start_immediately = TRUE
+	var/datum/callback/cb = CALLBACK(src, PROC_REF(run_performance_tests))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
+
+/// Stub proc intended to be filled with code that does some test, profiles it, and logs that test.
+/// Intended to be used with line by line macros, but you should live your truth
+/world/proc/run_performance_tests()
+	// In case we do somethin that could otherwise end the round
+	SSticker.delay_end = TRUE
+	// Your code goes here
+
+	// Logging goes here
+	// (sample line by line) stat_tracking_export_to_csv_later("file_name.csv", GLOB.cost_list, GLOB.count_list)
+	SSticker.delay_end = FALSE
+	shutdown()
 
 /// Returns a list of data about the world state, don't clutter
 /world/proc/get_world_state_for_logging()
@@ -256,6 +279,9 @@ GLOBAL_VAR(restart_counter)
 	if (TgsAvailable()) // why
 		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
 #endif
+
+/// The world.time we last ran maptick, used for stupid reasons
+GLOBAL_VAR_INIT(last_maptick_time, 0)
 
 // Tick control variables used in case something breaks
 /// Should we intentionally consume cpu time to try to keep SendMaps deltas constant?
@@ -324,6 +350,9 @@ GLOBAL_VAR_INIT(spike_cpu, 0)
 		tick_info.corrected_ticks[current_index] = cpu_corrected
 
 	GLOB.cpu_tracker.update_display()
+
+	// We need a hook for if maptick has happen yet
+	GLOB.last_maptick_time = world.time
 
 	if(tick_info)
 		tick_info.tick_cpu_usage[current_index] = TICK_USAGE
@@ -714,8 +743,8 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 	LISTASSERTLEN(global_area.turfs_by_zlevel, map_load_z_cutoff, list())
 	for (var/zlevel in 1 to map_load_z_cutoff)
 		var/list/to_add = block(
-			1, old_maxy + 1, 1,
-			maxx, maxy, map_load_z_cutoff
+			1, old_maxy + 1, zlevel,
+			maxx, maxy, zlevel
 		)
 		global_area.turfs_by_zlevel[zlevel] += to_add
 

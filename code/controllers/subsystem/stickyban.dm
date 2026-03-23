@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(stickyban)
 	name = "PRISM"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	var/list/cache = list()
 	var/list/dbcache = list()

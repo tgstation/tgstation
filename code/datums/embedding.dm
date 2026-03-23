@@ -133,7 +133,7 @@
 		failed_embed(victim, hit_zone, random = TRUE)
 		return
 
-	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || victim.bodyparts[1]
+	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || victim.get_bodypart()
 	embed_into(victim, limb)
 	return MOVABLE_IMPACT_ZONE_OVERRIDE
 
@@ -153,7 +153,7 @@
 		failed_embed(victim, hit_zone, random = TRUE)
 		return
 
-	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || victim.bodyparts[1]
+	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || victim.get_bodypart()
 	embed_into(victim, limb)
 	SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_EMBEDDED, payload, hit)
 
@@ -420,7 +420,7 @@
 	if (user.zone_selected != owner_limb.body_zone || (tool.tool_behaviour != TOOL_HEMOSTAT && tool.tool_behaviour != TOOL_WIRECUTTER))
 		return
 
-	if (parent != owner_limb.embedded_objects[1]) // Don't pluck everything at the same time
+	if (parent != LAZYACCESS(owner_limb.embedded_objects, 1)) // Don't pluck everything at the same time
 		return
 
 	// Ensure that we can actually

@@ -61,7 +61,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	to_chat(chap, span_boldnotice("\"[quote]\""))
 	to_chat(chap, span_notice("[desc]"))
-	chap.faction |= FACTION_HOLY
+	chap.add_faction(FACTION_HOLY)
 
 /// Activates if religious sect is reset by admins, should clean up anything you added on conversion.
 /datum/religion_sect/proc/on_deconversion(mob/living/chap)
@@ -69,7 +69,7 @@
 	to_chat(chap, span_boldnotice("You have lost the approval of \the [name]."))
 	if(chap.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(chap, span_notice("Return to an altar to reform your sect."))
-	chap.faction -= FACTION_HOLY
+	chap.remove_faction(FACTION_HOLY)
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/sacrifice, mob/living/chap)
@@ -111,7 +111,7 @@
 		return BLESSING_FAILED
 
 	var/mob/living/carbon/human/blessed = target
-	for(var/obj/item/bodypart/bodypart as anything in blessed.bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in blessed.get_bodyparts())
 		if(IS_ROBOTIC_LIMB(bodypart))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
 			return BLESSING_IGNORED
@@ -280,7 +280,7 @@
 		return BLESSING_IGNORED
 
 	var/mob/living/carbon/human/blessed = blessed_living
-	for(var/obj/item/bodypart/robolimb as anything in blessed.bodyparts)
+	for(var/obj/item/bodypart/robolimb as anything in blessed.get_bodyparts())
 		if(IS_ROBOTIC_LIMB(robolimb))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
 			return BLESSING_IGNORED
@@ -346,7 +346,7 @@
 	var/transferred = FALSE
 	var/list/hurt_limbs = target.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC) + target.get_wounded_bodyparts(BODYTYPE_ORGANIC)
 	var/list/chaplains_limbs = list()
-	for(var/obj/item/bodypart/possible_limb in chaplain.bodyparts)
+	for(var/obj/item/bodypart/possible_limb in chaplain.get_bodyparts())
 		if(IS_ORGANIC_LIMB(possible_limb))
 			chaplains_limbs += possible_limb
 

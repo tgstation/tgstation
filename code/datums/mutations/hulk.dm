@@ -33,7 +33,7 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
+	for(var/obj/item/bodypart/part as anything in owner.get_bodyparts())
 		if (part.bodytype & BODYTYPE_ORGANIC)
 			part.add_color_override(bodypart_color, LIMB_COLOR_HULK)
 	owner.update_body_parts()
@@ -65,7 +65,7 @@
 /datum/mutation/hulk/proc/scream_attack(mob/living/carbon/human/source)
 	source.say("WAAAAAAAAAAAAAAGH!", forced="hulk")
 
-/datum/mutation/hulk/on_life(seconds_per_tick, times_fired)
+/datum/mutation/hulk/on_life(seconds_per_tick)
 	if(owner.health < owner.crit_threshold)
 		on_losing(owner)
 		to_chat(owner, span_danger("You suddenly feel very weak."))
@@ -74,7 +74,7 @@
 /datum/mutation/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
+	for(var/obj/item/bodypart/part as anything in owner.get_bodyparts())
 		part.remove_color_override(LIMB_COLOR_HULK)
 	owner.update_body_parts()
 	owner.clear_mood_event("hulk")
@@ -276,7 +276,7 @@
 		TRAIT_NO_OXYLOSS_PASSOUT,
 	) // fight till your last breath
 
-/datum/mutation/hulk/superhuman/on_life(seconds_per_tick, times_fired)
+/datum/mutation/hulk/superhuman/on_life(seconds_per_tick)
 	return
 
 /datum/mutation/hulk/ork

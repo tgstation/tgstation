@@ -45,40 +45,15 @@
 
 /obj/item/organ/cyberimp/bci/proc/action_comp_registered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
-	LAZYADD(actions, new/datum/action/innate/bci_action(src, action_comp))
+	LAZYADD(actions, new/datum/action/innate/circuit_equipment_action(src, action_comp))
 
 /obj/item/organ/cyberimp/bci/proc/action_comp_unregistered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
-	var/datum/action/innate/bci_action/action = action_comp.granted_to[REF(src)]
+	var/datum/action/innate/circuit_equipment_action/action = action_comp.granted_to[REF(src)]
 	if(!istype(action))
 		return
 	LAZYREMOVE(actions, action)
 	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
-
-/datum/action/innate/bci_action
-	name = "Action"
-	button_icon = 'icons/mob/actions/actions_items.dmi'
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "bci_power"
-
-	var/obj/item/organ/cyberimp/bci/bci
-	var/obj/item/circuit_component/equipment_action/circuit_component
-
-/datum/action/innate/bci_action/New(obj/item/organ/cyberimp/bci/_bci, obj/item/circuit_component/equipment_action/circuit_component)
-	..()
-	bci = _bci
-	circuit_component.granted_to[REF(_bci)] = src
-	src.circuit_component = circuit_component
-
-/datum/action/innate/bci_action/Destroy()
-	circuit_component.granted_to -= REF(bci)
-	circuit_component = null
-
-	return ..()
-
-/datum/action/innate/bci_action/Activate()
-	circuit_component.user.set_output(owner)
-	circuit_component.signal.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/bci_core
 	display_name = "BCI Core"
@@ -357,27 +332,24 @@
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/bci_implanter/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	var/obj/item/organ/cyberimp/bci/new_bci = weapon
-	if (istype(new_bci))
-		if (!(locate(/obj/item/integrated_circuit) in new_bci))
-			balloon_alert(user, "bci has no circuit!")
-			return
+/obj/machinery/bci_implanter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/organ/cyberimp/bci))
+		return NONE
 
-		var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant
+	var/obj/item/organ/cyberimp/bci/new_bci = tool
+	if (!(locate(/obj/item/integrated_circuit) in new_bci))
+		balloon_alert(user, "bci has no circuit!")
+		return ITEM_INTERACT_BLOCKING
 
-		user.transferItemToLoc(weapon, src)
-		bci_to_implant = weapon
-
-		if (isnull(previous_bci_to_implant))
-			balloon_alert(user, "inserted bci")
-		else
-			balloon_alert(user, "swapped bci")
-			user.put_in_hands(previous_bci_to_implant)
-
-		return
-
-	return ..()
+	var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant
+	user.transferItemToLoc(new_bci, src)
+	bci_to_implant = new_bci
+	if (isnull(previous_bci_to_implant))
+		balloon_alert(user, "inserted bci")
+	else
+		balloon_alert(user, "swapped bci")
+		user.put_in_hands(previous_bci_to_implant)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bci_implanter/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if (!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))

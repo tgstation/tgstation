@@ -209,7 +209,7 @@
 	if(had_attack_hand_interaction)
 		thing.interaction_flags_atom |= INTERACT_ATOM_ATTACK_HAND
 	thing.anchored = was_anchored
-	thing.transform = thing.transform.Scale(10)
+	thing.transform = thing.transform.Scale(100)
 	thing.moveToNullspace()
 
 	var/item_price
@@ -663,7 +663,7 @@
 
 /datum/spy_bounty/targets_person/some_item/limb_or_organ/find_desired_thing(mob/living/carbon/human/crewmember)
 	if(ispath(desired_type, /obj/item/bodypart))
-		return locate(desired_type) in crewmember.bodyparts
+		return locate(desired_type) in crewmember.get_bodyparts()
 	if(ispath(desired_type, /obj/item/organ))
 		return locate(desired_type) in crewmember.organs
 	return null

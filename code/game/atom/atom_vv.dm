@@ -91,7 +91,7 @@
 		if(result["button"] == 2) // If the user pressed the cancel button
 			return
 
-		var/list/armor_all = ARMOR_LIST_ALL()
+		var/list/armor_all = ARMOR_LIST_ALL
 		// text2num conveniently returns a null on invalid values
 		var/list/converted = list()
 		for(var/armor_key in armor_all)
@@ -262,6 +262,27 @@
 			set_light_flags(var_value)
 			// I'm sorry
 			old_light_flags = var_value
+			. = TRUE
+		if(NAMEOF(src, light_render_source))
+			set_light_render_source(var_value)
+			. = TRUE
+		if(NAMEOF(src, light_angle))
+			if(light_system == COMPLEX_LIGHT)
+				set_light(l_angle = var_value)
+			else
+				set_light_angle(var_value)
+			. = TRUE
+		if(NAMEOF(src, light_dir))
+			if(light_system == COMPLEX_LIGHT)
+				set_light(l_dir = var_value)
+			else
+				set_light_dir(var_value)
+			. = TRUE
+		if(NAMEOF(src, light_height))
+			if(light_system == COMPLEX_LIGHT)
+				set_light(l_height = var_value)
+			else
+				set_light_height(var_value)
 			. = TRUE
 		if(NAMEOF(src, smoothing_junction))
 			set_smoothed_icon_state(var_value)

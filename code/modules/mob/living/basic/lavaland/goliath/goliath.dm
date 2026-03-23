@@ -36,8 +36,6 @@
 	var/tentacle_warning_state = "goliath_preattack"
 	/// Can this kind of goliath be tamed?
 	var/tameable = TRUE
-	/// Has this particular goliath been tamed?
-	var/tamed = FALSE
 	/// Can someone ride us around like a horse?
 	var/saddled = FALSE
 	/// Slight cooldown to prevent double-dipping if we use both abilities at once
@@ -96,7 +94,7 @@
 		. += span_info("Someone appears to have attached a saddle to this one.")
 
 // Goliaths can summon tentacles more frequently as they take damage, scary.
-/mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
+/mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
 	. = ..()
 	if (. <= 0)
 		return
@@ -112,7 +110,7 @@
 	if (saddled)
 		balloon_alert(user, "already saddled!")
 		return
-	if (!tamed)
+	if (!HAS_TRAIT(src, TRAIT_TAMED))
 		balloon_alert(user, "too rowdy!")
 		return
 	balloon_alert(user, "affixing saddle...")
@@ -150,16 +148,12 @@
 		return
 	icon_state = tentacle_warning_state
 
-/// Get ready for mounting
-/mob/living/basic/mining/goliath/tamed(mob/living/tamer, atom/food)
-	tamed = TRUE
-
 // Copy entire faction rather than just placing user into faction, to avoid tentacle peril on station
 /mob/living/basic/mining/goliath/befriend(mob/living/new_friend)
 	. = ..()
 	if(isnull(.))
 		return
-	faction = new_friend.faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM(src, new_friend)
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)
 	tentacles?.Trigger(target = atom_target)
@@ -209,7 +203,7 @@
 	/// List of places we might spawn a tentacle, if we're alive
 	var/list/tentacle_target_turfs
 
-/mob/living/basic/mining/goliath/ancient/immortal/Life(seconds_per_tick, times_fired)
+/mob/living/basic/mining/goliath/ancient/immortal/Life(seconds_per_tick)
 	. = ..()
 	if (!. || !isturf(loc))
 		return

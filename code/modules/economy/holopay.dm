@@ -80,6 +80,10 @@
 		return ..()
 	/// Users can pay with an ID to skip the UI
 	if(isidcard(held_item))
+		if(istype(held_item, /obj/item/card/id/departmental_budget))
+			balloon_alert(user, "invalid payment card")
+			to_chat(user, span_warning("You cannot use a departamental card for this."))
+			return FALSE
 		if(force_fee && tgui_alert(item_holder, "This holopay has a [force_fee] [MONEY_SYMBOL] fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
 			return TRUE
 		process_payment(user)
@@ -263,6 +267,10 @@
 	if(payee == linked_card?.registered_account)
 		balloon_alert(user, "invalid transaction")
 		to_chat(user, span_warning("You can't pay yourself."))
+		return FALSE
+	if(istype(id_card, /obj/item/card/id/departmental_budget))
+		balloon_alert(user, "invalid payment card")
+		to_chat(user, span_warning("You cannot use a departamental card for this."))
 		return FALSE
 	/// If the user has enough money, ask them the amount or charge the force fee
 	var/amount = force_fee || tgui_input_number(user, "How much? (Max: [payee.account_balance])", "Patronage", max_value = payee.account_balance)

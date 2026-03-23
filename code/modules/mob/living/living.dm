@@ -12,7 +12,7 @@
 	medhud.add_atom_to_hud(src)
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_atom_to_hud(src)
-	faction += "[REF(src)]"
+	add_ally(src)
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
@@ -45,7 +45,6 @@
 		imaginary_group -= src
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
-	QDEL_LIST(surgeries)
 	QDEL_LAZYLIST(quirks)
 	return ..()
 
@@ -628,11 +627,9 @@ DEFINE_PROC_VERB(/mob/living, mob_sleep, "Sleep", "", FALSE, "IC")
 /**
  * Returns the access list for this mob
  */
-/mob/living/proc/get_access() as /list
+/mob/living/get_access()
 	var/list/access_list = list()
-	SEND_SIGNAL(src, COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS, access_list)
-	var/obj/item/card/id/id = get_idcard()
-	access_list += id?.GetAccess()
+	SEND_SIGNAL(src, COMSIG_MOB_RETRIEVE_ACCESS, access_list)
 	return access_list
 
 /mob/living/proc/get_id_in_hand()
@@ -1054,6 +1051,10 @@ DEFINE_PROC_VERB(/mob/living, toggle_resting, "Rest", "", FALSE, "IC")
 
 ///Called by mob Move() when the lying_angle is different than zero, to better visually simulate crawling.
 /mob/living/proc/lying_angle_on_movement(direct)
+	if(buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
+		set_lying_angle(buckled.buckle_lying)
+		return
+
 	if(direct & EAST)
 		set_lying_angle(LYING_ANGLE_EAST)
 	else if(direct & WEST)
@@ -1355,10 +1356,6 @@ DEFINE_VERB(/mob/living, resist, "Resist", "", FALSE, "IC")
 		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
 			to_chat(src, span_warning("You don't have the hands for this action!"))
 			return FALSE
-
-	if(!(action_bitflags & ALLOW_PAI) && ispAI(src))
-		to_chat(src, span_warning("Your holochasis does not allow you to do this!"))
-		return FALSE
 
 	if(!(action_bitflags & BYPASS_ADJACENCY) && ((action_bitflags & NOT_INSIDE_TARGET) || !recursive_loc_check(src, target)) && !target.IsReachableBy(src))
 		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
@@ -1880,6 +1877,26 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	RETURN_TYPE(/mutable_appearance)
 	return null
 
+/// Create a fire overlay using the generic fire sprites
+/mob/living/proc/make_generic_fire_overlay()
+	var/fire_key = "[base_pixel_x]_[base_pixel_y]_fire"
+	if(!GLOB.fire_appearances[fire_key])
+		var/mutable_appearance/fire = mutable_appearance(
+			'icons/mob/effects/onfire.dmi',
+			"generic_fire",
+			ABOVE_ALL_MOB_LAYER,
+			appearance_flags = RESET_COLOR|KEEP_APART,
+		)
+		fire.pixel_x = -1 * base_pixel_x
+		fire.pixel_y = -1 * base_pixel_y
+		GLOB.fire_appearances[fire_key] = fire
+
+	return GLOB.fire_appearances[fire_key]
+
+/// Takes a fire overlay and generates an emissive appearance for it
+/mob/living/proc/make_fire_emissive(mutable_appearance/fire_overlay)
+	return emissive_appearance(fire_overlay.icon, fire_overlay.icon_state, src, fire_overlay.layer)
+
 /**
  * Handles effects happening when mob is on normal fire
  *
@@ -2398,7 +2415,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(HARD_CRIT)
 			if(stat != UNCONSCIOUS)
 				cure_blind(UNCONSCIOUS_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
 		if(DEAD)
+			REMOVE_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
 			remove_from_dead_mob_list()
 			add_to_alive_mob_list()
 	switch(stat) //Current stat.
@@ -2426,17 +2445,14 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			if(. != UNCONSCIOUS)
 				become_blind(UNCONSCIOUS_TRAIT)
 			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			ADD_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
 			log_combat(src, src, "entered hard crit")
 		if(DEAD)
 			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			ADD_TRAIT(src, TRAIT_DEAF, STAT_TRAIT)
 			remove_from_alive_mob_list()
 			add_to_dead_mob_list()
 			log_combat(src, src, "died")
-	if(!can_hear())
-		stop_sound_channel(CHANNEL_AMBIENCE)
-	refresh_looping_ambience()
-
-
 
 ///Reports the event of the change in value of the buckled variable.
 /mob/living/proc/set_buckled(new_buckled)
@@ -2501,7 +2517,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	. = num_legs
 	num_legs = new_value
-
+	hud_used?.update_locked_slots()
 
 ///Proc to modify the value of usable_legs and hook behavior associated to this event.
 /mob/living/proc/set_usable_legs(new_value)
@@ -2551,12 +2567,15 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	. = num_hands
 	num_hands = new_value
-
+	hud_used?.update_locked_slots()
 
 ///Proc to modify the value of usable_hands and hook behavior associated to this event.
 /mob/living/proc/set_usable_hands(new_value)
 	if(usable_hands == new_value)
 		return
+	if(new_value < 0) // Sanity check
+		stack_trace("[src] had set_usable_hands() called on them with a negative value!")
+		new_value = 0
 	. = usable_hands
 	usable_hands = new_value
 
@@ -2735,7 +2754,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/add_mood_event(category, type, ...)
 	if(QDELETED(mob_mood))
 		return
-	mob_mood.add_mood_event(arglist(args))
+
+	if(ispath(type, /datum/mood_event/conditional))
+		mob_mood.add_conditional_mood_event(arglist(args))
+	else
+		mob_mood.add_mood_event(arglist(args))
 
 /// Clears a mood event from the mob
 /mob/living/proc/clear_mood_event(category)
@@ -2769,7 +2792,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /// Proc called when TARGETED by a lazarus injector
 /mob/living/proc/lazarus_revive(mob/living/reviver, malfunctioning)
 	revive(HEAL_ALL)
-	faction |= FACTION_NEUTRAL
+	add_faction(FACTION_NEUTRAL)
 	if (!malfunctioning)
 		befriend(reviver)
 	var/lazarus_policy = get_policy(ROLE_LAZARUS_GOOD) || "The lazarus injector has brought you back to life! You are now friendly to everyone."
@@ -2788,9 +2811,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(QDELETED(new_friend))
 		return
 	var/friend_ref = REF(new_friend)
-	if (faction.Find(friend_ref))
+	if (has_ally(friend_ref))
 		return FALSE
-	faction |= friend_ref
+	add_ally(friend_ref)
 	ai_controller?.insert_blackboard_key_lazylist(BB_FRIENDS_LIST, new_friend)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_BEFRIENDED, new_friend)
@@ -2800,9 +2823,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/unfriend(mob/living/old_friend)
 	SHOULD_CALL_PARENT(TRUE)
 	var/friend_ref = REF(old_friend)
-	if (!faction.Find(friend_ref))
+	if (!has_ally(friend_ref))
 		return FALSE
-	faction -= friend_ref
+	remove_ally(friend_ref)
 	ai_controller?.remove_thing_from_blackboard_key(BB_FRIENDS_LIST, old_friend)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_UNFRIENDED, old_friend)
@@ -2884,7 +2907,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(picked_theme == "Random")
 		picked_theme = null //holopara code handles not having a theme by giving a random one
 	var/picked_name = tgui_input_text(admin, "Name the guardian, leave empty to let player name it.", "Guardian Controller", max_length = MAX_NAME_LEN)
-	var/picked_color = input(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", "#ffffff") as color|null
+	var/picked_color = tgui_color_picker(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", COLOR_WHITE)
 	if(tgui_alert(admin, "Confirm creation.", "Guardian Controller", list("Yes", "No")) != "Yes")
 		return
 	var/mob/living/basic/guardian/summoned_guardian = new picked_type(src, picked_theme)

@@ -24,7 +24,7 @@
 /obj/machinery/medipen_refiller/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand)
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	register_context()
 
 /obj/machinery/medipen_refiller/add_context(atom/source, list/context, obj/item/held_item, mob/user)

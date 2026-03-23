@@ -10,7 +10,8 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
-	grind_results = list(/datum/reagent/toxin/slimejelly = 20)
+	///Can this extract still be grinded
+	var/can_grind = TRUE
 	///uses before it goes inert
 	var/extract_uses = 1
 	///deletion timer, for delayed reactions
@@ -20,24 +21,28 @@
 	///Reagents required for activation
 	var/recurring = FALSE
 
+/obj/item/slime_extract/grind_results()
+	return can_grind ? list(/datum/reagent/toxin/slimejelly = 20) : list()
+
 /obj/item/slime_extract/examine(mob/user)
 	. = ..()
 	if(extract_uses > 1)
 		. += "It has [extract_uses] uses remaining."
 
-/obj/item/slime_extract/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/slimepotion/enhancer))
-		if(extract_uses >= 5 || recurring)
-			to_chat(user, span_warning("You cannot enhance this extract further!"))
-			return ..()
-		if(O.type == /obj/item/slimepotion/enhancer) //Seriously, why is this defined here...?
-			to_chat(user, span_notice("You apply the enhancer to the slime extract. It may now be reused one more time."))
-			extract_uses++
-		if(O.type == /obj/item/slimepotion/enhancer/max)
-			to_chat(user, span_notice("You dump the maximizer on the slime extract. It can now be used a total of 5 times!"))
-			extract_uses = 5
-		qdel(O)
-	..()
+/obj/item/slime_extract/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/slimepotion/enhancer))
+		return NONE
+	if(extract_uses >= 5 || recurring)
+		to_chat(user, span_warning("You cannot enhance this extract further!"))
+		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/slimepotion/enhancer/max))
+		to_chat(user, span_notice("You dump the maximizer on the slime extract. It can now be used a total of 5 times!"))
+		extract_uses = 5
+	else
+		to_chat(user, span_notice("You apply the enhancer to the slime extract. It may now be reused one more time."))
+		extract_uses++
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slime_extract/Initialize(mapload)
 	. = ..()
@@ -184,7 +189,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			user.visible_message(span_warning("[user] starts shaking!"),span_notice("Your [name] starts pulsing gently..."))
 			if(do_after(user, 4 SECONDS, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
-				spawned_mob.faction |= FACTION_NEUTRAL
+				spawned_mob.add_faction(FACTION_NEUTRAL)
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_notice("You spit out [spawned_mob]!"))
 				return 300
@@ -194,9 +199,9 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(do_after(user, 5 SECONDS, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
 				if(!user.combat_mode)
-					spawned_mob.faction |= FACTION_NEUTRAL
+					spawned_mob.add_faction(FACTION_NEUTRAL)
 				else
-					spawned_mob.faction |= FACTION_SLIME
+					spawned_mob.add_faction(FACTION_SLIME)
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_warning("You spit out [spawned_mob]!"))
 				return 600
@@ -867,7 +872,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 	user.mind.transfer_to(switchy_mob)
 	SEND_SIGNAL(switchy_mob, COMSIG_SIMPLEMOB_TRANSFERPOTION, user)
-	switchy_mob.faction = user.faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM( switchy_mob, user)
 	switchy_mob.copy_languages(user, LANGUAGE_MIND)
 	user.death()
 	to_chat(switchy_mob, span_notice("In a quick flash, you feel your consciousness flow into [switchy_mob]!"))

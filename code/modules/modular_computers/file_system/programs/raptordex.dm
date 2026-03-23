@@ -27,6 +27,8 @@
 	scan_data["raptor_speed"] = my_raptor.speed + intent_mod?.multiplicative_slowdown
 	scan_data["raptor_color"] = my_raptor.name
 	scan_data["raptor_gender"] = my_raptor.gender
+	scan_data["raptor_growth"] = my_raptor.growth_progress
+	scan_data["can_grow"] = my_raptor.growth_stage != RAPTOR_ADULT
 	scan_data["raptor_description"] = my_raptor.raptor_color.description
 
 	var/happiness_percentage = my_raptor.ai_controller?.blackboard[BB_BASIC_HAPPINESS]
@@ -59,3 +61,22 @@
 
 /datum/computer_file/program/raptordex/ui_data(mob/user)
 	return scan_data
+
+/datum/computer_file/program/raptordex/on_made_active_program(mob/user)
+	RegisterSignal(computer, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
+	computer.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
+
+/datum/computer_file/program/raptordex/background_program(mob/user)
+	. = ..()
+	UnregisterSignal(computer, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET)
+
+/datum/computer_file/program/raptordex/kill_program(mob/user)
+	. = ..()
+	UnregisterSignal(computer, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET)
+
+/datum/computer_file/program/raptordex/proc/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(target, /mob/living/basic/raptor))
+		return NONE
+	context[SCREENTIP_CONTEXT_RMB] = "Scan Raptor"
+	return CONTEXTUAL_SCREENTIP_SET

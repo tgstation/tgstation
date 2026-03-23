@@ -14,7 +14,7 @@
 /// A sprite accessory is something that we add to a human sprite to make them look different. This is hair, facial hair, underwear, mutant bits, etc.
 SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	name = "Sprite Accessories"
-	flags = SS_NO_FIRE | SS_NO_INIT
+	ss_flags = SS_NO_FIRE | SS_NO_INIT
 
 	// HOLY SHIT COMPACT THIS INTO ASSOCIATED LISTS SO WE STOP ADDING VARIABLES
 	//Hairstyles

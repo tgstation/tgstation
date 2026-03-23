@@ -163,8 +163,7 @@ DEFINE_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Click to sp
 
 	obj_flags = UNIQUE_RENAME
 
-/obj/item/gun/ballistic/revolver/c38/detective/Initialize(mapload)
-	. = ..()
+/obj/item/gun/ballistic/revolver/c38/detective/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/det_revolver)
 
 /obj/item/gun/ballistic/revolver/badass
@@ -365,6 +364,11 @@ DEFINE_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", "Click to sp
 	)
 	shoot_self(user, check_zone(user.zone_selected))
 	return .
+
+/obj/item/gun/ballistic/revolver/russian/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	if((get_ammo(FALSE, FALSE) > 1) || (get_ammo(TRUE, TRUE) < 6))
+		return NONE
+	return ..()
 
 /// Called after successfully(if you can call it that) shooting ourselves
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)

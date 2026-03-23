@@ -171,7 +171,7 @@
 
 	switch(random)
 		if(1)
-			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities."))
+			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak with just a fragment of their abilities."))
 			consumer.dna.features = list(
 				FEATURE_MUTANT_COLOR = "#A02720",
 				FEATURE_TAIL_LIZARD = "Dark Tiger",
@@ -187,6 +187,10 @@
 			)
 			consumer.set_eye_color("#FEE5A3")
 			consumer.set_species(/datum/species/lizard)
+			consumer.dna.add_mutation(/datum/mutation/firebreath, MUTATION_SOURCE_MUTATOR)
+			var/obj/item/organ/wings/functional/dragon/wings = new()
+			wings.Insert(consumer)
+
 		if(2)
 			to_chat(user, span_danger("Your flesh begins to melt! Miraculously, you seem fine otherwise."))
 			consumer.set_species(/datum/species/skeleton)

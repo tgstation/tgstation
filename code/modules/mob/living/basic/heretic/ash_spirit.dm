@@ -21,6 +21,6 @@
 	)
 	grant_actions_by_list(actions_to_add)
 
-/mob/living/basic/heretic_summon/ash_spirit/Life(seconds_per_tick, times_fired)
+/mob/living/basic/heretic_summon/ash_spirit/Life(seconds_per_tick)
 	. = ..()
 	adjust_brute_loss(-3) // 3 health passively healing

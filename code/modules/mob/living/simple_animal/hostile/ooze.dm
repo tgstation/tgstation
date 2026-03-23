@@ -54,7 +54,7 @@
 	return ..()
 
 ///Handles nutrition gain/loss of mob and also makes it take damage if it's too low on nutrition, only happens for sentient mobs.
-/mob/living/simple_animal/hostile/ooze/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/ooze/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 
 	if(!.) //dead or deleted

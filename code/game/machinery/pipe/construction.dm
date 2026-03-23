@@ -166,7 +166,7 @@ Buildable meters
 	pixel_y += rand(-5, 5)
 
 	//Flipping handled manually due to custom handling for trinary pipes
-	AddComponent(/datum/component/simple_rotation, ROTATION_NO_FLIPPING)
+	AddElement(/datum/element/simple_rotation, ROTATION_NO_FLIPPING)
 
 	// Only 'normal' pipes
 	if(type != /obj/item/pipe/quaternary)

@@ -77,7 +77,7 @@
 	var/mob/living/antag = mob_override || owner.current
 	RegisterSignal(antag, COMSIG_LIVING_LIFE, PROC_REF(rift_checks))
 	RegisterSignal(antag, COMSIG_LIVING_DEATH, PROC_REF(destroy_rifts))
-	antag.faction |= FACTION_CARP
+	antag.add_faction(FACTION_CARP)
 	// Give the ability over if we have one
 	rift_ability?.Grant(antag)
 	wavespeak = antag.AddComponent( \
@@ -94,7 +94,7 @@
 	var/mob/living/antag = mob_override || owner.current
 	UnregisterSignal(antag, COMSIG_LIVING_LIFE)
 	UnregisterSignal(antag, COMSIG_LIVING_DEATH)
-	antag.faction -= FACTION_CARP
+	antag.remove_faction(FACTION_CARP)
 	rift_ability?.Remove(antag)
 	QDEL_NULL(wavespeak)
 
@@ -107,13 +107,13 @@
 	return ..()
 
 /datum/antagonist/space_dragon/get_preview_icon()
-	var/icon/icon = icon('icons/mob/nonhuman-player/spacedragon.dmi', "spacedragon")
+	var/datum/universal_icon/icon = uni_icon('icons/mob/nonhuman-player/spacedragon.dmi', "spacedragon")
 
-	icon.Blend(COLOR_STRONG_VIOLET, ICON_MULTIPLY)
-	icon.Blend(icon('icons/mob/nonhuman-player/spacedragon.dmi', "spacedragon_overlay_base"), ICON_OVERLAY)
+	icon.blend_color(COLOR_STRONG_VIOLET, ICON_MULTIPLY)
+	icon.blend_icon(uni_icon('icons/mob/nonhuman-player/spacedragon.dmi', "spacedragon_overlay_base"), ICON_OVERLAY)
 
-	icon.Crop(10, 9, 54, 53)
-	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	icon.crop(10, 9, 54, 53)
+	icon.scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon
 

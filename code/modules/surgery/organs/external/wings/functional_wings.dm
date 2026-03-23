@@ -26,7 +26,6 @@
 	///We cant hide this wings in suit
 	var/cant_hide = FALSE
 
-	// grind_results = list(/datum/reagent/flightpotion = 5)
 	food_reagents = list(/datum/reagent/flightpotion = 5)
 
 	var/drift_force = FUNCTIONAL_WING_FORCE
@@ -50,6 +49,9 @@
 	QDEL_NULL(fly)
 	return ..()
 
+/obj/item/organ/wings/functional/grind_results()
+	return list(/datum/reagent/flightpotion = 5)
+
 /obj/item/organ/wings/functional/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 
@@ -63,7 +65,7 @@
 	if(wings_open)
 		toggle_flight(organ_owner)
 
-/obj/item/organ/wings/functional/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/wings/functional/on_life(seconds_per_tick)
 	. = ..()
 	handle_flight(owner)
 

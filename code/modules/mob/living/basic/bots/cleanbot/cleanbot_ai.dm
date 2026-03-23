@@ -185,7 +185,7 @@
 			continue
 		if(!HAS_TRAIT(human_target, TRAIT_CLEANBOT_WHISPERER))
 			continue
-		if((living_pawn.faction.Find(REF(human_target))))
+		if(living_pawn.has_ally(REF(human_target)))
 			continue
 		return human_target
 	return null

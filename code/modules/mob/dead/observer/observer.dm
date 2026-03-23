@@ -40,7 +40,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	///Flags of huds the ghost currently has enabled, data huds & ghost vision by default.
 	///Selection: GHOST_DATA_HUDS | GHOST_VISION | GHOST_HEALTH | GHOST_CHEM | GHOST_GAS
-	var/ghost_hud_flags = GHOST_DATA_HUDS | GHOST_VISION
+	var/ghost_hud_flags = NONE
 	///The shape the ghost will make while orbiting mobs.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
@@ -146,11 +146,12 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	grant_all_languages()
 	setup_hud_traits()
-	show_data_huds()
+	toggle_ghost_hud_flag(GHOST_VISION | GHOST_DATA_HUDS)
 
 	SSpoints_of_interest.make_point_of_interest(src)
 	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_GOOD_HEARING, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_DETECT_STORM, INNATE_TRAIT)
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -399,6 +400,8 @@ DEFINE_VERB(/mob/dead/observer, do_not_resuscitate, "Do Not Resuscitate", "", FA
 		// Update med huds
 		current_mob.med_hud_set_status()
 		current_mob.log_message("had their player ([key_name(src)]) do-not-resuscitate / DNR", LOG_GAME, color = COLOR_GREEN, log_globally = FALSE)
+		SEND_SIGNAL(current_mob, COMSIG_LIVING_DNR, src)
+
 	log_message("has opted to do-not-resuscitate / DNR from their body ([current_mob])", LOG_GAME, color = COLOR_GREEN)
 
 	// Disassociates observer mind from the body mind
@@ -504,7 +507,7 @@ DEFINE_VERB(/mob/dead/observer, change_view_range, "View Range", "", FALSE, "")
 		client.view_size.resetToDefault()
 
 DEFINE_VERB(/mob/dead/observer, toggle_ghostsee, "Toggle Ghost Vision", "", FALSE, "")
-	ghost_hud_flags ^= GHOST_VISION
+	toggle_ghost_hud_flag(GHOST_VISION)
 	update_sight()
 	to_chat(usr, span_boldnotice("You [(ghost_hud_flags & GHOST_VISION) ? "now" : "no longer"] have ghost vision."))
 
@@ -560,30 +563,28 @@ DEFINE_PROC_VERB(/mob/dead/observer, tray_view, "T-ray scan", "", FALSE, "")
 	t_ray_scan(src)
 
 DEFINE_VERB(/mob/dead/observer, toggle_data_huds, "Toggle Sec/Med/Diag HUD", "", FALSE, "")
-	ghost_hud_flags ^= GHOST_DATA_HUDS
+	toggle_ghost_hud_flag(GHOST_DATA_HUDS)
 	if(ghost_hud_flags & GHOST_DATA_HUDS)
-		show_data_huds()
 		to_chat(src, span_notice("Data HUDs enabled."))
 	else
-		remove_data_huds()
 		to_chat(src, span_notice("Data HUDs disabled."))
 
 DEFINE_VERB(/mob/dead/observer, toggle_health_scan, "Toggle Health Scan", "", FALSE, "")
-	ghost_hud_flags ^= GHOST_HEALTH
+	toggle_ghost_hud_flag(GHOST_HEALTH)
 	if(ghost_hud_flags & GHOST_HEALTH)
 		to_chat(src, span_notice("Health scan enabled."))
 	else
 		to_chat(src, span_notice("Health scan disabled."))
 
 DEFINE_VERB(/mob/dead/observer, toggle_chem_scan, "Toggle Chem Scan", "", FALSE, "")
-	ghost_hud_flags ^= GHOST_CHEM
+	toggle_ghost_hud_flag(GHOST_CHEM)
 	if(ghost_hud_flags & GHOST_CHEM)
 		to_chat(src, span_notice("Chem scan enabled."))
 	else
 		to_chat(src, span_notice("Chem scan disabled."))
 
 DEFINE_VERB(/mob/dead/observer, toggle_gas_scan, "Toggle Gas Scan", "", FALSE, "")
-	ghost_hud_flags ^= GHOST_GAS
+	toggle_ghost_hud_flag(GHOST_GAS)
 	if(ghost_hud_flags & GHOST_GAS)
 		to_chat(src, span_notice("Gas scan enabled."))
 	else
@@ -597,6 +598,18 @@ DEFINE_VERB(/mob/dead/observer, restore_ghost_appearance, "Restore Ghost Charact
 		if(mind)
 			mind.ghostname = real_name
 		name = real_name
+
+/// Toggles a flag from ghost hud and updates the mob accordingly
+/mob/dead/observer/proc/toggle_ghost_hud_flag(toggled)
+	ghost_hud_flags ^= toggled
+	if(ghost_hud_flags & GHOST_DATA_HUDS)
+		show_data_huds()
+	else
+		remove_data_huds()
+	update_sight()
+	for(var/atom/movable/screen/ghost/hudbox/hud in hud_used?.static_inventory)
+		if(hud.relevant_flag & toggled)
+			hud.update_appearance(UPDATE_ICON_STATE)
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
@@ -661,7 +674,6 @@ DEFINE_VERB(/mob/dead/observer, add_view_range, "Add View Range", "", TRUE, "", 
 	else
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
 
-
 	updateghostimages()
 	..()
 
@@ -717,7 +729,7 @@ DEFINE_VERB(/mob/dead/observer, add_view_range, "Add View Range", "", TRUE, "", 
 		return FALSE
 
 	target.PossessByPlayer(key)
-	target.faction = list(FACTION_NEUTRAL)
+	target.set_faction(list(FACTION_NEUTRAL))
 	return TRUE
 
 /mob/dead/observer/do_pointed(atom/pointing_at)
@@ -787,9 +799,13 @@ DEFINE_VERB(/mob/dead/observer, add_view_range, "Add View Range", "", TRUE, "", 
 	return
 
 /mob/dead/observer/proc/show_data_huds()
+	PRIVATE_PROC(TRUE)
+	ghost_hud_flags |= GHOST_DATA_HUDS // only for safety, it should be set already.
 	add_traits(observer_hud_traits, REF(src))
 
 /mob/dead/observer/proc/remove_data_huds()
+	PRIVATE_PROC(TRUE)
+	ghost_hud_flags &= ~GHOST_DATA_HUDS // only for safety, it should be unset already.
 	remove_traits(observer_hud_traits, REF(src))
 
 /mob/dead/observer/proc/set_ghost_appearance()

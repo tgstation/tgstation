@@ -11,11 +11,13 @@
 	name = "Anticoagulant"
 	desc = "The virus prevents the body from clotting blood. Unnoticable unless the host is bleeding."
 	stealth = 1
-	resistance = 0
-	stage_speed = -2
-	transmittable = -2
+	resistance = -1
+	stage_speed = -3
+	transmittable = 0
 	severity = 3
 	level = 7
+	symptom_cure = /datum/reagent/acetaldehyde
+	cure_color = "orange"
 	threshold_descs = list(
 		"Stage Speed 9" = "The host becomes more vulnerable to bleeding wounds.",
 		"Stealth 3" = "The symptom remains hidden even while active."

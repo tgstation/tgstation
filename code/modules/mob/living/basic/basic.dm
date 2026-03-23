@@ -51,7 +51,7 @@
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
-	var/list/speak_emote = list()
+	var/list/speak_emote
 
 	///When someone interacts with the simple animal.
 	///Help-intent verb in present continuous tense.
@@ -120,8 +120,9 @@
 	apply_target_randomisation()
 	make_stamina_slowable()
 
-	if(speak_emote)
+	if(LAZYLEN(speak_emote))
 		speak_emote = string_list(speak_emote)
+	damage_coeff = string_assoc_list(damage_coeff)
 
 	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
 	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)
@@ -163,7 +164,7 @@
 		return
 	AddElement(/datum/element/attack_zone_randomiser)
 
-/mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(staminaloss > 0)
 		adjust_stamina_loss(-stamina_recovery * seconds_per_tick, forced = TRUE)
@@ -304,16 +305,7 @@
 	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
 
 /mob/living/basic/get_fire_overlay(stacks, on_fire)
-	var/fire_icon = "generic_fire"
-	if(!GLOB.fire_appearances[fire_icon])
-		GLOB.fire_appearances[fire_icon] = mutable_appearance(
-			'icons/mob/effects/onfire.dmi',
-			fire_icon,
-			-HIGHEST_LAYER,
-			appearance_flags = RESET_COLOR|KEEP_APART,
-		)
-
-	return GLOB.fire_appearances[fire_icon]
+	return make_generic_fire_overlay()
 
 /mob/living/basic/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
@@ -350,4 +342,3 @@
 		return TRUE
 	else
 		return FALSE
-

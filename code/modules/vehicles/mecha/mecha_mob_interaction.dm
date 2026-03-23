@@ -103,6 +103,7 @@
 	brain_mob.reset_perspective(src)
 	brain_mob.remote_control = src
 	brain_mob.update_mouse_pointer()
+	RegisterSignal(brain_mob, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 	setDir(SOUTH)
 	log_message("[brain_obj] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
@@ -110,7 +111,6 @@
 	user.log_message("has put the MMI/posibrain of [key_name(brain_mob)] into [src]", LOG_GAME)
 	brain_mob.log_message("was put into [src] by [key_name(user)]", LOG_GAME, log_globally = FALSE)
 	return TRUE
-
 
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
 	// FIXME: this code is really bad (shocker). Needs a refactor
@@ -120,6 +120,7 @@
 		mob_container = M
 	else if(isbrain(M))
 		var/mob/living/brain/brain = M
+		UnregisterSignal(brain, COMSIG_MOB_RETRIEVE_ACCESS)
 		mob_container = brain.container
 	else if(isAI(M))
 		var/mob/living/silicon/ai/AI = M

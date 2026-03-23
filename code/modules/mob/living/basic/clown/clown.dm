@@ -42,6 +42,7 @@
 
 /mob/living/basic/clown/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NAIVE, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(retaliate_callback)))
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, emotes)
@@ -148,7 +149,7 @@
 		/obj/effect/gibspawner/human,
 		/obj/item/clothing/mask/gas/clown_hat,
 		/obj/item/food/meatclown,
-		/obj/item/stack/sheet/animalhide/human,
+		/obj/item/stack/sheet/animalhide/carbon/human,
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list(
@@ -480,6 +481,7 @@
 	flick("glutton_mouth", src)
 
 /mob/living/basic/clown/mutant/glutton/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
 

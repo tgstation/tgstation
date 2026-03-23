@@ -1,7 +1,7 @@
 /// The subsystem used to play ambience to users every now and then, makes them real excited.
 SUBSYSTEM_DEF(ambience)
 	name = "Ambience"
-	flags = SS_BACKGROUND|SS_NO_INIT
+	ss_flags = SS_BACKGROUND|SS_NO_INIT
 	priority = FIRE_PRIORITY_AMBIENCE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 1 SECONDS
@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(ambience)
 			client_old_areas -= client_iterator
 			continue
 
-		if(!client_mob.can_hear()) //WHAT? I CAN'T HEAR YOU
+		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU
 			continue
 
 		//Check to see if the client-mob is in a valid area
@@ -126,7 +126,7 @@ SUBSYSTEM_DEF(ambience)
 		client.current_ambient_sound = null
 		return
 
-	if(!can_hear()) // Can the mob hear?
+	if(HAS_TRAIT(src, TRAIT_DEAF)) // Can the mob hear?
 		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
 		client.current_ambient_sound = null
 		return

@@ -356,9 +356,7 @@ DEFINE_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", "", FALSE,
 	anchored = TRUE
 
 /obj/effect/resin_container/proc/Smoke()
-	var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
-	foaming.set_up(4, holder = src, location = loc)
-	foaming.start()
+	do_foam(4, src, loc, foam_type = /datum/effect_system/fluid_spread/foam/metal/resin)
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
 

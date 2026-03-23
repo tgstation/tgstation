@@ -8,7 +8,7 @@
 #define COMSIG_MOB_MIND_INITIALIZED "mob_mind_inited"
 ///from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"
-///from base of mob/reagent_tick(): (datum/reagent/chem, seconds_per_tick, times_fired)
+///from base of mob/reagent_tick(): (datum/reagent/chem, seconds_per_tick)
 #define COMSIG_MOB_REAGENT_TICK "mob_reagent_tick"
 	///stops the reagent check call
 	#define COMSIG_MOB_STOP_REAGENT_TICK (1<<0)
@@ -90,8 +90,7 @@
 	#define ACCESS_DISALLOWED (1<<1)
 	#define LOCKED_ATOM_INCOMPATIBLE (1<<2)
 
-///from the component /datum/component/simple_access
-#define	COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS "retrieve_simple_access"
+#define	COMSIG_MOB_RETRIEVE_ACCESS "retrieve_access"
 
 ///from base of mob/can_cast_magic(): (mob/user, magic_flags, charge_cost)
 #define COMSIG_MOB_RESTRICT_MAGIC "mob_cast_magic"

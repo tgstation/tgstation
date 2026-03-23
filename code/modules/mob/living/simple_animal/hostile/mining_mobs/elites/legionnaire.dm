@@ -172,7 +172,7 @@
 		visible_message(span_boldwarning("[src]'s head flies off!"))
 		var/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/newhead = new /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead(loc)
 		newhead.GiveTarget(target)
-		newhead.faction = faction.Copy()
+		SET_FACTION_AND_ALLIES_FROM(newhead, src)
 		myhead = newhead
 		myhead.body = src
 		if(health < maxHealth * 0.25)
@@ -231,9 +231,7 @@
 		visible_message(span_boldwarning("[src] spews smoke from the tip of their spine!"))
 	else
 		visible_message(span_boldwarning("[src] spews smoke from its maw!"))
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(2, holder = src, location = smoke_location)
-	smoke.start()
+	do_smoke(2, src, smoke_location)
 
 //The legionnaire's head.  Basically the same as any legion head, but we have to tell our creator when we die so they can generate another head.
 /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead
@@ -257,7 +255,7 @@
 	move_to_delay = 2
 	del_on_death = 1
 	death_message = "crumbles away!"
-	faction = list()
+	faction = null
 	ranged = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/body = null
 

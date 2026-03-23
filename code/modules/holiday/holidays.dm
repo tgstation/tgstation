@@ -487,7 +487,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_month = JULY
 	holiday_hat = /obj/item/clothing/head/costume/nursehat
 	holiday_mail = list(
-		/obj/item/stack/medical/gauze,
+		/obj/item/stack/medical/wrap/gauze,
 		/obj/item/stack/medical/ointment,
 		/obj/item/storage/box/bandages,
 	)
@@ -847,7 +847,13 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_month = DECEMBER
 	end_day = 27
 	holiday_hat = /obj/item/clothing/head/costume/santa
-	no_mail_holiday = TRUE
+	holiday_mail = list(
+		/obj/item/clothing/head/beanie/christmas,
+		/obj/item/clothing/neck/scarf/christmas,
+		/obj/item/food/cookie/sugar,
+		/obj/item/gift/anything,
+		/obj/item/toy/xmas_cracker,
+	)
 	holiday_colors = list(
 		COLOR_CHRISTMAS_GREEN,
 		COLOR_CHRISTMAS_RED,

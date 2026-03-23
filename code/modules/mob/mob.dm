@@ -181,7 +181,7 @@
  * Goes through hud_possible list and adds the images to the hud_list variable (if not already cached)
  */
 /atom/proc/prepare_huds()
-	if(hud_list) // I choose to be lienient about people calling this proc more then once
+	if(hud_list) // I choose to be lenient about people calling this proc more then once
 		return
 	hud_list = list()
 	for(var/hud in hud_possible)
@@ -240,7 +240,7 @@ DEFINE_PROC_VERB(/mob, Cell, "Cell", "", TRUE, "Admin")
 				type = alt_type
 				. = FALSE
 
-		if(type & MSG_AUDIBLE && !can_hear())//Hearing related
+		if(type & MSG_AUDIBLE && HAS_TRAIT(src, TRAIT_DEAF))//Hearing related
 			if(!alt_msg)
 				return FALSE
 			else
@@ -366,7 +366,7 @@ DEFINE_PROC_VERB(/mob, Cell, "Cell", "", TRUE, "Admin")
 			continue
 		if(self_message && hearing_mob == src)
 			continue
-		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(hearing_mob, audible_message_flags) && hearing_mob.can_hear())
+		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(hearing_mob, audible_message_flags) && !HAS_TRAIT(hearing_mob, TRAIT_DEAF))
 			hearing_mob.create_chat_message(src, raw_message = raw_msg, runechat_flags = audible_message_flags)
 		hearing_mob.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
@@ -434,6 +434,12 @@ DEFINE_PROC_VERB(/mob, Cell, "Cell", "", TRUE, "Admin")
 		return FALSE
 	return TRUE
 
+/mob/dead/observer/runechat_prefs_check(mob/target, visible_message_flags = NONE)
+	if(!..())
+		return FALSE
+	if(!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_ghosts))
+		return FALSE
+	return TRUE
 
 ///Get the item on the mob in the storage slot identified by the id passed in
 /mob/proc/get_item_by_slot(slot_id) as /obj/item
@@ -581,13 +587,19 @@ DEFINE_VERB(/mob, examinate, "Examine", "", FALSE, "IC", atom/examinify as mob|o
 	if(!result_combined)
 		var/list/result = examinify.examine(src)
 		var/atom_title = examinify.examine_title(src, thats = TRUE)
+		examining(examinify, result)
 		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
 		if(removes_double_click)
 			result += span_notice("<i>You can <a href=byond://?src=[REF(src)];run_examinate=[REF(examinify)]>examine</a> [examinify] closer...</i>")
-		result_combined = (atom_title ? fieldset_block("[atom_title]", jointext(result, "<br>"), "boxed_message") : boxed_message(jointext(result, "<br>")))
+		result_combined = (atom_title ? fieldset_block("[atom_title].", jointext(result, "<br>"), "boxed_message") : boxed_message(jointext(result, "<br>")))
 
 	to_chat(src, span_infoplain(result_combined))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
+
+/// Handles adding examine messages for the target that are specific to this mob, e.g. a blood worm examining how much blood a living target has.
+/mob/proc/examining(atom/target, list/result)
+	SHOULD_NOT_SLEEP(TRUE)
+	return
 
 /mob/Topic(href, list/href_list)
 	. = ..()
@@ -886,33 +898,6 @@ DEFINE_VERB(/mob, DisDblClick, ".dblclick", "", TRUE, null, argu = null as anyth
 	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
 	return .
 
-/**
- * Convert a list of spells into a displyable list for the statpanel
- *
- * Shows charge and other important info
- */
-/mob/proc/get_actions_for_statpanel()
-	var/list/data = list()
-	for(var/datum/action/cooldown/action in actions)
-		var/list/action_data = action.set_statpanel_format()
-		if(!length(action_data))
-			return
-
-		data += list(list(
-			// the panel the action gets displayed to
-			// in the future, this could probably be replaced with subtabs (a la admin tabs)
-			action_data[PANEL_DISPLAY_PANEL],
-			// the status of the action, - cooldown, charges, whatever
-			action_data[PANEL_DISPLAY_STATUS],
-			// the name of the action
-			action_data[PANEL_DISPLAY_NAME],
-			// a ref to the action button of this action for this mob
-			// it's a ref to the button specifically, instead of the action itself,
-			// because statpanel href calls click(), which the action button (not the action itself) handles
-			REF(action.viewers[hud_used]),
-		))
-
-	return data
 
 /mob/proc/swap_hand(held_index, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
@@ -925,7 +910,7 @@ DEFINE_VERB(/mob, DisDblClick, ".dblclick", "", TRUE, null, argu = null as anyth
 
 	var/result = perform_hand_swap(held_index)
 	if (result)
-		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS)
+		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, get_active_held_item(), held_item)
 
 	return result
 
@@ -1142,24 +1127,6 @@ DEFINE_VERB(/mob, DisDblClick, ".dblclick", "", TRUE, null, argu = null as anyth
 ///Can this mob use storage
 /mob/proc/canUseStorage()
 	return FALSE
-
-/*
- * Compare two lists of factions, returning true if any match
- *
- * If exact match is passed through we only return true if both faction lists match equally
- */
-/proc/faction_check(list/faction_A, list/faction_B, exact_match)
-	var/list/match_list
-	if(exact_match)
-		match_list = faction_A&faction_B //only items in both lists
-		var/length = LAZYLEN(match_list)
-		if(length)
-			return (length == LAZYLEN(faction_A)) //if they're not the same len(gth) or we don't have a len, then this isn't an exact match.
-	else
-		match_list = faction_A&faction_B
-		return LAZYLEN(match_list)
-	return FALSE
-
 
 /**
  * Fully update the name of a mob
@@ -1503,8 +1470,7 @@ DEFINE_VERB(/mob, open_language_menu_verb, "Open Language Menu", "", FALSE, "IC"
 	. = ..()
 	// Queue update if change is small enough (6 is 1% of nutrition softcap)
 	if(abs(change) >= 6)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
 
@@ -1520,10 +1486,15 @@ DEFINE_VERB(/mob, open_language_menu_verb, "Open Language Menu", "", FALSE, "IC"
 	. = ..()
 	// Queue update if change is small enough (6 is 1% of nutrition softcap)
 	if(abs(old_nutrition - nutrition) >= 6)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
+
+/// Updates nutrition related effects
+/mob/living/proc/update_nutrition()
+	mob_mood?.update_nutrition_moodlets()
+	hud_used?.hunger?.update_hunger_bar()
+	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_NUTRITION)
 
 /// Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
@@ -1607,6 +1578,18 @@ DEFINE_VERB(/mob, open_language_menu_verb, "Open Language Menu", "", FALSE, "IC"
 
 ///Shows a tgui window with memories
 DEFINE_VERB(/mob, memory, "Memories", "View your character's memories.", FALSE, "IC")
+	if(!mind)
+		var/fail_message = "You have no mind!"
+		if(isobserver(src))
+			fail_message += " You have to be in the current round at some point to have one."
+		to_chat(src, span_warning(fail_message))
+		return
+	if(!mind.memory_panel)
+		mind.memory_panel = new(usr, mind)
+	mind.memory_panel.ui_interact(usr)
+
+///Shows a tgui window with memories
+/mob/proc/open_memory_panel()
 	if(!mind)
 		var/fail_message = "You have no mind!"
 		if(isobserver(src))
@@ -1709,3 +1692,9 @@ DEFINE_VERB(/mob, view_skills, "View Skills", "", FALSE, "IC")
 			continue
 		var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[trait]]
 		datahud.show_to(src)
+
+/**
+ * Returns the access list for this mob, most mobs don't have any access.
+ */
+/mob/proc/get_access() as /list
+	return list()

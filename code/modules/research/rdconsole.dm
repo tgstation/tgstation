@@ -70,31 +70,38 @@ Nothing else in the console has ID requirements.
 		d_disk = null
 	return ..()
 
-/obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, list/modifiers, list/attack_modifiers)
-	//Loading a disk into it.
-	if(istype(D, /obj/item/disk))
-		if(istype(D, /obj/item/disk/tech_disk))
-			if(t_disk)
-				to_chat(user, span_warning("A technology disk is already loaded!"))
-				return
-			if(!user.transferItemToLoc(D, src))
-				to_chat(user, span_warning("[D] is stuck to your hand!"))
-				return
-			t_disk = D
-		else if (istype(D, /obj/item/disk/design_disk))
-			if(d_disk)
-				to_chat(user, span_warning("A design disk is already loaded!"))
-				return
-			if(!user.transferItemToLoc(D, src))
-				to_chat(user, span_warning("[D] is stuck to your hand!"))
-				return
-			d_disk = D
-		else
-			to_chat(user, span_warning("Machine cannot accept disks in that format."))
-			return
-		to_chat(user, span_notice("You insert [D] into \the [src]!"))
-		return
-	return ..()
+/obj/machinery/computer/rdconsole/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/disk))
+		return NONE
+
+	if(istype(tool, /obj/item/disk/tech_disk))
+		if(t_disk)
+			to_chat(user, span_warning("A technology disk is already loaded!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src))
+			to_chat(user, span_warning("[tool] is stuck to your hand!"))
+			return ITEM_INTERACT_BLOCKING
+
+		t_disk = tool
+		to_chat(user, span_notice("You insert [tool] into \the [src]!"))
+		return ITEM_INTERACT_SUCCESS
+
+	if (!istype(tool, /obj/item/disk/design_disk))
+		to_chat(user, span_warning("Machine cannot accept disks in that format."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(d_disk)
+		to_chat(user, span_warning("A design disk is already loaded!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("[tool] is stuck to your hand!"))
+		return ITEM_INTERACT_BLOCKING
+
+	d_disk = tool
+	to_chat(user, span_notice("You insert [tool] into \the [src]!"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/rdconsole/multitool_act(mob/living/user, obj/item/multitool/tool)
 	. = ..()
@@ -243,16 +250,8 @@ Nothing else in the console has ID requirements.
 	var/list/exp_to_process = stored_research.available_experiments.Copy()
 	for (var/e in stored_research.completed_experiments)
 		exp_to_process += stored_research.completed_experiments[e]
-	for (var/e in exp_to_process)
-		var/datum/experiment/ex = e
-		data["experiments"][ex.type] = list(
-			"name" = ex.name,
-			"description" = ex.description,
-			"tag" = ex.exp_tag,
-			"progress" = ex.check_progress(),
-			"completed" = ex.completed,
-			"performance_hint" = ex.performance_hint,
-		)
+	for (var/datum/experiment/ex as anything in exp_to_process)
+		data["experiments"][ex.type] = ex.to_ui_data()
 	return data
 
 /**

@@ -66,12 +66,12 @@
 	/// Sound that the drone dispnser plays when it's broken.
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
 	/// Reference to the object's internal storage for materials.
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 
 /obj/machinery/drone_dispenser/Initialize(mapload)
 	. = ..()
-	materials = AddComponent( \
-		/datum/component/material_container, \
+	materials = new ( \
+		src, \
 		list(/datum/material/iron, /datum/material/glass), \
 		SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, \
 		MATCONTAINER_EXAMINE, \
@@ -84,7 +84,7 @@
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/machinery/drone_dispenser/Destroy()
-	materials = null
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/drone_dispenser/preloaded

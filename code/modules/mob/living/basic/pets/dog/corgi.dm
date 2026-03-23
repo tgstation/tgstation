@@ -35,7 +35,7 @@
 	update_appearance()
 	AddElement(/datum/element/strippable, length(strippable_inventory_slots) ? create_strippable_list(strippable_inventory_slots) : GLOB.strippable_corgi_items)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
+	RegisterSignal(src, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 	RegisterSignals(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD), PROC_REF(on_appearance_change))
 	if(can_breed)
 		add_breeding_component()
@@ -267,10 +267,10 @@
 		var/datum/dog_fashion/equipped_back_fashion_item = new inventory_back.dog_fashion(src)
 		equipped_back_fashion_item.apply(src)
 
-///Handler for COMSIG_MOB_TRIED_ACCESS
-/mob/living/basic/pet/dog/corgi/proc/on_tried_access(mob/accessor, obj/locked_thing)
+///Handler for COMSIG_MOB_RETRIEVE_ACCESS
+/mob/living/basic/pet/dog/corgi/proc/retrieve_access(mob/accessor, list/player_access)
 	SIGNAL_HANDLER
-	return locked_thing?.check_access(access_card) ? ACCESS_ALLOWED : ACCESS_DISALLOWED
+	player_access += access_card.GetAccess()
 
 ///Handles updating any existing overlays for the corgi (such as fashion items) when it changes how it appears, as in, dead or alive.
 /mob/living/basic/pet/dog/corgi/proc/on_appearance_change()

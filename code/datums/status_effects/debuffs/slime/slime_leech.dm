@@ -1,7 +1,7 @@
 /atom/movable/screen/alert/status_effect/slime_leech
 	name = "Covered in Slime"
 	desc = "A slime is draining your very lifeforce! Remove it by hand, by hitting it, or by water."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "slime_leech"
 
 /datum/status_effect/slime_leech
@@ -71,7 +71,7 @@
 		if(need_mob_update)
 			owner.updatehealth()
 
-	if(totaldamage >= 0) // AdjustBruteLoss returns a negative value on successful damage adjustment
+	if(totaldamage >= 0) // adjust_brute_loss() returns a negative value on successful damage adjustment
 		our_slime.balloon_alert(our_slime, "not food!")
 		our_slime.stop_feeding()
 		return

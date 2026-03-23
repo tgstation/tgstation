@@ -30,6 +30,7 @@
 /obj/item/reagent_containers/spray/Initialize(mapload, vol)
 	. = ..()
 	AddElement(/datum/element/reagents_item_heatable)
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/reagent_containers/spray/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
@@ -150,6 +151,16 @@ DEFINE_VERB(/obj/item/reagent_containers/spray, empty, "Empty Spray Bottle", "",
 		log_combat(usr, usr.loc, "emptied onto", src, addition="which had [reagents.get_reagent_log_string()]")
 		src.reagents.clear_reagents()
 
+/obj/item/reagent_containers/spray/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	if(reagents.total_volume < amount_per_transfer_from_this)
+		return
+	to_chat(user, span_danger("As you open [letter], a mist spritzes out from inside!"))
+	spray(user, user)
+	playsound(user, spray_sound, 50, TRUE, -6)
+	forceMove(user.loc)
+	return COMPONENT_TRAITOR_MAIL_HANDLED
+
 /// Handles updating the spray distance when the reagents change.
 /obj/item/reagent_containers/spray/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
@@ -225,12 +236,6 @@ DEFINE_VERB(/obj/item/reagent_containers/spray, empty, "Empty Spray Bottle", "",
 	user.visible_message(span_suicide("[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!"))
 	return OXYLOSS
 
-// Fix pepperspraying yourself
-/obj/item/reagent_containers/spray/pepper/try_spray(atom/target, mob/user)
-	if (target.loc == user)
-		return FALSE
-	return ..()
-
 //water flower
 /obj/item/reagent_containers/spray/waterflower
 	name = "water flower"
@@ -241,11 +246,15 @@ DEFINE_VERB(/obj/item/reagent_containers/spray, empty, "Empty Spray Bottle", "",
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	amount_per_transfer_from_this = 1
+	initial_reagent_flags = OPENCONTAINER
 	has_variable_transfer_amount = FALSE
 	can_toggle_range = FALSE
 	current_range = 1
 	volume = 10
 	list_reagents = list(/datum/reagent/water = 10)
+
+/obj/item/reagent_containers/spray/waterflower/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash)
+	return ..(hit_atom, throwingdatum, do_splash = FALSE)
 
 ///Subtype used for the lavaland clown ruin.
 /obj/item/reagent_containers/spray/waterflower/superlube
@@ -313,11 +322,6 @@ DEFINE_VERB(/obj/item/reagent_containers/spray, empty, "Empty Spray Bottle", "",
 	stream_range = 7
 	amount_per_transfer_from_this = 10
 	volume = 600
-
-/obj/item/reagent_containers/spray/chemsprayer/try_spray(atom/target, mob/user)
-	if (target.loc == user)
-		return FALSE
-	return ..()
 
 /obj/item/reagent_containers/spray/chemsprayer/spray(atom/A, mob/user)
 	var/direction = get_dir(src, A)
@@ -446,8 +450,7 @@ DEFINE_VERB(/obj/item/reagent_containers/spray, empty, "Empty Spray Bottle", "",
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 100
 
-/obj/item/reagent_containers/spray/medical/Initialize(mapload, vol)
-	. = ..()
+/obj/item/reagent_containers/spray/medical/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/med_spray)
 
 /obj/item/reagent_containers/spray/hercuri

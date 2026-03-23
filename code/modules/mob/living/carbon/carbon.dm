@@ -112,6 +112,22 @@
 		weapon.get_embed().rip_out(usr)
 		return
 
+	if(href_list["remove_tourniquet"])
+		var/obj/item/bodypart/limb = locate(href_list["remove_tourniquet"]) in bodyparts
+		var/mob/living/patient = limb?.owner
+		var/obj/item/tourniquet = LAZYACCESS(limb?.applied_items, LIMB_ITEM_TOURNIQUET)
+		if(QDELETED(limb) || QDELETED(patient) || QDELETED(tourniquet))
+			return
+		balloon_alert_to_viewers("removing tourniquet...")
+		if(!do_after(usr, 4 SECONDS, target = src))
+			return
+		if(QDELETED(limb) || QDELETED(patient) || QDELETED(tourniquet) || limb.owner != patient || tourniquet.loc != limb)
+			return
+
+		balloon_alert_to_viewers("tourniquet removed")
+		usr.put_in_hands(tourniquet)
+		return
+
 	if(href_list["show_paper_note"])
 		var/obj/item/paper/paper_note = locate(href_list["show_paper_note"])
 		if(!paper_note)
@@ -409,8 +425,7 @@
 		return
 	var/total_burn = 0
 	var/total_brute = 0
-	for(var/X in bodyparts) //hardcoded to streamline things a bit
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 		total_brute += (BP.brute_dam * BP.body_damage_coeff)
 		total_burn += (BP.burn_dam * BP.body_damage_coeff)
 	set_health(round(maxHealth - get_oxy_loss() - get_tox_loss() - total_burn - total_brute, DAMAGE_PRECISION))
@@ -488,6 +503,10 @@
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+
+	if(HAS_TRAIT(src, TRAIT_ECHOLOCATOR))
+		new_sight |= SEE_MOBS|SEE_TURFS
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_FULLBRIGHT)
 
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 		new_sight = NONE
@@ -753,6 +772,8 @@
 
 	if(heal_flags & HEAL_LIMBS)
 		regenerate_limbs()
+		for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
+			limb.remove_surgical_state(ALL)
 
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ORGANS))
 		regenerate_organs(remove_hazardous = !!(heal_flags & HEAL_REFRESH_ORGANS))
@@ -760,9 +781,8 @@
 	if(heal_flags & HEAL_TRAUMAS)
 		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 		// Addictions are like traumas
-		if(mind)
-			for(var/addiction_type in subtypesof(/datum/addiction))
-				mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
+		for(var/addiction_type in GLOB.addictions)
+			mind?.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 
 	if(heal_flags & HEAL_RESTRAINTS)
 		QDEL_NULL(handcuffed)
@@ -782,6 +802,7 @@
 	return ..()
 
 /mob/living/carbon/proc/can_defib()
+	SHOULD_BE_PURE(TRUE)
 	if (HAS_TRAIT(src, TRAIT_SUICIDED))
 		return DEFIB_FAIL_SUICIDE
 
@@ -797,7 +818,7 @@
 	if ((get_brute_loss() >= MAX_REVIVE_BRUTE_DAMAGE) || (get_fire_loss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return DEFIB_FAIL_TISSUE_DAMAGE
 
-	var/heart_status = can_defib_heart(get_organ_by_type(/obj/item/organ/heart))
+	var/heart_status = SEND_SIGNAL(src, COMSIG_CARBON_DEFIB_HEART_CHECK) || can_defib_heart(get_organ_by_type(/obj/item/organ/heart))
 	if (heart_status)
 		return heart_status
 
@@ -889,16 +910,19 @@
 
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
-			set_num_legs(num_legs + 1)
-			if(!new_bodypart.bodypart_disabled)
-				set_usable_legs(usable_legs + 1)
+			if(!IS_STUMP(new_bodypart))
+				set_num_legs(num_legs + 1)
+				if(!new_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs + 1)
 		if(ARM_LEFT, ARM_RIGHT)
-			set_num_hands(num_hands + 1)
-			if(!new_bodypart.bodypart_disabled)
-				set_usable_hands(usable_hands + 1)
+			if(!IS_STUMP(new_bodypart))
+				set_num_hands(num_hands + 1)
+				if(!new_bodypart.bodypart_disabled)
+					set_usable_hands(usable_hands + 1)
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
+
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -915,13 +939,27 @@
 
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
-			set_num_legs(num_legs - 1)
-			if(!old_bodypart.bodypart_disabled)
-				set_usable_legs(usable_legs - 1)
+			if(!IS_STUMP(old_bodypart))
+				set_num_legs(num_legs - 1)
+				if(!old_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs - 1)
 		if(ARM_LEFT, ARM_RIGHT)
-			set_num_hands(num_hands - 1)
-			if(!old_bodypart.bodypart_disabled)
-				set_usable_hands(usable_hands - 1)
+			if(!IS_STUMP(old_bodypart))
+				set_num_hands(num_hands - 1)
+				if(!old_bodypart.bodypart_disabled)
+					set_usable_hands(usable_hands - 1)
+
+	if(!special && old_bodypart.stump_typepath)
+		if(old_bodypart.type == old_bodypart.stump_typepath)
+			stack_trace("Attempted to replace a stump with a stump")
+		else
+			var/obj/item/bodypart/stump = new old_bodypart.stump_typepath()
+			stump.bodyshape = old_bodypart.bodyshape
+			stump.bodytype = old_bodypart.bodytype
+			if(!stump.try_attach_limb(src, special = TRUE))
+				// the only way this can happen is if the stump is rejected via signal
+				// not much we can do about that besides hope they know what they're doing
+				qdel(stump)
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
@@ -929,7 +967,7 @@
 ///Updates the bodypart speed modifier based on our bodyparts.
 /mob/living/carbon/proc/update_bodypart_speed_modifier()
 	var/final_modification = 0
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/leg/bodypart in get_bodyparts())
 		final_modification += bodypart.speed_modifier
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bodypart, update = TRUE, multiplicative_slowdown = final_modification)
 
@@ -962,7 +1000,7 @@
 			return
 		var/list/limb_list = list()
 		if(edit_action == "remove")
-			for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+			for(var/obj/item/bodypart/iter_part as anything in get_bodyparts())
 				limb_list += iter_part.body_zone
 				limb_list -= BODY_ZONE_CHEST
 		else
@@ -995,8 +1033,8 @@
 				if("replace")
 					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
 					var/obj/item/bodypart/new_bp = new limb2add()
-					if(new_bp.replace_limb(src, special = TRUE))
-						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part.type] with [new_bp.type]")
+					if(new_bp.replace_limb(src))
+						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part?.type || "missing limb"] with [new_bp.type]")
 						qdel(part)
 					else
 						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
@@ -1074,7 +1112,7 @@
 /mob/living/carbon/proc/is_bleeding()
 	if(!CAN_HAVE_BLOOD(src))
 		return FALSE
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		if(part.cached_bleed_rate)
 			return TRUE
 
@@ -1084,7 +1122,7 @@
 		return FALSE
 
 	var/total_bleed_rate = 0
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		total_bleed_rate += part.cached_bleed_rate
 
 	return total_bleed_rate
@@ -1169,16 +1207,18 @@
 
 /mob/living/carbon/on_lying_down(new_lying_angle)
 	. = ..()
-	if(!buckled || buckled.buckle_lying != 0)
+	if(!buckled || (buckled.buckle_lying != 0 && buckled.buckle_lying != NO_BUCKLE_LYING))
 		lying_angle_on_lying_down(new_lying_angle)
 
 
 /// Special carbon interaction on lying down, to transform its sprite by a rotation.
 /mob/living/carbon/proc/lying_angle_on_lying_down(new_lying_angle)
-	if(!new_lying_angle)
-		set_lying_angle(pick(LYING_ANGLE_EAST, LYING_ANGLE_WEST))
-	else
+	if(new_lying_angle)
 		set_lying_angle(new_lying_angle)
+	else if (buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
+		set_lying_angle(buckled.buckle_lying)
+	else
+		set_lying_angle(pick(LYING_ANGLE_EAST, LYING_ANGLE_WEST))
 
 /mob/living/carbon/vv_edit_var(var_name, var_value)
 	switch(var_name)
@@ -1244,9 +1284,9 @@
 /// Goes through the organs and bodyparts of the mob and updates their blood_dna_info, in case their blood type has changed (via set_species() or otherwise)
 /mob/living/carbon/proc/update_cached_blood_dna_info()
 	var/list/blood_dna_info = get_blood_dna_list()
-	for(var/obj/item/organ/organ in organs)
+	for(var/obj/item/organ/organ as anything in organs)
 		organ.blood_dna_info = blood_dna_info
-	for(var/obj/item/bodypart/bodypart in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		bodypart.blood_dna_info = blood_dna_info
 
 /// Setter for changing a mob's blood type
@@ -1319,3 +1359,18 @@
 	if(!CAN_HAVE_BLOOD(src))
 		return
 	return dna?.blood_type
+
+/mob/living/carbon/update_nutrition()
+	. = ..()
+	// Force a weight update in case we're stasis'd and don't tick
+	if (HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
+		if (overeatduration >= 200 SECONDS)
+			return
+
+		to_chat(src, span_notice("You feel fit again!"))
+		remove_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
+		return
+
+	if (overeatduration >= 200 SECONDS)
+		to_chat(src, span_danger("You suddenly feel blubbery!"))
+		add_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
