@@ -236,33 +236,14 @@
 			"mechanic" = operation.operation_flags & OPERATION_MECHANIC,
 		))
 
-	if(!any_recommended && table?.patient)
-		var/obj/item/part = table.patient.get_bodypart(deprecise_zone(target_zone))
-		var/just_drapes = FALSE
-		if(table.patient.has_limbs)
-			if(isnull(part))
-				data["surgeries"] += list(list(
-					"name" = "Prepare for [/datum/surgery_operation/prosthetic_replacement::name]",
-					"desc" = "Prepare the patient's chest for prosthetic limb attachment.",
-					"tool_rec" = "operate on chest",
-					"show_as_next" = TRUE,
-					"show_in_list" = FALSE,
-				))
-
-			else if(!HAS_TRAIT(part, TRAIT_READY_TO_OPERATE))
-				just_drapes = TRUE
-
-		else if(!HAS_TRAIT(table.patient, TRAIT_READY_TO_OPERATE))
-			just_drapes = TRUE
-
-		if(just_drapes)
-			data["surgeries"] += list(list(
-				"name" = "Prepare for surgery",
-				"desc" = "Begin surgery by applying surgical drapes to the patient.",
-				"tool_rec" = /obj/item/surgical_drapes::name,
-				"show_as_next" = TRUE,
-				"show_in_list" = FALSE,
-			))
+	if(!any_recommended && table?.patient && !HAS_TRAIT(table.patient, TRAIT_READY_TO_OPERATE))
+		data["surgeries"] += list(list(
+			"name" = "Prepare for surgery",
+			"desc" = "Begin surgery by applying surgical drapes to the patient or by buckling the patient to the surgical table.",
+			"tool_rec" = /obj/item/surgical_drapes::name,
+			"show_as_next" = TRUE,
+			"show_in_list" = FALSE,
+		))
 
 	return data
 

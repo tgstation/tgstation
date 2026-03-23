@@ -73,17 +73,23 @@
 	var/light_power = 1
 	///Hexadecimal RGB string representing the colour of the light. White by default.
 	var/light_color = COLOR_WHITE
+	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
+	var/light_on = TRUE
+	///Bitflags to determine lighting-related atom properties.
+	var/light_flags = NONE
+
+	// OVERLAY_LIGHT only values
+	/// An optional render_source to apply to this atom's light overlay
+	var/light_render_source = ""
+
+	// COMPLEX_LIGHT only values
 	/// Angle of light to show in light_dir
 	/// 360 is a circle, 90 is a cone, etc.
 	var/light_angle = 360
 	/// What angle to project light in
 	var/light_dir = NORTH
-	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
-	var/light_on = TRUE
 	/// How many tiles "up" this light is. 1 is typical, should only really change this if it's a floor light
 	var/light_height = LIGHTING_HEIGHT
-	///Bitflags to determine lighting-related atom properties.
-	var/light_flags = NONE
 	///Our light source. Don't fuck with this directly unless you have a good reason!
 	var/tmp/datum/light_source/light
 	///Any light sources that are "inside" of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.

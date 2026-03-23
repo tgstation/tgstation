@@ -79,7 +79,7 @@
 
 	if(ishuman(living_target))
 		var/mob/living/carbon/human/plant_man = target
-		edible_bodypart = pick(plant_man.bodyparts)
+		edible_bodypart = pick(plant_man.get_bodyparts())
 		edible_bodypart.dismember()
 
 	living_target.visible_message(

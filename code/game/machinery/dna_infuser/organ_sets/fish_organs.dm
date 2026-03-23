@@ -93,7 +93,7 @@
 
 	if (new_value >= FISH_INFUSION_ALL_ORGANS && tail_color)
 		if (!color_active)
-			for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+			for(var/obj/item/bodypart/limb as anything in carbon_owner.get_bodyparts())
 				limb.add_color_override(tail_color, LIMB_COLOR_FISH_INFUSION)
 			color_active = TRUE
 		return
@@ -101,7 +101,7 @@
 	if (!color_active)
 		return
 
-	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in carbon_owner.get_bodyparts())
 		limb.remove_color_override(LIMB_COLOR_FISH_INFUSION)
 	color_active = FALSE
 

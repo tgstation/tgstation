@@ -9,17 +9,17 @@
 		return COMPONENT_REDUNDANT
 	ADD_TRAIT(parent, TRAIT_READY_TO_OPERATE, REF(src))
 	var/mob/living/carbon/owner = parent
-	if(!istype(owner))
+	if (!istype(owner))
 		return
-	for (var/obj/item/bodypart/limb as anything in owner.bodyparts)
+	for (var/obj/item/bodypart/limb as anything in owner.get_bodyparts(include_stumps = TRUE))
 		ADD_TRAIT(limb, TRAIT_READY_TO_OPERATE, REF(src))
 
 /datum/component/free_operation/Destroy(force)
 	REMOVE_TRAIT(parent, TRAIT_READY_TO_OPERATE, REF(src))
 	var/mob/living/carbon/owner = parent
-	if(!istype(owner))
+	if (!istype(owner))
 		return ..()
-	for (var/obj/item/bodypart/limb as anything in owner.bodyparts)
+	for (var/obj/item/bodypart/limb as anything in owner.get_bodyparts(include_stumps = TRUE))
 		REMOVE_TRAIT(limb, TRAIT_READY_TO_OPERATE, REF(src))
 	return ..()
 
