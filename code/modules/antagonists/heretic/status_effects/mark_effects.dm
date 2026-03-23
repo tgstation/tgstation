@@ -83,7 +83,11 @@
 /datum/status_effect/eldritch/ash/on_effect()
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.adjust_stamina_loss(20 * repetitions) // first one = 30 stam
+		var/stamloss = 10 * repetitions
+		if(repetitions >= 5)
+			stamloss += 50
+		carbon_owner.adjust_stamina_loss(stamloss) // first one = 30 stam
+
 		carbon_owner.adjust_fire_loss(3 * repetitions) // first one = 15 burn
 		for(var/mob/living/carbon/victim in shuffle(range(1, carbon_owner)))
 			if(IS_HERETIC(victim) || victim == carbon_owner)
