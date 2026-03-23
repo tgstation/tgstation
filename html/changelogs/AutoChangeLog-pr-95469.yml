@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds Thanatorenasia, a 0 point neutral quirk that turns your body into a \"recovered crewmember\" if you choose to DNR - meaning if revived, any ghost could take control of it"
+  - refactor: "Refactored \"ghostrol on revive\" behavior a fair bit, report any oddities with it / the spawners menu"
