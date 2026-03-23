@@ -11,11 +11,14 @@
 	else
 		CRASH("Could not find lib[library].so")
 
+
+
 #define AUXCPU_DLL (world.system_type == MS_WINDOWS ? "auxcpu_byondapi.dll" : __detect_auxtools("auxcpu_byondapi"))
 
 // uncomment the define below if you want support for "true" world.map_cpu (true_maptick)
 //#define MAPTICK_HOOK
 
+#ifdef USE_AUXCPU
 /proc/current_true_cpu()
 	var/static/__current_true_cpu
 #ifndef OPENDREAM
@@ -73,6 +76,36 @@
 
 /world/proc/cleanup_external_cpu()
 	return
+#endif
+
+#ifndef USE_AUXCPU
+/proc/current_true_cpu()
+	return world.cpu
+
+/proc/current_cpu_index()
+	return WRAP(world.time, 1, INTERNAL_CPU_SIZE + 1)
+
+/proc/true_cpu_at_index(index)
+	if(index == current_cpu_index())
+		return current_true_cpu()
+	return 0
+
+/proc/cpu_values()
+	var/list/values = list()
+	for(var/i in 1 to INTERNAL_CPU_SIZE)
+		values += true_cpu_at_index(i)
+	return values
+
+// NOTE: THIS IS IN DECISECONDS
+/proc/true_maptick()
+	return world.map_cpu
+
+/world/proc/setup_external_cpu()
+	return FALSE
+
+/world/proc/cleanup_external_cpu()
+	return
+#endif
 
 /proc/meowtonin_stack_trace(message, source, line, full_info)
 	var/list/info = list("[message || "N/A"]")

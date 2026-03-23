@@ -46,6 +46,10 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		return
 	graph_display.refresh_thresholds()
 
+	var/data_bad_text = ""
+#ifndef USE_AUXCPU
+	data_bad_text = " (INACCURATE)"
+#endif
 	var/datum/tick_holder/tick_info = GLOB.tick_info
 	var/list/cpu_values = tick_info.cpu_values
 	var/list/mc_start_usage = tick_info.mc_start_usage
@@ -86,34 +90,34 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		Correction Target: [FORMAT_CPU(GLOB.corrective_cpu_threshold)]\n\
 		Correction Distance: [FORMAT_CPU(GLOB.corrective_cpu_target - cpu_values[last_index])]\n\
 		Correction Cost: [FORMAT_CPU(GLOB.corrective_cpu_cost)]\n\
-		Frame Behind CPU: [FORMAT_CPU(cpu_values[last_index])]\n\
+		Frame Behind CPU[data_bad_text]: [FORMAT_CPU(cpu_values[last_index])]\n\
 		Frame Behind Sleep: [FORMAT_CPU(mc_start_usage[last_index])]\n\
 		Frame Behind MC: [FORMAT_CPU(mc_usage)]\n\
 		Frame Behind Post MC: [FORMAT_CPU(post_mc_usage)]\n\
 		Frame Behind Pre Tick: [FORMAT_CPU(pre_tick_cpu_usage[last_index])]\n\
 		Frame Behind Tick: [FORMAT_CPU(tick_cpu_usage[last_index])]\n\
-		Frame Behind Maptick: [FORMAT_CPU(maptick_usage[last_index])]\n\
+		Frame Behind Maptick[data_bad_text]: [FORMAT_CPU(maptick_usage[last_index])]\n\
 		Frame Behind Verb: [FORMAT_CPU(verb_cost[last_index])]\n\
 		Frame Behind Last Ran Verb: [FORMAT_CPU(last_verb_ran[last_index])]\n\
 		<div style=\"color:#FF0000;\">\
-			Max CPU [full_time]s: [FORMAT_CPU(max(cpu_values))]\n\
+			Max CPU[data_bad_text] [full_time]s: [FORMAT_CPU(max(cpu_values))]\n\
 			Max Sleep [full_time]s: [FORMAT_CPU(max(mc_start_usage))]\n\
 			Max MC [full_time]s: [FORMAT_CPU(max(mc_usage))]\n\
 			Max Post MC [full_time]s: [FORMAT_CPU(min(post_mc_usage))]\n\
 			Max Pre Tick [full_time]s: [FORMAT_CPU(max(pre_tick_cpu_usage))]\n\
 			Max Tick [full_time]s: [FORMAT_CPU(max(tick_cpu_usage))]\n\
-			Max Map [full_time]s: [FORMAT_CPU(max(maptick_usage))]\n\
+			Max Map[data_bad_text] [full_time]s: [FORMAT_CPU(max(maptick_usage))]\n\
 			Max Verb [full_time]s: [FORMAT_CPU(max(verb_cost))]\n\
 			Max Last Ran Verb [full_time]s: [FORMAT_CPU(max(last_verb_ran))]\n\
 		</div>\
 		<div style=\"color:#0096FF;\">\
-			Min CPU [full_time]s: [FORMAT_CPU(min(cpu_values))]\n\
+			Min CPU[data_bad_text] [full_time]s: [FORMAT_CPU(min(cpu_values))]\n\
 			Min Sleep [full_time]s: [FORMAT_CPU(min(mc_start_usage))]\n\
 			Min MC [full_time]s: [FORMAT_CPU(min(mc_usage))]\n\
 			Min Post MC [full_time]s: [FORMAT_CPU(min(post_mc_usage))]\n\
 			Min Pre Tick [full_time]: [FORMAT_CPU(min(pre_tick_cpu_usage))]\n\
 			Min Tick [full_time]s: [FORMAT_CPU(min(tick_cpu_usage))]\n\
-			Min Map [full_time]s: [FORMAT_CPU(min(maptick_usage))]\n\
+			Min Map[data_bad_text] [full_time]s: [FORMAT_CPU(min(maptick_usage))]\n\
 			Min Verb [full_time]s: [FORMAT_CPU(min(verb_cost))]\n\
 			Min Last Ran Verb [full_time]s: [FORMAT_CPU(min(last_verb_ran))]\
 		</div>\
