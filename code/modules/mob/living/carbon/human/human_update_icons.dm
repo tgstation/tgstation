@@ -921,9 +921,10 @@ generate/load female uniform sprites matching all previously decided variables
 	if(isnull(noggin))
 		return
 
+	noggin.update_head_visual_state()
 	// Eyes may be null and that's fine, we'll get the eyeless overlay instead
 	var/obj/item/organ/eyes/eyes = locate() in noggin
-	eyes?.refresh(call_update = FALSE)
+	eyes?.refresh(src, call_update = FALSE)
 
 	var/list/eye_overlays = noggin.get_eye_overlays()
 	if(length(eye_overlays))
@@ -962,8 +963,8 @@ generate/load female uniform sprites matching all previously decided variables
 	apply_overlay(EYES_LAYER)
 
 
-// Only renders the head of the human
-/mob/living/carbon/human/proc/update_body_parts_head_only(update_limb_data)
+/// Makes all aspects of the mob invisibile but the head and its associated sprites
+/mob/living/carbon/human/proc/render_only_head()
 	if(!dna?.species)
 		return
 
@@ -972,11 +973,13 @@ generate/load female uniform sprites matching all previously decided variables
 	if(!istype(my_head))
 		return
 
-	my_head.update_limb(is_creating = update_limb_data)
-
-	add_overlay(my_head.get_limb_icon(dropped = FALSE, update_on = src))
+	cut_overlays()
+	my_head.update_limb()
+	add_overlay(my_head.get_limb_icon())
 	update_worn_head()
 	update_worn_mask()
+	update_eyes()
+	update_hair()
 
 /**
  * Used to perform regular updates to the limbs of humans with special bodyshapes

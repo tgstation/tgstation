@@ -244,8 +244,7 @@
 			var/datum/species/S = victim.dna.species
 
 			if (istype(S))
-				victim.cut_overlays()
-				victim.update_body_parts_head_only()
+				victim.render_only_head()
 				victim.remove_overlay(BODY_ADJ_LAYER)
 				victim.pixel_y += -GUILLOTINE_HEAD_OFFSET // Offset their body so it looks like they're in the guillotine
 				victim.layer += GUILLOTINE_LAYER_DIFF

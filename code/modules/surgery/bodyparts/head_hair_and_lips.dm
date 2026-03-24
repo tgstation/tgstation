@@ -14,8 +14,8 @@
 	var/has_eyes = !!(locate(/obj/item/organ/eyes) in src)
 
 	// Update debrained / eyeless stasus
-	show_debrained = !hair_hidden && !has_brain && (isnull(owner) || !HAS_TRAIT(owner, TRAIT_NO_DEBRAIN_OVERLAY)) && (head_flags & HEAD_DEBRAIN)
-	show_eyeless = !has_eyes && (head_flags & HEAD_EYEHOLES)
+	show_debrained = !hair_hidden && !has_brain && (isnull(owner) || !HAS_TRAIT(owner, TRAIT_NO_DEBRAIN_OVERLAY)) && !!(head_flags & HEAD_DEBRAIN)
+	show_eyeless = !has_eyes && !!(head_flags & HEAD_EYEHOLES)
 
 	if(!is_creating || !owner)
 		return

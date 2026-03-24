@@ -193,7 +193,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/item/bodypart/head/get_limb_icon(dropped, mob/living/carbon/update_on)
+/obj/item/bodypart/head/get_limb_icon(dropped)
 	. = ..()
 	// All of these overlays are applied via standing_overlays, thus we only apply them to the limb if it's dropped
 	if(dropped)
