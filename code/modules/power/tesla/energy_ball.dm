@@ -176,7 +176,7 @@
 		target.orbiting_balls += src
 	. = ..()
 
-/obj/energy_ball/stop_orbit(/datum/component/orbiter/orbiters, refreshing = FALSE)
+/obj/energy_ball/stop_orbit(datum/component/orbiter/orbiters, refreshing = FALSE)
 	if(refreshing)
 		return ..()
 	if (orbiting && istype(orbiting.parent, /obj/energy_ball))
