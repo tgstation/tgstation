@@ -1148,6 +1148,34 @@
 	owner.remove_filter("designated_target")
 	REMOVE_TRAIT(owner, TRAIT_DESIGNATED_TARGET, id)
 
+
+/datum/status_effect/movespeed_slowdown
+	alert_type = null
+	remove_on_fullheal = TRUE
+	status_type = STATUS_EFFECT_MULTIPLE
+	var/datum/movespeed_modifier/movespeed_modifier
+
+/datum/status_effect/movespeed_slowdown/on_creation(mob/living/new_owner, duration = 10 SECONDS, datum/movespeed_modifier/modifier, new_id)
+	if(isnull(new_id))
+		stack_trace("[src] was not provided a movespeed modifier id! Must have a UNIQUE id for the movespeed modifier to prevent conflicts with other status effects! Example: 'full_eaten_slowdown'")
+		return FALSE
+	src.duration = duration
+	movespeed_modifier = modifier
+	id = new_id
+	if(!ispath(movespeed_modifier))
+		stack_trace("[src] was provided a invalid movespeed modifier [movespeed_modifier]. Must be a typepath of a subtype of /datum/movespeed_modifier.")
+		return FALSE
+	. = ..()
+
+/datum/status_effect/movespeed_slowdown/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier(movespeed_modifier, TRUE)
+
+/datum/status_effect/movespeed_slowdown/on_remove()
+	. = ..()
+	owner.remove_movespeed_modifier(movespeed_modifier)
+
+
 #undef HEALING_SLEEP_DEFAULT
 #undef HEALING_SLEEP_ORGAN_MULTIPLIER
 #undef SLEEP_QUALITY_WORKOUT_MULTIPLER

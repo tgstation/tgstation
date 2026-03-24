@@ -64,7 +64,12 @@
 		return TRUE
 
 	carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
-	carbon_hit.set_timed_status_effect(10 SECONDS, /datum/status_effect/mansus_slowdown)
+	carbon_hit.apply_status_effect(
+		/datum/status_effect/movespeed_slowdown,
+		10 SECONDS,
+		/datum/movespeed_modifier/mansus_grasp_slowdown,
+		"mansus_grasp_slowdown"
+	)
 	carbon_hit.AdjustKnockdown(5 SECONDS)
 
 	return TRUE

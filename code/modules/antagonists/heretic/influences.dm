@@ -40,11 +40,9 @@
 /datum/reality_smash_tracker/proc/get_influence_cap()
 	return length(tracked_heretics) * NUM_INFLUENCES_PER_HERETIC
 
-/// Tries to create one influeSZnce at a safe station location.
+/// Tries to create one influence at a safe station location.
 /datum/reality_smash_tracker/proc/try_generate_influence(amount = 1)
 	var/influence_cap = get_influence_cap()
-	if(num_drained >= influence_cap)
-		return
 
 	var/amount_to_make = min(amount, influence_cap - total_influences())
 	if(amount_to_make <= 0)

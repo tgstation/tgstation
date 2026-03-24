@@ -466,21 +466,5 @@
 	SIGNAL_HANDLER
 	return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE
 
-
-/datum/status_effect/mansus_slowdown
-	id = "mansus_slowdown"
-	alert_type = null
-	remove_on_fullheal = TRUE
-	duration = 10 SECONDS
-	var/movespeed_modifier = /datum/movespeed_modifier/mansus_slowdown
-
-/datum/status_effect/mansus_slowdown/on_apply()
-	. = ..()
-	owner.add_movespeed_modifier(movespeed_modifier, TRUE)
-
-/datum/status_effect/mansus_slowdown/on_remove()
-	. = ..()
-	owner.remove_movespeed_modifier(movespeed_modifier)
-
-/datum/movespeed_modifier/mansus_slowdown
+/datum/movespeed_modifier/mansus_grasp_slowdown
 	multiplicative_slowdown = 1
