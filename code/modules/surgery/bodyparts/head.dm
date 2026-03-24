@@ -195,11 +195,11 @@
 
 /obj/item/bodypart/head/get_limb_icon(dropped)
 	. = ..()
-	// All of these overlays are applied via standing_overlays, thus we only apply them to the limb if it's dropped
-	if(dropped)
-		. += get_hair_overlays(dropped) // returns hair overlay or debrained overlay
-		. += get_lips_overlays(dropped) // returns lip overlay if applicable
-		. += get_eye_overlays(dropped) // returns eye overlays or eyeless overlay
+	if(dropped) // These overlays are applied as standing overlays so we only need them if dropped
+		. += get_hair_overlays(dropped)
+		. += get_eye_overlays(dropped)
+
+	. += get_lips_overlays(dropped)
 
 /obj/item/bodypart/head/get_voice(add_id_name)
 	return "The head of [get_face_name()]"

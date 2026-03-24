@@ -144,7 +144,7 @@
 		if(native_fov)
 			organ_owner.remove_fov_trait(type)
 		if(!special)
-			human_owner.update_eyes()
+			human_owner.update_eyes(refresh = FALSE)
 
 	// become blind (if not special)
 	if(!special)

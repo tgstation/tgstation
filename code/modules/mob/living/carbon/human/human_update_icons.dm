@@ -869,10 +869,6 @@ generate/load female uniform sprites matching all previously decided variables
 	var/list/body_overlays = list()
 	body_overlays += get_underwear_overlays()
 
-	var/obj/item/bodypart/head/noggin = get_bodypart(BODY_ZONE_HEAD)
-	if(!isnull(noggin))
-		body_overlays += noggin.get_lips_overlays()
-
 	if(length(body_overlays))
 		overlays_standing[BODY_LAYER] = body_overlays
 		apply_overlay(BODY_LAYER)
@@ -912,7 +908,7 @@ generate/load female uniform sprites matching all previously decided variables
 /mob/living/proc/update_eyes()
 	return
 
-/mob/living/carbon/human/update_eyes()
+/mob/living/carbon/human/update_eyes(refresh = TRUE)
 	remove_overlay(EYES_LAYER)
 
 	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
@@ -921,10 +917,9 @@ generate/load female uniform sprites matching all previously decided variables
 	if(isnull(noggin))
 		return
 
-	noggin.update_head_visual_state()
-	// Eyes may be null and that's fine, we'll get the eyeless overlay instead
-	var/obj/item/organ/eyes/eyes = locate() in noggin
-	eyes?.refresh(src, call_update = FALSE)
+	if(refresh)
+		var/obj/item/organ/eyes/eyes = locate() in noggin
+		eyes?.refresh(src, call_update = FALSE)
 
 	var/list/eye_overlays = noggin.get_eye_overlays()
 	if(length(eye_overlays))

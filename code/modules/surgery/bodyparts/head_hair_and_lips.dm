@@ -186,7 +186,7 @@
 
 	var/obj/item/organ/eyes/eyes = locate() in src
 	if(isnull(eyes))
-		stack_trace("We should have an eye organ if we're trying to get eye overlays and show_eyeless is false!")
+		// This can happen due to insertion order shenanigans so it's best to just leave it
 		return .
 
 	if(head_flags & HEAD_EYESPRITES)
