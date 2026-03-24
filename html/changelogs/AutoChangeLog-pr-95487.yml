@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - qol: "Many circuit components have had ports that effectively act as boolean inputs or outputs converted into a new boolean datatype."

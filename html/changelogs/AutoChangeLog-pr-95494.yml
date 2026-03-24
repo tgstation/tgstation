@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Drinking soup will loop until it's empty or you cancel it (as it used to)"

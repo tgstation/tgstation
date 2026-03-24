@@ -1,4 +1,0 @@
-author: "cebutris"
-delete-after: True
-changes:
-  - bugfix: "Fixed an oversight with package wrapping"
