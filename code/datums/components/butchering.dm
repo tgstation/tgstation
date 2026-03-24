@@ -167,7 +167,7 @@
 
 	if (target.body_zone == BODY_ZONE_CHEST && target.owner)
 		// Cannot butcher the chest until we hack off all the other limbs
-		for (var/obj/item/bodypart/limb as anything in target.owner.bodyparts)
+		for (var/obj/item/bodypart/limb as anything in target.owner.get_bodyparts())
 			if (limb != target && limb.butcher_drops && limb.butcher_replacement)
 				to_chat(user, span_warning("You need to butcher all other limbs first!"))
 				return
@@ -249,7 +249,7 @@
 		for(var/obj/item/result as anything in results)
 			if (reagents_in_produced)
 				if (target.owner.reagents)
-					target.owner.reagents.trans_to(result, target.owner.reagents.total_volume / reagents_in_produced / length(target.owner.bodyparts), remove_blacklisted = TRUE)
+					target.owner.reagents.trans_to(result, target.owner.reagents.total_volume / reagents_in_produced / length(target.owner.get_bodyparts()), remove_blacklisted = TRUE)
 				result.reagents?.add_reagent(/datum/reagent/consumable/nutriment/fat, target.owner.nutrition / /datum/reagent/consumable/nutriment/fat::nutriment_factor / reagents_in_produced)
 
 			if(LAZYLEN(diseases))

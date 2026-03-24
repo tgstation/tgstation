@@ -48,7 +48,7 @@
 
 	if(istype(tool, /obj/item/disk/computer))
 		eject_disk(user)
-		if(user.transferItemToLoc(tool, src))
+		if(!user.transferItemToLoc(tool, src))
 			balloon_alert(user, "it's stuck to your hand!")
 			return ITEM_INTERACT_BLOCKING
 		inserted_disk = tool

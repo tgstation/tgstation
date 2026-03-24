@@ -237,7 +237,7 @@
 
 	var/mob/living/carbon/human/agent_whiskey = victim
 	var/drop_chance = 0
-	for (var/obj/item/bodypart/limb as anything in agent_whiskey.bodyparts)
+	for (var/obj/item/bodypart/limb as anything in agent_whiskey.get_bodyparts())
 		if (!limb.butcher_drops)
 			continue
 
