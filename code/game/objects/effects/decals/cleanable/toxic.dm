@@ -18,12 +18,12 @@
 	bubbling_audio = new /datum/looping_sound/soup(src)
 	bubbling_audio.start()
 	pre_eat()
-	add_shared_particles(/particles/acid)
+	add_shared_particles(/particles/acid/toxic)
 
 /obj/effect/decal/cleanable/greenglow/waste/Destroy()
 	. = ..()
 	QDEL_NULL(bubbling_audio)
-	remove_shared_particles(/particles/acid)
+	remove_shared_particles(/particles/acid/toxic)
 
 /obj/effect/decal/cleanable/greenglow/waste/proc/pre_eat(display_message = TRUE)
 	if(display_message)

@@ -1576,7 +1576,7 @@
 	liver_damage_multiplier = 0
 	toxpwr = 1
 
-#define WASTE_REACTION_THRESHOLD 5
+#define WASTE_REACTION_THRESHOLD 10
 #define CRITICAL_CAPACITY 45
 
 /datum/reagent/toxin/acid/industrial_waste
@@ -1594,9 +1594,12 @@
 	. = ..()
 	var/merged_total = amount + volume
 	if(merged_total >= CRITICAL_CAPACITY)
-		spew_waste(4) //Sure as HELL can't store it.
+		spew_waste(round(volume / WASTE_REACTION_THRESHOLD)) //Sure as HELL can't store it.
 		var/atom/container = holder.my_atom
-		container.take_damage(round(merged_total/10), BURN, BIO) //It's an unusual combination of damage type and flags, but we need to intentionally bypass beakers acid immunity.
+		var/damage_mult = 1
+		if(ismachinery(container))
+			damage_mult = 2
+		container.take_damage(round(merged_total * damage_mult / WASTE_REACTION_THRESHOLD), BURN, BIO) //It's an unusual combination of damage type and flags, but we need to intentionally bypass beakers acid immunity.
 
 /datum/reagent/toxin/acid/industrial_waste/intercept_reagents_transfer(datum/reagents/target)
 	if(target.total_volume >= target.maximum_volume)
@@ -1650,7 +1653,12 @@
 
 	var/atom/atom_holder = holder.my_atom
 	var/turf/dropturf = get_turf(atom_holder)
-	var/list/turfs = oview(spew_range, dropturf)
+	var/list/turf/turfs = list()
+	for(var/turf/floors in orange(spew_range, dropturf))
+		if(istype(floors, /turf/open/space))
+			continue
+		turfs += floors
+
 	while(length(turfs))
 		var/turf/turf_options = pick(turfs)
 		if(turf_options.is_blocked_turf(TRUE))
@@ -1661,6 +1669,6 @@
 			break
 
 	expose_turf(dropturf, volume/2)
-	volume = volume/2
+	volume = round(volume/2, 0.01)
 
 #undef WASTE_REACTION_THRESHOLD
