@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Some undergarmants will now use a generic replacement on lizard body shapes that fit more appropriately"
+  - refactor: "Refactored how undergarmants generate their icons, report any oddities with that"

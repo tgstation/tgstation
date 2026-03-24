@@ -1,0 +1,4 @@
+author: "Iajret"
+delete-after: True
+changes:
+  - bugfix: "fixed vitals display not respecting APCs power when you attach it to a wall"

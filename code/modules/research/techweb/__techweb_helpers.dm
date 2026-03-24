@@ -34,6 +34,6 @@
 	for(var/i in pointlist)
 		var/research_line = "[(i in SSresearch.point_types) || "ERRORED POINT TYPE"]: [pointlist[i]]"
 		if(last_pointlist[i] > 0)
-			research_line += " (+[(last_pointlist[i]) * ((SSresearch.flags & SS_TICKER)? (600 / (world.tick_lag * SSresearch.wait)) : (600 / SSresearch.wait))]/ minute)"
+			research_line += " (+[(last_pointlist[i]) * ((SSresearch.ss_flags & SS_TICKER)? (600 / (world.tick_lag * SSresearch.wait)) : (600 / SSresearch.wait))]/ minute)"
 		ret += research_line
 	return ret.Join("<BR>")
