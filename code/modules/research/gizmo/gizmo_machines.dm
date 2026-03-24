@@ -10,7 +10,9 @@
 	density = TRUE
 	anchored = FALSE
 
+	/// Possible icon states to pick from
 	var/list/icon_states = list("gizmo_0", "gizmo_1", "gizmo_2", "gizmo_3", "gizmo_4")
+	/// Reference to the gizmo. We dont actually need to track this for anything but ease of vv
 	var/datum/gizmo_controller/controller = /datum/gizmo_controller
 
 /obj/machinery/gizmo/Initialize(mapload)
@@ -62,14 +64,12 @@
 	icon_state = base_icon_state + (moving ? "_spinning" : "")
 
 /obj/machinery/gizmo/beyblade/on_start_moving(datum/gizpulse/pulse)
-	AddElement(/datum/element/moving_randomly)
 	density = TRUE
 
 	moving = TRUE
 	update_icon()
 
 /obj/machinery/gizmo/beyblade/on_stop_moving(datum/gizpulse/pulse)
-	RemoveElement(/datum/element/moving_randomly)
 	density = FALSE
 
 	moving = FALSE

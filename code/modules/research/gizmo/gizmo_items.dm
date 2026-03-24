@@ -6,7 +6,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/list/icon_states = list("gizmo_item_1")
-	var/datum/gizmo_controller/controller = /datum/gizmo_controller
+	var/datum/gizmo_controller/controller = /datum/gizmo_controller/item
 
 /obj/item/gizmo/Initialize(mapload)
 	. = ..()
