@@ -830,9 +830,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[HANDS_LAYER]" = LOWER_BODY,
 	// Very tall hats will get cut off by filter
 	"[HEAD_LAYER]" = UPPER_BODY,
-	// Hair will get cut off by filter
-	"[HAIR_LAYER]" = UPPER_BODY,
-	"[BENEATH_HAIR_LAYER]" = UPPER_BODY,
 	// Long belts (sabre sheathe) will get cut off by filter
 	"[BELT_LAYER]" = LOWER_BODY,
 	// Everything below looks fine with or without a filter, so we can skip it and just offset
@@ -849,6 +846,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[ID_LAYER]" = UPPER_BODY,
 	"[FACEMASK_LAYER]" = UPPER_BODY,
 	"[LOW_FACEMASK_LAYER]" = UPPER_BODY,
+	"[EYES_LAYER]" = UPPER_BODY,
 	// These two are cached, and have their appearance shared(?), so it's safer to just not touch it
 	"[MUTATIONS_LAYER]" = NO_MODIFY,
 	"[FRONT_MUTATIONS_LAYER]" = NO_MODIFY,
@@ -857,12 +855,13 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// BACK_LAYER (backpacks are big)
 	// BODYPARTS_HIGH_LAYER (arms)
 	// BODY_LAYER (body markings (full body), underwear (full body))
-	// EYES_LAYER,
 	// BODY_ADJ_LAYER (external organs like wings)
 	// BODY_BEHIND_LAYER (external organs like wings)
 	// BODY_FRONT_LAYER (external organs like wings)
 	// DAMAGE_LAYER (full body)
 	// HIGHEST_LAYER (full body)
+	// HAIR_LAYER (Longer hairs like FLBH)
+	// BENEATH_HAIR_LAYER (See above)
 	// UNIFORM_LAYER (full body)
 	// WOUND_LAYER (full body)
 ))
