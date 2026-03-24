@@ -22,6 +22,7 @@
 
 /obj/item/organ/cyberimp/arm/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
+	UnregisterSignal(arm_owner, COMSIG_CARBON_POST_ATTACH_LIMB)
 	on_limb_detached(hand)
 
 /obj/item/organ/cyberimp/arm/proc/on_limb_attached(mob/living/carbon/source, obj/item/bodypart/limb)
@@ -88,6 +89,7 @@
 
 /obj/item/organ/cyberimp/arm/toolkit/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
+	UnregisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN)
 	Retract()
 
 /obj/item/organ/cyberimp/arm/toolkit/on_limb_attached(mob/living/carbon/source, obj/item/bodypart/limb)
