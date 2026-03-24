@@ -33,7 +33,6 @@
 	. = ..()
 	to_chat(new_vampire, "[info_text]")
 	new_vampire.skin_tone = "albino"
-	new_vampire.update_body(0)
 	RegisterSignal(new_vampire, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	if(new_vampire.hud_used)
 		on_hud_created(new_vampire)

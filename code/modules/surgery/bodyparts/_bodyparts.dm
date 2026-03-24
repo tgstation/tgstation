@@ -281,6 +281,7 @@
 	if (length(drop_results))
 		butcher_drops = string_list(drop_results)
 		butcher_drop_cache[type] = butcher_drops
+	update_limb(TRUE)
 	update_icon_dropped()
 	refresh_bleed_rate()
 

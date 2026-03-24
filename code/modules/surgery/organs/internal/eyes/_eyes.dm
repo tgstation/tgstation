@@ -131,7 +131,7 @@
 		affected_human.add_fov_trait(type, native_fov)
 
 	if(call_update)
-		affected_human.update_body()
+		affected_human.update_eyes()
 
 /obj/item/organ/eyes/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
@@ -144,7 +144,7 @@
 		if(native_fov)
 			organ_owner.remove_fov_trait(type)
 		if(!special)
-			human_owner.update_body()
+			human_owner.update_eyes()
 
 	// become blind (if not special)
 	if(!special)
@@ -182,7 +182,7 @@
 	. = ..()
 	if (ishuman(owner))
 		refresh_atom_color_overrides()
-		owner.update_body()
+		owner.update_eyes()
 
 /// Adds eye color overrides to our owner from our atom color
 /obj/item/organ/eyes/proc/refresh_atom_color_overrides()
@@ -285,40 +285,32 @@
 	// Always show if we have an appendix
 	return ..() || (owner.stat != DEAD && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) && (owner.is_blind() || owner.is_nearsighted()))
 
-/// This proc generates a list of overlays that the eye should be displayed using for the given parent
-/obj/item/organ/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
-	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/eyes) != src)
-		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
-
-	if(isnull(eye_icon_state))
+/// This proc generates a list of overlays that the eye displays on the given head
+/obj/item/organ/eyes/proc/generate_body_overlay(obj/item/bodypart/head/my_head)
+	if(!eye_icon_state || isnull(my_head))
 		return list()
 
-	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -EYES_LAYER, parent)
-	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -EYES_LAYER, parent)
+	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -EYES_LAYER)
+	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -EYES_LAYER)
 	var/list/overlays = list(eye_left, eye_right)
 
-	if(!(parent.obscured_slots & HIDEEYES))
-		overlays += get_emissive_overlays(eye_left, eye_right, parent)
-
-	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
-
-	if(!my_head)
-		return overlays
+	if(my_head.owner && !(my_head.owner.obscured_slots & HIDEEYES))
+		overlays += get_emissive_overlays(eye_left, eye_right, my_head)
 
 	if(my_head.head_flags & HEAD_EYECOLOR)
-		eye_right.color = parent.get_right_eye_color()
-		eye_left.color = parent.get_left_eye_color()
-		var/list/eyelids = setup_eyelids(eye_left, eye_right, parent)
+		eye_right.color = eye_color_left || my_head.owner?.get_right_eye_color()
+		eye_left.color = eye_color_right || my_head.owner?.get_left_eye_color()
+		var/list/eyelids = setup_eyelids(eye_left, eye_right, my_head)
 		if (LAZYLEN(eyelids))
 			overlays += eyelids
 
 	if (scarring & RIGHT_EYE_SCAR)
-		var/mutable_appearance/right_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_right", -EYES_LAYER, parent)
+		var/mutable_appearance/right_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_right", -EYES_LAYER)
 		right_scar.color = my_head.draw_color
 		overlays += right_scar
 
 	if (scarring & LEFT_EYE_SCAR)
-		var/mutable_appearance/left_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_left", -EYES_LAYER, parent)
+		var/mutable_appearance/left_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_left", -EYES_LAYER)
 		left_scar.color = my_head.draw_color
 		overlays += left_scar
 
@@ -386,7 +378,7 @@
 		owner.assign_nearsightedness(TRAIT_LEFT_EYE_SCAR, 1, FALSE)
 	if((scarring & RIGHT_EYE_SCAR) && (scarring & LEFT_EYE_SCAR))
 		owner.become_blind(EYE_SCARRING_TRAIT)
-	owner.update_body()
+	owner.update_eyes()
 
 /obj/item/organ/eyes/proc/fix_scar(side)
 	if (!(scarring & side))
@@ -398,7 +390,7 @@
 		return
 	owner.cure_nearsighted(side == RIGHT_EYE_SCAR ? TRAIT_RIGHT_EYE_SCAR : TRAIT_LEFT_EYE_SCAR)
 	owner.cure_blind(EYE_SCARRING_TRAIT)
-	owner.update_body()
+	owner.update_eyes()
 
 #undef OFFSET_X
 #undef OFFSET_Y
@@ -442,10 +434,10 @@
 #define BLINK_LOOPS 5
 
 /// Modifies eye overlays to also act as eyelids, both for blinking and for when you're knocked out cold
-/obj/item/organ/eyes/proc/setup_eyelids(mutable_appearance/eye_left, mutable_appearance/eye_right, mob/living/carbon/human/parent)
-	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
+/obj/item/organ/eyes/proc/setup_eyelids(mutable_appearance/eye_left, mutable_appearance/eye_right, obj/item/bodypart/head/my_head)
+	var/mob/living/carbon/human/parent = my_head.owner
 	// Robotic eyes or colorless heads don't get the privelege of having eyelids
-	if (IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || HAS_TRAIT(parent, TRAIT_NO_EYELIDS))
+	if (isnull(parent) || IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || HAS_TRAIT(parent, TRAIT_NO_EYELIDS))
 		return
 
 	var/list/base_color = rgb2num(my_head.draw_color, COLORSPACE_HSL)

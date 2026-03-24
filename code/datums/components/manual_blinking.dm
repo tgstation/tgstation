@@ -28,7 +28,7 @@
 
 	var/mob/living/carbon/carbon_parent = parent
 	ADD_TRAIT(carbon_parent, TRAIT_PREVENT_BLINK_LOOPS, REF(src))
-	carbon_parent.update_body()
+	carbon_parent.update_eyes()
 	parent_eyes = carbon_parent.get_organ_slot(ORGAN_SLOT_EYES)
 
 	if(!parent_eyes || IS_ROBOTIC_ORGAN(parent_eyes))
@@ -47,7 +47,7 @@
 		to_chat(parent, span_notice("You revert back to automatic blinking."))
 	var/mob/living/carbon/carbon_parent = parent
 	carbon_parent.cure_blind(REF(src))
-	carbon_parent.update_body()
+	carbon_parent.update_eyes()
 	return ..()
 
 /datum/component/manual_blinking/RegisterWithParent()
