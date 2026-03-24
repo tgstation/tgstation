@@ -1,0 +1,4 @@
+author: "Bugwasabi, vinylspiders"
+delete-after: True
+changes:
+  - code_imp: "Uses defines instead of magic numbers on carbon_stripping.dm"
