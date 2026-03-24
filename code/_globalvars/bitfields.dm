@@ -313,6 +313,7 @@ DEFINE_BITFIELD(internal_damage, list(
 ))
 
 DEFINE_BITFIELD(mecha_flags, list(
+	"PANEL_OPEN" = PANEL_OPEN,
 	"ID_LOCK_ON" = ID_LOCK_ON,
 	"CAN_STRAFE" = CAN_STRAFE,
 	"LIGHTS_ON" = LIGHTS_ON,
