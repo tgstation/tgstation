@@ -364,9 +364,14 @@
   Iajret:
   - bugfix: fixed vitals display not respecting APCs power when you attach it to a
       wall
+  - rscadd: Vitals display can be printed in ancient lathes
   Jacquerel:
   - rscadd: Nonhuman mobs with hands can now pick up other mobs that are smaller than
       them and can usually be picked up
+  JohnFulpWillard:
+  - qol: The Curator's barcode scanner now lets you check books out.
+  - bugfix: The library console can no longer borrow books for an infinite amount
+      of time.
   Melbert:
   - bugfix: The skeleton from being shocked matches your height
   - bugfix: Drinking soup will loop until it's empty or you cancel it (as it used
@@ -383,3 +388,8 @@
       or outputs converted into a new boolean datatype.
   cebutris:
   - bugfix: Fixed an oversight with package wrapping
+  lelandkemble:
+  - bugfix: Friendly wisps, wizard gravity balls, & tesla periphery balls are no longer
+      disabled due to shuttle transit
+  - bugfix: Glasses that were in the vending machine now still count for the completion
+      of the Beach Bar virtual domain
