@@ -39,6 +39,7 @@ jobs:
         id: filter-prs
         uses: actions/github-script@v8
         with:
+          result-encoding: string
           script: |
             const pull_requests = JSON.parse('${{steps.stale.outputs.staled-issues-prs}}')
                                       .filter(issue => !!issue.pull_request)
@@ -55,8 +56,8 @@ jobs:
     needs: stale
     if: ${{ needs.stale.outputs.staled_prs != '[]' }}
     strategy:
-     matrix:
-      pull_request: ${{ fromJSON(needs.stale.outputs.staled_prs) }}
+      matrix:
+        pull_request: ${{ fromJSON(needs.stale.outputs.staled_prs) }}
     steps:
       - name: "Check for DISCORD_WEBHOOK"
         id: secrets_set
