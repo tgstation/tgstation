@@ -13,6 +13,9 @@
     2px 0 #000,
     -2px 0 #000;
 
+  // Stock rainbow gradient. Themed machines override background-image inline
+  // from TSX; background-size and the animation below remain in effect because
+  // only the image longhand gets replaced.
   background: linear-gradient(-45deg, #d16949, #ce3771, #229dca, #189175);
   background-size: 400% 400%;
   animation: SlotMachine__GradientMove 10s ease infinite;
@@ -119,8 +122,10 @@
   right: 0;
   display: block;
   content: '';
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
+  // --slot-theme is set on .SlotMachine__Reels from TSX when a themed subtype
+  // is in play. Falls back to black for the base machine.
+  border-top: 2px solid var(--slot-theme, black);
+  border-bottom: 2px solid var(--slot-theme, black);
 }
 
 .SlotMachine__Reel:nth-child(1) .SlotMachine__IconStrip {
@@ -150,17 +155,7 @@
 
 .SlotMachine__IconStrip {
   transform: translateY(calc(-60px * 27));
-  // animation-duration: 3.5s;
   text-align: center;
-  // animation: scroll-up 2s linear infinite;
-  // animation-play-state: paused;
-  // transform: translateY(0px);
-  text-shadow:
-    2px 2px 6px #000,
-    0 2px #000,
-    0 -2px #000,
-    2px 0 #000,
-    -2px 0 #000;
 }
 
 .SlotMachine__IconStrip--spinning {
@@ -169,6 +164,21 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(1, 1.26, 0.88, 0.96);
+}
+
+// Each slot on the strip. Fixed 60px tall so the -60px * 27 transform math and
+// the 58px highlight offsets in .SlotMachine__Reel::after continue to line up.
+.SlotMachine__Symbol {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 40px;
+    height: 40px;
+    image-rendering: pixelated;
+  }
 }
 
 @keyframes SlotMachine__Spin {

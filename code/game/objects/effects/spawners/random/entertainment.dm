@@ -12,6 +12,23 @@
 		/obj/machinery/computer/arcade/amputation = 2,
 	)
 
+/obj/effect/spawner/random/entertainment/slot_machine
+	name = "spawn random slot machine"
+	desc = "Automagically transforms into a random slot machine. If you see this while in a shift, please create a bug report."
+	icon_state = "arcade"
+	loot = list(
+		/obj/machinery/computer/slot_machine = 10,
+		/obj/machinery/computer/slot_machine/command = 5,
+		/obj/machinery/computer/slot_machine/security = 5,
+		/obj/machinery/computer/slot_machine/medical = 5,
+		/obj/machinery/computer/slot_machine/engineering = 5,
+		/obj/machinery/computer/slot_machine/cargo = 5,
+		/obj/machinery/computer/slot_machine/service = 5,
+		/obj/machinery/computer/slot_machine/science = 5,
+		/obj/machinery/computer/slot_machine/clown = 2,
+		/obj/machinery/computer/slot_machine/mime = 2,
+	)
+
 /obj/effect/spawner/random/entertainment/musical_instrument
 	name = "musical instrument spawner"
 	icon_state = "eguitar"

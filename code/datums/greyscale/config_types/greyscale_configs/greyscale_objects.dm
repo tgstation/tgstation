@@ -38,6 +38,15 @@
 	json_config = 'code/datums/greyscale/json_configs/bench_corner.json'
 
 //
+// SLOT MACHINES
+//
+
+/datum/greyscale_config/slot_machine
+	name = "Slot Machine"
+	icon_file = 'icons/obj/machines/computer.dmi'
+	json_config = 'code/datums/greyscale/json_configs/slot_machine.json'
+
+//
 // GIFTWRAP
 // (Yes, some of these are items and not large objects, but it's better they stay grouped together)
 //
