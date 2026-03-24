@@ -1,0 +1,4 @@
+author: "Iajret"
+delete-after: True
+changes:
+  - rscadd: "Vitals display can be printed in ancient lathes"
