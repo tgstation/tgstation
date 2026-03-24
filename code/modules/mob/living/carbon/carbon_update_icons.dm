@@ -565,44 +565,6 @@
 		. += "[human_owner.mob_height]"
 	return .
 
-// /obj/item/bodypart/head/generate_icon_key()
-// 	. = ..()
-// 	if(lip_style)
-// 		. += "-[lip_style]"
-// 		. += "-[lip_color]"
-
-// 	if(facial_hair_hidden)
-// 		. += "-FACIAL_HAIR_HIDDEN"
-// 	else
-// 		. += "-[facial_hairstyle]"
-// 		. += "-[override_hair_color || fixed_hair_color || facial_hair_color]"
-// 		. += "-[facial_hair_alpha]"
-// 		var/facial_hair_gradient_style = get_hair_gradient_style(GRADIENT_FACIAL_HAIR_KEY)
-// 		if(facial_hair_gradient_style)
-// 			. += "-[facial_hair_gradient_style]"
-// 			. += "-[get_hair_gradient_color(GRADIENT_FACIAL_HAIR_KEY)]"
-
-// 	if(show_eyeless)
-// 		. += "-SHOW_EYELESS"
-// 	if(show_debrained)
-// 		. += "-SHOW_DEBRAINED"
-// 		return .
-
-// 	if(hair_hidden)
-// 		. += "-HAIR_HIDDEN"
-// 	else
-// 		. += "-[hairstyle]"
-// 		. += "-[override_hair_color || fixed_hair_color || hair_color]"
-// 		. += "-[hair_alpha]"
-// 		var/hair_gradient_style = get_hair_gradient_style(GRADIENT_HAIR_KEY)
-// 		if(hair_gradient_style)
-// 			. += "-[hair_gradient_style]"
-// 			. += "-[get_hair_gradient_color(GRADIENT_HAIR_KEY)]"
-// 		if(LAZYLEN(hair_masks))
-// 			. += "-[jointext(hair_masks, "-")]"
-
-// 	return .
-
 GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 
 /**
