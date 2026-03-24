@@ -197,7 +197,7 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 
 	else if(islist(potential_container))
 		var/list/potential_cache = potential_container
-		var/is_alist = istype(potential_cache, /alist)
+		var/is_alist = isalist(/alist)
 		for(var/element_in_list in potential_cache)
 			//Check normal sublists
 			if(islist(element_in_list))
