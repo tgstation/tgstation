@@ -361,6 +361,9 @@
 2026-03-24:
   ArcaneMusic:
   - bugfix: Cargo goodies are now visible in the ordering and request consoles.
+  Iajret:
+  - bugfix: fixed vitals display not respecting APCs power when you attach it to a
+      wall
   Jacquerel:
   - rscadd: Nonhuman mobs with hands can now pick up other mobs that are smaller than
       them and can usually be picked up
@@ -368,6 +371,10 @@
   - bugfix: The skeleton from being shocked matches your height
   - bugfix: Drinking soup will loop until it's empty or you cancel it (as it used
       to)
+  - rscadd: Some undergarmants will now use a generic replacement on lizard body shapes
+      that fit more appropriately
+  - refactor: Refactored how undergarmants generate their icons, report any oddities
+      with that
   Y0SH1M4S73R:
   - qol: Many circuit components have had ports that effectively act as boolean inputs
       or outputs converted into a new boolean datatype.
