@@ -375,6 +375,9 @@
       that fit more appropriately
   - refactor: Refactored how undergarmants generate their icons, report any oddities
       with that
+  - code_imp: Cleaned up RTG code. Admins can now VV them easier. If you come across
+      a ruin on Lavaland or in space that uses them and see any odd behavior, report
+      it as an issue.
   Y0SH1M4S73R:
   - qol: Many circuit components have had ports that effectively act as boolean inputs
       or outputs converted into a new boolean datatype.

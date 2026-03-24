@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Cleaned up RTG code. Admins can now VV them easier. If you come across a ruin on Lavaland or in space that uses them and see any odd behavior, report it as an issue."
