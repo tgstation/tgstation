@@ -505,6 +505,8 @@
 /atom/movable/screen/plane_master/proc/add_relay_to(target_plane, blend_override, relay_layer, relay_color)
 	if(get_relay_to(target_plane))
 		return
+	if(!offset_already_updated)
+		CRASH("Attempted to draw a render relay before our offset has been applied, this WILL break")
 	render_relay_planes += target_plane
 	var/client/display_lad = home?.our_hud?.mymob?.canon_client
 	var/atom/movable/render_plane_relay/relay = generate_relay_to(target_plane, show_to = display_lad, blend_override = blend_override, relay_layer = relay_layer)

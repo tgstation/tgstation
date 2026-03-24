@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Glasses that were in the vending machine now still count for the completion of the Beach Bar virtual domain"
