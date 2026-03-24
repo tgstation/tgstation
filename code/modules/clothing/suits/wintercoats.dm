@@ -659,6 +659,17 @@
 /datum/armor/winterhood_miner
 	melee = 10
 
+/obj/item/clothing/suit/hooded/wintercoat/pullover
+	name = "hoodie pullover"
+	desc = "testies"
+	icon_state = "pullover"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/pullover
+
+/obj/item/clothing/head/hooded/winterhood/pullover
+	name = "hoodie pullover hood"
+	desc = "testies"
+	icon_state = "hood_pullover"
+
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs, with custom colors."
