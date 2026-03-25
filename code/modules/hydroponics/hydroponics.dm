@@ -191,6 +191,19 @@
 	reagents.maximum_volume = maxnutri
 	nutridrain = 1/rating
 
+	// active power draw reduction taken from stasis units in code\game\machinery\stasis.dm
+	// this really only matters if you're using the autogrow, because by default the trays don't draw power
+	var/energy_rating = 0
+	for(var/datum/stock_part/part in component_parts)
+		energy_rating += part.energy_rating()
+
+	for(var/obj/item/stock_parts/part in component_parts)
+		energy_rating += part.energy_rating
+
+	idle_power_usage = initial(idle_power_usage) / (energy_rating/3)
+	active_power_usage = initial(active_power_usage) / (energy_rating/3)
+	update_current_power_usage()
+
 /obj/machinery/hydroponics/constructable/examine(mob/user)
 	. = ..()
 	. += span_notice("Use <b>Ctrl-Click</b> to activate autogrow. <b>RMB</b> to empty the tray's nutrients.")
