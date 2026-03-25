@@ -9989,7 +9989,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "cIq" = (
-/obj/effect/spawner/random/entertainment/slot_machine{
+/obj/machinery/computer/slot_machine{
 	balance = 15;
 	money = 500
 	},
