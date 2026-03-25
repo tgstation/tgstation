@@ -329,7 +329,7 @@
 		if (iscarbon(target_living)) //If effectLimb is true (which means we pop limbs off when we hit people):
 			if (effectLimb)
 				var/mob/living/carbon/carbon_target_mob = target_living
-				for (var/bp in carbon_target_mob.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
+				for (var/bp in carbon_target_mob.get_bodyparts()) //Look at the bodyparts in our poor mob beneath our pod as it lands
 					var/obj/item/bodypart/bodypart = bp
 					if(bodypart.body_part != HEAD && bodypart.body_part != CHEST)//we dont want to kill him, just teach em a lesson!
 						if(bodypart.dismember()) //Using the power of flextape i've sawed this man's limb in half!
@@ -342,7 +342,7 @@
 					organ_to_yeet.forceMove(turf_underneath) //Move the organ outta the body
 					organ_to_yeet.throw_at(destination, 2, 3) //Thow the organ at a random tile 3 spots away
 					sleep(0.1 SECONDS)
-				for (var/bp in carbon_target_mob.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
+				for (var/bp in carbon_target_mob.get_bodyparts()) //Look at the bodyparts in our poor mob beneath our pod as it lands
 					var/obj/item/bodypart/bodypart = bp
 					var/destination = get_edge_target_turf(turf_underneath, pick(GLOB.alldirs))
 					if (bodypart.dismember()) //Using the power of flextape i've sawed this man's bodypart in half!

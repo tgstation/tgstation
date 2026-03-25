@@ -1,7 +1,7 @@
 /// Namespace for housing code relating to giving contextual tutorials to users.
 SUBSYSTEM_DEF(tutorials)
 	name = "Tutorials"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	/// A mapping of /datum/tutorial type to their manager singleton.
 	/// You probably shouldn't be indexing this directly.

@@ -76,8 +76,8 @@
 	open = add_input_port("Open", PORT_TYPE_SIGNAL)
 	close = add_input_port("Close", PORT_TYPE_SIGNAL)
 	// States
-	is_open = add_output_port("Is Open", PORT_TYPE_NUMBER)
-	is_bolted = add_output_port("Is Bolted", PORT_TYPE_NUMBER)
+	is_open = add_output_port("Is Open", PORT_TYPE_BOOLEAN)
+	is_bolted = add_output_port("Is Bolted", PORT_TYPE_BOOLEAN)
 	// Output Signals
 	opened = add_output_port("Opened", PORT_TYPE_SIGNAL)
 	closed = add_output_port("Closed", PORT_TYPE_SIGNAL)
