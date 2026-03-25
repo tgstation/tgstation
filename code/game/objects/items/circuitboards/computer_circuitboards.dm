@@ -314,7 +314,7 @@
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/slot_machine
 	desc = "You can change the theme using a screwdriver."
-	// List of pickable slot machiens
+	/// List of pickable slot machines
 	var/static/list/slot_themes = list(
 		"Default" = /obj/machinery/computer/slot_machine,
 		"Command" = /obj/machinery/computer/slot_machine/command,
