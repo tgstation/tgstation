@@ -14,7 +14,7 @@
 
 
 	implant_info = "Requires filling via syringe while in an implant case. Automatically activates upon implantation. \
-		Allows for remote release of reagents directly into implantee's bloodstream."
+		Allows for remote release of reagents directly into implantee's bloodstream. Can be synced with a remote signalling device."
 
 	implant_lore = "The Robust Corp MJ-420 Remote Chemical Release Implant is a remotely-controlled \
 		microcapsule network designed to be filled via syringe while still within an implant case. After implantation, \
