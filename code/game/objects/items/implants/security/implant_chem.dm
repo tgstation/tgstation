@@ -7,6 +7,11 @@
 	hud_icon_state = "hud_imp_chem"
 	/// All possible injection sizes for the implant shown in the prisoner management console.
 	var/list/implant_sizes = list(1, 5, 10)
+	/// Frequency of radio signal we've been synced to
+	var/frequency
+	/// Code of radio signal we've been synced to
+	var/code
+
 
 	implant_info = "Requires filling via syringe while in an implant case. Automatically activates upon implantation. \
 		Allows for remote release of reagents directly into implantee's bloodstream."
@@ -19,7 +24,7 @@
 		into their bloodstream."
 
 /obj/item/implant/chem/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
-	return is_valid_z_level(get_turf(console), get_turf(imp_in))
+	return !frequency && is_valid_z_level(get_turf(console), get_turf(imp_in))
 
 /obj/item/implant/chem/get_management_console_data()
 	var/list/info_shown = ..()
@@ -58,7 +63,7 @@
 
 /obj/item/implant/chem/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
-	if(.)
+	if(. && !frequency)
 		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /obj/item/implant/chem/removed(mob/target, silent = FALSE, special = FALSE)
@@ -86,13 +91,25 @@
 		to_chat(R, span_hear("You hear a faint click from your chest."))
 		qdel(src)
 
+/obj/item/implant/chem/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/assembly/signaler))
+		signaler_sync(tool, user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/obj/item/implant/chem/proc/signaler_sync(obj/item/assembly/signaler/syncing_signaler, mob/living/user)
+	to_chat(user, "You sync \the [src] to \the [syncing_signaler]'s code & frequency[frequency ? "" : ", disabling other methods of activation"].")
+	code = syncing_signaler.code
+	SSradio.remove_object(src, frequency)
+	frequency = syncing_signaler.frequency
+	SSradio.add_object(src, frequency, RADIO_SIGNALER)
+
+/obj/item/implant/chem/receive_signal(datum/signal/signal)
+	if(!signal || signal.data["code"] != code)
+		return
+	activate(reagents.total_volume)
 
 /obj/item/implantcase/chem
 	name = "implant case - 'Remote Chemical'"
 	desc = "A glass case containing a remote chemical implant."
 	imp_type = /obj/item/implant/chem
-
-/obj/item/implantcase/chem/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/reagent_containers/syringe) && imp)
-		return NONE
-	return tool.interact_with_atom(imp, user, modifiers)
