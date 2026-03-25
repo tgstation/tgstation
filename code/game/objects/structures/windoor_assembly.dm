@@ -226,6 +226,7 @@
 					span_notice("You start to install electronics into the airlock assembly..."))
 
 				if(do_after(user, 4 SECONDS, target = src))
+
 					if(!user.transferItemToLoc(W, src))
 						return
 					if(!src || electronics)
@@ -234,8 +235,6 @@
 					to_chat(user, span_notice("You install the airlock electronics."))
 					name = "near finished windoor assembly"
 					electronics = W
-				else
-					W.forceMove(drop_location())
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(W.tool_behaviour == TOOL_SCREWDRIVER)
