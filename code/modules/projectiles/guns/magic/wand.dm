@@ -326,6 +326,15 @@
 	. = ..()
 	return SHAME
 
+/// Also wand of doing fuck all
+/obj/item/gun/magic/wand/nothing/fake_resurrection
+	name = "holy staff"
+	desc = "It's just a fancy staff so that holy clerics and priests look cool. What? You didn't think someone would leave a REAL magic artifact with a snowman out in the cold, did you?"
+	fire_sound = 'sound/effects/magic/staff_healing.ogg'
+	icon_state = "revivewand"
+	base_icon_state = "revivewand"
+	ammo_type = /obj/item/ammo_casing/magic
+
 /// Wand of making things small
 /obj/item/gun/magic/wand/shrink
 	name = "wand of shrinking"
