@@ -511,8 +511,8 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 
 /obj/machinery/computer/slot_machine/command/Initialize(mapload)
-	slot_adjectives += list("Royal", "Regal", "Golden", "Certified", "Authorized", "Captain's", "Glorious")
-	slot_nouns += list("Medal", "Ransom", "Charter", "Authority", "Command", "Nanotrasen")
+	slot_adjectives += list("Royal", "Regal", "Golden", "Captain's", "Glorious")
+	slot_nouns += list("Medal", "Ransom", "Authority", "Command")
 	. = ..()
 
 /obj/machinery/computer/slot_machine/security
@@ -555,8 +555,8 @@
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 
 /obj/machinery/computer/slot_machine/medical/Initialize(mapload)
-	slot_adjectives += list("Mutated", "Cloned", "Spliced", "Overdosed", "Infectious", "Healing", "Husked")
-	slot_nouns += list("Clone", "Medkit", "Defib", "Patient", "Doctor", "Cure")
+	slot_adjectives += list("Mutated", "Overdosed", "Infectious", "Healing", "Husked")
+	slot_nouns += list("Medkit", "Defib", "Patient", "Doctor", "Cure")
 	. = ..()
 
 /obj/machinery/computer/slot_machine/engineering
@@ -578,7 +578,7 @@
 
 /obj/machinery/computer/slot_machine/engineering/Initialize(mapload)
 	slot_adjectives += list("Supercharged", "Pressurized", "Radioactive", "Overloaded", "Delaminating", "Insulated")
-	slot_nouns += list("Toolbox", "Emitter", "Supermatter", "Engineer", "SMES", "Radiation")
+	slot_nouns += list("Toolbox", "Emitter", "Supermatter")
 	. = ..()
 
 /obj/machinery/computer/slot_machine/cargo
@@ -599,8 +599,8 @@
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 
 /obj/machinery/computer/slot_machine/cargo/Initialize(mapload)
-	slot_adjectives += list("Logistical", "Express", "Tax-Free", "Smuggled", "Stolen", "Overdue", "Expedited", "Crated", "Subsidized", "Manifested")
-	slot_nouns += list("Bounty", "Crate", "Manifest", "Quartermaster", "MULE", "Stamp", "Logistics", "Profit", "Deficit", "Shuttle")
+	slot_adjectives += list("Express", "Smuggled", "Stolen", "Overdue", "Subsidized", "Manifested")
+	slot_nouns += list("Bounty", "Crate", "Manifest", "MULE", "Profit")
 	. = ..()
 
 /obj/machinery/computer/slot_machine/service
@@ -621,8 +621,8 @@
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 
 /obj/machinery/computer/slot_machine/service/Initialize(mapload)
-	slot_adjectives += list("Fermented", "Garnished", "Seasoned", "Tipsy", "Botanical", "Cleaned", "Organic", "Culinary", "Refreshing", "Brimming")
-	slot_nouns += list("Recipe", "Garnish", "Cocktail", "Tip", "Harvest", "Entree", "Dish", "Platter", "Scrubber", "Janitor", "Waiter", "Chef")
+	slot_adjectives += list("Fermented", "Seasoned", "Tipsy", "Cleaned", "Organic", "Culinary", "Refreshing")
+	slot_nouns += list("Recipe", "Cocktail", "Harvest", "Scrubber")
 	. = ..()
 
 /obj/machinery/computer/slot_machine/science
@@ -643,8 +643,8 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 
 /obj/machinery/computer/slot_machine/science/Initialize(mapload)
-	slot_adjectives += list("Atomic", "Bluespace", "Cosmic", "Golden", "Diamond", "Silver", "Uranium", "Quantum", "Phazon", "Anomalous", "Plasma", "Experimental", "Robotic")
-	slot_nouns += list("Anomaly", "Artifact", "Slime", "Extract", "Circuit", "Node", "Discovery", "Explosion")
+	slot_adjectives += list("Atomic", "Bluespace", "Cosmic", "Golden", "Diamond", "Silver", "Uranium", "Quantum", "Anomalous", "Plasma", "Experimental", "Robotic")
+	slot_nouns += list("Anomaly", "Artifact", "Slime", "Extract", "Circuit", "Discovery", "Explosion")
 	. = ..()
 
 /obj/machinery/computer/slot_machine/clown
@@ -665,7 +665,7 @@
 
 /obj/machinery/computer/slot_machine/clown/Initialize(mapload)
 	slot_adjectives += list("Honking", "Slippery", "Pranked", "Squeaky", "Hilarious", "Giggling")
-	slot_nouns += list("Banana", "Peel", "Prank", "Joke", "Punchline", "Clown", "Candy")
+	slot_nouns += list("Banana", "Peel", "Prank", "Joke", "Punchline", "Candy", "Honk")
 	. = ..()
 
 /obj/machinery/computer/slot_machine/mime
@@ -685,8 +685,8 @@
 	greyscale_colors = COLOR_VERY_LIGHT_GRAY
 
 /obj/machinery/computer/slot_machine/mime/Initialize(mapload)
-	slot_adjectives += list("Silent", "Noiseless", "Tongueless", "Transparent", "Unspeakable", "Voiceless", "Mysterious", "Quiet", "Hushed", "Mute", "Invisible", "Imaginary", "Untouchable")
-	slot_nouns += list("Silence", "Mime", "Tragedy", "Sorrow", "Wonder", "Baguette")
+	slot_adjectives += list("Silent", "Transparent", "Unspeakable", "Voiceless", "Quiet", "Hushed", "Invisible", "Imaginary", "Empty")
+	slot_nouns += list("Silence", "Mute", "Introvert", "Nothing", "Baguette")
 	. = ..()
 
 /obj/machinery/computer/slot_machine/syndicate
@@ -707,7 +707,7 @@
 	greyscale_colors = COLOR_SYNDIE_RED
 
 /obj/machinery/computer/slot_machine/syndicate/Initialize(mapload)
-	slot_adjectives += list("Emagged", "Covert", "Nuclear", "Suspicious", "Bloody", "Syndie", "Sabotaged", "Clandestine", "Illicit", "Traitorous")
+	slot_adjectives += list("Covert", "Nuclear", "Suspicious", "Bloody", "Syndie", "Sabotaged", "Clandestine", "Illicit", "Traitorous")
 	slot_nouns += list("Telecrystal", "Uplink", "Bomb", "Operative", "Disk", "Nuke", "Syndicate", "Traitor")
 	. = ..()
 
