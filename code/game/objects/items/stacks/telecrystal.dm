@@ -37,8 +37,8 @@
 	amount = 20
 
 /obj/item/stack/sheet/telepolycrystal
-	name = "tele-polycrystal"
-	singular_name = "tele-polycrystal"
+	name = "telelocational podcrystal"
+	singular_name = "telelocational podcrystal"
 	desc = "A \"somewhat\" stable chunk of telecrystal. It lacks the precision-carved tuning channels, making it useless for long-range matter teleportation."
 	icon_state = "telepolycrystal"
 	inhand_icon_state = null
