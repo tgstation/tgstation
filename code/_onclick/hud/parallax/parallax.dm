@@ -279,7 +279,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_home)
 
 	parallax_layers_cached = list()
 	for(var/space_layer in 1 to layers_to_draw)
-		parallax_layers_cached += generate_space_layer(space_layer)
+		var/atom/movable/screen/parallax_layer/parallax = generate_space_layer(space_layer)
+		if (parallax)
+			parallax_layers_cached += parallax
 
 	if(draw_old_space)
 		parallax_layers_cached += new /atom/movable/screen/parallax_layer/old(null, null, owner)
