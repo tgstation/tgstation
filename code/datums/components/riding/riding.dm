@@ -329,7 +329,7 @@
 /datum/component/riding/proc/block_unbuckle(atom/movable/source, mob/living/unbuckler)
 	SIGNAL_HANDLER
 
-	if(!source.has_buckled_mobs() || (disarmer in source.buckled_mobs))
+	if(!source.has_buckled_mobs() || (unbuckler in source.buckled_mobs))
 		return NONE
 
 	switch(other_unbuckle)
@@ -361,9 +361,9 @@
 					if(50 to INFINITY)
 						to_chat(disarmer, span_warning("[source] barely holds stable as you shove them around! Keep at it!"))
 					if(25 to 50)
-						to_chat(disarmer, span_warning("[rider] holds stable as you shove them around! Weakening [rider.p_their()] stability would help..."))
+						to_chat(disarmer, span_warning("[source] holds stable as you shove them around! Weakening [source.p_their()] stability would help..."))
 					if(-INFINITY to 25)
-						to_chat(disarmer, span_warning("[rider] effortlessly holds stable as you shove them around! You'd need to weaken [source.p_their()] stability...!"))
+						to_chat(disarmer, span_warning("[source] effortlessly holds stable as you shove them around! You'd need to weaken [source.p_their()] stability...!"))
 		return
 	source.visible_message(
 		span_warning("As [disarmer] shoves [source] around, [throwing] is thrown from [parent]!"),
