@@ -107,6 +107,7 @@ export const SlotMachine = () => {
                 fluid
                 textAlign={'center'}
                 fontSize={3}
+                color={'green'}
                 onClick={() => act('spin')}
                 disabled={spinning || balance < cost}
               >

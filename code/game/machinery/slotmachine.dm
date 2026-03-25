@@ -343,8 +343,10 @@
 
 	switch(trap_path)
 		if(/obj/item/restraints/handcuffs)
-			playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -2)
-			user.set_handcuffed(new /obj/item/restraints/handcuffs(user))
+			if(iscarbon(user))
+				var/mob/living/carbon/carbon_user = user
+				playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -2)
+				carbon_user.set_handcuffed(new /obj/item/restraints/handcuffs(user))
 		if(/obj/item/suspiciousphone)
 			playsound(loc,  'sound/items/dump_it.ogg', 30, TRUE, -2)
 			balance = 0
