@@ -299,10 +299,6 @@
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
 
-	// If the owner is being deleted, we shouldn't be able to cast a spell
-	if(QDELETED(owner))
-		return SPELL_CANCEL_CAST
-
 	// Bonus invocation check done here:
 	// If the caster has no tongue and it's a verbal spell,
 	// Or has no hands and is a gesture spell - cancel it,
