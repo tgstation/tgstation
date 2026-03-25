@@ -1,4 +1,10 @@
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  type CSSProperties,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   Blink,
   Box,
@@ -24,15 +30,10 @@ type Data = {
   jackpots: number;
   jackpot: number;
   paymode: number;
-  /**
-   * Hex colour string for department theming. Null on the base machine, which
-   * falls back to the stock rainbow banner defined in SCSS.
-   */
   theme_color: string | null;
 };
 
 type SlotSymbol = {
-  /** Stringified typepath. Uniquely identifies this symbol. */
   id: string;
   name: string;
   icon: string;
@@ -40,7 +41,6 @@ type SlotSymbol = {
 };
 
 type Reel = {
-  /** Three symbol ids, top → middle → bottom. */
   symbols: string[];
 };
 
@@ -48,7 +48,7 @@ const pluralS = (amount: number) => {
   return amount === 1 ? '' : 's';
 };
 
-const pickRandomMany = <T extends unknown>(items: T[], n: number) => {
+const pickRandomMany = <T,>(items: T[], n: number) => {
   const result: T[] = [];
   for (let i = 0; i < n; i += 1) {
     result.push(pickRandom(items));
@@ -56,7 +56,7 @@ const pickRandomMany = <T extends unknown>(items: T[], n: number) => {
   return result;
 };
 
-const pickRandom = <T extends unknown>(items: T[]) => {
+const pickRandom = <T,>(items: T[]) => {
   return items[Math.floor(Math.random() * items.length)];
 };
 
@@ -80,7 +80,6 @@ export const SlotMachine = () => {
   const { symbols, cost, reels, balance, theme_color } = data;
   const spinning = data.working === 1;
 
-  // Build a lookup map once so the strips can resolve ids -> sprite data cheaply.
   const symbolsById = useMemo(() => {
     const map: Record<string, SlotSymbol> = {};
     for (const symbol of symbols) {
