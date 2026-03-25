@@ -43,12 +43,12 @@
 
 	/// Typepaths representing the symbols shown on this machine's reels
 	var/list/symbol_paths = list(
-		/obj/item/food/grown/bluecherries,
+		/obj/item/storage/bag/money,
 		/obj/item/food/grown/cherries,
 		/obj/item/grenade/flashbang,
 		/obj/item/rupee,
 		/obj/item/food/grown/chili,
-		/obj/item/food/grown/icepepper,
+		/obj/item/clothing/neck/necklace/dope,
 		/obj/item/stack/spacecash/c20,
 	)
 
@@ -339,8 +339,20 @@
 
 /// Triggers a negative effect for a slot machine if all trap icons are lined up in the middle
 /obj/machinery/computer/slot_machine/proc/activate_trap(mob/living/user)
-	var/obj/item/grenade/flashbang/bang = new(get_turf(src))
-	bang.arm_grenade(null, 1 SECONDS)
+	visible_message("<b>[src]</b> says, 'Big Loser! Prepare for your special prize!'")
+
+	switch(trap_path)
+		if(/obj/item/restraints/handcuffs)
+			playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -2)
+			user.set_handcuffed(new /obj/item/restraints/handcuffs(user))
+		if(/obj/item/suspiciousphone)
+			playsound(loc,  'sound/items/dump_it.ogg', 30, TRUE, -2)
+			balance = 0
+		if(/obj/singularity)
+			user.electrocute_act(80, src, flags = SHOCK_ILLUSION | SHOCK_NOGLOVES)
+		else // gibonite, syndicate bombs, flashbangs, etc.
+			var/obj/item/grenade/flashbang/bang = new(get_turf(src))
+			bang.arm_grenade(null, 1 SECONDS)
 
 /// Checks if any prizes have been won, and pays them out
 /obj/machinery/computer/slot_machine/proc/give_prizes(usrname, mob/living/user)
