@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes an issue where casting spells after your mob gets deleted can leave you in a permanently bugged state."
