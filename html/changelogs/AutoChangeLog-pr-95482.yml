@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "The medisim shuttle docking port now aligns properly with most evac terminals."
