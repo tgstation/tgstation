@@ -25,7 +25,7 @@
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/list/words = splittext(message, " ")
 
-	// Maybe there's some fancy regex I could do to more accurately grab syllable count but see the header comment
+	// Maybe there's some fancy regex I could do to more accurately grab syllable count but this is fine
 	var/naive_length = 0
 	for (var/word in words)
 		naive_length += ceil(length(word) / 4)
