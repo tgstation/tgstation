@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - map: "Snow Cabin fake healing wand now holds on to its sprite"

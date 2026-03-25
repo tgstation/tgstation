@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "tearing a poster while placing it only creates a shred poster on the wall but won't place a new one in hand"
