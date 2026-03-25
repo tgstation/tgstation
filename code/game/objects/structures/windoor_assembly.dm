@@ -220,13 +220,14 @@
 
 			//Adding airlock electronics for access. Step 6 complete.
 			else if(istype(W, /obj/item/electronics/airlock))
-				if(!user.transferItemToLoc(W, src))
-					return
+
 				W.play_tool_sound(src, 100)
 				user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."),
 					span_notice("You start to install electronics into the airlock assembly..."))
 
 				if(do_after(user, 4 SECONDS, target = src))
+					if(!user.transferItemToLoc(W, src))
+						return
 					if(!src || electronics)
 						W.forceMove(drop_location())
 						return
