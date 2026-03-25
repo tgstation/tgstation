@@ -114,7 +114,7 @@
 		return
 
 	var/list/zone_candidates = target.get_missing_limbs()
-	for(var/obj/item/bodypart/bodypart in target.bodyparts)
+	for(var/obj/item/bodypart/bodypart in target.get_bodyparts())
 		if(bodypart.body_zone == BODY_ZONE_HEAD || bodypart.body_zone == BODY_ZONE_CHEST)
 			continue
 		if(HAS_TRAIT(bodypart, TRAIT_IGNORED_BY_LIVING_FLESH))

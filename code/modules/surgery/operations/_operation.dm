@@ -1297,6 +1297,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	abstract_type = /datum/surgery_operation/limb
 	/// Body type required to perform this operation
 	var/required_bodytype = NONE
+	/// If TRUE, this operation can be performed on stumps.
+	/// If FALSE, the target limb must be a full limb.
+	var/allow_stumps = FALSE
 
 /datum/surgery_operation/limb/all_blocked_strings()
 	. = ..()
@@ -1308,7 +1311,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/limb/get_operation_target(atom/movable/operating_on, body_zone)
 	if (isliving(operating_on))
 		var/mob/living/patient = operating_on
-		return patient.get_bodypart(deprecise_zone(body_zone))
+		return patient.get_bodypart(deprecise_zone(body_zone), allow_stumps)
 	if (!isbodypart(operating_on))
 		return null
 	return operating_on

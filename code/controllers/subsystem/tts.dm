@@ -156,7 +156,7 @@ SUBSYSTEM_DEF(tts)
 
 /datum/controller/subsystem/tts/fire(resumed)
 	if(!tts_enabled)
-		flags |= SS_NO_FIRE
+		ss_flags |= SS_NO_FIRE
 		return
 
 	if(!resumed)

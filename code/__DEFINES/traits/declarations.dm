@@ -52,6 +52,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Hud traits
 /// This hud is owned by a client with an open escape menu
 #define TRAIT_ESCAPE_MENU_OPEN "escape_menu_open"
+/// This hud has parallax displayed on it
+#define TRAIT_PARALLAX_DISPLAYED "parallax_displayed"
 
 // Mob traits
 /// Forces the user to stay unconscious.
@@ -1462,6 +1464,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BEAST_EMPATHY "beast_empathy" // you're good with animals, such as with taming them
 #define TRAIT_STURDY_FRAME "sturdy_frame" // you suffer much lesser effects from equipment that slows you down
 
+/// Has this mob been tamed?
+#define TRAIT_TAMED "tamed"
+
 /// This item cannot be selected for or used by a theft objective (Spies, Traitors, etc.)
 #define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked"
 /// This trait lets you attach limbs to any player without surgery.
@@ -1591,9 +1596,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait that signals to objects on this turf that its open (has UNDERFLOOR_INTERACTIBLE) but still covers them
 #define TRAIT_UNCOVERED_TURF "uncovered_turf"
-
-/// A trait that blocks the metabolism of formaldehyde
-#define TRAIT_BLOCK_FORMALDEHYDE_METABOLISM "block_formaldehyde_metabolism"
 
 ///Attached to objects currently on tables and such, allowing them to walk on other objects without the climbing delay
 #define TRAIT_ON_CLIMBABLE "on_climbable"
