@@ -29,19 +29,20 @@
 	if(extract_uses > 1)
 		. += "It has [extract_uses] uses remaining."
 
-/obj/item/slime_extract/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/slimepotion/enhancer))
-		if(extract_uses >= 5 || recurring)
-			to_chat(user, span_warning("You cannot enhance this extract further!"))
-			return ..()
-		if(O.type == /obj/item/slimepotion/enhancer) //Seriously, why is this defined here...?
-			to_chat(user, span_notice("You apply the enhancer to the slime extract. It may now be reused one more time."))
-			extract_uses++
-		if(O.type == /obj/item/slimepotion/enhancer/max)
-			to_chat(user, span_notice("You dump the maximizer on the slime extract. It can now be used a total of 5 times!"))
-			extract_uses = 5
-		qdel(O)
-	..()
+/obj/item/slime_extract/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/slimepotion/enhancer))
+		return NONE
+	if(extract_uses >= 5 || recurring)
+		to_chat(user, span_warning("You cannot enhance this extract further!"))
+		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/slimepotion/enhancer/max))
+		to_chat(user, span_notice("You dump the maximizer on the slime extract. It can now be used a total of 5 times!"))
+		extract_uses = 5
+	else
+		to_chat(user, span_notice("You apply the enhancer to the slime extract. It may now be reused one more time."))
+		extract_uses++
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slime_extract/Initialize(mapload)
 	. = ..()

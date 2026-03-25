@@ -22,7 +22,7 @@
 /atom/movable/screen/alert/status_effect/shockimmune
 	name = "Grounded"
 	desc = "That meal made me feel like a superconductor..."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "shock_immune"
 
 /datum/status_effect/food/trait/mute
@@ -32,7 +32,7 @@
 /atom/movable/screen/alert/status_effect/mute
 	name = "..."
 	desc = "..."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "mute"
 
 /datum/status_effect/food/trait/ashstorm_immune
@@ -42,7 +42,7 @@
 /atom/movable/screen/alert/status_effect/ashstorm_immune
 	name = "Ashstorm-proof"
 	desc = "That meal makes me feel born on Lavaland."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "ashstorm_immune"
 
 /datum/status_effect/food/trait/waddle
@@ -56,6 +56,6 @@
 /atom/movable/screen/alert/status_effect/waddle
 	name = "Waddling"
 	desc = "That meal makes me want to joke around."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_icon = /obj/item/clothing/mask/gas/clown_hat::icon
 	overlay_state = /obj/item/clothing/mask/gas/clown_hat::icon_state

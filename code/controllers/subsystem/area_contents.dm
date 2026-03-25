@@ -8,7 +8,7 @@
  */
 SUBSYSTEM_DEF(area_contents)
 	name = "Area Contents"
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	runlevels = RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	var/list/currentrun
 	var/list/area/marked_for_clearing = list()
@@ -63,6 +63,8 @@ SUBSYSTEM_DEF(area_contents)
 				if(MC_TICK_CHECK)
 					cut_from.Cut(1, amount_cut + 1)
 					return
+			// avoid double removals if we return early on a subsequent z-level
+			clear.turfs_to_uncontain_by_zlevel[area_zlevel] = list()
 
 		clear.turfs_to_uncontain_by_zlevel = list()
 		marked_for_clearing.len--

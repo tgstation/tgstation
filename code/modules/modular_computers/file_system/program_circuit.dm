@@ -57,7 +57,7 @@
 	. = ..()
 	start = add_input_port("Start", PORT_TYPE_SIGNAL, trigger = PROC_REF(start_prog))
 	kill = add_input_port("Kill", PORT_TYPE_SIGNAL, trigger = PROC_REF(kill_prog))
-	running = add_output_port("Running", PORT_TYPE_NUMBER)
+	running = add_output_port("Running", PORT_TYPE_BOOLEAN)
 
 ///For most programs, triggers only work if they're open (either active or idle).
 /obj/item/circuit_component/mod_program/should_receive_input(datum/port/input/port)

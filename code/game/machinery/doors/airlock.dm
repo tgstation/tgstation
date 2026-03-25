@@ -486,6 +486,8 @@
 /obj/machinery/door/airlock/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
 	if(!hasPower()) // unpowered, no shock
 		return FALSE
+	if(!isliving(shocking))
+		return FALSE
 	if(HAS_TRAIT(shocking, TRAIT_AIRLOCK_SHOCKIMMUNE)) // Be a bit more clever man come on
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, shockCooldown))
