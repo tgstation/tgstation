@@ -35,6 +35,11 @@
 		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/alien,
 	)
 
+	/// Icon used for speech animation
+	var/speech_mask_icon = 'icons/effects/cut.dmi'
+	/// Icon state used for speech animation
+	var/speech_mask_icon_state = "cut_xeno_head"
+
 GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	/datum/strippable_item/hand/left,
 	/datum/strippable_item/hand/right,
@@ -46,6 +51,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 	AddElement(/datum/element/strippable, GLOB.strippable_alien_humanoid_items)
+	AddElement(/datum/element/yapper, speech_mask_icon, speech_mask_icon_state)
 
 /mob/living/carbon/alien/adult/cuff_resist(obj/item/I)
 	playsound(src, 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free

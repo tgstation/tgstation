@@ -33,6 +33,7 @@
 	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/paper)
 	grant_abilities()
 	grant_loot()
+	AddElement(/datum/element/yapper)
 	AddElement(/datum/element/effect_trail, /obj/effect/temp_visual/paper_scatter)
 
 /mob/living/basic/paper_wizard/proc/grant_abilities()

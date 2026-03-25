@@ -9,6 +9,8 @@
 	melee_damage_upper = 15
 	status_flags = NONE //can't shove the queen, kiddo.
 	unique_name = FALSE
+	speech_mask_icon = 'icons/mob/nonhuman-player/alienqueen.dmi'
+	speech_mask_icon_state = "talk_mask"
 
 	ai_controller = /datum/ai_controller/basic_controller/alien/queen
 

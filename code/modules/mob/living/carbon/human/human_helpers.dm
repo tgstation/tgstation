@@ -282,7 +282,9 @@
  */
 /mob/living/carbon/human/proc/update_mob_height()
 	var/old_height = mob_height
+	RemoveElement(/datum/element/yapper, 'icons/effects/cut.dmi', "cut_head_[old_height]")
 	mob_height = dna?.species?.update_species_heights(src) || base_mob_height
+	AddElement(/datum/element/yapper, 'icons/effects/cut.dmi', "cut_head_[mob_height]")
 	if(old_height != mob_height)
 		regenerate_icons()
 	SEND_SIGNAL(src, COMSIG_HUMAN_HEIGHT_UPDATED, old_height)

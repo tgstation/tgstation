@@ -49,6 +49,7 @@
 	AddElement(/datum/element/death_drops, /obj/item/ectoplasm)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/yapper)
 
 	give_identity()
 

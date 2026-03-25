@@ -90,6 +90,7 @@
 	theme?.apply(src)
 	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/guardian/phase/out)
 	AddElement(/datum/element/simple_flying)
+	AddElement(/datum/element/yapper)
 	AddComponent(/datum/component/basic_inhands)
 	// life link
 	update_appearance(UPDATE_ICON)

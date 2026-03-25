@@ -11,6 +11,8 @@
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
+	speech_mask_icon = 'icons/mob/nonhuman-player/alienqueen.dmi'
+	speech_mask_icon_state = "talk_mask"
 
 	var/alt_inhands_file = 'icons/mob/nonhuman-player/alienqueen.dmi'
 

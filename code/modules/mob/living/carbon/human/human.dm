@@ -24,6 +24,9 @@
 	. = ..()
 
 	AddComponent(/datum/component/personal_crafting, ui_human_crafting)
+	// Probably a smarter way to do this but fuck it
+	RemoveElement(/datum/element/yapper, 'icons/effects/cut.dmi', "cut_head_[mob_height]") // in case we updated our height before htiting here
+	AddElement(/datum/element/yapper, 'icons/effects/cut.dmi', "cut_head_[mob_height]")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)

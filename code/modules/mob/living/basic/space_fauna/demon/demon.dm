@@ -55,6 +55,7 @@
 /mob/living/basic/demon/Initialize(mapload)
 	. = ..()
 	var/list/grantable_loot = grant_loot()
+	AddElement(/datum/element/yapper)
 	if(length(grantable_loot))
 		AddElement(/datum/element/death_drops, grantable_loot)
 

@@ -32,6 +32,7 @@
 	. = ..()
 	apply_dynamic_human_appearance(src, outfit, /datum/species/zombie, bloody_slots = ITEM_SLOT_OCLOTHING)
 	AddElement(/datum/element/death_drops, /obj/effect/decal/remains/human)
+	AddElement(/datum/element/yapper)
 
 /mob/living/basic/zombie/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()

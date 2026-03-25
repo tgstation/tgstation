@@ -38,6 +38,7 @@
 /mob/living/basic/faithless/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	AddElement(/datum/element/yapper)
 	AddElement(/datum/element/door_pryer)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/mob_grabber, steal_from_others = FALSE)

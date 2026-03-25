@@ -55,6 +55,10 @@
 	var/can_plant_weeds = TRUE
 	///Boolean on whether the xeno can lay eggs.
 	var/can_lay_eggs = FALSE
+	/// Icon used for speech animation
+	var/speech_mask_icon = 'icons/effects/cut.dmi'
+	/// Icon state used for speech animation
+	var/speech_mask_icon_state = "cut_xeno_head"
 
 /mob/living/basic/alien/Initialize(mapload)
 	. = ..()
@@ -63,6 +67,7 @@
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/yapper, speech_mask_icon, speech_mask_icon_state)
 
 /mob/living/basic/alien/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_XENOMORPH)

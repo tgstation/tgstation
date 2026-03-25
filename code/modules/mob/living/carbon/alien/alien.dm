@@ -42,6 +42,7 @@
 		ORGAN_SLOT_EARS = /obj/item/organ/ears,
 	)
 
+
 /mob/living/carbon/alien/Initialize(mapload)
 	add_verb(src, /mob/living/proc/mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)

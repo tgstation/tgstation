@@ -5,6 +5,8 @@
 	health = 250
 	icon_state = "alienp"
 	alien_speed = 0.5
+	speech_mask_icon = 'icons/mob/nonhuman-player/alienqueen.dmi'
+	speech_mask_icon_state = "talk_mask_p"
 
 	default_organ_types_by_slot = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/alien,

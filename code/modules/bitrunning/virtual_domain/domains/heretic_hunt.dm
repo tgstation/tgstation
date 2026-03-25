@@ -154,6 +154,7 @@
 
 /mob/living/basic/fake_crewman/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/yapper)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/death_drops, string_list(list(weapon, death_spawner)))
 	var/lhand = prob(50) ? weapon : null

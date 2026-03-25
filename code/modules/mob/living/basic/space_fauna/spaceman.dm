@@ -29,6 +29,7 @@
 /mob/living/basic/spaceman/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/yapper)
 
 /datum/ai_controller/basic_controller/spaceman
 	blackboard = list(

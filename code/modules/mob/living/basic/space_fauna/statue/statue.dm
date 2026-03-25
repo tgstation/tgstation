@@ -57,6 +57,7 @@
 /mob/living/basic/statue/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_MUTE, TRAIT_UNOBSERVANT), INNATE_TRAIT)
+	AddElement(/datum/element/yapper)
 	AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_MOVEMENT | NO_OBSERVED_ATTACKS)
 
 	var/static/list/innate_actions = list(

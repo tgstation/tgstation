@@ -34,6 +34,7 @@
 	AddElement(/datum/element/death_drops, /obj/effect/decal/remains/human)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/yapper)
 
 	AddComponent(\
 		/datum/component/ranged_attacks,\

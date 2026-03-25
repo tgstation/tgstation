@@ -86,6 +86,7 @@
 	attack_verb_simple = possible_weapons[weapon_of_choice]
 	attack_verb_continuous = "[attack_verb_simple]s"
 
+	AddElement(/datum/element/yapper)
 	AddElement(/datum/element/death_drops, /obj/effect/mob_spawn/corpse/human/revolutionary)
 	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/revolutionary, l_hand = weapon_of_choice)
 

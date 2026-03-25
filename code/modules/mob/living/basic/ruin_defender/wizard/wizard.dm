@@ -61,6 +61,7 @@
 		selected_outfit,
 		/obj/item/staff
 	))
+	AddElement(/datum/element/yapper)
 	AddElement(/datum/element/death_drops, remains)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
 
