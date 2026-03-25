@@ -92,6 +92,8 @@
 	if(trap_path && !(trap_path in symbol_paths))
 		stack_trace("[type] has trap_path [trap_path] not present in symbol_paths!")
 
+	light_color = greyscale_colors
+
 	build_symbol_data()
 	// Populate the reels
 	randomize_reels()
@@ -499,7 +501,6 @@
 	)
 	jackpot_path = /obj/item/clothing/accessory/medal/gold
 	trap_path = /obj/item/grenade/syndieminibomb
-	light_color = CIRCUIT_COLOR_COMMAND
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	theme_color = CIRCUIT_COLOR_COMMAND
 
@@ -523,7 +524,6 @@
 	)
 	jackpot_path = /obj/item/food/donut/choco
 	trap_path = /obj/item/grown/bananapeel
-	light_color = CIRCUIT_COLOR_SECURITY
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
 	theme_color = CIRCUIT_COLOR_SECURITY
 
@@ -547,7 +547,6 @@
 	)
 	jackpot_path = /obj/item/clothing/neck/stethoscope
 	trap_path = /obj/machinery/syndicatebomb
-	light_color = CIRCUIT_COLOR_MEDICAL
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 	theme_color = CIRCUIT_COLOR_MEDICAL
 
@@ -571,7 +570,6 @@
 	)
 	jackpot_path = /obj/item/blueprints
 	trap_path = /obj/singularity
-	light_color = CIRCUIT_COLOR_ENGINEERING
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	theme_color = CIRCUIT_COLOR_ENGINEERING
 
@@ -595,7 +593,6 @@
 	)
 	jackpot_path = /obj/item/stamp/granted
 	trap_path = /obj/item/suspiciousphone
-	light_color = CIRCUIT_COLOR_SUPPLY
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	theme_color = CIRCUIT_COLOR_SUPPLY
 
@@ -619,7 +616,6 @@
 	)
 	jackpot_path = /obj/item/seeds/random
 	trap_path = /mob/living/basic/goat/pete
-	light_color = CIRCUIT_COLOR_SERVICE
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	theme_color = CIRCUIT_COLOR_SERVICE
 
@@ -643,7 +639,6 @@
 	)
 	jackpot_path = /obj/item/stack/sheet/mineral/diamond
 	trap_path = /obj/item/gibtonite
-	light_color = CIRCUIT_COLOR_SCIENCE
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	theme_color = CIRCUIT_COLOR_SCIENCE
 
@@ -666,7 +661,6 @@
 	)
 	jackpot_path = /obj/vehicle/sealed/mecha/honker
 	trap_path = /obj/item/restraints/handcuffs
-	light_color = COLOR_BLUSH_PINK
 	greyscale_colors = COLOR_BLUSH_PINK
 	theme_color = COLOR_BLUSH_PINK
 
@@ -689,7 +683,6 @@
 	)
 	jackpot_path = /obj/item/food/baguette
 	trap_path = /obj/item/restraints/handcuffs
-	light_color = COLOR_VERY_LIGHT_GRAY
 	greyscale_colors = COLOR_VERY_LIGHT_GRAY
 	theme_color = COLOR_VERY_LIGHT_GRAY
 
@@ -713,7 +706,6 @@
 	)
 	jackpot_path = /obj/machinery/nuclearbomb
 	trap_path = /obj/item/restraints/handcuffs
-	light_color = COLOR_SYNDIE_RED
 	greyscale_colors = COLOR_SYNDIE_RED
 	theme_color = COLOR_SYNDIE_RED
 
