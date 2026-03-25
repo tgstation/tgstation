@@ -1594,7 +1594,7 @@
 	. = ..()
 	var/merged_total = amount + volume
 	if(merged_total >= CRITICAL_CAPACITY)
-		spew_waste(round(volume / WASTE_REACTION_THRESHOLD)) //Sure as HELL can't store it.
+		spew_waste(round(volume / WASTE_REACTION_THRESHOLD*2)) //Sure as HELL can't store it.
 		var/atom/container = holder.my_atom
 		var/damage_mult = 1
 		if(ismachinery(container))
@@ -1604,7 +1604,7 @@
 /datum/reagent/toxin/acid/industrial_waste/intercept_reagents_transfer(datum/reagents/target)
 	if(target.total_volume >= target.maximum_volume)
 		spew_waste(round(volume / WASTE_REACTION_THRESHOLD))
-		return TRUE
+		return ..()
 	return ..()
 
 /datum/reagent/toxin/acid/industrial_waste/burn(datum/reagents/holder)
@@ -1619,18 +1619,16 @@
 /datum/reagent/toxin/acid/industrial_waste/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if(reac_volume < WASTE_REACTION_THRESHOLD)
-		return // The waste is too small to do anything.
+		return // There's too little waste to do anything.
 	if(istype(exposed_obj, /obj/effect/decal/cleanable/greenglow/waste))
 		var/obj/effect/decal/cleanable/greenglow/waste/goo = exposed_obj
 		goo.visible_message(span_warning("\The new waste reactivates \the [goo]!"))
-		goo.pre_eat(FALSE)
-		if(prob(25))
-			goo.balloon_alert_to_viewers("Hisss!")
+		goo.pre_dissolve(FALSE)
 
 /datum/reagent/toxin/acid/industrial_waste/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
 	if(volume < WASTE_REACTION_THRESHOLD)
-		return // The waste is too small to do anything.
+		return // There's too little waste to do anything.
 	var/obj/effect/decal/cleanable/greenglow/waste/goo
 	goo = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste) //Following similar logic to how ants spawn their cleanables.
 	if(QDELETED(goo))
@@ -1653,6 +1651,8 @@
 
 	var/atom/atom_holder = holder.my_atom
 	var/turf/dropturf = get_turf(atom_holder)
+	var/obj/effect/particle_effect/fluid/smoke/quick/greenboy = new(dropturf)
+	greenboy.color = "#00ff00"
 	var/list/turf/turfs = list()
 	for(var/turf/floors in orange(spew_range, dropturf))
 		if(istype(floors, /turf/open/space))

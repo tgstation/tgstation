@@ -15,7 +15,8 @@
 	/// What list of reagents should we look at when we boost the effectiveness of this machinery?
 	booster_list = list(
 		/datum/reagent/toxin/acid = 1,
-		/datum/reagent/toxin/acid/nitracid = 2,
+		/datum/reagent/toxin/acid/fluacid = 2,
+		/datum/reagent/toxin/acid/nitracid = 3,
 		/datum/reagent/teslium = 5,
 	)
 
@@ -104,6 +105,7 @@
 	booster_list = list(
 		/datum/reagent/fuel = 1,
 		/datum/reagent/thermite = 2,
+		/datum/reagent/gunpowder = 3,
 		/datum/reagent/liquid_dark_matter = 5,
 	)
 

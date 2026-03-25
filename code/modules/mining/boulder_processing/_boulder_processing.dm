@@ -81,7 +81,7 @@
 /obj/machinery/bouldertech/examine(mob/user)
 	. = ..()
 
-	. += span_notice("The machine reads that it has [EXAMINE_HINT("[points_held] mining points")] stored. Swipe an ID to claim them.")
+	. += span_suppradio("The machine reads that it has [EXAMINE_HINT("[points_held] mining points")] stored. Swipe an ID to claim them.")
 
 	var/boulder_count = 0
 	for(var/obj/item/boulder/potential_boulder in contents)
