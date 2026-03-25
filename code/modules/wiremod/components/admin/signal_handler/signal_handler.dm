@@ -63,7 +63,7 @@
 	signal_map = GLOB.integrated_circuit_signal_ids
 
 /obj/item/circuit_component/signal_handler/populate_ports()
-	instant = add_input_port("Instant", PORT_TYPE_NUMBER, order = 0.5, trigger = null, default = 1)
+	instant = add_input_port("Instant", PORT_TYPE_BOOLEAN, order = 0.5, trigger = null, default = TRUE)
 	register = add_input_port("Register", PORT_TYPE_SIGNAL, order = 2, trigger = PROC_REF(register_signals))
 	unregister = add_input_port("Unregister", PORT_TYPE_SIGNAL, order = 2, trigger = PROC_REF(unregister_signals))
 	unregister_all = add_input_port("Unregister All", PORT_TYPE_SIGNAL, order = 2, trigger = PROC_REF(unregister_signals_all))

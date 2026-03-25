@@ -64,6 +64,14 @@
 /obj/item/circuitboard/proc/configure_machine(obj/machinery/machine)
 	return
 
+/**
+ * This proc is called during /obj/structure/frame/machine/finalize_construction in case there's anything else that needs to be met before completion.
+ * Arguments:
+ * * install_frame - The frame the circuit has been installed into for reference.
+ */
+/obj/item/circuitboard/proc/completion_requirements(obj/structure/frame/install_frame)
+	return TRUE
+
 // Circuitboard/machine
 /*Common Parts: Parts List: Ignitor, Timer, Infra-red laser, Infra-red sensor, t_scanner, Capacitor, Valve, sensor unit,
 micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
