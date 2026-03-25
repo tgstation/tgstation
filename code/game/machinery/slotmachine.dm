@@ -338,23 +338,25 @@
 		reel[2] = "[pick(symbol_paths)]"
 		reel[3] = "[pick(symbol_paths)]"
 
+/// Triggers a negative effect for a slot machine if all trap icons are lined up in the middle
+/obj/machinery/computer/slot_machine/proc/activate_trap(mob/living/user)
+	var/obj/item/grenade/flashbang/bang = new(get_turf(src))
+	bang.arm_grenade(null, 1 SECONDS)
+
 /// Checks if any prizes have been won, and pays them out
-/obj/machinery/computer/slot_machine/proc/give_prizes(usrname, mob/user)
+/obj/machinery/computer/slot_machine/proc/give_prizes(usrname, mob/living/user)
 	var/linelength = get_lines()
 	var/did_player_win = TRUE
 
 	if(trap_path && check_middle_row_all(trap_path))
-		var/obj/item/grenade/flashbang/bang = new(get_turf(src))
-		bang.arm_grenade(null, 1 SECONDS)
+		activate_trap(user)
 
 	else if(check_middle_row_all(jackpot_path))
 		winning = WINNING_JACKPOT
 		var/prize = money + PRIZE_JACKPOT
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] [MONEY_NAME]!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
-		if(isliving(user) && (user in viewers(src)))
-			var/mob/living/living_user = user
-			living_user.add_mood_event("slots", /datum/mood_event/slots/win/jackpot)
+		user.add_mood_event("slots", /datum/mood_event/slots/win/jackpot)
 		jackpots += 1
 		money = 0
 		if(paymode == HOLOCHIP)
@@ -371,17 +373,13 @@
 		winning = WINNING_BIG
 		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand [MONEY_NAME]!'")
 		give_money(PRIZE_BIG)
-		if(isliving(user) && (user in viewers(src)))
-			var/mob/living/living_user = user
-			living_user.add_mood_event("slots", /datum/mood_event/slots/win/big)
+		user.add_mood_event("slots", /datum/mood_event/slots/win/big)
 
 	else if(linelength == 4)
 		winning = WINNING_SMALL
 		visible_message("<b>[src]</b> says, 'Winner! You win four hundred [MONEY_NAME]!'")
 		give_money(PRIZE_SMALL)
-		if(isliving(user) && (user in viewers(src)))
-			var/mob/living/living_user = user
-			living_user.add_mood_event("slots", /datum/mood_event/slots/win)
+		user.add_mood_event("slots", /datum/mood_event/slots/win)
 
 	else if(linelength == 3)
 		winning = WINNING_FREESPIN
@@ -393,9 +391,7 @@
 		winning = WINNING_NOTHING
 		balloon_alert(user, "no luck!")
 		did_player_win = FALSE
-		if(isliving(user) && (user in viewers(src)))
-			var/mob/living/living_user = user
-			living_user.add_mood_event("slots", /datum/mood_event/slots/loss)
+		user.add_mood_event("slots", /datum/mood_event/slots/loss)
 
 	playsound(src, 'sound/machines/lever/lever_stop.ogg', 50)
 
