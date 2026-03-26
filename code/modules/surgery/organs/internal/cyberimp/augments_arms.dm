@@ -28,12 +28,14 @@
 /obj/item/organ/cyberimp/arm/proc/on_limb_attached(mob/living/carbon/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 	if(!limb || QDELETED(limb) || limb.body_zone != zone)
-		return FALSE
+		return
+	handle_attachment(limb)
+
+/obj/item/organ/cyberimp/arm/proc/handle_attachment(obj/item/bodypart/limb)
 	if(hand)
 		on_limb_detached(hand)
 	RegisterSignal(limb, COMSIG_BODYPART_REMOVED, PROC_REF(on_limb_detached))
 	hand = limb
-	return TRUE
 
 /obj/item/organ/cyberimp/arm/proc/on_limb_detached(obj/item/bodypart/source)
 	SIGNAL_HANDLER
@@ -93,10 +95,8 @@
 	UnregisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN)
 	Retract()
 
-/obj/item/organ/cyberimp/arm/toolkit/on_limb_attached(mob/living/carbon/source, obj/item/bodypart/limb)
+/obj/item/organ/cyberimp/arm/toolkit/handle_attachment(obj/item/bodypart/limb)
 	. = ..()
-	if(!.)
-		return
 	RegisterSignal(limb, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self))
 
 /obj/item/organ/cyberimp/arm/toolkit/on_limb_detached(obj/item/bodypart/source)
