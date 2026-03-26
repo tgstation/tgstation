@@ -372,11 +372,12 @@
 	cost = CARGO_CRATE_VALUE * 40 // HELLA expensive.
 	order_flags = ORDER_NOT_DEPARTMENTAL
 	access_view = ACCESS_CARGO
+	storage_override = /obj/item/folder
 	contains = list(
 		/obj/item/paper/fluff/certificate,
 	)
 
-/datum/supply_pack/imports/fan_upgrade/generate(atom/A, datum/bank_account/paying_account)
+/datum/supply_pack/imports/fan_upgrade/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	if(SSshuttle.renew_cargo_air)
 		return ..()
 
