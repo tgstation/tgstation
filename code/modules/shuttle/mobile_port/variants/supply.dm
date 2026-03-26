@@ -348,18 +348,17 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 
 /**
- * Largely remade off of the admin fix air verb, this will shotgun more air into the shuttle.
+ * This proc collects all turfs on a shuttle, then replaces the air with the initial gas mix across the shuttle.
  */
 /obj/docking_port/mobile/supply/proc/refill_air()
-	var/turf/refill_spot = get_turf(pick(GLOB.cargo_shuttle_flaps_landmarks))
-	for(var/turf/open/valid_range_turf in range(REFILL_RANGE_DEFAULT, refill_spot))
-		if(valid_range_turf.blocks_air)
+	for(var/turf/open/floor/shuttle_floor in shuttle_area.get_turfs_from_all_zlevels())
+		if(shuttle_floor.blocks_air)
 		//skip walls
 			continue
-		var/datum/gas_mixture/GM = SSair.parse_gas_string(valid_range_turf.initial_gas_mix, /datum/gas_mixture/turf)
-		valid_range_turf.copy_air(GM)
-		valid_range_turf.temperature = initial(valid_range_turf.temperature)
-		valid_range_turf.update_visuals()
+		var/datum/gas_mixture/GM = SSair.parse_gas_string(shuttle_floor.initial_gas_mix, /datum/gas_mixture/turf)
+		shuttle_floor.copy_air(GM)
+		shuttle_floor.temperature = initial(shuttle_floor.temperature)
+		shuttle_floor.update_visuals()
 
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX
