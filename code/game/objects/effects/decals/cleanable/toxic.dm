@@ -32,7 +32,8 @@
 	. = ..()
 	bubbling_audio.stop()
 	QDEL_NULL(bubbling_audio)
-	remove_shared_particles(/particles/acid/toxic)
+	qdel(particles)
+	particles = null
 
 	deltimer(dissolve_timer)
 	dissolve_timer = null
@@ -47,7 +48,7 @@
 		color = "#ffffffff"
 	playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 	dissolve_timer = addtimer(CALLBACK(src, PROC_REF(dissolve_floor)), dissolve_clock, TIMER_STOPPABLE)
-	add_shared_particles(/particles/acid/toxic)
+	particles =  new /particles/acid/toxic()
 
 /obj/effect/decal/cleanable/greenglow/waste/proc/dissolve_floor()
 	if(QDELETED(src))
@@ -61,6 +62,7 @@
 	animate(src, time = 0.5 SECONDS, color = "#bebebe8e")
 	if(bubbling_audio)
 		bubbling_audio.stop()
-	remove_shared_particles(/particles/acid/toxic)
+	qdel(particles)
+	particles = null
 
 #undef DISSOLVE_DURATION

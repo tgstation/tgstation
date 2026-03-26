@@ -1628,6 +1628,8 @@
 /datum/reagent/toxin/acid/industrial_waste/expose_turf(turf/exposed_turf, reac_volume)
 	if(volume < WASTE_REACTION_THRESHOLD)
 		return // There's too little waste to do anything.
+	if(locate(/obj/effect/decal/cleanable/greenglow/waste) in contents)
+		return
 	var/obj/effect/decal/cleanable/greenglow/waste/goo
 	goo = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste) //Following similar logic to how ants spawn their cleanables.
 	if(QDELETED(goo))
