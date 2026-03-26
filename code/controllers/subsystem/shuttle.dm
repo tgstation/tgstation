@@ -152,7 +152,7 @@ SUBSYSTEM_DEF(shuttle)
 	/// List of express consoles that are waiting for pack initialization
 	var/list/obj/machinery/computer/cargo/express/express_consoles = list()
 
-	/// Has the crew purchased a fan upgrade this shift? Installs tiny fans into the fan landmarks on the cargo shuttles.
+	/// If TRUE, automatically refills the cargo shuttle's air when it docks
 	var/renew_cargo_air = FALSE
 
 /datum/controller/subsystem/shuttle/Initialize()
