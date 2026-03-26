@@ -1,6 +1,11 @@
 /datum/orderable_item/mining
 	category_index = CATEGORY_MINING
 
+/datum/orderable_item/mining/chasm_filler
+	purchase_path = /obj/item/chasm_filler
+	desc = "A capsule that can be thrown into chasms to cover them with catwalks."
+	cost_per_order = 350
+
 /datum/orderable_item/mining/marker_beacon
 	purchase_path = /obj/item/stack/marker_beacon/ten
 	cost_per_order = 80

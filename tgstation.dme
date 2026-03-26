@@ -5028,6 +5028,7 @@
 #include "code\modules\mining\boulder_processing\boulder_types.dm"
 #include "code\modules\mining\boulder_processing\brm.dm"
 #include "code\modules\mining\boulder_processing\refinery.dm"
+#include "code\modules\mining\equipment\chasm_capsule.dm"
 #include "code\modules\mining\equipment\explorer_gear.dm"
 #include "code\modules\mining\equipment\grapple_gun.dm"
 #include "code\modules\mining\equipment\kheiral_cuffs.dm"
