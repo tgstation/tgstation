@@ -9,10 +9,28 @@
 
 	unset_after_click = FALSE // Unsetting is handled explicitly.
 
+/datum/action/cooldown/mob_cooldown/blood_worm/invade/Grant(mob/granted_to)
+	. = ..()
+	if (!owner)
+		return
+	RegisterSignal(owner, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_dragged_onto))
+
+/datum/action/cooldown/mob_cooldown/blood_worm/invade/Remove(mob/removed_from)
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOUSEDROP_ONTO)
+
 /datum/action/cooldown/mob_cooldown/blood_worm/invade/IsAvailable(feedback)
 	if (!istype(owner, /mob/living/basic/blood_worm))
 		return FALSE
 	return ..()
+
+/// If we drag ourselves onto a corpse (or a live human) then try and climb in
+/datum/action/cooldown/mob_cooldown/blood_worm/invade/proc/on_dragged_onto(atom/movable/source, atom/over, mob/user)
+	SIGNAL_HANDLER
+	if (user != owner || !ishuman(over))
+		return
+	INVOKE_ASYNC(src, PROC_REF(Activate), over)
+	return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 /datum/action/cooldown/mob_cooldown/blood_worm/invade/Activate(atom/target)
 	if (!ishuman(target))
@@ -46,6 +64,7 @@
 
 	return ..()
 
+/// See if we can invade something
 /datum/action/cooldown/mob_cooldown/blood_worm/invade/proc/invade_check(mob/living/basic/blood_worm/worm, mob/living/carbon/human/victim, feedback = FALSE)
 	if (HAS_TRAIT(victim, TRAIT_BLOOD_WORM_HOST))
 		if (feedback)
