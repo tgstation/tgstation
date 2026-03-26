@@ -259,7 +259,7 @@
 	var/volume_sum = 0
 
 	var/static/process_id = 0
-	process_id = (process_id + 1) % (SHORT_REAL_LIMIT - 1)
+	process_id = WRAP_UID(process_id + 1)
 
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 		// Ensure we never walk the same mix twice

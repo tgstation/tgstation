@@ -151,6 +151,10 @@
 #define COMSIG_ITEM_STORED "item_stored"
 ///from base of datum/storage/handle_exit(): (datum/storage/storage)
 #define COMSIG_ITEM_UNSTORED "item_unstored"
+///from base of obj/item/do_pickup_animation(): ()
+#define COMSIG_ITEM_BEFORE_PICKUP_ANIMATION "item_before_pickup_animation"
+///from base of obj/item/do_drop_animation(): ()
+#define COMSIG_ITEM_BEFORE_DROP_ANIMATION "item_before_drop_animation"
 
 /**
  * From base of datum/strippable_item/get_alternate_actions(): (atom/owner, mob/user, list/alt_actions)
@@ -654,6 +658,16 @@
 /// Sent from /obj/item/mail/traitor/after_unwrap(mob/user, obj/item/mail/traitor/letter)
 #define COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL "traitor_mail_opened"
 	#define COMPONENT_TRAITOR_MAIL_HANDLED (1<<0)
+
+/// Send to items that have been unwrapped from a gift
+#define COMSIG_ITEM_OPENED_FROM_GIFT "gift_opened"
+
+/// From /obj/machinery/vending/ui_interact(): (mob/user, datum/vending_ui/ui)
+#define COMSIG_VENDING_UI_INTERACT "vending_ui_interact"
+	#define VENDING_DENIED (1<<0)
+
+/// From /obj/machinery/vending/dispense(): (obj/item/vended_item)
+#define COMSIG_VENDING_DISPENSED "vending_dispensed"
 
 /// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
 #define COMSIG_REFLECTION_UPDATED "reflection_updated"

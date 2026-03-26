@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(shuttle)
 		/datum/controller/subsystem/atoms,
 		/datum/controller/subsystem/air,
 	)
-	flags = SS_KEEP_TIMING
+	ss_flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	/// A list of all the mobile docking ports.

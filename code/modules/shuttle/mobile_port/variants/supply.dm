@@ -298,6 +298,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				for(var/atom/movable/exporting_atom in shuttle_turf)
 					if(iseyemob(exporting_atom))
 						continue
+					if(isobserver(exporting_atom))
+						continue
 					if(exporting_atom.anchored)
 						continue
 					export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)

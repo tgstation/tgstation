@@ -47,6 +47,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	/// tracks if we cleared a monkey's aggressiveness value
+	var/cleared_aggressive = FALSE
 
 /datum/reagent/drug/cannabis/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -63,6 +65,18 @@
 	if(SPT_PROB(4, seconds_per_tick) && affected_mob.buckled && affected_mob.body_position != LYING_DOWN && !affected_mob.IsParalyzed()) //chance to be couchlocked if sitting
 		to_chat(affected_mob, span_warning("It's too comfy to move..."))
 		affected_mob.Paralyze(10 SECONDS)
+
+	var/list/enemies = affected_mob.ai_controller?.blackboard[BB_MONKEY_ENEMIES]
+	for(var/mob/living/enemy as anything in enemies)
+		affected_mob.ai_controller.add_blackboard_key_assoc(BB_MONKEY_ENEMIES, enemy, MONKEY_CALMED_HATRED_AMOUNT * metabolization_ratio * seconds_per_tick)
+		if(affected_mob.ai_controller.blackboard[BB_MONKEY_AGGRESSIVE] && SPT_PROB(10 - values_sum(enemies), seconds_per_tick))
+			affected_mob.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, FALSE)
+			cleared_aggressive = TRUE
+
+/datum/reagent/drug/cannabis/on_mob_delete(mob/living/affected_mob)
+	. = ..()
+	if(cleared_aggressive)
+		affected_mob.ai_controller?.set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE)
 
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
@@ -89,7 +103,10 @@
 		to_chat(affected_mob, span_notice("[smoke_message]"))
 	affected_mob.add_mood_event("smoked", /datum/mood_event/smoked)
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
-	affected_mob.AdjustAllImmobility(-200 * metabolization_ratio * seconds_per_tick)
+	affected_mob.AdjustAllImmobility(-20 SECONDS * metabolization_ratio * seconds_per_tick)
+
+	for(var/mob/living/enemy as anything in affected_mob.ai_controller?.blackboard[BB_MONKEY_ENEMIES])
+		affected_mob.ai_controller.add_blackboard_key_assoc(BB_MONKEY_ENEMIES, enemy, MONKEY_CALMED_HATRED_AMOUNT * 0.1 * metabolization_ratio * seconds_per_tick)
 
 	return UPDATE_MOB_HEALTH
 
