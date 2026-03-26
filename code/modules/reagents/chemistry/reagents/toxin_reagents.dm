@@ -1617,16 +1617,15 @@
 	spew_waste(2) //Can't electrify it...
 
 /datum/reagent/toxin/acid/industrial_waste/expose_obj(obj/exposed_obj, reac_volume)
-	. = ..()
 	if(reac_volume < WASTE_REACTION_THRESHOLD)
 		return // There's too little waste to do anything.
 	if(istype(exposed_obj, /obj/effect/decal/cleanable/greenglow/waste))
 		var/obj/effect/decal/cleanable/greenglow/waste/goo = exposed_obj
 		goo.visible_message(span_warning("\The new waste reactivates \the [goo]!"))
 		goo.pre_dissolve(FALSE)
+	return ..()
 
 /datum/reagent/toxin/acid/industrial_waste/expose_turf(turf/exposed_turf, reac_volume)
-	. = ..()
 	if(volume < WASTE_REACTION_THRESHOLD)
 		return // There's too little waste to do anything.
 	var/obj/effect/decal/cleanable/greenglow/waste/goo
@@ -1641,6 +1640,7 @@
 	if(goo.lazy_init_reagents())
 		goo.reagents.maximum_volume = min(goo.reagents.maximum_volume + rounded_volume, 300)
 		goo.reagents.add_reagent(type, reac_volume)
+	return ..()
 
 /**
  * Pick a random turf in the spew range and split our total amount of waste there.
@@ -1654,7 +1654,7 @@
 	var/obj/effect/particle_effect/fluid/smoke/quick/greenboy = new(dropturf)
 	greenboy.color = "#00ff00"
 	var/list/turf/turfs = list()
-	for(var/turf/floors in orange(spew_range, dropturf))
+	for(var/turf/floors in oview(spew_range, dropturf))
 		if(istype(floors, /turf/open/space))
 			continue
 		turfs += floors
