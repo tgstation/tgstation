@@ -161,4 +161,4 @@
 
 /mob/eye/camera/remote/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
-	astype(user_ref.resolve(), /mob/living)?.on_looking_z_level_change(old_turf, new_turf)
+	astype(user_ref?.resolve(), /mob/living)?.on_looking_z_level_change(old_turf, new_turf)
