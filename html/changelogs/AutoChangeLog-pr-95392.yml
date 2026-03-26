@@ -1,0 +1,5 @@
+author: "RusselNotSCP"
+delete-after: True
+changes:
+  - rscadd: "Added three new liqueurs, with bottles available in the booze-o-mat."
+  - rscadd: "Added 15 new cocktails that use the aforementioned liqueurs."
