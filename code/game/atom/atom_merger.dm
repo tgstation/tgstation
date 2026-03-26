@@ -3,12 +3,12 @@
 	var/list/datum/merger/mergers
 
 /// Gets a merger datum representing the connected blob of objects in the allowed_types argument
-/atom/proc/GetMergeGroup(id, list/allowed_types)
+/atom/proc/GetMergeGroup(id, list/allowed_types, can_merge_proc)
 	RETURN_TYPE(/datum/merger)
 	var/datum/merger/candidate
 	if(mergers)
 		candidate = mergers[id]
 	if(!candidate)
-		new /datum/merger(id, allowed_types, src)
+		new /datum/merger(id, allowed_types, src, can_merge_proc)
 		candidate = mergers[id]
 	return candidate
