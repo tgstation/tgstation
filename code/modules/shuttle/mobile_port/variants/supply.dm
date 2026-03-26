@@ -349,16 +349,18 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 /**
  * This proc collects all turfs on a shuttle, then replaces the air with the initial gas mix across the shuttle.
+ * Used by the shuttle air upgrade.
  */
 /obj/docking_port/mobile/supply/proc/refill_air()
-	for(var/turf/open/floor/shuttle_floor in shuttle_area.get_turfs_from_all_zlevels())
-		if(shuttle_floor.blocks_air)
-		//skip walls
-			continue
-		var/datum/gas_mixture/GM = SSair.parse_gas_string(shuttle_floor.initial_gas_mix, /datum/gas_mixture/turf)
-		shuttle_floor.copy_air(GM)
-		shuttle_floor.temperature = initial(shuttle_floor.temperature)
-		shuttle_floor.update_visuals()
+	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
+		for(var/turf/open/floor/shuttle_floor in shuttle_area.get_turfs_from_all_zlevels())
+			if(shuttle_floor.blocks_air)
+			//skip walls
+				continue
+			var/datum/gas_mixture/GM = SSair.parse_gas_string(shuttle_floor.initial_gas_mix, /datum/gas_mixture/turf)
+			shuttle_floor.copy_air(GM)
+			shuttle_floor.temperature = initial(shuttle_floor.temperature)
+			shuttle_floor.update_visuals()
 
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX
