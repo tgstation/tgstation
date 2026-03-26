@@ -17,7 +17,7 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/invade/Remove(mob/removed_from)
 	. = ..()
-	UnregisterSignal(owner, COMSIG_MOUSEDROP_ONTO)
+	UnregisterSignal(removed_from, COMSIG_MOUSEDROP_ONTO)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/invade/IsAvailable(feedback)
 	if (!istype(owner, /mob/living/basic/blood_worm))
