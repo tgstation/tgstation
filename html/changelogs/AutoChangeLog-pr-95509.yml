@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Health analyzer lung reports are appended by the lung organs rather than at the bottom of the readout"
