@@ -5,6 +5,7 @@
 /// If we're under load we want to allow for cycling, but if not we want to preserve already generated docks for use
 #define SOFT_TRANSIT_RESERVATION_THRESHOLD (100 ** 2)
 
+/// Points to turfs on the cargo shuttle that have flaps automatically installed if an upgrade is purchased
 GLOBAL_LIST_EMPTY(cargo_shuttle_flaps_landmarks)
 
 
