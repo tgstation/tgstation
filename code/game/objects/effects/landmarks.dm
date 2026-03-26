@@ -583,12 +583,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/flaps_install/Initialize(mapload)
 	. = ..()
 	GLOB.cargo_shuttle_flaps_landmarks += src
-	return
 
 /obj/effect/landmark/flaps_install/Destroy()
-	. = ..()
 	GLOB.cargo_shuttle_flaps_landmarks -= src
-	return
+	return ..()
 
 //Landmark that creates destinations for the navigate verb to path to
 /obj/effect/landmark/navigate_destination
