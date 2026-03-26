@@ -284,6 +284,7 @@
 /datum/component/shell/proc/override_power_usage(datum/source, power_to_use)
 	SIGNAL_HANDLER
 	if(COOLDOWN_FINISHED(src, power_used_cooldown))
+		COOLDOWN_START(src, power_used_cooldown, 1 MINUTES)
 		power_used_in_minute = 0
 
 	var/area/location = get_area(parent)
@@ -297,8 +298,7 @@
 		return
 	location.apc?.terminal?.use_energy(power_to_use, channel = AREA_USAGE_EQUIP)
 	power_used_in_minute += power_to_use
-	if(COOLDOWN_FINISHED(src, power_used_cooldown))
-		COOLDOWN_START(src, power_used_cooldown, 1 MINUTES)
+
 	return COMPONENT_OVERRIDE_POWER_USAGE
 
 /**
