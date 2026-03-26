@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - code_imp: "supply packs can now be spawned using containers different than a crate."
-  - bugfix: "The Random Supply Drop event can now spawn their items as opposed to runtiming."

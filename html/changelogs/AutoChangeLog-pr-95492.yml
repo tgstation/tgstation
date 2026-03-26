@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "the darken screen shake preference will no longer shake your screen underneath the fullscreen overlay"

@@ -395,3 +395,25 @@
       disabled due to shuttle transit
   - bugfix: Glasses that were in the vending machine now still count for the completion
       of the Beach Bar virtual domain
+2026-03-26:
+  Absolucy:
+  - qol: Slime Link messages now notify listeners with a balloon alert.
+  ArcaneMusic:
+  - code_imp: supply packs can now be spawned using containers different than a crate.
+  - bugfix: The Random Supply Drop event can now spawn their items as opposed to runtiming.
+  LemonInTheDark:
+  - bugfix: the darken screen shake preference will no longer shake your screen underneath
+      the fullscreen overlay
+  Rhials:
+  - bugfix: The medisim shuttle docking port now aligns properly with most evac terminals.
+  SyncIt21:
+  - bugfix: tearing a poster while placing it only creates a shred poster on the wall
+      but won't place a new one in hand
+  lelandkemble:
+  - bugfix: You can put a horn in a clown car
+  - map: Snow Cabin fake healing wand now holds on to its sprite
+  - bugfix: Tape can now secure prosthetic limbs again
+  - spellcheck: Immobile mobile defibrillator mounts are no longer called mobile
+  vinylspiders:
+  - bugfix: fixes an issue where casting spells after your mob gets deleted can leave
+      you in a permanently bugged state.
