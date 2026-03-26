@@ -406,6 +406,9 @@
       the fullscreen overlay
   Rhials:
   - bugfix: The medisim shuttle docking port now aligns properly with most evac terminals.
+  RusselNotSCP:
+  - rscadd: Added three new liqueurs, with bottles available in the booze-o-mat.
+  - rscadd: Added 15 new cocktails that use the aforementioned liqueurs.
   SyncIt21:
   - bugfix: tearing a poster while placing it only creates a shred poster on the wall
       but won't place a new one in hand
