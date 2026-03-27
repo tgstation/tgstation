@@ -90,9 +90,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/datum/action_group/listed/listed_actions
 	var/list/floating_actions
 
+	///Boolean on whether they need at least a healths or healdoll, for unit tests.
+	var/needs_health_indicator = TRUE
+	///Healthrate, heartbeat for humans, summoner HP % for Guardians, etc.
 	var/atom/movable/screen/healths/healths
-	var/atom/movable/screen/stamina
+	///A modular healthdoll that shows individual limbs.
 	var/atom/movable/screen/healthdoll/healthdoll
+	var/atom/movable/screen/stamina
 	var/atom/movable/screen/spacesuit
 	var/atom/movable/screen/hunger/hunger
 
@@ -306,17 +310,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hud_used = new_hud
 	new_hud.build_action_groups()
 
-/mob/living/proc/verify_mob_huds()
-	for(var/mob/living/basic/mobs as anything in subtypesof(/mob/living/basic))
-		if(mobs::abstract_type == mobs)
-			continue
-		var/datum/hud/mob_hud = mobs::hud_type
-		var/datum/hud/initialized_hud = new mob_hud(src)
-		if(isnull(initialized_hud.action_intent))
-			message_admins("[mobs] using [initialized_hud.type] does not have an Action Intent.")
-		if(isnull(initialized_hud.healthdoll) && isnull(initialized_hud.healths))
-			message_admins("[mobs] using [initialized_hud.type] does not have a Health Doll.")
-		qdel(initialized_hud)
 
 /**
  * Shows this hud's hud to some mob
