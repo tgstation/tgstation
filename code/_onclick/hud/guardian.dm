@@ -20,7 +20,7 @@
 		inv_box.name = "internal storage"
 		inv_box.icon = ui_style
 		inv_box.icon_state = "suit_storage"
-		inv_box.screen_loc = ui_id
+		inv_box.screen_loc = ui_back
 		inv_box.slot_id = ITEM_SLOT_DEX_STORAGE
 		static_inventory += inv_box
 
@@ -57,11 +57,6 @@
 	if(!.)
 		return .
 	return !!isguardian(owner)
-
-#define GUARDIAN_COMMUNICATE_LOCATION "CENTER+-2:16,SOUTH+0:5"
-#define GUARDIAN_MANIFEST_LOCATION "CENTER+-1:16,SOUTH+0:5"
-#define GUARDIAN_RECALL_LOCATION "CENTER+0:16,SOUTH+0:5"
-#define GUARDIAN_TOGGLE_LOCATION "CENTER+1:16,SOUTH+0:5"
 
 /datum/action/innate/guardian/communicate
 	name = "Communicate"
@@ -128,8 +123,3 @@
 	name = "Toggle Gas"
 	desc = "Switch between possible gases."
 	button_icon_state = "gases"
-
-#undef GUARDIAN_COMMUNICATE_LOCATION
-#undef GUARDIAN_MANIFEST_LOCATION
-#undef GUARDIAN_RECALL_LOCATION
-#undef GUARDIAN_TOGGLE_LOCATION

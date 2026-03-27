@@ -211,6 +211,12 @@
 #define ui_ghost_language_menu "SOUTH: 6, CENTER+4:22"
 #define ui_ghost_floor_changer "SOUTH: 6, CENTER+4:7"
 
+//Holoparasites
+#define GUARDIAN_COMMUNICATE_LOCATION "CENTER+-2:16,SOUTH+0:5"
+#define GUARDIAN_MANIFEST_LOCATION "CENTER+-1:16,SOUTH+0:5"
+#define GUARDIAN_RECALL_LOCATION "CENTER+0:16,SOUTH+0:5"
+#define GUARDIAN_TOGGLE_LOCATION "CENTER+1:16,SOUTH+0:5"
+
 //Voidwalker
 #define ui_voidwalker_left_of_hands "CENTER+-2:16,SOUTH+0:5"
 
