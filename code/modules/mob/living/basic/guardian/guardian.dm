@@ -42,7 +42,6 @@
 	light_system = OVERLAY_LIGHT
 	light_range = 3
 	light_on = FALSE
-	has_stat_panel_entries = FALSE
 
 	/// The summoner of the guardian, we share health with them and can't move too far away (usually)
 	var/mob/living/summoner
