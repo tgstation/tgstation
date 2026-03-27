@@ -7,6 +7,7 @@ export const TYPE_ICONS = {
   [Food.Bugs]: 'bug',
   [Food.Cloth]: 'tshirt',
   [Food.Dairy]: 'cheese',
+  [Food.Eggs]: 'egg',
   [Food.Fried]: 'fire',
   [Food.Fruit]: 'apple-alt',
   [Food.Gore]: 'skull',
