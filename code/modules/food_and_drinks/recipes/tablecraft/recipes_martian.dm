@@ -793,6 +793,7 @@
 	removed_foodtypes = BREAKFAST
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_MEAT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/vulgaris_spekkoek
 	name = "Vulgaris spekkoek"
@@ -804,6 +805,7 @@
 	result = /obj/item/food/cake/spekkoek
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_CAKE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/pineapple_foster
 	name = "Pineapple foster"
@@ -816,6 +818,7 @@
 	)
 	result = /obj/item/food/salad/pineapple_foster
 	cuisine_category = CUISINE_MARTIAN
+	dish_category = DISH_FROZEN
 	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/pastel_de_nata
@@ -830,6 +833,7 @@
 	removed_foodtypes = MEAT|RAW
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_PASTRY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/boh_loh_yah
 	name = "Boh loh yah"
@@ -842,6 +846,7 @@
 	added_foodtypes = PINEAPPLE // someone thought it's funny to give it this foodtype smh
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_COOKIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/banana_fritter
 	name = "Banana fritter"
@@ -852,6 +857,7 @@
 	result = /obj/item/food/banana_fritter
 	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	cuisine_category = CUISINE_MARTIAN
+	dish_category = DISH_PASTRY
 	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/pineapple_fritter
@@ -863,6 +869,7 @@
 	result = /obj/item/food/pineapple_fritter
 	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	cuisine_category = CUISINE_MARTIAN
+	dish_category = DISH_PASTRY
 	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/kasei_dango
@@ -877,6 +884,7 @@
 	result = /obj/item/food/kebab/kasei_dango
 	added_foodtypes = GRAIN
 	cuisine_category = CUISINE_MARTIAN
+	dish_category = DISH_PASTRY
 	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/pb_ice_cream_mochi
@@ -891,6 +899,7 @@
 	added_foodtypes = NUTS
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_FROZEN
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/frozen_pineapple_pop
 	name = "Frozen pineapple pop"
@@ -903,6 +912,7 @@
 	removed_foodtypes = JUNKFOOD
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_FROZEN
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/sea_salt_pop
 	name = "Sea-salt ice cream bar"
@@ -915,6 +925,7 @@
 	result = /obj/item/food/popsicle/sea_salt
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_FROZEN
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/berry_topsicle
 	name = "Berry topsicle"

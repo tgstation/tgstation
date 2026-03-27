@@ -264,6 +264,7 @@
 	reqs = list(/obj/item/food/cake/plain = 1)
 	result = /obj/item/food/cakeslice/plain
 	dish_category = DISH_CAKE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/knife/pizzaslice
 	reqs = list(/obj/item/food/pizza/margherita = 1)
@@ -781,6 +782,7 @@
 	reqs = list(/obj/item/food/cake/birthday = 1)
 	result = /obj/item/clothing/head/utility/hardhat/cakehat
 	dish_category = DISH_CAKE
+	meal_category = MEAL_UNCATEGORIZED
 
 /datum/crafting_recipe/food/microwave/cakehat/energycake
 	reqs = list(/obj/item/food/cake/birthday/energy = 1)
@@ -848,6 +850,7 @@
 	reqs = list(/obj/item/food/cakebatter = 1)
 	result = /obj/item/food/cake/plain
 	dish_category = DISH_CAKE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/oven/breadstick
 	reqs = list(/obj/item/food/raw_breadstick = 1)
