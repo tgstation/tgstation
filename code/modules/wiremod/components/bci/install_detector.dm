@@ -10,7 +10,7 @@
 	desc = "A component that detects when the circuit is installed or removed from its user."
 	category = "Entity"
 
-	required_shells = list(/obj/item/organ/cyberimp/bci, /obj/item/implant)
+	required_shells = list(/obj/item/skillchip/bci, /obj/item/implant)
 
 	var/datum/port/output/implanted
 	var/datum/port/output/removed
@@ -24,19 +24,19 @@
 
 /obj/item/circuit_component/install_detector/register_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell, /obj/item/organ/cyberimp/bci))
-		RegisterSignal(shell, COMSIG_ORGAN_IMPLANTED, PROC_REF(implanted))
-		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(removed))
+	if(istype(shell, /obj/item/skillchip/bci))
+		RegisterSignal(shell, COMSIG_SKILLCHIP_IMPLANTED, PROC_REF(implanted))
+		RegisterSignal(shell, COMSIG_SKILLCHIP_REMOVED, PROC_REF(removed))
 	if(istype(shell, /obj/item/implant))
 		RegisterSignal(shell, COMSIG_IMPLANT_IMPLANTED, PROC_REF(implanted))
 		RegisterSignal(shell, COMSIG_IMPLANT_REMOVED, PROC_REF(removed))
 
 /obj/item/circuit_component/install_detector/unregister_shell(atom/movable/shell)
 	. = ..()
-	if(istype(shell, /obj/item/organ/cyberimp/bci))
+	if(istype(shell, /obj/item/skillchip/bci))
 		UnregisterSignal(shell, list(
-			COMSIG_ORGAN_IMPLANTED,
-			COMSIG_ORGAN_REMOVED,
+			COMSIG_SKILLCHIP_IMPLANTED,
+			COMSIG_SKILLCHIP_REMOVED,
 		))
 	if(istype(shell, /obj/item/implant))
 		UnregisterSignal(shell, list(

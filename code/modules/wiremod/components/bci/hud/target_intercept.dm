@@ -10,11 +10,11 @@
 	desc = "Requires a BCI shell. When activated, this component will allow user to target an object using their brain and will output the reference to said object."
 	category = "BCI"
 
-	required_shells = list(/obj/item/organ/cyberimp/bci)
+	required_shells = list(/obj/item/skillchip/bci)
 
 	var/datum/port/output/clicked_atom
 
-	var/obj/item/organ/cyberimp/bci/bci
+	var/obj/item/skillchip/bci/bci
 	var/intercept_cooldown = 1 SECONDS
 
 /obj/item/circuit_component/target_intercept/populate_ports()
@@ -23,13 +23,13 @@
 	clicked_atom = add_output_port("Targeted Object", PORT_TYPE_ATOM)
 
 /obj/item/circuit_component/target_intercept/register_shell(atom/movable/shell)
-	if(istype(shell, /obj/item/organ/cyberimp/bci))
+	if(istype(shell, /obj/item/skillchip/bci))
 		bci = shell
-		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
+		RegisterSignal(shell, COMSIG_SKILLCHIP_REMOVED, PROC_REF(on_skillchip_removed))
 
 /obj/item/circuit_component/target_intercept/unregister_shell(atom/movable/shell)
 	bci = null
-	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
+	UnregisterSignal(shell, COMSIG_SKILLCHIP_REMOVED)
 
 /obj/item/circuit_component/target_intercept/input_received(datum/port/input/port)
 	if(!bci)
@@ -38,7 +38,7 @@
 	if(!parent.shell)
 		return
 
-	var/mob/living/owner = bci.owner
+	var/mob/living/owner = bci.controlled_mob.resolve()
 	if(!owner || !istype(owner) || !owner.client || owner.stat >= SOFT_CRIT)
 		return
 
@@ -48,10 +48,10 @@
 	to_chat(owner, "<B>Left-click to trigger target interceptor!</B>")
 	owner.client.click_intercept = src
 
-/obj/item/circuit_component/target_intercept/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
+/obj/item/circuit_component/target_intercept/proc/on_skillchip_removed(datum/source, obj/item/organ/brain/holding_brain)
 	SIGNAL_HANDLER
-
-	if(owner.client && owner.client.click_intercept == src)
+	var/mob/living/owner = bci.controlled_mob?.resolve()
+	if(owner && owner.client && owner.client.click_intercept == src)
 		owner.client.click_intercept = null
 
 /obj/item/circuit_component/target_intercept/proc/InterceptClickOn(mob/user, params, atom/object)

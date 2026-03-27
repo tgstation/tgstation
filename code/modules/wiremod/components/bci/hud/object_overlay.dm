@@ -12,7 +12,7 @@
 	desc = "Requires a BCI shell. A component that shows an overlay on top of an object."
 	category = "BCI"
 
-	required_shells = list(/obj/item/organ/cyberimp/bci)
+	required_shells = list(/obj/item/skillchip/bci)
 
 	var/datum/port/input/option/object_overlay_options
 
@@ -28,7 +28,7 @@
 	var/datum/port/input/signal_off
 
 	/// Reference to the BCI we're implanted inside
-	var/obj/item/organ/cyberimp/bci/bci
+	var/obj/item/skillchip/bci/bci
 
 	/// Assoc list of REF to the target atom to the overlay alt appearance it is using
 	var/list/active_overlays = list()
@@ -66,19 +66,19 @@
 	options_map = component_options
 
 /obj/item/circuit_component/object_overlay/register_shell(atom/movable/shell)
-	if(istype(shell, /obj/item/organ/cyberimp/bci))
+	if(istype(shell, /obj/item/skillchip/bci))
 		bci = shell
-		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
+		RegisterSignal(shell, COMSIG_SKILLCHIP_REMOVED, PROC_REF(on_skillchip_removed))
 
 /obj/item/circuit_component/object_overlay/unregister_shell(atom/movable/shell)
 	bci = null
-	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
+	UnregisterSignal(shell, COMSIG_SKILLCHIP_REMOVED)
 
 /obj/item/circuit_component/object_overlay/input_received(datum/port/input/port)
 	if(!bci)
 		return
 
-	var/mob/living/owner = bci.owner
+	var/mob/living/owner = bci.controlled_mob.resolve()
 	var/atom/target_atom = target.value
 
 	if(!istype(owner) || !owner.client || isnull(target_atom))
@@ -125,7 +125,7 @@
 
 	active_overlays[REF(target_atom)] = alt_appearance
 
-/obj/item/circuit_component/object_overlay/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
+/obj/item/circuit_component/object_overlay/proc/on_skillchip_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 
 	QDEL_LIST_ASSOC_VAL(active_overlays)

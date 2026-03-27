@@ -41,7 +41,7 @@
 		/obj/item/gun/energy,
 		/obj/item/compact_remote,
 		/obj/item/controller,
-		/obj/item/organ/cyberimp/bci,
+		/obj/item/skillchip/bci,
 		/obj/item/integrated_circuit,
 		/obj/item/melee/baton/security,
 		/obj/item/modular_computer,

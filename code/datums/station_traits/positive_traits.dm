@@ -286,7 +286,7 @@
 		/datum/job/psychologist = /obj/item/organ/ears/cybernetic/whisper,
 		/datum/job/pun_pun = /obj/item/organ/cyberimp/arm/strongarm,
 		/datum/job/quartermaster = /obj/item/organ/stomach/cybernetic/tier3,
-		/datum/job/research_director = /obj/item/organ/cyberimp/bci,
+		/datum/job/research_director = /obj/item/organ/cyberimp/brain/connector,
 		/datum/job/roboticist = /obj/item/organ/cyberimp/eyes/hud/diagnostic,
 		/datum/job/scientist = /obj/item/organ/ears/cybernetic,
 		/datum/job/security_officer = /obj/item/organ/cyberimp/arm/toolkit/flash,

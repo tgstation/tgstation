@@ -10,7 +10,7 @@
 	desc = "A component that shows a three-digit counter. Requires a BCI shell."
 	category = "BCI"
 
-	required_shells = list(/obj/item/organ/cyberimp/bci)
+	required_shells = list(/obj/item/skillchip/bci)
 
 	var/datum/port/input/counter_number
 
@@ -19,7 +19,7 @@
 
 	var/datum/port/input/signal_update
 
-	var/obj/item/organ/cyberimp/bci/bci
+	var/obj/item/skillchip/bci/bci
 	var/list/numbers = list()
 	var/datum/weakref/counter_appearance
 
@@ -32,9 +32,9 @@
 	image_pixel_y = add_input_port("Y-Axis Shift", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/counter_overlay/register_shell(atom/movable/shell)
-	if(istype(shell, /obj/item/organ/cyberimp/bci))
+	if(istype(shell, /obj/item/skillchip/bci))
 		bci = shell
-		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
+		RegisterSignal(shell, COMSIG_SKILLCHIP_REMOVED, PROC_REF(on_skillchip_removed))
 
 /obj/item/circuit_component/counter_overlay/unregister_shell(atom/movable/shell)
 	bci = null
@@ -45,13 +45,13 @@
 
 	var/datum/atom_hud/overlay = counter_appearance?.resolve()
 	QDEL_NULL(overlay)
-	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
+	UnregisterSignal(shell, COMSIG_SKILLCHIP_REMOVED)
 
 /obj/item/circuit_component/counter_overlay/input_received(datum/port/input/port)
 	if(!bci)
 		return
 
-	var/mob/living/owner = bci.owner
+	var/mob/living/owner = bci.controlled_mob.resolve()
 
 	if(!owner || !istype(owner) || !owner.client)
 		return
@@ -109,7 +109,7 @@
 
 		numbers += WEAKREF(number_alt_appearance)
 
-/obj/item/circuit_component/counter_overlay/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
+/obj/item/circuit_component/counter_overlay/proc/on_skillchip_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 	for(var/datum/weakref/number in numbers)
 		var/datum/atom_hud/number_overlay = number?.resolve()

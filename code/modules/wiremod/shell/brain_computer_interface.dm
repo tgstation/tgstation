@@ -1,15 +1,15 @@
 /obj/item/skillchip/bci
 	name = "brain-computer interface"
-	desc = "An implant that can be placed in a user's head to control circuits using their brain."
+	desc = "An programmable skillchip that can be placed in a user's head to control circuits using their brain."
 	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "bci"
 	w_class = WEIGHT_CLASS_TINY
 	/// Our internal circuit, if any
 	var/obj/item/integrated_circuit/circuit
-
-/obj/item/organ/cyberimp/bci
-
-
+	/// Mob we currently have our signals registered on, i.e. the thing we're in. Hopefully.
+	var/datum/weakref/controlled_mob
+	/// Our internal circuit's main component
+	var/obj/item/circuit_component/bci_core/bci_component
 
 /obj/item/skillchip/bci/Initialize(mapload)
 	. = ..()
@@ -20,8 +20,10 @@
 	circuit = new(src)
 	circuit.add_component(new /obj/item/circuit_component/equipment_action(null, "One"))
 
+	bci_component = new()
+
 	AddComponent(/datum/component/shell, list(
-		new /obj/item/circuit_component/bci_core,
+		bci_component,
 	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
 
 /obj/item/skillchip/bci/say(
@@ -51,19 +53,13 @@
 	forced = "circuit speech"
 	return owner.say(arglist(args))
 
-/obj/item/skillchip/bci/on_deactivate(mob/living/carbon/user, silent)
-	. = ..()
-	if(!circuit)
-		return
-	for(var/obj/item/circuit_component/bci_core/internal_component in circuit.attached_components)
-		internal_component.on_skillchip_deactivated(holding_brain)
-
 /obj/item/skillchip/bci/on_activate(mob/living/carbon/user, silent)
 	. = ..()
-	if(!circuit)
-		return
-	for(var/obj/item/circuit_component/bci_core/internal_component in circuit.attached_components)
-		internal_component.on_skillchip_activated(holding_brain)
+	bci_component.on_skillchip_activated(holding_brain)
+
+/obj/item/skillchip/bci/on_deactivate(mob/living/carbon/user, silent)
+	. = ..()
+	bci_component.on_skillchip_deactivated(holding_brain)
 
 /obj/item/skillchip/bci/proc/action_comp_registered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
@@ -91,9 +87,6 @@
 	var/datum/port/output/user_port
 
 	var/obj/item/skillchip/bci/bci
-
-	/// Mob we currently have our signals registered on, i.e. the thing we're in. Hopefully.
-	var/datum/weakref/controlled_mob
 
 /obj/item/circuit_component/bci_core/populate_ports()
 
@@ -167,6 +160,16 @@
 
 	set_up_new_mob(owner)
 
+/obj/item/circuit_component/bci_core/proc/on_skillchip_deactivated(obj/item/organ/brain/holding_brain)
+	user_port.set_output(null)
+	UnregisterSignal(bci.controlled_mob?.resolve(), list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
+		COMSIG_LIVING_ELECTROCUTE_ACT,
+	))
+	UnregisterSignal(holding_brain, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
+
+
 /obj/item/circuit_component/bci_core/proc/on_organ_implanted(obj/item/organ/brain/holding_brain, mob/living/carbon/new_owner)
 	SIGNAL_HANDLER
 	set_up_new_mob(new_owner)
@@ -177,25 +180,17 @@
 
 ///Set up a new mob for us, and cleans up the old mob.
 /obj/item/circuit_component/bci_core/proc/set_up_new_mob(mob/newguy)
-	if(controlled_mob)
-		UnregisterSignal(controlled_mob.resolve(), list(
+	if(bci.controlled_mob)
+		UnregisterSignal(bci.controlled_mob.resolve(), list(
 			COMSIG_ATOM_EXAMINE,
 			COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
 			COMSIG_LIVING_ELECTROCUTE_ACT,
 		))
-	controlled_mob = WEAKREF(newguy)
+	bci.controlled_mob = WEAKREF(newguy)
 	user_port.set_output(newguy)
 	RegisterSignal(newguy, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(newguy, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
 	RegisterSignal(newguy, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
-
-/obj/item/circuit_component/bci_core/proc/on_skillchip_deactivated(obj/item/organ/brain/holding_brain)
-	user_port.set_output(null)
-	UnregisterSignal(controlled_mob?.resolve(), list(
-		COMSIG_ATOM_EXAMINE,
-		COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
-		COMSIG_LIVING_ELECTROCUTE_ACT,
-	))
 
 /obj/item/circuit_component/bci_core/proc/on_borg_charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
 	SIGNAL_HANDLER

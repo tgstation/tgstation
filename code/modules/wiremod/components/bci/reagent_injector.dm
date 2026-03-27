@@ -11,7 +11,7 @@
 	category = "Entity"
 	circuit_flags = CIRCUIT_NO_DUPLICATES
 
-	required_shells = list(/obj/item/organ/cyberimp/bci, /obj/item/implant)
+	required_shells = list(/obj/item/skillchip/bci, /obj/item/implant)
 
 	var/datum/port/input/inject
 	var/datum/port/output/injected
@@ -28,9 +28,8 @@
 	injected = add_output_port("Injected", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/reagent_injector/proc/get_mob()
-	if(istype(shell_item, /obj/item/organ/cyberimp/bci))
-		var/obj/item/organ/cyberimp/bci/shell_bci = shell_item
-		return shell_bci.owner
+	if(istype(shell_item, /obj/item/skillchip/bci))
+		return astype(shell_item, /obj/item/skillchip/bci).controlled_mob?.resolve()
 	if(istype(shell_item, /obj/item/implant))
 		var/obj/item/implant/shell_implant = shell_item
 		return shell_implant.imp_in

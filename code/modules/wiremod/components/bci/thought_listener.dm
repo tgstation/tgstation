@@ -10,7 +10,7 @@
 	desc = "A component that allows the user to input a string using their mind. Requires a BCI shell."
 	category = "BCI"
 
-	required_shells = list(/obj/item/organ/cyberimp/bci)
+	required_shells = list(/obj/item/skillchip/bci)
 
 	var/datum/port/input/input_name
 	var/datum/port/input/input_desc
@@ -20,7 +20,7 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
-	var/obj/item/organ/cyberimp/bci/bci
+	var/obj/item/skillchip/bci/bci
 	var/ready = TRUE
 
 /obj/item/circuit_component/thought_listener/populate_ports()
@@ -31,7 +31,7 @@
 	failure = add_output_port("On Failure", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/thought_listener/register_shell(atom/movable/shell)
-	if(istype(shell, /obj/item/organ/cyberimp/bci))
+	if(istype(shell, /obj/item/skillchip/bci))
 		bci = shell
 
 /obj/item/circuit_component/thought_listener/unregister_shell(atom/movable/shell)
@@ -46,7 +46,7 @@
 		failure.set_output(COMPONENT_SIGNAL)
 		return
 
-	var/mob/living/owner = bci.owner
+	var/mob/living/owner = bci.controlled_mob?.resolve()
 
 	if(!owner || !istype(owner) || !owner.client || (owner.stat >= SOFT_CRIT))
 		failure.set_output(COMPONENT_SIGNAL)

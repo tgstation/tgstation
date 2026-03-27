@@ -283,7 +283,7 @@
 	desc = "Digitizes user's sight for surveillance-on-the-go. User must have fully functional eyes for digitizer to work. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
 	category = "BCI"
 	camera_prefix = "BCI"
-	required_shells = list(/obj/item/organ/cyberimp/bci)
+	required_shells = list(/obj/item/skillchip/bci)
 
 	/// BCIs are organs, and thus the signal must be assigned ONLY when the shell has been installed in a mob - otherwise the camera will never update position
 	camera_signal_move_override = TRUE
@@ -316,17 +316,18 @@
 
 /obj/item/circuit_component/remotecam/bci/register_shell(atom/movable/shell)
 	. = ..()
-	if(!istype(shell_parent, /obj/item/organ/cyberimp/bci))
+	if(!istype(shell_parent, /obj/item/skillchip/bci))
 		return
 	shell_camera = new /obj/machinery/camera (shell_parent)
 	init_camera()
-	RegisterSignal(shell_parent, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_implanted))
-	RegisterSignal(shell_parent, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
-	var/obj/item/organ/cyberimp/bci/bci = shell_parent
-	if(bci.owner) //If somehow the camera was added while shell is already installed inside a mob, assign signals
+	RegisterSignal(shell_parent, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_skillchip_implanted))
+	RegisterSignal(shell_parent, COMSIG_ORGAN_REMOVED, PROC_REF(on_skillchip_removed))
+	var/obj/item/skillchip/bci/bci = shell_parent
+	var/mob/living/owner = bci.controlled_mob?.resolve()
+	if(owner) //If somehow the camera was added while shell is already installed inside a mob, assign signals
 		if(bciuser) //This should never happen... But if it does, unassign move signal from old mob
 			UnregisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
-		bciuser = bci.owner
+		bciuser = owner
 		RegisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 
 /obj/item/circuit_component/remotecam/bci/unregister_shell(atom/movable/shell)
@@ -345,14 +346,14 @@
 		UnregisterSignal(shell_parent, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
 	return ..()
 
-/obj/item/circuit_component/remotecam/bci/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
+/obj/item/circuit_component/remotecam/bci/proc/on_skillchip_implanted(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 	if(bciuser)
 		return
 	bciuser = owner
 	RegisterSignal(bciuser, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 
-/obj/item/circuit_component/remotecam/bci/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
+/obj/item/circuit_component/remotecam/bci/proc/on_skillchip_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 	if(!bciuser)
 		return
@@ -390,9 +391,10 @@
 	if (current_camera_emp)
 		close_camera()
 		return
-	var/obj/item/organ/cyberimp/bci/bci = shell_parent
+	var/obj/item/skillchip/bci/bci = shell_parent
+	var/mob/living/owner = bci.controlled_mob?.resolve()
 	//If shell is not currently inside a head, or user is currently blind, or user is dead
-	if(!bci.owner || bci.owner.is_blind() || bci.owner.stat >= UNCONSCIOUS)
+	if(!owner || owner.is_blind() || owner.stat >= UNCONSCIOUS)
 		close_camera()
 		return
 	var/obj/item/stock_parts/power_store/cell = parent.get_cell()
@@ -401,7 +403,7 @@
 		close_camera()
 		return
 	//If owner is nearsighted, set camera range to short (if it wasn't already)
-	if(bci.owner.is_nearsighted_currently())
+	if(owner.is_nearsighted_currently())
 		if(current_camera_range)
 			current_camera_range = 0
 			update_camera_range()
