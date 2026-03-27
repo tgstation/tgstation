@@ -104,6 +104,9 @@
 	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_heat_damage = 1
 
+	///Boolean on whether this mob should show their HP bar in the stat panel. Preferably the stat panel entry should be killed off entirely.
+	var/shows_health = TRUE
+
 /mob/living/basic/Initialize(mapload)
 	. = ..()
 
@@ -295,7 +298,8 @@
 
 /mob/living/basic/get_status_tab_items()
 	. = ..()
-	. += "Health: [round((health / maxHealth) * 100)]%"
+	if(shows_health)
+		. += "Health: [round((health / maxHealth) * 100)]%"
 	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/basic/compare_sentience_type(compare_type)
