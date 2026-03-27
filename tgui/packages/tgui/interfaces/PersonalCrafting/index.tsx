@@ -401,9 +401,11 @@ export function PersonalCrafting(props: any) {
                                               cuisine,
                                             )}
                                             onClick={() => {
-                                              toggleArrayItem(
-                                                activeFoodCuisine,
-                                                cuisine,
+                                              setFoodCuisine(
+                                                toggleArrayItem(
+                                                  activeFoodCuisine,
+                                                  cuisine,
+                                                ),
                                               );
                                               setPages(1);
                                             }}
@@ -428,9 +430,11 @@ export function PersonalCrafting(props: any) {
                                               dish,
                                             )}
                                             onClick={() => {
-                                              toggleArrayItem(
-                                                activeDishCategory,
-                                                dish,
+                                              setDishCategory(
+                                                toggleArrayItem(
+                                                  activeDishCategory,
+                                                  dish,
+                                                ),
                                               );
                                               setPages(1);
                                             }}
@@ -455,9 +459,11 @@ export function PersonalCrafting(props: any) {
                                               meal,
                                             )}
                                             onClick={() => {
-                                              toggleArrayItem(
-                                                activeMealCategory,
-                                                meal,
+                                              setMealCategory(
+                                                toggleArrayItem(
+                                                  activeMealCategory,
+                                                  meal,
+                                                ),
                                               );
                                               setPages(1);
                                             }}
