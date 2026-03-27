@@ -124,13 +124,6 @@
 			to_chat(source, span_warning("[tether_name] catches on [blocker] and prevents you from moving!"))
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-	if (get_dist(anchor, new_loc) != cur_dist || !ismovable(source) || force_moving_target)
-		return
-
-	// var/datum/drift_handler/handler = movable_source.drift_handler
-	// if (handler)
-	// 	handler.remove_angle_force(get_angle(anchor, source))
-
 /// Try adjust the anchor's position to move closer to the target or regain LOS
 /// true_source is an optional argument in case we're looking for a LOS/closer turf to a new location rather than the actual owner, and need to ignore them
 /datum/component/tether/proc/try_adjust_position(atom/movable/anchor, atom/target, atom/true_source)
