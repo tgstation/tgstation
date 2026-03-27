@@ -49,63 +49,55 @@
 
 	..()
 
-/datum/action/innate/guardian
+/datum/action/cooldown/guardian
 	button_icon = 'icons/hud/guardian.dmi'
 
-/datum/action/innate/guardian/IsAvailable(feedback)
+/datum/action/cooldown/guardian/IsAvailable(feedback)
 	. = ..()
 	if(!.)
 		return .
 	return !!isguardian(owner)
 
-/datum/action/innate/guardian/communicate
+/datum/action/cooldown/guardian/communicate
 	name = "Communicate"
 	desc = "Communicate telepathically with your user."
 	button_icon_state = "communicate"
 	default_button_position = GUARDIAN_COMMUNICATE_LOCATION
 
-/datum/action/innate/guardian/communicate/Activate()
+/datum/action/cooldown/guardian/communicate/Activate()
 	astype(owner, /mob/living/basic/guardian)?.communicate()
 
-/datum/action/innate/guardian/manifest
+/datum/action/cooldown/guardian/manifest
 	name = "Manifest"
 	desc = "Spring forth into battle!"
 	button_icon_state = "manifest"
 	default_button_position = GUARDIAN_MANIFEST_LOCATION
 
-/datum/action/innate/guardian/manifest/Activate()
+/datum/action/cooldown/guardian/manifest/Activate()
 	astype(owner, /mob/living/basic/guardian)?.manifest()
 
-/datum/action/innate/guardian/recall
+/datum/action/cooldown/guardian/recall
 	name = "Recall"
 	desc = "Return to your user."
 	button_icon_state = "recall"
 	default_button_position = GUARDIAN_RECALL_LOCATION
 
-/datum/action/innate/guardian/recall/Activate()
+/datum/action/cooldown/guardian/recall/Activate()
 	astype(owner, /mob/living/basic/guardian)?.recall()
 
-/datum/action/innate/guardian/toggle_light
+/datum/action/cooldown/guardian/toggle_light
 	name = "Toggle Light"
 	desc = "Glow like star dust."
 	button_icon_state = "light"
 
-/datum/action/innate/guardian/toggle_light/Activate()
+/datum/action/cooldown/guardian/toggle_light/Activate()
 	astype(owner, /mob/living/basic/guardian)?.toggle_light()
 
-///COOLDOWN TYPES
 /datum/action/cooldown/guardian/toggle_mode
 	name = "Toggle Mode"
 	desc = "Switch between ability modes."
-	button_icon = 'icons/hud/guardian.dmi'
 	button_icon_state = "toggle"
 	default_button_position = GUARDIAN_TOGGLE_LOCATION
-
-/datum/action/cooldown/guardian/toggle_mode/IsAvailable(feedback)
-	. = ..()
-	if(!.)
-		return .
-	return !!isguardian(owner)
 
 /datum/action/cooldown/guardian/toggle_mode/Activate()
 	astype(owner, /mob/living/basic/guardian)?.toggle_modes()
