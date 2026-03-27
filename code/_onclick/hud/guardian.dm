@@ -18,10 +18,6 @@
 	using.screen_loc = ui_storage1
 	static_inventory += using
 
-	using = new /atom/movable/screen/guardian/toggle_light(null, src)
-	using.screen_loc = ui_inventory
-	static_inventory += using
-
 /datum/hud/dextrous/guardian/New(mob/living/basic/guardian/owner) //for a dextrous guardian
 	..()
 	var/atom/movable/screen/using
@@ -47,10 +43,6 @@
 
 	using = new owner.toggle_button_type(null, src)
 	using.screen_loc = ui_storage2
-	static_inventory += using
-
-	using = new /atom/movable/screen/guardian/toggle_light(null, src)
-	using.screen_loc = ui_inventory
 	static_inventory += using
 
 /datum/hud/dextrous/guardian/persistent_inventory_update()
@@ -147,13 +139,3 @@
 #undef GUARDIAN_COMMUNICATE_LOCATION
 #undef GUARDIAN_MANIFEST_LOCATION
 #undef GUARDIAN_RECALL_LOCATION
-
-/atom/movable/screen/guardian/toggle_light
-	icon_state = "light"
-	name = "Toggle Light"
-	desc = "Glow like star dust."
-
-/atom/movable/screen/guardian/toggle_light/Click()
-	if(isguardian(usr))
-		var/mob/living/basic/guardian/user = usr
-		user.toggle_light()
