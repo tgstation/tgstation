@@ -53,8 +53,8 @@
 		reload = TRUE
 	//if we transforming from open to open turf we can skip deconstruction under some conditions
 	else if(isopenturf(source) && ispath(path, /turf/open))
-		//we are transforming from plating into anything that isn't space
-		if(isplatingturf(source) && !ispath(path, /turf/open/space))
+		//we are transforming from plating into anything that isn't a groundless turf
+		if(isplatingturf(source) && !isgroundlessturf(path))
 			reload = TRUE
 		//we are transforming into plating turf
 		else if(ispath(LAZYACCESS(source.baseturfs, length(source.baseturfs)), /turf/open/floor/plating))
