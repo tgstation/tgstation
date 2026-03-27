@@ -56,18 +56,15 @@
 	#define CUISINE_MARTIAN "Martian"
 	#define CUISINE_MEXICAN "Mexican"
 	#define CUISINE_JAPANESE "Japanese"
-	// dish categories (generic)
-	#define DISH_UNCATEGORIZED "Uncategorized"
-	#define DISH_DESSERT "Dessert"
-	#define DISH_FROZEN "Frozen" // catch-all for ice cream, popsicles, etc
-	// dish categories (specific)
+	// dish categories
 	#define DISH_BREAD "Bread"
 	#define DISH_BURGER "Burger"
 	#define DISH_BURRITO "Burrito"
 	#define DISH_CAKE "Cake"
 	#define DISH_CANDY "Candy"
-	#define DISH_CONDIMENT "Condiment" // catch-all for sauces, dressings, etc
+	#define DISH_CONDIMENT "Condiment" // catch-all for sauces, dressings, sides, etc
 	#define DISH_COOKIE "Cookie"
+	#define DISH_FROZEN "Frozen" // catch-all for ice cream, popsicles, etc
 	#define DISH_MEAT "Meat" // things often served on its own as a "meat dish", though it may include tofu
 	#define DISH_NOODLES "Noodles"
 	#define DISH_PASTRY "Pastry"
@@ -79,6 +76,7 @@
 	#define DISH_SOUP "Soup"
 	#define DISH_SUSHI "Sushi"
 	#define DISH_TACO "Taco"
+	#define DISH_UNCATEGORIZED "Uncategorized"
 	// meal categories
 	#define MEAL_UNCATEGORIZED "Uncategorized"
 	#define MEAL_COMPONENT "Component" // stuff you're not intended to eat
