@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/datum/action_group/listed/listed_actions
 	var/list/floating_actions
 
-	var/atom/movable/screen/healths
+	var/atom/movable/screen/healths/healths
 	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll/healthdoll
 	var/atom/movable/screen/spacesuit
@@ -305,6 +305,18 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /mob/proc/set_hud_used(datum/hud/new_hud)
 	hud_used = new_hud
 	new_hud.build_action_groups()
+
+/mob/living/proc/verify_mob_huds()
+	for(var/mob/living/basic/mobs as anything in subtypesof(/mob/living/basic))
+		if(mobs::abstract_type == mobs)
+			continue
+		var/datum/hud/mob_hud = mobs::hud_type
+		var/datum/hud/initialized_hud = new mob_hud(src)
+		if(isnull(initialized_hud.action_intent))
+			message_admins("[mobs] using [initialized_hud.type] does not have an Action Intent.")
+		if(isnull(initialized_hud.healthdoll) && isnull(initialized_hud.healths))
+			message_admins("[mobs] using [initialized_hud.type] does not have a Health Doll.")
+		qdel(initialized_hud)
 
 /**
  * Shows this hud's hud to some mob
