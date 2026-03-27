@@ -29,10 +29,12 @@
 	if (!isnull(host))
 		var/mob/living/living_parent = parent
 		living_parent.updatehealth()
+		living_parent.client?.set_stat_panel()
 
 /datum/component/life_link/UnregisterFromParent()
 	unregister_host()
 	UnregisterSignal(parent, list(COMSIG_CARBON_LIMB_DAMAGED, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_MOB_GET_STATUS_TAB_ITEMS) + COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES)
+	astype(parent, /mob/living)?.client?.set_stat_panel()
 
 /datum/component/life_link/InheritComponent(datum/component/new_comp, i_am_original, mob/living/host, datum/callback/on_passed_damage, datum/callback/on_linked_death)
 	register_host(host)
