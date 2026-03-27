@@ -14,24 +14,12 @@
 	healths = new /atom/movable/screen/healths/guardian(null, src)
 	infodisplay += healths
 
-	using = new /atom/movable/screen/guardian/manifest(null, src)
-	using.screen_loc = ui_hand_position(RIGHT_HANDS)
-	static_inventory += using
-
-	using = new /atom/movable/screen/guardian/recall(null, src)
-	using.screen_loc = ui_hand_position(LEFT_HANDS)
-	static_inventory += using
-
 	using = new owner.toggle_button_type(null, src)
 	using.screen_loc = ui_storage1
 	static_inventory += using
 
 	using = new /atom/movable/screen/guardian/toggle_light(null, src)
 	using.screen_loc = ui_inventory
-	static_inventory += using
-
-	using = new /atom/movable/screen/guardian/communicate(null, src)
-	using.screen_loc = ui_back
 	static_inventory += using
 
 /datum/hud/dextrous/guardian/New(mob/living/basic/guardian/owner) //for a dextrous guardian
@@ -48,16 +36,6 @@
 		inv_box.slot_id = ITEM_SLOT_DEX_STORAGE
 		static_inventory += inv_box
 
-		using = new /atom/movable/screen/guardian/communicate(null, src)
-		using.screen_loc = ui_sstore1
-		static_inventory += using
-
-	else
-
-		using = new /atom/movable/screen/guardian/communicate(null, src)
-		using.screen_loc = ui_id
-		static_inventory += using
-
 	pull_icon = new /atom/movable/screen/pull(null, src)
 	pull_icon.icon = ui_style
 	pull_icon.update_appearance()
@@ -66,14 +44,6 @@
 
 	healths = new /atom/movable/screen/healths/guardian(null, src)
 	infodisplay += healths
-
-	using = new /atom/movable/screen/guardian/manifest(null, src)
-	using.screen_loc = ui_belt
-	static_inventory += using
-
-	using = new /atom/movable/screen/guardian/recall(null, src)
-	using.screen_loc = ui_back
-	static_inventory += using
 
 	using = new owner.toggle_button_type(null, src)
 	using.screen_loc = ui_storage2
@@ -103,27 +73,6 @@
 	icon = 'icons/hud/guardian.dmi'
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
-/atom/movable/screen/guardian/manifest
-	icon_state = "manifest"
-	name = "Manifest"
-	desc = "Spring forth into battle!"
-
-/atom/movable/screen/guardian/manifest/Click()
-	if(isguardian(usr))
-		var/mob/living/basic/guardian/user = usr
-		user.manifest()
-
-
-/atom/movable/screen/guardian/recall
-	icon_state = "recall"
-	name = "Recall"
-	desc = "Return to your user."
-
-/atom/movable/screen/guardian/recall/Click()
-	if(isguardian(usr))
-		var/mob/living/basic/guardian/user = usr
-		user.recall()
-
 /atom/movable/screen/guardian/toggle_mode
 	icon_state = "toggle"
 	name = "Toggle Mode"
@@ -147,16 +96,49 @@
 	name = "Toggle Gas"
 	desc = "Switch between possible gases."
 
-/atom/movable/screen/guardian/communicate
-	icon_state = "communicate"
+/datum/action/innate/guardian
+	button_icon = 'icons/hud/guardian.dmi'
+
+/datum/action/innate/guardian/IsAvailable(feedback)
+	. = ..()
+	if(!.)
+		return FALSE
+	return !!isguardian(owner)
+
+#define GUARDIAN_COMMUNICATE_LOCATION "CENTER+-2:16,SOUTH+0:5"
+#define GUARDIAN_MANIFEST_LOCATION "CENTER+-1:16,SOUTH+0:5"
+#define GUARDIAN_RECALL_LOCATION "CENTER+0:16,SOUTH+0:5"
+
+/datum/action/innate/guardian/communicate
 	name = "Communicate"
+	button_icon_state = "communicate"
 	desc = "Communicate telepathically with your user."
+	default_button_position = GUARDIAN_COMMUNICATE_LOCATION
 
-/atom/movable/screen/guardian/communicate/Click()
-	if(isguardian(usr))
-		var/mob/living/basic/guardian/user = usr
-		user.communicate()
+/datum/action/innate/guardian/communicate/Activate()
+	astype(owner, /mob/living/basic/guardian)?.communicate()
 
+/datum/action/innate/guardian/manifest
+	name = "Manifest"
+	desc = "Spring forth into battle!"
+	button_icon_state = "manifest"
+	default_button_position = GUARDIAN_MANIFEST_LOCATION
+
+/datum/action/innate/guardian/manifest/Activate()
+	astype(owner, /mob/living/basic/guardian)?.manifest()
+
+/datum/action/innate/guardian/recall
+	name = "Recall"
+	desc = "Return to your user."
+	button_icon_state = "recall"
+	default_button_position = GUARDIAN_RECALL_LOCATION
+
+/datum/action/innate/guardian/recall/Activate()
+	astype(owner, /mob/living/basic/guardian)?.recall()
+
+#undef GUARDIAN_COMMUNICATE_LOCATION
+#undef GUARDIAN_MANIFEST_LOCATION
+#undef GUARDIAN_RECALL_LOCATION
 
 /atom/movable/screen/guardian/toggle_light
 	icon_state = "light"

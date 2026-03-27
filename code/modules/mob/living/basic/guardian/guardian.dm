@@ -76,11 +76,17 @@
 	/// Cooldown between the summoner resetting the guardian's client.
 	COOLDOWN_DECLARE(resetting_cooldown)
 
-	/// List of actions we give to our summoner
+	/// List of actions we give to our summoner.
 	var/static/list/control_actions = list(
 		/datum/action/cooldown/mob_cooldown/guardian_comms,
 		/datum/action/cooldown/mob_cooldown/recall_guardian,
 		/datum/action/cooldown/mob_cooldown/replace_guardian,
+	)
+	/// List of actions we give to ourselves.
+	var/static/list/self_actions = list(
+		/datum/action/innate/guardian/communicate,
+		/datum/action/innate/guardian/manifest,
+		/datum/action/innate/guardian/recall,
 	)
 
 /mob/living/basic/guardian/Initialize(mapload, datum/guardian_fluff/theme)
@@ -94,6 +100,11 @@
 	// life link
 	update_appearance(UPDATE_ICON)
 	manifest_effects()
+	for (var/action_type in self_actions)
+		if (locate(action_type) in actions)
+			continue
+		var/datum/action/new_action = new action_type(mind)
+		new_action.Grant(src)
 
 /mob/living/basic/guardian/Destroy()
 	GLOB.parasites -= src
