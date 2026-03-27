@@ -624,12 +624,12 @@
 	name = "red fry box"
 	desc = "A cardboard box used for holding fries."
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "redfrybox1"
+	icon_state = "redfrybox2"
 	base_icon_state = "redfrybox"
 	contents_tag = "fries"
 	w_class = WEIGHT_CLASS_SMALL
 	spawn_type = /obj/item/food/fries
-	spawn_count = 1
+	spawn_count = 2
 	storage_type = /datum/storage/fry_box
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 

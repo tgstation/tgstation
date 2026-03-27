@@ -101,7 +101,7 @@
 
 /// Fry Boxes
 /datum/storage/fry_box
-	max_slots = 1
+	max_slots = 2
 
 /datum/storage/fry_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
