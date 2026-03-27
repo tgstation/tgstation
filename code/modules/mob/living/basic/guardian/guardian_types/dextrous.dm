@@ -27,6 +27,8 @@
 
 /mob/living/basic/guardian/dextrous/create_actions()
 	for (var/action_type in self_actions)
+		if(isnull(action_type)) //no toggle button type
+			continue
 		if (locate(action_type) in actions)
 			continue
 		var/datum/action/new_action = new action_type(src)
