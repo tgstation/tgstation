@@ -49,13 +49,13 @@
 //food/drink crafting defines
 #define CAT_FOOD "Foods"
 	// cuisine categories
-	#define CUISINE_TERRAN "Terran" // catch-all for earth food that we don't have a more specific category for
 	#define CUISINE_ITALIAN "Italian"
-	#define CUISINE_MOTHIC "Mothic"
+	#define CUISINE_JAPANESE "Japanese"
 	#define CUISINE_LIZARD "Lizard"
 	#define CUISINE_MARTIAN "Martian"
 	#define CUISINE_MEXICAN "Mexican"
-	#define CUISINE_JAPANESE "Japanese"
+	#define CUISINE_MOTHIC "Mothic"
+	#define CUISINE_TERRAN "Terran" // catch-all for earth food that we don't have a more specific category for
 	// dish categories
 	#define DISH_BREAD "Bread"
 	#define DISH_BURGER "Burger"
@@ -78,13 +78,13 @@
 	#define DISH_TACO "Taco"
 	#define DISH_UNCATEGORIZED "Uncategorized"
 	// meal categories
-	#define MEAL_UNCATEGORIZED "Uncategorized"
-	#define MEAL_COMPONENT "Component" // stuff you're not intended to eat
 	#define MEAL_APPETIZER "Appetizer"
 	#define MEAL_BREAKFAST "Breakfast"
+	#define MEAL_COMPONENT "Component" // stuff you're not intended to eat
 	#define MEAL_DESSERT "Dessert"
 	#define MEAL_MAIN_COURSE "Main Course"
 	#define MEAL_SNACK "Snack"
+	#define MEAL_UNCATEGORIZED "Uncategorized"
 
 #define CAT_DRINK "Drinks"
 
