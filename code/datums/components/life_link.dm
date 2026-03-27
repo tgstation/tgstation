@@ -25,14 +25,13 @@
 	RegisterSignal(parent, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(on_limb_damage))
 	RegisterSignals(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_damage_adjusted))
 	RegisterSignal(parent, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_updated))
-	RegisterSignal(parent, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_status_tab_updated))
 	if (!isnull(host))
 		var/mob/living/living_parent = parent
 		living_parent.updatehealth()
 
 /datum/component/life_link/UnregisterFromParent()
 	unregister_host()
-	UnregisterSignal(parent, list(COMSIG_CARBON_LIMB_DAMAGED, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_MOB_GET_STATUS_TAB_ITEMS) + COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES)
+	UnregisterSignal(parent, list(COMSIG_CARBON_LIMB_DAMAGED, COMSIG_LIVING_HEALTH_UPDATE) + COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES)
 
 /datum/component/life_link/InheritComponent(datum/component/new_comp, i_am_original, mob/living/host, datum/callback/on_passed_damage, datum/callback/on_linked_death)
 	register_host(host)
@@ -131,12 +130,6 @@
 		mob_parent.set_hud_image_state(STATUS_HUD, "huddead")
 	else
 		mob_parent.set_hud_image_state(STATUS_HUD, "hudhealthy")
-
-/// When our status tab updates, draw how much HP our host has in there
-/datum/component/life_link/proc/on_status_tab_updated(mob/living/source, list/items)
-	SIGNAL_HANDLER
-	var/healthpercent = health_percentage(host)
-	items += "Host Health: [round(healthpercent, 0.5)]%"
 
 /// Called when our host dies, we should die too
 /datum/component/life_link/proc/on_host_died(mob/living/source, gibbed)
