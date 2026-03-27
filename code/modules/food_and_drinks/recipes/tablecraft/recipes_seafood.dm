@@ -16,7 +16,7 @@
 		/obj/item/food/fishmeat = 1
 	)
 	result = /obj/item/food/fishandchips
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/fishfingers
 	name = "Fish fingers"
@@ -27,7 +27,7 @@
 	)
 	result = /obj/item/food/fishfingers
 	added_foodtypes = FRIED
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/fishfry
 	name = "Fish fry"

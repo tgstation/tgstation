@@ -7,7 +7,7 @@
 	)
 	result = /obj/item/food/herby_cheese
 	cuisine_category = CUISINE_MOTHIC
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/mothic_salad
 	name = "Mothic salad"
@@ -30,7 +30,7 @@
 	)
 	result = /obj/item/food/toasted_seeds
 	cuisine_category = CUISINE_MOTHIC
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_SNACK
 	crafting_flags = parent_type::crafting_flags & ~CRAFT_CLEARS_REAGENTS // seeds don't have nutriment
 
 /datum/crafting_recipe/food/engine_fodder
@@ -44,6 +44,7 @@
 	)
 	result = /obj/item/food/engine_fodder
 	cuisine_category = CUISINE_MOTHIC
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/squeaking_stir_fry
 	name = "Skeklitmischtpoppl (Squeaking stir fry)"
@@ -85,7 +86,7 @@
 	)
 	result = /obj/item/food/loaded_curds
 	cuisine_category = CUISINE_MOTHIC
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/baked_cheese_platter
 	name = "Stanntkraktælo (Baked cheese platter)"
@@ -164,7 +165,7 @@
 	)
 	result = /obj/item/food/mozzarella_sticks
 	added_foodtypes = FRIED
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/raw_stuffed_peppers
 	name = "Raw Voltölpapriken (Stuffed peppers)"
@@ -175,7 +176,7 @@
 	)
 	result = /obj/item/food/raw_stuffed_peppers
 	cuisine_category = CUISINE_MOTHIC
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/fueljacks_lunch
 	name = "Fueljack's lunch"
@@ -200,7 +201,7 @@
 	removed_foodtypes = JUNKFOOD
 	added_foodtypes = FRIED
 	cuisine_category = CUISINE_MOTHIC
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/hua_mulan_congee
 	name = "Hua Mulan congee"
@@ -380,7 +381,7 @@
 	added_foodtypes = GRAIN|FRIED
 	removed_foodtypes = JUNKFOOD
 	cuisine_category = CUISINE_MOTHIC
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/mothmallow
 	name = "Mothmallows"
@@ -393,7 +394,7 @@
 	result = /obj/item/food/cake/mothmallow
 	added_foodtypes = SUGAR
 	cuisine_category = CUISINE_MOTHIC
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/moffin
 	name = "Moffin"

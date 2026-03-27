@@ -30,7 +30,7 @@
 // Food reactions
 
 /datum/crafting_recipe/food/reaction
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 	non_craftable = TRUE
 
 /datum/crafting_recipe/food/reaction/New()
@@ -71,20 +71,22 @@
 	reaction = /datum/chemical_reaction/food/candycorn
 	result = /obj/item/food/candy_corn
 	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/reaction/chocolatepudding
 	reaction = /datum/chemical_reaction/food/chocolatepudding
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/reaction/vanillapudding
 	reaction = /datum/chemical_reaction/food/vanillapudding
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/reaction/chocolatebar
 	name = "Chocolate bar"
 	reaction = /datum/chemical_reaction/food/chocolate_bar3
 	result = /obj/item/food/chocolatebar
 	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/reaction/chocolatebar/chocomilk
 	name = "Chocolate bar (choco milk)"
@@ -96,13 +98,16 @@
 
 /datum/crafting_recipe/food/reaction/soysauce
 	reaction = /datum/chemical_reaction/food/soysauce
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/reaction/corn_syrup
 	reaction = /datum/chemical_reaction/food/corn_syrup
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/reaction/caramel
 	reaction = /datum/chemical_reaction/food/caramel
 	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/reaction/cheesewheel
 	reaction = /datum/chemical_reaction/food/cheesewheel
@@ -147,10 +152,12 @@
 /datum/crafting_recipe/food/reaction/bbqsauce
 	result = /datum/reagent/consumable/bbqsauce
 	reaction = /datum/chemical_reaction/food/bbqsauce
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/reaction/gravy
 	result = /datum/reagent/consumable/gravy
 	reaction = /datum/chemical_reaction/food/gravy
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/reaction/mothic_pizza_dough
 	result = /obj/item/food/mothic_pizza_dough
@@ -179,11 +186,12 @@
 /datum/crafting_recipe/food/reaction/yoghurt
 	result = /datum/reagent/consumable/yoghurt
 	reaction = /datum/chemical_reaction/food/yoghurt
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/reaction/olive_oil
 	result = /datum/reagent/consumable/nutriment/fat/oil/olive
 	reaction = /datum/chemical_reaction/food/olive_oil
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/reaction/olive_oil/upconvert
 	reaction = /datum/chemical_reaction/food/olive_oil_upconvert
@@ -198,6 +206,7 @@
 
 /datum/crafting_recipe/food/reaction/grounding_neutralise
 	reaction = /datum/chemical_reaction/food/grounding_neutralise
+	dish_category = DISH_CONDIMENT
 
 // Tools: Rolling pin
 
@@ -205,6 +214,7 @@
 	tool_behaviors =  list(TOOL_ROLLINGPIN)
 	steps = list("Flatten with a rolling pin")
 	non_craftable = TRUE
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/rollingpin/flatdough
 	reqs = list(/obj/item/food/dough = 1)
@@ -239,6 +249,7 @@
 	tool_behaviors =  list(TOOL_KNIFE)
 	steps = list("Slice with a knife")
 	non_craftable = TRUE
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/breadslice
 	reqs = list(/obj/item/food/bread/plain = 1)
@@ -264,141 +275,162 @@
 	reqs = list(/obj/item/food/flatdough = 1)
 	result = /obj/item/food/doughslice
 	dish_category = DISH_BREAD
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/knife/rootdoughslice
 	reqs = list(/obj/item/food/flatrootdough = 1)
 	result = /obj/item/food/rootdoughslice
 	dish_category = DISH_BREAD
 	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/knife/rawpastrybase
 	reqs = list(/obj/item/food/piedough = 1)
 	result = /obj/item/food/rawpastrybase
 	dish_category = DISH_BREAD
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/knife/butterslice
 	reqs = list(/obj/item/food/butter = 1)
 	result = /obj/item/food/butterslice
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/knife/doughball
 	reqs = list(/obj/item/food/doughslice = 1)
 	result = /obj/item/food/bait/doughball
 	dish_category = DISH_BREAD
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/knife/nizaya
 	reqs = list(/obj/item/food/rootdoughslice = 1)
 	result = /obj/item/food/spaghetti/nizaya
 	dish_category = DISH_NOODLES
 	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/knife/rawcutlet
 	reqs = list(/obj/item/food/meat/slab = 1)
 	result = /obj/item/food/meat/rawcutlet
 	dish_category = DISH_MEAT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/knife/headcheese_slice
 	reqs = list(/obj/item/food/headcheese = 1)
 	result = /obj/item/food/headcheese_slice
 	dish_category = DISH_MEAT
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/potatowedge
 	reqs = list(/obj/item/food/grown/potato = 1)
 	result = /obj/item/food/grown/potato/wedges
-	dish_category = DISH_COMPONENT
+	dish_category = DISH_SALAD
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/pineappleslice
 	reqs = list(/obj/item/food/grown/pineapple = 1)
 	result = /obj/item/food/pineappleslice
-	dish_category = DISH_COMPONENT
+	dish_category = DISH_SALAD
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/onionslice
 	reqs = list(/obj/item/food/grown/onion = 1)
 	result = /obj/item/food/onion_slice
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/knife/cheesewedge
 	reqs = list(/obj/item/food/cheese/wheel = 1)
 	result = /obj/item/food/cheese/wedge
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/knife/firm_cheese_slice
 	reqs = list(/obj/item/food/cheese/firm_cheese = 1)
 	result = /obj/item/food/cheese/firm_cheese_slice
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/knife/salami
 	reqs = list(/obj/item/food/sausage = 1)
 	result = /obj/item/food/salami
 	dish_category = DISH_MEAT
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/knife/american_sausage
 	reqs = list(/obj/item/food/sausage = 1)
 	result = /obj/item/food/sausage/american
 	dish_category = DISH_MEAT
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/knife/tempehslice
 	reqs = list(/obj/item/food/tempeh = 1)
 	result = /obj/item/food/tempehslice
 	dish_category = DISH_MEAT
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/brownie
 	reqs = list(/obj/item/food/brownie_sheet = 1)
 	result = /obj/item/food/brownie
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/knife/spicyfiletsushislice
 	reqs = list(/obj/item/food/spicyfiletsushiroll = 1)
 	result = /obj/item/food/spicyfiletsushislice
 	dish_category = DISH_SUSHI
+	meal_category = MEAL_MAIN_COURSE
 
 /datum/crafting_recipe/food/knife/vegetariansushislice
 	reqs = list(/obj/item/food/vegetariansushiroll = 1)
 	result = /obj/item/food/vegetariansushislice
 	dish_category = DISH_SUSHI
+	meal_category = MEAL_MAIN_COURSE
 
 /datum/crafting_recipe/food/knife/beef_wellington_slice
 	reqs = list(/obj/item/food/beef_wellington = 1)
 	result = /obj/item/food/beef_wellington_slice
 	dish_category = DISH_MEAT
+	meal_category = MEAL_MAIN_COURSE
 
 /datum/crafting_recipe/food/knife/green_lasagne_slice
 	reqs = list(/obj/item/food/green_lasagne = 1)
 	result = /obj/item/food/green_lasagne_slice
 	dish_category = DISH_NOODLES
+	meal_category = MEAL_MAIN_COURSE
 
 /datum/crafting_recipe/food/knife/lil_baked_rice
 	reqs = list(/obj/item/food/big_baked_rice = 1)
 	result = /obj/item/food/lil_baked_rice
 	cuisine_category = CUISINE_MOTHIC
 	dish_category = DISH_RICE
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/watermelonslice
 	reqs = list(/obj/item/food/grown/watermelon = 1)
 	result = /obj/item/food/watermelonslice
-	dish_category = DISH_COMPONENT
+	dish_category = DISH_SALAD
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/appleslice
 	reqs = list(/obj/item/food/grown/apple = 1)
 	result = /obj/item/food/appleslice
-	dish_category = DISH_COMPONENT
+	dish_category = DISH_SALAD
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/kamaboko_slice
 	reqs = list(/obj/item/food/kamaboko = 1)
 	result = /obj/item/food/kamaboko_slice
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/raw_noodles
 	reqs = list(/obj/item/food/rice_dough = 1)
 	result = /obj/item/food/spaghetti/rawnoodles
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_NOODLES
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/knife/chapslice
 	reqs = list(/obj/item/food/canned/chap = 1)
 	result = /obj/item/food/chapslice
 	dish_category = DISH_MEAT
+	meal_category = MEAL_COMPONENT
 
 // Machinery: Grill
 
@@ -411,14 +443,17 @@
 /datum/crafting_recipe/food/grill/meatball
 	reqs = list(/obj/item/food/raw_meatball = 1)
 	result = /obj/item/food/meatball
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/grill/patty
 	reqs = list(/obj/item/food/raw_patty = 1)
 	result = /obj/item/food/patty
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/grill/cutlet
 	reqs = list(/obj/item/food/meat/rawcutlet = 1)
 	result = /obj/item/food/meat/cutlet
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/grill/steak
 	reqs = list(/obj/item/food/meat/slab = 1)
@@ -435,15 +470,18 @@
 /datum/crafting_recipe/food/grill/bacon
 	reqs = list(/obj/item/food/meat/rawbacon = 1)
 	result = /obj/item/food/meat/bacon
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/grill/sausage
 	reqs = list(/obj/item/food/raw_sausage = 1)
 	result = /obj/item/food/sausage
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/grill/moonfish
 	reqs = list(/obj/item/food/fishmeat/moonfish = 1)
 	result = /obj/item/food/grilled_moonfish
 	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/grill/rootflatbread
 	reqs = list(/obj/item/food/flatrootdough = 1)
@@ -455,11 +493,13 @@
 	reqs = list(/obj/item/food/breadslice/plain = 1)
 	result = /obj/item/food/griddle_toast
 	dish_category = DISH_BREAD
+	meal_category = MEAL_BREAKFAST
 
 /datum/crafting_recipe/food/grill/frenchtoast
 	reqs = list(/obj/item/food/raw_frenchtoast = 1)
 	result = /obj/item/food/frenchtoast
 	dish_category = DISH_BREAD
+	meal_category = MEAL_BREAKFAST
 
 /datum/crafting_recipe/food/grill/khinkali
 	reqs = list(/obj/item/food/rawkhinkali = 1)
@@ -481,11 +521,13 @@
 	result = /obj/item/food/ballpark_pretzel
 	dish_category = DISH_PASTRY
 	cuisine_category = CUISINE_MARTIAN
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/grill/ballpark_tsukune
 	reqs = list(/obj/item/food/kebab/raw_ballpark_tsukune = 1)
 	result = /obj/item/food/kebab/ballpark_tsukune
 	cuisine_category = CUISINE_MARTIAN
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/grill/chapslice
 	reqs = list(/obj/item/food/chapslice = 1)
@@ -498,7 +540,7 @@
 		"Break the egg onto a griddle",
 		"Fry until ready"
 	)
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/grill/pancake
 	reqs = list(/datum/reagent/consumable/pancakebatter = 5)
@@ -544,19 +586,22 @@
 	machinery = list(/obj/machinery/reagentgrinder)
 	steps = list("Put into grinder and grind")
 	non_craftable = TRUE
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/grinder/capsaicin
 	reqs = list(/obj/item/food/grown/chili = 1)
 	result = /datum/reagent/consumable/capsaicin
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/grinder/frostoil
 	reqs = list(/obj/item/food/grown/icepepper = 1)
 	result = /datum/reagent/consumable/frostoil
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/grinder/ketchup
 	reqs = list(/obj/item/food/grown/tomato = 1)
 	result = /datum/reagent/consumable/ketchup
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/grinder/kortaflour
 	reqs = list(/obj/item/food/grown/korta_nut = 1)
@@ -588,15 +633,18 @@
 	reqs = list(/datum/reagent/consumable/milk = MILK_TO_BUTTER_COEFF)
 	result = /obj/item/food/butter
 	steps = list("Put into grinder and mix")
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/grinder/mayonnaise
 	reqs = list(/datum/reagent/consumable/eggyolk = 1)
 	result = /datum/reagent/consumable/mayonnaise
 	steps = list("Put into grinder and mix")
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/grinder/sugar
 	reqs = list(/obj/item/food/grown/sugarcane = 1)
 	result = /datum/reagent/consumable/sugar
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/grinder/sugar/beet
 	reqs = list(/obj/item/food/grown/whitebeet = 1)
@@ -610,29 +658,34 @@
 /datum/crafting_recipe/food/grinder/sprinkles
 	reqs = list(/obj/item/food/donut/plain = 1)
 	result = /datum/reagent/consumable/sprinkles
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/grinder/cherryjelly
 	reqs = list(/obj/item/food/grown/cherries = 1)
 	result = /datum/reagent/consumable/cherryjelly
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/grinder/bluecherryjelly
 	reqs = list(/obj/item/food/grown/bluecherries = 1)
 	result = /datum/reagent/consumable/bluecherryjelly
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/grinder/olivepaste
 	reqs = list(/obj/item/food/grown/olive = 1)
 	result = /datum/reagent/consumable/olivepaste
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/grinder/peanutbutter
 	reqs = list(/obj/item/food/grown/peanut = 1)
 	result = /datum/reagent/consumable/peanut_butter
+	dish_category = DISH_CONDIMENT
 
 // Machinery: Processor
 /datum/crafting_recipe/food/processor
 	machinery = list(/obj/machinery/processor)
 	steps = list("Put into processor and activate")
 	non_craftable = TRUE
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/processor/rawbacon
 	reqs = list(/obj/item/food/meat/rawcutlet = 1)
@@ -647,21 +700,22 @@
 /datum/crafting_recipe/food/processor/tatortot
 	reqs = list(/obj/item/food/grown/potato = 1)
 	result = /obj/item/food/tatortot
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/processor/fries
 	reqs = list(/obj/item/food/grown/potato/wedges = 1)
 	result = /obj/item/food/fries
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/processor/carrotfries
 	reqs = list(/obj/item/food/grown/carrot = 1)
 	result = /obj/item/food/carrotfries
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/processor/roastparsnip
 	reqs = list(/obj/item/food/grown/parsnip = 1)
 	result = /obj/item/food/roastparsnip
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/processor/soydope
 	reqs = list(/obj/item/food/grown/soybeans = 1)
@@ -686,6 +740,7 @@
 /datum/crafting_recipe/food/processor/popsicle_stick
 	reqs = list(/obj/item/grown/log = 1)
 	result = /obj/item/popsicle_stick
+	category = CAT_MISC
 
 /datum/crafting_recipe/food/processor/spidereggs
 	reqs = list(/obj/item/food/spidereggs = 1)
@@ -696,7 +751,7 @@
 	machinery = list(/obj/machinery/microwave)
 	steps = list("Microwave until ready")
 	non_craftable = TRUE
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/microwave/boiledegg
 	reqs = list(/obj/item/food/egg = 1)
@@ -715,12 +770,12 @@
 /datum/crafting_recipe/food/microwave/onionrings
 	reqs = list(/obj/item/food/onion_slice = 1)
 	result = /obj/item/food/onionrings
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/microwave/popcorn
 	reqs = list(/obj/item/food/grown/corn = 1)
 	result = /obj/item/food/popcorn
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/microwave/cakehat
 	reqs = list(/obj/item/food/cake/birthday = 1)
@@ -753,16 +808,19 @@
 /datum/crafting_recipe/food/oven/bun
 	reqs = list(/obj/item/food/doughslice = 1)
 	result = /obj/item/food/bun
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/oven/rootroll
 	reqs = list(/obj/item/food/rootdoughslice = 1)
 	result = /obj/item/food/rootroll
 	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/oven/pastrybase
 	reqs = list(/obj/item/food/rawpastrybase = 1)
 	result = /obj/item/food/pastrybase
 	dish_category = DISH_PASTRY
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/oven/pizzabread
 	reqs = list(/obj/item/food/flatdough = 1)
@@ -794,6 +852,7 @@
 /datum/crafting_recipe/food/oven/breadstick
 	reqs = list(/obj/item/food/raw_breadstick = 1)
 	result = /obj/item/food/breadstick
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/oven/baked_cheese
 	reqs = list(/obj/item/food/cheese/wheel = 1)
@@ -803,7 +862,7 @@
 /datum/crafting_recipe/food/oven/browniesheet
 	reqs = list(/obj/item/food/raw_brownie_batter = 1)
 	result = /obj/item/food/brownie_sheet
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/oven/green_lasagne
 	reqs = list(/obj/item/food/raw_green_lasagne = 1)
@@ -853,13 +912,14 @@
 	reqs = list(/obj/item/food/raw_ballpark_pretzel = 1)
 	result = /obj/item/food/ballpark_pretzel
 	cuisine_category = CUISINE_MARTIAN
+	meal_category = MEAL_APPETIZER
 
 // Machinery: Drying rack
 /datum/crafting_recipe/food/drying
 	machinery = list(/obj/machinery/smartfridge/drying)
 	steps = list("Put into the rack and dry")
 	non_craftable = TRUE
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/drying/firm_cheese
 	reqs = list(/obj/item/food/cheese/cheese_curds = 1)
@@ -869,27 +929,32 @@
 	reqs = list(/obj/item/food/raw_headcheese = 1)
 	result = /obj/item/food/headcheese
 	dish_category = DISH_MEAT
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/drying/tiziran_sausage
 	reqs = list(/obj/item/food/raw_tiziran_sausage = 1)
 	result = /obj/item/food/tiziran_sausage
 	dish_category = DISH_MEAT
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/drying/sosjerky
 	reqs = list(/obj/item/food/meat/slab = 1)
 	result = /obj/item/food/sosjerky/healthy
 	dish_category = DISH_MEAT
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/drying/no_raisin/healthy
 	reqs = list(/obj/item/food/grown/grapes = 1)
 	result = /obj/item/food/no_raisin/healthy
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/drying/semki
 	reqs = list(/obj/item/food/grown/sunflower = 1)
 	result = /obj/item/food/semki/healthy
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/drying/kamaboko
 	reqs = list(/obj/item/food/surimi = 1)
 	result = /obj/item/food/kamaboko
 	cuisine_category = CUISINE_MARTIAN
+	meal_category = MEAL_SNACK

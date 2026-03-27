@@ -73,7 +73,7 @@
 	)
 	result = /obj/item/food/moonfish_caviar
 	cuisine_category = CUISINE_LIZARD
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/lizard_escargot
 	name = "Desert snail cocleas"
@@ -88,7 +88,7 @@
 	result = /obj/item/food/lizard_escargot
 	removed_foodtypes = GORE
 	cuisine_category = CUISINE_LIZARD
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/fried_blood_sausage
 	name = "Fried blood sausage"
@@ -113,7 +113,7 @@
 	)
 	result = /obj/item/food/lizard_fries
 	cuisine_category = CUISINE_LIZARD
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/brain_pate
 	name = "Eyeball-and-brain pate"
@@ -136,7 +136,7 @@
 	)
 	result = /obj/item/food/crispy_headcheese
 	cuisine_category = CUISINE_LIZARD
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/picoss_skewers
 	name = "Picoss skewers"
@@ -161,7 +161,7 @@
 	)
 	result = /obj/item/food/nectar_larvae
 	cuisine_category = CUISINE_LIZARD
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/mushroomy_stirfry
 	name = "Mushroomy Stirfry"
@@ -434,7 +434,7 @@
 	added_foodtypes = GORE|BREAKFAST
 	removed_foodtypes = RAW
 	cuisine_category = CUISINE_LIZARD
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/patzikula
 	name = "Patzikula"
@@ -448,7 +448,7 @@
 	removed_foodtypes = RAW
 	added_foodtypes = BREAKFAST
 	cuisine_category = CUISINE_LIZARD
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/korta_brittle
 	name = "Korta brittle slab"
@@ -462,7 +462,7 @@
 	result = /obj/item/food/cake/korta_brittle
 	added_foodtypes = SUGAR
 	cuisine_category = CUISINE_LIZARD
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/korta_ice
 	name = "Korta ice"
@@ -489,6 +489,7 @@
 	added_foodtypes = SUGAR
 	cuisine_category = CUISINE_LIZARD
 	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/sauerkraut
 	name = "Sauerkraut"
@@ -498,7 +499,8 @@
 	)
 	result = /obj/item/food/sauerkraut
 	cuisine_category = CUISINE_LIZARD
-	dish_category = DISH_COMPONENT
+	dish_category = DISH_CONDIMENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/lizard_dumplings
 	name = "Tiziran dumplings"
@@ -509,7 +511,7 @@
 	result = /obj/item/food/lizard_dumplings
 	added_foodtypes = NUTS
 	cuisine_category = CUISINE_LIZARD
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/steeped_mushrooms
 	name = "Steeped mushrooms"
@@ -519,7 +521,7 @@
 	)
 	result = /obj/item/food/steeped_mushrooms
 	cuisine_category = CUISINE_LIZARD
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/rootbreadpbj
 	name = "Peanut butter and jelly rootwich"

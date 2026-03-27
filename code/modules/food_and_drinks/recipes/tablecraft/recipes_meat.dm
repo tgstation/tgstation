@@ -403,3 +403,4 @@
 	)
 	result = /obj/item/food/kebab/pineapple_skewer
 	dish_category = DISH_MEAT
+	meal_category = MEAL_APPETIZER

@@ -13,6 +13,7 @@
 	result = /obj/item/food/pie/cream
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/meatpie
 	name = "Meat pie"
@@ -24,6 +25,7 @@
 	)
 	result = /obj/item/food/pie/meatpie
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/tofupie
 	name = "Tofu pie"
@@ -33,6 +35,7 @@
 	)
 	result = /obj/item/food/pie/tofupie
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/xenopie
 	name = "Xeno pie"
@@ -42,6 +45,7 @@
 	)
 	result = /obj/item/food/pie/xemeatpie
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/cherrypie
 	name = "Cherry pie"
@@ -52,6 +56,7 @@
 	result = /obj/item/food/pie/cherrypie
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/berryclafoutis
 	name = "Berry clafoutis"
@@ -62,6 +67,7 @@
 	result = /obj/item/food/pie/berryclafoutis
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/bearypie
 	name = "Beary Pie"
@@ -73,6 +79,7 @@
 	result = /obj/item/food/pie/bearypie
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/amanitapie
 	name = "Amanita pie"
@@ -83,6 +90,7 @@
 	result = /obj/item/food/pie/amanita_pie
 	added_foodtypes = TOXIC|GROSS
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/plumppie
 	name = "Plump pie"
@@ -92,6 +100,7 @@
 	)
 	result = /obj/item/food/pie/plump_pie
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/applepie
 	name = "Apple pie"
@@ -102,6 +111,7 @@
 	result = /obj/item/food/pie/applepie
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/pumpkinpie
 	name = "Pumpkin pie"
@@ -114,6 +124,7 @@
 	result = /obj/item/food/pie/pumpkinpie
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/goldenappletart
 	name = "Golden apple tart"
@@ -126,6 +137,7 @@
 	result = /obj/item/food/pie/appletart
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/grapetart
 	name = "Grape tart"
@@ -138,6 +150,7 @@
 	result = /obj/item/food/pie/grapetart
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/mimetart
 	name = "Mime tart"
@@ -149,6 +162,7 @@
 	)
 	result = /obj/item/food/pie/mimetart
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 	added_foodtypes = SUGAR
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
@@ -162,6 +176,7 @@
 	)
 	result = /obj/item/food/pie/berrytart
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 	added_foodtypes = SUGAR
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
@@ -176,6 +191,7 @@
 	)
 	result = /obj/item/food/pie/cocolavatart
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 	added_foodtypes = SUGAR
 	removed_foodtypes = JUNKFOOD
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
@@ -191,6 +207,7 @@
 	result = /obj/item/food/pie/blumpkinpie
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/dulcedebatata
 	name = "Dulce de batata"
@@ -202,6 +219,7 @@
 	result = /obj/item/food/pie/dulcedebatata
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/frostypie
 	name = "Frosty pie"
@@ -212,6 +230,7 @@
 	result = /obj/item/food/pie/frostypie
 	added_foodtypes = FRUIT|SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/baklava
 	name = "Baklava pie"
@@ -223,6 +242,7 @@
 	result = /obj/item/food/pie/baklava
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/frenchsilkpie
 	name = "French silk pie"
@@ -235,6 +255,7 @@
 	removed_foodtypes = JUNKFOOD
 	added_foodtypes = SUGAR
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/shepherds_pie
 	name = "Shepherds pie"
@@ -248,6 +269,7 @@
 	)
 	result = /obj/item/food/pie/shepherds_pie
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/asdfpie
 	name = "Pie-flavored pie"
@@ -256,6 +278,7 @@
 	)
 	result = /obj/item/food/pie/asdfpie
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/bacid_pie
 	reqs = list(
@@ -266,3 +289,4 @@
 	result = /obj/item/food/pie/bacid_pie
 	added_foodtypes = TOXIC
 	dish_category = DISH_PIE
+	meal_category = MEAL_DESSERT

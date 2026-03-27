@@ -12,6 +12,7 @@
 	result = /obj/item/food/candiedapple
 	added_foodtypes = JUNKFOOD|SUGAR
 	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/spiderlollipop
 	name = "Spider Lollipop"
@@ -24,6 +25,7 @@
 	added_foodtypes = JUNKFOOD|SUGAR
 	removed_foodtypes = TOXIC
 	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/chococoin
 	name = "Choco coin"
@@ -31,6 +33,7 @@
 	tool_paths = list(/obj/item/coin)
 	result = /obj/item/food/chococoin
 	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/fudgedice
 	name = "Fudge dice"
@@ -40,6 +43,7 @@
 	)
 	result = /obj/item/food/fudgedice
 	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/chocoorange
 	name = "Choco orange"
@@ -48,7 +52,8 @@
 		/obj/item/food/chocolatebar = 1,
 	)
 	result = /obj/item/food/chocoorange
-	dish_category = DISH_DESSERT
+	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/cheesyfries
 	name = "Cheesy fries"
@@ -57,7 +62,7 @@
 		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/cheesyfries
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/poutine
 	name = "Poutine"
@@ -68,7 +73,7 @@
 	)
 	result = /obj/item/food/poutine
 	added_foodtypes = MEAT
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/beans
 	name = "Beans"
@@ -145,7 +150,7 @@
 	result = /obj/item/food/salad/ricepudding
 	added_foodtypes = DAIRY|SUGAR
 	removed_foodtypes = BREAKFAST
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/risotto
 	name = "Risotto"
@@ -176,6 +181,7 @@
 	)
 	result = /mob/living/basic/bear/butter
 	dish_category = DISH_UNCATEGORIZED
+	meal_category = MEAL_UNCATEGORIZED
 
 /datum/crafting_recipe/food/crab_rangoon
 	name = "Crab Rangoon"
@@ -187,7 +193,7 @@
 	)
 	result = /obj/item/food/crab_rangoon
 	removed_foodtypes = RAW
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/royalcheese
 	name = "Royal Cheese"
@@ -209,6 +215,7 @@
 	)
 	result = /obj/item/food/ant_candy
 	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/pesto
 	name = "Pesto"
@@ -221,7 +228,8 @@
 		/obj/item/food/canned/pine_nuts = 1
 	)
 	result = /obj/item/food/pesto
-	dish_category = DISH_COMPONENT
+	dish_category = DISH_CONDIMENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/tomato_sauce
 	name = "Tomato sauce"
@@ -232,7 +240,8 @@
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)
 	result = /obj/item/food/tomato_sauce
-	dish_category = DISH_COMPONENT
+	dish_category = DISH_CONDIMENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/bechamel_sauce
 	name = "Bechamel sauce"
@@ -243,7 +252,8 @@
 	)
 	result = /obj/item/food/bechamel_sauce
 	added_foodtypes = GRAIN
-	dish_category = DISH_COMPONENT
+	dish_category = DISH_CONDIMENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/pierogi
 	name = "Pierogi"
@@ -253,7 +263,7 @@
 		/obj/item/food/grown/onion = 1,
 	)
 	result = /obj/item/food/pierogi
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/stuffed_cabbage
 	name = "Stuffed cabbage"
@@ -287,7 +297,7 @@
 	)
 	result = /obj/item/food/onigiri
 	removed_foodtypes = BREAKFAST
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/mashed_potatoes
 	name = "Mashed potatoes"
@@ -321,7 +331,7 @@
 	)
 	result = /obj/item/food/springroll
 	added_foodtypes = GRAIN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 	// cuisine_category = CUISINE_CHINESE
 
 /datum/crafting_recipe/food/caramel_popcorn
@@ -333,6 +343,7 @@
 	result = /obj/item/food/popcorn/caramel
 	added_foodtypes = SUGAR
 	dish_category = DISH_CANDY
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/salty_popcorn
 	name = "Salty popcorn"
@@ -341,7 +352,7 @@
 		/datum/reagent/consumable/salt = 3,
 	)
 	result = /obj/item/food/popcorn/salty
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/spacylibertyduff
 	name = "Spacy liberty duff"
@@ -351,7 +362,7 @@
 		/obj/item/food/grown/mushroom/libertycap = 3
 	)
 	result = /obj/item/food/bowled/spacylibertyduff
-	dish_category = DISH_DESSERT // jello
+	meal_category = MEAL_DESSERT // jello
 
 /datum/crafting_recipe/food/amanitajelly
 	name = "Amanita jelly"
@@ -362,7 +373,7 @@
 	)
 	result = /obj/item/food/bowled/amanitajelly
 	added_foodtypes = TOXIC
-	dish_category = DISH_DESSERT // jello
+	meal_category = MEAL_DESSERT // jello
 
 /datum/crafting_recipe/food/buttered_baked_potato
 	name = "Buttered baked potato"
@@ -393,7 +404,7 @@
 		/obj/item/food/cheese/wedge = 1,
 	)
 	result = /obj/item/food/cheese_pierogi
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/meat_pierogi
 	name = "Meat pierogi"
@@ -403,7 +414,7 @@
 		/obj/item/food/meat/cutlet = 1,
 	)
 	result = /obj/item/food/meat_pierogi
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/bonbon/caramel_truffle
 	name = "Caramel truffle"
@@ -412,7 +423,7 @@
 		/datum/reagent/consumable/caramel = 2,
 	)
 	result = /obj/item/food/bonbon/caramel_truffle
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/bonbon/chocolate_truffle
 	name = "Chocolate truffle"
@@ -421,7 +432,7 @@
 		/datum/reagent/consumable/sugar = 2,
 	)
 	result = /obj/item/food/bonbon/chocolate_truffle
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/bonbon/peanut_truffle
 	name = "Peanut truffle"
@@ -430,7 +441,7 @@
 		/obj/item/food/grown/peanut = 1,
 	)
 	result = /obj/item/food/bonbon/peanut_truffle
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/bonbon/peanut_butter_cup
 	name = "Peanut butter cup"
@@ -461,7 +472,7 @@
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 3,
 	)
 	result = /obj/item/food/sauteed_eggplant
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/stuffed_eggplant
 	name = "Stuffed eggplant"
@@ -520,7 +531,7 @@
 	)
 	result = /obj/item/food/candied_pineapple
 	added_foodtypes = SUGAR
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/tzatziki_sauce
 	name = "Tzatziki sauce"
@@ -531,7 +542,7 @@
 		/datum/reagent/consumable/salt = 1,
 	)
 	result = /obj/item/food/tzatziki_sauce
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/tzatziki_and_pita_bread
 	name = "Tzatziki and pita bread"

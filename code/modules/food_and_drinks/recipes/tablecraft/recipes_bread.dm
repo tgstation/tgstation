@@ -95,6 +95,7 @@
 	)
 	result = /obj/item/food/garlicbread
 	dish_category = DISH_BREAD
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/butterbiscuit
 	name = "Butter Biscuit"
@@ -124,6 +125,7 @@
 	)
 	result = /obj/item/food/baguette
 	dish_category = DISH_BREAD
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/raw_breadstick
 	name = "Raw breadstick"
@@ -134,6 +136,7 @@
 	)
 	result = /obj/item/food/raw_breadstick
 	dish_category = DISH_BREAD
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/raw_croissant
 	name = "Raw croissant"
@@ -144,6 +147,7 @@
 	)
 	result = /obj/item/food/raw_croissant
 	dish_category = DISH_BREAD
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/throwing_croissant
 	name = "Throwing croissant"
@@ -171,6 +175,8 @@
 	)
 	result = /mob/living/basic/pet/dog/breaddog
 	dish_category = DISH_BREAD
+	meal_category = MEAL_UNCATEGORIZED
+
 
 ////////////////////////////////////////////////TOAST////////////////////////////////////////////////
 
@@ -236,6 +242,7 @@
 	)
 	result = /mob/living/basic/pet/cat/breadcat
 	dish_category = DISH_BREAD
+	meal_category = MEAL_UNCATEGORIZED
 
 /datum/crafting_recipe/food/frenchtoast
 	name = "Raw french toast"
@@ -247,3 +254,4 @@
 	result = /obj/item/food/raw_frenchtoast
 	added_foodtypes = BREAKFAST
 	dish_category = DISH_BREAD
+	meal_category = MEAL_COMPONENT

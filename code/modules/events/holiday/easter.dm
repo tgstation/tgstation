@@ -175,7 +175,7 @@
 	)
 	result = /obj/item/food/scotchegg
 	removed_foodtypes = BREAKFAST
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/mammi
 	name = "Mammi"
@@ -203,3 +203,4 @@
 	)
 	result = /obj/item/food/chocolatebunny
 	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT

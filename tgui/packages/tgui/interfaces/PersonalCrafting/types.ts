@@ -44,6 +44,7 @@ export type Recipe = {
   complexity?: number;
   cuisine_category?: string;
   dish_category?: string;
+  meal_category?: string;
 };
 
 export type Diet = {

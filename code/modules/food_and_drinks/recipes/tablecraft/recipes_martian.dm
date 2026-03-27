@@ -7,7 +7,7 @@
 	)
 	result = /obj/item/food/kimchi
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/inferno_kimchi
 	name = "Inferno kimchi"
@@ -18,7 +18,7 @@
 	)
 	result = /obj/item/food/inferno_kimchi
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/garlic_kimchi
 	name = "Garlic kimchi"
@@ -30,7 +30,7 @@
 	)
 	result = /obj/item/food/garlic_kimchi
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/surimi
 	name = "Surimi"
@@ -39,7 +39,7 @@
 	)
 	result = /obj/item/food/surimi
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/sambal
 	name = "Sambal"
@@ -54,7 +54,7 @@
 	result = /obj/item/food/sambal
 	added_foodtypes = SEAFOOD //Until we have easy to get shrimp to add to the recipe
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_COMPONENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/katsu_fillet
 	name = "Katsu fillet"
@@ -382,6 +382,7 @@
 	added_foodtypes = GRAIN|FRIED
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_MEAT
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/russian_takoyaki
 	name = "Russian takoyaki"
@@ -395,6 +396,7 @@
 	added_foodtypes = GRAIN|FRIED
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_MEAT
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/tacoyaki
 	name = "Tacoyaki"
@@ -409,6 +411,7 @@
 	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_MEAT
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/okonomiyaki
 	name = "Okonomiyaki"
@@ -423,6 +426,7 @@
 	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_PASTRY // ??
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/brat_kimchi
 	name = "Brat-kimchi"
@@ -434,7 +438,7 @@
 	result = /obj/item/food/brat_kimchi
 	removed_foodtypes = BREAKFAST
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/tonkatsuwurst
 	name = "Tonkatsuwurst"
@@ -447,7 +451,8 @@
 	result = /obj/item/food/tonkatsuwurst
 	removed_foodtypes = BREAKFAST
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_APPETIZER
+	dish_category = DISH_MEAT
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/ti_hoeh_koe
 	name = "Ti hoeh koe"
@@ -517,7 +522,7 @@
 	)
 	result = /obj/item/food/izakaya_fries
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/kurry_ok_subsando
 	name = "Kurry-OK subsando"
@@ -554,7 +559,7 @@
 	)
 	result = /obj/item/food/wild_duck_fries
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/little_hawaii_hotdog
 	name = "Little Hawaii hotdog"
@@ -579,7 +584,7 @@
 	)
 	result = /obj/item/food/salt_chilli_fries
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/steak_croquette
 	name = "Steak croquette"
@@ -774,7 +779,7 @@
 	result = /obj/item/food/cilbir
 	added_foodtypes = DAIRY
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/peking_duck_crepes
 	name = "Peking duck crepes a l'orange"
@@ -811,7 +816,7 @@
 	)
 	result = /obj/item/food/salad/pineapple_foster
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/pastel_de_nata
 	name = "Pastel de nata"
@@ -847,7 +852,7 @@
 	result = /obj/item/food/banana_fritter
 	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/pineapple_fritter
 	name = "Pineapple fritter"
@@ -858,7 +863,7 @@
 	result = /obj/item/food/pineapple_fritter
 	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/kasei_dango
 	name = "Kasei dango"
@@ -872,7 +877,7 @@
 	result = /obj/item/food/kebab/kasei_dango
 	added_foodtypes = GRAIN
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/pb_ice_cream_mochi
 	name = "Peanut-butter ice cream mochi"
@@ -923,6 +928,7 @@
 	added_foodtypes = SUGAR|FRUIT
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_FROZEN
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/banana_topsicle
 	name = "Banana topsicle"
@@ -936,6 +942,7 @@
 	added_foodtypes = SUGAR|FRUIT
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_FROZEN
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/pineapple_topsicle
 	name = "Pineapple topsicle"
@@ -949,6 +956,7 @@
 	added_foodtypes = SUGAR|FRUIT|PINEAPPLE
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_FROZEN
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/plasma_dog_supreme
 	name = "Plasma Dog Supreme"
@@ -972,7 +980,7 @@
 	result = /obj/item/food/frickles
 	added_foodtypes = GRAIN|FRIED|SEAFOOD
 	cuisine_category = CUISINE_MARTIAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/raw_ballpark_pretzel
 	name = "Raw ballpark pretzel"
@@ -984,6 +992,7 @@
 	added_foodtypes = RAW
 	cuisine_category = CUISINE_MARTIAN
 	dish_category = DISH_PASTRY
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/raw_ballpark_tsukune
 	name = "Raw ballpark tsukune"
@@ -1071,3 +1080,4 @@
 /datum/crafting_recipe/food/reaction/soup/volt_fish
 	reaction = /datum/chemical_reaction/food/soup/volt_fish
 	cuisine_category = CUISINE_MARTIAN
+	dish_category = DISH_MEAT

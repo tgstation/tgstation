@@ -1,6 +1,7 @@
 /datum/crafting_recipe/food/reaction/soup
 	machinery = list(/obj/machinery/stove)
 	dish_category = DISH_SOUP
+	meal_category = MEAL_MAIN_COURSE
 	non_craftable = TRUE
 	/// What contained is this reaction expected to be served in?
 	/// Used to determine the icon to display in the crafting UI.

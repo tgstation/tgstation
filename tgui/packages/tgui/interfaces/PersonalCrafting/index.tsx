@@ -76,8 +76,18 @@ export function PersonalCrafting(props: any) {
     }, [])
     .sort((a, b) => (a > b ? 1 : -1));
 
+  const allMealCategories = data.recipes
+    .reduce((acc: string[], recipe) => {
+      if (recipe.meal_category && !acc.includes(recipe.meal_category)) {
+        acc.push(recipe.meal_category);
+      }
+      return acc;
+    }, [])
+    .sort((a, b) => (a > b ? 1 : -1));
+
   const [activeFoodCuisine, setFoodCuisine] = useState<string[]>();
   const [activeDishCategory, setDishCategory] = useState<string[]>();
+  const [activeMealCategory, setMealCategory] = useState<string[]>();
 
   const [activeType, setFoodType] = useState(
     Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0],
@@ -124,6 +134,12 @@ export function PersonalCrafting(props: any) {
         if (
           activeDishCategory?.length &&
           !activeDishCategory.includes(recipe.dish_category || '')
+        ) {
+          return false;
+        }
+        if (
+          activeMealCategory?.length &&
+          !activeMealCategory.includes(recipe.meal_category || '')
         ) {
           return false;
         }
@@ -440,6 +456,42 @@ export function PersonalCrafting(props: any) {
                                               ml={0.5}
                                             />
                                             {dish}
+                                          </Button.Checkbox>
+                                        </Stack.Item>
+                                      ))}
+                                      <Stack.Item>
+                                        <SubGroupTitle title="Meals" />
+                                      </Stack.Item>
+                                      {allMealCategories.map((meal) => (
+                                        <Stack.Item key={meal}>
+                                          <Button.Checkbox
+                                            fluid
+                                            checked={activeMealCategory?.includes(
+                                              meal,
+                                            )}
+                                            onClick={() => {
+                                              setMealCategory(
+                                                activeMealCategory?.includes(
+                                                  meal,
+                                                )
+                                                  ? activeMealCategory.filter(
+                                                      (d) => d !== meal,
+                                                    )
+                                                  : [
+                                                      ...(activeMealCategory ||
+                                                        []),
+                                                      meal,
+                                                    ],
+                                              );
+                                              setPages(1);
+                                            }}
+                                          >
+                                            <Icon
+                                              name={getFAIcon(meal, mode)}
+                                              mr={1}
+                                              ml={0.5}
+                                            />
+                                            {meal}
                                           </Button.Checkbox>
                                         </Stack.Item>
                                       ))}

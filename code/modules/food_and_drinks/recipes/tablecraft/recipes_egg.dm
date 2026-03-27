@@ -30,7 +30,7 @@
 	)
 	result = /obj/item/food/chocolateegg
 	removed_foodtypes = MEAT|BREAKFAST //This recipe is very wrong, please change it ffs
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/eggsbenedict
 	name = "Eggs benedict"

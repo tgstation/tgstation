@@ -25,7 +25,7 @@
 	dish_category = DISH_BURRITO
 
 /datum/crafting_recipe/food/carneburrito
-	name ="Carne de asada burrito"
+	name = "Carne de asada burrito"
 	reqs = list(
 		/obj/item/food/tortilla = 1,
 		/obj/item/food/meat/cutlet = 2,
@@ -36,7 +36,7 @@
 	dish_category = DISH_BURRITO
 
 /datum/crafting_recipe/food/fuegoburrito
-	name ="Fuego plasma burrito"
+	name = "Fuego plasma burrito"
 	reqs = list(
 		/obj/item/food/tortilla = 1,
 		/obj/item/food/grown/ghost_chili = 2,
@@ -47,7 +47,7 @@
 	dish_category = DISH_BURRITO
 
 /datum/crafting_recipe/food/nachos
-	name =" Nachos"
+	name = "Nachos"
 	reqs = list(
 		/datum/reagent/consumable/salt = 1,
 		/obj/item/food/tortilla = 1
@@ -55,7 +55,7 @@
 	result = /obj/item/food/nachos
 	added_foodtypes = FRIED
 	cuisine_category = CUISINE_MEXICAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/cheesynachos
 	name = "Cheesy nachos"
@@ -67,7 +67,7 @@
 	result = /obj/item/food/cheesynachos
 	added_foodtypes = FRIED
 	cuisine_category = CUISINE_MEXICAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/cubannachos
 	name = "Cuban nachos"
@@ -79,7 +79,7 @@
 	result = /obj/item/food/cubannachos
 	added_foodtypes = FRIED
 	cuisine_category = CUISINE_MEXICAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/taco
 	name ="Classic Taco"
@@ -139,7 +139,7 @@
 	result = /obj/item/food/chipsandsalsa
 	removed_foodtypes = JUNKFOOD
 	cuisine_category = CUISINE_MEXICAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/classic_chimichanga
 	name = "Classic Chimichanga"
@@ -227,4 +227,4 @@
 	)
 	result = /obj/item/food/pineapple_salsa
 	cuisine_category = CUISINE_MEXICAN
-	dish_category = DISH_APPETIZER
+	meal_category = MEAL_APPETIZER

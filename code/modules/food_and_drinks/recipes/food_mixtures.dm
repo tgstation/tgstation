@@ -19,6 +19,8 @@
 	var/cuisine_category = CUISINE_TERRAN
 	/// Type of dish, like "Pizza", "Cake", "Burger" or "Soup"
 	var/dish_category = DISH_UNCATEGORIZED
+	/// Type of meal, like "Appetizer", "Main Course", "Dessert", or "Snack"
+	var/meal_category = MEAL_MAIN_COURSE
 
 /datum/crafting_recipe/food/New()
 	. = ..()
@@ -50,10 +52,12 @@
 /datum/crafting_recipe/food/crafting_ui_data()
 	var/list/data = list()
 
-	data["foodtypes"] = bitfield_to_list(get_food_types(), FOOD_FLAGS)
+	var/foodtypes = get_food_types()
+	data["foodtypes"] = bitfield_to_list(foodtypes, FOOD_FLAGS)
 	data["complexity"] = get_complexity()
 	data["cuisine_category"] = cuisine_category
 	data["dish_category"] = dish_category
+	data["meal_category"] = (meal_category != MEAL_COMPONENT && (foodtypes & BREAKFAST)) ? MEAL_BREAKFAST : meal_category
 
 	return data
 

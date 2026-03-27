@@ -692,7 +692,7 @@
 	result = /obj/item/food/raw_brownie_batter
 	added_foodtypes = GRAIN|JUNKFOOD|BREAKFAST|SUGAR
 	removed_foodtypes = MEAT|RAW
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/peanut_butter_brownie_batter
 	name = "Raw peanut butter brownie batter"
@@ -707,7 +707,7 @@
 	result = /obj/item/food/peanut_butter_brownie_batter
 	added_foodtypes = GRAIN|JUNKFOOD|BREAKFAST|SUGAR|NUTS
 	removed_foodtypes = MEAT|RAW
-	dish_category = DISH_DESSERT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/crunchy_peanut_butter_tart
 	name = "Crunchy peanut butter tart"
