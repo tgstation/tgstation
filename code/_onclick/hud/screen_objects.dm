@@ -333,10 +333,15 @@
 	icon_state = "combat_off"
 	screen_loc = ui_combat_toggle
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	///When recovering from minimizing our HUD, this is where we'll be set to. We set this in Initialize.
+	var/default_screen_location
 
-/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner, full_hud_location)
 	. = ..()
 	update_appearance()
+	if(full_hud_location)
+		screen_loc = full_hud_location
+	default_screen_location = screen_loc
 
 /atom/movable/screen/combattoggle/Click()
 	if(isliving(usr))

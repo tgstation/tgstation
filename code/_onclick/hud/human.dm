@@ -76,9 +76,8 @@
 	using.screen_loc = ui_human_memories_area
 	static_inventory += using
 
-	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
+	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src, ui_combat_toggle)
 	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_combat_toggle
 	static_inventory += action_intent
 
 	floor_change = new /atom/movable/screen/floor_changer/vertical(null, src)

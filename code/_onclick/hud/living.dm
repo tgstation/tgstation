@@ -7,9 +7,8 @@
 	pull_icon.screen_loc = ui_living_pull
 	static_inventory += pull_icon
 
-	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
+	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src, ui_basic_combat_toggle)
 	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_basic_combat_toggle
 	static_inventory += action_intent
 
 	floor_change = new /atom/movable/screen/floor_changer(null, src)

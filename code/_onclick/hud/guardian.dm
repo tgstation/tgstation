@@ -3,7 +3,12 @@
 
 /datum/hud/guardian/New(mob/living/basic/guardian/owner)
 	..()
+
 	var/atom/movable/screen/using
+
+	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src, ui_zonesel)
+	action_intent.icon = ui_style
+	static_inventory += action_intent
 
 	pull_icon = new /atom/movable/screen/pull(null, src)
 	pull_icon.icon = ui_style

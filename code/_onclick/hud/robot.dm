@@ -149,9 +149,8 @@
 	static_inventory += using
 
 	//Combat Mode
-	action_intent = new /atom/movable/screen/combattoggle/robot(null, src)
+	action_intent = new /atom/movable/screen/combattoggle/robot(null, src, ui_borg_intents)
 	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_borg_intents
 	static_inventory += action_intent
 
 	floor_change = new /atom/movable/screen/floor_changer(null, src)

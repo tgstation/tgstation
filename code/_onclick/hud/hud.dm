@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/alien_plasma_display
 	var/atom/movable/screen/alien_queen_finder
 
-	var/atom/movable/screen/action_intent
+	var/atom/movable/screen/combattoggle/action_intent
 	var/atom/movable/screen/zone_select
 	var/atom/movable/screen/pull_icon
 	var/atom/movable/screen/rest_icon
@@ -348,6 +348,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				list_clear_nulls(open_containers)
 				screenmob.client.screen += open_containers
 			screenmob.client.screen += toggle_palette
+			if(action_intent)
+				action_intent.screen_loc = action_intent.default_screen_location //Restore intent selection to the original position
 
 		if(HUD_STYLE_REDUCED) //Reduced HUD
 			hud_shown = FALSE //Governs behavior of other procs
