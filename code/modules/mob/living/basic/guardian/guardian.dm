@@ -87,7 +87,7 @@
 		/datum/action/innate/guardian/communicate,
 		/datum/action/innate/guardian/manifest,
 		/datum/action/innate/guardian/recall,
-		/datum/action/cooldown/guardian/toggle_light,
+		/datum/action/innate/guardian/toggle_light,
 	)
 
 /mob/living/basic/guardian/Initialize(mapload, datum/guardian_fluff/theme)
