@@ -59,20 +59,20 @@
 	// dish categories
 	#define DISH_BREAD "Bread"
 	#define DISH_BURGER "Burger"
-	#define DISH_BURRITO "Burrito"
+	#define DISH_BURRITO "Burrito" // also includes wraps/enchilada
 	#define DISH_CAKE "Cake"
 	#define DISH_CANDY "Candy"
 	#define DISH_CONDIMENT "Condiment" // catch-all for sauces, dressings, sides, etc
 	#define DISH_COOKIE "Cookie"
 	#define DISH_FROZEN "Frozen" // catch-all for ice cream, popsicles, etc
-	#define DISH_MEAT "Meat" // things often served on its own as a "meat dish", though it may include tofu
+	#define DISH_MEAT "Meat" // anything often served on its own as a "meat dish" (like steak), though it may include tofu
 	#define DISH_NOODLES "Noodles"
 	#define DISH_PASTRY "Pastry"
 	#define DISH_PIE "Pie"
 	#define DISH_PIZZA "Pizza"
-	#define DISH_RICE "Rice"
-	#define DISH_SALAD "Salad"
-	#define DISH_SANDWICH "Sandwich"
+	#define DISH_RICE "Rice" // practically anything with rice in it
+	#define DISH_SALAD "Salad" // often includes salad adjacent (ie: coleslaw, stir fry)
+	#define DISH_SANDWICH "Sandwich" // divorced from burger for better filtering. also, yes, includes hotdogs.
 	#define DISH_SOUP "Soup"
 	#define DISH_SUSHI "Sushi"
 	#define DISH_TACO "Taco"

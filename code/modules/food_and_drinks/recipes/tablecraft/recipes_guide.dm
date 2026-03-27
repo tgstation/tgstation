@@ -271,6 +271,7 @@
 	result = /obj/item/food/pizzaslice/margherita
 	cuisine_category = CUISINE_ITALIAN
 	dish_category = DISH_PIZZA
+	meal_category = MEAL_MAIN_COURSE
 
 /datum/crafting_recipe/food/knife/doughslice
 	reqs = list(/obj/item/food/flatdough = 1)
@@ -537,11 +538,12 @@
 /datum/crafting_recipe/food/grill/friedegg
 	reqs = list(/obj/item/food/egg = 1)
 	result = /obj/item/food/friedegg
+	meal_category = MEAL_APPETIZER
+	dish_category = DISH_UNCATEGORIZED
 	steps = list(
 		"Break the egg onto a griddle",
 		"Fry until ready"
 	)
-	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/grill/pancake
 	reqs = list(/datum/reagent/consumable/pancakebatter = 5)
@@ -581,6 +583,7 @@
 	result = /obj/item/food/hard_taco_shell
 	cuisine_category = CUISINE_MEXICAN
 	dish_category = DISH_TACO
+	meal_category = MEAL_COMPONENT
 
 // Machinery: Grinder
 /datum/crafting_recipe/food/grinder

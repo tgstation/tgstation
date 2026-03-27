@@ -497,7 +497,7 @@
 		/datum/reagent/consumable/lemonjuice = 3,
 	)
 	result = /obj/item/food/baba_ghanoush
-	dish_category = DISH_UNCATEGORIZED
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/moussaka
 	name = "Moussaka"

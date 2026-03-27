@@ -139,6 +139,7 @@
 	result = /obj/item/food/chipsandsalsa
 	removed_foodtypes = JUNKFOOD
 	cuisine_category = CUISINE_MEXICAN
+	dish_category = DISH_CONDIMENT
 	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/classic_chimichanga
@@ -228,3 +229,4 @@
 	result = /obj/item/food/pineapple_salsa
 	cuisine_category = CUISINE_MEXICAN
 	meal_category = MEAL_APPETIZER
+	dish_category = DISH_CONDIMENT
