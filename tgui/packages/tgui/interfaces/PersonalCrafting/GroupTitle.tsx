@@ -37,7 +37,7 @@ export function SubGroupTitle(props: Props) {
         mb={0.75}
         grow
       />
-      <Stack.Item grow pr={0.5} pl={0.5} italic>
+      <Stack.Item grow pr={0.5} pl={0.5} italic align="center">
         {title}
       </Stack.Item>
       <Stack.Item
