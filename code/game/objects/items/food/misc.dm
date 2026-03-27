@@ -340,7 +340,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/powercrepe
-	name = "Powercrepe"
+	name = "powercrepe"
 	desc = "With great power, comes great crepes.  It looks like a pancake filled with jelly but packs quite a punch."
 	icon_state = "powercrepe"
 	inhand_icon_state = "powercrepe"

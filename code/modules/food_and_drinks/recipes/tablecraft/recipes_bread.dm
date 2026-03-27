@@ -52,7 +52,7 @@
 		/obj/item/food/grown/banana = 1
 	)
 	result = /obj/item/food/bread/banana
-	removed_foodtypes = BREAKFAST
+	removed_foodtypes = BREAKFAST|EGG
 	dish_category = DISH_BREAD
 
 /datum/crafting_recipe/food/tofubread
@@ -252,6 +252,6 @@
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/food/raw_frenchtoast
-	added_foodtypes = BREAKFAST
+	added_foodtypes = BREAKFAST|EGG
 	dish_category = DISH_BREAD
 	meal_category = MEAL_COMPONENT

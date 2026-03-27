@@ -691,7 +691,7 @@
 	)
 	result = /obj/item/food/raw_brownie_batter
 	added_foodtypes = GRAIN|JUNKFOOD|BREAKFAST|SUGAR
-	removed_foodtypes = MEAT|RAW
+	removed_foodtypes = MEAT|RAW|EGG
 	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/peanut_butter_brownie_batter
@@ -706,7 +706,7 @@
 	)
 	result = /obj/item/food/peanut_butter_brownie_batter
 	added_foodtypes = GRAIN|JUNKFOOD|BREAKFAST|SUGAR|NUTS
-	removed_foodtypes = MEAT|RAW
+	removed_foodtypes = MEAT|RAW|EGG
 	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/crunchy_peanut_butter_tart

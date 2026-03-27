@@ -240,7 +240,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/bread/tofu
-	name = "Tofubread"
+	name = "tofubread"
 	desc = "Like meatbread but for vegetarians. Not guaranteed to give superpowers."
 	icon_state = "tofubread"
 	food_reagents = list(

@@ -165,7 +165,7 @@
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	crafting_complexity = FOOD_COMPLEXITY_2
-	foodtypes = MEAT
+	foodtypes = MEAT|EGG
 
 /datum/crafting_recipe/food/scotchegg
 	name = "Scotch egg"

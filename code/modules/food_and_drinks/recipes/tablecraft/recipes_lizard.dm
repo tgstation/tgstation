@@ -224,7 +224,7 @@
 		/datum/reagent/water = 10
 	)
 	result = /obj/item/food/rootdough/egg
-	removed_foodtypes = RAW
+	removed_foodtypes = RAW|EGG
 	/**
 	 * So, at some point, we've had some mean issues with crafting with empty containers.
 	 * Bugs happen and we fix them all the time, so let's make sure stuff like this won't happen again.
