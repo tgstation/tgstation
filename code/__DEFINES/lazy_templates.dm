@@ -4,6 +4,8 @@
 #define LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS "LT_ABDUCTORSHIPS"
 #define LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE "LT_HERETICSACRIFICE"
 #define LAZY_TEMPLATE_KEY_VOIDWALKER_VOID "LT_VOIDWALKERVOID"
+// Troutstation edit
+#define LAZY_TEMPLATE_KEY_FLOCK_OUTPOST "LT_FLOCKOUTPOST"
 
 #define LAZY_TEMPLATE_KEY_LIST_ALL(...) list( \
 	"Nukie Base" = LAZY_TEMPLATE_KEY_NUKIEBASE, \
@@ -12,4 +14,6 @@
 	"Abductor Ships" = LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS, \
 	"Heretic Sacrifice Level" = LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE, \
 	"Voidwalker Void" = LAZY_TEMPLATE_KEY_VOIDWALKER_VOID, \
+	"Flock Outpost" = LAZY_TEMPLATE_KEY_FLOCK_OUTPOST, \
 )
+// Troutstation edit - added Flock Outpost (can't put comment inside a define)

@@ -944,9 +944,47 @@ em {
 
 /* Troutstation edit */
 .flock {
-  font-family: 'Courier New', cursive, sans-serif;
-  color: hsl(162, 53%, 33%);
+  font-family: Consolas, monaco, monospace;
+  background-image: repeating-radial-gradient(
+    circle at center,
+    hsl(162, 48%, 40%) 0,
+    hsl(162, 55%, 53%),
+    hsl(162, 50%, 45%) 20%
+  );
+  color: transparent;
+  background-clip: text;
+  font-size: 110%;
 }
+
+.flockbold {
+  font-family: Consolas, monaco, monospace;
+  background-image: repeating-radial-gradient(
+    circle at center,
+    hsl(162, 48%, 40%) 0,
+    hsl(162, 55%, 53%),
+    hsl(162, 50%, 45%) 20%
+  );
+  color: transparent;
+  background-clip: text;
+  font-weight: bold;
+  font-size: 110%;
+}
+
+.flocklord {
+  font-family: Consolas, monaco, monospace;
+  background-image: repeating-radial-gradient(
+    circle at center,
+    hsl(162, 48%, 45%) 0,
+    hsl(162, 85%, 64%),
+    hsl(162, 48%, 45%) 20%
+  );
+  color: transparent;
+  background-clip: text;
+  font-weight: bold;
+  font-size: 170%;
+}
+
+/* end edit */
 
 .upside_down {
   transform: rotate(180deg);

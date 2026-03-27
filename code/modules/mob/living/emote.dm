@@ -429,10 +429,18 @@
 
 /datum/emote/living/scream/select_message_type(mob/user, message, intentional)
 	. = ..()
+	if(isflock(user))
+		message = "caws!"
+		return message // Troutstation edit, there's no way otherwise to get the scream
 	if(!intentional && isanimal_or_basicmob(user))
 		return "makes a loud and pained whimper."
 
 /datum/emote/living/scream/get_sound(mob/living/user)
+	// Troutstation edit, aggghhh, why is this done like this
+	if(isflock(user))
+		var/mob/living/basic/flock/flockie = user
+		return flockie.get_scream_sound()
+	// Troutstation edit end
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/humie = user

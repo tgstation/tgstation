@@ -60,6 +60,10 @@
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
 
+// Troutstation edit
+#define MODE_FLOCK "flock"
+#define MODE_KEY_FLOCK "f"
+
 /// Automatically playing a set of lines
 #define MODE_SEQUENTIAL "sequential"
 

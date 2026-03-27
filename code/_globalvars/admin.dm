@@ -81,6 +81,11 @@ GLOBAL_LIST_INIT(spanname_to_formatting, list(
 	"Engineering Radio" = "engradio",
 	"Extremely Big" = "extremelybig",
 	"Entertainment Radio" = "enteradio",
+	// Troutstation edit start
+	"Flock" = "flock",
+	"Flock Bold" = "flockbold",
+	"Flock Lord" = "flocklord",
+	// Troutstation edit end
 	"Game Say" = "game say",
 	"Ghost Alert" = "ghostalert",
 	"Green" = "green",

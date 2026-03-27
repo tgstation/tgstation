@@ -438,7 +438,20 @@
 	if(!(item_flags & WEAPON_DESCRIPTION_INITIALIZED))
 		add_weapon_description()
 		item_flags |= WEAPON_DESCRIPTION_INITIALIZED
-	return ..()
+	. = ..()
+	// Troutstation hacky as fuck edit
+	if(isflock(user))
+		if(w_class > WEIGHT_CLASS_NORMAL)
+			return
+		var/resources_gained = get_flock_item_resources(src)
+		if(resources_gained == 0)
+			. += span_flock("<br>-=# INTEGRATED COMPOSITION ANALYZER::<br>\
+				- <b>No material worth.</b>.<br>\
+				- Estimated processing time: <b>[get_flock_item_eating_time(src)]s</b>.")
+		else
+			. += span_flock("<br>-=# INTEGRATED COMPOSITION ANALYZER::<br>\
+				- Calculated resource total: <b>[get_flock_item_resources(src)]</b>.<br>\
+				- Estimated processing time: <b>[get_flock_item_eating_time(src)]s</b>.")
 
 /obj/item/examine_more(mob/user)
 	. = ..()

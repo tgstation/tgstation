@@ -1049,6 +1049,33 @@
 /datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/assign_role(datum/mind/candidate)
 	return // handled by new() entirely
 
+// Troutstation edit start (it does not feel worth splitting this into a modular file, subsystem stuff should all go in one place)
+/datum/dynamic_ruleset/midround/from_ghosts/flock_agent
+	name = "Flock Agent"
+	config_tag = "Flock Agent"
+	preview_antag_datum = /datum/antagonist/flock_agent
+
+	midround_type = LIGHT_MIDROUND
+	pref_flag = ROLE_FLOCK_AGENT
+	ruleset_flags = RULESET_INVADER
+
+	weight = 5 // they're functional enough
+	min_pop = 0
+	max_antag_cap = 2
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_FLOCK_OUTPOST)
+	signup_atom_appearance = /mob/living/basic/flock/agent
+
+/datum/dynamic_ruleset/midround/from_ghosts/morph/can_be_selected()
+	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+
+/datum/dynamic_ruleset/midround/from_ghosts/flock_agent/create_ruleset_body()
+	return new /mob/living/basic/flock/agent
+
+/datum/dynamic_ruleset/midround/from_ghosts/flock_agent/assign_role(datum/mind/candidate)
+	candidate.add_antag_datum(/datum/antagonist/flock_agent)
+	// candidate.current.forceMove(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+// Troutstation edit end
+
 /datum/dynamic_ruleset/midround/from_living
 	min_antag_cap = 1
 	max_antag_cap = 1

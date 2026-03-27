@@ -439,7 +439,6 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_PARADOX "Spacetime Aberrations"
 #define ANTAG_GROUP_CREW "Deviant Crew"
 
-
 /// Used to denote an antag datum that either isn't necessarily "evil" (like Valentines)
 /// or isn't necessarily a "real" antag (like Ashwalkers)
 #define ANTAG_FAKE (1 << 0)

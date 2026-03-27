@@ -1,6 +1,6 @@
 /datum/material/flockmetal
 	name = "sonorous metal"
-	desc = "Gently humming metal of unknown alien origin."
+	desc = "Gently humming metal of unknown alien origin. Faintly warm to the touch."
 	color = "#3c8c64"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	mat_properties = list(
@@ -21,7 +21,7 @@
 
 /datum/material/flockglass
 	name = "resonant crystal"
-	desc = "Alien glass. It glimmers in the light."
+	desc = "Alien glass. It glimmers with rivulets of light through geometric lines."
 	color = "#3c8c64"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
 	mat_properties = list(

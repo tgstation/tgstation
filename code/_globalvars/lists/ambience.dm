@@ -190,6 +190,15 @@ GLOBAL_LIST_INIT(creepy_ambience,list(
 	'sound/effects/hallucinations/wail.ogg',
 ))
 
+// Troutstation edit: it makes more sense to go here, unfortunately
+GLOBAL_LIST_INIT(flock_ambience,list(
+	'troutstation/sound/ambience/flock/granny_static.ogg',
+	'troutstation/sound/ambience/flock/new_signal.ogg',
+	'troutstation/sound/ambience/flock/radio_signal_interference.ogg',
+	'troutstation/sound/ambience/flock/storm_radio_interference_error_signal.ogg',
+	'troutstation/sound/ambience/flock/spacey_blip_bloop_bleep.ogg'
+))
+
 GLOBAL_LIST_INIT(ambience_assoc,list(
 	AMBIENCE_AWAY = GLOB.away_ambience,
 	AMBIENCE_CREEPY = GLOB.creepy_ambience,
@@ -206,4 +215,6 @@ GLOBAL_LIST_INIT(ambience_assoc,list(
 	AMBIENCE_RUINS = GLOB.ruins_ambience,
 	AMBIENCE_SPACE = GLOB.space_ambience,
 	AMBIENCE_SPOOKY = GLOB.spooky_ambience,
+	AMBIENCE_FLOCK = GLOB.flock_ambience,
 ))
+// Troutstation edit: added flock

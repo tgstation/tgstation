@@ -23,6 +23,9 @@
 	. = ..()
 	AddElement(/datum/element/decal, emissive_icon, base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, null, smoothing_junction)
 
+/turf/open/floor/flock/flock_act()
+	return
+
 /turf/closed/wall/flock // todo: make mineral
 	name = "humming wall"
 	desc = "Warm and smooth to the touch, and constantly pulsing with internal light."
@@ -45,6 +48,9 @@
 /turf/closed/wall/flock/update_overlays()
 	. = ..()
 	. += emissive_appearance(emissive_icon, icon_state, src)
+
+/turf/closed/wall/flock/flock_act()
+	return
 
 // /turf/closed/wall/mineral/cult
 // 	name = "runed metal wall"

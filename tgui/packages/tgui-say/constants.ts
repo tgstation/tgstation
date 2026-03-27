@@ -22,6 +22,7 @@ export const RADIO_PREFIXES = {
   ':b ': 'io',
   ':c ': 'Cmd',
   ':e ': 'Engi',
+  ':f ': 'Flock', // Troutstation edit
   ':g ': 'Cling',
   ':m ': 'Med',
   ':n ': 'Sci',

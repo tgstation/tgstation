@@ -397,6 +397,8 @@
 				ROLE_TRAITOR,
 				ROLE_WIZARD,
 				ROLE_VOIDWALKER,
+				// Troutstation edit
+				ROLE_FLOCK_AGENT,
 			),
 		)
 		for(var/department in long_job_lists)
