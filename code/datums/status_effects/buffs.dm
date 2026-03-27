@@ -716,3 +716,19 @@
 /datum/status_effect/desensitized/proc/remove_magnitude(datum/source, mob/living/old_body, datum/mind/swapping)
 	SIGNAL_HANDLER
 	swapping.desensitized_level /= magnitude
+
+//used by the garibaldi cocktail to grant revolutionaries wound resistance and fearlessness
+/datum/status_effect/rev_resilience
+	id = "rev_resilience"
+	duration = 5 SECONDS //gets refreshed by metabolism
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/rev_resilience/on_apply()
+	to_chat(owner, span_warning("You feel your revolutionary spirit surging! You feel like nothing the oppressors could throw at you could wound your pride!"))
+	owner.add_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/rev_resilience/on_remove()
+	to_chat(owner, span_notice("You feel your surge of revolutionary zeal fade. You hope you don't get shot in the foot..."))
+	owner.remove_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))

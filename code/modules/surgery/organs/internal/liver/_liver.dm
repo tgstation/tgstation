@@ -92,6 +92,8 @@
 			. += span_info("Fatty deposits and sprinkle residue, imply that this is the liver of someone in <em>security</em>.")
 		if(HAS_TRAIT(src, TRAIT_CULINARY_METABOLISM))
 			. += span_info("The high iron content and slight smell of garlic, implies that this is the liver of a <em>cook</em>.")
+		if (HAS_TRAIT(src, TRAIT_BARTENDER_METABOLISM))
+			. += span_info("The decidedly well-used look from periods of prolonged exposure to a wide variety of alcohols, implies that this is the liver of a <em>bartender</em>.")
 		if(HAS_TRAIT(src, TRAIT_COMEDY_METABOLISM))
 			. += span_info("A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>.")
 		if(HAS_TRAIT(src, TRAIT_MEDICAL_METABOLISM))

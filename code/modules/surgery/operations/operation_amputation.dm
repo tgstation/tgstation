@@ -27,7 +27,7 @@
 	return TOOL_SAW
 
 /datum/surgery_operation/limb/amputate/get_default_radial_image()
-	return image(/obj/item/shears)
+	return image('icons/hud/surgery_radial.dmi', "amputate")
 
 /datum/surgery_operation/limb/amputate/state_check(obj/item/bodypart/limb)
 	if(limb.body_zone == BODY_ZONE_CHEST)

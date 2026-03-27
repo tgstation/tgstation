@@ -89,7 +89,7 @@
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
 
-/datum/supply_pack/imports/dumpstercorpse/generate()
+/datum/supply_pack/imports/dumpstercorpse/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	. = ..()
 	var/mob/living/carbon/human/corpse = locate() in .
 	corpse.death()
@@ -364,3 +364,33 @@
 		/obj/item/stack/ore/bluespace_crystal/artificial = 2,
 		/obj/item/stock_parts/subspace/ansible,
 	)
+
+/datum/supply_pack/imports/fan_upgrade
+	name = "Cargo Shuttle Upgrade: Air Renewal"
+	desc = "Do you or your coworkers have a bad habit of leaving your cargo shuttle shutter doors open to the cold, cold, vaccuum of space? \
+		With this handy engineering retrofit, your shuttle will now be equip with a few handy plastic flaps and a subscription for air refills."
+	cost = CARGO_CRATE_VALUE * 40 // HELLA expensive.
+	order_flags = ORDER_NOT_DEPARTMENTAL
+	access_view = ACCESS_CARGO
+	storage_override = /obj/item/folder
+	contains = list(
+		/obj/item/paper/fluff/certificate,
+	)
+
+/datum/supply_pack/imports/fan_upgrade/generate(atom/A, datum/bank_account/paying_account, crate_override)
+	if(SSshuttle.renew_cargo_air)
+		return ..()
+
+	for(var/obj/spawnpoint as anything in GLOB.cargo_shuttle_flaps_landmarks)
+		new /obj/structure/plasticflaps(spawnpoint.loc)
+		SSshuttle.renew_cargo_air = TRUE
+		order_flags = ORDER_INVISIBLE
+	return ..()
+
+/obj/item/paper/fluff/certificate
+	name = "Certificate of Shuttle Upgrade"
+	color = COLOR_LIGHT_ORANGE
+	desc = "A note from the Nanotrasen Mechanics Society detailing your new shuttle upgrade."
+	default_raw_text = "Hey boss. We got those flaps installed for ya, nothing to it really. You'll find 'em over the blast doors or the exits, \
+		whichever the mechanics were able to get to. They're all set to go without any tweaking, so don't futz with them. Otherwise, you let us know \
+		if anything seems out of place."

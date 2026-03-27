@@ -309,6 +309,8 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	var/dynamic_inv_load = FALSE
 	///Book scanner that will be used when uploading books to the Archive
 	var/datum/weakref/scanner
+	///Name of the book we're checking out, given by barcodes or the UI.
+	var/datum/book_info/checking_out_book
 	///Our cooldown on using the printer
 	COOLDOWN_DECLARE(printer_cooldown)
 	///Our cooldown on publishing books to the newscaster's "book club" channel
@@ -370,6 +372,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			data["has_checkout"] = !!checkout_len
 			data["checkout_page"] = checkout_page + 1
 			data["checkout_page_count"] = checkout_page_count + 1
+			data["checkout_title"] = checking_out_book?.get_title() || null
 
 		//Copypasta from the visitor console
 		if(LIBRARY_ARCHIVE)
@@ -449,6 +452,19 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			update_static_data_for_all_viewers()
 			return TRUE
 		if("checkout")
+			if(isnull(checking_out_book))
+				return TRUE
+			var/datum/borrowbook/loan = new /datum/borrowbook
+			var/loan_to = copytext(sanitize(params["loaned_to"]), 1, MAX_NAME_LEN)
+			var/checkoutperiod = max(params["checkout_time"], 1)
+			loan.book_data = checking_out_book.return_copy()
+			loan.loanedto = loan_to
+			loan.checkout = world.time
+			loan.duedate = world.time + (checkoutperiod MINUTES)
+			checkouts[ref(loan)] = loan
+			checkout_update()
+			return TRUE
+		if("set_checkout")
 			var/list/available = list()
 			for(var/id in inventory)
 				var/datum/book_info/book_infos = inventory[id]
@@ -459,17 +475,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			var/datum/book_info/book_info = available[book_name]
 			if(!istype(book_info))
 				return
-			var/datum/borrowbook/loan = new /datum/borrowbook
-
-			var/loan_to = copytext(sanitize(params["loaned_to"]), 1, MAX_NAME_LEN)
-			var/checkoutperiod = max(params["checkout_time"], 1)
-
-			loan.book_data = book_info.return_copy()
-			loan.loanedto = loan_to
-			loan.checkout = world.time
-			loan.duedate = world.time + (checkoutperiod MINUTES)
-			checkouts[ref(loan)] = loan
-			checkout_update()
+			checking_out_book = book_info
 			return TRUE
 		if("checkin")
 			var/id = params["checked_out_id"]

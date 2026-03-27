@@ -135,8 +135,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	var/obj/machinery/light_switch/attached_switch
 
 /obj/item/circuit_component/light_switch/populate_ports()
-	on_setting = add_input_port("On", PORT_TYPE_NUMBER)
-	is_on = add_output_port("Is On", PORT_TYPE_NUMBER)
+	on_setting = add_input_port("On", PORT_TYPE_BOOLEAN)
+	is_on = add_output_port("Is On", PORT_TYPE_BOOLEAN)
 
 /obj/item/circuit_component/light_switch/register_usb_parent(atom/movable/parent)
 	. = ..()

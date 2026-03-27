@@ -1,6 +1,6 @@
 PROCESSING_SUBSYSTEM_DEF(greyscale)
 	name = "Greyscale"
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	wait = 3 SECONDS
 	init_stage = INITSTAGE_EARLY
 	var/list/datum/greyscale_config/configurations = list()

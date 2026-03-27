@@ -351,7 +351,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 
 /datum/controller/subsystem/mapping/Recover()
-	flags |= SS_NO_INIT
+	ss_flags |= SS_NO_INIT
 	initialized = SSmapping.initialized
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates

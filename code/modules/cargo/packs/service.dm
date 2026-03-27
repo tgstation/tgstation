@@ -230,10 +230,10 @@
 	crate_name = "donk pocket crate"
 	crate_type = /obj/structure/closet/crate/freezer/food
 
-/datum/supply_pack/service/randomized/donkpockets/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/service/randomized/donkpockets/fill(obj/container)
 	for(var/i in 1 to 3)
 		var/item = pick(contains)
-		new item(C)
+		new item(container)
 
 /datum/supply_pack/service/randomized/ready_donk
 	name = "Ready-Donk Variety Crate"
@@ -252,10 +252,10 @@
 	crate_type = /obj/structure/closet/crate/freezer/donk
 	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
-/datum/supply_pack/service/randomized/ready_donk/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/service/randomized/ready_donk/fill(obj/container)
 	for(var/i in 1 to 3)
 		var/item = pick(contains)
-		new item(C)
+		new item(container)
 
 /datum/supply_pack/service/coffeekit
 	name = "Coffee Equipment Crate"

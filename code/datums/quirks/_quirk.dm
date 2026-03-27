@@ -286,5 +286,7 @@
 	var/datum/preferences/to_pass = client || to_mob.client
 
 	for(var/datum/quirk/quirk as anything in quirks)
+		if(quirk.quirk_flags & QUIRK_NO_TRANSFER)
+			continue
 		quirk.remove_from_current_holder(quirk_transfer = TRUE)
 		quirk.add_to_holder(to_mob, quirk_transfer = TRUE, client_source = to_pass)

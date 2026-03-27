@@ -237,7 +237,7 @@
 		var/obj/item/organ/brain/brain = get_organ_by_type(/obj/item/organ/brain)
 		if(brain && isnull(ai_controller))
 			var/npc_message = ""
-			if(HAS_TRAIT(brain, TRAIT_GHOSTROLE_ON_REVIVE))
+			if(HAS_TRAIT(brain, TRAIT_GHOSTROLE_ON_REVIVE) || HAS_TRAIT(src, TRAIT_GHOSTROLE_ON_REVIVE))
 				npc_message = "Soul is pending..."
 			else if(!key)
 				npc_message = "[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely."
@@ -324,7 +324,7 @@
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
 	var/obj/item/organ/brain = get_organ_by_type(/obj/item/organ/brain)
-	if(brain && HAS_TRAIT(brain, TRAIT_GHOSTROLE_ON_REVIVE))
+	if((brain && HAS_TRAIT(brain, TRAIT_GHOSTROLE_ON_REVIVE)) || HAS_TRAIT(src, TRAIT_GHOSTROLE_ON_REVIVE))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; but [t_his] soul might yet come back...")
 	var/client_like = client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE)
 	var/valid_ghost = ghost?.can_reenter_corpse && ghost?.client

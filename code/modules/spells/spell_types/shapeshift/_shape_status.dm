@@ -14,6 +14,11 @@
 	var/already_restored = FALSE
 
 /datum/status_effect/shapechange_mob/on_creation(mob/living/new_owner, mob/living/caster)
+	// If the mob is shapechanging while being deleted (for example, a bitrunning avatar dying and getting booted out)
+	if(QDELETED(caster))
+		qdel(src)
+		return
+
 	// If any type or subtype of shapeshift mob is on the new_owner already throw an error and self-delete
 	if(locate(type) in new_owner.status_effects)
 		stack_trace("Mob shapechange status effect applied to a mob which already was shapechanged, which will definitely cause issues.")

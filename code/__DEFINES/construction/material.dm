@@ -108,8 +108,6 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATCONTAINER_SILENT (1 << 3)
 /// Alloys won't be disassembled in its components when inserted.
 #define MATCONTAINER_ACCEPT_ALLOYS (1 << 4)
-/// Prevents material items from displaying their descriptors in examine_more with sci glasses
-#define MATERIAL_NO_DESCRIPTORS (1 << 5)
 
 // Atom material behavior flags
 /// Whether a material's mechanical effects should apply to the atom. This is necessary for other flags to work.
@@ -129,6 +127,8 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_NO_EDIBILITY (1 << 6)
 /// Ignore custom material grind results
 #define MATERIAL_NO_REAGENTS (1 << 7)
+/// Prevents material items from displaying their descriptors in examine_more with sci glasses
+#define MATERIAL_NO_DESCRIPTORS (1 << 8)
 
 //Special return values of [/datum/material_container/insert_item]
 /// No material was found inside them item

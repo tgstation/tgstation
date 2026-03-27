@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(explosions)
 	name = "Explosions"
 	priority = FIRE_PRIORITY_EXPLOSIONS
 	wait = 1
-	flags = SS_TICKER|SS_NO_INIT
+	ss_flags = SS_TICKER|SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cost_lowturf = 0

@@ -188,8 +188,8 @@
 	select_module = add_input_port("Select Module", PORT_TYPE_SIGNAL)
 	// States
 	wearer = add_output_port("Wearer", PORT_TYPE_USER)
-	deployed = add_output_port("Deployed", PORT_TYPE_NUMBER)
-	activated = add_output_port("Activated", PORT_TYPE_NUMBER)
+	deployed = add_output_port("Deployed", PORT_TYPE_BOOLEAN)
+	activated = add_output_port("Activated", PORT_TYPE_BOOLEAN)
 	selected_module = add_output_port("Selected Module", PORT_TYPE_STRING)
 	deployed_parts = add_output_port("Deployed Parts", PORT_TYPE_LIST(PORT_TYPE_STRING))
 	// Output Signals

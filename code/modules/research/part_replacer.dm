@@ -150,6 +150,7 @@
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
 		new /obj/item/stock_parts/power_store/cell/bluespace(src)
+		new /obj/item/stack/cable_coil/thirty(src)
 
 //used in a cargo crate
 /obj/item/storage/part_replacer/cargo/PopulateContents()

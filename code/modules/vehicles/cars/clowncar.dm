@@ -101,7 +101,7 @@
 
 /obj/vehicle/sealed/car/clowncar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/food/grown/banana))
-		return
+		return ..()
 	var/obj/item/food/grown/banana/banana = tool
 	repair_damage(banana.seed.potency)
 	to_chat(user, span_danger("You use [banana] to repair [src]!"))

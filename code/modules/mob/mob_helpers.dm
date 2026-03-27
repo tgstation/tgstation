@@ -178,6 +178,7 @@
 
 		M.overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 1 SECONDS), shake_dur)
+		return
 
 	//How much time to allot for each pixel moved
 	var/time_scalar = (1 / ICON_SIZE_ALL) * TILES_PER_SECOND
@@ -227,7 +228,7 @@
 		var/shake_dur = max(duration, 2 SECONDS)
 		recoiled_mob.overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(recoiled_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 1 SECONDS), shake_dur)
-
+		return
 
 	animate(client_to_shake, pixel_x = oldx+mpx, pixel_y = oldy+mpy, time = duration, flags = ANIMATION_RELATIVE)
 	animate(pixel_x = oldx, pixel_y = oldy, time = backtime_duration, easing = BACK_EASING)

@@ -17,3 +17,5 @@
 /// Quirk is similar to brain trauma and should be shown in medical guides as one.
 /// You don't need to set this on quirks that apply a trauma, that's redundant.
 #define QUIRK_TRAUMALIKE (1<<5)
+/// Do not transfer this quirk via transfer_quirk_datums
+#define QUIRK_NO_TRANSFER (1<<6)

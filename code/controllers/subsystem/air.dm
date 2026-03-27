@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(air)
 	)
 	priority = FIRE_PRIORITY_AIR
 	wait = 0.5 SECONDS
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cached_cost = 0

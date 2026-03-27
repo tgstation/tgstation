@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(statpanels)
 	wait = 4
 	priority = FIRE_PRIORITY_STATPANEL
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	var/list/currentrun = list()
 	var/list/global_data
 	var/list/mc_data

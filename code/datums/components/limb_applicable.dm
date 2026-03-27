@@ -16,8 +16,10 @@
 	/// If TRUE, replaces existing items with new ones
 	/// If FALSE, application will fail if an item of the same category is already applied
 	var/override_existing
-	/// Callback to determine if parent can be applied. (Return FALSE to block application)
+	/// Callback to determine if application can be attempted. Cannot sleep. (Return FALSE to block application)
 	var/datum/callback/can_apply
+	/// Callback to attempt application, I.E. do_after()s. Can sleep.
+	var/datum/callback/do_apply
 	/// Callback invoked after application
 	var/datum/callback/on_apply
 
@@ -26,6 +28,7 @@
 	apply_category,
 	override_existing = TRUE,
 	datum/callback/can_apply,
+	datum/callback/do_apply,
 	datum/callback/on_apply,
 )
 	if(!isitem(parent))
@@ -35,6 +38,7 @@
 	src.apply_category = apply_category || REF(parent)
 	src.override_existing = override_existing
 	src.can_apply = can_apply
+	src.do_apply = do_apply
 	src.on_apply = on_apply
 
 
@@ -61,29 +65,34 @@
 	if(!isliving(interacting_with))
 		return NONE
 
-	INVOKE_ASYNC(src, PROC_REF(on_apply_async), user, interacting_with)
-	return ITEM_INTERACT_BLOCKING
-
-/datum/component/limb_applicable/proc/on_apply_async(mob/user, atom/interacting_with)
 	var/mob/living/target = interacting_with
 	var/obj/item/bodypart/applying_to = target.get_bodypart(deprecise_zone(user.zone_selected))
+
 	if(isnull(applying_to))
 		target.balloon_alert(user, "no bodypart!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(!(applying_to.body_zone in src.valid_zones))
+	if(!(applying_to.body_zone in valid_zones))
 		target.balloon_alert(user, "can't be applied there!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(!override_existing)
 		var/obj/item/existing = LAZYACCESS(applying_to.applied_items, apply_category)
 		if(!isnull(existing))
 			target.balloon_alert(user, "something is already there!")
-			return
+			return ITEM_INTERACT_BLOCKING
 
-	if(can_apply && !can_apply.Invoke(user, target, applying_to))
+	if(can_apply)
+		var/try_apply = can_apply.Invoke(user, target, applying_to)
+		if(try_apply & LIMB_APPLICABLE_BLOCK_APPLICATION)
+			return (try_apply & LIMB_APPLICABLE_BLOCK_ITEM_INTERACTION) ? ITEM_INTERACT_BLOCKING : NONE
+
+	INVOKE_ASYNC(src, PROC_REF(on_apply_async), user, interacting_with, applying_to)
+	return ITEM_INTERACT_BLOCKING
+
+/datum/component/limb_applicable/proc/on_apply_async(mob/user, mob/living/target, obj/item/bodypart/applying_to)
+	if(!do_apply?.Invoke(user, target, applying_to))
 		return
-
 	var/obj/item/applying = parent
 	if(isstack(parent))
 		var/obj/item/stack/stack_parent = parent

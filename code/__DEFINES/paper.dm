@@ -14,9 +14,6 @@
 /// Should be able to stamp paper.
 #define MODE_STAMPING 2
 
-#define BARCODE_SCANNER_CHECKIN "check_in"
-#define BARCODE_SCANNER_INVENTORY "inventory"
-
 #define IS_WRITING_UTENSIL(thing) (thing?.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
 
 /**

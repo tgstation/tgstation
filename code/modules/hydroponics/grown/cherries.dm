@@ -29,7 +29,7 @@
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	tastes = list("cherry" = 1)
-	wine_power = 30
+	distill_reagent = /datum/reagent/consumable/ethanol/maraschino
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 

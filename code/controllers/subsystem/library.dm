@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(library)
 		/datum/controller/subsystem/atoms,
 		/datum/controller/subsystem/mapping,
 	)
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	/// List of bookselves to prefill with books
 	var/list/shelves_to_load = list()

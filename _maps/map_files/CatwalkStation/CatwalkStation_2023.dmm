@@ -34519,9 +34519,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/machinery/defibrillator_mount/mobile{
-	anchored = 1
-	},
+/obj/machinery/defibrillator_mount/mobile/immobile,
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 4
 	},

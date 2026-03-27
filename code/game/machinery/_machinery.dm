@@ -490,6 +490,9 @@
 
 	use_power = new_use_power
 
+	if(use_power)
+		power_change()
+
 	return TRUE
 
 ///updates the power channel this machine uses. removes the static power usage from the old channel and readds it to the new channel

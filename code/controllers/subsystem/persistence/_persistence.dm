@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(persistence)
 		/datum/controller/subsystem/mapping,
 		/datum/controller/subsystem/atoms,
 	)
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	///instantiated wall engraving components
 	var/list/wall_engravings = list()
