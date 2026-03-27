@@ -9,7 +9,7 @@
 	creator_name = "Protector"
 	creator_desc = "Causes you to teleport to it when out of range, unlike other parasites. Has two modes; Combat, where it does and takes medium damage, and Protection, where it does and takes almost no damage but moves slightly slower."
 	creator_icon = "protector"
-	toggle_button_type = /datum/action/innate/guardian/toggle_mode
+	toggle_button_type = /datum/action/cooldown/guardian/toggle_mode
 	/// Action which toggles our shield
 	var/datum/action/cooldown/mob_cooldown/protector_shield/shield
 

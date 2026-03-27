@@ -754,12 +754,6 @@
 
 //GUARDIANS
 
-/atom/movable/screen/alert/canstealth
-	name = "Stealth Ready"
-	desc = "You are ready to enter stealth!"
-	icon_state = "guardian_canstealth"
-	alerttooltipstyle = "parasite"
-
 /atom/movable/screen/alert/status_effect/instealth
 	name = "In Stealth"
 	desc = "You are in stealth and your next attack will do bonus damage!"

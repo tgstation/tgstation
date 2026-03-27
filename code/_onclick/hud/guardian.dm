@@ -3,8 +3,6 @@
 
 /datum/hud/guardian/New(mob/living/basic/guardian/owner)
 	..()
-	var/atom/movable/screen/using
-
 	pull_icon = new /atom/movable/screen/pull(null, src)
 	pull_icon.icon = ui_style
 	pull_icon.update_appearance()
@@ -16,7 +14,6 @@
 
 /datum/hud/dextrous/guardian/New(mob/living/basic/guardian/owner) //for a dextrous guardian
 	..()
-	var/atom/movable/screen/using
 	if(istype(owner, /mob/living/basic/guardian/dextrous))
 		var/atom/movable/screen/inventory/inv_box
 		inv_box = new /atom/movable/screen/inventory(null, src)
@@ -58,7 +55,7 @@
 /datum/action/innate/guardian/IsAvailable(feedback)
 	. = ..()
 	if(!.)
-		return FALSE
+		return .
 	return !!isguardian(owner)
 
 #define GUARDIAN_COMMUNICATE_LOCATION "CENTER+-2:16,SOUTH+0:5"
@@ -101,21 +98,33 @@
 /datum/action/innate/guardian/toggle_light/Activate()
 	astype(owner, /mob/living/basic/guardian)?.toggle_light()
 
-/datum/action/innate/guardian/toggle_mode
+///COOLDOWN TYPES
+/datum/action/cooldown/guardian/toggle_mode
 	name = "Toggle Mode"
 	desc = "Switch between ability modes."
+	button_icon = 'icons/hud/guardian.dmi'
 	button_icon_state = "toggle"
 	default_button_position = GUARDIAN_TOGGLE_LOCATION
 
-/datum/action/innate/guardian/toggle_mode/Activate()
+/datum/action/cooldown/guardian/toggle_mode/IsAvailable(feedback)
+	. = ..()
+	if(!.)
+		return .
+	return !!isguardian(owner)
+
+/datum/action/cooldown/guardian/toggle_mode/Activate()
 	astype(owner, /mob/living/basic/guardian)?.toggle_modes()
 
-/datum/action/innate/guardian/toggle_mode/assassin
-	button_icon_state = "stealth"
+/datum/action/cooldown/guardian/toggle_mode/assassin
 	name = "Toggle Stealth"
 	desc = "Enter or exit stealth."
+	button_icon_state = "stealth"
+	transparent_when_unavailable = TRUE
 
-/datum/action/innate/guardian/toggle_mode/gases
+/datum/action/cooldown/guardian/toggle_mode/assassin/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	return owner.has_status_effect(/datum/status_effect/guardian_stealth)
+
+/datum/action/cooldown/guardian/toggle_mode/gases
 	name = "Toggle Gas"
 	desc = "Switch between possible gases."
 	button_icon_state = "gases"
