@@ -420,3 +420,16 @@
   vinylspiders:
   - bugfix: fixes an issue where casting spells after your mob gets deleted can leave
       you in a permanently bugged state.
+2026-03-27:
+  ArcaneMusic:
+  - rscadd: Centcom is now offering the ability to purchase airflow blocking plastic
+      flaps, and the ability to refill the cargo shuttle with air for the low, low
+      installation fee of 8,000 credits. Inquire today under the "Imports" category!
+  Melbert:
+  - bugfix: Hallucinating yourself as another mob will no longer disable all of your
+      light sources
+  - qol: Health analyzer lung reports are appended by the lung organs rather than
+      at the bottom of the readout
+  TealSeer:
+  - bugfix: fixed a few bugs related to arm implant surgery
+  - code_imp: added missing bitflags to bitfield defines
