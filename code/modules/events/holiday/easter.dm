@@ -144,6 +144,7 @@
 	result = /obj/item/food/hotcrossbun
 	added_foodtypes = SUGAR | BREAKFAST
 	dish_category = DISH_BREAD
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/briochecake
 	name = "Brioche cake"
@@ -153,6 +154,7 @@
 	)
 	result = /obj/item/food/cake/brioche
 	dish_category = DISH_PASTRY
+	meal_category = MEAL_DESSERT
 
 /obj/item/food/scotchegg
 	name = "scotch egg"
@@ -175,6 +177,7 @@
 	)
 	result = /obj/item/food/scotchegg
 	removed_foodtypes = BREAKFAST
+	dish_category = DISH_MEAT
 	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/mammi
@@ -186,6 +189,8 @@
 	)
 	result = /obj/item/food/bowled/mammi
 	added_foodtypes = DAIRY
+	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /obj/item/food/chocolatebunny
 	name = "chocolate bunny"

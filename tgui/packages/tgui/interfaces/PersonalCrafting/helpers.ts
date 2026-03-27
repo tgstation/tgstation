@@ -15,3 +15,10 @@ export function getFAIcon(category: string, mode: BooleanLike): string {
   const icons = mode ? CATEGORY_ICONS_COOKING : CATEGORY_ICONS_CRAFTING;
   return icons[category] || 'circle';
 }
+
+export function toggleArrayItem<T>(array: T[] | undefined, item: T): T[] {
+  if (!array) return [item];
+  return array.includes(item)
+    ? array.filter((i) => i !== item)
+    : [...array, item];
+}

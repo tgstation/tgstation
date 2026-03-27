@@ -22,7 +22,7 @@ import { FoodtypeContent } from './content/FoodtypeContent';
 import { MaterialContent } from './content/MaterialContent';
 import { RecipeContent, RecipeContentCompact } from './content/RecipeContent';
 import { SubGroupTitle } from './GroupTitle';
-import { getFAIcon } from './helpers';
+import { getFAIcon, toggleArrayItem } from './helpers';
 import {
   type CraftingData,
   type Material,
@@ -347,6 +347,9 @@ export function PersonalCrafting(props: any) {
                             <Stack vertical>
                               <Stack.Item>
                                 <Stack
+                                  // hack, for some reason the standard padding
+                                  // disappears with the extra food category
+                                  // rendering, so i'm manually doing it here
                                   pt={
                                     category === 'Foods' &&
                                     activeCategory === category
@@ -398,18 +401,9 @@ export function PersonalCrafting(props: any) {
                                               cuisine,
                                             )}
                                             onClick={() => {
-                                              setFoodCuisine(
-                                                activeFoodCuisine?.includes(
-                                                  cuisine,
-                                                )
-                                                  ? activeFoodCuisine.filter(
-                                                      (g) => g !== cuisine,
-                                                    )
-                                                  : [
-                                                      ...(activeFoodCuisine ||
-                                                        []),
-                                                      cuisine,
-                                                    ],
+                                              toggleArrayItem(
+                                                activeFoodCuisine,
+                                                cuisine,
                                               );
                                               setPages(1);
                                             }}
@@ -434,18 +428,9 @@ export function PersonalCrafting(props: any) {
                                               dish,
                                             )}
                                             onClick={() => {
-                                              setDishCategory(
-                                                activeDishCategory?.includes(
-                                                  dish,
-                                                )
-                                                  ? activeDishCategory.filter(
-                                                      (d) => d !== dish,
-                                                    )
-                                                  : [
-                                                      ...(activeDishCategory ||
-                                                        []),
-                                                      dish,
-                                                    ],
+                                              toggleArrayItem(
+                                                activeDishCategory,
+                                                dish,
                                               );
                                               setPages(1);
                                             }}
@@ -470,18 +455,9 @@ export function PersonalCrafting(props: any) {
                                               meal,
                                             )}
                                             onClick={() => {
-                                              setMealCategory(
-                                                activeMealCategory?.includes(
-                                                  meal,
-                                                )
-                                                  ? activeMealCategory.filter(
-                                                      (d) => d !== meal,
-                                                    )
-                                                  : [
-                                                      ...(activeMealCategory ||
-                                                        []),
-                                                      meal,
-                                                    ],
+                                              toggleArrayItem(
+                                                activeMealCategory,
+                                                meal,
                                               );
                                               setPages(1);
                                             }}
