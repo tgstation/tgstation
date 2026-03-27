@@ -89,6 +89,7 @@
 	name = "Toggle Light"
 	desc = "Glow like star dust."
 	button_icon_state = "light"
+	default_button_position = SCRN_OBJ_INSERT_FIRST
 
 /datum/action/cooldown/guardian/toggle_light/Activate()
 	astype(owner, /mob/living/basic/guardian)?.toggle_light()

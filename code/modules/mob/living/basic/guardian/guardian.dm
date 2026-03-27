@@ -84,10 +84,10 @@
 	)
 	/// List of actions we give to ourselves.
 	var/static/list/self_actions = list(
+		/datum/action/cooldown/guardian/toggle_light,
 		/datum/action/cooldown/guardian/communicate,
 		/datum/action/cooldown/guardian/manifest,
 		/datum/action/cooldown/guardian/recall,
-		/datum/action/cooldown/guardian/toggle_light,
 	)
 
 /mob/living/basic/guardian/Initialize(mapload, datum/guardian_fluff/theme)
