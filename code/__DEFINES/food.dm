@@ -19,6 +19,7 @@
 #define BUGS (1<<18)
 #define GORE (1<<19)
 #define STONE (1<<20)
+#define EGG (1<<21)
 
 DEFINE_BITFIELD(foodtypes, list(
 	"MEAT" = MEAT,

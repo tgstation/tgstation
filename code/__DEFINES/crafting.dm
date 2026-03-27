@@ -47,27 +47,40 @@
 #define NEVER_BLACKLIST_RESULT FALSE
 
 //food/drink crafting defines
-//When adding new defines, please make sure to also add them to the encompassing list
 #define CAT_FOOD "Foods"
-#define CAT_BREAD "Breads"
-#define CAT_BURGER "Burgers"
-#define CAT_CAKE "Cakes"
-#define CAT_EGG "Egg-Based Food"
-#define CAT_LIZARD "Lizard Food"
-#define CAT_MEAT "Meats"
-#define CAT_SEAFOOD "Seafood"
-#define CAT_MARTIAN "Martian Food"
-#define CAT_MISCFOOD "Misc. Food"
-#define CAT_MEXICAN "Mexican Food"
-#define CAT_MOTH "Mothic Food"
-#define CAT_PASTRY "Pastries"
-#define CAT_PIE "Pies"
-#define CAT_PIZZA "Pizzas"
-#define CAT_SALAD "Salads"
-#define CAT_SANDWICH "Sandwiches"
-#define CAT_SOUP "Soups"
-#define CAT_SPAGHETTI "Spaghettis"
-#define CAT_ICE "Frozen"
+	// cuisine categories
+	#define CUISINE_TERRAN "Terran" // catch-all for earth food that we don't have a more specific category for
+	#define CUISINE_ITALIAN "Italian"
+	#define CUISINE_MOTHIC "Mothic"
+	#define CUISINE_LIZARD "Lizard"
+	#define CUISINE_MARTIAN "Martian"
+	#define CUISINE_MEXICAN "Mexican"
+	#define CUISINE_JAPANESE "Japanese"
+	// dish categories (generic)
+	#define DISH_UNCATEGORIZED "Uncategorized"
+	#define DISH_APPETIZER "Appetizer"
+	#define DISH_COMPONENT "Component" // stuff you're not intended to eat - though some components may be more specific like dough being "bread" instead
+	#define DISH_DESSERT "Dessert"
+	#define DISH_FROZEN "Frozen" // catch-all for ice cream, popsicles, etc
+	// dish categories (specific)
+	#define DISH_BREAD "Bread"
+	#define DISH_BURGER "Burger"
+	#define DISH_BURRITO "Burrito"
+	#define DISH_CAKE "Cake"
+	#define DISH_CANDY "Candy"
+	#define DISH_COOKIE "Cookie"
+	#define DISH_MEAT "Meat" // things often served on its own as a "meat dish", though it may include tofu
+	#define DISH_NOODLES "Noodles"
+	#define DISH_PASTRY "Pastry"
+	#define DISH_PIE "Pie"
+	#define DISH_PIZZA "Pizza"
+	#define DISH_RICE "Rice"
+	#define DISH_SALAD "Salad"
+	#define DISH_SANDWICH "Sandwich"
+	#define DISH_SOUP "Soup"
+	#define DISH_SUSHI "Sushi"
+	#define DISH_TACO "Taco"
+
 #define CAT_DRINK "Drinks"
 
 //crafting defines

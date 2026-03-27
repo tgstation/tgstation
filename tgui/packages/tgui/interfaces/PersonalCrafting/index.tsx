@@ -21,6 +21,8 @@ import { CATEGORY_ICONS_COOKING, CATEGORY_ICONS_CRAFTING } from './constants';
 import { FoodtypeContent } from './content/FoodtypeContent';
 import { MaterialContent } from './content/MaterialContent';
 import { RecipeContent, RecipeContentCompact } from './content/RecipeContent';
+import { SubGroupTitle } from './GroupTitle';
+import { getFAIcon } from './helpers';
 import {
   type CraftingData,
   type Material,
@@ -55,6 +57,28 @@ export function PersonalCrafting(props: any) {
         ? DEFAULT_CAT_COOKING
         : DEFAULT_CAT_CRAFTING,
   );
+
+  const allFoodCuisines = data.recipes
+    .reduce((acc: string[], recipe) => {
+      if (recipe.cuisine_category && !acc.includes(recipe.cuisine_category)) {
+        acc.push(recipe.cuisine_category);
+      }
+      return acc;
+    }, [])
+    .sort((a, b) => (a > b ? 1 : -1));
+
+  const allDishCategories = data.recipes
+    .reduce((acc: string[], recipe) => {
+      if (recipe.dish_category && !acc.includes(recipe.dish_category)) {
+        acc.push(recipe.dish_category);
+      }
+      return acc;
+    }, [])
+    .sort((a, b) => (a > b ? 1 : -1));
+
+  const [activeFoodCuisine, setFoodCuisine] = useState<string[]>();
+  const [activeDishCategory, setDishCategory] = useState<string[]>();
+
   const [activeType, setFoodType] = useState(
     Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0],
   );
@@ -83,26 +107,47 @@ export function PersonalCrafting(props: any) {
       ? filter(material_occurences, searchMaterial)
       : material_occurences;
 
+  function categoryMatch(recipe: Recipe): boolean {
+    if (tabMode === TABS.material) {
+      return Object.keys(recipe.reqs).includes(activeMaterial);
+    } else if (tabMode === TABS.category) {
+      if (activeCategory === 'Can Make') {
+        return Boolean(craftability[recipe.ref]);
+      }
+      if (activeCategory === 'Foods') {
+        if (
+          activeFoodCuisine?.length &&
+          !activeFoodCuisine.includes(recipe.cuisine_category || '')
+        ) {
+          return false;
+        }
+        if (
+          activeDishCategory?.length &&
+          !activeDishCategory.includes(recipe.dish_category || '')
+        ) {
+          return false;
+        }
+      }
+      return recipe.category === activeCategory;
+    } else if (tabMode === TABS.foodtype && mode === MODE.cooking) {
+      if (activeType === 'Can Make') {
+        return Boolean(craftability[recipe.ref]);
+      }
+      if (recipe.foodtypes) {
+        return recipe.foodtypes.includes(activeType);
+      }
+      return false;
+    }
+    return true;
+  }
+
   let recipes = filter(
     data.recipes,
     (recipe) =>
       // If craftable only is selected, then filter by craftability
       (!display_craftable_only || Boolean(craftability[recipe.ref])) &&
       // Ignore categories and types when searching
-      (searchText.length > 0 ||
-        // Is foodtype mode and the active type matches
-        (tabMode === TABS.foodtype &&
-          mode === MODE.cooking &&
-          ((activeType === 'Can Make' && Boolean(craftability[recipe.ref])) ||
-            recipe.foodtypes?.includes(activeType))) ||
-        // Is material mode and the active material or catalysts match
-        (tabMode === TABS.material &&
-          Object.keys(recipe.reqs).includes(activeMaterial)) ||
-        // Is category mode and the active categroy matches
-        (tabMode === TABS.category &&
-          ((activeCategory === 'Can Make' &&
-            Boolean(craftability[recipe.ref])) ||
-            recipe.category === activeCategory))),
+      (searchText.length > 0 || categoryMatch(recipe)),
   );
   recipes = sortBy(recipes, [
     (recipe) => [
@@ -132,8 +177,6 @@ export function PersonalCrafting(props: any) {
         : 30;
   const displayLimit = pageSize * pages;
   const content = document.getElementById('content');
-  const CATEGORY_ICONS =
-    mode === MODE.cooking ? CATEGORY_ICONS_COOKING : CATEGORY_ICONS_CRAFTING;
 
   return (
     <Window width={700} height={720}>
@@ -285,36 +328,124 @@ export function PersonalCrafting(props: any) {
                               }
                             }}
                           >
-                            <Stack>
-                              <Stack.Item width="14px" textAlign="center">
-                                <Icon
-                                  color={
-                                    category === 'Blood Cult'
-                                      ? 'red'
-                                      : 'default'
+                            <Stack vertical>
+                              <Stack.Item>
+                                <Stack
+                                  pt={
+                                    category === 'Foods' &&
+                                    activeCategory === category
+                                      ? 0.75
+                                      : 0
                                   }
-                                  name={
-                                    category in CATEGORY_ICONS
-                                      ? CATEGORY_ICONS[
-                                          category as keyof typeof CATEGORY_ICONS
-                                        ]
-                                      : 'circle'
-                                  }
-                                />
+                                >
+                                  <Stack.Item width="14px" textAlign="center">
+                                    <Icon
+                                      color={
+                                        category === 'Blood Cult'
+                                          ? 'red'
+                                          : 'default'
+                                      }
+                                      name={getFAIcon(category, mode)}
+                                    />
+                                  </Stack.Item>
+                                  <Stack.Item
+                                    grow
+                                    color={
+                                      category === 'Blood Cult'
+                                        ? 'red'
+                                        : 'default'
+                                    }
+                                  >
+                                    {category}
+                                  </Stack.Item>
+                                  {category === 'Can Make' && (
+                                    <Stack.Item>
+                                      {Object.keys(craftability).length}
+                                    </Stack.Item>
+                                  )}
+                                </Stack>
                               </Stack.Item>
-                              <Stack.Item
-                                grow
-                                color={
-                                  category === 'Blood Cult' ? 'red' : 'default'
-                                }
-                              >
-                                {category}
-                              </Stack.Item>
-                              {category === 'Can Make' && (
-                                <Stack.Item>
-                                  {Object.keys(craftability).length}
-                                </Stack.Item>
-                              )}
+                              {/* Foods are further categorized by cuisine and dish type */}
+                              {category === 'Foods' &&
+                                activeCategory === category && (
+                                  <Stack.Item fontSize="0.95em">
+                                    <Stack vertical pb={1}>
+                                      <Stack.Item>
+                                        <SubGroupTitle title="Cuisines" />
+                                      </Stack.Item>
+                                      {allFoodCuisines.map((cuisine) => (
+                                        <Stack.Item key={cuisine}>
+                                          <Button.Checkbox
+                                            fluid
+                                            color="transparent"
+                                            checked={activeFoodCuisine?.includes(
+                                              cuisine,
+                                            )}
+                                            onClick={() => {
+                                              setFoodCuisine(
+                                                activeFoodCuisine?.includes(
+                                                  cuisine,
+                                                )
+                                                  ? activeFoodCuisine.filter(
+                                                      (g) => g !== cuisine,
+                                                    )
+                                                  : [
+                                                      ...(activeFoodCuisine ||
+                                                        []),
+                                                      cuisine,
+                                                    ],
+                                              );
+                                              setPages(1);
+                                            }}
+                                          >
+                                            <Icon
+                                              name={getFAIcon(cuisine, mode)}
+                                              mr={1}
+                                              ml={0.5}
+                                            />
+                                            {cuisine}
+                                          </Button.Checkbox>
+                                        </Stack.Item>
+                                      ))}
+                                      <Stack.Item>
+                                        <SubGroupTitle title="Dishes" />
+                                      </Stack.Item>
+                                      {allDishCategories.map((dish) => (
+                                        <Stack.Item key={dish}>
+                                          <Button.Checkbox
+                                            fluid
+                                            checked={activeDishCategory?.includes(
+                                              dish,
+                                            )}
+                                            onClick={() => {
+                                              setDishCategory(
+                                                activeDishCategory?.includes(
+                                                  dish,
+                                                )
+                                                  ? activeDishCategory.filter(
+                                                      (d) => d !== dish,
+                                                    )
+                                                  : [
+                                                      ...(activeDishCategory ||
+                                                        []),
+                                                      dish,
+                                                    ],
+                                              );
+                                              setPages(1);
+                                            }}
+                                          >
+                                            <Icon
+                                              name={getFAIcon(dish, mode)}
+                                              mr={1}
+                                              ml={0.5}
+                                            />
+                                            {dish}
+                                          </Button.Checkbox>
+                                        </Stack.Item>
+                                      ))}
+                                    </Stack>
+                                  </Stack.Item>
+                                )}
                             </Stack>
                           </Tabs.Tab>
                         ))}
