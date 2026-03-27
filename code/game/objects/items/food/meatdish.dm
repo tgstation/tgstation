@@ -1189,7 +1189,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/full_english
-	name = "full English breakfast"
+	name = "full english breakfast"
 	desc = "A hearty plate with all the trimmings, representing the pinnacle of the breakfast art."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "full_english"
@@ -1198,7 +1198,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("sausage" = 1, "bacon" = 1, "egg" = 1, "tomato" = 1, "mushrooms" = 1, "bread" = 1, "beans" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED|BREAKFAST|egg
+	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED|BREAKFAST|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_5
