@@ -19,7 +19,6 @@
 	spawning = 4
 	color = "#34ff19a1"
 	lifespan = null
-	// fade = 0
 	grow = -0.08
 	velocity = list(0, 1, 0)
 	position = generator(GEN_CIRCLE, 0, 16, NORMAL_RAND)
