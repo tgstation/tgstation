@@ -1584,6 +1584,14 @@
 	acidpwr = 30.0
 	ph = 0.0
 
+/datum/reagent/toxin/acid/industrial_waste/on_new(data)
+	. = ..()
+	RegisterSignal(holder, COMSIG_REAGENTS_CHEMICAL_OBLITERATION, PROC_REF(pre_disposal))
+
+/datum/reagent/toxin/acid/industrial_waste/Destroy()
+	UnregisterSignal(holder, COMSIG_REAGENTS_CHEMICAL_OBLITERATION)
+	return ..()
+
 /datum/reagent/toxin/acid/industrial_waste/on_merge(list/mix_data, amount)
 	. = ..()
 	var/merged_total = amount + volume
@@ -1638,6 +1646,15 @@
 		goo.reagents.add_reagent(type, reac_volume)
 	return ..()
 
+/datum/reagent/toxin/acid/industrial_waste/proc/pre_disposal()
+	SIGNAL_HANDLER
+	var/atom/disaster_zone = holder?.my_atom
+	if(!disaster_zone)
+		return
+	if(prob(10))
+		disaster_zone.balloon_alert_to_viewers("hissssssss!")
+	spew_waste(round(volume / WASTE_REACTION_THRESHOLD)) //You can't just dump the industrial waste down the kitchen sink.
+
 /**
  * Pick a random turf in the spew range and split our total amount of waste there.
  */
@@ -1658,6 +1675,9 @@
 	while(length(turfs))
 		var/turf/turf_options = pick(turfs)
 		if(turf_options.is_blocked_turf(TRUE))
+			turfs -= turf_options
+			continue
+		if(isgroundlessturf(turf_options) || isindestructiblefloor(turf_options))
 			turfs -= turf_options
 			continue
 		else

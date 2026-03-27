@@ -41,3 +41,5 @@
 #define COMSIG_REAGENTS_CUP_TRANSFER_TO "reagents_cup_transfer_to"
 /// sent when reagents are transfered from some reagent container, to a cup (atom/transfer_from)
 #define COMSIG_REAGENTS_CUP_TRANSFER_FROM "reagents_cup_transfer_from"
+/// Sent when reagents are being destroyed by the chemical disposer
+#define COMSIG_REAGENTS_CHEMICAL_OBLITERATION "reagents_obliteration"
