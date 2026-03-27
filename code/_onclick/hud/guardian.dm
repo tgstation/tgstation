@@ -136,6 +136,14 @@
 /datum/action/innate/guardian/recall/Activate()
 	astype(owner, /mob/living/basic/guardian)?.recall()
 
+/datum/action/cooldown/guardian/toggle_light
+	name = "Toggle Light"
+	desc = "Glow like star dust."
+	button_icon_state = "light"
+
+/datum/action/cooldown/guardian/toggle_light/Activate()
+	astype(owner, /mob/living/basic/guardian)?.toggle_light()
+
 #undef GUARDIAN_COMMUNICATE_LOCATION
 #undef GUARDIAN_MANIFEST_LOCATION
 #undef GUARDIAN_RECALL_LOCATION

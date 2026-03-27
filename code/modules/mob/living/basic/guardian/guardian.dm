@@ -105,6 +105,7 @@
 			continue
 		var/datum/action/new_action = new action_type(mind)
 		new_action.Grant(src)
+	update_action_buttons()
 
 /mob/living/basic/guardian/Destroy()
 	GLOB.parasites -= src
