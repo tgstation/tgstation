@@ -694,6 +694,7 @@
 		/datum/component/mind_linker/active_linking, \
 		network_name = "Slime Link", \
 		signals_which_destroy_us = list(COMSIG_SPECIES_LOSS), \
+		show_balloon_alert = TRUE, \
 		linker_action_path = /datum/action/innate/link_minds, \
 	)
 

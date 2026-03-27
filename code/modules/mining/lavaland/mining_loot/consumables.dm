@@ -96,8 +96,8 @@
 	ADD_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
 	being.update_sight()
 
-/obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits)
-	if(!ismob(orbit_target))
+/obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits, refreshing = FALSE)
+	if(!ismob(orbit_target) || refreshing)
 		return ..()
 	var/mob/being = orbit_target
 	UnregisterSignal(being, COMSIG_MOB_UPDATE_SIGHT)

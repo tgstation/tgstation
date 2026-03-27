@@ -1,7 +1,7 @@
 PROCESSING_SUBSYSTEM_DEF(personalities)
 	name = "Personalities"
 	runlevels = RUNLEVEL_GAME
-	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING
+	ss_flags = SS_BACKGROUND|SS_POST_FIRE_TIMING
 	wait = 3 SECONDS
 
 	/// All personality singletons indexed by their type

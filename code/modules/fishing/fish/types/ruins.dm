@@ -167,7 +167,7 @@
 		return SHAME
 
 	var/skin_tone
-	for(var/obj/item/bodypart/to_wound as anything in user.bodyparts)
+	for(var/obj/item/bodypart/to_wound as anything in user.get_bodyparts())
 		if(to_wound == user.get_bodypart(BODY_ZONE_CHEST))
 			skin_tone = to_wound.species_color || skintone2hex(to_wound.skin_tone)
 		user.cause_wound_of_type_and_severity(WOUND_SLASH, to_wound, WOUND_SEVERITY_CRITICAL, WOUND_SEVERITY_CRITICAL)
