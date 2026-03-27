@@ -53,8 +53,8 @@
 	/// Coloured overlay we apply
 	var/mutable_appearance/overlay
 
-	/// Which toggle button the HUD uses.
-	var/toggle_button_type = /atom/movable/screen/guardian/toggle_mode/inactive
+	/// Which toggle button the guardian has. Won't get one if it's null.
+	var/toggle_button_type = null
 	/// Name used by the guardian creator.
 	var/creator_name = "Error"
 	/// Description used by the guardian creator.
@@ -97,16 +97,10 @@
 	theme?.apply(src)
 	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/guardian/phase/out)
 	AddElement(/datum/element/simple_flying)
-	AddComponent(/datum/component/basic_inhands)
 	// life link
 	update_appearance(UPDATE_ICON)
 	manifest_effects()
-	for (var/action_type in self_actions)
-		if (locate(action_type) in actions)
-			continue
-		var/datum/action/new_action = new action_type(mind)
-		new_action.Grant(src)
-	update_action_buttons()
+	create_actions()
 
 /mob/living/basic/guardian/Destroy()
 	GLOB.parasites -= src
@@ -114,6 +108,16 @@
 		recall_effects()
 	cut_summoner(different_person = TRUE)
 	return ..()
+
+///Creates the guardian's default action buttons and sets them to go in their proper location.
+///Subtypes overwrite this for special ability types and whatnot.
+/mob/living/basic/guardian/proc/create_actions()
+	for (var/action_type in self_actions + toggle_button_type)
+		if (locate(action_type) in actions)
+			continue
+		var/datum/action/new_action = new action_type(mind)
+		new_action.Grant(src)
+	update_action_buttons()
 
 /mob/living/basic/guardian/update_overlays()
 	. = ..()

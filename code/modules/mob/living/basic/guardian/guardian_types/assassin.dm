@@ -17,7 +17,7 @@
 	creator_name = "Assassin"
 	creator_desc = "Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth."
 	creator_icon = "assassin"
-	toggle_button_type = /atom/movable/screen/guardian/toggle_mode/assassin
+	toggle_button_type = /datum/action/innate/guardian/toggle_mode/assassin
 	/// How long to put stealth on cooldown if we are forced out?
 	var/stealth_cooldown_time = 16 SECONDS
 	/// Cooldown for the stealth toggle.

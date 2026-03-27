@@ -13,7 +13,7 @@
 	creator_desc = "Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; where it cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode."
 	creator_icon = "ranged"
 	see_invisible = SEE_INVISIBLE_LIVING
-	toggle_button_type = /atom/movable/screen/guardian/toggle_mode
+	toggle_button_type = /datum/action/innate/guardian/toggle_mode
 
 /mob/living/basic/guardian/ranged/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()

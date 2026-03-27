@@ -9,7 +9,7 @@
 	creator_name = "Gaseous"
 	creator_desc = "Creates sparks on touch and continuously expels a gas of its choice. Automatically extinguishes the user if they catch on fire."
 	creator_icon = "gaseous"
-	toggle_button_type = /atom/movable/screen/guardian/toggle_mode/gases
+	toggle_button_type = /datum/action/innate/guardian/toggle_mode/gases
 	/// Ability we use to select gases
 	var/datum/action/cooldown/mob_cooldown/expel_gas/gas
 	/// Rate of temperature stabilization per second.

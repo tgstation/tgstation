@@ -14,16 +14,11 @@
 	healths = new /atom/movable/screen/healths/guardian(null, src)
 	infodisplay += healths
 
-	using = new owner.toggle_button_type(null, src)
-	using.screen_loc = ui_storage1
-	static_inventory += using
-
 /datum/hud/dextrous/guardian/New(mob/living/basic/guardian/owner) //for a dextrous guardian
 	..()
 	var/atom/movable/screen/using
 	if(istype(owner, /mob/living/basic/guardian/dextrous))
 		var/atom/movable/screen/inventory/inv_box
-
 		inv_box = new /atom/movable/screen/inventory(null, src)
 		inv_box.name = "internal storage"
 		inv_box.icon = ui_style
@@ -41,10 +36,6 @@
 	healths = new /atom/movable/screen/healths/guardian(null, src)
 	infodisplay += healths
 
-	using = new owner.toggle_button_type(null, src)
-	using.screen_loc = ui_storage2
-	static_inventory += using
-
 /datum/hud/dextrous/guardian/persistent_inventory_update()
 	if(!mymob)
 		return
@@ -61,33 +52,6 @@
 
 	..()
 
-/atom/movable/screen/guardian
-	icon = 'icons/hud/guardian.dmi'
-	mouse_over_pointer = MOUSE_HAND_POINTER
-
-/atom/movable/screen/guardian/toggle_mode
-	icon_state = "toggle"
-	name = "Toggle Mode"
-	desc = "Switch between ability modes."
-
-/atom/movable/screen/guardian/toggle_mode/Click()
-	if(isguardian(usr))
-		var/mob/living/basic/guardian/user = usr
-		user.toggle_modes()
-
-/atom/movable/screen/guardian/toggle_mode/inactive
-	icon_state = "notoggle" //greyed out so it doesn't look like it'll work
-
-/atom/movable/screen/guardian/toggle_mode/assassin
-	icon_state = "stealth"
-	name = "Toggle Stealth"
-	desc = "Enter or exit stealth."
-
-/atom/movable/screen/guardian/toggle_mode/gases
-	icon_state = "gases"
-	name = "Toggle Gas"
-	desc = "Switch between possible gases."
-
 /datum/action/innate/guardian
 	button_icon = 'icons/hud/guardian.dmi'
 
@@ -100,11 +64,12 @@
 #define GUARDIAN_COMMUNICATE_LOCATION "CENTER+-2:16,SOUTH+0:5"
 #define GUARDIAN_MANIFEST_LOCATION "CENTER+-1:16,SOUTH+0:5"
 #define GUARDIAN_RECALL_LOCATION "CENTER+0:16,SOUTH+0:5"
+#define GUARDIAN_TOGGLE_LOCATION "CENTER+1:16,SOUTH+0:5"
 
 /datum/action/innate/guardian/communicate
 	name = "Communicate"
-	button_icon_state = "communicate"
 	desc = "Communicate telepathically with your user."
+	button_icon_state = "communicate"
 	default_button_position = GUARDIAN_COMMUNICATE_LOCATION
 
 /datum/action/innate/guardian/communicate/Activate()
@@ -136,6 +101,26 @@
 /datum/action/innate/guardian/toggle_light/Activate()
 	astype(owner, /mob/living/basic/guardian)?.toggle_light()
 
+/datum/action/innate/guardian/toggle_mode
+	name = "Toggle Mode"
+	desc = "Switch between ability modes."
+	button_icon_state = "toggle"
+	default_button_position = GUARDIAN_TOGGLE_LOCATION
+
+/datum/action/innate/guardian/toggle_mode/Activate()
+	astype(owner, /mob/living/basic/guardian)?.toggle_modes()
+
+/datum/action/innate/guardian/toggle_mode/assassin
+	button_icon_state = "stealth"
+	name = "Toggle Stealth"
+	desc = "Enter or exit stealth."
+
+/datum/action/innate/guardian/toggle_mode/gases
+	name = "Toggle Gas"
+	desc = "Switch between possible gases."
+	button_icon_state = "gases"
+
 #undef GUARDIAN_COMMUNICATE_LOCATION
 #undef GUARDIAN_MANIFEST_LOCATION
 #undef GUARDIAN_RECALL_LOCATION
+#undef GUARDIAN_TOGGLE_LOCATION
