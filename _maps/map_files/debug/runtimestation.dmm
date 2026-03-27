@@ -2262,7 +2262,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "Nb" = (
-/obj/machinery/bci_implanter,
+/obj/machinery/skill_station,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "Nc" = (
@@ -2699,13 +2699,13 @@
 /area/station/hallway/primary/central)
 "XN" = (
 /obj/structure/table,
-/obj/item/organ/cyberimp/bci{
+/obj/item/skillchip/bci{
 	pixel_y = 5
 	},
-/obj/item/organ/cyberimp/bci{
+/obj/item/skillchip/bci{
 	pixel_y = 5
 	},
-/obj/item/organ/cyberimp/bci{
+/obj/item/skillchip/bci{
 	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,

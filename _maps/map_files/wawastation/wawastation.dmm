@@ -18383,7 +18383,7 @@
 /turf/open/floor/iron/white/textured,
 /area/station/science/genetics)
 "gun" = (
-/obj/machinery/bci_implanter,
+/obj/machinery/skill_station,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
@@ -51488,7 +51488,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/warehouse/upper)
 "rHF" = (
-/obj/machinery/bci_implanter,
+/obj/machinery/skill_station,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "rHG" = (

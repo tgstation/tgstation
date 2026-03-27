@@ -1,0 +1,2 @@
+/obj/machinery/bci_implanter : /obj/machinery/skill_station {@OLD}
+/obj/item/organ/cyberimp/bci : /obj/item/skillchip/bci {@OLD}

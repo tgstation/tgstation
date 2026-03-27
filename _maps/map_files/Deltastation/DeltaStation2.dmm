@@ -66671,7 +66671,7 @@
 /area/station/hallway/secondary/entry)
 "qub" = (
 /obj/structure/sign/warning/firing_range/directional/west,
-/obj/machinery/bci_implanter,
+/obj/machinery/skill_station,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
@@ -91388,7 +91388,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/machinery/bci_implanter,
+/obj/machinery/skill_station,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
 "wzY" = (

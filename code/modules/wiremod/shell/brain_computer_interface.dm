@@ -1,25 +1,30 @@
-/obj/item/organ/cyberimp/bci
+/obj/item/skillchip/bci
 	name = "brain-computer interface"
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
 	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "bci"
-	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
+	/// Our internal circuit, if any
+	var/obj/item/integrated_circuit/circuit
 
-/obj/item/organ/cyberimp/bci/Initialize(mapload)
+/obj/item/organ/cyberimp/bci
+
+
+
+/obj/item/skillchip/bci/Initialize(mapload)
 	. = ..()
 
 	RegisterSignal(src, COMSIG_CIRCUIT_ACTION_COMPONENT_REGISTERED, PROC_REF(action_comp_registered))
 	RegisterSignal(src, COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED, PROC_REF(action_comp_unregistered))
 
-	var/obj/item/integrated_circuit/circuit = new(src)
+	circuit = new(src)
 	circuit.add_component(new /obj/item/circuit_component/equipment_action(null, "One"))
 
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
 	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
 
-/obj/item/organ/cyberimp/bci/say(
+/obj/item/skillchip/bci/say(
 	message,
 	bubble_type,
 	list/spans = list(),
@@ -32,22 +37,39 @@
 	datum/saymode/saymode,
 	list/message_mods = list(),
 )
-	if (owner)
+	var/mob/living/owner = holding_brain.owner
+	if (!owner)
+		owner = holding_brain.brainmob
+		if(!owner)
+			return ..()
 		// Otherwise say_dead will be called.
 		// It's intentional that a circuit for a dead person does not speak from the shell.
-		if (owner.stat == DEAD)
+	if ((holding_brain.owner.stat == DEAD))
+		if(!(holding_brain.brainmob?.health > HEALTH_THRESHOLD_DEAD))
 			return
 
-		forced = "circuit speech"
-		return owner.say(arglist(args))
+	forced = "circuit speech"
+	return owner.say(arglist(args))
 
-	return ..()
+/obj/item/skillchip/bci/on_deactivate(mob/living/carbon/user, silent)
+	. = ..()
+	if(!circuit)
+		return
+	for(var/obj/item/circuit_component/bci_core/internal_component in circuit.attached_components)
+		internal_component.on_skillchip_deactivated(holding_brain)
 
-/obj/item/organ/cyberimp/bci/proc/action_comp_registered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
+/obj/item/skillchip/bci/on_activate(mob/living/carbon/user, silent)
+	. = ..()
+	if(!circuit)
+		return
+	for(var/obj/item/circuit_component/bci_core/internal_component in circuit.attached_components)
+		internal_component.on_skillchip_activated(holding_brain)
+
+/obj/item/skillchip/bci/proc/action_comp_registered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
 	LAZYADD(actions, new/datum/action/innate/circuit_equipment_action(src, action_comp))
 
-/obj/item/organ/cyberimp/bci/proc/action_comp_unregistered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
+/obj/item/skillchip/bci/proc/action_comp_unregistered(datum/source, obj/item/circuit_component/equipment_action/action_comp)
 	SIGNAL_HANDLER
 	var/datum/action/innate/circuit_equipment_action/action = action_comp.granted_to[REF(src)]
 	if(!istype(action))
@@ -68,7 +90,10 @@
 
 	var/datum/port/output/user_port
 
-	var/obj/item/organ/cyberimp/bci/bci
+	var/obj/item/skillchip/bci/bci
+
+	/// Mob we currently have our signals registered on, i.e. the thing we're in. Hopefully.
+	var/datum/weakref/controlled_mob
 
 /obj/item/circuit_component/bci_core/populate_ports()
 
@@ -88,14 +113,14 @@
 		if (charge_action)
 			return
 		charge_action = new(src)
-		if (bci.owner)
-			charge_action.Grant(bci.owner)
+		if (bci.holding_brain?.owner)
+			charge_action.Grant(bci.holding_brain.owner)
 		bci.actions += charge_action
 	else
 		if (!charge_action)
 			return
-		if (bci.owner)
-			charge_action.Remove(bci.owner)
+		if (bci.holding_brain?.owner)
+			charge_action.Remove(bci.holding_brain.owner)
 		bci.actions -= charge_action
 		QDEL_NULL(charge_action)
 
@@ -104,22 +129,15 @@
 
 	show_charge_meter.set_value(TRUE)
 
-	RegisterSignal(shell, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_implanted))
-	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
-
 /obj/item/circuit_component/bci_core/unregister_shell(atom/movable/shell)
 	bci = shell
 
 	if (charge_action)
-		if (bci.owner)
-			charge_action.Remove(bci.owner)
+		if (bci.holding_brain?.owner)
+			charge_action.Remove(bci.holding_brain.owner)
 		bci.actions -= charge_action
 		QDEL_NULL(charge_action)
 
-	UnregisterSignal(shell, list(
-		COMSIG_ORGAN_IMPLANTED,
-		COMSIG_ORGAN_REMOVED,
-	))
 
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
 	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
@@ -129,31 +147,51 @@
 	if (!sent_message)
 		return
 
-	if (isnull(bci.owner))
-		return
+	var/mob/living/owner = bci.holding_brain?.owner
+	if (isnull(owner) || owner.stat == DEAD)
+		owner = bci.holding_brain?.brainmob
+		if(isnull(owner))
+			return
 
-	if (bci.owner.stat == DEAD)
-		return
+	to_chat(owner, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
 
-	to_chat(bci.owner, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
-
-/obj/item/circuit_component/bci_core/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
-	SIGNAL_HANDLER
-
+/obj/item/circuit_component/bci_core/proc/on_skillchip_activated(obj/item/organ/brain/holding_brain)
 	update_charge_action()
 
-	user_port.set_output(owner)
+	var/owner = holding_brain.owner
+	if(!owner)
+		owner = holding_brain.brainmob
+		RegisterSignal(holding_brain, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_implanted))
+	else
+		RegisterSignal(holding_brain, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 
-	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
-	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
+	set_up_new_mob(owner)
 
-/obj/item/circuit_component/bci_core/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
+/obj/item/circuit_component/bci_core/proc/on_organ_implanted(obj/item/organ/brain/holding_brain, mob/living/carbon/new_owner)
 	SIGNAL_HANDLER
+	set_up_new_mob(new_owner)
 
+/obj/item/circuit_component/bci_core/proc/on_organ_removed(obj/item/organ/brain/holding_brain, mob/living/carbon/old_owner)
+	SIGNAL_HANDLER
+	set_up_new_mob(holding_brain.brainmob)
+
+///Set up a new mob for us, and cleans up the old mob.
+/obj/item/circuit_component/bci_core/proc/set_up_new_mob(mob/newguy)
+	if(controlled_mob)
+		UnregisterSignal(controlled_mob.resolve(), list(
+			COMSIG_ATOM_EXAMINE,
+			COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
+			COMSIG_LIVING_ELECTROCUTE_ACT,
+		))
+	controlled_mob = WEAKREF(newguy)
+	user_port.set_output(newguy)
+	RegisterSignal(newguy, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(newguy, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
+	RegisterSignal(newguy, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
+
+/obj/item/circuit_component/bci_core/proc/on_skillchip_deactivated(obj/item/organ/brain/holding_brain)
 	user_port.set_output(null)
-
-	UnregisterSignal(owner, list(
+	UnregisterSignal(controlled_mob?.resolve(), list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
 		COMSIG_LIVING_ELECTROCUTE_ACT,
@@ -241,246 +279,3 @@
 	. = ..()
 	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 	button.maptext = cell ? MAPTEXT("[cell.percent()]%") : ""
-
-/obj/machinery/bci_implanter
-	name = "brain-computer interface manipulation chamber"
-	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."
-	circuit = /obj/item/circuitboard/machine/bci_implanter
-	icon = 'icons/obj/machines/bci_implanter.dmi'
-	icon_state = "bci_implanter"
-	base_icon_state = "bci_implanter"
-	layer = ABOVE_WINDOW_LAYER
-	anchored = TRUE
-	density = TRUE
-	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
-
-	var/busy = FALSE
-	var/busy_icon_state
-	var/locked = FALSE
-
-	var/obj/item/organ/cyberimp/bci/bci_to_implant
-
-	COOLDOWN_DECLARE(message_cooldown)
-
-/obj/machinery/bci_implanter/Initialize(mapload)
-	. = ..()
-	occupant_typecache = typecacheof(/mob/living/carbon)
-
-/obj/machinery/bci_implanter/on_deconstruction(disassembled)
-	drop_stored_bci()
-
-/obj/machinery/bci_implanter/Destroy()
-	qdel(bci_to_implant)
-	return ..()
-
-/obj/machinery/bci_implanter/examine(mob/user)
-	. = ..()
-	if (isnull(bci_to_implant))
-		. += span_notice("There is no BCI inserted.")
-	else
-		. += span_notice("Right-click to remove current BCI.")
-
-/obj/machinery/bci_implanter/proc/set_busy(status, working_icon)
-	busy = status
-	busy_icon_state = working_icon
-	update_appearance()
-
-/obj/machinery/bci_implanter/update_icon_state()
-	if (occupant)
-		icon_state = busy ? busy_icon_state : "[base_icon_state]_occupied"
-		return ..()
-	icon_state = "[base_icon_state][state_open ? "_open" : null]"
-	return ..()
-
-/obj/machinery/bci_implanter/update_overlays()
-	var/list/overlays = ..()
-
-	if ((machine_stat & MAINT) || panel_open)
-		overlays += "maint"
-		return overlays
-
-	if (machine_stat & (NOPOWER|BROKEN))
-		return overlays
-
-	if (busy || locked)
-		overlays += "red"
-		if (locked)
-			overlays += "bolted"
-		return overlays
-
-	overlays += "green"
-
-	return overlays
-
-/obj/machinery/bci_implanter/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	if (. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return .
-
-	if(!user.Adjacent(src))
-		return
-
-	if (locked)
-		balloon_alert(user, "it's locked!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if (isnull(bci_to_implant))
-		balloon_alert(user, "no bci inserted!")
-	else
-		user.put_in_hands(bci_to_implant)
-		balloon_alert(user, "ejected bci")
-
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/bci_implanter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if (!istype(tool, /obj/item/organ/cyberimp/bci))
-		return NONE
-
-	var/obj/item/organ/cyberimp/bci/new_bci = tool
-	if (!(locate(/obj/item/integrated_circuit) in new_bci))
-		balloon_alert(user, "bci has no circuit!")
-		return ITEM_INTERACT_BLOCKING
-
-	var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant
-	user.transferItemToLoc(new_bci, src)
-	bci_to_implant = new_bci
-	if (isnull(previous_bci_to_implant))
-		balloon_alert(user, "inserted bci")
-	else
-		balloon_alert(user, "swapped bci")
-		user.put_in_hands(previous_bci_to_implant)
-	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/bci_implanter/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if (!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-		update_appearance()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if (default_pry_open(weapon, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if (default_deconstruction_crowbar(weapon))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/bci_implanter/proc/start_process()
-	if (machine_stat & (NOPOWER|BROKEN))
-		return
-	if ((machine_stat & MAINT) || panel_open)
-		return
-	if (!occupant || busy)
-		return
-
-	update_use_power(ACTIVE_POWER_USE)
-
-	var/locked_state = locked
-	locked = TRUE
-
-	set_busy(TRUE, "[initial(icon_state)]_raising")
-	addtimer(CALLBACK(src, PROC_REF(set_busy), TRUE, "[initial(icon_state)]_active"), 1 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(set_busy), TRUE, "[initial(icon_state)]_falling"), 2 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(complete_process), locked_state), 3 SECONDS)
-
-/obj/machinery/bci_implanter/proc/complete_process(locked_state)
-	update_use_power(IDLE_POWER_USE)
-	locked = locked_state
-	set_busy(FALSE)
-
-	var/mob/living/carbon/carbon_occupant = occupant
-	if (!istype(carbon_occupant))
-		return
-
-	playsound(loc, 'sound/machines/ping.ogg', 30, FALSE)
-
-	var/obj/item/organ/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/cyberimp/bci)
-
-	if (bci_organ)
-		bci_organ.Remove(carbon_occupant)
-
-		if (isnull(bci_to_implant))
-			say("Occupant's previous brain-computer interface has been transferred to internal storage unit.")
-			carbon_occupant.transferItemToLoc(bci_organ, src)
-			bci_to_implant = bci_organ
-		else
-			say("Occupant's previous brain-computer interface has been ejected.")
-			bci_organ.forceMove(drop_location())
-	else if (!isnull(bci_to_implant))
-		say("Occupant has been injected with [bci_to_implant].")
-		bci_to_implant.Insert(carbon_occupant)
-
-/obj/machinery/bci_implanter/open_machine(drop = TRUE, density_to_set = FALSE)
-	if(state_open)
-		return FALSE
-
-	..()
-
-	return TRUE
-
-/obj/machinery/bci_implanter/close_machine(mob/living/carbon/user, density_to_set = TRUE)
-	if(!state_open)
-		return FALSE
-
-	..()
-
-	var/mob/living/carbon/carbon_occupant = occupant
-	if (istype(occupant))
-		var/obj/item/organ/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/cyberimp/bci)
-		if (isnull(bci_organ) && isnull(bci_to_implant))
-			say("No brain-computer interface inserted, and occupant does not have one. Insert a BCI to implant one.")
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
-			return FALSE
-
-	addtimer(CALLBACK(src, PROC_REF(start_process)), 1 SECONDS)
-	return TRUE
-
-/obj/machinery/bci_implanter/relaymove(mob/living/user, direction)
-	var/message
-
-	if (locked)
-		message = "it won't budge!"
-	else if (user.stat != CONSCIOUS)
-		message = "you don't have the energy!"
-
-	if (!isnull(message))
-		if (COOLDOWN_FINISHED(src, message_cooldown))
-			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
-			balloon_alert(user, message)
-
-		return
-
-	open_machine()
-
-/obj/machinery/bci_implanter/interact(mob/user)
-	if (state_open)
-		close_machine(null, user)
-		return
-	else if (locked)
-		balloon_alert(user, "it's locked!")
-		return
-
-	open_machine()
-
-/obj/machinery/bci_implanter/proc/drop_stored_bci()
-	if (isnull(bci_to_implant))
-		return
-	bci_to_implant.forceMove(drop_location())
-
-/obj/machinery/bci_implanter/dump_inventory_contents(list/subset)
-	// Prevents opening the machine dropping the BCI.
-	// "dump_contents()" still drops the BCI.
-	return ..(contents - bci_to_implant)
-
-/obj/machinery/bci_implanter/Exited(atom/movable/gone, direction)
-	if (gone == bci_to_implant)
-		bci_to_implant = null
-	return ..()
-
-/obj/item/circuitboard/machine/bci_implanter
-	name = "Brain-Computer Interface Manipulation Chamber"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/bci_implanter
-	req_components = list(
-		/obj/item/stock_parts/micro_laser = 2,
-		/obj/item/stock_parts/servo = 1,
-	)

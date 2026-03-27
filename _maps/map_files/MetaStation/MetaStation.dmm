@@ -18508,7 +18508,7 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "gvS" = (
-/obj/machinery/bci_implanter,
+/obj/machinery/skill_station,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/science/explab)
@@ -34597,7 +34597,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "lRE" = (
-/obj/machinery/bci_implanter,
+/obj/machinery/skill_station,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},

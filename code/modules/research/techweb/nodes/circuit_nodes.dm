@@ -121,7 +121,6 @@
 	description = "Embedded brain circuits. May occasionally stream Nanotrasen ads in dreams."
 	prereq_ids = list(TECHWEB_NODE_CIRCUIT_SHELLS, TECHWEB_NODE_PASSIVE_IMPLANTS)
 	design_ids = list(
-		"bci_implanter",
 		"bci_shell",
 		"comp_bar_overlay",
 		"comp_camera_bci",

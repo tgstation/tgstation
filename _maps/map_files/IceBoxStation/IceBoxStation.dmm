@@ -4490,7 +4490,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "bkS" = (
-/obj/machinery/bci_implanter,
+/obj/machinery/skill_station,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -80448,7 +80448,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "wJW" = (
-/obj/machinery/bci_implanter,
+/obj/machinery/skill_station,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
