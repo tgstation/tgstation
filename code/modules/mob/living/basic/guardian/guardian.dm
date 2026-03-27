@@ -113,9 +113,11 @@
 ///Subtypes overwrite this for special ability types and whatnot.
 /mob/living/basic/guardian/proc/create_actions()
 	for (var/action_type in self_actions + toggle_button_type)
+		if(isnull(action_type)) //no toggle button type
+			continue
 		if (locate(action_type) in actions)
 			continue
-		var/datum/action/new_action = new action_type(mind)
+		var/datum/action/new_action = new action_type(src)
 		new_action.Grant(src)
 	update_action_buttons()
 
