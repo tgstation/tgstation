@@ -445,6 +445,9 @@
 			user.balloon_alert(user, "missing components!")
 			return FALSE
 
+	if(!circuit.completion_requirements(src))
+		return FALSE
+
 	tool.play_tool_sound(src)
 	// Prevent us from dropping stuff thanks to /Exited
 	var/obj/item/circuitboard/machine/leaving_circuit = circuit

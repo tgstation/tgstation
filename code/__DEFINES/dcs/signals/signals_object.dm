@@ -666,5 +666,8 @@
 #define COMSIG_VENDING_UI_INTERACT "vending_ui_interact"
 	#define VENDING_DENIED (1<<0)
 
+/// From /obj/machinery/vending/dispense(): (obj/item/vended_item)
+#define COMSIG_VENDING_DISPENSED "vending_dispensed"
+
 /// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
 #define COMSIG_REFLECTION_UPDATED "reflection_updated"

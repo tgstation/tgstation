@@ -3,7 +3,7 @@
  */
 SUBSYSTEM_DEF(id_access)
 	name = "IDs and Access"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	/// Dictionary of access flags. Keys are accesses. Values are their associated bitflags.
 	var/list/flags_by_access = list()
