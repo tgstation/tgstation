@@ -40,12 +40,7 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            const json_input = `${{steps.stale.outputs.staled-issues-prs}}`.trim();
-            if(json_input.length === 0 || json_input == '[]'){
-              return [];
-            }
-
-            return JSON.parse(`${json_input}`)
+            return JSON.parse(`${{steps.stale.outputs.staled-issues-prs}}`)
                        .filter(issue => !!issue.pull_request)
                        .map(pr => ({
                         title: pr.title,
