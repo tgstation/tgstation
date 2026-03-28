@@ -620,15 +620,14 @@
 /obj/item/organ/eyes/robotic/tacvisor/proc/on_hear(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 
-	if (hearing_args[HEARING_SPEAKER] == owner)
+	if (hearing_args[HEARING_SPEAKER] == owner || !isliving(hearing_args[HEARING_SPEAKER]))
 		return
 
-	if ((obj_flags & EMAGGED) && ismob(hearing_args[HEARING_SPEAKER]))
+	if (obj_flags & EMAGGED)
 		return COMSIG_MOVABLE_CANCEL_HEARING
 
-	if (iscarbon(hearing_args[HEARING_SPEAKER]))
-		var/list/message_mods = hearing_args[HEARING_MESSAGE_MODE]
-		message_mods[MODE_SPEAKER_NAME_OVERRIDE] = "Unknown"
+	var/list/message_mods = hearing_args[HEARING_MESSAGE_MODE]
+	message_mods[MODE_SPEAKER_NAME_OVERRIDE] = "Unknown"
 
 /obj/item/organ/eyes/robotic/tacvisor/proc/on_login(mob/living/carbon/source, client/user_client)
 	SIGNAL_HANDLER
