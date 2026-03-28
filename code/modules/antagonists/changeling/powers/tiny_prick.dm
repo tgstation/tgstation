@@ -1,7 +1,8 @@
 /datum/action/changeling/sting//parent path, not meant for users afaik
-	name = "Tiny Prick"
+	name = "Tiny Prick" //cellularemporium uses `nameToIconState` to button icon state must match this, on top of matching the hud below.
 	desc = "Stabby stabby"
 	category = "stings"
+	button_icon_state = "sting_null" //This must be equal to the icon state for `/atom/movable/screen/ling/sting`
 
 /datum/action/changeling/sting/Trigger(mob/clicker, trigger_flags)
 	var/mob/user = owner
@@ -75,7 +76,7 @@
 		For complex humanoids, the transformation is temporarily, but the duration is paused while the victim is dead or in stasis. \
 		For more simple humanoids, such as monkeys, the transformation is permanent. \
 		Does not provide a warning to others. Mutations will not be transferred."
-	button_icon_state = "sting_transform"
+	button_icon_state = "transformation_sting"
 	chemical_cost = 33 // Low enough that you can sting only two people in quick succession
 	dna_cost = 2
 	/// A reference to our active profile, which we grab DNA from
