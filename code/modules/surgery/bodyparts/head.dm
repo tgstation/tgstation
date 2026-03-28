@@ -184,8 +184,6 @@
 	if(brain && violent_removal && prob(90)) //ghetto surgery can damage the brain.
 		to_chat(user, span_warning("[brain] was damaged in the process!"))
 		brain.set_organ_damage(brain.maxHealth)
-
-	update_limb()
 	return ..()
 
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
@@ -197,6 +195,21 @@
 		else
 			REMOVE_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
 	update_hair_and_lips(dropping_limb, is_creating)
+
+// Ensures putting organs in and removing organs from our head always updates the limb
+/obj/item/bodypart/head/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(isorgan(arrived) && !ismob(loc))
+		addtimer(CALLBACK(src, PROC_REF(update_head_on_organ_movement)), 1, TIMER_UNIQUE|TIMER_DELETE_ME)
+
+/obj/item/bodypart/head/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(isorgan(gone) && !ismob(loc))
+		addtimer(CALLBACK(src, PROC_REF(update_head_on_organ_movement)), 1, TIMER_UNIQUE|TIMER_DELETE_ME)
+
+/obj/item/bodypart/head/proc/update_head_on_organ_movement()
+	update_limb()
+	update_icon_dropped()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
