@@ -27,7 +27,7 @@
 	/// The caption we will give to the picture when we first save it
 	var/current_picture_caption
 
-/// Special type of camera for this exact usecase to prevent harddels
+// Special type of camera for this exact usecase to prevent harddels
 /obj/item/camera/app
 	print_picture_on_snap = FALSE
 	cooldown = 1 SECONDS
