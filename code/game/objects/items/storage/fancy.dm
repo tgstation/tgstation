@@ -591,6 +591,9 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "nuggetbox"
 	base_icon_state = "nuggetbox"
+	inhand_icon_state = "nuggetbox"
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	contents_tag = "nugget"
 	w_class = WEIGHT_CLASS_SMALL
 	spawn_type = /obj/item/food/nugget
@@ -606,6 +609,7 @@
 	name = "red nugget box"
 	icon_state = "rednuggetbox"
 	base_icon_state = "rednuggetbox"
+	inhand_icon_state = "rednuggetbox"
 
 /obj/item/storage/fancy/wing_box
 	name = "red wing box"
@@ -613,6 +617,9 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "redwingbox5"
 	base_icon_state = "redwingbox"
+	inhand_icon_state = "redwingbox"
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	contents_tag = "wings"
 	w_class = WEIGHT_CLASS_SMALL
 	spawn_type = /obj/item/food/fried_chicken
@@ -626,6 +633,9 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "redfrybox2"
 	base_icon_state = "redfrybox"
+	inhand_icon_state = "redfrybox"
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	contents_tag = "fries"
 	w_class = WEIGHT_CLASS_SMALL
 	spawn_type = /obj/item/food/fries
