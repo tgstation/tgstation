@@ -25,7 +25,7 @@
 	force = 16
 	demolition_mod = 1.33
 	exposed_wound_bonus = 10
-	infect_chance = 75
+	infect_chance = 50
 
 /proc/try_to_zombie_infect(mob/living/carbon/human/target, mob/living/user, def_zone = BODY_ZONE_CHEST, base_chance = 100)
 	CHECK_DNA_AND_SPECIES(target)
