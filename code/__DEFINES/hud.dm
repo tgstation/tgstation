@@ -304,7 +304,7 @@
 #define ui_alien_navigate_menu "EAST-4:6,SOUTH:5"
 #define ui_alien_memories_menu "EAST-4:22,SOUTH:1:20"
 #define ui_alien_floor_change "EAST-3:24,SOUTH:20"
-#define ui_alienplasmadisplay_human "EAST,CENTER-5:14"
+#define ui_alienplasmadisplay_human "EAST,CENTER-5:8"
 
 //AI
 #define ui_ai_core "BOTTOM:6,RIGHT-4"
