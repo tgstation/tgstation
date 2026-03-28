@@ -605,7 +605,7 @@
 	organ_owner.remove_client_colour(REF(src))
 	QDEL_NULL(proximity_monitor)
 	organ_owner.client?.images -= assoc_to_values(mob_overlays)
-	for (var/mob/living/carbon/thing as anything in mob_overlays)
+	for (var/mob/living/thing as anything in mob_overlays)
 		UnregisterSignal(thing, list(
 			COMSIG_MOVABLE_Z_CHANGED,
 			COMSIG_QDELETING,
@@ -630,7 +630,7 @@
 	var/list/message_mods = hearing_args[HEARING_MESSAGE_MODE]
 	message_mods[MODE_SPEAKER_NAME_OVERRIDE] = "Unknown"
 
-/obj/item/organ/eyes/robotic/tacvisor/proc/on_login(mob/living/carbon/source, client/user_client)
+/obj/item/organ/eyes/robotic/tacvisor/proc/on_login(mob/living/source, client/user_client)
 	SIGNAL_HANDLER
 
 	if (!length(mob_overlays))
@@ -638,8 +638,8 @@
 	else
 		user_client.images |= assoc_to_values(mob_overlays)
 
-/obj/item/organ/eyes/robotic/tacvisor/proc/create_illusions(mob/living/carbon/user)
-	for(var/mob/living/carbon/target as anything in GLOB.carbon_list)
+/obj/item/organ/eyes/robotic/tacvisor/proc/create_illusions(mob/living/user)
+	for(var/mob/living/target as anything in ((obj_flags & EMAGGED) ? GLOB.mob_living_list : GLOB.carbon_list))
 		if (target == user)
 			continue
 
@@ -648,13 +648,13 @@
 		else
 			refresh_overlay(target)
 
-/obj/item/organ/eyes/robotic/tacvisor/proc/on_mob_delete(mob/living/carbon/source)
+/obj/item/organ/eyes/robotic/tacvisor/proc/on_mob_delete(mob/living/source)
 	SIGNAL_HANDLER
 	owner.client?.images -= mob_overlays[source]
 	mob_overlays -= source
 	direct_view_tracking -= source
 
-/obj/item/organ/eyes/robotic/tacvisor/proc/refresh_overlay(mob/living/carbon/source)
+/obj/item/organ/eyes/robotic/tacvisor/proc/refresh_overlay(mob/living/source)
 	SIGNAL_HANDLER
 
 	if (mob_overlays[source])
@@ -670,7 +670,7 @@
 	mob_overlays[source] = make_overlay(source)
 	owner.client?.images |= mob_overlays[source]
 
-/obj/item/organ/eyes/robotic/tacvisor/proc/on_z_change(mob/living/carbon/source)
+/obj/item/organ/eyes/robotic/tacvisor/proc/on_z_change(mob/living/source)
 	SIGNAL_HANDLER
 	var/image/overlay = mob_overlays[source]
 	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, source)
@@ -678,7 +678,7 @@
 /obj/item/organ/eyes/robotic/tacvisor/proc/examine_name_override(datum/source, mob/living/examined, visible_name, list/name_override)
 	SIGNAL_HANDLER
 
-	if(!iscarbon(examined))
+	if(!iscarbon(examined) && !(isliving(examined) && (obj_flags & EMAGGED)))
 		return NONE
 
 	name_override[1] = "Unknown"
@@ -687,13 +687,13 @@
 /obj/item/organ/eyes/robotic/tacvisor/proc/screentip_name_override(datum/source, list/returned_name, obj/item/held_item, atom/hovered)
 	SIGNAL_HANDLER
 
-	if(!iscarbon(hovered))
+	if(!iscarbon(hovered) && !(isliving(hovered) && (obj_flags & EMAGGED)))
 		return NONE
 
 	returned_name[1] = "Unknown"
 	return SCREENTIP_NAME_SET
 
-/obj/item/organ/eyes/robotic/tacvisor/proc/make_overlay(mob/living/carbon/target)
+/obj/item/organ/eyes/robotic/tacvisor/proc/make_overlay(mob/living/target)
 	if (obj_flags & EMAGGED)
 		var/image/overlay_image = image(mutable_appearance('icons/effects/effects.dmi', "nothing"), target)
 		overlay_image.name = "Unknown"
@@ -722,7 +722,7 @@
 	SET_PLANE_EXPLICIT(overlay_image, ABOVE_GAME_PLANE, target)
 	return overlay_image
 
-/obj/item/organ/eyes/robotic/tacvisor/proc/get_iff_signature(mob/living/carbon/target)
+/obj/item/organ/eyes/robotic/tacvisor/proc/get_iff_signature(mob/living/target)
 	. = IFF_NEUTRAL
 	if (hostile_faction == IFF_FACTION_EVERYONE)
 		. = IFF_HOSTILE
@@ -775,7 +775,7 @@
 /obj/item/organ/eyes/robotic/tacvisor/proc/on_examine(mob/source, atom/target, list/examine_strings)
 	SIGNAL_HANDLER
 
-	if (target == owner || !iscarbon(target))
+	if (target == owner || !iscarbon(target) && !(isliving(target) && (obj_flags & EMAGGED)))
 		return
 
 	examine_strings.Cut()
@@ -785,7 +785,7 @@
 		return
 
 	var/lasercolor = null
-	var/mob/living/carbon/victim = target
+	var/mob/living/victim = target
 	if (istype(owner.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/redtag) || istype(owner.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/gun/energy/laser/redtag) || owner.is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))
 		lasercolor = "r"
 	else if (istype(owner.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/bluetag) || istype(owner.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/gun/energy/laser/bluetag) || owner.is_holding_item_of_type(/obj/item/gun/energy/laser/bluetag))
@@ -868,14 +868,14 @@
 			owner?.update_body()
 
 /obj/item/organ/eyes/robotic/tacvisor/proc/update_mob_overlays()
-	for (var/mob/living/carbon/target as anything in direct_view_tracking)
+	for (var/mob/living/target as anything in direct_view_tracking)
 		refresh_overlay(target)
 
 /obj/item/organ/eyes/robotic/tacvisor/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/organ_action/use))
 		ui_interact(user)
 
-/obj/item/organ/eyes/robotic/tacvisor/proc/on_entered(mob/living/carbon/source)
+/obj/item/organ/eyes/robotic/tacvisor/proc/on_entered(mob/living/source)
 	if (source in direct_view_tracking)
 		return
 
@@ -885,14 +885,14 @@
 	RegisterSignal(source, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(check_equippped_item))
 	RegisterSignal(source, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(refresh_overlay)) // Can't see the slot of the dropped item so we need to blanket update
 
-/obj/item/organ/eyes/robotic/tacvisor/proc/check_equippped_item(mob/living/carbon/source, obj/item/equipped_item, slot)
+/obj/item/organ/eyes/robotic/tacvisor/proc/check_equippped_item(mob/living/source, obj/item/equipped_item, slot)
 	SIGNAL_HANDLER
 
 	// Anywhere where an ID or a gun would count
 	if (slot & (ITEM_SLOT_BELT | ITEM_SLOT_ID | ITEM_SLOT_HANDS | ITEM_SLOT_BACK))
 		refresh_overlay(source)
 
-/obj/item/organ/eyes/robotic/tacvisor/proc/on_exited(mob/living/carbon/source)
+/obj/item/organ/eyes/robotic/tacvisor/proc/on_exited(mob/living/source)
 	if (!(source in direct_view_tracking))
 		return
 
@@ -913,15 +913,15 @@
 	return
 
 /datum/proximity_monitor/tacvisor/on_entered(atom/source, atom/movable/arrived, turf/old_loc)
-	if (arrived != host && iscarbon(arrived))
+	if (arrived != host && (iscarbon(arrived) || isliving(arrived) && (owner.obj_flags & EMAGGED)))
 		owner.on_entered(arrived)
 
 /datum/proximity_monitor/tacvisor/on_uncrossed/on_uncrossed(turf/old_location, mob/exited, direction)
-	if (exited != host && iscarbon(exited) && get_dist(exited, host) > current_range)
+	if (exited != host && (iscarbon(exited) || isliving(exited) && (owner.obj_flags & EMAGGED)) && get_dist(exited, host) > current_range)
 		owner.on_exited(exited)
 
 /datum/proximity_monitor/tacvisor/on_initialized(turf/location, atom/created, init_flags)
-	if (created != host && iscarbon(created))
+	if (created != host && (iscarbon(created) || isliving(created) && (owner.obj_flags & EMAGGED)))
 		owner.on_entered(created)
 
 /datum/client_colour/tacvisor

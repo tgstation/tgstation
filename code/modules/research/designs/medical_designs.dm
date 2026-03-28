@@ -594,7 +594,7 @@
 		/datum/material/gold = SMALL_MATERIAL_AMOUNT * 6,
 		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/organ/eyes/robotic/tacv
+	build_path = /obj/item/organ/eyes/robotic/tacvisor
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_COMBAT
 	)
