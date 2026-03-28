@@ -4,6 +4,7 @@
 	category = "stings"
 
 /datum/action/changeling/sting/Trigger(mob/clicker, trigger_flags)
+	SHOULD_CALL_PARENT(FALSE) //We are snowflaked from parent
 	var/mob/user = owner
 	if(!user || !user.mind)
 		return
