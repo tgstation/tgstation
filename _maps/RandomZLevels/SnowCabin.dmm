@@ -3361,11 +3361,8 @@
 	pixel_x = -1;
 	pixel_y = 16
 	},
-/obj/item/gun/magic/wand{
-	desc = "It's just a fancy staff so that holy clerics and priests look cool. What? You didn't think someone would leave a REAL magic artifact with a snowman out in the cold, did you?";
-	icon_state = "revivewand";
-	name = "holy staff";
-	pixel_y = -2
+/obj/item/gun/magic/wand/nothing/fake_resurrection{
+	    pixel_y = -2
 	},
 /obj/effect/light_emitter{
 	set_cap = 3;

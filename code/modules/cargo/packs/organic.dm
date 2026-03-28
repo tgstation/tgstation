@@ -36,10 +36,10 @@
 	test_ignored = TRUE
 	crate_name = "food crate"
 
-/datum/supply_pack/organic/randomized/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/organic/randomized/fill(obj/container)
 	for(var/i in 1 to 15)
 		var/item = pick(contains)
-		new item(C)
+		new item(container)
 
 /datum/supply_pack/organic/randomized/chef
 	name = "Excellent Meat Crate"
