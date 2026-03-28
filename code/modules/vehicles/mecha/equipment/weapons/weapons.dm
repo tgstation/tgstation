@@ -97,7 +97,7 @@
 	name = "\improper CH-PS \"Immolator\" laser"
 	desc = "A weapon for combat exosuits. Shoots basic lasers."
 	icon_state = "mecha_laser"
-	energy_drain = 300
+	energy_drain = 3000
 	projectile = /obj/projectile/beam/laser
 	fire_sound = 'sound/items/weapons/laser.ogg'
 	harmful = TRUE
@@ -107,7 +107,7 @@
 	name = "\improper CH-DS \"Peacemaker\" disabler"
 	desc = "A weapon for combat exosuits. Shoots a bunch of weak disabler beams."
 	icon_state = "mecha_disabler"
-	energy_drain = 1000
+	energy_drain = 10000
 	projectile = /obj/projectile/beam/disabler/weak
 	variance = 25
 	projectiles_per_shot = 5
@@ -119,7 +119,7 @@
 	name = "\improper CH-LC \"Solaris\" laser cannon"
 	desc = "A weapon for combat exosuits. Shoots heavy lasers."
 	icon_state = "mecha_laser"
-	energy_drain = 600
+	energy_drain = 6000
 	projectile = /obj/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 
@@ -147,7 +147,7 @@
 	name = "eZ-13 MK2 heavy pulse rifle"
 	desc = "A weapon for combat exosuits. Shoots powerful destructive blasts capable of demolishing obstacles."
 	icon_state = "mecha_pulse"
-	energy_drain = 1200
+	energy_drain = 12000
 	projectile = /obj/projectile/beam/pulse/heavy
 	fire_sound = 'sound/items/weapons/marauder.ogg'
 	harmful = TRUE
@@ -160,7 +160,7 @@
 	inhand_icon_state = "plasmacutter"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	energy_drain = 300
+	energy_drain = 3000
 	projectile = /obj/projectile/plasma/adv/mech
 	fire_sound = 'sound/items/weapons/plasma_cutter.ogg'
 	harmful = TRUE
@@ -173,7 +173,7 @@
 	name = "\improper Prototype -I 'Thermal Cannon'"
 	desc = "A special prototype of a heavy thermal weapon designed for use on exosuits. This one is debug-chambered."
 	icon_state = "mecha_laser"
-	energy_drain = 500
+	energy_drain = 5000
 	projectile = /obj/item/ammo_casing/energy/nanite
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
 	harmful = TRUE
