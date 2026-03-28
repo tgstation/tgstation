@@ -486,9 +486,9 @@
 		apply_organ_damage(-10) //heal quickly
 	return ..()
 
-#define VISOR_DISPLAY_CROSS "cross"
-#define VISOR_DISPLAY_EYES "eyes"
-#define VISOR_DISPLAY_LINE "line"
+#define VISOR_DISPLAY_CROSS "Cross"
+#define VISOR_DISPLAY_EYES "Eyes"
+#define VISOR_DISPLAY_LINE "Line"
 
 #define IFF_HOSTILE 1
 #define IFF_NEUTRAL 2
@@ -560,10 +560,10 @@
 	var/list/eye_overlays = list(visor_overlay)
 
 	if (parent && parent.appears_alive() && !HAS_TRAIT(parent, TRAIT_KNOCKEDOUT))
-		var/mutable_appearance/display_overlay = mutable_appearance(eye_icon, "[eye_icon_state]_[visor_display]", -EYES_LAYER, parent)
+		var/mutable_appearance/display_overlay = mutable_appearance(eye_icon, "[eye_icon_state]_[LOWER_TEXT(visor_display)]", -EYES_LAYER, parent)
 		eye_overlays += display_overlay
 		if(!(parent.obscured_slots & HIDEEYES))
-			eye_overlays += emissive_appearance(eye_icon, "[eye_icon_state]_[visor_display]", parent, -EYES_LAYER)
+			eye_overlays += emissive_appearance(eye_icon, "[eye_icon_state]_[LOWER_TEXT(visor_display)]", parent, -EYES_LAYER)
 
 	if(!limb)
 		return eye_overlays
@@ -746,13 +746,13 @@
 
 	// Ignores RETA access so we directly access access instead of using the wrapper
 	if (ACCESS_SYNDICATE in idcard.access)
-		// Cham cards get a pass
-		if (hostile_faction == IFF_FACTION_SYNDICATE && idcard.trim?.threat_modifier >= 0)
+		if (hostile_faction == IFF_FACTION_SYNDICATE)
 			return IFF_HOSTILE
 		if (friendly_faction == IFF_FACTION_SYNDICATE)
 			return IFF_FRIENDLY
 
 	if (istype(idcard.trim, /datum/id_trim/job))
+		// Cham cards get a pass
 		if (hostile_faction == IFF_FACTION_CREW && idcard.trim?.threat_modifier >= 0)
 			return IFF_HOSTILE
 		if (friendly_faction == IFF_FACTION_CREW)

@@ -66,7 +66,7 @@ export const TacVisorEyesMenu = (props) => {
                 })
               }
             >
-              {capitalize(option)}
+              {option}
             </Button.Checkbox>
           ))}
         </Section>
