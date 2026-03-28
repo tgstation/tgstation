@@ -400,7 +400,7 @@
 
 /datum/status_effect/eldritch_painting/rusting/on_tick(seconds_between_ticks)
 	var/atom/tile = get_turf(owner)
-	if(isnull(turf))
+	if(isnull(tile))
 		return
 
 	to_chat(owner, span_notice("You feel the decay..."))
