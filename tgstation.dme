@@ -6499,6 +6499,8 @@
 #include "code\modules\surgery\organs\internal\cyberimp\augments_internal.dm"
 #include "code\modules\surgery\organs\internal\ears\_ears.dm"
 #include "code\modules\surgery\organs\internal\eyes\_eyes.dm"
+#include "code\modules\surgery\organs\internal\eyes\eyes_augments.dm"
+#include "code\modules\surgery\organs\internal\eyes\eyes_species.dm"
 #include "code\modules\surgery\organs\internal\heart\_heart.dm"
 #include "code\modules\surgery\organs\internal\heart\heart_anomalock.dm"
 #include "code\modules\surgery\organs\internal\heart\heart_ethereal.dm"

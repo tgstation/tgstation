@@ -209,32 +209,9 @@
 		. += no_eyes
 		return
 
-	if(!eyes.eye_icon_state || !(head_flags & HEAD_EYESPRITES))
-		return
-
-	// This is a bit of copy/paste code from eyes.dm:generate_body_overlay
-	var/image/eye_left = image(eyes.eye_icon, "[eyes.eye_icon_state]_l", -EYES_LAYER, SOUTH)
-	var/image/eye_right = image(eyes.eye_icon, "[eyes.eye_icon_state]_r", -EYES_LAYER, SOUTH)
-	if(head_flags & HEAD_EYECOLOR)
-		if(eyes.eye_color_left)
-			eye_left.color = eyes.eye_color_left
-		if(eyes.eye_color_right)
-			eye_right.color = eyes.eye_color_right
-
-	var/list/emissive_overlays = eyes.get_emissive_overlays(eye_left, eye_right, src)
-	if(length(emissive_overlays))
-		eye_left.overlays += image(emissive_overlays[1], dir = SOUTH)
-		eye_right.overlays += image(emissive_overlays[2], dir = SOUTH)
-	else if(blocks_emissive != EMISSIVE_BLOCK_NONE)
-		eye_left.overlays += image(emissive_blocker(eye_left.icon, eye_left.icon_state, src, alpha = eye_left.alpha), dir = SOUTH)
-		eye_right.overlays += image(emissive_blocker(eye_right.icon, eye_right.icon_state, src, alpha = eye_right.alpha), dir = SOUTH)
-
-	if(worn_face_offset)
-		worn_face_offset.apply_offset(eye_left)
-		worn_face_offset.apply_offset(eye_right)
-
-	. += eye_left
-	. += eye_right
+	if(head_flags & HEAD_EYESPRITES)
+		for (var/mutable_appearance/overlay as anything in eyes.generate_body_overlay(null, src))
+			. += image(overlay, dir = SOUTH)
 
 /obj/item/bodypart/head/get_voice(add_id_name)
 	return "The head of [get_face_name()]"
