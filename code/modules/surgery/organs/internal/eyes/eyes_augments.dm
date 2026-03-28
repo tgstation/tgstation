@@ -531,6 +531,8 @@
 	var/hostile_faction = IFF_FACTION_NONE
 	/// Threat flags for hostile detection, if any are chosen
 	var/threat_flags = JUDGE_IDCHECK | JUDGE_WEAPONCHECK | JUDGE_RECORDCHECK
+	/// Can the user change the parameters?
+	var/user_controls = TRUE
 
 	/// Valid options for friendly factions
 	var/static/list/valid_friendly_factions = list(
@@ -807,7 +809,7 @@
 
 /obj/item/organ/eyes/robotic/tacvisor/ui_status(mob/user, datum/ui_state/state)
 	if(!QDELETED(owner))
-		if(owner == user)
+		if(owner == user && user_controls)
 			return min(
 				ui_status_user_is_abled(user, src),
 				ui_status_only_living(user),
@@ -872,8 +874,27 @@
 		refresh_overlay(target)
 
 /obj/item/organ/eyes/robotic/tacvisor/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/organ_action/use))
+	if(istype(action, /datum/action/item_action/organ_action/use) && user_controls)
 		ui_interact(user)
+
+/obj/item/organ/eyes/robotic/tacvisor/multitool_act(mob/living/user, obj/item/tool)
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/organ/eyes/robotic/tacvisor/screwdriver_act(mob/living/user, obj/item/tool)
+	user_controls = !user_controls
+	balloon_alert(user, "user controls [user_controls ? "enabled" : "disabled"]")
+	if (user_controls)
+		add_item_action(/datum/action/item_action/organ_action/use)
+	else
+		for(var/datum/action/action as anything in actions)
+			remove_item_action(action)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/organ/eyes/robotic/tacvisor/examine(mob/user)
+	. = ..()
+	. += span_notice("Its settings can be changed with a [EXAMINE_HINT("multitool")].")
+	. += span_notice("User configuration switch is currently in the [user_controls ? "on" : "off"] position, and could be flipped wtih a [EXAMINE_HINT("screwdriver")].")
 
 /obj/item/organ/eyes/robotic/tacvisor/proc/on_entered(mob/living/source)
 	if (source in direct_view_tracking)
@@ -940,6 +961,7 @@
 	friendly_faction = IFF_FACTION_CENTCOM
 	hostile_faction = IFF_FACTION_EVERYONE
 	actions_types = null
+	user_controls = FALSE
 
 /obj/item/organ/eyes/robotic/tacvisor/deathsquad/ui_status(mob/user, datum/ui_state/state)
 	return UI_CLOSE
