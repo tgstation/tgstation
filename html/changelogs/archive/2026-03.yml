@@ -333,3 +333,103 @@
   ArcaneMusic:
   - bugfix: the BSA cannot be built half-into a wall.
   - qol: building the DNA vault and BSA points to the tiles blocking it's construction.
+  Melbert:
+  - image: Generic surgical operations now have unique surgery radial icons
+2026-03-23:
+  FalloutFalcon:
+  - spellcheck: removed extra space on spraying an atmos machine with spray can
+  LemonInTheDark:
+  - admin: Subsystem flags are now displayed as flags instead of raw numbers in vv
+  Melbert:
+  - qol: Audit log formats vendors without "the"
+  - rscadd: Adds Thanatorenasia, a 0 point neutral quirk that turns your body into
+      a "recovered crewmember" if you choose to DNR - meaning if revived, any ghost
+      could take control of it
+  - refactor: Refactored "ghostrol on revive" behavior a fair bit, report any oddities
+      with it / the spawners menu
+  SmArtKar:
+  - balance: Blue raptors had their HP increased from 220 to 300
+  - balance: Purple raptors now automatically start flying if the owner is about to
+      fall into a chasm.
+  - bugfix: Fixed 2 exploits which would render you immune to falling down a specific
+      chasm.
+  lelandkemble:
+  - bugfix: Monkey dust now properly removes anti-stun properties when its imbiber
+      is no longer a monkey
+  - spellcheck: Shoving someone into another person no longer sends the "you shoved"
+      message to the person who was shoved into
+2026-03-24:
+  ArcaneMusic:
+  - bugfix: Cargo goodies are now visible in the ordering and request consoles.
+  Bugwasabi, vinylspiders:
+  - code_imp: Uses defines instead of magic numbers on carbon_stripping.dm
+  Iajret:
+  - bugfix: fixed vitals display not respecting APCs power when you attach it to a
+      wall
+  - rscadd: Vitals display can be printed in ancient lathes
+  Jacquerel:
+  - rscadd: Nonhuman mobs with hands can now pick up other mobs that are smaller than
+      them and can usually be picked up
+  JohnFulpWillard:
+  - qol: The Curator's barcode scanner now lets you check books out.
+  - bugfix: The library console can no longer borrow books for an infinite amount
+      of time.
+  Melbert:
+  - bugfix: The skeleton from being shocked matches your height
+  - bugfix: Drinking soup will loop until it's empty or you cancel it (as it used
+      to)
+  - rscadd: Some undergarmants will now use a generic replacement on lizard body shapes
+      that fit more appropriately
+  - refactor: Refactored how undergarmants generate their icons, report any oddities
+      with that
+  - code_imp: Cleaned up RTG code. Admins can now VV them easier. If you come across
+      a ruin on Lavaland or in space that uses them and see any odd behavior, report
+      it as an issue.
+  Y0SH1M4S73R:
+  - qol: Many circuit components have had ports that effectively act as boolean inputs
+      or outputs converted into a new boolean datatype.
+  cebutris:
+  - bugfix: Fixed an oversight with package wrapping
+  lelandkemble:
+  - bugfix: Friendly wisps, wizard gravity balls, & tesla periphery balls are no longer
+      disabled due to shuttle transit
+  - bugfix: Glasses that were in the vending machine now still count for the completion
+      of the Beach Bar virtual domain
+2026-03-26:
+  Absolucy:
+  - qol: Slime Link messages now notify listeners with a balloon alert.
+  ArcaneMusic:
+  - code_imp: supply packs can now be spawned using containers different than a crate.
+  - bugfix: The Random Supply Drop event can now spawn their items as opposed to runtiming.
+  LemonInTheDark:
+  - bugfix: the darken screen shake preference will no longer shake your screen underneath
+      the fullscreen overlay
+  Rhials:
+  - bugfix: The medisim shuttle docking port now aligns properly with most evac terminals.
+  RusselNotSCP:
+  - rscadd: Added three new liqueurs, with bottles available in the booze-o-mat.
+  - rscadd: Added 15 new cocktails that use the aforementioned liqueurs.
+  SyncIt21:
+  - bugfix: tearing a poster while placing it only creates a shred poster on the wall
+      but won't place a new one in hand
+  lelandkemble:
+  - bugfix: You can put a horn in a clown car
+  - map: Snow Cabin fake healing wand now holds on to its sprite
+  - bugfix: Tape can now secure prosthetic limbs again
+  - spellcheck: Immobile mobile defibrillator mounts are no longer called mobile
+  vinylspiders:
+  - bugfix: fixes an issue where casting spells after your mob gets deleted can leave
+      you in a permanently bugged state.
+2026-03-27:
+  ArcaneMusic:
+  - rscadd: Centcom is now offering the ability to purchase airflow blocking plastic
+      flaps, and the ability to refill the cargo shuttle with air for the low, low
+      installation fee of 8,000 credits. Inquire today under the "Imports" category!
+  Melbert:
+  - bugfix: Hallucinating yourself as another mob will no longer disable all of your
+      light sources
+  - qol: Health analyzer lung reports are appended by the lung organs rather than
+      at the bottom of the readout
+  TealSeer:
+  - bugfix: fixed a few bugs related to arm implant surgery
+  - code_imp: added missing bitflags to bitfield defines
