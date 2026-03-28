@@ -111,7 +111,7 @@
 		extra_control_checks = CALLBACK(src, PROC_REF(check_ghost_control_eligibility)), \
 		after_assumed_control = CALLBACK(src, PROC_REF(after_ghost_control)), \
 		joinable_mobs_title = "Zombies", \
- 	))
+	))
 
 /obj/item/organ/zombie_infection/proc/check_ghost_control_eligibility(mob/candidate)
 	if(QDELETED(src) || QDELETED(owner))
