@@ -39,17 +39,19 @@ jobs:
         id: filter-prs
         uses: actions/github-script@v8
         with:
-          result-encoding: string
           script: |
-            const pull_requests = JSON.parse('${{steps.stale.outputs.staled-issues-prs}}')
-                                      .filter(issue => !!issue.pull_request)
-                                      .map(pr => ({
-                                          title: pr.title,
-                                          number: pr.number,
-                                          html_url: pr.pull_request.html_url,
-                                      }));
-
-            return JSON.stringify(pull_requests);
+                 const json_input = `${{steps.stale.outputs.staled-issues-prs}}`.trim();
+                 if(json_input.length === 0 || json_input == '[]'){
+                   return [];
+                 }
+  
+                 return JSON.parse(`${json_input}`)
+                             .filter(issue => !!issue.pull_request)
+                             .map(pr => ({
+                              title: pr.title,
+                              number: pr.number,
+                              html_url: pr.pull_request.html_url,
+                            }));
 
   announce:
     runs-on: ubuntu-24.04
