@@ -6,8 +6,8 @@
 	desc = "A comedy wand which is sure to get a laugh out of you, if not its victims."
 	school = SCHOOL_CONJURATION
 	ammo_type = /obj/item/ammo_casing/magic/prank
-	icon_state = "nothingwand"
-	base_icon_state = "nothingwand"
+	icon_state = "bananawand"
+	base_icon_state = "bananawand"
 	fire_sound = 'sound/items/bikehorn.ogg'
 	max_charges = 10
 
