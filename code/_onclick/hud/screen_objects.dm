@@ -781,7 +781,7 @@
 /atom/movable/screen/healthdoll/living
 	icon_state = "fullhealth0"
 	screen_loc = ui_living_healthdoll
-	///The image we create on New to use for showing mob's HP on hover.
+	///The image we create on New to use for showing mob's HP on hover. It uses a separate image as to not be cut off by `alpha_mask_filter`.
 	var/image/health_overlay
 	///Boolean on whether a mouse is being hovered over us right now.
 	var/hovering = FALSE
