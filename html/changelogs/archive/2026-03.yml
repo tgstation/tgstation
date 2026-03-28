@@ -457,6 +457,9 @@
   - bugfix: you can attach sink frames to walls in most cases regardless of what's
       on the wall(except when there is already a light fixture, camera or another
       sink)
+  Twaticus:
+  - image: resprites chicken nugget box and adds 3 new food related containers, new
+      nugget box, a wing bucket, and a fry sleeve.
   lelandkemble:
   - spellcheck: Changed spacing an punctuation in thanatorenasia offer to ghosts
   - bugfix: You can no longer create infinite plasteel with girders
