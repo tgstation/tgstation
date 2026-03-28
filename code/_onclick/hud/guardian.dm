@@ -1,15 +1,16 @@
-/datum/hud/guardian
-	ui_style = 'icons/hud/guardian.dmi'
-
 /datum/hud/guardian/New(mob/living/basic/guardian/owner)
 	..()
-	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src, ui_zonesel)
+	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
 	action_intent.icon = ui_style
 	action_intent.screen_loc = ui_zonesel
 	static_inventory += action_intent
 
+	floor_change = new /atom/movable/screen/floor_changer(null, src)
+	floor_change.icon = ui_style
+	static_inventory += floor_change
+
 	pull_icon = new /atom/movable/screen/pull(null, src)
-	pull_icon.icon = ui_style
+	pull_icon.icon = 'icons/hud/guardian.dmi'
 	pull_icon.update_appearance()
 	pull_icon.screen_loc = ui_living_pull
 	static_inventory += pull_icon
@@ -29,11 +30,10 @@
 		inv_box.slot_id = ITEM_SLOT_DEX_STORAGE
 		static_inventory += inv_box
 
-	pull_icon = new /atom/movable/screen/pull(null, src)
-	pull_icon.icon = ui_style
-	pull_icon.update_appearance()
-	pull_icon.screen_loc = ui_living_pull
-	static_inventory += pull_icon
+	//we're replacing this below
+	if(healthdoll)
+		QDEL_NULL(healthdoll)
+		infodisplay -= healthdoll
 
 	healths = new /atom/movable/screen/healths/guardian(null, src)
 	infodisplay += healths

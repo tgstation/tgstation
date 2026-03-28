@@ -28,7 +28,7 @@
 	static_inventory += action_intent
 
 	floor_change = new /atom/movable/screen/floor_changer(null, src)
-	floor_change.icon = 'icons/hud/screen_midnight.dmi'
+	floor_change.icon = ui_style
 	static_inventory += floor_change
 
 	if(HAS_TRAIT(owner, TRAIT_CAN_THROW_ITEMS))
