@@ -24,7 +24,7 @@
 /obj/item/circuit_component/compare/access/populate_custom_ports()
 	subject_accesses = add_input_port("Access To Check", PORT_TYPE_LIST(PORT_TYPE_STRING))
 	required_accesses = add_input_port("Required Access", PORT_TYPE_LIST(PORT_TYPE_STRING))
-	check_any = add_input_port("Check Any", PORT_TYPE_NUMBER)
+	check_any = add_input_port("Check Any", PORT_TYPE_BOOLEAN)
 
 /obj/item/circuit_component/compare/access/save_data_to_list(list/component_data)
 	. = ..()

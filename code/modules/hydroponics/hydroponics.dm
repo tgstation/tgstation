@@ -1215,10 +1215,10 @@
 	var/datum/port/output/reagents_level
 
 /obj/item/circuit_component/hydroponics/populate_ports()
-	selfsustaining_setting = add_input_port("Auto-Grow Setting", PORT_TYPE_NUMBER)
+	selfsustaining_setting = add_input_port("Auto-Grow Setting", PORT_TYPE_BOOLEAN)
 
 	plant_status = add_output_port("Plant Status", PORT_TYPE_NUMBER)
-	is_self_sustaining = add_output_port("Auto-Grow Status", PORT_TYPE_NUMBER)
+	is_self_sustaining = add_output_port("Auto-Grow Status", PORT_TYPE_BOOLEAN)
 	plant_harvested = add_output_port("Plant Harvested", PORT_TYPE_SIGNAL)
 	last_harvest = add_output_port("Last Harvest Amount", PORT_TYPE_NUMBER)
 	plant_died = add_output_port("Plant Died", PORT_TYPE_SIGNAL)

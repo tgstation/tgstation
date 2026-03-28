@@ -219,6 +219,9 @@
 	amount = 5
 	merge_type = /obj/item/stack/package_wrap/small
 
+/obj/item/stack/package_wrap/one
+	amount = 1
+
 /obj/item/c_tube
 	name = "cardboard tube"
 	desc = "A tube... of cardboard."
