@@ -291,8 +291,8 @@
 	sleep_icon.icon = ui_style
 	sleep_icon.screen_loc = ui_above_throw
 
-	spacesuit = new /atom/movable/screen/spacesuit(null, src)
-	infodisplay += spacesuit
+	spacesuit_hud = new /atom/movable/screen/spacesuit(null, src)
+	infodisplay += spacesuit_hud
 
 	healths = new /atom/movable/screen/healths(null, src)
 	infodisplay += healths
