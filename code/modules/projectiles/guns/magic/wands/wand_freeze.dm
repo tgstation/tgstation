@@ -6,8 +6,8 @@
 	desc = "The chilling power of this wand will stop your enemies in their tracks."
 	school = SCHOOL_EVOCATION
 	ammo_type = /obj/item/ammo_casing/magic/freeze
-	icon_state = "telewand"
-	base_icon_state = "telewand"
+	icon_state = "icewand"
+	base_icon_state = "icewand"
 	fire_sound = 'sound/effects/magic/blink.ogg'
 	max_charges = 8
 
