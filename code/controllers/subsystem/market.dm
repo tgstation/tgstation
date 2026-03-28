@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(market)
 	name = "Market"
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	dependencies = list(
 		/datum/controller/subsystem/atoms,
 	)

@@ -238,3 +238,160 @@
       and worm meat and can only be tamed when they are spiderlings or young.
   - code_imp: Refactored tameable code to use TRAIT_TAMED instead of setting individual
       variables on each mob.
+2026-03-17:
+  Melbert:
+  - qol: If your pay gets docked by Central Command, it is noted in audit and transaction
+      log
+  - qol: If your pay gets docked by Central Command, you will always be notified,
+      regardless of bank alert preference
+  - admin: Dock Pay smite supports negatives better (for an easy way to give someone
+      money)
+  SmArtKar:
+  - refactor: Converted autosurgeons/robot bodyparts/dissection notes to item_interaction
+  - refactor: Converted crossbreeds/anomacores/RND machinery to item_interaction
+  - refactor: Converted tram objects to item_interaction/tool_act
+  kittysmooch:
+  - rscadd: 'Added new sprites for baseball bats, metal bats, the homerun bat, the
+      cricket bat, and the baseball itself!
+
+      :cl:'
+  lelandkemble:
+  - bugfix: No more infinite free grenade launchers for nukeops
+2026-03-18:
+  Absolucy:
+  - qol: Watcher Hatchling projectiles should no longer hit people buckled to you,
+      or anything you're buckled to, i.e a raptor mount.
+  ArcaneMusic:
+  - bugfix: The gas compressor once again can perform disk operations.
+  Ezel:
+  - qol: Shuttle engine access requirement changed from CE access to Engineering access.
+  - qol: Shuttle engine now comes in a flatpack box (it does not come with a multitool)
+  Generalcamo:
+  - rscadd: Added `balloon_alert_to_hearers`, which is similar to `balloon_alert_to_viewers`
+      but for audible things.
+  - qol: Existing instances of `balloon_alert_to_viewers` which covered sounds, now
+      uses `balloon_alert_to_hearers`.
+  Iajret:
+  - bugfix: Fixed runtimes from buckling basic mobs to operating tables
+  - bugfix: free_operation is now applied to animals when you buckle them to operating
+      tables
+  - bugfix: This in turn fixed vitals monitors being stuck always displaying basic
+      mob's health if you try to buckle one to operating table
+  Melbert:
+  - bugfix: Fix cargo ordering app (on pdas and modular computers) from being unable
+      to order some things
+  TealSeer:
+  - code_imp: added a unit test macro for running the same test multiple times
+  lelandkemble:
+  - code_imp: fixed a runtime when something other than a player breaks an airlock
+  - bugfix: Flux & Gravity anomaly cores work with assembly activation
+2026-03-19:
+  Absolucy:
+  - qol: Added screentips for scanning raptors with the RaptorDex PDA app and standalone
+      handheld RaptorDex.
+  - bugfix: Fixed the handheld RaptorDex not showing the "scanned" balloon alert when
+      scanning a raptor.
+  Melbert:
+  - rscadd: Intelligence vendors (from the event) have a 50% chance to deny users
+      who are not wealthy. When the vendors awake and start moving, they instead get
+      a 100% chance to deny anyone.
+2026-03-20:
+  Absolucy:
+  - balance: The Staff of Storms is now normal-sized, and fits in a backpack.
+  LemonInTheDark:
+  - rscadd: Added an option for rendering space parallax with old space sprites (the
+      ones from before we invented parallax), they're animated and I feel quite pretty.
+  - bugfix: Space parallax should hopefully behave a little more consistently now
+  - refactor: Rewrote a lot of how space parallax handled itself, please yell at me
+      if any bugs make themselves known
+  - rscadd: Reworks how sparks render. They're now a bit brighter, will fade out as
+      they move/if they hit something, will stack with each other less and also won't
+      start hang in the air on spawn.
+  - rscadd: Added a flickering effect to lighters, welding tools, flares, torches
+      and candles (since they're flames).
+  - bugfix: Overlay based lights (think flashlights) will no longer flash to double
+      intensity while being picked up.
+  - refactor: Reworked how some effects (explosion particles, sparks, some reagent
+      stuff) function, report any bugs!
+  Melbert:
+  - rscadd: Relics found from cracking boulders now have a (mostly) unique set of
+      mining and cultish related effects.
+  - rscadd: Relics found in gift boxes no longer need to be discovered first in science.
+  - rscdel: '"Add prosthetic limb" surgical operation has been reverted to be a bit
+      closer to how it used to work - you operate on the missing limb / limb stump,
+      rather than on the chest.'
+  - refactor: Missing limbs are now represented as limb stumps. In practice this should
+      change nothing (for now), as no features were rewritten to make use of these
+      besides surgery. Please report any oddities with missing limbs, however.
+  SyncIt21:
+  - bugfix: you can pry out/deconstruct floor tiles/reinforced tiles etc without destroying
+      any floor lights/sinks mounted on as long as there is plating underneath that
+      turf
+  levels0:
+  - bugfix: webbing production webs no longer harm their maker
+2026-03-21:
+  ArcaneMusic:
+  - bugfix: the BSA cannot be built half-into a wall.
+  - qol: building the DNA vault and BSA points to the tiles blocking it's construction.
+  Melbert:
+  - image: Generic surgical operations now have unique surgery radial icons
+2026-03-23:
+  FalloutFalcon:
+  - spellcheck: removed extra space on spraying an atmos machine with spray can
+  LemonInTheDark:
+  - admin: Subsystem flags are now displayed as flags instead of raw numbers in vv
+  Melbert:
+  - qol: Audit log formats vendors without "the"
+  - rscadd: Adds Thanatorenasia, a 0 point neutral quirk that turns your body into
+      a "recovered crewmember" if you choose to DNR - meaning if revived, any ghost
+      could take control of it
+  - refactor: Refactored "ghostrol on revive" behavior a fair bit, report any oddities
+      with it / the spawners menu
+  SmArtKar:
+  - balance: Blue raptors had their HP increased from 220 to 300
+  - balance: Purple raptors now automatically start flying if the owner is about to
+      fall into a chasm.
+  - bugfix: Fixed 2 exploits which would render you immune to falling down a specific
+      chasm.
+  lelandkemble:
+  - bugfix: Monkey dust now properly removes anti-stun properties when its imbiber
+      is no longer a monkey
+  - spellcheck: Shoving someone into another person no longer sends the "you shoved"
+      message to the person who was shoved into
+2026-03-24:
+  ArcaneMusic:
+  - bugfix: Cargo goodies are now visible in the ordering and request consoles.
+  Bugwasabi, vinylspiders:
+  - code_imp: Uses defines instead of magic numbers on carbon_stripping.dm
+  Iajret:
+  - bugfix: fixed vitals display not respecting APCs power when you attach it to a
+      wall
+  - rscadd: Vitals display can be printed in ancient lathes
+  Jacquerel:
+  - rscadd: Nonhuman mobs with hands can now pick up other mobs that are smaller than
+      them and can usually be picked up
+  JohnFulpWillard:
+  - qol: The Curator's barcode scanner now lets you check books out.
+  - bugfix: The library console can no longer borrow books for an infinite amount
+      of time.
+  Melbert:
+  - bugfix: The skeleton from being shocked matches your height
+  - bugfix: Drinking soup will loop until it's empty or you cancel it (as it used
+      to)
+  - rscadd: Some undergarmants will now use a generic replacement on lizard body shapes
+      that fit more appropriately
+  - refactor: Refactored how undergarmants generate their icons, report any oddities
+      with that
+  - code_imp: Cleaned up RTG code. Admins can now VV them easier. If you come across
+      a ruin on Lavaland or in space that uses them and see any odd behavior, report
+      it as an issue.
+  Y0SH1M4S73R:
+  - qol: Many circuit components have had ports that effectively act as boolean inputs
+      or outputs converted into a new boolean datatype.
+  cebutris:
+  - bugfix: Fixed an oversight with package wrapping
+  lelandkemble:
+  - bugfix: Friendly wisps, wizard gravity balls, & tesla periphery balls are no longer
+      disabled due to shuttle transit
+  - bugfix: Glasses that were in the vending machine now still count for the completion
+      of the Beach Bar virtual domain

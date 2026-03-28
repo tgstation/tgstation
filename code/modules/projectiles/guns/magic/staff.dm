@@ -374,7 +374,7 @@
 	if (!iscarbon(user))
 		return BRUTELOSS
 	var/mob/living/carbon/suicider = user
-	for (var/obj/item/bodypart/limb in suicider.bodyparts)
+	for (var/obj/item/bodypart/limb in suicider.get_bodyparts())
 		limb.dismember(BRUTE, silent = FALSE, wounding_type = WOUND_SLASH)
 		sleep(0.25 SECONDS)
 

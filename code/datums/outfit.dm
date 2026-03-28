@@ -125,9 +125,9 @@
 	var/preload = FALSE
 
 	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
-	var/datum/sprite_accessory/undershirt = null
-	var/datum/sprite_accessory/underwear = null
-	var/datum/sprite_accessory/socks = null
+	var/datum/sprite_accessory/clothing/undershirt = null
+	var/datum/sprite_accessory/clothing/underwear = null
+	var/datum/sprite_accessory/clothing/socks = null
 
 /**
  * Called at the start of the equip proc

@@ -2358,7 +2358,7 @@
 	for (var/obj/item/organ/organ as anything in exposed_carbon.organs)
 		organ.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
 
-	for (var/obj/item/bodypart/part as anything in exposed_carbon.bodyparts)
+	for (var/obj/item/bodypart/part as anything in exposed_carbon.get_bodyparts())
 		part.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
