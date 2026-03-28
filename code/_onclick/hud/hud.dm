@@ -62,7 +62,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	/// This is updated by the preference for cheaper reads than would be
 	/// had with a proc call, especially on one of the hottest procs in the game (MouseEntered).
 	var/screentip_color = null
-
 	var/datum/action_group/palette/palette_actions = null
 	var/datum/action_group/listed/listed_actions = null
 	var/list/floating_actions = null

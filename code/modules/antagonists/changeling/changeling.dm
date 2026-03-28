@@ -1,4 +1,6 @@
 /// Helper to format the text that gets thrown onto the chem hud element.
+#define FORMAT_CHEM_MAX_TEXT(charges) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd2828'>[round(charges)]</font></div>")
+/// Helper to format the text that gets thrown onto the chem hud element.
 #define FORMAT_CHEM_CHARGES_TEXT(charges) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(charges)]</font></div>")
 
 /datum/antagonist/changeling
@@ -136,9 +138,8 @@
 	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	RegisterSignal(living_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fullhealed))
-	RegisterSignal(living_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
-	RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	RegisterSignal(living_mob, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(new_brain))
+	RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	RegisterSignals(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), PROC_REF(on_click_sting))
 	ADD_TRAIT(living_mob, TRAIT_FAKE_SOULLESS, CHANGELING_TRAIT)
 	ADD_TRAIT(living_mob, TRAIT_BRAINLESS_CARBON, CHANGELING_TRAIT)
@@ -195,7 +196,6 @@
 		COMSIG_MOB_LOGIN,
 		COMSIG_LIVING_LIFE,
 		COMSIG_LIVING_POST_FULLY_HEAL,
-		COMSIG_MOB_GET_STATUS_TAB_ITEMS,
 		COMSIG_MOB_MIDDLECLICKON,
 		COMSIG_MOB_ALTCLICKON,
 		COMSIG_MOB_HUD_CREATED,
@@ -316,11 +316,6 @@
 
 	return COMSIG_MOB_CANCEL_CLICKON
 
-/datum/antagonist/changeling/proc/get_status_tab_item(mob/living/source, list/items)
-	SIGNAL_HANDLER
-	items += "Chemical Storage: [chem_charges]/[total_chem_storage]"
-	items += "Absorbed DNA: [absorbed_count]"
-
 /*
  * Adjust the chem charges of the ling by [amount]
  * and clamp it between 0 and override_cap (if supplied) or total_chem_storage (if no override supplied)
@@ -330,10 +325,17 @@
 		return
 	var/cap_to = isnum(override_cap) ? override_cap : total_chem_storage
 	chem_charges = clamp(chem_charges + amount, 0, cap_to)
+	update_chemical_hud(chem_charges)
 
+///Updates the Changeling's chemical HUD to display the information we want it to (chem charges, or max if hovered over).
+/datum/antagonist/changeling/proc/update_chemical_hud(amount)
 	var/atom/movable/screen/ling/chems/chems = owner.current?.hud_used?.screen_objects[HUD_CHANGELING_CHEMS]
-	if (chems)
-		chems.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+	if(isnull(chems))
+		return
+	if(chems.hovering)
+		chems.maptext = FORMAT_CHEM_MAX_TEXT(total_chem_storage)
+	else
+		chems.maptext = FORMAT_CHEM_CHARGES_TEXT(amount)
 
 /*
  * Remove changeling powers from the current Changeling's purchased_powers list.
@@ -1020,6 +1022,7 @@
 	data["hive_name"] = hive_name
 	data["stolen_antag_info"] = antag_memory
 	data["objectives"] = get_objectives()
+	data["absorbed_dna"] = absorbed_count
 	return data
 
 // Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
@@ -1062,4 +1065,5 @@
 	name = "Changeling (Space)"
 	l_hand = /obj/item/melee/arm_blade
 
+#undef FORMAT_CHEM_MAX_TEXT
 #undef FORMAT_CHEM_CHARGES_TEXT

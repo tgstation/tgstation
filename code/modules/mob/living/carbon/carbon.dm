@@ -660,9 +660,6 @@
 	else
 		health_hud.icon_state = "health6"
 
-/mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
-	hud_used?.screen_objects[HUD_MOB_SPACESUIT]?.icon_state = "spacesuit_[cell_state]"
-
 /mob/living/carbon/set_health(new_value)
 	. = ..()
 	if(. > hardcrit_threshold)
