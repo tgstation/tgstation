@@ -1,4 +1,0 @@
-author: "DATA-xPUNGED"
-delete-after: True
-changes:
-  - admin: "When forcing an earthquake, admins can now pick their precise position on the station."

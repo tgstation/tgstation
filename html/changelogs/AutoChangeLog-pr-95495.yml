@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes an issue where the 'slow shuttle' station trait can sometimes not be applied properly"

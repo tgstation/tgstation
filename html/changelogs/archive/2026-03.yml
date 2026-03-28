@@ -433,3 +433,33 @@
   TealSeer:
   - bugfix: fixed a few bugs related to arm implant surgery
   - code_imp: added missing bitflags to bitfield defines
+2026-03-28:
+  DATA-xPUNGED:
+  - admin: When forcing an earthquake, admins can now pick their precise position
+      on the station.
+  Hatterhat:
+  - qol: Installing electronics into windoors/interior doors only moves the electronics
+      out of your hand on a successful installation.
+  JohnFulpWillard:
+  - qol: The stat panel entry for space suits has been replaced with the HUD element.
+      You can now hover over it to see exact cell percentage, and click it to turn
+      the regulator on, while it'll also display when it's off.
+  - qol: Changeling's stat panel entry has been moved to the HUD & Antag panel. Also
+      added some extra explanations on how Changelings work in there.
+  Melbert:
+  - bugfix: You can remove embeds during surgery
+  - bugfix: Gibbed heads don't look debrained despite having a brain
+  - rscdel: '"Cloning Lab" is no longer a traitor codeword.'
+  SyncIt21:
+  - refactor: random recipes like metalgen & secret sause have been refactored. Please
+      report bugs on github
+  - bugfix: you cannot install infinite water recyclers in the sink frame
+  - bugfix: you can attach sink frames to walls in most cases regardless of what's
+      on the wall(except when there is already a light fixture, camera or another
+      sink)
+  lelandkemble:
+  - spellcheck: Changed spacing an punctuation in thanatorenasia offer to ghosts
+  - bugfix: You can no longer create infinite plasteel with girders
+  vinylspiders:
+  - bugfix: fixes an issue where the 'slow shuttle' station trait can sometimes not
+      be applied properly
