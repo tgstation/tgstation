@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - qol: "Installing electronics into windoors/interior doors only moves the electronics out of your hand on a successful installation."
