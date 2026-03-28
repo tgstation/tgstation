@@ -9,8 +9,8 @@
 		trying to give someone liver damage."
 	school = SCHOOL_CONJURATION
 	ammo_type = /obj/item/ammo_casing/magic/booze
-	icon_state = "nothingwand"
-	base_icon_state = "nothingwand"
+	icon_state = "beerwand"
+	base_icon_state = "beerwand"
 	fire_sound = 'sound/effects/slosh.ogg'
 	max_charges = 8
 
