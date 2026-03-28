@@ -200,7 +200,7 @@
 	was_zombie.remove_movespeed_modifier(/datum/movespeed_modifier/mindless_zombie)
 
 /datum/movespeed_modifier/mindless_zombie
-	multiplicative_slowdown = 0.5
+	multiplicative_slowdown = 0.75
 
 // Your skin falls off
 /datum/species/human/krokodil_addict
