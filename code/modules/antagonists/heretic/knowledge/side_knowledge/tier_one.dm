@@ -100,3 +100,125 @@
 	research_tree_icon_path = 'icons/obj/economy.dmi'
 	research_tree_icon_state = "coin_heretic"
 	drafting_tier = 1
+
+/**
+ * This allows heretics to choose if they want to rush all the influences and take them stealthily, or
+ * Construct a codex and take what's left with more points.
+ * Another downside to having the book is strip searches, which means that it's not just a free nab, at least until you get exposed - and when you do, you'll probably need the faster drawing speed.
+ * Overall, it's a tradeoff between speed and stealth or power.
+ */
+/datum/heretic_knowledge/codex_cicatrix
+	name = "Codex Cicatrix"
+	desc = "Allows you to transmute a book, any pen, and your pick from any carcass (animal or human), leather, or hide to create a Codex Cicatrix. \
+		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
+		It can also be used to draw and remove transmutation runes easier, and as a spell focus in a pinch."
+	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
+		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
+	required_atoms = list(
+		list(/obj/item/toy/eldritch_book, /obj/item/book) = 1,
+		/obj/item/pen = 1,
+		list(/mob/living, /obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse) = 1,
+	)
+	result_atoms = list(/obj/item/codex_cicatrix)
+	cost = 1
+	priority = MAX_KNOWLEDGE_PRIORITY - 4
+	drafting_tier = 1
+	is_shop_only = TRUE
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "book"
+
+	var/static/list/non_mob_bindings = typecacheof(list(
+		/obj/item/stack/sheet/leather,
+		/obj/item/stack/sheet/animalhide,
+		/obj/item/food/deadmouse,
+	))
+
+/datum/heretic_knowledge/codex_cicatrix/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	for(var/thingy in atoms)
+		if(is_type_in_typecache(thingy, non_mob_bindings))
+			selected_atoms += thingy
+			return TRUE
+		else if(isliving(thingy))
+			var/mob/living/body = thingy
+			if(body.stat != DEAD)
+				continue
+			selected_atoms += body
+			return TRUE
+	return FALSE
+
+/datum/heretic_knowledge/codex_cicatrix/cleanup_atoms(list/selected_atoms)
+	var/mob/living/body = locate() in selected_atoms
+	if(!body)
+		return ..()
+	// A golem or an android doesn't have skin!
+	var/exterior_text = "skin"
+	// If carbon, it's the limb. If not, it's the body.
+	var/atom/movable/ripped_thing = body
+
+	// We will check if it's a carbon's body.
+	// If it is, we will damage a random bodypart, and check that bodypart for its body type, to select between 'skin' or 'exterior'.
+	if(iscarbon(body))
+		var/mob/living/carbon/carbody = body
+		var/obj/item/bodypart/bodypart = pick(carbody.get_bodyparts())
+		ripped_thing = bodypart
+
+		carbody.apply_damage(25, BRUTE, bodypart, sharpness = SHARP_EDGED)
+		if(!(bodypart.bodytype & BODYTYPE_ORGANIC))
+			exterior_text = "exterior"
+	else
+		body.apply_damage(25, BRUTE, sharpness = SHARP_EDGED)
+		// If it is not a carbon mob, we will just check biotypes and damage it directly.
+		if(body.mob_biotypes & (MOB_MINERAL|MOB_ROBOTIC))
+			exterior_text = "exterior"
+
+	// Procure book for flavor text. This is why we call parent at the end.
+	var/obj/item/book/le_book = locate() in selected_atoms
+	if(!le_book)
+		stack_trace("Somehow, no book in codex cicatrix selected atoms! [english_list(selected_atoms)]")
+	playsound(body, 'sound/items/poster/poster_ripped.ogg', 100, TRUE)
+	body.do_jitter_animation()
+	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book || "the book"], turning into an eldritch shade of blue!"))
+	return ..()
+
+/**
+ * Warren King's Welcome
+ * Gives heretics easy access to maintenance airlocks without having to rely on a HoP or having to off some poor assistant.
+ * Gives access to solars since those doors are especially useful to get in or out of space.
+ */
+/datum/heretic_knowledge/bookworm
+	name = "Warren King's Welcome"
+	desc = "Allows you to transmute 5 cable pieces and a piece of paper to infuse any ID with maintenace and external airlock access."
+	gain_text = "Gnawed into vicious-stained fingerbones, my grim invitation snaps my nauseous and clouded mind towards the heavy-set door. \
+		Slowly, the light dances between a crawling darkness, blanketing the fetid promenade with infinite machinations. \
+		But the King will soon take his pound of flesh. Even here, the taxman takes their cut. For there are a thousands mouths to feed."
+	required_atoms = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/paper = 1,
+	)
+	cost = 1
+	priority = MAX_KNOWLEDGE_PRIORITY - 3
+	drafting_tier = 1
+	research_tree_icon_path = 'icons/obj/card.dmi'
+	research_tree_icon_state = "eldritch"
+
+/datum/heretic_knowledge/bookworm/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/obj/item/card/id/used_id in atoms)
+		if((ACCESS_MAINT_TUNNELS in used_id.access) && (ACCESS_EXTERNAL_AIRLOCKS in used_id.access)) // If we can't give any access we aren't elligible
+			continue
+		selected_atoms += used_id
+		return TRUE
+
+	user.balloon_alert(user, "ritual failed, no ID lacking access!")
+	return FALSE
+
+/datum/heretic_knowledge/bookworm/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	var/obj/item/card/id/improved_id = locate() in selected_atoms
+	improved_id.add_access(list(ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS), mode = FORCE_ADD_ALL)
+	selected_atoms -= improved_id
+	return TRUE
