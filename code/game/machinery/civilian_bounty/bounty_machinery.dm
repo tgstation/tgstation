@@ -132,6 +132,8 @@
 			if(stack_item.applies_to(possible_shippable))
 				active_count++
 				LAZYADDASSOC(stack_item.contribution, id_account, stack_item.contribution_amount(possible_shippable))
+				if(stack_item.contribution[id_account] <= 0 || !stack_item.contribution[id_account])
+					stack_item.contribution[id_account] = stack_item.contribution_amount(possible_shippable)
 				stack_item.ship(possible_shippable)
 				qdel(possible_shippable)
 
