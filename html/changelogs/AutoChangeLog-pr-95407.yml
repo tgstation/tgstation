@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Friendly wisps, wizard gravity balls, & tesla periphery balls are no longer disabled due to shuttle transit"
