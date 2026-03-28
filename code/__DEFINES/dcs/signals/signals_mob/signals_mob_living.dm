@@ -381,3 +381,6 @@
 
 /// Sent to a mob when one of their bodypart's surgery state changes, OR sent from the basic_surgery_state holder when its surgery state changes (old_state, new_state, changed_states)
 #define COMSIG_LIVING_UPDATING_SURGERY_STATE "carbon_updating_surgery_state"
+
+/// Sent to a mob when its player DNRs
+#define COMSIG_LIVING_DNR "living_dnr"
