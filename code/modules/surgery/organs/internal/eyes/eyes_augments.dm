@@ -589,12 +589,10 @@
 /obj/item/organ/eyes/robotic/tacvisor/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	receiver.add_client_colour(/datum/client_colour/tacvisor, REF(src))
+	receiver.apply_status_effect(/datum/status_effect/grouped/see_no_names, REF(src))
 	proximity_monitor = new(receiver, 9)
 	proximity_monitor.owner = src
 
-	receiver.mob_flags |= MOB_HAS_SCREENTIPS_NAME_OVERRIDE
-	RegisterSignal(receiver, COMSIG_MOB_REQUESTING_SCREENTIP_NAME_FROM_USER, PROC_REF(screentip_name_override))
-	RegisterSignal(receiver, COMSIG_LIVING_PERCEIVE_EXAMINE_NAME, PROC_REF(examine_name_override))
 	RegisterSignal(receiver, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(on_login))
 	RegisterSignal(receiver, COMSIG_MOVABLE_PRE_HEAR, PROC_REF(on_hear))
 	RegisterSignal(receiver, COMSIG_MOB_EXAMINING, PROC_REF(on_examine))
@@ -603,8 +601,9 @@
 
 /obj/item/organ/eyes/robotic/tacvisor/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	UnregisterSignal(organ_owner, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_REQUESTING_SCREENTIP_NAME_FROM_USER, COMSIG_LIVING_PERCEIVE_EXAMINE_NAME, COMSIG_MOVABLE_PRE_HEAR, COMSIG_MOB_EXAMINING))
+	UnregisterSignal(organ_owner, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOVABLE_PRE_HEAR, COMSIG_MOB_EXAMINING))
 	organ_owner.remove_client_colour(REF(src))
+	organ_owner.remove_status_effect(/datum/status_effect/grouped/see_no_names, REF(src))
 	QDEL_NULL(proximity_monitor)
 	organ_owner.client?.images -= assoc_to_values(mob_overlays)
 	for (var/mob/living/thing as anything in mob_overlays)
@@ -676,24 +675,6 @@
 	SIGNAL_HANDLER
 	var/image/overlay = mob_overlays[source]
 	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, source)
-
-/obj/item/organ/eyes/robotic/tacvisor/proc/examine_name_override(datum/source, mob/living/examined, visible_name, list/name_override)
-	SIGNAL_HANDLER
-
-	if(!iscarbon(examined) && !(isliving(examined) && (obj_flags & EMAGGED)))
-		return NONE
-
-	name_override[1] = "Unknown"
-	return COMPONENT_EXAMINE_NAME_OVERRIDEN
-
-/obj/item/organ/eyes/robotic/tacvisor/proc/screentip_name_override(datum/source, list/returned_name, obj/item/held_item, atom/hovered)
-	SIGNAL_HANDLER
-
-	if(!iscarbon(hovered) && !(isliving(hovered) && (obj_flags & EMAGGED)))
-		return NONE
-
-	returned_name[1] = "Unknown"
-	return SCREENTIP_NAME_SET
 
 /obj/item/organ/eyes/robotic/tacvisor/proc/make_overlay(mob/living/target)
 	if (obj_flags & EMAGGED)
@@ -814,7 +795,7 @@
 				ui_status_user_is_abled(user, src),
 				ui_status_only_living(user),
 			)
-		else return UI_CLOSE
+		return UI_CLOSE
 	return ..()
 
 /obj/item/organ/eyes/robotic/tacvisor/ui_interact(mob/user, datum/tgui/ui)
@@ -836,7 +817,7 @@
 	data["validFriendlyFactions"] = valid_friendly_factions
 	data["validHostileFactions"] = valid_hostile_factions
 	data["visorOptions"] = list(VISOR_DISPLAY_CROSS, VISOR_DISPLAY_EYES, VISOR_DISPLAY_LINE)
-	data["threatOptions"] = threat_flag_options;
+	data["threatOptions"] = threat_flag_options
 	return data
 
 /obj/item/organ/eyes/robotic/tacvisor/ui_act(action, list/params, datum/tgui/ui)
