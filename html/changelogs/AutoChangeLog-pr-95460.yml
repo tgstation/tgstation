@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Changeling's stat panel entry has been moved to the HUD & Antag panel. Also added some extra explanations on how Changelings work in there."
