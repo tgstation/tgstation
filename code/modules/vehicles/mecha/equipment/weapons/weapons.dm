@@ -160,7 +160,7 @@
 	inhand_icon_state = "plasmacutter"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	energy_drain = 3000
+	energy_drain = 300
 	projectile = /obj/projectile/plasma/adv/mech
 	fire_sound = 'sound/items/weapons/plasma_cutter.ogg'
 	harmful = TRUE
@@ -241,7 +241,7 @@
 	name = "\improper PBT \"Pacifier\" mounted taser"
 	desc = "A weapon for combat exosuits. Shoots non-lethal stunning electrodes."
 	icon_state = "mecha_taser"
-	energy_drain = 200
+	energy_drain = 2000
 	equip_cooldown = 8
 	projectile = /obj/projectile/energy/electrode
 	fire_sound = 'sound/items/weapons/taser.ogg'
