@@ -512,6 +512,7 @@
 	eye_color_left = COLOR_WHITE
 	eye_color_right = COLOR_WHITE
 	flash_protect = FLASH_PROTECTION_WELDER
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
 	pupils_name = "faceplate"
 	penlight_message = "are a wide reinforced faceplate with an inbuilt screen and a multitude of combat sensors"
 	light_reactive = FALSE
