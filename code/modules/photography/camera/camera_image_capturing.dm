@@ -14,7 +14,7 @@
 
 #define PHYSICAL_POSITION(atom) ((atom.y * ICON_SIZE_Y) + (atom.pixel_y))
 
-/obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area, size_x, size_y, total_x, total_y)
+/obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area)
 	var/list/atoms = list()
 	var/list/lighting = list()
 	var/skip_normal = FALSE
@@ -24,35 +24,34 @@
 	backdrop.blend_mode = BLEND_OVERLAY
 	backdrop.color = "#292319"
 
-	if(istype(clone_area) && total_x == clone_area.width && total_y == clone_area.height && size_x >= 0 && size_y > 0)
-		var/turf/bottom_left = clone_area.bottom_left_turfs[1]
-		var/cloned_center_x = round(bottom_left.x + ((total_x - 1) / 2))
-		var/cloned_center_y = round(bottom_left.y + ((total_y - 1) / 2))
-		for(var/t in turfs)
-			var/turf/T = t
-			var/offset_x = T.x - center.x
-			var/offset_y = T.y - center.y
-			var/turf/newT = locate(cloned_center_x + offset_x, cloned_center_y + offset_y, bottom_left.z)
-			if(!(newT in clone_area.reserved_turfs)) //sanity check so we don't overwrite other areas somehow
-				continue
-			atoms += new /obj/effect/appearance_clone(newT, T)
-			if(T.loc.icon_state)
-				atoms += new /obj/effect/appearance_clone(newT, T.loc)
-			if(T.lighting_object)
-				var/obj/effect/appearance_clone/lighting_overlay = new(newT)
-				lighting_overlay.appearance = T.lighting_object.current_underlay
-				lighting_overlay.underlays += backdrop
-				lighting_overlay.blend_mode = BLEND_MULTIPLY
-				lighting += lighting_overlay
-			for(var/atom/found_atom as anything in T.contents)
-				if(HAS_TRAIT(found_atom, TRAIT_INVISIBLE_TO_CAMERA))
-					if(see_ghosts)
-						atoms += new /obj/effect/appearance_clone(newT, found_atom)
-				else if(!found_atom.invisibility || (see_ghosts && isobserver(found_atom)))
+	var/turf/bottom_left = clone_area.bottom_left_turfs[1]
+	var/cloned_center_x = round(bottom_left.x + ((clone_area.width - 1) / 2))
+	var/cloned_center_y = round(bottom_left.y + ((clone_area.height - 1) / 2))
+	for(var/t in turfs)
+		var/turf/T = t
+		var/offset_x = T.x - center.x
+		var/offset_y = T.y - center.y
+		var/turf/newT = locate(cloned_center_x + offset_x, cloned_center_y + offset_y, bottom_left.z)
+		if(!(newT in clone_area.reserved_turfs)) //sanity check so we don't overwrite other areas somehow
+			continue
+		atoms += new /obj/effect/appearance_clone(newT, T)
+		if(T.loc.icon_state)
+			atoms += new /obj/effect/appearance_clone(newT, T.loc)
+		if(T.lighting_object)
+			var/obj/effect/appearance_clone/lighting_overlay = new(newT)
+			lighting_overlay.appearance = T.lighting_object.current_underlay
+			lighting_overlay.underlays += backdrop
+			lighting_overlay.blend_mode = BLEND_MULTIPLY
+			lighting += lighting_overlay
+		for(var/atom/found_atom as anything in T.contents)
+			if(HAS_TRAIT(found_atom, TRAIT_INVISIBLE_TO_CAMERA))
+				if(see_ghosts)
 					atoms += new /obj/effect/appearance_clone(newT, found_atom)
-		skip_normal = TRUE
-		wipe_atoms = TRUE
-		center = locate(cloned_center_x, cloned_center_y, bottom_left.z)
+			else if(!found_atom.invisibility || (see_ghosts && isobserver(found_atom)))
+				atoms += new /obj/effect/appearance_clone(newT, found_atom)
+	skip_normal = TRUE
+	wipe_atoms = TRUE
+	center = locate(cloned_center_x, cloned_center_y, bottom_left.z)
 
 	if(!skip_normal)
 		for(var/i in turfs)

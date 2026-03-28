@@ -217,6 +217,8 @@
 	//These vars will be reused later on
 	var/size_x = picture_size_x - 1
 	var/size_y = picture_size_y - 1
+	var/width = size_x * 2 + 1
+	var/height = size_y * 2 + 1
 	var/list/viewlist = getviewsize(user?.client?.view || world.view)
 	var/view_range = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
 	var/viewer = get_turf(user?.client?.eye || user || target) // not sure why target is a fallback
@@ -233,13 +235,11 @@
 	var/list/turfs = list()
 	var/list/mobs = list()
 	var/blueprints = FALSE
-	var/clone_area = SSmapping.request_turf_block_reservation(size_x * 2 + 1, size_y * 2 + 1, 1)
+	var/clone_area = SSmapping.request_turf_block_reservation(width, height, 1)
 	///list of human names taken on picture
 	var/list/names = list()
 	var/cameranet_user = isAI(user) || istype(viewer, /mob/eye/camera)
 
-	var/width = size_x * 2 + 1
-	var/height = size_y * 2 + 1
 	for(var/turf/seen_placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
 		if(isnull(seen_placeholder))
 			continue
@@ -273,9 +273,9 @@
 		if(!isnull(info))
 			desc += info
 
-	var/psize_x = (size_x * 2 + 1) * ICON_SIZE_X
-	var/psize_y = (size_y * 2 + 1) * ICON_SIZE_Y
-	var/icon/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area, size_x, size_y, (size_x * 2 + 1), (size_y * 2 + 1))
+	var/psize_x = width * ICON_SIZE_X
+	var/psize_y = height * ICON_SIZE_Y
+	var/icon/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area)
 	qdel(clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
 	for(var/mob/living/carbon/human/person in mobs)
@@ -322,18 +322,17 @@
 			to_chat(user, span_warning("No film left."))
 			return
 
-		new_photo = new(get_turf(src), picture)
+		new_photo = new(src, picture)
 
-		if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
-			to_chat(user, span_notice("[pictures_left] photos left."))
+		to_chat(user, span_notice("[pictures_left] photos left."))
 
 		var/name_customized = FALSE
 		if(can_customise)
-			var/customise = user.is_holding(new_photo) && tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
+			var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
 			if(customise == "Yes")
-				var/name1 = user.is_holding(new_photo) && tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
-				var/desc1 = user.is_holding(new_photo) && tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
-				var/caption = user.is_holding(new_photo) && tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
+				var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
+				var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
+				var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
 				if(name1)
 					picture.picture_name = name1
 					name_customized = TRUE
@@ -353,14 +352,15 @@
 
 		new_photo = new(get_turf(src), picture)
 
-		if(holder.put_in_hands(new_photo))
-			to_chat(holder, span_notice("[pictures_left] photos left."))
+		to_chat(holder, span_notice("[pictures_left] photos left."))
 
 	new_photo.set_picture(picture, TRUE, TRUE)
 	if(CONFIG_GET(flag/picture_logging_camera))
 		picture.log_to_file()
 
 	pictures_left--
+
+	user.put_in_hands(new_photo)
 
 /obj/item/camera/attack_self(mob/user)
 	if(isnull(disk))
