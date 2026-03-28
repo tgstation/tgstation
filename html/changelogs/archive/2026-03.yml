@@ -395,3 +395,71 @@
       disabled due to shuttle transit
   - bugfix: Glasses that were in the vending machine now still count for the completion
       of the Beach Bar virtual domain
+2026-03-26:
+  Absolucy:
+  - qol: Slime Link messages now notify listeners with a balloon alert.
+  ArcaneMusic:
+  - code_imp: supply packs can now be spawned using containers different than a crate.
+  - bugfix: The Random Supply Drop event can now spawn their items as opposed to runtiming.
+  LemonInTheDark:
+  - bugfix: the darken screen shake preference will no longer shake your screen underneath
+      the fullscreen overlay
+  Rhials:
+  - bugfix: The medisim shuttle docking port now aligns properly with most evac terminals.
+  RusselNotSCP:
+  - rscadd: Added three new liqueurs, with bottles available in the booze-o-mat.
+  - rscadd: Added 15 new cocktails that use the aforementioned liqueurs.
+  SyncIt21:
+  - bugfix: tearing a poster while placing it only creates a shred poster on the wall
+      but won't place a new one in hand
+  lelandkemble:
+  - bugfix: You can put a horn in a clown car
+  - map: Snow Cabin fake healing wand now holds on to its sprite
+  - bugfix: Tape can now secure prosthetic limbs again
+  - spellcheck: Immobile mobile defibrillator mounts are no longer called mobile
+  vinylspiders:
+  - bugfix: fixes an issue where casting spells after your mob gets deleted can leave
+      you in a permanently bugged state.
+2026-03-27:
+  ArcaneMusic:
+  - rscadd: Centcom is now offering the ability to purchase airflow blocking plastic
+      flaps, and the ability to refill the cargo shuttle with air for the low, low
+      installation fee of 8,000 credits. Inquire today under the "Imports" category!
+  Melbert:
+  - bugfix: Hallucinating yourself as another mob will no longer disable all of your
+      light sources
+  - qol: Health analyzer lung reports are appended by the lung organs rather than
+      at the bottom of the readout
+  TealSeer:
+  - bugfix: fixed a few bugs related to arm implant surgery
+  - code_imp: added missing bitflags to bitfield defines
+2026-03-28:
+  DATA-xPUNGED:
+  - admin: When forcing an earthquake, admins can now pick their precise position
+      on the station.
+  Hatterhat:
+  - qol: Installing electronics into windoors/interior doors only moves the electronics
+      out of your hand on a successful installation.
+  JohnFulpWillard:
+  - qol: The stat panel entry for space suits has been replaced with the HUD element.
+      You can now hover over it to see exact cell percentage, and click it to turn
+      the regulator on, while it'll also display when it's off.
+  - qol: Changeling's stat panel entry has been moved to the HUD & Antag panel. Also
+      added some extra explanations on how Changelings work in there.
+  Melbert:
+  - bugfix: You can remove embeds during surgery
+  - bugfix: Gibbed heads don't look debrained despite having a brain
+  - rscdel: '"Cloning Lab" is no longer a traitor codeword.'
+  SyncIt21:
+  - refactor: random recipes like metalgen & secret sause have been refactored. Please
+      report bugs on github
+  - bugfix: you cannot install infinite water recyclers in the sink frame
+  - bugfix: you can attach sink frames to walls in most cases regardless of what's
+      on the wall(except when there is already a light fixture, camera or another
+      sink)
+  lelandkemble:
+  - spellcheck: Changed spacing an punctuation in thanatorenasia offer to ghosts
+  - bugfix: You can no longer create infinite plasteel with girders
+  vinylspiders:
+  - bugfix: fixes an issue where the 'slow shuttle' station trait can sometimes not
+      be applied properly
