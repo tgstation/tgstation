@@ -7,6 +7,7 @@
 
 	floor_change = new /atom/movable/screen/floor_changer(null, src)
 	floor_change.icon = ui_style
+	floor_change.screen_loc = "EAST-1:28,SOUTH+1:7"
 	static_inventory += floor_change
 
 	pull_icon = new /atom/movable/screen/pull(null, src)
@@ -67,7 +68,7 @@
 	name = "Communicate"
 	desc = "Communicate telepathically with your user."
 	button_icon_state = "communicate"
-	default_button_position = GUARDIAN_COMMUNICATE_LOCATION
+	default_button_position = ui_guardian_communication
 
 /datum/action/cooldown/guardian/communicate/Activate()
 	astype(owner, /mob/living/basic/guardian)?.communicate()
@@ -76,7 +77,7 @@
 	name = "Manifest"
 	desc = "Spring forth into battle!"
 	button_icon_state = "manifest"
-	default_button_position = GUARDIAN_MANIFEST_LOCATION
+	default_button_position = ui_guardian_manifest
 
 /datum/action/cooldown/guardian/manifest/Activate()
 	astype(owner, /mob/living/basic/guardian)?.manifest()
@@ -85,7 +86,7 @@
 	name = "Recall"
 	desc = "Return to your user."
 	button_icon_state = "recall"
-	default_button_position = GUARDIAN_RECALL_LOCATION
+	default_button_position = ui_guardian_recall
 
 /datum/action/cooldown/guardian/recall/Activate()
 	astype(owner, /mob/living/basic/guardian)?.recall()
@@ -103,7 +104,7 @@
 	name = "Toggle Mode"
 	desc = "Switch between ability modes."
 	button_icon_state = "toggle"
-	default_button_position = GUARDIAN_TOGGLE_LOCATION
+	default_button_position = ui_guardian_special
 
 /datum/action/cooldown/guardian/toggle_mode/Activate()
 	astype(owner, /mob/living/basic/guardian)?.toggle_modes()

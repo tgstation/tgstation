@@ -37,7 +37,7 @@
 	cooldown_time = 20 SECONDS
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
-	default_button_position = GUARDIAN_TOGGLE_LOCATION
+	default_button_position = ui_guardian_special
 	/// After this amount of time passses, bomb deactivates.
 	var/decay_time = 1 MINUTES
 	/// Static list of signals that activate the bomb.

@@ -120,7 +120,7 @@
 	button_icon_state = "eye"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
-	default_button_position = GUARDIAN_TOGGLE_LOCATION
+	default_button_position = ui_guardian_special
 	cooldown_time = 2 SECONDS
 	melee_cooldown_time = 0
 	click_to_activate = FALSE
