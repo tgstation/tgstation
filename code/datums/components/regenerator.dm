@@ -7,6 +7,7 @@
  * in the last X seconds. Taking any damage will reset this cooldown.
  */
 /datum/component/regenerator
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// You will only regain health if you haven't been hurt for this many seconds
 	var/regeneration_delay
 	/// Brute reagined every second
@@ -68,6 +69,29 @@
 	. = ..()
 	if(regeneration_start_timer)
 		deltimer(regeneration_start_timer)
+
+/datum/component/regenerator/InheritComponent(
+	datum/component/C,
+	i_am_original,
+	regeneration_delay = src.regeneration_delay,
+	brute_per_second = src.brute_per_second,
+	burn_per_second = src.burn_per_second,
+	tox_per_second = src.tox_per_second,
+	oxy_per_second = src.oxy_per_second,
+	heals_wounds = src.heals_wounds,
+	ignore_damage_types = src.ignore_damage_types,
+	outline_colour = src.outline_colour,
+	regen_check = src.regen_check,
+)
+	src.regeneration_delay = regeneration_delay
+	src.brute_per_second = brute_per_second
+	src.burn_per_second = burn_per_second
+	src.tox_per_second = tox_per_second
+	src.oxy_per_second = oxy_per_second
+	src.heals_wounds = heals_wounds
+	src.ignore_damage_types = ignore_damage_types
+	src.outline_colour = outline_colour
+	src.regen_check = regen_check
 
 /// When you take damage, reset the cooldown and start processing
 /datum/component/regenerator/proc/on_take_damage(datum/source, damage, damagetype, ...)

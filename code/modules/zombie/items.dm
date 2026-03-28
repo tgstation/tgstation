@@ -10,17 +10,27 @@
 	wound_bonus = -30
 	exposed_wound_bonus = 15
 	sharpness = SHARP_EDGED
+	/// Chance of infection on hit
+	var/infect_chance = 100
 
 /obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(QDELETED(target))
 		return
 	if(ishuman(target))
-		try_to_zombie_infect(target, user, user.zone_selected)
+		try_to_zombie_infect(target, user, user.zone_selected, infect_chance)
 	else if(isliving(target))
 		check_feast(target, user)
 
-/proc/try_to_zombie_infect(mob/living/carbon/human/target, mob/living/user, def_zone = BODY_ZONE_CHEST)
+/obj/item/mutant_hand/zombie/weak
+	force = 16
+	demolition_mod = 1.33
+	exposed_wound_bonus = 10
+	infect_chance = 75
+
+/proc/try_to_zombie_infect(mob/living/carbon/human/target, mob/living/user, def_zone = BODY_ZONE_CHEST, base_chance = 100)
 	CHECK_DNA_AND_SPECIES(target)
+	if(!prob(base_chance))
+		return
 
 	// Can't zombify with no head
 	if(!target.get_bodypart(BODY_ZONE_HEAD))
