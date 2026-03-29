@@ -165,6 +165,14 @@ window "infowindow"
 		left = "statwindow"
 		right = "outputwindow"
 		is-vert = false
+    elem "input_buttons_screen"
+		type = CHILD
+		pos = 0,96
+		size = 640x20
+		anchor1 = 0,96
+		anchor2 = 100,100
+		background-color = #ffc41f
+		left = "input_and_buttons"
 
 window "outputwindow"
 	elem "outputwindow"
@@ -175,19 +183,14 @@ window "outputwindow"
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-	elem "output_input_child"
+	elem "output_selector_screen"
 		type = CHILD
 		pos = 0,0
-		size = 640x475
+		size = 640x455
 		anchor1 = 0,0
-		anchor2 = 100,100
-		background-color = #ffc41f
-		saved-params = "splitter"
+		anchor2 = 96,100
+        background-color = #ffc41f
 		left = "output_selector"
-		right = "input_and_buttons"
-		is-vert = false
-		splitter = 96
-		show-splitter = false
 
 window "output_selector"
 	elem "output_selector"
