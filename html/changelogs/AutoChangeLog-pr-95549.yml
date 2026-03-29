@@ -1,0 +1,4 @@
+author: "Tsar-Salat"
+delete-after: True
+changes:
+  - bugfix: "firebreath will light objects on fire more consistently"
