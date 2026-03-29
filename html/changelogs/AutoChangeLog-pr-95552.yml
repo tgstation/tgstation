@@ -1,0 +1,4 @@
+author: "TheRyeGuyWhoWillNowDie"
+delete-after: True
+changes:
+  - bugfix: "cyborgs are made properly unconscious when emagged"
