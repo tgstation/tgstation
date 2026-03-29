@@ -17,6 +17,7 @@
 	var/obj/projectile/magic/freeze/ice = new(user.drop_location())
 	ice.firer = user
 	user.projectile_hit(ice, BODY_ZONE_CHEST)
+	qdel(ice)
 	charges--
 
 /obj/item/gun/magic/wand/freeze/do_suicide(mob/living/user)
