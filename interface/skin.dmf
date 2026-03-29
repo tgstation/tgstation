@@ -154,14 +154,14 @@ window "infowindow"
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-	elem "main_split"
+	elem "info_split"
 		type = CHILD
 		pos = 0,5
 		anchor1 = 0,0
 		anchor2 = 100,100
 		size = 640x475
 		is-vert = false
-		splitter = 97
+		splitter = 97.5
 		show-splitter = false
 		saved-params = "splitter"
 		left = "info"
