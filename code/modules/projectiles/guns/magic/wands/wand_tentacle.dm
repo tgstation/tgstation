@@ -55,7 +55,7 @@
 
 /obj/effect/wizard_tentacle/Initialize(mapload, mob/living/victim)
 	. = ..()
-	if (isgroundlessturf(loc))
+	if (isgroundlessturf(loc) || isnull(victim))
 		return INITIALIZE_HINT_QDEL
 	flick("goliath_tentacle_spawn", src)
 
