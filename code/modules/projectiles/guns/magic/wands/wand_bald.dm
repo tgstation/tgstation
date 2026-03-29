@@ -108,7 +108,7 @@
 /datum/status_effect/bald_flare
 	id = "bald_flare"
 	alert_type = null
-	duration = 1.5 SECONDS
+	duration = 1.6 SECONDS
 
 /datum/status_effect/bald_flare/on_apply()
 	. = ..()

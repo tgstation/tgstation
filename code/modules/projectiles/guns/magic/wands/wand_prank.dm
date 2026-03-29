@@ -58,6 +58,7 @@
 
 /// Used by the wand suicide, keep slipping until you hit a wall and explode
 /datum/status_effect/slippery_death
+	id = "slippery_death"
 	alert_type = null
 	tick_interval = 0.2 SECONDS
 	/// What direction are we slipping in?
