@@ -49,7 +49,7 @@
 	plane = GAME_PLANE
 	anchored = TRUE
 	/// How long do we get grabbed?
-	var/grab_time = 10 SECONDS
+	var/grab_time = 20 SECONDS
 	/// Status effect we apply to victims
 	var/status_applied = /datum/status_effect/incapacitating/immobilized/wizard_tentacle
 
