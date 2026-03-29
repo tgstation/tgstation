@@ -183,6 +183,8 @@ window "info"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
+		splitter = 40
+		background-color = #202020
 		left = "statwindow"
 		right = "outputwindow"
 		is-vert = false
@@ -221,7 +223,6 @@ window "outputwindow"
 		is-pane = true
 	elem "output_selector_screen"
 		type = CHILD
-		pos = 0,0
 		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
