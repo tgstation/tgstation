@@ -7,8 +7,8 @@
 	desc = "The dark power of this wand turns the victim's body against itself."
 	school = SCHOOL_NECROMANCY
 	ammo_type = /obj/item/ammo_casing/magic/rebellion
-	icon_state = "deathwand"
-	base_icon_state = "deathwand"
+	icon_state = "necrowand"
+	base_icon_state = "necrowand"
 	fire_sound = 'sound/effects/magic/wandodeath.ogg'
 	max_charges = 6
 
