@@ -8,8 +8,8 @@
 	desc = "A wand which blasts things away from you."
 	school = SCHOOL_TRANSLOCATION
 	ammo_type = /obj/item/ammo_casing/magic/repulse
-	icon_state = "telewand"
-	base_icon_state = "telewand"
+	icon_state = "repulsionwand"
+	base_icon_state = "repulsionwand"
 	fire_sound = 'sound/effects/magic/repulse.ogg'
 	max_charges = 12
 
