@@ -1,0 +1,4 @@
+author: "Yobrocharlie"
+delete-after: True
+changes:
+  - rscadd: "Added the academy back, its now a fetch quest."
