@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - qol: "Blood worms can drag themselves onto corpses to infest them as an alternative to pressing the action button."
