@@ -59,7 +59,7 @@ export const MatMarket = (props) => {
   const multiplier = orderingPrive ? 1.1 : 1;
 
   return (
-    <Window width={990} height={600}>
+    <Window width={990} height={615}>
       <Window.Content scrollable>
         {!!catastrophe && <MarketCrashModal />}
         <Section
