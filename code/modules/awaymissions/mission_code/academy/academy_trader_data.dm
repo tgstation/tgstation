@@ -22,7 +22,7 @@
 		/obj/item/fake_items/abductor_win_stick/no_anchor = list(PAYCHECK_CREW * 40, INFINITY, "Good work killing that wizard"),
 		/obj/item/clothing/head/collectable/paper = list(PAYCHECK_CREW * 40, INFINITY, "Good work killing that wizard"),
 		/obj/item/clothing/suit/wizrobe/paper = list(PAYCHECK_CREW * 40, INFINITY, "Good work killing that wizard"),
-		/obj/item/gun/magic/wand/nothing/disabler = list(PAYCHECK_CREW * 40, INFINITY, "Good work retriving the relic"),
+		/obj/item/gun/magic/wand/disabler = list(PAYCHECK_CREW * 40, INFINITY, "Good work retriving the relic"),
 		/obj/item/boulder/true_boulder = list(PAYCHECK_CREW * 40, INFINITY, "Good work retriving the relic"),
 		/obj/item/gun/magic/wand/fireball/inert = list(PAYCHECK_CREW * 40, INFINITY, "Good work retriving the relic"),
 		/obj/item/scanner_wand = list(PAYCHECK_CREW * 40, INFINITY, "Good work retriving the relic"),
