@@ -659,17 +659,6 @@
 /datum/armor/winterhood_miner
 	melee = 10
 
-/obj/item/clothing/suit/hooded/wintercoat/pullover
-	name = "hoodie pullover"
-	desc = "testies"
-	icon_state = "pullover"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/pullover
-
-/obj/item/clothing/head/hooded/winterhood/pullover
-	name = "hoodie pullover hood"
-	desc = "testies"
-	icon_state = "hood_pullover"
-
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs, with custom colors."
@@ -705,3 +694,39 @@
 	desc = "A heavy jacket hood made from 'synthetic' animal furs, with custom colors."
 	greyscale_config = /datum/greyscale_config/winter_hoods
 	greyscale_config_worn = /datum/greyscale_config/winter_hoods/worn
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover
+	name = "hoodie pullover"
+	desc = "A colorable pullover hoodie."
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/hooded/wintercoat/pullover"
+	post_init_icon_state = "pullover"
+	greyscale_config = /datum/greyscale_config/hoodie
+	greyscale_config_worn = /datum/greyscale_config/hoodie/worn
+	greyscale_colors = "#e05fb5"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/pullover
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/head/hooded/winterhood/pullover
+	name = "hoodie pullover hood"
+	desc = "A colorable pullover hoodie."
+	greyscale_config = /datum/greyscale_config/hoodie_hoods
+	greyscale_config_worn = /datum/greyscale_config/hoodie_hoods/worn
+	greyscale_colors = "#e05fb5"
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	. = ..()
+	if(!hood)
+		return
+	var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	var/list/new_coat_colors = coat_colors.Copy(1,4)
+	hood.set_greyscale(new_coat_colors)
+	hood.update_slot_icon()
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover/on_hood_created(obj/item/clothing/head/hooded/hood)
+	. = ..()
+	var/list/coat_colors = (SSgreyscale.ParseColorString(greyscale_colors))
+	var/list/new_coat_colors = coat_colors.Copy(1,4)
+	hood.set_greyscale(new_coat_colors)
+
+///worn hoodie hood doesnt color, hoodie up invis, hoodie up forced _t hoodie
