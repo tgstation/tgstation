@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed parallax runtiming horribly whenever parallax SS doesnt pick a random layer to display"

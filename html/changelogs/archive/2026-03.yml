@@ -466,3 +466,16 @@
   vinylspiders:
   - bugfix: fixes an issue where the 'slow shuttle' station trait can sometimes not
       be applied properly
+2026-03-29:
+  Hatterhat:
+  - bugfix: Integrated circuit shells now only explode if they draw too much power
+      in a minute, rather than being doomed to explode if it uses too much power over
+      its entire lifetime, following complaints from at least one guy. Nanotrasen
+      representatives claim that this is entirely unrelated to missing shipments of
+      explosive alloys.
+  SmArtKar:
+  - bugfix: Fixed stack items not being refunded by failed heretic summon rituals
+  - bugfix: Fixed parallax runtiming horribly whenever parallax SS doesnt pick a random
+      layer to display
+  Yobrocharlie:
+  - rscadd: Added the academy back, its now a fetch quest.
