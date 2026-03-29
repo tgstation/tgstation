@@ -6,8 +6,8 @@
 	desc = "The power of this rod lifts living creatures off the ground, potentially leaving them unable to move."
 	school = SCHOOL_TRANSLOCATION
 	ammo_type = /obj/item/ammo_casing/magic/levitate
-	icon_state = "telewand"
-	base_icon_state = "telewand"
+	icon_state = "gravwand"
+	base_icon_state = "gravwand"
 	fire_sound = 'sound/effects/magic/repulse.ogg'
 	max_charges = 12
 
