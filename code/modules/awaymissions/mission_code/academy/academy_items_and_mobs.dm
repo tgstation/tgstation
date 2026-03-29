@@ -38,7 +38,7 @@
 	force = 30
 
 //mobs start here
-/mob/living/basic/wizard/academy/buffwiz
+/mob/living/basic/wizard/buffwiz
 	name = "Buff wizard"
 	desc = "Well i guess not all wizards let their physical form go"
 	speed = 0
@@ -47,7 +47,7 @@
 	melee_damage_lower = 50
 	melee_damage_upper = 50
 
-/mob/living/basic/wizard/academy/tired
+/mob/living/basic/wizard/tired
 	name = "over-worked wizard"
 	desc = "This wizard doesnt seem hostile and pays you no mind, they continue working frantically as they do something to the modsuit- it appears like theyre changing it, somehow, maybe you can steal from him a bit."
 	speed = 0
@@ -57,7 +57,7 @@
 	melee_damage_upper = 4
 	faction = list(FACTION_NEUTRAL)
 
-/mob/living/basic/wizard/academy/high_magus
+/mob/living/basic/wizard/high_magus
 	name = "High Magus"
 	desc = "The high magus of this area, still only a slightly above average wizard"
 	speed = 0
@@ -96,7 +96,7 @@
 	desc = "A nanotrasen elite assault officer turned traitor"
 	faction = list(ROLE_WIZARD)
 
-/mob/living/basic/skeleton/templar/academy/leader
+/mob/living/basic/skeleton/templar/leader
 	name = "Knight leader"
 	desc = "This one isnt trapped behind glass or being ordered around like the others, this one must be in charge of the others"
 	maxHealth = 450
