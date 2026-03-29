@@ -6,8 +6,8 @@
 	desc = "This wand overloads the nerves of your enemies with potent lightning."
 	school = SCHOOL_EVOCATION
 	ammo_type = /obj/item/ammo_casing/magic/zap
-	icon_state = "revivewand"
-	base_icon_state = "revivewand"
+	icon_state = "teslawand"
+	base_icon_state = "teslawand"
 	fire_sound = 'sound/items/weapons/taser.ogg'
 	max_charges = 8
 
