@@ -1882,7 +1882,6 @@
 /area/awaymission/caves/academy)
 "mt" = (
 /obj/structure/table,
-/obj/item/gun/magic/wand/disabler,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/caves/academy)
 "mw" = (
@@ -2069,6 +2068,11 @@
 	dir = 1
 	},
 /turf/open/floor/vault,
+/area/awaymission/caves/academy)
+"tj" = (
+/obj/structure/chair/stool/directional/west,
+/obj/item/gun/magic/wand/disabler,
+/turf/open/floor/iron/showroomfloor,
 /area/awaymission/caves/academy)
 "tv" = (
 /mob/living/basic/construct/harvester/heretic,
@@ -13437,7 +13441,7 @@ jU
 jS
 jS
 cp
-Hb
+tj
 mt
 Hb
 cp
