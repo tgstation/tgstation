@@ -1606,7 +1606,6 @@
 /datum/reagent/toxin/acid/industrial_waste/intercept_reagents_transfer(datum/reagents/target)
 	if(target.total_volume >= target.maximum_volume)
 		spew_waste(round(volume / WASTE_REACTION_THRESHOLD))
-		return ..()
 	return ..()
 
 /datum/reagent/toxin/acid/industrial_waste/burn(datum/reagents/holder)
@@ -1623,15 +1622,14 @@
 		return // There's too little waste to do anything.
 	if(istype(exposed_obj, /obj/effect/decal/cleanable/greenglow/waste))
 		var/obj/effect/decal/cleanable/greenglow/waste/goo = exposed_obj
-		goo.visible_message(span_warning("\The new waste reactivates \the [goo]!"))
+		goo.visible_message(span_warning("The new waste reactivates [goo]!"))
 		goo.pre_dissolve(FALSE)
 	return ..()
 
 /datum/reagent/toxin/acid/industrial_waste/expose_turf(turf/exposed_turf, reac_volume)
 	if(volume < WASTE_REACTION_THRESHOLD)
 		return // There's too little waste to do anything.
-	var/obj/effect/decal/cleanable/greenglow/waste/goo
-	goo = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste) //Following similar logic to how ants spawn their cleanables.
+	var/obj/effect/decal/cleanable/greenglow/waste/goo = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste) //Following similar logic to how ants spawn their cleanables.
 	if(QDELETED(goo))
 		return
 
@@ -1665,8 +1663,8 @@
 	var/obj/effect/particle_effect/fluid/smoke/quick/greenboy = new(dropturf)
 	greenboy.color = "#00ff00"
 	var/list/turf/turfs = list()
-	for(var/turf/floors in oview(spew_range, dropturf))
-		if(istype(floors, /turf/open/space))
+	for(var/turf/open/floors in oview(spew_range, dropturf))
+		if(isgroundlessturf(floors))
 			continue
 		turfs += floors
 

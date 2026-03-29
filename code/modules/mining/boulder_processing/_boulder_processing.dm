@@ -109,7 +109,7 @@
 	if(length(booster_list))
 		. += span_notice("This machine is boosted from chemical intake:<br>")
 		for(var/datum/reagent/increment as anything in booster_list)
-			. += "[increment.name]: Provides [booster_list[increment.type]*10]% Boost"
+			. += "[increment::name]: Provides [booster_list[increment] * 10]% Boost"
 		. += span_notice("<br>Upon being boosted successfully, \the [src] will produce [EXAMINE_HINT("[waste_chemical.name]")].")
 
 /obj/machinery/bouldertech/update_icon_state()
