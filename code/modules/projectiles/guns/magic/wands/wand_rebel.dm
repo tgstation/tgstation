@@ -27,9 +27,6 @@
 		return SHAME // God damn dullahans
 	return BRUTELOSS
 
-/// Hurt yourself
-/obj/item/gun/magic/wand/rebel/proc/rend_self(mob/living/user, list/valid_zones)
-
 /obj/item/ammo_casing/magic/rebellion
 	projectile_type = /obj/projectile/magic/rebellion
 
