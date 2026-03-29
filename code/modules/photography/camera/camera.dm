@@ -56,7 +56,7 @@
 
 /obj/item/camera/Initialize(mapload)
 	. = ..()
-	/datum/component/overlay_lighting/camera
+
 	//we do this so if this camera is used as an internal component, the flash will still be visible
 	if(flash_enabled)
 		var/atom/movable/parent = loc
@@ -96,6 +96,7 @@
 	. = ..()
 	. += span_notice("It has [pictures_left] photos left.")
 	. += span_notice("Alt-click to change its focusing, allowing you to set how big of an area it will capture.")
+	. += span_notice("The present dimensions of the picture are [EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]")]")
 
 	if(isnull(disk))
 		. += span_notice("It has a slot for a holorecord disk.")
@@ -115,21 +116,26 @@
  * * desired_y - the y zoom value to use
  * * mob/user - the optional user who is taking the photo. Passing the mob will ask for input and ignore the above params
 */
-/obj/item/camera/proc/adjust_zoom(desired_x, desired_y, mob/user)
+/obj/item/camera/proc/adjust_zoom(desired_x = picture_size_x, desired_y = picture_size_y, mob/user)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(user)
 		if(loc != user)
 			to_chat(user, span_warning("You must be holding the camera to continue!"))
 			return FALSE
-		desired_x = tgui_input_number(user, "How wide do you want the camera to shoot?", "Zoom", picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
+		desired_x = tgui_input_number(user, "Set camera half width Aperture", "Zoom", picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
 		if(!desired_x || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
-		desired_y = tgui_input_number(user, "How high do you want the camera to shoot", "Zoom", picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
+		desired_y = tgui_input_number(user, "Set camera half height Aperture", "Zoom", picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
 		if(!desired_y || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
-	picture_size_x = clamp(desired_x, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	picture_size_y = clamp(desired_y, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+
+	picture_size_x = clamp(desired_x, 2, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_y = clamp(desired_y, 2, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+
+	if(user)
+		to_chat(user, span_notice("The dimensions of the picture will be [EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]")]"))
+
 	return TRUE
 /// Resets flash to be used again
 /obj/item/camera/proc/cooldown()
@@ -217,8 +223,6 @@
 	//These vars will be reused later on
 	var/size_x = picture_size_x - 1
 	var/size_y = picture_size_y - 1
-	var/width = size_x * 2 + 1
-	var/height = size_y * 2 + 1
 	var/list/viewlist = getviewsize(user?.client?.view || world.view)
 	var/view_range = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
 	var/viewer = get_turf(user?.client?.eye || user || target) // not sure why target is a fallback
@@ -229,17 +233,17 @@
 	//taking the actual picture
 	on_flash(target, user)
 	blending = TRUE
-	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
 	var/list/mobs_spotted = list()
 	var/list/dead_spotted = list()
 	var/list/turfs = list()
 	var/list/mobs = list()
 	var/blueprints = FALSE
-	var/clone_area = SSmapping.request_turf_block_reservation(width, height, 1)
+	var/width = APERTURE_TO_METERS(picture_size_x)
+	var/height = APERTURE_TO_METERS(picture_size_y)
 	///list of human names taken on picture
 	var/list/names = list()
 	var/cameranet_user = isAI(user) || istype(viewer, /mob/eye/camera)
-
+	var/datum/turf_reservation/clone_area = SSmapping.request_turf_block_reservation(width, height, 1)
 	for(var/turf/seen_placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
 		if(isnull(seen_placeholder))
 			continue
@@ -265,6 +269,7 @@
 	// do this before picture is taken so we can reveal revenants for the photo
 	steal_souls(mobs)
 
+	var/list/desc = list("This is a photo of an area of [width] meters by [height] meters.")
 	for(var/mob/mob as anything in mobs)
 		mobs_spotted += mob
 		if(mob.stat == DEAD)
@@ -273,17 +278,15 @@
 		if(!isnull(info))
 			desc += info
 
-	var/psize_x = width * ICON_SIZE_X
-	var/psize_y = height * ICON_SIZE_Y
-	var/icon/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area)
-	qdel(clone_area)
+	var/icon/get_icon = camera_get_icon(turfs, target_turf, clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
+	qdel(clone_area)
 	for(var/mob/living/carbon/human/person in mobs)
 		if(person.obscured_slots & HIDEFACE)
 			continue
 		names += "[person.name]"
 
-	var/datum/picture/picture = new("picture", desc.Join("<br>"), mobs_spotted, dead_spotted, names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
+	var/datum/picture/picture = new("picture", desc.Join("<br>"), mobs_spotted, dead_spotted, names, get_icon, null, width * ICON_SIZE_X, height * ICON_SIZE_X, blueprints, can_see_ghosts = see_ghosts)
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
 	blending = FALSE

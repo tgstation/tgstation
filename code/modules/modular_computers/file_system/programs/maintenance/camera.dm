@@ -14,8 +14,8 @@
 	var/obj/item/camera/app/internal_camera
 	/// Latest picture taken by the app.
 	var/datum/picture/internal_picture
-	/// A mutable_appearance of the latest picture, for getting an appeance reference for the UI.
-	var/mutable_appearance/picture_appearance
+	/// base64 of the current taken picture
+	var/internal_picture_icon
 	/// How many pictures were taken already, used for the camera's TGUI photo display
 	var/picture_number = 1
 	/// Can we edit the metadata of the latest picture?
@@ -36,13 +36,11 @@
 /datum/computer_file/program/maintenance/camera/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	internal_camera = new(computer)
-	picture_appearance = new()
 	RegisterSignal(internal_camera, COMSIG_CAMERA_IMAGE_CAPTURED, PROC_REF(on_image_captured))
 
 /datum/computer_file/program/maintenance/camera/Destroy()
 	QDEL_NULL(internal_camera)
 	QDEL_NULL(internal_picture)
-	QDEL_NULL(picture_appearance)
 	return ..()
 
 /datum/computer_file/program/maintenance/camera/tap(atom/tapped_atom, mob/living/user, list/modifiers)
@@ -66,15 +64,15 @@
 	take_picture(user, get_turf(target))
 
 /datum/computer_file/program/maintenance/camera/proc/take_picture(mob/user, turf/target)
-	QDEL_NULL(internal_picture)
 	internal_camera.see_ghosts = (locate(/datum/computer_file/program/maintenance/spectre_meter) in computer.stored_files) ?  CAMERA_SEE_GHOSTS_BASIC : CAMERA_NO_GHOSTS
 	internal_camera.attempt_picture(target, user)
 
 /datum/computer_file/program/maintenance/camera/proc/on_image_captured(cam, target, user, datum/picture/picture)
 	SIGNAL_HANDLER
 
+	QDEL_NULL(internal_picture)
 	internal_picture = picture
-	picture_appearance.icon = internal_picture.picture_image
+	internal_picture_icon = icon2base64(internal_picture.picture_image)
 	current_picture_name = null
 	current_picture_desc = null
 	current_picture_caption = null
@@ -94,7 +92,7 @@
 		"maxDescLength" = 128,
 		"maxCaptionLength" = 256,
 		"printCost" = 1,
-		"minSize" = 1,
+		"minSize" = 2,
 		"maxSize" = CAMERA_PICTURE_SIZE_HARD_LIMIT
 	)
 
@@ -102,13 +100,16 @@
 	var/list/data = list()
 
 	if(!isnull(internal_picture))
-		data["photo"] = REF(picture_appearance.appearance)
+		data["photo"] = internal_picture_icon
 		data["canEditMetadata"] = can_edit_metadata
 		data["name"] = current_picture_name
 		data["desc"] = current_picture_desc
 		data["caption"] = current_picture_caption
 		data["storedPaper"] = computer.stored_paper
-	data["size"] = max(internal_camera.picture_size_x, internal_camera.picture_size_y)
+
+	data["width"] = internal_camera.picture_size_x
+	data["height"] = internal_camera.picture_size_y
+	data["size"] = "[APERTURE_TO_METERS(internal_camera.picture_size_x)]x[APERTURE_TO_METERS(internal_camera.picture_size_y)]"
 
 	return data
 
@@ -118,14 +119,17 @@
 		return
 
 	switch(action)
-		if("adjustSize")
+		if("adjustWidth")
 			var/new_size = text2num(params["value"])
 			if(!new_size)
 				return
-			new_size = clamp(new_size, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-			internal_camera.picture_size_x = new_size
-			internal_camera.picture_size_y = new_size
-			return TRUE
+			return internal_camera.adjust_zoom(desired_x = new_size)
+
+		if("adjustHeight")
+			var/new_size = text2num(params["value"])
+			if(!new_size)
+				return
+			return internal_camera.adjust_zoom(desired_y = new_size)
 
 		if("setName")
 			if(!(internal_picture && can_edit_metadata))

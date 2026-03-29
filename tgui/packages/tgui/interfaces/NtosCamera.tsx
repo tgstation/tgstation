@@ -13,7 +13,9 @@ import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 type NtosCameraCommonData = {
-  size: number;
+  width: number;
+  height: number;
+  size: string;
   minSize: number;
   maxSize: number;
   maxNameLength: number;
@@ -48,6 +50,8 @@ export const NtosCamera = (props) => {
 export const NtosCameraContent = (props) => {
   const { act, data } = useBackend<NtosCameraData>();
   const {
+    width,
+    height,
     size,
     minSize,
     maxSize,
@@ -74,7 +78,7 @@ export const NtosCameraContent = (props) => {
               maxWidth="100%"
               height="auto"
               fixErrors
-              src={photo}
+              src={`data:image/jpeg;base64,${photo}`}
             />
           </Stack.Item>
           <Stack.Item>
@@ -150,18 +154,36 @@ export const NtosCameraContent = (props) => {
           </NoticeBox>
         </Stack.Item>
       )}
+      <Stack.Item align="center">{size}</Stack.Item>
       <Stack.Item align="center">
         <Box bold inline textColor="label" mr="0.5rem">
-          Photo Size:
+          Half Width Aperture:
         </Box>
         <Slider
           inline
-          value={size}
+          value={width}
           minValue={minSize}
           maxValue={maxSize}
           step={1}
           onChange={(e, value) =>
-            act('adjustSize', {
+            act('adjustWidth', {
+              value: value,
+            })
+          }
+        />
+      </Stack.Item>
+      <Stack.Item align="center">
+        <Box bold inline textColor="label" mr="0.5rem">
+          Half Height Aperture:
+        </Box>
+        <Slider
+          inline
+          value={height}
+          minValue={minSize}
+          maxValue={maxSize}
+          step={1}
+          onChange={(e, value) =>
+            act('adjustHeight', {
               value: value,
             })
           }

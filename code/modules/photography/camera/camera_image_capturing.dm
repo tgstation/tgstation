@@ -14,7 +14,9 @@
 
 #define PHYSICAL_POSITION(atom) ((atom.y * ICON_SIZE_Y) + (atom.pixel_y))
 
-/obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area)
+/obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, datum/turf_reservation/clone_area)
+	PRIVATE_PROC(TRUE)
+
 	var/list/atoms = list()
 	var/list/lighting = list()
 	var/skip_normal = FALSE
@@ -70,8 +72,11 @@
 				atoms += A
 			CHECK_TICK
 
+	var/psize_x = clone_area.width * ICON_SIZE_X
+	var/psize_y = clone_area.height * ICON_SIZE_Y
 	var/icon/res = icon('icons/blanks/96x96.dmi', "nothing")
 	res.Scale(psize_x, psize_y)
+
 	atoms += lighting
 
 	var/list/sorted = list()
