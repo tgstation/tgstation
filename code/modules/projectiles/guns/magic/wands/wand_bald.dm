@@ -4,8 +4,8 @@
 	desc = "A wand commonly used in wizard collegiate hazing, renders victims bald or draws significant attention to their baldness."
 	school = SCHOOL_TRANSMUTATION
 	ammo_type = /obj/item/ammo_casing/magic/bald
-	icon_state = "revivewand"
-	base_icon_state = "revivewand"
+	icon_state = "shavingwand"
+	base_icon_state = "shavingwand"
 	fire_sound = 'sound/items/tools/welder2.ogg'
 	max_charges = 12
 
@@ -17,7 +17,6 @@
 	trimmer.firer = user
 	user.projectile_hit(trimmer, BODY_ZONE_HEAD)
 	qdel(trimmer)
-	charges--
 
 /obj/item/gun/magic/wand/bald/do_suicide(mob/living/carbon/human/user)
 	var/obj/item/bodypart/head/dome = user.get_bodypart(BODY_ZONE_HEAD)
