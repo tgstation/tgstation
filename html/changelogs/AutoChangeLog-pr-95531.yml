@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - balance: "Upgraded exoscanners no longer have skyrocketing power draw when upgraded, following an incident where a station's chief engineer declared vendetta upon their Cargo department for drawing an excessive amount of power, resulting in massive casualties."
