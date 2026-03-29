@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Any effect that changes the theme of the environment no longer break turf mounted objects"
-  - bugfix: "destroying plating with lava/water etc will destroy any object mounted to it"

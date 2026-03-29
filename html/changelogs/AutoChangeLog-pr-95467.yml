@@ -1,9 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "The Psyker hunter ship now has a bandolier and two holsters for their shotgun and revolvers, as well as some backup knives."
-  - balance: "The Psyker hunter ship now has a box of bandages and an emergency medkit."
-  - balance: "All Psyker hunters now spawn with a headset set to a shared frequency."
-  - balance: "Psyker headsets now prevent their echolocation from being disabled due to deafness."
-  - balance: "Psyker hunters now spawn with flavorful eyewear. The Psyker Seer now spawns with the thermal monocle (which was previously on the ship)."
-  - balance: "Gore will now heal Psykers."

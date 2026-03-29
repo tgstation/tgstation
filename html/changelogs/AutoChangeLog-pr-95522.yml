@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - admin: "Admins can ban from \"recovered crew\", \"blood worm\", \"fugitive\" / \"fugitive hunter\", \"glitch\", and \"paradox clone\""
-  - admin: "Mind Magnification Monkeys are now affected by a sentience ban (previously unbannable)"

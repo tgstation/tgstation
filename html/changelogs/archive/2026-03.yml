@@ -473,9 +473,41 @@
       its entire lifetime, following complaints from at least one guy. Nanotrasen
       representatives claim that this is entirely unrelated to missing shipments of
       explosive alloys.
+  - balance: Upgraded exoscanners no longer have skyrocketing power draw when upgraded,
+      following an incident where a station's chief engineer declared vendetta upon
+      their Cargo department for drawing an excessive amount of power, resulting in
+      massive casualties.
+  Jacquerel:
+  - qol: Blood worms can drag themselves onto corpses to infest them as an alternative
+      to pressing the action button.
+  Melbert:
+  - admin: Admins can ban from "recovered crew", "blood worm", "fugitive" / "fugitive
+      hunter", "glitch", and "paradox clone"
+  - admin: Mind Magnification Monkeys are now affected by a sentience ban (previously
+      unbannable)
+  - balance: The Psyker hunter ship now has a bandolier and two holsters for their
+      shotgun and revolvers, as well as some backup knives.
+  - balance: The Psyker hunter ship now has a box of bandages and an emergency medkit.
+  - balance: All Psyker hunters now spawn with a headset set to a shared frequency.
+  - balance: Psyker headsets now prevent their echolocation from being disabled due
+      to deafness.
+  - balance: Psyker hunters now spawn with flavorful eyewear. The Psyker Seer now
+      spawns with the thermal monocle (which was previously on the ship).
+  - balance: Gore will now heal Psykers.
+  - qol: Height is now an element of DNA, meaning it can be changed via genetics or
+      radstorms and is carried between genetic copies (Changlings, etc)
+  - bugfix: Fix stray 0 in heretic UI
   SmArtKar:
   - bugfix: Fixed stack items not being refunded by failed heretic summon rituals
   - bugfix: Fixed parallax runtiming horribly whenever parallax SS doesnt pick a random
       layer to display
+  SyncIt21:
+  - bugfix: Any effect that changes the theme of the environment no longer break turf
+      mounted objects
+  - bugfix: destroying plating with lava/water etc will destroy any object mounted
+      to it
+  Time-Green:
+  - bugfix: Ethereal crystal revive no longer breaks if you change species midway
+      through
   Yobrocharlie:
   - rscadd: Added the academy back, its now a fetch quest.

@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "Ethereal crystal revive no longer breaks if you change species midway through"
