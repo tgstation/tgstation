@@ -78,6 +78,8 @@ COPY --from=build /deploy ./
 COPY --from=rust_g /rust_g/target/release/librust_g.so ./librust_g.so
 
 VOLUME [ "/tgstation/config", "/tgstation/data" ]
+# Tell BYOND to look in the current directory for librust_g.so and libdreamluau.so
+ENV LD_LIBRARY_PATH=.
 # We use box86 to bridge the gap between ARM and the Intel DreamDaemon
 ENTRYPOINT [ "box86", "DreamDaemon", "tgstation.dmb", "-port", "1337", "-trusted", "-close", "-verbose" ]
 EXPOSE 1337
