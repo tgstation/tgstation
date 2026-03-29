@@ -138,7 +138,6 @@ window "info_and_buttons"
 		size = 640x477
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffc41f
 		saved-params = "splitter"
 		left = "infobuttons"
 		right = "infowindow"
@@ -149,15 +148,37 @@ window "info_and_buttons"
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
-		pos = 281,0
+		pos = 281,5
 		size = 640x475
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-	elem "info"
+	elem "main_split"
 		type = CHILD
 		pos = 0,5
+		anchor1 = 0,0
+		anchor2 = 100,100
+		size = 640x475
+		is-vert = false
+		splitter = 97
+		show-splitter = false
+		saved-params = "splitter"
+		left = "info"
+		right = "input_buttons"
+
+window "info"
+	elem "info_main"
+		type = MAIN
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "info_child"
+		type = CHILD
+		pos = 0,0
 		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
@@ -165,14 +186,29 @@ window "infowindow"
 		left = "statwindow"
 		right = "outputwindow"
 		is-vert = false
-    elem "input_buttons_screen"
+
+window "input_buttons"
+	elem "input_buttons_main"
+		type = MAIN
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "input_buttons_child"
 		type = CHILD
-		pos = 0,96
-		size = 640x20
-		anchor1 = 0,96
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #ffc41f
-		left = "input_and_buttons"
+		saved-params = ""
+		left = "inputwindow"
+		right = "inputbuttons"
+		is-vert = true
+		splitter = 70
+		show-splitter = false
 
 window "outputwindow"
 	elem "outputwindow"
@@ -186,10 +222,10 @@ window "outputwindow"
 	elem "output_selector_screen"
 		type = CHILD
 		pos = 0,0
-		size = 640x455
+		size = 640x475
 		anchor1 = 0,0
-		anchor2 = 96,100
-        background-color = #ffc41f
+		anchor2 = 100,100
+		background-color = #ffc41f
 		left = "output_selector"
 
 window "output_selector"
@@ -210,29 +246,6 @@ window "output_selector"
 		saved-params = "splitter"
 		left = "output_legacy"
 		is-vert = false
-
-window "input_and_buttons"
-	elem "input_and_buttons"
-		type = MAIN
-		pos = 291,0
-		size = 640x20
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		saved-params = "pos;size;is-minimized;is-maximized"
-		is-pane = true
-	elem "input_buttons_child"
-		type = CHILD
-		pos = 0,0
-		size = 640x20
-		anchor1 = 0,0
-		anchor2 = 100,100
-		background-color = #ffc41f
-		saved-params = ""
-		left = "inputwindow"
-		right = "inputbuttons"
-		is-vert = true
-		splitter = 70
-		show-splitter = false
 
 window "inputwindow"
 	elem "inputwindow"
