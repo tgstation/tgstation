@@ -35,10 +35,10 @@ else
 	git fetch
 fi
 
-~/.cargo/bin/rustup target add "$RUST_TARGET"
+/home/ubuntu/.cargo/bin/rustup target add "$RUST_TARGET"
 git checkout "$RUST_G_VERSION"
 # Removed PKG_CONFIG_ALLOW_CROSS because we are building NATIVELY
-~/.cargo/bin/cargo build --ignore-rust-version --release --target="$RUST_TARGET"
+/home/ubuntu/.cargo/bin/cargo build --ignore-rust-version --release --target="$RUST_TARGET"
 cp -f "target/$RUST_TARGET/release/librust_g.so" "$1/librust_g.so"
 cd ..
 
@@ -52,9 +52,9 @@ else
 	git fetch
 fi
 
-~/.cargo/bin/rustup target add "$RUST_TARGET"
+/home/ubuntu/.cargo/bin/rustup target add "$RUST_TARGET"
 git checkout "$DREAMLUAU_VERSION"
-~/.cargo/bin/cargo build --ignore-rust-version --release --target="$RUST_TARGET"
+/home/ubuntu/.cargo/bin/cargo build --ignore-rust-version --release --target="$RUST_TARGET"
 cp -f "target/$RUST_TARGET/release/libdreamluau.so" "$1/libdreamluau.so"
 cd ..
 
