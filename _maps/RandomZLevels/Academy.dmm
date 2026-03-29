@@ -22,6 +22,7 @@
 /area/awaymission/caves/academy)
 "ae" = (
 /obj/structure/chair/office,
+/mob/living/basic/wizard/classic,
 /turf/open/floor/carpet,
 /area/awaymission/caves/academy)
 "af" = (
@@ -733,7 +734,6 @@
 /area/awaymission/beach/academy)
 "es" = (
 /obj/machinery/light/directional/east,
-/mob/living/basic/wizard/academy,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -1002,7 +1002,7 @@
 	name = "Skeleton Storage Control";
 	pixel_y = -24
 	},
-/mob/living/basic/wizard/academy/high_magus,
+/mob/living/basic/wizard/high_magus,
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "gn" = (
@@ -1386,6 +1386,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/mob/living/basic/wizard/classic,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
 "jq" = (
@@ -1780,7 +1781,7 @@
 	pixel_y = -13;
 	anchored = 1
 	},
-/mob/living/basic/wizard/academy/tired,
+/mob/living/basic/wizard/tired,
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "lV" = (
@@ -1881,7 +1882,7 @@
 /area/awaymission/caves/academy)
 "mt" = (
 /obj/structure/table,
-/obj/item/gun/magic/wand/nothing/disabler,
+/obj/item/gun/magic/wand/disabler,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/caves/academy)
 "mw" = (
@@ -1979,7 +1980,7 @@
 "os" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/basic/wizard/academy,
+/mob/living/basic/wizard/classic,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
 "ou" = (
@@ -2013,17 +2014,8 @@
 /turf/open/misc/grass/jungle,
 /area/awaymission/beach/academy)
 "qV" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/mob/living/basic/wizard/academy/buffwiz,
-/turf/open/floor/iron/white/corner,
+/mob/living/basic/wizard/classic,
+/turf/open/floor/iron/grimy,
 /area/awaymission/caves/academy)
 "rl" = (
 /obj/structure/filingcabinet/chestdrawer,
@@ -2045,15 +2037,21 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "sm" = (
-/mob/living/basic/skeleton/templar/academy/leader,
-/turf/open/floor/iron/showroomfloor,
+/mob/living/basic/wizard/classic,
+/turf/open/floor/iron,
 /area/awaymission/caves/academy)
 "so" = (
-/mob/living/basic/wizard/academy,
-/turf/open/floor/wood,
+/obj/structure/chair,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/mob/living/basic/wizard/buffwiz,
+/turf/open/floor/iron/white/corner,
 /area/awaymission/caves/academy)
 "sp" = (
-/mob/living/basic/wizard/academy,
 /obj/structure/window/spawner/directional/east,
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
@@ -2071,10 +2069,6 @@
 	dir = 1
 	},
 /turf/open/floor/vault,
-/area/awaymission/caves/academy)
-"tt" = (
-/mob/living/basic/wizard/academy,
-/turf/open/floor/plating,
 /area/awaymission/caves/academy)
 "tv" = (
 /mob/living/basic/construct/harvester/heretic,
@@ -2115,7 +2109,7 @@
 /area/awaymission/beach/academy)
 "vA" = (
 /obj/structure/chair/wood,
-/mob/living/basic/wizard/academy,
+/mob/living/basic/wizard/classic,
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "vD" = (
@@ -2236,8 +2230,13 @@
 /turf/open/misc/grass/jungle,
 /area/awaymission/beach/academy)
 "Bp" = (
-/obj/structure/chair/stool/directional/south,
-/mob/living/basic/wizard/academy,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/mob/living/basic/wizard/classic,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
 "BI" = (
@@ -2558,27 +2557,24 @@
 /obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/misc/grass/jungle,
 /area/awaymission/beach/academy)
-"Sc" = (
-/mob/living/basic/wizard/academy,
-/turf/open/floor/iron,
-/area/awaymission/caves/academy)
 "Sg" = (
 /obj/structure/toilet{
 	dir = 8
 	},
 /obj/machinery/light/small/directional/north,
 /obj/item/fake_items/abductor_win_stick/no_anchor,
-/mob/living/basic/wizard/academy,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/caves/academy)
 "Sn" = (
-/obj/machinery/light/directional/east,
-/mob/living/basic/wizard/academy,
-/turf/open/floor/iron,
+/mob/living/basic/wizard/classic,
+/turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "Sx" = (
-/mob/living/basic/wizard/academy,
-/turf/open/floor/grass,
+/obj/structure/chair/office{
+	dir = 1
+	},
+/mob/living/basic/wizard/classic,
+/turf/open/floor/carpet,
 /area/awaymission/caves/academy)
 "SR" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -2592,8 +2588,9 @@
 /turf/open/floor/mineral/titanium,
 /area/awaymission/caves/academy)
 "SZ" = (
-/mob/living/basic/wizard/academy,
-/turf/open/floor/iron/grimy,
+/obj/structure/chair,
+/mob/living/basic/wizard/classic,
+/turf/open/floor/iron,
 /area/awaymission/caves/academy)
 "Tk" = (
 /obj/structure/safe/floor{
@@ -2618,7 +2615,7 @@
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/mob/living/basic/wizard/academy,
+/mob/living/basic/wizard/classic,
 /turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "TJ" = (
@@ -8765,7 +8762,7 @@ bv
 gC
 gC
 gC
-Sc
+gC
 bt
 nr
 BQ
@@ -8922,7 +8919,7 @@ jH
 jS
 jH
 fo
-tt
+jH
 fo
 jH
 fo
@@ -9167,7 +9164,7 @@ hL
 gC
 lW
 AA
-gC
+sm
 iq
 iX
 Iw
@@ -9287,7 +9284,7 @@ jH
 LW
 bv
 gC
-Sc
+gC
 gC
 gC
 gC
@@ -9436,7 +9433,7 @@ gC
 hT
 dU
 ef
-Bp
+dU
 hT
 DS
 jS
@@ -9577,7 +9574,7 @@ fK
 fK
 cC
 vD
-Sn
+Oh
 jD
 gC
 jS
@@ -9949,7 +9946,7 @@ bZ
 be
 cD
 df
-SZ
+df
 Iw
 Iw
 Iw
@@ -10199,7 +10196,7 @@ mx
 mx
 mx
 mx
-so
+mx
 mx
 Iw
 df
@@ -10217,7 +10214,7 @@ mL
 el
 vA
 mL
-TI
+el
 mx
 Iw
 gC
@@ -10327,7 +10324,7 @@ aV
 LH
 mx
 mL
-el
+TI
 mL
 el
 mx
@@ -10587,7 +10584,7 @@ aV
 LH
 mx
 ps
-TI
+el
 mL
 el
 mx
@@ -10989,7 +10986,7 @@ al
 ah
 cD
 df
-df
+qV
 Iw
 df
 df
@@ -11004,7 +11001,7 @@ cD
 cD
 mx
 mx
-mx
+Sn
 mx
 dV
 mx
@@ -11112,7 +11109,7 @@ Wu
 cG
 Wu
 Iw
-SZ
+df
 df
 cD
 bZ
@@ -11231,7 +11228,7 @@ bZ
 be
 ex
 gC
-aF
+SZ
 hT
 gC
 bZ
@@ -11269,7 +11266,7 @@ mx
 mx
 mx
 mx
-so
+mx
 mx
 mx
 he
@@ -11372,7 +11369,7 @@ br
 br
 br
 Iw
-df
+qV
 df
 cD
 al
@@ -11743,7 +11740,7 @@ cD
 cD
 ai
 fv
-eH
+Sx
 mx
 Iw
 gC
@@ -11783,7 +11780,7 @@ Iw
 cD
 cD
 mx
-Sx
+fD
 fD
 fD
 fD
@@ -12041,7 +12038,7 @@ fW
 Iw
 Iw
 em
-em
+Bp
 Iw
 Iw
 Iw
@@ -12428,7 +12425,7 @@ Zc
 iQ
 eD
 iQ
-os
+eD
 Iw
 dD
 gC
@@ -12804,9 +12801,9 @@ gC
 gC
 RA
 Iw
-cv
+so
 me
-qV
+JT
 dk
 bb
 dk
@@ -13182,7 +13179,7 @@ eN
 eN
 eN
 eN
-sm
+eN
 ma
 eN
 Iw
@@ -13348,7 +13345,7 @@ Yv
 eV
 bz
 Yq
-Sc
+gC
 gC
 jS
 hb
@@ -13998,7 +13995,7 @@ jH
 jH
 jH
 gC
-Sc
+gC
 jS
 jS
 jU
