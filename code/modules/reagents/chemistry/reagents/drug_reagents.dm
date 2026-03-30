@@ -921,6 +921,17 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	ph = 4
 	chemical_flags = NONE
 
+/datum/reagent/drug/kronkaine/gore/on_mob_metabolize(mob/living/gored)
+	. = ..()
+	if(HAS_TRAIT(gored, TRAIT_ECHOLOCATOR))
+		to_chat(gored, span_nicegreen("OH YEAH! THAT'S THE STUFF! THAT'S GORE!"))
+
+/datum/reagent/drug/kronkaine/gore/on_mob_life(mob/living/gored, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(HAS_TRAIT(gored, TRAIT_ECHOLOCATOR))
+		gored.adjust_brute_loss(-2 * metabolization_ratio * seconds_per_tick)
+		gored.adjust_fire_loss(-2 * metabolization_ratio * seconds_per_tick)
+
 /datum/reagent/drug/kronkaine/gore/overdose_start(mob/living/gored, metabolization_ratio)
 	. = ..()
 	gored.visible_message(

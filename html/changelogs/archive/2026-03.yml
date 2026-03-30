@@ -395,3 +395,132 @@
       disabled due to shuttle transit
   - bugfix: Glasses that were in the vending machine now still count for the completion
       of the Beach Bar virtual domain
+2026-03-26:
+  Absolucy:
+  - qol: Slime Link messages now notify listeners with a balloon alert.
+  ArcaneMusic:
+  - code_imp: supply packs can now be spawned using containers different than a crate.
+  - bugfix: The Random Supply Drop event can now spawn their items as opposed to runtiming.
+  LemonInTheDark:
+  - bugfix: the darken screen shake preference will no longer shake your screen underneath
+      the fullscreen overlay
+  Rhials:
+  - bugfix: The medisim shuttle docking port now aligns properly with most evac terminals.
+  RusselNotSCP:
+  - rscadd: Added three new liqueurs, with bottles available in the booze-o-mat.
+  - rscadd: Added 15 new cocktails that use the aforementioned liqueurs.
+  SyncIt21:
+  - bugfix: tearing a poster while placing it only creates a shred poster on the wall
+      but won't place a new one in hand
+  lelandkemble:
+  - bugfix: You can put a horn in a clown car
+  - map: Snow Cabin fake healing wand now holds on to its sprite
+  - bugfix: Tape can now secure prosthetic limbs again
+  - spellcheck: Immobile mobile defibrillator mounts are no longer called mobile
+  vinylspiders:
+  - bugfix: fixes an issue where casting spells after your mob gets deleted can leave
+      you in a permanently bugged state.
+2026-03-27:
+  ArcaneMusic:
+  - rscadd: Centcom is now offering the ability to purchase airflow blocking plastic
+      flaps, and the ability to refill the cargo shuttle with air for the low, low
+      installation fee of 8,000 credits. Inquire today under the "Imports" category!
+  Melbert:
+  - bugfix: Hallucinating yourself as another mob will no longer disable all of your
+      light sources
+  - qol: Health analyzer lung reports are appended by the lung organs rather than
+      at the bottom of the readout
+  TealSeer:
+  - bugfix: fixed a few bugs related to arm implant surgery
+  - code_imp: added missing bitflags to bitfield defines
+2026-03-28:
+  DATA-xPUNGED:
+  - admin: When forcing an earthquake, admins can now pick their precise position
+      on the station.
+  Hatterhat:
+  - qol: Installing electronics into windoors/interior doors only moves the electronics
+      out of your hand on a successful installation.
+  JohnFulpWillard:
+  - qol: The stat panel entry for space suits has been replaced with the HUD element.
+      You can now hover over it to see exact cell percentage, and click it to turn
+      the regulator on, while it'll also display when it's off.
+  - qol: Changeling's stat panel entry has been moved to the HUD & Antag panel. Also
+      added some extra explanations on how Changelings work in there.
+  Melbert:
+  - bugfix: You can remove embeds during surgery
+  - bugfix: Gibbed heads don't look debrained despite having a brain
+  - rscdel: '"Cloning Lab" is no longer a traitor codeword.'
+  SyncIt21:
+  - refactor: random recipes like metalgen & secret sause have been refactored. Please
+      report bugs on github
+  - bugfix: you cannot install infinite water recyclers in the sink frame
+  - bugfix: you can attach sink frames to walls in most cases regardless of what's
+      on the wall(except when there is already a light fixture, camera or another
+      sink)
+  Twaticus:
+  - image: resprites chicken nugget box and adds 3 new food related containers, new
+      nugget box, a wing bucket, and a fry sleeve.
+  lelandkemble:
+  - spellcheck: Changed spacing an punctuation in thanatorenasia offer to ghosts
+  - bugfix: You can no longer create infinite plasteel with girders
+  vinylspiders:
+  - bugfix: fixes an issue where the 'slow shuttle' station trait can sometimes not
+      be applied properly
+2026-03-29:
+  Hatterhat:
+  - bugfix: Integrated circuit shells now only explode if they draw too much power
+      in a minute, rather than being doomed to explode if it uses too much power over
+      its entire lifetime, following complaints from at least one guy. Nanotrasen
+      representatives claim that this is entirely unrelated to missing shipments of
+      explosive alloys.
+  - balance: Upgraded exoscanners no longer have skyrocketing power draw when upgraded,
+      following an incident where a station's chief engineer declared vendetta upon
+      their Cargo department for drawing an excessive amount of power, resulting in
+      massive casualties.
+  Jacquerel:
+  - qol: Blood worms can drag themselves onto corpses to infest them as an alternative
+      to pressing the action button.
+  Melbert:
+  - admin: Admins can ban from "recovered crew", "blood worm", "fugitive" / "fugitive
+      hunter", "glitch", and "paradox clone"
+  - admin: Mind Magnification Monkeys are now affected by a sentience ban (previously
+      unbannable)
+  - balance: The Psyker hunter ship now has a bandolier and two holsters for their
+      shotgun and revolvers, as well as some backup knives.
+  - balance: The Psyker hunter ship now has a box of bandages and an emergency medkit.
+  - balance: All Psyker hunters now spawn with a headset set to a shared frequency.
+  - balance: Psyker headsets now prevent their echolocation from being disabled due
+      to deafness.
+  - balance: Psyker hunters now spawn with flavorful eyewear. The Psyker Seer now
+      spawns with the thermal monocle (which was previously on the ship).
+  - balance: Gore will now heal Psykers.
+  - qol: Height is now an element of DNA, meaning it can be changed via genetics or
+      radstorms and is carried between genetic copies (Changlings, etc)
+  - bugfix: Fix stray 0 in heretic UI
+  SmArtKar:
+  - bugfix: Fixed stack items not being refunded by failed heretic summon rituals
+  - bugfix: Fixed parallax runtiming horribly whenever parallax SS doesnt pick a random
+      layer to display
+  SyncIt21:
+  - bugfix: Any effect that changes the theme of the environment no longer break turf
+      mounted objects
+  - bugfix: destroying plating with lava/water etc will destroy any object mounted
+      to it
+  Time-Green:
+  - bugfix: Ethereal crystal revive no longer breaks if you change species midway
+      through
+  Yobrocharlie:
+  - rscadd: Added the academy back, its now a fetch quest.
+2026-03-30:
+  SmArtKar:
+  - bugfix: Fixes press badges and other miscellaneous objects failing to make the
+      user examine them.
+  - admin: Some non-critical VV actions such as mutation/organ/quirk modification
+      have been converted to TGUI
+  - admin: VV dropdown has gotten a refresh and now boasts a brand-new searchbar
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: cyborgs are made properly unconscious when emagged
+  Time-Green:
+  - bugfix: Coroner cytology grown organs can mutate again
+  Tsar-Salat:
+  - bugfix: firebreath will light objects on fire more consistently

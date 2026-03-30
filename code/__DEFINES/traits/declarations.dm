@@ -736,6 +736,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // These traits are applied to /obj/item/organ/liver
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law_enforcement_metabolism"
 #define TRAIT_CULINARY_METABOLISM "culinary_metabolism"
+#define TRAIT_BARTENDER_METABOLISM "bartender_metabolism"
 #define TRAIT_COMEDY_METABOLISM "comedy_metabolism"
 #define TRAIT_MEDICAL_METABOLISM "medical_metabolism"
 #define TRAIT_ENGINEER_METABOLISM "engineer_metabolism"
@@ -1216,6 +1217,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait given to a dreaming carbon when they are currently doing dreaming stuff
 #define TRAIT_DREAMING "currently_dreaming"
+
+/// Trait that allows non-heretics to have heretical dreams
+#define TRAIT_HERETICAL_DREAMS "heretical_dreams"
+
+/// Trait for if you've recently had a Last Word cocktail
+#define TRAIT_HAD_LAST_WORD "had_last_word"
 
 /// Whether bots will salute this mob.
 #define TRAIT_COMMISSIONED "commissioned"
