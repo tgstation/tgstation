@@ -165,12 +165,23 @@
 /obj/item/pneumatic_cannon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(user.combat_mode)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(!pre_fire(user, interacting_with))
+		return NONE
 	Fire(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/pneumatic_cannon/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	Fire(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
+
+/** Checks */
+/obj/item/pneumatic_cannon/proc/pre_fire(mob/living/user, atom/target)
+	if(user.Adjacent(target))
+		if(target in user.contents)
+			return FALSE
+		if(!ismob(target))
+			return FALSE
+	return TRUE
 
 /obj/item/pneumatic_cannon/proc/Fire(mob/living/user, atom/target)
 	if(!istype(user) && !target)
