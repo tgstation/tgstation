@@ -24,7 +24,6 @@ type Data = {
   jackpots: number;
   jackpot: number;
   paymode: number;
-  theme_color: string | null;
 };
 
 type SlotSymbol = {
@@ -56,7 +55,7 @@ const pickRandom = <T,>(items: T[]) => {
 
 export const SlotMachine = () => {
   const { act, data } = useBackend<Data>();
-  const { symbols, cost, reels, balance, theme_color } = data;
+  const { symbols, cost, reels, balance } = data;
   const spinning = data.working === 1;
 
   const symbolsById = useMemo(() => {
@@ -171,7 +170,6 @@ const WINNING_TEXTS = [
 
 const Banner = () => {
   const { data } = useBackend<Data>();
-  const { theme_color } = data;
   const [page, setPage] = useState(0);
 
   useEffect(() => {

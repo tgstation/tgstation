@@ -22,17 +22,14 @@
 /obj/machinery/computer/slot_machine
 	name = "slot machine"
 	desc = "Gambling for the antisocial."
-	icon = 'icons/map_icons/objects.dmi'
-	icon_state = "/obj/machinery/computer/slot_machine"
-	post_init_icon_state = "slots"
+	icon = 'icons/obj/machines/computer.dmi'
+	icon_state = "slots"
 	icon_keyboard = null
 	icon_screen = "slots_screen"
 	density = TRUE
 	circuit = /obj/item/circuitboard/computer/slot_machine
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON // don't need to be literate to play slots
-	greyscale_config = /datum/greyscale_config/slot_machine
-	greyscale_colors = CIRCUIT_COLOR_GENERIC // also used to set TGUI color theme and light color
-	light_color = CIRCUIT_COLOR_GENERIC
+	light_color = LIGHT_COLOR_BROWN
 	var/money = 3000 // How much money it has CONSUMED
 	var/plays = 0
 	var/working = FALSE
@@ -67,9 +64,6 @@
 	/// The symbol typepath that activates a trap when it lines up five wide (set to null to disable)
 	var/trap_path = /obj/item/grenade/flashbang
 
-	/// The slot machine color theme used for TGUI
-	var/theme_color = CIRCUIT_COLOR_GENERIC
-
 	/// Cached list of symbol data (id/name/icon/icon_state) sent to ui_static_data
 	var/list/symbol_data
 
@@ -94,8 +88,6 @@
 		stack_trace("[type] has jackpot_path [jackpot_path] not present in symbol_paths!")
 	if(trap_path && !(trap_path in symbol_paths))
 		stack_trace("[type] has trap_path [trap_path] not present in symbol_paths!")
-
-	light_color = greyscale_colors
 
 	build_symbol_data()
 	// Populate the reels
@@ -257,7 +249,6 @@
 /obj/machinery/computer/slot_machine/ui_static_data(mob/user)
 	var/list/data = list()
 	data["symbols"] = symbol_data
-	data["theme_color"] = greyscale_colors
 	data["cost"] = SPIN_PRICE
 	data["jackpot"] = PRIZE_JACKPOT
 	return data
@@ -571,7 +562,6 @@
 	)
 	jackpot_path = /obj/item/clothing/accessory/medal/gold
 	trap_path = /obj/item/grenade/syndieminibomb
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
 
 /obj/machinery/computer/slot_machine/command/Initialize(mapload)
 	slot_adjectives += list("Royal", "Regal", "Golden", "Captain's", "Glorious")
@@ -593,7 +583,6 @@
 	)
 	jackpot_path = /obj/item/food/donut/berry
 	trap_path = /obj/item/grown/bananapeel
-	greyscale_colors = CIRCUIT_COLOR_SECURITY
 
 /obj/machinery/computer/slot_machine/security/Initialize(mapload)
 	slot_adjectives += list("Stunned", "Flashed", "Confiscated", "Loyal", "Arrested")
@@ -615,7 +604,6 @@
 	)
 	jackpot_path = /obj/item/clothing/neck/stethoscope
 	trap_path = /obj/machinery/syndicatebomb
-	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 
 /obj/machinery/computer/slot_machine/medical/Initialize(mapload)
 	slot_adjectives += list("Mutated", "Overdosed", "Infectious", "Healing", "Husked")
@@ -637,7 +625,6 @@
 	)
 	jackpot_path = /obj/item/blueprints
 	trap_path = /obj/singularity
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 
 /obj/machinery/computer/slot_machine/engineering/Initialize(mapload)
 	slot_adjectives += list("Supercharged", "Pressurized", "Radioactive", "Overloaded", "Delaminating", "Insulated")
@@ -659,7 +646,6 @@
 	)
 	jackpot_path = /obj/item/bounty_cube
 	trap_path = /obj/item/suspiciousphone
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 
 /obj/machinery/computer/slot_machine/cargo/Initialize(mapload)
 	slot_adjectives += list("Express", "Smuggled", "Stolen", "Overdue", "Subsidized", "Manifested")
@@ -681,7 +667,6 @@
 	)
 	jackpot_path = /obj/item/seeds/random
 	trap_path = /mob/living/basic/goat/pete
-	greyscale_colors = CIRCUIT_COLOR_SERVICE
 
 /obj/machinery/computer/slot_machine/service/Initialize(mapload)
 	slot_adjectives += list("Fermented", "Seasoned", "Tipsy", "Cleaned", "Organic", "Culinary", "Refreshing", "Divine", "Holy")
@@ -703,7 +688,6 @@
 	)
 	jackpot_path = /obj/item/stack/sheet/mineral/runite
 	trap_path = /obj/item/gibtonite
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 
 /obj/machinery/computer/slot_machine/science/Initialize(mapload)
 	slot_adjectives += list("Atomic", "Bluespace", "Cosmic", "Golden", "Diamond", "Silver", "Uranium", "Quantum", "Anomalous", "Plasma", "Experimental", "Robotic")
@@ -724,7 +708,6 @@
 	)
 	jackpot_path = /obj/vehicle/sealed/mecha/honker
 	trap_path = /obj/item/restraints/handcuffs
-	greyscale_colors = COLOR_BLUSH_PINK
 
 /obj/machinery/computer/slot_machine/clown/Initialize(mapload)
 	slot_adjectives += list("Honking", "Slippery", "Pranked", "Squeaky", "Hilarious", "Giggling")
@@ -745,7 +728,6 @@
 	)
 	jackpot_path = /obj/vehicle/sealed/mecha/reticence
 	trap_path = /obj/item/restraints/handcuffs
-	greyscale_colors = COLOR_VERY_LIGHT_GRAY
 
 /obj/machinery/computer/slot_machine/mime/Initialize(mapload)
 	slot_adjectives += list("Silent", "Transparent", "Unspeakable", "Voiceless", "Quiet", "Hushed", "Invisible", "Imaginary", "Empty")
@@ -767,7 +749,6 @@
 	)
 	jackpot_path = /obj/machinery/nuclearbomb
 	trap_path = /obj/item/restraints/handcuffs
-	greyscale_colors = COLOR_SYNDIE_RED
 
 /obj/machinery/computer/slot_machine/syndicate/Initialize(mapload)
 	slot_adjectives += list("Covert", "Nuclear", "Suspicious", "Bloody", "Syndie", "Sabotaged", "Clandestine", "Illicit", "Traitorous")
