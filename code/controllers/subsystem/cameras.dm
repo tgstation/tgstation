@@ -1,7 +1,7 @@
 /// Manages the security cameras and camera chunks
 SUBSYSTEM_DEF(cameras)
 	name = "Cameras"
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	priority = FIRE_PRIORITY_CAMERAS
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 2 MINUTES

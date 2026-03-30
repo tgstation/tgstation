@@ -22,7 +22,7 @@
 	initialize_directions = NONE
 	custom_reconcilation = TRUE
 
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ | SMOOTH_PROC_FILTER
 	smoothing_groups = SMOOTH_GROUP_GAS_TANK
 	canSmoothWith = SMOOTH_GROUP_GAS_TANK
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
@@ -113,7 +113,7 @@
 // initial gas mixes and signal registrations.
 /obj/machinery/atmospherics/components/tank/post_machine_initialize()
 	. = ..()
-	GetMergeGroup(merger_id, merger_typecache)
+	GetMergeGroup(merger_id, merger_typecache, PROC_REF(can_merge))
 
 /obj/machinery/atmospherics/components/tank/Destroy()
 	QUEUE_SMOOTH_NEIGHBORS(src)
@@ -249,9 +249,22 @@
 
 /obj/machinery/atmospherics/components/tank/return_pipenets_for_reconcilation(datum/pipeline/requester)
 	. = ..()
-	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache, PROC_REF(can_merge))
 	for(var/obj/machinery/atmospherics/components/tank/tank as anything in merge_group.members)
 		. += tank.parents
+
+/// Called by /datum/merger to stop tanks of differing IDs from merging
+/obj/machinery/atmospherics/components/tank/proc/can_merge(datum/merger/merge_group, list/found_turfs)
+	return merge_group.id == merger_id
+
+// While merger handles tank *contents* being merged we need to separately handle them being *visually* merged here
+/obj/machinery/atmospherics/components/tank/smoothing_allowed(atom/smoothing_with, direction, junction)
+	if(istype(smoothing_with, /obj/machinery/atmospherics/components/tank))
+		var/obj/machinery/atmospherics/components/tank/opposing = smoothing_with
+		if(opposing.merger_id != merger_id)
+			return NONE
+
+	return junction
 
 ///////////////////////////////////////////////////////////////////
 // Merger handling

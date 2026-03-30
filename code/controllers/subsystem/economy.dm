@@ -216,7 +216,7 @@ SUBSYSTEM_DEF(economy)
 	audit_log += list(list(
 		"account" = "[account.account_holder]",
 		"cost" = price_to_use,
-		"vendor" = "[vendor]",
+		"vendor" = "[astype(vendor, /atom)?.name || vendor]",
 		"stationtime" = station_time_timestamp("hh:mm"),
 	))
 

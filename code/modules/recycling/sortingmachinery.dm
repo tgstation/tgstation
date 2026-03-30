@@ -37,7 +37,7 @@
 		new /obj/effect/decal/cleanable/wrapping(turf_loc)
 	else
 		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)
-		new /obj/item/stack/package_wrap(turf_loc)
+		new /obj/item/stack/package_wrap/one(turf_loc)
 	for(var/atom/movable/movable_content as anything in contents)
 		movable_content.forceMove(turf_loc)
 

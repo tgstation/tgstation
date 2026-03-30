@@ -41,8 +41,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB
 	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
-	///Whether or not the web is from the genetics power
-	var/genetic = FALSE
 	///Whether or not the web is a sealed web
 	var/sealed = FALSE
 	///Do we need to offset this based on a sprite frill?
@@ -80,24 +78,22 @@
 
 /obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(genetic)
-		return
 	if(sealed)
 		return FALSE
 	if(isprojectile(mover))
 		return prob(projectile_stuck_chance)
 	return .
 
+/obj/structure/spider/stickyweb/proc/is_whitelisted(mob/candidate)
+	return HAS_TRAIT(candidate, TRAIT_WEB_SURFER)
+
 /obj/structure/spider/stickyweb/proc/on_entered(datum/source, atom/movable/victim, old_loc)
 	SIGNAL_HANDLER
 
 	if(!isliving(victim))
 		return
-	if(HAS_TRAIT(victim, TRAIT_WEB_SURFER))
+	if(is_whitelisted(victim) || victim.pulledby && is_whitelisted(victim.pulledby))
 		return
-	if(victim.pulledby && HAS_TRAIT(victim.pulledby, TRAIT_WEB_SURFER))
-		return
-
 	if(prob(stuck_chance))
 		stuck_react(victim)
 
@@ -118,7 +114,6 @@
 
 /// Web made by geneticists, needs special handling to allow them to pass through their own webs
 /obj/structure/spider/stickyweb/genetic
-	genetic = TRUE
 	desc = "It's stringy, sticky, and came out of your coworker."
 	/// Mob with special permission to cross this web
 	var/mob/living/allowed_mob
@@ -132,19 +127,8 @@
 	allowed_mob = allowedmob
 	return ..()
 
-/obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(mover == allowed_mob)
-		return TRUE
-	else if(isliving(mover)) //we change the spider to not be able to go through here
-		if(mover.pulledby == allowed_mob)
-			return TRUE
-		if(prob(50))
-			stuck_react(mover)
-			return FALSE
-	else if(isprojectile(mover))
-		return prob(30)
-	return .
+/obj/structure/spider/stickyweb/genetic/is_whitelisted(mob/candidate)
+	return candidate == allowed_mob
 
 /// Web with a 100% chance to intercept movement
 /obj/structure/spider/stickyweb/very_sticky
