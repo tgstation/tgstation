@@ -862,6 +862,8 @@
 	var/image/object_overlay
 	/// Overlay for the hood object
 	var/image/hood_object_overlay
+	/// Turf we're currently listening to for rust trait gains
+	var/turf/listening_turf
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/Initialize(mapload)
 	. = ..()
@@ -874,6 +876,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/on_robes_gained(mob/living/user)
 	. = ..()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	register_turf_listener(user)
 	rust_overlay = new()
 	rust_overlay.icon = 'icons/mob/clothing/suits/armor.dmi'
 	rust_overlay.render_target = "*rust_overlay_[overlay_id]"
@@ -889,6 +892,9 @@
 	if(.)
 		return
 	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
+	if(listening_turf)
+		UnregisterSignal(listening_turf, SIGNAL_ADDTRAIT(TRAIT_RUSTY))
+		listening_turf = null
 	user.vis_contents -= rust_overlay
 	rusted = FALSE
 	set_armor(/datum/armor/eldritch_armor/rust)
@@ -921,14 +927,25 @@
 	victim.vomit(MOB_VOMIT_BLOOD | MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_FORCE)
 	victim.spew_organ(rand(4, 6))
 
-/*
- * Signal proc for [COMSIG_MOVABLE_MOVED].
- *
- * Checks if our armor values should be increased on the new turf
- */
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
+/// Keeps our turf rust listener aligned with where the wearer currently stands.
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/register_turf_listener(mob/source)
+	var/turf/new_turf = get_turf(source)
+	if(listening_turf == new_turf)
+		return
+	if(listening_turf)
+		UnregisterSignal(listening_turf, SIGNAL_ADDTRAIT(TRAIT_RUSTY))
+	listening_turf = new_turf
+	if(listening_turf)
+		RegisterSignal(listening_turf, SIGNAL_ADDTRAIT(TRAIT_RUSTY), PROC_REF(on_turf_became_rusty))
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/on_turf_became_rusty(turf/source, rust_trait)
+	SIGNAL_HANDLER
+	var/mob/living/wearer = loc
+	if(!isliving(wearer) || !is_equipped(wearer))
+		return
+	update_rust_state(wearer)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/update_rust_state(mob/source)
 	if(source.is_touching_rust())
 		set_armor(/datum/armor/eldritch_armor/rust/on_rust)
 
@@ -955,6 +972,16 @@
 		REMOVE_TRAIT(source, TRAIT_PIERCEIMMUNE, REF(src))
 		rusted = FALSE
 		update_rust()
+
+/*
+ * Signal proc for [COMSIG_MOVABLE_MOVED].
+ *
+ * Checks if our armor values should be increased on the new turf
+ */
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+	register_turf_listener(source)
+	update_rust_state(source)
 
 /// Updates the icon of our overlay and applies the animation
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/update_rust()
