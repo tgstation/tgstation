@@ -715,7 +715,7 @@
 	icon_state = "/obj/machinery/computer/slot_machine/clown"
 	symbol_paths = list(
 		/obj/item/food/grown/banana,
-		/obj/item/stack/sheet/mineral/bananium,
+		/obj/item/toy/crayon/spraycan/lubecan,
 		/obj/item/card/id/advanced/rainbow,
 		/obj/vehicle/sealed/mecha/honker,
 		/obj/item/clothing/mask/gas/clown_hat,
@@ -737,13 +737,13 @@
 	symbol_paths = list(
 		/obj/vehicle/sealed/mecha/reticence,
 		/obj/item/clothing/mask/gas/mime,
-		/obj/item/food/baguette,
+		/obj/item/toy/crayon/spraycan/mimecan,
 		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
 		/obj/item/clothing/gloves/color/white,
 		/obj/item/storage/backpack/mime,
 		/obj/item/restraints/handcuffs,
 	)
-	jackpot_path = /obj/item/food/baguette
+	jackpot_path = /obj/vehicle/sealed/mecha/reticence
 	trap_path = /obj/item/restraints/handcuffs
 	greyscale_colors = COLOR_VERY_LIGHT_GRAY
 
