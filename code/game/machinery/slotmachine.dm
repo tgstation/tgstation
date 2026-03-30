@@ -343,9 +343,9 @@
 
 	balance -= SPIN_PRICE
 	money += SPIN_PRICE
-	// Since big jackpots & free games aren't deducted directly from the account holder NT takes a 20% cut of profit
+	// Since big jackpots & free games aren't deducted directly from the account holder NT takes a 40% cut of profit
 	// Also discourages infinite money exploits since people playing slot machines they own will cause them to slowly lose money
-	house_bank_account.adjust_money(SPIN_PRICE * 0.80, "Slot Machine: Spin")
+	house_bank_account.adjust_money(SPIN_PRICE * 0.60, "Slot Machine: Spin")
 
 	plays += 1
 	working = TRUE
