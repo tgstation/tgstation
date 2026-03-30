@@ -2262,7 +2262,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "Nb" = (
-/obj/machinery/skill_station,
+/obj/machinery/skill_station/advanced,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "Nc" = (

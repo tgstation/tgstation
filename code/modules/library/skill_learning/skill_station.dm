@@ -1,5 +1,3 @@
-#define SKILLCHIP_IMPLANT_TIME (15 SECONDS)
-#define SKILLCHIP_REMOVAL_TIME (15 SECONDS)
 
 /obj/machinery/skill_station
 	name = "\improper Skillsoft station"
@@ -18,6 +16,10 @@
 	var/work_timer
 	/// What we're implanting
 	var/obj/item/skillchip/inserted_skillchip
+	/// How long it takes to implant or remove a skillchip
+	var/implant_time = 15 SECONDS
+	/// If the icon is animated during use. Purely for the sake of bypassing default icon handling
+	var/animated_icon = FALSE
 
 /obj/machinery/skill_station/Initialize(mapload)
 	. = ..()
@@ -34,6 +36,8 @@
 		ui.open()
 
 /obj/machinery/skill_station/update_icon_state()
+	if(animated_icon)
+		return ..()
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "_open"
@@ -47,17 +51,25 @@
 		. += "working"
 
 /obj/machinery/skill_station/relaymove(mob/living/user, direction)
+	if(working)
+		return
 	open_machine()
-
-/obj/machinery/skill_station/open_machine(drop = TRUE, density_to_set = FALSE)
-	. = ..()
-	interrupt_operation()
 
 /obj/machinery/skill_station/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == inserted_skillchip)
 		inserted_skillchip = null
 		interrupt_operation()
+	if(gone == occupant)
+		occupant = null
+		interrupt_operation()
+
+/obj/machinery/skill_station/proc/interrupt_operation()
+	working = FALSE
+	if(work_timer)
+		deltimer(work_timer)
+		work_timer = null
+	update_appearance()
 
 /obj/machinery/skill_station/power_change()
 	. = ..()
@@ -69,12 +81,6 @@
 	if(occupant)
 		ui_interact(occupant)
 
-/obj/machinery/skill_station/proc/interrupt_operation()
-	working = FALSE
-	if(work_timer)
-		deltimer(work_timer)
-		work_timer = null
-	update_appearance()
 
 /obj/machinery/skill_station/interact(mob/user)
 	. = ..()
@@ -115,7 +121,7 @@
 		CRASH("Unusual error - [usr] attempted to start implanting of [inserted_skillchip] when the interface state should not have allowed it.")
 
 	working = TRUE
-	work_timer = addtimer(CALLBACK(src, PROC_REF(implant)),SKILLCHIP_IMPLANT_TIME,TIMER_STOPPABLE)
+	work_timer = addtimer(CALLBACK(src, PROC_REF(implant)), implant_time, TIMER_STOPPABLE)
 	update_appearance()
 
 /// Finish implanting.
@@ -142,7 +148,7 @@
 		CRASH("Unusual error - [usr] attempted to start removal of [to_be_removed] when the interface state should not have allowed it.")
 
 	working = TRUE
-	work_timer = addtimer(CALLBACK(src, PROC_REF(remove_skillchip),to_be_removed),SKILLCHIP_REMOVAL_TIME,TIMER_STOPPABLE)
+	work_timer = addtimer(CALLBACK(src, PROC_REF(remove_skillchip),to_be_removed), implant_time, TIMER_STOPPABLE)
 	update_appearance()
 
 /// Finish removal.
@@ -306,5 +312,68 @@
 			toggle_chip_active(to_be_removed)
 			return TRUE
 
-#undef SKILLCHIP_IMPLANT_TIME
-#undef SKILLCHIP_REMOVAL_TIME
+/obj/machinery/skill_station/advanced
+	name = "Advanced Skillsoft Station"
+	desc = "A faster, sleeker, and neater version of the original Skillsoft Station."
+	circuit = /obj/item/circuitboard/machine/skill_station/advanced
+	icon = 'icons/obj/machines/bci_implanter.dmi'
+	icon_state = "bci_implanter"
+	base_icon_state = "bci_implanter"
+	layer = ABOVE_WINDOW_LAYER
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
+
+	implant_time = 5 SECONDS
+
+	animated_icon = TRUE
+
+/obj/machinery/skill_station/advanced/proc/set_icon(working_icon)
+	icon_state = working_icon
+	update_appearance()
+
+/obj/machinery/skill_station/advanced/update_icon_state()
+	if (occupant)
+		if(!working)
+			icon_state = "[base_icon_state]_occupied"
+		return ..()
+	icon_state = "[base_icon_state][state_open ? "_open" : null]"
+	return ..()
+
+/obj/machinery/skill_station/advanced/update_overlays()
+	var/list/overlays = ..()
+
+	if (machine_stat & MAINT)
+		overlays += "maint"
+		return overlays
+
+	if (machine_stat & (NOPOWER|BROKEN))
+		return overlays
+
+	if (working)
+		overlays += "red"
+		return overlays
+
+	overlays += "green"
+
+	return overlays
+/obj/machinery/skill_station/advanced/start_implanting()
+	. = ..()
+	play_animation()
+
+/obj/machinery/skill_station/advanced/start_removal()
+	. = ..()
+	play_animation()
+
+/obj/machinery/skill_station/advanced/proc/play_animation()
+	set_icon("[initial(icon_state)]_raising")
+	addtimer(CALLBACK(src, PROC_REF(set_icon), "[initial(icon_state)]_active"), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(set_icon), "[initial(icon_state)]_falling"), 4 SECONDS)
+
+/obj/item/circuitboard/machine/skill_station/advanced
+	name = "Advanced Skillsoft Station"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/skill_station/advanced
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/servo = 1,
+	)
+

@@ -26055,7 +26055,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
 "iis" = (
-/obj/machinery/skill_station,
+/obj/machinery/skill_station/advanced,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "iiw" = (

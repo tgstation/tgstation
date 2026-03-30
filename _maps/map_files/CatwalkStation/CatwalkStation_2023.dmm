@@ -36605,7 +36605,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "jLh" = (
-/obj/machinery/skill_station,
+/obj/machinery/skill_station/advanced,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
