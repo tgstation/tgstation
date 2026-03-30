@@ -69,7 +69,13 @@
 	/// The path our heretic has chosen.
 	var/datum/heretic_knowledge_tree_column/heretic_path
 	/// Reference to the overlay heretics get when they get strong enough
-	var/static/mutable_appearance/eldritch_overlay = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
+	var/static/mutable_appearance/eldritch_overlay
+	/// the accompanying emissive for the heretic overlay
+	var/static/mutable_appearance/eldritch_emissive
+	/// the icon filepath for the eldritch overlays, used for the mutable appearances
+	var/heretic_overlay_icon = 'icons/mob/effects/heretic_aura.dmi'
+	/// the icon state for the eldritch overlays, used for the mutable appearances
+	var/heretic_overlay_icon_state = "heretic_aura"
 	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
 	var/knowledge_points = 1
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
@@ -358,6 +364,10 @@
 
 	ADD_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
+
+	if(isnull(eldritch_overlay) || isnull(eldritch_emissive))
+		eldritch_overlay = mutable_appearance(heretic_overlay_icon, heretic_overlay_icon_state)
+		eldritch_emissive = emissive_appearance(heretic_overlay_icon, heretic_overlay_icon_state, owner.current)
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
@@ -393,6 +403,8 @@
 		list(SIGNAL_ADDTRAIT(TRAIT_HERETIC_AURA_HIDDEN), SIGNAL_REMOVETRAIT(TRAIT_HERETIC_AURA_HIDDEN)),
 		PROC_REF(update_heretic_aura)
 	)
+	RegisterSignal(our_mob, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_aura_overlay))
+	our_mob.update_appearance(UPDATE_OVERLAYS)
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
@@ -429,17 +441,18 @@
 	var/datum/action/cooldown/spell/shadow_cloak/cloak_spell = locate() in heretic_mob.actions
 	cloak_spell.Remove(heretic_mob)
 
+/datum/antagonist/heretic/proc/add_aura_overlay(mob/living/source, list/overlays)
+	SIGNAL_HANDLER
+	if(!should_show_aura())
+		return
+	overlays += eldritch_overlay
+	overlays += eldritch_emissive
+
 /// Adds an overlay to the heretic
 /datum/antagonist/heretic/proc/update_heretic_aura()
 	SIGNAL_HANDLER
-	var/mob/heretic_mob = owner.current
-	heretic_mob.cut_overlay(eldritch_overlay)
-
-	if(!should_show_aura())
-		return FALSE
-
-	heretic_mob.add_overlay(eldritch_overlay)
-	return TRUE
+	if(!QDELETED(owner?.current))
+		owner.current.update_appearance(UPDATE_OVERLAYS)
 
 /datum/antagonist/heretic/proc/should_show_aura()
 	if(!can_assign_self_objectives)
