@@ -32,6 +32,7 @@
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON // don't need to be literate to play slots
 	greyscale_config = /datum/greyscale_config/slot_machine
 	greyscale_colors = CIRCUIT_COLOR_GENERIC // also used to set TGUI color theme and light color
+	light_color = CIRCUIT_COLOR_GENERIC
 	var/money = 3000 // How much money it has CONSUMED
 	var/plays = 0
 	var/working = FALSE
