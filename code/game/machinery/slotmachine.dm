@@ -697,11 +697,11 @@
 		/obj/item/stack/sheet/mineral/silver,
 		/obj/item/stack/sheet/mineral/uranium,
 		/obj/item/stack/sheet/mineral/plasma,
-		/obj/item/stack/sheet/mineral/diamond,
+		/obj/item/stack/sheet/mineral/runite,
 		/obj/item/clothing/mask/facehugger/lamarr,
 		/obj/item/gibtonite,
 	)
-	jackpot_path = /obj/item/stack/sheet/mineral/diamond
+	jackpot_path = /obj/item/stack/sheet/mineral/runite
 	trap_path = /obj/item/gibtonite
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 
@@ -715,7 +715,7 @@
 	icon_state = "/obj/machinery/computer/slot_machine/clown"
 	symbol_paths = list(
 		/obj/item/food/grown/banana,
-		/obj/item/instrument/bikehorn,
+		/obj/item/stack/sheet/mineral/bananium,
 		/obj/item/card/id/advanced/rainbow,
 		/obj/vehicle/sealed/mecha/honker,
 		/obj/item/clothing/mask/gas/clown_hat,
