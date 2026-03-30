@@ -344,9 +344,11 @@
 
 	balance -= SPIN_PRICE
 	money += SPIN_PRICE
-	// Since big jackpots & free games aren't deducted directly from the account holder NT takes a 40% cut of profit
-	// Also discourages infinite money exploits since people playing slot machines they own will cause them to slowly lose money
-	house_bank_account.adjust_money(SPIN_PRICE * 0.60, "Slot Machine: Spin")
+
+	if(house_bank_account)
+		// Since big jackpots & free games aren't deducted directly from the account holder NT takes a 40% cut of profit
+		// Also discourages infinite money exploits since people playing slot machines they own will cause them to slowly lose money
+		house_bank_account.adjust_money(SPIN_PRICE * 0.60, "Slot Machine: Spin")
 
 	plays += 1
 	working = TRUE
@@ -581,15 +583,15 @@
 	desc = "Repurposed from a confiscated syndicate gambling ring. Losing is a crime. Winning is also a crime."
 	icon_state = "/obj/machinery/computer/slot_machine/security"
 	symbol_paths = list(
-		/obj/item/food/donut/choco,
+		/obj/item/food/donut/berry,
 		/mob/living/simple_animal/bot/secbot/beepsky,
 		/obj/item/melee/baton/security/loaded,
 		/obj/item/gun/energy/disabler,
-		/obj/item/clothing/head/helmet/sec,
+		/obj/vehicle/sealed/mecha/ripley/paddy,
 		/obj/item/clothing/glasses/hud/security/sunglasses,
 		/obj/item/grown/bananapeel
 	)
-	jackpot_path = /obj/item/food/donut/choco
+	jackpot_path = /obj/item/food/donut/berry
 	trap_path = /obj/item/grown/bananapeel
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
 
@@ -603,8 +605,8 @@
 	desc = "A miracle of modern medicine! It cures boredom, but causes acute financial necrosis."
 	icon_state = "/obj/machinery/computer/slot_machine/medical"
 	symbol_paths = list(
-		/obj/item/storage/medkit/regular,
-		/obj/item/healthanalyzer,
+		/obj/item/storage/medkit/brute,
+		/obj/vehicle/sealed/mecha/odysseus,
 		/obj/item/clothing/glasses/hud/health,
 		/mob/living/basic/pet/cat/runtime,
 		/obj/item/defibrillator/loaded,
@@ -652,10 +654,10 @@
 		/mob/living/simple_animal/bot/mulebot,
 		/mob/living/basic/sloth,
 		/obj/machinery/materials_market,
-		/obj/item/stamp/granted,
+		/obj/vehicle/sealed/mecha/ripley,
 		/obj/item/suspiciousphone,
 	)
-	jackpot_path = /obj/item/stamp/granted
+	jackpot_path = /obj/item/bounty_cube
 	trap_path = /obj/item/suspiciousphone
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 
@@ -733,7 +735,7 @@
 	desc = "Gambling is a silent tragedy. The machine stares back at you with a cold indifference."
 	icon_state = "/obj/machinery/computer/slot_machine/mime"
 	symbol_paths = list(
-		/obj/item/clothing/head/beret/frenchberet,
+		/obj/vehicle/sealed/mecha/reticence,
 		/obj/item/clothing/mask/gas/mime,
 		/obj/item/food/baguette,
 		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
@@ -758,7 +760,7 @@
 		/obj/machinery/nuclearbomb,
 		/obj/item/card/emag,
 		/obj/item/storage/toolbox/syndicate,
-		/obj/item/clothing/mask/gas/syndicate,
+		/obj/vehicle/sealed/mecha/gygax/dark,
 		/obj/item/soap/syndie,
 		/obj/item/gun/energy/recharge/ebow,
 		/obj/item/restraints/handcuffs,
