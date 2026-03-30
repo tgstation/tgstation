@@ -13,6 +13,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	leave_footprints = TRUE
 
 /turf/open/misc/snow/Initialize(mapload)
 	. = ..()
@@ -20,6 +21,30 @@
 
 /turf/open/misc/snow/broken_states()
 	return list("snow_dug")
+
+/turf/open/misc/snow/add_footprint(mob/living/carbon/human/walker, movement_direction)
+	// if an active snow storm affecting this turf is currently in its main or wind down stage, skip footprint creation
+	for(var/datum/weather/snow_storm/active_weather in SSweather.processing)
+		if(active_weather.stage != MAIN_STAGE && active_weather.stage != WIND_DOWN_STAGE)
+			continue
+		if(!(loc in active_weather.impacted_areas))
+			continue
+		return
+
+	. = ..()
+	// when a snow storm enters its main stage, clear all of our footprints
+	for(var/snow_type in typesof(/datum/weather/snow_storm))
+		RegisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type), PROC_REF(snow_clear_footprints), override = TRUE)
+
+/turf/open/misc/snow/proc/snow_clear_footprints(datum/source, datum/weather/storm)
+	SIGNAL_HANDLER
+
+	if(!(loc in storm.impacted_areas))
+		return
+
+	clear_footprints()
+	for(var/snow_type in typesof(/datum/weather/snow_storm))
+		UnregisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type))
 
 /turf/open/misc/snow/actually_safe
 	slowdown = 0

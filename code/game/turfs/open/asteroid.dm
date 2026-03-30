@@ -86,14 +86,12 @@
 
 /// Drops itemstack when dug and changes icon
 /turf/open/misc/asteroid/proc/getDug()
-	if(dug || broken)
-		return
-	dug = TRUE
-	broken = TRUE
+	if(!break_tile())
+		return FALSE
 	new dig_result(src, 5)
 	if(prob(worm_chance))
 		new /obj/item/food/bait/worm(src)
-	update_appearance()
+	return TRUE
 
 /// If the user can dig the turf
 /turf/open/misc/asteroid/proc/can_dig(mob/user)
@@ -101,6 +99,7 @@
 		return TRUE
 	if(user)
 		balloon_alert(user, "already excavated!")
+	return FALSE
 
 ///Refills the previously dug tile
 /turf/open/misc/asteroid/proc/refill_dug()
@@ -141,9 +140,11 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	dig_result = /obj/item/stack/ore/glass/basalt
 
 /turf/open/misc/asteroid/basalt/getDug()
+	. = ..()
+	if(!.)
+		return
 	set_light(0)
 	GLOB.dug_up_basalt |= src
-	return ..()
 
 /turf/open/misc/asteroid/basalt/Destroy()
 	GLOB.dug_up_basalt -= src
@@ -214,6 +215,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 	dig_result = /obj/item/stack/sheet/mineral/snow
+	leave_footprints = TRUE
 
 /turf/open/misc/asteroid/snow/burn_tile()
 	if(!burnt)
@@ -226,6 +228,30 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/snow/burnt_states()
 	return list("snow_dug")
+
+/turf/open/misc/asteroid/snow/add_footprint(mob/living/carbon/human/walker, movement_direction)
+	// if an active snow storm affecting this turf is currently in its main or wind down stage, skip footprint creation
+	for(var/datum/weather/snow_storm/active_weather in SSweather.processing)
+		if(active_weather.stage != MAIN_STAGE && active_weather.stage != WIND_DOWN_STAGE)
+			continue
+		if(!(loc in active_weather.impacted_areas))
+			continue
+		return
+
+	. = ..()
+	// when a snow storm enters its main stage, clear all of our footprints
+	for(var/snow_type in typesof(/datum/weather/snow_storm))
+		RegisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type), PROC_REF(snow_clear_footprints), override = TRUE)
+
+/turf/open/misc/asteroid/snow/proc/snow_clear_footprints(datum/source, datum/weather/storm)
+	SIGNAL_HANDLER
+
+	if(!(loc in storm.impacted_areas))
+		return
+
+	clear_footprints()
+	for(var/snow_type in typesof(/datum/weather/snow_storm))
+		UnregisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type))
 
 /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/openspace/icemoon
@@ -259,6 +285,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	damaged_dmi = null
+	leave_footprints = FALSE
 
 /turf/open/misc/asteroid/snow/ice/break_tile()
 	return FALSE
@@ -326,4 +353,3 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "asteroid"
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9"
 	planetary_atmos = TRUE
-
