@@ -122,7 +122,6 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", datum/th
 	var/list/variable_html = list()
 	if(isalist)
 		var/alist/alist_value = thing
-		// var/i = 1
 		for(var/key, value in alist_value)
 			variable_html += debug_variable(key, value, 0, alist_value)
 	else if(islist)
