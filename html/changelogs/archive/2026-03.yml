@@ -511,3 +511,11 @@
       through
   Yobrocharlie:
   - rscadd: Added the academy back, its now a fetch quest.
+2026-03-30:
+  SmArtKar:
+  - bugfix: Fixes press badges and other miscellaneous objects failing to make the
+      user examine them.
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: cyborgs are made properly unconscious when emagged
+  Tsar-Salat:
+  - bugfix: firebreath will light objects on fire more consistently

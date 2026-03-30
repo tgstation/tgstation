@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixes press badges and other miscellaneous objects failing to make the user examine them."
