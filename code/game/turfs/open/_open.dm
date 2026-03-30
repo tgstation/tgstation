@@ -265,7 +265,7 @@
 
 /turf/open/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(gone && direction && leave_footprints && !broken && !burnt && ishuman(gone))
+	if(gone && direction && leave_footprints && !broken && !burnt && isturf(gone.loc) && ishuman(gone))
 		add_footprint(gone, direction)
 
 /**
