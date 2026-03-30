@@ -4,6 +4,10 @@
 	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "bci"
 	w_class = WEIGHT_CLASS_TINY
+	cooldown = 5 SECONDS // BCIs have to be taken out a lot during testing
+	skill_name = "Brain-Computer Interface"
+	skill_description = "A programmable skillchip. Who knows what it'll do?"
+	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE
 	/// Our internal circuit, if any
 	var/obj/item/integrated_circuit/circuit
 	/// Mob we currently have our signals registered on, i.e. the thing we're in. Hopefully.
@@ -88,6 +92,8 @@
 
 	var/obj/item/skillchip/bci/bci
 
+	actions = list()
+
 /obj/item/circuit_component/bci_core/populate_ports()
 
 	message = add_input_port("Message", PORT_TYPE_STRING, trigger = null)
@@ -102,7 +108,7 @@
 
 /obj/item/circuit_component/bci_core/proc/update_charge_action()
 	CIRCUIT_TRIGGER
-	if (show_charge_meter.value)
+	if (show_charge_meter.value && bci.active)
 		if (charge_action)
 			return
 		charge_action = new(src)
@@ -161,6 +167,7 @@
 	set_up_new_mob(owner)
 
 /obj/item/circuit_component/bci_core/proc/on_skillchip_deactivated(obj/item/organ/brain/holding_brain)
+	update_charge_action()
 	user_port.set_output(null)
 	UnregisterSignal(bci.controlled_mob?.resolve(), list(
 		COMSIG_ATOM_EXAMINE,
