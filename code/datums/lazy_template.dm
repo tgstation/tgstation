@@ -92,7 +92,12 @@
 		)
 		for(var/turf/turf as anything in block(bottom_left, top_right))
 			loaded_turfs += turf
-			loaded_areas |= get_area(turf)
+
+			var/area/loaded_area = get_area(turf)
+			loaded_areas |= loaded_area
+
+			if(loaded_area.static_lighting)
+				turf.lighting_build_overlay()
 
 			// atoms can actually be in the contents of two or more turfs based on its icon/bound size
 			// see https://www.byond.com/docs/ref/index.html#/atom/var/contents
@@ -106,11 +111,6 @@
 	SSatoms.InitializeAtoms(loaded_areas + loaded_atom_movables + loaded_turfs)
 	SSmachines.setup_template_powernets(loaded_cables)
 	SSair.setup_template_machinery(loaded_atmospherics)
-
-	// okay, ensure lighting is setup now
-	for(var/area/loaded_area as anything in loaded_areas)
-		if(loaded_area.static_lighting)
-			loaded_area.create_area_lighting_objects()
 
 	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, loaded_atom_movables, loaded_turfs, loaded_areas)
 	reservations += reservation
