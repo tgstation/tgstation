@@ -8,8 +8,6 @@
 	skill_name = "Brain-Computer Interface"
 	skill_description = "A programmable skillchip. Who knows what it'll do?"
 	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE
-	/// Our internal circuit, if any
-	var/obj/item/integrated_circuit/circuit
 	/// Mob we currently have our signals registered on, i.e. the thing we're in. Hopefully.
 	var/datum/weakref/controlled_mob
 	/// Our internal circuit's main component
@@ -21,6 +19,7 @@
 	RegisterSignal(src, COMSIG_CIRCUIT_ACTION_COMPONENT_REGISTERED, PROC_REF(action_comp_registered))
 	RegisterSignal(src, COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED, PROC_REF(action_comp_unregistered))
 
+	var/obj/item/integrated_circuit/circuit
 	circuit = new(src)
 	circuit.add_component(new /obj/item/circuit_component/equipment_action(null, "One"))
 
@@ -104,6 +103,7 @@
 
 /obj/item/circuit_component/bci_core/Destroy()
 	QDEL_NULL(charge_action)
+	bci?.bci_component = null
 	return ..()
 
 /obj/item/circuit_component/bci_core/proc/update_charge_action()
