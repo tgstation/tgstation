@@ -69,13 +69,7 @@
 	/// The path our heretic has chosen.
 	var/datum/heretic_knowledge_tree_column/heretic_path
 	/// Reference to the overlay heretics get when they get strong enough
-	var/static/mutable_appearance/eldritch_overlay
-	/// the accompanying emissive for the heretic overlay
-	var/static/mutable_appearance/eldritch_emissive
-	/// the icon filepath for the eldritch overlays, used for the mutable appearances
-	var/heretic_overlay_icon = 'icons/mob/effects/heretic_aura.dmi'
-	/// the icon state for the eldritch overlays, used for the mutable appearances
-	var/heretic_overlay_icon_state = "heretic_aura"
+	var/static/mutable_appearance/eldritch_overlay = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
 	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
 	var/knowledge_points = 1
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
@@ -365,9 +359,6 @@
 	ADD_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
 
-	if(isnull(eldritch_overlay) || isnull(eldritch_emissive))
-		eldritch_overlay = mutable_appearance(heretic_overlay_icon, heretic_overlay_icon_state)
-		eldritch_emissive = emissive_appearance(heretic_overlay_icon, heretic_overlay_icon_state, owner.current)
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
@@ -446,7 +437,7 @@
 	if(!should_show_aura())
 		return
 	overlays += eldritch_overlay
-	overlays += eldritch_emissive
+	overlays += emissive_appearance(eldritch_overlay.icon, eldritch_overlay.icon_state, source)
 
 /// Adds an overlay to the heretic
 /datum/antagonist/heretic/proc/update_heretic_aura()
