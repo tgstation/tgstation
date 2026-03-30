@@ -107,6 +107,11 @@
 	SSmachines.setup_template_powernets(loaded_cables)
 	SSair.setup_template_machinery(loaded_atmospherics)
 
+	// okay, ensure lighting is setup now
+	for(var/area/loaded_area as anything in loaded_areas)
+		if(loaded_area.static_lighting)
+			loaded_area.create_area_lighting_objects()
+
 	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, loaded_atom_movables, loaded_turfs, loaded_areas)
 	reservations += reservation
 	return reservation
