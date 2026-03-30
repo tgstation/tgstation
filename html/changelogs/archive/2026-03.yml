@@ -520,5 +520,7 @@
   - admin: VV dropdown has gotten a refresh and now boasts a brand-new searchbar
   TheRyeGuyWhoWillNowDie:
   - bugfix: cyborgs are made properly unconscious when emagged
+  Time-Green:
+  - bugfix: Coroner cytology grown organs can mutate again
   Tsar-Salat:
   - bugfix: firebreath will light objects on fire more consistently
