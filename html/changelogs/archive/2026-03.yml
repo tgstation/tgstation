@@ -515,6 +515,9 @@
   SmArtKar:
   - bugfix: Fixes press badges and other miscellaneous objects failing to make the
       user examine them.
+  - admin: Some non-critical VV actions such as mutation/organ/quirk modification
+      have been converted to TGUI
+  - admin: VV dropdown has gotten a refresh and now boasts a brand-new searchbar
   TheRyeGuyWhoWillNowDie:
   - bugfix: cyborgs are made properly unconscious when emagged
   Tsar-Salat:

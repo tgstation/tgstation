@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - admin: "Some non-critical VV actions such as mutation/organ/quirk modification have been converted to TGUI"
-  - admin: "VV dropdown has gotten a refresh and now boasts a brand-new searchbar"
