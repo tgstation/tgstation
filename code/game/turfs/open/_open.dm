@@ -211,7 +211,7 @@
 		var/obj/item/bodypart/leg/walking_on = walker.get_bodypart(front_foot) || walker.get_bodypart(backup_foot)
 		if(isnull(walking_on))
 			return
-		LAZYOR(footprint_shoe_types, walking_on.type)
+		LAZYOR(footprint_species_types, walking_on.limb_id)
 
 	update_appearance()
 
