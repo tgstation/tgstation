@@ -355,6 +355,7 @@
 	overlays += "green"
 
 	return overlays
+
 /obj/machinery/skill_station/advanced/start_implanting()
 	. = ..()
 	play_animation()
@@ -376,4 +377,3 @@
 		/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/servo = 1,
 	)
-

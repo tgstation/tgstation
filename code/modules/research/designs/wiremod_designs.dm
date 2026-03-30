@@ -665,6 +665,16 @@
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
 
+/datum/design/board/advanced_skillchip_implanter
+	name = "Advanced Skillsoft Station"
+	desc = "A faster, sleeker, and no safer version of the original Skillsoft Station."
+	id = "adv_skillchip_implanter"
+	build_path = /obj/item/circuitboard/machine/skill_station/advanced
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_CATEGORY_CIRCUITRY_CORE
+	)
+
 /datum/design/assembly_shell
 	name = "Assembly Shell"
 	desc = "An assembly shell that can be attached to wires and other assemblies."
