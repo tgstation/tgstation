@@ -588,7 +588,7 @@
 		/obj/item/melee/baton/security/loaded,
 		/obj/item/gun/energy/disabler,
 		/obj/vehicle/sealed/mecha/ripley/paddy,
-		/obj/item/clothing/glasses/hud/security/sunglasses,
+		/obj/item/book/manual/wiki/security_space_law,
 		/obj/item/grown/bananapeel
 	)
 	jackpot_path = /obj/item/food/donut/berry
@@ -609,7 +609,7 @@
 		/obj/vehicle/sealed/mecha/odysseus,
 		/obj/item/clothing/glasses/hud/health,
 		/mob/living/basic/pet/cat/runtime,
-		/obj/item/defibrillator/loaded,
+		/obj/item/plunger,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/machinery/syndicatebomb,
 	)
@@ -675,7 +675,7 @@
 		/obj/item/reagent_containers/cup/watering_can,
 		/obj/item/clothing/shoes/galoshes,
 		/mob/living/basic/goat/pete,
-		/obj/item/book/manual/chef_recipes,
+		/obj/item/book/bible,
 		/obj/item/kitchen/rollingpin,
 		/obj/item/seeds/random,
 	)
@@ -684,7 +684,7 @@
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 
 /obj/machinery/computer/slot_machine/service/Initialize(mapload)
-	slot_adjectives += list("Fermented", "Seasoned", "Tipsy", "Cleaned", "Organic", "Culinary", "Refreshing")
+	slot_adjectives += list("Fermented", "Seasoned", "Tipsy", "Cleaned", "Organic", "Culinary", "Refreshing", "Divine", "Holy")
 	slot_nouns += list("Recipe", "Cocktail", "Harvest", "Scrubber")
 	. = ..()
 
