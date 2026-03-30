@@ -357,6 +357,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Stops all slipping and sliding from occurring
 #define TRAIT_NO_SLIP_ALL "noslip_all"
 
+/// Stops the mob from leaving prints in the snow
+#define TRAIT_NO_SNOWPRINTS "no_snowprints"
+
 /// Unlinks gliding from movement speed, meaning that there will be a delay between movements rather than a single move movement between tiles
 #define TRAIT_NO_GLIDE "no_glide"
 

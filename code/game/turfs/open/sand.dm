@@ -21,6 +21,9 @@
 	return FALSE
 
 /turf/open/misc/beach/add_footprint(mob/living/carbon/human/walker, movement_direction)
+	if(!SSmapping.level_trait(z, ZTRAIT_SANDSTORM))
+		return ..()
+
 	// if an active sand storm affecting this turf is currently in its main or wind down stage, skip footprint creation
 	for(var/datum/weather/sand_storm/active_weather in SSweather.processing)
 		if(active_weather.stage != MAIN_STAGE && active_weather.stage != WIND_DOWN_STAGE)

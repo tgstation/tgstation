@@ -23,6 +23,12 @@
 	return list("snow_dug")
 
 /turf/open/misc/snow/add_footprint(mob/living/carbon/human/walker, movement_direction)
+	if(HAS_TRAIT(walker, TRAIT_NO_SNOWPRINTS))
+		return
+	// skip the special logic if the level doesn't naturally have snowstorms
+	if(!SSmapping.level_trait(z, ZTRAIT_SNOWSTORM))
+		return ..()
+
 	// if an active snow storm affecting this turf is currently in its main or wind down stage, skip footprint creation
 	for(var/datum/weather/snow_storm/active_weather in SSweather.processing)
 		if(active_weather.stage != MAIN_STAGE && active_weather.stage != WIND_DOWN_STAGE)
@@ -30,7 +36,6 @@
 		if(!(loc in active_weather.impacted_areas))
 			continue
 		return
-
 	. = ..()
 	// when a snow storm enters its main stage, clear all of our footprints
 	for(var/snow_type in typesof(/datum/weather/snow_storm))

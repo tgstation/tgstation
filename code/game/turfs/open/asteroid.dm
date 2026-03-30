@@ -1,5 +1,7 @@
 /**********************Asteroid**************************/
 
+#define DIG_SHEET_AMOUNT 5
+
 /turf/open/misc/asteroid //floor piece
 	gender = PLURAL
 	name = "asteroid sand"
@@ -88,7 +90,7 @@
 /turf/open/misc/asteroid/proc/getDug()
 	if(!break_tile())
 		return FALSE
-	new dig_result(src, 5)
+	new dig_result(src, DIG_SHEET_AMOUNT)
 	if(prob(worm_chance))
 		new /obj/item/food/bait/worm(src)
 	return TRUE
@@ -230,6 +232,12 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	return list("snow_dug")
 
 /turf/open/misc/asteroid/snow/add_footprint(mob/living/carbon/human/walker, movement_direction)
+	if(HAS_TRAIT(walker, TRAIT_NO_SNOWPRINTS))
+		return
+	// skip the special logic if the level doesn't naturally have snowstorms
+	if(!SSmapping.level_trait(z, ZTRAIT_SNOWSTORM))
+		return ..()
+
 	// if an active snow storm affecting this turf is currently in its main or wind down stage, skip footprint creation
 	for(var/datum/weather/snow_storm/active_weather in SSweather.processing)
 		if(active_weather.stage != MAIN_STAGE && active_weather.stage != WIND_DOWN_STAGE)
@@ -252,6 +260,37 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	clear_footprints()
 	for(var/snow_type in typesof(/datum/weather/snow_storm))
 		UnregisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type))
+
+/turf/open/misc/asteroid/snow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/sheet/mineral/snow))
+		return ..()
+
+	if(dug)
+		if(tool.use(DIG_SHEET_AMOUNT))
+			user.visible_message(
+				span_notice("[user] packs [src] back in."),
+				span_notice("You pack [src] back in."),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
+			refill_dug()
+			return ITEM_INTERACT_SUCCESS
+
+		to_chat(user, "You don't have enough [tool.name] to fill the hole.")
+		return ITEM_INTERACT_BLOCKING
+
+	if(footprint_entrance_dirs || footprint_exit_dirs)
+		if(tool.use(1))
+			user.visible_message(
+				span_notice("[user] fills in the footprints in [src]."),
+				span_notice("You fill in the footprints in [src]."),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
+			clear_footprints()
+			return ITEM_INTERACT_SUCCESS
+
+		return NONE
+
+	return NONE
 
 /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/openspace/icemoon
@@ -353,3 +392,5 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "asteroid"
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9"
 	planetary_atmos = TRUE
+
+#undef DIG_SHEET_AMOUNT

@@ -116,7 +116,7 @@
 				if(!enter_overlay)
 					enter_overlay = image('icons/effects/footprints.dmi', "[icon_state_to_use]1", dir = print_dir)
 					enter_overlay.color = COLOR_DARK
-					enter_overlay.alpha *= 0.33
+					enter_overlay.alpha *= 0.2
 					footprint_cache[enter_state] = enter_overlay
 				. += enter_overlay
 
@@ -126,7 +126,7 @@
 				if(!exit_overlay)
 					exit_overlay = image('icons/effects/footprints.dmi', "[icon_state_to_use]2", dir = print_dir)
 					exit_overlay.color = COLOR_DARK
-					exit_overlay.alpha *= 0.33
+					exit_overlay.alpha *= 0.2
 					footprint_cache[exit_state] = exit_overlay
 				. += exit_overlay
 

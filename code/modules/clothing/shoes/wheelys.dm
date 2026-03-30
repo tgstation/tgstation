@@ -89,3 +89,4 @@
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	custom_premium_price = PAYCHECK_CREW * 1.6
 	custom_price = PAYCHECK_CREW * 1.6
+	clothing_traits = list(TRAIT_NO_SNOWPRINTS)
