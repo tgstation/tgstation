@@ -41,6 +41,9 @@
 	var/paymode = HOLOCHIP // toggles between HOLOCHIP/COIN, defined above
 	var/cointype = /obj/item/coin/iron //default cointype
 
+	/// The optional bank account used as the machine's bank. Player losses are deposited here, while payouts and jackpots are deducted from its balance
+	var/datum/bank_account/house_bank_account
+
 	/// Typepaths representing the symbols shown on this machine's reels
 	var/list/symbol_paths = list(
 		/obj/item/storage/bag/money,
@@ -104,6 +107,10 @@
 			var/obj/item/coin/C = new cointype
 			coinvalues["[cointype]"] = C.get_item_credit_value()
 			qdel(C) //Sigh
+
+/obj/machinery/computer/slot_machine/Destroy()
+	house_bank_account = null
+	. = ..()
 
 /// Generates a randomised slot name by pulling an adjective and a noun
 /// Produces things like "Lucky Sevens", "Robust Payday", "Honking Bonanza", etc.
@@ -184,6 +191,35 @@
 		else
 			balloon_alert(user, "coins only!")
 		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/card/id/id_card = inserted.GetID()
+	if(isidcard(id_card))
+		if(house_bank_account)
+			say("Already linked to [house_bank_account.account_holder]!")
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+			return ITEM_INTERACT_BLOCKING
+
+		var/datum/bank_account/id_bank_account = id_card.registered_account
+
+		if(!id_bank_account)
+			say("No bank account detected on id card!")
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+			return ITEM_INTERACT_BLOCKING
+
+		if(!id_bank_account.has_money(PRIZE_SMALL))
+			say("Insufficent funds for potential payout. Minimum of [PRIZE_SMALL] credits needed!")
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+			return ITEM_INTERACT_BLOCKING
+
+		var/msg = tgui_input_text(user, "Name of your slot machine (optional)", "Slot Customization", "Slot Machine", max_length = MAX_NAME_LEN)
+		if(msg)
+			name = msg
+
+		playsound(src, 'sound/machines/terminal/terminal_success.ogg', 50, TRUE)
+		desc = "Owned by [id_bank_account.account_holder], draws directly from [user.p_their()] account."
+		house_bank_account = id_bank_account
+		to_chat(user, span_notice("You link the slot machine to [id_bank_account.account_holder]'s account."))
+		return ITEM_INTERACT_SUCCESS
 
 	return NONE
 
@@ -272,8 +308,23 @@
 	money -= max(0, give_payout(min(rand(-50, 100 * severity_ascending)), money)) //This starts at -50 because it shouldn't always dispense coins yo
 	spin()
 
+/// Returns TRUE if the owner has enough funds to payout
+/obj/machinery/computer/slot_machine/proc/has_funds_to_pay(payout)
+	if(!house_bank_account) // no owner so NT is paying
+		return TRUE
+
+	if(house_bank_account.has_money(payout))
+		return TRUE
+
+	say("The bank account of [house_bank_account.account_holder] does not have enough funds to pay out the potential prize, contact them to fill up their account or lower your bet!")
+	playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+	return FALSE
+
 /obj/machinery/computer/slot_machine/proc/spin(mob/user)
 	if(!can_spin(user))
+		return
+
+	if(!has_funds_to_pay(PRIZE_SMALL))
 		return
 
 	if(!use_energy(active_power_usage, force = FALSE))
@@ -292,6 +343,10 @@
 
 	balance -= SPIN_PRICE
 	money += SPIN_PRICE
+	// Since big jackpots & free games aren't deducted directly from the account holder NT takes a 20% cut of profit
+	// Also discourages infinite money exploits since people playing slot machines they own will cause them to slowly lose money
+	house_bank_account.adjust_money(SPIN_PRICE * 0.80, "Slot Machine: Spin")
+
 	plays += 1
 	working = TRUE
 
@@ -454,6 +509,9 @@
 	var/surplus = amount - give_payout(amount_to_give)
 	money -= amount_to_give
 	balance += surplus
+
+	if(house_bank_account)
+		house_bank_account.adjust_money(-amount_to_give, "Slot Machine: Payout")
 
 /// Pay out the specified amount in either coins or holochips
 /obj/machinery/computer/slot_machine/proc/give_payout(amount)
