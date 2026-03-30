@@ -69,6 +69,7 @@ function TextHighlightSetting(props) {
     removeHighlight,
   } = useHighlights();
   const {
+    enabled,
     highlightColor,
     highlightText,
     highlightWholeMessage,
@@ -80,6 +81,18 @@ function TextHighlightSetting(props) {
     <Stack.Item {...rest}>
       <Stack mb={1} color="label" align="baseline">
         <Stack.Item grow>
+          <Button.Checkbox
+            checked={!!enabled}
+            mr="5px"
+            onClick={() =>
+              updateHighlight({
+                id,
+                enabled: !enabled,
+              })
+            }
+          >
+            Enabled
+          </Button.Checkbox>
           <Button
             color="transparent"
             icon="times"
