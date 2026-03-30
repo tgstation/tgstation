@@ -2350,7 +2350,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(!looking_holder)
 		return
 	on_looking_z_level_change(looking_holder.loc, get_turf(src))
-	qdel(looking_holder)
+	QDEL_NULL(looking_holder)
 
 /mob/living/proc/on_looking_z_level_change(turf/old_loc, turf/new_loc)
 	SEND_SIGNAL(src, COMSIG_LIVING_LOOK_Z_CHANGE, old_loc, new_loc)
