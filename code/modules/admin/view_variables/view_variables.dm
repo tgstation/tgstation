@@ -97,7 +97,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", datum/th
 				"Shuffle" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SHUFFLE),
 				"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
 				"---"
-				)
+			)
 		else
 			dropdownoptions = list(
 				"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
