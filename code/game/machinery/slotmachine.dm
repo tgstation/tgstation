@@ -252,14 +252,14 @@
 		ui.open()
 
 /obj/machinery/computer/slot_machine/ui_static_data(mob/user)
-    var/list/data = list()
-    data["symbols"] = symbol_data
-    data["cost"] = SPIN_PRICE
-    data["jackpot"] = PRIZE_JACKPOT
-    data["jackpot_id"] = "[jackpot_path]"
-    if(trap_path)
-        data["trap_id"] = "[trap_path]"
-    return data
+	var/list/data = list()
+	data["symbols"] = symbol_data
+	data["cost"] = SPIN_PRICE
+	data["jackpot"] = PRIZE_JACKPOT
+	data["jackpot_id"] = "[jackpot_path]"
+	if(trap_path)
+		data["trap_id"] = "[trap_path]"
+	return data
 
 /obj/machinery/computer/slot_machine/ui_data(mob/user)
 	var/list/data = list()
