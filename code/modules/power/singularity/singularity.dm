@@ -50,6 +50,8 @@
 	/// What the game tells ghosts when you make one
 	var/ghost_notification_message = "IT'S LOOSE"
 
+	var/is_radioactive = TRUE
+
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	flags_1 = SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF
@@ -78,7 +80,7 @@
 			new_component.target = singu_beacon
 			break
 
-	if (!mapload)
+	if (!mapload && !(locate(/obj/effect/shield) in loc))
 		notify_ghosts(
 			ghost_notification_message,
 			source = src,
@@ -165,6 +167,8 @@
 		return
 	time_since_act = 0
 	if(current_size >= STAGE_TWO)
+		if(is_radioactive) // in case this blows up the server admins can turn it off
+			radiation_pulse(src, 8, 0.2, 50)
 		if(prob(event_chance))
 			event()
 	dissipate(seconds_per_tick)

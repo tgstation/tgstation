@@ -82,6 +82,7 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/anchored/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
+	state = FG_WELDED
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
@@ -373,35 +374,42 @@ no power level overlay is currently in the overlays list.
 	set_explosion_block(0)
 
 /obj/machinery/field/generator/proc/shield_floor(create)
-	if(connected_gens.len < 2)
+	if(length(connected_gens) < 2)
 		return
-	var/connected_gen_counter
-	for(connected_gen_counter = 1; connected_gen_counter < connected_gens.len; connected_gen_counter++)
 
-		var/list/connected_gen_list = ((connected_gens[connected_gen_counter].connected_gens & connected_gens[connected_gen_counter+1].connected_gens)^src)
-		if(!connected_gen_list.len)
-			return
-		var/obj/machinery/field/generator/considered_generator = connected_gen_list[1]
+	var/gen_dirs = NONE
+	for(var/obj/machinery/field/generator/gen as anything in connected_gens)
+		gen_dirs |= get_dir(src, gen)
 
-		var/x_step
-		var/y_step
-		if(considered_generator.x > x && considered_generator.y > y)
-			for(x_step=x; x_step <= considered_generator.x; x_step++)
-				for(y_step=y; y_step <= considered_generator.y; y_step++)
-					place_floor(locate(x_step,y_step,z),create)
-		else if(considered_generator.x > x && considered_generator.y < y)
-			for(x_step=x; x_step <= considered_generator.x; x_step++)
-				for(y_step=y; y_step >= considered_generator.y; y_step--)
-					place_floor(locate(x_step,y_step,z),create)
-		else if(considered_generator.x < x && considered_generator.y > y)
-			for(x_step=x; x_step >= considered_generator.x; x_step--)
-				for(y_step=y; y_step <= considered_generator.y; y_step++)
-					place_floor(locate(x_step,y_step,z),create)
-		else
-			for(x_step=x; x_step >= considered_generator.x; x_step--)
-				for(y_step=y; y_step >= considered_generator.y; y_step--)
-					place_floor(locate(x_step,y_step,z),create)
+	// if we're a midsection, do nothing
+	if(((gen_dirs & (EAST|WEST)) == (EAST|WEST)) || ((gen_dirs & (NORTH|SOUTH)) == (NORTH|SOUTH)))
+		return
 
+	// if we're a corner, find the opposite corner
+	var/obj/machinery/field/generator/opposite_gen
+	var/x_dir = (gen_dirs & EAST) ? 1 : -1
+	var/y_dir = (gen_dirs & NORTH) ? 1 : -1
+	var/to_x = x + (9 * x_dir)
+	var/to_y = y + (9 * y_dir)
+	var/my_x = x + x_dir
+	var/my_y = y + y_dir
+	var/sanity = 12
+	while((my_x != to_x || my_y != to_y) && sanity && !opposite_gen)
+		var/turf/possible_turf = locate(my_x, my_y, z)
+		if(possible_turf)
+			opposite_gen = locate() in possible_turf
+
+		my_x += x_dir
+		my_y += y_dir
+		sanity--
+
+	if(!opposite_gen)
+		return
+	for(var/px in min(x, opposite_gen.x) to max(x, opposite_gen.x))
+		for(var/py in min(y, opposite_gen.y) to max(y, opposite_gen.y))
+			var/turf/floor_turf = locate(px, py, z)
+			if(isopenturf(floor_turf))
+				place_floor(floor_turf, create)
 
 /obj/machinery/field/generator/proc/place_floor(Location,create)
 	if(create && !locate(/obj/effect/shield) in Location)

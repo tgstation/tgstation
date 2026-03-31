@@ -210,6 +210,9 @@
 		if(grav_pull < dist_to_tile) //If we've exited the singulo's range already, just skip us
 			continue
 
+		if(HAS_TRAIT(atom_parent.loc, TRAIT_BLOCK_SINGULO_PULL) && !HAS_TRAIT(tile, TRAIT_BLOCK_SINGULO_PULL)) //If we're shielded, only pull things that aren't also shielded, but still consume them if they're in range
+			continue
+
 		var/in_consume_range = (dist_to_tile <= consume_range)
 		if (in_consume_range)
 			consume(src, tile)

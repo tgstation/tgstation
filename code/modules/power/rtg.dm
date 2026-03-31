@@ -132,6 +132,51 @@
 	circuit = null
 	affected_by_parts = FALSE
 
+/obj/machinery/power/rtg/fake_rad_collector
+	name = "radiation collector"
+	desc = "Collects radiation, turns it into power. Totally. Just needs a tank of plasma."
+	icon = 'icons/obj/machines/engine/singularity.dmi'
+	icon_state = "ca_on"
+	base_icon_state = "ca"
+	power_gen = 60 KILO WATTS
+	circuit = null
+	affected_by_parts = FALSE
+	var/has_ptank = FALSE
+
+/obj/machinery/power/rtg/fake_rad_collector/update_overlays()
+	. = ..()
+	if(has_ptank)
+		. += "ptank"
+
+/obj/machinery/power/rtg/fake_rad_collector/screwdriver_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/machinery/power/rtg/fake_rad_collector/get_base_power_gen()
+	. = 0
+	if(!has_ptank)
+		return .
+
+	for(var/datum/component/singularity/singo as anything in GLOB.singularities)
+		var/obj/singularity/singo_real = singo.parent
+		if(!istype(singo_real))
+			continue
+		if(get_dist(src, singo.parent) <= 12)
+			. = max(., base_power_gen * (singo_real.current_size / STAGE_TWO))
+
+	return .
+
+/obj/machinery/power/rtg/fake_rad_collector/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/tank/internals/plasma))
+		if(user.transferItemToLoc(tool, src))
+			has_ptank = TRUE
+			update_appearance()
+			return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/obj/machinery/power/rtg/fake_rad_collector/process()
+	power_gen = get_base_power_gen()
+	return ..()
+
 /obj/machinery/power/rtg/lavaland
 	name = "lava powered " + parent_type::name
 	desc = "A power generator that uses the heat and atmosphere of Lavaland to generate power. Won't generate squat anywhere else."
