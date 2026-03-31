@@ -694,39 +694,103 @@
 	desc = "A heavy jacket hood made from 'synthetic' animal furs, with custom colors."
 	greyscale_config = /datum/greyscale_config/winter_hoods
 	greyscale_config_worn = /datum/greyscale_config/winter_hoods/worn
+	flags_1 = NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/suit/hooded/wintercoat/pullover
-	name = "hoodie pullover"
+	name = "pullover"
 	desc = "A colorable pullover hoodie."
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/hooded/wintercoat/pullover"
 	post_init_icon_state = "pullover"
-	greyscale_config = /datum/greyscale_config/hoodie
-	greyscale_config_worn = /datum/greyscale_config/hoodie/worn
-	greyscale_colors = "#e05fb5"
+	greyscale_config = /datum/greyscale_config/hoodie_pullover
+	greyscale_config_worn = /datum/greyscale_config/hoodie_pullover/worn
+	greyscale_colors = "#5f5f5f"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/pullover
 	flags_1 = IS_PLAYER_COLORABLE_1
+	hood_down_overlay_suffix = ""
+	hood_up_affix = "_t"
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover/click_alt(mob/user)
+	return CLICK_ACTION_BLOCKING
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover/examine(mob/user)
+	. = ..()
+	for(var/line in .)
+		if(istext(line) && findtext(line, "<b>Alt-click</b> to"))
+			. -= line
+			break
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover/on_hood_up(obj/item/clothing/head/hooded/hood)
+	return
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover/on_hood_down(obj/item/clothing/head/hooded/hood)
+	return
 
 /obj/item/clothing/head/hooded/winterhood/pullover
-	name = "hoodie pullover hood"
+	name = "pullover hood"
 	desc = "A colorable pullover hoodie."
-	greyscale_config = /datum/greyscale_config/hoodie_hoods
-	greyscale_config_worn = /datum/greyscale_config/hoodie_hoods/worn
-	greyscale_colors = "#e05fb5"
+	icon_state = "hood_pullover"
+	hair_mask = /datum/hair_mask/hoodie
+	greyscale_config = /datum/greyscale_config/hoodie_pullover_hood
+	greyscale_config_worn = /datum/greyscale_config/hoodie_pullover_hood/worn
+	greyscale_colors = "#5f5f5f"
+	flags_1 = NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/suit/hooded/wintercoat/pullover/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
 	. = ..()
 	if(!hood)
 		return
 	var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
-	var/list/new_coat_colors = coat_colors.Copy(1,4)
-	hood.set_greyscale(new_coat_colors)
+	hood.set_greyscale(coat_colors)
 	hood.update_slot_icon()
 
 /obj/item/clothing/suit/hooded/wintercoat/pullover/on_hood_created(obj/item/clothing/head/hooded/hood)
 	. = ..()
-	var/list/coat_colors = (SSgreyscale.ParseColorString(greyscale_colors))
-	var/list/new_coat_colors = coat_colors.Copy(1,4)
-	hood.set_greyscale(new_coat_colors)
+	var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	hood.set_greyscale(coat_colors)
 
-///worn hoodie hood doesnt color, hoodie up invis, hoodie up forced _t hoodie
+/obj/item/clothing/suit/hooded/wintercoat/zipup
+	name = "zipup"
+	desc = "A colorable zipup hoodie."
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/hooded/wintercoat/zipup"
+	post_init_icon_state = "zipup"
+	greyscale_config = /datum/greyscale_config/hoodie_zipup
+	greyscale_config_worn = /datum/greyscale_config/hoodie_zipup/worn
+	greyscale_colors = "#5f5f5f"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/zipup
+	flags_1 = IS_PLAYER_COLORABLE_1
+	hood_down_overlay_suffix = ""
+	hood_up_affix = "_t"
+
+/obj/item/clothing/suit/hooded/wintercoat/zipup/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(isinhands || (hood && hood.loc != src))
+		return
+
+	var/suffix = (zipped ? "hood_t" : "hood")
+	var/state = "[initial(post_init_icon_state) || initial(icon_state)]_[suffix]"
+	. += mutable_appearance(icon_file, state, -SUIT_LAYER)
+
+/obj/item/clothing/head/hooded/winterhood/zipup
+	name = "zipup hood"
+	desc = "A colorable zipup hoodie."
+	icon_state = "hood_zipup"
+	hair_mask = /datum/hair_mask/hoodie
+	greyscale_config = /datum/greyscale_config/hoodie_zipup_hood
+	greyscale_config_worn = /datum/greyscale_config/hoodie_zipup_hood/worn
+	greyscale_colors = "#5f5f5f"
+	flags_1 = NO_NEW_GAGS_PREVIEW_1
+
+/obj/item/clothing/suit/hooded/wintercoat/zipup/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	. = ..()
+	if(!hood)
+		return
+	var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	hood.set_greyscale(coat_colors)
+	hood.update_slot_icon()
+
+/obj/item/clothing/suit/hooded/wintercoat/zipup/on_hood_created(obj/item/clothing/head/hooded/hood)
+	. = ..()
+	var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	hood.set_greyscale(coat_colors)

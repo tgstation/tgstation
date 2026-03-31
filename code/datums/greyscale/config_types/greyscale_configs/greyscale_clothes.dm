@@ -739,25 +739,45 @@
 	name = "H.E.C.K. Helmet (Worn)"
 	icon_file = 'icons/mob/clothing/head/helmet.dmi'
 
-/datum/greyscale_config/hoodie
-	name = "Hoodie"
+/datum/greyscale_config/hoodie_pullover
+	name = "Pullover Hoodie"
 	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
-	json_config = 'code/datums/greyscale/json_configs/hoodie.json'
+	json_config = 'code/datums/greyscale/json_configs/pullover.json'
 
-/datum/greyscale_config/hoodie/worn
-	name = "Hoodie (Worn)"
+/datum/greyscale_config/hoodie_pullover/worn
+	name = "Pullover Hoodie (Worn)"
 	icon_file = 'icons/mob/clothing/suits/wintercoat.dmi'
-	json_config = 'code/datums/greyscale/json_configs/hoodie_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/pullover_worn.json'
 
-/datum/greyscale_config/hoodie_hoods
-	name = "Hoodie Hood"
+/datum/greyscale_config/hoodie_pullover_hood
+	name = "Pullover Hood"
 	icon_file = 'icons/obj/clothing/head/winterhood.dmi'
-	json_config = 'code/datums/greyscale/json_configs/hoodie_hood.json'
+	json_config = 'code/datums/greyscale/json_configs/pullover_hood.json'
 
-/datum/greyscale_config/hoodie_hoods/worn
-	name = "Hoodie Hood (Worn)"
+/datum/greyscale_config/hoodie_pullover_hood/worn
+	name = "Pullover Hood (Worn)"
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
-	json_config = 'code/datums/greyscale/json_configs/hoodie_hood_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/pullover_hood_worn.json'
+
+/datum/greyscale_config/hoodie_zipup
+	name = "Zipup Hoodie"
+	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/zipup.json'
+
+/datum/greyscale_config/hoodie_zipup/worn
+	name = "Zipup Hoodie (Worn)"
+	icon_file = 'icons/mob/clothing/suits/wintercoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/zipup_worn.json'
+
+/datum/greyscale_config/hoodie_zipup_hood
+	name = "Zipup Hood"
+	icon_file = 'icons/obj/clothing/head/winterhood.dmi'
+	json_config = 'code/datums/greyscale/json_configs/zipup_hood.json'
+
+/datum/greyscale_config/hoodie_zipup_hood/worn
+	name = "Zipup Hood (Worn)"
+	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
+	json_config = 'code/datums/greyscale/json_configs/zipup_hood_worn.json'
 
 //
 // COSTUMES

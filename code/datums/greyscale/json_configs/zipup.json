@@ -1,16 +1,16 @@
 {
-	"pullover": [
+	"zipup": [
 		{
 			"type": "icon_state",
-			"icon_state": "pullover",
+			"icon_state": "zipup",
 			"blend_mode": "overlay",
 			"color_ids": [1]
 		}
 	],
-	"pullover_t": [
+	"zipup_t": [
 		{
 			"type": "icon_state",
-			"icon_state": "pullover_t",
+			"icon_state": "zipup_t",
 			"blend_mode": "overlay",
 			"color_ids": [1]
 		}
