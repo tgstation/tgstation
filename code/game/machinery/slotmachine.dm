@@ -640,10 +640,10 @@
 	desc = "Every credit spent here is a credit that won't be spent on 'useless' things, like food or medicine."
 	symbol_paths = list(
 		/obj/item/bounty_cube,
-		/obj/structure/closet/crate,
-		/mob/living/simple_animal/bot/mulebot,
+		/obj/structure/closet/crate/cardboard,
+		/obj/item/universal_scanner,
 		/mob/living/basic/sloth,
-		/obj/machinery/materials_market,
+		/obj/item/multitool,
 		/obj/vehicle/sealed/mecha/ripley,
 		/obj/item/suspiciousphone,
 	)
