@@ -24,6 +24,8 @@ type Data = {
   jackpots: number;
   jackpot: number;
   paymode: number;
+  jackpot_id: string;
+  trap_id: string;
 };
 
 type SlotSymbol = {
@@ -66,8 +68,11 @@ export const SlotMachine = () => {
     return map;
   }, [symbols]);
 
+  const jackpotSymbol = symbolsById[data.jackpot_id];
+  const trapSymbol = data.trap_id ? symbolsById[data.trap_id] : null;
+
   return (
-    <Window width={300} height={396}>
+    <Window width={300} height={440}>
       <Window.Content>
         <Banner />
         <Section>
@@ -84,35 +89,69 @@ export const SlotMachine = () => {
             ))}
           </div>
         </Section>
-        <Stack align={'stretch'}>
-          <Stack.Item grow={1}>
-            <Section
-              fill
-              title="Balance"
-              buttons={
-                <Button onClick={() => act('payout')} disabled={balance <= 0}>
-                  Refund
-                </Button>
-              }
-            >
-              <Box textAlign={'center'} fontSize={2}>
-                {formatMoney(balance)} cr
+        <Stack vertical fill>
+          <Stack.Item>
+            <Box textAlign="center" color="label" fontSize="12px" mt={1}>
+              <Box inline color="good" bold mr={1}>
+                Jackpot:
               </Box>
-            </Section>
+              {jackpotSymbol && (
+                <DmIcon
+                  icon={jackpotSymbol.icon}
+                  icon_state={jackpotSymbol.icon_state}
+                  style={{ verticalAlign: 'middle', marginRight: '16px' }}
+                />
+              )}
+
+              {trapSymbol && (
+                <>
+                  <Box inline color="bad" bold mr={1}>
+                    Trap:
+                  </Box>
+                  <DmIcon
+                    icon={trapSymbol.icon}
+                    icon_state={trapSymbol.icon_state}
+                    style={{ verticalAlign: 'middle' }}
+                  />
+                </>
+              )}
+            </Box>
           </Stack.Item>
           <Stack.Item grow={1}>
-            <Section fill>
-              <Button
-                fluid
-                textAlign={'center'}
-                fontSize={3}
-                color={'green'}
-                onClick={() => act('spin')}
-                disabled={spinning || balance < cost}
-              >
-                Spin!
-              </Button>
-            </Section>
+            <Stack align={'stretch'}>
+              <Stack.Item grow={1}>
+                <Section
+                  fill
+                  title="Balance"
+                  buttons={
+                    <Button
+                      onClick={() => act('payout')}
+                      disabled={balance <= 0}
+                    >
+                      Refund
+                    </Button>
+                  }
+                >
+                  <Box textAlign={'center'} fontSize={2}>
+                    {formatMoney(balance)} cr
+                  </Box>
+                </Section>
+              </Stack.Item>
+              <Stack.Item grow={1}>
+                <Section fill>
+                  <Button
+                    fluid
+                    textAlign={'center'}
+                    fontSize={3}
+                    color={'green'}
+                    onClick={() => act('spin')}
+                    disabled={spinning || balance < cost}
+                  >
+                    Spin!
+                  </Button>
+                </Section>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
         </Stack>
       </Window.Content>
