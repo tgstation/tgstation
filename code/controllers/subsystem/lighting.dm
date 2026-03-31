@@ -133,3 +133,13 @@ SUBSYSTEM_DEF(lighting)
 /datum/controller/subsystem/lighting/Recover()
 	initialized = SSlighting.initialized
 	..()
+
+/// Takes a list of turfs in, and sets up static lighting for them as needed.
+/// Exactly what it says on the tin.
+/datum/controller/subsystem/lighting/proc/setup_static_lighting_if_needed(list/turfs)
+	for(var/turf/unlit as anything in turfs)
+		if(unlit.space_lit)
+			continue
+		var/area/loc_area = unlit.loc
+		if(loc_area.static_lighting)
+			unlit.lighting_build_overlay()
