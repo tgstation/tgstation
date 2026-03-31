@@ -107,7 +107,7 @@
 			the_dance = GLOB.all_dances_by_name[pick(GLOB.all_dances_by_name)]
 		if(the_dance)
 			dancer.start_dancing(the_dance)
-		return ..(user, the_dance.emote_text, type_override, intentional)
+			return ..(user, the_dance.emote_text, type_override, intentional)
 	return ..()
 
 /datum/emote/living/deathgasp
@@ -639,7 +639,7 @@
 		var/datum/dance_moves/the_dance = GLOB.wave_moves
 		if(the_dance)
 			dancer.start_dancing(the_dance)
-		return ..(user, the_dance.emote_text, type_override, intentional)
+			return ..(user, the_dance.emote_text, type_override, intentional)
 	return ..()
 
 /datum/emote/living/whimper
