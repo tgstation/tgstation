@@ -1,0 +1,4 @@
+author: "KingkumaArt"
+delete-after: True
+changes:
+  - bugfix: "Fixes mech energy guns draining 100x less than intended."
