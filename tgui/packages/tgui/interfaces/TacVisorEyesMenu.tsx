@@ -1,5 +1,4 @@
 import { Button, Dropdown, LabeledList, Section } from 'tgui-core/components';
-import { capitalize } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
