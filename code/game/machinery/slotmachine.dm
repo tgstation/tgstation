@@ -239,6 +239,11 @@
 	balloon_alert(user, "machine rigged")
 	return TRUE
 
+/obj/machinery/computer/slot_machine/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet_batched/slot_machines),
+	)
+
 /obj/machinery/computer/slot_machine/ui_interact(mob/living/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -550,7 +555,6 @@
 /obj/machinery/computer/slot_machine/command
 	name = "command slot machine"
 	desc = "The handle is made of solid gold, and the screen is polished with the tears of overworked assistants."
-	icon_state = "/obj/machinery/computer/slot_machine/command"
 	symbol_paths = list(
 		/obj/item/disk/nuclear,
 		/obj/item/clothing/accessory/medal/gold,
@@ -571,7 +575,6 @@
 /obj/machinery/computer/slot_machine/security
 	name = "security slot machine"
 	desc = "Repurposed from a confiscated syndicate gambling ring. Losing is a crime. Winning is also a crime."
-	icon_state = "/obj/machinery/computer/slot_machine/security"
 	symbol_paths = list(
 		/obj/item/food/donut/berry,
 		/mob/living/simple_animal/bot/secbot/beepsky,
@@ -592,7 +595,6 @@
 /obj/machinery/computer/slot_machine/medical
 	name = "medical slot machine"
 	desc = "A miracle of modern medicine! It cures boredom, but causes acute financial necrosis."
-	icon_state = "/obj/machinery/computer/slot_machine/medical"
 	symbol_paths = list(
 		/obj/item/storage/medkit/brute,
 		/obj/vehicle/sealed/mecha/odysseus,
@@ -613,7 +615,6 @@
 /obj/machinery/computer/slot_machine/engineering
 	name = "engineering slot machine"
 	desc = "Gambling for those who think wearing insulated gloves makes them invincible. Ground yourself before playing."
-	icon_state = "/obj/machinery/computer/slot_machine/engineering"
 	symbol_paths = list(
 		/obj/item/storage/toolbox/mechanical,
 		/obj/item/blueprints,
@@ -634,7 +635,6 @@
 /obj/machinery/computer/slot_machine/cargo
 	name = "cargo slot machine"
 	desc = "Every credit spent here is a credit that won't be spent on 'useless' things, like food or medicine."
-	icon_state = "/obj/machinery/computer/slot_machine/cargo"
 	symbol_paths = list(
 		/obj/item/bounty_cube,
 		/obj/structure/closet/crate,
@@ -655,7 +655,6 @@
 /obj/machinery/computer/slot_machine/service
 	name = "service slot machine"
 	desc = "The handle is a repurposed rolling pin. Every loss is just another ingredient for the daily special."
-	icon_state = "/obj/machinery/computer/slot_machine/service"
 	symbol_paths = list(
 		/obj/item/clothing/head/hats/tophat,
 		/obj/item/reagent_containers/cup/watering_can,
@@ -676,7 +675,6 @@
 /obj/machinery/computer/slot_machine/science
 	name = "research slot machine"
 	desc = "The reels seem to exist in multiple dimensions at once. It still takes your money in all of them."
-	icon_state = "/obj/machinery/computer/slot_machine/science"
 	symbol_paths = list(
 		/obj/item/stack/sheet/mineral/gold,
 		/obj/item/stack/sheet/mineral/silver,
@@ -696,7 +694,6 @@
 
 /obj/machinery/computer/slot_machine/clown
 	desc = "Gambling is fun! Smells like bananas, wet shoes, and regret. HONK!"
-	icon_state = "/obj/machinery/computer/slot_machine/clown"
 	symbol_paths = list(
 		/obj/item/food/grown/banana,
 		/obj/item/toy/crayon/spraycan/lubecan,
@@ -716,7 +713,6 @@
 
 /obj/machinery/computer/slot_machine/mime
 	desc = "Gambling is a silent tragedy. The machine stares back at you with a cold indifference."
-	icon_state = "/obj/machinery/computer/slot_machine/mime"
 	symbol_paths = list(
 		/obj/vehicle/sealed/mecha/reticence,
 		/obj/item/clothing/mask/gas/mime,
@@ -737,7 +733,6 @@
 /obj/machinery/computer/slot_machine/syndicate
 	name = "syndicate slot machine"
 	desc = "Gambling for the operative who's already lost everything. Death to Nanotrasen, and death to your wallet."
-	icon_state = "/obj/machinery/computer/slot_machine/syndicate"
 	symbol_paths = list(
 		/obj/machinery/nuclearbomb,
 		/obj/item/card/emag,
