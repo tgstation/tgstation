@@ -1,5 +1,4 @@
 #define TALK_FILTER "talking_filter"
-#define YAP_TIME
 
 // Applies talking animations until you are done talking
 /datum/status_effect/yapping
