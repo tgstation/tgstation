@@ -45,9 +45,9 @@
 	/// Typepaths representing the symbols shown on this machine's reels
 	var/list/symbol_paths = list(
 		/obj/item/storage/bag/money,
-		/obj/item/food/grown/cherries,
+		/obj/item/food/grown/cherry_bomb,
 		/obj/item/grenade/flashbang,
-		/obj/item/rupee,
+		/obj/item/poker_chip,
 		/obj/item/food/grown/chili,
 		/obj/item/clothing/neck/necklace/dope,
 		/obj/item/stack/spacecash/c20,
@@ -59,7 +59,7 @@
 	var/list/slot_nouns = list("Bankroll", "Cashout", "Fortune", "Jackpot", "Luck", "Money", "Payday", "Reels", "Riches", "Spinner", "Spins", "Strike", "Treasure", "Spess")
 
 	/// The symbol typepath that pays out the jackpot when it lines up five wide
-	var/jackpot_path = /obj/item/rupee
+	var/jackpot_path = /obj/item/food/grown/cherry_bomb
 
 	/// The symbol typepath that activates a trap when it lines up five wide (set to null to disable)
 	var/trap_path = /obj/item/grenade/flashbang
@@ -121,6 +121,7 @@
 			"name" = symbol::name,
 			"icon" = symbol::icon,
 			"icon_state" = symbol::icon_state,
+			"icon_id" = sanitize_css_class_name("[symbol::icon][symbol::icon_state]")
 		))
 
 /obj/machinery/computer/slot_machine/on_deconstruction(disassembled)
@@ -640,7 +641,7 @@
 	desc = "Every credit spent here is a credit that won't be spent on 'useless' things, like food or medicine."
 	symbol_paths = list(
 		/obj/item/bounty_cube,
-		/obj/structure/closet/crate/cardboard,
+		/obj/item/clipboard,
 		/obj/item/universal_scanner,
 		/mob/living/basic/sloth,
 		/obj/item/multitool,
@@ -717,7 +718,7 @@
 /obj/machinery/computer/slot_machine/mime
 	desc = "Gambling is a silent tragedy. The machine stares back at you with a cold indifference."
 	symbol_paths = list(
-		/obj/vehicle/sealed/mecha/reticence,
+		/obj/item/book/granter/action/spell/mime/mimery,
 		/obj/item/clothing/mask/gas/mime,
 		/obj/item/toy/crayon/spraycan/mimecan,
 		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
@@ -725,7 +726,7 @@
 		/obj/item/storage/backpack/mime,
 		/obj/item/restraints/handcuffs,
 	)
-	jackpot_path = /obj/vehicle/sealed/mecha/reticence
+	jackpot_path = /obj/item/book/granter/action/spell/mime/mimery
 	trap_path = /obj/item/restraints/handcuffs
 
 /obj/machinery/computer/slot_machine/mime/Initialize(mapload)

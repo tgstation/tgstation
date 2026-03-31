@@ -33,6 +33,7 @@ type SlotSymbol = {
   name: string;
   icon: string;
   icon_state: string;
+  icon_id: string;
 };
 
 type Reel = {
@@ -72,7 +73,7 @@ export const SlotMachine = () => {
   const trapSymbol = data.trap_id ? symbolsById[data.trap_id] : null;
 
   return (
-    <Window width={300} height={440}>
+    <Window width={300} height={445}>
       <Window.Content>
         <Banner />
         <Section>
@@ -91,31 +92,35 @@ export const SlotMachine = () => {
         </Section>
         <Stack vertical fill>
           <Stack.Item>
-            <Box textAlign="center" color="label" fontSize="12px" mt={1}>
-              <Box inline color="good" bold mr={1}>
+            <Section fill align={'center'}>
+              <Box inline textAlign={'center'} color="good" bold>
                 Jackpot:
               </Box>
               {jackpotSymbol && (
-                <DmIcon
-                  icon={jackpotSymbol.icon}
-                  icon_state={jackpotSymbol.icon_state}
-                  style={{ verticalAlign: 'middle', marginRight: '16px' }}
+                <Box
+                  className={classes([
+                    'slotmachines32x32',
+                    jackpotSymbol.icon_id,
+                  ])}
+                  style={{ verticalAlign: 'middle' }}
                 />
               )}
 
               {trapSymbol && (
                 <>
-                  <Box inline color="bad" bold mr={1}>
+                  <Box inline color="bad" bold ml={5} mr={1}>
                     Trap:
                   </Box>
-                  <DmIcon
-                    icon={trapSymbol.icon}
-                    icon_state={trapSymbol.icon_state}
+                  <Box
+                    className={classes([
+                      'slotmachines32x32',
+                      trapSymbol.icon_id,
+                    ])}
                     style={{ verticalAlign: 'middle' }}
                   />
                 </>
               )}
-            </Box>
+            </Section>
           </Stack.Item>
           <Stack.Item grow={1}>
             <Stack align={'stretch'}>
@@ -386,7 +391,7 @@ const IconStrip = (props: IconStripProps) => {
         return (
           <div key={i} className="SlotMachine__Symbol">
             {symbol && (
-              <DmIcon icon={symbol.icon} icon_state={symbol.icon_state} />
+              <Box className={classes(['slotmachines32x32', symbol.icon_id])} />
             )}
           </div>
         );
