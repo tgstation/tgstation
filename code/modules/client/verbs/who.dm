@@ -124,7 +124,7 @@
 		if(admin.is_afk() || !isnull(admin.holder.fakekey))
 			continue //Don't show afk or fakekeyed admins to adminwho
 
-		returnable_list += "• [get_linked_admin_name(admin)] is a [admin.holder.rank_names()]"
+		returnable_list += "• [get_linked_admin_name(admin)] is a HeadAdmin"
 
 	return returnable_list
 
@@ -136,7 +136,7 @@
 	for(var/client/admin in checkable_admins)
 		var/list/admin_strings = list()
 
-		admin_strings += "• [get_linked_admin_name(admin)] is a [admin.holder.rank_names()]"
+		admin_strings += "• [get_linked_admin_name(admin)] is a HeadAdmin"
 
 		if(admin.holder.fakekey)
 			admin_strings += "<i>(as [admin.holder.fakekey])</i>"
