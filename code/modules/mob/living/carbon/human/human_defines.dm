@@ -86,6 +86,12 @@
 	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
 	var/list/afk_thefts
 
+	/// Data on the currently in-process dance
+	var/datum/active_dance/current_dance = null
+	var/datum/dance_sprites/current_dance_sprites = null
+	var/list/last_dance_sprites = null
+	COOLDOWN_DECLARE(last_dance_sprite_gen) // Cooldown on dance sprite generation so we don't kill the server with image operations
+
 	/// Base height of the mob, modified by stuff like dwarfism or species
 	VAR_PRIVATE/base_mob_height = HUMAN_HEIGHT_MEDIUM
 	/// Actual height of the mob. Don't touch this one, it is set via update_mob_height()

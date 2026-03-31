@@ -97,6 +97,19 @@
 	message = "dances around happily."
 	hands_use_check = TRUE
 
+/datum/emote/living/dance/run_emote(mob/living/user, params, type_override, intentional)
+	if(ishuman(user))
+		var/mob/living/carbon/human/dancer = user
+		var/datum/dance_moves/the_dance = null
+		if(params)
+			the_dance = GLOB.all_dances_by_name[LOWER_TEXT(params)]
+		if(!the_dance)
+			the_dance = GLOB.all_dances_by_name[pick(GLOB.all_dances_by_name)]
+		if(the_dance)
+			dancer.start_dancing(the_dance)
+		return ..(user, the_dance.emote_text, type_override, intentional)
+	return ..()
+
 /datum/emote/living/deathgasp
 	key = "deathgasp"
 	key_third_person = "deathgasps"
@@ -619,6 +632,15 @@
 	key = "wave"
 	key_third_person = "waves"
 	message = "waves."
+
+/datum/emote/living/wave/run_emote(mob/living/user, params, type_override, intentional)
+	if(ishuman(user))
+		var/mob/living/carbon/human/dancer = user
+		var/datum/dance_moves/the_dance = GLOB.wave_moves
+		if(the_dance)
+			dancer.start_dancing(the_dance)
+		return ..(user, the_dance.emote_text, type_override, intentional)
+	return ..()
 
 /datum/emote/living/whimper
 	key = "whimper"

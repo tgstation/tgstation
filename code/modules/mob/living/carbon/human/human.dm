@@ -70,6 +70,8 @@
 	if (mob_mood)
 		QDEL_NULL(mob_mood)
 
+	QDEL_NULL(current_dance)
+
 	return ..()
 
 /mob/living/carbon/human/prepare_data_huds()

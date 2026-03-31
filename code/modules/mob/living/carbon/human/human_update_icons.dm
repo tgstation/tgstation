@@ -45,10 +45,28 @@ There are several things that need to be remembered:
 		update_body()				//Calls update_body_parts(), as well as updates mutant bodyparts, the old, not-actually-bodypart system.
 */
 
+/mob/living/carbon/human/proc/handle_dance_sprites()
+	if(current_dance)
+		// Our sprite is being handled by the dance routine
+		cut_overlays()
+		return TRUE
+	return FALSE
+
+/mob/living/carbon/human/apply_overlay(cache_index)
+	if(handle_dance_sprites())
+		return
+	return ..()
+
+/mob/living/carbon/human/remove_overlay(cache_index)
+	if(handle_dance_sprites())
+		return
+	return ..()
+
 /* --------------------------------------- */
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
-
+	if(handle_dance_sprites())
+		return
 	if(!..())
 		update_worn_undersuit()
 		update_worn_id()

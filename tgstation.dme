@@ -5560,6 +5560,8 @@
 #include "code\modules\mob\living\carbon\alien\special\alien_embryo.dm"
 #include "code\modules\mob\living\carbon\alien\special\facehugger.dm"
 #include "code\modules\mob\living\carbon\human\_species.dm"
+#include "code\modules\mob\living\carbon\human\dances.dm"
+#include "code\modules\mob\living\carbon\human\dancing.dm"
 #include "code\modules\mob\living\carbon\human\death.dm"
 #include "code\modules\mob\living\carbon\human\dummy.dm"
 #include "code\modules\mob\living\carbon\human\emote.dm"
