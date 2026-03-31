@@ -524,7 +524,7 @@
 
 	if(!length(ingredients))
 		if(HAS_AI_ACCESS(user))
-			examine(user)
+			user.examinate(src)
 		else
 			balloon_alert(user, "it's empty!")
 		return
@@ -547,7 +547,7 @@
 			vampire_charging_enabled = TRUE
 			start_cycle(user)
 		if("examine")
-			examine(user)
+			user.examinate(src)
 
 /obj/machinery/microwave/wash(clean_types)
 	. = ..()

@@ -19,6 +19,8 @@
 #define VIEWPORT_USE_PREF "use_pref"
 #define WIDESCREEN_VIEWPORT_SIZE "19x15"
 #define SQUARE_VIEWPORT_SIZE "15x15"
+/// Largest viewport possible, required for checking if someone can see an object
+#define LARGEST_VIEWPORT_SIZE WIDESCREEN_VIEWPORT_SIZE
 
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.

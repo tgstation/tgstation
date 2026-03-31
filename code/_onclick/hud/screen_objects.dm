@@ -407,6 +407,63 @@
 	name = "Space suit cell status"
 	icon_state = "spacesuit_0"
 	screen_loc = ui_spacesuit
+	mouse_over_pointer = MOUSE_HAND_POINTER
+	///The overlay added on top of the HUD when the thermal regulator is off.
+	var/static/mutable_appearance/off_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "off")
+	///Boolean on whether a mouse is being hovered over us right now.
+	var/hovering = FALSE
+	///Boolean on whether or not the space suit's thermal mode is on. Start at TRUE so we auto-update when we are first equipped.
+	var/cached_thermal_on = TRUE
+
+/atom/movable/screen/spacesuit/Click(location, control, params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	var/mob/living/carbon/human/wearer = hud?.mymob
+	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.toggle_spacesuit(wearer, manual_toggle = TRUE)
+
+/atom/movable/screen/spacesuit/MouseEntered(location,control,params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	hovering = TRUE
+	var/mob/living/carbon/human/wearer = hud?.mymob
+	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.update_hud_icon(usr)
+
+/atom/movable/screen/spacesuit/MouseExited(location, control, params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	hovering = FALSE
+	var/mob/living/carbon/human/wearer = hud?.mymob
+	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.update_hud_icon(usr)
+
+/atom/movable/screen/spacesuit/proc/update_spacesuit_hud_icon(cell_state, cell_percent, thermal_on = TRUE)
+	if(cell_state)
+		switch(cell_state)
+			if(SPACESUIT_NO_ICON)
+				icon_state = null
+				maptext = null
+				cached_thermal_on = TRUE //for next use
+				update_appearance(UPDATE_ICON)
+				return
+			if(SPACESUIT_CELL_MISSING, SPACESUIT_CELL_EMPTY)
+				icon_state = "spacesuit_[cell_state]"
+				maptext = null
+			else
+				icon_state = "spacesuit_[cell_state]"
+	if(cell_percent && hovering)
+		maptext = MAPTEXT("<div align='right'>[round(cell_percent, 0.1)]%</div>")
+	else
+		maptext = null
+	if(thermal_on != cached_thermal_on)
+		cached_thermal_on = thermal_on
+		update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/spacesuit/update_overlays()
+	. = ..()
+	if(!cached_thermal_on && icon_state)
+		. |= off_overlay
 
 /atom/movable/screen/mov_intent
 	name = "run/walk toggle"
