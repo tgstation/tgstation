@@ -524,3 +524,8 @@
   - bugfix: Coroner cytology grown organs can mutate again
   Tsar-Salat:
   - bugfix: firebreath will light objects on fire more consistently
+2026-03-31:
+  Melbert:
+  - bugfix: Radio jammers no longer brick headsets forever
+  SmArtKar:
+  - bugfix: Fixed z-transition mirages not mirroring all objects on the other z level
