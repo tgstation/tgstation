@@ -14,8 +14,6 @@
 	var/gasmix_color
 	/// A named list of icon_file:overlay_object that gets automatically colored when the gasmix_color updates
 	var/list/gas_visuals
-	/// Whether the pipeline currently has visible gas (gasmix_color is not null/black). Used to avoid adding gas visuals to vis_contents when empty.
-	var/gas_visible = FALSE
 
 	///Should we equalize air amoung all our members?
 	var/update = TRUE
@@ -300,12 +298,10 @@
 //--------------------
 // GAS VISUALS STUFF
 //
-// Gas visuals use direct color + alpha animation on the gas_visual object rather than
-// a color filter + KEEP_APART. This avoids a separate GPU render pass and filter evaluation
-// per visible pipe, which massively reduces GPU cost for large visible pipelines.
-//
-// Gas visuals are only added to pipe vis_contents when the pipeline has visible gas
-// (gasmix_color is not null/black), eliminating all overhead for empty pipelines.
+// Gas visuals use direct color + alpha on the gas_visual object rather than
+// a color filter + KEEP_APART.
+// Color filters are expensive.
+// KEEP_APART forces a separate render.
 
 /**
  * Used to create and/or get the gas visual overlay created using the given icon file.
@@ -317,31 +313,13 @@
 
 	var/obj/effect/abstract/gas_visual/new_overlay = new
 	new_overlay.icon = icon_file
-	// Set initial state immediately without animation
-	if(gasmix_color && gasmix_color != COLOR_BLACK)
-		new_overlay.color = gasmix_color
-		new_overlay.alpha = 255
+	new_overlay.ChangeColor(gasmix_color)
 
 	gas_visuals[icon_file] = new_overlay
 	return new_overlay
 
 /// Called when the gasmix color has changed and the gas visuals need to be updated.
-/// Handles adding/removing gas visuals from pipe vis_contents on visibility transitions.
 /datum/pipeline/proc/UpdateGasVisuals()
-	var/now_visible = gasmix_color && gasmix_color != COLOR_BLACK
-
-	// Handle visibility transitions - add/remove from pipes' vis_contents
-	if(now_visible != gas_visible)
-		gas_visible = now_visible
-		for(var/obj/machinery/atmospherics/pipe/member as anything in members)
-			if(!member.has_gas_visuals)
-				continue
-			if(now_visible)
-				member.vis_contents += GetGasVisual('icons/obj/pipes_n_cables/!pipe_gas_overlays.dmi')
-			else
-				member.vis_contents -= GetGasVisual('icons/obj/pipes_n_cables/!pipe_gas_overlays.dmi')
-
-	// Update colors on existing gas visuals
 	for(var/icon/source as anything in gas_visuals)
 		var/obj/effect/abstract/gas_visual/overlay = gas_visuals[source]
 		overlay.ChangeColor(gasmix_color)
@@ -378,10 +356,9 @@
 /obj/effect/abstract/gas_visual
 	appearance_flags = RESET_COLOR
 	vis_flags = VIS_INHERIT_ICON_STATE | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
-	alpha = 0
+	color = COLOR_BLACK
 
 /obj/effect/abstract/gas_visual/proc/ChangeColor(new_color)
-	if(!new_color || new_color == COLOR_BLACK)
-		animate(src, alpha = 0, time = 0.5 SECONDS)
-	else
-		animate(src, color = new_color, alpha = 255, time = 0.5 SECONDS)
+	if(!new_color)
+		new_color = COLOR_BLACK
+	animate(src, color = new_color, time = 0.5 SECONDS)

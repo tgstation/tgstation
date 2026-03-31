@@ -101,12 +101,12 @@
 	return parent
 
 /obj/machinery/atmospherics/pipe/replace_pipenet(datum/pipeline/old_pipenet, datum/pipeline/new_pipenet)
-	if(parent && has_gas_visuals && parent.gas_visible)
+	if(parent && has_gas_visuals)
 		vis_contents -= parent.GetGasVisual('icons/obj/pipes_n_cables/!pipe_gas_overlays.dmi')
 
 	parent = new_pipenet
 
-	if(parent && has_gas_visuals && parent.gas_visible)
+	if(parent && has_gas_visuals) // null is a valid argument here
 		vis_contents += parent.GetGasVisual('icons/obj/pipes_n_cables/!pipe_gas_overlays.dmi')
 
 /obj/machinery/atmospherics/pipe/return_pipenets()
