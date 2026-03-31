@@ -186,18 +186,21 @@
 
 /**
  * Warren King's Welcome
- * Gives heretics easy access to maintenance airlocks without having to rely on a HoP or having to off some poor assistant.
- * Gives access to solars since those doors are especially useful to get in or out of space.
+ * Offers an alternative way besides stealing an ID or visiting the HoP to gain access to maintenance
+ * Additionally changes all nearby airlock's access's to ACCESS_HERETIC
  */
 /datum/heretic_knowledge/bookworm
 	name = "Warren King's Welcome"
-	desc = "Allows you to transmute 5 cable pieces and a piece of paper to infuse any ID with maintenace and external airlock access."
+	desc = "Allows you to transmute 10 cable pieces, a piece of paper, and a multitool to brand nearby ID cards and airlocks. \
+		Branded ID cards will gain access to maintenance, external airlocks, as well to branded airlocks. \
+		Branded airlocks will only be accessible by those with a branded ID card."
 	gain_text = "Gnawed into vicious-stained fingerbones, my grim invitation snaps my nauseous and clouded mind towards the heavy-set door. \
 		Slowly, the light dances between a crawling darkness, blanketing the fetid promenade with infinite machinations. \
 		But the King will soon take his pound of flesh. Even here, the taxman takes their cut. For there are a thousands mouths to feed."
 	required_atoms = list(
-		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/cable_coil = 10,
 		/obj/item/paper = 1,
+		/obj/item/multitool = 1,
 	)
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 3
@@ -208,17 +211,25 @@
 /datum/heretic_knowledge/bookworm/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
 	for(var/obj/item/card/id/used_id in atoms)
-		if((ACCESS_MAINT_TUNNELS in used_id.access) && (ACCESS_EXTERNAL_AIRLOCKS in used_id.access)) // If we can't give any access we aren't elligible
-			continue
 		selected_atoms += used_id
-		return TRUE
-
-	user.balloon_alert(user, "ritual failed, no ID lacking access!")
-	return FALSE
+	var/obj/item/card/user_card = user.get_idcard(hand_first = TRUE)
+	if(user_card)
+		selected_atoms += user_card
 
 /datum/heretic_knowledge/bookworm/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	var/obj/item/card/id/improved_id = locate() in selected_atoms
-	improved_id.add_access(list(ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS), mode = FORCE_ADD_ALL)
-	selected_atoms -= improved_id
+	for(var/obj/item/card/id/improved_id in selected_atoms)
+		improved_id.add_access(list(ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_HERETIC), mode = FORCE_ADD_ALL)
+		selected_atoms -= improved_id
+	for(var/obj/machinery/door/airlock/door in view(7, loc))
+		door.req_one_access = null
+		door.req_access = list(ACCESS_HERETIC)
+		door.wires?.cut(WIRE_AI)
+		new /obj/effect/temp_visual/eldritch_sparks(door.loc)
+		var/obj/effect/light_emitter/light = new(door.loc)
+		light.set_light(1.75, 1.5, COLOR_PUCE)
+		QDEL_IN(light, 1 SECONDS)
+		playsound(door, 'sound/effects/magic.ogg', 20, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, ignore_walls = FALSE)
+		playsound(door, SFX_SPARKS, 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, ignore_walls = FALSE)
+
 	return TRUE
