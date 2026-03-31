@@ -19,7 +19,7 @@
 	var/strength = 0
 	var/powered = FALSE
 
-/obj/machinery/particle_accelerator/control_box/Initialize()
+/obj/machinery/particle_accelerator/control_box/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/particle_accelerator/control_box(src)
 	connected_parts = list()

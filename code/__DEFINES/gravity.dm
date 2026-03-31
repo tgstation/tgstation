@@ -12,6 +12,8 @@
 /// Singularity is stage 6 (11x11)
 #define STAGE_SIX 11 //From supermatter shard
 
+#define TRAIT_BLOCK_SINGULO_PULL "block_singulo_pull"
+
 // Minimum energy needed to reach a stage
 /// Singularity stage 1 energy requirement
 #define STAGE_ONE_ENERGY_REQUIREMENT 1
