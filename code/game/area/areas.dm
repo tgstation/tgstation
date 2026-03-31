@@ -132,6 +132,9 @@
 	/// Are shuttles allowed to dock in this area
 	var/allow_shuttle_docking = FALSE
 
+	/// Are humans compelled to dance here?
+	var/wanna_dance = FALSE
+
 /**
  * A list of teleport locations
  *
