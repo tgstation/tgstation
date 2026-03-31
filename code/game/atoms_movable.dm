@@ -1307,6 +1307,9 @@
 	explosive_resistance += explosion_block
 	SEND_SIGNAL(src, COMSIG_MOVABLE_EXPLOSION_BLOCK_CHANGED, old_block, explosion_block)
 
+/**
+ * This proc is called when a thrown object makes contact with it's target. It then follows up by calling hitby below.
+ */
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = FALSE
 	var/hitpush = TRUE
@@ -1726,7 +1729,7 @@
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /movable ---")
 	VV_DROPDOWN_OPTION(VV_HK_OBSERVE_FOLLOW, "Observe Follow")
 	VV_DROPDOWN_OPTION(VV_HK_GET_MOVABLE, "Get Movable")
 	VV_DROPDOWN_OPTION(VV_HK_GET_FACTIONS, "Get Factions")
@@ -1770,11 +1773,13 @@
 		var/list/factions_printout = faction_to_text()
 		to_chat(usr, span_notice(span_notice("Factions for [src]:[factions_printout]")))
 
-	if(href_list[VV_HK_EDIT_PARTICLES] && check_rights(R_VAREDIT))
+	if(href_list[VV_HK_EDIT_PARTICLES])
 		var/client/C = usr.client
 		C?.open_particle_editor(src)
 
-	if(href_list[VV_HK_DEADCHAT_PLAYS] && check_rights(R_FUN))
+	if(href_list[VV_HK_DEADCHAT_PLAYS])
+		if(!check_rights(R_FUN))
+			return
 		if(tgui_alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", list("Allow", "Cancel")) != "Allow")
 			return
 		// Alert is async, so quick sanity check to make sure we should still be doing this.

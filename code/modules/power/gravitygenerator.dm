@@ -335,7 +335,8 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	soundloop.start()
 	var/old_gravity = gravity_in_level()
 	complete_state_update()
-	gravity_field = new(src, 2, TRUE, 6)
+	if (isnull(gravity_field))	// because if it isn't null, we have just overwritten it
+		gravity_field = new(src, 2, TRUE, 6)
 
 	if (!old_gravity)
 		if(SSticker.current_state == GAME_STATE_PLAYING)

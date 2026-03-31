@@ -165,8 +165,18 @@
 /atom/movable/screen/language_menu/Click()
 	usr.get_language_holder().open_language_menu(usr)
 
-/atom/movable/screen/language_menu/ghost
-	icon = 'icons/hud/screen_ghost.dmi'
+/atom/movable/screen/memories
+	name = "Memories"
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "memories"
+	screen_loc = ui_memories_menu
+	mouse_over_pointer = MOUSE_HAND_POINTER
+
+/atom/movable/screen/memories/Click()
+	if(!isliving(usr))
+		return TRUE
+	var/mob/living/daydreamer = usr
+	daydreamer.open_memory_panel()
 
 /atom/movable/screen/inventory
 	/// The identifier for the slot. It has nothing to do with ID cards.
@@ -393,13 +403,67 @@
 	icon_state = "floor_change_v"
 	vertical = TRUE
 
-/atom/movable/screen/floor_changer/vertical/ghost
-	icon = 'icons/hud/screen_ghost.dmi'
-
 /atom/movable/screen/spacesuit
 	name = "Space suit cell status"
 	icon_state = "spacesuit_0"
 	screen_loc = ui_spacesuit
+	mouse_over_pointer = MOUSE_HAND_POINTER
+	///The overlay added on top of the HUD when the thermal regulator is off.
+	var/static/mutable_appearance/off_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "off")
+	///Boolean on whether a mouse is being hovered over us right now.
+	var/hovering = FALSE
+	///Boolean on whether or not the space suit's thermal mode is on. Start at TRUE so we auto-update when we are first equipped.
+	var/cached_thermal_on = TRUE
+
+/atom/movable/screen/spacesuit/Click(location, control, params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	var/mob/living/carbon/human/wearer = hud?.mymob
+	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.toggle_spacesuit(wearer, manual_toggle = TRUE)
+
+/atom/movable/screen/spacesuit/MouseEntered(location,control,params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	hovering = TRUE
+	var/mob/living/carbon/human/wearer = hud?.mymob
+	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.update_hud_icon(usr)
+
+/atom/movable/screen/spacesuit/MouseExited(location, control, params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	hovering = FALSE
+	var/mob/living/carbon/human/wearer = hud?.mymob
+	astype(wearer.wear_suit, /obj/item/clothing/suit/space)?.update_hud_icon(usr)
+
+/atom/movable/screen/spacesuit/proc/update_spacesuit_hud_icon(cell_state, cell_percent, thermal_on = TRUE)
+	if(cell_state)
+		switch(cell_state)
+			if(SPACESUIT_NO_ICON)
+				icon_state = null
+				maptext = null
+				cached_thermal_on = TRUE //for next use
+				update_appearance(UPDATE_ICON)
+				return
+			if(SPACESUIT_CELL_MISSING, SPACESUIT_CELL_EMPTY)
+				icon_state = "spacesuit_[cell_state]"
+				maptext = null
+			else
+				icon_state = "spacesuit_[cell_state]"
+	if(cell_percent && hovering)
+		maptext = MAPTEXT("<div align='right'>[round(cell_percent, 0.1)]%</div>")
+	else
+		maptext = null
+	if(thermal_on != cached_thermal_on)
+		cached_thermal_on = thermal_on
+		update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/spacesuit/update_overlays()
+	. = ..()
+	if(!cached_thermal_on && icon_state)
+		. |= off_overlay
 
 /atom/movable/screen/mov_intent
 	name = "run/walk toggle"
@@ -792,8 +856,9 @@
 	update_appearance()
 
 /atom/movable/screen/healthdoll/human/update_body_zones()
-	limbs = list()
 	vis_contents.Cut()
+	QDEL_LIST_ASSOC_VAL(limbs)
+	limbs ||= list()
 	var/mob/living/carbon/human/owner = hud.mymob
 	for(var/body_zone in owner.get_all_limbs())
 		var/atom/movable/screen/healthdoll_limb/limb = new(src, null)
@@ -820,12 +885,13 @@
 
 	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
 
-	for(var/obj/item/bodypart/body_part as anything in owner.bodyparts)
+	for(var/part_zone, body_part_untyped in owner.get_bodyparts_by_zones())
 		var/icon_key = 0
-		var/part_zone = body_part.body_zone
-
+		var/obj/item/bodypart/body_part = body_part_untyped
 		var/list/overridable_key = list(icon_key)
-		if(body_part.bodypart_disabled)
+		if(isnull(body_part) || IS_STUMP(body_part))
+			icon_key = 6
+		else if(body_part.bodypart_disabled)
 			icon_key = 7
 		else if(owner.stat == DEAD)
 			icon_key = "DEAD"
@@ -836,15 +902,11 @@
 			// calculate what icon state (1-5, or 0 if undamaged) to use based on damage
 			icon_key = clamp(ceil(damage * 5), 0, 5)
 
-		if(length(body_part.wounds))
+		if(length(body_part?.wounds))
 			LAZYSET(animated_zones, part_zone, TRUE)
 		else
 			LAZYREMOVE(animated_zones, part_zone)
 		limbs[part_zone].icon_state = "[part_zone][icon_key]"
-	// handle leftovers
-	for(var/missing_zone in owner.get_missing_limbs())
-		limbs[missing_zone].icon_state = "[missing_zone]6"
-		LAZYREMOVE(animated_zones, missing_zone)
 	// time to re-sync animations, something changed
 	if(animated_zones ~! current_animated)
 		for(var/animated_zone in animated_zones)

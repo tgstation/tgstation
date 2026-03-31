@@ -499,7 +499,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	return list(/datum/reagent/carbon = 20)
 
 /obj/item/stack/sheet/mineral/coal/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
+	if(W.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //If the temperature of the object is hot enough to start a fire, then ignite
 		var/turf/T = get_turf(src)
 		message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		user.log_message("ignited coal", LOG_GAME)

@@ -978,7 +978,7 @@
 			return ITEM_INTERACT_BLOCKING
 		var/obj/machinery/atmospherics/target_pipe = target
 		target_pipe.paint(paint_color)
-		balloon_alert(user, "painted in  [GLOB.pipe_color_name[paint_color]] color")
+		balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
 	else if (is_type_in_typecache(target, direct_color_types))
 		target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 	else

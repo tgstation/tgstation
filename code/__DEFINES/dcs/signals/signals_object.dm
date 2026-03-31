@@ -151,6 +151,10 @@
 #define COMSIG_ITEM_STORED "item_stored"
 ///from base of datum/storage/handle_exit(): (datum/storage/storage)
 #define COMSIG_ITEM_UNSTORED "item_unstored"
+///from base of obj/item/do_pickup_animation(): ()
+#define COMSIG_ITEM_BEFORE_PICKUP_ANIMATION "item_before_pickup_animation"
+///from base of obj/item/do_drop_animation(): ()
+#define COMSIG_ITEM_BEFORE_DROP_ANIMATION "item_before_drop_animation"
 
 /**
  * From base of datum/strippable_item/get_alternate_actions(): (atom/owner, mob/user, list/alt_actions)
@@ -639,6 +643,9 @@
 /// Sent from /obj/item/mob_holder/purple_raptor/proc/toggle_wings() : (mob/living/carbon/human/user)
 #define COMSIG_RAPTOR_WINGS_CLOSED "raptor_wings_closed"
 
+/// Sent from /obj/machinery/vitals_monitor/proc/set_patient() : (mob/living/old_patient, mob/living/new_patient)
+#define COMSIG_VITALS_SET_PATIENT "vitals_set_patient"
+
 /// Sent from /obj/item/bodypart/limb/proc/apply_item(): (obj/item/bodypart/limb)
 #define COMSIG_ITEM_APPLIED_TO_LIMB "item_applied_to_limb"
 /// Sent from /obj/item/bodypart/limb/proc/Exited(): (obj/item/bodypart/limb)
@@ -647,3 +654,20 @@
 /// Sent from /obj/effect/rune/convert/try_sacrifice_item(obj/effect/rune/convert/rune)
 #define COMSIG_ITEM_CULT_SACRIFICE "item_cult_sacrifice"
 	#define COMPONENT_SACRIFICE_SUCCESSFUL (1<<0)
+
+/// Sent from /obj/item/mail/traitor/after_unwrap(mob/user, obj/item/mail/traitor/letter)
+#define COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL "traitor_mail_opened"
+	#define COMPONENT_TRAITOR_MAIL_HANDLED (1<<0)
+
+/// Send to items that have been unwrapped from a gift
+#define COMSIG_ITEM_OPENED_FROM_GIFT "gift_opened"
+
+/// From /obj/machinery/vending/ui_interact(): (mob/user, datum/vending_ui/ui)
+#define COMSIG_VENDING_UI_INTERACT "vending_ui_interact"
+	#define VENDING_DENIED (1<<0)
+
+/// From /obj/machinery/vending/dispense(): (obj/item/vended_item)
+#define COMSIG_VENDING_DISPENSED "vending_dispensed"
+
+/// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
+#define COMSIG_REFLECTION_UPDATED "reflection_updated"

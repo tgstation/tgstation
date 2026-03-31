@@ -372,3 +372,67 @@
   SyncIt21:
   - bugfix: moving reagents like acid/basic buffer and others across plumbing machinery
       produces correct effects again
+  Y0SH1M4S73R:
+  - rscadd: Adds ethereal mutation toxin, created by injecting enriched liquid electricity
+      into a green slime extract.
+  - qol: Moth Mutation Toxin and Felinid Mutation Toxin may be required for randomized
+      recipes. Remember, they are each obtained using cellulose and milk in a green
+      slime extract, respectively.
+  - rscadd: Adds ghost mutation toxin. You might find it in maintenance pills or strange
+      seeds.
+2026-02-25:
+  DaddyChristmas:
+  - balance: Golem shells can now be deconstructed with a crowbar (Not Golem the species!)
+  Dominion:
+  - rscadd: Incapacitation status effects and dead now trigger you to forcefully say
+      whatever was in your input prompt.
+  Melbert:
+  - refactor: Made some minor changes to how things like airlocks, vendors, and autolathes
+      shock you. Report any wierdness with that
+  - bugfix: Food items no longer "duplicate" their intended reagents when crafted
+  - rscadd: Spraying items with lube makes them slippery, causing them to fall out
+      of people's hands who try to pick them up or use them.
+  - rscadd: Vitals monitors have USB ports, allowing circuits to read patient status
+  SmArtKar:
+  - bugfix: Ghosts can now see through potted plants and syndicate armor when examining
+      people
+  - bugfix: Material turfs, such as plasma floors, now function again after 3+ years.
+  - bugfix: Condensers can no longer be used to ignite things
+  TealSeer:
+  - bugfix: fixed recharger not properly charging the laser rifle power pack
+  alien3301:
+  - balance: Clown's water flower can splash reagents
+  dwasint:
+  - qol: Ghosts now have runechat.
+  lelandkemble:
+  - rscadd: Several items have been given special interactions when placed inside
+      counterfit mail.
+  - bugfix: Bioscrambler anomaly pulse activation works
+  - bugfix: Pieces of paper no longer make bodybags inescapable
+2026-02-26:
+  nevimer:
+  - bugfix: fixed runechat's for radio emotes appearing incorrectly for observers
+  - code_imp: reuse the emote check from living's hearing function
+2026-02-27:
+  Absolucy:
+  - bugfix: Fixed a rare bug that could result in people permanently becoming pitch
+      black as a result of stabilized pyrite or regenerative rainbow extracts.
+  Ghommie:
+  - bugfix: Fixed materials not being applied when crafting with stacks if said stack
+      is zero'd in the process.
+  JohnFulpWillard:
+  - bugfix: pAIs/AIs in a Modsuit/PDA can now take photos properly, and their zoom
+      functionality works again.
+  - bugfix: pAI abilities like host scan now works while inside of a PDA.
+  - qol: pAI HUD now takes widescreen into account.
+  Melbert:
+  - bugfix: Weather anomaly cores are orderable from cargo
+  - refactor: Anomaly core cargo orders are auto-generated - report any oddities with
+      them.
+  MelokG000:
+  - qol: you can now quit the game
+  Swan:
+  - bugfix: fixes the gravity generator's crushing gravity effect not disappearing
+      when the gen goes offline
+  Watermelon914:
+  - bugfix: Fixed composite types appearing incorrectly in the IC editor.

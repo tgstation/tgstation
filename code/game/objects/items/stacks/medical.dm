@@ -230,7 +230,7 @@
 	PRIVATE_PROC(TRUE)
 
 	var/list/other_affected_limbs = list()
-	for(var/obj/item/bodypart/limb as anything in patient.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in patient.get_bodyparts())
 		if(!try_heal_checks(patient, user, limb.body_zone, silent = TRUE))
 			continue
 		other_affected_limbs += limb.body_zone
@@ -399,6 +399,7 @@
 		apply_category = LIMB_ITEM_GAUZE, \
 		override_existing = TRUE, \
 		can_apply = CALLBACK(src, PROC_REF(can_gauze_limb)), \
+		do_apply = CALLBACK(src, PROC_REF(do_gauze_limb)), \
 		on_apply = CALLBACK(src, PROC_REF(on_gauze_limb)), \
 	)
 	RegisterSignals(src, list(COMSIG_ITEM_APPLIED_TO_LIMB, COMSIG_ITEM_UNAPPLIED_FROM_LIMB), PROC_REF(update_wounds))
@@ -406,32 +407,45 @@
 /obj/item/stack/medical/wrap/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return NONE // uses component
 
-#define LACKS_WOUND 0
-#define HAS_WOUND 1
-#define HAS_SCANNED_WOUND 2
-
 /// Callback for limb applicability component
 /obj/item/stack/medical/wrap/proc/can_gauze_limb(mob/user, mob/living/patient, obj/item/bodypart/limb)
-	var/wound_tracker = LACKS_WOUND
-	for(var/datum/wound/woundies as anything in limb.wounds)
-		if(!(woundies.wound_flags & ACCEPTS_GAUZE))
+	var/can_gauze = FALSE
+	for(var/datum/wound/wound as anything in limb.wounds)
+		if(!(wound.wound_flags & ACCEPTS_GAUZE))
 			continue
-		if(HAS_TRAIT(woundies, TRAIT_WOUND_SCANNED))
-			wound_tracker = HAS_SCANNED_WOUND
-			break
-		wound_tracker = HAS_WOUND
+		can_gauze = TRUE
+		break
 
-	if(wound_tracker == LACKS_WOUND)
-		patient.balloon_alert(user, LAZYLEN(limb.wounds) ? "can't gauze!" : "no wounds!")
-		return FALSE
+	. = NONE
+	var/surgery_prepped = HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE)
+	if(!surgery_prepped)
+		. |= LIMB_APPLICABLE_BLOCK_ITEM_INTERACTION
+
+	if(!can_gauze)
+		if(!surgery_prepped)
+			patient.balloon_alert(user, LAZYLEN(limb.wounds) ? "can't gauze!" : "no wounds!")
+		. |= LIMB_APPLICABLE_BLOCK_APPLICATION
+		return .
 
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 	if(current_gauze && (current_gauze.absorption_capacity * 1.2 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
-		patient.balloon_alert(user, pick("already bandaged!", "bandage is clean!")) // good enough
-		return FALSE
+		if(!surgery_prepped)
+			patient.balloon_alert(user, pick("already bandaged!", "bandage is clean!")) // good enough
+		. |= LIMB_APPLICABLE_BLOCK_APPLICATION
+		return .
+
+/// Callback for limb applicability component
+/obj/item/stack/medical/wrap/proc/do_gauze_limb(mob/user, mob/living/patient, obj/item/bodypart/limb)
+
+	var/scanned_wound = FALSE
+	for(var/datum/wound/wound as anything in limb.wounds)
+		if(!HAS_TRAIT(wound, TRAIT_WOUND_SCANNED))
+			continue
+		scanned_wound = TRUE
+		break
 
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
-	if(wound_tracker == HAS_SCANNED_WOUND)
+	if(scanned_wound)
 		treatment_delay *= 0.5
 		if(user == patient)
 			user.visible_message(
@@ -482,10 +496,6 @@
 	SIGNAL_HANDLER
 	for(var/datum/wound/gauzed as anything in limb.wounds)
 		gauzed.update_inefficiencies()
-
-#undef LACKS_WOUND
-#undef HAS_WOUND
-#undef HAS_SCANNED_WOUND
 
 /obj/item/stack/medical/wrap/gauze
 	name = "medical gauze"
@@ -774,7 +784,7 @@
 		return BRUTELOSS
 
 	patient.emote("scream")
-	for(var/obj/item/bodypart/bone as anything in patient.bodyparts)
+	for(var/obj/item/bodypart/bone as anything in patient.get_bodyparts())
 		// fine to just, use these raw, its a meme anyway
 		var/datum/wound/blunt/bone/severe/oof_ouch = new
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")

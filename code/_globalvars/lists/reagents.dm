@@ -1,3 +1,6 @@
+///Maximum number of times to register a randomized reaction before giving up when collisions happen
+#define MAX_RANDOMIZED_REACTION_RETRY_ATTEMPTS 5
+
 //Pills & Patches
 /// List of containers the Chem Master machine can print
 GLOBAL_LIST_INIT(reagent_containers, list(
@@ -47,8 +50,6 @@ GLOBAL_LIST(chemical_reactions_list_product_index)
 GLOBAL_LIST_INIT(chemical_reagents_list, init_chemical_reagent_list())
 /// list of all reactions with their associated product and result ids. Used for reaction lookups
 GLOBAL_LIST(chemical_reactions_results_lookup_list)
-/// list of all reagents that are parent types used to define a bunch of children - but aren't used themselves as anything.
-GLOBAL_LIST(fake_reagent_blacklist)
 /// Turfs metalgen can't touch
 GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
 	/turf/closed/indestructible, //indestructible turfs should be indestructible, metalgen transmutation to plasma allows them to be destroyed
@@ -73,9 +74,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 /proc/init_chemical_reagent_list()
 	var/list/reagent_list = list()
 
-	for(var/datum/reagent/path as anything in subtypesof(/datum/reagent))
-		if(path in GLOB.fake_reagent_blacklist)
-			continue
+	for(var/datum/reagent/path as anything in valid_subtypesof(/datum/reagent))
 		var/datum/reagent/target_object = new path()
 		target_object.mass = rand(10, 800)
 		reagent_list[path] = target_object
@@ -94,9 +93,6 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 	if(GLOB.chemical_reactions_list_reactant_index)
 		return
 
-	//Prevent these reactions from appearing in lookup tables (UI code)
-	var/list/blacklist = typecacheof(/datum/chemical_reaction/randomized)
-
 	//Randomized need to go last since they need to check against conflicts with normal recipes
 	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
 	GLOB.chemical_reactions_list = list() //typepath to reaction list
@@ -104,9 +100,16 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 	GLOB.chemical_reactions_results_lookup_list = list() //UI glob
 	GLOB.chemical_reactions_list_product_index = list() //product to reaction list
 
+	//Randomized recipes
+	var/json_file = file("data/RandomizedChemRecipes.json")
+	var/json
+	if(fexists(json_file))
+		json = json_decode(file2text(json_file))
+
 	var/list/datum/chemical_reaction/reactions = list()
-	for(var/path in paths)
-		var/datum/chemical_reaction/reaction = new path()
+	for(var/datum/chemical_reaction/reaction as anything in paths)
+		if(!ispath(reaction, /datum/chemical_reaction/randomized))
+			reaction = new reaction
 		reactions += reaction
 
 	// Ok so we're gonna do a thingTM here
@@ -115,14 +118,45 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 	// So instead, we're gonna wing it
 	var/list/reagent_to_react_count = list()
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
-		for(var/reagent_id in reaction.required_reagents)
-			reagent_to_react_count[reagent_id] += 1
+		if(!ispath(reaction, /datum/chemical_reaction/randomized))
+			for(var/reagent_id in reaction.required_reagents)
+				reagent_to_react_count[reagent_id] += 1
 
+	var/randomized_reaction_retry_attempts = 0
 	var/list/reaction_lookup = GLOB.chemical_reactions_list_reactant_index
 	// Create filters based on a random reagent id in the required reagents list - this is used to speed up handle_reactions()
 	// Basically, we only really need to care about ONE reagent, at least when initially filtering, since any others are ignorable
 	// Doing this separately because it relies on the loop above, and this is easier to parse
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
+		//check for collisions
+		if(ispath(reaction, /datum/chemical_reaction/randomized))
+			var/target_path = reaction
+			var/index = reactions.Find(reaction)
+			reaction = new target_path(json)
+
+			//failed to init
+			if(QDELETED(reaction))
+				reactions -= target_path
+				continue
+
+			//failed to resolve so retry
+			outer:
+				for(var/x in reaction.required_reagents)
+					for(var/datum/chemical_reaction/R in reaction_lookup[x])
+						if(chem_recipes_do_conflict(R, reaction))
+							reactions -= target_path
+							QDEL_NULL(reaction)
+							if(randomized_reaction_retry_attempts < MAX_RANDOMIZED_REACTION_RETRY_ATTEMPTS)
+								reactions += target_path
+								randomized_reaction_retry_attempts += 1
+							break outer
+
+			//add to list
+			if(!reaction)
+				continue
+			else
+				reactions[index] = reaction
+
 		var/preferred_id = null
 		for(var/reagent_id in reaction.required_reagents)
 			if(isnull(preferred_id))
@@ -152,19 +186,11 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 
 		GLOB.chemical_reactions_list[reaction.type] = reaction
 
-		for(var/reagent_path in reaction.required_reagents)
-			var/datum/reagent/reagent = find_reagent_object_from_type(reagent_path)
-			if(!istype(reagent))
-				stack_trace("Invalid reagent found in [reaction] required_reagents: [reagent_path]")
-				continue
-			reagents += list(list("name" = reagent.name, "id" = reagent.type))
+		for(var/datum/reagent/reagent as anything in reaction.required_reagents)
+			reagents += list(list("name" = reagent::name, "id" = reagent))
 
-		for(var/product in reaction.results)
-			var/datum/reagent/reagent = find_reagent_object_from_type(product)
-			if(!istype(reagent))
-				stack_trace("Invalid reagent found in [reaction] results: [product]")
-				continue
-			product_names += reagent.name
+		for(var/datum/reagent/product as anything in reaction.results)
+			product_names += product::name
 			product_ids += product
 
 		var/product_name
@@ -174,7 +200,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 		else
 			product_name = product_names[1]
 
-		if(!is_type_in_typecache(reaction.type, blacklist))
+		if(!istype(reaction, /datum/chemical_reaction/randomized))
 			//Master list of ALL reactions that is used in the UI lookup table. This is expensive to make, and we don't want to lag the server by creating it on UI request, so it's cached to send to UIs instantly.
 			GLOB.chemical_reactions_results_lookup_list += list(list(
 				"name" = product_name,
@@ -214,3 +240,5 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 
 	for(var/datum/stacked_metabolization_effect/effect as anything in valid_subtypesof(/datum/stacked_metabolization_effect))
 		. += new effect()
+
+#undef MAX_RANDOMIZED_REACTION_RETRY_ATTEMPTS

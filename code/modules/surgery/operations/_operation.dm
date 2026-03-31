@@ -185,7 +185,7 @@
 		if(suture_tool.amount <= 0)
 			return FALSE
 	else if(tool.tool_behaviour != TOOL_CAUTERY)
-		if(tool.get_temperature() <= 0)
+		if(tool.get_temperature() <= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			return FALSE
 
 	// we need to have a surgery state worth closing
@@ -837,6 +837,12 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(!check_availability(patient, operating_on, surgeon, tool, operation_args[OPERATION_TARGET_ZONE]))
 		return ITEM_INTERACT_BLOCKING
 
+	if(isitem(tool))
+		var/obj/item/realtool = tool
+		var/tool_return = SEND_SIGNAL(realtool, COMSIG_ITEM_USED_IN_SURGERY, src, operating_on, surgeon)
+		if(tool_return & ITEM_INTERACT_ANY_BLOCKER)
+			return tool_return
+
 	if(!start_operation(operating_on, surgeon, tool, operation_args))
 		return ITEM_INTERACT_BLOCKING
 
@@ -1291,6 +1297,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	abstract_type = /datum/surgery_operation/limb
 	/// Body type required to perform this operation
 	var/required_bodytype = NONE
+	/// If TRUE, this operation can be performed on stumps.
+	/// If FALSE, the target limb must be a full limb.
+	var/allow_stumps = FALSE
 
 /datum/surgery_operation/limb/all_blocked_strings()
 	. = ..()
@@ -1302,7 +1311,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/limb/get_operation_target(atom/movable/operating_on, body_zone)
 	if (isliving(operating_on))
 		var/mob/living/patient = operating_on
-		return patient.get_bodypart(deprecise_zone(body_zone))
+		return patient.get_bodypart(deprecise_zone(body_zone), allow_stumps)
 	if (!isbodypart(operating_on))
 		return null
 	return operating_on

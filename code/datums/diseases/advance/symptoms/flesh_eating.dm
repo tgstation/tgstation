@@ -60,7 +60,7 @@ Bonus
 	if(bleed)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/obj/item/bodypart/random_part = pick(H.bodyparts)
+			var/obj/item/bodypart/random_part = pick(H.get_bodyparts())
 			random_part.adjustBleedStacks(5 * power)
 	return 1
 

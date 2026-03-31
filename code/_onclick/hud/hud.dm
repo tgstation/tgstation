@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/healths
 	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll/healthdoll
-	var/atom/movable/screen/spacesuit
+	var/atom/movable/screen/spacesuit/spacesuit_hud
 	var/atom/movable/screen/hunger/hunger
 
 	/// Subtypes can override this to force a specific UI style
@@ -245,7 +245,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	healths = null
 	stamina = null
 	healthdoll = null
-	spacesuit = null
+	spacesuit_hud = null
 	hunger = null
 	alien_plasma_display = null
 	alien_queen_finder = null
@@ -349,9 +349,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += open_containers
 			screenmob.client.screen += toggle_palette
 
-			if(action_intent)
-				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
-
 		if(HUD_STYLE_REDUCED) //Reduced HUD
 			hud_shown = FALSE //Governs behavior of other procs
 			if(static_inventory.len)
@@ -396,7 +393,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	screenmob.reload_fullscreen()
 
 	if(screenmob == mymob)
-		update_parallax_pref(screenmob)
+		update_parallax_pref()
 	else
 		viewmob.hud_used.update_parallax_pref()
 

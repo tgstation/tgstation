@@ -4,12 +4,13 @@
 	var/atom/hanging_support_atom
 
 /datum/component/atom_mounted/Initialize(target_structure)
-	. = ..()
 	if(!isobj(parent) || !isatom(target_structure))
 		return COMPONENT_INCOMPATIBLE
+	. = ..()
+
 	hanging_support_atom = target_structure
 	RegisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	if(isclosedturf(hanging_support_atom))
+	if(isturf(hanging_support_atom))
 		RegisterSignal(hanging_support_atom, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
 	else
 		RegisterSignal(hanging_support_atom, COMSIG_QDELETING, PROC_REF(on_structure_delete))
@@ -28,6 +29,7 @@
 	UnregisterSignal(parent, signals)
 
 /datum/component/atom_mounted/Destroy(force)
+	UnregisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE)
 	hanging_support_atom = null
 	return ..()
 
@@ -37,25 +39,47 @@
 /datum/component/atom_mounted/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if (parent in view(user.client?.view || world.view, user))
+	if(parent in view(user.client?.view || world.view, user))
 		examine_list += span_notice("\The [hanging_support_atom] is currently supporting [span_bold("\the [parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
 
 /// When the type of turf changes, if it is changing into a floor we should drop our contents
-/datum/component/atom_mounted/proc/on_turf_changing(datum/source, path, new_baseturfs, flags, post_change_callbacks)
+/datum/component/atom_mounted/proc/on_turf_changing(turf/source, path, new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 
-	if(ispath(path, /turf/open))
-		drop_wallmount()
+	var/reload = FALSE
+
+	//For special effects where we explicitly want to preserve objects after change
+	if(flags & CHANGETURF_INHERIT_MOUNTS)
+		reload = TRUE
+	//if we transforming from open to open turf we can skip deconstruction under some conditions
+	else if(isopenturf(source) && ispath(path, /turf/open))
+		//we are transforming from plating into anything that isn't a groundless turf
+		if(isplatingturf(source) && !isgroundlessturf(path))
+			reload = TRUE
+		//we are transforming into plating turf
+		else if(ispath(LAZYACCESS(source.baseturfs, length(source.baseturfs)), /turf/open/floor/plating))
+			reload = TRUE
+
+	if(reload)
+		var/obj/target = parent
+		qdel(src)
+		post_change_callbacks += CALLBACK(target, TYPE_PROC_REF(/obj, remount))
+		return
+
+	drop_wallmount()
 
 ///When the atom the object is mounted on is destroyed deconstruct
 /datum/component/atom_mounted/proc/on_structure_delete(datum/source, force)
 	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
 
 	drop_wallmount()
 
 /// If we get dragged from our wall (by a singulo for instance) we should deconstruct
 /datum/component/atom_mounted/proc/on_move(datum/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
+
 	// If we're having our lighting messed with we're likely to get dragged about
 	// That shouldn't lead to a decon
 	if(HAS_TRAIT(parent, TRAIT_LIGHTING_DEBUGGED))
@@ -65,6 +89,7 @@
 ///Called when the object is about to be shuttle rotated so we have to delete ourself and mount again later
 /datum/component/atom_mounted/proc/detach(datum/source, newT, rotation, move_mode, moving_dock)
 	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
 
 	qdel(src)
 
@@ -175,8 +200,8 @@
 		obj_flags |= MOUNT_ON_LATE_INITIALIZE
 	return FALSE
 
-///Used to remount an object after shuttle move
-/obj/proc/remount(datum/source, oldT)
+///Used to remount an object in special cases
+/obj/proc/remount()
 	SIGNAL_HANDLER
 	PRIVATE_PROC(TRUE)
 

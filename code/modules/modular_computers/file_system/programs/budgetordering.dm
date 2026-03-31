@@ -215,7 +215,7 @@
 				user.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
-			var/id = text2path(params["id"])
+			var/id = text2path(params["id"]) || params["id"]
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return

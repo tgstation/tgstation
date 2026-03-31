@@ -7,6 +7,9 @@
 /// From /datum/surgery_operation/failure(): (datum/surgery_operation/operation, atom/movable/operating_on, tool)
 #define COMSIG_ATOM_SURGERY_FAILED "atom_surgery_step_failed"
 
+/// From /datum/surgery_operation/try_perform(), sent to the tool: (datum/surgery_operation/operation, atom/movable/operating_on, mob/living/surgeon)
+#define COMSIG_ITEM_USED_IN_SURGERY "item_used_in_surgery"
+
 /// From /obj/item/shockpaddles/do_help, after the defib do_after is complete, but before any effects are applied: (mob/living/defibber, obj/item/shockpaddles/source)
 #define COMSIG_DEFIBRILLATOR_PRE_HELP_ZAP "carbon_being_defibbed"
 	/// Return to stop default defib handling
@@ -23,3 +26,6 @@
 #define COMSIG_LIVING_OPERATING_ON "living_operating_on"
 /// Sent from /mob/living/perform_surgery: (mob/living/surgeon, list/possible_operations)
 #define COMSIG_ATOM_BEING_OPERATED_ON "atom_being_operated_on"
+
+/// From /obj/item/ph_meter/interact_with_atom(): (atom/source, mob/user)
+#define COMSIG_ON_REAGENT_SCAN "on_reagent_scan"

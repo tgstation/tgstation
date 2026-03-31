@@ -142,7 +142,7 @@
 		return
 	var/mob/living/carbon/victim = user
 	var/iteration = 0
-	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in victim.get_bodyparts())
 		if(istype(limb, /obj/item/bodypart/head) || istype(limb, /obj/item/bodypart/chest))
 			continue
 		iteration++
@@ -259,7 +259,7 @@
 	if(!length(valid_turfs))
 		var/mob/living/carbon/carbon_target = target
 		if(iscarbon(target))
-			var/obj/item/bodypart/limb = pick(carbon_target.bodyparts)
+			var/obj/item/bodypart/limb = pick(carbon_target.get_bodyparts())
 			limb.force_wound_upwards(/datum/wound/slash/flesh/severe)
 		return
 	throw_blade(pick(valid_turfs), target)
@@ -451,7 +451,7 @@
 		return
 	var/mob/living/carbon/victim = user
 	var/iteration = 0
-	for(var/obj/item/bodypart/limb as anything in victim.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in victim.get_bodyparts())
 		iteration++
 		addtimer(CALLBACK(limb, TYPE_PROC_REF(/obj/item/bodypart, force_wound_upwards), /datum/wound/slash/flesh/critical), 1 SECONDS * iteration)
 
