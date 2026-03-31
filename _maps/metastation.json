@@ -9,6 +9,7 @@
 		"whiteship": "whiteship_meta",
 		"emergency": "emergency_meta"
 	},
+	"allow_custom_shuttles": 0,
 	"traits": [
 		{
 			"Gravity": true
