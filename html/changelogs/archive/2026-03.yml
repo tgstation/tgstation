@@ -525,6 +525,8 @@
   Tsar-Salat:
   - bugfix: firebreath will light objects on fire more consistently
 2026-03-31:
+  KingkumaArt:
+  - bugfix: Fixes mech energy guns draining 100x less than intended.
   Melbert:
   - bugfix: Radio jammers no longer brick headsets forever
   SmArtKar:
