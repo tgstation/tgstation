@@ -118,3 +118,36 @@
 	// We removed any invalid casings from the atoms list,
 	// return to allow the ritual to fill out selected atoms with the new list
 	return TRUE
+
+/datum/heretic_knowledge/here_in_my_garage
+	name = "Knowledge to surpass materialistic things"
+	desc = "Sacrifice your codex cicatrix, and a clean 5,000 credits worth of money, in order to summon something far less valuable than knowledge."
+	gain_text = "Here in my garage, just bought this uhh, new Lamborghini here. It's fun to drive up here in the Hollywood Hills. But do you know what I like a lot more than materialistic things? Knowledge!...In fact, I am a lot more proud of these seven new bookshelves that I had to get installed, the whole 2000 new books that I've got. It's like...the billionaire Warren Buffet says: \"The more you learn, the more you earn.\". Now, maybe you've seen my Ted Ex talk where I talk about how I read a book a day- you know I read a book a day not to show off, once again, it's about the knowledge. The real reason I keep this Lamborghini here is that it's a reminder. A reminder that dreams are still possible. Because it wasn't that long ago that I was in a little town, across the country, sleepin'...on a couch, in a mobile home, with only $47 in my bank account. I didn't have a college degree. I had no opportunities. But you know what? Something happened that changed my life. I bumped into a mentor. And another mentor. And a few more mentors later I found FIVE mentors. And they showed me what THEY did- to become multi-millionaires. Again, it's not just about the money, it's about the good life: health, wealth, love and happiness. So I recorded a little video, it's actually on my website you can click here, on this video and it will take you to my website where I share THREE things that they taught me. THREE things that you can implement today, no matter where you are. Now, this isn't a \"get rich quick\" scheme. You know, like they say. If it sounds too good to be true, they are too good to be true. I'm not promising you that TOMORROW you will be able to go out and buy a Lamborghini- but what I am telling you is that it can happen faster than you think if you know the proven steps! So, I recorded a little 2 minute video on my website, uhh, like I said it's not the most professional, I just shot it here with my iPhone, but it's real. Nobody can argue that this is mine. True story. And I'mma give you...the three most important things you can do today. So click the link, go there. It's completely free to watch. It's just a couple minutes. Invest it in yourself. Always be curious. Don't be a cynic. Okay? People see videos like this and they say \"uhh that\'s not for me, that\'s for somebody else\". DON\'T LISTEN! Don\'t listen! Be an optimist! Like Conrad Hilton, the man who started Hilton Hotel, he said...that when he was 15 year old, he read a book by Helen Keller. And that book changed his life. Books can change your life and in that book, Helen Keller said: \"Optimism\". So, if you're a pessimist, if you're a cynic, you don't have to click here."
+
+	required_atoms = list(
+		/obj/item/codex_cicatrix = 1,
+	)
+	result_atoms = list(/obj/vehicle/sealed/car/speedwagon)
+	cost = 2
+	research_tree_icon_path = 'icons/obj/weapons/sword.dmi'
+	research_tree_icon_state = "v8_engine"
+	drafting_tier = 4
+
+/datum/heretic_knowledge/here_in_my_garage/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+
+	var/total = 0
+	for(var/obj/item/valuables as anything in atoms)
+		if(!isitem(valuables))
+			continue
+		var/subtotal = valuables.get_item_credit_value()\
+		if(subtotal > 0)
+			selected_atoms += valuables
+			total += subtotal
+
+	if(total < 5000)
+		loc.balloon_alert(user, "come back when you're a little, mmmmmmmmmm, richer!")
+		return FALSE
+
+	message_admins("Bro I'm so sorry")
+	return TRUE
