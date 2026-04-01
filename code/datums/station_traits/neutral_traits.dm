@@ -693,6 +693,9 @@
 		var/mob/living/basic/guardian/new_guardian = new guardian_type(user, theme)
 		new_guardian.set_summoner(user, TRUE)
 		new_guardian.PossessByPlayer(guardian_mind.key)
+		var/datum/action/cooldown/mob_cooldown/replace_guardian/replacement_action = locate() in user.actions
+		if(replacement_action)
+			replacement_action.Remove(user)
 		user.log_message("has been assigned [key_name(new_guardian)] by the jeffjeff station trait.", LOG_GAME)
 		new_guardian.log_message("was summoned as a guardian by the jeffjeff station trait.", LOG_GAME)
 		assigned_users -= user_mind
