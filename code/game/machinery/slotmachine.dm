@@ -472,5 +472,4 @@
 	if(C && !QDELETED(C))
 		random_step(C, 2, 40)
 		playsound(src, 'sound/machines/coindrop.ogg', 50, TRUE)
-		to_chat(world, span_notice("[C] drops out of [src]!"))
 	return C
