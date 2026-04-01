@@ -826,3 +826,21 @@
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
 	return 'sound/mobs/humanoids/human/whistle/whistle1.ogg'
+
+/datum/emote/living/menace
+	key = "menace"
+	key_third_person = "menaces"
+	cooldown = 3 SECONDS
+	emote_type = EMOTE_VISIBLE
+
+/datum/emote/living/menace/can_run_emote(mob/living/user, status_check, intentional, params)
+	. = ..()
+	if(!.)
+		return
+	return length(user.get_all_linked_holoparasites())
+
+/datum/emote/living/menace/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	var/image/emote_animation = image('icons/effects/menacing.dmi', user, "clear", pixel_x = -5)
+	animate(emote_animation, 0.5 SECONDS, delay = 4 SECONDS, easing = CUBIC_EASING|EASE_IN, alpha = 0)
+	flick_overlay_global(emote_animation, GLOB.clients, 4.5 SECONDS)
