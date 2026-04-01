@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 			for(var/reagent_id in reaction.required_reagents)
 				reagent_to_react_count[reagent_id] += 1
 
-	var/randomized_reaction_retry_attempts = 0
+	var/list/randomized_reaction_retry_attempts = list()
 	var/list/reaction_lookup = GLOB.chemical_reactions_list_reactant_index
 	// Create filters based on a random reagent id in the required reagents list - this is used to speed up handle_reactions()
 	// Basically, we only really need to care about ONE reagent, at least when initially filtering, since any others are ignorable
@@ -146,9 +146,13 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 						if(chem_recipes_do_conflict(R, reaction))
 							reactions -= target_path
 							QDEL_NULL(reaction)
-							if(randomized_reaction_retry_attempts < MAX_RANDOMIZED_REACTION_RETRY_ATTEMPTS)
+							var/attempts = randomized_reaction_retry_attempts[target_path]
+							if(!attempts)
+								attempts = 0
+								randomized_reaction_retry_attempts[target_path] = attempts
+							if(attempts < MAX_RANDOMIZED_REACTION_RETRY_ATTEMPTS)
 								reactions += target_path
-								randomized_reaction_retry_attempts += 1
+								randomized_reaction_retry_attempts[target_path] += 1
 							break outer
 
 			//add to list
