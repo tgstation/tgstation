@@ -140,7 +140,7 @@
 	for(var/obj/item/valuables as anything in atoms)
 		if(!isitem(valuables))
 			continue
-		var/subtotal = valuables.get_item_credit_value()\
+		var/subtotal = valuables.get_item_credit_value()
 		if(subtotal > 0)
 			selected_atoms += valuables
 			total += subtotal
