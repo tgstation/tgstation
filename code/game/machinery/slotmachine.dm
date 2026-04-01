@@ -79,6 +79,9 @@
 /obj/machinery/computer/slot_machine/on_deconstruction(disassembled)
 	if(balance)
 		give_payout(balance)
+	if(working)
+		give_random_coin()
+
 
 /obj/machinery/computer/slot_machine/process(seconds_per_tick)
 	. = ..() //Sanity checks.
@@ -450,3 +453,24 @@
 #undef JACKPOT_SEVENS
 #undef HOLOCHIP
 #undef COIN
+
+///Fool's Day shit by maximal08
+
+/obj/machinery/computer/slot_machine/proc/give_random_coin()
+	var/list/all_coins = list()
+	for(var/T in typesof(/obj/item/coin))
+		var/obj/item/coin/test_coin = new T()
+		if(test_coin && !QDELETED(test_coin))
+			all_coins += T
+			qdel(test_coin)
+
+	if(!all_coins.len)
+		return null
+
+	var/coin_type = pick(all_coins)
+	var/obj/item/coin/C = new coin_type(loc)
+	if(C && !QDELETED(C))
+		random_step(C, 2, 40)
+		playsound(src, 'sound/machines/coindrop.ogg', 50, TRUE)
+		to_chat(world, span_notice("[C] drops out of [src]!"))
+	return C
