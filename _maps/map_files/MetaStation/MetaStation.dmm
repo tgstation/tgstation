@@ -7038,7 +7038,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/armory/e_gun,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/gun/energy/e_gun/advtaser,
+/obj/item/gun/energy/taser,
 /turf/open/floor/iron,
 /area/station/security/armory)
 "dDx" = (
@@ -32367,6 +32367,10 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
+"qzd" = (
+/mob/living/basic/slime,
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "qzs" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -82142,7 +82146,7 @@ mtu
 mtu
 xVu
 uEa
-mtu
+qzd
 mtu
 xVu
 mLV
@@ -84208,7 +84212,7 @@ cNt
 fRD
 nBa
 mtu
-mtu
+qzd
 mtu
 jlU
 lMJ
