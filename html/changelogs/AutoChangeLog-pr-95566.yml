@@ -1,0 +1,5 @@
+author: "Kashargul"
+delete-after: True
+changes:
+  - bugfix: "admin spawn panel persistent paths, panel offsets, panel diagonal dirs"
+  - bugfix: "admin spawn atom verb, crash on early enter, arrow key scroll focus"
