@@ -28,7 +28,7 @@
 		/obj/item/restraints/handcuffs/cable = 1,
 		/obj/item/stack/rods = 1,
 		/obj/item/assembly/igniter = 1,
-		/obj/item/stack/telecrystal = 1,
+		/obj/item/stack/sheet/telecrystal = 1,
 	)
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE

@@ -884,3 +884,25 @@
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(30, BURN, BODY_ZONE_HEAD, wound_bonus = 5)
 	return TRUE
+
+/datum/material/telecrystal
+	name = "telecrystal"
+	desc = "An ominous-looking gemstone capable of transporting objects vast distances through bluespace."
+	color = "#BD1B28"
+	alpha = 200
+	starlight_color = COLOR_SYNDIE_RED
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 1,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 10,
+		MATERIAL_ELECTRICAL = 10,
+		MATERIAL_THERMAL = 2,
+		MATERIAL_CHEMICAL = 8,
+		MATERIAL_BEAUTY = -0.5, // very evil bad no good
+	)
+	sheet_type = /obj/item/stack/sheet/telecrystal
+	material_reagent = list(/datum/reagent/bluespace = 1, /datum/reagent/medicine/stimulants = 1) // We don't have liquid telecrystals and I don't wanna risk it
+	value_per_unit = 1200 / SHEET_MATERIAL_AMOUNT
+	texture_layer_icon_state = "shine"

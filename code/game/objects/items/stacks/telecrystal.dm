@@ -1,4 +1,4 @@
-/obj/item/stack/telecrystal
+/obj/item/stack/sheet/telecrystal
 	name = "telecrystal"
 	desc = "It seems to be pulsing with suspiciously enticing energies."
 	singular_name = "telecrystal"
@@ -8,10 +8,11 @@
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 50
 	item_flags = NOBLUDGEON
-	merge_type = /obj/item/stack/telecrystal
+	merge_type = /obj/item/stack/sheet/telecrystal
 	novariants = FALSE
+	material_type = /datum/material/telecrystal
 
-/obj/item/stack/telecrystal/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/stack/sheet/telecrystal/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(interacting_with != user) //You can't go around smacking people with crystals to find out if they have an uplink or not.
 		return NONE
 
@@ -26,8 +27,8 @@
 			to_chat(user, span_notice("You press [src] onto yourself and charge your hidden uplink."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/stack/telecrystal/five
+/obj/item/stack/sheet/telecrystal/five
 	amount = 5
 
-/obj/item/stack/telecrystal/twenty
+/obj/item/stack/sheet/telecrystal/twenty
 	amount = 20

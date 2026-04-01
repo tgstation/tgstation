@@ -272,7 +272,7 @@
 		/obj/item/stack/sheet/mineral/gold = 25,
 		/obj/item/stack/sheet/mineral/silver = 25,
 		/obj/item/food/donkpocket = 1,
-		/obj/item/stack/telecrystal = 4,
+		/obj/item/stack/sheet/telecrystal = 4,
 		/obj/item/clothing/head/costume/crown/fancy = 1, //the captain's crown
 		/obj/item/storage/toolbox/syndicate = 1,
 		/obj/item/stack/sheet/iron = 10,

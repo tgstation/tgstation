@@ -327,7 +327,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 		/obj/item/gun/magic/staff/spellblade,
 		/obj/item/gun/magic/wand/death,
 		/obj/item/gun/magic/wand/fireball,
-		/obj/item/stack/telecrystal/twenty,
+		/obj/item/stack/sheet/telecrystal/twenty,
 		/obj/item/nuke_core,
 		/obj/item/banhammer,
 	)
