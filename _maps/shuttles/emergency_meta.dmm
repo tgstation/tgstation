@@ -614,7 +614,7 @@
 /area/shuttle/escape)
 "kp" = (
 /obj/docking_port/mobile/emergency{
-	dir = 4;
+	dir = 8;
 	name = "Meta emergency shuttle"
 	},
 /obj/machinery/door/airlock/titanium{

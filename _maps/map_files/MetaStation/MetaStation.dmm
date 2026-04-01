@@ -26521,6 +26521,7 @@
 /obj/item/disk/nuclear,
 /obj/item/pinpointer,
 /obj/item/radio/intercom/freerange/directional/west,
+/obj/item/disk/nuclear,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "nzP" = (
