@@ -524,7 +524,7 @@
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_SPECIES_GAIN, COMSIG_MOB_CLICKON))
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
-	wearer.update_spacesuit_hud_icon("0")
+	wearer.hud_used?.spacesuit_hud.update_spacesuit_hud_icon()
 	wearer = null
 
 /obj/item/mod/control/proc/get_sealed_slots(list/parts)
@@ -715,17 +715,17 @@
  * Updates the wearer's hud according to the current state of the MODsuit
  */
 /obj/item/mod/control/proc/update_charge_alert()
-	if(isnull(wearer))
+	if(isnull(wearer) || isnull(wearer.client))
 		return
 	var/state_to_use
 	if(!active)
-		state_to_use = "0"
+		state_to_use = SPACESUIT_NO_ICON
 	else if(isnull(core))
 		state_to_use = "coreless"
 	else
 		state_to_use = core.get_charge_icon_state()
 
-	wearer.update_spacesuit_hud_icon(state_to_use || "0")
+	wearer.hud_used.spacesuit_hud.update_spacesuit_hud_icon(state_to_use || SPACESUIT_NO_ICON)
 
 /obj/item/mod/control/proc/update_speed()
 	var/total_slowdown = 0

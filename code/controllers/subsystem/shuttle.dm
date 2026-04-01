@@ -5,6 +5,9 @@
 /// If we're under load we want to allow for cycling, but if not we want to preserve already generated docks for use
 #define SOFT_TRANSIT_RESERVATION_THRESHOLD (100 ** 2)
 
+/// Points to turfs on the cargo shuttle that have flaps automatically installed if an upgrade is purchased
+GLOBAL_LIST_EMPTY(cargo_shuttle_flaps_landmarks)
+
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
@@ -148,6 +151,9 @@ SUBSYSTEM_DEF(shuttle)
 
 	/// List of express consoles that are waiting for pack initialization
 	var/list/obj/machinery/computer/cargo/express/express_consoles = list()
+
+	/// If TRUE, automatically refills the cargo shuttle's air when it docks
+	var/renew_cargo_air = FALSE
 
 /datum/controller/subsystem/shuttle/Initialize()
 	order_number = rand(1, 9000)
