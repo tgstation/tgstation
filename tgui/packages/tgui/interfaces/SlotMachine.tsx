@@ -1,12 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  Blink,
-  Box,
-  Button,
-  DmIcon,
-  Section,
-  Stack,
-} from 'tgui-core/components';
+import { Blink, Box, Button, Section, Stack } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
 import { classes } from 'tgui-core/react';
 import { useBackend } from '../backend';
