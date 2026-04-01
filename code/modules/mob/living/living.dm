@@ -2135,7 +2135,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /living ---")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_SPEECH_IMPEDIMENT, "Impede Speech (Slurring, stuttering, etc)")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_MOOD, "Add Mood Event")
 	VV_DROPDOWN_OPTION(VV_HK_REMOVE_MOOD, "Remove Mood Event")
@@ -2151,33 +2151,21 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 
 	if(href_list[VV_HK_GIVE_SPEECH_IMPEDIMENT])
-		if(!check_rights(NONE))
-			return
 		admin_give_speech_impediment(usr)
 
 	if(href_list[VV_HK_ADD_MOOD])
-		if(!check_rights(NONE))
-			return
 		admin_add_mood_event(usr)
 
 	if(href_list[VV_HK_REMOVE_MOOD])
-		if(!check_rights(NONE))
-			return
 		admin_remove_mood_event(usr)
 
 	if(href_list[VV_HK_GIVE_HALLUCINATION])
-		if(!check_rights(NONE))
-			return
 		admin_give_hallucination(usr)
 
 	if(href_list[VV_HK_GIVE_DELUSION_HALLUCINATION])
-		if(!check_rights(NONE))
-			return
 		admin_give_delusion(usr)
 
 	if(href_list[VV_HK_GIVE_GUARDIAN_SPIRIT])
-		if(!check_rights(NONE))
-			return
 		admin_give_guardian(usr)
 
 	if(href_list[VV_HK_ADMIN_RENAME])
