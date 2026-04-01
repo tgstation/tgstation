@@ -35536,6 +35536,9 @@
 /area/station/engineering/main)
 "sfg" = (
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/computer/gateway_control{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "sfu" = (
