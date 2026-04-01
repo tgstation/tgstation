@@ -69,7 +69,7 @@
 	if (. && isliving(target))
 		add_ally(target) // Anyone we heal will treat us as a friend
 
-/mob/living/basic/lightgeist/ghost()
+/mob/living/basic/lightgeist/ghost_yourself()
 	. = ..()
 	if(.)
 		death()

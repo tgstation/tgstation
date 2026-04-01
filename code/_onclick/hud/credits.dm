@@ -24,9 +24,7 @@
 	remove_verb(src, /client/proc/ClearCredits)
 	qdel(credits_icon)
 
-/client/proc/ClearCredits()
-	set name = "Hide Credits"
-	set category = "OOC"
+DEFINE_PROC_VERB(/client, ClearCredits, "Hide Credits", "", FALSE, "OOC")
 	remove_verb(src, /client/proc/ClearCredits)
 	QDEL_LIST(credits)
 	credits = null

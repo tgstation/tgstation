@@ -10,3 +10,110 @@
 		return "[world.GetConfig("env", "HOME")]/.byond/bin/lib[library].so"
 	else
 		CRASH("Could not find lib[library].so")
+
+
+
+#define AUXCPU_DLL (world.system_type == MS_WINDOWS ? "auxcpu_byondapi.dll" : __detect_auxtools("auxcpu_byondapi"))
+
+// uncomment the define below if you want support for "true" world.map_cpu (true_maptick)
+//#define MAPTICK_HOOK
+
+#ifdef USE_AUXCPU
+/proc/current_true_cpu()
+	var/static/__current_true_cpu
+#ifndef OPENDREAM
+	__current_true_cpu ||= load_ext(AUXCPU_DLL, "byond:current_true_cpu")
+	return call_ext(__current_true_cpu)()
+#endif
+
+/proc/current_cpu_index()
+	var/static/__current_cpu_index
+#ifndef OPENDREAM
+	__current_cpu_index ||= load_ext(AUXCPU_DLL, "byond:current_cpu_index")
+	var/actual_index = call_ext(__current_cpu_index)()
+	return WRAP(actual_index + 1, 1, INTERNAL_CPU_SIZE + 1)
+#endif
+
+/proc/true_cpu_at_index(index)
+	var/static/__true_cpu_at_index
+	var/actual_index = WRAP(index - 1, 0, INTERNAL_CPU_SIZE)
+#ifndef OPENDREAM
+	__true_cpu_at_index ||= load_ext(AUXCPU_DLL, "byond:true_cpu_at_index")
+	return call_ext(__true_cpu_at_index)(actual_index)
+#endif
+
+/proc/cpu_values()
+	var/static/__cpu_values
+#ifndef OPENDREAM
+	__cpu_values ||= load_ext(AUXCPU_DLL, "byond:cpu_values")
+	return call_ext(__cpu_values)()
+#endif
+
+
+#ifdef MAPTICK_HOOK
+// NOTE: THIS IS IN DECISECONDS
+/proc/true_maptick()
+	var/static/__true_maptick
+#ifndef OPENDREAM
+	__true_maptick ||= load_ext(AUXCPU_DLL, "byond:maptick")
+	return call_ext(__true_maptick)()
+#endif
+#endif
+
+/world/proc/setup_external_cpu()
+	. = FALSE
+	if(!call_ext(AUXCPU_DLL, "byond:find_signatures")())
+		CRASH("auxcpu failed to find signatures")
+	world.log << "auxcpu signatures found"
+
+#ifdef MAPTICK_HOOK
+	var/maptick_err = call_ext(AUXCPU_DLL, "byond:maptick_init")()
+	if(maptick_err)
+		CRASH("auxcpu failed to hook maptick: [maptick_err]")
+	world.log << "auxcpu hooked maptick"
+#endif
+	return TRUE
+
+/world/proc/cleanup_external_cpu()
+	return
+#endif
+
+#ifndef USE_AUXCPU
+/proc/current_true_cpu()
+	return world.cpu
+
+/proc/current_cpu_index()
+	return WRAP(world.time, 1, INTERNAL_CPU_SIZE + 1)
+
+/proc/true_cpu_at_index(index)
+	if(index == current_cpu_index())
+		return current_true_cpu()
+	return 0
+
+/proc/cpu_values()
+	var/list/values = list()
+	for(var/i in 1 to INTERNAL_CPU_SIZE)
+		values += true_cpu_at_index(i)
+	return values
+
+// NOTE: THIS IS IN DECISECONDS
+/proc/true_maptick()
+	return world.map_cpu
+
+/world/proc/setup_external_cpu()
+	return FALSE
+
+/world/proc/cleanup_external_cpu()
+	return
+#endif
+
+/proc/meowtonin_stack_trace(message, source, line, full_info)
+	var/list/info = list("[message || "N/A"]")
+	if(istext(source))
+		info += "\tsource: [source]"
+		if(line)
+			info += "\tline: [line]"
+	if(full_info)
+		world.log << "\n=== (panic start) ===\n[full_info]\n=== (panic end) ===\n"
+	CRASH(jointext(info, "\n"))
+

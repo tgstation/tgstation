@@ -137,10 +137,10 @@
 		current_range = spray_range
 	to_chat(user, span_notice("You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]."))
 
-/obj/item/reagent_containers/spray/verb/empty()
-	set name = "Empty Spray Bottle"
-	set category = "Object"
-	set src in usr
+DEFINE_VERB(/obj/item/reagent_containers/spray, empty, "Empty Spray Bottle", "", FALSE, "Object")
+	empty_bottle()
+
+/obj/item/reagent_containers/spray/proc/empty_bottle()
 	if(usr.incapacitated)
 		return
 	if (tgui_alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", list("Yes", "No")) != "Yes")
@@ -298,7 +298,7 @@
 	last_generate = world.time
 	generate_reagents()
 
-/obj/item/reagent_containers/spray/waterflower/cyborg/empty()
+/obj/item/reagent_containers/spray/waterflower/cyborg/empty_bottle()
 	to_chat(usr, span_warning("You can not empty this!"))
 	return
 

@@ -65,12 +65,7 @@
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
 #define VOX_DELAY 600
-/mob/living/silicon/ai/verb/announcement_help()
-
-	set name = "Announcement Help"
-	set desc = "Display a list of vocal words to announce to the crew."
-	set category = "AI Commands"
-
+DEFINE_VERB(/mob/living/silicon/ai, announcement_help, "Announcement Help", "Display a list of vocal words to announce to the crew.", FALSE, "AI Commands")
 	if(incapacitated)
 		return
 

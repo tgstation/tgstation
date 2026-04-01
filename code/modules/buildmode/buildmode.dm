@@ -170,10 +170,7 @@
 	mode.handle_click(user.client, params, object)
 	return TRUE // no doing underlying actions
 
-/proc/togglebuildmode(mob/M as mob in GLOB.player_list)
-	set name = "Toggle Build Mode"
-	set category = "Event"
-
+DEFINE_PROC_NO_PARENT_VERB(togglebuildmode, "Toggle Build Mode", "", FALSE, "Event", mob/M as mob in GLOB.player_list)
 	if(M.client)
 		if(istype(M.client.click_intercept,/datum/buildmode))
 			var/datum/buildmode/B = M.client.click_intercept

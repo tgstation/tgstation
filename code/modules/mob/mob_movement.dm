@@ -3,8 +3,7 @@
  *
  * This is a hidden verb, likely for binding with winset for hotkeys
  */
-/client/verb/drop_item()
-	set hidden = TRUE
+DEFINE_VERB(/client, drop_item, "drop_item", "", TRUE, "")
 	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
@@ -407,10 +406,7 @@
  */
 
 ///Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth. Bound to 8
-/client/verb/body_toggle_head()
-	set name = "body-toggle-head"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, body_toggle_head, "body-toggle-head", "", TRUE, "")
 	if(!check_has_body_select())
 		return
 
@@ -427,10 +423,7 @@
 	selector.set_selected_zone(next_in_line, mob)
 
 ///Hidden verb to target the head, unbound by default.
-/client/verb/body_head()
-	set name = "body-head"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, body_head, "body-head", "", TRUE, "")
 	if(!check_has_body_select())
 		return
 
@@ -438,10 +431,7 @@
 	selector.set_selected_zone(BODY_ZONE_HEAD, mob)
 
 ///Hidden verb to target the eyes, bound to 7
-/client/verb/body_eyes()
-	set name = "body-eyes"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, body_eyes, "body-eyes", "", TRUE, "")
 	if(!check_has_body_select())
 		return
 
@@ -449,10 +439,7 @@
 	selector.set_selected_zone(BODY_ZONE_PRECISE_EYES, mob)
 
 ///Hidden verb to target the mouth, bound to 9
-/client/verb/body_mouth()
-	set name = "body-mouth"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, body_mouth, "body-mouth", "", TRUE, "")
 	if(!check_has_body_select())
 		return
 
@@ -460,10 +447,7 @@
 	selector.set_selected_zone(BODY_ZONE_PRECISE_MOUTH, mob)
 
 ///Hidden verb to target the right arm, bound to 4
-/client/verb/body_r_arm()
-	set name = "body-r-arm"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, body_r_arm, "body-r-arm", "", TRUE, "")
 	if(!check_has_body_select())
 		return
 
@@ -471,10 +455,7 @@
 	selector.set_selected_zone(BODY_ZONE_R_ARM, mob)
 
 ///Hidden verb to target the chest, bound to 5
-/client/verb/body_chest()
-	set name = "body-chest"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, body_chest, "body-chest", "", TRUE, "")
 	if(!check_has_body_select())
 		return
 
@@ -482,10 +463,7 @@
 	selector.set_selected_zone(BODY_ZONE_CHEST, mob)
 
 ///Hidden verb to target the left arm, bound to 6
-/client/verb/body_l_arm()
-	set name = "body-l-arm"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, body_l_arm, "body-l-arm", "", TRUE, "")
 	if(!check_has_body_select())
 		return
 
@@ -493,10 +471,7 @@
 	selector.set_selected_zone(BODY_ZONE_L_ARM, mob)
 
 ///Hidden verb to target the right leg, bound to 1
-/client/verb/body_r_leg()
-	set name = "body-r-leg"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, body_r_leg, "body-r-leg", "", TRUE, "")
 	if(!check_has_body_select())
 		return
 
@@ -504,10 +479,7 @@
 	selector.set_selected_zone(BODY_ZONE_R_LEG, mob)
 
 ///Hidden verb to target the groin, bound to 2
-/client/verb/body_groin()
-	set name = "body-groin"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, body_groin, "body-groin", "", TRUE, "")
 	if(!check_has_body_select())
 		return
 
@@ -515,10 +487,7 @@
 	selector.set_selected_zone(BODY_ZONE_PRECISE_GROIN, mob)
 
 ///Hidden verb to target the left leg, bound to 3
-/client/verb/body_l_leg()
-	set name = "body-l-leg"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, body_l_leg, "body-l-leg", "", TRUE, "")
 	if(!check_has_body_select())
 		return
 
@@ -526,10 +495,7 @@
 	selector.set_selected_zone(BODY_ZONE_L_LEG, mob)
 
 ///Verb to toggle the walk or run status
-/client/verb/toggle_walk_run()
-	set name = "toggle-walk-run"
-	set hidden = TRUE
-	set instant = TRUE
+DEFINE_INSTANT_VERB(/client, toggle_walk_run, "toggle-walk-run", "", TRUE, "")
 	if(isliving(mob))
 		var/mob/living/user_mob = mob
 		user_mob.toggle_move_intent()
@@ -552,10 +518,10 @@
 	SEND_SIGNAL(src, COMSIG_MOVE_INTENT_TOGGLED)
 
 ///Moves a mob upwards in z level
-/mob/verb/up()
-	set name = "Move Upwards"
-	set category = "IC"
+DEFINE_VERB(/mob, up, "Move Upwards", "", FALSE, "IC")
+	do_up()
 
+/mob/proc/do_up()
 	if(remote_control)
 		return remote_control.relaymove(src, UP)
 
@@ -579,10 +545,10 @@
 		to_chat(src, span_notice("You move upwards."))
 
 ///Moves a mob down a z level
-/mob/verb/down()
-	set name = "Move Down"
-	set category = "IC"
-
+DEFINE_VERB(/mob, down, "Move Down", "", FALSE, "IC")
+	do_down()
+	
+/mob/proc/do_down()
 	if(remote_control)
 		return remote_control.relaymove(src, DOWN)
 

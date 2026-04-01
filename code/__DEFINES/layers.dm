@@ -115,6 +115,8 @@
 
 ///Plane of the "splash" icon used that shows on the lobby screen
 #define SPLASHSCREEN_PLANE 37
+//Holds graphing/graphing related screen objects. Not normally displayed
+#define GRAPHING_PLANE 38
 
 // The largest plane here must still be less than RENDER_PLANE_GAME
 
@@ -345,6 +347,14 @@
 
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1
+
+// GRAPHING_PLANE
+
+///CPU related graph framing
+#define CPU_GRAPH_FRAME_LAYER 1
+
+///Primary CPU readout
+#define CPU_DISPLAY_LAYER 10
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"

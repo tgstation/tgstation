@@ -411,11 +411,7 @@
 	hud_used.infodisplay += combo_display
 	hud_used.show_hud(hud_used.hud_version)
 
-/mob/living/proc/verb_switch_style()
-	set name = "Swap Style"
-	set desc = "Switch to a different martial arts style."
-	set category = "IC"
-
+DEFINE_PROC_VERB(/mob/living, verb_switch_style, "Swap Style", "Switch to a different martial arts style.", FALSE, "IC")
 	var/datum/martial_art/current = GET_ACTIVE_MARTIAL_ART(src)
 	var/datum/martial_art/next = GET_NEXT_MARTIAL_ART(src)
 

@@ -60,11 +60,7 @@
 
 	return IS_LEFT_INDEX(martial_artist.active_hand_index) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG
 
-/mob/living/proc/spiders_bite_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the Spider Bite technique used by the Spider Clan."
-	set category = "Spider's Bite"
-
+DEFINE_PROC_VERB(/mob/living, spiders_bite_help, "Recall Teachings", "Remember the Spider Bite technique used by the Spider Clan.", FALSE, "Spider's Bite")
 	to_chat(usr, span_info("<b><i>You retreat inward and recall the Spider Clan's techniques...</i></b>\n\
 		&bull; Remember, <b>Many Legged Spider</b>: Unarmed attacks against staggered opponents will always be kicks - granting you greater accuracy and damage.\n\
 		&bull; Remember, <b>Jump and Climb</b>: Right clicking on throw mode will perform a tackle which is far far less likely to fail.\n\

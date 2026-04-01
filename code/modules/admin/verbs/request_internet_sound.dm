@@ -1,7 +1,4 @@
-/mob/verb/request_internet_sound()
-	set category = "OOC"
-	set name = "Request Internet Sound"
-
+DEFINE_VERB(/mob, request_internet_sound, "Request Internet Sound", "", FALSE, "OOC")
 	if(!CONFIG_GET(flag/request_internet_sound))
 		to_chat(usr, span_danger("This server has disabled internet sound requests."), confidential = TRUE)
 		return
