@@ -315,17 +315,24 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		return
 
 	for(var/mob/living/occupant as anything in stored_living)
-		if(occupant.stat == DEAD)
-			if(iscarbon(occupant))
-				var/mob/living/carbon/carbon_occupant = occupant
-				if(!carbon_occupant.can_defib_client())
-					continue
-			else
-				if(HAS_TRAIT(occupant, TRAIT_SUICIDED) || HAS_TRAIT(occupant, TRAIT_BADDNA) || (!occupant.key && !occupant.get_ghost(FALSE, TRUE)))
-					continue
-		morgue_state = MORGUE_HAS_REVIVABLE
-		return
+		if(occupant_revivable(occupant))
+			morgue_state = MORGUE_HAS_REVIVABLE
+			return
 	morgue_state = MORGUE_ONLY_BRAINDEAD
+
+/obj/structure/bodycontainer/morgue/proc/occupant_revivable(mob/living/occupant)
+	if(occupant.stat != DEAD)
+		return FALSE
+	if(HAS_TRAIT(occupant, TRAIT_GHOSTROLE_ON_REVIVE) && length(occupant.get_all_orbiters()))
+		return TRUE
+	if(iscarbon(occupant))
+		var/mob/living/carbon/carbon_occupant = occupant
+		return carbon_occupant.can_defib_client()
+	if(HAS_TRAIT(occupant, TRAIT_SUICIDED))
+		return FALSE
+	if(!occupant.key && !occupant.get_ghost(FALSE, TRUE))
+		return FALSE
+	return TRUE
 
 /obj/structure/bodycontainer/morgue/proc/handle_bodybag_enter(obj/structure/closet/body_bag/arrived_bag)
 	if(!arrived_bag.tag_name)
