@@ -578,3 +578,124 @@
 	show_in_report = TRUE
 
 	dynamic_threat_id = "GMM Econ Spotlight"
+
+/datum/station_trait/jeffjeff
+	name = "JeffJeff's Peculiar Excursion"
+	report_message = "For some reason, some of your crew possess guardian spirits. This should have no bearing on their affiliation with the station."
+	trait_type = STATION_TRAIT_NEUTRAL
+	cost = 0
+	force = TRUE // Look this is for an april fools PR why not use a debug var to ensure it always runs?
+	sign_up_button = TRUE
+	show_in_report = TRUE
+	var/list/user_candidates
+	var/list/guardian_candidates
+	var/list/typepaths_by_type
+	var/list/assigned_users
+	var/list/assigned_guardians
+
+/datum/station_trait/jeffjeff/New()
+	. = ..()
+	for(var/mob/living/basic/guardian/guardian_typepath as anything in subtypesof(/mob/living/basic/guardian))
+		LAZYADDASSOC(typepaths_by_type, guardian_typepath::guardian_type, guardian_typepath)
+	RegisterSignal(SSdcs, COMSIG_GLOB_PRE_JOBS_ASSIGNED, PROC_REF(pre_jobs_assigned))
+
+/datum/station_trait/jeffjeff/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
+	lobby_button.desc = "Sign up to be or possess a holoparasite, power miner, guardian spirit, or holocarp."
+	return ..()
+
+/datum/station_trait/jeffjeff/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
+	var/mob/our_player = lobby_button.get_mob()
+	var/client/player_client = our_player.client
+	if(isnull(player_client))
+		return
+	INVOKE_ASYNC(src, PROC_REF(ui_interact), our_player)
+
+/datum/station_trait/jeffjeff/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>ゴゴゴゴゴ</b></center><BR>"
+	advisory_string += "Your sector's advisory level is ゴゴゴゴゴ! Something's wrong with our threat analysis systems. We've never seen them act up like this before. This must be the work of an enemy Stand!"
+	return advisory_string
+
+/datum/station_trait/jeffjeff/ui_state(mob/user)
+	return GLOB.new_player_state
+
+/datum/station_trait/jeffjeff/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "JeffJeff")
+		ui.open()
+
+/datum/station_trait/jeffjeff/ui_static_data(mob/user)
+	var/list/data = list()
+	data["availableTypes"] = assoc_to_keys(typepaths_by_type)
+	data["availableThemes"] = assoc_to_keys(GLOB.guardian_themes)
+	return data
+
+/datum/station_trait/jeffjeff/ui_data(mob/user)
+	var/list/data = list()
+	data["guardianType"] = LAZYACCESS(user_candidates, user)
+	data["guardianTheme"] = LAZYACCESS(guardian_candidates, user)
+	return data
+
+/datum/station_trait/jeffjeff/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	var/mob/dead/new_player/user = ui.user
+	if(!istype(user))
+		return
+	switch(action)
+		if("setGuardianType")
+			var/guardian_type = params["type"]
+			if(typepaths_by_type[guardian_type])
+				LAZYSET(user_candidates, user, guardian_type)
+			else
+				user_candidates -= user
+		if("setGuardianTheme")
+			var/theme = params["type"]
+			if(GLOB.guardian_themes[theme])
+				LAZYSET(guardian_candidates, user, theme)
+			else
+				guardian_candidates -= user
+	return TRUE
+
+/datum/station_trait/jeffjeff/proc/pre_jobs_assigned()
+	SIGNAL_HANDLER
+	var/list/antag_minds = list()
+	for(var/datum/dynamic_ruleset/ruleset in SSdynamic.queued_rulesets)
+		antag_minds |= ruleset.selected_minds
+	for(var/mob/dead/new_player/user_candidate in user_candidates)
+		if(QDELETED(user_candidate) || QDELETED(user_candidate.mind) || user_candidate.ready != PLAYER_READY_TO_PLAY)
+			user_candidates -= user_candidate
+	for(var/mob/dead/new_player/guardian_candidate in guardian_candidates)
+		if(QDELETED(guardian_candidate) || QDELETED(guardian_candidate.mind) || guardian_candidate.ready != PLAYER_READY_TO_PLAY || (guardian_candidate.mind in antag_minds))
+			guardian_candidates -= guardian_candidate
+	while(length(user_candidates) && length(guardian_candidates))
+		var/mob/dead/new_player/selected_as_user = pick(user_candidates)
+		assigned_users[selected_as_user.mind] = typepaths_by_type[user_candidates[selected_as_user]]
+		user_candidates -= selected_as_user
+		var/mob/dead/new_player/selected_as_guardian = pick(guardian_candidates)
+		assigned_guardians[selected_as_guardian.mind] = GLOB.guardian_themes[guardian_candidates[selected_as_guardian]]
+		selected_as_guardian.mind.set_assigned_role(SSjob.get_job_type(/datum/job/guardian))
+		guardian_candidates -= selected_as_guardian
+	user_candidates = null
+	guardian_candidates = null
+
+
+/datum/station_trait/jeffjeff/on_round_start()
+	. = ..()
+	SStgui.close_uis(src)
+	while(length(assigned_users))
+		var/datum/mind/user_mind = pick(assigned_users)
+		var/mob/living/basic/guardian/guardian_type = assigned_users[user_mind]
+		var/datum/mind/guardian_mind = pick(assigned_guardians)
+		var/datum/guardian_fluff/theme = assigned_guardians[guardian_mind]
+		var/mob/living/user = user_mind.current
+		var/mob/living/basic/guardian/new_guardian = new guardian_type(user, theme)
+		new_guardian.set_summoner(user, TRUE)
+		new_guardian.PossessByPlayer(guardian_mind.key)
+		user.log_message("has been assigned [key_name(new_guardian)] by the jeffjeff station trait.", LOG_GAME)
+		new_guardian.log_message("was summoned as a guardian by the jeffjeff station trait.", LOG_GAME)
+		assigned_users -= user_mind
+		assigned_guardians -= guardian_mind
+	assigned_users = null
+	assigned_guardians = null
