@@ -68,7 +68,7 @@
 	flags_1 |= INITIALIZED_1
 
 	// If the tile uses holiday colors, apply them here
-	if(use_holiday_colors)
+	if(use_holiday_colors && SSmapping.current_map.allow_tile_recoloring)
 
 		var/custom_color = request_station_colors(src, pattern) || request_holiday_colors(src, pattern)
 		if(custom_color)

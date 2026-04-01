@@ -4,6 +4,7 @@
 	icon_state = "noslip_tram"
 	base_icon_state = "noslip_tram"
 	floor_tile = /obj/item/stack/tile/noslip/tram
+	color = "#EFB341"
 
 /turf/open/floor/tram
 	name = "tram guideway"

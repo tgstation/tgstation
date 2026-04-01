@@ -161,11 +161,8 @@
 
 /turf/open/floor/noslip/tram/Initialize(mapload)
 	. = ..()
-	var/current_holiday_color = request_station_colors(src, PATTERN_VERTICAL_STRIPE) || request_holiday_colors(src, PATTERN_VERTICAL_STRIPE)
-	if(current_holiday_color)
-		color = current_holiday_color
-	else
-		color = "#EFB341"
+	if(SSmapping.current_map.allow_tile_recoloring)
+		color = request_station_colors(src, PATTERN_VERTICAL_STRIPE) || request_holiday_colors(src, PATTERN_VERTICAL_STRIPE) || src.color
 
 /turf/open/floor/oldshuttle
 	icon = 'icons/turf/shuttleold.dmi'

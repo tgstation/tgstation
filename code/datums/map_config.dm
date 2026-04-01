@@ -42,6 +42,8 @@
 	///If no minetype is set, this will be the blacklist file used
 	var/blacklist_file
 
+	var/allow_tile_recoloring = TRUE
+
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
 		"cargo" = "cargo_box",
@@ -224,8 +226,11 @@
 	if ("bonus_weakpoints" in json)
 		bonus_weakpoints = json["bonus_weakpoints"]
 
+	if("allow_tile_recoloring" in json)
+		allow_tile_recoloring = json["allow_tile_recoloring"]
 
-	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
+	if("allow_custom_shuttles" in json)
+		allow_custom_shuttles = json["allow_custom_shuttles"]
 
 	if ("job_changes" in json)
 		if(!islist(json["job_changes"]))

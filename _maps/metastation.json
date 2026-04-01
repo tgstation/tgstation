@@ -10,6 +10,7 @@
 		"emergency": "emergency_meta"
 	},
 	"allow_custom_shuttles": 0,
+	"allow_tile_recoloring": 0,
 	"traits": [
 		{
 			"Gravity": true
