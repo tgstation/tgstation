@@ -293,6 +293,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		/obj/item/clothing/head/costume/whoopee,
 		/obj/item/grown/bananapeel/gros_michel,
 	)
+	always_celebrate = TRUE
 
 /datum/holiday/april_fools/celebrate()
 	. = ..()
