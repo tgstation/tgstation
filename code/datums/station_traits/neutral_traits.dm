@@ -671,12 +671,16 @@
 			guardian_candidates -= guardian_candidate
 	while(length(user_candidates) && length(guardian_candidates))
 		var/mob/dead/new_player/selected_as_user = pick(user_candidates)
-		assigned_users[selected_as_user.mind] = typepaths_by_type[user_candidates[selected_as_user]]
+		LAZYSET(assigned_users, selected_as_user.ckey, typepaths_by_type[user_candidates[selected_as_user]])
 		user_candidates -= selected_as_user
+		guardian_candidates -= selected_as_user
 		var/mob/dead/new_player/selected_as_guardian = pick(guardian_candidates)
-		assigned_guardians[selected_as_guardian.mind] = GLOB.guardian_themes[guardian_candidates[selected_as_guardian]]
-		selected_as_guardian.mind.set_assigned_role(SSjob.get_job_type(/datum/job/guardian))
+		if(!selected_as_guardian)
+			continue
+		LAZYSET(assigned_guardians, selected_as_guardian.ckey, GLOB.guardian_themes[guardian_candidates[selected_as_guardian]])
+		INVOKE_ASYNC(SSjob, TYPE_PROC_REF(/datum/controller/subsystem/job, assign_role), selected_as_guardian, SSjob.get_job_type(/datum/job/guardian))
 		guardian_candidates -= selected_as_guardian
+		user_candidates -= selected_as_guardian
 	user_candidates = null
 	guardian_candidates = null
 
@@ -685,20 +689,29 @@
 	. = ..()
 	SStgui.close_uis(src)
 	while(length(assigned_users))
-		var/datum/mind/user_mind = pick(assigned_users)
-		var/mob/living/basic/guardian/guardian_type = assigned_users[user_mind]
-		var/datum/mind/guardian_mind = pick(assigned_guardians)
-		var/datum/guardian_fluff/theme = assigned_guardians[guardian_mind]
-		var/mob/living/user = user_mind.current
+		var/user_ckey = pick(assigned_users)
+		var/mob/living/basic/guardian/guardian_type = assigned_users[user_ckey]
+		var/guardian_ckey = pick(assigned_guardians)
+		var/datum/guardian_fluff/theme = assigned_guardians[guardian_ckey]
+		var/mob/living/user = get_mob_by_key(user_ckey)
+		if(!istype(user))
+			assigned_users -= user_ckey
+			continue
 		var/mob/living/basic/guardian/new_guardian = new guardian_type(user, theme)
 		new_guardian.set_summoner(user, TRUE)
-		new_guardian.PossessByPlayer(guardian_mind.key)
+		new_guardian.PossessByPlayer(guardian_ckey)
 		var/datum/action/cooldown/mob_cooldown/replace_guardian/replacement_action = locate() in user.actions
 		if(replacement_action)
 			replacement_action.Remove(user)
 		user.log_message("has been assigned [key_name(new_guardian)] by the jeffjeff station trait.", LOG_GAME)
 		new_guardian.log_message("was summoned as a guardian by the jeffjeff station trait.", LOG_GAME)
-		assigned_users -= user_mind
-		assigned_guardians -= guardian_mind
+		assigned_users -= user_ckey
+		assigned_guardians -= guardian_ckey
+	for(var/unassigned_ckey in assigned_guardians)
+		var/mob/unassigned = get_mob_by_ckey(unassigned_ckey)
+		if(!istype(unassigned))
+			continue
+		to_chat(unassigned, span_danger("For some reason, there were not enough opted-in guardian users to assign you to one."))
+		INVOKE_ASYNC(SSjob, TYPE_PROC_REF(/datum/controller/subsystem/job, assign_role), unassigned, SSjob.get_job_type(/datum/job/unassigned))
 	assigned_users = null
 	assigned_guardians = null
