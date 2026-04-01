@@ -3673,11 +3673,9 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "bQO" = (
-/obj/structure/displaycase{
-	pixel_y = 5
-	},
 /obj/machinery/status_display/evac/directional/north,
 /obj/machinery/keycard_auth/wall_mounted/directional/west,
+/obj/structure/displaycase/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "bQT" = (
@@ -7040,6 +7038,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/armory/e_gun,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/gun/energy/e_gun/advtaser,
 /turf/open/floor/iron,
 /area/station/security/armory)
 "dDx" = (
@@ -64594,7 +64593,7 @@ vwi
 aaa
 aaa
 aaa
-cJT
+aaa
 aaa
 aaa
 aaa
@@ -64851,7 +64850,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cJT
 aaa
 aaa
 aaa
