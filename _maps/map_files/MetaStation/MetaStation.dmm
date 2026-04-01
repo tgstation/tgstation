@@ -15969,7 +15969,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "igf" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
