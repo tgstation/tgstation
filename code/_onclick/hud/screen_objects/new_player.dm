@@ -94,7 +94,7 @@
 	if(!enabled)
 		icon_state = "[base_icon_state]_disabled"
 		return
-	else if(highlighted)
+	if(highlighted)
 		icon_state = "[base_icon_state]_highlighted"
 		return
 	icon_state = base_icon_state
