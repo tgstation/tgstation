@@ -407,7 +407,7 @@
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
 
 /datum/uplink_item/role_restricted/briefcase_gun
-	name = "Briefcase Embedded Firearm"
+	name = "Briefcase Embedded Firearm Trigger"
 	desc = "A briefcase with a firing mechanism built into the handle that connects to the first weapon stored within. \
 		\"Aiming and firing\" the briefcase will instead trigger the firing mechanism, causing the weapon to fire through a discrete hole. \
 		Work with any firearm you could fit inside."
@@ -425,7 +425,7 @@
 	)
 
 /datum/uplink_item/role_restricted/briefcase_gun/with_gun
-	name = "Briefcase Embedded Firearm (Combo Deal)"
+	name = "Briefcase Embedded Firearm Trigger (Combo Deal)"
 	desc = parent_type::desc + " This COMBO DEAL comes with a pre-loaded Makarov pistol! (No extra magazines, though.)"
 	item = /obj/item/storage/briefcase/gun/preloaded
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
