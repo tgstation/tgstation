@@ -34,7 +34,6 @@
 	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	combat_mode = TRUE
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
