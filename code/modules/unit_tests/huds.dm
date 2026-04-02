@@ -30,8 +30,11 @@
 		var/mob_hud = mobs::hud_type
 		var/datum/hud/initialized_hud = new mob_hud(dummy)
 		//mobs that don't use combat mode don't need it.
-		if(!HAS_TRAIT(dummy, TRAIT_COMBAT_MODE_LOCK) && isnull(initialized_hud.action_intent))
+		var/atom/movable/screen/action_intent = initialized_hud.screen_objects[HUD_MOB_INTENTS]
+		if(!HAS_TRAIT(dummy, TRAIT_COMBAT_MODE_LOCK) && isnull(action_intent))
 			TEST_FAIL("[dummy] using [initialized_hud.type] does not have an Action Intent.")
 		//Mobs that need a health indicator should have at least a healthdoll or healths.
-		if(initialized_hud.needs_health_indicator && isnull(initialized_hud.healthdoll) && isnull(initialized_hud.healths))
-			TEST_FAIL("[dummy] using [initialized_hud.type] does not have a Health Doll.")
+		var/atom/movable/screen/healthdoll/healthdoll = initialized_hud.screen_objects[HUD_MOB_HEALTHDOLL]
+		var/atom/movable/screen/healths/healths = initialized_hud.screen_objects[HUD_MOB_HEALTH]
+		if(initialized_hud.needs_health_indicator && isnull(healthdoll) && isnull(healths))
+			TEST_FAIL("[dummy] using [initialized_hud.type] does not have a Health Doll or Health HUD.")
