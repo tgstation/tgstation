@@ -147,7 +147,6 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
                 setActiveSupplyName(supply.name);
                 setSearchText('');
               }}
-              style={supply.name === "Goodies" ? {display: 'none'} : undefined}
             >
               <Stack justify="space-between">
                 <span>{supply.name}</span>

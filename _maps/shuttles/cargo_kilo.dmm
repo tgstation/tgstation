@@ -58,6 +58,7 @@
 	id = "QMLoad";
 	name = "off ramp"
 	},
+/obj/effect/landmark/flaps_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "j" = (
@@ -166,6 +167,7 @@
 	id = "QMLoad2";
 	name = "on ramp"
 	},
+/obj/effect/landmark/flaps_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "u" = (
