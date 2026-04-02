@@ -23,9 +23,6 @@ type Data = {
 
 type SlotSymbol = {
   id: string;
-  name: string;
-  icon: string;
-  icon_state: string;
   icon_id: string;
 };
 

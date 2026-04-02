@@ -118,9 +118,6 @@
 	for(var/obj/symbol as anything in symbol_paths)
 		symbol_data += list(list(
 			"id" = "[symbol]",
-			"name" = symbol::name,
-			"icon" = symbol::icon,
-			"icon_state" = symbol::icon_state,
 			"icon_id" = sanitize_css_class_name("[symbol::icon][symbol::icon_state]")
 		))
 
