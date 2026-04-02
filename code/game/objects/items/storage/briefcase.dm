@@ -175,3 +175,22 @@
 	remote.pad = WEAKREF(src.pad)
 	to_chat(user, span_notice("You link [pad] to [remote]."))
 	return ITEM_INTERACT_BLOCKING
+
+/obj/item/storage/briefcase/gun
+	storage_type = /datum/storage/briefcase/gun
+
+/obj/item/storage/briefcase/gun/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	for(var/obj/item/gun/weapon in src)
+		return weapon.try_fire_gun(interacting_with, user, list2params(modifiers))
+	return NONE
+
+/obj/item/storage/briefcase/gun/examine_more(mob/user)
+	. = ..()
+	if(user.is_holding(src))
+		. += span_notice("Upon closer inspection, you notice a hole in the side of the briefcase.")
+
+/obj/item/storage/briefcase/gun/preloaded
+
+/obj/item/storage/briefcase/gun/preloaded/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol(src)
+	return ..()
