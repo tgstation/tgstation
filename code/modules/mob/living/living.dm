@@ -769,9 +769,9 @@
 		return TRUE
 
 	if(resting || HAS_TRAIT(src, TRAIT_FLOORED))
-		sleep_icon.RemoveInvisibility("sleep")
+		sleep_icon.RemoveInvisibility(INVISIBILITY_SOURCE_SLEEP_HUD_BUTTON)
 	else
-		sleep_icon.SetInvisibility(INVISIBILITY_ABSTRACT, "sleep")
+		sleep_icon.SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_SLEEP_HUD_BUTTON)
 	return TRUE
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.

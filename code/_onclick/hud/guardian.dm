@@ -1,5 +1,6 @@
 /datum/hud/guardian
 	ui_style = 'icons/hud/guardian.dmi'
+	inventory_slots = list(/datum/inventory_slot/guardian_storage)
 
 /datum/hud/guardian/initialize_screen_objects()
 	. = ..()
@@ -17,13 +18,8 @@
 
 /datum/hud/dextrous/guardian/initialize_screen_objects()
 	. = ..()
-	if(istype(mymob, /mob/living/basic/guardian/dextrous))
-		inventory_slots = list(/datum/inventory_slot/guardian_storage)
-		add_screen_object(/atom/movable/screen/guardian/communicate, HUD_GUARDIAN_COMMUNICATE, ui_loc = ui_sstore1)
-	else
-		add_screen_object(/atom/movable/screen/guardian/communicate, HUD_GUARDIAN_COMMUNICATE, ui_loc = ui_id)
-
 	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/guardian/communicate, HUD_GUARDIAN_COMMUNICATE, ui_loc = ui_sstore1)
 	add_screen_object(/atom/movable/screen/guardian/manifest, HUD_GUARDIAN_MANIFEST, ui_loc = ui_belt)
 	add_screen_object(/atom/movable/screen/guardian/recall, HUD_GUARDIAN_RECALL, ui_loc = ui_back)
 	add_screen_object(/atom/movable/screen/guardian/toggle_light, HUD_GUARDIAN_LIGHT)
