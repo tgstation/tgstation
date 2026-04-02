@@ -578,7 +578,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/sleep/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	// Invisible by default
-	SetInvisibility(INVISIBILITY_ABSTRACT, "sleep")
+	SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_SLEEP_HUD_BUTTON)
 
 /atom/movable/screen/sleep/Click()
 	if(!isliving(usr) || HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
