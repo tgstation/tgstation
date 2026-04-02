@@ -401,14 +401,14 @@
 /datum/uplink_item/role_restricted/concussivedisk
 	name = "Hyperconcussive Diode Disk"
 	desc = "A diode configuration disk that allows an emitter to shoot potent explosive lasers. \
-		Please note that this will halve the fire-rate of the emitter."
+	Please note that this will halve the fire-rate of the emitter."
 	item = /obj/item/emitter_disk/blast
 	cost = 5
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
 
 /datum/uplink_item/role_restricted/briefcase_gun
 	name = "Briefcase Embedded Firearm"
-	desc = "A briefcase with with a firing mechanism built into the handle which connects to the first weapon stored within. \
+	desc = "A briefcase with a firing mechanism built into the handle that connects to the first weapon stored within. \
 		\"Aiming and firing\" the briefcase will instead trigger the firing mechanism, causing the weapon to fire through a discrete hole. \
 		Work with any firearm you could fit inside."
 	item = /obj/item/storage/briefcase/gun
