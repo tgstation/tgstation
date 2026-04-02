@@ -16,7 +16,7 @@
 	log_game("An alien egg has been delivered to [AREACOORD(spawn_turf)]")
 
 	var/datum/command_footnote/footnote = new()
-	footnote.message = "We have entrusted your crew with a research specimen in [get_area_name(spawn_turf, TRUE)]. \
+	footnote.message = "We have entrusted your crew with a research specimen in [get_area(src)]. \
 		Remember to follow all safety precautions when dealing with the specimen."
 	footnote.signature = "Central Command"
 
