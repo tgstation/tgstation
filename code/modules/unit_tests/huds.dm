@@ -20,7 +20,6 @@
 ///We're gonna give every HUD type to a mob to see if they are missing action intent/health doll.
 ///This destroys the HUD of the mob we're using (but it doesn't matter cause it's a test)
 /datum/unit_test/verify_basic_huds
-	focus = TRUE
 
 /datum/unit_test/verify_basic_huds/Run()
 	for(var/mob/living/basic/mobs as anything in subtypesof(/mob/living/basic))
