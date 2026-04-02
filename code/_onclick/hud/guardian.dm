@@ -11,7 +11,6 @@
 
 /datum/hud/dextrous/guardian/initialize_screen_objects()
 	. = ..()
-	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style)
 	add_screen_object(/atom/movable/screen/healths/guardian, HUD_MOB_HEALTH, HUD_GROUP_INFO)
 
 /datum/hud/dextrous/guardian/persistent_inventory_update()

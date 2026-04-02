@@ -1,3 +1,7 @@
+/datum/hud/dextrous
+	///Boolean on whether to give the generic combat indicator
+	var/give_generic_combat = TRUE
+
 //Used for normal mobs that have hands.
 /datum/hud/dextrous/initialize_screen_objects()
 	. = ..()
@@ -11,7 +15,8 @@
 	build_hand_slots()
 
 	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style, ui_below_throw)
-	add_screen_object(/atom/movable/screen/combattoggle/flashy, HUD_MOB_INTENTS, HUD_GROUP_STATIC, ui_style, ui_movi)
+	if(give_generic_combat)
+		add_screen_object(/atom/movable/screen/combattoggle/flashy, HUD_MOB_INTENTS, HUD_GROUP_STATIC, ui_style, ui_movi)
 	add_screen_object(/atom/movable/screen/floor_changer, HUD_MOB_FLOOR_CHANGER, HUD_GROUP_STATIC, ui_style, ui_above_movement)
 	add_screen_object(/atom/movable/screen/zone_sel, HUD_MOB_ZONE_SELECTOR, HUD_GROUP_STATIC, ui_style)
 	add_screen_object(/atom/movable/screen/area_creator, HUD_MOB_AREA_CREATOR, HUD_GROUP_STATIC, ui_style)
