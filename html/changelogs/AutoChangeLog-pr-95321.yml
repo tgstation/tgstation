@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "you cannot install infinite water recyclers in the sink frame"
-  - bugfix: "you can attach sink frames to walls in most cases regardless of what's on the wall(except when there is already a light fixture, camera or another sink)"

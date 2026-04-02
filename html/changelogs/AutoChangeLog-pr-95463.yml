@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "The stat panel entry for space suits has been replaced with the HUD element. You can now hover over it to see exact cell percentage, and click it to turn the regulator on, while it'll also display when it's off."
