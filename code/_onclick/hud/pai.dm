@@ -27,6 +27,7 @@
 
 /datum/hud/pai/proc/update_software_buttons()
 	var/mob/living/silicon/pai/owner = mymob
-	for(var/atom/movable/screen/pai/button in screen_objects)
-		if(button.required_software)
+	for(var/button_key in screen_objects)
+		var/atom/movable/screen/pai/button = screen_objects[button_key]
+		if(istype(button) && button.required_software)
 			button.color = owner.installed_software.Find(button.required_software) ? null : COLOR_GRAY

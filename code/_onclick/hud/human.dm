@@ -65,8 +65,9 @@
 		if(eyes?.no_glasses)
 			blocked_slots |= ITEM_SLOT_EYES
 
-	for(var/atom/movable/screen/inventory/inv in screen_objects)
-		if(!inv.slot_id)
+	for(var/slot_key in screen_objects)
+		var/atom/movable/screen/inventory/inv = screen_objects[slot_key]
+		if(!istype(inv) || !inv.slot_id)
 			continue
 		inv.alpha = (blocked_slots & inv.slot_id) ? 128 : initial(inv.alpha)
 

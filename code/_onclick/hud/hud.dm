@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	/// Subtypes can override this to force a specific UI style
 	var/ui_style = null
-	/// List of all screen objects we hold
+	/// Assoc list of all screen objects we hold by their key
 	var/list/atom/movable/screen/screen_objects = list()
 	/// List of screen objects by their screen group
 	var/list/screen_groups[SCREEN_GROUP_AMT]
@@ -437,8 +437,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if (initial(ui_style) || ui_style == new_ui_style)
 		return
 
-	for(var/atom/item in screen_objects)
-		if (item.icon == ui_style)
+	for(var/hud_key in screen_objects)
+		var/atom/item = screen_objects[hud_key]
+		if (item?.icon == ui_style)
 			item.icon = new_ui_style
 
 	ui_style = new_ui_style
