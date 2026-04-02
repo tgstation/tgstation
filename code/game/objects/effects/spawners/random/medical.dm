@@ -69,8 +69,8 @@
 	name = "2% chance xeno egg spawner"
 	icon_state = "xeno_egg"
 	loot = list(
-		/obj/effect/decal/remains/xeno = 1,
-		/obj/effect/spawner/xeno_egg_delivery = 50,
+		/obj/effect/decal/remains/xeno = 49,
+		/obj/effect/spawner/xeno_egg_delivery = 1,
 	)
 
 /obj/effect/spawner/random/medical/surgery_tool
