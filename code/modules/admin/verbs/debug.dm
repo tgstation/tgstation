@@ -181,7 +181,7 @@ ADMIN_VERB(cmd_give_direct_control, R_ADMIN, "Give Direct Control", "Give direct
 	if(M.ckey)
 		if(tgui_alert(user,"This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
-	var/client/newkey = input(user, "Pick the player to put in control.", "New player") as null|anything in sort_list(GLOB.clients)
+	var/client/newkey = tgui_input_list(user, "Pick the player to put in control.", "New player", sort_list(GLOB.clients))
 	if(isnull(newkey))
 		return
 	var/mob/oldmob = newkey.mob
@@ -413,7 +413,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 		var/datum/outfit/O = path //not much to initalize here but whatever
 		outfits[initial(O.name)] = path
 
-	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in baseoutfits + sort_list(outfits)
+	var/dresscode = tgui_input_list(usr, "Select outfit", "Robust quick dress shop", baseoutfits + sort_list(outfits, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if (isnull(dresscode))
 		return
 
@@ -427,7 +427,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 			var/datum/outfit/O = path
 			job_outfits[initial(O.name)] = path
 
-		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in sort_list(job_outfits)
+		dresscode = tgui_input_list(usr, "Select job equipment", "Robust quick dress shop", sort_list(job_outfits, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		dresscode = job_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -439,7 +439,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 			var/datum/outfit/O = path
 			plasmaman_outfits[initial(O.name)] = path
 
-		dresscode = input("Select plasmeme equipment", "Robust quick dress shop") as null|anything in sort_list(plasmaman_outfits)
+		dresscode = tgui_input_list(usr, "Select plasmeme equipment", "Robust quick dress shop", sort_list(plasmaman_outfits, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		dresscode = plasmaman_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -448,7 +448,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 		var/list/custom_names = list()
 		for(var/datum/outfit/D in GLOB.custom_outfits)
 			custom_names[D.name] = D
-		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in sort_list(custom_names)
+		var/selected_name = tgui_input_list(usr, "Select outfit", "Robust quick dress shop", sort_list(custom_names, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		dresscode = custom_names[selected_name]
 		if(isnull(dresscode))
 			return
@@ -621,11 +621,11 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 		return
 	var/datum/map_template/ruin/template = data[1]
 	if (exists[template])
-		var/response = tgui_alert(user,"There is already a [template] in existence.", "Spawn Ruin", list("Jump", "Place Another", "Cancel"))
+		var/response = tgui_alert(user,"There is already a [template] in existence.", "Spawn Ruin", list("Jump", "Place Another"))
+		if (!response)
+			return
 		if (response == "Jump")
 			user.mob.forceMove(get_turf(exists[template]))
-			return
-		else if (response == "Cancel")
 			return
 
 	var/len = GLOB.ruin_landmarks.len

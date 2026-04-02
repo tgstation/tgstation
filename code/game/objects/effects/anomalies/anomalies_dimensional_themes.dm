@@ -117,7 +117,7 @@
 		return FALSE
 	if (isindestructiblewall(affected_turf))
 		return FALSE
-	affected_turf.ChangeTurf(replace_walls)
+	affected_turf.ChangeTurf(replace_walls, flags = CHANGETURF_INHERIT_MOUNTS)
 	return TRUE
 
 /**
@@ -131,7 +131,7 @@
 
 	if (replace_floors.len == 0)
 		return FALSE
-	affected_floor.replace_floor(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR)
+	affected_floor.replace_floor(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR | CHANGETURF_INHERIT_MOUNTS)
 	return TRUE
 
 /**

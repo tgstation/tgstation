@@ -46,22 +46,25 @@
 /datum/component/atom_mounted/proc/on_turf_changing(turf/source, path, new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 
-	//if we transforming from open to open turf we can skip deconstruction under some conditions
-	if(isopenturf(source) && ispath(path, /turf/open))
-		var/reload = FALSE
+	var/reload = FALSE
 
-		//we are transforming from plating into anything that isn't space
-		if(isplatingturf(source) && !ispath(path, /turf/open/space))
+	//For special effects where we explicitly want to preserve objects after change
+	if(flags & CHANGETURF_INHERIT_MOUNTS)
+		reload = TRUE
+	//if we transforming from open to open turf we can skip deconstruction under some conditions
+	else if(isopenturf(source) && ispath(path, /turf/open))
+		//we are transforming from plating into anything that isn't a groundless turf
+		if(isplatingturf(source) && !isgroundlessturf(path))
 			reload = TRUE
 		//we are transforming into plating turf
 		else if(ispath(LAZYACCESS(source.baseturfs, length(source.baseturfs)), /turf/open/floor/plating))
 			reload = TRUE
 
-		if(reload)
-			var/obj/target = parent
-			qdel(src)
-			post_change_callbacks += CALLBACK(target, TYPE_PROC_REF(/obj, remount))
-			return
+	if(reload)
+		var/obj/target = parent
+		qdel(src)
+		post_change_callbacks += CALLBACK(target, TYPE_PROC_REF(/obj, remount))
+		return
 
 	drop_wallmount()
 

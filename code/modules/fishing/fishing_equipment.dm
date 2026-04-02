@@ -556,7 +556,7 @@
 
 /obj/item/fish_genegun/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	var/is_syringe = istype(item, /obj/item/reagent_containers/syringe)
-	if(!is_syringe && istype(item, /obj/item/fish_gene))
+	if(!is_syringe && !istype(item, /obj/item/fish_gene))
 		return NONE
 	if(loaded_injector)
 		to_chat(user, span_warning("[src] already has [loaded_injector] loaded in it."))

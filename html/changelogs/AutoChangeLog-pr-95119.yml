@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Non-aliens with an implanted plasma vessel now see their plasma level in their HUD instead of just the stat panel"
+  - refactor: "Refactored the entirety of HUD management code, report if anything breaks!"

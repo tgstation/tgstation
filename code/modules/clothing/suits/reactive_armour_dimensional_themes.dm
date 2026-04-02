@@ -78,9 +78,9 @@
 /datum/armour_dimensional_theme/proc/convert_turf(turf/to_convert)
 	if (isfloorturf(to_convert))
 		var/turf/open/open_turf = to_convert
-		open_turf.replace_floor(replace_floor, flags = CHANGETURF_INHERIT_AIR)
+		open_turf.replace_floor(replace_floor, flags = CHANGETURF_INHERIT_AIR | CHANGETURF_INHERIT_MOUNTS)
 	else if (iswallturf(to_convert))
-		to_convert.ChangeTurf(replace_wall)
+		to_convert.ChangeTurf(replace_wall, flags = CHANGETURF_INHERIT_MOUNTS)
 
 	if (material)
 		var/list/custom_materials = list(SSmaterials.get_material(material) = SHEET_MATERIAL_AMOUNT)

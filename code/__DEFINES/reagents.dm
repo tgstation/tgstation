@@ -266,10 +266,6 @@
 ///same as istype() check
 #define REAGENT_SUB_TYPE (1<<2)
 
-#define RNGCHEM_INPUT "input"
-#define RNGCHEM_CATALYSTS "catalysts"
-#define RNGCHEM_OUTPUT "output"
-
 /// Below are defines used for reagent associated machines only
 /// For the pH meter flashing method
 #define ENABLE_FLASHING -1

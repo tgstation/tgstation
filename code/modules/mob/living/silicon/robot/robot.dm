@@ -20,10 +20,6 @@
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GOT_DAMPENED), PROC_REF(on_dampen))
 
-	inv1 = new /atom/movable/screen/robot/module1()
-	inv2 = new /atom/movable/screen/robot/module2()
-	inv3 = new /atom/movable/screen/robot/module3()
-
 	previous_health = health
 
 	if(ispath(cell))
@@ -131,10 +127,6 @@
 	QDEL_NULL(model)
 	QDEL_NULL(eye_lights)
 	QDEL_NULL(hat_overlay)
-	QDEL_NULL(inv1)
-	QDEL_NULL(inv2)
-	QDEL_NULL(inv3)
-	QDEL_NULL(hands)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(alert_control)
 	QDEL_LIST(upgrades)
@@ -513,19 +505,21 @@
 	if(!COOLDOWN_FINISHED(src, disabled_time))
 		balloon_alert(src, "disrupted!")
 		return FALSE
+
 	if(!(update_color && lamp_enabled) && (turn_off || lamp_enabled || update_color || !lamp_functional || stat || low_power_mode))
 		set_light_on(lamp_functional && stat != DEAD && lamp_doom) //If the lamp isn't broken and borg isn't dead, doomsday borgs cannot disable their light fully.
 		set_light_color(COLOR_RED) //This should only matter for doomsday borgs, as any other time the lamp will be off and the color not seen
 		set_light_range(1) //Again, like above, this only takes effect when the light is forced on by doomsday mode.
 		lamp_enabled = FALSE
-		lampButton?.update_appearance()
+		hud_used?.screen_objects[HUD_CYBORG_LAMP]?.update_appearance()
 		update_icons()
 		return
+
 	set_light_range(max(MINIMUM_USEFUL_LIGHT_RANGE, lamp_intensity))
 	set_light_color(lamp_doom ? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
 	set_light_on(TRUE)
 	lamp_enabled = TRUE
-	lampButton?.update_appearance()
+	hud_used?.screen_objects[HUD_CYBORG_LAMP]?.update_appearance()
 	update_icons()
 
 ///Completely deconstructs the borg, dropping the MMI/posibrain, removing applied upgrades and stripping the exoskeleton of all limbs,
@@ -762,17 +756,14 @@
 
 /mob/living/silicon/robot/proc/update_module_innate()
 	designation = model.name
-	if(hands)
-		hands.icon_state = model.model_select_icon
+	hud_used?.screen_objects[HUD_CYBORG_HANDS]?.icon_state = model.model_select_icon
 
 	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
 	if(length(model.model_traits))
 		add_traits(model.model_traits, MODEL_TRAIT)
 
 	hat_offset = model.hat_offset
-
 	INVOKE_ASYNC(src, PROC_REF(updatename))
-
 
 /mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)
 	if(hat)

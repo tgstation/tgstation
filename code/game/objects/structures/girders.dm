@@ -57,7 +57,7 @@
 	if (user.combat_mode)
 		return
 	if (istype(tool, /obj/item/stack/sheet/plasteel))
-		if (try_construction_step(user, tool, 5 SECONDS, req_state = GIRDER_NORMAL, start_alert = "reinforcing frame..."))
+		if (try_construction_step(user, tool, 5 SECONDS, req_state = GIRDER_NORMAL, start_alert = "reinforcing frame...", amount = 1))
 			replace_girder(/obj/structure/girder/reinforced)
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
@@ -114,7 +114,7 @@
 		deconstruct(disassembled = TRUE)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/structure/girder/proc/try_construction_step(mob/living/user, obj/item/tool, delay, req_state, req_floor, start_alert, volume = 100)
+/obj/structure/girder/proc/try_construction_step(mob/living/user, obj/item/tool, delay, req_state, req_floor, start_alert, volume = 100, amount = 0)
 	if (!check_state(user, req_state, req_floor))
 		return FALSE
 
@@ -123,7 +123,7 @@
 	add_fingerprint(user)
 	tool.add_fingerprint(user)
 
-	return tool.use_tool(src, user, delay, volume = volume, extra_checks = CALLBACK(src, PROC_REF(check_state), user, req_state, req_floor))
+	return tool.use_tool(src, user, delay, amount, volume, CALLBACK(src, PROC_REF(check_state), user, req_state, req_floor))
 
 /obj/structure/girder/proc/check_state(mob/living/user, req_state, req_anchored, req_floor)
 	if (!isnull(req_state) && req_state != state)

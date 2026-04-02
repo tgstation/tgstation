@@ -1,0 +1,10 @@
+2026-04-01:
+  Kashargul:
+  - bugfix: admin spawn panel persistent paths, panel offsets, panel diagonal dirs
+  - bugfix: admin spawn atom verb, crash on early enter, arrow key scroll focus
+  SmArtKar:
+  - bugfix: Fixed unpowered field generators yeeting people
+2026-04-02:
+  lelandkemble:
+  - bugfix: You can no longer put everything other than a fish gene into a fish gene
+      gun

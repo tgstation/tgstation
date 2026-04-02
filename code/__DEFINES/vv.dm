@@ -53,7 +53,7 @@
 #define VV_TOPIC_LINK(datum, href_key, text) "<a href='byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(datum)]'>text</a>"
 
 //Helpers for vv_get_dropdown()
-#define VV_DROPDOWN_OPTION(href_key, name) . += "<option value='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(src)]'>[name]</option>"
+#define VV_DROPDOWN_OPTION(href_key, name) . += "<a href='byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(src)]' style='display:none;'>[name]</a>"
 
 // VV HREF KEYS
 #define VV_HK_TARGET "target"

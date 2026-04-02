@@ -83,9 +83,6 @@
 /obj/item/pinpointer/shuttle{
 	pixel_y = 7
 	},
-/obj/item/clothing/glasses/thermal/monocle{
-	pixel_y = 2
-	},
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
 "ek" = (
@@ -96,6 +93,10 @@
 	},
 /obj/item/gun/ballistic/revolver/c38,
 /obj/machinery/light/cold/directional/south,
+/obj/item/storage/belt/holster/psyker,
+/obj/item/storage/belt/holster/psyker,
+/obj/item/knife/combat/survival,
+/obj/item/knife/combat/survival,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
 "eO" = (
@@ -457,6 +458,8 @@
 /obj/item/gun/ballistic/shotgun/lethal{
 	pixel_y = 4
 	},
+/obj/item/storage/belt/bandolier,
+/obj/item/knife/combat/survival,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
 "wG" = (
@@ -555,6 +558,10 @@
 /area/shuttle/hunter)
 "AF" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/storage/medkit/emergency{
+	pixel_y = 4
+	},
 /turf/open/floor/engine,
 /area/shuttle/hunter)
 "AH" = (
@@ -709,6 +716,9 @@
 "HO" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/bed/maint,
+/obj/item/storage/box/bandages{
+	pixel_y = -2
+	},
 /turf/open/floor/iron,
 /area/shuttle/hunter)
 "Id" = (
@@ -944,6 +954,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/garbage,
+/obj/structure/table_frame,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "Tp" = (

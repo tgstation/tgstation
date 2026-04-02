@@ -327,7 +327,7 @@
 	candidates = SSpolling.poll_ghost_candidates(
 		question = "Would you like to become a newly hatched blood worm? (x[num_hatchlings])",
 		role = ROLE_BLOOD_WORM_INFESTATION,
-		check_jobban = ROLE_BLOOD_WORM_INFESTATION,
+		check_jobban = ROLE_BLOOD_WORM,
 		poll_time = cocoon_time,
 		ignore_category = POLL_IGNORE_BLOOD_WORM,
 		alert_pic = cocoon_type, // The hatchling icon is too small, and a well-cropped juvenile icon is already used for the main spawn event.

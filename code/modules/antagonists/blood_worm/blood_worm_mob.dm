@@ -62,9 +62,6 @@
 	/// This mob is always dead as it's just a mind holder.
 	var/mob/living/blood_worm_host/backseat
 
-	/// The blood display on the left side of the screen, which is shown to the blood worm while in a host, if any.
-	var/atom/movable/screen/blood_level/blood_display
-
 	// Innate and shared actions
 
 	/// Typed, please initialize with a proper action subtype. (empty = no action)

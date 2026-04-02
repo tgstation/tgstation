@@ -38,7 +38,6 @@ GLOBAL_LIST_INIT(vv_var_blacklist, list(
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = list()
-	VV_DROPDOWN_OPTION("", "---")
 	VV_DROPDOWN_OPTION(VV_HK_CALLPROC, "Call Proc")
 	VV_DROPDOWN_OPTION(VV_HK_MARK, "Mark Object")
 	VV_DROPDOWN_OPTION(VV_HK_TAG, "Tag Datum")

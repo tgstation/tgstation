@@ -718,9 +718,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	for(var/mob/user as anything in is_using)
-		user.hud_used?.open_containers -= gone
+		if (user.hud_used?.screen_groups[HUD_GROUP_STORAGE])
+			user.hud_used.screen_groups[HUD_GROUP_STORAGE] -= gone
+
 		if(!user.client)
 			continue
+
 		var/client/cuser = user.client
 		cuser.screen -= gone
 
@@ -1086,9 +1089,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	LAZYOR(is_using, to_show)
 
-	to_show.hud_used.open_containers |= storage_interfaces[to_show].list_ui_elements()
+	// Don't add to screen_objects as that one gets its contents actually deleted
+	LAZYOR(to_show.hud_used.screen_groups[HUD_GROUP_STORAGE], storage_interfaces[to_show].list_ui_elements())
 	to_show.client.screen |= storage_interfaces[to_show].list_ui_elements()
-	to_show.hud_used.open_containers |= real_location.contents
+	LAZYOR(to_show.hud_used.screen_groups[HUD_GROUP_STORAGE], real_location.contents)
 	to_show.client.screen |= real_location.contents
 
 	return TRUE
@@ -1116,9 +1120,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(to_hide.client)
 		to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
 		to_hide.client.screen -= real_location.contents
-	if(to_hide.hud_used)
-		to_hide.hud_used.open_containers -= storage_interfaces[to_hide].list_ui_elements()
-		to_hide.hud_used.open_containers -=  real_location.contents
+	if(to_hide.hud_used.screen_groups[HUD_GROUP_STORAGE])
+		to_hide.hud_used.screen_groups[HUD_GROUP_STORAGE] -= storage_interfaces[to_hide].list_ui_elements()
+		to_hide.hud_used.screen_groups[HUD_GROUP_STORAGE] -= real_location.contents
 	QDEL_NULL(storage_interfaces[to_hide])
 	storage_interfaces -= to_hide
 

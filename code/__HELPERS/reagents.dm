@@ -58,16 +58,6 @@
 	//if we got this far, the longer reaction will be impossible to create if the shorter one is earlier in GLOB.chemical_reactions_list_reactant_index, and will require the reagents to be added in a particular order otherwise
 	return TRUE
 
-//see build_chemical_reactions_list in holder.dm for explanations
-/proc/add_chemical_reaction(datum/chemical_reaction/add)
-	if(!GLOB.chemical_reactions_list_reactant_index || !add.required_reagents || !add.required_reagents.len)
-		return
-	var/rand_reagent = pick(add.required_reagents)
-	if(!GLOB.chemical_reactions_list_reactant_index[rand_reagent])
-		GLOB.chemical_reactions_list_reactant_index[rand_reagent] = list()
-	GLOB.chemical_reactions_list_reactant_index[rand_reagent] += add
-	GLOB.chemical_reactions_list[add.type] = add
-
 //Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
 /datum/reagents/proc/create_foam(foamtype, foam_volume, result_type = null, notification = null, log = FALSE)
 	var/location = get_turf(my_atom)
