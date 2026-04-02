@@ -1,36 +1,9 @@
-/datum/hud/living/New(mob/living/owner)
-	..()
-
-	pull_icon = new /atom/movable/screen/pull(null, src)
-	pull_icon.icon = ui_style
-	pull_icon.update_appearance()
-	pull_icon.screen_loc = ui_living_pull
-	static_inventory += pull_icon
-
-	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src, ui_basic_combat_toggle)
-	action_intent.icon = ui_style
-	static_inventory += action_intent
-
-	floor_change = new /atom/movable/screen/floor_changer(null, src)
-	floor_change.icon = ui_style
-	floor_change.screen_loc = ui_floor_change
-	static_inventory += floor_change
-
-	var/atom/movable/screen/using
-
-	using = new /atom/movable/screen/language_menu(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_basic_language_menu
-	static_inventory += using
-
-	using = new /atom/movable/screen/memories(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_basic_memories_menu
-	static_inventory += using
-
-	//mob health doll assumes whatever sprite the mob is
-	healthdoll = new /atom/movable/screen/healthdoll/living(null, src)
-	infodisplay += healthdoll
-
-	stamina = new /atom/movable/screen/stamina(null, src)
-	infodisplay += stamina
+/datum/hud/living/initialize_screen_objects()
+	. = ..()
+	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style, ui_living_pull)
+	add_screen_object(/atom/movable/screen/combattoggle/flashy, HUD_MOB_INTENTS, HUD_GROUP_STATIC, ui_style, ui_basic_combat_toggle)
+	add_screen_object(/atom/movable/screen/healthdoll/living, HUD_MOB_HEALTHDOLL, HUD_GROUP_INFO)
+	add_screen_object(/atom/movable/screen/stamina, HUD_MOB_STAMINA, HUD_GROUP_INFO)
+	add_screen_object(/atom/movable/screen/floor_changer, HUD_MOB_FLOOR_CHANGER, HUD_GROUP_STATIC, ui_style, ui_floor_change)
+	add_screen_object(/atom/movable/screen/language_menu, HUD_MOB_LANGUAGE_MENU, HUD_GROUP_STATIC, ui_style, ui_basic_language_menu)
+	add_screen_object(/atom/movable/screen/memories, HUD_MOB_MEMORIES, HUD_GROUP_STATIC, ui_style, ui_basic_memories_menu)

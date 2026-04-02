@@ -201,7 +201,6 @@
 		hud_used.set_parallax_movedir(areaobj.parallax_movedir, TRUE)
 
 // Root object for parallax, all parallax layers are drawn onto this and it manages them
-INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_home)
 /atom/movable/screen/parallax_home
 	icon = null
 	blend_mode = BLEND_ADD
@@ -279,7 +278,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_home)
 
 	parallax_layers_cached = list()
 	for(var/space_layer in 1 to layers_to_draw)
-		parallax_layers_cached += generate_space_layer(space_layer)
+		var/atom/movable/screen/parallax_layer/parallax = generate_space_layer(space_layer)
+		if (parallax)
+			parallax_layers_cached += parallax
 
 	if(draw_old_space)
 		parallax_layers_cached += new /atom/movable/screen/parallax_layer/old(null, null, owner)
@@ -291,7 +292,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_home)
 	QDEL_LIST(parallax_layers_cached)
 
 // We need parallax to always pass its args down into initialize, so we immediate init it
-INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer
 	icon = 'icons/effects/parallax.dmi'
 	var/speed = 1
