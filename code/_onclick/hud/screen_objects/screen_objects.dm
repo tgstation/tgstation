@@ -344,12 +344,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	///When recovering from minimizing our HUD, this is where we'll be set to. We set this in Initialize.
 	var/default_screen_location
 
-/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner, full_hud_location)
+/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner, default_screen_location)
 	. = ..()
 	update_appearance()
-	if(full_hud_location)
-		screen_loc = full_hud_location
-	default_screen_location = screen_loc
+	if(default_screen_location)
+		screen_loc = default_screen_location
+	src.default_screen_location = screen_loc
 
 /atom/movable/screen/combattoggle/Click()
 	if(isliving(usr))
