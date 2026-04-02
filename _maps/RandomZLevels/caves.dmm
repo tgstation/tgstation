@@ -146,6 +146,7 @@
 /area/awaymission/caves/bmp_asteroid/level_three)
 "ba" = (
 /obj/structure/table/wood/fancy,
+/obj/item/book/granter/action/spell/charge,
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bf" = (
