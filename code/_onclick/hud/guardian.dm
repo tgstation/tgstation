@@ -1,124 +1,45 @@
-/datum/hud/guardian/New(mob/living/basic/guardian/owner)
-	..()
-	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
-	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_zonesel
-	static_inventory += action_intent
+/datum/hud/guardian
+	inventory_slots = list(/datum/inventory_slot/guardian_storage)
 
-	floor_change = new /atom/movable/screen/floor_changer(null, src)
-	floor_change.icon = ui_style
-	floor_change.screen_loc = "EAST-1:28,SOUTH+1:7"
-	static_inventory += floor_change
+/datum/hud/guardian/initialize_screen_objects()
+	. = ..()
+	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, 'icons/hud/guardian.dmi')
+	add_screen_object(/atom/movable/screen/floor_changer, HUD_MOB_FLOOR_CHANGER, HUD_GROUP_STATIC, ui_style, ui_below_throw)
+	add_screen_object(/atom/movable/screen/healths/guardian, HUD_MOB_HEALTH, HUD_GROUP_INFO)
 
-	pull_icon = new /atom/movable/screen/pull(null, src)
-	pull_icon.icon = 'icons/hud/guardian.dmi'
-	pull_icon.update_appearance()
-	pull_icon.screen_loc = ui_living_pull
-	static_inventory += pull_icon
+	var/mob/living/basic/guardian/owner = mymob
+	if (istype(owner) && owner.toggle_button_type)
+		add_screen_object(owner.toggle_button_type, HUD_GUARDIAN_TOGGLE, ui_loc = ui_storage1)
 
-	healths = new /atom/movable/screen/healths/guardian(null, src)
-	infodisplay += healths
+/datum/hud/dextrous/guardian/initialize_screen_objects()
+	. = ..()
+	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/healths/guardian, HUD_MOB_HEALTH, HUD_GROUP_INFO)
 
-/datum/hud/dextrous/guardian/New(mob/living/basic/guardian/owner) //for a dextrous guardian
-	..()
-	if(istype(owner, /mob/living/basic/guardian/dextrous))
-		var/atom/movable/screen/inventory/inv_box
-		inv_box = new /atom/movable/screen/inventory(null, src)
-		inv_box.name = "internal storage"
-		inv_box.icon = ui_style
-		inv_box.icon_state = "suit_storage"
-		inv_box.screen_loc = ui_back
-		inv_box.slot_id = ITEM_SLOT_DEX_STORAGE
-		static_inventory += inv_box
-
-	//we're replacing this below
-	if(healthdoll)
-		QDEL_NULL(healthdoll)
-		infodisplay -= healthdoll
-
-	healths = new /atom/movable/screen/healths/guardian(null, src)
-	infodisplay += healths
+	var/mob/living/basic/guardian/owner = mymob
+	if (istype(owner) && owner.toggle_button_type)
+		add_screen_object(owner.toggle_button_type, HUD_GUARDIAN_TOGGLE, ui_loc = ui_storage2)
 
 /datum/hud/dextrous/guardian/persistent_inventory_update()
 	if(!mymob)
 		return
-	if(istype(mymob, /mob/living/basic/guardian/dextrous))
-		var/mob/living/basic/guardian/dextrous/dex_guardian = mymob
 
-		if(hud_shown)
-			if(dex_guardian.internal_storage)
-				dex_guardian.internal_storage.screen_loc = ui_id
-				dex_guardian.client.screen += dex_guardian.internal_storage
-		else
-			if(dex_guardian.internal_storage)
-				dex_guardian.internal_storage.screen_loc = null
+	if(!istype(mymob, /mob/living/basic/guardian/dextrous))
+		return ..()
 
-	..()
+	var/mob/living/basic/guardian/dextrous/dex_guardian = mymob
+	if(hud_shown)
+		if(dex_guardian.internal_storage)
+			dex_guardian.internal_storage.screen_loc = ui_back
+			dex_guardian.client.screen += dex_guardian.internal_storage
+	else
+		if(dex_guardian.internal_storage)
+			dex_guardian.internal_storage.screen_loc = null
+	return ..()
 
-/datum/action/cooldown/guardian
-	button_icon = 'icons/hud/guardian.dmi'
+/datum/inventory_slot/guardian_storage
+	name = "internal storage"
+	icon_state = "suit_storage"
+	slot_id = ITEM_SLOT_DEX_STORAGE
+	screen_loc = ui_id
 
-/datum/action/cooldown/guardian/IsAvailable(feedback)
-	. = ..()
-	if(!.)
-		return .
-	return !!isguardian(owner)
-
-/datum/action/cooldown/guardian/communicate
-	name = "Communicate"
-	desc = "Communicate telepathically with your user."
-	button_icon_state = "communicate"
-	default_button_position = ui_guardian_communication
-
-/datum/action/cooldown/guardian/communicate/Activate()
-	astype(owner, /mob/living/basic/guardian)?.communicate()
-
-/datum/action/cooldown/guardian/manifest
-	name = "Manifest"
-	desc = "Spring forth into battle!"
-	button_icon_state = "manifest"
-	default_button_position = ui_guardian_manifest
-
-/datum/action/cooldown/guardian/manifest/Activate()
-	astype(owner, /mob/living/basic/guardian)?.manifest()
-
-/datum/action/cooldown/guardian/recall
-	name = "Recall"
-	desc = "Return to your user."
-	button_icon_state = "recall"
-	default_button_position = ui_guardian_recall
-
-/datum/action/cooldown/guardian/recall/Activate()
-	astype(owner, /mob/living/basic/guardian)?.recall()
-
-/datum/action/cooldown/guardian/toggle_light
-	name = "Toggle Light"
-	desc = "Glow like star dust."
-	button_icon_state = "light"
-	default_button_position = SCRN_OBJ_INSERT_FIRST
-
-/datum/action/cooldown/guardian/toggle_light/Activate()
-	astype(owner, /mob/living/basic/guardian)?.toggle_light()
-
-/datum/action/cooldown/guardian/toggle_mode
-	name = "Toggle Mode"
-	desc = "Switch between ability modes."
-	button_icon_state = "toggle"
-	default_button_position = ui_guardian_special
-
-/datum/action/cooldown/guardian/toggle_mode/Activate()
-	astype(owner, /mob/living/basic/guardian)?.toggle_modes()
-
-/datum/action/cooldown/guardian/toggle_mode/assassin
-	name = "Toggle Stealth"
-	desc = "Enter or exit stealth."
-	button_icon_state = "stealth"
-	transparent_when_unavailable = TRUE
-
-/datum/action/cooldown/guardian/toggle_mode/assassin/is_action_active(atom/movable/screen/movable/action_button/current_button)
-	return owner.has_status_effect(/datum/status_effect/guardian_stealth)
-
-/datum/action/cooldown/guardian/toggle_mode/gases
-	name = "Toggle Gas"
-	desc = "Switch between possible gases."
-	button_icon_state = "gases"

@@ -17,7 +17,7 @@
 		return
 	throw_mode = THROW_MODE_DISABLED
 	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw"
+		hud_used.screen_objects[HUD_MOB_THROW]?.icon_state = "act_throw"
 	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 
@@ -26,7 +26,7 @@
 		return
 	throw_mode = mode
 	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw_on"
+		hud_used.screen_objects[HUD_MOB_THROW]?.icon_state = "act_throw_on"
 	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 /mob/proc/throw_item(atom/target)
