@@ -12,7 +12,7 @@
 
 /datum/component/plumbing/boulder_reactions/can_give(amount, reagent, datum/ductnet/net)
 	if(amount <= 0 || !reagents.total_volume || !reagent)
-		return
+		return FALSE
 
 	var/obj/machinery/bouldertech/refinery/the_refinery = parent
 	var/list/datum/reagents/boosters = the_refinery.booster_list

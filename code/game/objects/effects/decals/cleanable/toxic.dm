@@ -20,15 +20,13 @@
 
 /obj/effect/decal/cleanable/greenglow/waste/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	animate(src, alpha=255, time= 0.5 SECONDS)
+	animate(src, alpha = 255, time = 0.5 SECONDS)
 
 	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash_hydroponics")
 	splash_animation.color = "#15ff00"
 	flick_overlay_view(splash_animation, 1.1 SECONDS)
 
-
 /obj/effect/decal/cleanable/greenglow/waste/Destroy()
-	bubbling_audio.stop()
 	QDEL_NULL(bubbling_audio)
 	QDEL_NULL(particles)
 	return ..()
@@ -58,8 +56,7 @@
 	splash_floor.ScrapeAway(flags = CHANGETURF_IGNORE_AIR) //Eat away the floor
 	visible_message(span_warning("The waste eats away at the floor, leaving \the [get_turf(src)] behind."))
 	animate(src, time = 0.5 SECONDS, color = "#bebebe8e")
-	if(bubbling_audio)
-		bubbling_audio.stop()
+	bubbling_audio?.stop()
 	QDEL_NULL(particles)
 
 #undef DISSOLVE_DURATION
