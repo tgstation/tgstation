@@ -24,6 +24,8 @@
 	var/datum/shuttle_loan_situation/situation
 	/// Whether the station has let Centcom commandeer the shuttle yet.
 	var/dispatched = FALSE
+	/// How long for the shuttle to come back to the station?
+	var/delay_time = 5 MINUTES
 
 /datum/round_event/shuttle_loan/setup()
 	var/datum/round_event_control/shuttle_loan/loan_control = control
@@ -60,7 +62,7 @@
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
 	SSshuttle.supply.destination = SSshuttle.getDock("cargo_home")
-	SSshuttle.supply.setTimer(3000)
+	SSshuttle.supply.setTimer(delay_time)
 	SSshuttle.centcom_message += situation.shuttle_transit_text
 
 	log_game("Shuttle loan event firing with type '[situation.logging_desc]'.")
