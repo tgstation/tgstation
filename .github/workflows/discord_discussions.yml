@@ -51,6 +51,6 @@ jobs:
             APP_ID: ${{ secrets.APP_ID }}
 
       - name: Run Tgstation.DiscordDiscussions
-        run: dotnet discord_discussions_bins/Tgstation.DiscordDiscussions.dll ${{ steps.app-token-generation.outputs.token }} ${{ github.repository_owner }} ${{ github.event.repository.name }} ${{ github.event.pull_request.number }} ${{ github.event.pull_request.merged && 'merged' || github.event.pull_request.state }} ${{ secrets.DISCORD_DISCUSSIONS_TOKEN }} ${{ vars.DISCORD_DISCUSSIONS_CHANNEL_ID }} ${{ github.event.action == 'reopened' && 'true' || 'false' }} ${{ vars.DISCORD_JOIN_LINK }}
+        run: dotnet discord_discussions_bins/Tgstation.DiscordDiscussions.dll ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }} ${{ github.repository_owner }} ${{ github.event.repository.name }} ${{ github.event.pull_request.number }} ${{ github.event.pull_request.merged && 'merged' || github.event.pull_request.state }} ${{ secrets.DISCORD_DISCUSSIONS_TOKEN }} ${{ vars.DISCORD_DISCUSSIONS_CHANNEL_ID }} ${{ github.event.action == 'reopened' && 'true' || 'false' }} ${{ vars.DISCORD_JOIN_LINK }}
         env:
           GITHUB_PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}
