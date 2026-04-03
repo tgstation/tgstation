@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/morgue/proc/occupant_revivable(mob/living/occupant)
 	if(occupant.stat != DEAD)
-		return FALSE
+		return TRUE
 	if(HAS_TRAIT(occupant, TRAIT_GHOSTROLE_ON_REVIVE) && length(occupant.get_all_orbiters()))
 		return TRUE
 	if(iscarbon(occupant))
