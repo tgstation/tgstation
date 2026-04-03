@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "The Combat indicator will now properly move back to its original location when using F12."
-  - bugfix: "Sleep icon now appears again & rest icon now respects \"Toggle Hotkeys button\" mode."

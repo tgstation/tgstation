@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "Zero-gravity drifting is no longer affected by inertia, ie it has been reverted to what it once was."

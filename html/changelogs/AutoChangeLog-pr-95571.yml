@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - qol: "The pneumatic cannon's examine will now show the contents of the cannon loaded."
-  - bugfix: "You may now place a pneumatic cannon (and the clown's pie cannon!) onto tables."
