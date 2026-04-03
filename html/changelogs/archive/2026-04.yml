@@ -9,6 +9,14 @@
   - bugfix: You can no longer put everything other than a fish gene into a fish gene
       gun
 2026-04-03:
+  Hatterhat:
+  - balance: Upgraded hydroponics trays now have reduced power draw with improved
+      parts, in the wake of complaints from both engineering and botanical staff regarding
+      exponentially increased short circuit frequency (and associated energy waste)
+      in affected tray basins.
+  Melbert:
+  - bugfix: Fixes wizard, cult, nukies, revs, and malf being unable to be selected
+      for roundstart antag (yes, you read that right)
   SmArtKar:
   - qol: Non-aliens with an implanted plasma vessel now see their plasma level in
       their HUD instead of just the stat panel

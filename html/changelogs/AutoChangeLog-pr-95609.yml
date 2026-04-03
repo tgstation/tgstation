@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes wizard, cult, nukies, revs, and malf being unable to be selected for roundstart antag (yes, you read that right)"
