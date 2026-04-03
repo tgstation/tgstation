@@ -24,7 +24,7 @@
 		tablet.vis_contents += robit.modularInterface
 
 	add_screen_object(/atom/movable/screen/robot/alerts, HUD_SILICON_ALERTS)
-	add_screen_object(/atom/movable/screen/combattoggle/robot, HUD_MOB_INTENTS)
+	add_screen_object(/atom/movable/screen/combattoggle/robot, HUD_MOB_INTENTS, HUD_GROUP_INFO)
 	add_screen_object(/atom/movable/screen/floor_changer, HUD_MOB_FLOOR_CHANGER, HUD_GROUP_STATIC, ui_style, ui_borg_floor_changer)
 	add_screen_object(/atom/movable/screen/zone_sel/robot, HUD_MOB_ZONE_SELECTOR)
 	var/atom/movable/screen/robot/module/module = add_screen_object(/atom/movable/screen/robot/module, HUD_CYBORG_HANDS, ui_loc = ui_borg_module)

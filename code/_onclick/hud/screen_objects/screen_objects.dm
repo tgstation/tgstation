@@ -341,10 +341,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	icon_state = "combat_off"
 	screen_loc = ui_acti
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	///When recovering from minimizing our HUD, this is where we'll be set to. We set this in Initialize.
+	var/default_screen_location
 
-/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner, default_screen_location)
 	. = ..()
 	update_appearance()
+	if(default_screen_location)
+		screen_loc = default_screen_location
+	src.default_screen_location = screen_loc
 
 /atom/movable/screen/combattoggle/Click()
 	if(isliving(usr))
@@ -573,7 +578,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/sleep/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	// Invisible by default
-	SetInvisibility(INVISIBILITY_ABSTRACT, "sleep")
+	SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_SLEEP_HUD_BUTTON)
 
 /atom/movable/screen/sleep/Click()
 	if(!isliving(usr) || HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
