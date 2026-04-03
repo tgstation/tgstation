@@ -1,118 +1,52 @@
 /datum/hud/flock_agent
 	ui_style = 'troutstation/icons/hud/screen_flock.dmi'
-
+	inventory_slots = /datum/inventory_slot/flock_agent
 	/// Used to toggle eat mode (consuming internal storage)
 	var/atom/movable/screen/eat
 	/// Internal storage
 	var/atom/movable/screen/inventory/flock_internal/internal
-	/// Resource display
-	var/atom/movable/screen/flock_resources_display/resources
 
-/datum/hud/flock_agent/New(mob/living/owner)
-	..()
-	var/atom/movable/screen/inventory/inv_box
+/datum/hud/flock_agent/initialize_screen_objects()
+	. = ..()
 	var/atom/movable/screen/using
-
-	pull_icon = new /atom/movable/screen/pull(null, src)
-	pull_icon.icon = ui_style
-	pull_icon.update_appearance()
-	pull_icon.screen_loc = ui_flock_pull
-	static_inventory += pull_icon
-
-	build_hand_slots()
-
-	using = new /atom/movable/screen/drop(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_swaphand_position(owner, 1)
-	static_inventory += using
-
-	using = new /atom/movable/screen/swap_hand(null, src)
-	using.icon = ui_style
+	add_screen_object(/atom/movable/screen/drop, HUD_MOB_DROP, HUD_GROUP_STATIC, ui_style, ui_swaphand_position(mymob, 1))
+	using = add_screen_object(/atom/movable/screen/swap_hand, HUD_MOB_SWAPHAND_2, HUD_GROUP_STATIC, ui_style, ui_swaphand_position(mymob, 2))
 	using.icon_state = "act_swap"
-	using.screen_loc = ui_swaphand_position(owner, 2)
-	static_inventory += using
-
-	action_intent = new /atom/movable/screen/combattoggle/flock(null, src)
-	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_movi
-	static_inventory += action_intent
-
-	floor_change = new /atom/movable/screen/floor_changer/vertical(null, src)
-	floor_change.icon = ui_style
-	floor_change.screen_loc = ui_flock_floor_changer
-	static_inventory += floor_change
-
-	throw_icon = new /atom/movable/screen/throw_catch(null, src)
-	throw_icon.icon = ui_style
-	throw_icon.screen_loc = ui_flock_throw
-	static_inventory += throw_icon
-
-	resist_icon = new /atom/movable/screen/resist(null, src)
-	resist_icon.icon = ui_style
-	resist_icon.screen_loc = ui_flock_resist
-	hotkeybuttons += resist_icon
-
-	using = new /atom/movable/screen/area_creator(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_flock_building
-	static_inventory += using
-
-	using = new /atom/movable/screen/language_menu(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_flock_language
-	static_inventory += using
-
-	using = new /atom/movable/screen/navigate(null, src)
-	using.icon = ui_style
-	using.screen_loc = ui_flock_navigate
-	static_inventory += using
-
-	// crafting component sets up its own screen object, check flock agent mob
-
-	zone_select = new /atom/movable/screen/zone_sel(null, src)
-	zone_select.icon = ui_style
-	zone_select.update_appearance()
-	static_inventory += zone_select
-
-	internal = new /atom/movable/screen/inventory/flock_internal(null, src)
-	internal.name = "internal storage"
-	internal.icon = ui_style
-	internal.icon_state = "internal"
-	internal.screen_loc = ui_flock_storage
-	internal.slot_id = ITEM_SLOT_DEX_STORAGE
-	static_inventory += internal
-
-	// snowflake screen bits
-	eat = new /atom/movable/screen/eat(null, src)
-	static_inventory += eat
-
-	resources = new /atom/movable/screen/flock_resources_display(null, src)
-	static_inventory += resources
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "hat"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "head"
-	inv_box.screen_loc = ui_flock_head
-	inv_box.slot_id = ITEM_SLOT_HEAD
-	static_inventory += inv_box
-
-	stamina = new /atom/movable/screen/stamina(null, src)
-	infodisplay += stamina
-
-	healthdoll = new /atom/movable/screen/healthdoll/living(null, src)
-	infodisplay += healthdoll
 
 	mymob.canon_client?.clear_screen()
 
-	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
-		if(inv.slot_id)
-			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
-			inv.update_appearance()
+	build_hand_slots()
+
+	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style, ui_flock_pull)
+	add_screen_object(/atom/movable/screen/combattoggle/flock, HUD_MOB_INTENTS, HUD_GROUP_STATIC, ui_style, ui_movi)
+	add_screen_object(/atom/movable/screen/floor_changer/vertical, HUD_MOB_FLOOR_CHANGER, HUD_GROUP_STATIC, ui_style, ui_flock_floor_changer)
+	add_screen_object(/atom/movable/screen/zone_sel, HUD_MOB_ZONE_SELECTOR, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/resist, HUD_MOB_RESIST, HUD_GROUP_HOTKEYS, ui_style, ui_flock_resist)
+	add_screen_object(/atom/movable/screen/area_creator, HUD_MOB_AREA_CREATOR, HUD_GROUP_STATIC, ui_style, ui_flock_building)
+	add_screen_object(/atom/movable/screen/language_menu, HUD_MOB_LANGUAGE_MENU, HUD_GROUP_STATIC, ui_style, ui_flock_language)
+	add_screen_object(/atom/movable/screen/memories, HUD_MOB_MEMORIES, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/navigate, HUD_MOB_NAVIGATE_MENU, HUD_GROUP_STATIC, ui_style, ui_flock_navigate)
+	add_screen_object(/atom/movable/screen/throw_catch, HUD_MOB_THROW, HUD_GROUP_HOTKEYS, ui_style, ui_flock_throw)
+	add_screen_object(/atom/movable/screen/healthdoll/living, HUD_MOB_HEALTHDOLL, HUD_GROUP_INFO)
+	add_screen_object(/atom/movable/screen/stamina, HUD_MOB_STAMINA, HUD_GROUP_STATIC)
+	// crafting component sets up its own screen object, check flock agent mob
+
+	// snowflake screen bits
+	eat = add_screen_object(/atom/movable/screen/eat, HUD_FLOCK_EAT, HUD_GROUP_STATIC)
+	add_screen_object(/atom/movable/screen/flock_resources_display, HUD_FLOCK_RESOURCE_COUNT, HUD_GROUP_STATIC)
+
+/datum/hud/flock_agent/create_inventory_slots()
+	. = ..()
+	// hacky "find the inventory slot I care about" logic
+	// the internal storage slot needs to be handled specially for appearance updates
+	for(var/atom/movable/screen/inventory/inv in screen_groups[HUD_GROUP_STATIC] + screen_groups[HUD_GROUP_TOGGLEABLE_INVENTORY])
+		if(inv.slot_id && inv.slot_id == ITEM_SLOT_DEX_STORAGE)
+			internal = inv
 
 /datum/hud/flock_agent/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return
+	..()
 	var/mob/living/basic/flock/agent/flockmob = mymob
 	var/mob/screenmob = viewer || flockmob
 
@@ -136,6 +70,22 @@
 		if(flockmob.head)
 			flockmob.head.screen_loc = null
 			screenmob.client.screen -= flockmob.head
+
+/datum/inventory_slot/flock_agent
+	abstract_type = /datum/inventory_slot/flock_agent
+
+/datum/inventory_slot/flock_agent/storage
+	name = "internal storage"
+	icon_state = "internal"
+	screen_loc = ui_flock_storage
+	slot_id = ITEM_SLOT_DEX_STORAGE
+	screen_type = /atom/movable/screen/inventory/flock_internal
+
+/datum/inventory_slot/flock_agent/hat
+	name = "hat"
+	icon_state = "head"
+	screen_loc = ui_flock_head
+	slot_id = ITEM_SLOT_HEAD
 
 /atom/movable/screen/inventory/flock_internal
 	/// Mut appearance for active animation
