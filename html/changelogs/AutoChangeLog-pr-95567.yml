@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Ascended Void heretics now properly play the deflect sound when deflecting projectiles."
