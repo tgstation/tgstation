@@ -60,7 +60,6 @@
 	name = "\improper Theater"
 	icon_state = "theatre"
 	sound_environment = SOUND_AREA_WOODFLOOR
-	wanna_dance = TRUE
 
 /area/station/service/theater_dressing
 	name = "\improper Theater Dressing Room"
