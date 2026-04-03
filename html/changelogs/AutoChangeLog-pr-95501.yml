@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - admin: "View Variables can now properly view alists, altho it cannot edit them."
