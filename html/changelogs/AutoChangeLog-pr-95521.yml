@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - balance: "Upgraded hydroponics trays now have reduced power draw with improved parts, in the wake of complaints from both engineering and botanical staff regarding exponentially increased short circuit frequency (and associated energy waste) in affected tray basins."
