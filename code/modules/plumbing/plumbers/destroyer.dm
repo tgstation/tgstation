@@ -88,7 +88,6 @@
 /obj/machinery/plumbing/disposer/process(seconds_per_tick)
 	if(!is_operational || !reagents.total_volume || !on)
 		return
-	SEND_SIGNAL(reagents, COMSIG_REAGENTS_CHEMICAL_OBLITERATION)
 	reagents.remove_all(disposal_rate * seconds_per_tick)
 	use_energy((disposal_rate / MAX_DISPOSAL_RATE) * active_power_usage * seconds_per_tick)
 

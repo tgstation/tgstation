@@ -90,8 +90,8 @@
 	if(boulder_count >= 1)
 		. += span_notice("[EXAMINE_HINT("Right Click")] to manually remove a stored boulder.<br />")
 
-	. += span_notice("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
-	. += span_notice("This machine can process up to [EXAMINE_HINT("[boulders_processing_count] boulders")] at a time.")
+	. += span_info("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
+	. += span_info("This machine can process up to [EXAMINE_HINT("[boulders_processing_count] boulders")] at a time.")
 
 	if(anchored)
 		. += span_notice("It's [EXAMINE_HINT("anchored")] in place.")
@@ -107,9 +107,9 @@
 	. = ..()
 
 	if(length(booster_list))
-		. += span_notice("This machine is boosted from chemical intake:<br>")
+		. += span_notice("This machine's output is boosted by <b>chemical intake:</b><br>")
 		for(var/datum/reagent/increment as anything in booster_list)
-			. += "[increment.name]: Provides [booster_list[increment.type]*10]% Boost"
+			. += span_info("&bull; [increment.name]: Provides [booster_list[increment.type]*10]% Boost")
 		. += span_notice("<br>Upon being boosted successfully, \the [src] will produce [EXAMINE_HINT("[waste_chemical.name]")].")
 
 /obj/machinery/bouldertech/update_icon_state()

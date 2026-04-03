@@ -63,12 +63,13 @@
 	var/highest_boost = 0
 	var/datum/reagent/biggest_booster
 	for(var/datum/reagent/chem in reagents.reagent_list)
-		if(booster_list[chem.type])
-			if(!reagents.has_reagent(chem.type, booster_list[chem.type])) //check that we have the associated quantity of the chem in order to perform the boost.
-				continue
-			if(booster_list[chem.type] > highest_boost)
-				highest_boost = booster_list[chem.type]
-				biggest_booster = chem.type
+		if(!booster_list[chem.type])
+			continue
+		if(!reagents.has_reagent(chem.type, booster_list[chem.type])) //check that we have the associated quantity of the chem in order to perform the boost.
+			continue
+		if(booster_list[chem.type] > highest_boost)
+			highest_boost = booster_list[chem.type]
+			biggest_booster = chem.type
 
 	if(!biggest_booster)
 		return

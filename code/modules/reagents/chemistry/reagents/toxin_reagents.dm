@@ -1570,7 +1570,6 @@
 	liver_damage_multiplier = 0
 	toxpwr = 1
 
-#define WASTE_REACTION_THRESHOLD 10
 #define CRITICAL_CAPACITY 45
 
 /datum/reagent/toxin/acid/industrial_waste
@@ -1586,11 +1585,8 @@
 
 /datum/reagent/toxin/acid/industrial_waste/on_new(data)
 	. = ..()
-	RegisterSignal(holder, COMSIG_REAGENTS_CHEMICAL_OBLITERATION, PROC_REF(pre_disposal))
-
-/datum/reagent/toxin/acid/industrial_waste/Destroy()
-	UnregisterSignal(holder, COMSIG_REAGENTS_CHEMICAL_OBLITERATION)
-	return ..()
+	if(istype(holder.my_atom, /obj/machinery/plumbing/disposer))
+		RegisterSignal(holder, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(pre_disposal))
 
 /datum/reagent/toxin/acid/industrial_waste/on_merge(list/mix_data, amount)
 	. = ..()
@@ -1628,8 +1624,6 @@
 	return ..()
 
 /datum/reagent/toxin/acid/industrial_waste/expose_turf(turf/exposed_turf, reac_volume)
-	if(volume < WASTE_REACTION_THRESHOLD)
-		return // There's too little waste to do anything.
 	var/obj/effect/decal/cleanable/greenglow/waste/goo
 	goo = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow/waste) //Following similar logic to how ants spawn their cleanables.
 	if(QDELETED(goo))
@@ -1641,7 +1635,10 @@
 
 	if(goo.lazy_init_reagents())
 		goo.reagents.maximum_volume = min(goo.reagents.maximum_volume + rounded_volume, 300)
-		goo.reagents.add_reagent(type, reac_volume)
+		goo.reagents.add_reagent(type, rounded_volume)
+	if(goo.reagents.has_reagent(type, WASTE_REACTION_THRESHOLD))
+		goo.pre_dissolve()
+		return // Otherwise there's too little waste to do anything.
 	return ..()
 
 /datum/reagent/toxin/acid/industrial_waste/proc/pre_disposal()
@@ -1651,7 +1648,7 @@
 		return
 	if(prob(10))
 		disaster_zone.balloon_alert_to_viewers("hissssssss!")
-	spew_waste(round(volume / WASTE_REACTION_THRESHOLD)) //You can't just dump the industrial waste down the kitchen sink.
+	spew_waste(5) //You can't just dump the industrial waste down the kitchen sink. High range to disincentivize using the chem disposaler.
 
 /**
  * Pick a random turf in the spew range and split our total amount of waste there.
@@ -1664,25 +1661,15 @@
 	var/turf/dropturf = get_turf(atom_holder)
 	var/obj/effect/particle_effect/fluid/smoke/quick/greenboy = new(dropturf)
 	greenboy.color = "#00ff00"
-	var/list/turf/turfs = list()
-	for(var/turf/floors in oview(spew_range, dropturf))
-		if(istype(floors, /turf/open/space))
+	var/list/turfs = list()
+	for(var/turf/open/floors in oview(spew_range, dropturf))
+		if(isgroundlessturf(floors) || isindestructiblefloor(floors) || floors.is_blocked_turf(TRUE))
 			continue
 		turfs += floors
 
-	while(length(turfs))
-		var/turf/turf_options = pick(turfs)
-		if(turf_options.is_blocked_turf(TRUE))
-			turfs -= turf_options
-			continue
-		if(isgroundlessturf(turf_options) || isindestructiblefloor(turf_options))
-			turfs -= turf_options
-			continue
-		else
-			dropturf = turf_options
-			break
+	if(!length(turfs))
+		return
+	dropturf = pick(turfs)
 
 	expose_turf(dropturf, volume/2)
 	volume = round(volume/2, 0.01)
-
-#undef WASTE_REACTION_THRESHOLD
