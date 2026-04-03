@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "HUDs are now visible when looking up a floor, as well as by AIS and camera consoles on lower floors."
