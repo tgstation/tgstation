@@ -39,6 +39,7 @@
 		wheelToggle = FALSE
 		return
 	wheels.forceMove(get_turf(user))
+	wheels.setDir(user.dir)
 	wheels.buckle_mob(user)
 	wheelToggle = TRUE
 
