@@ -799,7 +799,9 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 /obj/effect/rune/wall/Destroy()
 	if(barrier)
-		QDEL_NULL(barrier)
+		if(!QDELING(barrier))
+			qdel(barrier)
+		barrier = null
 	return ..()
 
 /obj/effect/rune/wall/invoke(list/invokers)

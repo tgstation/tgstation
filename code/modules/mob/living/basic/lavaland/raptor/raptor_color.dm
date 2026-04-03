@@ -165,8 +165,6 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	var/mutable_appearance/wings_underlay = null
 	/// Our drift force
 	var/drift_force = 2 NEWTONS
-	/// Our stabilizing force
-	var/stabilizer_force = 4.5 NEWTONS
 
 /obj/item/mob_holder/purple_raptor/Initialize(mapload, mob/living/held_mob, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags)
 	. = ..()
@@ -193,7 +191,6 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 		/datum/component/jetpack, \
 		TRUE, \
 		drift_force, \
-		stabilizer_force, \
 		COMSIG_RAPTOR_WINGS_OPENED, \
 		COMSIG_RAPTOR_WINGS_CLOSED, \
 		null, \
