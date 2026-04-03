@@ -470,6 +470,7 @@
 
 	return jointext(check_list, "<br>")
 
+/// Returns all surgical states, filtering out stuff which should not be reported
 /obj/item/bodypart/proc/get_reported_surgery_state()
 	var/reported_state = surgery_state
 	if(!LIMB_HAS_SKIN(src))
