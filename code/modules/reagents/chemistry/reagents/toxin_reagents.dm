@@ -1657,6 +1657,8 @@
 
 	var/atom/atom_holder = holder.my_atom
 	var/turf/dropturf = get_turf(atom_holder)
+	if(!dropturf)
+		return //Check for at least an inital turf to start
 	var/obj/effect/particle_effect/fluid/smoke/quick/greenboy = new(dropturf)
 	greenboy.color = "#00ff00"
 	var/list/turf/turfs = list()
