@@ -1,3 +1,15 @@
 2026-04-01:
+  Kashargul:
+  - bugfix: admin spawn panel persistent paths, panel offsets, panel diagonal dirs
+  - bugfix: admin spawn atom verb, crash on early enter, arrow key scroll focus
   SmArtKar:
   - bugfix: Fixed unpowered field generators yeeting people
+2026-04-02:
+  lelandkemble:
+  - bugfix: You can no longer put everything other than a fish gene into a fish gene
+      gun
+2026-04-03:
+  SmArtKar:
+  - qol: Non-aliens with an implanted plasma vessel now see their plasma level in
+      their HUD instead of just the stat panel
+  - refactor: Refactored the entirety of HUD management code, report if anything breaks!

@@ -225,8 +225,7 @@
 	. = combat_mode
 	combat_mode = new_mode
 	SEND_SIGNAL(src, COMSIG_COMBAT_MODE_TOGGLED)
-	if(hud_used?.action_intent)
-		hud_used.action_intent.update_appearance()
+	hud_used?.screen_objects[HUD_MOB_INTENTS]?.update_appearance()
 	if(silent || !client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode))
 		return
 	if(combat_mode)
