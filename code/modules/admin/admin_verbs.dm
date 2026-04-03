@@ -848,3 +848,7 @@ ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an it
 	log_admin("[key_name(user)] created a new black market item: [name] ([chosen]) for [price] credits, of quantity [quantity].")
 
 	BLACKBOX_LOG_ADMIN_VERB("Create Black Market Item")
+
+ADMIN_VERB(reload_dances, R_DEBUG, "Reload Dances", "Reload dance moves from file", ADMIN_CATEGORY_DEBUG)
+	loadDancesFromFile()
+	to_chat(user, "reloaded dances from file")

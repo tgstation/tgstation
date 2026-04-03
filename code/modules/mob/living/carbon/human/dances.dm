@@ -1,216 +1,90 @@
-////////////////////////////////////
-//            Dances              //
-////////////////////////////////////
 
-// TODO: there's definitely a better way to init the global list
-// Will deal with that if/when this becomes more than a silly april fool's joke
+// Info about an animation
+/datum/humanoid_animation
+	var/name = "Unnamed Dance"
+	var/emote_text = ""
+	var/list/keyframes
 
-// Not really a dance, just for the wave emote
-GLOBAL_DATUM_INIT(wave_moves, /datum/dance_moves/wave, new /datum/dance_moves/wave())
+// Emote animations
+GLOBAL_LIST_EMPTY(emote_animations)
+
+// All dances
+GLOBAL_LIST_EMPTY(all_dances_by_name)
 
 // Dances that can be picked by the random dance routine or by the *dance emote
-GLOBAL_LIST_INIT(all_dances_by_name, list(
-	LOWER_TEXT(/datum/dance_moves/shoulder_wave::dance_name) = new /datum/dance_moves/shoulder_wave,
-	LOWER_TEXT(/datum/dance_moves/floss::dance_name) = new /datum/dance_moves/floss,
-	LOWER_TEXT(/datum/dance_moves/disco::dance_name) = new /datum/dance_moves/disco,
-))
+GLOBAL_LIST_EMPTY(random_dances_by_name)
 
-/datum/dance_moves/wave
-	dance_name = "Wave"
-	emote_text = "waves!"
+/proc/json_pose_to_pose(list/json_pose)
+	var/datum/animation_pose/pose = new
+	if(json_pose["rotation"])
+		pose.rotation = json_pose["rotation"]
+	if(json_pose["offset_x"])
+		pose.offset_x = json_pose["offset_x"]
+	if(json_pose["offset_y"])
+		pose.offset_y = json_pose["offset_y"]
+	if(json_pose["scale_x"])
+		pose.scale_x = json_pose["scale_x"]
+	if(json_pose["scale_y"])
+		pose.scale_y = json_pose["scale_y"]
+	return pose
 
-/datum/dance_moves/wave/New()
-	keyframes = list()
-	var/datum/dance_keyframe/newframe
-	newframe = new
-	keyframes += newframe
+/proc/json_list_to_keyframes(list/json_list)
+	var/list/keyframes = list()
+	for(var/frame in json_list)
+		if(frame["repeat_frames"])
+			for(var/frameIdx in frame["repeat_frames"])
+				keyframes += keyframes[frameIdx]
+		else
+			var/datum/animation_keyframe/keyframe = new
+			if(frame["time"])
+				keyframe.time = frame["time"]
+			if(frame["animate"])
+				keyframe.animate = frame["animate"]
+			if(frame["head_dir"])
+				keyframe.head_dir = text2dir(frame["head_dir"])
+			if(frame["body_dir"])
+				keyframe.body_dir = text2dir(frame["body_dir"])
+			if(frame["legs_dir"])
+				keyframe.legs_dir = text2dir(frame["legs_dir"])
+			if(frame["head"])
+				keyframe.head = json_pose_to_pose(frame["head"])
+			if(frame["body"])
+				keyframe.body = json_pose_to_pose(frame["body"])
+			if(frame["arm_l"])
+				keyframe.arm_l = json_pose_to_pose(frame["arm_l"])
+			if(frame["arm_r"])
+				keyframe.arm_r = json_pose_to_pose(frame["arm_r"])
+			if(frame["leg_l"])
+				keyframe.leg_l = json_pose_to_pose(frame["leg_l"])
+			if(frame["leg_r"])
+				keyframe.leg_r = json_pose_to_pose(frame["leg_r"])
+			keyframes += keyframe
+	return keyframes
 
-	newframe = new
-	newframe.time_to_do = 5
-	newframe.arm_l.rotation = 10
-	newframe.arm_l.scale_y = -1
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 3
-	newframe.arm_l.rotation = 45
-	newframe.arm_l.scale_y = -1
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 3
-	newframe.arm_l.rotation = 10
-	newframe.arm_l.scale_y = -1
-	keyframes += newframe
-
-	// Repeat x1
-	keyframes += keyframes[3]
-	keyframes += keyframes[4]
-
-	newframe = new
-	newframe.time_to_do = 5
-	keyframes += newframe
-
-/datum/dance_moves/shoulder_wave
-	dance_name = "ShoulderWave"
-	emote_text = "does the wave!"
-
-/datum/dance_moves/shoulder_wave/New()
-	keyframes = list()
-	var/datum/dance_keyframe/newframe
-	newframe = new
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 3
-	newframe.arm_l.rotation = -80
-	newframe.arm_r.rotation = 80
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 3
-	newframe.arm_l.rotation = -80
-	newframe.arm_r.rotation = 100
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 3
-	newframe.arm_l.rotation = -80
-	newframe.arm_r.rotation = 60
-	newframe.arm_r.offset_y = 3
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 3
-	newframe.arm_l.rotation = -60
-	newframe.arm_l.offset_y = 3
-	newframe.arm_r.rotation = 80
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 3
-	newframe.arm_l.rotation = -100
-	newframe.arm_r.rotation = 80
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 3
-	newframe.arm_l.rotation = -80
-	newframe.arm_r.rotation = 80
-	keyframes += newframe
-
-	// Previous 4 frames in reverse order
-	keyframes += keyframes[6]
-	keyframes += keyframes[5]
-	keyframes += keyframes[4]
-	keyframes += keyframes[3]
-
-	newframe = new
-	newframe.time_to_do = 3
-	newframe.arm_l.rotation = -80
-	newframe.arm_r.rotation = 80
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 3
-	keyframes += newframe
-
-/datum/dance_moves/floss
-	dance_name = "Floss"
-	emote_text = "does the floss!"
-
-/datum/dance_moves/floss/New()
-	keyframes = list()
-	var/datum/dance_keyframe/newframe
-	newframe = new
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 5
-	newframe.body.offset_x = 4
-	newframe.body.rotation = -15
-	newframe.arm_l.rotation = 45
-	newframe.arm_l.offset_x = -2
-	newframe.arm_r.rotation = 45
-	newframe.arm_r.offset_x = 2
-	newframe.leg_l.rotation = 25
-	newframe.leg_l.offset_y = 3
-	newframe.leg_r.rotation = 25
-	newframe.leg_r.offset_y = 0
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 5
-	newframe.body.offset_x = -4
-	newframe.body.rotation = 15
-	newframe.arm_l.rotation = -45
-	newframe.arm_l.offset_x = -2
-	newframe.arm_r.rotation = -45
-	newframe.arm_r.offset_x = 2
-	newframe.leg_l.rotation = -25
-	newframe.leg_l.offset_y = 0
-	newframe.leg_r.rotation = -25
-	newframe.leg_r.offset_y = 3
-	keyframes += newframe
-
-	// Repeat x3
-	keyframes += keyframes[2]
-	keyframes += keyframes[3]
-	keyframes += keyframes[2]
-	keyframes += keyframes[3]
-	keyframes += keyframes[2]
-	keyframes += keyframes[3]
-
-	// Is this what flossing is? IDK, whatever
-
-	newframe = new
-	newframe.time_to_do = 5
-	keyframes += newframe
-
-/datum/dance_moves/disco
-	dance_name = "Disco"
-	emote_text = "dances a groovy disco number!"
-
-/datum/dance_moves/disco/New()
-	keyframes = list()
-	var/datum/dance_keyframe/newframe
-	newframe = new
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 8
-	newframe.head_dir = WEST
-	newframe.arm_l.rotation = -15
-	newframe.arm_r.rotation = 120
-	newframe.arm_r.scale_y = 1.2
-	newframe.arm_r.scale_x = -0.9
-	newframe.leg_r.rotation = 20
-	newframe.leg_l.rotation = 0
-	newframe.leg_l.offset_y = 2
-	newframe.body.offset_x = 3
-	keyframes += newframe
-
-	newframe = new
-	newframe.time_to_do = 8
-	newframe.head_dir = WEST
-	newframe.arm_l.rotation = 0
-	newframe.arm_r.rotation = 120
-	newframe.arm_r.scale_y = -0.8
-	newframe.arm_r.scale_x = -0.9
-	newframe.leg_r.rotation = 20
-	newframe.leg_l.rotation = 0
-	newframe.leg_l.offset_y = 1
-	newframe.body.offset_x = -1
-	keyframes += newframe
-
-	// Repeat x3
-	keyframes += keyframes[2]
-	keyframes += keyframes[3]
-	keyframes += keyframes[2]
-	keyframes += keyframes[3]
-	keyframes += keyframes[2]
-	keyframes += keyframes[3]
-
-	newframe = new
-	newframe.time_to_do = 5
-	keyframes += newframe
+/proc/loadDancesFromFile(filename, directory = "strings/tcg")
+	var/filepath = "strings/dances.json"
+	var/list/json = json_decode(file2text(filepath))
+	if(!json)
+		message_admins(span_warning("error decoding json when loading dances from file"))
+		return
+	GLOB.emote_animations.Cut()
+	for(var/dance in json["emotes"])
+		var/datum/humanoid_animation/anim = new
+		anim.name = dance["name"]
+		anim.keyframes = json_list_to_keyframes(dance["keyframes"])
+		GLOB.emote_animations[LOWER_TEXT(anim.name)] = anim
+	GLOB.all_dances_by_name.Cut()
+	GLOB.random_dances_by_name.Cut()
+	for(var/dance in json["random_dances"])
+		var/datum/humanoid_animation/anim = new
+		anim.name = dance["name"]
+		anim.emote_text = dance["emote_text"]
+		anim.keyframes = json_list_to_keyframes(dance["keyframes"])
+		GLOB.all_dances_by_name[LOWER_TEXT(anim.name)] = anim
+		GLOB.random_dances_by_name[LOWER_TEXT(anim.name)] = anim
+	for(var/dance in json["secret_dances"])
+		var/datum/humanoid_animation/anim = new
+		anim.name = dance["name"]
+		anim.emote_text = dance["emote_text"]
+		anim.keyframes = json_list_to_keyframes(dance["keyframes"])
+		GLOB.all_dances_by_name[LOWER_TEXT(anim.name)] = anim

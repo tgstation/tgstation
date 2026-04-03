@@ -1,0 +1,355 @@
+{
+	"emotes": [
+		{
+			"name": "wave",
+			"emote_text": "",
+			"keyframes": [
+				{
+					"time": 0
+				},
+				{
+					"time": 5,
+					"arm_l": { "rotation": 10, "scale_y": -1 }
+				},
+				{
+					"time": 3,
+					"arm_l": { "rotation": 45, "scale_y": -1 }
+				},
+				{
+					"time": 3,
+					"arm_l": { "rotation": 10, "scale_y": -1 }
+				},
+				{
+					"repeat_frames": [3, 4]
+				},
+				{
+					"time": 5
+				}
+			]
+		},
+		{
+			"name": "bow",
+			"emote_text": "",
+			"keyframes": [
+				{
+					"time": 0
+				},
+				{
+					"time": 3,
+					"arm_l": { "rotation": 30 }
+				},
+				{
+					"time": 4,
+					"arm_l": { "rotation": 30 },
+					"body": { "scale_y": 0.5 },
+					"leg_l": { "scale_y": 1.75, "offset_y": -1 },
+					"leg_r": { "scale_y": 1.75, "offset_y": -1  }
+				},
+				{
+					"time": 4,
+					"arm_l": { "rotation": 30 }
+				},
+				{
+					"time": 5
+				}
+			]
+		},
+		{
+			"name": "nod",
+			"emote_text": "",
+			"keyframes": [
+				{
+					"time": 0
+				},
+				{
+					"time": 4,
+					"head": { "scale_y": 0.75, "offset_y": 0 }
+				},
+				{
+					"time": 4
+				}
+			]
+		}
+	],
+	"random_dances": [
+		{
+			"name": "shoulderwave",
+			"emote_text": "does the wave!",
+			"keyframes": [
+				{
+					"time": 0
+				},
+				{
+					"time": 3,
+					"arm_l": { "rotation": -70 },
+					"arm_r": { "rotation": 70 }
+				},
+				{
+					"time": 3,
+					"arm_l": { "rotation": -70 },
+					"arm_r": { "rotation": 90 }
+				},
+				{
+					"time": 3,
+					"arm_l": { "rotation": -70 },
+					"arm_r": { "rotation": 50, "offset_y": 3 }
+				},
+				{
+					"time": 3,
+					"arm_l": { "rotation": -50, "offset_y": 3},
+					"arm_r": { "rotation": 70 }
+				},
+				{
+					"time": 3,
+					"arm_l": { "rotation": -90 },
+					"arm_r": { "rotation": 70 }
+				},
+				{
+					"time": 3,
+					"arm_l": { "rotation": -70 },
+					"arm_r": { "rotation": 70 }
+				},
+				{
+					"repeat_frames": [6, 5, 4, 3, 2]
+				},
+				{
+					"time": 3
+				}
+			]
+		},
+		{
+			"name": "floss",
+			"emote_text": "does the floss!",
+			"keyframes": [
+				{
+					"time": 0
+				},
+				{
+					"time": 5,
+					"body": { "offset_x": 5, "rotation": -13 },
+					"arm_l": { "offset_x": -2, "rotation": 45 },
+					"arm_r": { "offset_x": 2, "rotation": 45 },
+					"leg_l": { "offset_y": 3, "rotation": 25 },
+					"leg_r": { "offset_y": 0, "rotation": 25 }
+				},
+				{
+					"time": 5,
+					"body": { "offset_x": -5, "rotation": 13 },
+					"arm_l": { "offset_x": -2, "rotation": -45 },
+					"arm_r": { "offset_x": 2, "rotation": -45 },
+					"leg_l": { "offset_y": 0, "rotation": -25 },
+					"leg_r": { "offset_y": 3, "rotation": -25 }
+				},
+				{
+					"repeat_frames": [2, 3, 2, 3, 2, 3]
+				},
+				{
+					"time": 5
+				}
+			]
+		},
+		{
+			"name": "disco",
+			"emote_text": "dances a groovy disco number!",
+			"keyframes": [
+				{
+					"time": 0
+				},
+				{
+					"time": 8,
+					"head_dir": "WEST",
+					"body": { "offset_x": 3 },
+					"arm_l": { "rotation": -15 },
+					"arm_r": { "rotation": 120, "scale_y": 1.2, "scale_x": -0.9 },
+					"leg_l": { "offset_y": 2 },
+					"leg_r": { "rotation": 20 }
+				},
+				{
+					"time": 8,
+					"head_dir": "WEST",
+					"body": { "offset_x": -1 },
+					"arm_l": { "rotation": 0 },
+					"arm_r": { "rotation": 120, "scale_y": -0.8, "scale_x": -0.9 },
+					"leg_l": { "offset_y": 1 },
+					"leg_r": { "rotation": 20 }
+				},
+				{
+					"repeat_frames": [2, 3, 2, 3, 2, 3]
+				},
+				{
+					"time": 5
+				}
+			]
+		},
+		{
+			"name": "robot",
+			"emote_text": "does the robot!",
+			"keyframes": [
+				{
+					"time": 4,
+					"head_dir": "WEST",
+					"body_dir": "WEST",
+					"legs_dir": "SOUTH"
+				},
+				{
+					"time": 8,
+					"head_dir": "WEST",
+					"body_dir": "WEST",
+					"legs_dir": "SOUTH",
+					"body": { "rotation": -30 },
+					"leg_l": { "rotation": 30, "offset_y": -1 },
+					"leg_r": { "rotation": 30, "offset_y": 1 }
+				},
+				{
+					"time": 8,
+					"head_dir": "WEST",
+					"body_dir": "WEST",
+					"legs_dir": "SOUTH"
+				},
+				{
+					"time": 8,
+					"head_dir": "WEST",
+					"body_dir": "WEST",
+					"legs_dir": "SOUTH",
+					"arm_l": { "rotation": 80 }
+				},
+				{
+					"time": 8,
+					"head_dir": "WEST",
+					"body_dir": "WEST",
+					"legs_dir": "SOUTH"
+				},
+				{
+					"time": 4,
+					"head_dir": "SOUTH",
+					"body_dir": "SOUTH",
+					"legs_dir": "SOUTH"
+				},
+				{
+					"time": 4,
+					"head_dir": "EAST",
+					"body_dir": "EAST",
+					"legs_dir": "SOUTH"
+				},
+				{
+					"time": 8,
+					"head_dir": "EAST",
+					"body_dir": "EAST",
+					"legs_dir": "SOUTH",
+					"body": { "rotation": 30 },
+					"leg_l": { "rotation": -30, "offset_y": 1 },
+					"leg_r": { "rotation": -30, "offset_y": -1 }
+				},
+				{
+					"time": 8,
+					"head_dir": "EAST",
+					"body_dir": "EAST",
+					"legs_dir": "SOUTH"
+				},
+				{
+					"time": 8,
+					"head_dir": "EAST",
+					"body_dir": "EAST",
+					"legs_dir": "SOUTH",
+					"arm_r": { "rotation": -110 }
+				},
+				{
+					"time": 8,
+					"head_dir": "EAST",
+					"body_dir": "EAST",
+					"legs_dir": "SOUTH"
+				},
+				{
+					"time": 0
+				}
+			]
+		}
+	],
+	"secret_dances": [
+		{
+			"name": "headspin",
+			"emote_text": "spins on their head!",
+			"keyframes": [
+				{
+					"time": 0,
+					"head_dir": "WEST",
+					"body_dir": "WEST",
+					"legs_dir": "WEST"
+				},
+				{
+					"time": 8,
+					"head_dir": "WEST",
+					"body_dir": "WEST",
+					"legs_dir": "WEST",
+					"body": { "rotation": -90, "offset_x": 15 },
+					"arm_l": { "rotation": 110 },
+					"leg_l": { "rotation": 90, "offset_y": 3 },
+					"leg_r": { "rotation": 90, "offset_y": 3 }
+				},
+				{
+					"time": 8,
+					"head_dir": "WEST",
+					"body_dir": "WEST",
+					"legs_dir": "WEST",
+					"body": { "rotation": -180, "offset_y": 15 },
+					"arm_l": { "rotation": 110 },
+					"leg_l": { "rotation": 0, "offset_y": 0 },
+					"leg_r": { "rotation": 0, "offset_y": 0 }
+				},
+				{
+					"time": 1,
+					"head_dir": "NORTH",
+					"body_dir": "NORTH",
+					"legs_dir": "NORTH",
+					"arm_l": { "scale_y": -0.6, "rotation": -20 },
+					"arm_r": { "scale_y": -0.6, "rotation": 20 },
+					"body": { "rotation": -180, "offset_y": 15 }
+				},
+				{
+					"time": 1,
+					"head_dir": "EAST",
+					"body_dir": "EAST",
+					"legs_dir": "EAST",
+					"arm_r": { "rotation": -110 },
+					"body": { "rotation": -180, "offset_y": 15 }
+				},
+				{
+					"time": 1,
+					"head_dir": "SOUTH",
+					"body_dir": "SOUTH",
+					"legs_dir": "SOUTH",
+					"arm_l": { "scale_y": -0.6, "rotation": 20 },
+					"arm_r": { "scale_y": -0.6, "rotation": -20 },
+					"body": { "rotation": -180, "offset_y": 15 }
+				},
+				{
+					"time": 1,
+					"head_dir": "WEST",
+					"body_dir": "WEST",
+					"legs_dir": "WEST",
+					"arm_l": { "rotation": 110 },
+					"body": { "rotation": -180, "offset_y": 15 }
+				},
+				{
+					"repeat_frames": [4, 5, 6, 7, 4, 5, 6, 7, 4, 5]
+				},
+				{
+					"time": 6,
+					"head_dir": "EAST",
+					"body_dir": "EAST",
+					"legs_dir": "EAST",
+					"body": { "rotation": 90, "offset_y": 8, "offset_x": -15 },
+					"arm_l": { "rotation": -110 },
+					"leg_l": { "rotation": -90, "offset_y": 3 },
+					"leg_r": { "rotation": -90, "offset_y": 3 }
+				},
+				{
+					"time": 8,
+					"head_dir": "EAST",
+					"body_dir": "EAST",
+					"legs_dir": "EAST"
+				}
+			]
+		}
+	]
+}

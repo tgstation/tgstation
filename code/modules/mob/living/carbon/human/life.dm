@@ -51,9 +51,9 @@
 	if(!incapacitated && !current_dance)
 		var/area/my_area = get_area(src)
 		if(my_area?.wanna_dance)
-			var/datum/dance_moves/the_dance = GLOB.all_dances_by_name[pick(GLOB.all_dances_by_name)]
+			var/datum/humanoid_animation/the_dance = GLOB.random_dances_by_name[pick(GLOB.random_dances_by_name)]
 			to_chat(src, span_notice("You feel a strange compulsion to dance."))
-			start_dancing(the_dance)
+			start_animation(the_dance)
 
 	return stat != DEAD
 

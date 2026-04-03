@@ -6,7 +6,7 @@
 
 // Dance data for a single limb
 // The limb will rotate and scale around its anchoring joint, and then have offsets applied
-/datum/limb_dance_move
+/datum/animation_pose
 	var/rotation = 0
 	var/offset_x = 0
 	var/offset_y = 0
@@ -14,9 +14,9 @@
 	var/scale_y = 1
 
 // Get the translation matrix for this dance move
-/datum/limb_dance_move/proc/get_matrix(list/joint_pos)
+/datum/animation_pose/proc/get_matrix(list/joint_pos)
 	var/matrix/my_matrix = matrix()
-	// Move the joint (shoulter, hip, etc.) to the center so we scale/rotate around it
+	// Move the joint (shoulder, hip, etc.) to the center so we scale/rotate around it
 	my_matrix.Translate(16.5 - joint_pos[1], 16.5 - joint_pos[2])
 
 	// Do scale/rotation transformations
@@ -31,50 +31,47 @@
 	return my_matrix
 
 // Keyframe for a dance
-/datum/dance_keyframe
-	var/time_to_do = 0 // in deciseconds
+/datum/animation_keyframe
+	var/time = 0 // length of this move in deciseconds
+	var/animate = TRUE // If true and time > 0, use animate(), otherwise just set the transforms
 	var/head_dir = SOUTH
 	var/body_dir = SOUTH
-	var/datum/limb_dance_move/head
-	var/datum/limb_dance_move/body
-	var/datum/limb_dance_move/arm_l
-	var/datum/limb_dance_move/arm_r
-	var/datum/limb_dance_move/leg_l
-	var/datum/limb_dance_move/leg_r
+	var/legs_dir = SOUTH
+	var/datum/animation_pose/head
+	var/datum/animation_pose/body
+	var/datum/animation_pose/arm_l
+	var/datum/animation_pose/arm_r
+	var/datum/animation_pose/leg_l
+	var/datum/animation_pose/leg_r
 
-/datum/dance_keyframe/New()
-	head = new /datum/limb_dance_move()
-	body = new /datum/limb_dance_move()
-	arm_l = new /datum/limb_dance_move()
-	arm_r = new /datum/limb_dance_move()
-	leg_l = new /datum/limb_dance_move()
-	leg_r = new /datum/limb_dance_move()
-
-// A dance in the abstract
-/datum/dance_moves
-	var/dance_name = "Unnamed Dance"
-	var/emote_text = "dances"
-	var/list/keyframes
+/datum/animation_keyframe/New()
+	head = new /datum/animation_pose()
+	body = new /datum/animation_pose()
+	arm_l = new /datum/animation_pose()
+	arm_r = new /datum/animation_pose()
+	leg_l = new /datum/animation_pose()
+	leg_r = new /datum/animation_pose()
 
 // A dance that is currently being performed
-/datum/active_dance
-	var/datum/dance_moves/my_dance
+/datum/active_animation
+	var/datum/humanoid_animation/my_dance
 	var/mob/living/carbon/human/dancer
-	var/current_dance_keyframe = 0
+	var/current_animation_keyframe = 0
 	var/timer_id
 
-/datum/active_dance/proc/apply_keyframe_to_limb(datum/dance_keyframe/keyframe, obj/effect/dancing_limb/limb, datum/limb_dance_move/move, limb_dir, list/joint_pos)
+/datum/active_animation/proc/apply_keyframe_to_limb(datum/animation_keyframe/keyframe, obj/effect/dancing_limb/limb, datum/animation_pose/move, limb_dir, list/joint_pos)
 	if(limb && move)
+		var/dir_change = limb.dir != limb_dir // If a limb changes dir, we have to snap or it looks weird
 		limb.dir = limb_dir
-		animate(limb, transform = move.get_matrix(joint_pos), time = keyframe.time_to_do)
+		if(!dir_change && keyframe.animate && keyframe.time)
+			// Animate to position
+			animate(limb, transform = move.get_matrix(joint_pos), time = keyframe.time)
+		else
+			// Snap to position
+			limb.transform = move.get_matrix(joint_pos)
 
-/datum/active_dance/proc/apply_first_keyframe_to_limb(datum/dance_keyframe/keyframe, obj/effect/dancing_limb/limb, datum/limb_dance_move/move, limb_dir, list/joint_pos)
-	if(limb && move)
-		limb.dir = limb_dir
-		limb.transform = move.get_matrix(joint_pos)
-
-/datum/active_dance/proc/apply_keyframe(keyframe_idx)
-	if(!dancer)
+/datum/active_animation/proc/apply_keyframe(keyframe_idx)
+	if(QDELETED(dancer))
 		// where'd our dancer go?
 		qdel(src)
 		return
@@ -85,32 +82,26 @@
 	if(!dancer.current_dance_sprites)
 		dancer.current_dance_sprites = create_dance_sprites(dancer)
 		dancer.current_dance_sprites.apply_to(dancer)
-	current_dance_keyframe = keyframe_idx
-	var/datum/dance_keyframe/keyframe = my_dance.keyframes[current_dance_keyframe]
+	current_animation_keyframe = keyframe_idx
+	var/datum/animation_keyframe/keyframe = my_dance.keyframes[current_animation_keyframe]
 	// Setup next keyframe call
-	timer_id = addtimer(CALLBACK(src, PROC_REF(apply_keyframe), current_dance_keyframe + 1), keyframe.time_to_do, TIMER_DELETE_ME | TIMER_STOPPABLE)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(apply_keyframe), current_animation_keyframe + 1), keyframe.time, TIMER_DELETE_ME | TIMER_STOPPABLE)
 	// Animate dance sprites
 	var/h_dir = keyframe.head_dir
 	var/b_dir = keyframe.body_dir
-	if(keyframe_idx == 1)
-		apply_first_keyframe_to_limb(keyframe, dancer.current_dance_sprites.head, keyframe.head, h_dir, get_limb_joint_pos(BODY_ZONE_HEAD, h_dir))
-		apply_first_keyframe_to_limb(keyframe, dancer.current_dance_sprites.body, keyframe.body, b_dir, get_limb_joint_pos(BODY_ZONE_CHEST, b_dir))
-		apply_first_keyframe_to_limb(keyframe, dancer.current_dance_sprites.arm_l, keyframe.arm_l, b_dir, get_limb_joint_pos(BODY_ZONE_L_ARM, b_dir))
-		apply_first_keyframe_to_limb(keyframe, dancer.current_dance_sprites.arm_r, keyframe.arm_r, b_dir, get_limb_joint_pos(BODY_ZONE_R_ARM, b_dir))
-		apply_first_keyframe_to_limb(keyframe, dancer.current_dance_sprites.leg_l, keyframe.leg_l, b_dir, get_limb_joint_pos(BODY_ZONE_L_LEG, b_dir))
-		apply_first_keyframe_to_limb(keyframe, dancer.current_dance_sprites.leg_r, keyframe.leg_r, b_dir, get_limb_joint_pos(BODY_ZONE_R_LEG, b_dir))
-	else
-		apply_keyframe_to_limb(keyframe, dancer.current_dance_sprites.head, keyframe.head, h_dir, get_limb_joint_pos(BODY_ZONE_HEAD, h_dir))
-		apply_keyframe_to_limb(keyframe, dancer.current_dance_sprites.body, keyframe.body, b_dir, get_limb_joint_pos(BODY_ZONE_CHEST, b_dir))
-		apply_keyframe_to_limb(keyframe, dancer.current_dance_sprites.arm_l, keyframe.arm_l, b_dir, get_limb_joint_pos(BODY_ZONE_L_ARM, b_dir))
-		apply_keyframe_to_limb(keyframe, dancer.current_dance_sprites.arm_r, keyframe.arm_r, b_dir, get_limb_joint_pos(BODY_ZONE_R_ARM, b_dir))
-		apply_keyframe_to_limb(keyframe, dancer.current_dance_sprites.leg_l, keyframe.leg_l, b_dir, get_limb_joint_pos(BODY_ZONE_L_LEG, b_dir))
-		apply_keyframe_to_limb(keyframe, dancer.current_dance_sprites.leg_r, keyframe.leg_r, b_dir, get_limb_joint_pos(BODY_ZONE_R_LEG, b_dir))
+	var/l_dir = keyframe.legs_dir
+	var/datum/dance_sprites/d_sprites = dancer.current_dance_sprites
+	apply_keyframe_to_limb(keyframe, d_sprites.head, keyframe.head, h_dir, get_limb_joint_pos(BODY_ZONE_HEAD, h_dir))
+	apply_keyframe_to_limb(keyframe, d_sprites.body, keyframe.body, b_dir, get_limb_joint_pos(BODY_ZONE_CHEST, b_dir))
+	apply_keyframe_to_limb(keyframe, d_sprites.arm_l, keyframe.arm_l, b_dir, get_limb_joint_pos(BODY_ZONE_L_ARM, b_dir))
+	apply_keyframe_to_limb(keyframe, d_sprites.arm_r, keyframe.arm_r, b_dir, get_limb_joint_pos(BODY_ZONE_R_ARM, b_dir))
+	apply_keyframe_to_limb(keyframe, d_sprites.leg_l, keyframe.leg_l, l_dir, get_limb_joint_pos(BODY_ZONE_L_LEG, l_dir))
+	apply_keyframe_to_limb(keyframe, d_sprites.leg_r, keyframe.leg_r, l_dir, get_limb_joint_pos(BODY_ZONE_R_LEG, l_dir))
 
-/datum/active_dance/Destroy()
+/datum/active_animation/Destroy()
 	if(dancer)
 		dancer.current_dance = null
-		dancer.stop_dancing()
+		dancer.stop_animation()
 		dancer = null
 	deltimer(timer_id)
 	timer_id = null
@@ -118,7 +109,7 @@
 
 // An object we can use to animate a dance
 // Will copy the overlays of a limb or torso
-// Limbs are nested in the torso vias vis_contents so they inherit the torso's transform
+// Limbs are nested in the torso via vis_contents so they inherit the torso's transform
 /obj/effect/dancing_limb
 	var/datum/dance_sprites/my_holder
 
@@ -196,25 +187,41 @@
 // The cooldown leads to some weird situations if you are changing clothes a lot while dancing, but we need some throttling
 /proc/create_dance_sprites(mob/living/carbon/human/dancer)
 	// For most limbs, we can apply the limb sprite along with the proper overlays
-	// However, we also want the legs and arms of UNIFORM_LAYER and SUIT_LAYER to move with the limbs
+	// However, we also want the legs and arms of our outfit to move with the limbs
 	// To support this, we will create an image of those and chop them up
 	// Looks weird on skirts but pretty good on everything else
-	// Also it only works for south-facing sprites right now, so only the head can turn in any other direction
 
 	var/datum/dance_sprites/my_sprites = new
 	var/list/imgList
 	if(!dancer.last_dance_sprites || COOLDOWN_FINISHED(dancer, last_dance_sprite_gen))
 		var/list/d_overlays = dancer.overlays_standing
 
-		// Construct sprite for uniform, suit, shoes, and gloves
+		// Construct sprite for uniform, suit, and shoes
+		// Separate sprite for gloves to go above hands
 		var/icon/body_clothes
-		var/mutable_appearance/crop_appearance = new
-		crop_appearance.overlays += d_overlays[UNIFORM_LAYER]
-		crop_appearance.overlays += d_overlays[SUIT_LAYER]
-		crop_appearance.overlays += d_overlays[GLOVES_LAYER]
-		crop_appearance.overlays += d_overlays[SHOES_LAYER]
-		if(crop_appearance.overlays.len)
-			body_clothes = getFlatIcon(crop_appearance, defdir = SOUTH)
+		var/icon/gloves_icon
+		var/list/all_crop_overlays = list()
+		// The order these overlays are added is important
+		// They should be added from highest to lowest layer number
+		all_crop_overlays += d_overlays[UNIFORM_LAYER]
+		all_crop_overlays += d_overlays[SHOES_LAYER]
+		all_crop_overlays += d_overlays[SUIT_LAYER]
+		list_clear_nulls(all_crop_overlays)
+		if(all_crop_overlays.len)
+			body_clothes = icon('icons/mob/human/human.dmi', "blank")
+			for(var/mutable_appearance/appearance as anything in all_crop_overlays)
+				var/icon/overlayIcon = icon(appearance.icon, appearance.icon_state)
+				body_clothes.Blend(overlayIcon, ICON_OVERLAY)
+
+		var/list/glove_overlays = list()
+		glove_overlays += d_overlays[GLOVES_LAYER]
+		list_clear_nulls(glove_overlays)
+		if(glove_overlays.len)
+			gloves_icon = icon('icons/mob/human/human.dmi', "blank")
+			for(var/mutable_appearance/appearance as anything in glove_overlays)
+				var/icon/overlayIcon = icon(appearance.icon, appearance.icon_state)
+				gloves_icon.Blend(overlayIcon, ICON_OVERLAY)
+		// TODO: layer for arms behind body when facing EAST or WEST
 
 		// Head
 		var/list/head = list()
@@ -246,10 +253,8 @@
 		torso += d_overlays[BACK_LAYER]
 		if(body_clothes)
 			var/icon/crop_img = new /icon(body_clothes)
-			crop_img.Crop(12, 10, 20, 22)
-			var/icon/torso_img = icon('icons/mob/human/human.dmi', "blank", SOUTH)
-			torso_img.Blend(crop_img, ICON_OVERLAY, 12, 10)
-			torso += torso_img
+			crop_img.Blend(icon('icons/mob/human/dance_masks.dmi', "torso_mask"), ICON_ADD)
+			torso += image(crop_img, layer = -UNIFORM_LAYER)
 
 		// Left Arm
 		var/list/l_arm = list()
@@ -257,10 +262,12 @@
 			l_arm += dancer.get_bodypart(BODY_ZONE_L_ARM).get_limb_icon()
 			if(body_clothes)
 				var/icon/crop_img = new /icon(body_clothes)
-				crop_img.Crop(21, 10, 25, 22)
-				var/icon/l_arm_img = icon('icons/mob/human/human.dmi', "blank", SOUTH)
-				l_arm_img.Blend(crop_img, ICON_OVERLAY, 21, 10)
-				l_arm += l_arm_img
+				crop_img.Blend(icon('icons/mob/human/dance_masks.dmi', "l_arm_mask"), ICON_ADD)
+				l_arm += image(crop_img, layer = -UNIFORM_LAYER)
+			if(gloves_icon)
+				var/icon/crop_img = new /icon(gloves_icon)
+				crop_img.Blend(icon('icons/mob/human/dance_masks.dmi', "l_arm_mask"), ICON_ADD)
+				l_arm += image(crop_img, layer = -SUIT_LAYER)
 
 		// Right Arm
 		var/list/r_arm = list()
@@ -268,10 +275,12 @@
 			r_arm += dancer.get_bodypart(BODY_ZONE_R_ARM).get_limb_icon()
 			if(body_clothes)
 				var/icon/crop_img = new /icon(body_clothes)
-				crop_img.Crop(7, 10, 11, 22)
-				var/icon/r_arm_img = icon('icons/mob/human/human.dmi', "blank", SOUTH)
-				r_arm_img.Blend(crop_img, ICON_OVERLAY, 7, 10)
-				r_arm += r_arm_img
+				crop_img.Blend(icon('icons/mob/human/dance_masks.dmi', "r_arm_mask"), ICON_ADD)
+				r_arm += image(crop_img, layer = -UNIFORM_LAYER)
+			if(gloves_icon)
+				var/icon/crop_img = new /icon(gloves_icon)
+				crop_img.Blend(icon('icons/mob/human/dance_masks.dmi', "r_arm_mask"), ICON_ADD)
+				r_arm += image(crop_img, layer = -SUIT_LAYER)
 
 		// Left Leg
 		var/list/l_leg = list()
@@ -279,10 +288,8 @@
 			l_leg += dancer.get_bodypart(BODY_ZONE_L_LEG).get_limb_icon()
 			if(body_clothes)
 				var/icon/crop_img = new /icon(body_clothes)
-				crop_img.Crop(17, 1, 24, 10)
-				var/icon/l_leg_img = icon('icons/mob/human/human.dmi', "blank", SOUTH)
-				l_leg_img.Blend(crop_img, ICON_OVERLAY, 17, 1)
-				l_leg += l_leg_img
+				crop_img.Blend(icon('icons/mob/human/dance_masks.dmi', "l_leg_mask"), ICON_ADD)
+				l_leg += image(crop_img, layer = -UNIFORM_LAYER)
 
 		// Right Leg
 		var/list/r_leg = list()
@@ -290,10 +297,8 @@
 			r_leg += dancer.get_bodypart(BODY_ZONE_R_LEG).get_limb_icon()
 			if(body_clothes)
 				var/icon/crop_img = new /icon(body_clothes)
-				crop_img.Crop(8, 1, 15, 10)
-				var/icon/r_leg_img = icon('icons/mob/human/human.dmi', "blank", SOUTH)
-				r_leg_img.Blend(crop_img, ICON_OVERLAY, 8, 1)
-				r_leg += r_leg_img
+				crop_img.Blend(icon('icons/mob/human/dance_masks.dmi', "r_leg_mask"), ICON_ADD)
+				r_leg += image(crop_img, layer = -UNIFORM_LAYER)
 
 		imgList = list(head, torso, l_arm, r_arm, l_leg, r_leg)
 
@@ -311,7 +316,7 @@
 
 	return my_sprites
 
-/mob/living/carbon/human/proc/start_dancing(datum/dance_moves/dance_to_do)
+/mob/living/carbon/human/proc/start_animation(datum/humanoid_animation/dance_to_do)
 	if(current_dance)
 		// TODO: could try to do a seamless transition to the new dance here
 		// Maybe later
@@ -320,13 +325,13 @@
 		if(current_dance_sprites)
 			current_dance_sprites.stop_animations()
 	else
-		current_dance = new /datum/active_dance()
+		current_dance = new /datum/active_animation()
 	current_dance.my_dance = dance_to_do
 	current_dance.dancer = src
 	current_dance.apply_keyframe(1)
 	regenerate_icons()
 
-/mob/living/carbon/human/proc/stop_dancing(datum/dance_moves/dance)
+/mob/living/carbon/human/proc/stop_animation()
 	current_dance_sprites?.unapply_from(src)
 	QDEL_NULL(current_dance)
 	QDEL_NULL(current_dance_sprites)
@@ -334,69 +339,67 @@
 
 // Return the location of the anchoring joint for a limb
 // i.e., the shoulder for an arm, the hip for a leg, the neck for a head
-// torsos are considered anchored to the center of the sprite
+// torsos are considered anchored at the hips
 /proc/get_limb_joint_pos(limb, dir)
-	// TODO: currently only supports SOUTH dir
-	// Things will get weird if you make a dance for a different direction without populating the values in this function
 	switch(limb)
 		if(BODY_ZONE_HEAD)
 			switch(dir)
 				if(NORTH)
-					return list(0, 0)
+					return list(16, 23)
 				if(SOUTH)
 					return list(16, 23)
 				if(EAST)
-					return list(0, 0)
+					return list(16, 22)
 				if(WEST)
-					return list(0, 0)
+					return list(16, 22)
 		if(BODY_ZONE_CHEST)
 			switch(dir)
 				if(NORTH)
-					return list(0, 0)
+					return list(16, 11)
 				if(SOUTH)
-					return list(16, 16)
+					return list(16, 11)
 				if(EAST)
-					return list(0, 0)
+					return list(16, 11)
 				if(WEST)
-					return list(0, 0)
+					return list(16, 11)
 		if(BODY_ZONE_L_ARM)
 			switch(dir)
 				if(NORTH)
-					return list(0, 0)
+					return list(11, 21)
 				if(SOUTH)
 					return list(21, 21)
 				if(EAST)
-					return list(0, 0)
+					return list(17, 20)
 				if(WEST)
-					return list(0, 0)
+					return list(19, 20)
 		if(BODY_ZONE_R_ARM)
 			switch(dir)
 				if(NORTH)
-					return list(0, 0)
+					return list(21, 21)
 				if(SOUTH)
 					return list(11, 21)
 				if(EAST)
-					return list(0, 0)
+					return list(14, 20)
 				if(WEST)
-					return list(0, 0)
+					return list(16, 20)
 		if(BODY_ZONE_L_LEG)
 			switch(dir)
 				if(NORTH)
-					return list(0, 0)
+					return list(14, 10)
 				if(SOUTH)
 					return list(18, 10)
 				if(EAST)
-					return list(0, 0)
+					return list(16, 10)
 				if(WEST)
-					return list(0, 0)
+					return list(16, 10)
 		if(BODY_ZONE_R_LEG)
 			switch(dir)
 				if(NORTH)
-					return list(0, 0)
+					return list(18, 10)
 				if(SOUTH)
 					return list(14, 10)
 				if(EAST)
-					return list(0, 0)
+					return list(17, 10)
 				if(WEST)
-					return list(0, 0)
-	return list(0, 0)
+					return list(17, 10)
+	return list(16, 16) // Should never get here, return the center of the sprite if we do
