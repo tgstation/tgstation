@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Walking in snow or sand leaves behind prints. You can examine the turf to see what left the prints, like with bloodprints."
+  - rscadd: "Snowstorms or sandstorms clear away any footprints left behind in the snow or sand."
+  - rscadd: "Some equipment or effects, like skis or snowshoes, prevent you from leaving prints in the snow."
+  - rscadd: "You can fill in snowprints with snow."
