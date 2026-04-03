@@ -1,5 +1,4 @@
 #define DISSOLVE_DURATION 45 SECONDS
-#define WASTE_REACTION_THRESHOLD 10
 
 /obj/effect/decal/cleanable/greenglow/waste
 	name = "caustic sludge"
