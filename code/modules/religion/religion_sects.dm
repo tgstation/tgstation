@@ -111,7 +111,7 @@
 		return BLESSING_FAILED
 
 	var/mob/living/carbon/human/blessed = target
-	for(var/obj/item/bodypart/bodypart as anything in blessed.bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in blessed.get_bodyparts())
 		if(IS_ROBOTIC_LIMB(bodypart))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
 			return BLESSING_IGNORED
@@ -280,7 +280,7 @@
 		return BLESSING_IGNORED
 
 	var/mob/living/carbon/human/blessed = blessed_living
-	for(var/obj/item/bodypart/robolimb as anything in blessed.bodyparts)
+	for(var/obj/item/bodypart/robolimb as anything in blessed.get_bodyparts())
 		if(IS_ROBOTIC_LIMB(robolimb))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
 			return BLESSING_IGNORED
@@ -346,7 +346,7 @@
 	var/transferred = FALSE
 	var/list/hurt_limbs = target.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC) + target.get_wounded_bodyparts(BODYTYPE_ORGANIC)
 	var/list/chaplains_limbs = list()
-	for(var/obj/item/bodypart/possible_limb in chaplain.bodyparts)
+	for(var/obj/item/bodypart/possible_limb in chaplain.get_bodyparts())
 		if(IS_ORGANIC_LIMB(possible_limb))
 			chaplains_limbs += possible_limb
 

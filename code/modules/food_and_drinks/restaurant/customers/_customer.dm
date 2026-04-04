@@ -96,6 +96,8 @@
 			/datum/reagent/consumable/ethanol/b52 = 6,
 			/datum/reagent/consumable/ethanol/manhattan = 3,
 			/datum/reagent/consumable/ethanol/old_fashioned = 3,
+			/datum/reagent/consumable/ethanol/sazerac = 2,
+			/datum/reagent/consumable/ethanol/improved_whiskey = 1,
 			/datum/reagent/consumable/ethanol/atomicbomb = 1,
 		),
 	)
@@ -144,6 +146,9 @@
 			/datum/reagent/consumable/ethanol/amaretto = 5,
 			/datum/reagent/consumable/ethanol/amaretto_sour = 3,
 			/datum/reagent/consumable/cucumberlemonade = 2,
+			/datum/reagent/consumable/ethanol/negroni = 2,
+			/datum/reagent/consumable/ethanol/garibaldi = 2,
+			/datum/reagent/consumable/ethanol/spritz = 5,
 		),
 	)
 
@@ -181,6 +186,8 @@
 			/datum/reagent/consumable/ethanol/wine = 5,
 			/datum/reagent/consumable/ethanol/gin_garden = 2,
 			/datum/reagent/consumable/ethanol/french_75 = 5,
+			/datum/reagent/consumable/ethanol/herbal_liqueur = 2,
+			/datum/reagent/consumable/ethanol/pousse_cafe = 1,
 		),
 	)
 

@@ -24,22 +24,9 @@
 
 	var/amount = clamp(text2num(spawn_params["atom_amount"]), 1, ADMIN_SPAWN_CAP)
 
-	var/list/offset_data
-	if(islist(spawn_params["offset"]))
-		offset_data = spawn_params["offset"]
-	else if(istext(spawn_params["offset"]))
-		var/list/parsed = splittext(spawn_params["offset"], ",")
-		if(length(parsed) >= 3)
-			offset_data = list("X" = text2num(parsed[1]), "Y" = text2num(parsed[2]), "Z" = text2num(parsed[3]))
-		else
-			offset_data = list("X" = 0, "Y" = 0, "Z" = 0)
-	else
-		offset_data = list("X" = 0, "Y" = 0, "Z" = 0)
-
-
-	var/X = offset_data["X"] || 0
-	var/Y = offset_data["Y"] || 0
-	var/Z = offset_data["Z"] || 0
+	var/X = offset["X"] || 0
+	var/Y = offset["Y"] || 0
+	var/Z = offset["Z"] || 0
 
 	var/atom_dir = text2num(spawn_params["atom_dir"]) || 1
 	var/atom_name = sanitize(spawn_params["atom_name"])

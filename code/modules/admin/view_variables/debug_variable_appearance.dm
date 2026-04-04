@@ -68,7 +68,7 @@
 	SHOULD_CALL_PARENT(FALSE)
 
 	. = list()
-	VV_DROPDOWN_OPTION("", "---")
+	VV_DROPDOWN_OPTION("", "--- /appearance_mirror ---")
 	VV_DROPDOWN_OPTION(VV_HK_CALLPROC, "Call Proc")
 	VV_DROPDOWN_OPTION(VV_HK_MARK, "Mark Object")
 	VV_DROPDOWN_OPTION(VV_HK_TAG, "Tag Datum")

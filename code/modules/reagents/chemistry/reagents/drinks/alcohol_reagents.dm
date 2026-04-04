@@ -74,6 +74,9 @@
 		if(combined_dilute_volume) // safety check to prevent division by zero
 			booze_power *= (total_alcohol_volume / combined_dilute_volume)
 
+		for(var/mob/living/enemy as anything in drinker.ai_controller?.blackboard[BB_MONKEY_ENEMIES])
+			drinker.ai_controller.add_blackboard_key_assoc(BB_MONKEY_ENEMIES, enemy, MONKEY_ANGERED_HATRED_AMOUNT * (boozepwr / 100) * metabolization_ratio * seconds_per_tick)
+
 		// Volume, power, and server alcohol rate effect how quickly one gets drunk
 		drinker.adjust_drunk_effect(1 * sqrt(volume) * booze_power * ALCOHOL_RATE * metabolization_ratio * seconds_per_tick)
 		if(boozepwr > 0)
@@ -3121,6 +3124,7 @@
 	taste_description = "flowery anise-scented whiskey"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/amaretto_sour
 	name = "Amaretto Sour"
@@ -3244,6 +3248,247 @@
 	. = ..()
 	if(prob(10))
 		drinker.emote("flip")
+
+/datum/reagent/consumable/ethanol/aperitivo
+	name = "Aperitivo Liqueur"
+	description = "An aggressively bittersweet liqueur flavored with cinchona bark and other botanicals. Perfect for stimulating one's appetite or fighting off malaria."
+	boozepwr = 40
+	color = "#bf1038"
+	taste_description = "intense citrusy bitterness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/ethanol/aperitivo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //This and some of the cocktails it gets mixed into stimulate the apetite, as an aperitivo should
+	. = ..()
+	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
+	drinker.overeatduration = 0
+
+/datum/reagent/consumable/ethanol/herbal_liqueur
+	name = "Herbal Liqueur"
+	description = "A liqueur made with a wide variety of herbs and spices, infused into spirit through both distillation and maceration. So many, in fact, that trying to pick them out by scent and taste seems nearly impossible..."
+	boozepwr = 75
+	color = "#95be7d"
+	quality = DRINK_NICE
+	taste_description = "confounding herbaceousness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	glass_price = DRINK_PRICE_EASY
+
+/datum/reagent/consumable/ethanol/maraschino
+	name = "Maraschino Liqueur"
+	description = "A classic sweet liqueur made from the fruits, leaves, and even branches of sour cherries. Surprisingly, it doesn't actually taste much like cherry."
+	boozepwr = 50
+	color = "#DDDDDD"
+	taste_description = "nutty sweetness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/ethanol/bartenders_handshake
+	name = "Bartender's Handshake"
+	description = "A tradition of somewhat inconsistent providence, possibly linked to an obscure challenge-coin-based marketing scheme, this drink is a way for bartenders to greet and test each other's mettle via a drink that only a fellow barkeep could appreciate. While there are nearly as many versions of this drink as there are bars, this version tests one's palate by combining two of the most bitter ingredients you're likely to find in a bar."
+	boozepwr = 50
+	color = "#270101"
+	quality = DRINK_VERYGOOD
+	taste_description = "pretentious bitterness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/ethanol/bartenders_handshake/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //Heals bartenders brute and burn, disgusts otherwise
+	. = ..()
+	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(HAS_TRAIT(liver, TRAIT_BARTENDER_METABOLISM))
+		if(drinker.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
+			. = UPDATE_MOB_HEALTH
+	else
+		drinker.adjust_disgust(2 * REM * seconds_per_tick)
+
+/datum/reagent/consumable/ethanol/brandy_crusta
+	name = "Brandy Crusta"
+	description = "The far more gussied-up ancestor of the Sidecar, this heavily garnished cocktail is the grandparent of many essential drinks served today."
+	boozepwr = 30
+	color = "#f8c51c"
+	quality = DRINK_VERYGOOD
+	taste_description = "orangy sweetness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/ethanol/casino
+	name = "Casino"
+	description = "A gin-heavy classic. Juniper is tempered by scant amounts of citrus and sweetened with liqueur."
+	boozepwr = 50
+	color = "#fdee65"
+	quality = DRINK_GOOD
+	taste_description = "sweet juniper"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/ethanol/garibaldi //Makes revs resitant to wounds and fearless.
+	name = "Garibaldi"
+	description = "Named for the 19th-century Italian general, the red-orange color scheme of this drink mimics the shirts of those who followed him into battles all across the world."
+	boozepwr = 15
+	color = "#f77e2e"
+	quality = DRINK_GOOD
+	taste_description = "bitter oranges"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	glass_price = DRINK_PRICE_EASY
+
+/datum/reagent/consumable/ethanol/garibaldi/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(IS_REVOLUTIONARY(drinker))
+		//status effect has a duration of 5 seconds which gets refreshed by this, falls off on it's own in case of running out of drink or deconversion
+		drinker.apply_status_effect(/datum/status_effect/rev_resilience)
+
+/datum/reagent/consumable/ethanol/improved_whiskey
+	name = "Improved Whiskey Cocktail"
+	description = "The Classic Whiskey cocktail improved by the addition of absinthe and maraschino, as well as swapping the typical orange peel garnish for lemon."
+	boozepwr = 65
+	color = "#b8a385"
+	quality = DRINK_VERYGOOD
+	taste_description = "nutty anise-scented whiskey"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	glass_price = DRINK_PRICE_MEDIUM
+
+/datum/reagent/consumable/ethanol/jungle_bird
+	name = "Jungle Bird"
+	description = "This late-tiki concoction leverages the brilliant combination of bitter liqueur and pineapple juice to make a remarkably well-balanced cocktail."
+	boozepwr = 25
+	color = "#da8370"
+	quality = DRINK_VERYGOOD
+	taste_description = "pineapple and quinine"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	metabolized_traits = list(TRAIT_SUPERMATTER_SOOTHER) //If you have this in your system, you calm down the SM by being near it.
+
+/datum/reagent/consumable/ethanol/last_word
+	name = "Last Word"
+	description = "Despite being invented at the turn of the 20th century, this drink fell into obscurity until the cocktail renaissance of the beginning of the 21st, where it then went on to dominate bars and inspire countless twists upon its formula."
+	boozepwr = 50
+	color = "#dddfcaff"
+	quality = DRINK_VERYGOOD
+	taste_description = "herbal finality"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/ethanol/last_word/expose_mob(mob/living/drinker, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	//Mutes people for 5 seconds on their first sip every 5 minutes. Requires ingest, you can't savor something that's injected into your eyes or whatever.
+	if(!(methods & INGEST) || !iscarbon(drinker) || HAS_TRAIT(drinker, TRAIT_HAD_LAST_WORD))
+		return
+
+	ADD_TRAIT(drinker, TRAIT_HAD_LAST_WORD, type)
+	to_chat(drinker, span_notice("You take a moment to silently savor your drink..."))
+	drinker.set_silence_if_lower(5 SECONDS)
+	addtimer(TRAIT_CALLBACK_REMOVE(drinker, TRAIT_HAD_LAST_WORD, type), 300 SECONDS)
+
+/datum/reagent/consumable/ethanol/mary_pickford
+	name = "Mary Pickford"
+	description = "Named after an early 20th-century film star, this cocktail takes a rum and pineapple flavor profile and presents it in a classier and more elegant form than one would typically expect."
+	boozepwr = 35
+	color = "#f7b7a7ff"
+	quality = DRINK_GOOD
+	taste_description = "elegant pineapple"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/ethanol/negroni //Aperitif that increases hunger
+	name = "Negroni"
+	description = "An iconic Italian aperitif, its simple intensity crowns it as perhaps the ultimate bitter cocktail. Supposedly it was named after an Italian count who wanted a stronger version of a spritz and asked his bartender to replace soda with gin."
+	boozepwr = 50
+	color = "#cf0e00ff"
+	quality = DRINK_GOOD
+	taste_description = "bittersweet vermouth"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	glass_price = DRINK_PRICE_EASY
+
+/datum/reagent/consumable/ethanol/negroni/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	drinker.adjust_nutrition(-3 * REM * seconds_per_tick)
+	drinker.overeatduration = 0
+
+/datum/reagent/consumable/ethanol/nuclear_daiquiri
+	name = "Nuclear daiquiri"
+	description = "Overproof, funky, pot still rum and herbal liqueur takes the simple elegance of a Cuban daiquiri and turns it on its head."
+	boozepwr = 65
+	color = "#22cc22"
+	quality = DRINK_GOOD
+	taste_description = "hogo and herbs"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo
+	name = "Thermonuclear Daiquiri"
+	description = "A drink for those who enjoy the gnarlier things in life, like high-ester rums and Cobalt 60."
+	boozepwr = 80
+	color = "#00dd00"
+	quality = DRINK_FANTASTIC
+	taste_description = "approximately 3.6 roentgen"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo/on_mob_add(mob/living/living_mob)
+	. = ..()
+	living_mob.apply_status_effect(/datum/status_effect/cherenkov_radiation) //makes the drinker glow blue, and rarely emit high-energy nuclear particles.
+
+/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo/on_mob_delete(mob/living/living_mob)
+	. = ..()
+	living_mob.remove_status_effect(/datum/status_effect/cherenkov_radiation)
+
+/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	drinker.set_drugginess(100 SECONDS * metabolization_ratio * seconds_per_tick)
+	drinker.set_jitter_if_lower(20 SECONDS * metabolization_ratio * seconds_per_tick)
+	drinker.set_dizzy_if_lower(10 SECONDS * metabolization_ratio * seconds_per_tick)
+
+/datum/reagent/consumable/ethanol/poets_dream
+	name = "Poet's Dream"
+	description = "This cocktail takes a classic martini base and twists it into a deliciously sweet and herbal mode. Nanotrasen regulations state not to drink this too soon before sleep, or risk 'oneiric encroachment,' whatever that means."
+	boozepwr = 50
+	color = "#d4b14f"
+	quality = DRINK_GOOD
+	taste_description = "honeyed herbal gin"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	metabolized_traits = list(TRAIT_HERETICAL_DREAMS) //Enables non-heretics to have heretical dreams
+
+/datum/reagent/consumable/ethanol/pousse_cafe
+	name = "Pousse Cafe"
+	description = "An aesthetically beautiful cocktail made from the careful and meticulous layering of various liquors. Extremely annoying to make."
+	boozepwr = 50
+	color = "#93cf33"
+	quality = DRINK_FANTASTIC
+	taste_description = "a cascade of varying liqueurs"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_HIGH
+
+/datum/reagent/consumable/ethanol/spritz //Aperitif that increases hunger
+	name = "Spritz" // If someone wants to add an elderflower spritz or something else like that, just rename this to spritz al bitter or whatever
+	description = "This bittersweet and refreshing aperitif brings to mind the beautiful summer sunsets of venice."
+	boozepwr = 20
+	color = "#ee714b"
+	quality = DRINK_GOOD
+	taste_description = "bittersweet refreshment"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
+
+/datum/reagent/consumable/ethanol/spritz/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
+	drinker.overeatduration = 0
+
+/datum/reagent/consumable/ethanol/vieux_carre
+	name = "Vieux Carré"
+	description = "One of the best of many great cocktails to come out of New Orleans, this drink does honor to that city's French Quarter both in name and in taste."
+	boozepwr = 60
+	color = "#b43110"
+	quality = DRINK_VERYGOOD
+	taste_description = "Creole hospitality"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER

@@ -425,8 +425,7 @@
 		return
 	var/total_burn = 0
 	var/total_brute = 0
-	for(var/X in bodyparts) //hardcoded to streamline things a bit
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 		total_brute += (BP.brute_dam * BP.body_damage_coeff)
 		total_burn += (BP.burn_dam * BP.body_damage_coeff)
 	set_health(round(maxHealth - get_oxy_loss() - get_tox_loss() - total_burn - total_brute, DAMAGE_PRECISION))
@@ -636,11 +635,16 @@
 		clear_fullscreen("brute")
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
-	if(!client || !hud_used?.healths)
+	if(!client || !hud_used)
+		return
+
+	var/atom/movable/screen/healths/health_hud = hud_used.screen_objects[HUD_MOB_HEALTH]
+
+	if (!health_hud)
 		return
 
 	if(stat == DEAD)
-		hud_used.healths.icon_state = "health7"
+		health_hud.icon_state = "health7"
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_CARBON_UPDATING_HEALTH_HUD, shown_health_amount) & COMPONENT_OVERRIDE_HEALTH_HUD)
@@ -650,28 +654,11 @@
 		shown_health_amount = health
 
 	if(shown_health_amount >= maxHealth)
-		hud_used.healths.icon_state = "health0"
-
-	else if(shown_health_amount > maxHealth * 0.8)
-		hud_used.healths.icon_state = "health1"
-
-	else if(shown_health_amount > maxHealth * 0.6)
-		hud_used.healths.icon_state = "health2"
-
-	else if(shown_health_amount > maxHealth * 0.4)
-		hud_used.healths.icon_state = "health3"
-
-	else if(shown_health_amount > maxHealth*0.2)
-		hud_used.healths.icon_state = "health4"
-
-	else if(shown_health_amount > 0)
-		hud_used.healths.icon_state = "health5"
-
+		health_hud.icon_state = "health0"
+	else if(shown_health_amount > 0 && maxHealth > 0)
+		health_hud.icon_state = "health[6 - ceil(shown_health_amount / (maxHealth * 0.2))]"
 	else
-		hud_used.healths.icon_state = "health6"
-
-/mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
-	hud_used?.spacesuit?.icon_state = "spacesuit_[cell_state]"
+		health_hud.icon_state = "health6"
 
 /mob/living/carbon/set_health(new_value)
 	. = ..()
@@ -773,7 +760,7 @@
 
 	if(heal_flags & HEAL_LIMBS)
 		regenerate_limbs()
-		for(var/obj/item/bodypart/limb as anything in bodyparts)
+		for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
 			limb.remove_surgical_state(ALL)
 
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ORGANS))
@@ -856,7 +843,7 @@
 	return NONE
 
 /mob/living/carbon/proc/can_defib_client()
-	return (client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
+	return (HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))
@@ -911,13 +898,15 @@
 
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
-			set_num_legs(num_legs + 1)
-			if(!new_bodypart.bodypart_disabled)
-				set_usable_legs(usable_legs + 1)
+			if(!IS_STUMP(new_bodypart))
+				set_num_legs(num_legs + 1)
+				if(!new_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs + 1)
 		if(ARM_LEFT, ARM_RIGHT)
-			set_num_hands(num_hands + 1)
-			if(!new_bodypart.bodypart_disabled)
-				set_usable_hands(usable_hands + 1)
+			if(!IS_STUMP(new_bodypart))
+				set_num_hands(num_hands + 1)
+				if(!new_bodypart.bodypart_disabled)
+					set_usable_hands(usable_hands + 1)
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
@@ -938,13 +927,27 @@
 
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
-			set_num_legs(num_legs - 1)
-			if(!old_bodypart.bodypart_disabled)
-				set_usable_legs(usable_legs - 1)
+			if(!IS_STUMP(old_bodypart))
+				set_num_legs(num_legs - 1)
+				if(!old_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs - 1)
 		if(ARM_LEFT, ARM_RIGHT)
-			set_num_hands(num_hands - 1)
-			if(!old_bodypart.bodypart_disabled)
-				set_usable_hands(usable_hands - 1)
+			if(!IS_STUMP(old_bodypart))
+				set_num_hands(num_hands - 1)
+				if(!old_bodypart.bodypart_disabled)
+					set_usable_hands(usable_hands - 1)
+
+	if(!special && old_bodypart.stump_typepath)
+		if(old_bodypart.type == old_bodypart.stump_typepath)
+			stack_trace("Attempted to replace a stump with a stump")
+		else
+			var/obj/item/bodypart/stump = new old_bodypart.stump_typepath()
+			stump.bodyshape = old_bodypart.bodyshape
+			stump.bodytype = old_bodypart.bodytype
+			if(!stump.try_attach_limb(src, special = TRUE))
+				// the only way this can happen is if the stump is rejected via signal
+				// not much we can do about that besides hope they know what they're doing
+				qdel(stump)
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
@@ -952,7 +955,7 @@
 ///Updates the bodypart speed modifier based on our bodyparts.
 /mob/living/carbon/proc/update_bodypart_speed_modifier()
 	var/final_modification = 0
-	for(var/obj/item/bodypart/leg/bodypart in bodyparts)
+	for(var/obj/item/bodypart/leg/bodypart in get_bodyparts())
 		final_modification += bodypart.speed_modifier
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bodypart, update = TRUE, multiplicative_slowdown = final_modification)
 
@@ -964,7 +967,7 @@
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /carbon ---")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_BODYPART, "Modify bodypart")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_ORGANS, "Modify organs")
 	VV_DROPDOWN_OPTION(VV_HK_MARTIAL_ART, "Give Martial Arts")
@@ -980,63 +983,78 @@
 	if(href_list[VV_HK_MODIFY_BODYPART])
 		if(!check_rights(R_SPAWN))
 			return
-		var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("replace","remove")
+
+		var/edit_action = tgui_alert(usr, "What would you like to do?", "Modify Body Part", list("Replace", "Remove"))
 		if(!edit_action)
 			return
+
 		var/list/limb_list = list()
-		if(edit_action == "remove")
-			for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-				limb_list += iter_part.body_zone
-				limb_list -= BODY_ZONE_CHEST
+		if(edit_action == "Remove")
+			for(var/obj/item/bodypart/iter_part as anything in get_bodyparts())
+				var/zone = iter_part.body_zone
+				if (zone != BODY_ZONE_CHEST)
+					limb_list[parse_zone_with_bodypart(zone)] = zone
 		else
-			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST)
-		var/result = input(usr, "Please choose which bodypart to [edit_action]","[capitalize(edit_action)] Bodypart") as null|anything in sort_list(limb_list)
-		if(result)
-			var/obj/item/bodypart/part = get_bodypart(result)
-			var/list/limbtypes = list()
-			switch(result)
-				if(BODY_ZONE_CHEST)
-					limbtypes = typesof(/obj/item/bodypart/chest)
-				if(BODY_ZONE_R_ARM)
-					limbtypes = typesof(/obj/item/bodypart/arm/right)
-				if(BODY_ZONE_L_ARM)
-					limbtypes = typesof(/obj/item/bodypart/arm/left)
-				if(BODY_ZONE_HEAD)
-					limbtypes = typesof(/obj/item/bodypart/head)
-				if(BODY_ZONE_L_LEG)
-					limbtypes = typesof(/obj/item/bodypart/leg/left)
-				if(BODY_ZONE_R_LEG)
-					limbtypes = typesof(/obj/item/bodypart/leg/right)
-			switch(edit_action)
-				if("remove")
-					if(part)
-						part.drop_limb()
-						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [part.plaintext_zone]")
-					else
-						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
-						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
-				if("replace")
-					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
-					var/obj/item/bodypart/new_bp = new limb2add()
-					if(new_bp.replace_limb(src))
-						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part.type] with [new_bp.type]")
-						qdel(part)
-					else
-						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
-						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+			for(var/zone in GLOB.all_body_zones)
+				limb_list[parse_zone(zone)] = zone
+
+		var/result = tgui_input_list(usr, "Please choose which bodypart to [LOWER_TEXT(edit_action)]","[edit_action] Bodypart", sort_list(limb_list))
+		if (!result)
+			return
+
+		result = limb_list[result]
+		var/obj/item/bodypart/part = get_bodypart(result)
+		var/list/limbtypes = list()
+		switch(result)
+			if(BODY_ZONE_CHEST)
+				limbtypes = typesof(/obj/item/bodypart/chest)
+			if(BODY_ZONE_R_ARM)
+				limbtypes = typesof(/obj/item/bodypart/arm/right)
+			if(BODY_ZONE_L_ARM)
+				limbtypes = typesof(/obj/item/bodypart/arm/left)
+			if(BODY_ZONE_HEAD)
+				limbtypes = typesof(/obj/item/bodypart/head)
+			if(BODY_ZONE_L_LEG)
+				limbtypes = typesof(/obj/item/bodypart/leg/left)
+			if(BODY_ZONE_R_LEG)
+				limbtypes = typesof(/obj/item/bodypart/leg/right)
+
+		if(edit_action == "Remove")
+			if(part)
+				part.drop_limb()
+				admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [part.plaintext_zone]")
+			else
+				to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
+				admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+			return
+
+		var/list/limb_picks = list()
+		for (var/obj/item/bodypart/part_type as anything in sort_list(limbtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+			limb_picks[replacetext("[part_type]", "/obj/item/bodypart/", ":")] = part_type
+
+		var/choice = tgui_input_list(usr, "Select a bodypart type to add", "Add/Replace Bodypart", limb_picks)
+		if (!choice)
+			return
+
+		var/limb2add = limb_picks[choice]
+		var/obj/item/bodypart/new_bp = new limb2add()
+		if(new_bp.replace_limb(src))
+			admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part?.type || "missing limb"] with [new_bp.type]")
+			qdel(part)
+		else
+			to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
+			admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
 
 	if(href_list[VV_HK_MODIFY_ORGANS])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/manipulate_organs, src)
 
 	if(href_list[VV_HK_MARTIAL_ART])
-		if(!check_rights(NONE))
-			return
 		var/list/artpaths = subtypesof(/datum/martial_art)
 		var/list/artnames = list()
 		for(var/i in artpaths)
 			var/datum/martial_art/M = i
 			artnames[initial(M.name)] = M
-		var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in sort_list(artnames, GLOBAL_PROC_REF(cmp_typepaths_asc))
+		var/result = tgui_input_list(usr, "Choose the martial art to teach", "JUDO CHOP", sort_list(artnames, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		if(!usr)
 			return
 		if(QDELETED(src))
@@ -1050,10 +1068,8 @@
 			message_admins(span_notice("[key_name_admin(usr)] has taught [MA] to [key_name_admin(src)]."))
 
 	if(href_list[VV_HK_GIVE_TRAUMA])
-		if(!check_rights(NONE))
-			return
 		var/list/traumas = subtypesof(/datum/brain_trauma)
-		var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in sort_list(traumas, GLOBAL_PROC_REF(cmp_typepaths_asc))
+		var/result = tgui_input_list(usr, "Choose the brain trauma to apply", "Traumatize", sort_list(traumas, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		if(!usr)
 			return
 		if(QDELETED(src))
@@ -1067,8 +1083,6 @@
 			message_admins(span_notice("[key_name_admin(usr)] has traumatized [key_name_admin(src)] with [BT.name]."))
 
 	if(href_list[VV_HK_CURE_TRAUMA])
-		if(!check_rights(NONE))
-			return
 		cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
 		log_admin("[key_name(usr)] has cured all traumas from [key_name(src)].")
 		message_admins(span_notice("[key_name_admin(usr)] has cured all traumas from [key_name_admin(src)]."))
@@ -1097,7 +1111,7 @@
 /mob/living/carbon/proc/is_bleeding()
 	if(!CAN_HAVE_BLOOD(src))
 		return FALSE
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		if(part.cached_bleed_rate)
 			return TRUE
 
@@ -1107,7 +1121,7 @@
 		return FALSE
 
 	var/total_bleed_rate = 0
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		total_bleed_rate += part.cached_bleed_rate
 
 	return total_bleed_rate
@@ -1269,9 +1283,9 @@
 /// Goes through the organs and bodyparts of the mob and updates their blood_dna_info, in case their blood type has changed (via set_species() or otherwise)
 /mob/living/carbon/proc/update_cached_blood_dna_info()
 	var/list/blood_dna_info = get_blood_dna_list()
-	for(var/obj/item/organ/organ in organs)
+	for(var/obj/item/organ/organ as anything in organs)
 		organ.blood_dna_info = blood_dna_info
-	for(var/obj/item/bodypart/bodypart in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		bodypart.blood_dna_info = blood_dna_info
 
 /// Setter for changing a mob's blood type

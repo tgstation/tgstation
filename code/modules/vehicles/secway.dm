@@ -32,44 +32,54 @@
 		return
 	do_smoke(0, src, src)
 
-/obj/vehicle/ridden/secway/welder_act(mob/living/user, obj/item/W)
+/obj/vehicle/ridden/secway/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
-		return
-	. = TRUE
+		return NONE
+
 	if(DOING_INTERACTION(user, src))
 		balloon_alert(user, "you're already repairing it!")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it's not damaged!")
-		return
-	if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
-		return
+		return ITEM_INTERACT_BLOCKING
+
+	if(!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
+		return ITEM_INTERACT_BLOCKING
+
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
 	while(atom_integrity < max_integrity)
-		if(W.use_tool(src, user, 2.5 SECONDS, volume=50))
+		if(tool.use_tool(src, user, 2.5 SECONDS, volume=50))
 			did_the_thing = TRUE
 			atom_integrity += min(10, (max_integrity - atom_integrity))
 			audible_message(span_hear("You hear welding."))
 		else
 			break
+
 	if(did_the_thing)
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
-	else
-		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
+		return ITEM_INTERACT_SUCCESS
 
-/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!istype(W, /obj/item/food/grown/banana))
-		return ..()
+	user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
+	return ITEM_INTERACT_BLOCKING
+
+/obj/vehicle/ridden/secway/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!istype(tool, /obj/item/food/grown/banana))
+		return NONE
 	// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
-	user.visible_message(span_warning("[user] begins stuffing [W] into [src]'s tailpipe."), span_warning("You begin stuffing [W] into [src]'s tailpipe..."), ignored_mobs = occupants)
+	user.visible_message(span_warning("[user] begins stuffing [tool] into [src]'s tailpipe."), span_warning("You begin stuffing [tool] into [src]'s tailpipe..."), ignored_mobs = occupants)
 	if(!do_after(user, 3 SECONDS, src))
-		return TRUE
-	if(user.transferItemToLoc(W, src))
-		user.visible_message(span_warning("[user] stuffs [W] into [src]'s tailpipe."), span_warning("You stuff [W] into [src]'s tailpipe."), ignored_mobs = occupants)
-		eddie_murphy = W
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_warning("[user] stuffs [tool] into [src]'s tailpipe."), span_warning("You stuff [tool] into [src]'s tailpipe."), ignored_mobs = occupants)
+	eddie_murphy = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/ridden/secway/attack_hand(mob/living/user, list/modifiers)
 	if(!eddie_murphy)
