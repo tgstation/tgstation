@@ -171,9 +171,9 @@
 	var/maximum_value = INFINITY
 	// Don't backtrack on weather warnings every second of process() if we're poorly calibrated
 	if (warning_level == WEATHER_ALERT_INCOMING)
-		maximum_value = WEATHER_CLEAR_DELAY - 1
+		maximum_value = WEATHER_CLEAR_DELAY
 	else if (warning_level == WEATHER_ALERT_IMMINENT_OR_ACTIVE)
-		maximum_value = WEATHER_INCOMING_DELAY - 1
+		maximum_value = WEATHER_INCOMING_DELAY
 
 	time_until_next = clamp(time_until_next + accuracy_mod, min(time_until_next, 10 SECONDS), maximum_value)
 	return time_until_next
@@ -187,11 +187,11 @@
 		warning_level = WEATHER_ALERT_CLEAR
 		return // No problems if there are no mining z levels
 
-	if(time_until_next >= WEATHER_CLEAR_DELAY)
+	if(time_until_next > WEATHER_CLEAR_DELAY)
 		warning_level = WEATHER_ALERT_CLEAR
 		return
 
-	if(time_until_next >= WEATHER_INCOMING_DELAY)
+	if(time_until_next > WEATHER_INCOMING_DELAY)
 		warning_level = WEATHER_ALERT_INCOMING
 		return
 
