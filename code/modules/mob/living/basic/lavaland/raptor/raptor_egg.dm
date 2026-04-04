@@ -11,9 +11,9 @@
 	/// Current growth progress
 	var/growth_progress = 0
 	/// Minimum growth progress per second
-	var/min_growth_rate = 0.5
+	var/min_growth_rate = 1
 	/// Maximum growth progress per second
-	var/max_growth_rate = 1
+	var/max_growth_rate = 2
 
 /obj/item/food/egg/raptor_egg/Initialize(mapload)
 	. = ..()
