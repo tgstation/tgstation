@@ -271,6 +271,7 @@
 			"shipped" = ship_total,
 			"maximum" = ship_max,
 			"priority" = global_bounty.high_priority,
+			"unique" = istype(global_bounty, /datum/bounty/item/special)
 			))
 
 	return data
@@ -296,7 +297,7 @@
 		if("update_list")
 			playsound(src, 'sound/machines/data_transmission.ogg', 50) // Should only need to play once per round due to the list auto-updating afterwards.
 
-			var/bonus_bounties = clamp(round(length(GLOB.player_list) / 8), 0, 10) // The number of bounties to be generated is 5 + 1-per every 8 players on the server, up to a max of 10 total.
+			var/bonus_bounties = clamp(round(length(GLOB.player_list) / 8), 0, 5) // The number of bounties to be generated is 5 + 1-per every 8 players on the server, up to a max of 10 total.
 			looped_global_update(1, CIV_BOUNTY_BASELINE + bonus_bounties) // Just for visual flair
 		if("print")
 			print_sheet(user)
@@ -374,13 +375,20 @@
 	return jobs_picked
 
 /// Performs several global bounty updates in a row on a callback loop, adding one each time.
-/obj/machinery/computer/piratepad_control/civilian/proc/looped_global_update(current_count, update_to, inherited_list)
+/obj/machinery/computer/piratepad_control/civilian/proc/looped_global_update(current_count, update_to, inherited_list, first_time = FALSE)
 	var/jobs_picked = update_global_bounty_list(current_count, enable_high_priority = TRUE, running_jobs = inherited_list)
 
 	if(current_count == update_to)
+		if(first_time)
+			setup_special_procs()
 		return TRUE
 	current_count++
 	addtimer(CALLBACK(src, PROC_REF(looped_global_update), current_count, update_to, jobs_picked), 0.8 SECONDS)
+
+/// Spawns the roundstart "special" bounties.
+/obj/machinery/computer/piratepad_control/civilian/proc/setup_special_procs()
+	for(var/selected_special in subtypesof(/datum/bounty/item/special))
+		GLOB.bounties_list += new selected_special
 
 /**
  * Handles cooldowns and creation of a new cargo bounty sheet.
@@ -399,8 +407,9 @@
 			continue
 		printout_text += {"<h3>[current_bounty.name]</h3>
 			<ul>
+			<li>Quantity requested: <i>[current_bounty.print_required()]</i>
 			<li>Reward: <b>[current_bounty.get_bounty_reward()]</b> cr.</li>
-			<li>Cut: [round(BOUNTY_CUT_STANDARD * current_bounty.get_bounty_reward())] cr.</li>
+			<li>Cut: <b>[round(BOUNTY_CUT_STANDARD * current_bounty.get_bounty_reward())]</b> cr.</li>
 			</ul>"}
 	printout.add_raw_text(printout_text.Join("<br />"))
 	printout.update_appearance()

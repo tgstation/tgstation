@@ -48,6 +48,7 @@ type singleBounty = {
   claimed: BooleanLike;
   maximum: number;
   priority: BooleanLike;
+  unique: BooleanLike;
 }
 
 
@@ -234,7 +235,7 @@ const BountyPickButton = (props) => {
         lineHeight="1.2em"
         p={1}
       >
-        {props.bounty_info}
+        <Box dangerouslySetInnerHTML={{ __html: props.bounty_info }} />
       </Box>
       <Box>Payout: {props.bounty_value} cr</Box>
     </Button>
@@ -258,13 +259,14 @@ const GlobalBountyBlock = (props) => {
     claimed: false,
     maximum: 0,
     priority: false,
+    unique: false,
   });
 
   const [bountyTab, setBountyTab] = useState(0);
 
   const safeListBounty = Array.isArray(listBounty) ? listBounty : [];
   return (
-    <Stack fill>
+    <Stack fill scrollable>
       <Stack.Item
         width="30%"
         >
@@ -314,12 +316,12 @@ const GlobalBountyBlock = (props) => {
               pb={0.75}
               mt={0.5}
               width="100%"
-              backgroundColor={bounty.priority ? "#cec328a8" : "#d1d1d170"}
+              backgroundColor={bounty.priority ? "#cec328a8" : (bounty.unique ? "#00fff270" : "#d1d1d170")}
               textColor="white"
               onClick={() => { setBountyData(bounty); setBountyTab(safeListBounty.indexOf(bounty)); }}
               className="Tab_Flash"
               bold={bountyTab === safeListBounty.indexOf(bounty)}
-              icon={bounty.priority ? 'star' : ''}
+              icon={bounty.priority ? 'star' : (bounty.unique ? 'gem' : '')}
               selected={bountyTab === safeListBounty.indexOf(bounty)}
             >
               {bounty.name}
@@ -329,20 +331,44 @@ const GlobalBountyBlock = (props) => {
       </Stack.Item>
       <Stack.Item grow>
         {localBounty.reward !== 0 ? (
-            <Section
-              title={localBounty.name}
-              >
+          <Section
+            title={localBounty.name}
+            style={{
+              textWrap: 'wrap',
+              whiteSpace: 'normal',
+              paddingLeft: '0',
+              paddingRight: '0',
+            }}
+            >
           <ProgressBar
             value={localBounty.shipped}
             maxValue={localBounty.maximum}
+            p={1}
             >
           {localBounty.shipped} / {localBounty.maximum} shipped.
           </ProgressBar>
-          <BlockQuote
-            my="5%"
-            >
-              <Box dangerouslySetInnerHTML={{__html:localBounty.description }} />
-          </BlockQuote>
+              <Box
+                dangerouslySetInnerHTML={{__html:localBounty.description }}
+                p={1}
+              />
+              <br />
+              <Box
+                py={1.25}
+                pl={2}
+                my={0.75}
+                style={{
+                  borderRadius: '5px',
+                  textDecoration: 'underline dotted',
+                  textDecorationColor: '#ffffff8e',
+                  textDecorationThickness: '2px',
+                }}
+                backgroundColor="green"
+                color="white"
+              >
+                <Tooltip content={`You'll receive a cut of ${Math.round(localBounty.reward * 0.3)} Credits.`}>
+                  <b>Reward:</b> {localBounty.reward} Credits
+                </Tooltip>
+            </Box>
           <Button
             width="100%"
             icon={sending ? 'times' : 'arrow-up'}
