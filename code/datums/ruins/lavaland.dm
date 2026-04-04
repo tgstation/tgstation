@@ -5,8 +5,6 @@
 	prefix = "_maps/RandomRuins/LavaRuins/"
 	default_area = /area/lavaland/surface/outdoors/unexplored
 
-/* Fuck you three   ~ Sincerely, SmArtKar
-
 /datum/map_template/ruin/lavaland/biodome
 	cost = 5
 	allow_duplicates = FALSE
@@ -31,16 +29,12 @@
 	description = "WELCOME TO CLOWN PLANET! HONK HONK HONK etc.!"
 	suffix = "lavaland_biodome_clown_planet.dmm"
 
-*/
-
 /datum/map_template/ruin/lavaland/lizgas
 	name = "Lava-Ruin The Lizard's Gas"
 	id = "lizgas2"
 	description = "A recently opened gas station from the Lizard's Gas franchise."
 	suffix = "lavaland_surface_gas.dmm"
 	allow_duplicates = FALSE
-
-/* See you later in a remap
 
 /datum/map_template/ruin/lavaland/cube
 	name = "Lava-Ruin The Wishgranter Cube"
@@ -49,8 +43,6 @@
 	suffix = "lavaland_surface_cube.dmm"
 	cost = 10
 	allow_duplicates = FALSE
-
-*/
 
 /datum/map_template/ruin/lavaland/seed_vault
 	name = "Lava-Ruin Seed Vault"
@@ -70,8 +62,6 @@
 	cost = 20
 	allow_duplicates = FALSE
 
-/* Temp removal for my sanity
-
 /datum/map_template/ruin/lavaland/syndicate_base
 	name = "Lava-Ruin Syndicate Lava Base"
 	id = "lava-base"
@@ -79,7 +69,6 @@
 	suffix = "lavaland_surface_syndicate_base1.dmm"
 	cost = 20
 	allow_duplicates = FALSE
-
 
 /datum/map_template/ruin/lavaland/free_golem
 	name = "Lava-Ruin Free Golem Ship"
@@ -90,7 +79,6 @@
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "golem_ship.dmm"
 	allow_duplicates = FALSE
-*/
 
 /datum/map_template/ruin/lavaland/gaia
 	name = "Lava-Ruin Patch of Eden"
@@ -99,8 +87,6 @@
 	cost = 5
 	suffix = "lavaland_surface_gaia.dmm"
 	allow_duplicates = FALSE
-
-/* See you later in a remap
 
 /datum/map_template/ruin/lavaland/sin
 	cost = 10
@@ -138,8 +124,6 @@
 	suffix = "lavaland_surface_sloth.dmm"
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
-
-*/
 
 /datum/map_template/ruin/lavaland/ratvar
 	name = "Lava-Ruin Dead God"
@@ -325,8 +309,6 @@
 	cost = 5
 	allow_duplicates = FALSE
 
-/* See you later in a remap
-
 /datum/map_template/ruin/lavaland/mook_village
 	name = "Lava-Ruin Mook Village"
 	id = "mook_village"
@@ -334,8 +316,6 @@
 	suffix = "lavaland_surface_mookvillage.dmm"
 	allow_duplicates = FALSE
 	cost = 5
-
-*/
 
 /datum/map_template/ruin/lavaland/shuttle_wreckage
 	name = "Lava-Ruin Shuttle Wreckage"
