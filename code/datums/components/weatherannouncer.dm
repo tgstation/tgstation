@@ -158,6 +158,11 @@
 
 	var/time_until_next = INFINITY
 	for(var/mining_level in mining_z_levels)
+		// About to start!
+		if (SSweather.eligible_zlevels["[mining_level]"])
+			time_until_next = 0
+			break
+
 		var/next_time = timeleft(SSweather.next_hit_by_zlevel["[mining_level]"])
 		if (!isnull(next_time) && next_time < time_until_next)
 			time_until_next = next_time
