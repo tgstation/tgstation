@@ -64,6 +64,12 @@
   - qol: Recovered crew/Thanatorenasia bodies now cause morgue trays / bodybags to
       shake when orbited, much like how the body itself shakes when orbited (to allow
       ghosts to signal they want it to be revived)
+  - qol: '"Egg" foodtype now exists for better food sorting, though no species in
+      particular likes or dislikes it at the moment.'
+  - qol: Food crafting recipes now have three sub categories - Cuisine type, Dish
+      type, and Meal type. You can now filter between "Moth Pizzas" or "Lizard Soups"
+      rather than needing to guess if the recipe is in "Pizza" or "Mothic".
+  - spellcheck: de-capitalized several foods
   TheRyeGuyWhoWillNowDie:
   - bugfix: using a dedicated cyborg defib upgrade on a mediborg with a backpack defib
       installed will properly eject it
