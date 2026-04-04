@@ -73,3 +73,6 @@
   TheRyeGuyWhoWillNowDie:
   - bugfix: using a dedicated cyborg defib upgrade on a mediborg with a backpack defib
       installed will properly eject it
+  lelandkemble:
+  - rscadd: Remote chemical implants can be synced with a remote signalling device
+      to activate without a Prisoner Management Console.
