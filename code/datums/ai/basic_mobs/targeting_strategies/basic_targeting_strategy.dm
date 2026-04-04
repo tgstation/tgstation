@@ -164,6 +164,6 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	if (controller.blackboard[BB_FRIENDS_LIST] && (the_target in controller.blackboard[BB_FRIENDS_LIST]))
+	if (living_mob.ai_controller.blackboard[BB_FRIENDS_LIST] && (the_target in living_mob.ai_controller.blackboard[BB_FRIENDS_LIST]))
 		return FALSE
 	return TRUE
