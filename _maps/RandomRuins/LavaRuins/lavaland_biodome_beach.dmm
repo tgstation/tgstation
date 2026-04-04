@@ -770,7 +770,7 @@
 /turf/open/floor/carpet/blue,
 /area/ruin/powered/beach)
 "Bp" = (
-/turf/closed/mineral/random/volcanic,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors/explored)
 "Bv" = (
 /obj/effect/turf_decal/sand,
@@ -1410,7 +1410,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "ZS" = (
-/turf/closed/mineral/random/volcanic,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/template_noop)
 
 (1,1,1) = {"
@@ -1443,7 +1443,7 @@ BE
 BE
 yc
 Bp
-Bp
+aa
 "}
 (2,1,1) = {"
 aa
@@ -1451,8 +1451,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+Bp
+Bp
 aj
 gs
 gs
@@ -1475,16 +1475,16 @@ Df
 aF
 Fr
 yc
-Bp
+aa
 "}
 (3,1,1) = {"
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+Bp
+Bp
+Bp
+Bp
 aj
 cg
 Cs
@@ -1507,7 +1507,7 @@ kh
 aC
 hS
 cd
-Bp
+aa
 "}
 (4,1,1) = {"
 aa
@@ -1539,7 +1539,7 @@ CK
 IJ
 mE
 CU
-Bp
+aa
 "}
 (5,1,1) = {"
 aa
@@ -1766,7 +1766,7 @@ IP
 MZ
 "}
 (12,1,1) = {"
-aa
+Bp
 MZ
 VI
 VI
@@ -2115,7 +2115,7 @@ eA
 qf
 MZ
 Bp
-Bp
+aa
 "}
 (23,1,1) = {"
 aa
@@ -2339,7 +2339,7 @@ BE
 CU
 BE
 Mf
-Bp
+aa
 "}
 (30,1,1) = {"
 aa
@@ -2366,10 +2366,10 @@ aj
 aj
 Bp
 Bp
-Bp
-Bp
-Bp
-Bp
-Bp
-Bp
+aa
+aa
+aa
+aa
+aa
+aa
 "}

@@ -579,8 +579,6 @@
 	mineral_chance = 7 // N% functionally, 7.17% default, accounts for ~65% turfs
 
 /turf/closed/mineral/random/volcanic/mineral_chances()
-	// Comments are value with distance accounting for turf distribution (not average!)
-	// Values of these across rock types should roughly sum up to default values when corrected for vein spreading
 	return list(
 		/obj/item/stack/ore/bluespace_crystal = 1,
 		/obj/item/stack/ore/diamond = 2,
@@ -591,43 +589,7 @@
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite/volcanic = 2,
-	) // Total sum of 78, raw sum of
-
-/* Default values - comments mean values with distance
-
-/turf/closed/mineral/random/volcanic/mineral_chances()
-	return list(
-		/obj/item/stack/ore/bluespace_crystal = 1, // 0.58 raw
-		/obj/item/stack/ore/diamond = 1, // 0.60 raw
-		/obj/item/stack/ore/gold = 10, // 14.14 raw
-		/obj/item/stack/ore/iron = 40, // 73.90 raw
-		/obj/item/stack/ore/plasma = 20, // 36.95 raw
-		/obj/item/stack/ore/silver = 12, // 22.15 raw
-		/obj/item/stack/ore/titanium = 11, // 20.29 raw
-		/obj/item/stack/ore/uranium = 5, // 5.00 raw
-		/turf/closed/mineral/gibtonite/volcanic = 4, // 9.53 raw  ~ what no scaling does to a rock
-	) // Total sum of 104, raw sum of 183.14
-
-*/
-
-/* Default RAWs
-
-/turf/closed/mineral/random/volcanic/mineral_chances()
-	// Comments are value with distance accounting for turf distribution (not average!)
-	// Values of these across rock types should roughly sum up to default values when corrected for vein spreading
-	return list(
-		/obj/item/stack/ore/bluespace_crystal = 1, // 0.37 raw
-		/obj/item/stack/ore/diamond = 1, // 0.38 raw
-		/obj/item/stack/ore/gold = 10, // 8.84 raw
-		/obj/item/stack/ore/iron = 40, // 44.52 raw
-		/obj/item/stack/ore/plasma = 20, // 22.26 raw
-		/obj/item/stack/ore/silver = 12, // 13.35 raw
-		/obj/item/stack/ore/titanium = 11, // 12.22 raw
-		/obj/item/stack/ore/uranium = 5, // 3.17 raw
-		/turf/closed/mineral/gibtonite/volcanic = 4, // 5.89 raw
-	) // Total sum of 104, raw sum of 111
-
-*/
+	)
 
 /turf/closed/mineral/random/volcanic/red_rock
 	name = "siderite"
@@ -642,32 +604,16 @@
 
 /turf/closed/mineral/random/volcanic/red_rock/mineral_chances()
 	return list(
-		/obj/item/stack/ore/bluespace_crystal = 0.7,
-		/obj/item/stack/ore/diamond = 1.6,
-		/obj/item/stack/ore/gold = 6,
+		/obj/item/stack/ore/bluespace_crystal = 0,
+		/obj/item/stack/ore/diamond = 0,
+		/obj/item/stack/ore/gold = 2,
 		/obj/item/stack/ore/iron = 32, // Iron and plasma are this low due to how much they spread into veins
 		/obj/item/stack/ore/plasma = 6,
-		/obj/item/stack/ore/silver = 8,
+		/obj/item/stack/ore/silver = 14,
 		/obj/item/stack/ore/titanium = 25,
 		/obj/item/stack/ore/uranium = 3,
 		/turf/closed/mineral/gibtonite/volcanic/red_rock = 1,
-	) // Total sum of 140, raw sum of
-
-/* Default RAWs
-
-/turf/closed/mineral/random/volcanic/red_rock/mineral_chances()
-	return list(
-		/obj/item/stack/ore/bluespace_crystal = 1, // 0.12 raw
-		/obj/item/stack/ore/diamond = 1, // 0.12 raw
-		/obj/item/stack/ore/gold = 10, // 2.73 raw
-		/obj/item/stack/ore/iron = 40, // 13.74 raw
-		/obj/item/stack/ore/plasma = 20, // 6.87 raw
-		/obj/item/stack/ore/silver = 12, // 4.11 raw
-		/obj/item/stack/ore/titanium = 11, // 3.77 raw
-		/obj/item/stack/ore/uranium = 5, // 0.99 raw
-		/turf/closed/mineral/gibtonite/volcanic/red_rock = 4, // 1.87 raw
-	) // Total sum of 104, raw sum of 34.32
-*/
+	)
 
 /turf/closed/mineral/random/volcanic/shale
 	name = "shale"
@@ -678,36 +624,20 @@
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_SHALE_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHALE_WALLS
 	tool_mine_speed = 7 SECONDS // 75% harder than basalt
-	mineral_chance = 9 // N% functionally, 7.01% default, accounts for ~13% turfs
+	mineral_chance = 8 // N% functionally, 7.01% default, accounts for ~13% turfs
 
 /turf/closed/mineral/random/volcanic/shale/mineral_chances()
 	return list(
-		/obj/item/stack/ore/bluespace_crystal = 1,
-		/obj/item/stack/ore/diamond = 2,
-		/obj/item/stack/ore/gold = 8,
-		/obj/item/stack/ore/iron = 16, // Iron and plasma are this low due to how much they spread into veins
+		/obj/item/stack/ore/bluespace_crystal = 1.5,
+		/obj/item/stack/ore/diamond = 3,
+		/obj/item/stack/ore/gold = 12,
+		/obj/item/stack/ore/iron = 10, // Iron and plasma are this low due to how much they spread into veins
 		/obj/item/stack/ore/plasma = 32,
-		/obj/item/stack/ore/silver = 8,
+		/obj/item/stack/ore/silver = 4,
 		/obj/item/stack/ore/titanium = 8,
 		/obj/item/stack/ore/uranium = 16,
 		/turf/closed/mineral/gibtonite/volcanic/shale = 3,
-	) // Total sum of 100, raw sum of
-
-/* Default RAWs
-
-/turf/closed/mineral/random/volcanic/shale/mineral_chances()
-	return list(
-		/obj/item/stack/ore/bluespace_crystal = 1, // 0.07 raw
-		/obj/item/stack/ore/diamond = 1, // 0.08 raw
-		/obj/item/stack/ore/gold = 10, // 1.75 raw
-		/obj/item/stack/ore/iron = 40, // 8.80 raw
-		/obj/item/stack/ore/plasma = 20, // 4.40 raw
-		/obj/item/stack/ore/silver = 12, // 2.64 raw
-		/obj/item/stack/ore/titanium = 11, // 2.42 raw
-		/obj/item/stack/ore/uranium = 5, //  0.63 raw
-		/turf/closed/mineral/gibtonite/volcanic/shale = 4, // 1.17 raw
-	) // Total sum of 104, raw sum of 21.96
-*/
+	)
 
 /turf/closed/mineral/random/snow
 	name = "snowy mountainside"
