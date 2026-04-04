@@ -632,7 +632,7 @@
 		/obj/item/stack/ore/diamond = 3,
 		/obj/item/stack/ore/gold = 12,
 		/obj/item/stack/ore/iron = 10, // Iron and plasma are this low due to how much they spread into veins
-		/obj/item/stack/ore/plasma = 32,
+		/obj/item/stack/ore/plasma = 28,
 		/obj/item/stack/ore/silver = 4,
 		/obj/item/stack/ore/titanium = 8,
 		/obj/item/stack/ore/uranium = 16,
