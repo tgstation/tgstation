@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - rscadd: "Remote chemical implants can be synced with a remote signalling device to activate without a Prisoner Management Console."
