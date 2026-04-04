@@ -619,7 +619,7 @@
 
 /datum/mood_event/slots/win/jackpot
 	description = "JACKPOT! AW YEAH!"
-	mood_change = 6
+	mood_change = 4
 
 /datum/mood_event/slots/all_gone
 	description = "NOOOOOOO! IT'S ALL GONE!!!"
