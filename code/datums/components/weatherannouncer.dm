@@ -2,6 +2,9 @@
 #define WEATHER_ALERT_INCOMING 1
 #define WEATHER_ALERT_IMMINENT_OR_ACTIVE 2
 
+#define WEATHER_CLEAR_DELAY 2 MINUTES
+#define WEATHER_INCOMING_DELAY 30 SECONDS
+
 /// Component which makes you yell about what the weather is
 /datum/component/weather_announcer
 	/// Currently displayed warning level
@@ -143,6 +146,7 @@
 	for(var/datum/weather/check_weather as anything in SSweather.processing)
 		if(!(check_weather.weather_flags & WEATHER_BAROMETER) || check_weather.stage == WIND_DOWN_STAGE || check_weather.stage == END_STAGE)
 			continue
+
 		for (var/mining_level in mining_z_levels)
 			if(mining_level in check_weather.impacted_z_levels)
 				warning_level = WEATHER_ALERT_IMMINENT_OR_ACTIVE
@@ -151,28 +155,40 @@
 
 	var/time_until_next = INFINITY
 	for(var/mining_level in mining_z_levels)
-		var/next_time = timeleft(SSweather.next_hit_by_zlevel["[mining_level ]"]) || INFINITY
-		if (next_time && next_time < time_until_next)
+		var/next_time = timeleft(SSweather.next_hit_by_zlevel["[mining_level]"]) || INFINITY
+		if (!isnull(next_time) && next_time < time_until_next)
 			time_until_next = next_time
 
-	if(!check_accuracy())
-		if(!accuracy_mod && radar_z_trait)
-			accuracy_mod = rand(-9, 9) * 5 SECONDS
+	if(check_accuracy())
+		return time_until_next
 
-		time_until_next = max(10 SECONDS, time_until_next + accuracy_mod)
+	if(!accuracy_mod && radar_z_trait)
+		accuracy_mod = rand(-9, 9) * 5 SECONDS
 
+	var/maximum_value = INFINITY
+	// Don't backtrack on weather warnings every second of process() if we're poorly calibrated
+	if (warning_level == WEATHER_ALERT_INCOMING)
+		maximum_value = WEATHER_CLEAR_DELAY - 1
+	else if (warning_level == WEATHER_ALERT_IMMINENT_OR_ACTIVE)
+		maximum_value = WEATHER_INCOMING_DELAY - 1
+
+	time_until_next = clamp(time_until_next + accuracy_mod, min(time_until_next, 10 SECONDS), maximum_value)
 	return time_until_next
 
 /// Polls existing weather for what kind of warnings we should be displaying.
 /datum/component/weather_announcer/proc/set_current_alert_level()
 	var/time_until_next = time_till_storm()
+	is_weather_dangerous = FALSE
+
 	if(isnull(time_until_next))
+		warning_level = WEATHER_ALERT_CLEAR
 		return // No problems if there are no mining z levels
-	if(time_until_next >= 2 MINUTES)
+
+	if(time_until_next >= WEATHER_CLEAR_DELAY)
 		warning_level = WEATHER_ALERT_CLEAR
 		return
 
-	if(time_until_next >= 30 SECONDS)
+	if(time_until_next >= WEATHER_INCOMING_DELAY)
 		warning_level = WEATHER_ALERT_INCOMING
 		return
 
@@ -182,10 +198,14 @@
 	for(var/datum/weather/check_weather as anything in SSweather.processing)
 		if(!(check_weather.weather_flags & WEATHER_BAROMETER) || check_weather.stage == WIND_DOWN_STAGE || check_weather.stage == END_STAGE)
 			continue
+
 		var/list/mining_z_levels = SSmapping.levels_by_trait(radar_z_trait)
 		for(var/mining_level in mining_z_levels)
-			if(mining_level in check_weather.impacted_z_levels)
-				is_weather_dangerous = (check_weather.weather_flags & FUNCTIONAL_WEATHER)
+			if(!(mining_level in check_weather.impacted_z_levels))
+				continue
+
+			if(check_weather.weather_flags & FUNCTIONAL_WEATHER)
+				is_weather_dangerous = TRUE
 				return
 
 /datum/component/weather_announcer/proc/on_examine(atom/radio, mob/examiner, list/examine_texts)
@@ -229,3 +249,6 @@
 #undef WEATHER_ALERT_CLEAR
 #undef WEATHER_ALERT_INCOMING
 #undef WEATHER_ALERT_IMMINENT_OR_ACTIVE
+
+#undef WEATHER_CLEAR_DELAY
+#undef WEATHER_INCOMING_DELAY
