@@ -72,6 +72,9 @@
   - spellcheck: de-capitalized several foods
   - qol: TTS voice is more appropriately randomized to gender
   - qol: Getting randomized through means such as mulligan toxin randomizes TTS voices
+  SyncIt21:
+  - bugfix: camera devices work again, camera flash turns on in most instances
+  - refactor: camera code has been refactored. Report bugs on github
   TheRyeGuyWhoWillNowDie:
   - bugfix: using a dedicated cyborg defib upgrade on a mediborg with a backpack defib
       installed will properly eject it
