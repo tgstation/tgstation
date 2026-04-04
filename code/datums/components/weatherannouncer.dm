@@ -175,7 +175,7 @@
 	else if (warning_level == WEATHER_ALERT_IMMINENT_OR_ACTIVE)
 		maximum_value = WEATHER_INCOMING_DELAY
 
-	time_until_next = clamp(time_until_next + accuracy_mod, min(time_until_next, 10 SECONDS), maximum_value)
+	time_until_next = clamp(time_until_next + accuracy_mod, min(time_until_next, 10 SECONDS), max(time_until_next, maximum_value))
 	return time_until_next
 
 /// Polls existing weather for what kind of warnings we should be displaying.
