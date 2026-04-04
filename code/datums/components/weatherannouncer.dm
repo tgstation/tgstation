@@ -127,14 +127,16 @@
 
 /// Returns a string we should display to communicate what you should be doing
 /datum/component/weather_announcer/proc/get_warning_message()
-	if (!is_weather_dangerous)
-		return "No risk expected from incoming weather front."
 	switch(warning_level)
 		if(WEATHER_ALERT_CLEAR)
 			return "All clear, no weather alerts to report."
 		if(WEATHER_ALERT_INCOMING)
+			if (!is_weather_dangerous)
+				return "No risk expected from incoming weather front."
 			return "Weather front incoming, begin to seek shelter."
 		if(WEATHER_ALERT_IMMINENT_OR_ACTIVE)
+			if (!is_weather_dangerous)
+				return "No risk expected from imminent weather front."
 			return "Weather front imminent, find shelter immediately."
 	return "Error in meteorological calculation. Please report this deviation to a trained programmer."
 
