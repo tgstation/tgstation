@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "TTS voice is more appropriately randomized to gender"
-  - qol: "Getting randomized through means such as mulligan toxin randomizes TTS voices"
