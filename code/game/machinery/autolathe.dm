@@ -411,8 +411,8 @@
 /obj/machinery/autolathe/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
 	print_sound.stop()
-	update_appearance()
 	busy = FALSE
+	update_appearance()
 	SStgui.update_uis(src)
 
 /obj/machinery/autolathe/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
