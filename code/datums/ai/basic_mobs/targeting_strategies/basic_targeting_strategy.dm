@@ -157,3 +157,13 @@
 
 /datum/targeting_strategy/basic/exact_match
 	check_factions_exactly = TRUE
+
+/datum/targeting_strategy/basic/exact_match/ignore_friends
+
+/datum/targeting_strategy/basic/exact_match/ignore_friends/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+	. = ..()
+	if (!.)
+		return FALSE
+	if (controller.blackboard[BB_FRIENDS_LIST] && (the_target in controller.blackboard[BB_FRIENDS_LIST]))
+		return FALSE
+	return TRUE
