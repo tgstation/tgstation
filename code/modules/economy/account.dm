@@ -1,4 +1,5 @@
 #define DUMPTIME 3000
+#define NO_MY_MONEY 10000
 
 /datum/bank_account
 	///Name listed on the account, reflected on the ID card.
@@ -115,6 +116,16 @@
  */
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE
+	if(!has_money(NO_MY_MONEY))
+		return
+	for(var/obj/card in bank_cards)
+		var/mob/living/card_holder = recursive_loc_check(card, /mob/living)
+		if(!isliving(card_holder)) //If on a mob
+			continue
+		if(!card_holder.client || !card_holder.mob_mood?.get_mood_event(SLOTS_MOOD_CATEGORY))
+			continue
+		//overwrite the slots event.
+		card_holder.add_mood_event(SLOTS_MOOD_CATEGORY, /datum/mood_event/slots/all_gone)
 
 /**
  * Returns TRUE if a bank account has more than or equal to the amount, amt.
@@ -352,3 +363,4 @@
 	)))
 
 #undef DUMPTIME
+#undef NO_MY_MONEY

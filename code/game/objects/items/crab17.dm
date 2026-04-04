@@ -27,8 +27,7 @@
 		if(isliving(user))
 			L = user
 			accounts_to_rob -= L.get_bank_account()
-		for(var/i in accounts_to_rob)
-			var/datum/bank_account/B = i
+		for(var/datum/bank_account/B as anything in accounts_to_rob)
 			B.being_dumped = TRUE
 		new /obj/effect/dumpeet_target(targetturf, L)
 
@@ -203,8 +202,7 @@
 /obj/structure/checkoutmachine/proc/start_dumping()
 	accounts_to_rob = assoc_to_values(SSeconomy.bank_accounts_by_id)
 	accounts_to_rob -= bogdanoff?.get_bank_account()
-	for(var/i in accounts_to_rob)
-		var/datum/bank_account/B = i
+	for(var/datum/bank_account/B as anything in accounts_to_rob)
 		B.dumpeet()
 	dump()
 
