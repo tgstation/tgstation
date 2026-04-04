@@ -452,7 +452,7 @@
 
 	else if(linelength == 3)
 		winning = WINNING_FREESPIN
-		balloon_alert(user, span_notice("won 3 free games!"))
+		balloon_alert(user, "won 3 free games!")
 		balance += SPIN_PRICE * 4
 		money = max(money - SPIN_PRICE * 4, money)
 
