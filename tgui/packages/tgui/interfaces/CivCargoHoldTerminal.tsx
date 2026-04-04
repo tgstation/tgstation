@@ -1,6 +1,5 @@
 
 import {
-  BlockQuote,
   Box,
   Button,
   Flex,
