@@ -21,6 +21,8 @@ SUBSYSTEM_DEF(market)
 	var/list/queued_purchases = list()
 	/// How many admin items have been spawned this round? Used to iterate the identifier of admin-created market items.
 	var/admin_items_spawned = 0
+	/// A generic blackmarket uplink spawned in nullspace, so admins can view the black market.
+	var/obj/item/admin_uplink
 
 /datum/controller/subsystem/market/Initialize()
 	for(var/market in subtypesof(/datum/market))
@@ -28,6 +30,8 @@ SUBSYSTEM_DEF(market)
 
 	for(var/path in subtypesof(/datum/market_item))
 		initialize_item(path)
+
+	admin_uplink = new /obj/item/market_uplink/blackmarket(null) //Send it to nullspace.
 
 	return SS_INIT_SUCCESS
 

@@ -1,3 +1,8 @@
+ADMIN_VERB(access_black_market, R_ADMIN, "Access Black Market", "Allows you to view the current black market.", ADMIN_CATEGORY_EVENTS)
+	if(!SSmarket.admin_uplink)
+		SSmarket.admin_uplink = new /obj/item/market_uplink/blackmarket(null)
+	SSmarket.admin_uplink.ui_interact(user.mob)
+
 /obj/item/market_uplink
 	name = "\improper Market Uplink"
 	desc = "A market uplink. Usable with markets. You probably shouldn't have this!"
