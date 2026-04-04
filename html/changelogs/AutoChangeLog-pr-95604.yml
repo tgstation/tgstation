@@ -1,4 +1,0 @@
-author: "TheRyeGuyWhoWillNowDie"
-delete-after: True
-changes:
-  - bugfix: "using a dedicated cyborg defib upgrade on a mediborg with a backpack defib installed will properly eject it"
