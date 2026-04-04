@@ -1673,3 +1673,5 @@
 
 	expose_turf(dropturf, volume/2)
 	volume = round(volume/2, 0.01)
+
+#undef CRITICAL_CAPACITY
