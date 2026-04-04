@@ -53,8 +53,7 @@
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
-	if(SStts.tts_enabled)
-		voice = pick(SStts.available_speakers)
+	voice = SStts.random_tts_voice()
 	GLOB.silicon_mobs += src
 	add_faction(FACTION_SILICON)
 	if(ispath(radio))

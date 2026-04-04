@@ -17243,7 +17243,7 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Service - Gambling Lounge"
 	},
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	name = "two-armed bandit"
 	},
 /turf/open/floor/wood/large,
@@ -28771,7 +28771,7 @@
 /area/station/security/prison/rec)
 "ibJ" = (
 /obj/item/radio/intercom/directional/east,
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	name = "two-armed bandit"
 	},
 /turf/open/floor/wood/large,
@@ -52934,7 +52934,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/aft/greater)
 "oMP" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "oMR" = (

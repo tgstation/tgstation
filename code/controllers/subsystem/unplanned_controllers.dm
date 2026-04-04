@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(unplanned_controller_subsystems)
 /// Handles making mobs perform lightweight "idle" behaviors such as wandering around when they have nothing planned
 SUBSYSTEM_DEF(unplanned_controllers)
 	name = "Unplanned AI Controllers"
-	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
+	ss_flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
 	priority = FIRE_PRIORITY_UNPLANNED_NPC
 	dependencies = list(
 		/datum/controller/subsystem/movement/ai_movement,

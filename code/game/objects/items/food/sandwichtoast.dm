@@ -231,7 +231,7 @@
 	custom_materials = null
 
 /obj/item/food/sandwich/philly_cheesesteak
-	name = "Philly cheesesteak"
+	name = "philly cheesesteak"
 	desc = "A popular sandwich made of sliced meat, onions, melted cheese in a long hoagie roll. Mouthwatering doesn't even begin to describe it."
 	icon_state = "philly_cheesesteak"
 	food_reagents = list(
