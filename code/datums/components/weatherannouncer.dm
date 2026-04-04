@@ -122,7 +122,10 @@
 		if(WEATHER_ALERT_INCOMING)
 			light.set_light_color(LIGHT_COLOR_DIM_YELLOW)
 		if(WEATHER_ALERT_IMMINENT_OR_ACTIVE)
-			light.set_light_color(LIGHT_COLOR_INTENSE_RED)
+			if (is_weather_dangerous)
+				light.set_light_color(LIGHT_COLOR_INTENSE_RED)
+			else
+				light.set_light_color(LIGHT_COLOR_DIM_YELLOW)
 	light.update_light()
 
 /// Returns a string we should display to communicate what you should be doing
@@ -131,12 +134,10 @@
 		if(WEATHER_ALERT_CLEAR)
 			return "All clear, no weather alerts to report."
 		if(WEATHER_ALERT_INCOMING)
-			if (!is_weather_dangerous)
-				return "No risk expected from incoming weather front."
 			return "Weather front incoming, begin to seek shelter."
 		if(WEATHER_ALERT_IMMINENT_OR_ACTIVE)
 			if (!is_weather_dangerous)
-				return "No risk expected from imminent weather front."
+				return "No risk expected from incoming weather front."
 			return "Weather front imminent, find shelter immediately."
 	return "Error in meteorological calculation. Please report this deviation to a trained programmer."
 
