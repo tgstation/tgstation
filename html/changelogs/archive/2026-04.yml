@@ -56,3 +56,14 @@
       profit to payout major jackpots and bonus spins. Please gamble responsibly.
   - map: Replaced all slot machines with slot machine random spawners. Added syndicate
       slot machines to Syndicate bases and nuke outposts.
+2026-04-04:
+  Melbert:
+  - qol: Recovered crew/Thanatorenasia bodies in morgue trays change the indicator
+      to green when a ghost is orbiting them (to allow ghosts to signal they want
+      it to be revived)
+  - qol: Recovered crew/Thanatorenasia bodies now cause morgue trays / bodybags to
+      shake when orbited, much like how the body itself shakes when orbited (to allow
+      ghosts to signal they want it to be revived)
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: using a dedicated cyborg defib upgrade on a mediborg with a backpack defib
+      installed will properly eject it
