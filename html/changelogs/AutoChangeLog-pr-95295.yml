@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "camera devices work again, camera flash turns on in most instances"
+  - refactor: "camera code has been refactored. Report bugs on github"
