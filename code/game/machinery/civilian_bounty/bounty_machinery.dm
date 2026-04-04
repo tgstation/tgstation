@@ -298,7 +298,7 @@
 			playsound(src, 'sound/machines/data_transmission.ogg', 50) // Should only need to play once per round due to the list auto-updating afterwards.
 
 			var/bonus_bounties = clamp(round(length(GLOB.player_list) / 8), 0, 5) // The number of bounties to be generated is 5 + 1-per every 8 players on the server, up to a max of 10 total.
-			looped_global_update(1, CIV_BOUNTY_BASELINE + bonus_bounties) // Just for visual flair
+			looped_global_update(1, CIV_BOUNTY_BASELINE + bonus_bounties, first_time = TRUE) // Just for visual flair
 		if("print")
 			print_sheet(user)
 	. = TRUE
@@ -383,7 +383,7 @@
 			setup_special_procs()
 		return TRUE
 	current_count++
-	addtimer(CALLBACK(src, PROC_REF(looped_global_update), current_count, update_to, jobs_picked), 0.8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(looped_global_update), current_count, update_to, jobs_picked, first_time), 0.8 SECONDS)
 
 /// Spawns the roundstart "special" bounties.
 /obj/machinery/computer/piratepad_control/civilian/proc/setup_special_procs()
