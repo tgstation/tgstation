@@ -267,6 +267,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/structure/holosign/robot_seat,
 		//Singleton
 		/mob/dview,
+		//Template type
+		/obj/item/bodypart,
 		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
 		/obj/merge_conflict_marker,
 		//Not meant to spawn without the machine wand
