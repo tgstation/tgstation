@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "\"Egg\" foodtype now exists for better food sorting, though no species in particular likes or dislikes it at the moment."
+  - qol: "Food crafting recipes now have three sub categories - Cuisine type, Dish type, and Meal type. You can now filter between \"Moth Pizzas\" or \"Lizard Soups\" rather than needing to guess if the recipe is in \"Pizza\" or \"Mothic\"."
+  - spellcheck: "de-capitalized several foods"
