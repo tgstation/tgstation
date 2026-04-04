@@ -850,5 +850,6 @@ ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an it
 
 	SSmarket.initialize_admin_item(admin_item)
 	log_admin("[key_name(user)] created a new black market item: [name] ([chosen]) for [price] credits, of quantity [quantity].")
+	message_admins("[key_name(user)] created a new black market item: [name] ([chosen]) for [price] credits, of quantity [quantity].")
 
 	BLACKBOX_LOG_ADMIN_VERB("Create Black Market Item")
