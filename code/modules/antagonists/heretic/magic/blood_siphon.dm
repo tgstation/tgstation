@@ -40,26 +40,21 @@
 	)
 
 	var/mob/living/living_owner = owner
-	cast_on.adjustBruteLoss(20)
-	living_owner.adjustBruteLoss(-20)
+	cast_on.adjust_brute_loss(20)
+	living_owner.adjust_brute_loss(-20)
 
-	if(!cast_on.blood_volume || !living_owner.blood_volume)
-		return TRUE
-
-	cast_on.blood_volume -= 20
-	if(living_owner.blood_volume < BLOOD_VOLUME_MAXIMUM) // we dont want to explode from casting
-		living_owner.blood_volume += 20
+	cast_on.transfer_blood_to(living_owner, 20, ignore_low_blood = TRUE, ignore_incompatibility = TRUE, transfer_viruses = FALSE)
 
 	if(!iscarbon(cast_on) || !iscarbon(owner))
 		return TRUE
 
 	var/mob/living/carbon/carbon_target = cast_on
 	var/mob/living/carbon/carbon_user = owner
-	for(var/obj/item/bodypart/bodypart as anything in carbon_user.bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in carbon_user.get_bodyparts())
 		for(var/datum/wound/iter_wound as anything in bodypart.wounds)
 			if(prob(50))
 				continue
-			var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in carbon_target.bodyparts
+			var/obj/item/bodypart/target_bodypart = carbon_target.get_bodypart(bodypart.body_zone)
 			if(!target_bodypart)
 				continue
 			iter_wound.remove_wound()

@@ -417,20 +417,20 @@ const FunTab = (props) => {
           </Stack.Item>
           <Stack.Item>
             <Button
-              icon="dollar-sign"
-              lineHeight={lineHeightNormal}
-              width={buttonWidthNormal}
-              content="Ancap Station"
-              onClick={() => act('ancap')}
-            />
-          </Stack.Item>
-          <Stack.Item>
-            <Button
               icon="house"
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Send Shuttle Back"
               onClick={() => act('send_shuttle_back')}
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              icon="oil-well"
+              lineHeight={lineHeightNormal}
+              width={buttonWidthNormal}
+              content="Tap Ore Vents"
+              onClick={() => act('ore_vents')}
             />
           </Stack.Item>
         </Stack>
@@ -575,6 +575,21 @@ const FunForYouTab = (props) => {
         </Stack>
       </Stack.Item>
       <Stack.Item>
+        <Stack fill>
+          <Stack.Item>
+            <NoticeBox danger width={19.6} mb={0}>
+              <Button
+                color="red"
+                icon="cat"
+                fluid
+                content="CASCAAADE"
+                onClick={() => act('cascade')}
+              />
+            </NoticeBox>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item>
         <Stack>
           <Stack.Item>
             <NoticeBox danger width={19.6} mb={0}>
@@ -637,7 +652,7 @@ export const Secrets = (props) => {
   const TabComponent = TAB2NAME[tabIndex - 1].component();
 
   return (
-    <Window title="Secrets Panel" width={500} height={488} theme="admin">
+    <Window title="Secrets Panel" width={500} height={520} theme="admin">
       <Window.Content>
         <Flex direction="column" height="100%">
           <Flex.Item mb={1}>

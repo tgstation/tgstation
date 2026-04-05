@@ -9,10 +9,21 @@ import {
 
 import { useBackend } from '../../backend';
 import { bookmarkedReactions } from '.';
-import type { ReagentsData, ReagentsProps } from './types';
+import { bitflagInfo, type ReagentsData, type ReagentsProps } from './types';
 
 function matchBitflag(a: number, b: number) {
   return a & b && (a | b) === b;
+}
+
+function bitflagToIcon(flag: number, all_flags: Record<string, number>) {
+  for (const [readable, value] of Object.entries(all_flags)) {
+    for (const meta of bitflagInfo) {
+      if (meta.flag === readable && value === flag) {
+        return meta.icon;
+      }
+    }
+  }
+  return null;
 }
 
 export function RecipeLibrary(props: ReagentsProps) {
@@ -57,30 +68,6 @@ export function RecipeLibrary(props: ReagentsProps) {
       );
 
   const pageIndexMax = Math.ceil(visibleReactions.length / 50);
-
-  const flagIcons = [
-    { flag: bitflags.BRUTE, icon: 'gavel' },
-    { flag: bitflags.BURN, icon: 'burn' },
-    { flag: bitflags.TOXIN, icon: 'biohazard' },
-    { flag: bitflags.OXY, icon: 'wind' },
-    { flag: bitflags.HEALING, icon: 'medkit' },
-    { flag: bitflags.DAMAGING, icon: 'skull-crossbones' },
-    { flag: bitflags.EXPLOSIVE, icon: 'bomb' },
-    { flag: bitflags.OTHER, icon: 'question' },
-    { flag: bitflags.DANGEROUS, icon: 'exclamation-triangle' },
-    { flag: bitflags.EASY, icon: 'chess-pawn' },
-    { flag: bitflags.MODERATE, icon: 'chess-knight' },
-    { flag: bitflags.HARD, icon: 'chess-queen' },
-    { flag: bitflags.ORGAN, icon: 'brain' },
-    { flag: bitflags.DRINK, icon: 'cocktail' },
-    { flag: bitflags.FOOD, icon: 'drumstick-bite' },
-    { flag: bitflags.SLIME, icon: 'microscope' },
-    { flag: bitflags.DRUG, icon: 'pills' },
-    { flag: bitflags.UNIQUE, icon: 'puzzle-piece' },
-    { flag: bitflags.CHEMICAL, icon: 'flask' },
-    { flag: bitflags.PLANT, icon: 'seedling' },
-    { flag: bitflags.COMPETITIVE, icon: 'recycle' },
-  ];
 
   return (
     <Section
@@ -184,11 +171,10 @@ export function RecipeLibrary(props: ReagentsProps) {
               ))}
             </Table.Cell>
             <Table.Cell width="60px">
-              {flagIcons
-                .filter((meta) => reaction.bitflags & meta.flag)
-                .map((meta) => (
-                  <Icon key={meta.flag} name={meta.icon} mr={1} />
-                ))}
+              <Icon
+                name={bitflagToIcon(reaction.bitflags, bitflags) || 'question'}
+                mr={1}
+              />
             </Table.Cell>
             <Table.Cell width="20px">
               {!bookmarkMode ? (

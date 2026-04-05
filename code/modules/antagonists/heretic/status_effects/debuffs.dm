@@ -1,17 +1,19 @@
-// AMOK
-/datum/status_effect/amok
-	id = "amok"
+/// Forces the mob to attack nearby targets
+/datum/status_effect/forced_combat
+	id = "forced_combat"
 	status_type = STATUS_EFFECT_REPLACE
-	remove_on_fullheal = TRUE
 	alert_type = null
 	duration = 10 SECONDS
-	tick_interval = 1 SECONDS
+	tick_interval = CLICK_CD_MELEE
+	/// We stop attacking after this many successful attacks
+	var/num_attacks = INFINITY
 
-/datum/status_effect/amok/on_apply(mob/living/afflicted)
-	to_chat(owner, span_boldwarning("You feel filled with a rage that is not your own!"))
-	return TRUE
+/datum/status_effect/forced_combat/on_creation(mob/living/new_owner, duration = 10 SECONDS, num_attacks = INFINITY)
+	src.duration = duration
+	src.num_attacks = num_attacks
+	return ..()
 
-/datum/status_effect/amok/tick(seconds_between_ticks)
+/datum/status_effect/forced_combat/tick(seconds_between_ticks)
 	var/prev_combat_mode = owner.combat_mode
 	owner.set_combat_mode(TRUE)
 
@@ -19,17 +21,32 @@
 	// Otherwise, just look for adjacent targets
 	var/search_radius = isgun(owner.get_active_held_item()) ? 3 : 1
 
-	var/list/mob/living/targets = list()
+	var/list/mob/living/targets
 	for(var/mob/living/potential_target in oview(owner, search_radius))
-		if(IS_HERETIC_OR_MONSTER(potential_target))
+		if(!will_attack(potential_target))
 			continue
-		targets += potential_target
+		LAZYADD(targets, potential_target)
 
 	if(LAZYLEN(targets))
-		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
+		owner.log_message(" attacked someone due to the [id] debuff.", LOG_ATTACK) //the following attack will log itself
 		owner.ClickOn(pick(targets))
+		num_attacks -= 1
 
 	owner.set_combat_mode(prev_combat_mode)
+
+	if(num_attacks <= 0)
+		qdel(src)
+
+/datum/status_effect/forced_combat/proc/will_attack(mob/living/friendly)
+	return TRUE
+
+/datum/status_effect/forced_combat/amok
+	id = "amok_forced_combat"
+	remove_on_fullheal = TRUE
+	alert_type = null
+
+/datum/status_effect/forced_combat/amok/will_attack(mob/living/friendly)
+	return !IS_HERETIC_OR_MONSTER(friendly)
 
 /datum/status_effect/cloudstruck
 	id = "cloudstruck"
@@ -80,25 +97,25 @@
 			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 		if(30 to 40)
 			// Don't fully kill liver that's important
-			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 10, 90)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_LIVER, 10, 90)
 		if(40 to 50)
 			// Don't fully kill heart that's important
-			human_owner.adjustOrganLoss(ORGAN_SLOT_HEART, 10, 90)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_HEART, 10, 90)
 		if(50 to 60)
 			// You can fully kill the stomach that's not crucial
-			human_owner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 10)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_STOMACH, 10)
 		if(60 to 70)
 			// Same with eyes
-			human_owner.adjustOrganLoss(ORGAN_SLOT_EYES, 5)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_EYES, 5)
 		if(70 to 80)
 			// And same with ears
-			human_owner.adjustOrganLoss(ORGAN_SLOT_EARS, 10)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_EARS, 10)
 		if(80 to 90)
 			// But don't fully kill lungs that's usually important
-			human_owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 10, 90)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_LUNGS, 10, 90)
 		if(90 to 95)
 			// And definitely don't fully kil brains
-			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
+			human_owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
 			human_owner.adjust_confusion_up_to(12 SECONDS, 24 SECONDS)
 
@@ -191,8 +208,8 @@
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	// Heals them so people who are in crit can have this affect applied on them and still be of some use for the heretic
-	owner.adjustBruteLoss(-150 + owner.mob_mood.sanity)
-	owner.adjustFireLoss(-150 + owner.mob_mood.sanity)
+	owner.adjust_brute_loss(-150 + owner.mob_mood.sanity)
+	owner.adjust_fire_loss(-150 + owner.mob_mood.sanity)
 
 	to_chat(owner, span_hypnophrase(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>")))
 	owner.balloon_alert(owner, "they lie..THEY ALL LIE!!!")

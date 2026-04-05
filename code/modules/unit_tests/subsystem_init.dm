@@ -3,12 +3,12 @@
 
 /datum/unit_test/subsystem_init/Run()
 	for(var/datum/controller/subsystem/subsystem as anything in Master.subsystems)
-		if(subsystem.flags & SS_NO_INIT)
+		if(subsystem.ss_flags & SS_NO_INIT)
 			continue
 		if(subsystem.initialized)
 			continue
 
-		var/should_fail = !(subsystem.flags & SS_OK_TO_FAIL_INIT)
+		var/should_fail = !(subsystem.ss_flags & SS_OK_TO_FAIL_INIT)
 		var/list/message_strings = list("[subsystem] ([subsystem.type]) is a subsystem meant to initialize but could not get initialized.")
 
 		if(!isnull(subsystem.initialization_failure_message))

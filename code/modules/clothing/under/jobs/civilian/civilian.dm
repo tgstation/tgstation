@@ -44,23 +44,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/under/rank/civilian/head_of_personnel/suit
-	name = "head of personnel's suit"
-	desc = "A teal suit and yellow necktie. An authoritative yet tacky ensemble."
-	icon_state = "teal_suit"
-	inhand_icon_state = "g_suit"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/rank/civilian/head_of_personnel/suit/skirt
-	name = "teal suitskirt"
-	desc = "A teal suitskirt and yellow necktie. An authoritative yet tacky ensemble."
-	icon_state = "teal_suit_skirt"
-	inhand_icon_state = "g_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
-	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
 /obj/item/clothing/under/rank/civilian/hydroponics
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
 	name = "botanist's jumpsuit"
@@ -108,6 +91,7 @@
 	body_parts_covered = CHEST|GROIN
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR //weebs are going to lvoe this
 
 /obj/item/clothing/under/rank/civilian/lawyer
 	name = "Lawyer suit"

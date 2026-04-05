@@ -35,24 +35,23 @@
 	if(isnull(abilities))
 		abilities = list()
 		for(var/datum/action/changeling/ability_path as anything in changeling.all_powers)
-
 			var/dna_cost = initial(ability_path.dna_cost)
-
 			if(dna_cost < 0) // 0 = free, but negatives are invalid
 				continue
 
-			var/list/ability_data = list()
-			ability_data["name"] = initial(ability_path.name)
-			ability_data["desc"] = initial(ability_path.desc)
-			ability_data["path"] = ability_path
-			ability_data["helptext"] = initial(ability_path.helptext)
-			ability_data["genetic_point_required"] = dna_cost
-			ability_data["absorbs_required"] = initial(ability_path.req_absorbs) // compares against changeling true_absorbs
-			ability_data["dna_required"] = initial(ability_path.req_dna) // compares against changeling absorbed_count
+			var/list/ability_data = list(
+				"name" = initial(ability_path.name),
+				"desc" = initial(ability_path.desc),
+				"helptext" = initial(ability_path.helptext),
+				"path" = ability_path,
+				"genetic_point_required" = dna_cost,
+				"absorbs_required" = initial(ability_path.req_absorbs),
+				"dna_required" = initial(ability_path.req_dna),
+				"category" = initial(ability_path.category),
+			)
 
 			abilities += list(ability_data)
 
-		// Sorts abilities alphabetically by default
 		sortTim(abilities, /proc/cmp_assoc_list_name)
 
 	data["abilities"] = abilities

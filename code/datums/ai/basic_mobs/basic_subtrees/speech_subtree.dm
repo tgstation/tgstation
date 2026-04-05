@@ -2,23 +2,23 @@
 	//The chance of an emote occurring each second
 	var/speech_chance = 0
 	///Hearable emotes
-	var/list/emote_hear = list()
+	var/list/emote_hear
 	///Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
-	var/list/emote_see = list()
+	var/list/emote_see
 	///Possible lines of speech the AI can have
-	var/list/speak = list()
+	var/list/speak
 	///The sound effects associated with this speech, if any
-	var/list/sound = list()
+	var/list/sound
 
 /datum/ai_planning_subtree/random_speech/New()
 	. = ..()
-	if(speak)
+	if(LAZYLEN(speak))
 		speak = string_list(speak)
-	if(sound)
+	if(LAZYLEN(sound))
 		sound = string_list(sound)
-	if(emote_hear)
+	if(LAZYLEN(emote_hear))
 		emote_hear = string_list(emote_hear)
-	if(emote_see)
+	if(LAZYLEN(emote_see))
 		emote_see = string_list(emote_see)
 
 /datum/ai_planning_subtree/random_speech/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)

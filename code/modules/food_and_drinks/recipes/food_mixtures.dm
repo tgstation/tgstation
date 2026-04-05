@@ -4,12 +4,23 @@
 		/obj/item/reagent_containers/cup/bowl,
 		/obj/item/popsicle_stick,
 		/obj/item/stack/rods,
+		/obj/item/reagent_containers/cup/glass/sillycup,
 	)
-	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENTS | CRAFT_CLEARS_REAGENTS | CRAFT_ENFORCE_MATERIALS_PARITY
+	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENT_COMPONENTS | CRAFT_CLEARS_REAGENTS
+	// avoid changing this, it is used to split the crafting menu between normal and food
+	category = CAT_FOOD
+
 	///The food types that are added to the result when the recipe is completed
 	var/added_foodtypes = NONE
 	///The food types that are removed to the result when the recipe is completed
 	var/removed_foodtypes = NONE
+
+	/// Type of cuisine, like "Mexican", "Italian", "Martian", "Mothic", or "Lizard"
+	var/cuisine_category = CUISINE_TERRAN
+	/// Type of dish, like "Pizza", "Cake", "Burger" or "Soup"
+	var/dish_category = DISH_UNCATEGORIZED
+	/// Type of meal, like "Appetizer", "Main Course", "Dessert", or "Snack"
+	var/meal_category = MEAL_MAIN_COURSE
 
 /datum/crafting_recipe/food/New()
 	. = ..()
@@ -41,12 +52,26 @@
 /datum/crafting_recipe/food/crafting_ui_data()
 	var/list/data = list()
 
-	if(ispath(result, /obj/item/food))
-		var/obj/item/food/item = result
-		data["foodtypes"] = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
-		data["complexity"] = initial(item.crafting_complexity)
+	var/foodtypes = get_food_types()
+	data["foodtypes"] = bitfield_to_list(foodtypes, FOOD_FLAGS)
+	data["complexity"] = get_complexity()
+	data["cuisine_category"] = cuisine_category
+	data["dish_category"] = dish_category
+	data["meal_category"] = (meal_category != MEAL_COMPONENT && (foodtypes & BREAKFAST)) ? MEAL_BREAKFAST : meal_category
 
 	return data
+
+/datum/crafting_recipe/food/proc/get_food_types()
+	if(ispath(result, /obj/item/food))
+		var/obj/item/food/food_result = result
+		return (initial(food_result.foodtypes) | added_foodtypes) & ~removed_foodtypes
+	return NONE
+
+/datum/crafting_recipe/food/proc/get_complexity()
+	if(ispath(result, /obj/item/food))
+		var/obj/item/food/food_result = result
+		return initial(food_result.crafting_complexity)
+	return 0
 
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 
@@ -58,7 +83,6 @@
 	thermic_constant = 0
 	H_ion_release = 0
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
-	required_other = TRUE
 
 	/// Typepath of food that is created on reaction
 	var/atom/resulting_food_path
@@ -208,6 +232,7 @@
 
 /datum/chemical_reaction/food/cakebatter/vegan
 	required_reagents = list(/datum/reagent/consumable/soymilk = 15, /datum/reagent/consumable/flour = 15, /datum/reagent/consumable/sugar = 5)
+	resulting_food_path = /obj/item/food/cakebatter/vegan
 
 /datum/chemical_reaction/food/pancakebatter
 	results = list(/datum/reagent/consumable/pancakebatter = 15)
@@ -314,7 +339,7 @@
 	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 2, /datum/reagent/consumable/grounding_solution = 1)
 	mix_message = "The mixture lets off a sharp snap as the electricity discharges."
 	mix_sound = 'sound/items/weapons/taser.ogg'
-	reaction_flags = REACTION_INSTANT
+	reaction_flags = REACTION_INSTANT | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/food/martian_batter
 	results = list(/datum/reagent/consumable/martian_batter = 10)

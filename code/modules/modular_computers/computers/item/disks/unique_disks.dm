@@ -1,19 +1,27 @@
-/obj/item/computer_disk/syndicate
+/obj/item/disk/computer/syndicate
 	name = "golden data disk"
 	desc = "A data disk with some high-tech programs, probably expensive as hell."
-	icon_state = "datadisk8"
+	icon_state = "datadisk9"
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT)
 
-/obj/item/computer_disk/syndicate/camera_app
+/obj/item/disk/computer/syndicate/Initialize(mapload)
+	. = ..()
+	add_overlay("o_syndicate")
+
+/obj/item/disk/computer/syndicate/camera_app
 	starting_programs = list(/datum/computer_file/program/secureye/syndicate)
 
-/obj/item/computer_disk/syndicate/contractor
+/obj/item/disk/computer/syndicate/contractor
 	starting_programs = list(/datum/computer_file/program/contract_uplink)
 
-/obj/item/computer_disk/black_market
+/obj/item/disk/computer/black_market
 	desc = "Removable disk used to store data. This one has a smudged piece of paper glued to it, reading \"PC softwarez\"."
 
-/obj/item/computer_disk/black_market/Initialize(mapload)
+/obj/item/disk/computer/black_market/Initialize(mapload)
+	. = ..()
+	add_overlay("o_code")
+
+/obj/item/disk/computer/black_market/Initialize(mapload)
 	icon_state = "datadisk[rand(0, 10)]"
 	//Populated with programs not found in the verified downloader app or that require access to download (but not to run).
 	var/list/potential_programs = list(

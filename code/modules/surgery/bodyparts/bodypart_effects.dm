@@ -104,8 +104,8 @@
 		var/need_mob_update = FALSE
 		need_mob_update += owner.heal_overall_damage(brute = 0.5 * bodypart_coefficient, \
 			burn = 0.5 * bodypart_coefficient, updating_health = FALSE, required_bodytype = BODYTYPE_PLANT)
-		need_mob_update += owner.adjustToxLoss(-0.5 * bodypart_coefficient, updating_health = FALSE)
-		need_mob_update += owner.adjustOxyLoss(-0.5 * bodypart_coefficient, updating_health = FALSE)
+		need_mob_update += owner.adjust_tox_loss(-0.5 * bodypart_coefficient, updating_health = FALSE)
+		need_mob_update += owner.adjust_oxy_loss(-0.5 * bodypart_coefficient, updating_health = FALSE)
 		if(need_mob_update)
 			owner.updatehealth()
 
@@ -132,7 +132,9 @@
 
 	// Heal in the dark
 	owner.heal_overall_damage(brute = 0.5 * bodypart_coefficient, burn = 0.5 * bodypart_coefficient, required_bodytype = BODYTYPE_SHADOW)
-	if(!owner.has_status_effect(/datum/status_effect/shadow/nightmare)) // Somewhat awkward, but let's not duplicate the alerts
+
+	var/mob/living/carbon/carbon_owner = owner
+	if(carbon_owner.dna.species.id != SPECIES_NIGHTMARE) // Somewhat awkward, but let's not duplicate the alerts
 		// This only appears when in shadows, don't move to bodypart effect so people with nightvision can still tell if they're in light or not
 		owner.apply_status_effect(/datum/status_effect/shadow)
 

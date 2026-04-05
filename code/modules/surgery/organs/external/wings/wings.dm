@@ -10,6 +10,7 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings
 
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
+	abstract_type = /obj/item/organ/wings
 
 ///Checks if the wings can soften short falls
 /obj/item/organ/wings/proc/can_soften_fall()
@@ -23,6 +24,8 @@
 /datum/bodypart_overlay/mutant/wings
 	layers = ALL_EXTERNAL_OVERLAYS
 	feature_key = FEATURE_WINGS
+	/// Slot we check against
+	var/slot_blocker = HIDEJUMPSUIT
 
-/datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	return !(bodypart_owner.owner?.obscured_slots & HIDEJUMPSUIT)
+/datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
+	return ..() && !(bodypart_owner.owner?.obscured_slots & slot_blocker)

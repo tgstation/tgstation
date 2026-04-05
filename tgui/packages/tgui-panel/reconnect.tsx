@@ -11,10 +11,11 @@ setInterval(() => {
   });
 }, 5000);
 
-export const ReconnectButton = () => {
+export function ReconnectButton() {
   if (!url) {
     return null;
   }
+
   return (
     <>
       <Button
@@ -37,4 +38,4 @@ export const ReconnectButton = () => {
       />
     </>
   );
-};
+}

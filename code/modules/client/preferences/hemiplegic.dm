@@ -2,6 +2,7 @@
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "hemiplegic"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = FALSE
 
 /datum/preference/choiced/hemiplegic/init_possible_values()
 	return list("Random") + GLOB.side_choice_hemiplegic

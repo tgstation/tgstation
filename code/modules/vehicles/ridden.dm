@@ -29,16 +29,17 @@
 	add_occupant(M)
 	return ..()
 
-/obj/vehicle/ridden/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!key_type || is_key(inserted_key) || !is_key(I))
-		return ..()
-	if(!user.transferItemToLoc(I, src))
-		to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
-		return
-	to_chat(user, span_notice("You insert \the [I] into \the [src]."))
+/obj/vehicle/ridden/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!key_type || is_key(inserted_key) || !is_key(tool))
+		return NONE
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("[tool] seems to be stuck to your hand!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You insert \the [tool] into \the [src]."))
 	if(inserted_key) //just in case there's an invalid key
 		inserted_key.forceMove(drop_location())
-	inserted_key = I
+	inserted_key = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/ridden/click_alt(mob/user)
 	if(!inserted_key)
@@ -47,7 +48,6 @@
 		to_chat(user, span_warning("You must be riding the [src] to remove [src]'s key!"))
 		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [inserted_key] from \the [src]."))
-	inserted_key.forceMove(drop_location())
 	user.put_in_hands(inserted_key)
 	inserted_key = null
 	return CLICK_ACTION_SUCCESS

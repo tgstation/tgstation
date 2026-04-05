@@ -11,19 +11,21 @@ and your disease can spread via people walking on vomit.
 	name = "Vomiting"
 	desc = "The virus causes nausea and irritates the stomach, causing occasional vomit."
 	illness = "Cyclonic Irritation"
-	stealth = -2
-	resistance = -1
-	stage_speed = -1
-	transmittable = 2
+	stealth = -3
+	resistance = 2
+	stage_speed = 0
+	transmittable = 3
 	level = 3
 	severity = 3
 	base_message_chance = 100
 	symptom_delay_min = 25
 	symptom_delay_max = 80
 	required_organ = ORGAN_SLOT_STOMACH
+	symptom_cure = /datum/reagent/medicine/ondansetron
+	cure_color = "yellow"
 	threshold_descs = list(
-		"Resistance 7" = "Host will vomit blood, causing internal damage.",
-		"Transmission 7" = "Host will projectile vomit, increasing vomiting range.",
+		"Resistance 9" = "Host will vomit blood, causing internal damage.",
+		"Transmission 9" = "Host will projectile vomit, increasing vomiting range.",
 		"Stealth 4" = "The symptom remains hidden until active."
 	)
 	var/vomit_nebula = FALSE
@@ -36,9 +38,9 @@ and your disease can spread via people walking on vomit.
 		return
 	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
-	if(A.totalResistance() >= 7) //blood vomit
+	if(A.totalResistance() >= 9) //blood vomit
 		vomit_blood = TRUE
-	if(A.totalTransmittable() >= 7) //projectile vomit
+	if(A.totalTransmittable() >= 9) //projectile vomit
 		proj_vomit = 5
 
 /datum/symptom/vomit/Activate(datum/disease/advance/A)

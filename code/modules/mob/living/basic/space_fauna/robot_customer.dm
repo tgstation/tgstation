@@ -118,3 +118,8 @@
 		order = attending_venue.order_food_line(wanted_item)
 
 	. += span_notice("Their order was: \"[order].\"")
+
+/mob/living/basic/robot_customer/death()
+	new /obj/effect/gibspawner/robot(drop_location())
+
+	return ..()

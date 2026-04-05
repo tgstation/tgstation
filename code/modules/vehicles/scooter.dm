@@ -3,6 +3,7 @@
 	desc = "A fun way to get around."
 	icon_state = "scooter"
 	are_legs_exposed = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 11)
 
 /obj/vehicle/ridden/scooter/Initialize(mapload)
 	. = ..()
@@ -11,10 +12,10 @@
 /obj/vehicle/ridden/scooter/proc/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter)
 
-/obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/I)
+/obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/tool)
 	..()
 	to_chat(user, span_notice("You begin to remove the handlebars..."))
-	if(!I.use_tool(src, user, 40, volume=50))
+	if(!tool.use_tool(src, user, 40, volume=50))
 		return TRUE
 	var/obj/vehicle/ridden/scooter/skateboard/improvised/skater = new(drop_location())
 	new /obj/item/stack/rods(drop_location(), 2)
@@ -39,8 +40,9 @@
 	desc = "An old, battered skateboard. It's still rideable, but probably unsafe."
 	icon_state = "skateboard"
 	density = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
 	///Sparks datum for when we grind on tables
-	var/datum/effect_system/spark_spread/sparks
+	var/datum/effect_system/basic/spark_spread/sparks
 	///Whether the board is currently grinding
 	var/grinding = FALSE
 	///Stores the time of the last crash plus a short cooldown, affects availability and outcome of certain actions
@@ -51,19 +53,23 @@
 	var/instability = 10
 	///If true, riding the skateboard with walk intent on will prevent crashing.
 	var/can_slow_down = TRUE
+	///The actual item for the skateboard
+	var/obj/item/melee/skateboard/board_item
 
-/obj/vehicle/ridden/scooter/skateboard/Initialize(mapload)
+/obj/vehicle/ridden/scooter/skateboard/Initialize(mapload, obj/item/melee/skateboard/board_item)
 	. = ..()
-	sparks = new
-	sparks.set_up(1, 0, src)
+	sparks = new(src, 1, FALSE)
 	sparks.attach(src)
+	if(!istype(board_item))
+		src.board_item = new board_item_type(src)
+	else
+		src.board_item = board_item
 
 /obj/vehicle/ridden/scooter/skateboard/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard)
 
 /obj/vehicle/ridden/scooter/skateboard/Destroy()
-	if(sparks)
-		QDEL_NULL(sparks)
+	QDEL_NULL(sparks)
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/relaymove(mob/living/user, direction)
@@ -94,9 +100,9 @@
 		return
 
 	next_crash = world.time + 10
-	rider.adjustStaminaLoss(instability*6)
+	rider.adjust_stamina_loss(instability*6)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
-	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || iscarbon(bumped_thing))
+	if(!iscarbon(rider) || rider.get_stamina_loss() >= 100 || grinding || iscarbon(bumped_thing))
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
 		unbuckle_mob(rider)
 		if((istype(bumped_thing, /obj/machinery/disposal/bin)))
@@ -108,7 +114,7 @@
 		rider.throw_at(throw_target, 3, 2)
 		var/head_slot = rider.get_item_by_slot(ITEM_SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat)))
-			rider.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+			rider.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5)
 			rider.updatehealth()
 		visible_message(span_danger("[src] crashes into [bumped_thing], sending [rider] flying!"))
 		rider.Paralyze(8 SECONDS)
@@ -133,8 +139,8 @@
 		return
 
 	var/mob/living/skater = buckled_mobs[1]
-	skater.adjustStaminaLoss(instability*0.3)
-	if(skater.getStaminaLoss() >= 100)
+	skater.adjust_stamina_loss(instability*0.3)
+	if(skater.get_stamina_loss() >= 100)
 		obj_flags = CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 		unbuckle_mob(skater)
@@ -157,7 +163,7 @@
 			playsound(location, 'sound/items/trayhit/trayhit2.ogg', 40)
 			victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = victim.get_random_valid_zone(even_weights = TRUE), wound_bonus = 20)
 			victim.Paralyze(1.5 SECONDS)
-			skater.adjustStaminaLoss(instability)
+			skater.adjust_stamina_loss(instability)
 			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
 	addtimer(CALLBACK(src, PROC_REF(grind)), 0.1 SECONDS)
 
@@ -174,7 +180,7 @@
 	if(has_buckled_mobs())
 		to_chat(skater, span_warning("You can't lift this up when somebody's on it."))
 		return
-	skater.put_in_hands(new board_item_type(get_turf(skater)))
+	skater.put_in_hands(board_item)
 	qdel(src)
 
 /obj/vehicle/ridden/scooter/skateboard/pro
@@ -240,38 +246,42 @@
 	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "scooter_frame"
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
-/obj/item/scooter_frame/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(I, /obj/item/stack/sheet/iron))
-		return ..()
-	if(!I.tool_start_check(user, amount=5))
-		return
+/obj/item/scooter_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/sheet/iron))
+		return NONE
+	if(!tool.tool_start_check(user, amount=5))
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You begin to add wheels to [src]."))
-	if(!I.use_tool(src, user, 80, volume=50, amount=5))
-		return
+	if(!tool.use_tool(src, user, 80, volume = 50, amount = 5))
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You finish making wheels for [src]."))
 	new /obj/vehicle/ridden/scooter/skateboard/improvised(user.loc)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/scooter_frame/wrench_act(mob/living/user, obj/item/I)
-	..()
+/obj/item/scooter_frame/wrench_act(mob/living/user, obj/item/tool)
 	to_chat(user, span_notice("You deconstruct [src]."))
 	new /obj/item/stack/rods(drop_location(), 10)
-	I.play_tool_sound(src)
+	tool.play_tool_sound(src)
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
-/obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
+/obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/tool)
 	return
 
-/obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(I, /obj/item/stack/rods))
-		return ..()
-	if(!I.tool_start_check(user, amount=2))
+/obj/vehicle/ridden/scooter/skateboard/improvised/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if (.)
 		return
+	if(!istype(tool, /obj/item/stack/rods))
+		return NONE
+	if(!tool.tool_start_check(user, amount=2))
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You begin making handlebars for [src]."))
-	if(!I.use_tool(src, user, 25, volume=50, amount=2))
-		return
+	if(!tool.use_tool(src, user, 25, volume=50, amount=2))
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You add the rods to [src], creating handlebars."))
 	var/obj/vehicle/ridden/scooter/skaterskoot = new(loc)
 	if(has_buckled_mobs())
@@ -279,14 +289,15 @@
 		unbuckle_mob(skaterboy)
 		skaterskoot.buckle_mob(skaterboy)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/vehicle/ridden/scooter/skateboard/improvised/screwdriver_act(mob/living/user, obj/item/I)
+/obj/vehicle/ridden/scooter/skateboard/improvised/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(.)
 		return
 	to_chat(user, span_notice("You begin to deconstruct and remove the wheels on [src]..."))
-	if(!I.use_tool(src, user, 20, volume=50))
-		return
+	if(!tool.use_tool(src, user, 20, volume=50))
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You deconstruct the wheels on [src]."))
 	new /obj/item/stack/sheet/iron(drop_location(), 5)
 	new /obj/item/scooter_frame(drop_location())
@@ -294,7 +305,7 @@
 		var/mob/living/carbon/skatergirl = buckled_mobs[1]
 		unbuckle_mob(skatergirl)
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 //Wheelys
 /obj/vehicle/ridden/scooter/skateboard/wheelys

@@ -149,7 +149,13 @@
 
 /datum/config_entry/flag/no_summon_events //Allowed
 
-/datum/config_entry/flag/no_intercept_report //Whether or not to send a communications intercept report roundstart. This may be overridden by gamemodes.
+/// If TRUE, no roundstart report is sent
+/datum/config_entry/flag/no_intercept_report
+	default = FALSE
+
+/// If TRUE, the roundstart report will not contain dynamic information.
+/datum/config_entry/flag/no_dynamic_report
+	default = FALSE
 
 /datum/config_entry/number/arrivals_shuttle_dock_window //Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
 	default = 55

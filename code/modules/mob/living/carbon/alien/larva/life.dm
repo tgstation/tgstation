@@ -1,6 +1,6 @@
 
 
-/mob/living/carbon/alien/larva/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/carbon/alien/larva/Life(seconds_per_tick = SSMOBS_DT)
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 	if(!..() || HAS_TRAIT(src, TRAIT_STASIS) || (amount_grown >= max_grown))

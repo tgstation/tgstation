@@ -6,6 +6,7 @@
 	icon_state = "chemgun"
 	inhand_icon_state = "chemgun"
 	w_class = WEIGHT_CLASS_NORMAL
+	can_muzzle_flash = FALSE
 	throw_speed = 3
 	throw_range = 7
 	force = 4

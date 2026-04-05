@@ -384,7 +384,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(elite.stat != DEAD || elite.sentience_type != SENTIENCE_BOSS || !elite.key)
 		user.visible_message(span_notice("It appears [elite] is unable to be revived right now. Perhaps try again later."))
 		return ITEM_INTERACT_BLOCKING
-	elite.faction = list("[REF(user)]")
+	elite.set_allies(list("[REF(user)]"))
+	elite.set_faction(null)
 	elite.revive(HEAL_ALL)
 	user.visible_message(span_notice("[user] stabs [elite] with [src], reviving it."))
 	elite.playsound_local(get_turf(elite), 'sound/effects/magic.ogg', 40, 0)

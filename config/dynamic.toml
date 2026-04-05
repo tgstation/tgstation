@@ -288,6 +288,16 @@ repeatable_weight_decrease = 3
 repeatable = 1
 minimum_required_age = 0
 
+["Midround Blood Worm"]
+weight = 2
+min_pop = 20
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap = 2
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
 ["Nightmare"]
 weight = 5
 min_pop = 15
@@ -514,6 +524,16 @@ min_antag_cap = 1
 max_antag_cap.denominator = 29
 repeatable_weight_decrease = 2
 repeatable = 1
+minimum_required_age = 0
+
+["Roundstart Blood Worm"]
+weight = 1
+min_pop = 10
+blacklisted_roles = []
+min_antag_cap = 1
+max_antag_cap.denominator = 29
+repeatable_weight_decrease = 2
+repeatable = 0
 minimum_required_age = 0
 
 ["Roundstart Heretics"]

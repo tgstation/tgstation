@@ -168,9 +168,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/living_heart/proc/is_valid_heart(obj/item/organ/new_heart)
 	if(QDELETED(new_heart))
 		return FALSE
-	if(!new_heart.useable)
-		return FALSE
-	if(new_heart.organ_flags & (ORGAN_ROBOTIC|ORGAN_FAILING))
+	if(new_heart.organ_flags & (ORGAN_UNUSABLE|ORGAN_ROBOTIC|ORGAN_FAILING))
 		return FALSE
 
 	return TRUE
@@ -259,7 +257,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// If it is, we will damage a random bodypart, and check that bodypart for its body type, to select between 'skin' or 'exterior'.
 	if(iscarbon(body))
 		var/mob/living/carbon/carbody = body
-		var/obj/item/bodypart/bodypart = pick(carbody.bodyparts)
+		var/obj/item/bodypart/bodypart = pick(carbody.get_bodyparts())
 		ripped_thing = bodypart
 
 		carbody.apply_damage(25, BRUTE, bodypart, sharpness = SHARP_EDGED)

@@ -7,12 +7,12 @@
 	icon_deny = "cart-deny"
 	panel_type = "panel6"
 	products = list(
-		/obj/item/computer_disk/medical = 10,
-		/obj/item/computer_disk/engineering = 10,
-		/obj/item/computer_disk/security = 10,
-		/obj/item/computer_disk/ordnance = 10,
-		/obj/item/computer_disk/quartermaster = 10,
-		/obj/item/computer_disk/command/captain = 3,
+		/obj/item/disk/computer/medical = 10,
+		/obj/item/disk/computer/engineering = 10,
+		/obj/item/disk/computer/security = 10,
+		/obj/item/disk/computer/ordnance = 10,
+		/obj/item/disk/computer/quartermaster = 10,
+		/obj/item/disk/computer/command/captain = 3,
 		/obj/item/modular_computer/pda = 10,
 	)
 	refill_canister = /obj/item/vending_refill/cart

@@ -6,12 +6,21 @@
 	Maybe a few drinks of liquid charm will get the spirits up. As the saying goes, if you can't beat 'em, join 'em."
 	key = "beach_bar"
 	map_name = "beach_bar"
+	domain_flags = DOMAIN_NO_NOHIT_BONUS
 
 /datum/lazy_template/virtual_domain/beach_bar/setup_domain(list/created_atoms)
 	. = ..()
 
 	for(var/obj/item/reagent_containers/cup/glass/drink in created_atoms)
 		RegisterSignal(drink, COMSIG_GLASS_DRANK, PROC_REF(on_drink_drank))
+	for(var/obj/machinery/vending/vending_machine in created_atoms)
+		RegisterSignal(vending_machine, COMSIG_VENDING_DISPENSED, PROC_REF(on_vended_item))
+
+
+/datum/lazy_template/virtual_domain/beach_bar/proc/on_vended_item(obj/machinery/vending/vending_machine, obj/item/vended_item)
+	if(istype(vended_item, /obj/item/reagent_containers/cup/glass))
+		RegisterSignal(vended_item, COMSIG_GLASS_DRANK, PROC_REF(on_drink_drank))
+
 
 /// Eventually reveal the cache
 /datum/lazy_template/virtual_domain/beach_bar/proc/on_drink_drank(datum/source)

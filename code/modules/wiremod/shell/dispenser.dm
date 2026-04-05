@@ -60,27 +60,29 @@
 		new /obj/item/circuit_component/dispenser_bot()
 	), SHELL_CAPACITY_LARGE)
 
-/obj/structure/dispenser_bot/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(user.combat_mode)
-		return ..()
-	if(istype(item, /obj/item/wrench) || istype(item, /obj/item/multitool) || istype(item, /obj/item/integrated_circuit))
-		return ..()
-	if(item.w_class > max_weight && !istype(item, /obj/item/storage/bag))
+/obj/structure/dispenser_bot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (user.combat_mode)
+		return NONE
+
+	if (tool.w_class > max_weight && !istype(tool, /obj/item/storage/bag))
 		balloon_alert(user, "item too big!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
+
 	if(length(stored_items) >= capacity)
 		balloon_alert(user, "at maximum capacity!")
-		return FALSE
-	if(istype(item, /obj/item/storage/bag))
-		for(var/obj/item/bag_item in item.contents)
-			if(length(stored_items) >= capacity)
-				break
-			if(bag_item.w_class > max_weight || istype(bag_item, /obj/item/storage/bag))
-				continue
-			add_item(user, bag_item)
-		return TRUE
-	add_item(user, item)
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+
+	if(!istype(tool, /obj/item/storage/bag))
+		add_item(user, tool)
+		return ITEM_INTERACT_SUCCESS
+
+	for(var/obj/item/bag_item in tool.contents)
+		if(length(stored_items) >= capacity)
+			break
+		if(bag_item.w_class > max_weight || istype(bag_item, /obj/item/storage/bag))
+			continue
+		add_item(user, bag_item)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/dispenser_bot/wrench_act(mob/living/user, obj/item/tool)
 	if(locked)

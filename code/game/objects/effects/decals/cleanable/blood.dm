@@ -739,11 +739,10 @@
 			. += bloodstep_overlay
 
 			if(emissive_alpha && emissive_alpha < alpha && !dried)
-				var/enter_emissive_state = "[enter_state]_emissive-[emissive_alpha]"
-				var/mutable_appearance/emissive_overlay = bloody_footprints_cache[enter_emissive_state]
+				var/enter_emissive_state = "[enter_state]_emissive-[Ddir]-[emissive_alpha]"
+				var/image/emissive_overlay = bloody_footprints_cache[enter_emissive_state]
 				if(!emissive_overlay)
-					emissive_overlay = blood_emissive(icon, "[icon_state_to_use]1")
-					emissive_overlay.dir = Ddir
+					emissive_overlay = image(blood_emissive(icon, "[icon_state_to_use]1"), dir = Ddir)
 					bloody_footprints_cache[enter_emissive_state] = emissive_overlay
 				. += emissive_overlay
 
@@ -756,11 +755,10 @@
 			. += bloodstep_overlay
 
 			if(emissive_alpha && emissive_alpha < alpha && !dried)
-				var/exit_emissive_state = "[exit_state]_emissive-[emissive_alpha]"
-				var/mutable_appearance/emissive_overlay = bloody_footprints_cache[exit_emissive_state]
+				var/exit_emissive_state = "[exit_state]_emissive-[Ddir]-[emissive_alpha]"
+				var/image/emissive_overlay = bloody_footprints_cache[exit_emissive_state]
 				if(!emissive_overlay)
-					emissive_overlay = blood_emissive(icon, "[icon_state_to_use]2")
-					emissive_overlay.dir = Ddir
+					emissive_overlay = image(blood_emissive(icon, "[icon_state_to_use]2"), dir = Ddir)
 					bloody_footprints_cache[exit_emissive_state] = emissive_overlay
 				. += emissive_overlay
 
@@ -798,6 +796,8 @@
 	base_name = null
 	base_suffix = "splatter"
 	can_dry = FALSE // No point
+
+	mergeable_decal = FALSE
 
 	/// The turf we just came from, so we can back up when we hit a wall
 	var/turf/prev_loc

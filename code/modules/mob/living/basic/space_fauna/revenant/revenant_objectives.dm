@@ -25,11 +25,14 @@
 		"Ensure that any holy weapons are rendered unusable.",
 		"Heed and obey the requests of the dead, provided that carrying them out wouldn't be too inconvenient or self-destructive.",
 		"Impersonate or be worshipped as a God.",
-		"Make the captain as miserable as possible.",
-		"Make the clown as miserable as possible.",
 		"Make the crew as miserable as possible.",
 		"Prevent the use of energy weapons where possible.",
 	)
+	if(SSjob.assigned_captain)
+		explanation_texts += "Make the captain as miserable as possible."
+	var/datum/job/clown/clown_job = SSjob.get_job(JOB_CLOWN)
+	if(clown_job.current_positions)
+		explanation_texts += "Make the clown as miserable as possible."
 	explanation_text = pick(explanation_texts)
 	return ..()
 

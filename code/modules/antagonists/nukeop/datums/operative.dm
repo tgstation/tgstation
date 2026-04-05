@@ -9,6 +9,7 @@
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
 	stinger_sound = 'sound/music/antag/ops.ogg'
+	desensitized_modifier = DESENSITIZED_THRESHOLD * 0.5
 
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
@@ -18,6 +19,8 @@
 	var/job_type = /datum/job/nuclear_operative
 	/// The DEFAULT outfit we will give to players granted this datum
 	var/nukeop_outfit = /datum/outfit/syndicate
+	/// Which infiltrator should the team spawn with?
+	var/infiltrator_id = "infiltrator_basic"
 
 	preview_outfit = /datum/outfit/nuclear_operative_elite
 
@@ -108,19 +111,19 @@
 	if (!preview_outfit)
 		return null
 
-	var/icon/final_icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/final_icon = render_preview_outfit(preview_outfit)
 
 	if (!isnull(preview_outfit_behind))
-		var/icon/teammate = render_preview_outfit(preview_outfit_behind)
-		teammate.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
+		var/datum/universal_icon/teammate = render_preview_outfit(preview_outfit_behind)
+		teammate.blend_color("#80808080", ICON_MULTIPLY)
 
-		final_icon.Blend(teammate, ICON_UNDERLAY, -ICON_SIZE_X / 4, 0)
-		final_icon.Blend(teammate, ICON_UNDERLAY, ICON_SIZE_X / 4, 0)
+		final_icon.blend_icon(teammate, ICON_UNDERLAY, -ICON_SIZE_X / 4, 0)
+		final_icon.blend_icon(teammate, ICON_UNDERLAY, ICON_SIZE_X / 4, 0)
 
 	if (!isnull(nuke_icon_state))
-		var/icon/nuke = icon('icons/obj/machines/nuke.dmi', nuke_icon_state)
-		nuke.Shift(SOUTH, 6)
-		final_icon.Blend(nuke, ICON_OVERLAY)
+		var/datum/universal_icon/nuke = uni_icon('icons/obj/machines/nuke.dmi', nuke_icon_state)
+		nuke.shift(SOUTH, 6)
+		final_icon.blend_icon(nuke, ICON_OVERLAY)
 
 	return finish_preview_icon(final_icon)
 
@@ -130,7 +133,6 @@
 
 	var/mob/living/carbon/human/operative = owner.current
 	ADD_TRAIT(operative, TRAIT_NOFEAR_HOLDUPS, INNATE_TRAIT)
-	ADD_TRAIT(operative, TRAIT_DESENSITIZED, INNATE_TRAIT)
 
 	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
 		return
@@ -191,6 +193,32 @@
 		team_number = nuke_team.members.Find(owner)
 
 	return GLOB.nukeop_start[((team_number - 1) % GLOB.nukeop_start.len) + 1]
+
+/datum/antagonist/nukeop/proc/spawn_infiltrator()
+	var/datum/map_template/shuttle/infiltrator/ship = SSmapping.shuttle_templates[infiltrator_id]
+	var/x = (world.maxx - TRANSITIONEDGE - ship.width)
+	var/y = (world.maxy - TRANSITIONEDGE - ship.height)
+	var/z
+	if(SSmapping.empty_space)
+		z = SSmapping.empty_space.z_value
+	else
+		for(var/datum/space_level/z_level as anything in SSmapping.z_list)
+			if(z_level.traits.Find(ZTRAIT_RESERVED))
+				z = z_level.z_value
+				break
+
+	var/turf/turf = locate(x,y,z)
+
+	if(!turf)
+		CRASH("Infiltrator found no turf to load in")
+
+	if(!ship.load(turf))
+		CRASH("Infiltrator has failed to load!")
+
+	var/obj/docking_port/mobile/mobile_port = SSshuttle.getShuttle("syndicate")
+	mobile_port.destination = SSshuttle.getDock("syndicate_away")
+	mobile_port.mode = SHUTTLE_IGNITING
+	mobile_port.setTimer(mobile_port.ignitionTime)
 
 /datum/antagonist/nukeop/on_respawn(mob/new_character)
 	new_character.forceMove(pick(GLOB.nukeop_start))

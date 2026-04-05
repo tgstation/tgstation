@@ -6,7 +6,7 @@
 	icon = 'icons/hud/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
 	item_flags = ABSTRACT | DROPDEL
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = INDESTRUCTIBLE | UNACIDABLE
 	// This gives the user an action button that allows them to activate the implant.
 	// If the implant needs no action button, then null this out.
 	// Or, if you want to add a unique action button, then replace this.
@@ -24,6 +24,10 @@
 	///what icon state will we represent ourselves with on the hud?
 	var/hud_icon_state = null
 
+	/// What's the most important info that we really, really care about, e.g. name, lifespan-after-death, utility?
+	var/implant_info = "No information available."
+	/// What's the extended lore for this implant that we might not care that much about, e.g. descriptions, flavortext?
+	var/implant_lore = "No information available."
 
 /obj/item/implant/proc/activate()
 	SEND_SIGNAL(src, COMSIG_IMPLANT_ACTIVATED)
@@ -141,10 +145,16 @@
 	return ..()
 
 /**
- * Gets implant specifications for the implant pad
+ * Gets the implant's info, for the implant pad.
  */
 /obj/item/implant/proc/get_data()
-	return "No information available"
+	return implant_info
+
+/**
+ * Gets the implant's lore info, also for the implant pad.
+ */
+/obj/item/implant/proc/get_lore()
+	return implant_lore
 
 /obj/item/implant/dropped(mob/user)
 	. = TRUE

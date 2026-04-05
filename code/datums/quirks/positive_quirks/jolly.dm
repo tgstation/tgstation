@@ -3,8 +3,9 @@
 	desc = "You sometimes just feel happy, for no reason at all."
 	icon = FA_ICON_GRIN
 	value = 4
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED|QUIRK_PROCESSES
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED|QUIRK_PROCESSES|QUIRK_TRAUMALIKE
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
+	medical_symptom_text = "Exhibits persistent feelings of happiness and elevated mood, which may lead to unrealistic optimism and risk-taking behaviors."
 	mail_goodies = list(/obj/item/clothing/mask/joy)
 
 /datum/quirk/jolly/process(seconds_per_tick)

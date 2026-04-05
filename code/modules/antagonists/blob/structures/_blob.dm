@@ -274,7 +274,7 @@
 
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(ROLE_BLOB in user.faction) //sorry, but you can't kill the blob as a blobbernaut
+	if(user.has_faction(ROLE_BLOB)) //sorry, but you can't kill the blob as a blobbernaut
 		return
 	..()
 

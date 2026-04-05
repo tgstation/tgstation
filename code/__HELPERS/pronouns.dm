@@ -60,7 +60,7 @@
 /datum/proc/p_themselves(temp_gender)
 	return "itself"
 
-/datum/proc/plural_s(pluralize)
+/proc/plural_s(pluralize)
 	switch(copytext_char(pluralize, -2))
 		if ("ss")
 			return "es"

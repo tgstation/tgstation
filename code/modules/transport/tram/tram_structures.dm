@@ -218,28 +218,10 @@
 		for(var/i in 1 to mineral_amount)
 			new mineral(loc)
 
-/obj/structure/tram/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-
-	if(istype(item, /obj/item/wallframe/tram))
-		try_wallmount(item, user)
-
-/obj/structure/tram/proc/try_wallmount(obj/item/wallmount, mob/user)
-	if(!istype(wallmount, /obj/item/wallframe/tram))
-		return
-
-	var/obj/item/wallframe/frame = wallmount
-	if(frame.try_build(src, user))
-		frame.attach(src, user)
-
-	return
-
 /*
  * Other misc tramwall types
  */
-
 /obj/structure/tram/alt
-
 
 /obj/structure/tram/alt/titanium
 	name = "solid tram"
@@ -406,15 +388,17 @@
 	canSmoothWith = SMOOTH_GROUP_WOOD_WALLS
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 
-/obj/structure/tram/alt/wood/attackby(obj/item/W, mob/user)
-	if(W.get_sharpness() && W.force)
-		var/duration = ((4.8 SECONDS) / W.force) * 2 //In seconds, for now.
-		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/fireaxe))
-			duration /= 4 //Much better with hatchets and axes.
-		if(do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
-			deconstruct(disassembled = FALSE)
-			return
-	return ..()
+/obj/structure/tram/alt/wood/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness() || !tool.force)
+		return NONE
+	var/duration = ((4.8 SECONDS) / tool.force) * 2 //In seconds, for now.
+	if(istype(tool, /obj/item/hatchet) || istype(tool, /obj/item/fireaxe))
+		duration /= 4 //Much better with hatchets and axes.
+	to_chat(user, span_notice("You begin breaking down [src]."))
+	if(!do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
+		return ITEM_INTERACT_BLOCKING
+	deconstruct(disassembled = FALSE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tram/alt/bamboo
 	name = "bamboo tram"
@@ -485,7 +469,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/tram/spoiler/LateInitialize()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(set_spoiler))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(set_spoiler))
 
 /obj/structure/tram/spoiler/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

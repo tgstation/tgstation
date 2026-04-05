@@ -174,7 +174,7 @@ export function RecipeContent(props: FullProps) {
     <Section>
       <Stack>
         <Stack.Item>
-          <Box width="64px" height="64px" mr={1}>
+          <Box textAlign="center" minWidth="64px" minHeight="64px" mr={1}>
             <Box
               style={{
                 transform: 'scale(1.5)',
@@ -321,7 +321,7 @@ export function RecipeContent(props: FullProps) {
                       Complexity: {item.complexity}
                     </Box>
                   )}
-                  {item.foodtypes?.length > 0 && (
+                  {!!item.foodtypes && item.foodtypes.length > 0 && (
                     <Box color="gray" width="104px" lineHeight={1.5} mt={1}>
                       <Divider />
                       {item.foodtypes.map((foodtype) => (

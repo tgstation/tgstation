@@ -64,7 +64,7 @@
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
-	if(living_target.blood_volume < BLOOD_VOLUME_SURVIVE)
+	if(living_target.get_blood_volume() < BLOOD_VOLUME_SURVIVE)
 		return
 	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100)
 	playsound(target, 'sound/effects/magic/charge.ogg', 100)
@@ -72,13 +72,11 @@
 	if(iscarbon(living_target))
 		var/mob/living/carbon/carbon_target = living_target
 		carbon_target.spray_blood(attack_direction, 3)
-	living_target.blood_volume -= 50
+	living_target.adjust_blood_volume(-50)
 	if(!isliving(user))
 		return
 	var/mob/living/living_user = user
-	//if we blind-added blood volume to the caster, non-vampire wizards could easily kill themselves by using the spell enough
-	if(living_user.blood_volume < BLOOD_VOLUME_MAXIMUM)
-		living_user.blood_volume += 50
+	living_user.adjust_blood_volume(50)
 
 /// signal called from dropping the enchanted item
 /datum/action/cooldown/spell/sanguine_strike/proc/on_dropped(obj/item/enchanted, mob/dropper)

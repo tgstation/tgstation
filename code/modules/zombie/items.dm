@@ -12,6 +12,8 @@
 	sharpness = SHARP_EDGED
 
 /obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(QDELETED(target))
+		return
 	if(ishuman(target))
 		try_to_zombie_infect(target, user, user.zone_selected)
 	else if(isliving(target))
@@ -71,10 +73,10 @@
 		target.investigate_log("has been devoured by a zombie.", INVESTIGATE_DEATHS)
 		target.gib(DROP_ALL_REMAINS)
 		var/need_mob_update
-		need_mob_update = user.adjustBruteLoss(-hp_gained, updating_health = FALSE)
-		need_mob_update += user.adjustToxLoss(-hp_gained, updating_health = FALSE)
-		need_mob_update += user.adjustFireLoss(-hp_gained, updating_health = FALSE)
-		need_mob_update += user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
+		need_mob_update = user.adjust_brute_loss(-hp_gained, updating_health = FALSE)
+		need_mob_update += user.adjust_tox_loss(-hp_gained, updating_health = FALSE)
+		need_mob_update += user.adjust_fire_loss(-hp_gained, updating_health = FALSE)
+		need_mob_update += user.adjust_organ_loss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
 		user.set_nutrition(min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL))
 		if(need_mob_update)
 			user.updatehealth()

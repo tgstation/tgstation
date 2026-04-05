@@ -14,6 +14,7 @@ import { classes } from 'tgui-core/react';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
+import { sendAct as act } from '../events/act';
 import { Window } from '../layouts';
 
 const icons = {
@@ -68,7 +69,6 @@ export class Changelog extends Component {
   }
 
   getData = (date, attemptNumber = 1) => {
-    const { act } = useBackend();
     const self = this;
     const maxAttempts = 6;
 
@@ -101,9 +101,9 @@ export class Changelog extends Component {
     } = useBackend();
 
     if (dates) {
-      dates.forEach((date) =>
-        this.dateChoices.push(dateformat(date, 'mmmm yyyy', true)),
-      );
+      dates.forEach((date) => {
+        this.dateChoices.push(dateformat(date, 'mmmm yyyy', true));
+      });
       this.setSelectedDate(this.dateChoices[0]);
       this.getData(dates[0]);
     }

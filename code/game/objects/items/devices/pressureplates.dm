@@ -9,6 +9,7 @@
 	icon_state = "pressureplate"
 	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.75, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	var/trigger_mob = TRUE
 	var/trigger_item = FALSE
 	var/specific_item = null

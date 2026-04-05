@@ -22,7 +22,7 @@
 		/area/station/service = COLOR_SERVICE_LIME,
 		/area/centcom = COLOR_CENTCOM_BLUE,  // how?
 		/area/station/command = COLOR_COMMAND_BLUE,
-		/area/station/ai_monitored = COLOR_COMMAND_BLUE,
+		/area/station/ai = COLOR_COMMAND_BLUE,
 		/area/station/medical = COLOR_MEDICAL_BLUE,
 		/area/station/science = COLOR_SCIENCE_PINK,
 		/area/station/engineering = COLOR_ENGINEERING_ORANGE,

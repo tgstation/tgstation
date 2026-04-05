@@ -2,6 +2,6 @@
 	"private": true,
 	"type": "module",
 	"devDependencies": {
-		"@types/bun": "^1.2.16"
+		"@types/bun": "^1.3.5"
 	}
 }

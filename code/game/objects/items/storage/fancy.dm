@@ -270,12 +270,15 @@
 	. = ..()
 	icon_state = "[base_icon_state][contents.len ? null : "_empty"]"
 
+/obj/item/storage/fancy/cigarettes/proc/open_icon_state()
+	return "[icon_state]_open"
+
 /obj/item/storage/fancy/cigarettes/update_overlays()
 	. = ..()
 	if(!open_status || !contents.len)
 		return
 
-	. += "[icon_state]_open"
+	. += open_icon_state()
 
 	if(!display_cigs)
 		return
@@ -546,9 +549,13 @@
 /obj/item/storage/fancy/cigarettes/cigars/havana
 	name = "\improper premium Havanian cigar case"
 	desc = "A case of classy Havanian cigars."
-	icon_state = "cohibacase"
-	base_icon_state = "cohibacase"
+	icon_state = "havanacase"
+	base_icon_state = "havanacase"
 	spawn_type = /obj/item/cigarette/cigar/havana
+
+
+/obj/item/storage/fancy/cigarettes/cigars/havana/open_icon_state()
+	return "cohibacase_open"
 
 /obj/item/storage/fancy/cigarettes/cigars/havana/empty
 	spawn_count = 0
@@ -584,16 +591,57 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "nuggetbox"
 	base_icon_state = "nuggetbox"
+	inhand_icon_state = "nuggetbox"
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	contents_tag = "nugget"
 	w_class = WEIGHT_CLASS_SMALL
 	spawn_type = /obj/item/food/nugget
-	spawn_count = 6
+	spawn_count = 7
 	storage_type = /datum/storage/nugget_box
 
 /obj/item/storage/fancy/nugget_box/Initialize(mapload)
 	. = ..()
 	// It's a safe place for the Fryish/Fritterish
 	AddElement(/datum/element/fish_safe_storage)
+
+/obj/item/storage/fancy/nugget_box/red
+	name = "red nugget box"
+	icon_state = "rednuggetbox"
+	base_icon_state = "rednuggetbox"
+	inhand_icon_state = "rednuggetbox"
+
+/obj/item/storage/fancy/wing_box
+	name = "red wing box"
+	desc = "A cardboard box used for holding chicken wangs."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "redwingbox5"
+	base_icon_state = "redwingbox"
+	inhand_icon_state = "redwingbox"
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
+	contents_tag = "wings"
+	w_class = WEIGHT_CLASS_SMALL
+	spawn_type = /obj/item/food/fried_chicken
+	spawn_count = 5
+	storage_type = /datum/storage/wing_box
+	open_status = FANCY_CONTAINER_ALWAYS_OPEN
+
+/obj/item/storage/fancy/fry_box
+	name = "red fry box"
+	desc = "A cardboard box used for holding fries."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "redfrybox2"
+	base_icon_state = "redfrybox"
+	inhand_icon_state = "redfrybox"
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
+	contents_tag = "fries"
+	w_class = WEIGHT_CLASS_SMALL
+	spawn_type = /obj/item/food/fries
+	spawn_count = 2
+	storage_type = /datum/storage/fry_box
+	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 
 /*
  * Jar of pickles
@@ -609,7 +657,7 @@
 	spawn_count = 10
 	contents_tag = "pickle"
 	foldable_result = /obj/item/reagent_containers/cup/beaker/large
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
 	storage_type = /datum/storage/pickles_jar

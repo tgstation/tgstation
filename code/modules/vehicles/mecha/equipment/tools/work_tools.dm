@@ -108,8 +108,6 @@
 		return ..()
 
 	if(victim.check_block(chassis, clamp_damage, name, attack_type = OVERWHELMING_ATTACK))
-		source.visible_message(span_danger("[chassis] attempts to squeeze [victim] with [src], but the [name] is blocked!"), span_userdanger("You attempt to squeeze [victim] with [src], but [victim.p_They()] managed to block the attempt!"), ignored_mobs = victim)
-		to_chat(victim, span_userdanger("You block [chassis]'s attempt to squeeze you with [src]!"))
 		return ..()
 
 	if(iscarbon(victim) && killer_clamp)//meme clamp here
@@ -160,7 +158,9 @@
 	energy_drain = 0
 	equipment_slot = MECHA_UTILITY
 	range = MECHA_MELEE|MECHA_RANGED
-	mech_flags = EXOSUIT_MODULE_WORKING
+	mech_flags = ALL
+	can_be_triggered = TRUE
+	action_type = /datum/action/vehicle/sealed/mecha/equipment/extinguisher_action
 	///Minimum amount of reagent needed to activate.
 	var/required_amount = 80
 

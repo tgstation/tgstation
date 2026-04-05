@@ -6,6 +6,7 @@
 	resistance_flags = FLAMMABLE
 	density = TRUE
 	anchored = TRUE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 
 /obj/structure/dresser/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_WRENCH)
@@ -44,7 +45,7 @@
 			if(new_undies)
 				dressing_human.underwear = new_undies
 		if("Underwear Color")
-			var/new_underwear_color = input(dressing_human, "Choose your underwear color", "Underwear Color", dressing_human.underwear_color) as color|null
+			var/new_underwear_color = tgui_color_picker(dressing_human, "Choose your underwear color", "Underwear Color", dressing_human.underwear_color)
 			if(new_underwear_color)
 				dressing_human.underwear_color = sanitize_hexcolor(new_underwear_color)
 		if("Undershirt")

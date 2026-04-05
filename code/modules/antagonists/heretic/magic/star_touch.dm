@@ -137,7 +137,7 @@
 	id = "cosmic_beam"
 	tick_interval = 0.2 SECONDS
 	duration = 8 SECONDS
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_NO_TICK
 	alert_type = null
 	/// Stores the current beam target
 	var/mob/living/current_target
@@ -155,20 +155,25 @@
 	var/teleport_timer
 	/// The effect trail that we add to our victim
 	var/cosmic_effect_trail
+	/// Whether the teleport was successful or not
+	var/successful_teleport = FALSE
 
 /datum/status_effect/cosmic_beam/on_creation(mob/living/new_owner, mob/living/current_target)
-	src.current_target = current_target
 	cosmic_effect_trail = cosmic_trail_based_on_passive(new_owner)
 	start_beam(current_target, new_owner)
-	ADD_TRAIT(current_target, TRAIT_NO_TELEPORT, REF(src))
-	teleport_timer = addtimer(CALLBACK(src, PROC_REF(yoink_victim), new_owner), 8 SECONDS, TIMER_STOPPABLE)
+	return ..()
+
+/datum/status_effect/cosmic_beam/on_remove()
+	if(current_target && get_dist(owner, current_target) <= max_range)
+		yoink_victim()
+		successful_teleport = TRUE
+	lose_target()
 	return ..()
 
 /// Puts the victim to sleep and teleports them to the casters' location
-/datum/status_effect/cosmic_beam/proc/yoink_victim(mob/living/carbon/caster)
+/datum/status_effect/cosmic_beam/proc/yoink_victim()
 	current_target.apply_effect(8 SECONDS, effecttype = EFFECT_UNCONSCIOUS)
-	REMOVE_TRAIT(current_target, TRAIT_NO_TELEPORT, REF(src))
-	do_teleport(current_target, caster, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
+	do_teleport(current_target, owner, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
 	current_target.apply_status_effect(/datum/status_effect/star_mark)
 
 /datum/status_effect/cosmic_beam/be_replaced()
@@ -177,19 +182,6 @@
 		active = FALSE
 	return ..()
 
-/datum/status_effect/cosmic_beam/tick(seconds_between_ticks)
-	if(!current_target)
-		lose_target()
-		return
-
-	if(world.time <= last_check+check_delay)
-		return
-
-	last_check = world.time
-
-	if(!get_dist(owner, current_target) > 8)
-		QDEL_NULL(current_beam)//this will give the target lost message
-		return
 
 /**
  * Proc that always is called when we want to end the beam and makes sure things are cleaned up, see beam_died()
@@ -210,7 +202,9 @@
  */
 /datum/status_effect/cosmic_beam/proc/beam_died()
 	SIGNAL_HANDLER
-	to_chat(owner, span_warning("You lose control of the beam!"))
+	if(successful_teleport)
+		return
+	to_chat(owner, span_warning("Your cosmic tether to [current_target] has been broken!"))
 	active = FALSE
 	lose_target()
 	duration = 0
@@ -225,8 +219,9 @@
 
 	current_target = target
 	active = TRUE
-	current_beam = user.Beam(current_target, icon_state="cosmic_beam", time = 8 SECONDS, maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
+	current_beam = user.Beam(current_target, icon_state = "cosmic_beam", maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
 	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))
+	RegisterSignal(current_target, COMSIG_QDELETING, PROC_REF(beam_died))
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	if(current_target)
@@ -236,10 +231,12 @@
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target, mob/living/user)
 	if(isstargazer(target))
 		return
+	ADD_TRAIT(target, TRAIT_NO_TELEPORT, REF(src))
 	target.AddElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
 	if(isstargazer(target))
 		return
+	REMOVE_TRAIT(target, TRAIT_NO_TELEPORT, REF(src))
 	target.RemoveElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)

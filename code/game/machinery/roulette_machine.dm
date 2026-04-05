@@ -263,7 +263,7 @@
 	var/account_balance = my_card?.registered_account?.account_balance
 	potential_payout = (account_balance >= potential_payout) ? potential_payout : account_balance
 
-	say("You have won [potential_payout] credits! Congratulations!")
+	say("You have won [potential_payout] [MONEY_NAME]! Congratulations!")
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50)
 	if(isliving(user) && (user in viewers(src)))
 		var/mob/living/living_user = user
@@ -441,16 +441,10 @@
 			set_machine_stat(machine_stat | MAINT)
 			icon_state = "open"
 
-/obj/machinery/roulette/proc/shock(mob/user, prb)
+/obj/machinery/roulette/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
 	if(!on) // unpowered, no shock
 		return FALSE
-	if(!prob(prb))
-		return FALSE //you lucked out, no shock for you
-	do_sparks(5, TRUE, src)
-	if(electrocute_mob(user, get_area(src), src, 1, TRUE))
-		return TRUE
-	else
-		return FALSE
+	return ..()
 
 /obj/item/roulette_wheel_beacon
 	name = "roulette wheel beacon"

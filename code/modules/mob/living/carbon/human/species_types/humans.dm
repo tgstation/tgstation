@@ -4,7 +4,7 @@
 	inherent_traits = list(
 		TRAIT_USES_SKINTONES,
 	)
-	skinned_type = /obj/item/stack/sheet/animalhide/human
+	skinned_type = /obj/item/stack/sheet/animalhide/carbon/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	payday_modifier = 1.1
 

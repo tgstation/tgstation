@@ -23,7 +23,7 @@
 	var/datum/port/output/trigger_port
 
 /obj/item/circuit_component/hear/populate_ports()
-	on = add_input_port("On", PORT_TYPE_NUMBER, default = 1)
+	on = add_input_port("On", PORT_TYPE_BOOLEAN, default = TRUE)
 	message_port = add_output_port("Message", PORT_TYPE_STRING)
 	language_port = add_output_port("Language", PORT_TYPE_STRING)
 	speaker_port = add_output_port("Speaker", PORT_TYPE_ATOM)

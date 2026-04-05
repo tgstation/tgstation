@@ -66,7 +66,7 @@
 /obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	var/is_open = HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 	if(!is_open || swiping || !target.density || get_turf(target) == get_turf(user))
-		for(var/found_faction in target.faction)
+		for(var/found_faction in target.get_faction())
 			if(!(found_faction in nemesis_factions))
 				continue
 			if(is_open)

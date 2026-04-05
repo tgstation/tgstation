@@ -18,6 +18,12 @@
 	/// Typepath to a material to feed to the golem as soon as it is built
 	var/initial_type
 
+	//Deconstruction var's
+	var/list/obj/item/stack/drop_on_deconstruct
+	//Time it takes to deconstruct a completed shell.	 Note : You can dissssemble multiple at once
+	var/deconstruct_time = 4 SECONDS
+
+
 /obj/effect/mob_spawn/ghost_role/human/golem/Initialize(mapload, mob/living/creator, made_of)
 	initial_type = made_of
 	. = ..()
@@ -32,14 +38,7 @@
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 
-/obj/effect/mob_spawn/ghost_role/human/golem/name_mob(mob/living/spawned_mob, forced_name)
-	if(forced_name || !iscarbon(spawned_mob))
-		return ..()
-
-	forced_name = generate_random_name_species_based(spawned_mob.gender, TRUE, species_type = /datum/species/golem)
-	return ..()
-
-/obj/effect/mob_spawn/ghost_role/human/golem/special(mob/living/new_spawn, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/human/golem/special(mob/living/new_spawn, mob/mob_possessor, apply_prefs)
 	. = ..()
 	if(is_path_in_list(initial_type, GLOB.golem_stack_food_directory))
 		var/datum/golem_food_buff/initial_buff = GLOB.golem_stack_food_directory[initial_type]
@@ -73,7 +72,7 @@
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	prompt_name = "a free golem"
 
-/obj/effect/mob_spawn/ghost_role/human/golem/adamantine/special(mob/living/new_spawn, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/human/golem/adamantine/special(mob/living/new_spawn, mob/mob_possessor, apply_prefs)
 	. = ..()
 	if(!ishuman(new_spawn))
 		return
@@ -110,8 +109,30 @@
 	to_chat(new_spawn, span_userdanger("Serve [real_owner.real_name], and assist [real_owner.p_them()] in completing [real_owner.p_their()] goals at any cost."))
 
 /obj/effect/mob_spawn/ghost_role/human/golem/servant/name_mob(mob/living/spawned_mob, forced_name)
-	if(forced_name || !iscarbon(spawned_mob))
-		return ..()
 	if(owner_ref?.resolve())
 		forced_name =  "Golem ([rand(1,999)])"
 	return ..()
+
+
+/obj/effect/mob_spawn/ghost_role/human/golem/crowbar_act(mob/living/user, obj/item/tool)
+
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return ITEM_INTERACT_SUCCESS
+
+	if(user.combat_mode)
+		return
+	to_chat(user, span_notice("You begin prying load-bearing chunks from the completed shell."))
+	playsound(user, 'sound/items/tools/crowbar.ogg', 70)
+
+	if(do_after(user, delay = deconstruct_time, target = src))
+		new /obj/item/stack/sheet/mineral/adamantine(get_turf(src))
+		if(initial_type)
+			new initial_type(get_turf(src), 5)
+		else
+			new /obj/item/stack/sheet/iron/five(get_turf(src))
+
+		to_chat(user, span_notice("The Golem crumbles in on itself!"))
+		playsound(src, 'sound/effects/rock/rock_break.ogg', 60)
+		qdel(src)
+
+	return ITEM_INTERACT_SUCCESS

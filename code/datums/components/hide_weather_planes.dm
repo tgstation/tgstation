@@ -55,7 +55,7 @@
 	else
 		care_about.hide_plane(our_lad)
 
-/datum/component/hide_weather_planes/proc/new_hud_attached(datum/source, datum/hud/new_hud)
+/datum/component/hide_weather_planes/proc/new_hud_attached(datum/source, datum/hud/old_hud, datum/hud/new_hud)
 	SIGNAL_HANDLER
 	attach_hud(new_hud)
 

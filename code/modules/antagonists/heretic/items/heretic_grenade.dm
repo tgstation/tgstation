@@ -72,7 +72,7 @@
 	. = ..()
 	if(!ishuman(exposed_mob))
 		if(issilicon(exposed_mob) || ismecha(exposed_mob) || isbot(exposed_mob))
-			exposed_mob.adjustBruteLoss(500)
+			exposed_mob.adjust_brute_loss(500)
 		return
 	if(IS_HERETIC(exposed_mob))
 		return
@@ -95,7 +95,7 @@
 			addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
 		victim.update_damage_hud()
 		victim.adjust_disgust(5)
-		for(var/obj/item/bodypart/robotic_limb in victim.bodyparts)
+		for(var/obj/item/bodypart/robotic_limb in victim.get_bodyparts())
 			if(robotic_limb.biological_state & BIO_ROBOTIC)
 				robotic_limb.receive_damage(5, 5)
 	if(methods & INGEST)
@@ -111,9 +111,9 @@
 
 /datum/reagent/heretic_rust/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-	exposed_turf.rust_turf()
+	exposed_turf.rust_heretic_act(RUST_RESISTANCE_TITANIUM)
 
-/datum/reagent/heretic_rust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/heretic_rust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(!holder.has_reagent(/datum/reagent/consumable/milk))
 		if(SPT_PROB(5, seconds_per_tick))

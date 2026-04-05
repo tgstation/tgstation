@@ -15,6 +15,7 @@
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 	use_power = NO_POWER_USE
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 10)
 
 	/// What is the lowest amount of time we can set the timer to?
 	var/minimum_timer = SYNDIEBOMB_MIN_TIMER_SECONDS
@@ -276,7 +277,7 @@
 	activate()
 	add_fingerprint(user)
 	// We don't really concern ourselves with duds or fakes after this
-	if(isnull(payload) || istype(payload, /obj/machinery/syndicatebomb/training))
+	if(isnull(payload) || istype(payload, /obj/item/bombcore/training))
 		return
 
 	notify_ghosts(
@@ -356,18 +357,22 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.05)
 	var/adminlog = null
 	var/range_heavy = 3
 	var/range_medium = 9
 	var/range_light = 17
 	var/range_flame = 17
+	/// Whether this core explodes when burnt
+	var/explodes_when_burnt = TRUE
 
 /obj/item/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
 	detonate()
 	return TRUE
 
 /obj/item/bombcore/burn()
-	detonate()
+	if(explodes_when_burnt)
+		detonate()
 	..()
 
 /obj/item/bombcore/proc/detonate()
@@ -388,12 +393,10 @@
 /obj/item/bombcore/syndicate
 	name = "Donk Co. Super-Stable Bomb Payload"
 	desc = "After a string of unwanted detonations, this payload has been specifically redesigned to not explode unless triggered electronically by a bomb shell."
+	explodes_when_burnt = FALSE
 
 /obj/item/bombcore/syndicate/ex_act(severity, target)
 	return FALSE
-
-/obj/item/bombcore/syndicate/burn()
-	return ..()
 
 /obj/item/bombcore/syndicate/large
 	name = "Donk Co. Super-Stable Bomb Payload XL"

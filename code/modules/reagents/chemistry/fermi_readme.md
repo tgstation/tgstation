@@ -209,8 +209,6 @@ There are a few variables that are useful to know about
 	var/chem_temp = 150
 	///pH of the whole system
 	var/ph = CHEMICAL_NORMAL_PH //aka 7
-	///cached list of reagents
-	var/list/datum/reagent/previous_reagent_list = new/list()
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
 ```
@@ -218,4 +216,3 @@ There are a few variables that are useful to know about
 - chem_temp is the temperature used in the `datum/chemical_recipe`
 - pH is a result of the sum of all reagents, as well as any changes from buffers and reactions. This is the pH used in `datum/chemical_recipe`.
 - isReacting is a bool that can be used outside to ensure that you don't touch a reagents that is reacting.
-- previous_reagent_list is a list of the previous reagents (just the typepaths, not the objects) that was present on the last handle_reactions() method. This is to prevent pointless method calls.

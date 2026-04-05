@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(radiation)
 	name = "Radiation"
-	flags = SS_BACKGROUND | SS_NO_INIT
+	ss_flags = SS_BACKGROUND | SS_NO_INIT
 
 	wait = 0.5 SECONDS
 
@@ -132,7 +132,7 @@ SUBSYSTEM_DEF(radiation)
 
 /// Returns whether or not the human is covered head to toe in rad-protected clothing.
 /datum/controller/subsystem/radiation/proc/wearing_rad_protected_clothing(mob/living/carbon/human/human)
-	for (var/obj/item/bodypart/limb as anything in human.bodyparts)
+	for (var/obj/item/bodypart/limb as anything in human.get_bodyparts())
 		var/protected = FALSE
 
 		for (var/obj/item/clothing as anything in human.get_clothing_on_part(limb))

@@ -2,14 +2,14 @@
  * Virus disk
  * Can't hold apps, instead does unique actions.
  */
-/obj/item/computer_disk/virus
+/obj/item/disk/computer/virus
 	name = "\improper generic virus disk"
 	icon_state = "virusdisk"
 	max_capacity = 0
 	///How many charges the virus has left
 	var/charges = 5
 
-/obj/item/computer_disk/virus/proc/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
+/obj/item/disk/computer/virus/proc/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
 	if(charges <= 0)
 		to_chat(user, span_notice("ERROR: Out of charges."))
 		return FALSE
@@ -23,10 +23,10 @@
  * Makes people's PDA honk
  * Can also be used on open panel airlocks to make them honk on opening.
  */
-/obj/item/computer_disk/virus/clown
+/obj/item/disk/computer/virus/clown
 	name = "\improper H.O.N.K. disk"
 
-/obj/item/computer_disk/virus/clown/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
+/obj/item/disk/computer/virus/clown/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -40,10 +40,10 @@
  * Mime virus
  * Makes PDA's silent, removing their ringtone.
  */
-/obj/item/computer_disk/virus/mime
+/obj/item/disk/computer/virus/mime
 	name = "\improper sound of silence disk"
 
-/obj/item/computer_disk/virus/mime/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
+/obj/item/disk/computer/virus/mime/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -60,11 +60,11 @@
  * Detomatix virus
  * Sends a false message, and blows the PDA up if the target responds to it (or opens their messenger before a timer)
  */
-/obj/item/computer_disk/virus/detomatix
+/obj/item/disk/computer/virus/detomatix
 	name = "\improper D.E.T.O.M.A.T.I.X. disk"
 	charges = 6
 
-/obj/item/computer_disk/virus/detomatix/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
+/obj/item/disk/computer/virus/detomatix/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -101,7 +101,7 @@
  * Creates and opens a false uplink on someone's PDA
  * Can be loaded with TC to show up on the false uplink.
  */
-/obj/item/computer_disk/virus/frame
+/obj/item/disk/computer/virus/frame
 	name = "\improper F.R.A.M.E. disk"
 
 	///How many telecrystals the uplink should have
@@ -109,7 +109,7 @@
 	///How much progression should be shown in the uplink, set on purchase of the item.
 	var/current_progression = 0
 
-/obj/item/computer_disk/virus/frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/disk/computer/virus/frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/stack/telecrystal))
 		return
@@ -122,7 +122,7 @@
 	telecrystal_stack.use(telecrystal_stack.amount)
 
 
-/obj/item/computer_disk/virus/frame/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
+/obj/item/disk/computer/virus/frame/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
 	. = ..()
 	if(!.)
 		return FALSE

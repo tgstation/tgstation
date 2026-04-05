@@ -4,8 +4,8 @@
  * Placed machine that handles destructive experiments (but can also do the normal ones)
  */
 /obj/machinery/destructive_scanner
-	name = "Experimental Destructive Scanner"
-	desc = "A much larger version of the hand-held scanner, a charred label warns about its destructive capabilities."
+	name = "experimental destructive scanner"
+	desc = "A much larger version of the hand-held scanner. A charred label warns about its destructive capabilities."
 	icon = 'icons/obj/machines/destructive_scanner.dmi'
 	icon_state = "tube_open"
 	circuit = /obj/item/circuitboard/machine/destructive_scanner

@@ -8,7 +8,7 @@
 	playsound(origin_turf, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
 
 	for(var/mob/living/carbon/victim in hearers(max(light_range, medium_range, heavy_range), origin_turf))
-		if(!victim.can_hear())
+		if(HAS_TRAIT(victim, TRAIT_DEAF))
 			continue
 		var/distance = get_dist(origin_turf, victim.loc)
 		if(distance <= heavy_range)

@@ -2,7 +2,7 @@
 
 // Cans
 /obj/item/food/canned
-	name = "Canned Air"
+	name = "canned air"
 	desc = "If you ever wondered where air came from..."
 	food_reagents = list(
 		/datum/reagent/oxygen = 6,
@@ -65,7 +65,7 @@
 	foodtypes = FRUIT | SUGAR
 
 /obj/item/food/canned/peaches/maint
-	name = "Maintenance Peaches"
+	name = "maintenance peaches"
 	desc = "I have a mouth and I must eat."
 	icon_state = "peachcanmaint"
 	trash_type = /obj/item/trash/can/food/peaches/maint
@@ -166,13 +166,11 @@
 		splat_color = COLOR_NEARLY_ALL_BLACK, \
 		hit_callback = CALLBACK(src, PROC_REF(blind_em)), \
 	)
-	ADD_TRAIT(src, TRAIT_UNCATCHABLE, INNATE_TRAIT) //good luck catching the liquid
 
 /obj/item/food/canned/squid_ink/proc/blind_em(mob/living/victim, can_splat_on)
 	if(can_splat_on)
-		victim.adjust_temp_blindness_up_to(7 SECONDS, 10 SECONDS)
-		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
-		victim.Paralyze(2 SECONDS) //splat!
+		victim.adjust_temp_blindness_up_to(2.5 SECONDS, 3 SECONDS)
+		victim.adjust_confusion_up_to(2.5 SECONDS, 3 SECONDS)
 	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
 	playsound(victim, SFX_DESECRATION, 50, TRUE)
 

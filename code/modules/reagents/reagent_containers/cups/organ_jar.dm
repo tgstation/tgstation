@@ -12,6 +12,7 @@
 	possible_transfer_amounts = list(20, 40, 60, 120)
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
 	w_class = WEIGHT_CLASS_SMALL // Organs are small by default, so the jar should be at least small as well
+	can_lid = FALSE
 	/// The organ that is currently inside the jar
 	var/obj/item/organ/held_organ = null
 	/// Whether the jar is filled to capacity with formaldehyde, preserving any organ inside

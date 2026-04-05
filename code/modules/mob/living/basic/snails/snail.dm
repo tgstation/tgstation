@@ -81,6 +81,7 @@
 
 /mob/living/basic/snail/mob_pickup(mob/living/user)
 	var/obj/item/mob_holder/snail/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	SEND_SIGNAL(src, COMSIG_LIVING_SCOOPED_UP, user, holder)
 	var/display_message = "[user] [HAS_TRAIT(src, TRAIT_MOVE_FLOATING) ? "scoops up [src]" : "peels [src] off the ground"]!"
 	user.visible_message(span_warning(display_message))
 	user.put_in_hands(holder)

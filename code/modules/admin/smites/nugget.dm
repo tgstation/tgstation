@@ -11,7 +11,7 @@
 
 	var/mob/living/carbon/carbon_target = target
 	var/timer = 2 SECONDS
-	for (var/_limb in carbon_target.bodyparts)
+	for (var/_limb in carbon_target.get_bodyparts())
 		var/obj/item/bodypart/limb = _limb
 		if (limb.body_part == HEAD || limb.body_part == CHEST)
 			continue

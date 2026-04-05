@@ -27,7 +27,6 @@ export const ChemFilterPane = (props: Props) => {
       minHeight="240px"
       buttons={
         <Button
-          content="Add Reagent"
           icon="plus"
           color={buttonColor}
           onClick={() =>
@@ -35,7 +34,9 @@ export const ChemFilterPane = (props: Props) => {
               which: titleKey,
             })
           }
-        />
+        >
+          Add Reagent
+        </Button>
       }
     >
       {list.map((filter) => (
@@ -43,14 +44,15 @@ export const ChemFilterPane = (props: Props) => {
           <Button
             fluid
             icon="minus"
-            content={filter}
             onClick={() =>
               act('remove', {
                 which: titleKey,
                 reagent: filter,
               })
             }
-          />
+          >
+            {filter}
+          </Button>
         </Fragment>
       ))}
     </Section>
@@ -66,10 +68,10 @@ export const ChemFilter = (props) => {
       <Window.Content scrollable>
         <Stack>
           <Stack.Item grow>
-            <ChemFilterPane title="Left" list={left} buttonColor="yellow" />
+            <ChemFilterPane title="Right" list={right} buttonColor="red" />
           </Stack.Item>
           <Stack.Item grow>
-            <ChemFilterPane title="Right" list={right} buttonColor="red" />
+            <ChemFilterPane title="Left" list={left} buttonColor="yellow" />
           </Stack.Item>
         </Stack>
       </Window.Content>

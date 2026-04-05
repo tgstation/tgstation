@@ -5,13 +5,13 @@ on:
 
 jobs:
   linters:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Restore SpacemanDMM cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
@@ -20,21 +20,21 @@ jobs:
       - name: Setup Bun
         uses: ./.github/actions/setup_bun
       - name: Restore Bootstrap cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tools/bootstrap/.cache
-          key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
+          key: ${{ runner.os }}-bootstrap-${{ hashFiles('/tools/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-bootstrap-
       - name: Restore Rust cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cargo
-          key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
+          key: ${{ runner.os }}-rust-${{ hashFiles('/tools/ci/ci_dependencies.sh')}}
           restore-keys: |
             ${{ runner.os }}-rust-
       - name: Restore Cutter cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tools/icon_cutter/cache
           key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}

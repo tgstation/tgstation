@@ -1,5 +1,5 @@
-///This unique key decides how items are stacked on the UI. We separate them based on name,price & type
-#define ITEM_HASH(item)("[item.name][item.custom_price][item.type]")
+///This unique key decides how items are stacked on the UI. We separate them based on name, price & type
+#define ITEM_HASH(item)(sanitize_css_class_name("[item.name][item.custom_price][item.type]"))
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
@@ -275,8 +275,6 @@
 		if(ITEM_HASH(product) == dispensed_item)
 			dispensed_item = product
 			break
-	if(QDELETED(dispensed_item))
-		return
 
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	if(QDELETED(id_card))
@@ -294,10 +292,10 @@
 		payee.adjust_money(-dispensed_item.custom_price, , "Vending: [dispensed_item]")
 		linked_account.adjust_money(dispensed_item.custom_price, "Vending: [dispensed_item] Bought")
 		linked_account.bank_card_talk("[payee.account_holder] made a [dispensed_item.custom_price] \
-		cr purchase at your custom vendor.")
+		[MONEY_SYMBOL] purchase at your custom vendor.")
 		/// Log the transaction
 		SSblackbox.record_feedback("amount", "vending_spent", dispensed_item.custom_price)
-		log_econ("[dispensed_item.custom_price] credits were spent on [src] buying a \
+		log_econ("[dispensed_item.custom_price] [MONEY_NAME] were spent on [src] buying a \
 		[dispensed_item] by [payee.account_holder], owned by [linked_account.account_holder].")
 		/// Make an alert
 		var/ref = REF(user)

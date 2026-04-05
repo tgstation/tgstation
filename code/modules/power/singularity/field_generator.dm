@@ -417,7 +417,7 @@ no power level overlay is currently in the overlays list.
 	if (active)
 		return SINGULARITY_TRY_MOVE_BLOCK
 
-/obj/machinery/field/generator/shock(mob/living/user)
+/obj/machinery/field/generator/yeet_shock(mob/living/user)
 	if(fields.len)
 		..()
 

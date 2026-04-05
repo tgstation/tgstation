@@ -42,7 +42,7 @@
 		return
 
 	// don't skip codewords when owner speaks
-	if(!owner.can_hear() || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
 		return
 
 	var/message = hearing_args[HEARING_RAW_MESSAGE]

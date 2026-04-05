@@ -33,12 +33,9 @@
 "i" = (
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
-"n" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/testlab)
 "w" = (
 /obj/structure/closet/emcloset,
+/obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "A" = (
@@ -128,7 +125,7 @@ N
 "}
 (4,1,1) = {"
 d
-n
+B
 w
 A
 a

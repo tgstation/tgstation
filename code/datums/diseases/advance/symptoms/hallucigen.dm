@@ -12,19 +12,21 @@
 	desc = "The virus stimulates the brain, causing occasional hallucinations."
 	illness = "Paranoyance"
 	stealth = 1
-	resistance = -4
-	stage_speed = 1
+	resistance = -2
+	stage_speed = 2
 	transmittable = -1
 	level = 5
 	severity = 2
 	base_message_chance = 25
 	symptom_delay_min = 25
 	symptom_delay_max = 90
-	var/fake_healthy = FALSE
+	symptom_cure = /datum/reagent/medicine/psicodine
+	cure_color = "yellow"
 	threshold_descs = list(
 		"Stage Speed 7" = "Increases the amount of hallucinations.",
 		"Stealth 4" = "The virus mimics positive symptoms.",
 	)
+	var/fake_healthy = FALSE
 
 /datum/symptom/hallucigen/Start(datum/disease/advance/A)
 	. = ..()

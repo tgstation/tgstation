@@ -1,0 +1,3 @@
+/obj/item/stack/sheet/animalhide/lizard/@SUBTYPES : /obj/item/stack/sheet/animalhide/carbon/lizard/@SUBTYPES{@OLD}
+/obj/item/stack/sheet/animalhide/human/@SUBTYPES : /obj/item/stack/sheet/animalhide/carbon/human/@SUBTYPES{@OLD}
+/obj/item/stack/sheet/animalhide/monkey/@SUBTYPES : /obj/item/stack/sheet/animalhide/carbon/monkey/@SUBTYPES{@OLD}

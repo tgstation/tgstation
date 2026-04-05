@@ -8,11 +8,12 @@
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/storage/bag/garment/captain(src)
-	new /obj/item/computer_disk/command/captain(src)
+	new /obj/item/disk/computer/command/captain(src)
 	new /obj/item/radio/headset/heads/captain/alt(src)
 	new /obj/item/radio/headset/heads/captain(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/storage/photo_album/captain(src)
+	new /obj/item/megaphone/command(src)
 
 /obj/structure/closet/secure_closet/captains/populate_contents_immediate()
 	new /obj/item/gun/energy/e_gun(src)
@@ -28,7 +29,7 @@
 	new /obj/item/dog_bone(src)
 	new /obj/item/storage/bag/garment/hop(src)
 	new /obj/item/storage/lockbox/medal/service(src)
-	new /obj/item/computer_disk/command/hop(src)
+	new /obj/item/disk/computer/command/hop(src)
 	new /obj/item/radio/headset/heads/hop(src)
 	new /obj/item/storage/box/ids(src)
 	new /obj/item/storage/box/silver_ids(src)
@@ -40,6 +41,7 @@
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/hop(src)
 	new /obj/item/storage/lockbox/medal/hop(src)
+	new /obj/item/storage/box/stamps(src)
 
 /obj/structure/closet/secure_closet/hop/populate_contents_immediate()
 	new /obj/item/gun/energy/e_gun(src)
@@ -52,7 +54,7 @@
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
 
-	new /obj/item/computer_disk/command/hos(src)
+	new /obj/item/disk/computer/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
 	new /obj/item/radio/headset/heads/hos/alt(src)
 	new /obj/item/storage/bag/garment/hos(src)
@@ -89,6 +91,7 @@
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/door_remote/head_of_security(src)
+	new /obj/item/storage/belt/bandolier(src)
 
 
 /obj/structure/closet/secure_closet/warden/populate_contents_immediate()
@@ -173,7 +176,7 @@
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections locker"
-	req_access = list(ACCESS_HOS)
+	req_access = list(ACCESS_ARMORY)
 
 /obj/structure/closet/secure_closet/injection/PopulateContents()
 	..()
@@ -307,7 +310,7 @@
 	new /obj/item/storage/box/firingpins(src)
 	new /obj/item/gun/energy/ionrifle(src)
 	for(var/i in 1 to 3)
-		new /obj/item/gun/energy/laser/thermal(src)
+		new /obj/item/gun/energy/laser/pistol(src)
 
 /obj/structure/closet/secure_closet/armory3/populate_contents_immediate()
 	for(var/i in 1 to 3)

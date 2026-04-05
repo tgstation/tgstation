@@ -24,9 +24,6 @@
 /// From base of /datum/action/cooldown/proc/PreActivate(), sent to the action owner: (datum/action/cooldown/finished)
 #define COMSIG_MOB_ABILITY_FINISHED "mob_ability_base_finished"
 
-/// From base of /datum/action/cooldown/proc/set_statpanel_format(): (list/stat_panel_data)
-#define COMSIG_ACTION_SET_STATPANEL "ability_set_statpanel"
-
 // Specific cooldown action signals
 
 /// From base of /datum/action/cooldown/mob_cooldown/blood_warp/proc/blood_warp(): ()
@@ -57,3 +54,6 @@
 
 /// From /datum/action/vehicle/ridden/wheelchair/bell/Trigger():
 #define COMSIG_WHEELCHAIR_BELL_RANG "wheelchair_bell_rang"
+
+/// From /datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(), sent to the /mob/living/carbon/hurtguy: (/mob/living/carbon/mendicant)
+#define COMSIG_ON_LAY_ON_HANDS "mob_ability_lay_on_hands"

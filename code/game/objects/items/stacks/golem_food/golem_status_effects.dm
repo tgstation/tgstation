@@ -78,7 +78,7 @@
 
 	if(isgolem(owner))
 		var/mob/living/carbon/golem_owner = owner
-		for (var/obj/item/bodypart/part in golem_owner.bodyparts)
+		for (var/obj/item/bodypart/part in golem_owner.get_bodyparts())
 			// these overlays won't look good on anything but golem limbs
 			if (part.limb_id != SPECIES_GOLEM)
 				continue
@@ -307,11 +307,11 @@
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/light_speed)
 
 	var/mob/living/carbon/carbon_owner = owner
-	for (var/obj/item/bodypart/arm/arm in carbon_owner.bodyparts)
+	for (var/obj/item/bodypart/arm/arm in carbon_owner.get_bodyparts())
 		set_arm_fluff(arm)
 	return TRUE
 
-/datum/status_effect/golem/diamond/tick(delta_time, times_fired)
+/datum/status_effect/golem/diamond/tick(delta_time)
 	owner.alpha = max(owner.alpha - alpha_per_tick, 0)
 
 /// Reset alpha to starting value
@@ -373,7 +373,7 @@
 	alert_desc = "You are more resistant to physical blows, and pack more of a punch yourself."
 	filter_color = LIGHT_COLOR_HALOGEN
 	/// Amount to reduce brute damage by
-	var/brute_modifier = 0.7
+	var/brute_modifier = 0.8 // golems already have an innate 0.5 brute resistance - this is multiplicate on top of that
 	/// How much extra damage do we do with our fists?
 	var/damage_increase = 3
 	/// Deal this much extra damage to mining mobs, most of which take 0 unarmed damage usually
@@ -388,7 +388,7 @@
 	var/mob/living/carbon/human/human_owner = owner
 	RegisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_punched))
 	human_owner.physiology.brute_mod *= brute_modifier
-	for (var/obj/item/bodypart/arm/arm in human_owner.bodyparts)
+	for (var/obj/item/bodypart/arm/arm in human_owner.get_bodyparts())
 		buff_arm(arm)
 
 /// Give mining mobs an extra slap
@@ -397,7 +397,7 @@
 	if (!proximity || !isliving(punchee))
 		return NONE
 	var/mob/living/victim = punchee
-	if (victim.body_position == LYING_DOWN || (!(FACTION_MINING in victim.faction) && !(FACTION_BOSS in victim.faction)))
+	if (victim.body_position == LYING_DOWN || !victim.has_faction(list(FACTION_MINING, FACTION_BOSS)))
 		return NONE
 	victim.apply_damage(mining_bonus, BRUTE)
 

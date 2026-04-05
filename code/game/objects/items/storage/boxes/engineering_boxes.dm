@@ -24,7 +24,7 @@
 	storage_type = /datum/storage/box/debug
 
 /obj/item/storage/box/debugtools/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/card/emag=1,
 		/obj/item/construction/rcd/combat/admin=1,
 		/obj/item/disk/tech_disk/debug=1,

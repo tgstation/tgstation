@@ -200,7 +200,7 @@
 /// Gives the AI SAT a fax machine if it doesn't have one. This is copy pasted from Bridge Assistant's coffee maker.
 /datum/station_trait/job/human_ai/proc/give_fax_machine(datum/source)
 	SIGNAL_HANDLER
-	var/area/sat_area = GLOB.areas_by_type[/area/station/ai_monitored/turret_protected/ai]
+	var/area/sat_area = GLOB.areas_by_type[/area/station/ai/satellite/chamber]
 	if(isnull(sat_area))
 		return
 	var/list/fax_machines = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax)

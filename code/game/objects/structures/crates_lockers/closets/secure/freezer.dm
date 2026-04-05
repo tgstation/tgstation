@@ -5,6 +5,7 @@
 	door_anim_squish = 0.22
 	door_anim_angle = 123
 	door_anim_time = 4
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.5)
 	/// If FALSE, we will protect the first person in the freezer from an explosion / nuclear blast.
 	var/jones = FALSE
 	paint_jobs = null

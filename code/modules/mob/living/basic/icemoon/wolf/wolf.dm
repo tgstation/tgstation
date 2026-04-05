@@ -68,6 +68,7 @@
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 15, bonus_tame_chance = 5)
 
 /mob/living/basic/mining/wolf/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	new /obj/effect/temp_visual/heart(src.loc)
 	// ride wolf, life good
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/wolf)
@@ -83,5 +84,5 @@
 	. = ..()
 	if(isnull(.))
 		return
-	faction = new_friend.faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM(src, new_friend)
 	visible_message(span_notice("[src] lowers [src.p_their()] snout at [new_friend]'s offering and begins to wag [src.p_their()] tail."))

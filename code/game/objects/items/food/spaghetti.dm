@@ -182,7 +182,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("noodles" = 5, "meat" = 3, "egg" = 4, "dried seaweed" = 2)
-	foodtypes = GRAIN | MEAT | VEGETABLES
+	foodtypes = GRAIN | MEAT | VEGETABLES | EGG
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
@@ -269,7 +269,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("spaghetti" = 1, "parmigiano reggiano" = 1,  "guanciale" = 1)
-	foodtypes = GRAIN | MEAT | DAIRY
+	foodtypes = GRAIN | MEAT | DAIRY | EGG
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 

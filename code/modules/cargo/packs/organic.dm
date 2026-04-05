@@ -36,10 +36,10 @@
 	test_ignored = TRUE
 	crate_name = "food crate"
 
-/datum/supply_pack/organic/randomized/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/organic/randomized/fill(obj/container)
 	for(var/i in 1 to 15)
 		var/item = pick(contains)
-		new item(C)
+		new item(container)
 
 /datum/supply_pack/organic/randomized/chef
 	name = "Excellent Meat Crate"
@@ -139,7 +139,7 @@
 	cost = CARGO_CRATE_VALUE * 12
 	contains = list(/obj/item/storage/backpack/duffelbag/clown/cream_pie)
 	crate_name = "party equipment crate"
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	access = ACCESS_THEATRE
 	access_view = ACCESS_THEATRE
 	crate_type = /obj/structure/closet/crate/secure
@@ -183,6 +183,8 @@
 	var/anomalous_box_provided = FALSE
 	/// one percent chance for a pizza box to be the ininfite pizza box
 	var/infinite_pizza_chance = 1
+	/// chance that any one of the pizzas in the crate will have romerol added to it
+	var/romerol_chance = 0.2
 	///Whether we've provided a bomb pizza box already this shift or not.
 	var/boombox_provided = FALSE
 	/// three percent chance for a pizza box to be the pizza bomb box
@@ -207,12 +209,18 @@
 /datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/new_crate)
 	. = ..()
 	var/list/rng_pizza_list = pizza_types.Copy()
+	var/add_romerol = prob(romerol_chance)
 	for(var/i in 1 to 5)
 		if(add_anomalous(new_crate))
 			continue
 		if(add_boombox(new_crate))
 			continue
-		add_normal_pizza(new_crate, rng_pizza_list)
+		var/obj/item/pizzabox/pizzabox = add_normal_pizza(new_crate, rng_pizza_list)
+		if(add_romerol && pizzabox.pizza)
+			pizzabox.pizza.reagents.add_reagent(/datum/reagent/romerol, pizzabox.pizza.slices_left)
+			add_romerol = FALSE
+			log_game("A romerol pizza (as [pizzabox.pizza]) was created in a pizza crate delivery.")
+			message_admins("A romerol pizza (as [pizzabox.pizza]) was created in a pizza crate delivery.")
 
 /// adds the chance for an infinite pizza box
 /datum/supply_pack/organic/pizza/proc/add_anomalous(obj/structure/closet/crate/new_crate)
@@ -253,6 +261,7 @@
 	new_pizza_box.boxtag = new_pizza_box.pizza.boxtag
 	new_pizza_box.boxtag_set = TRUE
 	new_pizza_box.update_appearance(UPDATE_ICON | UPDATE_DESC)
+	return new_pizza_box
 
 /// tells crew that an infinite pizza box exists, half of the time, based on a roll in the anamolous box proc
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
@@ -360,7 +369,7 @@
 	crate_type = /obj/structure/closet/crate/cardboard
 
 /datum/supply_pack/organic/syrup_contraband
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	name = "Contraband Syrups Box"
 	desc = "A packaged box containing illegal coffee syrups. Possession of these carries a penalty established in the galactic penal code."
 	cost = CARGO_CRATE_VALUE * 6
@@ -445,4 +454,3 @@
 	contains = list(
 		/obj/item/soil_sack/worm = 3,
 	)
-

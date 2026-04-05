@@ -51,7 +51,7 @@
 /datum/ai_planning_subtree/fish/drilled_ice
 	find_fishable_behavior = /datum/ai_behavior/find_and_set/in_list/drilled_ice
 
-/datum/ai_behavior/find_and_set/in_list/drilled_ice/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
+/datum/ai_behavior/find_and_set/in_list/drilled_ice/search_tactic(datum/ai_controller/controller, locate_paths, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/atom/possible_ice as anything in RANGE_TURFS(search_range, controller.pawn))
 		if(!istype(possible_ice, /turf/open/misc/ice))
 			continue

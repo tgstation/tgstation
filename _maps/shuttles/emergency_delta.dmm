@@ -142,6 +142,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "am" = (
@@ -344,6 +345,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "aR" = (
@@ -352,13 +354,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"aT" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aU" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/west,
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aV" = (
@@ -408,6 +407,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ba" = (
@@ -690,6 +690,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/zipties,
 /obj/item/radio/intercom/directional/south,
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bX" = (
@@ -718,6 +719,7 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
 	},
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ci" = (
@@ -727,6 +729,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cj" = (
@@ -906,7 +909,7 @@
 /area/shuttle/escape)
 "pd" = (
 /obj/machinery/camera/autoname{
-	dir = 9
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
@@ -1004,6 +1007,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Jl" = (
@@ -1053,6 +1057,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Rz" = (
@@ -1107,7 +1112,7 @@ hB
 af
 af
 aO
-aT
+af
 aW
 af
 hB
@@ -1246,7 +1251,7 @@ bN
 bU
 af
 af
-aT
+af
 hB
 af
 af
@@ -1305,7 +1310,7 @@ af
 af
 bt
 hB
-aT
+af
 af
 WG
 jU
@@ -1457,7 +1462,7 @@ aE
 dY
 ah
 af
-aT
+af
 af
 af
 bY
@@ -1478,8 +1483,8 @@ ag
 aF
 aF
 ag
-aP
 af
+aP
 af
 af
 af
@@ -1525,7 +1530,7 @@ ae
 af
 af
 af
-aT
+af
 hB
 af
 af
@@ -1564,7 +1569,7 @@ aa
 (16,1,1) = {"
 ab
 ad
-hB
+af
 al
 aR
 aA
@@ -1595,7 +1600,7 @@ aa
 (17,1,1) = {"
 ab
 ad
-af
+hB
 am
 au
 QD
@@ -1634,7 +1639,7 @@ hB
 hB
 af
 af
-aT
+af
 af
 hB
 hB

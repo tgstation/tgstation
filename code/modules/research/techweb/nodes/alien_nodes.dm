@@ -82,6 +82,7 @@ ABDUCTOR_SUBTYPE_UNLOCKS(/datum/techweb_node/alien_engi)
 		"alien_retractor",
 		"alien_saw",
 		"alien_scalpel",
+		"medibot_upgrade_four",
 		"surgery_brainwashing",
 		"surgery_brainwashing_mechanic",
 		"surgery_heal_combo_upgrade_femto",

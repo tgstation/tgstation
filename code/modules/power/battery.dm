@@ -13,10 +13,12 @@
 	throw_speed = 2
 	throw_range = 2
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*12, /datum/material/glass=SMALL_MATERIAL_AMOUNT*2)
-	grind_results = list(/datum/reagent/lithium = 60, /datum/reagent/iron = 10, /datum/reagent/silicon = 10)
 	rating_base = STANDARD_BATTERY_CHARGE
 	maxcharge = STANDARD_BATTERY_CHARGE
 	chargerate = STANDARD_BATTERY_RATE
+
+/obj/item/stock_parts/power_store/battery/grind_results()
+	return list(/datum/reagent/lithium = 60, /datum/reagent/iron = 10, /datum/reagent/silicon = 10)
 
 /obj/item/stock_parts/power_store/battery/empty
 	empty = TRUE

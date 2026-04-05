@@ -1,6 +1,5 @@
 ///List of all items that can be found in the different types of order consoles, to purchase.
 GLOBAL_LIST_EMPTY(order_console_products)
-#define CREDIT_TYPE_CREDIT "credit"
 
 /obj/machinery/computer/order_console
 	name = "Orders Console"
@@ -25,7 +24,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/announcement_line
 
 	///The kind of cash does the console use.
-	var/credit_type = CREDIT_TYPE_CREDIT
+	var/credit_type = MONEY_SYMBOL
 	///Whether the console can only use express mode ONLY
 	var/forced_express = FALSE
 	///Multiplied cost to use for cargo mode
@@ -250,5 +249,3 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		announcement_lines_map["Error"] = "Unknown Error happened, while we tried to procceed an order, please report this to Nanotrasen."
 	. = ..()
 
-
-#undef CREDIT_TYPE_CREDIT

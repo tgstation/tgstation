@@ -1,8 +1,14 @@
 /datum/proc/CanProcCall(procname)
 	return TRUE
 
+/// Items in this list will not show up in VV
+GLOBAL_LIST_INIT(vv_var_blacklist, list(
+	"faction" = TRUE,
+))
 /datum/proc/can_vv_get(var_name)
 	if(var_name == NAMEOF(src, vars))
+		return FALSE
+	if(var_name in GLOB.vv_var_blacklist)
 		return FALSE
 	return TRUE
 
@@ -32,7 +38,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = list()
-	VV_DROPDOWN_OPTION("", "---")
 	VV_DROPDOWN_OPTION(VV_HK_CALLPROC, "Call Proc")
 	VV_DROPDOWN_OPTION(VV_HK_MARK, "Mark Object")
 	VV_DROPDOWN_OPTION(VV_HK_TAG, "Tag Datum")

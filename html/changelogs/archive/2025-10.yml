@@ -824,3 +824,115 @@
   - qol: Better exodrone console UI
   - rscadd: Exodrones now create a small explosion (0, 0, 1, 1) when self-destruction
       is triggered
+2025-10-27:
+  1393F:
+  - bugfix: The syndicate rebar crossbow quiver's action button now functions correctly.
+  Fghj240:
+  - bugfix: stabilized cerulean extract clones keep your traits
+  - bugfix: certain traits now function properly when added midround
+  Krysonism:
+  - balance: ' Sentient bears are now fast mounts equal to ponies and yellow raptors.'
+  loganuk:
+  - qol: New verb in "AI commands" to update AI display status
+  - bugfix: Stopped "Friend Computer" emotion affecting evac displays instead of just
+      AI displays
+  - code_imp: Replaced radial wheel for AI status or AI core display with TGUI menus
+  - image: AIs can now update their status displays with way more graphics to match
+      core display options onto the TVs.
+  necromanceranne:
+  - qol: Adds lore text to the stun baton and contractor baton, detailing a bit about
+      their dynamic as tools of Nanotrasen and Cybersun Industries respectively. Examine
+      them closely to learn more.
+  theselfish:
+  - qol: Reskinnable items now have a
+2025-10-28:
+  Aliceee2ch:
+  - map: Some minor fixes for paramedic dispatches
+  grungussuss:
+  - sound: added sounds for utility headwear
+  - sound: surgery caps use cloth sounds now
+2025-10-29:
+  Aliceee2ch:
+  - spellcheck: Birdshot plaque was decomissioned and replaced on Catwalk.
+  Fghj240:
+  - map: Added two DeForest first aid stations to the syndicate bioweapons base
+  - map: Added silver bars to the syndicate bioweapons base for grinding
+  - map: Added meat and a food processor to the syndicate bioweapons base kitchen
+  - map: The syndicate bioweapons base kitchen now contains a range
+  - map: The syndicate bioweapons base kitchen contains less flour, rice, and sugar
+  FlufflesTheDog:
+  - bugfix: Dullahans spawn with their intended organs
+  - bugfix: Dullahans can hear/see emotes
+  - bugfix: Dullahan heads properly have preferences applied to them
+  - bugfix: Dullahan heads no longer appear eyeless
+  - bugfix: Dullahans can hear things from their head regardless of if their body
+      is nearby
+  - bugfix: Dullahans can hear TTS messages
+  - bugfix: Dullahans have a TTS voice
+  - qol: Dullahans have a head in the character preview, for the sake of easier customization
+  Pickle-Coding:
+  - bugfix: Supermatter anomalies no longer drop anomaly cores.
+  - bugfix: Fix supermatter flux anomalies from sm delam not emping or whatever.
+  SyncIt21:
+  - bugfix: posters applied on walls fall off when the wall is destroyed
+  - bugfix: player mounted tram wall frame controller falls off when the wall is destroyed
+  lelandkemble:
+  - map: Meta's pipe and wire placements are more predictable
+  - bugfix: Meta's pipes and wires below library are connected again
+  - bugfix: Prevents post-slip events such as hats falling off from occurring while
+      crawling over slips.
+  paganiy:
+  - bugfix: Containers that appear sealed (spray bottles, hyposprays, gel cans, condiment
+      packets, inhaler cartridges) no longer spill when thrown or poured out.
+  uaioy:
+  - spellcheck: wave of desperation description does not state it sleeps you anymore
+2025-10-30:
+  Capsandi:
+  - qol: Charlie station ghostroles call on other observers to join in the fun when
+      taken.
+  - balance: Low pressure damage has been doubled
+  FalloutFalcon:
+  - image: cordon icon changed to be easier for mappers to visualize
+  Fghj240:
+  - qol: Agent IDs autofill the user's current age if they have one
+  - bugfix: Agent IDs can display custom jobs upon close examination
+  Melbert:
+  - qol: Tox damage from allergic reactions is affected by tox damage modifiers
+  - refactor: Changed how allergic reactions to chem pause metabolism, report any
+      oddities
+  OrbisAnima:
+  - bugfix: solves an exploit that allowed users to buy goodie packs with the pda
+      budget program
+  Sothanforax:
+  - map: added the ministation cargo shuttle
+  SyncIt21:
+  - rscdel: Removes circuit board recipe for vend a tray. Use 5 wood to create a "display
+      case chassis" and insert a card reader to create the tray instead
+  - bugfix: exporting seeds won't yield ridiculously large profits
+  lelandkemble:
+  - bugfix: Prevents woodfires from melting the captain's Spare ID Safe
+  loganuk:
+  - map: CATWALK - Upper level air and scrubber pipes now fixed plus a lot more routes
+      for reliability to link together, Also removed airless tiles from near arrivals
+      to stop firelock hell
+  projectkepler-ru:
+  - rscadd: True Strike is also now AP, making detective more scary and BR-38 much
+      more effective against highly armoured target
+2025-10-31:
+  Aliceee2ch:
+  - qol: You can now use bow with big fingers.
+  Fghj240:
+  - rscadd: Added cybernetic cat ears
+  - code_imp: Wall-penetrating and whisper-sensitive ears now properly utilize organ
+      traits
+  Melbert:
+  - refactor: Refactored species unique organs slightly, particularly how they are
+      set up at game start. Report any oddities, like invisible tails or wings
+  timothymtorres:
+  - rscadd: Thunder from weather will now smelt any mining ores it hits.
+  - balance: Remove thunder exploding turfs and damaging objects however mobs will
+      still be affected.
+  tonyhawq:
+  - bugfix: fixes permanent soul binding between golf carts and riders
+  vinylspiders:
+  - code_imp: optimizes space vine spawning to create less lag.

@@ -12,6 +12,7 @@
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
 	processing_flags = START_PROCESSING_MANUALLY
 	use_power = NO_POWER_USE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 	///The amount of fuel gained from stacks or reagents
 	var/grill_fuel = 0
@@ -42,9 +43,7 @@
 	new /obj/item/stack/rods(loc, 5)
 
 	if(grill_fuel > 0)
-		var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
-		smoke.set_up(1, holder = src, location = loc)
-		smoke.start()
+		do_smoke(1, src, loc, smoke_type = /datum/effect_system/fluid_spread/smoke/bad)
 
 /obj/machinery/grill/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
@@ -272,9 +271,7 @@
 	//use fuel, create smoke puffs for immersion
 	grill_fuel -= fuel_usage
 	if(SPT_PROB(0.5, seconds_per_tick))
-		var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
-		smoke.set_up(1, holder = src, location = loc)
-		smoke.start()
+		do_smoke(1, src, loc, smoke_type = /datum/effect_system/fluid_spread/smoke/bad)
 
 	fuel_usage = GRILL_FUELUSAGE_ACTIVE * seconds_per_tick
 	if(!QDELETED(grilled_item))

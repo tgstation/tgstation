@@ -37,7 +37,7 @@
 
 /obj/machinery/power/shuttle_engine/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 	register_context()
 	if(!mapload)
 		engine_state = ENGINE_UNWRENCHED

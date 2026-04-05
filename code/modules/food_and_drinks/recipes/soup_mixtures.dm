@@ -31,7 +31,6 @@
 	thermic_constant = 10
 	required_reagents = null
 	mob_react = FALSE
-	required_other = TRUE
 	required_container_accepts_subtypes = TRUE
 	required_container = /obj/item/reagent_containers/cup/soup_pot
 	mix_message = "You smell something good coming from the steaming pot of soup."
@@ -205,10 +204,7 @@
 		if(holder.total_volume >= holder.maximum_volume * 0.95)
 			below_pot.visible_message(span_warning("[pot] starts to boil over!"))
 			// Create a spread of dirty foam
-			var/datum/effect_system/fluid_spread/foam/dirty/soup_mess = new()
-			soup_mess.reagent_scale = 0.1 // (Just a little)
-			soup_mess.set_up(range = 1, holder = pot, location = below_pot, carry = holder, stop_reactions = TRUE)
-			soup_mess.start()
+			do_foam(1, pot, below_pot, carry = holder, foam_type = /datum/effect_system/fluid_spread/foam/dirty, stop_reactions = TRUE, reagent_scale = 0.1)
 			// Loses a bit from the foam
 			for(var/datum/reagent/reagent as anything in holder.reagent_list)
 				reagent.volume *= 0.5
@@ -760,12 +756,14 @@
 	// Pretty much just a normal chemical reaction.
 	// This also creates nutrients out of thin air.
 
-	required_other = FALSE
 	required_reagents = list(
 		/datum/reagent/water = 40,
 		/datum/reagent/toxin/slimejelly = 20,
 	)
 	required_ingredients = null
+
+/datum/chemical_reaction/food/soup/slimesoup/alt/pre_reaction_other_checks(datum/reagents/holder)
+	return TRUE
 
 // Clown Tear soup
 /datum/reagent/consumable/nutriment/soup/clown_tears
@@ -1746,7 +1744,6 @@
 	drink_type = GRAIN
 
 /datum/chemical_reaction/food/soup/cornmeal_porridge
-	required_other = FALSE
 	required_reagents = list(
 		/datum/reagent/consumable/cornmeal = 20,
 		/datum/reagent/water = 20,
@@ -1754,6 +1751,9 @@
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/cornmeal_porridge = 20,
 	)
+
+/datum/chemical_reaction/food/soup/cornmeal_porridge/pre_reaction_other_checks(datum/reagents/holder)
+	return TRUE
 
 // Cheese Porridge (Soup-ish)
 /datum/reagent/consumable/nutriment/soup/cheese_porridge

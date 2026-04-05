@@ -12,7 +12,7 @@
 	severity = DISEASE_SEVERITY_MINOR
 
 
-/datum/disease/anxiety/stage_act(seconds_per_tick, times_fired)
+/datum/disease/anxiety/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

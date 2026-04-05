@@ -2,11 +2,11 @@
 "ac" = (
 /obj/structure/closet/crate/medical,
 /turf/open/space/basic,
-/area/template_noop)
+/area/space/nearstation)
 "ae" = (
 /obj/effect/mob_spawn/corpse/human/cargo_tech,
 /turf/open/space/basic,
-/area/template_noop)
+/area/space/nearstation)
 "ai" = (
 /turf/closed/indestructible/reinforced,
 /area/deathmatch)
@@ -1096,15 +1096,15 @@
 "Zr" = (
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle,
 /turf/open/space/basic,
-/area/template_noop)
+/area/space/nearstation)
 "Zz" = (
 /obj/machinery/power/singularity_beacon/syndicate,
 /turf/open/space/basic,
-/area/template_noop)
+/area/space/nearstation)
 "ZD" = (
 /obj/item/storage/toolbox/syndicate,
 /turf/open/space/basic,
-/area/template_noop)
+/area/space/nearstation)
 
 (1,1,1) = {"
 je

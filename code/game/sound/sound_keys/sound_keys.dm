@@ -1108,3 +1108,46 @@
 		'sound/items/generic_device/generic_device_drop4.ogg',
 		'sound/items/generic_device/generic_device_drop5.ogg',
 	)
+
+/datum/sound_effect/hard_hat_pickup
+	key = SFX_HARD_HAT_PICKUP
+	file_paths = list(
+		'sound/items/hard_hat/hard_hat_pickup1.ogg',
+		'sound/items/hard_hat/hard_hat_pickup2.ogg',
+		'sound/items/hard_hat/hard_hat_pickup3.ogg',
+		'sound/items/hard_hat/hard_hat_pickup4.ogg',
+		'sound/items/hard_hat/hard_hat_pickup5.ogg',
+	)
+
+/datum/sound_effect/hard_hat_drop
+	key = SFX_HARD_HAT_DROP
+	file_paths = list(
+		'sound/items/hard_hat/hard_hat_drop1.ogg',
+		'sound/items/hard_hat/hard_hat_drop2.ogg',
+		'sound/items/hard_hat/hard_hat_drop3.ogg',
+		'sound/items/hard_hat/hard_hat_drop4.ogg',
+		'sound/items/hard_hat/hard_hat_drop5.ogg',
+	)
+
+/datum/sound_effect/hard_hat_equip
+	key = SFX_HARD_HAT_EQUIP
+	file_paths = list(
+		'sound/items/hard_hat/hard_hat_equip1.ogg',
+		'sound/items/hard_hat/hard_hat_equip2.ogg',
+		'sound/items/hard_hat/hard_hat_equip3.ogg',
+	)
+
+/datum/sound_effect/alien_spit_acid
+	key = SFX_ALIEN_SPIT_ACID
+	file_paths = list(
+		'sound/effects/alien/alien_spitacid.ogg',
+		'sound/effects/alien/alien_spitacid2.ogg'
+	)
+
+/datum/sound_effect/void_deflect
+	key = SFX_VOID_DEFLECT
+	file_paths = list(
+		'sound/effects/magic/void_deflect1.ogg',
+		'sound/effects/magic/void_deflect2.ogg',
+		'sound/effects/magic/void_deflect3.ogg',
+	)

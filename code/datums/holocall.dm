@@ -215,7 +215,7 @@
 /obj/item/disk/holodisk
 	name = "holorecord disk"
 	desc = "Stores recorder holocalls."
-	icon_state = "holodisk"
+	sticker_icon_state = "o_holo"
 	obj_flags = UNIQUE_RENAME
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	var/datum/holorecord/record

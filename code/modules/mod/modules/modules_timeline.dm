@@ -39,10 +39,12 @@
 /obj/item/mod/module/eradication_lock/proc/on_mod_activation(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(true_owner_ckey && user.ckey != true_owner_ckey)
+	if(!true_owner_ckey || user.ckey == true_owner_ckey)
+		return NONE
+	if(user == mod.wearer)
 		to_chat(mod.wearer, span_userdanger("\"MODsuit compromised by timeline inhabitant! Eradicating...\""))
 		new /obj/structure/chrono_field(user.loc, user)
-		return MOD_CANCEL_ACTIVATE
+	return MOD_CANCEL_ACTIVATE
 
 ///Signal fired when the modsuit tries removing a module.
 /obj/item/mod/module/eradication_lock/proc/on_mod_removal(datum/source, mob/user)
@@ -172,7 +174,7 @@
 		//phasing out
 		mod.visible_message(span_warning("[mod.wearer] leaps out of the timeline!"))
 		mod.wearer.SetAllImmobility(0)
-		mod.wearer.setStaminaLoss(0)
+		mod.wearer.set_stamina_loss(0)
 		phased_mob = new(get_turf(mod.wearer.loc), mod.wearer)
 		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_block))
 	else

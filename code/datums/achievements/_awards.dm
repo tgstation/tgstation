@@ -72,10 +72,6 @@
 /datum/award/proc/parse_value(raw_value)
 	return default_value()
 
-///Can be overridden for achievement specific events
-/datum/award/proc/on_unlock(mob/user)
-	return
-
 ///returns additional ui data for the Check Achievements menu
 /datum/award/proc/get_ui_data(list/award_data, datum/achievement_data/holder)
 	return list(
@@ -95,29 +91,7 @@
 	if(holder.data[type]) //You already unlocked it so don't bother running the unlock proc
 		return
 	holder.data[type] = TRUE
-	on_unlock(user)
 
-/datum/award/achievement/get_metadata_row()
-	. = ..()
-	.["achievement_type"] = "achievement"
-
-/datum/award/achievement/get_ui_data(list/award_data, datum/achievement_data/holder)
-	. = ..()
-	.["achieve_info"] = "Unlocked by [times_achieved] players so far"
-	if(!SSachievements.most_unlocked_achievement)
-		.["achieve_tooltip"] = "No achievement has been unlocked yet. Be the first today!"
-		return
-	if(SSachievements.most_unlocked_achievement == src)
-		.["achieve_tooltip"] = "This is the most unlocked achievement"
-		return
-	var/percent = FLOOR(times_achieved / SSachievements.most_unlocked_achievement.times_achieved * 100, 0.01)
-	.["achieve_tooltip"] = "[(times_achieved && !percent) ? "Less than 0.01" : percent]% compared to the achievement unlocked by the most players: \"[SSachievements.most_unlocked_achievement.name])\""
-
-/datum/award/achievement/parse_value(raw_value)
-	return raw_value > 0
-
-/datum/award/achievement/on_unlock(mob/user)
-	. = ..()
 	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
 	var/sound/sound_to_send = LAZYACCESS(GLOB.achievement_sounds, user.client.prefs.read_preference(/datum/preference/choiced/sound_achievement))
 	if(sound_to_send)
@@ -139,6 +113,25 @@
 	new_report.award_location = "[get_area_name(user)]"
 
 	GLOB.achievements_unlocked += new_report
+
+/datum/award/achievement/get_metadata_row()
+	. = ..()
+	.["achievement_type"] = "achievement"
+
+/datum/award/achievement/get_ui_data(list/award_data, datum/achievement_data/holder)
+	. = ..()
+	.["achieve_info"] = "Unlocked by [times_achieved] players so far"
+	if(!SSachievements.most_unlocked_achievement)
+		.["achieve_tooltip"] = "No achievement has been unlocked yet. Be the first today!"
+		return
+	if(SSachievements.most_unlocked_achievement == src)
+		.["achieve_tooltip"] = "This is the most unlocked achievement"
+		return
+	var/percent = FLOOR(times_achieved / SSachievements.most_unlocked_achievement.times_achieved * 100, 0.01)
+	.["achieve_tooltip"] = "[(times_achieved && !percent) ? "Less than 0.01" : percent]% compared to the achievement unlocked by the most players: \"[SSachievements.most_unlocked_achievement.name])\""
+
+/datum/award/achievement/parse_value(raw_value)
+	return raw_value > 0
 
 ///Scores are for leaderboarded things, such as killcount of a specific boss
 /datum/award/score
@@ -266,7 +259,7 @@
 		return FALSE
 	return ..()
 
-/datum/award/score/progress/unlock(mob/user, datum/achievement_data/holder, value)
+/datum/award/score/progress/unlock(mob/user, datum/achievement_data/holder, value, progress_string)
 	var/list/entries = holder.data[type]
 	if(!value)
 		CRASH("empty value used as argument to progress this score award.")
@@ -278,6 +271,22 @@
 		entries = entries?.Copy() || list()
 		holder.data[type] = entries
 	entries |= value
+
+	if(!progress_string)
+		return
+
+	to_chat(user, get_progress_string(progress_string))
+	var/sound/sound_pref = LAZYACCESS(GLOB.achievement_sounds, user.client.prefs.read_preference(/datum/preference/choiced/sound_achievement))
+	if(!sound_pref)
+		return
+	//send a copy cheevo sound but with its volume halved, since you're making a small progress and not unlocking an entire achievement.
+	var/sound/sound_to_send = sound(sound_pref.file, volume = sound_pref.volume / 2)
+	if(sound_to_send)
+		SEND_SOUND(user, sound_to_send)
+
+///Compose the string to send to the user's chat when the progress is made. This one here is generic, but you should override it really.
+/datum/award/score/progress/proc/get_progress_string(progress_string)
+	return span_greenannounce("New progress made for [name]: <B>[progress_string]!</B>")
 
 /datum/award/score/progress/load(datum/achievement_data/holder)
 	var/list/results = ..()
@@ -291,8 +300,8 @@
 	holder.original_cached_data[type] = holder.data[type] = results
 	if(!length(results))
 		return results
-	///This list will be populated on validate_entries()
-	var/list/validated_results = list()
+	///This list will be checked on validate_entries() to see if the entries are valid.
+	var/list/validated_results = unique_list(results)
 	if(!validate_entries(results, validated_results))
 		holder.data[type] = validated_results
 	return validated_results
@@ -344,7 +353,6 @@
  * ensuring that the original data and the new data aren't the same, allowing the new data will be saved.
  */
 /datum/award/score/progress/proc/validate_entries(list/entries, list/validated_entries)
-	validated_entries = unique_list(entries)
 	return length(validated_entries) == length(entries)
 
 ////Returns a list of data that we can use to make an index of contents that progress this award/score.

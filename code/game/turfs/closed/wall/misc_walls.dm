@@ -44,15 +44,14 @@
 
 /turf/closed/wall/rust
 	//SDMM supports colors, this is simply for easier mapping
-	//and should be removed on initialize
-	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
+	WHEN_MAP(color = COLOR_ORANGE_BROWN)
 
 /turf/closed/wall/rust/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/rust)
 
 /turf/closed/wall/heretic_rust
-	color = MAP_SWITCH(null, COLOR_GREEN_GRAY)
+	WHEN_MAP(color = COLOR_GREEN_GRAY)
 
 /turf/closed/wall/heretic_rust/Initialize(mapload)
 	. = ..()
@@ -60,8 +59,7 @@
 
 /turf/closed/wall/r_wall/rust
 	//SDMM supports colors, this is simply for easier mapping
-	//and should be removed on initialize
-	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
+	WHEN_MAP(color = COLOR_ORANGE_BROWN)
 	base_decon_state = "rusty_r_wall"
 
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
@@ -69,7 +67,7 @@
 	AddElement(/datum/element/rust)
 
 /turf/closed/wall/r_wall/heretic_rust
-	color = MAP_SWITCH(null, COLOR_GREEN_GRAY)
+	WHEN_MAP(color = COLOR_GREEN_GRAY)
 
 /turf/closed/wall/r_wall/heretic_rust/Initialize(mapload)
 	. = ..()
@@ -122,7 +120,7 @@
 
 /turf/closed/wall/material/meat/Initialize(mapload)
 	. = ..()
-	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
+	set_custom_materials(list(SSmaterials.get_material(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
 
 /turf/closed/wall/material/meat/airless
 	baseturfs = /turf/open/floor/material/meat/airless

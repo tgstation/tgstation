@@ -120,6 +120,7 @@
 		addtimer(CALLBACK(target.dna, TYPE_PROC_REF(/datum/dna, remove_mutation), mutation, MUTATION_SOURCE_TIMED_INJECTOR), duration)
 	if(fields)
 		if(fields["name"] && fields["UE"] && fields["blood_type"])
+			LAZYINITLIST(target.dna.previous)
 			if(!target.dna.previous["name"])
 				target.dna.previous["name"] = target.real_name
 			if(!target.dna.previous["UE"])
@@ -130,17 +131,19 @@
 			target.dna.unique_enzymes = fields["UE"]
 			target.name = target.real_name
 			target.set_blood_type(fields["blood_type"])
-			target.dna.temporary_mutations[UE_CHANGED] = endtime
+			LAZYSET(target.dna.temporary_mutations, UE_CHANGED, endtime)
 		if(fields["UI"]) //UI+UE
+			LAZYINITLIST(target.dna.previous)
 			if(!target.dna.previous["UI"])
 				target.dna.previous["UI"] = target.dna.unique_identity
 			target.dna.unique_identity = merge_text(target.dna.unique_identity, fields["UI"])
-			target.dna.temporary_mutations[UI_CHANGED] = endtime
+			LAZYSET(target.dna.temporary_mutations, UI_CHANGED, endtime)
 		if(fields["UF"]) //UI+UE
+			LAZYINITLIST(target.dna.previous)
 			if(!target.dna.previous["UF"])
 				target.dna.previous["UF"] = target.dna.unique_features
 			target.dna.unique_features = merge_text(target.dna.unique_features, fields["UF"])
-			target.dna.temporary_mutations[UF_CHANGED] = endtime
+			LAZYSET(target.dna.temporary_mutations, UF_CHANGED, endtime)
 		if(fields["UI"] || fields["UF"])
 			target.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	return TRUE

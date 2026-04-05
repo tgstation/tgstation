@@ -114,6 +114,14 @@ img {
   white-space: pre;
 }
 
+.mcstatcontent td {
+  vertical-align: top;
+}
+
+.mcstatcontent .monospace {
+  font-family: "Consolas", "Lucida Console", "Courier New", monospace;
+}
+
 #under-menu {
   height: 0.5em;
   background-color: #eeeeee;

@@ -97,7 +97,7 @@
 	owner.mouse_opacity = initial(owner.mouse_opacity)
 	playsound(owner.loc, 'sound/effects/meteorimpact.ogg', 200, TRUE)
 	for(var/mob/living/victim in orange(1, owner) - owner)
-		victim.adjustBruteLoss(75)
+		victim.adjust_brute_loss(75)
 		if(!QDELETED(victim)) // Some mobs are deleted on death
 			var/throw_dir = get_dir(owner, victim)
 			if(victim.loc == owner.loc)

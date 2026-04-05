@@ -205,8 +205,10 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
  * @param {icon} icon - The icon file of the cog. Default: 'icons/effects/progressbar.dmi'
  *
  * @param {iconstate} iconstate - The icon state of the cog. Default: "Cog"
+ *
+ * @param {mob} bar_override - Mob which should see the bar instead of the user
  */
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE, icon = 'icons/effects/progressbar.dmi', iconstate = "cog")
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE, icon = 'icons/effects/progressbar.dmi', iconstate = "cog", mob/bar_override = null)
 	if(!user)
 		return FALSE
 	if(!isnum(delay))
@@ -240,11 +242,11 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/datum/cogbar/cog
 
 	if(progress)
-		if(user.client)
-			progbar = new(user, delay, target || user)
+		if(user.client || bar_override?.client)
+			progbar = new(bar_override || user, delay, target || user)
 
 		if(!hidden && delay >= 1 SECONDS)
-			cog = new(user, icon, iconstate)
+			cog = new(bar_override || user, icon, iconstate)
 
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
 
@@ -265,6 +267,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			|| (!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
 			|| (!(timed_action_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
 			|| (!(timed_action_flags & IGNORE_INCAPACITATED) && HAS_TRAIT(user, TRAIT_INCAPACITATED)) \
+			|| ((timed_action_flags & DO_AFTER_CHECK_NEXT_MOVE) && world.time < user.next_move) \
 			|| (extra_checks && !extra_checks.Invoke()))
 			. = FALSE
 			break

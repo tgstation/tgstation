@@ -543,8 +543,8 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "jk" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum/external,
+/obj/machinery/light/small/directional/north,
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "jn" = (
@@ -637,9 +637,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "kv" = (
-/obj/structure/sign/warning/vacuum/external,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/structure/cable,
+/obj/structure/sign/warning/vacuum/external/directional/north,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "kw" = (
 /obj/structure/chair/wood,
@@ -1339,10 +1339,6 @@
 "vn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
-	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Monastery Archives Access Tunnel";
-	network = list("ss13","monastery")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -3242,6 +3238,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/camera/directional/west{
+	c_tag = "Monastery Archives Access Tunnel";
+	network = list("ss13","monastery")
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "TJ" = (
@@ -5606,8 +5606,8 @@ JG
 (24,1,1) = {"
 zE
 zE
-jk
-Am
+zE
+kv
 rQ
 XI
 Am
@@ -6444,7 +6444,7 @@ zE
 zE
 Pe
 jc
-kv
+zE
 lc
 zE
 jc
@@ -6527,7 +6527,7 @@ zE
 zE
 zE
 zE
-lE
+jk
 zE
 jc
 jc

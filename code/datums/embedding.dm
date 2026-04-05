@@ -133,7 +133,7 @@
 		failed_embed(victim, hit_zone, random = TRUE)
 		return
 
-	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || victim.bodyparts[1]
+	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || victim.get_bodypart()
 	embed_into(victim, limb)
 	return MOVABLE_IMPACT_ZONE_OVERRIDE
 
@@ -153,7 +153,7 @@
 		failed_embed(victim, hit_zone, random = TRUE)
 		return
 
-	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || victim.bodyparts[1]
+	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || victim.get_bodypart()
 	embed_into(victim, limb)
 	SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_EMBEDDED, payload, hit)
 
@@ -274,7 +274,7 @@
 	owner = victim
 	owner_limb = target_limb
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(owner_moved))
-	RegisterSignal(owner, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(owner, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 	RegisterSignal(owner, COMSIG_ATOM_EX_ACT, PROC_REF(on_ex_act))
 	RegisterSignal(owner_limb, COMSIG_BODYPART_REMOVED, PROC_REF(on_removed))
 
@@ -286,7 +286,7 @@
 		UnregisterSignal(owner_limb, COMSIG_BODYPART_REMOVED)
 		owner_limb._unembed_object(parent)
 	if (owner)
-		UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EX_ACT))
+		UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_ITEM_INTERACTION, COMSIG_ATOM_EX_ACT))
 		if (!owner.has_embedded_objects())
 			owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 			owner.clear_mood_event("embedded")
@@ -414,13 +414,13 @@
 	return
 
 /// When someone attempts to pluck us with tweezers or wirecutters
-/datum/embedding/proc/on_attackby(mob/living/carbon/victim, obj/item/tool, mob/user)
+/datum/embedding/proc/on_item_interaction(mob/living/carbon/victim, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 
 	if (user.zone_selected != owner_limb.body_zone || (tool.tool_behaviour != TOOL_HEMOSTAT && tool.tool_behaviour != TOOL_WIRECUTTER))
 		return
 
-	if (parent != owner_limb.embedded_objects[1]) // Don't pluck everything at the same time
+	if (parent != LAZYACCESS(owner_limb.embedded_objects, 1)) // Don't pluck everything at the same time
 		return
 
 	// Ensure that we can actually

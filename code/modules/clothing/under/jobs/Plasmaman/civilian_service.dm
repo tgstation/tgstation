@@ -6,11 +6,12 @@
 	inhand_icon_state = "plasmaman"
 	icon = 'icons/obj/clothing/under/plasmaman.dmi'
 	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
-	clothing_flags = PLASMAMAN_PREVENT_IGNITION
+	clothing_flags = PLASMAMAN_PREVENT_IGNITION | NO_ZONE_DISABLING
 	armor_type = /datum/armor/clothing_under/plasmaman
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	can_adjust = FALSE
 	strip_delay = 8 SECONDS
+	resistance_flags = FIRE_PROOF
 	COOLDOWN_DECLARE(extinguish_timer)
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
@@ -175,8 +176,4 @@
 	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
 	owner.visible_message(span_warning("[owner]'s suit spews space lube everywhere!"), span_warning("Your suit spews space lube everywhere!"))
 	owner.extinguish_mob()
-	var/datum/effect_system/fluid_spread/foam/foam = new
-	var/datum/reagents/foamreagent = new /datum/reagents(15)
-	foamreagent.add_reagent(/datum/reagent/lube, 15)
-	foam.set_up(4, holder = src, location = get_turf(owner), carry = foamreagent)
-	foam.start() //Truly terrifying.
+	do_foam(4, src, get_turf(owner), /datum/reagent/lube, 15)

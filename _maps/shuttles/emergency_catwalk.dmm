@@ -727,6 +727,7 @@
 	dir = 4
 	},
 /obj/structure/table/optable,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ML" = (
@@ -838,6 +839,7 @@
 	pixel_y = 16;
 	pixel_x = -1
 	},
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Ri" = (
@@ -1396,7 +1398,7 @@ HG
 fu
 HG
 ni
-ni
+HG
 ni
 HG
 fu

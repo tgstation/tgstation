@@ -77,7 +77,7 @@
 	return construct_block(SSaccessories.facial_hairstyles_list.Find(target.facial_hairstyle), length(SSaccessories.facial_hairstyles_list))
 
 /datum/dna_block/identity/facial_style/apply_to_mob(mob/living/carbon/human/target, dna_hash)
-	if(HAS_TRAIT(src, TRAIT_SHAVED))
+	if(HAS_TRAIT(target, TRAIT_SHAVED))
 		target.set_facial_hairstyle("Shaved", update = FALSE)
 		return
 	var/style = SSaccessories.facial_hairstyles_list[deconstruct_block(get_block(dna_hash), length(SSaccessories.facial_hairstyles_list))]
@@ -95,7 +95,7 @@
 /datum/dna_block/identity/hair_gradient
 
 /datum/dna_block/identity/hair_gradient/create_unique_block(mob/living/carbon/human/target)
-	return construct_block(SSaccessories.hair_gradients_list.Find(target.grad_style[GRADIENT_HAIR_KEY]), length(SSaccessories.hair_gradients_list))
+	return construct_block(SSaccessories.hair_gradients_list.Find(target.get_hair_gradient_style(GRADIENT_HAIR_KEY)), length(SSaccessories.hair_gradients_list))
 
 /datum/dna_block/identity/hair_gradient/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	var/gradient_style = SSaccessories.hair_gradients_list[deconstruct_block(get_block(dna_hash), length(SSaccessories.hair_gradients_list))]
@@ -105,7 +105,7 @@
 	block_length = DNA_BLOCK_SIZE_COLOR
 
 /datum/dna_block/identity/hair_gradient_color/create_unique_block(mob/living/carbon/human/target)
-	return sanitize_hexcolor(target.grad_color[GRADIENT_HAIR_KEY], include_crunch = FALSE)
+	return sanitize_hexcolor(target.get_hair_gradient_color(GRADIENT_HAIR_KEY), include_crunch = FALSE)
 
 /datum/dna_block/identity/hair_gradient_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	target.set_hair_gradient_color(sanitize_hexcolor(get_block(dna_hash)), update = FALSE)
@@ -113,7 +113,7 @@
 /datum/dna_block/identity/facial_gradient
 
 /datum/dna_block/identity/facial_gradient/create_unique_block(mob/living/carbon/human/target)
-	return construct_block(SSaccessories.facial_hair_gradients_list.Find(target.grad_style[GRADIENT_FACIAL_HAIR_KEY]), length(SSaccessories.facial_hair_gradients_list))
+	return construct_block(SSaccessories.facial_hair_gradients_list.Find(target.get_hair_gradient_style(GRADIENT_FACIAL_HAIR_KEY)), length(SSaccessories.facial_hair_gradients_list))
 
 /datum/dna_block/identity/facial_gradient/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	var/gradient_style = SSaccessories.facial_hair_gradients_list[deconstruct_block(get_block(dna_hash), length(SSaccessories.facial_hair_gradients_list))]
@@ -123,7 +123,29 @@
 	block_length = DNA_BLOCK_SIZE_COLOR
 
 /datum/dna_block/identity/facial_gradient_color/create_unique_block(mob/living/carbon/human/target)
-	return sanitize_hexcolor(target.grad_color[GRADIENT_FACIAL_HAIR_KEY], include_crunch = FALSE)
+	return sanitize_hexcolor(target.get_hair_gradient_color(GRADIENT_FACIAL_HAIR_KEY), include_crunch = FALSE)
 
 /datum/dna_block/identity/facial_gradient_color/apply_to_mob(mob/living/carbon/human/target, dna_hash)
 	target.set_facial_hair_gradient_color(sanitize_hexcolor(get_block(dna_hash)), update = FALSE)
+
+/datum/dna_block/identity/height
+	/// List of all heights you can have stored in your DNA
+	/// Heights above the highest and below the lowest are locked to traits/mutations/species
+	/// Actual DNA Height is stored as "index in dna_heights list"
+	var/list/dna_heights = list(
+		HUMAN_HEIGHT_SHORTEST,
+		HUMAN_HEIGHT_SHORT,
+		HUMAN_HEIGHT_MEDIUM,
+		HUMAN_HEIGHT_TALL,
+		HUMAN_HEIGHT_TALLER,
+	)
+
+/datum/dna_block/identity/height/create_unique_block(mob/living/carbon/human/target)
+	var/max_height_index = length(dna_heights)
+	var/mob_height_index = dna_heights.Find("[target.get_base_mob_height()]") || dna_heights.Find(HUMAN_HEIGHT_MEDIUM)
+	return construct_block(mob_height_index, max_height_index, block_length)
+
+/datum/dna_block/identity/height/apply_to_mob(mob/living/carbon/human/target, dna_hash)
+	var/max_height_index = length(dna_heights)
+	var/mob_height_index = deconstruct_block(get_block(dna_hash), max_height_index, block_length)
+	target.set_mob_height(text2num(dna_heights[mob_height_index]) || HUMAN_HEIGHT_MEDIUM, update_dna = FALSE)

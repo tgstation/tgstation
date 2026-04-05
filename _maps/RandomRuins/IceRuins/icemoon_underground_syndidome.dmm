@@ -4051,11 +4051,11 @@
 /area/icemoon/surface/outdoors/noteleport)
 "UK" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = -5;
 	pixel_y = 8
 	},
-/obj/item/computer_disk{
+/obj/item/disk/computer{
 	pixel_x = 4;
 	pixel_y = 5
 	},

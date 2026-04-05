@@ -52,6 +52,10 @@
 					You may want to check your loadout settings."))
 			continue
 
+		var/datum/loadout_item/loadout_item = GLOB.all_loadout_datums[real_path]
+		if(loadout_item.is_disabled())
+			continue // this just falls off silently
+
 		// Set into sanitize list using converted path key
 		var/list/data = passed_list[path]
 		LAZYSET(sanitized_list, real_path, LAZYLISTDUPLICATE(data))

@@ -93,8 +93,8 @@
 	. = ..()
 	if(!(machine_stat & NOPOWER))
 		. += span_info("A small display reads:")
-		. += span_tinynoticeital("Current market restock price: [EXAMINE_HINT("[restock_cost] cr")].")
-		. += span_tinynoticeital("Market placement fee: [EXAMINE_HINT("[PLACE_ON_MARKET_COST] cr")].")
+		. += span_tinynoticeital("Current market restock price: [EXAMINE_HINT("[restock_cost] [MONEY_SYMBOL]")].")
+		. += span_tinynoticeital("Market placement fee: [EXAMINE_HINT("[PLACE_ON_MARKET_COST] [MONEY_SYMBOL]")].")
 		. += span_tinynoticeital("Withholding tax on local items: [EXAMINE_HINT("[MARKET_WITHHOLDING_TAX * 100]%")].")
 
 /obj/machinery/ltsrbt/update_icon_state()
@@ -192,7 +192,7 @@
 		return
 
 	if(creds_value < restock_cost)
-		say("Insufficient credits!")
+		say("Insufficient [MONEY_NAME]!")
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 		return ITEM_INTERACT_BLOCKING
 
@@ -289,7 +289,7 @@
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return
 		if(!card.registered_account.adjust_money(-PLACE_ON_MARKET_COST, "Market: Placement Fee"))
-			say("Insufficient credits!")
+			say("Insufficient [MONEY_NAME]!")
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return
 		account = card.registered_account
@@ -366,11 +366,7 @@
 		receiving.post_purchase_effects(receiving.item)
 
 		use_energy(energy_usage_per_teleport / power_efficiency)
-		var/datum/effect_system/spark_spread/sparks = new
-		sparks.set_up(5, 1, get_turf(src))
-		sparks.attach(receiving.item)
-		sparks.start()
-
+		do_sparks(5, TRUE, src, receiving.item)
 		transmitting = receiving
 		receiving = null
 

@@ -89,7 +89,7 @@
 	var/list/data = list()
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
-	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
+	data["cameras"] = SScameras.get_available_cameras_data(network)
 	return data
 
 /obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -99,7 +99,7 @@
 
 	if(action == "switch_camera")
 		active_camera?.on_stop_watching(src)
-		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
+		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
 		active_camera = selected_camera
 
 		if(isnull(active_camera))

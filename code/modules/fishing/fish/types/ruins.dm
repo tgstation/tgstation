@@ -16,7 +16,6 @@
 	min_pressure = HAZARD_LOW_PRESSURE
 	max_integrity = 600
 	stable_population = 2
-	grind_results = list(/datum/reagent/bone_dust = 5, /datum/reagent/consumable/liquidgibs = 5)
 	fillet_type = /obj/item/stack/sheet/bone
 	num_fillets = 2
 	feeding_frequency = 2 MINUTES
@@ -30,6 +29,9 @@
 /obj/item/fish/mastodon/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_FISH_MADE_OF_BONE, INNATE_TRAIT)
+
+/obj/item/fish/mastodon/fish_grind_results()
+	return list(/datum/reagent/bone_dust = 5, /datum/reagent/consumable/liquidgibs = 5)
 
 /obj/item/fish/mastodon/make_edible(weight_val)
 	return //it's all bones and gibs.
@@ -165,7 +167,7 @@
 		return SHAME
 
 	var/skin_tone
-	for(var/obj/item/bodypart/to_wound as anything in user.bodyparts)
+	for(var/obj/item/bodypart/to_wound as anything in user.get_bodyparts())
 		if(to_wound == user.get_bodypart(BODY_ZONE_CHEST))
 			skin_tone = to_wound.species_color || skintone2hex(to_wound.skin_tone)
 		user.cause_wound_of_type_and_severity(WOUND_SLASH, to_wound, WOUND_SEVERITY_CRITICAL, WOUND_SEVERITY_CRITICAL)

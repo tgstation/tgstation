@@ -136,6 +136,45 @@
 		stack_trace("Adding chameleon ID action to non-chameleon id ([target])")
 		qdel(src)
 
+/datum/action/item_action/chameleon/change/id/format_readable_name(datum/format_type)
+	if(ispath(format_type, /obj/item/card/id/advanced))
+		var/obj/item/card/id/advanced/format_card = format_type
+		var/list/basesplit_state = splittext(format_card::post_init_icon_state || format_card::icon_state, "_")
+		if(basesplit_state[1] == "card") // kind of evil, but so is making icon state user visible
+			basesplit_state.Cut(1, 2)
+
+		var/list/assignedsplit_state = splittext(format_card::assigned_icon_state, "_")
+		if(assignedsplit_state[1] == "assigned") // kind of evil, but so is making icon state user visible
+			assignedsplit_state.Cut(1, 2)
+
+		var/final_state_string = "[jointext(basesplit_state, " ")], [jointext(assignedsplit_state, " ") || "unassigned"]"
+
+		return "[format_card::name] ([final_state_string])"
+
+	return ..()
+
+/datum/action/item_action/chameleon/change/id/initialize_disguises()
+	// basic id types
+	add_chameleon_items(list(
+		/obj/item/card/id/advanced,
+		/obj/item/card/id/advanced/black,
+		/obj/item/card/id/advanced/bountyhunter,
+		/obj/item/card/id/advanced/centcom,
+		/obj/item/card/id/advanced/gold,
+		/obj/item/card/id/advanced/platinum,
+		/obj/item/card/id/advanced/prisoner,
+		/obj/item/card/id/advanced/rainbow,
+		/obj/item/card/id/advanced/robotic,
+		/obj/item/card/id/advanced/silver,
+	), only_root = TRUE)
+
+	// all black cards (they're all syndie cards, which are IC anyways)
+	add_chameleon_items(/obj/item/card/id/advanced/black)
+	// all centcom cards (they should all be IC anyways)
+	add_chameleon_items(/obj/item/card/id/advanced/centcom)
+	// explicitly include the captain's spare id, even though it could be manually constructed from the gold id, for ease
+	add_chameleon_items(/obj/item/card/id/advanced/gold/captains_spare, only_root = TRUE)
+
 /datum/action/item_action/chameleon/change/id/update_item(obj/item/picked_item)
 	. = ..()
 	var/obj/item/card/id/advanced/chameleon/agent_card = target
@@ -151,15 +190,14 @@
 	// If there has not, we set the assignment to the copied card's default as well as copying over the the
 	// default registered name from the copied card.
 	if(!agent_card.forged)
-		if(!agent_card.assignment)
-			agent_card.assignment = initial(copied_card.assignment)
-
+		agent_card.assignment ||= initial(copied_card.assignment)
 		agent_card.registered_name = initial(copied_card.registered_name)
 
 	agent_card.icon_state = initial(copied_card.icon_state)
 	if(ispath(copied_card, /obj/item/card/id/advanced))
 		var/obj/item/card/id/advanced/copied_advanced_card = copied_card
 		agent_card.assigned_icon_state = initial(copied_advanced_card.assigned_icon_state)
+		agent_card.inherent_assigned_name = initial(copied_advanced_card.inherent_assigned_name)
 
 	agent_card.update_label()
 	agent_card.update_appearance(UPDATE_ICON)
@@ -204,26 +242,40 @@
 		stack_trace("Adding chameleon ID trim action to non-chameleon id ([target])")
 		qdel(src)
 
+/datum/action/item_action/chameleon/change/id_trim/format_readable_name(datum/format_type)
+	if(istype(format_type, /datum/id_trim))
+		var/datum/id_trim/trim = format_type
+		var/list/trimstate_split = splittext(trim.trim_state, "_")
+		if(trimstate_split[1] == "trim") // kind of evil, but so is making icon state user visible
+			trimstate_split.Cut(1, 2)
+
+		return "[trim.assignment] ([jointext(trimstate_split, " ")])"
+
+	return ..()
+
 /datum/action/item_action/chameleon/change/id_trim/initialize_blacklist()
-	return
+	chameleon_blacklist |= typecacheof(/datum/id_trim/centcom/corpse)
 
 /datum/action/item_action/chameleon/change/id_trim/initialize_disguises()
-	// Little bit of copypasta but we only use trim datums rather than item paths
-	name = "Change [chameleon_name] Appearance"
-	build_all_button_icons()
+	var/list/chameleon_whitelist = typecacheof(list(
+		/datum/id_trim/battlecruiser,
+		/datum/id_trim/bit_avatar,
+		/datum/id_trim/bounty_hunter,
+		/datum/id_trim/centcom,
+		/datum/id_trim/job,
+		/datum/id_trim/pirate,
+		/datum/id_trim/syndicom,
+		/datum/id_trim/technician_id,
+	))
 
-	LAZYINITLIST(chameleon_typecache)
-	LAZYINITLIST(chameleon_list)
-
-	for(var/datum/id_trim/trim_path as anything in typesof(/datum/id_trim))
-		if(chameleon_blacklist[trim_path])
+	for(var/trim_path in chameleon_whitelist)
+		if(is_type_in_typecache(trim_path, chameleon_blacklist))
 			continue
 
 		var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
 
 		if(trim && trim.trim_state && trim.assignment)
-			var/chameleon_item_name = "[trim.assignment] ([trim.trim_state])"
-			chameleon_list[chameleon_item_name] = trim_path
+			chameleon_list[format_readable_name(trim)] = trim_path
 			chameleon_typecache[trim_path] = TRUE
 
 /datum/action/item_action/chameleon/change/id_trim/update_item(picked_trim_path)

@@ -7,8 +7,8 @@
 	name = "\improper Cybersun AI Core"
 	desc = "An evil looking computer."
 	icon = 'icons/mob/silicon/ai.dmi'
-	icon_state = "ai-red"
-	icon_living = "ai-red"
+	icon_state = "ai-core"
+	icon_living = "ai-core"
 	gender = NEUTER
 	status_flags = NONE
 	basic_mob_flags = MOB_ROBOTIC
@@ -45,8 +45,33 @@
 		BARRAGE_ABILITY_TYPEPATH = BB_CYBERSUN_CORE_BARRAGE,
 	)
 	grant_actions_by_list(innate_actions)
+
+	update_appearance()
+
 	if(mapload && donk_ai_master)
 		return INITIALIZE_HINT_LATELOAD
+
+/mob/living/basic/cybersun_ai_core/update_overlays()
+	. = ..()
+
+	// Lights
+	var/lights_state = "lights_active"
+	var/mutable_appearance/lights_overlay = mutable_appearance(icon, lights_state)
+	lights_overlay.layer = FLOAT_LAYER
+	lights_overlay.appearance_flags = RESET_COLOR | KEEP_APART
+	. += lights_overlay
+	. += emissive_appearance(icon, lights_state, src)
+
+	// Display
+	var/screen_state = "ai-red"
+	if(stat == DEAD)
+		screen_state = "ai-red_dead"
+
+	var/mutable_appearance/screen_overlay = mutable_appearance(icon, screen_state)
+	screen_overlay.layer = FLOAT_LAYER + 0.1
+	screen_overlay.appearance_flags = RESET_COLOR | KEEP_APART
+	. += screen_overlay
+	. += emissive_appearance(icon, screen_state, src)
 
 /mob/living/basic/cybersun_ai_core/LateInitialize()
 	SSqueuelinks.add_to_queue(src, selfdestruct_queue_id)
@@ -64,11 +89,13 @@
 
 /obj/effect/temp_visual/cybersun_ai_core_death
 	icon = 'icons/mob/silicon/ai.dmi'
-	icon_state = "ai-red_dead"
+	icon_state = "ai-core"
 	duration = 2 SECONDS
 
 /obj/effect/temp_visual/cybersun_ai_core_death/Initialize(mapload)
 	. = ..()
+	add_overlay("ai-red_dead")
+
 	playsound(src, 'sound/misc/metal_creak.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
 	Shake(1, 0, 2 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(gib)), duration - 1, TIMER_DELETE_ME)

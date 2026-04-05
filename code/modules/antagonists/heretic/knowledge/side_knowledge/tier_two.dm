@@ -29,10 +29,10 @@
 /datum/heretic_knowledge/codex_morbus/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	var/mob/living/carbon/human/to_fuck_up = locate() in selected_atoms
-	for(var/_limb in to_fuck_up.bodyparts)
+	for(var/_limb in to_fuck_up.get_bodyparts())
 		var/obj/item/bodypart/limb = _limb
 		limb.force_wound_upwards(/datum/wound/slash/flesh/critical)
-	for(var/obj/item/bodypart/limb as anything in to_fuck_up.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in to_fuck_up.get_bodyparts())
 		to_fuck_up.cause_wound_of_type_and_severity(WOUND_BLUNT, limb, WOUND_SEVERITY_CRITICAL)
 	return TRUE
 
@@ -60,8 +60,7 @@
 /datum/heretic_knowledge/spell/opening_blast
 	name = "Wave Of Desperation"
 	desc = "Grants you Wave Of Desparation, a spell which can only be cast while restrained. \
-		It removes your restraints, repels and knocks down adjacent people, and applies the Mansus Grasp to everything nearby. \
-		However, you will fall unconscious a short time after casting this spell."
+		It removes your restraints, repels and knocks down adjacent people, and applies the Mansus Grasp to everything nearby."
 	gain_text = "My shackles undone in dark fury, their feeble bindings crumble before my power."
 
 	action_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation

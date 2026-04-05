@@ -5,6 +5,7 @@
 	icon_state = "cat_house"
 	density = TRUE
 	anchored = TRUE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	///cat residing in this house
 	var/mob/living/resident_cat
 

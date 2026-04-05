@@ -222,21 +222,21 @@
 	return ..() + "(Leader)"
 
 /datum/antagonist/rev/head/get_preview_icon()
-	var/icon/final_icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/final_icon = render_preview_outfit(preview_outfit)
 
-	final_icon.Blend(make_assistant_icon("Business Hair"), ICON_UNDERLAY, -8, 0)
-	final_icon.Blend(make_assistant_icon("CIA"), ICON_UNDERLAY, 8, 0)
+	final_icon.blend_icon(make_assistant_icon("Business Hair"), ICON_UNDERLAY, -8, 0)
+	final_icon.blend_icon(make_assistant_icon("CIA"), ICON_UNDERLAY, 8, 0)
 
 	// Apply the rev head HUD, but scale up the preview icon a bit beforehand.
 	// Otherwise, the R gets cut off.
-	final_icon.Scale(64, 64)
+	final_icon.scale(64, 64)
 
-	var/icon/rev_head_icon = icon('icons/mob/huds/antag_hud.dmi', "rev_head")
-	rev_head_icon.Scale(48, 48)
-	rev_head_icon.Crop(1, 1, 64, 64)
-	rev_head_icon.Shift(EAST, 10)
-	rev_head_icon.Shift(NORTH, 16)
-	final_icon.Blend(rev_head_icon, ICON_OVERLAY)
+	var/datum/universal_icon/rev_head_icon = uni_icon('icons/mob/huds/antag_hud.dmi', "rev_head")
+	rev_head_icon.scale(48, 48)
+	rev_head_icon.crop(1, 1, 64, 64)
+	rev_head_icon.shift(EAST, 10)
+	rev_head_icon.shift(NORTH, 16)
+	final_icon.blend_icon(rev_head_icon, ICON_OVERLAY)
 
 	return finish_preview_icon(final_icon)
 
@@ -244,8 +244,8 @@
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
 	assistant.set_hairstyle(hairstyle, update = TRUE)
 
-	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
-	assistant_icon.ChangeOpacity(0.5)
+	var/datum/universal_icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
+	assistant_icon.change_opacity(0.5)
 
 	qdel(assistant)
 

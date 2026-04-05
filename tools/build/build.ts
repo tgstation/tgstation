@@ -22,7 +22,7 @@ export const DME_NAME = 'tgstation';
 
 Juke.chdir('../..', import.meta.url);
 
-const dependencies: Record<string, any> = await Bun.file('dependencies.sh')
+const dependencies: Record<string, string> = await Bun.file('dependencies.sh')
   .text()
   .then(formatDeps)
   .catch((err) => {
@@ -90,7 +90,11 @@ export const CutterTarget = new Juke.Target({
     const ver = dependencies.CUTTER_VERSION;
     const suffix = process.platform === 'win32' ? '.exe' : '';
     const download_from = `https://github.com/${repo}/releases/download/${ver}/hypnagogic${suffix}`;
-    await downloadFile(download_from, cutter_path);
+    // We're delaying "comitting" to the final filename here in case downloading fails/is interrupted
+    const temp_path = `${cutter_path}_temp`; // yes this means its file extension is .exe_temp I don't really care
+    await downloadFile(download_from, temp_path);
+    fs.copyFileSync(temp_path, cutter_path);
+    fs.rmSync(temp_path)
     if (process.platform !== 'win32') {
       await Juke.exec('chmod', ['+x', cutter_path]);
     }
@@ -147,11 +151,10 @@ export const DmMapsIncludeTarget = new Juke.Target({
       ...Juke.glob('_maps/shuttles/**/*.dmm'),
       ...Juke.glob('_maps/templates/**/*.dmm'),
     ];
-    const content =
-      folders
-        .map((file) => file.replace('_maps/', ''))
-        .map((file) => `#include "${file}"`)
-        .join('\n') + '\n';
+    const content = `${folders
+      .map((file) => file.replace('_maps/', ''))
+      .map((file) => `#include "${file}"`)
+      .join('\n')}\n`;
     fs.writeFileSync('_maps/templates.dm', content);
   },
 });
@@ -410,6 +413,7 @@ export const TguiCleanTarget = new Juke.Target({
     Juke.rm('tgui/public/*.{chunk,bundle,hot-update}.*');
     Juke.rm('tgui/packages/tgfont/dist', { recursive: true });
     Juke.rm('tgui/node_modules', { recursive: true });
+    Juke.rm('tgui/packages/*/node_modules', { recursive: true });
   },
 });
 

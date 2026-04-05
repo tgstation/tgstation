@@ -26,6 +26,8 @@ type BeakerProps = {
   replace_contents?: BeakerReagent[];
   title_label?: string;
   showpH?: BooleanLike;
+  showInsertButton?: boolean;
+  hasBeakerInHand?: BooleanLike;
 };
 
 export const BeakerDisplay = (props: BeakerProps) => {
@@ -78,14 +80,23 @@ export const BeakerDisplay = (props: BeakerProps) => {
 
 export const BeakerSectionDisplay = (props: BeakerProps) => {
   const { act } = useBackend();
-  const { beaker, replace_contents, title_label, showpH } = props;
+  const {
+    beaker,
+    replace_contents,
+    title_label,
+    showpH,
+    showInsertButton = false,
+    hasBeakerInHand,
+  } = props;
+
   const beakerContents = replace_contents || beaker?.contents || [];
+  const isBeakerLoaded = !!beaker;
 
   return (
     <Section
       title={title_label || 'Beaker'}
       buttons={
-        !!beaker && (
+        isBeakerLoaded ? (
           <>
             <Box inline color="label" mr={2}>
               {beaker.currentVolume} / {beaker.maxVolume} units
@@ -94,11 +105,28 @@ export const BeakerSectionDisplay = (props: BeakerProps) => {
               Eject
             </Button>
           </>
+        ) : (
+          showInsertButton && (
+            <Button
+              icon="eject"
+              onClick={() => act('insert')}
+              style={{
+                opacity: hasBeakerInHand ? 1 : 0.5,
+              }}
+              tooltip={
+                !hasBeakerInHand && 'You need to hold a container in your hand'
+              }
+              tooltipPosition="bottom-start"
+            >
+              Insert
+            </Button>
+          )
         )
       }
     >
       <Box color="label">
-        {(!beaker && 'N/A') || (beakerContents.length === 0 && 'Nothing')}
+        {(!beaker && 'No beaker loaded') ||
+          (beakerContents.length === 0 && 'Nothing')}
       </Box>
       {beakerContents.map((chemical) => (
         <Box key={chemical.name} color="label">

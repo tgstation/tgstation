@@ -39,17 +39,13 @@ TGUI in /tg/station codebase has `/datum/asset`, that packs scripts and styleshe
 
 ```dm
 window.initialize(
-  fancy = user.client.prefs.read_preference(
-    /datum/preference/toggle/tgui_fancy
-  ),
   assets = list(
     get_asset_datum(/datum/asset/simple/tgui),
   ))
 ```
 
-You can see two new arguments:
+You can see new arguments:
 
-- `fancy` - See [Fancy mode](#fancy-mode)
 - `assets` - This is a list of asset datums, and all JS and CSS in the assets will be loaded in the page.
 
 Using asset datums has a big benefit over including `<script>` and `<link>` in normal html popups; If your asset is not available for any reason at the moment (e.g. network is down or packet loss), tgui window will retry loading those assets multiple times.
@@ -92,16 +88,6 @@ window.initialize(
 ```
 
 If you need to inline multiple JS or CSS files, you can concatenate them for now, and separate contents of each file with an `\n` symbol. _This can be a point of improvement (add support for file lists)_.
-
-## Fancy mode
-
-You may have noticed the fancy mode in previous snippets:
-
-```dm
-window.initialize(fancy = TRUE)
-```
-
-This removes the native window titlebar and border, which effectively turns window into a floating panel. TGUI heavily uses this option to draw completely custom, fancy windows. You can use it too, but not having the default titlebar limits usability of the browser window, since you can't even close it or drag around without implementing that functionality yourself. This mode might be useful for creating popups and tooltips.
 
 ## Communication
 

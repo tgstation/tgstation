@@ -12,7 +12,7 @@
 	severity = DISEASE_SEVERITY_MEDIUM
 	required_organ = ORGAN_SLOT_TONGUE
 
-/datum/disease/pierrot_throat/stage_act(seconds_per_tick, times_fired)
+/datum/disease/pierrot_throat/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

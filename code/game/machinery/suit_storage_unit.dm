@@ -80,12 +80,12 @@
 
 /obj/machinery/suit_storage_unit/captain
 	mask_type = /obj/item/clothing/mask/gas/atmos/captain
-	storage_type = /obj/item/tank/jetpack/oxygen/captain
+	storage_type = /obj/item/tank/jetpack/captain
 	mod_type = /obj/item/mod/control/pre_equipped/magnate
 
 /obj/machinery/suit_storage_unit/centcom
 	mask_type = /obj/item/clothing/mask/gas/atmos/centcom
-	storage_type = /obj/item/tank/jetpack/oxygen/captain
+	storage_type = /obj/item/tank/jetpack/captain
 	mod_type = /obj/item/mod/control/pre_equipped/corporate
 
 /obj/machinery/suit_storage_unit/engine
@@ -137,7 +137,7 @@
 
 /obj/machinery/suit_storage_unit/syndicate
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	storage_type = /obj/item/tank/jetpack/oxygen/harness
+	storage_type = /obj/item/tank/jetpack/harness
 	mod_type = /obj/item/mod/control/pre_equipped/nuclear
 
 /obj/machinery/suit_storage_unit/syndicate/lavaland
@@ -493,9 +493,9 @@
 		update_appearance()
 		if(mob_occupant)
 			if(uv_super)
-				mob_occupant.adjustFireLoss(rand(20, 36))
+				mob_occupant.adjust_fire_loss(rand(20, 36))
 			else
-				mob_occupant.adjustFireLoss(rand(10, 16))
+				mob_occupant.adjust_fire_loss(rand(10, 16))
 			if(iscarbon(mob_occupant) && mob_occupant.stat < UNCONSCIOUS)
 				//Awake, organic and screaming
 				mob_occupant.emote("scream")
@@ -507,9 +507,7 @@
 		if(uv_super)
 			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
 			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 50, TRUE)
-			var/datum/effect_system/fluid_spread/smoke/bad/black/smoke = new
-			smoke.set_up(0, holder = src, location = src)
-			smoke.start()
+			do_smoke(0, src, src, smoke_type = /datum/effect_system/fluid_spread/smoke/bad/black)
 			QDEL_NULL(helmet)
 			QDEL_NULL(suit)
 			QDEL_NULL(mask)
@@ -566,14 +564,6 @@
 	var/charge_per_item = (final_charge_rate * seconds_per_tick) / cell_count
 	for(var/obj/item/stock_parts/power_store/cell as anything in cells_to_charge)
 		charge_cell(charge_per_item, cell, grid_only = TRUE)
-
-/obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
-	if(!prob(prb))
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-		if(electrocute_mob(user, src, src, 1, TRUE))
-			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/living/user, direction)
 	if(locked)

@@ -85,7 +85,7 @@
 	if(isnull(outfit_id))
 		return
 
-	outfit_id.registered_account = new()
+	outfit_id.set_account(new /datum/bank_account)
 	outfit_id.registered_account.replaceable = FALSE
 	outfit_id.registered_account.account_id = null
 	outfit_id.registered_name = player.name

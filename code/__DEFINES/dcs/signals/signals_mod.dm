@@ -54,3 +54,9 @@
 #define COMSIG_MOD_GET_VISOR_OVERLAY "mod_get_visor_overlay"
 /// Called when the MOD control unit updates its parts speed
 #define COMSIG_MOD_UPDATE_SPEED "mod_update_speed"
+/// Called on the module when the user attempts to install it into a MOD control unit (obj/item/mod/control/suit, mob/user)
+#define COMSIG_MODULE_TRY_INSTALL "mod_module_try_install"
+/// Called on the MOD control unit when the user attempts to install a module (obj/item/mod/module/module, mob/user)
+#define COMSIG_MOD_TRY_INSTALL_MODULE "mod_try_install_module"
+	/// Cancel module installation, with no message. Include feedback on your cancel.
+	#define MOD_ABORT_INSTALL (1<<0)

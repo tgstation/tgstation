@@ -33,30 +33,20 @@ Slimecrossing Items
 		if(QDELETED(saved_part.old_part))
 			saved_part.old_part = new saved_part.bodypart_type
 		if(!already || already != saved_part.old_part)
-			saved_part.old_part.replace_limb(src, TRUE)
+			saved_part.old_part.replace_limb(src)
 		saved_part.old_part.heal_damage(INFINITY, INFINITY, null, FALSE)
 		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, wound_bonus=CANT_WOUND)
 		dont_chop[zone] = TRUE
-	for(var/_part in bodyparts)
-		var/obj/item/bodypart/part = _part
-		if(dont_chop[part.body_zone])
-			continue
-		part.drop_limb(TRUE)
 
 /mob/living/carbon/proc/save_bodyparts()
 	var/list/datum/saved_bodypart/ret = list()
-	for(var/_part in bodyparts)
-		var/obj/item/bodypart/part = _part
+	for(var/obj/item/bodypart/part as anything in get_bodyparts(include_stumps = TRUE))
 		var/datum/saved_bodypart/saved_part = new(part)
-
 		ret[part.body_zone] = saved_part
 	return ret
 
-/obj/item/camera/rewind/photo_taken(atom/target, mob/user)
+/obj/item/camera/rewind/on_flash(atom/target, mob/user)
 	. = ..()
-	if(!.)
-		return
-
 	if(user == target)
 		to_chat(user, span_notice("You take a selfie!"))
 	else
@@ -73,10 +63,8 @@ Slimecrossing Items
 	pictures_left = 1
 	pictures_max = 1
 
-/obj/item/camera/timefreeze/photo_taken(atom/target, mob/user)
+/obj/item/camera/timefreeze/on_flash(atom/target, mob/user)
 	. = ..()
-	if(!.)
-		return
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
 
 //Hypercharged slime cell - Charged Yellow
@@ -196,7 +184,7 @@ Slimecrossing Items
 		else
 			to_chat(user, span_warning("[pokemon] refused to enter the device."))
 			return
-	else if(!(FACTION_NEUTRAL in pokemon.faction))
+	else if(!pokemon.has_faction(FACTION_NEUTRAL))
 		to_chat(user, span_warning("This creature is too aggressive to capture."))
 		return
 	to_chat(user, span_notice("You store [pokemon] in the capture device."))

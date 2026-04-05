@@ -37,6 +37,10 @@
 ///Gaze upon the target
 /datum/status_effect/slime_food/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+	if(HAS_TRAIT(user, TRAIT_ANOSMIA))
+		return
+	if(get_dist(user, owner) > 1 && !astype(user, /mob/living/carbon)?.dna.get_mutation(/datum/mutation/olfaction))
+		return
 	if(user == feeder)
 		examine_list += span_boldnotice("Their smell reminds you of serenity and yourself.")
 	else

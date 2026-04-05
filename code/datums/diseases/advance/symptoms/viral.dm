@@ -14,6 +14,7 @@
 	stage_speed = -3
 	transmittable = 0
 	level = 3
+	symptom_cure = null
 
 /*Viral evolution
  * Reduces stealth
@@ -32,3 +33,4 @@
 	stage_speed = 5
 	transmittable = 3
 	level = 3
+	symptom_cure = null

@@ -88,6 +88,8 @@
 	var/rewards_given = 0
 	/// Our heretic passive level. Tracked here in case of body moving shenanigans
 	var/passive_level = 1
+	/// How many points are needed to gain a visible heretic aura
+	var/points_to_aura = 8
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
@@ -181,6 +183,7 @@
 
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
+	data["points_to_aura"] = points_to_aura
 
 	var/list/tree_data = list()
 	var/list/shop_knowledge = list()
@@ -312,7 +315,7 @@
 	return ..()
 
 /datum/antagonist/heretic/get_preview_icon()
-	var/icon/icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/icon = render_preview_outfit(preview_outfit)
 
 	// MOTHBLOCKS TODO: Copied and pasted from cult, make this its own proc
 
@@ -321,14 +324,14 @@
 
 	// Center the dude, because item icon states start from the center.
 	// This makes the image 64x64.
-	icon.Crop(-15, -15, 48, 48)
+	icon.crop(-15, -15, 48, 48)
 
-	var/obj/item/melee/sickly_blade/blade = new
-	icon.Blend(icon(blade.lefthand_file, blade.inhand_icon_state), ICON_OVERLAY)
-	qdel(blade)
+	var/obj/item/melee/sickly_blade/blade_type = /obj/item/melee/sickly_blade
+	var/datum/universal_icon/blade_icon = uni_icon(blade_type::lefthand_file, blade_type::inhand_icon_state)
+	icon.blend_icon(blade_icon, ICON_OVERLAY)
 
 	// Move the guy back to the bottom left, 32x32.
-	icon.Crop(17, 17, 48, 48)
+	icon.crop(17, 17, 48, 48)
 
 	return finish_preview_icon(icon)
 
@@ -351,7 +354,7 @@
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge, HERETIC_KNOWLEDGE_START, update = FALSE)
 
-	owner.current.AddElement(/datum/element/leeching_walk/minor)
+	owner.current.AddElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 
 	ADD_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
@@ -365,7 +368,7 @@
 			QDEL_NULL(researched_knowledge[knowledge_path][HKT_INSTANCE])
 
 	REMOVE_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
-	owner.current.RemoveElement(/datum/element/leeching_walk/minor)
+	owner.current.RemoveElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 	QDEL_NULL(heretic_path)
 	owner.current.cut_overlay(eldritch_overlay)
 	return ..()
@@ -373,7 +376,7 @@
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-	our_mob.faction |= FACTION_HERETIC
+	our_mob.add_faction(FACTION_HERETIC)
 
 	if(!issilicon(our_mob))
 		GLOB.reality_smash_track.add_tracked_mind(owner)
@@ -394,7 +397,7 @@
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
-	our_mob.faction -= FACTION_HERETIC
+	our_mob.remove_faction(FACTION_HERETIC)
 
 	if(owner in GLOB.reality_smash_track.tracked_heretics)
 		GLOB.reality_smash_track.remove_tracked_mind(owner)
@@ -775,7 +778,7 @@
 /datum/antagonist/heretic/proc/adjust_knowledge_points(amount, update = TRUE)
 	knowledge_points = max(0, knowledge_points + amount) // Don't allow negative knowledge points
 	knowledge_gained += max(0, amount)
-	if(knowledge_gained > 8 && !unlimited_blades)
+	if(knowledge_gained > points_to_aura && !unlimited_blades)
 		disable_blade_breaking()
 	if(update)
 		update_data_for_all_viewers()
@@ -1168,6 +1171,6 @@
 /datum/outfit/heretic
 	name = "Heretic (Preview only)"
 
-	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
-	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust
+	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
 	r_hand = /obj/item/melee/touch_attack/mansus_fist

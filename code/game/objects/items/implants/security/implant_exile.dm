@@ -8,22 +8,32 @@
 	implant_flags = IMPLANT_TYPE_SECURITY
 	hud_icon_state = "hud_imp_exile"
 
-/obj/item/implant/exile/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Nanotrasen Employee Exile Implant<BR> \
-		<b>Implant Details:</b> The onboard gateway system has been modified to reject entry by individuals containing this implant. \
-		Additionally, station mining shuttles will lock their controls if handled by someone with this implant.<BR>"
+	implant_info = "Automatically activates upon implantation. \
+		Prevents returning through Nanotrasen gateway systems, and prevents usage of Nanotrasen mining shuttle controls."
 
+	implant_lore = "The Nanotrasen Employee Exile Implant is an RFID transponder \
+		designed to facilitate one-way traversal through Nanotrasen Gateway Project gateways. \
+		It allows implantees to enter, but not exit, gateway locales, automatically rejecting traversal attempts if an attempt is made, \
+		effectively exiling them to the gateway's locale. \
+		Alongside this, the exile implant interfaces with Nanotrasen mining shuttle control systems, automatically locking \
+		themselves down if implantees attempt to use them."
 
 ///Used to help the staff of the space hotel resist the urge to use the space hotel's incredibly alluring roundstart teleporter to ignore their flavor/greeting text and come to the station.
 /obj/item/implant/exile/noteleport
 	name = "anti-teleportation implant"
-	desc = "Uses impressive bluespace grounding techniques to deny the person implanted by this implant the ability to teleport (or be teleported). Used by certain slavers (or particularly strict employers) to keep their slaves from using teleporters to escape their grasp."
+	desc = "Uses impressive bluespace grounding techniques to deny the person implanted by this implant the ability to teleport or be teleported. \
+		Used by certain slavers, or particularly strict employers, to keep their slaves or employees from using teleporters to escape their grasp."
 
-/obj/item/implant/exile/noteleport/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Anti-Teleportation Implant<BR> \
-		<b>Implant Details:</b> Keeps the implantee from using most teleportation devices. In addition, it spoofs the implant signature of an exile implant to keep the implantee from using certain gateway systems.<BR>"
+	implant_info = "Automatically activates upon implantation. \
+		Mimics an exile implant, preventing returning from a gateway locale and locking down Nanotrasen mining shuttles, \
+		while also preventing teleportation."
+
+	implant_lore = "The Sunken Anchor anti-teleportation implant is a subdermal anti-teleportation device that prevents usage of \
+		conventional and unconventional methods of teleporting, in order to prevent employees \
+		or slaves from using unauthorized means of teleportation to abandon their posts. \
+		In addition, the Sunken Anchor mimics the signature of Nanotrasen's exile implant, \
+		preventing returning through Nanotrasen Gateway Project gateways and locking implantees out of using Nanotrasen's mining shuttles. \
+		The ethics behind having this implant are questionable. The efficacy of the implant itself is not."
 
 /obj/item/implant/exile/noteleport/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()

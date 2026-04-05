@@ -202,10 +202,6 @@
 /obj/machinery/light/small/red/directional/north,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
-"vU" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/indestructible/reinforced,
-/area/ruin/powered/mailroom)
 "vV" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/smooth_large,
@@ -470,6 +466,7 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
+/obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)
 "Wr" = (
@@ -485,16 +482,13 @@
 "WE" = (
 /turf/closed/wall/r_wall,
 /area/ruin/powered/mailroom)
-"Xa" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/indestructible/reinforced,
-/area/ruin/powered/mailroom)
 "Xi" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
 /obj/effect/decal/remains/human,
 /obj/item/clothing/suit/hooded/wintercoat,
+/obj/structure/sign/departments/cargo/directional/south,
 /turf/open/floor/iron/textured,
 /area/ruin/powered/mailroom)
 "XO" = (
@@ -693,7 +687,7 @@ SY
 iO
 MC
 Wr
-Xa
+ms
 Wj
 ch
 Mi
@@ -767,7 +761,7 @@ MT
 ba
 ba
 Xi
-vU
+ms
 iV
 zr
 iV

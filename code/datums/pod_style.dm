@@ -33,7 +33,7 @@
 /datum/pod_style/centcom
 	name = "\improper CentCom supply pod"
 	ui_name = "Nanotrasen"
-	desc = "A Nanotrasen supply pod, this one has been marked with Central Command's designations. Teleports back to CentCom after delivery."
+	desc = "A Nanotrasen supply pod. This one has been marked with Central Command's designations. Teleports back to CentCom after delivery."
 	decal_icon = "centcom"
 	glow_color = "blue"
 	id = "centcom"

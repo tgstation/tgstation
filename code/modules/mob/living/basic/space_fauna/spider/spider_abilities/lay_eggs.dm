@@ -55,7 +55,7 @@
 
 /datum/action/cooldown/mob_cooldown/lay_eggs/proc/lay_egg()
 	var/obj/effect/mob_spawn/ghost_role/spider/new_eggs = new egg_type(get_turf(owner))
-	new_eggs.faction = owner.faction
+	SET_FACTION_AND_ALLIES_FROM(new_eggs, owner)
 	var/datum/action/cooldown/mob_cooldown/set_spider_directive/spider_directive = locate() in owner.actions
 	if (spider_directive)
 		new_eggs.directive = spider_directive.current_directive

@@ -322,7 +322,7 @@
 				info["name"] = new_name
 				// No color changing for channels with theme settings
 				if(!GLOB.freqtospan["[freq]"])
-					var/new_color = input(usr, "Choose color for frequency", "Modifying Frequency Information", info["color"]) as color|null
+					var/new_color = tgui_color_picker(usr, "Choose color for frequency", "Modifying Frequency Information", info["color"])
 					if(new_color)
 						info["color"] = new_color
 				frequency_infos[params["freq"]] = info
@@ -341,7 +341,7 @@
 			for(var/list/channel in get_channels())
 				if(channel["freq"] == freq || channel["name"] == name)
 					return
-			var/color = input(usr, "Choose color for frequency", "Adding Frequency Information") as color|null
+			var/color = tgui_color_picker(usr, "Choose color for frequency", "Adding Frequency Information")
 			if(!color)
 				return
 			frequency_infos[num2text(freq)] = list(

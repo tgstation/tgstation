@@ -117,7 +117,7 @@
 		name = new_name
 		real_name = new_name
 
-/mob/living/basic/pet/dog/breaddog/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/pet/dog/breaddog/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //dead or deleted
 		return
@@ -125,7 +125,7 @@
 		return
 
 	if(health < maxHealth)
-		adjustBruteLoss(-4 * seconds_per_tick) //Fast life regen
+		adjust_brute_loss(-4 * seconds_per_tick) //Fast life regen
 
 	for(var/mob/living/carbon/humanoid_entities in view(3, src)) //Mood aura which stay as long you do not wear Sanallite as hat or carry(I will try to make it work with hat someday(obviously weaker than normal one))
 		humanoid_entities.add_mood_event("kobun", /datum/mood_event/kobun)

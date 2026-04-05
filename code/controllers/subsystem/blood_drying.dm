@@ -5,7 +5,7 @@
  */
 PROCESSING_SUBSYSTEM_DEF(blood_drying)
 	name = "Blood Drying"
-	flags = SS_NO_INIT | SS_BACKGROUND
+	ss_flags = SS_NO_INIT | SS_BACKGROUND
 	priority = FIRE_PRIORITY_BLOOD_DRYING
 	runlevels = RUNLEVEL_GAME
 	wait = 4 SECONDS

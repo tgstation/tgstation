@@ -5,7 +5,6 @@
 	overlay_icon_state = "bg_mime_border"
 	button_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "mime_speech"
-	panel = "Mime"
 
 	school = SCHOOL_MIME
 	//MMI mimes should be able to break their vow

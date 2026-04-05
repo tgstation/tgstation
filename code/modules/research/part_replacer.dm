@@ -90,10 +90,10 @@
 
 	if(istype(inserted_component, /obj/item/stock_parts/power_store))
 		var/obj/item/stock_parts/power_store/inserted_cell = inserted_component
-		if(inserted_cell.rigged || inserted_cell.corrupted)
-			message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
-			usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
-			usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
+		if(inserted_cell.corrupted)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted corrupted [inserted_cell] into [src].")
+			usr.log_message("has inserted corrupted [inserted_cell] into [src].", LOG_GAME)
+			usr.log_message("inserted corrupted [inserted_cell] into [src]", LOG_ATTACK)
 		return
 
 	var/datum/reagents/target_holder = inserted_component.reagents
@@ -150,6 +150,7 @@
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
 		new /obj/item/stock_parts/power_store/cell/bluespace(src)
+		new /obj/item/stack/cable_coil/thirty(src)
 
 //used in a cargo crate
 /obj/item/storage/part_replacer/cargo/PopulateContents()

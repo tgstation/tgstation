@@ -261,12 +261,12 @@
 "DU" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "DY" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "DZ" = (
 /obj/structure/frame,
 /turf/open/misc/asteroid,
@@ -346,10 +346,6 @@
 /obj/structure/door_assembly/door_assembly_sec,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/derelictconstruction)
-"LL" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/space/nearstation)
 "Md" = (
 /turf/open/floor/plating/foam,
 /area/ruin/space/has_grav/derelictconstruction)
@@ -545,9 +541,9 @@ qM
 qM
 qM
 uw
-LL
+DU
 qM
-LL
+DU
 qM
 eu
 qM
@@ -574,10 +570,10 @@ qM
 qM
 qM
 uw
-LL
-LL
+DU
+DU
 fa
-LL
+DU
 uw
 Ik
 bY
@@ -603,9 +599,9 @@ qM
 qM
 qM
 Ax
-LL
+DU
 qM
-LL
+DU
 qM
 Ax
 Vq
@@ -634,8 +630,8 @@ qM
 Wj
 Sw
 Sw
-LL
-LL
+DU
+DU
 Ax
 Md
 ao
@@ -663,7 +659,7 @@ qM
 uw
 eu
 qM
-LL
+DU
 Sw
 Ax
 gi
@@ -985,10 +981,10 @@ qR
 Za
 qR
 qR
-LL
-LL
-LL
-LL
+DU
+DU
+DU
+DU
 Ax
 bY
 bY

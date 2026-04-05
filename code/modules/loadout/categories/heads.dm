@@ -155,3 +155,8 @@
 /datum/loadout_item/head/wig
 	name = "Natural Wig"
 	item_path = /obj/item/clothing/head/wig/natural
+
+/datum/loadout_item/head/santa
+	name = "Santa Hat"
+	item_path = /obj/item/clothing/head/costume/santa/gags
+	required_holiday = FESTIVE_SEASON

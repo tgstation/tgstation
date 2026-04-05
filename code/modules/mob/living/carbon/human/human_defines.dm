@@ -5,7 +5,7 @@
 	icon = 'icons/mob/human/human.dmi'
 	icon_state = "human_basic"
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPSEC_FIRST_HUD,IMPSEC_SECOND_HUD,ANTAG_HUD,GLAND_HUD,FAN_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,BLOOD_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPSEC_FIRST_HUD,IMPSEC_SECOND_HUD,ANTAG_HUD,GLAND_HUD,FAN_HUD)
 	hud_type = /datum/hud/human
 	pressure_resistance = 25
 	buckle_lying = 0
@@ -21,15 +21,9 @@
 	var/hairstyle = "Bald"
 
 	///Colours used for hair and facial hair gradients.
-	var/list/grad_color = list(
-		COLOR_BLACK,	//Hair Gradient Color
-		COLOR_BLACK,	//Facial Hair Gradient Color
-	)
+	var/list/grad_color
 	///Styles used for hair and facial hair gradients.
-	var/list/grad_style = list(
-		"None",	//Hair Gradient Style
-		"None",	//Facial Hair Gradient Style
-	)
+	var/list/grad_style
 
 	//Facial hair colour and style
 	var/facial_hair_color = COLOR_BLACK
@@ -96,3 +90,6 @@
 	VAR_PRIVATE/base_mob_height = HUMAN_HEIGHT_MEDIUM
 	/// Actual height of the mob. Don't touch this one, it is set via update_mob_height()
 	VAR_FINAL/mob_height = HUMAN_HEIGHT_MEDIUM
+
+	/// Tracks how long in seconds we've been in a low pressure environment
+	VAR_FINAL/seconds_in_low_pressure = 0

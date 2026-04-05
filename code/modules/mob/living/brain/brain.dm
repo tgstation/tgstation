@@ -58,10 +58,10 @@
 	return
 
 /mob/living/brain/get_eye_protection()//no eyes
-	return 2
+	return FLASH_PROTECTION_WELDER
 
-/mob/living/brain/get_ear_protection()//no ears
-	return 2
+/mob/living/brain/get_ear_protection(ignore_deafness = FALSE)
+	return ..() + EAR_PROTECTION_HEAVY
 
 /mob/living/brain/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	return // no eyes, no flashing

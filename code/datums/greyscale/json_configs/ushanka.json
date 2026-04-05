@@ -7,6 +7,12 @@
 			"color_ids": [1]
 		},
 		{
+            "type": "icon_state",
+            "icon_state": "ushanka_fur_up",
+            "blend_mode": "overlay",
+            "color_ids": [1]
+        },
+		{
 			"type": "icon_state",
 			"icon_state": "ushanka_base_up",
 			"blend_mode": "overlay",
@@ -22,9 +28,16 @@
 		},
 		{
 			"type": "icon_state",
+			"icon_state": "ushanka_base_2",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
 			"icon_state": "ushanka_base",
 			"blend_mode": "overlay",
 			"color_ids": [2]
 		}
+
 	]
 }

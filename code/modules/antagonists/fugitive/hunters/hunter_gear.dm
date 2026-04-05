@@ -106,9 +106,7 @@
 	color = "#d6ad8b"
 
 /obj/item/clothing/suit/armor/reactive/psykerboost/cooldown_activation(mob/living/carbon/human/owner)
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(1, 1, src)
-	sparks.start()
+	do_sparks(1, TRUE, src)
 	return ..()
 
 /obj/item/clothing/suit/armor/reactive/psykerboost/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -215,16 +213,39 @@
 	desc = "A headset designed to boost psychic waves. Protects ears from flashbangs."
 	icon_state = "psyker_headset"
 	worn_icon_state = "syndie_headset"
+	freerange = TRUE
 
 /obj/item/radio/headset/psyker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection)
+	set_frequency(FREQ_FUGITIVE_HUNTER)
 
-/obj/item/radio/headset/psyker/equipped(mob/living/user, slot)
+/obj/item/radio/headset/psyker/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot_flags & slot)
-		ADD_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
+	if(HAS_TRAIT(user, TRAIT_ECHOLOCATOR))
+		ADD_TRAIT(user, TRAIT_SIGHT_BYPASS, REF(src))
+	else
+		REMOVE_TRAIT(user, TRAIT_SIGHT_BYPASS, REF(src))
 
 /obj/item/radio/headset/psyker/dropped(mob/user, silent)
 	. = ..()
-	REMOVE_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
+	REMOVE_TRAIT(user, TRAIT_SIGHT_BYPASS, REF(src))
+
+/obj/item/radio/headset/psyker_seer
+	name = "psychic seer headset"
+	desc = "A psychic headset designed for the elite psyker seers."
+	icon_state = "med_headset_alt"
+	worn_icon_state = "med_headset_alt"
+	freerange = TRUE
+
+/obj/item/radio/headset/psyker_seer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection)
+	set_frequency(FREQ_FUGITIVE_HUNTER)
+
+/obj/item/storage/belt/holster/psyker
+
+/obj/item/storage/belt/holster/psyker/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 5
+	atom_storage.max_total_storage = /obj/item/gun/ballistic/revolver/c38::w_class + (4 * /obj/item/ammo_box/speedloader/c38::w_class)

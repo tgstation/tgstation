@@ -6,6 +6,9 @@
 	var/obj/effect/client_image_holder/hallucination/your_mother/mother
 
 /datum/hallucination/your_mother/start()
+	if(!hallucinator.client || hallucinator.stat >= UNCONSCIOUS)
+		return FALSE
+
 	var/list/spawn_locs = list()
 	for(var/turf/open/floor in view(hallucinator, 4))
 		if(floor.is_blocked_turf(exclude_mobs = TRUE))

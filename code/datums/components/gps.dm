@@ -23,10 +23,20 @@ GLOBAL_LIST_EMPTY(GPS_list)
 /datum/component/gps/kheiral_cuffs/Initialize(_gpstag = "COM0")
 	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(deactivate_kheiral_cuffs))
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(deactivate_if_station))
 
 /datum/component/gps/kheiral_cuffs/proc/deactivate_kheiral_cuffs(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)
+
+/datum/component/gps/kheiral_cuffs/proc/deactivate_if_station(atom/movable/moved_atom, turf/old_turf, turf/new_turf)
+	SIGNAL_HANDLER
+	if(!isturf(new_turf))
+		return
+
+	if(is_station_level(new_turf.z))
+		qdel(src)
+		return
 
 ///GPS component subtype. Only gps/item's can be used to open the UI.
 /datum/component/gps/item

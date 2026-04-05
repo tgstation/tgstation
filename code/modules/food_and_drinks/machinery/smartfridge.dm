@@ -550,6 +550,7 @@
 	base_build_path = /obj/machinery/smartfridge/drying/rack
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 
 /obj/machinery/smartfridge/drying/rack/Initialize(mapload)
 	. = ..()

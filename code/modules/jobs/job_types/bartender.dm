@@ -1,7 +1,6 @@
 /datum/job/bartender
 	title = JOB_BARTENDER
 	description = "Serve booze, mix drinks, keep the crew drunk."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -14,6 +13,9 @@
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
+
+	liver_traits = list(TRAIT_BARTENDER_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_BARTENDER
 	bounty_types = CIV_JOB_DRINK
 	departments_list = list(

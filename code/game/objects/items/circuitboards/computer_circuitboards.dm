@@ -313,6 +313,50 @@
 	name = "Slot Machine"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/slot_machine
+	desc = "You can change the theme using a screwdriver."
+	/// List of pickable slot machines
+	var/static/list/slot_themes = list(
+		"Default" = /obj/machinery/computer/slot_machine,
+		"Command" = /obj/machinery/computer/slot_machine/command,
+		"Security" = /obj/machinery/computer/slot_machine/security,
+		"Medical" = /obj/machinery/computer/slot_machine/medical,
+		"Engineering" = /obj/machinery/computer/slot_machine/engineering,
+		"Cargo" = /obj/machinery/computer/slot_machine/cargo,
+		"Service" = /obj/machinery/computer/slot_machine/service,
+		"Science" = /obj/machinery/computer/slot_machine/science,
+		"Clown" = /obj/machinery/computer/slot_machine/clown,
+		"Mime" = /obj/machinery/computer/slot_machine/mime,
+	)
+
+/obj/item/circuitboard/computer/slot_machine/examine(mob/user)
+	. = ..()
+	var/current_theme = "Unknown"
+	for(var/theme_name in slot_themes)
+		if(slot_themes[theme_name] == build_path)
+			current_theme = theme_name
+			break
+	. += span_info("[src] is set to the [current_theme] theme. You can use a screwdriver to reconfigure it.")
+
+/obj/item/circuitboard/computer/slot_machine/screwdriver_act(mob/living/user, obj/item/tool)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "board mode is broken!")
+		return FALSE
+
+	var/choice = tgui_input_list(user, "Choose a slot machine theme", "Theme Selection", slot_themes)
+	if(isnull(choice))
+		return ITEM_INTERACT_BLOCKING
+	build_path = slot_themes[choice]
+	to_chat(user, span_notice("You set the board to the [choice] theme."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/circuitboard/computer/slot_machine/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+
+	obj_flags |= EMAGGED
+	build_path = /obj/machinery/computer/slot_machine/syndicate
+	balloon_alert(user, "illegal slot machine loaded")
+	return TRUE
 
 /obj/item/circuitboard/computer/swfdoor
 	name = "Magix"
@@ -429,12 +473,20 @@
 	name = "R&D Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/rdconsole
+	req_access = list(ACCESS_RESEARCH) // Research access is required to toggle the lock.
+
 	var/silence_announcements = FALSE
+	var/locked = TRUE
+
+// An unlocked subtype of the board for mapping.
+/obj/item/circuitboard/computer/rdconsole/unlocked
+	locked = FALSE
 
 /obj/item/circuitboard/computer/rdconsole/examine(mob/user)
 	. = ..()
 	. += span_info("The board is configured to [silence_announcements ? "silence" : "announce"] researched nodes on radio.")
 	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+	. += span_notice("The board is [locked ? "locked" : "unlocked"], and can be [locked ? "unlocked" : "locked"] with an ID that has research access.")
 
 /obj/item/circuitboard/computer/rdconsole/multitool_act(mob/living/user)
 	. = ..()
@@ -445,6 +497,10 @@
 	balloon_alert(user, "announcements [silence_announcements ? "enabled" : "disabled"]")
 
 /obj/item/circuitboard/computer/rdconsole/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if (locked)
+		locked = FALSE
+		to_chat(user, span_notice("You magnetically trigger the locking mechanism, causing it to unlock."))
+
 	if (obj_flags & EMAGGED)
 		return FALSE
 
@@ -452,6 +508,20 @@
 	silence_announcements = FALSE
 	to_chat(user, span_notice("You overload the node announcement chip, forcing every node to be announced on the common channel."))
 	return TRUE
+
+/obj/item/circuitboard/computer/rdconsole/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	if (user.combat_mode || !isidcard(attacking_item))
+		return ..()
+	if (check_access(attacking_item))
+		locked = !locked
+		balloon_alert(user, locked ? "locked" : "unlocked")
+		user.visible_message(
+			message = span_notice("\The [user] unlock[user.p_s()] \the [src] with \the [attacking_item]."),
+			self_message = span_notice("You unlock \the [src] with \the [attacking_item]."),
+			blind_message = span_hear("You hear a soft beep."),
+		)
+	else
+		balloon_alert(user, "no access!")
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control"

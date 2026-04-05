@@ -16,7 +16,7 @@
 	canSmoothWith = SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_OPEN_FLOOR
 	var/number_of_mats = 1
 	var/build_material = /obj/item/stack/rods
-	var/list/give_turf_traits = list(TRAIT_CHASM_STOPPED, TRAIT_HYPERSPACE_STOPPED)
+	var/list/give_turf_traits = list(TRAIT_CHASM_STOPPED, TRAIT_HYPERSPACE_STOPPED, TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_IMMERSE_STOPPED)
 
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()
@@ -47,6 +47,10 @@
 	if(isturf(turfloc))
 		for(var/thing_that_falls in turfloc)
 			turfloc.zFall(thing_that_falls)
+
+	var/area/turf_area = get_area(turfloc)
+	if(isspaceturf(turfloc) && istype(turf_area, /area/space/nearstation))
+		set_turf_to_area(turfloc, GLOB.areas_by_type[/area/space])
 
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)
 	return span_notice("The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.")
@@ -82,8 +86,8 @@
 	return FALSE
 
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
-		var/design_structure = rcd_data["[RCD_DESIGN_PATH]"]
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF)
+		var/design_structure = rcd_data[RCD_DESIGN_PATH]
 		if(design_structure == /turf/open/floor/plating/rcd)
 			var/turf/T = src.loc
 			if(isgroundlessturf(T))

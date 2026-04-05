@@ -119,7 +119,11 @@
 
 ///Return a dumb glob list for this specific feature (called from parse_sprite)
 /datum/bodypart_overlay/mutant/proc/get_global_feature_list()
-	CRASH("External organ has no feature list, it will render invisible")
+	var/list/feature_list = SSaccessories.feature_list[feature_key]
+	if(isnull(feature_list))
+		stack_trace("External organ has no feature list, it will render invisible")
+		return list()
+	return feature_list
 
 ///Give the organ its color. Force will override the existing one.
 /datum/bodypart_overlay/mutant/proc/inherit_color(obj/item/bodypart/bodypart_owner, force)

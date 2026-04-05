@@ -38,7 +38,7 @@
 /datum/outfit/centcom/ert/commander
 	name = "ERT Commander"
 
-	id = /obj/item/card/id/advanced/centcom/ert
+	id = /obj/item/card/id/advanced/centcom/ert/commander
 	back = /obj/item/mod/control/pre_equipped/responsory/commander
 	l_hand = /obj/item/gun/energy/e_gun
 	box = /obj/item/storage/box/survival/centcom
@@ -54,12 +54,14 @@
 /datum/outfit/centcom/ert/commander/alert
 	name = "ERT Commander - High Alert"
 
+	l_hand = /obj/item/gun/energy/disabler/smg
 	backpack_contents = list(
 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
 		/obj/item/melee/baton/security/loaded = 1,
 	)
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	l_pocket = /obj/item/melee/energy/sword/saber
+	suit_store = /obj/item/gun/energy/laser/assault
 
 /datum/outfit/centcom/ert/security
 	name = "ERT Security"
@@ -186,7 +188,7 @@
 	name = "Inquisition Commander"
 
 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
-	r_hand = /obj/item/nullrod/vibro/talking/chainsword
+	r_hand = /obj/item/nullrod/claymore/talking/chainsword
 	backpack_contents = null
 
 /datum/outfit/centcom/ert/security/inquisitor
@@ -487,7 +489,7 @@
 /datum/outfit/centcom/ert/marine
 	name = "Marine Commander"
 
-	id = /obj/item/card/id/advanced/centcom/ert
+	id = /obj/item/card/id/advanced/centcom/ert/commander
 	suit = /obj/item/clothing/suit/armor/vest/marine
 	suit_store = /obj/item/gun/ballistic/automatic/wt550
 	back = /obj/item/shield/riot

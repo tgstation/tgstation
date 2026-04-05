@@ -41,6 +41,7 @@
 					new_latejoin += shuttle_chair
 				if(isnull(console))
 					console = locate() in arrival_turf
+					RegisterSignal(console, COMSIG_QDELETING, PROC_REF(find_console))
 		areas += arrival_area
 
 	if(SSjob.latejoin_trackers.len)
@@ -99,6 +100,22 @@
 			sound_played = TRUE
 	else if(!found_awake)
 		Launch(FALSE)
+
+/obj/docking_port/mobile/arrivals/proc/find_console(datum/source, force)
+	SIGNAL_HANDLER
+
+	//clear ref to old deleted console
+	console = null
+
+	//find new console
+	for(var/area/shuttle/arrival/arrival_area as anything in areas)
+		for(var/list/zlevel_turfs as anything in arrival_area.get_zlevel_turf_lists())
+			for(var/turf/arrival_turf as anything in zlevel_turfs)
+				var/obj/machinery/requests_console/target = locate() in arrival_turf
+				if(!QDELETED(target))
+					console = target
+					RegisterSignal(console, COMSIG_QDELETING, PROC_REF(find_console))
+					return
 
 /obj/docking_port/mobile/arrivals/proc/CheckTurfsPressure()
 	for(var/I in SSjob.latejoin_trackers)

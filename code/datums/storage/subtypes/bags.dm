@@ -217,8 +217,9 @@
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stock_parts,
 		/obj/item/wallframe/camera,
-		/obj/item/stack/sheet,
 		/obj/item/rcd_ammo,
+	), exception_hold_list = list(
+		/obj/item/stack/sheet,
 		/obj/item/stack/rods,
 	))
 
@@ -232,7 +233,7 @@
 	. = ..()
 	set_holdable(/obj/item/ammo_casing/harpoon)
 
-///Rebar quiber bag
+///Rebar quiver bag
 /datum/storage/bag/rebar_quiver
 	max_specific_storage = WEIGHT_CLASS_TINY
 	max_slots = 10

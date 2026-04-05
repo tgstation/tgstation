@@ -21,7 +21,7 @@
 	)
 	cons = list(
 		"No mobility.",
-		"Mo direct tools to damage your opponents.",
+		"No direct tools to damage your opponents.",
 		"Reliant on misdirection and confusion.",
 		"Lunatics can become liabilities.",
 		"Fairly fragile despite their unique protection mechanics.",
@@ -32,7 +32,8 @@
 		"Your moon blade is special compared to the other heretic blades. It can be used even if you are pacified.",
 		"Your passive makes you completely impervious to brain traumas and slowly regenerates your brain health. Makes sure to upgrade it to bolster the regeneration effect.",
 		"Your Resplendent Regalia utterly changes the rules of combat for you and your opponents; You become fully immune to disabling effect, and all damage received (lethal or non lethal) will be converted into brain damage. However. the robes themselves have no armor, and prevent you from using guns as well as pacifying you (you can still use your moon blade).",
-		"Your moon amulette allows you to channel its effects through your moon blade. When toggled on, your Moon blade will no longer do lethal damage, but do sanity damage and become unblockable.",
+		"Your moon amulette allows you to channel its effects through your moon blade. When toggled on, your Moon blade will no longer do lethal damage, but do sanity damage and become unblockable, this also allows you to use it while wearing your robes!",
+		"Your moon amulette is a vital part of your kit, as it allows your passive to regenerate double the brain health while worn.",
 		"If the sanity of your opponents goes below  a certain threshold, they'll become a lunatic. Lunatics are prompted to start attacking everyone (including you). Should you want to sacrifice them (or to get them to leave you be), hit them again with your moon blade to put them to sleep.",
 		"Ringleader's Rise summons an army of clones. They do barely any damage, but should they be attacked by non-heretics, they will explode and cause sanity and brain damage to those around them.",
 		"Your ascension will grant you an aura that converts nearby people to loyal lunatics. However, if they have a mindshield implant, their heads will instead detonate after a time.",
@@ -68,7 +69,7 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	ADD_TRAIT(user, TRAIT_EMPATH, REF(src))
+	user.AddComponentFrom(REF(src), /datum/component/empathy, seen_it = TRUE, visible_info = ALL, self_empath = FALSE, sense_dead = FALSE, sense_whisper = TRUE, smite_target = FALSE)
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
@@ -88,7 +89,7 @@
 
 /datum/heretic_knowledge/spell/mind_gate
 	name = "Mind Gate"
-	desc = "Grants you Mind Gate, a spell which mutes,deafens, blinds, inflicts hallucinations, \
+	desc = "Grants you Mind Gate, a spell which mutes, deafens, blinds, inflicts hallucinations, \
 		confusion, oxygen loss and brain damage to its target over 10 seconds.\
 		The caster takes 20 brain damage per use."
 	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
@@ -163,9 +164,9 @@
 	target.emote(pick("giggle", "laugh"))
 	target.mob_mood?.adjust_sanity(-10)
 	if(target.stat == CONSCIOUS && target.mob_mood?.sanity >= SANITY_NEUTRAL)
-		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
+		target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10)
 		return
-	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25)
+	target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 25)
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
@@ -262,7 +263,7 @@
 	INVOKE_ASYNC(convertee, TYPE_PROC_REF(/mob, emote), "laugh")
 	return TRUE
 
-/datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
+/datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	visible_hallucination_pulse(
 		center = get_turf(source),
@@ -299,13 +300,10 @@
 			to_chat(carbon_view, span_boldbig(span_red(\
 				"YOUR SENSES REEL AS YOUR MIND IS ENVELOPED BY AN OTHERWORLDLY FORCE ATTEMPTING TO REWRITE YOUR VERY BEING. \
 				YOU CANNOT EVEN BEGIN TO SCREAM BEFORE YOUR IMPLANT ACTIVATES ITS PSIONIC FAIL-SAFE PROTOCOL, TAKING YOUR HEAD WITH IT.")))
-			var/obj/item/bodypart/head/head = locate() in carbon_view.bodyparts
-			if(head)
-				head.dismember()
-			else
+			var/obj/item/bodypart/head/head = carbon_view.get_bodypart(BODY_ZONE_HEAD)
+			if(!head?.dismember())
 				carbon_view.gib(DROP_ALL_REMAINS)
-			var/datum/effect_system/reagents_explosion/explosion = new()
-			explosion.set_up(1, get_turf(carbon_view), TRUE, 0)
+			var/datum/effect_system/reagents_explosion/explosion = new(get_turf(carbon_view), 1, 1, 1)
 			explosion.start(src)
 		else
 			attempt_conversion(carbon_view, source)

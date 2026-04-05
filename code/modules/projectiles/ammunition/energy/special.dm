@@ -3,6 +3,7 @@
 	select_name = "ion"
 	fire_sound = 'sound/items/weapons/ionrifle.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
+	muzzle_flash_color = LIGHT_COLOR_BLUE
 
 /obj/item/ammo_casing/energy/ion/hos
 	projectile_type = /obj/projectile/ion/weak

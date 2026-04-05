@@ -37,11 +37,11 @@
 	var/udder_filled_percentage = PERCENT(udder.reagents.total_volume / udder.reagents.maximum_volume)
 	switch(udder_filled_percentage)
 		if(0 to 10)
-			examine_list += span_notice("[parent]'s [udder] is dry.")
+			examine_list += span_notice("[parent]'s [udder.name] is dry.")
 		if(11 to 99)
-			examine_list += span_notice("[parent]'s [udder] can be milked if you have something to contain it.")
+			examine_list += span_notice("[parent]'s [udder.name] can be milked if you have something to contain it.")
 		if(100)
-			examine_list += span_notice("[parent]'s [udder] is round and full, and can be milked if you have something to contain it.")
+			examine_list += span_notice("[parent]'s [udder.name] is round and full, and can be milked if you have something to contain it.")
 
 
 ///signal called on parent being attacked with an item

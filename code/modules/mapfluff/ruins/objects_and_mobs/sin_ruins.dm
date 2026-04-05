@@ -38,7 +38,7 @@
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 /obj/item/knife/envy/afterattack(atom/target, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
-	if(!istype(user) || !ishuman(target))
+	if(!istype(user) || !ishuman(target) || QDELETED(target))
 		return
 
 	var/mob/living/carbon/human/H = target

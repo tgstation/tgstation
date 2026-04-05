@@ -168,6 +168,9 @@
  */
 #define rustg_dmi_inject_metadata(path, metadata) RUSTG_CALL(RUST_G, "dmi_inject_metadata")(path, metadata)
 
+#define rustg_create_qr_code_png(path, data) RUSTG_CALL(RUST_G, "create_qr_code_png")(path, data)
+#define rustg_create_qr_code_svg(data) RUSTG_CALL(RUST_G, "create_qr_code_svg")(data)
+
 #define rustg_file_read(fname) RUSTG_CALL(RUST_G, "file_read")(fname)
 #define rustg_file_exists(fname) (RUSTG_CALL(RUST_G, "file_exists")(fname) == "true")
 #define rustg_file_write(text, fname) RUSTG_CALL(RUST_G, "file_write")(text, fname)
@@ -280,6 +283,21 @@
 #define rustg_iconforge_generate(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
 /// Returns a job_id for use with rustg_iconforge_check()
 #define rustg_iconforge_generate_async(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate_async")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
+/// Creates a single DMI or PNG using 'sprites' as a list of icon states / images.
+/// This function is intended for generating icons with only a few states that have little in common with each other, and only one size.
+/// For icons with a large number of states, potentially variable sizes, that re-use sets of transforms more than once, or that benefit from caching, use rustg_iconforge_generate.
+/// sprites - follows the same format as rustg_iconforge_generate.
+/// file_path - the full relative path at which the PNG or DMI will be written. It must be a full filepath such as tmp/my_icon.dmi or my_icon.png
+/// flatten - boolean (0 or 1) determines if the DMI output will be flattened to a single frame/dir if unscoped (null/0 dir or frame values).
+///
+/// Returns a HeadlessResult, decoded to a BYOND list (always, it's not possible for this to panic unless rustg itself has an issue) containing the following fields:
+/// list(
+///     "file_path" = "tmp/my_icon.dmi" // [whatever you input returned back to you, null if there was a fatal error]
+///     "width" = 32 // the width, which is determined by the first entry of 'sprites', null if there was a fatal error
+///     "height" = 32 // the height, which is determined by the first entry of 'sprites', null if there was a fatal error
+///     "error" = "[A string, null if there were no errors.]"
+/// )
+#define rustg_iconforge_generate_headless(file_path, sprites, flatten) json_decode(RUSTG_CALL(RUST_G, "iconforge_generate_headless")(file_path, sprites, "[flatten]"))
 /// Returns the status of an async job_id, or its result if it is completed. See RUSTG_JOB DEFINEs.
 #define rustg_iconforge_check(job_id) RUSTG_CALL(RUST_G, "iconforge_check")("[job_id]")
 /// Clears all cached DMIs and images, freeing up memory.

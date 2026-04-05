@@ -31,7 +31,7 @@ export const FakeWindow = (
   const { name, children, setScreenmode } = props;
 
   return (
-    <Stack vertical className="Accounting__Window">
+    <Stack vertical fill className="Accounting__Window">
       <Stack.Item>
         <Stack height="30px" backgroundColor="hsl(240, 100%, 25.1%)">
           <Stack.Item grow p={1}>

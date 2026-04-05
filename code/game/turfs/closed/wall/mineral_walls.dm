@@ -190,6 +190,8 @@
 	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
 	girder_type = /obj/structure/barricade/wooden
 	hardness = 67 //a bit weaker than iron (60)
+	sheet_amount = 5
+	make_delay = 5 SECONDS
 
 /turf/closed/wall/mineral/bamboo
 	name = "bamboo wall"
@@ -275,10 +277,10 @@
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
-/turf/closed/wall/mineral/titanium/rust_turf()
+/turf/closed/wall/mineral/titanium/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
-		return
+		return TRUE
 	return ..()
 
 /turf/closed/wall/mineral/titanium/nodiagonal
@@ -321,10 +323,10 @@
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
-/turf/closed/wall/mineral/titanium/rust_turf()
+/turf/closed/wall/mineral/titanium/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
-		return
+		return TRUE
 	return ..()
 
 /////////////////////Plastitanium walls/////////////////////
@@ -344,10 +346,10 @@
 	custom_materials = list(/datum/material/alloy/plastitanium = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
-/turf/closed/wall/mineral/plastitanium/rust_turf()
+/turf/closed/wall/mineral/plastitanium/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
-		return
+		return TRUE
 	return ..()
 
 
@@ -361,10 +363,10 @@
 	icon_state = MAP_SWITCH("plastitanium_wall-0", "plastitanium_overspace")
 	fixed_underlay = list("space" = TRUE)
 
-/turf/closed/wall/mineral/plastitanium/rust_turf()
+/turf/closed/wall/mineral/plastitanium/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ChangeTurf(/turf/closed/wall/rust)
-		return
+		return TRUE
 	return ..()
 
 

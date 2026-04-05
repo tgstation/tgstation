@@ -7,6 +7,7 @@
 	icon_dead = "basilisk_dead"
 	speak_emote = list("chimes")
 	damage_coeff = list(BRUTE = 1, BURN = 0.1, TOX = 1, STAMINA = 0, OXY = 1)
+	mob_biotypes = parent_type::mob_biotypes | MOB_MINERAL
 	speed = 20
 	maxHealth = 200
 	health = 200

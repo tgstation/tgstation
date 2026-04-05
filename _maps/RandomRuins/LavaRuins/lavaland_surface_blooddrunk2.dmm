@@ -97,7 +97,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "s" = (
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance{
+/mob/living/basic/boss/blood_drunk_miner/guidance{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,

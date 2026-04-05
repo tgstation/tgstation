@@ -118,7 +118,7 @@
 	if(AI.controlled_equipment)
 		to_chat(AI, span_warning("You are already loaded into an onboard computer!"))
 		return
-	if(!GLOB.cameranet.checkCameraVis(owner))
+	if(!SScameras.is_visible_by_cameras(owner))
 		to_chat(AI, span_warning("Target is no longer near active cameras."))
 		return
 	if(!isturf(AI.loc))
@@ -151,7 +151,7 @@
 		implant.radio.command = TRUE
 		implant.radio.channels = AI.radio.channels
 		for(var/channel in implant.radio.channels)
-			implant.radio.secure_radio_connections[channel] = add_radio(implant.radio, GLOB.default_radio_channels[channel])
+			LAZYSET(implant.radio.secure_radio_connections, channel, add_radio(implant.radio, GLOB.default_radio_channels[channel]))
 
 /obj/item/organ/brain/cybernetic/ai/proc/undeploy(datum/source)
 	SIGNAL_HANDLER

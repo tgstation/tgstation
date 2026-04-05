@@ -15,7 +15,7 @@
 	infectable_biotypes = MOB_ORGANIC
 
 
-/datum/disease/weightlessness/stage_act(seconds_per_tick, times_fired)
+/datum/disease/weightlessness/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

@@ -2,7 +2,11 @@
 	status = LIGHT_BROKEN
 	icon_state = "tube-broken"
 
-/obj/machinery/light/built
+/obj/machinery/light/burned
+	status = LIGHT_BURNED
+	icon_state = "tube-burned"
+
+/obj/machinery/light/empty
 	icon_state = "tube-empty"
 	start_with_cell = FALSE
 	status = LIGHT_EMPTY
@@ -68,7 +72,11 @@
 	status = LIGHT_BROKEN
 	icon_state = "bulb-broken"
 
-/obj/machinery/light/small/built
+/obj/machinery/light/small/burned
+	status = LIGHT_BURNED
+	icon_state = "bulb-burned"
+
+/obj/machinery/light/small/empty
 	icon_state = "bulb-empty"
 	start_with_cell = FALSE
 	status = LIGHT_EMPTY
@@ -101,11 +109,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light, 0)
 // ---- Broken tube
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/broken, 0)
 
+// ---- Burned tube
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/burned, 0)
+
 // ---- Tube construct
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/light_construct, 0)
 
 // ---- Tube frames
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/built, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/empty, 0)
 
 // ---- No nightlight tubes
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/no_nightlight, 0)
@@ -148,10 +159,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/light_construct/small, 0)
 
 // ---- Bulb frames
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/built, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/empty, 0)
 
 // ---- Broken bulbs
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/broken, 0)
+
+// ---- Burned bulb
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/burned, 0)
 
 // ---- Red bulbs
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/dim, 0)

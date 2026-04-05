@@ -3,9 +3,11 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 
 /proc/init_vine_mutation_list()
 	var/list/mutation_list = list()
-	init_subtypes(/datum/spacevine_mutation/, mutation_list)
-	for(var/datum/spacevine_mutation/mutation as anything in mutation_list)
+
+	for(var/datum/spacevine_mutation/subtype as anything in valid_subtypesof(/datum/spacevine_mutation))
+		var/datum/spacevine_mutation/mutation = new subtype
 		mutation_list[mutation] = IDEAL_MAX_SEVERITY - mutation.severity // the ideal maximum potency is used for weighting
+
 	return mutation_list
 
 /datum/spacevine_controller
@@ -46,6 +48,7 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
+	VV_DROPDOWN_OPTION("", "--- /spacevine_controller ---")
 	VV_DROPDOWN_OPTION(VV_HK_SPACEVINE_PURGE, "Delete Vines")
 
 /datum/spacevine_controller/vv_do_topic(href_list)
@@ -55,8 +58,6 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 		return
 
 	if(href_list[VV_HK_SPACEVINE_PURGE])
-		if(!check_rights(NONE))
-			return
 		if(tgui_alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", list("Yes", "No")) == "Yes")
 			DeleteVines()
 
@@ -161,6 +162,6 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 /proc/isvineimmune(atom/target)
 	if(isliving(target))
 		var/mob/living/victim = target
-		if((FACTION_VINES in victim.faction) || (FACTION_PLANTS in victim.faction))
+		if(victim.has_faction(FACTION_VINES, FACTION_PLANTS))
 			return TRUE
 	return FALSE

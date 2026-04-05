@@ -142,7 +142,7 @@
 "at" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "ax" = (
@@ -295,7 +295,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "ba" = (
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -317,7 +317,7 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "be" = (
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -454,7 +454,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bz" = (
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/west,
 /obj/structure/closet/crate/internals,
@@ -480,7 +480,7 @@
 /area/shuttle/abandoned/bar)
 "bF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/structure/curtain,
 /obj/machinery/shower/directional/south,
 /obj/item/soap,
@@ -529,7 +529,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)
 "bM" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -647,7 +647,7 @@
 /area/shuttle/abandoned/bar)
 "cd" = (
 /obj/structure/table,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper_bin{
 	pixel_x = -4
@@ -676,7 +676,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/turretid{
-	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
 	pixel_y = 28;
@@ -708,7 +707,7 @@
 /area/shuttle/abandoned/engine)
 "ci" = (
 /obj/structure/sign/warning/vacuum/external/directional/north,
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -833,7 +832,7 @@
 /area/shuttle/abandoned/bar)
 "cD" = (
 /obj/structure/table,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/power_store/cell/high,
@@ -889,7 +888,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/engine)
 "cI" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -969,7 +968,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
 "cS" = (
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/empty/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/east,
@@ -1072,7 +1071,7 @@
 "dk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/abandoned/bar)
@@ -1339,7 +1338,7 @@
 /area/shuttle/abandoned/bar)
 "ec" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
 "ed" = (
@@ -1375,12 +1374,12 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "ef" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/green/half/contrasted{
@@ -1464,7 +1463,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)
 "he" = (
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
@@ -1619,7 +1618,7 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "uS" = (
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/empty/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/all_access,
@@ -1632,7 +1631,7 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/all_access,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -1672,7 +1671,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "Aa" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/cleanable/dirt,
@@ -1821,7 +1820,7 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -1853,7 +1852,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "HJ" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/coffee,
 /obj/effect/decal/cleanable/dirt,
@@ -1986,7 +1985,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)
 "RV" = (
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/all_access,
@@ -2019,7 +2018,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/item/bedsheet/brown{
 	dir = 4
 	},

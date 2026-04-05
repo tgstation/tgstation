@@ -12,6 +12,7 @@
 	icon_state = "talismanaltar"
 	break_message = span_warning("The altar shatters, leaving only the wailing of the damned!")
 	mansus_conversion_path = /obj/effect/heretic_rune
+	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/structure/destructible/cult/item_dispenser/altar/setup_options()
 	var/static/list/altar_items = list(

@@ -159,7 +159,7 @@ h1.alert, h2.alert		{color: #000000;}
 .abductor				{color: #800080;	font-style: italic;}
 .mind_control			{color: #A00D6F;	font-size: 3;	font-weight: bold;	font-style: italic;}
 .slime					{color: #00CED1;}
-.drone					{color: #848482;}
+.drone					{color: #ffff00;	background-color: #7c2395;	font-style: italic;}
 .monkey					{color: #975032;}
 .swarmer				{color: #2C75FF;}
 .resonate				{color: #298F85;}

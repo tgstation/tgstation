@@ -3,7 +3,7 @@
  */
 /datum/element/mirage_border
 
-/datum/element/mirage_border/Attach(datum/target, turf/target_turf, direction, range=world.view)
+/datum/element/mirage_border/Attach(datum/target, turf/target_turf, direction, range = (maxviewdist() - 1) / 2)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE

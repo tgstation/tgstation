@@ -27,8 +27,11 @@
 	throw_speed = 3
 	drop_sound = 'sound/items/handling/tools/multitool_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/multitool_pickup.ogg'
-	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
-	custom_premium_price = PAYCHECK_COMMAND * 3
+	custom_materials = list(
+		/datum/material/iron =SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.2
+		)
+	custom_premium_price = PAYCHECK_CREW * 3
 	toolspeed = 1
 	usesound = 'sound/items/weapons/empty.ogg'
 	var/datum/buffer // simple machine buffer for device linkage
@@ -94,18 +97,26 @@
 	user.balloon_alert(user, balloon_message)
 
 	var/datum/hud/user_hud = user.hud_used
-	if(!user_hud || !istype(user_hud, /datum/hud) || !islist(user_hud.infodisplay))
+	if(!user_hud)
 		return
 
-	var/atom/movable/screen/multitool_arrow/arrow = new(null, user_hud)
+	var/atom/movable/screen/multitool_arrow/arrow = user_hud.add_screen_object(/atom/movable/screen/multitool_arrow, HUD_MULTITOOL_ARROW, HUD_GROUP_INFO, update_screen = TRUE)
 	arrow.color = arrow_color
-	arrow.screen_loc = around_player
 	arrow.transform = matrix(dir2angle(dir), MATRIX_ROTATE)
-
-	user_hud.infodisplay += arrow
-	user_hud.show_hud(user_hud.hud_version)
-
 	QDEL_IN(arrow, 1.5 SECONDS)
+
+/atom/movable/screen/multitool_arrow
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "multitool_arrow"
+	pixel_x = -32
+	pixel_y = -32
+	screen_loc = around_player
+
+/atom/movable/screen/multitool_arrow/Destroy()
+	var/datum/hud/our_hud = hud
+	. = ..()
+	if (!QDELETED(our_hud))
+		INVOKE_ASYNC(our_hud, TYPE_PROC_REF(/datum/hud, show_hud), our_hud.hud_version)
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
@@ -295,10 +306,10 @@
 
 	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-			var/datum/camerachunk/chunk = GLOB.cameranet.getCameraChunk(x, y, epicenter.z)
+			var/datum/camerachunk/chunk = SScameras.generate_chunk(x, y, epicenter.z)
 			// removing cameras in build mode didnt affect it and i guess it needs an AI eye to update so we have to do this manually
 			// unless we only want to see static in a jank manner only if an eye updates it
-			chunk?.update() // UPDATE THE FUCK NOW
+			chunk?.force_update(only_if_necessary = FALSE) // UPDATE THE FUCK NOW
 			. |= chunk
 
 /obj/item/multitool/ai_detect/proc/cleanup_static()

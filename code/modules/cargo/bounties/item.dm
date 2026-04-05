@@ -12,8 +12,11 @@
 	..()
 	wanted_types = string_assoc_list(zebra_typecacheof(wanted_types, only_root_path = !include_subtypes))
 
+/datum/bounty/item/print_required()
+	return "[shipped_count]/[required_count]"
+
 /datum/bounty/item/can_claim()
-	return ..() && shipped_count >= required_count
+	return shipped_count >= required_count
 
 /datum/bounty/item/applies_to(obj/shipped)
 	if(!is_type_in_typecache(shipped, wanted_types))
@@ -55,7 +58,7 @@
 		return
 	var/choice = tgui_input_list(living_user, "Choose a bounty.", "New Bounty", subtypesof(/datum/bounty))
 	var/datum/bounty/new_chore = text2path("[choice]")
-	id.registered_account.civilian_bounty = new new_chore
+	id.registered_account.set_bounty(new new_chore, id)
 	balloon_alert(user, "new bounty acquired!")
 	playsound(src, 'sound/effects/coin2.ogg', 30, TRUE)
 	qdel(src)

@@ -29,35 +29,48 @@
 	var/production
 
 /datum/round_event/spacevine/start()
-	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
-
+	var/list/final_turf_candidates = list() // final list of eligible empty floor turfs in the hallway areas that can be chosen
 
 	if(override_turf)
-		turfs += override_turf
+		final_turf_candidates += override_turf
 	else
 		var/obj/structure/spacevine/vine = new()
-
-		for(var/area/station/hallway/area in GLOB.areas)
+		var/list/floor_candidates = list()
+		for(var/area/station/hallway/area in shuffle(GLOB.areas))
 			for(var/turf/open/floor in area.get_turfs_from_all_zlevels())
-				if(!isopenspaceturf(floor) && floor.Enter(vine))
-					turfs += floor
+				if(isopenspaceturf(floor))
+					continue
+				floor_candidates += floor
 
+		// Enter() is expensive to call on potentially hundreds to thousands of turfs at once and can even lead to server crashes.
+		// We can pick() a subset instead and get close enough results at a fraction of the cost.
+		var/turfs_to_test = 100
+		var/list/sampled_floor_candidates = pick_n(floor_candidates, min(turfs_to_test, length(floor_candidates))) // results in at most 100 calls of Enter(), a reasonable amount while still feeling random.
+
+		for(var/turf/open/floor as anything in sampled_floor_candidates)
+			if(floor.Enter(vine))
+				final_turf_candidates += floor
 		qdel(vine)
 
-	if(length(turfs)) //Pick a turf to spawn at if we can
-		var/turf/floor = pick(turfs)
-		var/list/selected_mutations = list()
+	if(!length(final_turf_candidates))
+		return
 
-		if(mutations_overridden == FALSE)
-			selected_mutations = list(pick(subtypesof(/datum/spacevine_mutation)))
-		else
-			selected_mutations = override_mutations
-		if(isnull(potency))
-			potency = rand(50,100)
-		if(isnull(production))
-			production = rand(1, 4)
+	// Pick a turf to spawn at if we can
+	var/turf/floor = pick(final_turf_candidates)
+	var/list/selected_mutations = list()
 
-		new /datum/spacevine_controller(floor, selected_mutations, potency, production, src) //spawn a controller at turf with randomized stats and a single random mutation
+	if(mutations_overridden)
+		selected_mutations = override_mutations
+	else
+		selected_mutations = list(pick(valid_subtypesof(/datum/spacevine_mutation)))
+
+	if(isnull(potency))
+		potency = rand(50, 100)
+
+	if(isnull(production))
+		production = rand(1, 4)
+
+	new /datum/spacevine_controller(floor, selected_mutations, potency, production, src) //spawn a controller at turf with randomized stats and a single random mutation
 
 /datum/event_admin_setup/set_location/spacevine
 	input_text = "Spawn vines at current location?"
@@ -75,17 +88,17 @@
 		if("Custom")
 			return ..()
 		if("Random")
-			choices = list("[pick(subtypesof(/datum/spacevine_mutation))]")
+			choices = list("[pick(valid_subtypesof(/datum/spacevine_mutation))]")
 		else
 			return ADMIN_CANCEL_EVENT
 
 /datum/event_admin_setup/multiple_choice/spacevine/get_options()
-	return subtypesof(/datum/spacevine_mutation/)
+	return valid_subtypesof(/datum/spacevine_mutation)
 
 /datum/event_admin_setup/multiple_choice/spacevine/apply_to_event(datum/round_event/spacevine/event)
 	var/list/type_choices = list()
-	for(var/choice in choices)
-		type_choices += text2path(choice)
+	for(var/list/choice in choices)
+		type_choices += text2path(choice[1])
 	event.mutations_overridden = TRUE
 	event.override_mutations = type_choices
 

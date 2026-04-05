@@ -34,39 +34,52 @@
 	if (installed_upgrade)
 		. += "It has been upgraded with [installed_upgrade], which can be removed with a screwdriver."
 
-/obj/vehicle/ridden/janicart/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/storage/bag/trash))
+/obj/vehicle/ridden/janicart/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(istype(tool, /obj/item/storage/bag/trash))
 		if(trash_bag)
 			to_chat(user, span_warning("[src] already has a trashbag hooked!"))
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
 		to_chat(user, span_notice("You hook the trashbag onto [src]."))
-		trash_bag = I
+		trash_bag = tool
 		RegisterSignal(trash_bag, COMSIG_QDELETING, PROC_REF(bag_deleted))
-		SEND_SIGNAL(src, COMSIG_VACUUM_BAG_ATTACH, I)
+		SEND_SIGNAL(src, COMSIG_VACUUM_BAG_ATTACH, tool)
 		update_appearance()
-	else if(istype(I, /obj/item/janicart_upgrade))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/janicart_upgrade))
 		if(installed_upgrade)
 			to_chat(user, span_warning("[src] already has an upgrade installed! Use a screwdriver to remove it."))
-			return
-		var/obj/item/janicart_upgrade/new_upgrade = I
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/janicart_upgrade/new_upgrade = tool
 		new_upgrade.forceMove(src)
 		new_upgrade.install(src)
 		installed_upgrade = new_upgrade
 		to_chat(user, span_notice("You upgrade [src] with [new_upgrade]."))
 		update_appearance()
-	else if (istype(I, /obj/item/screwdriver) && installed_upgrade)
-		installed_upgrade.uninstall(src)
-		installed_upgrade.forceMove(get_turf(user))
-		user.put_in_hands(installed_upgrade)
-		to_chat(user, span_notice("You remove [installed_upgrade] from [src]"))
-		installed_upgrade = null
-		update_appearance()
-	else if(trash_bag && (!is_key(I) || is_key(inserted_key))) // don't put a key in the trash when we need it
-		trash_bag.atom_storage.attempt_insert(I, user)
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	if(trash_bag && (!is_key(tool) || is_key(inserted_key))) // don't put a key in the trash when we need it
+		trash_bag.atom_storage.attempt_insert(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/vehicle/ridden/janicart/screwdriver_act(mob/living/user, obj/item/tool)
+	if (!installed_upgrade)
+		return ITEM_INTERACT_BLOCKING
+	installed_upgrade.uninstall(src)
+	installed_upgrade.forceMove(get_turf(user))
+	user.put_in_hands(installed_upgrade)
+	to_chat(user, span_notice("You remove [installed_upgrade] from [src]"))
+	installed_upgrade = null
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/ridden/janicart/update_overlays()
 	. = ..()

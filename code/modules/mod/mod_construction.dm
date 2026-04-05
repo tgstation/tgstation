@@ -95,6 +95,9 @@
 /obj/item/mod/construction/plating/civilian
 	theme = /datum/mod_theme/civilian
 
+/obj/item/mod/construction/plating/portable_suit
+	theme = /datum/mod_theme/portable_suit
+
 /obj/item/mod/construction/plating/engineering
 	theme = /datum/mod_theme/engineering
 

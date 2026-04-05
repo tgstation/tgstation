@@ -18,14 +18,14 @@
 	if (card.registered_account.account_balance == 0)
 		to_chat(user,  span_warning("ID Card lacks any funds. No pay to dock."))
 		return
-	var/new_cost = input("How much pay are we docking? Current balance: [card.registered_account.account_balance] credits.", "BUDGET CUTS") as num|null
+	var/new_cost = input("How much pay are we docking? Negative = giving money. Current balance: [card.registered_account.account_balance] [MONEY_NAME].", "BUDGET CUTS") as num|null
 	if (!new_cost)
 		return
-	if (!(card.registered_account.has_money(new_cost)))
-		to_chat(user,  span_warning("ID Card lacked funds. Emptying account."))
-		card.registered_account.bank_card_talk("[new_cost] credits deducted from your account based on performance review.")
-		card.registered_account.account_balance = 0
+	if(new_cost < 0)
+		card.registered_account.adjust_money(new_cost, "Central Command: Pay Bonus")
+		card.registered_account.bank_card_talk("[new_cost] [MONEY_NAME] added to your account based on performance review by Central Command.", force = TRUE)
 	else
-		card.registered_account.account_balance = card.registered_account.account_balance - new_cost
-		card.registered_account.bank_card_talk("[new_cost] credits deducted from your account based on performance review.")
+		SSeconomy.add_audit_entry(card.registered_account, new_cost, "Central Command")
+		card.registered_account.adjust_money(-new_cost, "Central Command: Pay Cut")
+		card.registered_account.bank_card_talk("[new_cost] [MONEY_NAME] deducted from your account based on performance review by Central Command.", force = TRUE)
 	SEND_SOUND(target, 'sound/machines/buzz/buzz-sigh.ogg')

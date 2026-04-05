@@ -22,9 +22,11 @@
 	desc = "A poet's favorite fruit. Noice."
 	icon_state = "plum"
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/plumjuice
 	tastes = list("plum" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/plumwine
+
+/obj/item/food/grown/plum/juice_typepath()
+	return /datum/reagent/consumable/plumjuice
 
 // Plumb
 /obj/item/seeds/plum/plumb

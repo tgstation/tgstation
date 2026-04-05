@@ -31,7 +31,7 @@
 	return FALSE
 
 /obj/machinery/door/airlock/shell/allowed(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_AIRLOCK_SHELL_ALLOWED, user) & COMPONENT_OBJ_ALLOW)
+	if(SEND_SIGNAL(src, COMSIG_AIRLOCK_SHELL_ALLOWED, user) & ACCESS_ALLOWED)
 		return TRUE
 	return isAdminGhostAI(user)
 
@@ -76,8 +76,8 @@
 	open = add_input_port("Open", PORT_TYPE_SIGNAL)
 	close = add_input_port("Close", PORT_TYPE_SIGNAL)
 	// States
-	is_open = add_output_port("Is Open", PORT_TYPE_NUMBER)
-	is_bolted = add_output_port("Is Bolted", PORT_TYPE_NUMBER)
+	is_open = add_output_port("Is Open", PORT_TYPE_BOOLEAN)
+	is_bolted = add_output_port("Is Bolted", PORT_TYPE_BOOLEAN)
 	// Output Signals
 	opened = add_output_port("Opened", PORT_TYPE_SIGNAL)
 	closed = add_output_port("Closed", PORT_TYPE_SIGNAL)
@@ -157,14 +157,12 @@
 	if(istype(shell, /obj/machinery/door/airlock))
 		attached_airlock = shell
 		RegisterSignals(shell, list(
-			COMSIG_OBJ_ALLOWED,
 			COMSIG_AIRLOCK_SHELL_ALLOWED,
 		), PROC_REF(handle_allowed))
 
 /obj/item/circuit_component/airlock_access_event/unregister_shell(atom/movable/shell)
 	attached_airlock = null
 	UnregisterSignal(shell, list(
-		COMSIG_OBJ_ALLOWED,
 		COMSIG_AIRLOCK_SHELL_ALLOWED
 	))
 	return ..()
@@ -197,6 +195,6 @@
 		return
 
 	if(result["should_open"])
-		return COMPONENT_OBJ_ALLOW
+		return ACCESS_ALLOWED
 	else
-		return COMPONENT_OBJ_DISALLOW
+		return ACCESS_DISALLOWED

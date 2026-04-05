@@ -116,6 +116,9 @@
 
 /obj/structure/emergency_shield/cult/barrier/Destroy()
 	if(parent_rune)
+		if(QDELING(parent_rune))
+			parent_rune = null
+			return ..()
 		parent_rune.visible_message(span_danger("The [parent_rune] fades away as [src] is destroyed!"))
 		QDEL_NULL(parent_rune)
 	return ..()
