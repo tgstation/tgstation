@@ -40,8 +40,6 @@
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(modify_damage))
 	ADD_TRAIT(owner, TRAIT_HOLY, TRAIT_STATUS_EFFECT(id))
-	owner.add_filter(id, 1, outline_filter(size = 0, color = "#bde0dc"))
-	owner.transition_filter(id, outline_filter(size = 2, color = "#bde0dc"), 2 SECONDS)
 
 /datum/status_effect/dream_protection/on_remove()
 	. = ..()
@@ -54,8 +52,9 @@
 	if(owner.IsSleeping())
 		if(!has_filter)
 			owner.add_filter(id, 3, outline_filter(color = "#bde0dc"))
-			owner.transition_filter(id, outline_filter(size = 2), 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
-			owner.transition_filter(id, outline_filter(size = 0), 2 SECONDS, easing = SINE_EASING|EASE_OUT, loop = -1)
+			var/filter = owner.get_filter(id)
+			animate(filter, size = 2, 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
+			animate(size = 0, 2 SECONDS, easing = SINE_EASING|EASE_OUT, loop = -1)
 			has_filter = TRUE
 
 	else

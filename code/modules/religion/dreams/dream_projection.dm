@@ -98,8 +98,9 @@
 	RegisterSignal(projection, COMSIG_QDELETING, PROC_REF(stop_projection))
 
 	owner.add_filter(id, 1, outline_filter(color = "#aee2b2"))
-	owner.transition_filter(id, outline_filter(size = 2), 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
-	owner.transition_filter(id, outline_filter(size = 0), 2 SECONDS, easing = SINE_EASING|EASE_OUT, loop = -1)
+	var/filter = owner.get_filter(id)
+	animate(filter, size = 2, 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
+	animate(size = 0, 2 SECONDS, easing = SINE_EASING|EASE_OUT, loop = -1)
 
 /datum/status_effect/dream_projection/on_remove()
 	. = ..()
