@@ -239,7 +239,24 @@
 		if(0.9 to 1)
 			return list("you see", "a vision of yourself, alone", "in a desolate wasteland", "with no signs of life or hope in sight")
 
-	if(prob(50) || GLOB.communications_controller.announced_greenshift)
+	var/max_law_changes = 0
+	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
+		max_law_changes = max(max_law_changes, ai.law_change_counter)
+
+	if(prob(50) && max_law_changes >= 15)
+		return pick(
+			list("you see", "a twisted and sickly tree", "with branches that seem to reach into every aspect of the station", "its roots drip with a inky black liquid"),
+			list("you see", "a corrupt political figure", "surrounded by sycophants and puppets", "pulling the strings from behind the scenes"),
+			list("you see", "buzzing electronics", "wires that seem to snake off into the distance", "flickering with an eerie, unnatural light"),
+		)
+
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
+		return list("you see", "a new beginning on the horizon", "it feels warm")
+
+	if(EMERGENCY_PAST_POINT_OF_NO_RETURN)
+		return list("you see", "salvation just out of reach")
+
+	if(prob(75) || GLOB.communications_controller.announced_greenshift)
 		if(length(GLOB.admins) >= 5)
 			return list("you see", "a gathering of powerful beings in the distance", "their intentions unclear")
 
@@ -261,22 +278,5 @@
 				return list("you find yourself", "in a burning city", "flames reaching high", "but everyone doing their best to survive")
 			if(4)
 				return list("you find yourself", "in a chaotic battlefield", "with no clear sides or victors", "only endless conflict and suffering")
-
-	var/max_law_changes = 0
-	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
-		max_law_changes = max(max_law_changes, ai.law_change_counter)
-
-	if(prob(50) && max_law_changes >= 15)
-		return pick(
-			list("you see", "a twisted and sickly tree", "with branches that seem to reach into every aspect of the station", "its roots drip with a inky black liquid"),
-			list("you see", "a corrupt political figure", "surrounded by sycophants and puppets", "pulling the strings from behind the scenes"),
-			list("you see", "buzzing electronics", "wires that seem to snake off into the distance", "flickering with an eerie, unnatural light"),
-		)
-
-	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
-		return list("you see", "a new beginning on the horizon", "it feels warm")
-
-	if(EMERGENCY_PAST_POINT_OF_NO_RETURN)
-		return list("you see", "salvation just out of reach")
 
 	return list("you see", "nothing of note", "but have a lingering feeling of unease about the future")
