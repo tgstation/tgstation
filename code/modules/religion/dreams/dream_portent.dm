@@ -125,6 +125,7 @@
 
 /datum/dream/portent/proc/get_portent(mob/living/carbon/dreamer)
 	if(prob(1))
+		GLOB.religious_sect.adjust_favor(25, dreamer)
 		return pick(
 			list("reply hazy", "try again later"),
 			list("ask again later"),
