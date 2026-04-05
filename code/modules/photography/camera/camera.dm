@@ -168,6 +168,7 @@
  * * mob/user - the optional user who is taking the photo
 */
 /obj/item/camera/proc/on_flash(atom/target, mob/user)
+	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	on = FALSE
@@ -308,6 +309,7 @@
 	)
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
+	blending = FALSE
 
 /**
  * Action to take after the picture is taken

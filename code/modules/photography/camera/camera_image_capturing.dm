@@ -14,11 +14,9 @@
 
 #define PHYSICAL_POSITION(atom) ((atom.y * ICON_SIZE_Y) + (atom.pixel_y))
 
-/obj/item/camera/proc/camera_get_icon(
-	list/turfs,
-	turf/center,
-	datum/turf_reservation/clone_area,
-)
+/obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, datum/turf_reservation/clone_area)
+	PRIVATE_PROC(TRUE)
+
 	var/list/atoms = list()
 	var/list/lighting = list()
 	var/skip_normal = FALSE
@@ -161,3 +159,5 @@
 		res.GrayScale()
 
 	return res
+
+#undef PHYSICAL_POSITION
