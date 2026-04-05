@@ -65,7 +65,6 @@
 #define HUD_MOB_CRAFTING_MENU "mob_crafting"
 #define HUD_MOB_FLOOR_CHANGER "mob_floor_changer"
 #define HUD_MOB_BLOOD_LEVEL "mob_blood_level"
-#define HUD_MOB_FOV_BLOCKER "mob_fov_blocker"
 #define HUD_MOB_STYLE_METER "mob_style_meter"
 #define HUD_MOB_MOOD "mob_mood"
 #define HUD_MOB_HEALTHDOLL "mob_healthdoll"
