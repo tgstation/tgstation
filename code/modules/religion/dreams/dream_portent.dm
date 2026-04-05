@@ -104,17 +104,17 @@
 
 	var/list/portent_types = list(
 		"[GLOB.deity] greets you warmly" = "[GLOB.deity] bids you farewell, though you feel their presence watch over you",
-		"a crystal ball reveals a vision of the future" = "the crystal ball returns to its normal, opaque state",
-		"a divine light blinds you, revealing glimpses of what is to come" = "the light fades, leaving you with a lingering warmth",
+		"a crystal ball reveals a vision of the future" = "ultimately, the crystal ball returns to its normal, opaque state",
+		"a divine light blinds you, revealing glimpses of what is to come" = "finally, the light fades, leaving you with a lingering warmth",
 		"a full moon illuminates the sky" = "the moon crosses the horizon, bringing forth a new dawn",
 		"a mysterious figure appears, cloaked in shadow" = "they depart, leaving you with a sense of [pick("wonder", "dread", "curiosity", "foreboding")]",
 		"an incomprehensible entity envelops you, showing you visions of the past, present, and future" = "the entity releases you, leaving you with a sense of awe and fear",
 		"an old [pick("man", "woman", "prophet", "oracle")] approaches you, offering cryptic advice" = "they vanish before you can ask any questions",
-		"the stars align in a way you've never seen before" = "the stars return to their normal constellations",
-		"the trees ahead parts to reveal a hidden path" = "you lose the path as the trees sway back into place",
-		"walking through a featureless landscape, shapes begin to form" = "the shapes fade away, leaving alone in the void",
-		"you see yourself sleeping peacefully" = "you see yourself waking up calmly",
-		"your third eye opens to reveal a hidden truth" = "your third eye closes, but the vision lingers in your mind",
+		"the stars align in a way you've never seen before" = "finally, the stars return to their normal constellations",
+		"the trees ahead parts to reveal a hidden path" = "ultimately, you lose the path as the trees sway back into place",
+		"walking through a featureless landscape, shapes begin to form" = "finally, the shapes fade away, leaving alone in the void",
+		"you see yourself sleeping peacefully" = "finally, you see yourself waking up calmly",
+		"your third eye opens to reveal a hidden truth" = "finally, your third eye closes, but the vision lingers in your mind",
 	)
 	var/picked_portent = pick(portent_types)
 
@@ -222,12 +222,12 @@
 	switch(dead / length(GLOB.joined_player_list))
 		if(0.25 to 0.5)
 			return pick(
-				list("you see", "a vision of spirits", "floating throughout the station"),
 				list("you find yourself", "in a small graveyard", "humble in size but lovingly maintained", "with fresh flowers on the graves"),
+				list("you see", "a vision of spirits", "floating throughout the station"),
 			)
 		if(0.5 to 0.75)
 			return pick(
-				list("you find yourself", "in a dimly lit hallway dimly lit", "with a sense of dread in the air"),
+				list("you find yourself", "in a dimly lit hallway", "with a sense of dread in the air"),
 				list("you see", "a vision of an encroaching darkness", "threatening you eerily"),
 			)
 		if(0.75 to 0.9)
@@ -236,7 +236,7 @@
 				list("you see", "a picture of a silent battlefield", "no clear victor, but heavy losses on all sides"),
 			)
 		if(0.9 to 1)
-			return list("you see", "a vision of yourself, alone", "in a desolate wasteland", "with no signs of life or hope on the horizon")
+			return list("you see", "a vision of yourself, alone", "in a desolate wasteland", "with no signs of life or hope in sight")
 
 	if(prob(50) || GLOB.communications_controller.announced_greenshift)
 		if(length(GLOB.admins) >= 5)
