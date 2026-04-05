@@ -14,12 +14,10 @@
 
 #define PHYSICAL_POSITION(atom) ((atom.y * ICON_SIZE_Y) + (atom.pixel_y))
 
-/proc/camera_get_icon(
+/obj/item/camera/proc/camera_get_icon(
 	list/turfs,
 	turf/center,
 	datum/turf_reservation/clone_area,
-	see_ghosts,
-	monochrome,
 )
 	var/list/atoms = list()
 	var/list/lighting = list()
@@ -159,107 +157,7 @@
 	else
 		QDEL_LIST(lighting)
 
-	if(monochrome)
+	if(print_monochrome)
 		res.GrayScale()
 
 	return res
-
-/proc/take_photo(
-	obj/item/camera/camera_item,
-	atom/target,
-	mob/user,
-	datum/callback/post_image_callback,
-	see_ghosts,
-	monochrome,
-)
-	//Checking if we can target
-	var/turf/target_turf = get_turf(target)
-	if(isnull(target_turf))
-		return
-	if(isAI(user) && !SScameras.is_visible_by_cameras(target_turf))
-		return
-	if(isliving(camera_item.loc) && !(target_turf in view(world.view, camera_item.loc)))
-		return
-	if(!(target_turf in view(world.view, user || camera_item)))
-		return
-
-	//These vars will be reused later on
-	var/size_x = camera_item.picture_size_x - 1
-	var/size_y = camera_item.picture_size_y - 1
-	var/list/viewlist = getviewsize(user?.client?.view || world.view)
-	var/view_range = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
-	var/viewer = get_turf(user?.client?.eye || user || target) // not sure why target is a fallback
-	var/list/seen = get_hear_turfs(view_range, viewer)
-	if(!(target_turf in seen))
-		return
-
-	//taking the actual picture
-	camera_item.on_flash(target, user)
-	var/list/mobs_spotted = list()
-	var/list/dead_spotted = list()
-	var/list/turfs = list()
-	var/list/mobs = list()
-	var/blueprints = FALSE
-	var/width = APERTURE_TO_METERS(camera_item.picture_size_x)
-	var/height = APERTURE_TO_METERS(camera_item.picture_size_y)
-	///list of human names taken on picture
-	var/list/names = list()
-	var/cameranet_user = isAI(user) || istype(viewer, /mob/eye/camera)
-	var/datum/turf_reservation/clone_area = SSmapping.request_turf_block_reservation(width, height, 1)
-	for(var/turf/seen_placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
-		if(isnull(seen_placeholder))
-			continue
-		if(cameranet_user && !SScameras.is_visible_by_cameras(seen_placeholder))
-			continue
-		if(!cameranet_user && !(seen_placeholder in seen))
-			continue
-
-		//Multi-z photography
-		var/turf/target_placeholder = seen_placeholder
-		while(!isnull(target_placeholder))
-			turfs += target_placeholder
-			for(var/mob/mob_there in target_placeholder)
-				mobs += mob_there
-			if(locate(/obj/item/blueprints) in target_placeholder)
-				blueprints = TRUE
-
-			if(isopenspaceturf(target_placeholder) || istype(target_placeholder, /turf/open/floor/glass))
-				target_placeholder = GET_TURF_BELOW(target_placeholder)
-			else
-				break
-
-	// do this before picture is taken so we can reveal revenants for the photo
-	if(post_image_callback)
-		post_image_callback.Invoke(mobs)
-
-	var/list/desc = list("This is a photo of an area of [width] meters by [height] meters.")
-	for(var/mob/mob as anything in mobs)
-		mobs_spotted += mob
-		if(mob.stat == DEAD)
-			dead_spotted += mob
-		var/info = mob.get_photo_description(camera_item)
-		if(!isnull(info))
-			desc += info
-
-	var/icon/get_icon = camera_get_icon(turfs, target_turf, clone_area, see_ghosts, monochrome)
-	get_icon.Blend("#000", ICON_UNDERLAY)
-	qdel(clone_area)
-	for(var/mob/living/carbon/person in mobs)
-		if(person.obscured_slots & HIDEFACE)
-			continue
-		names += "[person.name]"
-
-	var/datum/picture/picture = new(
-		"picture",
-		desc.Join("<br>"),
-		mobs_spotted,
-		dead_spotted,
-		names,
-		get_icon,
-		null,
-		width * ICON_SIZE_X,
-		height * ICON_SIZE_X,
-		blueprints,
-		can_see_ghosts = see_ghosts,
-	)
-	return picture

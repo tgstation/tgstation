@@ -216,20 +216,98 @@
 */
 /obj/item/camera/proc/capture_image(atom/target, mob/user)
 	PRIVATE_PROC(TRUE)
+	//Checking if we can target
+	var/turf/target_turf = get_turf(target)
+	if(isnull(target_turf))
+		return
+	if(isAI(user) && !SScameras.is_visible_by_cameras(target_turf))
+		return
+	if(isliving(loc) && !(target_turf in view(world.view, loc)))
+		return
+	if(!(target_turf in view(world.view, user || src)))
+		return
+
+	//These vars will be reused later on
+	var/size_x = picture_size_x - 1
+	var/size_y = picture_size_y - 1
+	var/list/viewlist = getviewsize(user?.client?.view || world.view)
+	var/view_range = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
+	var/viewer = get_turf(user?.client?.eye || user || target) // not sure why target is a fallback
+	var/list/seen = get_hear_turfs(view_range, viewer)
+	if(!(target_turf in seen))
+		return
+
+	//taking the actual picture
+	on_flash(target, user)
 	blending = TRUE
-	var/datum/picture/picture = take_photo(
-		src,
-		target,
-		user,
-		post_image_callback = CALLBACK(src, PROC_REF(steal_souls)),
-		see_ghosts = see_ghosts,
-		monochrome = print_monochrome,
+	var/list/mobs_spotted = list()
+	var/list/dead_spotted = list()
+	var/list/turfs = list()
+	var/list/mobs = list()
+	var/blueprints = FALSE
+	var/width = APERTURE_TO_METERS(picture_size_x)
+	var/height = APERTURE_TO_METERS(picture_size_y)
+	///list of human names taken on picture
+	var/list/names = list()
+	var/cameranet_user = isAI(user) || istype(viewer, /mob/eye/camera)
+	var/datum/turf_reservation/clone_area = SSmapping.request_turf_block_reservation(width, height, 1)
+	for(var/turf/seen_placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
+		if(isnull(seen_placeholder))
+			continue
+		if(cameranet_user && !SScameras.is_visible_by_cameras(seen_placeholder))
+			continue
+		if(!cameranet_user && !(seen_placeholder in seen))
+			continue
+
+		//Multi-z photography
+		var/turf/target_placeholder = seen_placeholder
+		while(!isnull(target_placeholder))
+			turfs += target_placeholder
+			for(var/mob/mob_there in target_placeholder)
+				mobs += mob_there
+			if(locate(/obj/item/blueprints) in target_placeholder)
+				blueprints = TRUE
+
+			if(isopenspaceturf(target_placeholder) || istype(target_placeholder, /turf/open/floor/glass))
+				target_placeholder = GET_TURF_BELOW(target_placeholder)
+			else
+				break
+
+	// do this before picture is taken so we can reveal revenants for the photo
+	steal_souls(mobs)
+
+	var/list/desc = list("This is a photo of an area of [width] meters by [height] meters.")
+	for(var/mob/mob as anything in mobs)
+		mobs_spotted += mob
+		if(mob.stat == DEAD)
+			dead_spotted += mob
+		var/info = mob.get_photo_description(src)
+		if(!isnull(info))
+			desc += info
+
+	var/icon/get_icon = camera_get_icon(turfs, target_turf, clone_area)
+	get_icon.Blend("#000", ICON_UNDERLAY)
+	qdel(clone_area)
+	for(var/mob/living/carbon/human/person in mobs)
+		if(person.obscured_slots & HIDEFACE)
+			continue
+		names += "[person.name]"
+
+	var/datum/picture/picture = new(
+		"picture",
+		desc.Join("<br>"),
+		mobs_spotted,
+		dead_spotted,
+		names,
+		get_icon,
+		null,
+		width * ICON_SIZE_X,
+		height * ICON_SIZE_X,
+		blueprints,
+		can_see_ghosts = see_ghosts,
 	)
-	if(picture)
-		after_picture(user, picture)
-		SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
-	blending = FALSE
-	return picture
+	after_picture(user, picture)
+	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
 
 /**
  * Action to take after the picture is taken
