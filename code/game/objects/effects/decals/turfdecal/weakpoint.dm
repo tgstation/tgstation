@@ -173,7 +173,7 @@
 		newpoint.crack_length = crack_length
 		newpoint.crack_split_count = crack_split_count
 		new_cracks += newpoint
-		SEND_SIGNAL(new_point, COMSIG_OBJ_HIDE, spawn_location.underfloor_accessibility) //If possible, hide a crack under a turf.
+		spawn_location.levelupdate()
 		active_count++
 
 	notify_ghosts(
