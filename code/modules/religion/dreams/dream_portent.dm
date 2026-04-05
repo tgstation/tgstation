@@ -27,6 +27,13 @@
 	RegisterSignal(user, COMSIG_START_DREAMING, PROC_REF(check_portent))
 	RegisterSignal(user, COMSIG_END_DREAMING, PROC_REF(end_portent))
 	RegisterSignal(user, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(interrupt_portent))
+	addtimer(CALLBACK(src, PROC_REF(force_dream)), rand(2, 5) SECONDS, TIMER_DELETE_ME) // force the dream to start immediately
+
+/datum/religion_rites/dream_portent/proc/force_dream()
+	var/mob/living/carbon/dreamer = owner
+	if(HAS_TRAIT(dreamer, TRAIT_DREAMING))
+		return // dreamed naturally already
+	dreamer.dream()
 
 /datum/religion_rites/dream_portent/proc/add_portent(mob/living/carbon/dreamer, list/dream_pool)
 	SIGNAL_HANDLER

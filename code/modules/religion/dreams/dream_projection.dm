@@ -93,7 +93,10 @@
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 
 	UnregisterSignal(projection, COMSIG_QDELETING)
-	QDEL_NULL(projection)
+	if(QDELING(projection))
+		projection = null
+	else
+		QDEL_NULL(projection)
 
 /datum/status_effect/dream_projection/tick(seconds_between_ticks)
 	if(isnull(owner.mind?.holy_role))

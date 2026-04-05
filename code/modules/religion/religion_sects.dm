@@ -565,8 +565,11 @@
 	UnregisterSignal(chap, COMSIG_START_DREAMING)
 	chap.remove_status_effect(/datum/status_effect/dream_protection)
 
-/datum/religion_sect/dreams/proc/on_dream(mob/living/chap)
+/datum/religion_sect/dreams/proc/on_dream(mob/living/chap, datum/dream/dream_instance)
 	SIGNAL_HANDLER
+
+	if(istype(dream_instance, /datum/dream/portent))
+		return
 
 	to_chat(chap, span_hypnophrase("[GLOB.deity] approves of your slumber..."))
 	adjust_favor(10, chap)
