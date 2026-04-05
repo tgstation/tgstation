@@ -180,7 +180,7 @@
 		return
 	if(isliving(camera_item.loc) && !(target_turf in view(world.view, camera_item.loc)))
 		return
-	if(!(target_turf in view(world.view, user || src)))
+	if(!(target_turf in view(world.view, user || camera_item)))
 		return
 
 	//These vars will be reused later on

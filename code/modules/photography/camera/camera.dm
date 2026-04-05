@@ -168,7 +168,6 @@
  * * mob/user - the optional user who is taking the photo
 */
 /obj/item/camera/proc/on_flash(atom/target, mob/user)
-	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	on = FALSE
