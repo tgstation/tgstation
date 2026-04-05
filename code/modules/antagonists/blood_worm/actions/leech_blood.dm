@@ -118,7 +118,7 @@
 	if (synth_content >= 1)
 		target.balloon_alert(leech, "fully synthetic")
 	else if (synth_content > 0)
-		target.balloon_alert(leech, "[CEILING(synth_content * 100, 1)]% synthetic")
+		target.balloon_alert(leech, "[ceil(synth_content * 100)]% synthetic")
 
 	// Because of DO_AFTER_CHECK_NEXT_MOVE
 	leech.next_move = 0
@@ -229,7 +229,7 @@
 	if (synth_content >= 1)
 		target.balloon_alert(leech, "fully synthetic")
 	else if (synth_content > 0)
-		target.balloon_alert(leech, "[CEILING(synth_content * 100, 1)]% synthetic")
+		target.balloon_alert(leech, "[ceil(synth_content * 100)]% synthetic")
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container_start_check(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target, feedback = FALSE)
 	if (!length(get_blood_in_container(target)))
