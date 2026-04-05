@@ -51,6 +51,10 @@ GLOBAL_PROTECT(protected_ranks)
 /datum/admin_rank/vv_edit_var(var_name, var_value)
 	return FALSE
 
+/datum/admin_rank/allow_mark_datum()
+	alert_to_permissions_elevation_attempt(usr)
+	return FALSE
+
 // Adds/removes rights to this admin_rank
 /datum/admin_rank/proc/process_keyword(group, group_count, datum/admin_rank/previous_rank)
 	if(IsAdminAdvancedProcCall())
