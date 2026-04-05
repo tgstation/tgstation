@@ -540,9 +540,11 @@
 	alignment = ALIGNMENT_GOOD
 	rites_list = list(
 		/datum/religion_rites/deaconize/dreamers,
+		/datum/religion_rites/banish_nightmare,
 		/datum/religion_rites/dream_portent,
 		/datum/religion_rites/dream_projection,
 		/datum/religion_rites/dream_protection,
+		/datum/religion_rites/slumber_party,
 	)
 	smack_chance = 0
 	/// Number of deacons added thus far

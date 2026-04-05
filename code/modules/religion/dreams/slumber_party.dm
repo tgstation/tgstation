@@ -27,7 +27,7 @@
 /datum/status_effect/slumber_party/on_apply()
 	if(IS_CULTIST(owner))
 		var/datum/antagonist/cult/cultist = GET_CULTIST(owner)
-		if(cultist.cult_team.cult_ascendent)
+		if(cultist.cult_team?.cult_ascendent)
 			return FALSE
 
 	if(IS_HERETIC(owner))
@@ -44,14 +44,19 @@
 	if(owner.mind?.holy_role)
 		healing *= 2
 
+	else if(owner.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND, 1))
+		return FALSE
+
 	RegisterSignal(owner, COMSIG_PRE_DREAMING, PROC_REF(add_shared_dream))
+	RegisterSignal(owner, COMSIG_START_DREAMING, PROC_REF(start_shared_dream))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_applied))
 	if(iscarbon(owner))
-		addtimer(CALLBACK(src, PROC_REF(force_dream)), rand(2, 4) SECONDS, TIMER_DELETE_ME)
+		addtimer(CALLBACK(src, PROC_REF(force_dream)), rand(4, 8) SECONDS, TIMER_DELETE_ME)
 	return TRUE
 
 /datum/status_effect/slumber_party/on_remove()
 	UnregisterSignal(owner, COMSIG_PRE_DREAMING)
+	UnregisterSignal(owner, COMSIG_START_DREAMING)
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 	REMOVE_TRAIT(owner, TRAIT_DREAMING, TRAIT_STATUS_EFFECT(id))
 
@@ -67,15 +72,16 @@
 /datum/status_effect/slumber_party/proc/force_dream()
 	var/mob/living/carbon/dreamer = owner
 	if(HAS_TRAIT(dreamer, TRAIT_DREAMING))
-		return
-
+		return // dreamed naturally already
 	dreamer.dream()
-	ADD_TRAIT(dreamer, TRAIT_DREAMING, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/slumber_party/proc/add_shared_dream(datum/source, list/dream_pool)
 	SIGNAL_HANDLER
-
 	dream_pool[new /datum/dream/shared(shared_dream)] = 2000
+
+/datum/status_effect/slumber_party/proc/start_shared_dream(datum/source, datum/dream/current_dream)
+	SIGNAL_HANDLER
+	ADD_TRAIT(owner, TRAIT_DREAMING, TRAIT_STATUS_EFFECT(id)) // so they don't have any OTHER dreams
 
 /datum/status_effect/slumber_party/proc/damage_applied(mob/living/source, damage_amount, ...)
 	SIGNAL_HANDLER

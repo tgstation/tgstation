@@ -91,7 +91,7 @@
 	var/picked_portent = pick(portent_types)
 
 	. += span_hypnophrase(picked_portent)
-	for(var/part in get_portent())
+	for(var/part in get_portent(dreamer))
 		. += span_hypnophrase(part)
 	. += span_hypnophrase(portent_types[picked_portent])
 

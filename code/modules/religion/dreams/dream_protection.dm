@@ -42,4 +42,4 @@
 
 /datum/status_effect/dream_protection/get_examine_text()
 	if(owner.IsSleeping() || HAS_TRAIT(owner, TRAIT_DREAMING))
-		return "A soft cyan glow envelops [owner.p_them()], deflecting attacks slightly."
+		return "A soft cyan glow envelops [owner.p_them()], reflecting light."
