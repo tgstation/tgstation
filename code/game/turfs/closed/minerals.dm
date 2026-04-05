@@ -589,7 +589,7 @@
 		/obj/item/stack/ore/plasma = 10,
 		/obj/item/stack/ore/silver = 8,
 		/obj/item/stack/ore/titanium = 11,
-		/obj/item/stack/ore/uranium = 5,
+		/obj/item/stack/ore/uranium = 7,
 		/turf/closed/mineral/gibtonite/volcanic = 2,
 	)
 
@@ -639,7 +639,7 @@
 		/obj/item/stack/ore/plasma = 28,
 		/obj/item/stack/ore/silver = 4,
 		/obj/item/stack/ore/titanium = 8,
-		/obj/item/stack/ore/uranium = 16,
+		/obj/item/stack/ore/uranium = 14,
 		/turf/closed/mineral/gibtonite/volcanic/shale = 3,
 	)
 

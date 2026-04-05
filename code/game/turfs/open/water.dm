@@ -137,6 +137,7 @@
 
 /turf/open/water/lavaland_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	fishing_datum = /datum/fish_source/ocean
 
 /turf/open/water/beach/tizira
 	desc = "Shallow water. It somehow reminds you of lizardfolk."
