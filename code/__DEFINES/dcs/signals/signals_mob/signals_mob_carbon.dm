@@ -205,3 +205,7 @@
 #define COMSIG_HUMAN_NON_STORAGE_HOTKEY "human_storage_hotkey"
 	/// Return to prevent the storage fail message
 	#define COMPONENT_STORAGE_HOTKEY_HANDLED (1<<0)
+
+#define COMSIG_PRE_DREAMING "pre_dreaming"
+#define COMSIG_START_DREAMING "start_dreaming"
+#define COMSIG_END_DREAMING "end_dreaming"

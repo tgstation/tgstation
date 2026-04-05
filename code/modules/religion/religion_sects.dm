@@ -116,6 +116,14 @@
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
 			return BLESSING_IGNORED
 
+	return standard_bless_healing(blessed, chap)
+
+/datum/religion_sect/proc/standard_bless_healing(mob/living/carbon/human/blessed, mob/living/chap)
+	if(!ishuman(blessed))
+		blessed.adjust_brute_loss(-10)
+		blessed.adjust_fire_loss(-10)
+		return BLESSING_SUCCESS
+
 	var/heal_amt = 10
 	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
 
@@ -522,3 +530,69 @@
 /datum/religion_sect/music/on_conversion(mob/living/chap)
 	. = ..()
 	new /obj/item/choice_beacon/music(get_turf(chap))
+
+/datum/religion_sect/dreams
+	name = "Dream God"
+	quote = "The dream is a window into the soul."
+	desc = "Dream deeply to gain insights into the universe. Earn favor by dreaming or blessing dreaming creatures. \
+		Your blessings invoke dreams and promote healing in those who are sound asleep."
+	tgui_icon = FA_ICON_CLOUD
+	alignment = ALIGNMENT_GOOD
+	rites_list = list(
+		/datum/religion_rites/deaconize/dreamers,
+		/datum/religion_rites/dream_portent,
+		/datum/religion_rites/dream_projection,
+		/datum/religion_rites/dream_protection,
+	)
+	smack_chance = 0
+	/// Number of deacons added thus far
+	var/deacon_count = 0
+	/// Max number of deacons
+	var/max_deacons = 3
+	/// Whether the dream protection rite has been used
+	var/dream_protection = FALSE
+
+/datum/religion_sect/dreams/on_conversion(mob/living/chap)
+	. = ..()
+	RegisterSignal(chap, COMSIG_START_DREAMING, PROC_REF(on_dream))
+	if(dream_protection)
+		chap.apply_status_effect(/datum/status_effect/dream_protection)
+
+/datum/religion_sect/dreams/on_deconversion(mob/living/chap)
+	. = ..()
+	UnregisterSignal(chap, COMSIG_START_DREAMING)
+	chap.remove_status_effect(/datum/status_effect/dream_protection)
+
+/datum/religion_sect/dreams/proc/on_dream(mob/living/chap)
+	SIGNAL_HANDLER
+
+	to_chat(chap, span_hypnophrase("[GLOB.deity] approves of your slumber..."))
+	adjust_favor(10, chap)
+
+// dream blessing only works on dreaming targets.
+// blessing someone asleep causes them to dream, and blessing a dreamer rewards favor.
+// it also heals regardless of if the target is mechanical or organic. do robots dream of electric sheep?
+/datum/religion_sect/dreams/sect_bless(mob/living/target, mob/living/chap)
+	if(HAS_TRAIT(target, TRAIT_DREAMING))
+		to_chat(chap, span_hypnophrase("[GLOB.deity] approves of [target]'s slumber..."))
+		adjust_favor(20, chap)
+		return standard_bless_healing(target, chap)
+
+	if(target.IsSleeping())
+		if(iscarbon(target))
+			var/mob/living/carbon/sleeper = target
+			sleeper.dream()
+
+		to_chat(chap, span_hypnophrase("[GLOB.deity] blesses [target]'s slumber..."))
+		return standard_bless_healing(target, chap)
+
+	to_chat(chap, span_warning("[GLOB.deity] has no interest in blessing the waking."))
+	return BLESSING_IGNORED
+
+/datum/religion_sect/dreams/sect_dead_bless(mob/living/target, mob/living/chap)
+	if(isnull(target.mind))
+		return BLESSING_IGNORED
+
+	to_chat(chap, span_hypnophrase("[GLOB.deity] watches over [target]'s eternal rest..."))
+	adjust_favor(10, chap)
+	return BLESSING_SUCCESS
