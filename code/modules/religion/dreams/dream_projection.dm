@@ -68,6 +68,9 @@
 	src.target = target
 	return ..()
 
+/datum/status_effect/dream_projection/get_examine_text()
+	return "[owner.p_They()] are in a deep slumber, yet [owner.p_their()] eyes show a distant look, as if [owner.p_they()] are somewhere far away..."
+
 /datum/status_effect/dream_projection/on_apply()
 	for(var/obj/item/book/bible/bible in owner.held_items)
 		ADD_TRAIT(bible, TRAIT_NODROP, id)
