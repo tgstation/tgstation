@@ -252,6 +252,6 @@
 		var/list/target_levels = SSmapping.levels_by_trait(target_trait)
 		if(!length(target_levels))
 			return z_level
-		target_levels = sort_list(target_levels, /proc/cmp_numeric_asc)
+		target_levels = sort_list(target_levels, GLOBAL_PROC_REF(cmp_numeric_asc))
 		return target_levels[1]
 	return z_level
