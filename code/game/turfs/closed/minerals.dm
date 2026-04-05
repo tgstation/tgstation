@@ -297,18 +297,19 @@
 /turf/closed/mineral/proc/drill_aoe(mob/user, exp_multiplier = 0)
 	var/speed_change = /turf/closed/mineral::tool_mine_speed / tool_mine_speed
 	// Probability scaling isn't linear to still mine somewhat reliably in dense rocks
-	if (speed_change >= 1 || prob(100 * sqrt(speed_change)))
+	// Rocks with ores always get broken by AOE
+	if (speed_change >= 1 || mineral_type || spawned_boulder || prob(100 * sqrt(speed_change)))
 		return gets_drilled(user, exp_multiplier)
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	balloon_alert(user, "digging...")
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
-	if(do_after(user, 4 SECONDS, target = src))
+	if(do_after(user, tool_mine_speed, target = src))
 		gets_drilled(user)
 
 /turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
 	..()
-	if(do_after(H, 5 SECONDS, target = src))
+	if(do_after(H, tool_mine_speed * 1.25, target = src))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		H.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		gets_drilled(H)
@@ -323,20 +324,21 @@
 		gets_drilled()
 		return TRUE
 
+	var/hardness = /turf/closed/mineral::tool_mine_speed / tool_mine_speed
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			gets_drilled()
 		if(EXPLODE_HEAVY)
-			if(prob(90))
+			if(prob(90 * hardness))
 				gets_drilled()
 		if(EXPLODE_LIGHT)
-			if(prob(75))
+			if(prob(75 * hardness))
 				gets_drilled()
 
 	return TRUE
 
 /turf/closed/mineral/blob_act(obj/structure/blob/B)
-	if(prob(50))
+	if(prob(50 * /turf/closed/mineral::tool_mine_speed / tool_mine_speed))
 		gets_drilled()
 
 /proc/calculate_rock_edges()
@@ -600,6 +602,7 @@
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_RED_ROCK_WALLS
 	canSmoothWith = SMOOTH_GROUP_RED_ROCK_WALLS
 	tool_mine_speed = 5 SECONDS // 25% harder than basalt
+	hand_mine_speed = 17 SECONDS
 	mineral_chance = 8 // N% functionally, 6.67% default, accounts for ~22% turfs
 
 /turf/closed/mineral/random/volcanic/red_rock/mineral_chances()
@@ -624,6 +627,7 @@
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_SHALE_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHALE_WALLS
 	tool_mine_speed = 7 SECONDS // 75% harder than basalt
+	hand_mine_speed = 20 SECONDS
 	mineral_chance = 8 // N% functionally, 7.01% default, accounts for ~13% turfs
 
 /turf/closed/mineral/random/volcanic/shale/mineral_chances()
@@ -1159,6 +1163,7 @@
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_RED_ROCK_WALLS
 	canSmoothWith = SMOOTH_GROUP_RED_ROCK_WALLS
 	tool_mine_speed = 5 SECONDS // 25% harder than basalt
+	hand_mine_speed = 17 SECONDS
 
 /turf/closed/mineral/gibtonite/volcanic/shale
 	name = "shale"
@@ -1169,6 +1174,7 @@
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_SHALE_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHALE_WALLS
 	tool_mine_speed = 7 SECONDS // 75% harder than basalt
+	hand_mine_speed = 20 SECONDS
 
 /turf/closed/mineral/gibtonite/volcanic/airless
 	turf_type = /turf/open/misc/asteroid/basalt
