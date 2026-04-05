@@ -49,6 +49,7 @@
 	if(stat != UNCONSCIOUS || HAS_TRAIT(src, TRAIT_CRITICAL_CONDITION))
 		REMOVE_TRAIT(src, TRAIT_DREAMING, DREAMING_SOURCE)
 		current_dream.OnDreamEnd(src)
+		SEND_SIGNAL(src, COMSIG_END_DREAMING, current_dream)
 		return
 	var/next_message = dream_fragments[1]
 	dream_fragments.Cut(1,2)
