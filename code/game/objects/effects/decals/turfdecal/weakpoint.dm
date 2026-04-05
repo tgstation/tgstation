@@ -151,16 +151,18 @@
  */
 /turf/proc/create_new_cracks(list/chain_turfs, new_weakpoints = 1, skip_turfs = list(), crack_length = 2, crack_split_count = 1)
 	if(!chain_turfs || !length(chain_turfs))
-		return FALSE
+		chain_turfs = list(src)
+		chain_turfs += get_adjacent_turfs(src)
 	if(skip_turfs)
 		chain_turfs = typecache_filter_list_reverse(chain_turfs, skip_turfs) //Filter out things that we don't want to spawn new weakpoints onto.
 
-	var/active_count = 1
+	var/active_count = 0
+	var/list/new_cracks = list()
 	while(active_count < new_weakpoints)
 		if(!length(chain_turfs))
 			return
-		var/spawn_location = pick_n_take(chain_turfs)
-		if(locate(/obj/effect/weakpoint) in option)
+		var/turf/spawn_location = pick_n_take(chain_turfs)
+		if(locate(/obj/effect/weakpoint) in spawn_location)
 			continue
 		if(skip_turfs)
 			if(is_type_in_typecache(spawn_location, skip_turfs))
@@ -170,7 +172,16 @@
 		newpoint.new_weakpoints =  new_weakpoints
 		newpoint.crack_length = crack_length
 		newpoint.crack_split_count = crack_split_count
+		new_cracks += newpoint
+		SEND_SIGNAL(new_point, COMSIG_OBJ_HIDE, spawn_location.underfloor_accessibility) //If possible, hide a crack under a turf.
 		active_count++
+
+	notify_ghosts(
+		"A new crack has been spawned in [get_area(src)].",
+		source = pick(new_cracks),
+		header = "Weakpoint created",
+		ghost_sound = 'sound/effects/hit_kick.ogg',
+	)
 
 /obj/effect/weakpoint/big
 	name = "dangerous weakpoint"
