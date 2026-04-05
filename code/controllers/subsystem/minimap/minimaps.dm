@@ -76,40 +76,39 @@
 ///Creates a minimap for a particular z level
 /datum/tactical_map/proc/load_new_z(datum/dcs, datum/space_level/z_level)
 	SIGNAL_HANDLER
-	var/static/list/skip_render_turfs = typecacheof(list(
-		/turf/open/floor/iron/solarpanel,
-		/turf/open/misc/asteroid/snow/icemoon,
-		/turf/open/misc/ice/icemoon,
-		/turf/open/misc/asteroid/basalt/lava_land_surface
-	))
+	var/static/list/skip_render_turfs
+	if(isnull(skip_render_turfs))
+		skip_render_turfs = typecacheof(list(
+			/turf/open/floor/iron/solarpanel,
+			/turf/open/misc/asteroid/basalt/lava_land_surface,
+			/turf/open/misc/asteroid/snow/icemoon,
+			/turf/open/misc/ice/icemoon,
+			/turf/open/space,
+		))
 
 	var/level = z_level.z_value
 	minimaps_by_z["[level]"] = new /datum/hud_displays
 	if(!is_station_level(level))
 		return
 	var/icon/icon_gen = new('icons/ui_icons/minimap/minimap.dmi') //480x480 blank icon template for drawing on the map
-	for(var/xval = 1 to world.maxx)
-		for(var/yval = 1 to world.maxy) //Scan all the turfs and draw as needed
-			var/turf/location = locate(xval,yval,level)
-			if(isspaceturf(location))
-				continue
-			if(isshuttleturf(location))
-				continue
-			if(is_type_in_typecache(location, skip_render_turfs))
-				continue
-			var/area/arealoc = get(location, /area)
-			map_position_to_name["[level]:[xval]:[yval]"] = arealoc?.name
-			if(location.density)
-				icon_gen.DrawBox(location.tacmap_color, xval, yval)
-				continue
-			var/atom/movable/alttarget = (locate(/obj/machinery/door) in location) || (locate(/obj/structure/window) in location) || (locate(/obj/structure/fence) in location)
-			if(alttarget)
-				icon_gen.DrawBox(alttarget.tacmap_color, xval, yval)
-				continue
-			if(arealoc.tacmap_color)
-				icon_gen.DrawBox(BlendRGB(location.tacmap_color, arealoc.tacmap_color, 0.5), xval, yval)
-				continue
+	for(var/turf/location as anything in Z_TURFS(level))
+		if(is_type_in_typecache(location, skip_render_turfs) || isshuttleturf(location))
+			continue
+		var/xval = location.x
+		var/yval = location.y
+		var/area/arealoc = location.loc
+		map_position_to_name["[level]:[xval]:[yval]"] = arealoc.name
+		if(location.density)
 			icon_gen.DrawBox(location.tacmap_color, xval, yval)
+			continue
+		var/atom/movable/alttarget = (locate(/obj/machinery/door) in location) || (locate(/obj/structure/window) in location) || (locate(/obj/structure/fence) in location)
+		if(alttarget)
+			icon_gen.DrawBox(alttarget.tacmap_color, xval, yval)
+			continue
+		if(arealoc.tacmap_color)
+			icon_gen.DrawBox(BlendRGB(location.tacmap_color, arealoc.tacmap_color, 0.5), xval, yval)
+			continue
+		icon_gen.DrawBox(location.tacmap_color, xval, yval)
 	icon_gen.Scale(480*2,480*2) //scale it up x2 to make it easer to see
 	icon_gen.Crop(1, 1, min(icon_gen.Width(), 480), min(icon_gen.Height(), 480)) //then cut all the empty pixels
 
@@ -121,18 +120,14 @@
 	var/smallest_x = SCREEN_PIXEL_SIZE
 	var/largest_y = 0
 	var/smallest_y = SCREEN_PIXEL_SIZE
-	for(var/xval=1 to SCREEN_PIXEL_SIZE step 2) //step 2 is twice as fast :)
-		for(var/yval=1 to SCREEN_PIXEL_SIZE step 2) //keep in mind 1 wide giant straight lines will offset wierd but you shouldnt be mapping those anyway right???
-			if(!icon_gen.GetPixel(xval, yval))
+	for(var/xval = 1 to SCREEN_PIXEL_SIZE step 2) //step 2 is twice as fast :)
+		for(var/yval = 1 to SCREEN_PIXEL_SIZE step 2) //keep in mind 1 wide giant straight lines will offset wierd but you shouldnt be mapping those anyway right???
+			if(!icon_gen.GetPixel(xval, yval)) // this scares me. need to do it differently later ~Lucy
 				continue
-			if(xval > largest_x)
-				largest_x = xval
-			else if(xval < smallest_x)
-				smallest_x = xval
-			if(yval > largest_y)
-				largest_y = yval
-			else if(yval < smallest_y)
-				smallest_y = yval
+			largest_x = max(xval, largest_x)
+			smallest_x = min(xval, smallest_x)
+			largest_y = min(yval, largest_y)
+			smallest_y = min(yval, smallest_y)
 
 	minimaps_by_z["[level]"].x_offset = FLOOR((SCREEN_PIXEL_SIZE-largest_x-smallest_x)/2, 1)
 	minimaps_by_z["[level]"].y_offset = FLOOR((SCREEN_PIXEL_SIZE-largest_y-smallest_y)/2, 1)
@@ -525,8 +520,8 @@
 	var/zlevel = my_map.updators_by_datum[src].ztarget
 	var/x = (pixel_coords[1] - my_map.minimaps_by_z["[zlevel]"].x_offset) / 2
 	var/y = (pixel_coords[2] - my_map.minimaps_by_z["[zlevel]"].y_offset) / 2
-	var/c_x = clamp(CEILING(x, 1), 1, world.maxx)
-	var/c_y = clamp(CEILING(y, 1), 1, world.maxy)
+	var/c_x = clamp(ceil(x), 1, world.maxx)
+	var/c_y = clamp(ceil(y), 1, world.maxy)
 
 	var/list/position_to_name = my_map.map_position_to_name
 	if(!position_to_name || !usr.hud_used)
@@ -558,8 +553,8 @@
 	var/zlevel = my_map.updators_by_datum[src].ztarget
 	var/x = (pixel_coords[1] - my_map.minimaps_by_z["[zlevel]"].x_offset) / 2
 	var/y = (pixel_coords[2] - my_map.minimaps_by_z["[zlevel]"].y_offset) / 2
-	var/c_x = clamp(CEILING(x, 1), 1, world.maxx)
-	var/c_y = clamp(CEILING(y, 1), 1, world.maxy)
+	var/c_x = clamp(ceil(x), 1, world.maxx)
+	var/c_y = clamp(ceil(y), 1, world.maxy)
 	choices_by_mob[user] = list(c_x, c_y)
 
 /atom/movable/screen/minimap_locator
@@ -580,11 +575,11 @@
 	x_coord += my_map.minimaps_by_z["[mover_turf.z]"].x_offset
 	y_coord += my_map.minimaps_by_z["[mover_turf.z]"].y_offset
 	// + 1 because tiles start at 1
-	var/x_tile = FLOOR(x_coord/32, 1) + 1
+	var/x_tile = FLOOR(x_coord / ICON_SIZE_X, 1) + 1
 	// -3 to center the image
-	var/x_pixel = x_coord % 32 - 3
-	var/y_tile = FLOOR(y_coord/32, 1) + 1
-	var/y_pixel = y_coord % 32 - 3
+	var/x_pixel = x_coord % ICON_SIZE_X - 3
+	var/y_tile = FLOOR(y_coord / ICON_SIZE_Y, 1) + 1
+	var/y_pixel = y_coord % ICON_SIZE_Y - 3
 	screen_loc = "[x_tile]:[x_pixel],[y_tile]:[y_pixel]"
 
 /atom/movable/screen/minimap_extras
