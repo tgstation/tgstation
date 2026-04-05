@@ -139,7 +139,7 @@
 
 	for(var/datum/team/cult/cult as anything in GLOB.antagonist_teams)
 		if(cult.cult_ascendent)
-			return  list("The Blood Geometer, Nar'sie, invades your dream", "her pressence overwhelming and suffocating", "she eyes you greedily")
+			return list("The Blood Geometer, Nar'sie, invades your dream", "her pressence overwhelming and suffocating", "she eyes you greedily")
 
 	for(var/datum/antagonist/heretic/heretic in GLOB.antagonists)
 		if(heretic.ascended && heretic.owner?.current?.stat == CONSCIOUS)
