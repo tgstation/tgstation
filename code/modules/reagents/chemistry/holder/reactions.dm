@@ -1,7 +1,6 @@
 /**
  * Handle any reactions possible in this holder
  * Also UPDATES the reaction list
- * High potential for infinite loopsa if you're editing this.
 */
 /datum/reagents/proc/handle_reactions()
 	if(QDELING(src))
@@ -18,8 +17,6 @@
 	if(is_reacting)//Prevent wasteful calculations
 		if(!(datum_flags & DF_ISPROCESSING))//If we're reacting - but not processing (i.e. we've transferred)
 			START_PROCESSING(SSreagents, src)
-		if(!(has_changed_state()))
-			return FALSE
 
 #ifndef UNIT_TESTS
 	// We assert that reagents will not need to react before the map is fully loaded
@@ -28,91 +25,84 @@
 		return FALSE
 #endif
 
-	var/list/cached_reagents = reagent_list
+	var/list/cached_reagents = list()
+	for(var/datum/reagent/target as anything in reagent_list)
+		cached_reagents[target.type] = target.volume
 	var/list/cached_reactions = GLOB.chemical_reactions_list_reactant_index
 	var/datum/cached_my_atom = my_atom
-	LAZYNULL(failed_but_capable_reactions)
-	LAZYNULL(previous_reagent_list)
 
 	. = 0
-	var/list/possible_reactions = list()
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		LAZYADD(previous_reagent_list, reagent.type)
-		// I am SO sorry
-		reaction_loop:
-			for(var/datum/chemical_reaction/reaction as anything in cached_reactions[reagent.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
-				if(!reaction)
-					continue
-
-				if(!reaction.required_reagents)//Don't bring in empty ones
-					continue
-
-				var/granularity = 1
-				if(!(reaction.reaction_flags & REACTION_INSTANT))
-					granularity = CHEMICAL_QUANTISATION_LEVEL
-
-				var/list/cached_required_reagents = reaction.required_reagents
-				for(var/req_reagent in cached_required_reagents)
-					if(!has_reagent(req_reagent, (cached_required_reagents[req_reagent] * granularity)))
-						continue reaction_loop
-
-				var/list/cached_required_catalysts = reaction.required_catalysts
-				for(var/_catalyst in cached_required_catalysts)
-					if(!has_reagent(_catalyst, (cached_required_catalysts[_catalyst] * granularity)))
-						continue reaction_loop
-
-				if(cached_my_atom)
-					if(reaction.required_container)
-						if(reaction.required_container_accepts_subtypes)
-							if(!istype(cached_my_atom, reaction.required_container))
-								continue
-						else if(cached_my_atom.type != reaction.required_container)
-							continue
-
-					if(isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
-						continue
-
-				else if(reaction.required_container)
-					continue
-
-				if(reaction.required_other && !reaction.pre_reaction_other_checks(src))
-					continue
-
-				// At this point, we've passed all the hard restrictions and entered into just the soft ones
-				// So we're gonna start tracking reactions that COULD be completed on continue, instead of just exiting
-				var/required_temp = reaction.required_temp
-				var/is_cold_recipe = reaction.is_cold_recipe
-				if(required_temp != 0 && (is_cold_recipe && chem_temp > required_temp) || (!is_cold_recipe && chem_temp < required_temp))
-					LAZYADD(failed_but_capable_reactions, reaction)
-					continue
-
-				if(ph < reaction.optimal_ph_min - reaction.determin_ph_range && ph > reaction.optimal_ph_max + reaction.determin_ph_range)
-					LAZYADD(failed_but_capable_reactions, reaction)
-					continue
-
-				possible_reactions += reaction
-
-	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
-	for(var/datum/chemical_reaction/selected_reaction as anything in possible_reactions)
-		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT)) //If we have instant reactions, we process them here
-			instant_react(selected_reaction)
-			.++
-		else
-			var/exists = FALSE
+		for(var/datum/chemical_reaction/reaction as anything in cached_reactions[reagent]) // Was a big list but now it should be smaller since we filtered it with our reagent id
+			//is this reaction already going on?
+			var/next_reaction = FALSE
 			for(var/datum/equilibrium/E_exist as anything in reaction_list)
-				if(ispath(E_exist.reaction.type, selected_reaction.type)) //Don't add duplicates
-					exists = TRUE
+				if(ispath(E_exist.reaction.type, reaction.type)) //Don't add duplicates
+					next_reaction = TRUE
+					break
+			if(next_reaction)
+				continue
 
-			//Add it if it doesn't exist in the list
-			if(!exists)
-				is_reacting = TRUE//Prevent any on_reaction() procs from infinite looping
-				var/datum/equilibrium/equilibrium = new (selected_reaction, src) //Otherwise we add them to the processing list.
+			//do we have the required reagents?
+			var/granularity = 1
+			if(!(reaction.reaction_flags & REACTION_INSTANT))
+				granularity = CHEMICAL_QUANTISATION_LEVEL
+			var/present_volume = 0
+			var/list/datum/reagent/requirements = reaction.required_reagents
+			if(length(reaction.required_catalysts))
+				requirements |= reaction.required_catalysts
+			for(var/datum/reagent/requirement as anything in requirements)
+				present_volume = cached_reagents[requirement]
+				if(!present_volume)
+					next_reaction = TRUE
+					break
+
+				if(present_volume < requirements[requirement] * granularity)
+					next_reaction = TRUE
+					break
+			if(next_reaction)
+				continue
+
+			//do we have the required container?
+			if(cached_my_atom)
+				if(reaction.required_container)
+					if(reaction.required_container_accepts_subtypes)
+						if(!istype(cached_my_atom, reaction.required_container))
+							continue
+					else if(cached_my_atom.type != reaction.required_container)
+						continue
+				if(isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+					continue
+			else if(reaction.required_container)
+				continue
+
+			//do we have the required temps?
+			var/required_temp = reaction.required_temp
+			var/is_cold_recipe = reaction.is_cold_recipe
+			if(required_temp != 0 && (is_cold_recipe && chem_temp > required_temp) || (!is_cold_recipe && chem_temp < required_temp))
+				continue
+
+			//do we have the required ph? in range of min - ph_range & max + ph_range
+			if(ph < reaction.optimal_ph_min - reaction.determin_ph_range && ph > reaction.optimal_ph_max + reaction.determin_ph_range)
+				continue
+
+			//user defined checks
+			if(!reaction.pre_reaction_other_checks(src))
+				continue
+
+			//do the actual reactions
+			if((reaction.reaction_flags & REACTION_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT) || !length(reaction.results)) //If we have instant reactions, we process them here
+				instant_react(reaction)
+				.++
+			else
+				var/datum/equilibrium/equilibrium = new (reaction, src) //Otherwise we add them to the processing list.
 				if(equilibrium.to_delete)//failed startup checks
 					qdel(equilibrium)
 				else
 					//Adding is done in new(), deletion is in qdel
+					is_reacting = TRUE//Prevent any on_reaction() procs from infinite looping
 					equilibrium.reaction.on_reaction(src, equilibrium, equilibrium.multiplier)
-					equilibrium.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO equilibrium.NEW()
+					equilibrium.react_timestep(1)//Get an initial
 
 	if(LAZYLEN(reaction_list))
 		is_reacting = TRUE //We've entered the reaction phase - this is set here so any reagent handling called in on_reaction() doesn't cause infinite loops
@@ -121,32 +111,6 @@
 		is_reacting = FALSE
 
 	TEST_ONLY_ASSERT(!. || MC_RUNNING(), "We reacted during subsystem init, that shouldn't be happening!")
-
-/**
- * Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
- * Also checks to see if the saved reactions in failed_but_capable_reactions can start as a result of temp/pH change
-*/
-/datum/reagents/proc/has_changed_state()
-	//Check if reagents are different
-	var/total_matching_reagents = 0
-	for(var/reagent in previous_reagent_list)
-		if(has_reagent(reagent))
-			total_matching_reagents++
-	if(total_matching_reagents != reagent_list.len)
-		return TRUE
-
-	//Check our last reactions
-	for(var/datum/chemical_reaction/reaction as anything in failed_but_capable_reactions)
-		if(reaction.is_cold_recipe)
-			if(reaction.required_temp < chem_temp)
-				return TRUE
-		else
-			if(reaction.required_temp < chem_temp)
-				return TRUE
-		if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
-			return TRUE
-	return FALSE
-
 
 /*
 * Main Reaction loop handler, Do not call this directly
@@ -197,6 +161,8 @@
 * * mix_message - the associated mix message of a reaction
 */
 /datum/reagents/proc/end_reaction(datum/equilibrium/equilibrium)
+	PRIVATE_PROC(TRUE)
+
 	equilibrium.reaction.reaction_finish(src, equilibrium, equilibrium.reacted_vol)
 	if(!equilibrium.holder || !equilibrium.reaction) //Somehow I'm getting empty equilibrium. This is here to handle them
 		LAZYREMOVE(reaction_list, equilibrium)
@@ -223,9 +189,10 @@
 * Also resets reaction variables to be null/empty/FALSE so that it can restart correctly in the future
 */
 /datum/reagents/proc/finish_reacting()
+	PRIVATE_PROC(TRUE)
+
 	STOP_PROCESSING(SSreagents, src)
 	is_reacting = FALSE
-	LAZYNULL(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
 
 /*
@@ -241,25 +208,6 @@
 		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 	finish_reacting()
 
-/*
-* Force stops a specific reagent's associated reaction if it exists
-*
-* Returns TRUE if it stopped something, FALSE if it didn't
-* Arguments:
-* * reagent - the reagent PRODUCT that we're seeking reactions for, any and all found will be shut down
-*/
-/datum/reagents/proc/force_stop_reagent_reacting(datum/reagent/reagent)
-	var/any_stopped = FALSE
-	var/list/mix_message = list()
-	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
-		for(var/result in equilibrium.reaction.results)
-			if(result == reagent.type)
-				mix_message += end_reaction(equilibrium)
-				any_stopped = TRUE
-	if(length(mix_message) && !HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS))
-		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))][mix_message.Join()]"))
-	return any_stopped
-
 /**
  * Old reaction mechanics, edited to work on one only
  * This is changed from the old - purity of the reagents will affect yield
@@ -268,6 +216,8 @@
  * * [selected_reaction][datum/chemical_reaction] - the chemical reaction to finish instantly
  */
 /datum/reagents/proc/instant_react(datum/chemical_reaction/selected_reaction)
+	PRIVATE_PROC(TRUE)
+
 	var/list/cached_required_reagents = selected_reaction.required_reagents
 	var/list/cached_results = selected_reaction.results
 	var/datum/cached_my_atom = my_atom
