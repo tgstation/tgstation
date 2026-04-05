@@ -364,8 +364,7 @@
 
 /obj/structure/ore_vent/proc/add_tapped_visual()
 	if (vent_visual)
-		if (!(vent_visual in vis_contents))
-			vis_contents += vent_visual
+		vis_contents |= vent_visual
 		return
 
 	vent_visual = new(src)
