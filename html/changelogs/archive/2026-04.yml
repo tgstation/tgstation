@@ -81,3 +81,7 @@
   lelandkemble:
   - rscadd: Remote chemical implants can be synced with a remote signalling device
       to activate without a Prisoner Management Console.
+2026-04-05:
+  SyncIt21:
+  - refactor: ' reagent reaction code has been refactored for better cpu & memory
+      performance. Report broken reactions on github'

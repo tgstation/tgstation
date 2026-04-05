@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - refactor: " reagent reaction code has been refactored for better cpu & memory performance. Report broken reactions on github"
