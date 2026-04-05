@@ -175,10 +175,10 @@
 /atom/movable/screen/minimap_tool/draw_tool/proc/draw_line(list/start_coords, list/end_coords, draw_color = color)
 	// converts these into the unscaled minimap version so we have to do less calculating
 	var/halved_offset = MINIMAP_DRAW_OFFSET/2
-	var/start_x = FLOOR(start_coords[1]/2, 1) - halved_offset
-	var/start_y = FLOOR(start_coords[2]/2, 1) + halved_offset
-	var/end_x = FLOOR(end_coords[1]/2, 1) - halved_offset
-	var/end_y = FLOOR(end_coords[2]/2, 1) + halved_offset
+	var/start_x = floor(start_coords[1]/2) - halved_offset
+	var/start_y = floor(start_coords[2]/2) + halved_offset
+	var/end_x = floor(end_coords[1]/2) - halved_offset
+	var/end_y = floor(end_coords[2]/2) + halved_offset
 	var/icon/mona_lisa = icon(drawn_image.icon)
 
 	//special case 1, straight line
@@ -205,8 +205,8 @@
 
 	var/abs_dx = abs(end_x - start_x)
 	var/abs_dy = abs(end_y - start_y)
-	var/sign_dx = SIGN(end_x - start_x)
-	var/sign_dy = SIGN(end_y - start_y)
+	var/sign_dx = sign(end_x - start_x)
+	var/sign_dy = sign(end_y - start_y)
 
 	//special case 2, perfectly diagonal line
 	if(abs_dx == abs_dy)
@@ -310,8 +310,8 @@
 	var/list/pixel_coords = params2screenpixel(modifiers["screen-loc"])
 	var/x = (pixel_coords[1] - x_offset - MINIMAP_DRAW_OFFSET) / 2
 	var/y = (pixel_coords[2] - y_offset + MINIMAP_DRAW_OFFSET) / 2
-	var/c_x = clamp(CEILING(x, 1), 1, world.maxx)
-	var/c_y = clamp(CEILING(y, 1), 1, world.maxy)
+	var/c_x = clamp(ceil(x), 1, world.maxx)
+	var/c_y = clamp(ceil(y), 1, world.maxy)
 	var/turf/target = locate(c_x, c_y, zlevel)
 	if(modifiers[BUTTON] == RIGHT_CLICK)
 		var/curr_dist_sq
