@@ -78,7 +78,7 @@
 	desc = "Banish the shadows!"
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 1.5
 	/// Magic charges we block
-	var/charges = 4
+	var/charges = 3
 
 /obj/item/organ/heart/evolved/sacred/dreamer/on_life(seconds_per_tick)
 	healing_probability = 5
