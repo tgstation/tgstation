@@ -75,7 +75,7 @@
 	for(var/obj/item/book/bible/bible in owner.held_items)
 		ADD_TRAIT(bible, TRAIT_NODROP, id)
 
-	if(!user.SetSleeping(20 SECONDS))
+	if(!owner.SetSleeping(20 SECONDS))
 		to_chat(owner, span_warning("You fail to fall asleep."))
 		for(var/obj/item/book/bible/bible in owner.held_items)
 			REMOVE_TRAIT(bible, TRAIT_NODROP, id)
