@@ -49,6 +49,7 @@
 #define span_cult_bold_italic(str) ("<span class='cult_bold_italic'>" + str + "</span>")
 #define span_cult_italic(str) ("<span class='cult_italic'>" + str + "</span>")
 #define span_cult_large(str) ("<span class='cult_large'>" + str + "</span>")
+#define span_cyan(str) ("<span class='cyan'>" + str + "</span>")
 #define span_danger(str) ("<span class='danger'>" + str + "</span>")
 #define span_deadsay(str) ("<span class='deadsay'>" + str + "</span>")
 #define span_deconversion_message(str) ("<span class='deconversion_message'>" + str + "</span>")

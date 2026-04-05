@@ -1,10 +1,19 @@
 /datum/religion_rites/dream_projection
 	name = "Dream Projection"
 	desc = "Astrally project your dream consciousness into the mind of one of your followers. \
-		While projecting, you are asleep, and can communicate with and see through the eyes of the chosen follower, \
-		but cannot interact with the world in any way. The projection can be ended at any time, or if you are woken up, or if your follower dies."
+		While projecting, you are asleep, and can communicate with only and see through the eyes of the chosen follower, \
+		but cannot interact with the world in any way. The projection can be ended at any time, \
+			ends if you are woken up or attacked, and ends if the follower dies."
 	favor_cost = 100
-	ritual_length = 20 SECONDS
+	ritual_length = 15 SECONDS
+
+/datum/religion_rites/dream_projection/New()
+	. = ..()
+	ritual_invocations = list(
+		"A member of the flock has gone astray, lost in the waking world...",
+		"It is the duty of the shepard to guide them back to the fold, even if they cannot find their way themselves...",
+		"Let me walk through their waking dream, and show them the way back...",
+	)
 
 /datum/religion_rites/dream_projection/perform_rite(mob/living/user, atom/religious_tool)
 	var/list/followers = list()
@@ -34,12 +43,10 @@
 		refund(0.8)
 		return
 
-	if(!user.SetSleeping(20 SECONDS))
+	if(!user.apply_status_effect(/datum/status_effect/dream_projection, target))
 		to_chat(user, span_warning("You fail to fall asleep."))
 		refund(0.8)
 		return
-
-	user.apply_status_effect(/datum/status_effect/dream_projection, target)
 
 /datum/status_effect/dream_projection
 	id = "dream_projection"
@@ -62,6 +69,15 @@
 	return ..()
 
 /datum/status_effect/dream_projection/on_apply()
+	for(var/obj/item/book/bible/bible in owner.held_items)
+		ADD_TRAIT(bible, TRAIT_NODROP, id)
+
+	if(!user.SetSleeping(20 SECONDS))
+		to_chat(owner, span_warning("You fail to fall asleep."))
+		for(var/obj/item/book/bible/bible in owner.held_items)
+			REMOVE_TRAIT(bible, TRAIT_NODROP, id)
+		return FALSE
+
 	. = ..()
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(end_projection))
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(end_projection))
@@ -81,6 +97,10 @@
 
 	RegisterSignal(projection, COMSIG_QDELETING, PROC_REF(stop_projection))
 
+	owner.add_filter(id, 1, outline_filter(color = "#aee2b2"))
+	owner.transition_filter(id, outline_filter(size = 2), 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
+	owner.transition_filter(id, outline_filter(size = 0), 2 SECONDS, easing = SINE_EASING|EASE_OUT, loop = -1)
+
 /datum/status_effect/dream_projection/on_remove()
 	. = ..()
 	UnregisterSignal(target, COMSIG_QDELETING)
@@ -91,6 +111,9 @@
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_KNOCKEDOUT))
 	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
+	owner.adjust_drowsiness(10 SECONDS)
+	for(var/obj/item/book/bible/bible in owner.held_items)
+		REMOVE_TRAIT(bible, TRAIT_NODROP, id)
 
 	UnregisterSignal(projection, COMSIG_QDELETING)
 	if(QDELING(projection))

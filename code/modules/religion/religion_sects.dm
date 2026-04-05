@@ -554,6 +554,8 @@
 	/// Whether the dream protection rite has been used
 	var/dream_protection = FALSE
 
+	var/list/recent_bless_refs
+
 /datum/religion_sect/dreams/on_conversion(mob/living/chap)
 	. = ..()
 	RegisterSignal(chap, COMSIG_START_DREAMING, PROC_REF(on_dream))
@@ -571,7 +573,7 @@
 	if(istype(dream_instance, /datum/dream/portent))
 		return
 
-	to_chat(chap, span_hypnophrase("[GLOB.deity] approves of your slumber..."))
+	to_chat(chap, span_cyan("[GLOB.deity] approves of your slumber."))
 	adjust_favor(10, chap)
 
 // dream blessing only works on dreaming targets.
@@ -579,8 +581,12 @@
 // it also heals regardless of if the target is mechanical or organic. do robots dream of electric sheep?
 /datum/religion_sect/dreams/sect_bless(mob/living/target, mob/living/chap)
 	if(HAS_TRAIT(target, TRAIT_DREAMING))
-		to_chat(chap, span_hypnophrase("[GLOB.deity] approves of [target]'s slumber..."))
-		adjust_favor(20, chap)
+		to_chat(chap, span_cyan("[GLOB.deity] approves of [target]'s slumber."))
+		var/tarref = REF(target)
+		if(LAZYFIND(recent_bless_refs, tarref))
+			adjust_favor(20 * (target.mind ? 1 : 0.5), chap)
+			LAZYADD(recent_bless_refs, tarref)
+			addtimer(CALLBACK(src, PROC_REF(clear_bless_ref), tarref), 5 MINUTES)
 		return standard_bless_healing(target, chap)
 
 	if(target.IsSleeping())
@@ -588,16 +594,22 @@
 			var/mob/living/carbon/sleeper = target
 			sleeper.dream()
 
-		to_chat(chap, span_hypnophrase("[GLOB.deity] blesses [target]'s slumber..."))
+		to_chat(chap, span_cyan("[GLOB.deity] blesses [target]'s slumber."))
+		if(dream_protection && !target.has_status_effect(/datum/status_effect/dream_protection))
+			target.apply_status_effect(/datum/status_effect/dream_protection/temporary)
 		return standard_bless_healing(target, chap)
 
 	to_chat(chap, span_warning("[GLOB.deity] has no interest in blessing the waking."))
 	return BLESSING_IGNORED
 
 /datum/religion_sect/dreams/sect_dead_bless(mob/living/target, mob/living/chap)
-	if(isnull(target.mind))
-		return BLESSING_IGNORED
-
-	to_chat(chap, span_hypnophrase("[GLOB.deity] watches over [target]'s eternal rest..."))
-	adjust_favor(10, chap)
+	to_chat(chap, span_cyan("[GLOB.deity] watches over [target]'s eternal rest."))
+	var/tarref = REF(target)
+	if(!LAZYFIND(recent_bless_refs, tarref))
+		adjust_favor(10 * (target.mind ? 1 : 0.5), chap)
+		LAZYADD(recent_bless_refs, tarref)
+		addtimer(CALLBACK(src, PROC_REF(clear_bless_ref), tarref), 5 MINUTES)
 	return BLESSING_SUCCESS
+
+/datum/religion_sect/dreams/proc/clear_bless_ref(tarref)
+	LAZYREMOVE(recent_bless_refs, tarref)

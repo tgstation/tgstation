@@ -1,8 +1,19 @@
 /datum/religion_rites/slumber_party
 	name = "Slumber Party"
-	desc = "Put all nearby creatures to sleep. All affected creatures share the same dream and heal rapidly while sleeping."
+	desc = "Put all nearby creatures to sleep. \
+		All affected creatures share the same dream and heal rapidly while sleeping. \
+		You and your followers heal even faster during the ritual."
 	favor_cost = 200
 	rite_flags = RITE_AUTO_DELETE
+	ritual_length = 20 SECONDS
+
+/datum/religion_rites/slumber_party/New()
+	. = ..()
+	ritual_invocations = list(
+		"Sleep now, flock of [GLOB.deity], and share in each other's dreams...",
+		"Our slumber shall rejuvenate us for the trials ahead...",
+		"May we all wake up refreshed and renewed!",
+	)
 
 /datum/religion_rites/slumber_party/post_invoke_effects(mob/living/user, atom/religious_tool)
 	. = ..()
@@ -59,6 +70,7 @@
 	UnregisterSignal(owner, COMSIG_START_DREAMING)
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 	REMOVE_TRAIT(owner, TRAIT_DREAMING, TRAIT_STATUS_EFFECT(id))
+	owner.adjust_drowsiness(20 SECONDS)
 
 /datum/status_effect/slumber_party/tick(seconds_between_ticks)
 	if(!owner.IsSleeping())

@@ -2,9 +2,17 @@
 	name = "Dream Portent"
 	desc = "Immediately fall into a slumber and receive a portent of the future. \
 		The vision may be difficult to interpret, but will likely come true in some form. \
-		While sleeping, any form of harm will awaken you and disrupt the vision."
+		Any form of harm will awaken you and disrupt the vision."
 	favor_cost = 50
 	rite_flags = NONE
+	ritual_length = 6 SECONDS
+
+/datum/religion_rites/dream_portent/New()
+	. = ..()
+	ritual_invocations = list(
+		"O great shepard [GLOB.deity], grant me a vision of the future!..",
+		"That our flock may persevere through the trials to come...",
+	)
 
 /datum/religion_rites/dream_portent/can_afford(mob/living/user)
 	if(!..())
@@ -15,10 +23,17 @@
 	return TRUE
 
 /datum/religion_rites/dream_portent/invoke_effect(mob/living/user, atom/religious_tool)
+	for(var/obj/item/book/bible/bible in user.held_items)
+		ADD_TRAIT(bible, TRAIT_NODROP, type)
+
 	if(!user.SetSleeping(10 SECONDS))
 		to_chat(user, span_warning("You fail to fall asleep."))
+		for(var/obj/item/book/bible/bible in user.held_items)
+			REMOVE_TRAIT(bible, TRAIT_NODROP, type)
 		return FALSE
 
+	user.visible_message(span_notice("[user] suddenly falls into a deep slumber, [user.p_their()] eyes fluttering..."))
+	user.adjust_drowsiness(30 SECONDS)
 	return ..()
 
 /datum/religion_rites/dream_portent/post_invoke_effects(mob/living/user, atom/religious_tool)
@@ -45,8 +60,9 @@
 	if(istype(current_dream, /datum/dream/portent))
 		return
 
-	to_chat(dreamer, span_hypnophrase("Your mind wanders, yet you receive no clear vision... You must try again later."))
+	to_chat(dreamer, span_cyan("Your mind wanders, yet you receive no clear vision... You must try again later."))
 	refund(0.8)
+	dreamer.adjust_drowsiness(10 SECONDS)
 	dreamer.add_mood_event("dream_failed", /datum/mood_event/dream_failed)
 
 /datum/religion_rites/dream_portent/proc/interrupt_portent(mob/living/carbon/dreamer, damage_amount)
@@ -57,10 +73,14 @@
 
 	to_chat(dreamer, span_warning("Your dream is interrupted as you are harmed!"))
 	dreamer.SetSleeping(0)
+	dreamer.adjust_drowsiness(10 SECONDS)
 	dreamer.add_mood_event("dream_interrupted", /datum/mood_event/dream_interrupted)
 
 /datum/religion_rites/dream_portent/proc/end_portent(mob/living/carbon/dreamer, datum/dream/current_dream)
 	SIGNAL_HANDLER
+
+	for(var/obj/item/book/bible/bible in dreamer.held_items)
+		REMOVE_TRAIT(bible, TRAIT_NODROP, type)
 
 	qdel(src)
 
@@ -80,26 +100,28 @@
 
 /datum/dream/portent/GenerateDream(mob/living/carbon/dreamer)
 	. = list()
-	. += span_hypnophrase("You receive a portent of the future...")
+	. += span_cyan("you receive a portent of the future...")
 
 	var/list/portent_types = list(
+		"[GLOB.deity] greets you warmly" = "[GLOB.deity] bids you farewell, though you feel their presence watch over you",
 		"a crystal ball reveals a vision of the future" = "the crystal ball returns to its normal, opaque state",
 		"a divine light blinds you, revealing glimpses of what is to come" = "the light fades, leaving you with a lingering warmth",
+		"a full moon illuminates the sky" = "the moon crosses the horizon, bringing forth a new dawn",
 		"a mysterious figure appears, cloaked in shadow" = "they depart, leaving you with a sense of [pick("wonder", "dread", "curiosity", "foreboding")]",
+		"an incomprehensible entity envelops you, showing you visions of the past, present, and future" = "the entity releases you, leaving you with a sense of awe and fear",
 		"an old [pick("man", "woman", "prophet", "oracle")] approaches you, offering cryptic advice" = "they vanish before you can ask any questions",
 		"the stars align in a way you've never seen before" = "the stars return to their normal constellations",
 		"the trees ahead parts to reveal a hidden path" = "you lose the path as the trees sway back into place",
 		"walking through a featureless landscape, shapes begin to form" = "the shapes fade away, leaving alone in the void",
 		"you see yourself sleeping peacefully" = "you see yourself waking up calmly",
 		"your third eye opens to reveal a hidden truth" = "your third eye closes, but the vision lingers in your mind",
-		"[GLOB.deity] greets you warmly" = "[GLOB.deity] bids you farewell, though you feel their presence watch over you",
 	)
 	var/picked_portent = pick(portent_types)
 
-	. += span_hypnophrase(picked_portent)
+	. += span_cyan(picked_portent)
 	for(var/part in get_portent(dreamer))
-		. += span_hypnophrase(part)
-	. += span_hypnophrase(portent_types[picked_portent])
+		. += span_cyan(part)
+	. += span_cyan(portent_types[picked_portent])
 
 /datum/dream/portent/proc/get_portent(mob/living/carbon/dreamer)
 	if(prob(1))
@@ -161,6 +183,14 @@
 	for(var/mob/living/carbon/human/clone as anything in GLOB.human_list)
 		if(clone != dreamer && clone.real_name == dreamer.real_name && clone.stat == CONSCIOUS && prob(50))
 			return list("you see yourself", "in a foggy mirror", "the reflection, barely visible")
+
+	if(prob(length(dreamer.get_all_orbiters()) * 20))
+		return list(
+			"you feel a ghostly [pick("presence", "entity", "figure")]",
+			"it seems to be trying to communicate with you",
+			"yet you can't comprehend its message",
+			"a sense of sadness and longing washes over you",
+		)
 
 	if(IS_HERETIC(dreamer) && prob(50))
 		var/datum/antagonist/heretic/heretic = GET_HERETIC(dreamer)
