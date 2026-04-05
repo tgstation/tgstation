@@ -602,7 +602,7 @@
 	var/list/linked_zs = SSmapping.get_connected_levels(newz)
 	if(!length(linked_zs))
 		return
-	linked_zs = sort_list(linked_zs, /proc/cmp_numeric_asc)
+	linked_zs = sort_list(linked_zs, GLOBAL_PROC_REF(cmp_numeric_asc))
 	var/relativez = linked_zs.Find(newz)
 	var/text = "Floor<br/>[relativez]"
 	maptext = MAPTEXT_TINY_UNICODE("<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[text]</div>")
@@ -622,7 +622,7 @@
 	var/list/linked_zs = SSmapping.get_connected_levels(currentz)
 	if(!length(linked_zs))
 		return
-	linked_zs = sort_list(linked_zs, /proc/cmp_numeric_asc)
+	linked_zs = sort_list(linked_zs, GLOBAL_PROC_REF(cmp_numeric_asc))
 	var/relativez = linked_zs.Find(currentz)
 	if(relativez == length(linked_zs))
 		return //topmost z with nothing above. we still play effects just dont do anything
@@ -643,7 +643,7 @@
 	var/list/linked_zs = SSmapping.get_connected_levels(currentz)
 	if(!length(linked_zs))
 		return
-	linked_zs = sort_list(linked_zs, /proc/cmp_numeric_asc)
+	linked_zs = sort_list(linked_zs, GLOBAL_PROC_REF(cmp_numeric_asc))
 	var/relativez = linked_zs.Find(currentz)
 	if(relativez == 1)
 		return //bottommost z with nothing below. we still play effects just dont do anything
