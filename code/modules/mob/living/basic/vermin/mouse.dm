@@ -1,3 +1,5 @@
+#define SMART_MOUSE_CHANCE 10
+
 /mob/living/basic/mouse
 	name = "mouse"
 	desc = "This cute little guy just loves the taste of insulated electrical cables. Isn't he adorable?"
@@ -60,6 +62,8 @@
 	if(contributes_to_ratcap)
 		SSmobs.cheeserats |= src
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	if(prob(SMART_MOUSE_CHANCE))
+		ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, INNATE_TRAIT)
 
 	if(tame)
 		ADD_TRAIT(src, TRAIT_TAMED, INNATE_TRAIT)
@@ -272,6 +276,11 @@
 
 	playsound(cable, 'sound/effects/sparks/sparks2.ogg', 100, TRUE)
 	cable.deconstruct()
+
+/mob/living/basic/mouse/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+		. += span_info("This mouse looks unusually clever.")
 
 /mob/living/basic/mouse/white
 	body_color = "white"
@@ -490,3 +499,5 @@
 		/datum/ai_planning_subtree/random_speech/mouse,
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables,
 	)
+
+#undef SMART_MOUSE_CHANCE
