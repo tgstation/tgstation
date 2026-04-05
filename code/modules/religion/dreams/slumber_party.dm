@@ -44,7 +44,7 @@
 	if(owner.mind?.holy_role)
 		healing *= 2
 
-	RegisterSignal(user, COMSIG_PRE_DREAMING, PROC_REF(add_shared_dream))
+	RegisterSignal(owner, COMSIG_PRE_DREAMING, PROC_REF(add_shared_dream))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_applied))
 	if(iscarbon(owner))
 		addtimer(CALLBACK(src, PROC_REF(force_dream)), rand(2, 4) SECONDS, TIMER_DELETE_ME)
@@ -61,8 +61,8 @@
 		return
 
 	owner.heal_overall_damage(healing * seconds_between_ticks, healing * seconds_between_ticks, required_bodytype = BODYTYPE_ORGANIC)
-	owner.adjust_tox_loss(healing * seconds_between_ticks * 0.5)
-	owner.adjust_oxy_loss(healing * seconds_between_ticks * 0.25)
+	owner.adjust_tox_loss(healing * seconds_between_ticks * 0.50, required_biotype = MOB_ORGANIC)
+	owner.adjust_oxy_loss(healing * seconds_between_ticks * 0.25, required_biotype = MOB_ORGANIC)
 
 /datum/status_effect/slumber_party/proc/force_dream()
 	var/mob/living/carbon/dreamer = owner
