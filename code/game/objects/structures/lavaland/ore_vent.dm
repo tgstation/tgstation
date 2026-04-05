@@ -213,7 +213,7 @@
  * @params ore_floor The number of minerals already rolled. Used to scale the logarithmic function.
  */
 /obj/structure/ore_vent/proc/ore_quantity_function(ore_floor)
-	return SHEET_MATERIAL_AMOUNT * max(round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1)), 1)
+	return HALF_SHEET_MATERIAL_AMOUNT * max(round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1)), 1)
 
 /**
  * This confirms that the user wants to start the wave defense event, and that they can start it.

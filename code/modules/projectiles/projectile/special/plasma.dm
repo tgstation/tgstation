@@ -4,14 +4,14 @@
 	damage_type = BURN
 	armor_flag = ENERGY
 	damage = 5
-	range = 4
+	range = 3
 	dismemberment = 20
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 	tracer_type = /obj/effect/projectile/tracer/plasma_cutter
 	muzzle_type = /obj/effect/projectile/muzzle/plasma_cutter
 	impact_type = /obj/effect/projectile/impact/plasma_cutter
 	// Mines this many additional tiles of rock
-	var/mine_range = 4
+	var/mine_range = 3
 
 /obj/projectile/plasma/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -28,13 +28,13 @@
 
 /obj/projectile/plasma/adv
 	damage = 7
-	range = 6
-	mine_range = 6
+	range = 4
+	mine_range = 4
 
 /obj/projectile/plasma/adv/mech
 	damage = 10
-	range = 8
-	mine_range = 4
+	range = 7
+	mine_range = 3
 
 /obj/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
