@@ -147,19 +147,34 @@
 
 /datum/status_effect/stacking/brimdust_coating/on_apply()
 	. = ..()
-	dust_overlay = mutable_appearance('icons/effects/weather_effects.dmi', "ash_storm")
+	var/target_width = max(owner.get_cached_width(), ICON_SIZE_X)
+	var/target_height = max(owner.get_cached_height(), ICON_SIZE_Y)
+	if (target_width == ICON_SIZE_X && target_height == ICON_SIZE_Y)
+		dust_overlay = mutable_appearance('icons/effects/weather_effects.dmi', "ash_storm")
+	else
+		var/icon/dust_icon = icon('icons/effects/weather_effects.dmi', "ash_storm")
+		var/icon/base_icon = icon('icons/effects/weather_effects.dmi', "ash_storm")
+		dust_icon.Crop(1, 1, target_width, target_height)
+		var/icon/column = icon('icons/effects/weather_effects.dmi', "ash_storm")
+		column.Crop(1, 1, ICON_SIZE_X, target_height)
+		for (var/i in 1 to ceil(target_height / ICON_SIZE_Y))
+			column.Blend(base_icon, ICON_OVERLAY, 1, 1 + (i - 1) * ICON_SIZE_Y)
+		for (var/i in 1 to ceil(target_width / ICON_SIZE_X))
+			dust_icon.Blend(column, ICON_OVERLAY, 1 + (i - 1) * ICON_SIZE_X, 1)
+		dust_overlay = mutable_appearance(dust_icon)
 	dust_overlay.alpha = stacks * BRIMDUST_ALPHA_PER_STACK
 	dust_overlay.color = COLOR_RED_LIGHT
 	dust_overlay.blend_mode = BLEND_INSET_OVERLAY
 	owner.add_overlay(dust_overlay)
-	owner.add_shared_particles(/particles/brimdust)
+	var/obj/effect/holder = owner.add_shared_particles(/particles/brimdust, "brimdust_coating-[owner.base_pixel_w]")
+	holder.pixel_w = -owner.base_pixel_w
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 
 /datum/status_effect/stacking/brimdust_coating/on_remove()
 	. = ..()
 	owner.cut_overlay(dust_overlay)
-	owner.remove_shared_particles(/particles/brimdust)
+	owner.remove_shared_particles("brimdust_coating-[owner.base_pixel_w]")
 	UnregisterSignal(owner, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_COMPONENT_CLEAN_ACT))
 
 /// When you are cleaned, wash off the buff
