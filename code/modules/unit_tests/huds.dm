@@ -26,14 +26,14 @@
 		if(mobs::abstract_type == mobs)
 			continue
 		var/mob/living/basic/dummy = allocate(mobs)
-		var/mob_hud = mobs::hud_type
-		var/datum/hud/initialized_hud = new mob_hud(dummy)
+		var/mob_hud_type = mobs::hud_type
+		dummy.set_hud_used(new mob_hud_type(dummy))
 		//mobs that don't use combat mode don't need it.
-		var/atom/movable/screen/action_intent = initialized_hud.screen_objects[HUD_MOB_INTENTS]
+		var/atom/movable/screen/action_intent = dummy.hud_used.screen_objects[HUD_MOB_INTENTS]
 		if(!HAS_TRAIT(dummy, TRAIT_COMBAT_MODE_LOCK) && isnull(action_intent))
-			TEST_FAIL("[dummy] using [initialized_hud.type] does not have an Action Intent.")
+			TEST_FAIL("[dummy] using [dummy.hud_used.type] does not have an Action Intent.")
 		//Mobs that need a health indicator should have at least a healthdoll or healths.
-		var/atom/movable/screen/healthdoll/healthdoll = initialized_hud.screen_objects[HUD_MOB_HEALTHDOLL]
-		var/atom/movable/screen/healths/healths = initialized_hud.screen_objects[HUD_MOB_HEALTH]
-		if(initialized_hud.needs_health_indicator && isnull(healthdoll) && isnull(healths))
-			TEST_FAIL("[dummy] using [initialized_hud.type] does not have a Health Doll or Health HUD.")
+		var/atom/movable/screen/healthdoll/healthdoll = dummy.hud_used.screen_objects[HUD_MOB_HEALTHDOLL]
+		var/atom/movable/screen/healths/healths = dummy.hud_used.screen_objects[HUD_MOB_HEALTH]
+		if(dummy.hud_used.needs_health_indicator && isnull(healthdoll) && isnull(healths))
+			TEST_FAIL("[dummy] using [dummy.hud_used.type] does not have a Health Doll or Health HUD.")
