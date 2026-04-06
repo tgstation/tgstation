@@ -4,16 +4,21 @@
 
 /obj/item/earthcracker
 	name = "E-2 Earthcracker"
-	desc = "A nasty automated pilebunker can be used to create a massive weakpoint in flooring, which can be triggered afterwards by a sufficiently strong enough explosion."
+	desc = "A nasty automated pilebunker can be used to create a massive weakpoint in flooring,\
+		which can be triggered afterwards by a sufficiently strong enough explosion."
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "earthcracker"
 	inhand_icon_state = "multitool"
 	base_icon_state = "earthcracker"
-	//Is the earthcracker ready to arm, arming, activating, or spent?
+	/// Is the earthcracker ready to arm, arming, activating, or spent?
 	var/status = EARTHCRACKER_READY
+	/// What kind of weakpoint shall you spawn?
+	var/obj/weakpoint_type = /obj/effect/weakpoint/big
 
 /obj/item/earthcracker/Initialize(mapload)
 	. = ..()
+	if(!weakpoint_type)
+		CRASH("An earthcracker spawned without a designated weakpoint!")
 	register_context()
 
 /obj/item/earthcracker/attack_self(mob/user, modifiers)
@@ -106,7 +111,7 @@
 		return
 	playsound(src, 'sound/items/weapons/earthcracker_bang.mp3', 75, FALSE, 3)
 	var/turf/cracked_hull = drop_location()
-	new /obj/effect/weakpoint/big(cracked_hull)
+	new weakpoint_type(cracked_hull)
 	do_sparks(2, FALSE, src)
 	cracked_hull.levelupdate()
 
@@ -116,3 +121,11 @@
 
 /obj/item/earthcracker/proc/post_break()
 	qdel(src)
+
+// Small subtype for shenanigans.
+/obj/item/earthcracker/small
+	name = "E-1 Earthcracker"
+	desc = "A rusty automated pilebunker can be used to create a weakpoint in flooring,\
+		which can be triggered afterwards by a sufficiently strong enough explosion.\
+		You're pretty sure the company that used to make these got bought by Nanotrasen ages ago."
+	weakpoint_type = /obj/effect/weakpoint

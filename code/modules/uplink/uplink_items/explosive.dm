@@ -121,6 +121,15 @@
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
 	limited_discount_stock = 4
 
+/datum/uplink_item/explosives/earthcracker
+	name = "E-2 Earthcracker"
+	desc = "The E-2 Earthcracker makes for a great partner to any conventional explosive. Set the device up on any station hull, arm, and activate.\
+		What remains is a conventionally dangerous weakpoint, that will crack open a random pattern of floors upon being hit with an explosive force.\
+		That pattern of cracks will in-turn also create additional cracks, ad-finimum if not repaired. The E-2 is not useful for conventional mining anymore, however."
+	item = /obj/item/earthcracker
+	cost = 2
+	limited_discount_stock = 2
+
 /datum/uplink_item/explosives/syndicate_bomb/New()
 	. = ..()
 	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)
