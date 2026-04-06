@@ -755,16 +755,16 @@
 
 	return .
 
-/obj/item/organ/eyes/robotic/tacvisor/proc/on_examine(mob/source, atom/target, list/examine_strings)
+/obj/item/organ/eyes/robotic/tacvisor/proc/on_examine(mob/source, atom/target, list/examine_strings, list/examine_overrides)
 	SIGNAL_HANDLER
 
 	if (target == owner || !iscarbon(target) && !(isliving(target) && (obj_flags & EMAGGED)))
 		return
 
-	examine_strings.Cut()
-	examine_strings += span_warning("You're struggling to make out any details...")
+	var/list/override_strings = list(span_warning("You're struggling to make out any details..."))
 
 	if (!threat_flags && !(obj_flags & EMAGGED))
+		examine_overrides[EXAMINE_OVERRIDE_PRIORITY_IFF] = override_strings
 		return
 
 	var/lasercolor = null
@@ -773,17 +773,19 @@
 		lasercolor = "r"
 	else if (istype(owner.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/bluetag) || istype(owner.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/gun/energy/laser/bluetag) || owner.is_holding_item_of_type(/obj/item/gun/energy/laser/bluetag))
 		lasercolor = "b"
+
 	var/threat_level = victim.assess_threat(threat_flags, lasercolor)
 	switch (threat_level)
 		if (THREAT_ASSESS_MAXIMUM to INFINITY)
-			examine_strings += span_boldwarning("Assessed threat level of [threat_level]! Extreme danger of criminal activity!")
+			override_strings += span_boldwarning("Assessed threat level of [threat_level]! Extreme danger of criminal activity!")
 		if (THREAT_ASSESS_DANGEROUS to THREAT_ASSESS_MAXIMUM)
-			examine_strings += span_warning("Assessed threat level of [threat_level]. Criminal scum detected!")
+			override_strings += span_warning("Assessed threat level of [threat_level]. Criminal scum detected!")
 		if (1 to THREAT_ASSESS_DANGEROUS)
-			examine_strings += span_notice("Assessed threat level of [threat_level]. Probably not dangerous... yet.")
+			override_strings += span_notice("Assessed threat level of [threat_level]. Probably not dangerous... yet.")
 		else
-			examine_strings += span_notice("Seems to be a trustworthy individual.")
+			override_strings += span_notice("Seems to be a trustworthy individual.")
 
+	examine_overrides[EXAMINE_OVERRIDE_PRIORITY_IFF] = override_strings
 
 /obj/item/organ/eyes/robotic/tacvisor/ui_state(mob/user)
 	return GLOB.default_state
