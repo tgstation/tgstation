@@ -88,6 +88,12 @@
 2026-04-06:
   ArcaneMusic:
   - admin: Adds a secret to restart the gravity generator.
+  JohnFulpWillard:
+  - qol: Health assemblies now show their health in maptext rather than a stat panel
+      entry.
+  - rscdel: Deleted Object tab, and Server tab for players. Activate Held Object verb
+      is now in the IC tab. Examine and Point To was removed from the stat panel.
+  - admin: Object possession verbs have been moved to Admin Fun.
   LemonInTheDark:
   - config: Added a config option for the path to policy.json
   Melbert:

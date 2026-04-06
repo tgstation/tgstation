@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscdel: "Deleted Object tab, and Server tab for players. Activate Held Object verb is now in the IC tab. Examine and Point To was removed from the stat panel."
-  - admin: "Object possession verbs have been moved to Admin Fun."
