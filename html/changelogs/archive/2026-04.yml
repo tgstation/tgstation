@@ -99,3 +99,5 @@
   - bugfix: Fixed raptor shift-hover menu being offset, and other visual offset issues
   - balance: Raptors and raptor chicks/eggs have had their growth speed increased
       by 50/33% respectively.
+  rageguy505:
+  - bugfix: Metastations mining and QM disposal bins are no longer Jim Norton branded.
