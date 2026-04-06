@@ -37,4 +37,5 @@
 		var/atom/movable/screen/healths/healths = initialized_hud.screen_objects[HUD_MOB_HEALTH]
 		if(initialized_hud.needs_health_indicator && isnull(healthdoll) && isnull(healths))
 			TEST_FAIL("[dummy] using [initialized_hud.type] does not have a Health Doll or Health HUD.")
+		//Because we're not setting hud_used, the HUD doesn't delete with the mob, let's clear it here.
 		qdel(initialized_hud)
