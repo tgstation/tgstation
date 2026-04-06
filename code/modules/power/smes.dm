@@ -5,6 +5,7 @@
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon_state = "smes"
+	base_icon_state = "smes"
 	density = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/smes

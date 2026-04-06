@@ -4,6 +4,7 @@
 	name = "power connector"
 	desc = "A user-safe high-current contact port, used for connecting and interfacing with portable power storage units. Practically useless without one."
 	icon_state = "battery_port"
+	base_icon_state = "battery_port"
 	circuit = /obj/item/circuitboard/machine/smes/connector
 	density = FALSE
 	input_attempt = FALSE
