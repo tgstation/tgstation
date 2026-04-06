@@ -40,7 +40,7 @@
 	if(!iscarbon(occupant))
 		if(!state_open)
 			if(panel_open)
-				return deconstruct_on_fail ? default_deconstruction_crowbar(user, tool) : NONE
+				return deconstruct_on_fail ? default_deconstruction_crowbar(user, crowbar) : NONE
 			open_machine()
 		else
 			shut_pod()
