@@ -73,7 +73,7 @@
 	owner.adjust_drowsiness(20 SECONDS)
 
 /datum/status_effect/slumber_party/tick(seconds_between_ticks)
-	if(!owner.IsSleeping())
+	if(owner.stat != UNCONSCIOUS)
 		qdel(src)
 		return
 

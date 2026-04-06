@@ -84,7 +84,7 @@
 	healing_probability = 5
 	if(HAS_TRAIT(owner, TRAIT_DREAMING))
 		healing_probability += 7.5
-	if(owner.IsSleeping())
+	if(owner.stat == UNCONSCIOUS)
 		healing_probability += 7.5
 	return ..()
 

@@ -29,7 +29,7 @@
 /datum/status_effect/dream_protection
 	id = "dream_protection"
 	duration = STATUS_EFFECT_PERMANENT
-	tick_interval = 1 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = null
 	/// Damage reduction when sleeping/dreaming, multiplicative
 	var/damage_mod = 0.75
@@ -39,45 +39,91 @@
 /datum/status_effect/dream_protection/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(modify_damage))
-	ADD_TRAIT(owner, TRAIT_HOLY, TRAIT_STATUS_EFFECT(id))
+	RegisterSignals(owner, list(
+		COMSIG_MOB_STATCHANGE,
+		SIGNAL_ADDTRAIT(TRAIT_DREAMING),
+		SIGNAL_REMOVETRAIT(TRAIT_DREAMING),
+	), PROC_REF(check_protection))
+	check_protection()
 
 /datum/status_effect/dream_protection/on_remove()
 	. = ..()
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
 	REMOVE_TRAIT(owner, TRAIT_HOLY, TRAIT_STATUS_EFFECT(id))
-	owner.remove_filter(owner, id)
 
-/datum/status_effect/dream_protection/tick(seconds_between_ticks)
-	. = ..()
-	if(owner.IsSleeping())
+	if(!QDELETING(owner))
+		var/filter = owner.get_filter(id)
+		animate(filter, alpha = 0, time = 1 SECONDS, easing = SINE_EASING|EASE_OUT)
+		addtimer(CALLBACK(owner, TYPE_PROC_REF(/datum, remove_filter), id), 1 SECONDS) // delay the filter removal to let the transition finish
+
+/datum/status_effect/dream_protection/proc/check_protection()
+	SIGNAL_HANDLER
+
+	if(owner.stat == UNCONSCIOUS || HAS_TRAIT(owner, TRAIT_DREAMING))
 		if(!has_filter)
-			owner.add_filter(id, 3, outline_filter(color = "#bde0dc"))
+			owner.add_filter(id, 3, outline_filter(size = 0, color = "#bde0dc00"))
 			var/filter = owner.get_filter(id)
-			animate(filter, size = 2, 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
-			animate(size = 0, 2 SECONDS, easing = SINE_EASING|EASE_OUT, loop = -1)
+			animate(filter, alpha = 150, time = 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
+			animate(alpha = 0,  time = 2 SECONDS, easing = SINE_EASING|EASE_OUT, loop = -1)
 			has_filter = TRUE
+		ADD_TRAIT(owner, TRAIT_HOLY, TRAIT_STATUS_EFFECT(id))
 
 	else
 		if(has_filter)
 			owner.transition_filter(id, outline_filter(size = 0), 1 SECONDS, easing = SINE_EASING|EASE_OUT)
 			has_filter = FALSE
+		REMOVE_TRAIT(owner, TRAIT_HOLY, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/dream_protection/proc/modify_damage(mob/living/source, list/damage_mods, ...)
 	SIGNAL_HANDLER
-	if(owner.IsSleeping())
+	if(owner.stat == UNCONSCIOUS)
 		damage_mods += damage_mod
 	if(HAS_TRAIT(owner, TRAIT_DREAMING))
 		damage_mods += damage_mod
 
 /datum/status_effect/dream_protection/get_examine_text()
-	if(owner.IsSleeping() || HAS_TRAIT(owner, TRAIT_DREAMING))
+	if(owner.stat == UNCONSCIOUS || HAS_TRAIT(owner, TRAIT_DREAMING))
 		return "A soft cyan glow envelops [owner.p_them()], reflecting light."
 
+// Version that only lasts until they wake up (with a set duration backup)
 /datum/status_effect/dream_protection/temporary
 	id = "temporary_dream_protection"
+	duration = 3 MINUTES // lasts until they wake up or if they're an especially long sleeper
 	damage_mod = 0.9
 
-/datum/status_effect/dream_protection/temporary/tick()
+/datum/status_effect/dream_protection/temporary/on_apply()
+	if(owner.stat != UNCONSCIOUS)
+		return FALSE
+	if(owner.has_status_effect(/datum/status_effect/dream_protection))
+		return FALSE
+
+	return ..()
+
+/datum/status_effect/dream_protection/temporary/check_protection()
 	. = ..()
-	if(!owner.IsSleeping())
+	if(!has_filter) // soon as it goes, we go
 		qdel(src)
+
+// Version that works on dead mobs and lasts until they revive (with a set duration backup)
+/datum/status_effect/dream_protection/deceased
+	id = "deceased_dream_protection"
+	duration = 3 MINUTES // lasts until they wake up or if they're an especially long sleeper
+
+/datum/status_effect/dream_protection/deceased/on_apply()
+	if(owner.stat != DEAD)
+		return FALSE
+	if(owner.has_status_effect(/datum/status_effect/dream_protection))
+		return FALSE
+
+	RegisterSignal(owner, COMSIG_LIVING_REVIVE, PROC_REF(mob_revived))
+	ADD_TRAIT(owner, TRAIT_DREAMING, TRAIT_STATUS_EFFECT(id)) // "permanent" dreaming
+	return ..()
+
+/datum/status_effect/dream_protection/deceased/on_remove()
+	UnregisterSignal(owner, COMSIG_LIVING_REVIVE)
+	REMOVE_TRAIT(owner, TRAIT_DREAMING, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
+/datum/status_effect/dream_protection/deceased/proc/mob_revived()
+	SIGNAL_HANDLER
+	qdel(src)

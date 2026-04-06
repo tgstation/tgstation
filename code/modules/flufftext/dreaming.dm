@@ -110,11 +110,8 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	weight = 1000
 
 /datum/dream/random/GenerateDream(mob/living/carbon/dreamer)
-	var/list/custom_dream_nouns = list()
+	var/list/custom_dream_nouns = get_dream_nouns(dreamer) || list()
 	var/fragment = ""
-
-	for(var/obj/item/bedsheet/sheet in dreamer.loc)
-		custom_dream_nouns += sheet.dream_messages
 
 	. = list()
 	. += "you see"
@@ -157,6 +154,12 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	if(findtext(fragment, "%A% "))
 		fragment = "\a [replacetext(fragment, "%A% ", "")]"
 	. += fragment
+
+/datum/dream/random/proc/get_dream_nouns(mob/living/carbon/dreamer)
+	var/list/custom_dream_nouns = list()
+	for(var/obj/item/bedsheet/sheet in dreamer.loc)
+		custom_dream_nouns += sheet.dream_messages
+	return custom_dream_nouns
 
 /// Dream plays a random sound at you, chosen from all sounds in the folder
 /datum/dream/hear_something

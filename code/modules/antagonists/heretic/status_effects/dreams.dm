@@ -26,7 +26,7 @@
 	if(isnull(dream_center))
 		return
 
-	dream_pool[new /datum/dream/heretic(dream_center)] = 100
+	dream_pool[new /datum/dream/heretic(dream_center)] = 200
 
 /datum/status_effect/grouped/heretic_dreams/proc/start_heretic_dream(mob/living/dreamer, datum/dream/current_dream)
 	SIGNAL_HANDLER

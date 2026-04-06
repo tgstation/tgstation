@@ -72,13 +72,8 @@
 	return "[owner.p_They()] are in a deep slumber, yet [owner.p_their()] eyes show a distant look, as if [owner.p_they()] are somewhere far away..."
 
 /datum/status_effect/dream_projection/on_apply()
-	for(var/obj/item/book/bible/bible in owner.held_items)
-		ADD_TRAIT(bible, TRAIT_NODROP, id)
-
 	if(!owner.SetSleeping(20 SECONDS))
 		to_chat(owner, span_warning("You fail to fall asleep."))
-		for(var/obj/item/book/bible/bible in owner.held_items)
-			REMOVE_TRAIT(bible, TRAIT_NODROP, id)
 		return FALSE
 
 	. = ..()
@@ -100,10 +95,10 @@
 
 	RegisterSignal(projection, COMSIG_QDELETING, PROC_REF(stop_projection))
 
-	owner.add_filter(id, 1, outline_filter(color = "#aee2b2"))
+	owner.add_filter(id, 1, outline_filter(color = "#aee2b200"))
 	var/filter = owner.get_filter(id)
-	animate(filter, size = 2, 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
-	animate(size = 0, 2 SECONDS, easing = SINE_EASING|EASE_OUT, loop = -1)
+	animate(filter, alpha = 150, time = 2 SECONDS, , easing = SINE_EASING|EASE_IN, loop = -1)
+	animate(alpha = 0, time = 2 SECONDS, , easing = SINE_EASING|EASE_OUT, loop = -1)
 
 /datum/status_effect/dream_projection/on_remove()
 	. = ..()
@@ -116,8 +111,11 @@
 	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 	owner.adjust_drowsiness(10 SECONDS)
-	for(var/obj/item/book/bible/bible in owner.held_items)
-		REMOVE_TRAIT(bible, TRAIT_NODROP, id)
+
+	if(!QDELETING(owner))
+		var/filter = owner.get_filter(id)
+		animate(filter, alpha = 0, time = 1 SECONDS, easing = SINE_EASING|EASE_OUT)
+		addtimer(CALLBACK(owner, TYPE_PROC_REF(/datum, remove_filter), id), 1 SECONDS) // delay the filter removal to let the transition finish
 
 	UnregisterSignal(projection, COMSIG_QDELETING)
 	if(QDELING(projection))
