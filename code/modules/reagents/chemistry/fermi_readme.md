@@ -130,7 +130,6 @@ Reaction_flags can be used to set these defines:
 
 ```dm
 #define REACTION_CLEAR_INVERSE  //Convert into inverse on reaction completion when purity is low enough in the datum/reagents holder instead of on consumption
-#define REACTION_CLEAR_RETAIN	//Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above. This is so that it can split again after splitting from a reaction (i.e. if your impure_chem or inverse_chem has its own impure_chem/inverse_chem and you want it to split again on consumption).
 #define REACTION_INSTANT        //Used to create instant reactions
 
 /datum/chemical_reaction
@@ -178,7 +177,6 @@ The new vars that are introduced are below:
 - `impure_chem` is the datum type that is created provided that its `creation_purity` is above the `inverse_chem_val`. When the reagent is consumed it will split into this OR if the associated `datum/chemical_recipe` has a REACTION_CLEAR_INVERSE flag it will split at the end of the reaction in the `datum/reagents` holder
 - `inverse_chem_val` if a reagent's purity is below this value it will 100% convert into `inverse_chem`. If above it will split into `impure_chem`. See the note on purity effects above
 - `inverse_chem` is the datum type that is created provided that its `creation_purity` is below the `inverse_chem_val`. When the reagent is consumed it will 100% convert into this OR if the associated `datum/chemical_recipe` has a REACTION_CLEAR_INVERSE flag it will 100% convert at the end of the reaction in the `datum/reagents` holder
-- `failed_chem` is the chem that the product is 100% converted into if the purity is below the associated `datum/chemical_recipies`' `PurityMin` AT THE END OF A REACTION.
 
 When writing any reagent code ALWAYS use creation_purity. Purity is kept for internal mechanics only and won’t reflect the purity on creation.
 

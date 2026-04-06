@@ -52,7 +52,7 @@
 	var/rate_up_lim = 30
 	/// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
 	var/purity_min = 0.15
-	/// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
+	/// bitflags for clear conversions; see code/__DEFINES/reagents.dm
 	var/reaction_flags = NONE
 	///Tagging vars
 	///A bitflag var for tagging reagents for the reagent loopup functon
@@ -102,11 +102,7 @@
 	return
 
 /**
- * Stuff that occurs at the end of a reaction. This will proc if the beaker is forced to stop and start again (say for sudden temperature changes).
- * Only procs at the END of reaction
- * If reaction_flags & REACTION_INSTANT then this isn't called
- * if reaction_flags REACTION_CLEAR_IMPURE then the impurity chem is handled here, producing the result in the beaker instead of in a mob
- * Likewise for REACTION_CLEAR_INVERSE the inverse chem is produced at the end of the reaction in the beaker
+ * Stuff that should happen at the end of the reaction. Presently only REACTION_CLEAR_INVERSE is respected here
  * You should be calling ..() if you're writing a child function of this proc otherwise purity methods won't work correctly
  *
  * Proc where the additional magic happens.
@@ -116,22 +112,21 @@
  * * react_volume - volume created across the whole reaction
  */
 /datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
-	//failed_chem handler
+	if(!(reaction_flags & REACTION_CLEAR_INVERSE))
+		return
+
 	var/cached_temp = holder.chem_temp
 
-	for(var/id in results)
-		var/datum/reagent/reagent = holder.has_reagent(id)
-		if(!reagent)
+	for(var/datum/reagent/reagent as anything in holder.reagent_list)
+		if(!results[reagent.type] || reagent.purity == 1 || !reagent.inverse_chem || reagent.purity > reagent.inverse_chem_val)
 			continue
 
-		//Split like this so it's easier for people to edit this function in a child
-		if((reaction_flags & REACTION_CLEAR_INVERSE) && reagent.inverse_chem && reagent.inverse_chem_val > reagent.purity)
-			var/inverse_chem = reagent.inverse_chem
-			var/cached_volume = reagent.volume
-			var/cached_purity = reagent.get_inverse_purity(reagent.purity)
-			reagent.volume = 0
-			holder.update_total()
-			holder.add_reagent(inverse_chem, cached_volume, FALSE, added_purity = cached_purity)
+		var/inverse_chem = reagent.inverse_chem
+		var/cached_volume = reagent.volume
+		var/cached_purity = reagent.get_inverse_purity(reagent.purity)
+		reagent.volume = 0
+		holder.update_total()
+		holder.add_reagent(inverse_chem, cached_volume, FALSE, added_purity = cached_purity)
 
 	holder.chem_temp = cached_temp
 
