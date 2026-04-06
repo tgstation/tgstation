@@ -165,13 +165,7 @@
 	return infusing ? NONE : default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/dna_infuser/crowbar_act(mob/living/user, obj/item/tool)
-	if(infusing)
-		return NONE
-	if(default_pry_open(user, tool))
-		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(user, tool))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return infusing ? NONE : default_pry_open(user, tool, deconstruct_on_fail = TRUE)
 
 /obj/machinery/dna_infuser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)

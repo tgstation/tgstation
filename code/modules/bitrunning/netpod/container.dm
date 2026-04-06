@@ -36,16 +36,16 @@
 	enter_matrix()
 
 
-/obj/machinery/netpod/default_pry_open(mob/living/user, obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
+/obj/machinery/netpod/default_pry_open(mob/living/user, obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE, deconstruct_on_fail = FALSE)
 	if(!iscarbon(occupant))
 		if(!state_open)
 			if(panel_open)
-				return FALSE
+				return deconstruct_on_fail ? default_deconstruction_crowbar(user, tool) : NONE
 			open_machine()
 		else
 			shut_pod()
 
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 	user.visible_message(
 		span_danger("[user] starts prying open [src]!"),
@@ -61,7 +61,7 @@
 			sever_connection()
 			open_machine()
 
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 
 /// Closes the machine without shoving in an occupant

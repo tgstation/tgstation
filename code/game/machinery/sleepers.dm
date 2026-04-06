@@ -133,11 +133,7 @@
 	return default_change_direction_wrench(user, I)
 
 /obj/machinery/sleeper/crowbar_act(mob/living/user, obj/item/I)
-	if(default_pry_open(user, I))
-		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(user, I))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return default_pry_open(user, I, deconstruct_on_fail = TRUE)
 
 /obj/machinery/sleeper/can_crowbar_pry_open()
 	return !state_open && !panel_open

@@ -735,7 +735,7 @@
 			default_deconstruction_crowbar(tool)
 			return ITEM_INTERACT_SUCCESS
 
-	if(default_pry_open(user, tool))
+	if(default_pry_open(user, tool) & ITEM_INTERACT_SUCCESS)
 		dump_inventory_contents()
 		return ITEM_INTERACT_SUCCESS
 

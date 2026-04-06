@@ -139,15 +139,11 @@
 		power_change()
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/smartfridge/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(user, tool, close_after_pry = TRUE))
-		return ITEM_INTERACT_SUCCESS
+/obj/machinery/smartfridge/can_crowbar_deconstruct()
+	return ..() && !welded_down
 
-	if(welded_down)
-		balloon_alert(user, "unweld first!")
-	else
-		default_deconstruction_crowbar(tool)
-	return ITEM_INTERACT_SUCCESS
+/obj/machinery/smartfridge/crowbar_act(mob/living/user, obj/item/tool)
+	return default_pry_open(user, tool, close_after_pry = TRUE, deconstruct_on_fail = TRUE)
 
 /obj/machinery/smartfridge/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))

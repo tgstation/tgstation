@@ -3,10 +3,7 @@
 		attack_hand(user)
 		return ITEM_INTERACT_SUCCESS
 
-	if(default_pry_open(user, tool) || default_deconstruction_crowbar(user, tool))
-		return ITEM_INTERACT_SUCCESS
-
-	return NONE
+	return default_pry_open(user, tool, deconstruct_on_fail = TRUE)
 
 /obj/machinery/netpod/screwdriver_act(mob/living/user, obj/item/tool)
 	if(occupant)

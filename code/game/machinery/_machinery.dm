@@ -860,17 +860,25 @@
  * * open_density - If TRUE, the machine will be set to dense when pried open. Defaults to FALSE.
  * * closed_density - If TRUE, the machine will be set to dense when closed after being pried open. Defaults to TRUE.
  * Only applies if close_after_pry is TRUE.
+ * * deconstruct_on_fail - If TRUE, runs default_deconstruction_crowbar if the machine cannot be pried open. Defaults to FALSE.
  *
  * Returns NONE on failure
  * Returns ITEM_INTERACT_SUCCESS on success
  */
-/obj/machinery/proc/default_pry_open(mob/living/user, obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
+/obj/machinery/proc/default_pry_open(
+	mob/living/user,
+	obj/item/crowbar,
+	close_after_pry = FALSE,
+	open_density = FALSE,
+	closed_density = TRUE,
+	deconstruct_on_fail = FALSE,
+)
 	PROTECTED_PROC(TRUE)
 
 	if(crowbar.tool_behaviour != TOOL_CROWBAR)
 		return NONE
 	if(!can_crowbar_pry_open())
-		return ITEM_INTERACT_BLOCKING
+		return deconstruct_on_fail ? default_deconstruction_crowbar(user, crowbar) : ITEM_INTERACT_BLOCKING
 
 	crowbar.play_tool_sound(src, 50)
 	user.visible_message(span_notice("[user] pries open [src]."), span_notice("You pry open [src]."))

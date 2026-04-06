@@ -216,7 +216,6 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/on_deconstruction(dissassembled)
 	disk?.forceMove(drop_location())
-	disk = null
 	return ..()
 
 /obj/machinery/holopad/RefreshParts()
@@ -264,11 +263,7 @@ Possible to do for anyone motivated enough:
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/holopad/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(user, tool, close_after_pry = TRUE, closed_density = FALSE))
-		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(user, tool))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return default_pry_open(user, tool, close_after_pry = TRUE, closed_density = FALSE, deconstruct_on_fail = TRUE)
 
 /obj/machinery/holopad/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/disk/holodisk))
@@ -281,6 +276,11 @@ Possible to do for anyone motivated enough:
 		disk = tool
 		return ITEM_INTERACT_SUCCESS
 	return NONE
+
+/obj/machinery/holopad/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == disk)
+		disk = null
 
 /obj/machinery/holopad/ui_status(mob/user, datum/ui_state/state)
 	if(!is_operational)
@@ -385,7 +385,6 @@ Possible to do for anyone motivated enough:
 		if("disk_eject")
 			if(disk && !replay_mode)
 				disk.forceMove(drop_location())
-				disk = null
 				return TRUE
 		if("replay_mode")
 			if(replay_mode)

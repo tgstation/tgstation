@@ -47,11 +47,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/monkey_recycler/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(user, tool, close_after_pry = TRUE))
-		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(user, tool))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return default_pry_open(user, tool, close_after_pry = TRUE, deconstruct_on_fail = TRUE)
 
 /obj/machinery/monkey_recycler/update_icon_state()
 	. = ..()

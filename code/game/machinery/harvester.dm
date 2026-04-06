@@ -159,11 +159,7 @@
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/harvester/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(user, tool))
-		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(user, tool))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return default_pry_open(user, tool, deconstruct_on_fail = TRUE)
 
 /obj/machinery/harvester/can_crowbar_pry_open()
 	return !state_open && !panel_open

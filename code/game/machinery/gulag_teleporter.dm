@@ -57,11 +57,7 @@ The console is located at computer/gulag_teleporter.dm
 	return isnull(occupant) ? default_deconstruction_screwdriver(user, tool) : NONE
 
 /obj/machinery/gulag_teleporter/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(user, tool))
-		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(user, tool))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return default_pry_open(user, tool, deconstruct_on_fail = TRUE)
 
 /obj/machinery/gulag_teleporter/update_icon_state()
 	icon_state = "[base_icon_state][state_open ? "_open" : null]"

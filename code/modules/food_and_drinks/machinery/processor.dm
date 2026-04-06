@@ -103,11 +103,7 @@
 		to_chat(user, span_warning("[src] is in the process of processing!"))
 		return ITEM_INTERACT_BLOCKING
 
-	if(default_pry_open(user, tool, close_after_pry = TRUE))
-		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_crowbar(user, tool))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return default_pry_open(user, tool, close_after_pry = TRUE, deconstruct_on_fail = TRUE)
 
 /obj/machinery/processor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)

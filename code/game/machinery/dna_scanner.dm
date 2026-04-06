@@ -129,13 +129,7 @@
 	return occupant ? NONE : default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/dna_scannernew/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(user, tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
-		return ITEM_INTERACT_SUCCESS
-
-	if(default_deconstruction_crowbar(user, tool))
-		return ITEM_INTERACT_SUCCESS
-
-	return NONE
+	return default_pry_open(user, tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE, deconstruct_on_fail = TRUE)
 
 /obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)

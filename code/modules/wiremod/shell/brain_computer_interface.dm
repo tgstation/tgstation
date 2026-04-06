@@ -355,13 +355,7 @@
 	return isnull(occupant) ? default_deconstruction_screwdriver(user, tool) : NONE
 
 /obj/machinery/bci_implanter/crowbar_act_secondary(mob/living/user, obj/item/tool)
-	if (default_pry_open(user, user, tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
-		return ITEM_INTERACT_SUCCESS
-
-	if (default_deconstruction_crowbar(user, tool))
-		return ITEM_INTERACT_SUCCESS
-
-	return NONE
+	return default_pry_open(user, user, tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE, deconstruct_on_fail = TRUE)
 
 /obj/machinery/bci_implanter/proc/start_process()
 	if (machine_stat & (NOPOWER|BROKEN))

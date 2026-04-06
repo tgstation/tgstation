@@ -290,7 +290,7 @@
 		unsafe_release = TRUE
 
 	var/deconstruct = FALSE
-	if(!default_pry_open(tool))
+	if(!(default_pry_open(tool) & ITEM_INTERACT_SUCCESS))
 		deconstruct = can_crowbar_deconstruct()
 
 	if(unsafe_release)
