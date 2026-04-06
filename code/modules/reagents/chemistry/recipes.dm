@@ -115,20 +115,22 @@
 	if(!(reaction_flags & REACTION_CLEAR_INVERSE))
 		return
 
-	var/cached_temp = holder.chem_temp
+	var/list/inverse_data = list()
 
 	for(var/datum/reagent/reagent as anything in holder.reagent_list)
 		if(!results[reagent.type] || reagent.purity == 1 || !reagent.inverse_chem || reagent.purity > reagent.inverse_chem_val)
 			continue
 
-		var/inverse_chem = reagent.inverse_chem
-		var/cached_volume = reagent.volume
-		var/cached_purity = reagent.get_inverse_purity(reagent.purity)
+		inverse_data += reagent.inverse_chem
+		inverse_data += reagent.volume
+		inverse_data += reagent.get_inverse_purity(reagent.purity)
 		reagent.volume = 0
-		holder.update_total()
-		holder.add_reagent(inverse_chem, cached_volume, FALSE, added_purity = cached_purity)
 
-	holder.chem_temp = cached_temp
+	holder.update_total()
+
+	var/cached_temp = holder.chem_temp
+	while(inverse_data.len)
+		holder.add_reagent(popleft(inverse_data), popleft(inverse_data), reagtemp = cached_temp, added_purity = popleft(inverse_data))
 
 /**
  * Occurs when a reation is overheated (i.e. past its overheatTemp)
