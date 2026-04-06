@@ -144,10 +144,9 @@
  * * step_volume_added - how much product (across all products) was added for this single step
  */
 /datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
-	for(var/id in results)
-		var/datum/reagent/reagent = holder.has_reagent(id)
-		if(!reagent)
-			return
+	for(var/datum/reagent/reagent as anything in holder.reagent_list)
+		if(!results[reagent.type])
+			continue
 		reagent.volume *= 0.98 //Slowly lower yield per tick
 	holder.update_total()
 
