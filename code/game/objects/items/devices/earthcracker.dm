@@ -85,6 +85,13 @@
 				context[SCREENTIP_CONTEXT_LMB] = "Disassemble device"
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/item/earthcracker/examine(mob/user)
+	. = ..()
+	if(status == EARTHCRACKER_SPENT)
+		. += span_warning("This device is toast. You could probably disassemble the remains using a [EXAMINE_HINT("Wrench")].")
+	else
+		. += span_info("This device can be unanchored using a [EXAMINE_HINT("Wrench")].")
+
 /obj/item/earthcracker/proc/handle_arming(mob/user)
 	if(status == EARTHCRACKER_SPENT)
 		balloon_alert(user, "used up!")
