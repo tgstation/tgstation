@@ -657,3 +657,13 @@
 
 /datum/religion_sect/dreams/proc/clear_bless_ref(tarref)
 	LAZYREMOVE(recent_bless_refs, tarref)
+
+/datum/religion_sect/dreams/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, dream_protection))
+		for(var/mob/living/chap as anything in GLOB.mob_living_list)
+			if(chap.mind?.holy_role)
+				if(var_value)
+					chap.apply_status_effect(/datum/status_effect/dream_protection)
+				else
+					chap.remove_status_effect(/datum/status_effect/dream_protection)

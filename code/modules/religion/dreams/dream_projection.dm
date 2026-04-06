@@ -95,10 +95,10 @@
 
 	RegisterSignal(projection, COMSIG_QDELETING, PROC_REF(stop_projection))
 
-	owner.add_filter(id, 1, outline_filter(color = "#aee2b200"))
+	owner.add_filter(id, 1, outline_filter(size = 0, color = "#aee2b296"))
 	var/filter = owner.get_filter(id)
-	animate(filter, alpha = 150, time = 2 SECONDS, , easing = SINE_EASING|EASE_IN, loop = -1)
-	animate(alpha = 0, time = 2 SECONDS, , easing = SINE_EASING|EASE_OUT, loop = -1)
+	animate(filter, size = 2, time = 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
+	animate(alpha = 0, time = 2 SECONDS, easing = SINE_EASING|EASE_OUT)
 
 /datum/status_effect/dream_projection/on_remove()
 	. = ..()
@@ -110,11 +110,11 @@
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_KNOCKEDOUT))
 	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
-	owner.adjust_drowsiness(10 SECONDS)
 
-	if(!QDELETING(owner))
+	if(!QDELING(owner))
+		owner.adjust_drowsiness(10 SECONDS)
 		var/filter = owner.get_filter(id)
-		animate(filter, alpha = 0, time = 1 SECONDS, easing = SINE_EASING|EASE_OUT)
+		animate(filter, size = 0, time = 1 SECONDS, easing = SINE_EASING|EASE_OUT)
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/datum, remove_filter), id), 1 SECONDS) // delay the filter removal to let the transition finish
 
 	UnregisterSignal(projection, COMSIG_QDELETING)
