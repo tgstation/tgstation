@@ -27,7 +27,7 @@
 			continue
 		var/mob/living/basic/dummy = allocate(mobs)
 		var/mob_hud_type = mobs::hud_type
-		var/datum/hud/initialized_hud = new mob_hud(dummy)
+		var/datum/hud/initialized_hud = new mob_hud_type(dummy)
 		//mobs that don't use combat mode don't need it.
 		var/atom/movable/screen/action_intent = initialized_hud.screen_objects[HUD_MOB_INTENTS]
 		if(!HAS_TRAIT(dummy, TRAIT_COMBAT_MODE_LOCK) && isnull(action_intent))
