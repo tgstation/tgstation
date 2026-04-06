@@ -116,7 +116,6 @@
 		return
 
 	var/list/inverse_data = list()
-
 	for(var/datum/reagent/reagent as anything in holder.reagent_list)
 		if(!results[reagent.type] || reagent.purity == 1 || !reagent.inverse_chem || reagent.purity > reagent.inverse_chem_val)
 			continue
