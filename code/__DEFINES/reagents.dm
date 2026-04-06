@@ -137,8 +137,6 @@
 #define REAGENT_SPAWN_ALL_RANDOM_SPAWNS ALL
 
 //Chemical reaction flags, for determining reaction specialties
-///Convert into impure/pure on reaction completion
-#define REACTION_CLEAR_IMPURE (1<<0)
 ///Convert into inverse on reaction completion when purity is low enough
 #define REACTION_CLEAR_INVERSE (1<<1)
 ///Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
