@@ -17,6 +17,9 @@
 	var/obj/machinery/bouldertech/refinery/the_refinery = parent
 	var/list/datum/reagents/boosters = the_refinery.booster_list
 
+	if(istype(amount, the_refinery.waste_chemical))
+		return TRUE //
+
 	if(is_path_in_list(reagent, boosters))
 		return FALSE
 

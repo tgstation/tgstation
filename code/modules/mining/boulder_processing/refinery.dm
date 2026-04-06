@@ -87,6 +87,12 @@
 	set_light_on(TRUE)
 
 
+/obj/machinery/bouldertech/refinery/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
+	. = ..()
+	if(do_after(user, 2 SECONDS, src))
+		reagents.clear_reagents()
+
+
 /**
  * Your other new favorite industrial waste magnet!
  * Accepts boulders and produces sheets of metallic materials.
