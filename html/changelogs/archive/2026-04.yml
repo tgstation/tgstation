@@ -88,6 +88,8 @@
 2026-04-06:
   ArcaneMusic:
   - admin: Adds a secret to restart the gravity generator.
+  LemonInTheDark:
+  - config: Added a config option for the path to policy.json
   Melbert:
   - bugfix: Reset Dislocation operation ignores clothing
   Rhials:
