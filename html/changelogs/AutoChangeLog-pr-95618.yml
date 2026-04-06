@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - admin: "Adds a secret to restart the gravity generator."

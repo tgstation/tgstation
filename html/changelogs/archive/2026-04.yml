@@ -85,3 +85,17 @@
   SyncIt21:
   - refactor: ' reagent reaction code has been refactored for better cpu & memory
       performance. Report broken reactions on github'
+2026-04-06:
+  ArcaneMusic:
+  - admin: Adds a secret to restart the gravity generator.
+  Melbert:
+  - bugfix: Reset Dislocation operation ignores clothing
+  Rhials:
+  - bugfix: The shuttle loan event will now properly clear itself if not accepted
+      within the time limit, allowing for different loan opportunities to roll.
+  SmArtKar:
+  - balance: Red and black raptors no longer retaliate against their tamer's accidental
+      attacks
+  - bugfix: Fixed raptor shift-hover menu being offset, and other visual offset issues
+  - balance: Raptors and raptor chicks/eggs have had their growth speed increased
+      by 50/33% respectively.

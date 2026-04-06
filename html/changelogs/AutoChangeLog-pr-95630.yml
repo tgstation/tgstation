@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed raptor shift-hover menu being offset, and other visual offset issues"

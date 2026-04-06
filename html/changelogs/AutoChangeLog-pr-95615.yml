@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "The shuttle loan event will now properly clear itself if not accepted within the time limit, allowing for different loan opportunities to roll."
