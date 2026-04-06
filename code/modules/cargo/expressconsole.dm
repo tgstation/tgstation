@@ -137,6 +137,24 @@
 	data["supplies"] = meme_pack_data
 	return data
 
+/obj/machinery/computer/cargo/express/ui_static_data(mob/user)
+	var/list/data = list()
+	data["max_order"] = CARGO_MAX_ORDER
+	data["supplies"] = list()
+
+	for(var/pack_id in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		if(!data["supplies"][pack.group])
+			data["supplies"][pack.group] = list(
+				"name" = pack.group,
+				"packs" = get_packs_data(pack.group, TRUE),
+			)
+
+	data["displayed_currency_full_name"] = " [MONEY_NAME]"
+	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
+
+	return data
+
 /obj/machinery/computer/cargo/express/get_discount()
 	return (obj_flags & EMAGGED) ? EXPRESS_EMAG_DISCOUNT : 1
 
