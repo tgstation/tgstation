@@ -69,7 +69,7 @@
 
 /obj/item/earthcracker/Destroy(force)
 	. = ..()
-	remove_shared_particles(/particles/smoke)
+	QDEL_NULL(particles)
 
 /obj/item/earthcracker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	switch(status)
@@ -107,12 +107,12 @@
 	playsound(src, 'sound/items/weapons/earthcracker_bang.mp3', 75, FALSE, 3)
 	var/turf/cracked_hull = drop_location()
 	new /obj/effect/weakpoint/big(cracked_hull)
-	do_sparks(2, false, src)
+	do_sparks(2, FALSE, src)
 	cracked_hull.levelupdate()
 
 	status = EARTHCRACKER_SPENT
 	update_appearance(UPDATE_ICON)
-	add_shared_particles(/particles/smoke)
+	particles = new /particles/smoke/burning/small
 
 /obj/item/earthcracker/proc/post_break()
 	qdel(src)
