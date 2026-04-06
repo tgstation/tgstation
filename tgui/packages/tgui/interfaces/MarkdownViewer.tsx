@@ -31,7 +31,11 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
 
   content = marked(content, { async: false });
   if (sanitize) {
-    content = sanitizeText(content, /* advHtml = */ false);
+    const sanitized = sanitizeText(content, /* advHtml = */ false);
+    content =
+      typeof sanitized === 'object' && sanitized !== null
+        ? sanitized.sanitized
+        : sanitized;
   }
 
   return <div dangerouslySetInnerHTML={{ __html: content }} />;

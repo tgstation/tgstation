@@ -51,8 +51,12 @@ export function PageMessages(props) {
       );
     }
 
+    const sanitized = sanitizeText(message.content);
     const textHtml = {
-      __html: sanitizeText(message.content),
+      __html:
+        typeof sanitized === 'object' && sanitized !== null
+          ? sanitized.sanitized
+          : sanitized,
     };
 
     messageElements.push(
