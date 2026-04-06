@@ -1,4 +1,5 @@
 #define DUMPTIME 3000
+///Amount of money you need to lose to get the negative moodlet.
 #define NO_MY_MONEY 10000
 
 /datum/bank_account
@@ -22,6 +23,8 @@
 	var/add_to_accounts = TRUE
 	///The Unique ID number code associated with the owner's bank account, assigned at round start.
 	var/account_id
+	///Amount of money that's been crabbed, if you lose enough from one series of CRAB-17's, you get a negative moodlet.
+	var/money_crabbed
 	///Is there a CRAB 17 on the station draining funds? Prevents manual fund transfer. pink levels are rising
 	var/being_dumped = FALSE
 	///Reference to the current civilian bounty that the account is working on.
@@ -116,13 +119,18 @@
  */
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE
-	if(!has_money(NO_MY_MONEY))
+	money_crabbed = 0
+
+/**
+ * Stops the dumping of the bank account.
+ */
+/datum/bank_account/proc/stop_dump()
+	being_dumped = FALSE
+	if(money_crabbed < NO_MY_MONEY)
 		return
 	for(var/obj/card in bank_cards)
 		var/mob/living/card_holder = recursive_loc_check(card, /mob/living)
-		if(!isliving(card_holder)) //If on a mob
-			continue
-		if(!card_holder.client || !card_holder.mob_mood?.get_mood_event(SLOTS_MOOD_CATEGORY))
+		if(!isliving(card_holder) || !card_holder.client) //If on a mob
 			continue
 		//overwrite the slots event.
 		card_holder.add_mood_event(SLOTS_MOOD_CATEGORY, /datum/mood_event/slots/all_gone)

@@ -28,7 +28,7 @@
 			L = user
 			accounts_to_rob -= L.get_bank_account()
 		for(var/datum/bank_account/B as anything in accounts_to_rob)
-			B.being_dumped = TRUE
+			B.dumpeet()
 		new /obj/effect/dumpeet_target(targetturf, L)
 
 		to_chat(user, span_notice("You have activated Protocol CRAB-17."))
@@ -66,8 +66,7 @@
  * Returns TRUE if no accounts are being drained, FALSE otherwise
  */
 /obj/structure/checkoutmachine/proc/check_if_finished()
-	for(var/i in accounts_to_rob)
-		var/datum/bank_account/B = i
+	for(var/datum/bank_account/B as anything in accounts_to_rob)
 		if (B.being_dumped)
 			return FALSE
 	return TRUE
@@ -100,7 +99,8 @@
 		return
 
 	to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
-	card.registered_account.being_dumped = FALSE
+	accounts_to_rob -= card.registered_account
+	card.registered_account.stop_dump()
 
 	if(check_if_finished())
 		qdel(src)
@@ -202,8 +202,6 @@
 /obj/structure/checkoutmachine/proc/start_dumping()
 	accounts_to_rob = assoc_to_values(SSeconomy.bank_accounts_by_id)
 	accounts_to_rob -= bogdanoff?.get_bank_account()
-	for(var/datum/bank_account/B as anything in accounts_to_rob)
-		B.dumpeet()
 	dump()
 
 /**
@@ -213,14 +211,14 @@
  */
 /obj/structure/checkoutmachine/proc/dump()
 	var/percentage_lost = (rand(5, 15) / 100)
-	for(var/i in accounts_to_rob)
-		var/datum/bank_account/B = i
+	for(var/datum/bank_account/B as anything in accounts_to_rob)
 		if(!(B?.being_dumped))
 			accounts_to_rob -= B
 			continue
 		var/amount = round(B.account_balance * percentage_lost) // We don't want fractions of a credit stolen. That's just agony for everyone.
 		var/datum/bank_account/account = bogdanoff?.get_bank_account() || internal_account
 		account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
+		B.money_crabbed += amount
 		B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
 	addtimer(CALLBACK(src, PROC_REF(dump)), 15 SECONDS) //Drain every 15 seconds
 
@@ -233,10 +231,9 @@
  * Goes through accounts_to_rob and tells every account that the drain has stopped.
  */
 /obj/structure/checkoutmachine/proc/stop_dumping()
-	for(var/i in accounts_to_rob)
-		var/datum/bank_account/B = i
+	for(var/datum/bank_account/B as anything in accounts_to_rob)
 		if(B)
-			B.being_dumped = FALSE
+			B.stop_dump()
 
 /**
  * Splits the balance of the internal_account into several smaller piles of cash and scatters them around the area.
