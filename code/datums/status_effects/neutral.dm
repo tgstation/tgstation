@@ -615,6 +615,30 @@
 /datum/status_effect/tinlux_light/on_remove()
 	QDEL_NULL(mob_light_obj)
 
+///Makes the mob glow blue and rarely emit nuclear particles
+/datum/status_effect/cherenkov_radiation
+	id = "cherenkov_radiation"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	remove_on_fullheal = TRUE
+	alert_type = null
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+
+/datum/status_effect/cherenkov_radiation/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/cherenkov_radiation/on_apply()
+	mob_light_obj = owner.mob_light(2, 4, "#33ddff")
+	return TRUE
+
+/datum/status_effect/cherenkov_radiation/tick(seconds_between_ticks)
+	if(prob(3))
+		owner.fire_nuclear_particle()
+
+/datum/status_effect/cherenkov_radiation/on_remove()
+	QDEL_NULL(mob_light_obj)
+
 /datum/status_effect/gutted
 	id = "gutted"
 	alert_type = null

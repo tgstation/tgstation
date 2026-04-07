@@ -40,15 +40,21 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            return JSON.parse('${{steps.stale.outputs.staled-issues-prs}}').filter(issue => !!issue.pull_request)
+            return JSON.parse(`${{steps.stale.outputs.staled-issues-prs}}`)
+                       .filter(issue => !!issue.pull_request)
+                       .map(pr => ({
+                        title: pr.title,
+                        number: pr.number,
+                        html_url: pr.pull_request.html_url,
+                       }));
 
   announce:
     runs-on: ubuntu-24.04
     needs: stale
     if: ${{ needs.stale.outputs.staled_prs != '[]' }}
     strategy:
-     matrix:
-      pull_request: ${{ fromJSON(needs.stale.outputs.staled_prs) }}
+      matrix:
+        pull_request: ${{ fromJSON(needs.stale.outputs.staled_prs) }}
     steps:
       - name: "Check for DISCORD_WEBHOOK"
         id: secrets_set
@@ -64,7 +70,7 @@ jobs:
           steps.secrets_set.outputs.SECRETS_ENABLED
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-          title: ${{ matrix.pull_request.user.login }} - ${{ matrix.pull_request.title }}
+          title: ${{ matrix.pull_request.title }}
           message: ${{ format('**Pull Request \#{0} automatically marked as stale.**', matrix.pull_request.number) }}
           include_image: false
           show_author: false
