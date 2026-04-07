@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Medbay/Detectives can now add a Cause of Death to people's medical records when set as deceased."
