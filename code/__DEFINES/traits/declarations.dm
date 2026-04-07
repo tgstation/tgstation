@@ -1384,7 +1384,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to limb by /mob/living/basic/living_limb_flesh
 #define TRAIT_IGNORED_BY_LIVING_FLESH "livingflesh_ignored"
 
-///Trait given to organs that have been inside a living being previously
+///Trait given to organs that have previously been inside a being with a mind
 #define TRAIT_USED_ORGAN "used_organ"
 ///Trait given to organs that have started inside a being with a client
 #define TRAIT_CLIENT_STARTING_ORGAN "client_starting_organ"
@@ -1654,7 +1654,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Makes the owner desensetized to death, but happy whenever someone gets blown to pieces (as a sacrifice to the necropolis) unless its another worshipper
 #define TRAIT_NECROPOLIS_WORSHIP "necropolis_worship"
-
-#define TRAIT_HEART_EATER_BLACKLISTED "heart_eater_blacklisted"
 
 // END TRAIT DEFINES

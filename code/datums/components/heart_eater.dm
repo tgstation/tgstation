@@ -35,11 +35,13 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_SPECIES_GAIN, PROC_REF(on_species_change))
 	RegisterSignal(parent, COMSIG_LIVING_FINISH_EAT, PROC_REF(eat_eat_eat))
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_rip_heart))
 
 /datum/component/heart_eater/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, COMSIG_LIVING_FINISH_EAT)
 	UnregisterSignal(parent, COMSIG_SPECIES_GAIN)
+	UnregisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK)
 
 /datum/component/heart_eater/proc/prepare_species(mob/living/carbon/human/eater)
 	if(eater.get_liked_foodtypes() & GORE)
@@ -67,9 +69,6 @@
 	var/obj/item/organ/heart/we_ate_heart = what_we_ate
 	var/obj/item/organ/heart/previous_heart = last_heart_we_ate?.resolve()
 	if(we_ate_heart == previous_heart)
-		return
-	if (HAS_TRAIT(we_ate_heart, TRAIT_HEART_EATER_BLACKLISTED))
-		to_chat(eater, span_warning("This heart is tainted by orderly magicks, you won't receive any boons from consuming it!"))
 		return
 	if (!HAS_TRAIT(we_ate_heart, TRAIT_USED_ORGAN))
 		to_chat(eater, span_warning("This heart is utterly lifeless, you won't receive any boons from consuming it!"))
@@ -122,3 +121,58 @@
 	eater.adjust_tox_loss(-50)
 	eater.adjust_oxy_loss(-50)
 	eater.adjust_stamina_loss(-50)
+
+/datum/component/heart_eater/proc/try_rip_heart(mob/living/source, mob/living/carbon/target, proximity, modifiers)
+	SIGNAL_HANDLER
+	if(!istype(target))
+		return
+	if(!IS_DEAD_OR_INCAP(target))
+		return
+	if(!source.combat_mode)
+		return
+	var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
+	if(chest.get_wound_type(/datum/wound/blunt/bone/critical) && !target.get_organ_slot(ORGAN_SLOT_HEART)) //Don't bother trying to rip a heart out of someone we can see doesn't have one.
+		target.balloon_alert(source, "no heart!")
+		return
+	INVOKE_ASYNC(src, PROC_REF(do_rip_heart), source, target)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/component/heart_eater/proc/can_rip_heart(mob/living/user, mob/living/carbon/target, hand_index)
+	if(!IS_DEAD_OR_INCAP(target))
+		return FALSE
+	if(!user.has_hand_for_held_index(hand_index))
+		return FALSE
+	if(user.get_item_for_held_index(hand_index))
+		return FALSE
+	return TRUE
+
+/datum/component/heart_eater/proc/do_rip_heart(mob/living/user, mob/living/carbon/target)
+	playsound(target, 'sound/items/weapons/slice.ogg', 50, TRUE)
+	var/hand_index = user.active_hand_index
+	if(!do_after(
+		user,
+		3 SECONDS,
+		target,
+		timed_action_flags = IGNORE_HELD_ITEM,
+		extra_checks = CALLBACK(src, PROC_REF(can_rip_heart), user, target, hand_index),
+		interaction_key = "[DOAFTER_SOURCE_RIP_HEART]_[hand_index]",
+		max_interact_count = 1,
+		))
+		user.balloon_alert(user, "interrupted!")
+		return
+	var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
+	chest.force_wound_upwards(/datum/wound/blunt/bone/critical, wound_source = "heart ripped")
+	var/obj/item/organ/heart = target.get_organ_slot(ORGAN_SLOT_HEART)
+	if(!heart)
+		target.balloon_alert(user, "no heart!?")
+		return
+	heart.Remove(target)
+	to_chat(user, span_warning("You rip [target]'s [heart.name] out of [target.p_their()] chest!"))
+	target.visible_message(
+		span_warning("[user] rips [target]'s [heart.name] out of [target.p_their()] chest!"),
+		span_userdanger("[user] rips your [heart.name] out of your chest!"),
+		span_userdanger("You feel something being torn out of your chest!"),
+		ignored_mobs = list(user),
+		)
+	if(!user.put_in_hand(heart, hand_index))
+		heart.forceMove(user.drop_location())
