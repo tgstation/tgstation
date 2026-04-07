@@ -64,8 +64,8 @@ ADMIN_VERB(jump_to_ghost, R_ADMIN, "Jump To Ghost", "Jump your body to your Agho
 	if(!body)
 		to_chat(user, "No valid body to bring to ghost.", confidential = TRUE)
 		return
-	log_admin("[key_name(user)] jumped to their admin ghost")
-	message_admins("[key_name_admin(user)] jumped to their admin ghost")
+	log_admin("[key_name(user)] jumped to their Aghost at [AREACOORD(ghost.loc)]")
+	message_admins("[key_name_admin(user)] jumped to their Aghost [ADMIN_FLW(body)] at [AREACOORD(ghost.loc)]")
 	body.abstract_move(ghost.loc)
 	body.setDir(ghost.dir)
 	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
