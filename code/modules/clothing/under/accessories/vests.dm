@@ -28,7 +28,7 @@
 	attachment_slot = NONE
 	greyscale_config = /datum/greyscale_config/sweatervest
 	greyscale_config_worn = /datum/greyscale_config/sweatervest/worn
-	greyscale_colors = "#414344"
+	greyscale_colors = "#A52F29"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/accessory/vest_sheriff
