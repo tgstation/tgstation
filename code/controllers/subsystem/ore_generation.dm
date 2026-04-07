@@ -136,7 +136,8 @@ SUBSYSTEM_DEF(ore_generation)
 		totals[spawn_type] /= totals["raw_sum"] / 104
 
 	totals["count"] = summary_count
-	totals["chance"] /= summary_count
+	if (summary_count > 0)
+		totals["chance"] /= summary_count
 	result["total"] = totals
 	ore_spread_probabilities = result
 
