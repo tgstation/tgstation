@@ -3660,7 +3660,7 @@
 "bme" = (
 /obj/structure/sign/warning/directional/east,
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/asteroid)
 "bmf" = (
@@ -4488,7 +4488,7 @@
 /area/station/command/meeting_room)
 "bBo" = (
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/cargo/miningoffice)
 "bBr" = (
@@ -10414,7 +10414,7 @@
 "dGk" = (
 /obj/structure/sign/warning/directional/south,
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/asteroid)
 "dGq" = (
@@ -12039,7 +12039,7 @@
 /area/station/security)
 "eio" = (
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/maintenance/department/cargo)
 "eip" = (
@@ -23776,7 +23776,7 @@
 /area/station/maintenance/department/medical/central)
 "ilp" = (
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/maintenance/department/science)
 "ilq" = (
@@ -26374,7 +26374,7 @@
 "jjp" = (
 /obj/item/reagent_containers/cup/bottle/fake_gbs,
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/asteroid)
 "jjF" = (
@@ -33814,7 +33814,7 @@
 /area/station/security/medical)
 "lDQ" = (
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/hallway/secondary/entry)
 "lDZ" = (
@@ -39113,7 +39113,7 @@
 "nuH" = (
 /obj/structure/sign/warning/directional/west,
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/asteroid)
 "nuM" = (
@@ -47409,7 +47409,7 @@
 /area/station/maintenance/central/lesser)
 "qoN" = (
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/maintenance/department/medical)
 "qoO" = (
@@ -51850,7 +51850,7 @@
 /area/station/cargo/storage)
 "rPy" = (
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/maintenance/port/greater)
 "rPA" = (
@@ -57110,7 +57110,7 @@
 /area/station/command/meeting_room)
 "tAa" = (
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/maintenance/central/greater)
 "tAf" = (
@@ -58490,7 +58490,7 @@
 "tXg" = (
 /obj/structure/sign/warning/directional/north,
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/asteroid)
 "tXi" = (
@@ -62733,7 +62733,7 @@
 /area/station/commons/fitness/recreation)
 "vxX" = (
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/asteroid)
 "vxZ" = (
@@ -63726,7 +63726,7 @@
 /area/station/service/bar)
 "vPt" = (
 /turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
+	mineral_chance = 20
 	},
 /area/station/maintenance/disposal/incinerator)
 "vPF" = (
