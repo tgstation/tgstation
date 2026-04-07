@@ -452,7 +452,7 @@
 				continue
 
 			var/depth_factor = 1 / (1 + abs(ore_type::vein_distance - open_turf_distance))
-			lowest_factor = clamp(ceil(1 / spawn_chance_list[ore_type] * depth_factor)), lowest_factor, ORE_CHANCE_PRECISION)
+			lowest_factor = clamp(ceil(1 / (spawn_chance_list[ore_type] * depth_factor)), lowest_factor, ORE_CHANCE_PRECISION)
 			spawn_chance_list[ore_type] *= depth_factor
 			total_spawn_sum += spawn_chance_list[ore_type]
 
