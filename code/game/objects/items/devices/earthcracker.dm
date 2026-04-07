@@ -93,16 +93,19 @@
 		. += span_info("This device can be unanchored using a [EXAMINE_HINT("Wrench")].")
 
 /obj/item/earthcracker/proc/handle_arming(mob/user)
+	var/turf/arm_location = get_turf(user)
+	if(!arm_location)
+		return FALSE
+	if(isgroundlessturf(arm_location))
+		balloon_alert(user, "can't deploy here")
+		return FALSE
+
 	if(status == EARTHCRACKER_SPENT)
 		balloon_alert(user, "used up!")
 		return FALSE
 	balloon_alert(user, "arming...")
 	if(!do_after(user, 3 SECONDS, src))
 		balloon_alert(user, "failed to arm")
-		return FALSE
-
-	var/turf/arm_location = get_turf(user)
-	if(!arm_location)
 		return FALSE
 
 	forceMove(arm_location)
