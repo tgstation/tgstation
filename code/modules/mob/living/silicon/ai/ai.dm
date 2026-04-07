@@ -1034,6 +1034,8 @@
 	button_icon_state = "ai_shell"
 
 /datum/action/innate/deploy_shell/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return
 	var/mob/living/silicon/ai/AI = owner
 	if(!AI)
 		return
@@ -1047,6 +1049,8 @@
 	var/mob/living/silicon/robot/last_used_shell
 
 /datum/action/innate/deploy_last_shell/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return
 	if(!owner)
 		return
 	if(last_used_shell)

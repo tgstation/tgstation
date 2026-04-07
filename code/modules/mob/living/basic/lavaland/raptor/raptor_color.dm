@@ -124,12 +124,9 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 // Purple raptors never "fully" grow up, and remain usable as backpacks
 /datum/raptor_color/purple/setup_adult(mob/living/basic/raptor/raptor)
-	raptor.base_pixel_w = initial(raptor.base_pixel_w)
 	raptor.can_be_held = TRUE
 	raptor.density = FALSE
 	raptor.move_resist = MOVE_RESIST_DEFAULT
-	raptor.change_offsets = FALSE
-	raptor.remove_offsets(RAPTOR_INNATE_SOURCE, FALSE)
 	raptor.held_w_class = WEIGHT_CLASS_BULKY
 	. = ..()
 	// Non-shorties cannot ride these, so we gotta keep em tameable through food

@@ -691,12 +691,6 @@
 		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
-/datum/component/riding/creature/raptor/update_parent_layer_and_offsets(dir, animate)
-	. = ..()
-	var/mob/living/basic/raptor/raptor = parent
-	if (istype(raptor))
-		raptor.adjust_offsets(dir)
-
 /datum/component/riding/creature/raptor/combat
 	ai_behavior_while_ridden = RIDING_PAUSE_AI_MOVEMENT
 

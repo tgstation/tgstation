@@ -35766,6 +35766,10 @@
 /obj/item/reagent_containers/spray/cleaner,
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/machinery/status_display/ai/directional/west,
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 9;
+	pixel_x = 3
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "lrG" = (
@@ -40482,6 +40486,9 @@
 /obj/item/tgui_book/manual/dsm{
 	pixel_x = -6;
 	pixel_y = 4
+	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 3
 	},
 /obj/item/storage/briefcase/secure,
 /turf/open/floor/iron/white,
@@ -52597,6 +52604,10 @@
 	},
 /obj/item/tgui_book/manual/dsm{
 	pixel_y = 6;
+	pixel_x = 3
+	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 9;
 	pixel_x = 3
 	},
 /turf/open/floor/iron/dark,

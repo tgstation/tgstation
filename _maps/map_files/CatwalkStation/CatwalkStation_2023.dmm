@@ -13663,6 +13663,14 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/green/filled/mid_joiner,
 /obj/structure/table/glass,
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 2;
+	pixel_x = 3
+	},
+/obj/item/book/manual/wiki/infections{
+	name = "The Evil Doctor's How-To";
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/virology)
 "dCm" = (
@@ -19666,11 +19674,6 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/book/manual/wiki/infections{
-	name = "The Evil Doctor's How-To";
-	pixel_x = 5;
-	pixel_y = 15
-	},
 /obj/item/binoculars{
 	pixel_y = 1
 	},
@@ -45997,7 +46000,7 @@
 	},
 /obj/item/book/manual/wiki/medicine{
 	pixel_x = 1;
-	pixel_y = 5
+	pixel_y = -2
 	},
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner,
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
@@ -46006,6 +46009,10 @@
 /obj/item/tgui_book/manual/dsm{
 	pixel_x = 5;
 	pixel_y = -2
+	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 2;
+	pixel_x = 3
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
@@ -76167,6 +76174,10 @@
 /obj/item/storage/briefcase/secure{
 	pixel_x = 5;
 	pixel_y = 9
+	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = -3;
+	pixel_x = 3
 	},
 /obj/item/clothing/head/soft/blue{
 	pixel_x = 10;

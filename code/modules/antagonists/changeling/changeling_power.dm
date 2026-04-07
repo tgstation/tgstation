@@ -48,6 +48,9 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	Grant(user)//how powers are added rather than the checks in mob.dm
 
 /datum/action/changeling/Trigger(mob/clicker, trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/mob/user = owner
 	if(!user || !IS_CHANGELING(user))
 		return

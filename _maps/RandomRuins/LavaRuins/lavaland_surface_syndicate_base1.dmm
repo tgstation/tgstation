@@ -695,8 +695,12 @@
 	},
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/spray/cleaner,
 /obj/structure/cable,
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 9;
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
