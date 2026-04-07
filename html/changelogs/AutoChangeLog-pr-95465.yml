@@ -1,9 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored the SDSM-35 to allow for new books of similar styles, report any oddities with it."
-  - bugfix: "Fixes the broken image(s) in the SDSM-35."
-  - rscadd: "Adds the IDC-27 in Medbay, the CMO's office, Virology, and possibly the Library. It's a reference book to all viruses you may experience, similar to the SDSM-35."
-  - rscadd: "Several diseases/viruses received minor flavor adjustments, primarily to cure text, agent, description, and form."
-  - rscadd: "Getting cured of the Flu provides immunity to Spanish Flu (and visa versa) as implied in cure text."
-  - rscadd: "Getting cured of a Cold provides immunity to Cold-9 (and visa versa) as implied in cure text."

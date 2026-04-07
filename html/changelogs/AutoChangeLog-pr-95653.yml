@@ -1,4 +1,0 @@
-author: "Aliceee2ch"
-delete-after: True
-changes:
-  - bugfix: "Fixed empty message when ejecting an ID card from PDA."
