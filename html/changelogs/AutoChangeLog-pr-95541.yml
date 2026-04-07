@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Holy water temporarily pauses some effects of, and helps reverse, cursed painting effects"
