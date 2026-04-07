@@ -1,0 +1,4 @@
+author: "Tsar-Salat"
+delete-after: True
+changes:
+  - bugfix: "audits action button triggers, more action buttons ingame should respect if the player can use the action button or not."
