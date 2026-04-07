@@ -121,7 +121,7 @@
 
 	dirt_color = pepper.color
 	remove_tint(FALSE)
-	dirtiness = min(dirtiness + max(0.75, round(reagents[pepper] / 5, 0.25)), 3)
+	dirtiness = min(dirtiness + round(reagents[pepper] / 5, 0.25), 3)
 	apply_tint(TRUE)
 
 /datum/component/clothing_dirt/proc/is_protected(mob/living/carbon/wearer)
