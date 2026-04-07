@@ -136,6 +136,8 @@
   - qol: Surgical state examine text is now slightly smaller
   - qol: '"Fix bones" surgery operation no longer appears if the patient is suffering
       a bone fracture - you will need to "repair fracture" instead.'
+  - balance: Holy water temporarily pauses some effects of, and helps reverse, cursed
+      painting effects
   SmArtKar:
   - bugfix: Fixed boxing or successful blocking not preventing grabs
   - bugfix: Fixed people crashing into their own mounts if they're thrown together
