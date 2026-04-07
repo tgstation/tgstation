@@ -3688,7 +3688,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "tl" = (
-/turf/open/water/lavaland_atmos,
+/turf/open/water/lavaland_atmos/basalt,
 /area/lavaland/surface/outdoors)
 "tr" = (
 /obj/structure/closet/secure_closet/brig,
@@ -7814,7 +7814,7 @@
 /area/mine/laborcamp/security)
 "Sw" = (
 /obj/structure/flora/rock/pile/style_random,
-/turf/open/water/lavaland_atmos,
+/turf/open/water/lavaland_atmos/basalt,
 /area/lavaland/surface/outdoors)
 "Sz" = (
 /obj/machinery/hydroponics/constructable,
