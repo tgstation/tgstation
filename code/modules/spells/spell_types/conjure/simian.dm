@@ -108,3 +108,6 @@
 	var/stylish_monkey_hat = monky_hats[min(monkey_gear_tier, length(monky_hats))]
 	if(!isnull(stylish_monkey_hat))
 		summoned_monkey.equip_to_slot_or_del(new stylish_monkey_hat(summoned_monkey), ITEM_SLOT_HEAD)
+	var/obj/item/organ/heart/heart = summoned_monkey.get_organ_by_type(/obj/item/organ/heart)
+	if(!isnull(heart))
+		ADD_TRAIT(heart, TRAIT_HEART_EATER_BLACKLISTED, INNATE_TRAIT)
