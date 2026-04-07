@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Surgical states applied by wounds don't appear in examine unless the mob is prepared for surgery"
+  - qol: "Surgical state examine text is now slightly smaller"
+  - qol: "\"Fix bones\" surgery operation no longer appears if the patient is suffering a bone fracture - you will need to \"repair fracture\" instead."
