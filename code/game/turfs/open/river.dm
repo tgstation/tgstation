@@ -73,6 +73,10 @@
 	. = ..()
 	LAZYADD(GLOB.river_waypoint_list["[z]"], src)
 
+/obj/effect/landmark/river_waypoint/Destroy()
+	LAZYREMOVE(GLOB.river_waypoint_list["[z]"], src)
+	return ..()
+
 /turf/proc/Spread(probability = 30, prob_loss = 25, whitelisted_area)
 	if(probability <= 0)
 		return
