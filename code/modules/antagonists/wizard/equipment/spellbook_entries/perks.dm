@@ -141,7 +141,7 @@
 
 	if(new_area == GLOB.areas_by_type[/area/centcom/wizard_station])
 		return
-	wizard.gain_trauma(/datum/brain_trauma/magic/stalker)
+	wizard.gain_trauma(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_ABSOLUTE)
 	UnregisterSignal(wizard, COMSIG_ENTER_AREA)
 
 /datum/spellbook_entry/perks/magnetism
