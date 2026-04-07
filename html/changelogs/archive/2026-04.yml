@@ -85,3 +85,27 @@
   SyncIt21:
   - refactor: ' reagent reaction code has been refactored for better cpu & memory
       performance. Report broken reactions on github'
+2026-04-06:
+  ArcaneMusic:
+  - admin: Adds a secret to restart the gravity generator.
+  JohnFulpWillard:
+  - qol: Health assemblies now show their health in maptext rather than a stat panel
+      entry.
+  - rscdel: Deleted Object tab, and Server tab for players. Activate Held Object verb
+      is now in the IC tab. Examine and Point To was removed from the stat panel.
+  - admin: Object possession verbs have been moved to Admin Fun.
+  LemonInTheDark:
+  - config: Added a config option for the path to policy.json
+  Melbert:
+  - bugfix: Reset Dislocation operation ignores clothing
+  Rhials:
+  - bugfix: The shuttle loan event will now properly clear itself if not accepted
+      within the time limit, allowing for different loan opportunities to roll.
+  SmArtKar:
+  - balance: Red and black raptors no longer retaliate against their tamer's accidental
+      attacks
+  - bugfix: Fixed raptor shift-hover menu being offset, and other visual offset issues
+  - balance: Raptors and raptor chicks/eggs have had their growth speed increased
+      by 50/33% respectively.
+  rageguy505:
+  - bugfix: Metastations mining and QM disposal bins are no longer Jim Norton branded.
