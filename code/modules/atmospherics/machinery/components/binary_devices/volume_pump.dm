@@ -336,8 +336,11 @@
 /obj/machinery/atmospherics/components/binary/volume_pump/vortex/update_icon_nopipes()
 	icon_state = on && is_operational ? "vortexpump_on[set_overlay_offset(piping_layer)]" : "vortexpump_off[set_overlay_offset(piping_layer)]"
 	if(set_overlay_offset(piping_layer) == 2)
-	else
-		cut_overlay(overclock_overlay)
+	 	altlayeroverlay = TRUE
+	overclock_overlay = mutable_appearance('icons/obj/machines/atmospherics/binary_devices.dmi', "vpumpoverclock[altlayeroverlay ? "2" : ""]")
+		else
+			continue
+
 
 //##### Vortex Volume Pump Mapping Sprites
 
