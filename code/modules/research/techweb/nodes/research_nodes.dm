@@ -81,6 +81,7 @@
 		"anomaly_neutralizer",
 		"reactive_armour",
 		"space_furnace",
+		"RPD_UPGRADE_VORTEX",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)

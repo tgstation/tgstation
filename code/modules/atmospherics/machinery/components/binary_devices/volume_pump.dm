@@ -290,3 +290,76 @@
 	output_pressure.set_output(air_output.return_pressure())
 	input_temperature.set_output(air_input.return_temperature())
 	output_temperature.set_output(air_output.return_temperature())
+
+
+//below is the vortex volume pump subtype #########################
+//###################
+
+/obj/machinery/atmospherics/components/binary/volume_pump/vortex
+	icon_state = "vortexpump_map3"
+	name = "vortex volume pump"
+	desc = "A culmination of years of research towards vortex anomalies have lead to the creation of a volume pump that offers near infinite suction, just like your mom."
+	pipe_state = "vortexpump"
+
+
+/obj/machinery/atmospherics/components/binary/volume_pump/vortex/process_atmos()
+	if(!on || !is_operational)
+		return
+
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
+
+//## Required due to it being a subtype
+	if(overclocked)
+		return null
+
+	var/input_starting_pressure = air1.return_pressure()
+	var/output_starting_pressure = air2.return_pressure()
+
+	if((input_starting_pressure < VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE) || ((output_starting_pressure > VORTEX_PUMP_MAX_OUTPUT_PRESSURE)))
+		return
+
+	var/transfer_ratio = transfer_rate / air1.volume
+
+	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
+
+	if(!removed.total_moles())
+		return
+
+	air2.merge(removed)
+
+	update_parents()
+
+/obj/machinery/atmospherics/components/binary/volume_pump/vortex/multitool_act(mob/living/user, obj/item/I)
+	return null
+
+/obj/machinery/atmospherics/components/binary/volume_pump/vortex/update_icon_nopipes()
+	icon_state = on && is_operational ? "vortexpump_on[set_overlay_offset(piping_layer)]" : "vortexpump_off[set_overlay_offset(piping_layer)]"
+	if(set_overlay_offset(piping_layer) == 2)
+	else
+		cut_overlay(overclock_overlay)
+
+//##### Vortex Volume Pump Mapping Sprites
+
+/obj/machinery/atmospherics/components/binary/volume_pump/vortex/layer2
+	piping_layer = 2
+	icon_state = "vortexpump_map2"
+
+/obj/machinery/atmospherics/components/binary/volume_pump/vortex/layer4
+	piping_layer = 4
+	icon_state = "vortexpump_map4"
+
+/obj/machinery/atmospherics/components/binary/volume_pump/vortex/on
+	on = TRUE
+	icon_state = "vortexpump_map3"
+
+/obj/machinery/atmospherics/components/binary/volume_pump/vortex/on/layer2
+	piping_layer = 2
+	icon_state = "vortexpump_map2"
+
+/obj/machinery/atmospherics/components/binary/volume_pump/vortex/on/layer4
+	piping_layer = 4
+	icon_state = "vortexpump_map4"
+
+/obj/machinery/atmospherics/components/binary/volume_pump/vortex/examine(mob/user)
+	return null
