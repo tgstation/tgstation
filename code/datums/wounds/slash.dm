@@ -158,7 +158,7 @@
 			adjust_blood_flow(0.25) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
-	if(current_gauze && current_gauze.absorption_rate)
+	if(current_gauze?.absorption_rate)
 		var/gauze_power = current_gauze.absorption_rate
 		limb.seep_gauze(gauze_power * seconds_per_tick)
 		adjust_blood_flow(-gauze_power * seconds_per_tick)
