@@ -689,6 +689,15 @@
 	name = "Waistcoat (Worn)"
 	icon_file = 'icons/mob/clothing/accessories.dmi'
 
+/datum/greyscale_config/sweatervest
+	name = "Sweater Vest"
+	icon_file = 'icons/obj/clothing/accessories.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sweatervest.json'
+
+/datum/greyscale_config/sweatervest/worn
+	name = "Sweater Vest (Worn)"
+	icon_file = 'icons/mob/clothing/accessories.dmi'
+
 // Digi Stuff
 
 /datum/greyscale_config/digitigrade
