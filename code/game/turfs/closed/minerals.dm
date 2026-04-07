@@ -444,13 +444,15 @@
 		var/base_spawn_sum = 0
 		var/lowest_factor = 1
 		for (var/obj/item/stack/ore/ore_type as anything in spawn_chance_list)
+			if (!spawn_chance_list[ore_type])
+				continue
 			base_spawn_sum += spawn_chance_list[ore_type]
 			if (!ispath(ore_type, /obj/item/stack/ore))
 				total_spawn_sum += spawn_chance_list[ore_type]
 				continue
 
 			var/depth_factor = 1 / (1 + abs(ore_type::vein_distance - open_turf_distance))
-			lowest_factor = clamp(ceil(1 / (spawn_chance_list[ore_type] * depth_factor)), lowest_factor, ORE_CHANCE_PRECISION)
+			lowest_factor = clamp(ceil(1 / spawn_chance_list[ore_type] * depth_factor)), lowest_factor, ORE_CHANCE_PRECISION)
 			spawn_chance_list[ore_type] *= depth_factor
 			total_spawn_sum += spawn_chance_list[ore_type]
 
@@ -607,8 +609,9 @@
 
 /turf/closed/mineral/random/volcanic/red_rock/mineral_chances()
 	return list(
-		/obj/item/stack/ore/bluespace_crystal = 0,
-		/obj/item/stack/ore/diamond = 0,
+		// Cannot spawn these two
+		// /obj/item/stack/ore/bluespace_crystal = 0,
+		// /obj/item/stack/ore/diamond = 0,
 		/obj/item/stack/ore/gold = 2,
 		/obj/item/stack/ore/iron = 32, // Iron and plasma are this low due to how much they spread into veins
 		/obj/item/stack/ore/plasma = 6,
