@@ -54,6 +54,8 @@
 	if(!iscarbon(clothing.loc) || !(clothing.flags_cover & PEPPERPROOF) || clothing.tint < dirtiness || clothing.tint < TINT_MILD)
 		return
 	var/mob/living/carbon/wearer = clothing.loc
+	if(wearer.is_blind() && !wearer.is_blind_from(EYES_COVERED))
+		return
 	to_chat(wearer, span_warning("It's hard to see with all the stuff covering your [clothing.name]..."))
 
 /datum/component/clothing_dirt/proc/on_equip(datum/source, mob/user, slot)
