@@ -101,6 +101,7 @@
 	plane = HIGH_GAME_PLANE
 	layer = FLASH_LAYER
 	icon = 'icons/blanks/480x480.dmi'
+	icon_state = "nothing"
 	appearance_flags = NONE // to avoid having TILE_BOUND in the flags, so that the 480x480 icon states let you see it no matter where you are
 	pixel_x = -224
 	pixel_y = -224
