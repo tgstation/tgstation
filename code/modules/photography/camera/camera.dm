@@ -298,7 +298,7 @@
 		get_icon,
 		null,
 		width * ICON_SIZE_X,
-		height * ICON_SIZE_X,
+		height * ICON_SIZE_Y,
 		blueprints,
 		can_see_ghosts = see_ghosts,
 	)
