@@ -139,7 +139,7 @@
 /datum/spellbook_entry/perks/transparence/proc/make_stalker(mob/living/carbon/human/wizard, area/new_area)
 	SIGNAL_HANDLER
 
-	if(new_area == GLOB.areas_by_type[/area/centcom/wizard_station])
+	if(istype(new_area, /area/centcom/wizard_station))
 		return
 	wizard.gain_trauma(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_ABSOLUTE)
 	UnregisterSignal(wizard, COMSIG_ENTER_AREA)
