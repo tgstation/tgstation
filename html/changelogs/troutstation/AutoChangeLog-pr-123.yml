@@ -1,0 +1,8 @@
+author: "GuffyWuffy"
+delete-after: True
+changes:
+  - rscadd: "stone walls"
+  - map: "Tisserand: New Cargo Maint Module"
+  - map: "Tisserand: Cargo main windoor now accessible to miners"
+  - map: "Tisserand: Armory now better secured"
+  - map: "Tisserand: Missing keycard scanner added to CE's office"
