@@ -421,6 +421,7 @@
 			symptom_data["id"] = symptom_type
 			disease_info += list(symptom_data)
 
+		// snowflake
 		var/list/advanced_virus_info = list(
 			"form" = "Virus",
 			"agent" = "Microbes",
@@ -433,7 +434,7 @@
 			"cured_by" = "Varies by symptom combination",
 			"id" = /datum/disease/advance,
 		)
-		disease_info += advanced_virus_info
+		disease_info += list(advanced_virus_info)
 
 		// validate
 		for(var/list/disease_data as anything in disease_info)
