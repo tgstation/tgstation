@@ -482,6 +482,14 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	params = NONE
 	return ..()
 
+/// Admin proc that causes gravity to fully restart, via the secrets panel's fix gravity.
+/obj/machinery/gravity_generator/main/proc/kickstart()
+	charge_count = 100
+	breaker = TRUE
+	set_power()
+	enable()
+	investigate_log("was turned re-enabled by admin event.", INVESTIGATE_GRAVITY)
+
 // Misc
 
 /// Gravity generator instruction guide

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Hallucinating yourself as another mob will no longer disable all of your light sources"

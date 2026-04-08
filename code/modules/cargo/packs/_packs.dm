@@ -21,6 +21,8 @@
 	var/desc = ""
 	/// What typepath of crate do you spawn?
 	var/crate_type = /obj/structure/closet/crate
+	/// If we're not going to use a crate, then what would we like to use as a container for the order/manifest?
+	var/storage_override
 	/// If this pack comes shipped in a specific pod when launched from the express console
 	var/special_pod
 	/// Can coupons target this pack? If so, how rarely?
@@ -62,7 +64,7 @@
 	else if(!crate_type && !crate_override)
 		CRASH("tried to generate a supply pack without a valid crate type")
 	else if(crate_override)
-		var/obj/unique_container = new crate_override
+		var/obj/unique_container = new crate_override(A)
 		fill(unique_container)
 		return unique_container
 

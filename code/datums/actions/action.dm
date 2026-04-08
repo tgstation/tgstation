@@ -163,6 +163,7 @@
 /// Actually triggers the effects of the action.
 /// Called when the on-screen button is clicked, for example.
 /datum/action/proc/Trigger(mob/clicker, trigger_flags)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!(trigger_flags & TRIGGER_FORCE_AVAILABLE) && !IsAvailable(feedback = TRUE))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
@@ -373,7 +374,7 @@
 
 /// Creates an action button movable for the passed mob, and returns it.
 /datum/action/proc/create_button()
-	var/atom/movable/screen/movable/action_button/button = new()
+	var/atom/movable/screen/movable/action_button/button = owner.hud_used.add_screen_object(/atom/movable/screen/movable/action_button)
 	button.linked_action = src
 	button.allow_observer_click = allow_observer_click
 	build_button_icon(button, ALL, TRUE)
