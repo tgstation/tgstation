@@ -287,6 +287,19 @@
 		return FALSE
 	return TRUE
 
+/datum/status_effect/eldritch_painting/tick(seconds_between_ticks)
+	// having holy water in you halts the effect + makes it expire faster
+	// holy watter currently has 0.2 metab rate so 0.2u/s -> 3 seconds is removed per 0.2 units -> 30s per 2 units -> 300s per 20 units -> 40u will cure you
+	if(owner.reagents.has_reagent(/datum/reagent/water/holywater))
+		remove_duration(3 * seconds_between_ticks)
+		return
+	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
+		return
+	on_tick(seconds_between_ticks)
+
+/datum/status_effect/eldritch_painting/proc/on_tick(seconds_between_ticks)
+	return
+
 /atom/movable/screen/alert/status_effect/eldritch_painting
 	name = "Rick Roll'd"
 	desc = "Fucking coders are at it again."
@@ -298,10 +311,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/eldritch_painting/weeping
 	tick_interval = 10 SECONDS
 
-/datum/status_effect/eldritch_painting/weeping/tick(seconds_between_ticks)
+/datum/status_effect/eldritch_painting/weeping/on_tick(seconds_between_ticks)
 	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
-		return
-	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
 		return
 
 	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping status effect")
@@ -332,9 +343,7 @@
 	ADD_TRAIT(owner, TRAIT_FLESH_DESIRE, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
-/datum/status_effect/eldritch_painting/desire/tick(seconds_between_ticks)
-	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
-		return
+/datum/status_effect/eldritch_painting/desire/on_tick(seconds_between_ticks)
 	// Causes them to need to eat at 10x the normal rate
 	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
 	if(SPT_PROB(10, seconds_between_ticks))
@@ -362,11 +371,8 @@
 	/// How much damage we deal with each scratch
 	var/scratch_damage = 3
 
-/datum/status_effect/eldritch_painting/beauty/tick(seconds_between_ticks)
+/datum/status_effect/eldritch_painting/beauty/on_tick(seconds_between_ticks)
 	if(owner.incapacitated)
-		return
-
-	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
 		return
 
 	// Scratching code
@@ -392,9 +398,9 @@
 	alert_type = /atom/movable/screen/alert/status_effect/eldritch_painting/rusting
 	tick_interval = 3 SECONDS
 
-/datum/status_effect/eldritch_painting/rusting/tick(seconds_between_ticks)
+/datum/status_effect/eldritch_painting/rusting/on_tick(seconds_between_ticks)
 	var/atom/tile = get_turf(owner)
-	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
+	if(isnull(tile))
 		return
 
 	to_chat(owner, span_notice("You feel the decay..."))
