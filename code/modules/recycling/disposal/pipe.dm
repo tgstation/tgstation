@@ -35,7 +35,7 @@
 
 	if(!QDELETED(make_from))
 		setDir(make_from.dir)
-		make_from.forceMove(src)
+		make_from.force_move(src)
 		stored = make_from
 
 	if(ISDIAGONALDIR(dir)) // Bent pipes already have all the dirs set
@@ -109,7 +109,7 @@
 			H2.merge(H)
 			return
 		H.merge(H2)//Otherwise, we push it along through.
-	H.forceMove(P)
+	H.force_move(P)
 	return P
 
 // expel the held objects into a turf
@@ -177,7 +177,7 @@
 			if(!construct) // Don't have something? Make one now
 				construct = new /obj/structure/disposalconstruct(src, null, SOUTH, FALSE, src)
 			stored = null
-			construct.forceMove(loc)
+			construct.force_move(loc)
 			transfer_fingerprints_to(construct)
 			construct.setDir(dir)
 			spawn_pipe = FALSE

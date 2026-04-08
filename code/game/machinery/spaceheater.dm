@@ -349,7 +349,7 @@
 	if(!cell)
 		return
 	var/turf/turf = get_turf(cell)
-	forceMove(turf)
+	force_move(turf)
 	attackby(cell, user) //puts it into the heater
 
 /obj/machinery/space_heater/improvised_chem_heater/heating_examine()
@@ -450,7 +450,7 @@
 /obj/machinery/space_heater/improvised_chem_heater/on_deconstruction(disassembled = TRUE)
 	. = ..()
 	if(disassembled)
-		beaker?.forceMove(drop_location())
+		beaker?.force_move(drop_location())
 		beaker = null
 	var/static/bonus_junk = list(
 		/obj/item/stack/cable_coil = 2,

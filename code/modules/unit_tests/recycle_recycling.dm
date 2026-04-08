@@ -15,7 +15,7 @@
 	// Abstract cookie won't be recycled. But will be deleted if the contents of hologram aren't managed.
 	real_cookie.item_flags |= ABSTRACT
 	// Process the hologram through the recycler.
-	hologram_closet.forceMove(get_turf(recycler))
+	hologram_closet.force_move(get_turf(recycler))
 	// Check that hologram was properly deleted.
 	TEST_ASSERT(QDELETED(hologram_closet), "Hologram item was not deleted after processing")
 	// Check that real items were moved to recycler location (not deleted).
@@ -34,7 +34,7 @@
 	var/obj/item/food/cookie/indestructible_cookie = allocate(/obj/item/food/cookie, run_loc_floor_bottom_left)
 	indestructible_cookie.resistance_flags |= INDESTRUCTIBLE
 	// Try to process indestructible cookie.
-	indestructible_cookie.forceMove(get_turf(recycler))
+	indestructible_cookie.force_move(get_turf(recycler))
 	// Cookie should still exist.
 	TEST_ASSERT(!QDELETED(indestructible_cookie), "Indestructible item was recycled")
 
@@ -47,7 +47,7 @@
 	var/obj/item/food/cookie/abstract_cookie = allocate(/obj/item/food/cookie, run_loc_floor_bottom_left)
 	abstract_cookie.item_flags |= ABSTRACT
 	// Try to process abstract cookie.
-	abstract_cookie.forceMove(get_turf(recycler))
+	abstract_cookie.force_move(get_turf(recycler))
 	// Cookie should still exist.
 	TEST_ASSERT(!QDELETED(abstract_cookie), "Abstract item was recycled")
 
@@ -58,7 +58,7 @@
 	var/obj/machinery/recycler/recycler = allocate(/obj/machinery/recycler,  get_step(run_loc_floor_bottom_left, EAST))
 	var/mob/living/brain/test_brain = allocate(/mob/living/brain, run_loc_floor_bottom_left)
 	// Process brain - should trigger safety mode.
-	test_brain.forceMove(get_turf(recycler))
+	test_brain.force_move(get_turf(recycler))
 	// Should enter safety mode.
 	TEST_ASSERT(recycler.safety_mode, "Recycler did not enter safety mode when processing brain")
 	// Brain should not be deleted.
@@ -73,9 +73,9 @@
 	var/mob/living/brain/test_brain = allocate(/mob/living/brain, run_loc_floor_bottom_left)
 	// Insert brain into MMI.
 	test_mmi.brain = test_brain
-	test_brain.forceMove(test_mmi)
+	test_brain.force_move(test_mmi)
 	// Process MMI with brain - should trigger safety mode.
-	test_mmi.forceMove(get_turf(recycler))
+	test_mmi.force_move(get_turf(recycler))
 	// Should enter safety mode.
 	TEST_ASSERT(recycler.safety_mode, "Recycler did not enter safety mode when processing MMI with brain")
 	// MMI should not be deleted.

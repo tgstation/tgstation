@@ -134,12 +134,12 @@
 	add_fingerprint(user)
 	if(isnull(charging) || user.put_in_hands(charging))
 		return
-	charging.forceMove(drop_location())
+	charging.force_move(drop_location())
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(isnull(charging))
 		return
-	charging.forceMove(drop_location())
+	charging.force_move(drop_location())
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/recharger/process(seconds_per_tick)

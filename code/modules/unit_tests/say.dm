@@ -194,8 +194,8 @@
 #define WHISPER_HEARING_RANGE 1
 
 /datum/unit_test/speech/proc/conversation(distance = 0)
-	speaker.forceMove(run_loc_floor_bottom_left)
-	listener.forceMove(locate((run_loc_floor_bottom_left.x + distance), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	speaker.force_move(run_loc_floor_bottom_left)
+	listener.force_move(locate((run_loc_floor_bottom_left.x + distance), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	var/pangram_quote = "The quick brown fox jumps over the lazy dog"
 
@@ -225,12 +225,12 @@
 	speaker_radio_heard_message = FALSE
 	listener_radio_received_message = FALSE
 
-	speaker.forceMove(run_loc_floor_bottom_left)
-	listener.forceMove(locate((run_loc_floor_bottom_left.x + 10), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	speaker.force_move(run_loc_floor_bottom_left)
+	listener.force_move(locate((run_loc_floor_bottom_left.x + 10), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
-	speaker_radio.forceMove(run_loc_floor_bottom_left)
+	speaker_radio.force_move(run_loc_floor_bottom_left)
 	speaker_radio.set_broadcasting(TRUE)
-	listener_radio.forceMove(locate((run_loc_floor_bottom_left.x + 10), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	listener_radio.force_move(locate((run_loc_floor_bottom_left.x + 10), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	// Normally speaking, if there isn't a functional telecomms array on the same z-level, then handheld radios
 	// have a short delay before sending the message. We use the centcom frequency to get around this.
 	speaker_radio.set_frequency(FREQ_CENTCOM)

@@ -121,12 +121,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /obj/structure/fireaxecabinet/atom_deconstruct(disassembled = TRUE)
 	if(held_item && loc)
-		held_item.forceMove(loc)
+		held_item.force_move(loc)
 	new /obj/item/wallframe/fireaxecabinet(loc)
 
 /obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
 	if(held_item)
-		held_item.forceMove(loc)
+		held_item.force_move(loc)
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user, list/modifiers)
@@ -235,7 +235,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
 
 /obj/structure/fireaxecabinet/mechremoval/atom_deconstruct(disassembled = TRUE)
 	if(held_item && loc)
-		held_item.forceMove(loc)
+		held_item.force_move(loc)
 	new /obj/item/wallframe/fireaxecabinet/mechremoval(loc)
 
 /obj/structure/fireaxecabinet/mechremoval/empty
@@ -262,7 +262,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/jawsofrecovery, 32)
 
 /obj/structure/fireaxecabinet/jawsofrecovery/atom_deconstruct(disassembled = TRUE)
 	if(held_item && loc)
-		held_item.forceMove(loc)
+		held_item.force_move(loc)
 	new /obj/item/wallframe/fireaxecabinet/jawsofrecovery(loc)
 
 /obj/structure/fireaxecabinet/jawsofrecovery/empty

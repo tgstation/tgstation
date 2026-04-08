@@ -11,8 +11,8 @@
 
 /datum/blobstrain/reagent/shifting_fragments/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/eye/blob/O)
 	if(istype(B, /obj/structure/blob/normal) || (istype(B, /obj/structure/blob/shield)))
-		newB.forceMove(get_turf(B))
-		B.forceMove(T)
+		newB.force_move(get_turf(B))
+		B.force_move(T)
 
 /datum/blobstrain/reagent/shifting_fragments/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && damage > 0 && B.get_integrity() - damage > 0 && prob(60-damage))
@@ -23,8 +23,8 @@
 		if(blobstopick.len)
 			var/obj/structure/blob/targeted = pick(blobstopick) //randomize the blob chosen, because otherwise it'd tend to the lower left
 			var/turf/T = get_turf(targeted)
-			targeted.forceMove(get_turf(B))
-			B.forceMove(T) //swap the blobs
+			targeted.force_move(get_turf(B))
+			B.force_move(T) //swap the blobs
 	return ..()
 
 /datum/reagent/blob/shifting_fragments

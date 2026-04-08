@@ -88,7 +88,7 @@
 /obj/structure/tank_dispenser/atom_deconstruct(disassembled = TRUE)
 	for(var/X in src)
 		var/obj/item/I = X
-		I.forceMove(loc)
+		I.force_move(loc)
 	new /obj/item/stack/sheet/iron (loc, 2)
 
 /obj/structure/tank_dispenser/examine(mob/user)

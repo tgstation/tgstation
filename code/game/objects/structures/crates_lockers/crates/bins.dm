@@ -62,7 +62,7 @@
 		return
 
 	for (var/obj/item/garbage in items_to_sweep)
-		garbage.forceMove(loc)
+		garbage.force_move(loc)
 
 	items_to_sweep.Cut()
 

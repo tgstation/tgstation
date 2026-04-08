@@ -71,10 +71,10 @@
 /obj/machinery/pdapainter/on_deconstruction(disassembled)
 	// Don't use ejection procs as we're gonna be destroyed anyway, so no need to update icons or anything.
 	if(stored_pda)
-		stored_pda.forceMove(loc)
+		stored_pda.force_move(loc)
 		stored_pda = null
 	if(stored_id_card)
-		stored_id_card.forceMove(loc)
+		stored_id_card.force_move(loc)
 		stored_id_card = null
 
 /obj/machinery/pdapainter/contents_explosion(severity, target)
@@ -181,7 +181,7 @@
 	if(user && !user.transferItemToLoc(new_pda, src, silent = FALSE))
 		return FALSE
 	else
-		new_pda.forceMove(src)
+		new_pda.force_move(src)
 
 	if(stored_pda)
 		eject_pda(user)
@@ -226,7 +226,7 @@
 	if(user && !user.transferItemToLoc(new_id_card, src, silent = FALSE))
 		return FALSE
 	else
-		new_id_card.forceMove(src)
+		new_id_card.force_move(src)
 
 	if(stored_id_card)
 		eject_id_card(user)

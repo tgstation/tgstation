@@ -89,7 +89,7 @@
 	var/turf/new_turf = placer.findValidTurf(new_area)
 
 	priority_announce("Dimensional instability relocated. Expected location: [new_area.name].", "Anomaly Alert")
-	src.forceMove(new_turf)
+	src.force_move(new_turf)
 	prepare_area()
 
 /obj/effect/anomaly/dimensional/detonate()

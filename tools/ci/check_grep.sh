@@ -216,10 +216,10 @@ if $grep 'AddElement\(/datum/element/update_icon_updates_onmob.+ITEM_SLOT_HANDS'
 	st=1
 fi;
 
-part "forceMove sanity"
-if $grep 'forceMove\(\s*(\w+\(\)|\w+)\s*,\s*(\w+\(\)|\w+)\s*\)' $code_files; then
+part "force_move sanity"
+if $grep 'force_move\(\s*(\w+\(\)|\w+)\s*,\s*(\w+\(\)|\w+)\s*\)' $code_files; then
 	echo
-	echo -e "${RED}ERROR: forceMove() call with two arguments - this is not how forceMove() is invoked! It's x.forceMove(y), not forceMove(x, y).${NC}"
+	echo -e "${RED}ERROR: force_move() call with two arguments - this is not how force_move() is invoked! It's x.force_move(y), not force_move(x, y).${NC}"
 	st=1
 fi;
 

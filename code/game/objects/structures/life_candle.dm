@@ -106,7 +106,7 @@
 		ghostie.client?.prefs?.safe_transfer_prefs_to(body)
 		mind.transfer_to(body)
 	else
-		body.forceMove(T)
+		body.force_move(T)
 		body.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
 	body.flash_act()
 

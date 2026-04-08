@@ -33,7 +33,7 @@
 
 	if(new_poster_structure && (new_poster_structure.loc != src))
 		qdel(new_poster_structure.GetComponent(/datum/component/atom_mounted))
-		new_poster_structure.forceMove(src)
+		new_poster_structure.force_move(src)
 	poster_structure = new_poster_structure
 	if(!poster_type) // If we weren't already assigned a poster_type, we infer from the contained poster_structure
 		if(istype(poster_structure, /obj/structure/sign/poster)) // Make sure our poster structure is valid
@@ -99,7 +99,7 @@
 
 	balloon_alert(user, "hanging poster...")
 	var/obj/structure/sign/poster/placed_poster = poster_structure || new poster_type(src)
-	placed_poster.forceMove(user_turf)
+	placed_poster.force_move(user_turf)
 	placed_poster.setDir(dir)
 	switch(dir)
 		if(NORTH)
@@ -112,7 +112,7 @@
 			placed_poster.pixel_x = -32
 	var/obj/item/shard/trap = locate() in contents
 	if(trap)
-		trap.forceMove(placed_poster)
+		trap.force_move(placed_poster)
 	placed_poster.poster_item_type = type
 	poster_structure = null
 	flick("poster_being_set", placed_poster)
@@ -256,7 +256,7 @@
 	to_chat(user, span_warning("There's something sharp behind this! What the hell?"))
 	if(!can_embed_trap(user) || !payload.force_embed(user, user.get_active_hand()))
 		visible_message(span_notice("A [payload.name] falls from behind the poster.") )
-		payload.forceMove(user.drop_location())
+		payload.force_move(user.drop_location())
 
 /obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
 	if (!istype(user) || HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
@@ -268,7 +268,7 @@
 	pixel_y = 0
 	var/obj/item/poster/rolled_poster = return_to_poster_item(location, src)
 	if(!user?.put_in_hands(rolled_poster))
-		forceMove(rolled_poster)
+		force_move(rolled_poster)
 	return rolled_poster
 
 

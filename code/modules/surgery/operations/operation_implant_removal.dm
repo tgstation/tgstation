@@ -60,7 +60,7 @@
 		return
 
 	case.imp = implant
-	implant.forceMove(case)
+	implant.force_move(case)
 	case.update_appearance()
 	display_results(
 		surgeon,

@@ -615,7 +615,7 @@
 
 /obj/item/melee/baton/security/proc/tryremovecell(mob/user)
 	if(cell && can_remove_cell)
-		cell.forceMove(drop_location())
+		cell.force_move(drop_location())
 		to_chat(user, span_notice("You remove the cell from [src]."))
 		return TRUE
 	return FALSE
@@ -944,7 +944,7 @@
 	if(user.put_in_inactive_hand(stuff_in_hand))
 		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears in [user]'s hand!"))
 	else
-		stuff_in_hand.forceMove(user.drop_location())
+		stuff_in_hand.force_move(user.drop_location())
 		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))
 
 	if(clumsy && user.dropItemToGround(src, force = TRUE, silent = TRUE))

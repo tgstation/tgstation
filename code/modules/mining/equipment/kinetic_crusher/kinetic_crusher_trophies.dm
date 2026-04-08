@@ -39,7 +39,7 @@
 
 /// Removes the trophy from our crusher
 /obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
-	forceMove(get_turf(crusher))
+	force_move(get_turf(crusher))
 	return TRUE
 
 /// Does an effect when you hit a mob with a crusher

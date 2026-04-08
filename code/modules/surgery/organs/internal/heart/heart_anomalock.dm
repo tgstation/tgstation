@@ -173,7 +173,7 @@
 		balloon_alert(user, "interrupted!")
 		return
 	balloon_alert(user, "core removed")
-	core.forceMove(drop_location())
+	core.force_move(drop_location())
 	if(Adjacent(user) && !issilicon(user))
 		user.put_in_hands(core)
 	core = null

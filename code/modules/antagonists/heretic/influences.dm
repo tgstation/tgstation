@@ -116,7 +116,7 @@
 	if(prob(25))
 		to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
 		if (their_poor_arm.dismember())
-			their_poor_arm.forceMove(src) // stored for later fishage
+			their_poor_arm.force_move(src) // stored for later fishage
 	else
 		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existence itself!"))
 	return TRUE
@@ -143,7 +143,7 @@
 	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [user.p_their()] head off!"))
 	var/obj/item/bodypart/head/head = human_user.get_bodypart(BODY_ZONE_HEAD)
 	if(head?.dismember())
-		head.forceMove(src) // stored for later fishage
+		head.force_move(src) // stored for later fishage
 	else
 		human_user.gib(DROP_ALL_REMAINS)
 	human_user.investigate_log("has died from using telekinesis on a heretic influence.", INVESTIGATE_DEATHS)

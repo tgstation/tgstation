@@ -738,7 +738,7 @@ SUBSYSTEM_DEF(job)
 	if(ispath(joining_mob))
 		joining_mob = new joining_mob(get_turf(src))
 	else
-		joining_mob.forceMove(get_turf(src))
+		joining_mob.force_move(get_turf(src))
 	return joining_mob
 
 /obj/structure/chair/JoinPlayerHere(mob/joining_mob, buckle)

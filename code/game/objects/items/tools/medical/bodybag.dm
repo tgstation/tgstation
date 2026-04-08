@@ -45,7 +45,7 @@
 		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
 		R.add_fingerprint(user)
 		qdel(src)
-		user.forceMove(R)
+		user.force_move(R)
 		playsound(src, 'sound/items/zip/zip.ogg', 15, TRUE, -3)
 		return OXYLOSS
 
@@ -68,7 +68,7 @@
 
 /obj/item/bodybag/bluespace/Destroy()
 	for(var/atom/movable/A in contents)
-		A.forceMove(get_turf(src))
+		A.force_move(get_turf(src))
 		if(isliving(A))
 			to_chat(A, span_notice("You suddenly feel the space around you torn apart! You're free!"))
 	return ..()
@@ -76,7 +76,7 @@
 /obj/item/bodybag/bluespace/deploy_bodybag(mob/user, atom/location)
 	var/obj/structure/closet/body_bag/item_bag = new unfoldedbag_path(location)
 	for(var/atom/movable/inside in contents)
-		inside.forceMove(item_bag)
+		inside.force_move(item_bag)
 		if(isliving(inside))
 			to_chat(inside, span_notice("You suddenly feel air around you! You're free!"))
 	item_bag.open(user)

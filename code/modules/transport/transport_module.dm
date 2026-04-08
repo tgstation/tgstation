@@ -275,7 +275,7 @@
 
 	var/turf/old_loc = loc
 
-	forceMove(locate(min_x, min_y, z))//move to the lower left corner
+	force_move(locate(min_x, min_y, z))//move to the lower left corner
 	set_movement_registrations(locs - old_loc)
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	update_appearance()
@@ -484,7 +484,7 @@
 	tram_controller.register_collision(points)
 
 ///move the movers list of movables on our tile to destination if we successfully move there first.
-///this is like calling forceMove() on everything in movers and ourselves, except nothing in movers
+///this is like calling force_move() on everything in movers and ourselves, except nothing in movers
 ///has destination.Entered() and origin.Exited() called on them, as only our movement can be perceived.
 ///none of the movers are able to react to the movement of any other mover, saving a lot of needless processing cost
 ///and is more sensible. without this, if you and a banana are on the same platform, when that platform moves you will slip
@@ -506,7 +506,7 @@
 	if(glide_size != glide_size_override)
 		set_glide_size(glide_size_override)
 
-	forceMove(our_dest)
+	force_move(our_dest)
 	if(loc != our_dest || QDELETED(src))//check if our movement succeeded, if it didnt then the movers cant be moved
 		return FALSE
 

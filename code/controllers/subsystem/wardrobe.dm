@@ -280,7 +280,7 @@ SUBSYSTEM_DEF(wardrobe)
 		return requested_object
 
 	if(location)
-		requested_object.forceMove(location)
+		requested_object.force_move(location)
 
 	var/datum/callback/do_on_removal = stock_info[WARDROBE_STOCK_CALL_REMOVAL]
 	if(do_on_removal)

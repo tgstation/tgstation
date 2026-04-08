@@ -49,7 +49,7 @@
 
 /datum/proximity_monitor/advanced/bubble/on_moved(atom/movable/source, atom/old_loc)
 	. = ..()
-	my_movable.forceMove(get_turf(source))
+	my_movable.force_move(get_turf(source))
 
 /datum/proximity_monitor/advanced/bubble/on_z_change(datum/source)
 	recalculate_field(full_recalc = TRUE)

@@ -60,7 +60,7 @@
 	if(!QDELETED(cuffs))
 		cuffs.on_uncuffed(wearer = owner)
 		if(!QDELETED(owner) && cuffs.loc == owner && !(cuffs in owner.get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD)))
-			cuffs.forceMove(owner.drop_location())
+			cuffs.force_move(owner.drop_location())
 	cuffs = null
 
 ///Called when someone examines the owner twice, so they can know if someone has a cuffed item
@@ -128,7 +128,7 @@
 	log_combat(user, owner, "removed restraints binding [cuffed] to")
 
 	var/obj/item/restraints/handcuffs/ref_cuffs = cuffs
-	ref_cuffs.forceMove(owner.drop_location()) //This will cause the status effect to delete itself, which unsets the 'cuffs' var
+	ref_cuffs.force_move(owner.drop_location()) //This will cause the status effect to delete itself, which unsets the 'cuffs' var
 	user.put_in_hands(ref_cuffs)
 	owner.balloon_alert(user, "cuffs removed from item")
 

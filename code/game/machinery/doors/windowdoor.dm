@@ -346,7 +346,7 @@
 		drop_debris(new /obj/item/stack/cable_coil(src, cable))
 
 /obj/machinery/door/window/proc/drop_debris(obj/item/debris)
-	debris.forceMove(loc)
+	debris.force_move(loc)
 	transfer_fingerprints_to(debris)
 
 /obj/machinery/door/window/narsie_act()
@@ -444,7 +444,7 @@
 	else
 		dropped_electronics = electronics
 		electronics = null
-		dropped_electronics.forceMove(drop_location())
+		dropped_electronics.force_move(drop_location())
 	qdel(src)
 	return TRUE
 

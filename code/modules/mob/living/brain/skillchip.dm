@@ -39,7 +39,7 @@
 
 	LAZYADD(skillchips, skillchip)
 	skillchip.on_implant(src)
-	skillchip.forceMove(src)
+	skillchip.force_move(src)
 	return
 
 /**

@@ -169,7 +169,7 @@
 		bees += new_queen.queen
 		queen_bee = new_queen.queen
 
-		new_queen.queen.forceMove(src)
+		new_queen.queen.force_move(src)
 
 		if(queen_bee)
 			visible_message(span_notice("[user] sets [queen_bee] down inside the apiary, making it their new home."))
@@ -179,7 +179,7 @@
 					bees -= relocating_bee
 					relocating_bee.beehome = null
 					if(relocating_bee.loc == src)
-						relocating_bee.forceMove(drop_location())
+						relocating_bee.force_move(drop_location())
 					relocated++
 			if(relocated)
 				to_chat(user, span_warning("This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!"))
@@ -200,7 +200,7 @@
 			if(worker.is_queen)
 				continue
 			if(worker.loc == src)
-				worker.forceMove(drop_location())
+				worker.force_move(drop_location())
 			bees_attack = TRUE
 		if(bees_attack)
 			visible_message(span_danger("[user] disturbs the bees!"))
@@ -219,7 +219,7 @@
 				var/obj/item/honey_frame/frame = pick_n_take(honey_frames)
 				if(frame)
 					if(!user.put_in_active_hand(frame))
-						frame.forceMove(drop_location())
+						frame.force_move(drop_location())
 					visible_message(span_notice("[user] removes a frame from the apiary."))
 
 					var/amtH = frame.honeycomb_capacity
@@ -227,7 +227,7 @@
 					while(honeycombs.len && amtH) //let's pretend you always grab the frame with the most honeycomb on it
 						var/obj/item/food/honeycomb/comb = pick_n_take(honeycombs)
 						if(comb)
-							comb.forceMove(drop_location())
+							comb.force_move(drop_location())
 							amtH--
 							fallen++
 					if(fallen)
@@ -239,12 +239,12 @@
 					to_chat(user, span_warning("There is no queen bee to remove!"))
 					return
 				var/obj/item/queen_bee/queen = new()
-				queen_bee.forceMove(queen)
+				queen_bee.force_move(queen)
 				bees -= queen_bee
 				queen.queen = queen_bee
 				queen.name = queen_bee.name
 				if(!user.put_in_active_hand(queen))
-					queen.forceMove(drop_location())
+					queen.force_move(drop_location())
 				visible_message(span_notice("[user] removes the queen from the apiary."))
 				queen_bee = null
 
@@ -252,12 +252,12 @@
 	new /obj/item/stack/sheet/mineral/wood (loc, 20)
 	for(var/mob/living/basic/bee/worker as anything in bees)
 		if(worker.loc == src)
-			worker.forceMove(get_turf(src))
+			worker.force_move(get_turf(src))
 		bees -= worker
 		worker.beehome = null
 	for(var/obj/item/honey_frame/frame as anything in honey_frames)
 		if(frame.loc == src)
-			frame.forceMove(get_turf(src))
+			frame.force_move(get_turf(src))
 		honey_frames -= frame
 
 /obj/structure/beebox/unwrenched

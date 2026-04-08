@@ -141,7 +141,7 @@
 		return
 	var/mob/living/living_firer = firer
 	if(IS_HERETIC(living_firer))
-		living_firer.forceMove(src)
+		living_firer.force_move(src)
 		stored_mob = living_firer
 
 
@@ -151,11 +151,11 @@
 	return ..()
 
 /obj/projectile/bullet/strilka310/lionhunter/on_range()
-	stored_mob?.forceMove(loc)
+	stored_mob?.force_move(loc)
 	return ..()
 
 /obj/projectile/bullet/strilka310/lionhunter/on_hit(atom/target, blocked, pierce_hit)
-	stored_mob?.forceMove(loc) //Pretty important to get our mob out of the bullet
+	stored_mob?.force_move(loc) //Pretty important to get our mob out of the bullet
 	. = ..()
 	if(!isliving(target))
 		return BULLET_ACT_HIT
@@ -170,7 +170,7 @@
 /obj/projectile/bullet/strilka310/lionhunter/Destroy()
 	if(stored_mob)
 		stack_trace("Lionhunter bullet qdel'd with its firer still inside!")
-		stored_mob.forceMove(loc)
+		stored_mob.force_move(loc)
 	return ..()
 
 // Extra ammunition can be made with a heretic ritual.

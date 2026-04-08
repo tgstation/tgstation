@@ -77,7 +77,7 @@
 /// I love eating diamonds yum
 /mob/living/basic/mining/watcher/proc/consume(atom/movable/thing)
 	visible_message(span_warning("[thing] seems to vanish into [src]'s body!"))
-	thing.forceMove(src)
+	thing.force_move(src)
 
 /// More durable, burning projectiles
 /mob/living/basic/mining/watcher/magmawing

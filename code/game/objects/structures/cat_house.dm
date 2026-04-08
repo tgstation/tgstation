@@ -17,10 +17,10 @@
 	SIGNAL_HANDLER
 
 	if(isnull(resident_cat) && istype(attacker, /mob/living/basic/pet/cat))
-		attacker.forceMove(src)
+		attacker.force_move(src)
 		return
 	if(resident_cat == attacker)
-		attacker.forceMove(drop_location())
+		attacker.force_move(drop_location())
 
 /obj/structure/cat_house/Entered(atom/movable/mover)
 	. = ..()

@@ -16,8 +16,8 @@
 	to_swap.real_name = "The Guy Who Gets Mindswapped"
 	to_swap.name = to_swap.real_name
 
-	swapper.forceMove(run_loc_floor_bottom_left)
-	to_swap.forceMove(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	swapper.force_move(run_loc_floor_bottom_left)
+	to_swap.force_move(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	swapper.mind_initialize()
 	to_swap.mind_initialize()

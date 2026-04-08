@@ -83,7 +83,7 @@
 			to_chat(src, span_warning("You can't crawl around a welded vent!"))
 			return
 		visible_message(span_notice("[src] scrambles out from the ventilation ducts!"), span_notice("You scramble out from the ventilation ducts."))
-		forceMove(ventcrawl_target.loc)
+		force_move(ventcrawl_target.loc)
 		REMOVE_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
 		update_pipe_vision()
 
@@ -120,7 +120,7 @@
  * * ventcrawl_target - The vent into which we are moving the mob
  */
 /mob/living/proc/move_into_vent(obj/machinery/atmospherics/components/ventcrawl_target)
-	forceMove(ventcrawl_target)
+	force_move(ventcrawl_target)
 	ADD_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
 	update_pipe_vision()
 

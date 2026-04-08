@@ -13,7 +13,7 @@
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
 		OB.brainmob = src
-		forceMove(OB)
+		force_move(OB)
 	if(!container?.mecha && (!container || container.immobilize)) //Unless inside a mecha, brains are rather helpless.
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
@@ -76,12 +76,12 @@
 	if(stored_dna)
 		stored_dna.real_name = real_name
 
-/mob/living/brain/forceMove(atom/destination)
+/mob/living/brain/force_move(atom/destination)
 	if(container)
-		return container.forceMove(destination)
+		return container.force_move(destination)
 	else if (istype(loc, /obj/item/organ/brain))
 		var/obj/item/organ/brain/B = loc
-		B.forceMove(destination)
+		B.force_move(destination)
 	else if (istype(destination, /obj/item/organ/brain))
 		doMove(destination)
 	else if (istype(destination, /obj/item/mmi))

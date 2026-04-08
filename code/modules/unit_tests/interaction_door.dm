@@ -5,7 +5,7 @@
 	var/mob/living/carbon/human/consistent/tider = EASY_ALLOCATE()
 	var/obj/machinery/door/airlock/public/glass/door = EASY_ALLOCATE()
 
-	tider.forceMove(locate(door.x + 1, door.y, door.z))
+	tider.force_move(locate(door.x + 1, door.y, door.z))
 	door.open() // this sleeps we just have to cope
 	TEST_ASSERT(!door.operating, "Airlock was operating after being opened.")
 	TEST_ASSERT(!door.density, "Airlock was not open after being opened.")

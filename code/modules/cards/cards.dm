@@ -41,7 +41,7 @@
 
 	for(var/obj/item/toy/singlecard/card in fetch_card_atoms())
 		card_atoms -= card
-		card.forceMove(target.drop_location())
+		card.force_move(target.drop_location())
 		if(prob(50))
 			card.Flip()
 		card.pixel_x = rand(-16, 16)
@@ -91,7 +91,7 @@
 		cards_to_add.Cut(card_limit - count_cards() + 1, length(cards_to_add) + 1)
 
 	for(var/obj/item/toy/singlecard/card in cards_to_add)
-		card.forceMove(src)
+		card.force_move(src)
 		// reset the position and angle
 		card.pixel_x = 0
 		card.pixel_y = 0

@@ -277,7 +277,7 @@
 		user.put_in_hands(inserted_bomb)
 		to_chat(user, span_notice("You remove [inserted_bomb] from [src]."))
 	else
-		inserted_bomb.forceMove(drop_location())
+		inserted_bomb.force_move(drop_location())
 	combined_gasmix = null
 	reaction_increment = 0
 
@@ -288,7 +288,7 @@
 		user.put_in_hands(inserted_core)
 		to_chat(user, span_notice("You remove [inserted_core] from [src]."))
 	else
-		inserted_core.forceMove(drop_location())
+		inserted_core.force_move(drop_location())
 
 /// We rely on exited to clear references.
 /obj/machinery/research/anomaly_refinery/Exited(atom/movable/gone, direction)

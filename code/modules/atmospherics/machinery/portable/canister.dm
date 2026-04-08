@@ -414,7 +414,7 @@
 		return
 	new /obj/item/stack/sheet/iron (drop_location(), 10)
 	if(internal_cell)
-		internal_cell.forceMove(drop_location())
+		internal_cell.force_move(drop_location())
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/stock_parts/power_store/cell))
@@ -442,7 +442,7 @@
 	if(!panel_open || !internal_cell)
 		return ITEM_INTERACT_BLOCKING
 
-	internal_cell.forceMove(drop_location())
+	internal_cell.force_move(drop_location())
 	balloon_alert(user, "cell removed")
 	return ITEM_INTERACT_SUCCESS
 
@@ -493,7 +493,7 @@
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)
-		holding.forceMove(T)
+		holding.force_move(T)
 		holding = null
 
 	animate(src, 0.5 SECONDS, transform=turn(transform, rand(-179, 180)), easing=BOUNCE_EASING)

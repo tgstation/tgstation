@@ -98,7 +98,7 @@
 	var/turf/drop_location = listening_turf || parent_atom.drop_location()
 
 	UnregisterSignal(our_sticker, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
-	our_sticker.forceMove(drop_location)
+	our_sticker.force_move(drop_location)
 	our_sticker = null
 	peel_callback?.Invoke(parent)
 

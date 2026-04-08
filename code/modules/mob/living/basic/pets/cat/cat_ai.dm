@@ -279,7 +279,7 @@
 	if(isnull(food) || !(food in living_pawn))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	food.forceMove(get_turf(living_pawn))
+	food.force_move(get_turf(living_pawn))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/deliver_food_to_kitten/finish_action(datum/ai_controller/controller, success, target_key, food_key)

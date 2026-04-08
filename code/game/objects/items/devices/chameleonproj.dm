@@ -111,7 +111,7 @@
 
 /obj/item/chameleon/proc/eject_all()
 	for(var/atom/movable/A in active_dummy)
-		A.forceMove(active_dummy.loc)
+		A.force_move(active_dummy.loc)
 		if(ismob(A))
 			var/mob/M = A
 			M.reset_perspective(null)
@@ -128,7 +128,7 @@
 	if(istype(M.buckled, /obj/vehicle))
 		var/obj/vehicle/V = M.buckled
 		V.unbuckle_mob(M, force = TRUE)
-	M.forceMove(src)
+	M.force_move(src)
 	master = C
 	master.active_dummy = src
 

@@ -172,7 +172,7 @@
 		if(payload)
 			tool.play_tool_sound(src, 25) // sshhh
 			to_chat(user, span_notice("You carefully pry out [payload]."))
-			payload.forceMove(drop_location())
+			payload.force_move(drop_location())
 			payload = null
 		else
 			to_chat(user, span_warning("There isn't anything in here to remove!"))
@@ -558,7 +558,7 @@
 	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
 		I.play_tool_sound(src)
 		for (var/obj/item/B in beakers)
-			B.forceMove(drop_location())
+			B.force_move(drop_location())
 			beakers -= B
 		return
 	else if(istype(I, /obj/item/reagent_containers/cup/beaker) || istype(I, /obj/item/reagent_containers/cup/bottle))
@@ -586,9 +586,9 @@
 			for(var/obj/item/slime_extract/slime in nade.beakers) // And slime cores.
 				if(beakers.len < max_beakers)
 					beakers += slime
-					slime.forceMove(src)
+					slime.force_move(src)
 				else
-					slime.forceMove(drop_location())
+					slime.force_move(drop_location())
 
 		if(istype(nade, /obj/item/grenade/chem_grenade/cryo))
 			spread_range -= 1 // Reduced range, but increased density.
@@ -603,9 +603,9 @@
 		for(var/obj/item/reagent_containers/cup/beaker in nade)
 			if(beakers.len < max_beakers)
 				beakers += beaker
-				beaker.forceMove(src)
+				beaker.force_move(src)
 			else
-				beaker.forceMove(drop_location())
+				beaker.force_move(drop_location())
 
 	return ..()
 
@@ -647,7 +647,7 @@
 		if(istype(nade, /obj/item/grenade/chem_grenade/large) || istype(nade, /obj/item/grenade/chem_grenade/adv_release))
 			range_heavy += 1
 		for(var/obj/item/thing as anything in nade.beakers) //remove beakers, then delete the grenade.
-			thing.forceMove(drop_location())
+			thing.force_move(drop_location())
 	var/obj/item/gibtonite/ore = locate() in components
 	switch(ore.quality)
 		if(GIBTONITE_QUALITY_LOW)

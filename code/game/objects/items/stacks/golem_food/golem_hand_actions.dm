@@ -23,7 +23,7 @@
 		return INITIALIZE_HINT_QDEL
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	src.held_gibtonite = held_gibtonite
-	held_gibtonite.forceMove(src)
+	held_gibtonite.force_move(src)
 	addtimer(CALLBACK(src, PROC_REF(release_gibtonite)), GIBTONITE_GOLEM_HOLD_TIME, TIMER_DELETE_ME)
 
 /obj/item/gibtonite_hand/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -36,7 +36,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	playsound(src, 'sound/items/weapons/sonic_jackhammer.ogg', 50, TRUE)
-	held_gibtonite.forceMove(get_turf(src))
+	held_gibtonite.force_move(get_turf(src))
 	held_gibtonite.det_time = 2 SECONDS
 	held_gibtonite.GibtoniteReaction(user, "A [src] has targeted [interacting_with] with a thrown and primed")
 	held_gibtonite.throw_at(interacting_with, range = 10, speed = 3, thrower = user)
@@ -46,7 +46,7 @@
 
 /// Called when you can't hold it in any longer and just drop it on the ground
 /obj/item/gibtonite_hand/proc/release_gibtonite()
-	held_gibtonite.forceMove(get_turf(src))
+	held_gibtonite.force_move(get_turf(src))
 	held_gibtonite.GibtoniteReaction(isliving(loc) ? loc : null, "A [src] has dropped and primed a")
 	held_gibtonite = null
 	qdel(src)

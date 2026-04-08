@@ -123,7 +123,7 @@
 	inserted_console = attacked_obj
 	LAZYADD(inserted_console.loaded_coupons, src)
 	inserted_console.say("Coupon for [initial(discounted_pack.name)] applied!")
-	forceMove(inserted_console)
+	force_move(inserted_console)
 
 /obj/item/coupon/Destroy()
 	if(inserted_console)

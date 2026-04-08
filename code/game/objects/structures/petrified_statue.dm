@@ -27,7 +27,7 @@
 	if(living.buckled)
 		living.buckled.unbuckle_mob(living, force = TRUE)
 	living.visible_message(span_warning("[living]'s skin rapidly turns to marble!"), span_userdanger("Your body freezes up! Can't... move... can't... think..."))
-	living.forceMove(src)
+	living.force_move(src)
 	living.add_traits(list(TRAIT_GODMODE, TRAIT_MUTE, TRAIT_NOBLOOD), STATUE_MUTE)
 	living.add_faction(FACTION_MIMIC) //Stops mimics from instaqdeling people in statues
 	atom_integrity = living.health + 100 //stoning damaged mobs will result in easier to shatter statues
@@ -59,7 +59,7 @@
 	var/turf/dropoff_turf = drop_location()
 	if(istype(loc, /mob/living/basic/statue))
 		var/mob/living/basic/statue/statue_mob = loc
-		forceMove(dropoff_turf)
+		force_move(dropoff_turf)
 		if(statue_mob.mind)
 			if(petrified_mob)
 				statue_mob.mind.transfer_to(petrified_mob)
@@ -67,9 +67,9 @@
 		qdel(statue_mob)
 
 	for(var/obj/statue_contents in src)
-		statue_contents.forceMove(dropoff_turf)
+		statue_contents.force_move(dropoff_turf)
 
-	petrified_mob?.forceMove(dropoff_turf)
+	petrified_mob?.force_move(dropoff_turf)
 	return ..()
 
 /obj/structure/statue/petrified/atom_deconstruct(disassembled = TRUE)
@@ -81,7 +81,7 @@
 				var/mob/living/carbon/petrified_carbon = petrified_mob
 				var/obj/item/organ/brain/carbon_brain = petrified_carbon.get_organ_slot(ORGAN_SLOT_BRAIN)
 				carbon_brain.Remove(petrified_carbon)
-				carbon_brain.forceMove(get_turf(src))
+				carbon_brain.force_move(get_turf(src))
 				carbon_brain.name = "petrified [carbon_brain.name]"
 				carbon_brain.desc = "[carbon_brain.desc] This one seems a bit more... smooth than a normal brain. Probably'd still work."
 				carbon_brain.add_atom_colour(list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)), FIXED_COLOUR_PRIORITY)
@@ -104,7 +104,7 @@
 	new_statue.update_atom_colour()
 	petrified_mob.mind?.transfer_to(new_statue)
 	to_chat(new_statue, span_userdanger("You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! [owner ? "Do not harm [owner], your creator" : ""]."))
-	forceMove(new_statue)
+	force_move(new_statue)
 	return new_statue
 
 /mob/proc/petrify(statue_timer)

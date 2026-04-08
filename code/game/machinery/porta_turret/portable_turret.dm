@@ -215,7 +215,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(installation && !turret_gun)
 		stored_gun = new installation(src)
 	else if (turret_gun)
-		turret_gun.forceMove(src)
+		turret_gun.force_move(src)
 		stored_gun = turret_gun
 
 	RegisterSignal(stored_gun, COMSIG_QDELETING, PROC_REF(null_gun))
@@ -345,7 +345,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		return ITEM_INTERACT_BLOCKING
 	if(prob(70))
 		if(stored_gun)
-			stored_gun.forceMove(loc)
+			stored_gun.force_move(loc)
 			stored_gun = null
 		to_chat(user, span_notice("You remove the turret and salvage some components."))
 		if(prob(50))

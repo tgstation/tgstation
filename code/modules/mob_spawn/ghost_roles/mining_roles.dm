@@ -257,7 +257,7 @@
 	team = ashteam
 	eggshell = new /obj/structure/ash_walker_eggshell(get_turf(loc))
 	eggshell.egg = src
-	src.forceMove(eggshell)
+	src.force_move(eggshell)
 	if(spawner_area)
 		notify_ghosts(
 			"An ash walker egg is ready to hatch in \the [spawner_area.name].",

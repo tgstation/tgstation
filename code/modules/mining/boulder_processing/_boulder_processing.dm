@@ -154,7 +154,7 @@
 	if(!can_process_boulder(new_boulder))
 		return FALSE
 
-	new_boulder.forceMove(src)
+	new_boulder.force_move(src)
 
 	COOLDOWN_START(src, accept_cooldown, 1.5 SECONDS)
 
@@ -420,7 +420,7 @@
 	else
 		specific_boulder.durability = rand(BOULDER_SIZE_SMALL, size - 1)
 	specific_boulder.processed_by = src //so we don't take in the boulder again after we just ejected it
-	specific_boulder.forceMove(drop_location())
+	specific_boulder.force_move(drop_location())
 	specific_boulder.processed_by = null //now since move is done we can safely clear the reference
 	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
 

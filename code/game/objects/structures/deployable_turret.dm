@@ -63,7 +63,7 @@
 	//Keeps the health the same even if you redeploy the gun
 	undeployed_object.modify_max_integrity(max_integrity)
 	if(!user.put_in_hands(undeployed_object))
-		undeployed_object.forceMove(loc)
+		undeployed_object.force_move(loc)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -87,7 +87,7 @@
 /obj/machinery/deployable_turret/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(user.incapacitated || !istype(user))
 		return
-	M.forceMove(get_turf(src))
+	M.force_move(get_turf(src))
 	. = ..()
 	if(!.)
 		return

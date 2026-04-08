@@ -149,11 +149,11 @@ The console is located at computer/gulag_teleporter.dm
 			continue
 
 		if(QDELETED(linked_reclaimer) || istype(thing, /obj/item/restraints/handcuffs))
-			thing.forceMove(get_turf(src))
+			thing.force_move(get_turf(src))
 			continue
 
 		linked_reclaimer.stored_items[victim] += thing
-		thing.forceMove(linked_reclaimer)
+		thing.force_move(linked_reclaimer)
 
 /obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/record/crew/target)
 	if(!ishuman(occupant))

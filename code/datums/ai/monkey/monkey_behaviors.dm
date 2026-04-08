@@ -94,7 +94,7 @@
 				victim.visible_message(span_danger("[living_pawn] snatches [target] from [victim]."), span_userdanger("[living_pawn] snatched [target]!"))
 				if(victim.temporarilyRemoveItemFromInventory(target))
 					if(!QDELETED(target) && !equip_item(controller))
-						target.forceMove(living_pawn.drop_location())
+						target.force_move(living_pawn.drop_location())
 						success = TRUE
 						break
 				else

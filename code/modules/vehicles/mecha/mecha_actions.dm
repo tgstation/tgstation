@@ -246,7 +246,7 @@
 			return
 
 		to_chat(chassis.occupants, "[icon2html(cargo_hold, chassis.occupants)][span_notice("You unload [picked_item].")]")
-		picked_item.forceMove(cargo_hold.drop_location())
+		picked_item.force_move(cargo_hold.drop_location())
 		if(picked_item == chassis.ore_box)
 			chassis.ore_box = null
 		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
@@ -257,7 +257,7 @@
 	if(cargo_hold.contents.len)
 		var/atom/movable/first_item = cargo_hold.contents[1]
 		to_chat(chassis.occupants, "[icon2html(cargo_hold, chassis.occupants)][span_notice("You unload [first_item].")]")
-		first_item.forceMove(cargo_hold.drop_location())
+		first_item.force_move(cargo_hold.drop_location())
 		if(first_item == chassis.ore_box)
 			chassis.ore_box = null
 		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)

@@ -27,9 +27,9 @@
 		fade_out.fade(TRUE)
 
 	if(length(GLOB.newplayer_start))
-		forceMove(pick(GLOB.newplayer_start))
+		force_move(pick(GLOB.newplayer_start))
 	else
-		forceMove(locate(1,1,1))
+		force_move(locate(1,1,1))
 
 	. = ..()
 
@@ -93,7 +93,7 @@
 	var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	to_chat(src, span_notice("Now teleporting."))
 	if (O)
-		observer.forceMove(O.loc)
+		observer.force_move(O.loc)
 	else
 		to_chat(src, span_notice("Teleporting failed. Ahelp an admin please"))
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")

@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	if(!T)
 		CRASH("No blobspawnpoints and blob spawned in nullspace.")
-	forceMove(T)
+	force_move(T)
 
 /mob/eye/blob/proc/set_strain(datum/blobstrain/new_strain)
 	if (!ispath(new_strain))
@@ -364,14 +364,14 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(placed)
 		var/obj/structure/blob/B = locate() in range(OVERMIND_MAX_CAMERA_STRAY, NewLoc)
 		if(B)
-			forceMove(NewLoc)
+			force_move(NewLoc)
 		else
 			return FALSE
 	else
 		var/area/check_area = get_area(NewLoc)
 		if(isgroundlessturf(NewLoc) || istype(check_area, /area/shuttle)) //if unplaced, can't go on shuttles or groundless tiles
 			return FALSE
-		forceMove(NewLoc)
+		force_move(NewLoc)
 		return TRUE
 
 /mob/eye/blob/mind_initialize()

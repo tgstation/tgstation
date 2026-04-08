@@ -146,7 +146,7 @@
 	return TRUE
 
 /datum/antagonist/nukeop/proc/admin_send_to_base(mob/admin)
-	owner.current.forceMove(pick(GLOB.nukeop_start))
+	owner.current.force_move(pick(GLOB.nukeop_start))
 
 /datum/antagonist/nukeop/proc/admin_tell_code(mob/admin)
 	var/code
@@ -181,7 +181,7 @@
 	// Ensure that the nukiebase is loaded, and wait for it if required
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/turf/destination = get_spawnpoint()
-	owner.current.forceMove(destination)
+	owner.current.force_move(destination)
 	if(!owner.current.onSyndieBase())
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] is a NUKE OP and move_to_spawnpoint put them somewhere that isn't the syndie base, help please.")
 		stack_trace("Nuke op move_to_spawnpoint resulted in a location not on the syndicate base. (Was moved to: [destination])")
@@ -221,6 +221,6 @@
 	mobile_port.setTimer(mobile_port.ignitionTime)
 
 /datum/antagonist/nukeop/on_respawn(mob/new_character)
-	new_character.forceMove(pick(GLOB.nukeop_start))
+	new_character.force_move(pick(GLOB.nukeop_start))
 	equip_op()
 	return TRUE

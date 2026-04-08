@@ -240,7 +240,7 @@
 		balloon_alert(user, "can't add more!")
 		return ITEM_INTERACT_BLOCKING
 
-	newdisk.forceMove(src)
+	newdisk.force_move(src)
 	stacked_disks += newdisk
 	balloon_alert(user, "added to top")
 	update_appearance(UPDATE_OVERLAYS)
@@ -273,11 +273,11 @@
 	var/obj/item/disk/last_disk = stacked_disks[1]
 	var/was_in_hand = user.is_holding(src)
 	if(was_in_hand)
-		last_disk.forceMove(user)
+		last_disk.force_move(user)
 		user.put_in_hands(last_disk)
 	else
 		var/turf/T = get_turf(src)
-		last_disk.forceMove(T)
+		last_disk.force_move(T)
 		last_disk.pixel_x = pixel_x
 		last_disk.pixel_y = pixel_y
 
@@ -292,7 +292,7 @@
 		if(length(stacked_disks) >= MAX_DISK_STACK_SIZE)
 			break
 
-		each_disk.forceMove(src)
+		each_disk.force_move(src)
 		stacked_disks += each_disk
 		moved_disks += each_disk
 		amount_counter += 1
@@ -321,7 +321,7 @@
 
 	var/turf/landing = get_turf(src)
 	for(var/obj/item/disk/each_disk as anything in stacked_disks)
-		each_disk.forceMove(landing)
+		each_disk.force_move(landing)
 		each_disk.throw_at(get_step(src, pick(NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST)), 1, 0.8)
 
 	visible_message(span_warning("The stack falls apart!"))

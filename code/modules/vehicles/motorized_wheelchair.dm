@@ -111,7 +111,7 @@
 			to_chat(user, span_warning("There is a power cell already installed."))
 			return ITEM_INTERACT_BLOCKING
 
-		tool.forceMove(src)
+		tool.force_move(src)
 		power_cell = tool
 		to_chat(user, span_notice("You install the [tool]."))
 		refresh_parts()
@@ -161,7 +161,7 @@
 	for(var/datum/stock_part/part in component_parts)
 		new part.physical_object_type(drop)
 	if(!isnull(power_cell))
-		power_cell.forceMove(drop)
+		power_cell.force_move(drop)
 		power_cell = null
 
 /obj/vehicle/ridden/wheelchair/motorized/screwdriver_act(mob/living/user, obj/item/tool)

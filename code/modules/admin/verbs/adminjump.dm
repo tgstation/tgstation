@@ -69,7 +69,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(get_mob, R_ADMIN, "Get Mob", "Teleport a mob to your
 	else
 		var/turf/location = get_turf(new_location)
 		log_admin("[key_name(usr)] teleported [key_name(src)] to [AREACOORD(location)]")
-		forceMove(new_location)
+		force_move(new_location)
 
 /mob/admin_teleport(atom/new_location)
 	var/turf/location = get_turf(new_location)
@@ -94,7 +94,7 @@ ADMIN_VERB(get_key, R_ADMIN, "Get Key", "Teleport the player with the provided k
 	message_admins(msg)
 	admin_ticket_log(M, msg)
 	if(M)
-		M.forceMove(get_turf(user))
+		M.force_move(get_turf(user))
 		BLACKBOX_LOG_ADMIN_VERB("Get Key")
 
 ADMIN_VERB_AND_CONTEXT_MENU(send_mob, R_ADMIN, "Send Mob", "Teleport the specified mob to an area of your choosing.", ADMIN_CATEGORY_GAME, mob/jumper)
@@ -108,7 +108,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(send_mob, R_ADMIN, "Send Mob", "Teleport the specifi
 	if(!istype(target_area))
 		return
 	var/list/turfs = get_area_turfs(target_area)
-	if(length(turfs) && jumper.forceMove(pick(turfs)))
+	if(length(turfs) && jumper.force_move(pick(turfs)))
 		log_admin("[key_name(user)] teleported [key_name(jumper)] to [AREACOORD(jumper)]")
 		var/msg = "[key_name_admin(user)] teleported [ADMIN_LOOKUPFLW(jumper)] to [AREACOORD(jumper)]"
 		message_admins(msg)

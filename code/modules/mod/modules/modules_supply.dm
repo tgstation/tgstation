@@ -71,7 +71,7 @@
 		if(!check_crate_pickup(picked_crate))
 			return
 		stored_crates += picked_crate
-		picked_crate.forceMove(src)
+		picked_crate.force_move(src)
 		balloon_alert(mod.wearer, "picked up crate")
 		drain_power(use_energy_cost)
 	else if(length(stored_crates))
@@ -85,7 +85,7 @@
 		if(target_turf.is_blocked_turf())
 			return
 		var/atom/movable/dropped_crate = pop(stored_crates)
-		dropped_crate.forceMove(target_turf)
+		dropped_crate.force_move(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		drain_power(use_energy_cost)
 	else
@@ -95,7 +95,7 @@
 	if(deleting)
 		return
 	for(var/atom/movable/crate as anything in stored_crates)
-		crate.forceMove(drop_location())
+		crate.force_move(drop_location())
 		stored_crates -= crate
 
 /obj/item/mod/module/clamp/proc/check_crate_pickup(atom/movable/target)
@@ -279,12 +279,12 @@
 		ore.merge(stored_ore)
 		if(QDELETED(ore))
 			return
-	ore.forceMove(src)
+	ore.force_move(src)
 
 /obj/item/mod/module/orebag/on_use(mob/activator)
 	dropping_ores = TRUE
 	for(var/obj/item/ore as anything in src)
-		ore.forceMove(mod.drop_location())
+		ore.force_move(mod.drop_location())
 	dropping_ores = FALSE
 	drain_power(use_energy_cost)
 
@@ -410,7 +410,7 @@
 	if(istype(mod.wearer.pulling, /obj/structure/closet))
 		var/obj/structure/closet/locker = mod.wearer.pulling
 		playsound(locker, 'sound/effects/gravhit.ogg', 75, TRUE)
-		locker.forceMove(mod.wearer.loc)
+		locker.force_move(mod.wearer.loc)
 		locker.throw_at(target, range = 7, speed = 4, thrower = mod.wearer)
 		return
 	if(!istype(target, /obj/structure/closet) || !(target in view(mod.wearer)))

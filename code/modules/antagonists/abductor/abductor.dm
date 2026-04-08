@@ -110,7 +110,7 @@
 	//Teleport to ship
 	for(var/obj/effect/landmark/abductor/LM in GLOB.landmarks_list)
 		if(istype(LM, landmark_type) && LM.team_number == team.team_number)
-			new_abductor.forceMove(LM.loc)
+			new_abductor.force_move(LM.loc)
 			break
 
 /datum/antagonist/abductor/scientist/on_gain()

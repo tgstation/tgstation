@@ -245,10 +245,10 @@
 				continue
 			if(belonging == human_victim.shoes)
 				continue
-		belonging.forceMove(dropoff_location)
+		belonging.force_move(dropoff_location)
 
 	for(var/obj/item/item in victim_belongings)
-		item.forceMove(dropoff_location)
+		item.force_move(dropoff_location)
 
 	victim.flash_act()
 	victim.adjust_eye_blur(3 SECONDS)

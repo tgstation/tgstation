@@ -43,7 +43,7 @@
 
 	var/obj/item/item_parent = parent
 	if(!is_valid_location(item_parent.loc))
-		item_parent.forceMove(holder)
+		item_parent.force_move(holder)
 
 /datum/component/holderloving/proc/can_be_moved(obj/item/I, force, atom/newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER

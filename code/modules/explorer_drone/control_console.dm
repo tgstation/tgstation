@@ -170,7 +170,7 @@
 				if(thing_to_jettison)
 					controlled_drone.drone_log("Jettisoned [thing_to_jettison]")
 					if(controlled_drone.drone_status == EXODRONE_IDLE)
-						thing_to_jettison.forceMove(controlled_drone.drop_location())
+						thing_to_jettison.force_move(controlled_drone.drop_location())
 					else
 						qdel(thing_to_jettison) //this might need some limitations
 			return TRUE

@@ -80,7 +80,7 @@
 				var/list/droppage_candidates = bozo.get_organs_for_zone(BODY_ZONE_HEAD, include_children = TRUE)
 				if(droppage_candidates)
 					var/obj/thing_to_drop = pick(droppage_candidates)
-					thing_to_drop.forceMove(bozo.drop_location())
+					thing_to_drop.force_move(bozo.drop_location())
 			*/ //WHY DOESNTY IT OWRK
 
 			// does not necessarily kill you directly. instead it causes cranial fissure + something to drop from your head. could be eyes, tongue, ears, brain, even implants

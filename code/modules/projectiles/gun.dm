@@ -724,13 +724,13 @@
 
 /obj/item/gun/proc/fire_at_opener(mob/user, obj/item/mail/traitor/letter)
 	if(!user.put_in_hands(src)) //this won't ever fail under normal circumstances, but will happen with the admin versions
-		forceMove(user.loc)
+		force_move(user.loc)
 	to_chat(user, span_danger("As you open [letter], you see [src] inside! [about_to_shoot_inside_mail_text]"))
 	if(!can_shoot())
 		shoot_with_empty_chamber(user)
 		return
 	if(process_fire(user, user, FALSE, zone_override = BODY_ZONE_HEAD))
-		forceMove(user.loc)
+		force_move(user.loc)
 		throw_at(pick(get_step(user, user.dir)), 1, 3)
 
 #undef FIRING_PIN_REMOVAL_DELAY

@@ -224,7 +224,7 @@
 				user_unbuckle_mob(buckled_mobs[1],user)
 		else
 			silicon_bed.loaded = src
-			forceMove(silicon_bed)
+			force_move(silicon_bed)
 			user.visible_message(span_notice("[user] collects [src]."), span_notice("You collect [src]."))
 		return TRUE
 	else
@@ -300,7 +300,7 @@
 
 /obj/item/emergency_bed/silicon/deploy_bed(mob/user, atom/location)
 	if(loaded)
-		loaded.forceMove(location)
+		loaded.force_move(location)
 		user.visible_message(span_notice("[user] deploys [loaded]."), span_notice("You deploy [loaded]."))
 		loaded = null
 	else

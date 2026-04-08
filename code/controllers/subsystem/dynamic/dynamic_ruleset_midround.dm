@@ -518,7 +518,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/nightmare)
 	candidate.current.set_species(/datum/species/shadow/nightmare)
-	candidate.current.forceMove(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
+	candidate.current.force_move(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
 	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon
@@ -548,7 +548,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/space_dragon)
-	candidate.current.forceMove(find_space_spawn())
+	candidate.current.force_move(find_space_spawn())
 	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/execute()
@@ -616,7 +616,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/assign_role(datum/mind/candidate)
 	var/mob/living/carbon/human/new_ninja = candidate.current
-	new_ninja.forceMove(find_space_spawn()) // ninja antag datum needs the mob to be in place first
+	new_ninja.force_move(find_space_spawn()) // ninja antag datum needs the mob to be in place first
 	randomize_human_normie(new_ninja)
 	var/new_name = "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
 	new_ninja.name = new_name
@@ -783,7 +783,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/voidwalker)
-	candidate.current.forceMove(find_space_spawn())
+	candidate.current.force_move(find_space_spawn())
 	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives
@@ -882,7 +882,7 @@
 	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), 10 MINUTES), 1 MINUTES)
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/assign_role(datum/mind/candidate, datum/team/fugitive/team, turf/team_spawn)
-	candidate.current.forceMove(team_spawn)
+	candidate.current.force_move(team_spawn)
 	equip_fugitive(candidate.current, team)
 	if(candidate == selected_minds[1])
 		equip_fugitive_leader(candidate.current)

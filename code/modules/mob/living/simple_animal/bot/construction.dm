@@ -46,7 +46,7 @@
 /obj/item/bot_assembly/cleanbot/Initialize(mapload, obj/item/reagent_containers/cup/bucket/new_bucket)
 	if(!new_bucket)
 		new_bucket = new()
-	new_bucket.forceMove(src)
+	new_bucket.force_move(src)
 	return ..()
 
 /obj/item/bot_assembly/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -75,7 +75,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/mob/living/basic/bot/cleanbot/bot = new(drop_location())
-	bucket_obj.forceMove(bot)
+	bucket_obj.force_move(bot)
 	bot.name = created_name
 	bot.robot_arm = tool.type
 	to_chat(user, span_notice("You add [tool] to [src]. Beep boop!"))

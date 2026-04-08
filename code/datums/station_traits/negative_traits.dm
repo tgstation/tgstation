@@ -255,7 +255,7 @@
 			continue
 		area_open_turfs += location
 
-	punpun.forceMove(pick(area_open_turfs))
+	punpun.force_move(pick(area_open_turfs))
 
 	for(var/i in 1 to rand(10, 40))
 		new /obj/effect/decal/cleanable/blood(pick(area_open_turfs))

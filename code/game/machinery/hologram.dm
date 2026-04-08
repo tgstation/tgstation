@@ -138,7 +138,7 @@ Possible to do for anyone motivated enough:
 	if(mapload)
 		var/obj/item/disk/holodisk/new_disk = locate(/obj/item/disk/holodisk) in src.loc
 		if(new_disk && !disk)
-			new_disk.forceMove(src)
+			new_disk.force_move(src)
 			disk = new_disk
 
 /obj/machinery/holopad/tutorial/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
@@ -218,7 +218,7 @@ Possible to do for anyone motivated enough:
 		outgoing_call.ConnectionFailure(src)
 
 /obj/machinery/holopad/on_deconstruction(dissassembled)
-	disk?.forceMove(drop_location())
+	disk?.force_move(drop_location())
 	disk = null
 	return ..()
 
@@ -387,7 +387,7 @@ Possible to do for anyone motivated enough:
 			return TRUE
 		if("disk_eject")
 			if(disk && !replay_mode)
-				disk.forceMove(drop_location())
+				disk.force_move(drop_location())
 				disk = null
 				return TRUE
 		if("replay_mode")

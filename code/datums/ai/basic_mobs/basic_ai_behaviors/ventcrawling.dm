@@ -85,7 +85,7 @@
 		finish_action(controller, TRUE, target_key)
 		return
 
-	living_pawn.forceMove(exit_vent)
+	living_pawn.force_move(exit_vent)
 	if(!living_pawn.can_enter_vent(exit_vent, provide_feedback = FALSE))
 		// oh shit, something happened while we were waiting on that timer. let's figure out a different way to get out of here.
 		emergency_vent = calculate_exit_vent(controller)

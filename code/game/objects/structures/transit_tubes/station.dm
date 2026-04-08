@@ -37,7 +37,7 @@
 	if(!pod_moving && open_status == STATION_TUBE_OPEN && ismob(AM) && AM.dir == boarding_dir)
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(!pod.moving)
-				AM.forceMove(pod)
+				AM.force_move(pod)
 				pod.update_appearance()
 				return
 
@@ -86,7 +86,7 @@
 							if(do_after(user, 1 SECONDS, target = src)) //So it doesn't default to close_animation() on fail
 								if(pod && pod.loc == loc)
 									for(var/atom/movable/AM in pod)
-										AM.forceMove(get_turf(user))
+										AM.force_move(get_turf(user))
 
 						else
 							close_animation()
@@ -118,7 +118,7 @@
 						if(mob_content.client && mob_content.stat < UNCONSCIOUS)
 							continue // Let the mobs with clients decide what they want to do themselves.
 					var/atom/movable/movable_content = thing
-					movable_content.forceMove(loc) //Everything else is moved out of.
+					movable_content.force_move(loc) //Everything else is moved out of.
 		if(STATION_TUBE_CLOSING)
 			icon_state = "closed_[base_icon_state]"
 			open_status = STATION_TUBE_CLOSED
@@ -263,7 +263,7 @@
 	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))
 	playsound(src, 'sound/items/weapons/emitter2.ogg', 50, TRUE)
 	pod.setDir(turn(src.dir, -90))
-	AM.forceMove(pod)
+	AM.force_move(pod)
 	pod.update_appearance()
 	launch_pod()
 

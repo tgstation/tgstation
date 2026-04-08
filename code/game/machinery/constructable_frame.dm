@@ -31,7 +31,7 @@
 /obj/structure/frame/atom_deconstruct(disassembled = TRUE)
 	var/atom/movable/drop_loc = drop_location()
 	new /obj/item/stack/sheet/iron(drop_loc, 5)
-	circuit?.forceMove(drop_loc)
+	circuit?.force_move(drop_loc)
 
 /// Called when circuit has been set to a new board
 /obj/structure/frame/proc/circuit_added(obj/item/circuitboard/added)
@@ -145,7 +145,7 @@
 		return FALSE
 	if(by_hand && !user.transferItemToLoc(board, src))
 		return FALSE
-	else if(!board.forceMove(src))
+	else if(!board.force_move(src))
 		return FALSE
 
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)

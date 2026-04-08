@@ -77,7 +77,7 @@
 
 /obj/item/gun/blastcannon/attack_self(mob/user)
 	if(bomb)
-		bomb.forceMove(user.loc)
+		bomb.force_move(user.loc)
 		user.put_in_hands(bomb)
 		user.visible_message(span_warning("[user] detaches [bomb] from [src]."))
 		bomb = null

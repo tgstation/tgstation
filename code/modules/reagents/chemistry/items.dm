@@ -360,7 +360,7 @@
 	if(!issilicon(user) && in_range(loc, user))
 		user.put_in_hands(object)
 	else
-		object.forceMove(drop_location())
+		object.force_move(drop_location())
 
 /obj/item/thermometer/pen
 	color = "#888888"

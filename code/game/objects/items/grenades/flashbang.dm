@@ -118,7 +118,7 @@
 		var/mob/living/carbon/user = loc
 		var/obj/item/bodypart/bodypart = user.get_holding_bodypart_of_item(src)
 		if(bodypart)
-			forceMove(get_turf(user))
+			force_move(get_turf(user))
 			var/did_dismember = bodypart.dismember()
 			user.visible_message("<b>[span_danger("[src] goes off in [user]'s hand[did_dismember ? ", blowing [user.p_their()] [bodypart.plaintext_zone] to bloody shreds" : ""]!")]</b>", span_userdanger("[src] goes off in your hand[did_dismember ? ", blowing your [bodypart.plaintext_zone] to bloody shreds" : ""]!"))
 

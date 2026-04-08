@@ -164,7 +164,7 @@
 		seed.name = "[LOWER_TEXT(seed.plantname)] spore print"
 		seed.desc = "A dusting of [LOWER_TEXT(seed.plantname)] spores have been deposited in a beautiful pattern on the surface of the paper. "
 		seed.icon_state = "spore_print[pick(1,2,3)]"
-		seed.forceMove(drop_location())
+		seed.force_move(drop_location())
 		playsound(user, 'sound/items/paper_flip.ogg', 20)
 		seed = null
 		qdel(src)

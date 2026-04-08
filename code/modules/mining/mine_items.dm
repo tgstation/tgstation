@@ -301,7 +301,7 @@
 		return COMPONENT_NO_PUSH
 	return NONE
 
-/obj/structure/closet/crate/miningcar/forceMove(atom/destination)
+/obj/structure/closet/crate/miningcar/force_move(atom/destination)
 	update_rail_state(FALSE)
 	return ..()
 

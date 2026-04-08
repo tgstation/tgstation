@@ -37,7 +37,7 @@
 	var/obj/item/organ/the_organ = held_organ
 	if(the_organ)
 		unregister_held_organ(the_organ)
-		the_organ.forceMove(hand_owner.drop_location())
+		the_organ.force_move(hand_owner.drop_location())
 
 	return ..()
 

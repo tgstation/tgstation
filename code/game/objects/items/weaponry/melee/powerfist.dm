@@ -90,7 +90,7 @@
 			to_chat(user, span_notice("\The [src] currently has no tank attached to it."))
 			return
 		to_chat(user, span_notice("You detach \the [the_tank] from \the [src]."))
-		tank.forceMove(get_turf(user))
+		tank.force_move(get_turf(user))
 		user.put_in_hands(tank)
 		tank = null
 		return

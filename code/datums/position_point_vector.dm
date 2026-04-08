@@ -116,7 +116,7 @@
 	return "[text_ref(src)] aX [x] aY [y] aZ [z] pX [pixel_x] pY [pixel_y] mX [T.x] mY [T.y] mZ [T.z]"
 
 /datum/point/proc/move_atom_to_src(atom/movable/AM)
-	AM.forceMove(return_turf())
+	AM.force_move(return_turf())
 	AM.pixel_x = pixel_x
 	AM.pixel_y = pixel_y
 

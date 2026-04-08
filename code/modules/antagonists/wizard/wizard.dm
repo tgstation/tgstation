@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	if(!GLOB.wizardstart.len)
 		SSjob.send_to_late_join(owner.current)
 		to_chat(owner, "HOT INSERTION, GO GO GO")
-	owner.current.forceMove(pick(GLOB.wizardstart))
+	owner.current.force_move(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/proc/create_objectives()
 	switch(rand(1,100))
@@ -259,7 +259,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	.["Send to Lair"] = CALLBACK(src, PROC_REF(admin_send_to_lair))
 
 /datum/antagonist/wizard/proc/admin_send_to_lair(mob/admin)
-	owner.current.forceMove(pick(GLOB.wizardstart))
+	owner.current.force_move(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/apprentice
 	name = "Wizard Apprentice"
@@ -458,6 +458,6 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
 /datum/antagonist/wizard/on_respawn(mob/new_character)
-	new_character.forceMove(pick(GLOB.wizardstart))
+	new_character.force_move(pick(GLOB.wizardstart))
 	equip_wizard()
 	return TRUE

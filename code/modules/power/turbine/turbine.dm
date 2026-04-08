@@ -54,7 +54,7 @@
 	return ..()
 
 /obj/machinery/power/turbine/on_deconstruction(disassembled)
-	installed_part?.forceMove(loc)
+	installed_part?.force_move(loc)
 	return ..()
 
 /obj/machinery/power/turbine/add_context(atom/source, list/context, obj/item/held_item, mob/user)

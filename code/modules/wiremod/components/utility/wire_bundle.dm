@@ -38,7 +38,7 @@
 	for(var/color in tracked_wires.colors)
 		var/obj/item/assembly/assembly = tracked_wires.detach_assembly(color)
 		if(assembly)
-			assembly.forceMove(drop_location())
+			assembly.force_move(drop_location())
 	shell.set_wires(null)
 	QDEL_NULL(tracked_wires)
 	for(var/datum/port/input/in_port in wire_input_ports)

@@ -18,7 +18,7 @@
 
 	var/atom/fake_tray = new tray_type(null)
 	for(var/obj/item/tool in fake_tray)
-		tool.forceMove(src)
+		tool.force_move(src)
 		atom_storage.max_slots += 1
 		atom_storage.max_total_storage += tool.w_class
 

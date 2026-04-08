@@ -122,7 +122,7 @@
 		S.tracker = 1
 		S.update_appearance()
 		S.set_anchored(TRUE)
-	S.forceMove(src)
+	S.force_move(src)
 
 /obj/machinery/power/tracker/crowbar_act(mob/user, obj/item/I)
 	if(I.use_tool(src, user, 0))
@@ -142,7 +142,7 @@
 	if(disassembled)
 		var/obj/item/solar_assembly/assembly = locate() in src
 		if(assembly)
-			assembly.forceMove(loc)
+			assembly.force_move(loc)
 			if(machine_stat & BROKEN)
 				new material_type.shard_type(get_turf(src))
 				new material_type.shard_type(get_turf(src))

@@ -230,7 +230,7 @@
 					if(!user.transferItemToLoc(W, src))
 						return
 					if(!src || electronics)
-						W.forceMove(drop_location())
+						W.force_move(drop_location())
 						return
 					to_chat(user, span_notice("You install the airlock electronics."))
 					name = "near finished windoor assembly"
@@ -250,7 +250,7 @@
 					var/obj/item/electronics/airlock/ae
 					ae = electronics
 					electronics = null
-					ae.forceMove(drop_location())
+					ae.force_move(drop_location())
 
 			//Crowbar to complete the assembly, Step 7 complete.
 			else if(W.tool_behaviour == TOOL_CROWBAR)
@@ -326,7 +326,7 @@
 				windoor.unres_sides &= ~NORTH
 				windoor.unres_sides &= ~SOUTH
 		windoor.unres_latch = TRUE
-	electronics.forceMove(windoor)
+	electronics.force_move(windoor)
 	windoor.electronics = electronics
 	windoor.autoclose = TRUE
 	windoor.close()

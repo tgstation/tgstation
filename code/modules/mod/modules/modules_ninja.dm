@@ -720,7 +720,7 @@
 	if(!in_view && !drain_power(use_energy_cost * distance))
 		balloon_alert(mod.wearer, "not enough charge!")
 		return
-	linked_weapon.forceMove(linked_weapon.drop_location())
+	linked_weapon.force_move(linked_weapon.drop_location())
 	if(in_view)
 		do_sparks(5, FALSE, linked_weapon)
 		mod.wearer.visible_message(span_danger("[linked_weapon] flies towards [mod.wearer]!"),span_warning("You hold out your hand and [linked_weapon] flies towards you!"))
@@ -734,7 +734,7 @@
 	RegisterSignal(linked_weapon, COMSIG_QDELETING, PROC_REF(deleted_weapon))
 
 /obj/item/mod/module/weapon_recall/proc/recall_weapon(caught = FALSE)
-	linked_weapon.forceMove(get_turf(src))
+	linked_weapon.force_move(get_turf(src))
 	var/alert = ""
 	if(mod.wearer.put_in_hands(linked_weapon))
 		alert = "[linked_weapon.name] teleports to your hand"

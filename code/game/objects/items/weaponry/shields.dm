@@ -275,7 +275,7 @@
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				qdel(embedded_flash)
-				flash.forceMove(src)
+				flash.force_move(src)
 				return
 	return ..()
 

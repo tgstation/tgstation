@@ -578,7 +578,7 @@
 		playsound(get_turf(patient), 'sound/items/weapons/bladeslice.ogg', 250, TRUE)
 		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN) //OwO
 			tail_snip_candidate.Remove(patient)
-			tail_snip_candidate.forceMove(get_turf(patient))
+			tail_snip_candidate.force_move(get_turf(patient))
 		else
 			limb_snip_candidate.dismember()
 		user.visible_message(span_danger("[src] violently slams shut, amputating [patient]'s [candidate_name]."), span_notice("You amputate [patient]'s [candidate_name] with [src]."))

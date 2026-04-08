@@ -541,7 +541,7 @@
 /datum/species/jelly/luminescent/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	if(current_extract)
-		current_extract.forceMove(C.drop_location())
+		current_extract.force_move(C.drop_location())
 		current_extract = null
 	QDEL_NULL(glow)
 	QDEL_LIST(luminescent_actions)
@@ -602,7 +602,7 @@
 	if(species.current_extract)
 		var/obj/item/slime_extract/to_remove = species.current_extract
 		if(!human_owner.put_in_active_hand(to_remove))
-			to_remove.forceMove(human_owner.drop_location())
+			to_remove.force_move(human_owner.drop_location())
 
 		species.current_extract = null
 		human_owner.balloon_alert(human_owner, "[to_remove.name] ejected")
@@ -614,7 +614,7 @@
 			return
 		if(!human_owner.temporarilyRemoveItemFromInventory(to_integrate))
 			return
-		to_integrate.forceMove(human_owner)
+		to_integrate.force_move(human_owner)
 		species.current_extract = to_integrate
 		human_owner.balloon_alert(human_owner, "[to_integrate.name] consumed")
 

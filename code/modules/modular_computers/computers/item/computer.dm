@@ -293,7 +293,7 @@
 		return FALSE
 
 	else
-		inserting_id.forceMove(src)
+		inserting_id.force_move(src)
 
 	if(!isnull(stored_id))
 		remove_id(user, silent = TRUE)
@@ -352,7 +352,7 @@
 	if(!issilicon(user) && in_range(src, user))
 		user.put_in_hands(alt_stored_id)
 	else
-		alt_stored_id.forceMove(drop_location())
+		alt_stored_id.force_move(drop_location())
 
 	var/obj/item/lost_id = alt_stored_id
 	alt_stored_id = null
@@ -381,7 +381,7 @@
 	if(user && !issilicon(user) && in_range(src, user))
 		user.put_in_hands(stored_id)
 	else
-		stored_id.forceMove(drop_location())
+		stored_id.force_move(drop_location())
 	stored_id = null
 
 	if(!silent && !isnull(user))
@@ -864,7 +864,7 @@
 	. = ..()
 	if(internal_cell)
 		user.balloon_alert(user, "cell removed")
-		internal_cell.forceMove(drop_location())
+		internal_cell.force_move(drop_location())
 		internal_cell = null
 		return ITEM_INTERACT_SUCCESS
 	else
@@ -1020,10 +1020,10 @@
 	var/atom/droploc = drop_location()
 	remove_pai()
 	eject_aicard()
-	internal_cell?.forceMove(droploc)
-	stored_id?.forceMove(droploc)
-	alt_stored_id?.forceMove(droploc)
-	inserted_disk?.forceMove(droploc)
+	internal_cell?.force_move(droploc)
+	stored_id?.force_move(droploc)
+	alt_stored_id?.force_move(droploc)
+	inserted_disk?.force_move(droploc)
 	if (!disassembled)
 		physical.visible_message(span_notice("\The [src] breaks apart!"))
 	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
@@ -1059,7 +1059,7 @@
 		user.put_in_hands(inserted_pai)
 		balloon_alert(user, "removed pAI")
 	else
-		inserted_pai.forceMove(drop_location())
+		inserted_pai.force_move(drop_location())
 	inserted_pai = null
 	update_appearance(UPDATE_ICON)
 	return TRUE

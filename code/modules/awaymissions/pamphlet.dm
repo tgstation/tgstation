@@ -77,5 +77,5 @@
 /obj/item/paper/pamphlet/cybernetics/attack_self(mob/user, modifiers)
 	. = ..()
 	to_chat(user, span_notice("As you read the pamphlet, a free sample falls out!"))
-	sample.forceMove(drop_location())
+	sample.force_move(drop_location())
 	playsound(sample, 'sound/misc/splort.ogg', 50, vary = TRUE)

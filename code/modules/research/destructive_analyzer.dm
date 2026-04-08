@@ -143,7 +143,7 @@
 	if(!loaded_item)
 		return FALSE
 	playsound(loc, 'sound/machines/terminal/terminal_insert_disc.ogg', 30, FALSE)
-	loaded_item.forceMove(drop_location())
+	loaded_item.force_move(drop_location())
 	loaded_item = null
 	update_appearance(UPDATE_ICON)
 	return TRUE

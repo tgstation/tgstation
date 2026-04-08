@@ -236,7 +236,7 @@
 
 /datum/move_loop/move/force/move()
 	var/atom/old_loc = moving.loc
-	moving.forceMove(get_step(moving, direction))
+	moving.force_move(get_step(moving, direction))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 
@@ -294,7 +294,7 @@
 
 /datum/move_loop/has_target/force_move/move()
 	var/atom/old_loc = moving.loc
-	moving.forceMove(get_step(moving, get_dir(moving, target)))
+	moving.force_move(get_step(moving, get_dir(moving, target)))
 	return old_loc != moving?.loc ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 

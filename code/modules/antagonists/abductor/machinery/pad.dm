@@ -14,14 +14,14 @@
 
 /obj/machinery/abductor/pad/proc/Warp(mob/living/target)
 	if(!target.buckled)
-		target.forceMove(get_turf(src))
+		target.force_move(get_turf(src))
 
 /obj/machinery/abductor/pad/proc/Send()
 	if(teleport_target == null)
 		teleport_target = GLOB.teleportlocs[pick(GLOB.teleportlocs)]
 	flick("alien-pad", src)
 	for(var/mob/living/target in loc)
-		target.forceMove(teleport_target)
+		target.force_move(teleport_target)
 		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 		to_chat(target, span_warning("The instability of the warp leaves you disoriented!"))
 		target.Stun(60)
@@ -33,7 +33,7 @@
 
 /obj/machinery/abductor/pad/proc/doMobToLoc(place, atom/movable/target)
 	flick("alien-pad", src)
-	target.forceMove(place)
+	target.force_move(place)
 	new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 
 /obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
@@ -43,7 +43,7 @@
 /obj/machinery/abductor/pad/proc/doPadToLoc(place)
 	flick("alien-pad", src)
 	for(var/mob/living/target in get_turf(src))
-		target.forceMove(place)
+		target.force_move(place)
 		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 
 /obj/machinery/abductor/pad/proc/PadToLoc(place)

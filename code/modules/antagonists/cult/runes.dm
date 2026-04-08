@@ -1055,7 +1055,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			if(!(affecting in T))
 				user.visible_message(span_warning("A spectral tendril wraps around [affecting] and pulls [affecting.p_them()] back to the rune!"))
 				Beam(affecting, icon_state="drainbeam", time = 2)
-				affecting.forceMove(get_turf(src)) //NO ESCAPE :^)
+				affecting.force_move(get_turf(src)) //NO ESCAPE :^)
 			if(affecting.key)
 				affecting.visible_message(span_warning("[affecting] slowly relaxes, the glow around [affecting.p_them()] dimming."), \
 					span_danger("You are re-united with your physical form. [src] releases its hold over you."))

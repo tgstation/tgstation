@@ -97,7 +97,7 @@
 		CRASH("Jaunt spell attempted to exit_jaunt with an invalid unjaunter, somehow.")
 
 	if(loc_override)
-		jaunt.forceMove(loc_override)
+		jaunt.force_move(loc_override)
 	jaunt.eject_jaunter()
 	return TRUE
 

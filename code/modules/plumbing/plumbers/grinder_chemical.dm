@@ -109,7 +109,7 @@
 		//so you can't regrind them for extra stuff
 		blended_item.can_grind = FALSE
 
-		blended_item.forceMove(drop_location())
+		blended_item.force_move(drop_location())
 
 		return TRUE
 

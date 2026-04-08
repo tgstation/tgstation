@@ -84,7 +84,7 @@
 	if(disassembled)
 		var/obj/item/wallframe/fish/frame = new (loc)
 		frame.persistence_id = persistence_id
-	mounted_fish?.forceMove(loc)
+	mounted_fish?.force_move(loc)
 
 /obj/structure/fish_mount/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if(!isfish(item) || user.combat_mode)
@@ -113,8 +113,8 @@
 	if(QDELETED(fish)) // no adding deleted fishies either
 		return
 	if(mounted_fish)
-		mounted_fish.forceMove(loc)
-	fish.forceMove(src)
+		mounted_fish.force_move(loc)
+	fish.force_move(src)
 	vis_contents += fish
 	fish.vis_flags |= (VIS_INHERIT_PLANE|VIS_INHERIT_LAYER)
 	fish.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP

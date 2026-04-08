@@ -100,7 +100,7 @@
 		else
 			return FALSE
 
-	forceMove(target)
+	force_move(target)
 	imp_in = target
 	target.implants += src
 	for(var/datum/action/implant_action as anything in actions)

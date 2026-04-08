@@ -114,22 +114,22 @@
 /// Drops all included parts to the passed location
 /// This will also dissassemble the parts being dropped into components as well
 /obj/item/robot_suit/proc/drop_all_parts(atom/drop_to = drop_location())
-	l_leg?.forceMove(drop_to)
-	r_leg?.forceMove(drop_to)
-	l_arm?.forceMove(drop_to)
-	r_arm?.forceMove(drop_to)
+	l_leg?.force_move(drop_to)
+	r_leg?.force_move(drop_to)
+	l_arm?.force_move(drop_to)
+	r_arm?.force_move(drop_to)
 
 	if(chest)
-		chest.forceMove(drop_to)
+		chest.force_move(drop_to)
 		chest.drop_organs()
 
 	if(head)
-		head.forceMove(drop_to)
+		head.force_move(drop_to)
 		head.drop_organs()
 
 /obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
 	if(!user.put_in_hands(I))
-		I.forceMove(drop_location())
+		I.force_move(drop_location())
 		return FALSE
 	return TRUE
 
@@ -309,9 +309,9 @@
 			O.job = JOB_CYBORG
 
 			O.cell = chest.cell
-			chest.cell.forceMove(O)
+			chest.cell.force_move(O)
 
-			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			W.force_move(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			QDEL_NULL(O.mmi)  //we delete the mmi created by robot/New()
 			O.mmi = W //and give the real mmi to the borg.
 			O.updatename(brainmob.client)
@@ -325,7 +325,7 @@
 				to_chat(O, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))
 
 			SSblackbox.record_feedback("amount", "cyborg_birth", 1)
-			forceMove(O)
+			force_move(O)
 			O.robot_suit = src
 
 			user.log_message("put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell", LOG_GAME)
@@ -363,11 +363,11 @@
 				O.log_current_laws()
 
 			O.cell = chest.cell
-			chest.cell.forceMove(O)
+			chest.cell.force_move(O)
 
 			O.locked = panel_locked
 			O.job = JOB_CYBORG
-			forceMove(O)
+			force_move(O)
 			O.robot_suit = src
 			if(!locomotion)
 				O.set_lockcharge(TRUE)

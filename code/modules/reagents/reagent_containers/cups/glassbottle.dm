@@ -67,7 +67,7 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
 	. = ..()
-	message_in_a_bottle?.forceMove(drop_location())
+	message_in_a_bottle?.force_move(drop_location())
 
 /obj/item/reagent_containers/cup/glass/bottle/examine(mob/user)
 	. = ..()
@@ -136,7 +136,7 @@
 	broken.mimic_broken(src, target, break_top)
 	broken.inhand_icon_state = broken_inhand_icon_state
 	if(message_in_a_bottle)
-		message_in_a_bottle.forceMove(drop_location())
+		message_in_a_bottle.force_move(drop_location())
 
 	qdel(src)
 	return TRUE

@@ -156,7 +156,7 @@
 /obj/item/surgery_tray/dump_contents()
 	var/atom/drop_point = drop_location()
 	for(var/atom/movable/tool as anything in contents)
-		tool.forceMove(drop_point)
+		tool.force_move(drop_point)
 
 /obj/item/surgery_tray/atom_deconstruct(disassembled = TRUE)
 	dump_contents()

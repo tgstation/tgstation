@@ -84,7 +84,7 @@
 
 	tele_play_specials(teleatom, curturf, effectin, asoundin)
 
-	var/success = teleatom.forceMove(destturf)
+	var/success = teleatom.force_move(destturf)
 	if(!success)
 		return FALSE
 
@@ -115,7 +115,7 @@
 				to_chat(rider, span_warning("As you reorient your senses, you realize you aren't riding [teleatom] anymore!"))
 				continue
 
-			// [mob/living].forceMove() forces mobs to unbuckle, so we need to buckle them again
+			// [mob/living].force_move() forces mobs to unbuckle, so we need to buckle them again
 			teleatom.buckle_mob(rider, force=TRUE)
 
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)

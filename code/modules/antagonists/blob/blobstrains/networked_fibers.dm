@@ -20,8 +20,8 @@
 		return
 	for(var/obj/structure/blob/possible_expander in range(1, new_blob))
 		if(possible_expander.overmind == overmind && (istype(possible_expander, /obj/structure/blob/special/core) || istype(possible_expander, /obj/structure/blob/special/node)))
-			new_blob.forceMove(get_turf(possible_expander))
-			possible_expander.forceMove(chosen_turf)
+			new_blob.force_move(get_turf(possible_expander))
+			possible_expander.force_move(chosen_turf)
 			possible_expander.setDir(get_dir(new_blob, possible_expander))
 			return
 	overmind.add_points(4)

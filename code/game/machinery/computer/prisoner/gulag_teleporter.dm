@@ -145,7 +145,7 @@
 	prisoner.log_message("teleported to Labor Camp [COORD(beacon)] by [key_name(user)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.", LOG_GAME, log_globally = FALSE)
 	teleporter.handle_prisoner(contained_id, temporary_record)
 	playsound(src, 'sound/items/weapons/emitter.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	prisoner.forceMove(get_turf(beacon))
+	prisoner.force_move(get_turf(beacon))
 	prisoner.Paralyze(40) // small travel dizziness
 	to_chat(prisoner, span_warning("The teleportation makes you a little dizzy."))
 	new /obj/effect/particle_effect/sparks(get_turf(prisoner))

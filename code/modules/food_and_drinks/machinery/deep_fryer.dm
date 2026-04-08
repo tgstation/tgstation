@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/on_deconstruction(disassembled)
 	// This handles nulling out frying via exited
 	if(frying)
-		frying.forceMove(drop_location())
+		frying.force_move(drop_location())
 
 /obj/machinery/deepfryer/RefreshParts()
 	. = ..()
@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/attack_hand(mob/living/user, list/modifiers)
 	if(frying)
 		to_chat(user, span_notice("You eject [frying] from [src]."))
-		frying.forceMove(drop_location())
+		frying.force_move(drop_location())
 		if(Adjacent(user) && !issilicon(user))
 			user.put_in_hands(frying)
 		return

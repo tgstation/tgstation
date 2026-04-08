@@ -836,7 +836,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		return
 
 	if(machine_stat)
-		draw_from.forceMove(drop_location())
+		draw_from.force_move(drop_location())
 		return
 
 	visible_message(span_notice("[src] whirs as it prints and binds a new book."))

@@ -76,11 +76,11 @@
 			continue
 		organ.Remove(chest_owner)
 		if(chest_owner.loc)
-			organ.forceMove(chest_owner.loc)
+			organ.force_move(chest_owner.loc)
 		. += organ
 
 	if(cavity_item)
-		cavity_item.forceMove(chest_owner.loc)
+		cavity_item.force_move(chest_owner.loc)
 		. += cavity_item
 		cavity_item = null
 
@@ -133,7 +133,7 @@
 		if(!drop_loc) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 			qdel(src)
 			return
-		forceMove(drop_loc)
+		force_move(drop_loc)
 
 	SEND_SIGNAL(phantom_owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, special, dismembered)
 
@@ -229,7 +229,7 @@
 		pill_action.Remove(owner)
 		var/obj/pill = pill_action.target
 		if(pill)
-			pill.forceMove(src)
+			pill.force_move(src)
 
 	name = "[owner.real_name]'s head"
 
@@ -355,7 +355,7 @@
 	//Handle dental implants
 	for(var/obj/item/reagent_containers/applicator/pill/pill in src)
 		for(var/datum/action/item_action/activate_pill/pill_action in pill.actions)
-			pill.forceMove(new_head_owner)
+			pill.force_move(new_head_owner)
 			pill_action.Grant(new_head_owner)
 			break
 

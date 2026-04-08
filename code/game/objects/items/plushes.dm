@@ -701,7 +701,7 @@
 	var/list/available_spots = get_adjacent_open_turfs(loc)
 	if(available_spots.len) //If the user is in a confined space the plushie will drop normally as the user dies, but in the open the plush is placed one tile away from the user to prevent squeak spam
 		var/turf/open/random_open_spot = pick(available_spots)
-		forceMove(random_open_spot)
+		force_move(random_open_spot)
 	user.dust(just_ash = FALSE, drop_items = TRUE)
 	return MANUAL_SUICIDE
 
@@ -804,7 +804,7 @@
 /obj/item/toy/plush/monkey/item_interaction(mob/living/feeder, obj/item/food/grown/banana/nana, list/modifiers)
 	if(!istype(nana))
 		return ..()
-	nana.forceMove(src) // go into the cotton stomach
+	nana.force_move(src) // go into the cotton stomach
 	to_chat(feeder, span_notice("You hand over the [nana] to [src] and watch as it eats..."))
 	playsound(src, 'sound/items/eatfood.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(eat), feeder, nana), 3 SECONDS)

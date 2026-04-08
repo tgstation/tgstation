@@ -244,7 +244,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck/Destroy()
 	for(var/card in 1 to contents.len)
 		var/obj/item/tcgcard/stored_card = contents[card]
-		stored_card.forceMove(drop_location())
+		stored_card.force_move(drop_location())
 	. = ..()
 
 /obj/item/tcgcard_deck/proc/check_menu(mob/living/user)
@@ -262,7 +262,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			return FALSE
 		var/obj/item/tcgcard/new_card = item
 		new_card.flipped = flipped
-		new_card.forceMove(src)
+		new_card.force_move(src)
 
 
 /obj/item/tcgcard_deck/attack_self(mob/living/carbon/user)

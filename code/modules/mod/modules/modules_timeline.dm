@@ -336,7 +336,7 @@
 	if(isliving(target))
 		if(!tem)
 			attached = FALSE
-		target.forceMove(src)
+		target.force_move(src)
 		captured = target
 		var/icon/mob_snapshot = getFlatIcon(target)
 		var/icon/cached_icon = new()
@@ -376,7 +376,7 @@
 
 	if(timetokill > initial(timetokill))
 		for(var/atom/movable/freed_movable in contents)
-			freed_movable.forceMove(drop_location())
+			freed_movable.force_move(drop_location())
 		qdel(src)
 	else if(timetokill <= 0)
 		to_chat(captured, span_notice("As the last essence of your being is erased from time, you are taken back to your most enjoyable memory. You feel happy..."))
@@ -389,7 +389,7 @@
 	else
 		captured.Unconscious(8 SECONDS)
 		if(captured.loc != src)
-			captured.forceMove(src)
+			captured.force_move(src)
 		update_appearance()
 		if(tem)
 			if(tem.field_check(src))

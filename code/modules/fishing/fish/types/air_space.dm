@@ -172,7 +172,7 @@
 
 /obj/item/fish/baby_carp/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows [src] whole!"))
-	src.forceMove(user)
+	src.force_move(user)
 	if(status == FISH_DEAD)
 		user.emote("gasp")
 		user.visible_message(span_suicide("[user] chokes on [src] and dies!"))

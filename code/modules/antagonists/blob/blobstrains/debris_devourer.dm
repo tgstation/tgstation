@@ -26,13 +26,13 @@
 	for(var/i in 1 to trashsplosion_count)
 		var/obj/item/trash_shrapnel = pick(trash_source)
 		if (trash_shrapnel && !QDELETED(trash_shrapnel))
-			trash_shrapnel.forceMove(get_turf(spore))
+			trash_shrapnel.force_move(get_turf(spore))
 			trash_shrapnel.throw_at(get_edge_target_turf(spore,pick(GLOB.alldirs)), 6, 5, spore, TRUE, FALSE, null, 3)
 	playsound(spore, 'sound/effects/pop_expl.ogg', vol = 100, vary = TRUE)
 
 /datum/blobstrain/debris_devourer/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/eye/blob/O, coefficient = 1) //when the blob expands, do this
 	for (var/obj/item/I in T)
-		I.forceMove(overmind.blob_core)
+		I.force_move(overmind.blob_core)
 
 /datum/blobstrain/debris_devourer/proc/debris_attack(atom/attacking, atom/source)
 	if (!prob(overmind ? 40 * DEBRIS_DENSITY : FREE_MINION_DEBRIS_CHANCE)) // Pretend the items are spread through the blob and its mobs and not in the core.
@@ -48,7 +48,7 @@
 	if (QDELETED(trash_weapon))
 		return
 
-	trash_weapon.forceMove(get_turf(source))
+	trash_weapon.force_move(get_turf(source))
 	trash_weapon.throw_at(attacking, 6, 5, overmind ? overmind : source, TRUE, FALSE, null, 3)
 
 /datum/blobstrain/debris_devourer/blobbernaut_attack(mob/living/blobbernaut, atom/victim)
@@ -85,7 +85,7 @@
 	playsound(minion, 'sound/items/eatfood.ogg', 60, TRUE)
 	var/obj/item/tasty_trash = interacted_atom
 	minion.do_attack_animation(tasty_trash)
-	tasty_trash.forceMove(overmind ? overmind.blob_core : minion)
+	tasty_trash.force_move(overmind ? overmind.blob_core : minion)
 	return COMPONENT_HOSTILE_NO_ATTACK
 
 #undef DEBRIS_DENSITY

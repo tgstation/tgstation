@@ -33,7 +33,7 @@
  * - [source][/atom/movable]: The source of the signal. Presumably the host mob.
  * - [old_loc][/atom]: The location the host mob used to be in.
  * - move_dir: The direction the host mob moved in.
- * - forced: Whether the movement was caused by a forceMove or moveToNullspace.
+ * - forced: Whether the movement was caused by a force_move or moveToNullspace.
  * - [old_locs][/list/atom]: The locations the host mob used to be in.
  */
 /datum/mutation/chameleon/proc/on_move(atom/movable/source, atom/old_loc, move_dir, forced, list/atom/old_locs)

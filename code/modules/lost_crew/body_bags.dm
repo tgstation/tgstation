@@ -31,19 +31,19 @@
 	var/list/lost_crew_data = list()
 	var/mob/living/corpse = GLOB.lost_crew_manager.create_lost_crew(revivable = TRUE, recovered_items = recovered_items, protected_items = protected_items, body_data = lost_crew_data)
 	corpse.mind_initialize()
-	corpse.forceMove(src)
+	corpse.force_move(src)
 	body_spawned = TRUE
 
 	// Drop stuff like dropped limbs and organs with them in the bag
 	for(var/obj/object in recovered_items)
-		object.forceMove(src)
+		object.force_move(src)
 
 	// Spawn a mind lockbox with job stuffs for them to work with when they return
 	if(protected_items.len && corpse.mind)
 		var/obj/item/storage/lockbox/mind/box = new(src)
 		box.mind = corpse.mind
 		for(var/obj/object in protected_items)
-			object.forceMove(box)
+			object.force_move(box)
 
 	process_data(lost_crew_data)
 

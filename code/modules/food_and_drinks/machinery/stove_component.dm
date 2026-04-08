@@ -34,7 +34,7 @@
 
 	// To allow maploaded pots on top of your stove.
 	if(spawn_container)
-		spawn_container.forceMove(parent)
+		spawn_container.force_move(parent)
 		add_container(spawn_container)
 
 	soup_sound = new(parent)
@@ -60,7 +60,7 @@
 /datum/component/stove/UnregisterFromParent()
 	var/obj/machinery/real_parent = parent
 	if(!QDELING(parent))
-		container.forceMove(real_parent.drop_location())
+		container.force_move(real_parent.drop_location())
 
 	if (particle_type)
 		real_parent.remove_shared_particles("[particle_type]_stove_[container_x]")
@@ -165,7 +165,7 @@
 /datum/component/stove/proc/on_deconstructed(obj/machinery/source)
 	SIGNAL_HANDLER
 
-	container.forceMove(source.drop_location())
+	container.force_move(source.drop_location())
 
 /datum/component/stove/proc/on_overlay_update(obj/machinery/source, list/overlays)
 	SIGNAL_HANDLER

@@ -495,7 +495,7 @@
 		qdel(old_seed)
 	set_plant_status(new_seed ? HYDROTRAY_PLANT_GROWING : HYDROTRAY_NO_PLANT) //To make sure they can't just put in another seed and insta-harvest it
 	if(myseed && myseed.loc != src)
-		myseed.forceMove(src)
+		myseed.force_move(src)
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SEED, new_seed)
 	for(var/datum/plant_gene/trait/gene in myseed?.genes)
 		gene.on_plant_in_tray(src, myseed)
@@ -612,7 +612,7 @@
 	SIGNAL_HANDLER
 
 	var/atom/movable/mob_holder = source.loc
-	mob_holder.forceMove(drop_location())
+	mob_holder.force_move(drop_location())
 
 /obj/machinery/hydroponics/proc/handle_snail()
 	if(prob(15))
@@ -957,7 +957,7 @@
 			if(!snip)
 				return // The plant did not return a graft.
 
-			snip.forceMove(drop_location())
+			snip.force_move(drop_location())
 			myseed.grafts_taken++
 			adjust_plant_health(-5)
 			return
@@ -1129,7 +1129,7 @@
 /obj/machinery/hydroponics/proc/empty_tray(mob/user)
 	reagents.clear_reagents()
 	for(var/obj/item/mob_holder/snail/possible_snail in contents)
-		possible_snail.forceMove(drop_location())
+		possible_snail.force_move(drop_location())
 	to_chat(user, span_warning("You empty [src]'s nutrient tank."))
 
 /**

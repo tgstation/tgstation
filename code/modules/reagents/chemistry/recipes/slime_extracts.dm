@@ -494,7 +494,7 @@
 		if(extract.extract_uses > 0)
 			var/mob/lastheld = get_mob_by_key(holder.my_atom.fingerprintslast)
 			if(lastheld && !lastheld.equip_to_slot_if_possible(extract, ITEM_SLOT_HANDS, disable_warning = TRUE))
-				extract.forceMove(get_turf(lastheld))
+				extract.force_move(get_turf(lastheld))
 	use_slime_core(holder)
 
 /datum/chemical_reaction/slime/slimecamera

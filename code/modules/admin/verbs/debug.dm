@@ -144,7 +144,7 @@ ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full 
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
 				W.front_id = id
-				id.forceMove(W)
+				id.force_move(W)
 				W.update_icon()
 		else
 			H.equip_to_slot(id, ITEM_SLOT_ID)
@@ -592,7 +592,7 @@ ADMIN_VERB(jump_to_ruin, R_DEBUG, "Jump to Ruin", "Displays a list of all placed
 	if(!istype(landmark))
 		return
 	var/datum/map_template/ruin/template = landmark.ruin_template
-	user.mob.forceMove(get_turf(landmark))
+	user.mob.force_move(get_turf(landmark))
 	to_chat(user, span_name(template.name), confidential = TRUE)
 	to_chat(user, span_italics(template.description), confidential = TRUE)
 
@@ -625,7 +625,7 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 		if (!response)
 			return
 		if (response == "Jump")
-			user.mob.forceMove(get_turf(exists[template]))
+			user.mob.force_move(get_turf(exists[template]))
 			return
 
 	var/len = GLOB.ruin_landmarks.len
@@ -633,7 +633,7 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 	if (GLOB.ruin_landmarks.len > len)
 		var/obj/effect/landmark/ruin/landmark = GLOB.ruin_landmarks[GLOB.ruin_landmarks.len]
 		log_admin("[key_name(user)] randomly spawned ruin [ruinname] at [COORD(landmark)].")
-		user.mob.forceMove(get_turf(landmark))
+		user.mob.force_move(get_turf(landmark))
 		to_chat(user, span_name("[template.name]"), confidential = TRUE)
 		to_chat(user, span_italics("[template.description]"), confidential = TRUE)
 	else

@@ -395,7 +395,7 @@
 		var/obj/item/organ/guts = pick(organs)
 		var/turf/T = get_turf(src)
 		guts.Remove(src)
-		guts.forceMove(T)
+		guts.force_move(T)
 		var/atom/throw_target = get_edge_target_turf(guts, dir)
 		guts.throw_at(throw_target, power, 4, src)
 
@@ -853,7 +853,7 @@
 		if(prob(50))
 			organs_amt++
 			organ.Remove(src)
-			organ.forceMove(drop_location())
+			organ.force_move(drop_location())
 	if(organs_amt)
 		to_chat(user, span_notice("You retrieve some of [src]\'s internal organs!"))
 	remove_all_embedded_objects()

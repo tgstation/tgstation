@@ -407,7 +407,7 @@
 		return
 	visible_message(span_notice("[tonged] falls to the ground!"))
 	var/turf/location = drop_location()
-	tonged.forceMove(location)
+	tonged.force_move(location)
 	tonged.do_drop_animation(location)
 
 /// Play a clacking sound and appear closed, then open again
@@ -442,7 +442,7 @@
 		return ..()
 	tonged = attacked
 	attacked.do_pickup_animation(src)
-	attacked.forceMove(src)
+	attacked.force_move(src)
 	update_appearance(UPDATE_ICON)
 	return TRUE
 

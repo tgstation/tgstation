@@ -96,7 +96,7 @@
 	var/obj/effect/meteor/meaty/changeling/changeling_meteor = new(picked_start, get_random_station_turf())
 	var/mob/living/carbon/human/new_changeling = new(picked_start)
 
-	new_changeling.forceMove(changeling_meteor) //Place our payload inside of its vessel
+	new_changeling.force_move(changeling_meteor) //Place our payload inside of its vessel
 
 	player_mind.transfer_to(new_changeling, force_key_move = TRUE)
 	player_mind.add_antag_datum(/datum/antagonist/changeling/space)

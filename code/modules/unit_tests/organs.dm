@@ -122,7 +122,7 @@
 	dummy.gain_trauma_type(BRAIN_TRAUMA_MILD)
 
 	var/obj/item/organ/brain = locate() in dummy.organs
-	brain.forceMove(dummy.loc)
+	brain.force_move(dummy.loc)
 	allocated += brain
 
 /datum/unit_test/felinid_ears

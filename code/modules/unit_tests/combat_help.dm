@@ -7,7 +7,7 @@
 	var/mob/living/carbon/human/consistent/helps_the_guy = EASY_ALLOCATE()
 	var/mob/living/carbon/human/consistent/gets_the_help = EASY_ALLOCATE()
 
-	gets_the_help.forceMove(locate(helps_the_guy.x + 1, helps_the_guy.y, helps_the_guy.z))
+	gets_the_help.force_move(locate(helps_the_guy.x + 1, helps_the_guy.y, helps_the_guy.z))
 
 	RegisterSignal(helps_the_guy, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(helper_help_received))
 	RegisterSignal(gets_the_help, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(helpee_help_received))

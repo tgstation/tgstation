@@ -54,7 +54,7 @@
 	)
 
 	conjured_duffel.pickup(victim)
-	conjured_duffel.forceMove(victim)
+	conjured_duffel.force_move(victim)
 
 	// Put it on their back first
 	if(victim.dropItemToGround(victim.back))

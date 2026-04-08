@@ -513,7 +513,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
-		AM.forceMove(L)
+		AM.force_move(L)
 		if(throwing) // you keep some momentum when getting out of a thrown closet
 			step(AM, dir)
 	if(throwing)
@@ -570,7 +570,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLOSET_INSERT, inserted) & COMPONENT_CLOSET_INSERT_INTERRUPT)
 		return TRUE
-	inserted.forceMove(src)
+	inserted.force_move(src)
 	return TRUE
 
 /obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
@@ -975,13 +975,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			if(!issilicon(L))
 				L.Paralyze(40)
 			if(istype(src, /obj/structure/closet/supplypod/extractionpod))
-				O.forceMove(src)
+				O.force_move(src)
 			else
-				O.forceMove(T)
+				O.force_move(T)
 				close()
 			log_combat(user, O, "stuffed", addition = "inside of [src]")
 	else
-		O.forceMove(T)
+		O.force_move(T)
 
 /obj/structure/closet/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))
@@ -1248,7 +1248,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!opened) // Reversed because we should've toggled already
 		if (target.loc != loc)
 			return
-		target.forceMove(src)
+		target.force_move(src)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	update_icon()

@@ -35,7 +35,7 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/basic/blob_minion/zombie/death(gibbed)
-	corpse?.forceMove(loc)
+	corpse?.force_move(loc)
 	return ..()
 
 /mob/living/basic/blob_minion/zombie/Exited(atom/movable/gone, direction)
@@ -73,7 +73,7 @@
 		health = maxHealth
 	new_corpse.set_facial_hairstyle("Shaved", update = FALSE)
 	new_corpse.set_hairstyle("Bald", update = TRUE)
-	new_corpse.forceMove(src)
+	new_corpse.force_move(src)
 	corpse = new_corpse
 	copy_overlays(corpse, TRUE)
 	update_appearance(UPDATE_ICON)

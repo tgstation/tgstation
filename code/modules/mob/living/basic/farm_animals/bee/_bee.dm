@@ -127,7 +127,7 @@
 /mob/living/basic/bee/proc/handle_habitation(obj/structure/beebox/hive)
 	if(hive == beehome) //if its our home, we enter or exit it
 		var/drop_location = (src in beehome.contents) ? get_turf(beehome) : beehome
-		forceMove(drop_location)
+		force_move(drop_location)
 		return
 	if(!isnull(hive.queen_bee) && is_queen) //if we are queen and house already have a queen, dont inhabit
 		return

@@ -57,8 +57,8 @@
 	if(stasis_overlay)
 		//Free our prisoner
 		owner.remove_traits(list(TRAIT_GODMODE, TRAIT_NO_TRANSFORM, TRAIT_SOFTSPOKEN), TRAIT_STATUS_EFFECT(id))
-		owner.forceMove(get_turf(stasis_overlay))
-		stasis_overlay.forceMove(owner)
+		owner.force_move(get_turf(stasis_overlay))
+		stasis_overlay.force_move(owner)
 		owner.vis_contents += stasis_overlay
 		//Animate closing the ball
 		stasis_overlay.animate_closing()
@@ -69,8 +69,8 @@
 
 ///Freezes our prisoner in place
 /datum/status_effect/void_prison/proc/enter_prison(mob/living/prisoner)
-	stasis_overlay.forceMove(prisoner.loc)
-	prisoner.forceMove(stasis_overlay)
+	stasis_overlay.force_move(prisoner.loc)
+	prisoner.force_move(stasis_overlay)
 	prisoner.add_traits(list(TRAIT_GODMODE, TRAIT_NO_TRANSFORM, TRAIT_SOFTSPOKEN), TRAIT_STATUS_EFFECT(id))
 
 ///Makes sure to clear the ref in case the voidball ever suddenly disappears

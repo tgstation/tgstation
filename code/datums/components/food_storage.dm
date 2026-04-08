@@ -42,7 +42,7 @@
 	))
 	if(QDELING(parent) || QDELETED(stored_item))
 		return
-	stored_item.forceMove(stored_item.drop_location())
+	stored_item.force_move(stored_item.drop_location())
 	stored_item = null
 
 /** Begins the process of inserted an item.
@@ -116,7 +116,7 @@
 
 	var/atom/food = parent
 	to_chat(user, span_notice("You slip [inserted_item] inside [parent]."))
-	inserted_item.forceMove(food)
+	inserted_item.force_move(food)
 	user.log_message("inserted [inserted_item] into [parent].", LOG_ATTACK)
 	food.add_fingerprint(user)
 	inserted_item.add_fingerprint(user)
@@ -191,7 +191,7 @@
 	SIGNAL_HANDLER
 	if(QDELETED(stored_item))
 		return
-	stored_item.forceMove(stored_item.drop_location())
+	stored_item.force_move(stored_item.drop_location())
 	stored_item = null
 
 /** Updates the reference of the stored item.

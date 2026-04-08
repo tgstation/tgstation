@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	to_chat(source, span_notice("[user] has taken [chosen_accessory] off of [jumpsuit]."))
 	jumpsuit.remove_accessory(chosen_accessory)
 	jumpsuit.update_appearance()
-	chosen_accessory.forceMove(jumpsuit.drop_location())
+	chosen_accessory.force_move(jumpsuit.drop_location())
 
 	if(!ismob(source))
 		return

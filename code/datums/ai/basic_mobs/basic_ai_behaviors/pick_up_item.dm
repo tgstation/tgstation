@@ -27,7 +27,7 @@
 	var/atom/pawn = controller.pawn
 	drop_existing_item(controller, storage_key)
 	pawn.visible_message(span_notice("[pawn] picks up [target]."))
-	target.forceMove(pawn)
+	target.force_move(pawn)
 	controller.set_blackboard_key(storage_key, target)
 	return TRUE
 
@@ -40,5 +40,5 @@
 	if(carried_item.loc != pawn)
 		return
 	pawn.visible_message(span_notice("[pawn] drops [carried_item]."))
-	carried_item.forceMove(get_turf(pawn))
+	carried_item.force_move(get_turf(pawn))
 	return TRUE

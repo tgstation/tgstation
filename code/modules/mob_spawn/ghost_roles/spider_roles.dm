@@ -98,7 +98,7 @@
 	potentialspawns = string_list(potentialspawns)
 	egg = new cluster_type(get_turf(loc))
 	egg.spawner = src
-	forceMove(egg)
+	force_move(egg)
 
 /obj/effect/mob_spawn/ghost_role/spider/Destroy()
 	egg = null

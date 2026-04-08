@@ -36,7 +36,7 @@
 
 /datum/status_effect/shapechange_mob/on_apply()
 	caster_mob.mind?.transfer_to(owner)
-	caster_mob.forceMove(owner)
+	caster_mob.force_move(owner)
 	ADD_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, TRAIT_STATUS_EFFECT(id))
 	caster_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 
@@ -96,7 +96,7 @@
 
 	var/atom/former_loc = owner.loc
 	owner.moveToNullspace()
-	caster_mob.forceMove(former_loc) // This is to avoid crushing our former cockroach body
+	caster_mob.force_move(former_loc) // This is to avoid crushing our former cockroach body
 
 	if(kill_caster_after)
 		caster_mob.death()
@@ -201,7 +201,7 @@
 		for(var/atom/movable/thing as anything in owner.contents)
 			if(thing == caster_mob || HAS_TRAIT(thing, TRAIT_NOT_BARFABLE))
 				continue
-			thing.forceMove(get_turf(owner))
+			thing.force_move(get_turf(owner))
 
 	for(var/datum/action/bodybound_action as anything in owner.actions)
 		if(bodybound_action.target != caster_mob)

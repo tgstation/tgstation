@@ -9,7 +9,7 @@
 
 	src.container = container
 
-	stoned.forceMove(container)
+	stoned.force_move(container)
 	stoned.fully_heal()
 	stoned.add_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), SOULSTONE_TRAIT)
 

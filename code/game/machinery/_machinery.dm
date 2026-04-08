@@ -383,7 +383,7 @@
 	// Then we can clean up and drop everything else.
 	var/turf/this_turf = get_turf(src)
 	for(var/atom/movable/movable_atom in contents)
-		movable_atom.forceMove(this_turf)
+		movable_atom.force_move(this_turf)
 
 	// We'll have dropped the occupant, circuit and component parts as part of this.
 	set_occupant(null)
@@ -411,7 +411,7 @@
 		if(movable_atom in component_parts)
 			continue
 
-		movable_atom.forceMove(this_turf)
+		movable_atom.force_move(this_turf)
 
 		if(occupant == movable_atom)
 			set_occupant(null)
@@ -431,7 +431,7 @@
 		object.do_pickup_animation(user, src)
 		user.put_in_hands(object)
 	else
-		object.forceMove(drop_location())
+		object.force_move(drop_location())
 
 /obj/machinery/proc/can_be_occupant(atom/movable/occupant_atom)
 	return occupant_typecache ? is_type_in_typecache(occupant_atom, occupant_typecache) : isliving(occupant_atom)
@@ -459,7 +459,7 @@
 	var/mob/living/mobtarget = target
 	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
 		set_occupant(target)
-		target.forceMove(src)
+		target.force_move(src)
 	update_appearance()
 
 ///updates the use_power var for this machine and updates its static power usage from its area to reflect the new value
@@ -882,7 +882,7 @@
 		else
 			var/obj/item/obj_part = part
 			component_parts -= part
-			obj_part.forceMove(loc)
+			obj_part.force_move(loc)
 			if(istype(obj_part, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/board = obj_part
 				for(var/component in board.req_components) //loop through all stack components and spawn them
@@ -1067,7 +1067,7 @@
 						qdel(secondary_part)
 					else
 						component_parts += secondary_part
-						secondary_part.forceMove(src)
+						secondary_part.force_move(src)
 						part_list -= secondary_part //have to manually remove cause we are no longer refering replacer_tool.contents
 
 				component_parts -= primary_part_base

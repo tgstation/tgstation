@@ -129,5 +129,5 @@
 	if(!do_after(user, 2 SECONDS, interacting_with))
 		return
 
-	forceMove(interacting_with)
+	force_move(interacting_with)
 	return ITEM_INTERACT_SUCCESS

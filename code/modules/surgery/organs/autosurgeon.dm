@@ -59,7 +59,7 @@
 			return
 
 	stored_organ = loaded_organ
-	loaded_organ.forceMove(src)
+	loaded_organ.force_move(src)
 
 	name = "[initial(name)] ([stored_organ.name])" //to tell you the organ type, like "suspicious autosurgeon (Reviver implant)"
 	update_appearance()
@@ -136,7 +136,7 @@
 	else
 		var/atom/drop_loc = user.drop_location()
 		for(var/atom/movable/stored_implant as anything in src)
-			stored_implant.forceMove(drop_loc)
+			stored_implant.force_move(drop_loc)
 			to_chat(user, span_notice("You remove the [stored_organ] from [src]."))
 			stored_organ = null
 

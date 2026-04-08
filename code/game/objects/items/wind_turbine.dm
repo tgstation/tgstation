@@ -69,7 +69,7 @@
 	if (is_anchored)
 		RegisterSignal(src, COMSIG_MOVABLE_RESISTED_SPACEWIND, PROC_REF(on_space_wind))
 		UnregisterSignal(src, COMSIG_ATOM_PRE_DIR_CHANGE)
-		forceMove(get_turf(src))
+		force_move(get_turf(src))
 		pixel_x = 0
 		pixel_y = 0
 		setDir(SOUTH)
@@ -218,7 +218,7 @@
 	if(cap)
 		tool.play_tool_sound(src, 50)
 		user.balloon_alert(user, "capacitor removed")
-		cap.forceMove(drop_location())
+		cap.force_move(drop_location())
 		available_power = 0
 		cap = null
 		return TRUE
@@ -277,21 +277,21 @@
 	return ..()
 
 /obj/item/portable_wind_turbine/handle_deconstruct(dissassembled)
-	charging?.forceMove(drop_location())
-	cap?.forceMove(drop_location())
+	charging?.force_move(drop_location())
+	cap?.force_move(drop_location())
 	return ..()
 
 ///Takes charging item out if there is one
 /obj/item/portable_wind_turbine/proc/take_charging_out(mob/user)
 	if(isnull(charging) || user.put_in_hands(charging))
 		return
-	charging.forceMove(drop_location())
+	charging.force_move(drop_location())
 	update_appearance()
 
 /obj/item/portable_wind_turbine/attack_tk(mob/user)
 	if(isnull(charging))
 		return
-	charging.forceMove(drop_location())
+	charging.force_move(drop_location())
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/portable_wind_turbine/process(seconds_per_tick)

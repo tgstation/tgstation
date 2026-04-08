@@ -22,7 +22,7 @@
 	visuals.maptext_height = 6
 	visuals.alpha = 0
 	user.vis_contents += visuals
-	visuals.forceMove(user)
+	visuals.force_move(user)
 	animate(visuals, 0.5 SECONDS, alpha = 255)
 	var/datum/callback/setdir_callback = CALLBACK(mod_link.holder, proc_path)
 	setdir_callback.Invoke(user, user.dir, user.dir)

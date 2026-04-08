@@ -82,7 +82,7 @@
 		if(isnull(loc))
 			item.moveToNullspace()
 		else
-			item.forceMove(loc)
+			item.force_move(loc)
 		item = null
 		return return_item
 	if(ispath(item))

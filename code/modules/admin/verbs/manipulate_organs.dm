@@ -69,12 +69,12 @@ ADMIN_VERB(manipulate_organs, R_DEBUG, "Manipulate Organs", "Manipulate the orga
 				implant_holder = organ_to_modify
 				implant_holder.removed(carbon_victim, special = TRUE)
 
-			organ_to_modify.forceMove(get_turf(carbon_victim))
+			organ_to_modify.force_move(get_turf(carbon_victim))
 
 			if(operation == "Remove organ/implant")
 				qdel(organ_to_modify)
 			else if(implant_holder) // Put the implant in case.
 				var/obj/item/implantcase/case = new(get_turf(carbon_victim))
 				case.imp = implant_holder
-				implant_holder.forceMove(case)
+				implant_holder.force_move(case)
 				case.update_appearance()

@@ -75,7 +75,7 @@
 		QDEL_IN(src, 3 SECONDS)
 		return
 
-	fake_bubbles.forceMove(get_step_towards(fake_bubbles, landing_turf))
+	fake_bubbles.force_move(get_step_towards(fake_bubbles, landing_turf))
 	fake_bubbles.setDir(get_dir(fake_bubbles, landing_turf))
 	hallucinator.playsound_local(get_turf(fake_bubbles), 'sound/effects/meteorimpact.ogg', 150, TRUE)
 	shake_camera(hallucinator, 2, 1)

@@ -57,7 +57,7 @@
 	for(var/o in packed_things)
 		var/obj/object = o
 		UnregisterSignal(object, COMSIG_MOVABLE_MOVED)
-		object.forceMove(src)
+		object.force_move(src)
 	set_anchored(FALSE)
 	unpacked = FALSE
 
@@ -74,7 +74,7 @@
 	for(var/angle in list(0, -45, -45, 45))
 		var/turf/T = get_step(grabbed_turf, turn(SOUTH, angle))
 		var/obj/thing = packed_things[iteration]
-		thing.forceMove(T)
+		thing.force_move(T)
 		RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(lost_part))
 		iteration++
 	unpacked = TRUE

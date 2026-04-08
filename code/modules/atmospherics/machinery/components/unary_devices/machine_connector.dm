@@ -63,7 +63,7 @@
 		gas_connector.abstract_move(get_turf(connected_machine))
 		return // No side-effects means no disconnections
 
-	gas_connector.forceMove(get_turf(connected_machine))
+	gas_connector.force_move(get_turf(connected_machine))
 	reconnect_connector()
 
 /**

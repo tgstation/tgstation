@@ -77,7 +77,7 @@
 	to_chat(user, span_notice("You telekinetically remove [cell]."))
 	var/obj/item/stock_parts/power_store/cell_reference = cell
 	cell = null
-	cell_reference.forceMove(drop_location())
+	cell_reference.force_move(drop_location())
 	return cell_reference.attack_tk(user)
 
 /obj/structure/light_construct/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
@@ -96,7 +96,7 @@
 			user.visible_message(span_notice("[user] hooks up [tool] to [src]."), \
 			span_notice("You add [tool] to [src]."))
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-			tool.forceMove(src)
+			tool.force_move(src)
 			cell = tool
 			add_fingerprint(user)
 			return
@@ -158,7 +158,7 @@
 				transfer_fingerprints_to(new_light)
 				if(!QDELETED(cell))
 					new_light.cell = cell
-					cell.forceMove(new_light)
+					cell.force_move(new_light)
 					cell = null
 				qdel(src)
 				return

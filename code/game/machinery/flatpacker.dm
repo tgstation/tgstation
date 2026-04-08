@@ -231,7 +231,7 @@
 
 		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(inserted_board)
-			inserted_board.forceMove(drop_location())
+			inserted_board.force_move(drop_location())
 		inserted_board = attacking_item
 
 		//compute the needed mats from its stock parts
@@ -390,7 +390,7 @@
 	materials.use_materials(needed_mats, creation_efficiency)
 	var/obj/item/flatpack/box = new (drop_location(), board)
 	for(var/obj/item/component as anything in flatpacked_components)
-		component.forceMove(box)
+		component.force_move(box)
 
 	SStgui.update_uis(src)
 
@@ -401,7 +401,7 @@
 	try_put_in_hand(inserted_board, user)
 	var/drop = drop_location()
 	for(var/obj/item/component as anything in flatpacked_components)
-		component.forceMove(drop)
+		component.force_move(drop)
 
 	return CLICK_ACTION_SUCCESS
 

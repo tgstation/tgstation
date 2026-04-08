@@ -69,7 +69,7 @@
 		to_chat(holder, span_danger("You can't help but feel that you just lost something back there..."))
 		holder.temporarilyRemoveItemFromInventory(parent, TRUE) // prevents ghost diskie
 
-	movable_parent.forceMove(target_turf)
+	movable_parent.force_move(target_turf)
 
 	return target_turf
 

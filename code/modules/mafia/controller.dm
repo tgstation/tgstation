@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			judgement_abstain_votes += voters
 
 		on_trial = loser
-		on_trial.body.forceMove(get_turf(town_center_landmark))
+		on_trial.body.force_move(get_turf(town_center_landmark))
 		phase = MAFIA_PHASE_JUDGEMENT
 		next_phase_timer = addtimer(CALLBACK(src, PROC_REF(lynch)), (JUDGEMENT_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE)
 		reset_votes("Day")
@@ -310,7 +310,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		next_phase_timer = addtimer(CALLBACK(src, PROC_REF(send_home), on_trial), (LYNCH_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE)
 	else
 		send_message(span_green("<b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b>"))
-		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
+		on_trial.body.force_move(get_turf(on_trial.assigned_landmark))
 	on_trial = null
 	if(!check_victory())
 		//day votes are already cleared, so this will skip the trial and check victory/lockdown/whatever else
@@ -323,7 +323,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * role: mafia role that is getting sent back to the game.
  */
 /datum/mafia_controller/proc/send_home(datum/mafia_role/role)
-	role.body.forceMove(get_turf(role.assigned_landmark))
+	role.body.force_move(get_turf(role.assigned_landmark))
 
 /**
  * Checks to see if a faction (or solo antagonist) has won.

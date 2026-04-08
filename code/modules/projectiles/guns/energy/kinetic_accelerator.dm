@@ -80,7 +80,7 @@
 		to_chat(user, span_notice("You pry all the modifications out."))
 		I.play_tool_sound(src, 100)
 		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
-			modkit_upgrade.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
+			modkit_upgrade.force_move(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
 	else
 		to_chat(user, span_notice("There are no modifications currently installed."))
 
@@ -114,7 +114,7 @@
 	if(!istype(modkit_to_remove))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!user.put_in_hands(modkit_to_remove))
-		modkit_to_remove.forceMove(drop_location())
+		modkit_to_remove.force_move(drop_location())
 	update_appearance(UPDATE_ICON)
 
 

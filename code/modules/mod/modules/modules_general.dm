@@ -900,7 +900,7 @@
 
 /obj/item/mod/module/recycler/proc/attempt_insert_storage(obj/item/to_drop)
 	if(!isturf(to_drop.loc) && !to_drop.loc.atom_storage?.attempt_insert(to_drop, mod.wearer, override = TRUE))
-		to_drop.forceMove(to_drop.loc.drop_location())
+		to_drop.force_move(to_drop.loc.drop_location())
 
 ///A black market variant of the above that dispenses riot foam dart boxes
 /obj/item/mod/module/recycler/donk

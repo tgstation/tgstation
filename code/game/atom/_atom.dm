@@ -366,7 +366,7 @@
 			var/mob/living/living = movable.loc
 			living.transferItemToLoc(movable, src)
 		else
-			movable.forceMove(src)
+			movable.force_move(src)
 
 		if(matched_type)
 			remaining_parts[matched_type] -= 1

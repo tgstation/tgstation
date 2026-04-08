@@ -134,7 +134,7 @@
 	if(!cell || !cell_removable)
 		return FALSE
 
-	cell.forceMove(get_turf(src))
+	cell.force_move(get_turf(src))
 	balloon_alert(user, "removed [cell]")
 	cell = null
 	tool.play_tool_sound(src, 50)
@@ -424,7 +424,7 @@
 	if(!defib)
 		return
 	defib.on = FALSE
-	forceMove(defib)
+	force_move(defib)
 	defib.update_power()
 
 /obj/item/shockpaddles/attack(mob/M, mob/living/user, list/modifiers, list/attack_modifiers)

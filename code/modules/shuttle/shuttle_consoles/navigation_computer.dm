@@ -246,7 +246,7 @@
 		my_port.hidden = shuttle_port.hidden
 		my_port.register(TRUE)
 	my_port.setDir(the_eye.dir)
-	my_port.forceMove(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
+	my_port.force_move(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
 
 	if(current_user.client)
 		current_user.client.images -= the_eye.placed_images

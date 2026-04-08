@@ -26,7 +26,7 @@
 		return
 
 	var/obj/structure/puzzgrid_effect/puzzgrid_effect = new(target.loc, target, puzzgrid, timer, gib_on_loss)
-	target.forceMove(puzzgrid_effect)
+	target.force_move(puzzgrid_effect)
 	puzzgrid_effect.visible_message(span_warning("[target] has suddenly transformed into a fiendishly hard puzzle!"))
 
 	playsound(puzzgrid_effect, 'sound/effects/magic.ogg', 70)
@@ -72,7 +72,7 @@
 	)
 
 /obj/structure/puzzgrid_effect/proc/on_victory()
-	victim.forceMove(loc)
+	victim.force_move(loc)
 	victim.Paralyze(5 SECONDS)
 	victim.visible_message(
 		span_notice("[victim] is unshackled from their fiendish prison!"),
@@ -86,7 +86,7 @@
 	qdel(src)
 
 /obj/structure/puzzgrid_effect/proc/loss_gib()
-	victim.forceMove(loc)
+	victim.force_move(loc)
 	victim.visible_message(
 		span_bolddanger("You were unable to free [victim] from their fiendish prison, leaving them as nothing more than a smattering of mush!"),
 		span_bolddanger("Your compatriates were unable to free you from your fiendish prison, leaving you as nothing more than a smattering of mush!"),
@@ -99,7 +99,7 @@
 /obj/structure/puzzgrid_effect/proc/loss_restart()
 	var/datum/puzzgrid/puzzgrid = create_random_puzzgrid()
 	if (isnull(puzzgrid))
-		victim.forceMove(loc)
+		victim.force_move(loc)
 		victim.Paralyze(5 SECONDS)
 		victim.visible_message(span_bolddanger("Despite completely failing the puzzle, through unbelievable luck, [victim] manages to break out anyway!"))
 		victim.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")

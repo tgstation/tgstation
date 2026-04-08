@@ -123,7 +123,7 @@
 
 /obj/item/claymore/highlander/Destroy()
 	if(nuke_disk)
-		nuke_disk.forceMove(get_turf(src))
+		nuke_disk.force_move(get_turf(src))
 		nuke_disk.visible_message(span_warning("The nuke disk is vulnerable!"))
 		nuke_disk = null
 	STOP_PROCESSING(SSobj, src)

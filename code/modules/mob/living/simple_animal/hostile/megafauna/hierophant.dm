@@ -371,7 +371,7 @@ Difficulty: Hard
 	visible_message(span_hierophant_warning("[src] fades out!"))
 	ADD_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	SLEEP_CHECK_DEATH(2, src)
-	forceMove(T)
+	force_move(T)
 	SLEEP_CHECK_DEATH(1, src)
 	animate(src, alpha = 255, time = 2, easing = SINE_EASING|EASE_IN) //fade IN
 	SLEEP_CHECK_DEATH(1, src)
@@ -630,7 +630,7 @@ Difficulty: Hard
 						T = maybe_new_turf
 					else
 						break
-				forceMove(T)
+				force_move(T)
 				make_blast() //make a blast, too
 				moving--
 				sleep(speed)

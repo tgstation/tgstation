@@ -74,7 +74,7 @@
 
 /obj/machinery/cell_charger/on_deconstruction(disassembled)
 	if(charging)
-		charging.forceMove(drop_location())
+		charging.force_move(drop_location())
 
 /obj/machinery/cell_charger/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -88,7 +88,7 @@
 /obj/machinery/cell_charger/proc/removecell(new_loc)
 	. = charging
 	charging.update_appearance()
-	charging.forceMove(new_loc)
+	charging.force_move(new_loc)
 	charging = null
 	update_appearance()
 

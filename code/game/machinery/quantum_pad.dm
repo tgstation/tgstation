@@ -125,7 +125,7 @@
 	if(!linked_pad && map_pad_link_id)
 		initMappedLink()
 	if(linked_pad)
-		ghost.forceMove(get_turf(linked_pad))
+		ghost.force_move(get_turf(linked_pad))
 
 /obj/machinery/quantumpad/proc/doteleport(mob/user = null, obj/machinery/quantumpad/target_pad = linked_pad)
 	if(!target_pad)

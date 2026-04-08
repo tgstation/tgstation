@@ -156,7 +156,7 @@
 			balloon_alert(mod.wearer, "too many organs!")
 			return
 		organ_list += organ
-		organ.forceMove(src)
+		organ.force_move(src)
 		balloon_alert(mod.wearer, "picked up [organ]")
 		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
 		drain_power(use_energy_cost)
@@ -184,7 +184,7 @@
 	if(!stored_organ)
 		return INITIALIZE_HINT_QDEL
 	appearance = stored_organ.appearance
-	stored_organ.forceMove(src)
+	stored_organ.force_move(src)
 	organ = stored_organ
 
 /obj/projectile/organ/Destroy()
@@ -199,14 +199,14 @@
 /obj/projectile/organ/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!isliving(target) || (organ.organ_flags & ORGAN_UNUSABLE))
-		organ.forceMove(drop_location())
+		organ.force_move(drop_location())
 		return
 	var/mob/living/organ_receiver = target
 	// bodyparts actually *do* hit a specific bodypart, but random variance would make this projectile unusable
 	// so we just fake it, and assume the organ always hits the place it needs to go
 	var/obj/item/bodypart/fake_hit_part = organ_receiver.get_bodypart(length(organ.valid_zones) ? pick(organ.valid_zones) : deprecise_zone(organ.zone))
 	if(!LIMB_HAS_SURGERY_STATE(fake_hit_part, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED))
-		organ.forceMove(drop_location())
+		organ.force_move(drop_location())
 		return
 
 	// handles swapping any existing organ out for us

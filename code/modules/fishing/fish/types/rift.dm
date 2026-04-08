@@ -87,7 +87,7 @@
 
 /obj/item/fish/starfish/chrystarfish/suicide_act(mob/living/user)
 	visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit suicide!"))
-	forceMove(user)
+	force_move(user)
 	// *everything*
 	for(var/obj/thing in user.get_contents())
 		if(QDELETED(thing) || istype(thing, /obj/item/bodypart/chest))
@@ -228,7 +228,7 @@
 			// No check, we always want sharky to bite jerky on 0
 			moc.visible_message(span_bolddanger("[src] bites directly into [moc] and squirms away from [moc.p_their()] grasp!"), span_userdanger("[src] sinks its fangs into you!!"))
 			moc.apply_damage(force, BRUTE, moc.get_active_hand(), wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, sharpness = sharpness, attacking_item = src)
-			forceMove(moc.drop_location())
+			force_move(moc.drop_location())
 			moc.painful_scream()
 			patience = max_patience
 			playsound(src, hitsound, 45)
@@ -261,7 +261,7 @@
 		)
 	user.apply_damage(force, BRUTE, user.get_active_hand(), wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, sharpness = sharpness, attacking_item = src)
 	if(!in_aquarium)
-		forceMove(user.drop_location())
+		force_move(user.drop_location())
 	user.painful_scream()
 
 /obj/item/fish/flumpulus
@@ -306,7 +306,7 @@
 
 /obj/item/fish/flumpulus/suicide_act(mob/living/user)
 	visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit suicide!"))
-	forceMove(user)
+	force_move(user)
 	. = MANUAL_SUICIDE
 	for(var/i in 1 to rand(5, 15))
 		addtimer(CALLBACK(src, PROC_REF(flump_attack), user), 0.4 SECONDS * i)
@@ -394,7 +394,7 @@
 
 /obj/item/fish/gullion/suicide_act(mob/living/user)
 	visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit suicide!"))
-	forceMove(user)
+	force_move(user)
 	var/datum/gas_mixture/environment = user.loc.return_air()
 	var/oxygen_in_air = locate(/datum/gas/oxygen) in environment.gases
 	if(!oxygen_in_air || (status == FISH_DEAD))

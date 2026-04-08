@@ -35,7 +35,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	. = ..()
 	for(var/mob/living/basic/mothroach/roach in contents)
 		roach.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, src) //scatter away!
-		roach.forceMove(drop_location())
+		roach.force_move(drop_location())
 
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"

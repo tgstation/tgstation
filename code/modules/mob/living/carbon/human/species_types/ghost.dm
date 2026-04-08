@@ -142,7 +142,7 @@
 		return
 
 	if(HAS_TRAIT_FROM(owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT))
-		grave.forceMove(get_turf(owner))
+		grave.force_move(get_turf(owner))
 		owner.AddComponent(/datum/component/leash, grave, distance = 7)
 		REMOVE_TRAIT(owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT)
 		owner.add_traits(list(
@@ -156,7 +156,7 @@
 		RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_died))
 	else
 		qdel(owner.GetComponent(/datum/component/leash))
-		owner.forceMove(get_turf(grave))
+		owner.force_move(get_turf(grave))
 		grave.moveToNullspace()
 		ADD_TRAIT(owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT)
 		owner.remove_traits(list(
@@ -186,7 +186,7 @@
 
 	if (isliving(owner)) // You know just in case we give an observer the crazy ability to walk through walls
 		var/mob/living/living_owner = owner
-		living_owner.forceMove(source)
+		living_owner.force_move(source)
 		living_owner.unequip_everything()
 
 ///Called AFTER the contents have been spit out, which means the owner is now in the skeleton. Let's clean up.

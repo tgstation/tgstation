@@ -331,7 +331,7 @@
 	var/ejected = length(stomach_contents)
 	// Throw out the stuff in our stomach
 	for(var/atom/movable/thing as anything in stomach_contents)
-		thing.forceMove(spit_as.drop_location())
+		thing.force_move(spit_as.drop_location())
 		if(length(targets))
 			thing.throw_at(pick(targets), spit_range, content_speed, thrower = spit_as, spin = TRUE)
 

@@ -573,7 +573,7 @@
 		user.put_in_hands(result)
 	else if(ismovable(result) && !istype(result, /obj/effect/spawner))
 		var/atom/movable/movable = result
-		movable.forceMove(user.drop_location())
+		movable.force_move(user.drop_location())
 	to_chat(user, span_notice("[recipe.name] crafted."))
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
 	return TRUE

@@ -24,7 +24,7 @@
 	if(isnull(chosen_one) && !spawn_anyway_if_no_player || !isdead(chosen_one)) //we can get sniped if there's multiple spawns, so check if dead
 		qdel(new_mob)
 		return
-	new_mob.forceMove(get_turf(get_spawn_turf()))
+	new_mob.force_move(get_turf(get_spawn_turf()))
 	REMOVE_TRAIT(new_mob, TRAIT_STASIS, type)
 	new_mob.ckey = chosen_one?.ckey
 

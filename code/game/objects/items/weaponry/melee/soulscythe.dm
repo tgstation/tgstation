@@ -167,7 +167,7 @@
 	if(ismob(loc))
 		var/mob/holder = loc
 		holder.temporarilyRemoveItemFromInventory(src)
-	forceMove(drop_location())
+	force_move(drop_location())
 
 /obj/item/soulscythe/proc/on_integrity_change(datum/source, old_value, new_value)
 	SIGNAL_HANDLER

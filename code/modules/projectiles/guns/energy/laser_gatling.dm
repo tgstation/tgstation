@@ -72,7 +72,7 @@
 /obj/item/minigunpack/proc/attach_gun(mob/user)
 	if(!gun)
 		gun = new(src)
-	gun.forceMove(src)
+	gun.force_move(src)
 	armed = FALSE
 	if(user)
 		to_chat(user, span_notice("You attach \the [gun] to \the [src]."))

@@ -113,6 +113,6 @@
 			user.put_in_hands(finger)
 		return
 	if(user.equip_to_slot_if_possible(finger, ITEM_SLOT_MASK, qdel_on_fail = FALSE, disable_warning = TRUE))
-		finger.forceMove(user)
+		finger.force_move(user)
 		return
 	balloon_alert(user, "mouth is covered!")

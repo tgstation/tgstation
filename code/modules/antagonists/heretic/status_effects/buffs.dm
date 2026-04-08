@@ -23,7 +23,7 @@
 	to_chat(owner,span_notice("You regain your physicality, returning you to your original location..."))
 	owner.alpha = initial(owner.alpha)
 	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE)
-	owner.forceMove(location)
+	owner.force_move(location)
 	owner.apply_status_effect(/datum/status_effect/crucible_soul_cooldown)
 	location = null
 

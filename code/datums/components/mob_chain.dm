@@ -105,7 +105,7 @@
 	SIGNAL_HANDLER
 	if (isnull(back))
 		return
-	back.forceMove(shrinking.loc)
+	back.force_move(shrinking.loc)
 	var/datum/action/cooldown/worm_contract/shrink = locate() in back.actions
 	if (isnull(shrink))
 		return

@@ -346,7 +346,7 @@
 	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src)) // the ectoplasm will handle moving us out of dormancy
 	goop.old_ckey = client.ckey
 	goop.revenant = src
-	forceMove(goop)
+	force_move(goop)
 
 /mob/living/basic/revenant/proc/on_move(datum/source, atom/entering_loc)
 	SIGNAL_HANDLER
@@ -458,7 +458,7 @@
 
 /mob/living/basic/revenant/proc/death_reset()
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
-	forceMove(get_turf(src))
+	force_move(get_turf(src))
 	// clean slate, so no more debilitating effects
 	remove_status_effect(/datum/status_effect/revenant/revealed)
 	remove_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant)

@@ -71,7 +71,7 @@
 
 	remove_egg() //to check if we already have a egg
 	var/obj/item/egg_target = attack_target
-	egg_target.forceMove(src)
+	egg_target.force_move(src)
 	carried_egg = attack_target
 	add_overlay("penguin_egg_overlay")
 	RegisterSignal(egg_target, COMSIG_QDELETING, PROC_REF(on_hatch_egg))
@@ -99,7 +99,7 @@
 /mob/living/basic/pet/penguin/proc/remove_egg()
 	if(isnull(carried_egg))
 		return
-	carried_egg.forceMove(get_turf(src))
+	carried_egg.force_move(get_turf(src))
 	UnregisterSignal(carried_egg, COMSIG_QDELETING)
 	carried_egg = null
 	cut_overlay("penguin_egg_overlay")

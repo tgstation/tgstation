@@ -114,7 +114,7 @@
 					if(!player.body)
 						failed += player
 						continue
-					player.body.forceMove(get_turf(player.assigned_landmark))
+					player.body.force_move(get_turf(player.assigned_landmark))
 				if(failed.len)
 					to_chat(usr, "List of players who no longer had a body (if you see this, the game is runtiming anyway so just hit \"New Game\" to end it)")
 					for(var/datum/mafia_role/fail as anything in failed)

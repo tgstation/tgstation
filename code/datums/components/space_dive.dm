@@ -90,7 +90,7 @@
 
 	parent.remove_traits(phase_traits, REF(src))
 
-	parent.forceMove(target || get_turf(parent))
+	parent.force_move(target || get_turf(parent))
 	qdel(jaunt)
 
 	// This needs to happen at the end, after all the traits and stuff is handled

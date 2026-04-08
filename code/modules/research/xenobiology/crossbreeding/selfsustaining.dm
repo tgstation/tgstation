@@ -55,7 +55,7 @@ Self-sustaining extracts:
 	if (!user.is_holding(src) || !can_interact(user))
 		return
 
-	extract.forceMove(user.drop_location())
+	extract.force_move(user.drop_location())
 	qdel(src)
 	user.put_in_active_hand(extract)
 

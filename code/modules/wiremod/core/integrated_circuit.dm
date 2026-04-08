@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		balloon_alert(user, "owner id set for [tool]")
 		owner_id = WEAKREF(tool)
 		return ITEM_INTERACT_SUCCESS
-		
+
 	return NONE
 
 /obj/item/integrated_circuit/screwdriver_act(mob/living/user, obj/item/tool)
@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 	tool.play_tool_sound(src)
 	user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
-	cell.forceMove(drop_location())
+	cell.force_move(drop_location())
 	set_cell(null)
 	return ITEM_INTERACT_SUCCESS
 
@@ -273,7 +273,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	if(user)
 		success = user.transferItemToLoc(to_add, src)
 	else
-		success = to_add.forceMove(src)
+		success = to_add.force_move(src)
 
 	if(!success)
 		return FALSE

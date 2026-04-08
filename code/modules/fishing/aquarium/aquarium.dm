@@ -95,7 +95,7 @@
 		possible_destinations_for_fish = list(droploc)
 	playsound(src, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 	for(var/atom/movable/content as anything in contents)
-		content.forceMove(pick(possible_destinations_for_fish))
+		content.force_move(pick(possible_destinations_for_fish))
 	if(fluid_type != AQUARIUM_FLUID_AIR)
 		var/datum/reagents/reagent_splash = new()
 		reagent_splash.add_reagent(/datum/reagent/water, 30)

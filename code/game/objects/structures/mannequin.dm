@@ -75,7 +75,7 @@
 	for(var/slot_flag in worn_items)
 		var/obj/item/worn_item = worn_items[slot_flag]
 		if(worn_item)
-			worn_item.forceMove(drop_location())
+			worn_item.force_move(drop_location())
 	return ..()
 
 /obj/structure/mannequin/Exited(atom/movable/gone, direction)

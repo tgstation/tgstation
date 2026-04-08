@@ -197,7 +197,7 @@
 	if(SEND_SIGNAL(victim, COMSIG_LIVING_BLOOD_CRAWL_PRE_CONSUMED, src, jaunter, blood) & COMPONENT_STOP_CONSUMPTION)
 		return FALSE
 
-	victim.forceMove(jaunter)
+	victim.force_move(jaunter)
 	victim.emote("scream")
 	jaunt_turf.visible_message(
 		span_boldwarning("[jaunter] drags [victim] into [blood]!"),
@@ -331,7 +331,7 @@
 		// Unregister the signals first
 		UnregisterSignal(friend, list(COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
 
-		friend.forceMove(release_turf)
+		friend.force_move(release_turf)
 		// Heals them back to state one
 		if(!friend.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE))
 			continue
@@ -352,7 +352,7 @@
 	if(new_stat == DEAD)
 		return
 	// Someone we've eaten has spontaneously revived; maybe regen coma, maybe a changeling
-	victim.forceMove(get_turf(victim))
+	victim.force_move(get_turf(victim))
 	victim.visible_message(span_warning("[victim] falls out of the air, covered in blood, with a confused look on their face."))
 	exit_blood_effect(victim)
 

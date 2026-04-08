@@ -356,7 +356,7 @@
 				qdel(E)
 		if(cell)
 			WR.crowbar_salvage += cell
-			cell.forceMove(WR)
+			cell.force_move(WR)
 			cell.use(rand(0, cell.charge), TRUE)
 			cell = null
 	return ..()

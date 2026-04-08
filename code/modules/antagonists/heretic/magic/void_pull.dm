@@ -47,4 +47,4 @@
 	victim.AdjustKnockdown(3 SECONDS)
 	victim.AdjustParalyzed(0.5 SECONDS)
 	for(var/i in 1 to 3)
-		victim.forceMove(get_step_towards(victim, caster))
+		victim.force_move(get_step_towards(victim, caster))

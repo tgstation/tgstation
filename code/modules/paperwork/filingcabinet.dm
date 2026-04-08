@@ -36,12 +36,12 @@
 	if(mapload)
 		for(var/obj/item/I in loc)
 			if(I.w_class < WEIGHT_CLASS_NORMAL) //there probably shouldn't be anything placed ontop of filing cabinets in a map that isn't meant to go in them
-				I.forceMove(src)
+				I.force_move(src)
 
 /obj/structure/filingcabinet/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/iron(loc, 2)
 	for(var/obj/item/obj in src)
-		obj.forceMove(loc)
+		obj.force_move(loc)
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(P.tool_behaviour == TOOL_WRENCH && LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -108,7 +108,7 @@
 	if(contents.len)
 		if(prob(40 + contents.len * 5))
 			var/obj/item/I = pick(contents)
-			I.forceMove(loc)
+			I.force_move(loc)
 			if(prob(25))
 				step_rand(I)
 			to_chat(user, span_notice("You pull \a [I] out of [src] at random."))
@@ -126,7 +126,7 @@
 		return
 	for(var/datum/record/crew/target in GLOB.manifest.general)
 		var/obj/item/paper/rapsheet = target.get_rapsheet()
-		rapsheet.forceMove(src)
+		rapsheet.force_move(src)
 		virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 					//before the records have been generated, so we do this inside the loop.
 

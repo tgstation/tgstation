@@ -496,7 +496,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		var/mob/item_carrier = to_insert.loc
 		item_carrier.transferItemToLoc(to_insert, real_location, animated = FALSE) // This allows has_unequipped() to be properly called.
 	else
-		to_insert.forceMove(real_location)
+		to_insert.force_move(real_location)
 	if(get(real_location, /mob) != user)
 		to_insert.do_pickup_animation(real_location, user)
 	item_insertion_feedback(user, to_insert, override)
@@ -606,7 +606,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(remove_to_loc)
 		reset_item(thing)
-		thing.forceMove(remove_to_loc)
+		thing.force_move(remove_to_loc)
 
 		if(!silent && do_rustle)
 			if(remove_rustle_sound)

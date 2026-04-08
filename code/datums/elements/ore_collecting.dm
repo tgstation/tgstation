@@ -22,5 +22,5 @@
 		return
 
 	var/atom/movable/movable_target = target
-	movable_target.forceMove(source)
+	movable_target.force_move(source)
 	return COMPONENT_HOSTILE_NO_ATTACK

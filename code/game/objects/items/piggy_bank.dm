@@ -92,7 +92,7 @@
 
 /obj/item/piggy_bank/atom_deconstruct(disassembled = TRUE)
 	for(var/obj/item/thing as anything in contents)
-		thing.forceMove(loc)
+		thing.force_move(loc)
 	//Smashing the piggy after the round is over doesn't count.
 	if(persistence_id && SSticker.current_state < GAME_STATE_FINISHED)
 		LAZYADD(SSpersistence.queued_broken_piggy_ids, persistence_id)

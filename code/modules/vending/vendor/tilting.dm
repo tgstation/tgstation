@@ -285,7 +285,7 @@
 			if (!isliving(atom_target))
 				return FALSE
 			var/mob/living/living_target = atom_target
-			forceMove(get_turf(living_target))
+			force_move(get_turf(living_target))
 			buckle_mob(living_target, force=TRUE)
 			living_target.visible_message(span_danger("[living_target] is pinned underneath [src]!"), span_userdanger("You are pinned down by [src]!"))
 			return TRUE

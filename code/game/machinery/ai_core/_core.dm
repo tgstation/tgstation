@@ -34,7 +34,7 @@
 			core_mmi.set_brainmob(new /mob/living/brain())
 			core_mmi.brainmob.container = core_mmi
 			core_mmi.update_appearance()
-		core_mmi.forceMove(src)
+		core_mmi.force_move(src)
 		src.core_mmi = core_mmi
 		set_anchored(TRUE)
 
@@ -79,8 +79,8 @@
 		new /obj/item/stack/sheet/rglass(drop_location(), 2)
 	if(state >= CORE_STATE_CABLED)
 		new /obj/item/stack/cable_coil(drop_location(), 5)
-	core_mmi?.forceMove(drop_location())
-	circuit?.forceMove(drop_location())
+	core_mmi?.force_move(drop_location())
+	circuit?.force_move(drop_location())
 	new /obj/item/stack/sheet/plasteel(drop_location(), 4)
 
 /obj/structure/ai_core/Destroy()
@@ -240,7 +240,7 @@ That prevents a few funky behaviors.
 	if(interaction == AI_TRANS_FROM_CARD)
 		AI.set_control_disabled(FALSE)
 		AI.radio_enabled = TRUE
-		AI.forceMove(loc) // to replace the terminal.
+		AI.force_move(loc) // to replace the terminal.
 		to_chat(AI, span_notice("You have been uploaded to a stationary terminal. Remote device connection restored."))
 		to_chat(user, "[span_boldnotice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null

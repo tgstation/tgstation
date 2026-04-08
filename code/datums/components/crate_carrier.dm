@@ -63,7 +63,7 @@
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 		LAZYADD(crates_in_hand, target)
-		movable_target.forceMove(source)
+		movable_target.force_move(source)
 		source.balloon_alert(source, "grabbed crate")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -81,5 +81,5 @@
 /// Drops all the crates in our crate list.
 /datum/component/crate_carrier/proc/drop_all_crates(atom/drop_to)
 	for(var/obj/structure/closet/crate/held_crate as anything in crates_in_hand)
-		held_crate.forceMove(drop_to)
+		held_crate.force_move(drop_to)
 		LAZYREMOVE(crates_in_hand, held_crate)

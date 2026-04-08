@@ -44,7 +44,7 @@
 
 	// List of components always contains the circuit board used to build it.
 	machine.component_parts = list(src)
-	forceMove(machine)
+	force_move(machine)
 
 	if(machine.circuit != src)
 		// This really shouldn't happen. If it somehow does, print out a stack trace and gracefully handle it.
@@ -150,7 +150,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 				part = new part(machine)
 			else if(ismovable(part))
 				var/atom/movable/thing = part
-				thing.forceMove(machine)
+				thing.force_move(machine)
 			machine.component_parts += part
 		replacement_parts = null
 	else

@@ -124,7 +124,7 @@
 	if(baller.grab_state < GRAB_AGGRESSIVE)
 		to_chat(baller, span_warning("You need a better grip to do that!"))
 		return
-	loser.forceMove(loc)
+	loser.force_move(loc)
 	loser.Paralyze(100)
 	visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
 	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
@@ -162,7 +162,7 @@
 		score_chance *= 0.5
 
 	if(prob(score_chance))
-		AM.forceMove(get_turf(src))
+		AM.force_move(get_turf(src))
 		// is it a 3 pointer shot
 		var/points = (distance > 2) ? 3 : 2
 		thrower.add_mood_event("basketball", /datum/mood_event/basketball_score)

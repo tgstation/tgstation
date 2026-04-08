@@ -32,10 +32,10 @@
 	else
 		if(placement_override == BLOB_RANDOM_PLACEMENT)
 			var/turf/force_tile = pick(GLOB.blobstart)
-			forceMove(force_tile) //got overrided? you're somewhere random, motherfucker
+			force_move(force_tile) //got overrided? you're somewhere random, motherfucker
 
 	if(placed && blob_core)
-		blob_core.forceMove(loc)
+		blob_core.force_move(loc)
 	else
 		var/obj/structure/blob/special/core/core = new(get_turf(src), src, 1)
 		core.overmind = src
@@ -87,7 +87,7 @@
 /** Moves the core elsewhere. */
 /mob/eye/blob/proc/transport_core()
 	if(blob_core)
-		forceMove(blob_core.drop_location())
+		force_move(blob_core.drop_location())
 
 /** Jumps to a node */
 /mob/eye/blob/proc/jump_to_node()
@@ -105,7 +105,7 @@
 
 	var/obj/structure/blob/special/node/chosen_node = nodes[node_name]
 	if(chosen_node)
-		forceMove(chosen_node.loc)
+		force_move(chosen_node.loc)
 
 /** Places important blob structures */
 /mob/eye/blob/proc/create_special(price, blobstrain, min_separation, needs_node, turf/tile)
@@ -245,9 +245,9 @@
 
 	var/turf/old_turf = get_turf(blob_core)
 	var/old_dir = blob_core.dir
-	blob_core.forceMove(tile)
+	blob_core.force_move(tile)
 	blob_core.setDir(blob.dir)
-	blob.forceMove(old_turf)
+	blob.force_move(old_turf)
 	blob.setDir(old_dir)
 
 /** Searches the tile for a blob and removes it. */

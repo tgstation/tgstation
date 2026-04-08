@@ -300,7 +300,7 @@
 		if(head)
 			head.drop_limb()
 			var/list/safeLevels = SSmapping.levels_by_any_trait(list(ZTRAIT_SPACE_RUINS, ZTRAIT_LAVA_RUINS, ZTRAIT_STATION, ZTRAIT_MINING))
-			head.forceMove(locate(rand(1, world.maxx), rand(1, world.maxy), pick(safeLevels)))
+			head.force_move(locate(rand(1, world.maxx), rand(1, world.maxy), pick(safeLevels)))
 			itemUser.visible_message(span_suicide("The portal snaps closed taking [user]'s head with it!"))
 		else
 			itemUser.visible_message(span_suicide("[user] looks even further depressed as they realize they do not have a head...and suddenly dies of shame!"))
@@ -471,7 +471,7 @@
 ///Force move victim to destination, explode destination, drop all victim's items, gib them
 /obj/item/syndicate_teleporter/proc/get_fragged(mob/living/victim, turf/destination, not_holding_tele = FALSE)
 	var/turf/mobloc = get_turf(victim)
-	victim.forceMove(destination)
+	victim.force_move(destination)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
 	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

@@ -72,7 +72,7 @@
 
 		// Poof!
 		do_smoke(location=current_turf)
-		dog.forceMove(adventure_turf)
+		dog.force_move(adventure_turf)
 		do_smoke(location=adventure_turf)
 
 /// Moves the new dog somewhere safe, equips it with the old one's inventory and makes it deadchat_playable.
@@ -83,13 +83,13 @@
 	var/turf/adventure_turf = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
 
 	do_smoke(location=current_turf)
-	new_dog.forceMove(adventure_turf)
+	new_dog.force_move(adventure_turf)
 	do_smoke(location=adventure_turf)
 
 	if(old_dog.inventory_back)
 		var/obj/item/old_dog_back = old_dog.inventory_back
 		old_dog.inventory_back = null
-		old_dog_back.forceMove(new_dog)
+		old_dog_back.force_move(new_dog)
 		new_dog.inventory_back = old_dog_back
 
 	if(old_dog.inventory_head)
@@ -313,7 +313,7 @@
 	if(silly_little_scarf)
 		var/list/backup_slots = list(LOCATION_LPOCKET, LOCATION_RPOCKET, LOCATION_BACKPACK)
 		humanspawned.temporarilyRemoveItemFromInventory(silly_little_scarf)
-		silly_little_scarf.forceMove(get_turf(humanspawned))
+		silly_little_scarf.force_move(get_turf(humanspawned))
 		humanspawned.equip_in_one_of_slots(silly_little_scarf, backup_slots, qdel_on_fail = FALSE)
 
 	var/obj/item/clothing/neck/link_scryer/loaded/new_scryer = new(spawned)
@@ -350,7 +350,7 @@
 
 	living_mob.equip_to_slot_if_possible(wallet, ITEM_SLOT_ID, initial=TRUE)
 
-	id_card.forceMove(wallet)
+	id_card.force_move(wallet)
 
 	var/holochip_amount = id_card.registered_account.account_balance
 	new /obj/item/holochip(wallet, holochip_amount)
@@ -483,7 +483,7 @@
 		if(ishuman(spawned))
 			var/obj/item/clothing/suit/costume/wellworn_shirt/skub/shirt = new(spawned.loc)
 			if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
-				shirt.forceMove(boxie)
+				shirt.force_move(boxie)
 		return
 
 	var/obj/item/storage/box/stickers/anti_skub/boxie = new(spawned.loc)
@@ -492,7 +492,7 @@
 		return
 	var/obj/item/clothing/suit/costume/wellworn_shirt/skub/anti/shirt = new(spawned.loc)
 	if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
-		shirt.forceMove(boxie)
+		shirt.force_move(boxie)
 
 #undef PRO_SKUB
 #undef ANTI_SKUB

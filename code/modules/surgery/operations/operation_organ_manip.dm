@@ -196,7 +196,7 @@
 		organ.Remove(limb.owner)
 	else
 		organ.bodypart_remove(limb)
-	organ.forceMove(limb.owner ? limb.owner.drop_location() : limb.drop_location())
+	organ.force_move(limb.owner ? limb.owner.drop_location() : limb.drop_location())
 	organ.on_surgical_removal(surgeon, limb, tool)
 
 /datum/surgery_operation/limb/organ_manipulation/proc/on_success_insert_organ(obj/item/bodypart/limb, mob/living/surgeon, obj/item/organ/organ)

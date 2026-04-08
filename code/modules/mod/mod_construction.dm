@@ -178,7 +178,7 @@
 				step = SCREWED_CORE_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
-					core.forceMove(drop_location())
+					core.force_move(drop_location())
 					balloon_alert(user, "core taken out")
 				step = START_STEP
 		if(SCREWED_CORE_STEP)
@@ -205,7 +205,7 @@
 				step = CHESTPLATE_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
-					helmet.forceMove(drop_location())
+					helmet.force_move(drop_location())
 					balloon_alert(user, "helmet removed")
 					helmet = null
 					step = SCREWED_CORE_STEP
@@ -220,7 +220,7 @@
 				step = GAUNTLETS_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
-					chestplate.forceMove(drop_location())
+					chestplate.force_move(drop_location())
 					balloon_alert(user, "chestplate removed")
 					chestplate = null
 					step = HELMET_STEP
@@ -235,7 +235,7 @@
 				step = BOOTS_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
-					gauntlets.forceMove(drop_location())
+					gauntlets.force_move(drop_location())
 					balloon_alert(user, "gauntlets removed")
 					gauntlets = null
 					step = CHESTPLATE_STEP
@@ -246,7 +246,7 @@
 					step = WRENCHED_ASSEMBLY_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
-					boots.forceMove(drop_location())
+					boots.force_move(drop_location())
 					balloon_alert(user, "boots removed")
 					boots = null
 					step = GAUNTLETS_STEP

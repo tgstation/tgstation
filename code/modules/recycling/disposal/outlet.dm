@@ -33,7 +33,7 @@
 	. = ..()
 	if(make_from)
 		setDir(make_from.dir)
-		make_from.forceMove(src)
+		make_from.force_move(src)
 		stored = make_from
 	else
 		stored = new /obj/structure/disposalconstruct(src, null , SOUTH , FALSE , src)
@@ -90,7 +90,7 @@
 	to_chat(user, span_notice("You start slicing the floorweld off [src]..."))
 	if(I.use_tool(src, user, 20))
 		to_chat(user, span_notice("You slice the floorweld off [src]."))
-		stored.forceMove(loc)
+		stored.force_move(loc)
 		transfer_fingerprints_to(stored)
 		stored = null
 		qdel(src)
@@ -140,7 +140,7 @@
 /obj/structure/disposaloutlet/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	. = ..()
 	if(!isnull(stored))
-		stored.forceMove(loc)
+		stored.force_move(loc)
 		transfer_fingerprints_to(stored)
 		stored = null
 		visible_message(span_warning("[src] is ripped free from the floor!"))
@@ -149,7 +149,7 @@
 /obj/structure/disposaloutlet/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	. = ..()
 	if(!isnull(stored))
-		stored.forceMove(loc)
+		stored.force_move(loc)
 		transfer_fingerprints_to(stored)
 		stored = null
 		visible_message(span_warning("[src] is ripped free from the floor!"))

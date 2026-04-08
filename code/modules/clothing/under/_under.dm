@@ -355,7 +355,7 @@
 		return
 
 	LAZYADD(attached_accessories, accessory)
-	accessory.forceMove(src)
+	accessory.force_move(src)
 
 	// Allow for accessories to react to the acccessory list now
 	accessory.successful_attach(src)
@@ -410,7 +410,7 @@
 /obj/item/clothing/under/proc/dump_attachments(atom/drop_to = drop_location())
 	for(var/obj/item/clothing/accessory/worn_accessory as anything in attached_accessories)
 		remove_accessory(worn_accessory, update = FALSE)
-		worn_accessory.forceMove(drop_to)
+		worn_accessory.force_move(drop_to)
 	update_accessory_overlay()
 
 /obj/item/clothing/under/atom_destruction(damage_flag)

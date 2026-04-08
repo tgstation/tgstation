@@ -550,7 +550,7 @@ GLOBAL_LIST_EMPTY(shuttle_frames_by_turf)
 		qdel(shuttle)
 		return
 	if(docking_port_needs_relocated)
-		shuttle.forceMove(pick(shuttle.underlying_areas_by_turf))
+		shuttle.force_move(pick(shuttle.underlying_areas_by_turf))
 	if(bounds_need_recalculation)
 		QDEL_NULL(shuttle.assigned_transit)
 		shuttle.calculate_docking_port_information()

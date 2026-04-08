@@ -124,7 +124,7 @@
 	light.set_light_flags(light.light_flags | LIGHT_ATTACHED)
 	// We may already exist within in our parent's contents... But if we don't move it over now
 	if(light.loc != parent)
-		light.forceMove(parent)
+		light.force_move(parent)
 
 	// We already have an action for the light for some reason? Clean it up
 	if(toggle_action_ref?.resolve())
@@ -189,7 +189,7 @@
 		return
 
 	// We were deconstructed in any other way, so we can just drop the light on the ground (which removes it via signal).
-	light.forceMove(source.drop_location())
+	light.force_move(source.drop_location())
 
 /// Signal proc for [COMSIG_QDELETING] that deletes our light if our parent is deleted.
 /datum/component/seclite_attachable/proc/on_parent_deleted(obj/item/source)
@@ -247,7 +247,7 @@
 	var/obj/item/flashlight/seclite/to_remove = light
 
 	// The forcemove here will call exited on the light, and automatically update our references / etc
-	to_remove.forceMove(source.drop_location())
+	to_remove.force_move(source.drop_location())
 	if(source.Adjacent(user) && !issilicon(user))
 		user.put_in_hands(to_remove)
 

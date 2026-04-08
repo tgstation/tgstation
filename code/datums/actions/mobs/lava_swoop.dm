@@ -73,7 +73,7 @@
 
 	var/turf/target_turf = get_turf(target)
 	while(!QDELETED(target) && owner.loc != target_turf && owner.z == target_turf.z)
-		owner.forceMove(get_step(owner, get_dir(owner, target_turf)))
+		owner.force_move(get_step(owner, get_dir(owner, target_turf)))
 		SLEEP_CHECK_DEATH(0.5, owner)
 		target_turf = get_turf(target)
 

@@ -219,7 +219,7 @@
 
 /obj/item/soulstone/proc/release_shades(mob/user, silent = FALSE)
 	for(var/mob/living/basic/shade/captured_shade in src)
-		captured_shade.forceMove(get_turf(user))
+		captured_shade.force_move(get_turf(user))
 		captured_shade.cancel_camera()
 		update_appearance()
 		if(!silent)

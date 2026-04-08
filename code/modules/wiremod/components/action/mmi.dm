@@ -214,7 +214,7 @@
 		COMSIG_MOVABLE_MOVED
 	))
 	if(removing.loc == src)
-		removing.forceMove(drop_location())
+		removing.force_move(drop_location())
 
 /obj/item/circuit_component/mmi/proc/confirm_ai_connect(mob/living/silicon/ai/user, atom/movable/shell)
 	var/confirmation = tgui_alert(user, "Connect to [shell]?", buttons = list("Yes", "No"))

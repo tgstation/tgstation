@@ -148,7 +148,7 @@
 	var/list/datum/point/beam_points
 	/// Last point in the beam
 	var/datum/point/last_point
-	/// Next forceMove will not create tracer end/start effects
+	/// Next force_move will not create tracer end/start effects
 	var/free_hitscan_forceMove = FALSE
 	// Used to prevent duplicate effects during lag chunking
 	/// If a hitscan muzzle effect has been created for this "path", reset during forceMoves.
@@ -803,7 +803,7 @@
 	if (hitscan)
 		beam_points = list()
 	free_hitscan_forceMove = TRUE
-	forceMove(starting)
+	force_move(starting)
 	last_projectile_move = world.time
 	fired = TRUE
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = angle)
@@ -850,7 +850,7 @@
 	if(!nondirectional_sprite)
 		transform = transform.TurnTo(angle, new_angle + projectile_angle)
 	free_hitscan_forceMove = TRUE
-	forceMove(center_turf)
+	force_move(center_turf)
 	entry_x = 0
 	entry_y = 0
 	angle = new_angle
@@ -1138,7 +1138,7 @@
 	beam_points[new_point] = null
 	last_point = new_point
 
-/obj/projectile/forceMove(atom/target)
+/obj/projectile/force_move(atom/target)
 	if (!hitscan || isnull(beam_points))
 		return ..()
 	create_hitscan_point()
@@ -1249,7 +1249,7 @@
 		return FALSE
 
 	free_hitscan_forceMove = TRUE
-	forceMove(source_loc)
+	force_move(source_loc)
 	starting = source_loc
 	pixel_x = source.pixel_x
 	pixel_y = source.pixel_y
@@ -1275,7 +1275,7 @@
 	// We've got moved by turf offsets
 	if (starting != source_loc)
 		starting = source_loc
-		forceMove(source_loc)
+		force_move(source_loc)
 
 	if(length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)

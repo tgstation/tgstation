@@ -186,7 +186,7 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 	return (source_turf && target_turf)
 
 /datum/action/innate/path_debug/jps/run_the_path(atom/movable/middle_man)
-	middle_man.forceMove(source_turf)
+	middle_man.force_move(source_turf)
 	display_turfs = get_path_to(middle_man, target_turf, max_distance, min_distance, list(), allowed_on_space, blacklisted_turf, skip_first = FALSE, diagonal_handling = diagonal_handling)
 	update_visuals()
 
@@ -258,6 +258,6 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 	return (source_turf && source_turf != shown_map?.start)
 
 /datum/action/innate/path_debug/sssp/run_the_path(atom/movable/middle_man)
-	middle_man.forceMove(source_turf)
+	middle_man.force_move(source_turf)
 	shown_map = get_sssp(middle_man, max_distance, list(), allowed_on_space, blacklisted_turf)
 	update_visuals()

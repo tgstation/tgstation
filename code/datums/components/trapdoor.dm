@@ -404,7 +404,7 @@
 		to_chat(user, span_warning("[src] has no internals!"))
 		return
 	to_chat(user, span_notice("You pop [internals] out of [src]."))
-	internals.forceMove(get_turf(src))
+	internals.force_move(get_turf(src))
 	internals = null
 
 /obj/item/trapdoor_remote/item_interaction(mob/living/user, obj/item/assembly/trapdoor/assembly, list/modifiers)

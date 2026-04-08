@@ -132,7 +132,7 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 		to_chat(chosen_one, span_notice(policy))
 
 	UnregisterSignal(result, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_LIVING_DEATH))
-	result.forceMove(drop_location())
+	result.force_move(drop_location())
 	if (prob(evil_chance))
 		message_admins("[ADMIN_LOOKUPFLW(result)] has become an evil clone tasked to kill everyone else called '[result.real_name]'.")
 		result.mind?.add_antag_datum(/datum/antagonist/evil_clone)

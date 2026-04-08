@@ -23,7 +23,7 @@
 
 /obj/projectile/meteor/Bump(atom/hit_target)
 	if(hit_target == firer)
-		forceMove(hit_target.loc)
+		force_move(hit_target.loc)
 		return
 	if(isobj(hit_target))
 		SSexplosions.med_mov_atom += hit_target

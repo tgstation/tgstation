@@ -105,7 +105,7 @@
 			move_dir = get_dir(src, target)
 		var/turf/turf_to_move = get_step(src, move_dir)
 		if (can_move(turf_to_move))
-			forceMove(turf_to_move)
+			force_move(turf_to_move)
 			setDir(move_dir)
 			for (var/mob/living/carbon/mob_to_dust in loc)
 				dust_mobs(mob_to_dust)

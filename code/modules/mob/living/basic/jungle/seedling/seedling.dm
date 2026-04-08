@@ -132,7 +132,7 @@
 		return
 
 	var/obj/item/can_target = attack_target
-	can_target.forceMove(src)
+	can_target.force_move(src)
 
 /mob/living/basic/seedling/proc/change_combatant_state(state)
 	combatant_state = state
@@ -140,7 +140,7 @@
 
 /mob/living/basic/seedling/attackby(obj/item/can, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	if(istype(can, /obj/item/reagent_containers/cup/watering_can) && isnull(held_can))
-		can.forceMove(src)
+		can.force_move(src)
 		return
 
 	return ..()
@@ -199,7 +199,7 @@
 	. = ..()
 	if(isnull(held_can))
 		return
-	held_can.forceMove(drop_location())
+	held_can.force_move(drop_location())
 
 /mob/living/basic/seedling/Destroy()
 	QDEL_NULL(held_can)

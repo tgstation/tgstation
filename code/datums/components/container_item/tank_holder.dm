@@ -24,7 +24,7 @@
 			return TRUE
 		to_chat(user, span_notice("You put [I] into [container]."))
 	else
-		I.forceMove(container)
+		I.force_move(container)
 	container.tank = I
 	container.set_density(make_density)
 	container.icon_state = tank_holder_icon_state

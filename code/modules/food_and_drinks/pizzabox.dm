@@ -301,7 +301,7 @@
 		step(P, fall_dir)
 		if(P.pizza && P.can_open_on_fall && prob(50)) //rip pizza
 			P.open = TRUE
-			P.pizza.forceMove(get_turf(P))
+			P.pizza.force_move(get_turf(P))
 			fall_dir = pick(GLOB.alldirs)
 			step(P.pizza, fall_dir)
 			P.pizza = null

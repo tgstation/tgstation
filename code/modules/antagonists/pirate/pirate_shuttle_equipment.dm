@@ -435,7 +435,7 @@
 	if(. == EXPORT_NOT_SOLD || dry_run)
 		return
 	var/turf/picked_turf = pick(GLOB.holdingfacility)
-	sold_item.forceMove(picked_turf)
+	sold_item.force_move(picked_turf)
 	var/mob_cost = get_cost(sold_item)
 	sold_item.process_capture(mob_cost, mob_cost * 1.2)
 	do_sparks(8, FALSE, sold_item)

@@ -206,7 +206,7 @@
 	if(!is_valid_infusion(target, user))
 		return
 	infusing_from = target
-	infusing_from.forceMove(src)
+	infusing_from.force_move(src)
 
 /// Verify that the given infusion source/mob is a dead creature.
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
@@ -231,7 +231,7 @@
 		balloon_alert(user, "no sample to eject!")
 		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "ejected sample")
-	infusing_from.forceMove(get_turf(src))
+	infusing_from.force_move(get_turf(src))
 	infusing_from = null
 	return CLICK_ACTION_SUCCESS
 

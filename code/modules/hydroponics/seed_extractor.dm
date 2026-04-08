@@ -37,7 +37,7 @@
 	for(var/_ in 0 to t_max)
 		var/obj/item/seeds/t_prod = seed.Copy()
 		seeds.Add(t_prod)
-		t_prod.forceMove(seedloc)
+		t_prod.force_move(seedloc)
 	qdel(object)
 	return seeds
 
@@ -230,7 +230,7 @@
 		else if(!taking_from.atom_storage?.attempt_remove(to_add, src, silent = TRUE))
 			return FALSE
 	else
-		to_add.forceMove(src)
+		to_add.force_move(src)
 
 	// do this at the end, in case any of the previous steps failed
 	if(has_seed_data)
@@ -305,7 +305,7 @@
 					else
 						to_chat(user, span_notice("[found_seed] falls onto the floor."))
 				else
-					found_seed.forceMove(drop_location())
+					found_seed.force_move(drop_location())
 					visible_message(span_notice("[found_seed] falls onto the floor."), null, span_hear("You hear a soft clatter."), COMBAT_MESSAGE_RANGE)
 				. = TRUE
 

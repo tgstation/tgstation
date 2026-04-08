@@ -27,7 +27,7 @@
 		paths_to_spawn = list(paths_to_spawn)
 	for(var/atom/movable/path as anything in paths_to_spawn)
 		if(!ispath(path))
-			path.forceMove(pod)
+			path.force_move(pod)
 		else
 			var/amount_to_spawn = paths_to_spawn[path] || 1
 			if(!isnum(amount_to_spawn))

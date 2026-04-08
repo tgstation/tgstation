@@ -572,7 +572,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	for(var/obj/structure/closet/closet in get_turf(src))
 		if(closet.opened)
 			continue
-		created_joining_mob.forceMove(closet)
+		created_joining_mob.force_move(closet)
 		return created_joining_mob
 	return created_joining_mob
 

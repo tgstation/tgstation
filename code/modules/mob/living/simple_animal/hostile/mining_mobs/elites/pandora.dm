@@ -152,7 +152,7 @@
 	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_3), T), 0.2 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport_3(turf/T)
-	forceMove(T)
+	force_move(T)
 	animate(src, alpha = 255, time = 2, easing = CIRCULAR_EASING|EASE_IN) //fade IN
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	visible_message(span_hierophant_warning("[src] fades in!"))

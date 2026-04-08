@@ -48,7 +48,7 @@
 	if(ishuman(newoccupant) && !Adjacent(newoccupant))
 		return FALSE
 	mecha_flags &= ~PANEL_OPEN //Close panel if open
-	newoccupant.forceMove(src)
+	newoccupant.force_move(src)
 	newoccupant.update_mouse_pointer()
 	add_fingerprint(newoccupant)
 	log_message("[newoccupant] moved in as pilot.", LOG_MECHA)
@@ -127,7 +127,7 @@
 		mob_container = AI
 		//stop listening to this signal, as the static update is now handled by the eyeobj's setLoc
 		AI.eyeobj?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
+		AI.eyeobj?.force_move(newloc) //kick the eye out as well
 		AI.controlled_equipment = null
 		AI.remote_control = null
 		if(forced)
@@ -162,13 +162,13 @@
 	else
 		return ..()
 	var/mob/living/ejector = M
-	mob_container.forceMove(newloc)//ejecting mob container
+	mob_container.force_move(newloc)//ejecting mob container
 	log_message("[mob_container] moved out.", LOG_MECHA)
 	SStgui.close_user_uis(M, src)
 	if(istype(mob_container, /obj/item/mmi))
 		var/obj/item/mmi/mmi = mob_container
 		if(mmi.brainmob)
-			ejector.forceMove(mmi)
+			ejector.force_move(mmi)
 			ejector.reset_perspective()
 			remove_occupant(ejector)
 		mmi.set_mecha(null)

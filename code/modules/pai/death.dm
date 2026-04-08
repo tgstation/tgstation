@@ -11,7 +11,7 @@
 	ghostize()
 
 	if (!QDELETED(card) && loc != card)
-		card.forceMove(drop_location())
+		card.force_move(drop_location())
 		card.pai = null
 		card.screen_image = initial(card.screen_image)
 		card.update_appearance()

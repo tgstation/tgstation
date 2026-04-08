@@ -211,14 +211,14 @@
 /obj/item/pet_carrier/proc/add_occupant(mob/living/occupant)
 	if((occupant in occupants) || !istype(occupant))
 		return
-	occupant.forceMove(src)
+	occupant.force_move(src)
 	occupants += occupant
 	occupant_weight += occupant.mob_size
 
 /obj/item/pet_carrier/proc/remove_occupant(mob/living/occupant, turf/new_turf)
 	if(!(occupant in occupants) || !istype(occupant))
 		return
-	occupant.forceMove(new_turf ? new_turf : drop_location())
+	occupant.force_move(new_turf ? new_turf : drop_location())
 	occupants -= occupant
 	occupant_weight -= occupant.mob_size
 	occupant.setDir(SOUTH)

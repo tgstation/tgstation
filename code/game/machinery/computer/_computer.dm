@@ -144,7 +144,7 @@
 	new_frame.circuit = circuit
 	// Circuit removal code is handled in /obj/machinery/Exited()
 	component_parts -= circuit
-	circuit.forceMove(new_frame)
+	circuit.force_move(new_frame)
 
 	if((machine_stat & BROKEN) || !disassembled)
 		var/atom/drop_loc = drop_location()

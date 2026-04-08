@@ -88,7 +88,7 @@
 		client.set_eye(card)
 	if (isturf(loc))
 		new /obj/effect/temp_visual/guardian/phase/out(loc)
-	forceMove(card)
+	force_move(card)
 	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
 	ADD_TRAIT(src, TRAIT_UNDENSE, PAI_FOLDED)
 	set_light_on(FALSE)
@@ -122,7 +122,7 @@
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, PAI_FOLDED)
-	forceMove(get_turf(card))
+	force_move(get_turf(card))
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.set_eye(src)

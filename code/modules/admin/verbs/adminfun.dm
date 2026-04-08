@@ -275,7 +275,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player
 		tomb = new path_or_instance(get_turf(target))
 	else
 		tomb = path_or_instance
-	target.forceMove(tomb)
+	target.force_move(tomb)
 	target.AddComponent(/datum/component/itembound, tomb)
 
 /**

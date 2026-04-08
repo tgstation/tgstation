@@ -82,5 +82,5 @@
 
 /obj/structure/blob/special/core/on_changed_z_level(turf/old_turf, turf/new_turf)
 	if(overmind && is_station_level(new_turf?.z))
-		overmind.forceMove(get_turf(src))
+		overmind.force_move(get_turf(src))
 	return ..()

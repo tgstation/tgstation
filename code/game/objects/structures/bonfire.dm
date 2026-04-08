@@ -68,7 +68,7 @@
 			return FALSE
 		if(!user.combat_mode && !(used_item.item_flags & ABSTRACT))
 			if(user.temporarilyRemoveItemFromInventory(used_item))
-				used_item.forceMove(get_turf(src))
+				used_item.force_move(get_turf(src))
 				//Center the icon where the user clicked.
 				if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 					return
@@ -87,7 +87,7 @@
 		return
 	if(!has_buckled_mobs() && do_after(user, 5 SECONDS, target = src))
 		for(var/obj/item/grown/log/bonfire_log in contents)
-			bonfire_log.forceMove(drop_location())
+			bonfire_log.force_move(drop_location())
 			bonfire_log.pixel_x += rand(1,4)
 			bonfire_log.pixel_y += rand(1,4)
 		if(can_buckle || grill)

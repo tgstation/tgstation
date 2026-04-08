@@ -390,7 +390,7 @@
 	var/datum/storage/holding_storage = mod.loc.atom_storage
 	if(!holding_storage || holding_storage.max_specific_storage >= mod.w_class)
 		return
-	mod.forceMove(mod.drop_location())
+	mod.force_move(mod.drop_location())
 
 /obj/item/mod/module/demoralizer
 	name = "MOD psi-echo demoralizer module"

@@ -81,7 +81,7 @@
 
 		set_brainmob(newbrain.brainmob)
 		newbrain.brainmob = null
-		brainmob.forceMove(src)
+		brainmob.force_move(src)
 		brainmob.container = src
 		var/fubar_brain = newbrain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED) //brain is from a suicider
 		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
@@ -131,14 +131,14 @@
 		return FALSE
 
 	if(isnull(new_brain.brainmob))
-		new_brain.forceMove(src)
+		new_brain.force_move(src)
 		brain = new_brain
 		brain.organ_flags |= ORGAN_FROZEN
 		name = "[initial(name)]: [copytext(new_brain.name, 1, -8)]"
 		update_appearance()
 		return TRUE
 
-	new_brain.forceMove(src)
+	new_brain.force_move(src)
 
 	var/mob/living/brain/new_brain_brainmob = new_brain.brainmob
 	if(!new_brain_brainmob.key && !new_brain.decoy_override)
@@ -146,7 +146,7 @@
 
 	set_brainmob(new_brain_brainmob)
 	new_brain.brainmob = null
-	brainmob.forceMove(src)
+	brainmob.force_move(src)
 	brainmob.container = src
 
 	var/fubar_brain = new_brain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED)
@@ -182,14 +182,14 @@
 /obj/item/mmi/proc/eject_brain(mob/user)
 	if(brainmob)
 		brainmob.container = null //Reset brainmob mmi var.
-		brainmob.forceMove(brain) //Throw mob into brain.
+		brainmob.force_move(brain) //Throw mob into brain.
 		brainmob.set_stat(DEAD)
 		brainmob.emp_damage = 0
 		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 		brain.brainmob = brainmob //Set the brain to use the brainmob
 		user.log_message("has ejected the brain of [key_name(brainmob)] from an MMI", LOG_GAME)
 		brainmob = null //Set mmi brainmob var to null
-	brain.forceMove(drop_location())
+	brain.force_move(drop_location())
 	if(Adjacent(user))
 		user.put_in_hands(brain)
 	brain.organ_flags &= ~ORGAN_FROZEN
@@ -211,7 +211,7 @@
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/brain/newbrain = H.get_organ_by_type(/obj/item/organ/brain)
 		newbrain.Remove(H, special = TRUE, movement_flags = NO_ID_TRANSFER)
-		newbrain.forceMove(src)
+		newbrain.force_move(src)
 		brain = newbrain
 	else if(!brain)
 		brain = new(src)

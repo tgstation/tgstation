@@ -178,7 +178,7 @@
 		for(var/i  in 1 to seed_count)
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
 			result.Add(harvestseeds)
-			harvestseeds.forceMove(output_loc)
+			harvestseeds.force_move(output_loc)
 		parent.update_tray(user, seed_count)
 		return result
 

@@ -216,7 +216,7 @@
 		// Stacks are split off into nullspace and need to be brought back
 		if (isstack(to_appear) && isnull(to_appear.loc))
 			var/obj/item/stack/as_stack = to_appear
-			as_stack.forceMove(loc)
+			as_stack.force_move(loc)
 
 	// And finally, give some user feedback
 	// No feedback is given on failure here -

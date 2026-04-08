@@ -66,7 +66,7 @@
 		return
 
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
-	forceMove(drop_location()) //In case it's in a backpack or someone's hand
+	force_move(drop_location()) //In case it's in a backpack or someone's hand
 
 	var/user_name = old_ckey
 	if(isnull(revenant.client))

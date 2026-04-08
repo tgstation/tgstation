@@ -104,7 +104,7 @@
 	update_static_data_for_all_viewers()
 	if(old_dish)
 		if(!user.put_in_hands(old_dish))
-			old_dish.forceMove(get_turf(src))
+			old_dish.force_move(get_turf(src))
 		balloon_alert(user, "dish swapped")
 	else
 		balloon_alert(user, "dish added")
@@ -115,7 +115,7 @@
 	if(!current_dish)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(!user.put_in_hands(current_dish))
-		current_dish.forceMove(get_turf(src))
+		current_dish.force_move(get_turf(src))
 	current_dish = null
 	update_static_data_for_all_viewers()
 	balloon_alert(user, "dish removed")

@@ -65,7 +65,7 @@
 	if(IS_CHANGELING(brain_owner) && !(movement_flags & NO_ID_TRANSFER))
 		if(brainmob && !(brain_owner.stat == DEAD || (HAS_TRAIT(brain_owner, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
-		forceMove(brain_owner)
+		force_move(brain_owner)
 		brain_owner.update_body_parts()
 		return
 
@@ -194,7 +194,7 @@
 				remove_skillchip(skillchip)
 
 				if(skillchip.removable)
-					skillchip.forceMove(drop_location())
+					skillchip.force_move(drop_location())
 					continue
 
 				qdel(skillchip)
@@ -456,7 +456,7 @@
 		// Directly change the new holding_brain.
 		skillchip.holding_brain = replacement_brain
 		//And move the actual obj into the new brain (contents)
-		skillchip.forceMove(replacement_brain)
+		skillchip.force_move(replacement_brain)
 
 		// Directly add them to the skillchip list in the new brain.
 		LAZYADD(replacement_brain.skillchips, skillchip)

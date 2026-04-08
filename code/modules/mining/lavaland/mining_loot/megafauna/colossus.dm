@@ -349,7 +349,7 @@
 
 	var/mob/living/picked_mob = pick(valid_mobs)
 	var/obj/structure/closet/stasis/possessor_container = new /obj/structure/closet/stasis(picked_mob)
-	user.forceMove(possessor_container)
+	user.force_move(possessor_container)
 
 /// Returns true if this is a mob you're allowed to possess
 /obj/machinery/anomalous_crystal/possessor/proc/is_valid_animal(mob/living/check_mob)
@@ -394,7 +394,7 @@
 		if(holder_animal)
 			holder_animal.mind.transfer_to(possessor)
 			possessor.mind.grab_ghost(force = TRUE)
-			possessor.forceMove(get_turf(holder_animal))
+			possessor.force_move(get_turf(holder_animal))
 			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			holder_animal.gib(DROP_ALL_REMAINS)
 			return ..()

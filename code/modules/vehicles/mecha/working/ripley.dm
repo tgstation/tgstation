@@ -306,7 +306,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	for(var/mob/stored in get_all_contents())
 		if(stored.client)
 			stack_trace("[stored] was in [src] when it was deleted! We skipped deconstruct(), or something.")
-			stored.forceMove(droploc)
+			stored.force_move(droploc)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/atom_deconstruct(damage_flag)
@@ -321,7 +321,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 /obj/item/mecha_parts/mecha_equipment/ejector/proc/drop_contents(atom/drop_loc = drop_location(), drop_prob = 100)
 	for(var/atom/movable/stored in src)
 		if(prob(drop_prob))
-			stored.forceMove(drop_loc || get_turf(src))
+			stored.force_move(drop_loc || get_turf(src))
 			step_rand(stored)
 
 /obj/item/mecha_parts/mecha_equipment/ejector/relay_container_resist_act(mob/living/user, obj/container)
@@ -330,7 +330,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		if(!user || user.stat != CONSCIOUS || user.loc != src || container.loc != src )
 			return
 		to_chat(user, span_notice("You successfully pushed [container] out of [src]!"))
-		container.forceMove(drop_location())
+		container.force_move(drop_location())
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, span_warning("You fail to push [container] out of [src]!"))
@@ -357,7 +357,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		if(!crate)
 			return FALSE
 		to_chat(chassis.occupants, "[icon2html(src,  chassis.occupants)][span_notice("You unload [crate].")]")
-		crate.forceMove(drop_location())
+		crate.force_move(drop_location())
 		if(crate == chassis.ore_box)
 			chassis.ore_box = null
 		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
@@ -398,7 +398,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		if(!passenger)
 			return FALSE
 		to_chat(chassis.occupants, "[icon2html(src,  chassis.occupants)][span_notice("You unload [passenger].")]")
-		passenger.forceMove(drop_location())
+		passenger.force_move(drop_location())
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), passenger, chassis.dir), 1) //That's right, one tick. Just enough to cause the tile move animation.
 		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		log_message("Unloaded [passenger]. Cargo compartment capacity: [cargo_capacity - contents.len]", LOG_MECHA)
@@ -439,7 +439,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	var/target_x = round(range * cos(angle + variance), 1) + current_turf.x
 	var/target_y = round(range * sin(angle + variance), 1) + current_turf.y
 	escapee.Knockdown(1) //Otherwise everyone hits eachother while being thrown
-	escapee.forceMove(drop_location())
+	escapee.force_move(drop_location())
 	escapee.throw_at(locate(target_x, target_y, current_turf.z), range, 1)
 
 /**

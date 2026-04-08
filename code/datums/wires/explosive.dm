@@ -94,7 +94,7 @@
 	assemblies -= color
 	assembly.connected = null
 	assembly.holder = null
-	assembly.forceMove(holder.drop_location())
+	assembly.force_move(holder.drop_location())
 	grenade.landminemode = null
 	return assembly
 

@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 		for(var/obj/effect/portal/wormhole/O as anything in wormholes)
 			var/turf/T = pick(pick_turfs)
 			if(isopenturf(T))
-				O.forceMove(T)
+				O.force_move(T)
 				playsound(T, SFX_PORTAL_CREATED, 20, TRUE, SILENCED_SOUND_EXTRARANGE)
 
 /datum/round_event/wormholes/end()

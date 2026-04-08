@@ -34,4 +34,4 @@
 	else
 		new_turf = get_random_station_turf()
 
-	parent.forceMove(new_turf)
+	parent.force_move(new_turf)

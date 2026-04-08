@@ -325,7 +325,7 @@
 			stack_trace("Trying to move a qdeleted casing of type [casing.type]!")
 			chambered = null
 		else if(casing_ejector || !from_firing)
-			casing.forceMove(drop_location()) //Eject casing onto ground.
+			casing.force_move(drop_location()) //Eject casing onto ground.
 			if(!QDELETED(casing))
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 				var/hitting_ground = TRUE
@@ -418,7 +418,7 @@
 	if (magazine.ammo_count())
 		chambered = (bolt_type == BOLT_TYPE_OPEN && !bolt_locked) || bolt_type == BOLT_TYPE_NO_BOLT ? magazine.get_and_shuffle_round() : magazine.get_round()
 		if (bolt_type != BOLT_TYPE_OPEN && !(internal_magazine && bolt_type == BOLT_TYPE_NO_BOLT))
-			chambered.forceMove(src)
+			chambered.force_move(src)
 		else
 			RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 		if(replace_new_round)
@@ -487,7 +487,7 @@
 		playsound(src, eject_sound, eject_sound_volume, eject_sound_vary)
 	else
 		playsound(src, eject_empty_sound, eject_sound_volume, eject_sound_vary)
-	magazine.forceMove(drop_location())
+	magazine.force_move(drop_location())
 	var/obj/item/ammo_box/magazine/old_mag = magazine
 	if (tac_load)
 		if (insert_magazine(user, tac_load, FALSE))
@@ -558,7 +558,7 @@
 
 /obj/item/gun/ballistic/proc/load_gun(obj/item/ammo, mob/living/user)
 	if (chambered && !chambered.loaded_projectile)
-		chambered.forceMove(drop_location())
+		chambered.force_move(drop_location())
 		if(length(magazine?.stored_ammo) && chambered != magazine.stored_ammo[1])
 			magazine.stored_ammo -= chambered
 		chambered = null
@@ -681,7 +681,7 @@
 	var/num_unloaded = 0
 	var/turf/drop_turf = get_turf(drop_location())
 	for(var/obj/item/ammo_casing/casing as anything in get_ammo_list(FALSE))
-		casing.forceMove(drop_location())
+		casing.force_move(drop_location())
 		casing.bounce_away(FALSE, NONE)
 		num_unloaded++
 		if(drop_turf && is_station_level(drop_turf.z))
@@ -748,7 +748,7 @@
 			user.visible_message(span_suicide("[user] blows [user.p_their()] brain[user.p_s()] out with [src]!"))
 			var/turf/target = get_ranged_target_turf(user, REVERSE_DIR(user.dir), BRAINS_BLOWN_THROW_RANGE)
 			B.Remove(user)
-			B.forceMove(T)
+			B.force_move(T)
 			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_atom_to_turf), /obj/effect/gibspawner/generic, B, 1, FALSE, user)
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
 			return BRUTELOSS
@@ -871,7 +871,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		if(BOLT_TYPE_OPEN) //emptying the chamber of an automatic weapon, because rack() doesn't do this to it
 			handle_chamber(chamber_next_round = FALSE)
 	if(!internal_magazine && magazine) //if a magazine is attached to the weapon, we remove it and throw it aside
-		magazine.forceMove(drop_location())
+		magazine.force_move(drop_location())
 		magazine.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), 1, 1)
 		magazine = null
 		update_icon() //updating the sprite of weapons without a magazine

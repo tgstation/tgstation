@@ -145,7 +145,7 @@
 	if(outside_soil)
 		stored_soil = outside_soil
 		stored_soil.remove_plant()
-		stored_soil.forceMove(src)
+		stored_soil.force_move(src)
 		STOP_PROCESSING(SSmachines, stored_soil)
 		animate(src, 100 MILLISECONDS, pixel_z = 4, easing = QUAD_EASING | EASE_OUT)
 		animate(time = 100 MILLISECONDS, pixel_z = 0, easing = QUAD_EASING | EASE_IN)
@@ -170,7 +170,7 @@
 		START_PROCESSING(SSmachines, stored_soil)
 
 
-	stored_soil.forceMove(interacting_with)
+	stored_soil.force_move(interacting_with)
 	playsound(stored_soil, placement_sound, 65, vary = TRUE)
 	stored_soil.on_place()
 	qdel(src)

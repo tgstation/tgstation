@@ -21,11 +21,11 @@
 	source.buckled?.unbuckle_mob(source, force = TRUE)
 
 	if(source.movement_type & VENTCRAWLING)
-		source.forceMove(get_turf(source))
+		source.force_move(get_turf(source))
 
 	var/mob/living/worm = new /mob/living/basic/wizard_worm(get_turf(source))
 	source.mind?.transfer_to(worm)
-	source.forceMove(worm)
+	source.force_move(worm)
 
 /mob/living/basic/wizard_worm
 	name = "Magic Worm"

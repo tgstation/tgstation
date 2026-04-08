@@ -42,7 +42,7 @@
 	var/obj/item/parent_item = parent
 	var/parent_loc = parent_item.loc
 	if(parent_loc && (parent_loc == holder_casing || parent_loc == holder_projectile))
-		parent_item.forceMove(get_turf(parent_item))
+		parent_item.force_move(get_turf(parent_item))
 	remove_from_dart(holder_casing, holder_projectile)
 	UnregisterSignal(parent, COMSIG_ITEM_PRE_ATTACK)
 
@@ -72,7 +72,7 @@
 			return
 		to_chat(user, span_notice("You insert [parent_item] into [dart]."))
 	else
-		parent_item.forceMove(dart_projectile)
+		parent_item.force_move(dart_projectile)
 	ADD_TRAIT(dart, TRAIT_DART_HAS_INSERT, REF(src))
 	RegisterSignal(dart, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_dart_attack_self))
 	RegisterSignal(dart, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_dart_examine_more))

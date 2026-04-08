@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	for(var/atom/movable/atom_contents as anything in holo_atom) //make sure that things inside of a holoitem are moved outside before destroying it
 		if(atom_contents.flags_1 & HOLOGRAM_1) //hologram in hologram is fine
 			continue
-		atom_contents.forceMove(target_turf)
+		atom_contents.force_move(target_turf)
 
 	if(istype(holo_atom, /obj/item/clothing/under))
 		var/obj/item/clothing/under/holo_clothing = holo_atom

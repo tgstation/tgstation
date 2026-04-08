@@ -256,7 +256,7 @@
 		if(Adjacent(user))
 			user.put_in_hands(holding)
 		else
-			holding.forceMove(get_turf(src))
+			holding.force_move(get_turf(src))
 		playsound(src, remove_sound, sound_vol)
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = null

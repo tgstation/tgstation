@@ -242,7 +242,7 @@
 		new loaded_item.type(drop_atom)
 		return
 
-	loaded_item.forceMove(drop_atom)
+	loaded_item.force_move(drop_atom)
 	loaded_item = null
 
 /obj/machinery/rnd/experimentor/proc/match_reaction(obj/item/matching, target_reaction)
@@ -286,7 +286,7 @@
 			var/mob/living/tracked_ian = tracked_ian_ref?.resolve()
 			if(tracked_ian)
 				do_smoke(1, src, tracked_ian.loc)
-				tracked_ian.forceMove(loc)
+				tracked_ian.force_move(loc)
 				investigate_log("Experimentor has stolen Ian!", INVESTIGATE_EXPERIMENTOR)
 			else
 				new /mob/living/basic/pet/dog/corgi(loc)
@@ -304,7 +304,7 @@
 			var/mob/living/tracked_runtime = tracked_runtime_ref?.resolve()
 			if(tracked_runtime)
 				do_smoke(1, src, tracked_runtime.loc)
-				tracked_runtime.forceMove(drop_location())
+				tracked_runtime.force_move(drop_location())
 				investigate_log("Experimentor has stolen Runtime!", INVESTIGATE_EXPERIMENTOR)
 			else
 				new /mob/living/basic/pet/cat(loc)

@@ -131,7 +131,7 @@
 /obj/structure/training_machine/proc/attach_item(obj/target)
 	remove_attached_item()
 	attached_item = target
-	attached_item.forceMove(src)
+	attached_item.force_move(src)
 	attached_item.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_PLANE
 	vis_contents += attached_item
 	RegisterSignal(attached_item, COMSIG_QDELETING, PROC_REF(on_attached_delete))
@@ -168,7 +168,7 @@
 	else if (user)
 		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), attached_item)
 	else
-		attached_item.forceMove(drop_location())
+		attached_item.force_move(drop_location())
 	if (throwing && !QDELETED(attached_item)) //Fun little thing where we throw out the old attached item when emagged
 		//We do a QDELETED check here because we don't want to throw the syndi toolbox, if it exists
 		var/destination = get_edge_target_turf(get_turf(src), pick(GLOB.alldirs))

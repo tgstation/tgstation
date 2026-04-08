@@ -191,7 +191,7 @@
 
 	log_combat(src, eatable, "ate", addition = "as morph")
 	visible_message(span_warning("[src] swallows [eatable] whole!"))
-	eatable.forceMove(src)
+	eatable.force_move(src)
 	if(update_health != 0)
 		adjust_health(update_health)
 

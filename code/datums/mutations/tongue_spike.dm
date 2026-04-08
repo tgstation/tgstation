@@ -37,7 +37,7 @@
 
 	to_fire.Remove(cast_on, special = TRUE)
 	var/obj/item/hardened_spike/spike = new spike_path(get_turf(cast_on), cast_on)
-	to_fire.forceMove(spike)
+	to_fire.force_move(spike)
 	spike.throw_at(get_edge_target_turf(cast_on, cast_on.dir), 14, 4, cast_on)
 
 /obj/item/hardened_spike
@@ -71,7 +71,7 @@
 /obj/item/hardened_spike/proc/morph_back()
 	visible_message(span_warning("[src] cracks and twists, changing shape!"))
 	for(var/obj/tongue as anything in contents)
-		tongue.forceMove(get_turf(src))
+		tongue.force_move(get_turf(src))
 	qdel(src)
 
 /datum/embedding/tongue_spike
@@ -180,5 +180,5 @@
 	// Message first because it'll shift back into a tongue right after moving
 	if (istype(spike_owner))
 		spike_owner.visible_message(span_notice("[chem_spike] falls out of [spike_owner]!"))
-	chem_spike.forceMove(get_turf(chem_spike))
+	chem_spike.force_move(get_turf(chem_spike))
 	return TRUE

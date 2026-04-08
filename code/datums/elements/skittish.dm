@@ -43,7 +43,7 @@
 		// need to rest before moving, otherwise "can't get crate to close" message will be printed erroneously
 		scooby.set_resting(TRUE, silent = TRUE)
 
-	scooby.forceMove(closet_turf)
+	scooby.force_move(closet_turf)
 
 	if(!closet.close(scooby))
 		to_chat(scooby, span_warning("You can't get [closet] to close!"))

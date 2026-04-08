@@ -18,7 +18,7 @@
 /obj/item/mod/core/proc/install(obj/item/mod/control/mod_unit)
 	mod = mod_unit
 	mod.core = src
-	forceMove(mod)
+	force_move(mod)
 	mod.update_charge_alert()
 
 /obj/item/mod/core/proc/uninstall()
@@ -126,7 +126,7 @@
 
 /obj/item/mod/core/standard/uninstall()
 	if(!QDELETED(cell))
-		cell.forceMove(drop_location())
+		cell.force_move(drop_location())
 	UnregisterSignal(mod, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_ATTACK_HAND,
@@ -203,7 +203,7 @@
 
 /obj/item/mod/core/standard/proc/install_cell(new_cell)
 	cell = new_cell
-	cell.forceMove(src)
+	cell.force_move(src)
 	mod.update_charge_alert()
 
 /obj/item/mod/core/standard/proc/uninstall_cell()
@@ -245,7 +245,7 @@
 	mod.balloon_alert(user, "cell removed")
 	playsound(mod, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	var/obj/item/cell_to_move = cell
-	cell_to_move.forceMove(drop_location())
+	cell_to_move.force_move(drop_location())
 	user.put_in_hands(cell_to_move)
 
 /obj/item/mod/core/standard/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
@@ -568,7 +568,7 @@
 	var/obj/item/soulstone/stone = locate() in components
 	set_theme(stone.theme)
 	for(var/mob/living/basic/shade/shade in stone)
-		shade.forceMove(get_turf(src))
+		shade.force_move(get_turf(src))
 		shade.visible_message(span_warning("[shade] is ejected from [stone] as it is inserted into [src]!"), span_warning("You are ejected from [stone] as it is inserted into [src]!"))
 	return ..()
 

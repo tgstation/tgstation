@@ -102,7 +102,7 @@
 
 	playsound(user, 'sound/effects/meatslap.ogg', vol = 50, vary = TRUE, ignore_walls = FALSE)
 
-	user.forceMove(door)
+	user.force_move(door)
 
 	register_user_and_door(user, door)
 
@@ -135,7 +135,7 @@
 
 	unregister_user_and_door()
 
-	user.forceMove(door.drop_location())
+	user.force_move(door.drop_location())
 
 	if (move_dir)
 		user.Move(get_step(user, move_dir), move_dir)

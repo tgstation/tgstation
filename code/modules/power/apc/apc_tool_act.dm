@@ -185,7 +185,7 @@
 		if(!pseudocircuit.adapt_circuit(user, circuit_cost = 0.5 * STANDARD_CELL_CHARGE))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/stock_parts/power_store/battery/crap/empty/bad_cell = new(src)
-		bad_cell.forceMove(src)
+		bad_cell.force_move(src)
 		cell = bad_cell
 		user.visible_message(
 			span_notice("[user] fabricates a weak power cell and places it into [src]."),
@@ -319,7 +319,7 @@
 		user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
 		balloon_alert(user, "cell removed")
 		var/turf/user_turf = get_turf(user)
-		cell.forceMove(user_turf)
+		cell.force_move(user_turf)
 		cell = null
 		charging = APC_NOT_CHARGING
 		update_appearance()
@@ -424,7 +424,7 @@
 			balloon_alert(user, "no board for a cell!")
 			return FALSE
 		var/obj/item/stock_parts/power_store/battery/crap/empty/C = new(src)
-		C.forceMove(src)
+		C.force_move(src)
 		cell = C
 		balloon_alert(user, "power cell installed")
 		update_appearance()

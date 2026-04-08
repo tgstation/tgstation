@@ -271,7 +271,7 @@
 		if(eyes && IS_ORGANIC_ORGAN(eyes)) // doesn't affect robotic eyes
 			if(drinker.is_blind())
 				eyes.Remove(drinker)
-				eyes.forceMove(get_turf(drinker))
+				eyes.force_move(get_turf(drinker))
 				to_chat(drinker, span_userdanger("You double over in pain as you feel your eyeballs liquify in your head!"))
 				drinker.emote("scream")
 				if(drinker.adjust_brute_loss(15 * metabolization_ratio, updating_health = FALSE, required_bodytype = affected_bodytype))
@@ -761,7 +761,7 @@
 	if(QDELETED(light_holder))
 		holder.del_reagent(type) //If we lost our light object somehow, remove the reagent
 	else if(light_holder.loc != drinker)
-		light_holder.forceMove(drinker)
+		light_holder.force_move(drinker)
 	return ..()
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_end_metabolize(mob/living/drinker)
@@ -1087,13 +1087,13 @@
 	for(var/obj/effect/decal/cleanable/nearby_blood in range(1, get_turf(source)))
 		if(!nearby_blood.can_bloodcrawl_in())
 			continue
-		source.forceMove(get_turf(nearby_blood))
+		source.force_move(get_turf(nearby_blood))
 		source.visible_message(span_warning("[nearby_blood] violently expels [source]!"))
 		crawl.exit_blood_effect(source)
 		return
 
 	// Fuck it, just eject them, thanks to some split second cleaning
-	source.forceMove(get_turf(source))
+	source.force_move(get_turf(source))
 	source.visible_message(span_warning("[source] appears from nowhere, covered in blood!"))
 	crawl.exit_blood_effect(source)
 

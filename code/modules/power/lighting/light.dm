@@ -453,7 +453,7 @@
 
 	var/obj/item/stock_parts/power_store/real_cell = get_cell()
 	if(!QDELETED(real_cell))
-		real_cell.forceMove(frame)
+		real_cell.force_move(frame)
 		frame.cell = real_cell
 
 /obj/machinery/light/attacked_by(obj/item/attacking_object, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -654,7 +654,7 @@
 	switchcount = 0
 
 	light_object.update_appearance()
-	light_object.forceMove(loc)
+	light_object.force_move(loc)
 
 	if(user) //puts it in our active hand
 		light_object.add_fingerprint(user)

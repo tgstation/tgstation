@@ -70,7 +70,7 @@
 
 	playsound(cocoon, 'sound/effects/blob/blobattack.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
 
-	owner.forceMove(cocoon)
+	owner.force_move(cocoon)
 
 	owner.add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_EMOTEMUTE), REF(src))
 
@@ -170,7 +170,7 @@
 	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_EMOTEMUTE), REF(src))
 
 	if (!QDELETED(owner))
-		owner.forceMove(cocoon.drop_location())
+		owner.force_move(cocoon.drop_location())
 
 	if (!QDELETED(cocoon))
 		qdel(cocoon)

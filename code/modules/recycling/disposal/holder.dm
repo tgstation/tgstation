@@ -58,7 +58,7 @@
 		if(atom_in_transit == src)
 			continue
 		SEND_SIGNAL(atom_in_transit, COMSIG_MOVABLE_DISPOSING, src, D, hasmob)
-		atom_in_transit.forceMove(src)
+		atom_in_transit.force_move(src)
 		if(iscyborg(atom_in_transit))
 			var/obj/item/dest_tagger/borg/tagger = locate() in atom_in_transit
 			if(tagger)
@@ -70,7 +70,7 @@
 	if(QDELETED(D.trunk))
 		D.expel(src) // no trunk connected, so expel immediately
 		return
-	forceMove(D.trunk)
+	force_move(D.trunk)
 	active = TRUE
 	setDir(DOWN)
 	start_moving()
@@ -156,7 +156,7 @@
 		vent_gas(T)
 	for(var/A in contents)
 		var/atom/movable/AM = A
-		AM.forceMove(drop_location())
+		AM.force_move(drop_location())
 	qdel(src)
 
 /// Finds the turf which should contain the next pipe
@@ -180,7 +180,7 @@
 /// Merge two holder objects, used when a holder meets a stuck holder
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
 	for(var/atom/movable/movable as anything in other)
-		movable.forceMove(src) // move everything in other holder to this one
+		movable.force_move(src) // move everything in other holder to this one
 		if(ismob(movable))
 			var/mob/mob = movable
 			mob.reset_perspective(src) // if a client mob, update eye to follow this holder

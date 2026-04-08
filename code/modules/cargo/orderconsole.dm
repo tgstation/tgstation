@@ -356,7 +356,7 @@
 			return FALSE
 		if(order.applied_coupon)
 			say("Coupon refunded.")
-			order.applied_coupon.forceMove(get_turf(src))
+			order.applied_coupon.force_move(get_turf(src))
 		SSshuttle.shopping_list -= order
 		qdel(order)
 		return TRUE

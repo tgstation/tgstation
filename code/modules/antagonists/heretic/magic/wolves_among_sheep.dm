@@ -133,5 +133,5 @@
 		for(var/obj/structure/window/to_revert in target)
 			to_revert.remove_alt_appearance("heretic_arena")
 	for(var/obj/machinery/door/airlock/to_restore in banished_airlocks)
-		to_restore.forceMove(banished_airlocks[to_restore])
+		to_restore.force_move(banished_airlocks[to_restore])
 		banished_airlocks -= to_restore

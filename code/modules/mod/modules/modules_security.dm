@@ -141,7 +141,7 @@
 /obj/item/mod/module/holster/on_uninstall(deleting = FALSE)
 	. = ..()
 	if(holstered)
-		holstered.forceMove(mod.drop_location())
+		holstered.force_move(mod.drop_location())
 
 /obj/item/mod/module/holster/Exited(atom/movable/gone, direction)
 	if(gone == holstered)

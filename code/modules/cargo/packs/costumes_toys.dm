@@ -315,5 +315,5 @@
 	parcel.giftwrapped = TRUE
 	parcel.update_icon()
 	parcel.drag_slowdown = crate.drag_slowdown
-	crate.forceMove(parcel)
+	crate.force_move(parcel)
 	parcel.name = "christmas gifts"

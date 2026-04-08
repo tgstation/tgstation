@@ -56,5 +56,5 @@
 	if (!istype(parrot_source))
 		return
 
-	parrot_source.ears.forceMove(parrot_source.drop_location())
+	parrot_source.ears.force_move(parrot_source.drop_location())
 	parrot_source.ears = null

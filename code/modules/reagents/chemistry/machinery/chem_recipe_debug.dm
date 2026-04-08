@@ -680,7 +680,7 @@
 					qdel(item)
 				var/obj/item/reagent_containers/cup/soup_pot/holder = required_container
 				for(var/obj/item as anything in holder.added_ingredients)
-					item.forceMove(pot)
+					item.force_move(pot)
 					LAZYADD(pot.added_ingredients, item)
 			try_put_in_hand(container, ui.user)
 

@@ -185,7 +185,7 @@
 	usb_cable_ref = WEAKREF(connecting_cable)
 	attached_circuit = connecting_cable.attached_circuit
 
-	connecting_cable.forceMove(attached_circuit)
+	connecting_cable.force_move(attached_circuit)
 	attach_circuit_components(attached_circuit)
 	if(user)
 		attached_circuit.interact(user)
@@ -258,7 +258,7 @@
 	unregister_physical_signals()
 
 	var/atom/atom_parent = parent
-	usb_cable.forceMove(atom_parent.drop_location())
+	usb_cable.force_move(atom_parent.drop_location())
 	usb_cable.balloon_alert_to_hearers("*snap*")
 
 	physical_object = null

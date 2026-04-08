@@ -220,7 +220,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		target.visible_message(span_danger("[user] starts putting [target] into [src]."), span_userdanger("[user] starts putting you into [src]!"))
 	if(!do_after(user, 2 SECONDS, target) || QDELETED(src))
 		return FALSE
-	target.forceMove(src)
+	target.force_move(src)
 	if(user == target)
 		user.visible_message(span_warning("[user] climbs into [src]."), span_notice("You climb into [src]."))
 	else
@@ -257,7 +257,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		qdel(bag)
 	else
 		bag.add_fingerprint(user)
-		bag.forceMove(src)
+		bag.force_move(src)
 
 	add_fingerprint(user)
 	update_appearance()
@@ -278,7 +278,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
 /// Makes a mob in the disposal climb out
 /obj/machinery/disposal/proc/go_out(mob/user)
-	user.forceMove(loc)
+	user.force_move(loc)
 	update_appearance()
 
 // clumsy monkeys and xenos can only pull the flush lever
@@ -342,13 +342,13 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	if(stored)
 		var/obj/structure/disposalconstruct/construct = stored
 		stored = null
-		construct.forceMove(T)
+		construct.force_move(T)
 		transfer_fingerprints_to(construct)
 		construct.set_anchored(FALSE)
 		construct.set_density(TRUE)
 		construct.update_appearance()
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
-		AM.forceMove(T)
+		AM.force_move(T)
 
 ///How disposal handles getting a storage dump from a storage object
 /obj/machinery/disposal/proc/on_storage_dump(datum/source, datum/storage/storage, mob/user)
@@ -400,7 +400,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		return
 	density = cur_density
 	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-	target.forceMove(src)
+	target.force_move(src)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
@@ -509,7 +509,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 /obj/machinery/disposal/bin/on_deconstruction(disassembled)
 	. = ..()
 	if(!isnull(mounted_tagger))
-		mounted_tagger.forceMove(drop_location())
+		mounted_tagger.force_move(drop_location())
 		mounted_tagger = null
 
 /obj/machinery/disposal/bin/ui_state(mob/user)
@@ -567,7 +567,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	if(isitem(AM) && AM.CanEnterDisposals())
 		var/mob/thrower = throwingdatum?.get_thrower()
 		if((istype(thrower) && HAS_TRAIT(thrower, TRAIT_THROWINGARM)) || prob(75))
-			AM.forceMove(src)
+			AM.force_move(src)
 			visible_message(span_notice("[AM] lands in [src]."))
 			update_appearance()
 		else
@@ -731,13 +731,13 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
 	if(isobj(AM))
 		var/obj/O = AM
-		O.forceMove(src)
+		O.force_move(src)
 	else if(ismob(AM))
 		var/mob/M = AM
 		if(prob(2)) // to prevent mobs being stuck in infinite loops
 			to_chat(M, span_warning("You hit the edge of the chute."))
 			return
-		M.forceMove(src)
+		M.force_move(src)
 	flush()
 
 

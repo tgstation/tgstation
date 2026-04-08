@@ -93,7 +93,7 @@
 	var/target_x = x + x_offset
 	var/target_y = y + y_offset
 	var/turf/target = locate(target_x, target_y, z)
-	ghost.forceMove(target)
+	ghost.force_move(target)
 
 /// Updates diagnostic huds
 /obj/machinery/launchpad/proc/update_hud()

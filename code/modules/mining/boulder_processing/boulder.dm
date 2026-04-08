@@ -220,7 +220,7 @@
 		visible_message(span_notice("[pick(quips)] Something falls out of \the [src]!"))
 		playsound(loc, 'sound/effects/pickaxe/picaxe1.ogg', 60, FALSE)
 		for(var/obj/item/content as anything in contents)
-			content.forceMove(get_turf(src))
+			content.force_move(get_turf(src))
 	qdel(src)
 
 #undef PLATFORM_WARNING_MODIFIER

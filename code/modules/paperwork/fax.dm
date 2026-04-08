@@ -194,7 +194,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	if (can_load_item(item))
 		if (!loaded_item_ref?.resolve())
 			loaded_item_ref = WEAKREF(item)
-			item.forceMove(src)
+			item.force_move(src)
 			update_appearance()
 		return
 	return ..()
@@ -295,7 +295,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 			var/obj/item/loaded = loaded_item_ref?.resolve()
 			if (!loaded)
 				return
-			loaded.forceMove(drop_location())
+			loaded.force_move(drop_location())
 			loaded_item_ref = null
 			playsound(src, 'sound/machines/eject.ogg', 50, FALSE)
 			update_appearance()
@@ -460,7 +460,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
  * * vend - Item to vend from the fax machine.
  */
 /obj/machinery/fax/proc/vend_item(obj/item/vend)
-	vend.forceMove(drop_location())
+	vend.force_move(drop_location())
 	if (hurl_contents)
 		vend.throw_at(get_edge_target_turf(drop_location(), pick(GLOB.alldirs)), rand(1, 4), EMBED_THROWSPEED_THRESHOLD)
 	if (is_type_in_list(vend, exotic_types) && prob(20))

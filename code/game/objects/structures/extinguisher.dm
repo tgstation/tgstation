@@ -118,7 +118,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 /obj/structure/extinguisher_cabinet/attack_tk(mob/user)
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(stored_extinguisher)
-		stored_extinguisher.forceMove(loc)
+		stored_extinguisher.force_move(loc)
 		to_chat(user, span_notice("You telekinetically remove [stored_extinguisher] from [src]."))
 		stored_extinguisher = null
 		opened = TRUE
@@ -165,7 +165,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		broken = 1
 		opened = 1
 		if(stored_extinguisher)
-			stored_extinguisher.forceMove(loc)
+			stored_extinguisher.force_move(loc)
 			stored_extinguisher = null
 		update_appearance(UPDATE_ICON)
 
@@ -176,7 +176,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 	else
 		new /obj/item/stack/sheet/iron (loc, 2)
 	if(stored_extinguisher)
-		stored_extinguisher.forceMove(loc)
+		stored_extinguisher.force_move(loc)
 		stored_extinguisher = null
 
 /obj/item/wallframe/extinguisher_cabinet

@@ -89,5 +89,5 @@
 	if (land_turf.is_blocked_turf(exclude_mobs = TRUE))
 		land_turf = carbon_owner.drop_location()
 
-	removing_organ.forceMove(land_turf)
+	removing_organ.force_move(land_turf)
 	COOLDOWN_START(src, consequence_cooldown, 10 SECONDS)

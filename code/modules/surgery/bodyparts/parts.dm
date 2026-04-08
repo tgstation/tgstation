@@ -80,7 +80,7 @@
 
 /obj/item/bodypart/chest/drop_organs(mob/user, violent_removal)
 	if(cavity_item)
-		cavity_item.forceMove(drop_location())
+		cavity_item.force_move(drop_location())
 		cavity_item = null
 	return ..()
 

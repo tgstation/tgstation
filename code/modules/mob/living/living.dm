@@ -218,8 +218,8 @@
 
 			var/move_failed = FALSE
 			if(!M.Move(oldloc) || !Move(oldMloc))
-				M.forceMove(oldMloc)
-				forceMove(oldloc)
+				M.force_move(oldMloc)
+				force_move(oldloc)
 				move_failed = TRUE
 			if(!src_passmob)
 				pass_flags &= ~PASSMOB
@@ -1950,7 +1950,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	SEND_SIGNAL(src, COMSIG_LIVING_THUD)
 	return
 
-/mob/living/forceMove(atom/destination)
+/mob/living/force_move(atom/destination)
 	if(!currently_z_moving)
 		stop_pulling()
 		if(buckled && !HAS_TRAIT(src, TRAIT_CANNOT_BE_UNBUCKLED))
@@ -2192,9 +2192,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
 	if(error_landmark)
-		forceMove(error_landmark.loc)
+		force_move(error_landmark.loc)
 	else
-		forceMove(locate(4,4,1)) //Even if the landmark is missing, this should put them in the error room.
+		force_move(locate(4,4,1)) //Even if the landmark is missing, this should put them in the error room.
 		//If you're here from seeing this error, I'm sorry. I'm so very sorry. The error landmark should be a sacred object that nobody has any business messing with, and someone did!
 		//Consider seeing a therapist.
 		var/ERROR_ERROR_LANDMARK_ERROR = "ERROR-ERROR: ERROR landmark missing!"

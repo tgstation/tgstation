@@ -69,7 +69,7 @@
 	if(locate(/obj/item/clothing/neck/petcollar) in source)
 		user.balloon_alert(source, "already wearing a collar!")
 		return NONE
-	attacking_item.forceMove(source)
+	attacking_item.force_move(source)
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/element/wears_collar/proc/on_overlays_updated(mob/living/source, list/overlays)

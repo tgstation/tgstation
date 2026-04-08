@@ -210,7 +210,7 @@
 		stop_process(FALSE)
 
 	if(beaker)
-		beaker.forceMove(drop_location())
+		beaker.force_move(drop_location())
 		beaker = null
 
 	update_appearance(UPDATE_ICON)
@@ -449,7 +449,7 @@
 		if(!silent)
 			to_chat(user, span_notice("You eject [ejected_beaker] from [src] onto the ground."))
 
-		ejected_beaker.forceMove(drop_location())
+		ejected_beaker.force_move(drop_location())
 
 	beaker = null
 	update_appearance(UPDATE_ICON)

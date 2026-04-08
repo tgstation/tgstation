@@ -29,7 +29,7 @@
 		return FALSE
 	COOLDOWN_START(src, box_cooldown, 10 SECONDS)
 	var/box = new boxtype(owner.drop_location())
-	owner.forceMove(box)
+	owner.force_move(box)
 	owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
 /datum/action/item_action/agent_box/Grant(mob/grant_to)

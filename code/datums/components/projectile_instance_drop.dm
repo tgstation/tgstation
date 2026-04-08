@@ -12,7 +12,7 @@
 	src.dropped_atom = dropped_atom
 
 /datum/component/projectile_instance_drop/RegisterWithParent()
-	dropped_atom.forceMove(parent)
+	dropped_atom.force_move(parent)
 	RegisterSignal(parent, COMSIG_PROJECTILE_RANGE_OUT, PROC_REF(drop_item))
 	RegisterSignal(parent, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_projectile_hit))
 	RegisterSignals(dropped_atom, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_instance_left))
@@ -38,7 +38,7 @@
 	SIGNAL_HANDLER
 	var/turf/drop_turf = source.drop_location()
 	var/atom/movable/dropping = dropped_atom
-	dropping.forceMove(drop_turf)
+	dropping.force_move(drop_turf)
 	if (isitem(dropping))
 		var/obj/item/item_dropped = dropping
 		item_dropped.do_drop_animation(drop_turf)

@@ -161,8 +161,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/dump_location = drop_location()
 
 	// object_copy can be a traitor objective, don't qdel
-	object_copy?.forceMove(dump_location)
-	toner_cartridge?.forceMove(dump_location)
+	object_copy?.force_move(dump_location)
+	toner_cartridge?.force_move(dump_location)
 
 	for(var/paper_path in paper_stack)
 		var/paper_amount = paper_stack[paper_path]
@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /obj/machinery/photocopier/Destroy()
 	// object_copy can be a traitor objective, don't qdel
-	object_copy?.forceMove(drop_location())
+	object_copy?.force_move(drop_location())
 
 	QDEL_NULL(toner_cartridge)
 	paper_stack = null
@@ -344,7 +344,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 				return FALSE
 			var/success = usr.put_in_hands(toner_cartridge)
 			if(!success)
-				toner_cartridge.forceMove(drop_location())
+				toner_cartridge.force_move(drop_location())
 
 			toner_cartridge = null
 			return TRUE
@@ -453,7 +453,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 		// reveal our copied item
 		if(!QDELETED(copied_obj))
-			copied_obj.forceMove(drop_location())
+			copied_obj.force_move(drop_location())
 			give_pixel_offset(copied_obj)
 			copies_made += copied_obj
 		copies_left--
@@ -651,10 +651,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  */
 /obj/machinery/photocopier/proc/remove_photocopy(mob/user, obj/item/object)
 	if(issilicon(user))
-		object.forceMove(drop_location())
+		object.force_move(drop_location())
 		return
 
-	object.forceMove(user.loc)
+	object.force_move(user.loc)
 	user.put_in_hands(object)
 
 	to_chat(user, span_notice("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
@@ -695,7 +695,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			balloon_alert(user, "another cartridge inside!")
 			return ITEM_INTERACT_FAILURE
 
-		tool.forceMove(src)
+		tool.force_move(src)
 		toner_cartridge = tool
 		balloon_alert(user, "cartridge inserted")
 		return ITEM_INTERACT_SUCCESS
@@ -782,7 +782,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(!user.temporarilyRemoveItemFromInventory(object))
 		return
 	object_copy = object
-	object.forceMove(src)
+	object.force_move(src)
 	balloon_alert(user, "copy object inserted")
 	flick("photocopier1", src)
 
@@ -810,11 +810,11 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		else
 			user.visible_message(span_warning("[user] puts [target] onto the photocopier!"), span_notice("You put [target] onto the photocopier."))
 
-		target.forceMove(drop_location())
+		target.force_move(drop_location())
 		ass = target
 
 		if(!isnull(object_copy))
-			object_copy.forceMove(drop_location())
+			object_copy.force_move(drop_location())
 			visible_message(span_warning("[object_copy] is shoved out of the way by [ass]!"))
 			object_copy = null
 

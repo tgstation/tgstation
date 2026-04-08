@@ -224,7 +224,7 @@ Difficulty: Hard
 				to_chat(L, span_userdanger("[src] drags you through the blood!"))
 				playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, TRUE, -1)
 				var/turf/targetturf = get_step(src, dir)
-				L.forceMove(targetturf)
+				L.force_move(targetturf)
 				playsound(targetturf, 'sound/effects/magic/exit_blood.ogg', 100, TRUE, -1)
 				addtimer(CALLBACK(src, PROC_REF(devour), L), 0.2 SECONDS)
 	SLEEP_CHECK_DEATH(1, src)

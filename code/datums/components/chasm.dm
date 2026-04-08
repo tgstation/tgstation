@@ -161,7 +161,7 @@
 		// send to the turf below
 		dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[fall_message]"))
 		below_turf.visible_message(span_boldwarning("[dropped_thing] falls from above!"))
-		dropped_thing.forceMove(below_turf)
+		dropped_thing.force_move(below_turf)
 		if(isliving(dropped_thing))
 			var/mob/living/fallen = dropped_thing
 			fallen.Paralyze(100)
@@ -223,7 +223,7 @@
 	dropped_thing.transform = oldtransform
 	dropped_thing.pixel_y = oldoffset
 
-	if(!dropped_thing.forceMove(storage))
+	if(!dropped_thing.force_move(storage))
 		parent.visible_message(span_boldwarning("[parent] spits out [dropped_thing]!"))
 		dropped_thing.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 
@@ -334,7 +334,7 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 		turf.visible_message(span_boldwarning("[escapee] busts through [turf], leaping out of the chasm below"))
 		turf.ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 	ADD_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT) //Otherwise they instantly fall back in
-	escapee.forceMove(turf)
+	escapee.force_move(turf)
 	escapee.throw_at(get_edge_target_turf(turf, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 	REMOVE_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT)
 	escapee.Paralyze(20 SECONDS, TRUE)

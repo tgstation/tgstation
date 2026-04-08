@@ -164,7 +164,7 @@
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
 	if(do_after(user, 3 SECONDS, target = user))
-		pad.forceMove(get_turf(src))
+		pad.force_move(get_turf(src))
 		pad.update_indicator()
 		pad.closed = FALSE
 		user.transferItemToLoc(src, pad, TRUE)

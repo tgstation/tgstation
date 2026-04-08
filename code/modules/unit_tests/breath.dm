@@ -17,7 +17,7 @@
 /datum/unit_test/breath/breath_sanity/Run()
 	// Breathing from turf.
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
-	lab_rat.forceMove(run_loc_floor_bottom_left)
+	lab_rat.force_move(run_loc_floor_bottom_left)
 	var/turf/open/to_fill = run_loc_floor_bottom_left
 	to_fill.initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	to_fill.air = to_fill.create_gas_mixture()

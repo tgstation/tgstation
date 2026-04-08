@@ -161,7 +161,7 @@
 
 	src.corpse = corpse
 	src.dead_mind = dead_mind
-	corpse.forceMove(src)
+	corpse.force_move(src)
 	name = "spectre of [corpse]"
 	setup_icon(corpse)
 	DO_FLOATING_ANIM(src)
@@ -206,7 +206,7 @@
 	visible_message(span_boldnotice("[corpse] suddenly shudders to life!"))
 	corpse.remove_traits(list(TRAIT_NO_TELEPORT, TRAIT_AI_PAUSED), MAGIC_TRAIT)
 	corpse.remove_status_effect(/datum/status_effect/grouped/stasis, MAGIC_TRAIT)
-	corpse.forceMove(loc)
+	corpse.force_move(loc)
 
 /// If the body is destroyed then we can't come back, F
 /obj/effect/spectre_of_resurrection/proc/on_corpse_deleted()

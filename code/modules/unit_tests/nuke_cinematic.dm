@@ -26,8 +26,8 @@
 	var/turf/turf_on_station = get_turf(observer_point)
 	TEST_ASSERT(is_station_level(turf_on_station.z), "Nuke cinematic test didn't get a turf which was located on the station.")
 
-	nuke.forceMove(turf_on_station)
-	nuked.forceMove(turf_on_station)
+	nuke.force_move(turf_on_station)
+	nuked.force_move(turf_on_station)
 
 	// Pause the check so we don't, y'know, end the round
 	SSticker.roundend_check_paused = TRUE

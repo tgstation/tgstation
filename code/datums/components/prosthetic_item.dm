@@ -108,7 +108,7 @@
 
 	UnregisterSignal(owner, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_LIVING_UNARMED_ATTACK))
 	if(item_limb.loc == owner)
-		item_limb.forceMove(owner.drop_location())
+		item_limb.force_move(owner.drop_location())
 	if(QDELING(parent))
 		return
 	qdel(parent) // which nulls all the references and signals

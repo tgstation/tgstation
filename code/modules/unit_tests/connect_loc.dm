@@ -11,7 +11,7 @@
 	SEND_SIGNAL(current_turf, COMSIG_MOCK_SIGNAL)
 	TEST_ASSERT_EQUAL(watcher.times_called, 1, "After firing mock signal, connect_loc didn't send it")
 
-	watcher.forceMove(run_loc_floor_top_right)
+	watcher.force_move(run_loc_floor_top_right)
 
 	SEND_SIGNAL(current_turf, COMSIG_MOCK_SIGNAL)
 	TEST_ASSERT_EQUAL(watcher.times_called, 1, "Mock signal was fired on old turf, but connect_loc still picked it up")

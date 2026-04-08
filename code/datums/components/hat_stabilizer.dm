@@ -218,7 +218,7 @@
 	UnregisterSignal(attached_hat, COMSIG_MOVABLE_MOVED)
 
 	if (attached_hat.loc == parent)
-		attached_hat.forceMove(movable_parent.drop_location())
+		attached_hat.force_move(movable_parent.drop_location())
 
 	if(!isnull(user))
 		. = user.put_in_active_hand(attached_hat)

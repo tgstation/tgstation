@@ -10,9 +10,9 @@
 	var/turf/in_range = locate(center.x + 2, center.y + 2, center.z)
 	var/turf/out_of_range = locate(in_range.x + 1, in_range.y + 1, in_range.z)
 
-	dio.forceMove(center)
-	kakyoin.forceMove(in_range)
-	jotaro.forceMove(out_of_range)
+	dio.force_move(center)
+	kakyoin.force_move(in_range)
+	jotaro.force_move(out_of_range)
 
 	var/datum/action/cooldown/spell/timestop/timestop = new(dio)
 	timestop.spell_requirements = NONE

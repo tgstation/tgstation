@@ -373,7 +373,7 @@
 	var/atom/atom_location = drop_location()
 	for(var/found_regex in items_by_regex)
 		var/obj/item/result = items_by_regex[found_regex]
-		result.forceMove(atom_location)
+		result.force_move(atom_location)
 		items_by_regex -= found_regex
 		phrases_by_regex -= found_regex
 

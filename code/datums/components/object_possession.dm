@@ -64,7 +64,7 @@
 	stashed_name = user.real_name
 	possessed = target
 
-	user.forceMove(target)
+	user.force_move(target)
 	user.real_name = target.name
 	user.name = target.name
 	user.reset_perspective(target)
@@ -97,7 +97,7 @@
 			var/mob/living/carbon/human/human_user = poltergeist
 			human_user.name = human_user.get_visible_name()
 
-	poltergeist.forceMove(get_turf(possessed))
+	poltergeist.force_move(get_turf(possessed))
 	poltergeist.reset_perspective()
 
 	possessed = null
@@ -117,7 +117,7 @@
 		return .
 
 	if(!possessed.density)
-		possessed.forceMove(get_step(possessed, direct))
+		possessed.force_move(get_step(possessed, direct))
 	else
 		step(possessed, direct)
 

@@ -63,10 +63,10 @@ Nothing else in the console has ID requirements.
 		stored_research.consoles_accessing -= src
 		stored_research = null
 	if(t_disk)
-		t_disk.forceMove(get_turf(src))
+		t_disk.force_move(get_turf(src))
 		t_disk = null
 	if(d_disk)
-		d_disk.forceMove(get_turf(src))
+		d_disk.force_move(get_turf(src))
 		d_disk = null
 	return ..()
 
@@ -409,10 +409,10 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/eject_disk(type)
 	if(type == RND_DESIGN_DISK && d_disk)
-		d_disk.forceMove(get_turf(src))
+		d_disk.force_move(get_turf(src))
 		d_disk = null
 	if(type == RND_TECH_DISK && t_disk)
-		t_disk.forceMove(get_turf(src))
+		t_disk.force_move(get_turf(src))
 		t_disk = null
 
 #undef RND_TECH_DISK

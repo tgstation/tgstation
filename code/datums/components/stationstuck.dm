@@ -54,4 +54,4 @@ It has a punishment variable that is what happens to the parent when they leave 
 			var/targetturf = find_safe_turf(stuck_zlevel)
 			if(!targetturf)
 				targetturf = locate(world.maxx/2,world.maxy/2,stuck_zlevel)
-			escapee.forceMove(targetturf)
+			escapee.force_move(targetturf)

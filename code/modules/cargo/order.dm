@@ -173,7 +173,7 @@
 				qdel(pick(container.contents))
 
 	manifest_paper.update_appearance()
-	manifest_paper.forceMove(container)
+	manifest_paper.force_move(container)
 
 	if(istype(container, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/crate = container

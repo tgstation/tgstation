@@ -70,7 +70,7 @@
 	var/atom/Tsec = drop_location()
 	new /obj/item/stack/rods(Tsec, 2)
 	if(tank)
-		tank.forceMove(Tsec)
+		tank.force_move(Tsec)
 
 /obj/structure/tank_holder/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

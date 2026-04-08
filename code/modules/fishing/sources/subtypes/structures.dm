@@ -343,7 +343,7 @@
 
 	if(reward_path == FISHING_VENDING_CHUCK)
 		if(fishing_spot != vending) //fishing portals
-			vending.forceMove(get_turf(fishing_spot))
+			vending.force_move(get_turf(fishing_spot))
 		vending.tilt(fisherman, range = 4)
 		return null //Don't spawn a reward at all
 
@@ -424,5 +424,5 @@
 /datum/fish_source/vending/custom/spawn_vending_reward(obj/item/reward, atom/spawn_location, obj/machinery/vending/fishing_spot)
 	if(!isitem(reward))
 		return null
-	reward.forceMove(spawn_location)
+	reward.force_move(spawn_location)
 	return reward

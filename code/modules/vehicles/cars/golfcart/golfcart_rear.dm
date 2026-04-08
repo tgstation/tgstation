@@ -58,7 +58,7 @@
 	if (istype(to_load, /obj/structure/closet))
 		var/obj/structure/closet/crate = to_load
 		crate.close()
-	to_load.forceMove(src)
+	to_load.force_move(src)
 	cargo = to_load
 	layer = CARGO_HITBOX_LAYER
 	parent.update_appearance(UPDATE_ICON)
@@ -76,7 +76,7 @@
 		if (turf.Enter(cargo, src))
 			dropoff = turf
 			break
-	cargo.forceMove(dropoff)
+	cargo.force_move(dropoff)
 	cargo = null
 	layer = BELOW_HUMAN_HITBOX_LAYER
 	parent.update_appearance(UPDATE_ICON)
@@ -211,7 +211,7 @@
 /obj/golfcart_rear/proc/move_from_parent(atom/destination)
 	moving_from_parent = TRUE
 	currently_z_moving = destination.z != loc.z
-	. = forceMove(destination)
+	. = force_move(destination)
 	moving_from_parent = FALSE
 
 /obj/golfcart_rear/doMove(atom/destination)
@@ -221,15 +221,15 @@
 	for (var/mob/buckled_mob in buckled_mobs)
 		if (currently_z_moving)
 			buckled_mob.currently_z_moving = currently_z_moving
-			buckled_mob.forceMove(destination)
+			buckled_mob.force_move(destination)
 		else
 			// this is not a good hack - this should never happen
 			// but stairs are a particularly problematic area
 			if (!buckled_mob.Move(destination, dir, glide_size))
-				// this is a terrible hack because mob/living forwards forceMove calls to buckled
+				// this is a terrible hack because mob/living forwards force_move calls to buckled
 				// unless currently_z_moving is non-null
 				buckled_mob.currently_z_moving = CURRENTLY_Z_MOVING_GENERIC
-				buckled_mob.forceMove(destination)
+				buckled_mob.force_move(destination)
 				buckled_mob.currently_z_moving = FALSE
 
 
@@ -267,7 +267,7 @@
 			setDir(olddir)
 			behind = get_step(src, dir)
 		parent.set_glide_size(glide_size_override ? glide_size_override : pulledby.glide_size)
-		parent.forceMove(behind)
+		parent.force_move(behind)
 		parent.setDir(dir)
 		parent.update_appearance(UPDATE_ICON)
 		return
@@ -402,7 +402,7 @@
 		qdel(parent)
 	parent = null
 	if (cargo && !QDELETED(cargo))
-		cargo.forceMove(drop_location())
+		cargo.force_move(drop_location())
 	cargo = null
 	return ..()
 

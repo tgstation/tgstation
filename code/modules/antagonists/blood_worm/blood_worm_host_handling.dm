@@ -70,7 +70,7 @@
 	else
 		RegisterSignal(host, COMSIG_MOB_HUD_CREATED, PROC_REF(create_host_hud))
 
-	forceMove(host)
+	force_move(host)
 
 	log_blood_worm("[key_name(src)] entered their new host [key_name(host)]")
 
@@ -91,7 +91,7 @@
 
 	log_blood_worm("[key_name(src)] left their host [key_name(host)]")
 
-	forceMove(host.drop_location()) // This will call unregister_host() via Moved()
+	force_move(host.drop_location()) // This will call unregister_host() via Moved()
 
 	playsound(src, 'sound/effects/magic/exit_blood.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
 

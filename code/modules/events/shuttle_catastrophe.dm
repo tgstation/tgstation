@@ -59,7 +59,7 @@
 		if(port.shuttle_id != "emergency_home")
 			continue
 		var/turf/initial_loc = locate(port.initial_x, port.initial_y, port.initial_z)
-		port.forceMove(initial_loc)
+		port.force_move(initial_loc)
 		break
 	SSshuttle.existing_shuttle = SSshuttle.emergency
 	SSshuttle.action_load(new_shuttle, replace = TRUE)

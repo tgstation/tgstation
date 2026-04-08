@@ -296,7 +296,7 @@
 	playsound(src, toggled_on ? AUTO_TELEPORT_SOUND : MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
 	SSore_generation.available_boulders -= random_boulder
-	random_boulder.forceMove(drop_location())
+	random_boulder.force_move(drop_location())
 	random_boulder.pixel_x = rand(-2, 2)
 	random_boulder.pixel_y = rand(-2, 2)
 	balloon_alert_to_viewers("boulder appears!")

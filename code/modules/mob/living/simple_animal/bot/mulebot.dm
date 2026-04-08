@@ -173,7 +173,7 @@
 	if(Adjacent(user) && !issilicon(user))
 		user.put_in_hands(cell)
 	else
-		cell.forceMove(drop_location())
+		cell.force_move(drop_location())
 	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/mulebot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -408,10 +408,10 @@
 		if(crate)
 			crate.close()  //make sure the crate is closed
 
-		O.forceMove(src)
+		O.force_move(src)
 
 	else if(isliving(AM))
-		if(!load_mob(AM)) //forceMove() is handled in buckling
+		if(!load_mob(AM)) //force_move() is handled in buckling
 			return
 
 	load = AM
@@ -452,7 +452,7 @@
 
 	if(load) //don't have to do any of this for mobs.
 		load = null
-		cached_load.forceMove(loc)
+		cached_load.force_move(loc)
 		cached_load.pixel_y = initial(cached_load.pixel_y)
 		cached_load.layer = initial(cached_load.layer)
 		SET_PLANE_EXPLICIT(cached_load, initial(cached_load.plane), src)
@@ -754,7 +754,7 @@
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut(Tsec)
 	if(cell)
-		cell.forceMove(Tsec)
+		cell.force_move(Tsec)
 		cell = null
 
 	new /obj/effect/decal/cleanable/blood/oil(loc)
@@ -823,7 +823,7 @@
 
 	if(isobserver(movable_atom))
 		visible_message(span_warning("A ghostly figure appears on [src]!"))
-		movable_atom.forceMove(src)
+		movable_atom.force_move(src)
 		RegisterSignal(movable_atom, COMSIG_MOVABLE_MOVED, PROC_REF(ghostmoved))
 
 	else if(!wires.is_cut(WIRE_LOADCHECK))
@@ -839,7 +839,7 @@
 			var/obj/structure/closet/crate/crate = movable_atom
 			crate.close() //make sure it's closed
 
-		movable_atom.forceMove(src)
+		movable_atom.force_move(src)
 
 	else if(isliving(movable_atom) && !load_mob(movable_atom))
 		return

@@ -193,7 +193,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		new_name = pick(possible_names)
 	brainmob.name = "[new_name]-[rand(100, 999)]"
 	brainmob.real_name = brainmob.name
-	brainmob.forceMove(src)
+	brainmob.force_move(src)
 	brainmob.container = src
 	if(autoping)
 		ping_ghosts("created", TRUE)
@@ -255,7 +255,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(ismovable(loc) && prob(25))
 		var/obj/item/item = pick(loc.contents)
 		if(istype(loc, /obj/item/storage))
-			item.forceMove(loc.drop_location()) //throw stuff out of the inventory till we free ourselves!
+			item.force_move(loc.drop_location()) //throw stuff out of the inventory till we free ourselves!
 			playsound(src, SFX_RUSTLE, 30, TRUE)
 		return
 

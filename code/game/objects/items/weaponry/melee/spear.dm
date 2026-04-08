@@ -96,9 +96,9 @@
 	var/obj/structure/headpike/pike = new pike_type(drop_location())
 	if (!head.dismember(silent = FALSE, wounding_type = WOUND_PIERCE))
 		return BRUTELOSS // Guess your neck is too strong
-	head.forceMove(pike)
+	head.force_move(pike)
 	pike.victim = head
-	forceMove(pike)
+	force_move(pike)
 	pike.spear = src
 	pike.update_appearance(UPDATE_NAME | UPDATE_OVERLAYS)
 	return BRUTELOSS // Just in case they survived losing the head
@@ -221,7 +221,7 @@
 /obj/item/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
 		QDEL_NULL(explosive)
-	G.forceMove(src)
+	G.force_move(src)
 	explosive = G
 	desc = "A makeshift spear with [G] attached to it"
 
@@ -237,7 +237,7 @@
 /obj/item/spear/explosive/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.say("[war_cry]", forced="spear warcry")
-	explosive.forceMove(user)
+	explosive.force_move(user)
 	explosive.detonate()
 	user.gib(DROP_ALL_REMAINS)
 	qdel(src)
@@ -268,7 +268,7 @@
 		var/mob/living/living_user = user
 		living_user.set_resting(new_resting = TRUE, silent = TRUE, instant = TRUE)
 		living_user.Move(get_turf(target))
-		explosive.forceMove(get_turf(living_user))
+		explosive.force_move(get_turf(living_user))
 		explosive.detonate(lanced_by=user)
 		if(!QDELETED(living_user))
 			living_user.set_resting(new_resting = FALSE, silent = TRUE, instant = TRUE)

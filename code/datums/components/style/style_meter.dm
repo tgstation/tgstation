@@ -33,7 +33,7 @@
 
 	. = ITEM_INTERACT_SUCCESS
 
-	forceMove(interacting_with)
+	force_move(interacting_with)
 	interacting_with.add_overlay(meter_appearance)
 	RegisterSignal(interacting_with, COMSIG_ITEM_EQUIPPED, PROC_REF(check_wearing))
 	RegisterSignal(interacting_with, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
@@ -97,7 +97,7 @@
 		return CLICK_ACTION_BLOCKING
 
 	clean_up(loc)
-	forceMove(get_turf(src))
+	force_move(get_turf(src))
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), src)
 	return CLICK_ACTION_SUCCESS
 

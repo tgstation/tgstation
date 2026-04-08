@@ -99,7 +99,7 @@
 	if(consumer.put_in_hands(new_hand))
 		return
 
-	consumed.forceMove(get_turf(consumer))
+	consumed.force_move(get_turf(consumer))
 	new_hand.held_gibtonite = null
 	qdel(new_hand)
 	consumer.visible_message(span_warning("[consumer] can't keep [consumed] down, and coughs it onto the ground!"))

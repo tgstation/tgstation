@@ -51,7 +51,7 @@
 	new_ai.cancel_camera()
 	new_ai.controlled_equipment = src
 	new_ai.remote_control = src
-	new_ai.forceMove(src)
+	new_ai.force_move(src)
 	on_gained_assistant(new_ai)
 
 /// Remove an AI's control of your suit functions
@@ -61,7 +61,7 @@
 	old_ai.set_control_disabled(TRUE)
 	old_ai.radio_enabled = FALSE
 	old_ai.disconnect_shell()
-	old_ai.forceMove(card)
+	old_ai.force_move(card)
 	card.AI = old_ai
 	old_ai.controlled_equipment = null
 	on_removed_assistant(old_ai)
@@ -109,7 +109,7 @@
 	balloon_alert(user, "pAI removed")
 	var/mob/living/silicon/pai/pai_helper = ai_assistant
 	pai_helper.can_holo = TRUE
-	pai_helper.card.forceMove(get_turf(src))
+	pai_helper.card.force_move(get_turf(src))
 	on_removed_assistant()
 
 /// Called when a new ai assistant is inserted
@@ -180,7 +180,7 @@
 	ai.remote_control = null
 	ai.apply_damage(150, BURN)
 	INVOKE_ASYNC(ai, TYPE_PROC_REF(/mob/living/silicon/ai, death))
-	ai.forceMove(src)
+	ai.force_move(src)
 	stored_ai = WEAKREF(ai)
 	icon_state = "minicard-filled"
 
@@ -207,7 +207,7 @@
 		balloon_alert(user, "interrupted!")
 		return
 	icon_state = "minicard"
-	ai.forceMove(card)
+	ai.force_move(card)
 	card.AI = ai
 	ai.notify_revival("You have been recovered from the wreckage!", source = card)
 	balloon_alert(user, "ai transferred to card")

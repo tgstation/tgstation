@@ -45,7 +45,7 @@
 	var/obj/projectile/bullet/dart/syringe/dart = loaded_projectile
 	dart.set_embed(syringe.get_embed()?.create_copy())
 	dart.get_embed().embed_chance = 100 // Don't want to fail the shot here
-	syringe.forceMove(dart)
+	syringe.force_move(dart)
 	dart.inner_syringe = syringe
 
 /obj/item/ammo_casing/chemgun
@@ -82,6 +82,6 @@
 
 		var/obj/item/dnainjector/S = popleft(SG.syringes)
 		var/obj/projectile/bullet/dnainjector/D = loaded_projectile
-		S.forceMove(D)
+		S.force_move(D)
 		D.injector = S
 	return ..()

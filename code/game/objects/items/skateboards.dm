@@ -17,7 +17,7 @@
 /obj/item/melee/skateboard/attack_self(mob/user)
 	var/obj/vehicle/ridden/scooter/skateboard/board = new board_item_type(get_turf(user), src)//this probably has fucky interactions with telekinesis but for the record it wasn't my fault
 	board.buckle_mob(user)
-	forceMove(board)
+	force_move(board)
 
 /obj/item/melee/skateboard/improvised
 	name = "improvised skateboard"

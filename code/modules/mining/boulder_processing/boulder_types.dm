@@ -18,7 +18,7 @@
 
 /obj/item/boulder/artifact/convert_to_ore()
 	. = ..()
-	artifact_inside.forceMove(drop_location())
+	artifact_inside.force_move(drop_location())
 	artifact_inside = null
 
 /obj/item/boulder/artifact/break_apart()

@@ -485,7 +485,7 @@
 	for(var/atom/movable/atom in get_turf(src))
 		if(atom.density && (atom != src && atom != buckled_mob))
 			return
-	buckled_mob.forceMove(get_turf(src))
+	buckled_mob.force_move(get_turf(src))
 	..()
 	playsound(src, 'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	buckled_mob.pixel_y = 14

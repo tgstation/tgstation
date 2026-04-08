@@ -209,7 +209,7 @@
 		if(PTURRET_GUN_EQUIPPED)
 			build_step = PTURRET_INTERNAL_ARMOUR_ON
 
-			installed_gun.forceMove(loc)
+			installed_gun.force_move(loc)
 			to_chat(user, span_notice("You remove [installed_gun] from the turret frame."))
 			installed_gun = null
 

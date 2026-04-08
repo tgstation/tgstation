@@ -182,7 +182,7 @@
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	var/obj/item/removed = added_ingredients[1]
-	removed.forceMove(get_turf(src))
+	removed.force_move(get_turf(src))
 	user.put_in_hands(removed)
 
 	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)
@@ -225,7 +225,7 @@
  */
 /obj/item/reagent_containers/cup/soup_pot/proc/dump_ingredients(atom/drop_loc = drop_location(), x_offset, y_offset)
 	for(var/obj/item/ingredient as anything in added_ingredients)
-		ingredient.forceMove(drop_loc)
+		ingredient.force_move(drop_loc)
 		ingredient.pixel_x += (isnum(x_offset) ? x_offset : rand(-4, 4))
 		ingredient.pixel_y += (isnum(y_offset) ? x_offset : rand(-4, 4))
 		ingredient.SpinAnimation(loops = 1)

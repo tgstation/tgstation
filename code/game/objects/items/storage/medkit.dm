@@ -472,7 +472,7 @@
 		if(myhead)
 			user.visible_message(span_suicide("[user] puts [user.p_their()] head into \the [src] and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!"))
 			if (myhead.dismember())
-				myhead.forceMove(src) //force your enemies to kill themselves with your head collection box!
+				myhead.force_move(src) //force your enemies to kill themselves with your head collection box!
 			playsound(user, "desecration-01.ogg", 50, TRUE, -1)
 			return BRUTELOSS
 		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

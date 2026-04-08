@@ -141,7 +141,7 @@
 /obj/machinery/computer/warrant/proc/print_finish(obj/item/paper/bounty)
 	printing = FALSE
 	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 100, TRUE)
-	bounty.forceMove(loc)
+	bounty.force_move(loc)
 
 	return TRUE
 

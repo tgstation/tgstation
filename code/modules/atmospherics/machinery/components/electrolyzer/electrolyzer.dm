@@ -226,7 +226,7 @@
 			. = TRUE
 		if("eject")
 			if(panel_open && cell)
-				cell.forceMove(drop_location())
+				cell.force_move(drop_location())
 				cell = null
 				. = TRUE
 

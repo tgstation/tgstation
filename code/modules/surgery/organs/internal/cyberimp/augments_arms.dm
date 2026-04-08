@@ -163,7 +163,7 @@
 
 		owner.transferItemToLoc(active_item, src, TRUE)
 	else
-		active_item.forceMove(src)
+		active_item.force_move(src)
 
 	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF)
 	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
@@ -534,7 +534,7 @@
 		if(source.body_position != LYING_DOWN && living_target != source && prob(50))
 			to_chat(source, span_danger("You try to [picked_hit_type] [living_target], but lose your balance and fall!"))
 			source.Knockdown(3 SECONDS)
-			source.forceMove(get_turf(living_target))
+			source.force_move(get_turf(living_target))
 		else
 			to_chat(source, span_danger("Your muscles spasm!"))
 			source.Paralyze(1 SECONDS)

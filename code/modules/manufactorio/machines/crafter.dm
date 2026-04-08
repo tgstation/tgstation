@@ -46,7 +46,7 @@
 	var/turf/machine_turf = get_turf(src)
 	if(length(machine_turf.contents) >= MANUFACTURING_TURF_LAG_LIMIT)
 		return MANUFACTURING_FAIL
-	receiving.forceMove(machine_turf)
+	receiving.force_move(machine_turf)
 	return MANUFACTURING_SUCCESS
 
 /obj/machinery/power/manufacturing/crafter/multitool_act(mob/living/user, obj/item/tool)

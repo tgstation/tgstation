@@ -121,7 +121,7 @@
 	if(teleport_x && teleport_y && teleport_z)
 
 		var/turf/T = locate(teleport_x, teleport_y, teleport_z)
-		A.forceMove(T)
+		A.force_move(T)
 
 /* Random teleporter, teleports atoms to locations ranging from teleport_x - teleport_x_offset, etc */
 
@@ -136,7 +136,7 @@
 
 			var/turf/T = locate(rand(teleport_x, teleport_x_offset), rand(teleport_y, teleport_y_offset), rand(teleport_z, teleport_z_offset))
 			if (T)
-				A.forceMove(T)
+				A.force_move(T)
 
 /* Teleports atoms directly to an offset, no randomness, looping hallways! */
 
@@ -153,7 +153,7 @@
 	var/turf/destination = locate(x + teleport_x_offset, y + teleport_y_offset, z)
 	if(!destination)
 		return
-	poor_soul.forceMove(destination)
+	poor_soul.force_move(destination)
 	var/mob/living/living_soul = poor_soul
 	if(istype(living_soul) && living_soul.client)
 		living_soul.client.move_delay = 0

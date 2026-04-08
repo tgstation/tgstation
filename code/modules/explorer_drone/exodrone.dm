@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	else
 		var/obj/machinery/exodrone_launcher = find_landing_pad()
 		if(exodrone_launcher)
-			forceMove(get_turf(exodrone_launcher))
+			force_move(get_turf(exodrone_launcher))
 			drone_log("Arrived at [station_name()]. Landing at [exodrone_launcher].")
 		else
 			var/turf/drop_zone = drop_somewhere_on_station()
@@ -177,7 +177,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /// Tries to add loot to drone cargo while respecting space left
 /obj/item/exodrone/proc/try_transfer(obj/loot, delete_on_failure=TRUE)
 	if(space_left())
-		loot.forceMove(src)
+		loot.force_move(src)
 		drone_log("Acquired [loot.name].")
 	else
 		drone_log("Abandoned [loot.name] due to lack of space.")
@@ -191,7 +191,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	var/obj/structure/closet/supplypod/pod = podspawn(list(
 		"target" = random_spot,
 	))
-	forceMove(pod)
+	force_move(pod)
 	return random_spot
 
 /// Tries to find landing pad, starting with the one we launched from.
@@ -387,7 +387,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 		return
 
 	to_chat(user, span_notice("You remove [fuel_canister] from [src]."))
-	fuel_canister.forceMove(drop_location())
+	fuel_canister.force_move(drop_location())
 	fuel_canister = null
 	update_icon()
 	return TRUE

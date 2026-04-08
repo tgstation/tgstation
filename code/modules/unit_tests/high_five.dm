@@ -49,10 +49,10 @@
 
 	offer_guy.emote("slap")
 	offer_guy.give()
-	take_guy_A.forceMove(run_loc_floor_top_right)
+	take_guy_A.force_move(run_loc_floor_top_right)
 	TEST_ASSERT_NOTNULL(offer_guy.has_status_effect(/datum/status_effect/offering/no_item_received/high_five), \
 		"Offerer lost the high fiver offer status effect from taker A moving away, which is invalid because taker B is still nearby")
 
-	take_guy_B.forceMove(run_loc_floor_top_right)
+	take_guy_B.force_move(run_loc_floor_top_right)
 	TEST_ASSERT_NULL(offer_guy.has_status_effect(/datum/status_effect/offering/no_item_received/high_five), \
 		"Offerer still has the high fiver offer status effect from taker B moving away, which is invalid because there are no takers are nearby")

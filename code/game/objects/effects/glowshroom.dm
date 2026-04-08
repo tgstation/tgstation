@@ -84,7 +84,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	GLOB.glowshrooms++
 	if(istype(newseed))
 		myseed = newseed
-		myseed.forceMove(src)
+		myseed.force_move(src)
 	else
 		myseed = new myseed(src)
 

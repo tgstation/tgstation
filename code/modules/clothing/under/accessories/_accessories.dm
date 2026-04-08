@@ -196,7 +196,7 @@
 		return
 
 	source.remove_accessory(src)
-	forceMove(source.drop_location())
+	force_move(source.drop_location())
 	source.visible_message(span_warning("[src] falls off of [source]!"))
 
 /// Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS] on the uniform we're pinned to to add our overlays to the inventory icon

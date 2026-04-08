@@ -64,7 +64,7 @@
 		playsound(loccer, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 		if(prob(resist_chance))
-			flinged_sword.forceMove(get_turf(loccer))
+			flinged_sword.force_move(get_turf(loccer))
 			flinged_sword.visible_message(span_alert("\the [flinged_sword] yanks itself out of [loccer]'s grip!"))
 			// flung by later code
 		else
@@ -72,7 +72,7 @@
 			return
 
 	if(isitem(sword_loc))
-		flinged_sword.forceMove(get_turf(sword_loc))
+		flinged_sword.force_move(get_turf(sword_loc))
 		flinged_sword.visible_message(span_alert("\the [flinged_sword] yanks itself out of [sword_loc]!"))
 		// flung by later code
 

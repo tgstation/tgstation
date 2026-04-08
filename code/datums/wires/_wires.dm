@@ -214,7 +214,7 @@
 /datum/wires/proc/attach_assembly(color, obj/item/assembly/assembly)
 	if(assembly && istype(assembly) && assembly.assembly_behavior && !is_attached(color) && !(SEND_SIGNAL(assembly, COMSIG_ASSEMBLY_PRE_ATTACH, holder) & COMPONENT_CANCEL_ATTACH))
 		LAZYSET(assemblies, color, assembly)
-		assembly.forceMove(holder)
+		assembly.force_move(holder)
 		assembly.connected = src
 		assembly.on_attach() // Notify assembly that it is attached
 		return assembly
@@ -412,7 +412,7 @@
 						if(!L.temporarilyRemoveItemFromInventory(A))
 							return
 						if(!attach_assembly(target_wire, A))
-							A.forceMove(L.drop_location())
+							A.force_move(L.drop_location())
 						. = TRUE
 					else
 						to_chat(L, span_warning("You cannot attach this assembly to these wires!"))

@@ -6,7 +6,7 @@
 	var/obj/machinery/recycler/chewer = allocate(/obj/machinery/recycler/deathtrap, get_step(run_loc_floor_bottom_left, EAST)) //already existing subtype that has emagged set to TRUE, so it shall CHEW. Put it directly right to the assistant to mimick a player entering the recycler.
 	assistant.equipOutfit(/datum/outfit/job/assistant/consistent) // consistent assistant juuuust in case
 	var/turf/open/stage = get_turf(chewer)
-	assistant.forceMove(stage) // put the assistant in the recycler, to ensure that the recycler still registers incoming input.
+	assistant.force_move(stage) // put the assistant in the recycler, to ensure that the recycler still registers incoming input.
 
 	// okay, let's first test the basics of how an emagged recycler should operate
 	TEST_ASSERT_NULL(QDELETED(assistant), "Assistant was deleted by the emagged recycler!") // The assistant should not be deleted by the recycler.

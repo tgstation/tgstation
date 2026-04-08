@@ -39,7 +39,7 @@
 		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)
 		new /obj/item/stack/package_wrap/one(turf_loc)
 	for(var/atom/movable/movable_content as anything in contents)
-		movable_content.forceMove(turf_loc)
+		movable_content.force_move(turf_loc)
 
 	qdel(src)
 
@@ -84,7 +84,7 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != container || container.loc != src)
 			return
 		to_chat(user, span_notice("You successfully removed [container]'s wrapping!"))
-		container.forceMove(loc)
+		container.force_move(loc)
 		unwrap_contents()
 		post_unwrap_contents(user)
 	else
@@ -243,7 +243,7 @@
 			M.put_in_hands(movable_content)
 	else
 		for(var/atom/movable/movable_content as anything in contents)
-			movable_content.forceMove(loc)
+			movable_content.force_move(loc)
 
 	unwrap_contents()
 	post_unwrap_contents(user)

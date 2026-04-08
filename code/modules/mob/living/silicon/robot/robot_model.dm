@@ -107,7 +107,7 @@
 			sheet_module.is_cyborg = TRUE
 
 	if(added_module.loc != src)
-		added_module.forceMove(src)
+		added_module.force_move(src)
 	modules += added_module
 	added_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	added_module.item_flags |= ABSTRACT
@@ -133,7 +133,7 @@
 	var/active_module = cyborg.module_active
 	//move everything out of the model's inventory
 	for(var/obj/item/module as anything in modules)
-		module.forceMove(robot)
+		module.force_move(robot)
 	modules = list()
 	for(var/obj/item/module as anything in basic_modules)
 		add_module(module, FALSE, FALSE)
@@ -292,7 +292,7 @@
 /obj/item/robot_model/proc/do_transform_animation()
 	var/mob/living/silicon/robot/cyborg = loc
 	if(cyborg.hat)
-		cyborg.hat.forceMove(drop_location())
+		cyborg.hat.force_move(drop_location())
 
 	cyborg.cut_overlays()
 	cyborg.setDir(SOUTH)

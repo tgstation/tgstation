@@ -248,7 +248,7 @@
 			return ITEM_INTERACT_BLOCKING
 		wrench.play_tool_sound(src, 100)
 		balloon_alert(user, "core removed")
-		core.forceMove(drop_location())
+		core.force_move(drop_location())
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
@@ -292,7 +292,7 @@
 		if(!module_to_remove?.mod)
 			return ITEM_INTERACT_BLOCKING
 		uninstall(module_to_remove)
-		module_to_remove.forceMove(drop_location())
+		module_to_remove.force_move(drop_location())
 		crowbar.play_tool_sound(src, 100)
 		SEND_SIGNAL(src, COMSIG_MOD_MODULE_REMOVED, user)
 		return ITEM_INTERACT_SUCCESS
@@ -566,7 +566,7 @@
 	for(var/obj/item/part in get_parts(all = TRUE))
 		if(!(new_species.no_equip_flags & part.slot_flags) || is_type_in_list(new_species, part.species_exception))
 			continue
-		forceMove(drop_location())
+		force_move(drop_location())
 		return
 
 /obj/item/mod/control/proc/click_on(mob/source, atom/A, list/modifiers)
@@ -647,7 +647,7 @@
 	finish_install(new_module, user)
 
 /obj/item/mod/control/proc/finish_install(obj/item/mod/module/new_module, mob/user)
-	new_module.forceMove(src)
+	new_module.force_move(src)
 	modules += new_module
 	complexity += new_module.complexity
 	new_module.mod = src
@@ -782,7 +782,7 @@
 		if(isnull(part.loc))
 			return
 		if(!wearer)
-			part.forceMove(src)
+			part.force_move(src)
 			return
 		INVOKE_ASYNC(src, PROC_REF(retract), wearer, part, /* instant = */ TRUE) // async to appease spaceman DMM because the branch we don't run has a do_after
 

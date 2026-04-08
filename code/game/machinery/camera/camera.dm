@@ -288,7 +288,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 ///Drops a specific upgrade and nulls it where necessary.
 /obj/machinery/camera/proc/drop_upgrade(obj/item/upgrade_dropped)
-	upgrade_dropped.forceMove(drop_location())
+	upgrade_dropped.force_move(drop_location())
 	if(upgrade_dropped == xray_module)
 		xray_module = null
 		if(malf_xray_firmware_present)

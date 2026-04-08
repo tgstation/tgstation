@@ -130,7 +130,7 @@
 
 /// Gently place the mob onto the table
 /datum/element/table_smash/proc/tableplace(mob/living/user, mob/living/pushed_mob, obj/structure/table/table)
-	pushed_mob.forceMove(table.loc)
+	pushed_mob.force_move(table.loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	pushed_mob.visible_message(span_notice("[user] places [pushed_mob] onto [table]."), \
 		span_notice("[user] places [pushed_mob] onto [table]."))

@@ -201,7 +201,7 @@
 
 	if (replacement)
 		var/atom/replacement_parent = new replacement(atom_parent.drop_location())
-		ingredient.forceMove(replacement_parent)
+		ingredient.force_move(replacement_parent)
 		replacement = null
 		replacement_parent.TakeComponent(src)
 		handle_reagents(parent)
@@ -225,7 +225,7 @@
 	handle_materials(ingredient)
 
 	if(ingredient.loc != atom_parent)
-		ingredient.forceMove(atom_parent)
+		ingredient.force_move(atom_parent)
 
 ///Rebuilds the custom materials the holder is composed of based on the materials of each ingredient
 /datum/component/ingredients_holder/proc/handle_materials(obj/item/ingredient, remove = FALSE)

@@ -338,7 +338,7 @@
 		if(attachment)
 			visible_message(span_warning("[attachment?.attached_to] is detached from [src]."))
 			detach_iv()
-		reagent_container.forceMove(drop_location())
+		reagent_container.force_move(drop_location())
 		reagent_container = null
 		update_appearance(UPDATE_ICON)
 

@@ -10,7 +10,7 @@
 	if(!iscarbon(user))
 		to_chat(user, span_notice("A dark presence stops you from absorbing the crystal."))
 		return
-	forceMove(user)
+	force_move(user)
 	to_chat(user, span_notice("You feel a bit safer... but a demonic presence lurks in the back of your head..."))
 	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(resurrect))
 
@@ -27,7 +27,7 @@
 	INVOKE_ASYNC(user.dna, TYPE_PROC_REF(/datum/dna, copy_dna), clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	clone.updateappearance(mutcolor_update=1)
 	var/turf/T = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE) || find_safe_turf()
-	user.forceMove(T)
+	user.force_move(T)
 	user.revive(ADMIN_HEAL_ALL)
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living/carbon, set_species), /datum/species/shadow)
 	to_chat(user, span_notice("You blink and find yourself in [get_area_name(T)]... feeling a bit darker."))

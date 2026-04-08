@@ -123,7 +123,7 @@
 	for(var/component in components)
 		if(ismovable(component))
 			var/atom/movable/atom_component = component
-			atom_component.forceMove(drop_loc)
+			atom_component.force_move(drop_loc)
 
 		else if(istype(component, /datum/stock_part))
 			var/datum/stock_part/stock_part_datum = component
@@ -251,7 +251,7 @@
 					qdel(part)
 				else
 					components += part
-					part.forceMove(src)
+					part.force_move(src)
 				req_components[path]--
 				// No balloon alert here so they can look back and see what they added
 				to_chat(user, span_notice("You add [part] to [src]."))

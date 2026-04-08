@@ -406,7 +406,7 @@
 			bci_to_implant = bci_organ
 		else
 			say("Occupant's previous brain-computer interface has been ejected.")
-			bci_organ.forceMove(drop_location())
+			bci_organ.force_move(drop_location())
 	else if (!isnull(bci_to_implant))
 		say("Occupant has been injected with [bci_to_implant].")
 		bci_to_implant.Insert(carbon_occupant)
@@ -466,7 +466,7 @@
 /obj/machinery/bci_implanter/proc/drop_stored_bci()
 	if (isnull(bci_to_implant))
 		return
-	bci_to_implant.forceMove(drop_location())
+	bci_to_implant.force_move(drop_location())
 
 /obj/machinery/bci_implanter/dump_inventory_contents(list/subset)
 	// Prevents opening the machine dropping the BCI.

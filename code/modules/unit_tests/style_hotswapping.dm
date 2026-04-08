@@ -11,7 +11,7 @@
 	try_stabilize(john_ultrakill, bag, "while it was in the user's bag")
 	var/obj/item/coin/gold/coin_one = allocate(__IMPLIED_TYPE__, john_ultrakill.loc)
 	var/obj/item/coin/silver/coin_two = allocate(__IMPLIED_TYPE__, john_ultrakill.loc)
-	coin_two.forceMove(bag)
+	coin_two.force_move(bag)
 	john_ultrakill.put_in_active_hand(coin_one, TRUE)
 	TEST_ASSERT_EQUAL(john_ultrakill.get_active_held_item(), coin_one, "Human wasn't able to pick up a gold coin!")
 	john_ultrakill.ClickOn(coin_two)
@@ -32,7 +32,7 @@
 
 /datum/unit_test/style_hotswapping/proc/try_stabilize(mob/living/carbon/human/john_ultrakill, core_loc, desc = null)
 	var/obj/item/organ/monster_core/regenerative_core/legion/core = allocate(__IMPLIED_TYPE__, john_ultrakill.loc)
-	core.forceMove(core_loc)
+	core.force_move(core_loc)
 	TEST_ASSERT(core.decay_timer, "Legion core spawned without a decay timer!")
 	var/obj/item/mining_stabilizer/serum = allocate(__IMPLIED_TYPE__, john_ultrakill.loc)
 	john_ultrakill.put_in_active_hand(serum, TRUE)

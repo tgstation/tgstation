@@ -58,7 +58,7 @@
 	if (gibbed)
 		return
 	var/obj/effect/temp_visual/brim_burst/bang = new(loc)
-	forceMove(bang)
+	force_move(bang)
 
 /mob/living/basic/mining/brimdemon/update_overlays()
 	. = ..()
@@ -92,4 +92,4 @@
 		target.apply_damage(20, damagetype = BURN, blocked = armor, spread_damage = TRUE)
 
 	for (var/atom/movable/thing as anything in contents)
-		thing.forceMove(loc)
+		thing.force_move(loc)

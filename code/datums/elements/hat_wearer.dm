@@ -28,7 +28,7 @@
 /datum/element/hat_wearer/Detach(datum/target)
 	var/obj/item/hat = (locate(/obj/item/clothing/head) in target)
 	if(hat)
-		hat.forceMove(get_turf(target))
+		hat.force_move(get_turf(target))
 	UnregisterSignal(target, list(
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_ATOM_EXITED,
@@ -65,7 +65,7 @@
 	for(var/obj/item/clothing/head/already_worn in source)
 		if(already_worn == arrived)
 			continue
-		already_worn.forceMove(get_turf(source))
+		already_worn.force_move(get_turf(source))
 	source.update_appearance(UPDATE_OVERLAYS)
 
 /datum/element/hat_wearer/proc/on_attack_by(atom/movable/source, obj/item/item, mob/living/attacker)
@@ -86,7 +86,7 @@
 	if(!do_after(attacker, delay = 3 SECONDS, target = source))
 		source.balloon_alert(attacker, "must stay still!")
 		return
-	item.forceMove(source)
+	item.force_move(source)
 
 /datum/element/hat_wearer/proc/remove_hat(atom/movable/source)
 	SIGNAL_HANDLER
@@ -94,4 +94,4 @@
 	var/obj/our_hat = locate(/obj/item/clothing/head) in source
 	if(isnull(our_hat))
 		return
-	our_hat.forceMove(source.drop_location())
+	our_hat.force_move(source.drop_location())

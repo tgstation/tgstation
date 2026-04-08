@@ -36,7 +36,7 @@
 	if(QDELETED(living_mob)) // pawn can be null at this point
 		return
 	var/obj/drop_item = locate(/obj/item) in (living_mob.contents - typecache_filter_list(living_mob.contents, controller.blackboard[BB_IGNORE_ITEMS]))
-	drop_item?.forceMove(get_turf(living_mob))
+	drop_item?.force_move(get_turf(living_mob))
 
 /datum/ai_behavior/basic_melee_attack/interact_once/parrot
 

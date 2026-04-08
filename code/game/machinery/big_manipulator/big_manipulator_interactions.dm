@@ -148,7 +148,7 @@
 /// Attempts to start a work cycle (pick up the object)
 /obj/machinery/big_manipulator/proc/interact_with_origin_point(atom/movable/target, hand_is_empty = FALSE)
 	if(!hand_is_empty)
-		target.forceMove(src)
+		target.force_move(src)
 		held_object = WEAKREF(target)
 		manipulator_arm.update_claw(held_object)
 
@@ -267,11 +267,11 @@
 
 	var/atom/drop_target = drop_endpoint
 	if(drop_target.atom_storage && actual_held_object && (!drop_target.atom_storage.attempt_insert(actual_held_object, override = TRUE, messages = FALSE)))
-		actual_held_object.forceMove(drop_target.drop_location())
+		actual_held_object.force_move(drop_target.drop_location())
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return TRUE
 
-	actual_held_object?.forceMove(drop_endpoint)
+	actual_held_object?.force_move(drop_endpoint)
 	finish_manipulation(TRANSFER_TYPE_DROPOFF)
 	return TRUE
 
@@ -333,7 +333,7 @@
 		return TRUE
 
 	if(held_item.loc == monkey_resolve)
-		held_item.forceMove(original_loc)
+		held_item.force_move(original_loc)
 
 	check_for_cycle_end_drop(destination_point, TRUE, TRUE)
 
@@ -347,7 +347,7 @@
 		return
 
 	if(drop_point.worker_interaction == WORKER_SINGLE_USE && item_used_this_iteration)
-		obj_resolve.forceMove(drop_turf)
+		obj_resolve.force_move(drop_turf)
 		obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
@@ -362,13 +362,13 @@
 
 	switch(drop_point.use_post_interaction)
 		if(POST_INTERACTION_DROP_AT_POINT)
-			obj_resolve.forceMove(drop_turf)
+			obj_resolve.force_move(drop_turf)
 			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
 			finish_manipulation(TRANSFER_TYPE_DROPOFF)
 			return
 
 		if(POST_INTERACTION_DROP_AT_MACHINE)
-			obj_resolve.forceMove(get_turf(src))
+			obj_resolve.force_move(get_turf(src))
 			finish_manipulation(TRANSFER_TYPE_DROPOFF)
 			return
 
@@ -377,7 +377,7 @@
 			if(next)
 				rotate_to_point(next, PROC_REF(try_interact_with_destination_point), CURRENT_TASK_MOVING_DROPOFF)
 				return
-			obj_resolve.forceMove(drop_turf)
+			obj_resolve.force_move(drop_turf)
 			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
 			finish_manipulation(TRANSFER_TYPE_DROPOFF)
 			return
@@ -394,7 +394,7 @@
 	var/item_throw_range = drop_point.throw_range
 	var/atom/movable/held_atom = held_object?.resolve()
 
-	held_atom.forceMove(drop_turf)
+	held_atom.force_move(drop_turf)
 	do_attack_animation(drop_turf)
 	manipulator_arm.do_attack_animation(drop_turf)
 
@@ -424,7 +424,7 @@
 		var/resolve_loc = interact_with_item.loc
 		monkey_resolve.put_in_active_hand(interact_with_item)
 		interact_with_item.attack_self(monkey_resolve)
-		interact_with_item.forceMove(resolve_loc)
+		interact_with_item.force_move(resolve_loc)
 	else
 		monkey_resolve.UnarmedAttack(type_to_use)
 

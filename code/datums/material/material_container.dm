@@ -311,7 +311,7 @@
 
 			if(target_item.resistance_flags & INDESTRUCTIBLE)
 				if(target_item != active_held) //move it out of any storage medium its in so it doesn't get consumed with its parent, but only if that storage medium is not our hand
-					target_item.forceMove(get_turf(context))
+					target_item.force_move(get_turf(context))
 				continue
 
 			//storage items usually come here

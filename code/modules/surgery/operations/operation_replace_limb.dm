@@ -81,7 +81,7 @@
 			span_warning("[surgeon] can't seem to fit [tool] onto [patient]'s body!"),
 			span_warning("[surgeon] can't seem to fit [tool] onto [patient]'s body!"),
 		)
-		tool.forceMove(patient.drop_location())
+		tool.force_move(patient.drop_location())
 		return // could possibly happen
 
 	if(tool.check_for_frankenstein(patient))

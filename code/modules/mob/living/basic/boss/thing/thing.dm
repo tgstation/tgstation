@@ -143,7 +143,7 @@
 		new /obj/effect/temp_visual/mook_dust(target)
 	playsound(loc, 'sound/effects/meteorimpact.ogg', 40, TRUE)
 	visible_message(span_danger("[src] retreats through the ground back to where it came from!"))
-	forceMove(spawn_loc)
+	force_move(spawn_loc)
 
 /// The Thing is successfully hit by incendiary fire while downed by damage (alternatively takes too much damage if not ruin spawned)
 /mob/living/basic/boss/thing/proc/phase_successfully_depleted()

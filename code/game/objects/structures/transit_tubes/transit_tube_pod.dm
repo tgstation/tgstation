@@ -84,7 +84,7 @@
 	if(!location)
 		location = get_turf(src)
 	for(var/atom/movable/M in contents)
-		M.forceMove(location)
+		M.force_move(location)
 	update_appearance()
 
 /obj/structure/transit_tube_pod/proc/follow_tube(obj/structure/transit_tube/tube)
@@ -183,7 +183,7 @@
 			return
 		if(direction == REVERSE_DIR(station.boarding_dir))
 			if(station.open_status == STATION_TUBE_OPEN)
-				user.forceMove(loc)
+				user.force_move(loc)
 				update_appearance()
 			else
 				station.open_animation()

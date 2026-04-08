@@ -156,9 +156,9 @@
 	nukie.ckey = our_client.key
 	var/datum/mind/op_mind = nukie.mind
 	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the nukie) is in nullspace, so just move the nukie somewhere safe
-		nukie.forceMove(pick(GLOB.newplayer_start))
+		nukie.force_move(pick(GLOB.newplayer_start))
 	else
-		nukie.forceMove(locate(1,1,1))
+		nukie.force_move(locate(1,1,1))
 
 	var/new_datum = new antag_datum()
 
@@ -171,7 +171,7 @@
 		nukie_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
 
 	var/obj/structure/closet/supplypod/pod = setup_pod()
-	nukie.forceMove(pod)
+	nukie.force_move(pod)
 	new /obj/effect/pod_landingzone(spawn_location ? spawn_location : get_turf(src), pod)
 
 /obj/item/antag_spawner/nuke_ops/overwatch
@@ -251,7 +251,7 @@
 
 	borg.mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
 	LAZYADD(borg.mind.special_roles, special_role_name)
-	borg.forceMove(pod)
+	borg.force_move(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
 ///////////SLAUGHTER DEMON
@@ -380,9 +380,9 @@
 	spawned_mob.ckey = our_client.key
 	var/datum/mind/op_mind = spawned_mob.mind
 	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the spawned_mob) is in nullspace, so just move the spawned_mob somewhere safe
-		spawned_mob.forceMove(pick(GLOB.newplayer_start))
+		spawned_mob.force_move(pick(GLOB.newplayer_start))
 	else
-		spawned_mob.forceMove(locate(1,1,1))
+		spawned_mob.force_move(locate(1,1,1))
 
 	op_mind.add_antag_datum(antag_datum)
 
@@ -398,7 +398,7 @@
 
 	do_special_things(spawned_mob, user)
 
-	spawned_mob.forceMove(pod)
+	spawned_mob.force_move(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
 /obj/item/antag_spawner/loadout/contractor

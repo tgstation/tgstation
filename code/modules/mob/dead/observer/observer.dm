@@ -356,7 +356,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 		abstract_move(destination)//Get out of closets and such as a ghost
 
-/mob/dead/observer/forceMove(atom/destination)
+/mob/dead/observer/force_move(atom/destination)
 	abstract_move(destination) // move like the wind
 	return TRUE
 

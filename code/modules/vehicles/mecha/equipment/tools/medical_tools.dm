@@ -35,7 +35,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/Destroy()
 	for(var/atom/movable/content as anything in src)
-		content.forceMove(get_turf(src))
+		content.force_move(get_turf(src))
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/container_resist_act(mob/living/user)
@@ -55,7 +55,7 @@
 		return
 	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
 		return
-	target.forceMove(src)
+	target.force_move(src)
 	patient = target
 	START_PROCESSING(SSobj, src)
 	to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded into [src]. Life support functions engaged.")]")
@@ -78,7 +78,7 @@
 /obj/item/mecha_parts/mecha_equipment/sleeper/proc/go_out()
 	if(!patient)
 		return
-	patient.forceMove(get_turf(src))
+	patient.force_move(get_turf(src))
 	to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("[patient] ejected. Life support functions disabled.")]")
 	log_message("[patient] ejected. Life support functions disabled.", LOG_MECHA)
 	STOP_PROCESSING(SSobj, src)
@@ -324,7 +324,7 @@
 		to_chat(user, "[icon2html(src, user)][span_warning("Unable to load syringe!")]")
 		return FALSE
 	S.reagents.trans_to(src, S.reagents.total_volume, transferred_by = user)
-	S.forceMove(src)
+	S.force_move(src)
 	LAZYADD(syringes,S)
 	to_chat(user, "[icon2html(src, user)][span_notice("Syringe loaded.")]")
 	return TRUE

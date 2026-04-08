@@ -41,7 +41,7 @@
 	update_visuals(new_prisoner)
 	held_mob = new_prisoner
 	RegisterSignal(held_mob, COMSIG_QDELETING, PROC_REF(on_mob_deleted))
-	new_prisoner.forceMove(src)
+	new_prisoner.force_move(src)
 	name = new_prisoner.name
 	desc = new_prisoner.desc
 	return TRUE
@@ -85,7 +85,7 @@
 		if(display_messages)
 			to_chat(captor, span_warning("[released_mob] wriggles free!"))
 		captor.dropItemToGround(src)
-	released_mob.forceMove(drop_location())
+	released_mob.force_move(drop_location())
 	released_mob.reset_perspective()
 	released_mob.setDir(SOUTH)
 	if(display_messages)

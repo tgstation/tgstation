@@ -237,7 +237,7 @@
 	var/atom/drop_location = drop_location()
 
 	new /obj/item/stack/sheet/iron(drop_location, 4)
-	custom_ice_cream_beaker?.forceMove(drop_location)
+	custom_ice_cream_beaker?.force_move(drop_location)
 
 ///Makes an ice cream cone of the make_type, using ingredients list as reagents used to make it. Puts in user's hand if possible.
 /obj/machinery/icecream_vat/proc/make_cone(mob/user, make_type, list/ingredients)

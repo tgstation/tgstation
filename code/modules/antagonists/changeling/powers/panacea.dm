@@ -27,7 +27,7 @@
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			C.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 0)
-		O.forceMove(get_turf(user))
+		O.force_move(get_turf(user))
 
 	user.reagents.add_reagent(/datum/reagent/medicine/mutadone, 10)
 	user.reagents.add_reagent(/datum/reagent/medicine/pen_acid, 20)

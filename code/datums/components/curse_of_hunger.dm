@@ -100,7 +100,7 @@
 	if(iscarbon(cursed_item.loc))
 		return
 	else if(!isturf(cursed_item.loc))
-		cursed_item.forceMove(get_turf(cursed_item))
+		cursed_item.force_move(get_turf(cursed_item))
 	//only taking the most reasonable slot is fine since it unequips what is there to equip itself.
 	cursed_item.AddElement(/datum/element/cursed, cursed_item.slot_equipment_priority[1])
 	cursed_item.visible_message(span_warning("[cursed_item] begins to move on [cursed_item.p_their()] own..."))
@@ -124,7 +124,7 @@
 	for(var/obj/item/food in cursed_item.contents + cursed.contents)
 		if(!IS_EDIBLE(food))
 			continue
-		food.forceMove(cursed.loc)
+		food.force_move(cursed.loc)
 		///poisoned food damages it
 		if(locate(/datum/reagent/toxin) in food.reagents.reagent_list)
 			var/sick_word = pick("queasy", "sick", "iffy", "unwell")

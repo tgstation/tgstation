@@ -111,7 +111,7 @@
 
 	for (var/observer_key in observers)
 		var/mob/observer = observers[observer_key]["mob"]
-		observer.forceMove(pick(location.reserved_turfs))
+		observer.force_move(pick(location.reserved_turfs))
 
 	playing = DEATHMATCH_PLAYING
 	addtimer(CALLBACK(src, PROC_REF(game_took_too_long)), initial(map.automatic_gameend_time))
@@ -303,7 +303,7 @@
 		return
 	if (!observers[player.ckey])
 		add_observer(player)
-	player.forceMove(pick(location.reserved_turfs))
+	player.force_move(pick(location.reserved_turfs))
 
 /datum/deathmatch_lobby/proc/change_map(new_map)
 	if (!new_map || !GLOB.deathmatch_game.maps[new_map])

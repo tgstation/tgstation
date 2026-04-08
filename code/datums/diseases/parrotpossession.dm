@@ -35,7 +35,7 @@
 	var/atom/movable/inside_parrot = locate(/mob/living/basic/parrot/poly/ghost) in affected_mob
 	if(inside_parrot)
 		UnregisterSignal(inside_parrot, list(COMSIG_PREQDELETED, COMSIG_MOVABLE_MOVED))
-		inside_parrot.forceMove(affected_mob.drop_location())
+		inside_parrot.force_move(affected_mob.drop_location())
 		affected_mob.visible_message(
 			span_danger("[inside_parrot] is violently driven out of [affected_mob]!"),
 			span_userdanger("[inside_parrot] bursts out of your chest!"),

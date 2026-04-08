@@ -124,7 +124,7 @@
 	var/obj/item/holochip/chip = new(user ? user : drop_location(), new_credits)
 	if(user)
 		if(!user.put_in_hands(chip))
-			chip.forceMove(user.drop_location())
+			chip.force_move(user.drop_location())
 		add_fingerprint(user)
 	to_chat(user, span_notice("You extract [split_amount] [MONEY_NAME] into a new holochip."))
 	return CLICK_ACTION_SUCCESS

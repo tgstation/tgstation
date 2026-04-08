@@ -46,7 +46,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/bow/proc/drop_arrow()
-	chambered.forceMove(drop_location())
+	chambered.force_move(drop_location())
 	chambered = magazine.get_round()
 	update_appearance()
 

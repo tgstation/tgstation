@@ -36,8 +36,8 @@
 	var/atom/movable/stored_pulling = passing_mob.pulling
 	if(stored_pulling) //force whatever you're pulling to come with you
 		stored_pulling.setDir(get_dir(stored_pulling.loc, passing_mob.loc))
-		stored_pulling.forceMove(passing_mob.loc)
-	passing_mob.forceMove(bumped_wall)
+		stored_pulling.force_move(passing_mob.loc)
+	passing_mob.force_move(bumped_wall)
 
 	if(stored_pulling) //don't drop them because we went into a wall
 		passing_mob.start_pulling(stored_pulling, supress_message = TRUE)
@@ -52,5 +52,5 @@
 		return
 
 	stored_pulling.setDir(get_dir(stored_pulling.loc, passing_mob.loc))
-	stored_pulling.forceMove(exited_wall)
+	stored_pulling.force_move(exited_wall)
 	passing_mob.start_pulling(stored_pulling, supress_message = TRUE)

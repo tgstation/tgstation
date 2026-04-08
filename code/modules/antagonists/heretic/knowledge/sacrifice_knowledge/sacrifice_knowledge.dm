@@ -521,7 +521,7 @@
 
 	if(!do_teleport(sac_target, safe_turf, asoundout = 'sound/effects/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		safe_turf = get_turf(backup_loc)
-		sac_target.forceMove(safe_turf)
+		sac_target.force_move(safe_turf)
 		stack_trace("[type] - return_target was unable to teleport [sac_target] to the observer start turf. Forcemoving.")
 
 	if(sac_target.stat == DEAD)

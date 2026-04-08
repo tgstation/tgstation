@@ -145,7 +145,7 @@
 /obj/structure/fermenting_barrel/dump_contents()
 	var/atom/drop_point = drop_location()
 	for(var/obj/item/food/grown/fruit as anything in contents)
-		fruit.forceMove(drop_point)
+		fruit.force_move(drop_point)
 
 /// Adds the fruit to the barrel to queue the fermentation
 /obj/structure/fermenting_barrel/proc/insert_fruit(mob/user, obj/item/food/grown/fruit, obj/item/storage/bag/plants/bag = null)

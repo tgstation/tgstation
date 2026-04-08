@@ -71,7 +71,7 @@
 		RegisterSignals(copy, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
 		copies += copy
 		QDEL_IN(copy, clone_lifespan)
-	owner.forceMove(get_step(cast_on, pick_n_take(directions)))
+	owner.force_move(get_step(cast_on, pick_n_take(directions)))
 
 /datum/action/cooldown/spell/pointed/wizard_mimic/proc/lost_minion(mob/living/basic/paper_wizard/copy/source)
 	SIGNAL_HANDLER

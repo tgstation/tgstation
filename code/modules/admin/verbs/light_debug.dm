@@ -100,7 +100,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 		UnregisterSignal(loc, COMSIG_QDELETING)
 		var/atom/movable/mislead_areas = loc
 		mislead_areas.vis_contents -= src
-	forceMove(new_owner)
+	force_move(new_owner)
 	layer = loc.layer
 	RegisterSignal(loc, COMSIG_QDELETING, PROC_REF(delete_self))
 	var/atom/movable/lie_to_areas = loc
@@ -333,7 +333,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	if(!ismovable(loc))
 		return
 	var/atom/movable/movable_owner = loc
-	movable_owner.forceMove(get_turf(over_object))
+	movable_owner.force_move(get_turf(over_object))
 
 /datum/action/spawn_light
 	name = "Spawn Light"

@@ -58,7 +58,7 @@
 		return FALSE
 	var/atom/was_holder = holder
 	holder = null
-	forceMove(was_holder.drop_location())
+	force_move(was_holder.drop_location())
 	SEND_SIGNAL(src, COMSIG_ASSEMBLY_DETACHED, was_holder)
 	return TRUE
 

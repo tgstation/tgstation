@@ -92,7 +92,7 @@
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CIRCUIT)))
 				return ITEM_INTERACT_BLOCKING
 
-			circuit.forceMove(drop_location())
+			circuit.force_move(drop_location())
 			UPDATE_STATE(CORE_STATE_EMPTY)
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_SCREWED)
@@ -105,7 +105,7 @@
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || !core_mmi)
 				return ITEM_INTERACT_BLOCKING
 
-			core_mmi.forceMove(drop_location())
+			core_mmi.force_move(drop_location())
 			UPDATE_STATE(CORE_STATE_CABLED)
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_GLASSED)

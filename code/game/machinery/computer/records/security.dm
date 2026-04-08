@@ -327,7 +327,7 @@
 /obj/machinery/computer/records/security/proc/print_finish(obj/item/printable)
 	printing = FALSE
 	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 100, TRUE)
-	printable.forceMove(loc)
+	printable.force_move(loc)
 
 	return TRUE
 

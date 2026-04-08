@@ -83,7 +83,7 @@
 	egg.origin = mind
 
 	for(var/obj/item/organ/target in src)
-		target.forceMove(egg)
+		target.force_move(egg)
 
 	visible_message(
 		span_warning("[src] plants something in [victim]'s flesh!"),

@@ -617,7 +617,7 @@ ADMIN_VERB(load_lazy_template, R_ADMIN, "Load/Jump Lazy Template", "Loads a lazy
 	if(teleport_to_template == "Yes")
 		if(!isobserver(user.mob))
 			SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
-		user.mob.forceMove(reservation.bottom_left_turfs[1])
+		user.mob.force_move(reservation.bottom_left_turfs[1])
 		to_chat(user, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))
 
 	message_admins("[key_name_admin(user)] has loaded lazy template '[choice]'")

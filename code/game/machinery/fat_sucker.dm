@@ -58,7 +58,7 @@
 	playsound(src, 'sound/machines/click.ogg', 50)
 	if(occupant)
 		if(!iscarbon(occupant))
-			occupant.forceMove(drop_location())
+			occupant.force_move(drop_location())
 			set_occupant(null)
 			return
 		to_chat(occupant, span_notice("You enter [src]."))

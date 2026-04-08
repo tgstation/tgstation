@@ -502,7 +502,7 @@
 /obj/machinery/chem_dispenser/on_deconstruction(disassembled)
 	cell = null
 	if(beaker)
-		beaker.forceMove(drop_location())
+		beaker.force_move(drop_location())
 		beaker = null
 	return ..()
 

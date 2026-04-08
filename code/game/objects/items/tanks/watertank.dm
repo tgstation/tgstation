@@ -70,7 +70,7 @@
 	if(mover.loc == src || mover.loc == loc)
 		return
 	balloon_alert(loc, "nozzle snaps back")
-	mover.forceMove(src)
+	mover.force_move(src)
 
 /obj/item/watertank/equipped(mob/user, slot)
 	..()
@@ -82,7 +82,7 @@
 		if(ismob(noz.loc))
 			var/mob/M = noz.loc
 			M.temporarilyRemoveItemFromInventory(noz, TRUE)
-		noz.forceMove(src)
+		noz.force_move(src)
 
 /obj/item/watertank/attack_hand(mob/user, list/modifiers)
 	if (user.get_item_by_slot(user.getBackSlot()) == src)

@@ -124,7 +124,7 @@
 /datum/mutation/hulk/proc/setup_swing(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person)
 	var/original_dir = the_hulk.dir // so no matter if the hulk tries to mess up their direction, they always face where they started when they throw
 
-	yeeted_person.forceMove(the_hulk.loc)
+	yeeted_person.force_move(the_hulk.loc)
 	yeeted_person.setDir(get_dir(yeeted_person, the_hulk))
 
 	log_combat(the_hulk, yeeted_person, "has started swinging by tail")
@@ -186,7 +186,7 @@
 	var/direction = get_dir(current_spin_turf, intermediate_spin_turf)
 
 	if((isturf(current_spin_turf) && current_spin_turf.Exit(yeeted_person, direction)) && (isturf(next_spin_turf) && next_spin_turf.Enter(yeeted_person)))
-		yeeted_person.forceMove(next_spin_turf)
+		yeeted_person.force_move(next_spin_turf)
 		yeeted_person.face_atom(the_hulk)
 
 	var/list/collateral_check = intermediate_spin_turf.contents + next_spin_turf.contents // check the cardinal and the diagonal tiles we swung past
@@ -234,7 +234,7 @@
 		return
 
 	the_hulk.setDir(original_dir)
-	yeeted_person.forceMove(the_hulk.loc) // Maybe this will help with the wallthrowing bug.
+	yeeted_person.force_move(the_hulk.loc) // Maybe this will help with the wallthrowing bug.
 	yeeted_person.visible_message(span_danger("[the_hulk] throws [yeeted_person]!"), \
 					span_userdanger("You're thrown by [the_hulk]!"), span_hear("You hear aggressive shuffling and a loud thud!"), null, the_hulk)
 	to_chat(the_hulk, span_danger("You throw [yeeted_person]!"))

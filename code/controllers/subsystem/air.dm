@@ -901,7 +901,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 			var/turf/target = locate(params["spot"])
 			if(!target)
 				return
-			usr.forceMove(target)
+			usr.force_move(target)
 		if("toggle-freeze")
 			can_fire = !can_fire
 			return TRUE

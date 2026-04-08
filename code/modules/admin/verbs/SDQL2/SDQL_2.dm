@@ -84,11 +84,11 @@
 
 	Or you can have some fun..
 
-	"CALL forceMove(marked) ON /mob/living/carbon/superior_animal"
+	"CALL force_move(marked) ON /mob/living/carbon/superior_animal"
 
 	You can also run multiple queries sequentially:
 
-	"CALL forceMove(marked) ON /mob/living/carbon/superior_animal; CALL gib() ON
+	"CALL force_move(marked) ON /mob/living/carbon/superior_animal; CALL gib() ON
 	/mob/living/carbon/superior_animal"
 
 	And finally, you can directly modify variables on objects.
@@ -97,7 +97,7 @@
 
 	Don't crash the server, OK?
 
-	"UPDATE /mob/living/carbon/human/species/monkey SET #null = forceMove(usr.loc)"
+	"UPDATE /mob/living/carbon/human/species/monkey SET #null = force_move(usr.loc)"
 
 	Writing "#null" in front of the "=" will call the proc and discard the return value.
 

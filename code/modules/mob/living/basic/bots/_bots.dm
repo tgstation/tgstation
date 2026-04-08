@@ -536,7 +536,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		item_to_drop = new drop_item(dropzone)
 	else
 		item_to_drop = drop_item
-		item_to_drop.forceMove(dropzone)
+		item_to_drop.force_move(dropzone)
 
 	if(istype(item_to_drop, /obj/item/stock_parts/power_store/cell))
 		var/obj/item/stock_parts/power_store/cell/dropped_cell = item_to_drop
@@ -745,7 +745,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		ghostize(FALSE) // The pAI card that just got ejected was dead.
 
 	key = null
-	paicard.forceMove(drop_location())
+	paicard.force_move(drop_location())
 	var/to_log = user ? user : src
 	log_combat(to_log, paicard.pai, "ejected [user ? "from [initial(name)]" : ""].")
 	if(announce)

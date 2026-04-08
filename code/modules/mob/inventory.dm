@@ -181,7 +181,7 @@
 		I.do_pickup_animation(src)
 	if(get_item_for_held_index(hand_index))
 		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
-	I.forceMove(src) //this has to come before has_equipped() is called
+	I.force_move(src) //this has to come before has_equipped() is called
 	held_items[hand_index] = I
 	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
 	if(I.pulledby)
@@ -343,7 +343,7 @@
  * Used to drop an item (if it exists) to the ground.
  * * Will return null if the item wasn't dropped.
  * * If it was, returns the item.
- * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
+ * If the item can be dropped, it will be force_move()'d to the ground and the turf's Entered() will be called.
 */
 /mob/proc/dropItemToGround(obj/item/to_drop, force = FALSE, silent = FALSE, invdrop = TRUE)
 	if(isnull(to_drop))
@@ -440,12 +440,12 @@
 	item_dropping.layer = initial(item_dropping.layer)
 	SET_PLANE_EXPLICIT(item_dropping, initial(item_dropping.plane), newloc)
 	item_dropping.appearance_flags &= ~NO_CLIENT_COLOR
-	item_dropping.item_flags &= ~IN_INVENTORY //This has to come before MoveToNullspace/forceMove is called
+	item_dropping.item_flags &= ~IN_INVENTORY //This has to come before MoveToNullspace/force_move is called
 	if(!no_move && !(item_dropping.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
 		if (isnull(newloc))
 			item_dropping.moveToNullspace()
 		else
-			item_dropping.forceMove(newloc)
+			item_dropping.force_move(newloc)
 
 	has_unequipped(item_dropping, silent)
 	SEND_SIGNAL(item_dropping, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)

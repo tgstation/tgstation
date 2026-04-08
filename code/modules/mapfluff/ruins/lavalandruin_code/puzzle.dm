@@ -120,8 +120,8 @@
 	var/obj/structure/puzzle_element/E1 = locate() in T1
 	var/obj/structure/puzzle_element/E2 = locate() in T2
 
-	E1.forceMove(T2)
-	E2.forceMove(T1)
+	E1.force_move(T2)
+	E2.force_move(T1)
 
 /proc/cmp_xy_desc(atom/movable/A,atom/movable/B)
 	if(A.y > B.y)
@@ -294,7 +294,7 @@
 	. = ..()
 
 /obj/effect/sliding_puzzle/prison/dispense_reward()
-	prisoner.forceMove(get_turf(src))
+	prisoner.force_move(get_turf(src))
 	REMOVE_TRAIT(prisoner, TRAIT_NO_TRANSFORM, element_type)
 	prisoner = null
 
@@ -347,7 +347,7 @@
 
 	//First grab the prisoner and move them temporarily into the generator so they won't get thrown around.
 	ADD_TRAIT(prisoner, TRAIT_NO_TRANSFORM, cube.element_type)
-	prisoner.forceMove(cube)
+	prisoner.force_move(cube)
 	to_chat(prisoner,span_userdanger("You're trapped by the prison cube! You will remain trapped until someone solves it."))
 
 	//Clear the area from objects (and cube user)
@@ -366,7 +366,7 @@
 
 	//Move them into random block
 	var/obj/structure/puzzle_element/E = pick(cube.elements)
-	prisoner.forceMove(E)
+	prisoner.force_move(E)
 	return TRUE
 
 #undef COLLAPSE_DURATION

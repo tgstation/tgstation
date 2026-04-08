@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 	if(!ispath(equipping.dog_fashion, /datum/dog_fashion/back))
 		to_chat(user, span_warning("You set [equipping] on [source]'s back, but it falls off!"))
-		equipping.forceMove(source.drop_location())
+		equipping.force_move(source.drop_location())
 		if(prob(25))
 			step_rand(equipping)
 		dance_rotate(source, set_original_dir = TRUE)
@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if(!istype(corgi_source))
 		return
 
-	equipping.forceMove(corgi_source)
+	equipping.force_move(corgi_source)
 	corgi_source.inventory_back = equipping
 	corgi_source.update_corgi_fluff()
 	corgi_source.update_appearance(UPDATE_OVERLAYS)
@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if(!istype(corgi_source))
 		return
 
-	equipping.forceMove(source)
+	equipping.force_move(source)
 	corgi_source.access_card = equipping
 
 /datum/strippable_item/corgi_id/finish_unequip(atom/source, mob/user)

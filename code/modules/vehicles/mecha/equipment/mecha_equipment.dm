@@ -214,7 +214,7 @@
 		new_mecha.equip_by_category[to_equip_slot] = src
 	chassis = new_mecha
 	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_ATTACHED)
-	forceMove(new_mecha)
+	force_move(new_mecha)
 	log_message("[src] initialized.", LOG_MECHA)
 	chassis.on_equipment_attach(src)
 
@@ -226,7 +226,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto)
 	chassis.on_equipment_detach(src)
 	moveto = moveto || get_turf(chassis)
-	forceMove(moveto)
+	force_move(moveto)
 	playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 	LAZYREMOVE(chassis.flat_equipment, src)
 	var/to_unequip_slot = equipment_slot

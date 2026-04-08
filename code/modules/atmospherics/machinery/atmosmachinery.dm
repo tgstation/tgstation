@@ -603,7 +603,7 @@
 
 	if(!(target_move.vent_movement & VENTCRAWL_ALLOWED))
 		return
-	user.forceMove(target_move)
+	user.force_move(target_move)
 	var/list/pipenetdiff = return_pipenets() ^ target_move.return_pipenets()
 	if(pipenetdiff.len)
 		user.update_pipe_vision(full_refresh = TRUE)
@@ -690,7 +690,7 @@
 	cap_overlay.layer = initial(layer)
 	cap_overlay.icon_state = "[bitfield]_[piping_layer]"
 
-	cap_overlay.forceMove(our_turf)
+	cap_overlay.force_move(our_turf)
 
 /obj/effect/overlay/cap_visual
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

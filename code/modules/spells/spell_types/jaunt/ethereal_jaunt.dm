@@ -91,7 +91,7 @@
 		found_exit = start_point
 
 	exit_point_list = null
-	holder.forceMove(found_exit)
+	holder.force_move(found_exit)
 	do_steam_effects(found_exit)
 	holder.reappearing = TRUE
 	if(exit_jaunt_sound)
@@ -143,7 +143,7 @@
 	if(final_point.density)
 		var/list/aside_turfs = get_adjacent_open_turfs(final_point)
 		if(length(aside_turfs))
-			cast_on.forceMove(pick(aside_turfs))
+			cast_on.force_move(pick(aside_turfs))
 
 /**
  * Updates the exit point of the jaunt

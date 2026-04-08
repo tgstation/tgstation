@@ -91,7 +91,7 @@
 			span_warning("[user] captures [src]!"),
 			span_userdanger("You've got the disk! Defend it with your life!"),
 		)
-		forceMove(claymore)
+		force_move(claymore)
 		claymore.nuke_disk = src
 		return TRUE
 

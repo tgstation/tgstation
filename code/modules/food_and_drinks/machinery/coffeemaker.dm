@@ -47,8 +47,8 @@
 		cartridge = new /obj/item/coffee_cartridge(src)
 
 /obj/machinery/coffeemaker/on_deconstruction(disassembled)
-	coffeepot?.forceMove(drop_location())
-	cartridge?.forceMove(drop_location())
+	coffeepot?.force_move(drop_location())
+	cartridge?.force_move(drop_location())
 
 /obj/machinery/coffeemaker/Destroy()
 	QDEL_NULL(coffeepot)
@@ -697,7 +697,7 @@
 					if(user.transferItemToLoc(new_coffee, src))
 						coffee += new_coffee
 						coffee_amount++
-						new_coffee.forceMove(src)
+						new_coffee.force_move(src)
 						balloon_alert(user, "added coffee")
 						update_appearance(UPDATE_OVERLAYS)
 					else

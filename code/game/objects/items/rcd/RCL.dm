@@ -67,7 +67,7 @@
 			new /obj/item/stack/pipe_cleaner_coil(get_turf(user), 30)
 	loaded.max_amount = initial(loaded.max_amount)
 	if(!user.put_in_hands(loaded))
-		loaded.forceMove(get_turf(user))
+		loaded.force_move(get_turf(user))
 
 	loaded = null
 	update_appearance()

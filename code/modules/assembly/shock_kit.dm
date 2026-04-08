@@ -26,11 +26,11 @@
 	..()
 	to_chat(user, span_notice("You disassemble [src]."))
 	if(helmet_part)
-		helmet_part.forceMove(drop_location())
+		helmet_part.force_move(drop_location())
 		helmet_part.master = null
 		helmet_part = null
 	if(electropack_part)
-		electropack_part.forceMove(drop_location())
+		electropack_part.force_move(drop_location())
 		electropack_part.master = null
 		electropack_part = null
 	qdel(src)

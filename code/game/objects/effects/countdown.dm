@@ -28,7 +28,7 @@
 	if(!loc_turf)
 		RegisterSignal(attached_to, COMSIG_MOVABLE_MOVED, PROC_REF(retry_attach), TRUE)
 	else
-		forceMove(loc_turf)
+		force_move(loc_turf)
 
 /obj/effect/countdown/proc/retry_attach()
 	SIGNAL_HANDLER
@@ -36,7 +36,7 @@
 	var/turf/loc_turf = get_turf(attached_to)
 	if(!loc_turf)
 		return
-	forceMove(loc_turf)
+	force_move(loc_turf)
 	UnregisterSignal(attached_to, COMSIG_MOVABLE_MOVED)
 
 /obj/effect/countdown/proc/start()
@@ -57,7 +57,7 @@
 /obj/effect/countdown/process()
 	if(!attached_to || QDELETED(attached_to))
 		qdel(src)
-	forceMove(get_turf(attached_to))
+	force_move(get_turf(attached_to))
 	var/new_val = get_value()
 	if(new_val == displayed_text)
 		return

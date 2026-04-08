@@ -59,7 +59,7 @@
 
 	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
 	for(var/obj/item/scattered_item as anything in source.contents)
-		scattered_item.forceMove(scatter_turf)
+		scattered_item.force_move(scatter_turf)
 		var/list/scatter_vector = scatter_gen.Rand()
 		scattered_item.pixel_x = scatter_vector[1]
 		scattered_item.pixel_y = scatter_vector[2]

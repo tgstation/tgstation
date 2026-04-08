@@ -231,7 +231,7 @@
 /mob/living/basic/turtle/proc/post_eat(datum/source, obj/item/seeds/potential_food)
 	SIGNAL_HANDLER
 	if(is_type_in_typecache(potential_food, indigestible_seeds))
-		potential_food.forceMove(src)
+		potential_food.force_move(src)
 		addtimer(CALLBACK(src, PROC_REF(process_food), potential_food), 20 SECONDS)
 		return COMSIG_MOB_TERMINATE_EAT
 
@@ -247,7 +247,7 @@
 
 	else if((!isnull(potential_food)) && (potential_food in contents))
 		var/atom/movable/movable_food = potential_food
-		movable_food.forceMove(drop_location())
+		movable_food.force_move(drop_location())
 
 	balloon_alert_to_viewers("spits out some food")
 

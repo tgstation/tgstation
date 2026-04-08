@@ -152,7 +152,7 @@
 		target.visible_message(span_danger("[src] attaches itself to where [target]'s [target.parse_zone_with_bodypart(target_zone)] used to be!"), span_userdanger("[src] attaches itself to where your [target.parse_zone_with_bodypart(target_zone)] used to be!"))
 
 	var/obj/item/bodypart/new_bodypart = new part_type()
-	forceMove(new_bodypart)
+	force_move(new_bodypart)
 	new_bodypart.replace_limb(target)
 	register_to_limb(new_bodypart)
 
@@ -204,7 +204,7 @@
 	visible_message(span_warning("[src] begins flailing around!"))
 	Shake(6, 6, 0.5 SECONDS)
 	ai_controller.set_ai_status(AI_STATUS_ON)
-	forceMove(limb.drop_location())
+	force_move(limb.drop_location())
 	qdel(limb)
 
 #undef LIVING_FLESH_TOUCH_CHANCE

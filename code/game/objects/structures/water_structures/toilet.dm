@@ -174,7 +174,7 @@
 		if(ishuman(user))
 			user.put_in_hands(random_cistern_item)
 		else
-			random_cistern_item.forceMove(drop_location())
+			random_cistern_item.force_move(drop_location())
 		to_chat(user, span_notice("You find [random_cistern_item] in the cistern."))
 		return
 
@@ -183,7 +183,7 @@
 		if(ishuman(user))
 			user.put_in_hands(random_fish)
 		else
-			random_fish.forceMove(drop_location())
+			random_fish.force_move(drop_location())
 		to_chat(user, span_notice("You take [random_fish] out of the toilet, poor thing."))
 
 /obj/structure/toilet/click_alt(mob/living/user)
@@ -234,8 +234,8 @@
 
 /obj/structure/toilet/dump_contents()
 	for(var/obj/toilet_item in (cistern_items + fishes))
-		toilet_item.forceMove(drop_location())
-	stuck_item?.forceMove(drop_location())
+		toilet_item.force_move(drop_location())
+	stuck_item?.force_move(drop_location())
 
 /obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
 	dump_contents()
@@ -376,7 +376,7 @@
 	reagents.clear_reagents()
 	begin_reclamation()
 	if(stuck_item)
-		stuck_item.forceMove(drop_location())
+		stuck_item.force_move(drop_location())
 		stuck_item = null
 	return TRUE
 
@@ -432,11 +432,11 @@
 		toilet_brain = new(drop_location())
 		set_custom_materials(list(/datum/material/meat = SHEET_MATERIAL_AMOUNT))
 
-	toilet_brain.forceMove(src)
+	toilet_brain.force_move(src)
 	add_cistern_item(toilet_brain)
 
 //this also prevents the toilet from dropping meat sheets. if you want to cheese the meat exepriments, sacrifice more people
 /obj/structure/toilet/greyscale/flesh/atom_deconstruct(dissambled = TRUE)
 	for(var/obj/toilet_item in cistern_items)
-		toilet_item.forceMove(drop_location())
+		toilet_item.force_move(drop_location())
 	new /obj/effect/decal/remains/human(loc)

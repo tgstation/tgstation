@@ -72,7 +72,7 @@
 		return FALSE
 
 	pawn.visible_message(span_notice("[pawn] delivers [carried_item] to [return_target]."))
-	carried_item.forceMove(get_turf(return_target))
+	carried_item.force_move(get_turf(return_target))
 	controller.clear_blackboard_key(storage_key)
 	return TRUE
 

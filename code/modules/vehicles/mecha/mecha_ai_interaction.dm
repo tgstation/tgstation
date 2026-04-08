@@ -69,7 +69,7 @@
 			AI.disconnect_shell()
 			remove_occupant(AI)
 			mecha_flags  &= ~SILICON_PILOT
-			AI.forceMove(card)
+			AI.force_move(card)
 			card.AI = AI
 			AI.controlled_equipment = null
 			AI.remote_control = null
@@ -112,7 +112,7 @@
 	AI.ai_restore_power()
 	mecha_flags |= SILICON_PILOT
 	moved_inside(AI)
-	AI.eyeobj?.forceMove(src)
+	AI.eyeobj?.force_move(src)
 	AI.eyeobj?.RegisterSignal(src, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/mob/eye/camera/ai, update_visibility))
 	AI.controlled_equipment = src
 	AI.remote_control = src

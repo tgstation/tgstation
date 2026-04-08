@@ -44,7 +44,7 @@
 
 /obj/item/fish/mastodon/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows [src] whole (somehow)! It looks like user.p_theyre()] trying to commit suicide!"))
-	forceMove(user)
+	force_move(user)
 	user.update_transform(1.25) // become BIG from eating BIG fish
 	addtimer(CALLBACK(src, PROC_REF(skeleton_appears), user), 2 SECONDS)
 	return MANUAL_SUICIDE_NONLETHAL // chance not to die
@@ -97,7 +97,7 @@
 
 /obj/item/fish/soul/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to commit soulcide!"))
-	src.forceMove(user)
+	src.force_move(user)
 	addtimer(CALLBACK(src, PROC_REF(good_ending), user), 2.5 SECONDS)
 	for(var/i in 1 to 7)
 		addtimer(CALLBACK(src, PROC_REF(soul_attack), user, i), 0.2 SECONDS * i)

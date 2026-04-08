@@ -35,8 +35,8 @@
 /obj/item/experi_scanner/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is giving in to the Great Toilet Beyond! It looks like [user.p_theyre()] trying to commit suicide!"))
 
-	forceMove(drop_location())
-	user.forceMove(src)
+	force_move(drop_location())
+	user.force_move(src)
 	user.AddComponent(/datum/component/itembound, src) //basically a bread smite but with a bloody finale
 	icon_state = "experiscanner_closed"
 	add_atom_colour(COLOR_RED, ADMIN_COLOUR_PRIORITY)

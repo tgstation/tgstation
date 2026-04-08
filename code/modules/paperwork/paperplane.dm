@@ -29,7 +29,7 @@
 		internal_paper = paper_made_of
 		flags_1 = paper_made_of.flags_1
 		color = paper_made_of.color
-		paper_made_of.forceMove(src)
+		paper_made_of.force_move(src)
 	else
 		internal_paper = new(src)
 	if(istype(internal_paper, /obj/item/paper/carbon_copy))
@@ -75,7 +75,7 @@
 	// Need to keep a reference to the internal paper
 	// when we move it out of the plane, our ref gets set to null
 	var/obj/item/paper/released_paper = internal_paper
-	released_paper.forceMove(location)
+	released_paper.force_move(location)
 	// This will as a side effect, qdel the paper plane, making the user's hands empty
 
 	user.put_in_hands(released_paper)

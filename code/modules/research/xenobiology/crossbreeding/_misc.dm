@@ -146,7 +146,7 @@ Slimecrossing Items
 
 /obj/structure/ice_stasis/Destroy()
 	for(var/atom/movable/M in contents)
-		M.forceMove(loc)
+		M.force_move(loc)
 	playsound(src, 'sound/effects/glass/glassbr3.ogg', 50, TRUE)
 	return ..()
 
@@ -198,12 +198,12 @@ Slimecrossing Items
 		to_chat(user, span_warning("The device is empty..."))
 
 /obj/item/capturedevice/proc/store(mob/living/pokemon)
-	pokemon.forceMove(src)
+	pokemon.force_move(src)
 	pokemon.add_traits(traits_on_transfer, ABSTRACT_ITEM_TRAIT)
 	pokemon.cancel_camera()
 
 /obj/item/capturedevice/proc/release()
 	for(var/mob/living/pokemon in contents)
-		pokemon.forceMove(get_turf(loc))
+		pokemon.force_move(get_turf(loc))
 		pokemon.remove_traits(traits_on_transfer, ABSTRACT_ITEM_TRAIT)
 		pokemon.cancel_camera()

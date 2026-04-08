@@ -88,7 +88,7 @@
 	switch(action)
 		if("jump")
 			if(mob_spawner)
-				owner.forceMove(get_turf(mob_spawner))
+				owner.force_move(get_turf(mob_spawner))
 				return TRUE
 		if("spawn")
 			if(mob_spawner)

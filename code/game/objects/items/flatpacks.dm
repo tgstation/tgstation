@@ -29,7 +29,7 @@
 
 	board = !isnull(new_board) ? new_board : new board(src) // i got board
 	if(board.loc != src)
-		board.forceMove(src)
+		board.force_move(src)
 	var/obj/machinery/build = initial(board.build_path)
 	name = "flatpack ([initial(build.name)])"
 
@@ -114,7 +114,7 @@
 
 /obj/structure/flatpack_cart/atom_deconstruct(disassembled)
 	for(var/atom/movable/content as anything in contents)
-		content.forceMove(drop_location())
+		content.force_move(drop_location())
 
 /obj/structure/flatpack_cart/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE

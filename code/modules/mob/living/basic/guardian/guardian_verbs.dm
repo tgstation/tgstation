@@ -2,7 +2,7 @@
 /mob/living/basic/guardian/proc/manifest(forced)
 	if (is_deployed() || isnull(summoner) || isnull(summoner.loc) || istype(summoner.loc, /obj/effect) || (!COOLDOWN_FINISHED(src, manifest_cooldown) && !forced) || locked)
 		return FALSE
-	forceMove(summoner.loc)
+	force_move(summoner.loc)
 	new /obj/effect/temp_visual/guardian/phase(loc)
 	COOLDOWN_START(src, manifest_cooldown, 1 SECONDS)
 	reset_perspective()
@@ -15,7 +15,7 @@
 		return FALSE
 	new /obj/effect/temp_visual/guardian/phase/out(loc)
 	recall_effects()
-	forceMove(summoner)
+	force_move(summoner)
 	COOLDOWN_START(src, manifest_cooldown, 1 SECONDS)
 	return TRUE
 

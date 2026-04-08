@@ -82,7 +82,7 @@
 		return FALSE
 	if(!silent)
 		M.visible_message(span_notice("[M] climbs into \the [src]!"))
-	M.forceMove(src)
+	M.force_move(src)
 	add_occupant(M)
 	return TRUE
 
@@ -94,7 +94,7 @@
 		return FALSE
 	remove_occupant(M)
 	if(!isAI(M))//This is the ONE mob we don't want to be moved to the vehicle that should be handled when used
-		M.forceMove(exit_location(M))
+		M.force_move(exit_location(M))
 	else
 		return TRUE
 	if(randomstep)
@@ -118,9 +118,9 @@
 
 	to_chat(user, span_notice("You insert [tool] into [src]."))
 	if(inserted_key) // Just in case there's an invalid key
-		inserted_key.forceMove(drop_location())
+		inserted_key.force_move(drop_location())
 	inserted_key = tool
-	inserted_key.forceMove(src)
+	inserted_key.force_move(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/sealed/proc/remove_key(mob/user)

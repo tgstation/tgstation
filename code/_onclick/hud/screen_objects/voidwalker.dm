@@ -84,5 +84,5 @@
 
 	index = (index % vomits.len) + 1
 
-	holder.forceMove(get_step(vomits[index], pick(GLOB.alldirs)))
+	holder.force_move(get_step(vomits[index], pick(GLOB.alldirs)))
 	usr.playsound_local(usr, 'sound/effects/phasein.ogg', 50, FALSE)

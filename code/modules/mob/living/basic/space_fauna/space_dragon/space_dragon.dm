@@ -225,7 +225,7 @@
 	playsound(src, 'sound/effects/magic/demon_attack1.ogg', 60, TRUE)
 	visible_message(span_boldwarning("[src] swallows [food] whole!"))
 	food.extinguish_mob() // It's wet in there, and our food is likely to be on fire. Let's be decent and not husk them.
-	food.forceMove(src)
+	food.force_move(src)
 	return TRUE
 
 /mob/living/basic/space_dragon/proc/eat_fish(obj/item/fish/fish)
@@ -261,7 +261,7 @@
 	for(var/atom/movable/eaten in src)
 		if(HAS_TRAIT(eaten, TRAIT_NOT_BARFABLE))
 			continue
-		eaten.forceMove(eaten.loc)
+		eaten.force_move(eaten.loc)
 		if(prob(90))
 			step(eaten, pick(GLOB.alldirs))
 
@@ -283,7 +283,7 @@
 	new /obj/effect/decal/cleanable/vomit(loc)
 	playsound(src, 'sound/effects/splat.ogg', vol = 50, vary = TRUE)
 	visible_message(span_danger("[src] vomits up [eaten]!"))
-	eaten.forceMove(loc)
+	eaten.force_move(loc)
 	eaten.Paralyze(5 SECONDS)
 
 /mob/living/basic/space_dragon/RangedAttack(atom/target, modifiers)

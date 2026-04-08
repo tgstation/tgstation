@@ -38,7 +38,7 @@
 	for(var/obj/item/I in loc)
 		if(!isbook(I))
 			continue
-		I.forceMove(src)
+		I.force_move(src)
 	update_appearance()
 
 	if(SSlibrary.initialized)
@@ -117,7 +117,7 @@
 		for(var/obj/I in contents)
 			if(!isbook(I))
 				continue
-			I.forceMove(Tsec)
+			I.force_move(Tsec)
 	update_appearance()
 
 /obj/structure/bookcase/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -202,7 +202,7 @@
 		if(!user.get_active_held_item())
 			user.put_in_hands(choice)
 	else
-		choice.forceMove(drop_location())
+		choice.force_move(drop_location())
 	update_appearance()
 
 /obj/structure/bookcase/atom_deconstruct(disassembled = TRUE)
@@ -211,7 +211,7 @@
 	for(var/obj/item/I in contents)
 		if(!isbook(I)) //Wake me up inside
 			continue
-		I.forceMove(Tsec)
+		I.force_move(Tsec)
 
 /obj/structure/bookcase/update_icon_state()
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)

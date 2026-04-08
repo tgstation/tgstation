@@ -71,7 +71,7 @@
 	QDEL_NULL(current_potion)
 	for(var/thing in stored_slimes)
 		var/mob/living/basic/slime/stored_slime = thing
-		stored_slime.forceMove(drop_location())
+		stored_slime.force_move(drop_location())
 	stored_slimes.Cut()
 	return ..()
 
@@ -221,7 +221,7 @@
 		target_turf.visible_message(span_notice("[stored_slimes.len] slimes are spat out!"))
 
 	for(var/mob/living/basic/slime/stored_slime in stored_slimes)
-		stored_slime.forceMove(target_turf)
+		stored_slime.force_move(target_turf)
 		REMOVE_TRAIT(stored_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
 		stored_slime.handle_slime_stasis()
 
@@ -250,7 +250,7 @@
 		target_slime.stop_feeding(silent = TRUE)
 	target_slime.visible_message(span_notice("The slime gets sucked up!"))
 	suck_up(target_slime)
-	target_slime.forceMove(src)
+	target_slime.force_move(src)
 	stored_slimes += target_slime
 	ADD_TRAIT(target_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
 

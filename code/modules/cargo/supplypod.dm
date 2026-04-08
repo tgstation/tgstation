@@ -162,7 +162,7 @@
 	. = ..()
 	if (!loc)
 		var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding] //temporary holder for supplypods mid-transit
-		forceMove(shippingLane)
+		force_move(shippingLane)
 	if (customStyle)
 		style = customStyle
 	set_style(style) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
@@ -286,7 +286,7 @@
 	do_sparks(8, FALSE, victim)
 	victim.visible_message(span_notice("[victim] vanishes..."))
 
-	victim.forceMove(src)
+	victim.force_move(src)
 
 	new /obj/effect/pod_landingzone(destination, src)
 
@@ -305,7 +305,7 @@
 		contents |= holder.contents
 		qdel(holder)
 	var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding]
-	forceMove(shippingLane) //Move to the centcom-z-level until the pod_landingzone says we can drop back down again
+	force_move(shippingLane) //Move to the centcom-z-level until the pod_landingzone says we can drop back down again
 	if (!reverse_dropoff_coords) //If we're centcom-launched, the reverse dropoff turf will be a centcom loading bay. If we're an extraction pod, it should be the ninja jail. Thus, this shouldn't ever really happen.
 		var/obj/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
 		var/turf/error_landmark_turf = get_turf(error_landmark)
@@ -339,7 +339,7 @@
 				for(var/obj/item/organ/organ_to_yeet as anything in carbon_target_mob.organs)
 					var/destination = get_edge_target_turf(turf_underneath, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 					organ_to_yeet.Remove(carbon_target_mob) //Note that this isn't the same proc as for lists
-					organ_to_yeet.forceMove(turf_underneath) //Move the organ outta the body
+					organ_to_yeet.force_move(turf_underneath) //Move the organ outta the body
 					organ_to_yeet.throw_at(destination, 2, 3) //Thow the organ at a random tile 3 spots away
 					sleep(0.1 SECONDS)
 				for (var/bp in carbon_target_mob.get_bodyparts()) //Look at the bodyparts in our poor mob beneath our pod as it lands
@@ -398,7 +398,7 @@
 		turf_underneath.place_on_top(turf_type)
 	for (var/cargo in holder.contents)
 		var/atom/movable/movable_cargo = cargo
-		movable_cargo.forceMove(turf_underneath)
+		movable_cargo.force_move(turf_underneath)
 	if (!effectQuiet && !openingSound && !ispath(style, /datum/pod_style/seethrough) && !(pod_flags & FIRST_SOUNDS)) //If we aren't being quiet, play the default pod open sound
 		playsound(get_turf(holder), open_sound, 15, TRUE, -3)
 	if (broken) //If the pod is opening because it's been destroyed, we end here
@@ -455,7 +455,7 @@
 		var/mob/mob_to_insert = movable_to_insert
 		if (!isnull(mob_to_insert.buckled))
 			mob_to_insert.buckled.unbuckle_mob(mob_to_insert, force = TRUE)
-	movable_to_insert.forceMove(holder)
+	movable_to_insert.force_move(holder)
 
 /obj/structure/closet/supplypod/insertion_allowed(atom/to_insert)
 	if(to_insert.invisibility == INVISIBILITY_ABSTRACT)
@@ -717,7 +717,7 @@
 				SO.generateCombo(pod, SO.orderer, SO.pack.contains, SO.pack.cost)
 		else if (istype(single_order, /atom/movable))
 			var/atom/movable/O = single_order
-			O.forceMove(pod)
+			O.force_move(pod)
 	for (var/mob/living/mob_in_pod in pod) //If there are any mobs in the supplypod, we want to set their view to the pod_landingzone. This is so that they can see where they are about to land
 		mob_in_pod.reset_perspective(src)
 	if(pod.effectStun) //If effectStun is true, stun any mobs caught on this pod_landingzone until the pod gets a chance to hit them
@@ -738,7 +738,7 @@
 /obj/effect/pod_landingzone/proc/begin_launch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
 	pod.add_glow()
 	pod.update_appearance()
-	pod.forceMove(drop_location())
+	pod.force_move(drop_location())
 	for (var/mob/living/M in pod) //Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldnt get lost in nullspace? Time to get them out
 		M.reset_perspective(null)
 	var/angle = effectCircle ? rand(0,360) : rand(70,110) //The angle that we can come in from

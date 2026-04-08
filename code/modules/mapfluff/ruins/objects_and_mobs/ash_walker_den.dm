@@ -67,7 +67,7 @@
 				to_chat(deadmob, "Your body has been returned to the nest. You are being remade anew, and will awaken shortly. </br><b>Your memories will remain intact in your new body, as your soul is being salvaged</b>")
 				SEND_SOUND(deadmob, sound('sound/effects/magic/enter_blood.ogg',volume=100))
 				addtimer(CALLBACK(src, PROC_REF(remake_walker), offeredmob), 20 SECONDS)
-				offeredmob.forceMove(src)
+				offeredmob.force_move(src)
 				return
 
 			if(ismegafauna(offeredmob))

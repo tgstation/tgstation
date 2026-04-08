@@ -53,10 +53,10 @@
 		new /obj/item/assembly/igniter/condenser(drop)
 
 	if(!QDELETED(distilled_container))
-		distilled_container.forceMove(drop)
+		distilled_container.force_move(drop)
 
 	if(!QDELETED(fuel_container))
-		fuel_container.forceMove(drop)
+		fuel_container.force_move(drop)
 
 /obj/structure/chem_separator/Exited(atom/movable/gone, direction)
 	. = ..()

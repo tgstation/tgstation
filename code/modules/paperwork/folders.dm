@@ -39,7 +39,7 @@
 	for(var/obj/important_thing in contents)
 		if(!(important_thing.resistance_flags & INDESTRUCTIBLE))
 			continue
-		important_thing.forceMove(drop_location()) //don't destroy round critical content such as objective documents.
+		important_thing.force_move(drop_location()) //don't destroy round critical content such as objective documents.
 	return ..()
 
 /obj/item/folder/examine()
@@ -70,7 +70,7 @@
 
 /obj/item/folder/proc/remove_item(obj/item/Item, mob/user)
 	if(istype(Item))
-		Item.forceMove(user.loc)
+		Item.force_move(user.loc)
 		user.put_in_hands(Item)
 		to_chat(user, span_notice("You remove [Item] from [src]."))
 		update_icon()
@@ -131,7 +131,7 @@
 			return ITEM_INTERACT_BLOCKING
 	else
 		interacting_with.do_pickup_animation(src)
-		interacting_with.forceMove(src)
+		interacting_with.force_move(src)
 
 	playsound(src, interacting_with.pickup_sound, PICKUP_SOUND_VOLUME, interacting_with.sound_vary, ignore_walls = FALSE)
 	update_appearance()

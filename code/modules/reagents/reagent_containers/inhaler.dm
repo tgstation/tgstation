@@ -33,7 +33,7 @@
 /obj/item/inhaler/handle_deconstruct(disassembled)
 	. = ..()
 
-	canister?.forceMove(drop_location())
+	canister?.force_move(drop_location())
 
 /obj/item/inhaler/proc/update_canister_underlay()
 	if (isnull(canister))
@@ -172,10 +172,10 @@
 			var/mob/living/carbon/carbon_loc = loc
 			INVOKE_ASYNC(carbon_loc, TYPE_PROC_REF(/mob/living/carbon, put_in_hands), canister)
 		else if (!isnull(loc))
-			canister.forceMove(loc)
+			canister.force_move(loc)
 
 	canister = new_canister
-	canister?.forceMove(src)
+	canister?.force_move(src)
 	update_canister_underlay()
 
 /// Determines if we can be used. Fails on no canister, empty canister, invalid targets, or non-breathing targets.

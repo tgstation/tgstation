@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	profile_picture = getFlatIcon(image(icon = 'icons/ui/virtualpet/pet_state.dmi', icon_state = "pet_preview"))
 	GLOB.virtual_pets_list += src
 	pet = new pet_type(computer)
-	pet.forceMove(computer)
+	pet.force_move(computer)
 	pet.AddComponent(/datum/component/leash, computer, 9, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	RegisterSignal(pet, COMSIG_QDELETING, PROC_REF(remove_pet))
 	RegisterSignal(pet, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlays_updated)) //hologramic hat management
@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 /datum/computer_file/program/virtual_pet/proc/on_death(datum/source)
 	SIGNAL_HANDLER
 
-	pet.forceMove(computer)
+	pet.force_move(computer)
 
 
 /datum/computer_file/program/virtual_pet/proc/on_message_receive(datum/source, sender_title, inbound_message, photo_message)
@@ -356,7 +356,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 /datum/computer_file/program/virtual_pet/kill_program(mob/user)
 	if(pet && pet.loc != computer)
-		pet.forceMove(computer) //recall the hologram back to the pda
+		pet.force_move(computer) //recall the hologram back to the pda
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
@@ -591,7 +591,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 /datum/computer_file/program/virtual_pet/proc/recall_pet(mob/living/friend)
 	animate(pet, transform = matrix().Scale(0.3, 0.3), time = 1.5 SECONDS)
-	addtimer(CALLBACK(pet, TYPE_PROC_REF(/atom/movable, forceMove), computer), 1.5 SECONDS)
+	addtimer(CALLBACK(pet, TYPE_PROC_REF(/atom/movable, force_move), computer), 1.5 SECONDS)
 	SEND_SIGNAL(pet, COMSIG_VIRTUAL_PET_RECALLED, friend)
 
 /datum/computer_file/program/virtual_pet/proc/release_pet(mob/living/our_user)
@@ -605,7 +605,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	var/turf/final_turf = isnull(drop_zone) ? computer.drop_location() : drop_zone
 	pet.befriend(our_user) //befriend whoever set us out
 	animate(pet, transform = matrix(), time = 1.5 SECONDS)
-	pet.forceMove(final_turf)
+	pet.force_move(final_turf)
 	playsound(computer.loc, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg', 20)
 	SEND_SIGNAL(pet, COMSIG_VIRTUAL_PET_SUMMONED, our_user)
 	new /obj/effect/temp_visual/guardian/phase(pet.loc)

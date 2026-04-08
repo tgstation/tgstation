@@ -67,9 +67,9 @@
 		return
 
 	if(!isnull(stored_paper))
-		stored_paper.forceMove(drop_location())
+		stored_paper.force_move(drop_location())
 	if(!isnull(stored_blade))
-		stored_blade.forceMove(drop_location())
+		stored_blade.force_move(drop_location())
 
 /obj/item/papercutter/Exited(atom/movable/leaving, atom/new_loc)
 	. = ..()
@@ -134,7 +134,7 @@
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		balloon_alert(user, "blade inserted")
-		tool.forceMove(src)
+		tool.force_move(src)
 		stored_blade = tool
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS

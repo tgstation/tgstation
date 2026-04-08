@@ -483,7 +483,7 @@
 		return ITEM_INTERACT_FAILURE
 
 	rable.loaded = src
-	forceMove(rable)
+	force_move(rable)
 	user.visible_message(span_notice("[user] collects \the [src]."), span_notice("You collect \the [src]."))
 	return ITEM_INTERACT_SUCCESS
 
@@ -510,7 +510,7 @@
 		return
 
 	for(var/mob/living/living_mob in old_loc.contents)//Kidnap everyone on top
-		living_mob.forceMove(loc)
+		living_mob.force_move(loc)
 
 	for(var/atom/movable/attached_movable as anything in attached_items)
 		if(!attached_movable.Move(loc)) // weird
@@ -1012,14 +1012,14 @@
 		return
 
 	if (air_tank)
-		air_tank.forceMove(drop_loc)
+		air_tank.force_move(drop_loc)
 		air_tank = null
 
 	if (!breath_mask)
 		return
 	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
 	if (breath_mask.loc == src)
-		breath_mask.forceMove(drop_loc)
+		breath_mask.force_move(drop_loc)
 	else if (breath_mask.loc)
 		UnregisterSignal(breath_mask.loc, COMSIG_MOVABLE_MOVED)
 	breath_mask = null
@@ -1176,7 +1176,7 @@
 	if (breath_mask.loc != src)
 		return ITEM_INTERACT_BLOCKING
 
-	breath_mask.forceMove(drop_location())
+	breath_mask.force_move(drop_location())
 	tool.play_tool_sound(src, 50)
 	balloon_alert(user, "mask detached")
 	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
@@ -1192,7 +1192,7 @@
 	balloon_alert(user, "detaching the tank...")
 	if (!tool.use_tool(src, user, 3 SECONDS))
 		return ITEM_INTERACT_BLOCKING
-	air_tank.forceMove(drop_location())
+	air_tank.force_move(drop_location())
 	tool.play_tool_sound(src, 50)
 	balloon_alert(user, "tank detached")
 	if (air_tank.IsReachableBy(user))
@@ -1308,7 +1308,7 @@
 	if (ismob(breath_mask.loc))
 		var/mob/as_mob = breath_mask.loc
 		as_mob.temporarilyRemoveItemFromInventory(breath_mask, force = TRUE)
-	breath_mask.forceMove(src)
+	breath_mask.force_move(src)
 	update_appearance()
 
 /obj/structure/table/optable/update_overlays()

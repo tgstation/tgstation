@@ -211,7 +211,7 @@
 	if (!deployable)
 		return
 	if (!ishuman(deployable.loc))
-		deployable.forceMove(parent)
+		deployable.force_move(parent)
 		return
 	var/mob/living/carbon/human/wearer = deployable.loc
 	wearer.transferItemToLoc(deployable, parent, force = TRUE, silent = TRUE)

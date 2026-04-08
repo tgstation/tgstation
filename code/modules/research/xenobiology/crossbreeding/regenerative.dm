@@ -79,7 +79,7 @@ Regenerative extracts:
 		C.bust_open()
 		C.visible_message(span_warning("[target] is too big, and immediately breaks \the [C.name] open!"))
 	else //This can't be allowed to actually happen to the too-big mobs or it breaks some actions
-		target.forceMove(C)
+		target.force_move(C)
 
 /obj/item/slimecross/regenerative/yellow
 	colour = SLIME_TYPE_YELLOW
@@ -175,7 +175,7 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target and makes a second regenerative core with no special effects."
 
 /obj/item/slimecross/regenerative/cerulean/core_effect(mob/living/target, mob/user)
-	src.forceMove(user.loc)
+	src.force_move(user.loc)
 	var/obj/item/slimecross/X = new /obj/item/slimecross/regenerative(user.loc)
 	X.name = name
 	X.desc = desc

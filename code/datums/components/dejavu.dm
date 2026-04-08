@@ -85,7 +85,7 @@
 			to_chat(parent, span_warning("For some reason, your head aches and fills with mental fog when you try to think of where you were... It feels like you're now going against some dull, unstoppable universal force."))
 		else
 			var/atom/movable/master = parent
-			master.forceMove(starting_turf)
+			master.force_move(starting_turf)
 
 	rewinds_remaining --
 	if(rewinds_remaining || rewinds_remaining < 0)

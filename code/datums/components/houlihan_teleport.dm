@@ -46,11 +46,11 @@
 
 	var/turf/user_turf = get_turf(user)
 	var/atom/movable/dragged = user.pulling
-	user.forceMove(destination_turf)
+	user.force_move(destination_turf)
 	user_turf.balloon_alert_to_hearers("*pop*")
 	if(dragged)
 		var/turf/dragged_turf = get_turf(dragged)
-		dragged.forceMove(destination_turf)
+		dragged.force_move(destination_turf)
 		user.start_pulling(dragged, force = TRUE)
 		dragged_turf.balloon_alert_to_hearers("*pop*")
 

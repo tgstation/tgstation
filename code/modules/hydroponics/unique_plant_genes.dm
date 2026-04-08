@@ -438,7 +438,7 @@
 		var/calculated_speed = initial(spawned_basicmob.speed) - round((our_seed.production * mob_speed_multiplier), 0.01)
 		spawned_basicmob.set_varspeed(calculated_speed)
 
-	our_plant.forceMove(our_plant.drop_location())
+	our_plant.force_move(our_plant.drop_location())
 	spawned_mob.visible_message(span_notice("[our_plant] growls as it suddenly awakens!"))
 	qdel(our_plant)
 
@@ -606,7 +606,7 @@
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/flame_reach = clamp(round(our_seed.potency / 20), 1, 5) //Like IEDs - their flame range can get up to 5, but their real boom is small
 
-	our_plant.forceMove(our_plant.drop_location())
+	our_plant.force_move(our_plant.drop_location())
 	explosion(our_plant, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flame_range = flame_reach)
 	qdel(our_plant)
 

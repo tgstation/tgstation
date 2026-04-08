@@ -12,7 +12,7 @@
 	human.set_resting(new_resting = FALSE, instant = TRUE)
 	replacement_human.set_resting(new_resting = FALSE, instant = TRUE)
 
-	human.forceMove(get_turf(table))
+	human.force_move(get_turf(table))
 	TEST_ASSERT_NULL(table.patient, "Operating table is occupied by a non-resting patient.")
 
 	human.set_resting(new_resting = TRUE, instant = TRUE)
@@ -24,9 +24,9 @@
 	human.set_resting(new_resting = TRUE, instant = TRUE)
 	TEST_ASSERT_EQUAL(table.patient, human, "Operating table failed to update for a resting patient.")
 
-	replacement_human.forceMove(get_turf(table))
+	replacement_human.force_move(get_turf(table))
 	replacement_human.set_resting(new_resting = TRUE, instant = TRUE)
 	TEST_ASSERT_EQUAL(table.patient, human, "Operating table patient unset by another patient jumping in.")
 
-	human.forceMove(get_step(get_turf(table), NORTH))
+	human.force_move(get_step(get_turf(table), NORTH))
 	TEST_ASSERT_EQUAL(table.patient, replacement_human, "Operating table failed to find a replacement patient.")

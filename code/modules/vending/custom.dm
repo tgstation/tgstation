@@ -39,7 +39,7 @@
 
 	//move products to canister
 	for(var/obj/item/stored_item in contents - component_parts)
-		stored_item.forceMove(installed_refill)
+		stored_item.force_move(installed_refill)
 
 /obj/machinery/vending/custom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(panel_open && istype(held_item, refill_canister))
@@ -154,7 +154,7 @@
 				break
 			if(ITEM_HASH(product) == product_hash)
 				. += 1
-				product.forceMove(src)
+				product.force_move(src)
 				load_count--
 
 	if(update_static_data)

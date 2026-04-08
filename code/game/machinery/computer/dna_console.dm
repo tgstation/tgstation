@@ -184,7 +184,7 @@
 /obj/machinery/computer/dna_console/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	// Store chromosomes in the console if there's room
 	if (istype(item, /obj/item/chromosome))
-		item.forceMove(src)
+		item.force_move(src)
 		stored_chromosomes += item
 		to_chat(user, span_notice("You insert [item]."))
 		return
@@ -1034,7 +1034,7 @@
 
 			for(var/obj/item/chromosome/CM in stored_chromosomes)
 				if(chromname == CM.name)
-					CM.forceMove(drop_location())
+					CM.force_move(drop_location())
 					adjust_item_drop_location(CM)
 					stored_chromosomes -= CM
 					return
@@ -2336,7 +2336,7 @@
 
 	// If the disk shouldn't pop into the user's hand for any reason, drop it on the console instead.
 	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(diskette))
-		diskette.forceMove(drop_location())
+		diskette.force_move(drop_location())
 	diskette = null
 
 /obj/machinery/computer/dna_console/proc/set_connected_scanner(new_scanner)

@@ -228,7 +228,7 @@
 				var/obj/item/stack/new_stack = as_stack.split_stack(1)
 				new_stack.merge_type = null //prevent them from merging inside for contents.len
 				to_put = new_stack
-			to_put.forceMove(src)
+			to_put.force_move(src)
 			return
 
 		//if the item has reagents lets allow it to transfer
@@ -272,7 +272,7 @@
 
 		var/obj/item/grenade/iedcasing/pipebomb = new(drop_location())
 		for(var/atom/movable/item_inside as anything in contents)
-			item_inside.forceMove(pipebomb)
+			item_inside.force_move(pipebomb)
 
 		pipebomb.power = power
 		pipebomb.attach_activator(assembly)

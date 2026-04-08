@@ -107,7 +107,7 @@ GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller,
 		stack_trace("No eigen target set for the eigenstate component!")
 		return FALSE
 	if(check_teleport_valid(thing_to_send, eigen_target, TELEPORT_CHANNEL_QUANTUM))
-		thing_to_send.forceMove(eigen_target)
+		thing_to_send.force_move(eigen_target)
 	else
 		if(!subtle)
 			object_sent_from.balloon_alert(thing_to_send, "nothing happens!")

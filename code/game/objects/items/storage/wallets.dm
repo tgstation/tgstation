@@ -102,7 +102,7 @@
 	if(!front_id)
 		return
 	. = front_id
-	front_id.forceMove(get_turf(src))
+	front_id.force_move(get_turf(src))
 
 /obj/item/storage/wallet/insert_id(obj/item/inserting_item)
 	var/obj/item/card/inserting_id = inserting_item.remove_id()

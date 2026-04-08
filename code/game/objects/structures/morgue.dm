@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	var/turf/dump_turf = get_step(src, dir)
 	connected?.setDir(dir)
 	for(var/atom/movable/moving in src)
-		moving.forceMove(dump_turf)
+		moving.force_move(dump_turf)
 		animate_slide_out(moving)
 	update_appearance()
 	return TRUE
@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		else if(istype(entering, /obj/effect/dummy/phased_mob) || isdead(entering))
 			continue
 		animate_slide_in(entering, close_loc)
-		entering.forceMove(src)
+		entering.force_move(src)
 	update_appearance()
 	return TRUE
 
@@ -517,7 +517,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		icecreams += new /obj/item/food/icecream(null, list(ICE_CREAM_MOB = list(null, i_scream.name)))
 	. = ..()
 	for(var/obj/ice_cream as anything in icecreams)
-		ice_cream.forceMove(src)
+		ice_cream.force_move(src)
 
 /*
  * Generic Tray
@@ -582,7 +582,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		var/mob/M = O
 		if(M.buckled)
 			return
-	O.forceMove(src.loc)
+	O.force_move(src.loc)
 	if (user != O)
 		visible_message(span_warning("[user] stuffs [O] into [src]."))
 

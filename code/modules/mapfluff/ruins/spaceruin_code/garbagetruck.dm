@@ -70,7 +70,7 @@
 	playsound(target, 'sound/items/handling/surgery/retractor2.ogg', 100, TRUE)
 	playsound(target, 'sound/effects/pop.ogg', 100, TRAIT_MUTE)
 	eyeballies.Remove(target)
-	eyeballies.forceMove(get_turf(target))
+	eyeballies.force_move(get_turf(target))
 	notify_ghosts(
 		"[target.real_name] has just had their eyes snatched!",
 		source = target,

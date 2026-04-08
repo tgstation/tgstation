@@ -300,7 +300,7 @@
 		return
 
 	if(line?.fishing_line_traits & FISHING_LINE_PHASE)
-		currently_hooked.forceMove(get_step_towards(currently_hooked, get_turf(src)))
+		currently_hooked.force_move(get_step_towards(currently_hooked, get_turf(src)))
 	else
 		step_towards(currently_hooked, get_turf(src))
 

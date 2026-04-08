@@ -70,13 +70,13 @@
 /obj/item/clipboard/proc/remove_paper(obj/item/paper/paper, mob/user)
 	if(!istype(paper))
 		return
-	paper.forceMove(user.loc)
+	paper.force_move(user.loc)
 	user.put_in_hands(paper)
 	to_chat(user, span_notice("You remove [paper] from [src]."))
 
 /obj/item/clipboard/proc/remove_pen(mob/user)
 	var/obj/item/pen/pen = src.pen
-	pen.forceMove(user.loc)
+	pen.force_move(user.loc)
 	user.put_in_hands(pen)
 	to_chat(user, span_notice("You remove [pen] from [src]."))
 

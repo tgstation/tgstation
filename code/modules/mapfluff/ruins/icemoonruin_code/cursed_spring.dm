@@ -36,5 +36,5 @@
 		return ..()
 
 	var/turf/return_turf = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
-	transformed_mob.forceMove(return_turf)
+	transformed_mob.force_move(return_turf)
 	to_chat(transformed_mob, span_notice("You blink and find yourself in [get_area_name(return_turf)]."))

@@ -220,7 +220,7 @@
 /obj/structure/reflector/double/auto_reflect(obj/projectile/proj, pdir, turf/ploc, pangle)
 	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (proj.angle + 180))
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	proj.forceMove(loc)
+	proj.force_move(loc)
 	proj.set_angle_centered(loc, new_angle)
 	return ..()
 

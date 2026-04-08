@@ -36,7 +36,7 @@
 		if(Adjacent(user))
 			user.put_in_hands(old_pin)
 		else
-			old_pin.forceMove(targeted_gun.drop_location())
+			old_pin.force_move(targeted_gun.drop_location())
 		old_pin.gun_remove(user)
 
 	if(!targeted_gun.pin)
@@ -61,7 +61,7 @@
 
 /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/new_gun, starting = FALSE)
 	gun = new_gun
-	forceMove(gun)
+	force_move(gun)
 	gun.pin = src
 	SEND_SIGNAL(gun, COMSIG_GUN_PIN_INSERTED, src, user, starting)
 	return TRUE
@@ -259,7 +259,7 @@
 		return
 
 	if(isnull(user))
-		forceMove(new_gun.drop_location())
+		force_move(new_gun.drop_location())
 	else
 		to_chat(user, span_warning("ERROR: Please swipe valid identification card before installing firing pin!"))
 		user.put_in_hands(src)

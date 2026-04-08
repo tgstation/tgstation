@@ -75,7 +75,7 @@
 	brain.Remove(source)
 
 	var/turf/source_turf = get_turf(source)
-	brain.forceMove(source_turf)
+	brain.force_move(source_turf)
 	brain.throw_at(get_step(source_turf, source.dir), 1, 1)
 
 	source.visible_message(

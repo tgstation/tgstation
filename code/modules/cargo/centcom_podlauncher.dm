@@ -235,7 +235,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			var/turf/dropoff_turf = locate(coordinate_list[1], coordinate_list[2], coordinate_list[3])
 			if (current_location != dropoff_turf)
 				oldTurf = current_location
-			M.forceMove(dropoff_turf) //Perform the actual teleport
+			M.force_move(dropoff_turf) //Perform the actual teleport
 			log_admin("[key_name(usr)] jumped to [AREACOORD(dropoff_turf)]")
 			message_admins("[key_name_admin(usr)] jumped to [AREACOORD(dropoff_turf)]")
 			. = TRUE
@@ -246,7 +246,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			if (current_location.loc != bay_area)
 				oldTurf = current_location
 			var/turf/teleport_turf = pick(get_area_turfs(bay_area))
-			holder_mob.forceMove(teleport_turf) //Perform the actual teleport
+			holder_mob.force_move(teleport_turf) //Perform the actual teleport
 			if (holder.holder)
 				log_admin("[key_name(usr)] jumped to [AREACOORD(teleport_turf)]")
 				message_admins("[key_name_admin(usr)] jumped to [AREACOORD(teleport_turf)]")
@@ -256,7 +256,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			if (!oldTurf) //If theres no turf to go back to, error and cancel
 				to_chat(M, "Nowhere to jump to!")
 				return
-			M.forceMove(oldTurf) //Perform the actual teleport
+			M.force_move(oldTurf) //Perform the actual teleport
 			if (holder.holder)
 				log_admin("[key_name(usr)] jumped to [AREACOORD(oldTurf)]")
 				message_admins("[key_name_admin(usr)] jumped to [AREACOORD(oldTurf)]")
@@ -718,7 +718,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = duplicate_object(temp_pod) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
 	toLaunch.update_appearance()//we update_appearance() here so that the door doesnt "flicker on" right after it lands
 	var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding]
-	toLaunch.forceMove(shippingLane)
+	toLaunch.force_move(shippingLane)
 	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those
 		if(launchRandomItem)
 			var/launch_candidate = pick_n_take(launchList)
@@ -728,7 +728,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 					toLaunch.turfs_in_cargo += atom_to_launch.type
 				else
 					var/atom/movable/movable_to_launch = launch_candidate
-					duplicate_object(movable_to_launch).forceMove(toLaunch) //Duplicate a single atom/movable from launchList and forceMove it into the supplypod
+					duplicate_object(movable_to_launch).force_move(toLaunch) //Duplicate a single atom/movable from launchList and force_move it into the supplypod
 		else
 			for (var/launch_candidate in launchList)
 				if (isnull(launch_candidate))
@@ -738,7 +738,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 					toLaunch.turfs_in_cargo += turf_to_launch.type
 				else
 					var/atom/movable/movable_to_launch = launch_candidate
-					duplicate_object(movable_to_launch).forceMove(toLaunch) //Duplicate each atom/movable in launchList and forceMove them into the supplypod
+					duplicate_object(movable_to_launch).force_move(toLaunch) //Duplicate each atom/movable in launchList and force_move them into the supplypod
 	else
 		if(launchRandomItem)
 			var/atom/random_item = pick_n_take(launchList)
@@ -749,7 +749,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 					wall.ScrapeAway()
 				else
 					var/atom/movable/random_item_movable = random_item
-					random_item_movable.forceMove(toLaunch) //and forceMove any atom/moveable into the supplypod
+					random_item_movable.force_move(toLaunch) //and force_move any atom/moveable into the supplypod
 		else
 			for (var/thing_to_launch in launchList) //If we aren't cloning the objects, just go through the launchList
 				if (isnull(thing_to_launch))
@@ -760,8 +760,8 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 					wall.ScrapeAway()
 				else
 					var/atom/movable/movable_to_launch = thing_to_launch
-					movable_to_launch.forceMove(toLaunch) //and forceMove any atom/moveable into the supplypod
-	new /obj/effect/pod_landingzone(target_turf, toLaunch) //Then, create the DPTarget effect, which will eventually forceMove the temp_pod to its location
+					movable_to_launch.force_move(toLaunch) //and force_move any atom/moveable into the supplypod
+	new /obj/effect/pod_landingzone(target_turf, toLaunch) //Then, create the DPTarget effect, which will eventually force_move the temp_pod to its location
 	if (launchClone)
 		launchCounter++ //We only need to increment launchCounter if we are cloning objects.
 		//If we aren't cloning objects, taking and removing the first item each time from the acceptableTurfs list will inherently iterate through the list in order
@@ -771,7 +771,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		var/index = (launchCounter == 1 ? launchCounter : launchCounter + 1) //launchCounter acts as an index to the ordered acceptableTurfs list, so adding one will show the next item in the list. We don't want to do this for the very first item tho
 		if (index > length(acceptableTurfs)) //out of bounds check
 			index = 1
-		selector.forceMove(acceptableTurfs[index]) //forceMove the selector to the next turf in the ordered acceptableTurfs list
+		selector.force_move(acceptableTurfs[index]) //force_move the selector to the next turf in the ordered acceptableTurfs list
 	else
 		selector.moveToNullspace() //Otherwise, we move the selector to nullspace until it is needed again
 
@@ -862,7 +862,7 @@ GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
 	else
 		CRASH("Improper type passed to setDropoff! Should be /turf or /area")
 	temp_pod.reverse_dropoff_coords = list(target_turf.x, target_turf.y, target_turf.z)
-	indicator.forceMove(target_turf)
+	indicator.force_move(target_turf)
 
 /obj/effect/client_image_holder/supplypod_selector // Shows which item will be taken next
 	name = "Supply Selector (Only you can see this)"

@@ -36,7 +36,7 @@
 		return
 
 	source.visible_message(span_danger("[source] drops [carried_item] at [user]'s feet!"))
-	carried_item.forceMove(get_turf(user))
+	carried_item.force_move(get_turf(user))
 	source.ai_controller.clear_blackboard_key(BB_SIMPLE_CARRY_ITEM)
 
 /// If our held item is removed from our atom then take it off the blackboard
@@ -65,5 +65,5 @@
 		return
 
 	ol_yeller.visible_message(span_danger("[ol_yeller] drops [carried_item] as [ol_yeller.p_they()] die[ol_yeller.p_s()]."))
-	carried_item.forceMove(ol_yeller.drop_location())
+	carried_item.force_move(ol_yeller.drop_location())
 	ol_yeller.ai_controller.clear_blackboard_key(BB_SIMPLE_CARRY_ITEM)

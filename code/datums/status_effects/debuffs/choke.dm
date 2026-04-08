@@ -37,9 +37,9 @@
 			var/mob/inventory_in = chokin_item.loc
 			inventory_in.transferItemToLoc(chokin_item, owner, force = TRUE, silent = TRUE)
 		else if(!(chokin_item.item_flags & IN_STORAGE) || !chokin_item.remove_item_from_storage(owner))
-			choking_on.forceMove(owner) // backup
+			choking_on.force_move(owner) // backup
 	else
-		choking_on.forceMove(owner)
+		choking_on.force_move(owner)
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(no_breathing))
 	RegisterSignal(owner, COMSIG_MOB_LOGOUT, PROC_REF(on_logout))
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_death))
@@ -117,7 +117,7 @@
 	var/atom/movable/choking_on = choking_on_ref?.resolve()
 	if(choking_on)
 		choking_on_ref = null
-		choking_on.forceMove(get_turf(source)) // Gotta be on a tile to throw yourself bestie
+		choking_on.force_move(get_turf(source)) // Gotta be on a tile to throw yourself bestie
 		var/atom/target = get_edge_target_turf(source, source.dir)
 		choking_on.throw_at(target, distance, 1, source)
 

@@ -197,7 +197,7 @@
 	if(id != CAFE_KEYCARD_TOILETS)
 		return ..()
 	var/obj/structure/toilet/destination = pick(partners)
-	forceMove(destination)
+	force_move(destination)
 	destination.w_items += w_class
 	LAZYADD(destination.cistern_items, src)
 

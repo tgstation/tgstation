@@ -229,7 +229,7 @@
 		var/obj/structure/closet/decay/locker_temp_instance = locker_ref.resolve()
 		if(!locker_temp_instance?.insertion_allowed(target))
 			return
-		target.forceMove(src)
+		target.force_move(src)
 		return PROJECTILE_PIERCE_PHASE
 
 /obj/projectile/magic/locker/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -251,7 +251,7 @@
 	if (last_tick_turf)
 		UnregisterSignal(last_tick_turf, COMSIG_ATOM_ENTERED)
 	for(var/atom/movable/AM in contents)
-		AM.forceMove(get_turf(src))
+		AM.force_move(get_turf(src))
 	. = ..()
 
 /// Magic locker which breaks itself open after a while

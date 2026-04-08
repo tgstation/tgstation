@@ -141,7 +141,7 @@
 		if(!user.dropItemToGround(back))
 			return
 		for(var/obj/item/item as anything in back.contents)
-			item.forceMove(storage)
+			item.force_move(storage)
 	if(!user.equip_to_slot_if_possible(mod, mod.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return
 	if(!user.dropItemToGround(user.wear_suit) || !user.dropItemToGround(user.head))

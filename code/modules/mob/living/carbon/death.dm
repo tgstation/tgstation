@@ -23,7 +23,7 @@
 					step(W, pick(GLOB.alldirs))
 	var/atom/Tsec = drop_location()
 	for(var/mob/M in src)
-		M.forceMove(Tsec)
+		M.force_move(Tsec)
 		visible_message(span_danger("[M] bursts out of [src]!"))
 	return ..()
 
@@ -58,7 +58,7 @@
 				continue // the head will drop, so the brain should stay inside
 
 			organ.Remove(src)
-			organ.forceMove(Tsec)
+			organ.force_move(Tsec)
 			organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 			continue
 
@@ -67,7 +67,7 @@
 				continue // only chest & groin organs will be ejected
 
 			organ.Remove(src)
-			organ.forceMove(Tsec)
+			organ.force_move(Tsec)
 			organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 			continue
 

@@ -317,7 +317,7 @@
 		RegisterSignal(circuitboard, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(override_power_usage))
 	RegisterSignal(circuitboard, COMSIG_QDELETING, PROC_REF(on_circuit_delete))
 	for(var/obj/item/circuit_component/to_add as anything in unremovable_circuit_components)
-		to_add.forceMove(attached_circuit)
+		to_add.force_move(attached_circuit)
 		attached_circuit.add_component(to_add)
 	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, PROC_REF(on_circuit_add_component_manually))
 	if(attached_circuit.display_name != "")
@@ -327,7 +327,7 @@
 	if((shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) || circuitboard.admin_only)
 		circuitboard.moveToNullspace()
 	else if(circuitboard.loc != parent_atom)
-		circuitboard.forceMove(parent_atom)
+		circuitboard.force_move(parent_atom)
 	attached_circuit.set_shell(parent_atom)
 
 	// call after set_shell() sets on to true
@@ -350,7 +350,7 @@
 		var/atom/parent_atom = parent
 		var/drop_location = parent_atom.drop_location()
 		if(drop_location)
-			attached_circuit.forceMove(drop_location)
+			attached_circuit.force_move(drop_location)
 		else
 			attached_circuit.moveToNullspace()
 

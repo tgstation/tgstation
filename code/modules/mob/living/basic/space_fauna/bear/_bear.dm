@@ -66,7 +66,7 @@
 	var/obj/item/food/honeycomb/honey_food = pick_n_take(hive.honeycombs)
 	if(isnull(honey_food))
 		return
-	honey_food.forceMove(get_turf(src))
+	honey_food.force_move(get_turf(src))
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/basic/bear/hudson

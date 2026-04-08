@@ -27,7 +27,7 @@
 /obj/machinery/gulag_item_reclaimer/Destroy()
 	for(var/i in contents)
 		var/obj/item/I = i
-		I.forceMove(get_turf(src))
+		I.force_move(get_turf(src))
 	if(linked_teleporter)
 		linked_teleporter.linked_reclaimer = null
 	linked_teleporter = null
@@ -106,6 +106,6 @@
 	for(var/i in stored_items[user])
 		var/obj/item/W = i
 		stored_items[user] -= W
-		W.forceMove(drop_location)
+		W.force_move(drop_location)
 	stored_items -= user
 	user.log_message("has reclaimed their items from the gulag item reclaimer.", LOG_GAME)

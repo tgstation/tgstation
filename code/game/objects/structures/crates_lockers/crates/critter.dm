@@ -28,7 +28,7 @@
 /obj/structure/closet/crate/critter/Destroy()
 	var/turf/T = get_turf(src)
 	if(tank)
-		tank.forceMove(T)
+		tank.force_move(T)
 		tank = null
 
 	return ..()

@@ -17,7 +17,7 @@
 	var/list/contents_to_throw = list()
 
 	for(var/atom/movable/thing in contents_to_eject)
-		thing.forceMove(origin_turf)
+		thing.force_move(origin_turf)
 		SEND_SIGNAL(thing, COMSIG_MOVABLE_PIPE_EJECTING, direction)
 		if(QDELETED(thing))
 			continue

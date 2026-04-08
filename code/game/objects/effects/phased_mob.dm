@@ -26,7 +26,7 @@
 /// Sets [new_jaunter] as our jaunter, forcemoves them into our contents
 /obj/effect/dummy/phased_mob/proc/set_jaunter(atom/movable/new_jaunter)
 	jaunter = new_jaunter
-	jaunter.forceMove(src)
+	jaunter.force_move(src)
 	if(!ismob(jaunter))
 		return
 	var/mob/mob_jaunter = jaunter
@@ -66,9 +66,9 @@
 			if(ishuman(living_cheaterson))
 				shake_camera(living_cheaterson, 20, 1)
 				addtimer(CALLBACK(living_cheaterson, TYPE_PROC_REF(/mob/living/carbon, vomit)), 2 SECONDS)
-			jaunter.forceMove(find_safe_turf(z))
+			jaunter.force_move(find_safe_turf(z))
 	else
-		jaunter.forceMove(eject_spot)
+		jaunter.force_move(eject_spot)
 	qdel(src)
 
 /obj/effect/dummy/phased_mob/Exited(atom/movable/gone, direction)
@@ -92,7 +92,7 @@
 
 	if (direction in GLOB.alldirs)
 		setDir(direction)
-	forceMove(newloc)
+	force_move(newloc)
 
 /// Checks if the conditions are valid to be able to phase. Returns a turf destination if positive.
 /obj/effect/dummy/phased_mob/proc/phased_check(mob/living/user, direction)

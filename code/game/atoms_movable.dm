@@ -395,7 +395,7 @@
 
 	for(var/atom/movable/movable as anything in moving_movs)
 		movable.currently_z_moving = currently_z_moving || CURRENTLY_Z_MOVING_GENERIC
-		movable.forceMove(target)
+		movable.force_move(target)
 		movable.set_currently_z_moving(FALSE, TRUE)
 	// This is run after ALL movables have been moved, so pulls don't get broken unless they are actually out of range.
 	if(z_move_flags & ZMOVE_CHECK_PULLS)
@@ -609,7 +609,7 @@
 			stop_pulling()
 		else if(!isturf(loc))
 			stop_pulling()
-		else if(pulling && !isturf(pulling.loc) && pulling.loc != loc) //to be removed once all code that changes an object's loc uses forceMove().
+		else if(pulling && !isturf(pulling.loc) && pulling.loc != loc) //to be removed once all code that changes an object's loc uses force_move().
 			log_game("DEBUG:[src]'s pull on [pulling] wasn't broken despite [pulling] being in [pulling.loc]. Pull stopped manually.")
 			stop_pulling()
 		else if(pulling.anchored || pulling.move_resist > move_force)
@@ -629,7 +629,7 @@
 /**
  * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like eye mobs or ghosts)
  * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
- * most of the time you want forceMove()
+ * most of the time you want force_move()
  */
 /atom/movable/proc/abstract_move(atom/new_loc)
 	RESOLVE_ACTIVE_MOVEMENT // This should NEVER happen, but, just in case...
@@ -736,7 +736,7 @@
 		else //Diagonal move, split it into cardinal moves
 			moving_diagonally = FIRST_DIAG_STEP
 			var/first_step_dir
-			// The `&& moving_diagonally` checks are so that a forceMove taking
+			// The `&& moving_diagonally` checks are so that a force_move taking
 			// place due to a Crossed, Bumped, etc. call will interrupt
 			// the second half of the diagonal movement, or the second attempt
 			// at a first half if step() fails because we hit something.
@@ -1121,12 +1121,12 @@
 	currently_z_moving = max(currently_z_moving, new_z_moving_value)
 	return currently_z_moving > old_z_moving_value
 
-/atom/movable/proc/forceMove(atom/destination)
+/atom/movable/proc/force_move(atom/destination)
 	. = FALSE
 	if(destination)
 		. = doMove(destination)
 	else
-		CRASH("No valid destination passed into forceMove")
+		CRASH("No valid destination passed into force_move")
 
 /atom/movable/proc/moveToNullspace()
 	return doMove(null)
@@ -1751,7 +1751,7 @@
 			return
 		if(QDELETED(src))
 			return
-		forceMove(get_turf(usr))
+		force_move(get_turf(usr))
 
 	if(href_list[VV_HK_ADD_REMOVE_FACTION])
 		if(!check_rights(R_ADMIN))

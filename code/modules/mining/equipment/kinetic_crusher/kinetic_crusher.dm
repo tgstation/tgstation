@@ -166,7 +166,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	trophy_to_remove.remove_from(src, user)
 	if(!user.put_in_hands(trophy_to_remove))
-		trophy_to_remove.forceMove(drop_location())
+		trophy_to_remove.force_move(drop_location())
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

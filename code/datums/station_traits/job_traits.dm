@@ -149,7 +149,7 @@
 				continue
 			if(thing_on_table.invisibility || !thing_on_table.alpha || !thing_on_table.mouse_opacity)
 				continue
-			thing_on_table.forceMove(get_turf(another_table))
+			thing_on_table.force_move(get_turf(another_table))
 	new /obj/machinery/coffeemaker/impressa(picked_turf)
 	new /obj/item/reagent_containers/cup/coffeepot(picked_turf)
 	new /obj/item/storage/box/coffeepack(picked_turf)
@@ -227,7 +227,7 @@
 		if(thing_on_table.invisibility || !thing_on_table.alpha || !thing_on_table.mouse_opacity)
 			continue
 		if(length(tables))
-			thing_on_table.forceMove(get_turf(pick(tables)))
+			thing_on_table.force_move(get_turf(pick(tables)))
 		else
 			qdel(thing_on_table)
 	new /obj/machinery/fax/auto_name(picked_turf)

@@ -16,14 +16,14 @@
 	// Necessary for tying shoes.
 	TEST_ASSERT_EQUAL(strip_menu.ui_status(user, ui_state), UI_INTERACTIVE, "Lying down was not interactive.")
 
-	user.forceMove(locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	user.force_move(locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	TEST_ASSERT_EQUAL(strip_menu.ui_status(user, ui_state), UI_UPDATE, "Being too far away while lying down was not update-only.")
 
 	user.set_body_position(STANDING_UP)
 	TEST_ASSERT_EQUAL(strip_menu.ui_status(user, ui_state), UI_UPDATE, "Being too far away while standing up was not update-only.")
 
 	var/handcuffs = allocate(/obj/item/restraints/handcuffs, user)
-	user.forceMove(target.loc)
+	user.force_move(target.loc)
 	user.set_handcuffed(handcuffs)
 	TEST_ASSERT_EQUAL(strip_menu.ui_status(user, ui_state), UI_UPDATE, "Being within range but cuffed was not update-only.")
 	user.set_handcuffed(null)
@@ -35,7 +35,7 @@
 
 	var/mob/dead/observer/observer = allocate(/mob/dead/observer)
 	// observers set their own turf, so we can't just pass it into allocate
-	observer.forceMove(run_loc_floor_bottom_left)
+	observer.force_move(run_loc_floor_bottom_left)
 
 	// A mocked client is needed for providing view
 	var/datum/client_interface/mock_client = new
@@ -49,7 +49,7 @@
 
 	// Borgs can normally access tgui's regardless of position if it's within view range.
 	// This makes sense for machinery, but not for this abstract UI.
-	borg.forceMove(locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	borg.force_move(locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	TEST_ASSERT_EQUAL(strip_menu.ui_status(borg, ui_state), UI_UPDATE, "Being too far away as a borg was not update-only.")
 
 	var/mob/living/carbon/alien/rouny = allocate(/mob/living/carbon/alien, run_loc_floor_bottom_left)

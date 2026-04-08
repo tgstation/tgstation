@@ -73,10 +73,10 @@
 	var/obj/item/spear/our_spear = spear
 	victim = null
 	spear = null
-	our_head?.forceMove(drop_location()) //Make sure the head always comes off
+	our_head?.force_move(drop_location()) //Make sure the head always comes off
 	if(!disassembled)
 		return ..()
-	our_spear?.forceMove(drop_location())
+	our_spear?.force_move(drop_location())
 
 /obj/structure/headpike/attack_hand(mob/user, list/modifiers)
 	. = ..()

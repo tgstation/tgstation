@@ -31,7 +31,7 @@
 	if(mapload)
 		var/obj/item/pen/pen = locate(/obj/item/pen) in loc
 		if(pen && !bin_pen)
-			pen.forceMove(src)
+			pen.force_move(src)
 			bin_pen = pen
 	update_appearance()
 
@@ -55,7 +55,7 @@
 	if(collapse)
 		visible_message(span_warning("The stack of paper collapses!"))
 	for(var/obj/item/paper/stacked_paper in paper_stack) //first, dump all of the paper that already exists
-		stacked_paper.forceMove(droppoint)
+		stacked_paper.force_move(droppoint)
 		if(!stacked_paper.pixel_y)
 			stacked_paper.pixel_y = rand(-3,3)
 		if(!stacked_paper.pixel_x)
@@ -64,14 +64,14 @@
 		total_paper -= 1
 	for(var/i in 1 to total_paper) //second, generate new paper for the remainder
 		var/obj/item/paper/new_paper = generate_paper()
-		new_paper.forceMove(droppoint)
+		new_paper.force_move(droppoint)
 		if(!new_paper.pixel_y)
 			new_paper.pixel_y = rand(-3,3)
 		if(!new_paper.pixel_x)
 			new_paper.pixel_x = rand(-3,3)
 	if(bin_pen)
 		var/obj/item/pen/pen = bin_pen
-		pen.forceMove(droppoint)
+		pen.force_move(droppoint)
 		bin_pen = null
 	total_paper = 0
 	update_appearance()
@@ -100,7 +100,7 @@
 	if(bin_pen)
 		var/obj/item/pen/pen = bin_pen
 		pen.add_fingerprint(user)
-		pen.forceMove(user.loc)
+		pen.force_move(user.loc)
 		user.put_in_hands(pen)
 		to_chat(user, span_notice("You take [pen] out of [src]."))
 		bin_pen = null
@@ -109,7 +109,7 @@
 		var/obj/item/paper/top_paper = pop(paper_stack) || generate_paper()
 		total_paper -= 1
 		top_paper.add_fingerprint(user)
-		top_paper.forceMove(user.loc)
+		top_paper.force_move(user.loc)
 		user.put_in_hands(top_paper)
 		to_chat(user, span_notice("You take [top_paper] out of [src]."))
 		update_appearance()
@@ -232,7 +232,7 @@
 
 /obj/item/paper_bin/bundlenatural/dump_contents(atom/droppoint)
 	. = ..()
-	binding_cable.forceMove(droppoint)
+	binding_cable.force_move(droppoint)
 	binding_cable = null
 	qdel(src)
 

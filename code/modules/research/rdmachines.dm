@@ -150,5 +150,5 @@
 //we eject the loaded item when deconstructing the machine
 /obj/machinery/rnd/on_deconstruction(disassembled)
 	if(loaded_item)
-		loaded_item.forceMove(drop_location())
+		loaded_item.force_move(drop_location())
 	..()

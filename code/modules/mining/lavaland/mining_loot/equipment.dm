@@ -100,16 +100,16 @@
 	SSblackbox.record_feedback("tally", "warp_cube", 1, type)
 	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
 	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
-	user.forceMove(link_holder) //mess around with loc so the user can't wander around
+	user.force_move(link_holder) //mess around with loc so the user can't wander around
 	sleep(0.25 SECONDS)
 	if(QDELETED(user))
 		qdel(link_holder)
 		return
 	if(QDELETED(linked) || isnull(get_turf(linked)))
-		user.forceMove(get_turf(link_holder))
+		user.force_move(get_turf(link_holder))
 		qdel(link_holder)
 		return
-	link_holder.forceMove(get_turf(linked))
+	link_holder.force_move(get_turf(linked))
 	sleep(0.25 SECONDS)
 	if(QDELETED(user))
 		qdel(link_holder)
@@ -117,7 +117,7 @@
 	teleporting = FALSE
 	if(!QDELETED(linked))
 		linked.teleporting = FALSE
-	user.forceMove(get_turf(link_holder))
+	user.force_move(get_turf(link_holder))
 	qdel(link_holder)
 
 /obj/item/warp_cube/red
@@ -191,7 +191,7 @@
 		return
 
 	user.remove_traits(list(TRAIT_GODMODE, TRAIT_NO_TRANSFORM), REF(src))
-	user.forceMove(get_turf(src))
+	user.force_move(get_turf(src))
 	user.visible_message(span_danger("[user] pops back into reality!"))
 
 /obj/effect/immortality_talisman/proc/vanish(mob/user)
@@ -200,7 +200,7 @@
 	desc = "It's shaped an awful lot like [user.name]."
 	setDir(user.dir)
 
-	user.forceMove(src)
+	user.force_move(src)
 	user.add_traits(list(TRAIT_GODMODE, TRAIT_NO_TRANSFORM), REF(src))
 
 	user_ref = WEAKREF(user)

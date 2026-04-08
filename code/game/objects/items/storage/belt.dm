@@ -792,7 +792,7 @@
 
 	if(length(active_sheath.contents))
 		var/obj/item/denied_weapon = active_sheath.contents[1]
-		denied_weapon.forceMove(get_turf(holder))
+		denied_weapon.force_move(get_turf(holder))
 		denied_weapon.throw_at(pick(RANGE_TURFS(3, denied_weapon)), 3, 3)
 
 	// We can assume that the holder is a carbon, and thus has an actual arm, because they have a belt slot.

@@ -147,7 +147,7 @@
 /obj/structure/votebox/dump_contents()
 	var/atom/droppoint = drop_location()
 	for(var/atom/movable/AM in contents)
-		AM.forceMove(droppoint)
+		AM.force_move(droppoint)
 
 /obj/structure/votebox/atom_deconstruct(disassembled)
 	dump_contents()

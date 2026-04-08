@@ -730,7 +730,7 @@ SUBSYSTEM_DEF(spatial_grid)
 			var/turf/random_turf = pick(turfs)
 			var/mob/fake_client = new()
 			fake_client.important_recursive_contents = list(SPATIAL_GRID_CONTENTS_TYPE_HEARING = list(fake_client), SPATIAL_GRID_CONTENTS_TYPE_CLIENTS = list(fake_client))
-			fake_client.forceMove(random_turf)
+			fake_client.force_move(random_turf)
 			inserted_clients += fake_client
 
 	var/list/all_z_level_cells = SSspatial_grid.get_cells_in_range(src, 1000)

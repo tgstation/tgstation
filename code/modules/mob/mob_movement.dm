@@ -186,7 +186,7 @@
 		if(INCORPOREAL_MOVE_BASIC)
 			var/T = get_step(L,direct)
 			if(T)
-				L.forceMove(T)
+				L.force_move(T)
 			L.setDir(direct)
 		if(INCORPOREAL_MOVE_SHADOW)
 			if(prob(50))
@@ -217,7 +217,7 @@
 						return
 				var/target = locate(locx,locy,mobloc.z)
 				if(target)
-					L.forceMove(target)
+					L.force_move(target)
 					var/limit = 2//For only two trailing shadows.
 					for(var/turf/T in get_line(mobloc, L.loc))
 						new /obj/effect/temp_visual/dir_setting/ninja/shadow(T, L.dir)
@@ -228,7 +228,7 @@
 				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
 				var/T = get_step(L,direct)
 				if(T)
-					L.forceMove(T)
+					L.force_move(T)
 			L.setDir(direct)
 		if(INCORPOREAL_MOVE_JAUNT) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
@@ -248,7 +248,7 @@
 					to_chat(L, span_warning("Holy energies block your path!"))
 					return
 
-				L.forceMove(stepTurf)
+				L.force_move(stepTurf)
 			L.setDir(direct)
 	return TRUE
 

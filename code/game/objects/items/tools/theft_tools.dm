@@ -57,7 +57,7 @@
 /obj/item/nuke_core_container/proc/load(obj/item/nuke_core/ncore, mob/user)
 	if(core || !istype(ncore))
 		return FALSE
-	ncore.forceMove(src)
+	ncore.force_move(src)
 	core = ncore
 	icon_state = "core_container_loaded"
 	to_chat(user, span_warning("Container is sealing..."))
@@ -183,7 +183,7 @@
 		if (tongs.sliver)
 			to_chat(user, span_warning("\The [tongs] is already holding a supermatter sliver!"))
 			return FALSE
-		forceMove(tongs)
+		force_move(tongs)
 		tongs.sliver = src
 		tongs.update_appearance()
 		to_chat(user, span_notice("You carefully pick up [src] with [tongs]."))
@@ -243,7 +243,7 @@
 /obj/item/nuke_core_container/supermatter/load(obj/item/hemostat/supermatter/T, mob/user)
 	if(!istype(T) || !T.sliver)
 		return FALSE
-	T.sliver.forceMove(src)
+	T.sliver.force_move(src)
 	sliver = T.sliver
 	T.sliver = null
 	T.icon_state = "supermatter_tongs"
@@ -313,7 +313,7 @@
 
 /obj/item/hemostat/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins
 	if(sliver)
-		sliver.forceMove(loc)
+		sliver.force_move(loc)
 		visible_message(span_notice("\The [sliver] falls out of \the [src] as it hits the ground."))
 		sliver = null
 		update_appearance()

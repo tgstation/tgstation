@@ -32,7 +32,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	if(mapload)
 		for(var/obj/item/item in loc)
 			if(istype(item, /obj/item/paper) || istype(item, /obj/item/photo))
-				item.forceMove(src)
+				item.force_move(src)
 				cases[current_case].notices++
 		find_and_mount_on_atom()
 
@@ -241,7 +241,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
  * * user - The mob that is trying to get the item removed, if there is one
  */
 /obj/structure/detectiveboard/proc/remove_item(obj/item/item, mob/user)
-	item.forceMove(drop_location())
+	item.force_move(drop_location())
 	if(user)
 		user.put_in_hands(item)
 		balloon_alert(user, "removed from board")

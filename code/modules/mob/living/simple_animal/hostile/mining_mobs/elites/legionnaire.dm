@@ -144,7 +144,7 @@
 		if(D.density)
 			charging = FALSE
 			return
-	forceMove(T)
+	force_move(T)
 	playsound(src,'sound/effects/bang.ogg', 200, 1)
 	var/list/hit_things = list()
 	var/throwtarget = get_edge_target_turf(src, move_dir)
@@ -214,9 +214,9 @@
 		playsound(pileturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
 		playsound(legionturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
 		visible_message(span_boldwarning("[src] melts down into a burning pile of bones!"))
-		forceMove(pileturf)
+		force_move(pileturf)
 		visible_message(span_boldwarning("[src] forms from the bonfire!"))
-		mypile.forceMove(legionturf)
+		mypile.force_move(legionturf)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/spew_smoke()
 	ranged_cooldown = world.time + 4 SECONDS

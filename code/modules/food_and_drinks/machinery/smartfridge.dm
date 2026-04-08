@@ -349,7 +349,7 @@
 		if(weapon.loc.atom_storage)
 			return weapon.loc.atom_storage.attempt_remove(weapon, src, silent = TRUE)
 		else
-			weapon.forceMove(src)
+			weapon.force_move(src)
 			return TRUE
 
 /obj/machinery/smartfridge/ui_interact(mob/user, datum/tgui/ui)
@@ -417,7 +417,7 @@
 					CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
 				//dispense the item
 				if(!living_mob.put_in_hands(dispensed_item))
-					dispensed_item.forceMove(drop_location())
+					dispensed_item.force_move(drop_location())
 					adjust_item_drop_location(dispensed_item)
 				use_energy(active_power_usage)
 				dispensed_amount++

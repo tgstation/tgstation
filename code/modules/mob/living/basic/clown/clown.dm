@@ -459,7 +459,7 @@
 
 	visible_message(span_warning("[src] eats [eaten_atom]!"), span_notice("You eat [eaten_atom]."))
 	if(is_type_in_list(eaten_atom, funny_items))
-		eaten_atom.forceMove(src)
+		eaten_atom.force_move(src)
 		prank_pouch += eaten_atom
 
 	else
@@ -537,7 +537,7 @@
 		return TRUE
 
 	var/obj/item/projected_morsel = pick(pouch_owner.prank_pouch)
-	projected_morsel.forceMove(pouch_owner.loc)
+	projected_morsel.force_move(pouch_owner.loc)
 	projected_morsel.throw_at(spit_at, 8, 2, pouch_owner)
 	flick("glutton_mouth", pouch_owner)
 	playsound(pouch_owner, 'sound/misc/soggy.ogg', 75)

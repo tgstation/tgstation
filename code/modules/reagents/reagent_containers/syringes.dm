@@ -200,7 +200,7 @@
 		return
 	to_chat(user, span_danger("As you open [letter], you prick yourself on a syringe inside!"))
 	reagents.trans_to(user, min(reagents.total_volume, 5))
-	forceMove(user.loc)
+	force_move(user.loc)
 	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /datum/embedding/syringe

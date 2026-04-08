@@ -296,7 +296,7 @@
 	var/obj/item/skillchip/skillchip = show_radial_menu(owner, owner, chippy_brain.skillchips)
 	if(skillchip)
 		owner.remove_skillchip(skillchip, silent = FALSE)
-		skillchip.forceMove(owner.drop_location())
+		skillchip.force_move(owner.drop_location())
 		owner.put_in_hands(skillchip, del_on_fail = FALSE)
 		playsound(owner, 'sound/machines/click.ogg', 10, vary = TRUE)
 		to_chat(owner, span_warning("You take [skillchip] out of [src]."))
@@ -320,7 +320,7 @@
 		var/obj/item/skillchip/skillchip = chippy_brain?.skillchips[1]
 		if(skillchip)
 			owner.remove_skillchip(skillchip, silent = TRUE)
-			skillchip.forceMove(owner.drop_location())
+			skillchip.force_move(owner.drop_location())
 			playsound(owner, 'sound/machines/terminal/terminal_eject.ogg', 25, TRUE)
 		else
 			remove_brain(chippy_brain, severity == EMP_LIGHT ? 1 : 2)
@@ -333,7 +333,7 @@
 	chippy_brain.apply_organ_damage(20 * severity)
 	chippy_brain.maxHealth -= 15 * severity // a bit of your brain fell off. again.
 	if(chippy_brain.damage >= chippy_brain.maxHealth)
-		chippy_brain.forceMove(owner.drop_location())
+		chippy_brain.force_move(owner.drop_location())
 		owner.visible_message(span_userdanger("[owner]'s brain falls off the back of [owner.p_their()] head!!!"), span_boldwarning("You feel like you're missing something."))
 		return chippy_brain
 

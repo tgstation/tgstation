@@ -23,7 +23,7 @@
 			stack_trace("Moved during a reset move, giving up to prevent infinite recursion. Turf: [reset_turf.type] at [reset_turf.x], [reset_turf.y], [reset_turf.z]")
 			return
 		moving = TRUE
-		AM.forceMove(reset_turf)
+		AM.force_move(reset_turf)
 		moving = FALSE
 
 /datum/component/areabound/Destroy(force)

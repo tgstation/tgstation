@@ -128,5 +128,5 @@
 	equip_space_ninja()
 	var/turf/spawnpoint = find_space_spawn()
 	if(spawnpoint)
-		new_character.forceMove(spawnpoint)
+		new_character.force_move(spawnpoint)
 	return TRUE

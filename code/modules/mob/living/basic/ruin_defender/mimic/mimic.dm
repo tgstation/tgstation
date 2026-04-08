@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	ai_controller?.set_ai_status(AI_STATUS_OFF) //start inert, let gullible people pull us into cargo or something and then go nuts when opened
 	if(mapload) //eat shit
 		for(var/obj/item/item in loc)
-			item.forceMove(src)
+			item.force_move(src)
 
 	crate = new crate(null) // Nullspaced so we don't accidentally spew it out when opening
 	icon = crate.icon
@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	var/obj/structure/closet/crate/lootbox = new(get_turf(src))
 	// Put loot in crate
 	for(var/obj/loot in src)
-		loot.forceMove(lootbox)
+		loot.force_move(lootbox)
 	return ..()
 
 /mob/living/basic/mimic/crate/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		icon_state = "[base_icon_state]open"
 		playsound(src, 'sound/machines/crate/crate_open.ogg', 50, TRUE)
 		for(var/atom/movable/movable as anything in src)
-			movable.forceMove(loc)
+			movable.force_move(loc)
 	else
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = FALSE
@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(contents.len >= storage_capacity)
 		return CANT_INSERT_FULL
 	if(insertion_allowed(movable))
-		movable.forceMove(src)
+		movable.force_move(src)
 		return TRUE
 	return FALSE
 
@@ -295,7 +295,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 
 /mob/living/basic/mimic/copy/death()
 	for(var/atom/movable/movable as anything in src)
-		movable.forceMove(get_turf(src))
+		movable.force_move(get_turf(src))
 	return ..()
 
 /mob/living/basic/mimic/copy/wabbajack(what_to_randomize, change_flags = WABBAJACK)
@@ -333,7 +333,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(QDELETED(original) || !destroy_original && !check_object(original))
 		return FALSE
 	if(!destroy_original)
-		original.forceMove(src)
+		original.force_move(src)
 	copied_ref = WEAKREF(original)
 	CopyObjectVisuals(original)
 	if (overlay_googly_eyes)

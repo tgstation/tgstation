@@ -165,7 +165,7 @@
 
 	if (stored_ammo.len < max_ammo)
 		stored_ammo += new_round
-		new_round.forceMove(src)
+		new_round.force_move(src)
 		if(new_round.custom_materials && !(item_flags & ABSTRACT))
 			var/list/new_materials = custom_materials?.Copy() || list()
 			for(var/mat in new_round.custom_materials)
@@ -182,10 +182,10 @@
 			continue
 		//found a spent ammo
 		stored_ammo -= casing
-		casing.forceMove(get_turf(src))
+		casing.force_move(get_turf(src))
 
 		stored_ammo += new_round
-		new_round.forceMove(src)
+		new_round.force_move(src)
 		return TRUE
 	return FALSE
 
@@ -255,7 +255,7 @@
 	if(!A)
 		return
 
-	A.forceMove(drop_location())
+	A.force_move(drop_location())
 	if(!user.is_holding(src) || !user.put_in_hands(A)) //incase they're using TK
 		A.bounce_away(FALSE, NONE)
 	playsound(src, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
@@ -317,5 +317,5 @@
 	var/turf/turf_mag = get_turf(src)
 	var/obj/item/ammo_casing/casing = get_round()
 	while (casing)
-		casing.forceMove(turf_mag)
+		casing.force_move(turf_mag)
 		casing = get_round()

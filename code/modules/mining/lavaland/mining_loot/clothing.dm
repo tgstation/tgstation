@@ -64,7 +64,7 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/consume_guardian(mob/living/basic/guardian/guardian)
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(guardian))
 	guardian.locked = TRUE
-	guardian.forceMove(src)
+	guardian.force_move(src)
 	to_chat(guardian, span_userdanger("You have been locked away in your summoner's pendant!"))
 	guardian.playsound_local(get_turf(guardian), 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 

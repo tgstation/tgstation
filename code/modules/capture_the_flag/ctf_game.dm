@@ -238,7 +238,7 @@
 	var/turf/our_turf = get_turf(src.reset)
 	if(!our_turf)
 		return TRUE
-	forceMove(our_turf)
+	force_move(our_turf)
 	if(!capture && !isnull(ctf_game))
 		ctf_game.message_all_teams("[src] has been returned to the base!")
 

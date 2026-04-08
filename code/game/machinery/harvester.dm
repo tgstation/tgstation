@@ -125,11 +125,11 @@
 		limb_to_remove.drop_limb()
 		carbon_occupant.emote("scream")
 		if(limb_to_remove.body_zone != "chest")
-			limb_to_remove.forceMove(target)    //Move the limbs right next to it, except chest, that's a weird one
+			limb_to_remove.force_move(target)    //Move the limbs right next to it, except chest, that's a weird one
 			limb_to_remove.drop_organs()
 		else
 			for(var/obj/item/organ/organ_to_remove in limb_to_remove.dismember())
-				organ_to_remove.forceMove(target) //Some organs, like chest ones, are different so we need to manually move them
+				organ_to_remove.force_move(target) //Some organs, like chest ones, are different so we need to manually move them
 		operation_order.Remove(limb_to_remove)
 		break
 	use_energy(active_power_usage)

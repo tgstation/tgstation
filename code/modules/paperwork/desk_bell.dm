@@ -144,7 +144,7 @@
 		return INITIALIZE_HINT_QDEL
 	register_item_context()
 	src.bell = bell
-	bell.forceMove(src)
+	bell.force_move(src)
 	appearance = bell.appearance
 	RegisterSignals(bell, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(on_bell_gone))
 	return ..()
@@ -169,13 +169,13 @@
 
 /obj/item/inhand_desk_bell/on_thrown(mob/living/carbon/user, atom/target)
 	var/obj/throwing_bell = bell // We are about to null this variable but also want to return it
-	bell.forceMove(user.drop_location())
+	bell.force_move(user.drop_location())
 	return throwing_bell
 
 /obj/item/inhand_desk_bell/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if (isturf(loc))
-		bell.forceMove(loc)
+		bell.force_move(loc)
 
 /obj/item/inhand_desk_bell/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()

@@ -221,7 +221,7 @@
 		var/obj/item/bodypart/head = teleport_part
 		head.dismember(BRUTE)
 
-	teleport_part.forceMove(destination)
+	teleport_part.force_move(destination)
 	do_teleport(teleport_part, destination, 10, channel = TELEPORT_CHANNEL_MAGIC)
 	if (user.stat != DEAD)
 		return SHAME

@@ -268,7 +268,7 @@
 
 	if(is_statue)
 		statue.visible_message(span_danger("[statue] becomes animated!"))
-		owner.forceMove(get_turf(statue))
+		owner.force_move(get_turf(statue))
 		statue.moveToNullspace()
 		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
@@ -278,8 +278,8 @@
 			span_notice("You have become a silver statue!"),
 		)
 		statue.set_visuals(owner.appearance)
-		statue.forceMove(get_turf(owner))
-		owner.forceMove(statue)
+		statue.force_move(get_turf(owner))
+		owner.force_move(statue)
 		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(human_left_statue))
 
 		var/mob/living/living_owner = owner
@@ -303,7 +303,7 @@
 	UnregisterSignal(carbon_owner, COMSIG_MOVABLE_MOVED)
 
 	to_chat(carbon_owner, span_userdanger("Your existence as a living creature snaps as your statue form crumbles!"))
-	carbon_owner.forceMove(get_turf(statue))
+	carbon_owner.force_move(get_turf(statue))
 	carbon_owner.dust(just_ash = TRUE, drop_items = TRUE)
 	carbon_owner.investigate_log("has been dusted from having their Silverscale Statue deconstructed / destroyed.", INVESTIGATE_DEATHS)
 

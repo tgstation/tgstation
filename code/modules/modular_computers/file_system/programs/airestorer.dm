@@ -89,7 +89,7 @@
 		to_chat(user, span_notice("You remove [stored_card] from [computer.name]."))
 		user.put_in_hands(stored_card)
 	else
-		stored_card.forceMove(computer.drop_location())
+		stored_card.force_move(computer.drop_location())
 
 	stored_card = null
 	restoring = FALSE

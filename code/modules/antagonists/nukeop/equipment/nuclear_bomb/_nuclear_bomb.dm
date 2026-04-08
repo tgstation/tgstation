@@ -188,7 +188,7 @@ GLOBAL_VAR(station_nuke_source)
 				to_chat(user, span_notice("You pry open [core_box] and begin placing [core_box.core] into [src]'s inner chamber..."))
 				if(!do_after(user, 15 SECONDS, src))
 					return TRUE
-				core_box.core.forceMove(src)
+				core_box.core.force_move(src)
 				core = core_box.core
 				to_chat(user, span_notice("You place [core_box.core] into [src]'s inner chamber."))
 				deconstruction_state = NUKESTATE_CORE_EXPOSED
@@ -200,7 +200,7 @@ GLOBAL_VAR(station_nuke_source)
 				to_chat(user, span_notice("You begin placing [weapon] into [src]'s inner chamber..."))
 				if(!do_after(user, 6 SECONDS, src))
 					return TRUE
-				weapon.forceMove(src)
+				weapon.force_move(src)
 				core = weapon
 				to_chat(user, span_notice("You place [weapon] into [src]'s inner chamber."))
 				deconstruction_state = NUKESTATE_CORE_EXPOSED
@@ -418,7 +418,7 @@ GLOBAL_VAR(station_nuke_source)
 			if(auth && auth.loc == src)
 				playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
-				auth.forceMove(get_turf(src))
+				auth.force_move(get_turf(src))
 				auth = null
 				. = TRUE
 			else

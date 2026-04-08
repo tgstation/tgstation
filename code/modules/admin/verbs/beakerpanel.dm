@@ -78,7 +78,7 @@
 	grenade.stage_change(GRENADE_READY)
 
 	for(var/obj/beaker as anything in grenade.beakers)
-		beaker.forceMove(grenade)
+		beaker.force_move(grenade)
 
 	switch(grenade_info["detonation_type"])
 		if("normal")

@@ -87,7 +87,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/urinal/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/wallframe/urinal(loc)
-	hidden_item?.forceMove(drop_location())
+	hidden_item?.force_move(drop_location())
 
 /obj/item/wallframe/urinal
 	name = "urinal frame"

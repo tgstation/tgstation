@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /obj/machinery/gateway/proc/Transfer(atom/movable/AM)
 	if(!target || !target.incoming_pass_check(AM))
 		return
-	AM.forceMove(target.get_target_turf())
+	AM.force_move(target.get_target_turf())
 	target.post_transfer(AM)
 
 /obj/machinery/gateway/attack_ghost(mob/user)

@@ -177,7 +177,7 @@
 
 	to_chat(user, span_notice("You open the [initial(name)] assembly and remove the payload."))
 	for(var/obj/item/beaker as anything in beakers)
-		beaker.forceMove(drop_location())
+		beaker.force_move(drop_location())
 		if(!beaker.reagents)
 			continue
 		var/reagent_list = pretty_string_from_reagent_list(beaker.reagents.reagent_list)

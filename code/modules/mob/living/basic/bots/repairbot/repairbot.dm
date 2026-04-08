@@ -123,7 +123,7 @@
 			user?.balloon_alert(user, "not suitable!")
 			return
 		var/atom/movable/to_move = potential_stack.split_stack(min(our_sheet.max_amount - our_sheet.amount, potential_stack.amount))
-		to_move.forceMove(src)
+		to_move.force_move(src)
 		balloon_alert(user, "inserted")
 		return
 
@@ -248,7 +248,7 @@
 /mob/living/basic/bot/repairbot/process(seconds_per_tick) //generate 1 iron rod every 2 seconds
 	if(isnull(our_rods) || our_rods.amount < our_rods.max_amount)
 		var/obj/item/stack/rods/new_rods = new()
-		new_rods.forceMove(src)
+		new_rods.force_move(src)
 
 /mob/living/basic/bot/repairbot/turn_on()
 	. = ..()
@@ -379,7 +379,7 @@
 	righthand_file = bot_toolbox::righthand_file
 	inhand_icon_state = bot_toolbox::inhand_icon_state
 	force = bot_toolbox::force
-	repairbot.forceMove(src)
+	repairbot.force_move(src)
 
 /obj/item/carried_repairbot/dropped()
 	. = ..()
@@ -388,7 +388,7 @@
 
 /obj/item/carried_repairbot/proc/release_bot(bypass_delete = FALSE)
 	if(!isnull(our_bot))
-		our_bot.forceMove(drop_location())
+		our_bot.force_move(drop_location())
 		our_bot.balloon_alert_to_viewers("plops down")
 	if(!bypass_delete)
 		qdel(src)

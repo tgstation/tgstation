@@ -208,7 +208,7 @@
 
 /mob/proc/reckon(turf/final)
 	new /obj/effect/temp_visual/cult/blood/out(get_turf(src))
-	forceMove(final)
+	force_move(final)
 
 /datum/action/innate/cult/master/finalreck/proc/chant(chant_number)
 	switch(chant_number)

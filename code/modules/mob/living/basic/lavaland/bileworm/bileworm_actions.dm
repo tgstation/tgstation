@@ -21,7 +21,7 @@
 	new /obj/effect/temp_visual/mook_dust(get_turf(burrower))
 	ADD_TRAIT(burrower, TRAIT_GODMODE, REF(src))
 	burrower.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
-	burrower.forceMove(unburrow_turf)
+	burrower.force_move(unburrow_turf)
 	//not that it's gonna die with godmode but still
 	SLEEP_CHECK_DEATH(rand(0.7 SECONDS, 1.2 SECONDS), burrower)
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
@@ -110,7 +110,7 @@
 	new /obj/effect/temp_visual/mook_dust(get_turf(devourer))
 	ADD_TRAIT(devourer, TRAIT_GODMODE, REF(src))
 	devourer.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
-	devourer.forceMove(devour_turf)
+	devourer.force_move(devour_turf)
 	//not that it's gonna die with godmode but still
 	SLEEP_CHECK_DEATH(rand(0.7 SECONDS, 1.2 SECONDS), devourer)
 	playsound(devourer, 'sound/effects/break_stone.ogg', 50, TRUE)
@@ -125,4 +125,4 @@
 	devourer.fully_heal()
 	playsound(devourer, 'sound/effects/splat.ogg', 50, TRUE)
 	//to be received on death
-	target.forceMove(devourer)
+	target.force_move(devourer)

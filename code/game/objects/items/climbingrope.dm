@@ -64,7 +64,7 @@
 	var/final_climb_time = (climb_time - fitness_level) * misc_multiplier
 
 	if(do_after(user, final_climb_time, interacting_with))
-		user.forceMove(interacting_with)
+		user.force_move(interacting_with)
 		user.mind?.adjust_experience(/datum/skill/athletics, round((ATHLETICS_SKILL_MISC_EXP)/(fitness_level || 1), 1)) //get some experience for our trouble, especially since this costs us a climbing rope use
 
 	QDEL_LIST(effects)

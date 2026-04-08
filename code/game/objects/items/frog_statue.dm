@@ -48,7 +48,7 @@
 	playsound(src, 'sound/items/frog_statue_release.ogg', 20)
 	user.Beam(contained_frog, icon_state = "lichbeam", time = RECALL_DURATION)
 	animate(contained_frog, transform = matrix().Scale(0.3, 0.3), time = RECALL_DURATION)
-	addtimer(CALLBACK(contained_frog, TYPE_PROC_REF(/atom/movable, forceMove), src), RECALL_DURATION)
+	addtimer(CALLBACK(contained_frog, TYPE_PROC_REF(/atom/movable, force_move), src), RECALL_DURATION)
 
 ///release the frog to wreak havoc
 /obj/item/frog_statue/proc/release_frog(mob/user)
@@ -60,7 +60,7 @@
 	playsound(src, 'sound/items/frog_statue_release.ogg', 50, TRUE)
 	var/turf/final_turf = length(possible_turfs) ? pick(possible_turfs) : get_turf(src)
 	user.Beam(final_turf, icon_state = "lichbeam", time = RECALL_DURATION)
-	contained_frog.forceMove(final_turf)
+	contained_frog.force_move(final_turf)
 	animate(contained_frog, transform = matrix(), time = RECALL_DURATION)
 	REMOVE_TRAIT(contained_frog, TRAIT_AI_PAUSED, MAGIC_TRAIT)
 

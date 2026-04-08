@@ -304,7 +304,7 @@
 	if (attached_cell)
 		var/obj/item/our_cell = attached_cell
 		// Exited() automatically clears it
-		our_cell.forceMove(drop_location())
+		our_cell.force_move(drop_location())
 		user.put_in_hands(our_cell)
 		balloon_alert(user, "cell detached")
 		update_appearance()
@@ -312,7 +312,7 @@
 
 	if (lid_assembly)
 		var/obj/item/our_assembly = lid_assembly
-		our_assembly.forceMove(drop_location())
+		our_assembly.force_move(drop_location())
 		user.put_in_hands(our_assembly)
 		balloon_alert(user, "assembly detached")
 		update_appearance()
@@ -645,7 +645,7 @@
 /obj/item/reagent_containers/cup/mortar/click_alt(mob/user)
 	if(!grinded)
 		return CLICK_ACTION_BLOCKING
-	grinded.forceMove(drop_location())
+	grinded.force_move(drop_location())
 	grinded = null
 	balloon_alert(user, "ejected")
 	return CLICK_ACTION_SUCCESS

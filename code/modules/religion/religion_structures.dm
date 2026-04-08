@@ -35,7 +35,7 @@
 	to_chat(user, span_notice("You try to coax [pushed_mob] onto [src]..."))
 	if(!do_after(user,(5 SECONDS),target = pushed_mob))
 		return ..()
-	pushed_mob.forceMove(loc)
+	pushed_mob.force_move(loc)
 	return ..()
 
 /// This one actually has relevance to chaplains
@@ -143,4 +143,4 @@
 	..()
 	if(no_take)
 		taker.dropItemToGround(src)
-		forceMove(initial_loc)
+		force_move(initial_loc)

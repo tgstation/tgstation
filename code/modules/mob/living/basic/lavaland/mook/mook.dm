@@ -104,12 +104,12 @@
 /mob/living/basic/mining/mook/proc/attack_sequence(atom/target)
 	if(istype(target, /obj/item/stack/ore) && isnull(held_ore))
 		var/obj/item/ore_target = target
-		ore_target.forceMove(src)
+		ore_target.force_move(src)
 		return FALSE
 
 	if(istype(target, /obj/structure/ore_container/material_stand))
 		if(held_ore)
-			held_ore.forceMove(target)
+			held_ore.force_move(target)
 		return FALSE
 
 	if(istype(target, /obj/structure/bonfire))

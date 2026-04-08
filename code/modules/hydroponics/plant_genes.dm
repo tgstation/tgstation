@@ -236,7 +236,7 @@
 	SIGNAL_HANDLER
 
 	var/turf/our_turf = get_turf(target)
-	our_plant.forceMove(our_turf)
+	our_plant.force_move(our_turf)
 	if(istype(our_plant))
 		if(ispath(our_plant.splat_type, /obj/effect/decal/cleanable/food/plant_smudge))
 			var/obj/plant_smudge = new our_plant.splat_type(our_turf)

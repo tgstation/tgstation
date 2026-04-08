@@ -58,12 +58,12 @@
 
 	return
 
-/// Generic unloading proc. Takes an atom as an argument and forceMove's it to the turf adjacent to this machine in the `output_dir` direction.
+/// Generic unloading proc. Takes an atom as an argument and force_move's it to the turf adjacent to this machine in the `output_dir` direction.
 /obj/machinery/mineral/proc/unload_mineral(atom/movable/unloaded_mineral)
-	unloaded_mineral.forceMove(drop_location())
+	unloaded_mineral.force_move(drop_location())
 	var/turf/unload_turf = get_step(src, output_dir)
 	if(unload_turf)
-		unloaded_mineral.forceMove(unload_turf)
+		unloaded_mineral.force_move(unload_turf)
 
 /obj/machinery/mineral/processing_unit_console
 	name = "production machine console"

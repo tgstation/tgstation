@@ -22,8 +22,8 @@
 	// like creating influences and learning the default knowledge types, so better safe than sorry.
 
 	// Slap them down somewhere. The "heretic" should be in the middle of the rune, though this doesn't really matter.
-	our_rune.forceMove(run_loc_floor_bottom_left)
-	our_heretic.forceMove(locate((run_loc_floor_bottom_left.x + 1), (run_loc_floor_bottom_left.y + 1), run_loc_floor_bottom_left.z))
+	our_rune.force_move(run_loc_floor_bottom_left)
+	our_heretic.force_move(locate((run_loc_floor_bottom_left.x + 1), (run_loc_floor_bottom_left.y + 1), run_loc_floor_bottom_left.z))
 
 	// Set up the blacklist for types we don't want to test here. See above for reasons.
 	var/list/blacklist_typecache = typecacheof(list(

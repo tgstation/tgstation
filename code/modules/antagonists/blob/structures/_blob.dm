@@ -196,7 +196,7 @@
 		B.set_density(TRUE)
 		if(T.Enter(B)) //NOW we can attempt to move into the tile
 			B.set_density(initial(B.density))
-			B.forceMove(T)
+			B.force_move(T)
 			var/area/Ablob = get_area(B)
 			if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
 				overmind.blobs_legit += B

@@ -964,7 +964,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 		body_bag.tag_name = "[new_human.real_name][new_human.dna?.species ? " - [new_human.dna.species.name]" : " - Human"]"
 		body_bag.AddComponent(/datum/component/rename, "[initial(body_bag.name)][body_bag.tag_name? " - [body_bag.tag_name]" : null]", body_bag.desc)
 		body_bag.update_icon()
-		body_bag.forceMove(morgue_tray)
+		body_bag.force_move(morgue_tray)
 
 		morgue_tray.update_appearance()
 
@@ -1106,7 +1106,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 		if(note_path)
 			var/obj/item/paper/paper = new note_path(src)
 			found_airlock.note = paper
-			paper.forceMove(found_airlock)
+			paper.force_move(found_airlock)
 			found_airlock.update_appearance()
 			qdel(src)
 			return
@@ -1117,7 +1117,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 			paper.add_raw_text("[note_info]")
 			paper.update_appearance()
 			found_airlock.note = paper
-			paper.forceMove(found_airlock)
+			paper.force_move(found_airlock)
 			found_airlock.update_appearance()
 			qdel(src)
 			return

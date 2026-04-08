@@ -68,7 +68,7 @@
 /obj/item/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
 	for(var/mob/living/L in src)
-		L.forceMove(get_turf(src))
+		L.force_move(get_turf(src))
 	return ..()
 
 /obj/item/his_grace/update_icon_state()
@@ -136,7 +136,7 @@
 
 /obj/item/his_grace/relaymove(mob/living/user, direction) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
-		user.forceMove(get_turf(src))
+		user.force_move(get_turf(src))
 		user.visible_message(span_warning("[user] scrambles out of [src]!"), span_notice("You climb out of [src]!"))
 
 /obj/item/his_grace/process(seconds_per_tick)
@@ -162,7 +162,7 @@
 			else
 				master.apply_status_effect(/datum/status_effect/his_grace,gender)
 		return
-	forceMove(get_turf(src)) //no you can't put His Grace in a locker you just have to deal with Him
+	force_move(get_turf(src)) //no you can't put His Grace in a locker you just have to deal with Him
 	if(bloodthirst < HIS_GRACE_CONSUME_OWNER)
 		return
 	if(bloodthirst >= HIS_GRACE_FALL_ASLEEP)
@@ -238,7 +238,7 @@
 	meal.adjust_brute_loss(200)
 	playsound(meal, 'sound/effects/desecration/desecration-02.ogg', 75, TRUE)
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
-	meal.forceMove(src)
+	meal.force_move(src)
 	force_bonus += HIS_GRACE_FORCE_BONUS
 	prev_bloodthirst = bloodthirst
 	if(prev_bloodthirst < HIS_GRACE_CONSUME_OWNER)

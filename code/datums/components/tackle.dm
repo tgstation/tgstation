@@ -232,7 +232,7 @@
 			// Ignore_canstun has to be true, or else a stunimmune user would stay knocked down.
 			user.SetKnockdown(0, ignore_canstun = TRUE)
 			user.get_up(TRUE)
-			user.forceMove(get_turf(target))
+			user.force_move(get_turf(target))
 			target.apply_damage(40, STAMINA)
 			target.Paralyze(0.5 SECONDS)
 			target.Knockdown(3 SECONDS)
@@ -244,7 +244,7 @@
 			if(stamcritted_user) // in case the user went into stamcrit from the tackle itself and cannot actually aggro grab (since they will be crit) we make the tackle effectivelly mutually assured...stamina crit
 				user.visible_message(span_warning("[user] lands a monsterly reckless [tackle_word] on [target], knocking both of them senseless!"), span_userdanger("You land a monsterly reckless [tackle_word] on [target], knocking both of you senseless!"), ignored_mobs = target)
 				to_chat(target, span_userdanger("[user] lands a monsterly reckless [tackle_word] on you, knocking the both of you senseless!"))
-				user.forceMove(get_turf(target))
+				user.force_move(get_turf(target))
 				target.apply_damage(100, STAMINA) // CRASHING THIS PLANE WITH NO SURVIVORS
 				target.Paralyze(1 SECONDS)
 				target.Knockdown(5 SECONDS)
@@ -256,7 +256,7 @@
 				// Ignore_canstun has to be true, or else a stunimmune user would stay knocked down.
 				user.SetKnockdown(0, ignore_canstun = TRUE)
 				user.get_up(TRUE)
-				user.forceMove(get_turf(target))
+				user.force_move(get_turf(target))
 				target.apply_damage(60, STAMINA)
 				target.Paralyze(0.5 SECONDS)
 				target.Knockdown(3 SECONDS)

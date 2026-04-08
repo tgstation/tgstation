@@ -225,7 +225,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	INVOKE_ASYNC(src, PROC_REF(arena_checks))
 
 /obj/structure/elite_tumor/proc/return_elite()
-	mychild.forceMove(loc)
+	mychild.force_move(loc)
 	visible_message(span_boldwarning("[mychild] emerges from [src]!"))
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	mychild.revive(HEAL_ALL)
@@ -323,11 +323,11 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /obj/structure/elite_tumor/proc/border_check()
 	if(activator != null && get_dist(src, activator) >= 12)
-		activator.forceMove(loc)
+		activator.force_move(loc)
 		visible_message(span_boldwarning("[activator] suddenly reappears above [src]!"))
 		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(mychild != null && get_dist(src, mychild) >= 12)
-		mychild.forceMove(loc)
+		mychild.force_move(loc)
 		visible_message(span_boldwarning("[mychild] suddenly reappears above [src]!"))
 		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 

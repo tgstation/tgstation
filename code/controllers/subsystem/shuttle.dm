@@ -1136,7 +1136,7 @@ SUBSYSTEM_DEF(shuttle)
 				for(var/i in mobile_docking_ports)
 					var/obj/docking_port/mobile/M = i
 					if(M.shuttle_id == params["id"])
-						user.forceMove(get_turf(M))
+						user.force_move(get_turf(M))
 						. = TRUE
 						break
 
@@ -1166,7 +1166,7 @@ SUBSYSTEM_DEF(shuttle)
 				// If successful, returns the mobile docking port
 				var/obj/docking_port/mobile/mdp = action_load(S)
 				if(mdp)
-					user.forceMove(get_turf(mdp))
+					user.force_move(get_turf(mdp))
 					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
 					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
@@ -1181,7 +1181,7 @@ SUBSYSTEM_DEF(shuttle)
 				load_template(S)
 				if(preview_shuttle)
 					preview_template = S
-					user.forceMove(get_turf(preview_shuttle))
+					user.force_move(get_turf(preview_shuttle))
 				shuttle_loading = FALSE
 
 		if("replace")
@@ -1196,7 +1196,7 @@ SUBSYSTEM_DEF(shuttle)
 				// If successful, returns the mobile docking port
 				var/obj/docking_port/mobile/mdp = action_load(S, replace = TRUE)
 				if(mdp)
-					user.forceMove(get_turf(mdp))
+					user.force_move(get_turf(mdp))
 					message_admins("[key_name_admin(usr)] load/replaced [mdp] with the shuttle manipulator.")
 					log_admin("[key_name(usr)] load/replaced [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")

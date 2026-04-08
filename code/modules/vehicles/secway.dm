@@ -88,7 +88,7 @@
 	if(!do_after(user, 6 SECONDS, target = src))
 		return ..()
 	user.visible_message(span_warning("[user] cleans [eddie_murphy] out of [src]."), span_warning("You manage to get [eddie_murphy] out of [src]."))
-	eddie_murphy.forceMove(drop_location())
+	eddie_murphy.force_move(drop_location())
 	eddie_murphy = null
 
 /obj/vehicle/ridden/secway/examine(mob/user)

@@ -103,7 +103,7 @@
 		user.visible_message(span_suicide("[user] vomits out [user.p_their()] [L]!"))
 		playsound(user.loc, 'sound/effects/splat.ogg', 50, TRUE)
 
-		L.forceMove(T)
+		L.force_move(T)
 
 		return (TOXLOSS|OXYLOSS)
 	else if(can_use(user) && !L)
@@ -149,7 +149,7 @@
 		return CLICK_ACTION_BLOCKING
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-	ink.forceMove(user.drop_location())
+	ink.force_move(user.drop_location())
 	user.put_in_hands(ink)
 	to_chat(user, span_notice("You remove [ink] from [src]."))
 	ink = null

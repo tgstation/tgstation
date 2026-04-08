@@ -202,7 +202,7 @@
 			tool.play_tool_sound(src)
 			balloon_alert(user, "circuit removed")
 			circuit.add_fingerprint(user)
-			circuit.forceMove(drop_location())
+			circuit.force_move(drop_location())
 			return ITEM_INTERACT_SUCCESS
 
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
@@ -311,10 +311,10 @@
 		new_computer.component_parts = list(circuit)
 		new_computer.circuit = circuit
 
-		circuit.forceMove(new_computer)
+		circuit.force_move(new_computer)
 
 		for(var/atom/movable/movable_part in src)
-			movable_part.forceMove(new_computer)
+			movable_part.force_move(new_computer)
 			new_computer.component_parts += movable_part
 
 		new_computer.RefreshParts()

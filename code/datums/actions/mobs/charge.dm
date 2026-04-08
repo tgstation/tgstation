@@ -292,7 +292,7 @@
 		if(!place)
 			continue
 		if(use_self && !self_placed)
-			owner.forceMove(place)
+			owner.force_move(place)
 			self_placed = TRUE
 			continue
 		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/our_clone = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(place)

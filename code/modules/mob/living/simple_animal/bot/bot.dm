@@ -566,7 +566,7 @@
 		item_to_drop = new drop_item(dropzone)
 	else
 		item_to_drop = drop_item
-		item_to_drop.forceMove(dropzone)
+		item_to_drop.force_move(dropzone)
 
 	if(istype(item_to_drop, /obj/item/stock_parts/power_store/cell))
 		var/obj/item/stock_parts/power_store/cell/dropped_cell = item_to_drop
@@ -1115,7 +1115,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else
 		ghostize(FALSE) // The pAI card that just got ejected was dead.
 	key = null
-	paicard.forceMove(loc)
+	paicard.force_move(loc)
 	if(user)
 		log_combat(user, paicard.pai, "ejected from [initial(src.name)],")
 	else

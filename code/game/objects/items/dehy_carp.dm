@@ -39,14 +39,14 @@
 	if(!istype(user))
 		return BRUTELOSS
 	user.Paralyze(3 SECONDS)
-	forceMove(user) //we move it AWAAAYY
+	force_move(user) //we move it AWAAAYY
 	sleep(2 SECONDS)
 	if(QDELETED(src))
 		return SHAME
 	if(!QDELETED(user))
 		user.spawn_gibs()
 		user.apply_damage(200, def_zone = BODY_ZONE_CHEST)
-		forceMove(drop_location()) //we move it back
+		force_move(drop_location()) //we move it back
 	swelling = TRUE
 	icon = 'icons/mob/simple/carp.dmi'
 	flick("carp_swell", src)

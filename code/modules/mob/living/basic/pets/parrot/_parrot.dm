@@ -116,11 +116,11 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/basic/parrot/death(gibbed)
 	if(held_item)
-		held_item.forceMove(drop_location())
+		held_item.force_move(drop_location())
 		held_item = null
 
 	if(ears)
-		ears.forceMove(drop_location())
+		ears.force_move(drop_location())
 		ears = null
 
 	if(!isnull(buckled))
@@ -230,7 +230,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(!is_type_in_typecache(target, desired_perches))
 		return FALSE
 
-	forceMove(get_turf(target))
+	force_move(get_turf(target))
 	drop_held_item(gently = TRUE) // comfy :)
 	toggle_perched(perched = TRUE)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(after_move))
@@ -248,7 +248,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		balloon_alert(src, "can't perch on them!")
 		return FALSE
 
-	forceMove(get_turf(target))
+	force_move(get_turf(target))
 	if(!target.buckle_mob(src, TRUE))
 		return FALSE
 
@@ -378,7 +378,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		qdel(target)
 		return
 
-	target.forceMove(src)
+	target.force_move(src)
 	held_item = target
 
 /// Handles dropping items we're holding. Gently is a special modifier we can use for special interactions.
@@ -393,12 +393,12 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(!gently && isgrenade(held_item))
 		var/obj/item/grenade/bomb = held_item
 		balloon_alert(src, "bombs away!") // you'll likely die too so we can get away with the `!` here
-		bomb.forceMove(drop_location())
+		bomb.force_move(drop_location())
 		bomb.detonate()
 		return
 
 	balloon_alert(src, "dropped item")
-	held_item.forceMove(drop_location())
+	held_item.force_move(drop_location())
 
 /mob/living/basic/parrot/Exited(atom/movable/gone, direction)
 	. = ..()

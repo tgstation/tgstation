@@ -216,7 +216,7 @@
 	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(content_moved))
 	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(content_deleted))
 	LAZYADD(stomach_contents, thing)
-	thing.forceMove(owner || src) // We assert that if we have no owner, we will not be nullspaced
+	thing.force_move(owner || src) // We assert that if we have no owner, we will not be nullspaced
 	return TRUE
 
 /obj/item/organ/stomach/proc/content_deleted(atom/movable/source)
@@ -234,10 +234,10 @@
 	. = ..()
 	if(loc == null && owner)
 		for(var/atom/movable/thing as anything in stomach_contents)
-			thing.forceMove(owner)
+			thing.force_move(owner)
 	else if(loc != null)
 		for(var/atom/movable/thing as anything in stomach_contents)
-			thing.forceMove(src)
+			thing.force_move(src)
 
 /// Empties stomach contents on our current turf
 /obj/item/organ/stomach/proc/empty_contents(chance = 100, damaging = FALSE, min_amount = 0)
@@ -251,7 +251,7 @@
 			total_chance += 100 / (LAZYLEN(stomach_contents) + 1 - min_amount)
 		if (!prob(total_chance))
 			continue
-		nugget.forceMove(drop_loc)
+		nugget.force_move(drop_loc)
 		emptied += 1
 		min_amount -= 1
 		if (!damaging || QDELETED(owner))

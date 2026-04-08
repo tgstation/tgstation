@@ -73,7 +73,7 @@
 	if (istype(container, /obj/item/reagent_containers/applicator/pill))
 		var/obj/item/reagent_containers/applicator/pill/pill = container
 		pill.layers_remaining = pill_duration
-	container.forceMove(drop_location())
+	container.force_move(drop_location())
 
 	use_energy(active_power_usage * seconds_per_tick)
 

@@ -259,13 +259,13 @@
 	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] can't acces a fish source from a linked fishing spot")
 	//Let's move the fishing spot away. This is fine as long as the portal moves to another z level, away from the toilet
 	var/turf/other_z_turf = pick(GLOB.newplayer_start)
-	portal.forceMove(other_z_turf)
+	portal.force_move(other_z_turf)
 	TEST_ASSERT(!portal.active, "[portal] (not upgraded) is still active though the fishing spot is on another z-level.[portal.z == fishing_spot.z ? " Actually they're still on the same level!" : ""]")
 	portal.long_range_link = TRUE
 	portal.activate(fish_source, user)
 	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] can't acces a fish source from a linked fishing spot on a different z-level despite being upgraded")
-	fishing_spot.forceMove(other_z_turf)
-	portal.forceMove(get_turf(user))
+	fishing_spot.force_move(other_z_turf)
+	portal.force_move(get_turf(user))
 	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] (upgraded) deactivated while changing z-level")
 	tool.melee_attack_chain(user, extra_spot)
 	TEST_ASSERT_EQUAL(length(portal.linked_fishing_spots), 1, "We managed to link to another fishing spot when there's only space for one")
@@ -380,7 +380,7 @@
 	dummy.last_feeding = world.time
 	dummy_growth.on_fish_life(dummy, seconds_per_tick = 1)
 	TEST_ASSERT(!QDELETED(dummy), "The fish has grown when it shouldn't have")
-	dummy.forceMove(aquarium)
+	dummy.force_move(aquarium)
 	dummy_growth.on_fish_life(dummy, seconds_per_tick = 1)
 	var/obj/item/fish/dummy_boogaloo = locate(/datum/fish_evolution/dummy/two::new_fish_type) in aquarium
 	TEST_ASSERT(dummy_boogaloo, "The new fish type cannot be found inside the aquarium")

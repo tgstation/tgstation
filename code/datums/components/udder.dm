@@ -120,7 +120,7 @@
 	if(isstack(food)) //if stack, only consume 1
 		var/obj/item/stack/food_stack = food
 		final_food = food_stack.split_stack(1)
-	final_food.forceMove(src)
+	final_food.force_move(src)
 
 /obj/item/udder/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(!istype(arrived, require_consume_type))

@@ -46,6 +46,6 @@
 					// disease code already checks if the liver exists otherwise it is cured
 					var/obj/item/organ/liver/affected_liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 					affected_liver.Remove(affected_mob)
-					affected_liver.forceMove(get_turf(affected_mob))
+					affected_liver.force_move(get_turf(affected_mob))
 					cure()
 					return FALSE

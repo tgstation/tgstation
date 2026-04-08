@@ -99,7 +99,7 @@
 		if(picked_turf.x<edge_distance || picked_turf.y<edge_distance || (world.maxx+1-picked_turf.x)<edge_distance || (world.maxy+1-picked_turf.y)<edge_distance)
 			turfs -= picked_turf
 		else
-			forceMove(picked_turf)
+			force_move(picked_turf)
 			return
 
 	// Fallback: couldn't find anything

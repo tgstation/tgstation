@@ -749,7 +749,7 @@
 	if(!eye)
 		eye = new /obj/item/flashlight/eyelight()
 	eye.set_light_on(TRUE)
-	eye.forceMove(victim)
+	eye.force_move(victim)
 	eye.update_brightness(victim)
 	victim.become_blind(FLASHLIGHT_EYES)
 
@@ -757,7 +757,7 @@
 	. = ..()
 	eye.set_light_on(FALSE)
 	eye.update_brightness(victim)
-	eye.forceMove(src)
+	eye.force_move(src)
 	victim.cure_blind(FLASHLIGHT_EYES)
 
 // Welding shield implant
@@ -826,12 +826,12 @@
 	right_eye_color_string = eye_color_right
 	update_mob_eye_color(eye_recipient)
 	deactivate(close_ui = TRUE)
-	eye.forceMove(eye_recipient)
+	eye.force_move(eye_recipient)
 
 /obj/item/organ/eyes/robotic/glow/on_mob_remove(mob/living/carbon/eye_owner)
 	deactivate(eye_owner, close_ui = TRUE)
 	if(!QDELETED(eye))
-		eye.forceMove(src)
+		eye.force_move(src)
 	return ..()
 
 /obj/item/organ/eyes/robotic/glow/ui_state(mob/user)

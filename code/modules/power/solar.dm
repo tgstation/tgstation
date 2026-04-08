@@ -97,7 +97,7 @@
 		assembly.glass_type = /obj/item/stack/sheet/glass
 		assembly.set_anchored(TRUE)
 	else
-		assembly.forceMove(src)
+		assembly.force_move(src)
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
 	if(I.use_tool(src, user, 0))
@@ -131,7 +131,7 @@
 	if(disassembled)
 		var/obj/item/solar_assembly/assembly = locate() in src
 		if(assembly)
-			assembly.forceMove(loc)
+			assembly.force_move(loc)
 			if(machine_stat & BROKEN)
 				new material_type.shard_type(get_turf(src))
 				new material_type.shard_type(get_turf(src))
@@ -590,7 +590,7 @@
 				new /obj/item/shard( src.loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
-					C.forceMove(drop_location())
+					C.force_move(drop_location())
 				A.circuit = M
 				A.state = 3
 				A.icon_state = "3"
@@ -601,7 +601,7 @@
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
-					C.forceMove(drop_location())
+					C.force_move(drop_location())
 				A.circuit = M
 				A.state = 4
 				A.icon_state = "4"

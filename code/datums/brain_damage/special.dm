@@ -348,7 +348,7 @@
 			"You stop keeping it real.",
 			"You stop thinking for a moment. Therefore you are not.",
 		))]"))
-	owner.forceMove(veil)
+	owner.force_move(veil)
 	COOLDOWN_START(src, crisis_cooldown, 1 MINUTES)
 	addtimer(CALLBACK(src, PROC_REF(fade_in)), duration)
 
@@ -434,7 +434,7 @@
 		return
 
 	var/mob/victim = pick(who_sees_us)
-	forceMove(get_step_towards(src, victim))
+	force_move(get_step_towards(src, victim))
 	if(prob(5))
 		var/beepskys_cry = "Level 10 infraction alert!"
 		to_chat(victim, "[span_name("[name]")] exclaims, \"[span_robot("[beepskys_cry]")]")

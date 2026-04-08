@@ -344,7 +344,7 @@
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
 	set_toolbox_faction(turret, user)
 	turret.toolbox = src
-	forceMove(turret)
+	force_move(turret)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/toolbox/emergency/turret/proc/set_toolbox_faction(obj/machinery/porta_turret/turret, mob/user)

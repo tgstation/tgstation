@@ -114,7 +114,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		var/datum/turf_reservation/roomReservation = activeRooms["[roomNumber]"]
 		do_sparks(3, FALSE, get_turf(user))
 		var/turf/room_bottom_left = roomReservation.bottom_left_turfs[1]
-		user.forceMove(locate(
+		user.force_move(locate(
 			room_bottom_left.x + hotelRoomTemp.landingZoneRelativeX,
 			room_bottom_left.y + hotelRoomTemp.landingZoneRelativeY,
 			room_bottom_left.z,
@@ -132,7 +132,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 			for(var/y in 0 to hotelRoomTemp.height-1)
 				for(var/atom/movable/A in storedRooms["[roomNumber]"][turfNumber])
 					if(istype(A.loc, /obj/item/abstracthotelstorage))//Don't want to recall something thats been moved
-						A.forceMove(locate(
+						A.force_move(locate(
 							room_turf.x + x,
 							room_turf.y + y,
 							room_turf.z,
@@ -145,7 +145,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		activeRooms["[roomNumber]"] = roomReservation
 		linkTurfs(roomReservation, roomNumber)
 		do_sparks(3, FALSE, get_turf(user))
-		user.forceMove(locate(
+		user.force_move(locate(
 			room_turf.x + hotelRoomTemp.landingZoneRelativeX,
 			room_turf.y + hotelRoomTemp.landingZoneRelativeY,
 			room_turf.z,
@@ -165,7 +165,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	activeRooms["[roomNumber]"] = roomReservation
 	linkTurfs(roomReservation, roomNumber)
 	do_sparks(3, FALSE, get_turf(user))
-	user.forceMove(locate(
+	user.force_move(locate(
 		bottom_left.x + hotelRoomTemp.landingZoneRelativeX,
 		bottom_left.y + hotelRoomTemp.landingZoneRelativeY,
 		bottom_left.z,
@@ -213,7 +213,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 						var/_x = rand(min,max)
 						var/_y = rand(min,max)
 						var/turf/T = locate(_x, _y, _z)
-						A.forceMove(T)
+						A.force_move(T)
 			qdel(room)
 
 	if(storedRooms.len)
@@ -231,7 +231,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 				var/_x = rand(min,max)
 				var/_y = rand(min,max)
 				var/turf/T = locate(_x, _y, _z)
-				A.forceMove(T)
+				A.force_move(T)
 
 //Template Stuff
 /datum/map_template/hilbertshotel
@@ -293,7 +293,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /turf/open/space/bluespace/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(parentSphere && arrived.forceMove(get_turf(parentSphere)))
+	if(parentSphere && arrived.force_move(get_turf(parentSphere)))
 		do_sparks(3, FALSE, get_turf(arrived))
 
 /turf/closed/indestructible/hoteldoor
@@ -322,13 +322,13 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(tgui_alert(user, "Hilbert's Hotel would like to remind you that while we will do everything we can to protect the belongings you leave behind, we make no guarantees of their safety while you're gone, especially that of the health of any living creatures. With that in mind, are you ready to leave?", "Exit", list("Leave", "Stay")) == "Leave")
 		if(HAS_TRAIT(user, TRAIT_IMMOBILIZED) || (get_dist(get_turf(src), get_turf(user)) > 1)) //no teleporting around if they're dead or moved away during the prompt.
 			return
-		user.forceMove(get_turf(parentSphere))
+		user.force_move(get_turf(parentSphere))
 		do_sparks(3, FALSE, get_turf(user))
 
 /turf/closed/indestructible/hoteldoor/attack_ghost(mob/dead/observer/user)
 	if(!isobserver(user) || !parentSphere)
 		return ..()
-	user.forceMove(get_turf(parentSphere))
+	user.force_move(get_turf(parentSphere))
 
 //If only this could be simplified...
 /turf/closed/indestructible/hoteldoor/attack_tk(mob/user)
@@ -438,7 +438,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	log_game("[H] entered itself. Moving it to [loc_name(targetturf)].")
 	message_admins("[H] entered itself. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
 	H.visible_message(span_danger("[H] almost implodes in upon itself, but quickly rebounds, shooting off into a random point in space!"))
-	H.forceMove(targetturf)
+	H.force_move(targetturf)
 
 /area/misc/hilbertshotel/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -473,7 +473,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 				if(ismob(A) && !isliving(A))
 					continue //Don't want to store ghosts
 				turfContents += A
-				A.forceMove(storageObj)
+				A.force_move(storageObj)
 			storage[turfNumber] = turfContents
 			turfNumber++
 	parentSphere.storedRooms["[roomnumber]"] = storage

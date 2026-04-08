@@ -113,7 +113,7 @@
 		if(machine_stat & (NOPOWER|BROKEN))
 			to_chat(user, span_alert("[src] is offline and cannot take an AI at this time."))
 			return
-		AI.forceMove(src)
+		AI.force_move(src)
 		occupier = AI
 		AI.set_control_disabled(TRUE)
 		AI.radio_enabled = FALSE
@@ -126,7 +126,7 @@
 		if(occupier && !restoring)
 			to_chat(occupier, span_notice("You have been downloaded to a mobile storage device. Still no remote access."))
 			to_chat(user, "[span_notice("Transfer successful")]: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
-			occupier.forceMove(card)
+			occupier.force_move(card)
 			card.AI = occupier
 			occupier = null
 			update_appearance()

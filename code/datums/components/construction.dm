@@ -101,7 +101,7 @@
 			if(ITEM_MOVE_INSIDE)
 				var/obj/item/located_item = locate(target_step_key) in parent
 				if(located_item)
-					located_item.forceMove(drop_location())
+					located_item.force_move(drop_location())
 
 			else
 				if(ispath(target_step_key, /obj/item/stack))

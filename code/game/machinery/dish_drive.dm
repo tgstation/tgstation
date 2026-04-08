@@ -124,7 +124,7 @@
 			if(dish.Adjacent(src))
 				LAZYADD(dish_drive_contents, dish)
 				visible_message(span_notice("[src] beams up [dish]!"))
-				dish.forceMove(src)
+				dish.force_move(src)
 				playsound(src, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 				flick("synthesizer_beam", src)
 			else
@@ -158,7 +158,7 @@
 				say("Not enough energy to continue!")
 				break
 			LAZYREMOVE(dish_drive_contents, dish)
-			dish.forceMove(bin)
+			dish.force_move(bin)
 			disposed++
 	if (disposed)
 		visible_message(span_notice("[src] [pick("whooshes", "bwooms", "fwooms", "pshooms")] and beams [disposed] stored item\s into the nearby [bin.name]."))

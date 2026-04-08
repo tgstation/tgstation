@@ -86,7 +86,7 @@
 
 	flash()
 
-	cache.forceMove(loc)
+	cache.force_move(loc)
 
 /// Timed flash
 /obj/machinery/byteforge/proc/start_to_spawn(obj/cache)

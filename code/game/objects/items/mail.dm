@@ -144,7 +144,7 @@
 		if(isitem(stuff))
 			user.put_in_hands(stuff)
 		else
-			stuff.forceMove(drop_location())
+			stuff.force_move(drop_location())
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
 	qdel(src)
 	return TRUE

@@ -76,7 +76,7 @@
 	if(diode)
 		tool.play_tool_sound(src)
 		balloon_alert(user, "removed diode")
-		diode.forceMove(drop_location())
+		diode.force_move(drop_location())
 		diode = null
 		return TRUE
 
@@ -87,7 +87,7 @@
 		return ..()
 	tool.play_tool_sound(src)
 	balloon_alert(user, "removed crystal lens")
-	crystal_lens.forceMove(drop_location())
+	crystal_lens.force_move(drop_location())
 	crystal_lens = null
 	return ITEM_INTERACT_SUCCESS
 
@@ -106,7 +106,7 @@
 					to_chat(user, span_warning("You jam \the [attack_item.name] in too hard and break \the [crystal_lens.name] inside, teleporting you away!"))
 					user.drop_all_held_items()
 				else if(atom_to_teleport == attack_item)
-					attack_item.forceMove(drop_location())
+					attack_item.force_move(drop_location())
 					to_chat(user, span_warning("You jam \the [attack_item.name] in too hard and break \the [crystal_lens.name] inside, teleporting \the [attack_item.name] away!"))
 				do_teleport(atom_to_teleport, get_turf(src), crystal_lens.blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 				qdel(crystal_lens)
@@ -136,7 +136,7 @@
 					to_chat(user, span_warning("You press on \the [crystal_stack.name] too hard and are teleported away!"))
 					user.drop_all_held_items()
 				else if(atom_to_teleport == src)
-					forceMove(drop_location())
+					force_move(drop_location())
 					to_chat(user, span_warning("You press on \the [crystal_stack.name] too hard and \the [src] is teleported away!"))
 				do_teleport(atom_to_teleport, get_turf(src), crystal_stack.blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 				crystal_stack.use_tool(src, user, amount = 1) //use only one if we were installing from a stack of crystals
@@ -145,7 +145,7 @@
 		var/obj/item/stack/ore/bluespace_crystal/single_crystal = crystal_stack.split_stack(1)
 		if(isnull(single_crystal))
 			return
-		single_crystal.forceMove(src)
+		single_crystal.force_move(src)
 		crystal_lens = single_crystal
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 30)
 		balloon_alert(user, "installed \the [crystal_lens.name]")

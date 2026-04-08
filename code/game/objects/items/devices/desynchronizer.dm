@@ -53,7 +53,7 @@
 	sync_holder = new(drop_location())
 	new /obj/effect/temp_visual/desynchronizer(drop_location())
 	to_chat(user, span_notice("You activate [src], desynchronizing yourself from the present. You can still see your surroundings, but you feel eerily dissociated from reality."))
-	user.forceMove(sync_holder)
+	user.force_move(sync_holder)
 	last_use = world.time
 	icon_state = "desynchronizer-on"
 	resync_timer = addtimer(CALLBACK(src, PROC_REF(resync)), duration , TIMER_STOPPABLE)
@@ -94,7 +94,7 @@
 /obj/effect/abstract/sync_holder/Destroy()
 	for(var/I in contents)
 		var/atom/movable/AM = I
-		AM.forceMove(drop_location())
+		AM.force_move(drop_location())
 	return ..()
 
 /obj/effect/abstract/sync_holder/AllowDrop()

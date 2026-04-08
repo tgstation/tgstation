@@ -275,7 +275,7 @@
 		return NONE
 	to_chat(user, span_danger("As you open [letter], a very bright light shoots out from inside!"))
 	flash_mob(user)
-	forceMove(user.loc)
+	force_move(user.loc)
 	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /obj/item/assembly/flash/attack(mob/living/target, mob/user)

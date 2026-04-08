@@ -82,7 +82,7 @@
 			clamptarget.set_anchored(FALSE)
 			return
 		clamptarget.set_anchored(FALSE)
-		clamptarget.forceMove(workmech.cargo_hold)
+		clamptarget.force_move(workmech.cargo_hold)
 		if(!chassis.ore_box && istype(clamptarget, /obj/structure/ore_box))
 			chassis.ore_box = clamptarget
 		to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded.")]")
@@ -357,22 +357,22 @@
 	QDEL_NULL(newmech.cell)
 	if (markone.cell)
 		newmech.cell = markone.cell
-		markone.cell.forceMove(newmech)
+		markone.cell.force_move(newmech)
 		markone.cell = null
 	QDEL_NULL(newmech.scanmod)
 	if (markone.scanmod)
 		newmech.scanmod = markone.scanmod
-		markone.scanmod.forceMove(newmech)
+		markone.scanmod.force_move(newmech)
 		markone.scanmod = null
 	QDEL_NULL(newmech.capacitor)
 	if (markone.capacitor)
 		newmech.capacitor = markone.capacitor
-		markone.capacitor.forceMove(newmech)
+		markone.capacitor.force_move(newmech)
 		markone.capacitor = null
 	QDEL_NULL(newmech.servo)
 	if (markone.servo)
 		newmech.servo = markone.servo
-		markone.servo.forceMove(newmech)
+		markone.servo.force_move(newmech)
 		markone.servo = null
 	newmech.update_part_values()
 	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...

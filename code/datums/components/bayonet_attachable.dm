@@ -127,7 +127,7 @@
 
 	bayonet = new_bayonet
 	if(bayonet.loc != parent)
-		bayonet.forceMove(parent)
+		bayonet.force_move(parent)
 	var/obj/item/item_parent = parent
 	item_parent.update_appearance()
 
@@ -149,7 +149,7 @@
 		remove_bayonet()
 		return
 
-	bayonet.forceMove(source.drop_location())
+	bayonet.force_move(source.drop_location())
 
 /datum/component/bayonet_attachable/proc/on_screwdriver(obj/item/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
@@ -165,7 +165,7 @@
 	source.balloon_alert(user, "unscrewed [bayonet]")
 
 	var/obj/item/to_remove = bayonet
-	to_remove.forceMove(source.drop_location())
+	to_remove.force_move(source.drop_location())
 	if(source.Adjacent(user) && !issilicon(user))
 		user.put_in_hands(to_remove)
 

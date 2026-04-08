@@ -46,7 +46,7 @@
 						span_danger("You fire the grenade launcher!"))
 	var/obj/item/grenade/F = grenades[1] //Now with less copypasta!
 	grenades -= F
-	F.forceMove(user.loc)
+	F.force_move(user.loc)
 	F.throw_at(target, 30, 2, user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] fired a grenade ([F.name]) from a grenade launcher ([src]) from [AREACOORD(user)] at [target] [AREACOORD(target)].")
 	user.log_message("fired a grenade ([F.name]) with a grenade launcher ([src]) from [AREACOORD(user)] at [target] [AREACOORD(target)].", LOG_GAME)

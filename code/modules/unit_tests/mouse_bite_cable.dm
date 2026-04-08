@@ -15,7 +15,7 @@
 	// the unit tests room has normal flooring so let's just make it be interactable for the sake of this test
 	stage.underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	// relocate the rat
-	biter.forceMove(stage)
+	biter.force_move(stage)
 
 	// Ai controlling processes expect a seconds_per_tick, supply a real-fake dt
 	var/fake_dt = SSai_controllers.wait * 0.1

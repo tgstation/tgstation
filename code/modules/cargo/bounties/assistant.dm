@@ -70,7 +70,7 @@
 	. = ..()
 	for(var/obj/object as anything in shipped.contents)
 		if(!is_type_in_list(object, static_packing_list))
-			object.forceMove(shipped.drop_location())
+			object.force_move(shipped.drop_location())
 
 /datum/bounty/item/assistant/statue
 	name = "Statue"

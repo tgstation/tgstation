@@ -540,7 +540,7 @@
 		return
 
 	if(curse_flags & CURSE_WASTING)
-		wasting_effect.forceMove(owner.loc)
+		wasting_effect.force_move(owner.loc)
 		wasting_effect.setDir(owner.dir)
 		wasting_effect.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
 		wasting_effect.alpha = 255
@@ -764,7 +764,7 @@
 	if(!turf)
 		qdel(src)
 		return
-	owner.forceMove(turf)
+	owner.force_move(turf)
 
 /datum/status_effect/go_away/on_remove()
 	. = ..()

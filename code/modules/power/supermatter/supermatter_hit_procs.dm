@@ -1,4 +1,4 @@
-/// Consume things that run into the supermatter from the tram. The tram calls forceMove (doesn't call Bump/ed) and not Move, and I'm afraid changing it will do something chaotic
+/// Consume things that run into the supermatter from the tram. The tram calls force_move (doesn't call Bump/ed) and not Move, and I'm afraid changing it will do something chaotic
 /obj/machinery/power/supermatter_crystal/proc/tram_contents_consume(datum/source, list/tram_contents)
 	SIGNAL_HANDLER
 

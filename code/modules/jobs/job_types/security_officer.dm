@@ -147,13 +147,13 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 	if(!CONFIG_GET(flag/sec_start_brig) && move_to && (destination || spawn_point))
 		if(spawn_point)
-			spawning.forceMove(get_turf(spawn_point))
+			spawning.force_move(get_turf(spawn_point))
 		else
 			var/list/possible_turfs = get_area_turfs(destination)
 			while (length(possible_turfs))
 				var/random_index = rand(1, length(possible_turfs))
 				var/turf/target = possible_turfs[random_index]
-				if (isopenturf(target) && spawning.forceMove(target))
+				if (isopenturf(target) && spawning.force_move(target))
 					break
 				possible_turfs.Cut(random_index, random_index + 1)
 

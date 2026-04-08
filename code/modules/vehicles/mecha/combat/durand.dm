@@ -59,12 +59,12 @@
 /obj/vehicle/sealed/mecha/durand/Move(direction)
 	. = ..()
 	if(shield)
-		shield.forceMove(loc)
+		shield.force_move(loc)
 		shield.setDir(dir)
 
-/obj/vehicle/sealed/mecha/durand/forceMove(turf/T)
+/obj/vehicle/sealed/mecha/durand/force_move(turf/T)
 	. = ..()
-	shield.forceMove(T)
+	shield.force_move(T)
 
 /obj/vehicle/sealed/mecha/durand/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
 	if(defense_mode)

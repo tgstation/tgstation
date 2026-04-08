@@ -135,7 +135,7 @@
 
 	if (devour)
 		var/atom/movable/movable_target = final_target
-		movable_target.forceMove(eater)
+		movable_target.force_move(eater)
 	else
 		qdel(final_target)
 

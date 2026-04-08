@@ -177,7 +177,7 @@
 			return FALSE
 		to_chat(user, span_notice("You load \the [I] into \the [src]."))
 	else
-		I.forceMove(src)
+		I.force_move(src)
 	loadedItems += I
 	if(isitem(I))
 		loadedWeightClass += I.w_class
@@ -272,7 +272,7 @@
 		loadedWeightClass -= I.w_class
 	else
 		loadedWeightClass--
-	AM.forceMove(get_turf(src))
+	AM.force_move(get_turf(src))
 	AM.throw_at(target, pressure_setting * 10 * range_multiplier, pressure_setting * 2, user, spin_item)
 	return TRUE
 
@@ -310,7 +310,7 @@
 		if(!tank)
 			return
 		to_chat(user, span_notice("You detach \the [thetank] from \the [src]."))
-		tank.forceMove(user.drop_location())
+		tank.force_move(user.drop_location())
 		user.put_in_hands(tank)
 		tank = null
 	if(!removing)

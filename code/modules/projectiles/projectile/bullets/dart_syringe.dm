@@ -49,13 +49,13 @@
 
 /obj/projectile/bullet/dart/syringe/on_range()
 	if (inner_syringe)
-		inner_syringe.forceMove(drop_location())
+		inner_syringe.force_move(drop_location())
 	return ..()
 
 /obj/projectile/bullet/dart/syringe/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
 	if (inner_syringe)
-		inner_syringe.forceMove(drop_location())
+		inner_syringe.force_move(drop_location())
 
 /obj/projectile/bullet/dart/piercing
 	inject_flags = INJECT_CHECK_PENETRATE_THICK

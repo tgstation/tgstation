@@ -811,7 +811,7 @@
 	ai_restore_power()//So the AI initially has power.
 	set_control_disabled(TRUE) //Can't control things remotely if you're stuck in a card!
 	radio_enabled = FALSE //No talking on the built-in radio for you either!
-	forceMove(card)
+	force_move(card)
 	card.AI = src
 	to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
 	to_chat(user, "[span_boldnotice("Transfer successful")]: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
@@ -1077,7 +1077,7 @@
 /mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
 	SScameras.update_eye_chunk(moved_eye)
 
-/mob/living/silicon/ai/forceMove(atom/destination)
+/mob/living/silicon/ai/force_move(atom/destination)
 	. = ..()
 	if(.)
 		end_multicam()
@@ -1171,7 +1171,7 @@
 	if(!linked_core) //oh no bro
 		CRASH("tried to resolve a core link with no core!!!!")
 
-	forceMove(linked_core.loc)
+	force_move(linked_core.loc)
 	var/obj/structure/ai_core/unlinked_core = linked_core
 	break_core_link()
 	qdel(unlinked_core)

@@ -176,7 +176,7 @@
 		var/spawndir = pick_n_take(directions)
 		var/turf/T = get_step(src, spawndir)
 		if(T)
-			child.forceMove(T)
+			child.force_move(T)
 			playsound(src, 'sound/effects/bamf.ogg', 100, 1)
 
 //The goliath's children.  Pretty weak, simple mobs which are able to put a single tentacle under their target when at range.

@@ -165,7 +165,7 @@
 	var/turf/target_turf = get_turf(target)
 	if (target_turf == loc)
 		target_turf = get_step(target, target.dir) //please don't slam into a window like a bird, Nar'Sie
-	forceMove(target_turf)
+	force_move(target_turf)
 
 /// Stun people around Nar'Sie that aren't cultists
 /obj/narsie/proc/mesmerize()

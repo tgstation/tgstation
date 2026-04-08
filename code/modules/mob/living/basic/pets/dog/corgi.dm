@@ -63,7 +63,7 @@
 /mob/living/basic/pet/dog/corgi/gib()
 	undress_dog()
 	if(access_card)
-		access_card.forceMove(drop_location())
+		access_card.force_move(drop_location())
 		access_card = null
 	return ..()
 
@@ -81,8 +81,8 @@
 
 /// Removes the hat and shirt (but not ID) of this corgi
 /mob/living/basic/pet/dog/corgi/proc/undress_dog()
-	inventory_head?.forceMove(drop_location())
-	inventory_back?.forceMove(drop_location())
+	inventory_head?.force_move(drop_location())
+	inventory_back?.force_move(drop_location())
 
 /mob/living/basic/pet/dog/corgi/examine(mob/user)
 	. = ..()
@@ -231,7 +231,7 @@
 	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a hat is removed.
 	if(!ispath(item_to_add.dog_fashion, /datum/dog_fashion/head))
 		to_chat(user, span_warning("You set [item_to_add] on [src]'s head, but it falls off!"))
-		item_to_add.forceMove(drop_location())
+		item_to_add.force_move(drop_location())
 		if(prob(25))
 			step_rand(item_to_add)
 		dance_rotate(src, set_original_dir = TRUE)
@@ -244,7 +244,7 @@
 			user.visible_message(span_notice("[user] puts [item_to_add] on [real_name]'s head. [src] looks at [user] and barks once."),
 				span_notice("You put [item_to_add] on [real_name]'s head. [src] gives you a peculiar look, then wags [p_their()] tail once and barks."),
 				span_hear("You hear a friendly-sounding bark."))
-	item_to_add.forceMove(src)
+	item_to_add.force_move(src)
 	inventory_head = item_to_add
 	update_corgi_fluff()
 	update_appearance(UPDATE_OVERLAYS)
@@ -297,7 +297,7 @@
 	if(!length(possible_headwear))
 		return
 	if(inventory_head)
-		inventory_head.forceMove(drop_location())
+		inventory_head.force_move(drop_location())
 		inventory_head = null
 	place_on_head(pick(possible_headwear))
 	visible_message(span_notice("[src] puts [inventory_head] on [p_their()] own head, somehow."))
@@ -307,7 +307,7 @@
 	if(!inventory_head)
 		return
 	visible_message(span_notice("[src] vigorously shakes [p_their()] head, dropping [inventory_head] to the ground."))
-	inventory_head.forceMove(drop_location())
+	inventory_head.force_move(drop_location())
 	inventory_head = null
 	update_corgi_fluff()
 	update_appearance(UPDATE_OVERLAYS)
@@ -402,7 +402,7 @@
 	if (!.)
 		return
 	if (!istype(inventory_head, /obj/item/clothing/glasses/eyepatch))
-		inventory_head?.forceMove(drop_location())
+		inventory_head?.force_move(drop_location())
 	place_on_head(new /obj/item/clothing/glasses/eyepatch/medical)
 
 /mob/living/basic/pet/dog/corgi/ian/narsie_act()

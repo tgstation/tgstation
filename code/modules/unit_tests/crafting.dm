@@ -103,7 +103,7 @@
 	for(var/tooltype in needed_tools)
 		var/obj/item/tool = tools[tooltype]
 		if(!QDELETED(tool))
-			tool.forceMove(turf)
+			tool.force_move(turf)
 		else
 			var/is_behaviour = istext(tooltype)
 			var/path_to_use = is_behaviour ? /obj/item : tooltype

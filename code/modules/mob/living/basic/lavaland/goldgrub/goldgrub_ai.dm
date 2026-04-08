@@ -80,7 +80,7 @@
 	if(isnull(selected_turf))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	phased.forceMove(selected_turf)
+	phased.force_move(selected_turf)
 	return AI_BEHAVIOR_SUCCEEDED | AI_BEHAVIOR_DELAY
 
 ///consume food!

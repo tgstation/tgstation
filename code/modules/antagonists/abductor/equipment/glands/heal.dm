@@ -88,13 +88,13 @@
 	owner.visible_message(span_warning("[owner] vomits up his [implant.name]!"), span_userdanger("You suddenly vomit up your [implant.name]!"))
 	owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 	implant.Remove(owner)
-	implant.forceMove(owner.drop_location())
+	implant.force_move(owner.drop_location())
 
 /obj/item/organ/heart/gland/heal/proc/replace_appendix(obj/item/organ/appendix/appendix)
 	if(appendix)
 		owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 		appendix.Remove(owner)
-		appendix.forceMove(owner.drop_location())
+		appendix.force_move(owner.drop_location())
 		owner.visible_message(span_warning("[owner] vomits up his [appendix.name]!"), span_userdanger("You suddenly vomit up your [appendix.name]!"))
 	else
 		to_chat(owner, span_warning("You feel a weird rumble in your bowels..."))
@@ -110,7 +110,7 @@
 		owner.visible_message(span_warning("[owner] vomits up his [liver.name]!"), span_userdanger("You suddenly vomit up your [liver.name]!"))
 		owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 		liver.Remove(owner)
-		liver.forceMove(owner.drop_location())
+		liver.force_move(owner.drop_location())
 	else
 		to_chat(owner, span_warning("You feel a weird rumble in your bowels..."))
 
@@ -125,7 +125,7 @@
 		owner.visible_message(span_warning("[owner] vomits up his [lungs.name]!"), span_userdanger("You suddenly vomit up your [lungs.name]!"))
 		owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 		lungs.Remove(owner)
-		lungs.forceMove(owner.drop_location())
+		lungs.force_move(owner.drop_location())
 	else
 		to_chat(owner, span_warning("You feel a weird rumble inside your chest..."))
 
@@ -140,7 +140,7 @@
 		owner.visible_message(span_warning("[owner] vomits up his [stomach.name]!"), span_userdanger("You suddenly vomit up your [stomach.name]!"))
 		owner.vomit(REJECTION_VOMIT_FLAGS, lost_nutrition = 0)
 		stomach.Remove(owner)
-		stomach.forceMove(owner.drop_location())
+		stomach.force_move(owner.drop_location())
 	else
 		to_chat(owner, span_warning("You feel a weird rumble in your bowels..."))
 
@@ -155,7 +155,7 @@
 		owner.visible_message(span_warning("[owner]'s [eyes.name] fall out of their sockets!"), span_userdanger("Your [eyes.name] fall out of their sockets!"))
 		playsound(owner, 'sound/effects/splat.ogg', 50, TRUE)
 		eyes.Remove(owner)
-		eyes.forceMove(owner.drop_location())
+		eyes.force_move(owner.drop_location())
 	else
 		to_chat(owner, span_warning("You feel a weird rumble behind your eye sockets..."))
 

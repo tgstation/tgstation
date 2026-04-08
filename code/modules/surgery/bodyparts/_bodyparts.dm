@@ -586,7 +586,7 @@
 				user.temporarilyRemoveItemFromInventory(src, TRUE)
 				if(!try_attach_limb(victim))
 					to_chat(user, span_warning("[human_victim]'s body rejects [src]!"))
-					forceMove(human_victim.loc)
+					force_move(human_victim.loc)
 					return
 				if(check_for_frankenstein(victim))
 					bodypart_flags |= BODYPART_IMPLANTED
@@ -648,12 +648,12 @@
 			continue
 
 		if(drop_loc) //can be null if being deleted
-			bodypart_organ.forceMove(get_turf(drop_loc))
+			bodypart_organ.force_move(get_turf(drop_loc))
 			play_sfx = TRUE
 
 	if(drop_loc) //can be null during deletion
 		for(var/atom/movable/movable as anything in src)
-			movable.forceMove(drop_loc)
+			movable.force_move(drop_loc)
 			play_sfx = TRUE
 
 	if(play_sfx && IS_ORGANIC_LIMB(src))
@@ -1047,7 +1047,7 @@
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_owner_clean))
 	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(refresh_bleed_rate))
 
-	forceMove(owner)
+	force_move(owner)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_forced_removal)) //this must be set after we moved, or we insta gib
 
 	if(LIMB_HAS_SURGERY_STATE(src, ALL_SURGERY_FISH_STATES(body_zone)))
@@ -1616,7 +1616,7 @@
 	if(!override && LAZYACCESS(applied_items, category))
 		return FALSE
 
-	applying_item.forceMove(src)
+	applying_item.force_move(src)
 	LAZYSET(applied_items, category, applying_item)
 	SEND_SIGNAL(applying_item, COMSIG_ITEM_APPLIED_TO_LIMB, src)
 	return TRUE

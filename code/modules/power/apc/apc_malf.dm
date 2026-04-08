@@ -46,12 +46,12 @@
 	occupier = malf
 	if (isturf(malf.loc)) // create a deactivated AI core if the AI isn't coming from an emergency mech shunt
 		malf.create_core_link(new /obj/structure/ai_core(malf.loc, CORE_STATE_FINISHED, malf.make_mmi()))
-	malf.forceMove(src) // move INTO the APC, not to its tile
+	malf.force_move(src) // move INTO the APC, not to its tile
 	if(!findtext(occupier.name, "APC Copy"))
 		occupier.name = "[malf.name] APC Copy"
 	malf.shunted = TRUE
 	occupier.eyeobj.name = "[occupier.name] (AI Eye)"
-	occupier.eyeobj.forceMove(src.loc)
+	occupier.eyeobj.force_move(src.loc)
 	for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
 		disk_pinpointers.switch_mode_to(TRACK_MALF_AI) //Pinpointer will track the shunted AI
 	var/datum/action/innate/core_return/return_action = new
@@ -66,7 +66,7 @@
 	SEND_SIGNAL(occupier, COMSIG_SILICON_AI_VACATE_APC, occupier)
 	SEND_SIGNAL(src, COMSIG_SILICON_AI_VACATE_APC, occupier)
 	if(forced)
-		occupier.forceMove(drop_location())
+		occupier.force_move(drop_location())
 		INVOKE_ASYNC(occupier, TYPE_PROC_REF(/mob/living, death))
 		occupier.gib(DROP_ALL_REMAINS)
 		occupier = null
@@ -132,7 +132,7 @@
 		return FALSE
 	user.visible_message(span_notice("[user] transfers [occupier] to [card]!"), span_notice("Transfer complete! [occupier] is now stored in [card]."))
 	to_chat(occupier, span_notice("Transfer complete! You've been stored in [user]'s [card.name]."))
-	occupier.forceMove(card)
+	occupier.force_move(card)
 	card.AI = occupier
 	occupier.shunted = FALSE
 	occupier.cancel_camera()

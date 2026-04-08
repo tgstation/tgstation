@@ -18,7 +18,7 @@
 	TEST_ASSERT(check_access(subject, null), "Subject still had access after unequipping ID card.")
 
 	var/obj/item/storage/wallet/wallet = EASY_ALLOCATE()
-	card.forceMove(wallet)
+	card.force_move(wallet)
 	subject.equip_to_appropriate_slot(wallet)
 	TEST_ASSERT(check_access(subject, ACCESS_HYDROPONICS), "Subject did not have the access on equipping wallet with ID card inside.")
 	subject.dropItemToGround(wallet)

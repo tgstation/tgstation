@@ -138,7 +138,7 @@
 	for(var/mob/living/dispersed_mob in range(effect_range, get_turf(src)))
 		var/turf/drop_off = find_safe_turf(z)
 		new /obj/effect/temp_visual/gravpush(get_turf(dispersed_mob))
-		dispersed_mob.forceMove(drop_off)
+		dispersed_mob.force_move(drop_off)
 		dispersed_mob.balloon_alert(dispersed_mob, "pop!")
 
 // ----------- Station Crash
@@ -163,7 +163,7 @@
 		var/obj/docking_port/stationary/SM = S
 		if (SM.shuttle_id == "emergency_home")
 			var/new_dir = REVERSE_DIR(SM.dir)
-			SM.forceMove(get_ranged_target_turf(SM, new_dir, crash_strength))
+			SM.force_move(get_ranged_target_turf(SM, new_dir, crash_strength))
 			break
 
 /obj/effect/station_crash/devastating

@@ -337,7 +337,7 @@
 		return
 	screwtool.play_tool_sound(src)
 	to_chat(user, span_notice("Remove [cell] from [src]."))
-	cell.forceMove(drop_location())
+	cell.force_move(drop_location())
 
 /obj/item/bodypart/chest/robot/examine(mob/user)
 	. = ..()
@@ -357,7 +357,7 @@
 	if(wired)
 		new /obj/item/stack/cable_coil(drop_loc, 1)
 		wired = FALSE
-	cell?.forceMove(drop_loc)
+	cell?.force_move(drop_loc)
 	return ..()
 
 /obj/item/bodypart/head/robot
@@ -469,16 +469,16 @@
 	if(flash1 || flash2)
 		prytool.play_tool_sound(src)
 		to_chat(user, span_notice("You remove the flash from [src]."))
-		flash1?.forceMove(drop_location())
-		flash2?.forceMove(drop_location())
+		flash1?.force_move(drop_location())
+		flash2?.force_move(drop_location())
 	else
 		to_chat(user, span_warning("There is no flash to remove from [src]."))
 	return TRUE
 
 /obj/item/bodypart/head/robot/drop_organs(mob/user, violent_removal)
 	var/atom/drop_loc = drop_location()
-	flash1?.forceMove(drop_loc)
-	flash2?.forceMove(drop_loc)
+	flash1?.force_move(drop_loc)
+	flash2?.force_move(drop_loc)
 	return ..()
 
 // Prosthetics - Cheap, mediocre, and worse than organic limbs

@@ -60,7 +60,7 @@
 	if (!held_disk)
 		return
 	var/mob/mob_parent = parent
-	held_disk.forceMove(mob_parent.drop_location())
+	held_disk.force_move(mob_parent.drop_location())
 	mob_parent.visible_message(span_danger("[mob_parent] drops [held_disk] onto the ground!"))
 	disky = null
 	mob_parent.update_appearance(updates = UPDATE_ICON)
@@ -102,7 +102,7 @@
 	if(potential_disky.anchored)
 		return
 	var/mob/mob_parent = parent
-	potential_disky.forceMove(mob_parent)
+	potential_disky.force_move(mob_parent)
 	disky = WEAKREF(potential_disky)
 	mob_parent.update_appearance(updates = UPDATE_ICON)
 	mob_parent.balloon_alert(mob_parent, "disk secured!")
@@ -116,7 +116,7 @@
 		mob_parent.do_item_attack_animation(attacked_target, used_item = held_disk, animation_type = ATTACK_ANIMATION_BLUNT)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	held_disk.forceMove(attacked_target)
+	held_disk.force_move(attacked_target)
 	disky = null
 	mob_parent.balloon_alert(mob_parent, "disk dropped!")
 	mob_parent.update_appearance(updates = UPDATE_ICON)

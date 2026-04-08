@@ -57,11 +57,11 @@
 	if(tank_one)
 		split_gases()
 		valve_open = FALSE
-		tank_one.forceMove(drop_location())
+		tank_one.force_move(drop_location())
 	else if(tank_two)
 		split_gases()
 		valve_open = FALSE
-		tank_two.forceMove(drop_location())
+		tank_two.force_move(drop_location())
 
 	return CLICK_ACTION_SUCCESS
 
@@ -358,13 +358,13 @@
 			if(tank_one)
 				split_gases()
 				valve_open = FALSE
-				tank_one.forceMove(drop_location())
+				tank_one.force_move(drop_location())
 				. = TRUE
 		if("tanktwo")
 			if(tank_two)
 				split_gases()
 				valve_open = FALSE
-				tank_two.forceMove(drop_location())
+				tank_two.force_move(drop_location())
 				. = TRUE
 		if("toggle")
 			toggle_valve()

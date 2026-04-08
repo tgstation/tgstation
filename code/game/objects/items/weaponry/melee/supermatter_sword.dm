@@ -31,7 +31,7 @@
 		return
 	if(!isturf(src.loc))
 		var/atom/target = src.loc
-		forceMove(target.loc)
+		force_move(target.loc)
 		consume_everything(target)
 	else
 		var/turf/turf = get_turf(src)

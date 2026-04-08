@@ -353,7 +353,7 @@
 /obj/machinery/wall_healer/on_deconstruction(disassembled)
 	var/atom/drop_loc = drop_location()
 	for(var/obj/item/stack/medical/wrap/gauze/bandage as anything in stocked_bandages)
-		bandage.forceMove(drop_loc)
+		bandage.force_move(drop_loc)
 	new /obj/item/stack/medical/wrap/gauze(drop_loc, num_bandages)
 
 /obj/machinery/wall_healer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -373,9 +373,9 @@
 	while(bandage.amount > 1)
 		var/obj/item/stack/medical/wrap/gauze/split_bandage = bandage.split_stack(1)
 		LAZYADD(stocked_bandages, split_bandage)
-		split_bandage.forceMove(src)
+		split_bandage.force_move(src)
 	LAZYADD(stocked_bandages, bandage)
-	bandage.forceMove(src)
+	bandage.force_move(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/wall_healer/proc/set_using_mob(mob/living/user)

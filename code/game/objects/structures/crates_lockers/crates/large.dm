@@ -46,7 +46,7 @@
 		for(var/i in 1 to material_drop_amount)
 			new material_drop(src)
 		for(var/atom/movable/AM in contents)
-			AM.forceMove(T)
+			AM.force_move(T)
 		qdel(src)
 
 	else

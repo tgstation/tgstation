@@ -206,7 +206,7 @@
 
 				// For the rest, drop all the organs onto the floor (for style)
 				to_drop.Remove(carbon_body)
-				to_drop.forceMove(corpse.drop_location())
+				to_drop.force_move(corpse.drop_location())
 
 		var/turf/body_turf = get_turf(corpse)
 		var/wheres_wizdo = dir2text(get_dir(body_turf, parent_turf))

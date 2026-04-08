@@ -3,7 +3,7 @@
 
 /obj/structure/ore_container/attackby(obj/item/ore, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	if(istype(ore, /obj/item/stack/ore) && !user.combat_mode)
-		ore.forceMove(src)
+		ore.force_move(src)
 		return
 	return ..()
 
@@ -49,5 +49,5 @@
 			stack_to_move = locate(params["reference"]) in contents
 			if(isnull(stack_to_move))
 				return TRUE
-			stack_to_move.forceMove(get_turf(customer))
+			stack_to_move.force_move(get_turf(customer))
 			return TRUE

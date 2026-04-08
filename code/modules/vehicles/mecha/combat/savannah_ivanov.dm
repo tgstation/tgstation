@@ -378,7 +378,7 @@
 ///called when the mecha moves
 /obj/effect/skyfall_landingzone/proc/follow(datum/source_mecha)
 	SIGNAL_HANDLER
-	forceMove(get_turf(source_mecha))
+	force_move(get_turf(source_mecha))
 
 #undef SKYFALL_SINGLE_CHARGE_TIME
 #undef SKYFALL_CHARGELEVEL_LAUNCH

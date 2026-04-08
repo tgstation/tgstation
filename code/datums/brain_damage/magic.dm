@@ -122,7 +122,7 @@
 		owner.visible_message(span_warning("[owner] is torn apart by invisible claws!"), span_userdanger("Ghostly claws tear your body apart!"))
 		owner.take_bodypart_damage(rand(20, 45), wound_bonus=CANT_WOUND)
 	else if(SPT_PROB(30, seconds_per_tick))
-		stalker.forceMove(get_step_towards(stalker, owner))
+		stalker.force_move(get_step_towards(stalker, owner))
 	if(get_dist(owner, stalker) <= 8)
 		if(!close_stalker)
 			var/sound/slowbeat = sound('sound/effects/health/slowbeat.ogg', repeat = TRUE)

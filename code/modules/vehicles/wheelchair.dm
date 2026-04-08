@@ -112,7 +112,7 @@
 /// Attaches bell to the wheelchair
 /obj/vehicle/ridden/wheelchair/proc/attach_bell(obj/structure/desk_bell/bell)
 	bell_attached = bell
-	bell.forceMove(src)
+	bell.force_move(src)
 	generate_actions()
 	update_appearance()
 
@@ -121,7 +121,7 @@
 	if (!(obj_flags & EMAGGED))
 		RegisterSignal(src, COMSIG_WHEELCHAIR_BELL_RANG, PROC_REF(on_bell_rang))
 	bomb_attached = bomb
-	bomb.forceMove(src)
+	bomb.force_move(src)
 	update_appearance()
 
 /obj/vehicle/ridden/wheelchair/examine(mob/user)
@@ -134,7 +134,7 @@
 /obj/vehicle/ridden/wheelchair/proc/remove_bell()
 	if (!bell_attached)
 		return
-	bell_attached.forceMove(get_turf(src))
+	bell_attached.force_move(get_turf(src))
 	visible_message(span_notice("[bell_attached] falls off!"))
 	bell_attached = null
 	update_appearance()
@@ -142,7 +142,7 @@
 /obj/vehicle/ridden/wheelchair/proc/remove_bomb()
 	if (!bomb_attached)
 		return
-	bomb_attached.forceMove(get_turf(src))
+	bomb_attached.force_move(get_turf(src))
 	visible_message(span_notice("[bomb_attached] falls off!"))
 	bomb_attached = null
 	update_appearance()

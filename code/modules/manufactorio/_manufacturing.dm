@@ -109,7 +109,7 @@
 	if(isnull(sending))
 		return MANUFACTURING_SUCCESS // for the sake of being used as a check
 	if(isnull(sending.loc) || !sending.Move(next_turf, get_dir(src, next_turf)))
-		sending.forceMove(next_turf)
+		sending.force_move(next_turf)
 	return MANUFACTURING_SUCCESS
 
 /// Checks if this stack (if not a stack does not do anything) can merge WITHOUT creating two stacks in contents

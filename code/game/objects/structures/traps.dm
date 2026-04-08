@@ -131,8 +131,8 @@
 	var/turf/our_turf = get_turf(src)
 	if(!our_turf)
 		return
-	stored_item.forceMove(get_turf(src))
-	forceMove(stored_item)
+	stored_item.force_move(get_turf(src))
+	force_move(stored_item)
 	if(caught)
 		stored_item.announce_fugitive()
 		caught = FALSE
@@ -169,8 +169,8 @@
 	if(!user || !user.transferItemToLoc(src, target_turf))//visibly unequips
 		return
 	to_chat(user, span_notice("You set up [src]. Examine while close to disarm it."))
-	stored_trap.forceMove(target_turf)//moves trap to ground
-	forceMove(stored_trap)//moves item into trap
+	stored_trap.force_move(target_turf)//moves trap to ground
+	force_move(stored_trap)//moves item into trap
 
 /obj/item/bountytrap/Destroy()
 	if(!QDELETED(stored_trap))

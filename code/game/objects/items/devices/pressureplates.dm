@@ -81,7 +81,7 @@
 		to_chat(L, span_notice("You remove [assembly] from [src]."))
 		SEND_SIGNAL(assembly, COMSIG_ASSEMBLY_REMOVED_FROM_PRESSURE_PLATE, src, L)
 		if(!L.put_in_hands(assembly))
-			assembly.forceMove(get_turf(src))
+			assembly.force_move(get_turf(src))
 		assembly = null
 	return ..()
 

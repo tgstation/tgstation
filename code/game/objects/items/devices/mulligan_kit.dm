@@ -54,7 +54,7 @@
 			LOCATION_HANDS,
 		), qdel_on_fail = FALSE, indirect_action = TRUE)
 	if (isnull(placed_in))
-		fake_id.forceMove(user.drop_location())
+		fake_id.force_move(user.drop_location())
 		to_chat(user, span_warning("You drop your new ID card on the ground."))
 	else
 		to_chat(user, span_notice("You quickly put your new ID card [placed_in]."))
@@ -79,7 +79,7 @@
 			LOCATION_HANDS,
 		), qdel_on_fail = FALSE, indirect_action = TRUE)
 		if (isnull(returned_to))
-			fake_id.forceMove(user.drop_location())
+			fake_id.force_move(user.drop_location())
 			to_chat(user, span_warning("You drop your old ID card on the ground."))
 		else
 			to_chat(user, span_notice("You stash your old ID card [returned_to]."))

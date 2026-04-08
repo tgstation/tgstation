@@ -219,7 +219,7 @@
 
 	START_PROCESSING(SSprocessing, src)
 	owner_limb._embed_object(parent)
-	parent.forceMove(owner)
+	parent.force_move(owner)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(weapon_disappeared))
 	RegisterSignal(parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
 	owner.visible_message(span_danger("[parent] [is_harmless() ? "sticks itself to" : "embeds itself in"] [owner]'s [owner_limb.plaintext_zone]!"),
@@ -309,7 +309,7 @@
 /datum/embedding/proc/on_removed(datum/source, mob/living/carbon/old_owner)
 	SIGNAL_HANDLER
 	if (!stop_embedding()) // Dropdel?
-		parent.forceMove(old_owner.drop_location())
+		parent.force_move(old_owner.drop_location())
 
 /// Someone attempted to pull us out! Either the owner by inspecting themselves, or someone else by examining the owner and clicking the link.
 /datum/embedding/proc/rip_out(mob/living/jack_the_ripper)
@@ -373,7 +373,7 @@
 	var/mob/living/carbon/stored_owner = owner
 	if (stop_embedding()) // Dropdel?
 		return
-	parent.forceMove(stored_owner.drop_location())
+	parent.force_move(stored_owner.drop_location())
 	if (!isnull(to_hands))
 		to_hands.put_in_hands(parent)
 
@@ -433,7 +433,7 @@
 /datum/embedding/process(seconds_per_tick)
 	if (!owner || !owner_limb || owner_limb.owner != owner)
 		stack_trace("Attempted to process embedding on [parent] ([parent.type]) without an owner, owner_limb or owner-less limb!")
-		parent.forceMove(get_turf(parent))
+		parent.force_move(get_turf(parent))
 		return
 
 	if (process_effect(seconds_per_tick))

@@ -134,7 +134,7 @@
 				// Items in silicons warp the whole silicon
 				var/mob/holding_mark = item_to_retrieve.loc
 				holding_mark.loc.visible_message(span_warning("[holding_mark] suddenly disappears!"))
-				holding_mark.forceMove(caster.loc)
+				holding_mark.force_move(caster.loc)
 				holding_mark.loc.visible_message(span_warning("[holding_mark] suddenly appears!"))
 				SEND_SIGNAL(holding_mark, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
 				playsound(holding_mark, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
@@ -171,7 +171,7 @@
 	if(isitem(item_to_retrieve) && caster.put_in_hands(item_to_retrieve))
 		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears in [caster]'s hand!"))
 	else
-		item_to_retrieve.forceMove(caster.drop_location())
+		item_to_retrieve.force_move(caster.drop_location())
 		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears!"))
 
 	playsound(get_turf(item_to_retrieve), 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)

@@ -327,7 +327,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	held_mob.machine_wash(washer)
 
 /obj/item/clothing/shoes/sneakers/orange/machine_wash(obj/machinery/washing_machine/washer)
-	attached_cuffs?.forceMove(loc)
+	attached_cuffs?.force_move(loc)
 	return ..()
 
 /obj/machinery/washing_machine/relaymove(mob/living/user, direction)
@@ -405,7 +405,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			return
 		if(state_open)
 			if(istype(victim, /mob/living/basic/pet))
-				victim.forceMove(src)
+				victim.force_move(src)
 				update_appearance()
 			else if(ishuman(victim))
 				if(user.grab_state < GRAB_AGGRESSIVE)
@@ -416,7 +416,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 				log_game("[key_name_and_tag(user)] is forcing [key_name_and_tag(victim)] into a washing machine")
 				if(!do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, PROC_REF(check_aggro_grab), user)))
 					return
-				victim.forceMove(src)
+				victim.force_move(src)
 				update_appearance()
 		return
 

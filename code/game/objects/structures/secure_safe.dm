@@ -54,7 +54,7 @@
 		return ..()
 
 	for(var/obj/item in contents)
-		item.forceMove(safe)
+		item.force_move(safe)
 
 	var/datum/component/lockable_storage/storage_component = safe.GetComponent(/datum/component/lockable_storage)
 	if(stored_lock_code)
@@ -130,7 +130,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 		new_safe.update_appearance()
 
 		for(var/obj/item in contents)
-			item.forceMove(new_safe)
+			item.force_move(new_safe)
 
 /obj/structure/secure_safe/proc/PopulateContents()
 	new /obj/item/paper(src)

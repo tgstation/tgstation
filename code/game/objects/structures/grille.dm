@@ -130,7 +130,7 @@
 	for(var/obj/item/item_to_move in loc.contents)
 		if(!item_to_move.anchored)
 			if(unanchored_items_on_tile <= CLEAR_TILE_MOVE_LIMIT)
-				item_to_move.forceMove(at_users_feet)
+				item_to_move.force_move(at_users_feet)
 				last_item_moved = item_to_move
 			unanchored_items_on_tile++
 
@@ -373,7 +373,7 @@
 
 	// come back in 1 + 4 seconds
 	addtimer(VARSET_CALLBACK(src, atom_integrity, atom_integrity), time_to_go + time_to_return) //set the health back (icon is updated on move)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, force_move), loc), time_to_go + time_to_return) //we back boys
 	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
 
 /// Do some very specific checks to see if we *would* get shocked. Returns TRUE if it's shocked

@@ -102,13 +102,13 @@
 	tool.play_tool_sound(src)
 	var/turf/T = get_turf(src)
 	if(weldtool)
-		weldtool.forceMove(T)
+		weldtool.force_move(T)
 		weldtool = null
 	if(igniter)
-		igniter.forceMove(T)
+		igniter.force_move(T)
 		igniter = null
 	if(ptank)
-		ptank.forceMove(T)
+		ptank.force_move(T)
 		ptank = null
 	new /obj/item/stack/rods(T)
 	qdel(src)
@@ -138,7 +138,7 @@
 		if(ptank)
 			if(!user.transferItemToLoc(tool, src))
 				return ITEM_INTERACT_BLOCKING
-			ptank.forceMove(get_turf(src))
+			ptank.force_move(get_turf(src))
 			ptank = tool
 			to_chat(user, span_notice("You swap the plasma tank in [src]!"))
 			return ITEM_INTERACT_SUCCESS

@@ -132,7 +132,7 @@
 /obj/effect/cross_action/spacetime_dist/proc/get_walker(atom/movable/AM)
 	busy = TRUE
 	flick("purplesparkles", src)
-	AM.forceMove(get_turf(src))
+	AM.force_move(get_turf(src))
 	playsound(get_turf(src),sound,70,FALSE)
 	busy = FALSE
 

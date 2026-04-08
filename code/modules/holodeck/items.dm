@@ -48,7 +48,7 @@
 		if(card.flags_1 & HOLOGRAM_1)
 			continue
 		card_atoms -= card
-		card.forceMove(drop_location())
+		card.force_move(drop_location())
 
 /obj/item/toy/dodgeball
 	name = "dodgeball"

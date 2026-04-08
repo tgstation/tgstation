@@ -151,20 +151,20 @@
 		if(Adjacent(user)) //tk is love, tk is life.
 			user.put_in_hands(attached_cuffs)
 		else
-			attached_cuffs.forceMove(drop_location())
+			attached_cuffs.force_move(drop_location())
 		return
 	return ..()
 
 /obj/item/clothing/shoes/sneakers/orange/pre_attack(atom/movable/attacking_movable, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(attached_cuffs || attacking_movable.type != /obj/item/restraints/handcuffs)
 		return ..()
-	attacking_movable.forceMove(src)
+	attacking_movable.force_move(src)
 	return TRUE
 
 /obj/item/clothing/shoes/sneakers/orange/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attached_cuffs || attacking_item.type != /obj/item/restraints/handcuffs) 	// Note: not using istype here because we want to ignore all subtypes
 		return ..()
-	attacking_item.forceMove(src)
+	attacking_item.force_move(src)
 
 /obj/item/clothing/shoes/sneakers/orange/can_mob_unequip(mob/user)
 	if(user.get_item_by_slot(slot_flags) == src && attached_cuffs)

@@ -81,7 +81,7 @@
 	var/obj/item/organ/picked_organ = pick(elligible_organs)
 	picked_organ.Remove(src)
 	victim.visible_message(span_danger("[victim] vomits up [p_their()] [picked_organ.name]!"), span_danger("You vomit up your [picked_organ.name]")) //no "vomit up your heart"
-	picked_organ.forceMove(victim.drop_location())
+	picked_organ.force_move(victim.drop_location())
 	if(prob(20))
 		picked_organ.animate_atom_living()
 

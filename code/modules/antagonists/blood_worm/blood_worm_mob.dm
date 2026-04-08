@@ -253,7 +253,7 @@
 
 		leave_host()
 
-		// Has to be sent after the forceMove() in leave_host()
+		// Has to be sent after the force_move() in leave_host()
 		balloon_alert_self("out_of_blood!")
 
 /// Gets BLOOD_WORM_EJECT_THRESHOLD as an actionable blood volume threshold.

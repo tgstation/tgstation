@@ -160,7 +160,7 @@ If you make a derivative work from this code, you must include this notification
 	if(!attacker.pulling || attacker.pulling != defender)
 		to_chat(attacker, span_warning("You need to have [defender] in a cinch!"))
 		return
-	defender.forceMove(attacker.loc)
+	defender.force_move(attacker.loc)
 	defender.setDir(get_dir(defender, attacker))
 
 	defender.Stun(8 SECONDS)
@@ -198,7 +198,7 @@ If you make a derivative work from this code, you must include this notification
 			var/turf/S = defender.loc
 			var/direction = get_dir(defender, attacker)
 			if ((S && isturf(S) && S.Exit(defender, direction)) && (T && isturf(T) && T.Enter(attacker)))
-				defender.forceMove(T)
+				defender.force_move(T)
 				defender.setDir(direction)
 		else
 			return
@@ -216,7 +216,7 @@ If you make a derivative work from this code, you must include this notification
 			to_chat(attacker, span_warning("You can't throw [defender] from here!"))
 			return
 
-		defender.forceMove(attacker.loc) // Maybe this will help with the wallthrowing bug.
+		defender.force_move(attacker.loc) // Maybe this will help with the wallthrowing bug.
 
 		defender.visible_message(span_danger("[attacker] throws [defender]!"), \
 						span_userdanger("You're thrown by [attacker]!"), span_hear("You hear aggressive shuffling and a loud thud!"), null, attacker)
@@ -244,7 +244,7 @@ If you make a derivative work from this code, you must include this notification
 	if(!attacker.pulling || attacker.pulling != defender)
 		to_chat(attacker, span_warning("You need to have [defender] in a cinch!"))
 		return
-	defender.forceMove(attacker.loc)
+	defender.force_move(attacker.loc)
 	attacker.setDir(get_dir(attacker, defender))
 	defender.setDir(get_dir(defender, attacker))
 
@@ -311,7 +311,7 @@ If you make a derivative work from this code, you must include this notification
 			to_chat(attacker, span_warning("You can't slam [defender] here!"))
 			return
 
-		defender.forceMove(attacker.loc)
+		defender.force_move(attacker.loc)
 
 		var/fluff = "body-slam"
 		switch(pick(2,3))
@@ -352,7 +352,7 @@ If you make a derivative work from this code, you must include this notification
 
 /datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/attacker, turf/T)
 	if (attacker && (T && isturf(T) && get_dist(attacker, T) <= 1))
-		attacker.forceMove(T)
+		attacker.force_move(T)
 
 /datum/martial_art/wrestling/proc/strike(mob/living/attacker, mob/living/defender)
 	if(!defender)
@@ -362,7 +362,7 @@ If you make a derivative work from this code, you must include this notification
 		for (var/i in 1 to 4)
 			attacker.setDir(turn(attacker.dir, 90))
 
-		attacker.forceMove(defender.loc)
+		attacker.force_move(defender.loc)
 		addtimer(CALLBACK(src, PROC_REF(CheckStrikeTurf), attacker, T), 0.4 SECONDS)
 
 		defender.visible_message(span_danger("[attacker] headbutts [defender]!"), \
@@ -413,7 +413,7 @@ If you make a derivative work from this code, you must include this notification
 				break
 
 	if (surface && (ST && isturf(ST)))
-		attacker.forceMove(ST)
+		attacker.force_move(ST)
 		attacker.visible_message(span_danger("[attacker] climbs onto [surface]!"), \
 						span_danger("You climb onto [surface]!"))
 		attacker.pixel_y = attacker.base_pixel_y + 10
@@ -444,7 +444,7 @@ If you make a derivative work from this code, you must include this notification
 		if(attacker)
 			animate(attacker, transform = null, time = 1, loop = 0)
 
-		attacker.forceMove(defender.loc)
+		attacker.force_move(defender.loc)
 
 		defender.visible_message(span_danger("[attacker] leg-drops [defender]!"), \
 						span_userdanger("You're leg-dropped by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)

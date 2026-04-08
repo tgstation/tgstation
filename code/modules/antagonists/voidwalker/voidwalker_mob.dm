@@ -258,7 +258,7 @@
 	new /obj/effect/temp_visual/circle_wave/unsettle(get_turf(victim))
 
 	if(!SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID) || !GLOB.voidwalker_void.len)
-		victim.forceMove(get_random_station_turf())
+		victim.force_move(get_random_station_turf())
 		victim.heal_overall_damage(brute = 80, burn = 20)
 		CRASH("[victim] was instantly dumped after being voidwalker kidnapped due to a missing landmark!")
 	else
@@ -268,7 +268,7 @@
 		conversions_remaining++
 
 		var/obj/wisp = new /obj/effect/wisp_mobile (get_turf(pick(GLOB.voidwalker_void)))
-		victim.forceMove(wisp)
+		victim.force_move(wisp)
 
 /// Check if theyre still incapacitated for the kidnap do_after
 /mob/living/basic/voidwalker/proc/check_incapacitated(mob/living/carbon/human/kidnappee)

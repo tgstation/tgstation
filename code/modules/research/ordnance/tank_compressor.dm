@@ -215,7 +215,7 @@
 	if(user)
 		user.put_in_hands(inserted_tank)
 	else
-		inserted_tank.forceMove(drop_location())
+		inserted_tank.force_move(drop_location())
 	active = FALSE
 	return TRUE
 
@@ -223,7 +223,7 @@
 	if(!inserted_disk)
 		return FALSE
 	if(!user || !Adjacent(user))
-		inserted_disk.forceMove(drop_location())
+		inserted_disk.force_move(drop_location())
 	else
 		user.put_in_hands(inserted_disk)
 	playsound(src, 'sound/machines/card_slide.ogg', 50)

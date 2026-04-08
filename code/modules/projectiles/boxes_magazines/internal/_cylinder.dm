@@ -48,10 +48,10 @@
 			continue
 		// empty or spent
 		stored_ammo[i] = R
-		R.forceMove(src)
+		R.force_move(src)
 
 		if(bullet)
-			bullet.forceMove(drop_location())
+			bullet.force_move(drop_location())
 		return TRUE
 	return FALSE
 

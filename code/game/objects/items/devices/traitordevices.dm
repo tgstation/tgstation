@@ -476,7 +476,7 @@ effective or pretty fucking useless.
 	if(disassembled)
 		var/atom/movable/old_toolbox = toolbox
 		toolbox = null
-		old_toolbox.forceMove(drop_location())
+		old_toolbox.force_move(drop_location())
 
 	else
 		new /obj/effect/gibspawner/robot(drop_location())

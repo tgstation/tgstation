@@ -204,7 +204,7 @@
 			else
 				ae = electronics
 				electronics = null
-				ae.forceMove(src.loc)
+				ae.force_move(src.loc)
 
 	else if(istype(tool, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/sheet = tool
@@ -311,7 +311,7 @@
 	if(door.unres_sides)
 		door.unres_latch = TRUE
 	door.previous_airlock = previous_assembly
-	electronics.forceMove(door)
+	electronics.force_move(door)
 	door.autoclose = TRUE
 	door.close()
 	door.update_appearance()
@@ -350,7 +350,7 @@
 		target.previous_assembly = source.type
 	if(electronics)
 		target.electronics = source.electronics
-		source.electronics.forceMove(target)
+		source.electronics.force_move(target)
 	target.update_appearance()
 	target.update_name()
 	qdel(source)

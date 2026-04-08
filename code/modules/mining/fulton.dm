@@ -117,7 +117,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 	var/obj/effect/extraction_holder/holder_obj = new(get_turf(thing))
 	holder_obj.appearance = thing.appearance
-	thing.forceMove(holder_obj)
+	thing.force_move(holder_obj)
 	var/mutable_appearance/balloon2 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_expand", layer = VEHICLE_LAYER, appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART)
 	balloon2.pixel_z = 10
 	holder_obj.add_overlay(balloon2)
@@ -159,7 +159,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(!length(flooring_near_beacon))
 		flooring_near_beacon += beacon_turf
 
-	holder_obj.forceMove(pick(flooring_near_beacon))
+	holder_obj.force_move(pick(flooring_near_beacon))
 
 	animate(holder_obj, pixel_z = -990, time = 5 SECONDS, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = 5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	thing.set_density(initial(thing.density))
 	animate(holder_obj, pixel_z = -10, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 	sleep(0.5 SECONDS)
-	thing.forceMove(holder_obj.loc)
+	thing.force_move(holder_obj.loc)
 	qdel(holder_obj)
 	if(uses_left <= 0)
 		qdel(src)

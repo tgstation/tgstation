@@ -136,7 +136,7 @@
 			return
 		var/mob/living/pushed_mob = user.pulling
 		visible_message(span_warning("[user] stuffs [pushed_mob] into [src]!"))
-		pushed_mob.forceMove(src)
+		pushed_mob.force_move(src)
 		LAZYADD(processor_contents, pushed_mob)
 		user.stop_pulling()
 		return
@@ -190,7 +190,7 @@
 	add_fingerprint(usr)
 
 /obj/machinery/processor/container_resist_act(mob/living/user)
-	user.forceMove(drop_location())
+	user.force_move(drop_location())
 	user.visible_message(span_notice("[user] crawls free of the processor!"))
 
 /obj/machinery/processor/slime
@@ -244,7 +244,7 @@
 	visible_message(span_notice("[jointext(picked_slimes, ", ")] [LAZYLEN(picked_slimes) > 1 ? "are" : "is"] sucked into [src]."))
 	for(var/mob/living/basic/slime/slime_to_add in picked_slimes)
 		LAZYADD(processor_contents, slime_to_add)
-		slime_to_add.forceMove(src)
+		slime_to_add.force_move(src)
 
 /obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	var/mob/living/basic/slime/processed_slime = what
@@ -252,7 +252,7 @@
 		return
 
 	if(processed_slime.stat != DEAD)
-		processed_slime.forceMove(drop_location())
+		processed_slime.force_move(drop_location())
 		processed_slime.balloon_alert_to_viewers("crawls free")
 		return
 

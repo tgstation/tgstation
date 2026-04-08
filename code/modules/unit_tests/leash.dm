@@ -91,7 +91,7 @@
 
 /datum/unit_test/leash/will_teleport/Run()
 	leash_wait = new
-	owner.forceMove(locate(1, 1, 1))
+	owner.force_move(locate(1, 1, 1))
 	leash_wait.wait()
 	TEST_ASSERT(forcibly_teleported, "Pet should have been forcibly teleported, since they are too far away with no valid path")
 

@@ -60,7 +60,7 @@
 		span_warning("You sever [attacked]'s tail off."),
 	)
 	tail.Remove(attacked)
-	tail.forceMove(drop_location())
+	tail.force_move(drop_location())
 
 /datum/ai_controller/basic_controller/cat_butcherer
 	blackboard = list(

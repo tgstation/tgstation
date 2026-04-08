@@ -138,7 +138,7 @@
 		return
 	var/drop_location = owner.drop_location()
 
-	thing.forceMove(drop_location)
+	thing.force_move(drop_location)
 	if (isopenturf(drop_location))
 		make_mess(drop_location)
 		var/destination = get_edge_target_turf(drop_location, pick(GLOB.alldirs))

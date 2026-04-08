@@ -36,14 +36,14 @@
 	icon = bay.icon
 	icon_state = bay.icon_state
 	bay.detach()
-	bay.forceMove(src) //for later detaching
+	bay.force_move(src) //for later detaching
 	attach(mech, attach_right)
 	user.visible_message(span_notice("[user] inserts something into [src]."), span_notice("You attach the [initial(name)] into the concealed weapon bay."))
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/detach(atom/moveto)
 	for(var/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/bay in contents)
-		bay.forceMove(get_turf(chassis))
+		bay.force_move(get_turf(chassis))
 	name = initial(name)
 	icon = initial(icon)
 	icon_state = initial(icon_state)
@@ -660,7 +660,7 @@
 		mobtarget.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."),span_userdanger("[chassis] grips you with [src] and prepares to load you into [secmech.cargo_hold]!"))
 		if(!do_after_cooldown(mobtarget, source, flags = MECH_DO_AFTER_DIR_CHANGE_FLAG|MECH_DO_AFTER_ADJACENCY_FLAG))
 			return
-		mobtarget.forceMove(secmech.cargo_hold)
+		mobtarget.force_move(secmech.cargo_hold)
 		log_message("Loaded [mobtarget]. Cargo compartment capacity: [secmech.cargo_hold.cargo_capacity - secmech.cargo_hold.contents.len]", LOG_MECHA)
 		to_chat(source, "[icon2html(src, source)][span_notice("[mobtarget] successfully loaded.")]")
 		to_chat(mobtarget, "[span_warning("You have been moved into [secmech.cargo_hold]. You can attempt to resist out if you wish.")]")

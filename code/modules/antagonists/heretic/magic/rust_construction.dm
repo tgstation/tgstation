@@ -104,7 +104,7 @@
 		// If we're a multiz map send them to the next floor
 		var/turf/above_us = get_step_multiz(cast_on, UP)
 		if(above_us)
-			living_mob.forceMove(above_us)
+			living_mob.force_move(above_us)
 			continue
 
 		// If we're not throw them to a nearby (open) turf

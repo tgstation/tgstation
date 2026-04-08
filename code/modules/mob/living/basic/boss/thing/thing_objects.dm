@@ -68,7 +68,7 @@
 ///called when the thing we're following moves
 /obj/effect/temp_visual/telegraphing/exclamation/following/proc/follow(datum/source)
 	SIGNAL_HANDLER
-	forceMove(get_turf(source))
+	force_move(get_turf(source))
 
 /obj/effect/temp_visual/telegraphing/exclamation/animated
 	alpha = 0

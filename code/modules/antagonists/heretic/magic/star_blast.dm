@@ -70,7 +70,7 @@
 		if(nearby_mob.can_block_magic(antimagic_flags))
 			continue
 		for(var/i in 1 to 3)
-			nearby_mob.forceMove(get_step_towards(nearby_mob, owner))
+			nearby_mob.force_move(get_step_towards(nearby_mob, owner))
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/after_cast(atom/cast_on)

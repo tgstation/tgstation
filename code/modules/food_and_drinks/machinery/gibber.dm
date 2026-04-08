@@ -123,7 +123,7 @@
 		if(do_after(user, gibtime, target = src))
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message(span_danger("[user] stuffs [C] into [src]!"))
-				C.forceMove(src)
+				C.force_move(src)
 				set_occupant(C)
 				update_appearance()
 	else
@@ -310,7 +310,7 @@
 	var/turf/our_turf = get_turf(src)
 	var/list/turf/nearby_turfs = RANGE_TURFS(3, our_turf) - our_turf
 	for (var/obj/item/result as anything in results)
-		result.forceMove(our_turf)
+		result.force_move(our_turf)
 		result.throw_at(pick(nearby_turfs), rand(1, length(results)), 1)
 
 	if (!gibs_type)
@@ -347,7 +347,7 @@
 		var/mob/living/victim = AM
 
 		if(victim.loc == input)
-			victim.forceMove(src)
+			victim.force_move(src)
 			victim.gib(DROP_ALL_REMAINS)
 
 /obj/machinery/gibber/proc/on_cleaned(obj/source_component, obj/source)

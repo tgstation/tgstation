@@ -917,7 +917,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	SIGNAL_HANDLER
 
 	set_glide_size(source.glide_size)
-	forceMove(source.loc)
+	force_move(source.loc)
 
 /obj/effect/fishing_float/update_overlays()
 	. = ..()

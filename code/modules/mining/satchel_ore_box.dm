@@ -18,7 +18,7 @@
 /obj/structure/ore_box/proc/dump_box_contents()
 	var/drop = drop_location()
 	for(var/obj/item/weapon in src)
-		weapon.forceMove(drop)
+		weapon.force_move(drop)
 
 /obj/structure/ore_box/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(loc, 4)

@@ -145,7 +145,7 @@
 	user.balloon_alert_to_viewers("detached rig")
 	user.log_message("detached [rig] from [src].", LOG_GAME)
 	if(!user.put_in_hands(rig))
-		rig.forceMove(get_turf(user))
+		rig.force_move(get_turf(user))
 	rig = null
 	last_rigger = null
 	cut_overlays(assembliesoverlay)
@@ -545,7 +545,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	if(user)
 		user.put_in_hands(our_jug)
 	else
-		our_jug.forceMove(drop_location())
+		our_jug.force_move(drop_location())
 
 	if(throw_away)
 		var/turf/turf_to_throw_at = get_ranged_target_turf(src, pick(GLOB.alldirs), 2)

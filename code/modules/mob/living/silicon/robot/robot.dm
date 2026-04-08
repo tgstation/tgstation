@@ -278,7 +278,7 @@
 
 /mob/living/silicon/robot/proc/after_tip_over(mob/user)
 	if(hat && !HAS_TRAIT(hat, TRAIT_NODROP))
-		hat.forceMove(drop_location())
+		hat.force_move(drop_location())
 
 	unbuckle_all_mobs()
 
@@ -524,10 +524,10 @@
 	var/turf/drop_to = drop_location()
 	//remove installed upgrades
 	for(var/obj/item/borg/upgrade/upgrade_to_remove in upgrades)
-		upgrade_to_remove.forceMove(drop_to)
+		upgrade_to_remove.force_move(drop_to)
 	if(robot_suit)
 		robot_suit.drop_all_parts(drop_to)
-		robot_suit.forceMove(drop_to)
+		robot_suit.force_move(drop_to)
 	else
 		new /obj/item/robot_suit(drop_to)
 		new /obj/item/bodypart/leg/left/robot(drop_to)
@@ -541,8 +541,8 @@
 			var/obj/item/assembly/flash/handheld/borgeye = new(drop_to)
 			borgeye.burn_out()
 
-	cell?.forceMove(drop_to) // Cell can be null, if removed beforehand
-	radio?.keyslot?.forceMove(drop_to)
+	cell?.force_move(drop_to) // Cell can be null, if removed beforehand
+	radio?.keyslot?.force_move(drop_to)
 	radio?.keyslot = null
 
 	dump_into_mmi(drop_to)
@@ -557,7 +557,7 @@
 		return
 
 	var/obj/item/mmi/removing = mmi
-	mmi.forceMove(at_location) // Nulls it out via exited
+	mmi.force_move(at_location) // Nulls it out via exited
 
 	if(isnull(mind)) // no one to transfer, just leave the MMI.
 		return mmi
@@ -723,7 +723,7 @@
 
 	for(var/obj/item/storage/bag in model.contents) // drop all of the items that may be stored by the cyborg
 		for(var/obj/item in bag)
-			item.forceMove(drop_location())
+			item.force_move(drop_location())
 
 	if (hasExpanded)
 		hasExpanded = FALSE
@@ -734,7 +734,7 @@
 
 	// Remove upgrades.
 	for(var/obj/item/borg/upgrade/I in upgrades)
-		I.forceMove(get_turf(src))
+		I.force_move(get_turf(src))
 
 	ionpulse = FALSE
 	revert_shell()
@@ -760,9 +760,9 @@
 
 /mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)
 	if(hat)
-		hat.forceMove(get_turf(src))
+		hat.force_move(get_turf(src))
 	hat = new_hat
-	new_hat.forceMove(src)
+	new_hat.force_move(src)
 	update_icons()
 
 /**
@@ -792,7 +792,7 @@
 		return FALSE
 	if(!new_upgrade.action(src, user))
 		to_chat(user, span_danger("Upgrade error."))
-		new_upgrade.forceMove(loc) //gets lost otherwise
+		new_upgrade.force_move(loc) //gets lost otherwise
 		return FALSE
 	to_chat(user, span_notice("You apply the upgrade to [src]."))
 	add_to_upgrades(new_upgrade)
@@ -805,12 +805,12 @@
 		qdel(new_upgrade)
 		return FALSE
 	upgrades += new_upgrade
-	new_upgrade.forceMove(src)
+	new_upgrade.force_move(src)
 	RegisterSignal(new_upgrade, COMSIG_MOVABLE_MOVED, PROC_REF(remove_from_upgrades))
 	RegisterSignal(new_upgrade, COMSIG_QDELETING, PROC_REF(on_upgrade_deleted))
 	logevent("Hardware [new_upgrade] installed successfully.")
 
-///Called when an upgrade is moved outside the robot. So don't call this directly, use forceMove etc.
+///Called when an upgrade is moved outside the robot. So don't call this directly, use force_move etc.
 /mob/living/silicon/robot/proc/remove_from_upgrades(obj/item/borg/upgrade/old_upgrade)
 	SIGNAL_HANDLER
 	if(loc == src)

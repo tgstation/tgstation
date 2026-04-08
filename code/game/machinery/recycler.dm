@@ -151,13 +151,13 @@
 
 		if(thing.resistance_flags & INDESTRUCTIBLE)
 			if(!isturf(thing.loc) && !recursive_loc_check(thing, /mob/living))
-				thing.forceMove(loc)
+				thing.force_move(loc)
 			not_eaten++
 			continue
 
 		if(thing.flags_1 & HOLOGRAM_1)
 			for(var/atom/movable/hologram_content as anything in thing.contents)
-				hologram_content.forceMove(loc) // we shouldn't qdel() the non-holographic content of the hologram.
+				hologram_content.force_move(loc) // we shouldn't qdel() the non-holographic content of the hologram.
 			visible_message(span_notice("[thing] fades away!"))
 			qdel(thing)
 			continue

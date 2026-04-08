@@ -245,7 +245,7 @@
 	var/turf/T = get_turf(src)
 	src.visible_message(span_warning("\The [src] splits open."))
 	for(var/atom/movable/A in contents)
-		A.forceMove(T)
+		A.force_move(T)
 	return ..()
 
 /// Web caltrops

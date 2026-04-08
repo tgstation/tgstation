@@ -79,7 +79,7 @@
 		kidnapped.visible_message(span_warning("[kidnapped] is forced into \the [src]!"))
 		if(forced_enter_sound)
 			playsound(src, forced_enter_sound, 70, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
-	kidnapped.forceMove(src)
+	kidnapped.force_move(src)
 	add_occupant(kidnapped, VEHICLE_CONTROL_KIDNAPPED, TRUE)
 
 /obj/vehicle/sealed/car/atom_destruction(damage_flag)

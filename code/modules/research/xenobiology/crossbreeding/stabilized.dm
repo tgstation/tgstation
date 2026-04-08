@@ -202,5 +202,5 @@ Stabilized extracts:
 
 	to_chat(user, span_notice("You place [tool] in [src], prepping the extract for automatic application!"))
 	regencore = tool
-	tool.forceMove(src)
+	tool.force_move(src)
 	return ITEM_INTERACT_SUCCESS

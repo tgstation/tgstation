@@ -21,7 +21,7 @@
 	SIGNAL_HANDLER
 
 	if(stored)
-		stored.forceMove(get_turf(src))
+		stored.force_move(get_turf(src))
 		stored = null
 
 /obj/item/borg/apparatus/Exited(atom/movable/gone, direction)
@@ -37,7 +37,7 @@
 
 	if(usr != loc || !stored)
 		return
-	stored.forceMove(get_turf(usr))
+	stored.force_move(get_turf(usr))
 	return
 
 /obj/item/borg/apparatus/get_proxy_attacker_for(atom/target, mob/user)
@@ -57,7 +57,7 @@
 /obj/item/borg/apparatus/click_alt(mob/living/silicon/robot/user)
 	if(!stored || !issilicon(user))
 		return CLICK_ACTION_BLOCKING
-	stored.forceMove(user.drop_location())
+	stored.force_move(user.drop_location())
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -73,7 +73,7 @@
 		var/obj/item/item = atom
 		item.pixel_x = 0
 		item.pixel_y = 0
-		item.forceMove(src)
+		item.force_move(src)
 		stored = item
 		RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
 		update_appearance()
@@ -243,7 +243,7 @@
 
 	var/obj/item/organ = stored
 	user.visible_message(span_notice("[user] dumps [organ] from [src]."), span_notice("You dump [organ] from [src]."))
-	organ.forceMove(drop_location())
+	organ.force_move(drop_location())
 	return CLICK_ACTION_SUCCESS
 
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.

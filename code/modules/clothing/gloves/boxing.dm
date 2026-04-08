@@ -32,7 +32,7 @@
 	playsound(user, SFX_PUNCH, 25, TRUE)
 	userasliving.Knockdown((extrapower ? 2 : 4) SECONDS, (extrapower ? 4 : 6) SECONDS)
 	userasliving.adjust_stamina_loss(extrapower ? 40 : 80)
-	forceMove(user.loc)
+	force_move(user.loc)
 	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /obj/item/clothing/gloves/boxing/evil

@@ -253,7 +253,7 @@
 			return TRUE
 
 		say("Obstruction cleared. The fabrication of [stored_part] is now complete.")
-		stored_part.forceMove(exit)
+		stored_part.force_move(exit)
 		stored_part = null
 
 	// If there's nothing being built, try to build something
@@ -294,7 +294,7 @@
 		return FALSE
 
 	say("The fabrication of [built_part] is now complete.")
-	built_part.forceMove(exit)
+	built_part.force_move(exit)
 
 	top_job_id += 1
 

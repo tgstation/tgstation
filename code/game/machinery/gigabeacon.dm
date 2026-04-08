@@ -27,4 +27,4 @@
 		Beacon = new(T)
 		Beacon.SetInvisibility(INVISIBILITY_MAXIMUM)
 	else if (Beacon.loc != loc)
-		Beacon.forceMove(loc)
+		Beacon.force_move(loc)

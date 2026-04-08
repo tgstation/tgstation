@@ -68,7 +68,7 @@
 		return NONE
 
 	visible_message(span_boldwarning("[src] is choking on \the [food]!"))
-	food.forceMove(src)
+	food.force_move(src)
 	choke(food)
 
 	return COMSIG_MOB_TERMINATE_EAT

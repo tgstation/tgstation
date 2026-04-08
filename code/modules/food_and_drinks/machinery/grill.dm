@@ -36,7 +36,7 @@
 
 /obj/machinery/grill/on_deconstruction(disassembled)
 	if(!QDELETED(grilled_item))
-		grilled_item.forceMove(drop_location())
+		grilled_item.force_move(drop_location())
 
 	new /obj/item/assembly/igniter(loc)
 	new /obj/item/stack/sheet/iron(loc, 5)
@@ -100,7 +100,7 @@
 /obj/machinery/grill/attack_hand(mob/living/user, list/modifiers)
 	if(!QDELETED(grilled_item))
 		balloon_alert(user, "item removed")
-		grilled_item.forceMove(drop_location())
+		grilled_item.force_move(drop_location())
 		update_appearance(UPDATE_ICON_STATE)
 		return TRUE
 
@@ -155,7 +155,7 @@
 			merged = TRUE
 			break
 		if(!merged)
-			weapon.forceMove(src)
+			weapon.force_move(src)
 
 		to_chat(user, span_notice("You add [src] to the fuel stack."))
 		if(!grill_fuel)

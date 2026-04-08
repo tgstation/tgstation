@@ -122,7 +122,7 @@
 	var/obj/item/new_item = new new_item_path()
 	//take everything out and delete the box.
 	for(var/obj/item/storage_items as anything in new_item.contents)
-		storage_items.forceMove(get_turf(src))
+		storage_items.force_move(get_turf(src))
 	qdel(new_item)
 	qdel(src)
 

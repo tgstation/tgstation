@@ -76,7 +76,7 @@ FLOOR SAFES
 			return
 		if(inserting_item.w_class + space <= maxspace)
 			space += inserting_item.w_class
-			inserting_item.forceMove(src)
+			inserting_item.force_move(src)
 
 /obj/structure/safe/examine(mob/user)
 	. = ..()

@@ -41,7 +41,7 @@
 		var/obj/item/implanter/used_implanter = tool
 		if(used_implanter.imp && !imp)
 			//implanter to case implant transfer
-			used_implanter.imp.forceMove(src)
+			used_implanter.imp.force_move(src)
 			imp = used_implanter.imp
 			used_implanter.imp = null
 			update_appearance()
@@ -49,7 +49,7 @@
 			used_implanter.update_appearance()
 		else if(!used_implanter.imp && imp)
 			//implant case to implanter implant transfer
-			imp.forceMove(used_implanter)
+			imp.force_move(used_implanter)
 			used_implanter.imp = imp
 			imp = null
 			reagents = null

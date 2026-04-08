@@ -17,7 +17,7 @@
 	if(mapload)
 		for(var/obj/item/I in loc.contents)
 			if(istype(I, gun_category))
-				I.forceMove(src)
+				I.force_move(src)
 			if(contents.len >= capacity)
 				break
 	update_appearance()
@@ -91,7 +91,7 @@
 	if(!istype(weapon))
 		return
 	if(!user.put_in_hands(weapon))
-		weapon.forceMove(get_turf(src))
+		weapon.force_move(get_turf(src))
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu

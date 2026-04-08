@@ -37,7 +37,7 @@
 		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You insert \the [tool] into \the [src]."))
 	if(inserted_key) //just in case there's an invalid key
-		inserted_key.forceMove(drop_location())
+		inserted_key.force_move(drop_location())
 	inserted_key = tool
 	return ITEM_INTERACT_SUCCESS
 

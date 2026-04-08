@@ -39,7 +39,7 @@
 	handle_climb_tree(source, target)
 
 	if(current_tree)
-		source.forceMove(get_turf(current_tree))
+		source.force_move(get_turf(current_tree))
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 	var/list/possible_drops = get_adjacent_open_turfs(target)
@@ -48,7 +48,7 @@
 			continue
 		possible_drops -= droploc
 	if(possible_drops.len)
-		source.forceMove(pick(possible_drops))
+		source.force_move(pick(possible_drops))
 	return COMPONENT_HOSTILE_NO_ATTACK
 
 /datum/component/tree_climber/proc/on_examine(datum/source, mob/user, list/examine_text)

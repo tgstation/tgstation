@@ -923,7 +923,7 @@
 		return FALSE
 
 	var/obj/effect/decal/cleanable/final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc, null, GET_ATOM_BLOOD_DNA(src))
-	final_splatter.forceMove(the_window)
+	final_splatter.force_move(the_window)
 	the_window.vis_contents += final_splatter
 	expire()
 	return TRUE

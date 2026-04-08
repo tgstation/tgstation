@@ -91,12 +91,12 @@
 			///see if it would overflow else inject
 			if((B.reagents.total_volume + wanted_amount) <= B.reagents.maximum_volume)
 				reagents.trans_to(B, wanted_amount)
-				B.forceMove(goodspot)
+				B.force_move(goodspot)
 				return
 			///glass was full so we move it away
-			AM.forceMove(badspot)
+			AM.force_move(badspot)
 		else if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
-			AM.forceMove(goodspot)
+			AM.force_move(goodspot)
 			reagents.trans_to(AM, wanted_amount, methods = INJECT)
 		else if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
 			reagents.trans_to(AM, wanted_amount, methods = INJECT)

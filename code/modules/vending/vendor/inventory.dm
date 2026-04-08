@@ -229,7 +229,7 @@
 	var/obj/item/vended_item = null
 	if(dispense_returned)
 		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out
-		vended_item.forceMove(spawn_location)
+		vended_item.force_move(spawn_location)
 	else if(item_record.amount)
 		vended_item = new item_record.product_path(spawn_location)
 		if(vended_item.type in contraband)

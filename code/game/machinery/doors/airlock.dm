@@ -958,7 +958,7 @@
 		else //telekinesis
 			visible_message(span_notice("[tool] cuts down [note] from [src]."))
 		tool.play_tool_sound(src)
-		note.forceMove(tool.drop_location())
+		note.force_move(tool.drop_location())
 		note = null
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -1214,7 +1214,7 @@
 	if(!seal)
 		return TRUE
 	playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE)
-	airlockseal.forceMove(get_turf(user))
+	airlockseal.force_move(get_turf(user))
 	user.visible_message(span_notice("[user] finishes removing the seal from [src]."), span_notice("You finish removing [src]'s pneumatic seal."))
 	seal = null
 	modify_max_integrity(max_integrity / AIRLOCK_SEAL_MULTIPLIER)
@@ -1664,7 +1664,7 @@
 		else
 			ae = electronics
 			electronics = null
-			ae.forceMove(drop_location())
+			ae.force_move(drop_location())
 
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)

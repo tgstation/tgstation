@@ -113,7 +113,7 @@
 		else
 			to_chat(owner, span_warning("[living_wrapped] is not edible!"))
 
-	to_wrap.forceMove(casing)
+	to_wrap.force_move(casing)
 	if(isliving(to_wrap)&& (to_wrap.mob_biotypes & MOB_HUMANOID))
 		casing.icon_state = pick("cocoon_large1", "cocoon_large2", "cocoon_large3")
 	else

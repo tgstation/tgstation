@@ -33,7 +33,7 @@
 	AI = AI_pilot
 	AI.apply_damage(150, BURN) //Give the AI a bit of damage from the "shock" of being suddenly shut down
 	INVOKE_ASYNC(AI, TYPE_PROC_REF(/mob/living/silicon, death)) //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
-	AI.forceMove(src) //Put the dead AI inside the wreckage for recovery
+	AI.force_move(src) //Put the dead AI inside the wreckage for recovery
 	add_overlay(mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "green_laser")) //Overlay for the recovery beacon
 	AI.controlled_equipment = null
 	AI.remote_control = null
@@ -88,7 +88,7 @@
 	. = TRUE
 	if(crowbar_salvage.len)
 		var/obj/S = pick(crowbar_salvage)
-		S.forceMove(user.drop_location())
+		S.force_move(user.drop_location())
 		user.visible_message(span_notice("[user] pries [S] from [src]."), span_notice("You pry [S] from [src]."))
 		crowbar_salvage -= S
 		return
@@ -105,7 +105,7 @@
 		to_chat(user, span_warning("No AI backups found."))
 		return
 	cut_overlays() //Remove the recovery beacon overlay
-	AI.forceMove(card) //Move the dead AI to the card.
+	AI.force_move(card) //Move the dead AI to the card.
 	card.AI = AI
 	if(AI.client) //AI player is still in the dead AI and is connected
 		to_chat(AI, span_notice("The remains of your file system have been recovered on a mobile storage device."))

@@ -278,7 +278,7 @@
 		to_chat(L, span_notice("Your offering is accepted. You may pass."), confidential = TRUE)
 		qdel(L.pulling)
 		var/turf/LA = get_turf(pick(warp_points))
-		L.forceMove(LA)
+		L.force_move(LA)
 		L.remove_status_effect(/datum/status_effect/hallucination)
 		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>", confidential = TRUE)
 		for(var/obj/item/chainsaw/doomslayer/chainsaw in L)
@@ -311,6 +311,6 @@
 
 	var/obj/effect/landmark/LA = pick(warp_points)
 	var/mob/living/M = AM
-	M.forceMove(get_turf(LA))
+	M.force_move(get_turf(LA))
 	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>", confidential = TRUE)
 	M.apply_status_effect(/datum/status_effect/mayhem)

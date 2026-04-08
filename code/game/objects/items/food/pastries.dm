@@ -167,7 +167,7 @@
 	var/obj/item/paper/fortune = locate(/obj/item/paper) in src
 	// If a fortune exists, use that.
 	if (fortune)
-		fortune.forceMove(drop_location)
+		fortune.force_move(drop_location)
 		return fortune
 
 	// Otherwise, use a generic one

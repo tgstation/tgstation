@@ -89,7 +89,7 @@
 /datum/action/changeling/headcrab/proc/spawn_headcrab(datum/mind/stored_mind, turf/spawn_location, list/organs)
 	var/mob/living/basic/headslug/crab = new(spawn_location)
 	for(var/obj/item/organ/I in organs)
-		I.forceMove(crab)
+		I.force_move(crab)
 
 	stored_mind.transfer_to(crab, force_key_move = TRUE)
 	spawn_location.transfer_observers_to(crab)

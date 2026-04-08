@@ -18,11 +18,11 @@
 	for(var/obj/item/stack/ore/ore in range(1, src))
 		//we can reach it and it's in front of us? grab it!
 		if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc))
-			ore.forceMove(ore_box)
+			ore.force_move(ore_box)
 	for(var/obj/item/boulder/boulder in range(1, src))
 		//As above, but for boulders
 		if(boulder.Adjacent(src) && ((get_dir(src, boulder) & dir) || boulder.loc == loc))
-			boulder.forceMove(ore_box)
+			boulder.force_move(ore_box)
 
 
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.

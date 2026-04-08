@@ -295,7 +295,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		return
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
-	else if(istype(reward, /obj/effect/spawner)) // Do not attempt to forceMove() a spawner. It will break things, and the spawned item should already be at the mob's turf by now.
+	else if(istype(reward, /obj/effect/spawner)) // Do not attempt to force_move() a spawner. It will break things, and the spawned item should already be at the mob's turf by now.
 		fisherman.balloon_alert(fisherman, "caught something!")
 		return
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
@@ -345,7 +345,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		return
 	if(ismovable(reward_path))
 		var/atom/movable/reward = reward_path
-		reward.forceMove(spawn_location)
+		reward.force_move(spawn_location)
 		return reward
 	if(ispath(reward_path, /datum/chasm_detritus))
 		return GLOB.chasm_detritus_types[reward_path].dispense_detritus(spawn_location, fishing_spot)

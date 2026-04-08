@@ -30,7 +30,7 @@
 /obj/structure/dispenser_bot/proc/add_item(mob/user, obj/item/to_add)
 	balloon_alert(user, "inserted item")
 	stored_items += to_add
-	to_add.forceMove(src)
+	to_add.force_move(src)
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, PROC_REF(handle_stored_item_moved))
 	RegisterSignal(to_add, COMSIG_QDELETING, PROC_REF(handle_stored_item_deleted))
 	SEND_SIGNAL(src, COMSIG_DISPENSERBOT_ADD_ITEM, to_add)
@@ -49,7 +49,7 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_QDELETING,
 	))
-	to_remove.forceMove(drop_location())
+	to_remove.force_move(drop_location())
 	stored_items -= to_remove
 	SEND_SIGNAL(src, COMSIG_DISPENSERBOT_REMOVE_ITEM, to_remove)
 

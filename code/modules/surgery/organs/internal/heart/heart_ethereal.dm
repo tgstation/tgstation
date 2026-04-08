@@ -189,7 +189,7 @@
 	playsound(get_turf(src), 'sound/mobs/humanoids/ethereal/ethereal_crystalization.ogg', 50)
 	var/atom/movable/possible_chair = ethereal_heart.owner.buckled
 	possible_chair?.unbuckle_mob(ethereal_heart.owner, force = TRUE)
-	ethereal_heart.owner.forceMove(src) //put that ethereal in
+	ethereal_heart.owner.force_move(src) //put that ethereal in
 	add_atom_colour(ethereal_heart.ethereal_color, FIXED_COLOUR_PRIORITY)
 	crystal_heal_timer = addtimer(CALLBACK(src, PROC_REF(heal_ethereal)), CRYSTALIZE_HEAL_TIME, TIMER_STOPPABLE)
 	set_light(4, 10, ethereal_heart.ethereal_color)
@@ -214,7 +214,7 @@
 	COOLDOWN_START(ethereal_heart, crystalize_cooldown, CRYSTALIZE_COOLDOWN_LENGTH)
 
 	for(var/mob/living/living in contents)
-		living.forceMove(get_turf(src))
+		living.force_move(get_turf(src))
 		REMOVE_TRAIT(living, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 		visible_message(span_notice("The crystals shatters, causing [living] to fall out."))
 

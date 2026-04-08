@@ -116,7 +116,7 @@
 	if(!is_type_in_list(target, huntable_items) || held_food)
 		return TRUE
 	var/atom/movable/movable_target = target
-	movable_target.forceMove(src)
+	movable_target.force_move(src)
 	return FALSE
 
 /mob/living/basic/pet/cat/Exited(atom/movable/gone, direction)

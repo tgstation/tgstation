@@ -18,7 +18,7 @@
 	var/turf/right_of_shover = locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z)
 
 	// Position shover (bottom left) and the shovee (1 tile right of bottom left, no wall behind them)
-	shoves_the_guy.forceMove(run_loc_floor_bottom_left)
+	shoves_the_guy.force_move(run_loc_floor_bottom_left)
 	set_glasses_wearer(wears_the_glasses, right_of_shover, glasses)
 
 	TEST_ASSERT(wears_the_glasses.glasses == glasses, "Dummy failed to equip the glasses.")
@@ -72,8 +72,8 @@
 	TEST_ASSERT(wears_the_glasses.glasses == glasses, "Dummy lost their glasses, even though AdjustKnockdown() was called with a negative value.")
 
 	// Bonus check: A wallshove should definitely cause them to be lost
-	wears_the_glasses.forceMove(shoves_the_guy.loc)
-	shoves_the_guy.forceMove(right_of_shover)
+	wears_the_glasses.force_move(shoves_the_guy.loc)
+	shoves_the_guy.force_move(right_of_shover)
 
 	shoves_the_guy.zone_selected = BODY_ZONE_CHEST
 	shoves_the_guy.disarm(wears_the_glasses)
@@ -81,7 +81,7 @@
 
 /// Helper to reset the glasses dummy back to its original position, clear knockdown, and return glasses (if gone)
 /datum/unit_test/knockoff_component/proc/set_glasses_wearer(mob/living/carbon/human/wearer, turf/reset_to, obj/item/clothing/glasses/reset_worn)
-	wearer.forceMove(reset_to)
+	wearer.force_move(reset_to)
 	wearer.SetKnockdown(0 SECONDS)
 	if(!wearer.glasses)
 		wearer.equip_to_slot_if_possible(reset_worn, ITEM_SLOT_EYES)

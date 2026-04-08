@@ -14,10 +14,10 @@
 
 	// 2. ensure removed organs proper disassociate from the mob and the bodypart
 	for(var/obj/item/organ/organ as anything in removed_organs)
-		TEST_ASSERT(!(organ in hollow_boy.organs), "Organ '[organ.name] remained inside human after forceMove into nullspace.")
+		TEST_ASSERT(!(organ in hollow_boy.organs), "Organ '[organ.name] remained inside human after force_move into nullspace.")
 		TEST_ASSERT_NULL(organ.loc, "Organ '[organ.name] did not move to nullspace after being forced to.")
-		TEST_ASSERT_NULL(organ.owner, "Organ '[organ.name] kept reference to human after forceMove into nullspace.")
-		TEST_ASSERT_NULL(organ.bodypart_owner, "Organ '[organ.name] kept reference to bodypart after forceMove into nullspace.")
+		TEST_ASSERT_NULL(organ.owner, "Organ '[organ.name] kept reference to human after force_move into nullspace.")
+		TEST_ASSERT_NULL(organ.bodypart_owner, "Organ '[organ.name] kept reference to bodypart after force_move into nullspace.")
 
 	// 3. replace all bodyparts with new ones and place the previously removed organs into the new bodyparts
 	for(var/obj/item/bodypart/bodypart as anything in hollow_boy.get_bodyparts())

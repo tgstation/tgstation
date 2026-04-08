@@ -102,7 +102,7 @@
 
 /datum/status_effect/frozenstasis/on_apply()
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
-	owner.forceMove(cube)
+	owner.force_move(cube)
 	RegisterSignal(cube, COMSIG_QDELETING, PROC_REF(clear_effect))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(has_escaped))
 	if(resistable)

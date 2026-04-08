@@ -72,7 +72,7 @@
 		var/obj/item/circuit_component/mod_program/comp = new circuit_comp_type()
 		computer.shell.add_unremovable_circuit_component(comp)
 		if(computer.shell.attached_circuit)
-			comp.forceMove(computer.shell.attached_circuit)
+			comp.force_move(computer.shell.attached_circuit)
 			computer.shell.attached_circuit.add_component(comp)
 
 ///Here we deal with killing the associated components instead.

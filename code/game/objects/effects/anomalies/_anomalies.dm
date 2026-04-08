@@ -113,7 +113,7 @@
 		var/anomaly_type = anomaly_core.type
 		if (SSresearch.is_core_available(anomaly_type))
 			SSresearch.increment_existing_anomaly_cores(anomaly_type)
-			anomaly_core.forceMove(drop_location())
+			anomaly_core.force_move(drop_location())
 			anomaly_core = null
 		else // You exceeded the cap sorry
 			visible_message(span_warning("[anomaly_core] loses its lustre as it falls to the ground, there is too little ambient energy to support another core of this type."))

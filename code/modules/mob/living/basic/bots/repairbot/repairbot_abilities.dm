@@ -103,6 +103,6 @@
 				to_chat(owner, span_warning("You're unable to eject [my_sheet]!"))
 				return
 
-			my_sheet.forceMove(owner.drop_location())
+			my_sheet.force_move(owner.drop_location())
 
 #undef BUILDING_WALL_ABILITY

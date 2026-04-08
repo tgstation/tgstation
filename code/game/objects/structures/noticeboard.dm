@@ -32,7 +32,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 		if(notices >= MAX_NOTICES)
 			break
 
-		paper.forceMove(src)
+		paper.force_move(src)
 		notices++
 	update_appearance(UPDATE_ICON)
 	if(mapload)
@@ -113,7 +113,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
  * * user - The mob that is trying to get the item removed, if there is one
  */
 /obj/structure/noticeboard/proc/remove_item(obj/item/item, mob/user)
-	item.forceMove(drop_location())
+	item.force_move(drop_location())
 	if(user)
 		user.put_in_hands(item)
 		balloon_alert(user, "removed from board")

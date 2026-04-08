@@ -411,7 +411,7 @@
 
 	balloon_alert(user, "unbuckled")
 	poor_monkey.drop_all_held_items()
-	poor_monkey.forceMove(drop_point)
+	poor_monkey.force_move(drop_point)
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
 	if(current_task != CURRENT_TASK_NONE)
@@ -437,7 +437,7 @@
 	balloon_alert(user, "buckled")
 	monkey_worker = WEAKREF(poor_monkey)
 	poor_monkey.drop_all_held_items()
-	poor_monkey.forceMove(src)
+	poor_monkey.force_move(src)
 	manipulator_arm.vis_contents += poor_monkey
 	poor_monkey.dir = manipulator_arm.dir
 	poor_monkey.add_offsets(
@@ -543,7 +543,7 @@
 	if(isnull(held_object))
 		return
 	var/obj/obj_resolve = held_object?.resolve()
-	obj_resolve?.forceMove(get_turf(obj_resolve))
+	obj_resolve?.force_move(get_turf(obj_resolve))
 	finish_manipulation(TRANSFER_TYPE_DROPOFF) // MCBALAAM TODO
 
 /obj/machinery/big_manipulator/ui_interact(mob/user, datum/tgui/ui)

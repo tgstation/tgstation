@@ -165,7 +165,7 @@
 	if (force_teleport_out_effect)
 		new force_teleport_out_effect(movable_parent.loc)
 
-	movable_parent.forceMove(get_turf(owner))
+	movable_parent.force_move(get_turf(owner))
 
 	if (force_teleport_in_effect)
 		new force_teleport_in_effect(movable_parent.loc)

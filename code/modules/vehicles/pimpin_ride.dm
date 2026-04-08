@@ -57,7 +57,7 @@
 			to_chat(user, span_warning("[src] already has an upgrade installed! Use a screwdriver to remove it."))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/janicart_upgrade/new_upgrade = tool
-		new_upgrade.forceMove(src)
+		new_upgrade.force_move(src)
 		new_upgrade.install(src)
 		installed_upgrade = new_upgrade
 		to_chat(user, span_notice("You upgrade [src] with [new_upgrade]."))
@@ -74,7 +74,7 @@
 	if (!installed_upgrade)
 		return ITEM_INTERACT_BLOCKING
 	installed_upgrade.uninstall(src)
-	installed_upgrade.forceMove(get_turf(user))
+	installed_upgrade.force_move(get_turf(user))
 	user.put_in_hands(installed_upgrade)
 	to_chat(user, span_notice("You remove [installed_upgrade] from [src]"))
 	installed_upgrade = null
@@ -155,7 +155,7 @@
 	if (!trash_bag)
 		return FALSE
 	if (remover)
-		trash_bag.forceMove(get_turf(remover))
+		trash_bag.force_move(get_turf(remover))
 		remover.put_in_hands(trash_bag)
 	UnregisterSignal(trash_bag, COMSIG_QDELETING)
 	trash_bag = null

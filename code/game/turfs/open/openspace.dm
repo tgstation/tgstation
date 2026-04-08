@@ -44,7 +44,7 @@
 /**
  * Prepares a moving movable to be precipitated if Move() is successful.
  * This is done in Enter() and not Entered() because there's no easy way to tell
- * if the latter was called by Move() or forceMove() while the former is only called by Move().
+ * if the latter was called by Move() or force_move() while the former is only called by Move().
  */
 /turf/open/openspace/Enter(atom/movable/movable, atom/oldloc)
 	. = ..()
@@ -52,7 +52,7 @@
 		//higher priority than CURRENTLY_Z_FALLING so the movable doesn't fall on Entered()
 		movable.set_currently_z_moving(CURRENTLY_Z_FALLING_FROM_MOVE)
 
-///Makes movables fall when forceMove()'d to this turf.
+///Makes movables fall when force_move()'d to this turf.
 /turf/open/openspace/Entered(atom/movable/movable)
 	. = ..()
 	if(movable.set_currently_z_moving(CURRENTLY_Z_FALLING))

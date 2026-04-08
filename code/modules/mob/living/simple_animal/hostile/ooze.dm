@@ -241,7 +241,7 @@
 ///Start allowing this datum to process to handle the damage done to  this mob.
 /datum/action/consume/proc/start_consuming(mob/living/target)
 	vored_mob = target
-	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
+	vored_mob.force_move(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
 	RegisterSignal(vored_mob, COMSIG_QDELETING, PROC_REF(stop_consuming))
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	owner.visible_message(span_warning("[owner] [devour_verb]s [target]!"), span_notice("You [devour_verb] [target]."))
@@ -254,7 +254,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	if (isnull(vored_mob))
 		return
-	vored_mob.forceMove(get_turf(owner))
+	vored_mob.force_move(get_turf(owner))
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
 	owner.visible_message(span_warning("[owner] pukes out [vored_mob]!"), span_notice("You puke out [vored_mob]."))
 	UnregisterSignal(vored_mob, COMSIG_QDELETING)
@@ -490,12 +490,12 @@
 ///This proc handles the insertion of a person into the cocoon
 /obj/structure/gel_cocoon/proc/insert_target(target)
 	inhabitant = target
-	inhabitant.forceMove(src)
+	inhabitant.force_move(src)
 	START_PROCESSING(SSobj, src)
 
 ///This proc dumps the mob and handles associated audiovisual feedback
 /obj/structure/gel_cocoon/proc/dump_inhabitant(destroy_after = TRUE)
-	inhabitant.forceMove(get_turf(src))
+	inhabitant.force_move(get_turf(src))
 	playsound(get_turf(inhabitant), 'sound/effects/splat.ogg', 50, TRUE)
 	inhabitant.Paralyze(10)
 	inhabitant.visible_message(span_warning("[inhabitant] falls out of [src]!"), span_notice("You fall out of [src]."))

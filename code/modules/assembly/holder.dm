@@ -86,7 +86,7 @@
 		if(user)
 			user.transferItemToLoc(A, src)
 		else
-			A.forceMove(src)
+			A.force_move(src)
 	A.holder = src
 	A.toggle_secure()
 	LAZYADD(assemblies, A)

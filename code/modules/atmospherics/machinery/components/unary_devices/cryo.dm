@@ -143,7 +143,7 @@
 
 /obj/machinery/cryo_cell/on_deconstruction(disassembled)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		beaker.force_move(drop_location())
 
 /obj/machinery/cryo_cell/contents_explosion(severity, target)
 	. = ..()
@@ -621,7 +621,7 @@
 				if(Adjacent(user) && !issilicon(user))
 					user.put_in_hands(beaker)
 				else
-					beaker.forceMove(drop_location())
+					beaker.force_move(drop_location())
 				return TRUE
 
 /obj/machinery/cryo_cell/can_interact(mob/user)

@@ -60,7 +60,7 @@
 			return ITEM_INTERACT_FAILURE
 		pod_type = /obj/structure/closet/supplypod/bluespacepod // doesnt affect our circuit board, making reversal possible
 		to_chat(user, span_notice("You insert the disk into [src], allowing for advanced supply delivery vehicles."))
-		tool.forceMove(src)
+		tool.force_move(src)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/supplypod_beacon))

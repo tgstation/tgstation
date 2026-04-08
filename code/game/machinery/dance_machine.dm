@@ -264,7 +264,7 @@
 				S.orbit(src, 95, TRUE, 60, 36, TRUE)
 			if(25)
 				S.pixel_y = 7
-				S.forceMove(get_turf(src))
+				S.force_move(get_turf(src))
 		sleep(0.7 SECONDS)
 	for(var/s in sparkles)
 		var/obj/effect/overlay/sparkles/reveal = s

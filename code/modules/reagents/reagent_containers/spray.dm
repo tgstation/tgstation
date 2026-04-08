@@ -157,7 +157,7 @@
 	to_chat(user, span_danger("As you open [letter], a mist spritzes out from inside!"))
 	spray(user, user)
 	playsound(user, spray_sound, 50, TRUE, -6)
-	forceMove(user.loc)
+	force_move(user.loc)
 	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /// Handles updating the spray distance when the reagents change.

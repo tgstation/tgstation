@@ -172,7 +172,7 @@
 			final_y += Pixel_y > 0 ? round(Pixel_y/32) : CEILING(Pixel_y/32, 1)
 			Pixel_y %= 32
 
-		segment.forceMove(locate(final_x, final_y, segment.z))
+		segment.force_move(locate(final_x, final_y, segment.z))
 		segment.pixel_x = origin_px + Pixel_x
 		segment.pixel_y = origin_py + Pixel_y
 		CHECK_TICK

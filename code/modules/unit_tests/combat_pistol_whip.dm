@@ -7,7 +7,7 @@
 	var/obj/item/gun/ballistic/automatic/pistol/gun = EASY_ALLOCATE()
 
 	attacker.put_in_active_hand(gun, forced = TRUE)
-	victim.forceMove(locate(attacker.x + 1, attacker.y, attacker.z))
+	victim.force_move(locate(attacker.x + 1, attacker.y, attacker.z))
 
 	var/expected_ammo = gun.magazine.max_ammo + 1
 	// These assertions are just here because I don't understand gun code

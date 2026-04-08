@@ -389,7 +389,7 @@
 	shots_in_gun = 1
 
 	loaded_spear = tool
-	loaded_spear.forceMove(src)
+	loaded_spear.force_move(src)
 	update_appearance(UPDATE_ICON_STATE)
 	RegisterSignals(loaded_spear, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_spear_left))
 	return ITEM_INTERACT_SUCCESS
@@ -415,4 +415,4 @@
 
 /obj/structure/mounted_gun/ballista/dump_contents()
 	. = ..()
-	loaded_spear?.forceMove(drop_location())
+	loaded_spear?.force_move(drop_location())

@@ -104,7 +104,7 @@
 		var/obj/item/delivery/big/parcel = new(get_turf(user.loc))
 		parcel.base_icon_state = "deliverypackage5"
 		parcel.update_icon()
-		user.forceMove(parcel)
+		user.force_move(parcel)
 		parcel.add_fingerprint(user)
 		return OXYLOSS
 	else
@@ -147,7 +147,7 @@
 				parcel.add_fingerprint(user)
 				item.add_fingerprint(user)
 				user.put_in_hands(parcel)
-			item.forceMove(parcel)
+			item.force_move(parcel)
 			var/size = round(item.w_class)
 			if(istype(item, /obj/item/disk))
 				parcel.base_icon_state = "deliveryfloppy"
@@ -176,7 +176,7 @@
 			parcel.base_icon_state = closet.delivery_icon
 			parcel.update_icon()
 			parcel.drag_slowdown = closet.drag_slowdown
-			closet.forceMove(parcel)
+			closet.force_move(parcel)
 			parcel.add_fingerprint(user)
 			closet.add_fingerprint(user)
 		else
@@ -192,7 +192,7 @@
 			parcel.base_icon_state = "deliverybox"
 			parcel.update_icon()
 			parcel.drag_slowdown = portable_atmospherics.drag_slowdown
-			portable_atmospherics.forceMove(parcel)
+			portable_atmospherics.force_move(parcel)
 			parcel.add_fingerprint(user)
 			portable_atmospherics.add_fingerprint(user)
 		else

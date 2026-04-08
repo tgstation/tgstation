@@ -10,15 +10,15 @@
 
 	var/turf/open/move_to = get_step(blood_master, get_dir(blood_master, run_loc_floor_top_right))
 	//We need to not be "on" the same tile as the pool
-	blood_master.forceMove(move_to)
+	blood_master.force_move(move_to)
 
 	var/obj/effect/decal/cleanable/blood/pool = allocate(/obj/effect/decal/cleanable/blood)
 
 	//Max out the pools blood, so each step will make things stained enough to matter
 	pool.bloodiness = BLOOD_POOL_MAX
 
-	pool.forceMove(run_loc_floor_bottom_left)
-	blood_master.forceMove(run_loc_floor_bottom_left)
+	pool.force_move(run_loc_floor_bottom_left)
+	blood_master.force_move(run_loc_floor_bottom_left)
 
 	var/datum/component/bloodysoles/soles = holds_blood.GetComponent(/datum/component/bloodysoles)
 
@@ -31,10 +31,10 @@
 	soles.last_pickup -= 1
 
 	//Move off the bloody tile, time to do some testing
-	blood_master.forceMove(move_to)
+	blood_master.force_move(move_to)
 
 	soles.last_pickup -= 1
-	blood_master.forceMove(run_loc_floor_bottom_left)
+	blood_master.force_move(run_loc_floor_bottom_left)
 
 	var/footprint_total = 0
 	for(var/obj/effect/decal/cleanable/blood/footprints/print_set in move_to)
@@ -45,10 +45,10 @@
 	soles.last_pickup -= 1
 
 	//Another set of movements to try and make some doubled up prints
-	blood_master.forceMove(move_to)
+	blood_master.force_move(move_to)
 
 	soles.last_pickup -= 1
-	blood_master.forceMove(run_loc_floor_bottom_left)
+	blood_master.force_move(run_loc_floor_bottom_left)
 
 	footprint_total = 0
 	for(var/obj/effect/decal/cleanable/blood/footprints/print_set in move_to)

@@ -108,7 +108,7 @@
 /obj/structure/closet/body_bag/proc/undeploy_bodybag(atom/fold_loc)
 	var/obj/item/bodybag/folding_bodybag = foldedbag_instance || new foldedbag_path()
 	if(fold_loc)
-		folding_bodybag.forceMove(fold_loc)
+		folding_bodybag.force_move(fold_loc)
 	return folding_bodybag
 
 /obj/structure/closet/body_bag/container_resist_act(mob/living/user, loc_required = TRUE)
@@ -116,7 +116,7 @@
 	if(!istype(loc, /obj/machinery/disposal))
 		return ..()
 	for(var/atom/movable/thing as anything in src)
-		thing.forceMove(loc)
+		thing.force_move(loc)
 	undeploy_bodybag(loc)
 
 /obj/structure/closet/body_bag/bluespace
@@ -156,7 +156,7 @@
 	var/max_weight_of_contents = initial(folding_bodybag.w_class)
 	for(var/am in contents)
 		var/atom/movable/content = am
-		content.forceMove(folding_bodybag)
+		content.force_move(folding_bodybag)
 		if(isliving(content))
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
 		if(iscarbon(content))
@@ -223,7 +223,7 @@
 
 	if(!pinned && istype(tool, /obj/item/paper) && user.transferItemToLoc(tool, src, silent = FALSE))
 		pinned = tool
-		pinned.forceMove(src)
+		pinned.force_move(src)
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
@@ -236,16 +236,16 @@
 /obj/structure/closet/body_bag/before_open(mob/living/user, force)
 	if(pinned)
 		if(force || !user || user.loc == src)
-			pinned.forceMove(drop_location())
+			pinned.force_move(drop_location())
 			return TRUE // force open, no user, or we can't take the note out from inside
 		balloon_alert(user, "paper removed")
 		if(!user.put_in_inactive_hand(pinned) && pinned.loc == src)
-			pinned.forceMove(drop_location())
+			pinned.force_move(drop_location())
 		return FALSE // blocked the open action
 	return TRUE
 
 /obj/structure/closet/body_bag/handle_deconstruct(disassembled)
-	pinned?.forceMove(drop_location())
+	pinned?.force_move(drop_location())
 	return ..()
 
 /// Environmental bags. They protect against bad weather.

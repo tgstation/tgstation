@@ -231,12 +231,12 @@
 
 	if(istype(attack_target, /obj/item/stack/ore))
 		var/obj/item/target_ore = attack_target
-		target_ore.forceMove(src)
+		target_ore.force_move(src)
 
 /mob/living/basic/mining_drone/proc/drop_ore()
 	to_chat(src, span_notice("You dump your stored ore."))
 	for(var/obj/item/stack/ore/dropped_item in contents)
-		dropped_item.forceMove(get_turf(src))
+		dropped_item.force_move(get_turf(src))
 
 /mob/living/basic/mining_drone/death(gibbed)
 	drop_ore()

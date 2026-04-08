@@ -301,4 +301,4 @@
 	var/obj/item/bodypart/head/head = loc
 	var/turf/body_turf = get_turf(owner)
 	if(head && istype(head) && body_turf && !(head in owner.get_all_contents()))
-		head.forceMove(body_turf)
+		head.force_move(body_turf)

@@ -63,9 +63,9 @@
 	var/obj/item/ammo2 = new ammo
 
 	if(!bum.equip_to_slot_if_possible(new ammo, ITEM_SLOT_LPOCKET))
-		ammo1.forceMove(get_turf(bum))
+		ammo1.force_move(get_turf(bum))
 	if(!bum.equip_to_slot_if_possible(new ammo, ITEM_SLOT_RPOCKET))
-		ammo2.forceMove(get_turf(bum))
+		ammo2.force_move(get_turf(bum))
 
 	if(prob(50))
 		bum.equip_to_slot_if_possible(new /obj/item/clothing/glasses/sunglasses, ITEM_SLOT_EYES)

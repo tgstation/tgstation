@@ -547,7 +547,7 @@
 	. = ..()
 	if(!.)
 		return .
-	defib_instance?.forceMove(borg.drop_location()) // [on_defib_instance_qdel_or_moved()] handles the rest.
+	defib_instance?.force_move(borg.drop_location()) // [on_defib_instance_qdel_or_moved()] handles the rest.
 
 /obj/item/borg/upgrade/processor
 	name = "medical cyborg surgical processor"
@@ -657,7 +657,7 @@
 	if(upgrade)
 		to_chat(user, span_notice("The old RPED module is now expanded and gets more space"))
 		replacer.emptyStorage()
-		replacer.forceMove(get_turf(borg))
+		replacer.force_move(get_turf(borg))
 		qdel(upgrade)
 
 /obj/item/borg/upgrade/inducer

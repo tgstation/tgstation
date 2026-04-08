@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	var/turf/T = get_turf(src)
 	. = ..()
 	if(painting && painting.loc == T) //Only move if it's near us.
-		painting.forceMove(get_turf(src))
+		painting.force_move(get_turf(src))
 	else
 		painting = null
 
@@ -599,7 +599,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 
 /obj/structure/sign/painting/atom_deconstruct(disassembled)
 	var/turf/drop_turf = drop_location()
-	current_canvas?.forceMove(drop_turf)
+	current_canvas?.force_move(drop_turf)
 	var/obj/item/wallframe/frame = new wallframe_type(drop_turf)
 	frame.update_integrity(get_integrity()) //Transfer how damaged it is.
 
@@ -616,7 +616,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 /obj/structure/sign/painting/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(current_canvas)
-		current_canvas.forceMove(drop_location())
+		current_canvas.force_move(drop_location())
 		to_chat(user, span_notice("You remove the painting from the frame."))
 		return TRUE
 

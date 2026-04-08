@@ -241,7 +241,7 @@
 		engine = null
 		if (user.put_in_hands(engine_item))
 			return
-		engine_item.forceMove(drop_location())
+		engine_item.force_move(drop_location())
 		return
 	if (isnull(cell))
 		return ..()
@@ -250,7 +250,7 @@
 	. = TRUE
 	if (user.put_in_hands(cell_to_take))
 		return
-	cell_to_take.forceMove(drop_location())
+	cell_to_take.force_move(drop_location())
 
 /obj/vehicle/ridden/golfcart/proc/can_wrench_engine()
 	return hood_open && engine && (engine_state == ENGINE_UNWRENCHED || engine_state == ENGINE_WRENCHED)

@@ -72,7 +72,7 @@
 /obj/structure/displaycase/proc/dump()
 	if(QDELETED(showpiece))
 		return
-	showpiece.forceMove(drop_location())
+	showpiece.force_move(drop_location())
 
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -268,7 +268,7 @@
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		new /obj/item/stack/sheet/mineral/wood(drop_location(), 5)
 		if(electronics)
-			electronics.forceMove(drop_location())
+			electronics.force_move(drop_location())
 			electronics = null
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -305,7 +305,7 @@
 /obj/structure/displaycase_chassis/proc/make_final_result(obj/structure/displaycase/display_type)
 	var/obj/structure/displaycase/display = new display_type(loc)
 	if(electronics)
-		electronics.forceMove(display)
+		electronics.force_move(display)
 		display.electronics = electronics
 		if(electronics.one_access)
 			display.req_one_access = electronics.accesses

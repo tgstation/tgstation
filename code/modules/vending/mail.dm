@@ -77,7 +77,7 @@
 		QDEL_LIST(mail_list)
 		return
 	for(var/obj/item/mail in mail_list)
-		mail.forceMove(src)
+		mail.force_move(src)
 		mail_list -= mail
 
 /// Dumps all envelopes on the `unload_turf`.
@@ -87,7 +87,7 @@
 		return
 	var/turf/unload_turf = get_unload_turf()
 	for(var/obj/item/mail in mail_list)
-		mail.forceMove(unload_turf)
+		mail.force_move(unload_turf)
 		mail.throw_at(unload_turf, 2, 3)
 		mail_list -= mail
 
@@ -171,7 +171,7 @@
 		to_chat(user, span_notice("[src] ejects [length(sorted_mail)] envelope\s."))
 		var/turf/unload_turf = get_unload_turf()
 		for (var/obj/item/mail/mail_in_list in sorted_mail)
-			mail_in_list.forceMove(unload_turf)
+			mail_in_list.force_move(unload_turf)
 			sorted_mail -= mail_in_list
 			mail_list -= mail_in_list
 	addtimer(CALLBACK(src, PROC_REF(check_sorted), unable_to_sort, total_to_sort), 1 SECONDS)
@@ -220,7 +220,7 @@
 		if (length(mail_list) + 1 > MAIL_CAPACITY )
 			to_chat(user, span_warning("There is no space for more mail in [src]!"))
 		else
-			thingy.forceMove(src)
+			thingy.force_move(src)
 			mail_list += thingy
 			to_chat(user, span_notice("The [src] whizzles as it accepts the [thingy]."))
 
@@ -240,7 +240,7 @@
 /obj/machinery/mailsorter/proc/pick_envelope(mob/user, obj/item/mail/mail_throw)
 	to_chat(user, span_notice("[src] reluctantly spits out [mail_throw]."))
 	var/turf/unload_turf = get_unload_turf()
-	mail_throw.forceMove(unload_turf)
+	mail_throw.force_move(unload_turf)
 	mail_throw.throw_at(unload_turf, 2, 3)
 	mail_list -= mail_throw
 	currentstate = STATE_IDLE
@@ -258,7 +258,7 @@
 		if(thingy.loc.atom_storage)
 			return thingy.loc.atom_storage.attempt_remove(thingy, src, silent = TRUE)
 		else
-			thingy.forceMove(src)
+			thingy.force_move(src)
 			return TRUE
 
 /obj/machinery/mailsorter/click_alt(mob/living/user)

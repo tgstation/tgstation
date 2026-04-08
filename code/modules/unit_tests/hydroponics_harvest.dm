@@ -27,15 +27,15 @@
 
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 
-	testing_soil.forceMove(run_loc_floor_bottom_left)
+	testing_soil.force_move(run_loc_floor_bottom_left)
 
 	var/nearby_loc = locate((run_loc_floor_bottom_left.x + 1), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z)
-	human.forceMove(nearby_loc)
+	human.force_move(nearby_loc)
 
 	var/seeds_loc = locate((run_loc_floor_bottom_left.x + 1), (run_loc_floor_bottom_left.y + 1), run_loc_floor_bottom_left.z)
-	planted_food_seed.forceMove(seeds_loc)
-	planted_not_food_seed.forceMove(seeds_loc)
-	planted_densified_seed.forceMove(seeds_loc)
+	planted_food_seed.force_move(seeds_loc)
+	planted_not_food_seed.force_move(seeds_loc)
+	planted_densified_seed.force_move(seeds_loc)
 
 	// Apples should harvest 10 apples with 10u nutrients and 4u vitamins.
 	test_seed(testing_soil, planted_food_seed, human)
@@ -50,7 +50,7 @@
 	seed.set_instability(0) // Sets the seed instability to 0, to prevent mutations.
 
 	tray.set_seed(seed)
-	seed.forceMove(tray)
+	seed.force_move(tray)
 	tray.name = tray.myseed ? "[initial(tray.name)] ([tray.myseed.plantname])" : initial(tray.name)
 
 	tray.set_plant_health(seed.endurance)

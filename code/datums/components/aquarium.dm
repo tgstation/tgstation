@@ -185,7 +185,7 @@
 	current_mode = NONE
 	for(var/atom/movable/moving as anything in movable.contents)
 		if(HAS_TRAIT(moving, TRAIT_AQUARIUM_CONTENT))
-			moving.forceMove(new_parent)
+			moving.force_move(new_parent)
 	current_mode = old_mode
 	if(reagents_size)
 		if(!new_parent.reagents)
@@ -669,7 +669,7 @@
 			fish?.pet_fish(user)
 		if("remove_item")
 			var/atom/movable/item = locate(params["item_reference"]) in movable.contents
-			item?.forceMove(movable.drop_location())
+			item?.force_move(movable.drop_location())
 			to_chat(user, span_notice("You take out [item] from [movable]."))
 		if("rename_fish")
 			var/new_name = sanitize_name(params["chosen_name"])

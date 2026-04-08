@@ -99,7 +99,7 @@
 		source.balloon_alert(user, "interrupted!")
 		return
 	source.balloon_alert(user, "core removed")
-	core.forceMove(source.drop_location())
+	core.force_move(source.drop_location())
 	if(source.Adjacent(user) && !issilicon(user))
 		user.put_in_hands(core)
 	core = null

@@ -137,7 +137,7 @@
 /obj/effect/immovablerod/wizard/proc/set_wizard(mob/living/wizard)
 	our_wizard = WEAKREF(wizard)
 
-	wizard.forceMove(src)
+	wizard.force_move(src)
 	wizard.add_traits(list(TRAIT_GODMODE, TRAIT_MAGICALLY_PHASED, TRAIT_NO_TRANSFORM), REF(src))
 
 /**
@@ -150,7 +150,7 @@
 		return
 
 	wizard.remove_traits(list(TRAIT_GODMODE, TRAIT_MAGICALLY_PHASED, TRAIT_NO_TRANSFORM), REF(src))
-	wizard.forceMove(get_turf(src))
+	wizard.force_move(get_turf(src))
 	our_wizard = null
 
 #undef BASE_WIZ_ROD_RANGE

@@ -115,11 +115,11 @@
 	challenge.location.visible_message(span_danger("[challenge.location]'s tendrils lash out and pull on [user]'s [user.get_active_hand()], ripping it clean off and throwing it towards itself!"))
 	var/obj/item/bodypart/random_arm = user.get_active_hand()
 	if (random_arm.dismember(BRUTE, FALSE))
-		random_arm.forceMove(user.drop_location())
+		random_arm.force_move(user.drop_location())
 		random_arm.throw_at(challenge.location, 7, 1, null, TRUE)
 	// Abstract items shouldn't be thrown in!
 	if(!(challenge.used_rod.item_flags & ABSTRACT))
-		challenge.used_rod.forceMove(user.drop_location())
+		challenge.used_rod.force_move(user.drop_location())
 		challenge.used_rod.throw_at(challenge.location, 7, 1, null, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(check_item_location), challenge.location, challenge.used_rod), 1 SECONDS)
 
@@ -129,7 +129,7 @@
 		// This lets fishing gloves be dragged in as well. I mean honestly if you try fishing in here with those you should just Fucking Die but that's for later.
 		if(!is_type_in_list(thingy, list(/obj/item/bodypart, /obj/item/fishing_rod)) && (thingy != used_rod))
 			continue
-		thingy.forceMove(location)
+		thingy.force_move(location)
 		location.visible_message(span_danger("Tendrils lash out from [location] and greedily drag [thingy] inwards. You're probably never seeing [thingy] again."))
 
 /datum/fish_source/dimensional_rift/proc/arm_fished(atom/spawn_location)

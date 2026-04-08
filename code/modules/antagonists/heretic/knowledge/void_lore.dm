@@ -163,7 +163,7 @@
 		return
 
 	var/dir = angle2dir(dir2angle(get_dir(user, target)) + 180)
-	user.forceMove(get_step(target, dir))
+	user.force_move(get_step(target, dir))
 
 	INVOKE_ASYNC(src, PROC_REF(follow_up_attack), user, target, blade)
 

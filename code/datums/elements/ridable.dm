@@ -201,5 +201,5 @@
 	// Handles de-fireman carrying a mob and buckling them onto something (tables, etc)
 	var/mob/living/former_rider = rider
 	user.unbuckle_mob(former_rider)
-	former_rider.forceMove(get_turf(interacting_with))
+	former_rider.force_move(get_turf(interacting_with))
 	return interacting_with.mouse_buckle_handling(former_rider, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING

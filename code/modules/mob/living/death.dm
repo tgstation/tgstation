@@ -30,7 +30,7 @@
 	if((drop_bitflags & DROP_BRAIN) && !isnull(brain))
 		stack_trace("gib invoked with drop_brain() had their brain after spilling organs and bodyparts, meaning both failed!")
 		brain.Remove(src)
-		brain.forceMove(drop_location())
+		brain.force_move(drop_location())
 
 	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, drop_bitflags)
 	qdel(src)

@@ -23,7 +23,7 @@
 /obj/machinery/blackbox_recorder/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(stored)
-		stored.forceMove(drop_location())
+		stored.force_move(drop_location())
 		if(Adjacent(user))
 			user.put_in_hands(stored)
 		stored = null
@@ -49,7 +49,7 @@
 
 /obj/machinery/blackbox_recorder/Destroy()
 	if(stored)
-		stored.forceMove(loc)
+		stored.force_move(loc)
 		new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 

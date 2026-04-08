@@ -201,7 +201,7 @@
 	if(!AI || !istype(result, /obj/item/aicard))
 		return
 	var/obj/item/aicard/new_card = result
-	AI.forceMove(new_card)
+	AI.force_move(new_card)
 	new_card.AI = AI
 	new_card.update_appearance()
 	AI = null

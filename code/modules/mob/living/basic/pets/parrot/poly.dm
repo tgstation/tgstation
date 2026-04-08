@@ -209,12 +209,12 @@
 //we perch on human souls
 /mob/living/basic/parrot/poly/ghost/perch_on_human(mob/living/carbon/human/target)
 	if(loc == target) //dismount
-		forceMove(get_turf(target))
+		force_move(get_turf(target))
 		return FALSE
 	if(ishuman(loc))
 		balloon_alert(src, "already possessing!")
 		return FALSE
-	forceMove(target)
+	force_move(target)
 	return TRUE
 
 /mob/living/basic/parrot/poly/ghost/proc/on_moved(atom/movable/movable, atom/old_loc)

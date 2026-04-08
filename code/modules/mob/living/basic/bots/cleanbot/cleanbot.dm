@@ -146,10 +146,10 @@
 	GLOB.janitor_devices += src
 
 	var/obj/item/reagent_containers/cup/bucket/bucket_obj = new
-	bucket_obj.forceMove(src)
+	bucket_obj.force_move(src)
 
 	var/obj/item/mop/new_mop = new
-	new_mop.forceMove(src)
+	new_mop.force_move(src)
 
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/bot/foam = BB_CLEANBOT_FOAM,
@@ -209,11 +209,11 @@
 
 /mob/living/basic/bot/cleanbot/explode()
 	var/atom/drop_loc = drop_location()
-	build_bucket?.forceMove(drop_loc)
+	build_bucket?.force_move(drop_loc)
 	new /obj/item/assembly/prox_sensor(drop_loc)
 	if(weapon)
 		weapon.force = initial(weapon.force)
-		weapon.forceMove(drop_loc)
+		weapon.force_move(drop_loc)
 	return ..()
 
 /mob/living/basic/bot/cleanbot/update_overlays()

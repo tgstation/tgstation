@@ -33,7 +33,7 @@
 			var/target_zone = user.get_random_valid_zone(blacklisted_parts = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), even_weights = TRUE, bypass_warning = TRUE)
 			if(!target_zone) //we broke their legs right on off!
 				break
-			occupant.forceMove(user.drop_location())
+			occupant.force_move(user.drop_location())
 			user.visible_message(span_warning("[user] recoils as something slithers out of [src]."), span_userdanger("You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!"))
 			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
 			occupant.UnarmedAttack(user, proximity_flag = TRUE)
@@ -58,13 +58,13 @@
 		to_chat(user, span_warning("[src] are full!"))
 		return
 	if(istype(target, /mob/living/basic/snake) || istype(target, /mob/living/basic/headslug) || islarva(target))
-		target.forceMove(src)
+		target.force_move(src)
 		to_chat(user, span_notice("[target] slithers into [src]."))
 
 /obj/item/clothing/shoes/cowboy/container_resist_act(mob/living/user)
 	if(!do_after(user, 1 SECONDS, target = user))
 		return
-	user.forceMove(drop_location())
+	user.force_move(drop_location())
 
 /obj/item/clothing/shoes/cowboy/white
 	name = "white cowboy boots"

@@ -5,7 +5,7 @@
 	interaction_flags_click = ALLOW_SILICON_REACH
 
 /obj/machinery/computer/prisoner/on_deconstruction(disassembled)
-	contained_id?.forceMove(drop_location())
+	contained_id?.force_move(drop_location())
 
 /obj/machinery/computer/prisoner/Destroy()
 	QDEL_NULL(contained_id)
@@ -45,7 +45,7 @@
 	if(!issilicon(user) && Adjacent(user))
 		user.put_in_hands(contained_id)
 	else
-		contained_id.forceMove(drop_location())
+		contained_id.force_move(drop_location())
 
 	balloon_alert_to_viewers("id ejected")
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)

@@ -45,8 +45,8 @@
 
 /obj/machinery/chem_mass_spec/on_deconstruction(disassembled)
 	var/location = drop_location()
-	beaker1?.forceMove(location)
-	beaker2?.forceMove(location)
+	beaker1?.force_move(location)
+	beaker2?.force_move(location)
 
 /obj/machinery/chem_mass_spec/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE

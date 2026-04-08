@@ -166,7 +166,7 @@
 		var/mob/living/consumed_mob = consumed_object
 		message_admins("[key_name_admin(consumed_mob)] has entered [src] [ADMIN_VERBOSEJMP(src)].")
 		investigate_log("was entered by [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
-		consumed_mob.forceMove(arrival_turf)
+		consumed_mob.force_move(arrival_turf)
 		consumed_mob.Paralyze(100)
 		consumed_mob.adjust_brute_loss(30)
 		consumed_mob.flash_act(1, TRUE, TRUE)

@@ -59,7 +59,7 @@
 		PF.set_and_save_framed(displayed)
 	if(contents.len)
 		var/obj/item/I = pick(contents)
-		I.forceMove(PF)
+		I.force_move(PF)
 
 /obj/structure/sign/picture_frame
 	name = "picture frame"
@@ -97,7 +97,7 @@
 	var/obj/item/photo/old/P = load_photo_from_disk(id)
 	if(istype(P))
 		if(istype(framed))
-			framed.forceMove(drop_location())
+			framed.force_move(drop_location())
 		else
 			qdel(framed)
 		framed = P
@@ -138,7 +138,7 @@
 	if (!framed)
 		return FALSE
 	tool.play_tool_sound(src)
-	framed.forceMove(drop_location())
+	framed.force_move(drop_location())
 	user.visible_message(span_warning("[user] cuts away [framed] from [src]!"))
 	set_and_save_framed(null)
 	update_appearance()
@@ -178,7 +178,7 @@
 		set_and_save_framed(null)
 	if(contents.len)
 		var/obj/item/I = pick(contents)
-		I.forceMove(showcase)
+		I.force_move(showcase)
 	showcase.update_appearance()
 
 /obj/structure/sign/picture_frame/showroom

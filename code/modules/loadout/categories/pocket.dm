@@ -299,12 +299,12 @@
 	if(!istype(id_card))
 		// They must have a PDA or some other thing in their ID slot, abort
 		if(!equipper.equip_to_storage(wallet, ITEM_SLOT_BACK, indirect_action = TRUE))
-			wallet.forceMove(equipper.drop_location())
+			wallet.force_move(equipper.drop_location())
 		return
 
 	equipper.temporarilyRemoveItemFromInventory(id_card, force = TRUE)
 	equipper.equip_to_slot_if_possible(wallet, ITEM_SLOT_ID, initial = TRUE)
-	id_card.forceMove(wallet)
+	id_card.force_move(wallet)
 
 	for(var/obj/item/thing in equipper?.back)
 		// leaves a slot free for whatever they may want

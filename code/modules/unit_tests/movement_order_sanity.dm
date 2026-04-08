@@ -3,7 +3,7 @@
 	var/list/movement_cache = test_obj.movement_order
 
 	var/obj/movement_interceptor/interceptor = allocate(__IMPLIED_TYPE__)
-	interceptor.forceMove(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	interceptor.force_move(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	var/did_move = step(test_obj, EAST)
 

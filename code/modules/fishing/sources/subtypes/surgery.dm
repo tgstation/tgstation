@@ -36,7 +36,7 @@
 		return null
 	var/obj/item/organ/chosen = pick(possible_organs)
 	chosen.Remove(chosen.owner)
-	chosen.forceMove(spawn_location)
+	chosen.force_move(spawn_location)
 	return chosen
 
 /datum/fish_source/surgery/generate_wiki_contents(datum/autowiki/fish_sources/wiki)

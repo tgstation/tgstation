@@ -48,7 +48,7 @@
 	for(var/atom/movable/to_pickup in pickup_zone)
 		if(to_pickup == src)
 			continue
-		to_pickup.forceMove(src)
+		to_pickup.force_move(src)
 	flick("tube_down", src)
 	scanning = TRUE
 	update_icon()
@@ -83,7 +83,7 @@
 		if(movable_atom in component_parts)
 			continue
 		scanned_atoms += movable_atom
-		movable_atom.forceMove(this_turf)
+		movable_atom.force_move(this_turf)
 		if(isliving(movable_atom))
 			var/mob/living/fucked_up_thing = movable_atom
 			fucked_up_thing.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)

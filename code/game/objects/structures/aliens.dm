@@ -425,7 +425,7 @@
 	status = BURST
 	update_appearance()
 	if(child)
-		child.forceMove(get_turf(src))
+		child.force_move(get_turf(src))
 		// TECHNICALLY you could put non-facehuggers in the child var
 		if(istype(child))
 			if(kill)

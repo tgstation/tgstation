@@ -24,7 +24,7 @@ Recurring extracts:
 	extract.icon_state = icon_state
 	extract.color = color
 	extract.recurring = TRUE
-	src.forceMove(extract)
+	src.force_move(extract)
 	START_PROCESSING(SSobj,src)
 
 /obj/item/slimecross/recurring/process(seconds_per_tick)

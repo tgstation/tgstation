@@ -215,7 +215,7 @@
 		pai_card = new(newcardloc)
 		pai_card.set_personality(src)
 	card = pai_card
-	forceMove(pai_card)
+	force_move(pai_card)
 	toggle_leash()
 	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)

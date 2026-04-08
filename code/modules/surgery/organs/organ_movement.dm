@@ -72,7 +72,7 @@
 		if(movement_flags & DELETE_IF_REPLACED)
 			qdel(replaced)
 		else
-			replaced.forceMove(get_turf(receiver))
+			replaced.force_move(get_turf(receiver))
 
 	if(!IS_ROBOTIC_ORGAN(src) && (organ_flags & ORGAN_VIRGIN))
 		blood_dna_info = receiver.get_blood_dna_list()
@@ -130,7 +130,7 @@
 
 	// In the event that we're already in the bodypart, DO NOT MOVE IT! otherwise it triggers forced_removal
 	if(loc != bodypart)
-		forceMove(bodypart) // The true movement
+		force_move(bodypart) // The true movement
 
 	// Don't re-register if we are already owned
 	if(bodypart_owner != bodypart)

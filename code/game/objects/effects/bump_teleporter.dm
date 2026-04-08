@@ -1,6 +1,6 @@
-/// Abstract effect, that when a mob touches it, it will forceMove them to the teleporter-exit point (that matches the ID set map-side).
+/// Abstract effect, that when a mob touches it, it will force_move them to the teleporter-exit point (that matches the ID set map-side).
 /obj/effect/bump_teleporter
-	name = "bump teleporter (forceMove)"
+	name = "bump teleporter (force_move)"
 	desc = "Use me when you want to move every single mob without any exceptions."
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
@@ -57,7 +57,7 @@
 
 /// Actually move our target atom from one position to another. Return TRUE if everything is fine. Override this proc on subtypes for specific teleportation methods.
 /obj/effect/bump_teleporter/proc/teleport_action(atom/movable/target, turf/destination)
-	target.forceMove(destination)
+	target.force_move(destination)
 
 /// Subtype that uses do_teleport instead, to leverage any NO_TELEPORT traits that you might need to add in a given map
 /obj/effect/bump_teleporter/filtering
