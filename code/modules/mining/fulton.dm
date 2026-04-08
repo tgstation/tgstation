@@ -96,6 +96,10 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(!do_after(user, 5 SECONDS, target = thing))
 		return ITEM_INTERACT_BLOCKING
 
+	if(QDELETED(beacon))
+		balloon_alert_to_viewers("beacon lost!")
+		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert_to_viewers("extracting!")
 	if(loc == user && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
@@ -125,6 +129,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/extraction_pack/proc/create_balloon(atom/movable/thing, mob/living/user, obj/effect/extraction_holder/holder_obj, mutable_appearance/balloon2)
+	var/turf/beacon_turf = get_turf(beacon_ref.resolve())
 	var/mutable_appearance/balloon = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_balloon", layer = VEHICLE_LAYER, appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART)
 	balloon.pixel_z = 10
 	holder_obj.cut_overlay(balloon2)
@@ -151,7 +156,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	sleep(3 SECONDS)
 
 	var/turf/flooring_near_beacon = list()
-	var/turf/beacon_turf = get_turf(beacon_ref.resolve())
 	for(var/turf/floor as anything in RANGE_TURFS(1, beacon_turf))
 		if(!floor.is_blocked_turf())
 			flooring_near_beacon += floor
