@@ -1,5 +1,5 @@
 /datum/quirk/keen_nose
-	name = "Strong Nose"
+	name = "Keen Nose"
 	desc = "You have a very sensitive nose. You can smell the contents of any open containers you are holding simply by examining them."
 	icon = FA_ICON_FLASK
 	value = 3
