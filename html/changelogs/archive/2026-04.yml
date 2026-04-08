@@ -109,3 +109,42 @@
       by 50/33% respectively.
   rageguy505:
   - bugfix: Metastations mining and QM disposal bins are no longer Jim Norton branded.
+2026-04-07:
+  Aliceee2ch:
+  - bugfix: Fixed empty message when ejecting an ID card from PDA.
+  - spellcheck: Most of wrenching screentips should be properly capitalized now.
+  JohnFulpWillard:
+  - rscadd: Medbay/Detectives can now add a Cause of Death to people's medical records
+      when set as deceased.
+  Melbert:
+  - bugfix: Fix cyborgs being unable to do surgeries that ask for user input before
+      it begins
+  - refactor: Refactored the SDSM-35 to allow for new books of similar styles, report
+      any oddities with it.
+  - bugfix: Fixes the broken image(s) in the SDSM-35.
+  - rscadd: Adds the IDC-27 in Medbay, the CMO's office, Virology, and possibly the
+      Library. It's a reference book to all viruses you may experience, similar to
+      the SDSM-35.
+  - rscadd: Several diseases/viruses received minor flavor adjustments, primarily
+      to cure text, agent, description, and form.
+  - rscadd: Getting cured of the Flu provides immunity to Spanish Flu (and visa versa)
+      as implied in cure text.
+  - rscadd: Getting cured of a Cold provides immunity to Cold-9 (and visa versa) as
+      implied in cure text.
+  - qol: Surgical states applied by wounds don't appear in examine unless the mob
+      is prepared for surgery
+  - qol: Surgical state examine text is now slightly smaller
+  - qol: '"Fix bones" surgery operation no longer appears if the patient is suffering
+      a bone fracture - you will need to "repair fracture" instead.'
+  - balance: Holy water temporarily pauses some effects of, and helps reverse, cursed
+      painting effects
+  SmArtKar:
+  - bugfix: Fixed boxing or successful blocking not preventing grabs
+  - bugfix: Fixed people crashing into their own mounts if they're thrown together
+  Tsar-Salat:
+  - bugfix: audits action button triggers, more action buttons ingame should respect
+      if the player can use the action button or not.
+2026-04-08:
+  Maxipat:
+  - rscadd: New css style class for use in config. Now you can notice policy text
+      easier

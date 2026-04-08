@@ -43450,6 +43450,10 @@
 	pixel_x = -4;
 	pixel_y = 12
 	},
+/obj/item/tgui_book/manual/idc{
+	pixel_x = 4;
+	pixel_y = 13
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/cmo)
 "miS" = (
@@ -77532,6 +77536,10 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/blue/full,
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 3;
+	pixel_x = 3
+	},
 /obj/item/tgui_book/manual/dsm,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
@@ -79414,10 +79422,14 @@
 	pixel_y = 7
 	},
 /obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/structure/reagent_dispensers/wall/virusfood/directional/south,
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "wsN" = (
