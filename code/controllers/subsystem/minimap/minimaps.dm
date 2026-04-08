@@ -126,7 +126,7 @@
 				continue
 			largest_x = max(xval, largest_x)
 			smallest_x = min(xval, smallest_x)
-			largest_y = min(yval, largest_y)
+			largest_y = max(yval, largest_y)
 			smallest_y = min(yval, smallest_y)
 
 	minimaps_by_z["[level]"].x_offset = floor((SCREEN_PIXEL_SIZE - largest_x - smallest_x) / 2)
