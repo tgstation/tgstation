@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Gauze will stay on bleeding wounds it is applied to(but still not stop bloodflow)"
