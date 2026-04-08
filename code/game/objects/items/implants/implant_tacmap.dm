@@ -112,6 +112,9 @@
 /obj/item/implant/tacmap/nuclear/leader // Leader subtype lets him draw on the map
 	minimap_type = /datum/action/minimap/map_drawing/nuclear
 
+/obj/item/implant/tacmap/drawing
+	minimap_type = /datum/action/minimap/map_drawing
+
 /obj/item/implanter/tacmap
 	name = "implanter (minimap)"
 	imp_type = /obj/item/implant/tacmap
