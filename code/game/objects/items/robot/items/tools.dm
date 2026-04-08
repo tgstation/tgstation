@@ -285,7 +285,9 @@
  */
 /obj/item/borg/cyborg_omnitool/proc/set_upgraded(upgrade)
 	upgraded = upgrade
-
+	for(var/obj/item/tool_path as anything in atoms)
+		var/obj/item/tool = atoms[tool_path]
+		tool.toolspeed = initial(tool.toolspeed) - upgraded * 0.3
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 
 /obj/item/borg/cyborg_omnitool/medical
