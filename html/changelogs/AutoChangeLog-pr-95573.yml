@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Added an indicator to chat highlight settings if you've input an invalid regex (a red border around the textbox)."
-  - qol: "You can now enable/disable individual chat highlights."

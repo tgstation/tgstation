@@ -145,13 +145,25 @@
   - bugfix: audits action button triggers, more action buttons ingame should respect
       if the player can use the action button or not.
 2026-04-08:
+  Absolucy:
+  - qol: Added an indicator to chat highlight settings if you've input an invalid
+      regex (a red border around the textbox).
+  - qol: You can now enable/disable individual chat highlights.
   Maxipat:
   - rscadd: New css style class for use in config. Now you can notice policy text
       easier
   Melbert:
   - admin: Admins can no longer edit global movespeed modifier datums
+  SmArtKar:
+  - bugfix: Fixed brimdust rendering on wide mobs (like raptors)
   SyncIt21:
   - bugfix: rped beam on machine frame renders correctly
+  TealSeer:
+  - bugfix: fixed silicons being unable to use operating computer from afar
+  lelandkemble:
+  - rscdel: Charlie station can no longer print custom shuttle boards
+  - bugfix: Gauze will stay on bleeding wounds it is applied to(but still not stop
+      bloodflow)
   loganuk:
   - code_imp: Atmos pipes GPU performance - Station areas with pipes will be less
       taxing on the client.
