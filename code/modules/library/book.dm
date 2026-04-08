@@ -421,7 +421,6 @@
 			symptom_data["id"] = symptom_type
 			disease_info += list(symptom_data)
 
-		// snowflake
 		var/list/advanced_virus_info = list(
 			"form" = "Virus",
 			"agent" = "Microbes",
@@ -449,7 +448,7 @@
 			if(!disease_data["desc"])
 				disease_data["desc"] = "No description recorded - this is an error. Report this lack of research."
 				stack_trace("[type] - [disease_data["id"]] lacks a description!")
-			if(!disease_data["cured_by"])
+			if(!disease_data["cured_by"] && !ispath(disease_data["id"], /datum/symptom))
 				disease_data["cured_by"] = "Unknown"
 				stack_trace("[type] - [disease_data["id"]] lacks cure information!")
 
