@@ -1,0 +1,4 @@
+author: "Maxipat"
+delete-after: True
+changes:
+  - rscadd: "New css style class for use in config. Now you can notice policy text easier"
