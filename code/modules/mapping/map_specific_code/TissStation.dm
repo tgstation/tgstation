@@ -38,6 +38,21 @@
 		/obj/item/food/burger/rootguffin = 1,
 	)
 
+/turf/closed/wall/mineral/stone
+	name = "stone wall"
+	desc = "A wall with stone plating. Cold and rough. The kind of thing kingdoms are made of."
+	icon = 'troutstation/icons/turf/walls/stone_wall.dmi'
+	icon_state = "stone_wall-0"
+	base_icon_state = "stone_wall"
+	sheet_type = /obj/item/stack/sheet/mineral/sandstone
+	hardness = 45
+	explosive_resistance = 0
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_STONE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_STONE_WALLS
+	custom_materials = list(/datum/material/sandstone = SHEET_MATERIAL_AMOUNT*2)
+	rust_resistance = RUST_RESISTANCE_BASIC
+
 
 /// Areas
 

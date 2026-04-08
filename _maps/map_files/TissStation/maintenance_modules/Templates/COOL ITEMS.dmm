@@ -20,12 +20,6 @@
 /obj/item/clothing/suit/mothcoat/original,
 /turf/open/space/basic,
 /area/space)
-"q" = (
-/obj/item/clothing/suit/armor/dragoon,
-/obj/item/clothing/head/helmet/dragoon,
-/obj/item/spear/skybulge,
-/turf/open/space/basic,
-/area/space)
 "s" = (
 /obj/structure/healingfountain,
 /turf/open/space/basic,
@@ -219,7 +213,7 @@ H
 H
 H
 H
-q
+H
 y
 "}
 (10,1,1) = {"

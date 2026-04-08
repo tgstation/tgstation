@@ -4,7 +4,7 @@ directory = "_maps/map_files/TissStation/maintenance_modules/"
 modules = ["brig_1.dmm", "brig_2.dmm"]
 
 [rooms.cargo]
-modules = ["cargo_1.dmm"]
+modules = ["cargo_1.dmm", "cargo_2.dmm"]
 
 [rooms.disposals]
 modules = ["disposals_1.dmm", "disposals_2.dmm"]

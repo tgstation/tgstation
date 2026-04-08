@@ -37,6 +37,11 @@
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"bG" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/transit_tube/crossing,
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
 "bS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -74,6 +79,11 @@
 /obj/item/gun/energy/laser/luxurypaywall,
 /obj/structure/rack,
 /turf/open/floor/glass/reinforced,
+/area/station/maintenance/department/cargo)
+"eH" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/transit_tube,
+/turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "eJ" = (
 /obj/structure/disposalpipe/segment{
@@ -534,6 +544,13 @@
 /obj/machinery/light/broken/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"Ew" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/transit_tube/curved{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/station/asteroid)
 "EN" = (
 /obj/machinery/door/airlock{
 	name = "Maintenance Bathroom"
@@ -607,6 +624,14 @@
 /area/station/maintenance/department/cargo)
 "KR" = (
 /obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"Mj" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/unres/delayed,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "Mq" = (
@@ -711,8 +736,6 @@
 /area/station/maintenance/department/cargo)
 "Uj" = (
 /obj/structure/rack,
-/obj/item/roulette_wheel_beacon,
-/obj/item/roulette_wheel_beacon,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "Uw" = (
@@ -2438,15 +2461,15 @@ xC
 SI
 xC
 tc
-fm
-fm
-fm
-fm
-fm
-fm
-fm
-fm
-fm
+eH
+bG
+bG
+bG
+bG
+bG
+bG
+bG
+Ew
 fm
 "}
 (46,1,1) = {"
@@ -2475,15 +2498,15 @@ AN
 nV
 xC
 xC
-fm
-fm
-fm
-fm
-fm
-fm
-fm
-fm
-fm
+eH
+bG
+bG
+bG
+bG
+bG
+bG
+bG
+Ew
 fm
 "}
 (47,1,1) = {"
@@ -2688,7 +2711,7 @@ fm
 fm
 fm
 fm
-fm
+Mj
 II
 II
 tZ
