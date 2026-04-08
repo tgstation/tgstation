@@ -1653,7 +1653,7 @@
  */
 /obj/item/bodypart/proc/seep_gauze(seep_amt = 0)
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
-	if(!current_gauze)
+	if(!current_gauze || !current_gauze.absorption_capacity)
 		return FALSE
 	current_gauze.absorption_capacity -= seep_amt
 	if(current_gauze.absorption_capacity <= 0)
