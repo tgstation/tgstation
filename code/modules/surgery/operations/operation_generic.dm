@@ -396,7 +396,15 @@
 	return ..() + list("the limb must have bones")
 
 /datum/surgery_operation/limb/fix_bones/state_check(obj/item/bodypart/limb)
-	return LIMB_HAS_BONES(limb)
+	if(!LIMB_HAS_BONES(limb))
+		return FALSE
+
+	// if a wound has given us the broken bone state, don't show this surgery as an option, to prevent confusion
+	for(var/datum/wound/wound as anything in limb.wounds)
+		if(wound.surgery_states & any_surgery_states_required)
+			return FALSE
+
+	return TRUE
 
 /datum/surgery_operation/limb/fix_bones/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

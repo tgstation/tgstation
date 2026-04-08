@@ -1,3 +1,4 @@
+INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /*
 	Screen objects
 	Todo: improve/re-implement
@@ -34,6 +35,10 @@
 	 */
 	var/del_on_map_removal = TRUE
 
+	/// A key for cleaning up references in hud datums
+	var/hud_group_key
+	var/hud_key
+
 	/// If FALSE, this will not be cleared when calling /client/clear_screen()
 	var/clear_with_screen = TRUE
 	/// If TRUE, clicking the screen element will fall through and perform a default "Click" call
@@ -50,6 +55,10 @@
 	set_new_hud(hud_owner)
 
 /atom/movable/screen/Destroy()
+	if(hud)
+		if (hud_group_key && hud.screen_groups?[hud_group_key])
+			hud.screen_groups?[hud_group_key] -= src
+		hud.screen_objects -= hud_key
 	master_ref = null
 	hud = null
 	return ..()
@@ -57,6 +66,7 @@
 /atom/movable/screen/Click(location, control, params)
 	if(flags_1 & INITIALIZED_1)
 		SEND_SIGNAL(src, COMSIG_SCREEN_ELEMENT_CLICK, location, control, params, usr)
+
 	if(default_click)
 		return ..()
 
@@ -101,7 +111,6 @@
 	maptext_width = 480
 
 /atom/movable/screen/swap_hand
-	plane = HUD_PLANE
 	name = "swap hand"
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
@@ -187,7 +196,6 @@
 	var/icon_full
 	/// The overlay when hovering over with an item in your hand
 	var/image/object_overlay
-	plane = HUD_PLANE
 
 /atom/movable/screen/inventory/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -304,6 +312,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "storage_close"
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	hud_group_key = HUD_GROUP_STORAGE
 
 /atom/movable/screen/close/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
@@ -320,7 +329,6 @@
 	name = "drop"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_drop"
-	plane = HUD_PLANE
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/drop/Click()
@@ -331,12 +339,17 @@
 	name = "toggle combat mode"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "combat_off"
-	screen_loc = ui_combat_toggle
+	screen_loc = ui_acti
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	///When recovering from minimizing our HUD, this is where we'll be set to. We set this in Initialize.
+	var/default_screen_location
 
-/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner, default_screen_location)
 	. = ..()
 	update_appearance()
+	if(default_screen_location)
+		screen_loc = default_screen_location
+	src.default_screen_location = screen_loc
 
 /atom/movable/screen/combattoggle/Click()
 	if(isliving(usr))
@@ -470,6 +483,11 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "running"
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_movi
+
+/atom/movable/screen/mov_intent/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/mov_intent/Click()
 	toggle(usr)
@@ -496,6 +514,11 @@
 	icon_state = "pull"
 	base_icon_state = "pull"
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_living_pull
+
+/atom/movable/screen/pull/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/pull/Click()
 	if(isobserver(usr))
@@ -511,8 +534,8 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_resist"
 	base_icon_state = "act_resist"
-	plane = HUD_PLANE
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_above_movement
 
 /atom/movable/screen/resist/Click()
 	flick("[base_icon_state]_on", src)
@@ -525,8 +548,12 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_rest"
 	base_icon_state = "act_rest"
-	plane = HUD_PLANE
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_below_throw
+
+/atom/movable/screen/rest/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/rest/Click()
 	if(isliving(usr))
@@ -545,32 +572,38 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_sleep"
 	base_icon_state = "act_sleep"
-	plane = HUD_PLANE
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_above_throw
+
+/atom/movable/screen/sleep/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	// Invisible by default
+	SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_SLEEP_HUD_BUTTON)
 
 /atom/movable/screen/sleep/Click()
 	if(!isliving(usr) || HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
 		return
-	if(usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
-		var/tgui_answer = tgui_alert(usr, "You sure you want to sleep for a while?", "Sleeping", list("Yes", "No"))
-		if(tgui_answer == "Yes" && !HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
-			var/mob/living/L = usr
-			L.SetSleeping(400)
-	else
+	if(!usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
 		flick("[base_icon_state]_flick", src)
+		return
+
+	var/tgui_answer = tgui_alert(usr, "You sure you want to sleep for a while?", "Sleeping", list("Yes", "No"))
+	if(tgui_answer == "Yes" && !HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
+		var/mob/living/L = usr
+		L.Sleeping(400)
 
 /atom/movable/screen/sleep/DblClick(location, control, params)
 	if(!isliving(usr) || usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
 		return
 	if(isliving(usr))
 		var/mob/living/L = usr
-		L.SetSleeping(400)
+		L.Sleeping(400)
 
 /atom/movable/screen/storage
 	name = "storage"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "storage_cell"
-	plane = HUD_PLANE
+	hud_group_key = HUD_GROUP_STORAGE
 
 /atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
@@ -638,6 +671,7 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_throw"
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	screen_loc = ui_drop_throw
 
 /atom/movable/screen/throw_catch/Click()
 	if(isliving(usr))
@@ -652,6 +686,10 @@
 	var/overlay_icon = 'icons/hud/screen_gen.dmi'
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
+
+/atom/movable/screen/zone_sel/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	update_appearance()
 
 /atom/movable/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -941,7 +979,6 @@
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
 /atom/movable/screen/splash/Initialize(mapload, datum/hud/hud_owner, client/C, visible, use_previous_title)
 	. = ..()

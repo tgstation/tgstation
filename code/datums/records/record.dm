@@ -75,6 +75,8 @@
 	var/minor_disabilities_desc
 	/// Physical status of this person in medical records.
 	var/physical_status
+	/// If declared dead, this is set as the cause of death, wiped once declared alive again.
+	var/cause_of_death
 	/// Mental status of this person in medical records.
 	var/mental_status
 	/// Positive and neutral quirk strings

@@ -1075,7 +1075,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "NJ" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "NK" = (

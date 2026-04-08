@@ -635,11 +635,16 @@
 		clear_fullscreen("brute")
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
-	if(!client || !hud_used?.healths)
+	if(!client || !hud_used)
+		return
+
+	var/atom/movable/screen/healths/health_hud = hud_used.screen_objects[HUD_MOB_HEALTH]
+
+	if (!health_hud)
 		return
 
 	if(stat == DEAD)
-		hud_used.healths.icon_state = "health7"
+		health_hud.icon_state = "health7"
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_CARBON_UPDATING_HEALTH_HUD, shown_health_amount) & COMPONENT_OVERRIDE_HEALTH_HUD)
@@ -649,25 +654,11 @@
 		shown_health_amount = health
 
 	if(shown_health_amount >= maxHealth)
-		hud_used.healths.icon_state = "health0"
-
-	else if(shown_health_amount > maxHealth * 0.8)
-		hud_used.healths.icon_state = "health1"
-
-	else if(shown_health_amount > maxHealth * 0.6)
-		hud_used.healths.icon_state = "health2"
-
-	else if(shown_health_amount > maxHealth * 0.4)
-		hud_used.healths.icon_state = "health3"
-
-	else if(shown_health_amount > maxHealth*0.2)
-		hud_used.healths.icon_state = "health4"
-
-	else if(shown_health_amount > 0)
-		hud_used.healths.icon_state = "health5"
-
+		health_hud.icon_state = "health0"
+	else if(shown_health_amount > 0 && maxHealth > 0)
+		health_hud.icon_state = "health[6 - ceil(shown_health_amount / (maxHealth * 0.2))]"
 	else
-		hud_used.healths.icon_state = "health6"
+		health_hud.icon_state = "health6"
 
 /mob/living/carbon/set_health(new_value)
 	. = ..()
@@ -852,7 +843,7 @@
 	return NONE
 
 /mob/living/carbon/proc/can_defib_client()
-	return (client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
+	return (HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))
