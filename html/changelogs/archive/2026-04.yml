@@ -148,3 +148,10 @@
   Maxipat:
   - rscadd: New css style class for use in config. Now you can notice policy text
       easier
+  Melbert:
+  - admin: Admins can no longer edit global movespeed modifier datums
+  SyncIt21:
+  - bugfix: rped beam on machine frame renders correctly
+  loganuk:
+  - code_imp: Atmos pipes GPU performance - Station areas with pipes will be less
+      taxing on the client.
