@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "reactions no longer consume catalysts"
+  - code_imp: "improved reaction code in other places"
