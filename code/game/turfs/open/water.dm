@@ -140,7 +140,7 @@
 
 /turf/open/water/lavaland_atmos/basalt
 	icon = 'icons/turf/floors/water_lavaland.dmi'
-	icon_state = "water_lavaland"
+	icon_state = "water_lavaland-255"
 	base_icon_state = "water_lavaland"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_WATER_LAVALAND
