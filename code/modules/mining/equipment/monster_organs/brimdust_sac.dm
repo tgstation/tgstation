@@ -152,15 +152,19 @@
 	if (target_width == ICON_SIZE_X && target_height == ICON_SIZE_Y)
 		dust_overlay = mutable_appearance('icons/effects/weather_effects.dmi', "ash_storm")
 	else
-		var/icon/dust_icon = icon('icons/effects/weather_effects.dmi', "ash_storm")
-		var/icon/base_icon = icon('icons/effects/weather_effects.dmi', "ash_storm")
-		dust_icon.Crop(1, 1, target_width, target_height)
-		var/icon/column = icon('icons/effects/weather_effects.dmi', "ash_storm")
-		column.Crop(1, 1, ICON_SIZE_X, target_height)
-		for (var/i in 1 to ceil(target_height / ICON_SIZE_Y))
-			column.Blend(base_icon, ICON_OVERLAY, 1, 1 + (i - 1) * ICON_SIZE_Y)
-		for (var/i in 1 to ceil(target_width / ICON_SIZE_X))
-			dust_icon.Blend(column, ICON_OVERLAY, 1 + (i - 1) * ICON_SIZE_X, 1)
+		var/static/list/dust_icons = list()
+		var/icon/dust_icon = dust_icons["[target_width]-[target_height]"]
+		if (!dust_icon)
+			dust_icon = icon('icons/effects/weather_effects.dmi', "ash_storm")
+			var/icon/base_icon = icon('icons/effects/weather_effects.dmi', "ash_storm")
+			dust_icon.Crop(1, 1, target_width, target_height)
+			var/icon/column = icon('icons/effects/weather_effects.dmi', "ash_storm")
+			column.Crop(1, 1, ICON_SIZE_X, target_height)
+			for (var/i in 1 to ceil(target_height / ICON_SIZE_Y))
+				column.Blend(base_icon, ICON_OVERLAY, 1, 1 + (i - 1) * ICON_SIZE_Y)
+			for (var/i in 1 to ceil(target_width / ICON_SIZE_X))
+				dust_icon.Blend(column, ICON_OVERLAY, 1 + (i - 1) * ICON_SIZE_X, 1)
+			dust_icons["[target_width]-[target_height]"] = dust_icon
 		dust_overlay = mutable_appearance(dust_icon)
 	dust_overlay.alpha = stacks * BRIMDUST_ALPHA_PER_STACK
 	dust_overlay.color = COLOR_RED_LIGHT
