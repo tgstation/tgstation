@@ -18,11 +18,11 @@
 	if (!ismineralturf(target))
 		return
 	var/turf/closed/mineral/rock = target
-	rock.gets_drilled(firer)
 	if (mine_range)
 		mine_range -= 1
 		// Harder rocks give less extra range
 		range += /turf/closed/mineral::tool_mine_speed / rock.tool_mine_speed
+	rock.gets_drilled(firer)
 	if (range > 0)
 		return BULLET_ACT_FORCE_PIERCE
 
