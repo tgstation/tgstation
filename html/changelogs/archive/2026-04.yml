@@ -144,3 +144,7 @@
   Tsar-Salat:
   - bugfix: audits action button triggers, more action buttons ingame should respect
       if the player can use the action button or not.
+2026-04-08:
+  Maxipat:
+  - rscadd: New css style class for use in config. Now you can notice policy text
+      easier

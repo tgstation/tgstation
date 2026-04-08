@@ -298,9 +298,10 @@
 //--------------------
 // GAS VISUALS STUFF
 //
-// If I could have gotten layer filters to obey the RESET_COLOR appearance flag I would have used that here
-// so that only a single overlay object needs to exist for all pipelines per icon file. It shouldn't be too
-// hard to switch over to that if it becomes possible in the future or some other equivalent feature is added.
+// Gas visuals use direct color + alpha on the gas_visual object rather than
+// a color filter + KEEP_APART.
+// Color filters are expensive.
+// KEEP_APART forces a separate render.
 
 /**
  * Used to create and/or get the gas visual overlay created using the given icon file.
@@ -353,22 +354,11 @@
 		UpdateGasVisuals()
 
 /obj/effect/abstract/gas_visual
-	appearance_flags  = RESET_COLOR | KEEP_APART
+	appearance_flags = RESET_COLOR
 	vis_flags = VIS_INHERIT_ICON_STATE | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
-	var/current_color
-	var/color_filter
-
-/obj/effect/abstract/gas_visual/Initialize(mapload)
-	. = ..()
-	color_filter = filter(type="color", color="white")
-	filters += color_filter
-	color_filter = filters[filters.len]
-	if(current_color)
-		animate(color_filter, color=current_color, time=5)
+	color = COLOR_BLACK
 
 /obj/effect/abstract/gas_visual/proc/ChangeColor(new_color)
-	current_color = new_color
-	if(isnull(color_filter))
-		// Called before init
-		return
-	animate(color_filter, time=5, color=new_color)
+	if(!new_color)
+		new_color = COLOR_BLACK
+	animate(src, color = new_color, time = 0.5 SECONDS)
