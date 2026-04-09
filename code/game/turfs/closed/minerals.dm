@@ -298,7 +298,7 @@
 	var/speed_change = /turf/closed/mineral::tool_mine_speed / tool_mine_speed
 	// Probability scaling isn't linear to still mine somewhat reliably in dense rocks
 	// Rocks with ores always get broken by AOE
-	if (speed_change >= 1 || mineral_type || spawned_boulder || prob(100 * sqrt(speed_change)))
+	if (speed_change >= 1 || mineral_type || spawned_boulder || prob(100 * sqrt(speed_change) * 1.5))
 		return gets_drilled(user, exp_multiplier)
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/user, list/modifiers)
