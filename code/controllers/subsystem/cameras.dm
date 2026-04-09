@@ -1,3 +1,5 @@
+#define CAMERA_CAPTURE_DELAY (6 MINUTES)
+
 /// Manages the security cameras and camera chunks
 SUBSYSTEM_DEF(cameras)
 	name = "Cameras"
@@ -24,6 +26,10 @@ SUBSYSTEM_DEF(cameras)
 	var/disable_camera_updates = FALSE
 	/// Tracks current subsystem run
 	var/list/current_run = list()
+	/// Amount of cameras, that recording now
+	var/list/obj/machinery/camera/recording_cameras = list()
+	/// Time, when was last capture from recording cameras
+	var/last_capture_time = 0
 
 /datum/controller/subsystem/cameras/Initialize()
 	update_offsets(SSmapping.max_plane_offset)
@@ -40,6 +46,17 @@ SUBSYSTEM_DEF(cameras)
 		var/datum/camerachunk/chunk = current_run[current_run.len]
 		if(chunk.yield_update())
 			current_run.len--
+		if(MC_TICK_CHECK)
+			break
+
+	if(last_capture_time == 0)
+		last_capture_time = world.time
+
+	if(world.time - last_capture_time < CAMERA_CAPTURE_DELAY)
+		return
+	last_capture_time = world.time
+	for(var/obj/machinery/camera/camera in recording_cameras)
+		camera.take_photo(null, TRUE)
 		if(MC_TICK_CHECK)
 			break
 
@@ -338,3 +355,5 @@ ADMIN_VERB(pause_camera_updates, R_ADMIN, "Toggle Camera Updates", "Stop securit
 	log_admin("[key_name_admin(user)] [SScameras.disable_camera_updates ? "disabled" : "enabled"] camera updates.")
 	message_admins("Admin [key_name_admin(user)] has [SScameras.disable_camera_updates ? "disabled" : "enabled"] camera updates.")
 	BLACKBOX_LOG_ADMIN_VERB("Toggle Camera Updates")
+
+#undef CAMERA_CAPTURE_DELAY

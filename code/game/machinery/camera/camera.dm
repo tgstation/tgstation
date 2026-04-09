@@ -6,6 +6,10 @@
 #define MOTION_POWER_MOD (4)
 /// Active power multiplier of the EMP camera upgrade
 #define EMP_POWER_MOD (1.25)
+/// Maximum amount of cameras, that can take photos
+#define MAX_RECORDING_CAMERAS 5
+/// Maximum amount of pictures per camera
+#define MAX_PHOTOS_PER_CAMERA 10
 
 /**
  * Camera assembly frame
@@ -97,6 +101,9 @@
 	var/datum/motion_group/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
+	var/is_recording = FALSE
+	var/list/datum/picture/pictures = list()
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/motion, 0)
@@ -153,6 +160,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	QDEL_NULL(xray_module)
 	QDEL_NULL(emp_module)
 	QDEL_NULL(proximity_monitor)
+	QDEL_LIST(pictures)
 	// moveToNullspace will clear us from our current chunks
 	return ..()
 
@@ -479,7 +487,33 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	active_power_usage = CAMERA_POWER_CONSUMPTION * xray_power_mod * motion_power_mod * EMP_power_mod
 
+/obj/machinery/camera/proc/toggle_recording(mob/user)
+	var/obj/machinery/camera/camera = src
+	if(is_recording)
+		is_recording = FALSE
+		QDEL_LIST(pictures)
+		pictures = list()
+		SScameras.recording_cameras -= camera
+	else if(length(SScameras.recording_cameras) < MAX_RECORDING_CAMERAS)
+		is_recording = TRUE
+		SScameras.recording_cameras += camera
+
+/obj/machinery/camera/proc/take_photo(mob/user, add_to_pictures = FALSE)
+	var size_x = view_range + 1
+	var size_y = view_range + 1
+	var/width = APERTURE_TO_METERS(size_x - 1)
+	var/height = APERTURE_TO_METERS(size_y - 1)
+	var/datum/picture/picture = capture_photo(get_turf(src), get_turf(src), view_range, user, size_x, size_y, width, height, "picture at [station_time_timestamp()]", FALSE)
+	if(add_to_pictures)
+		if(isnull(picture))
+			return
+		if(length(pictures) == MAX_PHOTOS_PER_CAMERA)
+			pictures.len--
+		pictures += picture
+
 #undef CAMERA_POWER_CONSUMPTION
 #undef XRAY_POWER_MOD
 #undef MOTION_POWER_MOD
 #undef EMP_POWER_MOD
+#undef MAX_RECORDING_CAMERAS
+#undef MAX_PHOTOS_PER_CAMERA

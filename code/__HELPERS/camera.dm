@@ -14,9 +14,7 @@
 
 #define PHYSICAL_POSITION(atom) ((atom.y * ICON_SIZE_Y) + (atom.pixel_y))
 
-/obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, datum/turf_reservation/clone_area)
-	PRIVATE_PROC(TRUE)
-
+/proc/camera_get_icon(list/turfs, turf/center, datum/turf_reservation/clone_area, see_ghosts)
 	var/list/atoms = list()
 	var/list/lighting = list()
 	var/skip_normal = FALSE
@@ -156,5 +154,120 @@
 		QDEL_LIST(lighting)
 
 	return res
+
+/**
+ * Data for photography
+*/
+/datum/photo_snapshot
+	var/list/turfs = list()
+	var/list/mobs = list()
+	var/blueprints = FALSE
+
+/**
+ * Builds a snapshot of all turfs and mobs that should appear in the photo
+ *
+ * Arguments
+ *
+ * * turf/target_turf - the turf where the picture was taken
+ * * turf/viewer - the turf from which the picture is viewed
+ * * view_range - the range within which to look for turfs and mobs
+ * * mob/user - the user who took the picture
+ * * size_x, size_y - the size of the picture area
+ * * width, height - the dimensions of the photo
+*/
+/proc/get_photo_snapshot(turf/target_turf, turf/viewer, view_range, mob/user, size_x, size_y, width, height)
+	var/list/seen = get_hear_turfs(view_range, viewer)
+	var/datum/photo_snapshot/snapshot = new
+
+	var/cameranet_user = isAI(user) || istype(viewer, /mob/eye/camera)
+	for(var/turf/seen_placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
+		if(isnull(seen_placeholder))
+			continue
+		if(cameranet_user && !SScameras.is_visible_by_cameras(seen_placeholder))
+			continue
+		if(!cameranet_user && !(seen_placeholder in seen))
+			continue
+
+		//Multi-z photography
+		var/turf/target_placeholder = seen_placeholder
+		while(!isnull(target_placeholder))
+			snapshot.turfs += target_placeholder
+			for(var/mob/mob_there in target_placeholder)
+				snapshot.mobs += mob_there
+			if(locate(/obj/item/blueprints) in target_placeholder)
+				snapshot.blueprints = TRUE
+
+			if(isopenspaceturf(target_placeholder) || istype(target_placeholder, /turf/open/floor/glass))
+				target_placeholder = GET_TURF_BELOW(target_placeholder)
+			else
+				break
+
+	return snapshot
+
+/**
+ * Renders a picture from a previously built photo snapshot
+ *
+ * Arguments
+ *
+ * * turf/target_turf - the turf where the picture was taken
+ * * width, height - the dimensions of the photo
+ * * see_ghosts - whether the photo should show ghosts or not
+ * * datum/photo_snapshot/snapshot - the data to render the photo from
+*/
+/proc/render_photo_snapshot(turf/target_turf, width, height, name, see_ghosts, datum/photo_snapshot/snapshot)
+	if(isnull(snapshot))
+		return null
+
+	var/list/mobs_spotted = list()
+	var/list/dead_spotted = list()
+	var/list/turfs = snapshot.turfs
+	var/list/mobs = snapshot.mobs
+	var/blueprints = snapshot.blueprints
+
+	///list of human names taken on picture
+	var/list/names = list()
+	var/datum/turf_reservation/clone_area = SSmapping.request_turf_block_reservation(width, height, 1)
+
+	if(isnull(clone_area))
+		return null
+
+	var/list/desc = list("This is a photo of an area of [width] meters by [height] meters.")
+	for(var/mob/mob as anything in mobs)
+		mobs_spotted += mob
+		if(mob.stat == DEAD)
+			dead_spotted += mob
+		var/info = mob.get_photo_description(src)
+		if(!isnull(info))
+			desc += info
+
+	var/icon/get_icon = camera_get_icon(turfs, target_turf, clone_area, see_ghosts)
+	get_icon.Blend("#000", ICON_UNDERLAY)
+	qdel(clone_area)
+	for(var/mob/living/carbon/human/person in mobs)
+		if(person.obscured_slots & HIDEFACE)
+			continue
+		names += "[person.name]"
+
+	var/datum/picture/picture = new(name, desc.Join("<br>"), mobs_spotted, dead_spotted, names, get_icon, null, width * ICON_SIZE_X, height * ICON_SIZE_X, blueprints, can_see_ghosts = see_ghosts)
+	qdel(snapshot)
+	return picture
+
+/**
+ * Captures a photo without access to snapshot data
+ *
+ * Arguments
+ *
+ * * turf/target_turf - the turf where the picture was taken
+ * * turf/viewer - the turf from which the picture is viewed
+ * * view_range - the range within which to look for turfs and mobs
+ * * mob/user - the user who took the picture
+ * * size_x, size_y - the size of the picture area
+ * * width, height - the dimensions of the photo
+ * * see_ghosts - whether the photo should show ghosts or not
+ * * datum/photo_snapshot/snapshot - the data to render the photo from
+*/
+/proc/capture_photo(turf/target_turf, turf/viewer, view_range, mob/user, size_x, size_y, width, height, name, see_ghosts)
+	var/datum/photo_snapshot/snapshot = get_photo_snapshot(target_turf, viewer, view_range, user, size_x, size_y, width, height)
+	return render_photo_snapshot(target_turf, width, height, name, see_ghosts, snapshot)
 
 #undef PHYSICAL_POSITION
