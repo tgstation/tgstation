@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "A dirty mask that CAN be pushed out of the way no longer obscures vision if it IS pushed out of the way."
-  - qol: "If your mask is dirty from pepper spray, you get some passive chat messages indicating that it can be cleaned off."
-  - balance: "Pepper spray clothing dirt is applied piecemeal - smaller dosages, rather than doing nothing, now build up with repeat applications."
-  - balance: "Pepper spray clothing dirt now has a tier between \"very obscured vision\" and \"no obscured vision\", giving the wearer more of a warning before being thrust into darkness."
-  - balance: "Pepper spray can no longer stack blindness infinitely - it is now capped to 6 seconds. This brings it in line with its other effects (confusion capped at 5 seconds, blur capped at 10 seconds, knockdown capped at 3 seconds)."
