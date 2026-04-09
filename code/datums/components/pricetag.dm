@@ -19,7 +19,7 @@
 		stack_trace("[type] component was added to something without a pay_to_account list!")
 		return COMPONENT_INCOMPATIBLE
 
-	if(pay_to_account && !length(pay_to_account))
+	if(!length(pay_to_account))
 		stack_trace("[type] component was created with an empty pay_to_account list!")
 		return COMPONENT_INCOMPATIBLE
 

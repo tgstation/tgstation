@@ -1,3 +1,6 @@
+/datum/bounty/item/special
+	unique = TRUE
+
 /datum/bounty/item/special/alien_organs
 	name = "Alien Organs"
 	description = "Nanotrasen is interested in studying Xenomorph biology. Ship a set of organs to be thoroughly compensated."

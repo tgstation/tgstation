@@ -1,5 +1,5 @@
-
-GLOBAL_LIST_EMPTY(bounties_list)
+// The list of all current global, shared crew bounties, does not contain any personal bounties however.
+GLOBAL_LIST_EMPTY(shared_crew_bounties)
 
 /datum/bounty
 	/// A name for the bounty. Displayed on the bounty console/Paper sheets.
@@ -17,6 +17,8 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	var/global_exempt = FALSE
 	///A list consisting of the accounts who sent several of the items required for a bounty payout. Used for distributing payout with the payment component.
 	var/list/contribution = list()
+	/// Is this bounty considered unique? This is for weird, singleton bounties that we don't want to roll into randomly, and we provide one of these
+	var/unique = FALSE
 
 /// Can this bounty be claimed right now?
 /datum/bounty/proc/can_claim()
@@ -54,6 +56,18 @@ GLOBAL_LIST_EMPTY(bounties_list)
 /// Called when this bounty is reset from the passed ID card, either from successful claim or from being replaced by another bounty
 /datum/bounty/proc/on_reset(obj/item/card/id/id_card)
 	return
+
+/// Proc that returns the current quantity of this bounty.
+/datum/bounty/proc/get_total()
+	return
+
+/// Proc that returns the current maximum quantity of this bounty.
+/datum/bounty/proc/get_max()
+	return
+
+/// If the user can actually get this bounty as a selection.
+/datum/bounty/proc/can_get()
+	return TRUE
 
 /** Returns a new bounty of random type.
  *

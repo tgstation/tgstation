@@ -29,6 +29,13 @@
 /datum/bounty/reagent/contribution_amount(obj/shipped)
 	return shipped.reagents.get_reagent_amount(wanted_reagent.type)
 
+/datum/bounty/reagent/get_total()
+	return shipped_volume
+
+/datum/bounty/reagent/get_max()
+	return required_volume
+
+
 /datum/bounty/reagent/simple_drink
 	name = "Simple Drink"
 	reward = CARGO_CRATE_VALUE * 3
