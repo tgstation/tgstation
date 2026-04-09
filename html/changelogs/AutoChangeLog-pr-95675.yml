@@ -1,0 +1,4 @@
+author: "siliconOpossum"
+delete-after: True
+changes:
+  - admin: "Adds the jump-to-ghost verb, which brings your body to your aghost, it has a hotkey which defaults to F4."
