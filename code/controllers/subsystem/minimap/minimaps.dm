@@ -596,15 +596,13 @@
 	screen_loc = "BOTTOM+5,RIGHT"
 
 ///sets the currently indicated relative floor
-/atom/movable/screen/minimap_extras/minimap_z_indicator/proc/set_indicated_z(newz)
-	if(!newz)
+/atom/movable/screen/minimap_extras/minimap_z_indicator/proc/set_indicated_z(new_z)
+	if(!new_z)
 		return
-	var/list/linked_zs = SSmapping.get_connected_levels(newz)
-	if(!length(linked_zs))
-		return
-	linked_zs = sort_list(linked_zs, GLOBAL_PROC_REF(cmp_numeric_asc))
-	var/relativez = linked_zs.Find(newz)
-	var/text = "Floor<br/>[relativez]"
+	var/bottom_z = new_z
+	while(SSmapping.multiz_levels?[bottom_z]?[Z_LEVEL_DOWN]) // just keep going down
+		bottom_z--
+	var/text = "Floor<br/>[(new_z - bottom_z) + 1]"
 	maptext = MAPTEXT_TINY_UNICODE("<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[text]</div>")
 
 /atom/movable/screen/minimap_extras/minimap_z_up
@@ -615,18 +613,12 @@
 	screen_loc = "BOTTOM+5,RIGHT-1"
 
 /atom/movable/screen/minimap_extras/minimap_z_up/Click(location,control,params)
-	flick("uppressed",src)
-	if(!minimap_action.map_object)
+	flick("uppressed", src)
+	if(!minimap_action.map_object || !length(SSmapping.multiz_levels))
 		return
-	var/currentz = minimap_action.map_object.tracked_z
-	var/list/linked_zs = SSmapping.get_connected_levels(currentz)
-	if(!length(linked_zs))
-		return
-	linked_zs = sort_list(linked_zs, GLOBAL_PROC_REF(cmp_numeric_asc))
-	var/relativez = linked_zs.Find(currentz)
-	if(relativez == length(linked_zs))
-		return //topmost z with nothing above. we still play effects just dont do anything
-	minimap_action.change_z_shown(++currentz)
+	var/current_z = minimap_action.map_object.tracked_z
+	if(SSmapping.multiz_levels[current_z]?[Z_LEVEL_UP])
+		minimap_action.change_z_shown(++current_z)
 
 /atom/movable/screen/minimap_extras/minimap_z_down
 	name = "go down"
@@ -636,16 +628,9 @@
 	screen_loc = "BOTTOM+5,RIGHT-1"
 
 /atom/movable/screen/minimap_extras/minimap_z_down/Click(location,control,params)
-	flick("downpressed",src)
-	if(!minimap_action.map_object)
+	flick("downpressed", src)
+	if(!minimap_action.map_object || !length(SSmapping.multiz_levels))
 		return
-	var/currentz = minimap_action.map_object.tracked_z
-	var/list/linked_zs = SSmapping.get_connected_levels(currentz)
-	if(!length(linked_zs))
-		return
-	linked_zs = sort_list(linked_zs, GLOBAL_PROC_REF(cmp_numeric_asc))
-	var/relativez = linked_zs.Find(currentz)
-	if(relativez == 1)
-		return //bottommost z with nothing below. we still play effects just dont do anything
-	minimap_action.change_z_shown(--currentz)
-
+	var/current_z = minimap_action.map_object.tracked_z
+	if(SSmapping.multiz_levels[current_z]?[Z_LEVEL_DOWN])
+		minimap_action.change_z_shown(--current_z)
