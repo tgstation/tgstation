@@ -128,8 +128,7 @@
 
 //## doesn't display the multitool tip if it's a vortex pump
 	if (pipe_state == "vortexpump")
-		context[SCREENTIP_CONTEXT_LMB] = null
-			return CONTEXTUAL_SCREENTIP_SET
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item && held_item.tool_behaviour == TOOL_MULTITOOL)
 		context[SCREENTIP_CONTEXT_LMB] = "[overclocked ? "En" : "Dis"]able pressure limits"
