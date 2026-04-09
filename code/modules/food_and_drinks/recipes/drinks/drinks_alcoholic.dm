@@ -741,8 +741,8 @@
 	required_reagents = list(/datum/reagent/consumable/orangejuice = 4, /datum/reagent/consumable/ethanol/aperitivo = 1)
 
 /datum/chemical_reaction/drink/improved_whiskey
-	results=list(/datum/reagent/consumable/ethanol/improved_whiskey = 12)
-	required_reagents = list(/datum/reagent/consumable/ethanol/sazerac = 10, /datum/reagent/consumable/ethanol/maraschino = 2)
+	results=list(/datum/reagent/consumable/ethanol/improved_whiskey = 7)
+	required_reagents = list(/datum/reagent/consumable/ethanol/sazerac = 6, /datum/reagent/consumable/ethanol/maraschino = 1)
 
 /datum/chemical_reaction/drink/jungle_bird
 	results=list(/datum/reagent/consumable/ethanol/jungle_bird = 9)
