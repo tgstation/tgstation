@@ -575,10 +575,10 @@
 	x_coord += my_map.minimaps_by_z["[mover_turf.z]"].x_offset
 	y_coord += my_map.minimaps_by_z["[mover_turf.z]"].y_offset
 	// + 1 because tiles start at 1
-	var/x_tile = FLOOR(x_coord / ICON_SIZE_X, 1) + 1
+	var/x_tile = floor(x_coord / ICON_SIZE_X) + 1
 	// -3 to center the image
 	var/x_pixel = x_coord % ICON_SIZE_X - 3
-	var/y_tile = FLOOR(y_coord / ICON_SIZE_Y, 1) + 1
+	var/y_tile = floor(y_coord / ICON_SIZE_Y) + 1
 	var/y_pixel = y_coord % ICON_SIZE_Y - 3
 	screen_loc = "[x_tile]:[x_pixel],[y_tile]:[y_pixel]"
 
