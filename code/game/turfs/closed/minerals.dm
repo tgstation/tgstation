@@ -356,8 +356,8 @@
 					continue
 
 				rock.open_turf_distance = 1
-				adjacent_minerals += rock
-				continue
+				adjacent_minerals |= rock
+				CHECK_TICK
 
 		var/index = 1
 		while(index <= length(adjacent_minerals))
@@ -369,9 +369,11 @@
 					continue
 
 				var/turf/closed/mineral/rock_neighbour = neighbour
+				// Don't need to check if we're closer because we're doing BFS fill
 				if(rock_neighbour.open_turf_distance == DEFAULT_BORDER_DISTANCE)
 					rock_neighbour.open_turf_distance = rock.open_turf_distance + 1
 					adjacent_minerals += rock_neighbour
+				CHECK_TICK
 
 /turf/closed/mineral/random
 	/// What are the base odds that this turf spawns a mineral in the wall on initialize?

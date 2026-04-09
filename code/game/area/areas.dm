@@ -237,6 +237,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/RunTerrainPopulation()
 	if (!use_mapgen || !map_generator)
 		return
+	map_generator = get_generator()
 	var/list/turfs = list()
 	for(var/turf/T in contents)
 		turfs += T
@@ -245,6 +246,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/test_gen()
 	if (!use_mapgen || !map_generator)
 		return
+	map_generator = get_generator()
 	var/list/turfs = list()
 	for(var/turf/T in contents)
 		turfs += T
@@ -264,12 +266,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		return map_generator
 
 	var/list/z_generators = GLOB.map_generators_by_z["[z]"]
-	if (z_generators)
+	if (z_generators && z_generators[map_generator])
 		map_generator = z_generators[map_generator]
+
 	if (!istype(map_generator))
 		var/new_generator = new map_generator()
 		LAZYSET(GLOB.map_generators_by_z["[z]"], map_generator, new_generator)
 		map_generator = new_generator
+
 	return map_generator
 
 /// Returns the highest zlevel that this area contains turfs for
