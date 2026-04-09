@@ -274,18 +274,22 @@ SUBSYSTEM_DEF(tts)
 				"radio_blips" = radio_blips_response
 			))
 			continue
-		current_request.audio_length = text2num(normal_response.headers["audio-length"]) * 10
-		if(!current_request.audio_length)
-			current_request.audio_length = 0
-		current_request.audio_length_blips = text2num(blips_response.headers["audio-length"]) * 10
-		if(!current_request.audio_length_blips)
-			current_request.audio_length_blips = 0
-		current_request.audio_length_radio = text2num(radio_response.headers["audio-length"]) * 10
-		if(!current_request.audio_length_radio)
-			current_request.audio_length_radio = 0
-		current_request.audio_length_blips_radio = text2num(radio_blips_response.headers["audio-length"]) * 10
-		if(!current_request.audio_length_blips_radio)
-			current_request.audio_length_blips_radio = 0
+		if(length(normal_response.headers) && normal_response.headers.Find("audio-length"))
+			current_request.audio_length = text2num(normal_response.headers["audio-length"]) * 10
+			if(!current_request.audio_length)
+				current_request.audio_length = 0
+		if(length(blips_response.headers) && blips_response.headers.Find("audio-length"))
+			current_request.audio_length_blips = text2num(blips_response.headers["audio-length"]) * 10
+			if(!current_request.audio_length_blips)
+				current_request.audio_length_blips = 0
+		if(length(radio_response.headers) && radio_response.headers.Find("audio-length"))
+			current_request.audio_length_radio = text2num(radio_response.headers["audio-length"]) * 10
+			if(!current_request.audio_length_radio)
+				current_request.audio_length_radio = 0
+		if(length(radio_blips_response.headers) && radio_blips_response.headers.Find("audio-length"))
+			current_request.audio_length_blips_radio = text2num(radio_blips_response.headers["audio-length"]) * 10
+			if(!current_request.audio_length_blips_radio)
+				current_request.audio_length_blips_radio = 0
 		current_request.audio_file = "tmp/tts/[identifier].ogg"
 		current_request.audio_file_blips = "tmp/tts/[identifier]_blips.ogg" // We aren't as concerned about the audio length for blips as we are with actual speech
 		current_request.audio_file_radio = "tmp/tts/[identifier]_radio.ogg"
