@@ -167,3 +167,7 @@
   loganuk:
   - code_imp: Atmos pipes GPU performance - Station areas with pipes will be less
       taxing on the client.
+2026-04-09:
+  SyncIt21:
+  - bugfix: reactions no longer consume catalysts
+  - code_imp: improved reaction code in other places
