@@ -25,6 +25,9 @@
 	var/overclocked = FALSE
 	///flashing light overlay which appears on multitooled vol pumps
 	var/mutable_appearance/overclock_overlay
+	///both min/max output pressures for the volume
+	var/VOLUME_MAX_OUTPUT_PRESSURE = 9000
+	var/VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE = 0.01
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Initialize(mapload)
 	. = ..()
@@ -54,7 +57,10 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
-	icon_state = on && is_operational ? "volpump_on-[set_overlay_offset(piping_layer)]" : "volpump_off-[set_overlay_offset(piping_layer)]"
+	var/volumepump_on = "volpump_on-"
+	var/volumepump_off = "volpump_off-"
+	var/icon_state1 = on && is_operational ? "[volumepump_on][set_overlay_offset(piping_layer)]" : "[volumepump_off][set_overlay_offset(piping_layer)]"
+	icon_state = icon_state1
 	var/altlayeroverlay = FALSE
 	if(set_overlay_offset(piping_layer) == 2)
 		altlayeroverlay = TRUE
@@ -84,7 +90,7 @@
 			overclocked = FALSE
 			update_appearance(UPDATE_ICON)
 
-	if((input_starting_pressure < VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE) || ((output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE)) && !overclocked)
+	if((input_starting_pressure < VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE) || ((output_starting_pressure > VOLUME_MAX_OUTPUT_PRESSURE)) && !overclocked)
 		return
 
 	var/transfer_ratio = transfer_rate / air1.volume
@@ -106,6 +112,11 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
 	. = ..()
+
+//## Doesn't load the overclock text if it's a vortex pump
+	if (pipe_state == "vortexpump")
+		return
+//## Overclock hint
 	. += span_notice("Its pressure limits could be [overclocked ? "en" : "dis"]abled with a <b>multitool</b>.")
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
@@ -114,6 +125,12 @@
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize transfer rate"
+
+//## doesn't display the multitool tip if it's a vortex pump
+	if (pipe_state == "vortexpump")
+		context[SCREENTIP_CONTEXT_LMB] = null
+			return CONTEXTUAL_SCREENTIP_SET
+
 	if(held_item && held_item.tool_behaviour == TOOL_MULTITOOL)
 		context[SCREENTIP_CONTEXT_LMB] = "[overclocked ? "En" : "Dis"]able pressure limits"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -298,54 +315,23 @@
 /obj/machinery/atmospherics/components/binary/volume_pump/vortex
 	icon_state = "vortexpump_map3"
 	name = "vortex volume pump"
-	desc = "A culmination of years of research towards vortex anomalies have lead to the creation of a volume pump that offers near infinite suction, just like your mom."
+	desc = "A culmination of years of research towards vortex anomalies have lead to the creation of a volume pump that offers near infinite suction, just like your mother."
 	pipe_state = "vortexpump"
-
-
-/obj/machinery/atmospherics/components/binary/volume_pump/vortex/process_atmos()
-	if(!on || !is_operational)
-		return
-
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
-
-//## Required due to it being a subtype
-	if(overclocked)
-		return null
-
-	var/input_starting_pressure = air1.return_pressure()
-	var/output_starting_pressure = air2.return_pressure()
-
-	if((input_starting_pressure < VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE) || ((output_starting_pressure > VORTEX_PUMP_MAX_OUTPUT_PRESSURE)))
-		return
-
-	var/transfer_ratio = transfer_rate / air1.volume
-
-	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
-
-	if(!removed.total_moles())
-		return
-
-	air2.merge(removed)
-
-	update_parents()
-
-/obj/machinery/atmospherics/components/binary/volume_pump/vortex/multitool_act(mob/living/user, obj/item/I)
-	return null
+	VOLUME_MAX_OUTPUT_PRESSURE = INFINITY
+	VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE = 0.01
 
 /obj/machinery/atmospherics/components/binary/volume_pump/vortex/update_icon_nopipes()
-	icon_state = on && is_operational ? "vortexpump_on[set_overlay_offset(piping_layer)]" : "vortexpump_off[set_overlay_offset(piping_layer)]"
-	var/altlayeroverlay = FALSE
-	if(set_overlay_offset(piping_layer) == 2)
-		altlayeroverlay = TRUE
-	overclock_overlay = mutable_appearance('icons/obj/machines/atmospherics/binary_devices.dmi', "vpumpoverclock[altlayeroverlay ? "2" : ""]")
-	if(overclocked && on && is_operational)
-		add_overlay(overclock_overlay)
-	else
-		cut_overlay(overclock_overlay)
+	var/vortexpump_on = "vortexpump_on"
+	var/vortexpump_off = "vortexpump_off"
+	var/icon_state1 = on && is_operational ? "[vortexpump_on][set_overlay_offset(piping_layer)]" : "[vortexpump_off][set_overlay_offset(piping_layer)]"
+	icon_state = icon_state1
+
+/obj/machinery/atmospherics/components/binary/volume_pump/vortex/multitool_act(mob/living/user, obj/item/I)
+	if (overclocked)
+		return null
 
 
-//##### Vortex Volume Pump Mapping Sprites
+//##### Vortex Volume Pump Mapping Sprites ####\\\\al
 
 /obj/machinery/atmospherics/components/binary/volume_pump/vortex/layer2
 	piping_layer = 2
@@ -366,6 +352,3 @@
 /obj/machinery/atmospherics/components/binary/volume_pump/vortex/on/layer4
 	piping_layer = 4
 	icon_state = "vortexpump_map4"
-
-/obj/machinery/atmospherics/components/binary/volume_pump/vortex/examine(mob/user)
-	return null

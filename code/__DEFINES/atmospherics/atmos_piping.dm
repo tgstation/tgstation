@@ -25,12 +25,6 @@
 /// (L/s) Maximum speed powered equipment can work at.
 #define MAX_TRANSFER_RATE 200
 /// (kPa) Minimum pressure volume pumps can move.
-#define VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE 0.01
-/// (kPa) What pressure volume pumps max out at.
-#define VOLUME_PUMP_MAX_OUTPUT_PRESSURE 9000
-/// (kPa) Maximum output for the vortex volume pump
-#define VORTEX_PUMP_MAX_OUTPUT_PRESSURE INFINITY
-/// (kPa) Allowed pressure difference between input and output pipenets for overclocked volume pump.
 #define VOLUME_PUMP_OVERPRESSURE_ALLOWANCE 1000
 /// How many percent of the contents that an overclocked volume pumps leak into the air.
 #define VOLUME_PUMP_LEAK_AMOUNT 0.1
