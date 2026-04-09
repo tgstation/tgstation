@@ -248,9 +248,10 @@
 		CAVE_SPAWN_MEGAFAUNA = list(),
 	)
 
+	var/list/open_turf_cache = typecacheof(open_turf_types)
 	for (var/turf/target_turf as anything in turfs)
 		// Only put stuff on open turfs we generated, so closed walls and rivers and stuff are skipped
-		if (!(target_turf.type in open_turf_types))
+		if (!is_type_in_typecache(target_turf, open_turf_cache))
 			continue
 
 		CHECK_TICK
