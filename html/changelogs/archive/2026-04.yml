@@ -181,6 +181,7 @@
   - balance: Pepper spray can no longer stack blindness infinitely - it is now capped
       to 6 seconds. This brings it in line with its other effects (confusion capped
       at 5 seconds, blur capped at 10 seconds, knockdown capped at 3 seconds).
+  - bugfix: Fix zombie powder perma-coma on injection
   SyncIt21:
   - bugfix: reactions no longer consume catalysts
   - code_imp: improved reaction code in other places
