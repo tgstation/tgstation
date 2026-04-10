@@ -23,7 +23,7 @@
 			input_planes += plane_key
 
 	// We need to walk all our input planes and see if they feed into any plane masters that are also multiz scaled
-	for(var/input_key as anything in input_planes)
+	for(var/input_key in input_planes)
 		var/list/keys_to_walk = list()
 		var/atom/movable/screen/plane_master/input_plane = our_group.plane_masters[input_key]
 		keys_to_walk[input_key] = "[input_plane.type]"
