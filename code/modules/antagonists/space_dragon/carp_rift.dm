@@ -18,14 +18,16 @@
 	if(!dragon)
 		return
 	var/area/rift_location = get_area(owner)
-	if(!(rift_location in dragon.chosen_rift_areas))
-		owner.balloon_alert(owner, "can't summon a rift here! check your objectives!")
-		return
 	for(var/obj/structure/carp_rift/rift as anything in dragon.rift_list)
 		var/area/used_location = get_area(rift)
 		if(used_location == rift_location)
 			owner.balloon_alert(owner, "already summoned a rift here!")
 			return
+
+	if(!(rift_location in dragon.chosen_rift_areas))
+		owner.balloon_alert(owner, "can't summon a rift here! check your objectives!")
+		return
+
 	var/turf/rift_spawn_turf = get_turf(dragon)
 	if(isopenspaceturf(rift_spawn_turf))
 		owner.balloon_alert(dragon, "needs stable ground!")
@@ -253,8 +255,8 @@
 	// Is the rift now fully charged?
 	if(time_charged >= max_charge)
 		charge_state = CHARGE_COMPLETED
-		var/area/A = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
+		var/area/location = get_area(src)
+		priority_announce("Spatial object has reached peak energy charge in [initial(location.name)], please stand-by.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
 		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_DIM_YELLOW)
@@ -262,11 +264,16 @@
 		set_armor(/datum/armor/immune)
 		resistance_flags = INDESTRUCTIBLE
 		dragon.rifts_charged += 1
+		dragon.chosen_rift_areas -= location
 		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
 			dragon.rift_ability = new()
 			dragon.rift_ability.Grant(dragon.owner.current)
 			dragon.riftTimer = 0
 			dragon.rift_empower()
+			return
+
+		dragon.locate_rift_ability.Remove(dragon.owner.current)
+		QDEL_NULL(dragon.locate_rift_ability)
 		// Early return, nothing to do after this point.
 		return
 
