@@ -157,21 +157,18 @@
 	desc = "A weapon of incredible bulk, this ratvarian repeater has been permanently severed from its stand to be carried by hand, requiring great exertion to fire. Cumbersome, Yes - but powerful."
 	icon_state = "repeater"
 	inhand_icon_state = "repeater"
-	slowdown = 1
 	fire_delay = 0.5
 	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/repeater/handheld)
 	cell_type = /obj/item/stock_parts/power_store/battery/infinite // We use stamina in place of energy, so this is done to allow other guns to use its ammo without having infinite shots.
 	spread = 20
 	charge_sections = 1
-	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.25,
 		/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29
 	)
-	var/base_shots_per_stamina_bar = 8
-	var/additional_shots_per_athletics_level = 2
+	var/stamina_cost = LASER_SHOTS(25, 100)
 
 /obj/item/gun/energy/laser/musket/repeater/Initialize(mapload)
 	. = ..()
@@ -179,17 +176,6 @@
 
 /obj/item/gun/energy/laser/musket/repeater/add_deep_lore()
 	return
-
-/obj/item/gun/energy/laser/musket/repeater/proc/get_effective_stamina_cost(mob/living/shooter)
-	var/total_shots = base_shots_per_stamina_bar
-	var/athletics_skill_modifier = (shooter.mind?.get_skill_level(/datum/skill/athletics) || 1) - 1
-	total_shots += athletics_skill_modifier * additional_shots_per_athletics_level
-	if(HAS_TRAIT(shooter, TRAIT_STRENGTH))
-		total_shots *= 2
-	var/obj/item/organ/cyberimp/chest/spine/potential_spine = shooter.get_organ_slot(ORGAN_SLOT_SPINE)
-	if (istype(potential_spine))
-		total_shots *=  1 / potential_spine.athletics_boost_multiplier
-	return round((isbasicmob(shooter) ? 100 : shooter.maxHealth) / total_shots, 0.1)
 
 /obj/item/gun/energy/laser/musket/repeater/do_autofire(datum/source, atom/target, mob/living/shooter, allow_akimbo, params)
 	var/stamcrit_immune = FALSE
@@ -203,14 +189,14 @@
 	if(stamcrit_immune)
 		var/max_health = is_basic ? 100 : shooter.maxHealth
 		var/threshold = is_basic ? 1 : shooter.crit_threshold
-		if(max_health / (shooter.staminaloss + get_effective_stamina_cost(shooter)) > threshold)
+		if(max_health / (shooter.staminaloss + stamina_cost) > threshold)
 			balloon_alert(shooter, "too tired!")
 			return NONE
 	return ..()
 
 /obj/item/gun/energy/laser/musket/repeater/do_autofire_shot(datum/source, atom/target, mob/living/shooter, allow_akimbo, params)
 	. = ..()
-	shooter.adjust_stamina_loss(get_effective_stamina_cost(shooter))
+	shooter.adjust_stamina_loss(stamina_cost)
 
 // The Deep Lore //
 
