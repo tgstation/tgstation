@@ -1150,6 +1150,7 @@
 		'sound/effects/magic/void_deflect1.ogg',
 		'sound/effects/magic/void_deflect2.ogg',
 		'sound/effects/magic/void_deflect3.ogg',
+	)
 
 /// troutstation list
 /datum/sound_effect/gay
