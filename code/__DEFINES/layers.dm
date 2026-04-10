@@ -44,7 +44,6 @@
 
 /// Lighting objects that are "free floating"
 #define O_LIGHTING_VISUAL_PLANE 11
-#define O_LIGHTING_VISUAL_RENDER_TARGET "*O_LIGHT_VISUAL_PLANE"
 
 // Render plate used by overlay lighting to mask turf lights
 #define RENDER_PLANE_TURF_LIGHTING 12
@@ -70,7 +69,9 @@
 
 /// Main game plane to which everything renders, which then is multiplied by light
 /// Should not be lit directly as it is sourced for emissive bloom
-#define RENDER_PLANE_UNLIT_GAME 19
+#define RENDER_PLANE_UNLIT_GAME 18
+
+#define RENDER_PLANE_O_LIGHTING 19
 
 #define RENDER_PLANE_LIGHTING 20
 
