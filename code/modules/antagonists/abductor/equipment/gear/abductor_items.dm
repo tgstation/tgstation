@@ -292,7 +292,6 @@
 4.Apply scalpel to specimen's torso.<br>
 5.Retract skin of specimen's torso with a retractor.<br>
 6.Clamp bleeders on specimen's torso with a hemostat.<br>
-7.Saw the torso's bones to access internal organs with a scalpel or saw.<br>
 8.Remove the subject's heart with a hemostat.<br>
 9.Insert replacement gland (Retrieve one from gland storage).<br>
 10.Consider dressing the specimen back to not disturb the habitat. <br>
