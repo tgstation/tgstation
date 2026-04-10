@@ -40,6 +40,7 @@
 	RegisterSignals(parent, triggering_signals, PROC_REF(explode))
 	if (!isnull(saboteur))
 		RegisterSignal(saboteur, COMSIG_QDELETING, PROC_REF(on_bomber_deleted))
+	log_bomber(saboteur, "has set a direct_explosive_trap with severity [explosive_force] on", parent, "to detonate on the signals [english_list(triggering_signals)]", message_admins = (!isnull(saboteur)))
 
 /datum/component/direct_explosive_trap/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE) + triggering_signals)
@@ -74,6 +75,9 @@
 	to_chat(victim, span_bolddanger("[source] was boobytrapped!"))
 	if (!isnull(saboteur))
 		to_chat(saboteur, span_bolddanger("Success! Your trap on [source] caught [victim.name]!"))
+	var/atom/parent_atom = parent
+	message_admins("EX_ACT explosion with severity [explosive_force] on [ADMIN_LOOKUPFLW(victim)]. Caused by direct_explosive_trap on: [ADMIN_VERBOSEJMP(parent_atom)]. Set by: [key_name(saboteur)].")
+	log_game("EX_ACT explosion with severity [explosive_force] on [key_name(victim)]. Caused by direct_explosive_trap on: [parent_atom.name] at [AREACOORD(parent_atom)]. Set by: [key_name(saboteur)].")
 	playsound(source, 'sound/effects/explosion/explosion2.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/explosion(get_turf(source))
 	EX_ACT(victim, explosive_force)
