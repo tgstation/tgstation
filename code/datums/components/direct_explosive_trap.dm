@@ -76,8 +76,8 @@
 	if (!isnull(saboteur))
 		to_chat(saboteur, span_bolddanger("Success! Your trap on [source] caught [victim.name]!"))
 	var/atom/parent_atom = parent
-	message_admins("EX_ACT explosion with severity [explosive_force] on [ADMIN_LOOKUPFLW(victim)]. Caused by direct_explosive_trap on: [ADMIN_VERBOSEJMP(parent_atom)]. Set by: [key_name(saboteur)].")
-	log_game("EX_ACT explosion with severity [explosive_force] on [key_name(victim)]. Caused by direct_explosive_trap on: [parent_atom.name] at [AREACOORD(parent_atom)]. Set by: [key_name(saboteur)].")
+	message_admins("Direct EX_ACT explosion with severity [explosive_force] on [ADMIN_LOOKUPFLW(victim)]. Caused by direct_explosive_trap on: [ADMIN_VERBOSEJMP(parent_atom)]. Set by: [key_name(saboteur)].")
+	log_game("Direct EX_ACT explosion with severity [explosive_force] on [key_name(victim)]. Caused by direct_explosive_trap on: [parent_atom.name] at [AREACOORD(parent_atom)]. Set by: [key_name(saboteur)].")
 	playsound(source, 'sound/effects/explosion/explosion2.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/explosion(get_turf(source))
 	EX_ACT(victim, explosive_force)
