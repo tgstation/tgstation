@@ -249,7 +249,7 @@
 	duration += workout_duration(new_owner, bonus_time)
 	return ..()
 
-/datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
+/datum/status_effect/exercised/refresh(effect, bonus_time)
 	duration += workout_duration(new_owner, bonus_time)
 	new_owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
 	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/athletics))
