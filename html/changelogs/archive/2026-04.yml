@@ -196,5 +196,7 @@
   Melbert:
   - bugfix: Fixes the IDC
   - bugfix: Carp mask can be used for internals again
+  - qol: Roundstart xeno egg is now mentioned in the roundstart report as an addendum,
+      rather than as a second report (usually) following the roundstart report.
   lelandkemble:
   - bugfix: Neurine works in the dead again
