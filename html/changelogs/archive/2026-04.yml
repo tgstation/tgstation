@@ -188,3 +188,13 @@
   siliconOpossum:
   - admin: Adds the jump-to-ghost verb, which brings your body to your aghost, it
       has a hotkey which defaults to F4.
+2026-04-10:
+  Aliceee2ch:
+  - spellcheck: Renamed golden data disk to syndicate data disk.
+  Meblert:
+  - balance: Wizard Transparence perk's curse is permanent
+  Melbert:
+  - bugfix: Fixes the IDC
+  - bugfix: Carp mask can be used for internals again
+  lelandkemble:
+  - bugfix: Neurine works in the dead again
