@@ -1260,6 +1260,7 @@
 	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/neurine
 	added_traits = list(TRAIT_ANTICONVULSANT)
+	self_consuming = TRUE
 	///brain damage level when we first started taking the chem
 	var/initial_bdamage = 200
 

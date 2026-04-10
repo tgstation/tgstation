@@ -322,6 +322,36 @@
 	desc = "It's not just a stick, it's a MAGIC stick?"
 	ammo_type = /obj/item/ammo_casing/magic/nothing
 
+//disabler wand
+/obj/item/gun/magic/wand/disabler
+	name = "wand of non harmful incapasitation"
+	desc = "One of those magic wands you can buy from a costume vendor, this one however is not entirely useless, funny."
+	ammo_type = /obj/item/ammo_casing/energy/disabler/smoothbore
+	self_charging = TRUE
+
+
+//real magic missile wand
+/obj/item/gun/magic/wand/missile
+	name = "wand of MISSILE"
+	desc = "One of those magic wands you can buy from a costume vendor, this one however has a bunch of explosion/missile launcher stickers on it, its also obviously painted red."
+	ammo_type = /obj/item/ammo_casing/rocket/heap
+	color = "#FF0000"
+
+
+//arrow wand
+/obj/item/gun/magic/wand/arrow
+	name = "AWSOME WAND OF BULLET MURDER"
+	desc = "What the fuck? it looks like one of those wands that you buy from the costume vendor but it has a sticker on it that says 'AWSOME WAND OF BULLET MURDER'"
+	ammo_type = /obj/item/ammo_casing/arrow
+
+
+//20mm wand
+/obj/item/gun/magic/wand/anti_tank
+	name = "wand of tank shell"
+	desc = "One of those magic wands you can buy from a costume vendor, this one reaks of gunpowder and has a different aura however, be careful where you aim this"
+	ammo_type = /obj/item/ammo_casing/mm20x138
+	self_charging = TRUE
+
 /obj/item/gun/magic/wand/nothing/do_suicide(mob/living/user)
 	. = ..()
 	return SHAME
