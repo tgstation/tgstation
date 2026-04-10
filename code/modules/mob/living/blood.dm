@@ -400,7 +400,7 @@
 
 	if(blood_data["viruses"] && transfer_viruses)
 		for(var/datum/disease/blood_disease as anything in blood_data["viruses"])
-			if((blood_disease.spread_flags & DISEASE_SPREAD_SPECIAL) || (blood_disease.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
+			if((blood_disease.spread_flags & (DISEASE_SPREAD_SPECIAL|DISEASE_SPREAD_NON_CONTAGIOUS)))
 				continue
 			target.ForceContractDisease(blood_disease)
 

@@ -3,14 +3,14 @@
 	name = "Asthma attack"
 	desc = "Subject is undergoing a autoimmune response which threatens to close the esophagus and halt all respiration, leading to death. \
 	Minor asthma attacks may disappear on their own, but all are dangerous."
-	cure_text = "Albuterol/Surgical intervention"
+	cure_text = /datum/reagent/medicine/albuterol::name + " or surgical intervention"
 	cures = list(/datum/reagent/medicine/albuterol)
 	agent = "Inflammatory"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CURABLE
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
-	spread_text = "Inflammatory"
-	visibility_flags = HIDDEN_PANDEMIC
+	spread_text = "None"
+	visibility_flags = HIDDEN_PANDEMIC|HIDDEN_BOOK
 	bypasses_immunity = TRUE
 	disease_flags = CURABLE|INCREMENTAL_CURE
 	required_organ = ORGAN_SLOT_LUNGS

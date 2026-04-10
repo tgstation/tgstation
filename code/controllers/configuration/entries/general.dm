@@ -802,8 +802,7 @@
 /datum/config_entry/flag/generate_assets_in_init
 	default = FALSE
 
-/datum/config_entry/number/minimum_ascension_time
-	default = 0 // 1 minute
-	min_val = 0
-
 /datum/config_entry/flag/fishing
+
+/datum/config_entry/string/policy_json_path
+	default = "policy.json"
