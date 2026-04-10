@@ -8,14 +8,14 @@
 	sound = null
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 300 SECONDS
+	cooldown_time = 180 SECONDS
 
 	invocation = "ASH'N P'SSG'"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	exit_jaunt_sound = null
-	jaunt_duration = 10 SECONDS
+	jaunt_duration = 7.5 SECONDS
 	jaunt_in_time = 1.3 SECONDS
 	jaunt_type = /obj/effect/dummy/phased_mob/spell_jaunt/red
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/ash_shift
@@ -80,7 +80,7 @@
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long
 	name = "Ashen Walk"
 	desc = "A long range spell that allows you pass unimpeded through multiple walls with a reduced cooldown."
-	cooldown_time = 240 SECONDS
+	cooldown_time = 120 SECONDS
 
 /obj/effect/temp_visual/dir_setting/ash_shift
 	name = "ash_shift"
