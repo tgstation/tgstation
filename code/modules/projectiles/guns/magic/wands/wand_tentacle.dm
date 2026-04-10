@@ -74,7 +74,7 @@
 /obj/effect/wizard_tentacle/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if (buckled_mob == user)
 		balloon_alert(user, "can't reach!")
-		return
+		return NONE
 	return ..()
 
 /// We're done now
@@ -133,7 +133,7 @@
 /// Something happened to make the tentacle let go
 /datum/status_effect/incapacitating/immobilized/wizard_tentacle/proc/release()
 	SIGNAL_HANDLER
-	owner.remove_status_effect(/datum/status_effect/incapacitating/immobilized/wizard_tentacle)
+	qdel(src)
 
 /// Something happened to our associated tentacle
 /datum/status_effect/incapacitating/immobilized/wizard_tentacle/proc/on_tentacle_left()

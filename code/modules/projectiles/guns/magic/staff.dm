@@ -116,7 +116,7 @@
 /obj/item/gun/magic/staff/animate/animate_atom_living(mob/living/owner)
 	var/mob/living/basic/mimic/copy/ranged/living_staff = new(drop_location(), src, owner)
 	QDEL_NULL(living_staff.ai_controller)
-	living_staff.ai_controller=  new /datum/ai_controller/basic_controller/mimic_copy/gun/animator(living_staff)
+	living_staff.ai_controller = new /datum/ai_controller/basic_controller/mimic_copy/gun/animator(living_staff)
 	return living_staff
 
 /// Heals people and even raises the dead

@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(cursed_vermin_by_stage, list(
 /datum/disease/verminous_plague/proc/spawn_mob()
 	var/creating_type = pick_weight(GLOB.cursed_vermin_by_stage["[stage]"])
 	var/mob/living/created = new creating_type(affected_mob.drop_location())
-	if (!created || QDELETED(created))
+	if (QDELETED(created))
 		return
 
 	var/obj/item/organ/lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)

@@ -29,9 +29,7 @@
 		user.visible_message(span_suicide("... but [user] is already animate!"))
 		return SHAME
 	var/mob/living/carbon/suicider = user
-	var/obj/item/animate_part = suicider.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if (!animate_part)
-		animate_part = suicider.get_bodypart(BODY_ZONE_HEAD)
+	var/obj/item/animate_part = suicider.get_organ_slot(ORGAN_SLOT_BRAIN) || suicider.get_bodypart(BODY_ZONE_HEAD)
 	if (!animate_part)
 		return SHAME
 
@@ -54,5 +52,5 @@
 /obj/item/gun/magic/wand/animate/animate_atom_living(mob/living/owner)
 	var/mob/living/basic/mimic/copy/ranged/living_wand = new(drop_location(), src, owner, TRUE) // It's already got eyes
 	QDEL_NULL(living_wand.ai_controller)
-	living_wand.ai_controller=  new /datum/ai_controller/basic_controller/mimic_copy/gun/animator(living_wand)
+	living_wand.ai_controller = new /datum/ai_controller/basic_controller/mimic_copy/gun/animator(living_wand)
 	return living_wand

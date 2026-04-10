@@ -60,8 +60,15 @@
 		victim.apply_damage(35, BRUTE, wound_bonus = 20, sharpness = SHARP_EDGED)
 		return
 
+	var/atom/animate_item = slapper
+	if (slapper.bodypart_flags & BODYPART_PSEUDOPART)
+		animate_item = victim.get_item_for_held_index(slapper.held_index)
+
 	slapper.dismember(silent = FALSE, wounding_type = WOUND_SLASH)
-	var/mob/living/bully = slapper.animate_atom_living(firer)
+
+	if (QDELETED(animate_item))
+		return
+	var/mob/living/bully = animate_item.animate_atom_living(firer)
 	if (!bully.ai_controller)
 		return
 	bully.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, victim)

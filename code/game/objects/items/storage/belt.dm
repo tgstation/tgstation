@@ -555,8 +555,7 @@
 		return // Nothing to swap with
 
 	wizard.temporarilyRemoveItemFromInventory(old_wand)
-	if (!wizard.put_in_active_hand(fresh_wand))
-		wizard.put_in_active_hand(fresh_wand)
+	if (!wizard.put_in_hands(fresh_wand))
 		return
 	to_chat(wizard, span_notice("You quickly draw [fresh_wand]."))
 	if (atom_storage.attempt_insert(old_wand, wizard))

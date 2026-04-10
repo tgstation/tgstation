@@ -68,7 +68,7 @@
 
 		if (istype(hat, /obj/item/clothing/head/wig))
 			hat.forceMove(target.drop_location())
-			qdel(hat)
+			hat.deconstruct(FALSE)
 			if (QDELETED(hat)) // IDK maybe it's disagreed
 				visible_message(span_warning("[target]'s \the [hat] is shredded by [src]!"))
 				log_combat(firer, target, "magically destroyed wig", src)
@@ -77,7 +77,6 @@
 		if(hat.flags_inv & HIDEHAIR)
 			var/obj/item/clothing/clothing_hat = hat // Not all hats are clothing
 			if (!istype(clothing_hat) || !(clothing_hat.clothing_flags & SNUG_FIT))
-				target.dropItemToGround(hat)
 				visible_message(span_warning("[hat] is knocked off [target]'s head!"))
 				target.dropItemToGround(hat)
 			return

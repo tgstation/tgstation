@@ -51,11 +51,11 @@
 	name = "bolt of inebriation"
 	icon_state = "energy"
 
+/obj/projectile/magic/booze/Initialize(mapload)
+	. = ..()
+	create_reagents(max_vol = 10)
+	reagents.add_reagent(/datum/reagent/consumable/ethanol/bacchus_blessing, 10)
+
 /obj/projectile/magic/booze/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	var/mob/living/carbon/victim = target
-	if (!istype(victim))
-		return
-	var/datum/reagent/consumable/ethanol/bacchus_blessing/booze = new() // Only the best for wizards. Two shots will knock out someone's liver.
-	booze.expose_mob(victim, INGEST)
-	victim.reagents.add_reagent(booze.type, 10)
+	reagents.trans_to(target, 10, methods = INGEST)
