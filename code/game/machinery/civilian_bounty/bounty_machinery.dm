@@ -280,19 +280,22 @@
 	switch(action) //several ui_acts are handled on parent by piratepad
 		if("pick")
 			pick_bounty(params["value"])
+			return TRUE
 		if("bounty")
 			add_bounties(user, pad.get_cooldown_reduction())
+			return TRUE
 		if("eject")
 			id_eject(user, inserted_scan_id)
 			inserted_scan_id = null
+			return TRUE
 		if("update_list")
 			playsound(src, 'sound/machines/data_transmission.ogg', 50) // Should only need to play once per round due to the list auto-updating afterwards.
 
 			var/bonus_bounties = clamp(round(length(GLOB.player_list) / 8), 0, 5) // The number of bounties to be generated is 5 + 1-per every 8 players on the server, up to a max of 10 total.
 			looped_global_update(1, CIV_BOUNTY_BASELINE + bonus_bounties, first_time = TRUE) // Just for visual flair
+			return TRUE
 		if("print")
 			print_sheet(user)
-	. = TRUE
 
 /// Self explanitory, holds the ID card in the console for bounty payout and manipulation.
 /obj/machinery/computer/piratepad_control/civilian/proc/id_insert(mob/user, obj/item/inserting_item, obj/item/target)
@@ -359,7 +362,7 @@
 		if(new_bounty.global_exempt)
 			continue
 
-		GLOB.shared_crew_bounties.insert(0, new_bounty)
+		GLOB.shared_crew_bounties.Insert(0, new_bounty)
 
 		if(enable_high_priority && prob(HIGH_PRIORITY_BOUNTY_ODDS))
 			new_bounty.high_priority = TRUE
