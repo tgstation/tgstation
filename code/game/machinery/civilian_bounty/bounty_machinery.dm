@@ -178,23 +178,25 @@
 	pad.icon_state = pad.idle_state
 	playsound(loc, 'sound/machines/synth/synth_yes.ogg', 30 , TRUE)
 	sending = FALSE
+	return TRUE
 
 ///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
 /obj/machinery/computer/piratepad_control/civilian/proc/add_bounties(mob/user, cooldown_reduction = 0)
 	var/datum/bank_account/id_account = inserted_scan_id?.registered_account
 	if(!id_account)
-		return
+		return FALSE
 	if((id_account.civilian_bounty || id_account.bounties) && !COOLDOWN_FINISHED(id_account, bounty_timer))
 		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(id_account, bounty_timer), round_seconds_to = 1)
 		balloon_alert(user, "try again in [time_left]!")
-		return
+		return FALSE
 	if(!inserted_scan_id.trim)
 		say("Requesting ID card has no job assignment registered!")
-		return
+		return FALSE
 
 	var/list/datum/bounty/crumbs = inserted_scan_id.trim.generate_bounty_list()
 	COOLDOWN_START(id_account, bounty_timer, (5 MINUTES) - cooldown_reduction)
 	id_account.bounties = crumbs
+	return TRUE
 
 
 /**
@@ -276,8 +278,6 @@
 	if(!user.can_perform_action(src) || (machine_stat & (NOPOWER|BROKEN)))
 		return
 	switch(action) //several ui_acts are handled on parent by piratepad
-		if("send")
-			start_sending(params["global"], user)
 		if("pick")
 			pick_bounty(params["value"])
 		if("bounty")
@@ -341,9 +341,11 @@
  */
 /obj/machinery/computer/piratepad_control/civilian/proc/update_global_bounty_list(update_up_to = CIV_BOUNTY_BASELINE, enable_high_priority = FALSE, list/running_jobs)
 	//First, clear out completed bounties.
-	for(var/datum/bounty/complete in GLOB.shared_crew_bounties)
-		if(complete.claimed)
-			GLOB.shared_crew_bounties -= complete
+	for(var/datum/bounty/complete_or_unique in GLOB.shared_crew_bounties)
+		if(complete_or_unique.claimed)
+			GLOB.shared_crew_bounties -= complete_or_unique
+		if(complete_or_unique.unique)
+			update_up_to++ // We're doing this to ignore the quantity of unique bounties in the global list.
 
 	//Then, add new bounties up to the limit.
 	var/list/jobs_picked = running_jobs || list()
@@ -357,7 +359,7 @@
 		if(new_bounty.global_exempt)
 			continue
 
-		GLOB.shared_crew_bounties += new_bounty
+		GLOB.shared_crew_bounties.insert(0, new_bounty)
 
 		if(enable_high_priority && prob(HIGH_PRIORITY_BOUNTY_ODDS))
 			new_bounty.high_priority = TRUE

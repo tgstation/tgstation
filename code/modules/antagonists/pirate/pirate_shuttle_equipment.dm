@@ -286,7 +286,7 @@
 			recalc()
 			. = TRUE
 		if("send")
-			start_sending()
+			start_sending(params["global"], usr)
 			. = TRUE
 		if("stop")
 			stop_sending()
@@ -311,7 +311,9 @@
 	if(!value)
 		status_report += "0"
 
-/// Deletes and sells the item
+/**
+ * Sorts through all items on the control pad via pirate_export_loop, then generates a printout to view in the TGUI.
+ */
 /obj/machinery/computer/piratepad_control/proc/send(check_global = FALSE, mob/user)
 	if(!sending)
 		return
