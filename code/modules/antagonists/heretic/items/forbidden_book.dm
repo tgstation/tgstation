@@ -13,7 +13,7 @@
 	/// How fast we can drain influences
 	var/drain_speed = 5 SECONDS
 	/// How fast we can draw runes
-	var/draw_speed = 8 SECONDS
+	var/draw_speed = 22.5 SECONDS
 
 /obj/item/codex_cicatrix/Initialize(mapload)
 	. = ..()
