@@ -50,6 +50,52 @@
 	ASSERT(dragon.rift_ability == src) // Badmin protection.
 	QDEL_NULL(dragon.rift_ability) // Deletes this action when used successfully, we re-gain a new one on success later.
 
+/// Points towards a chosen location in which a rift can be placed
+/datum/action/innate/locate_rift
+	name = "Locate Rift"
+	desc = "Find out where a potential rift location is."
+	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
+	button_icon = 'icons/mob/actions/actions_space_dragon.dmi'
+	button_icon_state = "locate_carp_rift"
+
+/datum/action/innate/locate_rift/Activate()
+	var/datum/antagonist/space_dragon/dragon_datum = owner.mind?.has_antag_datum(/datum/antagonist/space_dragon)
+	var/mob/living/dragon_mob = dragon_datum?.owner.current
+	if(!dragon_mob)
+		return
+	if(!is_station_level(dragon_mob.z))
+		dragon_mob.balloon_alert(dragon_mob, "too far offstation!")
+		return
+
+	var/area/chosen_area = tgui_input_list(owner, "Select the area you'd like to be pointed towards.", "Locate Rift", dragon_datum.chosen_rift_areas)
+	if(!chosen_area)
+		return
+	if(chosen_area == get_area(dragon_mob))
+		dragon_mob.balloon_alert(dragon_mob, "already here!")
+		return
+
+	var/turf/chosen_turf = pick(get_area_turfs(chosen_area))
+
+	var/message = ""
+	if(chosen_turf.z != dragon_mob.z)
+		message = "[chosen_turf.z > dragon_mob.z ? "above" : "below"] you, "
+	else
+		switch(get_dist(dragon_mob, chosen_turf)) // Exact same numbers as the heretic heart tracker
+			if(0 to 15)
+				message = "very near, "
+			if(16 to 31)
+				message = "near, "
+			if(32 to 127)
+				message = "far, "
+			else
+				message = "very far, "
+
+	message += dir2text(get_dir(dragon_mob, chosen_turf))
+	message += "!"
+
+	dragon_mob.balloon_alert(dragon_mob, message)
+
 /**
  * # Carp Rift
  *
