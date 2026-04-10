@@ -171,6 +171,7 @@
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29
 	)
 	var/base_shots_per_stamina_bar = 8
+	var/additional_shots_per_athletics_level = 2
 
 /obj/item/gun/energy/laser/musket/repeater/Initialize(mapload)
 	. = ..()
@@ -182,7 +183,7 @@
 /obj/item/gun/energy/laser/musket/repeater/proc/get_effective_stamina_cost(mob/living/shooter)
 	var/total_shots = base_shots_per_stamina_bar
 	var/athletics_skill_modifier = (shooter.mind?.get_skill_level(/datum/skill/athletics) || 1) - 1
-	total_shots += athletics_skill_modifier * 2
+	total_shots += athletics_skill_modifier * additional_shots_per_athletics_level
 	if(HAS_TRAIT(shooter, TRAIT_STRENGTH))
 		total_shots *= 2
 	var/obj/item/organ/cyberimp/chest/spine/potential_spine = shooter.get_organ_slot(ORGAN_SLOT_SPINE)
