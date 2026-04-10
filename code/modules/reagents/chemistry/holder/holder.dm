@@ -18,10 +18,6 @@
 	var/flags
 	///list of reactions currently on going, this is a lazylist for optimisation
 	var/list/datum/equilibrium/reaction_list
-	///cached list of reagents typepaths (not object references), this is a lazylist for optimisation
-	var/list/datum/reagent/previous_reagent_list
-	///If a reaction fails due to temperature or pH, this tracks the required temperature or pH for it to be enabled.
-	var/list/failed_but_capable_reactions
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
 	///UI lookup stuff
@@ -48,7 +44,6 @@
 	if(is_reacting) //If false, reaction list should be cleaned up
 		force_stop_reacting()
 	QDEL_LAZYLIST(reaction_list)
-	previous_reagent_list = null
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 	my_atom = null
@@ -491,7 +486,6 @@
 
 		if(!isnull(target_id))
 			if(reagent.type == target_id)
-				force_stop_reagent_reacting(reagent)
 				transfer_amount = min(amount, reagent.volume)
 			else
 				continue
@@ -611,7 +605,6 @@
 
 			//removing it and store in a seperate list for processing later
 			cached_reagents -= reagent
-			LAZYREMOVE(previous_reagent_list, reagent.type)
 			deleted_reagents += reagent
 
 			//move pointer back so we don't overflow & decrease length

@@ -2,9 +2,10 @@
 /datum/disease/gastritium
 	name = "Gastritium"
 	desc = "If left untreated, may manifest in severe Tritium heartburn."
-	form = "Infection"
+	form = "Bacteria"
 	agent = "Atmobacter Polyri"
-	cure_text = "Milk"
+	cure_text = /datum/reagent/consumable/milk::name
+	spread_text = "None"
 	cures = list(/datum/reagent/consumable/milk)
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
