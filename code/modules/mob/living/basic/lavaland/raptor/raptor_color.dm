@@ -124,12 +124,9 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 // Purple raptors never "fully" grow up, and remain usable as backpacks
 /datum/raptor_color/purple/setup_adult(mob/living/basic/raptor/raptor)
-	raptor.base_pixel_w = initial(raptor.base_pixel_w)
 	raptor.can_be_held = TRUE
 	raptor.density = FALSE
 	raptor.move_resist = MOVE_RESIST_DEFAULT
-	raptor.change_offsets = FALSE
-	raptor.remove_offsets(RAPTOR_INNATE_SOURCE, FALSE)
 	raptor.held_w_class = WEIGHT_CLASS_BULKY
 	. = ..()
 	// Non-shorties cannot ride these, so we gotta keep em tameable through food
@@ -165,8 +162,6 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	var/mutable_appearance/wings_underlay = null
 	/// Our drift force
 	var/drift_force = 2 NEWTONS
-	/// Our stabilizing force
-	var/stabilizer_force = 4.5 NEWTONS
 
 /obj/item/mob_holder/purple_raptor/Initialize(mapload, mob/living/held_mob, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags)
 	. = ..()
@@ -193,7 +188,6 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 		/datum/component/jetpack, \
 		TRUE, \
 		drift_force, \
-		stabilizer_force, \
 		COMSIG_RAPTOR_WINGS_OPENED, \
 		COMSIG_RAPTOR_WINGS_CLOSED, \
 		null, \

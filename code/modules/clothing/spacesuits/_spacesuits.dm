@@ -123,7 +123,9 @@
 	STOP_PROCESSING(SSobj, src)
 	var/mob/living/carbon/human/human_user = user
 	if(istype(human_user) && human_user.hud_used)
-		human_user.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
+		var/atom/movable/screen/spacesuit/spacesuit_hud = human_user.hud_used.screen_objects[HUD_MOB_SPACESUIT]
+		if (spacesuit_hud)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
 
 // Space Suit temperature regulation and power usage
 /obj/item/clothing/suit/space/process(seconds_per_tick)
@@ -159,7 +161,9 @@
 		QDEL_NULL(cell)
 	var/mob/living/carbon/human/human = src.loc
 	if(istype(human) && human.hud_used)
-		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
+		var/atom/movable/screen/spacesuit/spacesuit_hud = human.hud_used.screen_objects[HUD_MOB_SPACESUIT]
+		if (spacesuit_hud)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -306,8 +310,12 @@
 	if(!show_hud || human.wear_suit != src || isnull(human.hud_used))
 		return
 
+	var/atom/movable/screen/spacesuit/spacesuit_hud = human.hud_used.screen_objects[HUD_MOB_SPACESUIT]
+	if(!spacesuit_hud)
+		return
+
 	if(!cell)
-		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_MISSING, 0, thermal_on)
+		spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_MISSING, 0, thermal_on)
 		return
 
 	var/cell_percent = cell.percent()
@@ -315,17 +323,17 @@
 	// if there is, whethere the cell's capacity indicates high, medium or low
 	// charge based on it.
 	if(cell.charge < THERMAL_REGULATOR_COST)
-		human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_EMPTY, cell_percent, thermal_on)
+		spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_EMPTY, cell_percent, thermal_on)
 		return
 	switch(cell_percent)
 		if(0 to 20)
-			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_VERY_LOW, cell_percent, thermal_on)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_VERY_LOW, cell_percent, thermal_on)
 		if(21 to 40)
-			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_LOW, cell_percent, thermal_on)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_LOW, cell_percent, thermal_on)
 		if(41 to 60)
-			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_MID, cell_percent, thermal_on)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_MID, cell_percent, thermal_on)
 		if(61 to 100)
-			human.hud_used.spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_HIGH, cell_percent, thermal_on)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_HIGH, cell_percent, thermal_on)
 
 // zap the cell if we get hit with an emp
 /obj/item/clothing/suit/space/emp_act(severity)
