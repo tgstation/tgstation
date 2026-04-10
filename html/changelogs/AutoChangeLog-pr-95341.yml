@@ -1,0 +1,7 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Custom material spears can now be crafted using shards or (any) crystal sheets on a wireprod"
+  - rscadd: "Added 3 new material effects: Vampire's Bane (Silver), Teleporting (BS/Telecrystals) and Penetrating (Telecrystals)"
+  - balance: "Spears had their material stat calculations adjusted a bit to account for the new slot system."
+  - refactor: "Implemented datum-based material effects and slots"
