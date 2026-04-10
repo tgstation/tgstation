@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Roundstart xeno egg is now mentioned in the roundstart report as an addendum, rather than as a second report (usually) following the roundstart report."
