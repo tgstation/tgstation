@@ -141,7 +141,7 @@
 
 /obj/item/implant/Destroy()
 	if(imp_in)
-		removed(imp_in)
+		removed(imp_in, silent = TRUE, special = TRUE)
 	return ..()
 
 /**
