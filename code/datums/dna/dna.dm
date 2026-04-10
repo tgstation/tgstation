@@ -619,7 +619,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		return
 	var/datum/mutation/mutation = dna.get_mutation(mutation_path)
 	if(mutation)
-		mutation.scrambled = TRUE
+		mutation.scrambled = FALSE
 
 /mob/living/carbon/proc/random_mutate_unique_identity()
 	if(!has_dna())
