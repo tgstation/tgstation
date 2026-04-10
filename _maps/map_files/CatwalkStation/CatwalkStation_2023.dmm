@@ -10861,7 +10861,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "cOJ" = (
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/glitter,
@@ -13663,6 +13663,14 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/green/filled/mid_joiner,
 /obj/structure/table/glass,
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 2;
+	pixel_x = 3
+	},
+/obj/item/book/manual/wiki/infections{
+	name = "The Evil Doctor's How-To";
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/virology)
 "dCm" = (
@@ -19666,11 +19674,6 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/book/manual/wiki/infections{
-	name = "The Evil Doctor's How-To";
-	pixel_x = 5;
-	pixel_y = 15
-	},
 /obj/item/binoculars{
 	pixel_y = 1
 	},
@@ -24017,7 +24020,7 @@
 "goW" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	pixel_y = 2
 	},
 /turf/open/floor/wood,
@@ -31604,7 +31607,7 @@
 "itr" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	pixel_y = 2
 	},
 /turf/open/floor/iron/dark/smooth_large,
@@ -33224,7 +33227,7 @@
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
 "iPv" = (
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -45997,7 +46000,7 @@
 	},
 /obj/item/book/manual/wiki/medicine{
 	pixel_x = 1;
-	pixel_y = 5
+	pixel_y = -2
 	},
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner,
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
@@ -46006,6 +46009,10 @@
 /obj/item/tgui_book/manual/dsm{
 	pixel_x = 5;
 	pixel_y = -2
+	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 2;
+	pixel_x = 3
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
@@ -60940,7 +60947,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "qjy" = (
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	pixel_y = 2
 	},
 /turf/open/floor/iron,
@@ -63099,7 +63106,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/sorting)
 "qNo" = (
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/blood/oil,
@@ -65052,7 +65059,7 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "rpq" = (
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	pixel_y = 2
 	},
 /turf/open/floor/plating,
@@ -76168,6 +76175,10 @@
 	pixel_x = 5;
 	pixel_y = 9
 	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = -3;
+	pixel_x = 3
+	},
 /obj/item/clothing/head/soft/blue{
 	pixel_x = 10;
 	pixel_y = 1
@@ -79748,7 +79759,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "vgV" = (
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -84488,7 +84499,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "wtN" = (
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/vomit/old,

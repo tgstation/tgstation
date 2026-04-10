@@ -330,7 +330,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 			var/datum/action/cooldown/mob_cooldown/capture_photo/photo_ability = new(pet)
 			photo_ability.Grant(pet)
 			pet.ai_controller?.set_blackboard_key(BB_PHOTO_ABILITY, photo_ability)
-			RegisterSignal(photo_ability.ability_camera, COMSIG_CAMERA_IMAGE_CAPTURED, PROC_REF(on_photo_captured))
+			RegisterSignal(photo_ability.internal_camera, COMSIG_CAMERA_IMAGE_CAPTURED, PROC_REF(on_photo_captured))
 
 /datum/computer_file/program/virtual_pet/proc/announce_global_updates(message)
 	if(isnull(message))

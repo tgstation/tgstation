@@ -33,7 +33,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "bT" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/carpet/green,
@@ -431,7 +431,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "mx" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/carpet/green,
@@ -509,7 +509,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "oB" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
@@ -739,7 +739,7 @@
 /turf/open/floor/sepia,
 /area/shuttle/escape)
 "we" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
@@ -911,7 +911,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Bf" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Bj" = (

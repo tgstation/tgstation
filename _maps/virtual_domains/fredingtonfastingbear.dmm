@@ -362,7 +362,7 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "sk" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "sl" = (

@@ -273,7 +273,7 @@
 /area/shuttle/hunter)
 "lD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /obj/effect/decal/cleanable/wrapping,
 /turf/open/floor/iron/grimy,
 /area/shuttle/hunter)

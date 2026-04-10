@@ -91,7 +91,7 @@
 		return
 
 	for(var/datum/disease/strain as anything in source.data["viruses"])
-		if ((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
+		if ((strain.spread_flags & (DISEASE_SPREAD_SPECIAL|DISEASE_SPREAD_NON_CONTAGIOUS)))
 			continue
 
 		if (methods & INGEST)

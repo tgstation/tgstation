@@ -4,11 +4,13 @@
 //Visibility Flags
 #define HIDDEN_SCANNER (1<<0)
 #define HIDDEN_PANDEMIC (1<<1)
+#define HIDDEN_BOOK (1<<2)
 
 //Bitfield for Visibility Flags
 DEFINE_BITFIELD(visibility_flags, list(
 	"HIDDEN_FROM_ANALYZER" = HIDDEN_SCANNER,
 	"HIDDEN_FROM_PANDEMIC" = HIDDEN_PANDEMIC,
+	"HIDDEN_FROM_BOOK" = HIDDEN_BOOK,
 ))
 
 //Disease Flags

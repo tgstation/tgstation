@@ -29,7 +29,7 @@
 		return
 
 	if(held_item.tool_behaviour == TOOL_WRENCH && !circuit?.needs_anchored)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	switch(state)

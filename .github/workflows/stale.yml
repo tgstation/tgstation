@@ -40,23 +40,21 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            const pull_requests = JSON.parse('${{steps.stale.outputs.staled-issues-prs}}')
-                                      .filter(issue => !!issue.pull_request)
-                                      .map(pr => ({
-                                          title: pr.title,
-                                          number: pr.number,
-                                          html_url: pr.pull_request.html_url,
-                                      }));
-
-            return JSON.stringify(pull_requests)
+            return JSON.parse(`${{steps.stale.outputs.staled-issues-prs}}`)
+                       .filter(issue => !!issue.pull_request)
+                       .map(pr => ({
+                        title: pr.title,
+                        number: pr.number,
+                        html_url: pr.pull_request.html_url,
+                       }));
 
   announce:
     runs-on: ubuntu-24.04
     needs: stale
     if: ${{ needs.stale.outputs.staled_prs != '[]' }}
     strategy:
-     matrix:
-      pull_request: ${{ fromJSON(needs.stale.outputs.staled_prs) }}
+      matrix:
+        pull_request: ${{ fromJSON(needs.stale.outputs.staled_prs) }}
     steps:
       - name: "Check for DISCORD_WEBHOOK"
         id: secrets_set

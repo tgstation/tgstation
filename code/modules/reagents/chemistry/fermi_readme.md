@@ -67,7 +67,7 @@ Lets go over the reaction vars below. These can be edited and set on a per chemi
 	var/H_ion_release 			= 0.01       	// pH change per 1u reaction
 	var/rate_up_lim 			= 20			// Optimal/max rate possible if all conditions are perfect
 	var/purity_min 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
-	var/reaction_flags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
+	var/reaction_flags							// bitflags for clear conversions;
 ```
 
 ### How temperature ranges are set and how reaction rate is determined
@@ -129,9 +129,7 @@ The thermic_constant is how much the temperature changes per u created, so for 1
 Reaction_flags can be used to set these defines:
 
 ```dm
-#define REACTION_CLEAR_IMPURE   //Convert into impure/pure on reaction completion in the datum/reagents holder instead of on consumption
 #define REACTION_CLEAR_INVERSE  //Convert into inverse on reaction completion when purity is low enough in the datum/reagents holder instead of on consumption
-#define REACTION_CLEAR_RETAIN	//Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above. This is so that it can split again after splitting from a reaction (i.e. if your impure_chem or inverse_chem has its own impure_chem/inverse_chem and you want it to split again on consumption).
 #define REACTION_INSTANT        //Used to create instant reactions
 
 /datum/chemical_reaction
@@ -176,10 +174,9 @@ The new vars that are introduced are below:
 - `pH` is the innate pH of the reagent and is used to calculate the pH of a reagents datum on addition/removal. This does not change and is a reference value. The reagents datum pH changes.
 - `purity` is the INTERNAL value for splitting. This is set to 1 after splitting so that it doesn't infinite split
 - `creation_purity` is the purity of the reagent on creation. This won't change. If you want to write code that checks the purity in any of the methods, use this.
-- `impure_chem` is the datum type that is created provided that its `creation_purity` is above the `inverse_chem_val`. When the reagent is consumed it will split into this OR if the associated `datum/chemical_recipe` has a REACTION_CLEAR_IMPURE flag it will split at the end of the reaction in the `datum/reagents` holder
+- `impure_chem` is the datum type that is created provided that its `creation_purity` is above the `inverse_chem_val`. When the reagent is consumed it will split into this OR if the associated `datum/chemical_recipe` has a REACTION_CLEAR_INVERSE flag it will split at the end of the reaction in the `datum/reagents` holder
 - `inverse_chem_val` if a reagent's purity is below this value it will 100% convert into `inverse_chem`. If above it will split into `impure_chem`. See the note on purity effects above
 - `inverse_chem` is the datum type that is created provided that its `creation_purity` is below the `inverse_chem_val`. When the reagent is consumed it will 100% convert into this OR if the associated `datum/chemical_recipe` has a REACTION_CLEAR_INVERSE flag it will 100% convert at the end of the reaction in the `datum/reagents` holder
-- `failed_chem` is the chem that the product is 100% converted into if the purity is below the associated `datum/chemical_recipies`' `PurityMin` AT THE END OF A REACTION.
 
 When writing any reagent code ALWAYS use creation_purity. Purity is kept for internal mechanics only and won’t reflect the purity on creation.
 
@@ -209,8 +206,6 @@ There are a few variables that are useful to know about
 	var/chem_temp = 150
 	///pH of the whole system
 	var/ph = CHEMICAL_NORMAL_PH //aka 7
-	///cached list of reagents
-	var/list/datum/reagent/previous_reagent_list = new/list()
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
 ```
@@ -218,4 +213,3 @@ There are a few variables that are useful to know about
 - chem_temp is the temperature used in the `datum/chemical_recipe`
 - pH is a result of the sum of all reagents, as well as any changes from buffers and reactions. This is the pH used in `datum/chemical_recipe`.
 - isReacting is a bool that can be used outside to ensure that you don't touch a reagents that is reacting.
-- previous_reagent_list is a list of the previous reagents (just the typepaths, not the objects) that was present on the last handle_reactions() method. This is to prevent pointless method calls.

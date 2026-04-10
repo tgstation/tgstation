@@ -281,7 +281,7 @@
 		/datum/reagent/toxin = 2,
 	)
 	tastes = list("cobwebs" = 1)
-	foodtypes = MEAT | TOXIC | BUGS
+	foodtypes = MEAT | TOXIC | BUGS | EGG
 	w_class = WEIGHT_CLASS_TINY
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
@@ -362,7 +362,7 @@
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/powercrepe
-	name = "Powercrepe"
+	name = "powercrepe"
 	desc = "With great power, comes great crepes.  It looks like a pancake filled with jelly but packs quite a punch."
 	icon_state = "powercrepe"
 	inhand_icon_state = "powercrepe"

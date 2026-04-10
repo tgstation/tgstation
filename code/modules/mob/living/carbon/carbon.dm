@@ -535,6 +535,10 @@
 		cure_blind(EYES_COVERED)
 		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
 
+	else if(tint >= TINT_MILD)
+		cure_blind(EYES_COVERED)
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1)
+
 	else
 		cure_blind(EYES_COVERED)
 		clear_fullscreen("tint", 0 SECONDS)
@@ -843,7 +847,7 @@
 	return NONE
 
 /mob/living/carbon/proc/can_defib_client()
-	return (client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
+	return (HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))

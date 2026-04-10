@@ -186,6 +186,10 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
+"iN" = (
+/obj/machinery/computer/slot_machine/syndicate,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation)
 "jr" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -1346,7 +1350,7 @@ FV
 ca
 BX
 dW
-We
+iN
 JB
 vI
 vI

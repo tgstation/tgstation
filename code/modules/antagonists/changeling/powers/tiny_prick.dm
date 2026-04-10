@@ -5,6 +5,7 @@
 	button_icon_state = "sting_null" //This must be equal to the icon state for `/atom/movable/screen/ling/sting`
 
 /datum/action/changeling/sting/Trigger(mob/clicker, trigger_flags)
+	SHOULD_CALL_PARENT(FALSE) //We are snowflaked from parent
 	var/mob/user = owner
 	if(!user || !user.mind)
 		return

@@ -213,9 +213,8 @@
 	set_wires(new /datum/wires/vending(src))
 
 	if(SStts.tts_enabled)
-		var/static/vendor_voice_by_type = list()
-		if(!vendor_voice_by_type[type])
-			vendor_voice_by_type[type] = pick(SStts.available_speakers)
+		var/static/list/vendor_voice_by_type = list()
+		vendor_voice_by_type[type] ||= SStts.random_tts_voice()
 		voice = vendor_voice_by_type[type]
 
 	slogan_list = splittext(product_slogans, ";")

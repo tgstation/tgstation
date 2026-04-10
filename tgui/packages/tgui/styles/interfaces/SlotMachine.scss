@@ -152,15 +152,6 @@
   transform: translateY(calc(-60px * 27));
   // animation-duration: 3.5s;
   text-align: center;
-  // animation: scroll-up 2s linear infinite;
-  // animation-play-state: paused;
-  // transform: translateY(0px);
-  text-shadow:
-    2px 2px 6px #000,
-    0 2px #000,
-    0 -2px #000,
-    2px 0 #000,
-    -2px 0 #000;
 }
 
 .SlotMachine__IconStrip--spinning {
@@ -169,6 +160,20 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(1, 1.26, 0.88, 0.96);
+}
+
+.SlotMachine__Symbol {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .slotmachines32x32 {
+    width: 32px;
+    height: 32px;
+    image-rendering: pixelated;
+    filter: drop-shadow(1px 1px 1px black);
+  }
 }
 
 @keyframes SlotMachine__Spin {

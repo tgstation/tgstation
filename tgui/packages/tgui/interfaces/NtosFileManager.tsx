@@ -90,7 +90,7 @@ const PrintDialog = (props: PrintDialogProps) => {
         left="5%"
       >
         <Stack fill justify="space-between">
-          <Stack.Item maxWidth="40%">
+          <Stack.Item maxWidth="70%">
             <Section title="Formats">
               <Stack vertical overflowY="scroll">
                 {printTypes.map((type, i) => {

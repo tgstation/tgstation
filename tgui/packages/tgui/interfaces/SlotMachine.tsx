@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import { Blink, Box, Button, Icon, Section, Stack } from 'tgui-core/components';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Blink, Box, Button, Section, Stack } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
 import { classes } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
-  icons: string[];
+  symbols: SlotSymbol[];
   reels: Reel[];
   balance: number;
   working: number;
@@ -17,36 +17,24 @@ type Data = {
   jackpots: number;
   jackpot: number;
   paymode: number;
+  jackpot_id: string;
+  trap_id: string;
+};
+
+type SlotSymbol = {
+  id: string;
+  icon_id: string;
 };
 
 type Reel = {
-  icons: string[];
-  spinning: number;
-};
-
-type IconMeta = {
-  color: string;
-};
-
-const iconMetaByName: Record<string, IconMeta> = {
-  'fa-7': { color: '#b22' },
-  'fa-star': { color: '#fd6' },
-  'fa-lemon': { color: '#ce0' },
-  'fa-apple-whole': { color: '#d64' },
-  'fa-biohazard': { color: '#2c0' },
-  'fa-dollar-sign': { color: '#08b' },
-  'fa-bomb': { color: '#876' },
+  symbols: string[];
 };
 
 const pluralS = (amount: number) => {
   return amount === 1 ? '' : 's';
 };
 
-const slotIconToColor = (iconName: string): string => {
-  return iconMetaByName[iconName]?.color || '#f0f';
-};
-
-const pickRandomMany = <T extends unknown>(items: T[], n: number) => {
+const pickRandomMany = <T,>(items: T[], n: number) => {
   const result: T[] = [];
   for (let i = 0; i < n; i += 1) {
     result.push(pickRandom(items));
@@ -54,17 +42,28 @@ const pickRandomMany = <T extends unknown>(items: T[], n: number) => {
   return result;
 };
 
-const pickRandom = <T extends unknown>(items: T[]) => {
+const pickRandom = <T,>(items: T[]) => {
   return items[Math.floor(Math.random() * items.length)];
 };
 
 export const SlotMachine = () => {
   const { act, data } = useBackend<Data>();
-  const { icons, cost, reels, balance } = data;
+  const { symbols, cost, reels, balance } = data;
   const spinning = data.working === 1;
 
+  const symbolsById = useMemo(() => {
+    const map: Record<string, SlotSymbol> = {};
+    for (const symbol of symbols) {
+      map[symbol.id] = symbol;
+    }
+    return map;
+  }, [symbols]);
+
+  const jackpotSymbol = symbolsById[data.jackpot_id];
+  const trapSymbol = data.trap_id ? symbolsById[data.trap_id] : null;
+
   return (
-    <Window width={300} height={396}>
+    <Window width={300} height={445}>
       <Window.Content>
         <Banner />
         <Section>
@@ -72,43 +71,82 @@ export const SlotMachine = () => {
             {reels.map((reel, i) => (
               <div key={i} className={'SlotMachine__Reel'}>
                 <IconStrip
-                  icons={icons}
-                  iconsNeeded={reel.icons}
+                  symbols={symbols}
+                  symbolsById={symbolsById}
+                  symbolsNeeded={reel.symbols}
                   spinning={spinning}
                 />
               </div>
             ))}
           </div>
         </Section>
-        <Stack align={'stretch'}>
-          <Stack.Item grow={1}>
-            <Section
-              fill
-              title="Balance"
-              buttons={
-                <Button onClick={() => act('payout')} disabled={balance <= 0}>
-                  Refund
-                </Button>
-              }
-            >
-              <Box textAlign={'center'} fontSize={2}>
-                {formatMoney(balance)} cr
+        <Stack vertical fill>
+          <Stack.Item>
+            <Section fill align={'center'}>
+              <Box inline textAlign={'center'} color="good" bold>
+                Jackpot:
               </Box>
+              {jackpotSymbol && (
+                <Box
+                  className={classes([
+                    'slotmachines32x32',
+                    jackpotSymbol.icon_id,
+                  ])}
+                  style={{ verticalAlign: 'middle' }}
+                />
+              )}
+
+              {trapSymbol && (
+                <>
+                  <Box inline color="bad" bold ml={5} mr={1}>
+                    Trap:
+                  </Box>
+                  <Box
+                    className={classes([
+                      'slotmachines32x32',
+                      trapSymbol.icon_id,
+                    ])}
+                    style={{ verticalAlign: 'middle' }}
+                  />
+                </>
+              )}
             </Section>
           </Stack.Item>
           <Stack.Item grow={1}>
-            <Section fill>
-              <Button
-                fluid
-                textAlign={'center'}
-                fontSize={3}
-                color={'green'}
-                onClick={() => act('spin')}
-                disabled={spinning || balance < cost}
-              >
-                Spin!
-              </Button>
-            </Section>
+            <Stack align={'stretch'}>
+              <Stack.Item grow={1}>
+                <Section
+                  fill
+                  title="Balance"
+                  buttons={
+                    <Button
+                      onClick={() => act('payout')}
+                      disabled={balance <= 0}
+                    >
+                      Refund
+                    </Button>
+                  }
+                >
+                  <Box textAlign={'center'} fontSize={2}>
+                    {formatMoney(balance)} cr
+                  </Box>
+                </Section>
+              </Stack.Item>
+              <Stack.Item grow={1}>
+                <Section fill>
+                  <Button
+                    fluid
+                    textAlign={'center'}
+                    fontSize={3}
+                    color={'green'}
+                    onClick={() => act('spin')}
+                    disabled={spinning || balance < cost}
+                  >
+                    Spin!
+                  </Button>
+                </Section>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -301,30 +339,32 @@ const BannerStats = () => {
 const ICON_STRIP_LENGTH = 30;
 
 type IconStripProps = {
-  icons: string[];
-  iconsNeeded: string[];
+  symbols: SlotSymbol[];
+  symbolsById: Record<string, SlotSymbol>;
+  symbolsNeeded: string[];
   spinning?: boolean;
 };
 
 const IconStrip = (props: IconStripProps) => {
-  const { icons, iconsNeeded, spinning } = props;
+  const { symbols, symbolsById, symbolsNeeded, spinning } = props;
+  const symbolIds = useMemo(() => symbols.map((s) => s.id), [symbols]);
 
-  const [drawnIcons, setDrawnIcons] = useState([
-    ...pickRandomMany(icons, ICON_STRIP_LENGTH - 3),
-    ...iconsNeeded,
+  const [drawnSymbols, setDrawnSymbols] = useState<string[]>([
+    ...pickRandomMany(symbolIds, ICON_STRIP_LENGTH - 3),
+    ...symbolsNeeded,
   ]);
 
   useEffect(() => {
     if (spinning) {
-      setDrawnIcons((drawnIcons) => [
-        ...drawnIcons.slice(-3),
-        ...pickRandomMany(icons, ICON_STRIP_LENGTH - 6),
-        ...iconsNeeded,
+      setDrawnSymbols((drawn) => [
+        ...drawn.slice(-3),
+        ...pickRandomMany(symbolIds, ICON_STRIP_LENGTH - 6),
+        ...symbolsNeeded,
       ]);
     } else {
-      setDrawnIcons([
-        ...pickRandomMany(icons, ICON_STRIP_LENGTH - 3),
-        ...iconsNeeded,
+      setDrawnSymbols([
+        ...pickRandomMany(symbolIds, ICON_STRIP_LENGTH - 3),
+        ...symbolsNeeded,
       ]);
     }
   }, [spinning]);
@@ -336,18 +376,16 @@ const IconStrip = (props: IconStripProps) => {
         spinning && 'SlotMachine__IconStrip--spinning',
       ])}
     >
-      {drawnIcons.map((icon, i) => (
-        <Icon
-          key={i}
-          size={2}
-          lineHeight={'60px'}
-          name={icon}
-          color={slotIconToColor(icon)}
-          style={{
-            display: 'block',
-          }}
-        />
-      ))}
+      {drawnSymbols.map((symbolId, i) => {
+        const symbol = symbolsById[symbolId];
+        return (
+          <div key={i} className="SlotMachine__Symbol">
+            {symbol && (
+              <Box className={classes(['slotmachines32x32', symbol.icon_id])} />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -119,7 +119,7 @@
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/cubannachos
-	name = "Cuban nachos"
+	name = "cuban nachos"
 	desc = "That's some dangerously spicy nachos."
 	icon = 'icons/obj/food/mexican.dmi'
 	icon_state = "cubannachos"

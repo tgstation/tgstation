@@ -113,6 +113,9 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if(!istype(L, /list))
 		to_chat(src, "Not a List.", confidential = TRUE)
 		return
+	if(isalist(L))
+		to_chat(src, "alists are currently unsupported", confidential = TRUE)
+		return
 
 	if(L.len > 1000)
 		var/confirm = tgui_alert(usr, "The list you're trying to edit is very long, continuing may crash the server.", "Warning", list("Continue", "Abort"))

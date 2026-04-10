@@ -189,8 +189,8 @@ Medical HUD! Basic mode needs suit sensors on.
 		set_hud_image_state(STATUS_HUD, "hudxeno")
 		return FALSE
 
-	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-		if(HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || can_defib_client())
+	if(!appears_alive())
+		if(can_defib_client())
 			set_hud_image_state(STATUS_HUD, "huddefib")
 		else if(HAS_TRAIT(src, TRAIT_GHOSTROLE_ON_REVIVE))
 			set_hud_image_state(STATUS_HUD, "hudghost")

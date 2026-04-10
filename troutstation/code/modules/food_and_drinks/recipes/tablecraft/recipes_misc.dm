@@ -13,4 +13,5 @@
 	result = /obj/item/food/float_your_goat
 	removed_foodtypes = BREAKFAST // holy god no could you fucking IMAGINE. even our most deranged would not eat this for BREAKFAST
 	added_foodtypes = DAIRY
-	category = CAT_MISCFOOD
+	dish_category = DISH_SOUP
+	meal_category = MEAL_MAIN_COURSE // i mean i wouldn't want to eat anything else after this either

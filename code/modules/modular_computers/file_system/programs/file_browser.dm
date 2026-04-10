@@ -5,25 +5,26 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 	for(var/obj/item/canvas/canvas_type as anything in typesof(/obj/item/canvas))
 		var/width = canvas_type::width
 		var/height = canvas_type::height
-		LAZYADDASSOC(print_types, "[width]x[height]", list("[canvas_type]" = list(
+		LAZYADDASSOC(print_types, "[width]x[height]", list(
 			"displayText" = "Canvas ([width]x[height])",
 			"typepath" = canvas_type,
 			"width" = width,
 			"height" = height,
 			"check_callback" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(check_can_print_canvas)),
 			"prepare_callback" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(prepare_canvas_from_file)),
-		)))
-	for(var/size in 1 to /obj/item/camera::picture_size_x_max)
-		var/width = ICON_SIZE_X*(size*2-1)
-		var/height = ICON_SIZE_Y*(size*2-1)
-		LAZYADDASSOC(print_types, "[width]x[height]", list("[/obj/item/photo]" = list(
-			"displayText" = "Photo Paper ([size*2-1]m focal length)",
+		))
+	for(var/size in 1 to CAMERA_PICTURE_SIZE_HARD_LIMIT)
+		var/meters = APERTURE_TO_METERS(size)
+		var/width = ICON_SIZE_X * meters
+		var/height = ICON_SIZE_Y * meters
+		LAZYADDASSOC(print_types, "[width]x[height]",  list(
+			"displayText" = "Photo Paper ([meters]m focal length)",
 			"typepath" = /obj/item/photo,
 			"width" = width,
 			"height" = height,
 			"check_callback" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(check_can_print_photo)),
 			"prepare_callback" = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(prepare_photo_from_file)),
-		)))
+		))
 	return print_types
 
 /proc/check_can_print_canvas(_typepath, _image_file, obj/item/modular_computer/computer, mob/user)
@@ -177,11 +178,8 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 			try_print(picture, params["width"], params["height"], params["offsetX"], params["offsetY"], params["typepath"], usr)
 
 /datum/computer_file/program/filemanager/proc/try_print(datum/computer_file/image/picture, width, height, offset_x, offset_y, typepath, mob/user)
-	var/list/print_types_for_dimensions = GLOB.print_types["[width]x[height]"]
-	if(!length(print_types_for_dimensions))
-		return
-	var/list/print_type = print_types_for_dimensions[typepath]
-	if(!print_type)
+	var/list/print_type = GLOB.print_types["[width]x[height]"]
+	if(!length(print_type))
 		return
 	var/image_width = picture.stored_icon.Width()
 	var/image_height = picture.stored_icon.Height()
@@ -203,10 +201,16 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 
 /datum/computer_file/program/filemanager/ui_static_data(mob/user)
 	var/list/print_types = list()
-	for(var/dimensions in GLOB.print_types)
-		var/list/types_for_dimensions = GLOB.print_types[dimensions]
-		for(var/print_typepath in types_for_dimensions)
-			print_types += list(types_for_dimensions[print_typepath])
+	for(var/dimensions, types_for_dimensions in GLOB.print_types)
+		var/list/typepath =  types_for_dimensions["typepath"]
+		if(ispath(typepath, /obj/item/canvas) && !(computer.hardware_flag & PROGRAM_CONSOLE))
+			continue
+		print_types += list(list(
+			displayText = types_for_dimensions["displayText"],
+			typepath = "[typepath]",
+			width = types_for_dimensions["width"],
+			height = types_for_dimensions["height"]
+		))
 	return list("printTypes" = print_types)
 
 /datum/computer_file/program/filemanager/ui_data(mob/user)

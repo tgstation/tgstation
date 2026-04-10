@@ -5627,7 +5627,7 @@
 "bXx" = (
 /obj/machinery/camera/autoname/directional/south,
 /obj/machinery/airalarm/directional/south,
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	pixel_y = 2
 	},
 /turf/open/floor/wood,
@@ -6753,7 +6753,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/security/prison)
 "ctP" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
@@ -22468,11 +22468,12 @@
 	pixel_y = -3
 	},
 /obj/item/book/manual/wiki/infections,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
+	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 2;
+	pixel_x = 3
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -36221,6 +36222,10 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 2;
+	pixel_x = 3
+	},
 /obj/item/food/sandwich/cheese,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/cmo)
@@ -37652,6 +37657,9 @@
 /obj/item/tgui_book/manual/dsm{
 	pixel_y = 3;
 	pixel_x = 3
+	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 7
 	},
 /obj/item/clothing/neck/stethoscope{
 	pixel_y = 4
@@ -39342,7 +39350,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/central/greater)
 "nzw" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
@@ -41216,7 +41224,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "olC" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
@@ -47574,6 +47582,9 @@
 	},
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 3
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -62694,7 +62705,7 @@
 "vxl" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/obj/machinery/computer/slot_machine{
+/obj/effect/spawner/random/entertainment/slot_machine{
 	pixel_y = 2
 	},
 /turf/open/floor/wood,
@@ -63653,7 +63664,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/research)
 "vNT" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/central/lesser)

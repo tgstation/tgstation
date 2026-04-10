@@ -1,1 +1,1 @@
-#define CAT_IO "Io"
+#define CUISINE_IO "Io"

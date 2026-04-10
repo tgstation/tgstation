@@ -102,8 +102,6 @@
 		return
 	applied_mask = TRUE
 	parent_client.screen += blocker_mask
-	parent_mob.hud_used.screen_objects += blocker_mask
-	parent_mob.hud_used.screen_groups[HUD_GROUP_SCREEN_OVERLAYS] += blocker_mask
 
 /// When a direction of the user changes, so do the masks
 /datum/component/fov_handler/proc/on_dir_change(mob/source, old_dir, new_dir)

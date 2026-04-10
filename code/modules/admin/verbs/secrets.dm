@@ -703,6 +703,18 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				return
 			return
 
+		if("fix_gravity")
+			if(!is_funmin)
+				return
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("fix_gravity"))
+			message_admins("[key_name_admin(holder)] fixed the gravity generator.")
+
+			for(var/obj/machinery/gravity_generator/main/the_generator as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/gravity_generator/main))
+				if(!is_station_level(the_generator.z))
+					continue
+				the_generator.kickstart()
+				CHECK_TICK
+
 	if(holder)
 		log_admin("[key_name(holder)] used secret: [action].")
 #undef THUNDERDOME_TEMPLATE_FILE

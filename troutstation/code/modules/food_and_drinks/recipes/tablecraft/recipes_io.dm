@@ -6,7 +6,9 @@
 		/datum/reagent/water = 10,
 	)
 	result = /obj/item/food/space_shuttle_jelly
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/raw_dim_sim
 	name = "raw dim sim"
@@ -18,14 +20,18 @@
 		/datum/reagent/consumable/blackpepper = 2,
 	)
 	result = /obj/item/food/raw_dim_sim
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_BURRITO
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/microwave/dim_sim
 	reqs = list(/obj/item/food/raw_dim_sim = 1)
 	result = /obj/item/food/dim_sim
 	removed_foodtypes = RAW
 	added_foodtypes = FRIED
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_BURRITO
+	meal_category = MEAL_MAIN_COURSE
 
 /datum/crafting_recipe/food/democracy_sausage
 	name = "democracy sausage"
@@ -36,7 +42,9 @@
 		/obj/item/food/breadslice/plain = 1,
 	)
 	result = /obj/item/food/democracy_sausage
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_BREAD
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/lamington
 	name = "lamington"
@@ -47,12 +55,16 @@
 	)
 	result = /obj/item/food/lamington
 	removed_foodtypes = JUNKFOOD
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_CAKE
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/lamington_slice
 	reqs = list(/obj/item/food/lamington = 1)
 	result = /obj/item/food/lamington_slice
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_CAKE
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/JC_lamington
 	name = "jam and cream lamington"
@@ -62,12 +74,16 @@
 		/datum/reagent/consumable/berryjuice = 5,
 	)
 	result = /obj/item/food/JC_lamington
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_CAKE
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/knife/JC_lamington_slice
 	reqs = list(/obj/item/food/JC_lamington = 1)
 	result = /obj/item/food/JC_lamington_slice
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_CAKE
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/vegemite_toast
 	name = "\improper Vegemite toast"
@@ -76,8 +92,10 @@
 		/obj/item/food/griddle_toast = 1,
 	)
 	result = /obj/item/food/vegemite_toast
-	added_foodtypes = VEGETABLES
-	category = CAT_IO
+	added_foodtypes = VEGETABLES | BREAKFAST
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_BREAD
+	meal_category = MEAL_BREAKFAST
 
 /datum/crafting_recipe/food/cheese_vegemite_scroll
 	name = "cheese and Vegemite scroll"
@@ -88,7 +106,9 @@
 	)
 	result = /obj/item/food/cheese_vegemite_scroll
 	added_foodtypes = VEGETABLES
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_BREAD
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/fairy_bread
 	name = "fairy bread"
@@ -100,7 +120,9 @@
 	result = /obj/item/food/fairy_bread
 	added_foodtypes = SUGAR
 	removed_foodtypes = JUNKFOOD
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_BREAD
+	meal_category = MEAL_SNACK
 
 /datum/crafting_recipe/food/golden_gaytime
 	name = "\improper Golden Gaytime"
@@ -116,7 +138,9 @@
 	result = /obj/item/food/popsicle/golden_gaytime
 	added_foodtypes = DAIRY
 	removed_foodtypes = JUNKFOOD
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_FROZEN
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/pie_floater
 	name = "pie floater"
@@ -128,7 +152,9 @@
 	)
 	result = /obj/item/food/pie_floater
 	added_foodtypes = VEGETABLES
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_PIE
+	meal_category = MEAL_MAIN_COURSE
 
 /datum/crafting_recipe/food/vanilla_slice
 	name = "vanilla slice"
@@ -139,9 +165,13 @@
 	)
 	result = /obj/item/food/vanilla_slice
 	added_foodtypes = SUGAR
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_CAKE
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/knife/vanilla_slice_slice
 	reqs = list(/obj/item/food/vanilla_slice = 1)
 	result = /obj/item/food/vanilla_slice_slice
-	category = CAT_IO
+	cuisine_category = CUISINE_IO
+	dish_category = DISH_CAKE
+	meal_category = MEAL_DESSERT

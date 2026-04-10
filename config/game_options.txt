@@ -576,6 +576,9 @@ SPY_EASY_REWARD_TC_THRESHOLD 5
 ## Also functions as the upper end for medium bounties.
 SPY_HARD_REWARD_TC_THRESHOLD 15
 
+## Minimum time before a heretic can ascend, in minutes
+# MINIMUM_ASCENSION_TIME 3
+
 ## TROUTSTATION EDIT
 ## Enabling this shows all players the job estimates for the round during the lobby phase.
 SHOW_JOB_ESTIMATION

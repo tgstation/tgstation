@@ -371,6 +371,7 @@
  * * silent - Boolean, determines whether fluff text would be printed
  */
 /obj/item/modular_computer/remove_id(mob/user, silent = FALSE)
+	var/obj/item/lost_id = stored_id
 	if(!stored_id)
 		return ..()
 
@@ -381,8 +382,6 @@
 		user.put_in_hands(stored_id)
 	else
 		stored_id.forceMove(drop_location())
-
-	var/obj/item/lost_id = stored_id
 	stored_id = null
 
 	if(!silent && !isnull(user))

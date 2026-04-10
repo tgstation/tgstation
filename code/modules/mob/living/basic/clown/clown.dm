@@ -627,6 +627,8 @@
 /datum/action/cooldown/exquisite_bunch/Trigger(mob/clicker, trigger_flags, atom/target)
 	if(activating)
 		return
+	if(!IsAvailable(feedback = TRUE))
+		return
 	var/atom/bunch_turf = get_step(owner.loc, owner.dir)
 	if(!bunch_turf)
 		return

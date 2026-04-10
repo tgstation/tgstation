@@ -199,7 +199,7 @@
 
 	START_PROCESSING(SSobj, src)
 
-/datum/action/innate/implant_charge_action/create_button()
+/datum/action/innate/implant_charge_action/create_button(mob/viewer)
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext_x = 2
 	button.maptext_y = 0
@@ -214,6 +214,8 @@
 	return ..()
 
 /datum/action/innate/implant_charge_action/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return
 	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 
 	if (isnull(cell))

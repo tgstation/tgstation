@@ -120,7 +120,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 
 		for(var/datum/command_footnote/footnote as anything in command_report_footnotes)
 			footnote_pile += "[footnote.message]<BR>"
-			footnote_pile += "<i>[footnote.signature]</i><BR>"
+			footnote_pile += "~ <i>[footnote.signature]</i><BR>"
 			footnote_pile += "<BR>"
 
 		. += "<hr><h4>Additional Notes: </h4>" + footnote_pile

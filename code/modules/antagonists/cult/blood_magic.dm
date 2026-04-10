@@ -403,11 +403,13 @@
 	if(isliving(interacting_with))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
+	var/spell_name = source.name // Spell action is deleted in cast_spell() if we're out of charges
+
 	if(!cast_spell(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 
 	user.do_attack_animation(interacting_with)
-	log_combat(user, interacting_with, "used a cult spell on", source.name, "")
+	log_combat(user, interacting_with, "used a cult spell on", spell_name)
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	return ITEM_INTERACT_SUCCESS
 

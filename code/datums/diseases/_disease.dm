@@ -5,11 +5,19 @@
 	var/spread_flags = DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
 
 	//Fluff
+
+	/// What type of disease this is
 	var/form = "Virus"
+	/// The name of the disease (this one's kind of important)
 	var/name = "No disease"
+	/// The description of what the disease is and does
 	var/desc = ""
-	var/agent = "some microbes"
+	/// The agent that causes the disease, for example "virus", "bacteria", "parasite", "curse"
+	var/agent = "Unknown"
+	/// A string describing how the disease spreads, for example "Airborne", "Blood", "Skin contact", "Magic"
+	/// (Keep this strictly for how it spreads BETWEEN hosts, NOT how it affected the initial host. Use agent var for that)
 	var/spread_text = ""
+	/// A string describing how the disease can be cured, for example "Toxin remover", "Antibiotics", "Rest and hydration", "Prayers to the gods"
 	var/cure_text = ""
 
 	//Stages
@@ -411,3 +419,16 @@
 			return 6
 		if(DISEASE_SEVERITY_BIOHAZARD)
 			return 7
+
+/proc/get_disease_spread_text(spread_flags)
+	if(spread_flags & DISEASE_SPREAD_AIRBORNE)
+		return "Airborne"
+	if(spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+		return "Skin contact"
+	if(spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+		return "Fluid contact"
+	if(spread_flags & DISEASE_SPREAD_BLOOD)
+		return "Blood"
+	if(spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS)
+		return "None"
+	return "Unknown"

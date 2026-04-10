@@ -225,7 +225,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 	)
 	tastes = list("rice" = 1, "meat" = 1, "pineapple" = 1, "veggies" = 1)
-	foodtypes = MEAT | GRAIN | PINEAPPLE | FRUIT | VEGETABLES
+	foodtypes = MEAT | GRAIN | PINEAPPLE | FRUIT | VEGETABLES | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
@@ -305,7 +305,7 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
 	tastes = list("rice" = 1, "egg" = 1, "soy sauce" = 1)
-	foodtypes = MEAT | GRAIN
+	foodtypes = MEAT | GRAIN | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -325,7 +325,7 @@
 		/datum/reagent/consumable/capsaicin = 2,
 	)
 	tastes = list("rice" = 1, "spicy cabbage" = 1, "chilli heat" = 1, "egg" = 1, "meat" = 1)
-	foodtypes = MEAT | VEGETABLES | GRAIN
+	foodtypes = MEAT | VEGETABLES | GRAIN | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
@@ -378,7 +378,7 @@
 		/datum/reagent/consumable/nutriment = 8,
 	)
 	tastes = list("noodles" = 1, "meat" = 1, "nuts" = 1, "onion" = 1, "egg" = 1)
-	foodtypes = GRAIN | NUTS | MEAT | VEGETABLES
+	foodtypes = GRAIN | NUTS | MEAT | VEGETABLES | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
@@ -447,7 +447,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("bun" = 1, "fried pork" = 2, "egg" = 1, "cheese" = 1, "ketchup" = 1)
-	foodtypes =  MEAT|GRAIN|DAIRY|FRIED
+	foodtypes =  MEAT|GRAIN|DAIRY|FRIED|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -496,7 +496,7 @@
 		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("egg" = 1, "meat" = 1, "kimchi" = 1, "mozzarella" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED
+	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
@@ -512,7 +512,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("egg" = 1, "toast" = 1, "pork" = 1, "pineapple" = 1, "cheese" = 1)
-	foodtypes = MEAT|GRAIN|FRUIT|DAIRY|FRIED|PINEAPPLE|BREAKFAST
+	foodtypes = MEAT|GRAIN|FRUIT|DAIRY|FRIED|PINEAPPLE|BREAKFAST|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
@@ -528,7 +528,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("egg" = 1, "toast" = 1, "bacon" = 1, "pickles" = 1, "cheese" = 1)
-	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN | BREAKFAST
+	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN | BREAKFAST | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
@@ -552,7 +552,7 @@
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 /obj/item/food/takoyaki/russian
-	name = "Russian takoyaki"
+	name = "russian takoyaki"
 	desc = "A dangerous twist on a classic dish, that makes for the perfect cover for evading the police."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "russian_takoyaki"
@@ -682,7 +682,7 @@
 		/datum/reagent/consumable/nutriment/protein = 4,
 	)
 	tastes = list("curry" = 1, "egg" = 1, "pastry" = 1)
-	foodtypes = GRAIN | MEAT | VEGETABLES | FRIED
+	foodtypes = GRAIN | MEAT | VEGETABLES | FRIED | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
@@ -700,7 +700,7 @@
 		/datum/reagent/consumable/nutriment = 10,
 	)
 	tastes = list("bread" = 1, "egg" = 1, "meat" = 1, "onion" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|BREAKFAST
+	foodtypes = MEAT|VEGETABLES|GRAIN|BREAKFAST|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
@@ -751,7 +751,7 @@
 		/datum/reagent/consumable/nutriment/protein = 8,
 	)
 	tastes = list("rice" = 1, "burger" = 1, "gravy" = 1, "egg" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|FRIED
+	foodtypes = MEAT|VEGETABLES|GRAIN|FRIED|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
@@ -857,7 +857,7 @@
 		/datum/reagent/consumable/garlic = 1,
 	)
 	tastes = list("ham" = 1, "garlic rice" = 1, "egg" = 1)
-	foodtypes = MEAT|GRAIN|FRIED|BREAKFAST|VEGETABLES
+	foodtypes = MEAT|GRAIN|FRIED|BREAKFAST|VEGETABLES|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
@@ -874,7 +874,7 @@
 		/datum/reagent/consumable/nutriment = 3,
 	)
 	tastes = list("ham" = 1, "onion" = 1, "pepper" = 1, "potato" = 1)
-	foodtypes = MEAT | VEGETABLES | BREAKFAST
+	foodtypes = MEAT | VEGETABLES | BREAKFAST | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
@@ -1021,7 +1021,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("seafood" = 1, "rice" = 1, "egg" = 1, "onion" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|SEAFOOD
+	foodtypes = MEAT|VEGETABLES|GRAIN|SEAFOOD|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -1054,7 +1054,7 @@
 		/datum/reagent/consumable/garlic = 1,
 	)
 	tastes = list("yoghurt" = 1, "garlic" = 1, "lemon" = 1, "egg" = 1, "chilli heat" = 1)
-	foodtypes = MEAT|VEGETABLES|DAIRY|FRIED|BREAKFAST
+	foodtypes = MEAT|VEGETABLES|DAIRY|FRIED|BREAKFAST|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
@@ -1131,7 +1131,7 @@
 		/datum/reagent/consumable/sugar = 4,
 	)
 	tastes = list("custard" = 1, "vanilla" = 1, "sweet pastry" = 1)
-	foodtypes = GRAIN|FRUIT|DAIRY
+	foodtypes = GRAIN|FRUIT|DAIRY|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
