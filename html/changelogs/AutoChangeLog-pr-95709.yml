@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Escape pod storage wall safes will now be unlocked when they're unlocked and appear locked when they're locked"

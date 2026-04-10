@@ -200,3 +200,5 @@
       rather than as a second report (usually) following the roundstart report.
   lelandkemble:
   - bugfix: Neurine works in the dead again
+  - bugfix: Escape pod storage wall safes will now be unlocked when they're unlocked
+      and appear locked when they're locked
