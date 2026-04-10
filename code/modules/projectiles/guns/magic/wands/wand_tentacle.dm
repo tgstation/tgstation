@@ -74,7 +74,7 @@
 /obj/effect/wizard_tentacle/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if (buckled_mob == user)
 		balloon_alert(user, "can't reach!")
-		return NONE
+		return
 	return ..()
 
 /// We're done now
@@ -125,7 +125,7 @@
 	SIGNAL_HANDLER
 	if (helping == owner)
 		owner.balloon_alert(owner, "can't reach!")
-		return
+		return NONE
 	source.visible_message(span_notice("[helping] rips [source] from the tentacle's grasp!"))
 	release()
 	return COMPONENT_BLOCK_MISC_HELP
