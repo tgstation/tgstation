@@ -154,14 +154,14 @@
 
 /obj/item/gun/energy/laser/musket/repeater
 	name = "iconoclast's repeater"
-	desc = "A weapon of incredible bulk, this ratvarian repeater has been permanently severed from its stand to be carried by hand. Cumbersome, Yes - but powerful."
+	desc = "A weapon of incredible bulk, this ratvarian repeater has been permanently severed from its stand to be carried by hand, requiring great exertion to fire. Cumbersome, Yes - but powerful."
 	icon_state = "repeater"
 	inhand_icon_state = "repeater"
 	slowdown = 1
-	burst_size = 2
 	fire_delay = 0.5
 	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/repeater/handheld)
+	cell_type = /obj/item/stock_parts/power_store/battery/infinite // We use stamina in place of energy, so this is done to allow other guns to use its ammo without having infinite shots.
 	spread = 20
 	charge_sections = 1
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
@@ -170,21 +170,46 @@
 		/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29
 	)
+	var/base_shots_per_stamina_bar = 8
 
 /obj/item/gun/energy/laser/musket/repeater/Initialize(mapload)
 	. = ..()
-	AddComponent( \
-		/datum/component/crank_recharge, \
-		charging_cell = get_cell(), \
-		charge_amount = LASER_SHOTS(6, STANDARD_CELL_CHARGE), \
-		cooldown_time = 0.4 SECONDS, \
-		charge_sound = 'sound/machines/clockcult/integration_cog_install.ogg', \
-		charge_sound_cooldown_time = 3 SECONDS, \
-	)
-	AddComponent(/datum/component/automatic_fire, 0.5 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.25 SECONDS)
 
 /obj/item/gun/energy/laser/musket/repeater/add_deep_lore()
 	return
+
+/obj/item/gun/energy/laser/musket/repeater/proc/get_effective_stamina_cost(mob/living/shooter)
+	var/total_shots = base_shots_per_stamina_bar
+	var/athletics_skill_modifier = (shooter.mind?.get_skill_level(/datum/skill/athletics) || 1) - 1
+	total_shots += athletics_skill_modifier * 2
+	if(HAS_TRAIT(shooter, TRAIT_STRENGTH))
+		total_shots *= 2
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = shooter.get_organ_slot(ORGAN_SLOT_SPINE)
+	if (istype(potential_spine))
+		total_shots *=  1 / potential_spine.athletics_boost_multiplier
+	return round((isbasicmob(shooter) ? 100 : shooter.maxHealth) / total_shots, 0.1)
+
+/obj/item/gun/energy/laser/musket/repeater/do_autofire(datum/source, atom/target, mob/living/shooter, allow_akimbo, params)
+	var/stamcrit_immune = FALSE
+	var/mob/living/basic/basic_shooter = shooter
+	var/is_basic = istype(basic_shooter)
+	if(HAS_TRAIT(shooter, TRAIT_STUNIMMUNE))
+		stamcrit_immune = TRUE
+	else if(is_basic)
+		if(basic_shooter.stamina_crit_threshold == BASIC_MOB_NO_STAMCRIT)
+			stamcrit_immune = TRUE
+	if(stamcrit_immune)
+		var/max_health = is_basic ? 100 : shooter.maxHealth
+		var/threshold = is_basic ? 1 : shooter.crit_threshold
+		if(max_health / (shooter.staminaloss + get_effective_stamina_cost(shooter)) > threshold)
+			balloon_alert(shooter, "too tired!")
+			return NONE
+	return ..()
+
+/obj/item/gun/energy/laser/musket/repeater/do_autofire_shot(datum/source, atom/target, mob/living/shooter, allow_akimbo, params)
+	. = ..()
+	shooter.adjust_stamina_loss(get_effective_stamina_cost(shooter))
 
 // The Deep Lore //
 
