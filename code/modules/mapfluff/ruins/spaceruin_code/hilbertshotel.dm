@@ -380,6 +380,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /datum/action/peephole_cancel/Trigger(mob/clicker, trigger_flags)
 	. = ..()
+	if(!.)
+		return
 	to_chat(owner, span_warning("You move away from the peephole."))
 	owner.reset_perspective()
 	owner.clear_fullscreen("remote_view", 0)

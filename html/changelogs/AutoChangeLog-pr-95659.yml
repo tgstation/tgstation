@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fix cyborgs being unable to do surgeries that ask for user input before it begins"

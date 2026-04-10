@@ -52,6 +52,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_vars_to_toggle = VISOR_TINT
 	visor_flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
 	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | PEPPERPROOF

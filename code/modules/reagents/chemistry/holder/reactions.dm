@@ -14,10 +14,6 @@
 			force_stop_reacting() //Force anything that is trying to to stop
 		return FALSE //Yup, no reactions here. No siree.
 
-	if(is_reacting)//Prevent wasteful calculations
-		if(!(datum_flags & DF_ISPROCESSING))//If we're reacting - but not processing (i.e. we've transferred)
-			START_PROCESSING(SSreagents, src)
-
 #ifndef UNIT_TESTS
 	// We assert that reagents will not need to react before the map is fully loaded
 	// This is the best I can do, sorry :(
@@ -37,7 +33,7 @@
 			//is this reaction already going on?
 			var/next_reaction = FALSE
 			for(var/datum/equilibrium/E_exist as anything in reaction_list)
-				if(ispath(E_exist.reaction.type, reaction.type)) //Don't add duplicates
+				if(E_exist.reaction == reaction) //Don't add duplicates
 					next_reaction = TRUE
 					break
 			if(next_reaction)
@@ -48,9 +44,7 @@
 			if(!(reaction.reaction_flags & REACTION_INSTANT))
 				granularity = CHEMICAL_QUANTISATION_LEVEL
 			var/present_volume = 0
-			var/list/datum/reagent/requirements = reaction.required_reagents
-			if(length(reaction.required_catalysts))
-				requirements |= reaction.required_catalysts
+			var/list/datum/reagent/requirements = reaction.required_reagents | reaction.required_catalysts
 			for(var/datum/reagent/requirement as anything in requirements)
 				present_volume = cached_reagents[requirement]
 				if(!present_volume)
@@ -101,7 +95,7 @@
 				else
 					//Adding is done in new(), deletion is in qdel
 					is_reacting = TRUE//Prevent any on_reaction() procs from infinite looping
-					equilibrium.reaction.on_reaction(src, equilibrium, equilibrium.multiplier)
+					reaction.on_reaction(src, equilibrium, equilibrium.multiplier)
 					equilibrium.react_timestep(1)//Get an initial
 
 	if(LAZYLEN(reaction_list))
