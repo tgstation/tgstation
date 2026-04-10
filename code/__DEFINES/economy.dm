@@ -83,7 +83,7 @@
 #define MARKET_TREND_STABLE 0
 
 #define MARKET_EVENT_PROBABILITY 8 //Probability of a market event firing, in percent. Fires once per material, every stock market tick.
-/// How much of the total value of a bounty cube does the player recieve when the cube is exported?
+/// How much of the total value of a bounty cube does the player receive when the cube is exported?
 #define BOUNTY_CUT_STANDARD 0.3
 
 // Fair warning that these defines at present are not used in all tgui, static descriptions, or any varible names or comments
