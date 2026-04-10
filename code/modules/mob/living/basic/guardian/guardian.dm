@@ -83,6 +83,7 @@
 	)
 	/// List of actions we give to ourselves.
 	var/static/list/self_actions = list(
+		/datum/action/cooldown/guardian/check_type,
 		/datum/action/cooldown/guardian/toggle_light,
 		/datum/action/cooldown/guardian/communicate,
 		/datum/action/cooldown/guardian/manifest,

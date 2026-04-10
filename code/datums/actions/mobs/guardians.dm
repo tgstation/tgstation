@@ -7,6 +7,17 @@
 		return .
 	return !!isguardian(owner)
 
+/datum/action/cooldown/guardian/check_type
+	name = "Check Type"
+	desc = "A reminder on what your abilities are."
+	//this is based off of the antag ui icon, if that changes then change this too please.
+	button_icon_state = /datum/action/antag_info::button_icon_state
+	default_button_position = SCRN_OBJ_INSERT_FIRST
+
+/datum/action/cooldown/guardian/check_type/Activate(atom/target)
+	. = ..()
+	to_chat(owner, astype(owner, /mob/living/basic/guardian)?.playstyle_string)
+
 /datum/action/cooldown/guardian/communicate
 	name = "Communicate"
 	desc = "Communicate telepathically with your user."
@@ -38,7 +49,6 @@
 	name = "Toggle Light"
 	desc = "Glow like star dust."
 	button_icon_state = "light"
-	default_button_position = SCRN_OBJ_INSERT_FIRST
 
 /datum/action/cooldown/guardian/toggle_light/Activate()
 	astype(owner, /mob/living/basic/guardian)?.toggle_light()

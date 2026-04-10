@@ -8,6 +8,7 @@
 ///Dextrous subtype for only dextrous holoparasites. Can hold things hence the inventory slot.
 /datum/hud/dextrous/guardian
 	inventory_slots = list(/datum/inventory_slot/guardian_storage)
+	give_health_doll = FALSE
 
 /datum/hud/dextrous/guardian/initialize_screen_objects()
 	. = ..()
