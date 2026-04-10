@@ -412,7 +412,6 @@ SUBSYSTEM_DEF(tts)
 		return
 
 	var/shell_scrubbed_input = tts_speech_filter(message)
-	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 300)
 	if(!(speaker in available_speakers))
 		return
 

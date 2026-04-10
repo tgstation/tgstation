@@ -127,7 +127,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		filter += tts_filter.Join(",")
 
 	var/shell_scrubbed_input = tts_speech_filter(html_decode(tts_message_to_use))
-	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 300)
 	var/identifier = "[sha1(voice + filter.Join(",") + num2text(pitch) + shell_scrubbed_input + blip_base + num2text(blip_number))].[world.time]"
 	message_mods[MODE_TTS_IDENTIFIER] = identifier
 	for(var/atom/movable/hearing_movable as anything in listeners)

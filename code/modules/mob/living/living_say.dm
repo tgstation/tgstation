@@ -239,7 +239,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			filter += tts_filter.Join(",")
 
 		var/shell_scrubbed_input = tts_speech_filter(html_decode(tts_message_to_use))
-		shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 300)
 		identifier = "[sha1(get_tts_voice(filter, special_filter) + filter.Join(",") + num2text(pitch) + special_filter.Join("|") + shell_scrubbed_input + blip_base + num2text(blip_number))].[world.time]"
 		message_mods[MODE_TTS_IDENTIFIER] = identifier
 
@@ -518,19 +517,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(capitalize_message)
 		message = capitalize(message)
 		tts_message = capitalize(tts_message)
-
-	///caps the length of individual letters to 3: ex: heeeeeeyy -> heeeyy
-	/// prevents TTS from choking on unrealistic text while keeping emphasis
-	var/static/regex/length_regex = regex(@"(.+)\1\1\1", "gi")
-	while(length_regex.Find(tts_message))
-		var/replacement = tts_message[length_regex.index]+tts_message[length_regex.index]+tts_message[length_regex.index]
-		tts_message = replacetext(tts_message, length_regex.match, replacement, length_regex.index)
-
-	// removes repeated consonants at the start of a word: ex: sss
-	var/static/regex/word_start_regex = regex(@"\b([^aeiou\L])\1", "gi")
-	while(word_start_regex.Find(tts_message))
-		var/replacement = tts_message[word_start_regex.index]
-		tts_message = replacetext(tts_message, word_start_regex.match, replacement, word_start_regex.index)
 
 	return list("message" = message, "tts_message" = tts_message, "tts_filter" = tts_filter)
 
