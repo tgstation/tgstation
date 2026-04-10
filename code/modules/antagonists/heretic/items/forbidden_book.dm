@@ -80,7 +80,7 @@
 	base_icon_state = "book_morbus"
 	icon_state = "book_morbus"
 	drain_speed = 2.5 SECONDS
-	draw_speed = 5 SECONDS
+	draw_speed = 20 SECONDS
 	/// List of mobs we've cursed with transmutation. When the codex is destroyed all those curses become undone
 	var/list/transmuted_victims = list()
 
