@@ -280,7 +280,7 @@
 	if(!isnull(sharpness_on))
 		source.sharpness = sharpness_off
 	if(!isnull(force_on))
-		source.force = force_off)
+		source.force = force_off
 	if(!isnull(throwforce_on))
 		source.throwforce = throwforce_off
 	if(!isnull(throw_speed_on))
