@@ -301,6 +301,52 @@
 	desc = "A laser gun modified to cost 20 credits to fire. Point towards poor people."
 	pin = /obj/item/firing_pin/paywall/luxury
 
+/obj/item/gun/energy/laser/repeater
+	name = "iconoclast's repeater"
+	desc = "A weapon of incredible bulk, this ratvarian repeater has been permanently severed from its stand to be carried by hand, requiring great exertion to fire. Cumbersome, Yes - but powerful."
+	icon_state = "repeater"
+	inhand_icon_state = "repeater"
+	fire_delay = 0.5
+	w_class = WEIGHT_CLASS_HUGE
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/repeater/handheld)
+	cell_type = /obj/item/stock_parts/power_store/battery/infinite // We use stamina in place of energy, so this is done to allow other guns to use its ammo without having infinite shots.
+	spread = 20
+	charge_sections = 1
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.25,
+		/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.29
+	)
+	var/stamina_cost = LASER_SHOTS(25, 100)
+
+/obj/item/gun/energy/laser/repeater/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.25 SECONDS)
+
+/obj/item/gun/energy/laser/repeater/add_deep_lore()
+	return
+
+/obj/item/gun/energy/laser/repeater/do_autofire(datum/source, atom/target, mob/living/shooter, allow_akimbo, params)
+	var/stamcrit_immune = FALSE
+	var/mob/living/basic/basic_shooter = shooter
+	var/is_basic = istype(basic_shooter)
+	if(HAS_TRAIT(shooter, TRAIT_STUNIMMUNE))
+		stamcrit_immune = TRUE
+	else if(is_basic)
+		if(basic_shooter.stamina_crit_threshold == BASIC_MOB_NO_STAMCRIT)
+			stamcrit_immune = TRUE
+	if(stamcrit_immune)
+		var/max_health = is_basic ? 100 : shooter.maxHealth
+		var/threshold = is_basic ? 1 : shooter.crit_threshold
+		if(max_health / (shooter.staminaloss + stamina_cost) > threshold)
+			balloon_alert(shooter, "too tired!")
+			return NONE
+	return ..()
+
+/obj/item/gun/energy/laser/repeater/do_autofire_shot(datum/source, atom/target, mob/living/shooter, allow_akimbo, params)
+	. = ..()
+	shooter.adjust_stamina_loss(stamina_cost)
+
 // The Deep Lore //
 
 // Laser Gun

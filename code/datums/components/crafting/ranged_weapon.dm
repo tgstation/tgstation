@@ -347,7 +347,7 @@
 /datum/crafting_recipe/detached_ratvarian_repeater
 	name = "Iconoclast's Repeater"
 	tool_behaviors = list(TOOL_WELDER)
-	result = /obj/item/gun/energy/laser/musket/repeater
+	result = /obj/item/gun/energy/laser/repeater
 	structures = list(
 		/obj/structure/mounted_gun/ratvarian_repeater = CRAFTING_STRUCTURE_CONSUME,
 	)
