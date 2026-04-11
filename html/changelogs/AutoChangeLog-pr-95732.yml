@@ -1,0 +1,4 @@
+author: "Neocloudy"
+delete-after: True
+changes:
+  - bugfix: "DNA mob height doesn't instantly fall back to the base height for all mobs."
