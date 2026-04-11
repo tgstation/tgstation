@@ -71,6 +71,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	force_no_gravity = TRUE
+	skip_minimap_rendering = TRUE
 
 /turf/open/space/basic
 	icon_state = MAP_SWITCH("space", "space_basic_map")
