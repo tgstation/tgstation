@@ -238,8 +238,10 @@
 	greyscale_config_worn = /datum/greyscale_config/cleric_mace
 	greyscale_colors = COLOR_WHITE + COLOR_BROWN
 
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.5, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.5)  //Defaults to an Iron Mace.
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
+	// Defaults to an iron head, wooden handle mace
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.5, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.5)
+	material_slots = list(/datum/material_slot/weapon_head/mace = /datum/material/iron, /datum/material_slot/handle = /datum/material/wood)
 	slot_flags = ITEM_SLOT_BELT
 	force = 16
 	w_class = WEIGHT_CLASS_BULKY
@@ -250,30 +252,27 @@
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
 
-///Cleric maces are made of two custom materials: one is handle, and the other is the mace itself.
-/obj/item/melee/cleric_mace/get_material_multiplier(datum/material/custom_material, list/materials, index)
-	if(length(materials) <= 1)
-		return 1.2
-	if(index == 1)
-		return 1
-	else
-		return 0.3
-
+// It only inherits the name of the main material it's made of. The secondary is in the description.
 /obj/item/melee/cleric_mace/get_material_prefixes(list/materials)
-	var/datum/material/material = materials[1]
-	return material.name //It only inherits the name of the main material it's made of. The secondary is in the description.
+	var/datum/material/material = get_material_from_slot(/datum/material_slot/weapon_head)
+	return material?.name
 
 /obj/item/melee/cleric_mace/finalize_material_effects(list/materials)
 	. = ..()
-	if(length(materials) == 1)
-		return
-	var/datum/material/material = materials[2]
-	desc = "[initial(desc)] Its handle is made of [material.name]."
+	var/datum/material/material = get_material_from_slot(/datum/material_slot/handle)
+	if (material)
+		desc = "[initial(desc)] Its handle is made of [material.name]."
 
 /obj/item/melee/cleric_mace/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	// Don't bring a...mace to a gunfight, and also you aren't going to really block someone full body tackling you with a mace.
+	// Or a road roller, if one happened to hit you.
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
-		final_block_chance = 0 //Don't bring a...mace to a gunfight, and also you aren't going to really block someone full body tackling you with a mace. Or a road roller, if one happened to hit you.
+		final_block_chance = 0
 	return ..()
+
+/datum/material_slot/weapon_head/mace
+	name = "mace head"
+	material_amount = 3
 
 /obj/item/sord
 	name = "\improper SORD"

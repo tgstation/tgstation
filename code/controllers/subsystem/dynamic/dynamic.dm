@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(dynamic)
 		log_dynamic("Roundstart: Ruleset [picked_ruleset.config_tag] (Chance: [round(rulesets_weighted[picked_ruleset] / total_weight * 100, 0.01)]%)")
 		if(picked_ruleset.solo)
 			log_dynamic("Roundstart: Ruleset is a solo ruleset. Cancelling other picks.")
-			QDEL_LIST(picked_rulesets)
+			picked_rulesets.Cut()
 			rulesets_weighted -= picked_ruleset
 			picked_rulesets += picked_ruleset.type
 			break

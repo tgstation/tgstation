@@ -241,6 +241,7 @@
 	tool.item_flags |= ABSTRACT
 	ADD_TRAIT(tool, TRAIT_NODROP, INNATE_TRAIT)
 	atoms[reference] = tool
+	tool.toolspeed = initial(tool.toolspeed) - upgraded * 0.3 //and finally assign the upgraded toolspeed, if any.
 	return tool
 
 /obj/item/borg/cyborg_omnitool/attack_self(mob/user)
@@ -283,8 +284,10 @@
  * * upgrade - TRUE/FALSE for upgraded
  */
 /obj/item/borg/cyborg_omnitool/proc/set_upgraded(upgrade)
-	upgraded = upgraded
-
+	upgraded = upgrade
+	for(var/obj/item/tool_path as anything in atoms)
+		var/obj/item/tool = atoms[tool_path]
+		tool.toolspeed = initial(tool.toolspeed) - upgraded * 0.3
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 
 /obj/item/borg/cyborg_omnitool/medical

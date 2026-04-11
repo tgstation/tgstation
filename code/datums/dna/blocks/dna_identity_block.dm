@@ -142,7 +142,7 @@
 
 /datum/dna_block/identity/height/create_unique_block(mob/living/carbon/human/target)
 	var/max_height_index = length(dna_heights)
-	var/mob_height_index = dna_heights.Find("[target.get_base_mob_height()]") || dna_heights.Find(HUMAN_HEIGHT_MEDIUM)
+	var/mob_height_index = dna_heights.Find(target.get_base_mob_height()) || dna_heights.Find(HUMAN_HEIGHT_MEDIUM)
 	return construct_block(mob_height_index, max_height_index, block_length)
 
 /datum/dna_block/identity/height/apply_to_mob(mob/living/carbon/human/target, dna_hash)

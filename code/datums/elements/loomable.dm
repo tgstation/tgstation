@@ -22,7 +22,7 @@
 	loom_type = /obj/structure/loom,
 	process_completion_verb = "spun",
 	target_needs_anchoring = TRUE,
-	loom_time = 1 SECONDS
+	loom_time = 1 SECONDS,
 )
 	. = ..()
 	//currently this element only works for items as we need to call /obj/item/attack_atom()
@@ -80,7 +80,8 @@
 				break
 
 			if(!stack_we_use.use(required_amount))
-				user.balloon_alert(user, "need [required_amount] of [source]!")
+				if (!spawning_amount)
+					user.balloon_alert(user, "need [required_amount] of [source]!")
 				break
 
 			spawning_amount++
@@ -96,8 +97,13 @@
 	if(spawning_amount == 0)
 		return
 
-	var/new_thing
-	for(var/repeated in 1 to spawning_amount)
-		new_thing = new resulting_atom(target.drop_location())
-
+	var/atom/new_thing = null
+	if (ispath(resulting_atom, /obj/item/stack))
+		var/obj/item/stack/stack_type = resulting_atom
+		while (spawning_amount > 0)
+			new_thing = new resulting_atom(target.drop_location(), new_amount = min(spawning_amount, stack_type::max_amount))
+			spawning_amount -= stack_type::max_amount
+	else
+		for(var/repeated in 1 to spawning_amount)
+			new_thing = new resulting_atom(target.drop_location())
 	user.balloon_alert_to_viewers("[process_completion_verb] [new_thing]")

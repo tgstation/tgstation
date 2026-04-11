@@ -145,6 +145,16 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
+/datum/crafting_recipe/wireprod
+	name = "Wireprod assembly"
+	result = /obj/item/wireprod
+	reqs = list(
+		/obj/item/restraints/handcuffs/cable = 1,
+		/obj/item/stack/rods = 1,
+	)
+	time = 2 SECONDS
+	category = CAT_WEAPON_MELEE
+
 /datum/crafting_recipe/toysword
 	name = "Toy Sword"
 	reqs = list(

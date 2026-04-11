@@ -433,7 +433,7 @@
 			"cured_by" = "Varies by symptom combination",
 			"id" = /datum/disease/advance,
 		)
-		disease_info += advanced_virus_info
+		disease_info += list(advanced_virus_info)
 
 		// validate
 		for(var/list/disease_data as anything in disease_info)
@@ -448,7 +448,7 @@
 			if(!disease_data["desc"])
 				disease_data["desc"] = "No description recorded - this is an error. Report this lack of research."
 				stack_trace("[type] - [disease_data["id"]] lacks a description!")
-			if(!disease_data["cured_by"])
+			if(!disease_data["cured_by"] && !ispath(disease_data["id"], /datum/symptom))
 				disease_data["cured_by"] = "Unknown"
 				stack_trace("[type] - [disease_data["id"]] lacks cure information!")
 
