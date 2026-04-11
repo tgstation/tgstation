@@ -73,7 +73,7 @@
         taste_messages += "the strong flavor of [english_list(strong_tastes, TEXT_NO_TASTE)]"
     if(LAZYLEN(mild_tastes))
         // Prefix "some " if there are strong flavors to avoid seeming like a strong flavor
-        taste_messages += ""[LAZYLEN(strong_tastes) ? "some " : ""][english_list(mild_tastes, TEXT_NO_TASTE)]"
+        taste_messages += "[LAZYLEN(strong_tastes) ? "some " : ""][english_list(mild_tastes, TEXT_NO_TASTE)]"
     if(LAZYLEN(weak_tastes))
         taste_messages += "a hint of [english_list(weak_tastes, TEXT_NO_TASTE)]"
 
