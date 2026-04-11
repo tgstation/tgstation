@@ -250,9 +250,9 @@
 	if(!isnull(sharpness_on))
 		source.sharpness = sharpness_on
 	if(!isnull(force_on))
-		source.force = force_on + (source.sharpness ? sharpened_bonus : 0)
+		source.force = force_on
 	if(!isnull(throwforce_on))
-		source.throwforce = throwforce_on + (source.sharpness ? sharpened_bonus : 0)
+		source.throwforce = throwforce_on
 	if(!isnull(throw_speed_on))
 		source.throw_speed = throw_speed_on
 
@@ -280,9 +280,9 @@
 	if(!isnull(sharpness_on))
 		source.sharpness = sharpness_off
 	if(!isnull(force_on))
-		source.force = force_off + (source.sharpness ? sharpened_bonus : 0)
+		source.force = force_off)
 	if(!isnull(throwforce_on))
-		source.throwforce = throwforce_off + (source.sharpness ? sharpened_bonus : 0)
+		source.throwforce = throwforce_off
 	if(!isnull(throw_speed_on))
 		source.throw_speed = throwforce_off
 
@@ -356,6 +356,10 @@
 	if(force_on + increment > max)
 		return COMPONENT_BLOCK_SHARPEN_MAXED
 	sharpened_bonus = increment
+	force_on += sharpened_bonus
+	throwforce_on += sharpened_bonus
+	force_off += sharpened_bonus
+	throwforce_off += sharpened_bonus
 	// Mimics base whetstone effect for the on state
 	sharpness_on = SHARP_EDGED
 	if (!active)
