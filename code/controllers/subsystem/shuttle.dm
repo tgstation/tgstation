@@ -466,9 +466,7 @@ SUBSYSTEM_DEF(shuttle)
 	emergency.cancel(signal_origin)
 	log_shuttle("[key_name(user)] has recalled the shuttle.")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
-	if(hide_origin)
-		deadchat_broadcast(" has recalled the shuttle.", span_name("[user.real_name]"), user, message_type = DEADCHAT_ANNOUNCEMENT)
-	else
+	if(!hide_origin)
 		deadchat_broadcast(" has recalled the shuttle from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type = DEADCHAT_ANNOUNCEMENT)
 	return TRUE
 
