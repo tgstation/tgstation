@@ -139,3 +139,7 @@
 		which can be triggered afterwards by a sufficiently strong enough explosion.\
 		You're pretty sure the company that used to make these got bought by Nanotrasen ages ago."
 	weakpoint_type = /obj/effect/weakpoint
+
+#undef EARTHCRACKER_READY
+#undef EARTHCRACKER_ACTIVE
+#undef EARTHCRACKER_SPENT
