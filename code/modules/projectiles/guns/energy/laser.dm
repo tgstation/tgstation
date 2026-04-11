@@ -323,9 +323,6 @@
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.25 SECONDS)
 
-/obj/item/gun/energy/laser/repeater/add_deep_lore()
-	return
-
 /obj/item/gun/energy/laser/repeater/do_autofire(datum/source, atom/target, mob/living/shooter, allow_akimbo, params)
 	var/stamcrit_immune = FALSE
 	var/mob/living/basic/basic_shooter = shooter
