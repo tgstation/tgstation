@@ -195,6 +195,7 @@
 	#define COMPONENT_BLOCK_SHARPEN_BLOCKED (1<<1)
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY (1<<2)
 	#define COMPONENT_BLOCK_SHARPEN_MAXED (1<<3)
+	#define COMPONENT_BLOCK_SHARPEN_SHARPNESS (1<<4)
 
 ///Called when an armor plate is successfully applied to an object
 #define COMSIG_ARMOR_PLATED "armor_plated"
