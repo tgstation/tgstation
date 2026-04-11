@@ -145,8 +145,9 @@
 			if (isnull(prop_value)) // Error?
 				continue
 			var/descriptor = property?.get_descriptor(prop_value)
+			var/tooltip_hint = property?.get_tooltip(prop_value)
 			if (descriptor) // Overriden derivative property?
-				material_string += span_tooltip("[property]: [prop_value < 0 ? "-" : ""]\Roman[round(abs(prop_value), 1)]", descriptor)
+				material_string += span_tooltip("[property]: [tooltip_hint]", descriptor)
 
 		if (length(material_string))
 			. += span_info("[capitalize(material.name)] is [english_list(material_string)].")
