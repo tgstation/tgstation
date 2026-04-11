@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Weakpoints have more safeguards to prevent them from spawning onto space."
+  - image: "Weakpoints now have an animation to spawn in with."
