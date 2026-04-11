@@ -539,6 +539,9 @@
 /// After we fire a gun, check if it's a wand. If it is and it's empty, do a swap
 /obj/item/storage/belt/wand_bandolier/proc/on_gun_fired(mob/living/wizard, obj/item/gun/magic/wand/old_wand)
 	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(equip_new_wand), wizard, old_wand)
+
+/obj/item/storage/belt/wand_bandolier/proc/equip_new_wand(mob/living/wizard, obj/item/gun/magic/wand/old_wand)
 	if (!istype(old_wand))
 		return
 	if (!atom_storage.real_location.contents.len) // no other wands

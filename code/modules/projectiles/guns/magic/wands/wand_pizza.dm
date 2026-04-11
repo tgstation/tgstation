@@ -57,9 +57,31 @@
 	var/special_slice = pick(slice_types)
 
 	var/obj/item/the_piz = new special_slice()
-	if (lunch_haver.put_in_hands(the_piz))
-		if (lunch_haver.get_active_held_item() != the_piz)
-			lunch_haver.swap_hand()
 
-		lunch_haver.set_combat_mode(FALSE) // You can't eat pizza if you're on combat mode
+	if (!length(lunch_haver.held_items))
+		the_piz.forceMove(lunch_haver.drop_location())
+	else
+		if (!iscarbon(lunch_haver))
+			if (lunch_haver.put_in_hands(the_piz))
+				if (lunch_haver.get_active_held_item() != the_piz)
+					lunch_haver.swap_hand()
+		else if (!lunch_haver.put_in_active_hand(the_piz))
+			if (istype(lunch_haver.get_active_held_item(), /obj/item/food/pizzaslice))
+				the_piz.forceMove(lunch_haver.drop_location())
+			else
+				// If you've got arms and refused to pick up pizza then woe be upon you
+				var/obj/item/bodypart/my_arm = lunch_haver.get_active_hand()
+
+				if (my_arm && my_arm.dismember())
+					the_piz.forceMove(lunch_haver.drop_location())
+				else
+					// I would love to use plaintext_zone but what if they don't have an arm?
+					var/hand_index = IS_LEFT_INDEX(lunch_haver.active_hand_index) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+					var/hand_zone = IS_LEFT_INDEX(lunch_haver.active_hand_index) ? "left arm" : "right arm"
+
+					var/mob/living/carbon/edward_pizza_hands = lunch_haver
+					edward_pizza_hands.make_item_prosthetic(the_piz, hand_index)
+					edward_pizza_hands.visible_message(span_warning("[edward_pizza_hands]'s [hand_zone] is transformed into \a [the_piz]!"))
+
+	lunch_haver.set_combat_mode(FALSE) // You can't eat pizza if you're on combat mode
 	the_piz.attack(lunch_haver, lunch_haver)
