@@ -1,0 +1,5 @@
+author: "TheRyeGuyWhoWillNowDie"
+delete-after: True
+changes:
+  - bugfix: "the cyborg omnitool upgrades properly increase tool speed"
+  - bugfix: "the cyborg omnitool engineer upgrade properly increases the welder speed as well"
