@@ -1,4 +1,0 @@
-author: "FalloutFalcon"
-delete-after: True
-changes:
-  - bugfix: "The swap hand tutorial wont be shown to someone missing a hand"
