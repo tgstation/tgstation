@@ -65,7 +65,7 @@
 /// The caliber used by the (gatfruit) peashooter
 #define CALIBER_PEA "pea"
 /// The caliber used in the naval cannon
-#define CALIBER_40MM "40MM"
+#define CALIBER_40MM_SHELL "40MM_shell"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2
