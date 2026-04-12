@@ -311,7 +311,7 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 	var/datum/feed_comment/new_feed_comment = new /datum/feed_comment
 	new_feed_comment.author = "Centcom Official"
 	new_feed_comment.body = comment_text
-	new_feed_comment.time_stamp = station_time_timestamp()
+	new_feed_comment.time_stamp = round_timestamp()
 	current_message.comments += new_feed_comment
 	GLOB.news_network.last_action ++
 	usr.log_message("(as an admin) commented on message [current_message.return_body(-1)] -- [current_message.body]", LOG_COMMENT)

@@ -480,7 +480,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	var/list/history_data = list()
 	history_data["history_type"] = history_type
 	history_data["history_fax_name"] = history_fax_name
-	history_data["history_time"] = station_time_timestamp()
+	history_data["history_time"] = round_timestamp()
 	fax_history += list(history_data)
 
 /// Clears the history of fax operations.

@@ -15,22 +15,16 @@
 		return "[current_year]-[time2text(world.timeofday, "MM-DD hh:mm:ss", world.timezone)]"
 	return time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)
 
+
+
 /// Returns UTC timestamp with the specifified format and optionally deciseconds
 /proc/time_stamp(format = "hh:mm:ss", show_ds)
 	var/time_string = time2text(world.timeofday, format, TIMEZONE_UTC)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
-/// Returns timestamp since the server started, for use with world.time
-/proc/gameTimestamp(format = "hh:mm:ss", wtime=world.time)
-	return time2text(wtime, format, NO_TIMEZONE)
-
 ///returns the current IC station time in a world.time format
 /proc/station_time(wtime = world.time)
 	return (((wtime - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % (24 HOURS)
-
-///returns the current IC station time in a human readable format
-/proc/station_time_timestamp(format = "hh:mm:ss", wtime)
-	return time2text(station_time(wtime), format, NO_TIMEZONE)
 
 /proc/station_time_debug(force_set)
 	if(isnum(force_set))

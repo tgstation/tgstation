@@ -80,7 +80,7 @@
 			span_notice("You stupidly try to analyze [scan_turf]'s vitals!"),
 		)
 
-		var/floor_text = "<span class='info'>Analyzing results for <b>[scan_turf]</b> ([station_time_timestamp()]):</span><br>"
+		var/floor_text = "<span class='info'>Analyzing results for <b>[scan_turf]</b> ([round_timestamp()]):</span><br>"
 		floor_text += "<span class='info ml-1'>Overall status: <i>Unknown</i></span><br>"
 		floor_text += "<span class='alert ml-1'>Subject lacks a brain.</span><br>"
 		floor_text += "<span class='info ml-1'>Body temperature: [scan_turf?.return_air()?.return_temperature() || "???"]</span><br>"
@@ -168,7 +168,7 @@
 			oxy_loss += 200 - (oxy_loss + tox_loss + fire_loss + brute_loss)
 			oxy_loss = clamp(oxy_loss, 0, 200)
 
-	render_list += "[span_info("Analyzing results for <b>[target]</b> ([station_time_timestamp()]):")]<br><span class='info ml-1'>Overall status: [mob_status]</span><br>"
+	render_list += "[span_info("Analyzing results for <b>[target]</b> ([round_timestamp()]):")]<br><span class='info ml-1'>Overall status: [mob_status]</span><br>"
 
 	if(!advanced && target.has_reagent(/datum/reagent/inverse/technetium))
 		advanced = TRUE
@@ -474,8 +474,8 @@
 	var/obj/item/paper/medical_report/report_paper = new(get_turf(src))
 
 	report_paper.color = "#99ccff"
-	report_paper.name = "health scan report - [station_time_timestamp()]"
-	var/report_text = "<center><B>Health scan report. Time of retrieval: [station_time_timestamp()]</B></center><HR>"
+	report_paper.name = "health scan report - [server_timestamp(ic_time = TRUE)] ([round_timestamp()])"
+	var/report_text = "<center><B>Health scan report. Time of retrieval: [server_timestamp(ic_time = TRUE)] ([round_timestamp()])</B></center><HR>"
 	report_text += last_scan_text
 
 	report_paper.add_raw_text(report_text)
