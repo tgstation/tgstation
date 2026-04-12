@@ -160,7 +160,8 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 		return FALSE
 	if(candidate.current.is_antag())
 		return FALSE
-	if(!(ROLE_REV_HEAD in candidate.current.client.prefs.be_special) && (roundstart || !(ROLE_PROVOCATEUR in candidate.current.client.prefs.be_special)))
+	var/client/candidate_client = GET_CLIENT(candidate.current)
+	if(!(ROLE_REV_HEAD in candidate_client.prefs.be_special) && (roundstart || !(ROLE_PROVOCATEUR in candidate_client.prefs.be_special)))
 		return FALSE
 	if(candidate.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 		return FALSE
