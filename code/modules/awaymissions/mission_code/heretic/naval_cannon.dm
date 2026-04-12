@@ -29,13 +29,8 @@
 	speed = 2
 	range = 400
 	damage = 600
-	paralyze = 10 SECONDS
-	dismemberment = 50
-	catastropic_dismemberment = TRUE
+	paralyze = 5 SECONDS
 	armour_penetration = 50
-	ignore_range_hit_prone_targets = TRUE
-	var/mecha_damage = 3 // if a tank shell hits a mech, i think the mech dies.
-	var/object_damage = 5
 
 /obj/projectile/bullet/mm40/on_hit(atom/target, blocked = 0, pierce_hit)
 	..()
