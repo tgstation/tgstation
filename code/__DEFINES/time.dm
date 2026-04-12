@@ -7,11 +7,8 @@
 ///Returns the time that has passed since the game started
 #define STATION_TIME_PASSED(...) (world.time - SSticker.round_start_time)
 
-#define CURRENT_YEAR time2text(world.timeofday, "YYYY", TIMEZONE_UTC)
-#define CURRENT_YEAR_INTEGER text2num(CURRENT_YEAR)
-
 /// Define that just has the current in-universe year for use in whatever context you might want to display that in. (For example, 2022 -> 2562 given a 540 year offset)
-#define CURRENT_STATION_YEAR (CURRENT_YEAR_INTEGER + STATION_YEAR_OFFSET)
+#define CURRENT_STATION_YEAR (GLOB.year_integer + STATION_YEAR_OFFSET)
 
 #define JANUARY 1
 #define FEBRUARY 2

@@ -2,7 +2,7 @@
 /proc/server_timestamp(format = "hh:mm:ss", show_ds, ic_time)
 	var/time_string = time2text(world.timeofday, format, TIMEZONE_UTC)
 	if(ic_time && findtext(format, "YYYY")) //if we have a year, replace the year
-		time_string = replacetext_char(time_string, "[CURRENT_YEAR_INTEGER]", CURRENT_STATION_YEAR)
+		time_string = replacetext_char(time_string, "[GLOB.year_integer]", CURRENT_STATION_YEAR)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
 /// Returns timestamp since the round started, AKA Pay Time (PT)
