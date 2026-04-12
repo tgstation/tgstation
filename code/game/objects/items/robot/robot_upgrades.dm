@@ -459,20 +459,13 @@
 	if(!.)
 		return .
 	ADD_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
-	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in cyborg.model.modules)
-		if(omnitool_upgrade.upgraded)
-			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
-			return FALSE
-	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
-		omnitool.set_upgraded(TRUE)
 
 /obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
 	REMOVE_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
-	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
-		omnitool.set_upgraded(FALSE)
+	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 
 /obj/item/borg/upgrade/engineering_omnitool
 	name = "cyborg engineering omni-tool upgrade"
@@ -487,12 +480,7 @@
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool_upgrade in cyborg.model.modules)
-		if(omnitool_upgrade.upgraded)
-			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
-			return FALSE
-	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
-		omnitool.set_upgraded(TRUE)
+	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 	for(var/obj/item/weldingtool/largetank/cyborg/welder in cyborg.model.modules)
 		welder.toolspeed = initial(welder.toolspeed) - 0.3
 
@@ -500,8 +488,6 @@
 	. = ..()
 	if(!.)
 		return .
-	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
-		omnitool.set_upgraded(FALSE)
 	for(var/obj/item/weldingtool/largetank/cyborg/welder in cyborg.model.modules)
 		welder.toolspeed = initial(welder.toolspeed)
 
