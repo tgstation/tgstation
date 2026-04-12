@@ -16,7 +16,7 @@
 
 /obj/item/ammo_casing/mm40
 	name = "40mm shell"
-	desc = "A 40mm shell."//do note that the bofors cannon in real life uses 57mm not 40mm but a 40mm shell can be used- elsewhere in code, maybe, possibly.
+	desc = "A 40mm shell."
 	caliber = CALIBER_40MM_SHELL
 	projectile_type = /obj/projectile/bullet/mm40
 	icon_state = "40mm-shell"
