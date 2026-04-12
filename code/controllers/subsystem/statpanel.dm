@@ -17,9 +17,6 @@ SUBSYSTEM_DEF(statpanels)
 	///how many full runs this subsystem has completed. used for variable rate refreshes.
 	var/num_fires = 0
 
-	//willard todo: convert this to be based on whether it's an admin.
-	var/show_ic_time = FALSE
-
 /datum/controller/subsystem/statpanels/fire(resumed = FALSE)
 	if (!resumed)
 		num_fires++
@@ -40,8 +37,8 @@ SUBSYSTEM_DEF(statpanels)
 
 		global_data += list(
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
-			"Server Time: [server_timestamp(format = "YYYY-MM-DD hh:mm:ss", ic_time = show_ic_time)]",
-			"Shift Time: [round_timestamp()]",
+			"Server Time/NST: [server_timestamp(format = "YYYY-MM-DD hh:mm:ss")]",
+			"Shift Time/NPT: [(SSticker.round_start_time == 0) ? "Pre-Game" : round_timestamp()]",
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
 		)
 
