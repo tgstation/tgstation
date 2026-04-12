@@ -13,7 +13,7 @@
 			"id": "xenoborg",
 			"name": "Xenoborg",
 			"desc": "With a mini-gun in one hand and a rocket launcher in the other, the Xenoborg is a failed hybridization of a Xenomorph and a cyborg.",
-			"rules": "You may sacrifice a silicon, reducing the cost of this card by the sacrificed creature's plasma cost, to summon this card from your hand.",
+			"rules": "You may sacrifice a silicon, reducing the cost of this card by the sacrificed creature's mana cost, to summon this card from your hand.",
 			"icon_state": "xeno_borg",
 			"power": 7,
 			"resolve": 5,
