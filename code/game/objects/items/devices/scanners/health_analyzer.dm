@@ -474,9 +474,9 @@
 	var/obj/item/paper/medical_report/report_paper = new(get_turf(src))
 
 	report_paper.color = "#99ccff"
-	report_paper.name = "health scan report - [server_timestamp(ic_time = TRUE)]"
+	report_paper.name = "health scan report - [server_timestamp(format = "hh:mm", ic_time = TRUE)]"
 	var/report_text = "<center><B>Health scan report</br>\
-		Time of retrieval: [server_timestamp(ic_time = TRUE)] (NPT: [round_timestamp()])</B></center><HR>"
+		Time of retrieval: [server_timestamp(format = "hh:mm", ic_time = TRUE)] (NPT: [round_timestamp()])</B></center><HR>"
 	report_text += last_scan_text
 
 	report_paper.add_raw_text(report_text)
