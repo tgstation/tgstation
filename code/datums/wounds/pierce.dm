@@ -51,7 +51,7 @@
 
 	return ..()
 
-/datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+/datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction, damage_source)
 	if(victim.stat == DEAD || wounding_dmg < 5 || !limb.can_bleed() || !victim.get_blood_volume() || !prob(internal_bleeding_chance + wounding_dmg))
 		return
 	// 20 force attack ~=  5-16 blood loss ~= 1%-3% of blood volume
