@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed weather forcasts randomly backtracking on themselves, and falsely announcing safety right before a storm hits"
