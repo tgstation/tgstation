@@ -24,7 +24,7 @@
 
 ///returns the current IC station time in a world.time format
 /proc/station_time(wtime = world.time)
-	return (((wtime - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % (24 HOURS)
+	return (((wtime - SSticker.round_start_time)) + SSticker.gametime_offset) % (24 HOURS)
 
 /proc/station_time_debug(force_set)
 	if(isnum(force_set))
