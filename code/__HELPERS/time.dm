@@ -15,10 +15,6 @@
 		return "[current_year]-[time2text(world.timeofday, "MM-DD hh:mm:ss", world.timezone)]"
 	return time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)
 
-///displays the current time into the round, with a lot of extra code just there for ensuring it looks okay after an entire day passes
-#define ROUND_TIME(...) ( "[STATION_TIME_PASSED() > MIDNIGHT_ROLLOVER ? "[round(STATION_TIME_PASSED()/MIDNIGHT_ROLLOVER)]:[gameTimestamp(wtime = STATION_TIME_PASSED())]" : gameTimestamp(wtime = STATION_TIME_PASSED())]" )
-
-
 /// Returns UTC timestamp with the specifified format and optionally deciseconds
 /proc/time_stamp(format = "hh:mm:ss", show_ds)
 	var/time_string = time2text(world.timeofday, format, TIMEZONE_UTC)

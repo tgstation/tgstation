@@ -34,7 +34,8 @@ GLOBAL_DATUM(escape_menu_details, /atom/movable/screen/escape_menu/details)
 	var/new_maptext = {"
 		<span style='text-align: right; line-height: 0.7'>
 			Round ID: [GLOB.round_id || "Unset"]<br />
-			Round Time: [ROUND_TIME()]<br />
+			Server Time: [server_timestamp(format = "YYYY-MM-DD hh:mm:ss", ic_time = TRUE)],
+			Round Time: [round_timestamp()]<br />
 			Map: [SSmapping.current_map.return_map_name(webmap_included = TRUE) || "Loading..."]<br />
 			Time Dilation: [round(SStime_track.time_dilation_current,1)]%<br />
 		</span>
