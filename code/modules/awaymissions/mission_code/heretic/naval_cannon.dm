@@ -27,8 +27,8 @@
 	name ="40mm shell"
 	icon_state = "40mm"
 	speed = 2
-	range = 400 //same as sniper rifle
-	damage = 600 //only 200 more than the 20mm but if i wanted to be realisitc this would get rediculous, maybe ill just give it 10k damage instead so it can one shot that dumb fucking heretic ascension mob
+	range = 400
+	damage = 600
 	paralyze = 100
 	dismemberment = 50
 	catastropic_dismemberment = TRUE
