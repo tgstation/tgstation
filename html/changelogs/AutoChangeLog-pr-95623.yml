@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscdel: "Plasma flower MOD core no longer spawns butterflies around the user"
-  - qol: "Plasma flower MOD core's pollen visual now spawns less particles"

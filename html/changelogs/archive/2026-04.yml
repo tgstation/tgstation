@@ -230,6 +230,11 @@
   - image: Hoodies! Both pullover and zip-up hoodies are available in the clothesmate
       and in loadouts!
 2026-04-12:
+  ElGitificador:
+  - spellcheck: due to conflicts with the hive empress, lamarr has lost it s diplomatic
+      facehugger title
   SmArtKar:
   - bugfix: Fixed weather forcasts randomly backtracking on themselves, and falsely
       announcing safety right before a storm hits
+  - rscdel: Plasma flower MOD core no longer spawns butterflies around the user
+  - qol: Plasma flower MOD core's pollen visual now spawns less particles
