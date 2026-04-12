@@ -1,3 +1,24 @@
+/// Returns UTC timestamp with the specifified format, with optionally deciseconds or optional IC time (year offset), AKA Nanotrasen Standard Time (NST)
+/proc/server_timestamp(format = "hh:mm:ss", show_ds, ic_time)
+	var/time_string = time2text(world.timeofday, format, TIMEZONE_UTC)
+	if(ic_time && findtext(format, "YYYY")) //if we have a year, replace the year
+		time_string = replacetext_char(time_string, "[CURRENT_YEAR_INTEGER]", CURRENT_STATION_YEAR)
+	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
+
+/// Returns timestamp since the server started, for use with world.time
+/proc/round_timestamp(format = "hh:mm:ss", wtime = world.time)
+	return time2text(wtime, format, NO_TIMEZONE)
+
+/mob/proc/get_server_time(ic_time = FALSE)
+	if(ic_time)
+		var/current_year = text2num(time2text(world.timeofday, "YYYY", world.timezone)) + STATION_YEAR_OFFSET
+		return "[current_year]-[time2text(world.timeofday, "MM-DD hh:mm:ss", world.timezone)]"
+	return time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)
+
+///displays the current time into the round, with a lot of extra code just there for ensuring it looks okay after an entire day passes
+#define ROUND_TIME(...) ( "[STATION_TIME_PASSED() > MIDNIGHT_ROLLOVER ? "[round(STATION_TIME_PASSED()/MIDNIGHT_ROLLOVER)]:[gameTimestamp(wtime = STATION_TIME_PASSED())]" : gameTimestamp(wtime = STATION_TIME_PASSED())]" )
+
+
 /// Returns UTC timestamp with the specifified format and optionally deciseconds
 /proc/time_stamp(format = "hh:mm:ss", show_ds)
 	var/time_string = time2text(world.timeofday, format, TIMEZONE_UTC)
