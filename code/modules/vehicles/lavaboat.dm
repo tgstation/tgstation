@@ -81,6 +81,7 @@
 	desc = "A tiny ship inside a bottle."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "ship_bottle"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/ship_in_a_bottle/attack_self(mob/user)
 	to_chat(user, span_notice("You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out."))
