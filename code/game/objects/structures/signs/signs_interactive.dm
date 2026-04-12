@@ -1,13 +1,13 @@
 /obj/structure/sign/clock
 	name = "wall clock"
-	desc = "It's your run-of-the-mill wall clock showing both the local Coalition Standard Time and the galactic Treaty Coordinated Time. Perfect for staring at instead of working."
+	desc = "It's your run-of-the-mill wall clock showing both the local Nanotrasen Standard Time and the galactic Treaty Coordinated Time. Perfect for staring at instead of working."
 	icon_state = "clock"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/clock, 32)
 
 /obj/structure/sign/clock/examine(mob/user)
 	. = ..()
-	. += span_info("The current CST (local) time is: [server_timestamp(ic_time = TRUE)].")
+	. += span_info("The current NST (local) time is: [server_timestamp(ic_time = TRUE)].")
 	if(user.is_literate())
 		. += span_info("That means it is currently [round_timestamp()] into the shift.")
 	. += span_info("The current TCT (galactic) time is: [time2text(world.realtime, "hh:mm:ss", 0)].")
