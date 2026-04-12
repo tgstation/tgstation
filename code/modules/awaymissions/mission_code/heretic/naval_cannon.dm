@@ -29,7 +29,7 @@
 	speed = 2
 	range = 400
 	damage = 600
-	paralyze = 100
+	paralyze = 10 SECONDS
 	dismemberment = 50
 	catastropic_dismemberment = TRUE
 	armour_penetration = 50
