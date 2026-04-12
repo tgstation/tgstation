@@ -4,7 +4,7 @@
 	icon = 'icons/obj/weapons/naval_cannon.dmi'
 	icon_state = 'turret_bofors_8d'
 	max_integrity = 5000 //its a naval cannon, but its not unbreakable
-	projectile_type = /obj/projectile/bullet/manned_turret/hmg
+	projectile_type = /obj/projectile/bullet/mm40
 	anchored = TRUE //nobody should be bringing this back to station, this is a set piece.
 	number_of_shots = 1
 	cooldown_duration = 2 SECONDS
@@ -21,9 +21,11 @@
 	projectile_type = /obj/projectile/bullet/mm40
 	icon_state = "40mm-shell"
 	newtonian_force = 10
+	slowdown = 2 //tank shells weigh a lot
 
 /obj/projectile/bullet/mm40
 	name ="40mm shell"
+	icon_state = "40mm"
 	speed = 2
 	range = 400 //same as sniper rifle
 	damage = 600 //only 200 more than the 20mm but if i wanted to be realisitc this would get rediculous, maybe ill just give it 10k damage instead so it can one shot that dumb fucking heretic ascension mob

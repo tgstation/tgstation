@@ -56,12 +56,13 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "ao" = (
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack{
-	pixel_y = 9;
-	pixel_x = 15;
-	anchored = 1;
-	name = "Sam Site Missle rack"
+/obj/structure/railing{
+	dir = 1
 	},
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/deployable_turret/hmg,
 /turf/open/floor/iron/large,
 /area/awaymission/beach/heretic)
 "aq" = (
@@ -329,6 +330,14 @@
 /obj/effect/blessing/invisible,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
+"bK" = (
+/obj/structure/fluff/sat_dish{
+	dir = 4;
+	pixel_x = -8;
+	pixel_y = -1
+	},
+/turf/open/floor/iron/large,
+/area/awaymission/beach/heretic)
 "bN" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -1611,7 +1620,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/beach/heretic)
 "iw" = (
-/obj/effect/turf_decal/trimline/red/filled/end,
+/obj/effect/turf_decal/trimline/yellow/filled,
 /turf/open/floor/iron/large,
 /area/awaymission/beach/heretic)
 "ix" = (
@@ -1669,6 +1678,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/heretic_laboratory)
+"iK" = (
+/obj/machinery/deployable_turret/naval_cannon,
+/obj/effect/turf_decal/trimline/yellow/filled,
+/turf/open/floor/iron/large,
+/area/awaymission/beach/heretic)
 "iL" = (
 /obj/structure/fluff/tram_rail/anchor{
 	dir = 1
@@ -2074,6 +2088,16 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
+"kS" = (
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack{
+	pixel_y = 9;
+	pixel_x = 15;
+	anchored = 1;
+	name = "Sam Site Missle rack"
+	},
+/obj/effect/turf_decal/trimline/red/arrow_cw,
+/turf/open/floor/iron/large,
+/area/awaymission/beach/heretic)
 "kV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2331,6 +2355,11 @@
 "mv" = (
 /turf/open/misc/beach/sand,
 /area/awaymission/caves/heretic_laboratory_clean)
+"mA" = (
+/obj/machinery/deployable_turret/naval_cannon,
+/obj/effect/turf_decal/trimline/yellow/filled/arrow_cw,
+/turf/open/floor/iron/large,
+/area/awaymission/beach/heretic)
 "mC" = (
 /obj/machinery/power/rtg/lavaland,
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
@@ -2800,6 +2829,25 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white/textured_large,
+/area/awaymission/beach/heretic)
+"oV" = (
+/obj/structure/rack,
+/obj/item/ammo_casing/mm40{
+	icon_state = "40mm-shell-live";
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/item/ammo_casing/mm40{
+	icon_state = "40mm-shell-live";
+	pixel_x = 2;
+	pixel_y = 0
+	},
+/obj/item/ammo_casing/mm40{
+	icon_state = "40mm-shell-live";
+	pixel_x = -2;
+	pixel_y = 0
+	},
+/turf/open/floor/iron/large,
 /area/awaymission/beach/heretic)
 "oW" = (
 /obj/structure/filingcabinet{
@@ -3600,6 +3648,13 @@
 /obj/item/radio/intercom/mi13/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
+"sP" = (
+/obj/structure/ladder{
+	name = "busted ladder hatch";
+	desc = "A sturdy metal ladder that used to lead to the bottom part of the ship- its completely broken however and the hatch is welded shut."
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory_clean)
 "sS" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -4119,11 +4174,13 @@
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
 "vI" = (
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack{
-	pixel_y = 8;
-	pixel_x = -15;
-	anchored = 1;
-	name = "Sam Site Missle rack"
+/obj/structure/fluff{
+	icon = 'icons/mob/simple/hivebot.dmi';
+	icon_state = "def_radar-off";
+	name = "radio dish component";
+	desc = "Remarkable Nanotrasen technology. This does... something to make the radio dish work.";
+	pixel_y = 0;
+	pixel_x = 0
 	},
 /turf/open/floor/iron/large,
 /area/awaymission/beach/heretic)
@@ -4263,6 +4320,16 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/awaymission/beach/heretic)
+"wv" = (
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack{
+	pixel_y = 8;
+	pixel_x = -15;
+	anchored = 1;
+	name = "Sam Site Missle rack"
+	},
+/obj/effect/turf_decal/trimline/red/arrow_ccw,
+/turf/open/floor/iron/large,
 /area/awaymission/beach/heretic)
 "wy" = (
 /obj/machinery/light/directional/west,
@@ -5285,6 +5352,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white/smooth_large,
 /area/awaymission/caves/heretic_laboratory)
+"BA" = (
+/obj/effect/turf_decal/trimline/yellow/filled/arrow_ccw,
+/turf/open/floor/iron/large,
+/area/awaymission/beach/heretic)
 "BE" = (
 /obj/machinery/teleport/station{
 	name = "Forcefield generator"
@@ -5451,6 +5522,10 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/white/smooth_large,
 /area/awaymission/caves/heretic_laboratory)
+"CF" = (
+/obj/effect/turf_decal/trimline/yellow/line,
+/turf/open/floor/iron/large,
+/area/awaymission/beach/heretic)
 "CG" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /obj/effect/blessing/invisible,
@@ -5831,12 +5906,22 @@
 /turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
 "EP" = (
-/obj/machinery/deployable_turret/hmg,
-/obj/structure/railing{
-	dir = 1
+/obj/effect/turf_decal/trimline/yellow/filled,
+/obj/structure/rack,
+/obj/item/ammo_casing/mm40{
+	icon_state = "40mm-shell-live";
+	pixel_x = 6;
+	pixel_y = 0
 	},
-/obj/effect/turf_decal/stripes{
-	dir = 1
+/obj/item/ammo_casing/mm40{
+	icon_state = "40mm-shell-live";
+	pixel_x = 2;
+	pixel_y = 0
+	},
+/obj/item/ammo_casing/mm40{
+	icon_state = "40mm-shell-live";
+	pixel_x = -2;
+	pixel_y = 0
 	},
 /turf/open/floor/iron/large,
 /area/awaymission/beach/heretic)
@@ -6284,13 +6369,7 @@
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "GR" = (
-/obj/effect/turf_decal/trimline/red/arrow_cw,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack{
-	pixel_y = 9;
-	pixel_x = 15;
-	anchored = 1;
-	name = "Sam Site Missle rack"
-	},
+/obj/effect/turf_decal/trimline/yellow/filled/end,
 /turf/open/floor/iron/large,
 /area/awaymission/beach/heretic)
 "GT" = (
@@ -9201,12 +9280,8 @@
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
 "Wz" = (
-/obj/effect/turf_decal/trimline/red/arrow_ccw,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack{
-	pixel_y = 8;
-	pixel_x = -15;
-	anchored = 1;
-	name = "Sam Site Missle rack"
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 1
 	},
 /turf/open/floor/iron/large,
 /area/awaymission/beach/heretic)
@@ -9827,7 +9902,11 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ZP" = (
-/obj/effect/turf_decal/trimline/red/filled,
+/obj/structure/fluff/sat_dish{
+	dir = 8;
+	pixel_x = 8;
+	pixel_y = -1
+	},
 /turf/open/floor/iron/large,
 /area/awaymission/beach/heretic)
 "ZQ" = (
@@ -50509,11 +50588,11 @@ nI
 nI
 nI
 nI
-SY
+ao
 hY
-hY
-hY
-hY
+Wz
+xH
+xH
 xl
 xl
 xl
@@ -50530,12 +50609,12 @@ xl
 xl
 xl
 BY
-xH
-xH
-ZP
+EP
 iw
-hY
-hY
+iw
+iw
+iK
+GR
 oo
 oo
 kI
@@ -50768,8 +50847,8 @@ nI
 nI
 pB
 hY
-hY
-hY
+kS
+ZP
 hY
 xl
 Kx
@@ -50787,11 +50866,11 @@ IP
 kw
 ZM
 BY
+oV
 hY
 hY
-ao
-GR
 hY
+BA
 hY
 hY
 hY
@@ -51024,16 +51103,16 @@ nI
 nI
 nI
 nI
-EP
-hY
-hY
+SY
+Gh
+Mj
 hY
 xl
 nL
 vu
 gi
 vu
-vu
+sP
 pr
 xl
 md
@@ -51044,16 +51123,16 @@ IP
 Yy
 KO
 BY
-hY
-hY
-Gh
-Mj
+oV
 hY
 hY
 hY
+CF
 hY
 hY
 hY
+hY
+vI
 nR
 nI
 nI
@@ -51282,8 +51361,8 @@ nI
 nI
 Hi
 hY
-hY
-hY
+wv
+bK
 hY
 xl
 Ew
@@ -51301,11 +51380,11 @@ IP
 FF
 Kk
 BY
+oV
 hY
 hY
-vI
-Wz
 hY
+mA
 hY
 hY
 hY
@@ -51537,11 +51616,11 @@ nI
 nI
 nI
 nI
-SY
+ao
 hY
-hY
-hY
-hY
+Wz
+xH
+xH
 xl
 xl
 xl
@@ -51558,12 +51637,12 @@ xl
 xl
 xl
 BY
-xH
-xH
-ZP
+EP
 iw
-hY
-hY
+iw
+iw
+iw
+GR
 VQ
 VQ
 CC
