@@ -229,3 +229,7 @@
   Twaticus:
   - image: Hoodies! Both pullover and zip-up hoodies are available in the clothesmate
       and in loadouts!
+2026-04-12:
+  SmArtKar:
+  - bugfix: Fixed weather forcasts randomly backtracking on themselves, and falsely
+      announcing safety right before a storm hits
