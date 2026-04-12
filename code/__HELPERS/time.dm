@@ -5,22 +5,9 @@
 		time_string = replacetext_char(time_string, "[CURRENT_YEAR_INTEGER]", CURRENT_STATION_YEAR)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
-/// Returns timestamp since the server started, for use with world.time
-/proc/round_timestamp(format = "hh:mm:ss", wtime = world.time)
+/// Returns timestamp since the round started, AKA Nanotrasen Pay Time (NPT)
+/proc/round_timestamp(format = "hh:mm:ss", wtime = world.time - SSticker.round_start_time)
 	return time2text(wtime, format, NO_TIMEZONE)
-
-/mob/proc/get_server_time(ic_time = FALSE)
-	if(ic_time)
-		var/current_year = text2num(time2text(world.timeofday, "YYYY", world.timezone)) + STATION_YEAR_OFFSET
-		return "[current_year]-[time2text(world.timeofday, "MM-DD hh:mm:ss", world.timezone)]"
-	return time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)
-
-
-
-/// Returns UTC timestamp with the specifified format and optionally deciseconds
-/proc/time_stamp(format = "hh:mm:ss", show_ds)
-	var/time_string = time2text(world.timeofday, format, TIMEZONE_UTC)
-	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
 ///returns the current IC station time in a world.time format
 /proc/station_time(wtime = world.time)

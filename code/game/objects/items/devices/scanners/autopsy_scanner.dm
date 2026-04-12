@@ -54,7 +54,7 @@
 
 	var/obj/item/paper/autopsy_report = new(get_turf(src))
 	autopsy_report.color = "#99ccff"
-	autopsy_report.name = "autopsy report of [scanned] - [server_timestamp(ic_time = TRUE)] ([round_timestamp()])"
+	autopsy_report.name = "autopsy report of [scanned] - [server_timestamp(ic_time = TRUE)]"
 	var/final_report_text = "<center><b>Autopsy report. Time of Autopsy: [server_timestamp(ic_time = TRUE)] ([round_timestamp()])</b></center>"
 
 	//A lot of this is extremely similar to /proc/healthscan() - but with different formatting, no color, and some added/removed info

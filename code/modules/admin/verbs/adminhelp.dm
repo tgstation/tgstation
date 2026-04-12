@@ -356,9 +356,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			heard_by_no_admins = FALSE
 			send2adminchat(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
 
-	ticket_interactions += "[time_stamp()]: [formatted_message]"
+	ticket_interactions += "[server_timestamp()]: [formatted_message]"
 	if (!isnull(player_message))
-		player_interactions += "[time_stamp()]: [player_message]"
+		player_interactions += "[server_timestamp()]: [player_message]"
 
 //Removes the ahelp verb and returns it after 2 minutes
 /datum/admin_help/proc/TimeoutVerb()

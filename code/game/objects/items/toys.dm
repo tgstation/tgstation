@@ -1139,7 +1139,9 @@
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
 	. = ..()
-	. += span_info("Station Time: [server_timestamp(ic_time = TRUE)] ([round_timestamp()])")
+	. += span_info("Station Time: [server_timestamp(ic_time = TRUE)]")
+	if(user.is_literate())
+		. += span_info("That means it is currently [round_timestamp()] into the shift.")
 
 /*
  * Toy Dagger
