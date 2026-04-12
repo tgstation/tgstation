@@ -7,8 +7,6 @@
 	projectile_type = /obj/projectile/bullet/mm40
 	anchored = TRUE //nobody should be bringing this back to station, this is a set piece.
 	number_of_shots = 1
-	cooldown_duration = 2 SECONDS
-	rate_of_fire = 2
 	firesound = 'sound/items/weapons/gun/general/cannon.ogg'
 	overheatsound = 'sound/items/tools/ratchet_slow.ogg'
 	can_be_undeployed = FALSE
