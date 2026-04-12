@@ -72,7 +72,7 @@
 
 /datum/crafting_recipe/honkbot
 	name = "Honkbot"
-	result = /mob/living/basic/bot/honkbot
+	result = /mob/living/basic/bot/secbot/honkbot
 	reqs = list(
 		/obj/item/storage/box/clown = 1,
 		/obj/item/bodypart/arm/right/robot = 1,

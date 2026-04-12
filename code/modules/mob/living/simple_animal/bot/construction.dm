@@ -343,7 +343,7 @@
 			if(!can_finish_build(tool, user))
 				return ITEM_INTERACT_BLOCKING
 			to_chat(user, span_notice("You add the [tool] to [src]! Honk!"))
-			var/mob/living/basic/bot/honkbot/new_honkbot = new(drop_location())
+			var/mob/living/basic/bot/secbot/honkbot/new_honkbot = new(drop_location())
 			new_honkbot.name = created_name
 			playsound(new_honkbot, 'sound/machines/ping.ogg', 50, TRUE, -1)
 			qdel(tool)
