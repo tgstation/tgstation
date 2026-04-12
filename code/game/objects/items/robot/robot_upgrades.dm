@@ -479,7 +479,7 @@
 /obj/item/borg/upgrade/engineering_omnitool/action(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
-		return .
+		return
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 
 /obj/item/borg/upgrade/defib
