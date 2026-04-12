@@ -193,6 +193,12 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/item/borg/cyborg_omnitool/examine(mob/user)
+	. = ..()
+	if(reference)
+		var/obj/item/tool = get_proxy_attacker_for(src, usr)
+		. += tool.examine(user)
+
 /**
  * Sets the new internal tool to be used
  * Arguments
@@ -307,12 +313,6 @@
 /obj/item/borg/cyborg_omnitool/engineering/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_SILICON_MODULE_ACTIVATION, PROC_REF(welder_toggle))
-
-/obj/item/borg/cyborg_omnitool/engineering/examine(mob/user)
-	. = ..()
-	if(reference)
-		var/obj/item/tool = get_proxy_attacker_for(src, usr)
-		. += tool.examine(user)
 
 /obj/item/borg/cyborg_omnitool/engineering/update_appearance(updates)
 	if(updates & UPDATE_OVERLAYS)
