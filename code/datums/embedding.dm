@@ -99,7 +99,8 @@
 	if(is_harmless())
 		examine_list["sticky"] = "[parent] looks sticky, and could probably get stuck to someone if thrown properly!"
 	else
-		examine_list["embeddable"] = "[parent] has a fine point, and could probably embed in someone if thrown properly!"
+		if(embed_chance > 0)
+			examine_list["embeddable"] = "[parent] has a fine point, and could probably embed in someone if thrown properly!"
 
 /// Is passed victim a valid target for us to embed into?
 /datum/embedding/proc/can_embed(atom/movable/source, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum)

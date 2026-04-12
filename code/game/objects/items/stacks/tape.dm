@@ -155,18 +155,23 @@
 	return "tape" + (tray_extended ? "" : "_out")
 
 /obj/item/stack/medical/wrap/sticky_tape/duct
-	name = "duct tape"
-	singular_name = "duct tape"
+	name = "industrial tape"
+	singular_name = "industrial tape"
 	desc = "Tape designed for sealing punctures, holes and breakages in objects. Engineers swear by this stuff for practically all kinds of repairs. Maybe a little TOO much..."
-	prefix = "duct taped"
+	prefix = "industrial taped"
 	conferred_embed = /datum/embedding/sticky_tape/duct
 	merge_type = /obj/item/stack/medical/wrap/sticky_tape/duct
+	greyscale_config = /datum/greyscale_config/tape
+	greyscale_colors = "#C94A16#FF5E1C"
 	var/object_repair_value = 30
 	amount = 10
 	max_amount = 10
 
 /datum/embedding/sticky_tape/duct
-	embed_chance = 0 //Wrapping something in duct tape is basically ensuring it never embeds.
+	embed_chance = null //Wrapping something in duct tape is basically ensuring it never embeds.
+	pain_mult = null
+	jostle_pain_mult = null
+	pain_stam_pct = null
 
 /obj/item/stack/medical/wrap/sticky_tape/duct/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!object_repair_value)
