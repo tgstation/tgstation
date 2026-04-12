@@ -80,8 +80,8 @@
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 	victim.bleed(blood_bled)
-	if(blood_bled >= 14)
-		victim.do_splatter_effect(attack_direction)
+	if(blood_bled >= 18)
+		victim.spray_blood(attack_direction)
 
 /datum/wound/pierce/bleed/get_bleed_rate_of_change()
 	//basically if a species doesn't bleed, the wound is stagnant and will not heal on its own (nor get worse)
