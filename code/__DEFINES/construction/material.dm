@@ -74,10 +74,21 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 // Optional material property IDs
 #define MATERIAL_FLAMMABILITY "flammability"
 #define MATERIAL_RADIOACTIVITY "radioactivity"
+#define MATERIAL_FIRESTACKER "firestacker"
+#define MATERIAL_VAMPIRES_BANE "vampires_bane"
+#define MATERIAL_TELEPORTING "teleporting"
+#define MATERIAL_PENETRATING "penetrating"
 
 // Derived material property IDs
 #define MATERIAL_INTEGRITY "integrity"
 #define MATERIAL_BEAUTY "beauty"
+#define MATERIAL_INSULATION "insulation"
+
+// Flags for signal tracking on materials
+/// Send COMSIG_MATERIAL_EFFECT_X whenever a mob steps onto a material atom/is shoved into this material wall
+#define MATERIAL_TRACK_CONTACT (1 << 0)
+/// Send COMSIG_MATERIAL_EFFECT_X whenever a mob is hit by/hits/catches the material atom
+#define MATERIAL_TRACK_IMPACT (1 << 1)
 
 /// Maximum value for a core material property
 #define MATERIAL_PROPERTY_MAX 10
@@ -108,8 +119,6 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATCONTAINER_SILENT (1 << 3)
 /// Alloys won't be disassembled in its components when inserted.
 #define MATCONTAINER_ACCEPT_ALLOYS (1 << 4)
-/// Prevents material items from displaying their descriptors in examine_more with sci glasses
-#define MATERIAL_NO_DESCRIPTORS (1 << 5)
 
 // Atom material behavior flags
 /// Whether a material's mechanical effects should apply to the atom. This is necessary for other flags to work.
@@ -129,6 +138,8 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_NO_EDIBILITY (1 << 6)
 /// Ignore custom material grind results
 #define MATERIAL_NO_REAGENTS (1 << 7)
+/// Prevents material items from displaying their descriptors in examine_more with sci glasses
+#define MATERIAL_NO_DESCRIPTORS (1 << 8)
 
 //Special return values of [/datum/material_container/insert_item]
 /// No material was found inside them item
@@ -170,5 +181,7 @@ GLOBAL_LIST_INIT(material_flags_to_string, alist(
 #define MATERIAL_LIST_OPTIMAL_AMOUNT "optimal_amount"
 /// The key to access the multiplier used to selectively control effects and modifiers of a material.
 #define MATERIAL_LIST_MULTIPLIER "multiplier"
+/// Key controlling which material slots a material is assigned to
+#define MATERIAL_LIST_SLOTS "slot"
 /// A macro that ensures some multiplicative modifiers higher than 1 don't become lower than 1 and vice-versa because of the multiplier.
 #define GET_MATERIAL_MODIFIER(modifier, multiplier) (modifier >= 1 ? 1 + ((modifier) - 1) * (multiplier) : (modifier)**(multiplier))

@@ -74,7 +74,7 @@
 
 	message = add_input_port("Message", PORT_TYPE_STRING, trigger = null)
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
-	show_charge_meter = add_input_port("Show Charge Meter", PORT_TYPE_NUMBER, trigger = PROC_REF(update_charge_action))
+	show_charge_meter = add_input_port("Show Charge Meter", PORT_TYPE_BOOLEAN, trigger = PROC_REF(update_charge_action))
 
 	user_port = add_output_port("User", PORT_TYPE_USER)
 
@@ -211,7 +211,7 @@
 
 	START_PROCESSING(SSobj, src)
 
-/datum/action/innate/bci_charge_action/create_button()
+/datum/action/innate/bci_charge_action/create_button(mob/viewer)
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext_x = 2
 	button.maptext_y = 0
@@ -226,6 +226,8 @@
 	return ..()
 
 /datum/action/innate/bci_charge_action/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return
 	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 
 	if (isnull(cell))
@@ -332,27 +334,24 @@
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/bci_implanter/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	var/obj/item/organ/cyberimp/bci/new_bci = weapon
-	if (istype(new_bci))
-		if (!(locate(/obj/item/integrated_circuit) in new_bci))
-			balloon_alert(user, "bci has no circuit!")
-			return
+/obj/machinery/bci_implanter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/organ/cyberimp/bci))
+		return NONE
 
-		var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant
+	var/obj/item/organ/cyberimp/bci/new_bci = tool
+	if (!(locate(/obj/item/integrated_circuit) in new_bci))
+		balloon_alert(user, "bci has no circuit!")
+		return ITEM_INTERACT_BLOCKING
 
-		user.transferItemToLoc(weapon, src)
-		bci_to_implant = weapon
-
-		if (isnull(previous_bci_to_implant))
-			balloon_alert(user, "inserted bci")
-		else
-			balloon_alert(user, "swapped bci")
-			user.put_in_hands(previous_bci_to_implant)
-
-		return
-
-	return ..()
+	var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant
+	user.transferItemToLoc(new_bci, src)
+	bci_to_implant = new_bci
+	if (isnull(previous_bci_to_implant))
+		balloon_alert(user, "inserted bci")
+	else
+		balloon_alert(user, "swapped bci")
+		user.put_in_hands(previous_bci_to_implant)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bci_implanter/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if (!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))

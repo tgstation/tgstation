@@ -49,7 +49,6 @@
 	overlay_icon_state = "bg_spell_border"
 	active_overlay_icon_state = "bg_spell_border_active_red"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED
-	panel = "Spells"
 
 	/// The sound played on cast.
 	var/sound = null
@@ -153,6 +152,9 @@
 /datum/action/cooldown/spell/proc/can_cast_spell(feedback = TRUE)
 	if(!owner)
 		CRASH("[type] - can_cast_spell called on a spell without an owner!")
+
+	if(SEND_SIGNAL(src, COMSIG_SPELL_CAN_CAST_CHECK, feedback) & SPELL_CANCEL_CAST)
+		return FALSE
 
 	// Certain spells are not allowed on the centcom zlevel
 	var/turf/caster_turf = get_turf(owner)

@@ -100,8 +100,12 @@
 		locked = TRUE
 	new_core?.install(src)
 	update_speed()
+
 	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_potion))
+	RegisterSignal(src, COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS, PROC_REF(get_strippable_alternate_actions))
+	RegisterSignal(src, COMSIG_ITEM_STRIPPABLE_ALT_ACTION, PROC_REF(do_strippable_action))
+
 	for(var/obj/item/mod/module/module as anything in theme.inbuilt_modules)
 		module = new module(src)
 		install(module)
@@ -402,6 +406,68 @@
 	icon_state = "[skin]-[base_icon_state][active ? "-sealed" : ""]"
 	return ..()
 
+/obj/item/mod/control/proc/get_strippable_alternate_actions(obj/item/source, atom/owner, mob/user, list/alt_actions)
+	SIGNAL_HANDLER
+	if(active)
+		alt_actions += "deactivate_mod"
+	else
+		alt_actions += "activate_mod"
+	if(check_retracted())
+		alt_actions += "deploy"
+	else
+		alt_actions += "undeploy"
+
+
+/obj/item/mod/control/proc/do_strippable_action(obj/item/source, atom/owner, mob/user, action_key)
+	SIGNAL_HANDLER
+	if(!isliving(user))
+		return NONE
+	switch(action_key)
+
+		if("deploy", "undeploy")
+			owner.visible_message(
+				span_warning("[user] tries to [action_key] [owner]'s [src]..."),
+				span_userdanger("[user] is trying to [action_key] your [src]!"),
+				blind_message = span_hear("You hear rustling."),
+				ignored_mobs = user,
+			)
+			INVOKE_ASYNC(src, PROC_REF(attempt_strip_deploy), owner, user, action_key)
+			return COMPONENT_ALT_ACTION_DONE
+
+		if("activate_mod", "deactivate_mod")
+			owner.visible_message(
+				span_warning("[user] tries to press [owner]'s [src]'s power button..."),
+				span_userdanger("[user] is trying to press your [src]'s power button!"),
+				blind_message = span_hear("You hear rustling."),
+				ignored_mobs = user,
+			)
+			INVOKE_ASYNC(src, PROC_REF(attempt_strip_activate), owner, user)
+			return COMPONENT_ALT_ACTION_DONE
+
+		else
+			return NONE
+
+/obj/item/mod/control/proc/attempt_strip_deploy(atom/owner, mob/user, message)
+	if(!do_after(user, strip_delay, owner))
+		return
+	owner.visible_message(
+		span_warning("[user] [message]s [owner]'s [src]."),
+		span_userdanger("[user] [message]s your [src]!"),
+		ignored_mobs = user,
+	)
+	quick_deploy(user)
+
+/obj/item/mod/control/proc/attempt_strip_activate(atom/owner, mob/user)
+	if(!do_after(user, strip_delay, owner))
+		return
+	owner.visible_message(
+		span_warning("[user] presses [owner]'s [src]'s power button."),
+		span_userdanger("[user] presses your [src]'s power button!"),
+		ignored_mobs = user,
+	)
+	toggle_activate(user)
+
+
 /obj/item/mod/control/proc/get_parts(all = FALSE)
 	. = list()
 	for(var/key in mod_parts)
@@ -458,7 +524,9 @@
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_SPECIES_GAIN, COMSIG_MOB_CLICKON))
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
-	wearer.update_spacesuit_hud_icon("0")
+	var/atom/movable/screen/spacesuit/spacesuit_hud = wearer.hud_used?.screen_objects[HUD_MOB_SPACESUIT]
+	if (spacesuit_hud)
+		spacesuit_hud.update_spacesuit_hud_icon()
 	wearer = null
 
 /obj/item/mod/control/proc/get_sealed_slots(list/parts)
@@ -649,17 +717,19 @@
  * Updates the wearer's hud according to the current state of the MODsuit
  */
 /obj/item/mod/control/proc/update_charge_alert()
-	if(isnull(wearer))
+	if(isnull(wearer) || isnull(wearer.client))
 		return
 	var/state_to_use
 	if(!active)
-		state_to_use = "0"
+		state_to_use = SPACESUIT_NO_ICON
 	else if(isnull(core))
 		state_to_use = "coreless"
 	else
 		state_to_use = core.get_charge_icon_state()
 
-	wearer.update_spacesuit_hud_icon(state_to_use || "0")
+	var/atom/movable/screen/spacesuit/spacesuit_hud = wearer.hud_used?.screen_objects[HUD_MOB_SPACESUIT]
+	if (spacesuit_hud)
+		spacesuit_hud.update_spacesuit_hud_icon(state_to_use || SPACESUIT_NO_ICON)
 
 /obj/item/mod/control/proc/update_speed()
 	var/total_slowdown = 0

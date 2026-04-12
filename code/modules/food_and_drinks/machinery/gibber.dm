@@ -147,7 +147,6 @@
 		return ..()
 
 /obj/machinery/gibber/verb/eject()
-	set category = "Object"
 	set name = "Empty gibber"
 	set src in oview(1)
 	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
@@ -234,7 +233,7 @@
 
 	var/mob/living/carbon/human/agent_whiskey = victim
 	var/drop_chance = 0
-	for (var/obj/item/bodypart/limb as anything in agent_whiskey.bodyparts)
+	for (var/obj/item/bodypart/limb as anything in agent_whiskey.get_bodyparts())
 		if (!limb.butcher_drops)
 			continue
 

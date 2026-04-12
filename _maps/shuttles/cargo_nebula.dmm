@@ -84,6 +84,7 @@
 	dir = 8;
 	id = "QMLoad"
 	},
+/obj/effect/landmark/flaps_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "s" = (
@@ -196,6 +197,7 @@
 	dir = 4;
 	id = "QMLoad2"
 	},
+/obj/effect/landmark/flaps_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "V" = (

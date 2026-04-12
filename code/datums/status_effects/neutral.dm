@@ -67,7 +67,7 @@
 /atom/movable/screen/alert/status_effect/in_love
 	name = "In Love"
 	desc = "You feel so wonderfully in love!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "in_love"
 
 /datum/status_effect/in_love
@@ -170,7 +170,7 @@
 /atom/movable/screen/alert/status_effect/heldup
 	name = "Held Up"
 	desc = "Making any sudden moves would probably be a bad idea!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "aimed"
 
 /datum/status_effect/grouped/heldup/on_apply()
@@ -192,7 +192,7 @@
 /atom/movable/screen/alert/status_effect/holdup
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone. Click to cancel."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "aimed"
 	clickable_glow = TRUE
 
@@ -376,7 +376,7 @@
 /atom/movable/screen/alert/status_effect/surrender
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "surrender"
 	clickable_glow = TRUE
 
@@ -613,6 +613,30 @@
 	return TRUE
 
 /datum/status_effect/tinlux_light/on_remove()
+	QDEL_NULL(mob_light_obj)
+
+///Makes the mob glow blue and rarely emit nuclear particles
+/datum/status_effect/cherenkov_radiation
+	id = "cherenkov_radiation"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	remove_on_fullheal = TRUE
+	alert_type = null
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+
+/datum/status_effect/cherenkov_radiation/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/cherenkov_radiation/on_apply()
+	mob_light_obj = owner.mob_light(2, 4, "#33ddff")
+	return TRUE
+
+/datum/status_effect/cherenkov_radiation/tick(seconds_between_ticks)
+	if(prob(3))
+		owner.fire_nuclear_particle()
+
+/datum/status_effect/cherenkov_radiation/on_remove()
 	QDEL_NULL(mob_light_obj)
 
 /datum/status_effect/gutted

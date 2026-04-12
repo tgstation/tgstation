@@ -175,9 +175,6 @@
 	/// Messages currently seen by this client
 	var/list/seen_messages
 
-	//Hide status bar (bottom left)
-	var/show_status_bar = TRUE
-
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
 
@@ -186,13 +183,9 @@
 
 	/// list of all tabs
 	var/list/panel_tabs = list()
-	/// list of tabs containing spells and abilities
-	var/list/spell_tabs = list()
 	///A lazy list of atoms we've examined in the last RECENT_EXAMINE_MAX_WINDOW (default 2) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
 
-	var/list/parallax_layers
-	var/list/parallax_layers_cached
 	var/atom/movable/screen/parallax_home/parallax_rock
 	///this is the last recorded client eye by SSparallax/fire()
 	var/atom/movable/movingmob
@@ -201,13 +194,8 @@
 	var/dont_animate_parallax
 	/// Direction our current area wants to move parallax
 	var/parallax_movedir = 0
-	/// How many parallax layers to show our client
-	var/parallax_layers_max = 4
 	/// Timers for the area directional animation, one for each layer
 	var/list/parallax_animate_timers
-	/// Do we want to do parallax animations at all?
-	/// Exists to prevent laptop fires
-	var/do_parallax_animations = TRUE
 
 	///Are we locking our movement input?
 	var/movement_locked = FALSE

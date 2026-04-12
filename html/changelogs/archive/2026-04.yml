@@ -1,0 +1,231 @@
+2026-04-01:
+  Kashargul:
+  - bugfix: admin spawn panel persistent paths, panel offsets, panel diagonal dirs
+  - bugfix: admin spawn atom verb, crash on early enter, arrow key scroll focus
+  SmArtKar:
+  - bugfix: Fixed unpowered field generators yeeting people
+2026-04-02:
+  lelandkemble:
+  - bugfix: You can no longer put everything other than a fish gene into a fish gene
+      gun
+2026-04-03:
+  Absolucy:
+  - bugfix: Ascended Void heretics now properly play the deflect sound when deflecting
+      projectiles.
+  - admin: View Variables can now properly view alists, altho it cannot edit them.
+  ArcaneMusic:
+  - qol: The pneumatic cannon's examine will now show the contents of the cannon loaded.
+  - bugfix: You may now place a pneumatic cannon (and the clown's pie cannon!) onto
+      tables.
+  Hatterhat:
+  - balance: Upgraded hydroponics trays now have reduced power draw with improved
+      parts, in the wake of complaints from both engineering and botanical staff regarding
+      exponentially increased short circuit frequency (and associated energy waste)
+      in affected tray basins.
+  JohnFulpWillard:
+  - bugfix: The Combat indicator will now properly move back to its original location
+      when using F12.
+  - bugfix: Sleep icon now appears again & rest icon now respects "Toggle Hotkeys
+      button" mode.
+  Melbert:
+  - bugfix: Fixes wizard, cult, nukies, revs, and malf being unable to be selected
+      for roundstart antag (yes, you read that right)
+  - rscadd: Walking in snow or sand leaves behind prints. You can examine the turf
+      to see what left the prints, like with bloodprints.
+  - rscadd: Snowstorms or sandstorms clear away any footprints left behind in the
+      snow or sand.
+  - rscadd: Some equipment or effects, like skis or snowshoes, prevent you from leaving
+      prints in the snow.
+  - rscadd: You can fill in snowprints with snow.
+  - rscdel: Zero-gravity drifting is no longer affected by inertia, ie it has been
+      reverted to what it once was.
+  SmArtKar:
+  - qol: Non-aliens with an implanted plasma vessel now see their plasma level in
+      their HUD instead of just the stat panel
+  - refactor: Refactored the entirety of HUD management code, report if anything breaks!
+  - bugfix: FOV blockers no longer harddel
+  lelandkemble:
+  - bugfix: Wheelys dont turn you when you kick them out
+  - bugfix: Three cult abilities no longer runtime
+  - bugfix: HUDs are now visible when looking up a floor, as well as by AIS and camera
+      consoles on lower floors.
+  timothymtorres:
+  - rscadd: To help cover budget expenses, NT has redesigned and installed new slot
+      machines that are themed by department. Slot machines can also be linked to
+      bank accounts via ID cards or department budget cards. NT takes a 40% cut of
+      profit to payout major jackpots and bonus spins. Please gamble responsibly.
+  - map: Replaced all slot machines with slot machine random spawners. Added syndicate
+      slot machines to Syndicate bases and nuke outposts.
+2026-04-04:
+  Melbert:
+  - qol: Recovered crew/Thanatorenasia bodies in morgue trays change the indicator
+      to green when a ghost is orbiting them (to allow ghosts to signal they want
+      it to be revived)
+  - qol: Recovered crew/Thanatorenasia bodies now cause morgue trays / bodybags to
+      shake when orbited, much like how the body itself shakes when orbited (to allow
+      ghosts to signal they want it to be revived)
+  - qol: '"Egg" foodtype now exists for better food sorting, though no species in
+      particular likes or dislikes it at the moment.'
+  - qol: Food crafting recipes now have three sub categories - Cuisine type, Dish
+      type, and Meal type. You can now filter between "Moth Pizzas" or "Lizard Soups"
+      rather than needing to guess if the recipe is in "Pizza" or "Mothic".
+  - spellcheck: de-capitalized several foods
+  - qol: TTS voice is more appropriately randomized to gender
+  - qol: Getting randomized through means such as mulligan toxin randomizes TTS voices
+  SyncIt21:
+  - bugfix: camera devices work again, camera flash turns on in most instances
+  - refactor: camera code has been refactored. Report bugs on github
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: using a dedicated cyborg defib upgrade on a mediborg with a backpack defib
+      installed will properly eject it
+  lelandkemble:
+  - rscadd: Remote chemical implants can be synced with a remote signalling device
+      to activate without a Prisoner Management Console.
+2026-04-05:
+  SyncIt21:
+  - refactor: ' reagent reaction code has been refactored for better cpu & memory
+      performance. Report broken reactions on github'
+2026-04-06:
+  ArcaneMusic:
+  - admin: Adds a secret to restart the gravity generator.
+  JohnFulpWillard:
+  - qol: Health assemblies now show their health in maptext rather than a stat panel
+      entry.
+  - rscdel: Deleted Object tab, and Server tab for players. Activate Held Object verb
+      is now in the IC tab. Examine and Point To was removed from the stat panel.
+  - admin: Object possession verbs have been moved to Admin Fun.
+  LemonInTheDark:
+  - config: Added a config option for the path to policy.json
+  Melbert:
+  - bugfix: Reset Dislocation operation ignores clothing
+  Rhials:
+  - bugfix: The shuttle loan event will now properly clear itself if not accepted
+      within the time limit, allowing for different loan opportunities to roll.
+  SmArtKar:
+  - balance: Red and black raptors no longer retaliate against their tamer's accidental
+      attacks
+  - bugfix: Fixed raptor shift-hover menu being offset, and other visual offset issues
+  - balance: Raptors and raptor chicks/eggs have had their growth speed increased
+      by 50/33% respectively.
+  rageguy505:
+  - bugfix: Metastations mining and QM disposal bins are no longer Jim Norton branded.
+2026-04-07:
+  Aliceee2ch:
+  - bugfix: Fixed empty message when ejecting an ID card from PDA.
+  - spellcheck: Most of wrenching screentips should be properly capitalized now.
+  JohnFulpWillard:
+  - rscadd: Medbay/Detectives can now add a Cause of Death to people's medical records
+      when set as deceased.
+  Melbert:
+  - bugfix: Fix cyborgs being unable to do surgeries that ask for user input before
+      it begins
+  - refactor: Refactored the SDSM-35 to allow for new books of similar styles, report
+      any oddities with it.
+  - bugfix: Fixes the broken image(s) in the SDSM-35.
+  - rscadd: Adds the IDC-27 in Medbay, the CMO's office, Virology, and possibly the
+      Library. It's a reference book to all viruses you may experience, similar to
+      the SDSM-35.
+  - rscadd: Several diseases/viruses received minor flavor adjustments, primarily
+      to cure text, agent, description, and form.
+  - rscadd: Getting cured of the Flu provides immunity to Spanish Flu (and visa versa)
+      as implied in cure text.
+  - rscadd: Getting cured of a Cold provides immunity to Cold-9 (and visa versa) as
+      implied in cure text.
+  - qol: Surgical states applied by wounds don't appear in examine unless the mob
+      is prepared for surgery
+  - qol: Surgical state examine text is now slightly smaller
+  - qol: '"Fix bones" surgery operation no longer appears if the patient is suffering
+      a bone fracture - you will need to "repair fracture" instead.'
+  - balance: Holy water temporarily pauses some effects of, and helps reverse, cursed
+      painting effects
+  SmArtKar:
+  - bugfix: Fixed boxing or successful blocking not preventing grabs
+  - bugfix: Fixed people crashing into their own mounts if they're thrown together
+  Tsar-Salat:
+  - bugfix: audits action button triggers, more action buttons ingame should respect
+      if the player can use the action button or not.
+2026-04-08:
+  Absolucy:
+  - qol: Added an indicator to chat highlight settings if you've input an invalid
+      regex (a red border around the textbox).
+  - qol: You can now enable/disable individual chat highlights.
+  Maxipat:
+  - rscadd: New css style class for use in config. Now you can notice policy text
+      easier
+  Melbert:
+  - admin: Admins can no longer edit global movespeed modifier datums
+  SmArtKar:
+  - bugfix: Fixed brimdust rendering on wide mobs (like raptors)
+  SyncIt21:
+  - bugfix: rped beam on machine frame renders correctly
+  TealSeer:
+  - bugfix: fixed silicons being unable to use operating computer from afar
+  lelandkemble:
+  - rscdel: Charlie station can no longer print custom shuttle boards
+  - bugfix: Gauze will stay on bleeding wounds it is applied to(but still not stop
+      bloodflow)
+  loganuk:
+  - code_imp: Atmos pipes GPU performance - Station areas with pipes will be less
+      taxing on the client.
+2026-04-09:
+  Melbert:
+  - bugfix: A dirty mask that CAN be pushed out of the way no longer obscures vision
+      if it IS pushed out of the way.
+  - qol: If your mask is dirty from pepper spray, you get some passive chat messages
+      indicating that it can be cleaned off.
+  - balance: Pepper spray clothing dirt is applied piecemeal - smaller dosages, rather
+      than doing nothing, now build up with repeat applications.
+  - balance: Pepper spray clothing dirt now has a tier between "very obscured vision"
+      and "no obscured vision", giving the wearer more of a warning before being thrust
+      into darkness.
+  - balance: Pepper spray can no longer stack blindness infinitely - it is now capped
+      to 6 seconds. This brings it in line with its other effects (confusion capped
+      at 5 seconds, blur capped at 10 seconds, knockdown capped at 3 seconds).
+  - bugfix: Fix zombie powder perma-coma on injection
+  SyncIt21:
+  - bugfix: reactions no longer consume catalysts
+  - code_imp: improved reaction code in other places
+  siliconOpossum:
+  - admin: Adds the jump-to-ghost verb, which brings your body to your aghost, it
+      has a hotkey which defaults to F4.
+2026-04-10:
+  Aliceee2ch:
+  - spellcheck: Renamed golden data disk to syndicate data disk.
+  Meblert:
+  - balance: Wizard Transparence perk's curse is permanent
+  Melbert:
+  - bugfix: Fixes the IDC
+  - bugfix: Carp mask can be used for internals again
+  - qol: Roundstart xeno egg is now mentioned in the roundstart report as an addendum,
+      rather than as a second report (usually) following the roundstart report.
+  lelandkemble:
+  - bugfix: Neurine works in the dead again
+  - bugfix: Escape pod storage wall safes will now be unlocked when they're unlocked
+      and appear locked when they're locked
+2026-04-11:
+  ArcaneMusic:
+  - bugfix: Weakpoints have more safeguards to prevent them from spawning onto space.
+  - image: Weakpoints now have an animation to spawn in with.
+  ElGitificador:
+  - bugfix: Deleted the misleading key request for the dragon lavaboat
+  FalloutFalcon:
+  - bugfix: The swap hand tutorial wont be shown to someone missing a hand
+  - bugfix: A handful of permissions panel querys now work again
+  Neocloudy:
+  - bugfix: DNA mob height doesn't instantly fall back to the base height for all
+      mobs.
+  SmArtKar:
+  - rscadd: Custom material spears can now be crafted using shards or (any) crystal
+      sheets on a wireprod
+  - rscadd: 'Added 3 new material effects: Vampire''s Bane (Silver), Teleporting (BS/Telecrystals)
+      and Penetrating (Telecrystals)'
+  - balance: Spears had their material stat calculations adjusted a bit to account
+      for the new slot system.
+  - refactor: Implemented datum-based material effects and slots
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: the cyborg omnitool upgrades properly increase tool speed
+  - bugfix: the cyborg omnitool engineer upgrade properly increases the welder speed
+      as well
+  Twaticus:
+  - image: Hoodies! Both pullover and zip-up hoodies are available in the clothesmate
+      and in loadouts!

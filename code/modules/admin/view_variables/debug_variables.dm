@@ -2,7 +2,9 @@
 /// Get displayed variable in VV variable list
 /proc/debug_variable(name, value, level, datum/owner, sanitize = TRUE, display_flags = NONE) //if D is a list, name will be index, and value will be assoc value.
 	if(owner)
-		if(islist(owner))
+		if(isalist(owner))
+			. = "<li style='backgroundColor:white'>(READ ONLY) "
+		else if(islist(owner))
 			var/list/list_owner = owner
 			var/index = name
 			if (isnull(value))
@@ -63,6 +65,18 @@
 	if(isdatum(value))
 		var/datum/datum_value = value
 		return datum_value.debug_variable_value(name, level, owner, sanitize, display_flags)
+
+	if(isalist(value))
+		var/alist/alist_value = value
+		var/list/items = list()
+
+		var/link_vars = "Vars=[REF(value)]"
+
+		if (!(display_flags & VV_ALWAYS_CONTRACT_LIST) && alist_value.len > 0 && alist_value.len <= VV_NORMAL_LIST_NO_EXPAND_THRESHOLD)
+			for(var/key, val in alist_value)
+				items += debug_variable(key, val, level + 1, sanitize = sanitize)
+			return "<a href='byond://?_src_=vars;[HrefToken()];[link_vars]'>/alist ([alist_value.len])</a><ul>[items.Join()]</ul>"
+		return "<a href='byond://?_src_=vars;[HrefToken()];[link_vars]'>/alist ([alist_value.len])</a>"
 
 	if(islist(value) || (name in GLOB.vv_special_lists)) // Some special lists aren't detectable as a list through istype
 		var/list/list_value = value
