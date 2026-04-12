@@ -5,7 +5,7 @@
 		time_string = replacetext_char(time_string, "[CURRENT_YEAR_INTEGER]", CURRENT_STATION_YEAR)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
-/// Returns timestamp since the round started, AKA Nanotrasen Pay Time (NPT)
+/// Returns timestamp since the round started, AKA Pay Time (PT)
 /proc/round_timestamp(format = "hh:mm:ss", wtime = world.time - SSticker.round_start_time)
 	return time2text(wtime, format, NO_TIMEZONE)
 
