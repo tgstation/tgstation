@@ -119,4 +119,5 @@
 	balloon_alert(user, "bottled the boat!")
 	var/obj/item/ship_in_a_bottle/bottled_ship = new(user.drop_location())
 	user.put_in_hands(bottled_ship)
+	qdel(src)
 	return CLICK_ACTION_SUCCESS
