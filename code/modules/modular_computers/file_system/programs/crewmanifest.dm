@@ -23,7 +23,7 @@
 								<br>
 								[GLOB.manifest ? GLOB.manifest.get_html(0) : ""]
 								"}
-				if(!computer.print_text(contents, "crew manifest ([server_timestamp(ic_time = TRUE)])"))
+				if(!computer.print_text(contents, "crew manifest ([round_timestamp()])"))
 					to_chat(usr, span_notice("Printer is out of paper."))
 					return
 				else
