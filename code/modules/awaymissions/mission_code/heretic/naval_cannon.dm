@@ -17,15 +17,15 @@
 /obj/item/ammo_casing/mm40
 	name = "40mm shell"
 	desc = "A 40mm shell."//do note that the bofors cannon in real life uses 57mm not 40mm but a 40mm shell can be used- elsewhere in code, maybe, possibly.
-	caliber = CALIBER_50BMG
+	caliber = CALIBER_40MM
 	projectile_type = /obj/projectile/bullet/mm40
-	icon_state = ".50"
+	icon_state = "40mm-shell"
 	newtonian_force = 10
 
 /obj/projectile/bullet/mm40
 	name ="40mm shell"
 	speed = 2
-	range = 400 // same as sniper rifle
+	range = 400 //same as sniper rifle
 	damage = 600 //only 200 more than the 20mm but if i wanted to be realisitc this would get rediculous, maybe ill just give it 10k damage instead so it can one shot that dumb fucking heretic ascension mob
 	paralyze = 100
 	dismemberment = 50
