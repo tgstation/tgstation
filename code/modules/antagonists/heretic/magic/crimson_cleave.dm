@@ -32,7 +32,7 @@
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		for(var/obj/item/bodypart/limbs as anything in carbon_owner.bodyparts)
+		for(var/obj/item/bodypart/limbs as anything in carbon_owner.get_bodyparts())
 			for(var/datum/wound/iter_wound as anything in limbs.wounds)
 				iter_wound.remove_wound()
 

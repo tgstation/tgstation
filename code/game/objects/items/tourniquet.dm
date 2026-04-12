@@ -16,7 +16,7 @@
 		/datum/component/limb_applicable, \
 		valid_zones = GLOB.limb_zones.Copy() + BODY_ZONE_HEAD, \
 		apply_category = LIMB_ITEM_TOURNIQUET, \
-		can_apply = CALLBACK(src, PROC_REF(can_apply_tourniquet)), \
+		do_apply = CALLBACK(src, PROC_REF(do_apply_tourniquet)), \
 	)
 	RegisterSignal(src, COMSIG_ITEM_APPLIED_TO_LIMB, PROC_REF(on_applied_to_limb))
 	RegisterSignal(src, COMSIG_ITEM_UNAPPLIED_FROM_LIMB, PROC_REF(on_removed_from_limb))
@@ -77,7 +77,7 @@
 		limb.owner.adjust_dizzy(4 SECONDS)
 		limb.owner.adjust_confusion(2 SECONDS)
 
-/obj/item/tourniquet/proc/can_apply_tourniquet(mob/user, mob/living/patient, obj/item/bodypart/limb)
+/obj/item/tourniquet/proc/do_apply_tourniquet(mob/user, mob/living/patient, obj/item/bodypart/limb)
 	var/speed_multiplier = 2
 	var/speed_boosted = FALSE
 	for(var/datum/wound/woundies as anything in limb.wounds)

@@ -691,12 +691,6 @@
 		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
 
-/datum/component/riding/creature/raptor/update_parent_layer_and_offsets(dir, animate)
-	. = ..()
-	var/mob/living/basic/raptor/raptor = parent
-	if (istype(raptor))
-		raptor.adjust_offsets(dir)
-
 /datum/component/riding/creature/raptor/combat
 	ai_behavior_while_ridden = RIDING_PAUSE_AI_MOVEMENT
 
@@ -738,4 +732,24 @@
 		TEXT_SOUTH = list(2, 8),
 		TEXT_EAST =  list(0, 5),
 		TEXT_WEST =  list(0, 5),
+	)
+
+/datum/component/riding/creature/spider
+	rider_traits = list(TRAIT_WEB_SURFER, TRAIT_FENCE_CLIMBER)
+	ride_check_flags = RIDER_NEEDS_ARM | UNBUCKLE_DISABLED_RIDER
+
+/datum/component/riding/creature/spider/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list( 0, 10),
+		TEXT_SOUTH = list( 0, 10),
+		TEXT_EAST =  list(-5, 10),
+		TEXT_WEST =  list( 5, 10),
+	)
+
+/datum/component/riding/creature/spider/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 0, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)

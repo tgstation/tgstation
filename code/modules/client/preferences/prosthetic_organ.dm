@@ -2,6 +2,7 @@
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "prosthetic_organ"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = FALSE
 
 /datum/preference/choiced/prosthetic_organ/create_default_value()
 	return "Random"
@@ -14,7 +15,7 @@
 	if (!.)
 		return FALSE
 
-	return "Prosthetic Organ" in preferences.all_quirks
+	return /datum/quirk/prosthetic_organ::name in preferences.all_quirks
 
 /datum/preference/choiced/prosthetic_organ/apply_to_human(mob/living/carbon/human/target, value)
 	return

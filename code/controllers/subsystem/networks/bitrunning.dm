@@ -2,7 +2,7 @@
 
 SUBSYSTEM_DEF(bitrunning)
 	name = "Bitrunning"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	var/list/all_domains = list()
 

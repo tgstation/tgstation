@@ -736,6 +736,15 @@
 
 	to_chat(src, "Camera lights activated.")
 
+// Allows AIs to turn their hologram instead on alt-move
+/mob/living/silicon/ai/keybind_face_direction(direction)
+	var/obj/machinery/holopad/active_pad = current
+	if(istype(active_pad) && active_pad.masters[src])
+		var/obj/effect/overlay/holo_pad_hologram/ai_holo = active_pad.masters[src]
+		ai_holo.setDir(direction)
+		return
+	return ..()
+
 //AI_CAMERA_LUMINOSITY
 
 /mob/living/silicon/ai/proc/light_cameras()
@@ -1025,6 +1034,8 @@
 	button_icon_state = "ai_shell"
 
 /datum/action/innate/deploy_shell/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return
 	var/mob/living/silicon/ai/AI = owner
 	if(!AI)
 		return
@@ -1038,6 +1049,8 @@
 	var/mob/living/silicon/robot/last_used_shell
 
 /datum/action/innate/deploy_last_shell/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return
 	if(!owner)
 		return
 	if(last_used_shell)
