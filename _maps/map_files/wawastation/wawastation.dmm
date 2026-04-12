@@ -22468,11 +22468,12 @@
 	pixel_y = -3
 	},
 /obj/item/book/manual/wiki/infections,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
+	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 2;
+	pixel_x = 3
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -36221,6 +36222,10 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 2;
+	pixel_x = 3
+	},
 /obj/item/food/sandwich/cheese,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/cmo)
@@ -37652,6 +37657,9 @@
 /obj/item/tgui_book/manual/dsm{
 	pixel_y = 3;
 	pixel_x = 3
+	},
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 7
 	},
 /obj/item/clothing/neck/stethoscope{
 	pixel_y = 4
@@ -47574,6 +47582,9 @@
 	},
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 3
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)

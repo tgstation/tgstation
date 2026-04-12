@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/carnivore/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
-	if(istype(rod.get_master_material(), /datum/material/meat)) //who cares about the bait, that fishing rod is yummy!
+	if(IS_EDIBLE(rod)) //who cares about the bait, that fishing rod is yummy!
 		return
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0

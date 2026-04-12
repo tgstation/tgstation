@@ -181,8 +181,9 @@
 /datum/component/tackler/proc/do_grab(mob/living/carbon/tackler, mob/living/carbon/tackled, skip_to_state = GRAB_PASSIVE)
 	set waitfor = FALSE
 
-	if(!tackler.grab(tackled) || tackler.pulling != tackled)
+	if(tackler.grab(tackled) != GRAB_SUCCESS || tackler.pulling != tackled)
 		return
+
 	if(tackler.grab_state != skip_to_state)
 		tackler.setGrabState(skip_to_state)
 
