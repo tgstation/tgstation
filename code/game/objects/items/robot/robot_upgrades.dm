@@ -481,15 +481,6 @@
 	if(!.)
 		return .
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
-	for(var/obj/item/weldingtool/largetank/cyborg/welder in cyborg.model.modules)
-		welder.toolspeed = initial(welder.toolspeed) - 0.3
-
-/obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
-	. = ..()
-	if(!.)
-		return .
-	for(var/obj/item/weldingtool/largetank/cyborg/welder in cyborg.model.modules)
-		welder.toolspeed = initial(welder.toolspeed)
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"

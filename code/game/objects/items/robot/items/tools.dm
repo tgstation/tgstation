@@ -303,6 +303,7 @@
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/multitool/cyborg,
+		/obj/item/weldingtool/largetank/cyborg,
 	)
 
 /obj/item/borg/cyborg_omnitool/engineering/examine(mob/user)
