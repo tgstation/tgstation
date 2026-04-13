@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Liberator pistol applies point-blank damage modifier no matter how it is fired"
