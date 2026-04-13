@@ -170,6 +170,8 @@
 	var/list/obj/item/atoms = list()
 	///object we are referencing to for force, sharpness and sound
 	var/obj/item/reference
+	//is the toolset upgraded or not
+	var/upgraded = FALSE
 
 /obj/item/borg/cyborg_omnitool/Initialize(mapload)
 	. = ..()
@@ -239,10 +241,14 @@
 
 	//if all else fails just make a new one from scratch
 	tool = new reference(user)
+	//assign the upgraded toolspeed, if engi omnitool upgrade was applied.
+	tool.toolspeed = initial(tool.toolspeed) - upgraded * 0.3
+	//the internal tool is considered part of the tool itself, so don't let it be dropped.
 	tool.item_flags |= ABSTRACT
-	tool.toolspeed = initial(tool.toolspeed) -  0.3
 	ADD_TRAIT(tool, TRAIT_NODROP, INNATE_TRAIT)
+	//store tool for future use
 	atoms[reference] = tool
+
 	return tool
 
 /obj/item/borg/cyborg_omnitool/attack_self(mob/user)
@@ -278,6 +284,18 @@
 		icon_state = reference.icon_state
 	return ..()
 
+/**
+ * Is this omni tool upgraded or not
+ * Arguments
+ *
+ * * upgrade - TRUE/FALSE for upgraded
+ */
+/obj/item/borg/cyborg_omnitool/proc/set_upgraded(upgrade)
+	upgraded = upgrade
+	for(var/obj/item/tool_path as anything in atoms)
+		var/obj/item/tool = atoms[tool_path]
+		tool.toolspeed = initial(tool.toolspeed) - upgraded * 0.3
+	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 
 /obj/item/borg/cyborg_omnitool/medical
 	name = "surgical omni-toolset"
