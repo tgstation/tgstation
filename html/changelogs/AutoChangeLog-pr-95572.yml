@@ -1,0 +1,8 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "rust heretic robes now become buffed if the tile under you becomes rusted"
+  - balance: "void ascension and the void chill status effect now respect antimagic"
+  - rscadd: "heretic aura is now emissive."
+  - bugfix: "a exploit where you could exit space phase anywhere by loosing your heretic focus"
+  - bugfix: "moon ascension aura not affecting anyone else if one of the targets has more than 10 sanity"
