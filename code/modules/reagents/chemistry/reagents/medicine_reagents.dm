@@ -1380,17 +1380,18 @@
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
+	var/need_mob_update
 	if(affected_mob.health < 50 && affected_mob.health > 0)
 		var/heal = -1 * metabolization_ratio * seconds_per_tick
-		var/need_mob_update
 		need_mob_update += affected_mob.adjust_oxy_loss(heal, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		need_mob_update += affected_mob.adjust_tox_loss(heal, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjust_brute_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjust_fire_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
-		if(need_mob_update)
-			. = UPDATE_MOB_HEALTH
+
 	affected_mob.AdjustAllImmobility(-60  * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_stamina_loss(-12 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_stamina_loss(-12 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
