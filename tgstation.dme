@@ -1981,6 +1981,7 @@
 #include "code\datums\quirks\positive_quirks\freerunning.dm"
 #include "code\datums\quirks\positive_quirks\friendly.dm"
 #include "code\datums\quirks\positive_quirks\jolly.dm"
+#include "code\datums\quirks\positive_quirks\keen_nose.dm"
 #include "code\datums\quirks\positive_quirks\light_step.dm"
 #include "code\datums\quirks\positive_quirks\mime_fan.dm"
 #include "code\datums\quirks\positive_quirks\musician.dm"
