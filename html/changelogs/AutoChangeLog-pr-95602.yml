@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Recovered crew/Thanatorenasia bodies in morgue trays change the indicator to green when a ghost is orbiting them (to allow ghosts to signal they want it to be revived)"
-  - qol: "Recovered crew/Thanatorenasia bodies now cause morgue trays / bodybags to shake when orbited, much like how the body itself shakes when orbited (to allow ghosts to signal they want it to be revived)"

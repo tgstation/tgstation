@@ -2,6 +2,7 @@
 /obj/item/camera/siliconcam
 	name = "silicon photo camera"
 	resistance_flags = INDESTRUCTIBLE
+	cooldown = 2 SECONDS
 	/// List of all pictures taken by this camera.
 	var/list/datum/picture/stored = list()
 
@@ -15,7 +16,7 @@
 	if(!can_take_picture(clicker))
 		return
 	clicker.face_atom(clicked_on)
-	INVOKE_ASYNC(src, PROC_REF(captureimage), clicked_on, clicker, picture_size_x - 1, picture_size_y - 1)
+	attempt_picture(clicked_on, clicker)
 	toggle_camera_mode(clicker, sound = FALSE)
 
 /// Toggles the camera mode on or off.
@@ -56,7 +57,10 @@
 /obj/item/camera/siliconcam/proc/viewpictures(mob/user)
 	var/datum/picture/selection = selectpicture(user)
 	if(istype(selection))
-		show_picture(user, selection)
+		var/obj/item/photo/P = new(src, selection)
+		P.show(user)
+		to_chat(user, P.desc)
+		qdel(P)
 
 /obj/item/camera/siliconcam/ai_camera
 	name = "AI photo camera"

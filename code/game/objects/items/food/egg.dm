@@ -8,7 +8,7 @@
 	icon_state = "chocolateegg"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("chocolate" = 4, "sweetness" = 1)
-	foodtypes = JUNKFOOD | SUGAR
+	foodtypes = JUNKFOOD | SUGAR | EGG
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -23,7 +23,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	icon_state = "egg"
 	inhand_icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4)
-	foodtypes = MEAT | RAW
+	foodtypes = MEAT | RAW | EGG
 	w_class = WEIGHT_CLASS_TINY
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/egg/rotten
@@ -208,7 +208,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	)
 	bite_consumption = 1
 	tastes = list("egg" = 4)
-	foodtypes = MEAT | FRIED | BREAKFAST
+	foodtypes = MEAT | FRIED | BREAKFAST | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
 
@@ -221,7 +221,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	bite_consumption = 1
 	tastes = list("raw egg" = 6, "sliminess" = 1)
 	eatverbs = list("gulp down")
-	foodtypes = MEAT | RAW
+	foodtypes = MEAT | RAW | EGG
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/rawegg/make_grillable()
@@ -238,7 +238,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("egg" = 1)
-	foodtypes = MEAT | BREAKFAST
+	foodtypes = MEAT | BREAKFAST | EGG
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	ant_attracting = FALSE
@@ -251,7 +251,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "eggsausage"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment = 4)
-	foodtypes = MEAT | FRIED | BREAKFAST
+	foodtypes = MEAT | FRIED | BREAKFAST | EGG
 	tastes = list("egg" = 4, "meat" = 4)
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -275,7 +275,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	bite_consumption = 1
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("egg" = 1, "cheese" = 1)
-	foodtypes = MEAT | BREAKFAST | DAIRY
+	foodtypes = MEAT | BREAKFAST | DAIRY | EGG
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -313,7 +313,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	)
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
-	foodtypes = MEAT|BREAKFAST|GRAIN|FRIED
+	foodtypes = MEAT|BREAKFAST|GRAIN|FRIED|EGG
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
@@ -329,7 +329,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("egg" = 1)
-	foodtypes = MEAT|VEGETABLES|FRIED
+	foodtypes = MEAT|VEGETABLES|FRIED|EGG
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -344,7 +344,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("custard" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = MEAT | VEGETABLES | EGG
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -357,7 +357,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	inhand_icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 4,  /datum/reagent/toxin/spore = 4, /datum/reagent/consumable/eggwhite = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("sliminess" = 4, "blob" = 2)
-	foodtypes = MEAT | RAW | TOXIC
+	foodtypes = MEAT | RAW | TOXIC | EGG
 	w_class = WEIGHT_CLASS_TINY
 	ant_attracting = FALSE
 	preserved_food = TRUE
