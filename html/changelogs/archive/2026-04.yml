@@ -279,6 +279,7 @@
   - bugfix: toiletbong works
   - bugfix: Smoke no longer exposes mobs to reagents multiple times per tick, significantly
       lowering the duration of effects applied by chemical smoke
+  - map: Tramstation inner supermatter chamber no longer has a connected APC
   timothymtorres:
   - bugfix: Fix admin shuttle recall revealing admin location
   - rscadd: Added a new positive quirk "Keen Nose". Characters with this quirk can
