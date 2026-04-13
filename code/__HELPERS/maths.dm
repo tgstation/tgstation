@@ -56,8 +56,8 @@
 	var/abs_x_distance = abs(x_distance)//Absolute value of x distance
 	var/abs_y_distance = abs(y_distance)
 
-	var/x_distance_sign = SIGN(x_distance) //Sign of x distance (+ or -)
-	var/y_distance_sign = SIGN(y_distance)
+	var/x_distance_sign = sign(x_distance) //Sign of x distance (+ or -)
+	var/y_distance_sign = sign(y_distance)
 
 	var/x = abs_x_distance >> 1 //Counters for steps taken, setting to distance/2
 	var/y = abs_y_distance >> 1 //Bit-shifting makes me l33t.  It also makes get_line() unnecessarily fast.
@@ -228,7 +228,7 @@
 /// Takes a value, and a threshold it has to at least match
 /// returns the correctly signed value max'd to the threshold
 /proc/at_least(new_value, threshold)
-	var/sign = SIGN(new_value)
+	var/sign = sign(new_value)
 	// SIGN will return 0 if the value is 0, so we just go to the positive threshold
 	if(!sign)
 		return threshold
