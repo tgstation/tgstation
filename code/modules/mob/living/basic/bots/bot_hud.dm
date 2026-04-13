@@ -95,11 +95,6 @@
 	if(client || !length(current_pathed_turfs) || isnull(ai_controller))
 		return
 
-	var/atom/move_target = ai_controller.current_movement_target
-
-	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
-		clear_path_hud(remove_hud = FALSE)
-
 	var/turf/our_turf = get_turf(src)
 	var/image/target_image = current_pathed_turfs[our_turf]
 	if(target_image)
