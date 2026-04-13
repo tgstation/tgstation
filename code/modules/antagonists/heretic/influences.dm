@@ -1,6 +1,6 @@
 
-/// The number of influences spawned per heretic
-#define NUM_INFLUENCES_PER_HERETIC 5
+/// How often the tracker attempts to create a new influence.
+#define INFLUENCE_SPAWN_INTERVAL (8 MINUTES)
 
 /**
  * #Reality smash tracker
@@ -20,27 +20,46 @@
 	var/list/obj/effect/heretic_influence/smashes = list()
 	/// List of minds with the ability to see influences
 	var/list/datum/mind/tracked_heretics = list()
+	/// Shared timer for periodic influence spawning.
+	var/spawn_timer_id
 
 /datum/reality_smash_tracker/Destroy(force)
 	if(GLOB.reality_smash_track == src)
 		stack_trace("[type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
 		message_admins("The [type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
+	if(spawn_timer_id)
+		deltimer(spawn_timer_id)
+		spawn_timer_id = null
 	QDEL_LIST(smashes)
 	tracked_heretics.Cut()
 	return ..()
 
-/**
- * Generates a set amount of reality smashes
- * based on the number of already existing smashes
- * and the number of minds we're tracking.
- */
-/datum/reality_smash_tracker/proc/generate_new_influences()
-	var/how_many_can_we_make = 0
-	for(var/heretic_number in 1 to length(tracked_heretics))
-		how_many_can_we_make += max(NUM_INFLUENCES_PER_HERETIC - heretic_number + 1, 1)
+/// Calculates how many influences this tracker should support at most.
+/datum/reality_smash_tracker/proc/get_influence_cap()
+	var/heretic_count = length(tracked_heretics)
+	switch(heretic_count)
+		if(0)
+			return 0
+		if(1)
+			return 4
+		if(2)
+			return 10
+		if(3)
+			return 14
+		else
+			return 17
+
+/// Tries to create one influence at a safe station location.
+/datum/reality_smash_tracker/proc/try_generate_influence(amount = 1)
+	var/influence_cap = get_influence_cap()
+
+	var/amount_to_make = min(amount, influence_cap - total_influences())
+	if(amount_to_make <= 0)
+		return
 
 	var/location_sanity = 0
-	while((length(smashes) + num_drained) < how_many_can_we_make && location_sanity < 100)
+	var/generated = 0
+	while(generated < amount_to_make && location_sanity < 100)
 		var/turf/chosen_location = get_safe_random_station_turf_equal_weight()
 
 		// We don't want them close to each other - at least 1 tile of separation
@@ -52,6 +71,27 @@
 			continue
 
 		new /obj/effect/heretic_influence(chosen_location)
+		generated++
+
+/// Returns the number of tracked heretics currently eligible for influence spawning.
+/datum/reality_smash_tracker/proc/get_spawn_eligible_heretic_count()
+	var/count = 0
+	for(var/datum/mind/heretic as anything in tracked_heretics)
+		if(is_eligible_mind(heretic))
+			count++
+	return count
+
+/datum/reality_smash_tracker/proc/is_eligible_mind(datum/mind/heretic)
+	return ishuman(heretic.current) && !is_centcom_level(heretic.current.z)
+
+/datum/reality_smash_tracker/proc/handle_spawn_tick()
+	var/eligible_count = get_spawn_eligible_heretic_count()
+	if(eligible_count <= 0)
+		return
+	try_generate_influence(eligible_count)
+
+/datum/reality_smash_tracker/proc/total_influences()
+	return length(smashes) + num_drained
 
 /**
  * Adds a mind to the list of people that can see the reality smashes
@@ -59,11 +99,13 @@
  * Use this whenever you want to add someone to the list
  */
 /datum/reality_smash_tracker/proc/add_tracked_mind(datum/mind/heretic)
+	if(heretic in tracked_heretics)
+		return
 	tracked_heretics |= heretic
-
-	// If our heretic's on station, generate some new influences
-	if(ishuman(heretic.current) && !is_centcom_level(heretic.current.z))
-		generate_new_influences()
+	if(is_eligible_mind(heretic))
+		try_generate_influence(1)
+	if(!spawn_timer_id)
+		spawn_timer_id = addtimer(CALLBACK(src, PROC_REF(handle_spawn_tick)), INFLUENCE_SPAWN_INTERVAL, TIMER_LOOP|TIMER_STOPPABLE)
 
 /**
  * Removes a mind from the list of people that can see the reality smashes
@@ -72,6 +114,9 @@
  */
 /datum/reality_smash_tracker/proc/remove_tracked_mind(datum/mind/heretic)
 	tracked_heretics -= heretic
+	if(!length(tracked_heretics) && spawn_timer_id)
+		deltimer(spawn_timer_id)
+		spawn_timer_id = null
 
 /obj/effect/visible_heretic_influence
 	name = "pierced reality"
@@ -141,7 +186,7 @@
 
 	// A very elaborate way to suicide
 	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [user.p_their()] head off!"))
-	var/obj/item/bodypart/head/head = human_user.get_bodypart(BODY_ZONE_HEAD)
+	var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
 	if(head?.dismember())
 		head.forceMove(src) // stored for later fishage
 	else
@@ -230,31 +275,31 @@
  * If successful, the influence is drained and deleted.
  */
 /obj/effect/heretic_influence/proc/drain_influence(mob/living/user, knowledge_to_gain, drain_speed = HERETIC_RIFT_DEFAULT_DRAIN_SPEED)
+	if(user.has_status_effect(/datum/status_effect/heretic_sated))
+		loc.balloon_alert(user, "sated, must complete sacrifice!")
+		return
 
 	being_drained = TRUE
 	loc.balloon_alert(user, "draining influence...")
 
-	// Only gives you the dripping eye effect if you have faster drain speed than default
-	var/mutable_appearance/draining_overlay = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_eye_dripping")
-	if(drain_speed < HERETIC_RIFT_DEFAULT_DRAIN_SPEED)
-		draining_overlay.pixel_y = 16
-		user.add_overlay(draining_overlay)
-
 	if(!do_after(user, drain_speed, src, hidden = TRUE))
 		being_drained = FALSE
 		loc.balloon_alert(user, "interrupted!")
-		user.cut_overlay(draining_overlay)
 		return
 
 	// We don't need to set being_drained back since we delete after anyways
 	loc.balloon_alert(user, "influence drained")
-	user.cut_overlay(draining_overlay)
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.adjust_knowledge_points(knowledge_to_gain)
+	heretic_datum.essences_siphoned++
+	if(heretic_datum.total_sacrifices < heretic_datum.essences_siphoned)
+		var/duration = heretic_datum.feast_of_owls ? 10 MINUTES : 20 MINUTES
+		user.apply_status_effect(/datum/status_effect/heretic_sated, duration)
 
 	// Aaand now we delete it
 	after_drain(user)
+
 
 /**
  * Handle the effects of the drain.
@@ -276,7 +321,7 @@
 /obj/effect/heretic_influence/proc/generate_name()
 	name = "\improper" + pick_list(HERETIC_INFLUENCE_FILE, "prefix") + " " + pick_list(HERETIC_INFLUENCE_FILE, "postfix")
 
-#undef NUM_INFLUENCES_PER_HERETIC
+#undef INFLUENCE_SPAWN_INTERVAL
 
 /// Hud used for heretics to see influences
 /datum/atom_hud/alternate_appearance/basic/has_antagonist/heretic

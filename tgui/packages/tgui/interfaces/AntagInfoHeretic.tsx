@@ -65,6 +65,7 @@ type Knowledge = {
   done: BooleanLike;
   ascension: BooleanLike;
   disabled: BooleanLike;
+  can_research: BooleanLike;
   tooltip?: string;
 };
 
@@ -99,6 +100,7 @@ type HereticPath = {
 
 type Info = {
   charges: number;
+  sidepath_charges: number;
   total_sacrifices: number;
   ascended: BooleanLike;
   objectives: Objective[];
@@ -193,7 +195,8 @@ const GuideSection = () => {
           <b>right click</b> on them to harvest them for&nbsp;
           <span style={hereticBlue}>knowledge points</span>. Tapping them makes
           them visible to all after a short time. Dreaming of Mansus may help to
-          find them.
+          find them. This rift will not open without first sending through to
+          the Mansus another sacrifice.
         </Stack.Item>
         <Stack.Item>
           - Use your&nbsp;
@@ -331,24 +334,32 @@ const KnowledgeTree = () => {
 type KnowledgeNodeProps = {
   node: Knowledge;
   purchaseCategory?: ShopCategory;
-  can_buy?: BooleanLike;
+  display_only?: BooleanLike;
+  bypass_buyable_check?: BooleanLike;
 };
 
 const KnowledgeNode = (props: KnowledgeNodeProps) => {
-  const { node, can_buy = true, purchaseCategory } = props;
-  const { data, act } = useBackend<Info>();
-  const { charges } = data;
+  const {
+    node,
+    display_only = false,
+    purchaseCategory,
+    bypass_buyable_check = false,
+  } = props;
+  const { act } = useBackend<Info>();
 
-  const isBuyable = can_buy && !node.done && !node.disabled;
+  const isBuyable =
+    bypass_buyable_check || (!node.done && !node.disabled && node.can_research);
+
+  const showCost = !display_only && !node.disabled && !node.done;
 
   const iconState = () => {
-    if (!can_buy) {
+    if (display_only || bypass_buyable_check) {
       return node.bgr;
     }
     if (node.done) {
       return 'node_finished';
     }
-    if (charges < node.cost || node.disabled) {
+    if (node.disabled || !node.can_research) {
       return 'node_locked';
     }
     return node.bgr;
@@ -406,7 +417,7 @@ const KnowledgeNode = (props: KnowledgeNodeProps) => {
           bold
           style={{ margin: '2px', borderRadius: '100%' }}
         >
-          {isBuyable && (node.cost > 0 ? node.cost : 'FREE')}
+          {showCost && (node.cost > 0 ? node.cost : 'FREE')}
         </Box>
       </Button>
       {!!node.ascension && (
@@ -466,7 +477,7 @@ const KnowledgeShop = () => {
 
 const ResearchInfo = () => {
   const { data } = useBackend<Info>();
-  const { charges, knowledge_shop } = data;
+  const { charges, sidepath_charges, knowledge_shop } = data;
 
   return (
     <>
@@ -474,14 +485,23 @@ const ResearchInfo = () => {
         You have <b>{charges || 0}</b>&nbsp;
         <span style={hereticBlue}>
           knowledge point{charges !== 1 ? 's' : ''}
-        </span>{' '}
+        </span>
+        {sidepath_charges !== 0 && (
+          <>
+            {' '}
+            and <b>{sidepath_charges || 0}</b>&nbsp;
+            <span style={hereticPurple}>
+              sidepath point{sidepath_charges !== 1 ? 's' : ''}
+            </span>
+          </>
+        )}{' '}
         to spend.
       </Stack.Item>
       <Stack fill>
         <Stack.Item grow>
           <KnowledgeTree />
         </Stack.Item>
-        {knowledge_shop?.length && (
+        {!!knowledge_shop?.length && (
           <Stack.Item grow>
             <KnowledgeShop />
           </Stack.Item>
@@ -552,6 +572,7 @@ const PathContent = ({
             <KnowledgeNode
               node={path.starting_knowledge}
               purchaseCategory={ShopCategory.Start}
+              bypass_buyable_check
             />
             <div>
               <h3>
@@ -601,7 +622,7 @@ const PathContent = ({
               <Stack wrap="wrap" justify="center">
                 {path.preview_abilities.map((ability) => (
                   <Stack.Item key={`guaranteed_${ability.name}`} m={1}>
-                    <KnowledgeNode node={ability} can_buy={false} />
+                    <KnowledgeNode node={ability} display_only={true} />
                   </Stack.Item>
                 ))}
               </Stack>

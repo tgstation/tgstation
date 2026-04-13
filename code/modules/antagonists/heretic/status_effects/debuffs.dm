@@ -73,6 +73,26 @@
 	owner.cure_blind(id)
 	owner.cut_overlay(mob_overlay)
 
+/datum/status_effect/heretic_sated
+	id = "heretic_sated"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /atom/movable/screen/alert/status_effect/heretic_sated
+	duration = 20 MINUTES
+	show_duration = TRUE
+
+/datum/status_effect/heretic_sated/on_creation(mob/living/new_owner, duration = 10 SECONDS)
+	src.duration = duration
+	return ..()
+
+/datum/status_effect/heretic_sated/on_apply()
+	to_chat(owner, span_warning("You are sated and cannot siphon more essence until you complete a sacrifice."))
+	return TRUE
+
+/atom/movable/screen/alert/status_effect/heretic_sated
+	name = "Sated"
+	desc = "You cannot siphon essence from influences until you complete a sacrifice."
+	icon_state = "pierced_illusion"
+
 /datum/status_effect/corrosion_curse
 	id = "corrosion_curse"
 	status_type = STATUS_EFFECT_REPLACE

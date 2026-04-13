@@ -311,6 +311,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 	)
 	/// generate 3 drafts for each draft tier, while banning you from picking multiple drafts
 	for(var/draft in drafts)
+
 		var/parent_knowledge_path = draft["parent_knowledge"]
 		var/datum/heretic_knowledge/guaranteed_draft = draft["guaranteed_knowledge"]
 		var/list/probabilities = draft["probabilities"]
@@ -356,6 +357,9 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 
 	// all possible drafts are added to the shop, this time with costs
 	for(var/drafting_tier in 1 to length(shop_knowledge))
+		if(drafting_tier == 5 && route != PATH_LOCK)
+			continue
+
 		var/unlocked_by = shop_unlock_order[drafting_tier]
 		var/list/eligible_tier = shop_knowledge[drafting_tier]
 		for(var/knowledge_type in eligible_tier)

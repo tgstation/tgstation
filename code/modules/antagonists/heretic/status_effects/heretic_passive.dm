@@ -356,7 +356,7 @@
 	name = "Open Invitation"
 	id = "lock_passive"
 	passive_descriptions = list(
-		"Shock insulation, all knowledges researched from the shop are cheaper",
+		"Shock insulation, all knowledges researched from the shop are cheaper, prevents manifestation of the eldritch aura, and access to the final row in the knowledge shop",
 		"X-ray vision, you can see through walls and objects.",
 		"Grasp no longer goes on cooldown when used to open a door or locker."
 	)

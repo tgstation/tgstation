@@ -210,6 +210,7 @@
 	var/datum/antagonist/cult/cultist_datum = GET_CULTIST(sacrifice)
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
+	user.remove_status_effect(/datum/status_effect/heretic_sated)
 	if((sac_job_flag & JOB_HEAD_OF_STAFF))
 		heretic_datum.adjust_knowledge_points(3)
 		heretic_datum.high_value_sacrifices++

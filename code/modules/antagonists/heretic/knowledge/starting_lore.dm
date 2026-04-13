@@ -280,20 +280,21 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /datum/heretic_knowledge/feast_of_owls
 	name = "Feast of Owls"
-	desc = "Allows you to undergo a ritual that gives you 5 knowledge points but locks you out of ascension. This can only be done once and cannot be reverted."
+	desc = "Allows you to undergo a ritual that gives you 2 knowledge points and 4 sidepath points, unlocks the full sidepath shop, makes draining rifts only makes you sated for 10 minutes, but locks you out of ascension. This can only be done once and cannot be reverted."
 	gain_text = "Under the soft glow of unreason there is a beast that stalks the night. I shall bring it forth and let it enter my presence. It will feast upon my amibitions and leave knowledge in its wake."
 	is_starting_knowledge = TRUE
 	required_atoms = list()
 	research_tree_icon_path = 'icons/mob/actions/actions_animal.dmi'
 	research_tree_icon_state = "god_transmit"
 	/// amount of research points granted
-	var/reward = 5
+	var/reward = 2
+	var/sidepoint_reward = 4
 
 /datum/heretic_knowledge/feast_of_owls/can_be_invoked(datum/antagonist/heretic/invoker)
 	return !invoker.feast_of_owls
 
 /datum/heretic_knowledge/feast_of_owls/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/alert = tgui_alert(user,"Do you really want to forsake your ascension? This action cannot be reverted.", "Feast of Owls", list("Yes I'm sure", "No"), 30 SECONDS)
+	var/alert = tgui_alert(user, "Do you really want to forsake your ascension? This action cannot be reverted.", "Feast of Owls", list("Yes I'm sure", "No"), 30 SECONDS)
 	if(alert != "Yes I'm sure" || QDELETED(user) || QDELETED(src) || get_dist(user, loc) > 2)
 		return FALSE
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
@@ -307,10 +308,14 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	user.set_temp_blindness(reward * 1 SECONDS)
 	user.AdjustParalyzed(reward * 1 SECONDS)
 	user.playsound_local(get_turf(user), 'sound/music/antag/heretic/heretic_gain_intense.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-	for(var/i in 1 to reward)
+	var/total_reward = max(reward, sidepoint_reward)
+	for(var/iterator in 1 to total_reward)
 		user.emote("scream")
 		playsound(loc, 'sound/items/eatfood.ogg', 100, TRUE)
-		heretic_datum.adjust_knowledge_points(1)
+		if(iterator <= reward)
+			heretic_datum.adjust_knowledge_points(1)
+		if(iterator <= sidepoint_reward)
+			heretic_datum.adjust_sidepath_points(1)
 
 		to_chat(user, span_danger("You feel something invisible tearing away at your very essence!"))
 		user.do_jitter_animation()
