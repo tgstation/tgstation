@@ -1299,7 +1299,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Radiation defines
 
 /// Marks that this object is irradiated
-#define TRAIT_IRRADIATED "iraddiated"
+#define TRAIT_IRRADIATED "irradiated"
 
 /// Immune to being irradiated
 #define TRAIT_RADIMMUNE "rad_immunity"
