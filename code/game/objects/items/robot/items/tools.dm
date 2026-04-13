@@ -278,7 +278,8 @@
 	var/mob/living/silicon/robot/user = usr
 	if (!(src in user.held_items))
 		attack_self(user)
-	return ..()
+	. = ..()
+	user.select_module(user.held_items.Find(src))
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
 	if (reference)
@@ -365,8 +366,11 @@
 /obj/item/borg/cyborg_omnitool/engineering/item_ctrl_click(mob/user)
 	. = NONE
 	if(tool_behaviour == TOOL_WELDER)
-		var/obj/item/weldingtool/tool = get_proxy_attacker_for(src, user)
-		welder_toggle(src, !tool.welding)
+		var/mob/living/silicon/robot/borgy = loc
+		if(!istype(borgy) || borgy.module_active != src)
+			return
+
+		welder_toggle(src, null)
 		return CLICK_ACTION_SUCCESS
 
 ///Reflects internal welder icon onto the omnitool
@@ -382,18 +386,18 @@
 	SIGNAL_HANDLER
 
 	if(tool_behaviour == TOOL_WELDER)
-		var/mob/living/silicon/robot/borgy = loc
-		if(istype(borgy) && borgy.module_active != src)
+		var/obj/item/weldingtool/tool = get_proxy_attacker_for(src, usr)
+		if(isnull(state))
+			state = !tool.welding
+		if(state == tool.welding)
 			return
 
-		var/obj/item/weldingtool/tool = get_proxy_attacker_for(src, usr)
 		if(state)
+			RegisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(welder_update))
 			tool.switched_on(usr)
-			UnregisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE)
 		else
 			tool.switched_off()
-			RegisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(welder_update))
-		update_appearance(UPDATE_OVERLAYS)
+			UnregisterSignal(tool, COMSIG_ATOM_UPDATE_APPEARANCE)
 
 /obj/item/borg/cyborg_omnitool/botany
 	name = "botanical omni-toolset"
