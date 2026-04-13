@@ -11,7 +11,7 @@
 /area/station/commons/dorms/laundry)
 "aau" = (
 /obj/structure/railing{
-	dir = 2
+	dir = 1
 	},
 /obj/structure/showcase/machinery/implanter,
 /turf/open/floor/wood,
