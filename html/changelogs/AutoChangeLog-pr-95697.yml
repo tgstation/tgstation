@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Added a new positive quirk \"Keen Nose\". Characters with this quirk can smell chemical contents in open beakers and bottles simply by examining them while held. The smell description is identical to the taste description of the reagents."
+  - rscadd: "Getting pepper-sprayed now causes a mob to lose their sense of smell for half a minute."
