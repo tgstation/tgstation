@@ -238,3 +238,30 @@
       announcing safety right before a storm hits
   - rscdel: Plasma flower MOD core no longer spawns butterflies around the user
   - qol: Plasma flower MOD core's pollen visual now spawns less particles
+2026-04-13:
+  Arturlang:
+  - bugfix: rust heretic robes now become buffed if the tile under you becomes rusted
+  - balance: void ascension and the void chill status effect now respect antimagic
+  - rscadd: heretic aura is now emissive.
+  - bugfix: a exploit where you could exit space phase anywhere by loosing your heretic
+      focus
+  - bugfix: moon ascension aura not affecting anyone else if one of the targets has
+      more than 10 sanity
+  Dolphyuser:
+  - balance: Now you can't handcuff shields
+  Iamgoofball:
+  - qol: Restores keybindings to their original pre-August 2025 defaults, moves the
+      new per-hand bind options to Unbound by default.
+  Rhials:
+  - bugfix: Donk Trading Post cameras no longer show up on the station cameranet
+  TheRyeGuyWhoWillNowDie:
+  - balance: making the handheld iconoclast's repeater now requires learning its recipe,
+      the book for which can spawn in maintenance.
+  lelandkemble:
+  - bugfix: Roundstart revs will no longer choose people who do not want to be headrevs
+      as headrevs
+  - bugfix: Liberator pistol applies point-blank damage modifier no matter how it
+      is fired
+  - bugfix: toiletbong works
+  timothymtorres:
+  - bugfix: Fix admin shuttle recall revealing admin location
