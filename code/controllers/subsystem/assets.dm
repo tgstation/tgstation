@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(assets)
 	transport.Load()
 
 /datum/controller/subsystem/assets/Initialize()
-	for(var/datum/asset/asset_type in valid_subtypesof(/datum/asset))
+	for(var/datum/asset/asset_type as anything in valid_subtypesof(/datum/asset))
 		load_asset_datum(asset_type)
 
 	transport.Initialize(cache)
