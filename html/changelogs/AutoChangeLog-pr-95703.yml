@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - map: "Tramstation inner supermatter chamber no longer has a connected APC"
