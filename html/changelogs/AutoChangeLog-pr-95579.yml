@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Smoke no longer exposes mobs to reagents multiple times per tick, significantly lowering the duration of effects applied by chemical smoke"

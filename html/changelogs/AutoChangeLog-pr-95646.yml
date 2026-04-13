@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Ore vents now turn transparent and clickthrough when a mob enters the tile above them. The bottom half of the vent is still clickable."
-  - code_imp: "Cleaned up ore vent code"

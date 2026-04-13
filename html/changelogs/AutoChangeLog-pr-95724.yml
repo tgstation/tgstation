@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - admin: "Holoparasite boobytraps now log when they're set and when they explode."

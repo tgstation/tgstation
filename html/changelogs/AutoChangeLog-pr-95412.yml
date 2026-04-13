@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - rscadd: "The Civilian bounty pad now has a new tab, where players can collaborate and work together to complete additional, station wide bounties. Reward is split based on the amount contributed. (Between 5-10 based on population to start)"
-  - rscadd: "The civilian bounty pad can now print out sheets of paper displaying all available bounties, like old times."
-  - bugfix: "The ninja holding facility is no longer loaded when civilian bounties are sent."
