@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Roundstart revs will no longer choose people who do not want to be headrevs as headrevs"
