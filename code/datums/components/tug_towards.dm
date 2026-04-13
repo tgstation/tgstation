@@ -108,8 +108,8 @@
 
 			tuggers += 1
 			var/strength = tugging_to_targets[target]
-			total_tug_x += SIGN(target.x - atom_parent.x) * strength
-			total_tug_y += SIGN(target.y - atom_parent.y) * strength
+			total_tug_x += sign(target.x - atom_parent.x) * strength
+			total_tug_y += sign(target.y - atom_parent.y) * strength
 
 		// Intentionally not trig--something at a corner with a strength of 1 should have
 		// you at the corner, rather than root(2).

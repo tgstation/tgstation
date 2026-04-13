@@ -49,6 +49,7 @@
 @include meta.load-css('./interfaces/DetectiveBoard.scss');
 @include meta.load-css('./interfaces/ColorPicker.scss');
 @include meta.load-css('./interfaces/AnomalyTower.scss');
+@include meta.load-css('./interfaces/CivCargoHoldTerminal.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

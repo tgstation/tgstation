@@ -1041,6 +1041,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SETTLER "settler"
 #define TRAIT_STRONG_STOMACH "strong_stomach"
 #define TRAIT_VEGETARIAN "trait_vegetarian"
+#define TRAIT_KEEN_NOSE "keen_nose"
 
 /// This mob always lands on their feet when they fall, for better or for worse.
 #define TRAIT_CATLIKE_GRACE "catlike_grace"
@@ -1299,7 +1300,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Radiation defines
 
 /// Marks that this object is irradiated
-#define TRAIT_IRRADIATED "iraddiated"
+#define TRAIT_IRRADIATED "irradiated"
 
 /// Immune to being irradiated
 #define TRAIT_RADIMMUNE "rad_immunity"
