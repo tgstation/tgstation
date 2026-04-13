@@ -36,6 +36,7 @@
 #define CAMERANET_NETWORK_CURATOR "curator"
 #define CAMERANET_NETWORK_FILMSTUDIO "filmstudio"
 #define CAMERANET_NETWORK_MONASTERY "monastery"
+#define CAMERANET_NETWORK_TRADINGPOST "donk"
 
 // Ruins/Away missiosn/Misc camera nets
 #define CAMERANET_NETWORK_MOON19_XENO "mo19x"
