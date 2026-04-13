@@ -187,13 +187,14 @@
 	return ..()
 
 /obj/item/borg/cyborg_omnitool/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
+	. = NONE
 	if (!issilicon(user))
 		return
+
 	var/mob/living/silicon/robot/as_cyborg = user
 	if (!(src in as_cyborg.held_items))
 		context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
-	return CONTEXTUAL_SCREENTIP_SET
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/borg/cyborg_omnitool/examine(mob/user)
 	. = ..()
@@ -332,6 +333,19 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_SILICON_MODULE_ACTIVATION, PROC_REF(welder_toggle))
 
+/obj/item/borg/cyborg_omnitool/engineering/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if (!issilicon(user) || tool_behaviour != TOOL_WELDER)
+		return
+
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle welder"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/borg/cyborg_omnitool/engineering/examine(mob/user)
+	. = ..()
+	if(tool_behaviour == TOOL_WELDER)
+		. += span_notice("Use [EXAMINE_HINT("Ctrl Click")] to toggle welder")
+
 /obj/item/borg/cyborg_omnitool/engineering/update_appearance(updates)
 	if(updates & UPDATE_OVERLAYS)
 		var/mob/living/silicon/robot/borgy = loc
@@ -355,6 +369,12 @@
 	if(tool_behaviour == TOOL_WELDER)
 		welder_toggle(src, TRUE)
 
+/obj/item/borg/cyborg_omnitool/engineering/item_ctrl_click(mob/user)
+	. = NONE
+	if(tool_behaviour == TOOL_WELDER)
+		var/obj/item/weldingtool/tool = get_proxy_attacker_for(src, user)
+		welder_toggle(src, !tool.welding)
+		return CLICK_ACTION_SUCCESS
 
 ///Reflects internal welder icon onto the omnitool
 /obj/item/borg/cyborg_omnitool/engineering/proc/welder_update(source)
