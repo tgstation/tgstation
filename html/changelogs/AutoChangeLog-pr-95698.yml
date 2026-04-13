@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes:
+  - qol: "Restores keybindings to their original pre-August 2025 defaults, moves the new per-hand bind options to Unbound by default."
