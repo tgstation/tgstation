@@ -7,7 +7,6 @@
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	antimagic_flags = MAGIC_RESISTANCE_MIND
-	panel = null
 	spell_requirements = NONE
 	cooldown_time = 25 SECONDS
 	cast_range = 9

@@ -38,8 +38,6 @@
 		HERETIC_KNOWLEDGE_SHOP = list(),
 		HERETIC_KNOWLEDGE_DRAFT = list()
 	)
-	/// A static typecache of all tools we can scribe with.
-	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
 	/// A static list of all paths we can take and related info for the UI
@@ -315,7 +313,7 @@
 	return ..()
 
 /datum/antagonist/heretic/get_preview_icon()
-	var/icon/icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/icon = render_preview_outfit(preview_outfit)
 
 	// MOTHBLOCKS TODO: Copied and pasted from cult, make this its own proc
 
@@ -324,14 +322,14 @@
 
 	// Center the dude, because item icon states start from the center.
 	// This makes the image 64x64.
-	icon.Crop(-15, -15, 48, 48)
+	icon.crop(-15, -15, 48, 48)
 
-	var/obj/item/melee/sickly_blade/blade = new
-	icon.Blend(icon(blade.lefthand_file, blade.inhand_icon_state), ICON_OVERLAY)
-	qdel(blade)
+	var/obj/item/melee/sickly_blade/blade_type = /obj/item/melee/sickly_blade
+	var/datum/universal_icon/blade_icon = uni_icon(blade_type::lefthand_file, blade_type::inhand_icon_state)
+	icon.blend_icon(blade_icon, ICON_OVERLAY)
 
 	// Move the guy back to the bottom left, 32x32.
-	icon.Crop(17, 17, 48, 48)
+	icon.crop(17, 17, 48, 48)
 
 	return finish_preview_icon(icon)
 
@@ -358,6 +356,7 @@
 
 	ADD_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
+
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
@@ -393,6 +392,8 @@
 		list(SIGNAL_ADDTRAIT(TRAIT_HERETIC_AURA_HIDDEN), SIGNAL_REMOVETRAIT(TRAIT_HERETIC_AURA_HIDDEN)),
 		PROC_REF(update_heretic_aura)
 	)
+	RegisterSignal(our_mob, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_aura_overlay))
+	our_mob.update_appearance(UPDATE_OVERLAYS)
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
@@ -429,17 +430,18 @@
 	var/datum/action/cooldown/spell/shadow_cloak/cloak_spell = locate() in heretic_mob.actions
 	cloak_spell.Remove(heretic_mob)
 
+/datum/antagonist/heretic/proc/add_aura_overlay(mob/living/source, list/overlays)
+	SIGNAL_HANDLER
+	if(!should_show_aura())
+		return
+	overlays += eldritch_overlay
+	overlays += emissive_appearance(eldritch_overlay.icon, eldritch_overlay.icon_state, source)
+
 /// Adds an overlay to the heretic
 /datum/antagonist/heretic/proc/update_heretic_aura()
 	SIGNAL_HANDLER
-	var/mob/heretic_mob = owner.current
-	heretic_mob.cut_overlay(eldritch_overlay)
-
-	if(!should_show_aura())
-		return FALSE
-
-	heretic_mob.add_overlay(eldritch_overlay)
-	return TRUE
+	if(!QDELETED(owner?.current))
+		owner.current.update_appearance(UPDATE_OVERLAYS)
 
 /datum/antagonist/heretic/proc/should_show_aura()
 	if(!can_assign_self_objectives)
@@ -506,7 +508,7 @@
  */
 /datum/antagonist/heretic/proc/on_item_use(mob/living/source, atom/target, obj/item/weapon, list/modifiers)
 	SIGNAL_HANDLER
-	if(!is_type_in_typecache(weapon, scribing_tools))
+	if(!IS_WRITING_UTENSIL(weapon))
 		return NONE
 	if(!isturf(target) || !isliving(source))
 		return NONE

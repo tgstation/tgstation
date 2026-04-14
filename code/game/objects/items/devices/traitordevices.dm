@@ -393,7 +393,7 @@ effective or pretty fucking useless.
 	for (var/obj/item/radio/radio in target.get_all_contents() + target)
 		if(ignore_syndie && (radio.special_channels & RADIO_SPECIAL_SYNDIE))
 			continue
-		radio.set_broadcasting(FALSE)
+		radio.set_broadcasting(FALSE, actual_setting = FALSE)
 
 /obj/item/jammer/Destroy()
 	GLOB.active_jammers -= src
@@ -555,14 +555,16 @@ effective or pretty fucking useless.
 
 /obj/item/clothing/shoes/jackboots/dagger/equipped(mob/living/user, slot)
 	. = ..()
+
 	if(!(slot & ITEM_SLOT_FEET) || !istype(user))
-		modified_bodyparts += user.get_bodypart(BODY_ZONE_L_LEG)
-		modified_bodyparts += user.get_bodypart(BODY_ZONE_R_LEG)
-		for(var/obj/item/bodypart/bodypart in modified_bodyparts)
-			bodypart.unarmed_sharpness |= SHARP_EDGED
-			bodypart.unarmed_attack_effect = ATTACK_EFFECT_SLASH
-			RegisterSignals(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(clear_modification))
-		RegisterSignal(user, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(modify_legs))
+		return
+	modified_bodyparts += user.get_bodypart(BODY_ZONE_L_LEG)
+	modified_bodyparts += user.get_bodypart(BODY_ZONE_R_LEG)
+	for(var/obj/item/bodypart/bodypart in modified_bodyparts)
+		bodypart.unarmed_sharpness |= SHARP_EDGED
+		bodypart.unarmed_attack_effect = ATTACK_EFFECT_SLASH
+		RegisterSignals(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(clear_modification))
+	RegisterSignal(user, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(modify_legs))
 
 /obj/item/clothing/shoes/jackboots/dagger/dropped(mob/user)
 	. = ..()

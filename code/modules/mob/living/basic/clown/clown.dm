@@ -481,6 +481,7 @@
 	flick("glutton_mouth", src)
 
 /mob/living/basic/clown/mutant/glutton/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
 
@@ -625,6 +626,8 @@
 
 /datum/action/cooldown/exquisite_bunch/Trigger(mob/clicker, trigger_flags, atom/target)
 	if(activating)
+		return
+	if(!IsAvailable(feedback = TRUE))
 		return
 	var/atom/bunch_turf = get_step(owner.loc, owner.dir)
 	if(!bunch_turf)

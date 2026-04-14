@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---")
+	VV_DROPDOWN_OPTION("", "--- /obj ---")
 	VV_DROPDOWN_OPTION(VV_HK_MASS_DEL_TYPE, "Delete all of type")
 	VV_DROPDOWN_OPTION(VV_HK_OSAY, "Object Say")
 
@@ -330,15 +330,13 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
-		return
-	change_material_strength(material, mat_amount, multiplier)
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		change_material_strength(material, mat_amount, multiplier)
 
 /obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
-		return
-	change_material_strength(material, mat_amount, multiplier, remove = TRUE)
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		change_material_strength(material, mat_amount, multiplier, remove = TRUE)
 
 /// Changes force and throwforce of an item based on its properties. Split into a separate proc as to allow items to change theirs based on sharpness and behavior
 /obj/proc/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)

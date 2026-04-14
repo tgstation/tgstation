@@ -4,6 +4,8 @@
 	icon_state = "health"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*8, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 2)
 	assembly_behavior = ASSEMBLY_TOGGLEABLE_INPUT
+	maptext_width = 64
+	maptext_y = 24
 
 	var/scanning = FALSE
 	var/health_scan
@@ -15,10 +17,12 @@
 
 /obj/item/assembly/health/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if(iscarbon(old_loc))
-		UnregisterSignal(old_loc, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
-	if(iscarbon(loc))
-		RegisterSignal(loc, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	if(isliving(old_loc))
+		UnregisterSignal(old_loc, COMSIG_LIVING_HEALTH_UPDATE)
+		maptext = null
+	if(isliving(loc))
+		RegisterSignal(loc, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_changed))
+		on_health_changed(loc)
 
 /obj/item/assembly/health/activate()
 	if(!..())
@@ -79,10 +83,9 @@
 		health_target = HEALTH_THRESHOLD_CRIT
 	return
 
-/obj/item/assembly/health/proc/get_status_tab_item(mob/living/carbon/source, list/items)
+/obj/item/assembly/health/proc/on_health_changed(mob/living/source)
 	SIGNAL_HANDLER
-	items += "Health: [round((source.health / source.maxHealth) * 100)]%"
-
+	maptext = MAPTEXT("HP: [round((source.health / source.maxHealth) * 100)]%")
 
 /obj/item/assembly/health/ui_status(mob/user, datum/ui_state/state)
 	return is_secured(user) ? ..() : UI_CLOSE

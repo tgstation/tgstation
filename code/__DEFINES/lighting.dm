@@ -11,6 +11,11 @@
 /// Nonesensical value for light color, used for null checks.
 #define NONSENSICAL_VALUE -99999
 
+// Light systems that use the overlay light component
+#define IS_OVERLAY_LIGHT_SYSTEM(system) (system == OVERLAY_LIGHT || system == OVERLAY_LIGHT_DIRECTIONAL || system == OVERLAY_LIGHT_BEAM)
+// Light systems that use the cone image of the overlay light component
+#define IS_OVERLAY_CONE_LIGHT_SYSTEM(system) (system == OVERLAY_LIGHT_DIRECTIONAL || system == OVERLAY_LIGHT_BEAM)
+
 /// Is our overlay light source attached to another movable (its loc), meaning that the lighting component should go one level deeper.
 #define LIGHT_ATTACHED (1<<0)
 /// Freezes a light in its current state, blocking any attempts at modification
@@ -38,6 +43,8 @@
 
 ///How many tiles standard fires glow.
 #define LIGHT_RANGE_FIRE 3
+#define LIGHT_POWER_FIRE 2
+
 #define LIGHT_FIRE_BLOSSOM 2.1
 #define LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED 2.7
 #define LIGHT_POWER_FIRE_BLOSSOM_HARVESTED 1.5

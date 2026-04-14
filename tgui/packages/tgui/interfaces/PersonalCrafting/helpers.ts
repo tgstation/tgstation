@@ -1,3 +1,5 @@
+import type { BooleanLike } from 'tgui-core/react';
+import { CATEGORY_ICONS_COOKING, CATEGORY_ICONS_CRAFTING } from './constants';
 import type { CraftingData } from './types';
 
 export function findIcon(atom_id: number, data: CraftingData): string {
@@ -7,4 +9,16 @@ export function findIcon(atom_id: number, data: CraftingData): string {
   }
 
   return icon;
+}
+
+export function getFAIcon(category: string, mode: BooleanLike): string {
+  const icons = mode ? CATEGORY_ICONS_COOKING : CATEGORY_ICONS_CRAFTING;
+  return icons[category] || 'circle';
+}
+
+export function toggleArrayItem<T>(array: T[] | undefined, item: T): T[] {
+  if (!array) return [item];
+  return array.includes(item)
+    ? array.filter((i) => i !== item)
+    : [...array, item];
 }

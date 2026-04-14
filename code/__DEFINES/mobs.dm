@@ -13,10 +13,10 @@
 /// Amount of oxyloss that KOs a human
 #define OXYLOSS_PASSOUT_THRESHOLD 50
 //Blood levels
-#define BLOOD_VOLUME_MAX_LETHAL 2150
-#define BLOOD_VOLUME_EXCESS 2100
 #define BLOOD_VOLUME_MAXIMUM 2000
-#define BLOOD_VOLUME_SLIME_SPLIT 1120
+#define BLOOD_VOLUME_MAX_LETHAL (BLOOD_VOLUME_MAXIMUM * 1.075) // 2150 units if BLOOD_VOLUME_MAXIMUM is 2000
+#define BLOOD_VOLUME_EXCESS (BLOOD_VOLUME_MAXIMUM * 1.05) // 2100 units if BLOOD_VOLUME_MAXIMUM is 2000
+#define BLOOD_VOLUME_SLIME_SPLIT (BLOOD_VOLUME_MAXIMUM * 0.56) // 1120 units if BLOOD_VOLUME_MAXIMUM is 2000
 #define BLOOD_VOLUME_NORMAL 560
 #define BLOOD_VOLUME_SAFE (BLOOD_VOLUME_NORMAL * (1 - 0.15)) // Latter number is percentage of blood lost, for readability!
 #define BLOOD_VOLUME_OKAY (BLOOD_VOLUME_NORMAL * (1 - 0.30))
@@ -607,6 +607,9 @@
 #define EXAMINE_MORE_WINDOW (1 SECONDS)
 /// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well. Tradecraft!
 #define YAWN_PROPAGATION_EXAMINE_WINDOW (2 SECONDS)
+
+// Priorities for examine overrides
+#define EXAMINE_OVERRIDE_PRIORITY_IFF 1
 
 /// How far away you can be to make eye contact with someone while examining
 #define EYE_CONTACT_RANGE 5

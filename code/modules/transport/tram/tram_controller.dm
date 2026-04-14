@@ -878,17 +878,14 @@
 		. += span_notice("The cabinet can be opened with a [EXAMINE_HINT("Left-click.")]")
 
 
-/obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(user.combat_mode || cover_open)
-		return ..()
-
-	if(has_cover)
-		var/obj/item/card/id/id_card = user.get_id_in_hand()
-		if(!isnull(id_card))
-			try_toggle_lock(user, id_card)
-			return
-
-	return ..()
+/obj/machinery/transport/tram_controller/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode || !has_cover)
+		return NONE
+	if(!istype(tool, /obj/item/card/id))
+		return NONE
+	if(cover_open)
+		return ITEM_INTERACT_BLOCKING
+	return try_toggle_lock(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /obj/machinery/transport/tram_controller/attack_hand(mob/living/user, params)
 	. = ..()

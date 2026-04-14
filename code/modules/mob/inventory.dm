@@ -675,8 +675,13 @@
 			dropItemToGround(held_items[i])
 	held_items.len = amt
 
-	if(hud_used)
-		hud_used.build_hand_slots()
+	if(!hud_used)
+		return
+
+	hud_used.build_hand_slots(update_hud = TRUE)
+	var/atom/movable/screen/healthdoll/doll = hud_used.screen_objects[HUD_MOB_HEALTHDOLL]
+	if(doll)
+		doll.update_body_zones()
 
 //GetAllContents that is reasonable and not stupid
 /mob/living/proc/get_all_gear(equipment_flags = INCLUDE_ACCESSORIES|INCLUDE_PROSTHETICS, recursive = TRUE)

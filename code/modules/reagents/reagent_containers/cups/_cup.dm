@@ -37,6 +37,8 @@
 	var/cell_wired = FALSE
 	/// Visual y-offset for the assembly on our lid
 	var/assembly_pixel_y = 0
+	/// If TRUE, after we finish drinking, we try to drink again after do_after
+	var/loop_drink = FALSE
 
 /obj/item/reagent_containers/cup/Initialize(mapload, vol)
 	. = ..()
@@ -96,6 +98,8 @@
 
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(target_mob != user)
+		if(DOING_INTERACTION_WITH_TARGET(user, target_mob))
+			return ITEM_INTERACT_BLOCKING
 		target_mob.visible_message(
 			span_danger("[user] attempts to feed [target_mob] something from [src]."),
 			span_userdanger("[user] attempts to feed you something from [src]."),
@@ -108,29 +112,47 @@
 			span_danger("[user] feeds [target_mob] something from [src]."),
 			span_userdanger("[user] feeds you something from [src]."),
 		)
+		if(target_mob.is_blind())
+			to_chat(target_mob, span_notice("You feel someone feed you something."))
 		log_combat(user, target_mob, "fed", reagents.get_reagent_log_string())
+
 	else
+		if(loop_drink)
+			if(DOING_INTERACTION_WITH_TARGET(user, user))
+				return ITEM_INTERACT_BLOCKING
+			user.visible_message(
+				span_danger("[user] attempts to drink from [src]."),
+				span_userdanger("[user] attempts to drink from [src]."),
+			)
+			if(!do_after(user, 1.25 SECONDS, user))
+				return ITEM_INTERACT_BLOCKING
+			if(!reagents || !reagents.total_volume)
+				return ITEM_INTERACT_BLOCKING
+			user.visible_message(
+				span_danger("[user] drinks from [src]."),
+				span_userdanger("[user] drinks from [src]."),
+				ignored_mobs = list(user),
+			)
 		to_chat(user, span_notice("You swallow a gulp of [src]."))
 
-	. = ITEM_INTERACT_SUCCESS
 	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
-	var/fraction = min(gulp_size/reagents.total_volume, 1)
+	var/fraction = min(gulp_size / reagents.total_volume, 1)
 	reagents.trans_to(target_mob, gulp_size, transferred_by = user, methods = reagent_consumption_method)
+	var/atom/movable/screen/hunger/hunger_bar = user.hud_used?.screen_objects[HUD_MOB_HUNGER]
+	if (istype(hunger_bar))
+		hunger_bar.update_hunger_bar()
 	checkLiked(fraction, target_mob)
-	playsound(target_mob.loc, consumption_sound, rand(10,50), TRUE)
-	if(!iscarbon(target_mob))
-		return .
-	var/mob/living/carbon/carbon_drinker = target_mob
-	var/list/diseases = carbon_drinker.get_static_viruses()
-	if(!LAZYLEN(diseases))
-		return .
-	var/list/datum/disease/diseases_to_add = list()
-	for(var/datum/disease/malady as anything in diseases)
+	playsound(target_mob, consumption_sound, rand(10, 50), TRUE)
+	var/list/datum/disease/diseases_to_add
+	for(var/datum/disease/malady as anything in target_mob.get_static_viruses())
 		if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
-			diseases_to_add += malady
+			LAZYADD(diseases_to_add, malady)
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
-	return .
+	if(loop_drink)
+		return try_drink(target_mob, user) | ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	. = ..()

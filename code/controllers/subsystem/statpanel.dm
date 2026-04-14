@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(statpanels)
 	wait = 4
 	priority = FIRE_PRIORITY_STATPANEL
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	var/list/currentrun = list()
 	var/list/global_data
 	var/list/mc_data
@@ -48,14 +48,6 @@ SUBSYSTEM_DEF(statpanels)
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
 
-		if(SSticker.reboot_timer)
-			var/reboot_time = timeleft(SSticker.reboot_timer)
-			if(reboot_time)
-				global_data += "Reboot: [DisplayTimeText(reboot_time, 1)]"
-		// admin must have delayed round end
-		else if(SSticker.ready_for_reboot)
-			global_data += "Reboot: DELAYED"
-
 		src.currentrun = GLOB.clients.Copy()
 		mc_data = null
 
@@ -89,23 +81,6 @@ SUBSYSTEM_DEF(statpanels)
 
 			else if(length(GLOB.sdql2_queries) && (target.stat_tab == "SDQL2" || !("SDQL2" in target.panel_tabs)) && num_fires % default_wait == 0)
 				set_SDQL2_tab(target)
-
-		if(target.mob)
-			var/mob/target_mob = target.mob
-
-			// Handle the action panels of the stat panel
-
-			var/update_actions = FALSE
-			// We're on a spell tab, update the tab so we can see cooldowns progressing and such
-			if(target.stat_tab in target.spell_tabs)
-				update_actions = TRUE
-			// We're not on a spell tab per se, but we have cooldown actions, and we've yet to
-			// set up our spell tabs at all
-			if(!length(target.spell_tabs) && locate(/datum/action/cooldown) in target_mob.actions)
-				update_actions = TRUE
-
-			if(update_actions && num_fires % default_wait == 0)
-				set_action_tabs(target, target_mob)
 
 		if(MC_TICK_CHECK)
 			return
@@ -177,17 +152,6 @@ SUBSYSTEM_DEF(statpanels)
 	sdql2A += sdql2B
 	target.stat_panel.send_message("update_sdql2", sdql2A)
 
-/// Set up the various action tabs.
-/datum/controller/subsystem/statpanels/proc/set_action_tabs(client/target, mob/target_mob)
-	var/list/actions = target_mob.get_actions_for_statpanel()
-	target.spell_tabs.Cut()
-
-	for(var/action_data in actions)
-		target.spell_tabs |= action_data[1]
-
-	target.stat_panel.send_message("update_spells", list(spell_tabs = target.spell_tabs, actions = actions))
-
-
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	mc_data = list(
 		list("", "CPU:", world.cpu),
@@ -228,21 +192,6 @@ SUBSYSTEM_DEF(statpanels)
 
 	if(target.stat_tab == "Status")
 		set_status_tab(target)
-		return TRUE
-
-	var/mob/target_mob = target.mob
-
-	// Handle actions
-
-	var/update_actions = FALSE
-	if(target.stat_tab in target.spell_tabs)
-		update_actions = TRUE
-
-	if(!length(target.spell_tabs) && locate(/datum/action/cooldown) in target_mob.actions)
-		update_actions = TRUE
-
-	if(update_actions)
-		set_action_tabs(target, target_mob)
 		return TRUE
 
 	if(!target.holder)
