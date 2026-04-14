@@ -286,7 +286,7 @@
 		carbon_view.mob_mood.adjust_sanity(-20)
 
 		if(carbon_sanity >= 10)
-			return
+			continue
 		// So our sanity is dead, time to fuck em up
 		if(SPT_PROB(20, seconds_per_tick))
 			to_chat(carbon_view, span_warning("it echoes through you!"))

@@ -518,3 +518,7 @@
 
 /datum/config_entry/number/max_shuttle_size
 	default = 250
+
+/datum/config_entry/number/minimum_ascension_time
+	default = 0 // 1 minute
+	min_val = 0

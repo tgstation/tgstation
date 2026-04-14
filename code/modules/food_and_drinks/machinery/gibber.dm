@@ -147,7 +147,6 @@
 		return ..()
 
 /obj/machinery/gibber/verb/eject()
-	set category = "Object"
 	set name = "Empty gibber"
 	set src in oview(1)
 	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
