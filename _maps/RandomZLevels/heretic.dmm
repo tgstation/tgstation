@@ -2093,7 +2093,7 @@
 	pixel_y = 9;
 	pixel_x = 15;
 	anchored = 1;
-	name = "Sam Site Missle rack"
+	name = "SAM site missile rack"
 	},
 /obj/effect/turf_decal/trimline/red/arrow_cw,
 /turf/open/floor/iron/large,
