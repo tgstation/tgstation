@@ -194,7 +194,6 @@
 	visible_message(span_notice("\The [src] finishes processing."))
 
 /obj/machinery/processor/verb/eject()
-	set category = "Object"
 	set name = "Eject Contents"
 	set src in oview(1)
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))

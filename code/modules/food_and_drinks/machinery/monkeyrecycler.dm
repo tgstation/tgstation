@@ -82,7 +82,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	if(stored_matter >= 1)
 		to_chat(user, span_notice("The machine hisses loudly as it condenses the ground monkey meat. After a moment, it dispenses a brand new monkey cube."))
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
-		for(var/i in 1 to FLOOR(stored_matter, 1))
+		for(var/i in 1 to floor(stored_matter))
 			new /obj/item/food/monkeycube(src.loc)
 			stored_matter--
 		to_chat(user, span_notice("The machine's display flashes that it has [stored_matter] monkeys worth of material left."))

@@ -95,7 +95,7 @@
 /mob/living/basic/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SEE_BLESSED_TILES, TRAIT_IGNORE_ELEVATION), INNATE_TRAIT)
+	add_traits(list(TRAIT_COMBAT_MODE_LOCK, TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SEE_BLESSED_TILES, TRAIT_IGNORE_ELEVATION), INNATE_TRAIT)
 
 	grant_actions_by_list(abilities)
 
@@ -182,7 +182,7 @@
 		essencecolor = "#9A5ACB" //oh boy you've got a lot of essence
 	else if(essence <= 0)
 		essencecolor = "#1D2953" //oh jeez you're dying
-	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
+	hud_used.screen_objects[HUD_MOB_HEALTH]?.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
 
 /mob/living/basic/revenant/say(
 	message,

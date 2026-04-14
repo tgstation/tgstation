@@ -349,7 +349,7 @@
 			need_mob_update = affected_mob.adjust_stamina_loss(20 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE)
 		if(10 to INFINITY)
 			if(affected_mob.stat != DEAD)
-				affected_mob.fakedeath(type)
+				affected_mob.apply_status_effect(/datum/status_effect/reagent_effect/fakedeath, type)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 

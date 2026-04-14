@@ -82,8 +82,6 @@
 			break
 		if(locate(type) in spread_turf)
 			continue // Don't spread smoke where there's already smoke!
-		for(var/mob/living/smoker in spread_turf)
-			smoke_mob(smoker, seconds_per_tick)
 
 		var/obj/effect/particle_effect/fluid/smoke/spread_smoke = new type(spread_turf, group, src)
 		reagents.trans_to(spread_smoke, reagents.total_volume, copy_only = TRUE)
@@ -379,6 +377,8 @@
 			continue
 		if(HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
 			continue
+		if(isliving(thing))
+			continue
 		reagents.expose(thing, SMOKE_MACHINE, fraction)
 
 	reagents.expose(location, SMOKE_MACHINE, fraction)
@@ -394,7 +394,6 @@
 
 	var/fraction = (seconds_per_tick SECONDS) / initial(lifetime)
 	reagents.trans_to(smoker, reagents.total_volume, fraction, methods = SMOKE_MACHINE, copy_only = TRUE)
-	reagents.expose(smoker, SMOKE_MACHINE, fraction)
 	return TRUE
 
 /// Helper to quickly create a cloud of reagent smoke

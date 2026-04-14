@@ -354,7 +354,7 @@
 		if("Eject Cartridge")
 			eject_cartridge(user)
 		if("Examine")
-			examine(user)
+			user.examinate(src)
 		if("Take Cup")
 			take_cup(user)
 		if("Take Sugar")

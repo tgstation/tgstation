@@ -213,6 +213,19 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	scan_power = power
 	GLOB.exoscanner_controller.update_scan_power()
 
+	// More generous power draw scaling. Sum the total energy ratings of all parts involved, divide by how many parts we have, use that as the multiplier.
+	// Otherwise it'd be hitting 81x power draw at T4 parts, which seems... unintended.
+	var/energy_rating = 0
+	for(var/datum/stock_part/part in component_parts)
+		energy_rating += part.energy_rating()
+
+	for(var/obj/item/stock_parts/part in component_parts)
+		energy_rating += part.energy_rating
+
+	idle_power_usage = initial(idle_power_usage) * (energy_rating/8)
+	active_power_usage = initial(active_power_usage) * (energy_rating/8)
+	update_current_power_usage()
+
 /obj/machinery/exoscanner/screwdriver_act(mob/user, obj/item/tool)
 	return default_deconstruction_screwdriver(user, tool)
 

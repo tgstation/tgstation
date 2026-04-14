@@ -182,6 +182,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define PEPPERPROOF (1<<5) //protects against pepperspray
 #define EARS_COVERED (1<<6)
 
+#define TINT_MILD 1.5 //Threshold of tint level to apply mild tint overlay
 #define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully
 

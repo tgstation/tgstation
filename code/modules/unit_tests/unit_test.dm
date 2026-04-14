@@ -267,6 +267,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/structure/holosign/robot_seat,
 		//Singleton
 		/mob/dview,
+		//Template type
+		/obj/item/bodypart,
 		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
 		/obj/merge_conflict_marker,
 		//Not meant to spawn without the machine wand
@@ -351,13 +353,12 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/structure/transport/linear)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	returnable_list += subtypesof(/obj/machinery/airlock_controller)
-	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
-	returnable_list += subtypesof(/atom/movable/screen/escape_menu)
 	// Can't spawn openspace above nothing, it'll get pissy at me
 	returnable_list += typesof(/turf/open/space/openspace)
 	returnable_list += typesof(/turf/open/openspace)
 	returnable_list += typesof(/obj/item/robot_model) // These should never be spawned outside of a robot.
-
+	//A lot of these depend on a hud datum to function and should not be created in a vacuum
+	returnable_list += typesof(/atom/movable/screen)
 	return returnable_list
 
 /proc/RunUnitTests()

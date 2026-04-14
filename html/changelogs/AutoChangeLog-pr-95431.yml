@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "The Curator's barcode scanner now lets you check books out."
-  - bugfix: "The library console can no longer borrow books for an infinite amount of time."
