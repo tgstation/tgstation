@@ -90,6 +90,7 @@ jobs:
             run_maps:
               - '**.dmm'
               - 'tools/maplint/**'
+              - 'tools/mapmerge2/**'
       - name: Run Map Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled() && steps.map-filter.outputs.run_maps == 'true'
         run: |
