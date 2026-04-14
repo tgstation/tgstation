@@ -1,7 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "Holoparasites' abilities are now action buttons, so you can rebind or move them."
-  - qol: "Holoparasites now have floor change buttons."
-  - bugfix: "Holoparasites and Soulscythes now have a combat mode indicator."
-  - bugfix: "Dextrous holoparasites now have their inventory slot again while non-dextrous had it taken away (not that they could use it)."
