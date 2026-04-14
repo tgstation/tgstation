@@ -18,9 +18,11 @@
 	var/list/datum/reagents/boosters = the_refinery.booster_list
 
 	if(istype(amount, the_refinery.waste_chemical))
-		return TRUE //
+		return TRUE //Always allow waste chemicals to leave.
 
-	if(is_path_in_list(reagent, boosters))
-		return FALSE
-
+	if(!length(boosters))
+		return ..()
+	for(var/datum/chem as anything in boosters)
+		if(chem.type == reagent) // Need to check strict subtype since most acids are subtypes of eachother.
+			return FALSE
 	return ..()

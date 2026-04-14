@@ -1599,10 +1599,6 @@
 			damage_mult = 2
 		container.take_damage(round(merged_total * damage_mult / WASTE_REACTION_THRESHOLD), BURN, BIO) //It's an unusual combination of damage type and flags, but we need to intentionally bypass beakers acid immunity.
 
-/datum/reagent/toxin/acid/industrial_waste/intercept_reagents_transfer(datum/reagents/target)
-	if(target.total_volume >= target.maximum_volume)
-		spew_waste(round(volume / WASTE_REACTION_THRESHOLD))
-	return ..()
 
 /datum/reagent/toxin/acid/industrial_waste/burn(datum/reagents/holder)
 	. = ..()
