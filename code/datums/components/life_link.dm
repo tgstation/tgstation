@@ -28,7 +28,6 @@
 	if (!isnull(host))
 		var/mob/living/living_parent = parent
 		living_parent.updatehealth()
-		living_parent.client?.set_stat_panel()
 
 /datum/component/life_link/UnregisterFromParent()
 	unregister_host()
