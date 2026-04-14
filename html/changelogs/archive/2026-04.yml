@@ -289,6 +289,8 @@
   - rscadd: Getting pepper-sprayed now causes a mob to lose their sense of smell for
       half a minute.
 2026-04-14:
+  Ben10Omintrix:
+  - bugfix: fixes bot huds randomly dissappearing
   JohnFulpWillard:
   - qol: Holoparasites' abilities are now action buttons, so you can rebind or move
       them.
@@ -296,5 +298,9 @@
   - bugfix: Holoparasites and Soulscythes now have a combat mode indicator.
   - bugfix: Dextrous holoparasites now have their inventory slot again while non-dextrous
       had it taken away (not that they could use it).
+  SmArtKar:
+  - rscadd: Added a new Tactical IFF Visor, available after combat implants have been
+      researched.
+  - refactor: Refactored eye rendering slightly.
   timothymtorres:
   - bugfix: Fix fishing random portals not working correctly
