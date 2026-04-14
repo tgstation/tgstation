@@ -4,7 +4,7 @@
 /mob/living/basic/blood_worm/examining(atom/target, list/result)
 	add_special_examining_messages(target, result)
 
-/mob/living/basic/blood_worm/proc/on_host_examining(datum/source, atom/target, list/examine_strings)
+/mob/living/basic/blood_worm/proc/on_host_examining(datum/source, atom/target, list/examine_strings, list/examine_overrides)
 	SIGNAL_HANDLER
 	add_special_examining_messages(target, examine_strings)
 
