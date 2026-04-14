@@ -77,6 +77,7 @@
 	desc = "This boat moves where you will it, without the need for an oar."
 	icon_state = "dragon_boat"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
+	key_type = null
 
 /obj/vehicle/ridden/lavaboat/dragon/Initialize(mapload)
 	. = ..()
