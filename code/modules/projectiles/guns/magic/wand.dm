@@ -19,9 +19,9 @@
 		return ..()
 
 	if(prob(33)) // 33% of the remaining 75% so another 25%
-		max_charges = CEILING(max_charges / 3, 1)
+		max_charges = ceil(max_charges / 3)
 	else
-		max_charges = CEILING(max_charges / 2, 1)
+		max_charges = ceil(max_charges / 2)
 	return ..()
 
 /obj/item/gun/magic/wand/examine(mob/user)

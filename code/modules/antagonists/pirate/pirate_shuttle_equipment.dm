@@ -190,6 +190,16 @@
 		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
+/obj/machinery/piratepad/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!.)
+		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", tool)
+
+/obj/machinery/piratepad/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!.)
+		return default_deconstruction_crowbar(tool)
+
 /obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)
 	. = ..()
 	if(!.)
@@ -222,6 +232,8 @@
 	var/interface_type = "CargoHoldTerminal"
 	///Typecache of things that shouldn't be sold and shouldn't have their contents sold.
 	var/static/list/nosell_typecache
+	/// When we send the pad for this machine, do we want to lazyload in the ninja holding facility?
+	var/load_holding_facility = TRUE
 
 /obj/machinery/computer/piratepad_control/Initialize(mapload)
 	..()
@@ -274,11 +286,7 @@
 			recalc()
 			. = TRUE
 		if("send")
-			start_sending()
-			//We ensure that the holding facility is loaded in time in case we're selling mobs.
-			//This isn't the prettiest place to put it, but 'start_sending()' is also used by civilian bounty computers
-			//And we don't need them to also load the holding facility.
-			SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
+			start_sending(params["global"], usr)
 			. = TRUE
 		if("stop")
 			stop_sending()
@@ -303,8 +311,10 @@
 	if(!value)
 		status_report += "0"
 
-/// Deletes and sells the item
-/obj/machinery/computer/piratepad_control/proc/send()
+/**
+ * Sorts through all items on the control pad via pirate_export_loop, then generates a printout to view in the TGUI.
+ */
+/obj/machinery/computer/piratepad_control/proc/send(check_global = FALSE, mob/user)
 	if(!sending)
 		return
 
@@ -369,7 +379,7 @@
 	return report
 
 /// Prepares to sell the items on the pad
-/obj/machinery/computer/piratepad_control/proc/start_sending()
+/obj/machinery/computer/piratepad_control/proc/start_sending(check_global = FALSE, mob/user)
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	if(!pad)
 		status_report = "No pad detected. Build or link a pad."
@@ -385,7 +395,10 @@
 	status_report = "Sending... "
 	pad.visible_message(span_notice("[pad] starts charging up."))
 	pad.icon_state = pad.warmup_state
-	sending_timer = addtimer(CALLBACK(src, PROC_REF(send)),warmup_time, TIMER_STOPPABLE)
+	sending_timer = addtimer(CALLBACK(src, PROC_REF(send), check_global, user), warmup_time, TIMER_STOPPABLE)
+	if(load_holding_facility)
+		//We ensure that the holding facility is loaded in time in case we're selling mobs.
+		SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 
 /// Finishes the sending state of the pad
 /obj/machinery/computer/piratepad_control/proc/stop_sending(custom_report)
