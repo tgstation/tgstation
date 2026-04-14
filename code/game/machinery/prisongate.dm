@@ -127,3 +127,6 @@
 	return BLOCK_EXIT
 
 #undef SPAM_CD
+#undef ALLOW_EXIT
+#undef BLOCK_EXIT
+#undef SKIP_EXIT

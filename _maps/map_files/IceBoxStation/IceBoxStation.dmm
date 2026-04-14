@@ -26516,12 +26516,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"hwR" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Security - Equipment Room"
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/security/lockers)
 "hwW" = (
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -9
@@ -81858,6 +81852,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/bot/left,
+/obj/machinery/camera/directional/west{
+	c_tag = "Security - Equipment Room"
+	},
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -241566,7 +241563,7 @@ mhu
 mhu
 bDu
 vKk
-hwR
+mAe
 igB
 wRs
 xlC
