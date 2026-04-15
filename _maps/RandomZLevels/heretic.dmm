@@ -3649,7 +3649,7 @@
 "sP" = (
 /obj/structure/ladder{
 	name = "busted ladder hatch";
-	desc = "A sturdy metal ladder that used to lead to the bottom part of the ship- its completely broken however and the hatch is welded shut."
+	desc = "A sturdy metal ladder that used to lead to the bottom part of the ship. It's completely broken and the hatch is welded shut."
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
