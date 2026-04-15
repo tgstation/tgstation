@@ -18,6 +18,8 @@
 	var/projectile_type = /obj/projectile/beam/disabler
 	///what projectiles we shoot when emagged
 	var/emagged_projectile_type = /obj/projectile/beam
+	///sound of emagged projectile
+	var/emagged_projectile_sound = 'sound/items/weapons/laser.ogg'
 	///special hats that change our personality :mistake:
 	var/static/list/sherrif_hats = typecacheof(list(
 		/obj/item/clothing/head/cowboy,
@@ -43,12 +45,13 @@
 		stun_sound = 'sound/items/weapons/egloves.ogg',\
 		handcuff_type = /obj/item/restraints/handcuffs/cable/zipties,\
 	)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/ed_bot)
 	RegisterSignal(src, COMSIG_BASICMOB_POST_ATTACK_RANGED, PROC_REF(post_ranged_attack))
 
 /mob/living/basic/bot/secbot/ed209/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(is_type_in_typecache(arrived, sherrif_hats))
-		ADD_TRAIT(src, TRAIT_BOT_SHERRIF, REF(arrived))
+		ADD_TRAIT(src, TRAIT_BOT_SHERRIF, REF(arrived)) //yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehawwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
 /mob/living/basic/bot/secbot/ed209/proc/post_ranged_attack()
 	SIGNAL_HANDLER
@@ -78,10 +81,11 @@
 /mob/living/basic/bot/secbot/ed209/proc/set_weapon()
 	qdel(GetComponent(/datum/component/ranged_attacks))
 	var/projectile = (bot_access_flags & BOT_COVER_EMAGGED) ? emagged_projectile_type : projectile_type
+	var/final_projectile_sound = (bot_access_flags & BOT_COVER_EMAGGED) ? emagged_projectile_sound : projectile_sound
 	AddComponent(\
 		/datum/component/ranged_attacks,\
 		projectile_type = projectile,\
-		projectile_sound = projectile_sound,\
+		projectile_sound = final_projectile_sound,\
 	)
 
 /mob/living/basic/bot/secbot/ed209/ui_data(mob/user)
@@ -126,23 +130,23 @@
 		new /obj/item/clothing/suit/armor/vest(drop_location)
 
 /mob/living/basic/bot/secbot/ed209/nukie
-	name = "\improper ED-209 Syndicate Robot"
-	desc = "Wait why is it red?"
+	name = "\improper ED-209(+1) Syndicate Robot"
+	desc = "Wait this one's red? This cannot be good... right??"
 	icon_state = "red209"
 	light_color = "#5c0909"
 	faction = list(ROLE_SYNDICATE)
 	health = 300
 	maxHealth = 300
 	obj_damage = 60
+	req_one_access = list(ACCESS_SYNDICATE)
+	bot_mode_flags = parent_type::bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED
+	radio_key = /obj/item/encryptionkey/syndicate
+	additional_access = /datum/id_trim/syndicom/crew
+	radio_channel = RADIO_CHANNEL_SYNDICATE
 	ai_controller = /datum/ai_controller/basic_controller/bot/ed209/syndicate
 	bot_type = ADVANCED_SEC_BOT
 	hackables = "combat inhibitors"
-	projectile_sound = 'sound/items/weapons/minebot_rocket.ogg'
-	projectile_type = /obj/projectile/bullet/rocket
-
-/mob/living/basic/bot/secbot/ed209/nukie/set_weapon()
-	AddComponent(\
-		/datum/component/ranged_attacks,\
-		projectile_type = projectile_type,\
-		projectile_sound = projectile_sound,\
-	)
+	projectile_sound = 'sound/items/weapons/gun/l6/shot.ogg'
+	projectile_type = /obj/projectile/bullet/a7mm
+	emagged_projectile_sound = 'sound/items/weapons/minebot_rocket.ogg'
+	emagged_projectile_type = /obj/projectile/bullet/rocket/weak //lord have mercy

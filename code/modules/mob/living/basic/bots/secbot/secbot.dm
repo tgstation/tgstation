@@ -135,12 +135,7 @@
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddComponent(/datum/component/security_vision, judgement_criteria = NONE, update_judgement_criteria = CALLBACK(src, PROC_REF(judgement_criteria)))
-	AddComponent(/datum/component/stun_n_cuff,\
-		stun_sound = stun_sound,\
-		post_stun_callback = CALLBACK(src, PROC_REF(post_stun)),\
-		post_arrest_callback = CALLBACK(src, PROC_REF(post_arrest)),\
-		handcuff_type = cuff_type,\
-	)
+	add_arrest_component()
 
 /mob/living/basic/bot/secbot/Destroy()
 	QDEL_NULL(weapon)
@@ -248,7 +243,7 @@
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
 		var/area/location = get_area(src)
 		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag [RUNECHAT_BOLD("[current_target]")] in [location].", radio_channel)
-
+	payment_check(current_target)
 	mode = BOT_PREP_ARREST
 
 /mob/living/basic/bot/secbot/explode()
@@ -263,7 +258,7 @@
 	secbot_assembly.add_overlay("hs_hole")
 	secbot_assembly.created_name = name
 	new /obj/item/assembly/prox_sensor(drop_location)
-	drop_part(baton_type, drop_location)
+	drop_part(weapon, drop_location)
 
 /mob/living/basic/bot/secbot/proc/on_entered(datum/source, atom/movable/to_be_tripped)
 	SIGNAL_HANDLER
@@ -322,3 +317,11 @@
 	if(security_mode_flags & SECBOT_SABOTEUR_AFFECTED)
 		final |= JUDGE_CHILLOUT
 	return final
+
+/mob/living/basic/bot/secbot/proc/add_arrest_component()
+	AddComponent(/datum/component/stun_n_cuff,\
+		stun_sound = stun_sound,\
+		post_stun_callback = CALLBACK(src, PROC_REF(post_stun)),\
+		post_arrest_callback = CALLBACK(src, PROC_REF(post_arrest)),\
+		handcuff_type = cuff_type,\
+	)

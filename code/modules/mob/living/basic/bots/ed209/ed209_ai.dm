@@ -38,9 +38,9 @@
 			"Threat detected!"
 		),
 		SPECIAL_LINES = list(
-		//	"Why ya'll causin trouble in my town?",
+			"Why ya'll causin trouble in my town?",
 			"Fill your hands, you son of a bitch.",
-			"Aint nobody causin trouble in my JURISDICTION."
+			"Aint nobody causin trouble in MY jurisdiction."
 		)
 
 	)

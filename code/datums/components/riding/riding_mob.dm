@@ -753,3 +753,17 @@
 		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
+
+
+/datum/component/riding/creature/ed_bot
+	ai_behavior_while_ridden = RIDING_PAUSE_AI_MOVEMENT //shoot while moving!
+	uses_native_speed = TRUE
+
+
+/datum/component/riding/creature/ed_bot/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 7, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_SOUTH = list(0, 7, MOB_ABOVE_PIGGYBACK_LAYER),
+		TEXT_EAST =  list(10, 7, MOB_BELOW_PIGGYBACK_LAYER),
+		TEXT_WEST =  list(-10, 7, MOB_BELOW_PIGGYBACK_LAYER),
+	)
