@@ -233,7 +233,7 @@
 		for(var/datum/callback/callback as anything in earlyadds["[target_turf.z]"])
 			if(callback.arguments[1] == target)
 				return
-		LAZYADDASSOC(earlyadds, "[target_turf.z]", CALLBACK(src, PROC_REF(add_marker), target, hud_flags, blip))
+		LAZYADD(earlyadds["[target_turf.z]"], CALLBACK(src, PROC_REF(add_marker), target, hud_flags, blip))
 		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(remove_earlyadd), override = TRUE) //Override required for late z-level loading to prevent hard dels where an atom is initiated during z load, but is qdel'd before it finishes
 		return
 
@@ -461,6 +461,28 @@
 			if(updator.ztarget != zlevel || (blip in updator.raw_blips))
 				continue
 			updator.raw_blips += blip
+
+/datum/tactical_map/nuclear/New()
+	. = ..()
+	for(var/obj/item/disk/nuclear/nuke_disk as anything in SSpoints_of_interest.real_nuclear_disks)
+		add_marker(nuke_disk, MINIMAP_FLAG_ALL, image('icons/ui_icons/minimap/map_blips_large.dmi', null, "green_disk_off", MINIMAP_BLIPS_LAYER))
+	for(var/obj/machinery/nuclearbomb/nuke as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
+		add_marker(nuke, MINIMAP_FLAG_ALL, image('icons/ui_icons/minimap/map_blips_large.dmi', null, "nuke_off", MINIMAP_BLIPS_LAYER))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(on_nuke_armed))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DISARMED, PROC_REF(on_nuke_disarmed))
+
+/datum/tactical_map/nuclear/proc/on_nuke_armed(datum/source, obj/machinery/nuclearbomb/bomb)
+	SIGNAL_HANDLER
+	var/image/blip = images_by_source[bomb]
+	if(blip)
+		blip.icon_state = "nuke_on"
+
+/datum/tactical_map/nuclear/proc/on_nuke_disarmed(datum/source, obj/machinery/nuclearbomb/bomb)
+	SIGNAL_HANDLER
+	var/image/blip = images_by_source[bomb]
+	if(blip)
+		blip.icon_state = "nuke_off"
+
 
 ///Default HUD screen minimap object
 /atom/movable/screen/minimap

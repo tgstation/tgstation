@@ -9,7 +9,7 @@
 	var/list/team_discounts
 	var/datum/weakref/war_button_ref
 	/// Tactical map that is shared between all nuke ops
-	var/datum/tactical_map/nuclear_tacmap
+	var/datum/tactical_map/nuclear/nuclear_tacmap
 
 /datum/team/nuclear/New()
 	..()
