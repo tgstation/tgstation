@@ -864,7 +864,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
-	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/healthdoll/Click()
 	if (iscarbon(usr))
@@ -877,9 +876,41 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/healthdoll/living
 	icon_state = "fullhealth0"
 	screen_loc = ui_living_healthdoll
+	///The image we create on New to use for showing mob's HP on hover. It uses a separate image as to not be cut off by `alpha_mask_filter`.
+	var/image/health_overlay
+	///Boolean on whether a mouse is being hovered over us right now.
+	var/hovering = FALSE
 	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
 
+/atom/movable/screen/healthdoll/living/New(loc, ...)
+	. = ..()
+	health_overlay = image(loc = src, layer = src.layer+0.1)
+
+/atom/movable/screen/healthdoll/living/Destroy()
+	QDEL_NULL(health_overlay)
+	return ..()
+
+/atom/movable/screen/healthdoll/living/update_overlays()
+	. = ..()
+	if(hovering)
+		. |= health_overlay
+
+/atom/movable/screen/healthdoll/living/MouseEntered(location,control,params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	hovering = TRUE
+	update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/healthdoll/living/MouseExited(location, control, params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	hovering = FALSE
+	update_appearance(UPDATE_ICON)
+
 /atom/movable/screen/healthdoll/human
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	/// Tracks components of our doll, each limb is a separate atom in our vis_contents
 	VAR_PRIVATE/list/atom/movable/screen/limbs
 	/// Lazylist, tracks all body zones that are wounded currently

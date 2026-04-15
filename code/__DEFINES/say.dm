@@ -73,6 +73,8 @@
 #define MODE_CUSTOM_SAY_ERASE_INPUT "erase_input"
 /// Message is being relayed through another object
 #define MODE_RELAY "relayed"
+/// Override the mob's name
+#define MODE_SPEAKER_NAME_OVERRIDE "speaker_name_override"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"

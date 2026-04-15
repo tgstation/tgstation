@@ -608,6 +608,9 @@
 /// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well. Tradecraft!
 #define YAWN_PROPAGATION_EXAMINE_WINDOW (2 SECONDS)
 
+// Priorities for examine overrides
+#define EXAMINE_OVERRIDE_PRIORITY_IFF 1
+
 /// How far away you can be to make eye contact with someone while examining
 #define EYE_CONTACT_RANGE 5
 

@@ -246,6 +246,8 @@
 	for(var/atom/thing_in_range as anything in range(10, source))
 		if(iscarbon(thing_in_range))
 			var/mob/living/carbon/close_carbon = thing_in_range
+			if(close_carbon.can_block_magic())
+				continue
 			if(IS_HERETIC_OR_MONSTER(close_carbon))
 				close_carbon.apply_status_effect(/datum/status_effect/void_conduit)
 				continue

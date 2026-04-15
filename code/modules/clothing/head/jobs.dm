@@ -713,7 +713,7 @@
 	. = ..()
 	UnregisterSignal(user, COMSIG_MOB_EXAMINING_MORE)
 
-/obj/item/clothing/head/utility/head_mirror/proc/examining(mob/living/examiner, atom/examining, list/examine_list)
+/obj/item/clothing/head/utility/head_mirror/proc/examining(mob/living/examiner, atom/examining, list/examine_list, list/examine_overrides)
 	SIGNAL_HANDLER
 	if(!ishuman(examining) || examining == examiner || examiner.is_blind() || !examiner.Adjacent(examining))
 		return

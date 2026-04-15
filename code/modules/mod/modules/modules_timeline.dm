@@ -362,7 +362,7 @@
 /obj/structure/chrono_field/update_overlays()
 	. = ..()
 	var/ttk_frame = 1 - (timetokill / initial(timetokill))
-	ttk_frame = clamp(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
+	ttk_frame = clamp(ceil(ttk_frame * CHRONO_FRAME_COUNT), 1, CHRONO_FRAME_COUNT)
 	if(ttk_frame != RPpos)
 		RPpos = ttk_frame
 		underlays -= mob_underlay

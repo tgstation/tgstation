@@ -268,7 +268,7 @@
 	unload_ammo(user, forced = TRUE)
 	return FALSE
 
-/obj/item/gun/ballistic/automatic/pistol/doorhickey/fire_gun(atom/target, mob/living/user, flag, params)
+/obj/item/gun/ballistic/automatic/pistol/doorhickey/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	var/dmg_multiplier = 1
 
 	if (get_dist(target, user) <= 1)

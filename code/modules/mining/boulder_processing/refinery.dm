@@ -7,6 +7,7 @@
 	name = "boulder refinery"
 	desc = "BR for short. Accepts boulders and refines non-metallic ores into sheets using internal chemicals."
 	icon_state = "stacker"
+	base_icon_state = "stacker"
 	circuit = /obj/item/circuitboard/machine/refinery
 	usage_sound = 'sound/machines/mining/refinery.ogg'
 	action = "crushing"
@@ -45,6 +46,7 @@
 	name = "boulder smelter"
 	desc = "BS for short. Accept boulders and refines metallic ores into sheets."
 	icon_state = "smelter"
+	base_icon_state = "smelter"
 	light_system = OVERLAY_LIGHT
 	light_range = 2
 	light_power = 3
@@ -55,7 +57,7 @@
 
 /obj/machinery/bouldertech/refinery/smelter/Initialize(mapload)
 	. = ..()
-	set_light_on(TRUE)
+	update_light_value()
 
 /obj/machinery/bouldertech/refinery/smelter/can_process_material(datum/material/possible_mat)
 	var/static/list/processable_materials
@@ -69,21 +71,17 @@
 		)
 	return is_type_in_list(possible_mat, processable_materials)
 
-/obj/machinery/bouldertech/refinery/smelter/set_light_on(new_value)
-	if(panel_open || !anchored || !is_operational || machine_stat & (BROKEN | NOPOWER))
-		new_value = FALSE
-	return ..()
+/obj/machinery/bouldertech/refinery/smelter/proc/update_light_value()
+	set_light_on(!panel_open && anchored && is_operational)
 
-/obj/machinery/bouldertech/refinery/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	. = ..()
-	set_light_on(TRUE)
-
-/obj/machinery/bouldertech/refinery/default_unfasten_wrench(mob/user, obj/item/wrench, time)
-	. = ..()
-	set_light_on(TRUE)
+/obj/machinery/bouldertech/refinery/smelter/on_set_anchored(atom/movable/source, anchorvalue)
+	update_light_value()
 
 /obj/machinery/bouldertech/refinery/smelter/on_set_is_operational(old_value)
-	set_light_on(TRUE)
+	update_light_value()
+
+/obj/machinery/bouldertech/refinery/smelter/on_set_panel_open(old_value)
+	update_light_value()
 
 /obj/machinery/bouldertech/refinery/smelter/maim_golem(mob/living/carbon/human/rockman)
 	rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("You get melted into rock by [src]!"))

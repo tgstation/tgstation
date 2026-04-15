@@ -117,7 +117,7 @@
 		TIMER_COOLDOWN_START(user, "general_emote_audio_cooldown", general_emote_audio_cooldown)
 		var/frequency = null
 		if (affected_by_pitch && SStts.tts_enabled && SStts.pitch_enabled)
-			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH) * (1 + sqrt(abs(user.pitch)) * SIGN(user.pitch) * EMOTE_TTS_PITCH_MULTIPLIER)
+			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH) * (1 + sqrt(abs(user.pitch)) * sign(user.pitch) * EMOTE_TTS_PITCH_MULTIPLIER)
 		else if(vary)
 			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH)
 		playsound(source = user,soundin = tmp_sound,vol = 50, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)

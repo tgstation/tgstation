@@ -140,6 +140,9 @@
 	if(isnull(generated_domain) || !is_operational)
 		icon_state = base_icon_state
 		return ..()
+	if(panel_open)
+		icon_state = "[base_icon_state]_panel"
+		return ..()
 
 	icon_state = "[base_icon_state]_[is_ready ? "on" : "off"]"
 	return ..()
@@ -157,23 +160,19 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/quantum_server/crowbar_act(mob/living/user, obj/item/crowbar)
-	. = NONE
 	if(!is_ready)
 		balloon_alert(user, "it's scalding hot!")
 		return ITEM_INTERACT_FAILURE
 	if(length(avatar_connection_refs))
 		balloon_alert(user, "all clients must disconnect!")
 		return ITEM_INTERACT_FAILURE
-	if(default_deconstruction_crowbar(crowbar))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, crowbar)
 
 /obj/machinery/quantum_server/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	. = NONE
 	if(!is_ready)
 		balloon_alert(user, "it's scalding hot!")
 		return ITEM_INTERACT_FAILURE
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_panel", base_icon_state, screwdriver))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, screwdriver)
 
 /obj/machinery/quantum_server/RefreshParts()
 	var/capacitor_rating = 1.15

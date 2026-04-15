@@ -17,6 +17,10 @@
 	rotation = 30
 	spin = generator(GEN_NUM, -20, 20)
 
+// Subtype for the lavaland flower MODcore
+/particles/pollen/modsuit
+	spawning = 1
+
 // Subtype for mushroom spores specific to mushfolk/mushroom people
 /particles/pollen/mushroom
 	icon = 'icons/effects/particles/pollen.dmi'

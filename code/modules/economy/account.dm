@@ -135,7 +135,7 @@
 	if((amount < 0 && has_money(-amount)) || amount > 0)
 		var/debt_collected = 0
 		if(account_debt > 0 && amount > 0)
-			debt_collected = min(CEILING(amount*DEBT_COLLECTION_COEFF, 1), account_debt)
+			debt_collected = min(ceil(amount*DEBT_COLLECTION_COEFF), account_debt)
 		account_balance += amount - debt_collected
 		if(reason)
 			add_log_to_history(amount, reason)

@@ -35,7 +35,7 @@
 		return
 
 	var/current_percent = 1 - (new_value / cracked_max_integrity)
-	var/cracks = CEILING(10 * current_percent, 1) // 1 crack per 10% integrity lost
+	var/cracks = ceil(10 * current_percent) // 1 crack per 10% integrity lost
 	var/current_cracks = length(applied_cracks)
 	if(!islist(source.filters))
 		if(isnull(source.filters))

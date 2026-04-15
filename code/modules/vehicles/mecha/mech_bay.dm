@@ -3,6 +3,7 @@
 	desc = "This port recharges a mech's internal power cell."
 	icon = 'icons/obj/machines/mech_bay.dmi'
 	icon_state = "recharge_port"
+	base_icon_state = "recharge_port"
 	density = TRUE
 	dir = EAST
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
@@ -75,22 +76,20 @@
 		recharging_mech_ref = null
 		recharge_console.update_appearance()
 
+/obj/machinery/mech_bay_recharge_port/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : base_icon_state
 
 /obj/machinery/mech_bay_recharge_port/screwdriver_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_screwdriver(user, "recharge_port-o", "recharge_port", tool))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
-
-/obj/machinery/mech_bay_recharge_port/wrench_act(mob/living/user, obj/item/tool)
-	if(default_change_direction_wrench(user, tool))
-		recharging_turf = get_step(loc, dir)
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/mech_bay_recharge_port/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/mech_bay_recharge_port/wrench_act(mob/living/user, obj/item/tool)
+	. = default_change_direction_wrench(user, tool)
+	recharging_turf = get_step(loc, dir)
+	return .
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"

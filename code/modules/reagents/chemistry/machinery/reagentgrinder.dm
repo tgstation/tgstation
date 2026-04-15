@@ -273,8 +273,6 @@
 	return NONE
 
 /obj/machinery/reagentgrinder/wrench_act(mob/living/user, obj/item/tool)
-	. = NONE
-
 	if(operating)
 		balloon_alert(user, "still operating!")
 		return ITEM_INTERACT_BLOCKING
@@ -283,26 +281,21 @@
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/reagentgrinder/screwdriver_act(mob/living/user, obj/item/tool)
-	. = NONE
+	return NONE
 
+/obj/machinery/reagentgrinder/screwdriver_act(mob/living/user, obj/item/tool)
 	if(operating)
 		balloon_alert(user, "still operating!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		update_appearance(UPDATE_OVERLAYS)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/reagentgrinder/crowbar_act(mob/living/user, obj/item/tool)
-	. = NONE
-
 	if(operating)
 		balloon_alert(user, "still operating!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/reagentgrinder/proc/on_storage_dump(datum/source, datum/storage/storage, mob/user)
 	SIGNAL_HANDLER
@@ -518,4 +511,3 @@
 	beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
 	//power consumed based on the ratio of total reagents mixed
 	use_energy((active_power_usage * (duration / (1 SECONDS))) * (beaker.reagents.total_volume / beaker.reagents.maximum_volume))
-

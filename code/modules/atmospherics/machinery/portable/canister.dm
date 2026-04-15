@@ -434,9 +434,7 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/canister/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, screwdriver))
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, screwdriver)
 
 /obj/machinery/portable_atmospherics/canister/crowbar_act(mob/living/user, obj/item/tool)
 	if(!panel_open || !internal_cell)

@@ -12,7 +12,7 @@
 
 	ai_movement = /datum/ai_movement/jps/bot
 	planning_subtrees = list(
-/datum/ai_planning_subtree/escape_captivity/pacifist,
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/salute_authority,
 		/datum/ai_planning_subtree/find_patrol_beacon,
@@ -55,8 +55,12 @@
 
 /datum/ai_controller/basic_controller/bot/proc/on_movement_start(mob/living/basic/bot/source, atom/target)
 	SIGNAL_HANDLER
+
 	if(current_movement_target == blackboard[BB_BEACON_TARGET])
 		source.update_bot_mode(new_mode = BOT_PATROL)
+		return
+
+	source.clear_path_hud(remove_hud = FALSE)
 
 /datum/ai_controller/basic_controller/bot/proc/add_to_blacklist(atom/target, duration)
 	var/final_duration = duration || blackboard[BB_UNREACHABLE_LIST_COOLDOWN]

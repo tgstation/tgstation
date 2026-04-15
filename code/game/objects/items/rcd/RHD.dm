@@ -177,7 +177,7 @@
 /obj/item/construction/update_overlays()
 	. = ..()
 	if(has_ammobar)
-		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
+		var/ratio = ceil((matter / max_matter) * ammo_sections)
 		if(ratio > 0)
 			. += "[icon_state]_charge[ratio]"
 

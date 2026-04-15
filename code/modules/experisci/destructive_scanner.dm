@@ -104,8 +104,11 @@
 	. = ..()
 	icon_state = scanning ? "tube_on" : "tube_open"
 
-/obj/machinery/destructive_scanner/attackby(obj/item/object, mob/user, list/modifiers, list/attack_modifiers)
-	if (!scanning && default_deconstruction_screwdriver(user, "tube_open", "tube_open", object) || default_deconstruction_crowbar(object))
-		update_icon()
-		return
-	return ..()
+/obj/machinery/destructive_scanner/screwdriver_act(mob/living/user, obj/item/tool)
+	return scanning ? NONE : default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/destructive_scanner/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/destructive_scanner/can_crowbar_deconstruct()
+	return ..() && !scanning

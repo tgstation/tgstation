@@ -1,34 +1,18 @@
-/datum/hud/guardian
-	ui_style = 'icons/hud/guardian.dmi'
-	inventory_slots = list(/datum/inventory_slot/guardian_storage)
-
 /datum/hud/guardian/initialize_screen_objects()
 	. = ..()
-	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style)
-	add_screen_object(/atom/movable/screen/guardian/manifest, HUD_GUARDIAN_MANIFEST, ui_loc = ui_hand_position(RIGHT_HANDS))
-	add_screen_object(/atom/movable/screen/guardian/recall, HUD_GUARDIAN_RECALL, ui_loc = ui_hand_position(LEFT_HANDS))
-	add_screen_object(/atom/movable/screen/guardian/toggle_light, HUD_GUARDIAN_LIGHT)
-	add_screen_object(/atom/movable/screen/guardian/communicate, HUD_GUARDIAN_COMMUNICATE)
-
+	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, 'icons/hud/guardian.dmi')
+	add_screen_object(/atom/movable/screen/floor_changer, HUD_MOB_FLOOR_CHANGER, HUD_GROUP_STATIC, ui_style, ui_below_throw)
 	add_screen_object(/atom/movable/screen/healths/guardian, HUD_MOB_HEALTH, HUD_GROUP_INFO)
+	add_screen_object(/atom/movable/screen/combattoggle/flashy, HUD_MOB_INTENTS, HUD_GROUP_STATIC, ui_style, ui_loc = ui_zonesel)
 
-	var/mob/living/basic/guardian/owner = mymob
-	if (istype(owner))
-		add_screen_object(owner.toggle_button_type, HUD_GUARDIAN_TOGGLE, ui_loc = ui_storage1)
+///Dextrous subtype for only dextrous holoparasites. Can hold things hence the inventory slot.
+/datum/hud/dextrous/guardian
+	inventory_slots = list(/datum/inventory_slot/guardian_storage)
+	give_health_doll = FALSE
 
 /datum/hud/dextrous/guardian/initialize_screen_objects()
 	. = ..()
-	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style)
-	add_screen_object(/atom/movable/screen/guardian/communicate, HUD_GUARDIAN_COMMUNICATE, ui_loc = ui_sstore1)
-	add_screen_object(/atom/movable/screen/guardian/manifest, HUD_GUARDIAN_MANIFEST, ui_loc = ui_belt)
-	add_screen_object(/atom/movable/screen/guardian/recall, HUD_GUARDIAN_RECALL, ui_loc = ui_back)
-	add_screen_object(/atom/movable/screen/guardian/toggle_light, HUD_GUARDIAN_LIGHT)
-
 	add_screen_object(/atom/movable/screen/healths/guardian, HUD_MOB_HEALTH, HUD_GROUP_INFO)
-
-	var/mob/living/basic/guardian/owner = mymob
-	if (istype(owner))
-		add_screen_object(owner.toggle_button_type, HUD_GUARDIAN_TOGGLE, ui_loc = ui_storage2)
 
 /datum/hud/dextrous/guardian/persistent_inventory_update()
 	if(!mymob)
@@ -40,7 +24,7 @@
 	var/mob/living/basic/guardian/dextrous/dex_guardian = mymob
 	if(hud_shown)
 		if(dex_guardian.internal_storage)
-			dex_guardian.internal_storage.screen_loc = ui_id
+			dex_guardian.internal_storage.screen_loc = ui_back
 			dex_guardian.client.screen += dex_guardian.internal_storage
 	else
 		if(dex_guardian.internal_storage)
@@ -51,4 +35,5 @@
 	name = "internal storage"
 	icon_state = "suit_storage"
 	slot_id = ITEM_SLOT_DEX_STORAGE
-	screen_loc = ui_id
+	screen_loc = ui_back
+
