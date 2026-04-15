@@ -86,6 +86,8 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	screen_loc = "1,1"
 	/// A reference to the minimap used for this display.
 	var/datum/minimap/minimap
+	/// Screentext in vis_contents used for the maptext.
+	var/atom/movable/screen/screentip
 
 /atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap)
 	. = ..()
@@ -95,9 +97,23 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	screen_loc = "1:[minimap.base_map.Width() / 2],1:[minimap.base_map.Height() / 2]"
 	src.minimap = minimap
 
+	screentip = new
+	screentip.name = ""
+	screentip.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	screentip.vis_flags = VIS_INHERIT_PLANE
+	screentip.layer = MINIMAP_LABELS_LAYER
+	screentip.maptext = ""
+	screentip.maptext_width = 96
+	screentip.maptext_height = 96
+	vis_contents += screentip
+
 /atom/movable/screen/minimap_display/Destroy()
 	minimap = null
+	QDEL_NULL(screentip)
 	return ..()
+
+/atom/movable/screen/minimap_display/MouseEntered(location, control, params)
+	MouseMove(location, control, params)
 
 /atom/movable/screen/minimap_display/MouseMove(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -108,6 +124,12 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	var/y = clamp(minimap.min_y + floor((icon_y - 1) / 2), 1, world.maxy)
 
 	var/area_name = minimap.map_position_to_name["[x]:[y]"]
+	screentip.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: left'>[area_name]</span>")
+	screentip.pixel_w = icon_x
+	screentip.pixel_z = icon_y
+
+/atom/movable/screen/minimap_display/MouseExited(location, control, params)
+	screentip.maptext = ""
 
 /client/verb/debug_toggle_minimap()
 	set name = "MINIMAP DISPLAY TEST (Debug)"
