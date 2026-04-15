@@ -93,7 +93,7 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	/// A reference to the minimap used for this display.
 	var/datum/minimap/minimap
 	/// Screentext in vis_contents used for the maptext.
-	var/atom/movable/screen/screentip
+	var/atom/movable/screen/minimap_label/screentip
 
 /atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap)
 	. = ..()
@@ -104,13 +104,6 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	src.minimap = minimap
 
 	screentip = new
-	screentip.name = ""
-	screentip.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screentip.vis_flags = VIS_INHERIT_PLANE
-	screentip.layer = MINIMAP_LABELS_LAYER
-	screentip.maptext = ""
-	screentip.maptext_width = 96
-	screentip.maptext_height = 96
 	vis_contents += screentip
 
 /atom/movable/screen/minimap_display/Destroy()
@@ -136,6 +129,15 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 /atom/movable/screen/minimap_display/MouseExited(location, control, params)
 	screentip.maptext = ""
+
+/atom/movable/screen/minimap_label
+	name = ""
+	layer = MINIMAP_LABELS_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	vis_flags = VIS_INHERIT_PLANE
+	maptext = ""
+	maptext_width = 96
+	maptext_height = 96
 
 /client/verb/debug_toggle_minimap()
 	set name = "MINIMAP DISPLAY TEST (Debug)"
