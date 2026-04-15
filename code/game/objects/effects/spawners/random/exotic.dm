@@ -64,7 +64,6 @@
 	name = "antag gear"
 	icon_state = "esword"
 	loot = list(
-		/obj/item/mod/control/pre_equipped/empty/syndicate = 9,
 		/obj/item/mod/control/pre_equipped/responsory/inquisitory/syndie/less_mods = 1,
 		/obj/item/mod/module/energy_shield/prototype = 2,
 		/obj/item/mod/module/jetpack/advanced = 2,
@@ -78,7 +77,7 @@
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset/single_use = 3,
 		/obj/item/climbing_hook/syndicate = 5,
 		/obj/item/dualsaber/toy = 5,
-		/obj/item/card/emag = 5,
+		/obj/item/card/emag/bluespace = 5,
 		/obj/item/storage/box/syndie_kit/imp_storage = 5,
 		/obj/item/storage/box/syndie_kit/imp_radio = 5,
 		/obj/item/gun/ballistic/automatic/napad = 1,
@@ -89,14 +88,14 @@
 		/obj/item/storage/box/evilmeds = 5,
 		/obj/item/storage/box/syndie_kit/space = 5,
 		/obj/effect/spawner/random/exotic/antag_sub_spawner = 1,
-		/obj/item/storage/box/stockparts/deluxe = 4,
+		/obj/item/storage/box/stockparts/deluxe = 13,
 		/obj/item/storage/box/alchemist_random_chems = 5,
 	)
 
 /obj/effect/spawner/random/exotic/antag_sub_spawner
 	name = "antag gear sub spawner"
 	loot = list(
-		/obj/effect/spawner/random/exotic/antag_gear = 98,
+		/obj/item/storage/box/stockparts/deluxe = 90,
 		/obj/item/storage/box/syndicate/bundle_b = 1,
 		/obj/item/storage/box/syndicate/bundle_a = 1,
 	)
