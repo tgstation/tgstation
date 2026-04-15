@@ -184,6 +184,7 @@
 		receive_radios[TTS_GHOST_RADIO] = filter_tts_listeners(receive_radios[TTS_GHOST_RADIO], frequency)
 		for(var/radio in receive_radios)
 			LAZYSET(SStts.queued_radio_messages[message_mods[MODE_TTS_IDENTIFIER]], radio, receive_radios[radio])
+		LAZYSET(SStts.queued_radio_messages_compression, message_mods[MODE_TTS_IDENTIFIER], compression)
 
 	for(var/atom/movable/hearer as anything in receive)
 		if(!hearer)
