@@ -1,6 +1,6 @@
 /obj/machinery/deployable_turret/naval_cannon
 	name = "Bofors Naval Cannon"
-	desc = "A naval cannon, of some variety, it probably wont feel good to be on the other end of this thing."
+	desc = "A naval cannon of some variety, it probably won't feel good to be on the other end of this thing."
 	icon = 'icons/obj/weapons/naval_cannon.dmi'
 	icon_state = "turret_bofors"
 	max_integrity = 5000 //its a naval cannon, but its not unbreakable
