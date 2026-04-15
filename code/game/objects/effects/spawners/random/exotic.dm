@@ -116,3 +116,25 @@
 		/obj/structure/mecha_wreckage/ripley = 3,
 		/obj/vehicle/sealed/mecha/ripley/mining = 1,
 	)
+
+/obj/item/mod/module/energy_shield/prototype
+	name = "MOD prototype energy shield"
+	desc = "An early prototype of energy shield adapted for use inside of a MOD, the energy shield before this saw \
+	extensive use in now defunct construction, combat, and mining exosuits with exosuits being something between a \
+	modsuit and a mech with most still functioning exosuits either being in a museaum or a military parade"
+	recharge_start_delay = 30 SECONDS
+	max_charges = 2
+	charge_increment_delay = 30 SECONDS
+	shield_icon = "shield-yellow"
+
+/obj/item/mod/control/pre_equipped/responsory/inquisitory/syndie/less_mods
+	starting_frequency = null
+	req_access = null
+	applied_cell = /obj/item/stock_parts/power_store/cell/super
+	insignia_type = /obj/item/mod/module/insignia/security
+	theme = /datum/mod_theme/responsory/traitor
+	applied_modules = list(
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/pathfinder,
+	)
