@@ -5915,7 +5915,6 @@
 	pixel_y = 0
 	},
 /obj/item/ammo_casing/mm40{
-	icon_state = "40mm-shell-live";
 	pixel_x = -2;
 	pixel_y = 0
 	},
