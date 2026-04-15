@@ -3,7 +3,7 @@
 	icon_static = 'icons/mob/human/species/ghost.dmi'
 	icon_state = "ghost_head"
 	biological_state = BIO_FLESH
-	bodytype = BODYTYPE_GHOST
+	bodytype = BODYTYPE_ORGANIC|BODYTYPE_GHOST
 	limb_id = SPECIES_GHOST
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -19,7 +19,7 @@
 	icon_state = "ghost_chest"
 	biological_state = BIO_FLESH
 	acceptable_bodyshape = BODYTYPE_GHOST
-	bodytype = BODYTYPE_GHOST
+	bodytype = BODYTYPE_ORGANIC|BODYTYPE_GHOST
 	limb_id = SPECIES_GHOST
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -37,7 +37,7 @@
 	icon_static = 'icons/mob/human/species/ghost.dmi'
 	icon_state = "ghost_l_arm"
 	biological_state = BIO_FLESH|BIO_JOINTED
-	bodytype = BODYTYPE_GHOST
+	bodytype = BODYTYPE_ORGANIC|BODYTYPE_GHOST
 	limb_id = SPECIES_GHOST
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
@@ -48,7 +48,7 @@
 	icon_static = 'icons/mob/human/species/ghost.dmi'
 	icon_state = "ghost_r_arm"
 	biological_state = BIO_FLESH|BIO_JOINTED
-	bodytype = BODYTYPE_GHOST
+	bodytype = BODYTYPE_ORGANIC|BODYTYPE_GHOST
 	limb_id = SPECIES_GHOST
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
