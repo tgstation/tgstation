@@ -250,4 +250,12 @@
 				else
 					return
 
+/// Indestructible consoles for offstation use
+/obj/machinery/computer/tram_controls/digital
+	obj_flags = INDESTRUCTIBLE
+	icon_state = "tram_alt_controls"
+
+/obj/machinery/computer/tram_controls/digital/screwdriver_act()
+	return
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 32)

@@ -1836,9 +1836,8 @@
 /area/ruin/space)
 "QS" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
-/obj/machinery/computer/tram_controls{
+/obj/machinery/computer/tram_controls/digital{
 	dir = 8;
-	icon_state = "tram_alt_controls";
 	density = 0;
 	specific_transport_id = "hilb_1"
 	},
