@@ -304,3 +304,22 @@
   - refactor: Refactored eye rendering slightly.
   timothymtorres:
   - bugfix: Fix fishing random portals not working correctly
+2026-04-15:
+  JoshAdamPowell:
+  - admin: admins can more freely mess with ooc colours
+  Macaroni:
+  - rscadd: Added the sweater vest
+  Melbert:
+  - refactor: A majority of machines had their screwdriver/crowbar/wrench interactions
+      rewritten, report any oddities like being unable to open a machine's panel or
+      deconstruct a machine
+  Rhials:
+  - spellcheck: The alien dissection guide steps have been updated to reflect changes
+      to surgical processes.
+  Yobrocharlie:
+  - rscdel: Removed the snowdin and caves maps
+  lelandkemble:
+  - rscadd: Space Dragons have a new ability to locate the areas they need to create
+      rifts in.
+  theselfish:
+  - sound: Shaving Ian will no longer sound like you're using a Welder.
