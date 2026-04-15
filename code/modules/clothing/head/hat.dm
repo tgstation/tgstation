@@ -410,4 +410,3 @@
 	desc = "An ancient hat made of paper. \"Savior of the Universe\" is spelled out on the rim in orange marker. "
 	icon_state = "paper_savior"
 	worn_icon_state = "paper_savior"
-	dog_fashion = /datum/dog_fashion/head
