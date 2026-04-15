@@ -257,9 +257,9 @@
 	name = "Syndicate Snow Operative"
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
-	uniform = /obj/item/clothing/under/syndicate/coldres
+	uniform = /obj/item/clothing/under/syndicate
 	ears = /obj/item/radio/headset/syndicate/alt
-	shoes = /obj/item/clothing/shoes/combat/coldres
+	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
 
 	implants = list(/obj/item/implant/exile)
