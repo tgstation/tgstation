@@ -29,6 +29,9 @@
 
 /area/ruin/powered/seedvault
 
+/area/ruin/powered/shoe_factory
+	name = "\improper Shoe Factory"
+
 /area/ruin/unpowered/elephant_graveyard
 	name = "\improper Elephant Graveyard"
 
