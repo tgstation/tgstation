@@ -71,12 +71,18 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 /// Gets the `/datum/minimap` for a Z-level - generating it if it hasn't been yet.
 /proc/get_minimap_for_z(z) as /datum/minimap
+	var/static/generating_minimap = FALSE
+	UNTIL(!generating_minimap)
+
 	if(GLOB.minimaps[z])
 		return GLOB.minimaps[z]
+
+	generating_minimap = TRUE
 	var/datum/minimap/minimap = new
 	if(minimap.load_z(z))
 		GLOB.minimaps[z] = minimap
-		return minimap
+		. = minimap
+	generating_minimap = FALSE
 
 /// Screen object that renders a [/datum/minimap] base map icon on the HUD.
 /atom/movable/screen/minimap_display
