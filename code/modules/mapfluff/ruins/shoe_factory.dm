@@ -14,7 +14,7 @@
 	if(istype(shoe))
 		// shoes will spawn anywhere from -0.5 speed modifer (fast) to +2.0 speed (slow)
 		// using dice rolls we can make shoes that make you fast rarer than slow shoes
-		// See https://tadeohepperle.com/dice-calculator-frontend/?d1=max(d20,%20d20)%2B3d4 to view dice chances for rolls (higher rolls == faster shoes)
+		// See https://tadeohepperle.com/dice-calculator-frontend/?d1=%2B5d5 to view dice chances for rolls (higher rolls == faster shoes)
 		var/dice = "5d5"
 		var/slowdown_modifier = (2 - (roll(dice) * 0.1))
 		shoe.slowdown += slowdown_modifier
