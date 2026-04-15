@@ -2318,6 +2318,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "lD" = (
+/obj/structure/barricade/wooden/snowed,
 /obj/structure/barricade/wooden/crude/snow,
 /obj/effect/light_emitter{
 	name = "outdoor light";
@@ -2390,6 +2391,7 @@
 /area/awaymission/cabin/caves/sovietcave)
 "mJ" = (
 /obj/effect/turf_decal/weather/snow,
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "mK" = (
 /turf/closed/indestructible/fakedoor{
@@ -2446,6 +2448,7 @@
 "mV" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/item/flashlight/flare,
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "mW" = (
 /obj/effect/turf_decal/weather/snow,
@@ -2682,6 +2685,20 @@
 /obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"pq" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "lumbermill"
+	},
+/obj/effect/turf_decal/stripes/red/full,
+/obj/structure/barricade/wooden/snowed,
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/turf/open/floor/plating/snowed/snow_cabin,
+/area/awaymission/cabin/lumbermill)
 "pu" = (
 /obj/item/grenade/barrier{
 	pixel_x = -14;
@@ -2777,6 +2794,7 @@
 	set_luminosity = 6;
 	light_color = "#9bbbff"
 	},
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "qi" = (
 /obj/structure/chair{
@@ -2964,6 +2982,15 @@
 /obj/item/clothing/neck/large_scarf/blue,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
+"sI" = (
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/mob/living/basic/pet/penguin/baby/permanent/snowdin,
+/turf/open/misc/ice/smooth,
+/area/awaymission/cabin/snowforest)
 "sK" = (
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/head/hats/warden/police{
@@ -3297,6 +3324,7 @@
 /obj/effect/decal/remains/human{
 	color = "#72e4fa"
 	},
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "vG" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -3334,7 +3362,7 @@
 	pixel_y = 16
 	},
 /obj/item/gun/magic/wand/nothing/fake_resurrection{
-	pixel_y = -2
+	    pixel_y = -2
 	},
 /obj/effect/light_emitter{
 	set_cap = 3;
@@ -3679,6 +3707,15 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
+"zY" = (
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/mob/living/basic/pet/penguin/emperor/snowdin,
+/turf/open/misc/ice/smooth,
+/area/awaymission/cabin/snowforest)
 "Aa" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
@@ -4157,6 +4194,22 @@
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"GO" = (
+/obj/structure/barricade/wooden/snowed,
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/cabin/caves)
+"Hf" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/structure/barricade/wooden/snowed,
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/turf/open/floor/plating/snowed/snow_cabin,
+/area/awaymission/cabin/snowforest)
 "Hk" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/light_emitter{
@@ -4166,6 +4219,16 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
+"Hx" = (
+/obj/effect/turf_decal/stripes/red/line,
+/obj/structure/barricade/wooden/snowed,
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/turf/open/floor/plating/snowed/snow_cabin,
+/area/awaymission/cabin/snowforest)
 "HH" = (
 /obj/effect/light_emitter{
 	name = "outdoor light";
@@ -4264,6 +4327,7 @@
 	set_luminosity = 6;
 	light_color = "#9bbbff"
 	},
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "Jp" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -4479,6 +4543,14 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/lumbermill)
+"LW" = (
+/obj/structure/barricade/wooden/snowed,
+/turf/open/misc/asteroid/snow/snow_cabin{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
+/area/awaymission/cabin/caves)
 "Md" = (
 /obj/structure/chair{
 	dir = 8
@@ -5115,6 +5187,7 @@
 	set_luminosity = 6;
 	light_color = "#9bbbff"
 	},
+/turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "Ue" = (
 /obj/structure/chair{
@@ -28090,13 +28163,13 @@ KP
 KP
 KP
 KP
+zY
 KP
 KP
 KP
 KP
 KP
-KP
-KP
+zY
 KP
 KP
 KP
@@ -29115,7 +29188,7 @@ vh
 vh
 KP
 KP
-KP
+zY
 KP
 KP
 KP
@@ -29383,7 +29456,7 @@ KP
 KP
 KP
 KP
-KP
+zY
 KP
 KP
 KP
@@ -29632,11 +29705,11 @@ KP
 KP
 KP
 KP
-KP
+sI
 gm
-KP
+sI
 gm
-KP
+sI
 KP
 KP
 KP
@@ -29890,9 +29963,9 @@ KP
 KP
 KP
 KP
-KP
+sI
 gm
-KP
+sI
 KP
 KP
 KP
@@ -31172,6 +31245,7 @@ vh
 KP
 KP
 KP
+zY
 KP
 KP
 KP
@@ -31180,8 +31254,7 @@ KP
 KP
 KP
 KP
-KP
-KP
+zY
 KP
 KP
 KP
@@ -31691,7 +31764,7 @@ KP
 KP
 KP
 KP
-KP
+zY
 KP
 KP
 KP
@@ -34913,8 +34986,8 @@ gx
 gx
 gx
 gx
-JL
-JL
+LW
+LW
 gx
 gx
 ab
@@ -35427,8 +35500,8 @@ gx
 gx
 gx
 gx
-JL
-JL
+LW
+LW
 gx
 gx
 gx
@@ -41624,7 +41697,7 @@ qz
 qz
 re
 JV
-md
+pq
 wC
 re
 qz
@@ -41880,9 +41953,9 @@ re
 qz
 qz
 re
-JV
+Hx
 wq
-wC
+Hf
 re
 qz
 qz
@@ -42138,7 +42211,7 @@ qz
 qz
 qz
 JV
-md
+pq
 wC
 qz
 qz
@@ -54786,11 +54859,11 @@ gx
 Nf
 Oe
 Oe
-Oe
+GO
 Oe
 pE
 Oe
-Oe
+GO
 Oe
 pE
 Oe
