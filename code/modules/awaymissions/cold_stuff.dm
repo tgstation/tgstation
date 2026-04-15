@@ -1,3 +1,4 @@
+/// stuff left over from the snowdin gateway that was too much of a pain to remove from the places where they are used.
 /obj/structure/barricade/wooden/snowed
 	name = "crude plank barricade"
 	desc = "This space is blocked off by a wooden barricade. It seems to be covered in a layer of snow."
@@ -32,3 +33,16 @@
 	name = "weakened wand of healing"
 	desc = "This wand uses healing magics to heal and revive. The years of the cold have weakened the magic inside the wand."
 	max_charges = 5
+
+/mob/living/basic/pet/penguin/emperor/snowdin
+	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE
+	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/pet/penguin/baby/permanent/snowdin
+	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE
+	gold_core_spawnable = NO_SPAWN
+
+/turf/open/floor/iron/dark/snowdin
+	initial_gas_mix = FROZEN_ATMOS
+	planetary_atmos = TRUE
+	temperature = ICEBOX_MIN_TEMPERATURE
