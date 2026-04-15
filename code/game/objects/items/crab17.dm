@@ -232,8 +232,7 @@
  */
 /obj/structure/checkoutmachine/proc/stop_dumping()
 	for(var/datum/bank_account/B as anything in accounts_to_rob)
-		if(B)
-			B.stop_dump()
+		B.stop_dump()
 
 /**
  * Splits the balance of the internal_account into several smaller piles of cash and scatters them around the area.

@@ -128,9 +128,9 @@
 	being_dumped = FALSE
 	if(money_crabbed < NO_MY_MONEY)
 		return
-	for(var/obj/card in bank_cards)
+	for(var/obj/card as anything in bank_cards)
 		var/mob/living/card_holder = recursive_loc_check(card, /mob/living)
-		if(!isliving(card_holder) || !card_holder.client) //If on a mob
+		if(!isliving(card_holder)) //If on a mob
 			continue
 		//overwrite the slots event.
 		card_holder.add_mood_event(SLOTS_MOOD_CATEGORY, /datum/mood_event/slots/all_gone)
