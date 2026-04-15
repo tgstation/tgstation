@@ -12,6 +12,7 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	var/y_offset
 
 /datum/minimap/proc/load_z(z)
+	. = FALSE
 	if(!isnum(z) || z > length(SSmapping.z_list))
 		CRASH("Tried to create minimap for invalid Z-level ([z])")
 	base_map = icon('icons/ui_icons/minimap/minimap.dmi')
@@ -62,6 +63,8 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	// base_map.Shift(EAST, x_offset)
 	// base_map.Shift(NORTH, y_offset)
 
+	return TRUE
+
 /client/verb/debug_generate_maps()
 	set name = "MINIMAP GENERATION TEST (Debug)"
 	set desc = "meow meow meow"
@@ -80,3 +83,12 @@ GLOBAL_ALIST_EMPTY(minimaps)
 		fcopy(z_minimap.base_map, "tmp/minimaps/minimap_[SSmapping.current_map.map_name].[z].png")
 	var/total_ms = rustg_time_milliseconds("meow_all")
 	message_admins("total generation time of [total_ms] ms")
+
+/// Gets the `/datum/minimap` for a Z-level - generating it if it hasn't been yet.
+/proc/get_minimap_for_z(z) as /datum/minimap
+	if(GLOB.minimaps[z])
+		return GLOB.minimaps[z]
+	var/datum/minimap/minimap = new
+	if(minimap.load_z())
+		GLOB.minimaps[z] = minimap
+		return minimap
