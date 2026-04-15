@@ -17,7 +17,9 @@
 	. = ..()
 	if(!.)
 		return
-
+	if(affected_mob.ckey == "rosham")
+		cure()
+		return
 	switch(stage)
 		if(2)
 			if(SPT_PROB(26, seconds_per_tick))
