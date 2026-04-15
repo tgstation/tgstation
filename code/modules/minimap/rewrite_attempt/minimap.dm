@@ -4,7 +4,7 @@ GLOBAL_ALIST_EMPTY(minimaps)
 /// Represents a minimap for a single Z-level.
 /datum/minimap
 	/// The Z-level this minimap was made for.
-	var/z
+	VAR_FINAL/z
 	/// The icon of the base map itself.
 	var/icon/base_map
 	/// Mapping of x/y coords to area names.
