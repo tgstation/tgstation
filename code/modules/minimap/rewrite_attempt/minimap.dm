@@ -3,16 +3,24 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 /// Represents a minimap for a single Z-level.
 /datum/minimap
+	/// The Z-level this minimap was made for.
+	var/z
 	/// The icon of the base map itself.
 	var/icon/base_map
 	/// Mapping of x/y coords to area names.
 	var/alist/map_position_to_name = alist()
+	/// Minimum world X coordinate included in the cropped map icon.
+	var/min_x = 1
+	/// Minimum world Y coordinate included in the cropped map icon.
+	var/min_y = 1
 
 /datum/minimap/proc/load_z(z)
 	. = FALSE
 	if(!isnum(z) || z > length(SSmapping.z_list))
 		CRASH("Tried to create minimap for invalid Z-level ([z])")
-	base_map = icon('icons/ui_icons/minimap/minimap.dmi')
+
+	src.base_map = icon('icons/ui_icons/minimap/minimap.dmi')
+	src.z = z
 
 	var/min_x = world.maxx
 	var/min_y = world.maxy
@@ -53,8 +61,12 @@ GLOBAL_ALIST_EMPTY(minimaps)
 				continue
 		base_map.DrawBox(location.tacmap_color, x, y)
 
+	src.min_x = min_x
+	src.min_y = min_y
+
 	base_map.Crop(min_x, min_y, max_x, max_y)
 	base_map.Scale(base_map.Width() * 2, base_map.Height() * 2)
+
 	return TRUE
 
 /client/verb/debug_generate_maps()
@@ -105,6 +117,16 @@ GLOBAL_ALIST_EMPTY(minimaps)
 /atom/movable/screen/minimap_display/Destroy()
 	minimap = null
 	return ..()
+
+/atom/movable/screen/minimap_display/MouseMove(location, control, params)
+	var/list/modifiers = params2list(params)
+	var/icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
+	var/icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
+
+	var/x = clamp(minimap.min_x + floor((icon_x - 1) / 2), 1, world.maxx)
+	var/y = clamp(minimap.min_y + floor((icon_y - 1) / 2), 1, world.maxy)
+
+	var/area_name = minimap.map_position_to_name["[x]:[y]"]
 
 /client/verb/debug_toggle_minimap()
 	set name = "MINIMAP DISPLAY TEST (Debug)"
