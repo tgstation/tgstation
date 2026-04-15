@@ -170,6 +170,8 @@
 
 #define HUD_XENOBIO_CONSOLE "xenobio_console"
 
+#define HUD_TAC_MINIMAP "tac_minimap"
+
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.
 

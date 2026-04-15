@@ -90,6 +90,21 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	name = "Minimap"
 	icon_state = ""
 	layer = MINIMAP_IMAGE_LAYER
+	screen_loc = "1,1"
+	/// A reference to the minimap used for this display.
+	var/datum/minimap/minimap
+
+/atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap)
+	. = ..()
+	if(isnull(minimap))
+		CRASH("[type] created without a minimap reference!")
+	icon = minimap.base_map
+	screen_loc = "1:[minimap.base_map.Width() / 2],1:[minimap.base_map.Height() / 2]"
+	src.minimap = minimap
+
+/atom/movable/screen/minimap_display/Destroy()
+	minimap = null
+	return ..()
 
 /client/verb/debug_toggle_minimap()
 	set name = "MINIMAP DISPLAY TEST (Debug)"
@@ -98,24 +113,20 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 	var/datum/hud/hud = mob.hud_used
 	if(!hud)
-		to_chat(src, "No HUD found.")
+		to_chat(src, span_warning("No HUD found."))
 		return
 
 	// Toggle off if already visible.
-	if(hud.screen_objects["debug_minimap_display"])
-		hud.remove_screen_object("debug_minimap_display")
-		to_chat(src, "Minimap hidden.")
+	if(hud.screen_objects[HUD_TAC_MINIMAP])
+		hud.remove_screen_object(HUD_TAC_MINIMAP)
+		to_chat(src, span_notice("Minimap hidden."))
 		return
 
 	var/datum/minimap/minimap = get_minimap_for_z(mob.z)
 	if(!minimap)
-		to_chat(src, "No minimap generated for z=[mob.z].")
+		to_chat(src, span_notice("No minimap generated for z=[mob.z]."))
 		return
 
-	var/atom/movable/screen/minimap_display/display = new(null, hud)
-	display.icon = minimap.base_map
-	var/map_width = minimap.base_map.Width()
-	var/map_height = minimap.base_map.Height()
-	display.screen_loc = "1:[map_width / 2],1:[map_height / 2]"
-	hud.add_screen_object(display, "debug_minimap_display", HUD_GROUP_STATIC, update_screen = TRUE)
-	to_chat(src, "Minimap shown for z=[mob.z].")
+	var/atom/movable/screen/minimap_display/display = new(null, hud, minimap)
+	hud.add_screen_object(display, HUD_TAC_MINIMAP, HUD_GROUP_STATIC, update_screen = TRUE)
+	to_chat(src, span_notice("Minimap shown for z=[mob.z]."))
