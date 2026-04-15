@@ -1,7 +1,8 @@
 /datum/disease/transformation
+	abstract_type = /datum/disease/transformation
 	name = "Transformation"
 	max_stages = 5
-	spread_text = "Acute"
+	spread_text = "None"
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	cure_text = "A coder's love (theoretical)."
 	agent = "Shenanigans"
@@ -99,7 +100,7 @@
 
 /datum/disease/transformation/jungle_flu
 	name = "Jungle Flu"
-	cure_text = "Death."
+	cure_text = "Death"
 	cures = list(/datum/reagent/medicine/adminordrazine)
 	spread_text = "Unknown"
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
@@ -148,7 +149,7 @@
 
 /datum/disease/transformation/robot
 	name = "Robotic Transformation"
-	cure_text = "An injection of copper."
+	cure_text = /datum/reagent/copper::name
 	cures = list(/datum/reagent/copper)
 	cure_chance = 2.5
 	agent = "R2D2 Nanomachines"
@@ -188,7 +189,7 @@
 /datum/disease/transformation/xeno
 
 	name = "Xenomorph Transformation"
-	cure_text = "Spaceacillin & Glycerol"
+	cure_text = /datum/reagent/medicine/spaceacillin::name + " & " + /datum/reagent/glycerol::name
 	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/glycerol)
 	cure_chance = 2.5
 	agent = "Rip-LEY Alien Microbes"
@@ -229,7 +230,7 @@
 
 /datum/disease/transformation/slime
 	name = "Advanced Mutation Transformation"
-	cure_text = "Frost oil"
+	cure_text = /datum/reagent/consumable/frostoil::name
 	cures = list(/datum/reagent/consumable/frostoil)
 	cure_chance = 55
 	agent = "Advanced Mutation Toxin"
@@ -317,7 +318,7 @@
 
 /datum/disease/transformation/gondola
 	name = "Gondola Transformation"
-	cure_text = "Condensed Capsaicin, ingested or injected." //getting pepper sprayed doesn't help
+	cure_text = /datum/reagent/consumable/condensedcapsaicin::name + " (not applied via vapor)"
 	cures = list(/datum/reagent/consumable/condensedcapsaicin) //beats the hippie crap right out of your system
 	cure_chance = 55
 	stage_prob = 2.5

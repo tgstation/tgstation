@@ -341,10 +341,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	icon_state = "combat_off"
 	screen_loc = ui_acti
 	mouse_over_pointer = MOUSE_HAND_POINTER
+	///When recovering from minimizing our HUD, this is where we'll be set to. We set this in Initialize.
+	var/default_screen_location
 
-/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner, default_screen_location)
 	. = ..()
 	update_appearance()
+	if(default_screen_location)
+		screen_loc = default_screen_location
+	src.default_screen_location = screen_loc
 
 /atom/movable/screen/combattoggle/Click()
 	if(isliving(usr))
@@ -573,7 +578,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/sleep/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	// Invisible by default
-	SetInvisibility(INVISIBILITY_ABSTRACT, "sleep")
+	SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_SLEEP_HUD_BUTTON)
 
 /atom/movable/screen/sleep/Click()
 	if(!isliving(usr) || HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
@@ -859,7 +864,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
-	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/healthdoll/Click()
 	if (iscarbon(usr))
@@ -872,9 +876,41 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/healthdoll/living
 	icon_state = "fullhealth0"
 	screen_loc = ui_living_healthdoll
+	///The image we create on New to use for showing mob's HP on hover. It uses a separate image as to not be cut off by `alpha_mask_filter`.
+	var/image/health_overlay
+	///Boolean on whether a mouse is being hovered over us right now.
+	var/hovering = FALSE
 	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
 
+/atom/movable/screen/healthdoll/living/New(loc, ...)
+	. = ..()
+	health_overlay = image(loc = src, layer = src.layer+0.1)
+
+/atom/movable/screen/healthdoll/living/Destroy()
+	QDEL_NULL(health_overlay)
+	return ..()
+
+/atom/movable/screen/healthdoll/living/update_overlays()
+	. = ..()
+	if(hovering)
+		. |= health_overlay
+
+/atom/movable/screen/healthdoll/living/MouseEntered(location,control,params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	hovering = TRUE
+	update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/healthdoll/living/MouseExited(location, control, params)
+	if(usr != get_mob())
+		return
+	. = ..()
+	hovering = FALSE
+	update_appearance(UPDATE_ICON)
+
 /atom/movable/screen/healthdoll/human
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	/// Tracks components of our doll, each limb is a separate atom in our vis_contents
 	VAR_PRIVATE/list/atom/movable/screen/limbs
 	/// Lazylist, tracks all body zones that are wounded currently

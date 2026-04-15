@@ -115,7 +115,7 @@
 	attack_speed = initial(attack_speed)
 	var/old_force = force
 	var/bonus_value = combo_count || 1
-	force = CEILING((bonus_value * damage_boost) * force, 1)
+	force = ceil((bonus_value * damage_boost) * force)
 	. = ..()
 	force = old_force
 	set_combo(new_value = combo_count + 1, user = user)

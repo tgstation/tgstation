@@ -65,7 +65,6 @@
 #define HUD_MOB_CRAFTING_MENU "mob_crafting"
 #define HUD_MOB_FLOOR_CHANGER "mob_floor_changer"
 #define HUD_MOB_BLOOD_LEVEL "mob_blood_level"
-#define HUD_MOB_FOV_BLOCKER "mob_fov_blocker"
 #define HUD_MOB_STYLE_METER "mob_style_meter"
 #define HUD_MOB_MOOD "mob_mood"
 #define HUD_MOB_HEALTHDOLL "mob_healthdoll"
@@ -361,6 +360,13 @@
 #define ui_ghost_minigames "SOUTH:6,CENTER+3:24"
 #define ui_ghost_language_menu "SOUTH:6,CENTER+4:22"
 #define ui_ghost_floor_changer "SOUTH:6,CENTER+4:7"
+
+//Holoparasites
+#define ui_guardian_floor_changer "EAST-1:28,SOUTH+1:7"
+#define ui_guardian_communication "CENTER-2:16,SOUTH+0:5"
+#define ui_guardian_manifest "CENTER-1:16,SOUTH+0:5"
+#define ui_guardian_recall "CENTER+0:16,SOUTH+0:5"
+#define ui_guardian_special "CENTER+1:16,SOUTH+0:5"
 
 //Voidwalker
 #define ui_voidwalker_left_of_hands "CENTER+-2:16,SOUTH+0:5"

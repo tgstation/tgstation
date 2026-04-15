@@ -387,3 +387,6 @@
 
 /// Sent to a mob when its player DNRs
 #define COMSIG_LIVING_DNR "living_dnr"
+
+/// From /mob/living/on_looking_z_level_change() : (turf/old_turf, turf/new_turf)
+#define COMSIG_LIVING_LOOK_Z_CHANGE "living_look_z_change"
