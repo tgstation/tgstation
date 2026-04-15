@@ -69,25 +69,6 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 	return TRUE
 
-/client/verb/debug_generate_maps()
-	set name = "MINIMAP GENERATION TEST (Debug)"
-	set desc = "meow meow meow"
-	set category = "mrrrp mrrrp mrrrow"
-
-	GLOB.minimaps.Cut()
-
-	rustg_time_reset("meow_all")
-	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		var/datum/minimap/z_minimap = new
-		GLOB.minimaps[z] = z_minimap
-		rustg_time_reset("meow")
-		z_minimap.load_z(z)
-		var/time_ms = rustg_time_milliseconds("meow")
-		message_admins("Minimap generated for Z [z] in [time_ms] ms")
-		fcopy(z_minimap.base_map, "tmp/minimaps/minimap_[SSmapping.current_map.map_name].[z].png")
-	var/total_ms = rustg_time_milliseconds("meow_all")
-	message_admins("total generation time of [total_ms] ms")
-
 /// Gets the `/datum/minimap` for a Z-level - generating it if it hasn't been yet.
 /proc/get_minimap_for_z(z) as /datum/minimap
 	if(GLOB.minimaps[z])
@@ -152,3 +133,22 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	var/atom/movable/screen/minimap_display/display = new(null, hud, minimap)
 	hud.add_screen_object(display, HUD_TAC_MINIMAP, HUD_GROUP_STATIC, update_screen = TRUE)
 	to_chat(src, span_notice("Minimap shown for z=[mob.z]."))
+
+/client/verb/debug_generate_maps()
+	set name = "MINIMAP GENERATION TEST (Debug)"
+	set desc = "meow meow meow"
+	set category = "mrrrp mrrrp mrrrow"
+
+	GLOB.minimaps.Cut()
+
+	rustg_time_reset("meow_all")
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		var/datum/minimap/z_minimap = new
+		GLOB.minimaps[z] = z_minimap
+		rustg_time_reset("meow")
+		z_minimap.load_z(z)
+		var/time_ms = rustg_time_milliseconds("meow")
+		message_admins("Minimap generated for Z [z] in [time_ms] ms")
+		fcopy(z_minimap.base_map, "tmp/minimaps/minimap_[SSmapping.current_map.map_name].[z].png")
+	var/total_ms = rustg_time_milliseconds("meow_all")
+	message_admins("total generation time of [total_ms] ms")
