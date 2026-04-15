@@ -1474,7 +1474,6 @@
 /obj/structure/closet/crate,
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/gun/magic/wand/resurrection/inert,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
 "jQ" = (
@@ -1994,11 +1993,6 @@
 "oQ" = (
 /obj/item/food/meat/slab,
 /turf/open/misc/asteroid/snow,
-/area/awaymission/caves/academy)
-"ps" = (
-/obj/structure/table/wood,
-/obj/item/gun/magic/wand/fireball/inert,
-/turf/open/floor/wood,
 /area/awaymission/caves/academy)
 "pC" = (
 /mob/living/basic/construct/proteon/hostile,
@@ -10587,7 +10581,7 @@ hb
 aV
 LH
 mx
-ps
+mL
 el
 mL
 el
