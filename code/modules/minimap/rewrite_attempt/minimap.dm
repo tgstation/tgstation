@@ -8,9 +8,6 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	/// Mapping of x/y coords to area names.
 	var/alist/map_position_to_name = alist()
 
-	var/x_offset
-	var/y_offset
-
 /datum/minimap/proc/load_z(z)
 	. = FALSE
 	if(!isnum(z) || z > length(SSmapping.z_list))
@@ -26,13 +23,15 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	for(var/turf/location as anything in Z_TURFS(z))
 		if(location.skip_minimap_rendering || isshuttleturf(location))
 			continue
+		var/area/arealoc = location.loc
+		if(arealoc.skip_minimap_rendering)
+			continue
 		var/x = location.x
 		var/y = location.y
 		min_x = min(min_x, x)
 		min_y = min(min_y, y)
 		max_x = max(max_x, x)
 		max_y = max(max_y, y)
-		var/area/arealoc = location.loc
 		map_position_to_name["[x]:[y]"] = arealoc.name
 		if(location.density)
 			base_map.DrawBox(location.tacmap_color, x, y)
@@ -56,13 +55,6 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 	base_map.Crop(min_x, min_y, max_x, max_y)
 	base_map.Scale(base_map.Width() * 2, base_map.Height() * 2)
-
-	// x_offset = floor((SCREEN_PIXEL_SIZE - max_xy[1] - min_xy[1]) / 2) * 2
-	// y_offset = floor((SCREEN_PIXEL_SIZE - max_xy[2] - min_xy[2]) / 2) * 2
-
-	// base_map.Shift(EAST, x_offset)
-	// base_map.Shift(NORTH, y_offset)
-
 	return TRUE
 
 /client/verb/debug_generate_maps()
@@ -89,6 +81,41 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	if(GLOB.minimaps[z])
 		return GLOB.minimaps[z]
 	var/datum/minimap/minimap = new
-	if(minimap.load_z())
+	if(minimap.load_z(z))
 		GLOB.minimaps[z] = minimap
 		return minimap
+
+/// Screen object that renders a [/datum/minimap] base map icon on the HUD.
+/atom/movable/screen/minimap_display
+	name = "Minimap"
+	icon_state = ""
+	layer = MINIMAP_IMAGE_LAYER
+
+/client/verb/debug_toggle_minimap()
+	set name = "MINIMAP DISPLAY TEST (Debug)"
+	set desc = "Toggle the rewrite minimap on your HUD."
+	set category = "mrrrp mrrrp mrrrow"
+
+	var/datum/hud/hud = mob.hud_used
+	if(!hud)
+		to_chat(src, "No HUD found.")
+		return
+
+	// Toggle off if already visible.
+	if(hud.screen_objects["debug_minimap_display"])
+		hud.remove_screen_object("debug_minimap_display")
+		to_chat(src, "Minimap hidden.")
+		return
+
+	var/datum/minimap/minimap = get_minimap_for_z(mob.z)
+	if(!minimap)
+		to_chat(src, "No minimap generated for z=[mob.z].")
+		return
+
+	var/atom/movable/screen/minimap_display/display = new(null, hud)
+	display.icon = minimap.base_map
+	var/map_width = minimap.base_map.Width()
+	var/map_height = minimap.base_map.Height()
+	display.screen_loc = "1:[map_width / 2],1:[map_height / 2]"
+	hud.add_screen_object(display, "debug_minimap_display", HUD_GROUP_STATIC, update_screen = TRUE)
+	to_chat(src, "Minimap shown for z=[mob.z].")

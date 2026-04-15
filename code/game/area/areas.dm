@@ -133,6 +133,9 @@
 	/// Are shuttles allowed to dock in this area
 	var/allow_shuttle_docking = FALSE
 
+	/// If TRUE, then this area will be skipped entirely by minimap rendering.
+	var/skip_minimap_rendering = FALSE
+
 /**
  * A list of teleport locations
  *

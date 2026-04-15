@@ -92,11 +92,13 @@
 		return
 	var/icon/icon_gen = new('icons/ui_icons/minimap/minimap.dmi') //480x480 blank icon template for drawing on the map
 	for(var/turf/location as anything in Z_TURFS(level))
-		if(is_type_in_typecache(location, skip_render_turfs) || isshuttleturf(location))
+		if(location.skip_minimap_rendering || isshuttleturf(location))
+			continue
+		var/area/arealoc = location.loc
+		if(arealoc.skip_minimap_rendering)
 			continue
 		var/xval = location.x
 		var/yval = location.y
-		var/area/arealoc = location.loc
 		map_position_to_name["[level]:[xval]:[yval]"] = arealoc.name
 		if(location.density)
 			icon_gen.DrawBox(location.tacmap_color, xval, yval)
