@@ -77,7 +77,7 @@
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset/single_use = 3,
 		/obj/item/climbing_hook/syndicate = 5,
 		/obj/item/dualsaber/toy = 5,
-		/obj/item/card/emag/bluespace = 5,
+		/obj/item/card/emag/blue = 5,
 		/obj/item/storage/box/syndie_kit/imp_storage = 5,
 		/obj/item/storage/box/syndie_kit/imp_radio = 5,
 		/obj/item/gun/ballistic/automatic/napad = 1,
