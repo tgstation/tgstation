@@ -1,0 +1,4 @@
+author: "Yobrocharlie"
+delete-after: True
+changes:
+  - rscdel: "Removed the snowdin and caves maps"

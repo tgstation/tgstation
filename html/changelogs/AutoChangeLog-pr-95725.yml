@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - rscadd: "Space Dragons have a new ability to locate the areas they need to create rifts in."

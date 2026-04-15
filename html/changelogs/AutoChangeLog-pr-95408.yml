@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "A majority of machines had their screwdriver/crowbar/wrench interactions rewritten, report any oddities like being unable to open a machine's panel or deconstruct a machine"

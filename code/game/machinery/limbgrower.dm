@@ -5,6 +5,7 @@
 	desc = "It grows new limbs using Synthflesh."
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
+	base_icon_state = "limbgrower"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/limbgrower
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_REQUIRES_ANCHORED
@@ -162,20 +163,16 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/limbgrower/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(check_busy(user))
 		return ITEM_INTERACT_BLOCKING
 
-	. = default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", tool)
-	if(.)
-		ui_close(user)
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/limbgrower/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(check_busy(user))
 		return ITEM_INTERACT_BLOCKING
 
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/limbgrower/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -184,6 +181,15 @@
 
 	if(default_unfasten_wrench(user, tool))
 		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/limbgrower/update_icon_state()
+	. = ..()
+	if(busy)
+		icon_state = "[base_icon_state]_idleon"
+	else if(panel_open)
+		icon_state = "[base_icon_state]_panelopen"
+	else
+		icon_state = "[base_icon_state]_idleoff"
 
 /obj/machinery/limbgrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -225,8 +231,8 @@
 
 			busy = TRUE
 			use_energy(power)
+			update_appearance()
 			flick("limbgrower_fill", src)
-			icon_state = "limbgrower_idleon"
 			selected_category = temp_category
 			addtimer(CALLBACK(src, PROC_REF(build_item), consumed_reagents_list), production_speed * production_coefficient)
 			return TRUE
@@ -257,8 +263,8 @@
 		new built_typepath(loc)
 
 	busy = FALSE
+	update_appearance()
 	flick("limbgrower_unfill", src)
-	icon_state = "limbgrower_idleoff"
 
 /*
  * The process of putting together a limb.
