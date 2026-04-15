@@ -287,3 +287,6 @@
 
 ///sent to TTS sounds when the volume preference is changed and applied
 #define COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED "tts_volume_preference_applied"
+
+///sent to radio TTS sounds when the volume preference is changed and applied
+#define COMSIG_MOB_TTS_RADIO_VOLUME_PREFERENCE_APPLIED "tts_radio_volume_preference_applied"

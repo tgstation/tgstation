@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(tts)
 		return SS_INIT_FAILURE
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(target, list/listeners, sound/audio, sound/audio_blips, datum/language/language, range = 7, volume_offset = 0, ignore_observers = FALSE, source_speaker = null, audio_length = 10 SECONDS, audio_length_blips = 10 SECONDS)
+/datum/controller/subsystem/tts/proc/play_tts(target, list/listeners, sound/audio, sound/audio_blips, datum/language/language, range = 7, volume_offset = 0, ignore_observers = FALSE, source_speaker = null, audio_length = 10 SECONDS, audio_length_blips = 10 SECONDS, volume_preference = /datum/preference/numeric/volume/sound_tts_volume, volume_signal = COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED)
 	var/turf/turf_source = get_turf(target)
 	if(!turf_source && target) // if there's a target, we better have a turf
 		return
@@ -139,7 +139,7 @@ SUBSYSTEM_DEF(tts)
 			continue
 		var/mob/listening_mob = hearer_atom.get_listening_mob()
 		/// volume modifier for TTS as set by the player in preferences.
-		var/volume_modifier = listening_mob.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_tts_volume)/100
+		var/volume_modifier = listening_mob.client?.prefs.read_preference(volume_preference)/100
 		var/tts_pref = listening_mob.client?.prefs.read_preference(/datum/preference/choiced/sound_tts)
 		var/hear_self_pref = listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts_hear_self_radio)
 		if(volume_modifier == 0 || (tts_pref == TTS_SOUND_OFF))
@@ -196,8 +196,8 @@ SUBSYSTEM_DEF(tts)
 			SOUND_RANGE,
 			audio_length,
 			channel,
-			/datum/preference/numeric/volume/sound_tts_volume,
-			COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED
+			volume_preference,
+			volume_signal
 		)
 		new /datum/threed_sound(
 			target,
@@ -208,8 +208,8 @@ SUBSYSTEM_DEF(tts)
 			SOUND_RANGE,
 			audio_length_blips,
 			channel,
-			/datum/preference/numeric/volume/sound_tts_volume,
-			COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED
+			volume_preference,
+			volume_signal
 		)
 
 
@@ -383,7 +383,7 @@ SUBSYSTEM_DEF(tts)
 				var/sound/audio_file_blips
 				audio_file = new(tts_request.audio_file_radio)
 				audio_file_blips = new(tts_request.audio_file_blips_radio)
-				play_tts(radio == TTS_GHOST_RADIO ? null : radio, hearers, audio_file, audio_file_blips, tts_request.language, INFINITY, tts_request.volume_offset, ignore_observers = TRUE, source_speaker = tts_request.target, audio_length = tts_request.audio_length_radio, audio_length_blips = tts_request.audio_length_blips_radio)
+				play_tts(radio == TTS_GHOST_RADIO ? null : radio, hearers, audio_file, audio_file_blips, tts_request.language, INFINITY, tts_request.volume_offset, ignore_observers = TRUE, source_speaker = tts_request.target, audio_length = tts_request.audio_length_radio, audio_length_blips = tts_request.audio_length_blips_radio, volume_preference = /datum/preference/numeric/volume/sound_tts_radio_volume, volume_signal = COMSIG_MOB_TTS_RADIO_VOLUME_PREFERENCE_APPLIED)
 			queued_radio_messages.Remove(identifier)
 			completed_tts_messages.Remove(identifier)
 

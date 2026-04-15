@@ -98,6 +98,13 @@ export const sound_tts_volume: Feature<number> = {
   component: FeatureSliderInput,
 };
 
+export const sound_tts_radio_volume: Feature<number> = {
+  name: 'TTS Radio Volume',
+  category: 'SOUND',
+  description: 'The volume that radio text-to-speech sounds will play at. This is independent of regular TTS volume.',
+  component: FeatureSliderInput,
+};
+
 export const sound_lobby_volume: Feature<number> = {
   name: 'Lobby music volume',
   category: 'SOUND',

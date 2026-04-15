@@ -92,6 +92,19 @@
 	if(!isnull(client_mob))
 		SEND_SIGNAL(client_mob, COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED)
 
+/datum/preference/numeric/volume/sound_tts_radio_volume
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_tts_radio_volume"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/numeric/volume/sound_tts_radio_volume/apply_to_client_updated(client/client, value)
+	var/mob/client_mob = client.mob
+	if(!isnull(client_mob))
+		SEND_SIGNAL(client_mob, COMSIG_MOB_TTS_RADIO_VOLUME_PREFERENCE_APPLIED)
+
+/datum/preference/numeric/volume/sound_tts_radio_volume/create_default_value()
+	return 75
+
 /datum/preference/choiced/sound_achievement
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_achievement"
