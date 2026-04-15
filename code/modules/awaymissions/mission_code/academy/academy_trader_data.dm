@@ -24,7 +24,9 @@
 		/obj/item/clothing/suit/wizrobe/paper = list(PAYCHECK_CREW * 40, INFINITY, "Good work killing that wizard"),
 		/obj/item/gun/magic/wand/disabler = list(PAYCHECK_CREW * 40, INFINITY, "Good work retriving the relic"),
 		/obj/item/boulder/true_boulder = list(PAYCHECK_CREW * 40, INFINITY, "Good work retriving the relic"),
+		/obj/item/gun/magic/wand/fireball/inert = list(PAYCHECK_CREW * 40, INFINITY, "Good work retriving the relic"),
 		/obj/item/scanner_wand = list(PAYCHECK_CREW * 40, INFINITY, "Good work retriving the relic"),
+		/obj/item/gun/magic/wand/resurrection/inert = list(PAYCHECK_CREW * 40, INFINITY, "Good work retriving the relic"),
 		/obj/item/soulstone = list(PAYCHECK_CREW * 40, INFINITY, "Good work retriving the relic"),
 		/obj/item/soulstone/anybody = list(PAYCHECK_CREW * 5, 1, "Good work retriving the con- oh, i recognize this, ill see if i can scramble a team for the station"),//to-do, spawn a red alert security ert if this item is sold
 		/obj/item/soulstone/anybody/chaplain = list(PAYCHECK_CREW * 5, INFINITY, "Good work retriving the relic"),
