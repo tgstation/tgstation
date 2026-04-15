@@ -1,4 +1,4 @@
-/mob/living/simple_animal/bot/secbot : /mob/living/basic/bot/medbot{@OLD}
+/mob/living/simple_animal/bot/secbot : /mob/living/basic/bot/secbot{@OLD}
 /mob/living/simple_animal/bot/secbot/beepsky : /mob/living/basic/bot/secbot/beepsky{@OLD}
 /mob/living/simple_animal/bot/secbot/beepsky/armsky : /mob/living/basic/bot/secbot/beepsky/armsky{@OLD}
 /mob/living/simple_animal/bot/secbot/beepsky/jr : /mob/living/basic/bot/secbot/beepsky/jr{@OLD}

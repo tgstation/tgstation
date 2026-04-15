@@ -25,6 +25,8 @@
 		/obj/item/clothing/head/cowboy,
 	))
 	COOLDOWN_DECLARE(shoot_cry)
+	///our riding component
+	var/ride_component = /datum/component/riding/creature/ed_bot
 
 
 /mob/living/basic/bot/secbot/ed209/Initialize(mapload)
@@ -45,7 +47,7 @@
 		stun_sound = 'sound/items/weapons/egloves.ogg',\
 		handcuff_type = /obj/item/restraints/handcuffs/cable/zipties,\
 	)
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/ed_bot)
+	AddElement(/datum/element/ridable, ride_component)
 	RegisterSignal(src, COMSIG_BASICMOB_POST_ATTACK_RANGED, PROC_REF(post_ranged_attack))
 
 /mob/living/basic/bot/secbot/ed209/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -135,8 +137,8 @@
 	icon_state = "red209"
 	light_color = "#5c0909"
 	faction = list(ROLE_SYNDICATE)
-	health = 300
-	maxHealth = 300
+	health = 250
+	maxHealth = 250
 	obj_damage = 60
 	req_one_access = list(ACCESS_SYNDICATE)
 	bot_mode_flags = parent_type::bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED
@@ -150,3 +152,4 @@
 	projectile_type = /obj/projectile/bullet/a7mm
 	emagged_projectile_sound = 'sound/items/weapons/minebot_rocket.ogg'
 	emagged_projectile_type = /obj/projectile/bullet/rocket/weak //lord have mercy
+	ride_component = /datum/component/riding/creature/ed_bot/nukie //ride at ur own risk. especially if its emagged. warranty void

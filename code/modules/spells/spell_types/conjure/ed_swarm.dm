@@ -4,14 +4,14 @@
 	desc = "This spell dispenses wizard justice."
 
 	summon_radius = 3
-	summon_type = list(/mob/living/simple_animal/bot/secbot/ed209)
+	summon_type = list(/mob/living/basic/bot/secbot/ed209)
 	summon_amount = 10
 
 /datum/action/cooldown/spell/conjure/summon_ed_swarm/post_summon(atom/summoned_object, atom/cast_on)
-	if(!istype(summoned_object, /mob/living/simple_animal/bot/secbot/ed209))
+	if(!istype(summoned_object, /mob/living/basic/bot/secbot/ed209))
 		return
 
-	var/mob/living/simple_animal/bot/secbot/ed209/summoned_bot = summoned_object
+	var/mob/living/basic/bot/secbot/ed209/summoned_bot = summoned_object
 	summoned_bot.name = "Wizard's Justicebot"
 
 	summoned_bot.security_mode_flags = ~SECBOT_DECLARE_ARRESTS

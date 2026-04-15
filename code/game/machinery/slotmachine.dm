@@ -578,7 +578,7 @@
 	desc = "Repurposed from a confiscated syndicate gambling ring. Losing is a crime. Winning is also a crime."
 	symbol_paths = list(
 		/obj/item/food/donut/berry,
-		/mob/living/simple_animal/bot/secbot/beepsky,
+		/mob/living/basic/bot/secbot/beepsky,
 		/obj/item/melee/baton/security/loaded,
 		/obj/item/gun/energy/disabler,
 		/obj/vehicle/sealed/mecha/ripley/paddy,

@@ -966,7 +966,7 @@
 "fS" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line,
-/mob/living/simple_animal/bot/secbot/beepsky/ofitser,
+/mob/living/basic/bot/secbot/beepsky/ofitser,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},

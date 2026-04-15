@@ -1,6 +1,6 @@
 /datum/crafting_recipe/ed209
 	name = "ED209"
-	result = /mob/living/simple_animal/bot/secbot/ed209
+	result = /mob/living/basic/bot/secbot/ed209
 	reqs = list(
 		/obj/item/robot_suit = 1,
 		/obj/item/clothing/head/helmet/sec = 1,
@@ -18,7 +18,7 @@
 
 /datum/crafting_recipe/secbot
 	name = "Secbot"
-	result = /mob/living/simple_animal/bot/secbot
+	result = /mob/living/basic/bot/secbot
 	reqs = list(
 		/obj/item/assembly/signaler = 1,
 		/obj/item/clothing/head/helmet/sec = 1,
