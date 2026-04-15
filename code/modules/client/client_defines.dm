@@ -257,3 +257,6 @@
 	var/window_scaling
 
 	var/datum/tgui_window/stat_panel
+
+	/// OOC colour of the clients messages.
+	var/ooc_colour = null

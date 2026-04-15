@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Added a new Tactical IFF Visor, available after combat implants have been researched."
-  - refactor: "Refactored eye rendering slightly."
