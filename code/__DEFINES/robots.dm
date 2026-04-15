@@ -375,3 +375,10 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 
 /// Default offsets for riding a cyborg
 #define DEFAULT_ROBOT_RIDING_OFFSETS list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-6, 3), TEXT_WEST = list(6, 3))
+
+
+//mulebots
+#define MULEBOT_MOOD_ANNOYED "ANNOYED"
+#define MULEBOT_MOOD_CHIME "CHIME"
+#define MULEBOT_MOOD_DELIGHT "DELIGHT"
+#define MULEBOT_MOOD_SIGH "SIGH"

@@ -495,6 +495,13 @@ Diagnostic HUDs!
 		var/chargelvl = (cell.charge/cell.maxcharge)
 		set_hud_image_state(DIAG_BATT_HUD, "hudbatt[RoundDiagBar(chargelvl)]")
 
+/mob/living/basic/bot/mulebot/proc/diag_hud_set_mulebotcell()
+	if(QDELETED(cell) || (cell.maxcharge == 0))
+		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
+	else
+		var/chargelvl = (cell.charge/cell.maxcharge)
+		set_hud_image_state(DIAG_BATT_HUD, "hudbatt[RoundDiagBar(chargelvl)]")
+
 /*~~~~~~~~~~~~
 	Airlocks!
 ~~~~~~~~~~~~~*/

@@ -453,8 +453,41 @@
 		if(length(movement_path))
 			movement_path.Cut(1,2)
 	else
+		return handle_move_attempt_failure()
+
+
+/datum/move_loop/has_target/jps/proc/handle_move_attempt_failure()
+	INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+	return MOVELOOP_FAILURE
+
+/datum/move_loop/has_target/jps/frustrations
+	///maximum amount of frustrations before we recalculate path
+	var/maximum_frustrations
+	///what is our current frustration?
+	var/current_frustrations = 0
+	///how long before we're able to increment frustration?
+	var/frustration_delay
+	///cooldown between frustration increments
+	COOLDOWN_DECLARE(frustration_cooldown)
+
+/datum/move_loop/has_target/jps/frustrations/setup(delay, timeout, atom/chasing, maximum_frustrations = 10, frustration_delay = 2 SECONDS)
+	. = ..()
+	if(!.)
+		return
+	src.maximum_frustrations = maximum_frustrations
+	src.frustration_delay = frustration_delay
+
+
+/datum/move_loop/has_target/jps/frustrations/handle_move_attempt_failure()
+	if(!COOLDOWN_FINISHED(src, frustration_cooldown))
+		return NONE
+	COOLDOWN_START(src, frustration_cooldown, frustration_delay)
+	current_frustrations++
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FRUSTRATION_INCREMENTED, current_frustrations)
+	if(current_frustrations >= maximum_frustrations)
+		current_frustrations = 0
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
-		return MOVELOOP_FAILURE
+	return MOVELOOP_FAILURE
 
 
 ///Base class of move_to and move_away, deals with the distance and target aspect of things
