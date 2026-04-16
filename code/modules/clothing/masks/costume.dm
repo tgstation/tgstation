@@ -75,6 +75,7 @@
 /obj/item/clothing/mask/kitsune/attack_self(mob/user)
 	adjust_visor(user)
 	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
+	flags_inv = up ? null : HIDEFACE|HIDEFACIALHAIR
 
 /obj/item/clothing/mask/rebellion
 	name = "rebellion mask"
