@@ -170,6 +170,11 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	vis_contents -= blip
 	qdel(blip)
 
+/atom/movable/screen/minimap_display/proc/remove_all_blips()
+	QDEL_LIST_ASSOC_VAL(blips)
+	vis_contents.Cut()
+	vis_contents += screentip // add screentip back in
+
 /atom/movable/screen/minimap_label
 	name = ""
 	layer = MINIMAP_LABELS_LAYER
