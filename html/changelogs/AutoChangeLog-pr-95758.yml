@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - server: "Optimized CI workflow to skip map-specific linters when no maps are modified."
