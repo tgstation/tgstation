@@ -5183,6 +5183,7 @@
 #include "code\modules\mob\living\basic\bots\ed209\ed209.dm"
 #include "code\modules\mob\living\basic\bots\ed209\ed209_ai.dm"
 #include "code\modules\mob\living\basic\bots\ed209\ed209_nukie_ai.dm"
+#include "code\modules\mob\living\basic\bots\ed209\ed209_nukie_spawner.dm"
 #include "code\modules\mob\living\basic\bots\firebot\firebot.dm"
 #include "code\modules\mob\living\basic\bots\firebot\firebot_ai.dm"
 #include "code\modules\mob\living\basic\bots\honkbots\honkbot.dm"

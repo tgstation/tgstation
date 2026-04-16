@@ -2,6 +2,7 @@
 	name = "\improper ED-209 Security Robot"
 	desc = "A security robot. He looks less than thrilled."
 	icon_state = "ed209"
+	base_icon_state = "ed209"
 	light_color = "#f84e4e"
 	density = TRUE
 	health = 100
@@ -67,6 +68,10 @@
 	if(is_type_in_typecache(gone, sherrif_hats))
 		REMOVE_TRAIT(src, TRAIT_BOT_SHERRIF, REF(gone))
 
+/mob/living/basic/bot/secbot/ed209/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_BOT_SHERRIF))
+		. += span_notice("Fastest hand in the west.")
 
 /mob/living/basic/bot/secbot/ed209/bot_reset(bypass_ai_reset = FALSE)
 	.= ..()

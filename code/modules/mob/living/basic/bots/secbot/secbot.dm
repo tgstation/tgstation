@@ -3,6 +3,7 @@
 	desc = "A little security robot. He looks less than thrilled."
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "secbot"
+	base_icon_state = "secbot"
 	light_color = "#f56275"
 	light_power = 0.8
 	gender = MALE
@@ -143,7 +144,7 @@
 
 /mob/living/basic/bot/secbot/update_icon_state()
 	if(mode == BOT_HUNT)
-		icon_state = "[initial(icon_state)]-c"
+		icon_state = "[base_icon_state]-c"
 		return
 	return ..()
 
@@ -238,7 +239,7 @@
 	playsound(src, SFX_LAW, 50, FALSE)
 
 /mob/living/basic/bot/secbot/proc/post_stun(mob/living/carbon/current_target, harm = FALSE)
-	flick("[initial(icon_state)]-c", src)
+	flick("[base_icon_state]-c", src)
 	var/threat = 5 || ai_controller.blackboard[BB_CURRENT_CRIMINAL_ASSESSMENT]
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
 		var/area/location = get_area(src)

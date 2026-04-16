@@ -763,8 +763,8 @@
 	return list(
 		TEXT_NORTH = list(0, 7),
 		TEXT_SOUTH = list(0, 7),
-		TEXT_EAST =  list(10, 7),
-		TEXT_WEST =  list(-10, 7),
+		TEXT_EAST =  list(-10, 7),
+		TEXT_WEST =  list(10, 7),
 	)
 
 /datum/component/riding/creature/ed_bot/get_parent_offsets_and_layers()
@@ -780,12 +780,11 @@
 	if(!.)
 		return
 	var/mob/living/basic/bot/secbot/my_bot = parent
+	if(!(my_bot.bot_mode_flags & BOT_MODE_ON))
+		return FALSE
 	return (my_bot.bot_access_flags & BOT_COVER_EMAGGED)
 
-
-
 /datum/component/riding/creature/ed_bot/nukie
-
 
 /datum/component/riding/creature/ed_bot/nukie/ride_check(mob/living/rider, consequences = TRUE)
 	var/mob/living/basic/bot/secbot/my_bot = parent

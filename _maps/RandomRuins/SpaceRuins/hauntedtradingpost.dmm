@@ -812,7 +812,7 @@
 "hf" = (
 /obj/structure/cable/layer1,
 /obj/structure/sign/poster/contraband/syndicate_pistol/directional/west,
-/mob/living/basic/bot/medbot{
+/mob/living/basic/bot/secbot{
 	faction = list("Syndicate");
 	bot_cover_flags = 4;
 	baton_type = /obj/item/melee/baton/security/cattleprod;

@@ -18,5 +18,5 @@
 	summoned_bot.bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED
 	summoned_bot.bot_mode_flags |= BOT_COVER_EMAGGED
 
-	summoned_bot.projectile = /obj/projectile/beam/laser
-	summoned_bot.shoot_sound = 'sound/items/weapons/laser.ogg'
+	summoned_bot.projectile_type = /obj/projectile/beam/laser
+	summoned_bot.projectile_sound = 'sound/items/weapons/laser.ogg'
