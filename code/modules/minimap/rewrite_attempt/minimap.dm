@@ -138,7 +138,11 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 /atom/movable/screen/minimap_display/proc/add_blip(name, icon_state, x, y, large = FALSE)
 	if(blips[name])
-		remove_blip(name)
+		if(blips[name].icon_state == icon_state)
+			update_blip(name, x, y)
+			return
+		else
+			remove_blip(name)
 	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, icon_state, large)
 	blips[name] = new_blip
 	var/half_size = large ? 5 : 3
