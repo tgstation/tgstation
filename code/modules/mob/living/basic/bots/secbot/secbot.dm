@@ -47,8 +47,6 @@
 	var/price_arrest = 0
 	/// Charged each time the violator is stunned on detain
 	var/price_detain = 0
-	///Force of the harmbaton used on them
-	var/weapon_force = 20
 	///The department the secbot will deposit collected money into
 	var/payment_department = ACCOUNT_SEC
 	///what sound we play when stunning
