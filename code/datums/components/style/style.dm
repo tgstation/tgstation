@@ -20,6 +20,9 @@
 #define ACTION_GEYSER_MARKED "GEYSER MARKED"
 #define ACTION_VENT_TAPPED "VENT TAPPED"
 
+#define ACTION_MULTIPLIER_PER_VENT_VALUE 0.1
+#define ACTION_MULTIPLIER_MAJOR_KILL 0.1
+
 /datum/component/style
 	/// Amount of style we have.
 	var/style_points = -1
@@ -416,7 +419,7 @@
 
 	var/vent_value = vent.boulder_size / BOULDER_SIZE_MEDIUM
 	add_action(ACTION_VENT_TAPPED, 250 * vent_value)
-	permanent_multiplier += 0.1 * vent_value
+	permanent_multiplier += ACTION_MULTIPLIER_PER_VENT_VALUE * vent_value
 
 // Emote-based multipliers
 /datum/component/style/proc/on_taunt()
@@ -444,7 +447,7 @@
 
 	if(ismegafauna(died))
 		add_action(ACTION_MAJOR_KILL, 350)
-		permanent_multiplier += 0.1
+		permanent_multiplier += ACTION_MULTIPLIER_MAJOR_KILL
 
 	else if(died.maxHealth >= 75) //at least legions
 		add_action(ACTION_KILL, 125)
@@ -473,3 +476,6 @@
 #undef ACTION_MARK_DETONATED
 #undef ACTION_GEYSER_MARKED
 #undef ACTION_VENT_TAPPED
+
+#undef ACTION_MULTIPLIER_PER_VENT_VALUE
+#undef ACTION_MULTIPLIER_MAJOR_KILL
