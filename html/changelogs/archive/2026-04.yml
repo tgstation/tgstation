@@ -330,3 +330,5 @@
       is now a permanent moodlet.
   - rscadd: Losing large amounts of money from the CRAB-17 will give you a negative
       moodlet, which overwrites jackpot winnings.
+  timothymtorres:
+  - server: Optimized CI workflow to skip map-specific linters when no maps are modified.
