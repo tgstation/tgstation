@@ -467,6 +467,7 @@
 	midround_type = LIGHT_MIDROUND
 	false_alarm_able = TRUE
 	pref_flag = ROLE_BLOOD_WORM_INFESTATION
+	jobban_flag = ROLE_BLOOD_WORM
 	candidate_role = "Blood Worm"
 	ruleset_flags = RULESET_INVADER
 	weight = 2 // For reference, Nightmare has a weight of 5.

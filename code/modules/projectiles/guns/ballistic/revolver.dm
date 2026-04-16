@@ -59,9 +59,6 @@
 
 /obj/item/gun/ballistic/revolver/verb/spin()
 	set name = "Spin Chamber"
-	set category = "Object"
-	set desc = "Click to spin your revolver's chamber."
-
 	var/mob/user = usr
 
 	if(user.stat || !in_range(user, src))

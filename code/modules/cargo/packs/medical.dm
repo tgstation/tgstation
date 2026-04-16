@@ -116,10 +116,10 @@
 	crate_type = /obj/structure/closet/crate/medical
 	test_ignored = TRUE
 
-/datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/medical/supplies/fill(obj/container)
 	for(var/i in 1 to 10)
 		var/item = pick(contains)
-		new item(C)
+		new item(container)
 
 /datum/supply_pack/medical/experimentalmedicine
 	name = "Experimental Medicine Crate"

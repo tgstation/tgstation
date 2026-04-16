@@ -58,8 +58,7 @@
 		playsound(src, 'sound/items/modsuit/flamethrower.ogg', 50)
 
 		var/smoke_amount = DIAMOND_AREA(smokeradius)
-		do_chem_smoke(amount = smoke_amount, holder = src, location = loc, carry = reagents, carry_limit = 20, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/smoke_machine)
-		reagents.remove_all(smoke_amount / 20)
+		do_chem_smoke(amount = smoke_amount, holder = src, location = loc, carry = item.reagents, carry_limit = 20, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/smoke_machine)
 		if (prob(5) && !(obj_flags & EMAGGED))
 			if(user.get_liked_foodtypes() & GORE)
 				user.balloon_alert(user, "a hidden treat!")

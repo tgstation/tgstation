@@ -421,13 +421,13 @@ ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN
 	BLACKBOX_LOG_ADMIN_VERB("Remove Spell")
 
 ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/victim)
-	var/datum/disease/D = input(user, "Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	if(!D)
+	var/datum/disease/disease = tgui_input_list(user, "Choose the disease to give to that guy", "ACHOO", sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	if(!disease)
 		return
-	victim.ForceContractDisease(new D, FALSE, TRUE)
+	victim.ForceContractDisease(new disease, FALSE, TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Give Disease")
-	log_admin("[key_name(user)] gave [key_name(victim)] the disease [D].")
-	message_admins(span_adminnotice("[key_name_admin(user)] gave [key_name_admin(victim)] the disease [D]."))
+	log_admin("[key_name(user)] gave [key_name(victim)] the disease [disease].")
+	message_admins(span_adminnotice("[key_name_admin(user)] gave [key_name_admin(victim)] the disease [disease]."))
 
 ADMIN_VERB_AND_CONTEXT_MENU(object_say, R_FUN, "OSay", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, obj/speaker in world)
 	var/message = tgui_input_text(user, "What do you want the message to be?", "Make Sound", encode = FALSE)
@@ -685,10 +685,8 @@ ADMIN_VERB(clear_legacy_asset_cache, R_DEBUG, "Clear Legacy Asset Cache", "Clear
 		to_chat(user, span_warning("Asset caching is disabled in the config!"))
 		return
 	var/regenerated = 0
-	for(var/datum/asset/target_spritesheet as anything in subtypesof(/datum/asset))
+	for(var/datum/asset/target_spritesheet as anything in valid_subtypesof(/datum/asset))
 		if(!initial(target_spritesheet.cross_round_cachable))
-			continue
-		if(target_spritesheet == initial(target_spritesheet._abstract))
 			continue
 		var/datum/asset/asset_datum = GLOB.asset_datums[target_spritesheet]
 		asset_datum.regenerate()
@@ -700,9 +698,7 @@ ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, "Clear Smart Asset Cache", "Clear t
 		to_chat(user, span_warning("Smart asset caching is disabled in the config!"))
 		return
 	var/cleared = 0
-	for(var/datum/asset/spritesheet_batched/target_spritesheet as anything in subtypesof(/datum/asset/spritesheet_batched))
-		if(target_spritesheet == initial(target_spritesheet._abstract))
-			continue
+	for(var/datum/asset/spritesheet_batched/target_spritesheet as anything in valid_subtypesof(/datum/asset/spritesheet_batched))
 		fdel("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[initial(target_spritesheet.name)].json")
 		cleared++
 	to_chat(user, span_notice("Cleared [cleared] asset\s."))
