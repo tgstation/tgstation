@@ -100,3 +100,7 @@
 
 #define MONEY_MINING_SYMBOL "mp"
 #define MONEY_BITRUNNING_SYMBOL "np"
+
+//Mood event from minor slot events like winning/losing a few bits.
+#define SLOTS_MOOD_CATEGORY "slots"
+
