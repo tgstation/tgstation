@@ -103,12 +103,22 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	set_minimap(minimap)
 	screentip = new
 	vis_contents += screentip
+	update_owner_blip(hud.mymob)
 
 /atom/movable/screen/minimap_display/Destroy()
+	if(hud?.mymob)
+		UnregisterSignal(hud.mymob, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED))
 	minimap = null
 	QDEL_LIST_ASSOC_VAL(blips)
 	QDEL_NULL(screentip)
 	return ..()
+
+/atom/movable/screen/minimap_display/set_new_hud(datum/hud/hud_owner)
+	if(hud?.mymob)
+		UnregisterSignal(hud.mymob, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED))
+	. = ..()
+	if(hud?.mymob)
+		RegisterSignals(hud.mymob, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED), PROC_REF(update_owner_blip))
 
 /atom/movable/screen/minimap_display/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
@@ -132,6 +142,14 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 /atom/movable/screen/minimap_display/MouseExited(location, control, params)
 	screentip.maptext = ""
+
+/atom/movable/screen/minimap_display/proc/update_owner_blip(mob/source)
+	SIGNAL_HANDLER
+	var/turf/mob_loc = get_turf(source)
+	if(!mob_loc || mob_loc.z != minimap.z)
+		remove_blip("locator")
+		return
+	add_blip("locator", "locator", mob_loc.x, mob_loc.y)
 
 /atom/movable/screen/minimap_display/proc/set_minimap(datum/minimap/minimap)
 	icon = minimap.base_map
@@ -242,5 +260,4 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 	var/atom/movable/screen/minimap_display/display = new(null, hud, minimap)
 	hud.add_screen_object(display, HUD_TAC_MINIMAP, HUD_GROUP_STATIC, update_screen = TRUE)
-	display.add_blip("locator", "locator", mob.x, mob.y)
 	to_chat(src, span_notice("Minimap shown for z=[mob.z]."))
