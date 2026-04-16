@@ -1,3 +1,6 @@
+/area/ruin/shoe_factory
+	name = "\improper Shoe Factory"
+
 /obj/effect/spawner/random/mining_loot/shoe_factory
 	name = "random shoe factory loot"
 	desc = "Spawns shoes from the loot list. Shoes have a randomized slowdown modifier."
