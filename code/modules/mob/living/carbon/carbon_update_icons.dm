@@ -543,6 +543,12 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_GENERATE_ICON_KEY, .)
 	return .
 
+/obj/item/bodypart/head/generate_icon_key()
+	. = ..()
+	if(lip_style)
+		. += lip_color
+		. += lip_style
+
 ///Generates a cache key specifically for husks
 /obj/item/bodypart/proc/generate_husk_key()
 	RETURN_TYPE(/list)
