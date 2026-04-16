@@ -111,6 +111,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "shoe_factory_entrance"
 	},
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -205,6 +206,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/powered/shoe_factory)
+"oU" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "shoe_factory_entrance"
+	},
+/obj/effect/mapping_helpers/airlock_note_placer,
+/obj/item/paper/fluff/ruins/shoe_factory/osha_shutdown,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/powered/shoe_factory)
 "pT" = (
 /turf/closed/wall{
 	baseturfs = /turf/open/floor/plating/lavaland_baseturf
@@ -274,6 +286,7 @@
 /area/ruin/powered/shoe_factory)
 "uV" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/ruin/powered/shoe_factory)
 "wv" = (
@@ -615,6 +628,8 @@
 	cycle_id = "shoe_factory_entrance"
 	},
 /obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock_note_placer,
+/obj/item/paper/fluff/ruins/shoe_factory/osha_shutdown,
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -838,7 +853,7 @@ dx
 dx
 pT
 Tw
-gn
+oU
 dx
 DI
 DI
