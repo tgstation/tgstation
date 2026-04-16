@@ -40,7 +40,6 @@ GLOBAL_ALIST_EMPTY(minimaps)
 		min_y = min(min_y, y)
 		max_x = max(max_x, x)
 		max_y = max(max_y, y)
-		map_position_to_name["[x]:[y]"] = arealoc.name
 		if(location.density)
 			base_map.DrawBox(location.tacmap_color, x, y)
 			continue
@@ -123,6 +122,10 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	var/y = clamp(minimap.min_y + floor((icon_y - 1) / 2), 1, world.maxy)
 
 	var/area_name = minimap.map_position_to_name["[x]:[y]"]
+	if(isnull(area_name))
+		var/turf/hovered_loc = locate(x, y, minimap.z)
+		area_name = "[hovered_loc?.loc?.name]"
+		minimap.map_position_to_name["[x]:[y]"] = area_name
 	screentip.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: left'>[area_name]</span>")
 	screentip.pixel_w = icon_x
 	screentip.pixel_z = icon_y
