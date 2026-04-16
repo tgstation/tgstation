@@ -93,6 +93,8 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	var/datum/minimap/minimap
 	/// Screentext in vis_contents used for the maptext.
 	var/atom/movable/screen/minimap_label/screentip
+	/// Assoc list of "names" to blips.
+	var/list/atom/movable/screen/minimap_blip/blips = list()
 
 /atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap)
 	. = ..()
@@ -107,6 +109,7 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 /atom/movable/screen/minimap_display/Destroy()
 	minimap = null
+	QDEL_LIST_ASSOC_VAL(blips)
 	QDEL_NULL(screentip)
 	return ..()
 
@@ -133,6 +136,32 @@ GLOBAL_ALIST_EMPTY(minimaps)
 /atom/movable/screen/minimap_display/MouseExited(location, control, params)
 	screentip.maptext = ""
 
+/atom/movable/screen/minimap_display/proc/add_blip(name, icon_state, x, y, large = FALSE)
+	if(blips[name])
+		remove_blip(name)
+	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, icon_state, large)
+	blips[name] = new_blip
+	var/half_size = large ? 5 : 3
+	new_blip.pixel_w = (x - minimap.min_x) * 2 + 1 - half_size
+	new_blip.pixel_z = (y - minimap.min_y) * 2 + 1 - half_size
+	vis_contents += new_blip
+
+/atom/movable/screen/minimap_display/proc/update_blip(name, x, y)
+	var/atom/movable/screen/minimap_blip/blip = blips[name]
+	if(!blip)
+		return
+	var/half_size = blip.large ? 5 : 3
+	blip.pixel_w = (x - minimap.min_x) * 2 + 1 - half_size
+	blip.pixel_z = (y - minimap.min_y) * 2 + 1 - half_size
+
+/atom/movable/screen/minimap_display/proc/remove_blip(name)
+	var/atom/movable/screen/minimap_blip/blip = blips[name]
+	if(!blip)
+		return
+	blips -= name
+	vis_contents -= blip
+	qdel(blip)
+
 /atom/movable/screen/minimap_label
 	name = ""
 	layer = MINIMAP_LABELS_LAYER
@@ -141,6 +170,41 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	maptext = ""
 	maptext_width = 96
 	maptext_height = 96
+
+/atom/movable/screen/minimap_blip
+	name = ""
+	icon = 'icons/ui_icons/minimap/map_blips.dmi'
+	layer = MINIMAP_BLIPS_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	vis_flags = VIS_INHERIT_PLANE
+	/// Is this a large blip?
+	var/large = FALSE
+
+/atom/movable/screen/minimap_blip/Initialize(mapload, datum/hud/hud_owner, icon_state, large = FALSE)
+	. = ..()
+	src.icon_state = icon_state
+	if(large)
+		src.icon = 'icons/ui_icons/minimap/map_blips_large.dmi'
+		src.large = TRUE
+
+/client/verb/debug_generate_maps()
+	set name = "MINIMAP GENERATION TEST (Debug)"
+	set desc = "meow meow meow"
+	set category = "mrrrp mrrrp mrrrow"
+
+	GLOB.minimaps.Cut()
+
+	rustg_time_reset("meow_all")
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		var/datum/minimap/z_minimap = new
+		GLOB.minimaps[z] = z_minimap
+		rustg_time_reset("meow")
+		z_minimap.load_z(z)
+		var/time_ms = rustg_time_milliseconds("meow")
+		message_admins("Minimap generated for Z [z] in [time_ms] ms")
+		fcopy(z_minimap.base_map, "tmp/minimaps/minimap_[SSmapping.current_map.map_name].[z].png")
+	var/total_ms = rustg_time_milliseconds("meow_all")
+	message_admins("total generation time of [total_ms] ms")
 
 /client/verb/debug_toggle_minimap()
 	set name = "MINIMAP DISPLAY TEST (Debug)"
@@ -165,23 +229,5 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 	var/atom/movable/screen/minimap_display/display = new(null, hud, minimap)
 	hud.add_screen_object(display, HUD_TAC_MINIMAP, HUD_GROUP_STATIC, update_screen = TRUE)
+	display.add_blip("locator", "locator", mob.x, mob.y)
 	to_chat(src, span_notice("Minimap shown for z=[mob.z]."))
-
-/client/verb/debug_generate_maps()
-	set name = "MINIMAP GENERATION TEST (Debug)"
-	set desc = "meow meow meow"
-	set category = "mrrrp mrrrp mrrrow"
-
-	GLOB.minimaps.Cut()
-
-	rustg_time_reset("meow_all")
-	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		var/datum/minimap/z_minimap = new
-		GLOB.minimaps[z] = z_minimap
-		rustg_time_reset("meow")
-		z_minimap.load_z(z)
-		var/time_ms = rustg_time_milliseconds("meow")
-		message_admins("Minimap generated for Z [z] in [time_ms] ms")
-		fcopy(z_minimap.base_map, "tmp/minimaps/minimap_[SSmapping.current_map.map_name].[z].png")
-	var/total_ms = rustg_time_milliseconds("meow_all")
-	message_admins("total generation time of [total_ms] ms")
