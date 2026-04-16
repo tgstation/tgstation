@@ -905,7 +905,7 @@ generate/load female uniform sprites matching all previously decided variables
 	return .
 
 /// Updates eye sprites if relevant
-/mob/living/proc/update_eyes()
+/mob/living/proc/update_eyes(refresh = TRUE)
 	return
 
 /mob/living/carbon/human/update_eyes(refresh = TRUE)
