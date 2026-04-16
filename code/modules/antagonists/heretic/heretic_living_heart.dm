@@ -61,6 +61,9 @@
 
 	replacement.TakeComponent(src)
 
+
+#define TRACK_TARGET_HERETIC_CHECK "Nearby heretics"
+
 /**
  * The action associated with the living heart.
  * Allows a heretic to track sacrifice targets.
@@ -109,11 +112,6 @@
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	var/datum/heretic_knowledge/sac_knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
 
-	if(!LAZYLEN(heretic_datum.sac_targets))
-		owner.balloon_alert(owner, "no targets, visit a rune!")
-		StartCooldown(1 SECONDS)
-		return TRUE
-
 	// Holds a list of `name = image` used to display the radial menu when you left click the living heart
 	var/list/choosable_targets = list()
 	// Holds a list of 'name = atom/thing` used to check if our thing still exists after we've made our selection
@@ -139,9 +137,17 @@
 		choosable_targets[blade.name] = image(icon = blade.icon, icon_state = blade.icon_state)
 		possible_tracked_atoms[blade.name] = blade
 
+	if(heretic_datum.is_tree_limited())
+		choosable_targets[TRACK_TARGET_HERETIC_CHECK] = image(icon = 'icons/mob/actions/actions_ecult.dmi', icon_state = "mansus_grasp") // No entry in possible_tracked_atoms, because we're pre-empting checks for it because we don't have an atom.
+
 	for(var/mob/living/carbon/human/sac_target as anything in heretic_datum.sac_targets)
 		choosable_targets[sac_target.real_name] = heretic_datum.sac_targets[sac_target]
 		possible_tracked_atoms[sac_target.real_name] = sac_target
+
+	if(!choosable_targets.len)
+		owner.balloon_alert(owner, "no targets, visit a rune!")
+		StartCooldown(1 SECONDS)
+		return TRUE
 
 	// If we don't have a last tracked name, open a radial to set one.
 	// If we DO have a last tracked name, we skip the radial if they right click the action.
@@ -161,6 +167,11 @@
 	// If our last tracked name is still null, skip the trigger
 	if(isnull(last_tracked_name))
 		return FALSE
+
+	if(last_tracked_name == TRACK_TARGET_HERETIC_CHECK)
+		owner.balloon_alert(owner, get_heretic_ping_message())
+		StartCooldown()
+		return TRUE
 
 	var/atom/tracked_thing = possible_tracked_atoms[last_tracked_name]
 	if(QDELETED(tracked_thing))
@@ -258,6 +269,35 @@
 			balloon_message = "they're dead, " + balloon_message
 
 	return balloon_message
+
+/// Gets the message for checking for the nearest heretic
+/datum/action/cooldown/track_target/proc/get_heretic_ping_message()
+	var/list/all_heretics = get_antag_minds(/datum/antagonist/heretic)
+	var/closest_dist = 500
+	for(var/datum/mind/heretic_mind in all_heretics)
+		var/mob/living/heretic = heretic_mind.current
+		if(!heretic || heretic.stat == DEAD || heretic == owner)
+			continue
+		if(heretic.z != owner.z)
+			if(!is_station_level(heretic.z) || !is_station_level(owner.z))
+				continue
+		var/dist = get_dist(heretic, owner)
+		if(dist < closest_dist)
+			closest_dist = dist
+	if(closest_dist == 500)
+		return "No other aspirants are anywhere close!"
+	closest_dist += rand(-25, 25) // Fairly unreliable as an exact check, but gives a general idea..
+	switch(closest_dist)
+		if(-25 to 15)
+			return "Another aspirant is very close!"
+		if(16 to 31)
+			return "Another aspirant is somewhere nearby!"
+		if(32 to 127)
+			return "Another aspirant is quite far!"
+		else
+			return "Another aspirant is very far away!"
+
+#undef TRACK_TARGET_HERETIC_CHECK
 
 /atom/movable/screen/navigate_arrow
 	icon = 'icons/effects/96x96.dmi'

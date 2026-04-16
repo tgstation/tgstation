@@ -959,6 +959,10 @@
 		stack_trace("[type] purchase_knowledge was given a path that doesn't exist in the heretic [category] knowledge list! (Got: [knowledge_type])")
 		return FALSE
 
+	if(category == HERETIC_KNOWLEDGE_TREE && is_tree_limited())
+		to_chat(owner.current, span_warning("There are too many competitors vying for the Hour's attention. Their ranks must be culled before you can gain further power."))
+		return FALSE
+
 	var/cost = knowledge_data[HKT_COST]
 	if(cost > knowledge_points)
 		return FALSE
@@ -1090,6 +1094,25 @@
 		return HERETIC_NO_LIVING_HEART
 
 	return HERETIC_HAS_LIVING_HEART
+
+/// Whether the heretic is prevented from researching more knowledge due to too many heretics remaining alive.
+/datum/antagonist/heretic/proc/is_tree_limited()
+	var/tree_knowledges = 0
+	for(var/knowledge_path in researched_knowledge)
+		if(researched_knowledge[knowledge_path][HKT_CATEGORY] == HERETIC_KNOWLEDGE_TREE)
+			tree_knowledges++
+	if(tree_knowledges > 2 || tree_knowledges > 6) // The limiting starts after armor, for no reason other than to make it easier to find and kill each other.
+		var/list/datum/mind/heretic_minds = get_antag_minds(/datum/antagonist/heretic)
+		heretic_minds.Remove(owner)
+		for(var/datum/mind/heretic_mind in heretic_minds)
+			var/mob/living/heretic_mob = heretic_mind.current
+			if(!heretic_mob || heretic_mob.stat == DEAD/* || !heretic_mob.client*/)
+				heretic_minds.Remove(heretic_mind)
+				continue
+
+		if(heretic_minds.len > -tree_knowledges + 6) // 3 or less for knowledge 4, 2 or less for knowledge 5, 1 or less for knowledge 6, and 0 for ascension.
+			return TRUE
+	return FALSE
 
 /// Heretic's minor sacrifice objective. "Minor sacrifices" includes anyone.
 /datum/objective/minor_sacrifice

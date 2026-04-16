@@ -228,6 +228,13 @@ const GuideSection = () => {
           harder sacrifices.
         </Stack.Item>
         <Stack.Item>
+          - There may be other aspirants to the power of the Mansus on the
+          station. You will be limited in your research by their presence, and
+          they by yours. You you will be{' '}
+          <span style={hereticRed}>unable to ascend</span> until they are all
+          dead.
+        </Stack.Item>
+        <Stack.Item>
           - Accomplish all of your objectives to be able to learn the{' '}
           <span style={hereticYellow}>final ritual</span>. Complete the ritual
           to become all powerful!
