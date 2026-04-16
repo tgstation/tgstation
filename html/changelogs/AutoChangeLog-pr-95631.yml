@@ -1,7 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Style meters now award you for clearing vents based on vent richness and difficulty"
-  - balance: "Megafauna kills and vent taps grant a permanent 10% / 5/10/15% (based on difficulty) permanent style boost respectively"
-  - rscdel: "Style meters no longer grant points for mining empty rocks"
-  - qol: "Style meter actions now list top-to-bottom rather than bottom-to-top"
