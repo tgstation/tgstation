@@ -100,10 +100,7 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	. = ..()
 	if(isnull(minimap))
 		CRASH("[type] created without a minimap reference!")
-	icon = minimap.base_map
-	screen_loc = "1:[minimap.base_map.Width() / 2],1:[minimap.base_map.Height() / 2]"
-	src.minimap = minimap
-
+	set_minimap(minimap)
 	screentip = new
 	vis_contents += screentip
 
@@ -135,6 +132,13 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 /atom/movable/screen/minimap_display/MouseExited(location, control, params)
 	screentip.maptext = ""
+
+/atom/movable/screen/minimap_display/proc/set_minimap(datum/minimap/minimap)
+	icon = minimap.base_map
+	screen_loc = "1:[minimap.base_map.Width() / 2],1:[minimap.base_map.Height() / 2]"
+	src.minimap = minimap
+	// reset screentip if it exists
+	screentip?.maptext = ""
 
 /atom/movable/screen/minimap_display/proc/add_blip(name, icon_state, x, y, large = FALSE)
 	if(blips[name])
