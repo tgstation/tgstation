@@ -330,5 +330,18 @@
       is now a permanent moodlet.
   - rscadd: Losing large amounts of money from the CRAB-17 will give you a negative
       moodlet, which overwrites jackpot winnings.
+  Melbert:
+  - rscadd: If a playerless body (DNR'd or otherwise) is raised as a zombie, ghosts
+      are given the ability to take control of it
+  - rscadd: If a body that never had a player control it is risen as a zombie, they
+      are risen as a weaker "mindless zombie" (moves and heals slower, deals less
+      damage, infection is not guaranteed on hit)
+  SmArtKar:
+  - rscadd: Style meters now award you for clearing vents based on vent richness and
+      difficulty
+  - balance: Megafauna kills and vent taps grant a permanent 10% / 5/10/15% (based
+      on difficulty) permanent style boost respectively
+  - rscdel: Style meters no longer grant points for mining empty rocks
+  - qol: Style meter actions now list top-to-bottom rather than bottom-to-top
   timothymtorres:
   - server: Optimized CI workflow to skip map-specific linters when no maps are modified.

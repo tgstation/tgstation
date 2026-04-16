@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "If a playerless body (DNR'd or otherwise) is raised as a zombie, ghosts are given the ability to take control of it"
-  - rscadd: "If a body that never had a player control it is risen as a zombie, they are risen as a weaker \"mindless zombie\" (moves and heals slower, deals less damage, infection is not guaranteed on hit)"
