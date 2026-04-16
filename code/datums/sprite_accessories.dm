@@ -1257,6 +1257,8 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	/// Color pallete for static colored underwear, like hearts.
 	/// Used so greyscale copies can have the same palette.
 	var/greyscale_colors = "#FFFFFF#FFFFFF#FFFFFF"
+	/// The layer this sprite accessory should render on
+	var/layer = -BODY_LAYER
 
 /**
  * Generate an appearance from this clothing datum
@@ -1268,6 +1270,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/clothing/proc/make_appearance(color = COLOR_WHITE, physique = MALE, bodyshape = BODYSHAPE_HUMANOID)
 	var/static/list/cached_icons = list()
 	var/use_female = physique == FEMALE
+	var/female_sprite_flags = FEMALE_UNIFORM_FULL
 	var/use_digi = digi_icon_state && (bodyshape & BODYSHAPE_DIGITIGRADE)
 
 	var/key = "[icon_state]-[greyscale_config || "ng"]-[use_female]-[use_digi]-[greyscale_colors]"
@@ -1278,7 +1281,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	else if(greyscale_config || use_female || use_digi) // icon ops ahead
 		var/icon/created = icon(greyscale_config ? SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors) : icon, icon_state)
 		if(use_female)
-			created = wear_female_version(icon_state, icon, FEMALE_UNIFORM_FULL)
+			created = wear_female_version(icon_state, icon, female_sprite_flags)
 		if(use_digi)
 			var/icon/replacement = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade_underwear, greyscale_colors), digi_icon_state)
 			created = replace_icon_legs(created, replacement)
@@ -1289,7 +1292,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	else // no caching necessary
 		result = mutable_appearance(icon, icon_state)
 
-	result.layer = -BODY_LAYER
+	result.layer = layer
 	result.color = use_static ? null : color
 
 	return result
