@@ -293,8 +293,12 @@
 	if(!eye_icon_state || isnull(my_head))
 		return list()
 
+	var/eye_dir = my_head.owner ? null : SOUTH
 	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -EYES_LAYER)
 	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -EYES_LAYER)
+	eye_left.dir = eye_dir
+	eye_right.dir = eye_dir
+
 	var/list/overlays = list(eye_left, eye_right)
 
 	if(my_head.owner && !(my_head.owner.obscured_slots & HIDEEYES))

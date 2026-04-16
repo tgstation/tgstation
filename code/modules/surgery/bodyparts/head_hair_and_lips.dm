@@ -1,26 +1,3 @@
-/// Part of `update_limb()`, basically does all the head specific icon stuff.
-/obj/item/bodypart/head/proc/update_head_visual_state(dropping_limb, is_creating)
-	// Re-assess what hair masks to apply
-	LAZYNULL(hair_masks)
-	for(var/obj/item/worn_item in owner?.get_equipped_items(INCLUDE_ABSTRACT))
-		if(worn_item.hair_mask)
-			LAZYSET(hair_masks, worn_item.hair_mask, TRUE)
-
-	// Update if hair is hidden (hair is hidden if husked or obscured)
-	hair_hidden = is_husked || !!(owner?.obscured_slots & HIDEHAIR)
-	facial_hair_hidden = is_husked || !!(owner?.obscured_slots & HIDEFACIALHAIR)
-
-	var/has_brain = !!(locate(/obj/item/organ/brain) in src)
-	var/has_eyes = !!(locate(/obj/item/organ/eyes) in src)
-
-	// Update debrained / eyeless stasus
-	show_debrained = !hair_hidden && !has_brain && (isnull(owner) || !HAS_TRAIT(owner, TRAIT_NO_DEBRAIN_OVERLAY)) && !!(head_flags & HEAD_DEBRAIN)
-	show_eyeless = !has_eyes && !!(head_flags & HEAD_EYEHOLES)
-
-	if(!is_creating || !owner)
-		return
-	copy_appearance_from(owner)
-
 /obj/item/bodypart/head/proc/copy_appearance_from(mob/living/carbon/human/target, overwrite_eyes = FALSE)
 	var/datum/species/target_species = target.dna.species
 
@@ -57,7 +34,7 @@
 /// Returns a list of all overlays associated with the lips
 /obj/item/bodypart/head/proc/get_lips_overlays(dropped)
 	. = list()
-	if(facial_hair_hidden || !lip_style || !(head_flags & HEAD_LIPS))
+	if(!lip_style || is_husked || is_invisible || (owner?.obscured_slots & HIDEFACIALHAIR) || !(head_flags & HEAD_LIPS))
 		return .
 
 	var/image/lip_overlay = image('icons/mob/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER, dir = (dropped ? SOUTH : null))
@@ -69,20 +46,24 @@
 /// Returns a list of all hair/facial hair related overlays, or alternatively the debrained overlay if applicable
 /obj/item/bodypart/head/proc/get_hair_overlays(dropped)
 	. = list()
-	if(show_debrained)
-		. += get_debrain_overlay(dropped)
+	var/hair_hidden = is_husked || is_invisible || (owner?.obscured_slots & HIDEHAIR)
+	var/facial_hair_hidden = is_husked || is_invisible || (owner?.obscured_slots & HIDEFACIALHAIR)
+
+	var/obj/item/organ/brain/brain = locate() in src
+	if(QDELETED(brain) && !hair_hidden)
+		if(head_flags & HEAD_DEBRAIN)
+			. += get_debrain_overlay(dropped)
 	else
-		. += get_base_facial_hair_overlays(dropped)
-		. += get_base_hair_overlays(dropped)
+		if(!facial_hair_hidden && (head_flags & HEAD_FACIAL_HAIR))
+			. += get_base_facial_hair_overlays(dropped)
+		if(!hair_hidden && (head_flags & HEAD_HAIR))
+			. += get_base_hair_overlays(dropped)
 	return .
 
 /// Used in constructing the hair overlays - handles just facial hair
 /obj/item/bodypart/head/proc/get_base_facial_hair_overlays(dropped)
 	PRIVATE_PROC(TRUE)
 	. = list()
-	if(facial_hair_hidden || !facial_hairstyle || !(head_flags & HEAD_FACIAL_HAIR))
-		return .
-
 	var/datum/sprite_accessory/facial_hair/sprite_accessory = SSaccessories.facial_hairstyles_list[facial_hairstyle]
 	if(!sprite_accessory || sprite_accessory.icon_state == SPRITE_ACCESSORY_NONE)
 		return .
@@ -118,9 +99,6 @@
 /obj/item/bodypart/head/proc/get_base_hair_overlays(dropped)
 	PRIVATE_PROC(TRUE)
 	. = list()
-	if(hair_hidden || !hairstyle || !(head_flags & HEAD_HAIR))
-		return .
-
 	var/datum/sprite_accessory/hair/hair_sprite_accessory = SSaccessories.hairstyles_list[hairstyle]
 	if(!hair_sprite_accessory || hair_sprite_accessory.icon_state == SPRITE_ACCESSORY_NONE)
 		return .
@@ -130,14 +108,14 @@
 
 	var/list/all_hair_overlays = list()
 	// Hair masks
-	var/icon/base_icon = icon(hair_sprite_accessory.getCachedIcon(hair_masks))
+	var/icon/base_icon = icon(hair_sprite_accessory.getCachedIcon(owner?.hair_masks))
 	// Overlay
 	all_hair_overlays += image(base_icon, layer = -HAIR_LAYER, dir = image_dir)
 	// If we have any hair appendages (ponytails, etc.) sticking out on a particular side,
 	// we need to add an additional hair layer to go above hats/helmets for the sides they stick out on
 	if(LAZYLEN(hair_sprite_accessory.hair_appendages_outer))
 		var/strictly_masked_zones = NONE
-		for(var/datum/hair_mask/mask as anything in hair_masks)
+		for(var/datum/hair_mask/mask as anything in owner?.hair_masks)
 			strictly_masked_zones |= mask.strict_coverage_zones
 		for(var/appendage_icon_state in hair_sprite_accessory.hair_appendages_outer)
 			var/appendage_zone = hair_sprite_accessory.hair_appendages_outer[appendage_icon_state]
@@ -180,14 +158,11 @@
 /// Returns a list of all eye related overlays, or an eyeless overlay if applicable
 /obj/item/bodypart/head/proc/get_eye_overlays(dropped)
 	. = list()
-	if(show_eyeless)
-		. += get_eyeless_overlay(dropped)
-		return .
 
 	var/obj/item/organ/eyes/eyes = locate() in src
-	// This can happen due to insertion order shenanigans so it's best to just leave it
 	if(QDELETED(eyes))
-		. += get_eyeless_overlay(dropped)
+		if(!(head_flags & HEAD_EYEHOLES))
+			. += get_eyeless_overlay(dropped)
 		return .
 
 	if(head_flags & HEAD_EYESPRITES)

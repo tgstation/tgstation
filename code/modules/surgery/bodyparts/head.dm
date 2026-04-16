@@ -44,10 +44,6 @@
 	var/hair_color = COLOR_BLACK
 	/// Hair alpha
 	var/hair_alpha = 255
-	/// Is the hair currently hidden by something?
-	var/hair_hidden = FALSE
-	/// Lazy initialized hashset of all hair mask types that should be applied
-	var/list/hair_masks
 
 	///Facial hair style
 	var/facial_hairstyle = "Shaved"
@@ -55,8 +51,6 @@
 	var/facial_hair_color = COLOR_BLACK
 	///Facial hair alpha
 	var/facial_hair_alpha = 255
-	///Is the facial hair currently hidden by something?
-	var/facial_hair_hidden = FALSE
 
 	/// Gradient styles, if any
 	var/list/gradient_styles
@@ -89,15 +83,8 @@
 	/// Offset to apply to overlays placed on the face
 	var/datum/worn_feature_offset/worn_face_offset
 
-	VAR_PROTECTED
-		/// Draw this head as "debrained"
-		show_debrained = FALSE
-
-		/// Draw this head as missing eyes
-		show_eyeless = FALSE
-
-		/// Can this head be dismembered normally?
-		can_dismember = FALSE
+	/// Can this head be dismembered normally?
+	VAR_PROTECTED/can_dismember = FALSE
 
 /obj/item/bodypart/head/Initialize(mapload)
 	. = ..()
@@ -181,13 +168,15 @@
 
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
-	if(!isnull(owner))
+	if(isnull(owner))
+		return
+	if(is_husked)
+		ADD_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
+	if(is_creating)
 		real_name = owner.real_name
-		if(is_husked)
-			ADD_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
-		else
-			REMOVE_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
-	update_head_visual_state(dropping_limb, is_creating)
+		copy_appearance_from(owner)
 
 // Ensures putting organs in and removing organs from our head always updates the limb
 /obj/item/bodypart/head/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)

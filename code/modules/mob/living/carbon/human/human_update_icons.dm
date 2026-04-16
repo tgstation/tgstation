@@ -860,10 +860,6 @@ generate/load female uniform sprites matching all previously decided variables
 					break
 
 /mob/living/carbon/human/update_body(is_creating = FALSE)
-	// for legacy support, updating body will also update eyes and hair together
-	update_eyes()
-	update_hair()
-
 	remove_overlay(BODY_LAYER)
 
 	var/list/body_overlays = list()
@@ -873,7 +869,7 @@ generate/load female uniform sprites matching all previously decided variables
 		overlays_standing[BODY_LAYER] = body_overlays
 		apply_overlay(BODY_LAYER)
 
-	// parent call will update the actual body part sprites
+	// parent call will update the actual bodyparts
 	return ..()
 
 /// Returns a list of all underclothing overlays to be applied to the mob
@@ -911,10 +907,8 @@ generate/load female uniform sprites matching all previously decided variables
 /mob/living/carbon/human/update_eyes(refresh = TRUE)
 	remove_overlay(EYES_LAYER)
 
-	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
-		return
 	var/obj/item/bodypart/head/noggin = get_bodypart(BODY_ZONE_HEAD)
-	if(isnull(noggin))
+	if(isnull(noggin) || noggin.is_husked || noggin.is_invisible)
 		return
 
 	if(refresh)

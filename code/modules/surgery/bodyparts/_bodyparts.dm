@@ -1170,7 +1170,7 @@
 	update_draw_color()
 
 	if(!is_creating || !owner)
-		return
+		return FALSE
 
 	// There should technically to be an ishuman(owner) check here, but it is absent because no basetype carbons use bodyparts
 	// No, xenos don't actually use bodyparts. Don't ask.
