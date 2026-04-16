@@ -334,9 +334,9 @@
 
 	switch(other_unbuckle)
 		if(CANNOT_FORCE_UNBUCKLE)
-			to_chat(unbuckler, span_warning("You can't demount [source]'s riders!"))
+			to_chat(unbuckler, span_warning("You can't dismount [source]'s rider[length(source.buckled_mobs) == 1 ? "" : "s"]!"))
 		if(CAN_DISARM_UNBUCKLE)
-			to_chat(unbuckler, span_warning("You can't demount [source]'s riders, but you may be able to shove them off!"))
+			parent_disarmed(source, unbuckler)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
