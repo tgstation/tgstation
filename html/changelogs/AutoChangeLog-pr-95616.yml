@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscadd: "Winning the slot machine jackpot now gives a memory."
-  - balance: "Winning the slot machine jackpot is a +4 moodlet instead of +6, but it is now a permanent moodlet."
-  - rscadd: "Losing large amounts of money from the CRAB-17 will give you a negative moodlet, which overwrites jackpot winnings."
