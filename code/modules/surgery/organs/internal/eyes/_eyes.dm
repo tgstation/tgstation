@@ -314,9 +314,9 @@
 		left_scar.color = my_head.draw_color
 		overlays += left_scar
 
-	if(head?.worn_face_offset)
+	if(my_head.worn_face_offset)
 		for (var/mutable_appearance/overlay as anything in overlays)
-			head.worn_face_offset.apply_offset(overlay)
+			my_head.worn_face_offset.apply_offset(overlay)
 
 	return overlays
 
