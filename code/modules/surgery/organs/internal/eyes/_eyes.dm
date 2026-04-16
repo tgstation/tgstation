@@ -303,7 +303,7 @@
 	if(my_head.head_flags & HEAD_EYECOLOR)
 		eye_right.color = eye_color_left || my_head.owner?.get_right_eye_color()
 		eye_left.color = eye_color_right || my_head.owner?.get_left_eye_color()
-		var/list/eyelids = setup_eyelids(eye_left, eye_right, my_head)
+		var/list/eyelids = get_eyelid_overlays(eye_left, eye_right, my_head)
 		if (LAZYLEN(eyelids))
 			overlays += eyelids
 
@@ -442,7 +442,7 @@
 #define BLINK_LOOPS 5
 
 /// Modifies eye overlays to also act as eyelids, both for blinking and for when you're knocked out cold
-/obj/item/organ/eyes/proc/setup_eyelids(mutable_appearance/eye_left, mutable_appearance/eye_right, obj/item/bodypart/head/my_head)
+/obj/item/organ/eyes/proc/get_eyelid_overlays(mutable_appearance/eye_left, mutable_appearance/eye_right, obj/item/bodypart/head/my_head)
 	var/mob/living/carbon/human/parent = my_head.owner
 	// Robotic eyes or colorless heads don't get the privelege of having eyelids
 	if (isnull(parent) || IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || HAS_TRAIT(parent, TRAIT_NO_EYELIDS))

@@ -184,9 +184,10 @@
 		. += get_eyeless_overlay(dropped)
 		return .
 
+	// This can happen due to insertion order shenanigans so it's best to just leave it
 	var/obj/item/organ/eyes/eyes = locate() in src
-	if(isnull(eyes))
-		// This can happen due to insertion order shenanigans so it's best to just leave it
+	if(QDELETED(eyes))
+		. += get_eyeless_overlay(dropped)
 		return .
 
 	if(head_flags & HEAD_EYESPRITES)
