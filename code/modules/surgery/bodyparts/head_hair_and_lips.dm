@@ -161,7 +161,7 @@
 
 	var/obj/item/organ/eyes/eyes = locate() in src
 	if(QDELETED(eyes))
-		if(!(head_flags & HEAD_EYEHOLES))
+		if(head_flags & HEAD_EYEHOLES)
 			. += get_eyeless_overlay(dropped)
 		return .
 
