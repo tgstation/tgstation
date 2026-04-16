@@ -305,8 +305,8 @@
 		overlays += get_emissive_overlays(eye_left, eye_right, my_head)
 
 	if(my_head.head_flags & HEAD_EYECOLOR)
-		eye_right.color = eye_color_left || my_head.owner?.get_right_eye_color()
-		eye_left.color = eye_color_right || my_head.owner?.get_left_eye_color()
+		eye_right.color = eye_color_right || my_head.owner?.get_right_eye_color()
+		eye_left.color = eye_color_left || my_head.owner?.get_left_eye_color()
 		var/list/eyelids = get_eyelid_overlays(eye_left, eye_right, my_head)
 		if (LAZYLEN(eyelids))
 			overlays += eyelids
