@@ -1258,7 +1258,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	/// Used so greyscale copies can have the same palette.
 	var/greyscale_colors = "#FFFFFF#FFFFFF#FFFFFF"
 	/// The layer this sprite accessory should render on
-	var/layer = -BODY_LAYER
+	var/layer = BODY_LAYER
 
 /**
  * Generate an appearance from this clothing datum
@@ -1292,7 +1292,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	else // no caching necessary
 		result = mutable_appearance(icon, icon_state)
 
-	result.layer = layer
+	result.layer = -layer
 	result.color = use_static ? null : color
 
 	return result
