@@ -850,10 +850,8 @@
 /// Returns the raw contents of the input as html, with **ZERO SANITIZATION**
 /datum/paper_input/proc/to_raw_html()
 	var/final = raw_text
-	if(font)
-		final = "<font face='[font]'>[final]</font>"
-	if(colour)
-		final = "<font color='[colour]'>[final]</font>"
+	if(font || colour)
+		final = "<font[" color='[colour]'"][" face='[font]'"]>[final]</font>"
 	if(bold)
 		final = "<b>[final]</b>"
 	return final
