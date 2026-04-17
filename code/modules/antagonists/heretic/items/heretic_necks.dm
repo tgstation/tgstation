@@ -6,7 +6,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
 	/// Cooldown between attempts to recharge spells
-	var/cooldown_period = 5 MINUTES
+	var/cooldown_period = 3 MINUTES
 	COOLDOWN_DECLARE(spell_recharge_cd)
 
 /obj/item/clothing/neck/heretic_focus/equipped(mob/living/user, slot)
@@ -39,7 +39,7 @@
 	desc = "A blood-red focusing glass that provides a link to the world beyond, and worse. \
 		Its eye is constantly twitching and gazing in all directions. It almost seems to be silently screaming..."
 	icon_state = "crimson_medallion"
-	cooldown_period = 3 MINUTES
+	cooldown_period = 1 MINUTES
 	/// The aura healing component. Used to delete it when taken off.
 	var/datum/component/component
 	/// If active or not, used to add and remove its cult and heretic buffs.

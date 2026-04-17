@@ -115,7 +115,7 @@
 	name = "Codex Cicatrix"
 	desc = "Author the Codex Cicatrix.<br>\
 		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed.<br>\
-		It can also be used to draw and remove transmutation runes easier, and as a spell focus in a pinch."
+		It can also be used to draw and remove transmutation runes easier, and can be opened to restore charges to your Mansus Grasp."
 	transmute_text = "Transmute a book, any pen, and your pick from any carcass (animal or human), leather"
 	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
 		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
