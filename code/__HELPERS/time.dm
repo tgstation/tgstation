@@ -6,7 +6,7 @@
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
 /// Returns timestamp since the round started, AKA Pay Time (PT)
-/proc/round_timestamp(format = "hh:mm:ss", wtime = world.time - SSticker.round_start_time)
+/proc/round_timestamp(format = "hh:mm:ss", wtime = STATION_TIME_PASSED())
 	return time2text(wtime, format, NO_TIMEZONE)
 
 ///returns the current IC station time in a world.time format
@@ -126,8 +126,8 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
  * the format arg is the format passed down to time2text() (e.g. "hh:mm" is hours and minutes but not seconds).
  * the timezone is the time value offset from the local time. It's to be applied outside time2text() to get the AM/PM right.
  */
-/proc/time_to_twelve_hour(time, format = "hh:mm:ss", timezone = TIMEZONE_UTC)
-	time = MODULUS(time + (timezone * (1 HOURS)), 24 HOURS)
+/proc/time_to_twelve_hour(format = "hh:mm:ss", time = STATION_TIME_PASSED())
+	time = MODULUS(time, 24 HOURS)
 	var/am_pm = "AM"
 	if(time > 12 HOURS)
 		am_pm = "PM"
@@ -135,4 +135,4 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 			time -= 12 HOURS // e.g. 4:16 PM but not 00:42 PM
 	else if (time < 1 HOURS)
 		time += 12 HOURS // e.g. 12.23 AM
-	return "[time2text(time, format)] [am_pm]"
+	return "[round_timestamp(format, time)] [am_pm]"

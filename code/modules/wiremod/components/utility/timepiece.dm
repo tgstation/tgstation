@@ -48,17 +48,17 @@
 		if(COMP_TIMEPIECE_TWENTYFOUR_HOUR)
 			time = round_timestamp()
 		if(COMP_TIMEPIECE_TWELVE_HOUR)
-			time = time_to_twelve_hour(station_time())
+			time = time_to_twelve_hour()
 
 	text_output.set_output(time)
 
 	switch(time_unit.value)
 		if(COMP_TIMEPIECE_HOURS)
-			time = round(station_time() / (1 HOURS))
+			time = round_timestamp(format = "hh")
 		if(COMP_TIMEPIECE_MINUTES)
-			time = round(station_time() / (1 MINUTES))
+			time = round_timestamp(format = "mm")
 		if(COMP_TIMEPIECE_SECONDS)
-			time = round(station_time() / (1 SECONDS))
+			time = round_timestamp(format = "ss")
 
 	num_output.set_output(time)
 
