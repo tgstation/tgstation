@@ -9,20 +9,6 @@
 /proc/round_timestamp(format = "hh:mm:ss", wtime = STATION_TIME_PASSED())
 	return time2text(wtime, format, NO_TIMEZONE)
 
-///returns the current IC station time in a world.time format
-/proc/station_time(wtime = world.time)
-	return (((wtime - SSticker.round_start_time)) + SSticker.gametime_offset) % (24 HOURS)
-
-/proc/station_time_debug(force_set)
-	if(isnum(force_set))
-		SSticker.gametime_offset = force_set
-		return
-	SSticker.gametime_offset = rand(0, 24 HOURS) //hours in day * minutes in hour * seconds in minute * deciseconds in second
-	if(prob(50))
-		SSticker.gametime_offset = FLOOR(SSticker.gametime_offset, 1 HOURS)
-	else
-		SSticker.gametime_offset = CEILING(SSticker.gametime_offset, 1 HOURS)
-
 ///returns timestamp in a sql and a not-quite-compliant ISO 8601 friendly format. Do not use for SQL, use NOW() instead
 /proc/ISOtime(timevar)
 	return time2text(timevar || world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)

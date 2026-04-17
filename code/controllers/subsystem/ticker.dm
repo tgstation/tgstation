@@ -38,8 +38,6 @@ SUBSYSTEM_DEF(ticker)
 	var/timeLeft //pregame timer
 	var/start_at
 
-	var/gametime_offset = 432000 //Deciseconds to add to world.time for station time.
-
 	/// Num of players, used for pregame stats on statpanel
 	var/totalPlayers = 0
 	/// Num of ready players, used for pregame stats on statpanel (only viewable by admins)
@@ -130,8 +128,6 @@ SUBSYSTEM_DEF(ticker)
 		GLOB.syndicate_code_response_regex = codeword_match
 
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * (1 SECONDS))
-
-	gametime_offset = world.timeofday + GLOB.timezoneOffset
 
 	return SS_INIT_SUCCESS
 
