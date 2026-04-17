@@ -1,0 +1,8 @@
+author: "GuffyWuffy"
+delete-after: True
+changes:
+  - rscadd: "Bunyips"
+  - rscadd: "Cauldron"
+  - rscadd: "White bricks"
+  - map: "Tisserand: new central northeast maint module"
+  - refactor: "move where skitterers are stored"
