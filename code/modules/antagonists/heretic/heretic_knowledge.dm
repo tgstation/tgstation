@@ -235,7 +235,7 @@
 	RegisterSignal(created_action_ref, COMSIG_QDELETING, PROC_REF(action_delete))
 	RegisterSignal(created_action_ref, COMSIG_SPELL_CAN_CAST_CHECK, PROC_REF(spell_check))
 
-	RegisterSignal(user, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(check_charges))
+	RegisterSignals(user, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(check_charges))
 	if(istype(created_action_ref, /datum/action/cooldown/spell/pointed/projectile))
 		RegisterSignal(user, COMSIG_MOB_SPELL_PROJECTILE, PROC_REF(deduct_charge))
 	else if(istype(created_action_ref, /datum/action/cooldown/spell/touch))
