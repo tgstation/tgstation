@@ -14,6 +14,7 @@
 	if(!(slot & ITEM_SLOT_NECK) || !IS_HERETIC(user))
 		return
 	START_PROCESSING(SSobj, src)
+	COOLDOWN_START(src, spell_recharge_cd, cooldown_period)
 
 /obj/item/clothing/neck/heretic_focus/dropped(mob/living/user)
 	. = ..()
