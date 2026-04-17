@@ -34,7 +34,6 @@ endmap
 
 map metastation
 	minplayers 25
-	#voteweight 0.5
 	votable
 	#feedbacklink https://www.youtube.com/watch?v=XG8b7WhANNA
 	#webmap_url https://webmap.affectedarc07.co.uk/maps/tgstation/metastation
@@ -53,6 +52,15 @@ endmap
 map wawastation
 	votable
 	minplayers 40
+endmap
+
+map kilostation
+	votable
+endmap
+
+map kilowattstation
+	votable
+	default
 endmap
 
 # Debug-only maps.
