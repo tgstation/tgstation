@@ -95,9 +95,10 @@
 
 	RegisterSignal(projection, COMSIG_QDELETING, PROC_REF(stop_projection))
 
-	owner.add_filter(id, 1, outline_filter(size = 0, color = "#aee2b296"))
+	owner.add_filter(id, 1, list("type" = "outline", "color" = "#aee2b2", "alpha" = 0, "size" = 2))
+	owner.update_filters()
 	var/filter = owner.get_filter(id)
-	animate(filter, size = 2, time = 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
+	animate(filter, alpha = 150, time = 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
 	animate(alpha = 0, time = 2 SECONDS, easing = SINE_EASING|EASE_OUT)
 
 /datum/status_effect/dream_projection/on_remove()
@@ -114,7 +115,7 @@
 	if(!QDELING(owner))
 		owner.adjust_drowsiness(10 SECONDS)
 		var/filter = owner.get_filter(id)
-		animate(filter, size = 0, time = 1 SECONDS, easing = SINE_EASING|EASE_OUT)
+		animate(filter, alpha = 0, time = 1 SECONDS, easing = SINE_EASING|EASE_OUT)
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/datum, remove_filter), id), 1 SECONDS) // delay the filter removal to let the transition finish
 
 	UnregisterSignal(projection, COMSIG_QDELETING)
@@ -156,7 +157,7 @@
 	. = ..()
 	var/datum/action/innate/stop_projection/exit_action = new(src)
 	exit_action.Grant(src)
-	overlay_fullscreen("curse", /atom/movable/screen/fullscreen/curse, 1) // todo
+	overlay_fullscreen("curse", /atom/movable/screen/fullscreen/curse, 1) // todo something more fitting?
 
 /mob/eye/imaginary_friend/dream_projection/Login()
 	. = ..()

@@ -53,7 +53,7 @@
 
 	if(!QDELING(owner))
 		var/filter = owner.get_filter(id)
-		animate(filter, size = 0, time = 1 SECONDS, easing = SINE_EASING|EASE_OUT)
+		animate(filter, alpha = 0, time = 1 SECONDS, easing = SINE_EASING|EASE_OUT)
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/datum, remove_filter), id), 1 SECONDS) // delay the filter removal to let the transition finish
 
 /datum/status_effect/dream_protection/proc/check_protection()
@@ -61,17 +61,17 @@
 
 	if(owner.stat == UNCONSCIOUS || HAS_TRAIT(owner, TRAIT_DREAMING))
 		if(!has_filter)
-			owner.add_filter(id, 2, outline_filter(size = 0, color = "#bde0dc96")) // melbert todo doesn't work
+			owner.add_filter(id, 2, list("type" = "outline", "color" = "#bde0dc", "alpha" = 0, "size" = 2))
 			var/filter = owner.get_filter(id)
-			animate(filter, size = 2, time = 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
-			animate(size = 0, time = 2 SECONDS, easing = SINE_EASING|EASE_OUT)
+			animate(filter, alpha = 150, time = 2 SECONDS, easing = SINE_EASING|EASE_IN, loop = -1)
+			animate(alpha = 0, time = 2 SECONDS, easing = SINE_EASING|EASE_OUT)
 			has_filter = TRUE
 		ADD_TRAIT(owner, TRAIT_HOLY, TRAIT_STATUS_EFFECT(id))
 
 	else
 		if(has_filter)
 			var/filter = owner.get_filter(id)
-			animate(filter, size = 0, time = 1 SECONDS, easing = SINE_EASING|EASE_OUT)
+			animate(filter, alpha = 0, time = 1 SECONDS, easing = SINE_EASING|EASE_OUT)
 			has_filter = FALSE
 		REMOVE_TRAIT(owner, TRAIT_HOLY, TRAIT_STATUS_EFFECT(id))
 
