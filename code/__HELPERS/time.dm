@@ -1,6 +1,6 @@
 /// Returns UTC timestamp with the specifified format, with optionally deciseconds or optional IC time (year offset), AKA Nanotrasen Standard Time (NST)
-/proc/server_timestamp(format = "hh:mm:ss", show_ds, ic_time)
-	var/time_string = time2text(world.timeofday, format, TIMEZONE_UTC)
+/proc/server_timestamp(format = "hh:mm:ss", show_ds, ic_time, twelve_hour_clock)
+	var/time_string = twelve_hour_clock ? time_to_twelve_hour(format, world.timeofday, world.timezone) : time2text(world.timeofday, format, world.timezone)
 	if(ic_time && findtext(format, "YYYY")) //if we have a year, replace the year
 		time_string = replacetext_char(time_string, "[GLOB.year_integer]", CURRENT_STATION_YEAR)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
@@ -126,8 +126,8 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
  * the format arg is the format passed down to time2text() (e.g. "hh:mm" is hours and minutes but not seconds).
  * the timezone is the time value offset from the local time. It's to be applied outside time2text() to get the AM/PM right.
  */
-/proc/time_to_twelve_hour(format = "hh:mm:ss", time = STATION_TIME_PASSED())
-	time = MODULUS(time, 24 HOURS)
+/proc/time_to_twelve_hour(format = "hh:mm:ss", time = STATION_TIME_PASSED(), timezone = NO_TIMEZONE)
+	time = MODULUS(time + (timezone * (1 HOURS)), 24 HOURS)
 	var/am_pm = "AM"
 	if(time > 12 HOURS)
 		am_pm = "PM"
@@ -135,4 +135,4 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 			time -= 12 HOURS // e.g. 4:16 PM but not 00:42 PM
 	else if (time < 1 HOURS)
 		time += 12 HOURS // e.g. 12.23 AM
-	return "[round_timestamp(format, time)] [am_pm]"
+	return "[time2text(time, format, NO_TIMEZONE)] [am_pm]"

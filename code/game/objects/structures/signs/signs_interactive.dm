@@ -7,7 +7,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/clock, 32)
 
 /obj/structure/sign/clock/examine(mob/user)
 	. = ..()
-	. += span_info("The current NST (local) time is: [server_timestamp(ic_time = TRUE)].")
+	. += span_info("The current NST (local) time is: [server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour))].")
 	if(user.is_literate())
 		. += span_info("That means it is currently [round_timestamp()] into the shift.")
 	. += span_info("The current TCT (galactic) time is: [time2text(world.realtime, "hh:mm:ss", 0)].")

@@ -4113,6 +4113,7 @@
 #include "code\modules\client\preferences\statpanel.dm"
 #include "code\modules\client\preferences\status_bar.dm"
 #include "code\modules\client\preferences\tgui.dm"
+#include "code\modules\client\preferences\time.dm"
 #include "code\modules\client\preferences\tooltips.dm"
 #include "code\modules\client\preferences\trans_prosthetic.dm"
 #include "code\modules\client\preferences\ui_style.dm"
