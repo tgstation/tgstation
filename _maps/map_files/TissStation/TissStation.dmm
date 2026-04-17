@@ -1433,6 +1433,9 @@
 /obj/effect/decal/cleanable/blood/trail_holder,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/virology)
+"avc" = (
+/turf/open/floor/engine/xenobio,
+/area/station/science/xenobiology)
 "avp" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/stripes/full,
@@ -12462,7 +12465,8 @@
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
 /obj/machinery/transport/tram_controller/tiss{
-	req_access = list("rd","tcoms")
+	req_one_access = list("rd","tcoms");
+	req_access = null
 	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/tram/sciai)
@@ -14582,7 +14586,8 @@
 /obj/structure/thermoplastic/light,
 /obj/machinery/door/airlock/tram{
 	transport_linked_id = "tiss_1";
-	req_access = list("rd","tcoms")
+	req_access = null;
+	req_one_access = list("rd","tcoms")
 	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/tram/sciai)
@@ -19185,7 +19190,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/west{
 	name = "Delivery Desk";
-	req_access = list("shipping", "mining")
+	req_one_access = list("shipping","mining")
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
@@ -19766,7 +19771,7 @@
 	c_tag = "Science - Xenobiology Test Chamber";
 	network = list("ss13","rd","xeno")
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "fXG" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -21787,7 +21792,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "gGb" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
@@ -27280,7 +27285,9 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
-/mob/living/basic/mothroach/bar,
+/mob/living/basic/mothroach/bar{
+	name = "Sleight"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "imU" = (
@@ -32623,7 +32630,7 @@
 /area/station/cargo/miningfoundry)
 "jNw" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "jNC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -32755,7 +32762,9 @@
 /obj/structure/curtain,
 /obj/machinery/shower/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/mob/living/basic/spaceman,
+/mob/living/basic/spaceman{
+	name = "Spaceman 12"
+	},
 /turf/open/floor/iron/freezer,
 /area/station/command/heads_quarters/captain/private)
 "jPN" = (
@@ -42068,7 +42077,7 @@
 /area/station/cargo/breakroom)
 "mBV" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "mCb" = (
 /obj/effect/turf_decal/tile/brown{
@@ -42546,7 +42555,7 @@
 /obj/machinery/sparker/directional/west{
 	id = "Xenobio"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "mKv" = (
 /turf/open/floor/iron/chapel{
@@ -42717,6 +42726,10 @@
 /obj/machinery/vending/cola/red,
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/security/prison)
+"mMA" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/engine/xenobio,
+/area/station/science/xenobiology)
 "mMD" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/table,
@@ -56162,7 +56175,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "qVM" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -67708,7 +67721,7 @@
 /area/station/commons/dorms)
 "uzH" = (
 /obj/structure/sign/poster/contraband/arc_slimes/directional/east,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "uzP" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
@@ -68924,7 +68937,7 @@
 /area/station/engineering/main)
 "uQz" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "uQC" = (
 /obj/structure/sign/picture_frame/showroom/one{
@@ -133668,11 +133681,11 @@ bNF
 tqc
 tqc
 nOY
-cEF
-cEF
+avc
+avc
 mKn
-cEF
-cEF
+avc
+avc
 nOY
 hpn
 bbo
@@ -133926,10 +133939,10 @@ tqc
 tqc
 nOY
 fXC
-cEF
-cEF
-cEF
-cEF
+avc
+avc
+avc
+avc
 leK
 leK
 itn
@@ -134182,10 +134195,10 @@ bNF
 tqc
 tqc
 nOY
-cEF
-cEF
-cEF
-cEF
+avc
+avc
+avc
+avc
 jNw
 orF
 but
@@ -134698,8 +134711,8 @@ tqc
 nOY
 gFR
 uzH
-abY
-cEF
+mMA
+avc
 uQz
 nOY
 lej

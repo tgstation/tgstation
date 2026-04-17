@@ -62,7 +62,7 @@ export const CATEGORY_ICONS_COOKING = {
   Cookie: 'cookie',
   Dessert: 'face-grin-beam-sweat',
   Frozen: 'ice-cream',
-  Io: 'kiwi-bird',
+  Io: 'earth-oceania',
   Italian: 'pizza-slice',
   Japanese: 'earth-asia',
   Lizard: 'dragon',

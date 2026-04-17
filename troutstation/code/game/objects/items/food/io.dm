@@ -204,7 +204,7 @@
 		/datum/reagent/consumable/vegemite = 10,
 	)
 	tastes = list("salt" = 1, "toast" = 1)
-	foodtypes = GRAIN|VEGETABLES
+	foodtypes = GRAIN|VEGETABLES|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
