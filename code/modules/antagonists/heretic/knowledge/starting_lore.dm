@@ -18,12 +18,13 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/spell/basic
 	name = "Break of Dawn"
-	desc = "Starts your journey into the Mansus. \
+	desc = "Starts your journey into the Mansus.<br>\
 		Grants you the Mansus Grasp, a powerful and upgradable disabling spell."
 	action_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
 	cost = 0
 	is_starting_knowledge = TRUE
 	max_charges = 8
+	focus_recharge_amount = 0.25
 	transmute_text = "Tapping influences and completing sacrifices will recharge the spell."
 
 // Heretics can enhance their fishing rods to fish better - fishing content.
@@ -69,11 +70,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /datum/heretic_knowledge/spell/basic/proc/on_influence_tap(...)
 	SIGNAL_HANDLER
-	max_charges()
+	add_charges(max_charges)
 
 /datum/heretic_knowledge/spell/basic/proc/on_sacrifice(...)
 	SIGNAL_HANDLER
-	max_charges()
+	add_charges(max_charges)
 
 /**
  * The Living Heart heretic knowledge.
@@ -198,6 +199,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	is_starting_knowledge = TRUE
 	max_charges = 6
+	focus_recharge_amount = 0.16
 	transmute_text = "Charges will return every three minutes. Using the spell again will reset the timer."
 	/// Cooldown for when we can give a charge back
 	COOLDOWN_DECLARE(charge_time)
@@ -210,7 +212,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	if(charges >= max_charges)
 		STOP_PROCESSING(SSobj, src)
 	else if(COOLDOWN_FINISHED(src, charge_time))
-		adjust_charges(1)
+		add_charges(1)
 		COOLDOWN_START(src, charge_time, 3 MINUTES)
 
 /datum/heretic_knowledge/spell/cloak_of_shadows/deduct_charge(mob/living/source, datum/action/the_spell)

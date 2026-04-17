@@ -150,6 +150,7 @@
 	cost = 2
 	research_tree_icon_frame = 5
 	max_charges = 12
+	focus_recharge_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a toolbox."
 
 /datum/heretic_knowledge/blade_upgrade/rust
@@ -181,6 +182,7 @@
 	cost = 2
 	drafting_tier = 5
 	max_charges = 4
+	focus_recharge_amount = 0.25
 	transmute_text = "To recharge, corrode 30 tiles with your abilities and spells."
 
 	var/rust_counter = 0

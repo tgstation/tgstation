@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/machinery/door/airlock/centcom,
 		/obj/item/clothing/mask/madness_mask,
 		/obj/item/wallframe/painting/eldritch,
-		/obj/item/clothing/neck/heretic_focus/moon_amulet,
+		/obj/item/clothing/neck/moon_amulet,
 		/obj/item/melee/sickly_blade/moon,
 	)),
 	"doctors" = typecacheof(list(

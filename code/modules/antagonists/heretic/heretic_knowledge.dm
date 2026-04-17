@@ -208,6 +208,8 @@
 	var/max_charges = 1
 	/// Percent of max charges restored on a successful ritual
 	var/recharge_amount = 1.0
+	/// What perfect of the max charges the spell regains periodically while wearing a focus
+	var/focus_recharge_amount = 0.0
 
 /datum/heretic_knowledge/spell/New()
 	. = ..()
@@ -263,7 +265,7 @@
 	return TRUE
 
 /datum/heretic_knowledge/spell/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	max_charges(recharge_amount)
+	add_charges(max_charges * recharge_amount)
 	return TRUE
 
 /datum/heretic_knowledge/spell/proc/action_update(datum/action/source, atom/movable/screen/movable/action_button/button, ...)
@@ -329,6 +331,7 @@
 
 	remove_charges(1)
 
+/// Add a number of charges, optionally bypassing the cap
 /datum/heretic_knowledge/spell/proc/add_charges(num, uncapped = FALSE)
 	if(uncapped)
 		charges += num
@@ -336,13 +339,9 @@
 		charges = min(charges + num, max_charges)
 	update_charge_counter()
 
+/// Remove a number of charges (down to 0)
 /datum/heretic_knowledge/spell/proc/remove_charges(num)
 	charges = max(charges - num, 0)
-	update_charge_counter()
-
-/datum/heretic_knowledge/spell/proc/max_charges(percent = 1.0)
-	// if you accrued some charges we won't steal them from you, otherwise we just gain % charges up to the max
-	charges = max(charges, min(max_charges, charges + ceil(max_charges * percent)))
 	update_charge_counter()
 
 /datum/heretic_knowledge/spell/proc/update_charge_counter()

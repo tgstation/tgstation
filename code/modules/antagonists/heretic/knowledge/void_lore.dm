@@ -97,6 +97,7 @@
 	cost = 2
 	research_tree_icon_frame = 7
 	max_charges = 4
+	focus_recharge_amount = 0.25
 	transmute_text = "To recharge, complete a ritual with a pane of glass."
 
 /datum/heretic_knowledge/spell/void_prison
@@ -163,6 +164,7 @@
 	cost = 2
 	research_tree_icon_frame = 6
 	max_charges = 4
+	focus_recharge_amount = 0.25
 	transmute_text = "To recharge, travel through a vacuum for 20 seconds."
 
 	var/seconds_in_vacuum = 0

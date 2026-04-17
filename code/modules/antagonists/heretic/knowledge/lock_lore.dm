@@ -193,6 +193,7 @@
 	action_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 2
 	max_charges = 12
+	focus_recharge_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a pair of gloves."
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock

@@ -239,3 +239,21 @@
 		playsound(door, SFX_SPARKS, 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, ignore_walls = FALSE)
 
 	return TRUE
+
+/**
+ * Allows the heretic to craft a spell focus, which passively regenerates some spell charges
+ */
+/datum/heretic_knowledge/amber_focus
+	name = "Amber Focus"
+	desc = "Sculpts an Amber Focus.<br>\
+		Recharges some spell charges every few minutes while worn, barring some exceptional spells."
+	transmute_text = "Transmute a sheet of glass and a pair of eyes."
+	required_atoms = list(
+		/obj/item/organ/eyes = 1,
+		/obj/item/stack/sheet/glass = 1,
+	)
+	result_atoms = list(/obj/item/clothing/neck/heretic_focus)
+	cost = 1
+	drafting_tier = 1
+	research_tree_icon_path = 'icons/obj/clothing/neck.dmi'
+	research_tree_icon_state = "eldritch_necklace"

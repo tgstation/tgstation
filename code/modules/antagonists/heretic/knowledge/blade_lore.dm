@@ -104,6 +104,7 @@
 	action_to_add = /datum/action/cooldown/spell/realignment
 	cost = 2
 	max_charges = 3
+	focus_recharge_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a cell or battery."
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
@@ -328,6 +329,7 @@
 	cost = 2
 	max_charges = 6
 	recharge_amount = 0.5
+	focus_recharge_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a knife - this will return half of the spell's maximum charges. \
 		Alternatively, you gain two charge every time you knock someone into critical condition."
 

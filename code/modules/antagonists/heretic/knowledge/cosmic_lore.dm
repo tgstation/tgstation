@@ -86,6 +86,7 @@
 	cost = 2
 	drafting_tier = 5
 	max_charges = 6
+	focus_recharge_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a pen, crayon, or spray can."
 
 /datum/heretic_knowledge/spell/star_blast
@@ -99,6 +100,7 @@
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 2
 	max_charges = 4
+	focus_recharge_amount = 0.25
 	transmute_text = "To recharge, complete a ritual with a sheet of plasma."
 
 /datum/heretic_knowledge/armor/cosmic
@@ -129,6 +131,7 @@
 	action_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 2
 	max_charges = 4
+	focus_recharge_amount = 0.25
 	transmute_text = "To recharge, complete a ritual with a pair of gloves."
 
 /datum/heretic_knowledge/blade_upgrade/cosmic

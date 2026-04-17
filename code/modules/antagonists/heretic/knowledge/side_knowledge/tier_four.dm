@@ -93,6 +93,7 @@
 	cost = 2
 	drafting_tier = 4
 	max_charges = 3
+	focus_recharge_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a bloodied rag or bandage, or a pool of blood."
 
 /datum/heretic_knowledge/spell/crimson_cleave/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -150,6 +151,13 @@
 		CALIBER_HARPOON,
 		CALIBER_HOOK,
 	)
+
+/datum/heretic_knowledge/rifle_ammo/pre_research(mob/user, datum/antagonist/heretic/our_heretic)
+	if(!our_heretic.get_knowledge(/datum/heretic_knowledge/rifle))
+		tgui_alert(user, "You must research the Lionhunter's Rifle knowledge before you can research its ammunition.")
+		return FALSE
+
+	return TRUE
 
 /datum/heretic_knowledge/rifle_ammo/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	for(var/obj/item/ammo_casing/casing in atoms)

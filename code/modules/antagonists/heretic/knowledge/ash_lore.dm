@@ -99,6 +99,7 @@
 	cost = 2
 	drafting_tier = 5
 	max_charges = 6
+	focus_recharge_amount = 0.15
 	transmute_text = "To recharge, complete a ritual with a smearing of ash."
 
 /datum/heretic_knowledge/spell/fire_blast
@@ -113,6 +114,7 @@
 	cost = 2
 	research_tree_icon_frame = 7
 	max_charges = 3
+	focus_recharge_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a lit bonfire."
 
 /datum/heretic_knowledge/spell/fire_blast/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -184,6 +186,7 @@
 	research_tree_icon_frame = 5
 	is_final_knowledge = TRUE
 	max_charges = 3
+	focus_recharge_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a burning or husked corpse."
 
 /datum/heretic_knowledge/spell/flame_birth/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)

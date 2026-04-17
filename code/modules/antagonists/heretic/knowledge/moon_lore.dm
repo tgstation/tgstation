@@ -100,6 +100,7 @@
 	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
 	cost = 2
 	max_charges = 6
+	focus_recharge_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a pair of glasses or goggles."
 
 /datum/heretic_knowledge/moon_amulet
@@ -117,7 +118,7 @@
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/clothing/neck/tie = 1,
 	)
-	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulet)
+	result_atoms = list(/obj/item/clothing/neck/moon_amulet)
 	cost = 2
 
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
@@ -148,6 +149,7 @@
 	cost = 2
 	drafting_tier = 5
 	max_charges = 4
+	focus_recharge_amount = 0.25
 	transmute_text = "To recharge, successfully apply a Moonlight Amulet to a heathen."
 
 /datum/heretic_knowledge/spell/moon_parade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -201,6 +203,7 @@
 	research_tree_icon_frame = 5
 	is_final_knowledge = TRUE
 	max_charges = 2
+	focus_recharge_amount = 0.25
 	transmute_text = "To recharge, successfully apply a Moonlight Amulet to a heathen."
 
 /datum/heretic_knowledge/spell/moon_ringleader/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -284,7 +287,7 @@
 
 	var/datum/antagonist/lunatic/lunatic = convertee.mind.add_antag_datum(/datum/antagonist/lunatic)
 	lunatic.set_master(user.mind, user)
-	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(convertee.drop_location())
+	var/obj/item/clothing/neck/moon_amulet/amulet = new(convertee.drop_location())
 	var/static/list/slots = list(
 		LOCATION_NECK,
 		LOCATION_HANDS,
