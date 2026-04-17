@@ -12,6 +12,31 @@
 	cost = 2
 	research_tree_icon_frame = 6
 	drafting_tier = 4
+	max_charges = 2
+	recharge_text = "To recharge, meditate on a rune in the station's EVA room for 20 seconds."
+
+	var/seconds_in_eva = 0
+
+/datum/heretic_knowledge/spell/void_pull/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+
+/datum/heretic_knowledge/spell/void_pull/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_LIFE)
+
+/datum/heretic_knowledge/spell/void_pull/proc/on_life(mob/living/source, seconds_per_tick)
+	SIGNAL_HANDLER
+
+	if(istype(get_area(source)), /area/station/command/eva)
+		for(var/obj/effect/heretic_rune/rune in view(1, source))
+			seconds_in_eva += seconds_per_tick
+			if(seconds_in_eva >= 20)
+				seconds_in_eva -= 20
+				add_charges(1)
+			return
+
+	seconds_in_eva = 0
 
 /datum/heretic_knowledge/unfathomable_curio
 	name = "Unfathomable Curio"
@@ -54,12 +79,27 @@
 
 /datum/heretic_knowledge/spell/crimson_cleave
 	name = "Crimson Cleave"
-	desc = "Grants you Crimson Cleave, a targeted spell which siphons health in a small AOE. Cleanses all wounds upon casting"
+	desc = "Grants you Crimson Cleave, a targeted spell which siphons health in a small AOE. Cleanses all wounds upon casting."
 	gain_text = "At first I didn't understand these instruments of war, but the Priest \
 				told me to use them regardless. Soon, he said, I would know them well."
+	required_atoms = list(
+		list(/obj/effect/decal/cleanable/blood, /obj/item/rag, /obj/item/stack/medical/wrap/gauze) = 1,
+	)
 	action_to_add = /datum/action/cooldown/spell/pointed/crimson_cleave
 	cost = 2
 	drafting_tier = 4
+	max_charges = 3
+	recharge_text = "To recharge, complete a ritual with a bloodied rag or bandage, or a pool of blood."
+
+/datum/heretic_knowledge/spell/crimson_cleave/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/obj/item/rag/rag in atoms)
+		if(!GET_ATOM_BLOOD_DNA_LENGTH(rag))
+			atoms -= rag
+
+	for(var/obj/item/stack/medical/wrap/gauze/medwrap in atoms)
+		if(!GET_ATOM_BLOOD_DNA_LENGTH(medwrap))
+			atoms -= medwrap
 
 /datum/heretic_knowledge/rifle
 	name = "Lionhunter's Rifle"

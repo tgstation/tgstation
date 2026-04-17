@@ -27,7 +27,7 @@
 	)
 	tips = list(
 		"Your Mansus Grasp allows you to mute your targets, making it ideal for silent assassinations (keep in mind that it won't short circuit their suit sensors, make sure you turn them off after you kill them). Yhe grasp also applies a mark that when triggered by the void blade will apply the maximum amount of stacks of void chill to your target, slowing them down to a crawl.",
-		"Void Cloak can be used to hide one of your blades and a Codex Cicatrix when the hood is down,  while acting as a focus when it's up.",
+		"Void Cloak can be used to hide one of your blades and a Codex Cicatrix.",
 		"Void chill is a debuff applied by your spells, your grasp, your mark and your blade once you unlock the upgrade. Each stack slows your target movement speed by 10% and make them gradually colder, up to a maximum of 5 stacks.",
 		"At 5 stacks void chill will also prevent your target from heating up.",
 		"You are immune to low pressure and cold damage at the start of the shift. Upgrade your passive to level 2 to no longer need to breathe. Use this to your advantage.",
@@ -89,14 +89,20 @@
 		Additionally causes damage to heathens around your original and target destination."
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
 		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
+	required_atoms = list(
+		list(/obj/structure/window, /obj/item/stack/sheet/glass) = 1,
+	)
 	action_to_add = /datum/action/cooldown/spell/pointed/void_phase
 	cost = 2
 	research_tree_icon_frame = 7
+	max_charges = 4
+	recharge_text = "To recharge, complete a ritual with a pane of glass."
 
 /datum/heretic_knowledge/spell/void_prison
 	name = "Void Prison"
 	desc = "Grants you Void Prison, a spell that places your victim into a ball, making them unable to do anything or speak. \
-		Applies void chill afterwards."
+		Applies void chill afterwards. \
+		You are rewarded with one charge for every sacrifice you complete."
 	gain_text = "At first, I see myself, waltzing along a snow-laden street. \
 		I try to yell, grab hold of this fool and tell them to run. \
 		But the only welts made are on my own beating fist. \
@@ -105,11 +111,25 @@
 	action_to_add = /datum/action/cooldown/spell/pointed/void_prison
 	cost = 2
 	drafting_tier = 5
+	max_charges = 1
+	recharge_text = "You are rewarded with one charge for every sacrifice you complete."
+
+/datum/heretic_knowledge/spell/void_prison/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE, PROC_REF(on_sacrifice))
+
+/datum/heretic_knowledge/spell/void_prison/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE)
+
+/datum/heretic_knowledge/spell/void_prison/proc/on_sacrifice(datum/sacrifice, ...)
+	SIGNAL_HANDLER
+	add_charges(1, uncapped = TRUE)
 
 /datum/heretic_knowledge/armor/void
 	name = "Hollow Weave"
-	desc = "Allows you to transmute a table (or a suit) and a mask in sub-zero temperatures to create a Hollow Weave, this armor will periodically nullify attacks and grant you a short stealth camoflage to reposition yourself. \
-			Acts as a focus while hooded."
+	desc = "Allows you to transmute a table (or a suit) and a mask in sub-zero temperatures to create a Hollow Weave, \
+		this armor will periodically nullify attacks and grant you a short stealth camoflage to reposition yourself."
 	gain_text = "Stepping through the cold air, I am shocked by a new sensation. \
 				Thousands of almost imperceivable threads cling to my form. \
 				I am left adrift with every step. \
@@ -142,6 +162,31 @@
 	action_to_add = /datum/action/cooldown/spell/aoe/void_pull
 	cost = 2
 	research_tree_icon_frame = 6
+	max_charges = 4
+	recharge_text = "To recharge, travel through a vacuum for 20 seconds."
+
+	var/seconds_in_vacuum = 0
+
+/datum/heretic_knowledge/spell/void_pull/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+
+/datum/heretic_knowledge/spell/void_pull/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_LIFE)
+
+/datum/heretic_knowledge/spell/void_pull/proc/on_life(mob/living/source, seconds_per_tick)
+	SIGNAL_HANDLER
+
+	var/turf/source_turf = get_turf(source)
+	var/datum/gas_mixture/air = source_turf?.return_air()
+	if(air?.return_pressure() <= 0)
+		seconds_in_vacuum += seconds_per_tick
+		if(seconds_in_vacuum >= 20)
+			add_charges(1)
+			seconds_in_vacuum -= 20
+	else
+		seconds_in_vacuum = 0
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
@@ -172,13 +217,30 @@
 
 /datum/heretic_knowledge/spell/void_conduit
 	name = "Void Conduit"
-	desc = "Grants you Void Conduit, a spell which summons a pulsing gate to the Void itself. Every pulse breaks windows and airlocks, while afflicting Heathens with an eldritch chill and shielding Heretics against low pressure."
+	desc = "Grants you Void Conduit, a spell which summons a pulsing gate to the Void itself. \
+		Every pulse breaks windows and airlocks, while afflicting Heathens with an eldritch chill \
+		and shielding Heretics against low pressure."
 	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
 		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
 		The doors won't close. I can't keep the cold out now."
 	action_to_add = /datum/action/cooldown/spell/conjure/void_conduit
 	cost = 2
 	is_final_knowledge = TRUE
+	max_charges = 1
+	recharge_text = "You are rewarded with one charge for every high value sacrifice you complete."
+
+/datum/heretic_knowledge/spell/void_conduit/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE, PROC_REF(on_sacrifice))
+
+/datum/heretic_knowledge/spell/void_conduit/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE)
+
+/datum/heretic_knowledge/spell/void_conduit/proc/on_sacrifice(datum/sacrifice, mob/living/sacrifice, high_value)
+	SIGNAL_HANDLER
+	if(high_value)
+		add_charges(1, uncapped = TRUE)
 
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"

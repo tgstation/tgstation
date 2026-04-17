@@ -382,7 +382,6 @@
 
 	ADD_TRAIT(our_mob, TRAIT_MANSUS_TOUCHED, REF(src))
 	RegisterSignal(our_mob, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
-	RegisterSignals(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
 	RegisterSignal(our_mob, COMSIG_USER_ITEM_INTERACTION, PROC_REF(on_item_use))
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
 	RegisterSignal(our_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_heretic_examine))
@@ -407,8 +406,6 @@
 	UnregisterSignal(
 		our_mob,
 		list(
-			COMSIG_MOB_BEFORE_SPELL_CAST,
-			COMSIG_MOB_SPELL_ACTIVATED,
 			COMSIG_USER_ITEM_INTERACTION,
 			COMSIG_LIVING_POST_FULLY_HEAL,
 			COMSIG_LIVING_CULT_SACRIFICED,
@@ -473,31 +470,6 @@
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
 		knowledge.on_lose(old_body, src)
 		knowledge.on_gain(new_body, src)
-
-/*
- * Signal proc for [COMSIG_MOB_BEFORE_SPELL_CAST] and [COMSIG_MOB_SPELL_ACTIVATED].
- *
- * Checks if our heretic has [TRAIT_ALLOW_HERETIC_CASTING] or is ascended.
- * If so, allow them to cast like normal.
- * If not, cancel the cast, and returns [SPELL_CANCEL_CAST].
- */
-/datum/antagonist/heretic/proc/on_spell_cast(mob/living/source, datum/action/cooldown/spell/spell)
-	SIGNAL_HANDLER
-
-	// Heretic spells are of the forbidden school, otherwise we don't care
-	if(spell.school != SCHOOL_FORBIDDEN)
-		return
-
-	// If we've got the trait, we don't care
-	if(HAS_TRAIT(source, TRAIT_ALLOW_HERETIC_CASTING))
-		return
-	// All powerful, don't care
-	if(ascended)
-		return
-
-	// We shouldn't be able to cast this! Cancel it.
-	source.balloon_alert(source, "you need a focus!")
-	return SPELL_CANCEL_CAST
 
 /*
  * Signal proc for [COMSIG_USER_ITEM_INTERACTION].

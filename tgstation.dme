@@ -3447,7 +3447,6 @@
 #include "code\modules\antagonists\heretic\cosmic_effect.dm"
 #include "code\modules\antagonists\heretic\heretic_antag.dm"
 #include "code\modules\antagonists\heretic\heretic_curses.dm"
-#include "code\modules\antagonists\heretic\heretic_focus.dm"
 #include "code\modules\antagonists\heretic\heretic_knowledge.dm"
 #include "code\modules\antagonists\heretic\heretic_living_heart.dm"
 #include "code\modules\antagonists\heretic\heretic_monsters.dm"

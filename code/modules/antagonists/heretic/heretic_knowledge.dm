@@ -195,7 +195,24 @@
 	/// Spell path we add to the heretic. Type-path.
 	var/datum/action/action_to_add
 	/// The spell we actually created.
-	var/datum/weakref/created_action_ref
+	VAR_FINAL/datum/action/created_action_ref
+
+	VAR_FINAL/mutable_appearance/charge_maptext
+
+	/// Charge count
+	VAR_FINAL/charges = 1
+	/// Max amount of charges before a heretic needs to recharge by doing the ritual again
+	var/max_charges = 1
+	/// Percent of max charges restored on a successful ritual
+	var/recharge_amount = 1.0
+
+	var/recharge_text = ""
+
+/datum/heretic_knowledge/spell/New()
+	. = ..()
+	charges = max_charges
+	if(recharge_text)
+		desc += " [recharge_text]"
 
 /datum/heretic_knowledge/spell/Destroy()
 	QDEL_NULL(created_action_ref)
@@ -205,14 +222,135 @@
 	// Added spells are tracked on the body, and not the mind,
 	// because we handle heretic mind transfers
 	// via the antag datum (on_gain and on_lose).
-	var/datum/action/created_action = created_action_ref?.resolve() || new action_to_add(user)
-	created_action.Grant(user)
-	created_action_ref = WEAKREF(created_action)
+	created_action_ref ||= new action_to_add(src)
+	created_action_ref.Grant(user)
+
+	RegisterSignal(created_action_ref, COMSIG_ACTION_STATUS_UPDATE, PROC_REF(action_update))
+	RegisterSignal(created_action_ref, COMSIG_QDELETING, PROC_REF(action_delete))
+	RegisterSignal(created_action_ref, COMSIG_SPELL_CAN_CAST_CHECK, PROC_REF(spell_check))
+
+	RegisterSignal(user, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(check_charges))
+	if(istype(created_action_ref, /datum/action/cooldown/spell/pointed/projectile))
+		RegisterSignal(user, COMSIG_MOB_SPELL_PROJECTILE, PROC_REF(deduct_charge))
+	else if(istype(created_action_ref, /datum/action/cooldown/spell/touch))
+		RegisterSignal(user, COMSIG_SPELL_TOUCH_SPELL_ACTUALLY_CAST, PROC_REF(deduct_charge))
+	else
+		RegisterSignal(user, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(deduct_charge))
+
+	update_charge_counter()
 
 /datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	var/datum/action/cooldown/spell/created_action = created_action_ref?.resolve()
-	if(created_action?.owner == user)
-		created_action.Remove(user)
+	if(created_action_ref?.owner == user)
+		created_action_ref.Remove(user)
+
+	UnregisterSignal(user, list(
+		COMSIG_SPELL_CAN_CAST_CHECK,
+		COMSIG_MOB_SPELL_ACTIVATED,
+		COMSIG_MOB_AFTER_SPELL_CAST,
+		COMSIG_MOB_BEFORE_SPELL_CAST,
+		COMSIG_MOB_SPELL_PROJECTILE,
+		COMSIG_SPELL_TOUCH_SPELL_ACTUALLY_CAST,
+	))
+
+/datum/heretic_knowledge/spell/can_be_invoked(datum/antagonist/heretic/invoker)
+	if(!LAZYLEN(required_atoms))
+		return FALSE
+	if(created_action_ref?.owner != invoker.owner?.current)
+		return FALSE
+	if(charges >= max_charges)
+		return FALSE
+	return TRUE
+
+/datum/heretic_knowledge/spell/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	max_charges(recharge_amount)
+	return TRUE
+
+/datum/heretic_knowledge/spell/proc/action_update(datum/action/source, atom/movable/screen/movable/action_button/button, ...)
+	SIGNAL_HANDLER
+
+	if(charge_maptext)
+		button.cut_overlay(charge_maptext)
+
+	if(charges >= 100)
+		return
+	if(source.owner)
+		var/datum/antagonist/heretic/our_heretic = GET_HERETIC(source.owner)
+		if(our_heretic?.ascended)
+			return
+
+	charge_maptext ||= new()
+	charge_maptext.maptext_x = 4
+	charge_maptext.maptext_y = 20
+	charge_maptext.maptext = MAPTEXT("[charges]")
+	button.add_overlay(charge_maptext)
+
+/datum/heretic_knowledge/spell/proc/action_delete(datum/action/source)
+	SIGNAL_HANDLER
+	created_action_ref = null // shouldn't happen...
+
+/datum/heretic_knowledge/spell/proc/spell_check(datum/action/the_spell, feedback)
+	SIGNAL_HANDLER
+
+	if(the_spell != created_action_ref || isnull(the_spell.owner))
+		return NONE
+	if(charges > 0)
+		return NONE
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(the_spell.owner)
+	if(our_heretic?.ascended)
+		return NONE
+
+	if(feedback)
+		to_chat(the_spell.owner, span_hierophant("You don't have enough charges to cast this spell! [recharge_text]"))
+	return SPELL_CANCEL_CAST
+
+/datum/heretic_knowledge/spell/proc/check_charges(mob/living/source, datum/action/the_spell)
+	SIGNAL_HANDLER
+
+	if(the_spell != created_action_ref)
+		return NONE
+	if(charges > 0)
+		return NONE
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(source)
+	if(our_heretic?.ascended)
+		return NONE
+
+	to_chat(source, span_hierophant("You don't have enough charges to cast this spell! [recharge_text]"))
+	return SPELL_CANCEL_CAST
+
+/datum/heretic_knowledge/spell/proc/deduct_charge(mob/living/source, datum/action/the_spell)
+	SIGNAL_HANDLER
+
+	if(the_spell != created_action_ref)
+		return
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(source)
+	if(our_heretic?.ascended)
+		return
+
+	remove_charges(1)
+
+/datum/heretic_knowledge/spell/proc/add_charges(num, uncapped = FALSE)
+	if(uncapped)
+		charges += num
+	else
+		charges = min(charges + num, max_charges)
+	update_charge_counter()
+
+/datum/heretic_knowledge/spell/proc/remove_charges(num)
+	charges = max(charges - num, 0)
+	update_charge_counter()
+
+/datum/heretic_knowledge/spell/proc/max_charges(percent = 1.0)
+	// if you accrued some charges we won't steal them from you, otherwise we just gain % charges up to the max
+	charges = max(charges, min(max_charges, charges + ceil(max_charges * percent)))
+	update_charge_counter()
+
+/datum/heretic_knowledge/spell/proc/update_charge_counter()
+	created_action_ref?.build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/datum/heretic_knowledge/spell/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, charges) || var_name == NAMEOF(src, max_charges))
+		update_charge_counter()
 
 /**
  * A knowledge subtype for knowledge that can only

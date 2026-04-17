@@ -19,17 +19,26 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/spell/basic
 	name = "Break of Dawn"
 	desc = "Starts your journey into the Mansus. \
-		Grants you the Mansus Grasp, a powerful and upgradable \
-		disabling spell that can be cast regardless of having a focus."
+		Grants you the Mansus Grasp, a powerful and upgradable disabling spell. \
+		Tapping influences and completing sacrifices will recharge the spell."
 	action_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
 	cost = 0
 	is_starting_knowledge = TRUE
+	max_charges = 8
 
 // Heretics can enhance their fishing rods to fish better - fishing content.
 // Lasts until successfully fishing something up.
 /datum/heretic_knowledge/spell/basic/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	..()
+	. = ..()
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
+	RegisterSignal(our_heretic, COMSIG_HERETIC_INFLUENCE_DRAINED, PROC_REF(on_influence_tap))
+	RegisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE, PROC_REF(on_sacrifice))
+
+/datum/heretic_knowledge/spell/basic/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST)
+	UnregisterSignal(our_heretic, COMSIG_HERETIC_INFLUENCE_DRAINED)
+	UnregisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE)
 
 /datum/heretic_knowledge/spell/basic/proc/on_grasp_cast(mob/living/carbon/cast_on, datum/action/cooldown/spell/touch/touch_spell)
 	SIGNAL_HANDLER
@@ -57,6 +66,14 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		item.remove_filter("mansus_infusion")
 		REMOVE_TRAIT(item, TRAIT_ROD_MANSUS_INFUSED, REF(item))
 		item.difficulty_modifier += 20
+
+/datum/heretic_knowledge/spell/basic/proc/on_influence_tap(...)
+	SIGNAL_HANDLER
+	max_charges()
+
+/datum/heretic_knowledge/spell/basic/proc/on_sacrifice(...)
+	SIGNAL_HANDLER
+	max_charges()
 
 /**
  * The Living Heart heretic knowledge.
@@ -173,32 +190,14 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	return TRUE
 
-/**
- * Allows the heretic to craft a spell focus.
- * They require a focus to cast advanced spells.
- */
-/datum/heretic_knowledge/amber_focus
-	name = "Amber Focus"
-	desc = "Allows you to transmute a sheet of glass and a pair of eyes to create an Amber Focus. \
-		A focus must be worn in order to cast more advanced spells."
-	required_atoms = list(
-		/obj/item/organ/eyes = 1,
-		/obj/item/stack/sheet/glass = 1,
-	)
-	result_atoms = list(/obj/item/clothing/neck/heretic_focus)
-	cost = 0
-	priority = MAX_KNOWLEDGE_PRIORITY - 2 // Not as important as making a heart or sacrificing, but important enough.
-	is_starting_knowledge = TRUE
-	research_tree_icon_path = 'icons/obj/clothing/neck.dmi'
-	research_tree_icon_state = "eldritch_necklace"
-
 /datum/heretic_knowledge/spell/cloak_of_shadows
 	name = "Cloak of Shadow"
 	desc = "Grants you the spell Cloak of Shadow. This spell will completely conceal your identity in a purple smoke \
-		for three minutes, assisting you in keeping secrecy. Requires a focus to cast."
+		for three minutes, assisting you in keeping secrecy."
 	action_to_add = /datum/action/cooldown/spell/shadow_cloak
 	cost = 0
 	is_starting_knowledge = TRUE
+	max_charges = 6
 
 /**
  * Codex Cicatrixi is available at the start:
@@ -211,7 +210,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	name = "Codex Cicatrix"
 	desc = "Allows you to transmute a book, any pen, and your pick from any carcass (animal or human), leather, or hide to create a Codex Cicatrix. \
 		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
-		It can also be used to draw and remove transmutation runes easier, and as a spell focus in a pinch."
+		It can also be used to draw and remove transmutation runes easier."
 	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
 		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
 	required_atoms = list(

@@ -1,13 +1,10 @@
 /obj/item/clothing/neck/heretic_focus
 	name = "amber focus"
-	desc = "An amber focusing glass that provides a link to the world beyond. The necklace seems to twitch, but only when you look at it from the corner of your eye."
+	desc = "An amber focusing glass that provides a link to the world beyond. \
+		The necklace seems to twitch, but only when you look at it from the corner of your eye."
 	icon_state = "eldritch_necklace"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
-
-/obj/item/clothing/neck/heretic_focus/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/heretic_focus)
 
 /obj/item/clothing/neck/heretic_focus/crimson_medallion
 	name = "crimson medallion"
@@ -98,7 +95,6 @@
 		. += span_cult_bold("This focus will allow you to store one extra spell and halve the empowering time, alongside providing a small regenerative effect.")
 		magic_dude = TRUE
 	if(IS_HERETIC_OR_MONSTER(user))
-		. += span_notice("This focus will halve your spell cooldowns, alongside granting a small regenerative effect to any nearby heretics or monsters, including you.")
 		magic_dude = TRUE
 
 	if(magic_dude)
@@ -106,17 +102,14 @@
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "warm eldritch medallion"
-	desc = "A strange medallion. Peering through the crystalline surface, the world around you melts away. You see your own beating heart, and the pulsing of a thousand others."
+	desc = "A strange medallion. Peering through the crystalline surface, the world around you melts away. \
+		You see your own beating heart, and the pulsing of a thousand others."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "eye_medalion"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	/// A secondary clothing trait only applied to heretics.
 	var/heretic_only_trait = TRAIT_THERMAL_VISION
-
-/obj/item/clothing/neck/eldritch_amulet/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/heretic_focus)
 
 /obj/item/clothing/neck/eldritch_amulet/equipped(mob/user, slot)
 	. = ..()
@@ -255,6 +248,7 @@
 			human_target.balloon_alert(living_user, "their mind almost bends but something protects it!")
 			human_target.apply_status_effect(/datum/status_effect/moon_slept)
 			return TRUE
+		SEND_SIGNAL(user, COMSIG_MOB_APPLIED_MOONLIGHT_AMULET, target)
 		human_target.balloon_alert(living_user, "their mind bends to see the truth!")
 		human_target.apply_status_effect(/datum/status_effect/moon_converted)
 		living_user.log_message("made [human_target] insane.", LOG_GAME)

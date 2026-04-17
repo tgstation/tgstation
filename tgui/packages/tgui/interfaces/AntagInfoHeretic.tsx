@@ -223,11 +223,6 @@ const GuideSection = () => {
           <span style={hereticRed}>Living Heart</span>.
         </Stack.Item>
         <Stack.Item>
-          - Make yourself a <span style={hereticYellow}>focus</span> to be able
-          to cast various advanced spells to assist you in acquiring harder and
-          harder sacrifices.
-        </Stack.Item>
-        <Stack.Item>
           - Accomplish all of your objectives to be able to learn the{' '}
           <span style={hereticYellow}>final ritual</span>. Complete the ritual
           to become all powerful!

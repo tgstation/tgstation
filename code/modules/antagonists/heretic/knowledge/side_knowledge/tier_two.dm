@@ -62,10 +62,14 @@
 	desc = "Grants you Wave Of Desparation, a spell which can only be cast while restrained. \
 		It removes your restraints, repels and knocks down adjacent people, and applies the Mansus Grasp to everything nearby."
 	gain_text = "My shackles undone in dark fury, their feeble bindings crumble before my power."
-
+	required_atoms = list(
+		/obj/item/clothing/suit/jacket/straight_jacket = 1,
+	)
 	action_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
 	cost = 2
 	drafting_tier = 2
+	max_charges = 1
+	recharge_text = "To recharge, complete a ritual with a straight jacket."
 
 /datum/heretic_knowledge/rune_carver
 	name = "Carving Knife"

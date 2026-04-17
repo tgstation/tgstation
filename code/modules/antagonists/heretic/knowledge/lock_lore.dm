@@ -165,8 +165,7 @@
 
 /datum/heretic_knowledge/armor/lock
 	desc = "Allows you to transmute a table (or a suit), a mask and a crowbar to create a shifting guise. \
-		It grants you camoflage from cameras, hides your identity, voice and muffles your footsteps. \
-		Acts as a focus while hooded."
+		It grants you camoflage from cameras, hides your identity, voice and muffles your footsteps."
 	gain_text = "While stewards are known to the Concierge, \
 				they still consort between one another and with outsiders under shaded cloaks and drawn hoods. \
 				Familiarity is treachery, even to oneself."
@@ -183,9 +182,11 @@
 	desc = "Grants you Burglar's Finesse, a single-target spell \
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
-
+	required_atoms = list(/obj/item/clothing/gloves = 1)
 	action_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 2
+	max_charges = 12
+	recharge_text = "To recharge, complete a ritual with a pair of gloves."
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock
 	name = "Opening Blade"
@@ -201,14 +202,19 @@
 		return ..()
 
 /datum/heretic_knowledge/spell/caretaker_refuge
-	name = "Caretaker’s Last Refuge"
+	name = "Caretaker's Last Refuge"
 	desc = "Gives you a spell that makes you transparent and not dense. Cannot be used near living sentient beings. \
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
+	required_atoms = list(
+		list(/obj/item/clothing/suit/armor, /obj/item/clothing/suit/space) = 1,
+	)
 	action_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 2
 	is_final_knowledge = TRUE
+	max_charges = 2
+	recharge_text = "To recharge, complete a ritual with a set of armor or space suit."
 
 /datum/heretic_knowledge/ultimate/lock_final
 	name = "Unlock the Labyrinth"

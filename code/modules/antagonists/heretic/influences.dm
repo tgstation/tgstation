@@ -252,6 +252,7 @@
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.adjust_knowledge_points(knowledge_to_gain)
+	SEND_SIGNAL(heretic_datum, COMSIG_HERETIC_INFLUENCE_DRAINED)
 
 	// Aaand now we delete it
 	after_drain(user)

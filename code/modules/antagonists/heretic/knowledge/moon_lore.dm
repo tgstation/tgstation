@@ -93,9 +93,13 @@
 		confusion, oxygen loss and brain damage to its target over 10 seconds.\
 		The caster takes 20 brain damage per use."
 	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
-
+	required_atoms = list(
+		/obj/item/clothing/glasses = 1,
+	)
 	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
 	cost = 2
+	max_charges = 6
+	recharge_text = "To recharge, complete a ritual with a pair of glasses or goggles."
 
 /datum/heretic_knowledge/moon_amulet
 	name = "Moonlight Amulet"
@@ -119,8 +123,7 @@
 	research_tree_icon_frame = 9
 
 /datum/heretic_knowledge/armor/moon
-	desc = "Allows you to transmute a table (or a suit), a mask and two sheets of glass to create a Resplendant Regalia, this robe will render the user   fully immune to disabling effects and convert all forms of damage into brain damage, while also pacifying the user and render him unable to use ranged weapons (Moon blade will bypass pacifism). \
-			Acts as a focus while hooded."
+	desc = "Allows you to transmute a table (or a suit), a mask and two sheets of glass to create a Resplendant Regalia, this robe will render the user   fully immune to disabling effects and convert all forms of damage into brain damage, while also pacifying the user and render him unable to use ranged weapons (Moon blade will bypass pacifism)."
 	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
 				The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
 				I observed, basking in the light, to find my self."
@@ -140,6 +143,20 @@
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 2
 	drafting_tier = 5
+	max_charges = 4
+	recharge_text = "To recharge, successfully apply a Moonlight Amulet to a heathen."
+
+/datum/heretic_knowledge/spell/moon_parade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_APPLIED_MOONLIGHT_AMULET, PROC_REF(on_amulet))
+
+/datum/heretic_knowledge/spell/moon_parade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_APPLIED_MOONLIGHT_AMULET)
+
+/datum/heretic_knowledge/spell/moon_parade/proc/on_amulet(...)
+	SIGNAL_HANDLER
+	add_charges(1, uncapped = TRUE)
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"
@@ -181,6 +198,20 @@
 
 	research_tree_icon_frame = 5
 	is_final_knowledge = TRUE
+	max_charges = 2
+	recharge_text = "To recharge, successfully apply a Moonlight Amulet to a heathen."
+
+/datum/heretic_knowledge/spell/moon_ringleader/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_APPLIED_MOONLIGHT_AMULET, PROC_REF(on_amulet))
+
+/datum/heretic_knowledge/spell/moon_ringleader/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_APPLIED_MOONLIGHT_AMULET)
+
+/datum/heretic_knowledge/spell/moon_ringleader/proc/on_amulet(...)
+	SIGNAL_HANDLER
+	add_charges(1, uncapped = TRUE)
 
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "The Last Act"

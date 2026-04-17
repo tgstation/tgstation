@@ -99,8 +99,11 @@
 		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
+	required_atoms = list(/obj/item/stock_parts/power_store = 1)
 	action_to_add = /datum/action/cooldown/spell/realignment
 	cost = 2
+	max_charges = 3
+	recharge_text = "To recharge, complete a ritual with a cell or battery."
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
 #define BLOOD_FLOW_PER_SEVEIRTY -1
@@ -174,8 +177,7 @@
 
 /datum/heretic_knowledge/armor/blade
 	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of titanium or silver to create a Shattered Panoply. \
-			Provides baton resistance and shock insulation while worn. \
-			Acts as a focus while hooded."
+			Provides baton resistance and shock insulation while worn."
 	gain_text = "The echoing, directionless cacophony of violence reverberates about me. \
 				Even as the Champion's steel panoply was torn from their form, each piece craves purpose still, seeking to intercept unseen or imagined attackers."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade)
@@ -191,7 +193,8 @@
 	desc = "Alters the fabric of reality, conjuring a magical arena unpassable to outsiders, \
 		all participants are trapped and immune to any form of crowd control or enviromental hazards; \
 		trapped participants are granted a Blade and are unable to leave or jaunt until they score a critical hit. \
-		Critical hits partially restore the Heretic's health."
+		Critical hits partially restore the Heretic's health. \
+		You are rewarded with one charge for every high value sacrifice you complete."
 	gain_text = "Shadows crawl across the room, casting every chair, table \
 		and console into the looming shape of another traitorous hand. \
 		I have made an enemy of all, and peace will never be known to me \
@@ -200,6 +203,21 @@
 	cost = 2
 	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
 	is_final_knowledge = TRUE
+	max_charges = 1
+	recharge_text = "You are rewarded with one charge for every high value sacrifice you complete."
+
+/datum/heretic_knowledge/spell/wolves_among_sheep/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE, PROC_REF(on_sacrifice))
+
+/datum/heretic_knowledge/spell/wolves_among_sheep/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE)
+
+/datum/heretic_knowledge/spell/wolves_among_sheep/proc/on_sacrifice(datum/sacrifice, mob/living/sacrifice, high_value)
+	SIGNAL_HANDLER
+	if(high_value)
+		add_charges(1, uncapped = TRUE)
 
 /datum/heretic_knowledge/blade_upgrade/blade
 	name = "Empowered Blades"
@@ -301,11 +319,44 @@
 	desc = "Grants you Furious Steel, a targeted spell. Using it will summon three \
 		orbiting blades around you. These blades will protect you from all attacks, \
 		but are consumed on use. Additionally, you can click to fire the blades \
-		at a target, dealing damage and causing bleeding."
+		at a target, dealing damage and causing bleeding. \
+		You gain two charge every time you knock someone into critical condition, though you can also recharge it with knives."
 	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
 		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
+	required_atoms = list(/obj/item/knife = 1)
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 2
+	max_charges = 6
+	recharge_amount = 0.5
+	recharge_text = "To recharge, complete a ritual with a knife - this will return half of the spell's maximum charges. \
+		Alternatively, you gain two charge every time you knock someone into critical condition."
+
+/datum/heretic_knowledge/spell/furious_steel/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hit_someone))
+	RegisterSignal(user, COMSIG_MOB_BLADE_BARRIER_TRIGGERED, PROC_REF(blade_barrier_triggered))
+
+/datum/heretic_knowledge/spell/furious_steel/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_USER_PRE_ITEM_ATTACK)
+	UnregisterSignal(user, COMSIG_MOB_BLADE_BARRIER_TRIGGERED)
+
+/datum/heretic_knowledge/spell/furious_steel/proc/hit_someone(mob/living/source, mob/living/target, obj/item/used_weapon)
+	SIGNAL_HANDLER
+
+	if(target.stat == CONSCIOUS && !ismonkey(target))
+		addtimer(CALLBACK(src, PROC_REF(check_crit), target), 0.1 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE)
+
+/datum/heretic_knowledge/spell/furious_steel/proc/check_crit(mob/living/target)
+	if(target.stat != CONSCIOUS)
+		add_charges(2)
+
+/datum/heretic_knowledge/spell/furious_steel/proc/blade_barrier_triggered(mob/living/target, datum/status_effect/barrier)
+	SIGNAL_HANDLER
+
+	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/spell = created_action_ref
+	if(spell?.blade_effect == barrier)
+		remove_charges(1)
 
 /datum/heretic_knowledge/ultimate/blade_final
 	name = "Maelstrom of Silver"

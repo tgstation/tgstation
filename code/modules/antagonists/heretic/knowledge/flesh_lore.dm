@@ -220,11 +220,11 @@
 	action_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
 	cost = 2
 	drafting_tier = 5
+	max_charges = INFINITY
 
 /datum/heretic_knowledge/armor/flesh
 	desc = "Allows you to transmute a table (or a suit), a mask and a pool of blood to create a writhing embrace. \
-		It grants you the ability to detect the health condition of other living (and non-living) and an aura that slowly heals your summons. \
-		Acts as a focus while hooded."
+		It grants you the ability to detect the health condition of other living (and non-living) and an aura that slowly heals your summons."
 	gain_text = "I tugged these wretched, slothing things about me, like one might a warm blanket. \
 				With eyes-not-mine, they will witness. With teeth-not-mine, they will clench. With limbs-not-mine, they will break."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh)

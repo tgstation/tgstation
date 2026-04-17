@@ -75,7 +75,7 @@
 
 // no breaky herety thingy
 /obj/structure/destructible/eldritch_crucible/rust_heretic_act()
-	return
+	return FALSE
 
 /obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/melee/touch_attack/mansus_fist))

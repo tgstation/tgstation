@@ -110,6 +110,7 @@
 	action_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
 	cost = 2
 	is_final_knowledge = TRUE
+	max_charges = INFINITY
 
 /datum/heretic_knowledge/spell/rust_construction
 	name = "Rust Construction"
@@ -119,11 +120,11 @@
 		they no longer looked man made. Or perhaps they never were in the first place."
 	action_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 2
+	max_charges = INFINITY
 
 /datum/heretic_knowledge/armor/rust
 	desc = "Allows you to transmute a table (or a suit), a mask and any trash item to create a Salvaged Remains. \
-			Has extra armor, tackle resistance and syringe immunity while standing on rust. \
-			Acts as a focus while hooded."
+			Has extra armor, tackle resistance and syringe immunity while standing on rust."
 	gain_text = "From beneath warped scrap, the Blacksmith pulls forth an ancient fabric. \
 				\"Whatever this once stood for is lost. So now, we give it new purpose.\""
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust)
@@ -137,11 +138,16 @@
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
-		Already rusted surfaces are destroyed \ Also improves the rusting abilities of non rust-heretics."
+		Already rusted surfaces are destroyed. Also improves the rusting abilities of non rust-heretics"
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
+	required_atoms = list(
+		/obj/item/storage/toolbox = 1,
+	)
 	action_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 2
 	research_tree_icon_frame = 5
+	max_charges = 12
+	recharge_text = "To recharge, complete a ritual with a toolbox."
 
 /datum/heretic_knowledge/blade_upgrade/rust
 	name = "Toxic Blade"
@@ -163,13 +169,35 @@
 	name = "Entropic Plume"
 	desc = "Grants you Entropic Plume, a spell that releases a vexing wave of Rust. \
 		Blinds, poisons, and inflicts Amok on any heathen it hits, causing them to strike \
-		at friend or foe wildly. Also rusts and destroys and surfaces it hits and improves the rusting abilities of non-rust heretics."
+		at friend or foe wildly. Also rusts and destroys and surfaces it hits \
+		and improves the rusting abilities of non-rust heretics."
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 
 	action_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 2
 	drafting_tier = 5
+	max_charges = 4
+	recharge_text = "To recharge, corrode 30 tiles with your abilities and spells."
+
+	var/rust_counter = 0
+
+/datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_RUST_HERETIC_ACT, PROC_REF(on_rust_tile_rusted))
+
+/datum/heretic_knowledge/spell/entropic_plume/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_RUST_HERETIC_ACT)
+
+/datum/heretic_knowledge/spell/entropic_plume/proc/on_rust_tile_rusted(mob/living/heretic, turf/rusted_target, result)
+	SIGNAL_HANDLER
+
+	if(isturf(rusted_target) && HAS_TRAIT(rusted_target, TRAIT_RUSTY) && result)
+		rust_counter += 1
+		if(rust_counter >= 30)
+			rust_counter -= 30
+			add_charges(1)
 
 /datum/heretic_knowledge/ultimate/rust_final
 	name = "Rustbringer's Oath"

@@ -75,6 +75,8 @@
 	/// Return this to prevent the hand spawning/unspawning
 	#define COMPONENT_CAST_HANDLESS (1<<0)
 
+#define COMSIG_SPELL_TOUCH_SPELL_ACTUALLY_CAST "spell_touch_spell_actually_cast"
+
 // Jaunt Spells
 /// Sent from datum/action/cooldown/spell/jaunt/before_cast, before the mob enters jaunting as a pre-check: (datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_PRE_JAUNT "spell_mob_pre_jaunt"
