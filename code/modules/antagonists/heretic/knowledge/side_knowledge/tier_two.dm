@@ -213,7 +213,7 @@
 	if(!HAS_TRAIT(user, TRAIT_UNCONVERTABLE))
 		for(var/obj/item/paper/paper in selected_atoms)
 			for(var/datum/paper_input/text as anything in paper.raw_text_inputs)
-				hypnosis_text += "[STRIP_HTML_FULL(text, MAX_MESSAGE_LEN)] "
+				hypnosis_text += "[STRIP_HTML_FULL(text.raw_text, MAX_MESSAGE_LEN)] "
 			paper.burn()
 			selected_atoms -= paper
 
