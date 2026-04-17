@@ -34,7 +34,6 @@
 		. += span_info("The current NST (local) time is: [server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour))].")
 		if(user.is_literate())
 			. += span_info("That means it is currently [round_timestamp()] into the shift.")
-		. += span_info("The current TCT (galactic) time is: [time2text(world.realtime, "hh:mm:ss", NO_TIMEZONE)].")
 
 /obj/item/table_clock/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()

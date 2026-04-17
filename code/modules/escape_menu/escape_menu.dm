@@ -24,6 +24,8 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	var/client/client
 	/// A weakref to the hud this escape menu currently applies to
 	var/datum/weakref/our_hud_ref
+	/// The details at the top right that persists through all screens, showing round info.
+	var/atom/movable/screen/escape_menu/details/detail_screen
 
 	VAR_PRIVATE
 		ckey
@@ -49,6 +51,8 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	base_holder = new(client)
 	if(isnull(dim_screen))
 		dim_screen = new()
+	detail_screen = new()
+	detail_screen.update_text(client)
 	populate_base_ui()
 
 	page_holder = new(client)
@@ -64,7 +68,10 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	if (!isnull(ckey))
 		GLOB.escape_menus[ckey] = src
 
+	START_PROCESSING(SSescape_menu, src)
+
 /datum/escape_menu/Destroy(force)
+	STOP_PROCESSING(SSescape_menu, src)
 	QDEL_NULL(base_holder)
 	QDEL_NULL(page_holder)
 	resource_panels = null // list contents were already qdeled in QDEL_NULL(page_holder), so we can safely null this
@@ -81,6 +88,9 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	client = null
 
 	return ..()
+
+/datum/escape_menu/process(seconds_per_tick)
+	detail_screen.update_text(client)
 
 /datum/escape_menu/proc/on_client_qdel()
 	SIGNAL_HANDLER
@@ -127,7 +137,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	PRIVATE_PROC(TRUE)
 
 	base_holder.give_protected_screen_object(dim_screen)
-	base_holder.give_protected_screen_object(give_escape_menu_details())
+	base_holder.give_screen_object(detail_screen)
 
 /datum/escape_menu/proc/open_home_page()
 	PRIVATE_PROC(TRUE)
