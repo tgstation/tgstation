@@ -125,7 +125,7 @@
 	. = ..()
 	UnregisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE)
 
-/datum/heretic_knowledge/spell/void_prison/proc/on_sacrifice(datum/sacrifice, ...)
+/datum/heretic_knowledge/spell/void_prison/proc/on_sacrifice(...)
 	SIGNAL_HANDLER
 	add_charges(1, uncapped = TRUE)
 
@@ -243,7 +243,7 @@
 	. = ..()
 	UnregisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE)
 
-/datum/heretic_knowledge/spell/void_conduit/proc/on_sacrifice(datum/sacrifice, mob/living/sacrifice, high_value)
+/datum/heretic_knowledge/spell/void_conduit/proc/on_sacrifice(datum/source, mob/living/sacrifice, high_value)
 	SIGNAL_HANDLER
 	if(high_value)
 		add_charges(1, uncapped = TRUE)
