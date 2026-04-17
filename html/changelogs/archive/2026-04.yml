@@ -323,3 +323,37 @@
       rifts in.
   theselfish:
   - sound: Shaving Ian will no longer sound like you're using a Welder.
+2026-04-16:
+  JohnFulpWillard:
+  - rscadd: Winning the slot machine jackpot now gives a memory.
+  - balance: Winning the slot machine jackpot is a +4 moodlet instead of +6, but it
+      is now a permanent moodlet.
+  - rscadd: Losing large amounts of money from the CRAB-17 will give you a negative
+      moodlet, which overwrites jackpot winnings.
+  Melbert:
+  - rscadd: If a playerless body (DNR'd or otherwise) is raised as a zombie, ghosts
+      are given the ability to take control of it
+  - rscadd: If a body that never had a player control it is risen as a zombie, they
+      are risen as a weaker "mindless zombie" (moves and heals slower, deals less
+      damage, infection is not guaranteed on hit)
+  SmArtKar:
+  - rscadd: Style meters now award you for clearing vents based on vent richness and
+      difficulty
+  - balance: Megafauna kills and vent taps grant a permanent 10% / 5/10/15% (based
+      on difficulty) permanent style boost respectively
+  - rscdel: Style meters no longer grant points for mining empty rocks
+  - qol: Style meter actions now list top-to-bottom rather than bottom-to-top
+  timothymtorres:
+  - server: Optimized CI workflow to skip map-specific linters when no maps are modified.
+2026-04-17:
+  Melbert:
+  - rscadd: Traitor Lawyers, Quartermasters, and Heads of Personnels can now purchase
+      a "Briefcase Embedded Firearm Trigger" from the uplink for 4tc - a briefcase
+      that allows any weapon stored within to be fired by "firing" the briefcase itself.
+      Weapon sizes are restricted to whatever fits in a briefcase, meaning it practically
+      only works with pistols and some laser weapons.  It has a subtle examine tell
+      that only appears while being held.
+  - rscadd: Also available for 8tc is a combo deal that comes pre-loaded with a Makarov.
+      This can also appear as a medium Spy reward.
+  - balance: The Spy item "boot dagger"'s examine tell now only appears if you're
+      examining them WHILE holding them.
