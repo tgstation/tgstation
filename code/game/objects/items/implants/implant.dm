@@ -125,7 +125,7 @@
  * * silent - unused here
  * * special - Set to true if removed by admin panel, should bypass any side effects
  */
-/obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = 0)
+/obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = FALSE)
 	moveToNullspace()
 	imp_in = null
 	source.implants -= src
@@ -139,9 +139,9 @@
 	GLOB.tracked_implants -= src
 	return TRUE
 
-/obj/item/implant/Destroy()
+/obj/item/implant/Destroy(force)
 	if(imp_in)
-		removed(imp_in)
+		removed(imp_in, silent = TRUE, special = TRUE)
 	return ..()
 
 /**
