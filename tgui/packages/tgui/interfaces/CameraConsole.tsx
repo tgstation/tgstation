@@ -269,6 +269,7 @@ const CameraControls = (props: { searchText: string }) => {
                   buttons={
                     activeCamera && [
                       <Button
+                        key={`toggle-${activeCamera.ref}`}
                         color={
                           recording_cameras.includes(activeCamera.ref)
                             ? 'green'
@@ -324,7 +325,7 @@ const CameraControls = (props: { searchText: string }) => {
                                 }
                               />
                             }
-                          ></ImageButton>
+                          />
                         </Stack.Item>
                       ))}
                     </Stack>
