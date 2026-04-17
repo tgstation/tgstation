@@ -137,8 +137,6 @@ const CameraSelector = (props) => {
       <Stack.Item grow>
         <Section fill scrollable>
           {cameras.map((camera) => {
-            const isRecording = recording_cameras.includes(camera.ref);
-
             return (
               <div
                 key={camera.ref}
@@ -146,7 +144,7 @@ const CameraSelector = (props) => {
                 className={classes([
                   'Button',
                   'Button--fluid',
-                  'Button--color--transparent',
+                  recording_cameras.includes(camera.ref) ? 'Button--color--red' : 'Button--color--transparent',
                   'Button--ellipsis',
                   activeCamera?.ref === camera.ref
                     ? 'Button--selected'
@@ -157,17 +155,7 @@ const CameraSelector = (props) => {
                     camera: camera.ref,
                   })
                 }
-              > <Button
-                  icon={isRecording ? 'circle-stop' : 'video'}
-                  color={isRecording ? 'bad' : 'transparent'}
-                  tooltip={isRecording ? 'Stop recording' : 'Start recording'}
-                  tooltipPosition="right"
-                  onClick={() =>
-                    act('toggle_recording', {
-                      camera: camera.ref,
-                    })
-                  }
-                />
+              >
                 {camera.name}
               </div>
             );
@@ -180,7 +168,7 @@ const CameraSelector = (props) => {
 
 const CameraControls = (props: { searchText: string }) => {
   const { act, data } = useBackend<Data>();
-  const { activeCamera, can_spy, mapRef, pictures } = data;
+  const { activeCamera, can_spy, mapRef, pictures, recording_cameras = [] } = data;
   const { searchText } = props;
   const [showPictures, setShowPictures] = useState(true);
 
@@ -266,7 +254,19 @@ const CameraControls = (props: { searchText: string }) => {
             </Stack.Item>
             {showPictures && (
               <Stack.Item basis="118px">
-                <Section fill scrollable title="Captured Pictures">
+                <Section fill scrollable title="Captured Pictures" buttons={activeCamera && [
+                  <Button
+                    color={recording_cameras.includes(activeCamera.ref) ? 'green' : 'red'}
+                    icon={recording_cameras.includes(activeCamera.ref) ? 'circle-stop' : 'video'}
+                    tooltipPosition="right"
+                    onClick={() =>
+                      act('toggle_recording', {
+                        camera: activeCamera.ref,
+                      })}
+                  >
+                    {recording_cameras.includes(activeCamera.ref) ? 'Recording...' : 'Off'}
+                  </Button>
+                ]}>
                   {!activeCamera ? (
                     <NoticeBox>No camera selected.</NoticeBox>
                   ) : pictures.length ? (
@@ -277,7 +277,6 @@ const CameraControls = (props: { searchText: string }) => {
                             fluid
                             imageSize={64}
                             imageSrc={picture.photo_url}
-                            icon="image"
                             tooltip={picture.name || `Picture #${picture.id}`}
                             tooltipPosition="top"
                             onClick={() => {
