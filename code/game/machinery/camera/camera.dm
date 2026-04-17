@@ -494,16 +494,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		QDEL_LIST(pictures)
 		pictures = list()
 		SScameras.recording_cameras -= camera
+		qdel(GetComponent(/datum/component/camera))
 	else if(length(SScameras.recording_cameras) < MAX_RECORDING_CAMERAS)
 		is_recording = TRUE
 		SScameras.recording_cameras += camera
+		AddComponent(/datum/component/camera)
 
 /obj/machinery/camera/proc/take_photo(mob/user, add_to_pictures = FALSE)
 	var size_x = view_range + 1
 	var size_y = view_range + 1
 	var/width = APERTURE_TO_METERS(size_x - 1)
 	var/height = APERTURE_TO_METERS(size_y - 1)
-	var/datum/picture/picture = capture_photo(get_turf(src), get_turf(src), view_range, user, size_x, size_y, width, height, "picture at [station_time_timestamp()]", FALSE)
+
+	var/datum/component/camera/camera = GetComponent(/datum/component/camera)
+	if(isnull(camera))
+		return
+	var/datum/picture/picture = camera.capture_photo(get_turf(src), get_turf(src), view_range, user, size_x, size_y, width, height, "picture at [station_time_timestamp()]", FALSE)
 	if(add_to_pictures)
 		if(isnull(picture))
 			return

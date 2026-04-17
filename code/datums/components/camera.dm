@@ -1,3 +1,5 @@
+/datum/component/camera
+
 /obj/effect/appearance_clone
 
 /obj/effect/appearance_clone/New(loc, atom/our_atom) //Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
@@ -14,7 +16,7 @@
 
 #define PHYSICAL_POSITION(atom) ((atom.y * ICON_SIZE_Y) + (atom.pixel_y))
 
-/proc/camera_get_icon(list/turfs, turf/center, datum/turf_reservation/clone_area, see_ghosts)
+/datum/component/camera/proc/camera_get_icon(list/turfs, turf/center, datum/turf_reservation/clone_area, see_ghosts)
 	var/list/atoms = list()
 	var/list/lighting = list()
 	var/skip_normal = FALSE
@@ -175,7 +177,7 @@
  * * size_x, size_y - the size of the picture area
  * * width, height - the dimensions of the photo
 */
-/proc/get_photo_snapshot(turf/target_turf, turf/viewer, view_range, mob/user, size_x, size_y, width, height)
+/datum/component/camera/proc/get_photo_snapshot(turf/target_turf, turf/viewer, view_range, mob/user, size_x, size_y, width, height)
 	var/list/seen = get_hear_turfs(view_range, viewer)
 	var/datum/photo_snapshot/snapshot = new
 
@@ -214,7 +216,7 @@
  * * see_ghosts - whether the photo should show ghosts or not
  * * datum/photo_snapshot/snapshot - the data to render the photo from
 */
-/proc/render_photo_snapshot(turf/target_turf, width, height, name, see_ghosts, datum/photo_snapshot/snapshot)
+/datum/component/camera/proc/render_photo_snapshot(turf/target_turf, width, height, name, see_ghosts, datum/photo_snapshot/snapshot)
 	if(isnull(snapshot))
 		return null
 
@@ -236,7 +238,7 @@
 		mobs_spotted += mob
 		if(mob.stat == DEAD)
 			dead_spotted += mob
-		var/info = mob.get_photo_description(src)
+		var/info = mob.get_photo_description(see_ghosts)
 		if(!isnull(info))
 			desc += info
 
@@ -266,7 +268,7 @@
  * * see_ghosts - whether the photo should show ghosts or not
  * * datum/photo_snapshot/snapshot - the data to render the photo from
 */
-/proc/capture_photo(turf/target_turf, turf/viewer, view_range, mob/user, size_x, size_y, width, height, name, see_ghosts)
+/datum/component/camera/proc/capture_photo(turf/target_turf, turf/viewer, view_range, mob/user, size_x, size_y, width, height, name, see_ghosts)
 	var/datum/photo_snapshot/snapshot = get_photo_snapshot(target_turf, viewer, view_range, user, size_x, size_y, width, height)
 	return render_photo_snapshot(target_turf, width, height, name, see_ghosts, snapshot)
 

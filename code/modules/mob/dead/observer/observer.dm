@@ -152,8 +152,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	ADD_TRAIT(src, TRAIT_GOOD_HEARING, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_DETECT_STORM, INNATE_TRAIT)
 
-/mob/dead/observer/get_photo_description(obj/item/camera/camera)
-	if(!invisibility || camera.see_ghosts)
+/mob/dead/observer/get_photo_description(see_ghosts)
+	if(!invisibility || see_ghosts)
 		return photo_description
 
 /mob/dead/observer/narsie_act()

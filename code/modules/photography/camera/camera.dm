@@ -67,6 +67,7 @@
 		light_holder.AddComponentFrom(REF(src), /datum/component/overlay_lighting/camera, light_range, light_power, light_color, FALSE, TRUE, FALSE, TRUE)
 
 	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera, new /obj/item/circuit_component/remotecam/polaroid), SHELL_CAPACITY_SMALL)
+	AddComponent(/datum/component/camera)
 	register_context()
 
 /obj/item/camera/Destroy(force)
@@ -236,10 +237,13 @@
 	var/width = APERTURE_TO_METERS(picture_size_x)
 	var/height = APERTURE_TO_METERS(picture_size_y)
 
-	var/datum/photo_snapshot/snapshot = get_photo_snapshot(target_turf, viewer, view_range, user, size_x, size_y, width, height)
+	var/datum/component/camera/camera = GetComponent(/datum/component/camera)
+	if(isnull(camera))
+		return
+	var/datum/photo_snapshot/snapshot = camera.get_photo_snapshot(target_turf, viewer, view_range, user, size_x, size_y, width, height)
 	// Do this before rendering so revenants can be revealed for the photo.
 	steal_souls(snapshot.mobs)
-	var/datum/picture/picture = render_photo_snapshot(target_turf, width, height, "picture", see_ghosts, snapshot)
+	var/datum/picture/picture = camera.render_photo_snapshot(target_turf, width, height, "picture", see_ghosts, snapshot)
 	if(isnull(picture))
 		blending = FALSE
 		return
