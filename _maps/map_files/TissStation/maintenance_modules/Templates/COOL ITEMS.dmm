@@ -83,10 +83,6 @@
 /obj/item/mod/module/waddle,
 /turf/open/space/basic,
 /area/space)
-"Q" = (
-/obj/structure/reagent_dispensers/beerkeg,
-/turf/open/space/basic,
-/area/space)
 "T" = (
 /obj/item/broken_missile,
 /turf/open/space/basic,
@@ -141,7 +137,7 @@ H
 H
 H
 X
-Q
+H
 V
 "}
 (4,1,1) = {"

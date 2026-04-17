@@ -53,6 +53,19 @@
 	custom_materials = list(/datum/material/sandstone = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_BASIC
 
+/turf/closed/wall/mineral/stone/wizard
+	icon = 'troutstation/icons/turf/walls/stone_wall_wizard.dmi'
+	icon_state = "stone_wall_wizard-0"
+	base_icon_state = "stone_wall_wizard"
+	smoothing_groups = SMOOTH_GROUP_STONE_WALLS_WIZARD + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_STONE_WALLS_WIZARD
+
+/obj/structure/sink/cauldron
+	name = "cauldron"
+	icon = 'troutstation/icons/obj/watercloset.dmi'
+	icon_state = "cauldron"
+	desc = "A mystically shitty cauldron which seems to slowly refill its contents. You don't think you'd be able to actually brew with this..."
+	dispensedreagent = /datum/reagent/luminescent_fluid
 
 /// Areas
 

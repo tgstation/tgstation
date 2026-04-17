@@ -1096,6 +1096,11 @@
 /turf/open/floor/carpet/red,
 /area/station/maintenance/department/cargo)
 "WL" = (
+/obj/item/paper/crumpled{
+	default_raw_text = "20,9";
+	pixel_x = -8;
+	pixel_y = 10
+	},
 /obj/structure/table/wood,
 /obj/item/reagent_containers/hypospray/medipen/pumpup,
 /obj/item/reagent_containers/hypospray/medipen/pumpup{

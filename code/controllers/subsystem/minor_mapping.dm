@@ -15,6 +15,7 @@ SUBSYSTEM_DEF(minor_mapping)
 		/mob/living/basic/regal_rat/controlled = 2,
 		/mob/living/basic/skitterer = 10, // troutstation edit
 		/mob/living/basic/gay_skitterer = 2, // troutstation edit
+		/mob/living/basic/bunyip = 2, // troutstation edit
 	)
 
 /datum/controller/subsystem/minor_mapping/Initialize()
