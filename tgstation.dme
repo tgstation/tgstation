@@ -5041,6 +5041,8 @@
 #include "code\modules\minimap\minimap_drawing.dm"
 #include "code\modules\minimap\minimaps.dm"
 #include "code\modules\minimap\rewrite_attempt\minimap.dm"
+#include "code\modules\minimap\rewrite_attempt\minimap_hud.dm"
+#include "code\modules\minimap\rewrite_attempt\minimap_verbs.dm"
 #include "code\modules\mining\aux_base.dm"
 #include "code\modules\mining\fulton.dm"
 #include "code\modules\mining\machine_processing.dm"
