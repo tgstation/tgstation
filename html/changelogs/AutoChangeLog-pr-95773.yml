@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix window spawners not being dense, which affected random spawners LOS boundaries."
