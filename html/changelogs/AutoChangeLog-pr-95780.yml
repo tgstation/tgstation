@@ -1,0 +1,4 @@
+author: "Yobrocharlie"
+delete-after: True
+changes:
+  - bugfix: "Removes inert wands of fireball and healing from the academy, apparently inert doesnt mean not working but just fewer charges."
