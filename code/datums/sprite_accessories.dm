@@ -1274,8 +1274,9 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	var/use_female = physique == FEMALE && female_sprite_flags
 	var/use_digi = digi_icon_state && (bodyshape & BODYSHAPE_DIGITIGRADE)
 	female_sprite_flags = initial(female_sprite_flags)
-	if(use_digi && female_sprite_flags)
-		female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY // No bottom gender shaping for the digi legs
+	if(use_digi)
+		if(female_sprite_flags)
+			female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY // No bottom gender shaping for the digi legs
 
 	var/key = "[icon_state]-[greyscale_config || "ng"]-[use_female]-[use_digi]-[greyscale_colors]"
 	var/mutable_appearance/result
