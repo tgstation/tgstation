@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 
 	// The mansus celebrates your efforts
 	if(IS_HERETIC(owner))
-		owner.heal_overall_damage(10, 10)
+		owner.heal_overall_damage(15, 15)
 		owner.adjust_tox_loss(-10, forced = TRUE) // Slime heretics everywhere...
 		owner.adjust_oxy_loss(-10)
 		if(iscarbon(owner))
