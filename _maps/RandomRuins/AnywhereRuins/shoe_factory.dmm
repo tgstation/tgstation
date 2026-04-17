@@ -13,20 +13,21 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
-"az" = (
-/obj/structure/girder,
-/turf/open/floor/plating,
-/area/ruin/shoe_factory)
 "aW" = (
 /obj/structure/sign/poster/official/safety_eye_protection/directional/south,
 /turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
+"ba" = (
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = -32;
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/shoe_factory)
 "bl" = (
 /obj/effect/spawner/random/vending/colavend,
-/turf/open/floor/wood,
-/area/ruin/shoe_factory)
-"bn" = (
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/ruin/shoe_factory)
 "bQ" = (
@@ -107,12 +108,16 @@
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
-"er" = (
-/turf/closed/wall/rust,
+"dZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti{
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/wood,
 /area/ruin/shoe_factory)
-"fM" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
+"ew" = (
+/obj/structure/girder,
+/turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
 "gm" = (
 /obj/machinery/light/small/dim/directional/east,
@@ -131,25 +136,15 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/shoe_factory)
-"gv" = (
-/obj/structure/closet/cardboard,
-/obj/effect/turf_decal/delivery,
-/obj/effect/spawner/random/mining_loot/shoe_factory{
-	spawn_loot_count = 1;
-	spawn_scatter_radius = 0;
-	spawn_random_offset = 0
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/rust,
-/area/ruin/shoe_factory)
-"hI" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt/dust,
+"hU" = (
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
+/area/ruin/shoe_factory)
+"ic" = (
+/obj/structure/girder,
+/turf/open/floor/plating,
 /area/ruin/shoe_factory)
 "jF" = (
 /obj/machinery/light/small/dim/directional/west,
@@ -162,6 +157,12 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/shoe_factory)
+"jP" = (
+/obj/effect/spawner/random/trash/graffiti{
+	spawn_loot_chance = 50
+	},
+/turf/closed/wall,
+/area/ruin/shoe_factory)
 "jQ" = (
 /obj/structure/sign/warning,
 /turf/closed/wall,
@@ -170,10 +171,14 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
-"kn" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/item/chair,
-/turf/open/floor/wood,
+"kG" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/effect/spawner/random/trash/graffiti{
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
 /area/ruin/shoe_factory)
 "kJ" = (
 /obj/machinery/light/small/dim/directional/north,
@@ -218,8 +223,8 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
-"mT" = (
-/obj/structure/grille/broken,
+"mR" = (
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
 "ny" = (
@@ -247,10 +252,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/ruin/shoe_factory)
-"oC" = (
-/obj/structure/girder,
-/turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
 "oU" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -280,6 +281,12 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
+"qG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/shoe_factory)
 "ra" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -299,7 +306,10 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/shoe_factory)
-"sj" = (
+"si" = (
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
 "tf" = (
@@ -317,10 +327,6 @@
 /obj/machinery/light/small/dim/directional/south,
 /turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
-"to" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/rust,
-/area/ruin/shoe_factory)
 "tz" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/trash/garbage,
@@ -335,19 +341,16 @@
 /obj/structure/sign/poster/official/cleanliness/directional/east,
 /obj/structure/sink/kitchen/directional/west,
 /obj/machinery/light/small/directional/south,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = -32;
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/iron/freezer,
 /area/ruin/shoe_factory)
 "uV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
-/area/ruin/shoe_factory)
-"vw" = (
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron{
-	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
-	},
 /area/ruin/shoe_factory)
 "wv" = (
 /obj/structure/closet/cardboard,
@@ -413,9 +416,32 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/spawner/random/trash/graffiti{
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
+/area/ruin/shoe_factory)
+"yu" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/shoe_factory)
+"yw" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/shoe_factory)
+"yJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
 /area/ruin/shoe_factory)
 "yO" = (
 /obj/structure/disposalpipe/segment{
@@ -423,12 +449,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/safety_eye_protection/directional/north,
-/turf/open/floor/plating/rust,
-/area/ruin/shoe_factory)
-"yX" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
 "yZ" = (
@@ -442,6 +462,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/turf/open/floor/plating,
+/area/ruin/shoe_factory)
+"zB" = (
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
 "zE" = (
@@ -482,6 +506,27 @@
 /obj/structure/railing/corner/end,
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
+"Dn" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/graffiti{
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/shoe_factory)
+"DB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = -32;
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/shoe_factory)
 "DI" = (
 /turf/template_noop,
 /area/template_noop)
@@ -489,26 +534,26 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
-"Er" = (
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron{
-	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
-	},
-/area/ruin/shoe_factory)
 "Es" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
 /turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
-"EB" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/ruin/shoe_factory)
 "EL" = (
 /obj/machinery/light/directional/west,
 /obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/shoe_factory)
+"ES" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = -32;
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -519,7 +564,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
-"Fw" = (
+"Fs" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -550,6 +595,12 @@
 	},
 /turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
+"Ho" = (
+/obj/effect/spawner/random/trash/graffiti{
+	spawn_loot_chance = 50
+	},
+/turf/closed/wall/rust,
+/area/ruin/shoe_factory)
 "HK" = (
 /obj/machinery/digital_clock/directional/north,
 /obj/item/kirbyplants/random,
@@ -574,12 +625,6 @@
 /obj/machinery/light/small/dim/directional/east,
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
-"Ih" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron{
-	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
-	},
-/area/ruin/shoe_factory)
 "IG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -587,11 +632,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
-"IQ" = (
-/obj/structure/railing{
-	dir = 8
+"Kf" = (
+/obj/effect/spawner/random/trash/graffiti{
+	spawn_loot_chance = 50
 	},
-/turf/open/floor/plating/rust,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
 /area/ruin/shoe_factory)
 "Kk" = (
 /obj/structure/closet/crate/cardboard,
@@ -617,12 +664,22 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
+"LO" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/chair,
+/turf/open/floor/wood,
+/area/ruin/shoe_factory)
 "LS" = (
 /obj/machinery/conveyor/inverted{
 	dir = 10;
 	id = "shoe_factory"
 	},
 /turf/open/floor/plating,
+/area/ruin/shoe_factory)
+"Mf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
 "Mj" = (
 /obj/structure/chair/office,
@@ -644,6 +701,9 @@
 "ND" = (
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
+"NQ" = (
+/turf/open/floor/plating/rust,
+/area/ruin/shoe_factory)
 "Ob" = (
 /obj/structure/railing{
 	dir = 8
@@ -656,6 +716,10 @@
 	dir = 6;
 	id = "shoe_factory"
 	},
+/turf/open/floor/plating,
+/area/ruin/shoe_factory)
+"OE" = (
+/obj/structure/girder/displaced,
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
 "OI" = (
@@ -672,9 +736,9 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood,
 /area/ruin/shoe_factory)
-"OX" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/rust,
+"QS" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/ruin/shoe_factory)
 "Re" = (
 /obj/effect/decal/cleanable/dirt,
@@ -710,6 +774,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/shoe_factory)
+"RY" = (
+/obj/structure/sign/warning,
+/turf/closed/wall/rust,
+/area/ruin/shoe_factory)
 "SX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -721,9 +789,8 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/shoe_factory)
-"Tv" = (
-/obj/machinery/smartfridge/drying/rack,
-/turf/open/floor/plating/rust,
+"Ti" = (
+/turf/closed/wall/rust,
 /area/ruin/shoe_factory)
 "Tw" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -735,6 +802,14 @@
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
+/area/ruin/shoe_factory)
+"TV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = -32;
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
 "Uk" = (
 /obj/machinery/conveyor{
@@ -757,6 +832,10 @@
 "UV" = (
 /obj/structure/table,
 /obj/machinery/microwave,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = -32;
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/wood,
 /area/ruin/shoe_factory)
 "Vj" = (
@@ -780,10 +859,6 @@
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
-/area/ruin/shoe_factory)
-"Wh" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
 /area/ruin/shoe_factory)
 "Wo" = (
 /obj/structure/railing{
@@ -813,12 +888,27 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/shoe_factory)
+"Xm" = (
+/obj/machinery/smartfridge/drying/rack,
+/turf/open/floor/plating/rust,
+/area/ruin/shoe_factory)
+"XD" = (
+/obj/structure/closet/cardboard,
+/obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/mining_loot/shoe_factory{
+	spawn_loot_count = 1;
+	spawn_scatter_radius = 0;
+	spawn_random_offset = 0
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/rust,
+/area/ruin/shoe_factory)
 "XN" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/ruin/shoe_factory)
-"XT" = (
-/obj/structure/girder/displaced,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = -32;
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/plating,
 /area/ruin/shoe_factory)
 "XW" = (
@@ -826,6 +916,10 @@
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
+/area/ruin/shoe_factory)
+"Yg" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
 "Yr" = (
 /obj/machinery/door/poddoor/shutters{
@@ -839,6 +933,10 @@
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
+/area/ruin/shoe_factory)
+"YT" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/ruin/shoe_factory)
 "YX" = (
 /obj/effect/spawner/random/mining_loot/shoe_factory,
@@ -860,11 +958,6 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ruin/shoe_factory)
-"ZT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/dim/directional/east,
-/turf/open/floor/plating/rust,
 /area/ruin/shoe_factory)
 
 (1,1,1) = {"
@@ -923,7 +1016,7 @@ DI
 DI
 DI
 DI
-er
+Ti
 gn
 gn
 pT
@@ -939,8 +1032,8 @@ DI
 dx
 uV
 uV
-EB
-er
+QS
+Ti
 DI
 DI
 DI
@@ -956,7 +1049,7 @@ DI
 DI
 DI
 DI
-er
+Ti
 dx
 GX
 ny
@@ -964,8 +1057,8 @@ jI
 dx
 dx
 dx
-er
-oC
+Ti
+ew
 Tw
 oU
 dx
@@ -974,22 +1067,22 @@ DI
 "}
 (6,1,1) = {"
 dx
-er
+Ti
 dx
 dx
-oC
+ew
 Rl
 Wf
-Ih
+hU
 Wf
-Wf
+ba
 EL
-Ih
-sj
+DB
+NQ
 Wf
-XN
+yJ
 Wf
-er
+Ti
 dx
 DI
 "}
@@ -998,18 +1091,18 @@ dx
 OR
 Vj
 UV
-er
-Wf
+Ti
+Kf
 xM
-hI
+yw
+Dn
+NQ
+yJ
 dF
-sj
-XN
-dF
-hI
-dF
+yw
+Dn
 HL
-to
+mR
 BM
 uV
 DI
@@ -1017,33 +1110,33 @@ DI
 (8,1,1) = {"
 dx
 qe
-kn
+LO
 ur
 xt
-Ih
+hU
 zF
 jQ
-er
+Ti
 DP
-fM
+zB
 DP
-XT
-OX
+OE
+RY
 WC
-Ih
+hU
 BM
 uV
 DI
 "}
 (9,1,1) = {"
-er
+Ti
 RU
 Zo
-Wh
+dZ
 dx
-sj
-to
-er
+NQ
+mR
+Ti
 dj
 Uk
 YX
@@ -1057,83 +1150,83 @@ uV
 DI
 "}
 (10,1,1) = {"
-er
+Ti
 HK
-Fw
-bn
+Fs
+YT
 dx
 XW
-to
-er
+TV
+Ti
 bQ
 DP
 DP
 DP
-er
+Ti
 dx
 SX
 LA
-er
-er
-XT
+Ti
+Ti
+OE
 "}
 (11,1,1) = {"
 dx
 bl
 tz
 ck
-er
+Ho
 Wf
-Er
+ES
 dx
 Op
 OI
 YY
 OI
 dt
-dx
+jP
 SX
 Wf
 dx
 Re
-er
+Ti
 "}
 (12,1,1) = {"
 dx
 dx
-oC
+ew
 dx
-er
-to
-vw
-XT
-az
-fM
+Ti
+mR
+yu
+OE
+ic
+zB
 DP
 DP
 bQ
-er
-yX
+Ti
+qG
 Wf
 tf
 uC
-er
+Ti
 "}
 (13,1,1) = {"
 DI
-er
+Ti
 jF
 ra
 Gz
-Ih
-zF
-er
+hU
+kG
+Ti
 dj
 Uk
 YX
 Uk
 LS
-dx
+jP
 rt
 xZ
 dx
@@ -1145,19 +1238,19 @@ DI
 dx
 mu
 dz
-er
-er
-az
+Ti
+Ti
+ic
 dx
 bQ
 dx
-er
-er
-az
+Ti
+Ti
+ic
 dx
 Yr
 GH
-er
+Ti
 DI
 DI
 "}
@@ -1169,13 +1262,13 @@ AS
 dx
 zE
 ND
-az
+ic
 Op
 OI
 YY
 OI
 dt
-er
+Ti
 ot
 mM
 dx
@@ -1185,21 +1278,21 @@ DI
 (16,1,1) = {"
 DI
 dx
-er
-er
+Ti
+Ti
 dx
 dX
 dE
 dx
-er
+Ti
 DP
 DP
 DP
 bQ
-er
+Ti
 IG
 tk
-er
+Ti
 DI
 DI
 "}
@@ -1211,16 +1304,16 @@ DI
 dx
 xd
 ND
-er
+Ti
 dj
 Uk
 YX
 Uk
 LS
-XT
+OE
 zg
 ND
-er
+Ti
 DI
 DI
 "}
@@ -1229,18 +1322,18 @@ DI
 DI
 dx
 dx
-az
+ic
 nH
 aW
 dx
 bQ
 DP
 DP
-mT
+Yg
 dx
-er
+Ti
 yO
-XN
+yJ
 dx
 DI
 DI
@@ -1248,8 +1341,8 @@ DI
 (19,1,1) = {"
 DI
 DI
-er
-Tv
+Ti
+Xm
 ND
 ND
 ND
@@ -1264,7 +1357,7 @@ ld
 GV
 dx
 dx
-er
+Ti
 "}
 (20,1,1) = {"
 DI
@@ -1272,10 +1365,10 @@ DI
 dx
 FS
 bV
-sj
-sj
+NQ
+NQ
 BW
-IQ
+si
 cf
 VY
 Es
@@ -1285,24 +1378,24 @@ Nr
 wQ
 HV
 yZ
-er
+Ti
 "}
 (21,1,1) = {"
 DI
 DI
-er
+Ti
 qA
 Nq
 ND
 wQ
 ND
-sj
-XN
+NQ
+yJ
 ND
 ND
 dE
-XN
-XN
+yJ
+yJ
 dE
 Mj
 cg
@@ -1313,40 +1406,40 @@ DI
 DI
 dx
 AC
-sj
+NQ
 Id
 ND
 dE
 Kk
-gv
+XD
 gm
 LF
 wv
 xW
-sj
-ZT
+NQ
+Mf
 le
 Fd
-er
+Ti
 "}
 (23,1,1) = {"
 DI
 DI
-oC
+ew
 dx
-er
-er
-er
-dx
-dx
-dx
-dx
-er
+Ti
+Ti
+Ti
 dx
 dx
 dx
-er
 dx
-er
+Ti
+dx
+dx
+dx
+Ti
+dx
+Ti
 dx
 "}
