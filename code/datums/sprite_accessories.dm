@@ -1271,7 +1271,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
  */
 /datum/sprite_accessory/clothing/proc/make_appearance(color = COLOR_WHITE, physique = MALE, bodyshape = BODYSHAPE_HUMANOID)
 	var/static/list/cached_icons = list()
-	var/use_female = physique == FEMALE
+	var/use_female = physique == FEMALE && female_sprite_flags
 	var/use_digi = digi_icon_state && (bodyshape & BODYSHAPE_DIGITIGRADE)
 	female_sprite_flags = initial(female_sprite_flags)
 	if(use_digi && female_sprite_flags)
