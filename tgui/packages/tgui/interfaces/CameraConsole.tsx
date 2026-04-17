@@ -144,7 +144,9 @@ const CameraSelector = (props) => {
                 className={classes([
                   'Button',
                   'Button--fluid',
-                  recording_cameras.includes(camera.ref) ? 'Button--color--red' : 'Button--color--transparent',
+                  recording_cameras.includes(camera.ref)
+                    ? 'Button--color--red'
+                    : 'Button--color--transparent',
                   'Button--ellipsis',
                   activeCamera?.ref === camera.ref
                     ? 'Button--selected'
@@ -168,7 +170,13 @@ const CameraSelector = (props) => {
 
 const CameraControls = (props: { searchText: string }) => {
   const { act, data } = useBackend<Data>();
-  const { activeCamera, can_spy, mapRef, pictures, recording_cameras = [] } = data;
+  const {
+    activeCamera,
+    can_spy,
+    mapRef,
+    pictures,
+    recording_cameras = [],
+  } = data;
   const { searchText } = props;
   const [showPictures, setShowPictures] = useState(true);
 
@@ -254,19 +262,37 @@ const CameraControls = (props: { searchText: string }) => {
             </Stack.Item>
             {showPictures && (
               <Stack.Item basis="118px">
-                <Section fill scrollable title="Captured Pictures" buttons={activeCamera && [
-                  <Button
-                    color={recording_cameras.includes(activeCamera.ref) ? 'green' : 'red'}
-                    icon={recording_cameras.includes(activeCamera.ref) ? 'circle-stop' : 'video'}
-                    tooltipPosition="right"
-                    onClick={() =>
-                      act('toggle_recording', {
-                        camera: activeCamera.ref,
-                      })}
-                  >
-                    {recording_cameras.includes(activeCamera.ref) ? 'Recording...' : 'Off'}
-                  </Button>
-                ]}>
+                <Section
+                  fill
+                  scrollable
+                  title="Captured Pictures"
+                  buttons={
+                    activeCamera && [
+                      <Button
+                        color={
+                          recording_cameras.includes(activeCamera.ref)
+                            ? 'green'
+                            : 'red'
+                        }
+                        icon={
+                          recording_cameras.includes(activeCamera.ref)
+                            ? 'circle-stop'
+                            : 'video'
+                        }
+                        tooltipPosition="right"
+                        onClick={() =>
+                          act('toggle_recording', {
+                            camera: activeCamera.ref,
+                          })
+                        }
+                      >
+                        {recording_cameras.includes(activeCamera.ref)
+                          ? 'Recording...'
+                          : 'Off'}
+                      </Button>,
+                    ]
+                  }
+                >
                   {!activeCamera ? (
                     <NoticeBox>No camera selected.</NoticeBox>
                   ) : pictures.length ? (
@@ -283,7 +309,7 @@ const CameraControls = (props: { searchText: string }) => {
                               act('show_photo', {
                                 camera: activeCamera.ref,
                                 photo_id: picture.id,
-                              })
+                              });
                             }}
                             buttons={
                               <Button
@@ -298,20 +324,21 @@ const CameraControls = (props: { searchText: string }) => {
                                 }
                               />
                             }
-                          >
-                          </ImageButton>
+                          ></ImageButton>
                         </Stack.Item>
                       ))}
                     </Stack>
                   ) : (
-                    <NoticeBox info>This camera has no captured pictures yet.</NoticeBox>
+                    <NoticeBox info>
+                      This camera has no captured pictures yet.
+                    </NoticeBox>
                   )}
                 </Section>
               </Stack.Item>
             )}
           </Stack>
         </Stack.Item>
-      </Stack >
-    </Section >
+      </Stack>
+    </Section>
   );
 };
