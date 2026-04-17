@@ -363,7 +363,7 @@
 		addtimer(CALLBACK(src, PROC_REF(revs_execution_failed)), 1 MINUTES, TIMER_UNIQUE|TIMER_DELETE_ME)
 		return
 
-	if(!can_be_headrev(candidate))
+	if(!can_be_headrev(candidate, TRUE))
 		log_dynamic("[config_tag]: [key_name(candidate)] was not eligible to be a headrev after the timer expired - finding a replacement.")
 		find_another_headrev()
 		return
@@ -378,7 +378,7 @@
 
 /datum/dynamic_ruleset/roundstart/revolution/proc/find_another_headrev()
 	for(var/mob/living/carbon/human/upstanding_citizen in GLOB.player_list)
-		if(!can_be_headrev(upstanding_citizen.mind))
+		if(!can_be_headrev(upstanding_citizen.mind, TRUE))
 			continue
 		reveal_head(upstanding_citizen.mind)
 		log_dynamic("[config_tag]: [key_name(upstanding_citizen)] was selected as a replacement headrev.")
