@@ -217,13 +217,13 @@
 			paper.burn()
 			selected_atoms -= paper
 
-	for(var/obj/item/implant/mindshield/shield in user.implants)
-		shield.removed(user, silent = FALSE)
-		shield.forceMove(user.drop_location())
-		shield.burn()
-
 	hypnosis_text = trim(hypnosis_text, MAX_MESSAGE_LEN) || pick_list(HERETIC_INFLUENCE_FILE, "hypnosis")
 	for(var/mob/living/carbon/human/victim in selected_atoms)
+		for(var/obj/item/implant/mindshield/shield in victim.implants)
+			shield.removed(victim, silent = FALSE)
+			shield.forceMove(victim.drop_location())
+			shield.burn()
+
 		selected_atoms -= victim
 		// lobotomy resistance because it might be a bit rough to make this permanent aye
 		var/datum/brain_trauma/hypnosis/trauma = new(hypnosis_text)
