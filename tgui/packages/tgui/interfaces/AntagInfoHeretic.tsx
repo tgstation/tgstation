@@ -119,7 +119,7 @@ const IntroductionSection = (props) => {
   return (
     <Stack justify="space-evenly" height="100%" width="100%">
       <Stack.Item grow>
-        <Section title="You are the Heretic!" fill fontSize="14px">
+        <Section title="You are the Heretic!" fill fontSize="14px" scrollable>
           <Stack vertical>
             <FlavorSection />
             <Stack.Divider />
@@ -225,25 +225,12 @@ const GuideSection = () => {
           <span style={hereticRed}>Living Heart</span>.
         </Stack.Item>
         <Stack.Item>
-          - Accomplish all of your objectives to be able to learn the{' '}
-          <span style={hereticYellow}>final ritual</span>. Complete the ritual
-          to become all powerful!
-        </Stack.Item>
-        <Stack.Item>
-          <span style={hereticRed}>WARNING!</span>
-          <br /> Accumulating a total of <b>{points_to_aura}</b>&nbsp;
+          - Accumulating a total of <b>{points_to_aura}</b>&nbsp;
           <span style={hereticBlue}>knowledge points</span>
-          &nbsp;to manifest a visible aura of&nbsp;
-          <span style={hereticPurple}>Mansus energy</span> around you. Simply
-          gaining the points is sufficent, spending them will not trigger it.
-          <br />
-          This aura will be visible to all those around you and will mark you as
-          a heretic. Consider the risks before accumulating too much knowledge!
-          <br />
-          Keep in mind that using a&nbsp;
-          <span style={hereticPurple}>Codex Cicatrix</span> will also make you
-          very obvious as a heretic when draining&nbsp;
-          <span style={hereticYellow}>influences</span>
+          &nbsp;will manifest a visible aura of&nbsp;
+          <span style={hereticPurple}>Mansus energy</span> around you. This aura
+          will be visible to all those around you and will mark you as a
+          Heretic. Consider the risks before accumulating too much knowledge!
         </Stack.Item>
       </Stack>
     </Stack.Item>
@@ -504,7 +491,7 @@ const ResearchInfo = () => {
   const { charges, knowledge_shop } = data;
 
   return (
-    <>
+    <Stack vertical fill>
       <Stack.Item mb={1.5} fontSize="20px" textAlign="center">
         You have <b>{charges || 0}</b>&nbsp;
         <span style={hereticBlue}>
@@ -522,7 +509,7 @@ const ResearchInfo = () => {
           </Stack.Item>
         )}
       </Stack>
-    </>
+    </Stack>
   );
 };
 

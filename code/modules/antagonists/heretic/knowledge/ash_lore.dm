@@ -27,9 +27,7 @@
 	tips = list(
 		"Your Mansus Grasp applies a short blind and a mark that puts your opponent into stamina crit when triggered by your blade. The mark can spread to nearby opponents.",
 		"Selecting this path makes you immune to high temperature damage. Remember, however, that your clothes can still burn! If you want to protect yourself from your own fire, wear a Scorched Mantle.",
-		"Your Scorched Mantle will cause you to generate firestacks on your own body (Make sure you toggle the effect!). Upon reaching 5 fire stacks, your ashen spells will be  empowered (indicated by your spells being highlighted in green).",
-		"Your Ashen passage is a short cooldown jaunt capable of removing restraints. If empowered, it gains a longer jaunt time, and also will remove stuns and stamina crit.",
-		"Volcano blast can make short work of your enemies, should they be foolish enough to stick close to each other. If empowered, it will have no cast time and generate twice the amount of firestacks. Burn the heathens to ashes!",
+		"Your Scorched Mantle will keep you on fire while protecting you from the ill effects of it. Use this to your advantage by running into groups of enemies, spreading fire far and wide.",
 		"Do not neglect the Mask of Madness. It will slowly sap the stamina of your enemies and make them hallucinate.",
 		"Make sure to set as many enemies on fire as you possibly can! Nightwatcher's Rebirth will heal you and have its cooldown reduced based on how many mobs you siphon.",
 		"Your ascension grants you complete immunity to environmental hazards, including bombs! But you are still vulnerable to more conventional weaponry. Do not become overconfident.",
@@ -91,8 +89,7 @@
 /datum/heretic_knowledge/spell/ash_passage
 	name = "Ashen Passage"
 	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality, \
-		allowing you to traverse a short distance, passing though any walls.<br>\
-		When empowered, it will break you out of any stuns and restraints, and will have a longer range."
+		allowing you to traverse a short distance, passing though any walls."
 	gain_text = "He knew how to walk between the planes."
 	required_atoms = list(/obj/effect/decal/cleanable/ash = 1)
 	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
@@ -100,14 +97,14 @@
 	drafting_tier = 5
 	max_charges = 6
 	focus_recharge_amount = 0.15
+	holywater_drain_amount = 0.15
 	transmute_text = "To recharge, complete a ritual with a smearing of ash."
 
 /datum/heretic_knowledge/spell/fire_blast
 	name = "Volcano Blast"
 	desc = "Grants you Volcano Blast, a spell that - after a short charge - fires off a beam of energy \
 		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
-		the beam will continue to another target.<br>\
-		When empowered, has instant cast time and blasts enemies with more flames."
+		the beam will continue to another target."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
 	action_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	required_atoms = list(/obj/structure/bonfire = 1)
@@ -115,6 +112,7 @@
 	research_tree_icon_frame = 7
 	max_charges = 3
 	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
 	transmute_text = "To recharge, complete a ritual with a lit bonfire."
 
 /datum/heretic_knowledge/spell/fire_blast/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -126,8 +124,7 @@
 
 /datum/heretic_knowledge/armor/ash
 	desc = "Create a Scorched Mantle.<br>\
-		It provides completes protection from fire, and is able to produce more flames passively.<br>\
-		When you have enough fire, you may cast empowered versions of your ashen spells."
+		It provides completes protection from fire, and is able to produce more flames passively."
 	transmute_text = "Transmute a table (or a suit), a mask and a match."
 	gain_text = "The Watch remain as they fell, crumbling away from sight. \
 		Yet the winds blowing through the city call them back to service, dust kicked into the air, a drifting silhouette of the fallen."
@@ -187,6 +184,7 @@
 	is_final_knowledge = TRUE
 	max_charges = 3
 	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
 	transmute_text = "To recharge, complete a ritual with a burning or husked corpse."
 
 /datum/heretic_knowledge/spell/flame_birth/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -208,7 +206,6 @@
 		When completed, you become a harbinger of flames, gaining two abilites.<br>\
 		Cascade, which causes a massive, growing ring of fire around you, \
 		and Oath of Flame, causing you to passively create a ring of flames as you walk.<br>\
-		Some ashen spells you already knew will be empowered as well.<br>\
 		You will also become immune to flames, space, and similar environmental hazards."
 	transmute_text = "Transmute 3 burning or husked corpses."
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \

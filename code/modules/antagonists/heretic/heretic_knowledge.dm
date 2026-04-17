@@ -139,10 +139,11 @@
 /datum/heretic_knowledge/proc/parse_required_item(atom/item_path, number_of_things)
 	// If we need a human, there is a high likelihood we actually need a (dead) body
 	if(ispath(item_path, /mob/living/carbon/human))
-		return "bod[number_of_things > 1 ? "ies" : "y"]"
+		return "[number_of_things] bod[number_of_things > 1 ? "ies" : "y"]"
 	if(ispath(item_path, /mob/living))
-		return "carcass[number_of_things > 1 ? "es" : ""] of any kind"
-	return "[initial(item_path.name)]\s"
+		return "[number_of_things] carcass[number_of_things > 1 ? "es" : ""] of any kind"
+	return "[number_of_things] [initial(item_path.name)]\s"
+
 /**
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
@@ -208,8 +209,10 @@
 	var/max_charges = 1
 	/// Percent of max charges restored on a successful ritual
 	var/recharge_amount = 1.0
-	/// What perfect of the max charges the spell regains periodically while wearing a focus
+	/// What percent of the max charges the spell regains periodically while wearing a focus
 	var/focus_recharge_amount = 0.0
+	/// What percent of the max charges the spell loses periodically from consuming holy water
+	var/holywater_drain_amount = 0.0
 
 /datum/heretic_knowledge/spell/New()
 	. = ..()
@@ -303,7 +306,7 @@
 		return NONE
 
 	if(feedback)
-		to_chat(the_spell.owner, span_hierophant("You don't have enough charges to cast this spell! [transmute_text]"))
+		to_chat(the_spell.owner, span_mansus("You don't have enough charges to cast this spell! [transmute_text]"))
 	return SPELL_CANCEL_CAST
 
 /datum/heretic_knowledge/spell/proc/check_charges(mob/living/source, datum/action/the_spell)
@@ -317,7 +320,7 @@
 	if(our_heretic?.ascended)
 		return NONE
 
-	to_chat(source, span_hierophant("You don't have enough charges to cast this spell! [transmute_text]"))
+	to_chat(source, span_mansus("You don't have enough charges to cast this spell! [transmute_text]"))
 	return SPELL_CANCEL_CAST
 
 /datum/heretic_knowledge/spell/proc/deduct_charge(mob/living/source, datum/action/the_spell)
@@ -333,16 +336,20 @@
 
 /// Add a number of charges, optionally bypassing the cap
 /datum/heretic_knowledge/spell/proc/add_charges(num, uncapped = FALSE)
+	var/pre_charge_value = charges
 	if(uncapped)
 		charges += num
 	else
 		charges = min(charges + num, max_charges)
 	update_charge_counter()
+	return charges != pre_charge_value
 
 /// Remove a number of charges (down to 0)
 /datum/heretic_knowledge/spell/proc/remove_charges(num)
+	var/pre_charge_value = charges
 	charges = max(charges - num, 0)
 	update_charge_counter()
+	return charges != pre_charge_value
 
 /datum/heretic_knowledge/spell/proc/update_charge_counter()
 	created_action_ref?.build_all_button_icons(UPDATE_BUTTON_STATUS)
@@ -668,13 +675,13 @@
 
 	var/list/requirements_string = list()
 
-	to_chat(user, span_hierophant("The [name] requires the following:"))
+	to_chat(user, span_mansus("The [name] requires the following:"))
 	for(var/obj/item/path as anything in required_atoms)
 		var/amount_needed = required_atoms[path]
 		to_chat(user, span_hypnophrase("[amount_needed] [initial(path.name)]\s..."))
 		requirements_string += "[amount_needed == 1 ? "":"[amount_needed] "][initial(path.name)]\s"
 
-	to_chat(user, span_hierophant("Completing it will reward you [KNOWLEDGE_RITUAL_POINTS] knowledge points. You can check the knowledge in your Researched Knowledge to be reminded."))
+	to_chat(user, span_mansus("Completing it will reward you [KNOWLEDGE_RITUAL_POINTS] knowledge points. You can check the knowledge in your Researched Knowledge to be reminded."))
 
 	transmute_text = "Transmute [english_list(requirements_string)]."
 	desc = "Rewards you with [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points."

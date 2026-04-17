@@ -87,6 +87,7 @@
 	drafting_tier = 5
 	max_charges = 6
 	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
 	transmute_text = "To recharge, complete a ritual with a pen, crayon, or spray can."
 
 /datum/heretic_knowledge/spell/star_blast
@@ -101,6 +102,7 @@
 	cost = 2
 	max_charges = 4
 	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
 	transmute_text = "To recharge, complete a ritual with a sheet of plasma."
 
 /datum/heretic_knowledge/armor/cosmic
@@ -132,6 +134,7 @@
 	cost = 2
 	max_charges = 4
 	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
 	transmute_text = "To recharge, complete a ritual with a pair of gloves."
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
@@ -235,6 +238,7 @@
 	cost = 2
 	is_final_knowledge = TRUE
 	max_charges = 2
+	holywater_drain_amount = 0.25
 	transmute_text = "To recharge, complete a ritual with a corpse with a star mark on it."
 
 /datum/heretic_knowledge/spell/cosmic_expansion/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -348,14 +352,14 @@
 
 	var/mob/living/to_reset = bad_dog.resolve()
 
-	to_chat(owner, span_hierophant("You prompt [to_reset] to shift it\'s personality..."))
+	to_chat(owner, span_mansus("You prompt [to_reset] to shift it\'s personality..."))
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(to_reset.name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, alert_pic = to_reset, jump_target = owner, role_name_text = to_reset.name, amount_to_pick = 1)
 	if(isnull(chosen_one))
-		to_chat(owner, span_hierophant("Your request to shift [to_reset]'\s personality appears to have been denied... Looks like you're stuck with it for now."))
+		to_chat(owner, span_mansus("Your request to shift [to_reset]'\s personality appears to have been denied... Looks like you're stuck with it for now."))
 		StartCooldown()
 		return FALSE
-	to_chat(to_reset, span_hierophant("Your summoner reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
-	to_chat(owner, span_hierophant("The mind of [to_reset] has twisted itself to suit you better."))
+	to_chat(to_reset, span_mansus("Your summoner reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
+	to_chat(owner, span_mansus("The mind of [to_reset] has twisted itself to suit you better."))
 	message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(to_reset)])")
 	to_reset.ghostize(FALSE)
 	to_reset.PossessByPlayer(chosen_one.key)

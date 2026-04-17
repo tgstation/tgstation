@@ -894,7 +894,7 @@
 
 	var/mob/living/pawn = owner.current
 	pawn.equip_to_slot_if_possible(new /obj/item/clothing/neck/heretic_focus(get_turf(pawn)), ITEM_SLOT_NECK, TRUE, TRUE)
-	to_chat(pawn, span_hypnophrase("The Mansus has manifested you a focus."))
+	to_chat(pawn, span_mansus("The Mansus has manifested you a focus."))
 
 /datum/antagonist/heretic/antag_panel_data()
 	var/list/string_of_knowledge = list()
@@ -991,6 +991,15 @@
 	return researchable_knowledge
 
 /**
+ * Get a list of all knowledge datums that we've researched.
+ */
+/datum/antagonist/heretic/proc/get_researched_knowledge()
+	var/list/knowledge_list = list()
+	for(var/knowledge_type in researched_knowledge)
+		knowledge_list += researched_knowledge[knowledge_type][HKT_INSTANCE]
+	return knowledge_list
+
+/**
  * Check if the wanted type-path is in the list of research knowledge.
  */
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
@@ -1020,9 +1029,9 @@
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
 		if(!knowledge.can_be_invoked(src))
 			continue
-		rituals[knowledge.name] = knowledge
+		rituals += knowledge
 
-	return sortTim(rituals, GLOBAL_PROC_REF(cmp_heretic_knowledge), associative = TRUE)
+	return sortTim(rituals, GLOBAL_PROC_REF(cmp_heretic_knowledge))
 
 /**
  * Checks to see if our heretic can ccurrently ascend.

@@ -101,6 +101,7 @@
 	cost = 2
 	max_charges = 6
 	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a pair of glasses or goggles."
 
 /datum/heretic_knowledge/moon_amulet
@@ -150,6 +151,7 @@
 	drafting_tier = 5
 	max_charges = 4
 	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
 	transmute_text = "To recharge, successfully apply a Moonlight Amulet to a heathen."
 
 /datum/heretic_knowledge/spell/moon_parade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -204,6 +206,7 @@
 	is_final_knowledge = TRUE
 	max_charges = 2
 	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
 	transmute_text = "To recharge, successfully apply a Moonlight Amulet to a heathen."
 
 /datum/heretic_knowledge/spell/moon_ringleader/on_gain(mob/user, datum/antagonist/heretic/our_heretic)

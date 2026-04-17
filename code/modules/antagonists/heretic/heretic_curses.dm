@@ -80,7 +80,7 @@
 	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([name])")
 	var/obj/item/codex_cicatrix/morbus/cursed_book = locate() in selected_atoms
 	curse(to_curse, cursed_book)
-	to_chat(user, span_hierophant("You cast a [name] upon [to_curse.real_name]."))
+	to_chat(user, span_mansus("You cast a [name] upon [to_curse.real_name]."))
 
 	fingerprints = null
 	blood_samples = null

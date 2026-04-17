@@ -194,6 +194,7 @@
 	cost = 2
 	max_charges = 12
 	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a pair of gloves."
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock
@@ -222,6 +223,7 @@
 	cost = 2
 	is_final_knowledge = TRUE
 	max_charges = 2
+	holywater_drain_amount = 0.5
 	transmute_text = "To recharge, complete a ritual with a set of armor or space suit."
 	notice = "&bull; Cannot be used near living sentient beings.<br>&bull; Cancelled if you are hit with an anti-magic item."
 

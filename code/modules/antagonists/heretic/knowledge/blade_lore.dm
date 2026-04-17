@@ -105,6 +105,7 @@
 	cost = 2
 	max_charges = 3
 	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
 	transmute_text = "To recharge, complete a ritual with a cell or battery."
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
@@ -206,6 +207,7 @@
 	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
 	is_final_knowledge = TRUE
 	max_charges = 1
+	holywater_drain_amount = 0.5
 	transmute_text = "You are rewarded with one charge for every high value sacrifice you complete."
 
 /datum/heretic_knowledge/spell/wolves_among_sheep/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -330,6 +332,7 @@
 	max_charges = 6
 	recharge_amount = 0.5
 	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
 	transmute_text = "To recharge, complete a ritual with a knife - this will return half of the spell's maximum charges. \
 		Alternatively, you gain two charge every time you knock someone into critical condition."
 

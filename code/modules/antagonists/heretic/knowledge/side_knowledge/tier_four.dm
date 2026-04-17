@@ -13,8 +13,9 @@
 	research_tree_icon_frame = 6
 	drafting_tier = 4
 	max_charges = 2
+	holywater_drain_amount = 0.5
 	transmute_text = "To recharge, meditate on a rune in the station's EVA room for 20 seconds."
-
+	/// Tracks tim ein EVA
 	var/seconds_in_eva = 0
 
 /datum/heretic_knowledge/spell/space_phase/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -94,6 +95,7 @@
 	drafting_tier = 4
 	max_charges = 3
 	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.33
 	transmute_text = "To recharge, complete a ritual with a bloodied rag or bandage, or a pool of blood."
 
 /datum/heretic_knowledge/spell/crimson_cleave/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)

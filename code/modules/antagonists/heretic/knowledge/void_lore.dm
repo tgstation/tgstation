@@ -98,6 +98,7 @@
 	research_tree_icon_frame = 7
 	max_charges = 4
 	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
 	transmute_text = "To recharge, complete a ritual with a pane of glass."
 
 /datum/heretic_knowledge/spell/void_prison
@@ -113,6 +114,7 @@
 	cost = 2
 	drafting_tier = 5
 	max_charges = 1
+	holywater_drain_amount = 0.5
 	transmute_text = "You are rewarded with one charge for every sacrifice you complete."
 
 /datum/heretic_knowledge/spell/void_prison/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -165,6 +167,7 @@
 	research_tree_icon_frame = 6
 	max_charges = 4
 	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
 	transmute_text = "To recharge, travel through a vacuum for 20 seconds."
 
 	var/seconds_in_vacuum = 0
@@ -229,6 +232,7 @@
 	cost = 2
 	is_final_knowledge = TRUE
 	max_charges = 1
+	holywater_drain_amount = 0.5
 	transmute_text = "You are rewarded with one charge for every high value sacrifice you complete."
 
 /datum/heretic_knowledge/spell/void_conduit/on_gain(mob/user, datum/antagonist/heretic/our_heretic)

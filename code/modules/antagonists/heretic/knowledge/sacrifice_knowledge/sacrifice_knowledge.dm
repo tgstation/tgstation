@@ -248,7 +248,7 @@
 
 	// Visible and audible encouragement!
 	to_chat(user, span_big(span_hypnophrase("A servant of the Sanguine Apostate!")))
-	to_chat(user, span_hierophant("Your patrons are rapturous!"))
+	to_chat(user, span_mansus("Your patrons are rapturous!"))
 	playsound(sacrifice, 'sound/effects/magic/disintegrate.ogg', 75, TRUE)
 
 	// Drop all items and splatter them around messily.

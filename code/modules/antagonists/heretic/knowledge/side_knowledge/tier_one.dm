@@ -126,7 +126,6 @@
 	)
 	result_atoms = list(/obj/item/codex_cicatrix)
 	cost = 1
-	priority = MAX_KNOWLEDGE_PRIORITY - 4
 	drafting_tier = 1
 	is_shop_only = TRUE
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
@@ -209,7 +208,6 @@
 		/obj/item/multitool = 1,
 	)
 	cost = 1
-	priority = MAX_KNOWLEDGE_PRIORITY - 3
 	drafting_tier = 1
 	research_tree_icon_path = 'icons/obj/card.dmi'
 	research_tree_icon_state = "eldritch"

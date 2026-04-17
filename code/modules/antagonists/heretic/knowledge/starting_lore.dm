@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	is_starting_knowledge = TRUE
 	max_charges = 8
 	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.125
 	transmute_text = "Tapping influences and completing sacrifices will recharge the spell."
 
 // Heretics can enhance their fishing rods to fish better - fishing content.
@@ -200,6 +201,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	is_starting_knowledge = TRUE
 	max_charges = 6
 	focus_recharge_amount = 0.16
+	holywater_drain_amount = 0.16
 	transmute_text = "Charges will return every three minutes. Using the spell again will reset the timer."
 	/// Cooldown for when we can give a charge back
 	COOLDOWN_DECLARE(charge_time)
