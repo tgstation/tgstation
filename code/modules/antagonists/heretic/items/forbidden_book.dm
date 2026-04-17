@@ -15,6 +15,7 @@
 	/// How fast we can draw runes
 	var/draw_speed = 15 SECONDS
 
+
 /obj/item/codex_cicatrix/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/effect_remover, \
@@ -40,12 +41,17 @@
 	if(.)
 		return
 
-	if(book_open)
-		close_animation()
-		update_weight_class(WEIGHT_CLASS_SMALL)
-	else
-		open_animation()
-		update_weight_class(WEIGHT_CLASS_NORMAL)
+	open_animation()
+	update_weight_class(WEIGHT_CLASS_NORMAL)
+	addtimer(CALLBACK(src, PROC_REF(close_book)), 30 SECONDS)
+
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	var/datum/heretic_knowledge/spell/basic/grasp_knowledge = heretic_datum.get_knowledge(__IMPLIED_TYPE__)
+	grasp_knowledge?.add_charges(grasp_knowledge.max_charges * 0.5)
+
+/obj/item/codex_cicatrix/proc/close_book()
+	close_animation()
+	update_weight_class(WEIGHT_CLASS_SMALL)
 
 /obj/item/codex_cicatrix/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)

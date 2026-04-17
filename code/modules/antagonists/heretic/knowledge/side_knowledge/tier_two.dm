@@ -178,3 +178,53 @@
 
 	user.balloon_alert(user, "no additional atom present!")
 	return FALSE
+
+/datum/heretic_knowledge/hypnosis_ritual
+	name = "Unwrap Minds"
+	desc = "Exposes a healthen directly to the horrors of the Mansus, hypnotizing them.\
+		<br>Further exposure to the horrors of the Mansus may cause the hypnosis to break."
+	transmute_text = "Transmute a scalpel, a shard of glass, a piece of paper, and a living heathen."
+	notice = "Whatever is written on the paper supplied, the heathen will be hypnotized with.\
+		<br>If the heathen is mindshielded, it will shater - but the resulting hypnosis may not be what you expect.\
+		<br>Other Heretics are unaffected by this ritual."
+	gain_text = "My rise has been lonely, but I had realized it did not have to be. \
+		I can show them the truth. Their weak, mortal minds may not be able to withstand the revelation, but in its tatters, they will find freedom. \
+		I can show them the world as it really is, and if they are strong enough to endure it, they will join me in my vision."
+	required_atoms = list(
+		/obj/item/scalpel = 1,
+		/obj/item/shard = 1,
+		/obj/item/paper = 1,
+		/mob/living/carbon/human = 1,
+	)
+	cost = 2
+	research_tree_icon_path = 'icons/hud/screen_alert.dmi'
+	research_tree_icon_state = "hypnosis"
+	drafting_tier = 2
+
+/datum/heretic_knowledge/hypnosis_ritual/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/mob/living/carbon/human/victim in atoms)
+		if(victim.stat == DEAD || IS_HERETIC(victim) || victim.has_trauma_type(/datum/brain_trauma/hypnosis))
+			atoms -= victim
+
+/datum/heretic_knowledge/hypnosis_ritual/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	var/hypnosis_text = ""
+	if(!HAS_TRAIT(user, TRAIT_UNCONVERTABLE))
+		for(var/obj/item/paper/paper in selected_atoms)
+			for(var/datum/paper_input/text as anything in paper.raw_text_inputs)
+				hypnosis_text += "[STRIP_HTML_FULL(text, MAX_MESSAGE_LEN)] "
+			paper.burn()
+			selected_atoms -= paper
+
+	for(var/obj/item/implant/mindshield/shield in user.implants)
+		shield.removed(user, silent = FALSE)
+		shield.forceMove(user.drop_location())
+		shield.burn()
+
+	hypnosis_text = trim(hypnosis_text, MAX_MESSAGE_LEN) || pick_list(HERETIC_INFLUENCE_FILE, "hypnosis")
+	for(var/mob/living/carbon/human/victim in selected_atoms)
+		selected_atoms -= victim
+		// lobotomy resistance because it might be a bit rough to make this permanent aye
+		var/datum/brain_trauma/hypnosis/trauma = new(hypnosis_text)
+		victim.gain_trauma(trauma, TRAUMA_RESILIENCE_LOBOTOMY)
