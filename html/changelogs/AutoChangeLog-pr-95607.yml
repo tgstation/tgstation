@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Traitor Lawyers, Quartermasters, and Heads of Personnels can now purchase a \"Briefcase Embedded Firearm Trigger\" from the uplink for 4tc - a briefcase that allows any weapon stored within to be fired by \"firing\" the briefcase itself. Weapon sizes are restricted to whatever fits in a briefcase, meaning it practically only works with pistols and some laser weapons.  It has a subtle examine tell that only appears while being held."
-  - rscadd: "Also available for 8tc is a combo deal that comes pre-loaded with a Makarov. This can also appear as a medium Spy reward."
-  - balance: "The Spy item \"boot dagger\"'s examine tell now only appears if you're examining them WHILE holding them."
