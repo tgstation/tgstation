@@ -346,6 +346,12 @@
   timothymtorres:
   - server: Optimized CI workflow to skip map-specific linters when no maps are modified.
 2026-04-17:
+  00-Steven:
+  - bugfix: Books no longer get trimmed below the paper length limit.
+  - bugfix: Books made using paperwork created with multiple inputs no longer put
+      all that text on the same line.
+  Hardly:
+  - bugfix: Kitsune mask no longer keeps the user's identity hidden while it's flipped
   Melbert:
   - rscadd: Traitor Lawyers, Quartermasters, and Heads of Personnels can now purchase
       a "Briefcase Embedded Firearm Trigger" from the uplink for 4tc - a briefcase
@@ -357,3 +363,9 @@
       This can also appear as a medium Spy reward.
   - balance: The Spy item "boot dagger"'s examine tell now only appears if you're
       examining them WHILE holding them.
+  Yobrocharlie:
+  - bugfix: Removes inert wands of fireball and healing from the academy, apparently
+      inert doesnt mean not working but just fewer charges.
+  timothymtorres:
+  - bugfix: Fix window spawners not being dense, which affected random spawners LOS
+      boundaries.

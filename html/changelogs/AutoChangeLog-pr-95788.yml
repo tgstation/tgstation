@@ -1,4 +1,0 @@
-author: "Hardly"
-delete-after: True
-changes:
-  - bugfix: "Kitsune mask no longer keeps the user's identity hidden while it's flipped"
