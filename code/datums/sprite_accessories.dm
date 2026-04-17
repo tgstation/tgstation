@@ -1273,12 +1273,13 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	var/static/list/cached_icons = list()
 	var/use_female = physique == FEMALE && female_sprite_flags
 	var/use_digi = digi_icon_state && (bodyshape & BODYSHAPE_DIGITIGRADE)
-	female_sprite_flags = initial(female_sprite_flags)
+	var/female_sprite_flags_to_use = female_sprite_flags
+	var/icon_state_to_use = icon_state
 	if(use_digi)
-		if(female_sprite_flags)
-			female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY // No bottom gender shaping for the digi legs
+		if(female_sprite_flags_to_use)
+			female_sprite_flags_to_use = FEMALE_UNIFORM_TOP_ONLY // No bottom gender shaping for the digi legs
 
-	var/key = "[icon_state]-[greyscale_config || "ng"]-[use_female]-[use_digi]-[greyscale_colors]"
+	var/key = "[icon_state_to_use]-[greyscale_config || "ng"]-[use_female]-[use_digi]-[greyscale_colors]"
 	var/mutable_appearance/result
 	if(cached_icons[key]) // it's already cached
 		result = mutable_appearance(icon(cached_icons[key]))
@@ -1286,7 +1287,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	else if(greyscale_config || use_female || use_digi) // icon ops ahead
 		var/icon/created = icon(greyscale_config ? SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors) : icon, icon_state)
 		if(use_female)
-			created = wear_female_version(icon_state, icon, female_sprite_flags)
+			created = wear_female_version(icon_state_to_use, icon, female_sprite_flags_to_use)
 		if(use_digi)
 			var/icon/replacement = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade_underwear, greyscale_colors), digi_icon_state)
 			created = replace_icon_legs(created, replacement)
