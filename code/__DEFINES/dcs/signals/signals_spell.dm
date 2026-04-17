@@ -74,7 +74,8 @@
 #define COMSIG_TOUCH_HANDLESS_CAST "spell_touch_handless_cast"
 	/// Return this to prevent the hand spawning/unspawning
 	#define COMPONENT_CAST_HANDLESS (1<<0)
-
+/// "Casting" a touch spell brings it into your hand, so this is for actually hitting someone with it
+/// Sent from /datum/action/cooldown/spell/touch/do_hand_hit: (atom/hit, mob/living/carbon/caster, obj/item/melee/touch_attack/hand)
 #define COMSIG_SPELL_TOUCH_SPELL_ACTUALLY_CAST "spell_touch_spell_actually_cast"
 
 // Jaunt Spells
