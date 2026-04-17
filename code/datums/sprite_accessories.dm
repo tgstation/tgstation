@@ -1259,6 +1259,8 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	var/greyscale_colors = "#FFFFFF#FFFFFF#FFFFFF"
 	/// The layer this sprite accessory should render on
 	var/layer = BODY_LAYER
+	/// What kind of gender shaping this sprite accessory should use (in case your sprite gets a weird missing pixel in the center)
+	var/female_sprite_flags = FEMALE_UNIFORM_FULL
 
 /**
  * Generate an appearance from this clothing datum
@@ -1270,9 +1272,9 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/clothing/proc/make_appearance(color = COLOR_WHITE, physique = MALE, bodyshape = BODYSHAPE_HUMANOID)
 	var/static/list/cached_icons = list()
 	var/use_female = physique == FEMALE
-	var/female_sprite_flags = FEMALE_UNIFORM_FULL
 	var/use_digi = digi_icon_state && (bodyshape & BODYSHAPE_DIGITIGRADE)
-	if(use_digi)
+	female_sprite_flags = initial(female_sprite_flags)
+	if(use_digi && female_sprite_flags)
 		female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY // No bottom gender shaping for the digi legs
 
 	var/key = "[icon_state]-[greyscale_config || "ng"]-[use_female]-[use_digi]-[greyscale_colors]"
