@@ -293,11 +293,6 @@
 		return
 	return relaydrive(user, direction)
 
-/mob/living/basic/get_status_tab_items()
-	. = ..()
-	. += "Health: [round((health / maxHealth) * 100)]%"
-	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
-
 /mob/living/basic/compare_sentience_type(compare_type)
 	return sentience_type == compare_type
 

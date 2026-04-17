@@ -473,6 +473,8 @@
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
 			addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
+			ADD_TRAIT(victim, TRAIT_ANOSMIA, type)
+			addtimer(TRAIT_CALLBACK_REMOVE(victim, TRAIT_ANOSMIA, type), 30 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 		victim.update_damage_hud()
 	if(methods & INGEST)
 		if(!holder.has_reagent(/datum/reagent/consumable/milk))
