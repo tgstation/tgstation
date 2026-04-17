@@ -1,7 +1,0 @@
-author: "GuffyWuffy"
-delete-after: True
-changes:
-  - map: "Tisserand: Fixes some accesses"
-  - map: "Tisserand: Fixes xenobio bz room having no bz"
-  - map: "Tisserand: Names bar mothroach"
-  - rscadd: "more pet names to ion laws list"

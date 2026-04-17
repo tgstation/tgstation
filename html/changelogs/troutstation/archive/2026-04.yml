@@ -8,3 +8,14 @@
   - map: 'Tisserand: Cargo main windoor now accessible to miners'
   - map: 'Tisserand: Armory now better secured'
   - map: 'Tisserand: Missing keycard scanner added to CE''s office'
+2026-04-17:
+  GuffyWuffy:
+  - rscadd: Bunyips
+  - rscadd: Cauldron
+  - rscadd: White bricks
+  - map: 'Tisserand: new central northeast maint module'
+  - refactor: move where skitterers are stored
+  - map: 'Tisserand: Fixes some accesses'
+  - map: 'Tisserand: Fixes xenobio bz room having no bz'
+  - map: 'Tisserand: Names bar mothroach'
+  - rscadd: more pet names to ion laws list
