@@ -4,8 +4,9 @@
 
 /datum/heretic_knowledge/summon/rusty
 	name = "Rusted Ritual"
-	desc = "Allows you to transmute a pool of vomit, some cable coil, and 10 sheets of iron into a Rust Walker. \
+	desc = "Summon a Rust Walker.<br>\
 		Rust Walkers excel at spreading rust and are moderately strong in combat."
+	transmute_text = "Transmute a pool of vomit, some cable coil, and 10 sheets of iron."
 	gain_text = "I combined my knowledge of creation with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/vomit = 1,
@@ -19,9 +20,10 @@
 
 /datum/heretic_knowledge/summon/maid_in_mirror
 	name = "Maid in the Mirror"
-	desc = "Allows you to transmute five sheets of glass, any suit, and a pair of lungs to create a Maid in the Mirror. \
-			Maid in the Mirrors are decent combatants that can become incorporeal by phasing in and out of the mirror realm, serving as powerful scouts and ambushers. \
-			Their attacks also apply a stack of void chill."
+	desc = "Summon a Maid in the Mirror.<br>\
+		Maid in the Mirrors are decent combatants that can become incorporeal by phasing in and out of the mirror realm, \
+		serving as powerful scouts and ambushers. Their attacks also apply a stack of void chill."
+	transmute_text = "Transmute five sheets of glass, any suit, and a pair of lungs."
 	gain_text = "Within each reflection, lies a gateway into an unimaginable world of colors never seen and \
 		people never met. The ascent is glass, and the walls are knives. Each step is blood, if you do not have a guide."
 
@@ -38,10 +40,11 @@
 
 /datum/heretic_knowledge/summon/ashy
 	name = "Ashen Ritual"
-	desc = "Allows you to transmute a Bonfire and a book to create an Ash Spirit. \
+	desc = "Summon an Ash Spirit.<br>\
 		Ash Spirits have a short range jaunt and the ability to cause bleeding in foes at range. \
-		They also have the ability to create a ring of fire around themselves for a length of time. \
+		They also have the ability to create a ring of fire around themselves for a length of time.<br>\
 		They have a low amount of health, but will passively recover given enough time to do so."
+	transmute_text = "Transmute a pool of ash, a book, and a bonfire."
 	gain_text = "I combined my principle of hunger with my desire for destruction. The Marshal knew my name, and the Nightwatcher gazed on."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/ash = 1,
@@ -59,10 +62,10 @@
 
 /datum/heretic_knowledge/limited_amount/risen_corpse
 	name = "Shattered Ritual"
-	desc = "Allows you to transmute a corpse with a soul, a pair of latex or nitrile gloves, and \
-		and any exosuit clothing (such as armor) to create a Shattered Risen. \
+	desc = "Enchant a corpse into a Shattered Risen.<br>\
 		Shattered Risen are strong ghouls that have 125 health, but cannot hold items, \
 		instead having two brutal weapons for hands. You can only create one at a time."
+	transmute_text = "Transmute a corpse with a soul, a pair of latex or nitrile gloves."
 	gain_text = "I witnessed a cold, rending force drag this corpse back to near-life. \
 		When it moves, it crunches like broken glass. Its hands are no longer recognizable as human - \
 		each clenched fist contains a brutal nest of sharp bone-shards instead."
@@ -159,9 +162,10 @@
 
 /datum/heretic_knowledge/summon/fire_shark
 	name = "Scorching Shark"
-	desc = "Allows you to transmute a pool of ash, a liver, and a sheet of plasma into a Fire Shark. \
-		Fire Sharks are fast and strong in groups, but die quickly. They are also highly resistant against fire attacks. \
-		Fire Sharks inject phlogiston into its victims and spawn plasma once they die."
+	desc = "Summon a Fire Shark.<br>\
+		Fire Sharks are fast and strong in groups, but fragile to non-burning damage.<br>\
+		They also inject phlogiston on attack and spawn plasma on death."
+	transmute_text = "Transmute a pool of ash, a liver, and a sheet of plasma."
 	gain_text = "The cradle of the nebula was cold, but not dead. Light and heat flits even through the deepest darkness, and is hunted by its own predators."
 
 	required_atoms = list(

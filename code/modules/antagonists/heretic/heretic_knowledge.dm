@@ -15,6 +15,10 @@
 	var/name = "Basic knowledge"
 	/// Description of the knowledge, shown to the heretic. Describes what it unlocks / does.
 	var/desc = "Basic knowledge of forbidden arts."
+
+	var/transmute_text = ""
+
+	var/notice = ""
 	/// What's shown to the heretic when the knowledge is acquired
 	var/gain_text
 	/// Assoc list of [typepaths we need] to [amount needed].
@@ -196,9 +200,8 @@
 	var/datum/action/action_to_add
 	/// The spell we actually created.
 	VAR_FINAL/datum/action/created_action_ref
-
+	/// Used to display charges on the spell's action button, if applicable.
 	VAR_FINAL/mutable_appearance/charge_maptext
-
 	/// Charge count
 	VAR_FINAL/charges = 1
 	/// Max amount of charges before a heretic needs to recharge by doing the ritual again
@@ -206,13 +209,11 @@
 	/// Percent of max charges restored on a successful ritual
 	var/recharge_amount = 1.0
 
-	var/recharge_text = ""
-
 /datum/heretic_knowledge/spell/New()
 	. = ..()
 	charges = max_charges
-	if(recharge_text)
-		desc += " [recharge_text]"
+	if(max_charges != INFINITY)
+		desc += "<br>Has [max_charges] charge\s[transmute_text ? ", after which you must recharge the spell" : ""]."
 
 /datum/heretic_knowledge/spell/Destroy()
 	QDEL_NULL(created_action_ref)
@@ -300,7 +301,7 @@
 		return NONE
 
 	if(feedback)
-		to_chat(the_spell.owner, span_hierophant("You don't have enough charges to cast this spell! [recharge_text]"))
+		to_chat(the_spell.owner, span_hierophant("You don't have enough charges to cast this spell! [transmute_text]"))
 	return SPELL_CANCEL_CAST
 
 /datum/heretic_knowledge/spell/proc/check_charges(mob/living/source, datum/action/the_spell)
@@ -314,7 +315,7 @@
 	if(our_heretic?.ascended)
 		return NONE
 
-	to_chat(source, span_hierophant("You don't have enough charges to cast this spell! [recharge_text]"))
+	to_chat(source, span_hierophant("You don't have enough charges to cast this spell! [transmute_text]"))
 	return SPELL_CANCEL_CAST
 
 /datum/heretic_knowledge/spell/proc/deduct_charge(mob/living/source, datum/action/the_spell)
@@ -613,6 +614,7 @@
 /datum/heretic_knowledge/knowledge_ritual
 	name = "Ritual of Knowledge"
 	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
+	notice = "This can only be completed once."
 	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
 	abstract_type = /datum/heretic_knowledge/knowledge_ritual
 	cost = 1
@@ -675,7 +677,8 @@
 
 	to_chat(user, span_hierophant("Completing it will reward you [KNOWLEDGE_RITUAL_POINTS] knowledge points. You can check the knowledge in your Researched Knowledge to be reminded."))
 
-	desc = "Allows you to transmute [english_list(requirements_string)] for [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points. This can only be completed once."
+	transmute_text = "Transmute [english_list(requirements_string)]."
+	desc = "Rewards you with [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points."
 
 /datum/heretic_knowledge/knowledge_ritual/can_be_invoked(datum/antagonist/heretic/invoker)
 	return !was_completed

@@ -159,12 +159,22 @@
 	var/list/knowledge_info = researched_knowledge[knowledge]
 	if(islist(knowledge_info))
 		var/datum/heretic_knowledge/knowledge_instance = knowledge_info[HKT_INSTANCE]
-
 		knowledge_data["desc"] = knowledge_instance.desc
+		knowledge_data["info"] = knowledge_instance.transmute_text
+		knowledge_data["notice"] = knowledge_instance.notice
+
 	else
 		knowledge_data["desc"] = initial(knowledge.desc)
-	return knowledge_data
+		knowledge_data["info"] = initial(knowledge.transmute_text)
+		knowledge_data["notice"] = initial(knowledge.notice)
 
+	if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
+		var/ascension_check = can_ascend()
+		if(ascension_check != HERETIC_CAN_ASCEND)
+			knowledge_data["disabled"] = TRUE
+			knowledge_data["notice"] += "<br>[ascension_check]"
+
+	return knowledge_data
 
 /datum/antagonist/heretic/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -215,15 +225,6 @@
 		if(!(knowledge_info[HKT_ID] in researchable_knowledges))
 			continue
 		var/list/knowledge_data = get_knowledge_data(knowledge_path, heretic_tree, FALSE)
-
-		// Final knowledge can't be learned until all objectives are complete.
-		if(ispath(knowledge_path, /datum/heretic_knowledge/ultimate))
-			var/ascension_check = can_ascend()
-			if(ascension_check != HERETIC_CAN_ASCEND)
-				knowledge_data["disabled"] = TRUE
-				knowledge_data["tooltip"] = ascension_check
-
-
 		var/depth = knowledge_data[HKT_DEPTH]
 
 		while(depth > length(tree_data))
@@ -1032,7 +1033,7 @@
 	if(feast_of_owls)
 		return "The owls have taken your right of ascension (denied ascension)." // We sold our ambition for immediate power :/
 	if(!can_assign_self_objectives)
-		return "The mansus has spurned you (denied ascension)."
+		return "The Mansus has spurned you (denied ascension)."
 	for(var/datum/objective/must_be_done as anything in objectives)
 		if(!must_be_done.check_completion())
 			return "Must complete all objectives before ascending."

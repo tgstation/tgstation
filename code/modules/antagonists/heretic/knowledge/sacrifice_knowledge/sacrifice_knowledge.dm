@@ -10,8 +10,8 @@
  */
 /datum/heretic_knowledge/hunt_and_sacrifice
 	name = "Heartbeat of the Mansus"
-	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition. \
-		If you have no targets, stand on a transmutation rune and invoke it to acquire some."
+	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition."
+	notice = "If you have no targets, stand on a transmutation rune and invoke it to acquire some."
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top

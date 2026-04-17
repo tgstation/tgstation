@@ -2,6 +2,7 @@ import '../styles/interfaces/AntagInfoHeretic.scss';
 
 import { useState } from 'react';
 import {
+  BlockQuote,
   Box,
   Button,
   DmIcon,
@@ -64,8 +65,9 @@ type Knowledge = {
   depth: number;
   done: BooleanLike;
   ascension: BooleanLike;
-  disabled: BooleanLike;
-  tooltip?: string;
+  disabled?: BooleanLike;
+  notice?: string;
+  info?: string;
 };
 
 enum ShopCategory {
@@ -323,6 +325,23 @@ const KnowledgeTree = () => {
   );
 };
 
+// take &bull; in from byond and make sure it's rendered properly
+function bulletpointHelper(text: string) {
+  return text.replace(/&bull;/g, '•');
+}
+
+// description or info text may have <br>s,
+// we need translate it into separate children for the tooltip to render it properly
+function formatTooltipText(text: string) {
+  return (
+    <Stack vertical>
+      {text.split('<br>').map((line, index) => (
+        <Stack.Item key={index}>{bulletpointHelper(line)}</Stack.Item>
+      ))}
+    </Stack>
+  );
+}
+
 type KnowledgeNodeProps = {
   node: Knowledge;
   purchaseCategory?: ShopCategory;
@@ -354,9 +373,30 @@ const KnowledgeNode = (props: KnowledgeNodeProps) => {
       <Button
         color="transparent"
         tooltip={
-          node.tooltip ??
-          `${node.name}:
-          ${node.desc}`
+          <Stack vertical>
+            <Stack.Item align="center" fontSize="16px">
+              <b>{node.name}</b>
+            </Stack.Item>
+            <Stack.Item>
+              <BlockQuote>
+                <span style={hereticPurple}>Result: </span>{' '}
+              </BlockQuote>
+              {formatTooltipText(node.desc)}
+            </Stack.Item>
+            {!!node.notice && (
+              <Stack.Item color="red">
+                {formatTooltipText(node.notice)}
+              </Stack.Item>
+            )}
+            {!!node.info && (
+              <Stack.Item>
+                <BlockQuote>
+                  <span style={hereticGreen}>Recipe: </span>{' '}
+                </BlockQuote>
+                {formatTooltipText(node.info)}
+              </Stack.Item>
+            )}
+          </Stack>
         }
         onClick={
           !isBuyable

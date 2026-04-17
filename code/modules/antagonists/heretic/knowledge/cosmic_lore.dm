@@ -49,9 +49,10 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	name = "Eternal Gate"
-	desc = "Opens up the Path of Cosmos to you. \
-		Allows you to transmute a sheet of plasma and a knife into an Cosmic Blade. \
+	desc = "Opens up the Path of Cosmos to you.<br>\
+		Allows you to create Cosmic Blades. \
 		You can only create two at a time."
+	transmute_text = "Transmute a sheet of plasma and a knife."
 	gain_text = "A nebula appeared in the sky, its infernal birth shone upon me. This was the start of a great transcendence."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -85,7 +86,7 @@
 	cost = 2
 	drafting_tier = 5
 	max_charges = 6
-	recharge_text = "To recharge, complete a ritual with a pen, crayon, or spray can."
+	transmute_text = "To recharge, complete a ritual with a pen, crayon, or spray can."
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
@@ -98,13 +99,14 @@
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 2
 	max_charges = 4
-	recharge_text = "To recharge, complete a ritual with a sheet of plasma."
+	transmute_text = "To recharge, complete a ritual with a sheet of plasma."
 
 /datum/heretic_knowledge/armor/cosmic
-
-	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of plasma to create a Starwoven Cloak, grants protection from the hazards of space while granting to the user the ability to levitate at will.."
+	desc = "Create a Starwoven Cloak.<br>Grants protection from the hazards of space \
+		while granting to the user the ability to levitate at will."
+	transmute_text = "Transmute a table (or a suit), a mask and a sheet of plasma."
 	gain_text = "Like radiant cords, the stars shone in union across the silken shape of a billowing cloak, that at once does and does not drape my shoulders. \
-				The eyes of the Beast rested upon me, and through me."
+		The eyes of the Beast rested upon me, and through me."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic)
 	research_tree_icon_state = "cosmic_armor"
 	required_atoms = list(
@@ -127,7 +129,7 @@
 	action_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 2
 	max_charges = 4
-	recharge_text = "To recharge, complete a ritual with a pair of gloves."
+	transmute_text = "To recharge, complete a ritual with a pair of gloves."
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
@@ -230,7 +232,7 @@
 	cost = 2
 	is_final_knowledge = TRUE
 	max_charges = 2
-	recharge_text = "To recharge, complete a ritual with a corpse with a star mark on it."
+	transmute_text = "To recharge, complete a ritual with a corpse with a star mark on it."
 
 /datum/heretic_knowledge/spell/cosmic_expansion/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -246,15 +248,15 @@
 
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"
-	desc = "The ascension ritual of the Path of Cosmos. \
-		Bring 3 corpses with a star mark to a transmutation rune to complete the ritual. \
+	desc = "The ascension ritual of the Path of Cosmos.<br>\
 		When completed, you become the owner of a Star Gazer. \
 		You will be able to command the Star Gazer with Alt+click. \
-		You can also give it commands through speech. \
+		You can also give it commands through speech.<br>\
 		The Star Gazer is a strong ally who can even break down reinforced walls. \
-		The Star Gazer has an aura that will heal you and damage opponents. \
-		Star Touch can now teleport you to the Star Gazer when activated in your hand. \
+		The Star Gazer has an aura that will heal you and damage opponents.<br>\
+		Star Touch can now teleport you to the Star Gazer when activated in your hand.<br>\
 		Your cosmic expansion spell and your blades also become greatly empowered."
+	transmute_text = "Transmute three corpses with a star mark on them."
 	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. \
 		I clung on to them, they would protect me, and I would protect it. \
 		I closed my eyes with my head laid against their form. I was safe. \

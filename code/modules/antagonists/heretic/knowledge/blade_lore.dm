@@ -52,9 +52,10 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
-	desc = "Opens up the Path of Blades to you. \
-		Allows you to transmute a knife with one bar of silver or titanium to create a Sundered Blade. \
+	desc = "Opens up the Path of Blades to you.<br>\
+		Allows you to create Sundered Blades. \
 		You can create up to four at a time."
+	transmute_text = "Transmute a knife with one bar of silver or titanium."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -95,22 +96,22 @@
 
 /datum/heretic_knowledge/spell/realignment
 	name = "Realignment"
-	desc = "Grants you Realignment a spell that wil realign your body rapidly for a short period. \
-		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
+	desc = "Grants you Realignment, a spell that wil realign your body rapidly for a short period.<br>\
+		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack.<br>\
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
 	required_atoms = list(/obj/item/stock_parts/power_store = 1)
 	action_to_add = /datum/action/cooldown/spell/realignment
 	cost = 2
 	max_charges = 3
-	recharge_text = "To recharge, complete a ritual with a cell or battery."
+	transmute_text = "To recharge, complete a ritual with a cell or battery."
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
 #define BLOOD_FLOW_PER_SEVEIRTY -1
 
 /datum/heretic_knowledge/duel_stance
 	name = "Stance of the Torn Champion"
-	desc = "Grants resilience to blood loss from wounds and immunity to having your limbs dismembered. \
+	desc = "Grants resilience to blood loss from wounds and immunity to having your limbs dismembered.<br>\
 		Additionally, when damaged below 50% of your maximum health, \
 		you gain increased resistance to gaining wounds and resistance to slowdown."
 	gain_text = "In time, it was he who stood alone among the bodies of his former comrades, awash in blood, none of it his own. \
@@ -176,10 +177,11 @@
 #undef BLOOD_FLOW_PER_SEVEIRTY
 
 /datum/heretic_knowledge/armor/blade
-	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of titanium or silver to create a Shattered Panoply. \
-			Provides baton resistance and shock insulation while worn."
+	desc = "Create a Shattered Panoply.<br>\
+		Provides baton resistance and shock insulation while worn."
+	transmute_text = "Transmute a table (or a suit), a mask and a sheet of titanium or silver."
 	gain_text = "The echoing, directionless cacophony of violence reverberates about me. \
-				Even as the Champion's steel panoply was torn from their form, each piece craves purpose still, seeking to intercept unseen or imagined attackers."
+		Even as the Champion's steel panoply was torn from their form, each piece craves purpose still, seeking to intercept unseen or imagined attackers."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade)
 	research_tree_icon_state = "blade_armor"
 	required_atoms = list(
@@ -190,11 +192,10 @@
 
 /datum/heretic_knowledge/spell/wolves_among_sheep
 	name = "Wolves Among Sheep"
-	desc = "Alters the fabric of reality, conjuring a magical arena unpassable to outsiders, \
-		all participants are trapped and immune to any form of crowd control or enviromental hazards; \
+	desc = "Alters the fabric of reality, conjuring a magical arena impassable to outsiders, \
+		all participants are trapped and immune to any form of crowd control or environmental hazards; \
 		trapped participants are granted a Blade and are unable to leave or jaunt until they score a critical hit. \
-		Critical hits partially restore the Heretic's health. \
-		You are rewarded with one charge for every high value sacrifice you complete."
+		Critical hits partially restore the Heretic's health."
 	gain_text = "Shadows crawl across the room, casting every chair, table \
 		and console into the looming shape of another traitorous hand. \
 		I have made an enemy of all, and peace will never be known to me \
@@ -204,7 +205,7 @@
 	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
 	is_final_knowledge = TRUE
 	max_charges = 1
-	recharge_text = "You are rewarded with one charge for every high value sacrifice you complete."
+	transmute_text = "You are rewarded with one charge for every high value sacrifice you complete."
 
 /datum/heretic_knowledge/spell/wolves_among_sheep/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -222,8 +223,8 @@
 /datum/heretic_knowledge/blade_upgrade/blade
 	name = "Empowered Blades"
 	desc = "Attacking someone with a Sundered Blade in both hands \
-		will now deliver a blow with both at once, dealing two attacks in rapid succession. \
-		The second blow will be slightly weaker. \
+		will now deliver a blow with both at once, dealing two attacks in rapid succession.<br>\
+		The second blow will be slightly weaker.<br>\
 		You are able to infuse your mansus grasp directly into your blades, and your blades are more effective against structures."
 	gain_text = "I found him cleaved in twain, halves locked in a duel without end; \
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
@@ -317,10 +318,9 @@
 /datum/heretic_knowledge/spell/furious_steel
 	name = "Furious Steel"
 	desc = "Grants you Furious Steel, a targeted spell. Using it will summon three \
-		orbiting blades around you. These blades will protect you from all attacks, \
-		but are consumed on use. Additionally, you can click to fire the blades \
-		at a target, dealing damage and causing bleeding. \
-		You gain two charge every time you knock someone into critical condition, though you can also recharge it with knives."
+		orbiting blades around you.<br>These blades will protect you from all attacks, \
+		but are consumed on use.<br>You can click to fire the blades \
+		at a target, dealing damage and causing bleeding."
 	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
 		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
 	required_atoms = list(/obj/item/knife = 1)
@@ -328,7 +328,7 @@
 	cost = 2
 	max_charges = 6
 	recharge_amount = 0.5
-	recharge_text = "To recharge, complete a ritual with a knife - this will return half of the spell's maximum charges. \
+	transmute_text = "To recharge, complete a ritual with a knife - this will return half of the spell's maximum charges. \
 		Alternatively, you gain two charge every time you knock someone into critical condition."
 
 /datum/heretic_knowledge/spell/furious_steel/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -360,13 +360,13 @@
 
 /datum/heretic_knowledge/ultimate/blade_final
 	name = "Maelstrom of Silver"
-	desc = "The ascension ritual of the Path of Blades. \
-		Bring 3 corpses with either no head or a split skull to a transmutation rune to complete the ritual. \
+	desc = "The ascension ritual of the Path of Blades.<br>\
 		When completed, you will be surrounded in a constant, regenerating orbit of blades. \
-		These blades will protect you from all attacks, but are consumed on use. \
-		Your Furious Steel spell will also have a shorter cooldown. \
-		Additionally, you become a master of combat, gaining full wound immunity and the ability to shrug off short stuns. \
+		These blades will protect you from all attacks, but are consumed on use.<br>\
+		Your Furious Steel spell will also have a shorter cooldown.<br>\
+		Additionally, you become a master of combat, gaining full wound immunity and the ability to shrug off short stuns.<br>\
 		Your Sundered Blades deal bonus damage and heal you on attack for a portion of the damage dealt."
+	transmute_text = "Transmute three corpses with either no head or a split skull."
 	gain_text = "The Torn Champion is freed! I will become the blade reunited, and with my greater ambition, \
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
 

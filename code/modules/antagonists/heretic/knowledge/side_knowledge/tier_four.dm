@@ -4,7 +4,7 @@
 
 /datum/heretic_knowledge/spell/space_phase
 	name = "Space Phase"
-	desc = "Grants you Space Phase, a spell that allows you to move freely through space. \
+	desc = "Grants you Space Phase, a spell that allows you to move freely through space.<br>\
 		You can only phase in and out when you are on a space or misc turf."
 	gain_text = "You feel like your body can move through space as if you where dust."
 
@@ -13,22 +13,22 @@
 	research_tree_icon_frame = 6
 	drafting_tier = 4
 	max_charges = 2
-	recharge_text = "To recharge, meditate on a rune in the station's EVA room for 20 seconds."
+	transmute_text = "To recharge, meditate on a rune in the station's EVA room for 20 seconds."
 
 	var/seconds_in_eva = 0
 
-/datum/heretic_knowledge/spell/void_pull/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/spell/space_phase/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
-/datum/heretic_knowledge/spell/void_pull/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/spell/space_phase/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	UnregisterSignal(user, COMSIG_LIVING_LIFE)
 
-/datum/heretic_knowledge/spell/void_pull/proc/on_life(mob/living/source, seconds_per_tick)
+/datum/heretic_knowledge/spell/space_phase/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	if(istype(get_area(source)), /area/station/command/eva)
+	if(istype(get_area(source), /area/station/command/eva))
 		for(var/obj/effect/heretic_rune/rune in view(1, source))
 			seconds_in_eva += seconds_per_tick
 			if(seconds_in_eva >= 20)
@@ -40,9 +40,10 @@
 
 /datum/heretic_knowledge/unfathomable_curio
 	name = "Unfathomable Curio"
-	desc = "Allows you to transmute 3 rods, lungs, and any belt into an Unfathomable Curio - \
-			a belt that can hold blades and items for rituals. Whilst worn it will veil you, \
-			blocking one blow of incoming damage, at the cost of the veil. The veil will recharge itself out of combat."
+	desc = "Fashion an Unfathomable Curio - \
+		a belt that can hold blades and items for rituals.<br>Whilst worn it will veil you, \
+		blocking one blow of incoming damage, at the cost of the veil. The veil will recharge itself out of combat."
+	transmute_text = "Transmute 3 rods, lungs, and any belt."
 	gain_text = "The mansus holds many a curio, some are not meant for the mortal eye."
 
 	required_atoms = list(
@@ -58,7 +59,9 @@
 
 /datum/heretic_knowledge/rust_sower
 	name = "Rust Sower Grenade"
-	desc = "Allows you to combine a chemical grenade casing and some moldy food to conjure a cursed grenade filled with Eldritch Rust, upon detonating it releases a huge cloud that blinds organics, rusts affected turfs and obliterates Silicons and Mechs."
+	desc = "Conjure a cursed grenade filled with Eldritch Rust.<br>Upon detonation, it releases a huge cloud that \
+		blinds organics, rusts affected turfs and obliterates silicons and mechs."
+	transmute_text = "Transmute a chemical grenade casing and some moldy food."
 	gain_text = "The choked vines of the Rusted Hills are burdened with such overripe fruits. It undoes the markers of progress, leaving a clean slate to work into new shapes."
 	required_atoms = list(
 		list(
@@ -79,9 +82,10 @@
 
 /datum/heretic_knowledge/spell/crimson_cleave
 	name = "Crimson Cleave"
-	desc = "Grants you Crimson Cleave, a targeted spell which siphons health in a small AOE. Cleanses all wounds upon casting."
+	desc = "Grants you Crimson Cleave, a targeted spell which siphons health in a small AoE.\
+		<br>Also cleanses all wounds upon casting."
 	gain_text = "At first I didn't understand these instruments of war, but the Priest \
-				told me to use them regardless. Soon, he said, I would know them well."
+		told me to use them regardless. Soon, he said, I would know them well."
 	required_atoms = list(
 		list(/obj/effect/decal/cleanable/blood, /obj/item/rag, /obj/item/stack/medical/wrap/gauze) = 1,
 	)
@@ -89,7 +93,7 @@
 	cost = 2
 	drafting_tier = 4
 	max_charges = 3
-	recharge_text = "To recharge, complete a ritual with a bloodied rag or bandage, or a pool of blood."
+	transmute_text = "To recharge, complete a ritual with a bloodied rag or bandage, or a pool of blood."
 
 /datum/heretic_knowledge/spell/crimson_cleave/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -103,12 +107,12 @@
 
 /datum/heretic_knowledge/rifle
 	name = "Lionhunter's Rifle"
-	desc = "Allows you to transmute a piece of wood, with hide \
-		from any animal, and a camera to create the Lionhunter's rifle. \
+	desc = "Unleash the Lionhunter's rifle.<br>\
 		The Lionhunter's Rifle is a long ranged ballistic weapon with three shots. \
 		These shots function as normal, albeit weak high-caliber munitions when fired from \
 		close range or at inanimate objects. You can aim the rifle at distant foes, \
 		causing the shot to mark your victim with your grasp and teleport you directly to them."
+	transmute_text = "Transmute a piece of wood, hide from any animal, and a camera."
 	gain_text = "I met an old man in an antique shop who wielded a very unusual weapon. \
 		I could not purchase it at the time, but they showed me how they made it ages ago."
 	required_atoms = list(
@@ -124,8 +128,8 @@
 
 /datum/heretic_knowledge/rifle_ammo
 	name = "Lionhunter Rifle Ammunition"
-	desc = "Allows you to transmute 3 ballistic ammo casings (used or unused) of any caliber, \
-		including shotgun shells to create an extra clip of ammunition for the Lionhunter Rifle."
+	desc = "Create an extra clip of ammunition for the Lionhunter Rifle."
+	transmute_text = "Transmute 3 ballistic ammo casings (used or unused) of any caliber, including shotgun shells."
 	gain_text = "The weapon came with three rough iron balls, intended to be used as ammunition. \
 		They were very effective, for simple iron, but used up quickly. I soon ran out. \
 		No replacement munitions worked in their stead. It was peculiar in what it wanted."
@@ -154,7 +158,6 @@
 
 		// Remove any casings in the caliber_blacklist list from atoms
 		atoms -= casing
-
 	// We removed any invalid casings from the atoms list,
 	// return to allow the ritual to fill out selected atoms with the new list
 	return TRUE

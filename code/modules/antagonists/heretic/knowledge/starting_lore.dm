@@ -19,12 +19,12 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/spell/basic
 	name = "Break of Dawn"
 	desc = "Starts your journey into the Mansus. \
-		Grants you the Mansus Grasp, a powerful and upgradable disabling spell. \
-		Tapping influences and completing sacrifices will recharge the spell."
+		Grants you the Mansus Grasp, a powerful and upgradable disabling spell."
 	action_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
 	cost = 0
 	is_starting_knowledge = TRUE
 	max_charges = 8
+	transmute_text = "Tapping influences and completing sacrifices will recharge the spell."
 
 // Heretics can enhance their fishing rods to fish better - fishing content.
 // Lasts until successfully fishing something up.
@@ -83,10 +83,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/living_heart
 	name = "The Living Heart"
-	desc = "Grants you a Living Heart, allowing you to track sacrifice targets. \
-		Should you lose your heart, you can transmute a poppy and a pool of blood \
-		to awaken your heart into a Living Heart. If your heart is Cybernetic, \
-		you will be unable to reawaken it."
+	desc = "Grants you a Living Heart, allowing you to track sacrifice targets."
+	transmute_text = "Should you lose your heart, you can transmute a poppy and a pool of blood \
+		to awaken your heart into a Living Heart."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/food/grown/poppy = 1,
@@ -97,6 +96,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "living_heart"
 	research_tree_icon_frame = 1
+	notice = "If your heart is Cybernetic, you will be unable to reawaken it."
 
 /datum/heretic_knowledge/living_heart/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -128,8 +128,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	if(where_to_put_our_heart)
 		where_to_put_our_heart.AddComponent(/datum/component/living_heart)
-		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], allowing you to track sacrifice targets. \
-			Should you lose your [where_to_put_our_heart.name], you can transmute a poppy and a pool of blood \
+		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], allowing you to track sacrifice targets."
+		transmute_text = "Should you lose your [where_to_put_our_heart.name], you can transmute a poppy and a pool of blood \
 			to awaken your [where_to_put_our_heart.name] into a Living Heart. \
 			Cybernetic [where_to_put_our_heart.name]\s will block the ritual!"
 
@@ -192,12 +192,33 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /datum/heretic_knowledge/spell/cloak_of_shadows
 	name = "Cloak of Shadow"
-	desc = "Grants you the spell Cloak of Shadow. This spell will completely conceal your identity in a purple smoke \
-		for three minutes, assisting you in keeping secrecy."
+	desc = "Grants you the spell Cloak of Shadow.<br>\
+		This spell will completely conceal your identity in a purple smoke for three minutes, assisting you in keeping secrecy."
 	action_to_add = /datum/action/cooldown/spell/shadow_cloak
 	cost = 0
 	is_starting_knowledge = TRUE
 	max_charges = 6
+	transmute_text = "Charges will return every three minutes. Using the spell again will reset the timer."
+	/// Cooldown for when we can give a charge back
+	COOLDOWN_DECLARE(charge_time)
+
+/datum/heretic_knowledge/spell/cloak_of_shadows/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/datum/heretic_knowledge/spell/cloak_of_shadows/process(seconds_per_tick)
+	if(charges >= max_charges)
+		STOP_PROCESSING(SSobj, src)
+	else if(COOLDOWN_FINISHED(src, charge_time))
+		adjust_charges(1)
+		COOLDOWN_START(src, charge_time, 3 MINUTES)
+
+/datum/heretic_knowledge/spell/cloak_of_shadows/deduct_charge(mob/living/source, datum/action/the_spell)
+	. = ..()
+	if(charges >= max_charges)
+		return
+	START_PROCESSING(SSobj, src)
+	COOLDOWN_START(src, charge_time, 2 MINUTES)
 
 /**
  * Codex Cicatrixi is available at the start:
@@ -208,9 +229,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/codex_cicatrix
 	name = "Codex Cicatrix"
-	desc = "Allows you to transmute a book, any pen, and your pick from any carcass (animal or human), leather, or hide to create a Codex Cicatrix. \
-		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
+	desc = "Author the Codex Cicatrix.<br>\
+		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed.<br>\
 		It can also be used to draw and remove transmutation runes easier."
+	transmute_text = "Transmute a book, any pen, and your pick from any carcass (animal or human), leather."
 	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
 		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
 	required_atoms = list(
@@ -279,12 +301,13 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /datum/heretic_knowledge/feast_of_owls
 	name = "Feast of Owls"
-	desc = "Allows you to undergo a ritual that gives you 5 knowledge points but locks you out of ascension. This can only be done once and cannot be reverted."
+	desc = "Allows you to undergo a ritual that grants you five knowledge points, but locks you out of ascension."
 	gain_text = "Under the soft glow of unreason there is a beast that stalks the night. I shall bring it forth and let it enter my presence. It will feast upon my amibitions and leave knowledge in its wake."
 	is_starting_knowledge = TRUE
 	required_atoms = list()
 	research_tree_icon_path = 'icons/mob/actions/actions_animal.dmi'
 	research_tree_icon_state = "god_transmit"
+	notice = "This can only be done once and cannot be reverted."
 	/// amount of research points granted
 	var/reward = 5
 
@@ -329,10 +352,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/bookworm
 	name = "Warren King's Welcome"
-	desc = "Allows you to transmute 5 cable pieces and a piece of paper to infuse any ID with maintenace and external airlock access."
+	desc = "Infuses any ID with maintenance and external airlock access."
+	transmute_text = "Transmute 5 cable pieces and a piece of paper. You must also include an ID access to infuse."
 	gain_text = "Gnawed into vicious-stained fingerbones, my grim invitation snaps my nauseous and clouded mind towards the heavy-set door. \
-	Slowly, the light dances between a crawling darkness, blanketing the fetid promenade with infinite machinations. \
-	But the King will soon take his pound of flesh. Even here, the taxman takes their cut. For there are a thousands mouths to feed."
+		Slowly, the light dances between a crawling darkness, blanketing the fetid promenade with infinite machinations. \
+		But the King will soon take his pound of flesh. Even here, the taxman takes their cut. For there are a thousands mouths to feed."
 	required_atoms = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/paper = 1,
