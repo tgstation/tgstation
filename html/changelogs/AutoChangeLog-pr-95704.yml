@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Books no longer get trimmed below the paper length limit."
+  - bugfix: "Books made using paperwork created with multiple inputs no longer put all that text on the same line."
