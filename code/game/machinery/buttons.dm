@@ -176,9 +176,7 @@
 
 /obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open || allowed(user))
-		default_deconstruction_screwdriver(user, "[base_icon_state][skin]-open", "[base_icon_state][skin]", tool)
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
+		return default_deconstruction_screwdriver(user, tool)
 
 	balloon_alert(user, "access denied")
 	flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)

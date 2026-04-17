@@ -960,8 +960,8 @@
 	angle = new_angle
 	x_rate = sin(angle)
 	y_rate = cos(angle)
-	x_sign = SIGN(x_rate)
-	y_sign = SIGN(y_rate)
+	x_sign = sign(x_rate)
+	y_sign = sign(y_rate)
 	x_rate = abs(x_rate)
 	y_rate = abs(y_rate)
 	x_ticker = 0

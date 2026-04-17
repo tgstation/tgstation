@@ -361,6 +361,13 @@
 #define ui_ghost_language_menu "SOUTH:6,CENTER+4:22"
 #define ui_ghost_floor_changer "SOUTH:6,CENTER+4:7"
 
+//Holoparasites
+#define ui_guardian_floor_changer "EAST-1:28,SOUTH+1:7"
+#define ui_guardian_communication "CENTER-2:16,SOUTH+0:5"
+#define ui_guardian_manifest "CENTER-1:16,SOUTH+0:5"
+#define ui_guardian_recall "CENTER+0:16,SOUTH+0:5"
+#define ui_guardian_special "CENTER+1:16,SOUTH+0:5"
+
 //Voidwalker
 #define ui_voidwalker_left_of_hands "CENTER+-2:16,SOUTH+0:5"
 
