@@ -476,7 +476,7 @@
 	report_paper.color = "#99ccff"
 	report_paper.name = "health scan report - [server_timestamp(format = "hh:mm", ic_time = TRUE)]"
 	var/report_text = "<center><B>Health scan report</br>\
-		Time of retrieval: [UNDERLINED_HTML_TEXT("[server_timestamp(format = "hh:mm", ic_time = TRUE)]", "Shift Time: [round_timestamp()]")]</B></center><HR>"
+		Time of retrieval: [UNDERLINED_HTML_TEXT("[server_timestamp(format = "hh:mm", ic_time = TRUE)]", "Shift Time: [round_timestamp(format = "hh:mm")]")]</B></center><HR>"
 	report_text += last_scan_text
 
 	report_paper.add_raw_text(report_text, advanced_html = TRUE)
