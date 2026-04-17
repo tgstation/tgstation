@@ -203,9 +203,7 @@
 	return NONE
 
 /obj/machinery/biogenerator/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		return ITEM_INTERACT_BLOCKING
-
+	. = default_deconstruction_screwdriver(user, tool)
 	if(processing)
 		stop_process(FALSE)
 
@@ -213,8 +211,7 @@
 		beaker.forceMove(drop_location())
 		beaker = null
 
-	update_appearance(UPDATE_ICON)
-	return ITEM_INTERACT_SUCCESS
+	return .
 
 /obj/machinery/biogenerator/crowbar_act(mob/living/user, obj/item/tool)
 	if(!default_deconstruction_crowbar(tool))

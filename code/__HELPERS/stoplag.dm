@@ -14,12 +14,12 @@
 // We don't want spurious hard deletes off this, so let's only sleep for the requested period of time here yeah?
 #ifdef UNIT_TESTS
 	sleep(initial_delay)
-	return CEILING(DS2TICKS(initial_delay), 1)
+	return ceil(DS2TICKS(initial_delay))
 #else
 	. = 0
 	var/i = DS2TICKS(initial_delay)
 	do
-		. += CEILING(i * DELTA_CALC, 1)
+		. += ceil(i * DELTA_CALC)
 		sleep(i * world.tick_lag * DELTA_CALC)
 		i *= 2
 	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))

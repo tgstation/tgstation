@@ -150,7 +150,7 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 	return objective_complete
 
 /// Checks if someone is valid to be a headrev
-/proc/can_be_headrev(datum/mind/candidate)
+/proc/can_be_headrev(datum/mind/candidate, roundstart = FALSE)
 	var/turf/head_turf = get_turf(candidate.current)
 	if(considered_afk(candidate))
 		return FALSE
@@ -159,6 +159,9 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 	if(!is_station_level(head_turf.z))
 		return FALSE
 	if(candidate.current.is_antag())
+		return FALSE
+	var/client/candidate_client = GET_CLIENT(candidate.current)
+	if(!(ROLE_REV_HEAD in candidate_client.prefs.be_special) && (roundstart || !(ROLE_PROVOCATEUR in candidate_client.prefs.be_special)))
 		return FALSE
 	if(candidate.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 		return FALSE

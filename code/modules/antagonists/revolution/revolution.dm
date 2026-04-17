@@ -405,9 +405,6 @@
 	for(var/datum/mind/khrushchev as anything in members - head_revolutionaries)
 		if(!can_be_headrev(khrushchev))
 			continue
-		var/client/khruschevs_client = GET_CLIENT(khrushchev.current)
-		if(!(ROLE_REV_HEAD in khruschevs_client.prefs.be_special) && !(ROLE_PROVOCATEUR in khruschevs_client.prefs.be_special))
-			continue
 		if(ismonkey(khrushchev.current))
 			monkey_promotable += khrushchev
 		else

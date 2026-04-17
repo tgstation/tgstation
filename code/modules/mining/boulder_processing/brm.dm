@@ -14,6 +14,7 @@
 	desc = "A teleportation matrix used to retrieve boulders excavated by mining NODEs from ore vents."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "brm"
+	base_icon_state = "brm"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/brm
 	processing_flags = START_PROCESSING_MANUALLY
@@ -72,7 +73,7 @@
 		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
 
 /obj/machinery/brm/update_icon_state()
-	icon_state = initial(icon_state)
+	icon_state = base_icon_state
 
 	if(!anchored || !is_operational || machine_stat & (BROKEN | NOPOWER) || panel_open)
 		icon_state = "[icon_state]-off"
@@ -91,15 +92,10 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/brm/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
-		update_appearance(UPDATE_ICON_STATE)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/brm/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 ///To allow boulders on a conveyor belt to move unobstructed if multiple machines are made on a single line
 /obj/machinery/brm/CanAllowThrough(atom/movable/mover, border_dir)

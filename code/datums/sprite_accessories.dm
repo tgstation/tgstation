@@ -75,6 +75,10 @@
 	icon_state = "hide_winterhood"
 	strict_coverage_zones = HAIR_APPENDAGE_TOP | HAIR_APPENDAGE_LEFT | HAIR_APPENDAGE_RIGHT | HAIR_APPENDAGE_REAR | HAIR_APPENDAGE_HANGING_REAR
 
+/datum/hair_mask/hoodie
+	icon_state = "hide_hoodie"
+	strict_coverage_zones = HAIR_APPENDAGE_TOP | HAIR_APPENDAGE_LEFT | HAIR_APPENDAGE_RIGHT | HAIR_APPENDAGE_REAR | HAIR_APPENDAGE_HANGING_REAR
+
 //////////////////////
 // Hair Definitions //
 //////////////////////

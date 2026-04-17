@@ -7777,7 +7777,7 @@
 /obj/effect/decal/cleanable/blood/tracks/xeno,
 /obj/item/organ/tail/xeno,
 /obj/item/stack/sheet/animalhide/xeno,
-/obj/item/stack/sheet/xenochitin,
+/obj/item/stack/sheet/animalhide/xeno,
 /obj/effect/decal/cleanable/blood/gibs/xeno/larva/body,
 /obj/effect/decal/remains/xeno,
 /obj/effect/light_emitter,

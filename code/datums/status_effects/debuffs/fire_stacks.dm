@@ -19,7 +19,7 @@
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
 
-/datum/status_effect/fire_handler/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
+/datum/status_effect/fire_handler/refresh(effect, new_stacks, forced = FALSE)
 	if(forced)
 		set_stacks(new_stacks)
 	else

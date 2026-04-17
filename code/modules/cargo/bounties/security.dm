@@ -6,6 +6,7 @@
 		Your ID card will update you as you progress."
 	reward = CARGO_CRATE_VALUE * 5
 	allow_duplicate = TRUE
+	global_exempt = TRUE
 
 	/// Ref to the component applied to the ID card to track movement.
 	VAR_PRIVATE/datum/tracker

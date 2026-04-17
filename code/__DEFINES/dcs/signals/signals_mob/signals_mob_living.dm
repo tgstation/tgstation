@@ -255,6 +255,9 @@
 /// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)
 #define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"
 
+/// From /obj/structure/ore_vent/proc/initiate_wave_win() : (obj/structure/ore_vent/vent)
+#define COMSIG_LIVING_ON_VENT_WIN "living_on_vent_win"
+
 /// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
 #define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"
 

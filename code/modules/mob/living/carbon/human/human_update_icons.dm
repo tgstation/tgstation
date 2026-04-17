@@ -898,15 +898,19 @@ generate/load female uniform sprites matching all previously decided variables
 	remove_overlay(EYES_LAYER)
 	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
 		return
-	var/obj/item/bodypart/head/noggin = get_bodypart(BODY_ZONE_HEAD)
-	if(!(noggin?.head_flags & HEAD_EYESPRITES))
-		return
+
 	// eyes (missing eye sprites get handled by the head itself, but sadly we have to do this stupid shit here, for now)
 	var/obj/item/organ/eyes/eye_organ = get_organ_slot(ORGAN_SLOT_EYES)
-	if(eye_organ)
-		eye_organ.refresh(call_update = FALSE)
-		overlays_standing[EYES_LAYER] = eye_organ.generate_body_overlay(src)
-		apply_overlay(EYES_LAYER)
+	if (!eye_organ)
+		return
+
+	var/obj/item/bodypart/head/noggin = get_bodypart(deprecise_zone(eye_organ.zone)) // Futureproofing for HARS/weird species
+	if(istype(noggin) && !(noggin?.head_flags & HEAD_EYESPRITES))
+		return
+
+	eye_organ.refresh(call_update = FALSE)
+	overlays_standing[EYES_LAYER] = eye_organ.generate_body_overlay(src, noggin)
+	apply_overlay(EYES_LAYER)
 
 /// Updates face (as of now, only eye) offsets
 /mob/living/carbon/human/update_face_offset()

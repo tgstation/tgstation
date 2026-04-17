@@ -189,7 +189,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/r10mm
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	obj_flags = UNIQUE_RENAME // if you did the sidequest, you get the customization
-	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 30, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 25, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 11.5)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 30, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 25, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 11.5, /datum/material/telecrystal = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/gun/ballistic/automatic/pistol/aps
 	name = "\improper Stechkin APS machine pistol"
@@ -268,7 +268,7 @@
 	unload_ammo(user, forced = TRUE)
 	return FALSE
 
-/obj/item/gun/ballistic/automatic/pistol/doorhickey/fire_gun(atom/target, mob/living/user, flag, params)
+/obj/item/gun/ballistic/automatic/pistol/doorhickey/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	var/dmg_multiplier = 1
 
 	if (get_dist(target, user) <= 1)

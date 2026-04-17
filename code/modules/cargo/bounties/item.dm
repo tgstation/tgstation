@@ -35,9 +35,12 @@
 		shipped_count += 1
 	return TRUE
 
-/// If the user can actually get this bounty as a selection.
-/datum/bounty/proc/can_get()
-	return TRUE
+/datum/bounty/item/get_total()
+	return shipped_count
+
+/datum/bounty/item/get_max()
+	return required_count
+
 
 /**
  * Debug item because it took less time to code this than it did to roll ONE toolbox bounty.
@@ -60,5 +63,26 @@
 	var/datum/bounty/new_chore = text2path("[choice]")
 	id.registered_account.set_bounty(new new_chore, id)
 	balloon_alert(user, "new bounty acquired!")
+	playsound(src, 'sound/effects/coin2.ogg', 30, TRUE)
+	qdel(src)
+
+/// As above, but it spawns a global bounty for testing.
+/obj/item/bounty_voucher/stationwide
+	name = "stationwide bounty voucher"
+	desc = "A certificate for ONE FREE BOUNTY of your choice! For everyone! Wowzers!"
+	color = "#ff8800"
+
+/obj/item/bounty_voucher/stationwide/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!isliving(user))
+		return
+	var/mob/living/living_user = user
+	var/choice = tgui_input_list(living_user, "Choose a bounty.", "New Bounty", subtypesof(/datum/bounty))
+	var/datum/bounty/new_chore = text2path("[choice]")
+	if(new_chore.global_exempt)
+		to_chat(user, span_warning("Can't use that one, try another!"))
+		return
+	GLOB.shared_crew_bounties += new_chore
+	balloon_alert(user, "new bounty provided to the crew!")
 	playsound(src, 'sound/effects/coin2.ogg', 30, TRUE)
 	qdel(src)

@@ -113,7 +113,7 @@
 	layer = FLASH_LAYER
 	icon = 'icons/effects/ore_visuals.dmi'
 	appearance_flags = NONE // to avoid having TILE_BOUND in the flags, so that the 480x480 icon states let you see it no matter where you are
-	duration = 35
+	duration = 3.5 SECONDS
 	pixel_x = -224
 	pixel_y = -224
 	/// What animation easing to use when we create the ore overlay on rock walls/ore vents.
@@ -122,11 +122,3 @@
 /obj/effect/temp_visual/mining_overlay/Initialize(mapload)
 	. = ..()
 	animate(src, alpha = 0, time = duration, easing = easing_style)
-
-/obj/effect/temp_visual/mining_overlay/vent
-	icon = 'icons/effects/vent_overlays.dmi'
-	icon_state = "unknown"
-	duration = 45
-	pixel_x = 0
-	pixel_y = 0
-	easing_style = CIRCULAR_EASING|EASE_IN

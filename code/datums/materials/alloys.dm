@@ -44,15 +44,15 @@
 	composition = list(/datum/material/iron = 1, /datum/material/plasma = 1)
 	mat_rust_resistance = RUST_RESISTANCE_REINFORCED
 
-/datum/material/alloy/plasteel/on_applied(atom/target, mat_amount, multiplier)
+/datum/material/alloy/plasteel/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
-	if(istype(target, /obj/item/fishing_rod))
-		ADD_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))
+	if(istype(source, /obj/item/fishing_rod))
+		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
-/datum/material/alloy/plasteel/on_removed(atom/target, mat_amount, multiplier)
+/datum/material/alloy/plasteel/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
-	if(istype(target, /obj/item/fishing_rod))
-		REMOVE_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))
+	if(istype(source, /obj/item/fishing_rod))
+		REMOVE_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /**
  * Plastitanium
@@ -78,15 +78,15 @@
 	composition = list(/datum/material/titanium = 1, /datum/material/plasma = 1)
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 
-/datum/material/alloy/plastitanium/on_applied(atom/target, mat_amount, multiplier)
+/datum/material/alloy/plastitanium/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
-	if(istype(target, /obj/item/fishing_rod))
-		ADD_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))
+	if(istype(source, /obj/item/fishing_rod))
+		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
-/datum/material/alloy/plastitanium/on_removed(atom/target, mat_amount, multiplier)
+/datum/material/alloy/plastitanium/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
-	if(istype(target, /obj/item/fishing_rod))
-		REMOVE_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))
+	if(istype(source, /obj/item/fishing_rod))
+		REMOVE_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /**
  * Plasmaglass
@@ -194,16 +194,16 @@
 	value_per_unit = 0.4
 	composition = list(/datum/material/iron = 2, /datum/material/plasma = 2)
 
-/datum/material/alloy/alien/on_applied(atom/target, mat_amount, multiplier)
+/datum/material/alloy/alien/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
-	if(isobj(target))
-		target.AddElement(/datum/element/obj_regen, _rate=0.02) // 2% regen per tick.
-	if(istype(target, /obj/item/fishing_rod))
-		ADD_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))
+	if(isobj(source))
+		source.AddElement(/datum/element/obj_regen, _rate=0.02) // 2% regen per tick.
+	if(istype(source, /obj/item/fishing_rod))
+		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
-/datum/material/alloy/alien/on_removed(atom/target, mat_amount, multiplier)
+/datum/material/alloy/alien/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
-	if(isobj(target))
-		target.RemoveElement(/datum/element/obj_regen, _rate=0.02)
-	if(istype(target, /obj/item/fishing_rod))
-		REMOVE_TRAIT(target, TRAIT_ROD_LAVA_USABLE, REF(src))
+	if(isobj(source))
+		source.RemoveElement(/datum/element/obj_regen, _rate=0.02)
+	if(istype(source, /obj/item/fishing_rod))
+		REMOVE_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))

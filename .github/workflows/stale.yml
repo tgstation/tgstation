@@ -37,7 +37,7 @@ jobs:
           operations-per-run: 300
       - name: Filter staled pull requests for announcement
         id: filter-prs
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             return JSON.parse(`${{steps.stale.outputs.staled-issues-prs}}`)

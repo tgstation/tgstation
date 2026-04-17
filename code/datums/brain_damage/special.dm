@@ -701,7 +701,7 @@
 	to_chat(owner, span_warning("Should I really leave it here?"))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 
-/datum/brain_trauma/special/axedoration/proc/on_examine(mob/source, atom/target, list/examine_strings)
+/datum/brain_trauma/special/axedoration/proc/on_examine(mob/source, atom/target, list/examine_strings, list/examine_overrides)
 	SIGNAL_HANDLER
 	if(!istype(target, /obj/item/fireaxe))
 		return
