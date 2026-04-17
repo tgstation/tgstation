@@ -1262,7 +1262,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	/// What kind of gender shaping this sprite accessory should use (in case your sprite gets a weird missing pixel in the center)
 	var/female_sprite_flags = FEMALE_UNIFORM_FULL
 
-/// Override to return a different icon state given a bodytype
+/// Override to return a different icon state given a bodytype or physique
 /datum/sprite_accessory/clothing/proc/get_icon_state(physique, bodyshape)
 	return icon_state
 
