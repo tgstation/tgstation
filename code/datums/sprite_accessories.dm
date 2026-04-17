@@ -1262,6 +1262,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	/// What kind of gender shaping this sprite accessory should use (in case your sprite gets a weird missing pixel in the center)
 	var/female_sprite_flags = FEMALE_UNIFORM_FULL
 
+/// Override to return a different icon state given a bodytype
+/datum/sprite_accessory/clothing/proc/get_icon_state(physique, bodyshape)
+	return icon_state
+
 /**
  * Generate an appearance from this clothing datum
  *
@@ -1274,7 +1278,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	var/use_female = physique == FEMALE && female_sprite_flags
 	var/use_digi = digi_icon_state && (bodyshape & BODYSHAPE_DIGITIGRADE)
 	var/female_sprite_flags_to_use = female_sprite_flags
-	var/icon_state_to_use = icon_state
+	var/icon_state_to_use = get_icon_state(physique, bodyshape)
 	if(use_digi)
 		if(female_sprite_flags_to_use)
 			female_sprite_flags_to_use = FEMALE_UNIFORM_TOP_ONLY // No bottom gender shaping for the digi legs
