@@ -242,7 +242,7 @@
 	name = "detective's noir fedora"
 	desc = "There's only one man who can recklessly discharge a firearm into a crowded street while trying to stop a criminal, \
 		and he's likely wearing this hat."
-	icon_state = "fedora"
+	icon_state = /obj/item/clothing/head/fedora::icon_state
 
 ///Detectives Fedora, but like Inspector Gadget. Not a subtype to not inherit candy corn stuff
 /obj/item/clothing/head/fedora/inspector_hat
