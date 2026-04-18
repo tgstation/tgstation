@@ -24,6 +24,7 @@ type Data = {
   mapRef: string;
   network: string[];
   recording_cameras: string[];
+  canSetRecording: BooleanLike;
 };
 
 type Camera = {
@@ -176,6 +177,7 @@ const CameraControls = (props: { searchText: string }) => {
     mapRef,
     pictures,
     recording_cameras = [],
+    canSetRecording,
   } = data;
   const { searchText } = props;
   const [showPictures, setShowPictures] = useState(true);
@@ -269,6 +271,7 @@ const CameraControls = (props: { searchText: string }) => {
                   buttons={
                     activeCamera && [
                       <Button
+                        disabled={!canSetRecording}
                         key={`toggle-${activeCamera.ref}`}
                         color={
                           recording_cameras.includes(activeCamera.ref)

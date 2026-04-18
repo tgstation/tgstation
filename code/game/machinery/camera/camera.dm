@@ -145,6 +145,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(mapload)
 		find_and_mount_on_atom(mark_for_late_init = TRUE)
 
+	AddComponent(/datum/component/camera)
+
 /obj/machinery/camera/get_turfs_to_mount_on()
 	return list(get_step(src, dir))
 
@@ -494,11 +496,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		QDEL_LIST(pictures)
 		pictures = list()
 		SScameras.recording_cameras -= camera
-		qdel(GetComponent(/datum/component/camera))
 	else if(length(SScameras.recording_cameras) < MAX_RECORDING_CAMERAS)
 		is_recording = TRUE
 		SScameras.recording_cameras += camera
-		AddComponent(/datum/component/camera)
 
 /obj/machinery/camera/proc/take_photo(mob/user, add_to_pictures = FALSE)
 	var size_x = view_range + 1
@@ -507,8 +507,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	var/height = APERTURE_TO_METERS(size_y - 1)
 
 	var/datum/component/camera/camera = GetComponent(/datum/component/camera)
-	if(isnull(camera))
-		return
 	var/datum/picture/picture = camera.capture_photo(get_turf(src), get_turf(src), view_range, user, size_x, size_y, width, height, "picture at [station_time_timestamp()]", FALSE)
 	if(add_to_pictures)
 		if(isnull(picture))
@@ -516,6 +514,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		if(length(pictures) == MAX_PHOTOS_PER_CAMERA)
 			pictures.len--
 		pictures += picture
+	return picture
 
 #undef CAMERA_POWER_CONSUMPTION
 #undef XRAY_POWER_MOD

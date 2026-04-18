@@ -21,6 +21,9 @@
 	/// Amount of paper for photos
 	var/paper_left = 10
 
+	/// Is camera recording feature available for console
+	var/can_set_recording = FALSE
+
 /obj/machinery/computer/security/Initialize(mapload)
 	. = ..()
 	// Map name has to start and end with an A-Z character,
@@ -109,6 +112,7 @@
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
 	data["cameras"] = SScameras.get_available_cameras_data(network)
+	data["canSetRecording"] = can_set_recording
 	return data
 
 /obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -185,6 +189,9 @@
 				onclose(ui.user, "[picture.picture_name]")
 				return TRUE
 		if("toggle_recording")
+			if(!can_set_recording)
+				return TRUE
+
 			var/obj/machinery/camera/camera = locate(params["camera"]) in SScameras.cameras
 			if(isnull(camera))
 				return TRUE
@@ -280,6 +287,9 @@
 	icon_keyboard = null
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
+
+	// Ancient technologies from a more civilized age
+	can_set_recording = TRUE
 
 /obj/machinery/computer/security/mining
 	name = "outpost camera console"
