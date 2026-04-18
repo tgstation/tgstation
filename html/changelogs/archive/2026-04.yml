@@ -369,3 +369,12 @@
   timothymtorres:
   - bugfix: Fix window spawners not being dense, which affected random spawners LOS
       boundaries.
+2026-04-18:
+  RusselNotSCP:
+  - rscadd: The Pousse-Cafe's recipe has been changed to require more exotic liqueurs
+  - qol: The Improved Whiskey Cocktail's recipe has been changed to make it easier
+      to handcraft
+  combustor:
+  - balance: Removes the minimum APC requirement for robofactories
+  lelandkemble:
+  - bugfix: stimulants properly regenerate stamina in otherwise healthy people

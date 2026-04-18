@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "stimulants properly regenerate stamina in otherwise healthy people"
