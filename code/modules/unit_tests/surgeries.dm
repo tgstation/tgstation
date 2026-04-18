@@ -244,6 +244,10 @@
 	var/obj/item/clothing/under/jumpsuit = test_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING)
 	jumpsuit.adjust_to_alt()
 	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_CHEST), "Chest should be accessible after rolling jumpsuit down")
+	jumpsuit.adjust_to_alt()
+
+	jumpsuit.flags_cover |= BODY_PART_ACCESSIBLE
+	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_CHEST), "Chest should be accessible if it has the BODY_PART_ACCESSIBLE flag")
 
 /// Tests surgeries which just modify basic surgical states
 /datum/unit_test/state_surgeries

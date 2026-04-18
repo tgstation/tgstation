@@ -1114,13 +1114,13 @@
 // Void cloak. Turns invisible with the hood up, lets you hide stuff.
 /obj/item/clothing/head/hooded/cult_hoodie/void
 	name = "void hood"
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	desc = "Black like tar, reflecting no light. Runic symbols line the outside. \
 		With each flash you lose comprehension of what you are seeing."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "void_cloak"
 	flags_inv = NONE
-	flags_cover = NONE
+	flags_cover = BODY_PART_ACCESSIBLE
 	armor_type = /datum/armor/cult_hoodie_void
 
 /datum/armor/cult_hoodie_void
@@ -1221,6 +1221,8 @@
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
 	add_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
 	RemoveElement(/datum/element/heretic_focus)
+	if(!(flags_cover & BODY_PART_ACCESSIBLE))
+		flags_cover |= BODY_PART_ACCESSIBLE
 
 	if(isliving(loc))
 		loc.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
@@ -1232,6 +1234,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_visible()
 	remove_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
 	AddElement(/datum/element/heretic_focus)
+	flags_cover &= ~BODY_PART_ACCESSIBLE
 
 	if(isliving(loc))
 		loc.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
