@@ -43,8 +43,8 @@
 	var/icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 
-	var/x = clamp(minimap.min_x + floor((icon_x - 1) / 2), 1, world.maxx)
-	var/y = clamp(minimap.min_y + floor((icon_y - 1) / 2), 1, world.maxy)
+	var/x = clamp(MINIMAP_ICON_TO_WORLD(icon_x, minimap.min_x), 1, world.maxx)
+	var/y = clamp(MINIMAP_ICON_TO_WORLD(icon_y, minimap.min_y), 1, world.maxy)
 
 	var/area_name = minimap.map_position_to_name["[x]:[y]"]
 	if(isnull(area_name))
@@ -83,8 +83,8 @@
 	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, icon_state, large)
 	blips[name] = new_blip
 	var/half_size = large ? 5 : 3
-	new_blip.pixel_w = (x - minimap.min_x) * 2 + 1 - half_size
-	new_blip.pixel_z = (y - minimap.min_y) * 2 + 1 - half_size
+	new_blip.pixel_w = MINIMAP_WORLD_TO_PIXEL(x, minimap.min_x, half_size)
+	new_blip.pixel_z = MINIMAP_WORLD_TO_PIXEL(y, minimap.min_y, half_size)
 	vis_contents += new_blip
 
 /atom/movable/screen/minimap_display/proc/update_blip(name, x, y)
@@ -92,8 +92,8 @@
 	if(!blip)
 		return
 	var/half_size = blip.large ? 5 : 3
-	blip.pixel_w = (x - minimap.min_x) * 2 + 1 - half_size
-	blip.pixel_z = (y - minimap.min_y) * 2 + 1 - half_size
+	blip.pixel_w = MINIMAP_WORLD_TO_PIXEL(x, minimap.min_x, half_size)
+	blip.pixel_z = MINIMAP_WORLD_TO_PIXEL(y, minimap.min_y, half_size)
 
 /atom/movable/screen/minimap_display/proc/remove_blip(name)
 	var/atom/movable/screen/minimap_blip/blip = blips[name]

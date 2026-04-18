@@ -41,3 +41,8 @@ GLOBAL_LIST_INIT(all_minimap_flags, bitfield2list(MINIMAP_FLAG_ALL))
 #define TACMAP_AREA_SERVICE COLOR_SERVICE_LIME
 //General
 #define TACMAP_AREA_MAINTENANCE COLOR_WEBSAFE_DARK_GRAY
+
+/// Converts an icon pixel coordinate (from ICON_X/ICON_Y modifiers) to a world tile coordinate.
+#define MINIMAP_ICON_TO_WORLD(icon_coord, minimap_min) ((minimap_min) + floor(((icon_coord) - 1) / 2))
+/// Converts a world tile coordinate to a pixel_w/pixel_z offset for placing a blip on the minimap display.
+#define MINIMAP_WORLD_TO_PIXEL(world_coord, minimap_min, half_size) (((world_coord) - (minimap_min)) * 2 + 1 - (half_size))
