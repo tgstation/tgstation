@@ -1288,7 +1288,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 		result = mutable_appearance(icon(cached_icons[key]))
 
 	else if(greyscale_config || use_female || use_digi) // icon ops ahead
-		var/icon/created = icon(greyscale_config ? SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors) : icon, icon_state)
+		var/icon/created = icon(greyscale_config ? SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors) : icon, icon_state_to_use)
 		if(use_female)
 			created = wear_female_version(icon_state_to_use, icon, female_sprite_flags_to_use)
 		if(use_digi)
