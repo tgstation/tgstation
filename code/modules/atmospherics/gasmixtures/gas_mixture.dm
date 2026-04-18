@@ -186,7 +186,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/adjust_gas(gas, amount)
 	ASSERT_GAS(gas, src)
 	gases[gas][MOLES] += QUANTIZE(amount)
-	total_moles += QUANTIZE(amount)
 	garbage_collect()
 
 /// Add a specific amount of moles to all the gasses present or add a new gas to the mix
@@ -195,7 +194,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/gas_specie in gases_moles)
 		ASSERT_GAS(gas_specie, src)
 		gases[gas_specie][MOLES] += gases_moles[gas_specie]
-		total_moles += gases_moles[gas_specie]
 	garbage_collect()
 
 
