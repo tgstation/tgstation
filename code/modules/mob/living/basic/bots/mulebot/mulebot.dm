@@ -139,6 +139,7 @@
 /mob/living/basic/bot/mulebot/proc/handle_buzzing(frustration_counter)
 	SIGNAL_HANDLER
 
+	update_bot_mode(new_mode = BOT_BLOCKED)
 	if(frustration_counter >= 3)
 		buzz(MULEBOT_MOOD_SIGH)
 	if(frustration_counter >= 10)
