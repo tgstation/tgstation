@@ -1221,8 +1221,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
 	add_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
 	RemoveElement(/datum/element/heretic_focus)
-	if(!(flags_cover & BODY_PART_ACCESSIBLE))
-		flags_cover |= BODY_PART_ACCESSIBLE
+	flags_cover |= BODY_PART_ACCESSIBLE
 
 	if(isliving(loc))
 		loc.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
