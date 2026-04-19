@@ -124,13 +124,13 @@
 
 /mob/living/basic/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	. = ..()
-	icon_state = "[base_icon_state][(bot_mode_flags & BOT_MODE_ON) ? wires?.is_cut(WIRE_AVOIDANCE) : 0]"
+	icon_state = "[base_icon_state][(bot_mode_flags & BOT_MODE_ON) ? wires?.is_cut(WIRE_AVOIDANCE) : "0"]"
 
 /mob/living/basic/bot/mulebot/update_overlays()
 	. = ..()
 	if(bot_access_flags & BOT_COVER_MAINTS_OPEN)
 		. += "[base_icon_state]-hatch"
-	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
+	if(isnull(load) || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
 	var/mutable_appearance/load_overlay = mutable_appearance(load.icon, load.icon_state, layer + 0.01)
 	load_overlay.pixel_y = initial(load.pixel_y) + 11
@@ -140,11 +140,21 @@
 	SIGNAL_HANDLER
 
 	update_bot_mode(new_mode = BOT_BLOCKED)
-	if(frustration_counter >= 3)
+	if(frustration_counter == 3)
 		buzz(MULEBOT_MOOD_SIGH)
 	if(frustration_counter >= 10)
 		buzz(MULEBOT_MOOD_ANNOYED)
 	UnregisterSignal(src, COMSIG_MOVELOOP_JPS_FRUSTRATION_INCREMENTED)
+
+/mob/living/basic/bot/mulebot/handle_loop_movement(atom/movable/source, atom/oldloc, dir, forced) //incase we start moving again after being previously blocked, update our mode
+	. = ..()
+	if(mode != BOT_BLOCKED)
+		return
+	var/obj/machinery/navbeacon/beacon = ai_controller.current_movement_target
+	if(!istype(beacon))
+		return
+	var/intended_mode = beacon.location == ai_controller.blackboard[BB_MULEBOT_HOME_BEACON] ? BOT_GO_HOME : BOT_DELIVER
+	update_bot_mode(new_mode = intended_mode)
 
 ///Noises that mulebots make
 /mob/living/basic/bot/mulebot/proc/buzz(type)
@@ -165,4 +175,12 @@
 
 /// returns true if the bot is fully powered.
 /mob/living/basic/bot/mulebot/proc/has_power()
+	if(cell)
+		to_chat(src, "hi")
+	if(cell.charge > 0 )
+		to_chat(src, "hi2")
+	if(!wires.is_cut(WIRE_POWER1))
+		to_chat(src, "hi3")
+	if(!wires.is_cut(WIRE_POWER2))
+		to_chat(src, "hi4")
 	return cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))

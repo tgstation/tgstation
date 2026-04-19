@@ -23,6 +23,19 @@
 		return AI_UNABLE_TO_RUN
 	return ..()
 
+/datum/ai_controller/basic_controller/bot/mulebot/on_movement_start(mob/living/basic/bot/source, atom/target)
+	. = ..()
+
+	if(current_movement_target == blackboard[BB])
+	SIGNAL_HANDLER
+
+	if(current_movement_target == blackboard[BB_BEACON_TARGET])
+		source.update_bot_mode(new_mode = BOT_PATROL)
+		return
+
+	source.clear_path_hud(remove_hud = FALSE)
+
+
 /datum/ai_planning_subtree/find_delivery_beacon
 	///what behavior do we use to seek beacons
 	var/find_beacon_behaviour = /datum/ai_behavior/find_delivery_beacon
@@ -83,8 +96,15 @@
 	if(target_atom.loc == controller.pawn.loc)
 		controller.queue_behavior(delivery_behaviour, BB_MULEBOT_TRAVEL_TARGET)
 
-/datum/ai_behavior/travel_towards/delivery_behaviour
-	new_movement_type = /datum/ai_movement/jps/bot/mulebot
+/datum/ai_behavior/handle_delivery
+	///what movement system should we use for delivery
+	var/movement_system = /datum/ai_movement/jps/bot/mulebot
+/datum/ai_behavior/handle_delivery/setup(datum/ai_controller/controller, target_key)
+	. = ..()
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return FALSE
+	set_movement_target(controller, target, /datum/ai_movement/jps/bot/mulebot)
 
 /datum/ai_behavior/delivery_behaviour/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/obj/machinery/navbeacon/beacon = controller.blackboard[target_key]
