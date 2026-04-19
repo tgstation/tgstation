@@ -387,3 +387,6 @@
 
 /// From /mob/living/on_looking_z_level_change() : (turf/old_turf, turf/new_turf)
 #define COMSIG_LIVING_LOOK_Z_CHANGE "living_look_z_change"
+
+/// From /mob/living/proc/refresh_gravity() : (new_gravity, old_gravity)
+#define COMSIG_LIVING_GRAVITY_CHANGED "living_gravity_changed"

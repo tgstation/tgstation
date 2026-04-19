@@ -38,9 +38,10 @@
 	// It won't really make sense to walk 3 feet and then suddenly gain / lose gravity sickness.
 	// If I'm proven wrong, swap this to use Moved.
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(spacer_moved))
+	RegisterSignal(quirk_holder, COMSIG_LIVING_GRAVITY_CHANGED, PROC_REF(spacer_grav))
 
 	// Yes, it's assumed for planetary maps that you start at gravity sickness.
-	check_z(quirk_holder, skip_timers = TRUE)
+	update_effects(quirk_holder, skip_timers = TRUE)
 
 	// drift slightly faster through zero G
 	quirk_holder.inertia_move_multiplier *= 0.8
@@ -69,6 +70,7 @@
 
 /datum/quirk/spacer_born/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED)
+	UnregisterSignal(quirk_holder, COMSIG_LIVING_GRAVITY_CHANGED)
 
 	if(QDELING(quirk_holder))
 		return
@@ -87,7 +89,13 @@
 /datum/quirk/spacer_born/proc/spacer_moved(mob/living/source, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
 
-	check_z(source)
+	update_effects(source)
+
+/// Check on gravity change whether we should start or stop timers
+/datum/quirk/spacer_born/proc/spacer_grav(mob/living/source, new_gravity, old_gravity)
+	SIGNAL_HANDLER
+
+	update_effects(source)
 
 /**
  * Used to check if we should start or stop timers based on the quirk holder's location.
@@ -95,8 +103,8 @@
  * * afflicted - the mob arriving / same as quirk holder
  * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
  */
-/datum/quirk/spacer_born/proc/check_z(mob/living/spacer, skip_timers = FALSE)
-	if(is_on_a_planet(spacer))
+/datum/quirk/spacer_born/proc/update_effects(mob/living/spacer, skip_timers = FALSE)
+	if(is_on_a_planet(spacer) && spacer.has_gravity())
 		on_planet(spacer, skip_timers)
 	else
 		in_space(spacer, skip_timers)
@@ -178,10 +186,10 @@
 	afflicted.remove_status_effect(/datum/status_effect/spacer)
 	afflicted.clear_mood_event("spacer")
 	// Does not remove the movement modifier yet, it lingers until you fully recover
-	to_chat(afflicted, span_green("You start feeling better now that you're back in space."))
+	to_chat(afflicted, span_green("You start feeling better now that you're [is_on_a_planet(afflicted) ? "in zero gravity" : "back in space"]."))
 
 /**
- * Ran when living back in space for a long enough period.
+ * Ran when living back in space, or just no-grav in general, for a long enough period.
  *
  * * afflicted - the mob arriving / same as quirk holder
  * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
@@ -190,9 +198,11 @@
 	if(QDELETED(src) || QDELETED(afflicted))
 		return
 
+	var/moodlet_picked = is_on_a_planet(afflicted) ? /datum/mood_event/spacer/on_planet/low_grav : /datum/mood_event/spacer/in_space
+
 	recovering_timer = null
 	afflicted.apply_status_effect(/datum/status_effect/spacer/gravity_wellness)
-	afflicted.add_mood_event("spacer", /datum/mood_event/spacer/in_space)
+	afflicted.add_mood_event("spacer", moodlet_picked)
 	afflicted.add_movespeed_modifier(/datum/movespeed_modifier/spacer/in_space)
 	if(!skip_timers)
 		to_chat(afflicted, span_green("You feel better."))

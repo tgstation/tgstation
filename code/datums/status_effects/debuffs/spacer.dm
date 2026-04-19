@@ -105,6 +105,10 @@
 	description = "I'm stationed on a planet. I'd love to be back in space."
 	mood_change = -3
 
+/datum/mood_event/spacer/on_planet/low_grav
+	description = "This feels like I'm back home!"
+	mood_change = 3
+
 /datum/movespeed_modifier/spacer
 	id = "spacer"
 
