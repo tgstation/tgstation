@@ -214,7 +214,7 @@
 	return .
 
 /obj/machinery/biogenerator/crowbar_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_crowbar(tool))
+	if(!default_deconstruction_crowbar(user, tool))
 		return ITEM_INTERACT_BLOCKING
 	var/turf/drop_location = drop_location()
 	if(biomass > 0)

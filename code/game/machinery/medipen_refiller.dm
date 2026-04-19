@@ -123,7 +123,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medipen_refiller/crowbar_act(mob/living/user, obj/item/tool)
-	default_deconstruction_crowbar(tool)
+	default_deconstruction_crowbar(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medipen_refiller/screwdriver_act(mob/living/user, obj/item/tool)
