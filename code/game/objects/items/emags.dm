@@ -87,8 +87,6 @@
 	prox_check = FALSE
 
 /obj/item/card/emag/blue
-	name = "blue cryptographic sequencer"
-	desc = "It's a blue card with a magnetic strip attached to some circuitry. Why is it colored blue?"
 	color = rgb(40, 130, 255)
 
 /obj/item/card/emag/halloween
