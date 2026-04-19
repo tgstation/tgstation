@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		return ITEM_INTERACT_BLOCKING
 
 	if(QDELETED(beacon))
-		balloon_alert_to_viewers("beacon lost!")
+		balloon_alert(user, "beacon lost!")
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert_to_viewers("extracting!")
