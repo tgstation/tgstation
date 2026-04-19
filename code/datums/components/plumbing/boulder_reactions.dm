@@ -4,6 +4,8 @@
 /datum/component/plumbing/boulder_reactions
 	demand_connects = NORTH
 	supply_connects = SOUTH
+	supply_offset = 8
+	demand_offset = 8
 
 /datum/component/plumbing/boulder_reactions/Initialize(ducting_layer)
 	if(!istype(parent, /obj/machinery/bouldertech/refinery))
