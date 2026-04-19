@@ -11,15 +11,13 @@
 	speed = 4 //he's a fast fucker
 	///chance we block bullets
 	var/block_chance = 50
-	///ability for players to turn their swords on or off
-	var/datum/action/cooldown/mob_cooldown/bot/sword/sword_activate_ability
 	///is our sword currently active?
 	var/sword_active = FALSE
 
 /mob/living/basic/bot/secbot/grievous/Initialize(mapload)
 	. = ..()
 	RegisterSignal(weapon, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_weapon_transform))
-	sword_activate_ability = new(src) //this is for sentient players.
+	var/datum/action/cooldown/mob_cooldown/bot/sword/sword_activate_ability = new(src) //this is for sentient players.
 	sword_activate_ability.Grant(src)
 	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, attack_self), src)
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))

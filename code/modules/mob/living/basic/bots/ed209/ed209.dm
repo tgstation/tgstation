@@ -142,6 +142,10 @@
 	else
 		new /obj/item/clothing/suit/armor/vest(drop_location)
 
+/mob/living/basic/bot/secbot/ed209/Destroy()
+	. = ..()
+	QDEL_NULL(bot_charge)
+
 /mob/living/basic/bot/secbot/ed209/nukie
 	name = "\improper ED-209(+1) Syndicate Robot"
 	desc = "Wait this one's red? This cannot be good... right??"
