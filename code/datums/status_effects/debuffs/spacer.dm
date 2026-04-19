@@ -107,7 +107,7 @@
 
 /datum/mood_event/spacer/on_planet/low_grav
 	description = "This feels like I'm back home!"
-	mood_change = 3
+	mood_change = 4
 
 /datum/mood_event/spacer/on_planet/low_grav/add_effects(...)
 	. = ..()
