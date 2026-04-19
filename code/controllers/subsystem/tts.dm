@@ -628,11 +628,8 @@ SUBSYSTEM_DEF(tts)
 		listeners = list(listeners)
 	var/list/filtered_listeners = list()
 
-	for(var/movable in listeners)
-		if(!ismob(movable))
-			continue
-		var/mob/listener = movable
-		if(!listener.client)
+	for(var/mob/listener as anything in listeners)
+		if(!ismob(listener) || !listener.client)
 			continue
 		var/tts_pref = listener.client?.prefs.read_preference(/datum/preference/choiced/sound_tts)
 		var/radio_tts_pref = listener.client?.prefs.read_preference(/datum/preference/choiced/sound_tts_radio)
