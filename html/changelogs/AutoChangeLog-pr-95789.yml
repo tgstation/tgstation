@@ -1,0 +1,4 @@
+author: "TheRyeGuyWhoWillNowDie"
+delete-after: True
+changes:
+  - bugfix: "welding goggles now only cover your eyes when covering your eyes"
