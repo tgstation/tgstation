@@ -18,14 +18,16 @@
 	if(!dragon)
 		return
 	var/area/rift_location = get_area(owner)
-	if(!(rift_location in dragon.chosen_rift_areas))
-		owner.balloon_alert(owner, "can't summon a rift here! check your objectives!")
-		return
 	for(var/obj/structure/carp_rift/rift as anything in dragon.rift_list)
 		var/area/used_location = get_area(rift)
 		if(used_location == rift_location)
 			owner.balloon_alert(owner, "already summoned a rift here!")
 			return
+
+	if(!(rift_location in dragon.chosen_rift_areas))
+		owner.balloon_alert(owner, "can't summon a rift here! check your objectives!")
+		return
+
 	var/turf/rift_spawn_turf = get_turf(dragon)
 	if(isopenspaceturf(rift_spawn_turf))
 		owner.balloon_alert(dragon, "needs stable ground!")
@@ -49,6 +51,52 @@
 	)
 	ASSERT(dragon.rift_ability == src) // Badmin protection.
 	QDEL_NULL(dragon.rift_ability) // Deletes this action when used successfully, we re-gain a new one on success later.
+
+/// Points towards a chosen location in which a rift can be placed
+/datum/action/innate/locate_rift
+	name = "Locate Rift"
+	desc = "Find out where a potential rift location is."
+	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
+	button_icon = 'icons/mob/actions/actions_space_dragon.dmi'
+	button_icon_state = "locate_carp_rift"
+
+/datum/action/innate/locate_rift/Activate()
+	var/datum/antagonist/space_dragon/dragon_datum = owner.mind?.has_antag_datum(/datum/antagonist/space_dragon)
+	var/mob/living/dragon_mob = dragon_datum?.owner.current
+	if(!dragon_mob)
+		return
+	if(!is_station_level(dragon_mob.z))
+		dragon_mob.balloon_alert(dragon_mob, "too far offstation!")
+		return
+
+	var/area/chosen_area = tgui_input_list(owner, "Select the area you'd like to be pointed towards.", "Locate Rift", dragon_datum.chosen_rift_areas)
+	if(!chosen_area)
+		return
+	if(chosen_area == get_area(dragon_mob))
+		dragon_mob.balloon_alert(dragon_mob, "already here!")
+		return
+
+	var/turf/chosen_turf = pick(get_area_turfs(chosen_area))
+
+	var/message = ""
+	if(chosen_turf.z != dragon_mob.z)
+		message = "[chosen_turf.z > dragon_mob.z ? "above" : "below"] you, "
+	else
+		switch(get_dist(dragon_mob, chosen_turf)) // Exact same numbers as the heretic heart tracker
+			if(0 to 15)
+				message = "very near, "
+			if(16 to 31)
+				message = "near, "
+			if(32 to 127)
+				message = "far, "
+			else
+				message = "very far, "
+
+	message += dir2text(get_dir(dragon_mob, chosen_turf))
+	message += "!"
+
+	dragon_mob.balloon_alert(dragon_mob, message)
 
 /**
  * # Carp Rift
@@ -159,7 +207,7 @@
 	if(charge_state == CHARGE_COMPLETED)
 		if(SPT_PROB(1.25, seconds_per_tick) && dragon)
 			var/mob/living/newcarp = new dragon.ai_to_spawn(loc)
-			newcarp.faction = dragon.owner.current.faction.Copy()
+			newcarp.set_faction(dragon.owner.current.get_faction())
 		if(SPT_PROB(1.5, seconds_per_tick))
 			var/rand_dir = pick(GLOB.cardinals)
 			GLOB.move_manager.move_to(src, get_step(src, rand_dir), 1)
@@ -207,8 +255,8 @@
 	// Is the rift now fully charged?
 	if(time_charged >= max_charge)
 		charge_state = CHARGE_COMPLETED
-		var/area/A = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
+		var/area/location = get_area(src)
+		priority_announce("Spatial object has reached peak energy charge in [initial(location.name)], please stand-by.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
 		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_DIM_YELLOW)
@@ -216,11 +264,16 @@
 		set_armor(/datum/armor/immune)
 		resistance_flags = INDESTRUCTIBLE
 		dragon.rifts_charged += 1
+		dragon.chosen_rift_areas -= location
 		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
 			dragon.rift_ability = new()
 			dragon.rift_ability.Grant(dragon.owner.current)
 			dragon.riftTimer = 0
 			dragon.rift_empower()
+			return
+
+		dragon.locate_rift_ability.Remove(dragon.owner.current)
+		QDEL_NULL(dragon.locate_rift_ability)
 		// Early return, nothing to do after this point.
 		return
 
@@ -258,7 +311,7 @@
 	if(isnull(dragon))
 		return
 	var/mob/living/newcarp = new dragon.minion_to_spawn(loc)
-	newcarp.faction = dragon.owner.current.faction
+	SET_FACTION_AND_ALLIES_FROM(newcarp, dragon.owner.current)
 	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
 	dragon.wavespeak?.link_mob(newcarp)

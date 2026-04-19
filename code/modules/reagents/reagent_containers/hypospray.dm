@@ -178,6 +178,7 @@
 /obj/item/reagent_containers/hypospray/medipen/stimpack/traitor
 	desc = "A modified stimulants autoinjector for use in combat situations. Has a mild healing effect."
 	list_reagents = list(/datum/reagent/medicine/stimulants = 10, /datum/reagent/medicine/omnizine = 10)
+	volume = 20
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants
 	name = "stimulant medipen"
@@ -203,6 +204,7 @@
 	inhand_icon_state = "morphen"
 	base_icon_state = "morphen"
 	list_reagents = list(/datum/reagent/medicine/morphine = 10)
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/oxandrolone
 	name = "oxandrolone medipen"
@@ -211,6 +213,7 @@
 	inhand_icon_state = "oxapen"
 	base_icon_state = "oxapen"
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 10)
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/penacid
 	name = "pentetic acid medipen"
@@ -219,6 +222,7 @@
 	inhand_icon_state = "penacid"
 	base_icon_state = "penacid"
 	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/salacid
 	name = "salicylic acid medipen"
@@ -227,6 +231,7 @@
 	inhand_icon_state = "salacid"
 	base_icon_state = "salacid"
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/salbutamol
 	name = "salbutamol medipen"
@@ -235,6 +240,7 @@
 	inhand_icon_state = "salpen"
 	base_icon_state = "salpen"
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"
@@ -297,6 +303,7 @@
 	inhand_icon_state = "atropen"
 	base_icon_state = "atropen"
 	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/coagulant = 2)
+	volume = 12
 
 /obj/item/reagent_containers/hypospray/medipen/snail
 	name = "snail shot"
@@ -306,6 +313,7 @@
 	base_icon_state = "snail"
 	list_reagents = list(/datum/reagent/snail = 10)
 	label_examine = FALSE
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/magillitis
 	name = "experimental autoinjector"
@@ -362,3 +370,4 @@
 	inhand_icon_state = "atropen"
 	base_icon_state = "atropen"
 	list_reagents = list(/datum/reagent/medicine/c2/penthrite = 10)
+	volume = 10

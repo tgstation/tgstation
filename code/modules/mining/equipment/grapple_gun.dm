@@ -84,7 +84,7 @@
 /obj/item/grapple_gun/proc/on_grapple_hit(datum/source, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_PREQDELETED))
+	UnregisterSignal(source, list(COMSIG_PROJECTILE_SELF_ON_HIT, COMSIG_PREQDELETED))
 	QDEL_NULL(zipline)
 	var/mob/living/user = zipliner?.resolve()
 	if(isnull(user) || isnull(target))

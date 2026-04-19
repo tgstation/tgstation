@@ -59,7 +59,7 @@
 	var/mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 
 	///Spark effects are handled by this datum
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	///How powerful our lights are
 	var/lights_power = 6
 	///Just stop the mech from doing anything
@@ -83,8 +83,6 @@
 	var/list/trackers = list()
 	///Camera installed into the mech
 	var/obj/machinery/camera/exosuit/chassis_camera
-	///Portable camera camerachunk update
-	var/updating = FALSE
 
 	var/max_temperature = 25000
 
@@ -173,7 +171,7 @@
 	var/defense_mode = FALSE
 
 	///Bool for leg overload on/off
-	var/overclock_mode = FALSE
+	VAR_FINAL/overclock_mode = FALSE
 	///Whether it is possible to toggle overclocking from the cabin
 	var/can_use_overclock = FALSE
 	///Speed and energy usage modifier for leg overload
@@ -186,6 +184,10 @@
 	var/overclock_safety_available = FALSE
 	///Whether the overclocking turns off automatically when overheated
 	var/overclock_safety = FALSE
+	/// Action type for overclocking, if null - no action
+	var/overclock_action_type = /datum/action/vehicle/sealed/mecha/mech_overclock
+	/// Name of the overclock action
+	var/overclock_name = "overclock"
 
 	//Bool for zoom on/off
 	var/zoom_mode = FALSE
@@ -230,13 +232,9 @@
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 
-	spark_system = new
-	spark_system.set_up(2, 0, src)
+	spark_system = new(src, 2, FALSE)
 	spark_system.attach(src)
-
-	smoke_system = new
-	smoke_system.set_up(3, holder = src, location = src)
-	smoke_system.attach(src)
+	smoke_system = new(src, 3, holder = src)
 
 	cabin_air = new(cabin_volume)
 
@@ -332,6 +330,7 @@
 	var/mob/living/silicon/ai/unlucky_ai
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
+			//FIXME: Nothiing about this block works
 			var/mob/living/silicon/ai/ai = occupant
 			if(!ai.linked_core && !ai.can_shunt) // we probably shouldnt gib AIs with a core or shunting abilities
 				unlucky_ai = occupant
@@ -409,8 +408,8 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
 	if(mecha_flags & IS_ENCLOSED)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal, VEHICLE_CONTROL_SETTINGS)
-	if(can_use_overclock)
-		initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_overclock)
+	if(can_use_overclock && overclock_action_type)
+		initialize_passenger_action_type(overclock_action_type)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_safeties, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats, VEHICLE_CONTROL_SETTINGS)
@@ -549,20 +548,54 @@
 			. += span_warning("It's missing a capacitor.")
 		if(!scanmod)
 			. += span_warning("It's missing a scanning module.")
-	if(mecha_flags & IS_ENCLOSED)
-		return
-	if(mecha_flags & SILICON_PILOT)
-		. += span_notice("[src] appears to be piloting itself...")
-	else
-		for(var/occupante in occupants)
-			. += span_notice("You can see [occupante] inside.")
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			for(var/held_item in H.held_items)
-				if(!isgun(held_item))
-					continue
-				. += span_warning("It looks like you can hit the pilot directly if you target the center or above.")
-				break //in case user is holding two guns
+	if(!(mecha_flags & IS_ENCLOSED))
+		if(mecha_flags & SILICON_PILOT)
+			. += span_notice("[src] appears to be piloting itself...")
+		else
+			for(var/occupante in occupants)
+				. += span_notice("You can see [occupante] inside.")
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				for(var/held_item in H.held_items)
+					if(!isgun(held_item))
+						continue
+					. += span_warning("It looks like you can hit the pilot directly if you target the center or above.")
+					break //in case user is holding two guns
+	. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
+
+/obj/vehicle/sealed/mecha/Topic(href, href_list)
+	. = ..()
+
+	if(href_list["list_armor"])
+		var/list/readout = list()
+
+		var/datum/armor/armor = get_armor()
+		var/added_damage_header = FALSE
+		for(var/damage_key in ARMOR_LIST_DAMAGE)
+			var/rating = armor.get_rating(damage_key)
+			if(!rating)
+				continue
+			if(!added_damage_header)
+				readout += "<b><u>ARMOR (I-X)</u></b>"
+				added_damage_header = TRUE
+			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
+
+		var/added_durability_header = FALSE
+		for(var/durability_key in ARMOR_LIST_DURABILITY)
+			var/rating = armor.get_rating(durability_key)
+			if(!rating)
+				continue
+			if(!added_durability_header)
+				readout += "<b><u>DURABILITY (I-X)</u></b>"
+				added_durability_header = TRUE
+			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
+
+		readout += "It can withstand temperatures up to [max_temperature]K."
+		if(mecha_flags & IS_ENCLOSED)
+			readout += "It fully encloses its occupants, protecting them from the atmosphere or lack thereof."
+
+		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
+		to_chat(usr, boxed_message(formatted_readout))
 
 /obj/vehicle/sealed/mecha/generate_integrity_message()
 	var/examine_text = ""
@@ -598,6 +631,10 @@
 	if(length(occupants))
 		process_occupants(seconds_per_tick)
 	process_constant_power_usage(seconds_per_tick)
+	//Diagnostic HUD updates
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
 
 /obj/vehicle/sealed/mecha/proc/process_overclock_effects(seconds_per_tick)
 	if(!overclock_mode && overclock_temp > 0)
@@ -697,10 +734,6 @@
 			else if (checking == src)
 				break  // all good
 			checking = checking.loc
-	//Diagnostic HUD updates
-	diag_hud_set_mechhealth()
-	diag_hud_set_mechcell()
-	diag_hud_set_mechstat()
 
 /obj/vehicle/sealed/mecha/proc/process_constant_power_usage(seconds_per_tick)
 	if(mecha_flags & LIGHTS_ON && !use_energy(light_power_drain * seconds_per_tick))
@@ -914,30 +947,26 @@
 	req_one_access = one_access ? accesses : list()
 
 /// Electrocute user from power celll
-/obj/vehicle/sealed/mecha/proc/shock(mob/living/user)
-	if(!istype(user) || get_charge() < 1)
+/obj/vehicle/sealed/mecha/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff)
+	if(get_charge() < 1)
 		return FALSE
-	do_sparks(5, TRUE, src)
-	return electrocute_mob(user, cell, src, 0.7, TRUE)
+	if(isnull(siemens_coeff))
+		siemens_coeff = 0.7
+	return ..()
 
 /// Toggle mech overclock with a button or by hacking
 /obj/vehicle/sealed/mecha/proc/toggle_overclock(forced_state = null)
 	if(!isnull(forced_state))
 		if(overclock_mode == forced_state)
-			return
+			return FALSE
 		overclock_mode = forced_state
 	else
 		overclock_mode = !overclock_mode
-	log_message("Toggled overclocking.", LOG_MECHA)
-
+	log_message("Toggled [overclock_name].", LOG_MECHA)
 	for(var/mob/occupant as anything in occupants)
+		balloon_alert(occupant, "[overclock_name] [overclock_mode ? "on":"off"]")
 		var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/mech_overclock) in occupant.actions
-		if(!act)
-			continue
-		act.button_icon_state = "mech_overload_[overclock_mode ? "on" : "off"]"
-		balloon_alert(occupant, "overclock [overclock_mode ? "on":"off"]")
-		act.build_all_button_icons()
-
+		act?.build_all_button_icons(UPDATE_BUTTON_ICON)
 	if(overclock_mode)
 		movedelay = movedelay / overclock_coeff
 		visible_message(span_notice("[src] starts heating up, making humming sounds."))
@@ -945,6 +974,7 @@
 		movedelay = initial(movedelay)
 		visible_message(span_notice("[src] cools down and the humming stops."))
 	update_energy_drain()
+	return TRUE
 
 /// Update the energy drain according to parts and status
 /obj/vehicle/sealed/mecha/proc/update_energy_drain()

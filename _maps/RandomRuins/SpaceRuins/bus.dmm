@@ -8,7 +8,7 @@
 "ac" = (
 /obj/item/trash/sosjerky,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "am" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,

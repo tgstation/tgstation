@@ -18,7 +18,7 @@ on:
 
 jobs:
   collect_data:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
       maps: ${{ steps.map_finder.outputs.maps }}
@@ -27,7 +27,7 @@ jobs:
       required_build_versions: ${{ steps.setup_required_build_versions.outputs.required_build_versions }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Find Maps
         id: map_finder
         run: |

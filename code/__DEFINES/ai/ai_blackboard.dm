@@ -176,8 +176,6 @@
 #define BB_MOD_TARGET "BB_mod_target"
 ///The module the AI was created from
 #define BB_MOD_MODULE "BB_mod_module"
-///Range for a MOD AI controller.
-#define MOD_AI_RANGE 200
 
 ///Only target mobs with these traits
 #define BB_TARGET_ONLY_WITH_TRAITS "BB_target_only_with_traits"

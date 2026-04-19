@@ -16,8 +16,7 @@
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
 	if(!component_parts)
 		return ITEM_INTERACT_FAILURE
-	default_deconstruction_crowbar(attack_item)
-	return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, attack_item)
 
 /obj/machinery/vending/wrench_act(mob/living/user, obj/item/tool)
 	. = NONE
@@ -29,11 +28,9 @@
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/attack_item)
 	if(anchored)
-		default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item)
-		return ITEM_INTERACT_SUCCESS
-	else
-		to_chat(user, span_warning("You must first secure [src]."))
-		return ITEM_INTERACT_FAILURE
+		return default_deconstruction_screwdriver(user, attack_item)
+	to_chat(user, span_warning("You must first secure [src]."))
+	return ITEM_INTERACT_FAILURE
 
 /obj/machinery/vending/on_set_panel_open(old_value)
 	update_appearance(UPDATE_OVERLAYS)
@@ -79,23 +76,24 @@
 
 	. = TRUE
 	if(!canLoadItem(inserted_item, user))
-		to_chat(user, span_warning("[src] does not accept [inserted_item]!"))
 		return FALSE
 
-	to_chat(user, span_notice("You insert [inserted_item] into [src]'s input compartment."))
 	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
-		if(inserted_item.type == product_datum.product_path)
-			if(product_datum.amount == product_datum.max_amount)
-				to_chat(user, span_warning("no space for any more [product_datum.category || "Products"]!"))
-				return FALSE
+		if(inserted_item.type != product_datum.product_path)
+			continue
 
-			if(!user.transferItemToLoc(inserted_item, src))
-				to_chat(user, span_warning("[inserted_item] is stuck in your hand!"))
-				return FALSE
+		if(product_datum.amount == product_datum.max_amount)
+			to_chat(user, span_warning("[src] can't accept any more [inserted_item.name][inserted_item.p_s()]!"))
+			return FALSE
 
-			product_datum.amount++
-			LAZYADD(product_datum.returned_products, inserted_item)
-			break
+		if(!user.transferItemToLoc(inserted_item, src))
+			to_chat(user, span_warning("[inserted_item] is stuck in your hand!"))
+			return FALSE
+
+		product_datum.amount++
+		LAZYADD(product_datum.returned_products, inserted_item)
+		to_chat(user, span_notice("You insert [inserted_item] into [src]'s input compartment."))
+		break
 
 /obj/machinery/vending/item_interaction(mob/living/user, obj/item/attack_item, list/modifiers)
 	. = ..()
@@ -158,7 +156,7 @@
 		to_chat(user, span_warning("There's nothing to restock!"))
 		return
 
-	to_chat(user, span_notice("You loaded [restocked] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] credits." : "."]"))
+	to_chat(user, span_notice("You loaded [restocked] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] [MONEY_NAME]." : "."]"))
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	cargo_account.adjust_money(round(credits_contained * 0.5), "Vending: Restock")
 	var/obj/item/holochip/payday = new(src, credits_contained)
@@ -196,7 +194,7 @@
 /obj/machinery/vending/proc/freebie(freebies)
 	PRIVATE_PROC(TRUE)
 
-	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"][credits_contained > 0 ? " and some credits" : ""]!"))
+	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"][credits_contained > 0 ? " and some [MONEY_NAME]" : ""]!"))
 
 	for(var/i in 1 to freebies)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)

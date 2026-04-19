@@ -69,19 +69,19 @@
 /datum/heretic_knowledge/limited_amount/starting/base_rust/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
-	user.RemoveElement(/datum/element/leeching_walk/minor)
+	user.RemoveElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY)
-	user.AddElement(/datum/element/leeching_walk/minor)
+	user.AddElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		for(var/obj/item/bodypart/robotic_limb as anything in carbon_target.bodyparts)
+		for(var/obj/item/bodypart/robotic_limb as anything in carbon_target.get_bodyparts())
 			if(IS_ROBOTIC_LIMB(robotic_limb))
 				robotic_limb.receive_damage(500)
 
@@ -262,7 +262,7 @@
 
 /datum/heretic_knowledge/ultimate/rust_final/proc/delay_transform_turfs(list/turfs)
 	for(var/turf/turf as anything in turfs)
-		turf.rust_heretic_act(5)
+		turf.rust_heretic_act(RUST_RESISTANCE_ORGANIC)
 		CHECK_TICK
 
 /**
@@ -273,16 +273,12 @@
 /datum/heretic_knowledge/ultimate/rust_final/proc/on_move(mob/living/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
-	// If we're on a rusty turf, and haven't given out our traits, buff our guy
-	var/turf/our_turf = get_turf(source)
-	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
+	if(source.is_touching_rust())
 		if(!immunities_active)
 			source.add_traits(conditional_immunities, type)
 			source.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 			immunities_active = TRUE
-
-	// If we're not on a rust turf, and we have given out our traits, nerf our guy
-	else
+	else // If we're not on a rust turf, and we have given out our traits, nerf our guy
 		if(immunities_active)
 			source.remove_traits(conditional_immunities, type)
 			source.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
@@ -293,21 +289,21 @@
  *
  * Gradually heals the heretic ([source]) on rust.
  */
-/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
+/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	var/turf/our_turf = get_turf(source)
-	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
+	if(!source.is_touching_rust())
 		return
 
 	var/need_mob_update = FALSE
 	var/base_heal_amt = 1 * DELTA_WORLD_TIME(SSmobs)
-	need_mob_update += source.adjustBruteLoss(-base_heal_amt, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss(-base_heal_amt, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-base_heal_amt, updating_health = FALSE, forced = TRUE)
-	need_mob_update += source.adjustOxyLoss(-base_heal_amt, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss(-base_heal_amt * 4, updating_stamina = FALSE)
-	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += base_heal_amt
+	need_mob_update += source.adjust_brute_loss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjust_fire_loss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjust_tox_loss(-base_heal_amt, updating_health = FALSE, forced = TRUE)
+	need_mob_update += source.adjust_oxy_loss(-base_heal_amt, updating_health = FALSE)
+	need_mob_update += source.adjust_stamina_loss(-base_heal_amt * 4, updating_stamina = FALSE)
+
+	source.adjust_blood_volume(base_heal_amt, maximum = BLOOD_VOLUME_NORMAL)
+
 	if(need_mob_update)
 		source.updatehealth()

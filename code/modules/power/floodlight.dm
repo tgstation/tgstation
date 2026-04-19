@@ -11,7 +11,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight_c1"
 	density = TRUE
-
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	var/state = FLOODLIGHT_NEEDS_WIRES
 
 /obj/structure/floodlight_frame/Initialize(mapload)
@@ -209,12 +209,12 @@
 	if(!anchored)
 		. += span_notice("It needs to be wrenched on top of a wire.")
 	else
-		. += span_notice("Its at power level [setting].")
+		. += span_notice("It's at power level [setting].")
 	if(panel_open)
-		. += span_notice("Its maintainence hatch is open but can be [EXAMINE_HINT("screwed")] close.")
+		. += span_notice("Its maintenance hatch is open but can be [EXAMINE_HINT("screwed")] closed.")
 		. += span_notice("You can remove the light tube by [EXAMINE_HINT("hand")].")
 	else
-		. += span_notice("Its maintainence hatch can be [EXAMINE_HINT("screwed")] open.")
+		. += span_notice("Its maintenance hatch can be [EXAMINE_HINT("screwed")] open.")
 
 /obj/machinery/power/floodlight/process()
 	var/turf/T = get_turf(src)

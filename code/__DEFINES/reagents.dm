@@ -126,23 +126,29 @@
 /// Supercedes [REAGENT_REVERSE_METABOLISM].
 #define REAGENT_UNAFFECTED_BY_METABOLISM (1<<10)
 
+/// Spawn from features that can produce an infinite amount of something, like geysers, strange seeds and bees
+#define REAGENT_SPAWN_RANDOM_PRODUCERS (1<<0)
+/// Spawn from maintpills (only real maintpills, not the fake mapped or purchased kind)
+#define REAGENT_SPAWN_MAINTENANCE_PILL (1<<1)
+
+/// Do not ever spawn in anything random
+#define REAGENT_SPAWN_NO_RANDOM NONE
+/// Just spawn in everything, we don't care
+#define REAGENT_SPAWN_ALL_RANDOM_SPAWNS ALL
+
 //Chemical reaction flags, for determining reaction specialties
-///Convert into impure/pure on reaction completion
-#define REACTION_CLEAR_IMPURE (1<<0)
 ///Convert into inverse on reaction completion when purity is low enough
-#define REACTION_CLEAR_INVERSE (1<<1)
-///Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
-#define REACTION_CLEAR_RETAIN (1<<2)
+#define REACTION_CLEAR_INVERSE (1<<0)
 ///Used to create instant reactions
-#define REACTION_INSTANT (1<<3)
+#define REACTION_INSTANT (1<<1)
 ///Used to force reactions to create a specific amount of heat per 1u created. So if thermic_constant = 5, for 1u of reagent produced, the heat will be forced up arbitarily by 5 irresepective of other reagents. If you use this, keep in mind standard thermic_constant values are 100x what it should be with this enabled.
-#define REACTION_HEAT_ARBITARY (1<<4)
+#define REACTION_HEAT_ARBITARY (1<<2)
 ///Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed). More stuff might be added later. When defining this, please add in the comments the associated reactions that it competes with
-#define REACTION_COMPETITIVE (1<<5)
+#define REACTION_COMPETITIVE (1<<3)
 ///Used to force pH changes to be constant regardless of volume
-#define REACTION_PH_VOL_CONSTANT (1<<6)
+#define REACTION_PH_VOL_CONSTANT (1<<4)
 ///If a reaction will generate its impure/inverse reagents in the middle of a reaction, as apposed to being determined on ingestion/on reaction completion
-#define REACTION_REAL_TIME_SPLIT (1<<7)
+#define REACTION_REAL_TIME_SPLIT (1<<5)
 
 ///Used for overheat_temp - This sets the overheat so high it effectively has no overheat temperature.
 #define NO_OVERHEAT 99999
@@ -205,6 +211,48 @@
 #define REACTION_TAG_PLANT (1<<19)
 /// This reaction is produces a product that affects plants
 #define REACTION_TAG_COMPETITIVE (1<<20)
+/// Reaction produces a reagent that is a common component for other reactions
+#define REACTION_TAG_COMPONENT (1<<21)
+/// Denotes reactions that will immediately do something on reaction, like an explosion, smoke, etc.
+#define REACTION_TAG_ACTIVE (1<<22)
+
+/// Readable list of reagent reaction tags (in the same order as they are defined!)
+#define REACTION_TAG_READABLE list(\
+	"BRUTE" = REACTION_TAG_BRUTE,\
+	"BURN" = REACTION_TAG_BURN,\
+	"TOXIN" = REACTION_TAG_TOXIN,\
+	"OXY" = REACTION_TAG_OXY,\
+	"HEALING" = REACTION_TAG_HEALING,\
+	"DAMAGING" = REACTION_TAG_DAMAGING,\
+	"EXPLOSIVE" = REACTION_TAG_EXPLOSIVE,\
+	"OTHER" = REACTION_TAG_OTHER,\
+	"DANGEROUS" = REACTION_TAG_DANGEROUS,\
+	"EASY" = REACTION_TAG_EASY,\
+	"MODERATE" = REACTION_TAG_MODERATE,\
+	"HARD" = REACTION_TAG_HARD,\
+	"ORGAN" = REACTION_TAG_ORGAN,\
+	"DRINK" = REACTION_TAG_DRINK,\
+	"FOOD" = REACTION_TAG_FOOD,\
+	"SLIME" = REACTION_TAG_SLIME,\
+	"DRUG" = REACTION_TAG_DRUG,\
+	"UNIQUE" = REACTION_TAG_UNIQUE,\
+	"CHEMICAL" = REACTION_TAG_CHEMICAL,\
+	"PLANT" = REACTION_TAG_PLANT,\
+	"COMPETITIVE" = REACTION_TAG_COMPETITIVE,\
+	"COMPONENT" = REACTION_TAG_COMPONENT,\
+	"ACTIVE" = REACTION_TAG_ACTIVE,\
+)
+
+/// Reaction tags for basic damgae types
+#define DAMAGE_HEALING_REACTION_TAGS (REACTION_TAG_BRUTE | REACTION_TAG_BURN | REACTION_TAG_TOXIN | REACTION_TAG_OXY)
+/// Reaction tags for medication
+#define MEDICATION_REACTION_TAGS (REACTION_TAG_HEALING | REACTION_TAG_DAMAGING | REACTION_TAG_ORGAN | REACTION_TAG_DRUG)
+/// Reaction tags for things the chemist would make
+#define CHEMIST_REACTION_TAGS (REACTION_TAG_EXPLOSIVE | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE | REACTION_TAG_EXPLOSIVE | REACTION_TAG_COMPONENT)
+/// Reaction tags for botanist stuff
+#define BOTANIST_REACTION_TAGS (REACTION_TAG_PLANT | REACTION_TAG_COMPONENT)
+/// Reaction tags for food and drink mainly
+#define KITCHEN_REACTION_TAGS (REACTION_TAG_FOOD | REACTION_TAG_DRINK | REACTION_TAG_COMPONENT)
 
 //flags used by holder.dm to locate an reagent
 ///Direct type
@@ -213,10 +261,6 @@
 #define REAGENT_PARENT_TYPE (1<<1)
 ///same as istype() check
 #define REAGENT_SUB_TYPE (1<<2)
-
-#define RNGCHEM_INPUT "input"
-#define RNGCHEM_CATALYSTS "catalysts"
-#define RNGCHEM_OUTPUT "output"
 
 /// Below are defines used for reagent associated machines only
 /// For the pH meter flashing method
@@ -254,3 +298,23 @@
 
 /// Cooldown between patch reagent messages
 #define PATCH_MESSAGE_COOLDOWN 10 SECONDS
+
+// on_spark_act returns
+/// We caused a non-destructive reaction
+#define SPARK_ACT_NON_DESTRUCTIVE (1 << 0)
+/// We caused a destructive action or an explosion, the holder should probably delete itself
+#define SPARK_ACT_DESTRUCTIVE (1 << 1)
+/// Don't remove this reagent, even if it reacted to spark_act
+#define SPARK_ACT_KEEP_REAGENT (1 << 2)
+/// Remove all reagents even if they didn't react and stop the processing
+/// Usually means an explosion or a destroyed parent
+#define SPARK_ACT_CLEAR_ALL (1 << 3)
+
+/// Valid values to be returned from reagent holder's spark_act
+#define SPARK_ACT_RETURNS (SPARK_ACT_NON_DESTRUCTIVE | SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL)
+
+// spark_flags values
+/// We're reacting in an enclosed container
+#define SPARK_ACT_ENCLOSED (1 << 0)
+/// We're in a large container or something, so decrease the power of bootleg explosives like welding fuel
+#define SPARK_ACT_WEAKEN_COMMON (1 << 1)

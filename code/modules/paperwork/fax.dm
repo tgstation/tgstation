@@ -160,10 +160,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
  * Open and close the wire panel.
  */
 /obj/machinery/fax/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	. = ..()
-	default_deconstruction_screwdriver(user, icon_state, icon_state, screwdriver)
-	update_appearance()
-	return TRUE
+	return default_deconstruction_screwdriver(user, screwdriver)
 
 /**
  * Using the multi-tool with the panel closed causes the fax network name to be renamed.
@@ -500,21 +497,12 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 			return TRUE
 	return FALSE
 
-/**
- * Attempts to shock the passed user, returns true if they are shocked.
- *
- * Arguments:
- * * user - the user to shock
- * * chance - probability the shock happens
- */
-/obj/machinery/fax/proc/shock(mob/living/user, chance)
-	if(!istype(user) || machine_stat & (BROKEN|NOPOWER))
+/obj/machinery/fax/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1)
+	if( machine_stat & (BROKEN|NOPOWER))
 		return FALSE
-	if(!prob(chance))
-		return FALSE
-	do_sparks(5, TRUE, src)
-	var/check_range = TRUE
-	return electrocute_mob(user, get_area(src), src, 0.7, check_range)
+	if(isnull(siemens_coeff))
+		siemens_coeff = 0.7
+	return ..()
 
 
 /obj/machinery/fax/add_context(atom/source, list/context, obj/item/held_item, mob/user)

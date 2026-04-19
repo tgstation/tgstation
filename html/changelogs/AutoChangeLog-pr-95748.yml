@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Ship from a bottle can now be bottled back up by alt-clicking it"
+  - balance: "Ship in a bottle can now be deployed by throwing it, and are a small item instead of normal-sized"
+  - spellcheck: "Boats no longer refer to oars as keys"

@@ -78,7 +78,7 @@
 	/// Whether this can be discounted or not
 	var/cant_discount = FALSE
 	/// If discounted, is true. Used to send a signal to update reimbursement.
-	var/discounted = FALSE
+	VAR_FINAL/discounted = FALSE
 	/// If this value is changed on two items they will share stock, defaults to not sharing stock with any other item
 	var/stock_key = UPLINK_SHARED_STOCK_UNIQUE
 	/// How many items of this stock can be purchased.
@@ -109,6 +109,9 @@
 	/// Uses the purchase log, so items purchased that are not visible in the purchase log will not count towards this.
 	/// However, they won't be purchasable afterwards.
 	var/lock_other_purchases = FALSE
+	/// A lazylist of typepaths to uplink items relevant to this this item
+	/// EX: a pistol would list its magazines or modifications here
+	var/list/relevant_child_items
 
 /datum/uplink_item/New()
 	. = ..()
@@ -209,7 +212,7 @@
 
 	QDEL_NULL(gun_reward.pin)
 	var/obj/item/firing_pin/pin = new
-	pin.gun_insert(new_gun = gun_reward)
+	pin.gun_insert(new_gun = gun_reward, starting = TRUE)
 
 ///For special overrides if an item can be bought or not.
 /datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)

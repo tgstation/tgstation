@@ -1,3 +1,12 @@
+/// Active power use of a regular default camera
+#define CAMERA_POWER_CONSUMPTION (BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02)
+/// Active power multiplier of the xray camera upgrade
+#define XRAY_POWER_MOD (10)
+/// Active power multiplier of the motion camera upgrade
+#define MOTION_POWER_MOD (4)
+/// Active power multiplier of the EMP camera upgrade
+#define EMP_POWER_MOD (1.25)
+
 /**
  * Camera assembly frame
  * Putting this on a wall will put a deconstructed camera machine on the wall.
@@ -7,12 +16,12 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "cameracase"
-	custom_materials = list(
-		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4,
-		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5,
-	)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	result_path = /obj/machinery/camera/autoname/deconstructed
 	wall_external = TRUE
+
+/obj/item/wallframe/camera/find_support_structure(atom/structure)
+	return istype(structure, /obj/structure/window) ? structure : ..()
 
 /obj/machinery/camera
 	name = "security camera"
@@ -21,7 +30,7 @@
 	icon_state = "camera"
 	base_icon_state = "camera"
 	use_power = ACTIVE_POWER_USE
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
+	active_power_usage = CAMERA_POWER_CONSUMPTION
 	layer = WALL_OBJ_LAYER
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 12
@@ -125,15 +134,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		else //this is handled by toggle_camera, so no need to update it twice.
 			update_appearance()
 #endif
-
 	alarm_manager = new(src)
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_mount_on_atom(mark_for_late_init = TRUE)
+
+/obj/machinery/camera/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
-	SScameras.remove_camera_from_chunk(src)
 	SScameras.cameras -= src
 	cancelCameraAlarm()
 	if(isarea(myarea))
@@ -143,6 +153,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	QDEL_NULL(xray_module)
 	QDEL_NULL(emp_module)
 	QDEL_NULL(proximity_monitor)
+	// moveToNullspace will clear us from our current chunks
 	return ..()
 
 /obj/machinery/camera/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -168,6 +179,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	else if(gone == proximity_monitor)
 		emp_module = null
 		removeMotion()
+
+/obj/machinery/camera/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	SScameras.camera_moved(src, get_turf(old_loc), get_turf(loc))
 
 /obj/machinery/camera/proc/create_prox_monitor()
 	if(!proximity_monitor)
@@ -224,6 +239,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	set_light(0)
 	emped++ //Increase the number of consecutive EMP's
 	update_appearance()
+	calculate_active_power()
 	addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), reset_time)
 	for(var/mob/M as anything in GLOB.player_list)
 		if (M.client?.eye == src)
@@ -249,6 +265,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		SScameras.add_camera_to_chunk(src)
 	emped = 0 //Resets the consecutive EMP count
 	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
+	calculate_active_power()
 
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
@@ -258,13 +275,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	user.switchCamera(src)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
+	if(num > MAX_CAMERA_RANGE)
+		CRASH("Attempted to set camera view range to something ([num]) greater then we support ([MAX_CAMERA_RANGE]).\
+			This would break chunk updating. If you really need to do this, update MAX_CAMERA_RANGE")
 	src.view_range = num
 	SScameras.update_visibility(src)
-
-/obj/machinery/camera/proc/shock(mob/living/user)
-	if(!istype(user))
-		return
-	user.electrocute_act(10, src)
 
 /obj/machinery/camera/singularity_pull(atom/singularity, current_size)
 	if (camera_enabled && current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects and the camera is still active, turn off the camera as it gets ripped off the wall.
@@ -363,6 +378,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 		playsound(src, 'sound/items/tools/wirecutter.ogg', 100, TRUE)
 	update_appearance() //update Initialize() if you remove this.
+	calculate_active_power()
 
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
@@ -387,33 +403,39 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		return FALSE
 	return TRUE
 
-/// Returns a list of turfs in this camera's view.
-/// This includes turfs that are "obscured by darkness" from the camera's POV.
+/// Returns an alist of turfs in this camera's view. This includes turfs that are "obscured by darkness" from the camera's POV.
+/// Format is "alist[turf] = null", if you need to check individual objects use "length(can_see & list(turf))". Only "&" and "in" work for checking contents, but "in" is much slower.
+/// Always have the return value of can_see as the left-hand operand, otherwise it uses list checks instead of alist checks and your CPU time gets thrown in a blender.
 /obj/machinery/camera/proc/can_see()
-	var/list/see = null
+	var/alist/see = alist()
 	var/turf/pos = get_turf(src)
 	var/turf/directly_above = GET_TURF_ABOVE(pos)
 	var/check_lower = pos != get_lowest_turf(pos)
 	var/check_higher = directly_above && istransparentturf(directly_above) && (pos != get_highest_turf(pos))
 
 	if(isXRay())
-		see = RANGE_TURFS(view_range, pos)
+		see += RANGE_TURFS(view_range, pos)
 	else
-		see = get_hear_turfs(view_range, pos)
+		var/lum = pos.luminosity
+		pos.luminosity = 6
+		for(var/turf/turf in view(view_range, pos))
+			see += turf
+		pos.luminosity = lum
 
 	if(check_lower || check_higher)
 		// Haha datum var access KILL ME
 		for(var/turf/seen as anything in see)
 			if(check_lower)
-				var/turf/below = GET_TURF_BELOW(seen)
+				var/turf/below = seen
 				while(below && istransparentturf(below))
-					see += RANGE_TURFS(1, below)
 					below = GET_TURF_BELOW(below)
+					see += RANGE_TURFS(1, below)
 			if(check_higher)
 				var/turf/above = GET_TURF_ABOVE(seen)
 				while(above && istransparentturf(above))
 					see += RANGE_TURFS(1, above)
 					above = GET_TURF_ABOVE(above)
+
 	return see
 
 /obj/machinery/camera/proc/Togglelight(on=0)
@@ -445,3 +467,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 ///Called when the camera stops being watched on a camera console.
 /obj/machinery/camera/proc/on_stop_watching()
 	return
+
+/obj/machinery/camera/proc/calculate_active_power()
+	if(!can_use())
+		active_power_usage = 0
+		return
+
+	var/xray_power_mod = (camera_upgrade_bitflags & CAMERA_UPGRADE_XRAY) && !malf_xray_firmware_present ? XRAY_POWER_MOD : 1
+	var/motion_power_mod = (camera_upgrade_bitflags & CAMERA_UPGRADE_MOTION) ? MOTION_POWER_MOD : 1
+	var/EMP_power_mod = (camera_upgrade_bitflags & CAMERA_UPGRADE_EMP_PROOF) && !malf_emp_firmware_present ? EMP_POWER_MOD : 1
+
+	active_power_usage = CAMERA_POWER_CONSUMPTION * xray_power_mod * motion_power_mod * EMP_power_mod
+
+#undef CAMERA_POWER_CONSUMPTION
+#undef XRAY_POWER_MOD
+#undef MOTION_POWER_MOD
+#undef EMP_POWER_MOD

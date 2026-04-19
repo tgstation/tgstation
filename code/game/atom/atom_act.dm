@@ -240,9 +240,6 @@
 	var/datum/antagonist/heretic/heretic_data = GET_HERETIC(src)
 	target.rust_heretic_act(heretic_data?.rust_strength)
 
-/mob/living/basic/heretic_summon/rust_walker/do_rust_heretic_act(atom/target)
-	target.rust_heretic_act(4)
-
 ///Called when something resists while this atom is its loc
 /atom/proc/container_resist_act(mob/living/user)
 	return
@@ -253,7 +250,7 @@
  * Default behaviour is to send [COMSIG_ATOM_RCD_ACT] and return FALSE
  */
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, rcd_data["[RCD_DESIGN_MODE]"])
+	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, rcd_data[RCD_DESIGN_MODE])
 	return FALSE
 
 ///Return the values you get when an RCD eats you?

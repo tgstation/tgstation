@@ -60,10 +60,11 @@
 	desc = "These were once used by plague doctors. This hat will only slightly protect you from exposure to the Pestilence."
 	icon_state = "plaguedoctor"
 	armor_type = /datum/armor/bio_hood_plague
-	flags_inv = NONE
+	flags_inv = HIDEHAIR|HIDEEARS
 	clothing_flags = SNUG_FIT
 	flags_cover = NONE
 	dirt_state = null
+	alternate_worn_layer = HAIR_LAYER
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -243,7 +244,19 @@
 /obj/item/clothing/head/costume/lizard
 	name = "lizardskin cloche hat"
 	desc = "How many lizards died to make this hat? Not enough."
-	icon_state = "lizard"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/lizard"
+	post_init_icon_state = "lizard_hat"
+	greyscale_config = /datum/greyscale_config/lizard_hat
+	greyscale_config_worn = /datum/greyscale_config/lizard_hat/worn
+	greyscale_colors = "#859333"
+
+/obj/item/clothing/head/costume/lizard/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/stack/sheet/animalhide/carbon/lizard/skin = locate() in components
+	if (isnull(skin) || !length(skin.skin_color)) // what
+		return ..()
+	set_greyscale(skin.skin_color)
+	return ..()
 
 /obj/item/clothing/head/costume/scarecrow_hat
 	name = "scarecrow hat"
@@ -303,7 +316,7 @@
 /obj/item/clothing/head/hats/centcom_cap
 	name = "\improper CentCom commander cap"
 	icon_state = "centcom_cap"
-	desc = "Worn by the finest of CentCom commanders. Inside the lining of the cap, lies two faint initials."
+	desc = "Worn by the finest of CentCom commanders. Two faint initials lie inside the lining of the cap."
 	inhand_icon_state = "that"
 	flags_inv = 0
 	armor_type = /datum/armor/hats_centcom_cap
@@ -390,3 +403,4 @@
 	icon_state = "paper"
 	worn_icon_state = "paper"
 	dog_fashion = /datum/dog_fashion/head
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)

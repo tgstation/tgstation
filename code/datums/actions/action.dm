@@ -163,6 +163,7 @@
 /// Actually triggers the effects of the action.
 /// Called when the on-screen button is clicked, for example.
 /datum/action/proc/Trigger(mob/clicker, trigger_flags)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!(trigger_flags & TRIGGER_FORCE_AVAILABLE) && !IsAvailable(feedback = TRUE))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
@@ -177,6 +178,10 @@
 	if(!owner)
 		return FALSE
 	if(action_disabled)
+		return FALSE
+	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
+		if (feedback)
+			owner.balloon_alert(owner, "[owner.stat == DEAD ? "dead" : "unconscious"]!")
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)
@@ -196,10 +201,6 @@
 			if (feedback)
 				owner.balloon_alert(owner, "must stand up!")
 			return FALSE
-	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
-		if (feedback)
-			owner.balloon_alert(owner, "unconscious!")
-		return FALSE
 	if((check_flags & AB_CHECK_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
 		if (feedback)
 			owner.balloon_alert(owner, "incorporeal!")
@@ -352,7 +353,7 @@
 	if(!our_hud || viewers[our_hud]) // There's no point in this if you have no hud in the first place
 		return
 
-	var/atom/movable/screen/movable/action_button/button = create_button()
+	var/atom/movable/screen/movable/action_button/button = create_button(viewer)
 	SetId(button, viewer)
 
 	button.our_hud = our_hud
@@ -372,8 +373,8 @@
 		qdel(button)
 
 /// Creates an action button movable for the passed mob, and returns it.
-/datum/action/proc/create_button()
-	var/atom/movable/screen/movable/action_button/button = new()
+/datum/action/proc/create_button(mob/viewer)
+	var/atom/movable/screen/movable/action_button/button = viewer.hud_used.add_screen_object(/atom/movable/screen/movable/action_button)
 	button.linked_action = src
 	button.allow_observer_click = allow_observer_click
 	build_button_icon(button, ALL, TRUE)
@@ -452,3 +453,8 @@
 		else
 			source.next_click = world.time + CLICK_CD_ACTIVATE_ABILITY
 	INVOKE_ASYNC(src, PROC_REF(Trigger))
+
+/// Used for setting the keybind via external sources.
+/datum/action/proc/set_key(new_full_key)
+	full_key = new_full_key
+	build_all_button_icons(UPDATE_BUTTON_STATUS)

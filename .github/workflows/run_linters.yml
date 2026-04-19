@@ -5,13 +5,13 @@ on:
 
 jobs:
   linters:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Restore SpacemanDMM cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
@@ -20,21 +20,21 @@ jobs:
       - name: Setup Bun
         uses: ./.github/actions/setup_bun
       - name: Restore Bootstrap cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tools/bootstrap/.cache
-          key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
+          key: ${{ runner.os }}-bootstrap-${{ hashFiles('/tools/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-bootstrap-
       - name: Restore Rust cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cargo
-          key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
+          key: ${{ runner.os }}-rust-${{ hashFiles('/tools/ci/ci_dependencies.sh')}}
           restore-keys: |
             ${{ runner.os }}-rust-
       - name: Restore Cutter cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tools/icon_cutter/cache
           key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
@@ -43,7 +43,7 @@ jobs:
         with:
           dotnet-version: 9.x
       - name: Install OpenDream
-        uses: robinraju/release-downloader@v1.12
+        uses: robinraju/release-downloader@93eac224fa5a1e835cc942d66c12ee373bc7fae9
         with:
           repository: "OpenDreamProject/OpenDream"
           tag: "latest"
@@ -82,8 +82,17 @@ jobs:
       - name: Run OpenDream
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING | bash tools/ci/annotate_od.sh
+      - name: Check for Map & Maplint File Edits
+        id: map-filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            run_maps:
+              - '**.dmm'
+              - 'tools/maplint/**'
+              - 'tools/mapmerge2/**'
       - name: Run Map Checks
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        if: steps.linter-setup.conclusion == 'success' && !cancelled() && steps.map-filter.outputs.run_maps == 'true'
         run: |
           tools/bootstrap/python -m mapmerge2.dmm_test
           tools/bootstrap/python -m tools.maplint.source

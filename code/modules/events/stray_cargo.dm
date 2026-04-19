@@ -64,7 +64,7 @@
 		stray_spawnable_supply_packs = SSshuttle.supply_packs.Copy()
 		for(var/pack in stray_spawnable_supply_packs)
 			var/datum/supply_pack/pack_type = pack
-			if(initial(pack_type.special))
+			if(initial(pack_type.order_flags) & ORDER_SPECIAL)
 				stray_spawnable_supply_packs -= pack
 
 ///Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area
@@ -96,12 +96,18 @@
 			supply_pack = admin_override_contents //Syndicate crates create a new datum while being customized which will result in this being triggered. Outside of this situation this should never trigger
 		else
 			supply_pack = SSshuttle.supply_packs[pack_type]
-	var/obj/structure/closet/crate/crate = supply_pack.generate(null)
-	if(crate) //empty supply packs are a thing! get memed on.
+
+	var/storage_override
+	if(initial(supply_pack.order_flags) & ORDER_GOODY) // We offer goody items inside of briefcases, but regular crates still default to their standard crates.
+		storage_override = /obj/item/storage/briefcase/empty
+	var/obj/container = supply_pack.generate(null, crate_override = storage_override)
+
+	if(container && istype(container, /obj/structure/closet/crate)) //empty supply packs are a thing! get memed on.
+		var/obj/structure/closet/crate/crate = container
 		crate.locked = FALSE //Unlock secure crates
 		crate.update_appearance()
 	var/obj/structure/closet/supplypod/pod = make_pod()
-	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, crate)
+	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, container)
 	var/static/mutable_appearance/target_appearance = mutable_appearance('icons/obj/supplypods_32x32.dmi', "LZ")
 	notify_ghosts("[control.name] has summoned a supply crate!", source = get_turf(landing_marker), header = "Cargo Inbound", alert_overlay = target_appearance)
 
@@ -189,5 +195,5 @@
 ///Apply the syndicate pod skin
 /datum/round_event/stray_cargo/syndicate/make_pod()
 	var/obj/structure/closet/supplypod/S = new
-	S.setStyle(/datum/pod_style/syndicate)
+	S.set_style(/datum/pod_style/syndicate)
 	return S

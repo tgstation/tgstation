@@ -79,6 +79,8 @@
 	inhand_icon_state = "cutters"
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/item/multitool/drone
 	name = "built-in multitool"

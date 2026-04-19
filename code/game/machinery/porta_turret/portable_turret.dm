@@ -40,6 +40,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	armor_type = /datum/armor/machinery_porta_turret
 	base_icon_state = "standard"
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	subsystem_type = /datum/controller/subsystem/processing/turrets
+	processing_flags = START_PROCESSING_MANUALLY
 	// Same faction mobs will never be shot at, no matter the other settings
 	faction = list(FACTION_TURRET)
 
@@ -84,7 +86,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// World.time the turret last fired
 	var/last_fired = 0
 	/// Ticks until next shot (1.5 ?)
-	var/shot_delay = 15
+	var/shot_delay = 1.5 SECONDS
 	/// Turret flags about who is turret allowed to shoot
 	var/turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS
 	/// Determines if the turret is on
@@ -92,7 +94,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// Determines if our projectiles hit our faction
 	var/ignore_faction = FALSE
 	/// The spark system, used for generating... sparks?
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	/// The turret will try to shoot from a turf in that direction when in a wall
 	var/wall_turret_direction
 	/// If the turret is manually controlled
@@ -103,6 +105,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/datum/action/turret_toggle/toggle_action
 	/// Mob that is remotely controlling the turret
 	var/mob/remote_controller
+	/// Proximity tracker used to activate/deactivate the turret's processing.
+	var/datum/proximity_monitor/advanced/turret_tracking/tracker
 	/// While the cooldown is still going on, it cannot be re-enabled.
 	COOLDOWN_DECLARE(disabled_time)
 
@@ -120,11 +124,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!base)
 		base = src
 	update_appearance()
-	//Sets up a spark system
-	spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(5, 0, src)
+	// Sets up a spark system
+	spark_system = new(src, 5, FALSE)
 	spark_system.attach(src)
-
+	tracker = new(src, scan_range)
+	tracker.recalculate_field(full_recalc = TRUE) // manually call this so that our tracker var is set before we set anything up
 	setup()
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
@@ -136,6 +140,16 @@ DEFINE_BITFIELD(turret_flags, list(
 		INVOKE_ASYNC(src, PROC_REF(popUp))
 
 	AddElement(/datum/element/hostile_machine)
+
+/obj/machinery/porta_turret/Destroy()
+	QDEL_NULL(tracker)
+	//deletes its own cover with it
+	QDEL_NULL(cover)
+	base = null
+	QDEL_NULL(stored_gun)
+	QDEL_NULL(spark_system)
+	remove_control()
+	return ..()
 
 ///Toggles the turret on or off depending on the value of the turn_on arg.
 /obj/machinery/porta_turret/proc/toggle_on(turn_on = TRUE)
@@ -160,13 +174,18 @@ DEFINE_BITFIELD(turret_flags, list(
 	INVOKE_ASYNC(src, PROC_REF(set_disabled), disrupt_duration)
 	return TRUE
 
+/// Checks to see if this should be processing, and starts/stops processing if so.
+/// Returns TRUE if processing began, FALSE if processing ended, or null if the processing state was not changed.
 /obj/machinery/porta_turret/proc/check_should_process()
 	if (datum_flags & DF_ISPROCESSING)
-		if (!on || !anchored || (machine_stat & BROKEN) || !powered())
+		if (!on || !anchored || !LAZYLEN(tracker.tracking) || (machine_stat & BROKEN) || !powered())
 			end_processing()
+			return FALSE
 	else
-		if (on && anchored && !(machine_stat & BROKEN) && powered())
+		if (on && anchored && LAZYLEN(tracker.tracking) && !(machine_stat & BROKEN) && powered())
 			begin_processing()
+			return TRUE
+	return null
 
 /obj/machinery/porta_turret/update_icon_state()
 	if(!anchored)
@@ -222,15 +241,6 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/proc/null_gun()
 	SIGNAL_HANDLER
 	stored_gun = null
-
-/obj/machinery/porta_turret/Destroy()
-	//deletes its own cover with it
-	QDEL_NULL(cover)
-	base = null
-	QDEL_NULL(stored_gun)
-	QDEL_NULL(spark_system)
-	remove_control()
-	return ..()
 
 /obj/machinery/porta_turret/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -482,7 +492,7 @@ DEFINE_BITFIELD(turret_flags, list(
 					continue
 				if(in_faction(sillyconerobot)) // borgs in faction are friendly
 					continue
-				if((ROLE_SYNDICATE in faction) && sillyconerobot.emagged) // special case: emagged station borgs are friendly to syndicate turrets
+				if(has_faction(ROLE_SYNDICATE) && sillyconerobot.emagged) // special case: emagged station borgs are friendly to syndicate turrets
 					continue
 
 				targets += sillyconerobot
@@ -610,10 +620,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	return threatcount
 
 /obj/machinery/porta_turret/proc/in_faction(mob/target)
-	for(var/faction1 in faction)
-		if(faction1 in target.faction)
-			return TRUE
-	return FALSE
+	return faction_check_atom(target)
 
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(target)
@@ -669,7 +676,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	A.firer = src
 	A.fired_from = src
 	if(ignore_faction)
-		A.ignored_factions = faction
+		APPLY_FACTION_AND_ALLIES_FROM(A, src)
 	A.fire()
 	return A
 
@@ -688,6 +695,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/turret_toggle/Trigger(mob/clicker, trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/obj/machinery/porta_turret/P = target
 	if(!istype(P))
 		return
@@ -699,6 +709,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	button_icon_state = "mech_eject"
 
 /datum/action/turret_quit/Trigger(mob/clicker, trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	var/obj/machinery/porta_turret/P = target
 	if(!istype(P))
 		return
@@ -830,7 +843,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/syndicate/shuttle
 	scan_range = 9
-	shot_delay = 3
+	shot_delay = 3 DECISECONDS
 	stun_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile_sound = 'sound/items/weapons/gun/smg/shot.ogg'
@@ -969,7 +982,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	.["stun_projectile"] = /obj/projectile/beam/lasertag/bluetag
 	.["lethal_projectile"] = /obj/projectile/beam/lasertag/bluetag
 	.["base_icon_state"] = "blue"
-	.["shot_delay"] = 30
+	.["shot_delay"] = 3 SECONDS
 	.["team_color"] = "blue"
 
 /obj/item/gun/energy/laser/redtag/get_turret_properties()
@@ -977,7 +990,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	.["stun_projectile"] = /obj/projectile/beam/lasertag/redtag
 	.["lethal_projectile"] = /obj/projectile/beam/lasertag/redtag
 	.["base_icon_state"] = "red"
-	.["shot_delay"] = 30
+	.["shot_delay"] = 3 SECONDS
 	.["team_color"] = "red"
 
 /obj/item/gun/energy/e_gun/turret/get_turret_properties()

@@ -45,11 +45,11 @@
 	var/atom/movable/result = new result_atom_type
 	if(!prototype.compare_materials(result))
 		var/warning = "custom_materials of [result.type] when processed compared to just spawned don't match"
-		var/what_it_should_be = prototype.get_materials_english_list()
+		var/what_it_should_be = prototype.transcribe_materials_list()
 		//compose a text string containing the syntax and paths to use for editing the custom_materials var
 		if(result.custom_materials)
 			what_it_should_be += " (you can round values a bit)"
-		stack_trace("[warning]. custom_materials should be [what_it_should_be] (you can round values a bit).")
+		stack_trace("[warning]. should be: custom_materials = [what_it_should_be] (you can round values a bit).")
 	qdel(prototype)
 	qdel(result)
 

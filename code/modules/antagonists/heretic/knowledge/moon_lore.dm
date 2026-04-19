@@ -21,7 +21,7 @@
 	)
 	cons = list(
 		"No mobility.",
-		"Mo direct tools to damage your opponents.",
+		"No direct tools to damage your opponents.",
 		"Reliant on misdirection and confusion.",
 		"Lunatics can become liabilities.",
 		"Fairly fragile despite their unique protection mechanics.",
@@ -89,7 +89,7 @@
 
 /datum/heretic_knowledge/spell/mind_gate
 	name = "Mind Gate"
-	desc = "Grants you Mind Gate, a spell which mutes,deafens, blinds, inflicts hallucinations, \
+	desc = "Grants you Mind Gate, a spell which mutes, deafens, blinds, inflicts hallucinations, \
 		confusion, oxygen loss and brain damage to its target over 10 seconds.\
 		The caster takes 20 brain damage per use."
 	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
@@ -164,9 +164,9 @@
 	target.emote(pick("giggle", "laugh"))
 	target.mob_mood?.adjust_sanity(-10)
 	if(target.stat == CONSCIOUS && target.mob_mood?.sanity >= SANITY_NEUTRAL)
-		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
+		target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10)
 		return
-	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25)
+	target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 25)
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"
@@ -263,7 +263,7 @@
 	INVOKE_ASYNC(convertee, TYPE_PROC_REF(/mob, emote), "laugh")
 	return TRUE
 
-/datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
+/datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	visible_hallucination_pulse(
 		center = get_turf(source),
@@ -286,7 +286,7 @@
 		carbon_view.mob_mood.adjust_sanity(-20)
 
 		if(carbon_sanity >= 10)
-			return
+			continue
 		// So our sanity is dead, time to fuck em up
 		if(SPT_PROB(20, seconds_per_tick))
 			to_chat(carbon_view, span_warning("it echoes through you!"))
@@ -300,13 +300,10 @@
 			to_chat(carbon_view, span_boldbig(span_red(\
 				"YOUR SENSES REEL AS YOUR MIND IS ENVELOPED BY AN OTHERWORLDLY FORCE ATTEMPTING TO REWRITE YOUR VERY BEING. \
 				YOU CANNOT EVEN BEGIN TO SCREAM BEFORE YOUR IMPLANT ACTIVATES ITS PSIONIC FAIL-SAFE PROTOCOL, TAKING YOUR HEAD WITH IT.")))
-			var/obj/item/bodypart/head/head = locate() in carbon_view.bodyparts
-			if(head)
-				head.dismember()
-			else
+			var/obj/item/bodypart/head/head = carbon_view.get_bodypart(BODY_ZONE_HEAD)
+			if(!head?.dismember())
 				carbon_view.gib(DROP_ALL_REMAINS)
-			var/datum/effect_system/reagents_explosion/explosion = new()
-			explosion.set_up(1, get_turf(carbon_view), TRUE, 0)
+			var/datum/effect_system/reagents_explosion/explosion = new(get_turf(carbon_view), 1, 1, 1)
 			explosion.start(src)
 		else
 			attempt_conversion(carbon_view, source)

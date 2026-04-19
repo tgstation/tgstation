@@ -17,7 +17,7 @@
 		to_chat(user, span_danger("You slash at [src]!"))
 		if(prob(8))
 			flash_act(affect_silicon = 1)
-		adjustBruteLoss(damage)
+		adjust_brute_loss(damage)
 		log_combat(user, src, "attacked")
 	else
 		playsound(loc, 'sound/items/weapons/slashmiss.ogg', 25, TRUE, -1)
@@ -51,7 +51,7 @@
 	. = ..()
 	if(!.)
 		return
-	adjustBruteLoss(rand(10, 15))
+	adjust_brute_loss(rand(10, 15))
 	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("[user] punches you!"), null, COMBAT_MESSAGE_RANGE, user)

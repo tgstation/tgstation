@@ -74,7 +74,7 @@
 	var/mob/living/target_mob = interacting_with
 
 	if (!can_puff(target_mob, user))
-		return NONE
+		return ITEM_INTERACT_BLOCKING
 
 	var/puff_timer = 0
 
@@ -110,10 +110,10 @@
 		to_chat(user, pre_use_self_message)
 		if (pre_use_target_message)
 			to_chat(target_mob, pre_use_target_message)
-		if (!do_after(user, puff_timer, src))
-			return NONE
+		if (!do_after(user, puff_timer, target_mob))
+			return ITEM_INTERACT_BLOCKING
 		if (!can_puff(target_mob, user)) // sanity
-			return NONE
+			return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(post_use_visible_message, ignored_mobs = list(user, target_mob))
 	to_chat(user, post_use_self_message)
@@ -121,6 +121,7 @@
 		to_chat(target_mob, post_use_target_message)
 
 	canister.puff(user, target_mob)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/inhaler/attack_self(mob/user, modifiers)
 	try_remove_canister(user, modifiers)
@@ -259,21 +260,11 @@
 
 /obj/item/reagent_containers/inhaler_canister/handle_deconstruct(disassembled)
 	if (!reagents?.total_volume)
+		visible_message(span_warning("[src] breaks open - but is empty!"))
 		return ..()
 
-	var/datum/reagents/smoke_reagents = new/datum/reagents() // Lets be safe first, our own reagents may be qdelled if we get deleted
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
-	smoke_reagents.my_atom = src
-	for (var/datum/reagent/reagent as anything in reagents.reagent_list)
-		smoke_reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity)
-		reagents.remove_reagent(reagent.type, reagent.volume)
-	if (smoke_reagents.reagent_list)
-		smoke.set_up(1, holder = src, location = get_turf(src), carry = smoke_reagents)
-		smoke.start(log = TRUE)
-		visible_message(span_warning("[src] breaks open and sprays its aerosilized contents everywhere!"))
-	else
-		visible_message(span_warning("[src] breaks open - but is empty!"))
-
+	do_chem_smoke(1, src, get_turf(src), carry = reagents, log = TRUE)
+	visible_message(span_warning("[src] breaks open and sprays its aerosilized contents everywhere!"))
 	return ..()
 
 /obj/item/inhaler/medical

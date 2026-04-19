@@ -483,28 +483,22 @@
 /obj/machinery/door/airlock/proc/regainBackupPower()
 	set_backup_outage(0 SECONDS)
 
-// shock user with probability prb (if all connections & power are working)
-// returns TRUE if shocked, FALSE otherwise
-// The preceding comment was borrowed from the grille's shock script
-/obj/machinery/door/airlock/proc/shock(mob/living/user, prb)
-	if(!istype(user) || !hasPower()) // unpowered, no shock
+/obj/machinery/door/airlock/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+	if(!hasPower()) // unpowered, no shock
 		return FALSE
-	if(HAS_TRAIT(user, TRAIT_AIRLOCK_SHOCKIMMUNE)) // Be a bit more clever man come on
+	if(!isliving(shocking))
+		return FALSE
+	if(HAS_TRAIT(shocking, TRAIT_AIRLOCK_SHOCKIMMUNE)) // Be a bit more clever man come on
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, shockCooldown))
 		return FALSE //Already shocked someone recently?
-	if(!prob(prb))
-		return FALSE //you lucked out, no shock for you
-	do_sparks(5, TRUE, src)
-	var/check_range = TRUE
-	if(electrocute_mob(user, get_area(src), src, 1, check_range))
-		COOLDOWN_START(src, shockCooldown, 1 SECONDS)
-		// Provides timed airlock shock immunity, to prevent overly cheesy deathtraps
-		ADD_TRAIT(user, TRAIT_AIRLOCK_SHOCKIMMUNE, REF(src))
-		addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_AIRLOCK_SHOCKIMMUNE, REF(src)), 1 SECONDS)
-		return TRUE
-	else
+	if(!..())
 		return FALSE
+	COOLDOWN_START(src, shockCooldown, 1 SECONDS)
+	// Provides timed airlock shock immunity, to prevent overly cheesy deathtraps
+	ADD_TRAIT(shocking, TRAIT_AIRLOCK_SHOCKIMMUNE, REF(src))
+	addtimer(TRAIT_CALLBACK_REMOVE(shocking, TRAIT_AIRLOCK_SHOCKIMMUNE, REF(src)), 1 SECONDS)
+	return TRUE
 
 /obj/machinery/door/airlock/proc/is_secure()
 	return (security_level > 0)
@@ -530,11 +524,11 @@
 
 			for(var/required_access in req_access)
 				if(required_access in origin_dept_access)
-					return target_dept
+					return LOWER_TEXT(target_dept)
 
 			for(var/required_access in req_one_access)
 				if(required_access in origin_dept_access)
-					return target_dept
+					return LOWER_TEXT(target_dept)
 
 	return FALSE
 
@@ -747,7 +741,7 @@
 
 	var/active_reta = has_active_reta_access()
 	if(active_reta)
-		. += span_nicegreen("Emergency Temporary Access is enabled for [EXAMINE_HINT(active_reta)].")
+		. += span_nicegreen("Emergency Temporary Access is enabled for [EXAMINE_HINT(active_reta)] ID cards.")
 
 	if(issilicon(user) && !(machine_stat & BROKEN))
 		. += span_notice("Shift-click [src] to [ density ? "open" : "close"] it.")
@@ -940,6 +934,9 @@
 	tool.play_tool_sound(src)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/door/airlock/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return screwdriver_act(user, tool)
 
 /obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
 	if(panel_open && security_level == AIRLOCK_SECURITY_PLASTEEL)
@@ -1480,12 +1477,12 @@
 
 // gets called when a player uses an airlock painter on this airlock
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/airlock_painter/painter, mob/user)
-	if((!in_range(src, user) && loc != user) || !painter.can_use(user)) // user should be adjacent to the airlock, and the painter should have a toner cartridge that isn't empty
+	if(!in_range(src, user) || !painter.can_use(user)) // user should be adjacent to the airlock, and the painter should have a toner cartridge that isn't empty
 		return
 
 	// reads from the airlock painter's `available paintjob` list. lets the player choose a paint option, or cancel painting
 	var/current_paintjob = tgui_input_list(user, "Paintjob for this airlock", "Customize", sort_list(painter.available_paint_jobs))
-	if(isnull(current_paintjob)) // if the user clicked cancel on the popup, return
+	if(isnull(current_paintjob) || !in_range(src, user) || !painter.can_use(user)) // if the user clicked cancel on the popup, or moved away, or ran out of ink, return
 		return
 
 	var/airlock_type = painter.available_paint_jobs["[current_paintjob]"] // get the airlock type path associated with the airlock name the user just chose
@@ -1528,10 +1525,10 @@
 /obj/machinery/door/airlock/proc/finish_emag_act()
 	if(QDELETED(src))
 		return FALSE
-	set_machine_stat(machine_stat & ~MAINT)
 	operating = FALSE
 	if(!open())
 		set_airlock_state(AIRLOCK_CLOSED)
+	set_machine_stat(machine_stat & ~MAINT)
 	obj_flags |= EMAGGED
 	feedback = FALSE
 	locked = TRUE
@@ -1682,7 +1679,7 @@
 	return FALSE
 
 /obj/machinery/door/airlock/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_DECONSTRUCT)
 			qdel(src)
 			return TRUE
@@ -1705,6 +1702,9 @@
 
 	else if(istype(note, /obj/item/photo))
 		return "photo_[frame_state]"
+
+/obj/machinery/door/airlock/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return ..() || (contained == note)
 
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -2438,6 +2438,7 @@
 	aiControlDisabled = AI_WIRE_DISABLED
 	req_access = list(ACCESS_BLOODCULT)
 	damage_deflection = 10
+	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT)
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
 	var/stealthy = FALSE

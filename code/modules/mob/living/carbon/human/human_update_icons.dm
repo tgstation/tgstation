@@ -866,36 +866,28 @@ generate/load female uniform sprites matching all previously decided variables
 
 /mob/living/carbon/human/proc/update_underwear()
 	remove_overlay(BODY_LAYER)
-	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
+	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(src, TRAIT_NO_UNDERWEAR))
 		return
 	// Underwear, Undershirts & Socks
 	var/list/standing = list()
+	var/active_bodyshapes = get_active_bodyshapes()
 	if(underwear)
-		var/datum/sprite_accessory/underwear/undie_accessory = SSaccessories.underwear_list[underwear]
-		var/mutable_appearance/underwear_overlay
-		if(undie_accessory)
-			if(dna.species.sexes && physique == FEMALE && (undie_accessory.gender == MALE))
-				underwear_overlay = mutable_appearance(wear_female_version(undie_accessory.icon_state, undie_accessory.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
-			else
-				underwear_overlay = mutable_appearance(undie_accessory.icon, undie_accessory.icon_state, -BODY_LAYER)
-			if(!undie_accessory.use_static)
-				underwear_overlay.color = underwear_color
+		var/datum/sprite_accessory/clothing/underwear/undie_accessory = SSaccessories.underwear_list[underwear]
+		var/mutable_appearance/underwear_overlay = undie_accessory?.make_appearance(underwear_color, physique, active_bodyshapes)
+		if(underwear_overlay)
 			standing += underwear_overlay
 
 	if(undershirt)
-		var/datum/sprite_accessory/undershirt/undie_accessory = SSaccessories.undershirt_list[undershirt]
-		if(undie_accessory)
-			var/mutable_appearance/working_shirt
-			if(dna.species.sexes && physique == FEMALE)
-				working_shirt = mutable_appearance(wear_female_version(undie_accessory.icon_state, undie_accessory.icon), layer = -BODY_LAYER)
-			else
-				working_shirt = mutable_appearance(undie_accessory.icon, undie_accessory.icon_state, layer = -BODY_LAYER)
-			standing += working_shirt
+		var/datum/sprite_accessory/clothing/undershirt/shirt_accessory = SSaccessories.undershirt_list[undershirt]
+		var/mutable_appearance/shirt_overlay = shirt_accessory?.make_appearance(null, physique, active_bodyshapes)
+		if(shirt_overlay)
+			standing += shirt_overlay
 
 	if(socks && num_legs >= 2 && !(bodyshape & BODYSHAPE_DIGITIGRADE))
-		var/datum/sprite_accessory/socks/undie_accessory = SSaccessories.socks_list[socks]
-		if(undie_accessory)
-			standing += mutable_appearance(undie_accessory.icon, undie_accessory.icon_state, -BODY_LAYER)
+		var/datum/sprite_accessory/clothing/socks/sock_accessory = SSaccessories.socks_list[socks]
+		var/mutable_appearance/socks_overlay = sock_accessory?.make_appearance(null, physique, active_bodyshapes)
+		if(socks_overlay)
+			standing += socks_overlay
 
 	if(standing.len)
 		overlays_standing[BODY_LAYER] = standing
@@ -906,15 +898,19 @@ generate/load female uniform sprites matching all previously decided variables
 	remove_overlay(EYES_LAYER)
 	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
 		return
-	var/obj/item/bodypart/head/noggin = get_bodypart(BODY_ZONE_HEAD)
-	if(!(noggin?.head_flags & HEAD_EYESPRITES))
-		return
+
 	// eyes (missing eye sprites get handled by the head itself, but sadly we have to do this stupid shit here, for now)
 	var/obj/item/organ/eyes/eye_organ = get_organ_slot(ORGAN_SLOT_EYES)
-	if(eye_organ)
-		eye_organ.refresh(call_update = FALSE)
-		overlays_standing[EYES_LAYER] = eye_organ.generate_body_overlay(src)
-		apply_overlay(EYES_LAYER)
+	if (!eye_organ)
+		return
+
+	var/obj/item/bodypart/head/noggin = get_bodypart(deprecise_zone(eye_organ.zone)) // Futureproofing for HARS/weird species
+	if(istype(noggin) && !(noggin?.head_flags & HEAD_EYESPRITES))
+		return
+
+	eye_organ.refresh(call_update = FALSE)
+	overlays_standing[EYES_LAYER] = eye_organ.generate_body_overlay(src, noggin)
+	apply_overlay(EYES_LAYER)
 
 /// Updates face (as of now, only eye) offsets
 /mob/living/carbon/human/update_face_offset()
@@ -967,7 +963,7 @@ generate/load female uniform sprites matching all previously decided variables
 		// optimization - none of our limbs or organs have the desired shape
 		return .
 
-	for(var/obj/item/bodypart/limb as anything in bodyparts)
+	for(var/obj/item/bodypart/limb as anything in get_bodyparts())
 		var/checked_bodyshape = limb.bodyshape
 		// accounts for stuff like snouts
 		for(var/obj/item/organ/organ in limb)

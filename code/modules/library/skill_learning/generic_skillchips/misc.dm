@@ -98,7 +98,7 @@
 
 /obj/item/skillchip/brainwashing/on_activate(mob/living/carbon/user, silent = FALSE)
 	to_chat(user, span_danger("You get a pounding headache as the chip sends corrupt memories into your head!"))
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 20)
 	. = ..()
 
 /obj/item/skillchip/chefs_kiss

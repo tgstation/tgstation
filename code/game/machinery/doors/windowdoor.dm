@@ -451,7 +451,7 @@
 /obj/machinery/door/window/interact(mob/user) //for sillycones
 	try_to_activate_door(user)
 
-/obj/machinery/door/window/try_to_activate_door(mob/user, access_bypass = FALSE)
+/obj/machinery/door/window/try_to_activate_door(mob/user, access_bypass = FALSE, bumped = FALSE)
 	. = ..()
 	if(.)
 		autoclose = FALSE
@@ -484,7 +484,7 @@
 	return FALSE
 
 /obj/machinery/door/window/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE

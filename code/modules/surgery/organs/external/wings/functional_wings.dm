@@ -1,5 +1,4 @@
 #define FUNCTIONAL_WING_FORCE 2.25 NEWTONS
-#define FUNCTIONAL_WING_STABILIZATION 4.5 NEWTONS
 
 ///hud action for starting and stopping flight
 /datum/action/innate/flight
@@ -26,11 +25,9 @@
 	///We cant hide this wings in suit
 	var/cant_hide = FALSE
 
-	// grind_results = list(/datum/reagent/flightpotion = 5)
 	food_reagents = list(/datum/reagent/flightpotion = 5)
 
 	var/drift_force = FUNCTIONAL_WING_FORCE
-	var/stabilizer_force = FUNCTIONAL_WING_STABILIZATION
 
 /obj/item/organ/wings/functional/Initialize(mapload)
 	. = ..()
@@ -38,7 +35,6 @@
 		/datum/component/jetpack, \
 		TRUE, \
 		drift_force, \
-		stabilizer_force, \
 		COMSIG_WINGS_OPENED, \
 		COMSIG_WINGS_CLOSED, \
 		null, \
@@ -49,6 +45,9 @@
 /obj/item/organ/wings/functional/Destroy()
 	QDEL_NULL(fly)
 	return ..()
+
+/obj/item/organ/wings/functional/grind_results()
+	return list(/datum/reagent/flightpotion = 5)
 
 /obj/item/organ/wings/functional/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
@@ -63,7 +62,7 @@
 	if(wings_open)
 		toggle_flight(organ_owner)
 
-/obj/item/organ/wings/functional/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/wings/functional/on_life(seconds_per_tick)
 	. = ..()
 	handle_flight(owner)
 
@@ -243,4 +242,3 @@
 	sprite_accessory_override = /datum/sprite_accessory/wings/slime
 
 #undef FUNCTIONAL_WING_FORCE
-#undef FUNCTIONAL_WING_STABILIZATION

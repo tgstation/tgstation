@@ -25,6 +25,8 @@
 	var/trait_modifier = 1
 	/// Category for general crafting menu
 	var/category
+	/// The amount of material to remove from the recipe's result
+	var/list/removed_mats
 
 	///crafting_flags var to hold bool values
 	var/crafting_flags = CRAFT_CHECK_DENSITY
@@ -41,6 +43,7 @@
 	trait_booster,
 	trait_modifier = 1,
 	category,
+	list/removed_mats,
 )
 
 	src.title = title
@@ -54,6 +57,8 @@
 	src.trait_booster = trait_booster
 	src.trait_modifier = trait_modifier
 	src.category = src.category || category || CAT_MISC
+
+	src.removed_mats = removed_mats
 
 	// We create base64 image only if item have color. Otherwise use icon_ref for TGUI
 	var/obj/item/result = result_type

@@ -61,7 +61,6 @@
 
 /obj/item/watertank/verb/toggle_mister_verb()
 	set name = "Toggle Mister"
-	set category = "Object"
 	toggle_mister(usr)
 
 /obj/item/watertank/proc/make_noz()
@@ -358,9 +357,7 @@
 	anchored = TRUE
 
 /obj/effect/resin_container/proc/Smoke()
-	var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
-	foaming.set_up(4, holder = src, location = loc)
-	foaming.start()
+	do_foam(4, src, loc, foam_type = /datum/effect_system/fluid_spread/foam/metal/resin)
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
 

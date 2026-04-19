@@ -1,4 +1,4 @@
-// When adding a new area to the security areas, make sure to add it to /datum/bounty/item/security/paperwork as well!
+// When adding a new area to the security areas, make sure to add it to /datum/bounty/patrol as well!
 
 /area/station/security
 	name = "Security"
@@ -194,7 +194,7 @@
 /area/station/security/prison
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 
 //Rad proof
 /area/station/security/prison/toilet

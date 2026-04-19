@@ -151,7 +151,7 @@
 		return
 	if(!SPT_PROB(15, seconds_per_tick))
 		return
-	var/obj/item/bodypart/bone_to_wound = pick(wearer.bodyparts)
+	var/obj/item/bodypart/bone_to_wound = pick(wearer.get_bodyparts())
 	var/wound_type = pick(list(
 		/datum/wound/blunt/bone/moderate,
 		/datum/wound/pierce/bleed/moderate,
@@ -246,6 +246,7 @@
 	actions_types = null
 	color_cutoffs = list(40, 0, 0) //red
 	glass_colour_type = null
+	custom_materials = null
 
 /obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	. = ..()

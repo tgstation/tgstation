@@ -38,7 +38,7 @@
 	filename = "syndeye"
 	filedesc = "SyndEye"
 	extended_desc = "This program allows for illegal access to security camera networks."
-	download_access = list()
+	download_access = null
 	can_run_on_flags = PROGRAM_ALL
 	program_flags = PROGRAM_ON_SYNDINET_STORE | PROGRAM_UNIQUE_COPY
 
@@ -69,7 +69,7 @@
 	)
 	spying = TRUE
 
-/datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+/datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	// Map name has to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
@@ -172,9 +172,9 @@
 	var/datum/camerachunk/target_camerachunk = SScameras.get_turf_camera_chunk(target_turf)
 	if(!target_camerachunk)
 		CRASH("[src] was able to track [target] through /datum/trackable, but was not on a visible turf to cameras.")
-	for(var/obj/machinery/camera/cameras as anything in target_camerachunk.cameras[target.z])
+	for(var/obj/machinery/camera/cameras as anything in target_camerachunk.cameras["[target.z]"])
 		// We need to find a particular camera that can see this turf
-		if(!(target_turf in cameras.can_see()))
+		if(length(cameras.can_see() & list(target_turf)))
 			continue
 		var/new_camera = WEAKREF(cameras)
 		if(camera_ref == new_camera)

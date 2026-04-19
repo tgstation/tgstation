@@ -1,5 +1,7 @@
 /// Maximimum number of characters that we allow on paper.
 #define MAX_PAPER_LENGTH 5000
+/// Maximimum number of characters that we allow in a book, after unfolding and encoding html.
+#define MAX_BOOK_LENGTH (MAX_PAPER_LENGTH * 2)
 /// Max number of stamps that can be applied to the paper in tgui.
 #define MAX_PAPER_STAMPS 30
 /// Max number of stamp overlays that we'll add to a piece of paper's icon.
@@ -13,9 +15,6 @@
 #define MODE_WRITING 1
 /// Should be able to stamp paper.
 #define MODE_STAMPING 2
-
-#define BARCODE_SCANNER_CHECKIN "check_in"
-#define BARCODE_SCANNER_INVENTORY "inventory"
 
 #define IS_WRITING_UTENSIL(thing) (thing?.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
 

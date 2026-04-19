@@ -58,11 +58,11 @@
 
 	// Heal the caster for every victim damaged
 	var/need_mob_update = FALSE
-	need_mob_update += caster.adjustBruteLoss(-10, updating_health = FALSE)
-	need_mob_update += caster.adjustFireLoss(-10, updating_health = FALSE)
-	need_mob_update += caster.adjustToxLoss(-10, updating_health = FALSE, forced = TRUE)
-	need_mob_update += caster.adjustOxyLoss(-10, updating_health = FALSE)
-	need_mob_update += caster.adjustStaminaLoss(-10, updating_stamina = FALSE)
+	need_mob_update += caster.adjust_brute_loss(-10, updating_health = FALSE)
+	need_mob_update += caster.adjust_fire_loss(-10, updating_health = FALSE)
+	need_mob_update += caster.adjust_tox_loss(-10, updating_health = FALSE, forced = TRUE)
+	need_mob_update += caster.adjust_oxy_loss(-10, updating_health = FALSE)
+	need_mob_update += caster.adjust_stamina_loss(-10, updating_stamina = FALSE)
 	if(need_mob_update)
 		caster.updatehealth()
 

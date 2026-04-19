@@ -10,7 +10,7 @@
 	weapon.attack_self(tider)
 	weapon.melee_attack_chain(tider, victim)
 
-	TEST_ASSERT_NOTEQUAL(victim.getFireLoss(), 0, "Victim did not get burned by welder.")
+	TEST_ASSERT_NOTEQUAL(victim.get_fire_loss(), 0, "Victim did not get burned by welder.")
 	TEST_ASSERT_EQUAL(weapon.get_fuel(), weapon.max_fuel - 1, "Welder did not consume fuel on attacking a mob")
 
 	var/obj/structure/blob/blobby = EASY_ALLOCATE()

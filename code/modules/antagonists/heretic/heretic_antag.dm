@@ -38,8 +38,6 @@
 		HERETIC_KNOWLEDGE_SHOP = list(),
 		HERETIC_KNOWLEDGE_DRAFT = list()
 	)
-	/// A static typecache of all tools we can scribe with.
-	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
 	/// A static list of all paths we can take and related info for the UI
@@ -315,7 +313,7 @@
 	return ..()
 
 /datum/antagonist/heretic/get_preview_icon()
-	var/icon/icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/icon = render_preview_outfit(preview_outfit)
 
 	// MOTHBLOCKS TODO: Copied and pasted from cult, make this its own proc
 
@@ -324,14 +322,14 @@
 
 	// Center the dude, because item icon states start from the center.
 	// This makes the image 64x64.
-	icon.Crop(-15, -15, 48, 48)
+	icon.crop(-15, -15, 48, 48)
 
-	var/obj/item/melee/sickly_blade/blade = new
-	icon.Blend(icon(blade.lefthand_file, blade.inhand_icon_state), ICON_OVERLAY)
-	qdel(blade)
+	var/obj/item/melee/sickly_blade/blade_type = /obj/item/melee/sickly_blade
+	var/datum/universal_icon/blade_icon = uni_icon(blade_type::lefthand_file, blade_type::inhand_icon_state)
+	icon.blend_icon(blade_icon, ICON_OVERLAY)
 
 	// Move the guy back to the bottom left, 32x32.
-	icon.Crop(17, 17, 48, 48)
+	icon.crop(17, 17, 48, 48)
 
 	return finish_preview_icon(icon)
 
@@ -349,15 +347,18 @@
 			qdel(path)
 
 	if(give_objectives)
-		forge_primary_objectives(heretic_shops[HERETIC_KNOWLEDGE_TREE])
+		var/datum/objective/pick_path/pick_a_path = new()
+		pick_a_path.owner = owner
+		objectives += pick_a_path
 
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge, HERETIC_KNOWLEDGE_START, update = FALSE)
 
-	owner.current.AddElement(/datum/element/leeching_walk/minor)
+	owner.current.AddElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 
 	ADD_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
+
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
@@ -368,7 +369,7 @@
 			QDEL_NULL(researched_knowledge[knowledge_path][HKT_INSTANCE])
 
 	REMOVE_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
-	owner.current.RemoveElement(/datum/element/leeching_walk/minor)
+	owner.current.RemoveElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 	QDEL_NULL(heretic_path)
 	owner.current.cut_overlay(eldritch_overlay)
 	return ..()
@@ -376,7 +377,7 @@
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-	our_mob.faction |= FACTION_HERETIC
+	our_mob.add_faction(FACTION_HERETIC)
 
 	if(!issilicon(our_mob))
 		GLOB.reality_smash_track.add_tracked_mind(owner)
@@ -393,11 +394,13 @@
 		list(SIGNAL_ADDTRAIT(TRAIT_HERETIC_AURA_HIDDEN), SIGNAL_REMOVETRAIT(TRAIT_HERETIC_AURA_HIDDEN)),
 		PROC_REF(update_heretic_aura)
 	)
+	RegisterSignal(our_mob, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_aura_overlay))
+	our_mob.update_appearance(UPDATE_OVERLAYS)
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
-	our_mob.faction -= FACTION_HERETIC
+	our_mob.remove_faction(FACTION_HERETIC)
 
 	if(owner in GLOB.reality_smash_track.tracked_heretics)
 		GLOB.reality_smash_track.remove_tracked_mind(owner)
@@ -429,17 +432,18 @@
 	var/datum/action/cooldown/spell/shadow_cloak/cloak_spell = locate() in heretic_mob.actions
 	cloak_spell.Remove(heretic_mob)
 
+/datum/antagonist/heretic/proc/add_aura_overlay(mob/living/source, list/overlays)
+	SIGNAL_HANDLER
+	if(!should_show_aura())
+		return
+	overlays += eldritch_overlay
+	overlays += emissive_appearance(eldritch_overlay.icon, eldritch_overlay.icon_state, source)
+
 /// Adds an overlay to the heretic
 /datum/antagonist/heretic/proc/update_heretic_aura()
 	SIGNAL_HANDLER
-	var/mob/heretic_mob = owner.current
-	heretic_mob.cut_overlay(eldritch_overlay)
-
-	if(!should_show_aura())
-		return FALSE
-
-	heretic_mob.add_overlay(eldritch_overlay)
-	return TRUE
+	if(!QDELETED(owner?.current))
+		owner.current.update_appearance(UPDATE_OVERLAYS)
 
 /datum/antagonist/heretic/proc/should_show_aura()
 	if(!can_assign_self_objectives)
@@ -506,7 +510,7 @@
  */
 /datum/antagonist/heretic/proc/on_item_use(mob/living/source, atom/target, obj/item/weapon, list/modifiers)
 	SIGNAL_HANDLER
-	if(!is_type_in_typecache(weapon, scribing_tools))
+	if(!IS_WRITING_UTENSIL(weapon))
 		return NONE
 	if(!isturf(target) || !isliving(source))
 		return NONE
@@ -709,8 +713,13 @@
 /**
  * Create our objectives for our heretic.
  */
-/datum/antagonist/heretic/proc/forge_primary_objectives(heretic_research_tree)
-	var/datum/objective/heretic_research/research_objective = new(heretic_research_tree = heretic_research_tree)
+/datum/antagonist/heretic/proc/forge_primary_objectives()
+	for(var/datum/objective/pick_path/filler in objectives)
+		filler.owner = null
+		objectives -= filler
+		qdel(filler)
+
+	var/datum/objective/heretic_research/research_objective = new(heretic_research_tree = heretic_shops)
 	research_objective.owner = owner
 	objectives += research_objective
 
@@ -1089,6 +1098,10 @@
 
 	return HERETIC_HAS_LIVING_HEART
 
+/datum/objective/pick_path
+	name = "pick a path"
+	explanation_text = "Pick a path to pursue."
+
 /// Heretic's minor sacrifice objective. "Minor sacrifices" includes anyone.
 /datum/objective/minor_sacrifice
 	name = "minor sacrifice"
@@ -1123,29 +1136,21 @@
 /// Heretic's research objective. "Research" is heretic knowledge nodes (You start with some).
 /datum/objective/heretic_research
 	name = "research"
-	/// The length of a main path. Calculated once in New().
-	var/static/main_path_length = 0
+	target_amount = 1 // You spawn with 1 point
 
-/datum/objective/heretic_research/New(text, heretic_research_tree)
+/datum/objective/heretic_research/New(text, list/heretic_research_tree = list())
 	. = ..()
 
-	if(!main_path_length)
-		// Let's find the length of a main path. We'll use rust because it's the coolest.
-		// (All the main paths are (should be) the same length, so it doesn't matter.)
-		var/rust_paths_found = 0
-		for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
-			var/list/knowledge_data = heretic_research_tree[knowledge]
-			if(knowledge_data && knowledge_data[HKT_ROUTE] == PATH_RUST)
-				rust_paths_found++
-
-		main_path_length = rust_paths_found
-
-	// Factor in the length of the main path first.
-	target_amount = main_path_length
-	// Add in the base research we spawn with, otherwise it'd be too easy.
+	// Factor in the length of the main path
+	target_amount += length(heretic_research_tree[HERETIC_KNOWLEDGE_TREE]) || 10
+	// Factor in base research we spawn with (otherwise it'd be too easy)
 	target_amount += length(GLOB.heretic_start_knowledge)
-	// And add in some buffer, to require some sidepathing, especially since heretics get some free side paths.
+	// Factor in free knowledge, no challenge there
+	target_amount += ceil(length(heretic_research_tree[HERETIC_KNOWLEDGE_DRAFT]) / 3) || 4
+
+	// The actual challenge factor is introduced here, adding a random amount of additional knowledge needed
 	target_amount += rand(2, 4)
+
 	update_explanation_text()
 
 /datum/objective/heretic_research/update_explanation_text()
@@ -1171,6 +1176,6 @@
 /datum/outfit/heretic
 	name = "Heretic (Preview only)"
 
-	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
-	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust
+	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
 	r_hand = /obj/item/melee/touch_attack/mansus_fist

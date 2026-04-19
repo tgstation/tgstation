@@ -138,7 +138,12 @@
 /atom/movable/screen/plane_master/rendering_plate/emissive_bloom/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_filter("emissive_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_BLOOM_MASK_RENDER_TARGET, offset)))
-	add_filter("emissive_bloom", 2, bloom_filter(threshold = COLOR_BLACK, size = 2, offset = 1))
+	var/bloom_scale = hud_owner?.mymob?.client?.prefs?.read_preference(/datum/preference/numeric/emissive_bloom)
+	if (isnull(bloom_scale))
+		bloom_scale = DEFAULT_EMISSIVE_BLOOM_SIZE
+	// 0 disables the bloom
+	if (bloom_scale)
+		add_filter("emissive_bloom", 2, bloom_filter(threshold = COLOR_BLACK, size = bloom_scale, offset = ceil(bloom_scale / 2)))
 
 /atom/movable/screen/plane_master/rendering_plate/specular_mask
 	name = "Specular mask plate"
@@ -197,6 +202,12 @@
 	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
 	set_light_cutoff(10)
 
+/atom/movable/screen/plane_master/rendering_plate/lighting/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(home)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+		hud_changed(null, null, home.our_hud)
+
 /atom/movable/screen/plane_master/rendering_plate/lighting/show_to(mob/mymob)
 	. = ..()
 	if(!.)
@@ -212,23 +223,20 @@
 	backdrop = mymob.overlay_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
 	SET_PLANE_EXPLICIT(backdrop, PLANE_TO_TRUE(backdrop.plane), src)
 
-	// Sorry, this is a bit annoying
-	// Basically, we only want the lighting plane we can actually see to attempt to render
-	// If we don't our lower plane gets totally overriden by the black void of the upper plane
-	var/datum/hud/hud = home.our_hud
-	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
-	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
-	offset_change(hud?.current_plane_offset || 0)
 	set_light_cutoff(mymob.lighting_cutoff, mymob.lighting_color_cutoffs)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/hide_from(mob/oldmob)
 	. = ..()
 	oldmob.clear_fullscreen("lighting_backdrop_lit_[home.key]#[offset]")
 	oldmob.clear_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]")
-	var/datum/hud/hud = home.our_hud
-	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+
+/atom/movable/screen/plane_master/rendering_plate/lighting/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	if(old_hud)
+		UnregisterSignal(old_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+	if(new_hud)
+		RegisterSignal(new_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+	offset_change(new_hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
@@ -437,26 +445,22 @@
 	plane = RENDER_PLANE_MASTER
 	render_relay_planes = list()
 
-/atom/movable/screen/plane_master/rendering_plate/master/show_to(mob/mymob)
+/atom/movable/screen/plane_master/rendering_plate/master/set_home(datum/plane_master_group/home)
 	. = ..()
-	if(!.)
-		return
-	if(offset == 0)
-		return
 	// Non 0 offset render plates will relay up to the transparent plane above them, assuming they're not on the same z level as their target of course
-	var/datum/hud/hud = home.our_hud
-	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
-	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
-	offset_change(hud?.current_plane_offset || 0)
-
-/atom/movable/screen/plane_master/rendering_plate/master/hide_from(mob/oldmob)
-	. = ..()
 	if(offset == 0)
 		return
-	var/datum/hud/hud = home.our_hud
-	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+	if(home)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+		hud_changed(null, null, home.our_hud)
+
+/atom/movable/screen/plane_master/rendering_plate/master/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	if(old_hud)
+		UnregisterSignal(old_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+	if(new_hud)
+		RegisterSignal(new_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+	offset_change(new_hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/rendering_plate/master/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
@@ -501,6 +505,8 @@
 /atom/movable/screen/plane_master/proc/add_relay_to(target_plane, blend_override, relay_layer, relay_color)
 	if(get_relay_to(target_plane))
 		return
+	if(!offset_already_updated)
+		CRASH("Attempted to draw a render relay before our offset has been applied, this WILL break")
 	render_relay_planes += target_plane
 	var/client/display_lad = home?.our_hud?.mymob?.canon_client
 	var/atom/movable/render_plane_relay/relay = generate_relay_to(target_plane, show_to = display_lad, blend_override = blend_override, relay_layer = relay_layer)

@@ -14,11 +14,11 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/recharger,
-/obj/item/gun/energy/laser{
+/obj/item/gun/energy/laser/soul{
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/gun/energy/laser{
+/obj/item/gun/energy/laser/soul{
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{

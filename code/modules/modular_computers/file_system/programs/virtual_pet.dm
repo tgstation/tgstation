@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	///cooldown till we can alter our pet's appearance again
 	COOLDOWN_DECLARE(alter_appearance_cooldown)
 
-/datum/computer_file/program/virtual_pet/on_install()
+/datum/computer_file/program/virtual_pet/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	profile_picture = getFlatIcon(image(icon = 'icons/ui/virtualpet/pet_state.dmi', icon_state = "pet_preview"))
 	GLOB.virtual_pets_list += src
@@ -195,7 +195,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 	if(isnull(photo))
 		return
-	computer.store_file(new /datum/computer_file/picture(photo))
+	computer.store_file(new /datum/computer_file/image(photo.picture_image, display_name = photo.picture_name))
 
 /datum/computer_file/program/virtual_pet/proc/set_hat_offsets(new_dir)
 	var/direction_text = dir2text(new_dir)
@@ -330,7 +330,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 			var/datum/action/cooldown/mob_cooldown/capture_photo/photo_ability = new(pet)
 			photo_ability.Grant(pet)
 			pet.ai_controller?.set_blackboard_key(BB_PHOTO_ABILITY, photo_ability)
-			RegisterSignal(photo_ability.ability_camera, COMSIG_CAMERA_IMAGE_CAPTURED, PROC_REF(on_photo_captured))
+			RegisterSignal(photo_ability.internal_camera, COMSIG_CAMERA_IMAGE_CAPTURED, PROC_REF(on_photo_captured))
 
 /datum/computer_file/program/virtual_pet/proc/announce_global_updates(message)
 	if(isnull(message))

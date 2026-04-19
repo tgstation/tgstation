@@ -35,7 +35,7 @@
 	qdel(src)
 
 // Every x seconds, if on lavaland, add one stack
-/obj/item/organ/monster_core/brimdust_sac/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/monster_core/brimdust_sac/on_life(seconds_per_tick)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, brimdust_auto_apply_cooldown))
 		return
@@ -47,7 +47,7 @@
 /// Make a cloud which applies brimdust to everyone nearby
 /obj/item/organ/monster_core/brimdust_sac/on_triggered_internal()
 	var/turf/origin_turf = get_turf(owner)
-	do_smoke(range = 2, holder = owner, location = origin_turf, smoke_type = /obj/effect/particle_effect/fluid/smoke/bad/brimdust)
+	do_smoke(2, owner, origin_turf, effect_type = /obj/effect/particle_effect/fluid/smoke/bad/brimdust)
 
 /// Smoke which applies brimdust to you, and is also bad for your lungs
 /obj/effect/particle_effect/fluid/smoke/bad/brimdust
@@ -93,7 +93,7 @@
 	desc = "You %STACKS% explosive dust, kinetic impacts will cause it to detonate! \
 		The explosion will not harm you as long as you're not under atmospheric pressure. \
 		Click this alert to shake off the dust."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "brimdemon_1"
 
 /atom/movable/screen/alert/status_effect/brimdust_coating/MouseEntered(location,control,params)
@@ -143,23 +143,42 @@
 
 /datum/status_effect/stacking/brimdust_coating/on_creation(mob/living/new_owner, stacks_to_apply)
 	. = ..()
-	linked_alert?.icon_state = "brimdemon_[stacks]"
+	linked_alert?.overlay_state = "brimdemon_[stacks]"
 
 /datum/status_effect/stacking/brimdust_coating/on_apply()
 	. = ..()
-	dust_overlay = mutable_appearance('icons/effects/weather_effects.dmi', "ash_storm")
+	var/target_width = max(owner.get_cached_width(), ICON_SIZE_X)
+	var/target_height = max(owner.get_cached_height(), ICON_SIZE_Y)
+	if (target_width == ICON_SIZE_X && target_height == ICON_SIZE_Y)
+		dust_overlay = mutable_appearance('icons/effects/weather_effects.dmi', "ash_storm")
+	else
+		var/static/list/dust_icons = list()
+		var/icon/dust_icon = dust_icons["[target_width]-[target_height]"]
+		if (!dust_icon)
+			dust_icon = icon('icons/effects/weather_effects.dmi', "ash_storm")
+			var/icon/base_icon = icon('icons/effects/weather_effects.dmi', "ash_storm")
+			dust_icon.Crop(1, 1, target_width, target_height)
+			var/icon/column = icon('icons/effects/weather_effects.dmi', "ash_storm")
+			column.Crop(1, 1, ICON_SIZE_X, target_height)
+			for (var/i in 1 to ceil(target_height / ICON_SIZE_Y))
+				column.Blend(base_icon, ICON_OVERLAY, 1, 1 + (i - 1) * ICON_SIZE_Y)
+			for (var/i in 1 to ceil(target_width / ICON_SIZE_X))
+				dust_icon.Blend(column, ICON_OVERLAY, 1 + (i - 1) * ICON_SIZE_X, 1)
+			dust_icons["[target_width]-[target_height]"] = dust_icon
+		dust_overlay = mutable_appearance(dust_icon)
 	dust_overlay.alpha = stacks * BRIMDUST_ALPHA_PER_STACK
 	dust_overlay.color = COLOR_RED_LIGHT
 	dust_overlay.blend_mode = BLEND_INSET_OVERLAY
 	owner.add_overlay(dust_overlay)
-	owner.add_shared_particles(/particles/brimdust)
+	var/obj/effect/holder = owner.add_shared_particles(/particles/brimdust, "brimdust_coating-[owner.base_pixel_w]")
+	holder.pixel_w = -owner.base_pixel_w
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 
 /datum/status_effect/stacking/brimdust_coating/on_remove()
 	. = ..()
 	owner.cut_overlay(dust_overlay)
-	owner.remove_shared_particles(/particles/brimdust)
+	owner.remove_shared_particles("brimdust_coating-[owner.base_pixel_w]")
 	UnregisterSignal(owner, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_COMPONENT_CLEAN_ACT))
 
 /// When you are cleaned, wash off the buff

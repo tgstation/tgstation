@@ -493,9 +493,9 @@
 		update_appearance()
 		if(mob_occupant)
 			if(uv_super)
-				mob_occupant.adjustFireLoss(rand(20, 36))
+				mob_occupant.adjust_fire_loss(rand(20, 36))
 			else
-				mob_occupant.adjustFireLoss(rand(10, 16))
+				mob_occupant.adjust_fire_loss(rand(10, 16))
 			if(iscarbon(mob_occupant) && mob_occupant.stat < UNCONSCIOUS)
 				//Awake, organic and screaming
 				mob_occupant.emote("scream")
@@ -507,9 +507,7 @@
 		if(uv_super)
 			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
 			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 50, TRUE)
-			var/datum/effect_system/fluid_spread/smoke/bad/black/smoke = new
-			smoke.set_up(0, holder = src, location = src)
-			smoke.start()
+			do_smoke(0, src, src, smoke_type = /datum/effect_system/fluid_spread/smoke/bad/black)
 			QDEL_NULL(helmet)
 			QDEL_NULL(suit)
 			QDEL_NULL(mask)
@@ -566,14 +564,6 @@
 	var/charge_per_item = (final_charge_rate * seconds_per_tick) / cell_count
 	for(var/obj/item/stock_parts/power_store/cell as anything in cells_to_charge)
 		charge_cell(charge_per_item, cell, grid_only = TRUE)
-
-/obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
-	if(!prob(prb))
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-		if(electrocute_mob(user, src, src, 1, TRUE))
-			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/living/user, direction)
 	if(locked)
@@ -745,12 +735,7 @@
 			default_deconstruction_crowbar(tool)
 			return ITEM_INTERACT_SUCCESS
 
-	if(!state_open)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", tool))	//Set to base_icon_state because the panels for this are overlays
-			update_appearance()
-			return ITEM_INTERACT_SUCCESS
-
-	if(default_pry_open(tool))
+	if(default_pry_open(user, tool) & ITEM_INTERACT_SUCCESS)
 		dump_inventory_contents()
 		return ITEM_INTERACT_SUCCESS
 
@@ -758,24 +743,20 @@
 	screwdriving it open while it's running a decontamination sequence without closing the panel prior to finish
 	causes the SSU to break due to state_open being set to TRUE at the end, and the panel becoming inaccessible.
 */
-/obj/machinery/suit_storage_unit/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	if(screwdriver.tool_behaviour == TOOL_SCREWDRIVER && (uv || locked))
+/obj/machinery/suit_storage_unit/screwdriver_act(mob/living/user, obj/item/tool)
+	if(state_open)
+		return NONE
+	if(uv || locked)
 		to_chat(user, span_warning("You can't open the panel while its [locked ? "locked" : "decontaminating"]"))
-		return TRUE
-	return ..()
+		return ITEM_INTERACT_BLOCKING
 
+	return default_deconstruction_screwdriver(user, tool)
 
-/obj/machinery/suit_storage_unit/default_pry_open(obj/item/crowbar)//needs to check if the storage is locked.
-	. = !(state_open || panel_open || is_operational || locked) && crowbar.tool_behaviour == TOOL_CROWBAR
-	if(.)
-		crowbar.play_tool_sound(src, 50)
-		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
-		open_machine()
+/obj/machinery/suit_storage_unit/can_crowbar_pry_open()
+	return ..() && !locked
 
-/obj/machinery/suit_storage_unit/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	. = (!locked && panel_open && crowbar.tool_behaviour == TOOL_CROWBAR)
-	if(.)
-		return ..()
+/obj/machinery/suit_storage_unit/can_crowbar_deconstruct()
+	return ..() && !locked
 
 /obj/machinery/suit_storage_unit/rename_checks(mob/living/user)
 	. = TRUE

@@ -14,6 +14,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	status_flags = (CANPUSH | CANSTUN)
 	ai_controller = /datum/ai_controller/basic_controller/bot/medbot
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_MEDICAL)
 	radio_key = /obj/item/encryptionkey/headset_med
@@ -26,6 +27,9 @@
 	additional_access = /datum/id_trim/medibot
 	announcement_type = /datum/action/cooldown/bot_announcement/medbot
 	path_image_color = "#d9d9f4"
+
+	///Because of our animation we need to handle drawn-on overlays ourself
+	var/painted_face_colour
 
 	///anouncements when we find a target to heal
 	var/static/list/wait_announcements = list(
@@ -98,6 +102,8 @@
 	var/skin = "generic"
 	/// How much healing do we do at a time?
 	var/heal_amount = 2.5
+	/// How much healing multiplier do we have from upgrades?
+	VAR_FINAL/heal_multiplier = 1.0
 	/// Start healing when they have this much damage in a category
 	var/heal_threshold = 10
 	/// What damage type does this bot support. Because the default is brute, if the medkit is brute-oriented there is a slight bonus to healing. set to "all" for it to heal any of the 4 base damage types
@@ -137,6 +143,11 @@
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
 		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
 
+	AddComponent(/datum/component/defaceable, \
+		drawing_of = "eyes", \
+		on_defaced = CALLBACK(src, PROC_REF(on_defaced)), \
+	)
+
 	var/static/list/hat_offsets = list(4,-9)
 	var/static/list/remove_hat = list(SIGNAL_ADDTRAIT(TRAIT_MOB_TIPPED))
 	var/static/list/prevent_checks = list(TRAIT_MOB_TIPPED)
@@ -162,6 +173,13 @@
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
+	if(linked_techweb)
+		RegisterSignal(linked_techweb, COMSIG_TECHWEB_ADD_DESIGN, PROC_REF(on_techweb_research))
+		RegisterSignal(linked_techweb, COMSIG_TECHWEB_REMOVE_DESIGN, PROC_REF(on_techweb_unresearch))
+
+		for(var/datum/design/medibot_upgrade/design in linked_techweb.get_researched_design_datums())
+			heal_multiplier += design.additive_multiplier
+
 /mob/living/basic/bot/medbot/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	. = ..()
 	var/obj/item/storage/medkit/medkit = locate() in contents
@@ -183,13 +201,24 @@
 	if(!(medical_mode_flags & MEDBOT_STATIONARY_MODE))
 		. += mutable_appearance(icon, "[base_icon_state]_overlay_wheels")
 
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-		. += mutable_appearance(icon, "[base_icon_state]_overlay_incapacitated")
-		. += emissive_appearance(icon, "[base_icon_state]_overlay_incapacitated", src, alpha = src.alpha)
-	else if(bot_mode_flags & BOT_MODE_ON)
-		var/mode_suffix = mode == BOT_HEALING ? "active" : "idle"
-		. += mutable_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]")
-		. += emissive_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]", src, alpha = src.alpha)
+	var/mode_suffix = mode == BOT_HEALING ? "active" : "idle"
+	if (HAS_TRAIT(src, TRAIT_DEFACED))
+		var/mutable_appearance/face = mutable_appearance('icons/mob/silicon/aibot_faces.dmi', "medbot_[mode_suffix]")
+		face.color = painted_face_colour
+		. += face
+		. += mutable_appearance('icons/mob/silicon/aibot_faces.dmi', "medbot_highlight_[mode_suffix]")
+	else
+		if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+			. += mutable_appearance(icon, "[base_icon_state]_overlay_incapacitated")
+			. += emissive_appearance(icon, "[base_icon_state]_overlay_incapacitated", src, alpha = src.alpha)
+		else if(bot_mode_flags & BOT_MODE_ON)
+			. += mutable_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]")
+			. += emissive_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]", src, alpha = src.alpha)
+
+/// Set our drawn-on ink colour
+/mob/living/basic/bot/medbot/proc/on_defaced(ink_colour)
+	SIGNAL_HANDLER
+	painted_face_colour = ink_colour
 
 //this is sin
 /mob/living/basic/bot/medbot/generate_speak_list()
@@ -213,7 +242,6 @@
 		data["custom_controls"]["speaker"] = medical_mode_flags & MEDBOT_SPEAK_MODE
 		data["custom_controls"]["crit_alerts"] = medical_mode_flags & MEDBOT_DECLARE_CRIT
 		data["custom_controls"]["stationary_mode"] = medical_mode_flags & MEDBOT_STATIONARY_MODE
-		data["custom_controls"]["sync_tech"] = TRUE
 	return data
 
 // Actions received from TGUI
@@ -236,21 +264,6 @@
 			medical_mode_flags ^= MEDBOT_DECLARE_CRIT
 		if("stationary_mode")
 			medical_mode_flags ^= MEDBOT_STATIONARY_MODE
-		if("sync_tech")
-			if(!linked_techweb)
-				to_chat(user, span_notice("No research techweb connected."))
-				return
-			var/oldheal_amount = heal_amount
-			var/tech_boosters
-			for(var/index in linked_techweb.researched_designs)
-				var/datum/design/surgery/healing/design = SSresearch.techweb_design_by_id(index)
-				if(!istype(design))
-					continue
-				tech_boosters++
-			if(tech_boosters)
-				heal_amount = (round(tech_boosters * 0.5, 0.1) * initial(heal_amount)) + initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
-				if(oldheal_amount < heal_amount)
-					speak("New knowledge found! Surgical efficacy improved to [round(heal_amount/initial(heal_amount)*100)]%!")
 
 	update_appearance()
 
@@ -340,7 +353,7 @@
 	if(!do_after(src, delay = 2 SECONDS, target = patient, interaction_key = TEND_DAMAGE_INTERACTION))
 		update_bot_mode(new_mode = BOT_IDLE)
 		return
-	var/modified_heal_amount = heal_amount
+	var/modified_heal_amount = heal_amount * heal_multiplier
 	var/done_healing = FALSE
 	if(damage_type_healer == BRUTE && medkit_type == /obj/item/storage/medkit/brute)
 		modified_heal_amount *= 1.1
@@ -368,6 +381,24 @@
 
 	if(patient.IsReachableBy(src))
 		melee_attack(patient)
+
+/mob/living/basic/bot/medbot/proc/on_techweb_research(datum/source, datum/design/medibot_upgrade/design)
+	SIGNAL_HANDLER
+
+	if(!istype(design))
+		return
+
+	heal_multiplier += design.additive_multiplier
+	INVOKE_ASYNC(src, PROC_REF(speak), "New knowledge found! Surgical efficacy improved to [round(heal_multiplier * 100)]%!")
+
+/mob/living/basic/bot/medbot/proc/on_techweb_unresearch(datum/source, datum/design/medibot_upgrade/design)
+	SIGNAL_HANDLER
+
+	if(!istype(design))
+		return
+
+	heal_multiplier -= design.additive_multiplier
+	INVOKE_ASYNC(src, PROC_REF(speak), "Error! Surgical efficacy decreased to [round(heal_multiplier * 100)]%!")
 
 /datum/id_trim/medibot
 	assignment = JOB_MEDIBOT

@@ -10,7 +10,6 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_APPENDIX
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/toxin/bad_food = 5)
-	grind_results = list(/datum/reagent/toxin/bad_food = 5)
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
 
@@ -18,6 +17,9 @@
 	now_fixed = span_info("The pain in your abdomen has subsided.")
 
 	var/inflamation_stage = 0
+
+/obj/item/organ/appendix/grind_results()
+	return list(/datum/reagent/toxin/bad_food = 5)
 
 /obj/item/organ/appendix/update_name()
 	. = ..()
@@ -27,14 +29,14 @@
 	icon_state = "[base_icon_state][inflamation_stage ? "inflamed" : ""]"
 	return ..()
 
-/obj/item/organ/appendix/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/appendix/on_life(seconds_per_tick)
 	. = ..()
 	if(!owner)
 		return
 
 	if(organ_flags & ORGAN_FAILING)
 		// forced to ensure people don't use it to gain tox as slime person
-		owner.adjustToxLoss(2 * seconds_per_tick, forced = TRUE)
+		owner.adjust_tox_loss(2 * seconds_per_tick, forced = TRUE)
 	else if(inflamation_stage)
 		inflamation(seconds_per_tick)
 	else if(SPT_PROB(APPENDICITIS_PROB, seconds_per_tick) && !HAS_TRAIT(owner, TRAIT_TEMPORARY_BODY))
@@ -68,13 +70,13 @@
 		if(2)
 			if(SPT_PROB(1.5, seconds_per_tick))
 				to_chat(organ_owner, span_warning("You feel a stabbing pain in your abdomen!"))
-				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 5)
+				organ_owner.adjust_organ_loss(ORGAN_SLOT_APPENDIX, 5)
 				organ_owner.Stun(rand(40, 60))
-				organ_owner.adjustToxLoss(1, forced = TRUE)
+				organ_owner.adjust_tox_loss(1, forced = TRUE)
 		if(3)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				organ_owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95)
-				organ_owner.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 15)
+				organ_owner.adjust_organ_loss(ORGAN_SLOT_APPENDIX, 15)
 
 /obj/item/organ/appendix/feel_for_damage(self_aware)
 	var/effective_stage = floor(inflamation_stage + (damage / maxHealth))

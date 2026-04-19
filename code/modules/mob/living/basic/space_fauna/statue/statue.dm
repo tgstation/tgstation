@@ -9,7 +9,7 @@
 	icon_dead = "human_male"
 	gender = NEUTER
 	combat_mode = TRUE
-	mob_biotypes = MOB_HUMANOID
+	mob_biotypes = MOB_HUMANOID|MOB_MINERAL
 	gold_core_spawnable = NO_SPAWN
 
 	response_help_continuous = "touches"

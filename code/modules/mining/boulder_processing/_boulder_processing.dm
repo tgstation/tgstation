@@ -3,6 +3,7 @@
 	desc = "You shouldn't be seeing this! And bouldertech isn't even a real company!"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
+	base_icon_state = "ore_redemption"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	anchored = TRUE
 	density = TRUE
@@ -16,7 +17,7 @@
 	/// What sound plays when a thing operates?
 	var/usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
 	/// Silo link to its materials list.
-	var/datum/component/remote_materials/silo_materials
+	var/datum/remote_materials/silo_materials
 	/// Mining points held by the machine for miners.
 	var/points_held = 0
 	///The action verb to display to players
@@ -30,8 +31,8 @@
 /obj/machinery/bouldertech/Initialize(mapload)
 	. = ..()
 
-	silo_materials = AddComponent(
-		/datum/component/remote_materials, \
+	silo_materials = new (
+		src, \
 		mapload, \
 		mat_container_flags = MATCONTAINER_NO_INSERT \
 	)
@@ -46,7 +47,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/bouldertech/Destroy()
-	silo_materials = null
+	QDEL_NULL(silo_materials)
 	return ..()
 
 /obj/machinery/bouldertech/on_deconstruction(disassembled)
@@ -68,7 +69,7 @@
 	else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
 	else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 
@@ -98,7 +99,7 @@
 	var/suffix = ""
 	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
 		suffix = "-off"
-	icon_state ="[initial(icon_state)][suffix]"
+	icon_state ="[base_icon_state][suffix]"
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored)
@@ -290,15 +291,10 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bouldertech/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
-		update_appearance(UPDATE_ICON_STATE)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/bouldertech/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

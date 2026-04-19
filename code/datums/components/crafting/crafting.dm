@@ -15,20 +15,29 @@
 
 /datum/component/personal_crafting/Initialize(screen_loc_override)
 	src.screen_loc_override = screen_loc_override
-	if(ismob(parent))
-		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(create_mob_button))
 
-/datum/component/personal_crafting/proc/create_mob_button(mob/user, client/user_client)
+/datum/component/personal_crafting/RegisterWithParent()
+	if(!ismob(parent))
+		return
+
+	var/mob/user = parent
+	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
+	if(user.hud_used)
+		on_hud_created()
+
+/datum/component/personal_crafting/UnregisterFromParent()
+	if(!ismob(parent))
+		return
+	var/mob/user = parent
+	UnregisterSignal(parent, COMSIG_MOB_HUD_CREATED)
+	user.hud_used?.remove_screen_object(HUD_MOB_CRAFTING_MENU)
+
+/datum/component/personal_crafting/proc/on_hud_created(datum/source)
 	SIGNAL_HANDLER
 
-	var/datum/hud/hud = user.hud_used
-	var/atom/movable/screen/craft/craft_ui = new()
-	craft_ui.icon = hud.ui_style
-	if (screen_loc_override)
-		craft_ui.screen_loc = screen_loc_override
-	hud.static_inventory += craft_ui
-	user_client.screen += craft_ui
-	RegisterSignal(craft_ui, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(component_ui_interact))
+	var/mob/user = parent
+	var/atom/movable/screen/screen_obj = user.hud_used.add_screen_object(/atom/movable/screen/craft, HUD_MOB_CRAFTING_MENU, HUD_GROUP_STATIC, user.hud_used.ui_style, screen_loc_override, update_screen = TRUE)
+	RegisterSignal(screen_obj, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(component_ui_interact))
 
 #define COOKING TRUE
 #define CRAFTING FALSE
@@ -68,12 +77,17 @@
 	var/list/requirements_list = list()
 
 	// Process all requirements
-	for(var/requirement_path in recipe.reqs)
+	var/recipe_result
+	if(recipe.blacklist_result)
+		recipe_result = recipe.result
+	for(var/requirement_path, needed_amount in recipe.reqs)
 		// Check we have the appropriate amount available in the contents list
-		var/needed_amount = recipe.reqs[requirement_path]
 		for(var/content_item_path in contents)
 			// Right path and not blacklisted
-			if(!ispath(content_item_path, requirement_path) || recipe.blacklist.Find(content_item_path))
+			if(!ispath(content_item_path, requirement_path) || (content_item_path in recipe.blacklist) || is_type_in_typecache(recipe.global_blacklist, content_item_path))
+				continue
+			// If we are a recipe that is blacklisting its result, make sure we skip that path
+			if(recipe_result && content_item_path == recipe_result)
 				continue
 
 			needed_amount -= contents[content_item_path]
@@ -85,14 +99,14 @@
 
 		// Store the instances of what we will use for recipe.check_requirements() for requirement_path
 		var/list/instances_list = list()
-		for(var/instance_path in item_instances)
+		for(var/instance_path, item_instance in item_instances)
 			if(ispath(instance_path, requirement_path))
-				instances_list += item_instances[instance_path]
+				instances_list += item_instance
 
 		requirements_list[requirement_path] = instances_list
 
-	for(var/requirement_path in recipe.chem_catalysts)
-		if(contents[requirement_path] < recipe.chem_catalysts[requirement_path])
+	for(var/requirement_path, chem_amount in recipe.chem_catalysts)
+		if(contents[requirement_path] < chem_amount)
 			return FALSE
 
 	var/mech_found = FALSE
@@ -244,28 +258,41 @@
 	//used to gather the material composition of the utilized requirements to transfer to the result
 	var/list/total_materials = list()
 	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
+
+	for(var/mat, to_remove in recipe.removed_mats)
+		var/datum/material/ref_mat = locate(mat) in total_materials
+		if(!ref_mat)
+			continue
+		if(total_materials[ref_mat] < to_remove)
+			total_materials -= ref_mat
+		else
+			total_materials[ref_mat] -= to_remove
+
 	var/atom/result
 	var/turf/craft_turf = get_turf(crafter.loc)
-	var/set_materials = TRUE
+	var/set_materials = !(recipe.crafting_flags & CRAFT_NO_MATERIALS)
 	if(ispath(recipe.result, /turf))
 		result = craft_turf.place_on_top(recipe.result)
 	else if(ispath(recipe.result, /obj/item/stack))
+		var/res_amount = recipe.result_amount || 1
 		//we don't merge the stack right away but try to put it in the hand of the crafter
-		result = new recipe.result(craft_turf, recipe.result_amount || 1, /*merge =*/FALSE)
-		set_materials = FALSE //stacks are bit too complex for it for now, but you're free to change that.
+		if(set_materials)
+			result = new recipe.result(craft_turf, res_amount, /*merge =*/ FALSE, /*mat_override =*/ total_materials, /*mat_amt =*/ 1 / res_amount)
+			set_materials = FALSE //We've already set the materials on init. Don't do it again
+		else
+			result = new recipe.result(craft_turf, res_amount, FALSE)
 	else
 		result = new recipe.result(craft_turf)
 		if(result.atom_storage && recipe.delete_contents)
 			for(var/obj/item/thing in result)
 				qdel(thing)
 	result.setDir(crafter.dir)
+	if(recipe.crafting_flags & CRAFT_CLEARS_REAGENTS)
+		result.reagents?.clear_reagents()
 	var/datum/reagents/holder = locate() in stuff_to_use
 	if(holder) //transfer reagents from ingredients to result
-		if(!ispath(recipe.result, /obj/item/reagent_containers) && result.reagents)
-			if(recipe.crafting_flags & CRAFT_CLEARS_REAGENTS)
-				result.reagents.clear_reagents()
-			if(recipe.crafting_flags & CRAFT_TRANSFERS_REAGENTS)
-				holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
+		if(result.reagents && (recipe.crafting_flags & CRAFT_TRANSFERS_REAGENT_COMPONENTS))
+			holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
 		stuff_to_use -= holder //This is the only non-movable in our list, we need to remove it.
 		qdel(holder)
 	result.on_craft_completion(stuff_to_use, recipe, crafter)
@@ -658,18 +685,18 @@
 			data["structures"] += atoms.Find(req_atom)
 
 	// Ingredients / Materials
+	data["reqs"] = list()
 	if(recipe.reqs.len)
-		data["reqs"] = list()
 		for(var/req_atom in recipe.reqs)
 			var/id = atoms.Find(req_atom)
 			data["reqs"]["[id]"] = recipe.reqs[req_atom]
 
 	// Catalysts
-	if(recipe.chem_catalysts.len)
+	if(LAZYLEN(recipe.chem_catalysts))
 		data["chem_catalysts"] = list()
-		for(var/req_atom in recipe.chem_catalysts)
+		for(var/req_atom, chem_amount in recipe.chem_catalysts)
 			var/id = atoms.Find(req_atom)
-			data["chem_catalysts"]["[id]"] = recipe.chem_catalysts[req_atom]
+			data["chem_catalysts"]["[id]"] = chem_amount
 
 	// Reaction data
 	if(ispath(recipe.reaction))

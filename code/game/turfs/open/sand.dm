@@ -9,6 +9,7 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	rust_resistance = RUST_RESISTANCE_REINFORCED
+	leave_footprints = TRUE
 
 /turf/open/misc/beach/Initialize(mapload)
 	. = ..()
@@ -18,6 +19,33 @@
 	if(fish_source)
 		GLOB.preset_fish_sources[fish_source].spawn_reward_from_explosion(src, severity)
 	return FALSE
+
+/turf/open/misc/beach/add_footprint(mob/living/carbon/human/walker, movement_direction)
+	if(!SSmapping.level_trait(z, ZTRAIT_SANDSTORM))
+		return ..()
+
+	// if an active sand storm affecting this turf is currently in its main or wind down stage, skip footprint creation
+	for(var/datum/weather/sand_storm/active_weather in SSweather.processing)
+		if(active_weather.stage != MAIN_STAGE && active_weather.stage != WIND_DOWN_STAGE)
+			continue
+		if(!(loc in active_weather.impacted_areas))
+			continue
+		return
+
+	. = ..()
+	// when a sand storm enters its main stage, clear all of our footprints
+	for(var/sand_type in typesof(/datum/weather/sand_storm))
+		RegisterSignal(SSdcs, COMSIG_WEATHER_START(sand_type), PROC_REF(sand_clear_footprints), override = TRUE)
+
+/turf/open/misc/beach/proc/sand_clear_footprints(datum/source, datum/weather/storm)
+	SIGNAL_HANDLER
+
+	if(!(loc in storm.impacted_areas))
+		return
+
+	clear_footprints()
+	for(var/sand_type in typesof(/datum/weather/sand_storm))
+		UnregisterSignal(SSdcs, COMSIG_WEATHER_START(sand_type))
 
 /turf/open/misc/beach/sand
 	gender = PLURAL
@@ -72,7 +100,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/misc/sandy_dirt/break_tile()

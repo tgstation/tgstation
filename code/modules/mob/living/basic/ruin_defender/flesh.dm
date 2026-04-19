@@ -59,7 +59,7 @@
 		if(!QDELETED(bodypart))
 			qdel(bodypart)
 
-/mob/living/basic/living_limb_flesh/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/living_limb_flesh/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(stat == DEAD)
 		return
@@ -114,7 +114,7 @@
 		return
 
 	var/list/zone_candidates = target.get_missing_limbs()
-	for(var/obj/item/bodypart/bodypart in target.bodyparts)
+	for(var/obj/item/bodypart/bodypart in target.get_bodyparts())
 		if(bodypart.body_zone == BODY_ZONE_HEAD || bodypart.body_zone == BODY_ZONE_CHEST)
 			continue
 		if(HAS_TRAIT(bodypart, TRAIT_IGNORED_BY_LIVING_FLESH))
@@ -153,7 +153,7 @@
 
 	var/obj/item/bodypart/new_bodypart = new part_type()
 	forceMove(new_bodypart)
-	new_bodypart.replace_limb(target, TRUE)
+	new_bodypart.replace_limb(target)
 	register_to_limb(new_bodypart)
 
 /mob/living/basic/living_limb_flesh/proc/owner_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)

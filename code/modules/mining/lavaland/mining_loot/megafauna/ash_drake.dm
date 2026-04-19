@@ -5,6 +5,7 @@
 	desc = "The gathered remains of a drake. It still crackles with heat, and smells distinctly of brimstone."
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	icon_state = "dragon"
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 10)
 
 /obj/item/drake_remains/Initialize(mapload)
 	. = ..()
@@ -27,6 +28,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 10)
 
 /datum/armor/cloak_drake
 	melee = 65
@@ -169,7 +171,7 @@
 
 	switch(random)
 		if(1)
-			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities."))
+			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak with just a fragment of their abilities."))
 			consumer.dna.features = list(
 				FEATURE_MUTANT_COLOR = "#A02720",
 				FEATURE_TAIL_LIZARD = "Dark Tiger",
@@ -185,6 +187,10 @@
 			)
 			consumer.set_eye_color("#FEE5A3")
 			consumer.set_species(/datum/species/lizard)
+			consumer.dna.add_mutation(/datum/mutation/firebreath, MUTATION_SOURCE_MUTATOR)
+			var/obj/item/organ/wings/functional/dragon/wings = new()
+			wings.Insert(consumer)
+
 		if(2)
 			to_chat(user, span_danger("Your flesh begins to melt! Miraculously, you seem fine otherwise."))
 			consumer.set_species(/datum/species/skeleton)

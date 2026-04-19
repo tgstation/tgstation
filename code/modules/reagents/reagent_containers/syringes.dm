@@ -33,6 +33,7 @@
 		dart_insert_projectile_icon_state, \
 		CALLBACK(src, PROC_REF(get_dart_var_modifiers))\
 	)
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user)
 	if(!target.reagents)
@@ -137,8 +138,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user) // transfer from, transfer to - who cares?
-
-	to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
+	if(trans)
+		to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
 	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -192,6 +193,15 @@
 		"exposed_wound_bonus" = exposed_wound_bonus,
 		"demolition_mod" = demolition_mod,
 	)
+
+/obj/item/reagent_containers/syringe/proc/on_mail_unwrap(atom/source, mob/living/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	if(!reagents.total_volume || !user.reagents || !user.try_inject(user, user.get_active_hand()))
+		return
+	to_chat(user, span_danger("As you open [letter], you prick yourself on a syringe inside!"))
+	reagents.trans_to(user, min(reagents.total_volume, 5))
+	forceMove(user.loc)
+	return COMPONENT_TRAITOR_MAIL_HANDLED
 
 /datum/embedding/syringe
 	embed_chance = 85
@@ -352,6 +362,7 @@
 	dart_insert_casing_icon_state = "overlay_syringe_crude"
 	dart_insert_projectile_icon_state = "overlay_syringe_crude_proj"
 	embed_type = /datum/embedding/syringe/crude
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 5)
 
 /datum/embedding/syringe/crude
 	embed_chance = 75

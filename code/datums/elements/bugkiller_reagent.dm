@@ -30,7 +30,7 @@
 		return
 
 	// capping damage so splashing a beaker on a moth is not an instant crit
-	var/damage = min(round(0.4 * reac_volume * (1 - touch_protection), 0.1), 12)
+	var/damage = min(round(reac_volume * (1 - touch_protection), 0.1), 20)
 	if(damage < 1)
 		return
 
@@ -87,5 +87,5 @@
 /atom/movable/screen/alert/status_effect/bugkiller_death
 	name = "Overwhelming Toxicity"
 	desc = "Don't go into the light!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "paralysis"

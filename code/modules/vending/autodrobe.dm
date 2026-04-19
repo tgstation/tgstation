@@ -90,12 +90,14 @@ GLOBAL_LIST_INIT(autodrobe_entretainers_items, list(
 	/obj/item/clothing/under/costume/singer/yellow = 1,
 	/obj/item/clothing/shoes/singerb = 1,
 	/obj/item/clothing/under/costume/singer/blue = 1,
+	/obj/item/clothing/shoes/singerr = 1,
+	/obj/item/clothing/under/costume/singer/red = 1,
 	/obj/item/clothing/head/costume/cueball = 1,
 ))
 
 GLOBAL_LIST_INIT(autodrobe_fancy_items, list(
-	/obj/item/clothing/under/rank/captain/suit = 1,
-	/obj/item/clothing/under/rank/captain/suit/skirt = 1,
+	/obj/item/clothing/under/costume/captain = 1,
+	/obj/item/clothing/under/costume/captain/skirt = 1,
 	/obj/item/clothing/under/costume/seifuku = 3,
 	/obj/item/clothing/under/costume/seifuku/red = 3,
 	/obj/item/clothing/under/costume/seifuku/teal = 3,

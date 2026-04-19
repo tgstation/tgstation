@@ -74,7 +74,6 @@
 	transfer_fingerprints_to(ampoule_shard)
 	splash_reagents(hit_atom, throwingdatum?.get_thrower(), was_thrown = TRUE, allow_closed_splash = FALSE)
 	qdel(src)
-	hit_atom.Bumped(ampoule_shard)
 
 /obj/item/reagent_containers/cup/blastoff_ampoule/Initialize(mapload, vol)
 	. = ..()

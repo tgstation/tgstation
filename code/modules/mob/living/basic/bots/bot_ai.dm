@@ -12,7 +12,7 @@
 
 	ai_movement = /datum/ai_movement/jps/bot
 	planning_subtrees = list(
-/datum/ai_planning_subtree/escape_captivity/pacifist,
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/salute_authority,
 		/datum/ai_planning_subtree/find_patrol_beacon,
@@ -55,8 +55,12 @@
 
 /datum/ai_controller/basic_controller/bot/proc/on_movement_start(mob/living/basic/bot/source, atom/target)
 	SIGNAL_HANDLER
+
 	if(current_movement_target == blackboard[BB_BEACON_TARGET])
 		source.update_bot_mode(new_mode = BOT_PATROL)
+		return
+
+	source.clear_path_hud(remove_hud = FALSE)
 
 /datum/ai_controller/basic_controller/bot/proc/add_to_blacklist(atom/target, duration)
 	var/final_duration = duration || blackboard[BB_UNREACHABLE_LIST_COOLDOWN]
@@ -251,7 +255,7 @@
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	action_cooldown = BOT_COMMISSIONED_SALUTE_DELAY
 
-/datum/ai_behavior/find_and_set/valid_authority/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/valid_authority/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/mob/living/nearby_mob in oview(search_range, controller.pawn))
 		if(!HAS_TRAIT(nearby_mob, TRAIT_COMMISSIONED))
 			continue

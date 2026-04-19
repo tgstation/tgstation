@@ -29,15 +29,18 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 
 //Movement loop flags
 ///Should the loop act immediately following its addition?
-#define MOVEMENT_LOOP_START_FAST (1<<0)
+#define MOVEMENT_LOOP_START_INSTANT (1<<0)
+///Should the loop act as soon as is reasonable?
+///(always 1 tick after the next visual tick, makes behavior consistent regardless of when the SS fires in the tick)
+#define MOVEMENT_LOOP_START_FAST (1<<1)
 ///Do we not use the priority system?
-#define MOVEMENT_LOOP_IGNORE_PRIORITY (1<<1)
+#define MOVEMENT_LOOP_IGNORE_PRIORITY (1<<2)
 ///Should we override the loop's glide?
-#define MOVEMENT_LOOP_IGNORE_GLIDE (1<<2)
+#define MOVEMENT_LOOP_IGNORE_GLIDE (1<<3)
 ///Should we not update our movables dir on move?
-#define MOVEMENT_LOOP_NO_DIR_UPDATE (1<<3)
+#define MOVEMENT_LOOP_NO_DIR_UPDATE (1<<4)
 ///Is the loop moving the movable outside its control, like it's an external force? e.g. footsteps won't play if enabled.
-#define MOVEMENT_LOOP_OUTSIDE_CONTROL (1<<4)
+#define MOVEMENT_LOOP_OUTSIDE_CONTROL (1<<5)
 
 // Movement loop status flags
 /// Has the loop been paused, soon to be resumed?
@@ -125,10 +128,24 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define TELEPORT_CHANNEL_MAGIC "magic"
 /// Cult teleportation, does whatever it wants (unless there's holiness)
 #define TELEPORT_CHANNEL_CULT "cult"
-/// Eigenstate teleportation, can do most things (that aren't in a teleport-prevented zone)
-#define TELEPORT_CHANNEL_EIGENSTATE "eigenstate"
 /// Anything else
 #define TELEPORT_CHANNEL_FREE "free"
+
+// Container flags for get_teleportable_container
+/// Count mob inventory as a valid container
+#define TELEPORT_CONTAINER_INCLUDE_INVENTORY (1<<0)
+/// Count modsuits with at least one sealed part as valid containers, even if mob inventory is not a valid container
+#define TELEPORT_CONTAINER_INCLUDE_SEALED_MODSUIT (1<<1)
+/// Count atom storage as a valid container
+#define TELEPORT_CONTAINER_INCLUDE_STORAGE (1<<2)
+/// Count closets as a valid container
+#define TELEPORT_CONTAINER_INCLUDE_CLOSET (1<<3)
+/// Count vehicles as a valid container
+#define TELEPORT_CONTAINER_INCLUDE_VEHICLE (1<<4)
+/// Count mech equipment (particularly cargo holds and sleepers) as a valid container
+#define TELEPORT_CONTAINER_INCLUDE_MECH_EQUIPMENT (1<<5)
+/// Count stomachs as a valid container (ew)
+#define TELEPORT_CONTAINER_INCLUDE_STOMACH (1<<6)
 
 ///Return values for moveloop Move()
 #define MOVELOOP_FAILURE 0
@@ -140,9 +157,5 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define DEFAULT_INERTIA_SPEED 5
 /// Maximum inertia that an object can hold. Used to prevent objects from getting to stupid speeds.
 #define INERTIA_FORCE_CAP 25 NEWTONS
-/// How much inertia is deducted when a mob has newtonian spacemove capabilities and is not moving in the same direction
-#define INERTIA_FORCE_SPACEMOVE_REDUCTION 0.75 NEWTONS
-/// How much inertia we must have to not be able to instantly stop after having something to grab
-#define INERTIA_FORCE_SPACEMOVE_GRAB 1.5 NEWTONS
 // Results in maximum speed of 1 tile per tick, capped at about 2/3rds of maximum force
 #define INERTIA_SPEED_COEF 0.375

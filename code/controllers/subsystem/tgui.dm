@@ -13,7 +13,7 @@
 SUBSYSTEM_DEF(tgui)
 	name = "tgui"
 	wait = 9
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_TGUI
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(tgui)
 	ntos_error = "<style type='text/css'>\n[ntos_error]\n</style>"
 	basehtml = replacetextEx(basehtml, "<!-- tgui:ntos-error -->", ntos_error)
 
-	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[CURRENT_STATION_YEAR]")
+	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[text2num(UTC_YEAR) + STATION_YEAR_OFFSET]") // This can't use the GLOB as it runs before those are populated
 
 /datum/controller/subsystem/tgui/OnConfigLoad()
 	var/storage_iframe = CONFIG_GET(string/storage_cdn_iframe)
@@ -299,6 +299,27 @@ SUBSYSTEM_DEF(tgui)
 	for(var/datum/tgui/ui in user.tgui_open_uis)
 		if(isnull(src_object) || ui.src_object == src_object)
 			ui.close()
+			count++
+	return count
+
+
+/**
+ * public
+ *
+ * Resets position of all UIs to 0, 0.
+ *
+ * required user mob The mob who opened/is using the UI.
+ * optional src_object datum If provided, only close UIs belonging this src_object.
+ *
+ * return int The number of UIs reset.
+ */
+/datum/controller/subsystem/tgui/proc/reset_ui_position(mob/user, datum/src_object)
+	var/count = 0
+	if(length(user?.tgui_open_uis) == 0)
+		return count
+	for(var/datum/tgui/ui in user.tgui_open_uis)
+		if(isnull(src_object) || ui.src_object == src_object)
+			ui.reset_ui_position()
 			count++
 	return count
 

@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   gbp_collection:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: "Check for ACTION_ENABLER secret and pass true to output if it exists to be checked by later steps"
         id: value_holder
@@ -18,7 +18,7 @@ jobs:
           echo "ACTIONS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Checkout
         if: steps.value_holder.outputs.ACTIONS_ENABLED
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup git
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
@@ -26,7 +26,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Checkout alternate branch
         if: steps.value_holder.outputs.ACTIONS_ENABLED
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: "gbp-balances" # The branch name
           path: gbp-balances

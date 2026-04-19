@@ -8,7 +8,7 @@
 #define COMSIG_MOB_MIND_INITIALIZED "mob_mind_inited"
 ///from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"
-///from base of mob/reagent_tick(): (datum/reagent/chem, seconds_per_tick, times_fired)
+///from base of mob/reagent_tick(): (datum/reagent/chem, seconds_per_tick)
 #define COMSIG_MOB_REAGENT_TICK "mob_reagent_tick"
 	///stops the reagent check call
 	#define COMSIG_MOB_STOP_REAGENT_TICK (1<<0)
@@ -51,8 +51,6 @@
 	#define MOVE_ARG_NEW_LOC 1
 	/// The argument of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
-/// From base of /client/Move(): (new_loc, direction)
-#define COMSIG_MOB_CLIENT_MOVE_NOGRAV "mob_client_move_nograv"
 /// From base of /client/Move(): (direction, old_dir)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
@@ -90,8 +88,7 @@
 	#define ACCESS_DISALLOWED (1<<1)
 	#define LOCKED_ATOM_INCOMPATIBLE (1<<2)
 
-///from the component /datum/component/simple_access
-#define	COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS "retrieve_simple_access"
+#define	COMSIG_MOB_RETRIEVE_ACCESS "retrieve_access"
 
 ///from base of mob/can_cast_magic(): (mob/user, magic_flags, charge_cost)
 #define COMSIG_MOB_RESTRICT_MAGIC "mob_cast_magic"
@@ -123,7 +120,7 @@
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
-///from base of /mob/verb/examinate(): (atom/target, list/examine_strings)
+///from base of /mob/verb/examinate(): (atom/target, list/examine_strings, list/examine_overrides)
 #define COMSIG_MOB_EXAMINING "mob_examining"
 ///from base of /mob/verb/examinate(): (atom/target)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"

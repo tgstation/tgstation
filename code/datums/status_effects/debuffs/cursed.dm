@@ -178,13 +178,13 @@
 /atom/movable/screen/alert/status_effect/cursed
 	name = "Cursed!"
 	desc = "The brand on your hand reminds you of your greed, yet you seem to be okay otherwise."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "cursed_by_slots"
 
 /atom/movable/screen/alert/status_effect/cursed/update_desc()
 	. = ..()
 	var/datum/status_effect/slot_machine_curse/linked_effect = attached_effect
-	var/curses = linked_effect.curse_count
+	var/curses = linked_effect?.curse_count
 	switch(curses)
 		if(2)
 			desc = "Your greed is catching up to you..."

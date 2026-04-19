@@ -1,5 +1,5 @@
 /// List of objects that AIs will treat as targets
-GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
+GLOBAL_ALIST_EMPTY(hostile_machines_by_z)
 /// Static typecache list of things we are interested in
 /// Consider this a union of the for loop and the hearers call from below
 /// Must be kept up to date with the contents of hostile_machines
@@ -39,9 +39,11 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 	var/list/potential_targets = hearers(aggro_range, get_turf(controller.pawn)) - living_mob //Remove self, so we don't suicide
 
-	for (var/atom/hostile_machine as anything in GLOB.hostile_machines)
-		if (can_see(living_mob, hostile_machine, aggro_range))
-			potential_targets += hostile_machine
+	var/turf/mob_turf = get_turf(living_mob)
+	if(mob_turf?.z)
+		for (var/atom/hostile_machine as anything in GLOB.hostile_machines_by_z[mob_turf.z])
+			if (can_see(living_mob, hostile_machine, aggro_range))
+				potential_targets += hostile_machine
 
 	if(!potential_targets.len)
 		failed_to_find_anyone(controller, target_key, targeting_strategy_key, hiding_location_key)

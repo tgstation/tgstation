@@ -258,7 +258,7 @@
 	Stun(70)
 	to_chat(src, span_danger("<b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)..."))
 	if(severity == 1)
-		adjustBruteLoss(heavy_emp_damage)
+		adjust_brute_loss(heavy_emp_damage)
 		to_chat(src, span_userdanger("HeAV% DA%^MMA+G TO I/O CIR!%UUT!"))
 
 /mob/living/basic/drone/proc/alarm_triggered(datum/source, alarm_type, area/source_area)

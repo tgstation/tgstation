@@ -1,0 +1,15 @@
+/obj/structure/sign/warning{dir = 1} : /obj/structure/sign/warning/directional/north
+/obj/structure/sign/warning{dir = 2} : /obj/structure/sign/warning/directional/south
+/obj/structure/sign/warning{dir = 4} : /obj/structure/sign/warning/directional/east
+/obj/structure/sign/warning{dir = 8} : /obj/structure/sign/warning/directional/west
+
+/obj/structure/sign/warning/radiation{dir = 1} : /obj/structure/sign/warning/radiation/directional/north
+/obj/structure/sign/warning/radiation{dir = 2} : /obj/structure/sign/warning/radiation/directional/south
+/obj/structure/sign/warning/radiation{dir = 4} : /obj/structure/sign/warning/radiation/directional/east
+/obj/structure/sign/warning/radiation{dir = 8} : /obj/structure/sign/warning/radiation/directional/west
+
+/obj/structure/sign/warning/secure_area{dir = 1} : /obj/structure/sign/warning/secure_area/directional/north
+/obj/structure/sign/warning/secure_area{dir = 2} : /obj/structure/sign/warning/secure_area/directional/south
+/obj/structure/sign/warning/secure_area{dir = 4} : /obj/structure/sign/warning/secure_area/directional/east
+/obj/structure/sign/warning/secure_area{dir = 8} : /obj/structure/sign/warning/secure_area/directional/west
+

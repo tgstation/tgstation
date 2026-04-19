@@ -14,21 +14,6 @@ menu "menu"
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem
-		name = "&Quick screenshot\tF2"
-		command = ".screenshot auto"
-		category = "&File"
-		saved-params = "is-checked"
-	elem
-		name = "&Save screenshot as...\tShift+F2"
-		command = ".screenshot"
-		category = "&File"
-		saved-params = "is-checked"
-	elem
-		name = ""
-		command = ""
-		category = "&File"
-		saved-params = "is-checked"
 	elem "reconnectbutton"
 		name = "&Reconnect"
 		command = ".reconnect"
@@ -259,12 +244,13 @@ window "inputwindow"
 	elem "input"
 		type = INPUT
 		pos = 0,0
-		size = 805x20
+		size = 520x20
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
 		border = line
 		saved-params = "command"
+		can-scroll = true
 
 window "inputbuttons"
 	elem "inputbuttons"

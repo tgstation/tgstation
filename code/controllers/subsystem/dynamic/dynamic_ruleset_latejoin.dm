@@ -35,9 +35,6 @@
 /datum/dynamic_ruleset/latejoin/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)
 
-/datum/dynamic_ruleset/latejoin/heretic/assign_role(datum/mind/candidate)
-	candidate.add_antag_datum(/datum/antagonist/heretic)
-
 /datum/dynamic_ruleset/latejoin/changeling
 	name = "Changeling"
 	config_tag = "Latejoin Changeling"

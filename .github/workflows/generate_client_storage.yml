@@ -10,14 +10,14 @@ jobs:
   dispatch_repo:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Repository Dispatch
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Generate App Token
         id: app-token-generation
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3.1.1
         if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
         with:
-          app-id: ${{ secrets.APP_ID }}
+          client-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
           owner: tgstation
         env:

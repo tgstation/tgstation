@@ -13,14 +13,14 @@
 	maxnutri = 15
 	tray_flags = SOIL
 	armor_type = /datum/armor/obj_soil
+	custom_materials = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT * 3)
 	//which type of sack to create when shovled.
 	var/sack_type = /obj/item/soil_sack
 
-/obj/machinery/hydroponics/soil/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	return NONE
-
-/obj/machinery/hydroponics/soil/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	return NONE
+/obj/machinery/hydroponics/soil/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER)
+	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR)
 
 /obj/machinery/hydroponics/soil/update_icon(updates=ALL)
 	. = ..()
@@ -174,6 +174,11 @@
 	stored_soil.on_place()
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/soil_sack/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+	return ..()
 
 ///Remove slowdown and add block chance when wielded.
 /obj/item/soil_sack/proc/on_wield()

@@ -6,6 +6,7 @@
 	base_icon_state = "box_"
 	density = TRUE
 	max_integrity = 250
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	/// What board do we accept
 	var/board_type = /obj/item/circuitboard
 	/// Reference to the circuit inside the frame
@@ -113,9 +114,9 @@
 	return .
 
 /obj/structure/frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
 	if(istype(tool, /obj/item/circuitboard)) // Install board will fail if passed an invalid circuitboard and give feedback
 		return install_board(user, tool, by_hand = TRUE) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-	return NONE
 
 /obj/structure/frame/ranged_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
@@ -125,7 +126,7 @@
 
 	. = item_interaction(user, tool, modifiers)
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		user.Beam(tool, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+		user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 
 /**
  * Installs the passed circuit board into the frame

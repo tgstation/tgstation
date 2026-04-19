@@ -12,8 +12,6 @@
 	var/recharge_coeff = 1
 	/// Did we put power into "charging" last process()?
 	var/using_power = FALSE
-	/// Did we finish recharging the currently inserted item?
-	var/finished_recharging = FALSE
 	/// List of items that can be recharged
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
@@ -71,7 +69,6 @@
 		charging = arrived
 		START_PROCESSING(SSmachines, src)
 		update_use_power(ACTIVE_POWER_USE)
-		finished_recharging = FALSE
 		using_power = TRUE
 		update_appearance()
 	return ..()
@@ -120,14 +117,13 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/recharger/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!anchored || charging)
-		return ITEM_INTERACT_BLOCKING
-	. = default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
-	if(.)
-		update_appearance()
+	return (!anchored || charging) ? ITEM_INTERACT_BLOCKING : default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/recharger/crowbar_act(mob/living/user, obj/item/tool)
-	return (!anchored || charging) ? ITEM_INTERACT_BLOCKING : default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/recharger/can_crowbar_deconstruct()
+	return ..() && anchored && !charging
 
 /obj/machinery/recharger/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -156,17 +152,25 @@
 	if(charging_cell)
 		if(charging_cell.charge < charging_cell.maxcharge)
 			charge_cell(charging_cell.chargerate * recharge_coeff * seconds_per_tick, charging_cell)
-			using_power = TRUE
+			if(charging_cell.charge >= charging_cell.maxcharge) //Inserted thing is at max charge/ammo, notify those around us
+				playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+				say("[charging] has finished recharging!")
+			else
+				using_power = TRUE
 		update_appearance()
+		return
 
 	if(istype(charging, /obj/item/ammo_box/magazine/recharge)) //if you add any more snowflake ones, make sure to update the examine messages too.
 		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
 		for(var/charge_iterations in 1 to recharge_coeff)
-			if(power_pack.stored_ammo.len >= power_pack.max_ammo)
-				break
-			power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
-			use_energy(active_power_usage * seconds_per_tick)
-			using_power = TRUE
+			if(power_pack.stored_ammo.len < power_pack.max_ammo)
+				power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
+				use_energy(active_power_usage * seconds_per_tick)
+				if(power_pack.stored_ammo.len >= power_pack.max_ammo)
+					playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+					say("[charging] has finished recharging!")
+				else
+					using_power = TRUE
 		update_appearance()
 		return
 
@@ -179,17 +183,15 @@
 			using_power = TRUE
 
 		else if(recalibrating_gun.shots_before_degradation < recalibrating_gun.max_shots_before_degradation)
-			recalibrating_gun.attempt_recalibration(TRUE, 1 * recharge_coeff)
+			recalibrating_gun.attempt_recalibration(TRUE, recharge_coeff)
 			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
-			using_power = TRUE
-
+			if(recalibrating_gun.shots_before_degradation == recalibrating_gun.max_shots_before_degradation)
+				playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+				say("[charging] has finished recalibrating!")
+			else
+				using_power = TRUE
 		update_appearance()
 		return
-
-	if(!using_power && !finished_recharging) //Inserted thing is at max charge/ammo, notify those around us
-		finished_recharging = TRUE
-		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-		say("[charging] has finished recharging!")
 
 /obj/machinery/recharger/emp_act(severity)
 	. = ..()

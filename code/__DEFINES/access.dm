@@ -28,6 +28,8 @@
 #define ACCESS_ALL_PERSONAL_LOCKERS "all_personal_lockers"
 /// Access used for Access-Changing Programs, this one will unlock all options that can be ever given via that program.
 #define ACCESS_CHANGE_IDS "change_ids"
+/// Access the PDA shopping app checks for to see if you can only request or place orders immediately
+#define ACCESS_BUDGET "department_budget"
 /// Access used for the Captain's personal quarters in mapping, as well as what allows one to order emergency shuttles.
 #define ACCESS_CAPTAIN "captain"
 /// Access used for the Head of Personnel's personal quarters in mapping, as well as the security console and other HoP-related things.
@@ -184,6 +186,7 @@
 #define ACCESS_CENT_TELEPORTER "cent_teleporter"
 #define ACCESS_CENT_CAPTAIN "cent_captain"
 #define ACCESS_CENT_BAR "cent_bar"
+#define ACCESS_CENT_OFFICER "cent_officer"
 /// Special Ops. Captain's display case, Marauder and Seraph mechs.
 #define ACCESS_CENT_SPECOPS "cent_specops"
 
@@ -295,6 +298,7 @@
 	ACCESS_BIT_DEN, \
 	ACCESS_BRIG, \
 	ACCESS_BRIG_ENTRANCE, \
+	ACCESS_BUDGET, \
 	ACCESS_CARGO, \
 	ACCESS_CHAPEL_OFFICE, \
 	ACCESS_CONSTRUCTION, \
@@ -338,6 +342,7 @@
 	ACCESS_SERVICE, \
 	ACCESS_SHIPPING, \
 	ACCESS_SURGERY, \
+	ACCESS_TECH_STORAGE, \
 	ACCESS_THEATRE, \
 	ACCESS_VIROLOGY, \
 	ACCESS_WEAPONS, \
@@ -349,6 +354,7 @@
 	ACCESS_AI_UPLOAD, \
 	ACCESS_ALL_PERSONAL_LOCKERS, \
 	ACCESS_ARMORY, \
+	ACCESS_BUDGET, \
 	ACCESS_CHANGE_IDS, \
 	ACCESS_COMMAND, \
 	ACCESS_EVA, \
@@ -356,7 +362,6 @@
 	ACCESS_MINISAT, \
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_TCOMMS, \
-	ACCESS_TECH_STORAGE, \
 	ACCESS_TELEPORTER, \
 	ACCESS_VAULT, \
 )
@@ -386,6 +391,7 @@
 	ACCESS_CENT_STORAGE, \
 	ACCESS_CENT_TELEPORTER, \
 	ACCESS_CENT_THUNDER, \
+	ACCESS_CENT_OFFICER, \
 )
 
 /// Syndicate areas off station. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SYNDICATE)
@@ -428,6 +434,7 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of general service accesses that are overseen by the HoP.
 #define REGION_ACCESS_GENERAL list( \
 	ACCESS_BAR, \
+	ACCESS_BUDGET, \
 	ACCESS_CHAPEL_OFFICE, \
 	ACCESS_CREMATORIUM, \
 	ACCESS_HYDROPONICS, \
@@ -445,6 +452,7 @@
 	ACCESS_ARMORY, \
 	ACCESS_BRIG, \
 	ACCESS_BRIG_ENTRANCE, \
+	ACCESS_BUDGET, \
 	ACCESS_COURT, \
 	ACCESS_DETECTIVE, \
 	ACCESS_HOS, \
@@ -456,6 +464,7 @@
 #define REGION_MEDBAY "Medbay"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all medbay regional accesses that are overseen by the CMO.
 #define REGION_ACCESS_MEDBAY list( \
+	ACCESS_BUDGET, \
 	ACCESS_CMO, \
 	ACCESS_MECH_MEDICAL, \
 	ACCESS_MEDICAL, \
@@ -473,6 +482,7 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.
 #define REGION_ACCESS_RESEARCH list( \
 	ACCESS_AI_UPLOAD, \
+	ACCESS_BUDGET, \
 	ACCESS_GENETICS, \
 	ACCESS_MECH_SCIENCE, \
 	ACCESS_MINISAT, \
@@ -491,6 +501,7 @@
 #define REGION_ACCESS_ENGINEERING list( \
 	ACCESS_ATMOSPHERICS, \
 	ACCESS_AUX_BASE, \
+	ACCESS_BUDGET, \
 	ACCESS_CE, \
 	ACCESS_CONSTRUCTION, \
 	ACCESS_ENGINEERING, \
@@ -507,6 +518,7 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
 #define REGION_ACCESS_SUPPLY list( \
 	ACCESS_BIT_DEN, \
+	ACCESS_BUDGET, \
 	ACCESS_CARGO, \
 	ACCESS_MECH_MINING, \
 	ACCESS_MINERAL_STOREROOM, \
@@ -522,6 +534,7 @@
 #define REGION_ACCESS_COMMAND list( \
 	ACCESS_AI_UPLOAD, \
 	ACCESS_ALL_PERSONAL_LOCKERS, \
+	ACCESS_BUDGET, \
 	ACCESS_CAPTAIN, \
 	ACCESS_CHANGE_IDS, \
 	ACCESS_COMMAND, \

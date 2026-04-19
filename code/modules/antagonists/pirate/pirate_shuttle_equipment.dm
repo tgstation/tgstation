@@ -65,7 +65,7 @@
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
 	if(credits_stored) // Prevents spamming empty holochips
 		new /obj/item/holochip(drop_location(), credits_stored)
-		to_chat(user,span_notice("You retrieve the siphoned credits!"))
+		to_chat(user,span_notice("You retrieve the siphoned [MONEY_NAME]!"))
 		credits_stored = 0
 	else
 		to_chat(user,span_notice("There's nothing to withdraw."))
@@ -158,15 +158,15 @@
 	name = "Advanced Surgery Disk"
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	surgeries = list(
-		/datum/surgery/advanced/lobotomy,
-		/datum/surgery/advanced/lobotomy/mechanic,
-		/datum/surgery/advanced/bioware/vein_threading,
-		/datum/surgery/advanced/bioware/vein_threading/mechanic,
-		/datum/surgery/advanced/bioware/nerve_splicing,
-		/datum/surgery/advanced/bioware/nerve_splicing/mechanic,
-		/datum/surgery_step/heal/combo/upgraded,
-		/datum/surgery_step/pacify,
-		/datum/surgery_step/pacify/mechanic,
+		/datum/surgery_operation/organ/lobotomy,
+		/datum/surgery_operation/organ/lobotomy/mechanic,
+		/datum/surgery_operation/limb/bioware/vein_threading,
+		/datum/surgery_operation/limb/bioware/vein_threading/mechanic,
+		/datum/surgery_operation/limb/bioware/nerve_splicing,
+		/datum/surgery_operation/limb/bioware/nerve_splicing/mechanic,
+		/datum/surgery_operation/basic/tend_wounds/combo/upgraded,
+		/datum/surgery_operation/organ/pacify,
+		/datum/surgery_operation/organ/pacify/mechanic,
 	)
 
 //Pad & Pad Terminal
@@ -174,12 +174,10 @@
 	name = "cargo hold pad"
 	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "lpad-idle-off"
-	///This is the icon_state that this telepad uses when it's not in use.
-	var/idle_state = "lpad-idle-off"
-	///This is the icon_state that this telepad uses when it's warming up for goods teleportation.
-	var/warmup_state = "lpad-idle"
-	///This is the icon_state to flick when the goods are being sent off by the telepad.
-	var/sending_state = "lpad-beam"
+	base_icon_state = "lpad"
+	/// Determines what icon is being shown
+	VAR_PRIVATE/is_sending = FALSE
+
 	///This is the cargo hold ID used by the piratepad_control. Match these two to link them together.
 	var/cargo_hold_id
 
@@ -190,15 +188,36 @@
 		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
-/obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)
-	. = ..()
-	if(!.)
-		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", screw)
+/obj/machinery/piratepad/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return screwdriver_act(user, tool)
+
+/obj/machinery/piratepad/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/piratepad/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	return crowbar_act(user, tool)
+
+/obj/machinery/piratepad/proc/set_is_sending(value)
+	if(is_sending == value)
+		return
+	is_sending = value
+	update_appearance()
+
+/obj/machinery/piratepad/proc/finish_sending()
+	set_is_sending(FALSE)
+	flick("[base_icon_state]-beam", src)
+
+/obj/machinery/piratepad/update_icon_state()
 	. = ..()
-	default_deconstruction_crowbar(tool)
-	return TRUE
+	if(panel_open)
+		icon_state = "[base_icon_state]-idle-open"
+	else if(is_sending)
+		icon_state = "[base_icon_state]-idle"
+	else
+		icon_state = "[base_icon_state]-idle-off"
 
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
@@ -222,6 +241,8 @@
 	var/interface_type = "CargoHoldTerminal"
 	///Typecache of things that shouldn't be sold and shouldn't have their contents sold.
 	var/static/list/nosell_typecache
+	/// When we send the pad for this machine, do we want to lazyload in the ninja holding facility?
+	var/load_holding_facility = TRUE
 
 /obj/machinery/computer/piratepad_control/Initialize(mapload)
 	..()
@@ -274,11 +295,7 @@
 			recalc()
 			. = TRUE
 		if("send")
-			start_sending()
-			//We ensure that the holding facility is loaded in time in case we're selling mobs.
-			//This isn't the prettiest place to put it, but 'start_sending()' is also used by civilian bounty computers
-			//And we don't need them to also load the holding facility.
-			SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
+			start_sending(params["global"], usr)
 			. = TRUE
 		if("stop")
 			stop_sending()
@@ -303,8 +320,10 @@
 	if(!value)
 		status_report += "0"
 
-/// Deletes and sells the item
-/obj/machinery/computer/piratepad_control/proc/send()
+/**
+ * Sorts through all items on the control pad via pirate_export_loop, then generates a printout to view in the TGUI.
+ */
+/obj/machinery/computer/piratepad_control/proc/send(check_global = FALSE, mob/user)
 	if(!sending)
 		return
 
@@ -337,8 +356,7 @@
 		status_report += "Nothing"
 
 	pad.visible_message(span_notice("[pad] activates!"))
-	flick(pad.sending_state,pad)
-	pad.icon_state = pad.idle_state
+	pad.finish_sending()
 	sending = FALSE
 
 ///The loop that calculates the value of stuff on a pirate pad, or plain sell them if dry_run is FALSE.
@@ -369,7 +387,7 @@
 	return report
 
 /// Prepares to sell the items on the pad
-/obj/machinery/computer/piratepad_control/proc/start_sending()
+/obj/machinery/computer/piratepad_control/proc/start_sending(check_global = FALSE, mob/user)
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	if(!pad)
 		status_report = "No pad detected. Build or link a pad."
@@ -384,8 +402,11 @@
 	sending = TRUE
 	status_report = "Sending... "
 	pad.visible_message(span_notice("[pad] starts charging up."))
-	pad.icon_state = pad.warmup_state
-	sending_timer = addtimer(CALLBACK(src, PROC_REF(send)),warmup_time, TIMER_STOPPABLE)
+	pad.set_is_sending(TRUE)
+	sending_timer = addtimer(CALLBACK(src, PROC_REF(send), check_global, user), warmup_time, TIMER_STOPPABLE)
+	if(load_holding_facility)
+		//We ensure that the holding facility is loaded in time in case we're selling mobs.
+		SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 
 /// Finishes the sending state of the pad
 /obj/machinery/computer/piratepad_control/proc/stop_sending(custom_report)
@@ -396,7 +417,7 @@
 	if(custom_report)
 		status_report = custom_report
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
-	pad.icon_state = pad.idle_state
+	pad.set_is_sending(FALSE)
 	deltimer(sending_timer)
 
 /datum/export/pirate
@@ -423,7 +444,7 @@
 /datum/export/pirate/ransom/get_base_cost(mob/living/carbon/human/ransomee)
 	if(ransomee.stat != CONSCIOUS || !ransomee.mind || HAS_TRAIT(ransomee.mind, TRAIT_HAS_BEEN_KIDNAPPED)) //mint condition only
 		return 0
-	else if(FACTION_PIRATE in ransomee.faction) //can't ransom your fellow pirates to CentCom!
+	else if(ransomee.has_faction(FACTION_PIRATE)) //can't ransom your fellow pirates to CentCom!
 		return 0
 	else if(HAS_TRAIT(ransomee, TRAIT_HIGH_VALUE_RANSOM))
 		return 3000

@@ -1,8 +1,7 @@
 /datum/job/doctor
 	title = JOB_MEDICAL_DOCTOR
 	description = "Save lives, run around the station looking for victims, \
-		scan everyone in sight"
-	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
+		scan everyone in sight."
 	faction = FACTION_STATION
 	total_positions = 6
 	spawn_positions = 4
@@ -16,7 +15,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED
 
-	mind_traits = list(MEDICAL_MIND_TRAITS)
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR

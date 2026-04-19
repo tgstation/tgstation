@@ -1,0 +1,1 @@
+Heavy SMG and the NAPAD smg sprite were both made by Trelus in GH pull request https://github.com/NovaSector/NovaSector/pull/4880

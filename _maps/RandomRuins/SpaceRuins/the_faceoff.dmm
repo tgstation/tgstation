@@ -37,7 +37,7 @@
 /area/ruin/space)
 "aC" = (
 /obj/effect/turf_decal/stripes/red/full,
-/obj/machinery/light/small/built,
+/obj/machinery/light/small/empty,
 /obj/item/light/bulb/broken,
 /turf/open/floor/iron/dark/smooth_large/airless,
 /area/ruin/space)
@@ -1056,7 +1056,7 @@
 "Ue" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/stack/sticky_tape/pointy/super,
+/obj/item/stack/medical/wrap/sticky_tape/pointy/super,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)

@@ -16,6 +16,7 @@
 	shrapnel_type = /obj/projectile/bullet/shrapnel/ied
 	det_time = 225 SECONDS //this is handled by assemblies now
 	display_timer = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.65, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	/// Explosive power
 	var/power = 5
 	/// Our assembly that when activated causes us to explode
@@ -127,6 +128,8 @@
 		return
 	if(istype(activator, /obj/item/assembly/signaler))
 		return //no signallers, signallers send a signal and i can imagine this having bad sideeffects if some has multiple of the same frequency in their backpack and uses them inhand by accident
+	log_grenade(user)
+	add_fingerprint(user)
 	activator.activate()
 	update_icon(UPDATE_ICON_STATE)
 	user.balloon_alert_to_viewers("arming!")
@@ -159,9 +162,6 @@
 /obj/item/grenade/iedcasing/Destroy()
 	. = ..()
 	activator = null
-
-
-
 
 /obj/item/grenade/iedcasing/spawned
 	power = 2.5 //20u welding fuel

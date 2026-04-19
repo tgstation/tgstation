@@ -2,7 +2,6 @@
 	title = JOB_HUMAN_AI
 	description = "Assist the crew, open airlocks, follow your lawset, and coordinate your cyborgs."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
-	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0
@@ -132,7 +131,7 @@
 		cybernetic.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		//you only get respect if you go all the way, man.
 		ADD_TRAIT(equipped, TRAIT_COMMISSIONED, INNATE_TRAIT)
-	equipped.faction |= list(FACTION_SILICON, FACTION_TURRET)
+	equipped.add_faction(list(FACTION_SILICON, FACTION_TURRET))
 
 /obj/item/paper/default_lawset_list
 	name = "Lawset Note"

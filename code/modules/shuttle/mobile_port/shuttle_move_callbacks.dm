@@ -7,10 +7,11 @@ All ShuttleMove procs go here
 // Called on every turf in the shuttle region, returns a bitflag for allowed movements of that turf
 // returns the new move_mode (based on the old)
 /turf/proc/fromShuttleMove(turf/newT, move_mode)
-	if(!(move_mode & MOVE_AREA) || !isshuttleturf(src))
-		return move_mode
-
-	return move_mode | MOVE_TURF | MOVE_CONTENTS
+	. = move_mode
+	if((move_mode & MOVE_AREA) && isshuttleturf(src))
+		. |= MOVE_TURF | MOVE_CONTENTS
+	if(SEND_SIGNAL(src, COMSIG_SHUTTLE_TURF_SHOULD_MOVE_SPECIAL, newT, move_mode))
+		. |= MOVE_SPECIAL
 
 // Called from the new turf before anything has been moved
 // Only gets called if fromShuttleMove returns true first
@@ -76,7 +77,7 @@ All ShuttleMove procs go here
 		oldT.ScrapeAway(shuttle_depth)
 
 	if(rotation)
-		shuttleRotate(rotation) //see shuttle_rotate.dm
+		shuttleRotate(rotation, params = ALL) //see shuttle_rotate.dm
 	SEND_SIGNAL(src, COMSIG_TURF_AFTER_SHUTTLE_MOVE, oldT)
 
 	return TRUE
@@ -117,13 +118,15 @@ All ShuttleMove procs go here
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, oldT)
+
 	if(light)
 		update_light()
 	if(rotation)
-		shuttleRotate(rotation)
+		shuttleRotate(rotation, params = ALL)
 
 	update_parallax_contents()
+
+	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, oldT)
 
 	return TRUE
 
@@ -368,7 +371,7 @@ All ShuttleMove procs go here
 
 /obj/structure/cable/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	Connect_cable(TRUE)
+	connect_cable(TRUE)
 	propagate_if_no_network()
 
 /obj/machinery/power/shuttle_engine/hypotheticalShuttleMove(move_mode)

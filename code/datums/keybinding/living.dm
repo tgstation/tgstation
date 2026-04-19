@@ -12,14 +12,14 @@
 	description = "Break free of your current state. Handcuffed? on fire? Resist!"
 	keybind_signal = COMSIG_KB_LIVING_RESIST_DOWN
 
-/datum/keybinding/living/resist/down(client/user, turf/target)
+/datum/keybinding/living/resist/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
 	var/mob/living/owner = user.mob
 	owner.resist()
-	if (owner.hud_used?.resist_icon)
-		owner.hud_used.resist_icon.icon_state = "[owner.hud_used.resist_icon.base_icon_state]_on"
+	if (owner.hud_used?.screen_objects[HUD_MOB_RESIST])
+		owner.hud_used.screen_objects[HUD_MOB_RESIST].icon_state = "[owner.hud_used.screen_objects[HUD_MOB_RESIST].base_icon_state]_on"
 	return TRUE
 
 /datum/keybinding/living/resist/up(client/user, turf/target)
@@ -27,8 +27,8 @@
 	if(.)
 		return
 	var/mob/living/owner = user.mob
-	if (owner.hud_used?.resist_icon)
-		owner.hud_used.resist_icon.icon_state = owner.hud_used.resist_icon.base_icon_state
+	if (owner.hud_used?.screen_objects[HUD_MOB_RESIST])
+		owner.hud_used.screen_objects[HUD_MOB_RESIST].icon_state = owner.hud_used.screen_objects[HUD_MOB_RESIST].base_icon_state
 
 /datum/keybinding/living/look_up
 	hotkey_keys = list("L")
@@ -37,7 +37,7 @@
 	description = "Look up at the next z-level.  Only works if directly below open space."
 	keybind_signal = COMSIG_KB_LIVING_LOOKUP_DOWN
 
-/datum/keybinding/living/look_up/down(client/user, turf/target)
+/datum/keybinding/living/look_up/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -58,7 +58,7 @@
 	description = "Look down at the previous z-level.  Only works if directly above open space."
 	keybind_signal = COMSIG_KB_LIVING_LOOKDOWN_DOWN
 
-/datum/keybinding/living/look_down/down(client/user, turf/target)
+/datum/keybinding/living/look_down/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -79,7 +79,7 @@
 	description = "Lay down, or get up."
 	keybind_signal = COMSIG_KB_LIVING_REST_DOWN
 
-/datum/keybinding/living/rest/down(client/user, turf/target)
+/datum/keybinding/living/rest/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -95,7 +95,7 @@
 	keybind_signal = COMSIG_KB_LIVING_TOGGLE_COMBAT_DOWN
 
 
-/datum/keybinding/living/toggle_combat_mode/down(client/user, turf/target)
+/datum/keybinding/living/toggle_combat_mode/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -109,7 +109,7 @@
 	description = "Enable combat mode."
 	keybind_signal = COMSIG_KB_LIVING_ENABLE_COMBAT_DOWN
 
-/datum/keybinding/living/enable_combat_mode/down(client/user, turf/target)
+/datum/keybinding/living/enable_combat_mode/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -123,7 +123,7 @@
 	description = "Disable combat mode."
 	keybind_signal = COMSIG_KB_LIVING_DISABLE_COMBAT_DOWN
 
-/datum/keybinding/living/disable_combat_mode/down(client/user, turf/target)
+/datum/keybinding/living/disable_combat_mode/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -137,7 +137,7 @@
 	description = "Held down to cycle to the other move intent, release to cycle back"
 	keybind_signal = COMSIG_KB_LIVING_TOGGLEMOVEINTENT_DOWN
 
-/datum/keybinding/living/toggle_move_intent/down(client/user, turf/target)
+/datum/keybinding/living/toggle_move_intent/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -152,13 +152,13 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_move_intent_alternative
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "toggle_move_intent_alt"
 	full_name = "press to cycle move intent"
 	description = "Pressing this cycle to the opposite move intent, does not cycle back"
 	keybind_signal = COMSIG_KB_LIVING_TOGGLEMOVEINTENTALT_DOWN
 
-/datum/keybinding/living/toggle_move_intent_alternative/down(client/user, turf/target)
+/datum/keybinding/living/toggle_move_intent_alternative/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -167,7 +167,7 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_throw_mode
-	hotkey_keys = list("Southwest") // END
+	hotkey_keys = list("R", "Southwest") // END
 	name = "toggle_throw_mode"
 	full_name = "Toggle throw mode"
 	description = "Toggle throwing the current item or not."
@@ -188,7 +188,7 @@
 	description = "Hold this to turn on throw mode, and release it to turn off throw mode"
 	keybind_signal = COMSIG_KB_LIVING_HOLDTHROWMODE_DOWN
 
-/datum/keybinding/living/hold_throw_mode/down(client/user, turf/target)
+/datum/keybinding/living/hold_throw_mode/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -219,7 +219,7 @@
 		return FALSE
 	return TRUE
 
-/datum/keybinding/living/give/down(client/user, turf/target)
+/datum/keybinding/living/give/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return

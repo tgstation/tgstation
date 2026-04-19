@@ -31,7 +31,7 @@
 	inhand_icon_state = "clown"
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
-	supports_variations_flags = CLOTHING_NO_VARIATION
+	supports_variations_flags = NONE
 
 /obj/item/clothing/under/rank/civilian/clown/Initialize(mapload)
 	. = ..()

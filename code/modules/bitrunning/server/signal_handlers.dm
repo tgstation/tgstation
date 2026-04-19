@@ -76,6 +76,11 @@
 				boss.make_virtual_megafauna()
 				continue
 
+			if(istype(creature, /mob/living/basic/boss))
+				var/mob/living/basic/boss/boss = creature
+				boss.make_virtual_megafauna()
+				continue
+
 			mutation_candidate_refs.Add(WEAKREF(creature))
 			continue
 

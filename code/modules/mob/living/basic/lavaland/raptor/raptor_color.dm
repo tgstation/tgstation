@@ -124,12 +124,9 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 // Purple raptors never "fully" grow up, and remain usable as backpacks
 /datum/raptor_color/purple/setup_adult(mob/living/basic/raptor/raptor)
-	raptor.base_pixel_w = initial(raptor.base_pixel_w)
 	raptor.can_be_held = TRUE
 	raptor.density = FALSE
 	raptor.move_resist = MOVE_RESIST_DEFAULT
-	raptor.change_offsets = FALSE
-	raptor.remove_offsets(RAPTOR_INNATE_SOURCE, FALSE)
 	raptor.held_w_class = WEIGHT_CLASS_BULKY
 	. = ..()
 	// Non-shorties cannot ride these, so we gotta keep em tameable through food
@@ -165,8 +162,6 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	var/mutable_appearance/wings_underlay = null
 	/// Our drift force
 	var/drift_force = 2 NEWTONS
-	/// Our stabilizing force
-	var/stabilizer_force = 4.5 NEWTONS
 
 /obj/item/mob_holder/purple_raptor/Initialize(mapload, mob/living/held_mob, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags)
 	. = ..()
@@ -193,12 +188,11 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 		/datum/component/jetpack, \
 		TRUE, \
 		drift_force, \
-		stabilizer_force, \
 		COMSIG_RAPTOR_WINGS_OPENED, \
 		COMSIG_RAPTOR_WINGS_CLOSED, \
 		null, \
-		CALLBACK(src, PROC_REF(can_fly)), \
-		CALLBACK(src, PROC_REF(can_fly)), \
+		CALLBACK(src, PROC_REF(check_flight)), \
+		CALLBACK(src, PROC_REF(check_flight)), \
 	)
 
 /obj/item/mob_holder/purple_raptor/Destroy()
@@ -212,9 +206,11 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	if ((slot & ITEM_SLOT_BACK) && ishuman(user) && flight_action)
 		flight_action.Grant(held_mob)
 		flight_action.GiveAction(user)
+		RegisterSignal(user, COMSIG_MOVABLE_CHASM_DROPPED, PROC_REF(chasm_react))
 
 /obj/item/mob_holder/purple_raptor/dropped(mob/user, silent)
 	. = ..()
+	UnregisterSignal(user, COMSIG_MOVABLE_CHASM_DROPPED)
 	if (wings_open)
 		toggle_wings(user)
 	// Removed in Destroy()
@@ -232,12 +228,9 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 		source.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
 		source.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor/slow)
 
-/obj/item/mob_holder/purple_raptor/proc/can_fly()
+/obj/item/mob_holder/purple_raptor/proc/can_fly(silent = FALSE)
 	var/mob/living/carbon/human/user = loc
 	if (!istype(user) || user.stat || user.body_position == LYING_DOWN || isnull(user.client))
-		return FALSE
-
-	if (user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS))
 		return FALSE
 
 	var/turf/location = get_turf(user)
@@ -248,8 +241,12 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	if (environment?.return_pressure() >= HAZARD_LOW_PRESSURE + 10)
 		return TRUE
 
-	to_chat(user, span_warning("The atmosphere is too thin for you to fly!"))
+	if (!silent)
+		to_chat(user, span_warning("The atmosphere is too thin for you to fly!"))
 	return FALSE
+
+/obj/item/mob_holder/purple_raptor/proc/check_flight()
+	return can_fly(silent = TRUE)
 
 /obj/item/mob_holder/purple_raptor/proc/toggle_wings(mob/living/carbon/human/user)
 	// In case something goes wrong
@@ -302,8 +299,18 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	UnregisterSignal(user, list(COMSIG_HUMAN_HEIGHT_UPDATED, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)))
 	SEND_SIGNAL(src, COMSIG_RAPTOR_WINGS_CLOSED, user)
 
+/obj/item/mob_holder/purple_raptor/proc/chasm_react(mob/living/user, turf/chasm)
+	SIGNAL_HANDLER
+
+	if (wings_open || !can_fly())
+		return
+
+	toggle_wings(user)
+	if (wings_open)
+		return COMPONENT_NO_CHASM_DROP
+
 /obj/item/mob_holder/purple_raptor/process(seconds_per_tick)
-	if (!can_fly())
+	if (!can_fly(silent = TRUE))
 		toggle_wings(loc)
 		return PROCESS_KILL
 
@@ -319,12 +326,17 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_IMMOBILE | AB_CHECK_INCAPACITATED
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "raptor_wings"
+	background_icon_state = "bg_default"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/innate/raptor_wings/Activate()
 	var/obj/item/mob_holder/purple_raptor/holder = target
 	var/mob/living/carbon/human/user = holder.loc
-	if (istype(user) && user.get_item_by_slot(ITEM_SLOT_BACK) == holder)
-		holder.toggle_wings(user)
+	if (!istype(user) || user.get_item_by_slot(ITEM_SLOT_BACK) != holder)
+		return
+	holder.toggle_wings(user)
+	background_icon_state = "bg_default[holder.wings_open ? "_on" : ""]"
+	build_all_button_icons()
 
 /datum/raptor_color/green
 	color = "green"
@@ -404,6 +416,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 /datum/raptor_color/blue
 	color = "blue"
 	description = "Covered in tough, lava-resistant feathers with thick insulated fur underneath, this breed is capable of marching through lava and fire alike."
+	health = 300
 	guaranteed_crossbreeds = list(
 		/datum/raptor_color/red = /datum/raptor_color/purple,
 		/datum/raptor_color/white = /datum/raptor_color/green,

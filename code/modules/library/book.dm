@@ -86,7 +86,6 @@
 
 /// Proc that handles sending the book information to the user, as well as some housekeeping stuff.
 /obj/item/book/proc/display_content(mob/living/user)
-	credit_book_to_reader(user)
 	ui_interact(user)
 
 /// Proc that checks if the user is capable of reading the book, for UI interactions and otherwise. Returns TRUE if they can, FALSE if they can't.
@@ -125,6 +124,7 @@
 		return
 
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
+	credit_book_to_reader(user)
 	display_content(user)
 
 /obj/item/book/proc/is_carving_tool(obj/item/tool)
@@ -255,3 +255,204 @@
 /// Generates a random icon state for the book
 /obj/item/book/proc/gen_random_icon_state()
 	icon_state = "book[rand(1, maximum_book_state)]"
+
+/// Base type for a book that opens a bespoke TUGI
+/// Does not inherit from /obj/item/book because the only similarities between the two are the concept of "being a book"
+/// When designing a UI book you can send a "play_flip_sound" act to play the page turn sound
+/obj/item/tgui_book
+	name = "book"
+	desc = "Must be one of those new fangled electronic books."
+	icon = 'icons/obj/service/library.dmi'
+	icon_state ="book"
+	worn_icon_state = "book"
+	throw_speed = 1
+	throw_range = 5
+	w_class = WEIGHT_CLASS_NORMAL  //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	attack_verb_continuous = list("bashes", "whacks", "educates")
+	attack_verb_simple = list("bash", "whack", "educate")
+	resistance_flags = FLAMMABLE
+	drop_sound = 'sound/items/handling/book_drop.ogg'
+	pickup_sound = 'sound/items/handling/book_pickup.ogg'
+	/// The name of the UI to open
+	var/ui_name
+
+/obj/item/tgui_book/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, ui_name)
+		ui.open()
+		playsound(src, SFX_PAGE_TURN, 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/obj/item/tgui_book/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	if(action == "play_flip_sound")
+		playsound(src, SFX_PAGE_TURN, 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/obj/item/tgui_book/manual/ui_state(mob/user)
+	return GLOB.book_state
+
+// For guides
+/obj/item/tgui_book/manual
+	abstract_type = /obj/item/tgui_book/manual
+
+/// Asserts a field is present in a list, stack traces if not
+#define ASSERT_DATA(data_list, data_field) \
+	if(!data_list[data_field]) { stack_trace("[type] - [data_list["id"]] lacks [data_field] information!"); }
+
+/obj/item/tgui_book/manual/dsm
+	name = "\improper SDSM-35" // 35 was picked based on the current edition plus the average years between edition divided by 500
+	desc = "The Space Diagnostic and Statistical Manual of Mental Disorders, \
+		a comprehensive book on all known mental disorders. \
+		On its 35th edition - though it's due for an update..."
+	icon_state = "book8"
+	ui_name = "DSMBook"
+
+/obj/item/tgui_book/manual/dsm/ui_static_data(mob/user)
+	var/list/data = list()
+
+	var/static/list/trauma_info
+	if(!trauma_info)
+		trauma_info = list()
+
+		var/list/blacklist = list()
+		// phobias need some special handing thanks to all their funky types
+		blacklist += typesof(/datum/brain_trauma/mild/phobia)
+
+		for(var/datum/brain_trauma/trauma_type as anything in valid_subtypesof(/datum/brain_trauma) - blacklist)
+			if(!trauma_type::known_trauma)
+				continue
+
+			var/list/trauma_data = list()
+			trauma_data["full_name"] = trauma_type::name
+			trauma_data["scan_name"] = trauma_type::scan_desc
+			trauma_data["desc"] = trauma_type::desc
+			trauma_data["symptoms"] = trauma_type::symptoms
+			trauma_data["id"] = trauma_type
+			trauma_info += list(trauma_data)
+
+		for(var/datum/quirk/quirk_type as anything in valid_subtypesof(/datum/quirk))
+			if(!(quirk_type::quirk_flags & QUIRK_TRAUMALIKE))
+				continue
+
+			var/list/trauma_data = list()
+			trauma_data["full_name"] = quirk_type::name
+			trauma_data["scan_name"] = LOWER_TEXT(quirk_type::name)
+			trauma_data["desc"] = quirk_type::medical_record_text
+			trauma_data["symptoms"] = quirk_type::medical_symptom_text
+			trauma_data["id"] = quirk_type
+			trauma_info += list(trauma_data)
+
+		for(var/datum/addiction/addiction_type as anything in GLOB.addictions)
+			var/list/trauma_data = list()
+			trauma_data["full_name"] = "[capitalize(addiction_type::name)] Addiction"
+			trauma_data["scan_name"] = "[addiction_type::name] addiction"
+			trauma_data["desc"] = addiction_type::description
+			trauma_data["symptoms"] = addiction_type::symptoms
+			trauma_data["id"] = addiction_type
+			trauma_info += list(trauma_data)
+
+		for(var/phobia_type, phobia_name in GLOB.phobia_types)
+			var/list/trauma_data = list()
+			trauma_data["full_name"] = phobia_name
+			trauma_data["scan_name"] = "[/datum/brain_trauma/mild/phobia::scan_desc] of [phobia_type]"
+			trauma_data["desc"] = "Patient is irrationally afraid of [phobia_type]."
+			trauma_data["symptoms"] = /datum/brain_trauma/mild/phobia::symptoms
+			trauma_data["id"] = "[/datum/brain_trauma/mild/phobia]/[phobia_type]"
+			trauma_info += list(trauma_data)
+
+		// validate
+		for(var/list/trauma_data as anything in trauma_info)
+			// these are asserted to be present, no matter what
+			ASSERT_DATA(trauma_data, "full_name")
+			ASSERT_DATA(trauma_data, "scan_name")
+			ASSERT_DATA(trauma_data, "id")
+			// these start as null, so there is a chance they are missing
+			if(!trauma_data["desc"])
+				trauma_data["desc"] = "No description recorded - this is an error. Report this lack of research."
+				stack_trace("[type] - [trauma_data["id"]] lacks a description!")
+			if(!trauma_data["symptoms"])
+				trauma_data["symptoms"] = "No symptoms recorded - this is an error. Report this lack of research."
+				stack_trace("[type] - [trauma_data["id"]] lacks symptom information!")
+
+	data["traumas"] = trauma_info
+	return data
+
+/obj/item/tgui_book/manual/idc
+	name = "\improper IDC-27" // 27 was picked based on the current edition plus the average years between edition divided by 500
+	desc = "The Interplanetary Classification of Diseases, \
+		a comprehensive book on all known diseases and ailments. \
+		On its 27th edition - though it's due for an update..."
+	icon_state = "book7"
+	ui_name = "IDCBook"
+
+/obj/item/tgui_book/manual/idc/ui_static_data(mob/user)
+	var/list/data = list()
+
+	var/static/list/disease_info
+	if(!disease_info)
+		disease_info = list()
+
+		for(var/datum/disease/disease_type as anything in valid_subtypesof(/datum/disease))
+			if(disease_type::visibility_flags & HIDDEN_BOOK)
+				continue
+
+			var/list/disease_data = list()
+			disease_data["form"] = disease_type::form
+			disease_data["agent"] = disease_type::agent
+			disease_data["name"] = disease_type::name
+			disease_data["desc"] = disease_type::desc
+			disease_data["illness"] = "N/A"
+			disease_data["spread_by"] = disease_type::spread_text || get_disease_spread_text(disease_type::spread_flags)
+			disease_data["cured_by"] = disease_type::cure_text
+			disease_data["id"] = disease_type
+			disease_info += list(disease_data)
+
+		for(var/datum/symptom/symptom_type as anything in valid_subtypesof(/datum/symptom))
+			var/list/symptom_data = list()
+			symptom_data["form"] = "Symptom"
+			symptom_data["agent"] = "N/A"
+			symptom_data["name"] = symptom_type::name
+			symptom_data["desc"] = symptom_type::desc
+			symptom_data["illness"] = symptom_type::illness
+			symptom_data["spread_by"] = "N/A"
+			symptom_data["cured_by"] = symptom_type::symptom_cure::name
+			symptom_data["id"] = symptom_type
+			disease_info += list(symptom_data)
+
+		var/list/advanced_virus_info = list(
+			"form" = "Virus",
+			"agent" = "Microbes",
+			"name" = "Advanced Disease",
+			"desc" = "A catch-all category for diseases that are too complex to document in their entirety. \
+				The Virology department is known for bio-engineering these diseases, as such their danger can vary wildly. \
+				These diseases are often a combination of various symptoms, each cataloged in this book individually.",
+			"illness" = "N/A",
+			"spread_by" = "Varies by symptom combination",
+			"cured_by" = "Varies by symptom combination",
+			"id" = /datum/disease/advance,
+		)
+		disease_info += list(advanced_virus_info)
+
+		// validate
+		for(var/list/disease_data as anything in disease_info)
+			// these are asserted to be present, no matter what
+			ASSERT_DATA(disease_data, "form")
+			ASSERT_DATA(disease_data, "agent")
+			ASSERT_DATA(disease_data, "name")
+			ASSERT_DATA(disease_data, "spread_by")
+			ASSERT_DATA(disease_data, "illness")
+			ASSERT_DATA(disease_data, "id")
+			// these start as null, so there is a chance they are missing
+			if(!disease_data["desc"])
+				disease_data["desc"] = "No description recorded - this is an error. Report this lack of research."
+				stack_trace("[type] - [disease_data["id"]] lacks a description!")
+			if(!disease_data["cured_by"] && !ispath(disease_data["id"], /datum/symptom))
+				disease_data["cured_by"] = "Unknown"
+				stack_trace("[type] - [disease_data["id"]] lacks cure information!")
+
+	data["diseases"] = disease_info
+	return data
+
+#undef ASSERT_DATA

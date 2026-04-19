@@ -95,13 +95,22 @@
 /mob/living/basic/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SEE_BLESSED_TILES), INNATE_TRAIT)
+	add_traits(list(TRAIT_COMBAT_MODE_LOCK, TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SEE_BLESSED_TILES, TRAIT_IGNORE_ELEVATION), INNATE_TRAIT)
 
 	grant_actions_by_list(abilities)
 
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignal(src, COMSIG_REFLECTION_UPDATED, PROC_REF(on_reflect))
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_REVENANT_REVEALED),
+		SIGNAL_REMOVETRAIT(TRAIT_REVENANT_REVEALED),
+		SIGNAL_ADDTRAIT(TRAIT_REVENANT_INHIBITED),
+		SIGNAL_REMOVETRAIT(TRAIT_REVENANT_INHIBITED),
+		SIGNAL_ADDTRAIT(TRAIT_NO_TRANSFORM),
+		SIGNAL_REMOVETRAIT(TRAIT_NO_TRANSFORM),
+	), PROC_REF(update_revenant_appearance))
 	name = generate_random_mob_name()
 
 	GLOB.revenant_relay_mobs |= src
@@ -131,7 +140,7 @@
 	return TRUE
 
 /// Signal Handler Injection to handle Life() stuff for revenants
-/mob/living/basic/revenant/proc/on_life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/revenant/proc/on_life(seconds_per_tick = SSMOBS_DT)
 	SIGNAL_HANDLER
 
 	if(dormant)
@@ -146,8 +155,12 @@
 		essence = min(essence + (essence_regen_amount * change_in_time), max_essence)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 
-	update_appearance(UPDATE_ICON)
 	update_health_hud()
+
+/mob/living/basic/revenant/proc/update_revenant_appearance()
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_ICON)
+	update_mob_action_buttons()
 
 /mob/living/basic/revenant/AltClickOn(atom/target)
 	if(CAN_I_SEE(target))
@@ -169,7 +182,7 @@
 		essencecolor = "#9A5ACB" //oh boy you've got a lot of essence
 	else if(essence <= 0)
 		essencecolor = "#1D2953" //oh jeez you're dying
-	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
+	hud_used.screen_objects[HUD_MOB_HEALTH]?.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
 
 /mob/living/basic/revenant/say(
 	message,
@@ -278,7 +291,7 @@
 /mob/living/basic/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/basic/revenant/dust(just_ash, drop_items, force)
+/mob/living/basic/revenant/dust(just_ash, drop_items, give_moodlet, force)
 	death()
 
 /mob/living/basic/revenant/gib()
@@ -309,6 +322,7 @@
 		return
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REVENANT_STUNNED_TRAIT)
 	dormant = TRUE
+	update_mob_action_buttons()
 
 	visible_message(
 		span_warning("[src] lets out a waning screech as violet mist swirls around its dissolving body!"),
@@ -398,28 +412,39 @@
 
 	return TRUE
 
-/mob/living/basic/revenant/proc/cast_check(essence_cost)
+/mob/living/basic/revenant/proc/cast_check(essence_cost, deduct_essence = TRUE, silent = FALSE)
 	if(QDELETED(src))
 		return
 
 	var/turf/current = get_turf(src)
 
 	if(isclosedturf(current))
-		to_chat(src, span_revenwarning("You cannot use abilities from inside of a wall."))
+		if(!silent)
+			to_chat(src, span_revenwarning("You cannot use abilities from inside of a wall."))
 		return FALSE
 
 	for(var/obj/thing in current)
 		if(!thing.density || thing.CanPass(src, get_dir(current, src)))
 			continue
-		to_chat(src, span_revenwarning("You cannot use abilities inside of a dense object."))
+		if(!silent)
+			to_chat(src, span_revenwarning("You cannot use abilities inside of a dense object."))
 		return FALSE
+
+	if(dormant)
+		if(!silent)
+			to_chat(src, span_revenwarning("Your powers lie dormant right now!"))
+		return SPELL_CANCEL_CAST
 
 	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED))
-		to_chat(src, span_revenwarning("Your powers have been suppressed by a nullifying energy!"))
+		if(!silent)
+			to_chat(src, span_revenwarning("Your powers have been suppressed by a nullifying energy!"))
 		return FALSE
 
-	if(!change_essence_amount(essence_cost, TRUE))
-		to_chat(src, span_revenwarning("You lack the essence to use that ability."))
+	essence_cost = abs(essence_cost) * -1
+	var/has_essence = deduct_essence ? change_essence_amount(essence_cost, silent = TRUE) : (essence + essence_cost >= 0)
+	if(!has_essence)
+		if(!silent)
+			to_chat(src, span_revenwarning("You lack the essence to use that ability!"))
 		return FALSE
 
 	return TRUE
@@ -443,6 +468,7 @@
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	RemoveInvisibility(type)
 	alpha = 255
+	update_mob_action_buttons()
 
 /mob/living/basic/revenant/proc/change_essence_amount(essence_to_change_by, silent = FALSE, source = null)
 	if(QDELETED(src))
@@ -465,5 +491,32 @@
 		else
 			to_chat(src, span_revenminor("Lost [essence_to_change_by]E [source ? "from [source]":""]."))
 	return TRUE
+
+/mob/living/basic/revenant/mob_negates_gravity()
+	return TRUE // i don't gotta explain shit
+
+/mob/living/basic/revenant/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, essence) || vname == NAMEOF(src, max_essence) || vname == NAMEOF(src, essence_excess))
+		update_health_hud()
+		update_mob_action_buttons()
+
+/mob/living/basic/revenant/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	update_mob_action_buttons()
+
+/mob/living/basic/revenant/proc/on_reflect(datum/source, atom/movable/reflecting_in, obj/effect/abstract/reflection)
+	SIGNAL_HANDLER
+	// powers are inhibited and we're not revealed so we can't project a reflect
+	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) && !HAS_TRAIT(src, TRAIT_REVENANT_REVEALED))
+		return
+
+	// otherwise revenants are always visible in reflections even if otherwise invisible
+	reflection.clear_filters()
+	reflection.SetInvisibility(0)
+
+	// but if we're (actually) invisible we look all wibbly and ghostly (unless the mirror is magic)
+	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) && !istype(reflecting_in, /obj/structure/mirror/magic))
+		apply_wibbly_filters(reflection)
 
 #undef REVENANT_STUNNED_TRAIT

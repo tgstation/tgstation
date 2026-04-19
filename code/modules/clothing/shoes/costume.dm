@@ -7,6 +7,7 @@
 	equip_delay_other = 10 SECONDS
 	armor_type = /datum/armor/shoes_roman
 	fastening_type = SHOES_STRAPS
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
@@ -35,17 +36,24 @@
 	icon_state = "bsing"
 	equip_delay_other = 5 SECONDS
 
+/obj/item/clothing/shoes/singerr
+	name = "red performer's boots"
+	desc = "These boots were made for dancing."
+	icon_state = "rsing"
+	equip_delay_other = 5 SECONDS
+
 /obj/item/clothing/shoes/bronze
 	name = "bronze boots"
 	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "clockwork_treads"
 	fastening_type = SHOES_SLIPON
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/effects/magic/clockwork/fellowship_armory.ogg' = 1), 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	AddComponent(/datum/component/adjust_fishing_difficulty, 4)
+	AddElement(/datum/element/adjust_fishing_difficulty, 4)
 
 /obj/item/clothing/shoes/cookflops
 	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"
@@ -128,7 +136,7 @@
 
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 	LoadComponent(/datum/component/squeak, list('sound/effects/quack.ogg' = 1), 50, falloff_exponent = 20)
-	AddComponent(/datum/component/adjust_fishing_difficulty, -7) //deploy tactical duckling lure
+	AddElement(/datum/element/adjust_fishing_difficulty, -7) //deploy tactical duckling lure
 
 /obj/item/clothing/shoes/ducky_shoes/equipped(mob/living/user, slot)
 	. = ..()

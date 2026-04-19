@@ -3,6 +3,7 @@
 	desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
 	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "qpad-idle"
+	base_icon_state = "qpad"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/quantumpad
@@ -23,9 +24,7 @@
 	if(map_pad_id)
 		mapped_quantum_pads[map_pad_id] = src
 
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/quantumpad,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/quantumpad), only_root_path = TRUE))
 
 /obj/machinery/quantumpad/Destroy()
 	mapped_quantum_pads -= map_pad_id
@@ -71,25 +70,31 @@
 	balloon_alert(user, "no quantum pad data found!")
 	return NONE
 
-/obj/machinery/quantumpad/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", weapon))
-		return
+/obj/machinery/quantumpad/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-	if(istype(weapon, /obj/item/quantum_keycard))
-		var/obj/item/quantum_keycard/K = weapon
-		if(K.qpad)
-			to_chat(user, span_notice("You insert [K] into [src]'s card slot, activating it."))
-			interact(user, K.qpad)
-		else
-			to_chat(user, span_notice("You insert [K] into [src]'s card slot, initiating the link procedure."))
-			if(do_after(user, 4 SECONDS, target = src))
-				to_chat(user, span_notice("You complete the link between [K] and [src]."))
-				K.set_pad(src)
+/obj/machinery/quantumpad/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
-	if(default_deconstruction_crowbar(weapon))
-		return
+/obj/machinery/quantumpad/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/quantum_keycard))
+		var/obj/item/quantum_keycard/card = tool
+		if(card.qpad)
+			to_chat(user, span_notice("You insert [card] into [src]'s card slot, activating it."))
+			interact(user, card.qpad)
+			return ITEM_INTERACT_SUCCESS
+		to_chat(user, span_notice("You insert [card] into [src]'s card slot, initiating the link procedure."))
+		if(!do_after(user, 4 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You complete the link between [card] and [src]."))
+		card.set_pad(src)
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
+
+/obj/machinery/quantumpad/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-idle-open" : "[base_icon_state]-idle"
 
 /obj/machinery/quantumpad/interact(mob/user, obj/machinery/quantumpad/target_pad = linked_pad)
 	if(QDELETED(target_pad))
@@ -118,9 +123,7 @@
 	doteleport(user, target_pad)
 
 /obj/machinery/quantumpad/proc/sparks()
-	var/datum/effect_system/spark_spread/quantum/s = new /datum/effect_system/spark_spread/quantum
-	s.set_up(5, 1, get_turf(src))
-	s.start()
+	do_sparks(5, TRUE, src, spark_type = /datum/effect_system/basic/spark_spread/quantum)
 
 /obj/machinery/quantumpad/attack_ghost(mob/dead/observer/ghost)
 	. = ..()
@@ -157,9 +160,9 @@
 	sparks()
 	target_pad.sparks()
 
-	flick("qpad-beam", src)
+	flick("[base_icon_state]-beam", src)
 	playsound(get_turf(src), 'sound/items/weapons/emitter2.ogg', 25, TRUE)
-	flick("qpad-beam", target_pad)
+	flick("[target_pad.base_icon_state]-beam", target_pad)
 	playsound(get_turf(target_pad), 'sound/items/weapons/emitter2.ogg', 25, TRUE)
 	for(var/atom/movable/ROI in get_turf(src))
 		if(QDELETED(ROI))

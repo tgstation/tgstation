@@ -1,7 +1,6 @@
 /datum/job/clown
 	title = JOB_CLOWN
 	description = "Entertain the crew, make bad jokes, go on a holy quest to find bananium, HONK!"
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -102,4 +101,4 @@
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
 	H.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 	ADD_TRAIT(H, TRAIT_CLOWN_ENJOYER, INNATE_TRAIT)
-	H.faction |= FACTION_CLOWN
+	H.add_faction(FACTION_CLOWN)

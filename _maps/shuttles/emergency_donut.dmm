@@ -245,10 +245,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"bf" = (
-/obj/machinery/stasis,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "bg" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -322,27 +318,17 @@
 /obj/item/clothing/mask/surgical,
 /obj/structure/table/optable,
 /obj/machinery/light/directional/north,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "gT" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"im" = (
-/obj/machinery/stasis{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "ls" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"mo" = (
-/obj/structure/table,
-/obj/item/defibrillator/loaded,
-/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "sE" = (
 /obj/structure/chair/comfy/shuttle,
@@ -384,6 +370,13 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"DV" = (
+/obj/machinery/stasis{
+	dir = 4
+	},
+/obj/machinery/vitals_reader/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "EJ" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -392,7 +385,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "IV" = (
-/obj/machinery/stasis,
+/obj/structure/table,
+/obj/item/defibrillator/loaded,
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -472,6 +466,11 @@
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"UL" = (
+/obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/south,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "YK" = (
 /obj/machinery/light/directional/west,
@@ -615,7 +614,7 @@ am
 am
 am
 aH
-ac
+ab
 ac
 ab
 ab
@@ -723,9 +722,9 @@ wN
 sE
 aZ
 ac
-bf
-bg
 bo
+bg
+UL
 ab
 TC
 bt
@@ -759,9 +758,9 @@ wN
 sE
 aZ
 ac
-im
-bg
 bp
+bg
+DV
 ab
 TC
 bt
@@ -833,7 +832,7 @@ aY
 ab
 IV
 bk
-mo
+UL
 ab
 TC
 bt

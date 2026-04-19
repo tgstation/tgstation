@@ -415,8 +415,11 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "by" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/structure/sign/warning/secure_area/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/sbc_starfury)
 "bB" = (
 /obj/effect/turf_decal/tile/red,
@@ -473,6 +476,13 @@
 "bM" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
+/area/shuttle/sbc_starfury)
+"bQ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/structure/sign/warning/secure_area/directional/west,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/sbc_starfury)
 "bR" = (
 /obj/effect/turf_decal/tile/red,
@@ -2663,8 +2673,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "ja" = (
-/obj/structure/sign/warning/radiation,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/obj/structure/sign/warning/radiation/directional/east,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "jb" = (
 /obj/effect/turf_decal/stripes/line{
@@ -3844,6 +3858,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "rr" = (
@@ -4129,6 +4144,7 @@
 	dir = 5
 	},
 /obj/machinery/light/directional/east,
+/obj/structure/sign/warning/secure_area/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_starfury)
 "wo" = (
@@ -4774,6 +4790,14 @@
 	temperature = 80
 	},
 /area/shuttle/sbc_starfury)
+"HC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/obj/structure/sign/warning/radiation/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/sbc_starfury)
 "HF" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /obj/machinery/light/small/directional/west,
@@ -5106,6 +5130,13 @@
 /obj/structure/sign/warning/electric_shock/directional/south,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
+/area/shuttle/sbc_starfury)
+"Or" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/sign/warning/radiation/directional/east,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "Ou" = (
 /obj/structure/lattice,
@@ -5450,6 +5481,13 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
+/area/shuttle/sbc_starfury)
+"UG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/sign/warning/radiation/directional/west,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "UH" = (
 /obj/effect/turf_decal/stripes/line{
@@ -6625,7 +6663,7 @@ ad
 ad
 ad
 ae
-by
+ae
 Sb
 Yg
 ae
@@ -6693,7 +6731,7 @@ aU
 bj
 eJ
 ev
-PF
+bQ
 ay
 vk
 ae
@@ -6732,12 +6770,12 @@ ay
 zm
 iD
 iQ
-iZ
+Or
 kt
 MR
 kt
 kg
-kg
+ja
 kt
 kR
 lk
@@ -6800,11 +6838,11 @@ ae
 ae
 ae
 ae
-ja
+ae
 ae
 wd
 jv
-ja
+ae
 ae
 kG
 kU
@@ -7344,11 +7382,11 @@ ae
 xG
 ae
 ae
-ja
+ae
 ae
 jN
 Xg
-ja
+ae
 ae
 xH
 kU
@@ -7373,7 +7411,7 @@ be
 bt
 FC
 eM
-NX
+by
 bZ
 cV
 ae
@@ -7412,11 +7450,11 @@ gO
 Rv
 iI
 kb
-jb
+UG
 kH
 yM
 Lb
-kj
+HC
 kj
 kH
 la
@@ -7441,7 +7479,7 @@ ad
 ad
 ad
 ae
-by
+ae
 po
 ES
 ae
@@ -7608,12 +7646,12 @@ nD
 Qw
 ae
 ae
-by
+ae
 ae
 ZK
 hX
 ae
-by
+ae
 ae
 ae
 xG

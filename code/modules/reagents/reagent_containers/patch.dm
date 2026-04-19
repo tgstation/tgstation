@@ -90,7 +90,7 @@
 	. = ..()
 	if (!.)
 		return
-	var/obj/item/bodypart/affecting = victim.get_bodypart(hit_zone) || victim.bodyparts[1]
+	var/obj/item/bodypart/affecting = victim.get_bodypart(hit_zone) || victim.get_bodypart()
 	if (!IS_ORGANIC_LIMB(affecting))
 		return FALSE
 	return TRUE
@@ -208,7 +208,7 @@
 		return
 	// Check mob damage for synthflesh unhusking
 	var/mob/living/carbon/carbies = eater
-	if(HAS_TRAIT_FROM(carbies, TRAIT_HUSK, BURN) && carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD * 2.5)
+	if(HAS_TRAIT_FROM(carbies, TRAIT_HUSK, BURN) && carbies.get_fire_loss() > UNHUSK_DAMAGE_THRESHOLD * 2.5)
 		// give them a warning if the mob is a husk but synthflesh won't unhusk yet
 		carbies.visible_message(span_boldwarning("[carbies]'s burns need to be repaired first before synthflesh will unhusk it!"))
 
