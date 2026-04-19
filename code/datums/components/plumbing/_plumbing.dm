@@ -192,6 +192,7 @@
 	var/duct_y = offset - parent_movable.pixel_y - parent_movable.pixel_z
 	var/duct_layer = PLUMBING_PIPE_VISIBILE_LAYER + ducting_layer * 0.0003
 
+	
 	for(var/direction in GLOB.cardinals)
 		var/color
 		if(direction & initial(demand_connects))
