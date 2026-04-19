@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "changing your gender choice in character prefs no longer modifies your physique preference"
