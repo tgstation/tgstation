@@ -1,0 +1,9 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Adds 16 more wizard wands to the game, which wizards can buy cheaply but randomly, or are available via Summon Magic."
+  - rscadd: "If a wizard buys more than one set of wands they will receive a \"Wand Bandolier\" holster which fits in the backpack or, if worn in the suit slot, will automatically exchange an expended wand for a full one."
+  - balance: "Staffs (and wands) of animation that are animated will try to animate other objects instead of firing at living mobs, which are already animated."
+  - balance: "Animating a wand of nothing will turn it into a wand of animation (and animate it)."
+  - balance: "The staff of chaos can now do more things."
+  - balance: "Magicarp now additionally come in Babbling, Frigid, Quantum, and Weightless varieties. Collect them all!"
