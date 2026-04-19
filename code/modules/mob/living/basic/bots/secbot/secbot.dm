@@ -243,7 +243,7 @@
 		var/area/location = get_area(src)
 		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag [RUNECHAT_BOLD("[current_target]")] in [location].", radio_channel)
 	payment_check(current_target)
-	mode = BOT_PREP_ARREST
+	update_bot_mode(new_mode = BOT_PREP_ARREST)
 
 /mob/living/basic/bot/secbot/explode()
 	var/atom/drop_location = drop_location()

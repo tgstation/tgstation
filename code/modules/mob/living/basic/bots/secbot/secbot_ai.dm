@@ -55,6 +55,8 @@
 		'sound/mobs/non-humanoids/beepsky/justice.ogg',
 		'sound/mobs/non-humanoids/beepsky/freeze.ogg',
 	), 50, FALSE)
+	var/mob/living/basic/bot/secbot/my_bot = pawn
+	my_bot.update_bot_mode(new_mode = BOT_HUNT)
 
 /datum/ai_controller/basic_controller/bot/secbot/proc/on_clear_target()
 	SIGNAL_HANDLER
