@@ -378,3 +378,9 @@
   - balance: Removes the minimum APC requirement for robofactories
   lelandkemble:
   - bugfix: stimulants properly regenerate stamina in otherwise healthy people
+2026-04-19:
+  Melbert:
+  - bugfix: Removing brain updates the med hud
+  vinylspiders:
+  - bugfix: changing your gender choice in character prefs no longer modifies your
+      physique preference
