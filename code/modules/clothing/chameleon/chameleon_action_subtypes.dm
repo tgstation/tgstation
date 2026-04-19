@@ -69,6 +69,14 @@
 	add_chameleon_items(/obj/item/cigarette)
 	add_chameleon_items(/obj/item/vape)
 
+/datum/action/item_action/chameleon/change/mask/update_item(obj/item/picked_item)
+	..()
+	var/obj/item/clothing/mask/mask_picked = picked_item
+	var/obj/item/clothing/mask/mask_used = target
+	if(istype(mask_picked))
+		mask_used.voice_filter = initial(mask_picked.voice_filter)
+		mask_used.use_radio_beeps_tts = initial(mask_picked.use_radio_beeps_tts)
+
 /datum/action/item_action/chameleon/change/hat
 	chameleon_type = /obj/item/clothing/head
 	chameleon_name = "Hat"
