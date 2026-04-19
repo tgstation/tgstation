@@ -49,13 +49,12 @@
 	SIGNAL_HANDLER
 	var/datum/action/cooldown/bot_announcement/announcement = blackboard[BB_ANNOUNCE_ABILITY]
 	var/threat_level = 5 || blackboard[BB_CURRENT_CRIMINAL_ASSESSMENT]
-	var/static/list/possible_sounds = list(
+	INVOKE_ASYNC(announcement, TYPE_PROC_REF(/datum/action/cooldown/bot_announcement, announce), "Level [threat_level] infraction alert!")
+	playsound(pawn, pick(
 		'sound/mobs/non-humanoids/beepsky/criminal.ogg',
 		'sound/mobs/non-humanoids/beepsky/justice.ogg',
 		'sound/mobs/non-humanoids/beepsky/freeze.ogg',
-	)
-	INVOKE_ASYNC(announcement, TYPE_PROC_REF(/datum/action/cooldown/bot_announcement, announce), "Level [threat_level] infraction alert!")
-	playsound(pawn, pick(possible_sounds), 50, FALSE)
+	), 50, FALSE)
 
 /datum/ai_controller/basic_controller/bot/secbot/proc/on_clear_target()
 	SIGNAL_HANDLER
