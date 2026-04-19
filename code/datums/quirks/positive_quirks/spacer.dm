@@ -1,5 +1,6 @@
 #define LAST_STATE_PLANET "on_planet"
 #define LAST_STATE_SPACE "in_space"
+#define LAST_STATE_NOGRAV "in_nograv"
 
 /datum/quirk/spacer_born
 	name = "Spacer"
@@ -26,7 +27,7 @@
 	var/recover_period = 1 MINUTES
 	/// TimerID for time spend in space
 	VAR_FINAL/recovering_timer
-	/// Determines the last state we were in ([LAST_STATE_PLANET] or [LAST_STATE_SPACE])
+	/// Determines the last state we were in ([LAST_STATE_PLANET], [LAST_STATE_SPACE], or [LAST_STATE_NOGRAV])
 	VAR_FINAL/last_state
 
 /datum/quirk/spacer_born/add(client/client_source)
@@ -104,8 +105,11 @@
  * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
  */
 /datum/quirk/spacer_born/proc/update_effects(mob/living/spacer, skip_timers = FALSE)
-	if(is_on_a_planet(spacer) && spacer.has_gravity())
-		on_planet(spacer, skip_timers)
+	if(is_on_a_planet(spacer))
+		if(spacer.has_gravity())
+			on_planet(spacer, skip_timers)
+		else
+			has_nograv(spacer, skip_timers)
 	else
 		in_space(spacer, skip_timers)
 
@@ -176,9 +180,10 @@
 		deltimer(planetside_timer)
 		planetside_timer = null
 
+	var/was_nograv = last_state == LAST_STATE_NOGRAV
 	last_state = LAST_STATE_SPACE
 
-	if(skip_timers)
+	if(skip_timers || was_nograv)
 		comfortably_in_space(afflicted, TRUE)
 		return
 
@@ -186,7 +191,7 @@
 	afflicted.remove_status_effect(/datum/status_effect/spacer)
 	afflicted.clear_mood_event("spacer")
 	// Does not remove the movement modifier yet, it lingers until you fully recover
-	to_chat(afflicted, span_green("You start feeling better now that you're [is_on_a_planet(afflicted) ? "in zero gravity" : "back in space"]."))
+	to_chat(afflicted, span_green("You start feeling better now that you're back in space."))
 
 /**
  * Ran when living back in space, or just no-grav in general, for a long enough period.
@@ -198,14 +203,40 @@
 	if(QDELETED(src) || QDELETED(afflicted))
 		return
 
-	var/moodlet_picked = is_on_a_planet(afflicted) ? /datum/mood_event/spacer/on_planet/low_grav : /datum/mood_event/spacer/in_space
-
 	recovering_timer = null
 	afflicted.apply_status_effect(/datum/status_effect/spacer/gravity_wellness)
-	afflicted.add_mood_event("spacer", moodlet_picked)
+	afflicted.add_mood_event("spacer", /datum/mood_event/spacer/in_space)
 	afflicted.add_movespeed_modifier(/datum/movespeed_modifier/spacer/in_space)
 	if(!skip_timers)
 		to_chat(afflicted, span_green("You feel better."))
 
+// On a planet but has no gravity
+
+/**
+ * Ran when we are on a planet while having no gravity.
+ *
+ * * afflicted - the mob arriving / same as quirk holder
+ * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
+ */
+/datum/quirk/spacer_born/proc/has_nograv(mob/living/afflicted, skip_timers = FALSE)
+	if(last_state == LAST_STATE_NOGRAV)
+		return
+	if(planetside_timer)
+		deltimer(planetside_timer)
+		planetside_timer = null
+	if(recovering_timer)
+		deltimer(recovering_timer)
+		recovering_timer = null
+
+	var/was_in_space = last_state == LAST_STATE_SPACE
+	last_state = LAST_STATE_NOGRAV
+
+	afflicted.apply_status_effect(/datum/status_effect/spacer/gravity_wellness)
+	afflicted.add_mood_event("spacer", /datum/mood_event/spacer/on_planet/low_grav)
+	afflicted.add_movespeed_modifier(/datum/movespeed_modifier/spacer/in_space)
+	if(!skip_timers && !was_in_space)
+		to_chat(afflicted, span_green("You feel like you're back in space!"))
+
 #undef LAST_STATE_PLANET
 #undef LAST_STATE_SPACE
+#undef LAST_STATE_NOGRAV
