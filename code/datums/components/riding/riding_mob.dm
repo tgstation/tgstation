@@ -757,6 +757,7 @@
 
 /datum/component/riding/creature/ed_bot
 	ai_behavior_while_ridden = RIDING_PAUSE_AI_MOVEMENT //shoot while moving!
+	can_use_abilities = TRUE
 	uses_native_speed = TRUE
 
 /datum/component/riding/creature/ed_bot/get_rider_offsets_and_layers(pass_index, mob/offsetter)

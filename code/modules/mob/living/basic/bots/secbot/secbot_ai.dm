@@ -1,13 +1,13 @@
 /datum/ai_controller/basic_controller/bot/secbot
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/secbot,
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/find_wanted_targets,
+		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/arrest_target,
 		/datum/ai_planning_subtree/find_patrol_beacon,
 	)
@@ -16,6 +16,27 @@
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
+
+/datum/targeting_strategy/basic/secbot/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+	var/datum/ai_controller/basic_controller/bot/my_controller = living_mob.ai_controller
+	if(isnull(my_controller))
+		return FALSE
+	if(!ishuman(the_target) || LAZYACCESS(my_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], the_target))
+		return FALSE
+	var/mob/living/carbon/human/human_target = the_target
+	if(human_target.handcuffed || human_target.stat != CONSCIOUS)
+		return FALSE
+	if(locate(human_target) in my_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
+		return TRUE
+	var/mob/living/basic/bot/secbot/my_bot = living_mob
+	if(human_target.IsParalyzed() && !(my_bot.security_mode_flags & SECBOT_HANDCUFF_TARGET))
+		return FALSE
+	var/assess_flags = my_bot.judgement_criteria()
+	var/assessed_threat = human_target.assess_threat(assess_flags)
+	if(assessed_threat > 0)
+		my_controller.set_blackboard_key(BB_CURRENT_CRIMINAL_ASSESSMENT, assessed_threat)
+	return (assessed_threat > 0)
+
 
 /datum/ai_controller/basic_controller/bot/secbot/TryPossessPawn(atom/new_pawn)
 	. = ..()
@@ -70,38 +91,3 @@
 	if(!isnull(human_target) && human_target.handcuffed)
 		controller.remove_from_blackboard_lazylist_key(BB_BASIC_MOB_RETALIATE_LIST, human_target)
 	return ..()
-
-
-/datum/ai_planning_subtree/find_wanted_targets
-	///what behavior do we use to search for targets?
-	var/datum/ai_behavior/search_behavior =  /datum/ai_behavior/bot_search/wanted_targets
-
-/datum/ai_planning_subtree/find_wanted_targets/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/static/list/can_arrest = typecacheof(list(/mob/living/carbon/human))
-	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
-		controller.queue_behavior(search_behavior, BB_BASIC_MOB_CURRENT_TARGET, can_arrest)
-
-/datum/ai_behavior/bot_search/wanted_targets
-
-/datum/ai_behavior/bot_search/wanted_targets/valid_target(datum/ai_controller/basic_controller/bot/controller, mob/living/my_target)
-	if(!ishuman(my_target))
-		return FALSE
-	var/mob/living/carbon/human/human_target = my_target
-	if(human_target.handcuffed || human_target.stat != CONSCIOUS)
-		return FALSE
-	if(locate(human_target) in controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
-		return TRUE
-	var/bot_flags = retrieve_arrest_flags(controller)
-	if(human_target.IsParalyzed() && !(bot_flags & SECBOT_HANDCUFF_TARGET))
-		return FALSE
-	var/mob/living/basic/bot/secbot/my_bot = controller.pawn
-	var/assess_flags = my_bot.judgement_criteria()
-	var/assessed_threat = human_target.assess_threat(assess_flags)
-	if(assessed_threat > 0)
-		controller.set_blackboard_key(BB_CURRENT_CRIMINAL_ASSESSMENT, assessed_threat)
-	return (assessed_threat > 0)
-
-
-/datum/ai_behavior/bot_search/wanted_targets/proc/retrieve_arrest_flags(datum/ai_controller/basic_controller/bot/controller) //should look into unifiyng honkbots and ed209s under secbot subtypes when the beepsky refactor comes
-	var/mob/living/basic/bot/secbot/parent_bot = controller.pawn
-	return parent_bot.security_mode_flags

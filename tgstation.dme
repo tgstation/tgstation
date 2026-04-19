@@ -5181,6 +5181,7 @@
 #include "code\modules\mob\living\basic\bots\cleanbot\cleanbot_abilities.dm"
 #include "code\modules\mob\living\basic\bots\cleanbot\cleanbot_ai.dm"
 #include "code\modules\mob\living\basic\bots\ed209\ed209.dm"
+#include "code\modules\mob\living\basic\bots\ed209\ed209_ability.dm"
 #include "code\modules\mob\living\basic\bots\ed209\ed209_ai.dm"
 #include "code\modules\mob\living\basic\bots\ed209\ed209_nukie_ai.dm"
 #include "code\modules\mob\living\basic\bots\ed209\ed209_nukie_spawner.dm"

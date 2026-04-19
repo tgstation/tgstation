@@ -3,7 +3,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/find_wanted_targets,
+		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_patrol_beacon,
 	)

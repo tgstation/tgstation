@@ -3,14 +3,14 @@
 
 /datum/ai_controller/basic_controller/bot/ed209
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/secbot,
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/find_wanted_targets,
+		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/ranged_skirmish,
 		/datum/ai_planning_subtree/arrest_target/ed209,
 		/datum/ai_planning_subtree/find_patrol_beacon,
@@ -44,8 +44,8 @@
 		)
 
 	)
-
-	var/list/final_list = HAS_TRAIT(pawn, TRAIT_BOT_SHERRIF) ? lines_to_pick[SPECIAL_LINES] : lines_to_pick[DEFAULT_LINES]
+	var/mob/living/basic/bot/secbot/ed209/my_bot = pawn
+	var/list/final_list = my_bot.sheriffized ? lines_to_pick[SPECIAL_LINES] : lines_to_pick[DEFAULT_LINES]
 	INVOKE_ASYNC(announcement, TYPE_PROC_REF(/datum/action/cooldown/bot_announcement, announce), pick(final_list))
 
 /datum/ai_planning_subtree/arrest_target/ed209

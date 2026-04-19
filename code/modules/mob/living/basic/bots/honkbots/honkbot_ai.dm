@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/bot/honkbot
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/secbot,
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 	)
@@ -8,7 +8,7 @@
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/use_mob_ability/random_honk,
-		/datum/ai_planning_subtree/find_wanted_targets,
+		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/arrest_target,
 		/datum/ai_planning_subtree/slip_victims,
 		/datum/ai_planning_subtree/play_with_clowns,

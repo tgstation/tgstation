@@ -25,15 +25,19 @@
 	var/static/list/sherrif_hats = typecacheof(list(
 		/obj/item/clothing/head/cowboy,
 	))
-	COOLDOWN_DECLARE(shoot_cry)
+	var/datum/action/cooldown/mob_cooldown/ed209_charge/bot_charge
 	///our riding component
 	var/ride_component = /datum/component/riding/creature/ed_bot
+	///have we become a sheriff
+	var/sheriffized = FALSE
+	///timer till we yell out our war cry again
+	COOLDOWN_DECLARE(shoot_cry)
 
 
 /mob/living/basic/bot/secbot/ed209/Initialize(mapload)
 	. = ..()
 	set_weapon()
-
+	bot_charge = new(src)
 	var/static/list/hat_offset = list(2, 0)
 	AddElement(/datum/element/hat_wearer,\
 		offsets = hat_offset,\
@@ -53,8 +57,7 @@
 
 /mob/living/basic/bot/secbot/ed209/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(is_type_in_typecache(arrived, sherrif_hats))
-		ADD_TRAIT(src, TRAIT_BOT_SHERRIF, REF(arrived)) //yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehawwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+	sheriffized = (is_type_in_typecache(arrived, sherrif_hats)) //yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehawwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
 /mob/living/basic/bot/secbot/ed209/proc/post_ranged_attack()
 	SIGNAL_HANDLER
@@ -65,16 +68,19 @@
 
 /mob/living/basic/bot/secbot/ed209/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(is_type_in_typecache(gone, sherrif_hats))
-		REMOVE_TRAIT(src, TRAIT_BOT_SHERRIF, REF(gone))
+	sheriffized = (is_type_in_typecache(gone, sherrif_hats))
 
 /mob/living/basic/bot/secbot/ed209/examine(mob/user)
 	. = ..()
-	if(HAS_TRAIT(src, TRAIT_BOT_SHERRIF))
+	if(sheriffized)
 		. += span_notice("Fastest hand in the west.")
 
 /mob/living/basic/bot/secbot/ed209/bot_reset(bypass_ai_reset = FALSE)
 	.= ..()
+	if(bot_access_flags & BOT_COVER_EMAGGED && isnull(bot_charge.owner))
+		bot_charge.Grant(src)
+	if(!(bot_access_flags & BOT_COVER_EMAGGED) && !isnull(bot_charge.owner))
+		bot_charge.Remove(src)
 	set_weapon()
 
 /mob/living/basic/bot/secbot/ed209/emag_act(mob/user, obj/item/card/emag/emag_card)
