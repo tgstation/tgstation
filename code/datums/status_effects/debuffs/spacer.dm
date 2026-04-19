@@ -107,7 +107,7 @@
 
 /datum/mood_event/spacer/on_planet/low_grav
 	description = "This feels like I'm back home!"
-	mood_change = 4
+	mood_change = 3
 
 /datum/mood_event/spacer/on_planet/low_grav/add_effects(...)
 	. = ..()
@@ -116,7 +116,7 @@
 /datum/mood_event/spacer/on_planet/low_grav/proc/lower_mood_bonus()
 	mood_change -= 1
 	owner.mob_mood.update_mood()
-	if(mood_change > 0)
+	if(mood_change > 1)
 		addtimer(CALLBACK(src, PROC_REF(lower_mood_bonus)), 5 MINUTES, TIMER_DELETE_ME)
 
 /datum/movespeed_modifier/spacer
