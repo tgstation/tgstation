@@ -372,13 +372,35 @@
 		else
 			remove_all_huds()
 
+/obj/machinery/big_manipulator/attack_ai()
+	to_chat(user, "Your programming forbids you from interfacing with these devices.")
+	balloon_alert(user, "no silicons allowed!')
+	return FALSE
+
+/obj/machinery/big_manipulator/attack_robot()
+	to_chat(user, "Your programming forbids you from interfacing with these devices.")
+	balloon_alert(user, "no silicons allowed!')
+	return FALSE
+
 /obj/machinery/big_manipulator/screwdriver_act(mob/living/user, obj/item/tool)
+	if(issilicon(user))
+		to_chat(user, "Your programming forbids you from interfacing with these devices.")
+		balloon_alert(user, "no silicons allowed!')
+		return FALSE
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/big_manipulator/crowbar_act(mob/living/user, obj/item/tool)
+	if(issilicon(user))
+		to_chat(user, "Your programming forbids you from interfacing with these devices.")
+		balloon_alert(user, "no silicons allowed!')
+		return FALSE
 	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/big_manipulator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(issilicon(user))
+		to_chat(user, "Your programming forbids you from interfacing with these devices.")
+		balloon_alert(user, "no silicons allowed!')
+		return FALSE
 	if(user.combat_mode)
 		return NONE
 	if(!panel_open || !is_wire_tool(tool))
@@ -391,6 +413,10 @@
 	process_upgrades()
 
 /obj/machinery/big_manipulator/mouse_drop_dragged(atom/drop_point, mob/user, src_location, over_location, params)
+	if(issilicon(user))
+		to_chat(user, "Your programming forbids you from interfacing with these devices.")
+		balloon_alert(user, "no silicons allowed!')
+		return FALSE
 	if(current_task != CURRENT_TASK_NONE)
 		balloon_alert(user, "turn it off first!")
 		return
@@ -409,6 +435,10 @@
 	poor_monkey.forceMove(drop_point)
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
+	if(issilicon(user))
+		to_chat(user, "Your programming forbids you from interfacing with these devices.")
+		balloon_alert(user, "no silicons allowed!')
+		return FALSE
 	if(current_task != CURRENT_TASK_NONE)
 		balloon_alert(user, "turn it off first!")
 		return
@@ -443,6 +473,10 @@
 
 /obj/machinery/big_manipulator/attackby(obj/item/some_item, mob/user, params)
 	. = ..()
+	if(issilicon(user))
+		to_chat(user, "Your programming forbids you from interfacing with these devices.")
+		balloon_alert(user, "no silicons allowed!')
+		return FALSE
 	if(!isidcard(some_item))
 		return
 
