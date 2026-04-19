@@ -72,12 +72,16 @@
 	appearance = original.appearance
 	setDir(original.dir)
 
-	maxHealth = hp
-	updatehealth() // re-cap health to new value
+	if (isnull(hp))
+		maxHealth = hp
+		updatehealth() // re-cap health to new value
 
-	melee_damage_lower = damage
-	melee_damage_upper = damage
-	multiply_chance = replicate
+	if (isnull(damage))
+		melee_damage_lower = damage
+		melee_damage_upper = damage
+
+	if (isnull(replicate))
+		multiply_chance = replicate
 
 	remove_faction(FACTION_NEUTRAL)
 	transform = initial(transform)
