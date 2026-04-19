@@ -14,7 +14,6 @@
 	interface_type = "CargoExpress"
 
 	var/message
-	var/list/meme_pack_data
 	/// The linked supplypod beacon
 	var/obj/item/supplypod_beacon/beacon
 	/// Where we droppin boys
@@ -31,15 +30,10 @@
 
 /obj/machinery/computer/cargo/express/Initialize(mapload)
 	. = ..()
-	packin_up()
 	landingzone = GLOB.areas_by_type[landingzone]
 	if (isnull(landingzone))
 		WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
 		landingzone = get_area(src)
-
-/obj/machinery/computer/cargo/express/on_construction(mob/user)
-	. = ..()
-	packin_up()
 
 /obj/machinery/computer/cargo/express/Destroy()
 	if(beacon)
@@ -87,22 +81,7 @@
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED
 	board.contraband = TRUE
-	packin_up()
 	return TRUE
-
-/obj/machinery/computer/cargo/express/proc/packin_up(forced = FALSE) // oh shit, I'm sorry
-	meme_pack_data = list() // sorry for what?
-	if(!forced && !SSshuttle.initialized) // our quartermaster taught us not to be ashamed of our supply packs
-		SSshuttle.express_consoles += src // specially since they're such a good price and all
-		return // yeah, I see that, your quartermaster gave you good advice
-	// it gets cheaper when I return it
-	for(var/pack_id in SSshuttle.supply_packs) // mmhm
-		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id] // sometimes, I return it so much, I rip the manifest
-		if(!meme_pack_data[pack.group]) // see, my quartermaster taught me a few things too
-			meme_pack_data[pack.group] = list( // like, how not to rip the manifest
-				"name" = pack.group, // by using someone else's crate
-				"packs" = get_packs_data(pack.group, express = TRUE), // will you show me?
-			) // i'd be right happy to
 
 /obj/machinery/computer/cargo/express/ui_data(mob/user)
 	var/canBeacon = beacon && (isturf(beacon.loc) || ismob(beacon.loc))//is the beacon in a valid location?
@@ -120,7 +99,6 @@
 	data["hasBeacon"] = beacon != null//is there a linked beacon?
 	data["beaconName"] = beacon ? beacon.name : "No Beacon Found"
 	data["printMsg"] = COOLDOWN_FINISHED(src, beacon_print_cooldown) ? "Print Beacon for [BEACON_COST] credits" : "Print Beacon for [BEACON_COST] credits ([COOLDOWN_TIMELEFT(src, beacon_print_cooldown)])" //buttontext for printing beacons
-	data["supplies"] = list()
 	message = "Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supply_blocked)
 		message = blockade_warning
@@ -131,10 +109,6 @@
 	if(obj_flags & EMAGGED)
 		message = "(&!#@ERROR: R0UTING_#PRO7O&OL MALF(*CT#ON. $UG%ESTE@ ACT#0N: !^/PULS3-%E)ET CIR*)ITB%ARD."
 	data["message"] = message
-	if(!meme_pack_data)
-		packin_up()
-		stack_trace("There was no pack data for [src]")
-	data["supplies"] = meme_pack_data
 	return data
 
 /obj/machinery/computer/cargo/express/get_discount()

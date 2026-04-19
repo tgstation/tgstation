@@ -154,7 +154,7 @@
 		if(!data["supplies"][pack.group])
 			data["supplies"][pack.group] = list(
 				"name" = pack.group,
-				"packs" = get_packs_data(pack.group),
+				"packs" = get_packs_data(pack.group, is_express),
 			)
 
 	return data
