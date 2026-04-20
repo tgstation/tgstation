@@ -59,3 +59,7 @@
 	. = ..()
 	if(!(. & AI_BEHAVIOR_DELAY))
 		return AI_BEHAVIOR_DELAY //this kinda sucks but we have to do this cause we need to shoot while moving to stun
+
+
+#undef DEFAULT_LINES
+#undef SPECIAL_LINES
