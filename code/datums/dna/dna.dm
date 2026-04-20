@@ -619,7 +619,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		return
 	var/datum/mutation/mutation = dna.get_mutation(mutation_path)
 	if(mutation)
-		mutation.scrambled = FALSE	//done to allow easy_random_mutate obtained genes to be saved in DNA consoles
+		mutation.scrambled = FALSE	//set to FALSE to allow easy_random_mutate obtained genes to be saved in DNA consoles
 
 /mob/living/carbon/proc/random_mutate_unique_identity()
 	if(!has_dna())
