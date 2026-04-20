@@ -37,7 +37,7 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 		UnregisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED)
 	. = ..()
 	if(hud?.mymob)
-		UnregisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_owner_blip))
+		RegisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_owner_blip))
 
 /atom/movable/screen/minimap_display/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
