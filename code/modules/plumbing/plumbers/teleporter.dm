@@ -48,6 +48,7 @@
 	desc = "Receives chemicals from one or more chemical beacons. Use a multitool on this machine and then all subsequent chemical beacons. Reset by opening the \
 	panel and cutting the main wire."
 	icon_state = "recipient"
+	base_icon_state = "recipient"
 
 	buffer = 150
 
@@ -98,21 +99,18 @@
 
 	senders = list()
 
-/obj/machinery/plumbing/receiver/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, icon_state + "_open", initial(icon_state), I))
-		update_appearance()
-		return
+/obj/machinery/plumbing/receiver/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-	if(default_pry_open(I))
-		return
-
-	if(default_deconstruction_crowbar(I))
-		return
-
-	return ..()
+/obj/machinery/plumbing/receiver/crowbar_act(mob/living/user, obj/item/tool)
+	return default_pry_open(user, tool, deconstruct_on_fail = TRUE)
 
 /obj/machinery/plumbing/receiver/wirecutter_act(mob/living/user, obj/item/I)
-	. = ..()
+	if(!panel_open)
+		return NONE
+	lose_senders()
+	return ITEM_INTERACT_SUCCESS
 
-	if(panel_open)
-		lose_senders()
+/obj/machinery/plumbing/receiver/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state

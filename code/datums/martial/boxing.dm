@@ -20,6 +20,8 @@
 	help_verb = /mob/living/proc/boxing_help
 	/// Boolean on whether we are sportsmanlike in our tussling; TRUE means we have restrictions
 	var/honorable_boxer = TRUE
+	/// Can we perform grabs even if it would be dishonorable?
+	var/ignore_grab_restriction = FALSE
 	/// Default damage type for our boxing.
 	var/default_damage_type = STAMINA
 	/// List of traits applied to users of this martial art.
@@ -85,7 +87,7 @@
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/boxing/grab_act(mob/living/attacker, mob/living/defender)
-	if(honorable_boxer)
+	if(honorable_boxer && !ignore_grab_restriction)
 		attacker.balloon_alert(attacker, "no grabbing while boxing!")
 		return MARTIAL_ATTACK_FAIL
 	return MARTIAL_ATTACK_INVALID //UNLESS YOU'RE EVIL
@@ -433,6 +435,7 @@
 	help_verb = /mob/living/proc/hunter_boxing_help
 	default_damage_type = BRUTE
 	boxing_traits = list(TRAIT_BOXING_READY)
+	ignore_grab_restriction = TRUE
 	/// The mobs we are looking for to pass the honor check
 	var/honorable_mob_biotypes = MOB_BEAST | MOB_SPECIAL | MOB_PLANT | MOB_BUG | MOB_MINING | MOB_CRUSTACEAN | MOB_REPTILE
 	/// Our crit shout words. First word is then paired with a second word to form an attack name.

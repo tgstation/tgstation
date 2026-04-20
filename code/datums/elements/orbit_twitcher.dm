@@ -30,6 +30,11 @@
 			else
 				living.emote("twitch", forced = TRUE)
 
+			// if we're in a bodybag or morgue slab go up a level and shake that as well
+			var/obj/container = get(living, /obj/structure/bodycontainer) || get(living, /obj/structure/closet/body_bag)
+			if(!isnull(container))
+				container.Shake(2, 1, 0.3 SECONDS, 0.1 SECONDS)
+
 /datum/element/orbit_twitcher/proc/orbit_begin(atom/source, atom/orbiter)
 	SIGNAL_HANDLER
 

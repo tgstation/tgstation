@@ -166,7 +166,7 @@
 	strict_tier = TRUE
 	variable_tier = FALSE
 
-/datum/status_effect/hallucination/perceptomatrix/refresh(mob/living/refresh_owner, new_duration)
+/datum/status_effect/hallucination/perceptomatrix/refresh(effect, new_duration)
 	src.duration += new_duration
 
 /datum/status_effect/hallucination/perceptomatrix/on_creation(mob/living/new_owner, new_duration)
