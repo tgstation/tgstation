@@ -71,7 +71,6 @@ GLOBAL_VAR(station_nuke_source)
 		toggle_nuke_safety()
 	QDEL_NULL(countdown)
 	QDEL_NULL(core)
-	remove_minimap_blip(src)
 	return ..()
 
 /obj/machinery/nuclearbomb/examine(mob/user)

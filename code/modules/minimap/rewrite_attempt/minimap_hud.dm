@@ -10,7 +10,7 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	var/datum/minimap/minimap
 	/// Screentext in vis_contents used for the maptext.
 	var/atom/movable/screen/minimap_label/screentip
-	/// Assoc list of "names" to blips.
+	/// indexed list of currently displayed blips.
 	var/list/atom/movable/screen/minimap_blip/blips = list()
 	/// The list of minimap blip tags we're going to shown on the minimap
 	var/list/valid_minimal_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP)
@@ -23,22 +23,21 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	screentip = new
 	vis_contents += screentip
 	update_owner_blip(hud.mymob)
-	INVOKE_ASYNC(src, PROC_REF(show_tagged_blips))
+	show_tagged_blips()
 
 /atom/movable/screen/minimap_display/Destroy()
 	if(hud?.mymob)
-		UnregisterSignal(hud.mymob, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED))
+		UnregisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED)
 	minimap = null
-	QDEL_LIST_ASSOC_VAL(blips)
 	QDEL_NULL(screentip)
 	return ..()
 
 /atom/movable/screen/minimap_display/set_new_hud(datum/hud/hud_owner)
 	if(hud?.mymob)
-		UnregisterSignal(hud.mymob, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED))
+		UnregisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED)
 	. = ..()
 	if(hud?.mymob)
-		RegisterSignals(hud.mymob, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED), PROC_REF(update_owner_blip))
+		UnregisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_owner_blip))
 
 /atom/movable/screen/minimap_display/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
@@ -78,6 +77,7 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 			if(blip.track_target.z == minimap.z)
 				blip.register_target(blip.track_target)
 				blip.start_tracking_target()
+				blips += blip
 				vis_contents += blip
 
 /atom/movable/screen/minimap_display/proc/set_minimap(datum/minimap/minimap)
@@ -88,17 +88,10 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	screentip?.maptext = ""
 
 /atom/movable/screen/minimap_display/proc/add_blip(name, icon_state, x, y, large = FALSE)
-	if(blips[name])
-		if(blips[name].icon_state == icon_state)
-			update_blip(name, x, y)
-			return
-		else
-			remove_blip(name)
-	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, icon_state, large)
-	blips[name] = new_blip
-	var/half_size = large ? 5 : 3
-	new_blip.pixel_w = MINIMAP_WORLD_TO_PIXEL(x, minimap.min_x, half_size)
-	new_blip.pixel_z = MINIMAP_WORLD_TO_PIXEL(y, minimap.min_y, half_size)
+	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, hud.mymob, icon_state, large)
+	new_blip.register_target(hud.mymob)
+	new_blip.start_tracking_target()
+	blips += new_blip
 	vis_contents += new_blip
 
 /atom/movable/screen/minimap_display/proc/update_blip(name, x, y)
@@ -118,14 +111,14 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	qdel(blip)
 
 /atom/movable/screen/minimap_display/proc/remove_all_blips()
-	QDEL_LIST_ASSOC_VAL(blips)
+	blips.Cut()
 	vis_contents.Cut()
 	vis_contents += screentip // add screentip back in
 
 /proc/add_minimap_blip(atom/object, tag, icon_state, icon = 'icons/ui_icons/minimap/map_blips.dmi', large = FALSE)
 	if(!istype(object) || !tag || !icon_state)
 		CRASH("Invalid params passed in to add_minimap_blip")
-	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, icon_state, icon, large, tag)
+	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, object, icon_state, icon, large, tag)
 	LAZYADD(GLOB.minimal_blip_tags[tag], new_blip)
 
 /proc/remove_minimap_blip(tag, atom/object)
@@ -186,12 +179,16 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 /atom/movable/screen/minimap_blip/proc/start_tracking_target()
 	if(tracking)
 		return
-	RegisterSignal(track_target, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED), PROC_REF(update_blip))
-	minimap = get_minimap_for_z(track_target.z)
+	RegisterSignals(track_target, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED), PROC_REF(update_blip))
 	tracking = TRUE
+	INVOKE_ASYNC(src, PROC_REF(delayed_setup))
 
-/atom/movable/screen/minimap_blip/proc/update_blip(atom/target)
+/atom/movable/screen/minimap_blip/proc/delayed_setup()
+	minimap = get_minimap_for_z(track_target.z)
+	update_blip()
+
+/atom/movable/screen/minimap_blip/proc/update_blip()
 	SIGNAL_HANDLER
 	var/half_size = large ? 5 : 3
-	pixel_w = MINIMAP_WORLD_TO_PIXEL(x, minimap.min_x, half_size)
-	pixel_z = MINIMAP_WORLD_TO_PIXEL(y, minimap.min_y, half_size)
+	pixel_w = MINIMAP_WORLD_TO_PIXEL(track_target.x, minimap.min_x, half_size)
+	pixel_z = MINIMAP_WORLD_TO_PIXEL(track_target.y, minimap.min_y, half_size)
