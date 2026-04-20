@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Fixes one way to get stuck in place forever while using a fulton extraction kit"
