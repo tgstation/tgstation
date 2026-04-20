@@ -409,6 +409,8 @@
       on multiple factors (such as stamina + physical damage and stagger)
   - balance: The Leaper mount also has this "disarm to dismount" mechanic, though
       it is significantly more difficult as they are much sturdier beasts
+  - balance: Upon being successfully sacrificed by a heretic all other heretics lose
+      you as a target, and you can no longer be (re)rolled as a target by other heretics.
   SmArtKar:
   - balance: Ship from a bottle can now be bottled back up by alt-clicking it
   - balance: Ship in a bottle can now be deployed by throwing it, and are a small
