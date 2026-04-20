@@ -198,7 +198,7 @@
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 	if(organ_owner.mind)
-		ADD_TRAIT(src, TRAIT_USED_ORGAN, ORGAN_TRAIT)
+		ADD_TRAIT(src, TRAIT_ORGAN_USED_BY_PLAYER, ORGAN_TRAIT)
 
 	if(!special)
 		organ_owner.hud_used?.update_locked_slots()

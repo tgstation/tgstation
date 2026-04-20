@@ -70,7 +70,7 @@
 	var/obj/item/organ/heart/previous_heart = last_heart_we_ate?.resolve()
 	if(we_ate_heart == previous_heart)
 		return
-	if (!HAS_TRAIT(we_ate_heart, TRAIT_USED_ORGAN))
+	if (!HAS_TRAIT(we_ate_heart, TRAIT_ORGAN_USED_BY_PLAYER))
 		to_chat(eater, span_warning("This heart is utterly lifeless, you won't receive any boons from consuming it!"))
 		return
 	bites_taken = 0

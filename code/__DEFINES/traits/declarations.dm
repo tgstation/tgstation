@@ -1385,7 +1385,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IGNORED_BY_LIVING_FLESH "livingflesh_ignored"
 
 ///Trait given to organs that have previously been inside a being with a mind
-#define TRAIT_USED_ORGAN "used_organ"
+#define TRAIT_ORGAN_USED_BY_PLAYER "organ_used_by_player"
 ///Trait given to organs that have started inside a being with a client
 #define TRAIT_CLIENT_STARTING_ORGAN "client_starting_organ"
 
