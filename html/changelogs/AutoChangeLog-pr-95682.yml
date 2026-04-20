@@ -1,0 +1,14 @@
+author: "SmArtKar, Kryson, ArcaneMusic"
+delete-after: True
+changes:
+  - rscadd: "Lavaland has received 2 new rock types: Siderite, rich in iron and titanium, and Shale, full of plasma, gold and uranium."
+  - rscadd: "A guaranteed river spawn and a fishing pond have been added to the lavaland outpost raptor area."
+  - rscadd: "Ores now tend to spawn in veins or clusters, and are much more likely to spawn near exposed rock."
+  - balance: "Natural ore spawns are much more abundant than before, closer to pre-arcmining levels. Vent output has been halved"
+  - balance: "PKA AOE mining module has been reverted to 3x3 and incurs a cooldown penalty"
+  - balance: "Plasma cutters eat more plasma when recharging and have slightly shorter range."
+  - balance: "Mining MOD sphere mode no longer instamines, and now just has an extremely high mining speed."
+  - balance: "Goldgrubs can now tunnel extremely fast and spawn much more frequently than before. Goldgrub burrowing can be interrupted by dealing damage to them."
+  - balance: "Goldgrubs no longer reflect non-bomb/energy shots."
+  - balance: "AOE mining methods now have a 10/25% chance to not mine siderite/shale unless it has ore inside of it."
+  - refactor: "Lavaland generation has been rewritten. The caves should be much more wilder."
