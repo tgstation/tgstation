@@ -43,7 +43,7 @@ jobs:
         with:
           dotnet-version: 9.x
       - name: Install OpenDream
-        uses: robinraju/release-downloader@616444d935c04e4269e694a274bd94383479ecde
+        uses: robinraju/release-downloader@93eac224fa5a1e835cc942d66c12ee373bc7fae9
         with:
           repository: "OpenDreamProject/OpenDream"
           tag: "latest"
