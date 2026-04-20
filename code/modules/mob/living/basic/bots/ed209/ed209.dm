@@ -14,7 +14,6 @@
 	bot_type = ADVANCED_SEC_BOT
 	hackables = "combat inhibitors"
 
-
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.8,
 		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.1,
