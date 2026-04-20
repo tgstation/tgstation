@@ -269,7 +269,6 @@
 
 	if(!filled_pipe)
 		return default_deconstruction_crowbar(user, tool)
-		return ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
 
