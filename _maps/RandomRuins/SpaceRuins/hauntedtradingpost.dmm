@@ -814,7 +814,7 @@
 /obj/structure/sign/poster/contraband/syndicate_pistol/directional/west,
 /mob/living/basic/bot/secbot{
 	faction = list("Syndicate");
-	bot_cover_flags = 4;
+	bot_access_flags = 4;
 	baton_type = /obj/item/melee/baton/security/cattleprod;
 	name = "\improper Syndicate Securitron";
 	desc = "A little security robot, reprogrammed by the syndicate. He looks downright surly.";
