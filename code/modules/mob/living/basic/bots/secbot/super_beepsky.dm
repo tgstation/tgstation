@@ -23,6 +23,13 @@
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
 
 
+/mob/living/basic/bot/secbot/grievous/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
+	. = ..()
+	if(. & FAILED_BLOCK)
+		return .
+
+	return (sword_active && prob(block_chance) ? SUCCESSFUL_BLOCK : FAILED_BLOCK)
+
 /mob/living/basic/bot/secbot/grievous/proc/on_weapon_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 	if(active)
@@ -33,17 +40,13 @@
 /mob/living/basic/bot/secbot/grievous/add_arrest_component() //i dont think we'll be arresting people...
 	return
 
-/mob/living/basic/bot/secbot/grievous/toy //A toy version of general beepsky!
-	name = "Genewul Bweepskee"
-	desc = "An adorable looking secbot with four toy swords taped to its arms"
-	health = 50
-	maxHealth = 50
-	baton_type = /obj/item/toy/sword
-
 /mob/living/basic/bot/secbot/grievous/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
 
-	if(stat != CONSCIOUS)
+	if(stat != CONSCIOUS )
+		return NONE
+
+	if(!sword_active || !prob(block_chance))
 		return NONE
 
 	visible_message(span_warning("[source] deflects [hitting_projectile] with its energy swords!"))
@@ -80,3 +83,12 @@
 		drop_part(baton_type, drop_location)
 
 	return ..()
+
+
+/mob/living/basic/bot/secbot/grievous/toy //A toy version of general beepsky!
+	name = "Genewul Bweepskee"
+	desc = "An adorable looking secbot with four toy swords taped to its arms"
+	health = 50
+	maxHealth = 50
+	block_chance = 0
+	baton_type = /obj/item/toy/sword
