@@ -173,9 +173,7 @@
 	if(tile_covered)
 		return
 
-	//Copied from ducts handle_layer()
 	var/offset
-
 	switch(ducting_layer)
 		if(FIRST_DUCT_LAYER)
 			offset = -10
@@ -188,17 +186,16 @@
 		if(FIFTH_DUCT_LAYER)
 			offset = 10
 
-	var/duct_x = offset - parent_movable.pixel_x - parent_movable.pixel_w
-	var/duct_y = offset - parent_movable.pixel_y - parent_movable.pixel_z
 	var/duct_layer = PLUMBING_PIPE_VISIBILE_LAYER + ducting_layer * 0.0003
 
-	
 	for(var/direction in GLOB.cardinals)
 		var/color
+		var/duct_x = offset - parent_movable.pixel_x - parent_movable.pixel_w
+		var/duct_y = offset - parent_movable.pixel_y - parent_movable.pixel_z
 		if(direction & initial(demand_connects))
 			color = demand_color
 			if(demand_offset)
-				switch(direction)
+				switch(parent_movable.dir)
 					if(NORTH)
 						duct_y -= demand_offset
 					if(SOUTH)
@@ -210,7 +207,7 @@
 		else if(direction & initial(supply_connects))
 			color = supply_color
 			if(supply_offset)
-				switch(direction)
+				switch(parent_movable.dir)
 					if(NORTH)
 						duct_y += supply_offset
 					if(SOUTH)
@@ -244,6 +241,7 @@
 				new_supply_connects |= turn(direction, angle)
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
+	parent_obj.update_appearance(UPDATE_OVERLAYS)
 
 	if(length(ducts))
 		disable()
