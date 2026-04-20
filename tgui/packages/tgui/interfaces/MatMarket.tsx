@@ -66,10 +66,11 @@ export const MatMarket = (props) => {
           title="Materials for sale"
           buttons={
             !!canOrderCargo && (
-              <Button
-                icon="dollar"
+              <Button.Checkbox
+                icon={orderingPrive ? "fa-regular fa-square" : "square-check"}
                 tooltip="Place order from cargo budget."
-                color={orderingPrive ? '' : 'green'}
+                color={orderingPrive ? 'transparent' : 'green'}
+                checked={orderingPrive}
                 content={
                   orderingPrive
                     ? 'Order via Cargo Budget?'
@@ -80,24 +81,6 @@ export const MatMarket = (props) => {
             )
           }
         >
-          <NoticeBox info>
-            <Collapsible title="Instructions" color="blue">
-              Buy orders for material sheets placed here will be ordered on the
-              next cargo shipment.
-              <br /> <br />
-              To sell materials, please insert sheets or similar stacks of
-              materials. All minerals sold on the market directly are subject to
-              a scaling value decrease per material, but this will recover over
-              time. To prevent market manipulation, all registered traders can
-              buy a total of 10 full stacks of materials at a time.
-              <br /> <br />
-              When selling materials, prices will be decreased based on the
-              elastic modifier of the material, which will recover over time.
-              <br /> <br />
-              All new purchases will include the cost of the shipped crate,
-              which may be recycled afterwards.
-            </Collapsible>
-          </NoticeBox>
           <Section>
             <Stack>
               <Stack.Item width="15%">
@@ -186,7 +169,7 @@ export const MatMarket = (props) => {
                     )}
 
                     <Stack.Item
-                      width="40%"
+                      width="20%"
                       color={
                         material.trend === 'up'
                           ? 'green'
@@ -202,7 +185,7 @@ export const MatMarket = (props) => {
                 </Stack.Item>
                 <Stack.Item>
                   <Button
-                    height="100%"
+                    height="35px"
                     verticalAlignContent="middle"
                     disabled={
                       catastrophe === 1 ||
@@ -222,7 +205,7 @@ export const MatMarket = (props) => {
                     Buy 1
                   </Button>
                   <Button
-                    height="100%"
+                    height="35px"
                     verticalAlignContent="middle"
                     disabled={
                       catastrophe === 1 ||
@@ -242,7 +225,7 @@ export const MatMarket = (props) => {
                     5
                   </Button>
                   <Button
-                    height="100%"
+                    height="35px"
                     verticalAlignContent="middle"
                     disabled={
                       catastrophe === 1 ||
@@ -262,7 +245,7 @@ export const MatMarket = (props) => {
                     10
                   </Button>
                   <Button
-                    height="100%"
+                    height="35px"
                     verticalAlignContent="middle"
                     disabled={
                       catastrophe === 1 ||
@@ -282,7 +265,7 @@ export const MatMarket = (props) => {
                     25
                   </Button>
                   <Button
-                    height="100%"
+                    height="35px"
                     verticalAlignContent="middle"
                     disabled={
                       catastrophe === 1 ||
@@ -306,6 +289,24 @@ export const MatMarket = (props) => {
             </Section>
           ),
         )}
+        <NoticeBox info>
+            <Collapsible title="Instructions" color="blue">
+              Buy orders for material sheets placed here will be ordered on the
+              next cargo shipment.
+              <br /> <br />
+              To sell materials, please insert sheets or similar stacks of
+              materials. All minerals sold on the market directly are subject to
+              a scaling value decrease per material, but this will recover over
+              time. To prevent market manipulation, all registered traders can
+              buy a total of 10 full stacks of materials at a time.
+              <br /> <br />
+              When selling materials, prices will be decreased based on the
+              elastic modifier of the material, which will recover over time.
+              <br /> <br />
+              All new purchases will include the cost of the shipped crate,
+              which may be recycled afterwards.
+            </Collapsible>
+          </NoticeBox>
       </Window.Content>
     </Window>
   );
