@@ -90,8 +90,6 @@
 
 			if(isliving(thing))
 				var/mob/living/L = thing
-				if(L.stat == DEAD)
-					continue
 
 			best_candidate = thing
 			best_priority_index = i
