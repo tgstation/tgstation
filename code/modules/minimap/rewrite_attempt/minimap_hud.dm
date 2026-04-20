@@ -1,4 +1,4 @@
-GLOBAL_ALIST_EMPTY(minimal_blip_tags)
+GLOBAL_ALIST_EMPTY(minimap_blip_tags)
 
 /// Screen object that renders a [/datum/minimap] base map icon on the HUD.
 /atom/movable/screen/minimap_display
@@ -13,8 +13,8 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	var/atom/movable/screen/minimap_label/screentip
 	/// indexed list of currently displayed blips.
 	var/list/atom/movable/screen/minimap_blip/blips = list()
-	/// The list of minimap blip tags we're going to shown on the minimap
-	var/list/valid_minimal_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP)
+	/// The list of minimap blip tags we're going to read from the globalist and listen for additions to
+	var/list/valid_minimap_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP)
 
 /atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap)
 	. = ..()
@@ -84,9 +84,9 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	add_blip("locator", "locator", mob_loc.x, mob_loc.y)
 
 /atom/movable/screen/minimap_display/proc/show_tagged_blips()
-	for(var/blip_flag in valid_minimal_blip_tags)
-		var/blip_list = GLOB.minimal_blip_tags[blip_flag]
-		for(var/atom/movable/screen/minimap_blip/blip in blip_list)
+	for(var/blip_flag in valid_minimap_blip_tags)
+		var/blip_list = GLOB.minimap_blip_tags[blip_flag]
+		for(var/atom/movable/screen/minimap_blip/blip as anything in blip_list)
 			if(blip.track_target.z == minimap.z)
 				blip.register_target(blip.track_target)
 				blip.start_tracking_target()
@@ -129,20 +129,22 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	vis_contents.Cut()
 	vis_contents += screentip // add screentip back in
 
+/// Create a minimap blip on the z-level in question, object is optional, and will tie the blip to the object in question, and will clean up itself if the object in question is deleted
 /proc/add_minimap_blip(atom/object, tag, icon_state, icon = 'icons/ui_icons/minimap/map_blips.dmi', large = FALSE)
 	if(!istype(object) || !tag || !icon_state)
 		CRASH("Invalid params passed in to add_minimap_blip")
 	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, object, icon_state, icon, large, tag)
-	LAZYADD(GLOB.minimal_blip_tags[tag], new_blip)
+	LAZYADD(GLOB.minimap_blip_tags[tag], new_blip)
+	SEND_GLOBAL_SIGNAL(SIGNAL_MINIMAP_ADD(tag), new_blip)
 
 /proc/remove_minimap_blip(tag, atom/object)
-	// assoc list of tags to a list of hud blips, find the correct hud blip via it's track_target
-	var/blip_list = GLOB.minimal_blip_tags[tag]
+	var/blip_list = GLOB.minimap_blip_tags[tag]
 	if(!length(blip_list))
 		return
 	for(var/atom/movable/screen/minimap_blip/blip as anything in blip_list)
 		if(blip.track_target == object)
 			qdel(blip)
+			SEND_GLOBAL_SIGNAL(SIGNAL_MINIMAP_REMOVE(tag), blip)
 			break
 
 /atom/movable/screen/minimap_label
@@ -184,7 +186,7 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 
 /atom/movable/screen/minimap_blip/Destroy()
 	. = ..()
-	GLOB.minimal_blip_tags -= src
+	GLOB.minimap_blip_tags -= src
 
 /atom/movable/screen/minimap_blip/proc/register_target(atom/target)
 	RegisterSignal(track_target, COMSIG_QDELETING, TYPE_PROC_REF(/datum, selfdelete), override = TRUE)

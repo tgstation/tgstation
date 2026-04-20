@@ -51,3 +51,5 @@ GLOBAL_LIST_INIT(all_minimap_flags, bitfield2list(MINIMAP_FLAG_ALL))
 #define MINIMAP_BOMB_BLIP "nuke"
 #define MINIMAP_NUKEDISK_BLIP "nuke_disk"
 #define MINIMAP_NUKEOP_BLIP "nukeop"
+#define SIGNAL_MINIMAP_ADD(blip_tag) "minimap_add_" + blip_tag
+#define SIGNAL_MINIMAP_REMOVE(blip_tag) "minimap_remove_" + blip_tag
