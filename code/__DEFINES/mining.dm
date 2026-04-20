@@ -34,39 +34,6 @@
 /// Duration for wave defense for a large vent.
 #define WAVE_DURATION_LARGE 150 SECONDS
 
-/// Proximity to a vent that a wall ore needs to be for 5 ore to be mined.
-#define VENT_PROX_VERY_HIGH 3
-/// Proximity to a vent that a wall ore needs to be for 4 ore to be mined.
-#define VENT_PROX_HIGH 6
-/// Proximity to a vent that a wall ore needs to be for 3 ore to be mined.
-#define VENT_PROX_MEDIUM 15
-/// Proximity to a vent that a wall ore needs to be for 2 ore to be mined.
-#define VENT_PROX_LOW 32
-/// Proximity to a vent that a wall ore needs to be for 1 ore to be mined.
-#define VENT_PROX_FAR 64
-
-/// The chance of ore spawning in a wall that is VENT_PROX_VERY_HIGH tiles to a vent.
-#define VENT_CHANCE_VERY_HIGH 75
-/// The chance of ore spawning in a wall that is VENT_PROX_HIGH tiles to a vent.
-#define VENT_CHANCE_HIGH 18
-/// The chance of ore spawning in a wall that is VENT_PROX_MEDIUM tiles to a vent.
-#define VENT_CHANCE_MEDIUM 9
-/// The chance of ore spawning in a wall that is VENT_PROX_LOW tiles to a vent.
-#define VENT_CHANCE_LOW 5
-/// The chance of ore spawning in a wall that is VENT_PROX_FAR tiles to a vent.
-#define VENT_CHANCE_FAR 1
-
-/// The amount of ore that is mined from a wall that is VENT_PROX_VERY_HIGH tiles to a vent.
-#define ORE_WALL_VERY_HIGH 5
-/// The amount of ore that is mined from a wall that is VENT_PROX_HIGH tiles to a vent.
-#define ORE_WALL_HIGH 4
-/// The amount of ore that is mined from a wall that is VENT_PROX_MEDIUM tiles to a vent.
-#define ORE_WALL_MEDIUM 3
-/// The amount of ore that is mined from a wall that is VENT_PROX_LOW tiles to a vent.
-#define ORE_WALL_LOW 2
-/// The amount of ore that is mined from a wall that is VENT_PROX_FAR tiles to a vent.
-#define ORE_WALL_FAR 1
-
 /// Lifetime of a boulder platform in seconds when spawned in lava/plasma.
 #define PLATFORM_LIFE_DEFAULT 10 SECONDS
 
@@ -78,6 +45,19 @@
 /// The number of points a miner gets for discovering a vent, multiplied by BOULDER_SIZE when completing a wave defense minus the discovery bonus.
 #define MINER_POINT_MULTIPLIER 100
 
-//String defines to use with CaveGenerator presets for what ore breakdown to use.
+// String defines to use with CaveGenerator presets for what ore breakdown to use.
 #define OREGEN_PRESET_LAVALAND "lavaland"
 #define OREGEN_PRESET_TRIPLE_Z "triple_z"
+
+// Ore vein types
+/// Round ore cluster
+#define ORE_VEIN_CLUSTER "cluster"
+/// Randomly scattered ore
+#define ORE_VEIN_SCATTER "scatter"
+/// A straight or slightly bent uneven line
+#define ORE_VEIN_PLAIN "plain"
+/// A branching tree-like vein
+#define ORE_VEIN_BRANCH "branch"
+
+/// Maximum precision for ore spawn probabilities
+#define ORE_CHANCE_PRECISION 5
