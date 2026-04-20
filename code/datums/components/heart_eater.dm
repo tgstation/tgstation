@@ -133,8 +133,9 @@
 	if(source.zone_selected != BODY_ZONE_CHEST)
 		return
 	var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
+	if(!can_rip_heart(user, target, user.active_hand_index))
+		return
 	if(chest.get_wound_type(/datum/wound/blunt/bone/critical) && !target.get_organ_slot(ORGAN_SLOT_HEART)) //Don't bother trying to rip a heart out of someone we can see doesn't have one.
-		target.balloon_alert(source, "no heart!")
 		return
 	INVOKE_ASYNC(src, PROC_REF(do_rip_heart), source, target)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
