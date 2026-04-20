@@ -6,6 +6,7 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	icon_state = ""
 	layer = MINIMAP_IMAGE_LAYER
 	screen_loc = "1,1"
+	var/atom/movable/screen/minimap_drawing/drawing
 	/// A reference to the minimap used for this display.
 	var/datum/minimap/minimap
 	/// Screentext in vis_contents used for the maptext.
@@ -19,6 +20,8 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	. = ..()
 	if(isnull(minimap))
 		CRASH("[type] created without a minimap reference!")
+	drawing = new
+	vis_contents += drawing
 	set_minimap(minimap)
 	screentip = new
 	vis_contents += screentip
@@ -29,6 +32,7 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	if(hud?.mymob)
 		UnregisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED)
 	minimap = null
+	QDEL_NULL(drawing)
 	QDEL_NULL(screentip)
 	return ..()
 
@@ -41,6 +45,15 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 
 /atom/movable/screen/minimap_display/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
+
+/atom/movable/screen/minimap_display/MouseDrag(over_object, src_location, over_location, src_control, over_control, params)
+	var/list/modifiers = params2list(params)
+	var/x = text2num(LAZYACCESS(modifiers, ICON_X))
+	var/y = text2num(LAZYACCESS(modifiers, ICON_Y))
+	var/erase_pixel_range = LAZYACCESS(modifiers, RIGHT_CLICK) ? 5 : 0
+
+	drawing.draw_box(COLOR_RED, x, y, x + 1, y + 1, erase_pixel_range, 1)
+	testing("minimapdisplay MouseDrag: [over_object], [src_location], [over_location], [src_control], [json_encode(modifiers)]")
 
 /atom/movable/screen/minimap_display/MouseMove(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -84,6 +97,7 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	icon = minimap.base_map
 	screen_loc = "1:[minimap.base_map.Width() / 2],1:[minimap.base_map.Height() / 2]"
 	src.minimap = minimap
+	drawing.clear_canvas(minimap.base_map)
 	// reset screentip if it exists
 	screentip?.maptext = ""
 
@@ -173,7 +187,7 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	GLOB.minimal_blip_tags -= src
 
 /atom/movable/screen/minimap_blip/proc/register_target(atom/target)
-	RegisterSignal(track_target, COMSIG_QDELETING, TYPE_PROC_REF(/datum, selfdelete))
+	RegisterSignal(track_target, COMSIG_QDELETING, TYPE_PROC_REF(/datum, selfdelete), override = TRUE)
 	track_target = target
 
 /atom/movable/screen/minimap_blip/proc/start_tracking_target()
@@ -192,3 +206,25 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	var/half_size = large ? 5 : 3
 	pixel_w = MINIMAP_WORLD_TO_PIXEL(track_target.x, minimap.min_x, half_size)
 	pixel_z = MINIMAP_WORLD_TO_PIXEL(track_target.y, minimap.min_y, half_size)
+
+/atom/movable/screen/minimap_drawing
+	name = ""
+	icon = 'icons/ui_icons/minimap/minimap.dmi'
+	layer = MINIMAP_LABELS_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	vis_flags = VIS_INHERIT_PLANE
+
+/atom/movable/screen/minimap_drawing/proc/clear_canvas(icon/base_map)
+	var/icon/new_icon = icon('icons/ui_icons/minimap/minimap.dmi')
+	if(base_map)
+		new_icon.Scale(base_map.Width(), base_map.Height())
+	icon = new_icon
+
+/atom/movable/screen/minimap_drawing/proc/draw_box(box_color, start_x, start_y, end_x, end_y, erase_pixel_range = 0, erase_padding_multiplier = 0)
+	var/icon/new_icon = icon(src.icon)
+	if(!isnull(box_color) || !erase_padding_multiplier)
+		new_icon.DrawBox(box_color, start_x, start_y, end_x, end_y)
+	else
+		var/padding = erase_pixel_range * erase_padding_multiplier
+		new_icon.DrawBox(box_color, start_x - padding, start_y - padding, end_x + padding, end_y + padding)
+	icon = new_icon
