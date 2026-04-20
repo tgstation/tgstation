@@ -1,0 +1,5 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - balance: "Wizards with the Heart Eater perk are only invigorated by the hearts of sentient beings."
+  - rscadd: "To facilitate the taking of hearts from sentient beings, the Heart Eater perk lets you tear the heart out of the chest of an incapacitated or dead being by targeting their chest with an empty hand in combat mode."
