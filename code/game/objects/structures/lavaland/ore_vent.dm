@@ -758,6 +758,40 @@
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 	)
 
+/obj/structure/ore_vent/debug
+	name = "debug ore vent"
+	desc = "How the hell did you get this?."
+	tapped = TRUE
+	discovered = TRUE
+	unique_vent = TRUE
+	color = "#ff00f2"
+	boulder_size = BOULDER_SIZE_SMALL
+	mineral_breakdown = list(
+		/datum/material/iron = 1,
+	)
+
+/obj/structure/ore_vent/debug/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	var/datum/material/choice = tgui_input_list(user, "Choose a material to add/remove.", "New material", subtypesof(/datum/material))
+	if(!choice)
+		return
+	if(mineral_breakdown[choice])
+		mineral_breakdown -= choice
+		balloon_alert_to_viewers("removed [choice::name]")
+		return
+	mineral_breakdown += choice
+	balloon_alert_to_viewers("added [choice::name]")
+	var/value = tgui_input_number(user, "What weight should it have?", "ore pickweight", 1, 100, 1)
+	mineral_breakdown[choice] = value
+	balloon_alert_to_viewers("weighting of [value] added")
+
+/obj/structure/ore_vent/debug/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	var/choice = tgui_input_list(user, "Choose a vent size.", "New size", list(SMALL_VENT_TYPE, MEDIUM_VENT_TYPE, LARGE_VENT_TYPE))
+	if(!choice)
+		return
+	vent_size_setup(random = FALSE, force_size = choice, map_loading = FALSE)
+
 /obj/effect/landmark/mining_center
 	name = "Mining Epicenter"
 	icon_state = "mining_epicenter"

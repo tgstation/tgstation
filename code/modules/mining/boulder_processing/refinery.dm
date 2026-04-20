@@ -50,7 +50,7 @@
 	for(var/obj/item/reagent_containers/beaker in component_parts)
 		new_volume += beaker.volume
 	if(!reagents)
-		create_reagents(new_volume, TRANSPARENT)
+		create_reagents(new_volume, OPENCONTAINER)
 	reagents.maximum_volume = new_volume
 
 
@@ -87,10 +87,10 @@
 	. = ..()
 	set_light_on(TRUE)
 
-
 /obj/machinery/bouldertech/refinery/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	. = ..()
 	if(do_after(user, 2 SECONDS, src))
+		reagents.expose(drop_location())
 		reagents.clear_reagents()
 
 

@@ -367,7 +367,7 @@
 			if(!can_process_material(possible_mat))
 				rejected_mats[possible_mat] = quantity
 				continue
-			points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
+			points_held += round(quantity * possible_mat.points_per_boulder_unit) // put point total here into machine
 			if(isnull(silo_materials.silo) || !silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
 				new possible_mat.sheet_type(drop_location(), floor(quantity / SHEET_MATERIAL_AMOUNT))
 
@@ -378,7 +378,7 @@
 		if(!length(chosen_boulder.custom_materials))
 			playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			if(istype(chosen_boulder, /obj/item/boulder/artifact))
-				points_held = round((points_held + MINER_POINT_MULTIPLIER) * MINING_POINT_MACHINE_MULTIPLIER) /// Artifacts give bonus points!
+				points_held = round((points_held + MINER_POINT_MULTIPLIER)) /// Artifacts give bonus points!
 			chosen_boulder.break_apart()
 			return//We've processed all the materials in the boulder, so we can just destroy it in break_apart.
 
