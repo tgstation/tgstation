@@ -357,7 +357,7 @@
 			miner.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
 		if(!user_id_card)
 			continue
-		var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
+		var/point_reward_val = (MINER_POINT_MULTIPLIER * (boulder_size + 2)) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
 		if(user_id_card.registered_account)
 			user_id_card.registered_account.mining_points += point_reward_val
 			user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
