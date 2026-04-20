@@ -88,9 +88,6 @@
 			if(!istype(thing, prio.atom_typepath))
 				continue
 
-			if(isliving(thing))
-				var/mob/living/L = thing
-
 			best_candidate = thing
 			best_priority_index = i
 
