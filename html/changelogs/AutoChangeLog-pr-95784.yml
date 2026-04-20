@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Upon being successfully sacrificed by a heretic all other heretics lose you as a target, and you can no longer be (re)rolled as a target by other heretics."
