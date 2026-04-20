@@ -1,3 +1,5 @@
+GLOBAL_ALIST_EMPTY(minimal_blip_tags)
+
 /// Screen object that renders a [/datum/minimap] base map icon on the HUD.
 /atom/movable/screen/minimap_display
 	name = "Minimap"
@@ -10,6 +12,8 @@
 	var/atom/movable/screen/minimap_label/screentip
 	/// Assoc list of "names" to blips.
 	var/list/atom/movable/screen/minimap_blip/blips = list()
+	/// The list of minimap blip tags we're going to shown on the minimap
+	var/list/valid_minimal_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP)
 
 /atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap)
 	. = ..()
@@ -19,6 +23,7 @@
 	screentip = new
 	vis_contents += screentip
 	update_owner_blip(hud.mymob)
+	INVOKE_ASYNC(src, PROC_REF(show_tagged_blips))
 
 /atom/movable/screen/minimap_display/Destroy()
 	if(hud?.mymob)
@@ -66,6 +71,15 @@
 		return
 	add_blip("locator", "locator", mob_loc.x, mob_loc.y)
 
+/atom/movable/screen/minimap_display/proc/show_tagged_blips()
+	for(var/blip_flag in valid_minimal_blip_tags)
+		var/blip_list = GLOB.minimal_blip_tags[blip_flag]
+		for(var/atom/movable/screen/minimap_blip/blip in blip_list)
+			if(blip.track_target.z == minimap.z)
+				blip.register_target(blip.track_target)
+				blip.start_tracking_target()
+				vis_contents += blip
+
 /atom/movable/screen/minimap_display/proc/set_minimap(datum/minimap/minimap)
 	icon = minimap.base_map
 	screen_loc = "1:[minimap.base_map.Width() / 2],1:[minimap.base_map.Height() / 2]"
@@ -108,6 +122,22 @@
 	vis_contents.Cut()
 	vis_contents += screentip // add screentip back in
 
+/proc/add_minimap_blip(atom/object, tag, icon_state, icon = 'icons/ui_icons/minimap/map_blips.dmi', large = FALSE)
+	if(!istype(object) || !tag || !icon_state)
+		CRASH("Invalid params passed in to add_minimap_blip")
+	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, icon_state, icon, large, tag)
+	LAZYADD(GLOB.minimal_blip_tags[tag], new_blip)
+
+/proc/remove_minimap_blip(tag, atom/object)
+	// assoc list of tags to a list of hud blips, find the correct hud blip via it's track_target
+	var/blip_list = GLOB.minimal_blip_tags[tag]
+	if(!length(blip_list))
+		return
+	for(var/atom/movable/screen/minimap_blip/blip as anything in blip_list)
+		if(blip.track_target == object)
+			qdel(blip)
+			break
+
 /atom/movable/screen/minimap_label
 	name = ""
 	layer = MINIMAP_LABELS_LAYER
@@ -123,12 +153,49 @@
 	layer = MINIMAP_BLIPS_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	vis_flags = VIS_INHERIT_PLANE
-	/// Is this a large blip?
+	/// Is this a large blip? causes different pixel offsets to be applied
 	var/large = FALSE
+	/// Minimap datum for the current z-level this blip is on
+	var/datum/minimap/minimap
+	/// If we are tracking our target or not, to ensure we do not re-register multiple times
+	var/tracking = FALSE
+	/// what target we're essentially owned by, and will cause this blip to cleanup if it gets deleted
+	var/atom/track_target
+	/// the tag this blip is associated via in it's stored globalist
+	var/blip_tag = ""
 
-/atom/movable/screen/minimap_blip/Initialize(mapload, datum/hud/hud_owner, icon_state, large = FALSE)
+/atom/movable/screen/minimap_blip/Initialize(mapload, datum/hud/hud_owner, atom/track_target, icon_state, icon, large = FALSE, blip_tag)
 	. = ..()
 	src.icon_state = icon_state
-	if(large)
-		src.icon = 'icons/ui_icons/minimap/map_blips_large.dmi'
-		src.large = TRUE
+	src.large = large
+	if(icon)
+		src.icon = icon
+	if(track_target)
+		register_target(track_target)
+	if(blip_tag)
+		src.blip_tag = blip_tag
+
+/atom/movable/screen/minimap_blip/Destroy()
+	. = ..()
+	GLOB.minimal_blip_tags -= src
+
+/atom/movable/screen/minimap_blip/proc/register_target(atom/target)
+	RegisterSignal(track_target, COMSIG_QDELETING, PROC_REF(cleanup_self))
+	track_target = target
+
+/atom/movable/screen/minimap_blip/proc/start_tracking_target()
+	if(tracking)
+		return
+	RegisterSignal(track_target, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED), PROC_REF(update_blip))
+	minimap = get_minimap_for_z(track_target.z)
+	tracking = TRUE
+
+/atom/movable/screen/minimap_blip/proc/update_blip(atom/target)
+	SIGNAL_HANDLER
+	var/half_size = large ? 5 : 3
+	pixel_w = MINIMAP_WORLD_TO_PIXEL(x, minimap.min_x, half_size)
+	pixel_z = MINIMAP_WORLD_TO_PIXEL(y, minimap.min_y, half_size)
+
+/atom/movable/screen/minimap_blip/proc/cleanup_self()
+	SIGNAL_HANDLER
+	qdel(src)

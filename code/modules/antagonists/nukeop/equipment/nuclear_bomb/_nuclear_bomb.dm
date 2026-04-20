@@ -62,6 +62,7 @@ GLOBAL_VAR(station_nuke_source)
 	update_appearance()
 	SSpoints_of_interest.make_point_of_interest(src)
 	previous_level = SSsecurity_level.get_current_level_as_text()
+	update_minimap_blip()
 
 /obj/machinery/nuclearbomb/Destroy()
 	safety = FALSE
@@ -70,6 +71,7 @@ GLOBAL_VAR(station_nuke_source)
 		toggle_nuke_safety()
 	QDEL_NULL(countdown)
 	QDEL_NULL(core)
+	remove_minimap_blip(src)
 	return ..()
 
 /obj/machinery/nuclearbomb/examine(mob/user)
@@ -523,6 +525,7 @@ GLOBAL_VAR(station_nuke_source)
 		arm_nuke(usr)
 	else
 		disarm_nuke(usr)
+	update_minimap_blip()
 
 /// Arms the nuke, making it active and triggering all pinpointers to start counting down (+delta alert)
 /obj/machinery/nuclearbomb/proc/arm_nuke(mob/armer)
@@ -564,6 +567,13 @@ GLOBAL_VAR(station_nuke_source)
 	countdown.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DISARMED, src)
 	update_appearance()
+
+/obj/machinery/nuclearbomb/proc/update_minimap_blip()
+	var/blip_icon =  'icons/ui_icons/minimap/map_blips_large.dmi'
+	if(timing)
+		add_minimap_blip(src, MINIMAP_BOMB_BLIP, "nuke_on", blip_icon, TRUE)
+	else
+		add_minimap_blip(src, MINIMAP_BOMB_BLIP, "nuke_off", blip_icon, TRUE)
 
 /// If the nuke is active, gets how much time is left until it detonates, in seconds.
 /// If the nuke is not active, gets how much time the nuke is set for, in seconds.

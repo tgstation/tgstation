@@ -42,7 +42,12 @@ GLOBAL_LIST_INIT(all_minimap_flags, bitfield2list(MINIMAP_FLAG_ALL))
 //General
 #define TACMAP_AREA_MAINTENANCE COLOR_WEBSAFE_DARK_GRAY
 
+/// How much we multiply the drawn image by, and as a result the pixel coordinates
+#define MINIMAP_PIXEL_MULTIPLIER 2
 /// Converts an icon pixel coordinate (from ICON_X/ICON_Y modifiers) to a world tile coordinate.
-#define MINIMAP_ICON_TO_WORLD(icon_coord, minimap_min) ((minimap_min) + floor(((icon_coord) - 1) / 2))
+#define MINIMAP_ICON_TO_WORLD(icon_coord, minimap_min) ((minimap_min) + floor(((icon_coord) - 1) / MINIMAP_PIXEL_MULTIPLIER))
 /// Converts a world tile coordinate to a pixel_w/pixel_z offset for placing a blip on the minimap display.
-#define MINIMAP_WORLD_TO_PIXEL(world_coord, minimap_min, half_size) (((world_coord) - (minimap_min)) * 2 + 1 - (half_size))
+#define MINIMAP_WORLD_TO_PIXEL(world_coord, minimap_min, half_size) (((world_coord) - (minimap_min)) * MINIMAP_PIXEL_MULTIPLIER + 1 - (half_size))
+#define MINIMAP_BOMB_BLIP "nuke"
+#define MINIMAP_NUKEDISK_BLIP "nuke_disk"
+#define MINIMAP_NUKEOP_BLIP "nukeop"

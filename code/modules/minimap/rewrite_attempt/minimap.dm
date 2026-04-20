@@ -64,7 +64,7 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	src.min_y = min_y
 
 	base_map.Crop(min_x, min_y, max_x, max_y)
-	base_map.Scale(base_map.Width() * 2, base_map.Height() * 2)
+	base_map.Scale(base_map.Width() * MINIMAP_PIXEL_MULTIPLIER, base_map.Height() * MINIMAP_PIXEL_MULTIPLIER)
 
 	return TRUE
 
