@@ -214,7 +214,7 @@
 	return .
 
 /obj/machinery/biogenerator/crowbar_act(mob/living/user, obj/item/tool)
-	. = default_deconstruction_crowbar(user, tool) & ITEM_INTERACT_SUCCESS)
+	. = default_deconstruction_crowbar(user, tool)
 	if(!(. & ITEM_INTERACT_SUCCESS))
 		return
 	var/turf/drop_location = drop_location()
