@@ -200,7 +200,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
-	points_per_boulder_unit = 2.5 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 3.5 / SHEET_MATERIAL_AMOUNT
 
 /// Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
@@ -225,7 +225,7 @@
 	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 15 / SHEET_MATERIAL_AMOUNT
-	points_per_boulder_unit = 3 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 2 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/plasma/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
@@ -313,7 +313,7 @@
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 60 / SHEET_MATERIAL_AMOUNT
-	points_per_boulder_unit = 18 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 15 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/bananium/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
@@ -369,6 +369,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	ore_type = /obj/item/stack/ore/titanium
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 3 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
@@ -399,7 +400,7 @@
 	value_per_unit = 600 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
-	points_per_boulder_unit = 30 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 20 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/runite/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
@@ -494,7 +495,7 @@
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
-	points_per_boulder_unit = 30 / SHEET_MATERIAL_AMOUNT // If it ever needs it, we'll give it
+	points_per_boulder_unit = 20 / SHEET_MATERIAL_AMOUNT // If it ever needs it, we'll give it
 
 /datum/material/adamantine/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
@@ -533,7 +534,7 @@
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
-	points_per_boulder_unit = 30 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 20 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/mythril/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
