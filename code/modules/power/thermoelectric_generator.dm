@@ -87,7 +87,7 @@
 	return TRUE
 
 /obj/machinery/power/thermoelectric_generator/crowbar_act(mob/living/user, obj/item/tool)
-	default_deconstruction_crowbar(user, tool)
+	return default_deconstruction_crowbar(user, tool)
 	return TRUE
 
 /obj/machinery/power/thermoelectric_generator/process()
