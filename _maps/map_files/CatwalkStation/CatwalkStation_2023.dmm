@@ -75390,14 +75390,6 @@
 /obj/structure/railing,
 /turf/open/floor/engine/hull/air,
 /area/station/maintenance/port)
-"ucf" = (
-/obj/machinery/light/directional/south,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mining"
-	},
-/turf/open/floor/iron/textured,
-/area/station/cargo/storage)
 "ucp" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -76875,6 +76867,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
 "uvF" = (
@@ -201181,7 +201174,7 @@ geK
 aPg
 jAO
 bEr
-ucf
+rCF
 uvA
 wrT
 rYh

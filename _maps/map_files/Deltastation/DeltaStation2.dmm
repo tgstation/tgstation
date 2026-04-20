@@ -83771,7 +83771,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
-/turf/open/space/basic,
+/turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "uDQ" = (
 /obj/structure/cable,

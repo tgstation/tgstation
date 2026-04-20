@@ -4491,11 +4491,6 @@
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/station/command/meeting_room)
-"bBo" = (
-/turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
-	},
-/area/station/cargo/miningoffice)
 "bBr" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
@@ -148443,7 +148438,7 @@ lEj
 lEj
 uKu
 pEH
-bBo
+uKu
 uKu
 uKu
 iaN
@@ -148699,7 +148694,7 @@ lEj
 lEj
 lEj
 uKu
-bBo
+uKu
 ixo
 dcg
 pdj
