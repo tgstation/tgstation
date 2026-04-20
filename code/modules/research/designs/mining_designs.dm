@@ -226,7 +226,7 @@
 		/datum/material/gold =SHEET_MATERIAL_AMOUNT,
 		/datum/material/diamond =SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs
+	build_path = /obj/item/borg/upgrade/modkit/cooldown/aoe/turfs
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
 	)
@@ -267,7 +267,7 @@
 	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
 	id = "hyperaoemod"
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver =SHEET_MATERIAL_AMOUNT*1.5, /datum/material/gold =SHEET_MATERIAL_AMOUNT*1.5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT*2)
-	build_path = /obj/item/borg/upgrade/modkit/aoe/mobs/andturfs
+	build_path = /obj/item/borg/upgrade/modkit/cooldown/aoe/mobs/andturfs
 
 /datum/design/unique_modkit/rapid_repeater
 	name = "Kinetic Accelerator Rapid Repeater Mod"
