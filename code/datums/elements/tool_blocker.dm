@@ -21,6 +21,8 @@
 		signals_to_register += COMSIG_ATOM_TOOL_ACT(tool_type)
 	if(action_type & TOOL_ACT_SECONDARY)
 		signals_to_register += COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type)
+	if(isturf(target))
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_turf_deleted), override = TRUE)
 
 	RegisterSignals(target, signals_to_register, PROC_REF(block_tool))
 
@@ -31,6 +33,8 @@
 		signals_to_unregister += COMSIG_ATOM_TOOL_ACT(tool_type)
 	if(action_type & TOOL_ACT_SECONDARY)
 		signals_to_unregister += COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type)
+	if(isturf(source))
+		signals_to_unregister += COMSIG_QDELETING
 	UnregisterSignal(source, signals_to_unregister)
 
 	return ..()
@@ -38,3 +42,7 @@
 /datum/element/tool_blocker/proc/block_tool(...)
 	SIGNAL_HANDLER
 	return ITEM_INTERACT_SKIP_TO_ATTACK
+
+/datum/element/tool_blocker/proc/on_turf_deleted(datum/source)
+	SIGNAL_HANDLER
+	Detach(source)
