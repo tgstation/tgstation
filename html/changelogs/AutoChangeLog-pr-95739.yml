@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Transforming items like eswords should no longer get absurd stats when metalgenned multiple times in a row"

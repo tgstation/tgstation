@@ -384,3 +384,46 @@
   vinylspiders:
   - bugfix: changing your gender choice in character prefs no longer modifies your
       physique preference
+2026-04-20:
+  ArcaneMusic:
+  - spellcheck: corrected some instances within TGC cards to say "plasma" instead
+      of "mana" when referring to card costs.
+  Jacquerel:
+  - rscadd: Adds 16 more wizard wands to the game, which wizards can buy cheaply but
+      randomly, or are available via Summon Magic.
+  - rscadd: If a wizard buys more than one set of wands they will receive a "Wand
+      Bandolier" holster which fits in the backpack or, if worn in the suit slot,
+      will automatically exchange an expended wand for a full one.
+  - balance: Staffs (and wands) of animation that are animated will try to animate
+      other objects instead of firing at living mobs, which are already animated.
+  - balance: Animating a wand of nothing will turn it into a wand of animation (and
+      animate it).
+  - balance: The staff of chaos can now do more things.
+  - balance: Magicarp now additionally come in Babbling, Frigid, Quantum, and Weightless
+      varieties. Collect them all!
+  Melbert:
+  - bugfix: Heretic "research knowledge" objective no longer undershoots the target
+      value by ~8-10
+  - balance: You can no longer dismount riders from ponies with a single click. Instead,
+      there is a chance to dismount the rider on shoving the pony OR the rider, based
+      on multiple factors (such as stamina + physical damage and stagger)
+  - balance: The Leaper mount also has this "disarm to dismount" mechanic, though
+      it is significantly more difficult as they are much sturdier beasts
+  SmArtKar:
+  - balance: Ship from a bottle can now be bottled back up by alt-clicking it
+  - balance: Ship in a bottle can now be deployed by throwing it, and are a small
+      item instead of normal-sized
+  - spellcheck: Boats no longer refer to oars as keys
+  - bugfix: Transforming items like eswords should no longer get absurd stats when
+      metalgenned multiple times in a row
+  SyncIt21:
+  - bugfix: AI camera mode works from any distances
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: welding goggles now only cover your eyes when covering your eyes
+  Yobrocharlie:
+  - rscadd: The heretic gateway now has a 40mm cannon in it.
+  lelandkemble:
+  - bugfix: Janiborgs will no longer track blood while autowashing
+  necromanceranne:
+  - qol: The detective's noir fedora is actually a detective fedora, and gets all
+      the unique qualities expected of one.

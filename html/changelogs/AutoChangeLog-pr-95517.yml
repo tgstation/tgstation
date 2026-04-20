@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "You can no longer dismount riders from ponies with a single click. Instead, there is a chance to dismount the rider on shoving the pony OR the rider, based on multiple factors (such as stamina + physical damage and stagger)"
-  - balance: "The Leaper mount also has this \"disarm to dismount\" mechanic, though it is significantly more difficult as they are much sturdier beasts"
