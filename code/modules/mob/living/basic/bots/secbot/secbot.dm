@@ -143,7 +143,6 @@
 /mob/living/basic/bot/secbot/update_icon_state()
 	if(mode == BOT_HUNT)
 		icon_state = "[base_icon_state]-c"
-		return
 	return ..()
 
 /mob/living/basic/bot/secbot/turn_off()
@@ -195,14 +194,19 @@
 	switch(action)
 		if("check_id")
 			security_mode_flags ^= SECBOT_CHECK_IDS
+			return TRUE
 		if("check_weapons")
 			security_mode_flags ^= SECBOT_CHECK_WEAPONS
+			return TRUE
 		if("check_warrants")
 			security_mode_flags ^= SECBOT_CHECK_RECORDS
+			return TRUE
 		if("handcuff_targets")
 			security_mode_flags ^= SECBOT_HANDCUFF_TARGET
+			return TRUE
 		if("arrest_alert")
 			security_mode_flags ^= SECBOT_DECLARE_ARRESTS
+			return TRUE
 
 
 /mob/living/basic/bot/secbot/attack_hand(mob/living/carbon/human/user, list/modifiers)

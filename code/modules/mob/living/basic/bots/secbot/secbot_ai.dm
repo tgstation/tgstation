@@ -72,18 +72,14 @@
 		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 		return
 
-	var/bot_flags = retrieve_arrest_flags(controller)
+	var/mob/living/basic/bot/secbot/my_bot = controller.pawn
+	var/bot_flags = my_bot.security_mode_flags
 	if(my_target.IsParalyzed() && !(bot_flags & SECBOT_HANDCUFF_TARGET))
 		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 		return
 
 	controller.queue_behavior(arrest_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY)
 	return SUBTREE_RETURN_FINISH_PLANNING
-
-/datum/ai_planning_subtree/arrest_target/proc/retrieve_arrest_flags(datum/ai_controller/basic_controller/bot/controller)
-	var/mob/living/basic/bot/secbot/my_bot = controller.pawn
-	return my_bot.security_mode_flags
-
 
 /datum/ai_behavior/basic_melee_attack/interact_once/bot
 
