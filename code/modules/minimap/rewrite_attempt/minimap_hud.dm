@@ -180,7 +180,7 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	GLOB.minimal_blip_tags -= src
 
 /atom/movable/screen/minimap_blip/proc/register_target(atom/target)
-	RegisterSignal(track_target, COMSIG_QDELETING, PROC_REF(cleanup_self))
+	RegisterSignal(track_target, COMSIG_QDELETING, TYPE_PROC_REF(/datum, selfdelete))
 	track_target = target
 
 /atom/movable/screen/minimap_blip/proc/start_tracking_target()
@@ -195,7 +195,3 @@ GLOBAL_ALIST_EMPTY(minimal_blip_tags)
 	var/half_size = large ? 5 : 3
 	pixel_w = MINIMAP_WORLD_TO_PIXEL(x, minimap.min_x, half_size)
 	pixel_z = MINIMAP_WORLD_TO_PIXEL(y, minimap.min_y, half_size)
-
-/atom/movable/screen/minimap_blip/proc/cleanup_self()
-	SIGNAL_HANDLER
-	qdel(src)
