@@ -363,7 +363,7 @@ GLOBAL_PROTECT(protected_ranks)
 			continue
 		var/flags_to_check = flags.Join(" != [R_EVERYTHING] AND ") + " != [R_EVERYTHING]"
 		var/datum/db_query/query_check_everything_ranks = SSdbcore.NewQuery(
-			"SELECT flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] WHERE rank = :rank AND ([flags_to_check])",
+			"SELECT flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] WHERE `rank` = :rank AND ([flags_to_check])",
 			list("rank" = R.name)
 		)
 		if(!query_check_everything_ranks.Execute())
@@ -372,7 +372,7 @@ GLOBAL_PROTECT(protected_ranks)
 		if(query_check_everything_ranks.NextRow()) //no row is returned if the rank already has the correct flag value
 			var/flags_to_update = flags.Join(" = [R_EVERYTHING], ") + " = [R_EVERYTHING]"
 			var/datum/db_query/query_update_everything_ranks = SSdbcore.NewQuery(
-				"UPDATE [format_table_name("admin_ranks")] SET [flags_to_update] WHERE rank = :rank",
+				"UPDATE [format_table_name("admin_ranks")] SET [flags_to_update] WHERE `rank` = :rank",
 				list("rank" = R.name)
 			)
 			if(!query_update_everything_ranks.Execute())

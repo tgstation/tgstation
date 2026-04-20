@@ -220,7 +220,7 @@
 		return TRUE
 
 	// Breaking the angle up into 45 degree steps
-	var/rotation_step = 45 * SIGN(angle_diff)
+	var/rotation_step = 45 * sign(angle_diff)
 	do_step_rotation(target_point, callback, current_angle, target_angle, rotation_step, 0, total_rotation_time)
 
 	return TRUE

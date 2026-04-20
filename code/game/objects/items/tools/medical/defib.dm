@@ -103,7 +103,7 @@
 		. += powered_state
 		if(!QDELETED(cell) && charge_state)
 			var/ratio = cell.charge / cell.maxcharge
-			ratio = CEILING(ratio*4, 1) * 25
+			ratio = ceil(ratio*4) * 25
 			. += "[charge_state][ratio]"
 	if(!cell && nocell_state)
 		. += "[nocell_state]"

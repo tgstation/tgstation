@@ -191,7 +191,7 @@
 	var/list/client_colours = list()
 	/// List of filter names used in the past client color update for cleanup
 	var/list/color_filter_store = list()
-	var/hud_type = /datum/hud
+	var/datum/hud/hud_type = /datum/hud
 
 	var/datum/focus //What receives our keyboard inputs. src by default
 

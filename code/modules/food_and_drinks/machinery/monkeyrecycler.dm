@@ -5,6 +5,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	desc = "A machine used for recycling dead monkeys into monkey cubes."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"
+	base_icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
 	interaction_flags_mouse_drop = NEED_DEXTERITY
 	density = TRUE
@@ -42,20 +43,15 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 		power_change()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
-		return
+/obj/machinery/monkey_recycler/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-	if(default_pry_open(O, close_after_pry = TRUE))
-		return
+/obj/machinery/monkey_recycler/crowbar_act(mob/living/user, obj/item/tool)
+	return default_pry_open(user, tool, close_after_pry = TRUE, deconstruct_on_fail = TRUE)
 
-	if(default_deconstruction_crowbar(O))
-		return
-
-	if(machine_stat) //NOPOWER etc
-		return
-	else
-		return ..()
+/obj/machinery/monkey_recycler/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state
 
 /obj/machinery/monkey_recycler/mouse_drop_receive(mob/living/target, mob/living/user, params)
 	if(!istype(target))
@@ -86,7 +82,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	if(stored_matter >= 1)
 		to_chat(user, span_notice("The machine hisses loudly as it condenses the ground monkey meat. After a moment, it dispenses a brand new monkey cube."))
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
-		for(var/i in 1 to FLOOR(stored_matter, 1))
+		for(var/i in 1 to floor(stored_matter))
 			new /obj/item/food/monkeycube(src.loc)
 			stored_matter--
 		to_chat(user, span_notice("The machine's display flashes that it has [stored_matter] monkeys worth of material left."))

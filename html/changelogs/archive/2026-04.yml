@@ -203,6 +203,17 @@
   - bugfix: Escape pod storage wall safes will now be unlocked when they're unlocked
       and appear locked when they're locked
 2026-04-11:
+  ArcaneMusic:
+  - bugfix: Weakpoints have more safeguards to prevent them from spawning onto space.
+  - image: Weakpoints now have an animation to spawn in with.
+  ElGitificador:
+  - bugfix: Deleted the misleading key request for the dragon lavaboat
+  FalloutFalcon:
+  - bugfix: The swap hand tutorial wont be shown to someone missing a hand
+  - bugfix: A handful of permissions panel querys now work again
+  Neocloudy:
+  - bugfix: DNA mob height doesn't instantly fall back to the base height for all
+      mobs.
   SmArtKar:
   - rscadd: Custom material spears can now be crafted using shards or (any) crystal
       sheets on a wireprod
@@ -211,3 +222,212 @@
   - balance: Spears had their material stat calculations adjusted a bit to account
       for the new slot system.
   - refactor: Implemented datum-based material effects and slots
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: the cyborg omnitool upgrades properly increase tool speed
+  - bugfix: the cyborg omnitool engineer upgrade properly increases the welder speed
+      as well
+  Twaticus:
+  - image: Hoodies! Both pullover and zip-up hoodies are available in the clothesmate
+      and in loadouts!
+2026-04-12:
+  ElGitificador:
+  - spellcheck: due to conflicts with the hive empress, lamarr has lost it s diplomatic
+      facehugger title
+  SmArtKar:
+  - bugfix: Fixed weather forcasts randomly backtracking on themselves, and falsely
+      announcing safety right before a storm hits
+  - rscdel: Plasma flower MOD core no longer spawns butterflies around the user
+  - qol: Plasma flower MOD core's pollen visual now spawns less particles
+2026-04-13:
+  00-Steven:
+  - admin: Holoparasite boobytraps now log when they're set and when they explode.
+  ArcaneMusic:
+  - rscadd: The Civilian bounty pad now has a new tab, where players can collaborate
+      and work together to complete additional, station wide bounties. Reward is split
+      based on the amount contributed. (Between 5-10 based on population to start)
+  - rscadd: The civilian bounty pad can now print out sheets of paper displaying all
+      available bounties, like old times.
+  - bugfix: The ninja holding facility is no longer loaded when civilian bounties
+      are sent.
+  Arturlang:
+  - bugfix: rust heretic robes now become buffed if the tile under you becomes rusted
+  - balance: void ascension and the void chill status effect now respect antimagic
+  - rscadd: heretic aura is now emissive.
+  - bugfix: a exploit where you could exit space phase anywhere by loosing your heretic
+      focus
+  - bugfix: moon ascension aura not affecting anyone else if one of the targets has
+      more than 10 sanity
+  Dolphyuser:
+  - balance: Now you can't handcuff shields
+  Iamgoofball:
+  - qol: Restores keybindings to their original pre-August 2025 defaults, moves the
+      new per-hand bind options to Unbound by default.
+  Rhials:
+  - bugfix: Donk Trading Post cameras no longer show up on the station cameranet
+  SmArtKar:
+  - qol: Ore vents now turn transparent and clickthrough when a mob enters the tile
+      above them. The bottom half of the vent is still clickable.
+  - code_imp: Cleaned up ore vent code
+  TheRyeGuyWhoWillNowDie:
+  - balance: making the handheld iconoclast's repeater now requires learning its recipe,
+      the book for which can spawn in maintenance.
+  lelandkemble:
+  - bugfix: Roundstart revs will no longer choose people who do not want to be headrevs
+      as headrevs
+  - bugfix: Liberator pistol applies point-blank damage modifier no matter how it
+      is fired
+  - bugfix: toiletbong works
+  - bugfix: Smoke no longer exposes mobs to reagents multiple times per tick, significantly
+      lowering the duration of effects applied by chemical smoke
+  - map: Tramstation inner supermatter chamber no longer has a connected APC
+  timothymtorres:
+  - bugfix: Fix admin shuttle recall revealing admin location
+  - rscadd: Added a new positive quirk "Keen Nose". Characters with this quirk can
+      smell chemical contents in open beakers and bottles simply by examining them
+      while held. The smell description is identical to the taste description of the
+      reagents.
+  - rscadd: Getting pepper-sprayed now causes a mob to lose their sense of smell for
+      half a minute.
+2026-04-14:
+  Ben10Omintrix:
+  - bugfix: fixes bot huds randomly dissappearing
+  JohnFulpWillard:
+  - qol: Holoparasites' abilities are now action buttons, so you can rebind or move
+      them.
+  - qol: Holoparasites now have floor change buttons.
+  - bugfix: Holoparasites and Soulscythes now have a combat mode indicator.
+  - bugfix: Dextrous holoparasites now have their inventory slot again while non-dextrous
+      had it taken away (not that they could use it).
+  SmArtKar:
+  - rscadd: Added a new Tactical IFF Visor, available after combat implants have been
+      researched.
+  - refactor: Refactored eye rendering slightly.
+  timothymtorres:
+  - bugfix: Fix fishing random portals not working correctly
+2026-04-15:
+  JoshAdamPowell:
+  - admin: admins can more freely mess with ooc colours
+  Macaroni:
+  - rscadd: Added the sweater vest
+  Melbert:
+  - refactor: A majority of machines had their screwdriver/crowbar/wrench interactions
+      rewritten, report any oddities like being unable to open a machine's panel or
+      deconstruct a machine
+  Rhials:
+  - spellcheck: The alien dissection guide steps have been updated to reflect changes
+      to surgical processes.
+  Yobrocharlie:
+  - rscdel: Removed the snowdin and caves maps
+  lelandkemble:
+  - rscadd: Space Dragons have a new ability to locate the areas they need to create
+      rifts in.
+  theselfish:
+  - sound: Shaving Ian will no longer sound like you're using a Welder.
+2026-04-16:
+  JohnFulpWillard:
+  - rscadd: Winning the slot machine jackpot now gives a memory.
+  - balance: Winning the slot machine jackpot is a +4 moodlet instead of +6, but it
+      is now a permanent moodlet.
+  - rscadd: Losing large amounts of money from the CRAB-17 will give you a negative
+      moodlet, which overwrites jackpot winnings.
+  Melbert:
+  - rscadd: If a playerless body (DNR'd or otherwise) is raised as a zombie, ghosts
+      are given the ability to take control of it
+  - rscadd: If a body that never had a player control it is risen as a zombie, they
+      are risen as a weaker "mindless zombie" (moves and heals slower, deals less
+      damage, infection is not guaranteed on hit)
+  SmArtKar:
+  - rscadd: Style meters now award you for clearing vents based on vent richness and
+      difficulty
+  - balance: Megafauna kills and vent taps grant a permanent 10% / 5/10/15% (based
+      on difficulty) permanent style boost respectively
+  - rscdel: Style meters no longer grant points for mining empty rocks
+  - qol: Style meter actions now list top-to-bottom rather than bottom-to-top
+  timothymtorres:
+  - server: Optimized CI workflow to skip map-specific linters when no maps are modified.
+2026-04-17:
+  00-Steven:
+  - bugfix: Books no longer get trimmed below the paper length limit.
+  - bugfix: Books made using paperwork created with multiple inputs no longer put
+      all that text on the same line.
+  Hardly:
+  - bugfix: Kitsune mask no longer keeps the user's identity hidden while it's flipped
+  Melbert:
+  - rscadd: Traitor Lawyers, Quartermasters, and Heads of Personnels can now purchase
+      a "Briefcase Embedded Firearm Trigger" from the uplink for 4tc - a briefcase
+      that allows any weapon stored within to be fired by "firing" the briefcase itself.
+      Weapon sizes are restricted to whatever fits in a briefcase, meaning it practically
+      only works with pistols and some laser weapons.  It has a subtle examine tell
+      that only appears while being held.
+  - rscadd: Also available for 8tc is a combo deal that comes pre-loaded with a Makarov.
+      This can also appear as a medium Spy reward.
+  - balance: The Spy item "boot dagger"'s examine tell now only appears if you're
+      examining them WHILE holding them.
+  Yobrocharlie:
+  - bugfix: Removes inert wands of fireball and healing from the academy, apparently
+      inert doesnt mean not working but just fewer charges.
+  timothymtorres:
+  - bugfix: Fix window spawners not being dense, which affected random spawners LOS
+      boundaries.
+2026-04-18:
+  RusselNotSCP:
+  - rscadd: The Pousse-Cafe's recipe has been changed to require more exotic liqueurs
+  - qol: The Improved Whiskey Cocktail's recipe has been changed to make it easier
+      to handcraft
+  combustor:
+  - balance: Removes the minimum APC requirement for robofactories
+  lelandkemble:
+  - bugfix: stimulants properly regenerate stamina in otherwise healthy people
+2026-04-19:
+  Melbert:
+  - bugfix: Removing brain updates the med hud
+  vinylspiders:
+  - bugfix: changing your gender choice in character prefs no longer modifies your
+      physique preference
+2026-04-20:
+  ArcaneMusic:
+  - spellcheck: corrected some instances within TGC cards to say "plasma" instead
+      of "mana" when referring to card costs.
+  Jacquerel:
+  - rscadd: Adds 16 more wizard wands to the game, which wizards can buy cheaply but
+      randomly, or are available via Summon Magic.
+  - rscadd: If a wizard buys more than one set of wands they will receive a "Wand
+      Bandolier" holster which fits in the backpack or, if worn in the suit slot,
+      will automatically exchange an expended wand for a full one.
+  - balance: Staffs (and wands) of animation that are animated will try to animate
+      other objects instead of firing at living mobs, which are already animated.
+  - balance: Animating a wand of nothing will turn it into a wand of animation (and
+      animate it).
+  - balance: The staff of chaos can now do more things.
+  - balance: Magicarp now additionally come in Babbling, Frigid, Quantum, and Weightless
+      varieties. Collect them all!
+  Melbert:
+  - bugfix: Heretic "research knowledge" objective no longer undershoots the target
+      value by ~8-10
+  - balance: You can no longer dismount riders from ponies with a single click. Instead,
+      there is a chance to dismount the rider on shoving the pony OR the rider, based
+      on multiple factors (such as stamina + physical damage and stagger)
+  - balance: The Leaper mount also has this "disarm to dismount" mechanic, though
+      it is significantly more difficult as they are much sturdier beasts
+  - balance: Upon being successfully sacrificed by a heretic all other heretics lose
+      you as a target, and you can no longer be (re)rolled as a target by other heretics.
+  SmArtKar:
+  - balance: Ship from a bottle can now be bottled back up by alt-clicking it
+  - balance: Ship in a bottle can now be deployed by throwing it, and are a small
+      item instead of normal-sized
+  - spellcheck: Boats no longer refer to oars as keys
+  - bugfix: Transforming items like eswords should no longer get absurd stats when
+      metalgenned multiple times in a row
+  SyncIt21:
+  - bugfix: AI camera mode works from any distances
+  TheRealSpriteMan1337:
+  - image: Omega soap texture has been updated.
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: welding goggles now only cover your eyes when covering your eyes
+  Yobrocharlie:
+  - rscadd: The heretic gateway now has a 40mm cannon in it.
+  lelandkemble:
+  - bugfix: Janiborgs will no longer track blood while autowashing
+  necromanceranne:
+  - qol: The detective's noir fedora is actually a detective fedora, and gets all
+      the unique qualities expected of one.

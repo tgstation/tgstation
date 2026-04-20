@@ -4,6 +4,7 @@
 	desc = "Produces components for the creation of integrated circuits."
 	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "fab-idle"
+	base_icon_state = "fab"
 	circuit = /obj/item/circuitboard/machine/component_printer
 
 	/// The internal material bus
@@ -233,14 +234,14 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/component_printer/screwdriver_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_screwdriver(user, "fab-o", "fab-idle", tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/component_printer/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : "[base_icon_state]-idle"
 
 /obj/machinery/component_printer/proc/get_material_cost_data(list/materials, efficiency_coeff)
 	var/list/data = list()
@@ -339,6 +340,7 @@
 	desc = "Allows you to duplicate module components so that you don't have to recreate them. Scan a module component over this machine to add it as an entry."
 	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "module-fab-idle"
+	base_icon_state = "module-fab"
 	circuit = /obj/item/circuitboard/machine/module_duplicator
 	density = TRUE
 
@@ -539,11 +541,11 @@
 	return data
 
 /obj/machinery/module_duplicator/crowbar_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/module_duplicator/screwdriver_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_screwdriver(user, "module-fab-o", "module-fab-idle", tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/module_duplicator/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : "[base_icon_state]-idle"
