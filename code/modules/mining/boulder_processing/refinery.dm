@@ -89,6 +89,7 @@
 
 /obj/machinery/bouldertech/refinery/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	. = ..()
+	balloon_alert(user, "emptying...")
 	if(do_after(user, 2 SECONDS, src))
 		reagents.expose(drop_location())
 		reagents.clear_reagents()
