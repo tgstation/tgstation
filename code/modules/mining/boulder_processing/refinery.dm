@@ -58,6 +58,7 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/boulder_reactions)
 	AddElement(/datum/element/simple_rotation)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/bouldertech/refinery/check_for_boosts()
 	. = ..() //resets to 1.00 efficiency in the parent
