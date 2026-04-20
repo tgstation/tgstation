@@ -267,20 +267,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 	max_n_of_items = 10
 	pixel_y = -4
 
-/obj/machinery/smartfridge/survival_pod/welder_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/machinery/smartfridge/survival_pod/wrench_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/machinery/smartfridge/survival_pod/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/machinery/smartfridge/survival_pod/crowbar_act(mob/living/user, obj/item/tool)
-	return NONE
-
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	AddElement(/datum/element/tool_blocker, TOOL_WELDER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR, TOOL_ACT_PRIMARY)
 	return ..()
 
 /obj/machinery/smartfridge/survival_pod/preloaded/Initialize(mapload)
