@@ -462,6 +462,8 @@
   - qol: The detective's noir fedora is actually a detective fedora, and gets all
       the unique qualities expected of one.
 2026-04-21:
+  Ben10Omintrix:
+  - balance: the grapple gun's price has been reduced to 1500 points
   LT3:
   - bugfix: Fixed loss of credits for correctly denied minerals market cargo manifest
   - bugfix: Cargo budget materials market orders arrive in crates as expected
