@@ -14,6 +14,6 @@ GLOBAL_ALIST_EMPTY(minimap_blip_tags)
 		return
 	for(var/atom/movable/screen/minimap_blip/blip as anything in blip_list)
 		if(blip.track_target == object)
-			qdel(blip)
 			SEND_GLOBAL_SIGNAL(SIGNAL_MINIMAP_REMOVE(tag), blip)
+			qdel(blip)
 			break
