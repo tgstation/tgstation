@@ -220,8 +220,7 @@
 	plasma_burn_rate = min(plasma_burn_rate, plasma[MOLES], oxygen[MOLES] *  INVERSE(oxygen_burn_ratio)) //Ensures matter is conserved properly
 	plasma[MOLES] = QUANTIZE(plasma[MOLES] - plasma_burn_rate)
 	oxygen[MOLES] = QUANTIZE(oxygen[MOLES] - (plasma_burn_rate * oxygen_burn_ratio))
-	var/moles_removed = plasma_burn_rate + (plasma_burn_rate * oxygen_burn_ratio)
-		if (super_saturation)
+	if(super_saturation)
 		ASSERT_GAS(/datum/gas/tritium, air)
 		cached_gases[/datum/gas/tritium][MOLES] += plasma_burn_rate
 	else
@@ -282,7 +281,6 @@
 
 	hydrogen[MOLES] -= burned_fuel
 	oxygen[MOLES] -= burned_fuel * 0.5
-	var/moles_removed = burned_fuel + burned_fuel * 0.5
 	ASSERT_GAS(/datum/gas/water_vapor, air)
 	cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel
 
@@ -340,7 +338,6 @@
 
 	tritium[MOLES] -= burned_fuel
 	oxygen[MOLES] -= burned_fuel * 0.5
-	var/moles_removed = burned_fuel * 0.5 + burned_fuel
 	ASSERT_GAS(/datum/gas/water_vapor, air)
 	cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel
 
@@ -423,7 +420,6 @@
 	freon_burn_rate = min(freon_burn_rate, freon[MOLES], oxygen[MOLES] * INVERSE(oxygen_burn_ratio)) //Ensures matter is conserved properly
 	freon[MOLES] = QUANTIZE(freon[MOLES] - freon_burn_rate)
 	oxygen[MOLES] = QUANTIZE(oxygen[MOLES] - (freon_burn_rate * oxygen_burn_ratio))
-	var/moles_removed = freon_burn_rate + (freon_burn_rate * oxygen_burn_ratio)
 	ASSERT_GAS(/datum/gas/carbon_dioxide, air)
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] += freon_burn_rate
 
@@ -480,7 +476,6 @@
 	var/old_heat_capacity = air.heat_capacity()
 	oxygen[MOLES] -= heat_efficiency * 0.5
 	nitrogen[MOLES] -= heat_efficiency
-	var/moles_removed = heat_efficiency * 0.5 + heat_efficiency
 	ASSERT_GAS(/datum/gas/nitrous_oxide, air)
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] += heat_efficiency
 
@@ -521,7 +516,6 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	nitrous_oxide[MOLES] -= burned_fuel
-	var/moles_removed = burned_fuel
 	ASSERT_GAS(/datum/gas/nitrogen, air)
 	cached_gases[/datum/gas/nitrogen][MOLES] += burned_fuel
 	ASSERT_GAS(/datum/gas/oxygen, air)
@@ -578,7 +572,6 @@
 	*Plasma acts as a catalyst on decomposition, so it doesn't get consumed in the process.
 	*N2O decomposes with its normal decomposition energy
 	*/
-	var/moles_removed
 	if (nitrous_oxide_decomposed_factor>0)
 		ASSERT_GAS(/datum/gas/nitrogen, air)
 		ASSERT_GAS(/datum/gas/oxygen, air)
@@ -590,7 +583,6 @@
 	cached_gases[/datum/gas/bz][MOLES] += bz_formed * (1-nitrous_oxide_decomposed_factor)
 	nitrous_oxide[MOLES] -= 0.4 * bz_formed
 	plasma[MOLES] -= 0.8 * bz_formed * (1-nitrous_oxide_decomposed_factor)
-	moles_removed = 0.4 * bz_formed + 0.8 * bz_formed * (1-nitrous_oxide_decomposed_factor)
 
 
 
@@ -638,7 +630,6 @@
 	carbon_dioxide[MOLES] -= produced_amount
 	oxygen[MOLES] -= produced_amount * 0.5
 	tritium[MOLES] -= produced_amount * 0.01
-	var/moles_removed = produced_amount * 0.5 + produced_amount * 0.01
 	ASSERT_GAS(/datum/gas/pluoxium, air)
 	cached_gases[/datum/gas/pluoxium][MOLES] += produced_amount
 	ASSERT_GAS(/datum/gas/hydrogen, air)
@@ -691,7 +682,6 @@
 	tritium[MOLES] -= heat_efficiency
 	nitrogen[MOLES] -= heat_efficiency
 	bz[MOLES] -= heat_efficiency * 0.05 //bz gets consumed to balance the nitrium production and not make it too common and/or easy
-	var/moles_removed = heat_efficiency + heat_efficiency + heat_efficiency * 0.05
 	cached_gases[/datum/gas/nitrium][MOLES] += heat_efficiency
 
 
@@ -737,7 +727,6 @@
 	var/old_heat_capacity = air.heat_capacity()
 	air.assert_gases(/datum/gas/nitrogen, /datum/gas/hydrogen)
 	nitrium[MOLES] -= heat_efficiency
-	var/moles_removed = heat_efficiency
 	cached_gases[/datum/gas/hydrogen][MOLES] += heat_efficiency
 	cached_gases[/datum/gas/nitrogen][MOLES] += heat_efficiency
 
@@ -790,7 +779,6 @@
 	plasma[MOLES] -= freon_formed * 0.6
 	carbon_dioxide[MOLES] -= freon_formed * 0.3
 	bz[MOLES] -= freon_formed * 0.1
-	var/moles_removed = freon_formed * 0.6 + freon_formed * 0.3 + freon_formed * 0.1
 	cached_gases[/datum/gas/freon][MOLES] += freon_formed
 
 	SET_REACTION_RESULTS(freon_formed)
@@ -844,7 +832,6 @@
 	var/old_heat_capacity = air.heat_capacity()
 	tritium[MOLES] -= 5 * nob_formed * reduction_factor
 	nitrogen[MOLES] -= 10 * nob_formed
-	var/moles_removed = 5 * nob_formed * reduction_factor + 10 * nob_formed
 	cached_gases[/datum/gas/hypernoblium][MOLES] += nob_formed // I'm not going to nitpick, but N20H10 feels like it should be an explosive more than anything.
 
 	SET_REACTION_RESULTS(nob_formed)
@@ -892,7 +879,6 @@
 	ASSERT_GAS(/datum/gas/pluoxium, air)
 	halon[MOLES] -= heat_efficiency
 	oxygen[MOLES] -= heat_efficiency * 20
-	var/moles_removed = heat_efficiency + heat_efficiency * 20
 	cached_gases[/datum/gas/pluoxium][MOLES] += heat_efficiency * 2.5
 
 	SET_REACTION_RESULTS(heat_efficiency * 5)
@@ -946,7 +932,6 @@
 	ASSERT_GAS(/datum/gas/healium, air)
 	freon[MOLES] -= heat_efficiency * 2.75
 	bz[MOLES] -= heat_efficiency * 0.25
-	var/moles_removed = heat_efficiency * 2.75 + heat_efficiency * 0.25
 	cached_gases[/datum/gas/healium][MOLES] += heat_efficiency * 3
 
 	SET_REACTION_RESULTS(heat_efficiency * 3)
@@ -990,7 +975,6 @@
 	ASSERT_GAS(/datum/gas/zauker, air)
 	hypernoblium[MOLES] -= heat_efficiency * 0.01
 	nitrium[MOLES] -= heat_efficiency * 0.5
-	var/moles_removed = heat_efficiency * 0.01 + heat_efficiency * 0.5
 	cached_gases[/datum/gas/zauker][MOLES] += heat_efficiency * 0.5
 
 	SET_REACTION_RESULTS(heat_efficiency * 0.5)
@@ -1029,7 +1013,6 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	zauker[MOLES] -= burned_fuel
-	var/moles_removed = burned_fuel
 	ASSERT_GAS(/datum/gas/oxygen, air)
 	cached_gases[/datum/gas/oxygen][MOLES] += burned_fuel * 0.3
 	nitrogen[MOLES] += burned_fuel * 0.7
@@ -1077,7 +1060,6 @@
 	ASSERT_GAS(/datum/gas/proto_nitrate, air)
 	hydrogen[MOLES] -= heat_efficiency * 2
 	pluoxium[MOLES] -= heat_efficiency * 0.2
-	var/moles_removed = heat_efficiency * 2 + heat_efficiency * 0.2
 	cached_gases[/datum/gas/proto_nitrate][MOLES] += heat_efficiency * 2.2
 
 	SET_REACTION_RESULTS(heat_efficiency * 2.2)
@@ -1116,7 +1098,6 @@
 	var/old_heat_capacity = air.heat_capacity()
 	hydrogen[MOLES] -= produced_amount
 	proto_nitrate[MOLES] += produced_amount * 0.5
-	var/moles_removed = produced_amount
 
 	SET_REACTION_RESULTS(produced_amount * 0.5)
 	var/energy_used = produced_amount * PN_HYDROGEN_CONVERSION_ENERGY
@@ -1159,7 +1140,6 @@
 	var/old_heat_capacity = air.heat_capacity()
 	proto_nitrate[MOLES] -= produced_amount * 0.01
 	tritium[MOLES] -= produced_amount
-	var/moles_removed = produced_amount + produced_amount * 0.01
 	ASSERT_GAS(/datum/gas/hydrogen, air)
 	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount
 
@@ -1213,7 +1193,6 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	bz[MOLES] -= consumed_amount
-	var/moles_removed = consumed_amount
 	ASSERT_GAS(/datum/gas/nitrogen, air)
 	cached_gases[/datum/gas/nitrogen][MOLES] += consumed_amount * 0.4
 	ASSERT_GAS(/datum/gas/helium, air)
@@ -1269,7 +1248,6 @@
 	var/antinoblium_moles = antinoblium[MOLES]
 	var/total_not_antinoblium_moles = total_moles - antinoblium_moles
 	var/reaction_rate = min(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR, total_not_antinoblium_moles)
-	var/moles_removed
 	if(total_not_antinoblium_moles < MINIMUM_MOLE_COUNT) // Clear up the remaining gases if this condition is met.
 		. = NO_REACTION
 		reaction_rate = total_not_antinoblium_moles
@@ -1280,7 +1258,6 @@
 			gas[MOLES] = 0
 			continue
 		gas[MOLES] -= reaction_rate * gas[MOLES] / total_not_antinoblium_moles
-		moles_removed += reaction_rate * gas[MOLES] / total_not_antinoblium_moles
 	antinoblium[MOLES] += reaction_rate
 
 	SET_REACTION_RESULTS(reaction_rate)
