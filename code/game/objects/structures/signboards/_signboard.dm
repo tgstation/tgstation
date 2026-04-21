@@ -23,7 +23,7 @@
 	var/locked = FALSE
 	/// If text should be shown while unanchored.
 	var/show_while_unanchored = FALSE
-	/// If TRUE, the sign can be edited without a writing utensil.
+	/// If TRUE, the sign can be edited without a pen.
 	var/edit_by_hand = FALSE
 
 /obj/structure/signboard/Initialize(mapload)
@@ -60,7 +60,7 @@
 	else
 		. += span_notice("It's unsecured, you could use a <b>wrench</b> to secure it in place.")
 	if(sign_text)
-		. += span_boldnotice("<hr>It currently displays the following:")
+		. += span_boldnotice("\nIt currently displays the following:")
 		. += span_info(html_encode(sign_text))
 	else
 		. += span_notice("\nIt's blank.")
@@ -191,11 +191,11 @@
 		SET_PLANE_EXPLICIT(text_image, HUD_PLANE, src)
 		text_image.alpha = 192
 		text_image.loc = src
+		text_image.maptext_x = (SIGNBOARD_WIDTH - safe_width) * -0.5
+		text_image.maptext_y = safe_height
+		text_image.maptext_width = SIGNBOARD_WIDTH
+		text_image.maptext_height = SIGNBOARD_HEIGHT
 	text_image.maptext = text_html
-	text_image.maptext_x = (SIGNBOARD_WIDTH - safe_width) * -0.5
-	text_image.maptext_y = safe_height
-	text_image.maptext_width = SIGNBOARD_WIDTH
-	text_image.maptext_height = SIGNBOARD_HEIGHT
 
 /obj/structure/signboard/proc/set_text(new_text, force = FALSE)
 	. = FALSE
