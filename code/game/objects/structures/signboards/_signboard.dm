@@ -54,7 +54,7 @@
 /obj/structure/signboard/examine(mob/user)
 	. = ..()
 	if(!edit_by_hand)
-		. += span_notice("You can write on the sign with a <b>pen or other utensil.</b>")
+		. += span_notice("You can write on the sign with a <b>pen.</b>")
 	if(anchored)
 		. += span_notice("It's secured to the floor, you could use a <b>wrench</b> to unsecure and move it.")
 	else
@@ -146,7 +146,7 @@
 
 /obj/structure/signboard/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(!same_z_layer)
-		SET_PLANE_EXPLICIT(text_image, HUD_PLANE, src)
+		SET_PLANE_EXPLICIT(text_image, ABOVE_GAME_PLANE, src)
 	return ..()
 
 /obj/structure/signboard/set_anchored(anchorvalue)
@@ -188,7 +188,7 @@
 	var/text_html = MAPTEXT_GRAND9K("<span style='text-align: center; line-height: 1'>[html_encode(sign_text)]</span>")
 	if(!text_image)
 		text_image = new
-		SET_PLANE_EXPLICIT(text_image, HUD_PLANE, src)
+		SET_PLANE_EXPLICIT(text_image, ABOVE_GAME_PLANE, src)
 		text_image.alpha = 192
 		text_image.loc = src
 		text_image.maptext_x = (SIGNBOARD_WIDTH - safe_width) * -0.5

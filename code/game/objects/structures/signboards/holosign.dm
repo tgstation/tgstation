@@ -161,7 +161,6 @@
 		current_color = new_color
 		add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
 	set_light(l_color = current_color || src::light_color)
-	text_image.color = current_color || null
 	update_appearance()
 
 /obj/item/circuit_component/holo_signboard
