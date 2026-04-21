@@ -16,12 +16,3 @@
 	// The only reason I'm limiting this to male or female
 	// is that hairstyle randomization handles enbies poorly
 	return pick(MALE, FEMALE)
-
-/datum/preference/choiced/gender/post_write(value, datum/preferences/preferences)
-	..()
-	if (gender_has_physique(value))
-		return
-
-	var/current_physique = preferences.read_preference(/datum/preference/choiced/body_type)
-	if(current_physique != MALE && current_physique != FEMALE)
-		preferences.update_preference(GLOB.preference_entries[/datum/preference/choiced/body_type], FEMALE)
