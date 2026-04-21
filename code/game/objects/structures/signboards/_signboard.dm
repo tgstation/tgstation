@@ -13,7 +13,9 @@
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_REQUIRES_DEXTERITY
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
-	/// The current text written on the sign.
+	/// The image holding this sign's text
+	var/image/text_image
+	/// The current text written on the sign
 	var/sign_text
 	/// The maximum length of text that can be input onto the sign.
 	var/max_length = MAX_SIGN_LEN
@@ -21,15 +23,11 @@
 	var/locked = FALSE
 	/// If text should be shown while unanchored.
 	var/show_while_unanchored = FALSE
-	/// If TRUE, the sign can be edited without a pen.
+	/// If TRUE, the sign can be edited without a writing utensil.
 	var/edit_by_hand = FALSE
-	/// Holder for signboard maptext
-	var/obj/effect/abstract/signboard_holder/text_holder
 
 /obj/structure/signboard/Initialize(mapload)
 	. = ..()
-	text_holder = new(src)
-	vis_contents += text_holder
 	if(sign_text)
 		set_text(sign_text, force = TRUE)
 		investigate_log("had its text set on load to \"[sign_text]\"", INVESTIGATE_SIGNBOARD)
@@ -37,35 +35,35 @@
 	register_context()
 
 /obj/structure/signboard/Destroy(force)
-	vis_contents -= text_holder
-	QDEL_NULL(text_holder)
+	QDEL_NULL(text_image)
 	return ..()
 
 /obj/structure/signboard/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(!is_locked(user))
-		if(held_item?.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
-			return CONTEXTUAL_SCREENTIP_SET
-		if((edit_by_hand || istype(held_item, /obj/item/pen)) && (anchored || show_while_unanchored))
-			context[SCREENTIP_CONTEXT_LMB] = "Set Displayed Text"
-			if(sign_text)
-				context[SCREENTIP_CONTEXT_ALT_RMB] = "Clear Sign"
-			return CONTEXTUAL_SCREENTIP_SET
+	if(is_locked(user))
+		return
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+		return CONTEXTUAL_SCREENTIP_SET
+	if((edit_by_hand || istype(held_item, /obj/item/pen)) && (anchored || show_while_unanchored))
+		context[SCREENTIP_CONTEXT_LMB] = "Set Displayed Text"
+		if(sign_text)
+			context[SCREENTIP_CONTEXT_ALT_RMB] = "Clear Sign"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/signboard/examine(mob/user)
 	. = ..()
 	if(!edit_by_hand)
-		. += span_info("You need a <b>pen</b> to write on the sign!")
+		. += span_notice("You can write on the sign with a <b>pen or other utensil.</b>")
 	if(anchored)
-		. += span_info("It is secured to the floor, you could use a <i>wrench</i> to unsecure and move it.")
+		. += span_notice("It's secured to the floor, you could use a <b>wrench</b> to unsecure and move it.")
 	else
-		. += span_info("It is unsecured, you could use a <i>wrench</i> to secure it in place.")
+		. += span_notice("It's unsecured, you could use a <b>wrench</b> to secure it in place.")
 	if(sign_text)
-		. += span_boldnotice("\nIt currently displays the following:")
+		. += span_boldnotice("<hr>It currently displays the following:")
 		. += span_info(html_encode(sign_text))
 	else
-		. += span_info("\nIt is blank!")
+		. += span_notice("\nIt's blank.")
 
 /obj/structure/signboard/update_icon_state()
 	. = ..()
@@ -108,7 +106,7 @@
 		default = sign_text,
 		max_length = max_length,
 		multiline = TRUE,
-		encode = FALSE
+		encode = FALSE,
 	)
 	if(QDELETED(src) || !new_text || check_locked(user))
 		return FALSE
@@ -148,7 +146,7 @@
 
 /obj/structure/signboard/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(!same_z_layer)
-		SET_PLANE_EXPLICIT(text_holder, ABOVE_GAME_PLANE, src)
+		SET_PLANE_EXPLICIT(text_image, HUD_PLANE, src)
 	return ..()
 
 /obj/structure/signboard/set_anchored(anchorvalue)
@@ -156,9 +154,9 @@
 	update_text()
 
 /obj/structure/signboard/proc/is_locked(mob/user)
-	. = locked
 	if(isAdminGhostAI(user))
 		return FALSE
+	return locked
 
 /obj/structure/signboard/proc/check_locked(mob/user, silent = FALSE)
 	. = is_locked(user)
@@ -172,22 +170,32 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/signboard/proc/update_text()
-	PROTECTED_PROC(TRUE)
-	if(!should_display_text())
-		text_holder.maptext = null
+/obj/structure/signboard/MouseEntered(location, control, params)
+	. = ..()
+	if(QDELETED(src) || !should_display_text())
 		return
-	var/bwidth = src.bound_width || ICON_SIZE_X
-	var/bheight = src.bound_height || ICON_SIZE_Y
+	usr.client.images |= text_image
+
+/obj/structure/signboard/MouseExited(location, control, params)
+	. = ..()
+	usr.client.images -= text_image
+
+/// Creates [text_image] if it doesn't exist, and sets its maptext to [sign_text]
+/obj/structure/signboard/proc/update_text()
+	PROTECTED_PROC(TRUE) // Use set_text instead
+	var/safe_width = src.bound_width || ICON_SIZE_X
+	var/safe_height = src.bound_height || ICON_SIZE_Y
 	var/text_html = MAPTEXT_GRAND9K("<span style='text-align: center; line-height: 1'>[html_encode(sign_text)]</span>")
-	SET_PLANE_EXPLICIT(text_holder, ABOVE_GAME_PLANE, src)
-	text_holder.layer = ABOVE_ALL_MOB_LAYER
-	text_holder.alpha = 192
-	text_holder.maptext = text_html
-	text_holder.maptext_x = (SIGNBOARD_WIDTH - bwidth) * -0.5
-	text_holder.maptext_y = bheight
-	text_holder.maptext_width = SIGNBOARD_WIDTH
-	text_holder.maptext_height = SIGNBOARD_HEIGHT
+	if(!text_image)
+		text_image = new
+		SET_PLANE_EXPLICIT(text_image, HUD_PLANE, src)
+		text_image.alpha = 192
+		text_image.loc = src
+	text_image.maptext = text_html
+	text_image.maptext_x = (SIGNBOARD_WIDTH - safe_width) * -0.5
+	text_image.maptext_y = safe_height
+	text_image.maptext_width = SIGNBOARD_WIDTH
+	text_image.maptext_height = SIGNBOARD_HEIGHT
 
 /obj/structure/signboard/proc/set_text(new_text, force = FALSE)
 	. = FALSE
@@ -199,28 +207,6 @@
 	sign_text = trim(new_text, max_length)
 	update_text()
 	update_appearance()
-
-/obj/effect/abstract/signboard_holder
-	name = ""
-	icon = null
-	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/obj/effect/abstract/signboard_holder/Initialize(mapload)
-	. = ..()
-	if(!istype(loc, /obj/structure/signboard) || QDELING(loc))
-		return INITIALIZE_HINT_QDEL
-	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_THREE_X_TWO, 112, use_parent_turf = TRUE, movement_source = loc)
-
-/obj/effect/abstract/signboard_holder/Destroy(force)
-	if(!force && istype(loc, /obj/structure/signboard) && !QDELING(loc))
-		stack_trace("Tried to delete a signboard holder that's inside of a non-deleted signboard!")
-		return QDEL_HINT_LETMELIVE
-	return ..()
-
-/obj/effect/abstract/signboard_holder/forceMove(atom/destination, no_tp = FALSE, harderforce = FALSE)
-	if(harderforce)
-		return ..()
 
 #undef MAX_SIGN_LEN
 #undef SIGNBOARD_HEIGHT
