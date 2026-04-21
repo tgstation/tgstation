@@ -192,8 +192,7 @@
 				var/status = ""
 				if(get_brute_loss())
 					to_chat(human_user, "<b>Physical trauma analysis:</b>")
-					for(var/X in bodyparts)
-						var/obj/item/bodypart/BP = X
+					for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 						var/brutedamage = BP.brute_dam
 						if(brutedamage > 0)
 							status = "received minor physical injuries."
@@ -208,8 +207,7 @@
 							to_chat(human_user, "<span class='[span]'>[BP] appears to have [status]</span>")
 				if(get_fire_loss())
 					to_chat(human_user, "<b>Analysis of skin burns:</b>")
-					for(var/X in bodyparts)
-						var/obj/item/bodypart/BP = X
+					for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 						var/burndamage = BP.burn_dam
 						if(burndamage > 0)
 							status = "signs of minor burns."
@@ -638,10 +636,8 @@
 	// If we have a species, we need to handle mutant parts and stuff
 	if(dna?.species)
 		add_atom_colour(COLOR_BLACK, TEMPORARY_COLOUR_PRIORITY)
-		var/static/mutable_appearance/shock_animation_dna
-		if(!shock_animation_dna)
-			shock_animation_dna = mutable_appearance(icon, "electrocuted_base")
-			shock_animation_dna.appearance_flags |= RESET_COLOR|KEEP_APART
+		var/mutable_appearance/shock_animation_dna = mutable_appearance(icon, "electrocuted_base", appearance_flags = RESET_COLOR|KEEP_APART)
+		apply_height_filters(shock_animation_dna)
 		zap_appearance = shock_animation_dna
 
 	// Otherwise do a generic animation
@@ -694,7 +690,7 @@
 	. = ..()
 	// Handles changing limb colors and stuff
 	if(!(living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
-		hud_used.healthdoll?.update_appearance()
+		hud_used.screen_objects[HUD_MOB_HEALTHDOLL]?.update_appearance()
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
@@ -737,7 +733,7 @@
 
 /mob/living/carbon/human/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /human ---")
 	VV_DROPDOWN_OPTION(VV_HK_COPY_OUTFIT, "Copy Outfit")
 	VV_DROPDOWN_OPTION(VV_HK_MOD_MUTATIONS, "Add/Remove Mutation")
 	VV_DROPDOWN_OPTION(VV_HK_MOD_QUIRKS, "Add/Remove Quirks")
@@ -760,48 +756,56 @@
 	if(href_list[VV_HK_MOD_MUTATIONS])
 		if(!check_rights(R_SPAWN))
 			return
-		var/list/options = list("Clear"="Clear")
-		for(var/x in subtypesof(/datum/mutation))
+		var/list/options = list("Clear" = "Clear")
+		for(var/x in sort_list(subtypesof(/datum/mutation), GLOBAL_PROC_REF(cmp_typepaths_asc)))
 			var/datum/mutation/mut = x
 			var/name = initial(mut.name)
 			options[dna.check_mutation(mut) ? "[name] (Remove)" : "[name] (Add)"] = mut
-		var/result = input(usr, "Choose mutation to add/remove","Mutation Mod") as null|anything in sort_list(options)
-		if(result)
-			if(result == "Clear")
-				for(var/datum/mutation/mutation as anything in dna.mutations)
-					dna.remove_mutation(mutation, mutation.sources)
-			else
-				var/mut = options[result]
-				if(dna.check_mutation(mut))
-					var/datum/mutation/mutation = dna.get_mutation(mut)
-					dna.remove_mutation(mut, mutation.sources)
-				else
-					dna.add_mutation(mut, MUTATION_SOURCE_VV)
+
+		var/result = tgui_input_list(usr, "Choose mutation to add/remove", "Mutation Mod", options)
+		if(!result)
+			return
+
+		if(result == "Clear")
+			for(var/datum/mutation/mutation as anything in dna.mutations)
+				dna.remove_mutation(mutation, mutation.sources)
+			return
+
+		var/mut = options[result]
+		if(dna.check_mutation(mut))
+			var/datum/mutation/mutation = dna.get_mutation(mut)
+			dna.remove_mutation(mut, mutation.sources)
+		else
+			dna.add_mutation(mut, MUTATION_SOURCE_VV)
 
 	if(href_list[VV_HK_MOD_QUIRKS])
 		if(!check_rights(R_SPAWN))
 			return
-		var/list/options = list("Clear"="Clear")
-		for(var/type in valid_subtypesof(/datum/quirk))
+		var/list/options = list("Clear" = "Clear")
+		for(var/type in sort_list(valid_subtypesof(/datum/quirk), GLOBAL_PROC_REF(cmp_typepaths_asc)))
 			var/datum/quirk/quirk_type = type
 			var/qname = initial(quirk_type.name)
 			options[has_quirk(quirk_type) ? "[qname] (Remove)" : "[qname] (Add)"] = quirk_type
-		var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in sort_list(options)
-		if(result)
-			if(result == "Clear")
-				for(var/datum/quirk/q in quirks)
-					remove_quirk(q.type)
-			else
-				var/T = options[result]
-				if(has_quirk(T))
-					remove_quirk(T)
-				else
-					add_quirk(T)
+
+		var/result = tgui_input_list(usr, "Choose quirk to add/remove", "Quirk Mod", options)
+		if(!result)
+			return
+
+		if(result == "Clear")
+			for(var/datum/quirk/quirk in quirks)
+				remove_quirk(quirk.type)
+			return
+
+		var/selected = options[result]
+		if(has_quirk(selected))
+			remove_quirk(selected)
+		else
+			add_quirk(selected)
 
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return
-		var/result = input(usr, "Please choose a new species","Species") as null|anything in sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc))
+		var/result = tgui_input_list(usr, "Please choose a new species", "Species", sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc)))
 		if(result)
 			var/newtype = GLOB.species_list[result]
 			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src] to [result]")
@@ -809,9 +813,6 @@
 
 	if(href_list[VV_HK_PURRBATION])
 		if(!check_rights(R_SPAWN))
-			return
-		if(!ishuman(src))
-			to_chat(usr, "This can only be done to human species at the moment.")
 			return
 		var/success = purrbation_toggle(src)
 		if(success)

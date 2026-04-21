@@ -86,8 +86,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	spawn_hands(affected_mob)
-	lag_remainder += seconds_per_tick - FLOOR(seconds_per_tick, 1)
-	seconds_per_tick = FLOOR(seconds_per_tick, 1)
+	lag_remainder += seconds_per_tick - floor(seconds_per_tick)
+	seconds_per_tick = floor(seconds_per_tick)
 	if(lag_remainder >= 1)
 		seconds_per_tick += 1
 		lag_remainder -= 1
@@ -986,6 +986,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(is_simian(affected_mob))
 		affected_mob.gain_trauma(/datum/brain_trauma/special/primal_instincts, TRAUMA_RESILIENCE_ABSOLUTE)
 		affected_mob.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
+		if(jungle_arts)
+			return
 		jungle_arts = new(src)
 		jungle_arts.locked_to_use = TRUE
 		jungle_arts.teach(affected_mob)
@@ -993,10 +995,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/bath_salts/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	QDEL_NULL(jungle_arts)
+	affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
+	affected_mob.Sleeping(30 SECONDS)
 	if(is_simian(affected_mob))
 		affected_mob.cure_trauma_type(/datum/brain_trauma/special/primal_instincts, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
-		affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
-		affected_mob.Sleeping(30 SECONDS)
+
 
 /datum/reagent/inverse/bath_salts/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1013,9 +1016,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 		if(need_mob_update)
 			. = UPDATE_MOB_HEALTH
+		return
 
-	else if(SPT_PROB(10, seconds_per_tick))
+	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.emote(pick("screech","scratch","jump","look"))
+
+	QDEL_NULL(jungle_arts)
+	affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
 
 /datum/reagent/inverse/aranesp
 	name = "Epoetin Alfa"
@@ -1264,7 +1271,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	for (var/obj/item/organ/organ as anything in exposed_carbon.organs)
 		organ.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
 
-	for (var/obj/item/bodypart/part as anything in exposed_carbon.bodyparts)
+	for (var/obj/item/bodypart/part as anything in exposed_carbon.get_bodyparts())
 		part.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
 
 /datum/reagent/inverse/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -1313,22 +1320,22 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 	switch(current_cycle)
 		if(10)
-			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_MODERATE)
 			to_chat(affected_mob, span_warning("Your legs start to cave in to your overwhelming gravity!"))
 
 		if(20)
-			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_SEVERE)
 			to_chat(affected_mob, span_warning("Your bones fragment horribly as the gravity pounds on you!"))
 
 		if(30)
-			for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+			for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 				affected_mob.cause_wound_of_type_and_severity(WOUND_BLUNT, leg, WOUND_SEVERITY_CRITICAL)
 			to_chat(affected_mob, span_warning("The gravity of this situation makes your bones snap like popsicle sticks!"))
 
 /datum/reagent/inverse/gravitum/overdose_start(mob/living/carbon/affected_mob, metabolization_ratio)
 	. = ..()
 	affected_mob.AddElement(/datum/element/squish, 120 SECONDS)
-	for(var/obj/item/bodypart/leg/leg in affected_mob.bodyparts)
+	for(var/obj/item/bodypart/leg/leg in affected_mob.get_bodyparts())
 		affected_mob.cause_wound_of_type_and_severity(WOUND_SLASH, leg, WOUND_SEVERITY_SEVERE)

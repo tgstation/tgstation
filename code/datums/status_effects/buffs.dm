@@ -249,10 +249,10 @@
 	duration += workout_duration(new_owner, bonus_time)
 	return ..()
 
-/datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
-	duration += workout_duration(new_owner, bonus_time)
-	new_owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
-	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/athletics))
+/datum/status_effect/exercised/refresh(effect, bonus_time)
+	duration += workout_duration(owner, bonus_time)
+	owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
+	owner.add_mood_event("exercise", /datum/mood_event/exercise, owner.mind.get_skill_level(/datum/skill/athletics))
 
 /datum/status_effect/exercised/on_apply()
 	if(!owner.mind)
@@ -716,3 +716,19 @@
 /datum/status_effect/desensitized/proc/remove_magnitude(datum/source, mob/living/old_body, datum/mind/swapping)
 	SIGNAL_HANDLER
 	swapping.desensitized_level /= magnitude
+
+//used by the garibaldi cocktail to grant revolutionaries wound resistance and fearlessness
+/datum/status_effect/rev_resilience
+	id = "rev_resilience"
+	duration = 5 SECONDS //gets refreshed by metabolism
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/rev_resilience/on_apply()
+	to_chat(owner, span_warning("You feel your revolutionary spirit surging! You feel like nothing the oppressors could throw at you could wound your pride!"))
+	owner.add_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/rev_resilience/on_remove()
+	to_chat(owner, span_notice("You feel your surge of revolutionary zeal fade. You hope you don't get shot in the foot..."))
+	owner.remove_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))

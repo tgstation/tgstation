@@ -48,33 +48,27 @@
 	. = ..()
 	. += span_notice("It is currently facing [dir2text(dir)]")
 
-/obj/machinery/doppler_array/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/disk/computer))
-		var/obj/item/disk/computer/disk = item
-		eject_disk(user)
-		if(user.transferItemToLoc(disk, src))
-			inserted_disk = disk
-			return
-		else
-			balloon_alert(user, "it's stuck to your hand!")
-			return ..()
-	return ..()
+/obj/machinery/doppler_array/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/disk/computer))
+		return NONE
+	eject_disk(user)
+	if(!user.transferItemToLoc(tool, src))
+		balloon_alert(user, "it's stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	inserted_disk = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/doppler_array/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/doppler_array/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", tool))
-		return FALSE
+	. = default_deconstruction_screwdriver(user, tool)
 	power_change()
-	update_appearance()
-	return TRUE
+	return .
 
 /obj/machinery/doppler_array/crowbar_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_crowbar(tool))
-		return FALSE
-	return TRUE
+	return default_deconstruction_crowbar(user, tool)
 
 /// Printing of a record into a disk.
 /obj/machinery/doppler_array/proc/print(mob/user, datum/data/tachyon_record/record)

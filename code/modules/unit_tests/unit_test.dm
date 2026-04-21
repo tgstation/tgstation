@@ -51,6 +51,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/succeeded = TRUE
 	var/list/allocated
 	var/list/fail_reasons
+	var/times_to_run = 1
 
 	/// List of atoms that we don't want to ever initialize in an agnostic context, like for Create and Destroy. Stored on the base datum for usability in other relevant tests that need this data.
 	var/static/list/uncreatables = null
@@ -266,6 +267,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/structure/holosign/robot_seat,
 		//Singleton
 		/mob/dview,
+		//Template type
+		/obj/item/bodypart,
 		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
 		/obj/merge_conflict_marker,
 		//Not meant to spawn without the machine wand
@@ -350,13 +353,12 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/structure/transport/linear)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	returnable_list += subtypesof(/obj/machinery/airlock_controller)
-	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
-	returnable_list += subtypesof(/atom/movable/screen/escape_menu)
 	// Can't spawn openspace above nothing, it'll get pissy at me
 	returnable_list += typesof(/turf/open/space/openspace)
 	returnable_list += typesof(/turf/open/openspace)
 	returnable_list += typesof(/obj/item/robot_model) // These should never be spawned outside of a robot.
-
+	//A lot of these depend on a hud datum to function and should not be created in a vacuum
+	returnable_list += typesof(/atom/movable/screen)
 	return returnable_list
 
 /proc/RunUnitTests()
@@ -377,9 +379,11 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	//Hell code, we're bound to end the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
-	for(var/unit_path in tests_to_run)
-		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
-		RunUnitTest(unit_path, test_results)
+	for(var/datum/unit_test/unit_path as anything in tests_to_run)
+		var/loop_count = unit_path::times_to_run
+		for(var/i in 1 to loop_count)
+			CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
+			RunUnitTest(unit_path, test_results)
 	SSticker.delay_end = FALSE
 
 	log_world("::group::Expensive Unit Test Times")

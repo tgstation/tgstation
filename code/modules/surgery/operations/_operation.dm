@@ -1109,8 +1109,13 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(!pre_preop(operating_on, surgeon, tool, operation_args))
 		return FALSE
 	// if pre_preop slept, sanity check that everything is still valid
-	if(preop_time != world.time && (patient != get_patient(operating_on) || !surgeon.Adjacent(patient || operating_on) || !surgeon.is_holding(tool) || !operate_check(patient, operating_on, surgeon, tool, operation_args)))
-		return FALSE
+	if(preop_time != world.time)
+		if(patient != get_patient(operating_on))
+			return FALSE
+		if(!in_range(patient || operating_on, surgeon))
+			return FALSE
+		if(!operate_check(patient, operating_on, surgeon, tool, operation_args))
+			return FALSE
 
 	play_operation_sound(operating_on, surgeon, tool, preop_sound)
 	on_preop(operating_on, surgeon, tool, operation_args)
@@ -1297,6 +1302,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	abstract_type = /datum/surgery_operation/limb
 	/// Body type required to perform this operation
 	var/required_bodytype = NONE
+	/// If TRUE, this operation can be performed on stumps.
+	/// If FALSE, the target limb must be a full limb.
+	var/allow_stumps = FALSE
 
 /datum/surgery_operation/limb/all_blocked_strings()
 	. = ..()
@@ -1308,7 +1316,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/limb/get_operation_target(atom/movable/operating_on, body_zone)
 	if (isliving(operating_on))
 		var/mob/living/patient = operating_on
-		return patient.get_bodypart(deprecise_zone(body_zone))
+		return patient.get_bodypart(deprecise_zone(body_zone), allow_stumps)
 	if (!isbodypart(operating_on))
 		return null
 	return operating_on

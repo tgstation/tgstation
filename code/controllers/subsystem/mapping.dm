@@ -156,8 +156,8 @@ SUBSYSTEM_DEF(mapping)
 	loading_ruins = TRUE
 	setup_ruins()
 	loading_ruins = FALSE
-
 #endif
+
 	// Run map generation after ruin generation to prevent issues
 	run_map_terrain_generation()
 	// Generate our rivers, we do this here so the map doesn't load on top of them
@@ -279,7 +279,7 @@ SUBSYSTEM_DEF(mapping)
 	// Generate mining ruins
 	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
 	for (var/lava_z in lava_ruins)
-		spawn_rivers(lava_z, 4, /turf/open/lava/smooth/lava_land_surface, /area/lavaland/surface/outdoors/unexplored)
+		spawn_rivers(lava_z, 3, /turf/open/lava/smooth/lava_land_surface, /area/lavaland/surface/outdoors/unexplored) // +1 from the mapped in waypoint
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	for (var/ice_z in ice_ruins)
@@ -351,7 +351,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 
 /datum/controller/subsystem/mapping/Recover()
-	flags |= SS_NO_INIT
+	ss_flags |= SS_NO_INIT
 	initialized = SSmapping.initialized
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates

@@ -5,6 +5,9 @@
 /// If we're under load we want to allow for cycling, but if not we want to preserve already generated docks for use
 #define SOFT_TRANSIT_RESERVATION_THRESHOLD (100 ** 2)
 
+/// Points to turfs on the cargo shuttle that have flaps automatically installed if an upgrade is purchased
+GLOBAL_LIST_EMPTY(cargo_shuttle_flaps_landmarks)
+
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
@@ -14,7 +17,7 @@ SUBSYSTEM_DEF(shuttle)
 		/datum/controller/subsystem/atoms,
 		/datum/controller/subsystem/air,
 	)
-	flags = SS_KEEP_TIMING
+	ss_flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	/// A list of all the mobile docking ports.
@@ -148,6 +151,9 @@ SUBSYSTEM_DEF(shuttle)
 
 	/// List of express consoles that are waiting for pack initialization
 	var/list/obj/machinery/computer/cargo/express/express_consoles = list()
+
+	/// If TRUE, automatically refills the cargo shuttle's air when it docks
+	var/renew_cargo_air = FALSE
 
 /datum/controller/subsystem/shuttle/Initialize()
 	order_number = rand(1, 9000)
@@ -423,7 +429,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(emergency.timer != old_timer)
 		return FALSE
 
-	if(!cancel_evac(user))
+	if(!cancel_evac(user, hide_origin = TRUE))
 		return FALSE //feedback handled in cancel_evac()
 
 	if(!admiral_message)
@@ -451,14 +457,17 @@ SUBSYSTEM_DEF(shuttle)
 	src.emergency = src.backup_shuttle
 
 /// Actually work on canceling the emergency shuttle recall. Returns TRUE if successful, FALSE otherwise.
-/datum/controller/subsystem/shuttle/proc/cancel_evac(mob/user)
+/// If hide_origin is TRUE, the recaller's area will not be revealed in announcements (used by admin tools)
+/datum/controller/subsystem/shuttle/proc/cancel_evac(mob/user, hide_origin = FALSE)
 	if(!can_recall(user))
 		return FALSE
 
-	emergency.cancel(get_area(user))
+	var/area/signal_origin = hide_origin ? null : get_area(user)
+	emergency.cancel(signal_origin)
 	log_shuttle("[key_name(user)] has recalled the shuttle.")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
-	deadchat_broadcast(" has recalled the shuttle from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type = DEADCHAT_ANNOUNCEMENT)
+	if(!hide_origin)
+		deadchat_broadcast(" has recalled the shuttle from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type = DEADCHAT_ANNOUNCEMENT)
 	return TRUE
 
 /// Can this user recall the emergency shuttle? Returns TRUE if they can, otherwise returns FALSE.

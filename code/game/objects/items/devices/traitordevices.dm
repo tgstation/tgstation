@@ -393,7 +393,7 @@ effective or pretty fucking useless.
 	for (var/obj/item/radio/radio in target.get_all_contents() + target)
 		if(ignore_syndie && (radio.special_channels & RADIO_SPECIAL_SYNDIE))
 			continue
-		radio.set_broadcasting(FALSE)
+		radio.set_broadcasting(FALSE, actual_setting = FALSE)
 
 /obj/item/jammer/Destroy()
 	GLOB.active_jammers -= src
@@ -598,4 +598,5 @@ effective or pretty fucking useless.
 
 /obj/item/clothing/shoes/jackboots/dagger/examine_more(mob/user)
 	. = ..()
-	. += span_notice("Upon closer inspection, you notice a dagger embedded into the sole.")
+	if(user.is_holding(src))
+		. += span_notice("Upon closer inspection, you notice a dagger embedded into the sole.")

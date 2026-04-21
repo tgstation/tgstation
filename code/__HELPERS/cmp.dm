@@ -124,8 +124,8 @@
 	return A.totalResistance() - B.totalResistance()
 
 /proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
-	var/a_sign = SIGN(initial(A.value) * -1)
-	var/b_sign = SIGN(initial(B.value) * -1)
+	var/a_sign = sign(initial(A.value) * -1)
+	var/b_sign = sign(initial(B.value) * -1)
 
 	// Neutral traits go last.
 	if(a_sign == 0)
@@ -161,7 +161,7 @@
 
 /// Orders bodyparts by their body_part value, ascending.
 /proc/cmp_bodypart_by_body_part_asc(obj/item/bodypart/limb_one, obj/item/bodypart/limb_two)
-	return limb_one.body_part - limb_two.body_part
+	return limb_one::body_part - limb_two::body_part
 
 /// Orders by integrated circuit weight
 /proc/cmp_port_order_asc(datum/port/compare1, datum/port/compare2)

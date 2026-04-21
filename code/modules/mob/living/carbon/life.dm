@@ -502,7 +502,7 @@
 	return COMPONENT_NO_EXPOSE_REAGENTS
 
 /mob/living/carbon/proc/handle_bodyparts(seconds_per_tick)
-	for(var/obj/item/bodypart/limb as anything in bodyparts)
+	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
 		. |= limb.on_life(seconds_per_tick)
 
 /mob/living/carbon/proc/handle_organs(seconds_per_tick)

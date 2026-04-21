@@ -409,6 +409,7 @@
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "claymore_old"
 	worn_icon = 'icons/mob/clothing/back.dmi'
+	worn_icon_state = "claymore"
 	force = 30
 	armour_penetration = 15
 

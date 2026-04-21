@@ -249,7 +249,8 @@
 				arrow_color = COLOR_RED
 
 		if(owner.hud_used)
-			new /atom/movable/screen/navigate_arrow(null, owner.hud_used, their_turf, arrow_color)
+			var/atom/movable/screen/navigate_arrow/arrow = owner.hud_used.add_screen_object(/atom/movable/screen/navigate_arrow, HUD_HERETIC_ARROW, HUD_GROUP_INFO, update_screen = TRUE)
+			arrow.start_effect(their_turf, arrow_color)
 
 	if(ismob(tracked_thing))
 		var/mob/tracked_mob = tracked_thing
@@ -265,25 +266,21 @@
 	pixel_x = -32
 	pixel_y = -32
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	screen_loc = around_player
 
-/atom/movable/screen/navigate_arrow/Initialize(mapload, datum/hud/hud_owner, turf/tracked_turf, arrow_color)
-	. = ..()
+/atom/movable/screen/navigate_arrow/proc/start_effect(turf/tracked_turf, arrow_color)
 	var/mob/owner = get_mob()
 	if (owner)
 		animate(src, transform = matrix(get_angle(owner, tracked_turf), MATRIX_ROTATE), 0.2 SECONDS)
-	screen_loc = around_player
 	color = arrow_color
-	if (hud)
-		hud.infodisplay += src
-		hud.show_hud(hud.hud_version)
 	addtimer(CALLBACK(src, PROC_REF(end_effect)), 1.6 SECONDS)
+
+/atom/movable/screen/navigate_arrow/Destroy()
+	var/datum/hud/our_hud = hud
+	. = ..()
+	if (!QDELETED(our_hud))
+		INVOKE_ASYNC(our_hud, TYPE_PROC_REF(/datum/hud, show_hud), our_hud.hud_version)
 
 /atom/movable/screen/navigate_arrow/proc/end_effect()
 	icon_state = "navigate_arrow_disappear"
-	addtimer(CALLBACK(src, PROC_REF(null_arrow)), 0.4 SECONDS)
-
-/atom/movable/screen/navigate_arrow/proc/null_arrow()
-	if (hud)
-		hud.infodisplay -= src
-		hud.show_hud(hud.hud_version)
-	qdel(src)
+	QDEL_IN(src, 0.4 SECONDS)

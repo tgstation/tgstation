@@ -2358,7 +2358,7 @@
 	for (var/obj/item/organ/organ as anything in exposed_carbon.organs)
 		organ.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
 
-	for (var/obj/item/bodypart/part as anything in exposed_carbon.bodyparts)
+	for (var/obj/item/bodypart/part as anything in exposed_carbon.get_bodyparts())
 		part.add_atom_colour(color_filter, WASHABLE_COLOUR_PRIORITY)
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -3023,6 +3023,12 @@
 		target.set_custom_materials()
 	var/list/metal_dat = list((metal_ref) = metal_amount)
 	target.material_flags = applied_material_flags
+	if (target.has_material_slots())
+		var/list/new_slots = target.get_material_slots()
+		for (var/slot_type in new_slots)
+			new_slots[slot_type] = metal_ref
+		// Safe to call and doesn't do anything as no materials are currently present on the target
+		target.set_material_slots(new_slots)
 	target.set_custom_materials(metal_dat)
 
 /datum/reagent/gravitum
