@@ -205,7 +205,7 @@ window "input_buttons"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #ffc41f
-		saved-params = ""
+		saved-params = "splitter"
 		left = "inputwindow"
 		right = "inputbuttons"
 		is-vert = true
@@ -226,6 +226,7 @@ window "outputwindow"
 		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
+        saved-params = "splitter"
 		background-color = #ffc41f
 		left = "output_selector"
 
@@ -247,6 +248,8 @@ window "output_selector"
 		saved-params = "splitter"
 		left = "output_legacy"
 		is-vert = false
+		splitter = 80
+		show-splitter = false
 
 window "inputwindow"
 	elem "inputwindow"
