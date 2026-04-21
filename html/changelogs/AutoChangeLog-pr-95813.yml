@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Fixed loss of credits for correctly denied minerals market cargo manifest"
-  - bugfix: "Cargo budget materials market orders arrive in crates as expected"
