@@ -517,6 +517,16 @@ const PointSection = (props: {
                             tooltip="Toggle using Combat Mode for interactions"
                           />
                           <ConfigRow
+                            label="Ignore Dead Mobs"
+                            content={
+                              editingPoint.ignore_dead ? 'TRUE' : 'FALSE'
+                            }
+                            onClick={() =>
+                              adjustPoint(editingPoint.id, 'toggle_ignore_dead')
+                            }
+                            tooltip="Toggle whether dead mobs should be ignored"
+                          />
+                          <ConfigRow
                             label="Alt Worker Action"
                             content={editingPoint.worker_interaction}
                             onClick={() =>

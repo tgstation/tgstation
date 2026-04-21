@@ -21,6 +21,8 @@
 	var/overflow_status = POINT_OVERFLOW_ALLOWED
 	/// Which object category should the filters be looking out for.
 	var/filtering_mode = TAKE_ITEMS
+	// Whether dead mobs should be ignored
+	var/ignore_dead = FALSE
 	/// Whether the worker will use combat mode while interacting with this point.
 	var/worker_combat_mode = FALSE
 	/// Whether the worker will simulate RMB instead of LMB on interaction.
@@ -87,6 +89,11 @@
 
 			if(!istype(thing, prio.atom_typepath))
 				continue
+
+			if(isliving(thing) && ignore_dead)
+				var/mob/living/L = thing
+				if(L.stat == DEAD)
+					continue
 
 			best_candidate = thing
 			best_priority_index = i

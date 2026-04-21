@@ -18,6 +18,7 @@ export type InteractionPoint = {
   overflow_status: string;
   worker_use_rmb: BooleanLike;
   worker_combat_mode: BooleanLike;
+  ignore_dead: BooleanLike;
   settings_list: PrioritySettings[];
   throw_range: number;
   worker_interaction: string;

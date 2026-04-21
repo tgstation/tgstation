@@ -620,6 +620,7 @@
 		point_data["overflow_status"] = point.overflow_status
 		point_data["worker_use_rmb"] = point.worker_use_rmb
 		point_data["worker_combat_mode"] = point.worker_combat_mode
+		point_data["ignore_dead"] = point.ignore_dead
 		point_data["throw_range"] = point.throw_range
 		point_data["use_post_interaction"] = point.use_post_interaction
 
@@ -776,6 +777,10 @@
 
 		if("toggle_worker_combat")
 			target_point.worker_combat_mode = !target_point.worker_combat_mode
+			return TRUE
+
+		if("toggle_ignore_dead")
+			target_point.ignore_dead = !target_point.ignore_dead
 			return TRUE
 
 		if("priority_move_up")
