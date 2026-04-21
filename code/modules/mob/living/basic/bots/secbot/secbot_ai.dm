@@ -33,9 +33,9 @@
 		return FALSE
 	var/assess_flags = my_bot.judgement_criteria()
 	var/assessed_threat = human_target.assess_threat(assess_flags)
-	if(assessed_threat > 0)
+	if(assessed_threat > THREAT_ASSESS_DANGEROUS)
 		my_controller.set_blackboard_key(BB_CURRENT_CRIMINAL_ASSESSMENT, assessed_threat)
-	return (assessed_threat > 0)
+	return (assessed_threat > THREAT_ASSESS_DANGEROUS)
 
 
 /datum/ai_controller/basic_controller/bot/secbot/TryPossessPawn(atom/new_pawn)
@@ -82,6 +82,7 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/basic_melee_attack/interact_once/bot
+	movement_behavior = /datum/ai_movement/basic_avoidance
 
 /datum/ai_behavior/basic_melee_attack/interact_once/bot/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	var/mob/living/carbon/human/human_target = controller.blackboard[target_key]
