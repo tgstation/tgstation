@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 		if(ispath(reaction, /datum/chemical_reaction/randomized))
 			var/target_path = reaction
 			var/index = reactions.Find(reaction)
-			reaction = new target_path(json ? json["[reaction.type]"] : null)
+			reaction = new target_path(LAZYACCESS(json, "[target_path]"))
 
 			//failed to init
 			if(QDELETED(reaction))
