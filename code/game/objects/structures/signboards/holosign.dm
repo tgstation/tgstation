@@ -20,7 +20,6 @@
 
 /obj/structure/signboard/holosign/Initialize(mapload)
 	. = ..()
-	text_holder.appearance_flags &= ~RESET_COLOR // allow the text holoder to inherit our color
 	if(current_color)
 		INVOKE_ASYNC(src, PROC_REF(set_color), current_color)
 	AddComponent(/datum/component/usb_port, list(
