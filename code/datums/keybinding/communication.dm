@@ -12,7 +12,7 @@
 	if(.)
 		return
 	winset(user, null, "command=[user.tgui_say_create_open_command(SAY_CHANNEL)];")
-	winset(user, "tgui_say.browser", "focus=true")
+	winset(user, SKIN_TGUISAY_BROWSER, "focus=true")
 	return TRUE
 
 /datum/keybinding/client/communication/radio
@@ -26,7 +26,7 @@
 	if(.)
 		return
 	winset(user, null, "command=[user.tgui_say_create_open_command(RADIO_CHANNEL)]")
-	winset(user, "tgui_say.browser", "focus=true")
+	winset(user, SKIN_TGUISAY_BROWSER, "focus=true")
 	return TRUE
 
 /datum/keybinding/client/communication/ooc
@@ -40,7 +40,7 @@
 	if(.)
 		return
 	winset(user, null, "command=[user.tgui_say_create_open_command(OOC_CHANNEL)]")
-	winset(user, "tgui_say.browser", "focus=true")
+	winset(user, SKIN_TGUISAY_BROWSER, "focus=true")
 	return TRUE
 
 /datum/keybinding/client/communication/me
@@ -54,5 +54,5 @@
 	if(.)
 		return
 	winset(user, null, "command=[user.tgui_say_create_open_command(ME_CHANNEL)]")
-	winset(user, "tgui_say.browser", "focus=true")
+	winset(user, SKIN_TGUISAY_BROWSER, "focus=true")
 	return TRUE

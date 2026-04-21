@@ -196,9 +196,9 @@
 		admin_client.mouse_pointer_icon = admin_client.mouse_override_icon
 		admin_client.click_intercept = src
 
-		winset(admin_client, "mapwindow.map", "right-click=true")
+		winset(admin_client, SKIN_MAPWINDOW_MAP, "right-click=true")
 	else
-		winset(admin_client, "mapwindow.map", "right-click=false")
+		winset(admin_client, SKIN_MAPWINDOW_MAP, "right-click=false")
 
 	var/mob/holder_mob = admin_client.mob
 	holder_mob?.update_mouse_pointer()

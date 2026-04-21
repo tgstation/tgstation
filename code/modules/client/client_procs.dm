@@ -1126,13 +1126,13 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 /client/proc/set_right_click_menu_mode(shift_only)
 	if(shift_only)
-		winset(src, "mapwindow.map", "right-click=true")
-		winset(src, "ShiftUp", "is-disabled=false")
-		winset(src, "Shift", "is-disabled=false")
+		winset(src, SKIN_MAPWINDOW_MAP, "right-click=true")
+		winset(src, SKIN_DEFAULT_SHIFTUP, "is-disabled=false")
+		winset(src, SKIN_DEFAULT_SHIFT, "is-disabled=false")
 	else
-		winset(src, "mapwindow.map", "right-click=false")
-		winset(src, "default.Shift", "is-disabled=true")
-		winset(src, "default.ShiftUp", "is-disabled=true")
+		winset(src, SKIN_MAPWINDOW_MAP, "right-click=false")
+		winset(src, SKIN_DEFAULT_SHIFT, "is-disabled=true")
+		winset(src, SKIN_DEFAULT_SHIFTUP, "is-disabled=true")
 
 /client/proc/update_ambience_pref(value)
 	if(value)
@@ -1202,7 +1202,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	set_fullscreen()
 
 /client/proc/set_fullscreen()
-	winset(src, "mainwindow", "is-fullscreen=[prefs?.read_preference(/datum/preference/toggle/fullscreen_mode) ? "true" : "false"]")
+	winset(src, SKIN_MAINWINDOW, "is-fullscreen=[prefs?.read_preference(/datum/preference/toggle/fullscreen_mode) ? "true" : "false"]")
 	attempt_auto_fit_viewport()
 
 /// Clears the client's screen, aside from ones that opt out

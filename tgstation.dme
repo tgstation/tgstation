@@ -227,6 +227,7 @@
 #include "code\__DEFINES\si.dm"
 #include "code\__DEFINES\sight.dm"
 #include "code\__DEFINES\skills.dm"
+#include "code\__DEFINES\skin.dm"
 #include "code\__DEFINES\song.dm"
 #include "code\__DEFINES\sort_types.dm"
 #include "code\__DEFINES\sound.dm"
