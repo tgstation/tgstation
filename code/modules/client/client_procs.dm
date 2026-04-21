@@ -576,9 +576,6 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if (!interviewee)
-		initialize_menus()
-
 	loot_panel = new(src)
 
 	view_size = new(src)
@@ -1115,29 +1112,6 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	if(stat_panel.is_ready())
 		return
 	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='byond://?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
-
-/**
- * Initializes dropdown menus on client
- */
-/client/proc/initialize_menus()
-	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
-	for (var/thing in topmenus)
-		var/datum/verbs/menu/topmenu = thing
-		var/topmenuname = "[topmenu]"
-		if (topmenuname == "[topmenu.type]")
-			var/list/tree = splittext(topmenuname, "/")
-			topmenuname = tree[tree.len]
-		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
-		var/list/entries = topmenu.Generate_list(src)
-		for (var/child in entries)
-			winset(src, "[child]", "[entries[child]]")
-			if (!ispath(child, /datum/verbs/menu))
-				var/procpath/verbpath = child
-				if (verbpath.name[1] != "@")
-					new child(src)
-
-	// Place Help back at the end.
-	winset(src, "help-menu", "index=1000")
 
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)
