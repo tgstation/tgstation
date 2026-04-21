@@ -178,8 +178,6 @@
 
 /obj/structure/signboard/MouseExited(location, control, params)
 	. = ..()
-	if(!text_image in usr.client.images)
-		return
 	usr.client.images -= text_image
 
 /// Creates [text_image] if it doesn't exist, and sets its maptext to [sign_text]
