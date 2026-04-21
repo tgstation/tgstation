@@ -14,6 +14,9 @@
 	/// The list of minimap blip tags we're going to read from the globalist and listen for additions to
 	var/list/valid_minimap_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP)
 
+	var/last_drag_x
+	var/last_drag_y
+
 /atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap)
 	. = ..()
 	if(isnull(minimap))
@@ -49,9 +52,21 @@
 	var/x = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/y = text2num(LAZYACCESS(modifiers, ICON_Y))
 	var/erase_pixel_range = LAZYACCESS(modifiers, RIGHT_CLICK) ? 5 : 0
+	var/color = LAZYACCESS(modifiers, RIGHT_CLICK) ? null : COLOR_RED
 
-	drawing.draw_box(COLOR_RED, x, y, x + 1, y + 1, erase_pixel_range, 1)
+	if(last_drag_x && last_drag_y)
+		drawing.draw_line(color, last_drag_x, last_drag_y, x, y, erase_pixel_range, 1)
+		last_drag_x = null
+		last_drag_y = null
+	else
+		drawing.draw_box(color, x, y, x + 1, y + 1, erase_pixel_range, 1)
+		last_drag_x = x
+		last_drag_y = y
 	testing("minimapdisplay MouseDrag: [over_object], [src_location], [over_location], [src_control], [json_encode(modifiers)]")
+
+/atom/movable/screen/minimap_display/MouseUp(location, control, params)
+	last_drag_x = null
+	last_drag_y = null
 
 /atom/movable/screen/minimap_display/MouseMove(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -72,6 +87,8 @@
 
 /atom/movable/screen/minimap_display/MouseExited(location, control, params)
 	screentip.maptext = ""
+	last_drag_x = null
+	last_drag_y = null
 
 /atom/movable/screen/minimap_display/proc/update_owner_blip(mob/source)
 	SIGNAL_HANDLER

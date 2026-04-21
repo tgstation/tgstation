@@ -5042,6 +5042,7 @@
 #include "code\modules\minimap\minimaps.dm"
 #include "code\modules\minimap\rewrite_attempt\_minimap.dm"
 #include "code\modules\minimap\rewrite_attempt\minimap.dm"
+#include "code\modules\minimap\rewrite_attempt\minimap_action.dm"
 #include "code\modules\minimap\rewrite_attempt\minimap_verbs.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_display.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_drawing.dm"
