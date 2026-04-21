@@ -1,0 +1,4 @@
+author: "TheBoondock"
+delete-after: True
+changes:
+  - refactor: "refactored majority of gas_mix mole change into adjust_gas() proc"
