@@ -2,6 +2,7 @@
 /datum/storage_interface
 	/// UI elements for this theme
 	var/atom/movable/screen/close/closer
+	var/atom/movable/screen/storage_up/upper
 	var/atom/movable/screen/storage/cell/cells
 	var/atom/movable/screen/storage/corner/corner_top_left
 	var/atom/movable/screen/storage/corner/top_right/corner_top_right
@@ -18,6 +19,7 @@
 	src.parent_storage = parent_storage
 	var/datum/hud/owner_hud = user.hud_used
 	closer = new(null, owner_hud, parent_storage)
+	upper = new(null, owner_hud, parent_storage)
 	cells = new(null, owner_hud, parent_storage)
 	corner_top_left = new(null, owner_hud, parent_storage)
 	corner_top_right = new(null, owner_hud, parent_storage)
@@ -30,7 +32,7 @@
 
 /// Returns all UI elements under this theme
 /datum/storage_interface/proc/list_ui_elements(initializing = FALSE)
-	return list(cells, corner_top_left, corner_top_right, corner_bottom_left, corner_bottom_right, rowjoin_left, rowjoin_right, closer)
+	return list(cells, corner_top_left, corner_top_right, corner_bottom_left, corner_bottom_right, rowjoin_left, rowjoin_right, upper, closer)
 
 /datum/storage_interface/Destroy(force)
 	QDEL_NULL(closer)
@@ -80,6 +82,9 @@
 	var/row_right_loc = spanning_screen_loc(end_pixel_x, start_pixel_y + 27, end_pixel_x, start_pixel_y + 27 + max(0, rows - 2) * 32)
 	rowjoin_right.screen_loc = row_right_loc
 	rowjoin_right.alpha = (rows > 1) * 255
+
+	upper.screen_loc = "[screen_start_x + columns]:[screen_pixel_x + 8],[screen_start_y]:[screen_pixel_y]"
+	upper.invisibility = parent_storage.parent.loc?.atom_storage ? INVISIBILITY_MAXIMUM : 0
 
 	closer.screen_loc = "[screen_start_x + columns]:[screen_pixel_x - 5],[screen_start_y]:[screen_pixel_y]"
 
