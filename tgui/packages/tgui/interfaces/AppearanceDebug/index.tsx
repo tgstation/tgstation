@@ -11,7 +11,6 @@ import {
 import { Window } from '../../layouts';
 import {
   type Connection,
-  ConnectionStyle,
   Connections,
   type Coordinates,
 } from '../common/Connections';
@@ -117,7 +116,7 @@ function mapAppearance(
   return appearance;
 }
 
-function getAppearanceHeight(appearance: Appearance) {
+export function getAppearanceHeight(appearance: Appearance) {
   const titlebar = appearance.data.icon_state || appearance.data.name ? 27 : 12;
   const COLUMN_BREAK = 20;
   let rows = 0;
@@ -125,36 +124,36 @@ function getAppearanceHeight(appearance: Appearance) {
   if (appearance.data.icon_state) rows++;
   if (appearance.data.layer) rows++;
   if (appearance.data.plane) rows++;
-  let height = COLUMN_BREAK + titlebar + rows * 15 + (rows - 1) * 6 + 12;
-  if (appearance.data.embed_icon) height += 64 + 10;
+  let height = COLUMN_BREAK + titlebar + rows * 15 + (rows - 1) * 6 - 8;
+  if (appearance.data.embed_icon) height += 64 + 6;
   return height;
 }
 
-function getAppearanceWidth(
+export function getAppearanceWidth(
   appearance: Appearance,
   layerToText: Record<string, number>,
   planeToText: Record<string, number>,
 ) {
   return Math.max(
     textWidth(appearance.data.name, 'Verdana, Geneva', 12),
-    textWidth(`icon: ${appearance.data.icon}`, 'Verdana, Geneva', 12),
+    textWidth(`icon: ${appearance.data.icon}`, 'Verdana, Geneva', 12) + 12,
     textWidth(
       `icon_state: ${appearance.data.icon_state}`,
       'Verdana, Geneva',
       12,
-    ),
+    ) + 12,
     layerToText &&
       textWidth(
         `layer: ${getReadableLayer(appearance, layerToText)}`,
         'Verdana, Geneva',
         12,
-      ),
+      ) + 12,
     planeToText &&
       textWidth(
         `plane: ${getReadablePlane(appearance, planeToText)}`,
         'Verdana, Geneva',
         12,
-      ),
+      ) + 12,
     150,
   );
 }
@@ -200,7 +199,6 @@ function parseAppearanceData(
   );
 
   const appearanceStacks: Record<number, Appearance[]> = {};
-  const widthPerStack: Record<number, number> = {};
   const sourceMap: Record<string, Appearance> = {};
   Object.values(appearances).forEach((element) => {
     if (!(element.depth in appearanceStacks))
@@ -218,20 +216,9 @@ function parseAppearanceData(
     }
   });
 
-  const STACK_COLUMN_GAP = 30;
+  const STACK_COLUMN_GAP = 60;
   const KEEP_APART_TOGETHER_GAP = 18;
-
-  // Find maximum width for each stack
-  for (let i = 0; i < Object.keys(appearanceStacks).length; i++) {
-    widthPerStack[i] = Math.max.apply(
-      Math,
-      appearanceStacks[i].map(
-        (element) =>
-          getAppearanceWidth(element, layerToText, planeToText) +
-          STACK_COLUMN_GAP,
-      ),
-    );
-  }
+  const KEEP_APART_TOGETHER_GAP_TOP = 30;
 
   // Returns a *relative* bounding box, includes KEEP_TOGETHER/APART borders!
   function getBoundingBox(appearance: Appearance): [Coordinates, Coordinates] {
@@ -269,7 +256,7 @@ function parseAppearanceData(
       (APPEARANCE_FLAGS.KEEP_TOGETHER | APPEARANCE_FLAGS.KEEP_APART)
     ) {
       minX -= KEEP_APART_TOGETHER_GAP;
-      minY -= KEEP_APART_TOGETHER_GAP;
+      minY -= KEEP_APART_TOGETHER_GAP_TOP;
       maxX += KEEP_APART_TOGETHER_GAP;
       maxY += KEEP_APART_TOGETHER_GAP;
     }
@@ -289,27 +276,27 @@ function parseAppearanceData(
 
     if (appearance.overlays) {
       let minHeight =
-        getAppearanceHeight(appearance) / 2 + CENTRAL_APPEARANCE_GAP / 2;
-      let totalUnderlayHeight = 0;
+        -getAppearanceHeight(appearance) / 2 + CENTRAL_APPEARANCE_GAP / 2;
+      let totalOverlayHeight = 0;
       for (let i = 0; i < appearance.overlays.length; i++) {
         const overlay = appearance.overlays[i];
         positionChildren(overlay);
         const overlayBounds = getBoundingBox(overlay);
         overlay.boundingBox = overlayBounds;
         overlay.relativePosition.x =
-          -STACK_COLUMN_GAP - widthPerStack[overlay.depth];
-        overlay.relativePosition.y = -minHeight + overlayBounds[0].y;
+          -STACK_COLUMN_GAP -
+          getAppearanceWidth(overlay, layerToText, planeToText);
+        overlay.relativePosition.y = -minHeight - getAppearanceHeight(overlay);
         const totalHeight =
           overlayBounds[1].y - overlayBounds[0].y + VERTICAL_APPEARANCE_GAP;
         minHeight += totalHeight;
-        totalUnderlayHeight += totalHeight;
+        totalOverlayHeight += totalHeight;
       }
-
       // If we don't have any underlays, shift all overlays down
       if (!appearance.underlays) {
         const staticShift =
           CENTRAL_APPEARANCE_GAP / 2 +
-          (totalUnderlayHeight - VERTICAL_APPEARANCE_GAP) / 2;
+          (totalOverlayHeight - VERTICAL_APPEARANCE_GAP) / 2;
         for (let i = 0; i < appearance.overlays.length; i++) {
           appearance.overlays[i].relativePosition.y += staticShift;
         }
@@ -326,14 +313,14 @@ function parseAppearanceData(
         const underlayBounds = getBoundingBox(underlay);
         underlay.boundingBox = underlayBounds;
         underlay.relativePosition.x =
-          -STACK_COLUMN_GAP - widthPerStack[underlay.depth];
-        underlay.relativePosition.y = minHeight + underlayBounds[1].y;
+          -STACK_COLUMN_GAP -
+          getAppearanceWidth(underlay, layerToText, planeToText);
+        underlay.relativePosition.y = minHeight + getAppearanceHeight(underlay);
         const totalHeight =
           underlayBounds[1].y - underlayBounds[0].y + VERTICAL_APPEARANCE_GAP;
         minHeight += totalHeight;
         totalUnderlayHeight += totalHeight;
       }
-
       // If we don't have any overlays, shift all underlays up
       if (!appearance.overlays) {
         const staticShift =
@@ -414,7 +401,6 @@ export function AppearanceDebug() {
               getAppearanceHeight(appearance.parent) -
               UNDERLAY_NODE_INPUT_PADDING,
       },
-      style: ConnectionStyle.SUBWAY,
       index: i,
       color: `hsl(${60 + 5 * (i % 30)}, 50%, ${50 + (i % 30)}%)`,
     });
