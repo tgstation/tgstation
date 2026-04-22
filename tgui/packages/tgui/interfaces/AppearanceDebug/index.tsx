@@ -1,8 +1,20 @@
 import { useState } from 'react';
 import { resolveAsset } from 'tgui/assets';
 import { useBackend } from 'tgui/backend';
-import { ByondUi, InfinitePlane } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  ByondUi,
+  InfinitePlane,
+  Stack,
+} from 'tgui-core/components';
 import { Window } from '../../layouts';
+import {
+  type Connection,
+  ConnectionStyle,
+  Connections,
+  type Coordinates,
+} from '../common/Connections';
 import { AppearanceBox } from './AppearanceBox';
 import type {
   Appearance,
@@ -10,7 +22,12 @@ import type {
   AppearanceDebugData,
   AppearanceMap,
 } from './types';
-import { AppearanceParentType } from './types';
+import {
+  APPEARANCE_FLAGS,
+  AppearanceParentType,
+  AppearanceType,
+  VIS_FLAGS,
+} from './types';
 import { AppearanceDebugContext } from './useAppearanceDebug';
 
 function textWidth(text: string, font: string, fontsize: number) {
@@ -24,7 +41,7 @@ function textWidth(text: string, font: string, fontsize: number) {
 function mapAppearance(
   appearance_data: AppearanceData,
   parent: Appearance | null = null,
-  parent_type: AppearanceParentType = AppearanceParentType.None,
+  parentType: AppearanceParentType = AppearanceParentType.None,
   depth: number = 0,
   appearances: AppearanceMap = {},
 ) {
@@ -33,14 +50,25 @@ function mapAppearance(
     underlays: null,
     overlays: null,
     parent: parent,
-    parent_type: parent_type,
-    render_target_to: null,
-    position: { x: 0, y: 0 },
+    boundingBox: [
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
+    ],
+    parentType: parentType,
+    renderTargetTo: null,
+    relativePosition: { x: 0, y: 0 },
     depth: depth,
   };
   appearances[appearance_data.id] = appearance;
-  if (appearance_data.underlays.length > 0)
-    appearance.underlays = appearance_data.underlays
+  let underlays = appearance_data.underlays;
+  if (appearance_data.vis_contents)
+    underlays = underlays.concat(
+      appearance_data.vis_contents.filter(
+        (x) => x.vis_flags && x.vis_flags & VIS_FLAGS.VIS_UNDERLAY,
+      ),
+    );
+  if (underlays.length > 0)
+    appearance.underlays = underlays
       .map((data) =>
         mapAppearance(
           data,
@@ -55,8 +83,15 @@ function mapAppearance(
           ? a.data.layer - b.data.layer
           : a.data.plane - b.data.plane,
       );
-  if (appearance_data.overlays.length > 0)
-    appearance.overlays = appearance_data.overlays
+  let overlays = appearance_data.overlays;
+  if (appearance_data.vis_contents)
+    overlays = overlays.concat(
+      appearance_data.vis_contents.filter(
+        (x) => !x.vis_flags || !(x.vis_flags & VIS_FLAGS.VIS_UNDERLAY),
+      ),
+    );
+  if (overlays.length > 0) {
+    appearance.overlays = overlays
       .map((data) =>
         mapAppearance(
           data,
@@ -66,11 +101,19 @@ function mapAppearance(
           appearances,
         ),
       )
+      // vis_contents get priority by layer over overlays, but not by plane
       .sort((a, b) =>
         a.data.plane === b.data.plane
-          ? a.data.layer - b.data.layer
+          ? a.data.type === AppearanceType.Atom &&
+            b.data.type !== AppearanceType.Atom
+            ? 1
+            : a.data.type !== AppearanceType.Atom &&
+                b.data.type === AppearanceType.Atom
+              ? -1
+              : a.data.layer - b.data.layer
           : a.data.plane - b.data.plane,
       );
+  }
   return appearance;
 }
 
@@ -87,7 +130,65 @@ function getAppearanceHeight(appearance: Appearance) {
   return height;
 }
 
-function parseAppearanceData(mainAppearance: AppearanceData) {
+function getAppearanceWidth(
+  appearance: Appearance,
+  layerToText: Record<string, number>,
+  planeToText: Record<string, number>,
+) {
+  return Math.max(
+    textWidth(appearance.data.name, 'Verdana, Geneva', 12),
+    textWidth(`icon: ${appearance.data.icon}`, 'Verdana, Geneva', 12),
+    textWidth(
+      `icon_state: ${appearance.data.icon_state}`,
+      'Verdana, Geneva',
+      12,
+    ),
+    layerToText &&
+      textWidth(
+        `layer: ${getReadableLayer(appearance, layerToText)}`,
+        'Verdana, Geneva',
+        12,
+      ),
+    planeToText &&
+      textWidth(
+        `plane: ${getReadablePlane(appearance, planeToText)}`,
+        'Verdana, Geneva',
+        12,
+      ),
+    150,
+  );
+}
+
+export function getReadableLayer(
+  appearance: Appearance,
+  layerToText: Record<string, number>,
+) {
+  return (
+    (appearance.data.layer_text_override ||
+      Object.keys(layerToText).find(
+        (x) => layerToText[x] === appearance.data.layer,
+      ) ||
+      '') + (appearance.data.layer !== -1 ? ` (${appearance.data.layer})` : '')
+  );
+}
+
+export function getReadablePlane(
+  appearance: Appearance,
+  planeToText: Record<string, number>,
+) {
+  return (
+    (Object.keys(planeToText).find(
+      (x) => planeToText[x] === appearance.data.plane_true,
+    ) || appearance.data.plane_true.toString()) +
+    (appearance.data.plane !== -32767 ? ` (${appearance.data.plane})` : '')
+  );
+}
+
+function parseAppearanceData(
+  mainAppearance: AppearanceData,
+  layerToText: Record<string, number>,
+  planeToText: Record<string, number>,
+) {
   const appearances: AppearanceMap = {};
   // Recursively map all appearances
   const primary: Appearance = mapAppearance(
@@ -111,13 +212,14 @@ function parseAppearanceData(mainAppearance: AppearanceData) {
 
   Object.values(appearances).forEach((element) => {
     if (element.data.render_source && element.data.render_source in sourceMap) {
-      if (sourceMap[element.data.render_source].render_target_to === null)
-        sourceMap[element.data.render_source].render_target_to = [];
-      sourceMap[element.data.render_source].render_target_to?.push(element);
+      if (sourceMap[element.data.render_source].renderTargetTo === null)
+        sourceMap[element.data.render_source].renderTargetTo = [];
+      sourceMap[element.data.render_source].renderTargetTo?.push(element);
     }
   });
 
   const STACK_COLUMN_GAP = 30;
+  const KEEP_APART_TOGETHER_GAP = 18;
 
   // Find maximum width for each stack
   for (let i = 0; i < Object.keys(appearanceStacks).length; i++) {
@@ -125,61 +227,127 @@ function parseAppearanceData(mainAppearance: AppearanceData) {
       Math,
       appearanceStacks[i].map(
         (element) =>
-          Math.max(
-            textWidth(element.data.name, 'Verdana, Geneva', 12),
-            textWidth(`icon: ${element.data.icon}`, 'Verdana, Geneva', 12),
-            textWidth(
-              `icon_state: ${element.data.icon_state}`,
-              'Verdana, Geneva',
-              12,
-            ),
-            120,
-          ) + STACK_COLUMN_GAP,
+          getAppearanceWidth(element, layerToText, planeToText) +
+          STACK_COLUMN_GAP,
       ),
     );
   }
 
-  // We can position our elements by going recursively over each stack, and then fixing overlaps
-  function positionChildren(appearance: Appearance) {
-    const VERTICAL_APPEARANCE_GAP = 15;
-    const CENTRAL_APPEARANCE_GAP = 30;
-    let curHeight = CENTRAL_APPEARANCE_GAP / 2;
-    // First, arrange our children
-    if (appearance.overlays) {
-      curHeight -= getAppearanceHeight(appearance.overlays[0]) / 2;
-      for (let i = 0; i < appearance.overlays.length; i++) {
-        appearance.overlays[i].position.x =
-          appearance.position.x -
-          STACK_COLUMN_GAP -
-          widthPerStack[appearance.overlays[i].depth];
-        appearance.overlays[i].position.y =
-          appearance.position.y -
-          curHeight -
-          getAppearanceHeight(appearance.overlays[i]);
-        curHeight +=
-          getAppearanceHeight(appearance.overlays[i]) + VERTICAL_APPEARANCE_GAP;
-        positionChildren(appearance.overlays[i]);
+  // Returns a *relative* bounding box, includes KEEP_TOGETHER/APART borders!
+  function getBoundingBox(appearance: Appearance): [Coordinates, Coordinates] {
+    let minX = 0;
+    let minY = 0;
+    let maxX = getAppearanceWidth(appearance, layerToText, planeToText);
+    let maxY = getAppearanceHeight(appearance);
+
+    if (appearance.underlays) {
+      for (let i = 0; i < appearance.underlays.length; i++) {
+        const underlay = appearance.underlays[i];
+        const underlayBox = getBoundingBox(underlay);
+        minX = Math.min(minX, underlayBox[0].x + underlay.relativePosition.x);
+        minY = Math.min(minY, underlayBox[0].y + underlay.relativePosition.y);
+        // Shouldn't happen with maxX but just in case
+        maxX = Math.max(maxX, underlayBox[1].x + underlay.relativePosition.x);
+        maxY = Math.max(maxY, underlayBox[1].y + underlay.relativePosition.y);
       }
     }
 
-    curHeight =
-      getAppearanceHeight(appearance) / 2 + CENTRAL_APPEARANCE_GAP / 2;
+    if (appearance.overlays) {
+      for (let i = 0; i < appearance.overlays.length; i++) {
+        const overlay = appearance.overlays[i];
+        const overlayBox = getBoundingBox(overlay);
+        minX = Math.min(minX, overlayBox[0].x + overlay.relativePosition.x);
+        minY = Math.min(minY, overlayBox[0].y + overlay.relativePosition.y);
+        // Shouldn't happen with maxX but just in case
+        maxX = Math.max(maxX, overlayBox[1].x + overlay.relativePosition.x);
+        maxY = Math.max(maxY, overlayBox[1].y + overlay.relativePosition.y);
+      }
+    }
+
+    if (
+      appearance.data.flags &
+      (APPEARANCE_FLAGS.KEEP_TOGETHER | APPEARANCE_FLAGS.KEEP_APART)
+    ) {
+      minX -= KEEP_APART_TOGETHER_GAP;
+      minY -= KEEP_APART_TOGETHER_GAP;
+      maxX += KEEP_APART_TOGETHER_GAP;
+      maxY += KEEP_APART_TOGETHER_GAP;
+    }
+
+    return [
+      { x: minX, y: minY },
+      { x: maxX, y: maxY },
+    ];
+  }
+
+  // By recursing through our children we can have them position their
+  // children's relative positions, and then position them based on said
+  // children's positions and bounding boxes when going back
+  function positionChildren(appearance: Appearance) {
+    const VERTICAL_APPEARANCE_GAP = 15;
+    const CENTRAL_APPEARANCE_GAP = 30;
+
+    if (appearance.overlays) {
+      let minHeight =
+        getAppearanceHeight(appearance) / 2 + CENTRAL_APPEARANCE_GAP / 2;
+      let totalUnderlayHeight = 0;
+      for (let i = 0; i < appearance.overlays.length; i++) {
+        const overlay = appearance.overlays[i];
+        positionChildren(overlay);
+        const overlayBounds = getBoundingBox(overlay);
+        overlay.boundingBox = overlayBounds;
+        overlay.relativePosition.x =
+          -STACK_COLUMN_GAP - widthPerStack[overlay.depth];
+        overlay.relativePosition.y = -minHeight + overlayBounds[0].y;
+        const totalHeight =
+          overlayBounds[1].y - overlayBounds[0].y + VERTICAL_APPEARANCE_GAP;
+        minHeight += totalHeight;
+        totalUnderlayHeight += totalHeight;
+      }
+
+      // If we don't have any underlays, shift all overlays down
+      if (!appearance.underlays) {
+        const staticShift =
+          CENTRAL_APPEARANCE_GAP / 2 +
+          (totalUnderlayHeight - VERTICAL_APPEARANCE_GAP) / 2;
+        for (let i = 0; i < appearance.overlays.length; i++) {
+          appearance.overlays[i].relativePosition.y += staticShift;
+        }
+      }
+    }
+
     if (appearance.underlays) {
-      for (let i = appearance.underlays.length - 1; i >= 0; i--) {
-        appearance.underlays[i].position.x =
-          appearance.position.x -
-          STACK_COLUMN_GAP -
-          widthPerStack[appearance.underlays[i].depth];
-        appearance.underlays[i].position.y = appearance.position.y + curHeight;
-        curHeight +=
-          getAppearanceHeight(appearance.underlays[i]) +
-          VERTICAL_APPEARANCE_GAP;
-        positionChildren(appearance.underlays[i]);
+      let minHeight =
+        getAppearanceHeight(appearance) / 2 - CENTRAL_APPEARANCE_GAP / 2;
+      let totalUnderlayHeight = 0;
+      for (let i = 0; i < appearance.underlays.length; i++) {
+        const underlay = appearance.underlays[i];
+        positionChildren(underlay);
+        const underlayBounds = getBoundingBox(underlay);
+        underlay.boundingBox = underlayBounds;
+        underlay.relativePosition.x =
+          -STACK_COLUMN_GAP - widthPerStack[underlay.depth];
+        underlay.relativePosition.y = minHeight + underlayBounds[1].y;
+        const totalHeight =
+          underlayBounds[1].y - underlayBounds[0].y + VERTICAL_APPEARANCE_GAP;
+        minHeight += totalHeight;
+        totalUnderlayHeight += totalHeight;
+      }
+
+      // If we don't have any overlays, shift all underlays up
+      if (!appearance.overlays) {
+        const staticShift =
+          CENTRAL_APPEARANCE_GAP / 2 +
+          (totalUnderlayHeight - VERTICAL_APPEARANCE_GAP) / 2;
+        for (let i = 0; i < appearance.underlays.length; i++) {
+          appearance.underlays[i].relativePosition.y -= staticShift;
+        }
       }
     }
   }
 
   positionChildren(primary);
+  primary.boundingBox = getBoundingBox(primary);
   return appearances;
 }
 
@@ -189,9 +357,68 @@ export function AppearanceDebug() {
 
   // This is a constant because we do not dynamically refresh, as appearances cannot be modified and rebuild all at once
   // So we do not need to concern ourselves with constant updates, and can just send data in ui_static_data()
-  const appsProcessed = parseAppearanceData(mainAppearance);
+  const appsProcessed = parseAppearanceData(
+    mainAppearance,
+    layerToText,
+    planeToText,
+  );
   const [zoomToX, setZoomToX] = useState<number>();
   const [zoomToY, setZoomToY] = useState<number>();
+
+  function mapPosition(
+    appearance: Appearance,
+    positions: Record<number, Coordinates>,
+  ) {
+    if (appearance.data.id in positions) return positions[appearance.data.id];
+    const position: Coordinates = {
+      x: appearance.relativePosition.x,
+      y: appearance.relativePosition.y,
+    };
+    if (appearance.parent) {
+      if (!(appearance.parent.data.id in positions))
+        mapPosition(appearance.parent, positions);
+      position.x += positions[appearance.parent.data.id].x;
+      position.y += positions[appearance.parent.data.id].y;
+    }
+    positions[appearance.data.id] = position;
+    return position;
+  }
+
+  const NODE_PADDING = 20;
+  const OVERLAY_NODE_INPUT_PADDING = 60;
+  const UNDERLAY_NODE_INPUT_PADDING = 40;
+
+  const connections: Connection[] = [];
+  const appearancePositions: Record<number, Coordinates> = {};
+  for (let i = 0; i < Object.keys(appsProcessed).length; i++) {
+    const appearance = appsProcessed[
+      Object.keys(appsProcessed)[i]
+    ] as Appearance;
+    if (!appearance.parent) continue;
+    const position = mapPosition(appearance, appearancePositions);
+    const parentPosition = mapPosition(appearance.parent, appearancePositions);
+    connections.push({
+      from: {
+        x:
+          position.x +
+          getAppearanceWidth(appearance, layerToText, planeToText) -
+          NODE_PADDING,
+        y: position.y + getAppearanceHeight(appearance) / 2,
+      },
+      to: {
+        x: parentPosition.x + NODE_PADDING,
+        y:
+          appearance.parentType === AppearanceParentType.Overlay
+            ? parentPosition.y + OVERLAY_NODE_INPUT_PADDING
+            : parentPosition.y +
+              getAppearanceHeight(appearance.parent) -
+              UNDERLAY_NODE_INPUT_PADDING,
+      },
+      style: ConnectionStyle.SUBWAY,
+      index: i,
+      color: `hsl(${60 + 5 * (i % 30)}, 50%, ${50 + (i % 30)}%)`,
+    });
+  }
 
   return (
     <AppearanceDebugContext.Provider
@@ -210,21 +437,45 @@ export function AppearanceDebug() {
       <Window
         width={1500}
         height={800}
-        title={`OverFlayer${mainAppearance.name ? `: ${mainAppearance.name}` : ''}`}
+        title={`OverFlayer${mainAppearance.name || mainAppearance.icon_state ? `: ${mainAppearance.name || mainAppearance.icon_state}` : ''}`}
+        buttons={
+          <Stack fill>
+            <Stack.Item>
+              <Button
+                color="transparent"
+                tooltip="Refresh Appearance"
+                icon="arrows-rotate"
+                onClick={() => act('refreshAppearance')}
+              />
+            </Stack.Item>
+          </Stack>
+        }
       >
         <Window.Content
           style={{
             backgroundImage: 'none',
           }}
         >
-          <ByondUi
-            width="256px"
-            height="256px"
-            params={{
-              id: mapRef,
-              type: 'map',
-            }}
-          />
+          <Box
+            className="Tooltip"
+            position="absolute"
+            left="12px"
+            top="42px"
+            width="172px"
+            height="172px"
+            pl="6px"
+            pr="6px"
+            style={{ zIndex: 3 }}
+          >
+            <ByondUi
+              width="160px"
+              height="160px"
+              params={{
+                id: mapRef,
+                type: 'map',
+              }}
+            />
+          </Box>
           <InfinitePlane
             width="100%"
             height="100%"
@@ -236,8 +487,13 @@ export function AppearanceDebug() {
             zoomToY={-(zoomToY || 0) + 300}
           >
             {Object.entries(appsProcessed).map((keyValue) => (
-              <AppearanceBox key={keyValue[0]} appearance={keyValue[1]} />
+              <AppearanceBox
+                key={keyValue[0]}
+                appearance={keyValue[1]}
+                position={mapPosition(keyValue[1], appearancePositions)}
+              />
             ))}
+            <Connections connections={connections} />
           </InfinitePlane>
         </Window.Content>
       </Window>

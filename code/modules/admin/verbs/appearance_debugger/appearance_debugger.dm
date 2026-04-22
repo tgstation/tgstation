@@ -1,10 +1,12 @@
 /// Allows developers to see a breakdown of an atom or a specific target and edit some of the values
 /datum/appearance_debugger
 	var/datum/admins/owner
-	/// A copy of the currently debugged appearance
-	var/mutable_appearance/debug_target
+	/// Currently debugged atom or mutable appearance, hence /datum
+	var/datum/debug_target
 	/// A list of copies of the currently debugged appearance and its children for access from the UI
 	var/list/mutable_appearance/appearance_copies
+	/// Assoc list of ref -> appearance as to prevent refreshing of dynamic appearances
+	var/list/mutable_appearance/appearance_cache
 	/// Mapview used to display the targeted appearance
 	var/atom/movable/screen/map_view/proxy_view
 
@@ -20,9 +22,14 @@
 	QDEL_NULL(proxy_view)
 	return ..()
 
-/datum/appearance_debugger/proc/get_appearance_data(mutable_appearance/target)
+/datum/appearance_debugger/proc/get_appearance_data(atom/appearance_owner)
+	var/mutable_appearance/target = appearance_owner
+	if (isatom(appearance_owner))
+		target = appearance_cache["[REF(appearance_owner)]"] || appearance_owner.appearance
+		appearance_cache["[REF(appearance_owner)]"] = target
+
 	var/list/data = list(
-		"type" = isimage(target) ? "image" : "appearance",
+		"type" = isatom(appearance_owner) ? "atom" : (isimage(target) ? "image" : "appearance"),
 		"alpha" = target.alpha,
 		"flags" = target.appearance_flags,
 		"blend_mode" = target.blend_mode,
@@ -79,8 +86,14 @@
 		data["embed_icon"] = icon2base64(used_icon)
 
 	data["transform"] = list(target.transform.a, target.transform.b, target.transform.c, target.transform.d, target.transform.e, target.transform.f)
-	if (isatom(target))
-		data["vis_flags"] = target.vis_flags
+	if (ismovable(appearance_owner))
+		var/atom/movable/as_movable = appearance_owner
+		data["vis_flags"] = as_movable.vis_flags
+		// Maybe should be cached but I'm too lazy and don't think this'll matter enough
+		var/list/vis_data = list()
+		for (var/atom/vis_thing as anything in as_movable.vis_contents)
+			vis_data += list(get_appearance_data(vis_thing))
+		data["vis_contents"] = vis_data
 
 	// Handle all dynamically modified layers
 	if (target.layer > FLOOR_EMISSIVE_START_LAYER && target.layer < FLOOR_EMISSIVE_END_LAYER)
@@ -95,8 +108,9 @@
 	return data
 
 /datum/appearance_debugger/ui_static_data(mob/user)
+	var/mutable_appearance/debug_appearance = new(debug_target)
 	return list(
-		"mainAppearance" = get_appearance_data(debug_target),
+		"mainAppearance" = get_appearance_data(debug_appearance),
 		"planeToText" = GLOB.admin_readable_planes,
 		"layerToText" = GLOB.admin_readable_layers,
 		"mapRef" = proxy_view.assigned_map,
@@ -110,6 +124,13 @@
 		if("swapMapView")
 			var/appearance_id = text2num(params["id"])
 			proxy_view.appearance = appearance_copies[appearance_id]
+			// Needs screenloc to be set since we're setting the appearance and carrying over target's screenloc
+			proxy_view.set_position(1, 1)
+
+		if("refreshAppearance")
+			appearance_copies = list()
+			appearance_cache = list()
+			update_static_data_for_all_viewers()
 
 /datum/appearance_debugger/ui_assets(mob/user)
 	return list(get_asset_datum(/datum/asset/simple/plane_background))
@@ -125,10 +146,8 @@
 		proxy_view.display_to(user, ui.window)
 
 /datum/appearance_debugger/proc/set_target(mutable_appearance/new_target)
-	if (isatom(new_target))
-		var/atom/as_atom = new_target
-		new_target = as_atom.appearance
-	// Copy our target appearance as to not lose/hang onto the original
-	debug_target = new(new_target)
+	// Can be an atom!
+	debug_target = new_target
 	appearance_copies = list()
+	appearance_cache = list()
 	update_static_data_for_all_viewers()

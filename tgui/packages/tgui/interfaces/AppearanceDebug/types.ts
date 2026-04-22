@@ -10,6 +10,7 @@ export type AppearanceDebugData = {
 export enum AppearanceType {
   MutableAppearance = 'appearance',
   Image = 'image',
+  Atom = 'atom',
 }
 
 export type FilterData = {
@@ -18,29 +19,29 @@ export type FilterData = {
 };
 
 export const APPEARANCE_FLAGS = {
-  LONG_GLIDE: 0,
-  RESET_COLOR: 1,
-  RESET_ALPHA: 2,
-  RESET_TRANSFORM: 3,
-  NO_CLIENT_COLOR: 4,
-  KEEP_TOGETHER: 5,
-  KEEP_APART: 6,
-  PLANE_MASTER: 7,
-  TILE_BOUND: 8,
-  PIXEL_SCALE: 9,
-  PASS_MOUSE: 10,
-  TILE_MOVER: 11,
+  LONG_GLIDE: 1,
+  RESET_COLOR: 2,
+  RESET_ALPHA: 4,
+  RESET_TRANSFORM: 8,
+  NO_CLIENT_COLOR: 16,
+  KEEP_TOGETHER: 32,
+  KEEP_APART: 64,
+  PLANE_MASTER: 128,
+  TILE_BOUND: 256,
+  PIXEL_SCALE: 512,
+  PASS_MOUSE: 1024,
+  TILE_MOVER: 2048,
 };
 
 export const VIS_FLAGS = {
-  VIS_INHERIT_ICON: 0,
-  VIS_INHERIT_ICON_STATE: 1,
-  VIS_INHERIT_DIR: 2,
-  VIS_INHERIT_LAYER: 3,
-  VIS_INHERIT_PLANE: 4,
-  VIS_INHERIT_ID: 5,
-  VIS_UNDERLAY: 6,
-  VIS_HIDE: 7,
+  VIS_INHERIT_ICON: 1,
+  VIS_INHERIT_ICON_STATE: 2,
+  VIS_INHERIT_DIR: 4,
+  VIS_INHERIT_LAYER: 8,
+  VIS_INHERIT_PLANE: 16,
+  VIS_INHERIT_ID: 32,
+  VIS_UNDERLAY: 64,
+  VIS_HIDE: 128,
 };
 
 export const MOUSE_OPACITY = {
@@ -72,6 +73,7 @@ export type AppearanceData = {
   invisibility: number;
   underlays: AppearanceData[];
   overlays: AppearanceData[];
+  vis_contents: AppearanceData[] | null;
   layer: number;
   layer_text_override: string | null;
   name: string;
@@ -106,9 +108,10 @@ export type Appearance = {
   underlays: Appearance[] | null;
   overlays: Appearance[] | null;
   parent: Appearance | null;
-  parent_type: AppearanceParentType;
-  render_target_to: Appearance[] | null;
-  position: Coordinates;
+  boundingBox: [Coordinates, Coordinates];
+  parentType: AppearanceParentType;
+  renderTargetTo: Appearance[] | null;
+  relativePosition: Coordinates;
   depth: number;
 };
 
