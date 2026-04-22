@@ -1385,8 +1385,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to limb by /mob/living/basic/living_limb_flesh
 #define TRAIT_IGNORED_BY_LIVING_FLESH "livingflesh_ignored"
 
-///Trait given to organs that have been inside a living being previously
-#define TRAIT_USED_ORGAN "used_organ"
+///Trait given to organs that have previously been inside a being with a mind
+#define TRAIT_ORGAN_USED_BY_PLAYER "organ_used_by_player"
 ///Trait given to organs that have started inside a being with a client
 #define TRAIT_CLIENT_STARTING_ORGAN "client_starting_organ"
 

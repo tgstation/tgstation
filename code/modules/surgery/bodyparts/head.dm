@@ -122,6 +122,13 @@
 		return null
 	return list(species.skinned_type = 1)
 
+/obj/item/bodypart/head/animate_atom_living(mob/living/owner)
+	var/mob/living/basic/animated = ..()
+	animated.attack_vis_effect = ATTACK_EFFECT_BITE
+	animated.attack_verb_continuous = "bites"
+	animated.attack_verb_simple = "bite"
+	return animated
+
 /obj/item/bodypart/head/grind_results()
 	return null
 

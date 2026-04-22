@@ -86,6 +86,9 @@
 	color = rgb(40, 130, 255)
 	prox_check = FALSE
 
+/obj/item/card/emag/blue
+	color = rgb(40, 130, 255)
+
 /obj/item/card/emag/halloween
 	name = "hack-o'-lantern"
 	desc = "It's a pumpkin with a cryptographic sequencer sticking out."

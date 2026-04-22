@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -11,6 +11,9 @@
 "d" = (
 /turf/closed/wall/mineral/abductor,
 /area/ruin/unpowered)
+"g" = (
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
 "j" = (
 /obj/machinery/abductor/experiment{
 	team_number = 100
@@ -105,9 +108,9 @@ a
 a
 a
 a
-a
-a
-a
+g
+g
+g
 a
 a
 "}
@@ -115,53 +118,53 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+g
+g
+g
+g
+g
+g
 a
 "}
 (3,1,1) = {"
 a
 a
-a
+g
 c
-a
-a
-a
-a
-a
-a
+g
+g
+g
+g
+g
+g
 "}
 (4,1,1) = {"
 a
-a
+g
 c
 d
-a
-a
-a
-a
-a
-a
+g
+g
+g
+g
+g
+g
 "}
 (5,1,1) = {"
 a
-a
+g
 d
 j
 k
 k
-a
+g
 y
 d
-a
+g
 "}
 (6,1,1) = {"
 a
-a
+g
 d
 k
 o
@@ -169,11 +172,11 @@ s
 v
 z
 d
-a
+g
 "}
 (7,1,1) = {"
-a
-a
+g
+g
 d
 l
 p
@@ -181,11 +184,11 @@ k
 w
 A
 d
-a
+g
 "}
 (8,1,1) = {"
-a
-a
+g
+g
 c
 d
 q
@@ -193,11 +196,11 @@ t
 q
 d
 c
-a
+g
 "}
 (9,1,1) = {"
-a
-a
+g
+g
 b
 c
 d
@@ -205,67 +208,67 @@ d
 d
 c
 b
-a
+g
 "}
 (10,1,1) = {"
 a
-a
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (11,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (12,1,1) = {"
-a
-a
+g
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (13,1,1) = {"
 a
-a
+g
 b
 b
 b
 b
 b
 b
-a
-a
+g
+g
 "}
 (14,1,1) = {"
 a
-a
+g
 b
 b
 b
 b
 b
 b
-a
-a
+b
+g
 "}
 (15,1,1) = {"
 a
@@ -276,7 +279,7 @@ b
 b
 b
 b
-a
+g
 a
 "}
 (16,1,1) = {"
@@ -288,7 +291,7 @@ b
 b
 b
 b
-a
+g
 a
 "}
 (17,1,1) = {"
@@ -300,13 +303,13 @@ b
 b
 b
 b
-a
+g
 a
 "}
 (18,1,1) = {"
 a
 a
-b
+a
 b
 b
 b
@@ -336,7 +339,7 @@ b
 b
 b
 b
-a
+b
 a
 "}
 (21,1,1) = {"
