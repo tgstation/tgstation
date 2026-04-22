@@ -426,7 +426,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 				rendered_message = "[turf_link] [message]"
 
 			if(GLOB.drune_allowed && original_message && M.runechat_prefs_check(M) && M.see_invisible >= follow_target.invisibility)
-				M.create_chat_message(follow_target, /datum/language/common, original_message)
+				M.create_chat_message(follow_target, /datum/language/common, original_message, list(SPAN_ITALICS))
 
 			to_chat(M, rendered_message, avoid_highlighting = speaker_key == M.key)
 		else
