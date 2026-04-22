@@ -472,3 +472,6 @@
       to the pod bay and buttons to control the doors!
   Yobrocharlie:
   - rscadd: added more things to the antag gear spawner
+2026-04-22:
+  TheBoondock:
+  - refactor: refactored majority of gas_mix mole change into adjust_gas() proc
