@@ -286,7 +286,7 @@ function parseAppearanceData(
         overlay.relativePosition.x =
           -STACK_COLUMN_GAP -
           getAppearanceWidth(overlay, layerToText, planeToText);
-        overlay.relativePosition.y = -minHeight - getAppearanceHeight(overlay);
+        overlay.relativePosition.y = -minHeight - overlayBounds[1].y;
         const totalHeight =
           overlayBounds[1].y - overlayBounds[0].y + VERTICAL_APPEARANCE_GAP;
         minHeight += totalHeight;
