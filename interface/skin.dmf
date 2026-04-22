@@ -226,7 +226,7 @@ window "outputwindow"
 		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
-        saved-params = "splitter"
+		saved-params = "splitter"
 		background-color = #ffc41f
 		left = "output_selector"
 
