@@ -217,7 +217,7 @@
 	if(isnull(target_turf))
 		return
 	if(isAI(user))
-		if(!SScameras.is_visible_by_cameras(target_turfs))
+		if(!SScameras.is_visible_by_cameras(target_turf))
 			return
 	else if(!(target_turf in view(view_size, user)))
 		return
