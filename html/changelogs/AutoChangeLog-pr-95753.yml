@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "The amount of blood loss from an attack to an already bleeding wound has been tweaked. As an example, a 20 force attack used to range 0.1% to 4% blood loss, and now ranges 1% to 3%."
