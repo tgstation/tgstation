@@ -138,6 +138,7 @@
 		to_chat(user, span_notice("The dimensions of the picture will be [EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]")]"))
 
 	return TRUE
+
 /// Resets flash to be used again
 /obj/item/camera/proc/cooldown()
 	PRIVATE_PROC(TRUE)
@@ -212,21 +213,21 @@
 
 	//Checking if we can target
 	var/turf/target_turf = get_turf(target)
+	var/view_size = user?.client?.view || world.view
 	if(isnull(target_turf))
 		return
-	if(isAI(user) && !SScameras.is_visible_by_cameras(target_turf))
-		return
-	if(isliving(loc) && !(target_turf in view(world.view, loc)))
-		return
-	if(!(target_turf in view(world.view, user || src)))
+	if(isAI(user))
+		if(!SScameras.is_visible_by_cameras(target_turfs))
+			return
+	else if(!(target_turf in view(view_size, user)))
 		return
 
 	//These vars will be reused later on
 	var/size_x = picture_size_x - 1
 	var/size_y = picture_size_y - 1
-	var/list/viewlist = getviewsize(user?.client?.view || world.view)
+	var/list/viewlist = getviewsize(view_size)
 	var/view_range = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
-	var/viewer = get_turf(user?.client?.eye || user || target) // not sure why target is a fallback
+	var/viewer = get_turf(user?.client?.eye || user)
 	var/list/seen = get_hear_turfs(view_range, viewer)
 	if(!(target_turf in seen))
 		return
