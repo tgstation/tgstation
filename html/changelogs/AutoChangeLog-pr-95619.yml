@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "More safeguards were added to the admin \"Create Black Market Item\" verb."

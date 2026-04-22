@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Butchering heads no longer moves their organs to nullspace, and probably the same with any other method of mass removing organs."
