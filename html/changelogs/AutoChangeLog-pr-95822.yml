@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes an issue where raptor chicks and other non-items appearing in item contents would prevent any personal crafting in the vicinity"
