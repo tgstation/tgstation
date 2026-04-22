@@ -97,7 +97,7 @@
 	obsession_hug_count++
 
 /datum/brain_trauma/special/obsessed/proc/on_failed_social_interaction()
-	if(QDELETED(owner) || owner.stat >= UNCONSCIOUS)
+	if(QDELETED(owner) || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
 		return
 	switch(rand(1, 100))
 		if(1 to 40)

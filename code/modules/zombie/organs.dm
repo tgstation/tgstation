@@ -86,7 +86,7 @@
 		old_species = owner.dna.species.type
 		target.set_species(/datum/species/zombie/infectious)
 
-	var/stand_up = (target.stat == DEAD) || (target.stat == UNCONSCIOUS)
+	var/stand_up = HAS_TRAIT(target, TRAIT_KNOCKEDOUT)
 
 	//Fully heal the zombie's damage the first time they rise
 	if(!target.heal_and_revive(0, span_danger("[target] suddenly convulses, as [target.p_they()][stand_up ? " stagger to [target.p_their()] feet and" : ""] gain a ravenous hunger in [target.p_their()] eyes!")))

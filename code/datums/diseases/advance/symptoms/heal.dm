@@ -366,7 +366,7 @@
 	if(living_host.IsSleeping())
 		return power * 0.25 //Voluntary unconsciousness yields lower healing.
 	switch(living_host.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
+		if(HARD_CRIT)
 			return power * 0.9
 		if(SOFT_CRIT)
 			return power * 0.5

@@ -2,7 +2,7 @@
 /datum/ai_controller/basic_controller/gorilla
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_TARGET_MINIMUM_STAT = UNCONSCIOUS,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_EMOTE_KEY = "ooga",
 		BB_EMOTE_CHANCE = 40,
 	)

@@ -293,7 +293,7 @@
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = model.cyborg_base_icon
-	if(stat < UNCONSCIOUS && !HAS_TRAIT(src, TRAIT_KNOCKEDOUT) && !IsStun() && !IsParalyzed() && !low_power_mode) //Not dead, not stunned.
+	if(!HAS_TRAIT(src, TRAIT_KNOCKEDOUT) && !IsStun() && !IsParalyzed() && !low_power_mode) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)
@@ -676,11 +676,10 @@
 /mob/living/silicon/robot/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
-	if(stat != DEAD)
-		if(health <= -maxHealth) //die only once
-			death()
-			toggle_headlamp(1)
-			return
+	if(stat != DEAD && health <= -maxHealth) //die only once
+		death()
+		toggle_headlamp(TRUE)
+		return
 	diag_hud_set_status()
 	diag_hud_set_health()
 	diag_hud_set_aishell()
@@ -1036,16 +1035,6 @@
 /// Draw power from the robot
 /mob/living/silicon/robot/proc/draw_power(power_to_draw)
 	cell?.use(power_to_draw)
-
-
-/mob/living/silicon/robot/set_stat(new_stat)
-	. = ..()
-	update_stat() // This is probably not needed, but hopefully should be a little sanity check for the spaghetti that borgs are built from
-
-/mob/living/silicon/robot/on_knockedout_trait_loss(datum/source)
-	. = ..()
-	set_stat(CONSCIOUS) //This is a horrible hack, but silicon code forced my hand
-	update_stat()
 
 /mob/living/silicon/robot/proc/on_dampen()
 	SIGNAL_HANDLER

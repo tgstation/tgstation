@@ -82,14 +82,20 @@
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
-	if(stat < UNCONSCIOUS)
-		set_stat(UNCONSCIOUS)
+	become_blind(TRAIT_KNOCKEDOUT)
+	add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_KNOCKEDOUT)
+	update_body() // updates eyelids
+	if(stat <= SOFT_CRIT)
+		log_combat(src, src, "lost consciousness")
 
 /// Called when [TRAIT_KNOCKEDOUT] is removed from the mob.
 /mob/living/proc/on_knockedout_trait_loss(datum/source)
 	SIGNAL_HANDLER
-	if(stat <= UNCONSCIOUS)
-		update_stat()
+	cure_blindness(TRAIT_KNOCKEDOUT)
+	remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_KNOCKEDOUT)
+	update_body() // updates eyelids
+	if(stat <= SOFT_CRIT)
+		log_combat(src, src, "regained consciousness")
 
 /// Called when [TRAIT_DEATHCOMA] is added to the mob.
 /mob/living/proc/on_deathcoma_trait_gain(datum/source)

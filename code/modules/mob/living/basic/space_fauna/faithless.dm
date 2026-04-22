@@ -56,7 +56,7 @@
 /datum/ai_controller/basic_controller/faithless
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_TARGET_MINIMUM_STAT = UNCONSCIOUS,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // lights
 	)
 

@@ -311,7 +311,7 @@
 		return
 	to_chat(summoner, span_bolddanger("[name] is under attack! You take damage!"))
 	summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
-	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
+	if(summoner.stat >= HARD_CRIT)
 		to_chat(summoner, span_bolddanger("Your head pounds, you can't take the strain of sustaining [src] in this condition!"))
 		summoner.adjust_organ_loss(ORGAN_SLOT_BRAIN, amount * 0.5)
 

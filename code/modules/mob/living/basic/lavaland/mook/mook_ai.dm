@@ -253,7 +253,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_behavior/find_and_set/music_audience/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/atom/home = controller.blackboard[BB_HOME_VILLAGE]
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
-		if(target.stat > UNCONSCIOUS || !target.mind)
+		if(HAS_TRAIT(target, TRAIT_KNOCKEDOUT) || !target.mind)
 			continue
 		if(isnull(home) || get_dist(target, home) > controller.blackboard[BB_MAXIMUM_DISTANCE_TO_VILLAGE])
 			continue

@@ -42,7 +42,6 @@
 		var/static/list/stat_types = list(
 			"Conscious" = CONSCIOUS,
 			"Soft Crit" = SOFT_CRIT,
-			"Unconscious" = UNCONSCIOUS,
 			"Hard Crit" = HARD_CRIT,
 			"Dead (will probably get stuck punching a corpse forever)" = DEAD,
 		)

@@ -161,7 +161,7 @@
 		COOLDOWN_START(src, move_delay, 1 SECONDS)
 		to_chat(src, span_warning("You're restrained! You can't move!"))
 		return TRUE
-	return mob.resist_grab(TRUE)
+	return !mob.resist_grab(TRUE)
 
 
 /**

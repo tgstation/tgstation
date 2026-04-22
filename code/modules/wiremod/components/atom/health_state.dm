@@ -46,11 +46,11 @@
 		if("Alive")
 			return state != DEAD
 		if("Asleep")
-			return !!organism.IsSleeping() && !organism.IsUnconscious()
+			return !!organism.IsSleeping() && !organism.IsUnconscious() && state <= SOFT_CRIT
 		if("Critical")
 			return state == SOFT_CRIT || state == HARD_CRIT
 		if("Unconscious")
-			return state == UNCONSCIOUS || state == HARD_CRIT || !!organism.IsUnconscious()
+			return state == HARD_CRIT || HAS_TRAIT(organism, TRAIT_KNOCKEDOUT)
 		if("Deceased")
 			return state == DEAD
 	//Unknown state, something fucked up really bad - just return false

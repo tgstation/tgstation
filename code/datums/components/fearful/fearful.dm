@@ -128,7 +128,7 @@
 /datum/component/fearful/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if (source.stat >= UNCONSCIOUS)
+	if (HAS_TRAIT(source, TRAIT_KNOCKEDOUT))
 		return
 
 	if(terror_buildup >= TERROR_BUILDUP_HEART_ATTACK)
