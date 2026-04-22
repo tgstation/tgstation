@@ -130,6 +130,7 @@
 	var/sheet_to_buy
 	var/requested_amount
 	var/minimum_value_threshold = 0
+	var/maximum_value_threshold = 0
 	var/elastic_mult = 1
 	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
 		//convert trend into text
@@ -168,6 +169,8 @@
 		else
 			minimum_value_threshold = round(initial(traded_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
 
+		maximum_value_threshold = round(initial(traded_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
+
 		//Pulling elastic modifier into data.
 		for(var/datum/export/material/market/export_est in GLOB.exports_list)
 			if(export_est.material_id == traded_mat)
@@ -177,7 +180,8 @@
 			"name" = initial(traded_mat.name),
 			"price" = SSstock_market.materials_prices[traded_mat],
 			"rarity" = initial(traded_mat.value_per_unit),
-			"threshold" = minimum_value_threshold,
+			"min_threshold" = minimum_value_threshold,
+			"max_threshold" = maximum_value_threshold,
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
 			"color" = color_string,
