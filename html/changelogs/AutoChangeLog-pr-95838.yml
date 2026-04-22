@@ -1,0 +1,4 @@
+author: "1393F"
+delete-after: True
+changes:
+  - bugfix: "The mushroom bowl no longer turns invisible when filled with a reagent."
