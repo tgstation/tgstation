@@ -1025,6 +1025,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	for(var/mob/user as anything in is_using)
 		hide_contents(user)
 
+/// Close the storage UI for everyone viewing us except if a viewer is holding us directly (and obsevers)
+/datum/storage/proc/close_all_non_wearers()
+	for(var/mob/user as anything in is_using)
+		if(parent.loc != user && !isobserver(user))
+			hide_contents(user)
+
 /// Closes the storage UIs of this and everything inside the parent for everyone viewing them.
 /datum/storage/proc/close_all_recursive()
 	close_all()

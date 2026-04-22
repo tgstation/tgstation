@@ -1696,6 +1696,7 @@
 #include "code\datums\elements\spooky.dm"
 #include "code\datums\elements\squish.dm"
 #include "code\datums\elements\squish_sound.dm"
+#include "code\datums\elements\strip_accessible_storage.dm"
 #include "code\datums\elements\strippable.dm"
 #include "code\datums\elements\structure_repair.dm"
 #include "code\datums\elements\surgery_aid.dm"

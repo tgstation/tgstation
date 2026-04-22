@@ -276,6 +276,9 @@
 /atom/movable/IsContainedAtomAccessible(atom/contained, atom/movable/user)
 	return !!atom_storage
 
+/mob/living/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return !!contained.atom_storage
+
 /atom/proc/DirectAccess()
 	return list(src, loc)
 
