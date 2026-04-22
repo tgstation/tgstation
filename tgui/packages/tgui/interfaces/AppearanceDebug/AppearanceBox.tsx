@@ -1,7 +1,12 @@
 import { Box, Image, Stack, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import type { Coordinates } from '../common/Connections';
-import { getAppearanceHeight, getReadableLayer, getReadablePlane } from '.';
+import {
+  getReadableLayer,
+  getReadablePlane,
+  isEmissive,
+  isEmissiveBlocker,
+} from '.';
 import { APPEARANCE_FLAGS, type Appearance, AppearanceType } from './types';
 import { useAppearanceDebugContext } from './useAppearanceDebug';
 
@@ -56,10 +61,10 @@ export function AppearanceBox(props: AppearanceProps) {
         <Box
           backgroundColor={
             appearance.data.type === AppearanceType.Atom
-              ? '#aa32c8'
+              ? '#ba5614'
               : appearance.data.type === AppearanceType.Image
-                ? '#e16614'
-                : '#1dbf60'
+                ? '#932bad'
+                : '#19964d'
           }
           py={1}
           px={1}
@@ -68,6 +73,11 @@ export function AppearanceBox(props: AppearanceProps) {
           <Stack>
             <Stack.Item grow>
               {appearance.data.name || appearance.data.icon_state}
+              {isEmissive(appearance)
+                ? ' (Emissive)'
+                : isEmissiveBlocker(appearance)
+                  ? ' (Emissive Blocker)'
+                  : ''}
             </Stack.Item>
           </Stack>
         </Box>
@@ -84,9 +94,7 @@ export function AppearanceBox(props: AppearanceProps) {
               layer:{` ${getReadableLayer(appearance, layerToText)}`}
             </Stack.Item>
             <Stack.Item style={{ borderBottom: '1px dashed hsl(0, 0%, 60%);' }}>
-              <Tooltip
-                content={`True plane: ${appearance.data.plane_true} ${getAppearanceHeight(appearance)} ${appearance.boundingBox[0].y} ${appearance.boundingBox[1].y}`}
-              >
+              <Tooltip content={`True plane: ${appearance.data.plane_true}`}>
                 plane:{` ${getReadablePlane(appearance, planeToText)}`}
               </Tooltip>
             </Stack.Item>

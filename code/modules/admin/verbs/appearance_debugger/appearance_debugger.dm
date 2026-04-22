@@ -25,11 +25,11 @@
 /datum/appearance_debugger/proc/get_appearance_data(atom/appearance_owner)
 	var/mutable_appearance/target = appearance_owner
 	if (isatom(appearance_owner))
-		target = appearance_cache["[REF(appearance_owner)]"] || appearance_owner.appearance
+		target = appearance_cache["[REF(appearance_owner)]"] || new /mutable_appearance(appearance_owner.appearance)
 		appearance_cache["[REF(appearance_owner)]"] = target
 
 	var/list/data = list(
-		"type" = isatom(appearance_owner) ? "atom" : (isimage(target) ? "image" : "appearance"),
+		"type" = isatom(appearance_owner) ? "atom" : (isimage(appearance_owner) ? "image" : "appearance"),
 		"alpha" = target.alpha,
 		"flags" = target.appearance_flags,
 		"blend_mode" = target.blend_mode,
@@ -108,9 +108,8 @@
 	return data
 
 /datum/appearance_debugger/ui_static_data(mob/user)
-	var/mutable_appearance/debug_appearance = new(debug_target)
 	return list(
-		"mainAppearance" = get_appearance_data(debug_appearance),
+		"mainAppearance" = get_appearance_data(debug_target),
 		"planeToText" = GLOB.admin_readable_planes,
 		"layerToText" = GLOB.admin_readable_layers,
 		"mapRef" = proxy_view.assigned_map,

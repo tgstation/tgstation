@@ -116,8 +116,14 @@ function mapAppearance(
   return appearance;
 }
 
-export function getAppearanceHeight(appearance: Appearance) {
-  const titlebar = appearance.data.icon_state || appearance.data.name ? 27 : 12;
+function getAppearanceHeight(appearance: Appearance) {
+  const titlebar =
+    appearance.data.icon_state ||
+    appearance.data.name ||
+    isEmissive(appearance) ||
+    isEmissiveBlocker(appearance)
+      ? 27
+      : 12;
   const COLUMN_BREAK = 20;
   let rows = 0;
   if (appearance.data.icon) rows++;
@@ -129,13 +135,52 @@ export function getAppearanceHeight(appearance: Appearance) {
   return height;
 }
 
-export function getAppearanceWidth(
+export function isEmissive(appearance: Appearance) {
+  const EMISSIVE_PLANE = 13;
+  // Emissives are always constant color matrixes
+  if (
+    appearance.data.plane_true !== EMISSIVE_PLANE ||
+    !Array.isArray(appearance.data.color)
+  )
+    return false;
+  const colorMatrix = appearance.data.color as number[];
+  for (let i = 0; i < colorMatrix.length; i++) {
+    if (i === 15 && colorMatrix[i] !== 1) return false;
+    else if (colorMatrix[i] !== 0 && (i < 15 || i > 18)) return false;
+  }
+  return true;
+}
+
+export function isEmissiveBlocker(appearance: Appearance) {
+  const EMISSIVE_PLANE = 13;
+  // Emissive blockers can be a constant matrix or pure black
+  if (appearance.data.plane_true !== EMISSIVE_PLANE || !appearance.data.color)
+    return false;
+  if (appearance.data.color === '#000000') return true;
+  if (!Array.isArray(appearance.data.color)) return false;
+  const colorMatrix = appearance.data.color as number[];
+  for (let i = 0; i < colorMatrix.length; i++) {
+    if (colorMatrix[i] !== 0 && i !== 15) return false;
+  }
+  return true;
+}
+
+function getAppearanceWidth(
   appearance: Appearance,
   layerToText: Record<string, number>,
   planeToText: Record<string, number>,
 ) {
   return Math.max(
-    textWidth(appearance.data.name, 'Verdana, Geneva', 12),
+    textWidth(
+      (appearance.data.name || appearance.data.icon_state) +
+        (isEmissive(appearance)
+          ? ' (Emissive)'
+          : isEmissiveBlocker(appearance)
+            ? ' (Emissive Blocker)'
+            : ''),
+      'Verdana, Geneva',
+      12,
+    ),
     textWidth(`icon: ${appearance.data.icon}`, 'Verdana, Geneva', 12) + 12,
     textWidth(
       `icon_state: ${appearance.data.icon_state}`,
