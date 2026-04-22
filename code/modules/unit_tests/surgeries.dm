@@ -246,8 +246,8 @@
 	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_CHEST), "Chest should be accessible after rolling jumpsuit down")
 	jumpsuit.adjust_to_alt()
 
-	jumpsuit.flags_cover |= BODY_PART_ACCESSIBLE
-	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_CHEST), "Chest should be accessible if it has the BODY_PART_ACCESSIBLE flag")
+	jumpsuit.flags_cover |= ALLOW_SURGERY_THROUGh
+	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_CHEST), "Chest should be accessible if it has the ALLOW_SURGERY_THROUGh flag")
 
 /// Tests surgeries which just modify basic surgical states
 /datum/unit_test/state_surgeries
