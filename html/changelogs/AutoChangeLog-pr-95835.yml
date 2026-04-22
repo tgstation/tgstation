@@ -1,0 +1,4 @@
+author: "levels0"
+delete-after: True
+changes:
+  - bugfix: "metalgen and secret sauce recipes are now loaded properly"

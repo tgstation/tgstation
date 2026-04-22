@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - admin: "Planemaster Debugger now has a text search input to locate and jump to planes"

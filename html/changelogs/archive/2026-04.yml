@@ -462,6 +462,8 @@
   - qol: The detective's noir fedora is actually a detective fedora, and gets all
       the unique qualities expected of one.
 2026-04-21:
+  Ben10Omintrix:
+  - balance: the grapple gun's price has been reduced to 1500 points
   LT3:
   - bugfix: Fixed loss of credits for correctly denied minerals market cargo manifest
   - bugfix: Cargo budget materials market orders arrive in crates as expected
@@ -470,3 +472,17 @@
       to the pod bay and buttons to control the doors!
   Yobrocharlie:
   - rscadd: added more things to the antag gear spawner
+2026-04-22:
+  ArcaneMusic:
+  - bugfix: More safeguards were added to the admin "Create Black Market Item" verb.
+  Melbert:
+  - rscadd: Spacers who manage to get nograv while on a planet are given a positive
+      moodlet, and are considered in space for the purpose of their buffs/debuffs
+  TheBoondock:
+  - refactor: refactored majority of gas_mix mole change into adjust_gas() proc
+  lelandkemble:
+  - bugfix: Butchering heads no longer moves their organs to nullspace, and probably
+      the same with any other method of mass removing organs.
+  vinylspiders:
+  - bugfix: fixes an issue where raptor chicks and other non-items appearing in item
+      contents would prevent any personal crafting in the vicinity
