@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Spacers who manage to get nograv while on a planet are given a positive moodlet, and are considered in space for the purpose of their buffs/debuffs"
