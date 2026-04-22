@@ -1452,7 +1452,7 @@
 	if(shown_stamina_loss >= stam_crit_threshold)
 		stamina.icon_state = "stamina_crit"
 	else if(shown_stamina_loss > 0 && maxHealth > 0)
-		stamina.icon_state = "stamina_[6 - ceil(shown_stamina_loss / (maxHealth * 0.2))]"
+		stamina.icon_state = "stamina_[ceil(shown_stamina_loss / (maxHealth * 0.2))]"
 	else
 		stamina.icon_state = "stamina_full"
 
