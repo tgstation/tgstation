@@ -33,7 +33,7 @@
 		return NONE
 
 	if(isliving(target))
-		to_chat(user, span_warning("[src] can't be used to draw blood!"
+		to_chat(user, span_warning("[src] can't be used to draw blood!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(reagents.holder_full())
