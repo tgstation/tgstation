@@ -31,6 +31,8 @@
 	var/pictures_left = 10
 	/// Currently inserted holorecord disk.
 	var/obj/item/disk/holodisk/disk
+	///Boolean on whether or not the camera will print in monochrome.
+	var/print_monochrome = FALSE
 	/// Whether we flash upon taking a picture.
 	var/flash_enabled = TRUE
 	/// Whether we silence our picture taking and zoom adjusting sounds.
@@ -77,6 +79,7 @@
 
 /obj/item/camera/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Adjust Zoom"
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Change Printer Mode"
 
 	if(istype(held_item, /obj/item/camera_film))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert Film"
@@ -96,6 +99,7 @@
 	. = ..()
 	. += span_notice("It has [pictures_left] photos left.")
 	. += span_notice("Alt-click to change its focusing, allowing you to set how big of an area it will capture.")
+	. += span_notice("Ctrl-click to change the printer between color and monochrome.")
 	. += span_notice("The present dimensions of the picture are [EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]")]")
 
 	if(isnull(disk))
@@ -209,7 +213,6 @@
 */
 /obj/item/camera/proc/capture_image(atom/target, mob/user)
 	PRIVATE_PROC(TRUE)
-
 	//Checking if we can target
 	var/turf/target_turf = get_turf(target)
 	var/view_size = user?.client?.view || world.view
@@ -287,7 +290,19 @@
 			continue
 		names += "[person.name]"
 
-	var/datum/picture/picture = new("picture", desc.Join("<br>"), mobs_spotted, dead_spotted, names, get_icon, null, width * ICON_SIZE_X, height * ICON_SIZE_Y, blueprints, can_see_ghosts = see_ghosts)
+	var/datum/picture/picture = new(
+		"picture",
+		desc.Join("<br>"),
+		mobs_spotted,
+		dead_spotted,
+		names,
+		get_icon,
+		null,
+		width * ICON_SIZE_X,
+		height * ICON_SIZE_Y,
+		blueprints,
+		can_see_ghosts = see_ghosts,
+	)
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
 	blending = FALSE
@@ -303,7 +318,9 @@
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
 	PROTECTED_PROC(TRUE)
 
-	if(!silent)
+	if(silent)
+		user.playsound_local(get_turf(src), SFX_POLAROID, 35, TRUE)
+	else
 		playsound(loc, SFX_POLAROID, 75, TRUE, -3)
 
 	if(print_picture_on_snap)
@@ -425,6 +442,15 @@
 /obj/item/camera/click_alt(mob/user)
 	if(!adjust_zoom(user = user))
 		return CLICK_ACTION_BLOCKING
+	if(silent) // Don't out your silent cameras
+		user.playsound_local(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+	else
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/camera/item_ctrl_click(mob/user)
+	print_monochrome = !print_monochrome
+	user.balloon_alert(user, "printing [print_monochrome ? "monochrome" : "in color"]")
 	if(silent) // Don't out your silent cameras
 		user.playsound_local(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 	else
