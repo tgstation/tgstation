@@ -97,6 +97,10 @@
 
 	icon_state = base_icon_state + (on_state ? "_on" : "")
 
+/obj/machinery/gizmo/toggle/tucker_tubes
+	icon_states = list("gizmo_active_0")
+	anchored = TRUE
+
 /obj/machinery/gizmo/toggle/proc/on_state(datum/gizpulse/pulse)
 	SIGNAL_HANDLER
 

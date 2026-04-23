@@ -9,11 +9,6 @@
 	/datum/gizmodes/copier = 1,\
 )
 
-// ideeën:
-// visuele effecten maker (misschien op een speciale locatie? met usb?)
-// pocket dimension thing
-// cloak
-
 /// Essentially a small wrapper that holds the puzzle datum and connects it with the operating modes of the machine
 /datum/gizmo_interface
 	/// The gizmo master ultra mega controller
