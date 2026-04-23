@@ -1,14 +1,3 @@
-/// Common gizmo modes to pick from. They are also weighted so you have even more probability control isnt that cool
-#define GIZMO_COMMON_MODES list(\
-	/datum/gizmodes/mood_pulser = 1,\
-	/datum/gizmodes/mopper = 1,\
-	/datum/gizmodes/teleporter = 1,\
-	/datum/gizmodes/electric = 1,\
-	/datum/gizmodes/dispenser/food = 1,\
-	/datum/gizmodes/sputter = 1,\
-	/datum/gizmodes/copier = 1,\
-)
-
 /// Essentially a small wrapper that holds the puzzle datum and connects it with the operating modes of the machine
 /datum/gizmo_interface
 	/// The gizmo master ultra mega controller

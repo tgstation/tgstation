@@ -26,3 +26,14 @@
 #define GIZMO_INTERFACE_VOICE "gizmo_interface_voices"
 
 #define GIZMO_PICK_ONE "gizmo_pick_one"
+
+/// Common gizmo modes to pick from. They are also weighted so you have even more probability control isnt that cool
+#define GIZMO_COMMON_MODES list(\
+	/datum/gizmodes/mood_pulser = 1,\
+	/datum/gizmodes/mopper = 1,\
+	/datum/gizmodes/teleporter = 1,\
+	/datum/gizmodes/electric = 1,\
+	/datum/gizmodes/dispenser/food = 1,\
+	/datum/gizmodes/sputter = 1,\
+	/datum/gizmodes/copier = 1,\
+)
