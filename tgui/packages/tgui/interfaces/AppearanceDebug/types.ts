@@ -4,7 +4,8 @@ export type AppearanceDebugData = {
   mainAppearance: AppearanceData;
   planeToText: Record<string, number>;
   layerToText: Record<string, number>;
-  mapRef: string;
+  mapRefHover: string;
+  mapRefSelected: string;
 };
 
 export enum AppearanceType {
@@ -45,9 +46,9 @@ export const VIS_FLAGS = {
 };
 
 export const MOUSE_OPACITY = {
-  TRANSPARENT: 0,
-  ICON: 1,
-  OPAQUE: 2,
+  MOUSE_OPACITY_TRANSPARENT: 0,
+  MOUSE_OPACITY_ICON: 1,
+  MOUSE_OPACITY_OPAQUE: 2,
 };
 
 export const BLEND_MODE = {
@@ -67,7 +68,7 @@ export type AppearanceData = {
   blend_mode: number;
   color: string | number[];
   dir: number | null;
-  filters: FilterData[];
+  filters: FilterData[] | null;
   icon: string;
   icon_state: string;
   invisibility: number;
@@ -103,16 +104,23 @@ export enum AppearanceParentType {
   Overlay = 2,
 }
 
+export enum HiddenState {
+  Visible = 0,
+  Hidden = 1,
+  VisibleChild = 2,
+}
+
 export type Appearance = {
   data: AppearanceData;
   underlays: Appearance[] | null;
   overlays: Appearance[] | null;
   parent: Appearance | null;
-  boundingBox: [Coordinates, Coordinates];
   parentType: AppearanceParentType;
   renderTargetTo: Appearance[] | null;
   relativePosition: Coordinates;
   depth: number;
+  boundingBox: [Coordinates, Coordinates];
+  hidden: HiddenState;
 };
 
 export type AppearanceMap = Record<number, Appearance>;

@@ -1,4 +1,4 @@
-import { Box, Image, Stack, Tooltip } from 'tgui-core/components';
+import { Box, Button, Image, Stack, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import type { Coordinates } from '../common/Connections';
 import {
@@ -7,16 +7,22 @@ import {
   isEmissive,
   isEmissiveBlocker,
 } from '.';
-import { APPEARANCE_FLAGS, type Appearance, AppearanceType } from './types';
+import {
+  APPEARANCE_FLAGS,
+  type Appearance,
+  AppearanceType,
+  HiddenState,
+} from './types';
 import { useAppearanceDebugContext } from './useAppearanceDebug';
 
 export type AppearanceProps = {
   appearance: Appearance;
   position: Coordinates;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
 };
 
 export function AppearanceBox(props: AppearanceProps) {
-  const { appearance, position } = props;
+  const { appearance, position, onClick } = props;
   const { planeToText, layerToText, act } = useAppearanceDebugContext();
 
   return (
@@ -31,7 +37,9 @@ export function AppearanceBox(props: AppearanceProps) {
           top={`${position.y + appearance.boundingBox[0].y}px`}
           width={`${appearance.boundingBox[1].x - appearance.boundingBox[0].x}px`}
           height={`${appearance.boundingBox[1].y - appearance.boundingBox[0].y}px`}
-          onMouseOver={() => act('swapMapView', { id: appearance.data.id })}
+          onMouseOver={() =>
+            act('swapMapViewHover', { id: appearance.data.id })
+          }
           style={{
             zIndex: -(999 - appearance.depth),
             border: `3px solid ${appearance.data.flags & APPEARANCE_FLAGS.KEEP_APART ? (appearance.data.flags & APPEARANCE_FLAGS.KEEP_TOGETHER ? '#2a7dc6' : '#107e2e') : '#e9cb0c'}`,
@@ -55,8 +63,10 @@ export function AppearanceBox(props: AppearanceProps) {
         left={`${position.x}px`}
         top={`${position.y}px`}
         minWidth="150px"
-        onMouseOver={() => act('swapMapView', { id: appearance.data.id })}
+        onMouseOver={() => act('swapMapViewHover', { id: appearance.data.id })}
+        onClick={onClick}
         style={{ zIndex: 1 }}
+        opacity={appearance.hidden === HiddenState.VisibleChild ? 0.7 : 1}
       >
         <Box
           backgroundColor={
@@ -78,6 +88,14 @@ export function AppearanceBox(props: AppearanceProps) {
                 : isEmissiveBlocker(appearance)
                   ? ' (Emissive Blocker)'
                   : ''}
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="pager"
+                compact
+                tooltip="View Variables (Mirror)"
+                onClick={() => act('vvAppearance', { id: appearance.data.id })}
+              />
             </Stack.Item>
           </Stack>
         </Box>

@@ -11,7 +11,8 @@ type AppearanceDebug = {
   act: typeof sendAct;
   planeToText: Record<string, number>;
   layerToText: Record<string, number>;
-  mapRef: string;
+  mapRefHover: string;
+  mapRefSelected: string;
   appsProcessed: AppearanceMap;
   zoomToX: number | undefined;
   setZoomToX: Dispatch<SetStateAction<number | undefined>>;

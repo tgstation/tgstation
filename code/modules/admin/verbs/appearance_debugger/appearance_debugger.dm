@@ -7,19 +7,24 @@
 	var/list/mutable_appearance/appearance_copies
 	/// Assoc list of ref -> appearance as to prevent refreshing of dynamic appearances
 	var/list/mutable_appearance/appearance_cache
-	/// Mapview used to display the targeted appearance
-	var/atom/movable/screen/map_view/proxy_view
+	/// Mapview used to display the hovered over appearance
+	var/atom/movable/screen/map_view/proxy_view_hover
+	/// Mapview used to display the selected appearance
+	var/atom/movable/screen/map_view/proxy_view_selected
 
 /datum/appearance_debugger/New(datum/admins/owner)
 	src.owner = owner
-	proxy_view = new()
-	proxy_view.generate_view("appearance_debugger_[REF(owner)]_proxy")
+	proxy_view_hover = new()
+	proxy_view_hover.generate_view("appearance_debugger_[REF(owner)]_proxy_hover")
+	proxy_view_selected = new()
+	proxy_view_selected.generate_view("appearance_debugger_[REF(owner)]_proxy_selected")
 
 /datum/appearance_debugger/Destroy()
 	if(owner)
 		owner.appearance_debug = null
 		owner = null
-	QDEL_NULL(proxy_view)
+	QDEL_NULL(proxy_view_hover)
+	QDEL_NULL(proxy_view_selected)
 	return ..()
 
 /datum/appearance_debugger/proc/get_appearance_data(atom/appearance_owner)
@@ -112,7 +117,8 @@
 		"mainAppearance" = get_appearance_data(debug_target),
 		"planeToText" = GLOB.admin_readable_planes,
 		"layerToText" = GLOB.admin_readable_layers,
-		"mapRef" = proxy_view.assigned_map,
+		"mapRefHover" = proxy_view_hover.assigned_map,
+		"mapRefSelected" = proxy_view_selected.assigned_map,
 	)
 
 /datum/appearance_debugger/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -120,16 +126,27 @@
 	if(.)
 		return
 	switch(action)
-		if("swapMapView")
+		if("swapMapViewHover")
 			var/appearance_id = text2num(params["id"])
-			proxy_view.appearance = appearance_copies[appearance_id]
+			proxy_view_hover.appearance = appearance_copies[appearance_id]
 			// Needs screenloc to be set since we're setting the appearance and carrying over target's screenloc
-			proxy_view.set_position(1, 1)
+			proxy_view_hover.set_position(1, 1)
+
+		if("swapMapViewSelected")
+			var/appearance_id = text2num(params["id"])
+			proxy_view_selected.appearance = appearance_copies[appearance_id]
+			proxy_view_selected.set_position(1, 1)
 
 		if("refreshAppearance")
 			appearance_copies = list()
 			appearance_cache = list()
 			update_static_data_for_all_viewers()
+
+		if("vvAppearance")
+			if (!check_rights(R_VAREDIT))
+				return
+			var/appearance_id = text2num(params["id"])
+			usr.client.debug_variables(appearance_copies[appearance_id])
 
 /datum/appearance_debugger/ui_assets(mob/user)
 	return list(get_asset_datum(/datum/asset/simple/plane_background))
@@ -142,7 +159,8 @@
 	if(!ui)
 		ui = new(user, src, "AppearanceDebug")
 		ui.open()
-		proxy_view.display_to(user, ui.window)
+		proxy_view_hover.display_to(user, ui.window)
+		proxy_view_selected.display_to(user, ui.window)
 
 /datum/appearance_debugger/proc/set_target(mutable_appearance/new_target)
 	// Can be an atom!
