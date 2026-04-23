@@ -7,12 +7,15 @@
 		In addition, at high style, you are able to swap an item in your hand with one in your backpack by <b>hitting</b> one with another."
 	icon_state = "style_meter"
 	icon = 'icons/obj/clothing/glasses.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	/// The style meter component we give.
 	var/datum/component/style/style_meter
 	/// Mutable appearance added to the attached glasses
 	var/mutable_appearance/meter_appearance
 	/// If this is multitooled, which is passed onto the component on-creation, if one doesn't currently exist
 	var/multitooled = FALSE
+	/// Stored permanent multiplier from doing mining-related tasks (e.g. vents, megafauna)
+	var/stored_permanent_multiplier = 0
 
 /obj/item/style_meter/Initialize(mapload)
 	. = ..()
@@ -49,7 +52,7 @@
 	if(carbon_wearer.glasses != interacting_with)
 		return .
 
-	style_meter = carbon_wearer.AddComponent(/datum/component/style, multitooled)
+	style_meter = carbon_wearer.AddComponent(/datum/component/style, multitooled, stored_permanent_multiplier)
 	return .
 
 /obj/item/style_meter/Moved(atom/old_loc, Dir, momentum_change)
@@ -68,7 +71,7 @@
 			QDEL_NULL(style_meter)
 		return
 
-	style_meter = equipper.AddComponent(/datum/component/style, multitooled)
+	style_meter = equipper.AddComponent(/datum/component/style, multitooled, stored_permanent_multiplier)
 
 
 /// Signal proc for when the meter-holding glasses are dropped/unequipped

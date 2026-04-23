@@ -75,13 +75,15 @@
 	)
 
 
-/datum/component/style/Initialize(multitooled = FALSE)
+/datum/component/style/Initialize(multitooled = FALSE, stored_permanent_multiplier = 0)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	START_PROCESSING(SSdcs, src)
 	if(multitooled)
 		src.multitooled = multitooled
+	if(stored_permanent_multiplier)
+		src.permanent_multiplier = stored_permanent_multiplier
 
 /datum/component/style/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hotswap))
@@ -328,6 +330,15 @@
 	else
 		source.balloon_alert(source, "unable to hotswap!")
 
+/datum/component/style/proc/adjust_permanent_multiplier(modifier)
+	permanent_multiplier += modifier
+	var/mob/living/carbon/carbon_owner = parent
+	if(!iscarbon(carbon_owner))
+		return
+	var/obj/item/style_meter/carbon_meter = locate(/obj/item/style_meter) in carbon_owner.glasses
+	if(carbon_meter)
+		carbon_meter.stored_permanent_multiplier += modifier
+
 // Point givers
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)
 	SIGNAL_HANDLER
@@ -419,7 +430,7 @@
 
 	var/vent_value = vent.boulder_size / BOULDER_SIZE_MEDIUM
 	add_action(ACTION_VENT_TAPPED, 250 * vent_value)
-	permanent_multiplier += ACTION_MULTIPLIER_PER_VENT_VALUE * vent_value
+	adjust_permanent_multiplier(ACTION_MULTIPLIER_PER_VENT_VALUE * vent_value)
 
 // Emote-based multipliers
 /datum/component/style/proc/on_taunt()
@@ -447,7 +458,7 @@
 
 	if(ismegafauna(died))
 		add_action(ACTION_MAJOR_KILL, 350)
-		permanent_multiplier += ACTION_MULTIPLIER_MAJOR_KILL
+		adjust_permanent_multiplier(ACTION_MULTIPLIER_MAJOR_KILL)
 
 	else if(died.maxHealth >= 75) //at least legions
 		add_action(ACTION_KILL, 125)
