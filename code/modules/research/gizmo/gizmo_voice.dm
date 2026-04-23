@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(gizmo_words, world.file2list("strings/gizmo_words.txt"))
 	movable.become_hearing_sensitive(type)
 	RegisterSignal(movable, COMSIG_MOVABLE_HEAR, PROC_REF(on_hear))
 
-	puzzle = src.puzzle
+	src.puzzle = puzzle
 
 	if(!active_words.len)
 		generate_active_words()
