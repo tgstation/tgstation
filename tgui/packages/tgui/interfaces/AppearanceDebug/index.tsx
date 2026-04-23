@@ -612,7 +612,7 @@ export function AppearanceDebug() {
                   position={mapPosition(keyValue[1], appearancePositions)}
                   onClick={(event) => {
                     setSelection(keyValue[1].data.id);
-                    act('setMapViewSelected', { id: keyValue[1].data.id });
+                    act('swapMapViewSelected', { id: keyValue[1].data.id });
                   }}
                 />
               ))}
