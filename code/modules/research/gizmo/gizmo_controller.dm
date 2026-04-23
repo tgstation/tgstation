@@ -12,8 +12,7 @@
 
 /// Generate interfaces for interacting with the gizmo
 /datum/gizmo_controller/proc/generate_interfaces(atom/movable/holder)
-	for(var/interface_define in interfaces)
-		var/interface_type = interfaces[interface_define]
+	for(var/interface_define, interface_type in interfaces)
 
 		var/list/callbacks = list()
 		var/datum/gizmo_interface/interface_instance = new interface_type (holder)
