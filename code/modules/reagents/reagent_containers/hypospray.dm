@@ -28,6 +28,32 @@
 		return NONE
 	return inject(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
+/obj/item/reagent_containers/hypospray/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	if (!target.reagents)
+		return NONE
+
+	if(isliving(target))
+		to_chat(user, span_warning("[src] can't be used to draw blood!"
+		return ITEM_INTERACT_BLOCKING
+
+	if(reagents.holder_full())
+		to_chat(user, span_notice("[src] is full."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!target.reagents.total_volume)
+		to_chat(user, span_warning("[target] is empty!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!target.is_drawable(user))
+		to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
+	if(trans)
+		to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
+	target.update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
 ///Handles all injection checks, injection and logging.
 /obj/item/reagent_containers/hypospray/proc/inject(mob/living/affected_mob, mob/user)
 	if(used_up)
