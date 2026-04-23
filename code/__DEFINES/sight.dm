@@ -18,7 +18,6 @@
 #define SEE_INVISIBLE_OBSERVER 60
 
 #define INVISIBILITY_ADMIN 61
-#define SEE_INVISIBLE_ADMIN 61
 
 #define INVISIBILITY_MAXIMUM 100 //the maximum allowed for "real" objects
 
