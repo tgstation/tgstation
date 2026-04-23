@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscadd: "You can Ctrl Click a camera to set it to print monochrome photos. The detective's camera is on this mode by default."
-  - qol: "Photos without a scribble written on them won't have empty white space at the bottom."
