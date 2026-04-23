@@ -1,3 +1,4 @@
+//These defines are used in skin.dmf, if one is to be renamed/edited, this file must match it.
 #define SKIN_MAINWINDOW "mainwindow"
 #define SKIN_MAINWINDOW_SPLIT "[SKIN_MAINWINDOW].split"
 
