@@ -378,3 +378,148 @@
   - balance: Removes the minimum APC requirement for robofactories
   lelandkemble:
   - bugfix: stimulants properly regenerate stamina in otherwise healthy people
+2026-04-19:
+  Melbert:
+  - bugfix: Removing brain updates the med hud
+  vinylspiders:
+  - bugfix: changing your gender choice in character prefs no longer modifies your
+      physique preference
+2026-04-20:
+  ArcaneMusic:
+  - spellcheck: corrected some instances within TGC cards to say "plasma" instead
+      of "mana" when referring to card costs.
+  Jacquerel:
+  - rscadd: Adds 16 more wizard wands to the game, which wizards can buy cheaply but
+      randomly, or are available via Summon Magic.
+  - rscadd: If a wizard buys more than one set of wands they will receive a "Wand
+      Bandolier" holster which fits in the backpack or, if worn in the suit slot,
+      will automatically exchange an expended wand for a full one.
+  - balance: Staffs (and wands) of animation that are animated will try to animate
+      other objects instead of firing at living mobs, which are already animated.
+  - balance: Animating a wand of nothing will turn it into a wand of animation (and
+      animate it).
+  - balance: The staff of chaos can now do more things.
+  - balance: Magicarp now additionally come in Babbling, Frigid, Quantum, and Weightless
+      varieties. Collect them all!
+  Melbert:
+  - bugfix: Heretic "research knowledge" objective no longer undershoots the target
+      value by ~8-10
+  - balance: You can no longer dismount riders from ponies with a single click. Instead,
+      there is a chance to dismount the rider on shoving the pony OR the rider, based
+      on multiple factors (such as stamina + physical damage and stagger)
+  - balance: The Leaper mount also has this "disarm to dismount" mechanic, though
+      it is significantly more difficult as they are much sturdier beasts
+  - balance: Upon being successfully sacrificed by a heretic all other heretics lose
+      you as a target, and you can no longer be (re)rolled as a target by other heretics.
+  SmArtKar:
+  - balance: Ship from a bottle can now be bottled back up by alt-clicking it
+  - balance: Ship in a bottle can now be deployed by throwing it, and are a small
+      item instead of normal-sized
+  - spellcheck: Boats no longer refer to oars as keys
+  - bugfix: Transforming items like eswords should no longer get absurd stats when
+      metalgenned multiple times in a row
+  SmArtKar, Kryson, ArcaneMusic:
+  - rscadd: 'Lavaland has received 2 new rock types: Siderite, rich in iron and titanium,
+      and Shale, full of plasma, gold and uranium.'
+  - rscadd: A guaranteed river spawn and a fishing pond have been added to the lavaland
+      outpost raptor area.
+  - rscadd: Ores now tend to spawn in veins or clusters, and are much more likely
+      to spawn near exposed rock.
+  - balance: Natural ore spawns are much more abundant than before, closer to pre-arcmining
+      levels. Vent output has been halved
+  - balance: PKA AOE mining module has been reverted to 3x3 and incurs a cooldown
+      penalty
+  - balance: Plasma cutters eat more plasma when recharging and have slightly shorter
+      range.
+  - balance: Mining MOD sphere mode no longer instamines, and now just has an extremely
+      high mining speed.
+  - balance: Goldgrubs can now tunnel extremely fast and spawn much more frequently
+      than before. Goldgrub burrowing can be interrupted by dealing damage to them.
+  - balance: Goldgrubs no longer reflect non-bomb/energy shots.
+  - balance: AOE mining methods now have a 10/25% chance to not mine siderite/shale
+      unless it has ore inside of it.
+  - refactor: Lavaland generation has been rewritten. The caves should be much more
+      wilder.
+  SyncIt21:
+  - bugfix: AI camera mode works from any distances
+  TheRealSpriteMan1337:
+  - image: Omega soap texture has been updated.
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: welding goggles now only cover your eyes when covering your eyes
+  Y0SH1M4S73R:
+  - balance: Wizards with the Heart Eater perk are only invigorated by the hearts
+      of sentient beings.
+  - rscadd: To facilitate the taking of hearts from sentient beings, the Heart Eater
+      perk lets you tear the heart out of the chest of an incapacitated or dead being
+      by targeting their chest with an empty hand in combat mode.
+  Yobrocharlie:
+  - rscadd: The heretic gateway now has a 40mm cannon in it.
+  lelandkemble:
+  - bugfix: Janiborgs will no longer track blood while autowashing
+  - bugfix: Fixes one way to get stuck in place forever while using a fulton extraction
+      kit
+  necromanceranne:
+  - qol: The detective's noir fedora is actually a detective fedora, and gets all
+      the unique qualities expected of one.
+2026-04-21:
+  Ben10Omintrix:
+  - balance: the grapple gun's price has been reduced to 1500 points
+  LT3:
+  - bugfix: Fixed loss of credits for correctly denied minerals market cargo manifest
+  - bugfix: Cargo budget materials market orders arrive in crates as expected
+  Pumpkinoe:
+  - map: Centcom's ERT wing has been updated, including a new door that leads directly
+      to the pod bay and buttons to control the doors!
+  Yobrocharlie:
+  - rscadd: added more things to the antag gear spawner
+2026-04-22:
+  ArcaneMusic:
+  - bugfix: More safeguards were added to the admin "Create Black Market Item" verb.
+  Melbert:
+  - rscadd: Spacers who manage to get nograv while on a planet are given a positive
+      moodlet, and are considered in space for the purpose of their buffs/debuffs
+  TheBoondock:
+  - refactor: refactored majority of gas_mix mole change into adjust_gas() proc
+  lelandkemble:
+  - bugfix: Butchering heads no longer moves their organs to nullspace, and probably
+      the same with any other method of mass removing organs.
+  vinylspiders:
+  - bugfix: fixes an issue where raptor chicks and other non-items appearing in item
+      contents would prevent any personal crafting in the vicinity
+2026-04-23:
+  1393F:
+  - bugfix: The mushroom bowl no longer turns invisible when filled with a reagent.
+  Absolucy, LemonInTheDark:
+  - bugfix: You can no longer see lights through walls when using mesons or when ventcrawling.
+  ArcaneMusic:
+  - qol: The GMM Ui can now tell you the minimum and maximum price ranges that a material
+      will sell for.
+  - qol: You can now sell materials on the edge of their buying and selling thresholds.
+      (This really only effects iron and glass, practically)
+  Ghommie:
+  - bugfix: Packs exclusive to the express console (crab rockets for example) can
+      now be ordered from express consoles.
+  Happyowl93:
+  - code_imp: makeHologram now allows a color override.
+  Melbert:
+  - balance: Codex Cicatrix is now a tier 1 heretic knowledge, and can not be drafted.
+  - balance: Warren King's Welcome is now a tier 1 heretic knowledge, but can be drafted.
+  - balance: Warren King's Welcome soft reworked. Now needs 10 cable, 1 paper, 1 multitool.
+      Now adds access to all IDs present, including worn IDs. Now adds "heretic" access
+      to the ID card. Now changes all nearby airlocks to require "heretic" access,
+      and cuts the AI wire.
+  - balance: Eldritch ID card starts with "heretic" access.
+  - admin: Adds toggle for meteor mode in secrets
+  - rscadd: Some EVA helmets now have retractable visors, which you can pull up or
+      down at will, to reveal your face.
+  - balance: The amount of blood loss from an attack to an already bleeding wound
+      has been tweaked. As an example, a 20 force attack used to range 0.1% to 4%
+      blood loss, and now ranges 1% to 3%.
+  - bugfix: Plasma works in IEDs again
+  SmArtKar:
+  - admin: Planemaster Debugger now has a text search input to locate and jump to
+      planes
+  levels0:
+  - bugfix: metalgen and secret sauce recipes are now loaded properly
+  timothymtorres:
+  - map: Add Shoe Factory to lava/ice ruins.

@@ -703,6 +703,27 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				return
 			return
 
+		if("meteormode")
+			if(!is_funmin)
+				return
+			if(GLOB.meteor_mode)
+				QDEL_NULL(GLOB.meteor_mode)
+				message_admins("[key_name_admin(holder)] disabled meteor mode.")
+				return TRUE
+
+			GLOB.meteor_mode = new()
+			var/start_when = tgui_input_number(usr, "Meteors will start in (this many seconds):", "Meteor Mode: Start", (5 MINUTES) / 10, (24 HOURS) / 10, 0)
+			var/ramp_speed = tgui_input_number(usr, "Meteors will worsen every (this many seconds):", "Meteor Mode: Intensity", (5 MINUTES) / 10, (24 HOURS) / 10, (30 SECONDS) / 10)
+			if(!is_funmin) // deadminnied?
+				QDEL_NULL(GLOB.meteor_mode)
+				return TRUE
+			GLOB.meteor_mode.meteordelay = world.time + (start_when * 10)
+			GLOB.meteor_mode.rampupdelta = ramp_speed / 60
+			GLOB.meteor_mode.start_meteor()
+			message_admins("[key_name_admin(holder)] enabled meteor mode. \
+				Meteors will start [start_when ? "in [DisplayTimeText(start_when * 10)]" : "immediately"], and will worsen every [DisplayTimeText(ramp_speed * 10)].")
+			return TRUE
+
 		if("fix_gravity")
 			if(!is_funmin)
 				return

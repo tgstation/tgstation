@@ -44,9 +44,9 @@
 /datum/action/cooldown/mob_cooldown/burrow/Activate()
 	var/obj/effect/dummy/phased_mob/grub_burrow/holder = null
 	var/turf/current_loc = get_turf(owner)
+	var/mob/living/grub = owner
 
-	if(!do_after(owner, 3 SECONDS, target = current_loc))
-		owner.balloon_alert(owner, "need to stay still!")
+	if(!do_after(owner, 2.5 SECONDS, target = current_loc, extra_checks = CALLBACK(src, PROC_REF(health_check), grub.health)))
 		return
 
 	if(get_turf(owner) != current_loc)
@@ -71,6 +71,10 @@
 	playsound(current_loc, 'sound/effects/break_stone.ogg', 50, TRUE, -1)
 	StartCooldown()
 	return TRUE
+
+/datum/action/cooldown/mob_cooldown/burrow/proc/health_check(health)
+	var/mob/living/grub = owner
+	return grub.health >= health
 
 /obj/effect/dummy/phased_mob/grub_burrow
 
