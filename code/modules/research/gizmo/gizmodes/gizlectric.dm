@@ -34,6 +34,7 @@
 	if(istype(master, /datum/gizmodes/electric))
 		var/datum/gizmodes/electric/electromaster = master
 		return electromaster.power.use(amount)
+	return FALSE
 
 /// Do an EMP blast
 /datum/gizpulse/electric/emp
