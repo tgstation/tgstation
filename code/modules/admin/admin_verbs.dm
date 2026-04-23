@@ -1,3 +1,6 @@
+
+#define STEALTH_MODE_TRAIT "stealth_mode"
+
 /client/proc/add_admin_verbs()
 	control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 	SSadmin_verbs.assosciate_admin(src)
@@ -34,24 +37,43 @@ ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_
 		log_admin("[key_name(user)] admin ghosted.")
 		message_admins("[key_name_admin(user)] admin ghosted.")
 		var/mob/body = user.mob
-		body.ghostize(TRUE, TRUE)
+		var/mob/dead/observer/ghost = body.ghostize(TRUE, TRUE)
 		user.init_verbs()
 		if(body && !body.key)
 			body.key = "@[user.key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
+		// Carry over invisimin to their aghost
+		var/is_stealth_mode = user.holder.fakekey
+		var/is_invisimin = HAS_TRAIT_FROM(body, TRAIT_INVISIMIN, ADMIN_TRAIT)
+		if(is_stealth_mode || is_invisimin)
+			if(is_invisimin)
+				ADD_TRAIT(ghost, TRAIT_INVISIMIN, ADMIN_TRAIT)
+				ghost.SetInvisibility(INVISIBILITY_ADMIN, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
+			else
+				ghost.SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_STEALTHMODE, INVISIBILITY_PRIORITY_ADMIN)
+				ghost.name = " "
+				ghost.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+			ghost.alpha = 0
+			ghost.remove_from_all_data_huds()
+			ADD_TRAIT(ghost, TRAIT_ORBITING_FORBIDDEN, is_invisimin ? ADMIN_TRAIT : STEALTH_MODE_TRAIT)
+			QDEL_NULL(ghost.orbiters)
+
 		BLACKBOX_LOG_ADMIN_VERB("Admin Ghost")
 
-ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles full invisibility.", ADMIN_CATEGORY_GAME)
 	if(HAS_TRAIT(user.mob, TRAIT_INVISIMIN))
 		REMOVE_TRAIT(user.mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
+		REMOVE_TRAIT(user.mob, TRAIT_ORBITING_FORBIDDEN, ADMIN_TRAIT)
 		user.mob.add_to_all_human_data_huds()
 		user.mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
 		to_chat(user, span_adminnotice(span_bold("Invisimin off. Invisibility reset.")), confidential = TRUE)
 		return
 
 	ADD_TRAIT(user.mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
+	ADD_TRAIT(user.mob, TRAIT_ORBITING_FORBIDDEN, ADMIN_TRAIT)
 	user.mob.remove_from_all_data_huds()
-	user.mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
-	to_chat(user, span_adminnotice(span_bold("Invisimin on. You are now as invisible as a ghost.")), confidential = TRUE)
+	user.mob.SetInvisibility(INVISIBILITY_ADMIN, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
+	QDEL_NULL(user.mob.orbiters)
+	to_chat(user, span_adminnotice(span_bold("Invisimin on. You are now fully invisible to players.")), confidential = TRUE)
 
 ADMIN_VERB(check_antagonists, R_ADMIN, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_GAME)
 	user.holder.check_antagonists()
@@ -141,8 +163,6 @@ ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY
 
 	BLACKBOX_LOG_ADMIN_VERB("Stealth Mode")
 
-#define STEALTH_MODE_TRAIT "stealth_mode"
-
 /client/proc/enable_stealth_mode()
 	var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
 	if(!new_key)
@@ -179,8 +199,6 @@ ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY
 
 	log_admin("[key_name(usr)] has turned stealth mode OFF")
 	message_admins("[key_name_admin(usr)] has turned stealth mode OFF")
-
-#undef STEALTH_MODE_TRAIT
 
 ADMIN_VERB(drop_bomb, R_FUN, "Drop Bomb", "Cause an explosion of varying strength at your location", ADMIN_CATEGORY_FUN)
 	var/list/choices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
