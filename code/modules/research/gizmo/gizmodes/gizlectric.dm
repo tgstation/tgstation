@@ -27,12 +27,14 @@
 	if(istype(master, /datum/gizmodes/electric))
 		var/datum/gizmodes/electric/electromaster = master
 		return electromaster.power.charge()
+	return 0
 
 /// Use some charge
 /datum/gizpulse/electric/proc/use_power(amount, atom/movable/holder, datum/gizmodes/master)
 	if(istype(master, /datum/gizmodes/electric))
 		var/datum/gizmodes/electric/electromaster = master
 		return electromaster.power.use(amount)
+	return FALSE
 
 /// Do an EMP blast
 /datum/gizpulse/electric/emp
