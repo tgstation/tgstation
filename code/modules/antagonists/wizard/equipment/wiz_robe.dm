@@ -119,7 +119,7 @@
 	inhand_icon_state = "wizrobe"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor_type = /datum/armor/suit_wizrobe
-	allowed = list(/obj/item/teleportation_scroll, /obj/item/highfrequencyblade/wizard)
+	allowed = list(/obj/item/highfrequencyblade/wizard, /obj/item/storage/belt/wand_bandolier, /obj/item/teleportation_scroll)
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 5 SECONDS
 	equip_delay_other = 5 SECONDS

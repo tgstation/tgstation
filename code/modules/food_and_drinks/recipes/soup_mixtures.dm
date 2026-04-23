@@ -31,7 +31,6 @@
 	thermic_constant = 10
 	required_reagents = null
 	mob_react = FALSE
-	required_other = TRUE
 	required_container_accepts_subtypes = TRUE
 	required_container = /obj/item/reagent_containers/cup/soup_pot
 	mix_message = "You smell something good coming from the steaming pot of soup."
@@ -757,12 +756,14 @@
 	// Pretty much just a normal chemical reaction.
 	// This also creates nutrients out of thin air.
 
-	required_other = FALSE
 	required_reagents = list(
 		/datum/reagent/water = 40,
 		/datum/reagent/toxin/slimejelly = 20,
 	)
 	required_ingredients = null
+
+/datum/chemical_reaction/food/soup/slimesoup/alt/pre_reaction_other_checks(datum/reagents/holder)
+	return TRUE
 
 // Clown Tear soup
 /datum/reagent/consumable/nutriment/soup/clown_tears
@@ -1743,7 +1744,6 @@
 	drink_type = GRAIN
 
 /datum/chemical_reaction/food/soup/cornmeal_porridge
-	required_other = FALSE
 	required_reagents = list(
 		/datum/reagent/consumable/cornmeal = 20,
 		/datum/reagent/water = 20,
@@ -1751,6 +1751,9 @@
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/cornmeal_porridge = 20,
 	)
+
+/datum/chemical_reaction/food/soup/cornmeal_porridge/pre_reaction_other_checks(datum/reagents/holder)
+	return TRUE
 
 // Cheese Porridge (Soup-ish)
 /datum/reagent/consumable/nutriment/soup/cheese_porridge

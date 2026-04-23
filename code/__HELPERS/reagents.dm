@@ -58,16 +58,6 @@
 	//if we got this far, the longer reaction will be impossible to create if the shorter one is earlier in GLOB.chemical_reactions_list_reactant_index, and will require the reagents to be added in a particular order otherwise
 	return TRUE
 
-//see build_chemical_reactions_list in holder.dm for explanations
-/proc/add_chemical_reaction(datum/chemical_reaction/add)
-	if(!GLOB.chemical_reactions_list_reactant_index || !add.required_reagents || !add.required_reagents.len)
-		return
-	var/rand_reagent = pick(add.required_reagents)
-	if(!GLOB.chemical_reactions_list_reactant_index[rand_reagent])
-		GLOB.chemical_reactions_list_reactant_index[rand_reagent] = list()
-	GLOB.chemical_reactions_list_reactant_index[rand_reagent] += add
-	GLOB.chemical_reactions_list[add.type] = add
-
 //Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
 /datum/reagents/proc/create_foam(foamtype, foam_volume, result_type = null, notification = null, log = FALSE)
 	var/location = get_turf(my_atom)
@@ -156,33 +146,17 @@
 	return input_reagent
 
 ///Returns a random reagent object, with the option to blacklist reagents.
-/proc/get_random_reagent_id(list/blacklist)
-	var/static/list/reagent_static_list = list() //This is static, and will be used by default if a blacklist is not passed.
-	var/list/reagent_list_to_process
-	if(blacklist) //If we do have a blacklist, we recompile a new list with the excluded reagents not present and pick from there.
-		reagent_list_to_process = list()
-	else
-		reagent_list_to_process = reagent_static_list
+/proc/get_random_reagent_id(randomization_flags = REAGENT_SPAWN_RANDOM_PRODUCERS, list/blacklist, list/whitelist)
+	var/list/reagent_list_to_process = list()
 
-	if(!reagent_list_to_process.len)
-		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
-			if(is_path_in_list(reagent_path, blacklist))
-				continue
-			if(initial(reagent_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
-				reagent_list_to_process += reagent_path
+	whitelist ||= subtypesof(/datum/reagent)
 
-	var/picked_reagent = pick(reagent_list_to_process)
-	return picked_reagent
-
-///Returns a random reagent consumable ethanol object minus blacklisted reagents
-/proc/get_random_drink_id()
-	var/static/list/random_drinks = list()
-	if(!random_drinks.len)
-		for(var/datum/reagent/drink_path as anything in subtypesof(/datum/reagent/consumable/ethanol))
-			if(initial(drink_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
-				random_drinks += drink_path
-	var/picked_drink = pick(random_drinks)
-	return picked_drink
+	for(var/datum/reagent/reagent_path as anything in whitelist)
+		if(is_path_in_list(reagent_path, blacklist))
+			continue
+		if(reagent_path::randomized_spawns & randomization_flags)
+			reagent_list_to_process += reagent_path
+	return pick(reagent_list_to_process)
 
 ///Returns reagent datum from reagent name string
 /proc/get_chem_id(chem_name)

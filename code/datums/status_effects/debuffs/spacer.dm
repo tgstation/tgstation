@@ -85,7 +85,7 @@
 /atom/movable/screen/alert/status_effect/gravity_sickness
 	name = "Gravity Sickness"
 	desc = "The gravity of the planet around you is making you feel sick and tired."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "paralysis"
 
 /datum/mood_event/spacer
@@ -104,6 +104,20 @@
 /datum/mood_event/spacer/on_planet/nerfed
 	description = "I'm stationed on a planet. I'd love to be back in space."
 	mood_change = -3
+
+/datum/mood_event/spacer/on_planet/low_grav
+	description = "This feels like I'm back home!"
+	mood_change = 3
+
+/datum/mood_event/spacer/on_planet/low_grav/add_effects(...)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(lower_mood_bonus)), 5 MINUTES, TIMER_DELETE_ME)
+
+/datum/mood_event/spacer/on_planet/low_grav/proc/lower_mood_bonus()
+	mood_change -= 1
+	owner.mob_mood.update_mood()
+	if(mood_change > 1)
+		addtimer(CALLBACK(src, PROC_REF(lower_mood_bonus)), 5 MINUTES, TIMER_DELETE_ME)
 
 /datum/movespeed_modifier/spacer
 	id = "spacer"

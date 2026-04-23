@@ -876,6 +876,35 @@
 		return span_boldwarning("Your lungs feel extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
 	return span_boldwarning("It feels extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
 
+/obj/item/organ/lungs/get_status_appendix(advanced, add_tooltips)
+	var/initial_pressure_mult = initial(received_pressure_mult)
+	if (received_pressure_mult == initial_pressure_mult)
+		return
+
+	var/tooltip
+	var/dilation_text
+	var/beginning_text = "Lung Dilation: "
+	if (received_pressure_mult > initial_pressure_mult) // higher than usual
+		beginning_text = span_blue("<b>[beginning_text]</b>")
+		dilation_text = span_blue("[(received_pressure_mult * 100) - 100]%")
+		tooltip = "Subject's lungs are dilated and breathing more air than usual. \
+			Increases the effectiveness of healium and other gases."
+
+	else
+		beginning_text = span_alert("<b>[beginning_text]</b>")
+		if (received_pressure_mult <= 0) // lethal
+			dilation_text = span_alert("<b>[received_pressure_mult * 100]%</b>")
+			tooltip = "Subject's lungs are completely shut. Subject is unable to breathe and requires emergency surgery. \
+				If asthmatic, perform asthmatic bypass surgery and adminster albuterol inhalant. \
+				Otherwise, replace lungs."
+		else
+			dilation_text = span_alert("[received_pressure_mult * 100]%")
+			tooltip = "Subject's lungs are partially shut. \
+				If unable to breathe, administer a high-pressure internals tank or replace lungs. \
+				If asthmatic, inhaled albuterol or bypass surgery will likely help."
+
+	return beginning_text + conditional_tooltip(dilation_text, tooltip, add_tooltips)
+
 /// by default, returns the lungs' breath_noise var as a notice. called when stethoscope is used on chest, uses the return as a message for stethoscope user.
 /obj/item/organ/lungs/proc/hear_breath_noise(mob/living/hearer)
 	return span_notice("[owner.p_Their()] lungs emit [breath_noise].")
@@ -1104,10 +1133,9 @@
 /// H2O electrolysis
 /obj/item/organ/lungs/ethereal/proc/consume_water(mob/living/carbon/breather, datum/gas_mixture/breath, h2o_pp, old_h2o_pp)
 	var/gas_breathed = breath.gases[/datum/gas/water_vapor][MOLES]
-	breath.gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
-	breath_out.assert_gases(/datum/gas/oxygen, /datum/gas/hydrogen)
-	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
-	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
+	breath.adjust_gas(/datum/gas/water_vapor, -gas_breathed)
+	var/list/new_gases = list(/datum/gas/oxygen = gas_breathed, /datum/gas/hydrogen = gas_breathed * 2)
+	breath_out.adjust_multiple_gases(new_gases)
 
 
 /obj/item/organ/lungs/pod

@@ -4,7 +4,8 @@
 	desc = "You can't contain the colorful beauty of the cosmos inside."
 	form = "Condition"
 	agent = "Stars"
-	cure_text = "Space Cleaner"
+	cure_text = /datum/reagent/space_cleaner::name
+	spread_text = "None"
 	cures = list(/datum/reagent/space_cleaner)
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS

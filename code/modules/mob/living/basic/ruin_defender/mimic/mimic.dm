@@ -411,10 +411,13 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	return TRUE
 
 /mob/living/basic/mimic/copy/ranged/CopyObject(obj/item/gun/original, mob/living/creator, destroy_original = 0)
-	if(..())
-		obj_damage = 0
-		melee_damage_upper = original.force
-		melee_damage_lower = original.force - max(0, (original.force / 2))
+	. = ..()
+	if(!.)
+		return
+	obj_damage = 0
+	melee_damage_upper = original.force
+	melee_damage_lower = original.force - max(0, (original.force / 2))
+	RegisterSignal(original, COMSIG_GUN_REPLENISHED_CHARGE, PROC_REF(on_regained_charge))
 
 /mob/living/basic/mimic/copy/ranged/CopyObjectVisuals(obj/original)
 	name = original.name
@@ -423,5 +426,10 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 
 /mob/living/basic/mimic/copy/ranged/can_use_guns(obj/item/gun)
 	return TRUE
+
+/// If our gun ran out of ammo but then regenerated it then we should go back to shooting
+/mob/living/basic/mimic/copy/ranged/proc/on_regained_charge()
+	SIGNAL_HANDLER
+	ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, FALSE)
 
 #undef CANT_INSERT_FULL

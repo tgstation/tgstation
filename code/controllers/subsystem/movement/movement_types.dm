@@ -59,11 +59,16 @@
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_START)
 	status |= MOVELOOP_STATUS_RUNNING
 	//If this is our first time starting to move with this loop
-	//And we're meant to start instantly
+	//And we want to start consistently fast
 	if(!timer && flags & MOVEMENT_LOOP_START_FAST)
-		timer = world.time
+		// + tick_lag because we want to avoid weird jumping in atoms that were just created (and avoid inconsistencies around subsystem timing)
+		timer = NEXT_VISUAL_TICK + world.tick_lag
 		return
-	timer = world.time + delay
+	//And we're meant to start instantly
+	if(!timer && flags & MOVEMENT_LOOP_START_INSTANT)
+		timer = NEXT_VISUAL_TICK
+		return
+	timer = NEXT_VISUAL_TICK + delay
 
 ///Called when a loop is stopped, doesn't stop the loop itself
 /datum/move_loop/proc/loop_stopped()
@@ -955,8 +960,8 @@
 	angle = new_angle
 	x_rate = sin(angle)
 	y_rate = cos(angle)
-	x_sign = SIGN(x_rate)
-	y_sign = SIGN(y_rate)
+	x_sign = sign(x_rate)
+	y_sign = sign(y_rate)
 	x_rate = abs(x_rate)
 	y_rate = abs(y_rate)
 	x_ticker = 0

@@ -20,6 +20,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/mat_flags = NONE
 	/// List of material property IDs to their values, 0 - 10
 	var/mat_properties = null
+	/// Flags for which comsigs we should track/send
+	/// These exist for performance reasons as to avoid unnecessary work on materials without properties that trigger off these, or doing the same checks for each property
+	var/track_flags = NONE
 
 	// Color values
 	/// Base color of the material, for items that don't have greyscale configs nor are made of multiple materials. Item isn't changed in color if this is null.
@@ -66,8 +69,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 	/// How likely this mineral is to be found in a boulder during mining.
 	var/mineral_rarity = MATERIAL_RARITY_COMMON
-	/// How many points per units of ore does this grant?
+	/// How many points per units of ore does this grant? This is used by ore in the ORM, NOT for boulder machinery due to the automated nature.
 	var/points_per_unit = 1
+	/// How many points per unit does this ore grant when processed by a smelter/refinery?
+	var/points_per_boulder_unit = 1
 
 	// Sound/icon stats, not inherited
 	/// Can be used to override the sound items make, lets add some SLOSHing.
@@ -99,15 +104,163 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 	return TRUE
 
-///This proc is called when the material is added to an object.
-/datum/material/proc/on_applied(atom/source, mat_amount, multiplier)
+/// This proc is called when the material is added to an object.
+/// Can be called even if the material is covered by a slot
+/datum/material/proc/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MATERIAL_APPLIED, source, mat_amount, multiplier)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_APPLIED, source, mat_amount, multiplier, from_slot)
 
-///This proc is called when the material becomes the one the object is composed of the most
+	if (!(source.material_flags & MATERIAL_EFFECTS) || from_slot)
+		return
+
+	if (track_flags & MATERIAL_TRACK_CONTACT)
+		var/static/list/turf_interactions = typecacheof(list(
+			/turf/open,
+			/obj/structure/platform,
+			/obj/structure/table,
+			/obj/structure/rack,
+			/obj/structure/bed,
+			/obj/structure/closet/crate,
+			/obj/structure/reagent_dispensers,
+			/obj/structure/altar,
+		))
+		if (is_type_in_typecache(source, turf_interactions))
+			source.AddComponent(/datum/component/material_turf_tracking, src)
+
+		if (isclosedturf(source))
+			RegisterSignal(source, COMSIG_LIVING_DISARM_COLLIDE, PROC_REF(on_wall_shove_collide))
+
+	if (track_flags & MATERIAL_TRACK_IMPACT)
+		RegisterSignal(source, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
+		RegisterSignal(source, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_throw_impact_living))
+		RegisterSignal(source, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
+		RegisterSignal(source, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(on_item_attack))
+		// Allow recipe crafting for stack items
+		if(!isstack(source))
+			RegisterSignal(source, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self))
+		RegisterSignal(source, COMSIG_ITEM_ATTACK_ZONE, PROC_REF(on_item_attack_living))
+
+/// This proc is called when the material becomes the one the object is composed of the most
+/// Only called when the material isn't assigned to a slot
 /datum/material/proc/on_main_applied(atom/source, mat_amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MATERIAL_MAIN_APPLIED, source, mat_amount, multiplier)
+
+/// This proc is called when the material is removed from an object.
+/datum/material/proc/on_removed(atom/source, mat_amount, material_flags, from_slot)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_REMOVED, source, mat_amount, material_flags, from_slot)
+
+	if (!(source.material_flags & MATERIAL_EFFECTS))
+		return
+
+	if (track_flags & MATERIAL_TRACK_CONTACT)
+		var/static/list/material_signals = list(
+			COMSIG_LIVING_DISARM_COLLIDE,
+		)
+		UnregisterSignal(source, material_signals)
+		var/list/tracker_components = source.GetComponents(/datum/component/material_turf_tracking)
+		if (istype(tracker_components, /datum/component/material_turf_tracking))
+			qdel(tracker_components)
+		else
+			// Delete all trackers linked to ourselves (might be multiple if we've got multiple slots going on)
+			for (var/datum/component/material_turf_tracking/tracker as anything in tracker_components)
+				if (tracker.owner_material == src)
+					qdel(tracker)
+
+	if (track_flags & MATERIAL_TRACK_IMPACT)
+		var/static/list/material_signals = list(
+			COMSIG_MOVABLE_IMPACT,
+			COMSIG_MOVABLE_IMPACT_ZONE,
+			COMSIG_ITEM_ATTACK,
+			COMSIG_ITEM_ATTACK_ATOM,
+			COMSIG_ITEM_ATTACK_SELF,
+			COMSIG_ITEM_ATTACK_ZONE,
+		)
+		UnregisterSignal(source, material_signals)
+
+/// This proc is called when the material is no longer the one the object is composed by the most
+/datum/material/proc/on_main_removed(atom/source, mat_amount, multiplier)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_MAIN_REMOVED, source, mat_amount, multiplier)
+
+/datum/material/proc/on_wall_shove_collide(turf/closed/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
+	SIGNAL_HANDLER
+
+	// If any part is exposed it makes sense it'd impact the wall
+	var/skin_contact = HEAD|CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	for (var/obj/item/worn_item in target.get_equipped_items(INCLUDE_ABSTRACT))
+		skin_contact &= ~worn_item.body_parts_covered
+		if (!skin_contact)
+			break
+
+	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_TOUCH, source, target, shover, null, !!skin_contact)
+
+/datum/material/proc/on_item_attack(obj/item/source, mob/living/target, mob/living/user)
+	SIGNAL_HANDLER
+	impact_affect_touch(source, user, user)
+	// Living mobs use a different signal
+	if (!isliving(target))
+		impact_affect_target(source, target, user)
+
+/datum/material/proc/on_item_attack_living(obj/item/source, mob/living/target, mob/living/user, def_zone)
+	SIGNAL_HANDLER
+	var/skin_contact = body_zone2cover_flags(def_zone)
+	for (var/obj/item/worn_item in target.get_equipped_items(INCLUDE_ABSTRACT))
+		skin_contact &= ~worn_item.body_parts_covered
+		if (!skin_contact)
+			break
+
+	impact_affect_target(source, target, user, def_zone, !!skin_contact)
+
+/datum/material/proc/on_item_attack_self(obj/item/source, mob/living/user)
+	SIGNAL_HANDLER
+	impact_affect_touch(source, user, user)
+
+/datum/material/proc/on_throw_impact(obj/item/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
+	SIGNAL_HANDLER
+	if (caught)
+		impact_affect_touch(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living))
+	else if (!isliving(hit_atom)) // Hit mobs have armor checking
+		impact_affect_throw_impact(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living))
+
+/datum/material/proc/on_throw_impact_living(obj/item/source, mob/living/target, def_zone, blocked, datum/thrownthing/throwing_datum)
+	SIGNAL_HANDLER
+
+	var/skin_contact = body_zone2cover_flags(def_zone)
+	for (var/obj/item/worn_item in target.get_equipped_items(INCLUDE_ABSTRACT))
+		skin_contact &= ~worn_item.body_parts_covered
+		if (!skin_contact)
+			break
+
+	impact_affect_throw_impact(source, target, astype(throwing_datum.thrower.resolve(), /mob/living), def_zone, !!skin_contact)
+
+/datum/material/proc/impact_affect_touch(obj/item/source, mob/living/user, mob/living/initiator)
+	var/arm_dir = IS_LEFT_INDEX(user.active_hand_index) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+	if (!ishuman(user))
+		SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_TOUCH, source, user, initiator, arm_dir, TRUE)
+		return
+
+	var/mob/living/carbon/human/as_human = user
+	var/obj/item/bodypart/hand = as_human.has_hand_for_held_index(as_human.get_held_index_of_item(source))
+	if (!hand)
+		SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_TOUCH, source, user, initiator, arm_dir, FALSE)
+		return
+
+	var/list/obj/item/hand_covers = as_human.get_clothing_on_part(hand)
+	var/hand_covered = FALSE
+	for (var/obj/item/worn_item in hand_covers)
+		if (worn_item.body_parts_covered & HANDS)
+			hand_covered = TRUE
+			break
+
+	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_TOUCH, source, user, initiator, hand.body_zone, !hand_covered)
+
+/datum/material/proc/impact_affect_target(obj/item/source, atom/target, mob/living/user, def_zone, skin_contact = TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_HIT, source, target, user, def_zone, skin_contact)
+
+/datum/material/proc/impact_affect_throw_impact(obj/item/source, atom/target, mob/living/user, def_zone, skin_contact = TRUE)
+	SEND_SIGNAL(src, COMSIG_MATERIAL_EFFECT_THROW_IMPACT, source, target, user, def_zone, skin_contact)
 
 /datum/material/proc/setup_glow(turf/on)
 	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother
@@ -127,15 +280,6 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material/proc/lit_turf_deleted(turf/source)
 	source.set_light(0, 0, null)
 
-/// This proc is called when the material is removed from an object.
-/datum/material/proc/on_removed(atom/source, amount, material_flags)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MATERIAL_REMOVED, source, amount, material_flags)
-
-/// This proc is called when the material is no longer the one the object is composed by the most
-/datum/material/proc/on_main_removed(atom/source, mat_amount, multiplier)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MATERIAL_MAIN_REMOVED, source, mat_amount, multiplier)
 
 ////Called in `/datum/component/edible/proc/on_material_effects`
 /datum/material/proc/on_edible_applied(atom/source, datum/component/edible/edible)

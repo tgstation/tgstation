@@ -41,6 +41,7 @@
 @include meta.load-css('./interfaces/RequestManager.scss');
 @include meta.load-css('./interfaces/Roulette.scss');
 @include meta.load-css('./interfaces/Safe.scss');
+@include meta.load-css('./interfaces/SlotMachine.scss');
 @include meta.load-css('./interfaces/SpriteAuditor.scss');
 @include meta.load-css('./interfaces/Techweb.scss');
 @include meta.load-css('./interfaces/Trophycase.scss');
@@ -48,6 +49,7 @@
 @include meta.load-css('./interfaces/DetectiveBoard.scss');
 @include meta.load-css('./interfaces/ColorPicker.scss');
 @include meta.load-css('./interfaces/AnomalyTower.scss');
+@include meta.load-css('./interfaces/CivCargoHoldTerminal.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

@@ -191,6 +191,21 @@
 	reagents.maximum_volume = maxnutri
 	nutridrain = 1/rating
 
+	// Active power draw reduction inspired by stasis units in code\game\machinery\stasis.dm
+	// This really only matters if you're using the autogrow, because, by default, trays don't draw power.
+	// Not using energy rating because they're nonlinear and make the power draw reduction too generous.
+	var/total_rating = 0
+	for(var/datum/stock_part/part in component_parts)
+		total_rating += part.tier
+
+	/**
+	 * We sum up the part tier ratings, divide by how many upgradable parts we have (in this case, 3) for a modifier,
+	 * and divide the initial power usage by the modifier. Power draw thus becomes 1 kW / 500 W / 333.3 W / 250 W at time of writing.
+	 */
+	idle_power_usage = initial(idle_power_usage) / (total_rating / 3)
+	active_power_usage = initial(active_power_usage) / (total_rating / 3)
+	update_current_power_usage()
+
 /obj/machinery/hydroponics/constructable/examine(mob/user)
 	. = ..()
 	. += span_notice("Use <b>Ctrl-Click</b> to activate autogrow. <b>RMB</b> to empty the tray's nutrients.")
@@ -229,16 +244,11 @@
 		))
 	QDEL_NULL(our_snail)
 
+/obj/machinery/hydroponics/constructable/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if (!user.combat_mode)
-		// handle opening the panel
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-			return
-		if(default_deconstruction_crowbar(I))
-			return
-
-	return ..()
+/obj/machinery/hydroponics/constructable/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/hydroponics/bullet_act(obj/projectile/proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
@@ -1215,10 +1225,10 @@
 	var/datum/port/output/reagents_level
 
 /obj/item/circuit_component/hydroponics/populate_ports()
-	selfsustaining_setting = add_input_port("Auto-Grow Setting", PORT_TYPE_NUMBER)
+	selfsustaining_setting = add_input_port("Auto-Grow Setting", PORT_TYPE_BOOLEAN)
 
 	plant_status = add_output_port("Plant Status", PORT_TYPE_NUMBER)
-	is_self_sustaining = add_output_port("Auto-Grow Status", PORT_TYPE_NUMBER)
+	is_self_sustaining = add_output_port("Auto-Grow Status", PORT_TYPE_BOOLEAN)
 	plant_harvested = add_output_port("Plant Harvested", PORT_TYPE_SIGNAL)
 	last_harvest = add_output_port("Last Harvest Amount", PORT_TYPE_NUMBER)
 	plant_died = add_output_port("Plant Died", PORT_TYPE_SIGNAL)

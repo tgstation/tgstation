@@ -14,7 +14,7 @@
 	cost = 2
 	restricted_roles = list(JOB_CURATOR)
 	limited_stock = 1 //please don't spam deadchat
-	surplus = 1 
+	surplus = 1
 
 /datum/uplink_item/role_restricted/mail_counterfeit_kit
 	name = "GLA Brand Mail Counterfeit Kit"
@@ -405,3 +405,32 @@
 	item = /obj/item/emitter_disk/blast
 	cost = 5
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
+
+/datum/uplink_item/role_restricted/briefcase_gun
+	name = "Briefcase Embedded Firearm Trigger"
+	desc = "A briefcase with a firing mechanism built into the handle that connects to the first weapon stored within. \
+		\"Aiming and firing\" the briefcase will instead trigger the firing mechanism, causing the weapon to fire through a discrete hole. \
+		Work with any firearm you could fit inside."
+	item = /obj/item/storage/briefcase/gun
+	purchasable_from = UPLINK_TRAITORS
+	cant_discount = TRUE // remove this when we get uplink logic to have one discount apply to all items on the same stock key
+	cost = 4
+	surplus = 0
+	uplink_item_flags = NONE
+	stock_key = "briefcase_gun"
+	restricted_roles = list(
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_LAWYER,
+		JOB_QUARTERMASTER,
+	)
+
+/datum/uplink_item/role_restricted/briefcase_gun/with_gun
+	name = "Briefcase Embedded Firearm Trigger (Combo Deal)"
+	desc = parent_type::desc + " This COMBO DEAL comes with a pre-loaded Makarov pistol! (No extra magazines, though.)"
+	item = /obj/item/storage/briefcase/gun/preloaded
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+	cost = 8
+	surplus = 50
+	progression_minimum = /datum/uplink_item/dangerous/pistol::progression_minimum
+	population_minimum = /datum/uplink_item/dangerous/pistol::population_minimum
+	relevant_child_items = /datum/uplink_item/dangerous/pistol::relevant_child_items
