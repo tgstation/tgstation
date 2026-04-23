@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Packs exclusive to the express console (crab rockets for example) can now be ordered from express consoles."

@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - qol: "The GMM Ui can now tell you the minimum and maximum price ranges that a material will sell for."
-  - qol: "You can now sell materials on the edge of their buying and selling thresholds. (This really only effects iron and glass, practically)"

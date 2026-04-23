@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Codex Cicatrix is now a tier 1 heretic knowledge, and can not be drafted."
-  - balance: "Warren King's Welcome is now a tier 1 heretic knowledge, but can be drafted."
-  - balance: "Warren King's Welcome soft reworked. Now needs 10 cable, 1 paper, 1 multitool. Now adds access to all IDs present, including worn IDs. Now adds \"heretic\" access to the ID card. Now changes all nearby airlocks to require \"heretic\" access, and cuts the AI wire."
-  - balance: "Eldritch ID card starts with \"heretic\" access."

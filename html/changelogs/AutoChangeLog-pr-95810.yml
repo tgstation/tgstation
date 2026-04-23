@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - admin: "Adds toggle for meteor mode in secrets"

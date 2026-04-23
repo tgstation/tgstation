@@ -486,3 +486,40 @@
   vinylspiders:
   - bugfix: fixes an issue where raptor chicks and other non-items appearing in item
       contents would prevent any personal crafting in the vicinity
+2026-04-23:
+  1393F:
+  - bugfix: The mushroom bowl no longer turns invisible when filled with a reagent.
+  Absolucy, LemonInTheDark:
+  - bugfix: You can no longer see lights through walls when using mesons or when ventcrawling.
+  ArcaneMusic:
+  - qol: The GMM Ui can now tell you the minimum and maximum price ranges that a material
+      will sell for.
+  - qol: You can now sell materials on the edge of their buying and selling thresholds.
+      (This really only effects iron and glass, practically)
+  Ghommie:
+  - bugfix: Packs exclusive to the express console (crab rockets for example) can
+      now be ordered from express consoles.
+  Happyowl93:
+  - code_imp: makeHologram now allows a color override.
+  Melbert:
+  - balance: Codex Cicatrix is now a tier 1 heretic knowledge, and can not be drafted.
+  - balance: Warren King's Welcome is now a tier 1 heretic knowledge, but can be drafted.
+  - balance: Warren King's Welcome soft reworked. Now needs 10 cable, 1 paper, 1 multitool.
+      Now adds access to all IDs present, including worn IDs. Now adds "heretic" access
+      to the ID card. Now changes all nearby airlocks to require "heretic" access,
+      and cuts the AI wire.
+  - balance: Eldritch ID card starts with "heretic" access.
+  - admin: Adds toggle for meteor mode in secrets
+  - rscadd: Some EVA helmets now have retractable visors, which you can pull up or
+      down at will, to reveal your face.
+  - balance: The amount of blood loss from an attack to an already bleeding wound
+      has been tweaked. As an example, a 20 force attack used to range 0.1% to 4%
+      blood loss, and now ranges 1% to 3%.
+  - bugfix: Plasma works in IEDs again
+  SmArtKar:
+  - admin: Planemaster Debugger now has a text search input to locate and jump to
+      planes
+  levels0:
+  - bugfix: metalgen and secret sauce recipes are now loaded properly
+  timothymtorres:
+  - map: Add Shoe Factory to lava/ice ruins.

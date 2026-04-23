@@ -1,4 +1,0 @@
-author: "Happyowl93"
-delete-after: True
-changes:
-  - code_imp: "makeHologram now allows a color override."
