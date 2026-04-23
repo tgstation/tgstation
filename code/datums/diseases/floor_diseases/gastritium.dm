@@ -2,9 +2,10 @@
 /datum/disease/gastritium
 	name = "Gastritium"
 	desc = "If left untreated, may manifest in severe Tritium heartburn."
-	form = "Infection"
+	form = "Bacteria"
 	agent = "Atmobacter Polyri"
-	cure_text = "Milk"
+	cure_text = /datum/reagent/consumable/milk::name
+	spread_text = "None"
 	cures = list(/datum/reagent/consumable/milk)
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
@@ -43,11 +44,10 @@
 
 /datum/disease/gastritium/proc/tritium_burp(hot_chance = FALSE)
 	var/datum/gas_mixture/burp = new
-	ADD_GAS(/datum/gas/tritium, burp.gases)
-	burp.gases[/datum/gas/tritium][MOLES] = MOLES_GAS_VISIBLE
+	burp.set_gas(/datum/gas/tritium, MOLES_GAS_VISIBLE)
 	burp.temperature = affected_mob.bodytemperature
 	if(hot_chance && prob(tritium_burp_hot_chance))
-		burp.temperature = TRITIUM_MINIMUM_BURN_TEMPERATURE
+		burp.set_temperature(TRITIUM_MINIMUM_BURN_TEMPERATURE)
 		if(affected_mob.stat == CONSCIOUS)
 			to_chat(affected_mob, span_warning("Your throat feels hot!"))
 	affected_mob.visible_message("burps out green gas.", visible_message_flags = EMOTE_MESSAGE)

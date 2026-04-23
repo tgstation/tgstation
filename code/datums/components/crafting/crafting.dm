@@ -180,7 +180,8 @@
 	for(var/obj/item/item in source.contents)
 		within_source += item
 		if(item.atom_storage)
-			within_source += item.contents
+			for(var/obj/item/item_stored_within in item.contents)
+				within_source += item_stored_within
 
 	for(var/obj/item/item as anything in within_source)
 		if(!item.tool_behaviour)

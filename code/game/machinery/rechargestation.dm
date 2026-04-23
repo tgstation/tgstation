@@ -3,6 +3,7 @@
 	desc = "This device recharges energy-dependent lifeforms, like cyborgs, ethereals, and MODsuit users."
 	icon = 'icons/obj/machines/borg_charger.dmi'
 	icon_state = "borgcharger0"
+	base_icon_state = "borgcharger"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	density = FALSE
 	req_access = list(ACCESS_ROBOTICS)
@@ -106,17 +107,11 @@
 		if (!(. & EMP_PROTECT_SELF))
 			open_machine()
 
-/obj/machinery/recharge_station/attackby(obj/item/P, mob/user, list/modifiers, list/attack_modifiers)
-	if(state_open)
-		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
-			return
+/obj/machinery/recharge_station/screwdriver_act(mob/living/user, obj/item/tool)
+	return state_open ? NONE : default_deconstruction_screwdriver(user, tool)
 
-	if(default_pry_open(P, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
-		return
-
-	if(default_deconstruction_crowbar(P))
-		return
-	return ..()
+/obj/machinery/recharge_station/crowbar_act(mob/living/user, obj/item/tool)
+	return default_pry_open(user, tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE, deconstruct_on_fail = TRUE)
 
 /obj/machinery/recharge_station/attack_ai_secondary(mob/user, list/modifiers)
 	toggle_restock(user)
@@ -167,10 +162,13 @@
 		add_fingerprint(occupant)
 
 /obj/machinery/recharge_station/update_icon_state()
-	if(!is_operational)
-		icon_state = "borgcharger-u[state_open ? 0 : 1]"
+	if(panel_open)
+		icon_state = "borgdecon2"
 		return ..()
-	icon_state = "borgcharger[state_open ? 0 : (occupant ? 1 : 2)]"
+	if(!is_operational)
+		icon_state = "[base_icon_state]-u[state_open ? 0 : 1]"
+		return ..()
+	icon_state = "[base_icon_state][state_open ? 0 : (occupant ? 1 : 2)]"
 	return ..()
 
 /obj/machinery/recharge_station/process(seconds_per_tick)

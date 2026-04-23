@@ -41,7 +41,7 @@
 			atoms += new /obj/effect/appearance_clone(newT, T.loc)
 		if(T.lighting_object)
 			var/obj/effect/appearance_clone/lighting_overlay = new(newT)
-			lighting_overlay.appearance = T.lighting_object.current_underlay
+			lighting_overlay.appearance = T.lighting_object.appearance
 			lighting_overlay.underlays += backdrop
 			lighting_overlay.blend_mode = BLEND_MULTIPLY
 			lighting += lighting_overlay
@@ -61,7 +61,7 @@
 			atoms += T
 			if(T.lighting_object)
 				var/obj/effect/appearance_clone/lighting_overlay = new(T)
-				lighting_overlay.appearance = T.lighting_object.current_underlay
+				lighting_overlay.appearance = T.lighting_object.appearance
 				lighting_overlay.underlays += backdrop
 				lighting_overlay.blend_mode = BLEND_MULTIPLY
 				lighting += lighting_overlay
@@ -138,7 +138,7 @@
 					img.Scale(base_w * abs(decompose.scale_x), base_h * decompose.scale_y)
 					if(decompose.scale_x < 0)
 						img.Flip(EAST)
-					xo -= base_w * (decompose.scale_x - SIGN(decompose.scale_x)) / 2 * SIGN(decompose.scale_x)
+					xo -= base_w * (decompose.scale_x - sign(decompose.scale_x)) / 2 * sign(decompose.scale_x)
 					yo -= base_h * (decompose.scale_y - 1) / 2
 				// Rotation
 				if(decompose.rotation != 0)

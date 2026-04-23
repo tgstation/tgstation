@@ -14,7 +14,7 @@
 	if (!.)
 		return FALSE
 
-	return "Prosthetic Limb" in preferences.all_quirks
+	return /datum/quirk/prosthetic_limb::name in preferences.all_quirks
 
 /datum/preference/choiced/prosthetic/apply_to_human(mob/living/carbon/human/target, value)
 	return

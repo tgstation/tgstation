@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/carnivore/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
-	if(istype(rod.get_master_material(), /datum/material/meat)) //who cares about the bait, that fishing rod is yummy!
+	if(IS_EDIBLE(rod)) //who cares about the bait, that fishing rod is yummy!
 		return
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
@@ -340,8 +340,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 
 	var/datum/gas_mixture/stench = new
-	ADD_GAS(/datum/gas/miasma, stench.gases)
-	stench.gases[/datum/gas/miasma][MOLES] = MIASMA_CORPSE_MOLES * 2 * seconds_per_tick
+
+	stench.set_gas(/datum/gas/miasma, MIASMA_CORPSE_MOLES * 2 * seconds_per_tick)
 	stench.temperature = mob.bodytemperature
 	our_turf.assume_air(stench)
 
