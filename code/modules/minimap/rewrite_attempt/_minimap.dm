@@ -6,7 +6,7 @@ GLOBAL_ALIST_EMPTY(minimap_blip_tags)
 		CRASH("Invalid params passed in to add_minimap_blip")
 	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, object, icon_state, icon, large, tag)
 	LAZYADD(GLOB.minimap_blip_tags[tag], new_blip)
-	SEND_GLOBAL_SIGNAL(SIGNAL_MINIMAP_ADD(tag), new_blip)
+	SEND_GLOBAL_SIGNAL(COMSIG_MINIMAP_ADD(tag), new_blip)
 
 /proc/remove_minimap_blip(tag, atom/object)
 	var/blip_list = GLOB.minimap_blip_tags[tag]
@@ -14,6 +14,6 @@ GLOBAL_ALIST_EMPTY(minimap_blip_tags)
 		return
 	for(var/atom/movable/screen/minimap_blip/blip as anything in blip_list)
 		if(blip.track_target == object)
-			SEND_GLOBAL_SIGNAL(SIGNAL_MINIMAP_REMOVE(tag), blip)
+			SEND_GLOBAL_SIGNAL(COMSIG_MINIMAP_REMOVE(tag), blip)
 			qdel(blip)
 			break

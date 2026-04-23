@@ -13,9 +13,15 @@
 	var/list/atom/movable/screen/minimap_blip/blips = list()
 	/// The list of minimap blip tags we're going to read from the globalist and listen for additions to
 	var/list/valid_minimap_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP)
-
 	var/last_drag_x
 	var/last_drag_y
+	/// fixed z-level to stay on
+	var/fixed_z_level
+	/// list of signals we want to keep tied on the hud owner mob
+	var/list/hud_signals = list(
+		COMSIG_MOVABLE_Z_CHANGED = PROC_REF(on_z_level_change),
+		COMSIG_MINIMAP_CHANGE_Z_LEVEL = PROC_REF(z_change_request)
+	)
 
 /atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap)
 	. = ..()
@@ -26,23 +32,24 @@
 	set_minimap(minimap)
 	screentip = new
 	vis_contents += screentip
-	update_owner_blip(hud.mymob)
+	on_z_level_change(hud.mymob)
 	show_tagged_blips()
 
 /atom/movable/screen/minimap_display/Destroy()
-	if(hud?.mymob)
-		UnregisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED)
 	minimap = null
 	QDEL_NULL(drawing)
 	QDEL_NULL(screentip)
+	if(hud?.mymob)
+		UnregisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED)
 	return ..()
 
 /atom/movable/screen/minimap_display/set_new_hud(datum/hud/hud_owner)
 	if(hud?.mymob)
-		UnregisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED)
+		for(var/signal in hud_signals)
+			RegisterSignal(hud_owner.mymob, signal, hud_signals[signal])
 	. = ..()
-	if(hud?.mymob)
-		RegisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_owner_blip))
+	for(var/signal in hud_signals)
+		UnregisterSignal(src, signal, hud_signals[signal])
 
 /atom/movable/screen/minimap_display/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
@@ -90,13 +97,22 @@
 	last_drag_x = null
 	last_drag_y = null
 
-/atom/movable/screen/minimap_display/proc/update_owner_blip(mob/source)
+/atom/movable/screen/minimap_display/proc/on_z_level_change(mob/source)
 	SIGNAL_HANDLER
 	var/turf/mob_loc = get_turf(source)
 	if(!mob_loc || mob_loc.z != minimap.z)
+		if(isnull(fixed_z_level))
+			INVOKE_ASYNC(src, PROC_REF(change_z_level), mob_loc.z)
+			return
 		remove_blip("locator")
 		return
 	add_blip("locator", "locator", mob_loc.x, mob_loc.y)
+
+/atom/movable/screen/minimap_display/proc/change_z_level(new_z)
+	var/new_minimap = get_minimap_for_z(new_z)
+	if(isnull(new_minimap))
+		return
+	set_minimap(new_minimap)
 
 /atom/movable/screen/minimap_display/proc/show_tagged_blips()
 	for(var/blip_flag in valid_minimap_blip_tags)
@@ -117,11 +133,13 @@
 	screentip?.maptext = ""
 
 /atom/movable/screen/minimap_display/proc/add_blip(name, icon_state, x, y, large = FALSE)
+	if(blips[name])
+		return
 	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, hud.mymob, icon_state, large)
 	new_blip.register_target(hud.mymob)
 	new_blip.start_tracking_target()
-	blips += new_blip
-	vis_contents += new_blip
+	blips |= new_blip
+	vis_contents |= new_blip
 
 /atom/movable/screen/minimap_display/proc/update_blip(name, x, y)
 	var/atom/movable/screen/minimap_blip/blip = blips[name]
@@ -143,3 +161,8 @@
 	blips.Cut()
 	vis_contents.Cut()
 	vis_contents += screentip // add screentip back in
+
+/atom/movable/screen/minimap_display/proc/z_change_request(new_z_change)
+	SIGNAL_HANDLER
+	var/new_z = minimap.z + new_z_change
+	INVOKE_ASYNC(src, PROC_REF(change_z_level), new_z)
