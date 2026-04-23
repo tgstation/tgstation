@@ -59,7 +59,7 @@ ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_
 
 		BLACKBOX_LOG_ADMIN_VERB("Admin Ghost")
 
-ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles full invisibility.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", ADMIN_CATEGORY_GAME)
 	if(HAS_TRAIT(user.mob, TRAIT_INVISIMIN))
 		REMOVE_TRAIT(user.mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
 		REMOVE_TRAIT(user.mob, TRAIT_ORBITING_FORBIDDEN, ADMIN_TRAIT)
@@ -75,7 +75,7 @@ ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles full invisibility.", ADMIN_
 	user.mob.remove_from_all_data_huds()
 	user.mob.SetInvisibility(INVISIBILITY_ADMIN, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
 	QDEL_NULL(user.mob.orbiters)
-	to_chat(user, span_adminnotice(span_bold("Invisimin on. You are now fully invisible to players.")), confidential = TRUE)
+	to_chat(user, span_adminnotice(span_bold("Invisimin on. You are now invisible to players and ghosts.")), confidential = TRUE)
 
 ADMIN_VERB(check_antagonists, R_ADMIN, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_GAME)
 	user.holder.check_antagonists()
