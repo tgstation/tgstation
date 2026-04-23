@@ -869,3 +869,5 @@ ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an it
 	message_admins("[key_name(user)] created a new black market item: [name] ([chosen]) for [price] credits, of quantity [quantity].")
 
 	BLACKBOX_LOG_ADMIN_VERB("Create Black Market Item")
+
+#undef STEALTH_MODE_TRAIT
