@@ -1,3 +1,4 @@
+/// Wires that send pulses to a gizmo puzzle datum
 /datum/wires/gizmo
 	/// It's already randomized on the puzzle component
 	randomize = FALSE

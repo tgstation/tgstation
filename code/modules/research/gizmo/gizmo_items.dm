@@ -1,3 +1,4 @@
+/// A handheld gizmo, with some different activation modes
 /obj/item/gizmo
 	name = "gizmo"
 	desc = "Fliggoes the giggoe when its oven in hot the device."
@@ -5,7 +6,9 @@
 
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+	/// Possible icon states
 	var/list/icon_states = list("gizmo_item_1")
+	/// Reference to the gizmo master controller that handles all the other gizmo stuff
 	var/datum/gizmo_controller/controller = /datum/gizmo_controller/item
 
 /obj/item/gizmo/Initialize(mapload)

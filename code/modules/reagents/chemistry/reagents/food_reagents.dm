@@ -1284,3 +1284,11 @@
 	color = "#efeff0"
 	taste_description = "metallic salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/gizmo_goop
+	name = "Gizmo Goop"
+	description = "A thick, grey goup that is supposedly 'nutritious'."
+	color = "#707070"
+	taste_description = "goop"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	nutriment_factor = 0.1

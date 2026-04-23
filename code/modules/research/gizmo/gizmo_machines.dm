@@ -2,6 +2,7 @@
 /obj/machinery/gizmo
 	name = "gizmo"
 	desc = "Does a function when you put the jigger at the other ends thing."
+	icon_state = "gizmo_1"
 	icon = 'icons/obj/science/gizmos.dmi'
 
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -51,11 +52,13 @@
 /obj/machinery/gizmo/proc/on_stop_moving(datum/gizpulse/pulse)
 	return
 
+/// Gizmo that comes with a gizmo interface to start moving
 /obj/machinery/gizmo/beyblade
 	icon_states = list("beyblade")
 
 	controller = /datum/gizmo_controller/beyblade
 
+	/// Are we currently moving?
 	var/moving = FALSE
 
 /obj/machinery/gizmo/beyblade/update_icon(updates)
@@ -106,5 +109,6 @@
 	on_state = FALSE
 	update_icon()
 
+/// A gizmo with a voice activated interface
 /obj/machinery/gizmo/voice
 	controller = /datum/gizmo_controller/voice

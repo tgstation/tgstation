@@ -1,3 +1,4 @@
+/// Holds the puzzle sequences, receives the pulses, decides if theyre correct, and gives feedback and calls the right callbacks when it does
 /datum/gizmo_puzzle
 	/// The wires we need to pulse for cracking the code
 	var/list/cryptic_pulse = list(
@@ -20,12 +21,12 @@
 	/// List of callbacks that the solutions will call on succes
 	var/list/solution_callbacks
 
+	/// For if you want something to happen on merely being pulsed. If null, simply ping, bleep and creak or whatever as feedback
 	var/datum/callback/pulsed_callback
 
 	COOLDOWN_DECLARE(feedback_cooldown)
-
+	/// So the ping buzz feedback doesnt spam too much
 	var/feedback_cooldown_time = 0.2 SECONDS
-
 
 /datum/gizmo_puzzle/New(datum/callback/pulsed)
 	if(pulsed)
@@ -34,6 +35,7 @@
 		pulsed_callback = CALLBACK(src, PROC_REF(default_on_pulsed))
 	return ..()
 
+/// Make up a sequence
 /datum/gizmo_puzzle/proc/generate_code_sequences(list/_solution_callbacks)
 	solution_callbacks = _solution_callbacks
 	code_sequences = list()
@@ -43,6 +45,7 @@
 		for(var/j in 1 to code_length)
 			code_sequences[i] += pick(cryptic_pulse)
 
+/// Whenever a puzzle attempt is made
 /datum/gizmo_puzzle/proc/on_pulse(pulse_number, mob/living/user, atom/movable/holder)
 	current_sequence += cryptic_pulse[pulse_number]
 	. = GIZMO_PUZZLE_CORRECT
@@ -69,6 +72,7 @@
 
 	pulsed_callback?.Invoke(holder, user, .)
 
+/// Just some feedback so people can start forcing sequences. No feedback if it's done automatically
 /datum/gizmo_puzzle/proc/default_on_pulsed(atom/movable/holder, mob/living/user, solved_type)
 	if(!COOLDOWN_FINISHED(src, feedback_cooldown) || !isliving(user))
 		return
@@ -85,5 +89,3 @@
 		if(GIZMO_PUZZLE_SOLVED)
 			holder.balloon_alert(user, "creak")
 			playsound(holder, 'sound/machines/creak.ogg', 30, FALSE)
-
-/datum/gizmo_puzzle/voice

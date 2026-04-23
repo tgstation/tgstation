@@ -25,3 +25,4 @@
 #define GIZMO_INTERFACE_WIRES "gizmo_interface_wires"
 #define GIZMO_INTERFACE_VOICE "gizmo_interface_voices"
 
+#define GIZMO_PICK_ONE "gizmo_pick_one"

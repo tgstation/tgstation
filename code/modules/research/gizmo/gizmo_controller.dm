@@ -1,7 +1,6 @@
 /// The master datum that handles every bit of gizmo code
 /// Just so you will understand the full insanity of this:
 /// object > gizmo_controller > gizmo_puzzle + gizmo_interface > gizmode > gizpulse > callbacks
-
 /datum/gizmo_controller
 	/// Can hold different interacting modes (wires, voice) and connected interfaces
 	var/list/interfaces = list(GIZMO_INTERFACE_WIRES = /datum/gizmo_interface)
@@ -11,6 +10,7 @@
 /datum/gizmo_controller/New()
 	. = ..()
 
+/// Generate interfaces for interacting with the gizmo
 /datum/gizmo_controller/proc/generate_interfaces(atom/movable/holder)
 	for(var/interface_define in interfaces)
 		var/interface_type = interfaces[interface_define]
