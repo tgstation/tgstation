@@ -51,7 +51,6 @@
 	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 	if(trans)
 		to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
-	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 ///Handles all injection checks, injection and logging.
