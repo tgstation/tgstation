@@ -22,7 +22,7 @@
 
 /datum/wires/gizmo/New(atom/holder, datum/gizmo_puzzle/puzzle)
 	wires = cryptic_wires
-	puzzle = src.puzzle
+	src.puzzle = puzzle
 
 	..()
 

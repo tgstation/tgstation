@@ -39,7 +39,7 @@
 
 /// Pick the paths to generate and instantiate them
 /datum/gizmodes/proc/generate_modes(list/trigger_callbacks, datum/gizmo_interface/interface)
-	interface = src.interface
+	src.interface = interface
 
 	var/list/modes_to_spawn = list()
 

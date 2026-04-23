@@ -20,7 +20,7 @@
 /datum/gizmo_interface/New(datum/gizmo_controller/controller)
 	. = ..()
 
-	controller = src.controller
+	src.controller = controller
 
 /// Instantiate the active modes, tell them to instantiate and pass their callbacks to the puzzle maker
 /datum/gizmo_interface/proc/generate_interface(atom/movable/holder, datum/callback/pulse_callback)
