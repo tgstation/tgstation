@@ -99,6 +99,7 @@
 
 /obj/machinery/gizmo/toggle/tucker_tubes
 	icon_states = list("gizmo_active_0")
+	icon_state = "gizmo_active_0" //for the mapping icon
 	anchored = TRUE
 
 /obj/machinery/gizmo/toggle/proc/on_state(datum/gizpulse/pulse)

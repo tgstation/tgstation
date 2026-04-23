@@ -35483,6 +35483,11 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
+"miP" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/gizmo/toggle/tucker_tubes,
+/turf/open/floor/iron/white,
+/area/station/science/auxlab/firing_range)
 "miU" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/plasteel{
@@ -53996,7 +54001,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
-/obj/machinery/door/window/right/directional/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/engine,
 /area/station/science/auxlab/firing_range)
 "suO" = (
@@ -62671,6 +62676,7 @@
 /area/station/maintenance/department/medical)
 "vwd" = (
 /obj/machinery/newscaster/directional/south,
+/obj/effect/spawner/random/gizmo,
 /turf/open/floor/engine,
 /area/station/science/auxlab/firing_range)
 "vwf" = (
@@ -172594,7 +172600,7 @@ obA
 fAU
 rjr
 mYN
-vzj
+miP
 suK
 nas
 nas

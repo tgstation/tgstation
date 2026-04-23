@@ -59840,6 +59840,7 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
 	},
+/obj/machinery/gizmo/toggle/tucker_tubes,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "tWb" = (
@@ -61735,6 +61736,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"uAs" = (
+/obj/effect/spawner/random/gizmo,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "uAx" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -119930,7 +119935,7 @@ sQZ
 owO
 owO
 owO
-owO
+uAs
 cJS
 rKD
 udg

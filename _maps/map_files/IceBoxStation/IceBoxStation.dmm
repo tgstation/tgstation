@@ -54825,9 +54825,9 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "pnK" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/gizmo/toggle/tucker_tubes,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "pnR" = (

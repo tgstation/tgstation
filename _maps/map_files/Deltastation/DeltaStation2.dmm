@@ -47989,6 +47989,7 @@
 	dir = 5
 	},
 /obj/machinery/status_display/ai/directional/north,
+/obj/effect/spawner/random/gizmo,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "lLy" = (
@@ -54113,6 +54114,7 @@
 	name = "Experimentor Blast Door"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/gizmo/toggle/tucker_tubes,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "nqD" = (
