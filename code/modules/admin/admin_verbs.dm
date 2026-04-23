@@ -66,6 +66,8 @@ ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles full invisibility.", ADMIN_
 		user.mob.add_to_all_human_data_huds()
 		user.mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
 		to_chat(user, span_adminnotice(span_bold("Invisimin off. Invisibility reset.")), confidential = TRUE)
+		if(isobserver(user.mob))
+			user.mob.alpha = initial(user.mob.alpha)
 		return
 
 	ADD_TRAIT(user.mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
