@@ -36,8 +36,8 @@
 	return ..()
 
 /// Make up a sequence
-/datum/gizmo_puzzle/proc/generate_code_sequences(list/_solution_callbacks)
-	solution_callbacks = _solution_callbacks
+/datum/gizmo_puzzle/proc/generate_code_sequences(list/solution_callbacks)
+	solution_callbacks = src.solution_callbacks
 	code_sequences = list()
 
 	for(var/i in 1 to solution_callbacks.len)

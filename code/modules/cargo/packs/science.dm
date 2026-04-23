@@ -121,5 +121,5 @@
 	contains = list(
 		/obj/machinery/gizmo = 1,
 		/obj/effect/spawner/random/gizmo = 2,
-		)
+	)
 	crate_name = "\improper Gizmo research crate"

@@ -17,17 +17,17 @@
 	/// Max modes to select from possible_active_modes
 	var/max_modes = 2
 
-/datum/gizmo_interface/New(datum/gizmo_controller/_controller)
+/datum/gizmo_interface/New(datum/gizmo_controller/controller)
 	. = ..()
 
-	controller = _controller
+	controller = src.controller
 
 /// Instantiate the active modes, tell them to instantiate and pass their callbacks to the puzzle maker
 /datum/gizmo_interface/proc/generate_interface(atom/movable/holder, datum/callback/pulse_callback)
 	var/list/trigger_callbacks = list()
 	var/list/modes_to_spawn = list() + guaranteed_active_gizmodes
 
-	for(var/i in 1 to (rand(min_modes, max_modes)))
+	for(var/i in 1 to rand(min_modes, max_modes))
 		var/path = pick_weight_take(possible_active_modes)
 		if(!path)
 			break

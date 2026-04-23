@@ -19,7 +19,7 @@
 	var/datum/gizmodes/copier/copier = master
 
 	for(var/atom/movable/candidate in oview(1, holder))
-		if(candidate.anchored) // skips most undertile and hidden objects
+		if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_UNDERFLOOR)) // skips most undertile and hidden objects
 			continue
 
 		copier.marked = WEAKREF(candidate)
@@ -39,9 +39,9 @@
 		return
 
 	// So you can pick up copied items but not copied structures and mobs
-	var/obj/copy = /obj/structure/gizmo_copy
-	if(isitem(object_to_copy))
-		copy = /obj/item/gizmo_copy
+	var/obj/item/copy = /obj/item/gizmo_copy
+	if(!isitem(object_to_copy))
+		copy.interaction_flags_item = NONE //so you cant pick it up anymore
 
 	copy = new copy (get_turf(holder))
 	copy.appearance = object_to_copy
@@ -57,16 +57,16 @@
 	var/datum/gizmodes/copier/copier = master
 
 	for(var/datum/weakref/ref as anything in copier.copies)
-		var/obj/item/gizmo_copy/copy = ref?.resolve()
-		if(copy)
-			qdel(copy)
+		qdel(ref)
 
 	copier.copies.Cut()
 
 /obj/item/gizmo_copy/emp_act(severity)
 	. = ..()
+	do_sparks(2, FALSE, "gizmo copy")
 	qdel(src)
 
 /obj/structure/gizmo_copy/emp_act(severity)
 	. = ..()
+	do_sparks(2, FALSE, "gizmo copy")
 	qdel(src)

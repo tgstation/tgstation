@@ -7,9 +7,6 @@
 	/// Instanted interfaces. really just here so I can check this shit in vv
 	var/list/instances = list()
 
-/datum/gizmo_controller/New()
-	. = ..()
-
 /// Generate interfaces for interacting with the gizmo
 /datum/gizmo_controller/proc/generate_interfaces(atom/movable/holder)
 	for(var/interface_define in interfaces)

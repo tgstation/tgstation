@@ -5,9 +5,9 @@ GLOBAL_LIST_INIT(gizmo_words, world.file2list("strings/gizmo_words.txt"))
 /datum/component/gizmo_voice
 	var/datum/gizmo_puzzle/puzzle
 	/// they're not really words but you get it
-	var/list/active_words = list()
+	var/static/list/active_words = list()
 
-/datum/component/gizmo_voice/Initialize(datum/gizmo_puzzle/_puzzle)
+/datum/component/gizmo_voice/Initialize(datum/gizmo_puzzle/puzzle)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -15,8 +15,10 @@ GLOBAL_LIST_INIT(gizmo_words, world.file2list("strings/gizmo_words.txt"))
 	movable.become_hearing_sensitive(type)
 	RegisterSignal(movable, COMSIG_MOVABLE_HEAR, PROC_REF(on_hear))
 
-	puzzle = _puzzle
-	generate_active_words()
+	puzzle = src.puzzle
+
+	if(!active_words.len)
+		generate_active_words()
 
 /// Pick the activate keywords
 /datum/component/gizmo_voice/proc/generate_active_words()

@@ -17,7 +17,7 @@
 /// Send a mood pulse to a range
 /datum/gizpulse/mood_pulser/proc/mood_pulse(atom/movable/holder)
 	new /obj/effect/temp_visual/circle_wave(get_turf(holder), ring_color)
-	for(var/mob/living/carbon/human/human in orange(range, holder))
+	for(var/mob/living/carbon/human/human in urange(range, holder))
 		human.add_mood_event("gizmo_mood_pulse", mood)
 
 /// Make a positive mood pulse

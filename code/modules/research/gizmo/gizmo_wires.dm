@@ -20,9 +20,9 @@
 
 	var/datum/gizmo_puzzle/puzzle
 
-/datum/wires/gizmo/New(atom/holder, datum/gizmo_puzzle/_puzzle)
+/datum/wires/gizmo/New(atom/holder, datum/gizmo_puzzle/puzzle)
 	wires = cryptic_wires
-	puzzle = _puzzle
+	puzzle = src.puzzle
 
 	..()
 

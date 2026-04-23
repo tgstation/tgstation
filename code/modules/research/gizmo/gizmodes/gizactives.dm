@@ -38,8 +38,8 @@
 	COOLDOWN_DECLARE(cooldown_timer)
 
 /// Pick the paths to generate and instantiate them
-/datum/gizmodes/proc/generate_modes(list/trigger_callbacks, datum/gizmo_interface/_interface)
-	interface = _interface
+/datum/gizmodes/proc/generate_modes(list/trigger_callbacks, datum/gizmo_interface/interface)
+	interface = src.interface
 
 	var/list/modes_to_spawn = list()
 
@@ -50,7 +50,7 @@
 		else
 			modes_to_spawn += path
 
-	for(var/i in 1 to (rand(min_modes, max_modes)))
+	for(var/i in 1 to rand(min_modes, max_modes))
 		var/path = pick_weight_take(possible_active_modes)
 		if(!path)
 			break

@@ -6,7 +6,7 @@
 		/datum/gizpulse/wet_tiles/fluid_circle/large = 1,
 		/datum/gizpulse/fluid_smoke = 1,
 		/datum/gizpulse/swap_reagent = 1,
-		)
+	)
 
 	min_modes = 3
 	max_modes = 5
@@ -43,7 +43,7 @@
 		holder.reagents.add_reagent(active_reagent, max_volume)
 		reagent_holder = holder.reagents
 		START_PROCESSING(SSdcs, src)
-	. = ..()
+	return ..()
 
 /datum/gizmodes/mopper/process(seconds_per_tick)
 	reagent_holder.add_reagent(active_reagent, regeneration_speed * seconds_per_tick)
@@ -67,7 +67,7 @@
 	var/size = 0
 
 /datum/gizpulse/wet_tiles/fluid_circle/get_tiles(atom/movable/holder)
-	return range(size, holder)
+	return RANGE_TURFS(size, holder)
 
 /// In a small circle
 /datum/gizpulse/wet_tiles/fluid_circle/small

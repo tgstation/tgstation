@@ -15,9 +15,16 @@
 	var/list/icon_states = list("gizmo_0", "gizmo_1", "gizmo_2", "gizmo_3", "gizmo_4")
 	/// Reference to the gizmo. We dont actually need to track this for anything but ease of vv
 	var/datum/gizmo_controller/controller = /datum/gizmo_controller
+	/// Possible names to pick from to keep things confusing
+	var/list/possible_names = list(
+		"gizmo", "jigger", "doohickey", "particle inverter", "polarity superplexer", "flitcher poster",
+		"entropy nilum", "tachyon streamer", "doing device", "task operator", "interface responder", "kinetic observer",
+	)
 
 /obj/machinery/gizmo/Initialize(mapload)
 	. = ..()
+
+	name = pick(possible_names)
 
 	if(icon_states)
 		base_icon_state = pick(icon_states)
@@ -36,20 +43,29 @@
 		attempt_wire_interaction(user)
 		return
 
-/obj/machinery/gizmo/proc/start_moving(datum/gizpulse/pulse)
+/obj/machinery/gizmo/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
+
+
+/obj/machinery/gizmo/proc/start_moving(datum/source, datum/gizpulse/pulse)
 	SIGNAL_HANDLER
 
 	on_start_moving(pulse)
 
-/obj/machinery/gizmo/proc/stop_moving(datum/gizpulse/pulse)
+/obj/machinery/gizmo/proc/stop_moving(datum/source, datum/gizpulse/pulse)
 	SIGNAL_HANDLER
 
 	on_stop_moving(pulse)
 
-/obj/machinery/gizmo/proc/on_start_moving(datum/gizpulse/pulse)
+/obj/machinery/gizmo/proc/on_start_moving(datum/source, datum/gizpulse/pulse)
 	return
 
-/obj/machinery/gizmo/proc/on_stop_moving(datum/gizpulse/pulse)
+/obj/machinery/gizmo/proc/on_stop_moving(datum/source, datum/gizpulse/pulse)
 	return
 
 /// Gizmo that comes with a gizmo interface to start moving
@@ -66,13 +82,13 @@
 
 	icon_state = base_icon_state + (moving ? "_spinning" : "")
 
-/obj/machinery/gizmo/beyblade/on_start_moving(datum/gizpulse/pulse)
+/obj/machinery/gizmo/beyblade/on_start_moving(datum/source, datum/gizpulse/pulse)
 	density = TRUE
 
 	moving = TRUE
 	update_icon()
 
-/obj/machinery/gizmo/beyblade/on_stop_moving(datum/gizpulse/pulse)
+/obj/machinery/gizmo/beyblade/on_stop_moving(datum/source, datum/gizpulse/pulse)
 	density = FALSE
 
 	moving = FALSE
