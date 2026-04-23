@@ -540,6 +540,8 @@
   SmArtKar:
   - admin: Planemaster Debugger now has a text search input to locate and jump to
       planes
+  TealSeer:
+  - bugfix: fixed CSS-related errors in BYOND 516.1681+
   levels0:
   - bugfix: metalgen and secret sauce recipes are now loaded properly
   timothymtorres:
