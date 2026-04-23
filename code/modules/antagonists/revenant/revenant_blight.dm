@@ -1,5 +1,7 @@
 /datum/disease/revblight
 	name = "Unnatural Wasting"
+	desc = "A strange condition which causes the victim to feel as if they were wasting away, despite being otherwise (almost) perfectly healthy."
+	form = "Condition"
 	max_stages = 5
 	stage_prob = 5
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS

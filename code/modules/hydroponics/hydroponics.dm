@@ -244,16 +244,11 @@
 		))
 	QDEL_NULL(our_snail)
 
+/obj/machinery/hydroponics/constructable/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if (!user.combat_mode)
-		// handle opening the panel
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-			return
-		if(default_deconstruction_crowbar(I))
-			return
-
-	return ..()
+/obj/machinery/hydroponics/constructable/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/hydroponics/bullet_act(obj/projectile/proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)

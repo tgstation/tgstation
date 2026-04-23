@@ -20,6 +20,7 @@
 	mat_rust_resistance = RUST_RESISTANCE_BASIC
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 1 / SHEET_MATERIAL_AMOUNT
 	minimum_value_override = 0
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
@@ -57,6 +58,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 1 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
 
 /datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -89,6 +91,7 @@
 		MATERIAL_ELECTRICAL = 9,
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 4,
+		MATERIAL_VAMPIRES_BANE = 5,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	ore_type = /obj/item/stack/ore/silver
@@ -98,6 +101,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 16 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 3.5 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
 
 /datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -129,6 +133,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 18 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 4 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
 
 /datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -162,6 +167,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 10 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	. = ..()
@@ -194,6 +200,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 3.5 / SHEET_MATERIAL_AMOUNT
 
 /// Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
@@ -209,7 +216,8 @@
 		MATERIAL_ELECTRICAL = 10,
 		MATERIAL_THERMAL = 8,
 		MATERIAL_CHEMICAL = 0,
-		MATERIAL_FLAMMABILITY = 9, // Literally sets itself on fire from any excitement
+		MATERIAL_FLAMMABILITY = 10, // Literally sets itself on fire from any excitement
+		MATERIAL_FIRESTACKER = 1,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	ore_type = /obj/item/stack/ore/plasma
@@ -217,23 +225,21 @@
 	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 15 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 2 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/plasma/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/plasma/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
-	if(ismovable(source))
-		source.AddElement(/datum/element/firestacker, 1 * multiplier)
 	source.AddComponent(/datum/component/combustible_flooder, GAS_PLASMA, mat_amount * 0.05 * multiplier) //Empty temp arg, fully dependent on whatever ignited it.
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
-/datum/material/plasma/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/plasma/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
-	source.RemoveElement(/datum/element/firestacker, mat_amount = 1 * multiplier)
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
-///Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
+/// Can cause bluespace effects on use. (Teleportation)
 /datum/material/bluespace
 	name = "bluespace crystal"
 	desc = "Crystals with bluespace properties."
@@ -250,6 +256,7 @@
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 4,
 		MATERIAL_BEAUTY = 0.5, // Absolutely mesmerizing
+		MATERIAL_TELEPORTING = 5,
 	)
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	ore_type = /obj/item/stack/ore/bluespace_crystal
@@ -257,6 +264,7 @@
 	value_per_unit = 300 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 10 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 	texture_layer_icon_state = "shine"
@@ -305,8 +313,9 @@
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 60 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 15 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/bananium/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/bananium/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	source.LoadComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50 * multiplier, falloff_exponent = 20)
 	source.AddComponent(/datum/component/slippery, min(mat_amount / 10 * multiplier, 80 * multiplier))
@@ -332,7 +341,7 @@
 	)
 	rewards += pick_weight(funny_fish)
 
-/datum/material/bananium/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/bananium/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/slippery))
 	qdel(source.GetComponent(/datum/component/squeak))
@@ -360,6 +369,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	ore_type = /obj/item/stack/ore/titanium
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 3 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
@@ -390,13 +400,14 @@
 	value_per_unit = 600 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 20 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/runite/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/runite/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
-/datum/material/runite/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/runite/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
@@ -429,6 +440,7 @@
 	value_per_unit = 25 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Nobody's found oil on lavaland yet.
 	points_per_unit = 4 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 4 / SHEET_MATERIAL_AMOUNT
 
 /// Force decrease and mushy sound effect. (Not yet implemented)
 /datum/material/biomass
@@ -483,13 +495,14 @@
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 20 / SHEET_MATERIAL_AMOUNT // If it ever needs it, we'll give it
 
-/datum/material/adamantine/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/adamantine/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) // light-absorbing, environment-cancelling fishing rod.
 
-/datum/material/adamantine/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/adamantine/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) // light-absorbing, environment-cancelling fishing rod.
@@ -521,14 +534,15 @@
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 20 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/mythril/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/mythril/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(isitem(source))
 		source.AddComponent(/datum/component/fantasy)
 		ADD_TRAIT(source, TRAIT_INNATELY_FANTASTICAL_ITEM, REF(src)) // DO THIS LAST OR WE WILL NEVER GET OUR BONUSES!!!
 
-/datum/material/mythril/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/mythril/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(isitem(source))
 		REMOVE_TRAIT(source, TRAIT_INNATELY_FANTASTICAL_ITEM, REF(src)) // DO THIS FIRST OR WE WILL NEVER GET OUR BONUSES DELETED!!!
@@ -557,16 +571,17 @@
 		MATERIAL_THERMAL = 8,
 		MATERIAL_CHEMICAL = 4,
 		MATERIAL_FLAMMABILITY = 10,
+		MATERIAL_FIRESTACKER = 1,
 	)
 	sheet_type = /obj/item/stack/sheet/hot_ice
 	material_reagent = /datum/reagent/toxin/hot_ice
 	value_per_unit = 400 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/hot_ice/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/hot_ice/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	source.AddComponent(/datum/component/combustible_flooder, GAS_PLASMA, mat_amount * 1.5 * multiplier, (mat_amount * 0.2 + 300) * multiplier)
 
-/datum/material/hot_ice/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/hot_ice/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
 
@@ -603,7 +618,7 @@
 	color = "#EDC9AF"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_AMORPHOUS
 	mat_properties = list(
-		MATERIAL_DENSITY = 2,
+		MATERIAL_DENSITY = 3,
 		MATERIAL_HARDNESS = 0,
 		MATERIAL_FLEXIBILITY = 0,
 		MATERIAL_REFLECTIVITY = 7,
@@ -679,13 +694,13 @@
 		MATERIAL_THERMAL = 1,
 		MATERIAL_CHEMICAL = 8,
 	)
+	material_reagent = list(/datum/reagent/iron = 1, /datum/reagent/fuel/unholywater = 2)
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "runed"
 
 /datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	. = ..()
-	victim.reagents.add_reagent(/datum/reagent/fuel/unholywater, rand(8, 12))
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
 	return TRUE
@@ -869,12 +884,12 @@
 	material_reagent = /datum/reagent/toxin/plasma
 	value_per_unit = 900 / SHEET_MATERIAL_AMOUNT
 
-/datum/material/zaukerite/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/zaukerite/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_IGNORE_ENVIRONMENT, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
-/datum/material/zaukerite/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/zaukerite/on_removed(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		REMOVE_TRAIT(source, TRAIT_ROD_IGNORE_ENVIRONMENT, REF(src)) //light-absorbing, environment-cancelling fishing rod.
@@ -884,3 +899,44 @@
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
 		victim.apply_damage(30, BURN, BODY_ZONE_HEAD, wound_bonus = 5)
 	return TRUE
+
+/// Evil and very unstable version of bluespace crystals
+/datum/material/telecrystal
+	name = "telecrystal"
+	desc = "An ominous-looking gemstone capable of transporting objects vast distances through bluespace."
+	color = "#BD1B28"
+	alpha = 200
+	starlight_color = COLOR_SYNDIE_RED
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 1,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 10,
+		MATERIAL_ELECTRICAL = 10,
+		MATERIAL_THERMAL = 2,
+		MATERIAL_CHEMICAL = 8,
+		MATERIAL_BEAUTY = -0.5, // very evil bad no good
+		MATERIAL_TELEPORTING = 8,
+		MATERIAL_PENETRATING = TRUE,
+	)
+	sheet_type = /obj/item/stack/sheet/telepolycrystal
+	material_reagent = list(/datum/reagent/bluespace = 1, /datum/reagent/medicine/stimulants = 1) // We don't have liquid telecrystals and I don't wanna risk it
+	value_per_unit = 1200 / SHEET_MATERIAL_AMOUNT
+	texture_layer_icon_state = "shine"
+
+/datum/material/telecrystal/on_main_applied(atom/source, mat_amount, multiplier)
+	. = ..()
+	if(istype(source, /obj/item/fishing_rod))
+		RegisterSignal(source, COMSIG_ROD_BEGIN_FISHING, PROC_REF(on_begin_fishing))
+
+/datum/material/telecrystal/on_main_removed(atom/source, mat_amount, multiplier)
+	. = ..()
+	if(istype(source, /obj/item/fishing_rod))
+		UnregisterSignal(source, COMSIG_ROD_BEGIN_FISHING)
+
+/datum/material/telecrystal/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge)
+	SIGNAL_HANDLER
+	// Oops, all chainsawfish!
+	challenge.register_reward_signals(GLOB.preset_fish_sources[/datum/fish_source/portal/syndicate])
+
