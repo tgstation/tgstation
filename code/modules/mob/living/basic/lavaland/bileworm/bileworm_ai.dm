@@ -1,10 +1,12 @@
 /datum/ai_controller/basic_controller/bileworm
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bileworm,
+		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,
 	)
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/call_reinforcements/mining,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/bileworm_attack,
 		/datum/ai_planning_subtree/bileworm_execute,

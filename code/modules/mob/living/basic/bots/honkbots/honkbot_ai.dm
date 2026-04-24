@@ -58,7 +58,7 @@
 	var/mob/living/carbon/human/human_target = my_target
 	if(human_target.handcuffed || human_target.stat != CONSCIOUS)
 		return FALSE
-	if(locate(human_target) in controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
+	if(human_target in controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
 		return TRUE
 	var/mob/living/basic/bot/honkbot/my_bot = controller.pawn
 	var/honkbot_flags = my_bot.honkbot_flags
