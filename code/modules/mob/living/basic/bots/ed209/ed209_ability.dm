@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/ed209_charge
 	name = "Bot Tackle"
-	desc = "Not even god's mightiest quarterback can withstand this"
+	desc = "Not even God's mightiest Quarterback can withstand this."
 	cooldown_time = 10 SECONDS
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
