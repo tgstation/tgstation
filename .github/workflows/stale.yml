@@ -37,26 +37,26 @@ jobs:
           operations-per-run: 300
       - name: Filter staled pull requests for announcement
         id: filter-prs
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
+        env:
+          input: ${{steps.stale.outputs.staled-issues-prs}}
         with:
           script: |
-            const pull_requests = JSON.parse('${{steps.stale.outputs.staled-issues-prs}}')
-                                      .filter(issue => !!issue.pull_request)
-                                      .map(pr => ({
-                                          title: pr.title,
-                                          number: pr.number,
-                                          html_url: pr.pull_request.html_url,
-                                      }));
-
-            return JSON.stringify(pull_requests)
+            return JSON.parse(process.env.input)
+                       .filter(issue => !!issue.pull_request)
+                       .map(pr => ({
+                        title: pr.title,
+                        number: pr.number,
+                        html_url: pr.pull_request.html_url,
+                       }));
 
   announce:
     runs-on: ubuntu-24.04
     needs: stale
     if: ${{ needs.stale.outputs.staled_prs != '[]' }}
     strategy:
-     matrix:
-      pull_request: ${{ fromJSON(needs.stale.outputs.staled_prs) }}
+      matrix:
+        pull_request: ${{ fromJSON(needs.stale.outputs.staled_prs) }}
     steps:
       - name: "Check for DISCORD_WEBHOOK"
         id: secrets_set
@@ -67,7 +67,7 @@ jobs:
           if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
           echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Send Discord notification
-        uses: tgstation/discord-notify@v3
+        uses: tgstation/discord-notify@main
         if: >
           steps.secrets_set.outputs.SECRETS_ENABLED
         with:

@@ -1,9 +1,10 @@
 /datum/disease/gbs
 	name = "GBS"
+	desc = "An extremely rare and dangerous disease that has been researched little due to its potentially apocalyptic nature."
 	max_stages = 4
-	spread_text = "On contact"
+	spread_text = "Skin contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
-	cure_text = "Synaptizine & Sulfur"
+	cure_text = /datum/reagent/medicine/synaptizine::name + " & " + /datum/reagent/sulfur::name
 	cures = list(/datum/reagent/medicine/synaptizine,/datum/reagent/sulfur)
 	cure_chance = 7.5 //higher chance to cure, since two reagents are required
 	agent = "Gravitokinetic Bipotential SADS+"

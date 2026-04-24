@@ -11,6 +11,10 @@
 /datum/material_property/proc/get_descriptor(value)
 	return null
 
+/// Returns the contents of the tooltip under our descriptor
+/datum/material_property/proc/get_tooltip(value)
+	return "[value < 0 ? "-" : ""]\Roman[round(abs(value), 1)]"
+
 /// Called whenever a material with this property initializes. Mostly used for behavior tracking on optional properties
 /datum/material_property/proc/attach_to(datum/material/material)
 	return

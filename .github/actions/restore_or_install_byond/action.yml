@@ -35,7 +35,7 @@ runs:
     # is cancelled, we already have a cache to restore from.
     - name: Restore BYOND cache
       id: restore_byond_cache
-      uses: actions/cache/restore@v4
+      uses: actions/cache/restore@v5
       with:
         path: ~/BYOND
         key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
@@ -45,7 +45,7 @@ runs:
       run: bash tools/ci/install_byond.sh
     - name: Save BYOND cache
       if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}
-      uses: actions/cache/save@v4
+      uses: actions/cache/save@v5
       with:
         path: ~/BYOND
         key: ${{ steps.restore_byond_cache.outputs.cache-primary-key }}

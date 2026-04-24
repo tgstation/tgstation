@@ -141,11 +141,8 @@ Possible to do for anyone motivated enough:
 			new_disk.forceMove(src)
 			disk = new_disk
 
-/obj/machinery/holopad/tutorial/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	return NONE
-
-/obj/machinery/holopad/tutorial/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	return NONE
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER)
+	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR)
 
 /obj/machinery/holopad/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -219,7 +216,6 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/on_deconstruction(dissassembled)
 	disk?.forceMove(drop_location())
-	disk = null
 	return ..()
 
 /obj/machinery/holopad/RefreshParts()
@@ -263,27 +259,28 @@ Possible to do for anyone motivated enough:
 	if(record_mode)
 		record_stop()
 
-/obj/machinery/holopad/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", item))
-		return
+/obj/machinery/holopad/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-	if(default_pry_open(item, close_after_pry = TRUE, closed_density = FALSE))
-		return
+/obj/machinery/holopad/crowbar_act(mob/living/user, obj/item/tool)
+	return default_pry_open(user, tool, close_after_pry = TRUE, closed_density = FALSE, deconstruct_on_fail = TRUE)
 
-	if(default_deconstruction_crowbar(item))
-		return
-
-	if(istype(item, /obj/item/disk/holodisk))
+/obj/machinery/holopad/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/disk/holodisk))
 		if(disk)
 			to_chat(user,span_warning("There's already a disk inside [src]!"))
 			return
-		if (!user.transferItemToLoc(item, src))
+		if (!user.transferItemToLoc(tool, src))
 			return
-		to_chat(user,span_notice("You insert [item] into [src]."))
-		disk = item
-		return
+		to_chat(user,span_notice("You insert [tool] into [src]."))
+		disk = tool
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	return ..()
+/obj/machinery/holopad/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == disk)
+		disk = null
 
 /obj/machinery/holopad/ui_status(mob/user, datum/ui_state/state)
 	if(!is_operational)
@@ -388,7 +385,6 @@ Possible to do for anyone motivated enough:
 		if("disk_eject")
 			if(disk && !replay_mode)
 				disk.forceMove(drop_location())
-				disk = null
 				return TRUE
 		if("replay_mode")
 			if(replay_mode)
@@ -611,6 +607,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	update_appearance()
 
 /obj/machinery/holopad/update_icon_state()
+	if(panel_open)
+		icon_state = "[base_icon_state]_open"
+		return ..()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	if(ringing)
 		icon_state = "[base_icon_state]_ringing"

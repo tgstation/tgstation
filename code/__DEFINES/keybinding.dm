@@ -13,6 +13,7 @@
 #define COMSIG_KB_ADMIN_DSAY_DOWN "keybinding_admin_dsay_down"
 #define COMSIG_KB_ADMIN_TOGGLEBUILDMODE_DOWN "keybinding_admin_togglebuildmode_down"
 #define COMSIG_KB_ADMIN_AGHOST_DOWN "keybinding_admin_aghost_down"
+#define COMSIG_KB_ADMIN_JUMPTOGHOST_DOWN "keybinding_admin_jumptoghost_down"
 #define COMSIG_KB_ADMIN_PLAYERPANELNEW_DOWN "keybinding_admin_playerpanelnew_down"
 #define COMSIG_KB_ADMIN_STEALTHMODETOGGLE_DOWN "keybinding_admin_stealthmodetoggle_down"
 #define COMSIG_KB_ADMIN_INVISIMINTOGGLE_DOWN "keybinding_admin_invisimintoggle_down"

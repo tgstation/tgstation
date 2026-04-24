@@ -84,47 +84,65 @@
 	LAZYREMOVE(processor_contents, what)
 
 /obj/machinery/processor/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
+	if(processing)
+		to_chat(user, span_warning("[src] is in the process of processing!"))
+		return ITEM_INTERACT_BLOCKING
+
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/processor/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/processor/screwdriver_act(mob/living/user, obj/item/tool)
 	if(processing)
 		to_chat(user, span_warning("[src] is in the process of processing!"))
-		return TRUE
-	if(default_deconstruction_screwdriver(user, base_icon_state + "_open", base_icon_state, attacking_item) || default_pry_open(attacking_item, close_after_pry = TRUE) || default_deconstruction_crowbar(attacking_item))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(attacking_item, /obj/item/storage/bag/tray))
-		var/obj/item/storage/attacking_storage = attacking_item
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/processor/crowbar_act(mob/living/user, obj/item/tool)
+	if(processing)
+		to_chat(user, span_warning("[src] is in the process of processing!"))
+		return ITEM_INTERACT_BLOCKING
+
+	return default_pry_open(user, tool, close_after_pry = TRUE, deconstruct_on_fail = TRUE)
+
+/obj/machinery/processor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(processing)
+		to_chat(user, span_warning("[src] is in the process of processing!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(istype(tool, /obj/item/storage/bag/tray))
+		var/obj/item/storage/attacking_storage = tool
 		var/loaded = 0
 		for(var/obj/content_item in attacking_storage.contents)
 			if(!IS_EDIBLE(content_item))
 				continue
 			var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(content_item)
-			if(recipe)
-				if(attacking_storage.atom_storage.attempt_remove(content_item, src))
-					LAZYADD(processor_contents, content_item)
-					loaded++
-
+			if(recipe && attacking_storage.atom_storage.attempt_remove(content_item, src))
+				LAZYADD(processor_contents, content_item)
+				loaded++
 		if(loaded)
 			to_chat(user, span_notice("You insert [loaded] items into [src]."))
-		return
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 
-	var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(attacking_item)
-	if(recipe)
+	var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(tool)
+	if(recipe && user.transferItemToLoc(tool, src))
 		user.visible_message(
-			span_notice("[user] put [attacking_item] into [src]."),
-			span_notice("You put [attacking_item] into [src]."),
+			span_notice("[user] put [tool] into [src]."),
+			span_notice("You put [tool] into [src]."),
 		)
-		user.transferItemToLoc(attacking_item, src, TRUE)
-		LAZYADD(processor_contents, attacking_item)
-		return TRUE
-	else if(!user.combat_mode)
-		to_chat(user, span_warning("That probably won't blend!"))
-		return TRUE
-	else
-		return ..()
+		LAZYADD(processor_contents, tool)
+		return ITEM_INTERACT_SUCCESS
+
+	to_chat(user, span_warning("That probably won't blend!"))
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/processor/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state
 
 /obj/machinery/processor/interact(mob/user)
 	if(processing)
@@ -176,7 +194,6 @@
 	visible_message(span_notice("\The [src] finishes processing."))
 
 /obj/machinery/processor/verb/eject()
-	set category = "Object"
 	set name = "Eject Contents"
 	set src in oview(1)
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))

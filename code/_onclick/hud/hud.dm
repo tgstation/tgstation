@@ -58,6 +58,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	/// If this client is being shown atmos debug overlays or not
 	var/atmos_debug_overlays = FALSE
 
+	///Boolean on whether they need at least a healths or healdoll, for unit tests.
+	var/needs_health_indicator = TRUE
 	/// The color to use for the screentips.
 	/// This is updated by the preference for cheaper reads than would be
 	/// had with a proc call, especially on one of the hottest procs in the game (MouseEntered).
@@ -153,7 +155,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /// Creates and registers a managed screen object
 /datum/hud/proc/add_screen_object(atom/movable/screen/new_object, hud_key, group_key = HUD_GROUP_STATIC, ui_icon, ui_loc, update_screen = FALSE)
 	if (ispath(new_object))
-		new_object = new new_object(null, src)
+		new_object = new new_object(null, src, ui_loc)
 
 	if (isnull(hud_key))
 		hud_key = REF(new_object)
@@ -303,6 +305,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hud_used = new_hud
 	new_hud.build_action_groups()
 
+
 /**
  * Shows this hud's hud to some mob
  *
@@ -344,7 +347,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		screenmob.client.screen += group_screen
 
 	var/atom/movable/screen/button_palette/palette = screen_objects[HUD_MOB_TOGGLE_PALETTE]
-	var/atom/movable/screen/action_intent = screen_objects[HUD_MOB_INTENTS]
+	var/atom/movable/screen/combattoggle/action_intent = screen_objects[HUD_MOB_INTENTS]
 
 	switch (display_hud_version)
 		if (HUD_STYLE_STANDARD)
@@ -362,6 +365,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += group_storage
 
 			screenmob.client.screen += palette
+			//Restore intent selection to the original position
+			if(action_intent)
+				action_intent.screen_loc = action_intent.default_screen_location
 
 		if (HUD_STYLE_REDUCED)
 			hud_shown = FALSE
@@ -374,7 +380,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += hand
 
 			if(action_intent)
-				screenmob.client.screen += action_intent
+				//move this to the alternative position, where zone_select usually is.
+				action_intent.screen_loc = ui_acti_alt
 
 		if (HUD_STYLE_NOHUD)
 			hud_shown = FALSE

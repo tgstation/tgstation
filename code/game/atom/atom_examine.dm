@@ -44,7 +44,6 @@
 						if(reagents.is_reacting)
 							. += span_warning("It is currently reacting!")
 						. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
-
 				else
 					. += "It contains:<br>Nothing."
 			else if(reagents.flags & AMOUNT_VISIBLE)
@@ -53,7 +52,28 @@
 				else
 					. += span_danger("It's empty.")
 
+		if(HAS_TRAIT(user, TRAIT_KEEN_NOSE))
+			var/sniff_text = get_sniff_examine(user)
+			if(sniff_text)
+				. += sniff_text
+
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
+
+/// Returns an examine string describing what the contents of this atom smell like
+/atom/proc/get_sniff_examine(mob/living/carbon/sniffer)
+	if(!istype(sniffer) || HAS_TRAIT(sniffer, TRAIT_ANOSMIA))
+		return
+	if(!is_open_container() || !reagents?.total_volume)
+		return
+	if(!sniffer.is_holding(src))
+		return
+	if(!sniffer.get_bodypart(BODY_ZONE_HEAD)) // Need a nose to smell
+		return
+	if(sniffer.is_mouth_covered())
+		return span_warning("You can't get a whiff of [src] with your face covered.")
+
+	var/smell_message = generate_reagents_taste_message(reagents.reagent_list, sniffer, 10)
+	return span_notice("You catch a whiff of [src]. It smells like [smell_message].")
 
 /**
  * A list of "tags" displayed after atom's description in examine.
@@ -145,8 +165,9 @@
 			if (isnull(prop_value)) // Error?
 				continue
 			var/descriptor = property?.get_descriptor(prop_value)
+			var/tooltip_hint = property?.get_tooltip(prop_value)
 			if (descriptor) // Overriden derivative property?
-				material_string += span_tooltip("[property]: [prop_value < 0 ? "-" : ""]\Roman[round(abs(prop_value), 1)]", descriptor)
+				material_string += span_tooltip("[property]: [tooltip_hint]", descriptor)
 
 		if (length(material_string))
 			. += span_info("[capitalize(material.name)] is [english_list(material_string)].")

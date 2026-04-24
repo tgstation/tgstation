@@ -392,6 +392,7 @@
 	)
 
 /datum/component/riding/creature/pony
+	other_unbuckle = CAN_DISARM_UNBUCKLE
 	vehicle_move_delay = 1.5
 	COOLDOWN_DECLARE(pony_trot_cooldown)
 
@@ -608,7 +609,7 @@
 	)
 
 /datum/component/riding/creature/leaper
-	can_force_unbuckle = FALSE
+	other_unbuckle = CAN_DISARM_UNBUCKLE
 	can_use_abilities = TRUE
 	ride_check_flags = JUST_FRIEND_RIDERS
 
@@ -690,12 +691,6 @@
 		TEXT_EAST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 		TEXT_WEST =  list(0, 0, MOB_BELOW_PIGGYBACK_LAYER),
 	)
-
-/datum/component/riding/creature/raptor/update_parent_layer_and_offsets(dir, animate)
-	. = ..()
-	var/mob/living/basic/raptor/raptor = parent
-	if (istype(raptor))
-		raptor.adjust_offsets(dir)
 
 /datum/component/riding/creature/raptor/combat
 	ai_behavior_while_ridden = RIDING_PAUSE_AI_MOVEMENT
