@@ -39,8 +39,8 @@
 	var/threatlevel = 0
 
 	///Flags SecBOTs use on what to check on targets when arresting, and whether they should announce it to security/handcuff their target
+	/// Look at the security_mode_flags bitfield for more information on what's togglable here.
 	var/security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_RECORDS | SECBOT_HANDCUFF_TARGET
-//	Selections: SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_WEAPONS | SECBOT_CHECK_RECORDS | SECBOT_HANDCUFF_TARGET
 
 	/// On arrest, charges the violator this much.
 	/// If they don't have that much in their account, they will get beaten instead
