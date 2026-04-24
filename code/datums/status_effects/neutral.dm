@@ -898,7 +898,7 @@
 	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
-	/// What the mob's invis_see should be once this status effect is removed
+	/// What the mob's see_invisible should be once this status effect is removed
 	VAR_PRIVATE/real_invis_see
 
 /datum/status_effect/admin_esp/on_apply()
