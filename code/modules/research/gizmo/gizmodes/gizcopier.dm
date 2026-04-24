@@ -65,8 +65,3 @@
 	. = ..()
 	do_sparks(2, FALSE, "gizmo copy")
 	qdel(src)
-
-/obj/structure/gizmo_copy/emp_act(severity)
-	. = ..()
-	do_sparks(2, FALSE, "gizmo copy")
-	qdel(src)

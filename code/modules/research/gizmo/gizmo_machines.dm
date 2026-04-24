@@ -133,3 +133,6 @@
 /// A gizmo with a voice activated interface
 /obj/machinery/gizmo/voice
 	controller = /datum/gizmo_controller/voice
+
+/obj/machinery/gizmo/cursed
+	controller = /datum/gizmo_controller/cursed

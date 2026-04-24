@@ -36,3 +36,7 @@
 
 /// For held gizmo's
 /datum/gizmo_controller/item
+
+/// Always horrible agony!
+/datum/gizmo_controller/cursed
+	interfaces = list(GIZMO_INTERFACE_WIRES = /datum/gizmo_interface/cursed)

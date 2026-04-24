@@ -57,3 +57,9 @@
 	min_modes = 0
 	max_modes = 0
 
+/// Always bad!
+/datum/gizmo_interface/cursed
+	possible_active_modes = list(
+		/datum/gizmodes/bad = 1,
+	)
+	max_modes = 1
