@@ -162,6 +162,7 @@ window "infowindow"
 		size = 640x475
 		is-vert = false
 		splitter = 97.5
+        background-color = #ffc41f
 		show-splitter = false
 		saved-params = "splitter"
 		left = "info"
