@@ -150,6 +150,11 @@
 "oX" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
+"qn" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/camera/autoname/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "qO" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/chair/comfy/shuttle{
@@ -314,13 +319,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"AA" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "AJ" = (
 /obj/structure/chair{
 	dir = 4
@@ -333,8 +331,20 @@
 /obj/machinery/vitals_reader/advanced/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"BM" = (
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape)
+"BT" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "Cg" = (
 /obj/machinery/computer/records/security,
+/obj/machinery/light/dim/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "CL" = (
@@ -380,10 +390,6 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"GY" = (
-/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Hp" = (
@@ -528,7 +534,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/dim/directional/south,
+/obj/machinery/light/dim/directional/east,
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "KY" = (
@@ -665,10 +671,6 @@
 "Ny" = (
 /obj/machinery/light/dim/directional/east,
 /turf/open/misc/asteroid,
-/area/shuttle/escape)
-"NI" = (
-/obj/machinery/light/dim/directional/east,
-/turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "NO" = (
 /obj/structure/chair/comfy/shuttle{
@@ -838,7 +840,7 @@
 /obj/item/restraints/handcuffs{
 	pixel_y = 3
 	},
-/obj/machinery/light/dim/directional/north,
+/obj/machinery/light/dim/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "XE" = (
@@ -1060,8 +1062,8 @@ oX
 mg
 un
 un
-AA
-OY
+un
+oX
 oX
 VU
 VU
@@ -1094,7 +1096,7 @@ VU
 VU
 ZB
 OY
-mg
+qn
 Fp
 gF
 gF
@@ -1131,7 +1133,7 @@ VU
 VU
 OY
 oX
-GY
+Vf
 RJ
 sL
 Oc
@@ -1209,7 +1211,7 @@ sV
 lK
 Qf
 Qf
-Ku
+BT
 oX
 VU
 Do
@@ -1279,7 +1281,7 @@ VU
 VU
 ZB
 OY
-oX
+OY
 nN
 oX
 oX
@@ -1469,7 +1471,7 @@ ZB
 ZB
 oX
 Cg
-NI
+xm
 xm
 xm
 xm
@@ -1511,7 +1513,7 @@ Ka
 VJ
 Ka
 xw
-Zv
+BM
 Zv
 oX
 bB
