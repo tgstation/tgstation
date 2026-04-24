@@ -63,3 +63,8 @@
 
 /// Maximum precision for ore spawn probabilities
 #define ORE_CHANCE_PRECISION 5
+
+/// Permanent style multiplier modifier earned from tapping vents, modified by vent size.
+#define ACTION_MULTIPLIER_PER_VENT_VALUE 0.1
+/// Permanent style multiplier modifier earned from killing a megafauna.
+#define ACTION_MULTIPLIER_MAJOR_KILL 0.1

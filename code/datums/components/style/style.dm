@@ -20,9 +20,6 @@
 #define ACTION_GEYSER_MARKED "GEYSER MARKED"
 #define ACTION_VENT_TAPPED "VENT TAPPED"
 
-#define ACTION_MULTIPLIER_PER_VENT_VALUE 0.1
-#define ACTION_MULTIPLIER_MAJOR_KILL 0.1
-
 /datum/component/style
 	/// Amount of style we have.
 	var/style_points = -1
@@ -330,14 +327,9 @@
 	else
 		source.balloon_alert(source, "unable to hotswap!")
 
+/// Increase our permanent multiplier based on the modifier.
 /datum/component/style/proc/adjust_permanent_multiplier(modifier)
 	permanent_multiplier += modifier
-	var/mob/living/carbon/carbon_owner = parent
-	if(!iscarbon(carbon_owner))
-		return
-	var/obj/item/style_meter/carbon_meter = locate(/obj/item/style_meter) in carbon_owner.glasses
-	if(carbon_meter)
-		carbon_meter.stored_permanent_multiplier += modifier
 
 // Point givers
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)
@@ -430,7 +422,6 @@
 
 	var/vent_value = vent.boulder_size / BOULDER_SIZE_MEDIUM
 	add_action(ACTION_VENT_TAPPED, 250 * vent_value)
-	adjust_permanent_multiplier(ACTION_MULTIPLIER_PER_VENT_VALUE * vent_value)
 
 // Emote-based multipliers
 /datum/component/style/proc/on_taunt()
@@ -458,7 +449,6 @@
 
 	if(ismegafauna(died))
 		add_action(ACTION_MAJOR_KILL, 350)
-		adjust_permanent_multiplier(ACTION_MULTIPLIER_MAJOR_KILL)
 
 	else if(died.maxHealth >= 75) //at least legions
 		add_action(ACTION_KILL, 125)
@@ -487,6 +477,3 @@
 #undef ACTION_MARK_DETONATED
 #undef ACTION_GEYSER_MARKED
 #undef ACTION_VENT_TAPPED
-
-#undef ACTION_MULTIPLIER_PER_VENT_VALUE
-#undef ACTION_MULTIPLIER_MAJOR_KILL
