@@ -89,13 +89,13 @@ const HelpfulTab = (props) => {
       <Stack.Item>
         <Stack fill>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="music"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Change Lobby Music"
+              onClick={() => act('change_lobby_music')}
+            />
           </Stack.Item>
           <Stack.Item>
             <Button

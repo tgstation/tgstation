@@ -897,6 +897,10 @@ SUBSYSTEM_DEF(ticker)
 		return
 
 	login_music = new_music
+	//we just overrode the song, let's update everyone.
+	if(override)
+		for(var/mob/dead/new_player/new_player as anything in GLOB.new_player_list)
+			new_player?.client.playtitlemusic()
 
 #undef ROUND_START_MUSIC_LIST
 #undef SS_TICKER_TRAIT
