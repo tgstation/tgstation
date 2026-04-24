@@ -12,7 +12,7 @@
 	for(var/interface_define, interface_type in interfaces)
 
 		var/list/callbacks = list()
-		var/datum/gizmo_interface/interface_instance = new interface_type (holder)
+		var/datum/gizmo_interface/interface_instance = new interface_type (src)
 		interface_instance.generate_interface(holder, callbacks)
 		instances += interface_instance
 
