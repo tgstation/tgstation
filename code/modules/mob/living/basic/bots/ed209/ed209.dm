@@ -82,7 +82,7 @@
 		. += span_notice("Fastest hand in the west.")
 
 /mob/living/basic/bot/secbot/ed209/bot_reset(bypass_ai_reset = FALSE)
-	.= ..()
+	. = ..()
 	if(bot_access_flags & BOT_COVER_EMAGGED && isnull(bot_charge.owner))
 		bot_charge.Grant(src)
 	if(!(bot_access_flags & BOT_COVER_EMAGGED) && !isnull(bot_charge.owner))
