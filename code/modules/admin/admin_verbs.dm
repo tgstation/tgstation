@@ -99,6 +99,8 @@ ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to 
 			living_user.remove_status_effect(/datum/status_effect/admin_esp)
 		else if(isobserver(user.mob))
 			user.mob.set_invis_see(SEE_INVISIBLE_OBSERVER)
+		else
+			user.mob.set_invis_see(SEE_INVISIBLE_LIVING)
 		REMOVE_TRAIT(user.mob, TRAIT_ADMIN_ESP, ADMIN_TRAIT)
 		to_chat(user.mob, span_adminnotice("Admin ESP off. You will no longer see [isliving(user.mob) ? "ghosts or " : ""]invisimins."), confidential = TRUE)
 		return
@@ -107,10 +109,10 @@ ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to 
 	if(isliving(user.mob))
 		var/mob/living/living_user = user.mob
 		living_user.apply_status_effect(/datum/status_effect/admin_esp)
-	else if(isobserver(user.mob))
+	else if(ismob(user.mob))
 		user.mob.set_invis_see(SEE_INVISIBLE_ADMIN)
 	else
-		to_chat(user.mob, span_warning("Admin ESP only works if you are a living mob or a ghost!"), confidential = TRUE)
+		to_chat(user.mob, span_warning("Admin ESP only works if you are in a mob!"), confidential = TRUE)
 		return
 
 	ADD_TRAIT(user.mob, TRAIT_ADMIN_ESP, ADMIN_TRAIT)
