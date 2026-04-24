@@ -60,6 +60,7 @@ ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_
 		BLACKBOX_LOG_ADMIN_VERB("Admin Ghost")
 
 ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", ADMIN_CATEGORY_GAME)
+	// Toggle OFF
 	if(HAS_TRAIT(user.mob, TRAIT_INVISIMIN))
 		user.mob.remove_traits(list(
 				TRAIT_INVISIMIN,
@@ -75,6 +76,7 @@ ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", 
 			user.mob.alpha = initial(user.mob.alpha)
 		return
 
+	// Toggle ON
 	user.mob.add_traits(list(
 			TRAIT_INVISIMIN,
 			TRAIT_ORBITING_FORBIDDEN,
@@ -84,10 +86,13 @@ ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", 
 		), ADMIN_TRAIT)
 	user.mob.remove_from_all_data_huds()
 	user.mob.SetInvisibility(INVISIBILITY_ADMIN, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
+	if(isobserver(user.mob))
+		user.mob.alpha = 0
 	QDEL_NULL(user.mob.orbiters)
 	to_chat(user, span_adminnotice(span_bold("Invisimin on. You are now invisible to players and ghosts.")), confidential = TRUE)
 
 ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to see ghosts and invisimins.", ADMIN_CATEGORY_GAME)
+	// Toggle OFF
 	if(HAS_TRAIT(user.mob, TRAIT_ADMIN_ESP))
 		if(isliving(user.mob))
 			var/mob/living/living_user = user.mob
@@ -95,9 +100,10 @@ ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to 
 		else if(isobserver(user.mob))
 			user.mob.set_invis_see(SEE_INVISIBLE_OBSERVER)
 		REMOVE_TRAIT(user.mob, TRAIT_ADMIN_ESP, ADMIN_TRAIT)
-		to_chat(user.mob, span_adminnotice("Admin ESP off. You will no longer see ghosts or invisimins."), confidential = TRUE)
+		to_chat(user.mob, span_adminnotice("Admin ESP off. You will no longer see [isliving(user.mob) ? "ghosts or " : ""]invisimins."), confidential = TRUE)
 		return
 
+	// Toggle ON
 	if(isliving(user.mob))
 		var/mob/living/living_user = user.mob
 		living_user.apply_status_effect(/datum/status_effect/admin_esp)
@@ -108,7 +114,7 @@ ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to 
 		return
 
 	ADD_TRAIT(user.mob, TRAIT_ADMIN_ESP, ADMIN_TRAIT)
-	to_chat(user.mob, span_adminnotice("Admin ESP on. You will now be able to see ghosts and invisimins."), confidential = TRUE)
+	to_chat(user.mob, span_adminnotice("Admin ESP on. You will now be able to see [isliving(user.mob) ? "ghosts and " : ""]invisimins."), confidential = TRUE)
 
 ADMIN_VERB(check_antagonists, R_ADMIN, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_GAME)
 	user.holder.check_antagonists()

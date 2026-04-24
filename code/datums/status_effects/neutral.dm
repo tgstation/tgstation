@@ -905,7 +905,6 @@
 	real_invis_see = owner.see_invisible
 	owner.set_invis_see(SEE_INVISIBLE_ADMIN)
 	RegisterSignal(owner, COMSIG_MOB_SEE_INVIS_CHANGE, PROC_REF(on_invis_changed))
-	to_chat(owner, span_adminnotice("Admin ESP on. You will now be able to see ghosts and invisimins."), confidential = TRUE)
 	return TRUE
 
 /datum/status_effect/admin_esp/on_remove()
