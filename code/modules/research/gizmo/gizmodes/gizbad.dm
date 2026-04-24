@@ -5,6 +5,9 @@
 		/datum/gizpulse/explode/fire = 1,
 		/datum/gizpulse/dispense/robot_spider = 1,
 		/datum/gizpulse/thrower = 1,
+		/datum/gizpulse/thrower/grenade = 1,
+		/datum/gizpulse/radiation_pulse = 1,
+		/datum/gizpulse/bone_breaker = 1,
 	)
 
 	guaranteed_active_gizmodes = list(
@@ -14,7 +17,7 @@
 	min_modes = 1
 	max_modes = 2
 
-	cooldown_time = 20 SECONDS
+	cooldown_time = 5 SECONDS
 
 /datum/gizpulse/explode
 	var/range_heavy = 0
@@ -51,7 +54,7 @@
 /mob/living/basic/spider/robot/death(gibbed)
 	. = ..()
 
-	explosion(src, 0, 1, 2)
+	explosion(src, 0, 0, 2)
 	if(prob(80))
 		qdel(src)
 
@@ -84,6 +87,45 @@
 	if(!targets.len)
 		targets += get_edge_target_turf(holder, GLOB.alldirs)
 	item.throw_at(pick(targets), 20, 3)
+	modify(item)
+
+/// Do some extra modifications if need be
+/datum/gizpulse/thrower/proc/modify(obj/item/item)
+	return
 
 /datum/gizpulse/ominous/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	holder.audible_message(span_hear("You hear an ominous hum."))
+
+/datum/gizpulse/thrower/grenade
+	throwables = list(
+		/obj/item/grenade/iedcasing = 3,
+		/obj/item/grenade/chem_grenade/cleaner = 2,
+		/obj/item/grenade/smokebomb = 2,
+		/obj/item/grenade/syndieminibomb/concussion = 1,
+		/obj/item/grenade/frag = 1,
+		/obj/item/grenade/chem_grenade/teargas = 1,
+		/obj/item/grenade/chem_grenade/facid = 1,
+		/obj/item/grenade/chem_grenade/clf3 = 1,
+	)
+
+/datum/gizpulse/thrower/grenade/modify(obj/item/item)
+	var/obj/item/grenade/regret = item
+	regret.arm_grenade()
+
+/datum/gizpulse/bone_breaker/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
+	var/list/victims = list()
+	for(var/mob/living/loser in orange(1, holder))
+		victims += loser
+
+	if(!victims.len)
+		return
+
+	var/mob/living/victim = pick(victims)
+	holder.forceMove(get_turf(victim))
+	playsound(victim, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
+
+	victim.apply_damage(60, BRUTE, wound_bonus = 100, sharpness = NONE)
+	victim.Stun(2 SECONDS)
+	victim.Knockdown(5 SECONDS)
+
+	victim.emote("scream")

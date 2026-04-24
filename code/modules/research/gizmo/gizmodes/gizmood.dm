@@ -1,6 +1,11 @@
 /// Send out mood pulses, good or bad
 /datum/gizmodes/mood_pulser
 	guaranteed_active_gizmodes = list(/datum/gizpulse/mood_pulser/positive, /datum/gizpulse/mood_pulser/negative)
+	possible_active_modes = list(
+		/datum/gizpulse/radiation_pulse = 1,
+	)
+	min_modes = 0
+	max_modes = 1
 
 /// Send out a mood pulse
 /datum/gizpulse/mood_pulser
@@ -29,3 +34,8 @@
 /datum/gizpulse/mood_pulser/negative
 	mood = /datum/mood_event/gizmo_negative
 	ring_color = COLOR_RED
+
+/datum/gizpulse/radiation_pulse/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
+	new /obj/effect/temp_visual/circle_wave(get_turf(holder), COLOR_GREEN)
+
+	radiation_pulse(holder, max_range = 5, threshold = RAD_LIGHT_INSULATION, chance = 30)
