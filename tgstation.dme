@@ -6406,6 +6406,7 @@
 #include "code\modules\spells\spell_types\self\charge.dm"
 #include "code\modules\spells\spell_types\self\disable_tech.dm"
 #include "code\modules\spells\spell_types\self\forcewall.dm"
+#include "code\modules\spells\spell_types\self\ghostliness.dm"
 #include "code\modules\spells\spell_types\self\lichdom.dm"
 #include "code\modules\spells\spell_types\self\mime_vow.dm"
 #include "code\modules\spells\spell_types\self\mutate.dm"

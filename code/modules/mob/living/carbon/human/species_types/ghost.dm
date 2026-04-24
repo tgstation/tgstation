@@ -16,7 +16,7 @@
 	)
 	inherent_biotypes = MOB_SPIRIT | MOB_UNDEAD
 	no_equip_flags = ITEM_SLOT_FEET
-	changesource_flags = MIRROR_BADMIN | MIRROR_PRIDE | WABBAJACK | SLIME_EXTRACT
+	changesource_flags = MIRROR_BADMIN | MIRROR_PRIDE | MIRROR_MAGIC | WABBAJACK | SLIME_EXTRACT
 	sexes = FALSE
 	meat = /obj/item/ectoplasm
 
@@ -108,7 +108,7 @@
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/ghost,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/ghost,
 	)
-	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | WABBAJACK
+	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	halloween_exclusive = FALSE
 
 	///Innate passthrough ability given to ghosts that allows them to phase but drops their stuff.
