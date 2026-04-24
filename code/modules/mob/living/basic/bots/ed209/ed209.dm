@@ -141,9 +141,9 @@
 		new /obj/item/bodypart/leg/left/robot(drop_location)
 		if(prob(25))
 			new /obj/item/bodypart/leg/right/robot(drop_location)
-	if(prob(75))//50% chance for a helmet OR vest
+	if(prob(75))
 		return
-	if(prob(50))
+	if(prob(50)) // either helmet or vest
 		new /obj/item/clothing/head/helmet(drop_location)
 	else
 		new /obj/item/clothing/suit/armor/vest(drop_location)
