@@ -1120,7 +1120,7 @@
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "void_cloak"
 	flags_inv = NONE
-	flags_cover = ALLOW_SURGERY_THROUGh
+	flags_cover = ALLOW_SURGERY_THROUGH
 	armor_type = /datum/armor/cult_hoodie_void
 
 /datum/armor/cult_hoodie_void
@@ -1221,7 +1221,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
 	add_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
 	RemoveElement(/datum/element/heretic_focus)
-	flags_cover |= ALLOW_SURGERY_THROUGh
+	flags_cover |= ALLOW_SURGERY_THROUGH
 
 	if(isliving(loc))
 		loc.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
