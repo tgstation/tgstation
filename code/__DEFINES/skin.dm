@@ -1,4 +1,5 @@
 //These defines are used in skin.dmf, if one is to be renamed/edited, this file must match it.
+//IMPORTANT: TGUI & especially `PANE_SPLITTERS` does not use defines, if you rename something make sure you keep name parity!
 #define SKIN_MAINWINDOW "mainwindow"
 #define SKIN_MAINWINDOW_SPLIT "[SKIN_MAINWINDOW].split"
 
