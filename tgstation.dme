@@ -5200,6 +5200,7 @@
 #include "code\modules\mob\living\basic\bots\secbot\secbot.dm"
 #include "code\modules\mob\living\basic\bots\secbot\secbot_abilities.dm"
 #include "code\modules\mob\living\basic\bots\secbot\secbot_ai.dm"
+#include "code\modules\mob\living\basic\bots\secbot\secbot_subtypes.dm"
 #include "code\modules\mob\living\basic\bots\secbot\super_beepsky.dm"
 #include "code\modules\mob\living\basic\bots\secbot\super_beepsky_ai.dm"
 #include "code\modules\mob\living\basic\bots\vibebot\vibebot.dm"

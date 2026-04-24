@@ -17,8 +17,10 @@
 /mob/living/basic/bot/secbot/grievous/Initialize(mapload)
 	. = ..()
 	RegisterSignal(weapon, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_weapon_transform))
-	var/datum/action/cooldown/mob_cooldown/bot/sword/sword_activate_ability = new(src) //this is for sentient players.
-	sword_activate_ability.Grant(src)
+	var/static/list/abilities = list(
+		var/datum/action/cooldown/mob_cooldown/bot/sword = null,
+	)
+	grant_actions_by_list(abilities)
 	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, attack_self), src)
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
 
