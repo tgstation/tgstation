@@ -2475,7 +2475,7 @@
 	cycle_id = "lavaland_living_north"
 	},
 /turf/open/floor/iron/textured_large,
-/area/lavaland/surface/outdoors)
+/area/mine/lounge)
 "mJ" = (
 /obj/docking_port/stationary{
 	dwidth = 2;
@@ -4172,7 +4172,7 @@
 "wc" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/textured_large,
-/area/lavaland/surface/outdoors)
+/area/mine/lounge)
 "wg" = (
 /obj/structure/chair/sofa/corp{
 	dir = 1
@@ -5075,10 +5075,6 @@
 /obj/structure/sign/poster/official/report_crimes/directional/west,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
-"BW" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/lavaland/surface/outdoors)
 "Ce" = (
 /turf/open/floor/plating,
 /area/mine/maintenance/public/south)
@@ -8397,10 +8393,6 @@
 /obj/structure/lattice/catwalk/mining,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"VL" = (
-/obj/machinery/ore_silo,
-/turf/closed/wall,
-/area/mine/mechbay)
 "VO" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -43033,8 +43025,8 @@ iu
 pU
 aj
 aj
-FH
-BW
+Zq
+SP
 Zq
 kK
 Sm
@@ -43804,8 +43796,8 @@ ZM
 ZM
 LB
 Ke
-FH
-BW
+Zq
+SP
 Zq
 Zq
 bL
@@ -45846,7 +45838,7 @@ oA
 oA
 oA
 Vn
-VL
+QX
 QX
 vF
 QX
