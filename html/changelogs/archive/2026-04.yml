@@ -546,3 +546,6 @@
   - bugfix: metalgen and secret sauce recipes are now loaded properly
   timothymtorres:
   - map: Add Shoe Factory to lava/ice ruins.
+2026-04-24:
+  lelandkemble:
+  - bugfix: Looming works again
