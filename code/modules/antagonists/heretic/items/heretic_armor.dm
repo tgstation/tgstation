@@ -1233,7 +1233,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_visible()
 	remove_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
 	AddElement(/datum/element/heretic_focus)
-	flags_cover &= ~ALLOW_SURGERY_THROUGh
+	flags_cover &= ~ALLOW_SURGERY_THROUGH
 
 	if(isliving(loc))
 		loc.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
