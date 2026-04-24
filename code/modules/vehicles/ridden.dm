@@ -9,11 +9,17 @@
 
 /obj/vehicle/ridden/examine(mob/user)
 	. = ..()
-	if(key_type)
-		if(!inserted_key)
-			. += span_notice("Put a key inside it by clicking it with the key.")
-		else
-			. += span_notice("Alt-click [src] to remove the key.")
+	var/key_message = examine_key_message()
+	if (key_message)
+		. += key_message
+
+/obj/vehicle/ridden/proc/examine_key_message()
+	if(!key_type)
+		return
+	if(!inserted_key)
+		return span_notice("Put a key inside it by clicking it with the [key_type::name].")
+	else
+		return span_notice("Alt-click [src] to remove \the [inserted_key].")
 
 /obj/vehicle/ridden/generate_action_type(actiontype)
 	var/datum/action/vehicle/ridden/A = ..()
@@ -45,7 +51,7 @@
 	if(!inserted_key)
 		return CLICK_ACTION_BLOCKING
 	if(!is_occupant(user))
-		to_chat(user, span_warning("You must be riding the [src] to remove [src]'s key!"))
+		to_chat(user, span_warning("You must be riding the [src] to remove [src]'s [inserted_key]!"))
 		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [inserted_key] from \the [src]."))
 	user.put_in_hands(inserted_key)

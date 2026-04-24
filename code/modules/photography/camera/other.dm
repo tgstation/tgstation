@@ -27,11 +27,8 @@
 /obj/item/camera/detective
 	name = "detective's camera"
 	desc = "A silent polaroid camera with extra capacity for crime investigations."
+	print_monochrome = TRUE
 	flash_enabled = FALSE
 	silent = TRUE
 	pictures_max = 30
 	pictures_left = 30
-
-/obj/item/camera/detective/after_picture(mob/user, datum/picture/picture)
-	. = ..()
-	user.playsound_local(get_turf(src), SFX_POLAROID, 35, TRUE)

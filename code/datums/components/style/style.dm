@@ -372,10 +372,10 @@
 				add_action(ACTION_GIBTONITE_BOOM, 50)
 				return
 
-	if(rock.mineralType)
+	if(rock.mineral_type)
 		if(exp_multiplier)
 			add_action(ACTION_ORE_MINED, 40)
-		rock.mineralAmt = ROUND_UP(rock.mineralAmt * (1 + ((rank * 0.1) - 0.3))) // You start out getting 20% less ore, but it goes up to 20% more at S-tier
+		rock.mineral_amt = ROUND_UP(rock.mineral_amt * (1 + ((rank * 0.1) - 0.3))) // You start out getting 20% less ore, but it goes up to 20% more at S-tier
 
 /datum/component/style/proc/on_resonator_burst(datum/source, mob/creator, mob/living/hit_living)
 	SIGNAL_HANDLER

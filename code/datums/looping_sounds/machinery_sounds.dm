@@ -207,6 +207,9 @@
 	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 	falloff_exponent = 4
 
+/datum/looping_sound/soup/toxic
+	volume = 40
+
 /datum/looping_sound/cryo_cell
 	mid_sounds = list(
 		'sound/machines/cryo/cryo_1.ogg',

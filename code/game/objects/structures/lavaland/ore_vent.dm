@@ -221,8 +221,8 @@
  * This also means a large boulder can highroll a boulder with a full stack of 50 sheets of material.
  * @params ore_floor The number of minerals already rolled. Used to scale the logarithmic function.
  */
-/obj/structure/ore_vent/proc/ore_quantity_function(ore_floor)
-	return SHEET_MATERIAL_AMOUNT * max(round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1)), 1)
+/obj/structure/ore_vent/proc/ore_quantity_function(ore_floor, ore_per_size = HALF_SHEET_MATERIAL_AMOUNT)
+	return ore_per_size * max(round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1)), 1)
 
 /**
  * This confirms that the user wants to start the wave defense event, and that they can start it.
@@ -357,7 +357,7 @@
 			miner.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
 		if(!user_id_card)
 			continue
-		var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
+		var/point_reward_val = (MINER_POINT_MULTIPLIER * (boulder_size + 2)) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
 		if(user_id_card.registered_account)
 			user_id_card.registered_account.mining_points += point_reward_val
 			user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
@@ -757,6 +757,40 @@
 		/mob/living/simple_animal/hostile/megafauna/wendigo/noportal,
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 	)
+
+/obj/structure/ore_vent/debug
+	name = "debug ore vent"
+	desc = "How the hell did you get this?."
+	tapped = TRUE
+	discovered = TRUE
+	unique_vent = TRUE
+	color = "#ff00f2"
+	boulder_size = BOULDER_SIZE_SMALL
+	mineral_breakdown = list(
+		/datum/material/iron = 1,
+	)
+
+/obj/structure/ore_vent/debug/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	var/datum/material/choice = tgui_input_list(user, "Choose a material to add/remove.", "New material", subtypesof(/datum/material))
+	if(!choice)
+		return
+	if(mineral_breakdown[choice])
+		mineral_breakdown -= choice
+		balloon_alert_to_viewers("removed [choice::name]")
+		return
+	mineral_breakdown += choice
+	balloon_alert_to_viewers("added [choice::name]")
+	var/value = tgui_input_number(user, "What weight should it have?", "ore pickweight", 1, 100, 1)
+	mineral_breakdown[choice] = value
+	balloon_alert_to_viewers("weighting of [value] added")
+
+/obj/structure/ore_vent/debug/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	var/choice = tgui_input_list(user, "Choose a vent size.", "New size", list(SMALL_VENT_TYPE, MEDIUM_VENT_TYPE, LARGE_VENT_TYPE))
+	if(!choice)
+		return
+	vent_size_setup(random = FALSE, force_size = choice, map_loading = FALSE)
 
 /obj/effect/landmark/mining_center
 	name = "Mining Epicenter"

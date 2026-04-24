@@ -343,6 +343,7 @@
 ///Apply material effects of a single material.
 /atom/proc/apply_single_mat_effect(datum/material/material, amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_SINGLE_MATERIAL_EFFECT_APPLY, material, amount, multiplier)
 
 	// Derived and not optional, so this needs to be on base and not in the property code itself
 	var/beauty_modifier = material.get_property(MATERIAL_BEAUTY)
@@ -432,6 +433,7 @@
 ///Remove material effects of a single material.
 /atom/proc/remove_single_mat_effect(datum/material/material, amount, multiplier)
 	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_SINGLE_MATERIAL_EFFECT_REMOVE, material, amount, multiplier)
 
 	var/beauty_modifier = material.get_property(MATERIAL_BEAUTY)
 	if(beauty_modifier)

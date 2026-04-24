@@ -221,6 +221,11 @@
 /datum/supply_order/disposable/materials/get_final_cost()
 	return (..() + CARGO_CRATE_VALUE)
 
+/// Custom material order to append cargo crate value to the final manifest cost
+/datum/supply_order/disposable/materials/generateManifest(obj/container, owner, packname, cost)
+	cost += CARGO_CRATE_VALUE
+	return ..()
+
 #undef MANIFEST_ERROR_CHANCE
 #undef MANIFEST_ERROR_NAME
 #undef MANIFEST_ERROR_CONTENTS

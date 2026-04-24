@@ -69,8 +69,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 	/// How likely this mineral is to be found in a boulder during mining.
 	var/mineral_rarity = MATERIAL_RARITY_COMMON
-	/// How many points per units of ore does this grant?
+	/// How many points per units of ore does this grant? This is used by ore in the ORM, NOT for boulder machinery due to the automated nature.
 	var/points_per_unit = 1
+	/// How many points per unit does this ore grant when processed by a smelter/refinery?
+	var/points_per_boulder_unit = 1
 
 	// Sound/icon stats, not inherited
 	/// Can be used to override the sound items make, lets add some SLOSHing.

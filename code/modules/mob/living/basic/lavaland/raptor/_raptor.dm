@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/obj/item/food/meat/slab/xeno = -15,
 		/obj/item/food/meat/steak = 50,
 		/obj/item/food/grown/ash_flora = 10,
-		/obj/item/fish = 15,
+		/obj/item/fish = 25,
 		/obj/item/organ = 25,
 	)
 	/// Inheritance datum we store our genetic data in

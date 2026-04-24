@@ -1,5 +1,5 @@
 /obj/item/clothing/head/helmet/space/beret
-	name = "CentCom officer's beret"
+	name = "\improper CentCom officer's beret"
 	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
 	icon_state = "/obj/item/clothing/head/helmet/space/beret"
@@ -9,7 +9,8 @@
 	inhand_icon_state = null
 	greyscale_colors = "#397F3F#FFCE5B"
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
-	flags_inv = 0
+	flags_inv = /obj/item/clothing/head/beret::flags_inv
+	flags_cover = /obj/item/clothing/head/beret::flags_cover
 	armor_type = /datum/armor/space_beret
 	strip_delay = 13 SECONDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
@@ -30,7 +31,7 @@
 	wound = 15
 
 /obj/item/clothing/suit/space/officer
-	name = "CentCom officer's coat"
+	name = "\improper CentCom officer's coat"
 	desc = "An armored, space-proof coat used in special operations."
 	icon_state = "centcom_coat"
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
