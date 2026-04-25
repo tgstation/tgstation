@@ -2400,6 +2400,10 @@
 	security_level = 1
 	damage_deflection = 30
 
+/obj/machinery/door/airlock/highsecurity/syndicate
+	icon = 'icons/obj/doors/airlocks/syndicate/highsec.dmi'
+	overlays_file = null
+
 // Shuttle Airlocks
 
 /obj/machinery/door/airlock/shuttle
