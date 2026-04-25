@@ -1,0 +1,7 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - refactor: "beepskies, and ed209s have been refactored. please report any bugs"
+  - rscadd: "ed209s can now wear hats! some hats give them new dialogue"
+  - rscadd: "emagged ed209s are now rideable!"
+  - rscadd: "added evil versions of the ed209s to the syndie uplink"
