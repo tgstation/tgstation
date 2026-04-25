@@ -160,16 +160,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 			qdel(src)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
-		victory_in_progress = TRUE
-		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
-		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+		begin_victory()
 
-		// Set status displays to biohazard alert - critical level
-		send_status_display_biohazard_alert()
-
-		max_blob_points = INFINITY
-		blob_points = INFINITY
-		addtimer(CALLBACK(src, PROC_REF(victory)), 45 SECONDS)
 	else if(!free_strain_rerolls && (last_reroll_time + BLOB_POWER_REROLL_FREE_TIME<world.time))
 		to_chat(src, span_boldnotice("You have gained another free strain re-roll."))
 		free_strain_rerolls = 1
@@ -199,6 +191,20 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/eye/blob/proc/clear_biohazard_display()
 	clear_status_display_biohazard()
 
+/// Announce the blob's victory! Tell everyone that they're about to explode and/or turn into biomass soup and give the overmind a victory lap.
+/mob/eye/blob/proc/begin_victory()
+	victory_in_progress = TRUE
+	priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
+	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+
+	// Set status displays to biohazard alert - critical level
+	send_status_display_biohazard_alert()
+
+	max_blob_points = INFINITY
+	blob_points = INFINITY
+	addtimer(CALLBACK(src, PROC_REF(victory)), 45 SECONDS)
+
+/// Actually *do* the blob's victory: give them their greentext, tell everyone they died, start the part where everyone actually dies.
 /mob/eye/blob/proc/victory()
 	// Set victory flags immediately
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
@@ -214,6 +220,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	// Handle the heavy victory operations asynchronously
 	INVOKE_ASYNC(src, PROC_REF(victory_sequence))
 
+/// Kill everyone who's still on the station area and not already part of the blob's faction, and cover every station area with blob icons. Everyone's soup now.
 /mob/eye/blob/proc/victory_sequence()
 	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)
 	sleep(10 SECONDS)
