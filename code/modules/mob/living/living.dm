@@ -1537,7 +1537,7 @@
 				/mob/living/basic/bot/dedbot = 25,
 				/mob/living/basic/bot/cleanbot = 25,
 				/mob/living/basic/bot/firebot = 25,
-				/mob/living/basic/bot/honkbot = 25,
+				/mob/living/basic/bot/secbot/honkbot = 25,
 				/mob/living/basic/bot/hygienebot = 25,
 				/mob/living/basic/bot/vibebot = 25,
 				/mob/living/basic/bot/medbot = 13,
