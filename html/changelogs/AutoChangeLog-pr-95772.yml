@@ -1,0 +1,6 @@
+author: "forgman6"
+delete-after: True
+changes:
+  - rscadd: "Saviors paper hat."
+  - rscadd: "Added worn and normal icon states for it in costume.dmi"
+  - map: "Modified bus.dmm to include the paper hat behind the main bus."
