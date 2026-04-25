@@ -157,6 +157,10 @@
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
 
+/// Can this blob structure make further blobs? Defaults to true. For blob structure types that can't expand, but can still fight.
+/obj/structure/blob/proc/can_make_blob()
+	return TRUE
+
 /obj/structure/blob/proc/expand(turf/T = null, controller = null, expand_reaction = 1)
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
@@ -171,6 +175,9 @@
 	if(!T)
 		return
 	var/make_blob = TRUE //can we make a blob?
+
+	if(!can_make_blob())
+		make_blob = FALSE
 
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE

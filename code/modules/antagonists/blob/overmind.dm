@@ -61,6 +61,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	/// The list of strains the blob can reroll for.
 	var/list/strain_choices
 
+	/// Adminbus potential - if this is set to FALSE, the blob won't end the round upon reaching critical mass.
+	var/end_round_on_victory = TRUE
+
 /mob/eye/blob/Initialize(mapload, starting_points = OVERMIND_STARTING_POINTS)
 	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
 	validate_location()
@@ -199,12 +202,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	// Set status displays to biohazard alert - critical level
 	send_status_display_biohazard_alert()
-
-	max_blob_points = INFINITY
-	blob_points = INFINITY
+	if(end_round_on_victory) // Assuming they actually *are* about to turn the station into soup...
+		max_blob_points = INFINITY
+		blob_points = INFINITY
 	addtimer(CALLBACK(src, PROC_REF(victory)), 45 SECONDS)
 
-/// Actually *do* the blob's victory: give them their greentext, tell everyone they died, start the part where everyone actually dies.
+/// Actually *do* the blob's victory: give them their greentext and, depending on the end_round_on_victory variable, decide if everyone dies or if it's just a jumpscare.
 /mob/eye/blob/proc/victory()
 	// Set victory flags immediately
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
@@ -213,12 +216,18 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(main_objective)
 			main_objective.completed = TRUE
 
-	to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
-	SSticker.news_report = BLOB_WIN
-	SSticker.force_ending = FORCE_END_ROUND
+	if(end_round_on_victory)
+		to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
+		SSticker.news_report = BLOB_WIN
+		SSticker.force_ending = FORCE_END_ROUND
 
-	// Handle the heavy victory operations asynchronously
-	INVOKE_ASYNC(src, PROC_REF(victory_sequence))
+		// Handle the heavy victory operations (where everyone dies) asynchronously
+		INVOKE_ASYNC(src, PROC_REF(victory_sequence))
+	else
+		// Is the station going boom? No. But is the station still going to get yelled at? Yes.
+		priority_announce("Experimental, classified, and very expensive emergency countermeasures have been activated to prevent total station loss, \
+			but the initial failure to contain the viral biohazard will be noted on the station's performance report. Expect further penalties.", \
+			"Emergency Biohazard Countermeasure Alert")
 
 /// Kill everyone who's still on the station area and not already part of the blob's faction, and cover every station area with blob icons. Everyone's soup now.
 /mob/eye/blob/proc/victory_sequence()
