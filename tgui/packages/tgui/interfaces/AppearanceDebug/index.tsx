@@ -48,7 +48,10 @@ function mapAppearance(
   appearances: AppearanceMap = {},
   planeFilter: number | null,
   hideEmissives: boolean,
+  keepTogether: boolean,
 ) {
+  if (appearance_data.flags & APPEARANCE_FLAGS.KEEP_APART) keepTogether = false;
+
   const appearance: Appearance = {
     data: appearance_data,
     underlays: null,
@@ -63,6 +66,26 @@ function mapAppearance(
     renderTargetTo: null,
     relativePosition: { x: 0, y: 0 },
     depth: depth,
+    inherited_icon: !!(
+      (appearance_data.vis_flags || 0) & VIS_FLAGS.VIS_INHERIT_ICON
+    ),
+    inherited_icon_state: !!(
+      (appearance_data.vis_flags || 0) & VIS_FLAGS.VIS_INHERIT_ICON_STATE
+    ),
+    inherited_layer: !!(
+      (appearance_data.vis_flags || 0) & VIS_FLAGS.VIS_INHERIT_LAYER
+    ),
+    inherited_plane: !!(
+      (appearance_data.vis_flags || 0) & VIS_FLAGS.VIS_INHERIT_PLANE
+    ),
+    inherited_dir:
+      !!((appearance_data.vis_flags || 0) & VIS_FLAGS.VIS_INHERIT_DIR) ||
+      keepTogether,
+    total_alpha:
+      (appearance_data.flags & APPEARANCE_FLAGS.RESET_ALPHA && !keepTogether) ||
+      !parent
+        ? appearance_data.alpha
+        : appearance_data.alpha * (parent.total_alpha / 255),
   };
   if (
     hideEmissives &&
@@ -90,6 +113,8 @@ function mapAppearance(
           appearances,
           planeFilter,
           hideEmissives,
+          keepTogether ||
+            !!(appearance.data.flags & APPEARANCE_FLAGS.KEEP_TOGETHER),
         ),
       )
       .sort((a, b) =>
@@ -122,6 +147,8 @@ function mapAppearance(
           appearances,
           planeFilter,
           hideEmissives,
+          keepTogether ||
+            !!(appearance.data.flags & APPEARANCE_FLAGS.KEEP_TOGETHER),
         ),
       )
       // vis_contents get priority by layer over overlays, but not by plane
@@ -269,6 +296,7 @@ function parseAppearanceData(
     appearances,
     planeFilter,
     hideEmissives,
+    !!(mainAppearance.flags & APPEARANCE_FLAGS.KEEP_TOGETHER),
   );
 
   const sourceMap: Record<string, Appearance> = {};
@@ -425,6 +453,7 @@ export function AppearanceDebug() {
     layerToText,
     mapRefHover,
     mapRefSelected,
+    updateWarning,
   } = data;
   const [planeFilter, setPlaneFilter] = useState<string | null>(null);
   const [hideEmissives, setHideEmissives] = useState(false);
@@ -515,7 +544,7 @@ export function AppearanceDebug() {
       <Window
         width={1600}
         height={840}
-        title={`OverFlayer${mainAppearance.name || mainAppearance.icon_state ? `: ${mainAppearance.name || mainAppearance.icon_state}` : ''}`}
+        title={`OverFlayer${mainAppearance.name || mainAppearance.icon_state ? `: ${mainAppearance.name || mainAppearance.icon_state}` : ''}${updateWarning ? ' (Out of date)' : ''}`}
         buttons={
           <Stack fill>
             <Stack.Item

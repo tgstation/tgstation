@@ -11,6 +11,7 @@ import {
   type Appearance,
   AppearanceType,
   BLEND_MODE,
+  DIR,
   MOUSE_OPACITY,
   VIS_FLAGS,
 } from './types';
@@ -57,15 +58,20 @@ export function AppearanceInfo(props: AppearanceInfoProps) {
           {!!appearance.data.icon && (
             <LabeledList.Item label="icon">
               {appearance.data.icon}
+              {appearance.inherited_icon ? ' (Inherited)' : ''}
             </LabeledList.Item>
           )}
           {!!appearance.data.icon_state && (
             <LabeledList.Item label="icon_state">
               {appearance.data.icon_state}
+              {appearance.inherited_icon_state ? ' (Inherited)' : ''}
             </LabeledList.Item>
           )}
           <LabeledList.Item label="alpha">
             {appearance.data.alpha}
+            {appearance.total_alpha !== appearance.data.alpha
+              ? ` (Displayed as ${appearance.total_alpha})`
+              : ''}
           </LabeledList.Item>
           <LabeledList.Item label="appearance_flags">
             {Object.entries(APPEARANCE_FLAGS)
@@ -85,7 +91,15 @@ export function AppearanceInfo(props: AppearanceInfoProps) {
                 : `[${appearance.data.color.join(', ')}]`}
             </LabeledList.Item>
           )}
-          <LabeledList.Item label="dir">{appearance.data.dir}</LabeledList.Item>
+          <LabeledList.Item label="dir">
+            {`${
+              Object.entries(DIR)
+                .filter((x) => appearance.data.dir & x[1])
+                .map((x) => x[0])
+                .join(' | ') || 'NONE'
+            } (${appearance.data.dir})`}
+            {appearance.inherited_dir ? ' (Inherited)' : ''}
+          </LabeledList.Item>
           {!!appearance.data.filters?.length && (
             <LabeledList.Item label="filters">
               {appearance.data.filters
@@ -98,10 +112,12 @@ export function AppearanceInfo(props: AppearanceInfoProps) {
           </LabeledList.Item>
           <LabeledList.Item label="layer">
             {getReadableLayer(appearance, layerToText)}
+            {appearance.inherited_layer ? ' (Inherited)' : ''}
           </LabeledList.Item>
           <Tooltip content={`True plane: ${appearance.data.plane_true}`}>
             <LabeledList.Item label="plane">
               {getReadablePlane(appearance, planeToText)}
+              {appearance.inherited_plane ? ' (Inherited)' : ''}
             </LabeledList.Item>
           </Tooltip>
           {!!appearance.data.maptext && (

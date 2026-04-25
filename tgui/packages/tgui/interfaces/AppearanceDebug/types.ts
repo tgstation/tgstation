@@ -6,6 +6,7 @@ export type AppearanceDebugData = {
   layerToText: Record<string, number>;
   mapRefHover: string;
   mapRefSelected: string;
+  updateWarning: boolean;
 };
 
 export enum AppearanceType {
@@ -60,6 +61,13 @@ export const BLEND_MODE = {
   BLEND_INSET_OVERLAY: 5,
 };
 
+export const DIR = {
+  NORTH: 1,
+  SOUTH: 2,
+  EAST: 4,
+  WEST: 8,
+};
+
 export type AppearanceData = {
   type: AppearanceType;
   id: number;
@@ -67,7 +75,7 @@ export type AppearanceData = {
   flags: number;
   blend_mode: number;
   color: string | number[];
-  dir: number | null;
+  dir: number;
   filters: FilterData[] | null;
   icon: string;
   icon_state: string;
@@ -121,6 +129,13 @@ export type Appearance = {
   depth: number;
   boundingBox: [Coordinates, Coordinates];
   hidden: HiddenState;
+  // Inherit info
+  inherited_icon: boolean;
+  inherited_icon_state: boolean;
+  inherited_layer: boolean;
+  inherited_plane: boolean;
+  inherited_dir: boolean;
+  total_alpha: number;
 };
 
 export type AppearanceMap = Record<number, Appearance>;
