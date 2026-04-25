@@ -1,0 +1,4 @@
+author: "Capsandi"
+delete-after: True
+changes:
+  - sound: "fire alarms are no longer stereo files condensed to mono at runtime"
