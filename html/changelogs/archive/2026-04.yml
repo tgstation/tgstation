@@ -555,6 +555,12 @@
   - rscadd: ed209s can now wear hats! some hats give them new dialogue
   - rscadd: emagged ed209s are now rideable!
   - rscadd: added evil versions of the ed209s to the syndie uplink
+  Capsandi:
+  - sound: fire alarms are no longer stereo files condensed to mono at runtime
+  forgman6:
+  - rscadd: Saviors paper hat.
+  - rscadd: Added worn and normal icon states for it in costume.dmi
+  - map: Modified bus.dmm to include the paper hat behind the main bus.
   lelandkemble:
   - bugfix: Stamina bars no longer invert the value they show you
   - bugfix: Nonbinary people can respawn
