@@ -549,3 +549,6 @@
 2026-04-24:
   lelandkemble:
   - bugfix: Looming works again
+2026-04-25:
+  lelandkemble:
+  - bugfix: Stamina bars no longer invert the value they show you
