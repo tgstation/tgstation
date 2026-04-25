@@ -1,0 +1,9 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscdel: "Removed Station Time, now we use NST (Nanotrasen Standard Time), which is IRL server time +540 years, and PT (Pay Time), the amount of time since the round has started."
+  - rscdel: "Station nightshift is now a Station event rather than being based on Server time."
+  - balance: "Time circuit's Unit of Measure now tells the amount of time in hour/minute/seconds rather than giving the whole time translated to hours/minutes/seconds."
+  - qol: "Added a 12-hour clock pref for people who prefer it."
+  - qol: "Hovering over NST timestamps on official documents will now translate how much it is in PT/Shift Time."
+  - admin: "Admins can now use style/class/background in their papercode."
