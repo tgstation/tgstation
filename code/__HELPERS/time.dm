@@ -121,4 +121,5 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 			time -= 12 HOURS // e.g. 4:16 PM but not 00:42 PM
 	else if (time < 1 HOURS)
 		time += 12 HOURS // e.g. 12.23 AM
-	return "[time2text(time, format, timezone)] [am_pm]"
+	//set NO_TIMEZONE because we've already applied the timezone above.
+	return "[time2text(time, format, NO_TIMEZONE)] [am_pm]"
