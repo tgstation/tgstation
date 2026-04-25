@@ -91,49 +91,6 @@
 	return new_turfs
 
 
-/// This proc handles populating the given turf based on whether flora,
-/// features and fauna are allowed. Does not take megafauna into account.
-/datum/biome/proc/populate_turf(turf/target_turf, flora_allowed, features_allowed, fauna_allowed)
-	if(flora_allowed && length(flora_types) && prob(flora_density))
-		var/obj/structure/flora = pick(flora_types)
-		new flora(target_turf)
-		return TRUE
-
-	if(features_allowed && prob(feature_density))
-		var/can_spawn = TRUE
-
-		var/atom/picked_feature = pick(feature_types)
-
-		for(var/obj/structure/existing_feature in range(7, target_turf))
-			if(istype(existing_feature, picked_feature))
-				can_spawn = FALSE
-				break
-
-		if(can_spawn)
-			new picked_feature(target_turf)
-			return TRUE
-
-	if(fauna_allowed && length(fauna_types) && prob(fauna_density))
-		var/mob/picked_mob = pick(fauna_types)
-
-		// prevents tendrils spawning in each other's collapse range
-		if(ispath(picked_mob, /obj/structure/spawner/lavaland))
-			for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, target_turf))
-				return FALSE
-
-		// if the random is not a tendril (hopefully meaning it is a mob), avoid spawning if there's another one within 12 tiles
-		else
-			var/list/things_in_range = range(12, target_turf)
-			for(var/mob/living/mob_blocker in things_in_range)
-				if(ismining(mob_blocker))
-					return FALSE
-
-		new picked_mob(target_turf)
-		return TRUE
-
-	return FALSE
-
-
 /**
  * This proc handles populating the given turfs based on whether flora, features
  * and fauna are allowed. Does not take megafauna into account.
@@ -143,7 +100,11 @@
  * allowed type. Aka, we return early if the proc wouldn't do anything anyway.
  */
 /datum/biome/proc/populate_turfs(list/turf/target_turfs, flora_allowed, features_allowed, fauna_allowed)
-	if(!(flora_allowed && length(flora_types)) && !(features_allowed && length(feature_types)) && !(fauna_allowed && length(fauna_types)))
+	var/has_flora = flora_allowed && length(flora_types)
+	var/has_features = features_allowed && length(feature_types)
+	var/has_fauna = fauna_allowed && length(fauna_types)
+
+	if(!has_flora && !has_features && !has_fauna)
 		return
 
 	for(var/turf/target_turf as anything in target_turfs)
@@ -151,17 +112,21 @@
 		// in this.
 		CHECK_TICK
 
-		if(flora_allowed && length(flora_types) && prob(flora_density))
+		if(istype(target_turf, closed_turf_type))
+			continue
+
+		if(has_flora && prob(flora_density))
 			var/obj/structure/flora = pick(flora_types)
 			new flora(target_turf)
 			continue
 
-		if(features_allowed && prob(feature_density))
+		if(has_features && prob(feature_density))
 			var/can_spawn = TRUE
 
 			var/atom/picked_feature = pick(feature_types)
 
-			for(var/obj/structure/existing_feature in range(7, target_turf))
+			var/list/features_in_range = range(7, target_turf)
+			for(var/obj/structure/existing_feature in features_in_range)
 				if(istype(existing_feature, picked_feature))
 					can_spawn = FALSE
 					break
@@ -170,19 +135,29 @@
 				new picked_feature(target_turf)
 				continue
 
-		if(fauna_allowed && length(fauna_types) && prob(fauna_density))
+		if(has_fauna && prob(fauna_density))
 			var/mob/picked_mob = pick(fauna_types)
 
 			// prevents tendrils spawning in each other's collapse range
 			if(ispath(picked_mob, /obj/structure/spawner/lavaland))
+				var/blocked = FALSE
 				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, target_turf))
+					blocked = TRUE
+					break
+
+				if(blocked)
 					continue
 
 			// if the random is not a tendril (hopefully meaning it is a mob), avoid spawning if there's another one within 12 tiles
 			else
 				var/list/things_in_range = range(12, target_turf)
+				var/blocked = FALSE
 				for(var/mob/living/mob_blocker in things_in_range)
-					if(ismining(mob_blocker))
-						continue
+					if(!ismining(mob_blocker))
+						blocked = TRUE
+						break
+
+				if(blocked)
+					continue
 
 			new picked_mob(target_turf)
