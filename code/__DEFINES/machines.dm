@@ -134,6 +134,9 @@
 /// What's the minimum duration of a syndie bomb (in seconds)
 #define SYNDIEBOMB_MIN_TIMER_SECONDS 90
 
+/// What's the maximum duration of a syndie bomb (in seconds)
+#define SYNDIEBOMB_MAX_TIMER_SECONDS 100*60 // 100 MINUTES // not using the MINUTES define because those are for deciseconds
+
 // Camera upgrade bitflags.
 #define CAMERA_UPGRADE_XRAY (1<<0)
 #define CAMERA_UPGRADE_EMP_PROOF (1<<1)
