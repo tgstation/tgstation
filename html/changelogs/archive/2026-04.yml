@@ -550,6 +550,9 @@
   lelandkemble:
   - bugfix: Looming works again
 2026-04-25:
+  Arturlang:
+  - rscadd: changes shutter and high security door sprites on the infiltrator battlecruiser
+      and the syndicate nuclear operative base
   Ben10Omintrix:
   - refactor: beepskies, and ed209s have been refactored. please report any bugs
   - rscadd: ed209s can now wear hats! some hats give them new dialogue
