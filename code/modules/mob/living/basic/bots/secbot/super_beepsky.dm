@@ -18,7 +18,7 @@
 	. = ..()
 	RegisterSignal(weapon, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_weapon_transform))
 	var/static/list/abilities = list(
-		var/datum/action/cooldown/mob_cooldown/bot/sword = null,
+		/datum/action/cooldown/mob_cooldown/bot/sword = null,
 	)
 	grant_actions_by_list(abilities)
 	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, attack_self), src)
