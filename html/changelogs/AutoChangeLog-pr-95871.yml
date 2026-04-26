@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "mobs and features should not be spawning in walls anymore in certain biomes"
