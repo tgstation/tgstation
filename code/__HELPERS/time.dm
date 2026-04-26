@@ -1,29 +1,13 @@
-/// Returns UTC timestamp with the specifified format and optionally deciseconds
-/proc/time_stamp(format = "hh:mm:ss", show_ds)
-	var/time_string = time2text(world.timeofday, format, TIMEZONE_UTC)
+/// Returns UTC timestamp with the specifified format, with optionally deciseconds or optional IC time (year offset), AKA Nanotrasen Standard Time (NST)
+/proc/server_timestamp(format = "hh:mm:ss", show_ds, ic_time, twelve_hour_clock)
+	var/time_string = twelve_hour_clock ? time_to_twelve_hour(format, world.timeofday, world.timezone) : time2text(world.timeofday, format, world.timezone)
+	if(ic_time && findtext(format, "YYYY")) //if we have a year, replace the year
+		time_string = replacetext_char(time_string, "[GLOB.year_integer]", CURRENT_STATION_YEAR)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
-/// Returns timestamp since the server started, for use with world.time
-/proc/gameTimestamp(format = "hh:mm:ss", wtime=world.time)
+/// Returns timestamp since the round started, AKA Pay Time (PT)
+/proc/round_timestamp(format = "hh:mm:ss", wtime = STATION_TIME_PASSED())
 	return time2text(wtime, format, NO_TIMEZONE)
-
-///returns the current IC station time in a world.time format
-/proc/station_time(wtime = world.time)
-	return (((wtime - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % (24 HOURS)
-
-///returns the current IC station time in a human readable format
-/proc/station_time_timestamp(format = "hh:mm:ss", wtime)
-	return time2text(station_time(wtime), format, NO_TIMEZONE)
-
-/proc/station_time_debug(force_set)
-	if(isnum(force_set))
-		SSticker.gametime_offset = force_set
-		return
-	SSticker.gametime_offset = rand(0, 24 HOURS) //hours in day * minutes in hour * seconds in minute * deciseconds in second
-	if(prob(50))
-		SSticker.gametime_offset = FLOOR(SSticker.gametime_offset, 1 HOURS)
-	else
-		SSticker.gametime_offset = CEILING(SSticker.gametime_offset, 1 HOURS)
 
 ///returns timestamp in a sql and a not-quite-compliant ISO 8601 friendly format. Do not use for SQL, use NOW() instead
 /proc/ISOtime(timevar)
@@ -128,7 +112,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
  * the format arg is the format passed down to time2text() (e.g. "hh:mm" is hours and minutes but not seconds).
  * the timezone is the time value offset from the local time. It's to be applied outside time2text() to get the AM/PM right.
  */
-/proc/time_to_twelve_hour(time, format = "hh:mm:ss", timezone = TIMEZONE_UTC)
+/proc/time_to_twelve_hour(format = "hh:mm:ss", time = STATION_TIME_PASSED(), timezone = NO_TIMEZONE)
 	time = MODULUS(time + (timezone * (1 HOURS)), 24 HOURS)
 	var/am_pm = "AM"
 	if(time > 12 HOURS)
@@ -137,4 +121,5 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 			time -= 12 HOURS // e.g. 4:16 PM but not 00:42 PM
 	else if (time < 1 HOURS)
 		time += 12 HOURS // e.g. 12.23 AM
-	return "[time2text(time, format)] [am_pm]"
+	//set NO_TIMEZONE because we've already applied the timezone above.
+	return "[time2text(time, format, NO_TIMEZONE)] [am_pm]"

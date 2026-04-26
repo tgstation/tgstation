@@ -93,9 +93,24 @@
 /// So transparent, blue, with a scanline and an emissive glow
 /// This is acomplished using a combination of filters and render steps/overlays
 /// The degree of the opacity is optional, based off the opacity arg (0 -> 1)
-/atom/proc/makeHologram(opacity = 0.5)
+/// An optional color_override replaces the default blue tint — either a hex string (opacity applied on top) or a color matrix/list (passed through as-is; caller owns its own alpha)
+/// Returns the glow mutable_appearance so callers can cut the overlay later
+/atom/proc/makeHologram(opacity = 0.5, color_override)
 	// First, we'll make things blue (roughly) and sorta transparent
-	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(rgb(125,180,225, opacity * 255)))
+	var/color_value
+	if(islist(color_override))
+		color_value = color_override
+	else
+		var/r = 125
+		var/g = 180
+		var/b = 225
+		if(color_override)
+			var/list/rgb_list = rgb2num(color_override)
+			r = rgb_list[1]
+			g = rgb_list[2]
+			b = rgb_list[3]
+		color_value = rgb(r, g, b, opacity * 255)
+	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(color_value))
 	// Now we're gonna do a scanline effect
 	// Gonna take this atom and give it a render target, then use it as a source for a filter
 	// (We use an atom because it seems as if setting render_target on an MA is just invalid. I hate this engine)
@@ -128,3 +143,4 @@
 	var/mutable_appearance/glow_appearance = new(glow)
 	add_overlay(glow_appearance)
 	LAZYADD(update_overlays_on_z, glow_appearance)
+	return glow_appearance

@@ -404,3 +404,9 @@
 	worn_icon_state = "paper"
 	dog_fashion = /datum/dog_fashion/head
 	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
+
+/obj/item/clothing/head/costume/paper_hat/savior
+	name = "ancient paper hat"
+	desc = "An ancient hat made of paper. \"Savior of the Universe\" is spelled out on the rim in orange marker. "
+	icon_state = "paper_savior"
+	worn_icon_state = "paper_savior"
