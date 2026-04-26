@@ -4,6 +4,10 @@
 /obj/item/stack/ore/bananium,
 /turf/open/space/basic,
 /area/deathmatch)
+"ap" = (
+/obj/item/tank/jetpack/improvised,
+/turf/open/floor/plating,
+/area/deathmatch)
 "aF" = (
 /obj/structure/fluff/tram_rail/floor,
 /obj/item/assembly/igniter,
@@ -34,7 +38,7 @@
 /area/deathmatch)
 "cb" = (
 /obj/structure/sign/warning/directional/south,
-/turf/closed/mineral/random,
+/turf/closed/mineral/asteroid,
 /area/deathmatch)
 "cF" = (
 /obj/structure/lattice/catwalk,
@@ -57,7 +61,9 @@
 /turf/open/floor/plating/airless,
 /area/deathmatch)
 "cX" = (
-/obj/structure/flora/rock/style_random,
+/obj/structure/flora/rock/style_random{
+	color = "#E09C96"
+	},
 /turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "dh" = (
@@ -494,7 +500,9 @@
 /turf/open/space/basic,
 /area/deathmatch)
 "pP" = (
-/obj/structure/flora/rock/pile/icy/style_random,
+/obj/structure/flora/rock/pile/icy/style_random{
+	color = "#E09C96"
+	},
 /turf/open/floor/grass,
 /area/deathmatch)
 "qg" = (
@@ -514,7 +522,10 @@
 /turf/open/floor/plating/airless,
 /area/deathmatch)
 "qw" = (
-/turf/closed/mineral/random,
+/obj/effect/decal/cleanable/rubble{
+	color = "#E09C96"
+	},
+/turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "qK" = (
 /obj/effect/turf_decal/siding/wood,
@@ -691,6 +702,7 @@
 "xa" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/grimy,
 /area/deathmatch)
 "xp" = (
@@ -732,7 +744,6 @@
 /turf/open/floor/grass,
 /area/deathmatch)
 "yb" = (
-/mob/living/basic/pet/gondola,
 /obj/effect/light_emitter/fake_outdoors,
 /turf/open/floor/grass,
 /area/deathmatch)
@@ -785,6 +796,10 @@
 /obj/structure/sign/warning/directional/north,
 /turf/closed/indestructible/reinforced,
 /area/deathmatch)
+"yM" = (
+/obj/item/tank/jetpack/carbondioxide,
+/turf/open/floor/vault,
+/area/deathmatch)
 "yN" = (
 /turf/closed/indestructible/fakedoor/engineering,
 /area/deathmatch)
@@ -799,7 +814,7 @@
 /area/deathmatch)
 "za" = (
 /obj/structure/sign/warning/directional/north,
-/turf/closed/mineral/random,
+/turf/closed/mineral/asteroid,
 /area/deathmatch)
 "zj" = (
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -1172,7 +1187,9 @@
 /turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "Ic" = (
-/obj/structure/flora/rock/pile/icy/style_random,
+/obj/structure/flora/rock/pile/icy/style_random{
+	color = "#E09C96"
+	},
 /mob/living/basic/carp,
 /obj/structure/festivus/anchored,
 /turf/open/misc/asteroid/airless,
@@ -1268,7 +1285,14 @@
 /turf/open/floor/grass,
 /area/deathmatch)
 "Ki" = (
-/obj/item/toy/plush/lizard_plushie/space,
+/obj/item/tank/jetpack/improvised{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/cigarette/greytide{
+	pixel_x = 13;
+	pixel_y = 10
+	},
 /turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "Km" = (
@@ -1294,8 +1318,11 @@
 /turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "KQ" = (
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/item/tank/jetpack,
+/turf/open/floor/plating/airless,
 /area/deathmatch)
 "Lw" = (
 /obj/structure/lattice/catwalk,
@@ -1318,12 +1345,18 @@
 /turf/open/floor/plating/airless,
 /area/deathmatch)
 "Mw" = (
-/obj/structure/spacevine,
+/obj/structure/spacevine{
+	can_spread = 0;
+	can_tangle = 0;
+	color = "#E09C96"
+	},
 /turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "MS" = (
 /obj/structure/sign/warning/directional/west,
-/obj/structure/flora/rock/style_random,
+/obj/structure/flora/rock/style_random{
+	color = "#E09C96"
+	},
 /turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "Nc" = (
@@ -1570,12 +1603,19 @@
 /turf/open/floor/iron/white,
 /area/deathmatch)
 "Xr" = (
-/obj/effect/decal/cleanable/rubble,
-/turf/closed/wall,
+/obj/structure/flora/rock/pile/icy/style_random{
+	color = "#E09C96"
+	},
+/turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "Xs" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/reagent_dispensers/fueltank,
+/turf/open/space/basic,
+/area/deathmatch)
+"Xu" = (
+/obj/structure/lattice,
+/obj/item/tank/jetpack,
 /turf/open/space/basic,
 /area/deathmatch)
 "XE" = (
@@ -1665,33 +1705,33 @@
 /area/deathmatch)
 
 (1,1,1) = {"
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
 ZK
 aH
 ZK
 zJ
 ZK
-qw
-qw
-qw
-qw
-qw
-qw
-qw
+rN
+rN
+rN
+rN
+rN
+rN
+rN
 Eb
 Eb
 Eb
@@ -1707,20 +1747,20 @@ Eb
 Eb
 "}
 (2,1,1) = {"
-qw
-qw
-qw
-qw
-qw
-qw
+rN
+rN
+rN
+rN
+rN
+rN
 Kh
 LV
-qw
-qw
-qw
-qw
-qw
-qw
+rN
+rN
+rN
+rN
+rN
+rN
 dH
 KK
 NK
@@ -1749,10 +1789,10 @@ DD
 Eb
 "}
 (3,1,1) = {"
-qw
+rN
 jb
-qw
-qw
+rN
+rN
 VN
 zj
 xM
@@ -1777,7 +1817,7 @@ qv
 qi
 ys
 nc
-ip
+ap
 Bx
 iV
 gP
@@ -1791,9 +1831,9 @@ IT
 Eb
 "}
 (4,1,1) = {"
-qw
-qw
-qw
+rN
+rN
+rN
 LV
 VN
 bW
@@ -1801,9 +1841,9 @@ Hg
 IG
 xM
 VN
-qw
-qw
-qw
+rN
+rN
+rN
 dH
 ZS
 hu
@@ -1833,20 +1873,20 @@ yt
 Eb
 "}
 (5,1,1) = {"
-qw
-qw
+rN
+rN
 pP
 VN
-Kh
+VN
 oi
 VN
 VN
 bW
 VN
 zj
-qw
-qw
-qw
+rN
+rN
+rN
 dH
 Ix
 pK
@@ -1875,8 +1915,8 @@ xp
 Eb
 "}
 (6,1,1) = {"
-qw
-qw
+rN
+rN
 bW
 xM
 zj
@@ -1886,9 +1926,9 @@ zj
 LV
 IX
 pP
-qw
-qw
-qw
+rN
+rN
+rN
 dh
 wf
 El
@@ -1917,8 +1957,8 @@ yu
 Eb
 "}
 (7,1,1) = {"
-qw
-qw
+rN
+rN
 FZ
 zj
 oi
@@ -1926,10 +1966,10 @@ pP
 zj
 xM
 VN
-qw
-qw
-qw
-qw
+rN
+rN
+rN
+rN
 wf
 wf
 wf
@@ -1959,18 +1999,18 @@ Km
 yN
 "}
 (8,1,1) = {"
-qw
-qw
+rN
+rN
 xM
 bW
 VN
 VN
 bW
 oi
-qw
-qw
-qw
-qw
+rN
+rN
+rN
+rN
 wf
 wf
 wf
@@ -2001,17 +2041,17 @@ uX
 Eb
 "}
 (9,1,1) = {"
-qw
-qw
-qw
+rN
+rN
+rN
 oi
 xM
 LV
 xM
-qw
-qw
-qw
-ZK
+rN
+rN
+rN
+Mw
 Mw
 wf
 wf
@@ -2043,18 +2083,18 @@ vz
 yN
 "}
 (10,1,1) = {"
-qw
-qw
-qw
+rN
+rN
+rN
 RU
-qw
-qw
-qw
-qw
-qw
+rN
+rN
+rN
+rN
+rN
 FP
 ZK
-ZK
+Mw
 Mw
 wf
 wf
@@ -2085,20 +2125,20 @@ sW
 Eb
 "}
 (11,1,1) = {"
-qw
-qw
-qw
+rN
+rN
+rN
 VN
-qw
+rN
 gd
-qw
-qw
-qw
+rN
+rN
+rN
 ZK
-HA
-qw
-qw
-qw
+Xr
+rN
+rN
+rN
 wf
 wf
 El
@@ -2127,19 +2167,19 @@ Eb
 Eb
 "}
 (12,1,1) = {"
-qw
-qw
-qw
+rN
+rN
+rN
 xB
-qw
-qw
+rN
+rN
 dH
 og
 IU
 eB
 ZU
-qw
-qw
+rN
+rN
 wf
 wf
 wf
@@ -2164,17 +2204,17 @@ wf
 wf
 RV
 mi
-ip
+ap
 Bz
 Eb
 "}
 (13,1,1) = {"
 dH
 za
-qw
+rN
 Mw
-qw
-HA
+rN
+Xr
 hk
 ZK
 Vn
@@ -2214,7 +2254,7 @@ Eb
 MS
 ZK
 ZK
-Gr
+qw
 ZK
 ZK
 ZK
@@ -2222,7 +2262,7 @@ ZK
 TP
 rG
 qg
-ZK
+Mw
 Mw
 wf
 wf
@@ -2250,7 +2290,7 @@ wf
 AD
 ys
 Xs
-qw
+rN
 "}
 (15,1,1) = {"
 wf
@@ -2260,13 +2300,13 @@ wf
 wf
 wf
 wf
-Gr
+qw
 PM
 Vz
 og
 cX
-qw
-qw
+rN
+rN
 wf
 wf
 El
@@ -2292,7 +2332,7 @@ wf
 uA
 ys
 ne
-qw
+rN
 "}
 (16,1,1) = {"
 wf
@@ -2306,9 +2346,9 @@ wf
 ZK
 ZK
 ZK
-qw
-qw
-qw
+rN
+rN
+rN
 dH
 KJ
 pf
@@ -2334,7 +2374,7 @@ wf
 KJ
 DW
 zB
-qw
+rN
 "}
 (17,1,1) = {"
 wf
@@ -2348,9 +2388,9 @@ wf
 wf
 wf
 ZK
-qw
-qw
-qw
+rN
+rN
+rN
 dH
 KJ
 pf
@@ -2376,23 +2416,23 @@ wf
 Di
 Lw
 Zw
-qw
+rN
 "}
 (18,1,1) = {"
 zC
-KQ
+zC
 zC
 wf
 zC
-KQ
+zC
 zC
 wf
 wf
 wf
 wf
-HA
-qw
-qw
+Xr
+rN
+rN
 wf
 wf
 El
@@ -2418,7 +2458,7 @@ wf
 AD
 ys
 ys
-qw
+rN
 "}
 (19,1,1) = {"
 RV
@@ -2427,7 +2467,7 @@ RV
 wf
 RV
 wf
-RV
+Xu
 wf
 wf
 wf
@@ -2450,7 +2490,7 @@ wf
 wf
 bP
 RV
-lV
+KQ
 lV
 lV
 yw
@@ -2460,7 +2500,7 @@ RV
 Sj
 KJ
 eE
-qw
+rN
 "}
 (20,1,1) = {"
 RV
@@ -2502,7 +2542,7 @@ wf
 xJ
 nu
 SS
-qw
+rN
 "}
 (21,1,1) = {"
 RV
@@ -2544,7 +2584,7 @@ wf
 fP
 KJ
 Jv
-qw
+rN
 "}
 (22,1,1) = {"
 QE
@@ -2585,8 +2625,8 @@ RV
 RV
 px
 Jv
-qw
-qw
+rN
+rN
 "}
 (23,1,1) = {"
 RV
@@ -2626,9 +2666,9 @@ wf
 wf
 wf
 Rm
-Xr
-qw
-qw
+dH
+rN
+rN
 "}
 (24,1,1) = {"
 RV
@@ -2668,9 +2708,9 @@ wf
 wf
 wf
 wf
-Gr
 qw
-qw
+rN
+rN
 "}
 (25,1,1) = {"
 RV
@@ -2712,15 +2752,15 @@ wf
 wf
 ZK
 Ic
-qw
+rN
 "}
 (26,1,1) = {"
 zC
-KQ
+zC
 zC
 wf
 zC
-KQ
+zC
 zC
 wf
 wf
@@ -2754,7 +2794,7 @@ rN
 wf
 ir
 Ko
-qw
+rN
 "}
 (27,1,1) = {"
 wf
@@ -2796,7 +2836,7 @@ rN
 rb
 EI
 ZK
-qw
+rN
 "}
 (28,1,1) = {"
 wf
@@ -2838,7 +2878,7 @@ wf
 wf
 wf
 ZK
-qw
+rN
 "}
 (29,1,1) = {"
 wf
@@ -2880,7 +2920,7 @@ wf
 wf
 wf
 wf
-qw
+rN
 "}
 (30,1,1) = {"
 wf
@@ -2963,7 +3003,7 @@ cX
 wf
 wf
 ZK
-HA
+Xr
 rN
 "}
 (32,1,1) = {"
@@ -3070,7 +3110,7 @@ Bh
 kK
 jS
 KJ
-Bh
+yM
 wf
 wf
 wf
@@ -3089,7 +3129,7 @@ wf
 wf
 Mh
 KN
-Gr
+qw
 rN
 "}
 (35,1,1) = {"
@@ -3120,7 +3160,7 @@ ZK
 wf
 wf
 ZK
-HA
+Xr
 wf
 tA
 wf
@@ -3156,13 +3196,13 @@ jS
 Yo
 wf
 wf
-HA
+Xr
 wf
 wf
 wf
 Tq
-qw
-qw
+rN
+rN
 FP
 Ar
 GM
@@ -3201,11 +3241,11 @@ wf
 wf
 wf
 HZ
-qw
-qw
-qw
-qw
-qw
+rN
+rN
+rN
+rN
+rN
 ep
 lb
 GM
@@ -3243,11 +3283,11 @@ wf
 YJ
 cb
 dH
-qw
-qw
-qw
-qw
-qw
+rN
+rN
+rN
+rN
+rN
 dH
 ry
 Jv
@@ -3256,7 +3296,7 @@ wf
 ZK
 rN
 rN
-HA
+Xr
 el
 rN
 "}
@@ -3282,20 +3322,20 @@ CT
 SJ
 KJ
 dH
-qw
-qw
-qw
-qw
-qw
+rN
+rN
+rN
+rN
+rN
 OL
 fF
-qw
-qw
-qw
+rN
+rN
+rN
 yO
 wf
 wf
-HA
+Xr
 rN
 rN
 rN
@@ -3315,7 +3355,7 @@ rN
 rN
 rN
 rN
-Gr
+qw
 wf
 wf
 wf
@@ -3324,17 +3364,17 @@ CT
 SJ
 KJ
 dH
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
-qw
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
+rN
 wf
 wf
 rN
