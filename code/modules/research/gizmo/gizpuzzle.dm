@@ -46,7 +46,7 @@
 			code_sequences[i] += pick(cryptic_pulse)
 
 /// Whenever a puzzle attempt is made
-/datum/gizmo_puzzle/proc/on_pulse(pulse_number, mob/living/user, atom/movable/holder)
+/datum/gizmo_puzzle/proc/on_pulse(pulse_number, mob/living/user, atom/movable/holder, no_feedback = FALSE)
 	current_sequence += cryptic_pulse[pulse_number]
 	. = GIZMO_PUZZLE_CORRECT
 
@@ -70,11 +70,11 @@
 		current_sequence.Cut()
 		. = GIZMO_PUZZLE_WRONG
 
-	pulsed_callback?.Invoke(holder, user, .)
+	pulsed_callback?.Invoke(holder, user, ., no_feedback)
 
 /// Just some feedback so people can start forcing sequences. No feedback if it's done automatically
-/datum/gizmo_puzzle/proc/default_on_pulsed(atom/movable/holder, mob/living/user, solved_type)
-	if(!COOLDOWN_FINISHED(src, feedback_cooldown) || !isliving(user))
+/datum/gizmo_puzzle/proc/default_on_pulsed(atom/movable/holder, mob/living/user, solved_type, no_feedback = FALSE)
+	if(!COOLDOWN_FINISHED(src, feedback_cooldown) || !isliving(user) || no_feedback)
 		return
 
 	COOLDOWN_START(src, feedback_cooldown, feedback_cooldown_time)

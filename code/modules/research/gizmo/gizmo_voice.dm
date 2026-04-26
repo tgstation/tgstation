@@ -1,4 +1,4 @@
-/// The words (or tones really) the gizmo voice interface can listen for
+/// The words (or tones really) the gizmo voice interface can listen for. Limit to 2 characters (or it breaks because im cringe)
 GLOBAL_LIST_INIT(gizmo_words, world.file2list("strings/gizmo_words.txt"))
 
 /// Listen to the tones and send the sequence to the puzzle datum
@@ -45,7 +45,8 @@ GLOBAL_LIST_INIT(gizmo_words, world.file2list("strings/gizmo_words.txt"))
 			if(!position)
 				break
 
-			text_position_index[needle] = position
+			/// needle + position because assocs need to be unique, we splice it away later when sending it
+			text_position_index[needle + "[position]"] = position
 			// So for the next loop we dont find the exact same word again
 			position++
 
@@ -53,7 +54,9 @@ GLOBAL_LIST_INIT(gizmo_words, world.file2list("strings/gizmo_words.txt"))
 		return
 
 	text_position_index = sortTim(text_position_index, associative = TRUE)
-	for(var/thing in text_position_index)
-		// Only one solved per speech packet
-		if(puzzle.on_pulse(active_words.Find(thing), hearing_args[HEARING_SPEAKER], parent) == GIZMO_PUZZLE_SOLVED)
+	for(var/thing, position in text_position_index)
+		// Only send feedback for the last speech packet
+		var/no_feedback = text_position_index.Find(thing) != text_position_index.len
+		// When solved, accept no further packets from this
+		if(puzzle.on_pulse(active_words.Find(copytext(thing, 1, 3)), hearing_args[HEARING_SPEAKER], parent, no_feedback = no_feedback) == GIZMO_PUZZLE_SOLVED)
 			return

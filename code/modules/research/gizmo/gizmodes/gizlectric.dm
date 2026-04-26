@@ -14,13 +14,17 @@
 	cooldown_time = 6 SECONDS
 
 	/// The internal power cell
-	var/obj/item/stock_parts/power_store/battery/power
+	var/obj/item/stock_parts/power_store/battery/gizmo/power
 
 /datum/gizmodes/electric/activate(atom/movable/holder)
 	if(!power)
 		power = new(holder)
 
 	return ..()
+
+/// Batter used in the gizmo device
+/obj/item/stock_parts/power_store/battery/gizmo
+	charge = STANDARD_BATTERY_CHARGE * 0.1 //you gotta work for your fun
 
 /// Get the total charge
 /datum/gizpulse/electric/proc/get_power(atom/movable/holder, datum/gizmodes/master)

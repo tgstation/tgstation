@@ -39,11 +39,10 @@
 		return
 
 	// So you can pick up copied items but not copied structures and mobs
-	var/obj/item/copy = /obj/item/gizmo_copy
+	var/obj/item/copy = new /obj/item/gizmo_copy (get_turf(holder))
 	if(!isitem(object_to_copy))
 		copy.interaction_flags_item = NONE //so you cant pick it up anymore
 
-	copy = new copy (get_turf(holder))
 	copy.appearance = object_to_copy
 	copy.density = object_to_copy.density
 

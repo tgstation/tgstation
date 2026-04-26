@@ -6273,7 +6273,7 @@
 #include "code\modules\research\gizmo\gizmo_voice.dm"
 #include "code\modules\research\gizmo\gizmo_wires.dm"
 #include "code\modules\research\gizmo\gizpuzzle.dm"
-#include "code\modules\research\gizmo\gizmodes\filler.dm"
+#include "code\modules\research\gizmo\gizmodes\giz_filler.dm"
 #include "code\modules\research\gizmo\gizmodes\gizactives.dm"
 #include "code\modules\research\gizmo\gizmodes\gizbad.dm"
 #include "code\modules\research\gizmo\gizmodes\gizcopier.dm"
