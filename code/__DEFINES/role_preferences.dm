@@ -8,12 +8,14 @@
 //then you MUST update the database!
 
 // Roundstart roles
+#define ROLE_BLOOD_WORM "Blood Worm"
 #define ROLE_BROTHER "Blood Brother"
 #define ROLE_CHANGELING "Changeling"
 #define ROLE_CULTIST "Cultist"
 #define ROLE_HERETIC "Heretic"
 #define ROLE_MALF "Malf AI"
 #define ROLE_OPERATIVE "Operative"
+#define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 #define ROLE_SPY "Spy"
@@ -23,6 +25,7 @@
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_BLOB "Blob"
 #define ROLE_BLOB_INFECTION "Blob Infection"
+#define ROLE_BLOOD_WORM_INFESTATION "Blood Worm Infestation"
 #define ROLE_CHANGELING_MIDROUND "Changeling (Midround)"
 #define ROLE_FUGITIVE "Fugitive"
 #define ROLE_LONE_OPERATIVE "Lone Operative"
@@ -33,7 +36,6 @@
 #define ROLE_OPERATIVE_MIDROUND "Operative (Midround)"
 #define ROLE_CLOWN_OPERATIVE_MIDROUND "Clown Operative (Midround)"
 #define ROLE_PARADOX_CLONE "Paradox Clone"
-#define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SPIDER "Spider"
@@ -41,8 +43,6 @@
 #define ROLE_VOIDWALKER "Voidwalker"
 #define ROLE_SUNWALKER "Sunwalker"
 
-// Latejoin roles
-#define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_PROVOCATEUR "Provocateur"
 #define ROLE_STOWAWAY_CHANGELING "Stowaway Changeling"
 #define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"

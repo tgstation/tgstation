@@ -11,6 +11,11 @@
 /// Nonesensical value for light color, used for null checks.
 #define NONSENSICAL_VALUE -99999
 
+// Light systems that use the overlay light component
+#define IS_OVERLAY_LIGHT_SYSTEM(system) (system == OVERLAY_LIGHT || system == OVERLAY_LIGHT_DIRECTIONAL || system == OVERLAY_LIGHT_BEAM)
+// Light systems that use the cone image of the overlay light component
+#define IS_OVERLAY_CONE_LIGHT_SYSTEM(system) (system == OVERLAY_LIGHT_DIRECTIONAL || system == OVERLAY_LIGHT_BEAM)
+
 /// Is our overlay light source attached to another movable (its loc), meaning that the lighting component should go one level deeper.
 #define LIGHT_ATTACHED (1<<0)
 /// Freezes a light in its current state, blocking any attempts at modification
@@ -38,6 +43,8 @@
 
 ///How many tiles standard fires glow.
 #define LIGHT_RANGE_FIRE 3
+#define LIGHT_POWER_FIRE 2
+
 #define LIGHT_FIRE_BLOSSOM 2.1
 #define LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED 2.7
 #define LIGHT_POWER_FIRE_BLOSSOM_HARVESTED 1.5
@@ -117,6 +124,11 @@ GLOBAL_LIST_INIT(em_block_color, EM_BLOCK_COLOR)
 #define EM_MASK_MATRIX list(0,0,0,1/3, 0,0,0,1/3, 0,0,0,1/3, 0,0,0,0, 1,1,1,0)
 /// A globally cached version of [EM_MASK_MATRIX] for quick access.
 GLOBAL_LIST_INIT(em_mask_matrix, EM_MASK_MATRIX)
+
+/// Maximum selectable value for emissive bloom, minimum being 0 which just disables it outright
+#define MAXIMUM_EMISSIVE_BLOOM_SIZE 5
+/// Default value for emissive bloom
+#define DEFAULT_EMISSIVE_BLOOM_SIZE 2
 
 /// Parse the hexadecimal color into lumcounts of each perspective.
 #define PARSE_LIGHT_COLOR(source) \

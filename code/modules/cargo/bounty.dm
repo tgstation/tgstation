@@ -1,33 +1,75 @@
-/// How many jobs have bounties, minus the random civ bounties. PLEASE INCREASE THIS NUMBER AS MORE DEPTS ARE ADDED TO BOUNTIES.
-#define MAXIMUM_BOUNTY_JOBS 14
+// The list of all current global, shared crew bounties, does not contain any personal bounties however.
+GLOBAL_LIST_EMPTY(shared_crew_bounties)
 
 /datum/bounty
+	/// A name for the bounty. Displayed on the bounty console/Paper sheets.
 	var/name
+	/// A description for the bounty.
 	var/description
-	var/reward = 1000 // In credits.
+	/// Whether or not the bounty has been claimed by cargo. Only applies to cargo list bounties.
 	var/claimed = FALSE
+	/// Whether or not the bounty is high priority. High priority bounties appear at the top of the list.
 	var/high_priority = FALSE
+	/// The reward for completing the bounty in credits, before being split by cargo/the player.
+	VAR_PROTECTED/reward = CARGO_CRATE_VALUE * 5 // In credits.
+	var/allow_duplicate = FALSE
+	/// Can this bounty be selected got a new global bounty?
+	var/global_exempt = FALSE
+	///A list consisting of the accounts who sent several of the items required for a bounty payout. Used for distributing payout with the payment component.
+	var/list/contribution = list()
+	/// Is this bounty considered unique? This is for weird, singleton bounties that we don't want to roll into randomly, and we provide one of these
+	var/unique = FALSE
 
+/// Can this bounty be claimed right now?
 /datum/bounty/proc/can_claim()
-	return !claimed
-
-/// Called when the claim button is clicked. Override to provide fancy rewards.
-/datum/bounty/proc/claim()
-	if(can_claim())
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(D)
-			D.adjust_money(reward * SSeconomy.bounty_modifier)
-		claimed = TRUE
-
-/// If an item in question can satisfy the bounty.
-/datum/bounty/proc/applies_to(obj/O)
 	return FALSE
 
+/// If an item in question can satisfy the bounty.
+/datum/bounty/proc/applies_to(obj/shipped)
+	return FALSE
+
+/// When calculating the contribution breakdown of an object shipped, how much does that object increase that account's cut?
+/datum/bounty/proc/contribution_amount(obj/shipped)
+	return 1
+
 /// Called when an object is sent on the bounty pad.
-/datum/bounty/proc/ship(obj/O)
+/datum/bounty/proc/ship(obj/shipped)
 	return
 
-/** Returns a new bounty of random type, but does not add it to GLOB.bounties_list.
+/// Formats the text for what is required to complete the bounty, for display purposes.
+/datum/bounty/proc/print_required()
+	return ""
+
+/// Returns the adjusted reward for this bounty, taking into account any global modifiers.
+/datum/bounty/proc/get_bounty_reward()
+	var/high_priority_mult = high_priority ? 1.5 : 1
+	return reward * SSeconomy.bounty_modifier * high_priority_mult
+
+/// Called when this bounty is selected by the passed ID card
+/datum/bounty/proc/on_selected(obj/item/card/id/id_card)
+	return
+
+/// Called when this bounty is successfully claimed by the passed ID card
+/datum/bounty/proc/on_claimed(obj/item/card/id/id_card)
+	return
+
+/// Called when this bounty is reset from the passed ID card, either from successful claim or from being replaced by another bounty
+/datum/bounty/proc/on_reset(obj/item/card/id/id_card)
+	return
+
+/// Proc that returns the current quantity of this bounty.
+/datum/bounty/proc/get_total()
+	return
+
+/// Proc that returns the current maximum quantity of this bounty.
+/datum/bounty/proc/get_max()
+	return
+
+/// If the user can actually get this bounty as a selection.
+/datum/bounty/proc/can_get()
+	return TRUE
+
+/** Returns a new bounty of random type.
  *
  * * Category determines what specific catagory of bounty should be chosen.
  */
@@ -49,7 +91,10 @@
 			if(CIV_JOB_CHEF)
 				chosen_type = pick(subtypesof(/datum/bounty/item/chef) + subtypesof(/datum/bounty/reagent/chef))
 			if(CIV_JOB_SEC)
-				chosen_type = pick(subtypesof(/datum/bounty/item/security))
+				if(prob(75))
+					chosen_type = /datum/bounty/patrol
+				else
+					chosen_type = /datum/bounty/item/contraband
 			if(CIV_JOB_DRINK)
 				if(prob(50))
 					chosen_type = /datum/bounty/reagent/simple_drink
@@ -85,5 +130,3 @@
 		else
 			qdel(bounty_ref)
 	return bounty_ref
-
-#undef MAXIMUM_BOUNTY_JOBS

@@ -9,7 +9,7 @@
 	contains = list(/mob/living/basic/parrot)
 	crate_name = "parrot crate"
 
-/datum/supply_pack/critter/parrot/generate()
+/datum/supply_pack/critter/parrot/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	. = ..()
 	for(var/i in 1 to 4)
 		new /mob/living/basic/parrot(.)
@@ -17,12 +17,12 @@
 /datum/supply_pack/critter/butterfly
 	name = "Butterflies Crate"
 	desc = "Not a very dangerous insect, but they do give off a better image than, say, flies or cockroaches."//is that a motherfucking worm reference
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/mob/living/basic/butterfly)
 	crate_name = "entomology samples crate"
 
-/datum/supply_pack/critter/butterfly/generate()
+/datum/supply_pack/critter/butterfly/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	. = ..()
 	for(var/i in 1 to 49)
 		new /mob/living/basic/butterfly(.)
@@ -38,7 +38,7 @@
 	)
 	crate_name = "cat crate"
 
-/datum/supply_pack/critter/cat/generate()
+/datum/supply_pack/critter/cat/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	. = ..()
 	if(!prob(50))
 		return
@@ -65,7 +65,7 @@
 				)
 	crate_name = "corgi crate"
 
-/datum/supply_pack/critter/corgi/generate()
+/datum/supply_pack/critter/corgi/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	. = ..()
 	if(prob(50))
 		var/mob/living/basic/pet/dog/corgi/D = locate() in .
@@ -113,9 +113,9 @@
 	cost = CARGO_CRATE_VALUE * 8
 	contains = list(/mob/living/basic/crab)
 	crate_name = "look sir free crabs"
-	drop_pod_only = TRUE
+	order_flags = ORDER_POD_ONLY
 
-/datum/supply_pack/critter/crab/generate()
+/datum/supply_pack/critter/crab/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	. = ..()
 	for(var/i in 1 to 49)
 		new /mob/living/basic/crab(.)
@@ -218,13 +218,13 @@
 /datum/supply_pack/critter/garden_gnome
 	name = "Garden Gnome Crate"
 	desc = "Collect them all for your garden. Comes with three!"
-	hidden = TRUE
+	order_flags = ORDER_EMAG_ONLY
 	cost = CARGO_CRATE_VALUE * 15
 	contains = list(/mob/living/basic/garden_gnome)
 	crate_name = "garden gnome crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
-/datum/supply_pack/critter/garden_gnome/generate()
+/datum/supply_pack/critter/garden_gnome/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	. = ..()
 	for(var/i in 1 to 2)
 		new /mob/living/basic/garden_gnome(.)

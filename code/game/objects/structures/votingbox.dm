@@ -9,7 +9,7 @@
 	icon_state = "votebox_maint"
 
 	anchored = TRUE
-
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15)
 	var/obj/item/card/id/owner //Slapping the box with this ID starts/ends the vote.
 
 	var/voting_active = FALSE //Voting or Maintenance Mode

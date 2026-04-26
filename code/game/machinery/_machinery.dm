@@ -119,7 +119,7 @@
 	var/is_operational = TRUE
 	///list of all the parts used to build it, if made from certain kinds of frames.
 	var/list/component_parts = null
-	///Is the machines maintainence panel open.
+	///Is the machines maintenance panel open.
 	var/panel_open = FALSE
 	///Is the machine open or closed
 	var/state_open = FALSE
@@ -208,6 +208,8 @@
 /obj/machinery/proc/post_machine_initialize()
 	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
+
+	find_and_mount_on_atom(late_init = TRUE)
 
 	power_change()
 	if(use_power == NO_POWER_USE)
@@ -309,7 +311,11 @@
 	set waitfor = FALSE
 	return PROCESS_KILL
 
-/obj/machinery/proc/process_atmos()//If you dont use process why are you here
+/**
+ * Process but for machines interacting with atmospherics.
+ * Like process, anything sensitive to changes in the wait time between process ticks should account for seconds_per_tick.
+**/
+/obj/machinery/proc/process_atmos(seconds_per_tick)//If you dont touch atmos why are you here
 	set waitfor = FALSE
 	return PROCESS_KILL
 
@@ -396,7 +402,7 @@
 	var/turf/this_turf = get_turf(src)
 	for(var/atom/movable/movable_atom in contents)
 		//so machines like microwaves dont dump out signalers after cooking
-		if(wires && (movable_atom in flatten_list(wires.assemblies)))
+		if(wires && (movable_atom in assoc_to_values(wires.assemblies)))
 			continue
 
 		if(subset && !(movable_atom in subset))
@@ -483,6 +489,9 @@
 		our_area?.addStaticPower(new_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
 
 	use_power = new_use_power
+
+	if(use_power)
+		power_change()
 
 	return TRUE
 
@@ -617,6 +626,10 @@
 	var/old_value = panel_open
 	panel_open = new_value
 	on_set_panel_open(old_value)
+	update_appearance()
+	// if this is a machine that cares about whether the panel is open for UIs, force an update
+	if(interaction_flags_machine & (INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_OPEN))
+		SStgui.update_uis(src)
 
 ///Called when the value of `panel_open` changes, so we can react to it.
 /obj/machinery/proc/on_set_panel_open(old_value)
@@ -684,49 +697,6 @@
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
 
-/**
- * Checks for NAP non aggression principle, an anarcho capitalist event triggered by admins
- * where using machines cost money
- */
-/obj/machinery/proc/check_nap_violations()
-	PROTECTED_PROC(TRUE)
-	SHOULD_NOT_OVERRIDE(TRUE)
-
-	if(!SSeconomy.full_ancap)
-		return TRUE
-	if(!occupant || state_open)
-		return TRUE
-	var/mob/living/occupant_mob = occupant
-	var/obj/item/card/id/occupant_id = occupant_mob.get_idcard(TRUE)
-	if(!occupant_id)
-		say("Customer NAP Violation: No ID card found.")
-		nap_violation(occupant_mob)
-		return FALSE
-	var/datum/bank_account/insurance = occupant_id.registered_account
-	if(!insurance)
-		say("Customer NAP Violation: No bank account found.")
-		nap_violation(occupant_mob)
-		return FALSE
-	if(!insurance.adjust_money(-fair_market_price))
-		say("Customer NAP Violation: Unable to pay.")
-		nap_violation(occupant_mob)
-		return FALSE
-	var/datum/bank_account/department_account = SSeconomy.get_dep_account(payment_department)
-	if(department_account)
-		department_account.adjust_money(fair_market_price)
-	return TRUE
-
-/**
- * Actions to take in case of NAP violation
- * Arguments
- *
- * * mob/violator - the mob who violated the NAP aggrement
- */
-/obj/machinery/proc/nap_violation(mob/violator)
-	PROTECTED_PROC(TRUE)
-
-	return
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 //Return a non FALSE value to interrupt attack_hand propagation to subtypes.
@@ -738,7 +708,7 @@
 	var/mob/user = ui.user
 	add_fingerprint(user)
 	update_last_used(user)
-	if(isAI(user) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
+	if(isAI(user) && !SScameras.is_visible_by_cameras(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
 		to_chat(user, span_warning("You can no longer connect to this device!"))
 		return FALSE
 	return ..()
@@ -807,7 +777,7 @@
 /obj/machinery/attack_ai(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
 		return FALSE
-	if(!(ROLE_SYNDICATE in user.faction))
+	if(!user.has_faction(ROLE_SYNDICATE))
 		if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
 			return FALSE
 		if((onSyndieBase() && loc != user))
@@ -872,26 +842,81 @@
 	update_current_power_usage()
 	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS)
 
-/obj/machinery/proc/default_pry_open(obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
+/**
+ * Checks if the machine is in a state where it can be pried open with a crowbar,
+ * which is used by the default crowbar pry open method.
+ */
+/obj/machinery/proc/can_crowbar_pry_open()
+	PROTECTED_PROC(TRUE)
+	return !state_open && !panel_open && !is_operational
+
+/**
+ * Default method for prying a machine open, setting it to open state
+ *
+ * * crowbar - The crowbar being used to pry the machine open.
+ * You do not have to assert the crowbar is a crowbar, it is checked for you.
+ * * close_after_pry - If TRUE, the machine will immediately close after being pried open. Defaults to FALSE.
+ * Best used for machines that don't have a real open state, effectively making this proc a "dump contents on crowbar" action.
+ * * open_density - If TRUE, the machine will be set to dense when pried open. Defaults to FALSE.
+ * * closed_density - If TRUE, the machine will be set to dense when closed after being pried open. Defaults to TRUE.
+ * Only applies if close_after_pry is TRUE.
+ * * deconstruct_on_fail - If TRUE, runs default_deconstruction_crowbar if the machine cannot be pried open. Defaults to FALSE.
+ *
+ * Returns NONE on failure
+ * Returns ITEM_INTERACT_SUCCESS on success
+ */
+/obj/machinery/proc/default_pry_open(
+	mob/living/user,
+	obj/item/crowbar,
+	close_after_pry = FALSE,
+	open_density = FALSE,
+	closed_density = TRUE,
+	deconstruct_on_fail = FALSE,
+)
 	PROTECTED_PROC(TRUE)
 
-	. = !(state_open || panel_open || is_operational) && crowbar.tool_behaviour == TOOL_CROWBAR
-	if(!.)
-		return
+	if(crowbar.tool_behaviour != TOOL_CROWBAR)
+		return NONE
+	if(!can_crowbar_pry_open())
+		return deconstruct_on_fail ? default_deconstruction_crowbar(user, crowbar) : ITEM_INTERACT_BLOCKING
+
 	crowbar.play_tool_sound(src, 50)
-	visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
+	user.visible_message(span_notice("[user] pries open [src]."), span_notice("You pry open [src]."))
 	open_machine(density_to_set = open_density)
 	if (close_after_pry) //Should it immediately close after prying? (If not, it must be closed elsewhere)
 		close_machine(density_to_set = closed_density)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
+/**
+ * Checks if the machine is in a state where it can be deconstructed with a crowbar,
+ * which is used by the default crowbar deconstruction method.
+ */
+/obj/machinery/proc/can_crowbar_deconstruct()
+	PROTECTED_PROC(TRUE)
+	return panel_open
+
+/**
+ * Default method of deconstructing a machine with a crowbar
+ * Requires panel be open to work, unless ignore_panel is set to TRUE.
+ *
+ * * crowbar - The crowbar being used to deconstruct the machine.
+ * You do not have to assert the crowbar is a crowbar, it is checked for you.
+ *
+ * Returns NONE on failure, or if custom_deconstruct is set to TRUE.
+ * Returns ITEM_INTERACT_SUCCESS on success.
+ */
+/obj/machinery/proc/default_deconstruction_crowbar(mob/living/user, obj/item/crowbar)
 	PROTECTED_PROC(TRUE)
 
-	. = (panel_open || ignore_panel) && crowbar.tool_behaviour == TOOL_CROWBAR
-	if(!. || custom_deconstruct)
-		return
+	if(crowbar.tool_behaviour != TOOL_CROWBAR)
+		return NONE
+	if(!can_crowbar_deconstruct())
+		return ITEM_INTERACT_BLOCKING
+
 	crowbar.play_tool_sound(src, 50)
+	// user.visible_message(span_notice("[user] deconstructs [src]."), span_notice("You deconstruct [src]."))
 	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/handle_deconstruct(disassembled = TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -1007,29 +1032,45 @@
 	for(var/atom/atom_part in old_components)
 		qdel(atom_part)
 
-/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+/**
+ * Default method of opening a machine's maintenance panel with a screwdriver
+ *
+ * * user - The mob using the screwdriver
+ * * screwdriver - The screwdriver being used to open the panel.
+ * You do not have to assert the screwdriver is a screwdriver, it is checked for you.
+ *
+ * Returns NONE on failure
+ * Returns ITEM_INTERACT_SUCCESS on success
+ */
+/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, obj/item/screwdriver)
 	if(screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
-		return FALSE
+		return NONE
 
 	screwdriver.play_tool_sound(src, 50)
 	toggle_panel_open()
-	if(panel_open)
-		icon_state = icon_state_open
-		to_chat(user, span_notice("You open the maintenance hatch of [src]."))
-	else
-		icon_state = icon_state_closed
-		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
-	return TRUE
+	balloon_alert(user, "maintenance hatch [panel_open ? "opened" : "closed"]")
+	return ITEM_INTERACT_SUCCESS
 
+/**
+ * Default method of rotating a machine with a wrench
+ * Requires panel to be opened to work.
+ *
+ * * user - The mob using the wrench
+ * * wrench - The wrench being used to rotate the machine
+ * You do not have to assert the wrench is a wrench, it is checked for you.
+ *
+ * Returns NONE on failure
+ * Returns ITEM_INTERACT_SUCCESS on success
+ */
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/wrench)
 	if(!panel_open || wrench.tool_behaviour != TOOL_WRENCH)
-		return FALSE
+		return NONE
 
 	wrench.play_tool_sound(src, 50)
 	setDir(turn(dir,-90))
 	to_chat(user, span_notice("You rotate [src]."))
 	SEND_SIGNAL(src, COMSIG_MACHINERY_DEFAULT_ROTATE_WRENCH, user, wrench)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
 	if(!istype(replacer_tool) || !component_parts)
@@ -1086,9 +1127,7 @@
 			if(istype(secondary_part, /obj/item/stock_parts/power_store/cell) && works_from_distance)
 				var/obj/item/stock_parts/power_store/cell/checked_cell = secondary_part
 				// If it's rigged or corrupted, max the charge. Then explode it.
-				if(checked_cell.rigged || checked_cell.corrupted)
-					checked_cell.charge = checked_cell.maxcharge
-					checked_cell.explode()
+				if(checked_cell.try_explode(max_charge = TRUE))
 					break
 			if(secondary_part.get_part_rating() > current_rating)
 				//store name of part incase we qdel it below
@@ -1237,8 +1276,9 @@
 	dropped_atom.pixel_x = -8 + ((.%3)*8)
 	dropped_atom.pixel_y = -8 + (round( . / 3)*8)
 
-/obj/machinery/rust_heretic_act()
-	take_damage(500, BRUTE, MELEE, 1)
+/obj/machinery/rust_heretic_act(rust_strength)
+	var/damage = 500 + rust_strength * 200
+	take_damage(damage, BRUTE, BOMB, 1)
 
 /obj/machinery/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, occupant))

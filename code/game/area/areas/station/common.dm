@@ -2,7 +2,7 @@
 	name = "\improper Crew Facilities"
 	icon_state = "commons"
 	sound_environment = SOUND_AREA_STANDARD_STATION
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /*
 * Dorm Areas

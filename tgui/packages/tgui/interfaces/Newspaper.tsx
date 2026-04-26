@@ -41,23 +41,6 @@ export const Newspaper = (props) => {
   return (
     <Window width={300} height={400}>
       <Window.Content backgroundColor="#858387" scrollable>
-        {current_page === channels.length + 1 ? (
-          <NewspaperEnding />
-        ) : current_page ? (
-          <NewspaperChannel />
-        ) : (
-          <NewspaperIntro />
-        )}
-        {!!scribble_message && (
-          <Box
-            style={{
-              borderTop: '3px dotted rgba(255, 255, 255, 0.8)',
-              borderBottom: '3px dotted rgba(255, 255, 255, 0.8)',
-            }}
-          >
-            {scribble_message}
-          </Box>
-        )}
         <Section>
           <Button
             icon="arrow-left"
@@ -76,6 +59,23 @@ export const Newspaper = (props) => {
             Next Page
           </Button>
         </Section>
+        {current_page === channels.length + 1 ? (
+          <NewspaperEnding />
+        ) : current_page ? (
+          <NewspaperChannel />
+        ) : (
+          <NewspaperIntro />
+        )}
+        {!!scribble_message && (
+          <Box
+            style={{
+              borderTop: '3px dotted rgba(255, 255, 255, 0.8)',
+              borderBottom: '3px dotted rgba(255, 255, 255, 0.8)',
+            }}
+          >
+            {scribble_message}
+          </Box>
+        )}
       </Window.Content>
     </Window>
   );

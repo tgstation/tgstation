@@ -359,8 +359,8 @@
 			else
 				repair_amount = -1
 				energy_cost = 0.01 * STANDARD_CELL_CHARGE
-			cyborg.adjustBruteLoss(repair_amount)
-			cyborg.adjustFireLoss(repair_amount)
+			cyborg.adjust_brute_loss(repair_amount)
+			cyborg.adjust_fire_loss(repair_amount)
 			cyborg.updatehealth()
 			cyborg.cell.use(energy_cost)
 		else
@@ -419,15 +419,18 @@
 		return .
 	var/found_hypo = FALSE
 	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.modules)
-		hypo.bypass_protection = TRUE
-		found_hypo = TRUE
-	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emag_modules)
+		if(!hypo.allow_piercing)
+			continue
 		hypo.bypass_protection = TRUE
 		found_hypo = TRUE
 
 	if(!found_hypo)
 		to_chat(user, span_warning("There are no installed hypospray modules to upgrade with piercing!")) //check to see if any hyposprays were upgraded
 		return FALSE
+
+	// If we are actually going to install the upgrade due to the presence of compatible modules, make sure their emagged counterparts get upgraded too.
+	for(var/obj/item/reagent_containers/borghypo/hypo in borg.model.emag_modules)
+		hypo.bypass_protection = TRUE
 
 /obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
@@ -490,6 +493,8 @@
 			return FALSE
 	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
 		omnitool.set_upgraded(TRUE)
+	for(var/obj/item/weldingtool/largetank/cyborg/welder in cyborg.model.modules)
+		welder.toolspeed = initial(welder.toolspeed) - 0.3
 
 /obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
@@ -497,6 +502,8 @@
 		return .
 	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
 		omnitool.set_upgraded(FALSE)
+	for(var/obj/item/weldingtool/largetank/cyborg/welder in cyborg.model.modules)
+		welder.toolspeed = initial(welder.toolspeed)
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
@@ -510,13 +517,11 @@
 	items_to_add = list(/obj/item/shockpaddles/cyborg)
 
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/borg, mob/living/user = usr)
-	. = ..()
-	if(!.)
-		return .
 	var/obj/item/borg/upgrade/defib/backpack/defib_pack = locate() in borg //If a full defib unit was used to upgrade prior, we can just pop it out now and replace
 	if(defib_pack)
 		defib_pack.deactivate(borg, user)
 		to_chat(user, span_notice("The defibrillator pops out of the chassis as the compact upgrade installs."))
+	. = ..()
 
 ///A version of the above that also acts as a holder of an actual defibrillator item used in place of the upgrade chip.
 /obj/item/borg/upgrade/defib/backpack
@@ -602,9 +607,7 @@
 	var/prev_lockcharge = borg.lockcharge
 	borg.SetLockdown(TRUE)
 	borg.set_anchored(TRUE)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(1, holder = borg, location = borg.loc)
-	smoke.start()
+	do_smoke(1, borg, borg.loc)
 	sleep(0.2 SECONDS)
 	for(var/i in 1 to 4)
 		playsound(borg, pick(

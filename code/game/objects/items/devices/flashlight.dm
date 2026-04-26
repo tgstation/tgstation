@@ -17,7 +17,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
+	custom_materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2,
+	)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	action_slots = ALL
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
@@ -25,6 +28,10 @@
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
+
 	/// If we've been forcibly disabled for a temporary amount of time.
 	COOLDOWN_DECLARE(disabled_time)
 	/// Can we toggle this light on and off (used for contexual screentips only)
@@ -37,9 +44,13 @@
 	var/start_on = FALSE
 	/// When true, painting the flashlight won't change its light color
 	var/ignore_base_color = FALSE
+	/// This simply means if the flashlight can be cuffed to your hand (why?)
+	var/has_closed_handle = TRUE
 
 /obj/item/flashlight/Initialize(mapload)
 	. = ..()
+	if(has_closed_handle)
+		AddElement(/datum/element/cuffable_item)
 	if(start_on)
 		set_light_on(TRUE)
 	update_brightness()
@@ -223,7 +234,7 @@
 			. += span_notice_ml("[patient] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [patient.p_their()] teeth.\n")
 
 	//assess any suffocation damage
-	var/hypoxia_status = patient.getOxyLoss() > 20
+	var/hypoxia_status = patient.get_oxy_loss() > 20
 
 	if(patient == user)
 		if(hypoxia_status)
@@ -242,9 +253,11 @@
 	else
 		. += span_info_ml("You press a finger to [patient.p_their()] gums:\n")
 
-	if(patient.blood_volume <= BLOOD_VOLUME_SAFE && patient.blood_volume > BLOOD_VOLUME_OKAY)
+	var/cached_blood_volume = patient.get_blood_volume(apply_modifiers = TRUE)
+
+	if(cached_blood_volume <= BLOOD_VOLUME_SAFE && cached_blood_volume > BLOOD_VOLUME_OKAY)
 		. += span_danger_ml("Color returns slowly!\n")//low blood
-	else if(patient.blood_volume <= BLOOD_VOLUME_OKAY)
+	else if(cached_blood_volume <= BLOOD_VOLUME_OKAY)
 		. += span_danger_ml("Color does not return!\n")//critical blood
 	else
 		. += span_notice_ml("Color returns quickly.\n")//they're okay :D
@@ -328,6 +341,7 @@
 	light_range = 2
 	light_power = 0.8
 	light_color = "#CCFFFF"
+	has_closed_handle = FALSE
 	COOLDOWN_DECLARE(holosign_cooldown)
 
 /obj/item/flashlight/pen/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -385,6 +399,7 @@
 	light_power = 0.8
 	light_color = "#99ccff"
 	hitsound = 'sound/items/weapons/genhit1.ogg'
+	has_closed_handle = FALSE
 
 // the desk lamps are a bit special
 /obj/item/flashlight/lamp
@@ -402,6 +417,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	custom_materials = null
 	start_on = TRUE
+	has_closed_handle = FALSE
 
 // green-shaded desk lamp
 /obj/item/flashlight/lamp/green
@@ -431,9 +447,9 @@
 	light_color = LIGHT_COLOR_FLARE
 	light_system = OVERLAY_LIGHT
 	light_power = 2
-	grind_results = list(/datum/reagent/sulfur = 15)
 	sound_on = 'sound/items/match_strike.ogg'
 	toggle_context = FALSE
+	has_closed_handle = FALSE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
 	/// Do we randomize the fuel when initialized
@@ -444,10 +460,20 @@
 	var/trash_type = /obj/item/trash/flare
 	/// If the light source can be extinguished
 	var/can_be_extinguished = FALSE
-	custom_materials = list(/datum/material/plastic= SMALL_MATERIAL_AMOUNT * 0.5)
+	custom_materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 0.5,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.5,
+	)
+	/// Lighting middleman, lets us do a flicker effect
+	var/datum/light_middleman/middleman
 
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
+	if(IS_OVERLAY_LIGHT_SYSTEM(light_system))
+		middleman = new(src, "flashlight")
+		RegisterSignal(middleman, COMSIG_LIGHT_MIDDLEMAN_UPDATED, PROC_REF(light_updated))
+		middleman.being_overriding_light()
 	if(randomize_fuel)
 		fuel = rand(10 MINUTES, 15 MINUTES)
 	if(light_on)
@@ -458,11 +484,16 @@
 		damtype = BURN
 		update_brightness()
 
+/obj/item/flashlight/flare/grind_results()
+	return list(/datum/reagent/sulfur = 15)
+
 /obj/item/flashlight/flare/init_slapcrafting()
 	return
 
 /obj/item/flashlight/flare/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	if(middleman)
+		QDEL_NULL(middleman)
 	return ..()
 
 /obj/item/flashlight/flare/afterattack(atom/target, mob/user, click_parameters)
@@ -495,6 +526,10 @@
 	force = initial(force)
 	damtype = initial(damtype)
 	update_brightness()
+
+/obj/item/flashlight/flare/proc/light_updated(datum/source)
+	SIGNAL_HANDLER
+	fire_flicker_middleman(middleman)
 
 /obj/item/flashlight/flare/extinguish()
 	. = ..()
@@ -701,6 +736,7 @@
 	slot_flags = null
 	trash_type = /obj/effect/decal/cleanable/ash
 	can_be_extinguished = TRUE
+	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/flashlight/flare/torch/on
 	start_on = TRUE
@@ -712,6 +748,7 @@
 	fuel = INFINITY
 	randomize_fuel = FALSE
 	start_on = TRUE
+	custom_materials = null
 
 /obj/item/flashlight/flare/torch/red
 	color = "#ff0000"
@@ -770,6 +807,7 @@
 	light_range = 6 //luminosity when on
 	light_color = "#ffff66"
 	light_system = OVERLAY_LIGHT
+	has_closed_handle = FALSE
 
 /obj/item/flashlight/emp
 	var/emp_max_charges = 4
@@ -840,10 +878,11 @@
 	base_icon_state = "glowstick"
 	inhand_icon_state = null
 	worn_icon_state = "lightstick"
-	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
 	sound_on = 'sound/effects/wounds/crack2.ogg' // the cracking sound isn't just for wounds silly
 	toggle_context = FALSE
 	ignore_base_color = TRUE
+	has_closed_handle = FALSE
+	custom_materials = null
 	/// How much max fuel we have
 	var/max_fuel = 0
 	/// How much oxygen gets added upon cracking the stick. Doesn't actually produce a reaction with the fluid but it does allow for bootleg chemical "grenades"
@@ -871,6 +910,11 @@
 		bite_consumption = round(reagents.total_volume / (rand(20, 30) * 0.1)),\
 	)
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
+
+/obj/item/flashlight/glowstick/grind_results()
+	. = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10)
+	if(!light_on)
+		.[/datum/reagent/oxygen] = 5
 
 /obj/item/flashlight/glowstick/proc/get_fuel()
 	return reagents.get_reagent_amount(fuel_type)
@@ -911,7 +955,6 @@
 
 /obj/item/flashlight/glowstick/proc/turn_on()
 	reagents.add_reagent(/datum/reagent/oxygen, oxygen_added)
-	grind_results -= /datum/reagent/oxygen
 	set_light_on(TRUE) // Just in case
 	var/datum/action/toggle = locate(/datum/action/item_action/toggle_light) in actions
 	// No sense having a toggle light action that we don't use eh?
@@ -1023,6 +1066,7 @@
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	has_closed_handle = FALSE
 	///Boolean that switches when a full color flip ends, so the light can appear in all colors.
 	var/even_cycle = FALSE
 	///Base light_range that can be set on Initialize to use in smooth light range expansions and contractions.
@@ -1165,8 +1209,8 @@
 		return FALSE
 	var/datum/gas_mixture/environment = loc?.return_air()
 	var/affected_pressure = environment.return_pressure()
-	if(!light_on && (affected_pressure < ONE_ATMOSPHERE))
-		user.balloon_alert(user, "no pressure!")
+	if(!light_on && (affected_pressure < ONE_ATMOSPHERE - 1))
+		user.balloon_alert(user, "[affected_pressure < HAZARD_LOW_PRESSURE? "no" : "low"] pressure!")
 		return FALSE
 	. = ..()
 	if(light_on)

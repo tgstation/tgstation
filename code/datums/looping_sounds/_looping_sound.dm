@@ -68,7 +68,13 @@
 	//If we reserve a random sound channel, store the channel number here so we can clean it up later.
 	var/reserved_channel
 
-/datum/looping_sound/New(_parent, start_immediately = FALSE, _direct = FALSE, _skip_starting_sounds = FALSE)
+/datum/looping_sound/New(
+	_parent,
+	start_immediately = FALSE,
+	_direct = FALSE,
+	_skip_starting_sounds = FALSE,
+	sound_channel,
+)
 	if(!mid_sounds)
 		WARNING("A looping sound datum was created without sounds to play.")
 		return
@@ -76,6 +82,8 @@
 	set_parent(_parent)
 	direct = _direct
 	skip_starting_sounds = _skip_starting_sounds
+	if(sound_channel)
+		src.sound_channel = sound_channel
 
 	if(start_immediately)
 		start()
@@ -164,9 +172,9 @@
  */
 /datum/looping_sound/proc/play(soundfile, volume_override)
 	var/sound/sound_to_play = sound(soundfile)
+	sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
+	sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
 	if(direct)
-		sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
-		sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
 		SEND_SOUND(parent, sound_to_play)
 	else
 		playsound(
@@ -176,6 +184,7 @@
 			vary,
 			extra_range,
 			falloff_exponent = falloff_exponent,
+			channel = sound_to_play.channel,
 			pressure_affected = pressure_affected,
 			ignore_walls = ignore_walls,
 			falloff_distance = falloff_distance,

@@ -19,8 +19,9 @@
 
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
-#define INVENTORY_DEPTH 3
-#define STORAGE_VIEW_DEPTH 2
+#define REACH_DEPTH_SELF 1
+/// A storage depth ontop of SELF. REACH_DEPTH_STORAGE(1) would allow an item inside of a backpack you are carrying.
+#define REACH_DEPTH_STORAGE(level) (level + REACH_DEPTH_SELF)
 
 //ITEM INVENTORY SLOT BITMASKS
 /// Suit slot (armors, costumes, space suits, etc.)
@@ -162,14 +163,12 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define DIGITIGRADE_STYLE 2
 
 //Flags (actual flags, fucker ^) for /obj/item/var/supports_variations_flags
-/// No alternative sprites or handling based on bodytype
-#define CLOTHING_NO_VARIATION (1<<0)
 /// Has a sprite for digitigrade legs specifically.
-#define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
+#define CLOTHING_DIGITIGRADE_VARIATION (1<<0)
 /// The sprite works fine for digitigrade legs as-is.
-#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
+#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<1)
 /// Auto-generates the leg portion of the sprite with GAGS
-#define CLOTHING_DIGITIGRADE_MASK (1<<3)
+#define CLOTHING_DIGITIGRADE_MASK (1<<2)
 
 /// All variation flags which render "correctly" on a digitigrade leg setup
 #define DIGITIGRADE_VARIATIONS (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON|CLOTHING_DIGITIGRADE_MASK)
@@ -183,6 +182,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define PEPPERPROOF (1<<5) //protects against pepperspray
 #define EARS_COVERED (1<<6)
 
+#define TINT_MILD 1.5 //Threshold of tint level to apply mild tint overlay
 #define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully
 
@@ -215,7 +215,7 @@ GLOBAL_LIST_INIT(any_suit_storage, typecacheof(list(
 	/obj/item/radio,
 	/obj/item/storage/bag/books,
 	/obj/item/storage/fancy/cigarettes,
-	/obj/item/tank/jetpack/oxygen/captain,
+	/obj/item/tank/jetpack/captain,
 	/obj/item/stack/spacecash,
 	/obj/item/storage/wallet,
 	/obj/item/folder,
@@ -223,7 +223,8 @@ GLOBAL_LIST_INIT(any_suit_storage, typecacheof(list(
 	/obj/item/cigarette,
 	/obj/item/gun/energy/laser/bluetag,
 	/obj/item/gun/energy/laser/redtag,
-	/obj/item/storage/belt/holster
+	/obj/item/storage/belt/holster,
+	/obj/item/storage/belt/sheath
 )))
 
 //Allowed equipment lists for security vests.
@@ -288,6 +289,8 @@ GLOBAL_LIST_INIT(chaplain_suit_allowed, list(
 	/obj/item/tank/internals/plasmaman,
 	/obj/item/gun/ballistic/bow/divine,
 	/obj/item/gun/ballistic/revolver/chaplain,
+	/obj/item/toy/plush/carpplushie/nullrod,
+	/obj/item/melee/energy/sword/nullrod,
 ))
 
 //Allowed list for all mining suits

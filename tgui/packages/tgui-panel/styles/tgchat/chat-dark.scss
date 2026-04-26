@@ -908,6 +908,13 @@ em {
   font-size: 125%;
 }
 
+.policy {
+  text-align: center;
+  font-size: 125%;
+  color: hsl(276, 70%, 52%);
+  font-style: italic;
+}
+
 .abductor {
   color: hsl(300, 96%, 38.8%);
   font-style: italic;
@@ -925,7 +932,9 @@ em {
 }
 
 .drone {
-  color: hsl(60, 0.8%, 51.4%);
+  color: hsl(60, 100%, 50%);
+  background-color: hsl(287 62% 36%);
+  font-style: italic;
 }
 
 .monkey {

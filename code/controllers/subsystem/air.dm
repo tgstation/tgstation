@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(air)
 	)
 	priority = FIRE_PRIORITY_AIR
 	wait = 0.5 SECONDS
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cached_cost = 0
@@ -325,7 +325,7 @@ SUBSYSTEM_DEF(air)
 		currentrun.len--
 		if(!M)
 			atmos_machinery -= M
-		if(M.process_atmos() == PROCESS_KILL)
+		if(M.process_atmos(wait * 0.1) == PROCESS_KILL)
 			stop_processing_machine(M)
 		if(MC_TICK_CHECK)
 			return

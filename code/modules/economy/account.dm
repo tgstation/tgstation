@@ -1,4 +1,6 @@
 #define DUMPTIME 3000
+///Amount of money you need to lose to get the negative moodlet.
+#define NO_MY_MONEY 10000
 
 /datum/bank_account
 	///Name listed on the account, reflected on the ID card.
@@ -16,11 +18,13 @@
 	///The job datum of the account owner.
 	var/datum/job/account_job
 	///List of the physical ID card objects that are associated with this bank_account
-	var/list/bank_cards = list()
+	var/list/bank_cards
 	///Should this ID be added to the global list of accounts? If true, will be subject to station-bound economy effects as well as income.
 	var/add_to_accounts = TRUE
 	///The Unique ID number code associated with the owner's bank account, assigned at round start.
 	var/account_id
+	///Amount of money that's been crabbed, if you lose enough from one series of CRAB-17's, you get a negative moodlet.
+	var/money_crabbed
 	///Is there a CRAB 17 on the station draining funds? Prevents manual fund transfer. pink levels are rising
 	var/being_dumped = FALSE
 	///Reference to the current civilian bounty that the account is working on.
@@ -34,7 +38,7 @@
 	///A special semi-tandom token for tranfering money from NT pay app
 	var/pay_token
 	///List with a transaction history for NT pay app
-	var/list/transaction_history = list()
+	var/list/transaction_history
 	///A lazylist of coupons redeemed with the Coupon Master pda app associated with this account.
 	var/list/redeemed_coupons
 	/// How many paychecks to skip when payday is called.
@@ -115,6 +119,21 @@
  */
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE
+	money_crabbed = 0
+
+/**
+ * Stops the dumping of the bank account.
+ */
+/datum/bank_account/proc/stop_dump()
+	being_dumped = FALSE
+	if(money_crabbed < NO_MY_MONEY)
+		return
+	for(var/obj/card as anything in bank_cards)
+		var/mob/living/card_holder = recursive_loc_check(card, /mob/living)
+		if(!isliving(card_holder)) //If on a mob
+			continue
+		//overwrite the slots event.
+		card_holder.add_mood_event(SLOTS_MOOD_CATEGORY, /datum/mood_event/slots/all_gone)
 
 /**
  * Returns TRUE if a bank account has more than or equal to the amount, amt.
@@ -135,7 +154,7 @@
 	if((amount < 0 && has_money(-amount)) || amount > 0)
 		var/debt_collected = 0
 		if(account_debt > 0 && amount > 0)
-			debt_collected = min(CEILING(amount*DEBT_COLLECTION_COEFF, 1), account_debt)
+			debt_collected = min(ceil(amount*DEBT_COLLECTION_COEFF), account_debt)
 		account_balance += amount - debt_collected
 		if(reason)
 			add_log_to_history(amount, reason)
@@ -152,7 +171,7 @@
 			return 0
 	else
 		add_log_to_history(-amount, "Other: Debt Collection")
-	log_econ("[amount_to_pay] credits were removed from [account_holder]'s bank account to pay a debt of [account_debt]")
+	log_econ("[amount_to_pay] [MONEY_NAME] were removed from [account_holder]'s bank account to pay a debt of [account_debt]")
 	account_debt -= amount_to_pay
 	SEND_SIGNAL(src, COMSIG_BANK_ACCOUNT_DEBT_PAID)
 	return amount_to_pay
@@ -180,7 +199,7 @@
 		adjust_money(amount, reason_to)
 		from.adjust_money(-amount, reason_from)
 		SSblackbox.record_feedback("amount", "credits_transferred", amount)
-		log_econ("[amount] credits were transferred from [from.account_holder]'s account to [src.account_holder]")
+		log_econ("[amount] [MONEY_NAME] were transferred from [from.account_holder]'s account to [src.account_holder]")
 		return TRUE
 	return FALSE
 
@@ -212,7 +231,7 @@
 		adjust_money(money_to_transfer, "Nanotrasen: Shift Payment")
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
 		SSeconomy.station_target += money_to_transfer
-		log_econ("[money_to_transfer] credits were given to [src.account_holder]'s account from income.")
+		log_econ("[money_to_transfer] [MONEY_NAME] were given to [src.account_holder]'s account from income.")
 		return TRUE
 	var/datum/bank_account/department_account = SSeconomy.get_dep_account(account_job.paycheck_department)
 	if(isnull(department_account))
@@ -221,7 +240,7 @@
 	if(!transfer_money(department_account, money_to_transfer))
 		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
 		return FALSE
-	bank_card_talk("[event] processed, account now holds [account_balance] cr.")
+	bank_card_talk("[event] processed, account now holds [account_balance] [MONEY_SYMBOL].")
 	return TRUE
 
 /**
@@ -232,7 +251,7 @@
  * * force - if TRUE ignore checks on client and client prefernces.
  */
 /datum/bank_account/proc/bank_card_talk(message, force)
-	if(!message || !bank_cards.len)
+	if(!message || !LAZYLEN(bank_cards))
 		return
 	for(var/obj/card in bank_cards)
 		var/icon_source = card
@@ -244,7 +263,7 @@
 			if(!card_holder.client || (!(get_chat_toggles(card_holder.client) & CHAT_BANKCARD) && !force))
 				return
 
-			if(card_holder.can_hear())
+			if(!HAS_TRAIT(card_holder, TRAIT_DEAF))
 				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 				to_chat(card_holder, "[icon2html(icon_source, card_holder)] [span_notice("[message]")]")
 		else if(isturf(card.loc)) //If on the ground
@@ -252,7 +271,7 @@
 			for(var/mob/potential_hearer in hearers(1,card_location))
 				if(!potential_hearer.client || (!(get_chat_toggles(potential_hearer.client) & CHAT_BANKCARD) && !force))
 					continue
-				if(potential_hearer.can_hear())
+				if(!HAS_TRAIT(potential_hearer, TRAIT_DEAF))
 					potential_hearer.playsound_local(card_location, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 		else
@@ -262,7 +281,7 @@
 					continue
 				if(!sound_atom)
 					sound_atom = card.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
-				if(potential_hearer.can_hear())
+				if(!HAS_TRAIT(potential_hearer, TRAIT_DEAF))
 					potential_hearer.playsound_local(get_turf(sound_atom), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 
@@ -279,30 +298,29 @@
  * Returns the required item count, or required chemical units required to submit a bounty.
  */
 /datum/bank_account/proc/bounty_num()
-	if(!civilian_bounty)
-		return FALSE
-	if(istype(civilian_bounty, /datum/bounty/item))
-		var/datum/bounty/item/item = civilian_bounty
-		return "[item.shipped_count]/[item.required_count]"
-	if(istype(civilian_bounty, /datum/bounty/reagent))
-		var/datum/bounty/reagent/chemical = civilian_bounty
-		return "[chemical.shipped_volume]/[chemical.required_volume] u"
-	if(istype(civilian_bounty, /datum/bounty/virus))
-		return "At least 1u"
+	return civilian_bounty?.print_required() || "N/A"
 
 /**
  * Produces the value of the account's civilian bounty reward, if able.
  */
 /datum/bank_account/proc/bounty_value()
-	if(!civilian_bounty)
-		return FALSE
-	return civilian_bounty.reward
+	return civilian_bounty?.get_bounty_reward() || 0
+
+/datum/bank_account/proc/set_bounty(datum/bounty/new_bounty, obj/item/id_card)
+	if(civilian_bounty)
+		reset_bounty(id_card)
+
+	civilian_bounty = new_bounty
+	civilian_bounty.on_selected(id_card)
 
 /**
  * Performs house-cleaning on variables when a civilian bounty is replaced, or, when a bounty is claimed.
  */
-/datum/bank_account/proc/reset_bounty()
-	civilian_bounty = null
+/datum/bank_account/proc/reset_bounty(obj/item/id_card)
+	if(civilian_bounty)
+		civilian_bounty.on_reset(id_card)
+		civilian_bounty = null
+
 	COOLDOWN_RESET(src, bounty_timer)
 
 /datum/bank_account/department
@@ -318,8 +336,11 @@
 
 /datum/bank_account/department/adjust_money(amount, reason)
 	. = ..()
+
+	SSblackbox.record_feedback("amount", "[department_id]_balance", account_balance, world.time) //Provides the cargo balance alongside a timestamp for comparison afterwards.
 	if(department_id != ACCOUNT_CAR)
 		return
+
 	// If we're under (or equal) 3 crates woth of money (600?) in the cargo department, we unlock the scrapheap, which gives us a buncha money. Useful in an emergency?
 	if(account_balance >= CARGO_CRATE_VALUE * 3)
 		return
@@ -341,12 +362,13 @@
  * * reason - The reason of interact with balance, for example, "Bought chips" or "Payday".
  */
 /datum/bank_account/proc/add_log_to_history(adjusted_money, reason)
-	if(transaction_history.len >= 20)
+	if(LAZYLEN(transaction_history) >= 20)
 		transaction_history.Cut(1,2)
 
-	transaction_history += list(list(
+	LAZYADD(transaction_history, list(list(
 		"adjusted_money" = adjusted_money,
 		"reason" = reason,
-	))
+	)))
 
 #undef DUMPTIME
+#undef NO_MY_MONEY

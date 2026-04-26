@@ -31,8 +31,7 @@
 	var/emag_count = 0
 	for(var/obj/item/card/emag/emag in get_all_contents() + emag_card.get_all_contents()) // This is including itself
 		emag_count++
-	if(emag_count > 6) // 1 uplink's worth is the limit
-		to_chat(user, span_warning("Nope, lesson learned. No more."))
+	if(emag_count >= 128) // prevent overlay sprite overload allowed on a single item, incase someone manages to (somehow) emag an emag 128 times
 		return FALSE
 	if(emag_card.loc != loc) // Both have to be in your hand (or TK shenanigans)
 		return FALSE
@@ -86,6 +85,9 @@
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
 	color = rgb(40, 130, 255)
 	prox_check = FALSE
+
+/obj/item/card/emag/blue
+	color = rgb(40, 130, 255)
 
 /obj/item/card/emag/halloween
 	name = "hack-o'-lantern"

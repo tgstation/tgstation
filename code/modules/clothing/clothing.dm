@@ -64,6 +64,8 @@
 /obj/item/clothing/Initialize(mapload)
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
 		actions_types += list(/datum/action/item_action/toggle_voice_box)
+	if(LAZYLEN(clothing_traits))
+		clothing_traits = string_list(clothing_traits)
 	. = ..()
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
@@ -71,17 +73,6 @@
 	AddElement(/datum/element/attack_equip)
 	if(!icon_state)
 		item_flags |= ABSTRACT
-
-/obj/item/clothing/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
-	var/mob/M = user
-
-	if(ismecha(M.loc)) // stops inventory actions in a mech
-		return
-
-	if(loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-			add_fingerprint(user)
 
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
@@ -217,7 +208,8 @@
 		zone_name = parse_zone(def_zone)
 
 	zones_disabled++
-	body_parts_covered &= ~body_zone2cover_flags(def_zone)
+	if(clothing_flags & NO_ZONE_DISABLING)
+		body_parts_covered &= ~body_zone2cover_flags(def_zone)
 
 	if(body_parts_covered == NONE) // if there are no more parts to break then the whole thing is kaput
 		atom_destruction((damage_type == BRUTE ? MELEE : LASER)) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
@@ -296,7 +288,11 @@
 	if(!islist(trait_or_traits))
 		trait_or_traits = list(trait_or_traits)
 
+	// Use a temporary list so we don't mutate the cached version
+	clothing_traits = LAZYLISTDUPLICATE(clothing_traits)
 	LAZYOR(clothing_traits, trait_or_traits)
+	if(clothing_traits) // because we might be null
+		clothing_traits = string_list(clothing_traits)
 	var/mob/wearer = loc
 	if(istype(wearer) && (wearer.get_slot_by_item(src) & slot_flags))
 		for(var/new_trait in trait_or_traits)
@@ -313,7 +309,11 @@
 	if(!islist(trait_or_traits))
 		trait_or_traits = list(trait_or_traits)
 
+	// Use a temporary list so we don't mutate the cached version
+	clothing_traits = LAZYLISTDUPLICATE(clothing_traits)
 	LAZYREMOVE(clothing_traits, trait_or_traits)
+	if(clothing_traits) // because we might be null
+		clothing_traits = string_list(clothing_traits)
 	var/mob/wearer = loc
 	if(istype(wearer))
 		for(var/new_trait in trait_or_traits)
@@ -324,9 +324,6 @@
 	if(damaged_clothes == CLOTHING_SHREDDED)
 		. += span_warning("<b>[p_Theyre()] completely shredded and require[p_s()] mending before [p_they()] can be worn again!</b>")
 		return
-
-	if(TRAIT_FAST_CUFFING in clothing_traits)
-		. += "[src] increase the speed that you handcuff others."
 
 	for(var/zone in damage_by_parts)
 		var/pct_damage_part = damage_by_parts[zone] / limb_integrity * 100
@@ -369,7 +366,7 @@
 		.["pressure-proof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
 	if(flags_cover & PEPPERPROOF)
 		.["pepper-proof"] = "Protects the wearer from the effects of pepperspray."
-	if (heat_protection || cold_protection)
+	if(heat_protection || cold_protection)
 		var/heat_desc
 		var/cold_desc
 		switch (max_heat_protection_temperature)
@@ -387,6 +384,12 @@
 			if (0 to 71)
 				cold_desc = "extremely low"
 		.["thermally insulated"] = "Protects the wearer from [jointext(list(heat_desc, cold_desc) - null, " and ")] temperatures."
+	if((TRAIT_QUICK_CARRY in clothing_traits) || (TRAIT_QUICKER_CARRY in clothing_traits))
+		.["tactile"] = "Decreases the time it takes to pick up creatures by [(TRAIT_QUICKER_CARRY in clothing_traits) ? "2 seconds" : "1 second"]."
+	if(TRAIT_FASTMED in clothing_traits)
+		.["sterile"] = "Increases the speed at which reagents are administered to others by [round((1/NITRILE_GLOVES_MULTIPLIER-1)*100, 1)]%."
+	if(TRAIT_FAST_CUFFING in clothing_traits)
+		.["secure"] = "Increases the speed at which you apply restraints."
 
 /obj/item/clothing/examine_descriptor(mob/user)
 	return "clothing"
@@ -399,7 +402,7 @@
 
 		var/datum/armor/armor = get_armor()
 		var/added_damage_header = FALSE
-		for(var/damage_key in ARMOR_LIST_DAMAGE())
+		for(var/damage_key in ARMOR_LIST_DAMAGE)
 			var/rating = armor.get_rating(damage_key)
 			if(!rating)
 				continue
@@ -409,13 +412,13 @@
 			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
 
 		var/added_durability_header = FALSE
-		for(var/durability_key in ARMOR_LIST_DURABILITY())
+		for(var/durability_key in ARMOR_LIST_DURABILITY)
 			var/rating = armor.get_rating(durability_key)
 			if(!rating)
 				continue
 			if(!added_durability_header)
 				readout += "<b><u>DURABILITY (I-X)</u></b>"
-				added_damage_header = TRUE
+				added_durability_header = TRUE
 			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
 
 		if((flags_cover & HEADCOVERSMOUTH) || (flags_cover & PEPPERPROOF))
@@ -569,7 +572,7 @@ BLIND     // can't see anything
 	if(!iscarbon(user))
 		return TRUE
 	var/mob/living/carbon/carbon_user = user
-	if(up)
+	if(visor_flags_inv)
 		carbon_user.refresh_obscured()
 	if(visor_vars_to_toggle & VISOR_TINT)
 		carbon_user.update_tint()
@@ -579,7 +582,6 @@ BLIND     // can't see anything
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
-	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= visor_flags_cover
@@ -587,6 +589,7 @@ BLIND     // can't see anything
 		flash_protect ^= initial(flash_protect)
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	update_appearance() //most of the time the sprite changes
 
 /obj/item/clothing/proc/can_use(mob/user)

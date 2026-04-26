@@ -180,20 +180,20 @@
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
 	real_mob.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
-	RegisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_flash_success))
+	RegisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB, PROC_REF(on_flash_success))
 
 /datum/antagonist/rev/head/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
 	real_mob.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
-	UnregisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
+	UnregisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB)
 
-/// Signal proc for [COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON].
+/// Signal proc for [COMSIG_MOB_SUCCESSFUL_FLASHED_MOB].
 /// Bread and butter of revolution conversion, successfully flashing a carbon will make them a revolutionary
-/datum/antagonist/rev/head/proc/on_flash_success(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
+/datum/antagonist/rev/head/proc/on_flash_success(mob/living/source, mob/living/flashed, obj/item/assembly/flash/flash, deviation)
 	SIGNAL_HANDLER
 
-	if(flashed.stat == DEAD)
+	if(flashed.stat == DEAD || issilicon(flashed) || isdrone(flashed))
 		return
 	if(flashed.stat != CONSCIOUS)
 		to_chat(source, span_warning("[flashed.p_They()] must be conscious before you can convert [flashed.p_them()]!"))
@@ -222,21 +222,21 @@
 	return ..() + "(Leader)"
 
 /datum/antagonist/rev/head/get_preview_icon()
-	var/icon/final_icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/final_icon = render_preview_outfit(preview_outfit)
 
-	final_icon.Blend(make_assistant_icon("Business Hair"), ICON_UNDERLAY, -8, 0)
-	final_icon.Blend(make_assistant_icon("CIA"), ICON_UNDERLAY, 8, 0)
+	final_icon.blend_icon(make_assistant_icon("Business Hair"), ICON_UNDERLAY, -8, 0)
+	final_icon.blend_icon(make_assistant_icon("CIA"), ICON_UNDERLAY, 8, 0)
 
 	// Apply the rev head HUD, but scale up the preview icon a bit beforehand.
 	// Otherwise, the R gets cut off.
-	final_icon.Scale(64, 64)
+	final_icon.scale(64, 64)
 
-	var/icon/rev_head_icon = icon('icons/mob/huds/antag_hud.dmi', "rev_head")
-	rev_head_icon.Scale(48, 48)
-	rev_head_icon.Crop(1, 1, 64, 64)
-	rev_head_icon.Shift(EAST, 10)
-	rev_head_icon.Shift(NORTH, 16)
-	final_icon.Blend(rev_head_icon, ICON_OVERLAY)
+	var/datum/universal_icon/rev_head_icon = uni_icon('icons/mob/huds/antag_hud.dmi', "rev_head")
+	rev_head_icon.scale(48, 48)
+	rev_head_icon.crop(1, 1, 64, 64)
+	rev_head_icon.shift(EAST, 10)
+	rev_head_icon.shift(NORTH, 16)
+	final_icon.blend_icon(rev_head_icon, ICON_OVERLAY)
 
 	return finish_preview_icon(final_icon)
 
@@ -244,8 +244,8 @@
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
 	assistant.set_hairstyle(hairstyle, update = TRUE)
 
-	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
-	assistant_icon.ChangeOpacity(0.5)
+	var/datum/universal_icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
+	assistant_icon.change_opacity(0.5)
 
 	qdel(assistant)
 
@@ -404,9 +404,6 @@
 	var/list/datum/mind/monkey_promotable = list()
 	for(var/datum/mind/khrushchev as anything in members - head_revolutionaries)
 		if(!can_be_headrev(khrushchev))
-			continue
-		var/client/khruschevs_client = GET_CLIENT(khrushchev.current)
-		if(!(ROLE_REV_HEAD in khruschevs_client.prefs.be_special) && !(ROLE_PROVOCATEUR in khruschevs_client.prefs.be_special))
 			continue
 		if(ismonkey(khrushchev.current))
 			monkey_promotable += khrushchev

@@ -1,8 +1,11 @@
 /datum/action/changeling/sting//parent path, not meant for users afaik
-	name = "Tiny Prick"
+	name = "Tiny Prick" //cellularemporium uses `nameToIconState` to button icon state must match this, on top of matching the hud below.
 	desc = "Stabby stabby"
+	category = "stings"
+	button_icon_state = "sting_null" //This must be equal to the icon state for `/atom/movable/screen/ling/sting`
 
 /datum/action/changeling/sting/Trigger(mob/clicker, trigger_flags)
+	SHOULD_CALL_PARENT(FALSE) //We are snowflaked from parent
 	var/mob/user = owner
 	if(!user || !user.mind)
 		return
@@ -20,16 +23,20 @@
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	changeling.chosen_sting = src
 
-	changeling.lingstingdisplay.icon_state = button_icon_state
-	changeling.lingstingdisplay.SetInvisibility(0, id=type)
+	var/atom/movable/screen/ling/sting/sting = user.hud_used?.screen_objects[HUD_CHANGELING_STING]
+	if (sting)
+		sting.icon_state = button_icon_state
+		sting.SetInvisibility(0, id=type)
 
 /datum/action/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, span_warning("We retract our sting, we can't sting anyone for now."))
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	changeling.chosen_sting = null
 
-	changeling.lingstingdisplay.icon_state = null
-	changeling.lingstingdisplay.RemoveInvisibility(type)
+	var/atom/movable/screen/ling/sting/sting = user.hud_used?.screen_objects[HUD_CHANGELING_STING]
+	if (sting)
+		sting.icon_state = null
+		sting.RemoveInvisibility(type)
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind)
@@ -70,7 +77,7 @@
 		For complex humanoids, the transformation is temporarily, but the duration is paused while the victim is dead or in stasis. \
 		For more simple humanoids, such as monkeys, the transformation is permanent. \
 		Does not provide a warning to others. Mutations will not be transferred."
-	button_icon_state = "sting_transform"
+	button_icon_state = "transformation_sting"
 	chemical_cost = 33 // Low enough that you can sting only two people in quick succession
 	dna_cost = 2
 	/// A reference to our active profile, which we grab DNA from
@@ -143,7 +150,7 @@
 	name = "False Armblade Sting"
 	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade. Costs 20 chemicals."
 	helptext = "The victim will form an armblade much like a changeling would, except the armblade is dull and useless."
-	button_icon_state = "sting_armblade"
+	button_icon_state = "false_armblade_sting"
 	chemical_cost = 20
 	dna_cost = 1
 
@@ -194,7 +201,7 @@
 	name = "Extract DNA Sting"
 	desc = "We stealthily sting a target and extract their DNA. Costs 25 chemicals."
 	helptext = "Will give us the DNA of our target, allowing us to transform into them. This will render us unable to absorb their body fully later."
-	button_icon_state = "sting_extract"
+	button_icon_state = "extract_dna_sting"
 	chemical_cost = 25
 	dna_cost = 0
 
@@ -215,7 +222,7 @@
 	name = "Mute Sting"
 	desc = "We silently sting a human, completely silencing them for a short time. Costs 20 chemicals."
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
-	button_icon_state = "sting_mute"
+	button_icon_state = "mute_sting"
 	chemical_cost = 20
 	dna_cost = 2
 
@@ -229,7 +236,7 @@
 	name = "Blind Sting"
 	desc = "We temporarily blind our victim. Costs 25 chemicals."
 	helptext = "This sting completely blinds a target for a short time, and leaves them with blurred vision for a long time. Does not work if target has robotic or missing eyes."
-	button_icon_state = "sting_blind"
+	button_icon_state = "blind_sting"
 	chemical_cost = 25
 	dna_cost = 1
 
@@ -256,7 +263,7 @@
 	desc = "We cause mass terror to our victim. Costs 10 chemicals."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. \
 			The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
-	button_icon_state = "sting_lsd"
+	button_icon_state = "hallucination_sting"
 	chemical_cost = 10
 	dna_cost = 1
 
@@ -275,7 +282,7 @@
 	name = "Cryogenic Sting"
 	desc = "We silently sting our victim with a cocktail of chemicals that freezes them from the inside. Costs 15 chemicals."
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
-	button_icon_state = "sting_cryo"
+	button_icon_state = "cryogenic_sting"
 	chemical_cost = 15
 	dna_cost = 2
 

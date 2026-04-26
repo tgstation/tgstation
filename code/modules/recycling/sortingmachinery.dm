@@ -1,6 +1,7 @@
 /obj/item/delivery
 	icon = 'icons/obj/storage/wrapping.dmi'
 	inhand_icon_state = "deliverypackage"
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	var/giftwrapped = 0
 	var/sort_tag = 0
 	var/obj/item/paper/note
@@ -36,7 +37,7 @@
 		new /obj/effect/decal/cleanable/wrapping(turf_loc)
 	else
 		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)
-		new /obj/item/stack/package_wrap(turf_loc)
+		new /obj/item/stack/package_wrap/one(turf_loc)
 	for(var/atom/movable/movable_content as anything in contents)
 		movable_content.forceMove(turf_loc)
 
@@ -113,18 +114,6 @@
 			sort_tag = dest_tagger.currTag
 			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 			update_appearance()
-	else if(IS_WRITING_UTENSIL(item))
-		if(!user.can_write(item))
-			return
-		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
-		if(!user.can_perform_action(src))
-			return
-		if(!str || !length(str))
-			to_chat(user, span_warning("Invalid text!"))
-			return
-		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-		user.visible_message(span_notice("[user] labels [src] as [str]."))
-		name = "[name] ([str])"
 
 	else if(istype(item, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/wrapping_paper = item
@@ -170,7 +159,7 @@
 		for(var/obj/wrapped_item in get_all_contents())
 			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
 				continue
-			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sales_tagger.cut_multiplier)
+			wrapped_item.AddComponent(/datum/component/pricetag, list(sticker.payments_acc), sales_tagger.cut_multiplier)
 		update_appearance()
 
 	else if(istype(item, /obj/item/barcode))
@@ -188,7 +177,7 @@
 		for(var/obj/wrapped_item in get_all_contents())
 			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
 				continue
-			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
+			wrapped_item.AddComponent(/datum/component/pricetag, list(sticker.payments_acc), sticker.cut_multiplier)
 		update_appearance()
 
 	else if(istype(item, /obj/item/boxcutter))
@@ -204,6 +193,10 @@
 
 	else
 		return ..()
+
+/obj/item/delivery/nameformat(input, user)
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	return "[name] ([input])" // This just repeatedly adds new labels, but i think that's intentional?
 
 /**
  * # Wrapped up crates and lockers - too big to carry.
@@ -270,6 +263,9 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 /obj/item/dest_tagger/borg
 	name = "cyborg destination tagger"

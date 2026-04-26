@@ -227,6 +227,15 @@
 	name = "Infinity Scarf (Worn)"
 	icon_file = 'icons/mob/clothing/neck.dmi'
 
+/datum/greyscale_config/robe_cape
+	name = "Robe Cape"
+	icon_file = 'icons/obj/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/robe_cape.json'
+
+/datum/greyscale_config/robe_cape/worn
+	name = "Robe Cape"
+	icon_file = 'icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/robe_cape_worn.json'
 //
 // GLOVES
 //
@@ -407,6 +416,7 @@
 /datum/greyscale_config/slacks/worn
 	name = "Slacks (Worn)"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/slacks_worn.json'
 
 /datum/greyscale_config/shorts
 	name = "Shorts"
@@ -425,6 +435,7 @@
 /datum/greyscale_config/jeans/worn
 	name = "Jeans (Worn)"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jeans_worn.json'
 
 /datum/greyscale_config/jeanshorts
 	name = "Jean Shorts"
@@ -647,6 +658,15 @@
 	name = "Glow Shoes (Worn)"
 	icon_file = 'icons/mob/clothing/feet.dmi'
 
+/datum/greyscale_config/lizard_shoes
+	name = "Lizardskin Boots"
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lizard_shoes.json'
+
+/datum/greyscale_config/lizard_shoes/worn
+	name = "Lizardskin Boots (Worn)"
+	icon_file = 'icons/mob/clothing/feet.dmi'
+
 //
 // ACCESSORIES
 //
@@ -669,13 +689,26 @@
 	name = "Waistcoat (Worn)"
 	icon_file = 'icons/mob/clothing/accessories.dmi'
 
+/datum/greyscale_config/sweatervest
+	name = "Sweater Vest"
+	icon_file = 'icons/obj/clothing/accessories.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sweatervest.json'
+
+/datum/greyscale_config/sweatervest/worn
+	name = "Sweater Vest (Worn)"
+	icon_file = 'icons/mob/clothing/accessories.dmi'
+
 // Digi Stuff
 
 /datum/greyscale_config/digitigrade
 	name = "Digitigrade Clothes"
-	icon_file = 'icons/mob/clothing/digi_template.dmi'
+	icon_file = 'icons/mob/clothing/digi_template_equpiment.dmi'
 	json_config = 'code/datums/greyscale/json_configs/digitigrade.json'
 
+/datum/greyscale_config/digitigrade_underwear
+	name = "Digitigrade Underwear"
+	icon_file = 'icons/mob/clothing/digi_template_underwear.dmi'
+	json_config = 'code/datums/greyscale/json_configs/digitigrade_underwear.json'
 
 //
 // SUIT + HEAD
@@ -718,6 +751,46 @@
 /datum/greyscale_config/heck_helmet/worn
 	name = "H.E.C.K. Helmet (Worn)"
 	icon_file = 'icons/mob/clothing/head/helmet.dmi'
+
+/datum/greyscale_config/hoodie_pullover
+	name = "Pullover Hoodie"
+	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pullover.json'
+
+/datum/greyscale_config/hoodie_pullover/worn
+	name = "Pullover Hoodie (Worn)"
+	icon_file = 'icons/mob/clothing/suits/wintercoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pullover_worn.json'
+
+/datum/greyscale_config/hoodie_pullover_hood
+	name = "Pullover Hood"
+	icon_file = 'icons/obj/clothing/head/winterhood.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pullover_hood.json'
+
+/datum/greyscale_config/hoodie_pullover_hood/worn
+	name = "Pullover Hood (Worn)"
+	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pullover_hood_worn.json'
+
+/datum/greyscale_config/hoodie_zipup
+	name = "Zipup Hoodie"
+	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/zipup.json'
+
+/datum/greyscale_config/hoodie_zipup/worn
+	name = "Zipup Hoodie (Worn)"
+	icon_file = 'icons/mob/clothing/suits/wintercoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/zipup_worn.json'
+
+/datum/greyscale_config/hoodie_zipup_hood
+	name = "Zipup Hood"
+	icon_file = 'icons/obj/clothing/head/winterhood.dmi'
+	json_config = 'code/datums/greyscale/json_configs/zipup_hood.json'
+
+/datum/greyscale_config/hoodie_zipup_hood/worn
+	name = "Zipup Hood (Worn)"
+	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
+	json_config = 'code/datums/greyscale/json_configs/zipup_hood_worn.json'
 
 //
 // COSTUMES
@@ -878,6 +951,15 @@
 
 /datum/greyscale_config/jester_hat/worn
 	name = "Jester Hat (Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
+/datum/greyscale_config/lizard_hat
+	name = "Lizardskin Cloche Hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lizard_hat.json'
+
+/datum/greyscale_config/lizard_hat/worn
+	name = "Lizardskin Cloche Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 
 /datum/greyscale_config/fedora

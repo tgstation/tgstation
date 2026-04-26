@@ -93,7 +93,6 @@
 		return loc_atom.relaymove(mob, direct)
 
 	if(!mob.Process_Spacemove(direct))
-		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE_NOGRAV, args)
 		return FALSE
 
 	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_MOVE, args) & COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE)
@@ -283,9 +282,6 @@
 	if (SEND_SIGNAL(src, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, movement_dir, continuous_move, backup) & COMPONENT_PREVENT_SPACEMOVE_HALT)
 		return FALSE
 
-	if (drift_handler?.attempt_halt(movement_dir, continuous_move, backup))
-		return FALSE
-
 	if(continuous_move || !istype(backup) || !movement_dir || backup.anchored)
 		return TRUE
 
@@ -382,9 +378,13 @@
  * force_drop = the slip forces them to drop held items
  */
 /mob/proc/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
-	add_mob_memory(/datum/memory/was_slipped, antagonist = slipped_on)
-
 	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, daze, force_drop)
+
+/mob/living/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
+	add_mob_memory(/datum/memory/was_slipped, antagonist = slipped_on)
+	add_mood_event("slipped", /datum/mood_event/slipped)
+	add_personality_mood_to_viewers(src, "slip_observed", list(/datum/personality/whimsical = /datum/mood_event/whimsical_slip), range = 5)
+	return ..()
 
 //bodypart selection verbs - Cyberboss
 //8: repeated presses toggles through head - eyes - mouth
@@ -394,7 +394,7 @@
 
 ///Validate the client's mob has a valid zone selected
 /client/proc/check_has_body_select()
-	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /atom/movable/screen/zone_sel)
+	return istype(mob?.hud_used?.screen_objects[HUD_MOB_ZONE_SELECTOR], /atom/movable/screen/zone_sel)
 
 /**
  * Hidden verbs to set desired body target zone
@@ -419,7 +419,7 @@
 		else
 			next_in_line = BODY_ZONE_HEAD
 
-	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(next_in_line, mob)
 
 ///Hidden verb to target the head, unbound by default.
@@ -430,7 +430,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_HEAD, mob)
 
 ///Hidden verb to target the eyes, bound to 7
@@ -441,7 +441,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_PRECISE_EYES, mob)
 
 ///Hidden verb to target the mouth, bound to 9
@@ -452,7 +452,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_PRECISE_MOUTH, mob)
 
 ///Hidden verb to target the right arm, bound to 4
@@ -463,7 +463,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_R_ARM, mob)
 
 ///Hidden verb to target the chest, bound to 5
@@ -474,7 +474,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_CHEST, mob)
 
 ///Hidden verb to target the left arm, bound to 6
@@ -485,7 +485,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_L_ARM, mob)
 
 ///Hidden verb to target the right leg, bound to 1
@@ -496,7 +496,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_R_LEG, mob)
 
 ///Hidden verb to target the groin, bound to 2
@@ -507,7 +507,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_PRECISE_GROIN, mob)
 
 ///Hidden verb to target the left leg, bound to 3
@@ -518,7 +518,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_L_LEG, mob)
 
 ///Verb to toggle the walk or run status
@@ -540,11 +540,9 @@
 		move_intent = MOVE_INTENT_WALK
 	else
 		move_intent = MOVE_INTENT_RUN
-	if(hud_used?.static_inventory)
-		for(var/atom/movable/screen/mov_intent/selector in hud_used.static_inventory)
-			selector.update_appearance()
-	update_move_intent_slowdown()
 
+	hud_used?.screen_objects[HUD_MOB_MOVE_INTENT]?.update_appearance()
+	update_move_intent_slowdown()
 	SEND_SIGNAL(src, COMSIG_MOVE_INTENT_TOGGLED)
 
 ///Moves a mob upwards in z level

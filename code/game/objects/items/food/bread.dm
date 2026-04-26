@@ -22,7 +22,7 @@
 
 /obj/item/food/bread/make_processable()
 	if (slice_type)
-		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 		AddElement(/datum/element/processable, TOOL_SAW, slice_type, yield, 4 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 // Abstract parent object for sliced bread items. Should not be made obtainable in game.
@@ -240,7 +240,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/bread/tofu
-	name = "Tofubread"
+	name = "tofubread"
 	desc = "Like meatbread but for vegetarians. Not guaranteed to give superpowers."
 	icon_state = "tofubread"
 	food_reagents = list(
@@ -507,7 +507,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("raw egg" = 2, "soaked bread" = 1)
-	foodtypes = GRAIN | RAW | BREAKFAST | MEAT
+	foodtypes = GRAIN | RAW | BREAKFAST | MEAT | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -524,7 +524,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("french toast" = 1, "syrup" = 1, "golden deliciousness" = 1)
-	foodtypes = GRAIN | BREAKFAST | MEAT
+	foodtypes = GRAIN | BREAKFAST | MEAT | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 

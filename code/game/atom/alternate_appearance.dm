@@ -110,6 +110,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	)
 
 /datum/atom_hud/alternate_appearance/basic/New(key, image/I, options = AA_TARGET_SEE_APPEARANCE)
+	signals_registering = string_list(signals_registering)
 	..()
 	transfer_overlays = options & AA_MATCH_TARGET_OVERLAYS
 	image = I
@@ -228,7 +229,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/heretic
 
-/datum/atom_hud/alternate_appearance/basic/heretic/mobShouldSee(mob/M)
-	if(IS_HERETIC(M))
+/datum/atom_hud/alternate_appearance/basic/heretic/mobShouldSee(mob/viewer)
+	if(IS_HERETIC_OR_MONSTER(viewer))
 		return TRUE
 	return FALSE

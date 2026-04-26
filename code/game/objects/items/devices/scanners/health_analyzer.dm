@@ -21,13 +21,16 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT *2)
 	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
+	custom_price = PAYCHECK_COMMAND
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	/// Verbose/condensed
 	var/mode = SCANNER_VERBOSE
 	/// HEALTH/WOUND
 	var/scanmode = SCANMODE_HEALTH
 	/// Advanced health analyzer
 	var/advanced = FALSE
-	custom_price = PAYCHECK_COMMAND
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text
@@ -77,7 +80,7 @@
 			span_notice("You stupidly try to analyze [scan_turf]'s vitals!"),
 		)
 
-		var/floor_text = "<span class='info'>Analyzing results for <b>[scan_turf]</b> ([station_time_timestamp()]):</span><br>"
+		var/floor_text = "<span class='info'>Analyzing results for <b>[scan_turf]</b> ([round_timestamp()]):</span><br>"
 		floor_text += "<span class='info ml-1'>Overall status: <i>Unknown</i></span><br>"
 		floor_text += "<span class='alert ml-1'>Subject lacks a brain.</span><br>"
 		floor_text += "<span class='info ml-1'>Body temperature: [scan_turf?.return_air()?.return_temperature() || "???"]</span><br>"
@@ -153,10 +156,10 @@
 	var/list/render_list = list()
 
 	// Damage specifics
-	var/oxy_loss = target.getOxyLoss()
-	var/tox_loss = target.getToxLoss()
-	var/fire_loss = target.getFireLoss()
-	var/brute_loss = target.getBruteLoss()
+	var/oxy_loss = target.get_oxy_loss()
+	var/tox_loss = target.get_tox_loss()
+	var/fire_loss = target.get_fire_loss()
+	var/brute_loss = target.get_brute_loss()
 	var/mob_status = (!target.appears_alive() ? span_alert("<b>Deceased</b>") : "<b>[round(target.health / target.maxHealth, 0.01) * 100]% healthy</b>")
 
 	if(HAS_TRAIT(target, TRAIT_FAKEDEATH) && target.stat != DEAD)
@@ -165,7 +168,7 @@
 			oxy_loss += 200 - (oxy_loss + tox_loss + fire_loss + brute_loss)
 			oxy_loss = clamp(oxy_loss, 0, 200)
 
-	render_list += "[span_info("Analyzing results for <b>[target]</b> ([station_time_timestamp()]):")]<br><span class='info ml-1'>Overall status: [mob_status]</span><br>"
+	render_list += "[span_info("Analyzing results for <b>[target]</b> ([round_timestamp()]):")]<br><span class='info ml-1'>Overall status: [mob_status]</span><br>"
 
 	if(!advanced && target.has_reagent(/datum/reagent/inverse/technetium))
 		advanced = TRUE
@@ -175,22 +178,24 @@
 	// Husk detection
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		if(advanced)
-			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
-				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
-			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
+			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant.", tochat)].</span><br>"
-			else
+			else if(HAS_TRAIT_FROM(target, TRAIT_HUSK, SKELETON_TRAIT))
+				render_list += "<span class='alert ml-1'>Subject has been husked due to severe flesh loss.</span><br>"
+			else if(!HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN)) // prioritize showing unknown causes over burns
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span><br>"
+			else
+				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
 
 		else
 			render_list += "<span class='alert ml-1'>Subject has been husked.</span><br>"
 
-	if(target.getStaminaLoss())
+	if(target.get_stamina_loss())
 		if(advanced)
-			render_list += "<span class='alert ml-1'>Fatigue level: [target.getStaminaLoss()]%.</span><br>"
+			render_list += "<span class='alert ml-1'>Fatigue level: [target.get_stamina_loss()]%.</span><br>"
 		else
 			render_list += "<span class='alert ml-1'>Subject appears to be suffering from fatigue.</span><br>"
-	
+
 	// Check for brain - both organic (carbon) and synthetic (cyborg MMI)
 	var/has_brain = FALSE
 	if(target.get_organ_slot(ORGAN_SLOT_BRAIN))
@@ -199,7 +204,7 @@
 		var/mob/living/silicon/robot/cyborg_target = target
 		if(cyborg_target.mmi?.brain)
 			has_brain = TRUE
-	
+
 	if(!has_brain) // kept exclusively for soul purposes
 		render_list += "<span class='alert ml-1'>Subject lacks a brain.</span><br>"
 
@@ -214,7 +219,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/carbontarget = target
 		var/any_damage = brute_loss > 0 || fire_loss > 0 || oxy_loss > 0 || tox_loss > 0 || fire_loss > 0
-		var/any_missing = length(carbontarget.bodyparts) < (carbontarget.dna?.species?.max_bodypart_count || 6)
+		var/any_missing = length(carbontarget.get_missing_limbs())
 		var/any_wounded = length(carbontarget.all_wounds)
 		var/any_embeds = carbontarget.has_embedded_objects()
 		if(any_damage || (mode == SCANNER_VERBOSE && (any_missing || any_wounded || any_embeds)))
@@ -249,7 +254,7 @@
 						dmgreport += "</tr>"
 						dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Physical trauma: [conditional_tooltip("Dismembered", "Reattach or replace surgically.", tochat)]</span></td></tr>"
 						continue
-					var/has_any_embeds = length(limb.embedded_objects) >= 1
+					var/has_any_embeds = LAZYLEN(limb.embedded_objects) >= 1
 					var/has_any_wounds = length(limb.wounds) >= 1
 					var/is_damaged = limb.burn_dam > 0 || limb.brute_dam > 0
 					if(!is_damaged && (zone != BODY_ZONE_CHEST || (tox_loss <= 0 && oxy_loss <= 0)) && !has_any_embeds && !has_any_wounds)
@@ -368,15 +373,16 @@
 	// Blood Level
 	var/datum/blood_type/blood_type = target.get_bloodtype()
 	if(blood_type)
-		var/blood_percent = round((target.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+		var/cached_blood_volume = target.get_blood_volume(apply_modifiers = TRUE)
+		var/blood_percent = round((cached_blood_volume / BLOOD_VOLUME_NORMAL) * 100)
 		var/blood_type_format
 		var/level_format
-		if(target.blood_volume <= BLOOD_VOLUME_SAFE && target.blood_volume > BLOOD_VOLUME_OKAY)
-			level_format = "LOW [blood_percent]%, [target.blood_volume] cl"
+		if(cached_blood_volume <= BLOOD_VOLUME_SAFE && cached_blood_volume > BLOOD_VOLUME_OKAY)
+			level_format = "LOW [blood_percent]%, [cached_blood_volume] cl"
 			if (blood_type.restoration_chem)
 				level_format = conditional_tooltip(level_format, "Recommendation: [blood_type.restoration_chem::name] supplement.", tochat)
-		else if(target.blood_volume <= BLOOD_VOLUME_OKAY)
-			level_format = "<b>CRITICAL [blood_percent]%</b>, [target.blood_volume] cl"
+		else if(cached_blood_volume <= BLOOD_VOLUME_OKAY)
+			level_format = "<b>CRITICAL [blood_percent]%</b>, [cached_blood_volume] cl"
 			var/recommendation = list()
 			if (blood_type.restoration_chem)
 				recommendation += "[blood_type.restoration_chem::name] supplement"
@@ -388,7 +394,7 @@
 				recommendation += "immediate [blood_type.get_blood_name()] transufion"
 			level_format = conditional_tooltip(level_format, "Recommendation: [english_list(recommendation, and_text = " or ")].", tochat)
 		else
-			level_format = "[blood_percent]%, [target.blood_volume] cl"
+			level_format = "[blood_percent]%, [cached_blood_volume] cl"
 
 		if (blood_type.get_type())
 			blood_type_format = "type: [blood_type.get_type()]"
@@ -398,7 +404,7 @@
 					compatible_types_readable |= initial(comp_blood_type.name)
 				blood_type_format = span_tooltip("Can receive from types [english_list(compatible_types_readable)].", blood_type_format)
 
-		render_list += "<span class='[target.blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
+		render_list += "<span class='[cached_blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
 
 	var/blood_alcohol_content = target.get_blood_alcohol_content()
 	if(blood_alcohol_content > 0)
@@ -416,39 +422,30 @@
 		if(!disease_hr)
 			render_list += "<hr>"
 			disease_hr = TRUE
+		var/cure_text
+		if(istype(disease, /datum/disease/advance))
+			var/datum/disease/advance/advanced_disease = disease
+			var/remedies = list()
+			var/remedy_limit = advanced ? 3 : 2
+			for(var/datum/symptom/each_symptom as anything in advanced_disease.symptoms)
+				if(!each_symptom.symptom_cure)
+					continue
+				var/datum/reagent/each_cure = each_symptom.symptom_cure
+				if(!each_symptom.neutered && !(each_cure::name in remedies))
+					remedies += each_cure::name
+				if(length(remedies) >= remedy_limit)
+					break
+			cure_text = english_list(remedies, nothing_text = "Nothing")
+		else
+			cure_text = disease.cure_text
 		render_list += "<span class='alert ml-1'>\
 			<b>Warning: [disease.form] detected</b><br>\
 			<div class='ml-2'>\
 			Name: [disease.name].<br>\
 			Type: [disease.spread_text].<br>\
 			Stage: [disease.stage]/[disease.max_stages].<br>\
-			Possible Cure: [disease.cure_text]</div>\
+			Possible Cure: [cure_text]</div>\
 			</span>"
-
-
-	// Lungs
-	var/obj/item/organ/lungs/lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if (lungs)
-		var/initial_pressure_mult = lungs::received_pressure_mult
-		if (lungs.received_pressure_mult != initial_pressure_mult)
-			var/tooltip
-			var/dilation_text
-			var/beginning_text = "Lung Dilation: "
-			if (lungs.received_pressure_mult > initial_pressure_mult) // higher than usual
-				beginning_text = span_blue("<b>[beginning_text]</b>")
-				dilation_text = span_blue("[(lungs.received_pressure_mult * 100) - 100]%")
-				tooltip = "Subject's lungs are dilated and breathing more air than usual. Increases the effectiveness of healium and other gases."
-			else
-				beginning_text = span_danger("<b>[beginning_text]</b>")
-				if (lungs.received_pressure_mult <= 0) // lethal
-					dilation_text = span_bolddanger("[lungs.received_pressure_mult * 100]%")
-					tooltip = "Subject's lungs are completely shut. Subject is unable to breathe and requires emergency surgery. If asthmatic, perform asthmatic bypass surgery and adminster albuterol inhalant. Otherwise, replace lungs."
-				else
-					dilation_text = span_danger("[lungs.received_pressure_mult * 100]%")
-					tooltip = "Subject's lungs are partially shut. If unable to breathe, administer a high-pressure internals tank or replace lungs. If asthmatic, inhaled albuterol or bypass surgery will likely help."
-
-			var/lung_message = beginning_text + conditional_tooltip(dilation_text, tooltip, TRUE)
-			render_list += lung_message
 
 	// Time of death
 	if(target.station_timestamp_timeofdeath && !target.appears_alive())
@@ -477,11 +474,12 @@
 	var/obj/item/paper/medical_report/report_paper = new(get_turf(src))
 
 	report_paper.color = "#99ccff"
-	report_paper.name = "health scan report - [station_time_timestamp()]"
-	var/report_text = "<center><B>Health scan report. Time of retrieval: [station_time_timestamp()]</B></center><HR>"
+	report_paper.name = "health scan report - [server_timestamp(format = "hh:mm", ic_time = TRUE)]"
+	var/report_text = "<center><B>Health scan report</br>\
+		Time of retrieval: [UNDERLINED_HTML_TEXT("[server_timestamp(format = "hh:mm", ic_time = TRUE)]", "Shift Time: [round_timestamp(format = "hh:mm")]")]</B></center><HR>"
 	report_text += last_scan_text
 
-	report_paper.add_raw_text(report_text)
+	report_paper.add_raw_text(report_text, advanced_html = TRUE)
 	report_paper.update_appearance()
 
 	user.put_in_hands(report_paper)
@@ -519,7 +517,7 @@
 	REMOVE_TRAIT(target, TRAIT_RECENTLY_TREATED, ANALYZER_TRAIT)
 	return TRUE
 
-/proc/chemscan(mob/living/user, mob/living/target, reagent_types_to_check = null)
+/proc/chemscan(mob/living/user, mob/living/target, reagent_types_to_check = null, tochat = TRUE)
 	if(user.incapacitated)
 		return
 
@@ -588,7 +586,10 @@
 				render_list += "<span class='alert ml-2'>[allergies]</span><br>"
 
 		// we handled the last <br> so we don't need handholding
-		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		if(tochat)
+			to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		else
+			return jointext(render_list, "")
 
 /obj/item/healthanalyzer/click_alt(mob/user)
 	if(mode == SCANNER_NO_MODE)
@@ -691,7 +692,7 @@
 		show_emotion(AID_EMOTION_HAPPY)
 
 /obj/item/healthanalyzer/simple/proc/violence_damage(mob/living/user)
-	user.adjustBruteLoss(4)
+	user.adjust_brute_loss(4)
 
 /obj/item/healthanalyzer/simple/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -759,7 +760,7 @@
 	scan_for_what = "diseases"
 
 /obj/item/healthanalyzer/simple/disease/violence_damage(mob/living/user)
-	user.adjustBruteLoss(1)
+	user.adjust_brute_loss(1)
 	user.reagents.add_reagent(/datum/reagent/toxin, rand(1, 3))
 
 /obj/item/healthanalyzer/simple/disease/do_the_scan(mob/living/carbon/scanning, mob/living/user)
@@ -787,8 +788,16 @@
 	var/list/render = list()
 	for(var/datum/disease/disease as anything in patient.diseases)
 		if(!(disease.visibility_flags & HIDDEN_SCANNER))
+			var/disease_cure = disease.cure_text
+			if(istype(disease, /datum/disease/advance))
+				var/datum/disease/advance/advanced_disease = disease
+				for(var/datum/symptom/each_symptom as anything in advanced_disease.symptoms)
+					if(!each_symptom.neutered && each_symptom.symptom_cure)
+						var/datum/reagent/each_cure = each_symptom.symptom_cure
+						disease_cure = each_cure::name
+						break // We only get one
 			render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b><br>\
-			<div class='ml-2'>Name: [disease.name].<br>Type: [disease.spread_text].<br>Stage: [disease.stage]/[disease.max_stages].<br>Possible Cure: [disease.cure_text]</div>\
+			<div class='ml-2'>Name: [disease.name].<br>Type: [disease.spread_text].<br>Stage: [disease.stage]/[disease.max_stages].<br>Possible Cure: [disease_cure]</div>\
 			</span>"
 
 	if(!length(render))

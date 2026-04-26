@@ -18,6 +18,8 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 /// Global assoc list of required mapping items, [item typepath] to [required item datum].
 GLOBAL_LIST_EMPTY(required_map_items)
 
+GLOBAL_LIST_EMPTY(test_run_times)
+
 /// A list of every test that is currently focused.
 /// Use the PERFORM_ALL_TESTS macro instead.
 GLOBAL_VAR_INIT(focused_tests, focused_tests())
@@ -49,6 +51,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/succeeded = TRUE
 	var/list/allocated
 	var/list/fail_reasons
+	var/times_to_run = 1
 
 	/// List of atoms that we don't want to ever initialize in an agnostic context, like for Create and Destroy. Stored on the base datum for usability in other relevant tests that need this data.
 	var/static/list/uncreatables = null
@@ -67,9 +70,14 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		uncreatables = build_list_of_uncreatables()
 
 	allocated = new
+
 	run_loc_floor_bottom_left = get_turf(locate(/obj/effect/landmark/unit_test_bottom_left) in GLOB.landmarks_list)
 	run_loc_floor_top_right = get_turf(locate(/obj/effect/landmark/unit_test_top_right) in GLOB.landmarks_list)
 
+	if(priority > TEST_CREATE_AND_DESTROY) //the create and destroy test WILL wreck havok in the unit test room. You CANNOT stop the inevitable.
+		return
+
+	//Make sure that the top and bottom locations in the diagonal are floors. Anything else may get in the way of several tests.
 	TEST_ASSERT(isfloorturf(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not a floor ([run_loc_floor_bottom_left])")
 	TEST_ASSERT(isfloorturf(run_loc_floor_top_right), "run_loc_floor_top_right was not a floor ([run_loc_floor_top_right])")
 
@@ -97,6 +105,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// Allocates an instance of the provided type, and places it somewhere in an available loc
 /// Instances allocated through this proc will be destroyed when the test is over
 /datum/unit_test/proc/allocate(type, ...)
+	if(priority > TEST_CREATE_AND_DESTROY) //I'm not using TEST_ASSERT here since these are just numbers that tell nothing useful about the problem.
+		TEST_FAIL("allocate() was called for a unit test after 'create_and_destroy' has finished. The unit test room is no longer a reliable testing ground for atoms.")
+		return null //you deserve runtime errors for it
 	var/list/arguments = args.Copy(2)
 	if(ispath(type, /atom))
 		if (!arguments.len)
@@ -204,7 +215,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	else
 
 		test.Run()
-		test.restore_atmos()
+		if(test.priority < TEST_CREATE_AND_DESTROY) //We shouldn't care about restoring atmos after create_and_destroy.
+			test.restore_atmos()
 
 		duration = REALTIMEOFDAY - duration
 		GLOB.current_test = null
@@ -228,6 +240,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 			log_test(message)
 
 		test_output_desc += " [duration / 10]s"
+		if(duration > 10)
+			GLOB.test_run_times[test_path] = duration
 		if (test.succeeded)
 			log_world("[TEST_OUTPUT_GREEN("PASS")] [test_output_desc]")
 
@@ -245,21 +259,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// It is appreciated to add the reason why the atom shouldn't be initialized if you add it to this list.
 /datum/unit_test/proc/build_list_of_uncreatables()
 	RETURN_TYPE(/list)
-	var/list/returnable_list = list()
-	// The following are just generic, singular types.
-	returnable_list = list(
-		//Never meant to be created, errors out the ass for mobcode reasons
-		/mob/living/carbon,
-		//And another
-		/obj/item/slimecross/recurring,
-		//This should be obvious
-		/obj/machinery/doomsday_device,
+	// The following are just generic, singular types
+	var/list/returnable_list = list(
 		//Yet more templates
 		/obj/machinery/restaurant_portal,
-		//Template type
-		/obj/machinery/power/turbine,
-		//Template type
-		/obj/effect/mob_spawn,
 		//Template type
 		/obj/structure/holosign/robot_seat,
 		//Singleton
@@ -268,22 +271,22 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/item/bodypart,
 		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
 		/obj/merge_conflict_marker,
-		//briefcase launchpads erroring
-		/obj/machinery/launchpad/briefcase,
-		//Wings abstract path
-		/obj/item/organ/wings,
 		//Not meant to spawn without the machine wand
 		/obj/effect/bug_moving,
-		//The abstract grown item expects a seed, but doesn't have one
-		/obj/item/food/grown,
 		//Single use case holder atom requiring a user
 		/atom/movable/looking_holder,
 		//Should not exist outside of holders
 		/obj/effect/decal/cleanable/blood/trail,
+		//Should not exist outside of ethereals
+		/obj/item/stock_parts/power_store/cell/ethereal,
+		// Abstract type, controlled by turfs
+		// Literally errors on creation/deletion
+		/atom/movable/lighting_object,
 	)
 
 	// Everything that follows is a typesof() check.
-
+	returnable_list += typesof(/obj/machinery/doomsday_device) //This should be obvious
+	returnable_list += typesof(/obj/machinery/launchpad/briefcase) //briefcase launchpads erroring
 	//Say it with me now, type template
 	returnable_list += typesof(/obj/effect/mapping_helpers)
 	//This turf existing is an error in and of itself
@@ -353,13 +356,12 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/structure/transport/linear)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	returnable_list += subtypesof(/obj/machinery/airlock_controller)
-	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
-	returnable_list += subtypesof(/atom/movable/screen/escape_menu)
 	// Can't spawn openspace above nothing, it'll get pissy at me
 	returnable_list += typesof(/turf/open/space/openspace)
 	returnable_list += typesof(/turf/open/openspace)
 	returnable_list += typesof(/obj/item/robot_model) // These should never be spawned outside of a robot.
-
+	//A lot of these depend on a hud datum to function and should not be created in a vacuum
+	returnable_list += typesof(/atom/movable/screen)
 	return returnable_list
 
 /proc/RunUnitTests()
@@ -380,10 +382,18 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	//Hell code, we're bound to end the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
-	for(var/unit_path in tests_to_run)
-		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
-		RunUnitTest(unit_path, test_results)
+	for(var/datum/unit_test/unit_path as anything in tests_to_run)
+		var/loop_count = unit_path::times_to_run
+		for(var/i in 1 to loop_count)
+			CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
+			RunUnitTest(unit_path, test_results)
 	SSticker.delay_end = FALSE
+
+	log_world("::group::Expensive Unit Test Times")
+	sortTim(GLOB.test_run_times, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+	for(var/type, duration in GLOB.test_run_times)
+		log_world("[type] took [duration/10]s")
+	log_world("::endgroup::")
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)

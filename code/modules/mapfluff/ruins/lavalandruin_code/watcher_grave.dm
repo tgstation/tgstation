@@ -147,7 +147,7 @@
 	pixel_y = 22
 	alpha = 0
 	/// Who are we following?
-	var/atom/parent
+	var/atom/movable/parent
 	/// Datum which keeps us hanging out with our parent
 	var/datum/movement_detector/tracker
 	/// Type of projectile we fire
@@ -165,6 +165,8 @@
 
 /obj/effect/watcher_orbiter/Initialize(mapload)
 	. = ..()
+	if(LAZYLEN(target_faction))
+		target_faction = string_list(target_faction)
 	START_PROCESSING(SSobj, src)
 
 // Shuttle rotation fucks with our position, we just want to stick with our guy
@@ -182,15 +184,22 @@
 	for (var/mob/living/potential_target in oview(5, src))
 		if (!ismining(potential_target) || potential_target.stat == DEAD)
 			continue
-		if (!faction_check(target_faction, potential_target.faction))
+		if (!potential_target.has_faction(target_faction) || parent.has_ally(potential_target))
 			continue
 		shoot_at(potential_target)
 		return
 
 /// Take a shot
 /obj/effect/watcher_orbiter/proc/shoot_at(atom/target)
+	var/list/ignore_targets = list(parent)
+	if(isliving(parent))
+		var/mob/living/living_parent = parent
+		if(LAZYLEN(living_parent.buckled_mobs))
+			ignore_targets += living_parent.buckled_mobs
+		if(living_parent.buckled)
+			ignore_targets += living_parent.buckled
 	COOLDOWN_START(src, shot_cooldown, fire_delay)
-	fire_projectile(projectile_type, target, projectile_sound, ignore_targets = list(parent))
+	fire_projectile(projectile_type, target, projectile_sound, ignore_targets = ignore_targets)
 
 /// Set ourselves up to track and orbit around a guy
 /obj/effect/watcher_orbiter/proc/follow(atom/movable/target)

@@ -32,7 +32,7 @@
 #define UPDATE_TRANSFORM_ANIMATION_TIME (0.2 SECONDS)
 
 ///Animates source spinning around itself. For docmentation on the args, check atom/proc/SpinAnimation()
-/atom/proc/do_spin_animation(speed = 1 SECONDS, loops = -1, segments = 3, angle = 120, parallel = TRUE)
+/atom/proc/do_spin_animation(speed = 1 SECONDS, loops = -1, segments = 3, angle = 120, parallel = TRUE, tag = null)
 	var/list/matrices = list()
 	for(var/i in 1 to segments-1)
 		var/matrix/segment_matrix = matrix(transform)
@@ -44,7 +44,7 @@
 	speed /= segments
 
 	if(parallel)
-		animate(src, transform = matrices[1], time = speed, loop = loops, flags = ANIMATION_PARALLEL)
+		animate(src, transform = matrices[1], time = speed, loop = loops, flags = ANIMATION_PARALLEL, tag = tag)
 	else
 		animate(src, transform = matrices[1], time = speed, loop = loops)
 	for(var/i in 2 to segments) //2 because 1 is covered above
@@ -78,23 +78,39 @@
  * * clockwise: whether the atom ought to spin clockwise or counter-clockwise
  * * segments: in how many animate calls the rotation is split. Probably unnecessary, but you shouldn't set it lower than 3 anyway.
  * * parallel: whether the animation calls have the ANIMATION_PARALLEL flag, necessary for it to run alongside concurrent animations.
+ * * tag: animation tag to use, for parralel animations only
  */
-/atom/proc/SpinAnimation(speed = 1 SECONDS, loops = -1, clockwise = TRUE, segments = 3, parallel = TRUE)
+/atom/proc/SpinAnimation(speed = 1 SECONDS, loops = -1, clockwise = TRUE, segments = 3, parallel = TRUE, tag = null)
 	if(!segments)
 		return
 	var/segment = 360/segments
 	if(!clockwise)
 		segment = -segment
 	SEND_SIGNAL(src, COMSIG_ATOM_SPIN_ANIMATION, speed, loops, segments, segment)
-	do_spin_animation(speed, loops, segments, segment, parallel)
+	do_spin_animation(speed, loops, segments, segment, parallel, tag)
 
 /// Makes this atom look like a "hologram"
 /// So transparent, blue, with a scanline and an emissive glow
 /// This is acomplished using a combination of filters and render steps/overlays
 /// The degree of the opacity is optional, based off the opacity arg (0 -> 1)
-/atom/proc/makeHologram(opacity = 0.5)
+/// An optional color_override replaces the default blue tint — either a hex string (opacity applied on top) or a color matrix/list (passed through as-is; caller owns its own alpha)
+/// Returns the glow mutable_appearance so callers can cut the overlay later
+/atom/proc/makeHologram(opacity = 0.5, color_override)
 	// First, we'll make things blue (roughly) and sorta transparent
-	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(rgb(125,180,225, opacity * 255)))
+	var/color_value
+	if(islist(color_override))
+		color_value = color_override
+	else
+		var/r = 125
+		var/g = 180
+		var/b = 225
+		if(color_override)
+			var/list/rgb_list = rgb2num(color_override)
+			r = rgb_list[1]
+			g = rgb_list[2]
+			b = rgb_list[3]
+		color_value = rgb(r, g, b, opacity * 255)
+	add_filter("HOLO: Color and Transparent", 1, color_matrix_filter(color_value))
 	// Now we're gonna do a scanline effect
 	// Gonna take this atom and give it a render target, then use it as a source for a filter
 	// (We use an atom because it seems as if setting render_target on an MA is just invalid. I hate this engine)
@@ -127,3 +143,4 @@
 	var/mutable_appearance/glow_appearance = new(glow)
 	add_overlay(glow_appearance)
 	LAZYADD(update_overlays_on_z, glow_appearance)
+	return glow_appearance

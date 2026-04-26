@@ -13,6 +13,7 @@
 	suicide_cry = "FOR NANOTRASEN!!"
 	// Not 'true' antags, this disables certain interactions that assume the owner is a baddie
 	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
+	desensitized_modifier = DESENSITIZED_THRESHOLD * 0.5
 	var/datum/team/ert/ert_team
 	var/leader = FALSE
 	var/datum/outfit/outfit = /datum/outfit/centcom/ert/security

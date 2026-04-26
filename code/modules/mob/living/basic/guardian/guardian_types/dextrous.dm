@@ -15,6 +15,7 @@
 
 /mob/living/basic/guardian/dextrous/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
+	AddComponent(/datum/component/basic_inhands)
 	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
 	AddElement(/datum/element/dextrous, hud_type = hud_type, can_throw = TRUE)
 	AddComponent(/datum/component/personal_crafting)
@@ -24,15 +25,32 @@
 	dropItemToGround(internal_storage)
 	return ..()
 
+/mob/living/basic/guardian/dextrous/create_actions()
+	for (var/action_type in self_actions)
+		if(isnull(action_type)) //no toggle button type
+			continue
+		if (locate(action_type) in actions)
+			continue
+		var/datum/action/new_action = new action_type(src)
+		//Show up at the top left like usual.
+		new_action.default_button_position = /datum/action::default_button_position
+		new_action.Grant(src)
+	update_action_buttons()
+
 /mob/living/basic/guardian/dextrous/examine(mob/user)
 	. = ..()
 	if(isnull(internal_storage) || (internal_storage.item_flags & ABSTRACT))
 		return
 	. += span_info("It is holding [internal_storage.examine_title(user)] in its internal storage.")
 
+/mob/living/basic/guardian/dextrous/manifest_effects()
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, GUARDIAN_RECALLED)
+
 /mob/living/basic/guardian/dextrous/recall_effects()
 	. = ..()
 	drop_all_held_items()
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, GUARDIAN_RECALLED)
 
 // Bullshit related to having a fake pocket begins here
 
@@ -90,7 +108,7 @@
 /mob/living/basic/guardian/dextrous/proc/update_inv_internal_storage()
 	if(isnull(internal_storage) || isnull(client) || !hud_used?.hud_shown)
 		return
-	internal_storage.screen_loc = ui_id
+	internal_storage.screen_loc = ui_back
 	client.screen += internal_storage
 
 /mob/living/basic/guardian/dextrous/regenerate_icons()

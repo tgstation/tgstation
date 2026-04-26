@@ -181,7 +181,7 @@
  * Goes through hud_possible list and adds the images to the hud_list variable (if not already cached)
  */
 /atom/proc/prepare_huds()
-	if(hud_list) // I choose to be lienient about people calling this proc more then once
+	if(hud_list) // I choose to be lenient about people calling this proc more then once
 		return
 	hud_list = list()
 	for(var/hud in hud_possible)
@@ -243,7 +243,7 @@
 				type = alt_type
 				. = FALSE
 
-		if(type & MSG_AUDIBLE && !can_hear())//Hearing related
+		if(type & MSG_AUDIBLE && HAS_TRAIT(src, TRAIT_DEAF))//Hearing related
 			if(!alt_msg)
 				return FALSE
 			else
@@ -286,11 +286,8 @@
 
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
-	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
+	var/list/hearers = mob_only_listeners(get_hearers_in_view(vision_distance, src)) //caches the hearers and then removes ignored mobs.
 	hearers -= ignored_mobs
-
-	if(self_message)
-		hearers -= src
 
 	var/raw_msg = message
 	if(visible_message_flags & WITH_EMPHASIS_MESSAGE)
@@ -298,32 +295,33 @@
 	if(visible_message_flags & EMOTE_MESSAGE)
 		message = span_emote("<b>[src]</b> [message]")
 
-	for(var/mob/M in hearers)
-		if(!M.client)
+	for(var/mob/hearing_mob as anything in hearers)
+		if(!hearing_mob?.client)
+			continue
+		if(self_message && hearing_mob == src)
 			continue
 
 		//This entire if/else chain could be in two lines but isn't for readibilties sake.
 		var/msg = message
 		var/msg_type = MSG_VISUAL
 
-		if(M.see_invisible < invisibility)//if src is invisible to M
+		if(hearing_mob.see_invisible < invisibility)//if src is invisible to M
 			msg = blind_message
 			msg_type = MSG_AUDIBLE
 		else if(T != loc && T != src) //if src is inside something and not a turf.
-			if(M != loc) // Only give the blind message to hearers that aren't the location
+			if(hearing_mob != loc) // Only give the blind message to hearers that aren't the location
 				msg = blind_message
 				msg_type = MSG_AUDIBLE
-		else if(!HAS_TRAIT(M, TRAIT_HEAR_THROUGH_DARKNESS) && M.lighting_cutoff < LIGHTING_CUTOFF_HIGH && T.is_softly_lit() && !in_range(T,M)) //if it is too dark, unless we're right next to them.
+		else if(!HAS_TRAIT(hearing_mob, TRAIT_HEAR_THROUGH_DARKNESS) && hearing_mob.lighting_cutoff < LIGHTING_CUTOFF_HIGH && T.is_softly_lit() && !in_range(T,hearing_mob)) //if it is too dark, unless we're right next to them.
 			msg = blind_message
 			msg_type = MSG_AUDIBLE
 		if(!msg)
 			continue
 
-		if(visible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, visible_message_flags) && !M.is_blind())
-			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = visible_message_flags)
+		if(visible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(hearing_mob, visible_message_flags) && !hearing_mob.is_blind())
+			hearing_mob.create_chat_message(src, raw_message = raw_msg, runechat_flags = visible_message_flags)
 
-		M.show_message(msg, msg_type, blind_message, MSG_AUDIBLE)
-
+		hearing_mob.show_message(msg, msg_type, blind_message, MSG_AUDIBLE)
 
 ///Adds the functionality to self_message.
 /mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
@@ -360,18 +358,20 @@
  * * audible_message_flags (optional) is the type of message being sent.
  */
 /atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE)
-	var/list/hearers = get_hearers_in_view(hearing_distance, src)
-	if(self_message)
-		hearers -= src
+	var/list/hearers = mob_only_listeners(get_hearers_in_view(hearing_distance, src))
 	var/raw_msg = message
 	if(audible_message_flags & WITH_EMPHASIS_MESSAGE)
 		message = apply_message_emphasis(message)
 	if(audible_message_flags & EMOTE_MESSAGE)
 		message = span_emote("<b>[src]</b> [message]")
-	for(var/mob/M in hearers)
-		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, audible_message_flags) && M.can_hear())
-			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = audible_message_flags)
-		M.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
+	for(var/mob/hearing_mob as anything in hearers)
+		if(!hearing_mob?.client)
+			continue
+		if(self_message && hearing_mob == src)
+			continue
+		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(hearing_mob, audible_message_flags) && !HAS_TRAIT(hearing_mob, TRAIT_DEAF))
+			hearing_mob.create_chat_message(src, raw_message = raw_msg, runechat_flags = audible_message_flags)
+		hearing_mob.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
 /**
  * Show a message to all mobs in earshot of this one
@@ -405,6 +405,21 @@
 	if(self_runechat && (audible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, audible_message_flags))
 		create_chat_message(src, raw_message = raw_self_message, runechat_flags = audible_message_flags)
 
+/// Gets a linked mob, letting atoms act as proxies for actions that rely on hearing sensitivity.
+/// For example, AIs hearing around their holopads, and dullahans hearing around their heads.
+/// Normal say messages are handled by Hear(), this is for other visible/audible messages
+/atom/movable/proc/get_listening_mob()
+	return
+
+/obj/effect/overlay/holo_pad_hologram/get_listening_mob()
+	return Impersonation
+
+/obj/item/dullahan_relay/get_listening_mob()
+	return owner
+
+/mob/get_listening_mob()
+	return src
+
 ///Returns the client runechat visible messages preference according to the message type.
 /atom/proc/runechat_prefs_check(mob/target, visible_message_flags = NONE)
 	if(!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
@@ -422,9 +437,15 @@
 		return FALSE
 	return TRUE
 
+/mob/dead/observer/runechat_prefs_check(mob/target, visible_message_flags = NONE)
+	if(!..())
+		return FALSE
+	if(!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_ghosts))
+		return FALSE
+	return TRUE
 
 ///Get the item on the mob in the storage slot identified by the id passed in
-/mob/proc/get_item_by_slot(slot_id)
+/mob/proc/get_item_by_slot(slot_id) as /obj/item
 	return null
 
 /// Gets what slot the item on the mob is held in.
@@ -526,11 +547,12 @@
  */
 /mob/verb/examinate(atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
-	set category = "IC"
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 
 /mob/proc/run_examinate(atom/examinify, force_examinate_more = FALSE)
+	if(QDELETED(examinify)) // since this can run async we might have had the atom get qdeleted already
+		return
 
 	if(isturf(examinify) && !(sight & SEE_TURFS) && !(examinify in view(client ? client.view : world.view, src)))
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
@@ -566,13 +588,22 @@
 	if(!result_combined)
 		var/list/result = examinify.examine(src)
 		var/atom_title = examinify.examine_title(src, thats = TRUE)
-		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
+		examining(examinify, result)
+		var/alist/overrides = alist()
+		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result, overrides)
+		if (length(overrides))
+			result = overrides[max(overrides)]
 		if(removes_double_click)
 			result += span_notice("<i>You can <a href=byond://?src=[REF(src)];run_examinate=[REF(examinify)]>examine</a> [examinify] closer...</i>")
-		result_combined = (atom_title ? fieldset_block("[atom_title]", jointext(result, "<br>"), "boxed_message") : boxed_message(jointext(result, "<br>")))
+		result_combined = (atom_title ? fieldset_block("[atom_title].", jointext(result, "<br>"), "boxed_message") : boxed_message(jointext(result, "<br>")))
 
 	to_chat(src, span_infoplain(result_combined))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
+
+/// Handles adding examine messages for the target that are specific to this mob, e.g. a blood worm examining how much blood a living target has.
+/mob/proc/examining(atom/target, list/result)
+	SHOULD_NOT_SLEEP(TRUE)
+	return
 
 /mob/Topic(href, list/href_list)
 	. = ..()
@@ -737,13 +768,13 @@
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()
-	hud_used?.pull_icon?.update_appearance()
+	hud_used?.screen_objects[HUD_MOB_PULL]?.update_appearance()
 
 ///Update the resting hud icon
 /mob/proc/update_rest_hud_icon()
 	if(!hud_used)
 		return FALSE
-	hud_used.rest_icon?.update_appearance()
+	hud_used.screen_objects[HUD_MOB_REST]?.update_appearance()
 	return TRUE
 
 /**
@@ -753,7 +784,7 @@
  */
 /mob/verb/mode()
 	set name = "Activate Held Object"
-	set category = "Object"
+	set category = "IC"
 	set src = usr
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
@@ -854,6 +885,15 @@
 	set category = "OOC"
 	reset_perspective(null)
 
+/**
+ * Helpful for when a players uplink window gets glitched to above their screen.
+ * preventing them from moving the UPLINK window.
+ */
+/mob/verb/reset_ui_positions_for_mob()
+	set name = "Reset UI Positions"
+	set category = "OOC"
+	SStgui.reset_ui_position(src)
+
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
 /mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
 	set name = ".click"
@@ -873,33 +913,6 @@
 	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
 	return .
 
-/**
- * Convert a list of spells into a displyable list for the statpanel
- *
- * Shows charge and other important info
- */
-/mob/proc/get_actions_for_statpanel()
-	var/list/data = list()
-	for(var/datum/action/cooldown/action in actions)
-		var/list/action_data = action.set_statpanel_format()
-		if(!length(action_data))
-			return
-
-		data += list(list(
-			// the panel the action gets displayed to
-			// in the future, this could probably be replaced with subtabs (a la admin tabs)
-			action_data[PANEL_DISPLAY_PANEL],
-			// the status of the action, - cooldown, charges, whatever
-			action_data[PANEL_DISPLAY_STATUS],
-			// the name of the action
-			action_data[PANEL_DISPLAY_NAME],
-			// a ref to the action button of this action for this mob
-			// it's a ref to the button specifically, instead of the action itself,
-			// because statpanel href calls click(), which the action button (not the action itself) handles
-			REF(action.viewers[hud_used]),
-		))
-
-	return data
 
 /mob/proc/swap_hand(held_index, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
@@ -912,7 +925,7 @@
 
 	var/result = perform_hand_swap(held_index)
 	if (result)
-		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS)
+		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, get_active_held_item(), held_item)
 
 	return result
 
@@ -932,10 +945,10 @@
 	active_hand_index = held_index
 	if(hud_used)
 		var/atom/movable/screen/inventory/hand/held_location
-		held_location = hud_used.hand_slots["[previous_index]"]
+		held_location = hud_used.hand_slots[previous_index]
 		if(!isnull(held_location))
 			held_location.update_appearance()
-		held_location = hud_used.hand_slots["[held_index]"]
+		held_location = hud_used.hand_slots[held_index]
 		if(!isnull(held_location))
 			held_location.update_appearance()
 	return TRUE
@@ -1130,24 +1143,6 @@
 /mob/proc/canUseStorage()
 	return FALSE
 
-/*
- * Compare two lists of factions, returning true if any match
- *
- * If exact match is passed through we only return true if both faction lists match equally
- */
-/proc/faction_check(list/faction_A, list/faction_B, exact_match)
-	var/list/match_list
-	if(exact_match)
-		match_list = faction_A&faction_B //only items in both lists
-		var/length = LAZYLEN(match_list)
-		if(length)
-			return (length == LAZYLEN(faction_A)) //if they're not the same len(gth) or we don't have a len, then this isn't an exact match.
-	else
-		match_list = faction_A&faction_B
-		return LAZYLEN(match_list)
-	return FALSE
-
-
 /**
  * Fully update the name of a mob
  *
@@ -1301,8 +1296,7 @@
 	if(!writing_instrument)
 		return FALSE
 
-	var/pen_info = writing_instrument.get_writing_implement_details()
-	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
+	if(!IS_WRITING_UTENSIL(writing_instrument))
 		if(!silent_if_not_writing_tool)
 			to_chat(src, span_warning("You can't write with \the [writing_instrument]!"))
 		return FALSE
@@ -1364,7 +1358,7 @@
  */
 /mob/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /mob ---")
 	VV_DROPDOWN_OPTION(VV_HK_GIB, "Gib")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_AI, "Give AI Controller")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_AI_SPEECH, "Give Random AI Speech")
@@ -1383,6 +1377,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DIRECT_CONTROL, "Give Direct Control")
 	VV_DROPDOWN_OPTION(VV_HK_OFFER_GHOSTS, "Offer Control to Ghosts")
 	VV_DROPDOWN_OPTION(VV_HK_VIEW_PLANES, "View/Edit Planes")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_ACCESS, "Give Access")
 
 /mob/vv_do_topic(list/href_list)
 	. = ..()
@@ -1391,13 +1386,9 @@
 		return
 
 	if(href_list[VV_HK_REGEN_ICONS])
-		if(!check_rights(NONE))
-			return
 		regenerate_icons()
 
 	if(href_list[VV_HK_REGEN_ICONS_FULL])
-		if(!check_rights(NONE))
-			return
 		cut_overlays()
 		regenerate_icons()
 
@@ -1448,14 +1439,16 @@
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_give_direct_control, src)
 
 	if(href_list[VV_HK_OFFER_GHOSTS])
-		if(!check_rights(NONE))
-			return
 		offer_control(src)
 
 	if(href_list[VV_HK_VIEW_PLANES])
 		if(!check_rights(R_DEBUG))
 			return
 		usr.client.edit_plane_masters(src)
+
+	if(href_list[VV_HK_GIVE_ACCESS])
+		AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
+		to_chat(usr, span_notice("Access granted."))
 /**
  * extra var handling for the logging var
  */
@@ -1487,8 +1480,7 @@
 	. = ..()
 	// Queue update if change is small enough (6 is 1% of nutrition softcap)
 	if(abs(change) >= 6)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
 
@@ -1504,10 +1496,17 @@
 	. = ..()
 	// Queue update if change is small enough (6 is 1% of nutrition softcap)
 	if(abs(old_nutrition - nutrition) >= 6)
-		mob_mood?.update_nutrition_moodlets()
-		hud_used?.hunger?.update_hunger_bar()
+		update_nutrition()
 	else
 		living_flags |= QUEUE_NUTRITION_UPDATE
+
+/// Updates nutrition related effects
+/mob/living/proc/update_nutrition()
+	mob_mood?.update_nutrition_moodlets()
+	var/atom/movable/screen/hunger/hunger_bar = hud_used?.screen_objects[HUD_MOB_HUNGER]
+	if (hunger_bar)
+		hunger_bar.update_hunger_bar()
+	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_NUTRITION)
 
 /// Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
@@ -1538,13 +1537,6 @@
 		)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/equipment_speedmod)
-
-///Get all items in our possession that should affect our movespeed
-/mob/proc/get_equipped_speed_mod_items()
-	. = list()
-	for(var/obj/item/thing in held_items)
-		if(thing.item_flags & SLOWS_WHILE_IN_HAND)
-			. += thing
 
 /mob/proc/set_stat(new_stat)
 	if(new_stat == stat)
@@ -1611,6 +1603,18 @@
 		mind.memory_panel = new(usr, mind)
 	mind.memory_panel.ui_interact(usr)
 
+///Shows a tgui window with memories
+/mob/proc/open_memory_panel()
+	if(!mind)
+		var/fail_message = "You have no mind!"
+		if(isobserver(src))
+			fail_message += " You have to be in the current round at some point to have one."
+		to_chat(src, span_warning(fail_message))
+		return
+	if(!mind.memory_panel)
+		mind.memory_panel = new(usr, mind)
+	mind.memory_panel.ui_interact(usr)
+
 /datum/memory_panel
 	var/datum/mind/mind_reference
 	var/client/holder //client of whoever is using this datum
@@ -1665,13 +1669,50 @@
 	for(var/hud_trait in GLOB.trait_to_hud)
 		RegisterSignal(src, SIGNAL_ADDTRAIT(hud_trait), PROC_REF(hud_trait_enabled))
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(hud_trait), PROC_REF(hud_trait_disabled))
+	for(var/hud_trait in GLOB.trait_blockers_to_hud)
+		RegisterSignal(src, SIGNAL_ADDTRAIT(hud_trait), PROC_REF(hud_trait_blocker_gained))
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(hud_trait), PROC_REF(hud_trait_blocker_lost))
 
 /mob/proc/hud_trait_enabled(datum/source, new_trait)
 	SIGNAL_HANDLER
+
+	for(var/blocker, blocked_traits in GLOB.trait_blockers_to_hud)
+		if(HAS_TRAIT(src, blocker) && (new_trait in blocked_traits))
+			return
+
 	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[new_trait]]
 	datahud.show_to(src)
 
-/mob/proc/hud_trait_disabled(datum/source, new_trait)
+/mob/proc/hud_trait_disabled(datum/source, lost_trait)
 	SIGNAL_HANDLER
-	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[new_trait]]
+
+	for(var/blocker, blocked_traits in GLOB.trait_blockers_to_hud)
+		if(HAS_TRAIT(src, blocker) && (lost_trait in blocked_traits))
+			return // it may seem counterintuitive to check for blockers on trait removal, the blocker now has total reign over whether the hud should come back
+
+	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[lost_trait]]
 	datahud.hide_from(src)
+
+/mob/proc/hud_trait_blocker_gained(datum/source, new_trait)
+	SIGNAL_HANDLER
+
+	for(var/trait in GLOB.trait_blockers_to_hud[new_trait])
+		if(!HAS_TRAIT(src, trait))
+			continue
+		var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[trait]]
+		datahud.hide_from(src)
+
+/mob/proc/hud_trait_blocker_lost(datum/source, new_trait)
+	SIGNAL_HANDLER
+
+	for(var/trait in GLOB.trait_blockers_to_hud[new_trait])
+		if(!HAS_TRAIT(src, trait))
+			continue
+		var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[trait]]
+		datahud.show_to(src)
+
+/**
+ * Returns the access list for this mob, most mobs don't have any access.
+ */
+/mob/proc/get_access() as /list
+	return list()

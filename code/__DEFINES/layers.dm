@@ -39,12 +39,11 @@
 #define POINT_PLANE 5
 
 //---------- LIGHTING -------------
-/// Normal 1 per turf dynamic lighting underlays
+/// Normal 1 per turf dynamic lighting objects
 #define LIGHTING_PLANE 10
 
 /// Lighting objects that are "free floating"
 #define O_LIGHTING_VISUAL_PLANE 11
-#define O_LIGHTING_VISUAL_RENDER_TARGET "*O_LIGHT_VISUAL_PLANE"
 
 // Render plate used by overlay lighting to mask turf lights
 #define RENDER_PLANE_TURF_LIGHTING 12
@@ -70,7 +69,9 @@
 
 /// Main game plane to which everything renders, which then is multiplied by light
 /// Should not be lit directly as it is sourced for emissive bloom
-#define RENDER_PLANE_UNLIT_GAME 19
+#define RENDER_PLANE_UNLIT_GAME 18
+
+#define RENDER_PLANE_O_LIGHTING 19
 
 #define RENDER_PLANE_LIGHTING 20
 
@@ -158,6 +159,9 @@
 
 // NOTICE: we break from the pattern of increasing in steps of like 0.01 here
 // Because TOPDOWN_LAYER is 10000 and that's enough to floating point our modifications away
+
+/// Used to shift all topdown layer emissives to a the game plane equivalent layers, as otherwise they render above everything else due to being KEEP_APART
+#define TOPDOWN_TO_EMISSIVE_LAYER(layer) LERP(FLOOR_EMISSIVE_START_LAYER, FLOOR_EMISSIVE_END_LAYER, (layer - (TOPDOWN_LAYER + 1)) / TOPDOWN_LAYER_COUNT)
 
 // Must be equal to the offset of the highest topdown layer
 #define TOPDOWN_LAYER_COUNT 18
@@ -252,6 +256,7 @@
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
 #define TRAM_SIGNAL_LAYER 4.26
+#define EDGED_TURF_LOWER_LAYER 4.28
 #define EDGED_TURF_LAYER 4.3
 #define ON_EDGED_TURF_LAYER 4.35
 #define SPACEVINE_LAYER 4.4

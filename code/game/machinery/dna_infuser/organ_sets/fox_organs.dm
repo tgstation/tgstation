@@ -6,6 +6,6 @@
 	visual = TRUE
 	damage_multiplier = 2
 
-	dna_block = /datum/dna_block/feature/ears
+	dna_block = /datum/dna_block/feature/accessory/ears
 	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears
 	sprite_accessory_override = /datum/sprite_accessory/ears/fox

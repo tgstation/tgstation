@@ -188,6 +188,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon_state = "deck_up"
 	base_icon_state = "deck"
 	obj_flags = UNIQUE_RENAME
+	spawn_blacklisted = TRUE
 	var/flipped = FALSE
 	var/static/radial_draw = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw")
 	var/static/radial_shuffle = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle")

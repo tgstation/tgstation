@@ -70,6 +70,8 @@
 #define CIV_JOB_BITRUN 14
 #define CIV_JOB_RANDOM 15
 
+#define MAXIMUM_BOUNTY_JOBS 14 //Should be equal to the highest numbered non-random job above.
+
 //These defines are to be used to with the payment component, determines which lines will be used during a transaction. If in doubt, go with clinical.
 #define PAYMENT_CLINICAL "clinical"
 #define PAYMENT_FRIENDLY "friendly"
@@ -81,3 +83,24 @@
 #define MARKET_TREND_STABLE 0
 
 #define MARKET_EVENT_PROBABILITY 8 //Probability of a market event firing, in percent. Fires once per material, every stock market tick.
+/// How much of the total value of a bounty cube does the player receive when the cube is exported?
+#define BOUNTY_CUT_STANDARD 0.3
+
+// Fair warning that these defines at present are not used in all tgui, static descriptions, or any varible names or comments
+/// The symbol for the default type of money used in the code.
+#define MONEY_SYMBOL "cr"
+/// The name for the default type of money used in the code.
+#define MONEY_NAME "credits"
+#define MONEY_NAME_SINGULAR "credit"
+#define MONEY_NAME_CAPITALIZED "Credits"
+// Due to the ways macros work, I cant just directly use credit\s.
+// You will need to verify there is no loose use cases of credit\s.
+// As of present there is none left floating around.
+#define MONEY_NAME_AUTOPURAL(amount) "credit[##amount == 1 ? "" : "s"]"
+
+#define MONEY_MINING_SYMBOL "mp"
+#define MONEY_BITRUNNING_SYMBOL "np"
+
+//Mood event from minor slot events like winning/losing a few bits.
+#define SLOTS_MOOD_CATEGORY "slots"
+

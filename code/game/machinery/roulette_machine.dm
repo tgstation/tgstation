@@ -220,11 +220,14 @@
 	cut_overlays()
 	update_appearance()
 	set_light(0)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		living_user.add_mood_event("roulette", /datum/mood_event/slots)
 
 	var/rolled_number = rand(0, 36)
 
 	playsound(src, 'sound/machines/roulette/roulettewheel.ogg', 50)
-	addtimer(CALLBACK(src, PROC_REF(finish_play), player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
+	addtimer(CALLBACK(src, PROC_REF(finish_play), player_id, bet_type, bet_amount, payout, rolled_number, user), 34) //4 deciseconds more so the animation can play
 	addtimer(CALLBACK(src, PROC_REF(finish_play_animation)), 3 SECONDS)
 
 	use_energy(active_power_usage)
@@ -235,7 +238,7 @@
 	playsound(src, 'sound/machines/piston/piston_lower.ogg', 70)
 
 ///Ran after a while to check if the player won or not.
-/obj/machinery/roulette/proc/finish_play(obj/item/card/id/player_id, bet_type, bet_amount, potential_payout, rolled_number)
+/obj/machinery/roulette/proc/finish_play(obj/item/card/id/player_id, bet_type, bet_amount, potential_payout, rolled_number, mob/user)
 	last_spin = rolled_number
 
 	var/is_winner = check_win(bet_type, bet_amount, rolled_number) //Predetermine if we won
@@ -249,17 +252,22 @@
 	handle_color_light(color)
 
 	if(!is_winner)
-		say("You lost! Better luck next time")
+		say("You lost! Better luck next time.")
 		playsound(src, 'sound/machines/synth/synth_no.ogg', 50)
+		if(isliving(user) && (user in viewers(src)))
+			var/mob/living/living_user = user
+			living_user.add_mood_event("roulette", /datum/mood_event/slots/loss)
 		return FALSE
 
 	// Prevents money generation exploits. Doesn't prevent the owner being a scrooge and running away with the money.
 	var/account_balance = my_card?.registered_account?.account_balance
 	potential_payout = (account_balance >= potential_payout) ? potential_payout : account_balance
 
-	say("You have won [potential_payout] credits! Congratulations!")
+	say("You have won [potential_payout] [MONEY_NAME]! Congratulations!")
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50)
-
+	if(isliving(user) && (user in viewers(src)))
+		var/mob/living/living_user = user
+		living_user.add_mood_event("roulette", potential_payout >= ROULETTE_JACKPOT_AMOUNT ? /datum/mood_event/slots/win/jackpot : /datum/mood_event/slots/win/big)
 	dispense_prize(potential_payout)
 
 ///Fills a list of coins that should be dropped.
@@ -433,16 +441,10 @@
 			set_machine_stat(machine_stat | MAINT)
 			icon_state = "open"
 
-/obj/machinery/roulette/proc/shock(mob/user, prb)
+/obj/machinery/roulette/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
 	if(!on) // unpowered, no shock
 		return FALSE
-	if(!prob(prb))
-		return FALSE //you lucked out, no shock for you
-	do_sparks(5, TRUE, src)
-	if(electrocute_mob(user, get_area(src), src, 1, TRUE))
-		return TRUE
-	else
-		return FALSE
+	return ..()
 
 /obj/item/roulette_wheel_beacon
 	name = "roulette wheel beacon"

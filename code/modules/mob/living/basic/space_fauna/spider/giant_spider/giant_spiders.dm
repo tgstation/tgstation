@@ -110,11 +110,6 @@
 	. = ..()
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 
-///Used in the caves away mission.
-/mob/living/basic/spider/giant/hunter/away_caves
-	minimum_survivable_temperature = 0
-	gold_core_spawnable = NO_SPAWN
-
 /**
  * ### Scout Spider
  * A subtype of the giant spider which is faster, has thermal vision, but less health and damage.
@@ -169,18 +164,10 @@
 	web_speed = 0.25
 	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	menu_description = "Avarage speed spider able to heal other spiders and itself together with a fast web laying capability, has low damage and health."
-	///The health HUD applied to the mob.
-	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
-
-///Used in the caves away mission.
-/mob/living/basic/spider/giant/nurse/away_caves
-	minimum_survivable_temperature = 0
-	gold_core_spawnable = NO_SPAWN
 
 /mob/living/basic/spider/giant/nurse/Initialize(mapload)
 	. = ..()
-	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
-	datahud.show_to(src)
+	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
 
 	AddComponent(/datum/component/healing_touch,\
 		heal_brute = 10,\

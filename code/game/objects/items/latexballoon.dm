@@ -15,6 +15,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 7
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 	var/state = DEFLATED
 	var/datum/gas_mixture/air_contents = null
 
@@ -98,7 +99,6 @@
 /obj/item/latexballoon/bullet_act(obj/projectile/projectile)
 	if(projectile.damage > 0)
 		burst()
-
 	return ..()
 
 /obj/item/latexballoon/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
@@ -106,7 +106,7 @@
 		var/obj/item/tank/air_tank = item
 		blow(air_tank, user)
 		return
-	if(item.get_sharpness() || item.get_temperature())
+	if(item.get_sharpness() || item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		burst()
 		return
 

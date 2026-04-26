@@ -4,13 +4,13 @@ import { Button, Dropdown, Slider, Table } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import type { IconSettings } from './index';
 
-interface SpawnPanelData {
+type SpawnPanelData = {
   icon: string;
   iconState: string;
   iconStates: string[];
   selected_object?: string;
   apply_icon_override?: boolean;
-}
+};
 
 interface CreateObjectAdvancedSettingsProps {
   iconSettings: IconSettings;

@@ -35,6 +35,8 @@
 				/obj/item/reagent_containers/cup/glass/bottle/coconut_rum = 5,
 				/obj/item/reagent_containers/cup/glass/bottle/yuyake = 5,
 				/obj/item/reagent_containers/cup/glass/bottle/shochu = 5,
+				/obj/item/reagent_containers/cup/glass/bottle/aperitivo = 5,
+				/obj/item/reagent_containers/cup/glass/bottle/maraschino = 5,
 				/obj/item/reagent_containers/cup/soda_cans/beer = 10,
 				/obj/item/reagent_containers/cup/soda_cans/beer/rice = 10,
 			),
@@ -45,10 +47,11 @@
 			"icon" = "bottle-water",
 			"products" = list(
 				/obj/item/reagent_containers/cup/glass/ice = 10,
+				/obj/item/reagent_containers/cup/glass/bottle/juice/lemonjuice = 4,
 				/obj/item/reagent_containers/cup/glass/bottle/juice/limejuice = 4,
+				/obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice = 4,
 				/obj/item/reagent_containers/cup/glass/bottle/juice/menthol = 4,
 				/obj/item/reagent_containers/cup/glass/bottle/juice/cream = 4,
-				/obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice = 4,
 				/obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice = 4,
 				/obj/item/reagent_containers/cup/soda_cans/sodawater = 15,
 				/obj/item/reagent_containers/cup/soda_cans/sol_dry = 8,
@@ -75,12 +78,14 @@
 	contraband = list(
 		/obj/item/reagent_containers/cup/glass/mug/tea = 12,
 		/obj/item/reagent_containers/cup/glass/bottle/fernet = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/herbal_liqueur = 2,
 	)
 	premium = list(
 		/obj/item/reagent_containers/cup/bottle/ethanol = 4,
 		/obj/item/reagent_containers/cup/glass/bottle/champagne = 5,
 		/obj/item/reagent_containers/cup/glass/bottle/trappist = 5,
 		/obj/item/reagent_containers/cup/glass/bottle/bitters = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/herbal_liqueur = 2,
 	)
 
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
@@ -90,7 +95,6 @@
 	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
 	light_mask = "boozeomat-light-mask"
-	allow_custom = TRUE
 
 /obj/machinery/vending/boozeomat/syndicate
 	age_restrictions = FALSE

@@ -1,8 +1,5 @@
 /// Makes sure only integer values are used when consuming, removing & checking for mats
-#define OPTIMAL_COST(cost)(max(1, round(cost)))
-
-/// Wrapper for fetching material references. Exists exclusively so that people don't need to wrap everything in a list every time.
-#define GET_MATERIAL_REF(arguments...) SSmaterials._GetMaterialRef(list(##arguments))
+#define OPTIMAL_COST(cost)(max(1, floor(cost)))
 
 // Wrapper to convert material name into its source name
 #define MATERIAL_SOURCE(mat) "[mat.name]_material"
@@ -31,7 +28,7 @@
  */
 /proc/amount2sheet(amt)
 	if(amt >= SHEET_MATERIAL_AMOUNT)
-		return round(amt / SHEET_MATERIAL_AMOUNT)
+		return floor(amt / SHEET_MATERIAL_AMOUNT)
 	return 0
 
 /**

@@ -10,7 +10,7 @@
 	incompatible_modules = list(/obj/item/mod/module/magnetic_harness)
 	required_slots = list(ITEM_SLOT_OCLOTHING)
 	/// Time before we activate the magnet.
-	var/magnet_delay = 0.8 SECONDS
+	var/magnet_delay = 0.5 SECONDS
 	/// The typecache of all guns we allow.
 	var/static/list/guns_typecache
 	/// The guns already allowed by the modsuit chestplate.
@@ -19,7 +19,14 @@
 /obj/item/mod/module/magnetic_harness/Initialize(mapload)
 	. = ..()
 	if(!guns_typecache)
-		guns_typecache = typecacheof(list(/obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/gun/grenadelauncher, /obj/item/gun/chem, /obj/item/gun/syringe))
+		guns_typecache = typecacheof(list(
+			/obj/item/gun/ballistic,
+			/obj/item/gun/energy,
+			/obj/item/gun/grenadelauncher,
+			/obj/item/gun/chem,
+			/obj/item/gun/syringe,
+			/obj/item/kinetic_crusher,
+		))
 
 /obj/item/mod/module/magnetic_harness/on_install()
 	. = ..()
@@ -84,12 +91,7 @@
 
 /obj/item/mod/module/pepper_shoulders/on_use(mob/activator)
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
-	var/datum/reagents/capsaicin_holder = new(10)
-	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
-	var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke = new
-	smoke.set_up(1, holder = src, location = get_turf(src), carry = capsaicin_holder)
-	smoke.start(log = TRUE)
-	QDEL_NULL(capsaicin_holder) // Reagents have a ref to their holder which has a ref to them. No leaks please.
+	do_chem_smoke(1, src, get_turf(src), /datum/reagent/consumable/condensedcapsaicin, 10, log = TRUE, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/quick)
 
 /obj/item/mod/module/pepper_shoulders/proc/on_check_block()
 	SIGNAL_HANDLER
@@ -139,7 +141,7 @@
 /obj/item/mod/module/holster/on_uninstall(deleting = FALSE)
 	. = ..()
 	if(holstered)
-		holstered.forceMove(drop_location())
+		holstered.forceMove(mod.drop_location())
 
 /obj/item/mod/module/holster/Exited(atom/movable/gone, direction)
 	if(gone == holstered)
@@ -296,8 +298,8 @@
 	. = ..()
 	do_sparks(rand(3, 6), FALSE, src)
 	if(thrower)
-		var/mob/living/simple_animal/hostile/illusion/mirage/mirage = new(get_turf(src))
-		mirage.Copy_Parent(thrower, 15 SECONDS)
+		var/mob/living/basic/illusion/mirage/mirage = new(get_turf(src))
+		mirage.mock_as(thrower, 15 SECONDS)
 	qdel(src)
 
 ///Projectile Dampener - Weakens projectiles in range.

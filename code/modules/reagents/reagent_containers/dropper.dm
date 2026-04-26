@@ -10,6 +10,7 @@
 	volume = 5
 	initial_reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/dropper/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!target.reagents)
@@ -28,9 +29,9 @@
 		var/fraction = min(amount_per_transfer_from_this / reagents.total_volume, 1)
 
 		if(ismob(target))
+			user.changeNext_move(CLICK_CD_MELEE)
 			if(ishuman(target))
 				var/mob/living/carbon/human/victim = target
-
 				var/obj/item/safe_thing = victim.is_eyes_covered()
 
 				if(safe_thing)
@@ -45,20 +46,23 @@
 						to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 					update_appearance()
 					return ITEM_INTERACT_BLOCKING
+
 			else if(isalien(target)) //hiss-hiss has no eyes!
 				to_chat(target, span_danger("[target] does not seem to have any eyes!"))
 				return ITEM_INTERACT_BLOCKING
 
-			target.visible_message(span_danger("[user] squirts something into [target]'s eyes!"), \
-									span_userdanger("[user] squirts something into your eyes!"))
-
+			target.visible_message(
+				span_danger("[user] squirts something into [target]'s eyes!"),
+				span_userdanger("[user] squirts something into your eyes!"),
+			)
 			SEND_SIGNAL(target, COMSIG_MOB_REAGENTS_DROPPED_INTO_EYES, user, src, reagents, fraction)
 			reagents.expose(target, TOUCH, fraction)
 			var/mob/M = target
 			log_combat(user, M, "squirted", reagents.get_reagent_log_string())
 
 		trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-		to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+		if(trans)
+			to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 		update_appearance()
 		target.update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -72,8 +76,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-
-	to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
+	if(trans)
+		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
 
 	update_appearance()
 	target.update_appearance()

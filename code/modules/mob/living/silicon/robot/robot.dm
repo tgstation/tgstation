@@ -1,9 +1,8 @@
 /mob/living/silicon/robot/Initialize(mapload)
-	spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(5, 0, src)
+	spark_system = new /datum/effect_system/basic/spark_spread(src, 5, FALSE)
 	spark_system.attach(src)
 
-	add_traits(list(TRAIT_CAN_STRIP, TRAIT_FORCED_STANDING, TRAIT_KNOW_ENGI_WIRES), INNATE_TRAIT)
+	add_traits(list(TRAIT_CAN_STRIP, TRAIT_FORCED_STANDING, TRAIT_KNOW_ENGI_WIRES, TRAIT_IGNORE_SURGERY_MODIFIERS), INNATE_TRAIT)
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 2 SECONDS, \
@@ -20,10 +19,6 @@
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GOT_DAMPENED), PROC_REF(on_dampen))
-
-	inv1 = new /atom/movable/screen/robot/module1()
-	inv2 = new /atom/movable/screen/robot/module2()
-	inv3 = new /atom/movable/screen/robot/module3()
 
 	previous_health = health
 
@@ -84,7 +79,13 @@
 	log_silicon("New cyborg [key_name(src)] created with [connected_ai ? "master AI: [key_name(connected_ai)]" : "no master AI"]")
 	log_current_laws()
 
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
+	var/static/list/alert_areas
+	if(isnull(alert_areas))
+		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
+	if(is_station_level(z))
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), SSmapping.levels_by_trait(ZTRAIT_STATION), alert_areas)
+	else
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), (SSmapping.levels_by_trait(ZTRAIT_STATION) + z), alert_areas)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
@@ -126,10 +127,6 @@
 	QDEL_NULL(model)
 	QDEL_NULL(eye_lights)
 	QDEL_NULL(hat_overlay)
-	QDEL_NULL(inv1)
-	QDEL_NULL(inv2)
-	QDEL_NULL(inv3)
-	QDEL_NULL(hands)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(alert_control)
 	QDEL_LIST(upgrades)
@@ -244,8 +241,7 @@
 		return
 
 	if(!ion_trail)
-		ion_trail = new
-		ion_trail.set_up(src)
+		ion_trail = new(src)
 
 	ionpulse_on = !ionpulse_on
 	to_chat(src, span_notice("You [ionpulse_on ? null :"de"]activate your ion thrusters."))
@@ -397,13 +393,6 @@
 		// to have to check if every camera is null or not before doing anything, to prevent runtime errors.
 		// I could change the network to null but I don't know what would happen, and it seems too hacky for me.
 
-/mob/living/silicon/robot/mode()
-	set name = "Activate Held Object"
-	set category = "IC"
-	set src = usr
-
-	return ..()
-
 /mob/living/silicon/robot/execute_mode()
 	if(incapacitated)
 		return
@@ -509,19 +498,21 @@
 	if(!COOLDOWN_FINISHED(src, disabled_time))
 		balloon_alert(src, "disrupted!")
 		return FALSE
+
 	if(!(update_color && lamp_enabled) && (turn_off || lamp_enabled || update_color || !lamp_functional || stat || low_power_mode))
 		set_light_on(lamp_functional && stat != DEAD && lamp_doom) //If the lamp isn't broken and borg isn't dead, doomsday borgs cannot disable their light fully.
 		set_light_color(COLOR_RED) //This should only matter for doomsday borgs, as any other time the lamp will be off and the color not seen
 		set_light_range(1) //Again, like above, this only takes effect when the light is forced on by doomsday mode.
 		lamp_enabled = FALSE
-		lampButton?.update_appearance()
+		hud_used?.screen_objects[HUD_CYBORG_LAMP]?.update_appearance()
 		update_icons()
 		return
+
 	set_light_range(max(MINIMUM_USEFUL_LIGHT_RANGE, lamp_intensity))
 	set_light_color(lamp_doom ? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
 	set_light_on(TRUE)
 	lamp_enabled = TRUE
-	lampButton?.update_appearance()
+	hud_used?.screen_objects[HUD_CYBORG_LAMP]?.update_appearance()
 	update_icons()
 
 ///Completely deconstructs the borg, dropping the MMI/posibrain, removing applied upgrades and stripping the exoskeleton of all limbs,
@@ -758,17 +749,14 @@
 
 /mob/living/silicon/robot/proc/update_module_innate()
 	designation = model.name
-	if(hands)
-		hands.icon_state = model.model_select_icon
+	hud_used?.screen_objects[HUD_CYBORG_HANDS]?.icon_state = model.model_select_icon
 
 	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
 	if(length(model.model_traits))
 		add_traits(model.model_traits, MODEL_TRAIT)
 
 	hat_offset = model.hat_offset
-
 	INVOKE_ASYNC(src, PROC_REF(updatename))
-
 
 /mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)
 	if(hat)
@@ -903,7 +891,7 @@
 		radio.command = TRUE
 		radio.channels = AI.radio.channels
 		for(var/chan in radio.channels)
-			radio.secure_radio_connections[chan] = add_radio(radio, GLOB.default_radio_channels[chan])
+			LAZYSET(radio.secure_radio_connections, chan, add_radio(radio, GLOB.default_radio_channels[chan]))
 
 	diag_hud_set_aishell()
 	undeployment_action.Grant(src)
@@ -949,7 +937,7 @@
 /mob/living/silicon/robot/attack_ai(mob/user)
 	if(shell && (!connected_ai || connected_ai == user))
 		var/mob/living/silicon/ai/AI = user
-		AI.deploy_to_shell(src)
+		AI.select_shell(src)
 
 /mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
 	//Don't try buckling on INTENT_HARM so that silicons can search people's inventories without loading them
@@ -1043,18 +1031,7 @@
 	to_chat(src, span_notice("Your frustration has empowered you! You can now right yourself faster!"))
 
 /mob/living/silicon/robot/get_fire_overlay(stacks, on_fire)
-	var/fire_icon = "generic_fire"
-
-	if(!GLOB.fire_appearances[fire_icon])
-		var/mutable_appearance/new_fire_overlay = mutable_appearance(
-			'icons/mob/effects/onfire.dmi',
-			fire_icon,
-			-HIGHEST_LAYER,
-			appearance_flags = RESET_COLOR|KEEP_APART,
-		)
-		GLOB.fire_appearances[fire_icon] = new_fire_overlay
-
-	return GLOB.fire_appearances[fire_icon]
+	return make_generic_fire_overlay()
 
 /// Draw power from the robot
 /mob/living/silicon/robot/proc/draw_power(power_to_draw)

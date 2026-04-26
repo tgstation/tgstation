@@ -24,7 +24,6 @@
 	name = "Piercing Wound"
 	sound_effect = 'sound/items/weapons/slice.ogg'
 	processes = TRUE
-	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_tools = list(TOOL_CAUTERY)
 	base_treat_time = 3 SECONDS
 	wound_flags = (ACCEPTS_GAUZE | CAN_BE_GRASPED)
@@ -40,49 +39,49 @@
 
 	/// When hit on this bodypart, we have this chance of losing some blood + the incoming damage
 	var/internal_bleeding_chance
-	/// If we let off blood when hit, the max blood lost is this * the incoming damage
-	var/internal_bleeding_coefficient
+	/// A multiplier applied to how much blood is lost from damage to the wounded limb
+	var/internal_bleeding_coefficient = 1
+	/// If TRUE we are ready to be mended in surgery
+	VAR_FINAL/mend_state = FALSE
 
 /datum/wound/pierce/bleed/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	set_blood_flow(initial_flow)
-	if(limb.can_bleed() && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
+	if(limb.can_bleed() && attack_direction && victim.get_blood_volume() > BLOOD_VOLUME_OKAY)
 		victim.spray_blood(attack_direction, severity)
 
 	return ..()
 
-/datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(victim.stat == DEAD || (wounding_dmg < 5) || !limb.can_bleed() || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
+/datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction, damage_source)
+	if(victim.stat == DEAD || wounding_dmg < 5 || !limb.can_bleed() || !victim.get_blood_volume() || !prob(internal_bleeding_chance + wounding_dmg))
 		return
-	if(limb.current_gauze?.splint_factor)
-		wounding_dmg *= (1 - limb.current_gauze.splint_factor)
-	var/blood_bled = rand(1, wounding_dmg * internal_bleeding_coefficient) // 12 brute toolbox can cause up to 15/18/21 bloodloss on mod/sev/crit
+	// 20 force attack ~=  5-16 blood loss ~= 1%-3% of blood volume
+	// 30 force attack ~= 6-20 blood loss ~= 1%-4% of blood volume
+	var/blood_bled = sqrt(wounding_dmg) * internal_bleeding_coefficient * limb.get_splint_factor() * pick(0.75, 1, 1.25, 1.5)
 	switch(blood_bled)
-		if(1 to 6)
-			victim.bleed(blood_bled, TRUE)
-		if(7 to 13)
+		if(8 to 12)
 			victim.visible_message(
 				span_smalldanger("Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone]."),
 				span_danger("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."),
 				vision_distance = COMBAT_MESSAGE_RANGE,
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
-			victim.bleed(blood_bled, TRUE)
-		if(14 to 19)
+		if(12 to 18)
 			victim.visible_message(
 				span_smalldanger("A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!"),
 				span_danger("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
-			victim.create_splatter(victim.dir)
-			victim.bleed(blood_bled)
-		if(20 to INFINITY)
+		if(18 to INFINITY)
 			victim.visible_message(
 				span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"),
 				span_bolddanger("You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
-			victim.bleed(blood_bled)
-			victim.create_splatter(victim.dir)
-			victim.add_splatter_floor(get_step(victim.loc, victim.dir))
+	victim.bleed(blood_bled)
+	if(blood_bled >= 18)
+		victim.spray_blood(attack_direction)
 
 /datum/wound/pierce/bleed/get_bleed_rate_of_change()
 	//basically if a species doesn't bleed, the wound is stagnant and will not heal on its own (nor get worse)
@@ -90,13 +89,13 @@
 		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 		return BLOOD_FLOW_INCREASING
-	if(limb.current_gauze || clot_rate > 0)
+	if(LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE) || clot_rate > 0)
 		return BLOOD_FLOW_DECREASING
 	if(clot_rate < 0)
 		return BLOOD_FLOW_INCREASING
 	return BLOOD_FLOW_STEADY
 
-/datum/wound/pierce/bleed/handle_process(seconds_per_tick, times_fired)
+/datum/wound/pierce/bleed/handle_process(seconds_per_tick)
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
@@ -113,12 +112,11 @@
 			adjust_blood_flow(0.25 * seconds_per_tick) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	//gauze always reduces blood flow, even for non bleeders
-	if(limb.current_gauze)
-		if(clot_rate > 0)
-			adjust_blood_flow(-clot_rate * seconds_per_tick)
-		var/gauze_power = limb.current_gauze.absorption_rate
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if(current_gauze?.absorption_rate)
+		var/gauze_power = current_gauze.absorption_rate
 		limb.seep_gauze(gauze_power * seconds_per_tick)
-		adjust_blood_flow(-gauze_power * gauzed_clot_rate * seconds_per_tick)
+		adjust_blood_flow((-clot_rate * seconds_per_tick) + (-gauze_power * gauzed_clot_rate * seconds_per_tick))
 	//otherwise, only clot if it's a bleeder
 	else if(limb.can_bleed())
 		adjust_blood_flow(-clot_rate * seconds_per_tick)
@@ -131,13 +129,14 @@
 		to_chat(victim, span_green("The holes on your [limb.plaintext_zone] have [!limb.can_bleed() ? "healed up" : "stopped bleeding"]!"))
 		qdel(src)
 
-/datum/wound/pierce/bleed/check_grab_treatments(obj/item/I, mob/user)
-	if(I.get_temperature()) // if we're using something hot but not a cautery, we need to be aggro grabbing them first, so we don't try treating someone we're eswording
-		return TRUE
+/datum/wound/pierce/bleed/check_grab_treatments(obj/item/tool, mob/user)
+	// if we're using something hot but not a cautery, we need to be aggro grabbing them first,
+	// so we don't try treating someone we're eswording
+	return tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 
-/datum/wound/pierce/bleed/treat(obj/item/I, mob/user)
-	if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
-		return tool_cauterize(I, user)
+/datum/wound/pierce/bleed/treat(obj/item/tool, mob/user)
+	if(tool.tool_behaviour == TOOL_CAUTERY || tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		tool_cauterize(tool, user)
 
 /datum/wound/pierce/bleed/on_xadone(power)
 	. = ..()
@@ -179,14 +178,13 @@
 	adjust_blood_flow(-blood_cauterized)
 
 	if(blood_flow > 0)
-		return try_treating(I, user)
-	return TRUE
+		try_treating(I, user)
 
 /datum/wound_pregen_data/flesh_pierce
 	abstract = TRUE
 
-	required_limb_biostate = (BIO_FLESH)
-	required_wounding_types = list(WOUND_PIERCE)
+	required_limb_biostate = BIO_FLESH
+	required_wounding_type = WOUND_PIERCE
 
 	wound_series = WOUND_SERIES_FLESH_PUNCTURE_BLEED
 
@@ -204,11 +202,11 @@
 	occur_text = "spurts out a thin stream of blood"
 	sound_effect = 'sound/effects/wounds/pierce1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
-	initial_flow = 1.5
-	gauzed_clot_rate = 0.8
+	initial_flow = 1.25
+	gauzed_clot_rate = 0.75
 	clot_rate = 0.03
 	internal_bleeding_chance = 30
-	internal_bleeding_coefficient = 1.25
+	internal_bleeding_coefficient = 1.5
 	series_threshold_penalty = 20
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
@@ -242,7 +240,6 @@
 	gauzed_clot_rate = 0.1
 	clot_rate = 0.03 // will close quickly on its own
 	internal_bleeding_chance = 0
-	internal_bleeding_coefficient = 1
 	threshold_penalty = 5
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture/pinprick
@@ -283,11 +280,11 @@
 	occur_text = "looses a violent spray of blood, revealing a pierced wound"
 	sound_effect = 'sound/effects/wounds/pierce2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
-	initial_flow = 2.25
-	gauzed_clot_rate = 0.6
+	initial_flow = 2
+	gauzed_clot_rate = 0.5
 	clot_rate = 0.02
 	internal_bleeding_chance = 60
-	internal_bleeding_coefficient = 1.5
+	internal_bleeding_coefficient = 2
 	series_threshold_penalty = 35
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
@@ -340,7 +337,7 @@
 	RegisterSignal(limb, COMSIG_BODYPART_UPDATE_WOUND_OVERLAY, PROC_REF(wound_overlay))
 	limb.update_part_wound_overlay()
 
-/datum/wound/pierce/bleed/severe/eye/remove_wound(ignore_limb, replaced)
+/datum/wound/pierce/bleed/severe/eye/remove_wound(ignore_limb, replaced, destroying)
 	if (!isnull(limb))
 		UnregisterSignal(limb, COMSIG_BODYPART_UPDATE_WOUND_OVERLAY)
 	return ..()
@@ -396,13 +393,14 @@
 	occur_text = "blasts apart, sending chunks of viscera flying in all directions"
 	sound_effect = 'sound/effects/wounds/pierce3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
-	initial_flow = 3
-	gauzed_clot_rate = 0.4
+	initial_flow = 2.5
+	gauzed_clot_rate = 0.3
 	internal_bleeding_chance = 80
-	internal_bleeding_coefficient = 1.75
+	internal_bleeding_coefficient = 2.5
 	threshold_penalty = 15
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
+	surgery_states = SURGERY_SKIN_CUT | SURGERY_VESSELS_UNCLAMPED // Bad enough to count
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
 
 	simple_treat_text = "<b>Bandaging</b> the wound is of utmost importance, as is seeking direct medical attention - <b>Death</b> will ensue if treatment is delayed whatsoever, with lack of <b>oxygen</b> killing the patient, thus <b>Food, Iron, and saline solution</b> is always recommended after treatment. This wound will not naturally seal itself."

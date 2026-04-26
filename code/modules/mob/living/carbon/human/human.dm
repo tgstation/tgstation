@@ -55,6 +55,8 @@
 /mob/living/carbon/human/proc/setup_organless_effects()
 	// All start without eyes, and get them via set species
 	become_blind(NO_EYES)
+	// And no ears, and get them via set species
+	ADD_TRAIT(src, TRAIT_DEAF, NO_EARS)
 	// Mobs cannot taste anything without a tongue; the tongue organ removes this on Insert
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
@@ -105,7 +107,7 @@
 		if(!same_id || (text2num(href_list["examine_time"]) + viable_time) < world.time)
 			to_chat(viewer, span_notice("You don't have that good of a memory. Examine [p_them()] again."))
 			return
-		if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
+		if(!isobserver(viewer) && HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 			to_chat(viewer, span_notice("You can't make out that ID anymore."))
 			return
 		if(!isobserver(viewer) && get_dist(viewer, src) > ID_EXAMINE_DISTANCE + 1) // leeway, ignored if the viewer is a ghost
@@ -127,7 +129,7 @@
 			id_species ||= dna.species.name
 			id_blood_type ||= get_bloodtype()
 
-		if(istype(id, /obj/item/card/id/advanced))
+		else if(istype(id, /obj/item/card/id/advanced))
 			var/obj/item/card/id/advanced/advancedID = id
 			id_job = advancedID.trim_assignment_override || id_job
 
@@ -183,15 +185,14 @@
 			if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 				return
 			if(href_list["evaluation"])
-				if(!getBruteLoss() && !getFireLoss() && !getOxyLoss() && getToxLoss() < 20)
+				if(!get_brute_loss() && !get_fire_loss() && !get_oxy_loss() && get_tox_loss() < 20)
 					to_chat(human_user, "[span_notice("No external injuries detected.")]<br>")
 					return
 				var/span = "notice"
 				var/status = ""
-				if(getBruteLoss())
+				if(get_brute_loss())
 					to_chat(human_user, "<b>Physical trauma analysis:</b>")
-					for(var/X in bodyparts)
-						var/obj/item/bodypart/BP = X
+					for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 						var/brutedamage = BP.brute_dam
 						if(brutedamage > 0)
 							status = "received minor physical injuries."
@@ -204,10 +205,9 @@
 							span = "userdanger"
 						if(brutedamage)
 							to_chat(human_user, "<span class='[span]'>[BP] appears to have [status]</span>")
-				if(getFireLoss())
+				if(get_fire_loss())
 					to_chat(human_user, "<b>Analysis of skin burns:</b>")
-					for(var/X in bodyparts)
-						var/obj/item/bodypart/BP = X
+					for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 						var/burndamage = BP.burn_dam
 						if(burndamage > 0)
 							status = "signs of minor burns."
@@ -220,9 +220,9 @@
 							span = "userdanger"
 						if(burndamage)
 							to_chat(human_user, "<span class='[span]'>[BP] appears to have [status]</span>")
-				if(getOxyLoss())
+				if(get_oxy_loss())
 					to_chat(human_user, span_danger("Patient has signs of suffocation, emergency treatment may be required!"))
-				if(getToxLoss() > 20)
+				if(get_tox_loss() > 20)
 					to_chat(human_user, span_danger("Gathered data is inconsistent with the analysis, possible cause: poisoning."))
 			if(!human_user.wear_id) //You require access from here on out.
 				to_chat(human_user, span_warning("ERROR: Invalid access"))
@@ -337,7 +337,7 @@
 					var/datum/crime/citation/new_citation = new(name = citation_name, author = allowed_access, fine = fine)
 
 					target_record.citations += new_citation
-					new_citation.alert_owner(usr, src, target_record.name, "You have been fined [fine] credits for '[citation_name]'. Fines may be paid at security.")
+					new_citation.alert_owner(usr, src, target_record.name, "You have been fined [fine] [MONEY_NAME] for '[citation_name]'. Fines may be paid at security.")
 					investigate_log("New Citation: <strong>[citation_name]</strong> Fine: [fine] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 					SSblackbox.ReportCitation(REF(new_citation), human_user.ckey, human_user.real_name, target_record.name, citation_name, null, fine)
 
@@ -560,7 +560,7 @@
 		else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
 			to_chat(target, span_unconscious("You feel a breath of fresh air... but you don't feel any better..."))
 		else
-			target.adjustOxyLoss(-min(target.getOxyLoss(), 7))
+			target.adjust_oxy_loss(-min(target.get_oxy_loss(), 7))
 			to_chat(target, span_unconscious("You feel a breath of fresh air enter your lungs... It feels good..."))
 
 		if (target.health <= target.crit_threshold)
@@ -636,10 +636,8 @@
 	// If we have a species, we need to handle mutant parts and stuff
 	if(dna?.species)
 		add_atom_colour(COLOR_BLACK, TEMPORARY_COLOUR_PRIORITY)
-		var/static/mutable_appearance/shock_animation_dna
-		if(!shock_animation_dna)
-			shock_animation_dna = mutable_appearance(icon, "electrocuted_base")
-			shock_animation_dna.appearance_flags |= RESET_COLOR|KEEP_APART
+		var/mutable_appearance/shock_animation_dna = mutable_appearance(icon, "electrocuted_base", appearance_flags = RESET_COLOR|KEEP_APART)
+		apply_height_filters(shock_animation_dna)
 		zap_appearance = shock_animation_dna
 
 	// Otherwise do a generic animation
@@ -692,7 +690,7 @@
 	. = ..()
 	// Handles changing limb colors and stuff
 	if(!(living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
-		hud_used.healthdoll?.update_appearance()
+		hud_used.screen_objects[HUD_MOB_HEALTHDOLL]?.update_appearance()
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
@@ -703,11 +701,12 @@
 	if(heal_flags & HEAL_TEMP)
 		set_coretemperature(get_body_temp_normal(apply_change = FALSE))
 		heat_exposure_stacks = 0
+		seconds_in_low_pressure = 0
 
 	return ..()
 
 /mob/living/carbon/human/vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/toxic, lost_nutrition = 10, distance = 1, purge_ratio = 0.1)
-	if(!((vomit_flags & MOB_VOMIT_BLOOD) && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER)))
+	if(!((vomit_flags & MOB_VOMIT_BLOOD) && !CAN_HAVE_BLOOD(src) && !HAS_TRAIT(src, TRAIT_TOXINLOVER)))
 		return ..()
 
 	if(vomit_flags & MOB_VOMIT_MESSAGE)
@@ -734,7 +733,7 @@
 
 /mob/living/carbon/human/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /human ---")
 	VV_DROPDOWN_OPTION(VV_HK_COPY_OUTFIT, "Copy Outfit")
 	VV_DROPDOWN_OPTION(VV_HK_MOD_MUTATIONS, "Add/Remove Mutation")
 	VV_DROPDOWN_OPTION(VV_HK_MOD_QUIRKS, "Add/Remove Quirks")
@@ -757,50 +756,56 @@
 	if(href_list[VV_HK_MOD_MUTATIONS])
 		if(!check_rights(R_SPAWN))
 			return
-		var/list/options = list("Clear"="Clear")
-		for(var/x in subtypesof(/datum/mutation))
+		var/list/options = list("Clear" = "Clear")
+		for(var/x in sort_list(subtypesof(/datum/mutation), GLOBAL_PROC_REF(cmp_typepaths_asc)))
 			var/datum/mutation/mut = x
 			var/name = initial(mut.name)
 			options[dna.check_mutation(mut) ? "[name] (Remove)" : "[name] (Add)"] = mut
-		var/result = input(usr, "Choose mutation to add/remove","Mutation Mod") as null|anything in sort_list(options)
-		if(result)
-			if(result == "Clear")
-				for(var/datum/mutation/mutation as anything in dna.mutations)
-					dna.remove_mutation(mutation, mutation.sources)
-			else
-				var/mut = options[result]
-				if(dna.check_mutation(mut))
-					var/datum/mutation/mutation = dna.get_mutation(mut)
-					dna.remove_mutation(mut, mutation.sources)
-				else
-					dna.add_mutation(mut, MUTATION_SOURCE_VV)
+
+		var/result = tgui_input_list(usr, "Choose mutation to add/remove", "Mutation Mod", options)
+		if(!result)
+			return
+
+		if(result == "Clear")
+			for(var/datum/mutation/mutation as anything in dna.mutations)
+				dna.remove_mutation(mutation, mutation.sources)
+			return
+
+		var/mut = options[result]
+		if(dna.check_mutation(mut))
+			var/datum/mutation/mutation = dna.get_mutation(mut)
+			dna.remove_mutation(mut, mutation.sources)
+		else
+			dna.add_mutation(mut, MUTATION_SOURCE_VV)
 
 	if(href_list[VV_HK_MOD_QUIRKS])
 		if(!check_rights(R_SPAWN))
 			return
-		var/list/options = list("Clear"="Clear")
-		for(var/type in subtypesof(/datum/quirk))
+		var/list/options = list("Clear" = "Clear")
+		for(var/type in sort_list(valid_subtypesof(/datum/quirk), GLOBAL_PROC_REF(cmp_typepaths_asc)))
 			var/datum/quirk/quirk_type = type
-			if(initial(quirk_type.abstract_parent_type) == type)
-				continue
 			var/qname = initial(quirk_type.name)
 			options[has_quirk(quirk_type) ? "[qname] (Remove)" : "[qname] (Add)"] = quirk_type
-		var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in sort_list(options)
-		if(result)
-			if(result == "Clear")
-				for(var/datum/quirk/q in quirks)
-					remove_quirk(q.type)
-			else
-				var/T = options[result]
-				if(has_quirk(T))
-					remove_quirk(T)
-				else
-					add_quirk(T)
+
+		var/result = tgui_input_list(usr, "Choose quirk to add/remove", "Quirk Mod", options)
+		if(!result)
+			return
+
+		if(result == "Clear")
+			for(var/datum/quirk/quirk in quirks)
+				remove_quirk(quirk.type)
+			return
+
+		var/selected = options[result]
+		if(has_quirk(selected))
+			remove_quirk(selected)
+		else
+			add_quirk(selected)
 
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return
-		var/result = input(usr, "Please choose a new species","Species") as null|anything in sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc))
+		var/result = tgui_input_list(usr, "Please choose a new species", "Species", sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc)))
 		if(result)
 			var/newtype = GLOB.species_list[result]
 			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src] to [result]")
@@ -808,9 +813,6 @@
 
 	if(href_list[VV_HK_PURRBATION])
 		if(!check_rights(R_SPAWN))
-			return
-		if(!ishuman(src))
-			to_chat(usr, "This can only be done to human species at the moment.")
 			return
 		var/success = purrbation_toggle(src)
 		if(success)
@@ -970,16 +972,6 @@
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 
-/mob/living/carbon/human/is_bleeding()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return FALSE
-	return ..()
-
-/mob/living/carbon/human/get_total_bleed_rate()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return FALSE
-	return ..()
-
 /mob/living/carbon/human/get_exp_list(minutes)
 	. = ..()
 	if(mind.assigned_role.title in SSjob.name_occupations)
@@ -1035,6 +1027,7 @@
 	ai_controller = /datum/ai_controller/monkey
 
 /mob/living/carbon/human/species
+	abstract_type = /mob/living/carbon/human/species
 	var/race = null
 	var/use_random_name = TRUE
 
@@ -1062,7 +1055,7 @@
 	var/chest_covered = FALSE
 	var/head_covered = FALSE
 	var/hands_covered = FALSE
-	for (var/obj/item/clothing/equipped in get_equipped_items())
+	for (var/obj/item/clothing/equipped in get_equipped_items(INCLUDE_ABSTRACT))
 		// We don't really have space-proof gloves, so even if we're checking them we ignore the flags
 		if ((equipped.body_parts_covered & HANDS) && num_hands >= default_num_hands)
 			hands_covered = TRUE

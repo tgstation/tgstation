@@ -27,15 +27,11 @@
 	open_machine()
 	update_appearance()
 
-/obj/machinery/hypnochair/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, item))
-		update_appearance()
-		return
-	if(default_pry_open(item))
-		return
-	if(default_deconstruction_crowbar(item))
-		return
-	return ..()
+/obj/machinery/hypnochair/screwdriver_act(mob/living/user, obj/item/tool)
+	return isnull(occupant) ? default_deconstruction_screwdriver(user, tool) : NONE
+
+/obj/machinery/hypnochair/crowbar_act(mob/living/user, obj/item/tool)
+	return default_pry_open(user, tool, deconstruct_on_fail = TRUE)
 
 /obj/machinery/hypnochair/ui_state(mob/user)
 	return GLOB.notcontained_state

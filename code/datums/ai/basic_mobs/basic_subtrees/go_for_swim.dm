@@ -28,7 +28,7 @@
 ///find land if its time to get out of water, otherwise find water
 /datum/ai_behavior/find_and_set/swim_alternate
 
-/datum/ai_behavior/find_and_set/swim_alternate/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/swim_alternate/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn
 	if(QDELETED(living_pawn))
 		return null

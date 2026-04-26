@@ -585,6 +585,7 @@
 	pixel_y = -1
 	},
 /obj/structure/closet/crate/freezer,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
 /turf/open/floor/iron/freezer{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -714,7 +715,7 @@
 	},
 /area/ruin/thelizardsgas_lavaland)
 "Eh" = (
-/obj/machinery/atmospherics/components/tank/oxygen{
+/obj/machinery/atmospherics/components/tank/air/layer2{
 	dir = 8
 	},
 /turf/open/floor/iron/smooth{
@@ -730,7 +731,6 @@
 /area/ruin/thelizardsgas_lavaland)
 "Es" = (
 /obj/machinery/door/airlock/external/ruin,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -847,6 +847,12 @@
 	cycle_id = "lizardgas_lavaland_entrance"
 	},
 /turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Im" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
 /area/ruin/thelizardsgas_lavaland)
@@ -1038,7 +1044,6 @@
 	pixel_y = 2;
 	pixel_x = 6
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -1530,7 +1535,7 @@ IU
 HL
 xW
 rM
-IU
+Im
 pp
 FA
 dC

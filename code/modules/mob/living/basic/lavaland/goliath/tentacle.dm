@@ -47,7 +47,7 @@
 			continue
 		balloon_alert(victim, "grabbed")
 		visible_message(span_danger("[src] grabs hold of [victim]!"))
-		victim.adjustBruteLoss(rand(min_damage, max_damage))
+		victim.adjust_brute_loss(rand(min_damage, max_damage))
 		if (victim.apply_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled, grapple_time, src))
 			buckle_mob(victim, TRUE)
 			SEND_SIGNAL(victim, COMSIG_GOLIATH_TENTACLED_GRABBED)

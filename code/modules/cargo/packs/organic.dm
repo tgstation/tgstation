@@ -4,6 +4,7 @@
 
 /datum/supply_pack/organic/hydroponics
 	access_view = ACCESS_HYDROPONICS
+	crate_type = /obj/structure/closet/crate/hydroponics
 
 /datum/supply_pack/organic/hydroponics/beekeeping_suits
 	name = "Beekeeper Suit Crate"
@@ -31,28 +32,61 @@
 	crate_name = "beekeeping starter crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
+/datum/supply_pack/organic/randomized
+	test_ignored = TRUE
+	crate_name = "food crate"
+
+/datum/supply_pack/organic/randomized/fill(obj/container)
+	for(var/i in 1 to 15)
+		var/item = pick(contains)
+		new item(container)
+
 /datum/supply_pack/organic/randomized/chef
 	name = "Excellent Meat Crate"
 	desc = "The best cuts in the whole galaxy. Contains a random assortment of exotic meats."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/food/meat/slab/human/mutant/slime,
-					/obj/item/food/meat/slab/killertomato,
-					/obj/item/food/meat/slab/bear,
-					/obj/item/food/meat/slab/xeno,
-					/obj/item/food/meat/slab/spider,
-					/obj/item/food/meat/rawbacon,
-					/obj/item/food/meat/slab/penguin,
-					/obj/item/food/spiderleg,
-					/obj/item/food/fishmeat/carp,
-					/obj/item/food/meat/slab/human,
-					/obj/item/food/meat/slab/grassfed,
-				)
-	crate_name = "food crate"
+	contains = list(
+		/obj/item/food/meat/slab/human/mutant/slime,
+		/obj/item/food/meat/slab/killertomato,
+		/obj/item/food/meat/slab/bear,
+		/obj/item/food/meat/slab/xeno,
+		/obj/item/food/meat/slab/spider,
+		/obj/item/food/meat/rawbacon,
+		/obj/item/food/meat/slab/penguin,
+		/obj/item/food/spiderleg,
+		/obj/item/food/fishmeat/carp,
+		/obj/item/food/meat/slab/human,
+		/obj/item/food/meat/slab/grassfed,
+	)
 
-/datum/supply_pack/organic/randomized/chef/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 15)
-		var/item = pick(contains)
-		new item(C)
+/datum/supply_pack/organic/randomized/fruits
+	name = "Fruit Crate"
+	desc = "Rich in vitamins. Contains a lime, orange, watermelon, apple, berries and a lemon."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(
+		/obj/item/food/grown/citrus/lime,
+		/obj/item/food/grown/citrus/orange,
+		/obj/item/food/grown/watermelon,
+		/obj/item/food/grown/apple,
+		/obj/item/food/grown/berries,
+		/obj/item/food/grown/citrus/lemon,
+	)
+
+/datum/supply_pack/organic/randomized/vegetables
+	name = "Vegetables Crate"
+	desc = "Grown in vats. Contains a chili, corn, tomato, potato, carrot, chanterelle, onion, pumpkin, and cucumber."
+	cost = CARGO_CRATE_VALUE * 1.8
+	contains = list(
+		/obj/item/food/grown/chili,
+		/obj/item/food/grown/corn,
+		/obj/item/food/grown/tomato,
+		/obj/item/food/grown/potato,
+		/obj/item/food/grown/carrot,
+		/obj/item/food/grown/mushroom/chanterelle,
+		/obj/item/food/grown/onion,
+		/obj/item/food/grown/pumpkin,
+		/obj/item/food/grown/cucumber,
+	)
 
 /datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
@@ -97,20 +131,6 @@
 				)
 	crate_name = "food crate"
 
-/datum/supply_pack/organic/randomized/chef/fruits
-	name = "Fruit Crate"
-	desc = "Rich in vitamins. Contains a lime, orange, watermelon, apple, \
-		berries and a lemon."
-	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/food/grown/citrus/lime,
-					/obj/item/food/grown/citrus/orange,
-					/obj/item/food/grown/watermelon,
-					/obj/item/food/grown/apple,
-					/obj/item/food/grown/berries,
-					/obj/item/food/grown/citrus/lemon,
-				)
-	crate_name = "food crate"
-
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
 	desc = "Designed by Aussec's Advanced Warfare Research Division, \
@@ -119,13 +139,13 @@
 	cost = CARGO_CRATE_VALUE * 12
 	contains = list(/obj/item/storage/backpack/duffelbag/clown/cream_pie)
 	crate_name = "party equipment crate"
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	access = ACCESS_THEATRE
 	access_view = ACCESS_THEATRE
 	crate_type = /obj/structure/closet/crate/secure
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
-/datum/supply_pack/organic/hydroponics
+/datum/supply_pack/organic/hydroponics/supplies
 	name = "Hydroponics Crate"
 	desc = "Supplies for growing a great garden! Contains two bottles of ammonia, \
 		two Plant-B-Gone spray bottles, a hatchet, cultivator, plant analyzer, \
@@ -140,7 +160,6 @@
 					/obj/item/clothing/suit/apron,
 				)
 	crate_name = "hydroponics crate"
-	crate_type = /obj/structure/closet/crate/hydroponics
 
 /datum/supply_pack/organic/hydroponics/hydrotank
 	name = "Hydroponics Backpack Crate"
@@ -164,6 +183,8 @@
 	var/anomalous_box_provided = FALSE
 	/// one percent chance for a pizza box to be the ininfite pizza box
 	var/infinite_pizza_chance = 1
+	/// chance that any one of the pizzas in the crate will have romerol added to it
+	var/romerol_chance = 0.2
 	///Whether we've provided a bomb pizza box already this shift or not.
 	var/boombox_provided = FALSE
 	/// three percent chance for a pizza box to be the pizza bomb box
@@ -188,12 +209,18 @@
 /datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/new_crate)
 	. = ..()
 	var/list/rng_pizza_list = pizza_types.Copy()
+	var/add_romerol = prob(romerol_chance)
 	for(var/i in 1 to 5)
 		if(add_anomalous(new_crate))
 			continue
 		if(add_boombox(new_crate))
 			continue
-		add_normal_pizza(new_crate, rng_pizza_list)
+		var/obj/item/pizzabox/pizzabox = add_normal_pizza(new_crate, rng_pizza_list)
+		if(add_romerol && pizzabox.pizza)
+			pizzabox.pizza.reagents.add_reagent(/datum/reagent/romerol, pizzabox.pizza.slices_left)
+			add_romerol = FALSE
+			log_game("A romerol pizza (as [pizzabox.pizza]) was created in a pizza crate delivery.")
+			message_admins("A romerol pizza (as [pizzabox.pizza]) was created in a pizza crate delivery.")
 
 /// adds the chance for an infinite pizza box
 /datum/supply_pack/organic/pizza/proc/add_anomalous(obj/structure/closet/crate/new_crate)
@@ -234,6 +261,7 @@
 	new_pizza_box.boxtag = new_pizza_box.pizza.boxtag
 	new_pizza_box.boxtag_set = TRUE
 	new_pizza_box.update_appearance(UPDATE_ICON | UPDATE_DESC)
+	return new_pizza_box
 
 /// tells crew that an infinite pizza box exists, half of the time, based on a roll in the anamolous box proc
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
@@ -276,23 +304,6 @@
 	crate_name = "seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
-/datum/supply_pack/organic/randomized/chef/vegetables
-	name = "Vegetables Crate"
-	desc = "Grown in vats. Contains a chili, corn, tomato, potato, carrot, \
-		chanterelle, onion, pumpkin, and cucumber."
-	cost = CARGO_CRATE_VALUE * 1.8
-	contains = list(/obj/item/food/grown/chili,
-					/obj/item/food/grown/corn,
-					/obj/item/food/grown/tomato,
-					/obj/item/food/grown/potato,
-					/obj/item/food/grown/carrot,
-					/obj/item/food/grown/mushroom/chanterelle,
-					/obj/item/food/grown/onion,
-					/obj/item/food/grown/pumpkin,
-					/obj/item/food/grown/cucumber,
-				)
-	crate_name = "food crate"
-
 /datum/supply_pack/organic/grill
 	name = "Grilling Starter Kit"
 	desc = "Hey dad I'm Hungry. Hi Hungry I'm THE NEW GRILLING STARTER KIT \
@@ -331,6 +342,7 @@
 				)
 	crate_name = "\improper Tiziran Supply box"
 	crate_type = /obj/structure/closet/crate/cardboard/tiziran
+	test_ignored = TRUE
 
 /datum/supply_pack/organic/mothic_supply
 	name = "Mothic Supply Box"
@@ -357,7 +369,7 @@
 	crate_type = /obj/structure/closet/crate/cardboard
 
 /datum/supply_pack/organic/syrup_contraband
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	name = "Contraband Syrups Box"
 	desc = "A packaged box containing illegal coffee syrups. Possession of these carries a penalty established in the galactic penal code."
 	cost = CARGO_CRATE_VALUE * 6
@@ -396,3 +408,49 @@
 	contains = list(/obj/structure/reagent_dispensers/servingdish)
 	crate_name = "nutraslop serving dish crate"
 
+
+/datum/supply_pack/organic/hydroponics/soil_normal
+	name = "NT-Ag Potting Soil Crate"
+	desc = "A crate containing sacks of regular, commercial soil."
+	cost = CARGO_CRATE_VALUE * 2
+	crate_name = "potting soil crate"
+	contains = list(
+		/obj/item/soil_sack = 5,
+	)
+
+/datum/supply_pack/organic/hydroponics/soil_vermaculite
+	name = "NT-Ag Vermaculite Crate"
+	desc = "A crate containing sacks of NT-Ag vermaculite. Your favorite expanded mineral!"
+	cost = CARGO_CRATE_VALUE * 2
+	crate_name = "vermaculite crate"
+	contains = list(
+		/obj/item/soil_sack/vermaculite = 3,
+	)
+
+/datum/supply_pack/organic/hydroponics/soil_gel
+	name = "NT-Ag Hydrogel Beads Crate"
+	desc = "A crate containing sacks of prehydrated superabsorbent gel beads. Everyone likes some nice beads."
+	cost = CARGO_CRATE_VALUE * 2
+	crate_name = "hydrogel beads crate"
+	contains = list(
+		/obj/item/soil_sack/gel = 3,
+	)
+
+
+/datum/supply_pack/organic/hydroponics/soil_coir
+	name = "NT-Ag Korta Coir Crate"
+	desc = "A crate containing sacks of korta root coir. Good for starting a mushroom farm!"
+	cost = CARGO_CRATE_VALUE * 3
+	crate_name = "korta coir crate"
+	contains = list(
+		/obj/item/soil_sack/coir = 3,
+	)
+
+/datum/supply_pack/organic/hydroponics/soil_worm
+	name = "NT-Ag Worm Castings Crate"
+	desc = "A crate containing sacks of vermicompost. Worms not included! Or?.."
+	cost = CARGO_CRATE_VALUE * 4
+	crate_name = "worm castings crate"
+	contains = list(
+		/obj/item/soil_sack/worm = 3,
+	)

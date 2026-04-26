@@ -194,10 +194,8 @@
 	var/datum/browser/panel = new(usr, "banpanel", "Banning Panel", 910, panel_height)
 	panel.add_stylesheet("admin_panelscss", 'html/admin/admin_panels.css')
 	panel.add_stylesheet("banpanelcss", 'html/admin/banpanel.css')
-	var/tgui_fancy = usr.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy)
-	if(tgui_fancy) //some browsers (IE8) have trouble with unsupported css3 elements and DOM methods that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
-		panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
-		panel.add_script("banpaneljs", 'html/admin/banpanel.js')
+	panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
+	panel.add_script("banpaneljs", 'html/admin/banpanel.js')
 	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
 	output += {"<input type='hidden' name='src' value='[REF(src)]'>
 	<label class='inputlabel checkbox'>Key:
@@ -324,7 +322,7 @@
 		for(var/datum/job_department/department as anything in SSjob.joinable_departments)
 			var/label_class = department.label_class
 			var/department_name = department.department_name
-			output += "<div class='column'><label class='rolegroup [label_class]'>[tgui_fancy ? "<input type='checkbox' name='[label_class]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""] \
+			output += "<div class='column'><label class='rolegroup [label_class]'><input type='checkbox' name='[label_class]' class='hidden' onClick='header_click_all_checkboxes(this)'> \
 			[department_name]</label><div class='content'>"
 			for(var/datum/job/job_datum as anything in department.get_jobban_jobs())
 				if(break_counter > 0 && (break_counter % 3 == 0))
@@ -337,7 +335,8 @@
 					if(!department_index)
 						stack_trace("Failed to find a department index for [department.type] in the departments_list of [job_datum.type]")
 					output += {"<label class='inputlabel checkbox'>[job_name]
-						<input type='checkbox' id='[job_name]_[department_index]' name='[job_name]' class='[label_class]' value='1'[tgui_fancy ? " onClick='toggle_other_checkboxes(this, \"[length(job_datum.departments_list)]\", \"[department_index]\")'" : ""]>
+						<input type='checkbox' id='[job_name]_[department_index]' name='[job_name]' class='[label_class]' value='1'
+						onClick='toggle_other_checkboxes(this, \"[length(job_datum.departments_list)]\", \"[department_index]\")'">
 						<div class='inputbox[(job_name in banned_from) ? " banned" : ""]'></div></label>
 						"}
 				else
@@ -352,7 +351,7 @@
 			"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC", "Urgent Adminhelp"),
 			)
 		for(var/department in other_job_lists)
-			output += "<div class='column'><label class='rolegroup [ckey(department)]'>[tgui_fancy ? "<input type='checkbox' name='[department]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""][department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='header_click_all_checkboxes(this)'>[department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in other_job_lists[department])
 				if(break_counter > 0 && (break_counter % 3 == 0))
@@ -374,20 +373,26 @@
 				ROLE_MIND_TRANSFER,
 				ROLE_POSIBRAIN,
 				ROLE_SENTIENCE,
+				ROLE_RECOVERED_CREW,
 			),
 			"Antagonist Positions" = list(
 				ROLE_ABDUCTOR,
 				ROLE_ALIEN,
 				ROLE_BLOB,
+				ROLE_BLOOD_WORM,
 				ROLE_BROTHER,
 				ROLE_CHANGELING,
 				ROLE_CULTIST,
+				ROLE_FUGITIVE,
+				ROLE_FUGITIVE_HUNTER,
+				ROLE_GLITCH,
 				ROLE_HERETIC,
 				ROLE_HIVE,
 				ROLE_MALF,
 				ROLE_NINJA,
 				ROLE_OPERATIVE,
 				ROLE_OVERTHROW,
+				ROLE_PARADOX_CLONE,
 				ROLE_REV,
 				ROLE_REVENANT,
 				ROLE_REV_HEAD,
@@ -396,12 +401,12 @@
 				ROLE_SPY,
 				ROLE_SYNDICATE,
 				ROLE_TRAITOR,
-				ROLE_WIZARD,
 				ROLE_VOIDWALKER,
+				ROLE_WIZARD,
 			),
 		)
 		for(var/department in long_job_lists)
-			output += "<div class='column'><label class='rolegroup long [ckey(department)]'>[tgui_fancy ? "<input type='checkbox' name='[department]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""][department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='header_click_all_checkboxes(this)'>[department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in long_job_lists[department])
 				if(break_counter > 0 && (break_counter % 10 == 0))

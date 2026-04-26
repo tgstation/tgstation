@@ -1,11 +1,6 @@
-/// Disable to use builtin DM-based generation.
-/// IconForge is 250x times faster but requires storing the icons in tmp/ and may result in higher asset transport.
-/// Note that the builtin GAGS editor still uses the 'legacy' generation to allow for debugging.
-#define USE_RUSTG_ICONFORGE_GAGS
-
 PROCESSING_SUBSYSTEM_DEF(greyscale)
 	name = "Greyscale"
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	wait = 3 SECONDS
 	init_stage = INITSTAGE_EARLY
 	var/list/datum/greyscale_config/configurations = list()

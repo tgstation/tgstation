@@ -129,9 +129,12 @@
 	if(numbuttons == numready)
 		begin_event()
 
-/obj/machinery/readybutton/update_icon_state()
-	icon_state = "auth_[ready ? "on" : "off"]"
-	return ..()
+/obj/machinery/readybutton/update_overlays()
+	. = ..()
+	if(ready && is_operational)
+		. += mutable_appearance(icon, "auth_on")
+		. += emissive_appearance(icon, "auth_on", src, alpha = src.alpha)
+
 
 /obj/machinery/readybutton/proc/begin_event()
 

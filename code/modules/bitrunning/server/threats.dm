@@ -114,7 +114,7 @@
 	new_mob.PossessByPlayer(ghost.key)
 
 	if(ghost_mind)
-		new_mob.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
+		new_mob.AddComponent(/datum/component/temporary_body, ghost_mind, return_on_death = TRUE)
 
 	var/datum/mind/antag_mind = new_mob.mind
 	antag_mind.add_antag_datum(chosen_role)
@@ -131,7 +131,7 @@
 /obj/machinery/quantum_server/proc/station_spawn(mob/living/antag, obj/machinery/byteforge/chosen_forge)
 	antag.balloon_alert(antag, "scanning...")
 	chosen_forge.setup_particles(angry = TRUE)
-	var/obj/machinery/announcement_system/aas = get_announcement_system(source = src)
+	var/obj/machinery/announcement_system/aas = get_announcement_system(null, src, list(RADIO_CHANNEL_SUPPLY))
 	if (aas)
 		aas.broadcast("QUANTUM SERVER ALERT: Security breach detected. Unauthorized entry sequence in progress...", list(RADIO_CHANNEL_SUPPLY))
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_STATION_SPAWN)

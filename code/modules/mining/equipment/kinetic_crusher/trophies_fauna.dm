@@ -179,7 +179,7 @@
 
 /obj/item/crusher_trophy/bileworm_spewlet/on_projectile_hit_mineral(turf/closed/mineral, mob/living/user)
 	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(1, mineral) - mineral)
-		mineral_turf.gets_drilled(user, 1)
+		mineral_turf.drill_aoe(user, 0.2)
 
 //yes this is a /mob_cooldown subtype being added to an item. I can't recommend you do what I'm doing
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet
@@ -231,7 +231,7 @@
 	for(var/i in 1 to summon_amount)
 		var/turf/drop_off = find_dropoff_turf(target, user)
 		var/mob/living/basic/mining/demon_afterimage/crusher/friend = new(drop_off)
-		friend.faction = list(FACTION_NEUTRAL)
+		friend.set_faction(list(FACTION_NEUTRAL))
 		friend.befriend(user)
 		friend.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
 	COOLDOWN_START(src, summon_cooldown, 30 SECONDS)

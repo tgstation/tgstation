@@ -18,7 +18,7 @@ concurrency:
 jobs:
   manage-discord-discussion:
     name: Manage Discord Discussion
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: contains(github.event.pull_request.labels.*.name, 'Discord Discussion')
     steps:
       - name: Fail if vars.DISCORD_DISCUSSIONS_CHANNEL_ID is unset
@@ -34,19 +34,23 @@ jobs:
           dotnet-quality: ga
 
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Build Tgstation.DiscordDiscussions
         run: dotnet publish -c Release -o discord_discussions_bins tools/Tgstation.DiscordDiscussions/Tgstation.DiscordDiscussions.csproj
 
       - name: Generate App Token
         id: app-token-generation
-        uses: getsentry/action-github-app-token@d4b5da6c5e37703f8c3b3e43abb5705b46e159cc
+        uses: actions/create-github-app-token@v3.1.1
+        if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
         with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+            client-id: ${{ secrets.APP_ID }}
+            private-key: ${{ secrets.APP_PRIVATE_KEY }}
+        env:
+            APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+            APP_ID: ${{ secrets.APP_ID }}
 
       - name: Run Tgstation.DiscordDiscussions
-        run: dotnet discord_discussions_bins/Tgstation.DiscordDiscussions.dll ${{ steps.app-token-generation.outputs.token }} ${{ github.repository_owner }} ${{ github.event.repository.name }} ${{ github.event.pull_request.number }} ${{ github.event.pull_request.merged && 'merged' || github.event.pull_request.state }} ${{ secrets.DISCORD_DISCUSSIONS_TOKEN }} ${{ vars.DISCORD_DISCUSSIONS_CHANNEL_ID }} ${{ github.event.action == 'reopened' && 'true' || 'false' }} ${{ vars.DISCORD_JOIN_LINK }}
+        run: dotnet discord_discussions_bins/Tgstation.DiscordDiscussions.dll ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }} ${{ github.repository_owner }} ${{ github.event.repository.name }} ${{ github.event.pull_request.number }} ${{ github.event.pull_request.merged && 'merged' || github.event.pull_request.state }} ${{ secrets.DISCORD_DISCUSSIONS_TOKEN }} ${{ vars.DISCORD_DISCUSSIONS_CHANNEL_ID }} ${{ github.event.action == 'reopened' && 'true' || 'false' }} ${{ vars.DISCORD_JOIN_LINK }}
         env:
           GITHUB_PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}

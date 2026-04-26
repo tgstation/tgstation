@@ -9,7 +9,6 @@
 #define ACTION_MAJOR_KILL "MAJOR KILL"
 #define ACTION_DISRESPECT "DISRESPECT"
 #define ACTION_MELEED "MELEE'D"
-#define ACTION_ROCK_MINED "ROCK MINED"
 #define ACTION_ORE_MINED "ORE MINED"
 #define ACTION_TRAPPER "TRAPPER"
 #define ACTION_PARRIED "PARRIED"
@@ -19,12 +18,18 @@
 #define ACTION_GIBTONITE_DEFUSED "GIBTONITE DEFUSED"
 #define ACTION_MARK_DETONATED "MARK DETONATED"
 #define ACTION_GEYSER_MARKED "GEYSER MARKED"
+#define ACTION_VENT_TAPPED "VENT TAPPED"
+
+#define ACTION_MULTIPLIER_PER_VENT_VALUE 0.1
+#define ACTION_MULTIPLIER_MAJOR_KILL 0.1
 
 /datum/component/style
 	/// Amount of style we have.
 	var/style_points = -1
 	/// Our style point multiplier.
 	var/point_multiplier = 1
+	/// Permanent multiplier gain from megafauna kills and vent taps
+	var/permanent_multiplier = 0
 	/// The current rank we have.
 	var/rank = STYLE_DULL
 	/// The last point affecting actions we've done
@@ -74,28 +79,12 @@
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/mob/mob_parent = parent
-
-	meter = new()
-	meter_image = new()
-	meter.vis_contents += meter_image
-	meter_image.add_filter("meter_mask", 1, list(type = "alpha", icon = icon('icons/hud/style_meter.dmi', "style_meter"), flags = MASK_INVERSE))
-	meter.update_appearance()
-	meter_image.update_appearance()
-
-	update_screen()
-
-	if(mob_parent.hud_used)
-		mob_parent.hud_used.static_inventory += meter
-		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
-
 	START_PROCESSING(SSdcs, src)
-
 	if(multitooled)
 		src.multitooled = multitooled
 
 /datum/component/style/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_USER_ITEM_INTERACTION, PROC_REF(hotswap))
+	RegisterSignal(parent, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hotswap))
 	RegisterSignal(parent, COMSIG_MOB_MINED, PROC_REF(on_mine))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 	RegisterSignal(parent, COMSIG_MOB_EMOTED("taunt"), PROC_REF(on_taunt))
@@ -107,10 +96,15 @@
 	RegisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE, PROC_REF(on_gibtonite_defuse))
 	RegisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE, PROC_REF(on_crusher_detonate))
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
+	RegisterSignal(parent, COMSIG_LIVING_ON_VENT_WIN, PROC_REF(on_vent_win))
+	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	ADD_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
+	var/mob/mob_parent = parent
+	if (mob_parent.hud_used)
+		on_hud_created()
 
 /datum/component/style/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_USER_ITEM_INTERACTION)
+	UnregisterSignal(parent, COMSIG_USER_PRE_ITEM_ATTACK)
 	UnregisterSignal(parent, COMSIG_MOB_MINED)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(parent, COMSIG_MOB_EMOTED("taunt"))
@@ -121,15 +115,30 @@
 	UnregisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE)
 	UnregisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE)
 	UnregisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER)
+	UnregisterSignal(parent, COMSIG_MOB_HUD_CREATED)
 	REMOVE_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
 
 /datum/component/style/Destroy(force)
 	STOP_PROCESSING(SSdcs, src)
+	QDEL_NULL(meter)
+	QDEL_NULL(meter_image)
 	var/mob/mob_parent = parent
 	if(mob_parent.hud_used)
-		mob_parent.hud_used.static_inventory -= meter
 		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
 	return ..()
+
+
+/datum/component/style/proc/on_hud_created(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/owner = parent
+	meter = owner.hud_used.add_screen_object(/atom/movable/screen/style_meter_background, HUD_MOB_STYLE_METER, update_screen = TRUE)
+	meter_image = new()
+	meter.vis_contents += meter_image
+	meter_image.add_filter("meter_mask", 1, list(type = "alpha", icon = icon('icons/hud/style_meter.dmi', "style_meter"), flags = MASK_INVERSE))
+	meter.update_appearance()
+	meter_image.update_appearance()
+	update_screen()
 
 /datum/component/style/process(seconds_per_tick)
 	point_multiplier = round(max(point_multiplier - 0.2 * seconds_per_tick, 1), 0.1)
@@ -157,7 +166,7 @@
 	if(!amount)
 		return
 
-	var/modified_amount = amount * (amount > 0 ? 1 - 0.1 * rank : 1) * (use_multiplier ? point_multiplier : 1)
+	var/modified_amount = amount * (amount > 0 ? 1 - 0.1 * rank : 1) * (use_multiplier ? permanent_multiplier + point_multiplier : 1)
 	style_points = max(style_points + modified_amount, -1)
 	update_screen()
 
@@ -195,6 +204,9 @@
 				mob_parent.balloon_alert(mob_parent, "hotswapping disabled")
 
 			rank = rank_changed
+
+	if(!meter)
+		return
 	meter.maptext = "[format_rank_string(rank)][generate_multiplier()][generate_actions()]"
 	meter.maptext_y = initial(meter.maptext_y) - 12 * length(actions)
 	update_meter(point_to_rank(), go_back)
@@ -250,11 +262,12 @@
 	return MAPTEXT_PIXELLARI("<font color='[rank_to_color(new_rank)]'>[rank_to_string(new_rank)]</font>")
 
 /datum/component/style/proc/generate_multiplier()
-	return "<br>" + MAPTEXT_GRAND9K("MULTIPLIER: [point_multiplier]X")
+	return "<br>" + MAPTEXT_GRAND9K("MULTIPLIER: [permanent_multiplier + point_multiplier]X")
 
 /datum/component/style/proc/generate_actions()
 	var/action_string = ""
-	for(var/action in actions)
+	for(var/i in 0 to length(actions) - 1)
+		var/action = actions[length(actions) - i]
 		action_string += "<br>" + MAPTEXT_GRAND9K("+ <font color='[action_to_color(actions[action])]'>[actions[action]]</font>")
 	return action_string
 
@@ -270,8 +283,6 @@
 			return "#990000"
 		if(ACTION_MELEED)
 			return "#660033"
-		if(ACTION_ROCK_MINED)
-			return "#664433"
 		if(ACTION_ORE_MINED)
 			return "#663366"
 		if(ACTION_TRAPPER)
@@ -290,29 +301,32 @@
 			return "#ac870e"
 		if(ACTION_GEYSER_MARKED)
 			return "#364866"
+		if(ACTION_VENT_TAPPED)
+			return "#366b55"
 
 /// A proc that lets a user, when their rank >= `hotswap_rank`, swap items in storage with what's in their hands, simply by clicking on the stored item with a held item
-/datum/component/style/proc/hotswap(mob/living/source, atom/target, obj/item/weapon, list/modifiers)
+/datum/component/style/proc/hotswap(mob/living/source, obj/item/weapon, atom/target, list/modifiers)
 	SIGNAL_HANDLER
-
-	if((rank < hotswap_rank) || !isitem(target) || !(target in source.get_all_contents()))
+	if((rank < hotswap_rank) || !isitem(target) || get(target, /mob/living) != source)
 		return NONE
 
 	var/obj/item/item_target = target
-
 	if(!(item_target.item_flags & IN_STORAGE))
 		return NONE
 
-	var/datum/storage/atom_storage = item_target.loc.atom_storage
+	INVOKE_ASYNC(src, PROC_REF(hotswap_interact), source, weapon, target, modifiers)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
+/datum/component/style/proc/hotswap_interact(mob/living/source, obj/item/weapon, atom/target, list/modifiers)
+	var/datum/storage/atom_storage = target.loc.atom_storage
 	if(!atom_storage.can_insert(weapon, source, messages = FALSE))
 		source.balloon_alert(source, "unable to hotswap!")
-		return NONE
+		return
 
-	atom_storage.attempt_insert(weapon, source, override = TRUE)
-	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, put_in_hands), target)
-	source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
-	return ITEM_INTERACT_BLOCKING
+	if (atom_storage.attempt_insert(weapon, source, override = TRUE) && source.put_in_hands(target))
+		source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
+	else
+		source.balloon_alert(source, "unable to hotswap!")
 
 // Point givers
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)
@@ -322,7 +336,7 @@
 		return
 
 	var/mob/living/disrespected = attacked_atom
-	if(disrespected.stat || faction_check(punching_person.faction, disrespected.faction) || !(FACTION_MINING in disrespected.faction))
+	if(disrespected.stat || disrespected.faction_check_atom(punching_person) || !disrespected.has_faction(FACTION_MINING))
 		return
 
 	add_action(ACTION_DISRESPECT, 60 * (ismegafauna(disrespected) ? 2 : 1))
@@ -335,7 +349,7 @@
 
 	var/mob/living/attacked = attacked_mob
 	var/mob/mob_parent = parent
-	if(faction_check(attacking_person.faction, attacked.faction) || !(FACTION_MINING in attacked.faction) || (istype(mob_parent.get_active_held_item(), /obj/item/kinetic_crusher) && attacked.has_status_effect(/datum/status_effect/crusher_mark)))
+	if(attacking_person.faction_check_atom(attacked) || !attacked.has_faction(FACTION_MINING) || (istype(mob_parent.get_active_held_item(), /obj/item/kinetic_crusher) && attacked.has_status_effect(/datum/status_effect/crusher_mark)))
 		return
 
 	add_action(ACTION_MELEED, 50 * (ismegafauna(attacked) ? 1.5 : 1))
@@ -358,18 +372,15 @@
 				add_action(ACTION_GIBTONITE_BOOM, 50)
 				return
 
-	if(rock.mineralType)
+	if(rock.mineral_type)
 		if(exp_multiplier)
 			add_action(ACTION_ORE_MINED, 40)
-		rock.mineralAmt = ROUND_UP(rock.mineralAmt * (1 + ((rank * 0.1) - 0.3))) // You start out getting 20% less ore, but it goes up to 20% more at S-tier
-
-	else if(exp_multiplier)
-		add_action(ACTION_ROCK_MINED, 25)
+		rock.mineral_amt = ROUND_UP(rock.mineral_amt * (1 + ((rank * 0.1) - 0.3))) // You start out getting 20% less ore, but it goes up to 20% more at S-tier
 
 /datum/component/style/proc/on_resonator_burst(datum/source, mob/creator, mob/living/hit_living)
 	SIGNAL_HANDLER
 
-	if(faction_check(creator.faction, hit_living.faction) || (hit_living.stat != CONSCIOUS) || !(FACTION_MINING in hit_living.faction))
+	if(creator.faction_check_atom(hit_living) || (hit_living.stat != CONSCIOUS) || !hit_living.has_faction(FACTION_MINING))
 		return
 
 	add_action(ACTION_TRAPPER, 70)
@@ -403,6 +414,12 @@
 
 	add_action(ACTION_GEYSER_MARKED, 100)
 
+/datum/component/style/proc/on_vent_win(datum/source, obj/structure/ore_vent/vent)
+	SIGNAL_HANDLER
+
+	var/vent_value = vent.boulder_size / BOULDER_SIZE_MEDIUM
+	add_action(ACTION_VENT_TAPPED, 250 * vent_value)
+	permanent_multiplier += ACTION_MULTIPLIER_PER_VENT_VALUE * vent_value
 
 // Emote-based multipliers
 /datum/component/style/proc/on_taunt()
@@ -425,10 +442,12 @@
 	if(died == parent)
 		change_points(-500, use_multiplier = FALSE)
 		return
-	else if(faction_check(mob_parent.faction, died.faction) || !(FACTION_MINING in died.faction) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
+	else if(mob_parent.faction_check_atom(died) || !died.has_faction(FACTION_MINING) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
 		return
+
 	if(ismegafauna(died))
 		add_action(ACTION_MAJOR_KILL, 350)
+		permanent_multiplier += ACTION_MULTIPLIER_MAJOR_KILL
 
 	else if(died.maxHealth >= 75) //at least legions
 		add_action(ACTION_KILL, 125)
@@ -447,7 +466,6 @@
 #undef ACTION_MAJOR_KILL
 #undef ACTION_DISRESPECT
 #undef ACTION_MELEED
-#undef ACTION_ROCK_MINED
 #undef ACTION_ORE_MINED
 #undef ACTION_TRAPPER
 #undef ACTION_PARRIED
@@ -457,3 +475,7 @@
 #undef ACTION_GIBTONITE_DEFUSED
 #undef ACTION_MARK_DETONATED
 #undef ACTION_GEYSER_MARKED
+#undef ACTION_VENT_TAPPED
+
+#undef ACTION_MULTIPLIER_PER_VENT_VALUE
+#undef ACTION_MULTIPLIER_MAJOR_KILL

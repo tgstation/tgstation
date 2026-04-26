@@ -82,7 +82,11 @@ export function TguiSay() {
       setButtonContent(currentPrefix.current ?? iterator.current());
 
       // Empty input, resets the channel
-    } else if (currentPrefix.current && iterator.isSay() && value?.length === 0) {
+    } else if (
+      currentPrefix.current &&
+      iterator.isSay() &&
+      value?.length === 0
+    ) {
       setCurrentPrefix(null);
       setButtonContent(iterator.current());
     }
@@ -152,6 +156,15 @@ export function TguiSay() {
     handleClose();
   }
 
+  function handleSaveText(): void {
+    const iterator = channelIterator.current;
+    const currentValue = innerRef.current?.value;
+
+    if (!currentValue || !iterator.isVisible()) return;
+
+    messages.current.saveText(currentValue, iterator.current());
+  }
+
   function handleIncrementChannel(): void {
     const iterator = channelIterator.current;
 
@@ -181,6 +194,7 @@ export function TguiSay() {
     // Handles typing indicators
     if (channelIterator.current.isVisible() && newPrefix !== ':b ') {
       messages.current.typingMsg();
+      messages.current.saveText(newValue, iterator.current());
     }
 
     setValue(newValue);
@@ -248,6 +262,8 @@ export function TguiSay() {
     Byond.subscribeTo('props', handleProps);
     Byond.subscribeTo('force', handleForceSay);
     Byond.subscribeTo('open', handleOpen);
+    Byond.subscribeTo('save', handleSaveText);
+    Byond.subscribeTo('close', handleClose);
   }, []);
 
   /** Value has changed, we need to check if the size of the window is ok */

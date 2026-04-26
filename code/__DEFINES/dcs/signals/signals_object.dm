@@ -5,8 +5,6 @@
 // /obj signals
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
-///from base of code/game/machinery
-#define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
 /// from /obj/item/toy/crayon/spraycan/use_on: (user, spraycan, color_is_dark)
@@ -16,6 +14,9 @@
 #define COMSIG_OBJ_RESKIN "obj_reskin"
 
 #define COMSIG_LIONHUNTER_ON_HIT "lionhunter_on_hit"
+
+/// from /datum/component/subtype_picker/pick_subtype(): (obj/item/old_item, mob/picker)
+#define COMSIG_ITEM_SUBTYPE_PICKER_SELECTED "item_subtype_picker_selected"
 
 // /obj/machinery signals
 
@@ -97,11 +98,6 @@
 #define COMSIG_FIREALARM_ON_RESET "firealarm_reset"
 
 // /obj access signals
-
-#define COMSIG_OBJ_ALLOWED "door_try_to_activate"
-	#define COMPONENT_OBJ_ALLOW (1<<0)
-	#define COMPONENT_OBJ_DISALLOW (1<<1)
-
 #define COMSIG_AIRLOCK_SHELL_ALLOWED "airlock_shell_try_allowed"
 
 // /obj/machinery/door/airlock signals
@@ -145,6 +141,8 @@
 #define COMSIG_ITEM_DRIED "item_dried"
 ///from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_DROPPED "item_drop"
+///a mob has just dropped an item
+#define COMSIG_MOB_DROPPED_ITEM "mob_dropped_item"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
 ///from base of obj/item/on_outfit_equip(): (mob/equipper, visuals_only, slot)
@@ -153,6 +151,23 @@
 #define COMSIG_ITEM_STORED "item_stored"
 ///from base of datum/storage/handle_exit(): (datum/storage/storage)
 #define COMSIG_ITEM_UNSTORED "item_unstored"
+///from base of obj/item/do_pickup_animation(): ()
+#define COMSIG_ITEM_BEFORE_PICKUP_ANIMATION "item_before_pickup_animation"
+///from base of obj/item/do_drop_animation(): ()
+#define COMSIG_ITEM_BEFORE_DROP_ANIMATION "item_before_drop_animation"
+
+/**
+ * From base of datum/strippable_item/get_alternate_actions(): (atom/owner, mob/user, list/alt_actions)
+ * As a side note, make sure the strippable item datum (the slot) in question doesn't have too many alternate actions already,
+ * as only up to three are supported at a time (as of september 2025), though, so far only the jumpsuit slot uses all three slots.
+ *
+ * Also make sure to code the alt action and add it to the StripMenu.tsx interface
+ */
+#define COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS "item_get_strippable_alt_actions"
+
+/// From base of datum/strippable_item/perform_alternate_action(): (atom/owner, mob/user, action_key)
+#define COMSIG_ITEM_STRIPPABLE_ALT_ACTION "item_strippable_alt_action"
+	#define COMPONENT_ALT_ACTION_DONE (1<<0)
 
 ///from base of obj/item/apply_fantasy_bonuses(): (bonus)
 #define COMSIG_ITEM_APPLY_FANTASY_BONUSES "item_apply_fantasy_bonuses"
@@ -180,9 +195,11 @@
 	#define COMPONENT_BLOCK_SHARPEN_BLOCKED (1<<1)
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY (1<<2)
 	#define COMPONENT_BLOCK_SHARPEN_MAXED (1<<3)
+	#define COMPONENT_BLOCK_SHARPEN_SHARPNESS (1<<4)
 
 ///Called when an armor plate is successfully applied to an object
 #define COMSIG_ARMOR_PLATED "armor_plated"
+
 ///Called when an item gets recharged by the ammo powerup
 #define COMSIG_ITEM_RECHARGED "item_recharged"
 ///Called when an item is being offered, from [/obj/item/proc/on_offered(mob/living/offerer)]
@@ -208,7 +225,9 @@
 #define COMSIG_MULTITOOL_REMOVE_BUFFER "multitool_remove_buffer"
 ///from [/obj/effect/mine/proc/triggermine]:
 #define COMSIG_MINE_TRIGGERED "minegoboom"
-///from [/obj/structure/closet/supplypod/proc/preOpen]:
+///from [/obj/structure/closet/supplypod/proc/handleReturnAfterDeparting]:
+#define COMSIG_SUPPLYPOD_RETURNING "supplypodgohome"
+///from [/obj/structure/closet/supplypod/proc/pre_open]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
 /// from [/obj/item/stack/proc/can_merge]: (obj/item/stack/merge_with, in_hand)
@@ -239,10 +258,6 @@
 
 ///a deliver_first element closet was successfully delivered
 #define COMSIG_CLOSET_DELIVERED "crate_delivered"
-
-///Eigenstasium
-///From base of [/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom]: (var/target)
-#define COMSIG_EIGENSTATE_ACTIVATE "eigenstate_activate"
 
 // /obj signals for economy
 ///called when the payment component tries to charge an account.
@@ -359,11 +374,13 @@
 	#define COMPONENT_CANCEL_SAWING_OFF (1<<0)
 #define COMSIG_GUN_SAWN_OFF "gun_sawn_off"
 
-///called in /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/new_gun): (obj/item/firing_pin/pin, mob/living/user)
+///called in /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/new_gun, starting): (obj/item/firing_pin/pin, mob/living/user, starting)
 #define COMSIG_GUN_PIN_INSERTED "gun_pin_inserted"
 
 ///called in /obj/item/firing_pin/proc/gun_remove(mob/living/user): (obj/item/firing_pin/pin, mob/living/user)
 #define COMSIG_GUN_PIN_REMOVED "gun_pin_removed"
+///called when an empty rechargeable gun gives itself more ammo
+#define COMSIG_GUN_REPLENISHED_CHARGE "gun_replenished_charge"
 
 // Jetpack things
 // Please kill me
@@ -420,6 +437,10 @@
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
 ///from the base of /obj/projectile/process(): ()
 #define COMSIG_PROJECTILE_BEFORE_MOVE "projectile_before_move"
+///sent to firer at the end of /mob/living/apply_projectile_effects(): (mob/living/target, hit_limb, blocked)
+#define COMSIG_PROJECTILE_POST_HIT_LIVING "projectile_post_hit_living"
+///sent to projectile at the end of /mob/living/apply_projectile_effects(): (mob/living/target, hit_limb, blocked)
+#define COMSIG_PROJECTILE_SELF_POST_HIT_LIVING "projectile_post_hit_living"
 // FROM [/obj/item/proc/set_embed] sent when an item's embedding properties are changed : ()
 #define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
@@ -483,13 +504,17 @@
 #define COMSIG_ITEM_ATTACK_SELF_SECONDARY "item_attack_self_secondary"
 ///from base of obj/item/attack_atom(): (/atom, /mob, list/modifiers)
 #define COMSIG_ITEM_ATTACK_ATOM "item_attack_atom"
-///from base of obj/item/pre_attack(): (atom/target, mob/user, list/modifiers)
+///from base of obj/item/pre_attack(): (atom/target, mob/user, list/modifiers, list/attack_modifiers)
 #define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"
+///from base of obj/item/pre_attack(): (obj/item/weapon, atom/target, list/modifiers, list/attack_modifiers)
+#define COMSIG_USER_PRE_ITEM_ATTACK "user_pre_item_attack"
 /// From base of [/obj/item/proc/pre_attack_secondary()]: (atom/target, mob/user, list/modifiers, list/attack_modifiers)
 #define COMSIG_ITEM_PRE_ATTACK_SECONDARY "item_pre_attack_secondary"
 	#define COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN (1<<0)
 	#define COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN (1<<1)
 	#define COMPONENT_SECONDARY_CALL_NORMAL_ATTACK_CHAIN (1<<2)
+///from base of obj/item/pre_attack_secondary(): (obj/item/weapon, atom/target, list/modifiers, list/attack_modifiers)
+#define COMSIG_USER_PRE_ITEM_ATTACK_SECONDARY "user_pre_item_attack_secondary"
 /// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, list/modifiers, list/attack_modifiers)
 #define COMSIG_ITEM_ATTACK_SECONDARY "item_attack_secondary"
 ///from base of [obj/item/attack()]: (atom/target, mob/user, proximity_flag, list/modifiers)
@@ -518,7 +543,7 @@
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
 
-/// from /obj/item/detective_scanner/scan(): (mob/user, list/extra_data)
+/// from /obj/item/detective_scanner/scan(): (mob/user, datum/detective_scanner_log/entry)
 #define COMSIG_DETECTIVE_SCANNED "det_scanned"
 
 /// from /obj/plunger_act when an object is being plungered
@@ -615,3 +640,38 @@
 
 /// Sent from /obj/machinert/console/camera_advanced/attack_hand() : (mob/eye/camera/remote/new_camera)
 #define COMSIG_ADVANCED_CAMERA_EYE_CREATED "advanced_camera_eye_created"
+
+/// Sent from /obj/item/mob_holder/purple_raptor/proc/toggle_wings() : (mob/living/carbon/human/user)
+#define COMSIG_RAPTOR_WINGS_OPENED "raptor_wings_opened"
+
+/// Sent from /obj/item/mob_holder/purple_raptor/proc/toggle_wings() : (mob/living/carbon/human/user)
+#define COMSIG_RAPTOR_WINGS_CLOSED "raptor_wings_closed"
+
+/// Sent from /obj/machinery/vitals_monitor/proc/set_patient() : (mob/living/old_patient, mob/living/new_patient)
+#define COMSIG_VITALS_SET_PATIENT "vitals_set_patient"
+
+/// Sent from /obj/item/bodypart/limb/proc/apply_item(): (obj/item/bodypart/limb)
+#define COMSIG_ITEM_APPLIED_TO_LIMB "item_applied_to_limb"
+/// Sent from /obj/item/bodypart/limb/proc/Exited(): (obj/item/bodypart/limb)
+#define COMSIG_ITEM_UNAPPLIED_FROM_LIMB "item_removed_from_limb"
+
+/// Sent from /obj/effect/rune/convert/try_sacrifice_item(obj/effect/rune/convert/rune)
+#define COMSIG_ITEM_CULT_SACRIFICE "item_cult_sacrifice"
+	#define COMPONENT_SACRIFICE_SUCCESSFUL (1<<0)
+
+/// Sent from /obj/item/mail/traitor/after_unwrap(mob/user, obj/item/mail/traitor/letter)
+#define COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL "traitor_mail_opened"
+	#define COMPONENT_TRAITOR_MAIL_HANDLED (1<<0)
+
+/// Send to items that have been unwrapped from a gift
+#define COMSIG_ITEM_OPENED_FROM_GIFT "gift_opened"
+
+/// From /obj/machinery/vending/ui_interact(): (mob/user, datum/vending_ui/ui)
+#define COMSIG_VENDING_UI_INTERACT "vending_ui_interact"
+	#define VENDING_DENIED (1<<0)
+
+/// From /obj/machinery/vending/dispense(): (obj/item/vended_item)
+#define COMSIG_VENDING_DISPENSED "vending_dispensed"
+
+/// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
+#define COMSIG_REFLECTION_UPDATED "reflection_updated"

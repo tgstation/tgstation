@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(statpanels)
 	wait = 4
 	priority = FIRE_PRIORITY_STATPANEL
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	var/list/currentrun = list()
 	var/list/global_data
 	var/list/mc_data
@@ -37,9 +37,8 @@ SUBSYSTEM_DEF(statpanels)
 
 		global_data += list(
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
-			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)]",
-			"Round Time: [ROUND_TIME()]",
-			"Station Time: [station_time_timestamp()]",
+			"Server Time/NST: [server_timestamp(format = "YYYY-MM-DD hh:mm:ss")]",
+			"Shift Time/PT: [(SSticker.round_start_time == 0) ? "Pre-Game" : round_timestamp()]",
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
 		)
 
@@ -47,14 +46,6 @@ SUBSYSTEM_DEF(statpanels)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
-
-		if(SSticker.reboot_timer)
-			var/reboot_time = timeleft(SSticker.reboot_timer)
-			if(reboot_time)
-				global_data += "Reboot: [DisplayTimeText(reboot_time, 1)]"
-		// admin must have delayed round end
-		else if(SSticker.ready_for_reboot)
-			global_data += "Reboot: DELAYED"
 
 		src.currentrun = GLOB.clients.Copy()
 		mc_data = null
@@ -89,23 +80,6 @@ SUBSYSTEM_DEF(statpanels)
 
 			else if(length(GLOB.sdql2_queries) && (target.stat_tab == "SDQL2" || !("SDQL2" in target.panel_tabs)) && num_fires % default_wait == 0)
 				set_SDQL2_tab(target)
-
-		if(target.mob)
-			var/mob/target_mob = target.mob
-
-			// Handle the action panels of the stat panel
-
-			var/update_actions = FALSE
-			// We're on a spell tab, update the tab so we can see cooldowns progressing and such
-			if(target.stat_tab in target.spell_tabs)
-				update_actions = TRUE
-			// We're not on a spell tab per se, but we have cooldown actions, and we've yet to
-			// set up our spell tabs at all
-			if(!length(target.spell_tabs) && locate(/datum/action/cooldown) in target_mob.actions)
-				update_actions = TRUE
-
-			if(update_actions && num_fires % default_wait == 0)
-				set_action_tabs(target, target_mob)
 
 		if(MC_TICK_CHECK)
 			return
@@ -177,28 +151,17 @@ SUBSYSTEM_DEF(statpanels)
 	sdql2A += sdql2B
 	target.stat_panel.send_message("update_sdql2", sdql2A)
 
-/// Set up the various action tabs.
-/datum/controller/subsystem/statpanels/proc/set_action_tabs(client/target, mob/target_mob)
-	var/list/actions = target_mob.get_actions_for_statpanel()
-	target.spell_tabs.Cut()
-
-	for(var/action_data in actions)
-		target.spell_tabs |= action_data[1]
-
-	target.stat_panel.send_message("update_spells", list(spell_tabs = target.spell_tabs, actions = actions))
-
-
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	mc_data = list(
-		list("CPU:", world.cpu),
-		list("Instances:", "[num2text(world.contents.len, 10)]"),
-		list("World Time:", "[world.time]"),
-		list("Globals:", GLOB.stat_entry(), text_ref(GLOB)),
-		list("[config]:", config.stat_entry(), text_ref(config)),
-		list("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%))\n  (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)"),
-		list("Master Controller:", Master.stat_entry(), text_ref(Master)),
-		list("Failsafe Controller:", Failsafe.stat_entry(), text_ref(Failsafe)),
-		list("","")
+		list("", "CPU:", world.cpu),
+		list("", "Instances:", "[num2text(world.contents.len, 10)]"),
+		list("", "World Time:", "[world.time]"),
+		list("", "Globals:", GLOB.stat_entry(), text_ref(GLOB)),
+		list("", "[config]:", config.stat_entry(), text_ref(config)),
+		list("", "Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%))\n  (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)"),
+		list("", "Master Controller:", Master.stat_entry(), text_ref(Master)),
+		list("", "Failsafe Controller:", Failsafe.stat_entry(), text_ref(Failsafe)),
+		list("", "", "")
 	)
 #if defined(MC_TAB_TRACY_INFO) || defined(SPACEMAN_DMM)
 	var/static/tracy_dll
@@ -208,19 +171,18 @@ SUBSYSTEM_DEF(statpanels)
 		tracy_present = fexists(tracy_dll)
 	if(tracy_present)
 		if(Tracy.enabled)
-			mc_data.Insert(2, list(list("byond-tracy:", "Active (reason: [Tracy.init_reason || "N/A"])")))
+			mc_data.Insert(2, list(list("", "byond-tracy:", "Active (reason: [Tracy.init_reason || "N/A"])")))
 		else if(Tracy.error)
-			mc_data.Insert(2, list(list("byond-tracy:", "Errored ([Tracy.error])")))
+			mc_data.Insert(2, list(list("", "byond-tracy:", "Errored ([Tracy.error])")))
 		else if(fexists(TRACY_ENABLE_PATH))
-			mc_data.Insert(2, list(list("byond-tracy:", "Queued for next round")))
+			mc_data.Insert(2, list(list("", "byond-tracy:", "Queued for next round")))
 		else
-			mc_data.Insert(2, list(list("byond-tracy:", "Inactive")))
+			mc_data.Insert(2, list(list("", "byond-tracy:", "Inactive")))
 	else
-		mc_data.Insert(2, list(list("byond-tracy:", "[tracy_dll] not present")))
+		mc_data.Insert(2, list(list("", "byond-tracy:", "[tracy_dll] not present")))
 #endif
 	for(var/datum/controller/subsystem/sub_system as anything in Master.subsystems)
-		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), text_ref(sub_system))
-	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", text_ref(GLOB.cameranet))
+		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]]", sub_system.name, sub_system.stat_entry(), text_ref(sub_system))
 
 ///immediately update the active statpanel tab of the target client
 /datum/controller/subsystem/statpanels/proc/immediate_send_stat_data(client/target)
@@ -229,21 +191,6 @@ SUBSYSTEM_DEF(statpanels)
 
 	if(target.stat_tab == "Status")
 		set_status_tab(target)
-		return TRUE
-
-	var/mob/target_mob = target.mob
-
-	// Handle actions
-
-	var/update_actions = FALSE
-	if(target.stat_tab in target.spell_tabs)
-		update_actions = TRUE
-
-	if(!length(target.spell_tabs) && locate(/datum/action/cooldown) in target_mob.actions)
-		update_actions = TRUE
-
-	if(update_actions)
-		set_action_tabs(target, target_mob)
 		return TRUE
 
 	if(!target.holder)

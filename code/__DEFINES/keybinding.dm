@@ -3,6 +3,7 @@
 //General
 #define COMSIG_KB_ACTIVATED (1<<0)
 #define COMSIG_KB_EMOTE "keybinding_emote_down"
+#define UNBOUND_KEY "Unbound"
 
 ///Signal sent when a keybind is deactivated
 #define DEACTIVATE_KEYBIND(A) "[A]_DEACTIVATED"
@@ -12,6 +13,7 @@
 #define COMSIG_KB_ADMIN_DSAY_DOWN "keybinding_admin_dsay_down"
 #define COMSIG_KB_ADMIN_TOGGLEBUILDMODE_DOWN "keybinding_admin_togglebuildmode_down"
 #define COMSIG_KB_ADMIN_AGHOST_DOWN "keybinding_admin_aghost_down"
+#define COMSIG_KB_ADMIN_JUMPTOGHOST_DOWN "keybinding_admin_jumptoghost_down"
 #define COMSIG_KB_ADMIN_PLAYERPANELNEW_DOWN "keybinding_admin_playerpanelnew_down"
 #define COMSIG_KB_ADMIN_STEALTHMODETOGGLE_DOWN "keybinding_admin_stealthmodetoggle_down"
 #define COMSIG_KB_ADMIN_INVISIMINTOGGLE_DOWN "keybinding_admin_invisimintoggle_down"
@@ -26,6 +28,7 @@
 //Client
 #define COMSIG_KB_CLIENT_GETHELP_DOWN "keybinding_client_gethelp_down"
 #define COMSIG_KB_CLIENT_SCREENSHOT_DOWN "keybinding_client_screenshot_down"
+#define COMSIG_KB_CLIENT_SCREENSHOT_AS_DOWN "keybinding_client_screenshot_as_down"
 #define COMSIG_KB_CLIENT_FULLSCREEN_DOWN "keybinding_client_fullscreen_down"
 #define COMSIG_KB_CLIENT_MINIMALHUD_DOWN "keybinding_client_minimalhud_down"
 #define COMSIG_KB_CLIENT_CLOSEUI_DOWN "keybinding_client_closeui_down"
@@ -36,6 +39,7 @@
 #define COMSIG_KB_CLIENT_RADIO_DOWN "keybinding_client_radio_down"
 #define COMSIG_KB_CLIENT_ME_DOWN "keybinding_client_me_down"
 #define COMSIG_KB_CLIENT_OOC_DOWN "keybinding_client_ooc_down"
+#define COMSIG_KB_CLIENT_PRAY_DOWN "keybinding_client_pray_down"
 
 //Human
 #define COMSIG_KB_HUMAN_QUICKEQUIP_DOWN "keybinding_human_quickequip_down"

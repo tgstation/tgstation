@@ -58,8 +58,8 @@
 		return
 	if(!HAS_TRAIT(location, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift)))
 		RegisterSignal(location, COMSIG_TURF_RESET_ELEVATION, PROC_REF(check_elevation))
+		reset_elevation(location) // This needs to go in the before COMSIG_TURF_CHANGE, or we can end up bouncing back into this and getting a runtime
 		RegisterSignal(location, COMSIG_TURF_CHANGE, PROC_REF(pre_change_turf))
-		reset_elevation(location)
 	ADD_TRAIT(location, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), ref(source))
 
 /datum/element/elevation/proc/unregister_turf(atom/movable/source, atom/location)
@@ -130,15 +130,19 @@
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON,
 		COMSIG_TURF_RESET_ELEVATION,
 	))
-	REMOVE_TRAIT(source, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src))
 	for(var/mob/living/living in source)
 		deelevate_mob(living)
 		UnregisterSignal(living, list(COMSIG_LIVING_SET_BUCKLED, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION)))
+	REMOVE_TRAIT(source, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src))
 	return ..()
 
 /datum/element/elevation_core/proc/on_entered(turf/source, atom/movable/entered, atom/old_loc)
 	SIGNAL_HANDLER
-	if((isnull(old_loc) || !HAS_TRAIT_FROM(old_loc, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src))) && isliving(entered))
+	// If the movement has been aborted by something else within the chain we need to abort
+	if(!isliving(entered) || entered.loc != source)
+		return
+
+	if(isnull(old_loc) || !HAS_TRAIT_FROM(old_loc, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src)))
 		register_new_mob(entered, elevate_time = isturf(old_loc) && source.Adjacent(old_loc) ? ELEVATE_TIME : 0)
 
 /datum/element/elevation_core/proc/on_initialized_on(turf/source, atom/movable/spawned)
@@ -178,7 +182,6 @@
 	// we want to avoid accidentally double-elevating anything they're buckled to (namely vehicles)
 	if(target.has_offset(source = ELEVATION_SOURCE(src)))
 		return
-	ADD_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 	// We are buckled to something
 	if(target.buckled)
 		// We are buckled to a vehicle, so it also must be elevated
@@ -189,15 +192,18 @@
 			pass()
 		// We are buckled to some other object - perhaps the object itself - so skip
 		else
+			ADD_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 			return
+
 	target.add_offsets(ELEVATION_SOURCE(src), z_add = pixel_shift, animate = elevate_time > 0)
+	ADD_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 
 /// Reverts elevation of the mob.
 /datum/element/elevation_core/proc/deelevate_mob(mob/living/target, elevate_time = ELEVATE_TIME)
-	REMOVE_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 	target.remove_offsets(ELEVATION_SOURCE(src), animate = elevate_time > 0)
 	if(isvehicle(target.buckled))
 		animate(target.buckled, pixel_z = -pixel_shift, time = elevate_time, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	REMOVE_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 
 /**
  * If the mob is buckled or unbuckled to/from a vehicle, shift it up/down

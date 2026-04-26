@@ -57,7 +57,7 @@
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
-			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
+			new /obj/item/disk/computer/syndicate/camera_app(src) // 1 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/storage/box/syndie_kit/mulligan(src) // 4 tc
@@ -122,7 +122,7 @@
 			new /obj/item/ai_module/toy_ai(src) // ~6 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
-			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
+			new /obj/item/disk/computer/syndicate/camera_app(src) // 1 tc
 			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc
 			new /obj/item/card/id/advanced/chameleon/elite(src) // 2 tc
 
@@ -143,9 +143,9 @@
 
 		if(KIT_SABOTAGE)
 			new /obj/item/storage/backpack/duffelbag/syndie/sabotage(src) // 5 tc for 3 c4 and 2 x4
-			new /obj/item/computer_disk/syndicate/camera_app(src) // 1 tc
+			new /obj/item/disk/computer/syndicate/camera_app(src) // 1 tc
 			new /obj/item/sbeacondrop/powersink(src) // 11 tc
-			new /obj/item/computer_disk/virus/detomatix(src) // 6 tc
+			new /obj/item/disk/computer/virus/detomatix(src) // 6 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/pizzabox/bomb(src) // 6 tc
 			new /obj/item/storage/box/syndie_kit/emp(src) // 2 tc
@@ -212,7 +212,7 @@
 			new /obj/item/toy/cards/deck/syndicate(src) // 1 tc, for poker
 
 		if(KIT_NINJA)
-			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
+			new /obj/item/storage/belt/sheath/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
 				new /obj/item/throwing_star(src) // 1 tc
@@ -301,7 +301,7 @@
 			new /obj/item/clothing/head/helmet/marine/pmc(src)
 			new /obj/item/clothing/mask/gas/sechailer(src)
 			new /obj/item/clothing/glasses/night(src) // 3~ TC
-			new /obj/item/clothing/gloves/krav_maga/combatglovesplus(src) //5TC
+			new /obj/item/clothing/gloves/kaza_ruk/combatglovesplus(src) //5TC
 			new /obj/item/clothing/shoes/jackboots(src)
 			new /obj/item/storage/belt/military/assault/fisher(src) //items in this belt easily costs 18 TC
 
@@ -478,7 +478,7 @@
 	new /obj/item/reagent_containers/cup/bottle/polonium(src)
 	new /obj/item/reagent_containers/cup/bottle/venom(src)
 	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
-	new /obj/item/reagent_containers/cup/bottle/formaldehyde(src)
+	new /obj/item/reagent_containers/cup/bottle/anacea(src)
 	new /obj/item/reagent_containers/cup/bottle/spewium(src)
 	new /obj/item/reagent_containers/cup/bottle/syndol(src)
 	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
@@ -706,7 +706,7 @@
 /obj/item/storage/box/syndie_kit/imp_deathrattle/PopulateContents()
 	new /obj/item/implanter(src)
 
-	var/datum/deathrattle_group/group = new
+	var/datum/deathrattle_group/standard/group = new
 
 	var/implants = list()
 	for(var/j in 1 to 8)
@@ -751,7 +751,7 @@
 	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
 	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
 	new spess_helmet(src) // 4 TC for the space gear
-	new /obj/item/tank/jetpack/oxygen/harness(src) // They kinda need this to fly to the cruiser.
+	new /obj/item/tank/jetpack/harness(src) // They kinda need this to fly to the cruiser.
 	// Tacticool gear
 	new /obj/item/clothing/shoes/combat(src)
 	new /obj/item/clothing/under/syndicate(src)
@@ -772,13 +772,6 @@
 	name = "nuclear operative implant"
 	desc = "Registers you as a member of a Syndicate nuclear operative team."
 	implant_color = "r"
-
-/obj/item/implant/nuclear_operative/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Suspicious Implant<BR> \
-		<b>Life:</b> UNKNOWN <BR> \
-		<b>Implant Details:</b> <BR> \
-		<b>Function:</b> Strange implant that seems to resist any attempts at scanning it."
 
 /obj/item/implant/nuclear_operative/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
@@ -807,7 +800,7 @@
 	nuke_datum.send_to_spawnpoint = FALSE
 	nuke_datum.nukeop_outfit = null
 	human_target.mind?.add_antag_datum(nuke_datum)
-	human_target.faction |= ROLE_SYNDICATE
+	human_target.add_faction(ROLE_SYNDICATE)
 	to_chat(human_target, span_warning("You are now a nuclear operative. Your main objective, if you were an antagonist and willing, is presumably to assist the nuclear operative team and secure the disk."))
 	to_chat(human_target, span_userdanger("This implant does NOT, in any way, brainwash you. If you were a normal crew member beforehand, forcibly implanted or otherwise, you are still one and cannot assist the nuclear operatives."))
 	return TRUE
@@ -818,7 +811,7 @@
 		return FALSE
 	var/mob/living/living_target = target
 	living_target.mind.remove_antag_datum(/datum/antagonist/nukeop)
-	living_target.faction -= ROLE_SYNDICATE
+	living_target.remove_faction(ROLE_SYNDICATE)
 	to_chat(target, span_notice("You feel a little less nuclear."))
 	to_chat(target, span_userdanger("You're no longer identified as a nuclear operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
 	return TRUE
@@ -889,8 +882,14 @@
 
 /obj/item/storage/box/syndicate/horse_box/PopulateContents()
 	new /obj/item/food/monkeycube/dangerous_horse(src)
-	new /obj/item/slimepotion/slime/sentience/nuclear/dangerous_horse(src)
+	new /obj/item/slimepotion/sentience/nuclear/dangerous_horse(src)
 	new /obj/item/food/grown/apple(src)
+
+/obj/item/storage/box/syndicate/sleeping_carp/PopulateContents()
+	new /obj/item/book/granter/martial/carp(src)
+	new /obj/item/clothing/head/costume/snakeeater(src)
+	new /obj/item/clothing/under/costume/gi(src)
+	new /obj/item/clothing/shoes/sandal(src)
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

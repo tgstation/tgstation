@@ -12,6 +12,7 @@
 	key = "stairs_and_cliffs"
 	map_name = "stairs_and_cliffs"
 	reward_points = BITRUNNER_REWARD_MEDIUM
+	domain_flags = DOMAIN_NO_NOHIT_BONUS
 
 /turf/open/cliff/snowrock/virtual_domain
 	name = "icy cliff"

@@ -30,8 +30,10 @@
 	var/list/rider_traits = list(TRAIT_NO_FLOATING_ANIM)
 	/// We don't need roads where we're going if this is TRUE, allow normal movement in space tiles
 	var/override_allow_spacemove = FALSE
-	/// can anyone other than the rider unbuckle the rider?
-	var/can_force_unbuckle = TRUE
+	/// determines behavior for other mobs trying to unbuckle riders
+	var/other_unbuckle = CAN_FORCE_UNBUCKLE
+	/// Like last_bumped for mobs, but for vehicles. Exists to allow the door bump cooldown while also passing door openings through Bumped()
+	var/vehicle_last_bumped = 0
 
 	/**
 	 * Ride check flags defined for the specific riding component types, so we know if we need arms, legs, or whatever.
@@ -65,8 +67,13 @@
 	RegisterSignals(parent, GLOB.movement_type_addtrait_signals, PROC_REF(on_movement_type_trait_gain))
 	RegisterSignals(parent, GLOB.movement_type_removetrait_signals, PROC_REF(on_movement_type_trait_loss))
 	RegisterSignal(parent, COMSIG_SUPERMATTER_CONSUMED, PROC_REF(on_entered_supermatter))
-	if(!can_force_unbuckle)
-		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(force_unbuckle))
+	switch(other_unbuckle)
+		if(CAN_FORCE_UNBUCKLE)
+			RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(block_unbuckle))
+		if(CAN_DISARM_UNBUCKLE)
+			RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(block_unbuckle))
+			if(isliving(parent))
+				RegisterSignal(parent, COMSIG_LIVING_DISARM_HIT, PROC_REF(parent_disarmed))
 
 /// This proc is called when a rider unbuckles, whether they chose to or not. If there's no more riders, this will be the riding component's death knell.
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/rider, force = FALSE)
@@ -86,6 +93,7 @@
 	unequip_buckle_inhands(rider)
 	rider.updating_glide_size = TRUE
 	UnregisterSignal(rider, COMSIG_LIVING_TRY_PULL)
+	UnregisterSignal(rider, COMSIG_LIVING_DISARM_HIT)
 	for (var/trait in GLOB.movement_type_trait_to_flag)
 		if (HAS_TRAIT(parent, trait))
 			REMOVE_TRAIT(rider, trait, REF(src))
@@ -103,6 +111,8 @@
 	if(rider.pulling == parent)
 		rider.stop_pulling()
 	RegisterSignal(rider, COMSIG_LIVING_TRY_PULL, PROC_REF(on_rider_try_pull))
+	if(other_unbuckle == CAN_DISARM_UNBUCKLE)
+		RegisterSignal(rider, COMSIG_LIVING_DISARM_HIT, PROC_REF(rider_disarmed))
 
 	for (var/trait in GLOB.movement_type_trait_to_flag)
 		if (HAS_TRAIT(parent, trait))
@@ -270,10 +280,12 @@
 /// So we can check all occupants when we bump a door to see if anyone has access
 /datum/component/riding/proc/vehicle_bump(atom/movable/movable_parent, obj/machinery/door/possible_bumped_door)
 	SIGNAL_HANDLER
-	if(!istype(possible_bumped_door))
+	if(!istype(possible_bumped_door) || world.time - vehicle_last_bumped <= 0.3 SECONDS)
 		return
-	for(var/occupant in movable_parent.buckled_mobs)
-		INVOKE_ASYNC(possible_bumped_door, TYPE_PROC_REF(/obj/machinery/door/, bumpopen), occupant)
+	for(var/mob/living/occupant in movable_parent.buckled_mobs)
+		vehicle_last_bumped = world.time
+		occupant.last_bumped = 0
+		INVOKE_ASYNC(possible_bumped_door, TYPE_PROC_REF(/atom, Bumped), occupant)
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, TYPE_PROC_REF(/atom/movable/, unbuckle_mob), M), 0, TIMER_UNIQUE)
@@ -313,12 +325,109 @@
 	for (var/mob/rider in movable_parent.buckled_mobs)
 		REMOVE_TRAIT(rider, trait, REF(src))
 
-/datum/component/riding/proc/force_unbuckle(atom/movable/source, mob/living/living_hitter)
+/// Block attempts to unbuckle by direct click in certain conditions
+/datum/component/riding/proc/block_unbuckle(atom/movable/source, mob/living/unbuckler)
 	SIGNAL_HANDLER
 
-	if((living_hitter in source.buckled_mobs))
-		return
+	if(!source.has_buckled_mobs() || (unbuckler in source.buckled_mobs))
+		return NONE
+
+	switch(other_unbuckle)
+		if(CANNOT_FORCE_UNBUCKLE)
+			to_chat(unbuckler, span_warning("You can't dismount [source]'s rider[length(source.buckled_mobs) == 1 ? "" : "s"]!"))
+		if(CAN_DISARM_UNBUCKLE)
+			parent_disarmed(source, unbuckler)
+
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/// If our parent is a living mob it can  be disarmed which may trigger a forced unbuckle
+/datum/component/riding/proc/parent_disarmed(mob/living/source, mob/living/disarmer)
+	SIGNAL_HANDLER
+	if(!source.has_buckled_mobs() || (disarmer in source.buckled_mobs))
+		return
+	var/mob/living/throwing = pick(source.buckled_mobs)
+	var/disarm_chance = get_disarm_chance(source) + get_disarm_chance(disarmer)
+	if(!prob(disarm_chance))
+		if(disarm_chance > 0)
+			source.visible_message(
+				span_warning("[disarmer] shoves [source] around, trying to throw off [source.p_their()] rider[length(source.buckled_mobs) == 1 ? "" : "s"]!"),
+				span_warning("[disarmer] shoves you around, trying to throw off your rider[length(source.buckled_mobs) == 1 ? "" : "s"]!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
+			if(source.is_blind())
+				to_chat(source, span_warning("Someone shoves you around, trying to throw off your rider[length(source.buckled_mobs) == 1 ? "" : "s"]!"))
+			if(!disarmer.is_blind())
+				switch(disarm_chance)
+					if(50 to INFINITY)
+						to_chat(disarmer, span_warning("[source] barely holds stable as you shove them around! Keep at it!"))
+					if(25 to 50)
+						to_chat(disarmer, span_warning("[source] holds stable as you shove them around! Weakening [source.p_their()] stability would help..."))
+					if(-INFINITY to 25)
+						to_chat(disarmer, span_warning("[source] effortlessly holds stable as you shove them around! You'd need to weaken [source.p_their()] stability...!"))
+		return
+	source.visible_message(
+		span_warning("As [disarmer] shoves [source] around, [throwing] is thrown from [parent]!"),
+		span_warning("As [disarmer] shoves you around, [throwing] is thrown from you!"),
+	)
+	if(source.is_blind())
+		to_chat(source, span_warning("As someone shoves you around, you feel [length(source.buckled_mobs) == 1 ? "your rider" : "one of your riders"] get thrown from you!"))
+
+	source.unbuckle_mob(throwing, force = TRUE)
+	throwing.Knockdown(throwing.has_status_effect(/datum/status_effect/staggered) ? SHOVE_KNOCKDOWN_COLLATERAL : SHOVE_KNOCKDOWN_HUMAN)
+
+/// If our rider is disarmed, they may be thrown from the vehicle depending on their and the disarmer's stats
+/datum/component/riding/proc/rider_disarmed(mob/living/rider, mob/living/disarmer)
+	SIGNAL_HANDLER
+	var/disarm_chance = get_disarm_chance(parent) + get_disarm_chance(rider)
+	if(!prob(disarm_chance))
+		if(disarm_chance > 0)
+			rider.visible_message(
+				span_warning("[disarmer] shoves [rider] around, trying to throw [rider.p_them()] off [parent]!"),
+				span_warning("As [disarmer] shoves you around, you [(disarm_chance >= 50 ? "barely" : (disarm_chance >= 25 ? "" : "effortlessly"))] manage to hold on to [parent]!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
+			if(rider.is_blind())
+				to_chat(rider, span_warning("As someone shoves you around, you [(disarm_chance >= 50 ? "barely" : (disarm_chance >= 25 ? "" : "effortlessly"))] manage to hold on to [parent]!"))
+			if(!disarmer.is_blind())
+				switch(disarm_chance)
+					if(50 to INFINITY)
+						to_chat(disarmer, span_warning("[rider] barely holds on to [parent] as you shove them around! Keep at it!"))
+					if(25 to 50)
+						to_chat(disarmer, span_warning("[rider] holds on to [parent] as you shove them around! Weakening [rider.p_their()] [pick("balance", "grip", "hold")] would help..."))
+					if(-INFINITY to 25)
+						to_chat(disarmer, span_warning("[rider] effortlessly holds on to [parent] as you shove them around! You'd need to weaken [rider.p_their()] [pick("balance", "grip", "hold")]...!"))
+		return
+
+	rider.visible_message(
+		span_warning("As [disarmer] shoves [rider] around, [rider.p_they()] lose [rider.p_their()] [pick("balance", "grip", "hold")] and fall off [parent]!"),
+		span_warning("As [disarmer] shoves you around, you lose your [pick("balance", "grip", "hold")] and fall off [parent]!")
+	)
+	if(rider.is_blind())
+		to_chat(rider, span_warning("As someone shoves you around, you lose your [pick("balance", "grip", "hold")] and fall off [parent]!"))
+
+	var/atom/movable/riding = parent
+	riding.unbuckle_mob(rider, force = TRUE)
+	if(rider.has_status_effect(/datum/status_effect/staggered))
+		rider.Knockdown(2 SECONDS)
+
+/// Calculates chance to be thrown off the mount based on mob state
+/datum/component/riding/proc/get_disarm_chance(mob/living/disarmed)
+	if(!isliving(disarmed))
+		return 0
+
+	var/staminaloss = round(disarmed.get_stamina_loss(), 0.1)
+	var/healthpercent = round(1 - (disarmed.health / disarmed.maxHealth), 0.01)
+
+	var/chance = 0
+
+	chance += disarmed.has_status_effect(/datum/status_effect/staggered) ? 25 : 0
+	chance += INCAPACITATED_IGNORING(disarmed, INCAPABLE_STASIS) ? 75 : 0
+	chance += staminaloss >= 10 ? (staminaloss * 0.5) : 0
+	chance += healthpercent >= 0.25 ? ((disarmed.health / disarmed.maxHealth) * 50) : 0
+
+	chance -= max(0, disarmed.mob_size - MOB_SIZE_HUMAN) * 12.5
+
+	return chance
 
 /// When we touch a crystal, kill everything inside us
 /datum/component/riding/proc/on_entered_supermatter(atom/movable/ridden, atom/movable/supermatter)

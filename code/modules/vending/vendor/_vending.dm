@@ -72,7 +72,7 @@
 	///Icon for the maintenance panel overlay
 	var/panel_type = "panel1"
 	///Whether this vendor can be selected when building a custom vending machine
-	var/allow_custom = FALSE
+	var/allow_custom = TRUE
 
 	/**
 	  * List of products this machine sells
@@ -153,7 +153,7 @@
 	///fontawesome icon name to use in to display the user's balance in the vendor UI
 	var/displayed_currency_icon = "coins"
 	///String of the used currency to display in the vendor UI
-	var/displayed_currency_name = " cr"
+	var/displayed_currency_name = MONEY_SYMBOL
 	///Whether our age check is currently functional
 	var/age_restrictions = TRUE
 	/// How many credits does this vending machine have? 20% of all sales go to this pool, and are given freely when the machine is restocked, or successfully tilted. Lost on deconstruction.
@@ -213,9 +213,8 @@
 	set_wires(new /datum/wires/vending(src))
 
 	if(SStts.tts_enabled)
-		var/static/vendor_voice_by_type = list()
-		if(!vendor_voice_by_type[type])
-			vendor_voice_by_type[type] = pick(SStts.available_speakers)
+		var/static/list/vendor_voice_by_type = list()
+		vendor_voice_by_type[type] ||= SStts.random_tts_voice()
 		voice = vendor_voice_by_type[type]
 
 	slogan_list = splittext(product_slogans, ";")
@@ -234,6 +233,7 @@
 					all_products_free = TRUE
 			if(circuit)
 				circuit.all_products_free = all_products_free //sync up the circuit so the pricing schema is carried over if it's reconstructed.
+				circuit.desc = "This board's card reader component has been cut out, along with its brand selection dial."
 
 	else if(circuit)
 		all_products_free = circuit.all_products_free //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
@@ -330,7 +330,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(panel_open && istype(held_item, refill_canister))
-		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine[credits_contained ? " and collect credits" : null]"
+		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine[credits_contained ? " and collect [MONEY_NAME]" : null]"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /**
@@ -359,7 +359,7 @@
 	if(isnull(refill_canister))
 		return // you can add the comment here instead
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"]")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("The machine may be [EXAMINE_HINT("pried")] apart.")
 
@@ -370,9 +370,9 @@
 		else
 			. += span_notice("\The [src] is fully stocked.")
 	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
-		. += span_notice("It should have a handfull of credits stored based on the missing items.")
+		. += span_notice("It should have a handfull of [MONEY_NAME] stored based on the missing items.")
 	else if (credits_contained > PAYCHECK_CREW)
-		. += span_notice("It should have at least a full paycheck worth of credits inside!")
+		. += span_notice("It should have at least a full paycheck worth of [MONEY_NAME] inside!")
 
 /obj/machinery/vending/update_appearance(updates = ALL)
 	. = ..()

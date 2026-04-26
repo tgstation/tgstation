@@ -8,7 +8,7 @@
 "ac" = (
 /obj/item/trash/sosjerky,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "am" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
@@ -295,6 +295,10 @@
 	},
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
+"FD" = (
+/obj/item/clothing/head/costume/paper_hat/savior,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
 "FZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toy/plush/awakenedplushie{
@@ -501,7 +505,7 @@ ab
 yY
 yY
 yY
-yY
+FD
 OD
 yY
 Ne

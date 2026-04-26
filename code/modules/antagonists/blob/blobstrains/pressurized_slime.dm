@@ -48,5 +48,5 @@
 		exposed_mob.adjust_wet_stacks(reac_volume / 10)
 	exposed_mob.apply_damage(0.4*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
 	if(exposed_mob)
-		exposed_mob.adjustStaminaLoss(reac_volume, FALSE)
+		exposed_mob.adjust_stamina_loss(reac_volume, FALSE)
 		exposed_mob.apply_damage(0.4 * reac_volume, OXY)

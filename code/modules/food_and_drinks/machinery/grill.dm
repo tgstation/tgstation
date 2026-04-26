@@ -12,6 +12,7 @@
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
 	processing_flags = START_PROCESSING_MANUALLY
 	use_power = NO_POWER_USE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 	///The amount of fuel gained from stacks or reagents
 	var/grill_fuel = 0
@@ -42,9 +43,7 @@
 	new /obj/item/stack/rods(loc, 5)
 
 	if(grill_fuel > 0)
-		var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
-		smoke.set_up(1, holder = src, location = loc)
-		smoke.start()
+		do_smoke(1, src, loc, smoke_type = /datum/effect_system/fluid_spread/smoke/bad)
 
 /obj/machinery/grill/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
@@ -61,7 +60,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Add item"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(!anchored && held_item.tool_behaviour == TOOL_CROWBAR)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
@@ -239,24 +238,19 @@
 	return NONE
 
 /obj/machinery/grill/wrench_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
 	. = ITEM_INTERACT_BLOCKING
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/grill/crowbar_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
-	. = ITEM_INTERACT_BLOCKING
 	if(anchored)
 		balloon_alert(user, "unanchor first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_crowbar(tool, ignore_panel = TRUE))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/grill/can_crowbar_deconstruct()
+	return !anchored
 
 /obj/machinery/grill/process(seconds_per_tick)
 	if(!anchored)
@@ -272,9 +266,7 @@
 	//use fuel, create smoke puffs for immersion
 	grill_fuel -= fuel_usage
 	if(SPT_PROB(0.5, seconds_per_tick))
-		var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
-		smoke.set_up(1, holder = src, location = loc)
-		smoke.start()
+		do_smoke(1, src, loc, smoke_type = /datum/effect_system/fluid_spread/smoke/bad)
 
 	fuel_usage = GRILL_FUELUSAGE_ACTIVE * seconds_per_tick
 	if(!QDELETED(grilled_item))

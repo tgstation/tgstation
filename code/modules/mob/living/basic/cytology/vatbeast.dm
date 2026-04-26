@@ -27,7 +27,7 @@
 	lighting_cutoff_blue = 20
 	ai_controller = /datum/ai_controller/basic_controller/vatbeast
 	faction = list(FACTION_HOSTILE)
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	/// What can you feed a vatbeast to tame it?
 	var/static/list/enjoyed_food = list(
 		/obj/item/food/carrotfries,
@@ -51,9 +51,10 @@
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(enjoyed_food))
 
 /mob/living/basic/vatbeast/tamed(mob/living/tamer, obj/item/food)
+	. = ..()
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
-	faction = list(FACTION_NEUTRAL)
+	set_faction(list(FACTION_NEUTRAL))
 
 /mob/living/basic/vatbeast/proc/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

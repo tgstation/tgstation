@@ -60,7 +60,7 @@
 		return
 	make_migo_sound()
 
-/mob/living/basic/migo/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/migo/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //dead or deleted
 		return
@@ -101,5 +101,4 @@
 
 /mob/living/basic/migo/hatsune/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/item/instrument/piano_synth)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/instrument/piano_synth)

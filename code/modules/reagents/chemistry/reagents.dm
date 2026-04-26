@@ -1,5 +1,7 @@
 /// A single reagent
 /datum/reagent
+	abstract_type = /datum/reagent
+
 	/// datums don't have names by default
 	var/name = ""
 	/// nor do they have descriptions
@@ -42,8 +44,6 @@
 	var/metabolizing = FALSE
 	/// Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
 	var/datum/material/material
-	///A list of causes why this chem should skip being removed, if the length is 0 it will be removed from holder naturally, if this is >0 it will not be removed from the holder.
-	var/list/reagent_removal_skip_list = list()
 	///The set of exposure methods this penetrates skin with.
 	var/penetrates_skin = VAPOR
 	/// See fermi_readme.dm REAGENT_DEAD_PROCESS, REAGENT_INVISIBLE, REAGENT_SNEAKYNAME, REAGENT_SPLITRETAINVOL, REAGENT_CANSYNTH, REAGENT_IMPURE
@@ -58,7 +58,13 @@
 	var/burning_temperature = null
 	///How much is consumed when it is burnt per second
 	var/burning_volume = 0.5
-	///Assoc list with key type of addiction this reagent feeds, and value amount of addiction points added per unit of reagent metabolzied (which means * REAGENTS_METABOLISM every life())
+	/**
+	 * Lazyassoc list of [addiction typepath] to [threshold value].
+	 *
+	 * [threshold value] can be interpreted as the number of units that must be consumed before an addiction is formed.
+	 *
+	 * Ex: list(/datum/addiction/stimulants = 50) -> "become addicted to stimulants after metabolizing 50 units of this reagent".
+	 */
 	var/list/addiction_types = null
 	/// The affected organ_flags, if the reagent damages/heals organ damage of an affected mob.
 	/// See "Organ defines for carbon mobs" in /code/_DEFINES/surgery.dm
@@ -91,13 +97,15 @@
 	var/fallback_icon_state
 	/// When ordered in a restaurant, what custom order do we create?
 	var/restaurant_order = /datum/custom_order/reagent/drink
+	/// How we interact with random generators
+	var/randomized_spawns = REAGENT_SPAWN_NO_RANDOM
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 
 	if(material)
-		material = GET_MATERIAL_REF(material)
+		material = SSmaterials.get_material(material)
 	if(glass_price)
 		AddElement(/datum/element/venue_price, glass_price)
 	if(!mass)
@@ -150,6 +158,22 @@
 /datum/reagent/proc/burn(datum/reagents/holder)
 	return
 
+
+///Called to begin metabolization and return the volume of reagent to metabolize
+/datum/reagent/proc/compute_metabolization(mob/living/carbon/affected_mob, seconds_per_tick)
+	var/metabolizing_out = metabolization_rate * seconds_per_tick
+	if(!(chemical_flags & REAGENT_UNAFFECTED_BY_METABOLISM))
+		if(chemical_flags & REAGENT_REVERSE_METABOLISM)
+			metabolizing_out /= affected_mob.metabolism_efficiency
+		else
+			metabolizing_out *= affected_mob.metabolism_efficiency
+
+	if(!metabolizing)
+		metabolizing = TRUE
+		on_mob_metabolize(affected_mob)
+
+	return min(metabolizing_out, volume)
+
 /**
  * Ticks on mob Life() for as long as the reagent remains in the mob's reagents.
  *
@@ -165,25 +189,15 @@
  * * times_fired - the number of times the owner's Life() tick has been called aka The number of times SSmobs has fired
  *
  */
-/datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	SHOULD_CALL_PARENT(TRUE)
 
 ///Metabolizes a portion of the reagent after on_mob_life() is called
-/datum/reagent/proc/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(length(reagent_removal_skip_list))
-		return
+/datum/reagent/proc/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, metabolized_volume)
 	if(isnull(holder))
 		return
-
-	var/metabolizing_out = metabolization_rate * seconds_per_tick
-	if(!(chemical_flags & REAGENT_UNAFFECTED_BY_METABOLISM))
-		if(chemical_flags & REAGENT_REVERSE_METABOLISM)
-			metabolizing_out /= affected_mob.metabolism_efficiency
-		else
-			metabolizing_out *= affected_mob.metabolism_efficiency
-
-	holder.remove_reagent(type, metabolizing_out)
-
+	volume -= metabolized_volume
+	holder.update_total()
 
 /// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
 /datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
@@ -221,7 +235,7 @@
 		affected_mob.add_traits(metabolized_traits, "metabolize:[type]")
 
 /// Called when this reagent stops being metabolized by a liver
-/datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob)
+/datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob, metabolization_ratio)
 	SHOULD_CALL_PARENT(TRUE)
 	REMOVE_TRAITS_IN(affected_mob, "metabolize:[type]")
 
@@ -231,6 +245,17 @@
  */
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE)
+
+/*
+ * Called when a reagent is exposed to electric current, rapidly heated or smashed, something that would cause explosives to get easily set off
+ * Returning a SPARK_ACT_ flag will signal that an action has occurred as a result, for parent behavior and logging purposes
+ * Probably shouldn't be called from within a mob's bloodstream, unless you're ready for some very explosive results
+ * Arguments:
+ * * power_charge - If we were triggered from electric current, how much power was dumped into us?
+ * * spark_flags - Flags specific to the interaction, is it in an enclosed space, should we nerf common reagents, etc.
+ */
+/datum/reagent/proc/on_spark_act(power_charge = 0, spark_flags = NONE)
+	return NONE
 
 /**
  * Called after add_reagents creates a new reagent.
@@ -249,11 +274,11 @@
 	SEND_SIGNAL(src, COMSIG_REAGENT_ON_MERGE, mix_data, amount)
 
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
-/datum/reagent/proc/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/proc/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	return
 
 /// Called when an overdose starts. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
-/datum/reagent/proc/overdose_start(mob/living/affected_mob)
+/datum/reagent/proc/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	to_chat(affected_mob, span_userdanger("You feel like you took too much of [name]!"))
 	affected_mob.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
 	return

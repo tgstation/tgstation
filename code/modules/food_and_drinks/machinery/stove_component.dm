@@ -217,7 +217,7 @@
 /datum/component/stove/proc/add_container(obj/item/new_container, mob/user)
 	var/obj/real_parent = parent
 	real_parent.vis_contents += new_container
-	new_container.flags_1 |= IS_ONTOP_1
+	ADD_TRAIT(new_container, TRAIT_SKIP_BASIC_REACH_CHECK, REF(src))
 	new_container.vis_flags |= VIS_INHERIT_PLANE
 
 	container = new_container
@@ -230,7 +230,7 @@
 
 /datum/component/stove/proc/remove_container()
 	var/obj/real_parent = parent
-	container.flags_1 &= ~IS_ONTOP_1
+	REMOVE_TRAIT(container, TRAIT_SKIP_BASIC_REACH_CHECK, REF(src))
 	container.vis_flags &= ~VIS_INHERIT_PLANE
 	real_parent.vis_contents -= container
 
@@ -274,4 +274,3 @@
 		return
 	var/obj/effect/abstract/shared_particle_holder/soup_smoke = obj_parent.add_shared_particles(particle_type, "[particle_type]_stove_[container_x]")
 	soup_smoke.particles.position = list(container_x, round(ICON_SIZE_Y * 0.66), 0)
-

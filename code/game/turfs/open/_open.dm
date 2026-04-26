@@ -26,6 +26,17 @@
 	/// Custom destination for mirages
 	var/destination_y
 
+	/// If TRUE, humans walking in and out of this turf will leave behind footprints, applied as a generic overlay
+	var/leave_footprints = FALSE
+	/// Lazylist of all shoe types that have walked over this turf
+	VAR_PRIVATE/list/footprint_shoe_types
+	/// Lazylist of all species that have walked over this turf
+	VAR_PRIVATE/list/footprint_species_types
+	/// All dirs from which footprints have entered this turf
+	VAR_PRIVATE/footprint_entrance_dirs = NONE
+	/// All dirs from which footprints have exited this turf
+	VAR_PRIVATE/footprint_exit_dirs = NONE
+
 /// Returns a list of every turf state considered "broken".
 /// Will be randomly chosen if a turf breaks at runtime.
 /turf/open/proc/broken_states()
@@ -40,49 +51,99 @@
 	if(isnull(damaged_dmi) || broken)
 		return FALSE
 	broken = TRUE
-	update_appearance()
+	if(leave_footprints)
+		clear_footprints() // calls update_appearance() for us
+	else
+		update_appearance()
 	return TRUE
 
 /turf/open/burn_tile()
 	if(isnull(damaged_dmi) || burnt)
 		return FALSE
 	burnt = TRUE
-	update_appearance()
+	if(leave_footprints)
+		clear_footprints() // calls update_appearance() for us
+	else
+		update_appearance()
 	return TRUE
 
 /turf/open/update_overlays()
-	if(isnull(damaged_dmi))
-		return ..()
-
 	. = ..()
-
 	if(broken)
-		var/mutable_appearance/broken_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
+		if(isnull(damaged_dmi))
+			stack_trace("[type] has broken set to TRUE but doesn't have a damaged_dmi set.")
+		else
+			var/mutable_appearance/broken_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
 
-		if(smoothing_flags && !smooth_broken)
-			var/matrix/translation = new
-			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
-			broken_appearance.transform = translation
+			if(smoothing_flags && !smooth_broken)
+				var/matrix/translation = new
+				translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
+				broken_appearance.transform = translation
 
-		. += broken_appearance
+			. += broken_appearance
 
 	else if(burnt)
-		var/list/burnt_states = burnt_states()
-		var/mutable_appearance/burnt_appearance
-		if(burnt_states.len)
-			burnt_appearance = mutable_appearance(damaged_dmi, pick(burnt_states))
+		if(isnull(damaged_dmi))
+			stack_trace("[type] has burnt set to TRUE but doesn't have a damaged_dmi set.")
 		else
-			burnt_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
+			var/list/burnt_states = burnt_states()
+			var/mutable_appearance/burnt_appearance
+			if(burnt_states.len)
+				burnt_appearance = mutable_appearance(damaged_dmi, pick(burnt_states))
+			else
+				burnt_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
 
-		if(smoothing_flags && !smooth_burnt)
-			var/matrix/translation = new
-			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
-			burnt_appearance.transform = translation
+			if(smoothing_flags && !smooth_burnt)
+				var/matrix/translation = new
+				translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
+				burnt_appearance.transform = translation
 
-		. += burnt_appearance
+			. += burnt_appearance
+
+	if(leave_footprints && (footprint_entrance_dirs || footprint_exit_dirs))
+		var/static/list/footprint_cache = list()
+
+		var/icon_state_to_use = "footprint"
+		if(LAZYACCESS(footprint_species_types, BODYPART_ID_DIGITIGRADE))
+			icon_state_to_use += "_claw"
+		else if(LAZYACCESS(footprint_species_types, SPECIES_MONKEY))
+			icon_state_to_use += "_paw"
+
+		for(var/print_dir in GLOB.cardinals)
+			if(footprint_entrance_dirs & print_dir)
+				var/enter_state = "entered-[icon_state_to_use]-[print_dir]"
+				var/image/enter_overlay = footprint_cache[enter_state]
+				if(!enter_overlay)
+					enter_overlay = image('icons/effects/footprints.dmi', "[icon_state_to_use]1", dir = print_dir)
+					enter_overlay.color = COLOR_DARK
+					enter_overlay.alpha *= 0.2
+					footprint_cache[enter_state] = enter_overlay
+				. += enter_overlay
+
+			if(footprint_exit_dirs & print_dir)
+				var/exit_state = "exited-[icon_state_to_use]-[print_dir]"
+				var/image/exit_overlay = footprint_cache[exit_state]
+				if(!exit_overlay)
+					exit_overlay = image('icons/effects/footprints.dmi', "[icon_state_to_use]2", dir = print_dir)
+					exit_overlay.color = COLOR_DARK
+					exit_overlay.alpha *= 0.2
+					footprint_cache[exit_state] = exit_overlay
+				. += exit_overlay
 
 /turf/open/examine_descriptor(mob/user)
 	return "floor"
+
+/turf/open/examine(mob/user)
+	. = ..()
+	if(leave_footprints && (footprint_entrance_dirs || footprint_exit_dirs) && (LAZYLEN(footprint_shoe_types) || LAZYLEN(footprint_species_types)))
+		. += "You recognise the footprints as belonging to:"
+		for(var/obj/item/clothing/shoes/sole as anything in footprint_shoe_types)
+			var/article = initial(sole.article) || (initial(sole.gender) == PLURAL ? "Some" : "A")
+			. += "[icon2html(initial(sole.icon), user, initial(sole.icon_state))] [article] <b>[initial(sole.name)]</b>."
+
+		for(var/species in footprint_species_types)
+			var/datum/species/species_type = GLOB.species_list[species]
+			. += "&bull; Some <b>[species_type ? format_text(species_type::plural_form) : "unknown"] feet</b>."
 
 //direction is direction of travel of A
 /turf/open/zPassIn(direction)
@@ -130,10 +191,45 @@
 	if(destination_x || destination_y || destination_z)
 		return TRUE
 
+/// Add the passed mob's footprint to the turf with the given movement direction
+/turf/open/proc/add_footprint(mob/living/carbon/human/walker, movement_direction)
+	if(walker.body_position != STANDING_UP || walker.buckled || (walker.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
+		return
+
+	if(walker.loc == src)
+		footprint_entrance_dirs |= movement_direction
+	else
+		footprint_exit_dirs |= movement_direction
+
+	if(walker.shoes)
+		LAZYOR(footprint_shoe_types, walker.shoes.type)
+
+	else
+		// we can't actually get which leg is the "front foot" so we'll just guess
+		var/front_foot = prob(50) ? BODY_ZONE_R_LEG : BODY_ZONE_L_LEG
+		var/backup_foot = front_foot == BODY_ZONE_R_LEG ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG
+		var/obj/item/bodypart/leg/walking_on = walker.get_bodypart(front_foot) || walker.get_bodypart(backup_foot)
+		if(isnull(walking_on))
+			return
+		LAZYOR(footprint_species_types, walking_on.limb_id)
+
+	update_appearance()
+
+/// Clear all footprints on the turf
+/turf/open/proc/clear_footprints()
+	footprint_entrance_dirs = NONE
+	footprint_exit_dirs = NONE
+	LAZYNULL(footprint_shoe_types)
+	LAZYNULL(footprint_species_types)
+	update_appearance()
+
 /turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(!arrived || src != arrived.loc)
 		return
+
+	if(old_loc && leave_footprints && !broken && !burnt && ishuman(arrived))
+		add_footprint(arrived, get_dir(old_loc, src))
 
 	if(!destination_z || !destination_x || !destination_y || arrived.pulledby || arrived.currently_z_moving)
 		return
@@ -166,6 +262,12 @@
 		var/turf/target_turf = get_step(current_pull.pulledby.loc, REVERSE_DIR(current_pull.pulledby.dir)) || current_pull.pulledby.loc
 		current_pull.zMove(null, target_turf, ZMOVE_ALLOW_BUCKLED)
 		current_pull = current_pull.pulling
+
+/turf/open/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone && direction && leave_footprints && !broken && !burnt && isturf(gone.loc) && ishuman(gone))
+		add_footprint(gone, direction)
+
 /**
  * Replace an open turf with another open turf while avoiding the pitfall of replacing plating with a floor tile, leaving a hole underneath.
  * This replaces the current turf if it is plating and is passed plating, is tile and is passed tile.
@@ -188,7 +290,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = TRUE
+	tiled_turf = TRUE
 
 /turf/open/indestructible/Melt()
 	to_be_destroyed = FALSE
@@ -264,7 +366,7 @@
 	barefootstep = FOOTSTEP_LAVA
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/indestructible/necropolis/Initialize(mapload)
 	. = ..()
@@ -327,7 +429,7 @@
 	barefootstep = null
 	clawfootstep = null
 	heavyfootstep = null
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/indestructible/binary
 	name = "tear in the fabric of reality"
@@ -457,7 +559,6 @@
 		playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
-	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
 	if(force_drop && iscarbon(slipper)) //carbon specific behavior that living doesn't have
 		var/mob/living/carbon/carbon = slipper
 		for(var/obj/item/item in slipper.held_items)
@@ -570,7 +671,7 @@
 	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	new used_tiles.tile_type(src)
 
-/turf/open/apply_main_material_effects(datum/material/main_material, amount, multipier)
+/turf/open/apply_main_material_effects(datum/material/main_material, amount, multiplier)
 	. = ..()
 	if(!main_material.turf_sound_override)
 		return

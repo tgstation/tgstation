@@ -5,3 +5,4 @@
 	icon_state = "raptor_trough"
 	x_offsets = list(-5, 5)
 	y_offsets = list(-4, 5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)

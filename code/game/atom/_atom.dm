@@ -73,17 +73,23 @@
 	var/light_power = 1
 	///Hexadecimal RGB string representing the colour of the light. White by default.
 	var/light_color = COLOR_WHITE
+	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
+	var/light_on = TRUE
+	///Bitflags to determine lighting-related atom properties.
+	var/light_flags = NONE
+
+	// OVERLAY_LIGHT only values
+	/// An optional render_source to apply to this atom's light overlay
+	var/light_render_source = ""
+
+	// COMPLEX_LIGHT only values
 	/// Angle of light to show in light_dir
 	/// 360 is a circle, 90 is a cone, etc.
 	var/light_angle = 360
 	/// What angle to project light in
 	var/light_dir = NORTH
-	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
-	var/light_on = TRUE
 	/// How many tiles "up" this light is. 1 is typical, should only really change this if it's a floor light
 	var/light_height = LIGHTING_HEIGHT
-	///Bitflags to determine lighting-related atom properties.
-	var/light_flags = NONE
 	///Our light source. Don't fuck with this directly unless you have a good reason!
 	var/tmp/datum/light_source/light
 	///Any light sources that are "inside" of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.
@@ -336,30 +342,31 @@
 	return FALSE
 
 /**
- * Ensure a list of atoms/reagents exists inside this atom
+ * Called whenever an item is crafted, either via stack recipes or crafting recipes from the crafting menu
  *
- * Cycles through the list of movables used up in the recipe and calls used_in_craft() for each of them
- * then it either moves them inside the object or deletes
- * them depending on whether they're in the list of parts for the recipe or not
+ * By default, it just cycles through the list of movables used in the recipe and calls used_in_craft() for each of them,
+ * then it either moves them inside the object if they're in the list of parts for the recipe
+ * or deletes them if they're not.
+ * The proc can be overriden by subtypes, as long as it always call parent.
  */
 /atom/proc/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_CRAFT, components, current_recipe)
-	var/list/remaining_parts = current_recipe?.parts?.Copy()
-	var/list/parts_by_type = remaining_parts?.Copy()
+	var/list/remaining_parts = LAZYLISTDUPLICATE(current_recipe?.parts)
+	var/list/parts_by_type = LAZYLISTDUPLICATE(remaining_parts)
 	for(var/parttype in parts_by_type) //necessary for our is_type_in_list() call with the zebra arg set to true
 		parts_by_type[parttype] = parttype
-	for(var/obj/item/item in components) // machinery or structure objects in the list are guaranteed to be used up. We only check items.
-		item.used_in_craft(src, current_recipe)
-		var/matched_type = is_type_in_list(item, parts_by_type, zebra = TRUE)
+	for(var/atom/movable/movable as anything in components) // machinery or structure objects in the list are guaranteed to be used up. We only check items.
+		movable.used_in_craft(src, current_recipe)
+		var/matched_type = is_type_in_list(movable, parts_by_type, zebra = TRUE)
 		if(!matched_type)
 			continue
 
-		if(isliving(item.loc))
-			var/mob/living/living = item.loc
-			living.transferItemToLoc(item, src)
+		if(isliving(movable.loc) && isitem(movable))
+			var/mob/living/living = movable.loc
+			living.transferItemToLoc(movable, src)
 		else
-			item.forceMove(src)
+			movable.forceMove(src)
 
 		if(matched_type)
 			remaining_parts[matched_type] -= 1
@@ -409,6 +416,10 @@
 /atom/proc/is_drainable()
 	return reagents && (reagents.flags & DRAINABLE)
 
+/// Can we dunk stuff into this container?
+/atom/proc/is_dunkable()
+	return reagents && (reagents.flags & DUNKABLE)
+
 /** Handles exposing this atom to a list of reagents.
  *
  * Sends COMSIG_ATOM_EXPOSE_REAGENTS
@@ -428,7 +439,7 @@
 	for(var/datum/reagent/current_reagent as anything in reagents)
 		. |= current_reagent.expose_atom(src, reagents[current_reagent], methods)
 
-/// Are you allowed to drop this atom
+/// Are you allowed to drop stuff inside this atom
 /atom/proc/AllowDrop()
 	return FALSE
 
@@ -653,7 +664,10 @@
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
 	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
+	var/sound_to_play = chosen_option[TOOL_PROCESSING_SOUND]
 	to_chat(user, span_notice("You start working on [src]."))
+	if(sound_to_play)
+		playsound(src, sound_to_play, 50, TRUE)
 	if(!process_item.use_tool(src, user, processing_time, volume=50))
 		return
 	var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
@@ -778,7 +792,7 @@
  *
  * Override this if you want an atom to be usable as a supplypod.
  */
-/atom/proc/setOpened()
+/atom/proc/set_opened()
 	return
 
 /**
@@ -786,11 +800,13 @@
  *
  * Override this if you want an atom to be usable as a supplypod.
  */
-/atom/proc/setClosed()
+/atom/proc/set_closed()
 	return
 
 ///Called after the atom is 'tamed' for type-specific operations, Usually called by the tameable component but also other things.
 /atom/proc/tamed(mob/living/tamer, obj/item/food)
+	SHOULD_CALL_PARENT(TRUE)
+	ADD_TRAIT(src, TRAIT_TAMED, INNATE_TRAIT)
 	return
 
 /**
@@ -973,3 +989,7 @@
 	if(pass_info.pass_flags & pass_flags_self)
 		return TRUE
 	. = !density
+
+/// Logic for adding reskin components goes here. Override for atom-specific reskin setups.
+/atom/proc/setup_reskins()
+	return

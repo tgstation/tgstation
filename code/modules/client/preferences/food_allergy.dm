@@ -3,6 +3,7 @@
 	savefile_key = "food_allergy"
 	savefile_identifier = PREFERENCE_CHARACTER
 	can_randomize = FALSE
+	should_update_preview = FALSE
 
 /datum/preference/choiced/food_allergy/init_possible_values()
 	return list("Random") + assoc_to_keys(GLOB.possible_food_allergies)
@@ -14,7 +15,7 @@
 	if (!..())
 		return FALSE
 
-	return "Food Allergy" in preferences.all_quirks
+	return /datum/quirk/item_quirk/food_allergic::name in preferences.all_quirks
 
 /datum/preference/choiced/food_allergy/apply_to_human(mob/living/carbon/human/target, value)
 	return

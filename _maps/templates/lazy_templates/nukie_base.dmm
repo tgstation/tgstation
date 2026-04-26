@@ -202,9 +202,15 @@
 /area/centcom/syndicate_mothership/control)
 "cT" = (
 /obj/structure/rack,
-/obj/item/katana/cursed{
-	desc = "A gift from your benefactors.";
-	force = 20
+/obj/item/storage/belt/sheath/katana/empty{
+	pixel_y = 3;
+	pixel_x = 7
+	},
+/obj/item/katana{
+	pixel_x = -3;
+	pixel_y = 2;
+	force = 20;
+	desc = "A gift from your benefactors."
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/centcom/syndicate_mothership/control)
@@ -1175,11 +1181,11 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters/syndicate{
 	id = "FBBZ1";
 	name = "Security Shutters"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "nk" = (
@@ -1621,7 +1627,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wideplating,
-/obj/machinery/door/poddoor/shutters/indestructible{
+/obj/machinery/door/poddoor/shutters/syndicate/indestructible{
 	name = "Subterrainian Cargo Lift"
 	},
 /turf/open/floor/iron/dark/textured_half,
@@ -2384,12 +2390,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/shutters/window{
-	id = "FBBZ1";
-	name = "Security Shutters"
-	},
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/door/poddoor/shutters/syndicate,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "AO" = (
@@ -2631,7 +2634,6 @@
 	dwidth = 12;
 	height = 17;
 	name = "syndicate recon outpost";
-	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
 	shuttle_id = "syndicate_away";
 	width = 23
 	},
@@ -3628,6 +3630,7 @@
 /area/centcom/syndicate_mothership/control)
 "Ni" = (
 /obj/machinery/light/small/directional/north,
+/obj/machinery/computer/slot_machine/syndicate,
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
 "No" = (
@@ -3666,10 +3669,10 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity{
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate{
 	name = "Sky Bridge"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
 "Oc" = (
@@ -3807,11 +3810,11 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity{
-	name = "Sky Bridge"
-	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate{
+	name = "Sky Bridge"
+	},
 /turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
 "OX" = (
@@ -4348,11 +4351,11 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity{
-	name = "Sky Bridge"
-	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate{
+	name = "Sky Bridge"
+	},
 /turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
 "TS" = (

@@ -127,7 +127,7 @@
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/proc/do_scatter(atom/movable/scatter, atom/movable/target)
 	var/dist = 5 - get_dist(scatter, target)
 	var/delay = 2
-	GLOB.move_manager.move_away(scatter, target, delay = delay, timeout = delay * dist, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	GLOB.move_manager.move_away(scatter, target, delay = delay, timeout = delay * dist, flags = MOVEMENT_LOOP_START_INSTANT, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_snowflake_data()
 	return list(
@@ -195,10 +195,10 @@
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
-	chassis.AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+	chassis.AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES|EMP_NO_EXAMINE)
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/detach(atom/moveto)
-	chassis.RemoveElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+	chassis.RemoveElement(/datum/element/empprotection, EMP_PROTECT_WIRES|EMP_NO_EXAMINE)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/clandestine
@@ -339,11 +339,11 @@
 			log_message("Deactivated.", LOG_MECHA)
 		return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(!istype(weapon, fuel))
-		return FALSE
-	load_fuel(weapon, user)
+/obj/item/mecha_parts/mecha_equipment/generator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, fuel))
+		load_fuel(tool, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/mecha_parts/mecha_equipment/generator/process(seconds_per_tick)
 	if(!chassis)

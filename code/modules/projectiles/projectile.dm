@@ -234,8 +234,6 @@
 	var/log_override = FALSE
 	/// If true, the projectile won't cause any logging whatsoever. Used for hallucinations and shit.
 	var/do_not_log = FALSE
-	/// We ignore mobs with these factions.
-	var/list/ignored_factions
 	/// Turf that we have registered connect_loc signal - this is done for performance, as we're moving ~a dozen turfs per tick
 	/// and registering and unregistering signal for every single one of them is stupid. Unregistering the signal from the correct turf in case we get moved by smth else is important
 	var/turf/last_tick_turf
@@ -635,6 +633,8 @@
 			var/mob/living/living_target = target
 			living_target.block_projectile_effects()
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_UNHITTABLE_BY_LASERS) && (armor_flag & LASER))
+		return FALSE
 	if(!ignore_source_check && firer && !direct_target)
 		if(target == firer || (target == firer.loc && ismecha(firer.loc)) || (target in firer.buckled_mobs))
 			return FALSE
@@ -642,9 +642,9 @@
 			var/mob/firer_mob = firer
 			if (firer_mob.buckled == target)
 				return FALSE
-	if(ignored_factions?.len && ismob(target) && !direct_target)
+	if(LAZYLEN(faction) && ismob(target) && !direct_target)
 		var/mob/target_mob = target
-		if(faction_check(target_mob.faction, ignored_factions))
+		if(FAST_FACTION_CHECK(faction, target_mob.get_faction(), allies, target_mob.allies, FALSE))
 			return FALSE
 	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
@@ -817,7 +817,7 @@
 		START_PROCESSING(SSprojectiles, src)
 	// move it now to avoid potentially hitting yourself with firer-hitting projectiles
 	if (!deletion_queued && !hitscan)
-		process_movement(max(FLOOR(speed, 1), 1), tile_limit = TRUE)
+		process_movement(max(floor(speed)), tile_limit = TRUE)
 
 /// Makes projectile home onto the passed target with minor inaccuracy
 /obj/projectile/proc/set_homing_target(atom/target)
@@ -907,7 +907,7 @@
 		pixels_to_move = SSprojectiles.max_pixels_per_tick
 
 	overrun += MODULUS(pixels_to_move, 1)
-	pixels_to_move = FLOOR(pixels_to_move, 1)
+	pixels_to_move = floor(pixels_to_move)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_BEFORE_MOVE)
 
 	// Registering turf entries is done here instead of a connect_loc because else it could be called multiple times per tick and waste performance
@@ -978,8 +978,8 @@
 			distance_to_move = SSprojectiles.pixels_per_decisecond
 
 		// Figure out if we move to the next turf and if so, what its positioning relatively to us is
-		var/x_shift = distance_to_move >= x_to_border ? SIGN(movement_vector.pixel_x) : 0
-		var/y_shift = distance_to_move >= y_to_border ? SIGN(movement_vector.pixel_y) : 0
+		var/x_shift = distance_to_move >= x_to_border ? sign(movement_vector.pixel_x) : 0
+		var/y_shift = distance_to_move >= y_to_border ? sign(movement_vector.pixel_y) : 0
 		var/moving_turfs = x_shift || y_shift
 		// Calculate where in the turf we will be when we cross the edge.
 		// This is a projectile variable because its also used in hit VFX

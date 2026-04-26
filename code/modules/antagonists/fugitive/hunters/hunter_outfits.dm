@@ -85,8 +85,8 @@
 
 	if(istype(equip_to.w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/uniform = equip_to.w_uniform
-		uniform.sensor_mode = NO_SENSORS
-		uniform.has_sensor = NO_SENSORS
+		uniform.set_sensor_mode(SENSOR_OFF)
+		uniform.set_has_sensor(NO_SENSORS)
 
 /datum/outfit/russian_hunter/leader
 	name = "Russian Hunter Leader"
@@ -169,16 +169,21 @@
 
 /datum/id_trim/bounty_hunter/psykers
 	assignment = "Psyker-gang Shikari"
+	honorifics = list("Psyker-Shikari")
+	honorific_positions = HONORIFIC_POSITION_FIRST_FULL
 
 /datum/id_trim/bounty_hunter/psykers/captain
 	assignment = "Psyker-gang Shikari Captain"
+	honorifics = list("Psyker-Shikari Captain")
 
 /datum/id_trim/bounty_hunter/psykers/seer
 	assignment = "Psyker-gang Shikari Seer"
+	honorifics = list("Psyker-Shikari Seer")
 
 /datum/outfit/psyker/captain
 	name = "Psyker-Shikari Leader"
 
+	glasses = /obj/item/clothing/glasses/red
 	id_trim = /datum/id_trim/bounty_hunter/psykers/captain
 	suit = /obj/item/clothing/suit/armor/reactive/psykerboost
 	uniform = /obj/item/clothing/under/pants/camo
@@ -187,6 +192,7 @@
 	name = "Psyker-Shikari Hunter"
 	glasses = null
 	head = null
+	glasses = /obj/item/clothing/glasses/trickblindfold
 	ears = /obj/item/radio/headset/psyker
 	uniform = /obj/item/clothing/under/pants/track
 	gloves = /obj/item/clothing/gloves/fingerless
@@ -201,11 +207,16 @@
 /datum/outfit/psyker/post_equip(mob/living/carbon/human/equipped)
 	. = ..()
 	equipped.psykerize()
+	var/obj/item/card/id/wearing = equipped.wear_id
+	wearing.registered_name = equipped.real_name
+	wearing.chosen_honorific = LAZYACCESS(wearing.trim.honorifics, 1)
+	wearing.honorific_position = (wearing.trim.honorific_positions & HONORIFIC_POSITION_FIRST_FULL)
+	wearing.update_label()
 
 /datum/outfit/psyker_seer
 	name = "Psyker-Shikari Seer"
-	glasses = /obj/item/clothing/glasses/regular/thin
-	ears = /obj/item/radio/headset
+	glasses = /obj/item/clothing/glasses/thermal/monocle
+	ears = /obj/item/radio/headset/psyker_seer
 	uniform = /obj/item/clothing/under/pants/jeans
 	suit = /obj/item/clothing/suit/hazardvest
 	gloves = /obj/item/clothing/gloves/fingerless
@@ -215,6 +226,14 @@
 	id = /obj/item/card/id/advanced/bountyhunter
 
 	id_trim = /datum/id_trim/bounty_hunter/psykers/seer
+
+/datum/outfit/psyker_seer/post_equip(mob/living/carbon/human/equipped)
+	. = ..()
+	var/obj/item/card/id/wearing = equipped.wear_id
+	wearing.registered_name = equipped.real_name
+	wearing.chosen_honorific = LAZYACCESS(wearing.trim.honorifics, 1)
+	wearing.honorific_position = (wearing.trim.honorific_positions & HONORIFIC_POSITION_FIRST_FULL)
+	wearing.update_label()
 
 /datum/outfit/mi13_hunter
 	name = "\improper MI13 Fugitive Retrieval Agent"

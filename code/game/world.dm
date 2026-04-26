@@ -29,7 +29,7 @@ GLOBAL_VAR(restart_counter)
  *   - config.Load()
  *   - world.InitTgs() =>
  *     - TgsNew() *may sleep
- *     - GLOB.rev_data.load_tgs_info()
+ *     - GLOB.rev_data.load_tgs_info() *may sleep
  *   - world.ConfigLoaded() =>
  *     - SSdbcore.InitializeRound()
  *     - world.SetupLogs()
@@ -126,12 +126,7 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
-	log_world("World loaded at [time_stamp()]!")
-
-	// From a really fucking old commit (91d7150)
-	// I wanted to move it but I think this needs to be after /world/New is called but before any sleeps?
-	// - Dominion/Cyberboss
-	GLOB.timezoneOffset = world.timezone * 36000
+	log_world("World loaded at [server_timestamp()]!")
 
 	// First possible sleep()
 	InitTgs()
@@ -186,6 +181,10 @@ GLOBAL_VAR(restart_counter)
 	setup_autowiki()
 	#endif
 
+	#ifdef PERFORMANCE_TESTS
+	queue_performance_tests()
+	#endif
+
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
 	Master.sleep_offline_after_initializations = FALSE
@@ -198,6 +197,25 @@ GLOBAL_VAR(restart_counter)
 	cb = VARSET_CALLBACK(SSticker, force_ending, ADMIN_FORCE_END_ROUND)
 #endif
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
+
+/world/proc/queue_performance_tests()
+	//trigger things to run the whole process
+	Master.sleep_offline_after_initializations = FALSE
+	SSticker.start_immediately = TRUE
+	var/datum/callback/cb = CALLBACK(src, PROC_REF(run_performance_tests))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
+
+/// Stub proc intended to be filled with code that does some test, profiles it, and logs that test.
+/// Intended to be used with line by line macros, but you should live your truth
+/world/proc/run_performance_tests()
+	// In case we do somethin that could otherwise end the round
+	SSticker.delay_end = TRUE
+	// Your code goes here
+
+	// Logging goes here
+	// (sample line by line) stat_tracking_export_to_csv_later("file_name.csv", GLOB.cost_list, GLOB.count_list)
+	SSticker.delay_end = FALSE
+	shutdown()
 
 /// Returns a list of data about the world state, don't clutter
 /world/proc/get_world_state_for_logging()
@@ -221,7 +239,7 @@ GLOBAL_VAR(restart_counter)
 			GLOB.picture_logging_prefix += "R_[GLOB.round_id]_"
 			GLOB.picture_log_directory += "[GLOB.round_id]"
 		else
-			var/timestamp = replacetext(time_stamp(), ":", ".")
+			var/timestamp = replacetext(server_timestamp(), ":", ".")
 			GLOB.log_directory += "[timestamp]"
 			GLOB.picture_log_directory += "[timestamp]"
 			GLOB.picture_logging_prefix += "T_[timestamp]_"
@@ -252,6 +270,12 @@ GLOBAL_VAR(restart_counter)
 	if (TgsAvailable()) // why
 		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
 #endif
+
+/// The world.time we last ran maptick, used for stupid reasons
+GLOBAL_VAR_INIT(last_maptick_time, 0)
+/world/Tick()
+	// We need a hook for if maptick has happen yet
+	GLOB.last_maptick_time = world.time
 
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC //redirect to server tools if necessary
@@ -344,14 +368,14 @@ GLOBAL_VAR(restart_counter)
 	return
 	#else
 	if(check_hard_reboot())
-		log_world("World hard rebooted at [time_stamp()]")
+		log_world("World hard rebooted at [server_timestamp()]")
 		shutdown_logging() // See comment below.
 		QDEL_NULL(Tracy)
 		QDEL_NULL(Debugger)
 		TgsEndProcess()
 		return ..()
 
-	log_world("World rebooted at [time_stamp()]")
+	log_world("World rebooted at [server_timestamp()]")
 
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	QDEL_NULL(Tracy)
@@ -407,7 +431,7 @@ GLOBAL_VAR(restart_counter)
 		else if(SSticker.current_state == GAME_STATE_SETTING_UP)
 			new_status += "<br>Starting: <b>Now</b>"
 		else if(SSticker.IsRoundInProgress())
-			new_status += "<br>Time: <b>[time2text(STATION_TIME_PASSED(), "hh:mm", NO_TIMEZONE)]</b>"
+			new_status += "<br>Time: <b>[round_timestamp("hh:mm")]</b>"
 			if(SSshuttle?.emergency && SSshuttle?.emergency?.mode != (SHUTTLE_IDLE || SHUTTLE_ENDGAME))
 				new_status += " | Shuttle: <b>[SSshuttle.emergency.getModeStr()] [SSshuttle.emergency.getTimerStr()]</b>"
 		else if(SSticker.current_state == GAME_STATE_FINISHED)
@@ -461,8 +485,8 @@ GLOBAL_VAR(restart_counter)
 	LISTASSERTLEN(global_area.turfs_by_zlevel, map_load_z_cutoff, list())
 	for (var/zlevel in 1 to map_load_z_cutoff)
 		var/list/to_add = block(
-			1, old_maxy + 1, 1,
-			maxx, maxy, map_load_z_cutoff
+			1, old_maxy + 1, zlevel,
+			maxx, maxy, zlevel
 		)
 		global_area.turfs_by_zlevel[zlevel] += to_add
 

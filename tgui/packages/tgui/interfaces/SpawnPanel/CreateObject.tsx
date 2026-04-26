@@ -1,5 +1,5 @@
 import { storage } from 'common/storage';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Button,
   DmIcon,
@@ -20,13 +20,13 @@ import type {
   SpawnPanelPreferences,
 } from './types';
 
-interface SpawnPanelData {
+type SpawnPanelData = {
   icon: string;
   iconState: string;
   selected_object?: string;
   copied_type?: string;
   preferences?: SpawnPanelPreferences;
-}
+};
 
 interface SpawnPreferences {
   hide_icons: boolean;
@@ -55,10 +55,19 @@ export function CreateObject(props: CreateObjectProps) {
   const currentList = objList;
   const currentType = allObjects[data.copied_type ?? '']?.type || 'Objects';
 
+  const getSearchString = useCallback(
+    (key: string) => {
+      const item = allObjects[key];
+      if (!item) return key;
+      return searchBy ? key : `${key} ${item.name || ''}`;
+    },
+    [searchBy, allObjects],
+  );
+
   const { query, setQuery, results } = useFuzzySearch({
     searchArray: Object.keys(allObjects),
     matchStrategy: 'smart',
-    getSearchString: (key) => (searchBy ? key : allObjects[key]?.name || ''),
+    getSearchString,
   });
 
   const filteredResults = results.filter((obj) => {
@@ -116,14 +125,15 @@ export function CreateObject(props: CreateObjectProps) {
       if (storedHideMapping !== undefined) setHideMapping(storedHideMapping);
       if (storedShowIcons !== undefined) setshowIcons(storedShowIcons);
       if (storedShowPreview !== undefined) setshowPreview(storedShowPreview);
-      if (storedSelectedObj) {
-        if (allObjects[storedSelectedObj]) {
-          setSelectedObj(storedSelectedObj);
-          props.onIconSettingsChange?.({
-            icon: allObjects[storedSelectedObj].icon,
-            iconState: allObjects[storedSelectedObj].icon_state,
-          });
-        }
+      if (storedSelectedObj && allObjects[storedSelectedObj]) {
+        act('selected-atom-changed', {
+          newObj: storedSelectedObj,
+        });
+        setSelectedObj(storedSelectedObj);
+        props.onIconSettingsChange?.({
+          icon: allObjects[storedSelectedObj].icon,
+          iconState: allObjects[storedSelectedObj].icon_state,
+        });
       }
     };
 
@@ -197,7 +207,7 @@ export function CreateObject(props: CreateObjectProps) {
       if (!offsetStr.trim()) return [0, 0, 0];
 
       const parts = offsetStr.split(',').map((part) => {
-        return parseInt(part.trim());
+        return parseInt(part.trim(), 10);
       });
 
       while (parts.length < 3) {

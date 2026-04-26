@@ -6,6 +6,8 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	///do we finish this action after hitting once?
 	var/terminate_after_action = FALSE
+	///do we have any alternate movement behavior?
+	var/movement_behavior
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
@@ -16,13 +18,13 @@
 	if(QDELETED(target))
 		return FALSE
 
-	set_movement_target(controller, target)
+	set_movement_target(controller, target, movement_behavior)
 
 /datum/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/atom/target = controller.blackboard[target_key]
 	if (isnull(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	if (!controller.pawn.CanReach(target))
+	if (!target.IsReachableBy(controller.pawn))
 		controller.clear_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER)
 		return AI_BEHAVIOR_INSTANT
 
@@ -57,6 +59,8 @@
 /datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	controller.clear_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER)
+	if(movement_behavior)
+		controller.change_ai_movement_type(initial(controller.ai_movement))
 	if(!succeeded)
 		controller.clear_blackboard_key(target_key)
 

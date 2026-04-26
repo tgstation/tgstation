@@ -93,7 +93,7 @@
 					/obj/item/reagent_containers/cup/bottle/toxin,
 					/obj/item/reagent_containers/cup/beaker/large,
 					/obj/item/reagent_containers/applicator/pill/insulin,
-					/obj/item/stack/medical/gauze,
+					/obj/item/stack/medical/wrap/gauze,
 					/obj/item/storage/box/bandages,
 					/obj/item/storage/box/beakers,
 					/obj/item/storage/box/medigels,
@@ -116,10 +116,10 @@
 	crate_type = /obj/structure/closet/crate/medical
 	test_ignored = TRUE
 
-/datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/medical/supplies/fill(obj/container)
 	for(var/i in 1 to 10)
 		var/item = pick(contains)
-		new item(C)
+		new item(container)
 
 /datum/supply_pack/medical/experimentalmedicine
 	name = "Experimental Medicine Crate"
@@ -176,7 +176,7 @@
 				)
 	crate_name = "virus crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
-	dangerous = TRUE
+	order_flags = ORDER_DANGEROUS
 
 /datum/supply_pack/medical/cmoturtlenecks
 	name = "Chief Medical Officer Turtlenecks"
@@ -226,3 +226,22 @@
 		/obj/item/pestle,
 	)
 	crate_name = "organ growing kit"
+
+/datum/supply_pack/medical/chiral_inversing_buffer
+	name = "Chiral Inversing Buffer Crate"
+	desc = "A crate containing a rare sample of an inversing buffer. \
+		It can transform impure reagents into their inverse counterparts when the right conditions are met."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/reagent_containers/cup/bottle/inversing_buffer)
+	crate_name = "chiral inversing buffer crate"
+
+/datum/supply_pack/medical/handheld_crew_monitor
+	name = "Handheld Crew Monitor Crate"
+	desc = "A crate containing three handheld crew monitors"
+	cost = (CARGO_CRATE_VALUE * /obj/item/sensor_device::custom_premium_price * 3 * 0.8) / 280 // Bulk discount .8X base /tg/ vending machine value with the CARGO_CRATE_VALUE modifier
+	contains = list(
+		/obj/item/sensor_device,
+		/obj/item/sensor_device,
+		/obj/item/sensor_device,
+	)
+	crate_name = "handheld crew monitor crate"

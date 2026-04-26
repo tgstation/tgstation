@@ -160,6 +160,24 @@
         background-color: #282831;
       }
 
+      .clockwork .wrap {
+        border-color: #cfbc47;
+      }
+      .clockwork .content {
+        color: #b18e25;
+        border-color: #cfbc47;
+        background-color: #523c15;
+      }
+
+      .glass .wrap {
+        border-color: #344b58;
+      }
+      .glass .content {
+        color: #75a4c4;
+        border-color: #344b58;
+        background-color: #1f252b;
+      }
+
       .trasen-knox .wrap {
         border-color: #998e81;
       }
@@ -172,7 +190,7 @@
       .detective .wrap {
         border-color: #2c0f0c;
       }
-      .detective .wrap {
+      .detective .content {
         color: #c7b08b;
         border-color: #2c0f0c;
         background-color: #221c1a;
@@ -220,15 +238,15 @@
           //To improve our code. Thanks gooncoders, very cool
           var mapWidth = map["view-size"].x,
             mapHeight = map["view-size"].y,
-            tilesShownX = tooltip.client_view_w;
-          tilesShownY = tooltip.client_view_h;
-          (realIconSizeX = mapWidth / tilesShownX),
-            (realIconSizeY = mapHeight / tilesShownY),
-            (resizeRatioX = realIconSizeX / tooltip.tileSize),
-            (resizeRatioY = realIconSizeY / tooltip.tileSize),
+            tilesShownX = tooltip.client_view_w,
+            tilesShownY = tooltip.client_view_h,
+            realIconSizeX = mapWidth / tilesShownX,
+            realIconSizeY = mapHeight / tilesShownY,
+            resizeRatioX = realIconSizeX / tooltip.tileSize,
+            resizeRatioY = realIconSizeY / tooltip.tileSize,
             //Calculate letterboxing offsets
-            (leftOffset = (map.size.x - mapWidth) / 2),
-            (topOffset = (map.size.y - mapHeight) / 2);
+            leftOffset = (map.size.x - mapWidth) / 2,
+            topOffset = (map.size.y - mapHeight) / 2;
 
           //alert(realIconSize + ' | ' +tooltip.tileSize + ' | ' + resizeRatio); //DEBUG
 

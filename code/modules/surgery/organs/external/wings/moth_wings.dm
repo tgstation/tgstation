@@ -5,9 +5,7 @@
 	name = "moth wings"
 	desc = "Spread your wings and FLOOOOAAAAAT!"
 
-	preference = "feature_moth_wings"
-
-	dna_block = /datum/dna_block/feature/moth_wing
+	dna_block = /datum/dna_block/feature/accessory/moth_wing
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/moth
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
@@ -18,7 +16,6 @@
 	var/original_sprite_datum
 
 	var/drift_force = MOTH_WING_FORCE
-	var/stabilizer_force = MOTH_WING_FORCE
 
 /obj/item/organ/wings/moth/Initialize(mapload)
 	. = ..()
@@ -26,7 +23,6 @@
 		/datum/component/jetpack, \
 		TRUE, \
 		drift_force, \
-		stabilizer_force, \
 		COMSIG_ORGAN_IMPLANTED, \
 		COMSIG_ORGAN_REMOVED, \
 		null, \
@@ -99,6 +95,7 @@
 /datum/bodypart_overlay/mutant/wings/moth
 	feature_key = FEATURE_MOTH_WINGS
 	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	slot_blocker = HIDEMUTWINGS
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_wings/burnt_off
 	///Are we burned? If so we draw differently
@@ -106,14 +103,7 @@
 
 /datum/bodypart_overlay/mutant/wings/moth/New()
 	. = ..()
-
 	burn_datum = fetch_sprite_datum(burn_datum)
-
-/datum/bodypart_overlay/mutant/wings/moth/get_global_feature_list()
-	return SSaccessories.moth_wings_list
-
-/datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	return !(bodypart_owner.owner?.obscured_slots & HIDEMUTWINGS)
 
 /datum/bodypart_overlay/mutant/wings/moth/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state

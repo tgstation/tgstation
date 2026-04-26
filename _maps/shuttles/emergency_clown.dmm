@@ -193,6 +193,7 @@
 /area/shuttle/escape)
 "aX" = (
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aY" = (
@@ -211,7 +212,6 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
-/obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
@@ -283,6 +283,12 @@
 /obj/structure/table,
 /obj/item/toy/sword,
 /obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
+"Dy" = (
+/obj/structure/closet/emcloset,
+/obj/item/toy/sword,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "Hv" = (
@@ -493,7 +499,7 @@ ak
 ac
 Zf
 aY
-Zf
+Dy
 pi
 bg
 "}
@@ -587,9 +593,9 @@ ac
 ab
 ab
 ab
-ac
 ab
 ac
+ab
 ab
 aa
 "}

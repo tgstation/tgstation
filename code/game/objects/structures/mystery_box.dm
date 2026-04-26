@@ -23,6 +23,9 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/energy/e_gun,
 	/obj/item/gun/energy/e_gun/nuclear,
 	/obj/item/gun/energy/laser,
+	/obj/item/gun/energy/laser/soul,
+	/obj/item/gun/energy/laser/pistol,
+	/obj/item/gun/energy/laser/assault,
 	/obj/item/gun/energy/laser/hellgun,
 	/obj/item/gun/energy/laser/captain,
 	/obj/item/gun/energy/laser/scatter,
@@ -74,6 +77,7 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	/obj/item/gun/magic/wand/door,
 	/obj/item/gun/magic/wand/nothing,
 	/obj/item/storage/belt/wands/full,
+	/obj/item/storage/belt/wands/full/discount,
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/chaos,
 	/obj/item/gun/magic/staff/door,
@@ -174,13 +178,15 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 /obj/structure/mystery_box/proc/generate_valid_types()
 	valid_types = get_sane_item_types(selectable_base_type)
 
+/obj/structure/mystery_box/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return TRUE
+
 /// The box has been activated, play the sound and spawn the prop item
 /obj/structure/mystery_box/proc/activate(mob/living/user)
 	box_state = MYSTERY_BOX_CHOOSING
 	update_icon_state()
 	presented_item = new(src)
 	presented_item.vis_flags = VIS_INHERIT_PLANE
-	presented_item.flags_1 |= IS_ONTOP_1
 	vis_contents += presented_item
 	presented_item.start_animation(src)
 	current_sound_channel = SSsounds.reserve_sound_channel(src)

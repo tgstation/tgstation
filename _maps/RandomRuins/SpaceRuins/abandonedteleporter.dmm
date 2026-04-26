@@ -8,7 +8,7 @@
 "c" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "d" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plating/airless,

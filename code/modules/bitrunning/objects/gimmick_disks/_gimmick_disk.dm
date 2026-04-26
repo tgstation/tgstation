@@ -2,23 +2,23 @@
 /**
  * Bitrunning tech disks which let you load full loadouts into the vdom on first avatar generation.
  */
-/obj/item/bitrunning_disk/gimmick
+/obj/item/disk/bitrunning/gimmick
 	desc = "A disk containing source code. It can be used to preload gimmick loadouts into the virtual domain."
 	/// The selected loadout that this grants
 	var/datum/bitrunning_gimmick/granted_loadout
 	/// The list of loadouts that this can grant
 	var/list/datum/bitrunning_gimmick/selectable_loadouts
 
-/obj/item/bitrunning_disk/gimmick/Destroy()
+/obj/item/disk/bitrunning/gimmick/Destroy()
 	QDEL_NULL(granted_loadout)
 	return ..()
 
-/obj/item/bitrunning_disk/gimmick/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
+/obj/item/disk/bitrunning/gimmick/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
 	if(isnull(granted_loadout))
 		return BITRUNNER_GEAR_LOAD_FAILED
-	return granted_loadout.grant_loadout(neo, avatar, external_load_flags)
+	return granted_loadout.grant_loadout(neo, avatar, domain_flags)
 
-/obj/item/bitrunning_disk/gimmick/attack_self(mob/user, modifiers)
+/obj/item/disk/bitrunning/gimmick/attack_self(mob/user, modifiers)
 	. = ..()
 
 	if(granted_loadout)
@@ -57,17 +57,17 @@
 	var/prefix_container_name = TRUE
 
 /// Grants out loadout.
-/datum/bitrunning_gimmick/proc/grant_loadout(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
+/datum/bitrunning_gimmick/proc/grant_loadout(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
 	var/return_flags = NONE
-	return_flags |= grant_items(neo, avatar, external_load_flags)
-	return_flags |= grant_abilities(neo, avatar, external_load_flags)
+	return_flags |= grant_items(neo, avatar, domain_flags)
+	return_flags |= grant_abilities(neo, avatar, domain_flags)
 	return return_flags
 
-/datum/bitrunning_gimmick/proc/grant_items(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
+/datum/bitrunning_gimmick/proc/grant_items(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
 	if(!length(granted_items))
 		return NONE
 
-	if(external_load_flags & DOMAIN_FORBIDS_ITEMS)
+	if(domain_flags & DOMAIN_FORBIDS_ITEMS)
 		return BITRUNNER_GEAR_LOAD_BLOCKED
 
 	var/obj/item/container_item = new container_item_type()
@@ -81,11 +81,11 @@
 
 	return NONE
 
-/datum/bitrunning_gimmick/proc/grant_abilities(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
+/datum/bitrunning_gimmick/proc/grant_abilities(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
 	if(!length(granted_actions))
 		return NONE
 
-	if(external_load_flags & DOMAIN_FORBIDS_ABILITIES)
+	if(domain_flags & DOMAIN_FORBIDS_ABILITIES)
 		return BITRUNNER_GEAR_LOAD_BLOCKED
 
 	var/return_flags = NONE
@@ -99,4 +99,3 @@
 		our_action.Grant(avatar)
 
 	return return_flags
-

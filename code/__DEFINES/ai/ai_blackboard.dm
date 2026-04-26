@@ -4,6 +4,8 @@
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
 ///time until we should next eat, set by the generic hunger subtree
 #define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
+///When looking for food, ignore drinks
+#define BB_IGNORE_DRINKS "bb_ignore_drinks"
 ///what we're going to eat next
 #define BB_FOOD_TARGET "bb_food_target"
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
@@ -81,6 +83,7 @@
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETING_STRATEGY "targeting_strategy"
+#define BB_HUNT_TARGETING_STRATEGY "hunt_targeting_strategy"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
@@ -173,8 +176,6 @@
 #define BB_MOD_TARGET "BB_mod_target"
 ///The module the AI was created from
 #define BB_MOD_MODULE "BB_mod_module"
-///Range for a MOD AI controller.
-#define MOD_AI_RANGE 200
 
 ///Only target mobs with these traits
 #define BB_TARGET_ONLY_WITH_TRAITS "BB_target_only_with_traits"
@@ -236,5 +237,3 @@
 // Used to hold state without making bigass lists
 /// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
-
-

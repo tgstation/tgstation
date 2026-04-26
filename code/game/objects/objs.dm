@@ -64,10 +64,14 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 	if (id_tag)
 		GLOB.objects_by_id_tag[id_tag] = src
+	if(opacity)
+		SScameras.update_visibility(src)
 
 /obj/Destroy(force)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+	if(opacity)
+		SScameras.update_visibility(src)
 	SStgui.close_uis(src)
 	GLOB.objects_by_id_tag -= id_tag
 	. = ..()
@@ -164,7 +168,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---")
+	VV_DROPDOWN_OPTION("", "--- /obj ---")
 	VV_DROPDOWN_OPTION(VV_HK_MASS_DEL_TYPE, "Delete all of type")
 	VV_DROPDOWN_OPTION(VV_HK_OSAY, "Object Say")
 
@@ -302,7 +306,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	set_anchored(!anchored)
 	check_on_table()
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
 	return SUCCESSFUL_UNFASTEN
 
 /// For the do_after, this checks if unfastening conditions are still valid
@@ -327,23 +330,76 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
-		return
-	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
-	force *= strength_mod
-	throwforce *= strength_mod
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		change_material_strength(material, mat_amount, multiplier)
 
-///This proc is called when the material is removed from an object specifically.
 /obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
-		return
-	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
-	force /= strength_mod
-	throwforce /= strength_mod
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		change_material_strength(material, mat_amount, multiplier, remove = TRUE)
+
+/// Changes force and throwforce of an item based on its properties. Split into a separate proc as to allow items to change theirs based on sharpness and behavior
+/obj/proc/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/hardness = material.get_property(MATERIAL_HARDNESS)
+	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
+	// Dense and hard objects make for good melee weapons, bendy ones not so much
+	var/force_mod = (1 + (density - 4) * 0.05 + (hardness - 4) * 0.05) * (1 - flexibility * 0.1)
+	// Hardness doesn't matter much when we're just whacking someone in the back of the head
+	var/throwforce_mod = 1 + (density - 4) * 0.1 - flexibility * 0.1
+
+	if (!remove)
+		force *= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce *= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
+	else
+		force /= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce /= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
 
 /// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
 /obj/proc/get_demolition_modifier(obj/target)
 	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
 		return (1 / demolition_mod)
 	return demolition_mod
+
+/// Checks performed by a renamable object(through UNIQUE_RENAME obj_flag) before renaming begins.
+/obj/proc/rename_checks(mob/living/user)
+	return TRUE
+
+/// Returns the final name of the object, and does any side effects of renaming, such as sounds.
+/obj/proc/nameformat(input, mob/living/user)
+	return input
+
+/// Same as nameformat, but for desc.
+/obj/proc/descformat(input, mob/living/user)
+	return input
+
+/// Called when UNIQUE_RENAME is reset
+/obj/proc/rename_reset()
+	return
+
+/**
+ * Used to deliver a shock to a mob from this object
+ * The target must be adjacent to this object, or else the shock will fail
+ *
+ * * shocking - who are we zapping
+ * * chance - probability the shock succeeds
+ * defaults to 100 (guaranteed to shock)
+ * * shock_source - used for determining where to get the power to zap them.
+ * can be an apc, a cable, an area, a cell, or even a powernet datum
+ * subtypes may override this proc to pass this up to the parent
+ * defaults to our cell or our current area/apc
+ * * siemens_coeff - multiplier to how much shock is delivered
+ * default to a 1x modifier
+ *
+ * Returns TRUE if the shock was successfully delivered
+ * Returns FALSE if the shock failed for any reason
+ */
+/obj/proc/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1)
+	SHOULD_CALL_PARENT(TRUE)
+	if(!isliving(shocking))
+		return FALSE
+	if(!prob(chance))
+		return FALSE // you lucked out, no shock for you
+
+	do_sparks(5, TRUE, src)
+	return electrocute_mob(shocking, shock_source || get_cell() || get_area(src), src, siemens_coeff, TRUE)

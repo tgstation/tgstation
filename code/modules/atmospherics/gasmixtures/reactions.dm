@@ -7,10 +7,10 @@
 	//Builds a list of gas id to reaction group
 	for(var/gas_id in GLOB.meta_gas_info)
 		priority_reactions[gas_id] = list(
-			PRIORITY_PRE_FORMATION = list(),
-			PRIORITY_FORMATION = list(),
-			PRIORITY_POST_FORMATION = list(),
-			PRIORITY_FIRE = list()
+			/* PRIORITY_PRE_FORMATION = */ list(),
+			/* PRIORITY_FORMATION = */ list(),
+			/* PRIORITY_POST_FORMATION = */ list(),
+			/* PRIORITY_FIRE = */ list()
 		)
 
 	for(var/datum/gas_reaction/reaction as anything in subtypesof(/datum/gas_reaction))
@@ -220,7 +220,7 @@
 	plasma_burn_rate = min(plasma_burn_rate, plasma[MOLES], oxygen[MOLES] *  INVERSE(oxygen_burn_ratio)) //Ensures matter is conserved properly
 	plasma[MOLES] = QUANTIZE(plasma[MOLES] - plasma_burn_rate)
 	oxygen[MOLES] = QUANTIZE(oxygen[MOLES] - (plasma_burn_rate * oxygen_burn_ratio))
-	if (super_saturation)
+	if(super_saturation)
 		ASSERT_GAS(/datum/gas/tritium, air)
 		cached_gases[/datum/gas/tritium][MOLES] += plasma_burn_rate
 	else
@@ -228,6 +228,7 @@
 		ASSERT_GAS(/datum/gas/water_vapor, air)
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate * 0.75
 		cached_gases[/datum/gas/water_vapor][MOLES] += plasma_burn_rate * 0.25
+
 
 	SET_REACTION_RESULTS((plasma_burn_rate) * (1 + oxygen_burn_ratio))
 	var/energy_released = FIRE_PLASMA_ENERGY_RELEASED * plasma_burn_rate
@@ -583,6 +584,8 @@
 	nitrous_oxide[MOLES] -= 0.4 * bz_formed
 	plasma[MOLES] -= 0.8 * bz_formed * (1-nitrous_oxide_decomposed_factor)
 
+
+
 	SET_REACTION_RESULTS(bz_formed)
 	var/energy_released = bz_formed * (BZ_FORMATION_ENERGY + nitrous_oxide_decomposed_factor * (N2O_DECOMPOSITION_ENERGY - BZ_FORMATION_ENERGY))
 	var/new_heat_capacity = air.heat_capacity()
@@ -680,6 +683,7 @@
 	nitrogen[MOLES] -= heat_efficiency
 	bz[MOLES] -= heat_efficiency * 0.05 //bz gets consumed to balance the nitrium production and not make it too common and/or easy
 	cached_gases[/datum/gas/nitrium][MOLES] += heat_efficiency
+
 
 	SET_REACTION_RESULTS(heat_efficiency)
 	var/energy_used = heat_efficiency * NITRIUM_FORMATION_ENERGY
@@ -815,8 +819,8 @@
 	var/list/tritium = cached_gases[/datum/gas/tritium]
 	/// List of gases we will assert, and possibly garbage collect.
 	var/list/asserted_gases = list(/datum/gas/hypernoblium, /datum/gas/bz)
-	var/list/bz = cached_gases[/datum/gas/bz]
 	air.assert_gases(arglist(asserted_gases))
+	var/list/bz = cached_gases[/datum/gas/bz]
 	var/reduction_factor = clamp(tritium[MOLES] / (tritium[MOLES] + bz[MOLES]), 0.001 , 1) //reduces trit consumption in presence of bz upward to 0.1% reduction
 	var/nob_formed = min((nitrogen[MOLES] + tritium[MOLES]) * 0.01, tritium[MOLES] * INVERSE(5 * reduction_factor), nitrogen[MOLES] * INVERSE(10))
 
@@ -829,6 +833,7 @@
 	tritium[MOLES] -= 5 * nob_formed * reduction_factor
 	nitrogen[MOLES] -= 10 * nob_formed
 	cached_gases[/datum/gas/hypernoblium][MOLES] += nob_formed // I'm not going to nitpick, but N20H10 feels like it should be an explosive more than anything.
+
 	SET_REACTION_RESULTS(nob_formed)
 	var/energy_released = nob_formed * NOBLIUM_FORMATION_ENERGY / max(bz[MOLES], 1)
 	var/new_heat_capacity = air.heat_capacity()
@@ -887,9 +892,7 @@
 	var/obj/effect/particle_effect/fluid/foam/foam = locate() in location
 	var/obj/structure/foamedmetal/resin = locate() in location
 	if(heat_efficiency > HALON_COMBUSTION_MINIMUM_RESIN_MOLES && isopenturf(location) && !foam && !resin) // Don't resin if there is aleady resin or we are not in an open turf.
-		var/datum/effect_system/fluid_spread/foam/metal/resin/halon/foaming = new
-		foaming.set_up(amount = HALON_COMBUSTION_RESIN_VOLUME, holder = holder, location = location)
-		foaming.start()
+		do_foam(amount = HALON_COMBUSTION_RESIN_VOLUME, holder = holder, location = location, foam_type = /datum/effect_system/fluid_spread/foam/metal/resin/halon)
 		. |= VOLATILE_REACTION
 
 	. |= REACTING
@@ -1256,6 +1259,7 @@
 			continue
 		gas[MOLES] -= reaction_rate * gas[MOLES] / total_not_antinoblium_moles
 	antinoblium[MOLES] += reaction_rate
+
 	SET_REACTION_RESULTS(reaction_rate)
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)

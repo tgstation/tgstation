@@ -25,14 +25,13 @@
 	RegisterSignal(parent, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(on_limb_damage))
 	RegisterSignals(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_damage_adjusted))
 	RegisterSignal(parent, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_updated))
-	RegisterSignal(parent, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_status_tab_updated))
 	if (!isnull(host))
 		var/mob/living/living_parent = parent
 		living_parent.updatehealth()
 
 /datum/component/life_link/UnregisterFromParent()
 	unregister_host()
-	UnregisterSignal(parent, list(COMSIG_CARBON_LIMB_DAMAGED, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_MOB_GET_STATUS_TAB_ITEMS) + COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES)
+	UnregisterSignal(parent, list(COMSIG_CARBON_LIMB_DAMAGED, COMSIG_LIVING_HEALTH_UPDATE) + COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES)
 
 /datum/component/life_link/InheritComponent(datum/component/new_comp, i_am_original, mob/living/host, datum/callback/on_passed_damage, datum/callback/on_linked_death)
 	register_host(host)
@@ -65,13 +64,13 @@
 	amount *= our_mob.get_damage_mod(type)
 	switch (type)
 		if(BRUTE)
-			host.adjustBruteLoss(amount, forced = TRUE)
+			host.adjust_brute_loss(amount, forced = TRUE)
 		if(BURN)
-			host.adjustFireLoss(amount, forced = TRUE)
+			host.adjust_fire_loss(amount, forced = TRUE)
 		if(TOX)
-			host.adjustToxLoss(amount, forced = TRUE)
+			host.adjust_tox_loss(amount, forced = TRUE)
 		if(OXY)
-			host.adjustOxyLoss(amount, forced = TRUE)
+			host.adjust_oxy_loss(amount, forced = TRUE)
 
 	on_passed_damage?.Invoke(our_mob, host, amount)
 	return COMPONENT_IGNORE_CHANGE
@@ -80,9 +79,9 @@
 /datum/component/life_link/proc/on_limb_damage(mob/living/our_mob, limb, brute, burn)
 	SIGNAL_HANDLER
 	if (brute != 0)
-		host.adjustBruteLoss(brute, updating_health = FALSE)
+		host.adjust_brute_loss(brute, updating_health = FALSE)
 	if (burn != 0)
-		host.adjustFireLoss(burn, updating_health = FALSE)
+		host.adjust_fire_loss(burn, updating_health = FALSE)
 	if (brute != 0 || burn != 0)
 		host.updatehealth()
 	on_passed_damage?.Invoke(our_mob, host, brute + burn)
@@ -118,8 +117,9 @@
 		mob_parent.overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 	else
 		mob_parent.clear_fullscreen("brute")
-	if(mob_parent.hud_used?.healths)
-		mob_parent.hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[round(healthpercent, 0.5)]%</font></div>")
+
+	if(mob_parent.hud_used?.screen_objects[HUD_MOB_HEALTH])
+		mob_parent.hud_used.screen_objects[HUD_MOB_HEALTH].maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[round(healthpercent, 0.5)]%</font></div>")
 
 /// Update our health on the medical hud
 /datum/component/life_link/proc/update_med_hud_health(mob/living/mob_parent)
@@ -131,12 +131,6 @@
 		mob_parent.set_hud_image_state(STATUS_HUD, "huddead")
 	else
 		mob_parent.set_hud_image_state(STATUS_HUD, "hudhealthy")
-
-/// When our status tab updates, draw how much HP our host has in there
-/datum/component/life_link/proc/on_status_tab_updated(mob/living/source, list/items)
-	SIGNAL_HANDLER
-	var/healthpercent = health_percentage(host)
-	items += "Host Health: [round(healthpercent, 0.5)]%"
 
 /// Called when our host dies, we should die too
 /datum/component/life_link/proc/on_host_died(mob/living/source, gibbed)

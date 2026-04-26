@@ -1,5 +1,5 @@
 /obj/item/tank/jetpack
-	name = "jetpack (empty)"
+	name = "jetpack (oxygen)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
 	inhand_icon_state = "jetpack"
@@ -22,8 +22,6 @@
 	var/thrust_callback
 	/// How much force out jetpack can output per tick
 	var/drift_force = 1.5 NEWTONS
-	/// How much force this jetpack can output per tick to stabilize the user
-	var/stabilizer_force = 1.2 NEWTONS
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
@@ -48,7 +46,6 @@
 		/datum/component/jetpack, \
 		src.stabilize, \
 		drift_force, \
-		stabilizer_force, \
 		COMSIG_JETPACK_ACTIVATED, \
 		COMSIG_JETPACK_DEACTIVATED, \
 		JETPACK_ACTIVATION_FAILED, \
@@ -76,8 +73,7 @@
 /obj/item/tank/jetpack/populate_gas()
 	if(gas_type)
 		var/datum/gas_mixture/our_mix = return_air()
-		our_mix.assert_gas(gas_type)
-		our_mix.gases[gas_type][MOLES] = ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+		our_mix.set_gas(gas_type,  ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)))
 
 /obj/item/tank/jetpack/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_jetpack))
@@ -188,7 +184,7 @@
 	gas_type = null //it starts empty
 	full_speed = FALSE
 	drift_force = 1 NEWTONS
-	stabilizer_force = 0.5 NEWTONS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.4, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num)
 	if(!ismob(loc))
@@ -207,13 +203,7 @@
 	icon_state = "jetpack-void"
 	inhand_icon_state = "jetpack-void"
 
-/obj/item/tank/jetpack/oxygen
-	name = "jetpack (oxygen)"
-	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas. Use with caution."
-	icon_state = "jetpack"
-	inhand_icon_state = "jetpack"
-
-/obj/item/tank/jetpack/oxygen/harness
+/obj/item/tank/jetpack/harness
 	name = "jet harness (oxygen)"
 	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
 	icon_state = "jetpack-mini"
@@ -222,7 +212,7 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/tank/jetpack/oxygen/captain
+/obj/item/tank/jetpack/captain
 	name = "captain's jetpack"
 	desc = "A compact, lightweight jetpack containing a high amount of compressed oxygen."
 	icon_state = "jetpack-captain"
@@ -232,15 +222,12 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
 	drift_force = 2 NEWTONS
-	stabilizer_force = 2 NEWTONS
 
-/obj/item/tank/jetpack/oxygen/security
+/obj/item/tank/jetpack/security
 	name = "security jetpack (oxygen)"
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
 	icon_state = "jetpack-sec"
 	inhand_icon_state = "jetpack-sec"
-
-
 
 /obj/item/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"

@@ -9,18 +9,18 @@
 	preview_outfit = /datum/outfit/paradox_clone
 
 /datum/antagonist/paradox_clone/get_preview_icon()
-	var/icon/final_icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/final_icon = render_preview_outfit(preview_outfit)
 
-	final_icon.Blend(make_background_clone_icon(preview_outfit), ICON_UNDERLAY, -8, 0)
-	final_icon.Scale(64, 64)
+	final_icon.blend_icon(make_background_clone_icon(preview_outfit), ICON_UNDERLAY, -8, 0)
+	final_icon.scale(64, 64)
 
 	return finish_preview_icon(final_icon)
 
 /datum/antagonist/paradox_clone/proc/make_background_clone_icon(datum/outfit/clone_fit)
 	var/mob/living/carbon/human/dummy/consistent/clone = new
 
-	var/icon/clone_icon = render_preview_outfit(clone_fit, clone)
-	clone_icon.ChangeOpacity(0.5)
+	var/datum/universal_icon/clone_icon = render_preview_outfit(clone_fit, clone)
+	clone_icon.change_opacity(0.5)
 	qdel(clone)
 
 	return clone_icon
@@ -50,9 +50,8 @@
 	//dont want anyone noticing there's two now
 	var/mob/living/carbon/human/clone_human = owner.current
 	var/obj/item/clothing/under/sensor_clothes = clone_human.w_uniform
-	if(sensor_clothes)
-		sensor_clothes.sensor_mode = SENSOR_OFF
-		clone_human.update_suit_sensors()
+	if(istype(sensor_clothes))
+		sensor_clothes.set_sensor_mode(SENSOR_OFF)
 
 	// Perform a quick copy of existing memories.
 	// This may result in some minutely imperfect memories, but it'll do

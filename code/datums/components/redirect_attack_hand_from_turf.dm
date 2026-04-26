@@ -28,12 +28,20 @@
 	src.screentip_texts = screentip_texts
 	src.interact_check = interact_check
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	connect_to_new_turf()
 
+/datum/component/redirect_attack_hand_from_turf/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
 /datum/component/redirect_attack_hand_from_turf/Destroy(force)
+	interact_check = null
 	disconnect_from_old_turf()
 	return ..()
+
+/datum/component/redirect_attack_hand_from_turf/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
 /datum/component/redirect_attack_hand_from_turf/proc/find_turf()
 	PRIVATE_PROC(TRUE)
@@ -101,7 +109,7 @@
 	var/atom/movable/movable_parent = parent
 	if (!movable_parent.can_interact(user))
 		return NONE
-	
+
 	if (!isnull(interact_check) && !interact_check.Invoke(user))
 		return NONE
 
@@ -123,7 +131,7 @@
 
 	if (!isnull(held_item))
 		return NONE
-	
+
 	if (!isnull(interact_check) && !interact_check.Invoke(user))
 		return NONE
 

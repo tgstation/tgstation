@@ -5,13 +5,13 @@
 /obj/effect/mob_spawn/corpse/ai
 	mob_type = /mob/living/silicon/ai/spawned
 
-/obj/effect/mob_spawn/corpse/ai/create(mob/user, newname)
+/obj/effect/mob_spawn/corpse/ai/create(mob/user, newname, apply_prefs)
 	var/ai_already_present = locate(/mob/living/silicon/ai) in loc
 	if(ai_already_present)
-		return
-	. = ..()
+		return CANCEL_SPAWN
+	return ..()
 
-/obj/effect/mob_spawn/corpse/ai/special(mob/living/silicon/ai/spawned/dead_ai)
+/obj/effect/mob_spawn/corpse/ai/special(mob/living/silicon/ai/spawned/dead_ai, mob/mob_possessor, apply_prefs)
 	. = ..()
 	dead_ai.name = src.name
 	dead_ai.real_name = src.name
@@ -24,7 +24,7 @@
 	///the color of the slime you're spawning.
 	var/slime_species = /datum/slime_type/grey
 
-/obj/effect/mob_spawn/corpse/slime/special(mob/living/basic/slime/spawned_slime)
+/obj/effect/mob_spawn/corpse/slime/special(mob/living/basic/slime/spawned_slime, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_slime.set_slime_type(slime_species)
 
@@ -33,7 +33,7 @@
 	//mostly for unit tests to not get alarmed (which by all means it should because this is a mess)
 	mob_type = /obj/item/clothing/mask/facehugger
 
-/obj/effect/mob_spawn/corpse/facehugger/create(mob/user)
+/obj/effect/mob_spawn/corpse/facehugger/create(mob/user, newname, apply_prefs)
 	var/obj/item/clothing/mask/facehugger/spawned_facehugger = new mob_type(loc)
 	spawned_facehugger.Die()
 	qdel(src)

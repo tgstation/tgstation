@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Reinforced floors will stop light and heavy explosions from affecting objects beneath the floor, ie cabling and piping"
-  - balance: "Explosions affecting floors are no longer blocked by *any structure*, such as posters. Only dense structures block them."
-  - balance: "Machines can now block explosions from affecting floors, much like structures"

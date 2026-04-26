@@ -198,6 +198,8 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 
 /// Generate a mask filter mutable to use as render_source for the alpha filter based on provided width, height and immersion state
 /datum/element/immerse/proc/generate_immerse_mask(width, height, is_below_water)
+	if (!width || !height)
+		return
 	var/clean_height = height
 	width = ceil(width / ICON_SIZE_X) * ICON_SIZE_X
 	height = ceil(height / ICON_SIZE_Y) * ICON_SIZE_Y
@@ -245,6 +247,8 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	var/is_below_water = (movable.layer < layer_to_check) ? "underwater-" : ""
 	// Tall mobs still only get covered to their feet, unless they're offset down
 	var/mutable_appearance/immerse_mask = generate_immerse_mask(movable.get_cached_width(), max(ICON_SIZE_Y - movable.pixel_z, ICON_SIZE_Y), is_below_water)
+	if (!immerse_mask)
+		return
 	var/atom/movable/immerse_mask/effect_relay = generated_visual_overlays[movable]
 	if (!effect_relay)
 		effect_relay = new(movable)
@@ -269,10 +273,12 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 /// A band-aid to keep the (unique) visual overlay from scaling and rotating along with its owner. I'm sorry.
 /datum/element/immerse/proc/on_update_transform(mob/living/source, resize, new_lying_angle, is_opposite_angle)
 	SIGNAL_HANDLER
+	var/atom/movable/immerse_mask/effect_relay = generated_visual_overlays[source]
+	if (!effect_relay)
+		return
 	var/matrix/new_transform = matrix()
 	new_transform.Scale(1 / source.current_size)
 	new_transform.Turn(-new_lying_angle)
-	var/atom/movable/immerse_mask/effect_relay = generated_visual_overlays[source]
 	var/mutable_appearance/relay_appearance = new(effect_relay.appearance)
 	relay_appearance.transform = new_transform
 	effect_relay.appearance = relay_appearance
@@ -281,10 +287,13 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 /datum/element/immerse/proc/on_spin_animation(atom/source, speed, loops, segments, segment)
 	SIGNAL_HANDLER
 	var/atom/movable/immerse_mask/immerse_mask = generated_visual_overlays[source]
-	immerse_mask.do_spin_animation(speed, loops, segments, -segment)
+	if (immerse_mask)
+		immerse_mask.do_spin_animation(speed, loops, segments, -segment)
 
 /datum/element/immerse/proc/on_update_offsets(mob/living/source, new_x, new_y, new_w, new_z, animate)
 	SIGNAL_HANDLER
+	if (!generated_visual_overlays[source])
+		return
 	var/old_height = ceil(max(ICON_SIZE_Y - source.pixel_z, ICON_SIZE_Y) / ICON_SIZE_Y)
 	var/new_height = ceil(max(ICON_SIZE_Y - new_z, ICON_SIZE_Y) / ICON_SIZE_Y)
 	if (old_height != new_height)

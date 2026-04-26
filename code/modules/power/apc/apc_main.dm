@@ -173,35 +173,13 @@
 	//. += NAMEOF(src, locked)
 	return .
 
-/obj/machinery/power/apc/Initialize(mapload, ndir)
+/obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
+
 	//APCs get added to their own processing tasks for the machines subsystem.
 	if (!(datum_flags & DF_ISPROCESSING))
 		datum_flags |= DF_ISPROCESSING
 		SSmachines.processing_apcs += src
-
-	//Pixel offset its appearance based on its direction
-	dir = ndir
-	switch(dir)
-		if(NORTH)
-			offset_old = pixel_y
-			pixel_y = APC_PIXEL_OFFSET
-		if(SOUTH)
-			offset_old = pixel_y
-			pixel_y = -APC_PIXEL_OFFSET
-		if(EAST)
-			offset_old = pixel_x
-			pixel_x = APC_PIXEL_OFFSET
-		if(WEST)
-			offset_old = pixel_x
-			pixel_x = -APC_PIXEL_OFFSET
-
-	var/image/hud_image = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked")
-	hud_image.pixel_w = pixel_x
-	hud_image.pixel_z = pixel_y
-	hud_list = list(
-		MALF_APC_HUD = hud_image
-	)
 
 	//Assign it to its area. If mappers already assigned an area string fast load the area from it else get the current area
 	var/area/our_area = get_area(loc)
@@ -236,8 +214,10 @@
 			cell.charge = start_charge * cell.maxcharge / 100 // (convert percentage to actual value)
 		make_terminal()
 		///This is how we test to ensure that mappers use the directional subtypes of APCs, rather than use the parent and pixel-shift it themselves.
+		setDir(dir)
 		if(abs(offset_old) != APC_PIXEL_OFFSET)
 			log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
+		find_and_mount_on_atom()
 	// For apcs created during the round players need to configure them from scratch
 	else
 		opened = APC_COVER_OPENED
@@ -261,7 +241,6 @@
 
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle interface lock")
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
-	find_and_hang_on_wall()
 
 /obj/machinery/power/apc/Destroy()
 	if(malfai)
@@ -276,6 +255,30 @@
 	if(terminal)
 		disconnect_terminal()
 	return ..()
+
+/obj/machinery/power/apc/setDir(newdir)
+	. = ..()
+
+	switch(newdir)
+		if(NORTH)
+			offset_old = pixel_y
+			pixel_y = APC_PIXEL_OFFSET
+		if(SOUTH)
+			offset_old = pixel_y
+			pixel_y = -APC_PIXEL_OFFSET
+		if(EAST)
+			offset_old = pixel_x
+			pixel_x = APC_PIXEL_OFFSET
+		if(WEST)
+			offset_old = pixel_x
+			pixel_x = -APC_PIXEL_OFFSET
+
+	var/image/hud_image = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked")
+	hud_image.pixel_w = pixel_x
+	hud_image.pixel_z = pixel_y
+	hud_list = list(
+		MALF_APC_HUD = hud_image
+	)
 
 /obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
@@ -583,7 +586,7 @@
 		update_appearance()
 	if(machine_stat & (BROKEN|MAINT))
 		return
-	if(!area || !area.requires_power)
+	if(!area?.requires_power)
 		return
 	if(failure_timer)
 		failure_timer--
@@ -628,6 +631,7 @@
 
 	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after give().
 		// set channels depending on how much charge we have left
+		var/cell_percent = cell.percent()
 		if(cell.charge <= 0) // zero charge, turn all off
 			equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
@@ -636,7 +640,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < APC_CHANNEL_LIGHT_TRESHOLD) // turn off lighting & equipment
+		else if(cell_percent < APC_CHANNEL_LIGHT_TRESHOLD) // turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
@@ -644,7 +648,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < APC_CHANNEL_EQUIP_TRESHOLD) // turn off equipment
+		else if(cell_percent < APC_CHANNEL_EQUIP_TRESHOLD) // turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
@@ -656,11 +660,13 @@
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			if(nightshift_lights && low_power_nightshift_lights)
+			//If nightlights are on, and we're recovering from low power/nightlight event, we'll remove it.
+			var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
+			if(nightshift_lights && (nightshift_disabled || low_power_nightshift_lights))
 				low_power_nightshift_lights = FALSE
-				if(!SSnightshift.nightshift_active)
+				if(nightshift_disabled)
 					INVOKE_ASYNC(src, PROC_REF(set_nightshift), FALSE)
-			if(cell.percent() > APC_CHANNEL_ALARM_TRESHOLD)
+			if(cell_percent > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)
 
 	else // no cell, switch everything off

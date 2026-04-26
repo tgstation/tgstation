@@ -3,7 +3,7 @@
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
 	inhand_icon_state = "mousetrap"
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	assembly_behavior = ASSEMBLY_TOGGLEABLE_INPUT
 	var/armed = FALSE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
@@ -194,7 +194,7 @@
 					if(H.move_intent == MOVE_INTENT_RUN)
 						INVOKE_ASYNC(src, PROC_REF(triggered), H)
 						H.visible_message(span_warning("[H] accidentally steps on [src]."), \
-							span_warning("You accidentally step on [src]"))
+							span_warning("You accidentally step on [src]."))
 				else if(ismouse(MM) || isregalrat(MM))
 					INVOKE_ASYNC(src, PROC_REF(triggered), MM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy

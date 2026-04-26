@@ -66,10 +66,14 @@
 	neutral_overlay = mutable_appearance(icon = 'icons/mob/silicon/aibots.dmi', icon_state = "mining_drone_grey")
 	combat_overlay = mutable_appearance(icon = 'icons/mob/silicon/aibots.dmi', icon_state = "mining_drone_offense_grey")
 	AddComponent(/datum/component/obeys_commands, pet_commands)
-	var/static/list/death_drops = list(/obj/effect/decal/cleanable/blood/gibs/robot_debris/old)
-	AddElement(/datum/element/death_drops, death_drops)
+	AddElement(/datum/element/death_drops, /obj/effect/decal/cleanable/blood/gibs/robot_debris/old)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
+	AddComponent(/datum/component/defaceable, \
+		icon = 'icons/mob/silicon/aibot_faces.dmi', \
+		icon_states = list("minebot" = FALSE, "minebot_highlight" = TRUE), \
+		drawing_of = "a face", \
+	)
 
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/missile_launcher = BB_MINEBOT_MISSILE_ABILITY,
@@ -120,7 +124,7 @@
 		user.balloon_alert(user, "at full integrity!")
 		return TRUE
 	if(welder.use_tool(src, user, 0, volume=40))
-		adjustBruteLoss(-15)
+		adjust_brute_loss(-15)
 		user.balloon_alert(user, "successfully repaired!")
 	return TRUE
 
@@ -166,7 +170,7 @@
 
 /mob/living/basic/mining_drone/ui_static_data(mob/user)
 	var/list/data = list()
-	data["bot_icon"] = icon2base64(getFlatIcon(src))
+	data["bot_icon"] = icon2base64(getFlatIcon(src, no_anim = TRUE))
 	data["possible_colors"] = list()
 	for(var/color in possible_colors)
 		data["possible_colors"] += list(list(
@@ -277,4 +281,4 @@
 	if(isnull(required_access))
 		var/datum/id_trim/access_card = SSid_access.trim_singletons_by_path[/datum/id_trim/job/shaft_miner]
 		required_access = access_card.access
-	AddElement(/datum/element/mob_access, required_access)
+	AddComponent(/datum/component/simple_access, required_access)

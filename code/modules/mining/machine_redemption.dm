@@ -6,6 +6,7 @@
 	desc = "A machine that accepts ore and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
+	base_icon_state = "ore_redemption"
 	density = TRUE
 	input_dir = NORTH
 	output_dir = SOUTH
@@ -41,7 +42,7 @@
 	/// References the alloys the smelter can create
 	var/datum/techweb/stored_research
 	/// Linkage to the ORM silo
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 
 /obj/machinery/mineral/ore_redemption/offstation
 	circuit = /obj/item/circuitboard/machine/ore_redemption/offstation
@@ -59,8 +60,8 @@
 		local_signals = list(
 			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/mineral/ore_redemption, local_redeem_points)
 		)
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
+	materials = new ( \
+		src, \
 		mapload, \
 		mat_container_signals = local_signals \
 	)
@@ -70,7 +71,7 @@
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	stored_research = null
-	materials = null
+	QDEL_NULL(materials)
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
@@ -91,15 +92,14 @@
 		points += gathered_ore.points * point_upgrade * gathered_ore.amount
 
 /// Returns the amount of a specific alloy design, based on the accessible materials
-/obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
-	var/datum/component/material_container/mat_container = materials.mat_container
-	if(!mat_container || D.make_reagent)
+/obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/design)
+	var/datum/material_container/mat_container = materials.mat_container
+	if(!mat_container || design.make_reagent)
 		return FALSE
 
 	var/build_amount = 0
 
-	for(var/mat in D.materials)
-		var/amount = D.materials[mat]
+	for(var/mat, amount in design.materials)
 		var/datum/material/redemption_mat_amount = mat_container.materials[mat]
 
 		if(!amount || !redemption_mat_amount)
@@ -119,7 +119,7 @@
 
 /// Sends a message to the request consoles that signed up for ore updates
 /obj/machinery/mineral/ore_redemption/proc/send_console_message()
-	var/datum/component/material_container/mat_container = materials.mat_container
+	var/datum/material_container/mat_container = materials.mat_container
 	if(!mat_container || !is_station_level(z))
 		return
 
@@ -160,6 +160,7 @@
 		gathered_ores += tool
 	else if(tool.atom_storage && !tool.atom_storage.locked)
 		tool.atom_storage.remove_type(/obj/item/stack/ore, src, check_adjacent = TRUE, user = user, inserted = gathered_ores)
+
 	if(!gathered_ores.len)
 		return ..()
 
@@ -168,7 +169,7 @@
 		if(isnull(smelted_ore))
 			continue
 
-		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+		if(materials.insert_item(smelted_ore, ore_multiplier, ID_DATA(user)) <= 0)
 			unload_mineral(smelted_ore)
 
 	return ITEM_INTERACT_SUCCESS
@@ -176,9 +177,13 @@
 /obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
 		return
+
 	if(!materials.mat_container || panel_open || !powered())
 		return
 
+	var/alist/user_data = null
+	if (isliving(target.pulledby))
+		user_data = ID_DATA(target.pulledby)
 	//gethering the ore
 	var/list/obj/item/stack/ore/ore_list = list()
 	if(istype(target, /obj/structure/ore_box))
@@ -196,7 +201,7 @@
 		if(isnull(smelted_ore))
 			continue
 
-		if(materials.insert_item(smelted_ore, ore_multiplier) <= 0)
+		if(materials.insert_item(smelted_ore, ore_multiplier, user_data) <= 0)
 			unload_mineral(smelted_ore) //if rejected unload
 
 	if(!console_notify_timer)
@@ -213,12 +218,10 @@
 		unregister_input_turf() // someone just un-wrenched us, unregister the turf
 
 /obj/machinery/mineral/ore_redemption/screwdriver_act(mob/living/user, obj/item/tool)
-	default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", tool)
-	return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/mineral/ore_redemption/crowbar_act(mob/living/user, obj/item/tool)
-	default_deconstruction_crowbar(tool)
-	return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/mineral/ore_redemption/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)
@@ -245,7 +248,7 @@
 	var/list/data = list()
 	data["unclaimedPoints"] = points
 	data["materials"] = list()
-	var/datum/component/material_container/mat_container = materials.mat_container
+	var/datum/material_container/mat_container = materials.mat_container
 	if (mat_container)
 		for(var/datum/material/material as anything in mat_container.materials)
 			var/amount = mat_container.materials[material]
@@ -290,7 +293,7 @@
 		if(card?.registered_account)
 			data["user"] = list(
 				"name" = card.registered_account.account_holder,
-				"cash" = card.registered_account.account_balance,
+				"cash" = card.registered_account.mining_points,
 			)
 
 		else if(issilicon(user))
@@ -305,7 +308,7 @@
 	. = ..()
 	if(.)
 		return
-	var/datum/component/material_container/mat_container = materials.mat_container
+	var/datum/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Claim")
 			//requires silo but silo not in range
@@ -366,11 +369,11 @@
 				if(amount < 1) //no negative mats
 					return
 				materials.use_materials(alloy.materials, multiplier = amount, action = "withdrawn", name = "sheets", user_data = ID_DATA(usr))
-				var/output
+				var/atom/movable/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
-					output = new alloy.build_path(src, amount)
+					output = alloy.create_result(src, amount = amount)
 				else
-					output = new alloy.build_path(src)
+					output = alloy.create_result(src)
 				unload_mineral(output)
 			else
 				to_chat(usr, span_warning("Required access not found."))
@@ -381,7 +384,7 @@
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/update_icon_state()
-	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
+	icon_state = "[base_icon_state][panel_open ? "-open" : powered() ? null : "-off"]"
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/update_overlays()

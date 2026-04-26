@@ -2,7 +2,8 @@
 
 /area/ruin/space
 	default_gravity = ZERO_GRAVITY
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
+	area_flags_mapping = UNIQUE_AREA
 
 /area/ruin/space/unpowered
 	always_unpowered = TRUE
@@ -16,11 +17,10 @@
 /area/ruin/space/has_grav/powered
 	requires_power = FALSE
 
-
 // Ruin solars define, /area/solars was moved to /area/station/solars, causing the solars specific areas to lose their properties
 /area/ruin/space/solars
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 	flags_1 = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
@@ -310,7 +310,7 @@
 	icon = 'icons/area/areas_ruins.dmi' // Solars inheriet areas_misc.dmi, not areas_ruin.dmi
 	icon_state = "os_charlie_solars"
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 	sound_environment = SOUND_AREA_SPACE
 
 /area/ruin/space/ancientstation/charlie/storage
@@ -534,7 +534,7 @@
 /area/ruin/space/djstation/solars
 	name = "\improper DJ Station Solars"
 	icon_state = "DJ"
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 	default_gravity = ZERO_GRAVITY
 
 /area/ruin/space/djstation/service
@@ -582,7 +582,7 @@
 
 /area/ruin/space/has_grav/hellfactoryoffice
 	name = "\improper Hell Factory Office"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | NOTELEPORT
 
 //Ruin of Spinward Smoothies
 
@@ -600,7 +600,7 @@
 
 /area/ruin/space/has_grav/powered/biooutpost
 	name = "\improper Bioresearch Outpost"
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	area_flags = NOTELEPORT
 
 /area/ruin/space/has_grav/powered/biooutpost/vault
 	name = "\improper Bioresearch Outpost Secure Testing"

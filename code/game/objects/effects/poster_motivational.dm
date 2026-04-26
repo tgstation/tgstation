@@ -105,8 +105,6 @@
 /datum/mood_event/poster_mood
 	description = "That poster is really motivating me!"
 	mood_change = 2
-	category = POSTER_MOOD_CAT
-
 
 // random posters
 
@@ -153,6 +151,8 @@
 	desc = "A poster depicting a bike. Someday it WILL be yours! \
 	When people read this poster they'll feel better!"
 	icon_state = "bike"
+
+// Departmental posters
 
 /obj/item/poster/quirk/cargo_logo
 	poster_type = /obj/structure/sign/poster/quirk/cargo_logo

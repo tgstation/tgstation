@@ -30,16 +30,6 @@
 	QDEL_NULL(breathing_loop)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-	// Needs to happen after parent call otherwise wounds are prioritized over surgery
-	for(var/datum/wound/wound as anything in shuffle(all_wounds))
-		if(wound.try_treating(tool, user))
-			return ITEM_INTERACT_SUCCESS
-	return .
-
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/hurt = TRUE
@@ -120,6 +110,22 @@
 		if(!weapon || weapon.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 			return
 		weapon.get_embed().rip_out(usr)
+		return
+
+	if(href_list["remove_tourniquet"])
+		var/obj/item/bodypart/limb = locate(href_list["remove_tourniquet"]) in bodyparts
+		var/mob/living/patient = limb?.owner
+		var/obj/item/tourniquet = LAZYACCESS(limb?.applied_items, LIMB_ITEM_TOURNIQUET)
+		if(QDELETED(limb) || QDELETED(patient) || QDELETED(tourniquet))
+			return
+		balloon_alert_to_viewers("removing tourniquet...")
+		if(!do_after(usr, 4 SECONDS, target = src))
+			return
+		if(QDELETED(limb) || QDELETED(patient) || QDELETED(tourniquet) || limb.owner != patient || tourniquet.loc != limb)
+			return
+
+		balloon_alert_to_viewers("tourniquet removed")
+		usr.put_in_hands(tourniquet)
 		return
 
 	if(href_list["show_paper_note"])
@@ -344,14 +350,14 @@
 	var/turf/location = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
-		need_mob_update += adjustToxLoss(-3, updating_health = FALSE)
+		need_mob_update += adjust_tox_loss(-3, updating_health = FALSE)
 
 	for(var/i = 0 to distance)
 		if(blood)
 			if(location)
 				add_splatter_floor(location)
 			if(vomit_flags & MOB_VOMIT_HARM)
-				need_mob_update += adjustBruteLoss(3, updating_health = FALSE)
+				need_mob_update += adjust_brute_loss(3, updating_health = FALSE)
 		else
 			if(location)
 				location.add_vomit_floor(src, vomit_type, vomit_flags, purge_ratio) // call purge when doing detoxicfication to pump more chems out of the stomach.
@@ -419,11 +425,10 @@
 		return
 	var/total_burn = 0
 	var/total_brute = 0
-	for(var/X in bodyparts) //hardcoded to streamline things a bit
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 		total_brute += (BP.brute_dam * BP.body_damage_coeff)
 		total_burn += (BP.burn_dam * BP.body_damage_coeff)
-	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - total_burn - total_brute, DAMAGE_PRECISION))
+	set_health(round(maxHealth - get_oxy_loss() - get_tox_loss() - total_burn - total_brute, DAMAGE_PRECISION))
 	update_stat()
 	update_stamina()
 
@@ -499,6 +504,10 @@
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 
+	if(HAS_TRAIT(src, TRAIT_ECHOLOCATOR))
+		new_sight |= SEE_MOBS|SEE_TURFS
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_FULLBRIGHT)
+
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 		new_sight = NONE
 
@@ -512,7 +521,7 @@
  */
 /mob/living/carbon/proc/update_tint()
 	var/tint = 0
-	for(var/obj/item/clothing/worn_item in get_equipped_items())
+	for(var/obj/item/clothing/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
 		tint += worn_item.tint
 
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
@@ -525,6 +534,10 @@
 	else if(tint >= TINT_DARKENED)
 		cure_blind(EYES_COVERED)
 		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
+
+	else if(tint >= TINT_MILD)
+		cure_blind(EYES_COVERED)
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1)
 
 	else
 		cure_blind(EYES_COVERED)
@@ -605,7 +618,7 @@
 		clear_fullscreen("oxy")
 
 	//Fire and Brute damage overlay (BSSR)
-	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+	var/hurtdamage = get_brute_loss() + get_fire_loss() + damageoverlaytemp
 	if(hurtdamage && !HAS_TRAIT(src, TRAIT_NO_DAMAGE_OVERLAY))
 		var/severity = 0
 		switch(hurtdamage)
@@ -626,11 +639,16 @@
 		clear_fullscreen("brute")
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
-	if(!client || !hud_used?.healths)
+	if(!client || !hud_used)
+		return
+
+	var/atom/movable/screen/healths/health_hud = hud_used.screen_objects[HUD_MOB_HEALTH]
+
+	if (!health_hud)
 		return
 
 	if(stat == DEAD)
-		hud_used.healths.icon_state = "health7"
+		health_hud.icon_state = "health7"
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_CARBON_UPDATING_HEALTH_HUD, shown_health_amount) & COMPONENT_OVERRIDE_HEALTH_HUD)
@@ -640,56 +658,11 @@
 		shown_health_amount = health
 
 	if(shown_health_amount >= maxHealth)
-		hud_used.healths.icon_state = "health0"
-
-	else if(shown_health_amount > maxHealth * 0.8)
-		hud_used.healths.icon_state = "health1"
-
-	else if(shown_health_amount > maxHealth * 0.6)
-		hud_used.healths.icon_state = "health2"
-
-	else if(shown_health_amount > maxHealth * 0.4)
-		hud_used.healths.icon_state = "health3"
-
-	else if(shown_health_amount > maxHealth*0.2)
-		hud_used.healths.icon_state = "health4"
-
-	else if(shown_health_amount > 0)
-		hud_used.healths.icon_state = "health5"
-
+		health_hud.icon_state = "health0"
+	else if(shown_health_amount > 0 && maxHealth > 0)
+		health_hud.icon_state = "health[6 - ceil(shown_health_amount / (maxHealth * 0.2))]"
 	else
-		hud_used.healths.icon_state = "health6"
-
-/mob/living/carbon/update_stamina_hud(shown_stamina_loss)
-	if(!client || !hud_used?.stamina)
-		return
-
-	var/stam_crit_threshold = maxHealth - crit_threshold
-
-	if(stat == DEAD)
-		hud_used.stamina.icon_state = "stamina_dead"
-	else
-
-		if(shown_stamina_loss == null)
-			shown_stamina_loss = getStaminaLoss()
-
-		if(shown_stamina_loss >= stam_crit_threshold)
-			hud_used.stamina.icon_state = "stamina_crit"
-		else if(shown_stamina_loss > maxHealth*0.8)
-			hud_used.stamina.icon_state = "stamina_5"
-		else if(shown_stamina_loss > maxHealth*0.6)
-			hud_used.stamina.icon_state = "stamina_4"
-		else if(shown_stamina_loss > maxHealth*0.4)
-			hud_used.stamina.icon_state = "stamina_3"
-		else if(shown_stamina_loss > maxHealth*0.2)
-			hud_used.stamina.icon_state = "stamina_2"
-		else if(shown_stamina_loss > 0)
-			hud_used.stamina.icon_state = "stamina_1"
-		else
-			hud_used.stamina.icon_state = "stamina_full"
-
-/mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
-	hud_used?.spacesuit?.icon_state = "spacesuit_[cell_state]"
+		health_hud.icon_state = "health6"
 
 /mob/living/carbon/set_health(new_value)
 	. = ..()
@@ -745,8 +718,7 @@
 
 /mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
-		if(dna && !HAS_TRAIT(src, TRAIT_NOBLOOD))
-			blood_volume += (excess_healing * 2) //1 excess = 10 blood
+		adjust_blood_volume(excess_healing * 2)
 
 		for(var/obj/item/organ/target_organ as anything in organs)
 			if(!target_organ.damage)
@@ -792,6 +764,8 @@
 
 	if(heal_flags & HEAL_LIMBS)
 		regenerate_limbs()
+		for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
+			limb.remove_surgical_state(ALL)
 
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ORGANS))
 		regenerate_organs(remove_hazardous = !!(heal_flags & HEAL_REFRESH_ORGANS))
@@ -799,9 +773,8 @@
 	if(heal_flags & HEAL_TRAUMAS)
 		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 		// Addictions are like traumas
-		if(mind)
-			for(var/addiction_type in subtypesof(/datum/addiction))
-				mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
+		for(var/addiction_type in GLOB.addictions)
+			mind?.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 
 	if(heal_flags & HEAL_RESTRAINTS)
 		QDEL_NULL(handcuffed)
@@ -814,51 +787,67 @@
 	return ..()
 
 /mob/living/carbon/can_be_revived()
-	if(!get_organ_by_type(/obj/item/organ/brain) && (!IS_CHANGELING(src)) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK))
+		return FALSE
+	if(!HAS_TRAIT(src, TRAIT_BRAINLESS_CARBON) && !get_organ_by_type(/obj/item/organ/brain))
 		return FALSE
 	return ..()
 
 /mob/living/carbon/proc/can_defib()
+	SHOULD_BE_PURE(TRUE)
 	if (HAS_TRAIT(src, TRAIT_SUICIDED))
 		return DEFIB_FAIL_SUICIDE
 
 	if (HAS_TRAIT(src, TRAIT_HUSK))
 		return DEFIB_FAIL_HUSK
 
+	if (IS_FAKE_KEY(key))
+		return DEFIB_NOGRAB_AGHOST
+
 	if (HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED))
 		return DEFIB_FAIL_BLACKLISTED
 
-	if ((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
+	if ((get_brute_loss() >= MAX_REVIVE_BRUTE_DAMAGE) || (get_fire_loss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return DEFIB_FAIL_TISSUE_DAMAGE
 
-	// Only check for a heart if they actually need a heart. Who would've thunk
-	if (needs_heart())
-		var/obj/item/organ/heart = get_organ_by_type(/obj/item/organ/heart)
+	var/heart_status = SEND_SIGNAL(src, COMSIG_CARBON_DEFIB_HEART_CHECK) || can_defib_heart(get_organ_by_type(/obj/item/organ/heart))
+	if (heart_status)
+		return heart_status
 
-		if (!heart)
-			return DEFIB_FAIL_NO_HEART
-
-		if (heart.organ_flags & ORGAN_FAILING)
-			return DEFIB_FAIL_FAILING_HEART
-
-	var/obj/item/organ/brain/current_brain = get_organ_by_type(/obj/item/organ/brain)
-
-	if (QDELETED(current_brain))
-		return DEFIB_FAIL_NO_BRAIN
-
-	if (current_brain.organ_flags & ORGAN_FAILING)
-		return DEFIB_FAIL_FAILING_BRAIN
-
-	if (current_brain.suicided || (current_brain.brainmob && HAS_TRAIT(current_brain.brainmob, TRAIT_SUICIDED)))
-		return DEFIB_FAIL_NO_INTELLIGENCE
-
-	if(IS_FAKE_KEY(key))
-		return DEFIB_NOGRAB_AGHOST
+	var/brain_status = SEND_SIGNAL(src, COMSIG_CARBON_DEFIB_BRAIN_CHECK) || can_defib_brain(get_organ_by_type(/obj/item/organ/brain))
+	if (brain_status)
+		return brain_status
 
 	return DEFIB_POSSIBLE
 
+/// Return a defib status based on the heart organ provided
+/mob/living/carbon/proc/can_defib_heart(obj/item/organ/heart/heart_organ)
+	if (!needs_heart())
+		return NONE
+
+	if (QDELETED(heart_organ))
+		return DEFIB_FAIL_NO_HEART
+
+	if (heart_organ.organ_flags & ORGAN_FAILING)
+		return DEFIB_FAIL_FAILING_HEART
+
+	return NONE
+
+/// Return a defib status based on the brain organ provided
+/mob/living/carbon/proc/can_defib_brain(obj/item/organ/brain/brain_organ)
+	if (QDELETED(brain_organ))
+		return DEFIB_FAIL_NO_BRAIN
+
+	if (brain_organ.organ_flags & ORGAN_FAILING)
+		return DEFIB_FAIL_FAILING_BRAIN
+
+	if (brain_organ.suicided || (brain_organ.brainmob && HAS_TRAIT(brain_organ.brainmob, TRAIT_SUICIDED)))
+		return DEFIB_FAIL_NO_INTELLIGENCE
+
+	return NONE
+
 /mob/living/carbon/proc/can_defib_client()
-	return (client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
+	return (HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))
@@ -913,16 +902,19 @@
 
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
-			set_num_legs(num_legs + 1)
-			if(!new_bodypart.bodypart_disabled)
-				set_usable_legs(usable_legs + 1)
+			if(!IS_STUMP(new_bodypart))
+				set_num_legs(num_legs + 1)
+				if(!new_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs + 1)
 		if(ARM_LEFT, ARM_RIGHT)
-			set_num_hands(num_hands + 1)
-			if(!new_bodypart.bodypart_disabled)
-				set_usable_hands(usable_hands + 1)
+			if(!IS_STUMP(new_bodypart))
+				set_num_hands(num_hands + 1)
+				if(!new_bodypart.bodypart_disabled)
+					set_usable_hands(usable_hands + 1)
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
+
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -939,13 +931,27 @@
 
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
-			set_num_legs(num_legs - 1)
-			if(!old_bodypart.bodypart_disabled)
-				set_usable_legs(usable_legs - 1)
+			if(!IS_STUMP(old_bodypart))
+				set_num_legs(num_legs - 1)
+				if(!old_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs - 1)
 		if(ARM_LEFT, ARM_RIGHT)
-			set_num_hands(num_hands - 1)
-			if(!old_bodypart.bodypart_disabled)
-				set_usable_hands(usable_hands - 1)
+			if(!IS_STUMP(old_bodypart))
+				set_num_hands(num_hands - 1)
+				if(!old_bodypart.bodypart_disabled)
+					set_usable_hands(usable_hands - 1)
+
+	if(!special && old_bodypart.stump_typepath)
+		if(old_bodypart.type == old_bodypart.stump_typepath)
+			stack_trace("Attempted to replace a stump with a stump")
+		else
+			var/obj/item/bodypart/stump = new old_bodypart.stump_typepath()
+			stump.bodyshape = old_bodypart.bodyshape
+			stump.bodytype = old_bodypart.bodytype
+			if(!stump.try_attach_limb(src, special = TRUE))
+				// the only way this can happen is if the stump is rejected via signal
+				// not much we can do about that besides hope they know what they're doing
+				qdel(stump)
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
@@ -953,7 +959,7 @@
 ///Updates the bodypart speed modifier based on our bodyparts.
 /mob/living/carbon/proc/update_bodypart_speed_modifier()
 	var/final_modification = 0
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/leg/bodypart in get_bodyparts())
 		final_modification += bodypart.speed_modifier
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bodypart, update = TRUE, multiplicative_slowdown = final_modification)
 
@@ -965,7 +971,7 @@
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /carbon ---")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_BODYPART, "Modify bodypart")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_ORGANS, "Modify organs")
 	VV_DROPDOWN_OPTION(VV_HK_MARTIAL_ART, "Give Martial Arts")
@@ -981,63 +987,78 @@
 	if(href_list[VV_HK_MODIFY_BODYPART])
 		if(!check_rights(R_SPAWN))
 			return
-		var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("replace","remove")
+
+		var/edit_action = tgui_alert(usr, "What would you like to do?", "Modify Body Part", list("Replace", "Remove"))
 		if(!edit_action)
 			return
+
 		var/list/limb_list = list()
-		if(edit_action == "remove")
-			for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-				limb_list += iter_part.body_zone
-				limb_list -= BODY_ZONE_CHEST
+		if(edit_action == "Remove")
+			for(var/obj/item/bodypart/iter_part as anything in get_bodyparts())
+				var/zone = iter_part.body_zone
+				if (zone != BODY_ZONE_CHEST)
+					limb_list[parse_zone_with_bodypart(zone)] = zone
 		else
-			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST)
-		var/result = input(usr, "Please choose which bodypart to [edit_action]","[capitalize(edit_action)] Bodypart") as null|anything in sort_list(limb_list)
-		if(result)
-			var/obj/item/bodypart/part = get_bodypart(result)
-			var/list/limbtypes = list()
-			switch(result)
-				if(BODY_ZONE_CHEST)
-					limbtypes = typesof(/obj/item/bodypart/chest)
-				if(BODY_ZONE_R_ARM)
-					limbtypes = typesof(/obj/item/bodypart/arm/right)
-				if(BODY_ZONE_L_ARM)
-					limbtypes = typesof(/obj/item/bodypart/arm/left)
-				if(BODY_ZONE_HEAD)
-					limbtypes = typesof(/obj/item/bodypart/head)
-				if(BODY_ZONE_L_LEG)
-					limbtypes = typesof(/obj/item/bodypart/leg/left)
-				if(BODY_ZONE_R_LEG)
-					limbtypes = typesof(/obj/item/bodypart/leg/right)
-			switch(edit_action)
-				if("remove")
-					if(part)
-						part.drop_limb()
-						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [part.plaintext_zone]")
-					else
-						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
-						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
-				if("replace")
-					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
-					var/obj/item/bodypart/new_bp = new limb2add()
-					if(new_bp.replace_limb(src, special = TRUE))
-						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part.type] with [new_bp.type]")
-						qdel(part)
-					else
-						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
-						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+			for(var/zone in GLOB.all_body_zones)
+				limb_list[parse_zone(zone)] = zone
+
+		var/result = tgui_input_list(usr, "Please choose which bodypart to [LOWER_TEXT(edit_action)]","[edit_action] Bodypart", sort_list(limb_list))
+		if (!result)
+			return
+
+		result = limb_list[result]
+		var/obj/item/bodypart/part = get_bodypart(result)
+		var/list/limbtypes = list()
+		switch(result)
+			if(BODY_ZONE_CHEST)
+				limbtypes = typesof(/obj/item/bodypart/chest)
+			if(BODY_ZONE_R_ARM)
+				limbtypes = typesof(/obj/item/bodypart/arm/right)
+			if(BODY_ZONE_L_ARM)
+				limbtypes = typesof(/obj/item/bodypart/arm/left)
+			if(BODY_ZONE_HEAD)
+				limbtypes = typesof(/obj/item/bodypart/head)
+			if(BODY_ZONE_L_LEG)
+				limbtypes = typesof(/obj/item/bodypart/leg/left)
+			if(BODY_ZONE_R_LEG)
+				limbtypes = typesof(/obj/item/bodypart/leg/right)
+
+		if(edit_action == "Remove")
+			if(part)
+				part.drop_limb()
+				admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [part.plaintext_zone]")
+			else
+				to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
+				admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+			return
+
+		var/list/limb_picks = list()
+		for (var/obj/item/bodypart/part_type as anything in sort_list(limbtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+			limb_picks[replacetext("[part_type]", "/obj/item/bodypart/", ":")] = part_type
+
+		var/choice = tgui_input_list(usr, "Select a bodypart type to add", "Add/Replace Bodypart", limb_picks)
+		if (!choice)
+			return
+
+		var/limb2add = limb_picks[choice]
+		var/obj/item/bodypart/new_bp = new limb2add()
+		if(new_bp.replace_limb(src))
+			admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part?.type || "missing limb"] with [new_bp.type]")
+			qdel(part)
+		else
+			to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
+			admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
 
 	if(href_list[VV_HK_MODIFY_ORGANS])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/manipulate_organs, src)
 
 	if(href_list[VV_HK_MARTIAL_ART])
-		if(!check_rights(NONE))
-			return
 		var/list/artpaths = subtypesof(/datum/martial_art)
 		var/list/artnames = list()
 		for(var/i in artpaths)
 			var/datum/martial_art/M = i
 			artnames[initial(M.name)] = M
-		var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in sort_list(artnames, GLOBAL_PROC_REF(cmp_typepaths_asc))
+		var/result = tgui_input_list(usr, "Choose the martial art to teach", "JUDO CHOP", sort_list(artnames, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		if(!usr)
 			return
 		if(QDELETED(src))
@@ -1051,10 +1072,8 @@
 			message_admins(span_notice("[key_name_admin(usr)] has taught [MA] to [key_name_admin(src)]."))
 
 	if(href_list[VV_HK_GIVE_TRAUMA])
-		if(!check_rights(NONE))
-			return
 		var/list/traumas = subtypesof(/datum/brain_trauma)
-		var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in sort_list(traumas, GLOBAL_PROC_REF(cmp_typepaths_asc))
+		var/result = tgui_input_list(usr, "Choose the brain trauma to apply", "Traumatize", sort_list(traumas, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		if(!usr)
 			return
 		if(QDELETED(src))
@@ -1068,26 +1087,12 @@
 			message_admins(span_notice("[key_name_admin(usr)] has traumatized [key_name_admin(src)] with [BT.name]."))
 
 	if(href_list[VV_HK_CURE_TRAUMA])
-		if(!check_rights(NONE))
-			return
 		cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
 		log_admin("[key_name(usr)] has cured all traumas from [key_name(src)].")
 		message_admins(span_notice("[key_name_admin(usr)] has cured all traumas from [key_name_admin(src)]."))
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
-
-/mob/living/carbon/proc/hypnosis_vulnerable()
-	if(HAS_MIND_TRAIT(src, TRAIT_UNCONVERTABLE))
-		return FALSE
-	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
-		return TRUE
-	if(IsSleeping() || IsUnconscious())
-		return TRUE
-	if(HAS_TRAIT(src, TRAIT_DUMB))
-		return TRUE
-	if(mob_mood.sanity < SANITY_UNSTABLE)
-		return TRUE
 
 /mob/living/carbon/wash(clean_types)
 	. = ..()
@@ -1108,14 +1113,19 @@
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	if(!CAN_HAVE_BLOOD(src))
+		return FALSE
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		if(part.cached_bleed_rate)
 			return TRUE
 
 /// get our total bleedrate
 /mob/living/carbon/proc/get_total_bleed_rate()
+	if(!CAN_HAVE_BLOOD(src))
+		return FALSE
+
 	var/total_bleed_rate = 0
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		total_bleed_rate += part.cached_bleed_rate
 
 	return total_bleed_rate
@@ -1200,16 +1210,18 @@
 
 /mob/living/carbon/on_lying_down(new_lying_angle)
 	. = ..()
-	if(!buckled || buckled.buckle_lying != 0)
+	if(!buckled || (buckled.buckle_lying != 0 && buckled.buckle_lying != NO_BUCKLE_LYING))
 		lying_angle_on_lying_down(new_lying_angle)
 
 
 /// Special carbon interaction on lying down, to transform its sprite by a rotation.
 /mob/living/carbon/proc/lying_angle_on_lying_down(new_lying_angle)
-	if(!new_lying_angle)
-		set_lying_angle(pick(LYING_ANGLE_EAST, LYING_ANGLE_WEST))
-	else
+	if(new_lying_angle)
 		set_lying_angle(new_lying_angle)
+	else if (buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
+		set_lying_angle(buckled.buckle_lying)
+	else
+		set_lying_angle(pick(LYING_ANGLE_EAST, LYING_ANGLE_WEST))
 
 /mob/living/carbon/vv_edit_var(var_name, var_value)
 	switch(var_name)
@@ -1275,9 +1287,9 @@
 /// Goes through the organs and bodyparts of the mob and updates their blood_dna_info, in case their blood type has changed (via set_species() or otherwise)
 /mob/living/carbon/proc/update_cached_blood_dna_info()
 	var/list/blood_dna_info = get_blood_dna_list()
-	for(var/obj/item/organ/organ in organs)
+	for(var/obj/item/organ/organ as anything in organs)
 		organ.blood_dna_info = blood_dna_info
-	for(var/obj/item/bodypart/bodypart in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		bodypart.blood_dna_info = blood_dna_info
 
 /// Setter for changing a mob's blood type
@@ -1347,4 +1359,21 @@
 
 /mob/living/carbon/get_bloodtype()
 	RETURN_TYPE(/datum/blood_type)
+	if(!CAN_HAVE_BLOOD(src))
+		return
 	return dna?.blood_type
+
+/mob/living/carbon/update_nutrition()
+	. = ..()
+	// Force a weight update in case we're stasis'd and don't tick
+	if (HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
+		if (overeatduration >= 200 SECONDS)
+			return
+
+		to_chat(src, span_notice("You feel fit again!"))
+		remove_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
+		return
+
+	if (overeatduration >= 200 SECONDS)
+		to_chat(src, span_danger("You suddenly feel blubbery!"))
+		add_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)

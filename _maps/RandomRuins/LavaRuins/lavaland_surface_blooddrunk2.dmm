@@ -2,9 +2,6 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
-"b" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "c" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
@@ -70,23 +67,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"o" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"p" = (
-/obj/structure/stone_tile,
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "q" = (
 /obj/structure/stone_tile{
 	dir = 8
@@ -96,23 +76,12 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"s" = (
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance{
+"r" = (
+/obj/structure/stone_tile/surrounding/burnt,
+/mob/living/basic/boss/blood_drunk_miner/guidance{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"t" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/structure/stone_tile{
-	dir = 4
-	},
-/obj/structure/stone_tile/cracked{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "u" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
@@ -150,24 +119,65 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"M" = (
+"C" = (
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"F" = (
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/template_noop)
+"H" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"L" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"V" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Z" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 a
 a
-b
-b
-b
-b
+F
+F
+F
+F
 a
-b
-b
+a
+a
 a
 a
 a
@@ -177,24 +187,24 @@ a
 "}
 (2,1,1) = {"
 a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+F
+F
+F
+f
+f
+f
+f
+a
+F
+F
 a
 a
 a
 a
 "}
 (3,1,1) = {"
-b
-b
+F
+F
 c
 h
 k
@@ -203,15 +213,15 @@ f
 f
 k
 f
-b
-b
+F
+F
 a
 a
 a
 "}
 (4,1,1) = {"
-b
-b
+F
+F
 d
 c
 l
@@ -220,15 +230,15 @@ f
 f
 v
 f
-b
-b
-b
+F
+F
+F
 a
 a
 "}
 (5,1,1) = {"
-b
-b
+F
+F
 e
 i
 m
@@ -238,65 +248,65 @@ u
 w
 f
 f
-b
-b
-b
+F
+F
+F
 a
 "}
 (6,1,1) = {"
 a
-b
+F
+F
 f
 f
-f
-o
-M
-q
+V
+C
+H
 w
 f
 f
 f
 f
-b
-b
+F
+F
 "}
 (7,1,1) = {"
-b
-b
-b
+a
+F
+F
 f
 f
-p
-s
-t
+L
+r
+Z
 f
 f
 q
 n
 A
 f
-b
+F
 "}
 (8,1,1) = {"
-b
-b
+a
+F
 g
 f
 c
-q
-t
-q
+H
+Z
+H
 k
 x
 f
 z
 d
 f
-b
+a
 "}
 (9,1,1) = {"
 a
-b
+a
 f
 j
 n
@@ -308,57 +318,57 @@ y
 f
 n
 y
-b
-b
+a
+a
 "}
 (10,1,1) = {"
 a
-b
-b
+a
+a
 f
 f
 f
 f
 f
 f
-b
-b
+F
+F
 f
 f
-b
-b
+a
+a
 "}
 (11,1,1) = {"
 a
 a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+a
+a
+F
+F
+F
+F
+F
+F
+F
+F
+a
+a
 a
 "}
 (12,1,1) = {"
 a
 a
 a
-b
-b
-b
-b
-b
-b
 a
 a
-b
-b
+F
+F
+F
+F
+a
+a
+a
+a
 a
 a
 "}

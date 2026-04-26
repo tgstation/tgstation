@@ -23,7 +23,7 @@ export const AccountingConsole = () => {
     : `Ian.${pic_file_format}`;
 
   return (
-    <Window width={600} height={440} theme="ntOS95">
+    <Window width={680} height={440} theme="ntOS95">
       <Window.Content fontFamily="Tahoma">
         <Stack vertical fill>
           <Stack.Item>
@@ -150,7 +150,7 @@ export const AccountingConsole = () => {
               <Stack.Item grow />
               <Stack.Item>
                 <Button p={0.75} pl={1} pr={1} disabled textColor="black">
-                  {station_time} ST
+                  {station_time} PT
                 </Button>
               </Stack.Item>
             </Stack>
