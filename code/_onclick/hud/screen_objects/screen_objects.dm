@@ -409,6 +409,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 		mouse_position = text2num(LAZYACCESS(modifiers, ICON_X))
 
 	if(mouse_position > 16)
+		//non-living can't RMB anyway, but just a precaution.
 		if(LAZYACCESS(modifiers, RIGHT_CLICK) && isliving(user))
 			if(user.looking_vertically == UP)
 				user.end_look()
