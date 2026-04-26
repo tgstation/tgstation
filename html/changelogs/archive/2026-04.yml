@@ -580,6 +580,12 @@
   - qol: Hovering over NST timestamps on official documents will now translate how
       much it is in PT/Shift Time.
   - admin: Admins can now use style/class/background in their papercode.
+  - qol: Pray verb is now a hotkey, Whisper is now a command bar button, and all say
+      verbs have been removed from the stat panel.
+  - qol: Admin button on the escape menu is now its own section for praying, as well
+      as seeing your latest ticket & admin notes.
+  - bugfix: Resizing the stat panel will no longer change the size of the command
+      bar.
   Ruslanllll:
   - bugfix: Alien plasma display works again
   vinylspiders:
