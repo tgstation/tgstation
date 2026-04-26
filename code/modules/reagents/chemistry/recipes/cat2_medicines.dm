@@ -302,7 +302,7 @@
 
 /datum/chemical_reaction/medicine/syriniver
 	results = list(/datum/reagent/medicine/c2/syriniver = 5)
-	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin/mutagen = 1, /datum/reagent/nitrous_oxide = 2)
+	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
 	required_temp = 250
 	optimal_temp = 310
 	overheat_temp = NO_OVERHEAT
