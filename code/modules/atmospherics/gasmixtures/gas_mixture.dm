@@ -37,6 +37,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	/// When this gas mixture was last touched by pipeline processing
 	/// I am sorry
 	var/pipeline_cycle = -1
+	///track total moles for optimization
+	var/total_moles
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -142,10 +144,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///Update archived versions of variables. Returns: 1 in all cases
 /datum/gas_mixture/proc/archive()
 	var/list/cached_gases = gases
-
+	var/moles
 	temperature_archived = temperature
 	for(var/id in cached_gases)
 		cached_gases[id][ARCHIVE] = cached_gases[id][MOLES]
+		moles += cached_gases[id][MOLES]
+	total_moles = moles
 
 	return TRUE
 
@@ -175,7 +179,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 // Set the gas specie within the gas mix to a set amount, if there is none it will be created at the target temp
 /datum/gas_mixture/proc/set_gas(gas_specie, amount)
 	ASSERT_GAS(gas_specie, src)
+	var/mole_diff = gases[gas_specie][MOLES] - amount
 	gases[gas_specie][MOLES] = amount
+	total_moles += mole_diff
+
 	garbage_collect()
 
 /datum/gas_mixture/proc/set_temperature(target_temp)
@@ -186,6 +193,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/adjust_gas(gas, amount)
 	ASSERT_GAS(gas, src)
 	gases[gas][MOLES] += QUANTIZE(amount)
+	total_moles += QUANTIZE(amount)
 	garbage_collect()
 
 /// Add a specific amount of moles to all the gasses present or add a new gas to the mix
@@ -193,7 +201,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/adjust_multiple_gases(list/gases_moles)
 	for(var/gas_specie in gases_moles)
 		ASSERT_GAS(gas_specie, src)
-		gases[gas_specie][MOLES] += gases_moles[gas_specie]
+		gases[gas_specie][MOLES] += QUANTIZE(gases_moles[gas_specie])
+		total_moles += QUANTIZE(gases_moles[gas_specie])
 	garbage_collect()
 
 
@@ -224,6 +233,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		ADD_GAS(id, removed.gases)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
+		total_moles -= removed_gases[id][MOLES]
 	garbage_collect()
 
 	SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED)
@@ -246,6 +256,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		ADD_GAS(id, removed.gases)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
+		total_moles -= removed_gases[id][MOLES]
 
 	garbage_collect()
 
@@ -426,6 +437,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		moved_moles += delta
 		abs_moved_moles += abs(delta)
 
+	total_moles += abs(delta)
 	last_share = abs_moved_moles
 
 	//THERMAL ENERGY TRANSFER
