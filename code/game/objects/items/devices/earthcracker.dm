@@ -14,6 +14,8 @@
 	var/status = EARTHCRACKER_READY
 	/// What kind of weakpoint shall you spawn?
 	var/obj/weakpoint_type = /obj/effect/weakpoint/big
+	/// The timer for the strike_the_earth activation
+	var/activation_timer
 
 /obj/item/earthcracker/Initialize(mapload)
 	. = ..()
@@ -34,13 +36,15 @@
 		if(EARTHCRACKER_ACTIVE)
 			var/response = (tgui_alert(user, "Activate the earthcracker?", "Activate?", list("Yes", "No")) == "Yes")
 			if(!response)
-				return ITEM_INTERACT_FAILURE
+				return FALSE
+			if(!user.Adjacent(src) || activation_timer)
+				return FALSE
 			flick("[base_icon_state]-active", src)
-			addtimer(CALLBACK(src, PROC_REF(strike_the_earth)), 1.2 SECONDS)
-			return ITEM_INTERACT_SUCCESS
+			activation_timer = addtimer(CALLBACK(src, PROC_REF(strike_the_earth)), 1.2 SECONDS)
+			return TRUE
 		if(EARTHCRACKER_SPENT)
 			balloon_alert(user, "used up!")
-			return ITEM_INTERACT_FAILURE
+			return FALSE
 
 /obj/item/earthcracker/update_icon_state()
 	. = ..()
@@ -53,23 +57,22 @@
 			icon_state = "[base_icon_state]-spent"
 
 /obj/item/earthcracker/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(anchored && status == EARTHCRACKER_SPENT)
-		to_chat(user, span_notice("You unsecure the spent [src] as it falls apart."))
+		balloon_alert(user, "it falls apart")
 		animate(src, 0.6 SECONDS, alpha = 0, easing = CIRCULAR_EASING|EASE_IN)
 		addtimer(CALLBACK(src, PROC_REF(post_break)), 0.6 SECONDS)
 		return ITEM_INTERACT_SUCCESS
 	if(!anchored && status == EARTHCRACKER_READY)
-		balloon_alert(user, "arm in hands first")
+		balloon_alert(user, "arm in hands first!")
 		return ITEM_INTERACT_SUCCESS
 	if(anchored && status == EARTHCRACKER_ACTIVE)
-		to_chat(user, span_notice("You start unfastening [src] from the floor..."))
+		balloon_alert(user, "unfastening from the floor...")
 		if(!tool.use_tool(src, user, 8 SECONDS, volume = 50))
 			return ITEM_INTERACT_FAILURE
 		anchored = FALSE
 		status = EARTHCRACKER_READY
 		update_appearance(UPDATE_ICON)
-		return ITEM_INTERACT_SUCCESS
+		return NONE
 
 
 /obj/item/earthcracker/Destroy(force)
@@ -88,7 +91,7 @@
 /obj/item/earthcracker/examine(mob/user)
 	. = ..()
 	if(status == EARTHCRACKER_SPENT)
-		. += span_warning("This device is toast. You could probably disassemble the remains using a [EXAMINE_HINT("Wrench")].")
+		. += span_warning("This device is toast. You could disassemble the remains using a [EXAMINE_HINT("Wrench")].")
 	else
 		. += span_info("This device can be unanchored using a [EXAMINE_HINT("Wrench")].")
 
@@ -114,6 +117,7 @@
 	playsound(src, 'sound/items/barcodebeep.ogg', 50, FALSE)
 	status = EARTHCRACKER_ACTIVE
 	update_appearance(UPDATE_ICON)
+	return TRUE
 
 /** The fun part. We spawn a huge weakpoint here. */
 /obj/item/earthcracker/proc/strike_the_earth()
@@ -128,9 +132,10 @@
 	status = EARTHCRACKER_SPENT
 	update_appearance(UPDATE_ICON)
 	particles = new /particles/smoke/burning/small
+	activation_timer = null
 
 /obj/item/earthcracker/proc/post_break()
-	qdel(src)
+	deconstruct(TRUE)
 
 // Small subtype for shenanigans.
 /obj/item/earthcracker/small
