@@ -66,6 +66,8 @@ export function setClientTheme(name): void | Promise<void> {
     'saybutton.text-color': themeColor.TEXT,
     'oocbutton.background-color': themeColor.BG_BASE,
     'oocbutton.text-color': themeColor.TEXT,
+    'whisperbutton.background-color': themeColor.BG_BASE,
+    'whisperbutton.text-color': themeColor.TEXT,
     'mebutton.background-color': themeColor.BG_BASE,
     'mebutton.text-color': themeColor.TEXT,
     'asset_cache_browser.background-color': themeColor.BG_BASE,
