@@ -931,7 +931,7 @@
 /area/deathmatch)
 "CE" = (
 /obj/structure/fluff/fake_camera{
-	dir = 1
+	dir = 9
 	},
 /turf/open/space/basic,
 /area/deathmatch)
@@ -960,12 +960,11 @@
 	light_color = "#DEEFFF";
 	set_luminosity = 4
 	},
-/turf/open/floor/iron/recharge_floor,
+/obj/effect/turf_decal/recharge,
+/turf/open/floor/iron/large,
 /area/deathmatch)
 "CW" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
+/obj/structure/fluff/fake_camera,
 /turf/open/space/basic,
 /area/deathmatch)
 "CY" = (
@@ -1094,9 +1093,7 @@
 /turf/open/floor/iron/white/small,
 /area/deathmatch)
 "FT" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/space/basic,
 /area/deathmatch)
 "FZ" = (
@@ -1544,9 +1541,7 @@
 /turf/open/floor/iron,
 /area/deathmatch)
 "Vf" = (
-/obj/structure/fluff/fake_camera{
-	dir = 5
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/space/basic,
 /area/deathmatch)
 "Vm" = (
@@ -2681,13 +2676,13 @@ wf
 wf
 wf
 wf
-Vf
+wf
 qg
 qg
 lv
 qg
 qg
-CW
+wf
 wf
 wf
 wf
@@ -2723,13 +2718,13 @@ wf
 wf
 wf
 wf
-wf
+CW
 qg
 vh
 Uz
 IK
 qg
-wf
+Vf
 wf
 wf
 wf
@@ -2891,13 +2886,13 @@ vn
 ys
 wf
 wf
-wf
+FT
 qg
 CP
 Uz
 ZW
 qg
-wf
+CE
 wf
 wf
 zE
@@ -2933,13 +2928,13 @@ ZK
 Iv
 wf
 wf
-FT
+wf
 qg
 qg
 vB
 qg
 qg
-CE
+wf
 wf
 yg
 yg
@@ -3017,7 +3012,7 @@ WA
 ys
 wf
 wf
-Vf
+wf
 qg
 og
 vB
@@ -3059,7 +3054,7 @@ Gr
 wf
 wf
 wf
-wf
+CW
 og
 is
 Kf
