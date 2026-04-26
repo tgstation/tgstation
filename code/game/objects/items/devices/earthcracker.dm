@@ -33,14 +33,16 @@
 		return NONE
 	switch(status)
 		if(EARTHCRACKER_ACTIVE)
+			if(activation_timer)
+				return FALSE
 			var/response = (tgui_alert(user, "Activate the earthcracker?", "Activate?", list("Yes", "No")) == "Yes")
 			if(!response)
 				return FALSE
-			if(!user.Adjacent(src) || activation_timer)
+			if(!user.Adjacent(src))
 				return FALSE
 			flick("[base_icon_state]-active", src)
 			if(is_mining_level(z))
-				activation_timer = addtimer(CALLBACK(src, PROC_REF(mining_act)), 1.2 SECONDS)
+				activation_timer = addtimer(CALLBACK(src, PROC_REF(mining_act), user), 1.2 SECONDS)
 				return TRUE
 			activation_timer = addtimer(CALLBACK(src, PROC_REF(strike_the_earth)), 1.2 SECONDS)
 			return TRUE
@@ -128,6 +130,12 @@
 	playsound(src, 'sound/items/weapons/earthcracker_bang.mp3', 75, FALSE, 3)
 	var/turf/cracked_hull = drop_location()
 	new weakpoint_type(cracked_hull)
+	handle_after_activation()
+
+/**
+ * Cleanup after an earthcracker is activated either for sabotage or mining.
+ */
+/obj/item/earthcracker/proc/handle_after_activation()
 	do_sparks(2, FALSE, src)
 	cracked_hull.levelupdate()
 
@@ -142,7 +150,7 @@
 /**
  * When this item is used on a mining Z, we perform an action that breaks all rocks in a radius around us, the same as starting an ore vent wave.
  */
-/obj/item/earthcracker/proc/mining_act()
+/obj/item/earthcracker/proc/mining_act(mob/user)
 	for(var/i in 1 to 5)
 		for(var/turf/rock in oview(i))
 
@@ -159,13 +167,14 @@
 				new /obj/effect/decal/cleanable/rubble(rock)
 				continue
 		sleep(0.6 SECONDS)
+	handle_after_activation()
 
 // Small subtype for shenanigans.
 /obj/item/earthcracker/small
 	name = "E-1 Earthcracker"
 	desc = "A rusty automated pilebunker can be used to create a weakpoint in flooring,\
 		which can be triggered afterwards by a sufficiently strong enough explosion.\
-		You're pretty sure the company that used to make these got bought by Nanotrasen ages ago."
+		You're pretty sure the mining company that used to make these got bought by Nanotrasen ages ago."
 	weakpoint_type = /obj/effect/weakpoint
 
 #undef EARTHCRACKER_READY
