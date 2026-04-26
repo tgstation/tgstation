@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Pray verb is now a hotkey, Whisper is now a command bar button, and all say verbs have been removed from the stat panel."
+  - qol: "Admin button on the escape menu is now its own section for praying, as well as seeing your latest ticket & admin notes."
+  - bugfix: "Resizing the stat panel will no longer change the size of the command bar."
