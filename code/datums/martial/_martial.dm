@@ -19,7 +19,7 @@
 	VAR_PRIVATE/datum/weakref/current_target
 
 	/// Path to verb to display help text for this martial art.
-	var/help_verb
+	var/help_verb = "Remember the Basics"
 	/// If TRUE, this martial art smashes tables when performing table slams and head smashes
 	var/smashes_tables = FALSE
 	/// If TRUE, a combo meter will be displayed on the HUD for the current streak
@@ -436,4 +436,4 @@
 
 ///To be overwritten for artstyle help.
 /datum/martial_art/proc/get_style_help()
-	return null
+	return list("No guide implemented!")
