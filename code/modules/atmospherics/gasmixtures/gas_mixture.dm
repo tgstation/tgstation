@@ -436,7 +436,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		moved_moles += delta
 		abs_moved_moles += abs(delta)
 
-	total_moles += abs(delta)
+	total_moles += moved_moles
 	last_share = abs_moved_moles
 
 	//THERMAL ENERGY TRANSFER
