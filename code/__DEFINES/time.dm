@@ -44,6 +44,7 @@
 #define IAN_HOLIDAY "Ian's Birthday"
 #define HOTDOG_DAY "National Hot Dog Day"
 #define ICE_CREAM_DAY "National Ice Cream Day"
+#define CHERNOBYL_ANNIVERSARY "Chernobyl Disaster Remembrance Day"
 /*
 
 Days of the week to make it easier to reference them.
