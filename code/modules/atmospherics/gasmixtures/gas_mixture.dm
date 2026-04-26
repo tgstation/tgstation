@@ -501,6 +501,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/cached_gases = gases
 	var/moles_sum = 0
 
+	if(total_moles >= sample.total_moles)
+		return ""
+
 	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
 		// Yes this is actually fast. I too hate it here
 		var/gas_moles = cached_gases[id]?[index] || 0
