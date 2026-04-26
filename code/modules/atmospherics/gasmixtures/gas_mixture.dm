@@ -172,6 +172,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/giver_id in giver_gases)
 		ASSERT_GAS_IN_LIST(giver_id, cached_gases)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
+		total_moles += giver_gases[giver_id][MOLES]
 
 	SEND_SIGNAL(src, COMSIG_GASMIX_MERGED)
 	return TRUE
@@ -182,8 +183,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/mole_diff = gases[gas_specie][MOLES] - amount
 	gases[gas_specie][MOLES] = amount
 	total_moles += mole_diff
-
-	garbage_collect()
 
 /datum/gas_mixture/proc/set_temperature(target_temp)
 	temperature = target_temp
