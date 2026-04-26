@@ -458,43 +458,6 @@ Diagnostic HUDs!
 /*~~~~~~~~~
 	Bots!
 ~~~~~~~~~~*/
-/mob/living/simple_animal/bot/proc/diag_hud_set_bothealth()
-	set_hud_image_state(DIAG_HUD, "huddiag[RoundDiagBar(health/maxHealth)]")
-
-/mob/living/simple_animal/bot/proc/diag_hud_set_botstat() //On (With wireless on or off), Off, EMP'ed
-	if(bot_mode_flags & BOT_MODE_ON)
-		set_hud_image_state(DIAG_STAT_HUD, "hudstat")
-	else if(stat) //Generally EMP causes this
-		set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
-	else //Bot is off
-		set_hud_image_state(DIAG_STAT_HUD, "huddead2")
-
-/mob/living/simple_animal/bot/proc/diag_hud_set_botmode() //Shows a bot's current operation
-	if(client) //If the bot is player controlled, it will not be following mode logic!
-		set_hud_image_state(DIAG_BOT_HUD, "hudsentient")
-		return
-
-	switch(mode)
-		if(BOT_SUMMON, BOT_RESPONDING) //Responding to PDA or AI summons
-			set_hud_image_state(DIAG_BOT_HUD, "hudcalled")
-		if(BOT_CLEANING, BOT_HEALING) //Cleanbot cleaning, repairbot fixing, or Medibot Healing
-			set_hud_image_state(DIAG_BOT_HUD, "hudworking")
-		if(BOT_PATROL, BOT_START_PATROL) //Patrol mode
-			set_hud_image_state(DIAG_BOT_HUD, "hudpatrol")
-		if(BOT_PREP_ARREST, BOT_ARREST, BOT_HUNT) //STOP RIGHT THERE, CRIMINAL SCUM!
-			set_hud_image_state(DIAG_BOT_HUD, "hudalert")
-		if(BOT_MOVING, BOT_DELIVER, BOT_GO_HOME, BOT_NAV) //Moving to target for normal bots, moving to deliver or go home for MULES.
-			set_hud_image_state(DIAG_BOT_HUD, "hudmove")
-		else
-			set_hud_image_state(DIAG_BOT_HUD, "")
-
-/mob/living/simple_animal/bot/mulebot/proc/diag_hud_set_mulebotcell()
-	if(QDELETED(cell) || (cell.maxcharge == 0))
-		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
-	else
-		var/chargelvl = (cell.charge/cell.maxcharge)
-		set_hud_image_state(DIAG_BATT_HUD, "hudbatt[RoundDiagBar(chargelvl)]")
-
 /mob/living/basic/bot/mulebot/proc/diag_hud_set_mulebotcell()
 	if(QDELETED(cell) || (cell.maxcharge == 0))
 		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")

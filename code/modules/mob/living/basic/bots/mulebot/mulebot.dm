@@ -70,7 +70,7 @@
 		new /mob/living/basic/bot/mulebot/paranormal(loc)
 		return INITIALIZE_HINT_QDEL
 
-	set_wires(new /datum/wires/basic_mulebot(src))
+	set_wires(new /datum/wires/mulebot(src))
 	cell = new /obj/item/stock_parts/power_store/cell/upgraded(src)
 
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
