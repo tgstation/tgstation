@@ -8,7 +8,6 @@
 		which can be triggered afterwards by a sufficiently strong enough explosion."
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "earthcracker"
-	inhand_icon_state = "multitool"
 	base_icon_state = "earthcracker"
 	/// Is the earthcracker ready to arm, arming, activating, or spent?
 	var/status = EARTHCRACKER_READY
@@ -40,6 +39,9 @@
 			if(!user.Adjacent(src) || activation_timer)
 				return FALSE
 			flick("[base_icon_state]-active", src)
+			if(is_mining_level(z))
+				activation_timer = addtimer(CALLBACK(src, PROC_REF(mining_act)), 1.2 SECONDS)
+				return TRUE
 			activation_timer = addtimer(CALLBACK(src, PROC_REF(strike_the_earth)), 1.2 SECONDS)
 			return TRUE
 		if(EARTHCRACKER_SPENT)
@@ -136,6 +138,27 @@
 
 /obj/item/earthcracker/proc/post_break()
 	deconstruct(TRUE)
+
+/**
+ * When this item is used on a mining Z, we perform an action that breaks all rocks in a radius around us, the same as starting an ore vent wave.
+ */
+/obj/item/earthcracker/proc/mining_act()
+	for(var/i in 1 to 5)
+		for(var/turf/rock in oview(i))
+
+			if(istype(rock, /turf/closed/mineral))
+				if(prob(50 + (i * 8)))
+					continue
+				var/turf/closed/mineral/drillable = rock
+				drillable.gets_drilled(user)
+				if(prob(50))
+					new /obj/effect/decal/cleanable/rubble(rock)
+				continue
+
+			if(istype(rock, /turf/open/misc/asteroid) && prob(35))
+				new /obj/effect/decal/cleanable/rubble(rock)
+				continue
+		sleep(0.6 SECONDS)
 
 // Small subtype for shenanigans.
 /obj/item/earthcracker/small
