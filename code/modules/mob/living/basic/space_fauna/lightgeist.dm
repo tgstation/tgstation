@@ -47,12 +47,7 @@
 
 /mob/living/basic/lightgeist/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
-
-	remove_verb(src, /mob/living/verb/pulled)
-	remove_verb(src, /mob/verb/me_verb)
-
+	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_MEDICAL_HUD, TRAIT_NO_GRABBING, TRAIT_EMOTEMUTE), INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(\
 		/datum/component/healing_touch,\

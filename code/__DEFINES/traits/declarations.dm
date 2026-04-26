@@ -1489,6 +1489,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to a turf that should not be allowed to be terraformed, such as turfs holding ore vents.
 #define TRAIT_NO_TERRAFORM "no_terraform"
 
+///Trait given to mobs that can't grab at all.
+#define TRAIT_NO_GRABBING "no_grabbing"
+
 ///Trait that prevents mobs from stopping by grabbing objects
 #define TRAIT_NOGRAV_ALWAYS_DRIFT "nograv_always_drift"
 
