@@ -117,11 +117,8 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 	// I get the feeling there's a canonical way of doing this, but I don't know it
 	// So instead, we're gonna wing it
 	var/list/reagent_to_react_count = list()
-	var/list/randomized_reaction_retry_attempts = list()
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
-		if(ispath(reaction, /datum/chemical_reaction/randomized))
-			randomized_reaction_retry_attempts[reaction] = 0
-		else
+		if(!ispath(reaction, /datum/chemical_reaction/randomized))
 			for(var/reagent_id in reaction.required_reagents)
 				reagent_to_react_count[reagent_id] += 1
 
@@ -132,12 +129,17 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
 		//check for collisions
 		if(ispath(reaction, /datum/chemical_reaction/randomized))
+			var/randomized_reaction_retry_attempts = 0
 			var/target_path = reaction
 			var/index = reactions.Find(reaction)
-			reaction = new target_path(LAZYACCESS(json, "[target_path]"))
+			var/reaction_data = LAZYACCESS(json, "[target_path]")
+			if(!reaction_data)
+				log_game("DEBUG: No data found for random recipe [target_path] in file.")
+			reaction = new target_path(reaction_data)
 
 			//failed to init
 			if(QDELETED(reaction))
+				log_game("DEBUG: Failed to load random recipe [target_path]")
 				reactions -= target_path
 				continue
 
@@ -148,15 +150,22 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 						if(chem_recipes_do_conflict(R, reaction))
 							reactions -= target_path
 							QDEL_NULL(reaction)
-							if(randomized_reaction_retry_attempts[target_path] < MAX_RANDOMIZED_REACTION_RETRY_ATTEMPTS)
+							if(randomized_reaction_retry_attempts < MAX_RANDOMIZED_REACTION_RETRY_ATTEMPTS)
 								reactions += target_path
-								randomized_reaction_retry_attempts[target_path] += 1
+								randomized_reaction_retry_attempts += 1
 							break outer
 
 			//add to list
 			if(!reaction)
+				log_game("DEBUG: Couldn't generate random recipe [target_path] in \
+					[randomized_reaction_retry_attempts] attempts due to conflicts.")
 				continue
 			else
+				if(randomized_reaction_retry_attempts > 0)
+					log_game("DEBUG: Regenerated random recipe [target_path] in \
+						[randomized_reaction_retry_attempts] attempts due to conflicts.")
+				else
+					log_game("DEBUG: Successfully loaded random recipe [target_path]")
 				reactions[index] = reaction
 
 		var/preferred_id = null

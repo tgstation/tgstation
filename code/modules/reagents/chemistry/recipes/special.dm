@@ -44,6 +44,8 @@
 	//creation time, decides if we are random generating or not
 	created = recipe_data ? text2num(recipe_data["timestamp"]) : world.realtime
 	if(daysSince(created) > persistence_period)
+		log_game("DEBUG: Resetting expired random recipe [src.type]")
+		created = world.realtime
 		recipe_data = null
 
 	//all reagents
