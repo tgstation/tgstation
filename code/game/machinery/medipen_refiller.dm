@@ -3,6 +3,7 @@
 	desc = "A machine that refills used medipens with chemicals."
 	icon = 'icons/obj/machines/medipen_refiller.dmi'
 	icon_state = "medipen_refiller"
+	base_icon_state = "medipen_refiller"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medipen_refiller
 
@@ -126,4 +127,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medipen_refiller/screwdriver_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", initial(icon_state), tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/medipen_refiller/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state

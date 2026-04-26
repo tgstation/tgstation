@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "b" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -185,6 +185,9 @@
 	name = "dirt"
 	},
 /area/ruin/powered)
+"T" = (
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/ruin/powered)
 
 (1,1,1) = {"
 P
@@ -264,7 +267,7 @@ P
 a
 a
 a
-b
+T
 c
 b
 t
@@ -281,8 +284,8 @@ P
 a
 a
 a
-b
-b
+T
+T
 L
 n
 t
@@ -299,7 +302,7 @@ a
 a
 a
 a
-b
+T
 m
 o
 o
@@ -314,9 +317,9 @@ s
 "}
 (8,1,1) = {"
 a
-b
-b
-b
+T
+T
+T
 c
 f
 o
@@ -332,7 +335,7 @@ s
 "}
 (9,1,1) = {"
 a
-b
+T
 f
 i
 g
@@ -350,7 +353,7 @@ s
 "}
 (10,1,1) = {"
 a
-b
+T
 S
 j
 g
@@ -360,7 +363,7 @@ f
 u
 o
 A
-b
+T
 P
 s
 s
@@ -378,7 +381,7 @@ r
 c
 c
 c
-b
+T
 P
 P
 s
@@ -386,14 +389,14 @@ s
 "}
 (12,1,1) = {"
 a
-b
-b
+T
+T
 k
 M
-b
-b
-b
-b
+T
+T
+T
+T
 a
 a
 P
@@ -405,10 +408,10 @@ E
 (13,1,1) = {"
 a
 a
-b
-b
-b
-b
+T
+T
+T
+T
 a
 a
 a

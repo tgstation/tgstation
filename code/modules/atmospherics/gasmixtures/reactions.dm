@@ -220,7 +220,7 @@
 	plasma_burn_rate = min(plasma_burn_rate, plasma[MOLES], oxygen[MOLES] *  INVERSE(oxygen_burn_ratio)) //Ensures matter is conserved properly
 	plasma[MOLES] = QUANTIZE(plasma[MOLES] - plasma_burn_rate)
 	oxygen[MOLES] = QUANTIZE(oxygen[MOLES] - (plasma_burn_rate * oxygen_burn_ratio))
-	if (super_saturation)
+	if(super_saturation)
 		ASSERT_GAS(/datum/gas/tritium, air)
 		cached_gases[/datum/gas/tritium][MOLES] += plasma_burn_rate
 	else
@@ -228,6 +228,7 @@
 		ASSERT_GAS(/datum/gas/water_vapor, air)
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate * 0.75
 		cached_gases[/datum/gas/water_vapor][MOLES] += plasma_burn_rate * 0.25
+
 
 	SET_REACTION_RESULTS((plasma_burn_rate) * (1 + oxygen_burn_ratio))
 	var/energy_released = FIRE_PLASMA_ENERGY_RELEASED * plasma_burn_rate
@@ -583,6 +584,8 @@
 	nitrous_oxide[MOLES] -= 0.4 * bz_formed
 	plasma[MOLES] -= 0.8 * bz_formed * (1-nitrous_oxide_decomposed_factor)
 
+
+
 	SET_REACTION_RESULTS(bz_formed)
 	var/energy_released = bz_formed * (BZ_FORMATION_ENERGY + nitrous_oxide_decomposed_factor * (N2O_DECOMPOSITION_ENERGY - BZ_FORMATION_ENERGY))
 	var/new_heat_capacity = air.heat_capacity()
@@ -680,6 +683,7 @@
 	nitrogen[MOLES] -= heat_efficiency
 	bz[MOLES] -= heat_efficiency * 0.05 //bz gets consumed to balance the nitrium production and not make it too common and/or easy
 	cached_gases[/datum/gas/nitrium][MOLES] += heat_efficiency
+
 
 	SET_REACTION_RESULTS(heat_efficiency)
 	var/energy_used = heat_efficiency * NITRIUM_FORMATION_ENERGY
@@ -829,6 +833,7 @@
 	tritium[MOLES] -= 5 * nob_formed * reduction_factor
 	nitrogen[MOLES] -= 10 * nob_formed
 	cached_gases[/datum/gas/hypernoblium][MOLES] += nob_formed // I'm not going to nitpick, but N20H10 feels like it should be an explosive more than anything.
+
 	SET_REACTION_RESULTS(nob_formed)
 	var/energy_released = nob_formed * NOBLIUM_FORMATION_ENERGY / max(bz[MOLES], 1)
 	var/new_heat_capacity = air.heat_capacity()

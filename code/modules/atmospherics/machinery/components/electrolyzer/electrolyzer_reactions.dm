@@ -52,11 +52,11 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 /datum/electrolyzer_reaction/h2o_conversion/react(turf/location, datum/gas_mixture/air_mixture, working_power)
 
 	var/old_heat_capacity = air_mixture.heat_capacity()
-	air_mixture.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
+
 	var/proportion = min(air_mixture.gases[/datum/gas/water_vapor][MOLES] * INVERSE(2), (2.5 * (working_power ** 2)))
-	air_mixture.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2
-	air_mixture.gases[/datum/gas/oxygen][MOLES] += proportion
-	air_mixture.gases[/datum/gas/hydrogen][MOLES] += proportion * 2
+	air_mixture.adjust_gas(/datum/gas/water_vapor, -proportion * 2)
+	air_mixture.adjust_gas(/datum/gas/oxygen, proportion)
+	air_mixture.adjust_gas(/datum/gas/hydrogen, proportion * 2)
 	var/new_heat_capacity = air_mixture.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air_mixture.temperature = max(air_mixture.temperature * old_heat_capacity / new_heat_capacity, TCMB)
@@ -107,9 +107,11 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	var/old_heat_capacity = air_mixture.heat_capacity()
 	air_mixture.assert_gases(/datum/gas/bz, /datum/gas/oxygen, /datum/gas/halon)
 	var/reaction_efficency = min(air_mixture.gases[/datum/gas/bz][MOLES] * (1 - NUM_E ** (-0.5 * air_mixture.temperature * working_power / FIRE_MINIMUM_TEMPERATURE_TO_EXIST)), air_mixture.gases[/datum/gas/bz][MOLES])
-	air_mixture.gases[/datum/gas/bz][MOLES] -= reaction_efficency
-	air_mixture.gases[/datum/gas/oxygen][MOLES] += reaction_efficency * 0.2
-	air_mixture.gases[/datum/gas/halon][MOLES] += reaction_efficency * 2
+
+	air_mixture.adjust_gas(/datum/gas/bz, -reaction_efficency)
+	air_mixture.adjust_gas(/datum/gas/oxygen, reaction_efficency * 0.2)
+	air_mixture.adjust_gas(/datum/gas/halon, reaction_efficency * 2)
+
 	var/energy_used = reaction_efficency * HALON_FORMATION_ENERGY
 	var/new_heat_capacity = air_mixture.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)

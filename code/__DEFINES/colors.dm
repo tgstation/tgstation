@@ -376,6 +376,7 @@
 
 
 #define COLOR_CARP_PURPLE "#aba2ff"
+#define COLOR_CARP_DARK_PURPLE "#4c486e"
 #define COLOR_CARP_PINK "#da77a8"
 #define COLOR_CARP_GREEN "#70ff25"
 #define COLOR_CARP_GRAPE "#df0afb"

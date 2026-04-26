@@ -173,12 +173,9 @@
 		thaw_them(L_occupant)
 
 /obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
-	. |= default_deconstruction_screwdriver(user, "stasis_maintenance", "stasis", I)
-	update_appearance()
+	return default_deconstruction_screwdriver(user, I)
 
 /obj/machinery/stasis/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	return default_deconstruction_crowbar(I) || .
+	return default_deconstruction_crowbar(user, I)
 
 #undef STASIS_TOGGLE_COOLDOWN

@@ -40,3 +40,11 @@
 		/datum/job/paramedic = "#28324b",
 		/datum/job/prisoner = "#ff8b00",
 	)
+
+/datum/loadout_item/suit/hoodie_pullover
+	name = "pullover"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/pullover
+
+/datum/loadout_item/suit/hoodie_zipup
+	name = "zipup"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/zipup
