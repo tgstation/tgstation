@@ -115,11 +115,15 @@
 	ai_controller.set_blackboard_key(BB_MULEBOT_DESTINATION_BEACON, new_destination)
 
 /mob/living/basic/bot/mulebot/proc/set_home(turf/home_loc)
+	if(home_destination)
+		ai_controller.set_blackboard_key(BB_MULEBOT_HOME_BEACON, home_destination)
+		home_destination = null
 	if(!istype(home_loc))
 		CRASH("MULEbot [id] was requested to set a home location to [home_loc ? "an invalid home loc ([home_loc.type])" : "null"]")
 
 	var/obj/machinery/navbeacon/home_beacon = locate() in home_loc
 	if(isnull(home_beacon))
+		ai_controller.set_blackboard_key(BB_MULEBOT_HOME_BEACON, "")
 		return
 	ai_controller.set_blackboard_key(BB_MULEBOT_HOME_BEACON, home_beacon.location)
 	log_transport("[id]: MULEbot successfuly set home location to ID [home_beacon.location] at [home_beacon.x], [home_beacon.y], [home_beacon.z]")

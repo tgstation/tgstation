@@ -52,8 +52,9 @@
 	var/datum/move_loop/loop = ..()
 	var/atom/our_pawn = controller.pawn
 	if(isnull(our_pawn))
-		return
+		return null
 	our_pawn.RegisterSignal(loop, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, TYPE_PROC_REF(/mob/living/basic/bot, generate_bot_path))
+	return loop
 
 /datum/ai_movement/jps/bot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
@@ -62,10 +63,10 @@
 
 /datum/ai_movement/jps/bot/mulebot
 	max_pathing_attempts = 10
-	maximum_length = AI_BOT_PATH_LENGTH
+	maximum_length = AI_MULEBOT_PATH_LENGTH
 
 /datum/ai_movement/jps/bot/mulebot/setup_moveloop(datum/ai_controller/controller, atom/current_movement_target, atom/movable/moving, delay)
-	var/datum/move_loop/has_target/jps/frustrations/loop = GLOB.move_manager.jps_move(moving,
+	var/datum/move_loop/has_target/jps/frustrations/loop = GLOB.move_manager.frustrations_move(moving,
 		current_movement_target,
 		delay,
 		repath_delay = 0.5 SECONDS,

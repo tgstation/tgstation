@@ -19,6 +19,40 @@
 	if(. && isobserver(load))
 		return "Unknown"
 
+/mob/living/basic/bot/mulebot/paranormal/load(atom/movable/movable_atom)
+	if(load || movable_atom.anchored)
+		return
+
+	if(!isturf(movable_atom.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
+		return
+
+	if(isobserver(movable_atom))
+		visible_message(span_warning("A ghostly figure appears on [src]!"))
+		movable_atom.forceMove(src)
+		RegisterSignal(movable_atom, COMSIG_MOVABLE_MOVED, PROC_REF(ghost_moved))
+
+	else if(!wires.is_cut(WIRE_LOADCHECK))
+		buzz(MULEBOT_MOOD_SIGH)
+		return // if not hacked, only allow ghosts to be loaded
+
+	else if(isobj(movable_atom))
+		if(movable_atom.has_buckled_mobs() || (locate(/mob) in movable_atom)) //can't load non crates objects with mobs buckled to it or inside it.
+			buzz(MULEBOT_MOOD_SIGH)
+			return
+
+		if(istype(movable_atom, /obj/structure/closet/crate))
+			var/obj/structure/closet/crate/crate = movable_atom
+			crate.close() //make sure it's closed
+
+		movable_atom.forceMove(src)
+
+	else if(isliving(movable_atom) && !load_mob(movable_atom))
+		return
+
+	load = movable_atom
+	update_bot_mode(new_mode = BOT_IDLE)
+	update_appearance()
+
 ///Handles the ghosts moving out from the mule
 /mob/living/basic/bot/mulebot/paranormal/proc/ghost_moved()
 	SIGNAL_HANDLER

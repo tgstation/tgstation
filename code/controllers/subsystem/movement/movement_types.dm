@@ -467,8 +467,47 @@
 	var/current_frustrations = 0
 	///how long before we're able to increment frustration?
 	var/frustration_delay
+	///have we drawn our initial path?
+	var/initial_path_drawn = FALSE
 	///cooldown between frustration increments
 	COOLDOWN_DECLARE(frustration_cooldown)
+
+
+/datum/move_manager/proc/frustrations_move(moving,
+	chasing,
+	delay,
+	timeout,
+	repath_delay,
+	max_path_length,
+	minimum_distance,
+	list/access,
+	simulated_only,
+	turf/avoid,
+	skip_first,
+	subsystem,
+	diagonal_handling,
+	priority,
+	flags,
+	datum/extra_info,
+	initial_path)
+	return add_to_loop(moving,
+		subsystem,
+		/datum/move_loop/has_target/jps/frustrations,
+		priority,
+		flags,
+		extra_info,
+		delay,
+		timeout,
+		chasing,
+		repath_delay,
+		max_path_length,
+		minimum_distance,
+		access,
+		simulated_only,
+		avoid,
+		skip_first,
+		diagonal_handling,
+		initial_path)
 
 /datum/move_loop/has_target/jps/frustrations/setup(delay, timeout, atom/chasing, maximum_frustrations = 10, frustration_delay = 2 SECONDS)
 	. = ..()
@@ -477,8 +516,23 @@
 	src.maximum_frustrations = maximum_frustrations
 	src.frustration_delay = frustration_delay
 
+/datum/move_loop/has_target/jps/frustrations/recalculate_path()
+	if(initial_path_drawn && current_frustrations < maximum_frustrations)
+		return
+	return ..()
+
+/datum/move_loop/has_target/jps/frustrations/loop_stopped()
+	. = ..()
+
+/datum/move_loop/has_target/jps/frustrations/on_finish_pathing(list/path)
+	. = ..()
+	if(movement_path)
+		initial_path_drawn = TRUE
 
 /datum/move_loop/has_target/jps/frustrations/handle_move_attempt_failure()
+	if(!initial_path_drawn)
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+		return MOVELOOP_FAILURE
 	if(!COOLDOWN_FINISHED(src, frustration_cooldown))
 		return NONE
 	COOLDOWN_START(src, frustration_cooldown, frustration_delay)
@@ -487,7 +541,7 @@
 	if(current_frustrations >= maximum_frustrations)
 		current_frustrations = 0
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
-	return MOVELOOP_FAILURE
+		return MOVELOOP_FAILURE
 
 
 ///Base class of move_to and move_away, deals with the distance and target aspect of things

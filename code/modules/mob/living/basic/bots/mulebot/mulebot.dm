@@ -30,6 +30,7 @@
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CARGO)
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
+	pass_flags = PASSFLAPS
 	bot_type = MULE_BOT
 
 	additional_access = /datum/id_trim/job/cargo_technician
@@ -59,6 +60,8 @@
 
 	///The chance to be deleted and replaced by a different mule
 	var/replacement_chance = 0.666 //0.666
+	///home destination, only used by mappers.
+	var/home_destination = ""
 
 /mob/living/basic/bot/mulebot/Initialize(mapload)
 	. = ..()
@@ -79,6 +82,8 @@
 	if(name == "\improper MULEbot")
 		name = "\improper MULEbot [id]"
 	set_home(loc)
+	ai_controller.update_able_to_run()
+	update_appearance()
 
 /mob/living/basic/bot/mulebot/Destroy()
 	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
@@ -136,15 +141,12 @@
 	load_overlay.pixel_y = initial(load.pixel_y) + 11
 	. += load_overlay
 
-/mob/living/basic/bot/mulebot/proc/handle_buzzing(frustration_counter)
+/mob/living/basic/bot/mulebot/proc/handle_buzzing(datum/move_loop/has_target/jps/frustrations/source, frustration_counter)
 	SIGNAL_HANDLER
 
 	update_bot_mode(new_mode = BOT_BLOCKED)
-	if(frustration_counter == 3)
-		buzz(MULEBOT_MOOD_SIGH)
-	if(frustration_counter >= 10)
-		buzz(MULEBOT_MOOD_ANNOYED)
-	UnregisterSignal(src, COMSIG_MOVELOOP_JPS_FRUSTRATION_INCREMENTED)
+	var/buzz_mode = frustration_counter >= source.maximum_frustrations ? MULEBOT_MOOD_ANNOYED : MULEBOT_MOOD_SIGH
+	buzz(buzz_mode)
 
 /mob/living/basic/bot/mulebot/handle_loop_movement(atom/movable/source, atom/oldloc, dir, forced) //incase we start moving again after being previously blocked, update our mode
 	. = ..()
@@ -175,12 +177,4 @@
 
 /// returns true if the bot is fully powered.
 /mob/living/basic/bot/mulebot/proc/has_power()
-	if(cell)
-		to_chat(src, "hi")
-	if(cell.charge > 0 )
-		to_chat(src, "hi2")
-	if(!wires.is_cut(WIRE_POWER1))
-		to_chat(src, "hi3")
-	if(!wires.is_cut(WIRE_POWER2))
-		to_chat(src, "hi4")
 	return cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
