@@ -73,7 +73,7 @@
 /datum/component/blob_minion/RegisterWithParent()
 	var/mob/living/living_parent = parent
 	living_parent.add_faction(ROLE_BLOB)
-	ADD_TRAIT(parent, TRAIT_BLOB_ALL, REF(src))
+	ADD_TRAIT(parent, TRAIT_BLOB_ALLY, REF(src))
 	RegisterSignal(parent, COMSIG_MOB_MIND_INITIALIZED, PROC_REF(on_mind_init))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_update_appearance))
 	RegisterSignal(parent, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_update_status_tab))
