@@ -132,7 +132,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/stack/sheet = tool
-	if (!sheet.use(1))
+	if (sheet.use(1))
 		return ITEM_INTERACT_BLOCKING
 
 	cell.give(0.2 * STANDARD_CELL_CHARGE * charge_multiplier)
