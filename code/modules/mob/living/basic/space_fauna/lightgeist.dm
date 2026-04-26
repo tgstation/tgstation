@@ -41,13 +41,14 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	obj_damage = 0
+	pull_force = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
 	ai_controller = /datum/ai_controller/basic_controller/lightgeist
 
 /mob/living/basic/lightgeist/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_MEDICAL_HUD, TRAIT_NO_GRABBING, TRAIT_EMOTEMUTE), INNATE_TRAIT)
+	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_MEDICAL_HUD, TRAIT_EMOTEMUTE), INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(\
 		/datum/component/healing_touch,\

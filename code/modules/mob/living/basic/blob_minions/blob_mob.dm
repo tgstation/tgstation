@@ -21,6 +21,7 @@
 	initial_language_holder = /datum/language_holder/empty
 	can_buckle_to = FALSE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	pull_force = 0
 	/// Size of cloud produced from a dying spore
 	var/death_cloud_size = BLOBMOB_CLOUD_NONE
 	var/loot = /obj/item/food/spore_sack
