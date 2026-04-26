@@ -327,9 +327,10 @@
 		LAZYINSERT(new_holder.martial_arts, 2, src)
 	else
 		LAZYADD(new_holder.martial_arts, src)
+	if(LAZYLEN(new_holder.martial_arts) == 1) //First martial art being added
+		var/datum/action/swap_arts/new_action = new(new_holder, src)
+		new_action.Grant(new_holder)
 	if(LAZYLEN(new_holder.martial_arts) >= 2)
-		// newly learned martials are preferred to be the active one
-		add_verb(new_holder, /mob/living/proc/verb_switch_style)
 		// if the active one is locked, this will no-op, which is fine
 		new_holder.switch_style(GET_ACTIVE_MARTIAL_ART(new_holder), src)
 	else if(!active)
@@ -369,8 +370,9 @@
 		UnregisterSignal(old_holder, COMSIG_QDELETING)
 	LAZYREMOVE(old_holder.martial_arts, src)
 	holder = null
-	if(LAZYLEN(old_holder.martial_arts) <= 1)
-		remove_verb(old_holder, /mob/living/proc/verb_switch_style)
+	if(LAZYLEN(old_holder.martial_arts) < 1) //no more arts, we check above to switch style already.
+		var/datum/action/swap_arts/swap_button = locate() in old_holder.actions
+		swap_button.Remove(old_holder)
 	return TRUE
 
 /**
@@ -379,8 +381,6 @@
 /datum/martial_art/proc/activate_style(mob/living/new_holder)
 	SHOULD_CALL_PARENT(TRUE)
 	active = TRUE
-	if(help_verb)
-		add_verb(new_holder, help_verb)
 	RegisterSignal(new_holder, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
 	RegisterSignal(new_holder, COMSIG_LIVING_GRAB, PROC_REF(attempt_grab))
 	RegisterSignals(new_holder, list(COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING), PROC_REF(smash_table))
@@ -395,8 +395,6 @@
 /datum/martial_art/proc/deactivate_style(mob/living/remove_from)
 	SHOULD_CALL_PARENT(TRUE)
 	active = FALSE
-	if(help_verb)
-		remove_verb(remove_from, help_verb)
 	UnregisterSignal(remove_from, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING))
 	remove_from.hud_used?.remove_screen_object(HUD_MOB_COMBO)
 
@@ -405,11 +403,7 @@
 	SIGNAL_HANDLER
 	source.hud_used.add_screen_object(/atom/movable/screen/combo, HUD_MOB_COMBO, HUD_GROUP_INFO, update_screen = TRUE)
 
-/mob/living/proc/verb_switch_style()
-	set name = "Swap Style"
-	set desc = "Switch to a different martial arts style."
-	set category = "IC"
-
+/mob/living/proc/cycle_style()
 	var/datum/martial_art/current = GET_ACTIVE_MARTIAL_ART(src)
 	var/datum/martial_art/next = GET_NEXT_MARTIAL_ART(src)
 
@@ -417,7 +411,7 @@
 		to_chat(src, span_warning("You can't stop practicing [current]! It's too ingrained in your muscle memory."))
 		return
 
-	switch_style(GET_ACTIVE_MARTIAL_ART(src), GET_NEXT_MARTIAL_ART(src))
+	switch_style(current, next)
 	to_chat(src, span_notice("You stop practicing [current] and start practicing [next]."))
 
 /// Deactivates the current martial art and activates the next one.
@@ -428,6 +422,9 @@
 	if(!current_martial.active || next_martial.active)
 		return
 
+	var/datum/action/swap_arts/swap_button = locate() in actions
+	swap_button.current_used_art = next_martial
+
 	current_martial.deactivate_style(src)
 	next_martial.activate_style(src)
 	// front of the list with ye
@@ -436,3 +433,7 @@
 	// back of the list with ye
 	LAZYREMOVE(martial_arts, current_martial)
 	LAZYADD(martial_arts, current_martial)
+
+///To be overwritten for artstyle help.
+/datum/martial_art/proc/get_style_help()
+	return null
