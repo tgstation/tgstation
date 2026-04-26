@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Ninja spider bomb can no longer be placed in certain situations it would be unable to detonate"
