@@ -6,15 +6,7 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import { getReadableLayer, getReadablePlane } from '.';
-import {
-  APPEARANCE_FLAGS,
-  type Appearance,
-  AppearanceType,
-  BLEND_MODE,
-  DIR,
-  MOUSE_OPACITY,
-  VIS_FLAGS,
-} from './types';
+import { type Appearance, AppearanceType, DIR, MOUSE_OPACITY } from './types';
 import { useAppearanceDebugContext } from './useAppearanceDebug';
 
 export type AppearanceInfoProps = {
@@ -24,8 +16,15 @@ export type AppearanceInfoProps = {
 
 export function AppearanceInfo(props: AppearanceInfoProps) {
   const { appearance, onClose } = props;
-  const { planeToText, layerToText, mapRefSelected, act } =
-    useAppearanceDebugContext();
+  const {
+    planeToText,
+    layerToText,
+    flagsToText,
+    visToText,
+    blendToText,
+    mapRefSelected,
+    act,
+  } = useAppearanceDebugContext();
   return (
     <Section
       fill
@@ -74,15 +73,15 @@ export function AppearanceInfo(props: AppearanceInfoProps) {
               : ''}
           </LabeledList.Item>
           <LabeledList.Item label="appearance_flags">
-            {Object.entries(APPEARANCE_FLAGS)
+            {Object.entries(flagsToText)
               .filter((x) => appearance.data.flags & x[1])
               .map((x) => x[0])
               .join(' | ') || 'NONE'}
           </LabeledList.Item>
           <LabeledList.Item label="blend_mode">
-            {Object.entries(BLEND_MODE)
-              .find((x) => appearance.data.blend_mode === x[1])
-              ?.at(0) || 'ERROR'}
+            {Object.entries(blendToText)
+              .find((x) => appearance.data.blend_mode.toString() === x[0])
+              ?.at(1) || 'ERROR'}
           </LabeledList.Item>
           {!!appearance.data.color && (
             <LabeledList.Item label="color">
@@ -173,7 +172,7 @@ export function AppearanceInfo(props: AppearanceInfoProps) {
           </LabeledList.Item>
           {!!(appearance.data.vis_flags !== null) && (
             <LabeledList.Item label="vis_flags">
-              {Object.entries(VIS_FLAGS)
+              {Object.entries(visToText)
                 .filter((x) => (appearance.data.vis_flags as number) & x[1])
                 .map((x) => x[0])
                 .join(' | ') || 'NONE'}

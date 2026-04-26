@@ -141,6 +141,9 @@
 		"mainAppearance" = get_appearance_data(debug_target),
 		"planeToText" = GLOB.admin_readable_planes,
 		"layerToText" = GLOB.admin_readable_layers,
+		"flagsToText" = get_valid_bitflags("appearance_flags"),
+		"visToText" = get_valid_bitflags("vis_flags"),
+		"blendToText" = GLOB.blend_names,
 		"mapRefHover" = proxy_view_hover.assigned_map,
 		"mapRefSelected" = proxy_view_selected.assigned_map,
 	)

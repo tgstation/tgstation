@@ -11,6 +11,9 @@ type AppearanceDebug = {
   act: typeof sendAct;
   planeToText: Record<string, number>;
   layerToText: Record<string, number>;
+  flagsToText: Record<string, number>;
+  visToText: Record<string, number>;
+  blendToText: Record<string, string>;
   mapRefHover: string;
   mapRefSelected: string;
   appsProcessed: AppearanceMap;

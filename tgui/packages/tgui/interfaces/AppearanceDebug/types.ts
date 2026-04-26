@@ -4,6 +4,9 @@ export type AppearanceDebugData = {
   mainAppearance: AppearanceData;
   planeToText: Record<string, number>;
   layerToText: Record<string, number>;
+  flagsToText: Record<string, number>;
+  visToText: Record<string, number>;
+  blendToText: Record<string, string>;
   mapRefHover: string;
   mapRefSelected: string;
   updateWarning: boolean;
@@ -50,15 +53,6 @@ export const MOUSE_OPACITY = {
   MOUSE_OPACITY_TRANSPARENT: 0,
   MOUSE_OPACITY_ICON: 1,
   MOUSE_OPACITY_OPAQUE: 2,
-};
-
-export const BLEND_MODE = {
-  BLEND_DEFAULT: 0,
-  BLEND_OVERLAY: 1,
-  BLEND_ADD: 2,
-  BLEND_SUBTRACT: 3,
-  BLEND_MULTIPLY: 4,
-  BLEND_INSET_OVERLAY: 5,
 };
 
 export const DIR = {
