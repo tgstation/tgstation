@@ -105,7 +105,7 @@ window "info_and_buttons"
 		size = 640x477
 		anchor1 = 0,0
 		anchor2 = 100,100
-        background-color = #ffc41f
+		background-color = #ffc41f
 		saved-params = "splitter"
 		left = "infobuttons"
 		right = "infowindow"
@@ -168,7 +168,7 @@ window "infobuttons"
 		saved-params = "is-checked"
 		text = "Fullscreen"
 		command = "fullscreen"
-    elem "reconnect"
+	elem "reconnect"
 		type = BUTTON
 		pos = 369,5
 		size = 88x27
@@ -176,7 +176,7 @@ window "infobuttons"
 		anchor2 = 71,100
 		background-color = none
 		saved-params = "is-checked"
-        text = "Reconnect"
+		text = "Reconnect"
 		command = ".reconnect"
 	elem "chat"
 		type = BUTTON
@@ -206,7 +206,7 @@ window "infowindow"
 		size = 640x475
 		is-vert = false
 		splitter = 97.5
-        background-color = #ffc41f
+		background-color = #ffc41f
 		show-splitter = false
 		saved-params = "splitter"
 		left = "info"
