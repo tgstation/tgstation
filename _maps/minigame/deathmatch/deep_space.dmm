@@ -1146,10 +1146,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/deathmatch)
-"HA" = (
-/obj/structure/flora/rock/pile/icy/style_random,
-/turf/open/misc/asteroid/airless,
-/area/deathmatch)
 "HH" = (
 /obj/structure/chair/comfy/shuttle/tactical{
 	dir = 8
@@ -2870,7 +2866,7 @@ wf
 wf
 wf
 rN
-HA
+Xr
 wf
 XE
 rN
@@ -2994,7 +2990,7 @@ yg
 cT
 wf
 wf
-Gr
+qw
 rN
 wf
 wf

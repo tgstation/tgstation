@@ -1153,9 +1153,9 @@
 	desc = "A syndicate operative suited up for some space reconnaissance."
 
 	uniform = /obj/item/clothing/under/syndicate
-	belt = /obj/item/storage/belt/military
+	belt = /obj/item/storage/belt/holster
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
-	l_pocket = /obj/item/gun/ballistic/automatic/pistol
+	l_pocket = /obj/item/knife/combat/survival
 	internals_slot = ITEM_SLOT_RPOCKET
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
@@ -1191,7 +1191,7 @@
 	var/obj/item/card/id/id_card = syndicate_spaceman.get_item_by_slot(ITEM_SLOT_ID)
 	var/obj/item/storage/belt/belt = syndicate_spaceman.get_item_by_slot(ITEM_SLOT_BELT)
 	if(belt)
-		new /obj/item/knife/combat/survival(belt)
+		new /obj/item/gun/ballistic/automatic/pistol/m1911(belt)
 	if(id_card)
 		SSid_access.apply_trim_to_card(id_card, /datum/id_trim/syndicom/crew)
 		id_card.registered_name = syndicate_spaceman.real_name
@@ -1210,6 +1210,7 @@
 	suit =  /obj/item/clothing/suit/space
 	head = /obj/item/clothing/head/helmet/space
 	internals_slot = ITEM_SLOT_SUITSTORE
+	r_pocket = /obj/item/ammo_casing/strilka310
 	suit_store = /obj/item/tank/internals/oxygen/yellow
 	shoes = /obj/item/clothing/shoes/sneakers
 	gloves = /obj/item/clothing/gloves/fingerless
