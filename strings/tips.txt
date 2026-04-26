@@ -326,5 +326,6 @@ You can use a machine in the vault to deposit cash or rob Cargo's department fun
 You can use a multitool in your hand to track the area's local APC.
 You can use a screwdriver to remove an encryption key from a radio headset. The key can then be installed into your own headset, an intercom, or even a station-bounced radio, allowing you to eavesdrop on secure communications.
 You can use an upgraded microwave to charge your PDA!
+You can right-click the floor changer to look up/down through open space or glass floors!
 You don't need to destroy a Spacecoin machine to make your funds stop draining. Swiping your ID on it will stop the withdrawal.
 You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!

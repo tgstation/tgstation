@@ -782,11 +782,7 @@
  *
  * Calls attack self on the item and updates the inventory hud for hands
  */
-/mob/verb/mode()
-	set name = "Activate Held Object"
-	set category = "IC"
-	set src = usr
-
+/mob/proc/mode()
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
 
 ///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called

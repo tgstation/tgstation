@@ -396,8 +396,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	var/vertical = FALSE
 
 /atom/movable/screen/floor_changer/Click(location,control,params)
-	var/list/modifiers = params2list(params)
+	if(usr != get_mob())
+		return
 
+	var/list/modifiers = params2list(params)
 	var/mouse_position
 
 	if(vertical)
@@ -406,10 +408,16 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 		mouse_position = text2num(LAZYACCESS(modifiers, ICON_X))
 
 	if(mouse_position > 16)
-		usr.up()
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			astype(hud.mymob, /mob/living)?.look_up()
+			return
+		hud.mymob.up()
 		return
 
-	usr.down()
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		astype(hud.mymob, /mob/living)?.look_down()
+		return
+	hud.mymob.down()
 	return
 
 /atom/movable/screen/floor_changer/vertical
