@@ -1,0 +1,2 @@
+/mob/living/simple_animal/bot/mulebot : /mob/living/basic/bot/mulebot{@OLD}
+/mob/living/simple_animal/bot/mulebot/paranormal : /mob/living/basic/bot/mulebot/paranormal{@OLD}

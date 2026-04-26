@@ -21306,7 +21306,7 @@
 	codes_txt = "delivery;dir=4";
 	location = "Cargo Storage4"
 	},
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/basic/bot/mulebot{
 	name = "Old Yeller"
 	},
 /turf/open/floor/iron/recharge_floor,
@@ -33869,7 +33869,7 @@
 	codes_txt = "delivery;dir=4";
 	location = "Cargo Storage-2"
 	},
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/basic/bot/mulebot{
 	name = "Parcel Pete"
 	},
 /obj/item/radio/intercom/directional/west,
