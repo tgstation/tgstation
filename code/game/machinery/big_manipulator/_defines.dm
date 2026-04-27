@@ -23,12 +23,6 @@
 #define MAX_TASKS_TIER_3 24
 #define MAX_TASKS_TIER_4 32
 
-#define CURRENT_TASK_NONE "NO TASK" // manipulator is off
-#define CURRENT_TASK_IDLE "IDLE" // manipulator is skipping a cycle because it has nothing to do
-#define CURRENT_TASK_MOVING_PICKUP "MOVING TO PICKUP POINT"
-#define CURRENT_TASK_MOVING_DROPOFF "MOVING TO DROPOFF POINT"
-#define CURRENT_TASK_INTERACTING "INTERACTING"
-#define CURRENT_TASK_STOPPING "STOPPING"
 
 // How should the worker interact with the point
 #define WORKER_SINGLE_USE "SINGLE TIME"
@@ -53,9 +47,6 @@
 #define POST_INTERACTION_DROP_NEXT_FITTING "AT ANY FITTING"
 #define POST_INTERACTION_WAIT "CONTINUE"
 
-// Some macros for interaction checks
-#define IS_STOPPING (current_task_state == CURRENT_TASK_STOPPING)
-#define IS_BUSY (current_task_state != CURRENT_TASK_NONE)
 
 #define PICKUP_EAGER "Always Pick Up"
 #define PICKUP_CAN_WAIT "Wait For Suiting"
@@ -66,7 +57,6 @@
 #define TASK_TYPE_USE "use"
 #define TASK_TYPE_INTERACT "interact"
 #define TASK_TYPE_WAIT "wait"
-#define TASK_TYPE_SIGNAL "signal"
 
 #define TASKING_SEQUENTIAL "Sequential"
 #define TASKING_STRICT "Strict order"

@@ -1,3 +1,21 @@
+/// Small marker placed on a cargo task's target turf.
+/// The atom itself is invisible; only the HUD image is shown to diagnostic HUD wearers.
+/obj/effect/big_manipulator_hud_point
+	name = "manipulator target"
+	icon = 'icons/effects/tasks.dmi'
+	icon_state = "pickup"
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	invisibility = INVISIBILITY_MAXIMUM
+	hud_possible = list(BIG_MANIP_HUD)
+
+/obj/effect/big_manipulator_hud_point/Initialize(mapload)
+	. = ..()
+	prepare_huds()
+	var/image/holder = hud_list[BIG_MANIP_HUD]
+	holder.appearance = mutable_appearance('icons/effects/tasks.dmi', "pickup", ABOVE_NORMAL_TURF_LAYER, src, ABOVE_LIGHTING_PLANE)
+	holder.alpha = 180
+
 /// Manipulator hand. Effect we animate to show that the manipulator is working and moving something.
 /obj/effect/big_manipulator_arm
 	name = "mechanical claw"

@@ -11,8 +11,7 @@ export type TaskType =
   | 'Throw...'
   | 'Use...'
   | 'Interact with...'
-  | 'Wait for...'
-  | 'Send a signal...';
+  | 'Wait for...';
 
 export interface ManipulatorTask {
   name: string;
@@ -20,6 +19,7 @@ export interface ManipulatorTask {
   task_type: string;
   // cargo fields
   turf?: string;
+  hud_color?: string;
   item_filters?: string[];
   filters_status?: BooleanLike;
   filtering_mode?: number;
@@ -41,13 +41,13 @@ export interface ManipulatorTask {
 
 export interface ManipulatorData {
   active: BooleanLike;
-  current_task_state: string;
+  stopping: BooleanLike;
   current_task: ManipulatorTask | null;
-  current_task_duration: number;
   speed_multiplier: number;
   min_speed_multiplier: number;
   max_speed_multiplier: number;
   tasks_data: ManipulatorTask[];
   manipulator_position: string;
   tasking_strategy: string;
+  has_monkey: BooleanLike;
 }

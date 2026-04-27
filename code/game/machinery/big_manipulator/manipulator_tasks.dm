@@ -25,22 +25,11 @@
 /datum/manipulator_task/simple/wait/run_task(obj/machinery/big_manipulator/manipulator)
 	manipulator.schedule_next_cycle(time_seconds)
 
-// ===== SIGNAL =====
-
-/datum/manipulator_task/simple/signal
-	name = "signal"
-
-/datum/manipulator_task/simple/signal/can_run(obj/machinery/big_manipulator/manipulator)
-	return TRUE
-
-/datum/manipulator_task/simple/signal/run_task(obj/machinery/big_manipulator/manipulator)
-	// TODO: send signal via signaler
-	manipulator.schedule_next_cycle()
-
 // ===== BASE CARGO =====
 
 /datum/manipulator_task/cargo
 	var/turf/interaction_turf
+	var/hud_color = COLOR_WHITE
 	var/should_use_filters = FALSE
 	var/list/atom_filters = list()
 	var/filtering_mode = TAKE_ITEMS
@@ -67,25 +56,17 @@
 	return list()
 
 /datum/manipulator_task/cargo/proc/find_type_priority()
-	var/list/turf_contents = interaction_turf.contents
-
 	var/atom/movable/best_candidate = null
 	var/best_priority_index = INFINITY
 
-	for(var/atom/movable/thing as anything in turf_contents)
+	for(var/atom/movable/thing as anything in interaction_turf.contents)
 		for(var/i in 1 to length(interaction_priorities))
 			if(i >= best_priority_index)
 				break
 
 			var/datum/manipulator_priority/prio = interaction_priorities[i]
 
-			if(!prio.active)
-				continue
-
-			if(prio.atom_typepath == /turf)
-				if(i < best_priority_index)
-					best_candidate = interaction_turf
-					best_priority_index = i
+			if(!prio.active || prio.atom_typepath == /turf)
 				continue
 
 			if(!istype(thing, prio.atom_typepath))
@@ -101,6 +82,16 @@
 
 			if(best_priority_index == 1)
 				return best_candidate
+			break
+
+	// Turf is always available as a fallback target — check it after contents.
+	for(var/i in 1 to length(interaction_priorities))
+		if(i >= best_priority_index)
+			break
+		var/datum/manipulator_priority/prio = interaction_priorities[i]
+		if(prio.active && prio.atom_typepath == /turf)
+			best_candidate = interaction_turf
+			best_priority_index = i
 			break
 
 	return best_candidate
@@ -176,28 +167,27 @@
 	return FALSE
 
 /datum/manipulator_task/cargo/pickup/run_task(obj/machinery/big_manipulator/manipulator)
-	manipulator.rotate_to_point(src, src, PROC_REF(try_pickup), CURRENT_TASK_MOVING_PICKUP)
+	manipulator.rotate_to_point(src, src, PROC_REF(try_pickup))
 
 /datum/manipulator_task/cargo/pickup/proc/try_pickup(obj/machinery/big_manipulator/manipulator)
 	var/atom/movable/selected = find_pickup_candidate(manipulator)
 	if(!selected)
-		manipulator.handle_no_work_available()
+		manipulator.nothing_ever_happens()
 		return
 
 	if(selected.anchored || HAS_TRAIT(selected, TRAIT_NODROP))
-		manipulator.handle_no_work_available()
+		manipulator.nothing_ever_happens()
 		return
 
 	if(isitem(selected))
 		var/obj/item/selected_item = selected
 		if(selected_item.item_flags & (ABSTRACT|DROPDEL))
-			manipulator.handle_no_work_available()
+			manipulator.nothing_ever_happens()
 			return
 
 	selected.forceMove(manipulator)
 	manipulator.held_object = WEAKREF(selected)
 	manipulator.manipulator_arm.update_claw(manipulator.held_object)
-	manipulator.current_task_state = CURRENT_TASK_IDLE
 	manipulator.schedule_next_cycle()
 
 /datum/manipulator_task/cargo/pickup/proc/find_pickup_candidate(obj/machinery/big_manipulator/manipulator)
@@ -207,6 +197,9 @@
 		if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_NODROP))
 			continue
 		if(!check_filters_for_atom(candidate))
+			continue
+		if(pickup_eagerness == PICKUP_EAGER)
+			candidates += candidate
 			continue
 		for(var/datum/manipulator_task/cargo/dropoff_base/dest in manipulator.tasks)
 			if(dest.can_accept(candidate))
@@ -241,12 +234,12 @@
 	return can_accept(target)
 
 /datum/manipulator_task/cargo/dropoff_base/run_task(obj/machinery/big_manipulator/manipulator)
-	manipulator.rotate_to_point(src, src, PROC_REF(try_dropoff), CURRENT_TASK_MOVING_DROPOFF)
+	manipulator.rotate_to_point(src, src, PROC_REF(try_dropoff))
 
 /datum/manipulator_task/cargo/dropoff_base/proc/try_dropoff(obj/machinery/big_manipulator/manipulator)
 	var/obj/actual_held_object = manipulator.held_object?.resolve()
 	if(!actual_held_object || actual_held_object.loc != manipulator)
-		manipulator.handle_no_work_available()
+		manipulator.nothing_ever_happens()
 		return FALSE
 	do_dropoff(manipulator)
 	return TRUE
@@ -290,7 +283,6 @@
 
 /datum/manipulator_task/cargo/dropoff_base/drop/do_dropoff(obj/machinery/big_manipulator/manipulator)
 	manipulator.try_drop_thing(src)
-	manipulator.current_task_state = CURRENT_TASK_IDLE
 	manipulator.schedule_next_cycle()
 
 // ===== THROW =====
@@ -365,7 +357,7 @@
 	return find_type_priority() != null
 
 /datum/manipulator_task/cargo/interact/run_task(obj/machinery/big_manipulator/manipulator)
-	manipulator.rotate_to_point(src, src, PROC_REF(try_interact), CURRENT_TASK_MOVING_DROPOFF)
+	manipulator.rotate_to_point(src, src, PROC_REF(try_interact))
 
 /datum/manipulator_task/cargo/interact/proc/try_interact(obj/machinery/big_manipulator/manipulator)
 	var/atom/movable/held = manipulator.held_object?.resolve()

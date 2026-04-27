@@ -1,20 +1,41 @@
+/// We have no tasks to execute for some reason. Waits for a turf signal to retry.
+/obj/machinery/big_manipulator/proc/nothing_ever_happens()
+	if(stopping)
+		complete_stopping_task()
+		return FALSE
+
+	current_task = null
+	waiting_for_signal = TRUE
+	register_task_turf_signals()
+
+	return FALSE
+
+/// A signal ran or some settings changed; checking if we can run the tasks now.
+/obj/machinery/big_manipulator/proc/something_happened()
+	next_cycle_scheduled = FALSE
+	step_tasks()
+
 /// Runs the next task. Or doesn't.
 /obj/machinery/big_manipulator/proc/step_tasks()
-	if(!on || IS_STOPPING)
+	if(!on || stopping)
 		return
+	next_cycle_scheduled = FALSE
+	if(waiting_for_signal)
+		unregister_task_turf_signals()
+		waiting_for_signal = FALSE
 	if(!length(tasks))
-		handle_no_work_available()
+		nothing_ever_happens()
 		return
 	var/datum/manipulator_task/next_task = master_tasking.get_next_task(tasks, src)
 	if(!next_task)
-		handle_no_work_available()
+		nothing_ever_happens()
 		return
 	current_task = next_task
 	next_task.run_task(src)
 
 /// Attempts to launch the work cycle. Should only be ran on pressing the "Run" button.
 /obj/machinery/big_manipulator/proc/try_kickstart(mob/user)
-	if(!on || !anchored || IS_BUSY)
+	if(!on || !anchored || stopping || current_task != null)
 		return FALSE
 
 	if(!use_energy(active_power_usage, force = FALSE))
@@ -27,30 +48,15 @@
 
 /// Safely schedules the next step to prevent overlapping.
 /obj/machinery/big_manipulator/proc/schedule_next_cycle(time_seconds = BASE_INTERACTION_TIME)
-	if(next_cycle_scheduled || IS_STOPPING)
-		return
-
-	if(current_task_state != CURRENT_TASK_IDLE && current_task_state != CURRENT_TASK_NONE)
+	if(next_cycle_scheduled || stopping)
 		return
 
 	next_cycle_scheduled = TRUE
 	addtimer(CALLBACK(src, PROC_REF(step_tasks)), time_seconds)
 
-/// Handles the common pattern of waiting and scheduling next cycle when no work can be done.
-/obj/machinery/big_manipulator/proc/handle_no_work_available()
-	if(IS_STOPPING)
-		complete_stopping_task()
-		return FALSE
-
-	current_task_state = CURRENT_TASK_IDLE
-	current_task = null
-
-	addtimer(CALLBACK(src, PROC_REF(schedule_next_cycle)), CYCLE_SKIP_TIMEOUT)
-	return FALSE
-
 /// Rotates the manipulator arm to face the target task's turf.
-/obj/machinery/big_manipulator/proc/rotate_to_point(datum/manipulator_task/cargo/target_task, callback_object, callback, type)
-	if(IS_STOPPING)
+/obj/machinery/big_manipulator/proc/rotate_to_point(datum/manipulator_task/cargo/target_task, callback_object, callback)
+	if(stopping)
 		return
 
 	if(!target_task)
@@ -62,22 +68,19 @@
 	var/angle_diff = closer_angle_difference(current_angle, target_angle)
 
 	var/num_rotations = round(abs(angle_diff) / 45)
-	var/total_rotation_time = num_rotations * BASE_INTERACTION_TIME / speed_multiplier
-
-	start_task_state(type == CURRENT_TASK_MOVING_PICKUP ? CURRENT_TASK_MOVING_PICKUP : CURRENT_TASK_MOVING_DROPOFF, total_rotation_time)
 
 	if(!num_rotations)
-		CALLBACK(callback_object, callback, src)
+		CALLBACK(callback_object, callback, src).Invoke()
 		return TRUE
 
 	var/rotation_step = 45 * SIGN(angle_diff)
-	do_step_rotation(target_task, callback_object, callback, current_angle, target_angle, rotation_step, 0, total_rotation_time)
+	do_step_rotation(target_task, callback_object, callback, current_angle, target_angle, rotation_step)
 
 	return TRUE
 
 /// Does a 45 degree step, animating the claw
-/obj/machinery/big_manipulator/proc/do_step_rotation(datum/manipulator_task/cargo/target_task, callback_object, callback, current_angle, target_angle, rotation_step, elapsed_time, total_time)
-	if(IS_STOPPING)
+/obj/machinery/big_manipulator/proc/do_step_rotation(datum/manipulator_task/cargo/target_task, callback_object, callback, current_angle, target_angle, rotation_step)
+	if(stopping)
 		return
 
 	var/angle_diff = closer_angle_difference(current_angle, target_angle)
@@ -93,8 +96,7 @@
 	next_matrix.Turn(next_angle)
 	animate(manipulator_arm, transform = next_matrix, time = BASE_INTERACTION_TIME / speed_multiplier)
 
-	elapsed_time += BASE_INTERACTION_TIME / speed_multiplier
-	addtimer(CALLBACK(src, PROC_REF(do_step_rotation), target_task, callback_object, callback, next_angle, target_angle, rotation_step, elapsed_time, total_time), BASE_INTERACTION_TIME / speed_multiplier)
+	addtimer(CALLBACK(src, PROC_REF(do_step_rotation), target_task, callback_object, callback, next_angle, target_angle, rotation_step), BASE_INTERACTION_TIME / speed_multiplier)
 
 /obj/machinery/big_manipulator/proc/try_drop_thing(datum/manipulator_task/cargo/dropoff_base/drop/destination_task)
 	var/drop_endpoint = destination_task.find_type_priority()
@@ -114,7 +116,7 @@
 	return TRUE
 
 /obj/machinery/big_manipulator/proc/try_use_thing(datum/manipulator_task/cargo/interact/destination_task, work_done_at_point = FALSE)
-	if(IS_STOPPING)
+	if(stopping)
 		return
 
 	var/obj/obj_resolve = held_object?.resolve()
@@ -208,7 +210,7 @@
 		if(POST_INTERACTION_DROP_NEXT_FITTING)
 			var/datum/manipulator_task/next = master_tasking.get_next_task(tasks, src)
 			if(istype(next, /datum/manipulator_task/cargo/dropoff_base))
-				rotate_to_point(next, next, TYPE_PROC_REF(/datum/manipulator_task/cargo/dropoff_base, try_dropoff), CURRENT_TASK_MOVING_DROPOFF)
+				rotate_to_point(next, next, TYPE_PROC_REF(/datum/manipulator_task/cargo/dropoff_base, try_dropoff))
 				return
 			obj_resolve.forceMove(drop_turf)
 			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
@@ -280,41 +282,45 @@
 	manipulator_arm.update_claw(null)
 	current_task = null
 
-	end_current_task()
+	SStgui.update_uis(src)
 
-	if(IS_STOPPING)
+	if(stopping)
 		complete_stopping_task()
 		return
 
-	current_task_state = CURRENT_TASK_IDLE
 	schedule_next_cycle()
 
-/// Begins a new task state with the specified type and duration
-/obj/machinery/big_manipulator/proc/start_task_state(task_state, duration)
-	if(current_task_state == CURRENT_TASK_STOPPING)
-		return
-
-	end_current_task()
-	current_task_start_time = world.time
-	current_task_duration = duration
-	current_task_state = task_state
-	SStgui.update_uis(src)
-
-/// Ends the current task state
-/obj/machinery/big_manipulator/proc/end_current_task()
-	current_task_start_time = 0
-	current_task_duration = 0
-	if(current_task_state == CURRENT_TASK_STOPPING)
-		current_task_state = CURRENT_TASK_NONE
-	SStgui.update_uis(src)
-
-/// Completes the stopping task and transitions to TASK_NONE
+/// Completes the stopping task and transitions to idle
 /obj/machinery/big_manipulator/proc/complete_stopping_task()
 	on = FALSE
+	stopping = FALSE
 	next_cycle_scheduled = FALSE
 	current_task = null
-	end_current_task()
+	unregister_task_turf_signals()
+	waiting_for_signal = FALSE
 	SStgui.update_uis(src)
+
+/// Registers enter/exit signals on all unique cargo task turfs.
+/obj/machinery/big_manipulator/proc/register_task_turf_signals()
+	unregister_task_turf_signals()
+	for(var/datum/manipulator_task/cargo/task in tasks)
+		if(!task.interaction_turf || (task.interaction_turf in signal_turfs))
+			continue
+		signal_turfs += task.interaction_turf
+		RegisterSignals(task.interaction_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED), PROC_REF(on_task_turf_changed))
+
+/// Unregisters all previously registered turf signals.
+/obj/machinery/big_manipulator/proc/unregister_task_turf_signals()
+	for(var/turf/t in signal_turfs)
+		UnregisterSignal(t, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
+	signal_turfs = list()
+
+/// Fires when something enters or leaves a watched task turf.
+/obj/machinery/big_manipulator/proc/on_task_turf_changed(datum/source)
+	SIGNAL_HANDLER
+	if(!on || stopping || !waiting_for_signal)
+		return
+	something_happened()
 
 /// Drop the held atom.
 /obj/machinery/big_manipulator/proc/drop_held_atom()

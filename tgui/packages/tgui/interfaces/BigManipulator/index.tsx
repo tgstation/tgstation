@@ -25,7 +25,6 @@ const TASK_TYPE_LABELS: Record<string, string> = {
   use: 'Use held...',
   interact: 'Interact',
   wait: 'Wait...',
-  signal: 'Signal',
 };
 
 const TASK_TYPE_ICONS: Record<string, string> = {
@@ -33,7 +32,6 @@ const TASK_TYPE_ICONS: Record<string, string> = {
   drop: 'box-open',
   interact: 'bolt',
   wait: 'hourglass-half',
-  signal: 'satellite-dish',
 };
 
 const TASKING_STRATEGY_ICONS: Record<string, string> = {
@@ -69,7 +67,7 @@ const MasterControls = () => {
       </Stack.Item>
       <Stack.Item grow>
         <Slider
-          style={{ marginTop: '-5px' }}
+          style={{ marginTop: '-0px', marginBottom: '-7px' }}
           lineHeight={1}
           step={0.1}
           my={1}
@@ -78,7 +76,7 @@ const MasterControls = () => {
           maxValue={max_speed_multiplier}
           unit="x"
           stepPixelSize={20}
-          onDrag={(value) =>
+          onChange={(_e, value) =>
             act('adjust_interaction_speed', { new_speed: value })
           }
         />
@@ -199,6 +197,26 @@ const TaskEditModal = (props: {
           <Button icon="xmark" color="bad" onClick={onClose} />
         }
       >
+        {task.task_type.includes('wait') && (
+          <Table>
+            <Table.Row className="candystripe" style={{ height: '2em', lineHeight: '2em' }}>
+              <Table.Cell>
+                <Box style={{ marginLeft: '5px' }}>Wait Time</Box>
+              </Table.Cell>
+              <Table.Cell style={{ paddingRight: '5px' }}>
+                <Slider
+                  value={task.time ?? 1}
+                  minValue={1}
+                  maxValue={60}
+                  step={1}
+                  stepPixelSize={4}
+                  unit="s"
+                  onChange={(_e, value) => adjust('set_wait_time', value)}
+                />
+              </Table.Cell>
+            </Table.Row>
+          </Table>
+        )}
         {isCargo && (
           <Stack>
             <Stack.Item>
@@ -512,6 +530,27 @@ const TaskList = () => {
                       </Box>
                     )}
                   </Stack.Item>
+                  {task.hud_color !== undefined && (
+                    <>
+                      <Stack.Item>
+                        <Button
+                          icon="circle"
+                          color="transparent"
+                          style={{ color: task.hud_color }}
+                          tooltip="Change HUD color"
+                          onClick={() => adjust(task.id, 'set_hud_color')}
+                        />
+                      </Stack.Item>
+                      <Stack.Item>
+                        <Button
+                          icon="lightbulb"
+                          color="transparent"
+                          tooltip="Flash HUD indicator"
+                          onClick={() => act('flash_task', { taskId: task.id })}
+                        />
+                      </Stack.Item>
+                    </>
+                  )}
                   <Stack.Item>
                     <Button
                       icon="gear"
@@ -570,6 +609,7 @@ const TaskList = () => {
             <Button
               icon="plus"
               onClick={() => act('create_task', { task_type: selectedType })}
+              style={{lineHeight: '22px'}}
             >
               New
             </Button>
@@ -589,7 +629,7 @@ const TaskList = () => {
 
 export const BigManipulator = () => {
   const { data, act } = useBackend<ManipulatorData>();
-  const { current_task_state } = data;
+  const { active, stopping } = data;
 
   return (
     <Window title="Manipulator Interface" width={420} height={560}>
@@ -598,27 +638,11 @@ export const BigManipulator = () => {
           title="Action Panel"
           buttons={
             <Button
-              icon={
-                current_task_state === 'NO TASK'
-                  ? 'play'
-                  : current_task_state === 'STOPPING'
-                    ? 'hourglass-start'
-                    : 'stop'
-              }
-              color={
-                current_task_state === 'NO TASK'
-                  ? 'good'
-                  : current_task_state === 'STOPPING'
-                    ? 'blue'
-                    : 'bad'
-              }
+              icon={!active ? 'play' : stopping ? 'hourglass-start' : 'stop'}
+              color={!active ? 'good' : stopping ? 'blue' : 'bad'}
               onClick={() => act('run_cycle')}
             >
-              {current_task_state === 'NO TASK'
-                ? 'Run'
-                : current_task_state === 'STOPPING'
-                  ? 'Stopping'
-                  : 'Stop'}
+              {!active ? 'Run' : stopping ? 'Stopping' : 'Stop'}
             </Button>
           }
         >
