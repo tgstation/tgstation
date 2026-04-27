@@ -70,7 +70,7 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_RMB] = "[anchored ? "Unanchor" : "Anchor"]"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unanchor" : "Anchor"]"
 		return CONTEXTUAL_SCREENTIP_SET
 	return .
 
