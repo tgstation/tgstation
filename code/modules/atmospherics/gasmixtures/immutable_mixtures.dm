@@ -71,6 +71,7 @@
 
 	var/list/mix = initial_gas
 	var/list/gas = params2list(gas_string)
+	var/mole_sum
 	if(gas["TEMP"])
 		initial_temperature = text2num(gas["TEMP"])
 		temperature_archived = initial_temperature
@@ -89,5 +90,7 @@
 		ADD_GAS(id, gases)
 		gases[id][MOLES] = mix[id][MOLES]
 		gases[id][ARCHIVE] = mix[id][MOLES]
+		mole_sum += mix[id][MOLES]
+	total_moles = mole_sum
 
 
