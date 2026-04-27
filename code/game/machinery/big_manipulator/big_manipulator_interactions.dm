@@ -75,7 +75,7 @@
 		cb.Invoke()
 		return TRUE
 
-	var/rotation_step = 45 * SIGN(angle_diff)
+	var/rotation_step = 45 * sign(angle_diff)
 	do_step_rotation(target_task, callback_object, callback, current_angle, target_angle, rotation_step)
 
 	return TRUE
