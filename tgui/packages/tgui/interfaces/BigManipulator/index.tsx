@@ -51,7 +51,7 @@ const buttonNumberToIcon: Record<number, string> = {
   9: '',
 };
 
-const MasterControls = () => {
+function MasterControls() {
   const { act, data } = useBackend<ManipulatorData>();
   const { speed_multiplier, min_speed_multiplier, max_speed_multiplier } = data;
 
@@ -170,10 +170,12 @@ const getFilteringModeText = (mode: number) => {
   }
 };
 
-const TaskEditModal = (props: {
+type TaskEditModalProps = {
   task: ManipulatorTask;
   onClose: () => void;
-}) => {
+};
+
+function TaskEditModal(props: TaskEditModalProps) {
   const { act, data } = useBackend<ManipulatorData>();
   const { task, onClose } = props;
 

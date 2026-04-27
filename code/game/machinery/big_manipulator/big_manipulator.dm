@@ -726,7 +726,7 @@
 			if(!istype(target_task, /datum/manipulator_task/cargo))
 				return FALSE
 			var/datum/manipulator_task/cargo/current_task = target_task
-			return current_task.tick_priority_by_index(value)
+			return current_task.move_priority_up_by_index(value)
 
 		if("cycle_pickup_eagerness")
 			if(!istype(target_task, /datum/manipulator_task/cargo/pickup))
