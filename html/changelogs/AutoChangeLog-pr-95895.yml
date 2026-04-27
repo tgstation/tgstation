@@ -1,4 +1,0 @@
-author: "levels0"
-delete-after: True
-changes:
-  - bugfix: "metalgen and secret sauce should now generate properly"
