@@ -447,5 +447,5 @@
 /datum/supply_pack/goody/camera
 	name = "Broadcast Camera"
 	desc = "A single broadcast camera which broadcasts to the station's entertainment monitors, for all your theatrical needs."
-	cost = PAYCHECK_COMMAND * 6
+	cost = PAYCHECK_COMMAND * 8
 	contains = list(/obj/item/broadcast_camera/cargo)
