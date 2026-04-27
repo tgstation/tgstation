@@ -132,7 +132,7 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(O_LIGHTING_VISUAL_PLANE)
+	render_relay_planes = list(RENDER_PLANE_O_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/rendering_plate/emissive_bloom/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
@@ -154,6 +154,35 @@
 	render_target = SPECULAR_MASK_RENDER_TARGET
 	render_relay_planes = list()
 	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/overlay_light
+	name = "Overlight plate"
+	documentation = "Combines overlay lights with emissives.\
+		<br>We draw to the generic lighting plate, do some funky stuff with turf lighting to sort of \"cut out\" a bit of space for ourselves there, and do some junk to speculars"
+	plane = RENDER_PLANE_O_LIGHTING
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blend_mode = BLEND_ADD
+	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/overlay_light/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	// I'd love for this to be HSL but filters don't work with blend modes
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_TURF_LIGHTING, offset), BLEND_MULTIPLY, relay_color = list(
+		-1, -1, -1, 0,
+		-1, -1, -1, 0,
+		-1, -1, -1, 0,
+		0, 0, 0, OVERLAY_LIGHTING_WEIGHT,
+		1, 1, 1, 0,
+	))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR, offset), relay_color = list(
+		SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0, 0,
+		0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0,
+		0, 0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0,
+		0, 0, 0, 1,
+		-SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, 0,
+	))
 
 /atom/movable/screen/plane_master/rendering_plate/specular
 	name = "Specular plate"

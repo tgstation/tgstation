@@ -198,8 +198,8 @@
 			to_chat(user, span_notice("You start attaching the gun to the frame..."))
 			if(!tool.use_tool(src, user, 40, volume=100))
 				return ITEM_INTERACT_BLOCKING
-			var/mob/living/simple_animal/bot/secbot/ed209/B = new(drop_location())
-			B.name = created_name
+			var/mob/living/basic/bot/secbot/ed209/new_bot = new(drop_location())
+			new_bot.name = created_name
 			to_chat(user, span_notice("You complete the ED-209."))
 			qdel(src)
 			return ITEM_INTERACT_SUCCESS
@@ -343,7 +343,7 @@
 			if(!can_finish_build(tool, user))
 				return ITEM_INTERACT_BLOCKING
 			to_chat(user, span_notice("You add the [tool] to [src]! Honk!"))
-			var/mob/living/basic/bot/honkbot/new_honkbot = new(drop_location())
+			var/mob/living/basic/bot/secbot/honkbot/new_honkbot = new(drop_location())
 			new_honkbot.name = created_name
 			playsound(new_honkbot, 'sound/machines/ping.ogg', 50, TRUE, -1)
 			qdel(tool)
@@ -433,10 +433,10 @@
 				if(!can_finish_build(tool, user))
 					return ITEM_INTERACT_BLOCKING
 				to_chat(user, span_notice("You complete the Securitron! Beep boop."))
-				var/mob/living/simple_animal/bot/secbot/S = new(drop_loc)
-				S.name = created_name
-				S.baton_type = tool.type
-				S.robot_arm = robot_arm
+				var/mob/living/basic/bot/secbot/new_bot = new(drop_loc)
+				new_bot.name = created_name
+				new_bot.baton_type = tool.type
+				new_bot.robot_arm = robot_arm
 				qdel(tool)
 				qdel(src)
 				return ITEM_INTERACT_SUCCESS
@@ -478,9 +478,9 @@
 				return ITEM_INTERACT_BLOCKING
 
 			to_chat(user, span_notice("You complete the Securitron!...Something seems a bit wrong with it..?"))
-			var/mob/living/simple_animal/bot/secbot/grievous/toy/S = new(drop_loc)
-			S.name = created_name
-			S.robot_arm = robot_arm
+			var/mob/living/basic/bot/secbot/grievous/toy/new_bot = new(drop_loc)
+			new_bot.name = created_name
+			new_bot.robot_arm = robot_arm
 			qdel(tool)
 			qdel(src)
 			return ITEM_INTERACT_SUCCESS
@@ -513,9 +513,9 @@
 				return ITEM_INTERACT_BLOCKING
 
 			to_chat(user, span_notice("You complete the Securitron!...Something seems a bit wrong with it..?"))
-			var/mob/living/simple_animal/bot/secbot/grievous/S = new(drop_loc)
-			S.name = created_name
-			S.robot_arm = robot_arm
+			var/mob/living/basic/bot/secbot/grievous/new_bot = new(drop_loc)
+			new_bot.name = created_name
+			new_bot.robot_arm = robot_arm
 			qdel(tool)
 			qdel(src)
 			return ITEM_INTERACT_SUCCESS

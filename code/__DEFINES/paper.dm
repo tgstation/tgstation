@@ -43,3 +43,7 @@
 #define LIST_PAPER_STAMP_X "x"
 #define LIST_PAPER_STAMP_Y "y"
 #define LIST_PAPER_ROTATION "rotation"
+
+///Use in conjunction with `advanced_html` to have underlined text that, when hovered over, will let you see additional text.
+///Would be appreciated if you avoided dotted underlined (and underlined in general) text elsewhere so players don't get confused.
+#define UNDERLINED_HTML_TEXT(text_displayed, revealed_text) "<span title='[revealed_text]' style='border-bottom: 1px dotted;'>[text_displayed]</span>"
