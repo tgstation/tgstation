@@ -72,7 +72,9 @@ export type FeatureDropdownInputCoreProps = {
 export function FeatureDropdownInputCore(
   props: FeatureDropdownInputCoreProps
 ) {
-  const { serverData, disabled, buttons, handleSetValue, value } = props;
+  const { dropdownProps, populateOptions } = props;
+  const { serverData, disabled, buttons, handleSetValue, value } =
+    dropdownProps;
 
   const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>([]);
 
