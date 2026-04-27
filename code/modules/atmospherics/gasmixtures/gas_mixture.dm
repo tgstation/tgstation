@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	/// I am sorry
 	var/pipeline_cycle = -1
 	///track total moles for optimization
-	var/total_moles
+	var/total_moles = 0
 
 /datum/gas_mixture/New(volume)
 	gases = new
