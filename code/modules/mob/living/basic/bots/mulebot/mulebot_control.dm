@@ -71,7 +71,7 @@
 		if("sethome")
 			var/new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, ai_controller.blackboard[BB_MULEBOT_HOME_BEACON])
 			if(new_home)
-				set_home(new_home)
+				ai_controller.set_blackboard_key(BB_MULEBOT_HOME_BEACON, new_home)
 		if("unload")
 			if(load && mode != BOT_HUNT)
 				unload()

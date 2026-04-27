@@ -69,7 +69,7 @@
 
 	set_wires(new /datum/wires/mulebot(src))
 	cell = new /obj/item/stock_parts/power_store/cell/upgraded(src)
-
+	ai_controller.set_blackboard_key(BB_MULEBOT_HOME_BEACON, "")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
 	add_traits(list(TRAIT_NOMOBSWAP, TRAIT_COMBAT_MODE_LOCK), INNATE_TRAIT)
@@ -79,7 +79,7 @@
 	suffix = null
 	if(name == "\improper MULEbot")
 		name = "\improper MULEbot [id]"
-	set_home(loc)
+	set_home(get_turf(src))
 	ai_controller.update_able_to_run()
 	update_appearance()
 
