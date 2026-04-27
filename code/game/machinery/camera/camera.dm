@@ -507,7 +507,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	var/height = APERTURE_TO_METERS(size_y - 1)
 
 	var/datum/component/camera/camera = GetComponent(/datum/component/camera)
-	var/datum/picture/picture = camera.capture_photo(get_turf(src), get_turf(src), view_range, user, size_x, size_y, width, height, "picture at [station_time_timestamp()]", FALSE)
+	var/datum/picture/picture = camera.capture_photo(get_turf(src), get_turf(src), view_range, user, size_x, size_y, width, height, "picture at [round_timestamp()]", FALSE, FALSE)
 	if(add_to_pictures)
 		if(isnull(picture))
 			return

@@ -16,7 +16,7 @@
 
 #define PHYSICAL_POSITION(atom) ((atom.y * ICON_SIZE_Y) + (atom.pixel_y))
 
-/datum/component/camera/proc/camera_get_icon(list/turfs, turf/center, datum/turf_reservation/clone_area, see_ghosts)
+/datum/component/camera/proc/camera_get_icon(list/turfs, turf/center, datum/turf_reservation/clone_area, see_ghosts, print_monochrome = FALSE)
 	var/list/atoms = list()
 	var/list/lighting = list()
 	var/skip_normal = FALSE
@@ -219,7 +219,7 @@
  * * see_ghosts - whether the photo should show ghosts or not
  * * datum/photo_snapshot/snapshot - the data to render the photo from
 */
-/datum/component/camera/proc/render_photo_snapshot(turf/target_turf, width, height, name, see_ghosts, datum/photo_snapshot/snapshot)
+/datum/component/camera/proc/render_photo_snapshot(turf/target_turf, width, height, name, see_ghosts, print_monochrome, datum/photo_snapshot/snapshot)
 	if(isnull(snapshot))
 		return null
 
@@ -245,7 +245,7 @@
 		if(!isnull(info))
 			desc += info
 
-	var/icon/get_icon = camera_get_icon(turfs, target_turf, clone_area, see_ghosts)
+	var/icon/get_icon = camera_get_icon(turfs, target_turf, clone_area, see_ghosts, print_monochrome)
 	get_icon.Blend("#000", ICON_UNDERLAY)
 	qdel(clone_area)
 	for(var/mob/living/carbon/human/person in mobs)
@@ -253,7 +253,19 @@
 			continue
 		names += "[person.name]"
 
-	var/datum/picture/picture = new(name, desc.Join("<br>"), mobs_spotted, dead_spotted, names, get_icon, null, width * ICON_SIZE_X, height * ICON_SIZE_Y, blueprints, can_see_ghosts = see_ghosts)
+	var/datum/picture/picture = new(
+		name,
+		desc.Join("<br>"),
+		mobs_spotted,
+		dead_spotted,
+		names,
+		get_icon,
+		null,
+		width * ICON_SIZE_X,
+		height * ICON_SIZE_Y,
+		blueprints,
+		can_see_ghosts = see_ghosts
+		)
 	qdel(snapshot)
 	return picture
 
@@ -271,8 +283,8 @@
  * * see_ghosts - whether the photo should show ghosts or not
  * * datum/photo_snapshot/snapshot - the data to render the photo from
 */
-/datum/component/camera/proc/capture_photo(turf/target_turf, turf/viewer, view_range, mob/user, size_x, size_y, width, height, name, see_ghosts)
+/datum/component/camera/proc/capture_photo(turf/target_turf, turf/viewer, view_range, mob/user, size_x, size_y, width, height, name, see_ghosts, print_monochrome)
 	var/datum/photo_snapshot/snapshot = get_photo_snapshot(target_turf, viewer, view_range, user, size_x, size_y, width, height)
-	return render_photo_snapshot(target_turf, width, height, name, see_ghosts, snapshot)
+	return render_photo_snapshot(target_turf, width, height, name, see_ghosts, print_monochrome, snapshot)
 
 #undef PHYSICAL_POSITION
