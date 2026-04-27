@@ -44,7 +44,7 @@
 	knowledge_tier3 = /datum/heretic_knowledge/spell/void_pull
 	guaranteed_side_tier3 = /datum/heretic_knowledge/summon/maid_in_mirror
 	blade = /datum/heretic_knowledge/blade_upgrade/void
-	knowledge_tier4 = /datum/heretic_knowledge/spell/void_conduit
+	knowledge_tier4 = /datum/heretic_knowledge/void_conduit
 	ascension = /datum/heretic_knowledge/ultimate/void_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_void
@@ -99,7 +99,19 @@
 	max_charges = 4
 	focus_recharge_amount = 0.25
 	holywater_drain_amount = 0.25
-	transmute_text = "To recharge, complete a ritual with a pane of glass."
+	transmute_text = "To recharge, complete a ritual with a pane of glass in a sub-zero environment."
+
+/datum/heretic_knowledge/spell/void_phase/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	if(!isopenturf(loc))
+		loc.balloon_alert(user, "ritual failed, invalid location!")
+		return FALSE
+
+	var/turf/open/our_turf = loc
+	if(our_turf.GetTemperature() > T0C)
+		loc.balloon_alert(user, "ritual failed, not cold enough!")
+		return FALSE
+
+	return ..()
 
 /datum/heretic_knowledge/void_prison
 	name = "Void Prison"
@@ -119,6 +131,8 @@
 	result_atoms = list(/obj/item/void_prison)
 	cost = 2
 	drafting_tier = 5
+	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	research_tree_icon_state = "voidball"
 
 	var/list/closet_blacklist = list(
 		/obj/structure/closet/crate,
@@ -178,7 +192,7 @@
 	max_charges = 4
 	focus_recharge_amount = 0.25
 	holywater_drain_amount = 0.25
-	transmute_text = "To recharge, travel through a vacuum for 20 seconds."
+	transmute_text = "To recharge, travel through a sub-zero temperature environment for 20 seconds."
 
 	var/seconds_in_vacuum = 0
 
@@ -194,8 +208,7 @@
 	SIGNAL_HANDLER
 
 	var/turf/source_turf = get_turf(source)
-	var/datum/gas_mixture/air = source_turf?.return_air()
-	if(air?.return_pressure() <= 0)
+	if(source_turf.GetTemperature() <= T0C)
 		seconds_in_vacuum += seconds_per_tick
 		if(seconds_in_vacuum >= 20)
 			add_charges(1)
@@ -242,15 +255,15 @@
 	cost = 2
 	is_final_knowledge = TRUE
 
-/datum/heretic_knowledge/spell/void_conduit/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/void_conduit/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_PREATTACK, PROC_REF(on_blade_preattack))
 
-/datum/heretic_knowledge/spell/void_conduit/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+/datum/heretic_knowledge/void_conduit/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_BLADE_PREATTACK)
 
-/datum/heretic_knowledge/spell/void_conduit/proc/is_valid_turf(turf/open/affected_turf)
+/datum/heretic_knowledge/void_conduit/proc/is_valid_turf(turf/open/affected_turf)
 	// space is the obvious one, snow is for icebox
 	if(isspaceturf(affected_turf) || issnowturf(affected_turf))
 		return TRUE
@@ -260,7 +273,7 @@
 		return TRUE
 	return FALSE
 
-/datum/heretic_knowledge/spell/void_conduit/proc/is_valid_turf_callback(turf/open/affected_turf, mob/living/source, obj/item/sword)
+/datum/heretic_knowledge/void_conduit/proc/is_valid_turf_callback(turf/open/affected_turf, mob/living/source, obj/item/sword)
 	if(!source.is_holding(sword))
 		return FALSE
 	if(!is_valid_turf(affected_turf))
@@ -269,7 +282,7 @@
 		return FALSE
 	return TRUE
 
-/datum/heretic_knowledge/spell/void_conduit/proc/on_blade_preattack(mob/living/source, atom/target, obj/item/sword)
+/datum/heretic_knowledge/void_conduit/proc/on_blade_preattack(mob/living/source, atom/target, obj/item/sword)
 	SIGNAL_HANDLER
 	if(!isopenturf(target))
 		return NONE
@@ -285,7 +298,7 @@
 	to_chat(source, span_mansus("[sword] hums with power, but [target] is not cold enough to create a conduit!"))
 	return NONE
 
-/datum/heretic_knowledge/spell/void_conduit/proc/create_conduit(turf/open/affected_turf, mob/living/source, obj/item/sword)
+/datum/heretic_knowledge/void_conduit/proc/create_conduit(turf/open/affected_turf, mob/living/source, obj/item/sword)
 	playsound(source, 'sound/effects/cloth_rip.ogg', 50, TRUE) // funny thing is, can't hear sound in a vacuum
 	to_chat(source, span_mansus("You plunge [sword] deep into [affected_turf], trying to rip open a conduit to the void!"))
 	source.visible_message(
