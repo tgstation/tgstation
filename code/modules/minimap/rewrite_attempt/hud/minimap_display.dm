@@ -4,6 +4,7 @@
 	icon_state = ""
 	layer = MINIMAP_IMAGE_LAYER
 	screen_loc = "1,1"
+	var/list/origin_px
 	var/atom/movable/screen/minimap_drawing/drawing
 	/// A reference to the minimap used for this display.
 	var/datum/minimap/minimap
@@ -56,16 +57,19 @@
 
 /atom/movable/screen/minimap_display/MouseDrag(over_object, src_location, over_location, src_control, over_control, params)
 	var/list/modifiers = params2list(params)
-	var/x = text2num(LAZYACCESS(modifiers, ICON_X))
-	var/y = text2num(LAZYACCESS(modifiers, ICON_Y))
+	var/list/mouse_px = params2screenpixel(LAZYACCESS(modifiers, SCREEN_LOC))
+	var/x = mouse_px[1] - origin_px[1] + 1
+	var/y = mouse_px[2] - origin_px[2] + 1
 	var/erase_pixel_range = LAZYACCESS(modifiers, RIGHT_CLICK) ? 5 : 0
 	var/color = LAZYACCESS(modifiers, RIGHT_CLICK) ? null : COLOR_RED
 
 	if(last_drag_x && last_drag_y)
+		testing("drawing line from [last_drag_x],[last_drag_y] to [x],[y]")
 		drawing.draw_line(color, last_drag_x, last_drag_y, x, y, erase_pixel_range, 1)
 		last_drag_x = null
 		last_drag_y = null
 	else
+		testing("drawing box at [x],[y]")
 		drawing.draw_box(color, x, y, x + 1, y + 1, erase_pixel_range, 1)
 		last_drag_x = x
 		last_drag_y = y
@@ -127,6 +131,7 @@
 /atom/movable/screen/minimap_display/proc/set_minimap(datum/minimap/minimap)
 	icon = minimap.base_map
 	screen_loc = "1:[minimap.base_map.Width() / 2],1:[minimap.base_map.Height() / 2]"
+	origin_px = params2screenpixel(screen_loc)
 	src.minimap = minimap
 	drawing.clear_canvas(minimap.base_map)
 	// reset screentip if it exists
