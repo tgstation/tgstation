@@ -64,16 +64,13 @@
 	var/color = LAZYACCESS(modifiers, RIGHT_CLICK) ? null : COLOR_RED
 
 	if(last_drag_x && last_drag_y)
-		testing("drawing line from [last_drag_x],[last_drag_y] to [x],[y]")
 		drawing.draw_line(color, last_drag_x, last_drag_y, x, y, erase_pixel_range, 1)
 		last_drag_x = null
 		last_drag_y = null
 	else
-		testing("drawing box at [x],[y]")
 		drawing.draw_box(color, x, y, x + 1, y + 1, erase_pixel_range, 1)
 		last_drag_x = x
 		last_drag_y = y
-	testing("minimapdisplay MouseDrag: [over_object], [src_location], [over_location], [src_control], [json_encode(modifiers)]")
 
 /atom/movable/screen/minimap_display/MouseUp(location, control, params)
 	last_drag_x = null
