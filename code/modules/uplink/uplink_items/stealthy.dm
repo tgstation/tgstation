@@ -49,7 +49,7 @@
 	desc = "A bottle of Carnivorous Blood, an Interdyne bioweapon that, once mixed with a potential victim's blood and then inserted into their bloodstream, \
 		will rapidly consume its victim's supply of usable blood."
 	item = /obj/item/reagent_containers/cup/bottle/carnivorous_blood
-	cost = 4
+	cost = 3
 	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/suppressor

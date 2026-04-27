@@ -134,7 +134,7 @@
 	create_reagents(round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER, CHEMICAL_VOLUME_ROUNDING))
 	var/num_reagents = length(reagents_to_add)
 	for(var/reagent_type in reagents_to_add)
-		reagents.add_reagent(reagent_type = reagent_type, \
+		reagents.add_reagent(reagent_type = reagent_type,
 							amount = round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER / num_reagents, CHEMICAL_VOLUME_ROUNDING),
 							data = ispath(reagent_type, /datum/reagent/blood) ? list("blood_DNA" = pick(blood_DNA)) : null)
 	return reagents
