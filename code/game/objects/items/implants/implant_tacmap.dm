@@ -106,8 +106,19 @@
 		return ..()
 	var/datum/team/nuclear/nukie_team = nukie.get_team()
 	my_map = nukie_team.nuclear_tacmap // Specify that we are using the nukeop map before calling parent
+	RegisterSignal(target, COMSIG_MINIMAP_ACTION_TRIGGER, PROC_REF(deny_nukie_base_open))
 
 	return ..()
+
+/obj/item/implant/tacmap/nuclear/removed(mob/living/source, silent, special)
+	. = ..()
+	UnregisterSignal(source, COMSIG_MINIMAP_ACTION_TRIGGER)
+
+/obj/item/implant/tacmap/nuclear/proc/deny_nukie_base_open(mob/living/user)
+	var/turf/user_turf = get_turf(user)
+	if(user_turf.onSyndieBase())
+		user.balloon_alert(user, "cannot use implant on base, use holotable!")
+		return COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL
 
 /obj/item/implant/tacmap/nuclear/leader // Leader subtype lets him draw on the map
 	minimap_type = /datum/action/minimap/map_drawing/nuclear

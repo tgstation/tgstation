@@ -5043,6 +5043,7 @@
 #include "code\modules\minimap\rewrite_attempt\_minimap.dm"
 #include "code\modules\minimap\rewrite_attempt\minimap.dm"
 #include "code\modules\minimap\rewrite_attempt\minimap_action.dm"
+#include "code\modules\minimap\rewrite_attempt\minimap_table.dm"
 #include "code\modules\minimap\rewrite_attempt\minimap_verbs.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimal_z_level.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_display.dm"

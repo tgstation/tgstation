@@ -55,3 +55,5 @@ GLOBAL_LIST_INIT(all_minimap_flags, bitfield2list(MINIMAP_FLAG_ALL))
 #define COMSIG_MINIMAP_REMOVE(blip_tag) "minimap_remove_" + blip_tag
 // sends a index of how much to change by
 #define COMSIG_MINIMAP_CHANGE_Z_LEVEL "minimap_z_change"
+#define COMSIG_MINIMAP_ACTION_TRIGGER "minimap_action_trigger"
+	#define COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL "minimap_action_trigger_cancel"

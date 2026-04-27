@@ -20,6 +20,9 @@
 		to_chat(clicker, span_notice("Minimap hidden."))
 		return
 
+	if(SEND_SIGNAL(clicker, COMSIG_MINIMAP_ACTION_TRIGGER) & COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL)
+		return
+
 	var/datum/minimap/minimap = get_minimap_for_z(clicker.z)
 	if(isnull(minimap))
 		to_chat(clicker, span_notice("No minimap generated for z=[clicker.z]."))
