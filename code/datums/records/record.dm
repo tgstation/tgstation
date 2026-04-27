@@ -145,7 +145,7 @@
 	character_appearance,
 	dna_string = "Unknown",
 	fingerprint = "?????",
-	gender = "Other",
+	gender = "neuter",
 	initial_rank = "Unassigned",
 	name = "Unknown",
 	rank = "Unassigned",

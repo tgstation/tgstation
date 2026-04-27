@@ -155,6 +155,9 @@
 	else
 		QDEL_LIST(lighting)
 
+	if(print_monochrome)
+		res.GrayScale()
+
 	return res
 
 /**

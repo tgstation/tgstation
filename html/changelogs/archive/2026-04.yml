@@ -496,11 +496,32 @@
       will sell for.
   - qol: You can now sell materials on the edge of their buying and selling thresholds.
       (This really only effects iron and glass, practically)
+  - rscadd: The boulder smelter and refinery may now take a plumbing input (Closely
+      examine to see the full list) to boost the mineral output of processed boulders.
+  - rscadd: Boulder refinery machines will produce a new chemical, industrial waste,
+      which must be managed, dispersed, or it will eventually overflow if too much
+      exists in the same container.
+  - balance: The smelter and refinery now produce less mining points per unit than
+      before, but the quantity of points are now better scaled to the quantity processed.
+      50% more ores means 50% more points.
+  - balance: The amount of points generated per ore within boulders is now a separate
+      variable, not a percentage of the base value. This means some ores are better/worse
+      for generating mining points as a result.
+  - balance: Completing wave defense will award 200 more points across all ore vent
+      tiers, 700/1200/1700 for small/medium/large vents.
+  ElGitificador:
+  - balance: mutations coming from most random mutation sources can now be saved in
+      dna consoles
   Ghommie:
   - bugfix: Packs exclusive to the express console (crab rockets for example) can
       now be ordered from express consoles.
   Happyowl93:
   - code_imp: makeHologram now allows a color override.
+  JohnFulpWillard:
+  - rscadd: You can Ctrl Click a camera to set it to print monochrome photos. The
+      detective's camera is on this mode by default.
+  - qol: Photos without a scribble written on them won't have empty white space at
+      the bottom.
   Melbert:
   - balance: Codex Cicatrix is now a tier 1 heretic knowledge, and can not be drafted.
   - balance: Warren King's Welcome is now a tier 1 heretic knowledge, but can be drafted.
@@ -519,7 +540,64 @@
   SmArtKar:
   - admin: Planemaster Debugger now has a text search input to locate and jump to
       planes
+  TealSeer:
+  - bugfix: fixed CSS-related errors in BYOND 516.1681+
   levels0:
   - bugfix: metalgen and secret sauce recipes are now loaded properly
   timothymtorres:
   - map: Add Shoe Factory to lava/ice ruins.
+2026-04-24:
+  lelandkemble:
+  - bugfix: Looming works again
+2026-04-25:
+  Arturlang:
+  - rscadd: changes shutter and high security door sprites on the infiltrator battlecruiser
+      and the syndicate nuclear operative base
+  Ben10Omintrix:
+  - refactor: beepskies, and ed209s have been refactored. please report any bugs
+  - rscadd: ed209s can now wear hats! some hats give them new dialogue
+  - rscadd: emagged ed209s are now rideable!
+  - rscadd: added evil versions of the ed209s to the syndie uplink
+  Capsandi:
+  - sound: fire alarms are no longer stereo files condensed to mono at runtime
+  forgman6:
+  - rscadd: Saviors paper hat.
+  - rscadd: Added worn and normal icon states for it in costume.dmi
+  - map: Modified bus.dmm to include the paper hat behind the main bus.
+  lelandkemble:
+  - bugfix: Stamina bars no longer invert the value they show you
+  - bugfix: Nonbinary people can respawn
+2026-04-26:
+  Aliceee2ch:
+  - bugfix: LIttle map fixes for lavaland.
+  JohnFulpWillard:
+  - rscdel: Removed Station Time, now we use NST (Nanotrasen Standard Time), which
+      is IRL server time +540 years, and PT (Pay Time), the amount of time since the
+      round has started.
+  - rscdel: Station nightshift is now a Station event rather than being based on Server
+      time.
+  - balance: Time circuit's Unit of Measure now tells the amount of time in hour/minute/seconds
+      rather than giving the whole time translated to hours/minutes/seconds.
+  - qol: Added a 12-hour clock pref for people who prefer it.
+  - qol: Hovering over NST timestamps on official documents will now translate how
+      much it is in PT/Shift Time.
+  - admin: Admins can now use style/class/background in their papercode.
+  - qol: Pray verb is now a hotkey, Whisper is now a command bar button, and all say
+      verbs have been removed from the stat panel.
+  - qol: Admin button on the escape menu is now its own section for praying, as well
+      as seeing your latest ticket & admin notes.
+  - bugfix: Resizing the stat panel will no longer change the size of the command
+      bar.
+  Rhials:
+  - bugfix: The bear mask in the pizzeria virtual domain is now a regular, non-cursed
+      mask.
+  Ruslanllll:
+  - bugfix: Alien plasma display works again
+  lelandkemble:
+  - bugfix: Ninja spider bomb can no longer be placed in certain situations it would
+      be unable to detonate
+  vinylspiders:
+  - bugfix: mobs and features should not be spawning in walls anymore in certain biomes
+2026-04-27:
+  levels0:
+  - bugfix: metalgen and secret sauce should now generate properly

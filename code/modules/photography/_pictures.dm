@@ -205,9 +205,9 @@
 	P.has_blueprints = has_blueprints
 	if(greyscale)
 		if(picture_image)
-			P.picture_image.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			P.picture_image.GrayScale()
 		if(picture_icon)
-			P.picture_icon.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			P.picture_icon.GrayScale()
 	if(cropx || cropy)
 		if(picture_image)
 			P.picture_image.Crop(cropx, cropy, psize_x - cropx, psize_y - cropy)
