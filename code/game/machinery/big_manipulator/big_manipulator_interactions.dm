@@ -31,6 +31,7 @@
 		nothing_ever_happens()
 		return
 	current_task = next_task
+	SStgui.update_uis(src)
 	next_task.run_task(src)
 
 /// Attempts to launch the work cycle. Should only be ran on pressing the "Run" button.
@@ -70,7 +71,8 @@
 	var/num_rotations = round(abs(angle_diff) / 45)
 
 	if(!num_rotations)
-		CALLBACK(callback_object, callback, src).Invoke()
+		var/datum/callback/cb = CALLBACK(callback_object, callback, src)
+		cb.Invoke()
 		return TRUE
 
 	var/rotation_step = 45 * SIGN(angle_diff)
@@ -215,10 +217,6 @@
 			obj_resolve.forceMove(drop_turf)
 			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
 			finish_manipulation()
-
-		if(POST_INTERACTION_WAIT)
-			schedule_next_cycle()
-
 		else
 			schedule_next_cycle()
 
@@ -256,7 +254,9 @@
 		interact_with_item.attack_self(monkey_resolve)
 		interact_with_item.forceMove(resolve_loc)
 	else
+		monkey_resolve.combat_mode = destination_task.worker_combat_mode
 		monkey_resolve.UnarmedAttack(type_to_use)
+		monkey_resolve.combat_mode = FALSE
 
 	var/turf/dest_turf = destination_task.interaction_turf
 	if(dest_turf)

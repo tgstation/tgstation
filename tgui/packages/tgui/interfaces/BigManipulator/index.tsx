@@ -36,7 +36,7 @@ const TASK_TYPE_ICONS: Record<string, string> = {
 
 const TASKING_STRATEGY_ICONS: Record<string, string> = {
   Sequential: 'list-ol',
-  Strict: 'lock',
+  'Strict order': 'lock',
 };
 
 const buttonNumberToIcon: Record<number, string> = {
@@ -437,7 +437,7 @@ const TaskList = () => {
               color="transparent"
               tooltip="Cycle tasking strategy"
               onClick={() => act('cycle_tasking_strategy', {
-                new_strategy: tasking_strategy === 'Sequential' ? 'Strict' : 'Sequential',
+                new_strategy: tasking_strategy === 'Sequential' ? 'Strict order' : 'Sequential',
               })}
             >
               {tasking_strategy}
@@ -455,7 +455,7 @@ const TaskList = () => {
       >
         <Stack vertical>
           {tasks_data.map((task, index) => {
-            const isActive = current_task?.id === task.id;
+            const isActive = current_task === task.id;
             const taskTypeKey = Object.keys(TASK_TYPE_LABELS).find((k) =>
               task.task_type.includes(k),
             ) ?? 'wait';
@@ -465,8 +465,10 @@ const TaskList = () => {
                 key={task.id}
                 style={{
                   padding: '5px',
-                  border: isActive ? '1px solid #c8a800' : '1px solid transparent',
+                  border: isActive ? '1px solid #bdad5e' : '1px solid transparent',
                   borderRadius: '2px',
+                  boxShadow: isActive ? '0 0 6px 2px rgba(200, 168, 0, 0.55)' : undefined,
+                  backgroundColor: isActive ? 'rgba(151, 142, 95, 0.55)' : undefined
                 }}
                 className="candystripe"
               >
@@ -486,30 +488,10 @@ const TaskList = () => {
                   <Stack.Item>
                     <Icon
                       name={TASK_TYPE_ICONS[taskTypeKey] ?? 'circle'}
-                      color={isActive ? '#c8a800' : '#888'}
-                      style={{ width: '1.2em', textAlign: 'center' }}
+                      style={{ width: '1.2em', textAlign: 'center', marginRight: '5px' }}
                     />
                   </Stack.Item>
                   <Stack.Item grow>
-                    {editingNameId === task.id ? (
-                      <Stack>
-                        <Stack.Item>
-                          <Input
-                            value={newName}
-                            onChange={(value) => setNewName(value)}
-                            onEnter={() => handleSaveName(task.id)}
-                            maxLength={20}
-                            autoFocus
-                          />
-                        </Stack.Item>
-                        <Stack.Item>
-                          <Button
-                            icon="check"
-                            onClick={() => handleSaveName(task.id)}
-                          />
-                        </Stack.Item>
-                      </Stack>
-                    ) : (
                       <Box>
                         <Box bold style={{ display: 'inline' }}>
                           {TASK_TYPE_LABELS[taskTypeKey] ?? task.task_type}
@@ -528,29 +510,7 @@ const TaskList = () => {
                           {task.time && <Box>...for {task.time} second{task.time > 1 && "s"}...</Box>}
                         </Box>
                       </Box>
-                    )}
                   </Stack.Item>
-                  {task.hud_color !== undefined && (
-                    <>
-                      <Stack.Item>
-                        <Button
-                          icon="circle"
-                          color="transparent"
-                          style={{ color: task.hud_color }}
-                          tooltip="Change HUD color"
-                          onClick={() => adjust(task.id, 'set_hud_color')}
-                        />
-                      </Stack.Item>
-                      <Stack.Item>
-                        <Button
-                          icon="lightbulb"
-                          color="transparent"
-                          tooltip="Flash HUD indicator"
-                          onClick={() => act('flash_task', { taskId: task.id })}
-                        />
-                      </Stack.Item>
-                    </>
-                  )}
                   <Stack.Item>
                     <Button
                       icon="gear"
@@ -566,21 +526,19 @@ const TaskList = () => {
                     />
                   </Stack.Item>
                   <Stack.Item>
-                    <Stack vertical style={{ gap: '1px' }}>
+                    <Stack style={{ gap: '4px' }}>
                       <Stack.Item>
                         <Button
-                          icon="arrow-up"
-                          color="transparent"
-                          disabled={index === 0}
-                          onClick={() => adjust(task.id, 'move_up')}
+                          icon="arrow-down"
+                          disabled={index === tasks_data.length - 1}
+                          onClick={() => adjust(task.id, 'move_down')}
                         />
                       </Stack.Item>
                       <Stack.Item>
                         <Button
-                          icon="arrow-down"
-                          color="transparent"
-                          disabled={index === tasks_data.length - 1}
-                          onClick={() => adjust(task.id, 'move_down')}
+                          icon="arrow-up"
+                          disabled={index === 0}
+                          onClick={() => adjust(task.id, 'move_up')}
                         />
                       </Stack.Item>
                     </Stack>

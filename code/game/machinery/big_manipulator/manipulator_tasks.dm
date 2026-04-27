@@ -20,7 +20,10 @@
 	var/time_seconds = 1
 
 /datum/manipulator_task/simple/wait/can_run(obj/machinery/big_manipulator/manipulator)
-	return TRUE
+	for(var/datum/manipulator_task/cargo/task in manipulator.tasks)
+		if(task.can_run(manipulator))
+			return TRUE
+	return FALSE
 
 /datum/manipulator_task/simple/wait/run_task(obj/machinery/big_manipulator/manipulator)
 	manipulator.schedule_next_cycle(time_seconds)
@@ -29,7 +32,6 @@
 
 /datum/manipulator_task/cargo
 	var/turf/interaction_turf
-	var/hud_color = COLOR_WHITE
 	var/should_use_filters = FALSE
 	var/list/atom_filters = list()
 	var/filtering_mode = TAKE_ITEMS
@@ -283,7 +285,6 @@
 
 /datum/manipulator_task/cargo/dropoff_base/drop/do_dropoff(obj/machinery/big_manipulator/manipulator)
 	manipulator.try_drop_thing(src)
-	manipulator.schedule_next_cycle()
 
 // ===== THROW =====
 

@@ -19,7 +19,6 @@ export interface ManipulatorTask {
   task_type: string;
   // cargo fields
   turf?: string;
-  hud_color?: string;
   item_filters?: string[];
   filters_status?: BooleanLike;
   filtering_mode?: number;
@@ -42,7 +41,7 @@ export interface ManipulatorTask {
 export interface ManipulatorData {
   active: BooleanLike;
   stopping: BooleanLike;
-  current_task: ManipulatorTask | null;
+  current_task: string | null;
   speed_multiplier: number;
   min_speed_multiplier: number;
   max_speed_multiplier: number;

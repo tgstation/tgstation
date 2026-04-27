@@ -50,27 +50,6 @@
 	/// Tasking strategy instance.
 	var/datum/tasking_strategy/master_tasking
 
-	/// List of all HUD icons resembling interaction points.
-	var/list/hud_points = list()
-
-/// Re-creates hud markers for cargo task turfs.
-/obj/machinery/big_manipulator/proc/update_hud()
-	remove_all_huds()
-
-	if(!anchored)
-		return
-
-	for(var/datum/manipulator_task/cargo/task in tasks)
-		if(!task.interaction_turf)
-			continue
-		var/obj/effect/big_manipulator_hud_point/pt = new(task.interaction_turf)
-		var/image/holder = pt.hud_list?[BIG_MANIP_HUD]
-		if(holder)
-			holder.color = task.hud_color
-		hud_points[task] = pt
-		for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-			diag_hud.add_atom_to_hud(pt)
-
 /// Attempts to find a suitable turf near the manipulator for creating a cargo task.
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
 	for(var/turf/checked_turf in orange(get_turf(src), 1))
@@ -119,9 +98,6 @@
 		var/datum/manipulator_task/cargo/cargo_task = new_task
 		cargo_task.type_filters += /mob/living
 
-	if(is_operational)
-		update_hud()
-
 	return new_task
 
 /obj/machinery/big_manipulator/Initialize(mapload)
@@ -133,10 +109,6 @@
 	set_wires(new /datum/wires/big_manipulator(src))
 	register_context()
 
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
-
-	update_hud()
 	update_strategies()
 
 /// Checks the component tiers, adjusting the properties of the manipulator.
@@ -211,10 +183,6 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/big_manipulator/Destroy(force)
-	remove_all_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_atom_from_hud(src)
-
 	unregister_task_turf_signals()
 	QDEL_NULL(manipulator_arm)
 	QDEL_LIST(tasks)
@@ -256,9 +224,6 @@
 
 	if(waiting_for_signal)
 		register_task_turf_signals()
-
-	if(is_operational)
-		update_hud()
 
 /// Updates a single cargo task's turf position by the given offset.
 /obj/machinery/big_manipulator/proc/update_task_position(datum/manipulator_task/cargo/task, dx, dy)
@@ -303,8 +268,6 @@
 		return
 	tasks.Remove(task)
 	qdel(task)
-	if(is_operational)
-		update_hud()
 
 /obj/machinery/big_manipulator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
@@ -335,9 +298,6 @@
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
 			validate_all_tasks()
-			update_hud()
-		else
-			remove_all_huds()
 
 /obj/machinery/big_manipulator/screwdriver_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
@@ -442,8 +402,6 @@
 
 	if(!user)
 		on = newly_on
-		if(!on)
-			remove_all_huds()
 		return
 
 	if(newly_on)
@@ -481,9 +439,6 @@
 			tasks.Remove(cargo_task)
 			qdel(cargo_task)
 
-	if(is_operational)
-		update_hud()
-
 /// Attempts to press the power button.
 /obj/machinery/big_manipulator/proc/try_press_on(mob/living/carbon/human/user)
 	if(power_access_wire_cut)
@@ -518,7 +473,7 @@
 	var/list/data = list()
 	data["active"] = on
 	data["stopping"] = stopping
-	data["current_task_id"] = current_task ? REF(current_task) : null
+	data["current_task"] = current_task ? REF(current_task) : null
 	data["speed_multiplier"] = speed_multiplier
 	data["min_speed_multiplier"] = min_speed_multiplier
 	data["max_speed_multiplier"] = max_speed_multiplier
@@ -531,10 +486,6 @@
 		var/list/td = list()
 		td["name"] = task.name
 		td["id"] = REF(task)
-
-		if(istype(task, /datum/manipulator_task/cargo))
-			var/datum/manipulator_task/cargo/ct = task
-			td["hud_color"] = ct.hud_color
 
 		if(istype(task, /datum/manipulator_task/cargo/pickup))
 			td["task_type"] = TASK_TYPE_PICKUP
@@ -673,12 +624,6 @@
 				maybe_wake()
 			return success
 
-		if("flash_task")
-			var/datum/manipulator_task/cargo/target = locate(params["taskId"]) in tasks
-			if(!istype(target, /datum/manipulator_task/cargo))
-				return FALSE
-			flash_hud(target)
-			return TRUE
 
 /obj/machinery/big_manipulator/proc/adjust_param_for_task(task_ref, param, value, mob/user)
 	if(!param)
@@ -703,7 +648,6 @@
 		if("remove_task")
 			tasks.Remove(target_task)
 			qdel(target_task)
-			update_hud()
 			return TRUE
 
 		if("move_up")
@@ -729,7 +673,6 @@
 			if(!new_turf || isclosedturf(new_turf))
 				return FALSE
 			cargo_task.interaction_turf = new_turf
-			update_hud()
 			return TRUE
 
 		if("toggle_filter_skip")
@@ -852,46 +795,12 @@
 				return TRUE
 			return FALSE
 
-		if("set_hud_color")
-			if(!istype(target_task, /datum/manipulator_task/cargo))
-				return FALSE
-			var/datum/manipulator_task/cargo/ct = target_task
-			var/new_color = tgui_color_picker(user, "Pick a color for [ct.name]", "HUD Color", ct.hud_color)
-			if(!new_color)
-				return FALSE
-			ct.hud_color = new_color
-			var/obj/effect/big_manipulator_hud_point/pt = hud_points[ct]
-			if(pt)
-				var/image/holder = pt.hud_list?[BIG_MANIP_HUD]
-				if(holder)
-					holder.color = ct.hud_color
-			return TRUE
-
 /// Cycles the given value in the given list.
 /obj/machinery/big_manipulator/proc/cycle_value(current_value, list/possible_values)
 	var/current_index = possible_values.Find(current_value)
 	if(current_index == 0)
 		return possible_values[1]
 	return possible_values[(current_index % length(possible_values)) + 1]
-
-/obj/machinery/big_manipulator/proc/remove_all_huds()
-	for(var/datum/manipulator_task/task in hud_points)
-		var/obj/effect/big_manipulator_hud_point/pt = hud_points[task]
-		for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-			diag_hud.remove_atom_from_hud(pt)
-		qdel(pt)
-	hud_points = list()
-
-/// Flashes the HUD marker for a specific task to draw attention to its turf.
-/obj/machinery/big_manipulator/proc/flash_hud(datum/manipulator_task/task)
-	var/obj/effect/big_manipulator_hud_point/pt = hud_points[task]
-	if(!pt)
-		return
-	var/image/holder = pt.hud_list?[BIG_MANIP_HUD]
-	if(!holder)
-		return
-	animate(holder, alpha = 255, time = 2, easing = EASE_OUT)
-	animate(alpha = 180, time = 8, easing = EASE_IN)
 
 /// Retries the task loop if we're waiting for a signal and the machine is on.
 /obj/machinery/big_manipulator/proc/maybe_wake()
