@@ -17,8 +17,9 @@
 	var/datum/gizmo_controller/controller = /datum/gizmo_controller
 	/// Possible names to pick from to keep things confusing
 	var/list/possible_names = list(
-		"gizmo", "jigger", "doohickey", "particle inverter", "polarity superplexer", "flitcher poster",
+		"gizmo", "jigger", "doohickey", "particle inverter", "polarity superplexer", "flitcher poster", "natty gonk", "quantum quantum",
 		"entropy nilum", "tachyon streamer", "doing device", "task operator", "interface responder", "kinetic observer", "turbo encabulator",
+		"statistic responder", "possibility matrix", "toety aaier", "phase anchor",
 	)
 
 /obj/machinery/gizmo/Initialize(mapload)

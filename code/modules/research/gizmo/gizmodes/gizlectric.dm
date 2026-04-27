@@ -3,13 +3,17 @@
 	possible_active_modes = list(
 		/datum/gizpulse/electric/emp = 1,
 		/datum/gizpulse/electric/discharge = 1,
+		/datum/gizpulse/electric/charge = 1,
 	)
 
 	guaranteed_active_gizmodes = list(
 		GIZMO_PICK_ONE = list(
-			/datum/gizpulse/electric/charge = 1,
+			/datum/gizpulse/electric/draw = 1,
+			/datum/gizpulse/electric/passive_charge = 1,
 		)
 	)
+	min_modes = 2
+	max_modes = 3
 
 	cooldown_time = 6 SECONDS
 
@@ -63,8 +67,32 @@
 	tesla_zap(holder, power = charge, zap_flags = ZAP_GIZMO_FLAGS)
 	use_power(charge, holder, master)
 
-/// Look for the nearest power-containing object and suck the power out
+/// Look for an object with a cell, and CHARGE IT!!!
 /datum/gizpulse/electric/charge/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
+	if(!istype(master, /datum/gizmodes/electric))
+		return
+
+	var/datum/gizmodes/electric/electromaster = master
+
+	for(var/atom/movable/power_source in oview(4, holder))
+		if(!power_source.get_cell())
+			continue
+
+		var/obj/item/stock_parts/power_store/cell = power_source.get_cell()
+
+		var/charge = electromaster.power.charge() - cell.used_charge()
+		if(charge <= 0)
+			continue
+
+		cell.give(charge)
+		electromaster.power.use(charge)
+
+		holder.Beam(power_source, icon_state = "g_beam", time = 5)
+		playsound(power_source, 'sound/effects/magic/ethereal_exit.ogg', 40)
+		return
+
+/// Look for the nearest power-containing object and suck the power out
+/datum/gizpulse/electric/draw/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	if(!istype(master, /datum/gizmodes/electric))
 		return
 
@@ -83,6 +111,20 @@
 		cell.use(charge)
 		electromaster.power.give(charge)
 
-		holder.Beam(power_source, icon_state = "g_beam", time = 5)
+		holder.Beam(power_source, icon_state = "r_beam", time = 5)
 		playsound(power_source, 'sound/effects/magic/ethereal_exit.ogg', 40)
 		return
+
+/// Give a bit of charge, FOR FREE
+/datum/gizpulse/electric/passive_charge
+	/// How much we magically charge from nothing per pulse
+	var/recharge = STANDARD_BATTERY_CHARGE * 0.001
+
+/datum/gizpulse/electric/passive_charge/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
+	if(!istype(master, /datum/gizmodes/electric))
+		return
+
+	var/datum/gizmodes/electric/electromaster = master
+	electromaster.power.give(recharge)
+
+	playsound(holder, 'sound/effects/magic/charge.ogg', 50, TRUE)
