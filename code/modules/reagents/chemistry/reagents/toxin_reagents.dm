@@ -280,6 +280,10 @@
 	if(affected_mob.dna.unique_enzymes in data)
 		multiplier *= 3
 	affected_mob.adjust_blood_volume(-2 * multiplier * seconds_per_tick)
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, span_danger("Your blood is writhing in your veins!"))
+		if(SPT_PROB(25, seconds_per_tick))
+			affected_mob.emote("scream")
 	return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/carnivorousblood/on_merge(list/mix_data, amount)
