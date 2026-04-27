@@ -551,7 +551,7 @@
  * Overridable proc that invokes special effects
  * whenever the heretic clicks on someone at range with their heretic blade.
  */
-/datum/heretic_knowledge/blade_upgrade/proc/do_ranged_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+/datum/heretic_knowledge/blade_upgrade/proc/do_ranged_effects(mob/living/source, atom/target, obj/item/melee/sickly_blade/blade)
 	return
 
 /**

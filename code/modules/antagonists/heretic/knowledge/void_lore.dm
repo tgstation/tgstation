@@ -231,8 +231,11 @@
 
 	target.apply_status_effect(/datum/status_effect/void_chill, 2)
 
-/datum/heretic_knowledge/blade_upgrade/void/do_ranged_effects(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
-	if(!target.has_status_effect(/datum/status_effect/eldritch))
+/datum/heretic_knowledge/blade_upgrade/void/do_ranged_effects(mob/living/user, atom/target, obj/item/melee/sickly_blade/blade)
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+	if(!living_target.has_status_effect(/datum/status_effect/eldritch))
 		return
 
 	var/dir = angle2dir(dir2angle(get_dir(user, target)) + 180)
@@ -254,6 +257,9 @@
 		The doors won't close. I can't keep the cold out now."
 	cost = 2
 	is_final_knowledge = TRUE
+	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	research_tree_icon_state = "void_rift"
+	research_tree_icon_frame = 12
 
 /datum/heretic_knowledge/void_conduit/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
