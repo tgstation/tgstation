@@ -18,7 +18,7 @@
 	/// Possible names to pick from to keep things confusing
 	var/list/possible_names = list(
 		"gizmo", "jigger", "doohickey", "particle inverter", "polarity superplexer", "flitcher poster",
-		"entropy nilum", "tachyon streamer", "doing device", "task operator", "interface responder", "kinetic observer", “turbo encabulator",
+		"entropy nilum", "tachyon streamer", "doing device", "task operator", "interface responder", "kinetic observer", "turbo encabulator",
 	)
 
 /obj/machinery/gizmo/Initialize(mapload)
