@@ -74,7 +74,10 @@
 /datum/heretic_knowledge/crucible
 	name = "Mawed Crucible"
 	desc = "Create a Mawed Crucible.<br>\
-		The Mawed Crucible can brew powerful potions for combat and utility, but must be fed bodyparts and organs between uses."
+		The Mawed Crucible can brew powerful but temporary potions for combat and utility, but must be fed bodyparts and organs between uses. \
+		<br>&bull; Brew of the Crucible Soul: Allows you to walk through walls. Returns you to the place you consumed the potion after it expires. \
+		<br>&bull; Brew of Dusk and Dawn: Allows you to see through walls. \
+		<br>&bull; Brew of the Wounded Soldier: Heals you over time. The more severe your wounds (such as fractures or cuts), the faster it heals you."
 	transmute_text = "Transmute a portable water tank and a table."
 	gain_text = "This is pure agony. I wasn't able to summon the figure of the Aristocrat, \
 		but with the Priest's attention I stumbled upon a different recipe..."

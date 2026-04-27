@@ -1,5 +1,5 @@
 /obj/structure/void_conduit
-	name = "Void Conduit"
+	name = "void conduit"
 	desc = "An open gate which leads to nothingness. Releases pulses which you do not want to get hit by."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "void_conduit"
@@ -101,3 +101,14 @@
 
 /datum/status_effect/void_conduit/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, TRAIT_STATUS_EFFECT(id))
+
+/obj/effect/temp_visual/void_conduit_opening
+	icon = /obj/structure/void_conduit::icon
+	icon_state = /obj/structure/void_conduit::icon_state
+	duration = 5 SECONDS
+
+/obj/effect/temp_visual/void_conduit_opening/Initialize(mapload)
+	. = ..()
+	transform = transform.Scale(0.1)
+	alpha = 0
+	animate(src, time = 5 SECONDS, transform = transform.Scale(1), alpha = /obj/structure/void_conduit::alpha

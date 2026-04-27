@@ -248,7 +248,7 @@
 
 /datum/heretic_knowledge/void_conduit
 	name = "Void Conduit"
-	desc = "Empowers your blade, allowing you to rip a hole through space itself. \
+	desc = "Empowers your blade, allowing you to rip a hole through space itself.<br>\
 		Attacking space with one of your void blades will create conduit to the void, \
 		damaging and chilling nearby heathens, and destroying windows and airlocks in the area."
 	notice = "The blade is consumed in the process. You can also use this ability on snow, or any tile in a complete vacuum."
@@ -312,7 +312,10 @@
 			[isspaceturf(affected_turf) ? "but instead of nothing happening" : "contrary to what you expected"], a dark energy begins to flow from the site!"),
 		ignored_mobs = source,
 	)
+	var/obj/effect/temp_visual/void_conduit_opening/animation = new(affected_turf)
 	if(!do_after(source, 5 SECONDS, affected_turf, extra_checks = CALLBACK(src, PROC_REF(is_valid_turf_callback), affected_turf, source, sword)))
+		animate(animation, alpha = 0, time = 1 SECONDS)
+		QDEL_IN(animation, 1 SECONDS)
 		return
 	to_chat(source, span_mansus("The conduit opens, releasing a storm of void energy! [sword] shatters into a million tiny shards!"))
 	source.visible_message(

@@ -322,9 +322,24 @@ function bulletpointHelper(text: string) {
 function formatTooltipText(text: string) {
   return (
     <Stack vertical>
-      {text.split('<br>').map((line, index) => (
-        <Stack.Item key={index}>{bulletpointHelper(line)}</Stack.Item>
-      ))}
+      {text.split('<br>').map((line, index) => {
+        const isBulletPoint = line.includes('&bull;');
+        if (isBulletPoint) {
+          line = line.replace(/&bull;/g, '•');
+        }
+        return (
+          <Stack.Item
+            key={index}
+            // hacky. pretty much solely exists to make Unsealed Arts readable.
+            // stretches beyond the bounds of the tooltip to avoid getting cut off.
+            // call it a format screw
+            fontSize={isBulletPoint ? '10px' : undefined}
+            width={isBulletPoint ? '110%' : undefined}
+          >
+            {line}
+          </Stack.Item>
+        );
+      })}
     </Stack>
   );
 }
