@@ -450,6 +450,10 @@
 /atom/proc/HasProximity(atom/movable/proximity_check_mob as mob|obj)
 	return
 
+/// has a previously nearby atom moved away
+/atom/proc/OnProximityExit(atom/movable/proximity_check_mob as mob|obj)
+	return
+
 /// Sets the wire datum of an atom
 /atom/proc/set_wires(datum/wires/new_wires)
 	wires = new_wires

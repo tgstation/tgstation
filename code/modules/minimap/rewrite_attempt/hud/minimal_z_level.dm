@@ -1,7 +1,7 @@
 /atom/movable/screen/minimap_z_indicator
 	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "zindicator"
-	screen_loc = "BOTTOM+5,RIGHT"
+	screen_loc = "BOTTOM+4,RIGHT"
 
 /atom/movable/screen/minimap_z_indicator/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -26,7 +26,7 @@
 	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "up"
 	mouse_over_pointer = MOUSE_HAND_POINTER
-	screen_loc = "BOTTOM+5,RIGHT-1"
+	screen_loc = "BOTTOM+4,RIGHT-1"
 
 /atom/movable/screen/minimap_z_up/Click(location, control, params)
 	flick("uppressed", src)
@@ -37,7 +37,7 @@
 	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "down"
 	mouse_over_pointer = MOUSE_HAND_POINTER
-	screen_loc = "BOTTOM+5,RIGHT-1"
+	screen_loc = "BOTTOM+4,RIGHT-1"
 
 /atom/movable/screen/minimap_z_down/Click(location, control, params)
 	flick("downpressed", src)

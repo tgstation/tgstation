@@ -13,10 +13,13 @@
 	var/startup = FALSE
 	var/animation_x = -15
 	var/animation_y = 18
+	var/interactivity_range = 2
+	var/datum/proximity_monitor/proximity
 
 /obj/machinery/minimap_table/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(set_minimap))
+	proximity = new(src, interactivity_range)
 
 /obj/machinery/minimap_table/Destroy(force)
 	. = ..()
@@ -28,6 +31,9 @@
 	. = ..()
 	if(!is_operational || isnull(minimap) || isnull(user.hud_used))
 		return FALSE
+	if(!isnull(user.hud_used.screen_objects[HUD_TAC_MINIMAP]))
+		hide_minmap(user)
+		return TRUE
 	if(active)
 		show_minimap(user)
 		return TRUE
@@ -46,10 +52,22 @@
 	show_minimap(activator)
 	update_appearance(UPDATE_OVERLAYS)
 
+/obj/machinery/minimap_table/proc/deactivate()
+	if(length(viewers))
+		return
+	active = FALSE
+	update_appearance(UPDATE_OVERLAYS)
+
 /obj/machinery/minimap_table/proc/show_minimap(mob/user)
 	var/atom/movable/screen/minimap_display/instanced = new(null, user.hud_used, minimap)
 	user.hud_used.add_screen_object(instanced, HUD_TAC_MINIMAP, HUD_GROUP_STATIC, update_screen = TRUE)
 	viewers |= user
+
+/obj/machinery/minimap_table/proc/hide_minmap(mob/user)
+	user.hud_used.remove_screen_object(HUD_TAC_MINIMAP)
+	viewers -= user
+	if(!length(viewers))
+		addtimer(CALLBACK(src, PROC_REF(deactivate)), 10 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE)
 
 /obj/machinery/minimap_table/proc/set_minimap()
 	minimap = get_minimap_for_z(target_z)
@@ -79,3 +97,12 @@
 	if(active)
 		. += offset_hologram_overlays("idle")
 
+/obj/machinery/minimap_table/OnProximityExit(atom/movable/gone)
+	if(!active || !ismob(gone))
+		return
+	var/mob/mob_gone = gone
+	var/list/adjacent = orange(interactivity_range, src)
+	if(mob_gone in adjacent)
+		return
+	if(mob_gone in viewers)
+		hide_minmap(gone)
