@@ -38,9 +38,8 @@
 	if(. || (bot_access_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
-	switch(action)
-		bot_control(action, user, params)
-		return TRUE
+	bot_control(action, user, params)
+	return TRUE
 
 /mob/living/basic/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)
 	if(pda && wires.is_cut(WIRE_RX)) // MULE wireless is controlled by wires.
