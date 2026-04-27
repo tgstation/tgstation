@@ -161,10 +161,10 @@
 
 /datum/looping_sound/firealarm
 	mid_sounds = list(
-		'sound/machines/fire_alarm/FireAlarm1.ogg',
-		'sound/machines/fire_alarm/FireAlarm2.ogg',
-		'sound/machines/fire_alarm/FireAlarm3.ogg',
-		'sound/machines/fire_alarm/FireAlarm4.ogg',
+		'sound/machines/fire_alarm/fire_alarm1.ogg',
+		'sound/machines/fire_alarm/fire_alarm2.ogg',
+		'sound/machines/fire_alarm/fire_alarm3.ogg',
+		'sound/machines/fire_alarm/fire_alarm4.ogg',
 	)
 	mid_length = 2.4 SECONDS
 	volume = 30
@@ -206,6 +206,9 @@
 	end_volume = 60
 	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 	falloff_exponent = 4
+
+/datum/looping_sound/soup/toxic
+	volume = 40
 
 /datum/looping_sound/cryo_cell
 	mid_sounds = list(

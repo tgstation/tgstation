@@ -1,14 +1,14 @@
-output_name = "red_wall"
+output_name = "shale"
 template = "bitmask/diagonal_32x32.toml"
 
 [icon_size]
-x = 40
-y = 40
+x = 48
+y = 48
 
 [output_icon_size]
-x = 40
-y = 40
+x = 48
+y = 48
 
 [cut_pos]
-x = 20
-y = 20
+x = 24
+y = 24

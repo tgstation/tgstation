@@ -110,7 +110,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 			var/skipcount = abs(error_cooldown[erroruid]) - 1
 			error_cooldown[erroruid] = 0
 			if(skipcount > 0)
-				SEND_TEXT(world.log, "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line].")
+				SEND_TEXT(world.log, "\[[server_timestamp()]] Skipped [skipcount] runtimes in [E.file],[E.line].")
 				GLOB.error_cache.log_error(E, skip_count = skipcount)
 
 	error_last_seen[erroruid] = world.time
@@ -158,7 +158,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(GLOB.error_cache)
 		GLOB.error_cache.log_error(E, desclines)
 
-	var/main_line = "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]"
+	var/main_line = "\[[server_timestamp()]] Runtime in [E.file],[E.line]: [E]"
 	SEND_TEXT(world.log, main_line)
 	for(var/line in desclines)
 		SEND_TEXT(world.log, line)

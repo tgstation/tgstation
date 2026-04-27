@@ -418,16 +418,186 @@
   - spellcheck: Boats no longer refer to oars as keys
   - bugfix: Transforming items like eswords should no longer get absurd stats when
       metalgenned multiple times in a row
+  SmArtKar, Kryson, ArcaneMusic:
+  - rscadd: 'Lavaland has received 2 new rock types: Siderite, rich in iron and titanium,
+      and Shale, full of plasma, gold and uranium.'
+  - rscadd: A guaranteed river spawn and a fishing pond have been added to the lavaland
+      outpost raptor area.
+  - rscadd: Ores now tend to spawn in veins or clusters, and are much more likely
+      to spawn near exposed rock.
+  - balance: Natural ore spawns are much more abundant than before, closer to pre-arcmining
+      levels. Vent output has been halved
+  - balance: PKA AOE mining module has been reverted to 3x3 and incurs a cooldown
+      penalty
+  - balance: Plasma cutters eat more plasma when recharging and have slightly shorter
+      range.
+  - balance: Mining MOD sphere mode no longer instamines, and now just has an extremely
+      high mining speed.
+  - balance: Goldgrubs can now tunnel extremely fast and spawn much more frequently
+      than before. Goldgrub burrowing can be interrupted by dealing damage to them.
+  - balance: Goldgrubs no longer reflect non-bomb/energy shots.
+  - balance: AOE mining methods now have a 10/25% chance to not mine siderite/shale
+      unless it has ore inside of it.
+  - refactor: Lavaland generation has been rewritten. The caves should be much more
+      wilder.
   SyncIt21:
   - bugfix: AI camera mode works from any distances
   TheRealSpriteMan1337:
   - image: Omega soap texture has been updated.
   TheRyeGuyWhoWillNowDie:
   - bugfix: welding goggles now only cover your eyes when covering your eyes
+  Y0SH1M4S73R:
+  - balance: Wizards with the Heart Eater perk are only invigorated by the hearts
+      of sentient beings.
+  - rscadd: To facilitate the taking of hearts from sentient beings, the Heart Eater
+      perk lets you tear the heart out of the chest of an incapacitated or dead being
+      by targeting their chest with an empty hand in combat mode.
   Yobrocharlie:
   - rscadd: The heretic gateway now has a 40mm cannon in it.
   lelandkemble:
   - bugfix: Janiborgs will no longer track blood while autowashing
+  - bugfix: Fixes one way to get stuck in place forever while using a fulton extraction
+      kit
   necromanceranne:
   - qol: The detective's noir fedora is actually a detective fedora, and gets all
       the unique qualities expected of one.
+2026-04-21:
+  Ben10Omintrix:
+  - balance: the grapple gun's price has been reduced to 1500 points
+  LT3:
+  - bugfix: Fixed loss of credits for correctly denied minerals market cargo manifest
+  - bugfix: Cargo budget materials market orders arrive in crates as expected
+  Pumpkinoe:
+  - map: Centcom's ERT wing has been updated, including a new door that leads directly
+      to the pod bay and buttons to control the doors!
+  Yobrocharlie:
+  - rscadd: added more things to the antag gear spawner
+2026-04-22:
+  ArcaneMusic:
+  - bugfix: More safeguards were added to the admin "Create Black Market Item" verb.
+  Melbert:
+  - rscadd: Spacers who manage to get nograv while on a planet are given a positive
+      moodlet, and are considered in space for the purpose of their buffs/debuffs
+  TheBoondock:
+  - refactor: refactored majority of gas_mix mole change into adjust_gas() proc
+  lelandkemble:
+  - bugfix: Butchering heads no longer moves their organs to nullspace, and probably
+      the same with any other method of mass removing organs.
+  vinylspiders:
+  - bugfix: fixes an issue where raptor chicks and other non-items appearing in item
+      contents would prevent any personal crafting in the vicinity
+2026-04-23:
+  1393F:
+  - bugfix: The mushroom bowl no longer turns invisible when filled with a reagent.
+  Absolucy, LemonInTheDark:
+  - bugfix: You can no longer see lights through walls when using mesons or when ventcrawling.
+  ArcaneMusic:
+  - qol: The GMM Ui can now tell you the minimum and maximum price ranges that a material
+      will sell for.
+  - qol: You can now sell materials on the edge of their buying and selling thresholds.
+      (This really only effects iron and glass, practically)
+  - rscadd: The boulder smelter and refinery may now take a plumbing input (Closely
+      examine to see the full list) to boost the mineral output of processed boulders.
+  - rscadd: Boulder refinery machines will produce a new chemical, industrial waste,
+      which must be managed, dispersed, or it will eventually overflow if too much
+      exists in the same container.
+  - balance: The smelter and refinery now produce less mining points per unit than
+      before, but the quantity of points are now better scaled to the quantity processed.
+      50% more ores means 50% more points.
+  - balance: The amount of points generated per ore within boulders is now a separate
+      variable, not a percentage of the base value. This means some ores are better/worse
+      for generating mining points as a result.
+  - balance: Completing wave defense will award 200 more points across all ore vent
+      tiers, 700/1200/1700 for small/medium/large vents.
+  ElGitificador:
+  - balance: mutations coming from most random mutation sources can now be saved in
+      dna consoles
+  Ghommie:
+  - bugfix: Packs exclusive to the express console (crab rockets for example) can
+      now be ordered from express consoles.
+  Happyowl93:
+  - code_imp: makeHologram now allows a color override.
+  JohnFulpWillard:
+  - rscadd: You can Ctrl Click a camera to set it to print monochrome photos. The
+      detective's camera is on this mode by default.
+  - qol: Photos without a scribble written on them won't have empty white space at
+      the bottom.
+  Melbert:
+  - balance: Codex Cicatrix is now a tier 1 heretic knowledge, and can not be drafted.
+  - balance: Warren King's Welcome is now a tier 1 heretic knowledge, but can be drafted.
+  - balance: Warren King's Welcome soft reworked. Now needs 10 cable, 1 paper, 1 multitool.
+      Now adds access to all IDs present, including worn IDs. Now adds "heretic" access
+      to the ID card. Now changes all nearby airlocks to require "heretic" access,
+      and cuts the AI wire.
+  - balance: Eldritch ID card starts with "heretic" access.
+  - admin: Adds toggle for meteor mode in secrets
+  - rscadd: Some EVA helmets now have retractable visors, which you can pull up or
+      down at will, to reveal your face.
+  - balance: The amount of blood loss from an attack to an already bleeding wound
+      has been tweaked. As an example, a 20 force attack used to range 0.1% to 4%
+      blood loss, and now ranges 1% to 3%.
+  - bugfix: Plasma works in IEDs again
+  SmArtKar:
+  - admin: Planemaster Debugger now has a text search input to locate and jump to
+      planes
+  TealSeer:
+  - bugfix: fixed CSS-related errors in BYOND 516.1681+
+  levels0:
+  - bugfix: metalgen and secret sauce recipes are now loaded properly
+  timothymtorres:
+  - map: Add Shoe Factory to lava/ice ruins.
+2026-04-24:
+  lelandkemble:
+  - bugfix: Looming works again
+2026-04-25:
+  Arturlang:
+  - rscadd: changes shutter and high security door sprites on the infiltrator battlecruiser
+      and the syndicate nuclear operative base
+  Ben10Omintrix:
+  - refactor: beepskies, and ed209s have been refactored. please report any bugs
+  - rscadd: ed209s can now wear hats! some hats give them new dialogue
+  - rscadd: emagged ed209s are now rideable!
+  - rscadd: added evil versions of the ed209s to the syndie uplink
+  Capsandi:
+  - sound: fire alarms are no longer stereo files condensed to mono at runtime
+  forgman6:
+  - rscadd: Saviors paper hat.
+  - rscadd: Added worn and normal icon states for it in costume.dmi
+  - map: Modified bus.dmm to include the paper hat behind the main bus.
+  lelandkemble:
+  - bugfix: Stamina bars no longer invert the value they show you
+  - bugfix: Nonbinary people can respawn
+2026-04-26:
+  Aliceee2ch:
+  - bugfix: LIttle map fixes for lavaland.
+  JohnFulpWillard:
+  - rscdel: Removed Station Time, now we use NST (Nanotrasen Standard Time), which
+      is IRL server time +540 years, and PT (Pay Time), the amount of time since the
+      round has started.
+  - rscdel: Station nightshift is now a Station event rather than being based on Server
+      time.
+  - balance: Time circuit's Unit of Measure now tells the amount of time in hour/minute/seconds
+      rather than giving the whole time translated to hours/minutes/seconds.
+  - qol: Added a 12-hour clock pref for people who prefer it.
+  - qol: Hovering over NST timestamps on official documents will now translate how
+      much it is in PT/Shift Time.
+  - admin: Admins can now use style/class/background in their papercode.
+  - qol: Pray verb is now a hotkey, Whisper is now a command bar button, and all say
+      verbs have been removed from the stat panel.
+  - qol: Admin button on the escape menu is now its own section for praying, as well
+      as seeing your latest ticket & admin notes.
+  - bugfix: Resizing the stat panel will no longer change the size of the command
+      bar.
+  Rhials:
+  - bugfix: The bear mask in the pizzeria virtual domain is now a regular, non-cursed
+      mask.
+  Ruslanllll:
+  - bugfix: Alien plasma display works again
+  lelandkemble:
+  - bugfix: Ninja spider bomb can no longer be placed in certain situations it would
+      be unable to detonate
+  vinylspiders:
+  - bugfix: mobs and features should not be spawning in walls anymore in certain biomes
+2026-04-27:
+  levels0:
+  - bugfix: metalgen and secret sauce should now generate properly

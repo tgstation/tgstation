@@ -198,6 +198,7 @@
 	/// Static list of reagent to explosive power
 	var/static/list/fuel_power = list(
 		/datum/reagent/fuel = 0.5,
+		/datum/reagent/toxin/plasma = 0.75,
 		/datum/reagent/gunpowder = 1,
 		/datum/reagent/nitroglycerin = 2,
 		/datum/reagent/tatp = 2.5,
