@@ -10,7 +10,7 @@
 	if(gone == cell)
 		turn_off()
 		cell = null
-		diag_hud_set_mulebotcell()
+		set_cell_hud()
 
 // mousedrop a crate to load the bot
 // can load anything if hacked

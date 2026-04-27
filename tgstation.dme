@@ -5210,6 +5210,7 @@
 #include "code\modules\mob\living\basic\bots\mulebot\mulebot_ai.dm"
 #include "code\modules\mob\living\basic\bots\mulebot\mulebot_control.dm"
 #include "code\modules\mob\living\basic\bots\mulebot\mulebot_delivery.dm"
+#include "code\modules\mob\living\basic\bots\mulebot\mulebot_hud.dm"
 #include "code\modules\mob\living\basic\bots\mulebot\mulebot_movement.dm"
 #include "code\modules\mob\living\basic\bots\mulebot\mulebot_paranormal.dm"
 #include "code\modules\mob\living\basic\bots\repairbot\repairbot.dm"

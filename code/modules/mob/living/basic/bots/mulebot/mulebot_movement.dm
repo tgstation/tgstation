@@ -12,7 +12,7 @@
 
 /mob/living/basic/bot/mulebot/on_bot_movement(atom/movable/source, atom/oldloc, dir, forced)
 	cell?.use(cell_move_power_usage)
-	diag_hud_set_mulebotcell()
+	set_cell_hud()
 
 	if(has_gravity())
 		for(var/mob/living/carbon/human/future_pancake in loc)
