@@ -435,12 +435,17 @@
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/key/golfcart)
 
-
 /datum/supply_pack/goody/handheld_crew_monitor
 	name = "Handheld Crew Monitor"
-	desc = "A crate containing a handheld crew monitor"
+	desc = "A crate containing a handheld crew monitor."
 	cost = /obj/item/sensor_device::custom_premium_price * 1.25 // 1.25X base vending machine value
 	contains = list(
 		/obj/item/sensor_device,
 	)
 	crate_name = "handheld crew monitor crate"
+
+/datum/supply_pack/goody/camera
+	name = "Broadcast Camera"
+	desc = "A single broadcast camera which broadcasts to the station's entertainment monitors, for all your theatrical needs."
+	cost = PAYCHECK_COMMAND * 6
+	contains = list(/obj/item/broadcast_camera/cargo)
