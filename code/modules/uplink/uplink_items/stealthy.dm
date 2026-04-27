@@ -44,6 +44,14 @@
 	cost = 6
 	surplus = 50
 
+/datum/uplink_item/stealthy_weapons/carnivorous_blood
+	name = "Carnivorous Blood"
+	desc = "A bottle of Carnivorous Blood, an Interdyne bioweapon that, once mixed with a potential victim's blood and then inserted into their bloodstream, \
+		will rapidly consume its victim's supply of usable blood."
+	item = /obj/item/reagent_containers/cup/bottle/carnivorous_blood
+	cost = 4
+	surplus = 50
+
 /datum/uplink_item/stealthy_weapons/suppressor
 	name = "Suppressor"
 	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Makarov, Stechkin APS and C-20r, but not revolvers or energy guns."

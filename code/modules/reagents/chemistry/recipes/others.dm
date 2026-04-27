@@ -1104,3 +1104,16 @@
 
 	glitter.data["colors"] = list("[accumulated_color]" = 100)
 	glitter.color = accumulated_color
+
+/datum/chemical_reaction/feed_carnivorous_blood
+	results = list(/datum/reagent/toxin/carnivorousblood = 1)
+	required_reagents = list(/datum/reagent/toxin/carnivorousblood = 1, /datum/reagent/blood = 1)
+	mix_message = "the mixture jumps and sloshes around!"
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/feed_carnivorous_blood/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/datum/reagent/toxin/carnivorousblood/hungryblood = holder.has_reagent(/datum/reagent/toxin/carnivorousblood)
+	var/list/new_blood_dna = list()
+	for(var/datum/reagent/blood/bloodinstance in holder.reagent_list)
+		new_blood_dna += bloodinstance.data["blood_DNA"]
+	hungryblood.feed_dna_list(new_blood_dna)
