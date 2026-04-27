@@ -30,7 +30,7 @@
 		add_screen_object(/atom/movable/screen/alien/leap, HUD_ALIEN_HUNTER_LEAP, HUD_GROUP_STATIC, ui_style)
 
 	if(!isalienqueen(mymob))
-		add_screen_object(/atom/movable/screen/alien/plasma_display, HUD_ALIEN_QUEEN_FINDER, HUD_GROUP_INFO)
+		add_screen_object(/atom/movable/screen/alien/alien_queen_finder, HUD_ALIEN_QUEEN_FINDER, HUD_GROUP_INFO)
 
 /datum/hud/alien/persistent_inventory_update()
 	if(!mymob)

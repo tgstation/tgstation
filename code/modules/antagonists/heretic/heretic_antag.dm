@@ -348,7 +348,9 @@
 			qdel(path)
 
 	if(give_objectives)
-		forge_primary_objectives(heretic_shops[HERETIC_KNOWLEDGE_TREE])
+		var/datum/objective/pick_path/pick_a_path = new()
+		pick_a_path.owner = owner
+		objectives += pick_a_path
 
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge, HERETIC_KNOWLEDGE_START, update = FALSE)
@@ -684,8 +686,13 @@
 /**
  * Create our objectives for our heretic.
  */
-/datum/antagonist/heretic/proc/forge_primary_objectives(heretic_research_tree)
-	var/datum/objective/heretic_research/research_objective = new(heretic_research_tree = heretic_research_tree)
+/datum/antagonist/heretic/proc/forge_primary_objectives()
+	for(var/datum/objective/pick_path/filler in objectives)
+		filler.owner = null
+		objectives -= filler
+		qdel(filler)
+
+	var/datum/objective/heretic_research/research_objective = new(heretic_research_tree = heretic_shops)
 	research_objective.owner = owner
 	objectives += research_objective
 
@@ -1073,6 +1080,10 @@
 
 	return HERETIC_HAS_LIVING_HEART
 
+/datum/objective/pick_path
+	name = "pick a path"
+	explanation_text = "Pick a path to pursue."
+
 /// Heretic's minor sacrifice objective. "Minor sacrifices" includes anyone.
 /datum/objective/minor_sacrifice
 	name = "minor sacrifice"
@@ -1107,29 +1118,21 @@
 /// Heretic's research objective. "Research" is heretic knowledge nodes (You start with some).
 /datum/objective/heretic_research
 	name = "research"
-	/// The length of a main path. Calculated once in New().
-	var/static/main_path_length = 0
+	target_amount = 1 // You spawn with 1 point
 
-/datum/objective/heretic_research/New(text, heretic_research_tree)
+/datum/objective/heretic_research/New(text, list/heretic_research_tree = list())
 	. = ..()
 
-	if(!main_path_length)
-		// Let's find the length of a main path. We'll use rust because it's the coolest.
-		// (All the main paths are (should be) the same length, so it doesn't matter.)
-		var/rust_paths_found = 0
-		for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
-			var/list/knowledge_data = heretic_research_tree[knowledge]
-			if(knowledge_data && knowledge_data[HKT_ROUTE] == PATH_RUST)
-				rust_paths_found++
-
-		main_path_length = rust_paths_found
-
-	// Factor in the length of the main path first.
-	target_amount = main_path_length
-	// Add in the base research we spawn with, otherwise it'd be too easy.
+	// Factor in the length of the main path
+	target_amount += length(heretic_research_tree[HERETIC_KNOWLEDGE_TREE]) || 10
+	// Factor in base research we spawn with (otherwise it'd be too easy)
 	target_amount += length(GLOB.heretic_start_knowledge)
-	// And add in some buffer, to require some sidepathing, especially since heretics get some free side paths.
+	// Factor in free knowledge, no challenge there
+	target_amount += ceil(length(heretic_research_tree[HERETIC_KNOWLEDGE_DRAFT]) / 3) || 4
+
+	// The actual challenge factor is introduced here, adding a random amount of additional knowledge needed
 	target_amount += rand(2, 4)
+
 	update_explanation_text()
 
 /datum/objective/heretic_research/update_explanation_text()

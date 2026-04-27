@@ -255,6 +255,9 @@
 /// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)
 #define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"
 
+/// From /obj/structure/ore_vent/proc/initiate_wave_win() : (obj/structure/ore_vent/vent)
+#define COMSIG_LIVING_ON_VENT_WIN "living_on_vent_win"
+
 /// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
 #define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"
 
@@ -390,3 +393,6 @@
 
 /// From /obj/item/stack/ore/bluespace_crystal/attack_self() : (obj/item/crushed_crystal)
 #define COMSIG_MOB_CRUSHED_BLUESPACE_CRYSTAL "living_crushed_bluespace_crystal"
+
+/// From /mob/living/proc/refresh_gravity() : (new_gravity, old_gravity)
+#define COMSIG_LIVING_GRAVITY_CHANGED "living_gravity_changed"
