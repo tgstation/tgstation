@@ -1,6 +1,3 @@
-
-#define BUZZER_COOLDOWN 2 SECONDS
-
 /mob/living/basic/bot/mulebot
 	name = "\improper MULEbot"
 	desc = "A Multiple Utility Load Effector bot."
@@ -21,7 +18,7 @@
 	animate_movement = SLIDE_STEPS
 	speed = 3
 
-	combat_mode = TRUE //No swapping
+	combat_mode = TRUE
 
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE // No pulling loaded shit
@@ -59,13 +56,13 @@
 	var/num_steps = 0
 
 	///The chance to be deleted and replaced by a different mule
-	var/replacement_chance = 0.666 //0.666
+	var/replacement_chance = 0.666
 	///home destination, only used by mappers.
 	var/home_destination = ""
 
 /mob/living/basic/bot/mulebot/Initialize(mapload)
 	. = ..()
-	//if(prob(0.666) && mapload)
+
 	if(prob(replacement_chance) && mapload)
 		new /mob/living/basic/bot/mulebot/paranormal(loc)
 		return INITIALIZE_HINT_QDEL
@@ -75,6 +72,7 @@
 
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
+	add_traits(list(TRAIT_NOMOBSWAP, TRAIT_COMBAT_MODE_LOCK), INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_pre_move))
 
 	set_id(suffix || assign_random_name())
@@ -122,9 +120,15 @@
 	else
 		return ..()
 
-/mob/living/basic/bot/mulebot/turn_on()
+/mob/living/basic/bot/mulebot/turn_on(mob/user)
+	if(bot_access_flags & BOT_COVER_MAINTS_OPEN)
+		if(user)
+			to_chat(user, span_warning("[src]'s maintenance panel is open!"))
+		return FALSE
 	if(!has_power())
-		return
+		if(user)
+			to_chat(user, span_warning("[src] has no power!"))
+		return FALSE
 	return ..()
 
 /mob/living/basic/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3

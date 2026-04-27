@@ -39,24 +39,8 @@
 		return
 
 	switch(action)
-		if("lock")
-			if(HAS_SILICON_ACCESS(user))
-				bot_access_flags ^= BOT_COVER_LOCKED
-				return TRUE
-		if("on")
-			if(bot_mode_flags & BOT_MODE_ON)
-				turn_off()
-			else if(bot_access_flags & BOT_COVER_MAINTS_OPEN)
-				to_chat(user, span_warning("[name]'s maintenance panel is open!"))
-				return
-			else if(cell)
-				if(!turn_on())
-					to_chat(user, span_warning("You can't switch on [src]!"))
-					return
-			return TRUE
-		else
-			bot_control(action, user, params)
-			return TRUE
+		bot_control(action, user, params)
+		return TRUE
 
 /mob/living/basic/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)
 	if(pda && wires.is_cut(WIRE_RX)) // MULE wireless is controlled by wires.
@@ -103,13 +87,13 @@
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(ai_controller.blackboard[BB_MULEBOT_DESTINATION_BEACON] == ai_controller.blackboard[BB_MULEBOT_HOME_BEACON])
-		mode = BOT_GO_HOME
+		update_bot_mode(new_mode = BOT_GO_HOME)
 	else
-		mode = BOT_DELIVER
+		update_bot_mode(new_mode = BOT_DELIVER)
 
 /mob/living/basic/bot/mulebot/proc/start_home()
 	set_destination(ai_controller.blackboard[BB_MULEBOT_HOME_BEACON])
-	mode = BOT_GO_HOME
+	update_bot_mode(new_mode = BOT_GO_HOME)
 
 /mob/living/basic/bot/mulebot/proc/set_destination(new_destination)
 	ai_controller.set_blackboard_key(BB_MULEBOT_DESTINATION_BEACON, new_destination)
