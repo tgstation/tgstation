@@ -17,7 +17,7 @@
 
 	playsound(src, SFX_SHATTER, 50, TRUE)
 	playsound(src, 'sound/effects/magic/voidblink.ogg', 50, FALSE)
-	if(IS_HERETIC(user))
+	if(IS_HERETIC_OR_MONSTER(user))
 		to_chat(user, span_mansus("You smash [src], releasing its power around you!"))
 		for(var/mob/living/nearby_mob in view(3, user))
 			if(IS_HERETIC_OR_MONSTER(nearby_mob))
