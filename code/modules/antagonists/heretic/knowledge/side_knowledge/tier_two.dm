@@ -184,11 +184,10 @@
 	desc = "Exposes a healthen directly to the horrors of the Mansus, hypnotizing them."
 	transmute_text = "Transmute a scalpel, a shard of glass, a piece of paper, and a living heathen."
 	notice = "Whatever is written on the paper supplied, the heathen will be hypnotized with.\
-		<br>If the heathen is mindshielded, it will shater - but the resulting hypnosis may not be what you expect.\
+		<br>If the heathen is mindshielded, it will shatter - but the resulting hypnosis may not be what you expect.\
 		<br>Other Heretics are unaffected by this ritual."
 	gain_text = "My rise has been lonely, but I had realized it did not have to be. \
-		I can show them the truth. Their weak, mortal minds may not be able to withstand the revelation, but in its tatters, they will find freedom. \
-		I can show them the world as it really is, and if they are strong enough to endure it, they will join me in my vision."
+		I can show them the truth. Their weak, mortal minds may not be able to withstand the revelation, but in its ashes, a phoenix will rise, free and true."
 	required_atoms = list(
 		/obj/item/scalpel = 1,
 		/obj/item/shard = 1,
@@ -201,13 +200,24 @@
 	drafting_tier = 2
 
 /datum/heretic_knowledge/hypnosis_ritual/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	. = ..()
 	for(var/mob/living/carbon/human/victim in atoms)
 		if(victim.stat == DEAD || IS_HERETIC(victim) || victim.has_trauma_type(/datum/brain_trauma/hypnosis))
 			atoms -= victim
 
+	var/has_paper = FALSE
+	var/has_written_text = FALSE
+	for(var/obj/item/paper/paper in atoms)
+		has_paper = TRUE
+		for(var/datum/paper_input/text as anything in paper.raw_text_inputs)
+			has_written_text = TRUE
+
+	if(!has_written_text && has_paper)
+		loc.balloon_alert(user, "write your hypnosis on the paper!")
+		return FALSE
+
+	return ..()
+
 /datum/heretic_knowledge/hypnosis_ritual/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	. = ..()
 	var/hypnosis_text = ""
 	if(!HAS_TRAIT(user, TRAIT_UNCONVERTABLE))
 		for(var/obj/item/paper/paper in selected_atoms)
@@ -225,5 +235,8 @@
 
 		selected_atoms -= victim
 		// lobotomy resistance because it might be a bit rough to make this permanent aye
+		// future note: if people just spam hypnosis to make an army to rush ascension, make it so hypnosis is broken by witnessing sacrifices
 		var/datum/brain_trauma/hypnosis/trauma = new(hypnosis_text)
 		victim.gain_trauma(trauma, TRAUMA_RESILIENCE_LOBOTOMY)
+
+	return TRUE
