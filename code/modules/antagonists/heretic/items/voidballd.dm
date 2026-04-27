@@ -10,7 +10,7 @@
 	. = ..()
 	transform = transform.Scale(0.5)
 
-/obj/item/void_prison/attack_self(mob/user, modifiers)
+/obj/item/void_prison/attack_self(mob/living/user, modifiers)
 	. = ..()
 	if(.)
 		return

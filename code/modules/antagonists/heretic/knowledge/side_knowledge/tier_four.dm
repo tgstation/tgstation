@@ -33,6 +33,7 @@
 	if(isnull(rune))
 		return
 
+	rune.ritual_animation()
 	add_charges(1)
 
 /datum/heretic_knowledge/unfathomable_curio

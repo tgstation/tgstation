@@ -197,7 +197,7 @@
 	desc = "Alters the fabric of reality, conjuring a magical arena impassable to outsiders, \
 		all participants are trapped and immune to any form of crowd control or environmental hazards; \
 		trapped participants are granted a Blade and are unable to leave or jaunt until they score a critical hit. \
-		Downing combatants partially restore the Heretic's health."
+		Knocking combatant into critical condition partially restore the Heretic's health."
 	gain_text = "Shadows crawl across the room, casting every chair, table \
 		and console into the looming shape of another traitorous hand. \
 		I have made an enemy of all, and peace will never be known to me \
@@ -209,7 +209,7 @@
 	max_charges = 4
 	holywater_drain_amount = 0.25
 	transmute_text = "You are rewarded with one charge for every sacrifice you complete. \
-		You will also be rewarded with a charge if you down at least three combatants while the spell is active. \
+		You will also be rewarded with a charge if you knock at least three combatants into critical condition while the spell is active. \
 		You may only have up to four charges at once."
 
 /datum/heretic_knowledge/spell/wolves_among_sheep/New()
@@ -339,7 +339,7 @@
 	focus_recharge_amount = 0.33
 	holywater_drain_amount = 0.16
 	transmute_text = "To recharge, complete a ritual with a knife - this will return half of the spell's maximum charges. \
-		Alternatively, you gain two charge every time you knock someone into critical condition."
+		You will also gain two charge every time you knock someone into critical condition."
 
 /datum/heretic_knowledge/spell/furious_steel/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()

@@ -217,8 +217,7 @@
 	// If we made it here, the ritual had all necessary components, and we can try to cast it.
 	// This doesn't necessarily mean the ritual will succeed, but it's valid!
 	// Do the animations and associated feedback.
-	flick("[icon_state]_active", src)
-	playsound(user, 'sound/effects/magic/castsummon.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10, ignore_walls = FALSE)
+	ritual_animation()
 
 	// - We temporarily make all of our chosen atoms invisible, as some rituals may sleep,
 	// and we don't want people to be able to run off with ritual items.
@@ -255,6 +254,9 @@
 
 	return ritual_result
 
+/obj/effect/heretic_rune/proc/ritual_animation()
+	flick("[icon_state]_active", src)
+	playsound(src, 'sound/effects/magic/castsummon.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10, ignore_walls = FALSE)
 
 /// A 3x3 heretic rune. The kind heretics actually draw in game.
 /obj/effect/heretic_rune/big
