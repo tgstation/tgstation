@@ -78,7 +78,6 @@
 		update_appearance(UPDATE_ICON)
 		return NONE
 
-
 /obj/item/earthcracker/Destroy(force)
 	. = ..()
 	QDEL_NULL(particles)
@@ -130,12 +129,12 @@
 	playsound(src, 'sound/items/weapons/earthcracker_bang.mp3', 75, FALSE, 3)
 	var/turf/cracked_hull = drop_location()
 	new weakpoint_type(cracked_hull)
-	handle_after_activation()
+	handle_after_activation(cracked_hull)
 
 /**
  * Cleanup after an earthcracker is activated either for sabotage or mining.
  */
-/obj/item/earthcracker/proc/handle_after_activation()
+/obj/item/earthcracker/proc/handle_after_activation(turf/cracked_hull)
 	do_sparks(2, FALSE, src)
 	cracked_hull.levelupdate()
 
@@ -144,6 +143,7 @@
 	particles = new /particles/smoke/burning/small
 	activation_timer = null
 
+/** Called after the earthcracker activates. */
 /obj/item/earthcracker/proc/post_break()
 	deconstruct(TRUE)
 
