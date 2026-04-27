@@ -15,9 +15,9 @@
 	var/name = "Basic knowledge"
 	/// Description of the knowledge, shown to the heretic. Describes what it unlocks / does.
 	var/desc = "Basic knowledge of forbidden arts."
-
+	/// Text describing how you create the thing
 	var/transmute_text = ""
-
+	/// Big red notices about the knowledge
 	var/notice = ""
 	/// What's shown to the heretic when the knowledge is acquired
 	var/gain_text

@@ -38,7 +38,7 @@
 	start = /datum/heretic_knowledge/limited_amount/starting/base_void
 	knowledge_tier1 = /datum/heretic_knowledge/spell/void_phase
 	guaranteed_side_tier1 = /datum/heretic_knowledge/void_cloak
-	knowledge_tier2 = /datum/heretic_knowledge/spell/void_prison
+	knowledge_tier2 = /datum/heretic_knowledge/void_prison
 	guaranteed_side_tier2 = /datum/heretic_knowledge/ether
 	robes = /datum/heretic_knowledge/armor/void
 	knowledge_tier3 = /datum/heretic_knowledge/spell/void_pull
@@ -101,33 +101,43 @@
 	holywater_drain_amount = 0.25
 	transmute_text = "To recharge, complete a ritual with a pane of glass."
 
-/datum/heretic_knowledge/spell/void_prison
+/datum/heretic_knowledge/void_prison
 	name = "Void Prison"
-	desc = "Grants you Void Prison, a spell that places your victim into a ball, making them unable to do anything or speak. \
-		Applies void chill afterwards."
+	desc = "Transmute a set of handcuffs, a stun baton, and a closet in sub-zero temperatures to gain a Void Prison.<br>\
+		A Void Prison is an orb that, when used, traps all nearby unmarked heathens into a stasis ball for 10 seconds. \
+		While in the ball, they are unable to speak, act, or be harmed. The Void Prison is consumed after one use."
+	transmute_text = "Transmute a set of handcuffs, a stun baton, and a closet in sub-zero temperatures."
 	gain_text = "At first, I see myself, waltzing along a snow-laden street. \
 		I try to yell, grab hold of this fool and tell them to run. \
 		But the only welts made are on my own beating fist. \
 		My smiling face turns to regard me, reflecting back in glassy eyes the empty path I have been lead down."
-
-	action_to_add = /datum/action/cooldown/spell/pointed/void_prison
+	required_atoms = list(
+		/obj/item/restraints/handcuffs = 1,
+		/obj/structure/closet = 1,
+		/obj/item/melee/baton/security = 1,
+	)
+	result_atoms = list(/obj/item/void_prison)
 	cost = 2
 	drafting_tier = 5
-	max_charges = 1
-	holywater_drain_amount = 0.5
-	transmute_text = "You are rewarded with one charge for every sacrifice you complete."
 
-/datum/heretic_knowledge/spell/void_prison/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	var/list/closet_blacklist = list(
+		/obj/structure/closet/crate,
+		/obj/structure/closet/body_bag,
+		/obj/structure/closet/cardboard,
+		/obj/structure/closet/infinite,
+	)
+
+/datum/heretic_knowledge/void_prison/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
-	RegisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE, PROC_REF(on_sacrifice))
+	for(var/obj/structure/closet/closet in atoms)
+		if(is_type_in_list(closet, closet_blacklist))
+			atoms -= closet
 
-/datum/heretic_knowledge/spell/void_prison/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	UnregisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE)
+/datum/heretic_knowledge/void_prison/cleanup_atoms(list/selected_atoms)
+	for(var/obj/structure/closet/closet in selected_atoms)
+		closet.dump_contents()
 
-/datum/heretic_knowledge/spell/void_prison/proc/on_sacrifice(...)
-	SIGNAL_HANDLER
-	add_charges(1, uncapped = TRUE)
+	return ..()
 
 /datum/heretic_knowledge/armor/void
 	desc = "Create a Hollow Weave.<br>\
@@ -220,33 +230,80 @@
 /datum/heretic_knowledge/blade_upgrade/void/proc/follow_up_attack(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	blade.melee_attack_chain(user, target)
 
-/datum/heretic_knowledge/spell/void_conduit
+/datum/heretic_knowledge/void_conduit
 	name = "Void Conduit"
-	desc = "Grants you Void Conduit, a spell which summons a pulsing gate to the void itself.<br>\
-		Every pulse breaks windows and airlocks, while simultaneously afflicting heathens with an eldritch chill \
-		and shielding heretics against low pressure."
+	desc = "Empowers your blade, allowing you to rip a hole through space itself. \
+		Attacking space with one of your void blades will create conduit to the void, \
+		damaging and chilling nearby heathens, and destroying windows and airlocks in the area."
+	notice = "The blade is consumed in the process. You can also use this ability on snow, or any tile in a complete vacuum."
 	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
 		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
 		The doors won't close. I can't keep the cold out now."
-	action_to_add = /datum/action/cooldown/spell/conjure/void_conduit
 	cost = 2
 	is_final_knowledge = TRUE
-	max_charges = 1
-	holywater_drain_amount = 0.5
-	transmute_text = "You are rewarded with one charge for every high value sacrifice you complete."
 
 /datum/heretic_knowledge/spell/void_conduit/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	RegisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE, PROC_REF(on_sacrifice))
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_PREATTACK, PROC_REF(on_blade_preattack))
 
 /datum/heretic_knowledge/spell/void_conduit/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	UnregisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE)
+	UnregisterSignal(user, COMSIG_HERETIC_BLADE_PREATTACK)
 
-/datum/heretic_knowledge/spell/void_conduit/proc/on_sacrifice(datum/source, mob/living/sacrifice, high_value)
+/datum/heretic_knowledge/spell/void_conduit/proc/is_valid_turf(turf/open/affected_turf)
+	// space is the obvious one, snow is for icebox
+	if(isspaceturf(affected_turf) || issnowturf(affected_turf))
+		return TRUE
+	// works in any vacuum as a backup
+	var/datum/gas_mixture/air = affected_turf.return_air()
+	if(air?.return_pressure() <= 0)
+		return TRUE
+	return FALSE
+
+/datum/heretic_knowledge/spell/void_conduit/proc/is_valid_turf_callback(turf/open/affected_turf, mob/living/source, obj/item/sword)
+	if(!source.is_holding(sword))
+		return FALSE
+	if(!is_valid_turf(affected_turf))
+		return FALSE
+	if(affected_turf.GetTemperature() > T0C)
+		return FALSE
+	return TRUE
+
+/datum/heretic_knowledge/spell/void_conduit/proc/on_blade_preattack(mob/living/source, atom/target, obj/item/sword)
 	SIGNAL_HANDLER
-	if(high_value)
-		add_charges(1, uncapped = TRUE)
+	if(!isopenturf(target))
+		return NONE
+
+	var/turf/open/affected_turf = target
+	if(!is_valid_turf(affected_turf))
+		return NONE
+
+	if(affected_turf.GetTemperature() <= T0C)
+		INVOKE_ASYNC(src, PROC_REF(create_conduit), affected_turf, source, sword)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	to_chat(source, span_mansus("[sword] hums with power, but [target] is not cold enough to create a conduit!"))
+	return NONE
+
+/datum/heretic_knowledge/spell/void_conduit/proc/create_conduit(turf/open/affected_turf, mob/living/source, obj/item/sword)
+	playsound(source, 'sound/effects/cloth_rip.ogg', 50, TRUE) // funny thing is, can't hear sound in a vacuum
+	to_chat(source, span_mansus("You plunge [sword] deep into [affected_turf], trying to rip open a conduit to the void!"))
+	source.visible_message(
+		span_hypnophrase("[source] plunges [source.p_their()] [sword.name] into [affected_turf] - \
+			[isspaceturf(affected_turf) ? "but instead of nothing happening" : "contrary to what you expected"], a dark energy begins to flow from the site!"),
+		ignored_mobs = source,
+	)
+	if(!do_after(source, 5 SECONDS, affected_turf, extra_checks = CALLBACK(src, PROC_REF(is_valid_turf_callback), affected_turf, source, sword)))
+		return
+	to_chat(source, span_mansus("The conduit opens, releasing a storm of void energy! [sword] shatters into a million tiny shards!"))
+	source.visible_message(
+		span_hypnophrase("A conduit to the void opens, releasing a storm of void energy!"),
+		ignored_mobs = source,
+	)
+	new /obj/structure/void_conduit(affected_turf)
+	source.dropItemToGround(sword)
+	qdel(sword)
+	playsound(source, SFX_SHATTER, 50, FALSE)
 
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"

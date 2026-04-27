@@ -152,7 +152,7 @@
 	max_charges = 4
 	focus_recharge_amount = 0.25
 	holywater_drain_amount = 0.25
-	transmute_text = "To recharge, successfully apply a Moonlight Amulet to a heathen."
+	transmute_text = "To recharge, successfully apply a Moonlight Amulet to a heathen. There is no limit to the amount of charges you can have."
 
 /datum/heretic_knowledge/spell/moon_parade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -207,7 +207,7 @@
 	max_charges = 2
 	focus_recharge_amount = 0.25
 	holywater_drain_amount = 0.25
-	transmute_text = "To recharge, successfully apply a Moonlight Amulet to a heathen."
+	transmute_text = "To recharge, successfully apply a Moonlight Amulet to a heathen. There is no limit to the amount of charges you can have."
 
 /datum/heretic_knowledge/spell/moon_ringleader/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()

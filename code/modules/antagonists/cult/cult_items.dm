@@ -194,7 +194,7 @@ Striking a noncultist, however, will tear their flesh."}
 		// Void
 		PATH_VOID = list(
 			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/void_phase),
-			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/void_prison),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/aoe/void_pull),
 			SWORD_PREFIX = "tenebrous",
 		),
 		// Blade

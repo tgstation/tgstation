@@ -181,8 +181,7 @@
 
 /datum/heretic_knowledge/hypnosis_ritual
 	name = "Unwrap Minds"
-	desc = "Exposes a healthen directly to the horrors of the Mansus, hypnotizing them.\
-		<br>Further exposure to the horrors of the Mansus may cause the hypnosis to break."
+	desc = "Exposes a healthen directly to the horrors of the Mansus, hypnotizing them."
 	transmute_text = "Transmute a scalpel, a shard of glass, a piece of paper, and a living heathen."
 	notice = "Whatever is written on the paper supplied, the heathen will be hypnotized with.\
 		<br>If the heathen is mindshielded, it will shater - but the resulting hypnosis may not be what you expect.\

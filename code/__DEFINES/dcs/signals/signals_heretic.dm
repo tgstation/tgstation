@@ -9,6 +9,8 @@
 	/// Default behavior is to continue attack chain and do nothing else, so return this to use up the hand after use.
 	#define COMPONENT_USE_HAND (1<<0)
 
+/// From /obj/item/melee/sickly_blade/preattack : (mob/living/source, mob/living/target)
+#define COMSIG_HERETIC_BLADE_PREATTACK "blade_preattack"
 /// From /obj/item/melee/sickly_blade/afterattack : (mob/living/source, mob/living/target)
 #define COMSIG_HERETIC_BLADE_ATTACK "blade_attack"
 /// From /obj/item/melee/sickly_blade/ranged_interact_with_atom (without proximity) : (mob/living/source, mob/living/target)

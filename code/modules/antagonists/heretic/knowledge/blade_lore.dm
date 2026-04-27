@@ -197,7 +197,7 @@
 	desc = "Alters the fabric of reality, conjuring a magical arena impassable to outsiders, \
 		all participants are trapped and immune to any form of crowd control or environmental hazards; \
 		trapped participants are granted a Blade and are unable to leave or jaunt until they score a critical hit. \
-		Critical hits partially restore the Heretic's health."
+		Downing combatants partially restore the Heretic's health."
 	gain_text = "Shadows crawl across the room, casting every chair, table \
 		and console into the looming shape of another traitorous hand. \
 		I have made an enemy of all, and peace will never be known to me \
@@ -206,9 +206,15 @@
 	cost = 2
 	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
 	is_final_knowledge = TRUE
-	max_charges = 1
-	holywater_drain_amount = 0.5
-	transmute_text = "You are rewarded with one charge for every high value sacrifice you complete."
+	max_charges = 4
+	holywater_drain_amount = 0.25
+	transmute_text = "You are rewarded with one charge for every sacrifice you complete. \
+		You will also be rewarded with a charge if you down at least three combatants while the spell is active. \
+		You may only have up to four charges at once."
+
+/datum/heretic_knowledge/spell/wolves_among_sheep/New()
+	. = ..()
+	charges = 1 // start with one, can go up to four
 
 /datum/heretic_knowledge/spell/wolves_among_sheep/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -220,8 +226,7 @@
 
 /datum/heretic_knowledge/spell/wolves_among_sheep/proc/on_sacrifice(datum/source, mob/living/sacrifice, high_value)
 	SIGNAL_HANDLER
-	if(high_value)
-		add_charges(1, uncapped = TRUE)
+	add_charges(1)
 
 /datum/heretic_knowledge/blade_upgrade/blade
 	name = "Empowered Blades"

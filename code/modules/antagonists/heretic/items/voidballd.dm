@@ -1,40 +1,58 @@
-/datum/action/cooldown/spell/pointed/void_prison
-	name = "Void Prison"
-	desc = "Sends a heathen into the void for 10 seconds. \
-		They will be unable to perform any actions for the duration. \
-		Afterwards, they will be chilled and returned to the mortal plane."
-	background_icon_state = "bg_heretic"
-	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
-	button_icon_state = "voidball"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
-	sound = 'sound/effects/magic/voidblink.ogg'
+/obj/item/void_prison
+	name = "void prison"
+	desc = "A small glass orb of swirling darkness. It feels cold to the touch, and consumes all light around it."
+	icon = 'icons/mob/actions/actions_ecult.dmi'
+	icon_state = "voidball"
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
-	cooldown_time = 1 MINUTES
-	cast_range = 3
-
-	sound = null
-	school = SCHOOL_FORBIDDEN
-	invocation = "V'D PR'S'N!"
-	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
-
-/datum/action/cooldown/spell/pointed/void_prison/before_cast(atom/cast_on)
+/obj/item/void_prison/Initialize(mapload)
 	. = ..()
-	if(. & SPELL_CANCEL_CAST)
+	transform = transform.Scale(0.5)
+
+/obj/item/void_prison/attack_self(mob/user, modifiers)
+	. = ..()
+	if(.)
 		return
-	if(!ismob(cast_on))
-		return SPELL_CANCEL_CAST
 
-/datum/action/cooldown/spell/pointed/void_prison/cast(mob/living/carbon/human/cast_on)
-	. = ..()
-	if(cast_on.can_block_magic(antimagic_flags))
-		cast_on.visible_message(
-			span_danger("A swirling, cold void wraps around [cast_on], but they burst free in a wave of heat!"),
-			span_danger("A yawning void begins to open before you, but a great wave of heat bursts it apart! You are protected!!")
+	playsound(src, SFX_SHATTER, 50, TRUE)
+	playsound(src, 'sound/effects/magic/voidblink.ogg', 50, FALSE)
+	if(IS_HERETIC(user))
+		to_chat(user, span_mansus("You smash [src], releasing its power around you!"))
+		for(var/mob/living/nearby_mob in view(3, user))
+			if(IS_HERETIC_OR_MONSTER(nearby_mob))
+				continue
+			if(nearby_mob.has_status_effect(/datum/status_effect/eldritch))
+				continue
+			if(nearby_mob.can_block_magic(MAGIC_RESISTANCE))
+				nearby_mob.visible_message(
+					span_danger("A swirling, cold void wraps around [nearby_mob], but they burst free in a wave of heat!"),
+					span_userdanger("A yawning void begins to open before you, but a great wave of heat bursts it apart! You are protected!!")
+				)
+				continue
+			nearby_mob.visible_message(
+				span_danger("A swirling, cold void wraps around [nearby_mob]!"),
+				span_userdanger("A yawning void opens before you! You are swallowed by the darkness, and find yourself in complete nothingness..."),
+			)
+			nearby_mob.apply_status_effect(/datum/status_effect/void_prison)
+
+	else if(user.can_block_magic(MAGIC_RESISTANCE))
+		to_chat(user, span_hypnophrase("You smash [src], but its power begins to encompass you!"))
+		user.visible_message(
+			span_danger("A swirling, cold void wraps around [user], but they burst free in a wave of heat!"),
+			span_userdanger("A yawning void begins to open before you, but a great wave of heat bursts it apart! You are protected!!")
 		)
-		return
-	cast_on.apply_status_effect(/datum/status_effect/void_prison, "void_stasis")
+
+	else
+		to_chat(user, span_hypnophrase("You smash [src], but its power begins to encompass you!"))
+		user.visible_message(
+			span_danger("A swirling, cold void wraps around [user]!"),
+			span_userdanger("A yawning void opens before you! You are swallowed by the darkness, and find yourself in complete nothingness..."),
+		)
+		user.apply_status_effect(/datum/status_effect/void_prison)
+
+	qdel(src)
+	return TRUE
 
 /datum/status_effect/void_prison
 	id = "void_prison"
@@ -43,7 +61,7 @@
 	///The overlay that gets applied to whoever has this status active
 	var/obj/effect/abstract/voidball/stasis_overlay
 
-/datum/status_effect/void_prison/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/void_prison/on_creation(mob/living/new_owner)
 	. = ..()
 	stasis_overlay = new /obj/effect/abstract/voidball(new_owner)
 	RegisterSignal(stasis_overlay, COMSIG_QDELETING, PROC_REF(clear_overlay))

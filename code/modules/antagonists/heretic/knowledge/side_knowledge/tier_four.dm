@@ -14,30 +14,26 @@
 	drafting_tier = 4
 	max_charges = 2
 	holywater_drain_amount = 0.5
-	transmute_text = "To recharge, meditate on a rune in the station's EVA room for 20 seconds."
+	transmute_text = "To recharge, crush a bluespace crystal while standing over a rune."
 	/// Tracks tim ein EVA
 	var/seconds_in_eva = 0
 
 /datum/heretic_knowledge/spell/space_phase/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignal(user, COMSIG_MOB_CRUSHED_BLUESPACE_CRYSTAL, PROC_REF(on_crystal_crushed))
 
 /datum/heretic_knowledge/spell/space_phase/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	UnregisterSignal(user, COMSIG_LIVING_LIFE)
+	UnregisterSignal(user, COMSIG_MOB_CRUSHED_BLUESPACE_CRYSTAL)
 
-/datum/heretic_knowledge/spell/space_phase/proc/on_life(mob/living/source, seconds_per_tick)
+/datum/heretic_knowledge/spell/space_phase/proc/on_crystal_crushed(mob/living/source, obj/item/crystal)
 	SIGNAL_HANDLER
 
-	if(istype(get_area(source), /area/station/command/eva))
-		for(var/obj/effect/heretic_rune/rune in view(1, source))
-			seconds_in_eva += seconds_per_tick
-			if(seconds_in_eva >= 20)
-				seconds_in_eva -= 20
-				add_charges(1)
-			return
+	var/obj/effect/heretic_rune/rune = locate() in view(1, source)
+	if(isnull(rune))
+		return
 
-	seconds_in_eva = 0
+	add_charges(1)
 
 /datum/heretic_knowledge/unfathomable_curio
 	name = "Unfathomable Curio"
