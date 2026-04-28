@@ -10,12 +10,15 @@
 	bonus_deactivate_text = span_notice("You are no longer majority stoat, \
 		and you realize larger enemies are quite intimidating after all.")
 	bonus_traits = list(TRAIT_FEARLESS)
-
 	COOLDOWN_DECLARE(big_attack_dodge_cd)
 
-/datum/status_effect/organ_set_bonus/stoat/on_apply()
+/datum/status_effect/organ_set_bonus/stoat/enable_bonus(obj/item/organ/inserted_organ)
 	. = ..()
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(dodge_bigger_attack))
+
+/datum/status_effect/organ_set_bonus/stoat/disable_bonus(obj/item/organ/removed_organ)
+	. = ..()
+	UnregisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK)
 
 /datum/status_effect/organ_set_bonus/stoat/on_remove()
 	. = ..()
