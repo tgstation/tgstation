@@ -598,3 +598,6 @@
       be unable to detonate
   vinylspiders:
   - bugfix: mobs and features should not be spawning in walls anymore in certain biomes
+2026-04-27:
+  levels0:
+  - bugfix: metalgen and secret sauce should now generate properly
