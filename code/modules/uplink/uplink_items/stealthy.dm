@@ -47,8 +47,8 @@
 /datum/uplink_item/stealthy_weapons/carnivorous_blood
 	name = "Carnivorous Blood"
 	desc = "A bottle of Carnivorous Blood, an Interdyne bioweapon that, once mixed with a potential victim's blood and then inserted into their bloodstream, \
-		will rapidly consume its victim's supply of usable blood."
-	item = /obj/item/reagent_containers/cup/bottle/carnivorous_blood
+		will rapidly consume its victim's supply of usable blood. Feed it high-protein meat to let it cultivate."
+	item = /obj/item/storage/box/syndie_kit/carnivorous_blood
 	cost = 3
 	surplus = 50
 
