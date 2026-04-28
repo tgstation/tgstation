@@ -47,7 +47,7 @@
 
 	//check if the shorter reaction list is a subset of the longer one
 	var/list/reagent_overlap = long_req.required_reagents & short_req.required_reagents
-	if(overlap.len != short_req.required_reagents.len)
+	if(reagent_overlap.len != short_req.required_reagents.len)
 		//there is at least one reagent in the short list that is not in the long list, so there is no conflict
 		return FALSE
 
