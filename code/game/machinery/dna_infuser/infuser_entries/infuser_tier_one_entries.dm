@@ -223,7 +223,7 @@
 	threshold_desc = "become fearless, dodging attacks from larger opponents"
 	qualities = list(
 		"a snout!",
-		"really really tall",
+		"really tall",
 		"better senses, weaker organs",
 		"instinctively want to be alone",
 		"ferocious bites - especially when grappling",

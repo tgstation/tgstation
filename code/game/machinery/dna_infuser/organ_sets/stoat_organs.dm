@@ -124,13 +124,29 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = STOAT_COLORS
 	beat_noise = "a fast-paced high-pitched pit-pat"
-	organ_traits = list(TRAIT_TOO_TALL)
 	maxHealth = parent_type::maxHealth * 0.8 // weaker heart
+	/// Tracks height of the mob on add
+	var/mob_base_height = HUMAN_HEIGHT_MEDIUM
 
 /obj/item/organ/heart/stoat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/stoat)
 	AddElement(/datum/element/update_icon_blocker)
+
+/obj/item/organ/heart/stoat/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	if(!ishuman(organ_owner))
+		return
+	var/mob/living/carbon/human/human_owner = organ_owner
+	mob_base_height = human_owner.get_base_mob_height()
+	human_owner.set_mob_height(HUMAN_HEIGHT_TALLER, update_dna = FALSE)
+
+/obj/item/organ/heart/stoat/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	if(!ishuman(organ_owner))
+		return
+	var/mob/living/carbon/human/human_owner = organ_owner
+	human_owner.set_mob_height(mob_base_height, update_dna = FALSE)
 
 /obj/item/organ/tongue/stoat
 	name = "mutated stoat-tongue"
