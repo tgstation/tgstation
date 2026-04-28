@@ -211,7 +211,7 @@
 /obj/item/organ/eyes/stoat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/stoat)
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes are black orbs.", BODY_ZONE_PRECISE_EYES)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes are black orbs.", zone)
 
 /obj/item/organ/ears/stoat
 	name = "mutated stoat-ears"
@@ -222,12 +222,20 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = STOAT_COLORS
 	damage_multiplier = 1.2
-	organ_traits = list(TRAIT_GOOD_HEARING)
 	maxHealth = parent_type::maxHealth * 0.8 // weaker ears
 
 /obj/item/organ/ears/stoat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/stoat)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their ears are furred, and twitch occasionally.", zone)
+
+/obj/item/organ/ears/stoat/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	organ_owner.eavesdrop_range += 2
+
+/obj/item/organ/ears/stoat/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	organ_owner.eavesdrop_range -= 2
 
 /obj/item/organ/snout/stoat
 	name = "stoat snout"
