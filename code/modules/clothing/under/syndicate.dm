@@ -114,6 +114,15 @@
 	can_adjust = FALSE
 	supports_variations_flags = NONE
 
+/obj/item/clothing/under/syndicate/cybersun
+	name = "\improper Cybersun businesswear"
+	desc = "The material of this black and orange businesswear outfit appears to be surprisingly comfortable form of kevlar. \
+		Perfect for hostile takeovers and budget meetings."
+	icon_state = "cybersun_suit"
+	inhand_icon_state = "bl_suit"
+	can_adjust = FALSE
+	supports_variations_flags = NONE
+
 /obj/item/clothing/under/syndicate/floortilecamo
 	name = "floortile camouflage fatigues"
 	desc = "The newest floortile camouflage fatigues used for hallway warfare. \
