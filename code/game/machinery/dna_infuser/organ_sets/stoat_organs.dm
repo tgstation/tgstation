@@ -198,10 +198,12 @@
 	eye_color_right = COLOR_BLACK
 	lighting_cutoff = LIGHTING_CUTOFF_LOW
 	maxHealth = parent_type::maxHealth * 0.8 // weaker eyes
+	penlight_message = "shine green"
 
 /obj/item/organ/eyes/stoat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/stoat)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes are black orbs.", BODY_ZONE_PRECISE_EYES)
 
 /obj/item/organ/ears/stoat
 	name = "mutated stoat-ears"
