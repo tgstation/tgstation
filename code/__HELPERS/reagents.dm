@@ -8,13 +8,10 @@
 		return FALSE
 
 	//do the non-list tests first, because they are cheaper
-	if(r1.required_container != r2.required_container)
+	//if both reactions have containers, and they are different, there is no conflict
+	if(r1.required_container && r2.required_container && r1.required_container != r2.required_container)
 		return FALSE
-	if(r1.is_cold_recipe == r2.is_cold_recipe)
-		if(r1.required_temp != r2.required_temp)
-			//one reaction requires a more extreme temperature than the other, so there is no conflict
-			return FALSE
-	else
+	if(r1.is_cold_recipe != r2.is_cold_recipe)
 		var/datum/chemical_reaction/cold_one = r1.is_cold_recipe ? r1 : r2
 		var/datum/chemical_reaction/warm_one = r1.is_cold_recipe ? r2 : r1
 		if(cold_one.required_temp < warm_one.required_temp)
@@ -40,6 +37,9 @@
 			long_req = r2
 			short_req = r1
 
+	//if short one has a container requirement and the long one doesn't, there's no conflict
+	if(short_req.required_container && !long_req.required_container)
+		return FALSE
 
 	//check if the shorter reaction list is a subset of the longer one
 	var/list/overlap = r1.required_reagents & r2.required_reagents
