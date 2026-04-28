@@ -2,7 +2,7 @@
 /obj/item/codex_cicatrix
 	name = "Codex Cicatrix"
 	desc = "This heavy tome is full of cryptic scribbles and impossible diagrams. \
-	According to legend, it can be deciphered to reveal the secrets of the veil between worlds."
+		According to legend, it can be deciphered to reveal the secrets of the veil between worlds."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	base_icon_state = "book"
 	icon_state = "book"
@@ -11,9 +11,10 @@
 	/// Helps determine the icon state of this item when it's used on self.
 	var/book_open = FALSE
 	/// How fast we can drain influences
-	var/drain_speed = 5 SECONDS
+	var/drain_speed = 7.5 SECONDS
 	/// How fast we can draw runes
-	var/draw_speed = 8 SECONDS
+	var/draw_speed = 15 SECONDS
+
 
 /obj/item/codex_cicatrix/Initialize(mapload)
 	. = ..()
@@ -34,21 +35,23 @@
 
 	. += span_notice("Can be used to tap influences for additional knowledge points.")
 	. += span_notice("Can also be used to draw or remove transmutation runes with ease.")
-	. += span_notice("Additionally, it can work as a focus for your spells when held.")
 
 /obj/item/codex_cicatrix/attack_self(mob/user, modifiers)
 	. = ..()
 	if(.)
 		return
 
-	if(book_open)
-		close_animation()
-		RemoveElement(/datum/element/heretic_focus)
-		update_weight_class(WEIGHT_CLASS_SMALL)
-	else
-		open_animation()
-		AddElement(/datum/element/heretic_focus)
-		update_weight_class(WEIGHT_CLASS_NORMAL)
+	open_animation()
+	update_weight_class(WEIGHT_CLASS_NORMAL)
+	addtimer(CALLBACK(src, PROC_REF(close_book)), 30 SECONDS)
+
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	var/datum/heretic_knowledge/spell/basic/grasp_knowledge = heretic_datum.get_knowledge(__IMPLIED_TYPE__)
+	grasp_knowledge?.add_charges(grasp_knowledge.max_charges * 0.5)
+
+/obj/item/codex_cicatrix/proc/close_book()
+	close_animation()
+	update_weight_class(WEIGHT_CLASS_SMALL)
 
 /obj/item/codex_cicatrix/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
@@ -79,8 +82,8 @@
 	desc = "A hideous, ragged book covered in separately-blinking eyes, all of them staring at you. You have no idea how to hold this thing, and to be honest you're not sure if you want to."
 	base_icon_state = "book_morbus"
 	icon_state = "book_morbus"
-	drain_speed = 2.5 SECONDS
-	draw_speed = 5 SECONDS
+	drain_speed = 5 SECONDS
+	draw_speed = 10 SECONDS
 	/// List of mobs we've cursed with transmutation. When the codex is destroyed all those curses become undone
 	var/list/transmuted_victims = list()
 

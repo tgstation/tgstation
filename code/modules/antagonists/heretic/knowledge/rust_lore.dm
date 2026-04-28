@@ -52,9 +52,10 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust
 	name = "Blacksmith's Tale"
-	desc = "Opens up the Path of Rust to you. \
-		Allows you to transmute a knife with any trash item into a Rusty Blade. \
+	desc = "Opens up the Path of Rust to you.<br>\
+		Allows you to create Rusty Blades. \
 		You can only create two at a time."
+	transmute_text = "Transmute a knife with any trash item."
 	gain_text = "\"Let me tell you a story\", said the Blacksmith, as he gazed deep into his rusty blade."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -104,28 +105,31 @@
 
 /datum/heretic_knowledge/spell/rust_charge
 	name = "Rust Charge"
-	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
+	desc = "Allows you to muster a mighty charge while standing on rusted tile.<br>\
+		As you charge, you will spread rust, destroy any rusted objects, and deal high damage to anyone you collide with."
 	gain_text = "The hills sparkled now, as I neared them my mind began to wander. I quickly regained my resolve and pushed forward, this last leg would be the most treacherous."
 
 	action_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
 	cost = 2
 	is_final_knowledge = TRUE
+	max_charges = INFINITY
 
 /datum/heretic_knowledge/spell/rust_construction
 	name = "Rust Construction"
-	desc = "Grants you Rust Construction, a spell that allows you to raise a wall out of a rusted floor. \
+	desc = "Grants you Rust Construction, a spell that allows you to raise a wall out of a rusted floor.<br>\
 		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
 	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
 		they no longer looked man made. Or perhaps they never were in the first place."
 	action_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 2
+	max_charges = INFINITY
 
 /datum/heretic_knowledge/armor/rust
-	desc = "Allows you to transmute a table (or a suit), a mask and any trash item to create a Salvaged Remains. \
-			Has extra armor, tackle resistance and syringe immunity while standing on rust. \
-			Acts as a focus while hooded."
+	desc = "Create a Salvaged Remains.<br>\
+		Has extra armor, tackle resistance and syringe immunity while standing on rust."
+	transmute_text = "Transmute a table (or a suit), a mask and any trash item."
 	gain_text = "From beneath warped scrap, the Blacksmith pulls forth an ancient fabric. \
-				\"Whatever this once stood for is lost. So now, we give it new purpose.\""
+		\"Whatever this once stood for is lost. So now, we give it new purpose.\""
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust)
 	research_tree_icon_state = "rust_armor"
 	required_atoms = list(
@@ -136,16 +140,23 @@
 
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
-	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
-		Already rusted surfaces are destroyed \ Also improves the rusting abilities of non rust-heretics."
+	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces.<br>\
+		Already rusted surfaces are destroyed.<br>Improves the rusting abilities of non rust-heretics."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
+	required_atoms = list(
+		/obj/item/storage/toolbox = 1,
+	)
 	action_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 2
 	research_tree_icon_frame = 5
+	max_charges = 12
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
+	transmute_text = "To recharge, complete a ritual with a toolbox."
 
 /datum/heretic_knowledge/blade_upgrade/rust
 	name = "Toxic Blade"
-	desc = "Your Rusty Blade now disgusts enemies on attack \ Allows you to rust Titanium and Plastitanium.."
+	desc = "Your Rusty Blade now disgusts enemies on attack.<br>Allows you to rust Titanium and Plastitanium.."
 	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
@@ -161,23 +172,47 @@
 
 /datum/heretic_knowledge/spell/entropic_plume
 	name = "Entropic Plume"
-	desc = "Grants you Entropic Plume, a spell that releases a vexing wave of Rust. \
+	desc = "Grants you Entropic Plume, a spell that releases a vexing wave of Rust.<br>\
 		Blinds, poisons, and inflicts Amok on any heathen it hits, causing them to strike \
-		at friend or foe wildly. Also rusts and destroys and surfaces it hits and improves the rusting abilities of non-rust heretics."
+		at friend or foe wildly.<br>Also rusts and destroys and surfaces it hits \
+		and improves the rusting abilities of non-rust heretics."
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 
 	action_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 2
 	drafting_tier = 5
+	max_charges = 4
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
+	transmute_text = "To recharge, corrode 30 tiles with your abilities and spells."
+
+	var/rust_counter = 0
+
+/datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_RUST_HERETIC_ACT, PROC_REF(on_rust_tile_rusted))
+
+/datum/heretic_knowledge/spell/entropic_plume/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_RUST_HERETIC_ACT)
+
+/datum/heretic_knowledge/spell/entropic_plume/proc/on_rust_tile_rusted(mob/living/heretic, turf/rusted_target, result)
+	SIGNAL_HANDLER
+
+	if(isturf(rusted_target) && HAS_TRAIT(rusted_target, TRAIT_RUSTY) && result)
+		rust_counter += 1
+		if(rust_counter >= 30)
+			rust_counter -= 30
+			add_charges(1)
 
 /datum/heretic_knowledge/ultimate/rust_final
 	name = "Rustbringer's Oath"
-	desc = "The ascension ritual of the Path of Rust. \
-		Bring 3 corpses to a transmutation rune on the bridge of the station to complete the ritual. \
-		When completed, the ritual site will endlessly spread rust onto any surface, stopping for nothing. \
+	desc = "The ascension ritual of the Path of Rust.<br>\
+		When completed, the ritual site will endlessly spread rust onto any surface, stopping for nothing.<br>\
 		Additionally, you will become extremely resilient on rust, healing at triple the rate \
 		and becoming immune to many effects and dangers \ You will be able to rust almost anything upon ascending."
+	transmute_text = "Transmute 3 corpses on the bridge of the station."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come! \
 		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
 

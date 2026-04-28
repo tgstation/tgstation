@@ -59,12 +59,45 @@
 		is_in_use = FALSE
 		return
 
-	var/chosen = tgui_input_list(user, "Chose a ritual to attempt.", "Chose a Ritual", rituals)
-	if(!chosen || !istype(rituals[chosen], /datum/heretic_knowledge) || QDELETED(src) || QDELETED(user) || QDELETED(heretic_datum))
+	var/list/ritual_radial = list()
+	var/list/ritual_to_name = list()
+	for(var/datum/heretic_knowledge/ritual as anything in rituals)
+		var/ritual_info = ""
+		var/list/ritual_requirements = list()
+		for(var/req_type, req_amount in ritual.required_atoms)
+			if(islist(req_type))
+				var/list/req_type_list = req_type
+				var/list/req_text_list = list()
+				for(var/atom/possible_type as anything in req_type_list)
+					req_text_list += ritual.parse_required_item(possible_type)
+				ritual_requirements += english_list(req_text_list, and_text = "or")
+
+			else
+				ritual_requirements += ritual.parse_required_item(req_type)
+
+		if(length(ritual_requirements))
+			ritual_info = "Requires: [english_list(ritual_requirements)]"
+
+		var/list/ritual_icon_info = heretic_datum.get_icon_of_knowledge(ritual)
+		var/icon/ritual_icon = icon(ritual_icon_info["icon"], ritual_icon_info["state"], ritual_icon_info["dir"], ritual_icon_info["frame"])
+		var/image/ritual_background = image(icon = 'icons/ui_icons/antags/heretic/knowledge.dmi', icon_state = heretic_datum.researched_knowledge[ritual.type][HKT_UI_BGR])
+
+		var/image/ritual_image = image(ritual_icon)
+		ritual_image.underlays += ritual_background
+
+		var/datum/radial_menu_choice/choice = new()
+		choice.name = ritual.name
+		choice.info = ritual_info
+		choice.image = ritual_image
+		ritual_radial[ritual.name] = choice
+		ritual_to_name[ritual.name] = ritual
+
+	var/chosen = show_radial_menu(user, loc, ritual_radial, radius = 48, require_near = TRUE)
+	if(!chosen || !istype(ritual_to_name[chosen], /datum/heretic_knowledge) || QDELETED(src) || QDELETED(user) || QDELETED(heretic_datum))
 		is_in_use = FALSE
 		return
 
-	do_ritual(user, rituals[chosen])
+	do_ritual(user, ritual_to_name[chosen])
 	is_in_use = FALSE
 
 /**
@@ -143,32 +176,28 @@
 
 	// All of the atoms have been checked, let's see if the ritual was successful
 	var/list/what_are_we_missing = list()
-	for(var/req_type in requirements_list)
-		var/number_of_things = requirements_list[req_type]
+	for(var/req_type, fulfilled_amount in requirements_list)
 		// <= 0 means it's fulfilled, skip
-		if(number_of_things <= 0)
+		if(fulfilled_amount <= 0)
 			continue
 
 		// > 0 means it's unfilfilled - the ritual has failed, we should tell them why
 		// Lets format the thing they're missing and put it into our list
-		var/formatted_thing = "[number_of_things] "
 		if(islist(req_type))
 			var/list/req_type_list = req_type
 			var/list/req_text_list = list()
-			for(var/atom/possible_type as anything in req_type_list)
-				req_text_list += ritual.parse_required_item(possible_type)
-			formatted_thing += english_list(req_text_list, and_text = "or")
+			for(var/possible_type, needed_amount in req_type_list)
+				req_text_list += ritual.parse_required_item(possible_type, fulfilled_amount)
+			what_are_we_missing += english_list(req_text_list, and_text = "or")
 
 		else
-			formatted_thing = ritual.parse_required_item(req_type)
-
-		what_are_we_missing += formatted_thing
+			what_are_we_missing += ritual.parse_required_item(req_type)
 
 	if(length(what_are_we_missing))
 		// Let them know it screwed up
 		loc.balloon_alert(user, "ritual failed, missing components!")
 		// Then let them know what they're missing
-		to_chat(user, span_hierophant_warning("You are missing [english_list(what_are_we_missing)] in order to complete the ritual \"[ritual.name]\"."))
+		to_chat(user, span_mansus("You are missing [english_list(what_are_we_missing)] in order to complete the ritual \"[ritual.name]\"."))
 		return FALSE
 
 	//Everything's good, proceed and collect from the available stacks what's needed if needed.
@@ -188,8 +217,7 @@
 	// If we made it here, the ritual had all necessary components, and we can try to cast it.
 	// This doesn't necessarily mean the ritual will succeed, but it's valid!
 	// Do the animations and associated feedback.
-	flick("[icon_state]_active", src)
-	playsound(user, 'sound/effects/magic/castsummon.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10, ignore_walls = FALSE)
+	ritual_animation()
 
 	// - We temporarily make all of our chosen atoms invisible, as some rituals may sleep,
 	// and we don't want people to be able to run off with ritual items.
@@ -226,6 +254,9 @@
 
 	return ritual_result
 
+/obj/effect/heretic_rune/proc/ritual_animation()
+	flick("[icon_state]_active", src)
+	playsound(src, 'sound/effects/magic/castsummon.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10, ignore_walls = FALSE)
 
 /// A 3x3 heretic rune. The kind heretics actually draw in game.
 /obj/effect/heretic_rune/big

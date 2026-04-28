@@ -403,7 +403,7 @@
 		"Mind gate and Ringleader's rise will channel the moon amulet effects, further inreases brain regeneration."
 	)
 	/// Built-in moon amulet which channels through your spells
-	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet
+	var/obj/item/clothing/neck/moon_amulet/amulet
 	/// When were we last attacked?
 	var/last_attack = 0
 	/// How long the combat tag lasts for

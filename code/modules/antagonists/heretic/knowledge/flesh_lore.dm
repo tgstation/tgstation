@@ -51,9 +51,10 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh
 	name = "Principle of Hunger"
-	desc = "Opens up the Path of Flesh to you. \
-		Allows you to transmute a knife and a pool of blood into a Bloody Blade. \
+	desc = "Opens up the Path of Flesh to you.<br>\
+		Allows you to create Bloody Blades. \
 		You can only create three at a time."
+	transmute_text = "Transmute a knife and a pool of blood."
 	gain_text = "Hundreds of us starved, but not me... I found strength in my greed."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -72,7 +73,7 @@
 	summon_objective.owner = our_heretic.owner
 	our_heretic.objectives += summon_objective
 
-	to_chat(user, span_hierophant("Undertaking the Path of Flesh, you are given another objective."))
+	to_chat(user, span_mansus("Undertaking the Path of Flesh, you are given another objective."))
 	our_heretic.owner.announce_objectives()
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -128,10 +129,11 @@
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul
 	name = "Imperfect Ritual"
-	desc = "Allows you to transmute a corpse and a poppy to create a Voiceless Dead. \
-		The corpse does not need to have a soul. \
+	desc = "Enchant a corpse into a Voiceless Dead. \
+		The corpse does not need to have a soul.<br>\
 		Voiceless Dead are mute ghouls and only have 50 health, but can use Bloody Blades effectively. \
 		You can only create two at a time."
+	transmute_text = "Transmute a corpse and a poppy."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	required_atoms = list(
 		/mob/living/carbon/human = 1,
@@ -212,21 +214,23 @@
 
 /datum/heretic_knowledge/spell/flesh_surgery
 	name = "Knitting of Flesh"
-	desc = "Grants you the spell Knit Flesh. This spell allows you to remove organs from victims \
-		without requiring a lengthy surgery. This process is much longer if the target is not dead. \
+	desc = "Grants you the spell Knit Flesh.<br>This spell allows you to remove organs from victims \
+		without requiring a lengthy surgery.<br>This process is much longer if the target is not dead.<br>\
 		This spell also allows you to heal your minions and summons, or restore failing organs to acceptable status."
 	gain_text = "But they were not out of my reach for long. With every step, the screams grew, until at last \
 		I learned that they could be silenced."
 	action_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
 	cost = 2
 	drafting_tier = 5
+	max_charges = INFINITY
 
 /datum/heretic_knowledge/armor/flesh
-	desc = "Allows you to transmute a table (or a suit), a mask and a pool of blood to create a writhing embrace. \
-		It grants you the ability to detect the health condition of other living (and non-living) and an aura that slowly heals your summons. \
-		Acts as a focus while hooded."
+	desc = "Create a Writhing Embrace.<br>\
+		It grants you the ability to detect the health condition of other living (and non-living) \
+		and an aura that slowly heals your summons."
+	transmute_text = "Transmute a table (or a suit), a mask and a pool of blood."
 	gain_text = "I tugged these wretched, slothing things about me, like one might a warm blanket. \
-				With eyes-not-mine, they will witness. With teeth-not-mine, they will clench. With limbs-not-mine, they will break."
+		With eyes-not-mine, they will witness. With teeth-not-mine, they will clench. With limbs-not-mine, they will break."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh)
 	research_tree_icon_state = "flesh_armor"
 	required_atoms = list(
@@ -237,9 +241,10 @@
 
 /datum/heretic_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
-	desc = "Allows you to transmute a pair of eyes, a left arm, and a pool of blood to create a Raw Prophet. \
+	desc = "Summon a Raw Prophet.<br>\
 		Raw Prophets have a greatly increased sight range and x-ray vision, as well as a long range jaunt and \
 		the ability to link minds to communicate with ease, but are very fragile and weak in combat."
+	transmute_text = "Transmute a pair of eyes, a left arm, and a pool of blood."
 	gain_text = "I could not continue alone. I was able to summon The Uncanny Man to help me see more. \
 		The screams... once constant, now silenced by their wretched appearance. Nothing was out of reach."
 	required_atoms = list(
@@ -273,8 +278,9 @@
 
 /datum/heretic_knowledge/summon/stalker
 	name = "Lonely Ritual"
-	desc = "Allows you to transmute a tail of any kind, a stomach, a tongue, a pen and a piece of paper to create a Stalker. \
+	desc = "Summon a Stalker.<br>\
 		Stalkers can jaunt, release EMPs, shapeshift into animals or automatons, and are strong in combat."
+	transmute_text = "Transmute a tail of any kind, a stomach, a tongue, a pen and a piece of paper."
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. \
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
 
@@ -293,14 +299,14 @@
 
 /datum/heretic_knowledge/ultimate/flesh_final
 	name = "Priest's Final Hymn"
-	desc = "The ascension ritual of the Path of Flesh. \
-		Bring 4 corpses to a transmutation rune to complete the ritual. \
+	desc = "The ascension ritual of the Path of Flesh.<br>\
 		When completed, you gain the ability to shed your human form \
 		and become the Lord of the Night, a supremely powerful creature. \
-		Just the act of transforming causes nearby heathens great fear and trauma. \
-		While in the Lord of the Night form, you can consume arms to heal and regain segments. \
+		Just the act of transforming causes nearby heathens great fear and trauma.<br>\
+		While in the Lord of the Night form, you can consume arms to heal and regain segments.<br>\
 		Additionally, you can summon three times as many Ghouls and Voiceless Dead, \
 		and can create unlimited blades to arm them all."
+	transmute_text = "Transmute four corpses."
 	gain_text = "With the Marshal's knowledge, my power had peaked. The throne was open to claim. \
 		Men of this world, hear me, for the time has come! The Marshal guides my army! \
 		Reality will bend to THE LORD OF THE NIGHT or be unraveled! WITNESS MY ASCENSION!"

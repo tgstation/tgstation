@@ -2,6 +2,7 @@ import '../styles/interfaces/AntagInfoHeretic.scss';
 
 import { useState } from 'react';
 import {
+  BlockQuote,
   Box,
   Button,
   DmIcon,
@@ -64,8 +65,9 @@ type Knowledge = {
   depth: number;
   done: BooleanLike;
   ascension: BooleanLike;
-  disabled: BooleanLike;
-  tooltip?: string;
+  disabled?: BooleanLike;
+  notice?: string;
+  info?: string;
 };
 
 enum ShopCategory {
@@ -117,7 +119,7 @@ const IntroductionSection = (props) => {
   return (
     <Stack justify="space-evenly" height="100%" width="100%">
       <Stack.Item grow>
-        <Section title="You are the Heretic!" fill fontSize="14px">
+        <Section title="You are the Heretic!" fill fontSize="14px" scrollable>
           <Stack vertical>
             <FlavorSection />
             <Stack.Divider />
@@ -223,30 +225,12 @@ const GuideSection = () => {
           <span style={hereticRed}>Living Heart</span>.
         </Stack.Item>
         <Stack.Item>
-          - Make yourself a <span style={hereticYellow}>focus</span> to be able
-          to cast various advanced spells to assist you in acquiring harder and
-          harder sacrifices.
-        </Stack.Item>
-        <Stack.Item>
-          - Accomplish all of your objectives to be able to learn the{' '}
-          <span style={hereticYellow}>final ritual</span>. Complete the ritual
-          to become all powerful!
-        </Stack.Item>
-        <Stack.Item>
-          <span style={hereticRed}>WARNING!</span>
-          <br /> Accumulating a total of <b>{points_to_aura}</b>&nbsp;
+          - Accumulating a total of <b>{points_to_aura}</b>&nbsp;
           <span style={hereticBlue}>knowledge points</span>
-          &nbsp;to manifest a visible aura of&nbsp;
-          <span style={hereticPurple}>Mansus energy</span> around you. Simply
-          gaining the points is sufficent, spending them will not trigger it.
-          <br />
-          This aura will be visible to all those around you and will mark you as
-          a heretic. Consider the risks before accumulating too much knowledge!
-          <br />
-          Keep in mind that using a&nbsp;
-          <span style={hereticPurple}>Codex Cicatrix</span> will also make you
-          very obvious as a heretic when draining&nbsp;
-          <span style={hereticYellow}>influences</span>
+          &nbsp;will manifest a visible aura of&nbsp;
+          <span style={hereticPurple}>Mansus energy</span> around you. This aura
+          will be visible to all those around you and will mark you as a
+          Heretic. Consider the risks before accumulating too much knowledge!
         </Stack.Item>
       </Stack>
     </Stack.Item>
@@ -328,6 +312,38 @@ const KnowledgeTree = () => {
   );
 };
 
+// take &bull; in from byond and make sure it's rendered properly
+function bulletpointHelper(text: string) {
+  return text.replace(/&bull;/g, '•');
+}
+
+// description or info text may have <br>s,
+// we need translate it into separate children for the tooltip to render it properly
+function formatTooltipText(text: string) {
+  return (
+    <Stack vertical>
+      {text.split('<br>').map((line, index) => {
+        const isBulletPoint = line.includes('&bull;');
+        if (isBulletPoint) {
+          line = line.replace(/&bull;/g, '•');
+        }
+        return (
+          <Stack.Item
+            key={index}
+            // hacky. pretty much solely exists to make Unsealed Arts readable.
+            // stretches beyond the bounds of the tooltip to avoid getting cut off.
+            // call it a format screw
+            fontSize={isBulletPoint ? '10px' : undefined}
+            width={isBulletPoint ? '110%' : undefined}
+          >
+            {line}
+          </Stack.Item>
+        );
+      })}
+    </Stack>
+  );
+}
+
 type KnowledgeNodeProps = {
   node: Knowledge;
   purchaseCategory?: ShopCategory;
@@ -359,9 +375,30 @@ const KnowledgeNode = (props: KnowledgeNodeProps) => {
       <Button
         color="transparent"
         tooltip={
-          node.tooltip ??
-          `${node.name}:
-          ${node.desc}`
+          <Stack vertical>
+            <Stack.Item align="center" fontSize="16px">
+              <b>{node.name}</b>
+            </Stack.Item>
+            <Stack.Item>
+              <BlockQuote>
+                <span style={hereticPurple}>Result: </span>{' '}
+              </BlockQuote>
+              {formatTooltipText(node.desc)}
+            </Stack.Item>
+            {!!node.notice && (
+              <Stack.Item color="red">
+                {formatTooltipText(node.notice)}
+              </Stack.Item>
+            )}
+            {!!node.info && (
+              <Stack.Item>
+                <BlockQuote>
+                  <span style={hereticGreen}>Recipe: </span>{' '}
+                </BlockQuote>
+                {formatTooltipText(node.info)}
+              </Stack.Item>
+            )}
+          </Stack>
         }
         onClick={
           !isBuyable
@@ -469,7 +506,7 @@ const ResearchInfo = () => {
   const { charges, knowledge_shop } = data;
 
   return (
-    <>
+    <Stack vertical fill>
       <Stack.Item mb={1.5} fontSize="20px" textAlign="center">
         You have <b>{charges || 0}</b>&nbsp;
         <span style={hereticBlue}>
@@ -487,7 +524,7 @@ const ResearchInfo = () => {
           </Stack.Item>
         )}
       </Stack>
-    </>
+    </Stack>
   );
 };
 
