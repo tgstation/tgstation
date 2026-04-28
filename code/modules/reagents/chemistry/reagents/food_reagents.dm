@@ -908,7 +908,7 @@
 	nutriment_factor = 0 //the essence of this sauce is to stimulate hunger and improve the absorption of calories from food eaten
 	metabolization_rate = 0.025 * REAGENTS_METABOLISM
 	metabolized_traits = list(TRAIT_GLUTTON)
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/consumable/moltobeso/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
