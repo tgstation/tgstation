@@ -299,3 +299,5 @@
 
 /datum/movespeed_modifier/stoat_dodge
 	multiplicative_slowdown = 1
+
+#undef STOAT_COLORS
