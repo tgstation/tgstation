@@ -23,7 +23,7 @@ const TASK_TYPE_LABELS: Record<string, string> = {
   drop: 'Drop...',
   throw: 'Throw...',
   use: 'Use held...',
-  interact: 'Interact',
+  interact: 'Interact...',
   wait: 'Wait...',
 };
 
