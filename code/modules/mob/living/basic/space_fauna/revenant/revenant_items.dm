@@ -13,14 +13,10 @@
 	var/old_ckey
 	/// The revenant we're currently storing
 	var/mob/living/basic/revenant/revenant
-	/// Whether we are being deleted due to antimagic or because we are finished reforming (if not, don't delete)
-	var/should_destroy = FALSE
 
 /obj/item/ectoplasm/revenant/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(try_reform)), 1 MINUTES)
-	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(should_qdel))
-	RegisterSignal(src, COMSIG_ATOM_HOLYATTACK, PROC_REF(dispel))
 
 /obj/item/ectoplasm/revenant/Destroy()
 	if(!QDELETED(revenant))
@@ -32,29 +28,12 @@
 	if(inert)
 		. += span_revennotice("It seems inert.")
 	else if(reforming)
-		. += span_revenwarning("It is shifting and distorted. It would be wise to destroy this. [EXAMINE_HINT("This may require the aid of a holy implement.")]")
+		. += span_revenwarning("It is shifting and distorted. It would be wise to destroy this.")
 
 /obj/item/ectoplasm/revenant/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the shadow realm!"))
 	qdel(src)
 	return OXYLOSS
-
-/obj/item/ectoplasm/revenant/proc/should_qdel(datum/source, forced)
-	SIGNAL_HANDLER
-#ifndef UNIT_TEST
-	return !(forced || should_destroy)
-#endif
-
-/obj/item/ectoplasm/revenant/proc/dispel(datum/source, obj/item/weapon, mob/living/user, flags)
-	SIGNAL_HANDLER
-	if(!(flags & MAGIC_RESISTANCE_HOLY))
-		return
-	user.visible_message(
-		span_notice("As [user] strikes [src] with [weapon], it rapidly vaporizes into nothingness."),
-		span_notice("As you strike [src] with [weapon], it rapidly vaporizes into nothingness.")
-	)
-	should_destroy = TRUE
-	qdel(src)
 
 /obj/item/ectoplasm/revenant/proc/try_reform()
 	if(reforming)
@@ -85,7 +64,6 @@
 
 	revenant.death_reset()
 	revenant = null
-	should_destroy = TRUE
 	qdel(src)
 
 /// Handles giving the revenant a new client to control it
