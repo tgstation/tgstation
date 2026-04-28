@@ -116,7 +116,7 @@
 
 /obj/item/clothing/under/syndicate/cybersun
 	name = "\improper Cybersun businesswear"
-	desc = "The material of this black and orange businesswear outfit appears to be surprisingly comfortable form of kevlar. \
+	desc = "This black and orange businesswear appears to be made of some kind of protective lightweight material. \
 		Perfect for hostile takeovers and budget meetings."
 	icon_state = "cybersun_suit"
 	inhand_icon_state = "bl_suit"
