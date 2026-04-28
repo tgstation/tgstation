@@ -8,9 +8,6 @@
 		return FALSE
 
 	//do the non-list tests first, because they are cheaper
-	//if both reactions have containers, and they are different, there is no conflict
-	if(r1.required_container && r2.required_container && r1.required_container != r2.required_container)
-		return FALSE
 	if(r1.is_cold_recipe != r2.is_cold_recipe)
 		var/datum/chemical_reaction/cold_one = r1.is_cold_recipe ? r1 : r2
 		var/datum/chemical_reaction/warm_one = r1.is_cold_recipe ? r2 : r1
@@ -37,8 +34,8 @@
 			long_req = r2
 			short_req = r1
 
-	//if short one has a container requirement and the long one doesn't, there's no conflict
-	if(short_req.required_container && !long_req.required_container)
+	//if short one has a container requirement and it's not the same as the long one's, there's no conflict
+	if(short_req.required_container && short_req.required_container != long_req.required_container)
 		return FALSE
 
 	//if short one has a more extreme temperature requirement, there's no conflict
