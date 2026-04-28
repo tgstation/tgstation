@@ -45,7 +45,7 @@
 	if(short_req.is_cold_recipe == long_req.is_cold_recipe)
 		if(short_req.is_cold_recipe && short_req.required_temp < long_req.required_temp)
 			return FALSE
-		if(!shor_req.is_cold_recipe && short_req.required_temp > long_req.required_temp)
+		if(!short_req.is_cold_recipe && short_req.required_temp > long_req.required_temp)
 			return FALSE
 
 	//check if the shorter reaction list is a subset of the longer one
