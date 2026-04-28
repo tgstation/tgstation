@@ -3,7 +3,7 @@
 
 /datum/status_effect/organ_set_bonus/stoat
 	id = "organ_set_bonus_stoat"
-	tick_interval = 5 SECONDS
+	tick_interval = 3 SECONDS
 	organs_needed = 4
 	bonus_activate_text = span_notice("Stoat DNA is deeply infused with you! \
 		Your instincts set in - you now feel fearless, as if you could take on any enemy, no matter the size difference.")
