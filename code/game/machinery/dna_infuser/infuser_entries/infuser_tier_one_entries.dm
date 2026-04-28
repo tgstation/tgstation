@@ -222,10 +222,12 @@
 		This kind of action is what we need on the corporate ladder."
 	threshold_desc = "become fearless, dodging attacks from larger opponents"
 	qualities = list(
+		"a snout!",
 		"really really tall",
-		"instinctively wants to be alone",
-		"ferocious bites, especially when grappling",
-		"rodents look very edible... plants do not",
+		"better senses, weaker organs",
+		"instinctively want to be alone",
+		"ferocious bites - especially when grappling",
+		"rodents and eggs look very tasty... but anything plant does not",
 	)
 	input_obj_or_mob = list(
 		/mob/living/basic/stoat,
