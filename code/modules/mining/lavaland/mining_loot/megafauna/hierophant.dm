@@ -2,7 +2,7 @@
 
 /obj/item/hierophant_club
 	name = "hierophant club"
-	desc = "The strange technology of this large club allows various nigh-magical teleportation feats. It used to beat you, but now you can set the beat."
+	desc = "The shriveled remains of the Hierophant hold some remnant of its power. It used it to beat you, but now you can set the beat."
 	icon_state = "hierophant_club"
 	inhand_icon_state = "hierophant_club"
 	icon_angle = -135
