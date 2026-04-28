@@ -601,3 +601,15 @@
 2026-04-27:
   levels0:
   - bugfix: metalgen and secret sauce should now generate properly
+2026-04-28:
+  ArcaneMusic:
+  - bugfix: Mice now have a movement sprite going both east and west.
+  - qol: Added a sound effect when a geyser is properly scanned.
+  ElGitificador:
+  - bugfix: fixed heretic gate cam appearing in on station ss13 network
+  SmArtKar:
+  - bugfix: Fixed plasma cutter recharging
+  levels0:
+  - bugfix: molt'obeso sauce will no longer appear as an ingredient in random recipes
+  vinylspiders:
+  - bugfix: fixes blue and green cybernetic cat ears being switched
