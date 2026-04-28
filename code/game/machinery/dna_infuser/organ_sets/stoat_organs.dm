@@ -160,13 +160,15 @@
 	. = ..()
 	RegisterSignals(receiver, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
 	if(ishuman(receiver))
-		receiver.physiology.hunger_mod *= 2
+		var/mob/living/carbon/human/human_receiver = receiver
+		human_receiver.physiology.hunger_mod *= 2
 
 /obj/item/organ/tongue/stoat/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY)
 	if(ishuman(organ_owner))
-		organ_owner.physiology.hunger_mod /= 2
+		var/mob/living/carbon/human/human_remover = organ_owner
+		human_remover.physiology.hunger_mod /= 2
 
 /obj/item/organ/tongue/stoat/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
