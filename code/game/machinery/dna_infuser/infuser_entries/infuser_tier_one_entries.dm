@@ -214,3 +214,41 @@
 	tier = DNA_MUTANT_TIER_ONE
 	unreachable_effect = TRUE
 	status_effect_type = /datum/status_effect/organ_set_bonus/fish
+
+/datum/infuser_entry/stoat
+	name = "Stoat"
+	infuse_mob_name = "stoat"
+	desc = "We looked at a stoat, and begin to admire its fearless nature, hunting animals much larger than itself head on. \
+		This kind of action is what we need on the corporate ladder."
+	threshold_desc = "become fearless, dodging attacks from larger opponents"
+	qualities = list(
+		"really really tall",
+		"instinctively wants to be alone",
+		"ferocious bites, especially when grappling",
+		"rodents look very edible... plants do not",
+	)
+	input_obj_or_mob = list(
+		/mob/living/basic/stoat,
+	)
+	output_organs = list(
+		/obj/item/organ/eyes/stoat,
+		/obj/item/organ/ears/stoat,
+		/obj/item/organ/heart/stoat,
+		/obj/item/organ/tongue/stoat,
+		/obj/item/organ/snout/stoat,
+	)
+	infusion_desc = "ermine"
+	tier = DNA_MUTANT_TIER_ONE
+	status_effect_type = /datum/status_effect/organ_set_bonus/stoat
+
+/datum/infuser_entry/stoat/get_output_organs(mob/living/carbon/human/target, atom/movable/infused_from)
+	// eyes and ears are low priority, infuse them last
+	var/datum/status_effect/organ_set_bonus/stoat/organ_tracker = target.has_status_effect(__IMPLIED_TYPE__)
+	if(organ_tracker?.organs < 3)
+		return list(
+			/obj/item/organ/heart/stoat,
+			/obj/item/organ/tongue/stoat,
+			/obj/item/organ/snout/stoat,
+		)
+
+	return ..()
