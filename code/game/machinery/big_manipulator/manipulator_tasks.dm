@@ -26,7 +26,7 @@
 	return FALSE
 
 /datum/manipulator_task/simple/wait/run_task(obj/machinery/big_manipulator/manipulator)
-	manipulator.schedule_next_cycle(time_seconds)
+	manipulator.schedule_next_cycle(time_seconds SECONDS)
 
 // ===== BASE CARGO =====
 

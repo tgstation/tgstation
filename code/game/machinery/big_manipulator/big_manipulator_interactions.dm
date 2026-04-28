@@ -53,7 +53,7 @@
 		return
 
 	next_cycle_scheduled = TRUE
-	addtimer(CALLBACK(src, PROC_REF(step_tasks)), time_seconds SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(step_tasks)), time_seconds)
 
 /// Rotates the manipulator arm to face the target task's turf.
 /obj/machinery/big_manipulator/proc/rotate_to_point(datum/manipulator_task/cargo/target_task, callback_object, callback)

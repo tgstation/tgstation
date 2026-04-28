@@ -5,7 +5,6 @@ import {
   Button,
   Dropdown,
   Icon,
-  Input,
   Modal,
   Section,
   Slider,
