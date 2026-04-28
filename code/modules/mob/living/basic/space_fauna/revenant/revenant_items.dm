@@ -13,44 +13,46 @@
 	var/old_ckey
 	/// The revenant we're currently storing
 	var/mob/living/basic/revenant/revenant
+	/// Whether we are being deleted due to antimagic or because we are finished reforming (if not, don't delete)
+	var/should_destroy = FALSE
 
 /obj/item/ectoplasm/revenant/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(try_reform)), 1 MINUTES)
+	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(should_qdel))
+	RegisterSignal(src, COMSIG_ATOM_HOLYATTACK, PROC_REF(dispel))
 
 /obj/item/ectoplasm/revenant/Destroy()
 	if(!QDELETED(revenant))
 		qdel(revenant)
 	return ..()
 
-/obj/item/ectoplasm/revenant/attack_self(mob/user)
-	if(!reforming || inert)
-		return ..()
-	user.visible_message(
-		span_notice("[user] scatters [src] in all directions."),
-		span_notice("You scatter [src] across the area. The particles slowly fade away."),
-	)
-	user.dropItemToGround(src)
-	qdel(src)
-
-/obj/item/ectoplasm/revenant/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(inert)
-		return
-	visible_message(span_notice("[src] breaks into particles upon impact, which fade away to nothingness."))
-	qdel(src)
-
 /obj/item/ectoplasm/revenant/examine(mob/user)
 	. = ..()
 	if(inert)
 		. += span_revennotice("It seems inert.")
 	else if(reforming)
-		. += span_revenwarning("It is shifting and distorted. It would be wise to destroy this.")
+		. += span_revenwarning("It is shifting and distorted. It would be wise to destroy this. [EXAMINE_HINT("This may require the aid of a holy implement.")]")
 
 /obj/item/ectoplasm/revenant/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the shadow realm!"))
 	qdel(src)
 	return OXYLOSS
+
+/obj/item/ectoplasm/revenant/proc/should_qdel(datum/source, forced)
+	SIGNAL_HANDLER
+	return !(forced || should_destroy)
+
+/obj/item/ectoplasm/revenant/proc/dispel(datum/source, obj/item/weapon, mob/living/user, flags)
+	SIGNAL_HANDLER
+	if(!flags & MAGIC_RESISTANCE_HOLY)
+		return
+	user.visible_message(
+		span_notice("As [user] strikes [src] with [weapon], it rapidly vaporizes into nothingness."),
+		span_notice("As you strike [src] with [weapon], it rapidly vaporizes into nothingness.")
+	)
+	should_destroy = TRUE
+	qdel(src)
 
 /obj/item/ectoplasm/revenant/proc/try_reform()
 	if(reforming)
@@ -81,6 +83,7 @@
 
 	revenant.death_reset()
 	revenant = null
+	should_destroy = TRUE
 	qdel(src)
 
 /// Handles giving the revenant a new client to control it
