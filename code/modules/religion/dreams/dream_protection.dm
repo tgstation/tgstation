@@ -9,7 +9,7 @@
 /datum/religion_rites/dream_protection/New()
 	. = ..()
 	ritual_invocations = list(
-		"Protect our flock from harm, great shepard [GLOB.deity]!..",
+		"Protect our flock from harm, great shepherd [GLOB.deity]!..",
 		"Grant us peaceful slumber, free from nightmares and those who would do us harm!..",
 		"Our sleepers shall be safe to dream to their heart's desire!..",
 	)

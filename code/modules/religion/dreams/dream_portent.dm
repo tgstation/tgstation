@@ -10,7 +10,7 @@
 /datum/religion_rites/dream_portent/New()
 	. = ..()
 	ritual_invocations = list(
-		"O great shepard [GLOB.deity], grant me a vision of the future!..",
+		"O great shepherd [GLOB.deity], grant me a vision of the future!..",
 		"That our flock may persevere through the trials to come...",
 	)
 
@@ -90,7 +90,7 @@
 	description = "I couldn't receive a clear vision from my dreams!"
 	timeout = 5 MINUTES
 
-/datum/dream/portent
+/datum/dream/specific_portent
 	weight = 0
 	sleep_until_finished = TRUE
 
@@ -108,7 +108,7 @@
 		"an old [pick("man", "woman", "prophet", "oracle")] approaches you, offering cryptic advice" = "they vanish before you can ask any questions",
 		"the stars align in a way you've never seen before" = "finally, the stars return to their normal constellations",
 		"the trees ahead parts to reveal a hidden path" = "ultimately, you lose the path as the trees sway back into place",
-		"walking through a featureless landscape, shapes begin to form" = "finally, the shapes fade away, leaving alone in the void",
+		"walking through a featureless landscape, shapes begin to form" = "finally, the shapes fade away, leaving you alone in the void",
 		"you see yourself sleeping peacefully" = "finally, you see yourself waking up calmly",
 		"your third eye opens to reveal a hidden truth" = "finally, your third eye closes, but the vision lingers in your mind",
 	)
@@ -174,7 +174,7 @@
 				heretic_text += "you feel insignificant"
 			if(PATH_BLADE)
 				heretic_text += "beyond it, you see a great battle unfolding"
-				heretic_text += "countless warriors clashing in an endless war"
+				heretic_text += "countless warriors grappling in an endless war"
 				heretic_text += "the sound of clashing steel and cries of the fallen fill the air"
 			if(PATH_LOCK)
 				heretic_text += "beyond it, you see an endless labyrinth"

@@ -615,7 +615,7 @@
 	if(HAS_TRAIT(target, TRAIT_DREAMING))
 		var/result = standard_bless_healing(target, chap)
 		var/tarref = REF(target)
-		if(LAZYFIND(recent_bless_refs, tarref))
+		if(!LAZYFIND(recent_bless_refs, tarref))
 			adjust_favor(20 * (isnull(target.mind) ? 0.5 : 1) * (target.IsSleeping() ? 1 : 0.5), chap)
 			LAZYADD(recent_bless_refs, tarref)
 			addtimer(CALLBACK(src, PROC_REF(clear_bless_ref), tarref), 6 MINUTES)

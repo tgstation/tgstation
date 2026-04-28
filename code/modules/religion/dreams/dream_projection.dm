@@ -11,7 +11,7 @@
 	. = ..()
 	ritual_invocations = list(
 		"A member of the flock has gone astray, lost in the waking world...",
-		"It is the duty of the shepard to guide them back to the fold, even if they cannot find their way themselves...",
+		"It is the duty of the shepherd to guide them back to the fold, even if they cannot find their way themselves...",
 		"Let me walk through their waking dream, and show them the way back...",
 	)
 
