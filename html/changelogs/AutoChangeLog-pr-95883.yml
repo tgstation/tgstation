@@ -1,0 +1,4 @@
+author: "levels0"
+delete-after: True
+changes:
+  - bugfix: "molt'obeso sauce will no longer appear as an ingredient in random recipes"
