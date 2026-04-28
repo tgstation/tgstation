@@ -19,6 +19,8 @@
 /datum/status_effect/organ_set_bonus/stoat/disable_bonus(obj/item/organ/removed_organ)
 	. = ..()
 	UnregisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK)
+	owner.clear_mood_event("stoat_enemy")
+	owner.clear_mood_event("stoat_friendly")
 
 /datum/status_effect/organ_set_bonus/stoat/on_remove()
 	. = ..()
@@ -80,6 +82,8 @@
 
 /datum/status_effect/organ_set_bonus/stoat/tick(seconds_between_ticks)
 	. = ..()
+	if(!bonus_active)
+		return
 	var/nearby_friends = 0
 	var/nearby_enemies = 0
 	for(var/obj/vehicle/sealed/mecha/mech in oview(owner, 5))
@@ -155,10 +159,14 @@
 /obj/item/organ/tongue/stoat/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	RegisterSignals(receiver, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
+	if(ishuman(receiver))
+		receiver.physiology.hunger_mod *= 2
 
 /obj/item/organ/tongue/stoat/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY)
+	if(ishuman(organ_owner))
+		organ_owner.physiology.hunger_mod /= 2
 
 /obj/item/organ/tongue/stoat/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
