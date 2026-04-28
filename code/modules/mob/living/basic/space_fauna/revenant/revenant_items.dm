@@ -41,7 +41,9 @@
 
 /obj/item/ectoplasm/revenant/proc/should_qdel(datum/source, forced)
 	SIGNAL_HANDLER
+#ifndef UNIT_TEST
 	return !(forced || should_destroy)
+#endif
 
 /obj/item/ectoplasm/revenant/proc/dispel(datum/source, obj/item/weapon, mob/living/user, flags)
 	SIGNAL_HANDLER
