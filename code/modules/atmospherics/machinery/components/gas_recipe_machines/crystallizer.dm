@@ -58,13 +58,8 @@
 			context[SCREENTIP_CONTEXT_RMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!on)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", I))
-			return
-	if(default_change_direction_wrench(user, I))
-		return
-	return ..()
+/obj/machinery/atmospherics/components/binary/crystallizer/screwdriver_act(mob/living/user, obj/item/tool)
+	return on ? NONE : default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/atmospherics/components/binary/crystallizer/crowbar_act(mob/living/user, obj/item/tool)
 	return crowbar_deconstruction_act(user, tool, internal.return_pressure())

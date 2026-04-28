@@ -43,7 +43,7 @@ jobs:
         with:
           dotnet-version: 9.x
       - name: Install OpenDream
-        uses: robinraju/release-downloader@v1.12
+        uses: robinraju/release-downloader@v1.13
         with:
           repository: "OpenDreamProject/OpenDream"
           tag: "latest"
@@ -82,8 +82,17 @@ jobs:
       - name: Run OpenDream
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING | bash tools/ci/annotate_od.sh
+      - name: Check for Map & Maplint File Edits
+        id: map-filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            run_maps:
+              - '**.dmm'
+              - 'tools/maplint/**'
+              - 'tools/mapmerge2/**'
       - name: Run Map Checks
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        if: steps.linter-setup.conclusion == 'success' && !cancelled() && steps.map-filter.outputs.run_maps == 'true'
         run: |
           tools/bootstrap/python -m mapmerge2.dmm_test
           tools/bootstrap/python -m tools.maplint.source

@@ -14,21 +14,6 @@ menu "menu"
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem
-		name = "&Quick screenshot\tF2"
-		command = ".screenshot auto"
-		category = "&File"
-		saved-params = "is-checked"
-	elem
-		name = "&Save screenshot as...\tShift+F2"
-		command = ".screenshot"
-		category = "&File"
-		saved-params = "is-checked"
-	elem
-		name = ""
-		command = ""
-		category = "&File"
-		saved-params = "is-checked"
 	elem "reconnectbutton"
 		name = "&Reconnect"
 		command = ".reconnect"
@@ -153,7 +138,6 @@ window "info_and_buttons"
 		size = 640x477
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffc41f
 		saved-params = "splitter"
 		left = "infobuttons"
 		right = "infowindow"
@@ -164,22 +148,70 @@ window "info_and_buttons"
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
-		pos = 281,0
+		pos = 281,5
 		size = 640x475
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-	elem "info"
+	elem "info_split"
 		type = CHILD
 		pos = 0,5
+		anchor1 = 0,0
+		anchor2 = 100,100
+		size = 640x475
+		is-vert = false
+		splitter = 97.5
+        background-color = #ffc41f
+		show-splitter = false
+		saved-params = "splitter"
+		left = "info"
+		right = "input_buttons"
+
+window "info"
+	elem "info_main"
+		type = MAIN
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "info_child"
+		type = CHILD
+		pos = 0,0
 		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
+		splitter = 40
+		background-color = #202020
 		left = "statwindow"
 		right = "outputwindow"
 		is-vert = false
+
+window "input_buttons"
+	elem "input_buttons_main"
+		type = MAIN
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "input_buttons_child"
+		type = CHILD
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = #ffc41f
+		saved-params = "splitter"
+		left = "inputwindow"
+		right = "inputbuttons"
+		is-vert = true
+		splitter = 70
+		show-splitter = false
 
 window "outputwindow"
 	elem "outputwindow"
@@ -190,19 +222,14 @@ window "outputwindow"
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-	elem "output_input_child"
+	elem "output_selector_screen"
 		type = CHILD
-		pos = 0,0
 		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffc41f
 		saved-params = "splitter"
+		background-color = #ffc41f
 		left = "output_selector"
-		right = "input_and_buttons"
-		is-vert = false
-		splitter = 96
-		show-splitter = false
 
 window "output_selector"
 	elem "output_selector"
@@ -222,27 +249,6 @@ window "output_selector"
 		saved-params = "splitter"
 		left = "output_legacy"
 		is-vert = false
-
-window "input_and_buttons"
-	elem "input_and_buttons"
-		type = MAIN
-		pos = 291,0
-		size = 640x20
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		saved-params = "pos;size;is-minimized;is-maximized"
-		is-pane = true
-	elem "input_buttons_child"
-		type = CHILD
-		pos = 0,0
-		size = 640x20
-		anchor1 = 0,0
-		anchor2 = 100,100
-		background-color = #ffc41f
-		saved-params = "splitter"
-		left = "inputwindow"
-		right = "inputbuttons"
-		is-vert = true
 		splitter = 80
 		show-splitter = false
 
@@ -250,16 +256,16 @@ window "inputwindow"
 	elem "inputwindow"
 		type = MAIN
 		pos = 575,0
-		size = 520x25
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		size = 480x25
+		anchor1 = 0,0
+		anchor2 = 70,100
 		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "input"
 		type = INPUT
 		pos = 0,0
-		size = 520x20
+		size = 480x20
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
@@ -271,8 +277,8 @@ window "inputbuttons"
 	elem "inputbuttons"
 		type = MAIN
 		pos = 291,0
-		size = 120x25
-		anchor1 = 0,0
+		size = 160x25
+		anchor1 = 70,0
 		anchor2 = 100,100
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
@@ -281,38 +287,51 @@ window "inputbuttons"
 		pos = 0,0
 		size = 40x20
 		anchor1 = 0,0
-		anchor2 = 33,100
+		anchor2 = 25,100
 		font-size = 4
 		border = line
 		saved-params = "is-checked"
 		text = "Say"
-		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\"\"saybutton.is-checked=true ? mebutton.is-checked=false\"\"saybutton.is-checked=true ? oocbutton.is-checked=false\""
+		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\"\"saybutton.is-checked=true ? mebutton.is-checked=false\"\"saybutton.is-checked=true ? oocbutton.is-checked=false\"\"saybutton.is-checked=true ? whisperbutton.is-checked=false\""
+		is-flat = true
+		button-type = pushbox
+	elem "whisperbutton"
+		type = BUTTON
+		pos = 40,0
+		size = 40x20
+		anchor1 = 25,0
+		anchor2 = 50,100
+		font-size = 4
+		border = line
+		saved-params = "is-checked"
+		text = "Whisper"
+		command = ".winset \"whisperbutton.is-checked=true ? input.command=\"!say \\\"#\" : input.command=\"\"whisperbutton.is-checked=false ? saybutton.is-checked=false\"\"whisperbutton.is-checked=true ? mebutton.is-checked=false\"\"whisperbutton.is-checked=true ? oocbutton.is-checked=false\""
 		is-flat = true
 		button-type = pushbox
 	elem "mebutton"
 		type = BUTTON
-		pos = 40,0
+		pos = 80,0
 		size = 40x20
-		anchor1 = 33,0
-		anchor2 = 66,100
+		anchor1 = 50,0
+		anchor2 = 75,100
 		font-size = 4
 		border = line
 		saved-params = "is-checked"
 		text = "Me"
-		command = ".winset \"mebutton.is-checked=true ? input.command=\"!me \\\"\" : input.command=\"\"mebutton.is-checked=true ? saybutton.is-checked=false\"\"mebutton.is-checked=true ? oocbutton.is-checked=false\""
+		command = ".winset \"mebutton.is-checked=true ? input.command=\"!me \\\"\" : input.command=\"\"mebutton.is-checked=true ? saybutton.is-checked=false\"\"mebutton.is-checked=true ? oocbutton.is-checked=false\"\"mebutton.is-checked=true ? whisperbutton.is-checked=false\""
 		is-flat = true
 		button-type = pushbox
 	elem "oocbutton"
 		type = BUTTON
-		pos = 80,0
+		pos = 120,0
 		size = 40x20
-		anchor1 = 66,0
+		anchor1 = 75,0
 		anchor2 = 100,100
 		font-size = 4
 		border = line
 		saved-params = "is-checked"
 		text = "OOC"
-		command = ".winset \"oocbutton.is-checked=true ? input.command=\"!ooc \\\"\" : input.command=\"\"oocbutton.is-checked=true ? mebutton.is-checked=false\"\"oocbutton.is-checked=true ? saybutton.is-checked=false\""
+		command = ".winset \"oocbutton.is-checked=true ? input.command=\"!ooc \\\"\" : input.command=\"\"oocbutton.is-checked=true ? mebutton.is-checked=false\"\"oocbutton.is-checked=true ? saybutton.is-checked=false\"\"oocbutton.is-checked=true ? whisperbutton.is-checked=false\""
 		is-flat = true
 		button-type = pushbox
 

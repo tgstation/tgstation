@@ -103,7 +103,7 @@
 /obj/structure/tram/update_overlays(updates = ALL)
 	. = ..()
 	var/ratio = atom_integrity / max_integrity
-	ratio = CEILING(ratio * 4, 1) * 25
+	ratio = ceil(ratio * 4) * 25
 	cut_overlay(damage_overlay)
 	if(ratio > 75)
 		return
@@ -388,15 +388,17 @@
 	canSmoothWith = SMOOTH_GROUP_WOOD_WALLS
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 
-/obj/structure/tram/alt/wood/attackby(obj/item/W, mob/user)
-	if(W.get_sharpness() && W.force)
-		var/duration = ((4.8 SECONDS) / W.force) * 2 //In seconds, for now.
-		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/fireaxe))
-			duration /= 4 //Much better with hatchets and axes.
-		if(do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
-			deconstruct(disassembled = FALSE)
-			return
-	return ..()
+/obj/structure/tram/alt/wood/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness() || !tool.force)
+		return NONE
+	var/duration = ((4.8 SECONDS) / tool.force) * 2 //In seconds, for now.
+	if(istype(tool, /obj/item/hatchet) || istype(tool, /obj/item/fireaxe))
+		duration /= 4 //Much better with hatchets and axes.
+	to_chat(user, span_notice("You begin breaking down [src]."))
+	if(!do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
+		return ITEM_INTERACT_BLOCKING
+	deconstruct(disassembled = FALSE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tram/alt/bamboo
 	name = "bamboo tram"

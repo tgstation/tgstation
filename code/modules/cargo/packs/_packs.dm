@@ -21,6 +21,8 @@
 	var/desc = ""
 	/// What typepath of crate do you spawn?
 	var/crate_type = /obj/structure/closet/crate
+	/// If we're not going to use a crate, then what would we like to use as a container for the order/manifest?
+	var/storage_override
 	/// If this pack comes shipped in a specific pod when launched from the express console
 	var/special_pod
 	/// Can coupons target this pack? If so, how rarely?
@@ -52,14 +54,20 @@
  *
  * @ atom/A: The location or turf that the pack is being generated onto. Cargo shuttle provides an empty turf, other generate()s call this either null or otherwise.
  * @ datum/bank_account/paying_account: The account to associate the supply pack with when going and generating the crate. Only the paying account can open said secure crate/case.
+ * @ crate_override: If defined, we will fill our supply pack with this object. This is used for when we need to spawn a random crate but the contents are goodies or we don't need a full crate.
  */
-/datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
+/datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	var/obj/structure/closet/crate/C
 	if(paying_account)
 		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
 		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
-	else if(!crate_type)
+	else if(!crate_type && !crate_override)
 		CRASH("tried to generate a supply pack without a valid crate type")
+	else if(crate_override)
+		var/obj/unique_container = new crate_override(A)
+		fill(unique_container)
+		return unique_container
+
 	else
 		C = new crate_type(A)
 		C.name = crate_name
@@ -75,12 +83,16 @@
 	. = cost
 	. *= SSeconomy.pack_price_modifier
 
-/datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
+/**
+ * Takes a provided container, iterates, and spawns the full quantity of items within it, and applies and necessary status effects when the crate is populated.
+ * @ container: The container holding the contents of the supply pack. Most typically a obj/structure/closet/crate, but can technically be anything.
+ */
+/datum/supply_pack/proc/fill(obj/container)
 	for(var/item in contains)
 		if(!contains[item])
 			contains[item] = 1
 		for(var/iteration = 1 to contains[item])
-			var/atom/A = new item(C)
+			var/atom/A = new item(container)
 			if(!(order_flags & ORDER_ADMIN_SPAWNED))
 				continue
 			A.flags_1 |= ADMIN_SPAWNED_1
@@ -127,7 +139,7 @@
 	name = "materials order"
 	crate_name = "galactic materials market delivery crate"
 	access = FALSE
-	crate_type = /obj/structure/closet/crate/cardboard
+	crate_type = /obj/structure/closet/crate/cargo/mining
 
 /datum/supply_pack/custom/minerals/New(purchaser, cost, list/contains)
 	. = ..()
@@ -165,13 +177,13 @@
 		//We decrease the quantity only after adjusting our prices for accurate values
 		SSstock_market.adjust_material_quantity(material_type, -available_quantity)
 
-/datum/supply_pack/custom/minerals/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/custom/minerals/fill(obj/container)
 	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
 		//spawn the ordered stack inside the crate
 		var/sheets_to_spawn = contains[possible_stack]
 		while(sheets_to_spawn)
 			var/spawn_quantity = min(sheets_to_spawn, MAX_STACK_SIZE)
-			var/obj/item/stack/sheet/ordered_stack = new possible_stack(C, spawn_quantity)
+			var/obj/item/stack/sheet/ordered_stack = new possible_stack(container, spawn_quantity)
 			if(order_flags & ORDER_ADMIN_SPAWNED)
 				ordered_stack.flags_1 |= ADMIN_SPAWNED_1
 			sheets_to_spawn -= spawn_quantity

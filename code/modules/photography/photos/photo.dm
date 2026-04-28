@@ -20,8 +20,8 @@
 /obj/item/photo/get_save_vars()
 	return ..() - NAMEOF(src, icon)
 
-/obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
-	set_picture(P, datum_name, datum_desc, TRUE)
+/obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE, override_name = TRUE)
+	set_picture(P, datum_name, datum_desc, override_name)
 	//Photos are quite rarer than papers, so they're more likely to be added to the queue to make things even.
 	if(!mapload && prob(MESSAGE_BOTTLE_CHANCE * 5) && picture?.id)
 		LAZYADD(SSpersistence.queued_message_bottles, src)
@@ -111,12 +111,11 @@
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='tmp_photo.png' [width_height]='480' style='image-rendering:pixelated' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
-		+ "</body></html>", "window=photo_showing;size=480x608")
+		+ "</body></html>", "window=photo_showing;size=[scribble ? "480x580" : "480x480"]")
 	onclose(user, "[name]")
 
 /obj/item/photo/verb/rename()
 	set name = "Rename photo"
-	set category = "Object"
 	set src in usr
 
 	var/n_name = tgui_input_text(usr, "What would you like to label the photo?", "Photo Labelling", max_length = MAX_NAME_LEN)

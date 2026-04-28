@@ -396,15 +396,6 @@
 
 /datum/config_entry/flag/enable_night_shifts
 
-/datum/config_entry/flag/randomize_shift_time
-
-/datum/config_entry/flag/shift_time_realtime
-
-/datum/config_entry/number/shift_time_start_hour
-	default = 12
-	min_val = 0
-	max_val = 23
-
 /datum/config_entry/number/monkeycap
 	default = 64
 	min_val = 0
@@ -518,3 +509,7 @@
 
 /datum/config_entry/number/max_shuttle_size
 	default = 250
+
+/datum/config_entry/number/minimum_ascension_time
+	default = 0 // 1 minute
+	min_val = 0

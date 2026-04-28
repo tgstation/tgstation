@@ -53,7 +53,8 @@
 	if(!banned_typecache)
 		banned_typecache = typecacheof(list(
 			/obj/item/stock_parts/power_store/cell/infinite,
-			/obj/item/grenade/chem_grenade/tuberculosis
+			/obj/item/stock_parts/power_store/cell/ethereal,
+			/obj/item/grenade/chem_grenade/tuberculosis,
 		))
 
 	if(!length(valid_items))
@@ -150,9 +151,9 @@
 		. += span_notice("Malfunction probability reduced by [span_bold("[malfunction_probability_coeff]")].")
 		. += span_notice("Cooldown interval between experiments at [span_bold("[cooldown]")] seconds.")
 
-/obj/machinery/rnd/experimentor/default_deconstruction_crowbar(obj/item/crowbar)
+/obj/machinery/rnd/experimentor/on_deconstruction(disassembled)
+	. = ..()
 	item_eject()
-	return ..()
 
 /obj/machinery/rnd/experimentor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -361,10 +362,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/rnd/experimentor/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/rnd/experimentor/multitool_act(mob/living/user, obj/item/tool)
 	if(panel_open)

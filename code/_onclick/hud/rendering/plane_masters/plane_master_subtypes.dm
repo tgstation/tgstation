@@ -67,6 +67,36 @@
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE, offset), relay_layer = EMISSIVE_SPACE_LAYER)
 
+/atom/movable/screen/plane_master/parallax_white/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(home)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+		hud_changed(null, null, home.our_hud)
+
+/atom/movable/screen/plane_master/parallax_white/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	if(old_hud)
+		UnregisterSignal(old_hud, list(SIGNAL_ADDTRAIT(TRAIT_PARALLAX_DISPLAYED), SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_DISPLAYED)), PROC_REF(parallax_updated))
+	if(new_hud)
+		RegisterSignals(new_hud, list(SIGNAL_ADDTRAIT(TRAIT_PARALLAX_DISPLAYED), SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_DISPLAYED)), PROC_REF(parallax_updated))
+		parallax_updated(new_hud)
+
+/atom/movable/screen/plane_master/parallax_white/proc/parallax_updated(datum/source)
+	SIGNAL_HANDLER
+	if(isnull(home.our_hud?.mymob))
+		return
+	if(HAS_TRAIT(home.our_hud, TRAIT_PARALLAX_DISPLAYED))
+		// Gives parallax a fullwhite backdrop to multiply against
+		color = list(
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			1, 1, 1, 1,
+			0, 0, 0, 0
+			)
+	else
+		color = initial(color)
+
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
 	name = "Parallax"
@@ -91,6 +121,29 @@
 	if(GLOB.narsie_summon_count >= 1)
 		narsie_start_midway(GLOB.narsie_effect_last_modified) // We assume we're on the start, so we can use this number
 	offset_increase(0, SSmapping.max_plane_offset)
+
+/atom/movable/screen/plane_master/parallax/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(home)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+		hud_changed(null, null, home.our_hud)
+
+/atom/movable/screen/plane_master/parallax/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	if(old_hud)
+		UnregisterSignal(old_hud, list(SIGNAL_ADDTRAIT(TRAIT_PARALLAX_DISPLAYED), SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_DISPLAYED)), PROC_REF(parallax_updated))
+	if(new_hud)
+		RegisterSignals(new_hud, list(SIGNAL_ADDTRAIT(TRAIT_PARALLAX_DISPLAYED), SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_DISPLAYED)), PROC_REF(parallax_updated))
+		parallax_updated(new_hud)
+
+/atom/movable/screen/plane_master/parallax/proc/parallax_updated(datum/source)
+	SIGNAL_HANDLER
+	if(isnull(home.our_hud?.mymob))
+		return
+	if(HAS_TRAIT(home.our_hud, TRAIT_PARALLAX_DISPLAYED))
+		show_to(home.our_hud.mymob)
+	else
+		hide_from(home.our_hud.mymob)
 
 /atom/movable/screen/plane_master/parallax/proc/on_offset_increase(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
@@ -302,33 +355,13 @@
 /atom/movable/screen/plane_master/o_light_visual
 	name = "Overlight light visual"
 	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\
-		<br>Exists because lighting updating is really slow, and movement needs to feel smooth.\
-		<br>We draw to the game plane, and mask out space for ourselves on the lighting plane so any color we have has the chance to display."
+		<br>Exists because lighting updating is really slow, and movement needs to feel smooth (also being an overlay lets us muck with it easier)."
 	plane = O_LIGHTING_VISUAL_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(RENDER_PLANE_O_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
-
-/atom/movable/screen/plane_master/o_light_visual/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	// I'd love for this to be HSL but filters don't work with blend modes
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_TURF_LIGHTING, offset), BLEND_MULTIPLY, relay_color = list(
-		-1, -1, -1, 0,
-		-1, -1, -1, 0,
-		-1, -1, -1, 0,
-		0, 0, 0, OVERLAY_LIGHTING_WEIGHT,
-		1, 1, 1, 0,
-	))
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR, offset), relay_color = list(
-		SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0, 0,
-		0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0,
-		0, 0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0,
-		0, 0, 0, 1,
-		-SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, 0,
-	))
 
 /atom/movable/screen/plane_master/above_lighting
 	name = "Above lighting"
@@ -401,19 +434,19 @@
 	plane = CAMERA_STATIC_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME)
 
-/atom/movable/screen/plane_master/camera_static/show_to(mob/mymob)
+/atom/movable/screen/plane_master/camera_static/set_home(datum/plane_master_group/home)
 	. = ..()
-	if(!.)
-		return
-	var/datum/hud/our_hud = home.our_hud
-	if(isnull(our_hud))
-		return
+	if(home)
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+		hud_changed(null, null, home.our_hud)
 
-	// We'll hide the slate if we're not seeing through a camera eye
-	// This can call on a cycle cause we don't clear in hide_from
-	// Yes this is the best way of hooking into the hud, I hate myself too
-	RegisterSignal(our_hud, COMSIG_HUD_EYE_CHANGED, PROC_REF(eye_changed), override = TRUE)
-	eye_changed(our_hud, null, our_hud.mymob?.canon_client?.eye)
+/atom/movable/screen/plane_master/camera_static/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	if(old_hud)
+		UnregisterSignal(old_hud, COMSIG_HUD_EYE_CHANGED, PROC_REF(eye_changed))
+	if(new_hud)
+		RegisterSignal(new_hud, COMSIG_HUD_EYE_CHANGED, PROC_REF(eye_changed))
+		eye_changed(new_hud, null, new_hud.mymob?.canon_client?.eye)
 
 /atom/movable/screen/plane_master/camera_static/proc/eye_changed(datum/hud/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER

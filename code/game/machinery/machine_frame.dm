@@ -29,7 +29,7 @@
 		return
 
 	if(held_item.tool_behaviour == TOOL_WRENCH && !circuit?.needs_anchored)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	switch(state)
@@ -444,6 +444,9 @@
 		if(req_components[component] > 0)
 			user.balloon_alert(user, "missing components!")
 			return FALSE
+
+	if(!circuit.completion_requirements(src))
+		return FALSE
 
 	tool.play_tool_sound(src)
 	// Prevent us from dropping stuff thanks to /Exited

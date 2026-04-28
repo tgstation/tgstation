@@ -3,6 +3,7 @@
 	desc = "You shouldn't be seeing this! And bouldertech isn't even a real company!"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
+	base_icon_state = "ore_redemption"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	anchored = TRUE
 	density = TRUE
@@ -21,6 +22,12 @@
 	var/points_held = 0
 	///The action verb to display to players
 	var/action = "processing"
+
+
+	/// What list of reagents should we look at when we boost the effectiveness of this machinery? Assign a value to a chem as well, eg: /datum/reagent/water = 1 is a 10% boost
+	var/list/booster_list = list()
+	/// What reagent should be produced when a boost chemical is replaced by the booster_reagent?
+	var/datum/reagent/waste_chemical = /datum/reagent/water
 
 	/// Cooldown associated with the sound played for collecting mining points.
 	COOLDOWN_DECLARE(sound_cooldown)
@@ -68,20 +75,24 @@
 	else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
 	else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 
 /obj/machinery/bouldertech/examine(mob/user)
 	. = ..()
-	. += span_notice("The machine reads that it has [span_bold("[points_held] mining points")] stored. Swipe an ID to claim them.")
-	. += span_notice("Click to remove a stored boulder.")
+
+	. += span_suppradio("The machine reads that it has [EXAMINE_HINT("[points_held] mining points")] stored. Swipe an ID to claim them.")
 
 	var/boulder_count = 0
 	for(var/obj/item/boulder/potential_boulder in contents)
 		boulder_count += 1
-	. += span_notice("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
-	. += span_notice("Can process up to <b>[boulders_processing_count] boulders</b> at a time.")
+
+	if(boulder_count >= 1)
+		. += span_notice("[EXAMINE_HINT("Right Click")] to manually remove a stored boulder.<br />")
+
+	. += span_info("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
+	. += span_info("This machine can process up to [EXAMINE_HINT("[boulders_processing_count] boulders")] at a time.")
 
 	if(anchored)
 		. += span_notice("It's [EXAMINE_HINT("anchored")] in place.")
@@ -93,12 +104,21 @@
 	if(panel_open)
 		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
 
+/obj/machinery/bouldertech/examine_more(mob/user)
+	. = ..()
+
+	if(length(booster_list))
+		. += span_notice("This machine's output is boosted by <b>chemical intake:</b><br>")
+		for(var/datum/reagent/increment as anything in booster_list)
+			. += span_info("&bull; [increment::name]: Provides [booster_list[increment] * 10]% Boost")
+		. += span_notice("<br>Upon being boosted successfully, \the [src] will produce [EXAMINE_HINT("[waste_chemical.name]")].")
+
 /obj/machinery/bouldertech/update_icon_state()
 	. = ..()
 	var/suffix = ""
 	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
 		suffix = "-off"
-	icon_state ="[initial(icon_state)][suffix]"
+	icon_state ="[base_icon_state][suffix]"
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored)
@@ -290,15 +310,10 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bouldertech/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
-		update_appearance(UPDATE_ICON_STATE)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/bouldertech/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -342,7 +357,8 @@
 
 	//if boulders are kept inside because there is no space to eject them, then they could be reprocessed, lets avoid that
 	if(!chosen_boulder.processed_by)
-		check_for_boosts()
+		if(length(reagents.reagent_list))
+			check_for_boosts() //Handles the mineral boosting, as well as creating waste. Must have reagents in the machine.
 
 		//here we loop through the boulder's ores
 		var/list/rejected_mats = list()
@@ -351,7 +367,7 @@
 			if(!can_process_material(possible_mat))
 				rejected_mats[possible_mat] = quantity
 				continue
-			points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
+			points_held += round(quantity * possible_mat.points_per_boulder_unit) // put point total here into machine
 			if(isnull(silo_materials.silo) || !silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
 				new possible_mat.sheet_type(drop_location(), floor(quantity / SHEET_MATERIAL_AMOUNT))
 
@@ -362,7 +378,7 @@
 		if(!length(chosen_boulder.custom_materials))
 			playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			if(istype(chosen_boulder, /obj/item/boulder/artifact))
-				points_held = round((points_held + MINER_POINT_MULTIPLIER) * MINING_POINT_MACHINE_MULTIPLIER) /// Artifacts give bonus points!
+				points_held = round((points_held + MINER_POINT_MULTIPLIER)) /// Artifacts give bonus points!
 			chosen_boulder.break_apart()
 			return//We've processed all the materials in the boulder, so we can just destroy it in break_apart.
 
@@ -391,7 +407,7 @@
 		breakdown_boulder(potential_boulder)
 		boulders_found = FALSE
 
-	//when the boulder is removed it plays sound and  displays a balloon alert. don't overlap when that happens
+	//when the boulder is removed it plays sound and displays a balloon alert. Don't overlap when that happens
 	if(boulders_found)
 		playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		balloon_alert_to_viewers(action)

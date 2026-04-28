@@ -4,6 +4,7 @@
 	desc = "Produces components for the creation of integrated circuits."
 	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "fab-idle"
+	base_icon_state = "fab"
 	circuit = /obj/item/circuitboard/machine/component_printer
 
 	/// The internal material bus
@@ -213,33 +214,34 @@
 
 	return data
 
-/obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/component_printer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (user.combat_mode)
-		return ..()
+		return NONE
 
 	var/obj/item/integrated_circuit/circuit
-	if(istype(weapon, /obj/item/integrated_circuit))
-		circuit = weapon
-	else if (istype(weapon, /obj/item/circuit_component/module))
-		var/obj/item/circuit_component/module/module = weapon
+	if(istype(tool, /obj/item/integrated_circuit))
+		circuit = tool
+	else if (istype(tool, /obj/item/circuit_component/module))
+		var/obj/item/circuit_component/module/module = tool
 		circuit = module.internal_circuit
+
 	if (isnull(circuit))
-		return ..()
+		return NONE
 
 	circuit.linked_component_printer = WEAKREF(src)
 	circuit.update_static_data_for_all_viewers()
 	balloon_alert(user, "successfully linked to the integrated circuit")
-
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/component_printer/screwdriver_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_screwdriver(user, "fab-o", "fab-idle", tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/component_printer/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : "[base_icon_state]-idle"
 
 /obj/machinery/component_printer/proc/get_material_cost_data(list/materials, efficiency_coeff)
 	var/list/data = list()
@@ -338,6 +340,7 @@
 	desc = "Allows you to duplicate module components so that you don't have to recreate them. Scan a module component over this machine to add it as an entry."
 	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "module-fab-idle"
+	base_icon_state = "module-fab"
 	circuit = /obj/item/circuitboard/machine/module_duplicator
 	density = TRUE
 
@@ -447,14 +450,14 @@
 	created_atom.pixel_x = created_atom.base_pixel_x + rand(-5, 5)
 	created_atom.pixel_y = created_atom.base_pixel_y + rand(-5, 5)
 
-/obj/machinery/module_duplicator/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/module_duplicator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/list/data = list()
 
-	if(istype(weapon, /obj/item/circuit_component/module))
-		var/obj/item/circuit_component/module/module = weapon
+	if(istype(tool, /obj/item/circuit_component/module))
+		var/obj/item/circuit_component/module/module = tool
 		if(HAS_TRAIT(module, TRAIT_CIRCUIT_UNDUPABLE))
 			balloon_alert(user, "integrated circuit cannot be saved!")
-			return ..()
+			return ITEM_INTERACT_BLOCKING
 
 		data["dupe_data"] = list()
 		module.save_data_to_list(data["dupe_data"])
@@ -462,11 +465,12 @@
 		data["name"] = module.display_name
 		data["desc"] = "A module that has been loaded in by [user]."
 		data["materials"] = list(SSmaterials.get_material(/datum/material/glass) = module.circuit_size * cost_per_component)
-	else if(istype(weapon, /obj/item/integrated_circuit))
-		var/obj/item/integrated_circuit/integrated_circuit = weapon
+	else if(istype(tool, /obj/item/integrated_circuit))
+		var/obj/item/integrated_circuit/integrated_circuit = tool
 		if(HAS_TRAIT(integrated_circuit, TRAIT_CIRCUIT_UNDUPABLE))
 			balloon_alert(user, "integrated circuit cannot be saved!")
-			return ..()
+			return ITEM_INTERACT_BLOCKING
+
 		data["dupe_data"] = integrated_circuit.convert_to_json()
 
 		data["name"] = integrated_circuit.display_name
@@ -481,19 +485,20 @@
 		data["integrated_circuit"] = TRUE
 
 	if(!length(data))
-		return ..()
+		return NONE
 
 	if(!data["name"])
 		balloon_alert(user, "it needs a name!")
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	for(var/list/component_data as anything in scanned_designs)
 		if(component_data["name"] == data["name"])
 			balloon_alert(user, "name already exists!")
-			return ..()
+			return ITEM_INTERACT_BLOCKING
 
 	flick("module-fab-scan", src)
 	addtimer(CALLBACK(src, PROC_REF(finish_module_scan), user, data), 1.4 SECONDS)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/module_duplicator/proc/finish_module_scan(mob/user, data)
 	scanned_designs += list(data)
@@ -536,11 +541,11 @@
 	return data
 
 /obj/machinery/module_duplicator/crowbar_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/module_duplicator/screwdriver_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_screwdriver(user, "module-fab-o", "module-fab-idle", tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/module_duplicator/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : "[base_icon_state]-idle"

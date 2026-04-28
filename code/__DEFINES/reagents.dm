@@ -126,23 +126,29 @@
 /// Supercedes [REAGENT_REVERSE_METABOLISM].
 #define REAGENT_UNAFFECTED_BY_METABOLISM (1<<10)
 
+/// Spawn from features that can produce an infinite amount of something, like geysers, strange seeds and bees
+#define REAGENT_SPAWN_RANDOM_PRODUCERS (1<<0)
+/// Spawn from maintpills (only real maintpills, not the fake mapped or purchased kind)
+#define REAGENT_SPAWN_MAINTENANCE_PILL (1<<1)
+
+/// Do not ever spawn in anything random
+#define REAGENT_SPAWN_NO_RANDOM NONE
+/// Just spawn in everything, we don't care
+#define REAGENT_SPAWN_ALL_RANDOM_SPAWNS ALL
+
 //Chemical reaction flags, for determining reaction specialties
-///Convert into impure/pure on reaction completion
-#define REACTION_CLEAR_IMPURE (1<<0)
 ///Convert into inverse on reaction completion when purity is low enough
-#define REACTION_CLEAR_INVERSE (1<<1)
-///Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
-#define REACTION_CLEAR_RETAIN (1<<2)
+#define REACTION_CLEAR_INVERSE (1<<0)
 ///Used to create instant reactions
-#define REACTION_INSTANT (1<<3)
+#define REACTION_INSTANT (1<<1)
 ///Used to force reactions to create a specific amount of heat per 1u created. So if thermic_constant = 5, for 1u of reagent produced, the heat will be forced up arbitarily by 5 irresepective of other reagents. If you use this, keep in mind standard thermic_constant values are 100x what it should be with this enabled.
-#define REACTION_HEAT_ARBITARY (1<<4)
+#define REACTION_HEAT_ARBITARY (1<<2)
 ///Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed). More stuff might be added later. When defining this, please add in the comments the associated reactions that it competes with
-#define REACTION_COMPETITIVE (1<<5)
+#define REACTION_COMPETITIVE (1<<3)
 ///Used to force pH changes to be constant regardless of volume
-#define REACTION_PH_VOL_CONSTANT (1<<6)
+#define REACTION_PH_VOL_CONSTANT (1<<4)
 ///If a reaction will generate its impure/inverse reagents in the middle of a reaction, as apposed to being determined on ingestion/on reaction completion
-#define REACTION_REAL_TIME_SPLIT (1<<7)
+#define REACTION_REAL_TIME_SPLIT (1<<5)
 
 ///Used for overheat_temp - This sets the overheat so high it effectively has no overheat temperature.
 #define NO_OVERHEAT 99999
@@ -256,10 +262,6 @@
 ///same as istype() check
 #define REAGENT_SUB_TYPE (1<<2)
 
-#define RNGCHEM_INPUT "input"
-#define RNGCHEM_CATALYSTS "catalysts"
-#define RNGCHEM_OUTPUT "output"
-
 /// Below are defines used for reagent associated machines only
 /// For the pH meter flashing method
 #define ENABLE_FLASHING -1
@@ -316,3 +318,5 @@
 #define SPARK_ACT_ENCLOSED (1 << 0)
 /// We're in a large container or something, so decrease the power of bootleg explosives like welding fuel
 #define SPARK_ACT_WEAKEN_COMMON (1 << 1)
+/// Chemical threshold that industrial waste needs to start eating floors.
+#define WASTE_REACTION_THRESHOLD 10

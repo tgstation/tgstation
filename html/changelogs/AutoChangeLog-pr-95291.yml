@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Fish can be scanned for the dna vault."
-  - balance: "You need more animals on average to complete a dna vault."
-  - balance: "You need less plants on average to complete a dna vault."

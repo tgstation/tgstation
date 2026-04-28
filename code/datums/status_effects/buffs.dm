@@ -249,10 +249,10 @@
 	duration += workout_duration(new_owner, bonus_time)
 	return ..()
 
-/datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
-	duration += workout_duration(new_owner, bonus_time)
-	new_owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
-	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/athletics))
+/datum/status_effect/exercised/refresh(effect, bonus_time)
+	duration += workout_duration(owner, bonus_time)
+	owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
+	owner.add_mood_event("exercise", /datum/mood_event/exercise, owner.mind.get_skill_level(/datum/skill/athletics))
 
 /datum/status_effect/exercised/on_apply()
 	if(!owner.mind)
@@ -266,7 +266,7 @@
 /atom/movable/screen/alert/status_effect/exercised
 	name = "Exercise"
 	desc = "You feel well exercised! Sleeping will improve your fitness."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "exercised"
 
 //Hippocratic Oath: Applied when the Rod of Asclepius is activated.
@@ -378,7 +378,7 @@
 /atom/movable/screen/alert/status_effect/regenerative_core
 	name = "Regenerative Core Tendrils"
 	desc = "You can move faster than your broken body could normally handle!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	overlay_state = "legion_core_stable"
 
@@ -422,7 +422,7 @@
 /atom/movable/screen/alert/status_effect/lightningorb
 	name = "Lightning Orb"
 	desc = "The speed surges through you!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "lightningorb"
 
 /datum/status_effect/mayhem
@@ -561,7 +561,7 @@
 /atom/movable/screen/alert/status_effect/nest_sustenance
 	name = "Nest Vitalization"
 	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions. You feel ill..."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "nest_life"
 
 /**
@@ -641,7 +641,7 @@
 /atom/movable/screen/alert/status_effect/radiation_immunity
 	name = "Radiation shielding"
 	desc = "You're immune to radiation, get settled quick!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "radiation_shield"
 
 /// Throw an alert we're in darkness!! Nightvision can make it hard to tell so this is useful
@@ -673,7 +673,7 @@
 /atom/movable/screen/alert/status_effect/shadow_regeneration
 	name = "Shadow Regeneration"
 	desc = "Bathed in soothing darkness, you will slowly heal yourself"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "lightless"
 
 /// Applies desensitized mood modifier to the mob, carrying between mind transfers
@@ -716,3 +716,19 @@
 /datum/status_effect/desensitized/proc/remove_magnitude(datum/source, mob/living/old_body, datum/mind/swapping)
 	SIGNAL_HANDLER
 	swapping.desensitized_level /= magnitude
+
+//used by the garibaldi cocktail to grant revolutionaries wound resistance and fearlessness
+/datum/status_effect/rev_resilience
+	id = "rev_resilience"
+	duration = 5 SECONDS //gets refreshed by metabolism
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/rev_resilience/on_apply()
+	to_chat(owner, span_warning("You feel your revolutionary spirit surging! You feel like nothing the oppressors could throw at you could wound your pride!"))
+	owner.add_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/rev_resilience/on_remove()
+	to_chat(owner, span_notice("You feel your surge of revolutionary zeal fade. You hope you don't get shot in the foot..."))
+	owner.remove_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))

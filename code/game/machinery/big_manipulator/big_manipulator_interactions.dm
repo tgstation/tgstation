@@ -53,7 +53,7 @@
 		return
 
 	next_cycle_scheduled = TRUE
-	addtimer(CALLBACK(src, PROC_REF(step_tasks)), time_seconds)
+	addtimer(CALLBACK(src, PROC_REF(step_tasks)), time_seconds SECONDS)
 
 /// Rotates the manipulator arm to face the target task's turf.
 /obj/machinery/big_manipulator/proc/rotate_to_point(datum/manipulator_task/cargo/target_task, callback_object, callback)
@@ -77,7 +77,6 @@
 
 	var/rotation_step = 45 * sign(angle_diff)
 	do_step_rotation(target_task, callback_object, callback, current_angle, target_angle, rotation_step)
-
 	return TRUE
 
 /// Does a 45 degree step, animating the claw

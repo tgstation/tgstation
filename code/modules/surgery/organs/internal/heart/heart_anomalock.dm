@@ -235,7 +235,7 @@
 
 /atom/movable/screen/alert/status_effect/anomalock_active
 	name = "voltaic overdrive"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "anomalock_heart"
 	desc = "Voltaic energy is flooding your muscles, keeping your body upright. You have 30 seconds before it falters!"
 
