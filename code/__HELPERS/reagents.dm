@@ -41,6 +41,13 @@
 	if(short_req.required_container && !long_req.required_container)
 		return FALSE
 
+	//if short one has a more extreme temperature requirement, there's no conflict
+	if(short_req.is_cold_recipe == long_req.is_cold_recipe)
+		if(short_req.is_cold_recipe && short_req.required_temp < long_req.required_temp)
+			return FALSE
+		if(!shor_req.is_cold_recipe && short_req.required_temp > long_req.required_temp)
+			return FALSE
+
 	//check if the shorter reaction list is a subset of the longer one
 	var/list/overlap = r1.required_reagents & r2.required_reagents
 	if(overlap.len != short_req.required_reagents.len)
