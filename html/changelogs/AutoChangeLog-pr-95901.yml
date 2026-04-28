@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Mice now have a movement sprite going both east and west."
