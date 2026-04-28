@@ -59,12 +59,16 @@
 		//there is at least one unique catalyst for the short reaction, so there is no conflict
 		return FALSE
 
+	//if the list of reagents&catalysts is exactly the same, don't bother comparing the amounts, just call it an overlap
+	if(reagent_overlap.len == long_req.required_reagents.len && catalyst_overlap.len == long_req.required_catalysts.len)
+		return TRUE
+
 	for(var/datum/reagent/ingredient as anything in reagent_overlap)
-		//if longer reaction requires less amount of a reagent, there's no conflict
+		//if longer reaction requires lower reagent quantity, there's no conflict
 		if(reagent_overlap[ingredient] < short_req.required_reagents[ingredient])
 			return FALSE
 	for(var/datum/reagent/catalyst as anything in catalyst_overlap)
-		//if longer reaction requires less amount of a catalyst, there's no conflict
+		//if longer reaction requires lower catalys quantity, there's no conflict
 		if(catalyst_overlap[catalyst] < short_req.required_catalysts[catalyst])
 			return FALSE
 
