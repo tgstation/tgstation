@@ -46,7 +46,7 @@
 			return FALSE
 
 	//check if the shorter reaction list is a subset of the longer one
-	var/list/overlap = r1.required_reagents & r2.required_reagents
+	var/list/reagent_overlap = long_req.required_reagents & short_req.required_reagents
 	if(overlap.len != short_req.required_reagents.len)
 		//there is at least one reagent in the short list that is not in the long list, so there is no conflict
 		return FALSE
@@ -54,10 +54,19 @@
 	//check to see if the shorter reaction's catalyst list is also a subset of the longer reaction's catalyst list
 	//if the longer reaction's catalyst list is a subset of the shorter ones, that is fine
 	//if the reaction lists are the same, the short reaction will have the shorter required_catalysts list, so it will register as a conflict
-	var/list/short_minus_long_catalysts = short_req.required_catalysts - long_req.required_catalysts
-	if(short_minus_long_catalysts.len)
+	var/list/catalyst_overlap = long_req.required_catalysts & short_req.required_catalysts
+	if(catalyst_overlap.len != short_req.required_catalysts.len)
 		//there is at least one unique catalyst for the short reaction, so there is no conflict
 		return FALSE
+
+	for(var/datum/reagent/ingredient as anything in reagent_overlap)
+		//if longer reaction requires less amount of a reagent, there's no conflict
+		if(reagent_overlap[ingredient] < short_req.required_reagents[ingredient])
+			return FALSE
+	for(var/datum/reagent/catalyst as anything in catalyst_overlap)
+		//if longer reaction requires less amount of a catalyst, there's no conflict
+		if(catalyst_overlap[catalyst] < short_req.required_catalysts[catalyst])
+			return FALSE
 
 	//if we got this far, the longer reaction will be impossible to create if the shorter one is earlier in GLOB.chemical_reactions_list_reactant_index, and will require the reagents to be added in a particular order otherwise
 	return TRUE
