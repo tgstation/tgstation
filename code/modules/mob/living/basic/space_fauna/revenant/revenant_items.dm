@@ -45,7 +45,7 @@
 
 /obj/item/ectoplasm/revenant/proc/dispel(datum/source, obj/item/weapon, mob/living/user, flags)
 	SIGNAL_HANDLER
-	if(!flags & MAGIC_RESISTANCE_HOLY)
+	if(!(flags & MAGIC_RESISTANCE_HOLY))
 		return
 	user.visible_message(
 		span_notice("As [user] strikes [src] with [weapon], it rapidly vaporizes into nothingness."),
