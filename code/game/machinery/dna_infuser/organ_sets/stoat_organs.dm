@@ -9,7 +9,7 @@
 		Your instincts set in - you now feel fearless, as if you could take on any enemy, no matter the size difference.")
 	bonus_deactivate_text = span_notice("You are no longer majority stoat, \
 		and you realize larger enemies are quite intimidating after all.")
-	bonus_traits = list(TRAIT_FEARLESS)
+	bonus_traits = list(TRAIT_FEARLESS, TRAIT_NOFEAR_HOLDUPS)
 	COOLDOWN_DECLARE(big_attack_dodge_cd)
 
 /datum/status_effect/organ_set_bonus/stoat/enable_bonus(obj/item/organ/inserted_organ)
