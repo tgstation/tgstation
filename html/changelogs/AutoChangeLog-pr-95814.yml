@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes a few instances of crowbar deconstruction not working for certain items"
-  - refactor: "extends the tool_blocker element to support secondary tool_acts"

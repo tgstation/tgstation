@@ -622,3 +622,10 @@
   Melbert:
   - rscadd: Adds the Sect of the Dream God, a new option for chaplains.
   - qol: Drinking soup from a bowl no longer yells at you in big text
+  tmyqlfpir:
+  - rscadd: Added USB interface to emitters, temperature pumps and temperature control
+      unit machines
+  vinylspiders:
+  - bugfix: fixes a few instances of crowbar deconstruction not working for certain
+      items
+  - refactor: extends the tool_blocker element to support secondary tool_acts
