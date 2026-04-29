@@ -142,6 +142,14 @@
 			aas.broadcast("QUANTUM SERVER ALERT: Fabrication protocols have crashed unexpectedly. Please evacuate the area.", list(RADIO_CHANNEL_SUPPLY))
 		timeout = 10 SECONDS
 
+	for(var/datum/weakref/bitrunner_ref in avatar_connection_refs)
+		var/mob/living/bitrunner = astype(bitrunner_ref.resolve(), /datum/component/avatar_connection)?.parent
+		if(!bitrunner)
+			continue
+		if((bitrunner.stat > CONSCIOUS) || !bitrunner.client)
+			continue
+		timeout *= 5
+
 	if(!do_after(antag, timeout) || QDELETED(chosen_forge) || QDELETED(antag) || QDELETED(src) || !is_ready || !is_operational)
 		chosen_forge.setup_particles()
 		return
