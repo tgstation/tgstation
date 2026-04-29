@@ -368,6 +368,7 @@ const SendToAllSection = (props) => {
       <Section>
         <TextArea
           height={6}
+          width="100%"
           value={message}
           placeholder="Send message to everyone..."
           onChange={setMessage}
