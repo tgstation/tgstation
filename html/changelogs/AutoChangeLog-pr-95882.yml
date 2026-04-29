@@ -1,0 +1,4 @@
+author: "Dmeto"
+delete-after: True
+changes:
+  - map: "IceBox station boulder processing no longer exposed to outside."
