@@ -1426,6 +1426,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given when a mob is currently in invisimin mode
 #define TRAIT_INVISIMIN "invisimin"
 
+/// Trait given when a mob has admin esp turned on
+#define TRAIT_ADMIN_ESP "admin_esp"
+
 ///Trait given when a mob has been tipped
 #define TRAIT_MOB_TIPPED "mob_tipped"
 
