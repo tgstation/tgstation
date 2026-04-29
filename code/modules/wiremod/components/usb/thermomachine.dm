@@ -1,3 +1,6 @@
+/**
+ * USB wiremod interface for temperature control unit machines
+ */
 /obj/item/circuit_component/thermomachine
 	display_name = "Temperature Control Unit"
 	desc = "The interface for communicating with a temperature control unit."

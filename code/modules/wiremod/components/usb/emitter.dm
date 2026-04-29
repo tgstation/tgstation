@@ -1,3 +1,6 @@
+/**
+ * USB wiremod interface for emitter machines
+ */
 /obj/item/circuit_component/emitter
 	display_name = "Emitter"
 	desc = "Allows you to manually fire and get the ready status of an emitter. Must be unlocked to use fired signal."
@@ -12,6 +15,7 @@
 	///Send a signal when the emitter has fired
 	var/datum/port/output/has_fired
 
+	///The component parent object
 	var/obj/machinery/power/emitter/attached_emitter
 
 /obj/item/circuit_component/emitter/populate_ports()

@@ -1,3 +1,6 @@
+/**
+ * USB wiremod interface for temperature pumps
+ */
 /obj/item/circuit_component/atmos_temperature_pump
 	display_name = "Atmospheric Temperature Pump"
 	desc = "The interface for communicating with a temperature pump."
