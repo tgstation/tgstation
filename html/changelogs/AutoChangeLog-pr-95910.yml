@@ -1,0 +1,5 @@
+author: "dresseronfire"
+delete-after: True
+changes:
+  - bugfix: "You can now sic pets onto targets again"
+  - bugfix: "Pointing at things no longer sometimes points at the wrong thing"
