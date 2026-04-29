@@ -613,3 +613,6 @@
   - bugfix: molt'obeso sauce will no longer appear as an ingredient in random recipes
   vinylspiders:
   - bugfix: fixes blue and green cybernetic cat ears being switched
+2026-04-29:
+  Melbert:
+  - rscadd: Adds the Sect of the Dream God, a new option for chaplains.
