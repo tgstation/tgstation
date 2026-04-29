@@ -280,21 +280,13 @@ SUBSYSTEM_DEF(tts)
 			))
 			continue
 		if(length(normal_response.headers) && normal_response.headers.Find("audio-length"))
-			current_request.audio_length = text2num(normal_response.headers["audio-length"]) * 10
-			if(!current_request.audio_length)
-				current_request.audio_length = 0
+			current_request.audio_length = text2num(normal_response.headers["audio-length"]) * 10 || 0
 		if(length(blips_response.headers) && blips_response.headers.Find("audio-length"))
-			current_request.audio_length_blips = text2num(blips_response.headers["audio-length"]) * 10
-			if(!current_request.audio_length_blips)
-				current_request.audio_length_blips = 0
+			current_request.audio_length_blips = text2num(blips_response.headers["audio-length"]) * 10 || 0
 		if(length(radio_response.headers) && radio_response.headers.Find("audio-length"))
-			current_request.audio_length_radio = text2num(radio_response.headers["audio-length"]) * 10
-			if(!current_request.audio_length_radio)
-				current_request.audio_length_radio = 0
+			current_request.audio_length_radio = text2num(radio_response.headers["audio-length"]) * 10 || 0
 		if(length(radio_blips_response.headers) && radio_blips_response.headers.Find("audio-length"))
-			current_request.audio_length_blips_radio = text2num(radio_blips_response.headers["audio-length"]) * 10
-			if(!current_request.audio_length_blips_radio)
-				current_request.audio_length_blips_radio = 0
+			current_request.audio_length_blips_radio = text2num(radio_blips_response.headers["audio-length"]) * 10 || 0
 		if(length(radio_gibberish_response.headers) && radio_gibberish_response.headers.Find("audio-length"))
 			current_request.audio_length_radio_gibberish = text2num(radio_gibberish_response.headers["audio-length"]) * 10
 			if(!current_request.audio_length_radio_gibberish)
