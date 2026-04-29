@@ -205,3 +205,10 @@
 #define COMSIG_HUMAN_NON_STORAGE_HOTKEY "human_storage_hotkey"
 	/// Return to prevent the storage fail message
 	#define COMPONENT_STORAGE_HOTKEY_HANDLED (1<<0)
+
+/// Before a mob starts dreaming - you can add dream datums to the dream pool to override the selection: (list/dream_pool)
+#define COMSIG_PRE_DREAMING "pre_dreaming"
+/// A mob has started dreaming: (datum/dream/current_dream)
+#define COMSIG_START_DREAMING "start_dreaming"
+/// A mob has finished dreaming: (datum/dream/finished_dream)
+#define COMSIG_END_DREAMING "end_dreaming"

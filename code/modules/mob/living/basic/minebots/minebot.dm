@@ -255,13 +255,13 @@
 
 /mob/living/basic/mining_drone/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	if(!istype(target, /mob/living/basic/node_drone))
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	repair_node_drone(target)
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/mining_drone/proc/repair_node_drone(mob/living/my_target)
 	do_sparks(5, FALSE, source = my_target)
