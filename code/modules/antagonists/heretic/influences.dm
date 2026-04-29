@@ -147,7 +147,7 @@
 	else
 		human_user.gib(DROP_ALL_REMAINS)
 	human_user.investigate_log("has died from using telekinesis on a heretic influence.", INVESTIGATE_DEATHS)
-	dyn_explosion(get_turf(human_user), 1, flash_range = 1.5)
+	dyn_explosion(get_turf(human_user), 1, flash_range = 1)
 
 /obj/effect/visible_heretic_influence/examine(mob/living/user)
 	. = ..()
