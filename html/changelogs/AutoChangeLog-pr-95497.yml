@@ -1,0 +1,4 @@
+author: "tmyqlfpir"
+delete-after: True
+changes:
+  - rscadd: "Added USB interface to emitters, temperature pumps and temperature control unit machines"
