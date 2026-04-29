@@ -9,7 +9,7 @@ type Disease = {
   form: string; // used by symptoms and diseases - something like symptom, virus, bacteria, etc
   agent: string; // used by diseases - the agent that causes the disease, like a virus or bacteria name
   spread_by: string; // used by diseases - how the disease is spread, like "Airborne" or "Contact"
-  cured_by: string; // used by symptoms and diseases - how the disease or symptom is cured, like a medicine name or "Unknown"
+  cured_by: string | null; // used by symptoms and diseases - how the disease or symptom is cured, like a medicine name or "Unknown"
   illness: string; // used by symptoms - the common illness associated with the symptom, like "Flu" for "Fever"
   id: string;
 };
@@ -157,12 +157,14 @@ function renderDSMEntry(entry: BookEntry<Disease>) {
                 "{entry.illness}"
               </Stack.Item>
             )}
-            <Stack.Item>
-              <Box inline color="label">
-                Common cures:
-              </Box>{' '}
-              {entry.cured_by}
-            </Stack.Item>
+            {!!entry.cured_by && (
+              <Stack.Item>
+                <Box inline color="label">
+                  Common cures:
+                </Box>{' '}
+                {entry.cured_by}
+              </Stack.Item>
+            )}
           </>
         ) : (
           <>

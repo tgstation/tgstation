@@ -250,7 +250,7 @@
 /obj/structure/closet/gmcloset,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/item/clothing/mask/animal/small/bear/cursed,
+/obj/item/clothing/mask/animal/small/bear,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "nX" = (

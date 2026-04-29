@@ -668,6 +668,16 @@
 	restricted = FALSE
 	refundable = FALSE
 
+
+/datum/uplink_item/reinforcements/ed209
+	name = "Modified ED209"
+	desc = "Stolen Nanotrasen tech, slightly tweaked and modified to fit a greater purpose."
+	item = /obj/item/antag_spawner/nuke_ops/ed209_nukie
+	cost = 20
+	restricted = FALSE
+	refundable = FALSE
+
+
 // Bundles
 
 /datum/uplink_item/bundles_tc/cyber_implants

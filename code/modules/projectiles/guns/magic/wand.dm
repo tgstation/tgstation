@@ -19,9 +19,9 @@
 		return ..()
 
 	if(prob(33)) // 33% of the remaining 75% so another 25%
-		max_charges = CEILING(max_charges / 3, 1)
+		max_charges = ceil(max_charges / 3)
 	else
-		max_charges = CEILING(max_charges / 2, 1)
+		max_charges = ceil(max_charges / 2)
 	return ..()
 
 /obj/item/gun/magic/wand/examine(mob/user)
@@ -356,6 +356,19 @@
 	. = ..()
 	return SHAME
 
+// Animating a nothing wand makes it into an animating wand (and also animates it)
+/obj/item/gun/magic/wand/nothing/animate_atom_living(mob/living/owner)
+	var/obj/item/gun/magic/wand/animate/animated_wand = new()
+	animated_wand.charges = charges
+	animated_wand.name = name + "?"
+
+	var/mob/living/basic/mimic/copy/ranged/living_wand = new(drop_location(), animated_wand, owner, TRUE) // It's already got eyes
+	QDEL_NULL(living_wand.ai_controller)
+	living_wand.ai_controller = new /datum/ai_controller/basic_controller/mimic_copy/gun/animator(living_wand)
+
+	qdel(src)
+	return living_wand
+
 /// Also wand of doing fuck all
 /obj/item/gun/magic/wand/nothing/fake_resurrection
 	name = "holy staff"
@@ -364,6 +377,9 @@
 	icon_state = "revivewand"
 	base_icon_state = "revivewand"
 	ammo_type = /obj/item/ammo_casing/magic
+
+/obj/item/gun/magic/wand/nothing/fake_resurrection/animate_atom_living(mob/living/owner)
+	return new /mob/living/basic/mimic/copy/ranged(drop_location(), src, owner)
 
 /// Wand of making things small
 /obj/item/gun/magic/wand/shrink

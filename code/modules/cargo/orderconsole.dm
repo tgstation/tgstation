@@ -165,9 +165,8 @@
 /**
  * returns a list of supply packs for a certain group
  * * group - the group of packs to return
- * * express - if this is an express console
  */
-/obj/machinery/computer/cargo/proc/get_packs_data(group, express = FALSE)
+/obj/machinery/computer/cargo/proc/get_packs_data(group)
 	var/list/packs = list()
 	for(var/pack_id in SSshuttle.supply_packs)
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
@@ -177,14 +176,15 @@
 		if(pack.order_flags & ORDER_INVISIBLE)
 			continue
 
-		// Express console packs check
-		if(express && (pack.order_flags & (ORDER_EMAG_ONLY | ORDER_SPECIAL)))
+		if((pack.order_flags & ORDER_EMAG_ONLY) && !(obj_flags & EMAGGED))
 			continue
-
-		if(!express && (((pack.order_flags & ORDER_EMAG_ONLY) && !(obj_flags & EMAGGED)) || ((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED)) || (pack.order_flags & ORDER_POD_ONLY)))
+		if((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED))
 			continue
 
 		if((pack.order_flags & ORDER_CONTRABAND) && !contraband)
+			continue
+
+		if(!is_express && (pack.order_flags & ORDER_POD_ONLY))
 			continue
 
 		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
@@ -394,10 +394,10 @@
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))
 					var/obj/item/paper/requisition/requisition_paper = new(get_turf(src))
-					requisition_paper.name = "requisition form - [station_time_timestamp()]"
+					requisition_paper.name = "requisition form - [server_timestamp(ic_time = TRUE)] (PT: [round_timestamp()])"
 					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 					requisition_text += "<hr/>"
-					requisition_text += "Time of Order: [station_time_timestamp()]<br/><br/>"
+					requisition_text += "Time of Order: [UNDERLINED_HTML_TEXT("[server_timestamp(ic_time = TRUE)]", "Shift Time: [round_timestamp()]")]<br/><br/>"
 					for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
 						requisition_text += "<b>[order.pack.name]</b></br>"
 						requisition_text += "- Order ID: [order.id]</br>"
@@ -412,7 +412,7 @@
 						if(reason)
 							requisition_text += "- Reason Given: [reason]</br>"
 						requisition_text += "</br></br>"
-					requisition_paper.add_raw_text(requisition_text)
+					requisition_paper.add_raw_text(requisition_text, advanced_html = TRUE)
 					requisition_paper.color = "#9ef5ff"
 					requisition_paper.update_appearance()
 

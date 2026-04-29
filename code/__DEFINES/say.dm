@@ -73,6 +73,8 @@
 #define MODE_CUSTOM_SAY_ERASE_INPUT "erase_input"
 /// Message is being relayed through another object
 #define MODE_RELAY "relayed"
+/// Override the mob's name
+#define MODE_SPEAKER_NAME_OVERRIDE "speaker_name_override"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
@@ -144,3 +146,11 @@
 ///Defines for priorities for the bubble_icon_override comp
 #define BUBBLE_ICON_PRIORITY_ACCESSORY 2
 #define BUBBLE_ICON_PRIORITY_ORGAN 1
+
+//These are the names of the commands, what you'd need to type to do the command (also used in winset)
+#define VERB_SAY "Say"
+#define VERB_WHISPER "Whisper"
+#define VERB_ME "Me"
+//Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
+#define VERB_OOC "OOC"
+#define VERB_PRAY "Pray"

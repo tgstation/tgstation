@@ -211,7 +211,7 @@
 
 	START_PROCESSING(SSobj, src)
 
-/datum/action/innate/bci_charge_action/create_button()
+/datum/action/innate/bci_charge_action/create_button(mob/viewer)
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext_x = 2
 	button.maptext_y = 0
@@ -353,18 +353,11 @@
 		user.put_in_hands(previous_bci_to_implant)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/bci_implanter/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if (!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-		update_appearance()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/machinery/bci_implanter/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return isnull(occupant) ? default_deconstruction_screwdriver(user, tool) : NONE
 
-	if (default_pry_open(weapon, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if (default_deconstruction_crowbar(weapon))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/machinery/bci_implanter/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	return default_pry_open(user, user, tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE, deconstruct_on_fail = TRUE)
 
 /obj/machinery/bci_implanter/proc/start_process()
 	if (machine_stat & (NOPOWER|BROKEN))
