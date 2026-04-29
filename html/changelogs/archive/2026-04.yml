@@ -614,5 +614,8 @@
   vinylspiders:
   - bugfix: fixes blue and green cybernetic cat ears being switched
 2026-04-29:
+  Dmeto:
+  - map: IceBox station boulder processing no longer exposed to outside.
   Melbert:
   - rscadd: Adds the Sect of the Dream God, a new option for chaplains.
+  - qol: Drinking soup from a bowl no longer yells at you in big text
