@@ -267,6 +267,24 @@ a:visited {
   background: yellow;
 }
 
+.Chat__highlight {
+  color: oklch(from var(--h-color) min(l, 0.45) c h);
+  background: color-mix(
+    in srgb,
+    oklch(from var(--h-color) min(l, 0.45) c h) 25%,
+    transparent
+  );
+}
+
+.ChatMessage--highlighted {
+  border-left-color: oklch(from var(--h-color) min(l, 0.45) c h);
+  background: color-mix(
+    in srgb,
+    oklch(from var(--h-color) min(l, 0.45) c h) 14%,
+    transparent
+  );
+}
+
 h1,
 h2,
 h3,
