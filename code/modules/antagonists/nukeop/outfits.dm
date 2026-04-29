@@ -146,9 +146,8 @@
 	name = "Syndicate Operative - Cybersun Reinforcement"
 	uniform = /obj/item/clothing/under/syndicate/cybersun
 	gloves = /obj/item/clothing/gloves/combat
-	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	shoes = /obj/item/clothing/shoes/laceup
-	mask = /obj/item/clothing/mask/gas/sechailer
+	mask = /obj/item/clothing/mask/gas/syndicate/cybersun
 	faction = "Cybersun Industries"
 
 /datum/outfit/syndicate/reinforcement/donk
