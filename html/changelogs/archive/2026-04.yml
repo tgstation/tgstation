@@ -616,6 +616,9 @@
 2026-04-29:
   Dmeto:
   - map: IceBox station boulder processing no longer exposed to outside.
+  ElGitificador:
+  - bugfix: hierophant achievement can now be obtained from 1 tile away of it s final
+      blast
   Melbert:
   - rscadd: Adds the Sect of the Dream God, a new option for chaplains.
   - qol: Drinking soup from a bowl no longer yells at you in big text
