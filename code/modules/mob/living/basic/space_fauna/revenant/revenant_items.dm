@@ -9,8 +9,6 @@
 	var/reforming = TRUE
 	/// Are we inert (aka distorted such that we can't reform)?
 	var/inert = FALSE
-	/// The key of the revenant that we started the reform as
-	var/old_ckey
 	/// The revenant we're currently storing
 	var/mob/living/basic/revenant/revenant
 
@@ -23,13 +21,29 @@
 		qdel(revenant)
 	return ..()
 
+/obj/item/ectoplasm/revenant/proc/check_for_mirrors(turf/location, radius)
+	PRIVATE_PROC(TRUE)
+	for(var/obj/structure/mirror/mirror in view(radius, location))
+		if(!mirror.revenant && !mirror.broken)
+			return mirror
+	return null
+
 /obj/item/ectoplasm/revenant/attack_self(mob/user)
 	if(!reforming || inert)
 		return ..()
-	user.visible_message(
-		span_notice("[user] scatters [src] in all directions."),
-		span_notice("You scatter [src] across the area. The particles slowly fade away."),
-	)
+	var/obj/structure/mirror/nearby_mirror = check_for_mirrors(drop_location(), 5)
+	if(!nearby_mirror)
+		user.visible_message(
+			span_notice("[user] scatters [src] in all directions."),
+			span_notice("You scatter [src] across the area. The particles slowly fade away."),
+		)
+	else
+		nearby_mirror.become_cursed(revenant)
+		src.revenant = null
+		user.visible_message(
+			span_revenwarning("[user] scatters [src] in all directions. A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"),
+			span_revenwarning("You scatter [src] across the area. A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"),
+		)
 	user.dropItemToGround(src)
 	qdel(src)
 
@@ -37,7 +51,13 @@
 	. = ..()
 	if(inert)
 		return
-	visible_message(span_notice("[src] breaks into particles upon impact, which fade away to nothingness."))
+	var/obj/structure/mirror/nearby_mirror = check_for_mirrors(get_turf(hit_atom), 3)
+	if(!nearby_mirror)
+		visible_message(span_notice("[src] breaks into particles upon impact, which fade away to nothingness."))
+	else
+		visible_message(span_revenwarning("A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"))
+		nearby_mirror.become_cursed(revenant)
+		revenant = null
 	qdel(src)
 
 /obj/item/ectoplasm/revenant/examine(mob/user)
@@ -62,35 +82,16 @@
 
 /// Actually moves the revenant out of ourself
 /obj/item/ectoplasm/revenant/proc/reform()
-	if(QDELETED(src) || QDELETED(revenant) || inert)
+	if(QDELETED(src) || inert)
 		return
 
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
 	forceMove(drop_location()) //In case it's in a backpack or someone's hand
 
-	var/user_name = old_ckey
-	if(isnull(revenant.client))
-		var/mob/potential_user = get_new_user()
-		revenant.PossessByPlayer(potential_user.key)
-		user_name = potential_user.ckey
-		qdel(potential_user)
-
-	message_admins("[user_name] has been [old_ckey == user_name ? "re":""]made into a revenant by reforming ectoplasm.")
-	revenant.log_message("was [old_ckey == user_name ? "re":""]made as a revenant by reforming ectoplasm.", LOG_GAME)
-	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
-
-	revenant.death_reset()
-	revenant = null
-	qdel(src)
-
-/// Handles giving the revenant a new client to control it
-/obj/item/ectoplasm/revenant/proc/get_new_user()
-	message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to be [span_notice(revenant.name)] (reforming)?", check_jobban = ROLE_REVENANT, role = ROLE_REVENANT, poll_time = 5 SECONDS, checked_target = revenant, alert_pic = revenant, role_name_text = "reforming revenant", chat_text_border_icon = revenant)
-	if(isnull(chosen_one))
-		message_admins("No candidates were found for the new revenant.")
+	if(!revenant.reform("by reforming ectoplasm"))
 		inert = TRUE
 		visible_message(span_revenwarning("[src] settles down and seems lifeless."))
-		qdel(revenant)
-		return null
-	return chosen_one
+		return
+	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
+	revenant = null
+	qdel(src)
