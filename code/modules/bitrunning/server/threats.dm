@@ -142,6 +142,7 @@
 			aas.broadcast("QUANTUM SERVER ALERT: Fabrication protocols have crashed unexpectedly. Please evacuate the area.", list(RADIO_CHANNEL_SUPPLY))
 		timeout = 10 SECONDS
 
+	var/bitrunners_alive = 0
 	var/island_brawl_exception = istype(generated_domain, /datum/lazy_template/virtual_domain/island_brawl)
 	for(var/datum/weakref/bitrunner_ref in avatar_connection_refs)
 		var/mob/living/bitrunner = astype(bitrunner_ref.resolve(), /datum/component/avatar_connection)?.parent
@@ -152,7 +153,10 @@
 		if(island_brawl_exception)
 			timeout *= max(5 - generated_domain.main_crate_points, 1)
 			continue
+		bitrunners_alive++
 		timeout *= 5
+	if(bitrunners_alive)
+		to_chat(antag, span_warning("[bitrunners_alive] criminals still remain here, pilfering your domain. It will be more difficult to leave until they are handled."))
 
 	if(!do_after(antag, timeout) || QDELETED(chosen_forge) || QDELETED(antag) || QDELETED(src) || !is_ready || !is_operational)
 		chosen_forge.setup_particles()
