@@ -251,6 +251,54 @@
 	SIGNAL_HANDLER
 	return COMSIG_CARBON_BLOCK_BREATH
 
+/datum/reagent/toxin/carnivorousblood
+	name = "Carnivorous Blood"
+	description = "An Interdyne-developed biological agent that consumes any blood similar to the blood it was trained on."
+	color ="#C80000"
+	toxpwr = 0
+	taste_description = "carbonated blood"
+	ph = 7.4
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_DEAD_PROCESS
+	self_consuming = TRUE
+	// Will hold up to three DNA unique enzymes
+	data = list()
+
+/datum/reagent/toxin/carnivorousblood/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	if(methods & INHALE)
+		data = list() // Being vaporized is generally undesirable for living creatures
+
+/datum/reagent/toxin/carnivorousblood/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(!CAN_HAVE_BLOOD(affected_mob) || affected_mob.blood_volume == 0)
+		affected_mob.reagents.remove_reagent(/datum/reagent/toxin/carnivorousblood, volume)
+		return
+	var/multiplier = 1
+	if(affected_mob.stat == DEAD)
+		multiplier *= 2
+	if(affected_mob.dna.unique_enzymes in data)
+		multiplier *= 3
+	affected_mob.adjust_blood_volume(-2 * multiplier * seconds_per_tick)
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, span_danger("Your blood is writhing in your veins!"))
+		if(SPT_PROB(25, seconds_per_tick))
+			affected_mob.emote("scream")
+	return UPDATE_MOB_HEALTH
+
+/datum/reagent/toxin/carnivorousblood/on_merge(list/mix_data, amount)
+	. = ..()
+	feed_dna_list(mix_data)
+
+/// Given a list of DNA keys, adds new keys up to the limit of three distinct sequences.
+/datum/reagent/toxin/carnivorousblood/proc/feed_dna_list(list/adding_list)
+	for(var/dna in adding_list)
+		if(data.len >= 3)
+			return
+		if(dna in data)
+			continue
+		data += dna
+
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
