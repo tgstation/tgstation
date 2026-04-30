@@ -35,7 +35,7 @@
 
 	entries += prison_tattoos_to_save
 
-	saved_data["version"] = ENGRAVING_PERSISTENCE_VERSION
+	saved_data["version"] = TATTOO_PERSISTENCE_VERSION
 	saved_data["entries"] = entries
 
 	fdel(json_file)

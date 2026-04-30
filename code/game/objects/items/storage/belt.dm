@@ -466,7 +466,8 @@
 	worn_icon_state = "soulstonebelt"
 	storage_type = /datum/storage/wands_belt
 
-/obj/item/storage/belt/wands/full/PopulateContents()
+/// Put some wands in that bad boy
+/obj/item/storage/belt/wands/full/proc/create_wands()
 	new /obj/item/gun/magic/wand/death(src)
 	new /obj/item/gun/magic/wand/resurrection(src)
 	new /obj/item/gun/magic/wand/polymorph(src)
@@ -475,9 +476,95 @@
 	new /obj/item/gun/magic/wand/fireball(src)
 	new /obj/item/gun/magic/wand/shrink(src)
 
+/obj/item/storage/belt/wands/full/PopulateContents()
+	create_wands()
 	for(var/obj/item/gun/magic/wand/W in contents) //All wands in this pack come in the best possible condition
 		W.max_charges = initial(W.max_charges)
 		W.charges = W.max_charges
+
+/// Filled with budget wands instead of cool ones
+/obj/item/storage/belt/wands/full/discount
+	/// Which wands can appear?
+	var/static/list/possible_options = list(
+		/obj/item/gun/magic/wand/animate,
+		/obj/item/gun/magic/wand/babel,
+		/obj/item/gun/magic/wand/bald,
+		/obj/item/gun/magic/wand/door,
+		/obj/item/gun/magic/wand/fireball,
+		/obj/item/gun/magic/wand/freeze,
+		/obj/item/gun/magic/wand/hallucination,
+		/obj/item/gun/magic/wand/levitate,
+		/obj/item/gun/magic/wand/pax,
+		/obj/item/gun/magic/wand/pizza,
+		/obj/item/gun/magic/wand/plague,
+		/obj/item/gun/magic/wand/prank,
+		/obj/item/gun/magic/wand/rebel,
+		/obj/item/gun/magic/wand/repulse,
+		/obj/item/gun/magic/wand/swap,
+		/obj/item/gun/magic/wand/teleport,
+		/obj/item/gun/magic/wand/tentacles,
+		/obj/item/gun/magic/wand/zap,
+	)
+
+/obj/item/storage/belt/wands/full/discount/create_wands()
+	var/list/available_options = possible_options.Copy()
+	for (var/i in 1 to 6)
+		if (!length(available_options))
+			break
+		var/wand_path = pick_n_take(available_options)
+		new wand_path(src)
+
+/// Not a subtype of bandolier because it acts pretty differently
+/obj/item/storage/belt/wand_bandolier
+	name = "wand bandolier"
+	desc = "A bandolier for holding a whole lot of wands. If worn on your suit, swaps expended wands for fresh ones on the fly."
+	icon_state = "bandolier"
+	inhand_icon_state = "bandolier"
+	worn_icon_state = "bandolier"
+	storage_type = /datum/storage/wands_belt
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/belt/wand_bandolier/equipped(mob/user, slot)
+	. = ..()
+	if (!(slot & ITEM_SLOT_SUITSTORE))
+		return
+	ADD_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
+	RegisterSignal(user, COMSIG_MOB_FIRED_GUN, PROC_REF(on_gun_fired))
+
+/obj/item/storage/belt/wand_bandolier/dropped(mob/user)
+	. = ..()
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
+	UnregisterSignal(user, COMSIG_MOB_FIRED_GUN)
+
+/// After we fire a gun, check if it's a wand. If it is and it's empty, do a swap
+/obj/item/storage/belt/wand_bandolier/proc/on_gun_fired(mob/living/wizard, obj/item/gun/magic/wand/old_wand)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(equip_new_wand), wizard, old_wand)
+
+/obj/item/storage/belt/wand_bandolier/proc/equip_new_wand(mob/living/wizard, obj/item/gun/magic/wand/old_wand)
+	if (!istype(old_wand))
+		return
+	if (!atom_storage.real_location.contents.len) // no other wands
+		return
+	if (old_wand.charges > 1) // It hasn't subtracted yet
+		return
+
+	var/obj/item/fresh_wand
+	for (var/obj/item/gun/magic/wand/checked in atom_storage.real_location.contents)
+		if (checked.charges)
+			fresh_wand = checked
+			break
+	if (!fresh_wand || fresh_wand.on_found())
+		return // Nothing to swap with
+
+	wizard.temporarilyRemoveItemFromInventory(old_wand)
+	if (!wizard.put_in_hands(fresh_wand))
+		return
+	to_chat(wizard, span_notice("You quickly draw [fresh_wand]."))
+	if (atom_storage.attempt_insert(old_wand, wizard))
+		return
+	old_wand.forceMove(wizard.drop_location())
+	to_chat(wizard, span_warning("...and drop [old_wand] on the ground."))
 
 /obj/item/storage/belt/janitor
 	name = "janibelt"

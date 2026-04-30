@@ -51,22 +51,22 @@
 
 /mob/living/basic/mining/ice_whelp/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	if(istype(target, /obj/structure/flora/rock/icy))
 		create_sculpture(target)
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 	if(!istype(target, type))
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 
 	var/mob/living/victim = target
 	if(victim.stat != DEAD)
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 
 	cannibalize_victim(victim)
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /// Carve a stone into a beautiful self-portrait
 /mob/living/basic/mining/ice_whelp/proc/create_sculpture(atom/target)

@@ -146,7 +146,7 @@ SUBSYSTEM_DEF(modular_computers)
  */
 /datum/controller/subsystem/modular_computers/proc/add_log(log_string)
 	var/list/log_text = list()
-	log_text += "\[[station_time_timestamp()]\]"
+	log_text += "\[[round_timestamp()]\]"
 	log_text += "*SYSTEM* - "
 	log_text += log_string
 	log_string = log_text.Join()

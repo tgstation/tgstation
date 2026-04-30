@@ -54,8 +54,9 @@
 
 	var/obj/item/paper/autopsy_report = new(get_turf(src))
 	autopsy_report.color = "#99ccff"
-	autopsy_report.name = "autopsy report of [scanned] - [station_time_timestamp()])"
-	var/final_report_text = "<center><b>Autopsy report. Time of Autopsy: [station_time_timestamp()]</b></center>"
+	autopsy_report.name = "autopsy report of [scanned] - [server_timestamp(format = "hh:mm", ic_time = TRUE)]"
+	var/final_report_text = "<center><b>Autopsy report</br>\
+		Time of Autopsy: [UNDERLINED_HTML_TEXT("[server_timestamp(format = "hh:mm", ic_time = TRUE)]", "Shift Time: [round_timestamp(format = "hh:mm")]")]</b></center>"
 
 	//A lot of this is extremely similar to /proc/healthscan() - but with different formatting, no color, and some added/removed info
 	//Does not list quirks/exhaustion/how to repair wounds
@@ -240,7 +241,7 @@
 	autopsy_information += "<b>Coroner's Notes:</b>" //Bottom of the page, anything past here is player-written
 
 	final_report_text += jointext(autopsy_information, "")
-	autopsy_report.add_raw_text(final_report_text)
+	autopsy_report.add_raw_text(final_report_text, advanced_html = TRUE)
 	autopsy_report.update_appearance()
 	user.put_in_hands(autopsy_report)
 	user.balloon_alert(user, "report printed")

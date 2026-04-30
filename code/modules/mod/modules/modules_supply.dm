@@ -194,7 +194,7 @@
 	if (!istype(giberal_turf) || giberal_turf.stage != GIBTONITE_UNSTRUCK)
 		last_bumpmine_tick = world.time
 		var/turf/closed/mineral/rock = bumped_into
-		INVOKE_ASYNC(rock, TYPE_PROC_REF(/atom, attackby), src, bumper, null, null, exp_multiplier)
+		INVOKE_ASYNC(src, PROC_REF(mine_rock), rock, bumper)
 		return
 
 	if (!COOLDOWN_FINISHED(src, gibtonite_warning_cd))
@@ -204,12 +204,21 @@
 	playsound(bumper, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected!"))
 
+/obj/item/mod/module/drill/proc/mine_rock(turf/closed/mineral/rock, mob/living/carbon/human/bumper)
+	// Even faster if it has ore!
+	var/has_ore = !isnull(rock.mineral_type)
+	if (has_ore)
+		toolspeed /= 1.5
+	rock.attackby(src, bumper, null, null, exp_multiplier)
+	if (has_ore)
+		toolspeed *= 1.5
+
 /obj/item/mod/module/drill/proc/on_module_activated(datum/source, obj/item/mod/module/module)
 	SIGNAL_HANDLER
 	if (!istype(module, /obj/item/mod/module/sphere_transform))
 		return
-	// In sphere mode we get instamine and halved power drain
-	toolspeed = 0
+	// In sphere mode we get faster mining and halved power drain
+	toolspeed = 0.075
 	use_energy_cost *= 0.5
 	exp_multiplier *= 0.2
 	if (!active)
@@ -750,8 +759,12 @@
 /obj/structure/mining_bomb/proc/boom(atom/movable/firer)
 	visible_message(span_danger("[src] explodes!"))
 	playsound(src, 'sound/effects/magic/magic_missile.ogg', 200, vary = TRUE)
-	for(var/turf/closed/mineral/rock in circle_range_turfs(src, 1))
-		rock.gets_drilled()
+	var/turf/our_turf = get_turf(src)
+	for(var/turf/closed/mineral/rock in RANGE_TURFS(1, src))
+		if (rock == our_turf)
+			rock.gets_drilled(firer, 0)
+		else
+			rock.drill_aoe(firer, 0)
 	for(var/mob/living/victim in range(1, src))
 		if(HAS_TRAIT(victim, TRAIT_MINING_AOE_IMMUNE))
 			continue

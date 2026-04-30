@@ -22,6 +22,9 @@
 
 /obj/item/grenade/chem_grenade/rust_sower/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_MULTITOOL, TOOL_ACT_PRIMARY)
 	RegisterSignal(src, COMSIG_ITEM_ON_GRIND, PROC_REF(on_try_grind))
 	var/obj/item/reagent_containers/cup/beaker/large/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/large/beaker_two = new(src)
@@ -38,15 +41,6 @@
 	. = ..()
 	playsound(src, 'sound/items/weapons/rust_sower_explode.ogg', 70, FALSE)
 	qdel(src)
-
-/obj/item/grenade/chem_grenade/rust_sower/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/item/grenade/chem_grenade/rust_sower/wrench_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/item/grenade/chem_grenade/rust_sower/multitool_act(mob/living/user, obj/item/tool)
-	return NONE
 
 /// Returns -1 so that you cant extract the chems
 /obj/item/grenade/chem_grenade/rust_sower/proc/on_try_grind()

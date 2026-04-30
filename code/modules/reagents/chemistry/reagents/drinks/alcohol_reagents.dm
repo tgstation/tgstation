@@ -3451,7 +3451,14 @@
 	taste_description = "honeyed herbal gin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	metabolized_traits = list(TRAIT_HERETICAL_DREAMS) //Enables non-heretics to have heretical dreams
+
+/datum/reagent/consumable/ethanol/poets_dream/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.apply_status_effect(/datum/status_effect/grouped/heretic_dreams, type)
+
+/datum/reagent/consumable/ethanol/poets_dream/on_mob_end_metabolize(mob/living/affected_mob, metabolization_ratio)
+	. = ..()
+	affected_mob.remove_status_effect(/datum/status_effect/grouped/heretic_dreams, type)
 
 /datum/reagent/consumable/ethanol/pousse_cafe
 	name = "Pousse Cafe"

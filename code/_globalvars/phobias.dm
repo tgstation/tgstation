@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	)),
 	"authority" = typecacheof(list(
 		/mob/living/basic/trooper/nanotrasen,
-		/mob/living/simple_animal/bot/secbot,
+		/mob/living/basic/bot/secbot,
 	)),
 	"birds" = typecacheof(list(
 		/mob/living/basic/chick,
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"conspiracies" = typecacheof(list(
 		/mob/living/basic/drone,
 		/mob/living/basic/pet/penguin,
-		/mob/living/simple_animal/bot/secbot,
+		/mob/living/basic/bot/secbot,
 	)),
 	"doctors" = typecacheof(list(/mob/living/basic/bot/medbot)),
 	"fish" = typecacheof(list(
@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/silicon/robot,
 		/mob/living/simple_animal/bot,
 	)),
-	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
+	"security" = typecacheof(list(/mob/living/basic/bot/secbot)),
 	"spiders" = typecacheof(list(
 		/mob/living/basic/flesh_spider,
 		/mob/living/basic/mega_arachnid,

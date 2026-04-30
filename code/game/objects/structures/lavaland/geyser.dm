@@ -72,6 +72,7 @@
 		return
 
 	to_chat(user, span_notice("You discovered the geyser and mark it on the GPS system!"))
+	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 30)
 	SEND_SIGNAL(user, COMSIG_LIVING_DISCOVERED_GEYSER, src)
 	if(discovery_message)
 		to_chat(user, discovery_message)

@@ -9,7 +9,7 @@
 	/// A memory to grant to killers, if any
 	var/kill_memory_type = null
 	/// Range in which to grant the achievement
-	var/achievement_range = 7
+	var/achievement_range = 12
 	/// Threshold for damage dealt with a crusher to count it as a crusher kill
 	/// If null, then no kill counts as a crusher kill
 	var/crusher_kill_threshold = 0.6

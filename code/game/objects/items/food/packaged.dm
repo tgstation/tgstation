@@ -117,6 +117,7 @@
 	if(!check_buffability(user))
 		return ..()
 	apply_buff(user)
+	return TRUE
 
 /obj/item/food/canned/envirochow/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!check_buffability(interacting_with))

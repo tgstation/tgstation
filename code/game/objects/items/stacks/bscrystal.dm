@@ -13,6 +13,10 @@
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
 	scan_state = "rock_bscrystal"
 	merge_type = /obj/item/stack/ore/bluespace_crystal
+	vein_type = ORE_VEIN_SCATTER
+	vein_distance = 5
+	min_vein_size = 1
+	max_vein_size = 2
 	/// The teleport range when crushed/thrown at someone.
 	var/blink_range = 8
 

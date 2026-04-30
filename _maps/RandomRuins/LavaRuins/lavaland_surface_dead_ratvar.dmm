@@ -18,8 +18,8 @@
 /turf/open/floor/bronze/filled/lavaland,
 /area/ruin/unpowered/ratvar)
 "f" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/ruin/unpowered/ratvar)
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/template_noop)
 "g" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -123,6 +123,20 @@
 /obj/item/stack/sheet/bronze/thirty,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ratvar)
+"I" = (
+/obj/structure/fluff/clockwork/alloy_shards/large,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"J" = (
+/obj/structure/fluff/clockwork/alloy_shards/small,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"K" = (
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/ruin/unpowered/ratvar)
+"L" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 
 (1,1,1) = {"
 a
@@ -138,10 +152,10 @@ a
 a
 a
 a
-b
+L
 s
 h
-b
+L
 a
 a
 a
@@ -158,8 +172,8 @@ a
 a
 a
 a
-o
-b
+I
+L
 a
 h
 b
@@ -184,7 +198,7 @@ a
 a
 a
 f
-b
+L
 l
 b
 v
@@ -195,8 +209,8 @@ j
 j
 c
 l
-b
-b
+L
+L
 a
 a
 a
@@ -221,7 +235,7 @@ j
 j
 p
 l
-b
+L
 h
 c
 r
@@ -303,7 +317,7 @@ l
 c
 f
 f
-b
+L
 a
 "}
 (8,1,1) = {"
@@ -328,7 +342,7 @@ l
 l
 l
 f
-b
+L
 a
 a
 "}
@@ -352,10 +366,10 @@ b
 g
 l
 l
-b
-b
-b
-b
+L
+L
+L
+L
 a
 "}
 (10,1,1) = {"
@@ -407,7 +421,7 @@ l
 l
 l
 l
-b
+L
 a
 "}
 (12,1,1) = {"
@@ -463,9 +477,9 @@ b
 a
 "}
 (14,1,1) = {"
-b
-b
-b
+L
+L
+L
 m
 l
 l
@@ -486,12 +500,12 @@ l
 b
 b
 h
-b
+L
 "}
 (15,1,1) = {"
-b
-b
-b
+L
+L
+L
 l
 l
 l
@@ -510,8 +524,8 @@ l
 l
 l
 l
-b
-b
+L
+L
 a
 "}
 (16,1,1) = {"
@@ -541,9 +555,9 @@ f
 a
 "}
 (17,1,1) = {"
-b
-b
-b
+L
+L
+L
 l
 l
 l
@@ -563,7 +577,7 @@ l
 r
 l
 l
-b
+L
 a
 "}
 (18,1,1) = {"
@@ -590,7 +604,7 @@ h
 b
 b
 m
-b
+L
 "}
 (19,1,1) = {"
 b
@@ -616,7 +630,7 @@ h
 r
 h
 b
-b
+L
 "}
 (20,1,1) = {"
 b
@@ -716,8 +730,8 @@ b
 l
 l
 l
-b
-b
+L
+L
 w
 r
 b
@@ -725,8 +739,8 @@ b
 (24,1,1) = {"
 a
 a
-b
-b
+L
+L
 l
 l
 l
@@ -742,7 +756,7 @@ j
 j
 l
 l
-c
+J
 l
 l
 b
@@ -751,7 +765,7 @@ a
 (25,1,1) = {"
 a
 a
-b
+L
 l
 l
 l
@@ -777,7 +791,7 @@ a
 (26,1,1) = {"
 a
 a
-b
+L
 c
 b
 l
@@ -795,7 +809,7 @@ l
 l
 c
 m
-b
+L
 a
 a
 a
@@ -859,7 +873,7 @@ a
 a
 b
 b
-f
+K
 c
 b
 l
@@ -871,7 +885,7 @@ l
 c
 o
 l
-b
+L
 a
 a
 a
@@ -895,7 +909,7 @@ l
 b
 l
 f
-b
+L
 a
 a
 a

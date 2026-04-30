@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/datum/feed_message/new_article = new /datum/feed_message
 	new_article.author = author
 	new_article.body = msg
-	new_article.time_stamp = "[station_time_timestamp()]"
+	new_article.time_stamp = "[round_timestamp()]"
 	new_article.is_admin_message = adminMessage
 	new_article.locked = !allow_comments
 
@@ -243,7 +243,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/datum/feed_comment/new_feed_comment = new/datum/feed_comment
 	new_feed_comment.author = newscaster_username
 	new_feed_comment.body = comment_text
-	new_feed_comment.time_stamp = station_time_timestamp()
+	new_feed_comment.time_stamp = round_timestamp()
 	GLOB.news_network.last_action ++
 	current_message.comments += new_feed_comment
 	if(user)

@@ -536,11 +536,26 @@ export function PlaneMasterDebug() {
         title={`Plane Debugging: ${mob_name}`}
         buttons={
           <Stack fill>
-            <Stack.Item>
+            <Stack.Item
+              width={`${
+                Math.max(
+                  90,
+                  textWidth(
+                    planes
+                      .map((plane) => plane.name)
+                      .sort((a, b) => a.length - b.length)
+                      .pop() as string,
+                    'Verdana, Geneva',
+                    12,
+                  ),
+                ) + 40
+              }px`}
+            >
               <Dropdown
                 options={planes.map((plane) => plane.name).sort()}
                 placeholder="Find Plane"
                 selected={zoomToPlane}
+                searchInput
                 onSelected={(value) => {
                   setZoomToPlane(value);
                   const locatedPlane = planes.find(

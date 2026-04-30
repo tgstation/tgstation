@@ -318,3 +318,5 @@
 #define SPARK_ACT_ENCLOSED (1 << 0)
 /// We're in a large container or something, so decrease the power of bootleg explosives like welding fuel
 #define SPARK_ACT_WEAKEN_COMMON (1 << 1)
+/// Chemical threshold that industrial waste needs to start eating floors.
+#define WASTE_REACTION_THRESHOLD 10

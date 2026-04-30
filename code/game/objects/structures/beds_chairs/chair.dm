@@ -623,8 +623,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	fishing_modifier = -21 //it only lives for 25 seconds, so we make them worth it.
 	custom_materials = null
 
-/obj/structure/chair/mime/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	return NONE
+/obj/structure/chair/mime/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_SECONDARY)
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
 	M.add_offsets(type, z_add = 5)

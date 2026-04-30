@@ -6,7 +6,7 @@
 /datum/religion_rites/deaconize
 	name = "Deaconize"
 	desc = "Converts someone to your sect. They must be willing, so the first invocation will instead prompt them to join. \
-	They will gain the same holy abilities as you, this is a one-time use so make sure they are worthy!"
+		They will gain the same holy abilities as you, this is a one-time use so make sure they are worthy!"
 	ritual_length = 30 SECONDS
 	ritual_invocations = list(
 		"A good, honorable person has been brought here by faith ...",

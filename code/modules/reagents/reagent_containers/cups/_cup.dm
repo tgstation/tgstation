@@ -121,16 +121,16 @@
 			if(DOING_INTERACTION_WITH_TARGET(user, user))
 				return ITEM_INTERACT_BLOCKING
 			user.visible_message(
-				span_danger("[user] attempts to drink from [src]."),
-				span_userdanger("[user] attempts to drink from [src]."),
+				span_notice("[user] attempts to drink from [src]."),
+				ignored_mobs = list(user),
 			)
+			to_chat(user, span_notice("You attempt to drink from [src]."))
 			if(!do_after(user, 1.25 SECONDS, user))
 				return ITEM_INTERACT_BLOCKING
 			if(!reagents || !reagents.total_volume)
 				return ITEM_INTERACT_BLOCKING
 			user.visible_message(
-				span_danger("[user] drinks from [src]."),
-				span_userdanger("[user] drinks from [src]."),
+				span_notice("[user] drinks from [src]."),
 				ignored_mobs = list(user),
 			)
 		to_chat(user, span_notice("You swallow a gulp of [src]."))

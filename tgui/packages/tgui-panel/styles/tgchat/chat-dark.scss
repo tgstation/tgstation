@@ -954,6 +954,11 @@ em {
   display: inline-block;
 }
 
+.cyan {
+  color: #bde0dc;
+  text-shadow: 0 0 6px #bde0dc;
+}
+
 .connectionClosed,
 .fatalError {
   background: red;

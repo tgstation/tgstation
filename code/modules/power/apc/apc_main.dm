@@ -660,9 +660,11 @@
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			if(nightshift_lights && low_power_nightshift_lights)
+			//If nightlights are on, and we're recovering from low power/nightlight event, we'll remove it.
+			var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
+			if(nightshift_lights && (nightshift_disabled || low_power_nightshift_lights))
 				low_power_nightshift_lights = FALSE
-				if(!SSnightshift.nightshift_active)
+				if(nightshift_disabled)
 					INVOKE_ASYNC(src, PROC_REF(set_nightshift), FALSE)
 			if(cell_percent > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)

@@ -206,11 +206,6 @@
 /obj/item/seeds/replicapod,
 /turf/open/floor/iron,
 /area/awaymission/caves/academy)
-"bi" = (
-/obj/structure/table/wood,
-/obj/item/seeds/kudzu,
-/turf/open/floor/iron,
-/area/awaymission/caves/academy)
 "bj" = (
 /obj/structure/ladder/unbreakable/rune{
 	height = 1;
@@ -1474,7 +1469,6 @@
 /obj/structure/closet/crate,
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/gun/magic/wand/resurrection/inert,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/academy)
 "jQ" = (
@@ -1995,11 +1989,6 @@
 /obj/item/food/meat/slab,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/caves/academy)
-"ps" = (
-/obj/structure/table/wood,
-/obj/item/gun/magic/wand/fireball/inert,
-/turf/open/floor/wood,
-/area/awaymission/caves/academy)
 "pC" = (
 /mob/living/basic/construct/proteon/hostile,
 /turf/open/floor/plating,
@@ -2139,11 +2128,13 @@
 "wt" = (
 /obj/item/stack/sheet/greatergem{
 	pixel_x = 10;
-	pixel_y = -1
+	pixel_y = -1;
+	anchored = 1
 	},
 /obj/item/stock_parts/power_store/cell/high/slime_hypercharged{
 	pixel_x = 23;
-	pixel_y = -10
+	pixel_y = -10;
+	anchored = 1
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/academy)
@@ -10587,7 +10578,7 @@ hb
 aV
 LH
 mx
-ps
+mL
 el
 mL
 el
@@ -13320,7 +13311,7 @@ Iw
 aP
 gC
 hR
-bi
+hR
 jZ
 gC
 gC
