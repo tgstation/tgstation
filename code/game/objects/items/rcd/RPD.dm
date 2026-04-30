@@ -185,6 +185,11 @@
 		for(var/i in 1 to subcategory_recipes.len)
 			var/datum/pipe_info/info = subcategory_recipes[i]
 
+			//### hides the vortex volume pump unless you have the upgrade applied ####
+			if(info.id == /obj/machinery/atmospherics/components/binary/volume_pump/vortex)
+				if(!(upgrade_flags & RPD_UPGRADE_VORTEX))
+					continue
+
 			available_recipe += list(list(
 				"pipe_name" = info.name,
 				"pipe_index" = i,
@@ -607,6 +612,12 @@
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
 	icon_state = "datadisk1"
 	upgrade_flags = RPD_UPGRADE_UNWRENCH
+
+/obj/item/rpd_upgrade/vortex
+	name = "RPD advanced upgrade: Vortex Volume Pump"
+	desc = "Adds the power of the vortex to the RPD."
+	icon_state = "datadisk1"
+	upgrade_flags = RPD_UPGRADE_VORTEX
 
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY

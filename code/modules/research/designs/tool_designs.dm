@@ -190,6 +190,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/rpd_upgrade/vortex
+	name = "RPD Vortex Upgrade"
+	desc = "Adds the power of the vortex to the RPD."
+	id = "RPD_UPGRADE_VORTEX"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*1.25)
+	build_path = /obj/item/rpd_upgrade/vortex
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/rpd_upgrade/unwrench
 	name = "RPD unwrenching upgrade"
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
