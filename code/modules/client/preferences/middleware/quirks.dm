@@ -48,7 +48,7 @@
 	var/list/data = list()
 
 	data["selected_quirks"] = get_selected_quirks()
-	data["default_quirk_balance"] = default_quirk_points
+	data["default_quirk_balance"] = SSquirks.default_quirk_points
 	data["species_disallowed_quirks"] = get_species_compatibility()
 
 	return data
