@@ -21,13 +21,29 @@
 		qdel(revenant)
 	return ..()
 
+/obj/item/ectoplasm/revenant/proc/check_for_mirrors(turf/location, radius)
+	PRIVATE_PROC(TRUE)
+	for(var/obj/structure/mirror/mirror in view(radius, location))
+		if(!mirror.revenant && !mirror.broken)
+			return mirror
+	return null
+
 /obj/item/ectoplasm/revenant/attack_self(mob/user)
 	if(!reforming || inert)
 		return ..()
-	user.visible_message(
-		span_notice("[user] scatters [src] in all directions."),
-		span_notice("You scatter [src] across the area. The particles slowly fade away."),
-	)
+	var/obj/structure/mirror/nearby_mirror = check_for_mirrors(drop_location(), 5)
+	if(!nearby_mirror)
+		user.visible_message(
+			span_notice("[user] scatters [src] in all directions."),
+			span_notice("You scatter [src] across the area. The particles slowly fade away."),
+		)
+	else
+		nearby_mirror.become_cursed(revenant)
+		src.revenant = null
+		user.visible_message(
+			span_revenwarning("[user] scatters [src] in all directions. A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"),
+			span_revenwarning("You scatter [src] across the area. A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"),
+		)
 	user.dropItemToGround(src)
 	qdel(src)
 
@@ -35,7 +51,13 @@
 	. = ..()
 	if(inert)
 		return
-	visible_message(span_notice("[src] breaks into particles upon impact, which fade away to nothingness."))
+	var/obj/structure/mirror/nearby_mirror = check_for_mirrors(get_turf(hit_atom), 3)
+	if(!nearby_mirror)
+		visible_message(span_notice("[src] breaks into particles upon impact, which fade away to nothingness."))
+	else
+		visible_message(span_revenwarning("A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"))
+		nearby_mirror.become_cursed(revenant)
+		revenant = null
 	qdel(src)
 
 /obj/item/ectoplasm/revenant/examine(mob/user)
