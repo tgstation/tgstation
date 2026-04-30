@@ -274,7 +274,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	user.update_body()
 	to_chat(user, span_notice("You gaze at your new eyes with your new eyes. Perfect!"))
 
-/obj/structure/mirror/proc/become_cursed(var/mob/living/basic/revenant/revenant)
+/obj/structure/mirror/proc/become_cursed(mob/living/basic/revenant/revenant)
 	src.revenant = revenant
 	revenant.forceMove(src)
 	log_game("A revenant was trapped inside [src]")
