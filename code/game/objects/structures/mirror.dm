@@ -64,7 +64,7 @@
 	if(mapload)
 		find_and_mount_on_atom()
 		if(prob(CURSED_CHANCE))
-			revenant = new()
+			revenant = new(mapload)
 			become_cursed(revenant)
 	update_choices()
 	register_context()
