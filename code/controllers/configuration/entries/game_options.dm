@@ -480,7 +480,7 @@
 /datum/config_entry/flag/disable_quirk_points/ValidateAndSet(str_val)
 	. = ..()
 	if(.)
-		SSquirks.quirks_enabled = !config_entry_value
+		SSquirks.quirk_points_enabled = !config_entry_value
 
 /// The maximum amount of positive quirks one character can have at roundstart.
 /datum/config_entry/number/max_positive_quirks
@@ -500,7 +500,7 @@
 /datum/config_entry/number/default_quirk_points/ValidateAndSet(str_val)
 	. = ..()
 	if(.)
-		SSquirks.default_quirks_points = config_entry_value
+		SSquirks.default_quirk_points = config_entry_value
 
 /// Max personalities you can have at once
 /datum/config_entry/number/max_personalities
