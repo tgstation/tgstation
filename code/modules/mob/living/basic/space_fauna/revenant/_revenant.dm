@@ -529,7 +529,7 @@
 		return null
 	return chosen_one
 
-/mob/living/basic/revenant/proc/reform(var/cause)
+/mob/living/basic/revenant/proc/reform(cause)
 	if(QDELETED(src))
 		return FALSE
 

@@ -64,7 +64,7 @@
 	if(mapload)
 		find_and_mount_on_atom()
 		if(prob(CURSED_CHANCE))
-			revenant = new
+			revenant = new()
 			become_cursed(revenant)
 	update_choices()
 	register_context()
@@ -274,8 +274,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	user.update_body()
 	to_chat(user, span_notice("You gaze at your new eyes with your new eyes. Perfect!"))
 
-/obj/structure/mirror/proc/become_cursed(var/mob/living/basic/revenant/trapped_revenant)
-	revenant = trapped_revenant
+/obj/structure/mirror/proc/become_cursed(var/mob/living/basic/revenant/revenant)
+	src.revenant = revenant
 	revenant.forceMove(src)
 	log_game("A revenant was trapped inside [src]")
 	message_admins("A revenant was trapped inside [src]")
@@ -495,3 +495,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 #undef INERT_MIRROR_OPTIONS
 #undef PRIDE_MIRROR_OPTIONS
 #undef MAGIC_MIRROR_OPTIONS
+#undef CURSED_CHANCE
