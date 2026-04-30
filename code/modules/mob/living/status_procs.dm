@@ -542,7 +542,7 @@
 	if(stat != DEAD)
 		if(!silent)
 			emote("deathgasp")
-		station_timestamp_timeofdeath = station_time_timestamp()
+		station_timestamp_timeofdeath = round_timestamp()
 
 	if(!HAS_TRAIT(src, TRAIT_FAKEDEATH) && !silent)
 		send_death_moodlets()

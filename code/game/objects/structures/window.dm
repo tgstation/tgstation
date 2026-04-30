@@ -422,7 +422,7 @@
 		QUEUE_SMOOTH(src)
 
 	var/ratio = atom_integrity / max_integrity
-	ratio = CEILING(ratio*4, 1) * 25
+	ratio = ceil(ratio*4) * 25
 	if(ratio > 75)
 		return
 	. += mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
@@ -849,17 +849,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	flags_1 = PREVENT_CLICK_UNDER_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/structure/window/reinforced/shuttle/indestructible/welder_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/window/reinforced/shuttle/indestructible/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/window/reinforced/shuttle/indestructible/wrench_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/window/reinforced/shuttle/indestructible/crowbar_act(mob/living/user, obj/item/tool)
-	return NONE
+/obj/structure/window/reinforced/shuttle/indestructible/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_WELDER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR, TOOL_ACT_PRIMARY)
 
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"

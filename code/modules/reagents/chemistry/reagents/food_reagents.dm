@@ -473,6 +473,8 @@
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
 			addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
+			ADD_TRAIT(victim, TRAIT_ANOSMIA, type)
+			addtimer(TRAIT_CALLBACK_REMOVE(victim, TRAIT_ANOSMIA, type), 30 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 		victim.update_damage_hud()
 	if(methods & INGEST)
 		if(!holder.has_reagent(/datum/reagent/consumable/milk))
@@ -906,7 +908,7 @@
 	nutriment_factor = 0 //the essence of this sauce is to stimulate hunger and improve the absorption of calories from food eaten
 	metabolization_rate = 0.025 * REAGENTS_METABOLISM
 	metabolized_traits = list(TRAIT_GLUTTON)
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/consumable/moltobeso/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)

@@ -76,7 +76,7 @@
 			) = 11,
 
 		list( // Mobs
-			/mob/living/basic/bot/honkbot = 5,
+			/mob/living/basic/bot/secbot/honkbot = 5,
 			/mob/living/basic/pet/gondola = 2,
 			/obj/effect/spawner/abandoned_crate/bloodroaches = 1,
 			) = 8,

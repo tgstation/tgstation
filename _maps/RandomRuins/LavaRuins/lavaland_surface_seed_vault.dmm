@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ab" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -525,9 +525,6 @@
 /obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
-"bD" = (
-/turf/closed/wall/r_wall,
-/area/lavaland/surface/outdoors)
 "ca" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 4
@@ -542,7 +539,7 @@
 /area/ruin/powered/seedvault)
 "eq" = (
 /obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "hf" = (
 /obj/structure/sink/directional/east,
@@ -817,7 +814,7 @@ bc
 rF
 ac
 ac
-bD
+ac
 aa
 "}
 (8,1,1) = {"

@@ -167,9 +167,9 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	amount = 5
 
 /obj/item/stack/sheet/animalhide/xeno
-	name = "alien hide"
+	name = "alien chitin"
+	singular_name = "alien chitin piece"
 	desc = "The skin of a terrible creature."
-	singular_name = "alien hide piece"
 	icon_state = "sheet-xeno"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/xeno
@@ -209,16 +209,6 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/carp/five
 	amount = 5
-
-//don't see anywhere else to put these, maybe together they could be used to make the xenos suit?
-/obj/item/stack/sheet/xenochitin
-	name = "alien chitin"
-	desc = "A piece of the hide of a terrible creature."
-	singular_name = "alien hide piece"
-	icon = 'icons/mob/nonhuman-player/alien.dmi'
-	icon_state = "chitin"
-	novariants = TRUE
-	merge_type = /obj/item/stack/sheet/xenochitin
 
 /obj/item/xenos_claw
 	name = "alien claw"
