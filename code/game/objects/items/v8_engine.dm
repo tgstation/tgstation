@@ -65,6 +65,7 @@
 	throw_range = 5
 	throw_speed = 1
 	armour_penetration = 15
+	block_chance = 55
 	hitsound = 'sound/items/car_engine_start.ogg'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 14, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
 	/// The number of charges the house edge has accrued through 2-handed hits, to charge a more powerful charge attack.
@@ -77,7 +78,7 @@
 
 /obj/item/house_edge/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
+	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 28, attacksound = active_hitsound)
 	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
 
 /obj/item/house_edge/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
