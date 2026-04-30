@@ -108,3 +108,13 @@
 #define AI_WIRE_DISABLED_HACKED -1
 
 #define MAX_WIRE_COUNT 17
+
+// Cryptic wires for Interface Science
+#define CRYPTIC_WIRE_1 "Cryptic Wire 1"
+#define CRYPTIC_WIRE_2 "Cryptic Wire 2"
+#define CRYPTIC_WIRE_3 "Cryptic Wire 3"
+#define CRYPTIC_WIRE_4 "Cryptic Wire 4"
+#define CRYPTIC_WIRE_5 "Cryptic Wire 5"
+#define CRYPTIC_WIRE_6 "Cryptic Wire 6"
+#define CRYPTIC_WIRE_7 "Cryptic Wire 7"
+#define CRYPTIC_WIRE_8 "Cryptic Wire 8"

@@ -10952,6 +10952,10 @@
 /obj/machinery/light/floor,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
+"cXQ" = (
+/obj/effect/spawner/random/gizmo,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "cXR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/warning/cold_temp/directional/north,
@@ -54825,9 +54829,9 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "pnK" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/gizmo/toggle/tucker_tubes,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "pnR" = (
@@ -267044,7 +267048,7 @@ xLq
 nsZ
 rDZ
 rDZ
-rDZ
+cXQ
 swa
 rDZ
 rDZ
