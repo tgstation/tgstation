@@ -354,6 +354,21 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 /datum/holiday/anz/getStationPrefix()
 	return pick("Australian","New Zealand","Poppy", "Southern Cross")
 
+/datum/holiday/chernobyl
+	name = CHERNOBYL_ANNIVERSARY
+	begin_day = 26
+	begin_month = APRIL
+
+/datum/holiday/chernobyl/getStationPrefix()
+	if(prob(3))
+		return "Not Great, Not Terrible"
+
+	return pick("Atomic", "Nuclear", "Radiation", "Plutonium", "Uranium", "Corium", "Zirconium", "Graphite", "Scram", "Explosion")
+
+/datum/holiday/chernobyl/greet()
+	return "On this day in 1986, the Chernobyl nuclear power plant melted down, causing one of the worst nuclear disasters in human history. \
+		Today serves as a reminder to the lives lost and to the rigorous safety standards our engineers must adhere to when providing power to the station."
+
 // MAY
 
 /datum/holiday/labor
