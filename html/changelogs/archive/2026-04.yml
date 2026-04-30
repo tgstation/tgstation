@@ -629,3 +629,16 @@
   - bugfix: fixes a few instances of crowbar deconstruction not working for certain
       items
   - refactor: extends the tool_blocker element to support secondary tool_acts
+2026-04-30:
+  DresserOnFire:
+  - bugfix: Fixes a bug where player-controlled basic mobs would get a cooldown when
+      their attacks miss
+  - refactor: basic mob attack chain can now decided whether an attack resulted in
+      a cooldown or not.
+  dresseronfire:
+  - bugfix: You can now sic pets onto targets again
+  - bugfix: Pointing at things no longer sometimes points at the wrong thing
+  lelandkemble:
+  - bugfix: Cables without power no longer produce sparks when placed
+  timothymtorres:
+  - bugfix: Fix large bulky toys from being stored in suit storage
