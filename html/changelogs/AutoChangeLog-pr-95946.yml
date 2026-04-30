@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed circuits bluescreening whenever you try to put text or numbers into a STRING or ANY type field"
