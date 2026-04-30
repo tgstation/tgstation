@@ -477,15 +477,30 @@
 /// Disables Quirk point balancing for the server and clients.
 /datum/config_entry/flag/disable_quirk_points
 
+/datum/config_entry/flag/disable_quirk_points/ValidateAndSet(str_val)
+	. = ..()
+	if(.)
+		SSquirks.quirks_enabled = !config_entry_value
+
 /// The maximum amount of positive quirks one character can have at roundstart.
 /datum/config_entry/number/max_positive_quirks
 	default = 6
 	min_val = -1
 
+/datum/config_entry/number/max_positive_quirks/ValidateAndSet(str_val)
+	. = ..()
+	if(.)
+		SSquirks.max_positive_quirks = config_entry_value
+
 /// Freebie quirk points. Can't go negative because we have no way of enforcing a person has a quirk before they join.
 /datum/config_entry/number/default_quirk_points
 	default = 2
 	min_val = 0
+
+/datum/config_entry/number/default_quirk_points/ValidateAndSet(str_val)
+	. = ..()
+	if(.)
+		SSquirks.default_quirks_points = config_entry_value
 
 /// Max personalities you can have at once
 /datum/config_entry/number/max_personalities
