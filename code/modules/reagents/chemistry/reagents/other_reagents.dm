@@ -859,10 +859,10 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/mutationtoxin/ghost
-	name = "Ghost Mutation Toxin"
+	name = "Spirit Mutation Toxin"
 	description = "A spiritual toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/ghost
+	race = /datum/species/spirit
 	taste_description = "ectoplasm"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
