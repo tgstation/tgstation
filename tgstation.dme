@@ -2670,6 +2670,7 @@
 #include "code\game\objects\items\devices\chameleonproj.dm"
 #include "code\game\objects\items\devices\destabilizing_crystal.dm"
 #include "code\game\objects\items\devices\desynchronizer.dm"
+#include "code\game\objects\items\devices\earthcracker.dm"
 #include "code\game\objects\items\devices\electroadaptive_pseudocircuit.dm"
 #include "code\game\objects\items\devices\flashlight.dm"
 #include "code\game\objects\items\devices\forcefieldprojector.dm"
