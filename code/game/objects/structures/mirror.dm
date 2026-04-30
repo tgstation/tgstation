@@ -339,10 +339,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	icon_state = "mirror_broke"
 	if(!mapload)
 		playsound(src, SFX_SHATTER, 70, TRUE)
+		if(revenant)
+			release_revenant()
+	else if(revenant)
+			qdel(revenant)
 	if(desc == initial(desc))
 		desc = "Oh no, seven years of bad luck!"
-	if(revenant)
-		release_revenant()
 	broken = TRUE
 
 /obj/structure/mirror/atom_deconstruct(disassembled = TRUE)
