@@ -43048,7 +43048,6 @@
 "oHO" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "oIa" = (
@@ -99339,7 +99338,7 @@ kQe
 kQe
 vZB
 dKC
-vZB
+dKC
 dKC
 dKC
 ufZ
