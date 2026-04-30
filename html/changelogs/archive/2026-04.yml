@@ -643,5 +643,8 @@
   - bugfix: Pointing at things no longer sometimes points at the wrong thing
   lelandkemble:
   - bugfix: Cables without power no longer produce sparks when placed
+  necromanceranne:
+  - rscadd: Gives the Cybersun reinforcement a new outfit.
+  - rscadd: No new items were added to the black market. None. Honest.
   timothymtorres:
   - bugfix: Fix large bulky toys from being stored in suit storage
