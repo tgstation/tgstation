@@ -787,7 +787,6 @@ GLOBAL_LIST_EMPTY(colored_images)
 
 	var/list/gases = canonical_mix.gases
 	var/list/gas = params2list(gas_string)
-	var/mole_sum
 	if(gas["TEMP"])
 		canonical_mix.temperature = text2num(gas["TEMP"])
 		canonical_mix.temperature_archived = canonical_mix.temperature
@@ -800,8 +799,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
 		ADD_GAS(path, gases)
 		gases[path][MOLES] = text2num(gas[id])
-		mole_sum += text2num(gas[id])
-	canonical_mix.total_moles = mole_sum
+	canonical_mix.total_moles = values_sum(gases)
 	if(istype(canonical_mix, /datum/gas_mixture/immutable))
 		return canonical_mix
 	return canonical_mix.copy()

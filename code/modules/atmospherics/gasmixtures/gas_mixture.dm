@@ -144,12 +144,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///Update archived versions of variables. Returns: 1 in all cases
 /datum/gas_mixture/proc/archive()
 	var/list/cached_gases = gases
-	var/moles
 	temperature_archived = temperature
 	for(var/id in cached_gases)
 		cached_gases[id][ARCHIVE] = cached_gases[id][MOLES]
-		moles += cached_gases[id][MOLES]
-	total_moles = moles
+	total_moles = values_sum(cached_gases)
 
 	return TRUE
 
@@ -168,13 +166,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/giver_gases = giver.gases
-	var/mole_taken
 	//gas transfer
 	for(var/giver_id in giver_gases)
 		ASSERT_GAS_IN_LIST(giver_id, cached_gases)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
-		mole_taken += giver_gases[giver_id][MOLES]
-	total_moles += mole_taken
+	total_moles = values_sum(giver_gases)
 	SEND_SIGNAL(src, COMSIG_GASMIX_MERGED)
 	return TRUE
 
@@ -203,7 +199,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/gas_specie in gases_moles)
 		ASSERT_GAS(gas_specie, src)
 		gases[gas_specie][MOLES] += QUANTIZE(gases_moles[gas_specie])
-		total_moles += QUANTIZE(gases_moles[gas_specie])
+	total_moles = values_sum(gases_moles)
 	garbage_collect(gases_moles)
 
 
@@ -234,7 +230,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		ADD_GAS(id, removed.gases)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
-		total_moles -= removed_gases[id][MOLES]
+	total_moles -= values_sum(removed_gases)
 	garbage_collect()
 
 	SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED)
@@ -257,7 +253,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		ADD_GAS(id, removed.gases)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
-		total_moles -= removed_gases[id][MOLES]
+	total_moles -= values_sum(removed_gases)
 
 	garbage_collect()
 
@@ -277,6 +273,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	ADD_GAS(gas_id, removed.gases)
 	removed_gases[gas_id][MOLES] = amount
 	cached_gases[gas_id][MOLES] -= amount
+	total_moles -= amount
 
 	garbage_collect(list(gas_id))
 	return removed
@@ -294,6 +291,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	ADD_GAS(gas_id, removed.gases)
 	removed_gases[gas_id][MOLES] = QUANTIZE(cached_gases[gas_id][MOLES] * ratio)
 	cached_gases[gas_id][MOLES] -= removed_gases[gas_id][MOLES]
+	total_moles -= removed_gases[gas_id][MOLES]
 
 	garbage_collect(list(gas_id))
 
@@ -323,6 +321,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
 			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
 			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
+	total_moles = values_sum(gases)
+	other.total_moles = values_sum(other.gases)
 	garbage_collect()
 	other.garbage_collect()
 
@@ -335,6 +335,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/copy_gases = copy.gases
 
 	copy.temperature = temperature
+	copy.total_moles = total_moles
 	for(var/id in cached_gases)
 		// Sort of a sideways way of doing ADD_GAS()
 		// Faster tho, gotta save those cpu cycles
@@ -374,6 +375,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in sample_gases)
 		ASSERT_GAS_IN_LIST(id, cached_gases)
 		cached_gases[id][MOLES] = sample_gases[id][MOLES] * partial
+	total_moles = values_sum(cached_gases)
 
 	return TRUE
 
