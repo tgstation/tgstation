@@ -635,6 +635,9 @@
       their attacks miss
   - refactor: basic mob attack chain can now decided whether an attack resulted in
       a cooldown or not.
+  Jacquerel:
+  - bugfix: The Hierophant Club will stop glowing when you can't use it to teleport
+  - image: Updated the Hierophant Club so that it looks like the Hierophant
   dresseronfire:
   - bugfix: You can now sic pets onto targets again
   - bugfix: Pointing at things no longer sometimes points at the wrong thing

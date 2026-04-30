@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "The Hierophant Club will stop glowing when you can't use it to teleport"
-  - image: "Updated the Hierophant Club so that it looks like the Hierophant"
