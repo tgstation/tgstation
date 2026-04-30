@@ -90,6 +90,12 @@
 /// from /obj/machinery/atmospherics/set_on(active): (on)
 #define COMSIG_ATMOS_MACHINE_SET_ON "atmos_machine_set_on"
 
+/// from /obj/machinery/power/emitter/interact(mob/user): (on)
+#define COMSIG_EMITTER_MACHINE_SET_ON "emitter_machine_set_on"
+
+/// from /obj/machinery/power/emitter/fire_beam(mob/user): (fired)
+#define COMSIG_EMITTER_MACHINE_ON_FIRE "emitter_machine_fire"
+
 /// from /obj/machinery/light_switch/set_lights(), sent to every switch in the area: (status)
 #define COMSIG_LIGHT_SWITCH_SET "light_switch_set"
 

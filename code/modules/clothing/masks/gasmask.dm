@@ -287,6 +287,16 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/syndicate/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
+/obj/item/clothing/mask/gas/syndicate/cybersun
+	name = "\improper Cybersun mask"
+	desc = "It's really more about making a statement than protecting you from environmental hazards."
+	icon_state = "cybersun"
+	flags_cover = MASKCOVERSMOUTH
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_cover = MASKCOVERSMOUTH
+	alternate_worn_layer = BENEATH_HAIR_LAYER
+
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
