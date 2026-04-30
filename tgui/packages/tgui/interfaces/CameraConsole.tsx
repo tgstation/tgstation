@@ -4,6 +4,7 @@ import { useState } from 'react';
 import {
   Button,
   ByondUi,
+  ImageButton,
   Input,
   NoticeBox,
   Section,
@@ -18,14 +19,24 @@ import { Window } from '../layouts';
 type Data = {
   activeCamera: Camera & { status: BooleanLike };
   cameras: Camera[];
+  pictures: Picture[];
   can_spy: BooleanLike;
   mapRef: string;
   network: string[];
+  recording_cameras: string[];
+  canSetRecording: BooleanLike;
 };
 
 type Camera = {
   name: string;
   ref: string;
+};
+
+type Picture = {
+  name: string;
+  desc: string;
+  id: number;
+  photo_url: string;
 };
 
 /**
@@ -109,7 +120,7 @@ export const CameraContent = (props) => {
 const CameraSelector = (props) => {
   const { act, data } = useBackend<Data>();
   const { searchText, setSearchText } = props;
-  const { activeCamera } = data;
+  const { activeCamera, recording_cameras = [] } = data;
   const cameras = selectCameras(data.cameras, searchText);
 
   return (
@@ -126,30 +137,32 @@ const CameraSelector = (props) => {
       </Stack.Item>
       <Stack.Item grow>
         <Section fill scrollable>
-          {cameras.map((camera) => (
-            // We're not using the component here because performance
-            // would be absolutely abysmal (50+ ms for each re-render).
-            <div
-              key={camera.ref}
-              title={camera.name}
-              className={classes([
-                'Button',
-                'Button--fluid',
-                'Button--color--transparent',
-                'Button--ellipsis',
-                activeCamera?.ref === camera.ref
-                  ? 'Button--selected'
-                  : 'candystripe',
-              ])}
-              onClick={() =>
-                act('switch_camera', {
-                  camera: camera.ref,
-                })
-              }
-            >
-              {camera.name}
-            </div>
-          ))}
+          {cameras.map((camera) => {
+            return (
+              <div
+                key={camera.ref}
+                title={camera.name}
+                className={classes([
+                  'Button',
+                  'Button--fluid',
+                  recording_cameras.includes(camera.ref)
+                    ? 'Button--color--red'
+                    : 'Button--color--transparent',
+                  'Button--ellipsis',
+                  activeCamera?.ref === camera.ref
+                    ? 'Button--selected'
+                    : 'candystripe',
+                ])}
+                onClick={() =>
+                  act('switch_camera', {
+                    camera: camera.ref,
+                  })
+                }
+              >
+                {camera.name}
+              </div>
+            );
+          })}
         </Section>
       </Stack.Item>
     </Stack>
@@ -158,8 +171,16 @@ const CameraSelector = (props) => {
 
 const CameraControls = (props: { searchText: string }) => {
   const { act, data } = useBackend<Data>();
-  const { activeCamera, can_spy, mapRef } = data;
+  const {
+    activeCamera,
+    can_spy,
+    mapRef,
+    pictures,
+    recording_cameras = [],
+    canSetRecording,
+  } = data;
   const { searchText } = props;
+  const [showPictures, setShowPictures] = useState(true);
 
   const cameras = selectCameras(data.cameras, searchText);
 
@@ -190,6 +211,14 @@ const CameraControls = (props: { searchText: string }) => {
 
             <Stack.Item>
               <Button
+                icon="image"
+                disabled={!activeCamera}
+                onClick={() => act('take_photo')}
+              />
+            </Stack.Item>
+
+            <Stack.Item>
+              <Button
                 icon="chevron-left"
                 disabled={!prevCamera}
                 onClick={() =>
@@ -211,17 +240,107 @@ const CameraControls = (props: { searchText: string }) => {
                 }
               />
             </Stack.Item>
+
+            <Stack.Item>
+              <Button
+                icon={showPictures ? 'eye-slash' : 'eye'}
+                tooltip={showPictures ? 'Hide photos' : 'Show photos'}
+                onClick={() => setShowPictures(!showPictures)}
+              />
+            </Stack.Item>
           </Stack>
         </Stack.Item>
         <Stack.Item grow>
-          <ByondUi
-            height="100%"
-            width="100%"
-            params={{
-              id: mapRef,
-              type: 'map',
-            }}
-          />
+          <Stack fill vertical>
+            <Stack.Item grow>
+              <ByondUi
+                height="100%"
+                width="100%"
+                params={{
+                  id: mapRef,
+                  type: 'map',
+                }}
+              />
+            </Stack.Item>
+            {showPictures && (
+              <Stack.Item basis="118px">
+                <Section
+                  fill
+                  scrollable
+                  title="Captured Pictures"
+                  buttons={
+                    activeCamera && [
+                      <Button
+                        disabled={!canSetRecording}
+                        key={`toggle-${activeCamera.ref}`}
+                        color={
+                          recording_cameras.includes(activeCamera.ref)
+                            ? 'green'
+                            : 'red'
+                        }
+                        icon={
+                          recording_cameras.includes(activeCamera.ref)
+                            ? 'circle-stop'
+                            : 'video'
+                        }
+                        tooltipPosition="right"
+                        onClick={() =>
+                          act('toggle_recording', {
+                            camera: activeCamera.ref,
+                          })
+                        }
+                      >
+                        {recording_cameras.includes(activeCamera.ref)
+                          ? 'Recording...'
+                          : 'Off'}
+                      </Button>,
+                    ]
+                  }
+                >
+                  {!activeCamera ? (
+                    <NoticeBox>No camera selected.</NoticeBox>
+                  ) : pictures.length ? (
+                    <Stack fill scrollable wrap="wrap" g={0.5}>
+                      {pictures.map((picture) => (
+                        <Stack.Item key={picture.id} basis="88px" grow={false}>
+                          <ImageButton
+                            fluid
+                            imageSize={64}
+                            imageSrc={picture.photo_url}
+                            tooltip={picture.name || `Picture #${picture.id}`}
+                            tooltipPosition="top"
+                            onClick={() => {
+                              act('show_photo', {
+                                camera: activeCamera.ref,
+                                photo_id: picture.id,
+                              });
+                            }}
+                            buttons={
+                              <Button
+                                compact
+                                icon="print"
+                                tooltip="Print photo"
+                                onClick={() =>
+                                  act('print_photo', {
+                                    camera: activeCamera.ref,
+                                    photo_id: picture.id,
+                                  })
+                                }
+                              />
+                            }
+                          />
+                        </Stack.Item>
+                      ))}
+                    </Stack>
+                  ) : (
+                    <NoticeBox info>
+                      This camera has no captured pictures yet.
+                    </NoticeBox>
+                  )}
+                </Section>
+              </Stack.Item>
+            )}
+          </Stack>
         </Stack.Item>
       </Stack>
     </Section>

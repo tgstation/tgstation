@@ -1251,9 +1251,9 @@
 		return
 	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
-/mob/living/carbon/get_photo_description(obj/item/camera/camera)
+/mob/living/carbon/get_photo_description(see_ghosts)
 	if(HAS_TRAIT(src, TRAIT_INVISIBLE_TO_CAMERA))
-		if(camera.see_ghosts)
+		if(see_ghosts)
 			return /mob/dead/observer::photo_description
 		return null
 	return ..()

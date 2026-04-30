@@ -69,6 +69,7 @@
 		light_holder.AddComponentFrom(REF(src), /datum/component/overlay_lighting/camera, light_range, light_power, light_color, FALSE, TRUE, FALSE, TRUE)
 
 	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera, new /obj/item/circuit_component/remotecam/polaroid), SHELL_CAPACITY_SMALL)
+	AddComponent(/datum/component/camera)
 	register_context()
 
 /obj/item/camera/Destroy(force)
@@ -237,72 +238,19 @@
 	//taking the actual picture
 	on_flash(target, user)
 	blending = TRUE
-	var/list/mobs_spotted = list()
-	var/list/dead_spotted = list()
-	var/list/turfs = list()
-	var/list/mobs = list()
-	var/blueprints = FALSE
 	var/width = APERTURE_TO_METERS(picture_size_x)
 	var/height = APERTURE_TO_METERS(picture_size_y)
-	///list of human names taken on picture
-	var/list/names = list()
-	var/cameranet_user = isAI(user) || istype(viewer, /mob/eye/camera)
-	var/datum/turf_reservation/clone_area = SSmapping.request_turf_block_reservation(width, height, 1)
-	for(var/turf/seen_placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
-		if(isnull(seen_placeholder))
-			continue
-		if(cameranet_user && !SScameras.is_visible_by_cameras(seen_placeholder))
-			continue
-		if(!cameranet_user && !(seen_placeholder in seen))
-			continue
 
-		//Multi-z photography
-		var/turf/target_placeholder = seen_placeholder
-		while(!isnull(target_placeholder))
-			turfs += target_placeholder
-			for(var/mob/mob_there in target_placeholder)
-				mobs += mob_there
-			if(locate(/obj/item/blueprints) in target_placeholder)
-				blueprints = TRUE
-
-			if(isopenspaceturf(target_placeholder) || istype(target_placeholder, /turf/open/floor/glass))
-				target_placeholder = GET_TURF_BELOW(target_placeholder)
-			else
-				break
-
-	// do this before picture is taken so we can reveal revenants for the photo
-	steal_souls(mobs)
-
-	var/list/desc = list("This is a photo of an area of [width] meters by [height] meters.")
-	for(var/mob/mob as anything in mobs)
-		mobs_spotted += mob
-		if(mob.stat == DEAD)
-			dead_spotted += mob
-		var/info = mob.get_photo_description(src)
-		if(!isnull(info))
-			desc += info
-
-	var/icon/get_icon = camera_get_icon(turfs, target_turf, clone_area)
-	get_icon.Blend("#000", ICON_UNDERLAY)
-	qdel(clone_area)
-	for(var/mob/living/carbon/human/person in mobs)
-		if(person.obscured_slots & HIDEFACE)
-			continue
-		names += "[person.name]"
-
-	var/datum/picture/picture = new(
-		"picture",
-		desc.Join("<br>"),
-		mobs_spotted,
-		dead_spotted,
-		names,
-		get_icon,
-		null,
-		width * ICON_SIZE_X,
-		height * ICON_SIZE_Y,
-		blueprints,
-		can_see_ghosts = see_ghosts,
-	)
+	var/datum/component/camera/camera = GetComponent(/datum/component/camera)
+	if(isnull(camera))
+		return
+	var/datum/photo_snapshot/snapshot = camera.get_photo_snapshot(target_turf, viewer, view_range, user, size_x, size_y, width, height)
+	// Do this before rendering so revenants can be revealed for the photo.
+	steal_souls(snapshot.mobs)
+	var/datum/picture/picture = camera.render_photo_snapshot(target_turf, width, height, "picture", see_ghosts, print_monochrome, snapshot)
+	if(isnull(picture))
+		blending = FALSE
+		return
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
 	blending = FALSE

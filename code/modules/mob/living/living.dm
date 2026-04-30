@@ -295,7 +295,7 @@
 	// Else, sure, let us pass
 	return TRUE
 
-/mob/living/get_photo_description(obj/item/camera/camera)
+/mob/living/get_photo_description(see_ghosts)
 	var/list/holding = list()
 	var/len = length(held_items)
 	if(len)

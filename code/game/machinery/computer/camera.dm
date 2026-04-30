@@ -18,6 +18,12 @@
 	// Stuff needed to render the map
 	var/atom/movable/screen/map_view/camera/cam_screen
 
+	/// Amount of paper for photos
+	var/paper_left = 10
+
+	/// Is camera recording feature available for console
+	var/can_set_recording = FALSE
+
 /obj/machinery/computer/security/Initialize(mapload)
 	. = ..()
 	// Map name has to start and end with an A-Z character,
@@ -35,6 +41,13 @@
 /obj/machinery/computer/security/Destroy()
 	QDEL_NULL(cam_screen)
 	return ..()
+
+/obj/machinery/computer/security/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(item, /obj/item/paper))
+		var/obj/item/paper/paper = item
+		to_chat(user, span_notice("You add [paper] in [src]."))
+		paper_left++
+		qdel(paper)
 
 /obj/machinery/computer/security/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
@@ -74,15 +87,24 @@
 		return UI_CLOSE
 	return .
 
-/obj/machinery/computer/security/ui_data()
+/obj/machinery/computer/security/ui_data(mob/user)
 	var/list/data = list()
 	data["activeCamera"] = null
+	data["pictures"] = list()
 	if(active_camera)
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
 			ref = REF(active_camera),
 			status = active_camera.camera_enabled,
 		)
+		for(var/i in 1 to length(active_camera.pictures))
+			var/datum/picture/picture = active_camera.pictures[i]
+			var/tmp_picture_name = "evidence_photo[REF(picture)].png"
+			user << browse_rsc(picture.picture_image, tmp_picture_name)
+			data["pictures"] += list(list("name" = picture.picture_name, "desc" = picture.picture_desc, "id" = i, "photo_url" = tmp_picture_name ))
+	data["recording_cameras"] = list()
+	for(var/obj/machinery/camera/camera in SScameras.recording_cameras)
+		data["recording_cameras"] += list(REF(camera))
 	return data
 
 /obj/machinery/computer/security/ui_static_data()
@@ -90,6 +112,7 @@
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
 	data["cameras"] = SScameras.get_available_cameras_data(network)
+	data["canSetRecording"] = can_set_recording
 	return data
 
 /obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -97,18 +120,84 @@
 	if(.)
 		return
 
-	if(action == "switch_camera")
-		active_camera?.on_stop_watching(src)
-		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
-		active_camera = selected_camera
+	switch(action)
+		if("switch_camera")
+			active_camera?.on_stop_watching(src)
+			var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
+			active_camera = selected_camera
 
-		if(isnull(active_camera))
+			if(isnull(active_camera))
+				return TRUE
+
+			active_camera.on_start_watching(src)
+			update_active_camera_screen()
+
 			return TRUE
+		if("take_photo")
+			if(!active_camera)
+				return
 
-		active_camera.on_start_watching(src)
-		update_active_camera_screen()
+			if(paper_left <= 0)
+				balloon_alert(ui.user, "[src] is ran out of paper!")
+				return TRUE
 
-		return TRUE
+			var/datum/picture/picture = active_camera.take_photo(ui.user)
+			if(isnull(picture))
+				return
+
+			paper_left--
+			new /obj/item/photo(get_turf(src), picture)
+
+			if(CONFIG_GET(flag/picture_logging_camera))
+				picture.log_to_file()
+
+			playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
+			return TRUE
+		if("print_photo")
+			var/obj/machinery/camera/camera = locate(params["camera"]) in SScameras.cameras
+			if(isnull(camera))
+				return TRUE
+			var/photo_id = text2num(params["photo_id"])
+			if(photo_id > 0 && photo_id <= length(camera.pictures))
+				var/datum/picture/picture = camera.pictures[photo_id]
+				paper_left--
+				new /obj/item/photo(get_turf(src), picture)
+
+				if(CONFIG_GET(flag/picture_logging_camera))
+					picture.log_to_file()
+
+				playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
+				return TRUE
+		if("show_photo")
+			var/obj/machinery/camera/camera = locate(params["camera"]) in SScameras.cameras
+			if(isnull(camera))
+				return TRUE
+			var/photo_id = text2num(params["photo_id"])
+			if(photo_id > 0 && photo_id <= length(camera.pictures))
+				var/datum/picture/picture = camera.pictures[photo_id]
+				if(!istype(picture) || !picture.picture_image)
+					to_chat(ui.user, span_warning("[picture] seems to be blank..."))
+					return
+				var/width_height = "width"
+				if(picture.psize_y > picture.psize_x)
+					width_height = "height"
+				ui.user << browse_rsc(picture.picture_image, "tmp_photo.png")
+				ui.user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[picture.picture_name]</title></head>" \
+					+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
+					+ "<img src='tmp_photo.png' [width_height]='480' style='image-rendering:pixelated' />" \
+					+ "</body></html>", "window=photo_showing;size=480x608")
+				onclose(ui.user, "[picture.picture_name]")
+				return TRUE
+		if("toggle_recording")
+			if(!can_set_recording)
+				return TRUE
+
+			var/obj/machinery/camera/camera = locate(params["camera"]) in SScameras.cameras
+			if(isnull(camera))
+				return TRUE
+
+			camera.toggle_recording()
+			return TRUE
 
 /obj/machinery/computer/security/proc/update_active_camera_screen()
 	// Show static if can't use the camera
@@ -158,6 +247,10 @@
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
+/obj/machinery/computer/security/examine(mob/user)
+	. = ..()
+	. += span_notice("It has [paper_left] paper left.")
+
 /atom/movable/screen/map_view/camera
 	/// All the plane masters that need to be applied.
 	var/atom/movable/screen/background/cam_background
@@ -194,6 +287,9 @@
 	icon_keyboard = null
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
+
+	// Ancient technologies from a more civilized age
+	can_set_recording = TRUE
 
 /obj/machinery/computer/security/mining
 	name = "outpost camera console"
