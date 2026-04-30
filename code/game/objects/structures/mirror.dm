@@ -341,7 +341,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		playsound(src, SFX_SHATTER, 70, TRUE)
 		if(revenant)
 			release_revenant()
-	else
 	if(desc == initial(desc))
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE
