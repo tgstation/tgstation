@@ -220,8 +220,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
 /// Humans with this trait cannot have underwear
 #define TRAIT_NO_UNDERWEAR "no_underwear"
-/// This carbon doesn't show an overlay when they have no brain
-#define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 /// Humans with this trait cannot get augmentation surgery
 #define TRAIT_NO_AUGMENTS "no_augments"
 /// This carbon doesn't get hungry

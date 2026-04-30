@@ -44,10 +44,6 @@
 	var/hair_color = COLOR_BLACK
 	/// Hair alpha
 	var/hair_alpha = 255
-	/// Is the hair currently hidden by something?
-	var/hair_hidden = FALSE
-	/// Lazy initialized hashset of all hair mask types that should be applied
-	var/list/hair_masks
 
 	///Facial hair style
 	var/facial_hairstyle = "Shaved"
@@ -55,8 +51,6 @@
 	var/facial_hair_color = COLOR_BLACK
 	///Facial hair alpha
 	var/facial_hair_alpha = 255
-	///Is the facial hair currently hidden by something?
-	var/facial_hair_hidden = FALSE
 
 	/// Gradient styles, if any
 	var/list/gradient_styles
@@ -89,15 +83,8 @@
 	/// Offset to apply to overlays placed on the face
 	var/datum/worn_feature_offset/worn_face_offset
 
-	VAR_PROTECTED
-		/// Draw this head as "debrained"
-		show_debrained = FALSE
-
-		/// Draw this head as missing eyes
-		show_eyeless = FALSE
-
-		/// Can this head be dismembered normally?
-		can_dismember = FALSE
+	/// Can this head be dismembered normally?
+	VAR_PROTECTED/can_dismember = FALSE
 
 /obj/item/bodypart/head/Initialize(mapload)
 	. = ..()
@@ -188,13 +175,15 @@
 
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
-	if(!isnull(owner))
+	if(isnull(owner))
+		return
+	if(is_husked)
+		ADD_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
+	if(is_creating)
 		real_name = owner.real_name
-		if(is_husked)
-			ADD_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
-		else
-			REMOVE_TRAIT(src, TRAIT_DISFIGURED, HUSK_TRAIT)
-	update_hair_and_lips(dropping_limb, is_creating)
+		copy_appearance_from(owner)
 
 // Ensures putting organs in and removing organs from our head always updates the limb
 /obj/item/bodypart/head/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -213,25 +202,13 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/item/bodypart/head/get_limb_icon(dropped, mob/living/carbon/update_on)
+/obj/item/bodypart/head/get_limb_icon(dropped)
 	. = ..()
-	. += get_hair_and_lips_icon(dropped)
-	// We need to get the eyes if we are dropped (ugh)
-	if(!dropped)
-		return
+	if(dropped) // These overlays are applied as standing overlays so we only need them if dropped
+		. += get_hair_overlays(dropped)
+		. += get_eye_overlays(dropped)
 
-	var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in src
-	if(!eyes)
-		if (!(head_flags & HEAD_EYEHOLES))
-			return
-		var/image/no_eyes = image('icons/mob/human/human_eyes.dmi', "eyes_missing", -EYES_LAYER, SOUTH)
-		worn_face_offset?.apply_offset(no_eyes)
-		. += no_eyes
-		return
-
-	if(head_flags & HEAD_EYESPRITES)
-		for (var/mutable_appearance/overlay as anything in eyes.generate_body_overlay(null, src))
-			. += image(overlay, dir = SOUTH)
+	. += get_lips_overlays(dropped)
 
 /obj/item/bodypart/head/get_voice(add_id_name)
 	return "The head of [get_face_name()]"
