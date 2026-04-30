@@ -358,6 +358,7 @@
 	// If not locked, handle these message types
 	switch(type)
 		if("ping")
+			client?.avgping = payload["index"]
 			send_message("ping/reply", payload)
 		if("visible")
 			visible = TRUE

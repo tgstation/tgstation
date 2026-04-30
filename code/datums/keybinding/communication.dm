@@ -15,7 +15,7 @@
 		winset(user, null, "command=[VERB_SAY]")
 		return TRUE
 	winset(user, null, "command=[user.tgui_say_create_open_command(SAY_CHANNEL)];")
-	winset(user, "tgui_say.browser", "focus=true")
+	winset(user, SKIN_TGUISAY_BROWSER, "focus=true")
 	return TRUE
 
 /datum/keybinding/client/communication/radio
@@ -32,7 +32,7 @@
 		winset(user, null, "command=[VERB_SAY]")
 		return TRUE
 	winset(user, null, "command=[user.tgui_say_create_open_command(RADIO_CHANNEL)]")
-	winset(user, "tgui_say.browser", "focus=true")
+	winset(user, SKIN_TGUISAY_BROWSER, "focus=true")
 	return TRUE
 
 /datum/keybinding/client/communication/ooc
@@ -49,7 +49,7 @@
 		winset(user, null, "command=[VERB_OOC]")
 		return TRUE
 	winset(user, null, "command=[user.tgui_say_create_open_command(OOC_CHANNEL)]")
-	winset(user, "tgui_say.browser", "focus=true")
+	winset(user, SKIN_TGUISAY_BROWSER, "focus=true")
 	return TRUE
 
 /datum/keybinding/client/communication/me
@@ -66,7 +66,7 @@
 		winset(user, null, "command=[VERB_ME]")
 		return TRUE
 	winset(user, null, "command=[user.tgui_say_create_open_command(ME_CHANNEL)]")
-	winset(user, "tgui_say.browser", "focus=true")
+	winset(user, SKIN_TGUISAY_BROWSER, "focus=true")
 	return TRUE
 
 /datum/keybinding/client/communication/pray
