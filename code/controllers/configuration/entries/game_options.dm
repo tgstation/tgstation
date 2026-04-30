@@ -480,7 +480,7 @@
 /datum/config_entry/flag/disable_quirk_points/ValidateAndSet(str_val)
 	. = ..()
 	if(.)
-		SSquirks.quirk_points_enabled = !config_entry_value
+		SSquirks.points_enabled = !config_entry_value
 
 /// The maximum amount of positive quirks one character can have at roundstart.
 /datum/config_entry/number/max_positive_quirks
