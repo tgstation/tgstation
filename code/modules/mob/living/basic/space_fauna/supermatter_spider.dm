@@ -49,8 +49,8 @@
 /// Proc that we call on attacking something to dust 'em.
 /mob/living/basic/supermatter_spider/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	if(isliving(target))
 		var/mob/living/victim = target
@@ -59,14 +59,14 @@
 		victim.dust()
 		if(single_use)
 			death()
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 	if(!isturf(target))
 		dust_feedback(target)
 		qdel(target)
 		if(single_use)
 			death()
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /// Simple proc that plays the supermatter dusting sound and sends a visible message.
 /mob/living/basic/supermatter_spider/proc/dust_feedback(atom/target)

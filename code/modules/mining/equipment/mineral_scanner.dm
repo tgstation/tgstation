@@ -27,10 +27,10 @@
 /obj/item/mining_scanner/admin
 
 /obj/item/mining_scanner/admin/attack_self(mob/user)
-	for(var/turf/closed/mineral/mineral_turf in world)
-		if(mineral_turf.scan_state)
-			mineral_turf.icon = mineral_turf.scan_icon
-			mineral_turf.icon_state = mineral_turf.scan_state
+	for(var/turf/closed/mineral/rock in world)
+		if(rock.scan_state)
+			var/mutable_appearance/rock_overlay = mutable_appearance(rock.scan_icon, rock.scan_state, FLASH_LAYER, rock, ABOVE_LIGHTING_PLANE, appearance_flags = RESET_TRANSFORM)
+			rock.add_overlay(rock_overlay)
 	qdel(src)
 
 /obj/item/t_scanner/adv_mining_scanner
@@ -86,19 +86,8 @@
 		vent.add_mineral_overlays()
 
 	for(var/turf/closed/mineral/mineral in RANGE_TURFS(range, start_turf))
-		if(!mineral.scan_state)
-			continue
-
-		var/obj/effect/temp_visual/mining_overlay/scan_overlay = locate(/obj/effect/temp_visual/mining_overlay) in mineral
-		if(!scan_overlay)
-			scan_overlay = new(mineral)
-			scan_overlay.icon = mineral.scan_icon
-			scan_overlay.icon_state = mineral.scan_state
-			continue
-
-		deltimer(scan_overlay.timerid)
-		scan_overlay.timerid = QDEL_IN_STOPPABLE(scan_overlay, scan_overlay.duration)
-		animate(scan_overlay, alpha = 0, time = scan_overlay.duration, easing = scan_overlay.easing_style)
+		if(mineral.scan_state)
+			mineral.flash_scan()
 
 	if(vents_nearby && scanner)
 		if(undiscovered)
@@ -111,7 +100,8 @@
 /obj/effect/temp_visual/mining_overlay
 	plane = HIGH_GAME_PLANE
 	layer = FLASH_LAYER
-	icon = 'icons/effects/ore_visuals.dmi'
+	icon = 'icons/blanks/480x480.dmi'
+	icon_state = "nothing"
 	appearance_flags = NONE // to avoid having TILE_BOUND in the flags, so that the 480x480 icon states let you see it no matter where you are
 	duration = 3.5 SECONDS
 	pixel_x = -224

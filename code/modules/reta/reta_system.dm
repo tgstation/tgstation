@@ -5,7 +5,7 @@
 
 /// Helper function for RETA-specific logging
 /proc/log_reta(text)
-	WRITE_LOG(GLOB.reta_log, "[time_stamp()] RETA: [text]")
+	WRITE_LOG(GLOB.reta_log, "[server_timestamp()] RETA: [text]")
 	log_game("RETA: [text]")
 
 /proc/initialize_reta_system()

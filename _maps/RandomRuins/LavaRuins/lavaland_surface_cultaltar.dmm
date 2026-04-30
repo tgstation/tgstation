@@ -34,6 +34,9 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/unpowered/cultaltar)
+"j" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 "k" = (
 /obj/effect/decal/remains/human,
 /obj/item/melee/cultblade,
@@ -84,6 +87,14 @@
 "s" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/cultaltar)
+"z" = (
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"T" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
 
 (1,1,1) = {"
 a
@@ -106,16 +117,16 @@ a
 a
 d
 e
-c
-s
+T
+j
 c
 b
 b
 b
 c
-s
-c
-s
+j
+T
+j
 d
 a
 "}
@@ -133,13 +144,13 @@ c
 d
 e
 f
-s
+j
 a
 "}
 (4,1,1) = {"
 a
-c
-s
+T
+j
 c
 c
 c
@@ -150,12 +161,12 @@ c
 c
 c
 e
-c
+T
 a
 "}
 (5,1,1) = {"
 a
-s
+j
 d
 c
 c
@@ -167,12 +178,12 @@ b
 c
 c
 d
-s
+j
 a
 "}
 (6,1,1) = {"
 a
-c
+T
 c
 c
 b
@@ -183,12 +194,12 @@ k
 b
 b
 c
-c
-c
+T
+T
 a
 "}
 (7,1,1) = {"
-b
+z
 b
 c
 c
@@ -200,12 +211,12 @@ b
 l
 b
 c
-c
+T
 b
 b
 "}
 (8,1,1) = {"
-c
+T
 b
 g
 b
@@ -219,7 +230,7 @@ b
 b
 g
 b
-c
+T
 "}
 (9,1,1) = {"
 b
@@ -240,7 +251,7 @@ b
 "}
 (10,1,1) = {"
 a
-c
+T
 c
 c
 g
@@ -252,12 +263,12 @@ b
 b
 c
 c
-c
+T
 a
 "}
 (11,1,1) = {"
 a
-s
+j
 d
 c
 c
@@ -274,7 +285,7 @@ a
 "}
 (12,1,1) = {"
 a
-c
+T
 s
 c
 c
@@ -310,15 +321,15 @@ a
 a
 d
 e
-c
+T
 s
-c
+T
 b
 b
 b
-c
-s
-c
+T
+j
+T
 s
 d
 a
@@ -331,7 +342,7 @@ a
 a
 a
 b
-c
+T
 b
 a
 a

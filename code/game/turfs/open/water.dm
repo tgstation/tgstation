@@ -138,6 +138,20 @@
 /turf/open/water/lavaland_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
+/turf/open/water/lavaland_atmos/basalt
+	icon = 'icons/turf/floors/water_lavaland.dmi'
+	icon_state = "water_lavaland-255"
+	base_icon_state = "water_lavaland"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_WATER_LAVALAND
+	canSmoothWith = SMOOTH_GROUP_FLOOR_WATER_LAVALAND
+	fishing_datum = /datum/fish_source/ocean
+
+/turf/open/water/lavaland_atmos/basalt/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = /turf/open/misc/asteroid/basalt::icon
+	underlay_appearance.icon_state = /turf/open/misc/asteroid/basalt::icon_state
+	return TRUE
+
 /turf/open/water/beach/tizira
 	desc = "Shallow water. It somehow reminds you of lizardfolk."
 	icon_state = "tizira_water"

@@ -741,8 +741,8 @@
 	required_reagents = list(/datum/reagent/consumable/orangejuice = 4, /datum/reagent/consumable/ethanol/aperitivo = 1)
 
 /datum/chemical_reaction/drink/improved_whiskey
-	results=list(/datum/reagent/consumable/ethanol/improved_whiskey = 12)
-	required_reagents = list(/datum/reagent/consumable/ethanol/sazerac = 10, /datum/reagent/consumable/ethanol/maraschino = 2)
+	results=list(/datum/reagent/consumable/ethanol/improved_whiskey = 7)
+	required_reagents = list(/datum/reagent/consumable/ethanol/sazerac = 6, /datum/reagent/consumable/ethanol/maraschino = 1)
 
 /datum/chemical_reaction/drink/jungle_bird
 	results=list(/datum/reagent/consumable/ethanol/jungle_bird = 9)
@@ -774,8 +774,8 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/martini = 3, /datum/reagent/consumable/ethanol/herbal_liqueur = 1)
 
 /datum/chemical_reaction/drink/pousse_cafe
-	results=list(/datum/reagent/consumable/ethanol/pousse_cafe = 50) // if you managed to make this properly, the least it can do is fit into a glass neatly
-	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 12, /datum/reagent/consumable/ethanol/whiskey = 11, /datum/reagent/consumable/ethanol/fernet = 10, /datum/reagent/consumable/ethanol/herbal_liqueur = 9, /datum/reagent/consumable/ethanol/kahlua = 8, /datum/reagent/consumable/grenadine = 7)	// Since I have no way to simulate layering a cocktail, I will instead make it have absolutely godawful ratios to emulate the fiddling nessecary for something like this.
+	results=list(/datum/reagent/consumable/ethanol/pousse_cafe = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/herbal_liqueur = 1, /datum/reagent/consumable/ethanol/bitters = 1, /datum/reagent/consumable/ethanol/branca_menta = 1, /datum/reagent/consumable/ethanol/irish_cream = 1, /datum/reagent/consumable/ethanol/yuyake = 1, /datum/reagent/consumable/ethanol/aperitivo = 1, /datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/curacao = 1, /datum/reagent/consumable/ethanol/maraschino = 1, /datum/reagent/consumable/toechtauese_syrup = 1)	// In case someone wants to implement some sort of actual layering mechanic, these are listed from left to right by their specific gravity more or less
 
 /datum/chemical_reaction/drink/spritz
 	results=list(/datum/reagent/consumable/ethanol/spritz = 6)

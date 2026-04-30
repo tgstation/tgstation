@@ -499,7 +499,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		to_insert.forceMove(real_location)
 	if(get(real_location, /mob) != user)
 		to_insert.do_pickup_animation(real_location, user)
-	item_insertion_feedback(user, to_insert, override)
+	if (messages)
+		item_insertion_feedback(user, to_insert, override)
 	parent.update_appearance()
 	return TRUE
 

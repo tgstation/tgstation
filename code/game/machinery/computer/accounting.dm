@@ -37,7 +37,7 @@
 	data["accounts"] = player_accounts
 	data["audit_log"] = SSeconomy.audit_log
 	data["crashing"] = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING)
-	data["station_time"] = station_time_timestamp("hh:mm")
+	data["station_time"] = round_timestamp("hh:mm")
 	return data
 
 /obj/machinery/computer/accounting/ui_static_data(mob/user)

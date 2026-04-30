@@ -36,6 +36,8 @@
 	var/altar_icon
 	/// Changes the Altar of Gods icon_state
 	var/altar_icon_state
+	/// Changes the Altar of Gods emissive overlay icon_state
+	var/altar_emissive_icon_state
 	/// Currently Active (non-deleted) rites
 	var/list/active_rites
 	/// Chance that we fail a bible blessing.
@@ -115,6 +117,14 @@
 		if(IS_ROBOTIC_LIMB(bodypart))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
 			return BLESSING_IGNORED
+
+	return standard_bless_healing(blessed, chap)
+
+/datum/religion_sect/proc/standard_bless_healing(mob/living/carbon/human/blessed, mob/living/chap)
+	if(!ishuman(blessed))
+		blessed.adjust_brute_loss(-10)
+		blessed.adjust_fire_loss(-10)
+		return BLESSING_SUCCESS
 
 	var/heal_amt = 10
 	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
@@ -522,3 +532,138 @@
 /datum/religion_sect/music/on_conversion(mob/living/chap)
 	. = ..()
 	new /obj/item/choice_beacon/music(get_turf(chap))
+
+/datum/religion_sect/dreams
+	name = "Dream God"
+	quote = "The dream is a window into the soul."
+	desc = "Dream deeply to gain insights into the universe. Earn favor by dreaming or blessing dreaming creatures. \
+		Your blessings invoke dreams and promote healing in those who are sound asleep."
+	tgui_icon = FA_ICON_CLOUD
+	alignment = ALIGNMENT_GOOD
+	altar_icon_state = "convertaltar-dream"
+	altar_emissive_icon_state = "convertaltar-dream-em"
+	candle_overlay = FALSE
+	rites_list = list(
+		/datum/religion_rites/deaconize/dreamers,
+		/datum/religion_rites/banish_nightmare,
+		/datum/religion_rites/dream_portent,
+		/datum/religion_rites/dream_projection,
+		/datum/religion_rites/dream_protection,
+		/datum/religion_rites/slumber_party,
+	)
+	smack_chance = 20
+	/// Whether the dream protection rite has been used
+	VAR_FINAL/dream_protection = FALSE
+	/// Number of deacons added thus far
+	VAR_FINAL/deacon_count = 0
+	/// Max number of deacons
+	var/max_deacons = 3
+	/// Chance a given dream will be a vague portent
+	var/vague_portent_chance = 10
+	/// Lazylist of mobs that were blessed recently
+	/// Blocks mobs from being repeatedly blessed for favor
+	VAR_PRIVATE/list/recent_bless_refs
+	/// Cooldown between any follower receiving a vague portent
+	COOLDOWN_DECLARE(vague_portent_cooldown)
+
+/datum/religion_sect/dreams/on_conversion(mob/living/chap)
+	. = ..()
+	RegisterSignal(chap, COMSIG_PRE_DREAMING, PROC_REF(pre_dream))
+	RegisterSignal(chap, COMSIG_START_DREAMING, PROC_REF(on_dream))
+	if(dream_protection)
+		chap.apply_status_effect(/datum/status_effect/dream_protection)
+
+/datum/religion_sect/dreams/on_deconversion(mob/living/chap)
+	. = ..()
+	UnregisterSignal(chap, COMSIG_PRE_DREAMING)
+	UnregisterSignal(chap, COMSIG_START_DREAMING)
+	chap.remove_status_effect(/datum/status_effect/dream_protection)
+
+/datum/religion_sect/dreams/proc/pre_dream(mob/living/chap, list/dream_pool)
+	SIGNAL_HANDLER
+
+	// prioritize specific portents if they're in the pool
+	if(locate(/datum/dream/specific_portent) in dream_pool)
+		return
+	if(!COOLDOWN_FINISHED(src, vague_portent_cooldown))
+		return
+	if(!prob(vague_portent_chance))
+		return
+
+	dream_pool[new /datum/dream/random/vague_portent()] = /datum/dream/random::weight * 0.1
+
+/datum/religion_sect/dreams/proc/on_dream(mob/living/chap, datum/dream/dream_instance)
+	SIGNAL_HANDLER
+
+	// no reward for the dream your god is specifically giving you
+	if(istype(dream_instance, /datum/dream/specific_portent))
+		return
+
+	var/dream_favor = 10
+	// but you do get a slight boost for having a *vague* one
+	if(istype(dream_instance, /datum/dream/random/vague_portent))
+		COOLDOWN_START(src, vague_portent_cooldown, 30 SECONDS)
+		dream_favor *= 1.5
+
+	to_chat(chap, span_cyan("[GLOB.deity] approves of your slumber."))
+	adjust_favor(dream_favor, chap)
+
+// dream blessing only works on dreaming targets.
+// blessing someone asleep causes them to dream, and blessing a dreamer rewards favor.
+// it also heals regardless of if the target is mechanical or organic. do robots dream of electric sheep?
+/datum/religion_sect/dreams/sect_bless(mob/living/target, mob/living/chap)
+	if(HAS_TRAIT(target, TRAIT_DREAMING))
+		var/result = standard_bless_healing(target, chap)
+		var/tarref = REF(target)
+		if(!LAZYFIND(recent_bless_refs, tarref))
+			adjust_favor(20 * (isnull(target.mind) ? 0.5 : 1) * (target.IsSleeping() ? 1 : 0.5), chap)
+			LAZYADD(recent_bless_refs, tarref)
+			addtimer(CALLBACK(src, PROC_REF(clear_bless_ref), tarref), 6 MINUTES)
+			result = BLESSING_SUCCESS
+
+		if(result == BLESSING_SUCCESS)
+			to_chat(chap, span_cyan("[GLOB.deity] approves of [target]'s slumber."))
+		return result
+
+	if(target.stat == UNCONSCIOUS)
+		if(iscarbon(target))
+			var/mob/living/carbon/sleeper = target
+			sleeper.dream()
+
+		to_chat(chap, span_cyan("[GLOB.deity] blesses [target]'s slumber."))
+		var/result = standard_bless_healing(target, chap)
+		if(dream_protection && target.mind && target.apply_status_effect(/datum/status_effect/dream_protection/temporary))
+			result = BLESSING_SUCCESS
+
+		if(result == BLESSING_SUCCESS)
+			to_chat(chap, span_cyan("[GLOB.deity] blesses [target]'s slumber."))
+		return result
+
+	to_chat(chap, span_warning("[GLOB.deity] has no interest in blessing the waking."))
+	return BLESSING_IGNORED
+
+/datum/religion_sect/dreams/sect_dead_bless(mob/living/target, mob/living/chap)
+	var/tarref = REF(target)
+	if(LAZYFIND(recent_bless_refs, tarref))
+		return BLESSING_IGNORED
+
+	to_chat(chap, span_cyan("[GLOB.deity] watches over [target]'s eternal rest."))
+	if(dream_protection && target.mind)
+		target.apply_status_effect(/datum/status_effect/dream_protection/deceased)
+	adjust_favor(10 * (target.mind ? 1 : 0.5), chap)
+	LAZYADD(recent_bless_refs, tarref)
+	addtimer(CALLBACK(src, PROC_REF(clear_bless_ref), tarref), 6 MINUTES)
+	return BLESSING_SUCCESS
+
+/datum/religion_sect/dreams/proc/clear_bless_ref(tarref)
+	LAZYREMOVE(recent_bless_refs, tarref)
+
+/datum/religion_sect/dreams/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, dream_protection))
+		for(var/mob/living/chap as anything in GLOB.mob_living_list)
+			if(chap.mind?.holy_role)
+				if(var_value)
+					chap.apply_status_effect(/datum/status_effect/dream_protection)
+				else
+					chap.remove_status_effect(/datum/status_effect/dream_protection)

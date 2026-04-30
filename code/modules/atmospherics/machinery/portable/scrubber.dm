@@ -84,7 +84,7 @@
 
 	//contains all of the gas we're sucking out of the tile, gets put into our parent pipenet
 	var/datum/gas_mixture/filtered_out = new
-	var/list/filtered_gases = filtered_out.gases
+
 	filtered_out.temperature = environment.temperature
 
 	//maximum percentage of the turfs gas we can filter
@@ -102,8 +102,8 @@
 		filtered_out.add_gas(gas)
 		var/transferred_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MOLAR_ACCURACY*1000, env_gases[gas][MOLES]))
 
-		filtered_gases[gas][MOLES] = transferred_moles
-		env_gases[gas][MOLES] -= transferred_moles
+		filtered_out.adjust_gas(gas, transferred_moles)
+		environment.adjust_gas(gas, -transferred_moles)
 
 	environment.garbage_collect()
 

@@ -57,10 +57,6 @@ GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generate_map_list_from_directory(
 	name = "research outpost away spawn"
 	id = AWAYSTART_RESEARCH
 
-/obj/effect/landmark/awaystart/caves
-	name = "caves away spawn"
-	id = AWAYSTART_CAVES
-
 /obj/effect/landmark/awaystart/moonoutpost
 	name = "Moon Outpost 19 away spawn"
 	id = AWAYSTART_MOONOUTPOST
@@ -68,10 +64,6 @@ GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generate_map_list_from_directory(
 /obj/effect/landmark/awaystart/snowcabin
 	name = "snow cabin away spawn"
 	id = AWAYSTART_SNOWCABIN
-
-/obj/effect/landmark/awaystart/snowdin
-	name = "Snowdin away spawn"
-	id = AWAYSTART_SNOWDIN
 
 /obj/effect/landmark/awaystart/underground
 	name = "Underground Outpost 45 away spawn"

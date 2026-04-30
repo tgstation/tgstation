@@ -90,6 +90,12 @@
 /// from /obj/machinery/atmospherics/set_on(active): (on)
 #define COMSIG_ATMOS_MACHINE_SET_ON "atmos_machine_set_on"
 
+/// from /obj/machinery/power/emitter/interact(mob/user): (on)
+#define COMSIG_EMITTER_MACHINE_SET_ON "emitter_machine_set_on"
+
+/// from /obj/machinery/power/emitter/fire_beam(mob/user): (fired)
+#define COMSIG_EMITTER_MACHINE_ON_FIRE "emitter_machine_fire"
+
 /// from /obj/machinery/light_switch/set_lights(), sent to every switch in the area: (status)
 #define COMSIG_LIGHT_SWITCH_SET "light_switch_set"
 
@@ -195,9 +201,11 @@
 	#define COMPONENT_BLOCK_SHARPEN_BLOCKED (1<<1)
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY (1<<2)
 	#define COMPONENT_BLOCK_SHARPEN_MAXED (1<<3)
+	#define COMPONENT_BLOCK_SHARPEN_SHARPNESS (1<<4)
 
 ///Called when an armor plate is successfully applied to an object
 #define COMSIG_ARMOR_PLATED "armor_plated"
+
 ///Called when an item gets recharged by the ammo powerup
 #define COMSIG_ITEM_RECHARGED "item_recharged"
 ///Called when an item is being offered, from [/obj/item/proc/on_offered(mob/living/offerer)]
@@ -377,6 +385,8 @@
 
 ///called in /obj/item/firing_pin/proc/gun_remove(mob/living/user): (obj/item/firing_pin/pin, mob/living/user)
 #define COMSIG_GUN_PIN_REMOVED "gun_pin_removed"
+///called when an empty rechargeable gun gives itself more ammo
+#define COMSIG_GUN_REPLENISHED_CHARGE "gun_replenished_charge"
 
 // Jetpack things
 // Please kill me

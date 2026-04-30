@@ -151,6 +151,10 @@
 #define COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS "atom_finalize_material_effects"
 /// From /atom/finalize_remove_material_effects(): (list/materials, datum/material/main_material)
 #define COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS "atom_finalize_remove_material_effects"
+/// /atom/proc/apply_single_mat_effect(): (datum/material/material, amount, multiplier)
+#define COMSIG_ATOM_SINGLE_MATERIAL_EFFECT_APPLY "atom_single_material_effect_apply"
+/// /atom/proc/remove_single_mat_effect(): (datum/material/material, amount, multiplier)
+#define COMSIG_ATOM_SINGLE_MATERIAL_EFFECT_REMOVE "atom_single_material_effect_remove"
 
 /// From /atom/proc/update_atom_colour() : (color_changed)
 #define COMSIG_ATOM_COLOR_UPDATED "atom_color_updated"

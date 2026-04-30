@@ -716,23 +716,23 @@
 
 /datum/spy_bounty/some_bot/beepsky
 	difficulty = SPY_DIFFICULTY_MEDIUM // gotta get him to stand still
-	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/officer
+	bot_type = /mob/living/basic/bot/secbot/beepsky/officer
 	help = "Abduct Officer Beepsky - commonly found patrolling the station. \
 		Watch out, they may not take kindly to being scanned."
 
 /datum/spy_bounty/some_bot/ofitser
 	difficulty = SPY_DIFFICULTY_EASY
-	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/ofitser
+	bot_type = /mob/living/basic/bot/secbot/beepsky/ofitser
 	help = "Abduct Prison Ofitser - commonly found guarding the Gulag."
 
 /datum/spy_bounty/some_bot/armsky
 	difficulty = SPY_DIFFICULTY_HARD
-	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/armsky
+	bot_type = /mob/living/basic/bot/secbot/beepsky/armsky
 	help = "Abduct Sergeant-At-Armsky - commonly found guarding the station's Armory."
 
 /datum/spy_bounty/some_bot/pingsky
 	difficulty = SPY_DIFFICULTY_HARD
-	bot_type = /mob/living/simple_animal/bot/secbot/pingsky
+	bot_type = /mob/living/basic/bot/secbot/pingsky
 	help = "Abduct Officer Pingsky - commonly found protecting the station's AI."
 
 /datum/spy_bounty/some_bot/scrubs

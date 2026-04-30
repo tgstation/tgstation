@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(any_suit_storage, typecacheof(list(
 	/obj/item/lighter,
 	/obj/item/pen,
 	/obj/item/modular_computer/pda,
-	/obj/item/toy,
+	/obj/item/toy/plush,
 	/obj/item/radio,
 	/obj/item/storage/bag/books,
 	/obj/item/storage/fancy/cigarettes,

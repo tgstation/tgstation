@@ -171,22 +171,22 @@
 /// Checks if we are able to attack this object, as well as send out the signal to see if we get any special regal rat interactions.
 /mob/living/basic/regal_rat/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	if(DOING_INTERACTION(src, REGALRAT_INTERACTION) || !allowed_to_attack(target))
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN
 
 	if(SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src) & COMPONENT_RAT_INTERACTED)
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 	if(isnull(mind) || combat_mode)
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 
 	if(poison_target(target))
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
-	return TRUE
+	return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 
 /// Checks if we are allowed to attack this mob. Will return TRUE if we are potentially allowed to attack, but if we end up in a case where we should NOT attack, return FALSE.
 /mob/living/basic/regal_rat/proc/allowed_to_attack(atom/the_target)

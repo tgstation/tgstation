@@ -22,6 +22,14 @@
 /// Can be used to scrape rust off an any atom; which will result in the Rust Component being qdel'd
 #define TOOL_RUSTSCRAPER "rustscraper"
 
+// Used by the tool_blocker element, to block the primary or secondary tool action (or both)
+/// e.g. crowbar_act()
+#define TOOL_ACT_PRIMARY (1<<0)
+/// e.g. crowbar_act_secondary()
+#define TOOL_ACT_SECONDARY (1<<1)
+/// e.g. both crowbar_act() and crowbar_act_secondary()
+#define TOOL_ACT_ALL TOOL_ACT_PRIMARY | TOOL_ACT_SECONDARY
+
 // If delay between the start and the end of tool operation is less than MIN_TOOL_SOUND_DELAY,
 // tool sound is only played when op is started. If not, it's played twice.
 #define MIN_TOOL_SOUND_DELAY 20
