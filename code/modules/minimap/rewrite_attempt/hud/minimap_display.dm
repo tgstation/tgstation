@@ -10,6 +10,8 @@
 	var/datum/minimap/minimap
 	/// Screentext in vis_contents used for the maptext.
 	var/atom/movable/screen/minimap_label/screentip
+	/// List of user-applied labels.
+	var/list/atom/movable/screen/minimap_label/labels = list()
 	/// indexed list of currently displayed blips.
 	var/list/atom/movable/screen/minimap_blip/blips = list()
 	/// The list of minimap blip tags we're going to read from the globalist and listen for additions to
@@ -40,6 +42,7 @@
 	minimap = null
 	QDEL_NULL(drawing)
 	QDEL_NULL(screentip)
+	QDEL_LIST(labels)
 	if(hud?.mymob)
 		UnregisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED)
 	return ..()
@@ -52,11 +55,42 @@
 	for(var/signal in hud_signals)
 		UnregisterSignal(src, signal, hud_signals[signal])
 
+/atom/movable/screen/minimap_display/Click(location, control, params)
+	if(..() || usr != hud.mymob)
+		return
+	var/list/modifiers = params2list(params)
+	if(!LAZYACCESS(modifiers, CTRL_CLICK)) // ctrl click is to add a label
+		return
+	var/icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
+	var/icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
+
+	var/x = clamp(MINIMAP_ICON_TO_WORLD(icon_x, minimap.min_x), 1, world.maxx)
+	var/y = clamp(MINIMAP_ICON_TO_WORLD(icon_y, minimap.min_y), 1, world.maxy)
+
+	var/area_name = minimap.map_position_to_name["[x]:[y]"]
+	if(isnull(area_name))
+		var/turf/hovered_loc = locate(x, y, minimap.z)
+		area_name = "[hovered_loc?.loc?.name]"
+		minimap.map_position_to_name["[x]:[y]"] = area_name
+
+	var/label_text = tgui_input_text(usr, "What would you like the label at [area_name] to say?", "Add Label", max_length = 25)
+	if(!label_text)
+		return
+
+	var/atom/movable/screen/minimap_label/new_label = new
+	new_label.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: left'>[label_text]</span>")
+	new_label.pixel_w = icon_x
+	new_label.pixel_z = icon_y
+	vis_contents += new_label
+	labels += new_label
+
 /atom/movable/screen/minimap_display/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
 
 /atom/movable/screen/minimap_display/MouseDrag(over_object, src_location, over_location, src_control, over_control, params)
 	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, CTRL_CLICK)) // adding a label
+		return
 	var/list/mouse_px = params2screenpixel(LAZYACCESS(modifiers, SCREEN_LOC))
 	var/x = mouse_px[1] - origin_px[1] + 1
 	var/y = mouse_px[2] - origin_px[2] + 1
