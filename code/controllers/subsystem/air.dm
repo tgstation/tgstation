@@ -799,7 +799,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
 		ADD_GAS(path, gases)
 		gases[path][MOLES] = text2num(gas[id])
-
+	canonical_mix.total_moles = values_sum(gases)
 	if(istype(canonical_mix, /datum/gas_mixture/immutable))
 		return canonical_mix
 	return canonical_mix.copy()

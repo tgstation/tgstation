@@ -89,5 +89,6 @@
 		ADD_GAS(id, gases)
 		gases[id][MOLES] = mix[id][MOLES]
 		gases[id][ARCHIVE] = mix[id][MOLES]
+	total_moles = values_sum(gases)
 
 

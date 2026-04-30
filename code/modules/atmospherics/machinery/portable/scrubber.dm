@@ -103,7 +103,9 @@
 		var/transferred_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MOLAR_ACCURACY*1000, env_gases[gas][MOLES]))
 
 		filtered_out.adjust_gas(gas, transferred_moles)
+		filtered_out.total_moles += transferred_moles
 		environment.adjust_gas(gas, -transferred_moles)
+		environment.total_moles -= transferred_moles
 
 	environment.garbage_collect()
 
