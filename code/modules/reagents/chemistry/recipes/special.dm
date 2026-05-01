@@ -284,7 +284,7 @@
 /obj/item/paper/secretrecipe/gorgium/Initialize(mapload)
 	. = ..()
 
-	metal_morph(src, /datum/material/rock)
+	metal_transmute(src, /datum/material/rock)
 
 /// Recipe that always has metalgen
 /obj/item/paper/secretrecipe/metalgen
@@ -294,7 +294,7 @@
 /obj/item/paper/secretrecipe/metalgen/Initialize(mapload)
 	. = ..()
 
-	metal_morph(src, /datum/material/uranium)
+	metal_transmute(src, /datum/material/uranium)
 
 #undef RNGCHEM_INPUT
 #undef RNGCHEM_CATALYSTS
