@@ -188,10 +188,6 @@
 "T" = (
 /turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/ruin/powered)
-"V" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
-/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 P
@@ -370,8 +366,8 @@ A
 T
 P
 s
-V
-V
+s
+s
 "}
 (11,1,1) = {"
 a
