@@ -1452,7 +1452,7 @@
 	if(shown_stamina_loss >= stam_crit_threshold)
 		stamina.icon_state = "stamina_crit"
 	else if(shown_stamina_loss > 0 && maxHealth > 0)
-		stamina.icon_state = "stamina_[6 - ceil(shown_stamina_loss / (maxHealth * 0.2))]"
+		stamina.icon_state = "stamina_[ceil(shown_stamina_loss / (maxHealth * 0.2))]"
 	else
 		stamina.icon_state = "stamina_full"
 
@@ -1537,7 +1537,7 @@
 				/mob/living/basic/bot/dedbot = 25,
 				/mob/living/basic/bot/cleanbot = 25,
 				/mob/living/basic/bot/firebot = 25,
-				/mob/living/basic/bot/honkbot = 25,
+				/mob/living/basic/bot/secbot/honkbot = 25,
 				/mob/living/basic/bot/hygienebot = 25,
 				/mob/living/basic/bot/vibebot = 25,
 				/mob/living/basic/bot/medbot = 13,

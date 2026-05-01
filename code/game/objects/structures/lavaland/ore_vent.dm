@@ -140,6 +140,7 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		produce_boulder(TRUE)
+		return TRUE
 
 /obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()

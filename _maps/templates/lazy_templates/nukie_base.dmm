@@ -1181,11 +1181,11 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters/syndicate{
 	id = "FBBZ1";
 	name = "Security Shutters"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "nk" = (
@@ -1627,7 +1627,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wideplating,
-/obj/machinery/door/poddoor/shutters/indestructible{
+/obj/machinery/door/poddoor/shutters/syndicate/indestructible{
 	name = "Subterrainian Cargo Lift"
 	},
 /turf/open/floor/iron/dark/textured_half,
@@ -2390,12 +2390,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/shutters/window{
-	id = "FBBZ1";
-	name = "Security Shutters"
-	},
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/door/poddoor/shutters/syndicate,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "AO" = (
@@ -3672,10 +3669,10 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity{
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate{
 	name = "Sky Bridge"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
 "Oc" = (
@@ -3813,11 +3810,11 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity{
-	name = "Sky Bridge"
-	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate{
+	name = "Sky Bridge"
+	},
 /turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
 "OX" = (
@@ -4354,11 +4351,11 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity{
-	name = "Sky Bridge"
-	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate{
+	name = "Sky Bridge"
+	},
 /turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
 "TS" = (

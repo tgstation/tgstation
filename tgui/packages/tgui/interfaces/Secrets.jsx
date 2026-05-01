@@ -231,13 +231,13 @@ const HelpfulTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <Button
-              icon="moon"
-              lineHeight={lineHeightNormal}
+            <NoticeBox
+              mb={-0.5}
               width={buttonWidthNormal}
-              content="Set Nightshift"
-              onClick={() => act('night_shift_set')}
-            />
+              height={lineHeightNormal}
+            >
+              Your admin button here, coder!
+            </NoticeBox>
           </Stack.Item>
         </Stack>
       </Stack.Item>

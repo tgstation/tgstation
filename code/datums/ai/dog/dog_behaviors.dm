@@ -27,16 +27,8 @@
 		paw_harmlessly(living_pawn, target, seconds_per_tick)
 		return AI_BEHAVIOR_INSTANT
 
-	// Give Ian some teeth
-	var/old_melee_lower = living_pawn.melee_damage_lower
-	var/old_melee_upper = living_pawn.melee_damage_upper
-	living_pawn.melee_damage_lower = max(5, old_melee_lower)
-	living_pawn.melee_damage_upper = max(10, old_melee_upper)
-
 	. = ..() // Bite time
 
-	living_pawn.melee_damage_lower = old_melee_lower
-	living_pawn.melee_damage_upper = old_melee_upper
 	return AI_BEHAVIOR_DELAY
 
 /// Swat at someone we don't like but won't hurt

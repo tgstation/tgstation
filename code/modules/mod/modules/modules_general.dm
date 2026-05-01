@@ -244,7 +244,7 @@
 /obj/item/mod/module/status_readout/add_ui_data()
 	. = ..()
 	.["display_time"] = display_time
-	.["shift_time"] = station_time_timestamp()
+	.["shift_time"] = round_timestamp()
 	.["shift_id"] = GLOB.round_id
 	.["health"] = mod.wearer?.health || 0
 	.["health_max"] = mod.wearer?.getMaxHealth() || 0

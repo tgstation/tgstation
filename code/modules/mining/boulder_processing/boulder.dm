@@ -110,6 +110,7 @@
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER) //A little hacky but it works around the speed of the blackboard task selection process for now.
+		return TRUE
 
 /obj/item/boulder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()

@@ -14,6 +14,7 @@
 }
 
 :root {
+    /* biome-ignore-start lint/suspicious/noUselessEscapeInString: The escapes are needed */
 	--tg-air-tank-slash: "\ea01";
 	--tg-air-tank: "\ea02";
 	--tg-bad-touch: "\ea03";
@@ -26,6 +27,7 @@
 	--tg-sound-minus: "\ea0a";
 	--tg-sound-plus: "\ea0b";
 	--tg-syndicate-logo: "\ea0c";
+    /* biome-ignore-end lint/suspicious/noUselessEscapeInString: The escapes are needed */
 }
 .tg-air-tank-slash::before {
 	content: var(--tg-air-tank-slash);

@@ -155,4 +155,6 @@ h1.alert, h2.alert		{color: #000000;}
 .flock					{color: #288166; font-family: "Courier New", cursive, sans-serif;}
 
 .upside_down			{display: inline; -moz-transform: scale(-1, -1); -webkit-transform: scale(-1, -1); -o-transform: scale(-1, -1); -ms-transform: scale(-1, -1); transform: scale(-1, -1);}
+
+.cyan					{color: #bde0dc;}
 </style>"}
