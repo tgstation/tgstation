@@ -263,7 +263,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	icon = 'icons/turf/floors/siderite.dmi'
 	damaged_dmi = 'icons/turf/floors/siderite_variants.dmi'
 	variant_dmi = 'icons/turf/floors/siderite_variants.dmi'
-	icon_state = "siderite"
+	icon_state = "siderite-255"
 	base_icon_state = "siderite"
 	layer = HIGH_TURF_LAYER
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SIDERITE
@@ -284,7 +284,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	icon = 'icons/turf/floors/shale.dmi'
 	damaged_dmi = 'icons/turf/floors/shale_variants.dmi'
 	variant_dmi = 'icons/turf/floors/shale_variants.dmi'
-	icon_state = "shale"
+	icon_state = "shale-255"
 	base_icon_state = "shale"
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SHALE
 	canSmoothWith = SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_CLOSED_TURFS
