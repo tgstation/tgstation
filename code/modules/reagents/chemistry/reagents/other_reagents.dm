@@ -2830,6 +2830,18 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
+/datum/reagent/pax/peaceborg/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	RegisterSignal(affected_mob, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_metabolizer_damaged))
+
+/datum/reagent/pax/peaceborg/on_mob_end_metabolize(mob/living/affected_mob, metabolization_ratio)
+	. = ..()
+	UnregisterSignal(affected_mob, COMSIG_ATOM_TAKE_DAMAGE)
+
+/datum/reagent/pax/peaceborg/proc/on_metabolizer_damaged(mob/living/source, amount)
+	SIGNAL_HANDLER
+	source.reagents.remove_reagent(/datum/reagent/pax/peaceborg, amount)
+
 /datum/reagent/peaceborg/confuse
 	name = "Dizzying Solution"
 	description = "Makes the target off balance and dizzy"
