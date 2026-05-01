@@ -286,13 +286,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(revenant)
 		revenant.on_reflect(source, reflecting_in, reflection)
 
-/obj/structure/mirror/proc/release_revenant()
-	message_admins("A revenant escaped its mirror containment and is now reforming.")
-	if(revenant.reform("by the mirror breaking"))
-		visible_message(span_revenwarning("The revenant cackles as it escapes from the [src]!"))
-		playsound(loc, 'sound/effects/chemistry/ahaha.ogg', 100, TRUE)
-	revenant = null
-
 /obj/structure/mirror/examine(mob/user)
 	. = ..()
 	if(deconstructable)
@@ -340,7 +333,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(!init)
 		playsound(src, SFX_SHATTER, 70, TRUE)
 		if(revenant)
-			release_revenant()
+			SEND_SIGNAL(revenant, COMSIG_REVENANT_REFORM, "by [src] shattering")
 	if(desc == initial(desc))
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE

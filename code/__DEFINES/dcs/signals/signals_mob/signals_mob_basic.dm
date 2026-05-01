@@ -33,3 +33,6 @@
 #define COMSIG_RAPTOR_GROWTH_STAGE_CHANGE "raptor_growth_stage_change"
 	/// Cancel raptor growth
 	#define COMPONENT_CANCEL_RAPTOR_GROWTH (1<<0)
+
+// Called when a revenant must be reformed: (cause)
+#define COMSIG_REVENANT_REFORM "revenant_reform"

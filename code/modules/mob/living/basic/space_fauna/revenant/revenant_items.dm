@@ -86,12 +86,8 @@
 		return
 
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
-	forceMove(drop_location()) //In case it's in a backpack or someone's hand
 
-	if(!revenant.reform("by reforming ectoplasm"))
-		inert = TRUE
-		visible_message(span_revenwarning("[src] settles down and seems lifeless."))
-		return
+	SEND_SIGNAL(revenant, COMSIG_REVENANT_REFORM, "by reforming ectoplasm")
 	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
 	revenant = null
 	qdel(src)
