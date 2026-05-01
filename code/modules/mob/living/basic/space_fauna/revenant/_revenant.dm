@@ -345,10 +345,7 @@
 
 	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
 
-	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src)) // the ectoplasm will handle moving us out of dormancy
-	old_ckey = client?.ckey
-	goop.revenant = src
-	forceMove(goop)
+	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src), src) // the ectoplasm will handle moving us out of dormancy
 
 /mob/living/basic/revenant/proc/on_move(datum/source, atom/entering_loc)
 	SIGNAL_HANDLER
@@ -522,29 +519,27 @@
 		apply_wibbly_filters(reflection)
 
 /mob/living/basic/revenant/proc/get_new_user()
-	message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
+	message_admins("A poll for the reforming revenant was created since the original player is missing.")
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to be [span_notice(name)] (reforming)?", check_jobban = ROLE_REVENANT, role = ROLE_REVENANT, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "reforming revenant", chat_text_border_icon = src)
-	if(isnull(chosen_one))
+	if(!chosen_one)
 		message_admins("No candidates were found for the new revenant.")
-		return null
-	return chosen_one
+		visible_message(span_revenwarning("A blue dust appears from thin air and settles down."))
+		var/obj/item/ectoplasm/residue = new(get_turf(src)) // inert
+		qdel(src)
+	else
+		PossessByPlayer(chosen_one.key)
+		message_admins("[chosen_one.key] has been made into the reformed revenant via poll.")
+		qdel(chosen_one)
 
 /mob/living/basic/revenant/proc/reform(cause)
 	if(QDELETED(src))
 		return FALSE
 
-	var/user_name = old_ckey
-	if(isnull(client))
-		var/mob/potential_user = get_new_user()
-		if(!potential_user)
-			qdel(src)
-			return FALSE
-		PossessByPlayer(potential_user.key)
-		user_name = potential_user.ckey
-		qdel(potential_user)
-
-	message_admins("[user_name] has been [old_ckey == user_name ? "re":""]made into a revenant [cause].")
-	log_message("was [old_ckey == user_name ? "re":""]made as a revenant [cause].", LOG_GAME)
 	death_reset()
+	if(isnull(client))
+		INVOKE_ASYNC(src, PROC_REF(get_new_user))
+	else
+		message_admins("[client.ckey] has been remade into a revenant.")
+		log_message("was remade as a revenant.", LOG_GAME)
 	return TRUE
 #undef REVENANT_STUNNED_TRAIT

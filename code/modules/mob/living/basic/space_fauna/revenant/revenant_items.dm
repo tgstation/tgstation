@@ -5,31 +5,28 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "revenantEctoplasm"
 	w_class = WEIGHT_CLASS_SMALL
-	/// Are we currently reforming?
-	var/reforming = TRUE
-	/// Are we inert (aka distorted such that we can't reform)?
+	// Can the revenant reform?
 	var/inert = FALSE
-	/// The revenant we're currently storing
-	var/mob/living/basic/revenant/revenant
 
-/obj/item/ectoplasm/revenant/Initialize(mapload)
+/obj/item/ectoplasm/revenant/Initialize(mapload, revenant)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(try_reform)), 1 MINUTES)
+	inert = !revenant
+	if(revenant)
+		AddComponent(/datum/component/revenant_prison, revenant = revenant)
+		addtimer(CALLBACK(src, PROC_REF(reform)), 1 MINUTES)
 
 /obj/item/ectoplasm/revenant/Destroy()
-	if(!QDELETED(revenant))
-		qdel(revenant)
 	return ..()
 
 /obj/item/ectoplasm/revenant/proc/check_for_mirrors(turf/location, radius)
 	PRIVATE_PROC(TRUE)
 	for(var/obj/structure/mirror/mirror in view(radius, location))
-		if(!mirror.revenant && !mirror.broken)
+		if(!mirror.GetComponent(/datum/component/revenant_prison) && !mirror.broken)
 			return mirror
 	return null
 
 /obj/item/ectoplasm/revenant/attack_self(mob/user)
-	if(!reforming || inert)
+	if(inert)
 		return ..()
 	var/obj/structure/mirror/nearby_mirror = check_for_mirrors(drop_location(), 5)
 	if(!nearby_mirror)
@@ -38,8 +35,7 @@
 			span_notice("You scatter [src] across the area. The particles slowly fade away."),
 		)
 	else
-		nearby_mirror.become_cursed(revenant)
-		src.revenant = null
+		GetComponent(/datum/component/revenant_prison).TakeComponent(nearby_mirror)
 		user.visible_message(
 			span_revenwarning("[user] scatters [src] in all directions. A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"),
 			span_revenwarning("You scatter [src] across the area. A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"),
@@ -56,15 +52,16 @@
 		visible_message(span_notice("[src] breaks into particles upon impact, which fade away to nothingness."))
 	else
 		visible_message(span_revenwarning("A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"))
-		nearby_mirror.become_cursed(revenant)
-		revenant = null
+		GetComponent(/datum/component/revenant_prison).TakeComponent(nearby_mirror)
+		log_game("A revenant was trapped inside [nearby_mirror]")
+		message_admins("A revenant was trapped inside [nearby_mirror]")
 	qdel(src)
 
 /obj/item/ectoplasm/revenant/examine(mob/user)
 	. = ..()
 	if(inert)
 		. += span_revennotice("It seems inert.")
-	else if(reforming)
+	else
 		. += span_revenwarning("It is shifting and distorted. It would be wise to destroy this.")
 
 /obj/item/ectoplasm/revenant/suicide_act(mob/living/user)
@@ -72,26 +69,13 @@
 	qdel(src)
 	return OXYLOSS
 
-/obj/item/ectoplasm/revenant/proc/try_reform()
-	if(reforming)
-		reforming = FALSE
-		reform()
-	else
-		inert = TRUE
-		visible_message(span_warning("[src] settles down and seems lifeless."))
-
 /// Actually moves the revenant out of ourself
 /obj/item/ectoplasm/revenant/proc/reform()
 	if(QDELETED(src) || inert)
 		return
-
-	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
-	forceMove(drop_location()) //In case it's in a backpack or someone's hand
-
-	if(!revenant.reform("by reforming ectoplasm"))
-		inert = TRUE
-		visible_message(span_revenwarning("[src] settles down and seems lifeless."))
+	if(!GetComponent(/datum/component/revenant_prison))
 		return
+	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
+	SEND_SIGNAL(src, COMSIG_REVENANT_RELEASE, "ectoplasm reforming")
 	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
-	revenant = null
 	qdel(src)
