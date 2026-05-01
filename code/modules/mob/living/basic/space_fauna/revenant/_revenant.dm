@@ -345,7 +345,7 @@
 
 	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
 
-	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src), src) // the ectoplasm will handle moving us out of dormancy
+	new /obj/item/ectoplasm/revenant(get_turf(src), src) // the ectoplasm will handle moving us out of dormancy
 
 /mob/living/basic/revenant/proc/on_move(datum/source, atom/entering_loc)
 	SIGNAL_HANDLER
@@ -524,7 +524,7 @@
 	if(!chosen_one)
 		message_admins("No candidates were found for the new revenant.")
 		visible_message(span_revenwarning("A blue dust appears from thin air and settles down."))
-		var/obj/item/ectoplasm/residue = new(get_turf(src)) // inert
+		new /obj/item/ectoplasm/revenant(get_turf(src)) // inert
 		qdel(src)
 	else
 		PossessByPlayer(chosen_one.key)
