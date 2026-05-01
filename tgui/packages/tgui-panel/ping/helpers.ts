@@ -46,6 +46,7 @@ export function pingSuccess(roundtrip: number): void {
     failCount: 0,
     networkQuality,
   });
+  Byond.sendMessage('ping/set', { ping: roundtrip });
 
   store.set(lastPingedAtAtom, Date.now());
 }
