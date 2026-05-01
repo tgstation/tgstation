@@ -2832,11 +2832,11 @@
 
 /datum/reagent/pax/peaceborg/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
-	RegisterSignal(affected_mob, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_metabolizer_damaged))
+	RegisterSignal(affected_mob, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_metabolizer_damaged))
 
 /datum/reagent/pax/peaceborg/on_mob_end_metabolize(mob/living/affected_mob, metabolization_ratio)
 	. = ..()
-	UnregisterSignal(affected_mob, COMSIG_ATOM_TAKE_DAMAGE)
+	UnregisterSignal(affected_mob, COMSIG_MOB_AFTER_APPLY_DAMAGE)
 
 /datum/reagent/pax/peaceborg/proc/on_metabolizer_damaged(mob/living/source, amount)
 	SIGNAL_HANDLER
