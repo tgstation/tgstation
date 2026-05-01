@@ -191,23 +191,24 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "basalt_biome"
 	smoothing_flags = NONE
+	/// Area type to whose generator we try to default to
+	var/default_area = /area/lavaland/surface/outdoors/unexplored/danger
 
 /turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/Initialize(mapload)
 	. = ..()
-	var/area/cur_area = loc
-	if (!cur_area) // what
-		return
-
 	// Just spawn a normal lavaland rock if we fail to get a mapgen, such as being spawned over lava
 	var/supposed_type = /turf/open/misc/asteroid/basalt/lava_land_surface
-	var/datum/map_generator/cave_generator/map_generator = cur_area.get_generator()
+	var/area/cur_area = loc
+	var/datum/map_generator/cave_generator/map_generator = cur_area?.get_generator()
+	if (!map_generator)
+		cur_area = GLOB.areas_by_type[default_area]
+		map_generator = cur_area?.get_generator()
+
 	if (istype(map_generator))
-		for (var/datum/biome/biome as anything in map_generator.generated_turfs_per_biome)
-			var/list/gen_turfs = map_generator.generated_turfs_per_biome[biome]
-			if (!isnull(gen_turfs[src]))
-				// Ignore what we were supposed to spawn as in favor of the closed turf
-				supposed_type = biome.open_turf_type
-				break
+		var/biome = map_generator.get_biome_for_turf(src)
+		if (biome)
+			var/datum/biome/generating_biome = SSmapping.biomes[biome]
+			supposed_type = generating_biome.open_turf_type
 
 	var/cur_flags = turf_flags
 	var/turf/new_turf = ChangeTurf(supposed_type, flags = CHANGETURF_FORCEOP | CHANGETURF_INHERIT_AIR)
