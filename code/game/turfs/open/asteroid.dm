@@ -186,9 +186,33 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
 	turf_flags = NO_RUINS
 
-/// A turf that can't we can't build openspace chasms on or spawn ruins in.
-/turf/closed/mineral/volcanic/lava_land_surface/do_not_chasm
-	turf_flags = NO_RUINS
+/// Variant for ruins which replaces itself with the floor of a biome it generates in
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "basalt_biome"
+	smoothing_flags = NONE
+
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/Initialize(mapload)
+	. = ..()
+	var/area/cur_area = loc
+	if (!cur_area) // what
+		return
+
+	// Just spawn a normal lavaland rock if we fail to get a mapgen, such as being spawned over lava
+	var/supposed_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	var/datum/map_generator/cave_generator/map_generator = cur_area.get_generator()
+	if (istype(map_generator))
+		for (var/datum/biome/biome as anything in map_generator.generated_turfs_per_biome)
+			var/list/gen_turfs = map_generator.generated_turfs_per_biome[biome]
+			if (!isnull(gen_turfs[src]))
+				// Ignore what we were supposed to spawn as in favor of the closed turf
+				supposed_type = biome.open_turf_type
+				break
+
+	var/cur_flags = turf_flags
+	var/turf/new_turf = ChangeTurf(supposed_type, flags = CHANGETURF_FORCEOP | CHANGETURF_INHERIT_AIR)
+	if(cur_flags & NO_RUINS)
+		new_turf.turf_flags |= NO_RUINS
 
 /turf/open/misc/asteroid/lowpressure
 	initial_gas_mix = OPENTURF_LOW_PRESSURE

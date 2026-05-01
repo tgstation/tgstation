@@ -11,9 +11,11 @@
 "e" = (
 /obj/item/clothing/suit/space/orange,
 /turf/open/misc/asteroid/basalt,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/powered)
 "f" = (
 /turf/open/misc/asteroid/basalt,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/powered)
 "g" = (
 /turf/open/misc/asteroid{
@@ -58,6 +60,7 @@
 /obj/item/food/grown/mushroom/glowshroom,
 /obj/item/seeds/tower,
 /turf/open/misc/asteroid/basalt,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/powered)
 "n" = (
 /obj/machinery/hydroponics/soil,
@@ -72,6 +75,7 @@
 /obj/item/storage/bag/ore,
 /obj/item/storage/medkit/regular,
 /turf/open/misc/asteroid/basalt,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/powered)
 "q" = (
 /obj/structure/glowshroom/single,
@@ -82,9 +86,11 @@
 /obj/item/pickaxe/emergency,
 /obj/item/tank/internals/oxygen,
 /turf/open/misc/asteroid/basalt,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/powered)
 "s" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "t" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
@@ -175,6 +181,7 @@
 "M" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/misc/asteroid/basalt,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/powered)
 "P" = (
 /turf/template_noop,
@@ -188,6 +195,11 @@
 "T" = (
 /turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/ruin/powered)
+"V" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 P
@@ -366,8 +378,8 @@ A
 T
 P
 s
-s
-s
+V
+V
 "}
 (11,1,1) = {"
 a

@@ -954,14 +954,19 @@
 	if (istype(map_generator))
 		for (var/datum/biome/biome as anything in map_generator.generated_turfs_per_biome)
 			var/list/gen_turfs = map_generator.generated_turfs_per_biome[biome]
-			if (gen_turfs[src])
+			if (!isnull(gen_turfs[src]))
 				// Ignore what we were supposed to spawn as in favor of the closed turf
 				supposed_type = biome.closed_turf_type
 				break
 
-	var/turf/new_turf = new supposed_type(src)
-	if(turf_flags & NO_RUINS)
+	var/cur_flags = turf_flags
+	var/turf/new_turf = ChangeTurf(supposed_type, flags = CHANGETURF_FORCEOP | CHANGETURF_INHERIT_AIR)
+	if(cur_flags & NO_RUINS)
 		new_turf.turf_flags |= NO_RUINS
+
+/// A turf that can't we can't build openspace chasms on or spawn ruins in.
+/turf/closed/mineral/volcanic/lava_land_surface/do_not_chasm
+	turf_flags = NO_RUINS
 
 /// Wall piece
 /turf/closed/mineral/ash_rock

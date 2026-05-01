@@ -1,10 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "b" = (
 /obj/structure/bonfire/prelit,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "c" = (
 /turf/open/floor/wood/lavaland,
@@ -14,11 +16,13 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "e" = (
 /obj/structure/flora/ash/fireblossom,
 /mob/living/basic/mining/mook/worker/tribal_chief,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "f" = (
 /obj/structure/chair/wood{
@@ -51,6 +55,7 @@
 "l" = (
 /obj/structure/flora/ash/fireblossom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "m" = (
 /obj/item/flashlight/lantern{
@@ -62,14 +67,18 @@
 /obj/structure/flora/ash/fireblossom,
 /mob/living/basic/mining/mook/worker,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "o" = (
 /obj/structure/railing/corner,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "p" = (
 /obj/structure/ore_container/material_stand,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "q" = (
 /obj/item/fishing_rod,
@@ -82,26 +91,32 @@
 "s" = (
 /obj/effect/landmark/mook_village,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "t" = (
 /obj/structure/chair/pew/left,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "u" = (
 /obj/structure/railing,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "v" = (
 /obj/structure/railing/corner{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "w" = (
 /obj/structure/railing{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "x" = (
 /obj/structure/table/wood/shuttle_bar,
@@ -115,10 +130,24 @@
 "z" = (
 /mob/living/basic/mining/mook/worker/bard,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "A" = (
 /obj/structure/chair/pew/right,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"B" = (
+/mob/living/basic/mining/mook,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"C" = (
+/obj/structure/railing,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "E" = (
 /obj/structure/flora/grass/jungle/b,
@@ -127,6 +156,7 @@
 "F" = (
 /obj/structure/chair/pew,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "G" = (
 /obj/structure/bed/pod,
@@ -138,22 +168,46 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "I" = (
 /mob/living/basic/mining/mook,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "J" = (
 /obj/structure/railing{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"K" = (
+/obj/structure/chair/pew,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"L" = (
+/obj/structure/flora/ash/fireblossom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "M" = (
 /obj/structure/chair/pew/right{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"N" = (
+/obj/structure/flora/ash/fireblossom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "O" = (
 /obj/structure/table/wood/shuttle_bar,
@@ -164,38 +218,68 @@
 "P" = (
 /mob/living/basic/mining/mook/worker,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "Q" = (
 /obj/structure/flora/tree/jungle/style_5,
 /turf/open/misc/grass/jungle/lavaland,
+/area/lavaland/surface/outdoors)
+"R" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "S" = (
 /obj/item/flashlight/lantern{
 	start_on = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"T" = (
+/mob/living/basic/mining/mook/worker,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors)
+"U" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "V" = (
 /obj/structure/chair/pew{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "W" = (
 /obj/structure/flora/tree/jungle/style_3,
 /turf/open/misc/grass/jungle/lavaland,
+/area/lavaland/surface/outdoors)
+"X" = (
+/obj/item/flashlight/lantern{
+	start_on = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "Y" = (
 /obj/structure/chair/pew/left{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "Z" = (
 /obj/structure/railing/corner{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
@@ -228,7 +312,7 @@ a
 a
 a
 l
-S
+X
 a
 a
 a
@@ -295,18 +379,18 @@ c
 c
 a
 S
-a
-a
-a
-a
-P
-a
+R
+R
+R
+R
+T
+R
 S
-F
-a
-a
-a
-a
+K
+R
+R
+R
+R
 "}
 (6,1,1) = {"
 c
@@ -360,8 +444,8 @@ f
 c
 c
 a
-a
-a
+R
+R
 o
 w
 w
@@ -403,10 +487,10 @@ a
 a
 a
 a
-a
-I
-a
-u
+R
+B
+R
+C
 y
 y
 E
@@ -494,11 +578,11 @@ h
 h
 z
 S
-l
-a
-a
+L
+U
+R
 I
-l
+N
 l
 a
 I
@@ -515,18 +599,18 @@ q
 g
 g
 l
+R
+R
+U
+R
+a
+R
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+R
+R
+R
 "}
 (16,1,1) = {"
 c
@@ -606,7 +690,7 @@ a
 a
 l
 a
-S
+X
 h
 m
 c
@@ -624,7 +708,7 @@ a
 a
 a
 a
-a
+R
 a
 a
 a

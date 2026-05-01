@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "b" = (
 /obj/machinery/door/airlock/titanium{
@@ -44,11 +44,11 @@
 /area/ruin/powered)
 "h" = (
 /obj/effect/decal/cleanable/rubble,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "i" = (
 /obj/effect/mob_spawn/corpse/goliath,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "j" = (
 /obj/structure/chair/comfy/shuttle{
@@ -96,17 +96,17 @@
 /area/ruin/powered)
 "t" = (
 /obj/structure/flora/tree/stump,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "u" = (
 /obj/structure/bonfire/prelit,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "v" = (
 /obj/effect/decal/cleanable/rubble,
 /obj/item/stack/sheet/mineral/titanium,
 /obj/item/stack/sheet/mineral/titanium,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "w" = (
 /obj/effect/decal/cleanable/glass/titanium,
@@ -133,18 +133,18 @@
 /area/lavaland/surface/outdoors)
 "B" = (
 /mob/living/basic/mining/goliath,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "D" = (
 /obj/item/gun/energy/recharge/kinetic_accelerator,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "E" = (
 /turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "F" = (
 /obj/effect/mob_spawn/corpse/human/cargo_tech,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "G" = (
 /turf/template_noop,
@@ -193,7 +193,7 @@
 /area/ruin/unpowered)
 "P" = (
 /obj/effect/mob_spawn/corpse/human/miner,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "Q" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,

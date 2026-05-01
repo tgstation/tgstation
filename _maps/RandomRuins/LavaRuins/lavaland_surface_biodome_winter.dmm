@@ -302,7 +302,7 @@
 /area/ruin/powered/snow_biodome)
 "tb" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors/explored)
 "tl" = (
 /turf/open/floor/pod/light,
@@ -422,10 +422,10 @@
 "Qa" = (
 /obj/effect/mapping_helpers/no_lava,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors/explored)
 "QI" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors/explored)
 "QK" = (
 /obj/structure/table,
