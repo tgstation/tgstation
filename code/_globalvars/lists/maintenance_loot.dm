@@ -358,7 +358,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 			/obj/item/reagent_containers/syringe/contraband/methamphetamine = 1,
 			) = 2,
 		list(
-			/obj/item/paper/secretrecipe/petrifium = 1,
+			/obj/item/paper/secretrecipe/gorgium = 1,
 			/obj/item/paper/secretrecipe/metalgen = 1,
 			) = 1,
 		) = 1,

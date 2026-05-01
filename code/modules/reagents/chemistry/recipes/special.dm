@@ -198,11 +198,11 @@
 			return list(/datum/reagent/wittel)
 
 ///Random recipe that turns stuff into ROCKS
-/datum/chemical_reaction/randomized/petrifium
+/datum/chemical_reaction/randomized/gorgium
 	persistence_period = 7
-	results = list(/datum/reagent/metalgen/petrifium = 20)
+	results = list(/datum/reagent/metalgen/gorgium = 20)
 
-/datum/chemical_reaction/randomized/petrifium/GetPossibleReagents(kind)
+/datum/chemical_reaction/randomized/gorgium/GetPossibleReagents(kind)
 	var/list/possible_ingredients = list()
 	for(var/datum/reagent/reagent as anything in valid_subtypesof(/datum/reagent))
 		var/chemical_flags = reagent::chemical_flags
@@ -277,11 +277,11 @@
 	update_appearance()
 
 /// Paper that spawns a recipe for the petrification serum
-/obj/item/paper/secretrecipe/petrifium
+/obj/item/paper/secretrecipe/gorgium
 	name = "paper" //gets affixed by rock
-	possible_recipes = list(/datum/chemical_reaction/randomized/petrifium)
+	possible_recipes = list(/datum/chemical_reaction/randomized/gorgium)
 
-/obj/item/paper/secretrecipe/petrifium/Initialize(mapload)
+/obj/item/paper/secretrecipe/gorgium/Initialize(mapload)
 	. = ..()
 
 	metal_morph(src, /datum/material/rock)

@@ -3003,10 +3003,10 @@
 	if(!metal_ref)
 		return
 
-	metal_morph(target, metal_ref)
+	metal_transmute(target, metal_ref)
 
 /// Change the material type of an object or turf, but with visuals and effects related to the material
-/proc/metal_morph(atom/target, metal_type, default_material_amount = 100, applied_material_flags = MATERIAL_METALGEN)
+/proc/metal_transmute(atom/target, metal_type, default_material_amount = 100, applied_material_flags = MATERIAL_METALGEN)
 	if(is_type_in_typecache(target, GLOB.blacklisted_metalgen_types)) //some stuff can lead to exploits if transmuted
 		return
 
@@ -3555,8 +3555,8 @@
 		affected_mob.wabbajack()
 
 /// Turns you into STONE
-/datum/reagent/metalgen/petrifium
-	name = "Petrifium"
+/datum/reagent/metalgen/gorgium
+	name = "Gorgium"
 	description = "Turns the affected... into STONE!!!"
 	color = "#929292"
 	metabolization_rate = 10 * REAGENTS_METABOLISM
@@ -3571,7 +3571,7 @@
 	/// So 1u of exposure is 5 seconds of statue time
 	var/reagent_to_time_conversion = 5 SECONDS
 
-/datum/reagent/metalgen/petrifium/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+/datum/reagent/metalgen/gorgium/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
 	. = ..()
 
 	if(reac_volume < min_volume_to_pretrify)
