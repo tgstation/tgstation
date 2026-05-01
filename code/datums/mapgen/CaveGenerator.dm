@@ -222,7 +222,7 @@
 	for(var/biome in to_generate)
 		var/datum/biome/generating_biome = SSmapping.biomes[biome]
 		var/list/turf/generated_turfs = generating_biome.generate_turfs_for_terrain(to_generate[biome])
-		generated_turfs_per_biome[biome] = generated_turfs
+		generated_turfs_per_biome[biome] = (generated_turfs_per_biome[biome] || list()) + generated_turfs
 
 	var/message = "[name] terrain generation finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"), MESSAGE_TYPE_DEBUG)

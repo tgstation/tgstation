@@ -47,6 +47,8 @@
 	var/hand_mine_speed = 15 SECONDS
 	/// Distance to the nearest open turf
 	var/open_turf_distance = DEFAULT_BORDER_DISTANCE
+	/// Wall plane overlay icon state
+	var/wall_icon_state = "rock"
 
 /turf/closed/mineral/Initialize(mapload)
 	. = ..()
@@ -55,7 +57,11 @@
 	// So we draw them as if they were on the game plane, and then overlay a copy onto
 	// The wall plane (so emissives/light masks behave)
 	// I am so sorry
-	var/static/mutable_appearance/wall_overlay = mutable_appearance('icons/turf/mining.dmi', "rock", appearance_flags = RESET_TRANSFORM)
+	var/static/list/mutable_appearance/wall_overlays = list()
+	var/mutable_appearance/wall_overlay = wall_overlays[wall_icon_state]
+	if (!wall_overlay)
+		wall_overlay = mutable_appearance('icons/turf/mining.dmi', wall_icon_state, appearance_flags = RESET_TRANSFORM)
+		wall_overlays[wall_icon_state] = wall_overlay
 	wall_overlay.plane = MUTATE_PLANE(WALL_PLANE, src)
 	overlays += wall_overlay
 
@@ -608,6 +614,9 @@
 	tool_mine_speed = 5 SECONDS // 25% harder than basalt
 	hand_mine_speed = 17 SECONDS
 	mineral_chance = 8 // N% functionally, 6.67% default, accounts for ~22% turfs
+	wall_icon_state = "red_rock"
+	turf_type = /turf/open/misc/asteroid/basalt/smooth/siderite/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/smooth/siderite/lava_land_surface
 
 /turf/closed/mineral/random/volcanic/red_rock/mineral_chances()
 	return list(
@@ -634,6 +643,9 @@
 	tool_mine_speed = 7 SECONDS // 75% harder than basalt
 	hand_mine_speed = 20 SECONDS
 	mineral_chance = 8 // N% functionally, 7.01% default, accounts for ~13% turfs
+	wall_icon_state = "shale"
+	turf_type = /turf/open/misc/asteroid/basalt/smooth/shale/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/smooth/shale/lava_land_surface
 
 /turf/closed/mineral/random/volcanic/shale/mineral_chances()
 	return list(
@@ -1020,6 +1032,7 @@
 	transform = MAP_SWITCH(TRANSLATE_MATRIX(-8, -8), matrix())
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_RED_ROCK_WALLS
 	canSmoothWith = SMOOTH_GROUP_RED_ROCK_WALLS
+	wall_icon_state = "red_rock"
 
 /turf/closed/mineral/random/stationside/asteroid
 	name = "iron rock"
@@ -1029,6 +1042,7 @@
 	transform = MAP_SWITCH(TRANSLATE_MATRIX(-8, -8), matrix())
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_RED_ROCK_WALLS
 	canSmoothWith = SMOOTH_GROUP_RED_ROCK_WALLS
+	wall_icon_state = "red_rock"
 
 /turf/closed/mineral/random/stationside/asteroid/porus
 	name = "porous iron rock"
@@ -1169,6 +1183,7 @@
 	canSmoothWith = SMOOTH_GROUP_RED_ROCK_WALLS
 	tool_mine_speed = 5 SECONDS // 25% harder than basalt
 	hand_mine_speed = 17 SECONDS
+	wall_icon_state = "red_rock"
 
 /turf/closed/mineral/gibtonite/volcanic/shale
 	name = "shale"
@@ -1180,6 +1195,7 @@
 	canSmoothWith = SMOOTH_GROUP_SHALE_WALLS
 	tool_mine_speed = 7 SECONDS // 75% harder than basalt
 	hand_mine_speed = 20 SECONDS
+	wall_icon_state = "shale"
 
 /turf/closed/mineral/gibtonite/volcanic/airless
 	turf_type = /turf/open/misc/asteroid/basalt

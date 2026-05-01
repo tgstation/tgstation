@@ -182,6 +182,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 0
 	merge_type = /obj/item/stack/ore/glass/basalt
 
+/obj/item/stack/ore/glass/siderite
+	name = "siderite dust"
+	icon_state = "siderite_sand"
+	singular_name = "siderite dust pile"
+	mine_experience = 0
+	merge_type = /obj/item/stack/ore/glass/siderite
+
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
 	icon_state = "plasma"
