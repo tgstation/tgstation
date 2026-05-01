@@ -79,7 +79,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 /obj/structure/mirror/broken/Initialize(mapload)
 	. = ..()
-	atom_break(null, TRUE)
+	atom_break(null, init = TRUE)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
