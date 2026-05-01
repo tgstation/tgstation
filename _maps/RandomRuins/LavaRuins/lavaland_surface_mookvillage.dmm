@@ -155,11 +155,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
-"N" = (
-/obj/structure/flora/ash/fireblossom,
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
-/area/lavaland/surface/outdoors)
 "O" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/item/hatchet/wooden,
@@ -173,10 +168,6 @@
 "Q" = (
 /obj/structure/flora/tree/jungle/style_5,
 /turf/open/misc/grass/jungle/lavaland,
-/area/lavaland/surface/outdoors)
-"R" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "V" = (
 /obj/structure/chair/pew{
@@ -503,8 +494,8 @@ h
 h
 z
 X
-N
-R
+l
+a
 a
 I
 l
@@ -526,7 +517,7 @@ g
 l
 a
 a
-R
+a
 a
 a
 a
