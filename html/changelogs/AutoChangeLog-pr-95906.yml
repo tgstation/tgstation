@@ -1,5 +1,0 @@
-author: "DresserOnFire"
-delete-after: True
-changes:
-  - bugfix: "Fixes a bug where player-controlled basic mobs would get a cooldown when their attacks miss"
-  - refactor: "basic mob attack chain can now decided whether an attack resulted in a cooldown or not."
