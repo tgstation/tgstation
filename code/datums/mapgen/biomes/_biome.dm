@@ -124,12 +124,14 @@
 
 	// Assoc list of spawned categories to
 	// Static as to be shared between all biomes
-	var/static/list/spawn_data = list(
-		CAVE_SPAWN_FEATURE = list(),
-		CAVE_SPAWN_TENDRIL = list(),
-		CAVE_SPAWN_MOB = list(),
-		CAVE_SPAWN_MEGAFAUNA = list(),
-	)
+	var/static/list/spawn_data
+	if (isnull(spawn_data))
+		spawn_data = list(
+			CAVE_SPAWN_FEATURE = list(),
+			CAVE_SPAWN_TENDRIL = list(),
+			CAVE_SPAWN_MOB = list(),
+			CAVE_SPAWN_MEGAFAUNA = list(),
+		)
 
 	for(var/turf/target_turf as anything in target_turfs)
 		// Only put stuff on open turfs we generated, so closed walls and rivers and stuff are skipped

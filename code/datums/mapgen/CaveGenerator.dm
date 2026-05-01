@@ -41,6 +41,8 @@
 	/// of biome-related operations. Is populated through
 	/// `generate_terrain_with_biomes()`.
 	var/list/generated_turfs_per_biome = list()
+	/// Same as generated_turfs_per_biome, but additionally indexed by area
+	var/list/generated_turfs_per_area_biome = list()
 	/// 2D list of all biomes based on heat and humidity combos. Associative by
 	/// `BIOME_X_HEAT` and then by `BIOME_X_HUMIDITY` (i.e.
 	/// `possible_biomes[BIOME_LOW_HEAT][BIOME_LOWMEDIUM_HUMIDITY]`).
@@ -223,6 +225,11 @@
 		var/datum/biome/generating_biome = SSmapping.biomes[biome]
 		var/list/turf/generated_turfs = generating_biome.generate_turfs_for_terrain(to_generate[biome])
 		generated_turfs_per_biome[biome] = (generated_turfs_per_biome[biome] || list()) + generated_turfs
+		var/list/area_list = generated_turfs_per_area_biome[biome]
+		if (!area_list)
+			area_list = list()
+			generated_turfs_per_area_biome[biome] = area_list
+		area_list[generate_in] = generated_turfs
 
 	var/message = "[name] terrain generation finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"), MESSAGE_TYPE_DEBUG)
@@ -354,9 +361,10 @@
 		log_world(message)
 		return
 
-	for(var/biome in generated_turfs_per_biome)
+	for(var/biome in generated_turfs_per_area_biome)
 		var/datum/biome/generating_biome = SSmapping.biomes[biome]
-		generating_biome.populate_turfs(generated_turfs_per_biome[biome], flora_allowed, features_allowed, fauna_allowed)
+		var/list/areas_list = generated_turfs_per_area_biome[biome]
+		generating_biome.populate_turfs(areas_list[generate_in], flora_allowed, features_allowed, fauna_allowed)
 
 		CHECK_TICK
 

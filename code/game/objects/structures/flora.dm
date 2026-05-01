@@ -1116,6 +1116,9 @@
 	icon_state = "volcano1"
 	base_icon_state = "volcano"
 	harvest_message_med = "You finish mining the pore buildup."
+	light_range = 3
+	light_power = 2.5
+	light_color = LIGHT_COLOR_LAVA
 
 /obj/structure/flora/rock/volcano/Initialize(mapload)
 	. = ..()

@@ -180,18 +180,23 @@
 	icon_state = "glowgrowth1"
 	base_icon_state = "glowgrowth"
 	density = TRUE // Large rock formations with plants ontop
-	light_range = 1
-	light_power = 0.2
+	light_range = 1.7
+	light_power = 1.2
 	light_color = "#67b6a5"
 	harvested_name = "hot air vent"
 	harvested_desc = "A ridged porous rock formation exuming hot air from the depths of the planet."
 	harvest_amount_high = 4
+	harvest_verb = "scrape"
 	harvest_message_low = "You scrape off a thin layer of glowing fungi."
 	harvest_message_med = "You pick a sizeable patch of glowing fungi."
 	harvest_message_high = "You grab a large fistful of glowing fungi."
 	regrowth_time_low = 8 MINUTES
 	regrowth_time_high = 16 MINUTES
 	number_of_variants = 3
+
+/obj/structure/flora/ash/glowgrowth/Initialize(mapload)
+	. = ..()
+	update_appearance()
 
 /obj/structure/flora/ash/glowgrowth/get_potential_products()
 	return list(/obj/item/food/grown/ash_flora/glowgrowth = 1)
@@ -211,7 +216,7 @@
 /obj/structure/flora/ash/glowgrowth/update_overlays()
 	. = ..()
 	if (!harvested)
-		. += emissive_appearance(icon, "[icon_state]e", src, alpha = 180)
+		. += emissive_appearance(icon, "[icon_state]e", src, alpha = 120)
 
 ///Snow flora to exist on icebox.
 /obj/structure/flora/ash/chilly
@@ -455,7 +460,7 @@
 	species = "glowgrowth"
 	product = /obj/item/food/grown/ash_flora/glowgrowth
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance, /datum/plant_gene/trait/glow/blue) // Fungal metab doesn't do anything (cause it can't be planted) but it shows up in analyzers
-	reagents_add = list(/datum/reagent/consumable/tinlux = 0.03, /datum/reagent/luminescent_fluid/cyan = 0.04, /datum/reagent/consumable/nutriment = 0.01, /datum/reagent/silicon = 0.05)
+	reagents_add = list(/datum/reagent/luminescent_fluid/cyan = 0.06, /datum/reagent/consumable/nutriment = 0.01, /datum/reagent/silicon = 0.03)
 	seed_flags = parent_type::seed_flags | NO_PLANTING
 
 //CRAFTING
