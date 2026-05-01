@@ -1671,3 +1671,48 @@
 	volume = round(volume/2, 0.01)
 
 #undef CRITICAL_CAPACITY
+
+/// Gibs you (lol)
+/datum/reagent/toxin/gibbium
+	name = "Gibbium"
+	description = "Guess what this does."
+	silent_toxin = TRUE
+	color = "#ff0000"
+	metabolization_rate = 4 * REAGENTS_METABOLISM
+	toxpwr = 0
+	taste_description = "regret"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_MAINTENANCE_PILL
+	/// On what cycle to gib the person
+	var/gib_cycle = 5
+
+/datum/reagent/toxin/gibbium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+
+	if(current_cycle >= gib_cycle)
+		affected_mob.investigate_log("has been gibbed by the Gibbium reagent.", INVESTIGATE_DEATHS)
+		affected_mob.gib(DROP_ALL_REMAINS)
+
+/datum/reagent/toxin/spider_serum
+	name = "Spider Serum"
+	description = "A horrible mutagen that transmutes flesh into spiders."
+	color = "#000000"
+	taste_description = "unending nightmares"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_MAINTENANCE_PILL
+	toxpwr = 0
+	/// The cycle for when to do the "transformation"
+	var/transformation_cycle = 30
+
+/datum/reagent/toxin/spider_serum/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+
+	if(prob(10))
+		new /mob/living/basic/spider/growing/spiderling (get_turf(affected_mob))
+		affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 20)
+		to_chat(affected_mob, span_warning("You feel tiny legs climbing up your throat."))
+
+	if(current_cycle >= transformation_cycle)
+		affected_mob.mind?.add_antag_datum(/datum/antagonist/spider)
+		affected_mob.on_wabbajacked(new /mob/living/basic/spider/giant(get_turf(affected_mob)))
+
