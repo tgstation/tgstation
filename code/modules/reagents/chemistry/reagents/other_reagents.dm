@@ -3538,7 +3538,7 @@
 /// Reagent that polymorphs you
 /datum/reagent/polyjuice
 	name = "Polyjuice"
-	description = "A bunch of magic non-sense juice that polymorphs."
+	description = "A vibrant liquid which causes sudden and irreversible changes in the body plan of living creatures."
 	color = "#ff00ea"
 	metabolization_rate = REAGENTS_METABOLISM
 	taste_description = "magic"
