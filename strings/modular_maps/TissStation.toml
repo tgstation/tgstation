@@ -58,7 +58,7 @@ modules = ["sciNorth_1.dmm"]
 modules = ["sciSouth_1.dmm"]
 
 [rooms.sciWest]
-modules = ["sciWest_1.dmm"]
+modules = ["sciWest_1.dmm","sciWest_2.dmm"]
 
 [rooms.security]
 modules = ["security_1.dmm"]

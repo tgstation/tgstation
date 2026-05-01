@@ -1,0 +1,6 @@
+author: "GuffyWuffy"
+delete-after: True
+changes:
+  - map: "Tisserand: Fixes a slime thing that'd break a table every day of the week"
+  - map: "Tisserand: Removes an accidental door in a wall"
+  - map: "Tisserand: new west science maint module"

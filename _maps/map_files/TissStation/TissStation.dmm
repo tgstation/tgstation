@@ -8208,19 +8208,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/security/prison/rec)
-"cBM" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	id = "chem_lockdown";
-	name = "Chemistry Shutters"
-	},
-/obj/machinery/door/window/brigdoor/left/directional/north{
-	name = "Coroner's Office";
-	req_access = list("morgue_secure")
-	},
-/turf/open/floor/plating,
-/area/station/medical/chemistry/walkway)
 "cCh" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -43084,7 +43071,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance/department/medical)
+/area/space/nearstation)
 "mSv" = (
 /turf/open/floor/iron/dark/herringbone,
 /area/station/medical/virology)
@@ -54539,9 +54526,6 @@
 /obj/effect/landmark/start/depsec/supply,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
-"quC" = (
-/turf/open/floor/plating/airless,
-/area/station/maintenance/department/medical)
 "quS" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -75875,12 +75859,9 @@
 /turf/open/floor/iron/white/smooth_half,
 /area/station/cargo/miningfoundry)
 "xbB" = (
-/obj/machinery/processor/slime{
-	pixel_y = 5
-	},
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/dark_green/full,
 /obj/effect/turf_decal/tile/dark_green/full,
+/obj/machinery/processor/slime,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/xenobiology)
 "xbD" = (
@@ -85891,9 +85872,9 @@ elN
 elN
 ohK
 jHq
-quC
+vUu
 mSt
-quC
+vUu
 jHq
 uYA
 vIy
@@ -94138,7 +94119,7 @@ dex
 wMj
 gBu
 bwe
-cBM
+bwe
 bwe
 bwe
 bwe
