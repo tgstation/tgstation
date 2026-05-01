@@ -27,7 +27,7 @@
 
 /datum/status_effect/cuffed_item/on_apply()
 	owner.temporarilyRemoveItemFromInventory(cuffs, force = TRUE)
-	if(!owner.is_holding(cuffed) && !owner.put_in_hands(cuffed) || !update_link())
+	if(!update_link())
 		owner.put_in_hands(cuffs)
 		qdel(src)
 		return FALSE
