@@ -14,8 +14,6 @@
 #define INERT_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD)
 #define PRIDE_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD, CHANGE_RACE, CHANGE_SEX, CHANGE_EYES)
 #define MAGIC_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD, CHANGE_RACE, CHANGE_SEX, CHANGE_EYES, CHANGE_NAME)
-// Odds of a revenant being trapped inside the mirror upon initialization
-#define CURSED_CHANCE 0.2
 
 /obj/structure/mirror
 	name = "mirror"
@@ -63,9 +61,6 @@
 	)
 	if(mapload)
 		find_and_mount_on_atom()
-		if(prob(CURSED_CHANCE))
-			revenant = new(mapload)
-			become_cursed(revenant)
 	update_choices()
 	register_context()
 
@@ -286,6 +281,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(revenant)
 		revenant.on_reflect(source, reflecting_in, reflection)
 
+/obj/structure/mirror/proc/release_revenant()
+	message_admins("A revenant escaped its mirror containment and is now reforming.")
+	if(revenant.reform("by the mirror breaking"))
+		visible_message(span_revenwarning("The revenant cackles as it escapes from the [src]!"))
+		playsound(loc, 'sound/effects/chemistry/ahaha.ogg', 100, TRUE)
+	revenant = null
+
 /obj/structure/mirror/examine(mob/user)
 	. = ..()
 	if(deconstructable)
@@ -333,7 +335,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(!init)
 		playsound(src, SFX_SHATTER, 70, TRUE)
 		if(revenant)
-			SEND_SIGNAL(revenant, COMSIG_REVENANT_REFORM, "by [src] shattering")
+			release_revenant()
 	if(desc == initial(desc))
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE

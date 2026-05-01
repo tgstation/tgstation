@@ -101,7 +101,6 @@
 
 	grant_actions_by_list(abilities)
 
-	RegisterSignal(src, COMSIG_REVENANT_REFORM, PROC_REF(reform))
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
@@ -531,11 +530,9 @@
 	return chosen_one
 
 /mob/living/basic/revenant/proc/reform(cause)
-	SIGNAL_HANDLER
 	if(QDELETED(src))
-		return
+		return FALSE
 
-	death_reset()
 	var/user_name = old_ckey
 	if(isnull(client))
 		var/mob/potential_user = get_new_user()
@@ -548,5 +545,6 @@
 
 	message_admins("[user_name] has been [old_ckey == user_name ? "re":""]made into a revenant [cause].")
 	log_message("was [old_ckey == user_name ? "re":""]made as a revenant [cause].", LOG_GAME)
+	death_reset()
 	return TRUE
 #undef REVENANT_STUNNED_TRAIT
