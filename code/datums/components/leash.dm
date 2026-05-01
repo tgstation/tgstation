@@ -124,7 +124,7 @@
 
 	var/list/path = get_path_to(parent, owner, mintargetdist = distance)
 
-	if (last_completed_path_tick > our_path_tick)
+	if (last_completed_path_tick > our_path_tick || QDELETED(src))
 		return
 
 	last_completed_path_tick = our_path_tick
@@ -171,6 +171,7 @@
 		new force_teleport_in_effect(movable_parent.loc)
 
 	if (ismob(movable_parent))
+		SSblackbox.record_feedback("tally", "leash_force_teleport_back", 1, reason)
 		movable_parent.balloon_alert(movable_parent, "moved out of range!")
 
 	SEND_SIGNAL(parent, COMSIG_LEASH_FORCE_TELEPORT)

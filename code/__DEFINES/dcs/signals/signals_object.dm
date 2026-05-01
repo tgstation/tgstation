@@ -151,6 +151,10 @@
 #define COMSIG_ITEM_STORED "item_stored"
 ///from base of datum/storage/handle_exit(): (datum/storage/storage)
 #define COMSIG_ITEM_UNSTORED "item_unstored"
+/// From datum/storage/attempt_insert()
+#define COMSIG_ITEM_PRE_STORAGE_INSERTION "item_pre_storage_insertion"
+	// return BLOCK_STORAGE_INSERT
+
 ///from base of obj/item/do_pickup_animation(): ()
 #define COMSIG_ITEM_BEFORE_PICKUP_ANIMATION "item_before_pickup_animation"
 ///from base of obj/item/do_drop_animation(): ()
