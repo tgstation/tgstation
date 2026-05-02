@@ -1,11 +1,15 @@
 /datum/component/revenant_prison
+	// Whether a revenant should be created upon release
+	var/create_on_release = FALSE
 	// The revenant which is currently imprisoned
 	var/mob/living/basic/revenant/revenant
 	// ckey of the player who controlled it when it was imprisoned
 	var/old_ckey
 
-/datum/component/revenant_prison/Initialize(mob/living/basic/revenant/revenant)
+/datum/component/revenant_prison/Initialize(mob/living/basic/revenant/revenant, create_on_release = FALSE)
 	. = ..()
+	if(create_on_release)
+		return .
 	if(!revenant)
 		return COMPONENT_INCOMPATIBLE
 	src.revenant = revenant
@@ -20,6 +24,8 @@
 
 /datum/component/revenant_prison/proc/release_revenant(cause)
 	SIGNAL_HANDLER
+	if(create_on_release)
+		revenant = new(get_turf(parent))
 	if(!revenant)
 		return
 	message_admins("[revenant] has been released from [parent]. Cause: [cause]")

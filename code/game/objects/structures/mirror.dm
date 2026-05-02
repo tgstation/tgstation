@@ -15,6 +15,9 @@
 #define PRIDE_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD, CHANGE_RACE, CHANGE_SEX, CHANGE_EYES)
 #define MAGIC_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD, CHANGE_RACE, CHANGE_SEX, CHANGE_EYES, CHANGE_NAME)
 
+// Chance for the mirror to be haunted at creation
+#define ROUNDSTART_CURSED_CHANCE 100
+
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
@@ -57,6 +60,8 @@
 	)
 	if(mapload)
 		find_and_mount_on_atom()
+		if(prob(ROUNDSTART_CURSED_CHANCE))
+			AddComponent(/datum/component/revenant_prison, create_on_release = TRUE)
 	update_choices()
 	register_context()
 
@@ -474,3 +479,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 #undef INERT_MIRROR_OPTIONS
 #undef PRIDE_MIRROR_OPTIONS
 #undef MAGIC_MIRROR_OPTIONS
+
+#undef ROUNDSTART_CURSED_CHANCE
