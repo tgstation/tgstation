@@ -15,13 +15,13 @@
 	///all our current active hitsplats
 	var/list/current_hitsplats = list()
 
-	/// If we are as faithful as possible to runescape or tweak some stuff for better feedback ingame
-	var/lore_accurate = FALSE
+	var/obj/effect/overlay/vis/hitsplat/hitsplat_type = /obj/effect/overlay/vis/hitsplat/lore_accurate
 	// Alot less spammy and more useable as a smite or ingame feature. Off for ALL the health adjustments
 	var/only_attacks = FALSE
 
-/datum/component/hitsplat/Initialize(lore_accurate, only_attacks)
-	src.lore_accurate = lore_accurate
+/datum/component/hitsplat/Initialize(hitsplat_type, only_attacks)
+	if(hitsplat_type)
+		src.hitsplat_type = hitsplat_type
 	src.only_attacks = only_attacks
 	if(!ismob(parent))
 		return ELEMENT_INCOMPATIBLE
@@ -70,7 +70,7 @@
 		spawn_hitsplat(burn, BURN)
 
 /datum/component/hitsplat/proc/spawn_hitsplat(amount, type)
-	var/obj/effect/overlay/vis/hitsplat/new_hitsplat = new(null, lore_accurate)
+	var/obj/effect/overlay/vis/hitsplat/new_hitsplat = new hitsplat_type()
 	new_hitsplat.set_damage_amount(amount, type)
 	add_hitsplat(new_hitsplat)
 
@@ -101,6 +101,7 @@
 		if(hitsplat_positions[hitsplat] == source)
 			hitsplat_positions[hitsplat] = null
 
+
 /obj/effect/overlay/vis/hitsplat
 	name = "hitsplat"
 	icon = 'icons/effects/hitsplats.dmi'
@@ -111,35 +112,65 @@
 	vis_flags = VIS_INHERIT_PLANE
 	///the damage amount we're displaying
 	var/damage_amount = 0
-	/// If we are as faithful as possible to runescape or tweak some stuff for better feedback ingame
-	var/lore_accurate = FALSE
+	var/rounding = 1
+	var/lore_accurate = TRUE
+	var/text_color
 
-/obj/effect/overlay/vis/hitsplat/Initialize(mapload, lore_accurate)
+/obj/effect/overlay/vis/hitsplat/Initialize(mapload)
 	. = ..()
-	src.lore_accurate = lore_accurate
-	if(!lore_accurate)
-		alpha = 128
 	QDEL_IN(src, 2 SECONDS)
 
 /obj/effect/overlay/vis/hitsplat/proc/set_damage_amount(damage_number, damage_type)
 	damage_amount = damage_number
 
-	if(damage_amount < 0)
-		icon_state = "[base_icon_state]_heal"
-	else if(damage_amount == 0)
-		icon_state = "[base_icon_state]_blocked"
-	else if(damage_type == TOX)
-		icon_state = "[base_icon_state]_poison"
-	else if(damage_type == BURN)
-		icon_state = "[base_icon_state]_burn"
+	if(lore_accurate)
+		if(damage_amount < 0)
+			icon_state = "[base_icon_state]_heal"
+		else if(damage_amount == 0)
+			icon_state = "[base_icon_state]_blocked"
+		else if(damage_type == TOX)
+			icon_state = "[base_icon_state]_poison"
+		else if(damage_type == BURN)
+			icon_state = "[base_icon_state]_burn"
+	else
+		switch(damage_type)
+			if(BRUTE)
+				text_color = COLOR_RED
+			if(BURN)
+				text_color = COLOR_ORANGE
+			if(TOX)
+				text_color = COLOR_GREEN
+			if(OXY)
+				text_color = COLOR_BLUE
+			if(STAMINA)
+				text_color = COLOR_YELLOW
 
 	update_appearance()
 
-/obj/effect/overlay/vis/hitsplat/update_overlays()
+
+/obj/effect/overlay/vis/hitsplat/lore_accurate
+
+/obj/effect/overlay/vis/hitsplat/lore_accurate/update_overlays()
 	. = ..()
-	var/hitsplat_num = CEILING(abs(damage_amount), lore_accurate ? 1 : 0.1)
+	var/hitsplat_num = CEILING(abs(damage_amount), rounding)
 	var/image/hitsplat_text = image(loc = src, layer = layer + 0.1)
 	hitsplat_text.pixel_w = 1
 	hitsplat_text.pixel_z = 10
 	hitsplat_text.maptext = MAPTEXT("<span style='text-align: center; -dm-text-outline: 1px #0005'>[hitsplat_num]</span>")
+	. += hitsplat_text
+
+
+/obj/effect/overlay/vis/hitsplat/debugging
+	icon_state = null // Just the maptext
+	base_icon_state = null
+	rounding = 0.01
+	lore_accurate = FALSE
+
+/obj/effect/overlay/vis/hitsplat/debugging/update_overlays()
+	. = ..()
+	var/hitsplat_num = CEILING(damage_amount, rounding)
+	var/image/hitsplat_text = image(loc = src, layer = layer + 0.1)
+	hitsplat_text.pixel_w = 1
+	hitsplat_text.pixel_z = 10
+	hitsplat_text.maptext = MAPTEXT("<span style='text-align: center; -dm-text-outline: 1px #0005'><font color='[text_color]'>[hitsplat_num]</font></span>")
 	. += hitsplat_text
