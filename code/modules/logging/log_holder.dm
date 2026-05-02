@@ -36,9 +36,6 @@ ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds 
 	logger.ui_interact(user.mob)
 
 /datum/log_holder/ui_interact(mob/user, datum/tgui/ui)
-	if(!check_rights_for(user.client, R_ADMIN))
-		return
-
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(isnull(ui))
 		ui = new(user, src, "LogViewer")
