@@ -1,0 +1,6 @@
+2026-05-01:
+  TheRyeGuyWhoWillNowDie:
+  - qol: hyposprays can now draw from other reagent containers
+2026-05-02:
+  lelandkemble:
+  - bugfix: Mjolnir only successfully attacks if it successfully attacks

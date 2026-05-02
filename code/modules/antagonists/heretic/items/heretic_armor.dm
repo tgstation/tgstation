@@ -1100,13 +1100,13 @@
 // Void cloak. Turns invisible with the hood up, lets you hide stuff.
 /obj/item/clothing/head/hooded/cult_hoodie/void
 	name = "void hood"
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	desc = "Black like tar, reflecting no light. Runic symbols line the outside. \
 		With each flash you lose comprehension of what you are seeing."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "void_cloak"
 	flags_inv = NONE
-	flags_cover = NONE
+	flags_cover = ALLOW_SURGERY_THROUGH
 	armor_type = /datum/armor/cult_hoodie_void
 
 /datum/armor/cult_hoodie_void
@@ -1206,6 +1206,7 @@
 /// Makes our cloak "invisible". Not the wearer, the cloak itself.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
 	add_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
+	flags_cover |= ALLOW_SURGERY_THROUGH
 
 	if(isliving(loc))
 		loc.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
@@ -1216,6 +1217,7 @@
 /// Makes our cloak "visible" again.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_visible()
 	remove_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
+	flags_cover &= ~ALLOW_SURGERY_THROUGH
 
 	if(isliving(loc))
 		loc.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), REF(src))
