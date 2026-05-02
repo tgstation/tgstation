@@ -15,7 +15,7 @@
 	///all our current active hitsplats
 	var/list/current_hitsplats = list()
 
-	var/obj/effect/overlay/vis/hitsplat/hitsplat_type = /obj/effect/overlay/vis/hitsplat/lore_accurate
+	var/obj/effect/overlay/vis/hitsplat/hitsplat_type = /obj/effect/overlay/vis/hitsplat/debugging
 	// Alot less spammy and more useable as a smite or ingame feature. Off for ALL the health adjustments
 	var/only_attacks = FALSE
 
