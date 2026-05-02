@@ -19,6 +19,7 @@
 /datum/component/hitsplat/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_attacked))
 	RegisterSignal(parent, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(after_attackby))
+	RegisterSignal(parent, COMSIG_MOB_HEAL_DAMAGE_TYPE, PROC_REF(on_healed))
 
 /datum/component/hitsplat/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_ATOM_AFTER_ATTACKEDBY))
@@ -35,10 +36,19 @@
 /datum/component/hitsplat/proc/on_attacked(mob/source, damage_amount, damagetype, def_zone, blocked)
 	SIGNAL_HANDLER
 
-	if(damagetype == STAMINA || damage_amount < 0)
+	if(damagetype == STAMINA)
 		return NONE
 	var/obj/effect/overlay/vis/hitsplat/new_hitsplat = new
 	new_hitsplat.set_damage_amount(damage_amount, damagetype)
+	add_hitsplat(new_hitsplat)
+
+/datum/component/hitsplat/proc/on_healed(mob/source, heal_amount, damagetype)
+	SIGNAL_HANDLER
+
+	if(damagetype == STAMINA)
+		return NONE
+	var/obj/effect/overlay/vis/hitsplat/new_hitsplat = new
+	new_hitsplat.set_damage_amount(-damage_amount, damagetype)
 	add_hitsplat(new_hitsplat)
 
 /datum/component/hitsplat/proc/add_hitsplat(obj/effect/new_hitsplat)
@@ -86,17 +96,22 @@
 /obj/effect/overlay/vis/hitsplat/proc/set_damage_amount(damage_number, damage_type)
 	damage_amount = damage_number
 
-	if(damage_amount == 0)
+	if(damage_amount < 0)
+		icon_state = "[base_icon_state]_heal"
+	else if(damage_amount == 0)
 		icon_state = "[base_icon_state]_blocked"
 	else if(damage_type == TOX)
 		icon_state = "[base_icon_state]_poison"
+	else if(damage_type == BURN)
+		icon_state = "[base_icon_state]_burn"
 
 	update_appearance()
 
 /obj/effect/overlay/vis/hitsplat/update_overlays()
 	. = ..()
+	var/hitsplat_num = CEILING(abs(damage_amount), 1)
 	var/image/hitsplat_text = image(loc = src, layer = layer + 0.1)
 	hitsplat_text.pixel_w = 1
 	hitsplat_text.pixel_z = 10
-	hitsplat_text.maptext = MAPTEXT("<span style='text-align: center; -dm-text-outline: 1px #0005'>[CEILING(damage_amount, 1)]</span>")
+	hitsplat_text.maptext = MAPTEXT("<span style='text-align: center; -dm-text-outline: 1px #0005'>[hitsplat_num]</span>")
 	. += hitsplat_text
