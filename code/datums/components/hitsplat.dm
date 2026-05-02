@@ -18,7 +18,7 @@
 	// Alot less spammy and more useable as a smite or ingame feature. Off for ALL the health adjustments
 	var/only_attacks = FALSE
 
-/datum/component/hitsplat/Initialize(datum/callback/post_retaliate_callback, only_attacks = FALSE)
+/datum/component/hitsplat/Initialize(only_attacks = FALSE)
 	src.only_attacks = only_attacks
 	if(!ismob(parent))
 		return ELEMENT_INCOMPATIBLE
@@ -44,7 +44,6 @@
 		return NONE
 	spawn_hitsplat(0)
 
-/// Add an attacking atom to a blackboard list of things which attacked us
 /datum/component/hitsplat/proc/on_attacked(mob/source, damage_amount, damagetype, def_zone, blocked)
 	SIGNAL_HANDLER
 
@@ -65,7 +64,7 @@
 	if(brute)
 		spawn_hitsplat(brute, BRUTE)
 	if(burn)
-		spawn_hitsplat(burn, BRUN)
+		spawn_hitsplat(burn, BURN)
 
 /datum/component/hitsplat/proc/spawn_hitsplat(amount, type)
 	var/obj/effect/overlay/vis/hitsplat/new_hitsplat = new(lore_accurate)
