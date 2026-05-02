@@ -12,41 +12,16 @@
 	///all our current active hitsplats
 	var/list/current_hitsplats = list()
 
-	/// If we are as faithful as possible to runescape or tweak some stuff for better feedback ingame
-	var/lore_accurate = TRUE
-
 /datum/component/hitsplat/Initialize(datum/callback/post_retaliate_callback)
 	if(!ismob(parent))
 		return ELEMENT_INCOMPATIBLE
 
 /datum/component/hitsplat/RegisterWithParent()
-	// RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_attacked))
-	// RegisterSignal(parent, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(after_attackby))
 	RegisterSignals(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_damage_adjusted))
 
 /datum/component/hitsplat/UnregisterFromParent()
-	// UnregisterSignal(parent, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_ATOM_AFTER_ATTACKEDBY))
 	UnregisterSignal(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES)
 
-/*
-/datum/component/hitsplat/proc/after_attackby(atom/target, obj/item/weapon)
-	SIGNAL_HANDLER
-	if(weapon.force) //will be handled by on_attacked
-		return NONE
-	var/obj/effect/overlay/vis/hitsplat/new_hitsplat = new
-	new_hitsplat.set_damage_amount(0)
-	add_hitsplat(new_hitsplat)
-
-/// Add an attacking atom to a blackboard list of things which attacked us
-/datum/component/hitsplat/proc/on_attacked(mob/source, damage_amount, damagetype, def_zone, blocked)
-	SIGNAL_HANDLER
-
-	if(damagetype == STAMINA || damage_amount < 0)
-		return NONE
-	var/obj/effect/overlay/vis/hitsplat/new_hitsplat = new
-	new_hitsplat.set_damage_amount(damage_amount, damagetype)
-	add_hitsplat(new_hitsplat)
-*/
 
 /datum/component/hitsplat/proc/on_damage_adjusted(mob/source, type, amount)
 	SIGNAL_HANDLER
