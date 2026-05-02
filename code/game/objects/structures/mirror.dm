@@ -16,7 +16,7 @@
 #define MAGIC_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD, CHANGE_RACE, CHANGE_SEX, CHANGE_EYES, CHANGE_NAME)
 
 // Chance for the mirror to be haunted at creation
-#define ROUNDSTART_CURSED_CHANCE 100
+#define ROUNDSTART_CURSED_CHANCE 0.2
 
 /obj/structure/mirror
 	name = "mirror"
