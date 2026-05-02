@@ -36,7 +36,7 @@
 
 /datum/component/revenant_prison/proc/shift_reflection(datum/source, atom/movable/reflecting_in, obj/effect/abstract/reflection)
 	SIGNAL_HANDLER
-	revenant.on_reflect(source, reflecting_in, reflection)
+	apply_wibbly_filters(reflection)
 
 /datum/component/revenant_prison/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_REVENANT_RELEASE, PROC_REF(release_revenant))
