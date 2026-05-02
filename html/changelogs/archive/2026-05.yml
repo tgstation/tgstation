@@ -4,3 +4,5 @@
 2026-05-02:
   lelandkemble:
   - bugfix: Mjolnir only successfully attacks if it successfully attacks
+  necromanceranne:
+  - bugfix: Void cloaks no longer obstruct surgery while invisible.
