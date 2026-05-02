@@ -18,7 +18,7 @@
 	var/mob/living/basic/revenant/revenant = center
 	if(!revenant.dormant)
 		return ..()
-	return ..(get_turf(revenant), 3)
+	return ..(get_turf(revenant), 2)
 
 /datum/action/cooldown/spell/aoe/revenant
 	background_icon_state = "bg_revenant"
