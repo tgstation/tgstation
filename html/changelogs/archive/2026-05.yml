@@ -2,6 +2,10 @@
   TheRyeGuyWhoWillNowDie:
   - qol: hyposprays can now draw from other reagent containers
 2026-05-02:
+  Hatterhat:
+  - qol: The style meter for miners now stores its permanent multiplier on the meter
+      in case you're switching eyewear. The style meter item is now small, allowing
+      for easier storage.
   lelandkemble:
   - bugfix: Mjolnir only successfully attacks if it successfully attacks
   necromanceranne:

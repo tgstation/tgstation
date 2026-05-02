@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - qol: "The style meter for miners now stores its permanent multiplier on the meter in case you're switching eyewear. The style meter item is now small, allowing for easier storage."
