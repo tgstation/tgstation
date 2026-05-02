@@ -1672,7 +1672,7 @@
 
 #undef CRITICAL_CAPACITY
 
-/// Gibs you (lol)
+/// Gibs you (lol), after an easily curable disease because WERE COWARDS
 /datum/reagent/toxin/gibbium
 	name = "Gibbium"
 	description = "Guess what this does."
@@ -1690,8 +1690,7 @@
 	. = ..()
 
 	if(current_cycle >= gib_cycle)
-		affected_mob.investigate_log("has been gibbed by the Gibbium reagent.", INVESTIGATE_DEATHS)
-		affected_mob.gib(DROP_ALL_REMAINS)
+		affected_mob.ForceContractDisease(new /datum/disease/gbs/no_transmission ())
 
 /datum/reagent/toxin/spider_serum
 	name = "Spider Serum"
@@ -1715,5 +1714,3 @@
 	if(current_cycle >= transformation_cycle)
 		affected_mob.mind?.add_antag_datum(/datum/antagonist/spider)
 		affected_mob.change_mob_type(/mob/living/basic/spider/giant, delete_old_mob = TRUE)
-		qdel(affected_mob)
-
