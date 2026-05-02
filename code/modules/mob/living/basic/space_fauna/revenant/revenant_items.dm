@@ -40,6 +40,8 @@
 			span_revenwarning("[user] scatters [src] in all directions. A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"),
 			span_revenwarning("You scatter [src] across the area. A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"),
 		)
+		log_game("A revenant was trapped inside [nearby_mirror]")
+		message_admins("A revenant was trapped inside [nearby_mirror]")
 	user.dropItemToGround(src)
 	qdel(src)
 
