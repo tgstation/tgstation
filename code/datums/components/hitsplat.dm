@@ -16,12 +16,12 @@
 	var/list/current_hitsplats = list()
 
 	/// If we are as faithful as possible to runescape or tweak some stuff for better feedback ingame
-	var/lore_accurate = TRUE
-
+	var/lore_accurate = FALSE
 	// Alot less spammy and more useable as a smite or ingame feature. Off for ALL the health adjustments
 	var/only_attacks = FALSE
 
-/datum/component/hitsplat/Initialize(only_attacks = FALSE)
+/datum/component/hitsplat/Initialize(lore_accurate, only_attacks)
+	src.lore_accurate = lore_accurate
 	src.only_attacks = only_attacks
 	if(!ismob(parent))
 		return ELEMENT_INCOMPATIBLE
@@ -70,7 +70,7 @@
 		spawn_hitsplat(burn, BURN)
 
 /datum/component/hitsplat/proc/spawn_hitsplat(amount, type)
-	var/obj/effect/overlay/vis/hitsplat/new_hitsplat = new(lore_accurate)
+	var/obj/effect/overlay/vis/hitsplat/new_hitsplat = new(null, lore_accurate)
 	new_hitsplat.set_damage_amount(amount, type)
 	add_hitsplat(new_hitsplat)
 
@@ -114,7 +114,7 @@
 	/// If we are as faithful as possible to runescape or tweak some stuff for better feedback ingame
 	var/lore_accurate = FALSE
 
-/obj/effect/overlay/vis/hitsplat/Initialize(mapload, lore_accurate = FALSE)
+/obj/effect/overlay/vis/hitsplat/Initialize(mapload, lore_accurate)
 	. = ..()
 	src.lore_accurate = lore_accurate
 	if(!lore_accurate)
