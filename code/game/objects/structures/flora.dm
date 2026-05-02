@@ -1113,7 +1113,7 @@
 /obj/structure/flora/rock/volcano
 	name = "volcanic pore"
 	desc = "A miniature volcano-like rock formed of the lava slowly pouring from it."
-	icon_state = "volcano1"
+	icon_state = "volcano_1"
 	base_icon_state = "volcano"
 	harvest_message_med = "You finish mining the pore buildup."
 	light_range = 3
