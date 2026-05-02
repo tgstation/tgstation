@@ -8,6 +8,9 @@
 		list(0, 10) = null,
 		list(10, 0) = null,
 		list(-10, 0) = null,
+		list(10, 12) = null,
+		list(-10, 12) = null,
+		list(0, 22) = null,
 	)
 	///all our current active hitsplats
 	var/list/current_hitsplats = list()
