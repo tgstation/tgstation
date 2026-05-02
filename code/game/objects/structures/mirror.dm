@@ -276,6 +276,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	. = ..()
 	if(deconstructable)
 		. += span_notice("It's mounted to the wall with a couple of <b>bolts</b>.")
+	if(GetComponent(/datum/component/revenant_prison))
+		. += span_revendanger("The reflection is shifting and distorted.")
 
 /obj/structure/mirror/examine_status(mob/living/carbon/human/user)
 	if(broken)
