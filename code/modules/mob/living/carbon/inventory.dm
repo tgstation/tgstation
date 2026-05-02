@@ -256,7 +256,11 @@
  * * removed_slots - slots that were removed from obscured_slots
  */
 /mob/living/carbon/proc/item_coverage_changed(added_slots, removed_slots)
+	SEND_SIGNAL(src, COMSIG_CARBON_ITEM_COVERAGE_CHANGED, added_slots, removed_slots)
 	update_clothing(hidden_slots_to_inventory_slots(added_slots|removed_slots))
+	if((added_slots|removed_slots) & HIDESNOUT)
+		synchronize_bodyshapes()
+
 	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
 		update_body()
 

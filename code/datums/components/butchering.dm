@@ -318,6 +318,7 @@
 		wound.remove_wound()
 		wound.apply_wound(replacement, silent = TRUE)
 
+	SEND_SIGNAL(target, COMSIG_BODYPART_BUTCHERED, replacement)
 	return replacement
 
 /datum/component/butchering/proc/start_butcher(obj/item/source, mob/living/target, mob/living/user)

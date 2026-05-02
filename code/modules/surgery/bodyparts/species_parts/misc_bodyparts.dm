@@ -481,10 +481,6 @@
 	. = ..()
 	AddElement(/datum/element/blood_limb_overlay)
 
-/obj/item/bodypart/leg/left/skeleton/nonfunctional/update_limb(dropping_limb = FALSE, is_creating = FALSE)
-	. = ..()
-	limb_id = ((bodyshape & BODYSHAPE_DIGITIGRADE) && owner?.is_digitigrade_squished()) ? initial(limb_id) : "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]"
-
 /obj/item/bodypart/leg/right/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
@@ -492,10 +488,6 @@
 /obj/item/bodypart/leg/right/skeleton/nonfunctional/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/blood_limb_overlay)
-
-/obj/item/bodypart/leg/right/skeleton/nonfunctional/update_limb(dropping_limb = FALSE, is_creating = FALSE)
-	. = ..()
-	limb_id = ((bodyshape & BODYSHAPE_DIGITIGRADE) && owner?.is_digitigrade_squished()) ? initial(limb_id) : "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]"
 
 ///MUSHROOM
 /obj/item/bodypart/head/mushroom

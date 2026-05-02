@@ -1145,6 +1145,8 @@
 /obj/item/bodypart/proc/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
+	SEND_SIGNAL(src, COMSIG_BODYPART_UPDATED, dropping_limb, is_creating)
+
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
 		// Should be fine as this gets called before all the important stuff happens
