@@ -12,23 +12,63 @@
 	///all our current active hitsplats
 	var/list/current_hitsplats = list()
 
-/datum/component/hitsplat/Initialize(datum/callback/post_retaliate_callback)
+	/// If we are as faithful as possible to runescape or tweak some stuff for better feedback ingame
+	var/lore_accurate = TRUE
+
+	// Alot less spammy and more useable as a smite or ingame feature. Off for ALL the health adjustments
+	var/only_attacks = FALSE
+
+/datum/component/hitsplat/Initialize(datum/callback/post_retaliate_callback, only_attacks = FALSE)
+	src.only_attacks = only_attacks
 	if(!ismob(parent))
 		return ELEMENT_INCOMPATIBLE
 
 /datum/component/hitsplat/RegisterWithParent()
-	RegisterSignals(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_damage_adjusted))
+	if(only_attacks)
+		RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_attacked))
+		RegisterSignal(parent, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(after_attackby))
+	else
+		RegisterSignals(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_damage_adjusted))
+		RegisterSignal(parent, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(on_limb_damage))
 
 /datum/component/hitsplat/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES)
+	if(only_attacks)
+		UnregisterSignal(parent, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_ATOM_AFTER_ATTACKEDBY))
+	else
+		UnregisterSignal(parent, list(COMSIG_CARBON_LIMB_DAMAGED) + COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES)
 
+
+/datum/component/hitsplat/proc/after_attackby(atom/target, obj/item/weapon)
+	SIGNAL_HANDLER
+	if(weapon.force) //will be handled by on_attacked
+		return NONE
+	spawn_hitsplat(0)
+
+/// Add an attacking atom to a blackboard list of things which attacked us
+/datum/component/hitsplat/proc/on_attacked(mob/source, damage_amount, damagetype, def_zone, blocked)
+	SIGNAL_HANDLER
+
+	if(damagetype == STAMINA || damage_amount < 0)
+		return NONE
+	spawn_hitsplat(damage_amount, damagetype)
 
 /datum/component/hitsplat/proc/on_damage_adjusted(mob/source, type, amount)
 	SIGNAL_HANDLER
 
 	if(type == STAMINA)
 		return NONE
-	var/obj/effect/overlay/vis/hitsplat/new_hitsplat = new
+	spawn_hitsplat(amount, type)
+
+/datum/component/hitsplat/proc/on_limb_damage(mob/living/our_mob, limb, brute, burn)
+	SIGNAL_HANDLER
+
+	if(brute)
+		spawn_hitsplat(brute, BRUTE)
+	if(burn)
+		spawn_hitsplat(burn, BRUN)
+
+/datum/component/hitsplat/proc/spawn_hitsplat(amount, type)
+	var/obj/effect/overlay/vis/hitsplat/new_hitsplat = new(lore_accurate)
 	new_hitsplat.set_damage_amount(amount, type)
 	add_hitsplat(new_hitsplat)
 
@@ -69,9 +109,14 @@
 	vis_flags = VIS_INHERIT_PLANE
 	///the damage amount we're displaying
 	var/damage_amount = 0
+	/// If we are as faithful as possible to runescape or tweak some stuff for better feedback ingame
+	var/lore_accurate = FALSE
 
-/obj/effect/overlay/vis/hitsplat/Initialize(mapload)
+/obj/effect/overlay/vis/hitsplat/Initialize(mapload, lore_accurate = FALSE)
 	. = ..()
+	src.lore_accurate = lore_accurate
+	if(!lore_accurate)
+		alpha = 128
 	QDEL_IN(src, 2 SECONDS)
 
 /obj/effect/overlay/vis/hitsplat/proc/set_damage_amount(damage_number, damage_type)
@@ -90,7 +135,7 @@
 
 /obj/effect/overlay/vis/hitsplat/update_overlays()
 	. = ..()
-	var/hitsplat_num = CEILING(abs(damage_amount), 1)
+	var/hitsplat_num = CEILING(abs(damage_amount), lore_accurate ? 1 : 0.1)
 	var/image/hitsplat_text = image(loc = src, layer = layer + 0.1)
 	hitsplat_text.pixel_w = 1
 	hitsplat_text.pixel_z = 10
