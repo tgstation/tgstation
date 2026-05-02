@@ -17,7 +17,6 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
-	AddComponent(/datum/component/hitsplat)
 
 /mob/living/prepare_huds()
 	..()
