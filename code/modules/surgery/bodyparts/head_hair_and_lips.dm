@@ -49,15 +49,16 @@
 	var/hair_hidden = is_husked || is_invisible || (owner?.obscured_slots & HIDEHAIR)
 	var/facial_hair_hidden = is_husked || is_invisible || (owner?.obscured_slots & HIDEFACIALHAIR)
 
-	var/obj/item/organ/brain/brain = locate() in src
-	if(QDELETED(brain) && !hair_hidden)
-		if(head_flags & HEAD_DEBRAIN)
+	if(!facial_hair_hidden && (head_flags & HEAD_FACIAL_HAIR))
+		. += get_base_facial_hair_overlays(dropped)
+
+	if(!hair_hidden)
+		var/obj/item/organ/brain/brain = locate() in src
+		if(QDELETED(brain) && (head_flags & HEAD_DEBRAIN))
 			. += get_debrain_overlay(dropped)
-	else
-		if(!facial_hair_hidden && (head_flags & HEAD_FACIAL_HAIR))
-			. += get_base_facial_hair_overlays(dropped)
-		if(!hair_hidden && (head_flags & HEAD_HAIR))
+		else if(head_flags & HEAD_HAIR)
 			. += get_base_hair_overlays(dropped)
+
 	return .
 
 /// Used in constructing the hair overlays - handles just facial hair

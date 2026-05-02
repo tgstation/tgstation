@@ -176,6 +176,20 @@
 		SIGNAL_REMOVETRAIT(TRAIT_REFLECTIVE_EYES),
 	))
 
+/obj/item/organ/eyes/on_bodypart_insert(obj/item/bodypart/limb)
+	. = ..()
+	if(ishuman(limb.owner))
+		limb.owner.update_eyes(refresh = FALSE)
+	else
+		limb.update_icon_dropped()
+
+/obj/item/organ/eyes/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
+	. = ..()
+	if(ishuman(limb.owner))
+		limb.owner.update_eyes(refresh = FALSE)
+	else
+		limb.update_icon_dropped()
+
 ///Called whenever the luminescent and/or reflective eyes traits are added or removed
 /obj/item/organ/eyes/proc/on_shiny_eyes_trait_update(mob/living/carbon/human/source)
 	SIGNAL_HANDLER

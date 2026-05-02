@@ -178,21 +178,6 @@
 		real_name = owner.real_name
 		copy_appearance_from(owner)
 
-// Ensures putting organs in and removing organs from our head always updates the limb
-/obj/item/bodypart/head/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(isorgan(arrived) && !ismob(loc))
-		addtimer(CALLBACK(src, PROC_REF(update_head_on_organ_movement)), 1, TIMER_UNIQUE|TIMER_DELETE_ME)
-
-/obj/item/bodypart/head/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(isorgan(gone) && !ismob(loc))
-		addtimer(CALLBACK(src, PROC_REF(update_head_on_organ_movement)), 1, TIMER_UNIQUE|TIMER_DELETE_ME)
-
-/obj/item/bodypart/head/proc/update_head_on_organ_movement()
-	update_limb()
-	update_icon_dropped()
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/bodypart/head/get_limb_icon(dropped)
