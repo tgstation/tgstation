@@ -1714,6 +1714,6 @@
 
 	if(current_cycle >= transformation_cycle)
 		affected_mob.mind?.add_antag_datum(/datum/antagonist/spider)
-		affected_mob.on_wabbajacked(new /mob/living/basic/spider/giant(get_turf(affected_mob)))
+		affected_mob.change_mob_type(/mob/living/basic/spider/giant, delete_old_mob = TRUE)
 		qdel(affected_mob)
 
