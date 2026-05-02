@@ -35,7 +35,7 @@
 			span_notice("You scatter [src] across the area. The particles slowly fade away."),
 		)
 	else
-		GetComponent(/datum/component/revenant_prison).TakeComponent(nearby_mirror)
+		nearby_mirror.TakeComponent(GetComponent(/datum/component/revenant_prison))
 		user.visible_message(
 			span_revenwarning("[user] scatters [src] in all directions. A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"),
 			span_revenwarning("You scatter [src] across the area. A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"),
@@ -52,7 +52,7 @@
 		visible_message(span_notice("[src] breaks into particles upon impact, which fade away to nothingness."))
 	else
 		visible_message(span_revenwarning("A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"))
-		GetComponent(/datum/component/revenant_prison).TakeComponent(nearby_mirror)
+		nearby_mirror.TakeComponent(GetComponent(/datum/component/revenant_prison))
 		log_game("A revenant was trapped inside [nearby_mirror]")
 		message_admins("A revenant was trapped inside [nearby_mirror]")
 	qdel(src)
@@ -76,6 +76,6 @@
 	if(!GetComponent(/datum/component/revenant_prison))
 		return
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
-	SEND_SIGNAL(src, COMSIG_REVENANT_RELEASE, "ectoplasm reforming")
+	SEND_SIGNAL(src, COMSIG_REVENANT_RELEASE, cause = "ectoplasm reforming")
 	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
 	qdel(src)

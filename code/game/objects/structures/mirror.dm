@@ -268,7 +268,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/proc/release_revenant()
 	message_admins("A revenant escaped its mirror containment and is now reforming.")
-	SEND_SIGNAL(src, COMSIG_REVENANT_RELEASE, "mirror breaking")
+	SEND_SIGNAL(src, COMSIG_REVENANT_RELEASE, cause = "mirror breaking")
 	visible_message(span_revenwarning("The revenant cackles as it escapes from the [src]!"))
 	playsound(loc, 'sound/effects/chemistry/ahaha.ogg', 100, TRUE)
 
@@ -277,7 +277,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(deconstructable)
 		. += span_notice("It's mounted to the wall with a couple of <b>bolts</b>.")
 	if(GetComponent(/datum/component/revenant_prison))
-		. += span_revendanger("The reflection is shifting and distorted.")
+		. += span_revenwarning("The reflection is shifting and distorted.")
 
 /obj/structure/mirror/examine_status(mob/living/carbon/human/user)
 	if(broken)

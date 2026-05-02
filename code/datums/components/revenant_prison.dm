@@ -9,9 +9,9 @@
 	if(!revenant)
 		return COMPONENT_INCOMPATIBLE
 	src.revenant = revenant
+	revenant.dormant = TRUE
 	old_ckey = revenant.client?.ckey
 	revenant.forceMove(parent)
-	RegisterSignal(parent, COMSIG_REVENANT_RELEASE, PROC_REF(release_revenant))
 
 /datum/component/revenant_prison/Destroy()
 	if(revenant)
@@ -40,5 +40,5 @@
 	UnregisterSignal(parent, COMSIG_REVENANT_RELEASE)
 	UnregisterSignal(parent, COMSIG_REFLECTION_UPDATED)
 
-/datum/component/revenant_prison/PostTransfer()
-	revenant.forceMove(parent)
+/datum/component/revenant_prison/PostTransfer(datum/new_parent)
+	revenant.forceMove(new_parent)
