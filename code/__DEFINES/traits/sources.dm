@@ -348,3 +348,6 @@
 
 /// Trait granted as a result of a mob being husked
 #define HUSK_TRAIT "husk"
+
+/// Trait granted from the metabolization of a reagent
+#define METABOLIZATION_TRAIT(type) "metabolize:[type]"

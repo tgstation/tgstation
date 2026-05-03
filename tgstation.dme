@@ -1365,6 +1365,7 @@
 #include "code\datums\components\temporary_body.dm"
 #include "code\datums\components\temporary_description.dm"
 #include "code\datums\components\temporary_glass_shatter.dm"
+#include "code\datums\components\temporary_synthpax_immunity.dm"
 #include "code\datums\components\tether.dm"
 #include "code\datums\components\thermite.dm"
 #include "code\datums\components\throwbonus_on_windup.dm"
