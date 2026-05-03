@@ -2844,7 +2844,7 @@
 
 /datum/reagent/pax/peaceborg/proc/on_metabolizer_damaged(mob/living/source, amount)
 	SIGNAL_HANDLER
-	source.AddComponent(/datum/component/temporary_synthpax_immunity, amount)
+	source.adjust_timed_status_effect(amount SECONDS, /datum/status_effect/synthpax_immunity, 5 SECONDS)
 
 /datum/reagent/peaceborg/confuse
 	name = "Dizzying Solution"

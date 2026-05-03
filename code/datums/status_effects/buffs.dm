@@ -732,3 +732,24 @@
 /datum/status_effect/rev_resilience/on_remove()
 	to_chat(owner, span_notice("You feel your surge of revolutionary zeal fade. You hope you don't get shot in the foot..."))
 	owner.remove_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))
+
+//status effect granted when taking attack damage while metabolizing synthpax
+/datum/status_effect/synthpax_immunity
+	id = "synthpax_immune"
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/synthpax_immunity/on_creation(mob/living/new_owner, duration)
+	. = ..()
+	src.duration = duration
+
+/datum/status_effect/synthpax_immunity/on_apply()
+	ADD_TRAIT(owner, TRAIT_SYNTHPAX_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, METABOLIZATION_TRAIT(/datum/reagent/pax/peaceborg))
+	return TRUE
+
+/datum/status_effect/synthpax_immunity/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_SYNTHPAX_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	if(owner.reagents.has_reagent(/datum/reagent/pax/peaceborg))
+		ADD_TRAIT(owner, TRAIT_PACIFISM, METABOLIZATION_TRAIT(/datum/reagent/pax/peaceborg))
+	UnregisterSignal(owner, COMSIG_MOB_AFTER_APPLY_DAMAGE)
