@@ -142,6 +142,7 @@
 		"syrup_bottle",
 		"foodtray",
 		"restaurant_portal",
+		"wet_floor_sign",
 	)
 
 /datum/techweb_node/food_proc
