@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 /mob/living/basic/mimic/crate/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	if(target == src)
 		toggle_open()
-		return FALSE
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 	return ..()
 
 /mob/living/basic/mimic/crate/CanAllowThrough(atom/movable/mover, border_dir)

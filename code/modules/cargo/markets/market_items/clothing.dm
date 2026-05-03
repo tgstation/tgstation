@@ -112,3 +112,14 @@
 	price_max = CARGO_CRATE_VALUE * 4.5
 	stock_max = 3
 	availability_prob = 60
+
+/datum/market_item/clothing/totally_normal_pet_collar
+	name = "Strange Pet Collar"
+	desc = "We found these in the back of a militarized shuttle destined for New Osaka. Who the hell transports pet collars \
+		in an armored vessel? Whatever, if Cybersun Industries didn't want you to have them, that must mean they're REAL special! \
+		Which is why we're charging you extra for them."
+	item = /obj/item/clothing/neck/petcollar/wearable/cyber
+	price_min = CARGO_CRATE_VALUE * 5
+	price_max = CARGO_CRATE_VALUE * 10
+	stock_max = 5
+	availability_prob = 20
