@@ -45,6 +45,7 @@
 	icon_state = "datadisk9"
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/citation_ticket,
 	)
 
 /obj/item/disk/computer/command/hop
@@ -73,6 +74,7 @@
 	icon_state = "datadisk9"
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/citation_ticket,
 	)
 
 /**
