@@ -107,9 +107,11 @@
  * * death_limit: If the number of neighboring cells is lower than this amount, a cell dies
  * * width: The width of the grid.
  * * height: The height of the grid.
+ * * def_alive_grid: (Optional) A grid string of '0'/'1' indicating cells that are permanently alive. Legacy mode when omitted.
+ * * def_dead_grid: (Optional) A grid string of '0'/'1' indicating cells that are permanently dead. Legacy mode when omitted.
  */
-#define rustg_cnoise_generate(percentage, smoothing_iterations, birth_limit, death_limit, width, height) \
-	RUSTG_CALL(RUST_G, "cnoise_generate")(percentage, smoothing_iterations, birth_limit, death_limit, width, height)
+#define rustg_cnoise_generate(percentage, smoothing_iterations, birth_limit, death_limit, width, height, def_alive_grid, def_dead_grid) \
+	RUSTG_CALL(RUST_G, "cnoise_generate")(percentage, smoothing_iterations, birth_limit, death_limit, width, height, def_alive_grid, def_dead_grid)
 
 /**
  * This proc generates a grid of perlin-like noise
@@ -203,20 +205,69 @@
 
 #define rustg_hash_string(algorithm, text) RUSTG_CALL(RUST_G, "hash_string")(algorithm, text)
 #define rustg_hash_file(algorithm, fname) RUSTG_CALL(RUST_G, "hash_file")(algorithm, fname)
-#define rustg_hash_generate_totp(seed) RUSTG_CALL(RUST_G, "generate_totp")(seed)
-#define rustg_hash_generate_totp_tolerance(seed, tolerance) RUSTG_CALL(RUST_G, "generate_totp_tolerance")(seed, tolerance)
+
+/// Supported algorithms: RUSTG_HASH_SHA1, RUSTG_HASH_SHA256, RUSTG_HASH_SHA512
+/// Seed must be between 10 bytes to 64 bytes (padded or unpadded) of base32. 20 bytes is recommended. Use a CSPRNG.
+/// Refresh rate is fixed at 30sec and digit count is fixed at 6
+#define rustg_hash_generate_totp(algorithm, seed) RUSTG_CALL(RUST_G, "generate_totp")(algorithm, seed)
+/// Supported algorithms: RUSTG_HASH_SHA1, RUSTG_HASH_SHA256, RUSTG_HASH_SHA512
+/// Seed must be between 10 bytes to 64 bytes (padded or unpadded) of base32. 20 bytes is recommended. Use a CSPRNG.
+/// Refresh rate is fixed at 30sec and digit count is fixed at 6
+/// Tolerance is the number of codes +-30sec from the current one that are allowed.
+#define rustg_hash_generate_totp_tolerance(algorithm, seed, tolerance) RUSTG_CALL(RUST_G, "generate_totp_tolerance")(algorithm, seed, tolerance)
+
+/// Creates a cryptographically-secure pseudorandom number generator using the OS-level PRNG as a seed
+/// n_bytes is the number of bytes provided to the RNG, the length of the string output varies by format
+/// The output string length and characters contained in each format is as follows:
+/// RUSTG_RNG_FORMAT_HEX: n_bytes * 2, [a-z0-9]
+/// RUSTG_RNG_FORMAT_ALPHANUMERIC: n_bytes, [A-Za-z0-9]
+/// RUSTG_RNG_FORMAT_BASE32: ceil(n_bytes / 5 * 8) [A-Z2-7]
+/// RUSTG_RNG_FORMAT_BASE32_PADDED: ceil(n_bytes / 5) * 8 [A-Z2-7=]
+/// RUSTG_RNG_FORMAT_BASE64: 4 * ceil(n_bytes/3), [A-Za-z0-9+/=]
+/// Outputs "ERROR: [reason]" if the format string provided is invalid, or n_bytes is not a positive non-zero integer
+#define rustg_csprng_chacha20(format, n_bytes) RUSTG_CALL(RUST_G, "csprng_chacha20")(format, "[n_bytes]")
+
+/// Creates a seeded pseudorandom number generator using the SHA256 hash output bytes of the seed string
+/// Note that this function is NOT suitable for use in cryptography and is intended for high-quality **predictable** RNG
+/// Use rustg_csprng_chacha20 for a cryptographically-secure PRNG.
+/// n_bytes is the number of bytes provided to the RNG, the length of the string output varies by format
+/// The output string length and characters contained in each format is as follows:
+/// RUSTG_RNG_FORMAT_HEX: n_bytes * 2, [a-z0-9]
+/// RUSTG_RNG_FORMAT_ALPHANUMERIC: n_bytes, [A-Za-z0-9]
+/// RUSTG_RNG_FORMAT_BASE32: ceil(n_bytes / 5 * 8) [A-Z2-7]
+/// RUSTG_RNG_FORMAT_BASE32_PADDED: ceil(n_bytes / 5) * 8 [A-Z2-7=]
+/// RUSTG_RNG_FORMAT_BASE64: 4 * ceil(n_bytes/3), [A-Za-z0-9+/=]
+/// Outputs "ERROR: [reason]" if the format string provided is invalid, or n_bytes is not a positive non-zero integer
+#define rustg_prng_chacha20_seeded(format, n_bytes, seed) RUSTG_CALL(RUST_G, "prng_chacha20_seeded")(format, "[n_bytes]", seed)
+
+#define RUSTG_RNG_FORMAT_HEX "hex"
+#define RUSTG_RNG_FORMAT_ALPHANUMERIC "alphanumeric"
+#define RUSTG_RNG_FORMAT_BASE32 "base32_rfc4648"
+#define RUSTG_RNG_FORMAT_BASE32_PADDED "base32_rfc4648_pad"
+#define RUSTG_RNG_FORMAT_BASE64 "base64"
 
 #define RUSTG_HASH_MD5 "md5"
 #define RUSTG_HASH_SHA1 "sha1"
 #define RUSTG_HASH_SHA256 "sha256"
 #define RUSTG_HASH_SHA512 "sha512"
 #define RUSTG_HASH_XXH64 "xxh64"
+#define RUSTG_HASH_BASE32 "base32_rfc4648"
+#define RUSTG_HASH_BASE32_PADDED "base32_rfc4648_pad"
 #define RUSTG_HASH_BASE64 "base64"
 
 /// Encode a given string into base64
 #define rustg_encode_base64(str) rustg_hash_string(RUSTG_HASH_BASE64, str)
-/// Decode a given base64 string
+/// Decode a given base64 string. This expects padding.
+/// Returns a blank string if the string is not valid base64.
 #define rustg_decode_base64(str) RUSTG_CALL(RUST_G, "decode_base64")(str)
+
+/// Encode a given string into base32 (RFC4648)
+/// If padding set to FALSE, will not output padding characters.
+#define rustg_encode_base32(str, padding) rustg_hash_string(padding ? RUSTG_HASH_BASE32_PADDED : RUSTG_HASH_BASE32, str)
+/// Decode a given base32 (RFC4648) string
+/// If padding set to FALSE, decoding will not support padding characters.
+/// Returns a blank string if the string is not valid base32.
+#define rustg_decode_base32(str, padding) RUSTG_CALL(RUST_G, "decode_base32")(str, "[padding ? 1 : 0]")
 
 #ifdef RUSTG_OVERRIDE_BUILTINS
 	#define md5(thing) (isfile(thing) ? rustg_hash_file(RUSTG_HASH_MD5, "[thing]") : rustg_hash_string(RUSTG_HASH_MD5, thing))
@@ -346,6 +397,31 @@
 #define RUSTG_JOB_ERROR "JOB PANICKED"
 
 #define rustg_json_is_valid(text) (RUSTG_CALL(RUST_G, "json_is_valid")(text) == "true")
+
+/**
+ * Generates a procedural dungeon map using BSP tree partitioning, prefab placement,
+ * MST corridor generation, and Cellular Automata smoothing.
+ *
+ * Returns a plain binary grid string (matching cellularnoise format):
+ * A width*height string of '0' (wall) and '1' (floor) characters in row-major order.
+ *
+ * Arguments:
+ * * width - Grid width (required)
+ * * height - Grid height (required)
+ * * prefabs_json - JSON array of prefab configs: [{"cx":55,"cy":65,"w":10,"h":10,"isEnclosed":true},...] (default: "[]")
+ * * min_bsp_size - Minimum BSP leaf dimension (default: 20)
+ * * max_ratio - Maximum aspect ratio for BSP splits (default: 2.5)
+ * * padding - Room edge padding within BSP leaf (default: 2)
+ * * room_fill_percent - How much of each BSP leaf a room fills, 1-100 (default: 50)
+ * * corridor_width - Width of corridors between rooms (default: 1)
+ * * loop_percent - Chance to add extra MST edges for loops (default: 15)
+ * * noise_percent - Initial random floor density (default: 48)
+ * * ca_steps - Cellular Automata smoothing iterations (default: 6)
+ * * birth_limit - Neighbors to create floor (>=) (default: 5)
+ * * survival_limit - Neighbors to survive as floor (>=) (default: 4)
+ */
+#define rustg_lavaland_generator_generate(width, height, prefabs_json, min_bsp_size, max_ratio, padding, room_fill_percent, corridor_width, loop_percent, noise_percent, ca_steps, birth_limit, survival_limit) \
+	RUSTG_CALL(RUST_G, "lavaland_generator_generate")(width, height, prefabs_json, min_bsp_size, max_ratio, padding, room_fill_percent, corridor_width, loop_percent, noise_percent, ca_steps, birth_limit, survival_limit)
 
 #define rustg_log_write(fname, text, format) RUSTG_CALL(RUST_G, "log_write")(fname, text, format)
 /proc/rustg_log_close_all() return RUSTG_CALL(RUST_G, "log_close_all")()
@@ -500,4 +576,20 @@
 	#define url_encode(text) rustg_url_encode(text)
 	#define url_decode(text) rustg_url_decode(text)
 #endif
+
+/// Generates a version 4 UUID.
+/// See https://www.ietf.org/rfc/rfc9562.html#section-5.4 for specifics on version 4 UUIDs.
+#define rustg_generate_uuid_v4(...) RUSTG_CALL(RUST_G, "uuid_v4")()
+
+/// Generates a version 7 UUID, with the current time.
+/// See https://www.ietf.org/rfc/rfc9562.html#section-5.7 for specifics on version 7 UUIDs.
+#define rustg_generate_uuid_v7(...) RUSTG_CALL(RUST_G, "uuid_v7")()
+
+/// Generates a random version 2 CUID.
+/// See https://github.com/paralleldrive/cuid2 for specifics on version 2 CUIDs.
+#define rustg_generate_cuid2(...) RUSTG_CALL(RUST_G, "cuid2")()
+
+/// Generates a random version 2 CUID with the given length.
+/// See https://github.com/paralleldrive/cuid2 for specifics on version 2 CUIDs.
+#define rustg_generate_cuid2_length(length) RUSTG_CALL(RUST_G, "cuid2_len")("[length]")
 

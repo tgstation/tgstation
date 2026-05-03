@@ -134,7 +134,7 @@
 		return generate_terrain_with_biomes(turfs, generate_in)
 
 	var/start_time = REALTIMEOFDAY
-	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
+	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]", null, null) //Generate the raw CA data
 
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
 		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
@@ -186,7 +186,7 @@
 		heat_seed = rand(0, 50000)
 
 	var/start_time = REALTIMEOFDAY
-	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
+	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]", null, null) //Generate the raw CA data
 
 	var/humidity_gen = list()
 	humidity_gen[BIOME_HIGH_HUMIDITY] = rustg_dbp_generate("[humidity_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[high_heat_threshold]", "1.1")
