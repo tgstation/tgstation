@@ -55,18 +55,42 @@
 	var/mob/our_mob = null
 
 /obj/effect/holodeck_effect/mobspawner/activate(obj/machinery/computer/holodeck/HC)
+	. = list()
+
 	if(islist(mobtype))
 		mobtype = pick(mobtype)
 	our_mob = new mobtype(loc)
 	our_mob.flags_1 |= HOLOGRAM_1
+	. += our_mob
+
+	for(var/atom/holo_atom as anything in our_mob.contents)
+		holo_atom.flags_1 |= HOLOGRAM_1
+		. += holo_atom
+
+	if(iscarbon(our_mob))
+		var/mob/living/carbon/holo_carbon_mob = our_mob
+		for(var/obj/item/organ/holo_organ as anything in holo_carbon_mob.organs)
+			holo_organ.flags_1 |= HOLOGRAM_1
+			. += holo_organ
 
 	// these vars are not really standardized but all would theoretically create stuff on death
 	our_mob.add_traits(list(TRAIT_PERMANENTLY_MORTAL, TRAIT_NO_BLOOD_OVERLAY, TRAIT_NOBLOOD, TRAIT_NOHUNGER, TRAIT_SPAWNED_MOB), INNATE_TRAIT)
 	RegisterSignal(our_mob, COMSIG_QDELETING, PROC_REF(handle_mob_delete))
-	return our_mob
+
+	return .
 
 /obj/effect/holodeck_effect/mobspawner/deactivate(obj/machinery/computer/holodeck/HC)
 	if(our_mob)
+		for(var/atom/holo_atom as anything in our_mob.contents)
+			if(holo_atom.flags_1 & HOLOGRAM_1)
+				HC.derez(holo_atom)
+
+		if(iscarbon(our_mob))
+			var/mob/living/carbon/holo_carbon_mob = our_mob
+			for(var/obj/item/organ/holo_organ as anything in holo_carbon_mob.organs)
+				if(holo_organ.flags_1 & HOLOGRAM_1)
+					HC.derez(holo_organ)
+
 		HC.derez(our_mob)
 	qdel(src)
 
@@ -99,13 +123,6 @@
 
 /obj/effect/holodeck_effect/mobspawner/monkey
 	mobtype = /mob/living/carbon/human/species/monkey
-
-/obj/effect/holodeck_effect/mobspawner/monkey/activate(obj/machinery/computer/holodeck/computer)
-	var/mob/living/carbon/human/monkey = ..()
-	. = list() + monkey
-
-	for(var/atom/atom as anything in monkey.contents + monkey.organs)
-		. += atom
 
 /obj/effect/holodeck_effect/mobspawner/penguin
 	mobtype = /mob/living/basic/pet/penguin/emperor/neuter

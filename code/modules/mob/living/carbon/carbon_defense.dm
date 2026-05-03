@@ -661,6 +661,9 @@
 	if (HAS_TRAIT(src, TRAIT_GENELESS))
 		return FALSE
 
+	if(flags_1 & HOLOGRAM_1)
+		return FALSE
+
 	if (run_armor_check(attack_flag = BIO, silent = TRUE) >= 100)
 		to_chat(src, span_warning("Your armor shields you from [scramble_source]!"))
 		return FALSE
@@ -671,7 +674,8 @@
 	var/changed_something = FALSE
 	var/obj/item/organ/new_organ = pick(GLOB.bioscrambler_valid_organs)
 	var/obj/item/organ/replaced = get_organ_slot(initial(new_organ.slot))
-	if (!replaced || !IS_ROBOTIC_ORGAN(replaced))
+	var/is_holo_organ = replaced && (replaced.flags_1 & HOLOGRAM_1)
+	if (!replaced || !IS_ROBOTIC_ORGAN(replaced) && !(is_holo_organ))
 		changed_something = TRUE
 		new_organ = new new_organ()
 		new_organ.replace_into(src)
@@ -680,7 +684,8 @@
 	if (!HAS_TRAIT(src, TRAIT_NODISMEMBER))
 		var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
 		var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
-		if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part.bodytype))
+		var/is_holo_bodypart = (picked_user_part && (picked_user_part.flags_1 & HOLOGRAM_1))
+		if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part.bodytype) && !(is_holo_bodypart))
 			changed_something = TRUE
 			new_part = new new_part()
 			new_part.replace_limb(src)
