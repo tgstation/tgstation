@@ -150,6 +150,10 @@
 	upgradable = FALSE
 	attachment_holes = FALSE
 
+/turf/open/floor/plating/foam/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_WELDER, TOOL_ACT_PRIMARY)
+
 /turf/open/floor/plating/foam/burn_tile()
 	return //jetfuel can't melt steel foam
 
@@ -196,9 +200,6 @@
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
-
-/turf/open/floor/plating/foam/welder_act(mob/living/user, obj/item/I)
-	return NONE // Fuck you
 
 //reinforced plating deconstruction states
 #define PLATE_INTACT 0
