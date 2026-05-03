@@ -19,3 +19,4 @@
   - code_imp: Things that interrupted the opening of storages are no longer reliant
       on a runtime, meaning they interrupt regardless of whether you had another open
       storage open at the time
+  - balance: Blood from blood bags is fully synthetic
