@@ -134,15 +134,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	else
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
-/proc/toggle_drune(toggle = null)
-	if(toggle != null)
-		if(toggle != GLOB.drune_allowed)
-			GLOB.drune_allowed = toggle
-		else
-			return
-	else
-		GLOB.drune_allowed = !GLOB.drune_allowed
-
 /client/proc/set_ooc()
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"

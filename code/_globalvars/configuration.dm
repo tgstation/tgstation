@@ -11,7 +11,6 @@ GLOBAL_VAR_INIT(hub_visibility, FALSE)
 
 GLOBAL_VAR_INIT(ooc_allowed, TRUE) // used with admin verbs to disable ooc - not a config option apparently
 GLOBAL_VAR_INIT(dooc_allowed, TRUE)
-GLOBAL_VAR_INIT(drune_allowed, TRUE) // dead runechat
 
 
 // debugging_enabled is used in conjunction with a lot of admin verbs and therefore is actually legit.
