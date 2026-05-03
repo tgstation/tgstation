@@ -152,9 +152,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	ADD_TRAIT(src, TRAIT_GOOD_HEARING, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_DETECT_STORM, INNATE_TRAIT)
 
-	if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
-		GLOB.keyloop_list -= src
-
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
 		return photo_description
