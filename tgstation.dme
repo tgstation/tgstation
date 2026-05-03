@@ -5058,6 +5058,7 @@
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_display.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_drawing.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_label.dm"
+#include "code\modules\minimap\rewrite_attempt\hud\minimap_toolbar.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_tracking_blip.dm"
 #include "code\modules\mining\aux_base.dm"
 #include "code\modules\mining\fulton.dm"
