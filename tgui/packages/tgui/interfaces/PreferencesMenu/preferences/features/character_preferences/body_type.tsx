@@ -12,7 +12,7 @@ export const body_type: FeatureChoiced = {
 };
 
 function FeatureBodyTypeDropdownInput(props: DropdownInputProps) {
-  return FeatureDropdownInputCore(props, (serverData, setDropdownOptions) => {
+  return FeatureDropdownInputCore(props, (serverData) => {
     let options = generateOptions(serverData);
 
     const current_gender = props.character_preferences.misc.gender;
@@ -23,6 +23,6 @@ function FeatureBodyTypeDropdownInput(props: DropdownInputProps) {
       );
     }
 
-    setDropdownOptions(options);
+    return options;
   });
 }

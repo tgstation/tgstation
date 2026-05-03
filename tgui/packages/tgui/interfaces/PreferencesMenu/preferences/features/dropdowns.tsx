@@ -61,28 +61,15 @@ export function generateOptions(
 }
 
 export function FeatureDropdownInput(props: DropdownInputProps) {
-  return FeatureDropdownInputCore(props, (serverData, setDropdownOptions) =>
-    setDropdownOptions(generateOptions(serverData)),
-  );
+  return FeatureDropdownInputCore(props, generateOptions);
 }
 
 export function FeatureDropdownInputCore(
   props: DropdownInputProps,
-  populateOptions: (
-    serverData: FeatureChoicedServerData,
-    setDropdownOptions: (newValue: DropdownOptions) => void,
-  ) => void,
+  populateOptions: (serverData: FeatureChoicedServerData) => DropdownOptions,
 ) {
   const { serverData, disabled, buttons, handleSetValue, value } = props;
-
-  const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>([]);
-
-  useEffect(() => {
-    if (serverData) {
-      populateOptions(serverData, setDropdownOptions);
-    }
-  }, [serverData, populateOptions]);
-
+  const dropdownOptions = serverData ? populateOptions(serverData) : [];
   const displayText = serverData?.display_names?.[value] || String(value);
 
   return (
