@@ -11,5 +11,11 @@
   necromanceranne:
   - bugfix: Void cloaks no longer obstruct surgery while invisible.
 2026-05-03:
+  Aliceee2ch:
+  - bugfix: Fixed color matrix not applying in reskinnable item preview.
   Melbert:
   - bugfix: Fix some erroneous dream portents from showing up
+  lelandkemble:
+  - code_imp: Things that interrupted the opening of storages are no longer reliant
+      on a runtime, meaning they interrupt regardless of whether you had another open
+      storage open at the time
