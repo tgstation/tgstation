@@ -47,7 +47,6 @@
 /mob/proc/add_to_player_list()
 	SHOULD_CALL_PARENT(TRUE)
 	GLOB.player_list |= src
-	GLOB.keyloop_list |= src
 	if(stat == DEAD)
 		add_to_current_dead_players()
 	else
@@ -71,10 +70,10 @@
 		GLOB.keyloop_list -= src
 
 /mob/dead/observer/add_to_current_dead_players()
+	if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client.holder)
+		GLOB.keyloop_list |= src
 	if(started_as_observer)
 		GLOB.current_observers_list |= src
-		if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client.holder)
-			GLOB.keyloop_list -= src
 		return
 	return ..()
 
@@ -95,6 +94,7 @@
 ///Adds the cliented mob reference to the list of living player-mobs. If the mob is an antag, it adds it to the list of living antag player-mobs.
 /mob/proc/add_to_current_living_players()
 	GLOB.alive_player_list |= src
+	GLOB.keyloop_list |= src
 	if(is_antag(NONE))
 		add_to_current_living_antags()
 
