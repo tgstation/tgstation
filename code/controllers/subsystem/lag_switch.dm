@@ -89,7 +89,7 @@ SUBSYSTEM_DEF(lag_switch)
 		if(DISABLE_DEAD_KEYLOOP)
 			if(state)
 				for(var/mob/player as anything in GLOB.player_list)
-					if(ghost.client?.holder) // Don't freeze admins
+					if(player.client?.holder) // Don't freeze admins
 						continue
 					if(!isobserver(player) && player.stat == DEAD)
 						continue // dead players in their bodies - we will just remove them when they become a ghost
