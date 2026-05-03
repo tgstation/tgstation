@@ -70,7 +70,7 @@
 		GLOB.keyloop_list -= src
 
 /mob/dead/observer/add_to_current_dead_players()
-	if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client.holder)
+	if(!SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] || client.holder)
 		GLOB.keyloop_list |= src
 	if(started_as_observer)
 		GLOB.current_observers_list |= src
