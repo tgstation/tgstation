@@ -1,0 +1,4 @@
+author: "Aliceee2ch"
+delete-after: True
+changes:
+  - bugfix: "Fixed color matrix not applying in reskinnable item preview."
