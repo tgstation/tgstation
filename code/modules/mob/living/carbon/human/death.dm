@@ -40,6 +40,8 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 				<b>Reagents</b>:<br>[reagents_readout()]", INVESTIGATE_DEATHS)
 	to_chat(src, span_warning("You have died. Barring complete bodyloss, you can in most cases be revived by other players. \
 		If you do not wish to be brought back, use the \"Do Not Resuscitate\" button at the bottom of your screen."))
+	if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
+		to_chat(src, span_warning("Ghost movement is currently disabled by admins. To leave your body use the Ghost verb."))
 
 /mob/living/carbon/human/proc/reagents_readout()
 	var/readout = "[get_bloodtype()?.get_blood_name() || "Blood"]stream:"
