@@ -268,19 +268,19 @@ a:visited {
 }
 
 .Chat__highlight {
-  color: oklch(from var(--h-color) min(l, 0.45) c h);
+  color: oklch(from var(--highlight-color) min(l, 0.45) c h);
   background: color-mix(
     in srgb,
-    oklch(from var(--h-color) min(l, 0.45) c h) 25%,
+    oklch(from var(--highlight-color) min(l, 0.45) c h) 25%,
     transparent
   );
 }
 
 .ChatMessage--highlighted {
-  border-left-color: oklch(from var(--h-color) min(l, 0.45) c h);
+  border-left-color: oklch(from var(--highlight-color) min(l, 0.45) c h);
   background: color-mix(
     in srgb,
-    oklch(from var(--h-color) min(l, 0.45) c h) 14%,
+    oklch(from var(--highlight-color) min(l, 0.45) c h) 14%,
     transparent
   );
 }
