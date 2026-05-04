@@ -183,7 +183,7 @@
 		if (feedback)
 			switch(owner.stat)
 				if(SOFT_CRIT)
-					owner.balloon_alert(owner, "dying!")
+					owner.balloon_alert(owner, "downed!")
 				if(DEAD)
 					owner.balloon_alert(owner, "dead!")
 				else
