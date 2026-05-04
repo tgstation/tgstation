@@ -643,6 +643,7 @@ export function PlaneMasterDebug() {
             imageWidth={900}
             initialLeft={500}
             initialTop={-1350}
+            zoomPadding={planeOpen ? 450 : 0}
             zoomToX={-(zoomToX || 0) + 525}
             zoomToY={-(zoomToY || 0) + 300}
           >
