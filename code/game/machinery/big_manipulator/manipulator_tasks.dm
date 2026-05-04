@@ -86,7 +86,6 @@
 				return best_candidate
 			break
 
-	// Turf is always available as a fallback target — check it after contents.
 	for(var/i in 1 to length(interaction_priorities))
 		if(i >= best_priority_index)
 			break
@@ -214,8 +213,8 @@
 	return manipulator.master_tasking.get_next_candidate(candidates)
 
 // ===== BASE DROPOFF =====
-// Базовый тип для всего что принимает held_object: drop, throw, use.
-// Пикап итерирует по этому типу чтобы найти подходящую точку назначения.
+// Base type for anything that accepts a `held_object`: drop, throw, use.
+// Pickup iterates by this type to find a target point.
 
 /datum/manipulator_task/cargo/dropoff_base
 	name = "dropoff"
@@ -292,7 +291,6 @@
 	name = "throw"
 	var/throw_range = 1
 
-// throw не проверяет overflow — предмет летит мимо тайла
 /datum/manipulator_task/cargo/dropoff_base/throw/can_accept(atom/movable/target)
 	if(!is_valid())
 		return FALSE
@@ -322,7 +320,6 @@
 		priorities[5] = new /datum/manipulator_priority/interact/with_vehicles
 	return priorities
 
-// use тоже не проверяет overflow
 /datum/manipulator_task/cargo/dropoff_base/use/can_accept(atom/movable/target)
 	if(!is_valid())
 		return FALSE
