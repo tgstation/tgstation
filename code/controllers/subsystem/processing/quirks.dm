@@ -54,8 +54,17 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/quirk_points = list() //Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
 	///An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
 	var/list/hardcore_quirks = list()
+	/// Whether or not quirk points are enabled, per server config
+	var/points_enabled
+	/// The number of max positive quirks that we allow, per server config
+	var/max_positive_quirks
+	// The default number of quirk points that you get to spend, per server config
+	var/default_quirk_points
 
 /datum/controller/subsystem/processing/quirks/Initialize()
+	points_enabled = !CONFIG_GET(flag/disable_quirk_points)
+	max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
+	default_quirk_points = CONFIG_GET(number/default_quirk_points)
 	get_quirks()
 	return SS_INIT_SUCCESS
 
@@ -110,7 +119,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	///Cached list of possible quirks
 	var/list/possible_quirks = quirks.Copy()
 
-	var/max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
 	if(max_positive_quirks < 0)
 		max_positive_quirks = 6
 
@@ -174,9 +182,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
-	var/points_enabled = !CONFIG_GET(flag/disable_quirk_points)
-	var/max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
-	var/balance = -CONFIG_GET(number/default_quirk_points)
+	var/balance = -default_quirk_points
 
 	var/list/all_quirks = get_quirks()
 

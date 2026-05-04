@@ -153,7 +153,7 @@
 				var/list/things_in_range = range(12, target_turf)
 				var/blocked = FALSE
 				for(var/mob/living/mob_blocker in things_in_range)
-					if(!ismining(mob_blocker))
+					if(ismining(mob_blocker))
 						blocked = TRUE
 						break
 
