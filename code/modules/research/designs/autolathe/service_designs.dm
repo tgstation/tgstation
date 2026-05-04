@@ -14,7 +14,7 @@
 	name = "Wet Floor Sign"
 	id = "wet_floor_sign"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/suit/caution
 	category = list(
 		RND_CATEGORY_INITIAL,
