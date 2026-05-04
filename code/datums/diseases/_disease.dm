@@ -148,7 +148,7 @@
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
 		switch(severity)
 			if(DISEASE_SEVERITY_POSITIVE)
-				if(slowdown < 1 || affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)
+				if(slowdown < 1 || (!(HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) && (affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)))
 					cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_POSITIVE)
 				else
 					recovery_prob = 0
