@@ -1,0 +1,28 @@
+2026-05-01:
+  TheRyeGuyWhoWillNowDie:
+  - qol: hyposprays can now draw from other reagent containers
+2026-05-02:
+  Hatterhat:
+  - qol: The style meter for miners now stores its permanent multiplier on the meter
+      in case you're switching eyewear. The style meter item is now small, allowing
+      for easier storage.
+  lelandkemble:
+  - bugfix: Mjolnir only successfully attacks if it successfully attacks
+  necromanceranne:
+  - bugfix: Void cloaks no longer obstruct surgery while invisible.
+2026-05-03:
+  Aliceee2ch:
+  - bugfix: Fixed color matrix not applying in reskinnable item preview.
+  Melbert:
+  - bugfix: Fix some erroneous dream portents from showing up
+  lelandkemble:
+  - code_imp: Things that interrupted the opening of storages are no longer reliant
+      on a runtime, meaning they interrupt regardless of whether you had another open
+      storage open at the time
+  - balance: Blood from blood bags is fully synthetic
+  vinylspiders:
+  - code_imp: fixes mining mobs being able to spawn too close to one another under
+      certain circumstances
+2026-05-04:
+  SmArtKar:
+  - admin: Added a new debug tool which displays a detailed breakdown of in-game visuals

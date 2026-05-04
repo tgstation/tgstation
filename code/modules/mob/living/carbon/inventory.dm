@@ -444,6 +444,8 @@
 	for(var/obj/item/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
 		if(worn_item.slot_flags & exluded_equipment_slots)
 			continue
+		if(worn_item.flags_cover & ALLOW_SURGERY_THROUGH)
+			continue
 		covered_flags |= worn_item.body_parts_covered
 
 	// NB: we have to convert covered_flags via cover_flags2body_zones here
