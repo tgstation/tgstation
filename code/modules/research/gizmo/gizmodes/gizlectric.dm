@@ -13,6 +13,13 @@
 			/datum/gizpulse/electric/passive_charge = 1,
 		)
 	)
+
+	mode_pulses = list(
+		/datum/gizpulse/mode_controle/select_mode,
+		/datum/gizpulse/mode_controle/cycle_mode,
+		/datum/gizpulse/mode_controle/direct_activate,
+	)
+
 	min_modes = 3
 	max_modes = 4
 
@@ -110,7 +117,7 @@
 
 	for(var/mob/living/dead in orange(holder, 3))
 		if(dead.stat & DEAD)
-			dead.revive()
+			dead.revive(excess_healing = 5)
 			dead.adjust_oxy_loss(-200)
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), dead, 'sound/machines/defib/defib_zap.ogg', 60), 3 SECONDS)
 
