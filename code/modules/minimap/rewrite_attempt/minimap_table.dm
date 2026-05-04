@@ -9,6 +9,7 @@
 	light_power = 2
 	light_color = LIGHT_COLOR_INTENSE_RED
 	light_system = OVERLAY_LIGHT
+	density = TRUE
 	SET_BASE_PIXEL(0, 2)
 	var/hologram_icon_file = 'icons/obj/machines/minimap_table_hologram.dmi'
 	var/target_z = 2
@@ -63,17 +64,17 @@
 	addtimer(CALLBACK(src, PROC_REF(activate), user), animation_duration, TIMER_UNIQUE | TIMER_CLIENT_TIME)
 
 	startup = TRUE
-	play_startup_animation()
+	play_animation("startup")
 	return TRUE
 
-/obj/machinery/minimap_table/proc/play_startup_animation()
-	var/image/img = image(hologram_icon_file, src, "startup", ABOVE_MOB_LAYER, dir, animation_x, animation_y)
-	var/image/emissive_img = image(hologram_icon_file, src, "startup", ABOVE_MOB_LAYER, dir, animation_x, animation_y)
+/obj/machinery/minimap_table/proc/play_animation(icon_state = "startup", duration = animation_duration)
+	var/image/img = image(hologram_icon_file, src, icon_state, ABOVE_MOB_LAYER, dir, animation_x, animation_y)
+	var/image/emissive_img = image(hologram_icon_file, src, icon_state, ABOVE_MOB_LAYER, dir, animation_x, animation_y)
 	emissive_img.plane = EMISSIVE_PLANE
 	emissive_img.color = _EMISSIVE_COLOR_NO_BLOOM(1)
 
-	flick_overlay_global(img, GLOB.clients, animation_duration)
-	flick_overlay_global(emissive_img, GLOB.clients, animation_duration)
+	flick_overlay_global(img, GLOB.clients, duration)
+	flick_overlay_global(emissive_img, GLOB.clients, duration)
 
 /obj/machinery/minimap_table/proc/activate(mob/activator)
 	if(active || !is_operational)
@@ -92,15 +93,17 @@
 	update_appearance(UPDATE_OVERLAYS)
 	var/obj/effect/abstract/main_light = middleman.primary_intercept
 	animate(main_light, time = 1 SECONDS)
+	play_animation("closing")
 
 /obj/machinery/minimap_table/proc/light_pulsate()
-	if(!active)
-		return
 	var/obj/effect/abstract/main_light = middleman.primary_intercept
-	// center it since we're a 2x2 machine
 	var/matrix/center = matrix()
 	center.Translate(16, 0)
 	main_light.transform = center
+	if(!active)
+		return
+	// center it since we're a 2x2 machine
+
 
 	var/matrix/bigTransform = matrix()
 	var/matrix/smallTransform = matrix()
