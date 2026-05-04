@@ -68,7 +68,7 @@
 
 			var/datum/manipulator_priority/prio = interaction_priorities[i]
 
-			if(!prio.active || prio.atom_typepath == /turf)
+			if(!prio.active || ispath(prio, /turf))
 				continue
 
 			if(!istype(thing, prio.atom_typepath))
