@@ -228,7 +228,8 @@ ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY
 	holder.fakekey = null
 	if(isobserver(mob))
 		mob.RemoveInvisibility(INVISIBILITY_SOURCE_STEALTHMODE)
-		mob.alpha = initial(mob.alpha)
+		if(!HAS_TRAIT_FROM(mob, TRAIT_INVISIMIN, ADMIN_TRAIT)) // Don't reset our alpha if we're also invisimin'd
+			mob.alpha = initial(mob.alpha)
 		if(mob.mind)
 			if(mob.mind.ghostname)
 				mob.name = mob.mind.ghostname
