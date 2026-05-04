@@ -638,6 +638,9 @@
   Jacquerel:
   - bugfix: The Hierophant Club will stop glowing when you can't use it to teleport
   - image: Updated the Hierophant Club so that it looks like the Hierophant
+  SmArtKar:
+  - bugfix: Fixed circuits bluescreening whenever you try to put text or numbers into
+      a STRING or ANY type field
   dresseronfire:
   - bugfix: You can now sic pets onto targets again
   - bugfix: Pointing at things no longer sometimes points at the wrong thing
