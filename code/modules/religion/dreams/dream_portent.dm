@@ -130,7 +130,7 @@
 			list("concentrate and ask again"),
 		))
 
-	for(var/datum/antagonist/nightmare/nightmare as anything in GLOB.antagonists)
+	for(var/datum/antagonist/nightmare/nightmare in GLOB.antagonists)
 		if(nightmare.owner?.current?.stat == CONSCIOUS)
 			return pick(list(
 				list("you have a terrible nightmare", "filled with indescribable horrors", "leaving you with a lingering sense of dread"),
@@ -140,7 +140,7 @@
 				list("you have a terrible nightmare", "filled with stabbing pain and suffocating darkness", "leaving you with a lingering sense of panic"),
 			))
 
-	for(var/datum/team/cult/cult as anything in GLOB.antagonist_teams)
+	for(var/datum/team/cult/cult in GLOB.antagonist_teams)
 		if(cult.cult_ascendent)
 			return list("the Blood Geometer, Nar'sie, invades your dream", "her pressence overwhelming and suffocating", "she eyes you greedily")
 
