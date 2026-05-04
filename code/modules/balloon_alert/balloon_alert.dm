@@ -34,6 +34,20 @@
 
 		balloon_alert(hearer, (hearer == src && self_message) || message)
 
+/// Create balloon alerts (text that floats up) to everything within range.
+/// Will only display to people who can hear.
+/atom/proc/balloon_alert_to_hearers(message, self_message, hearing_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
+	SHOULD_NOT_SLEEP(TRUE)
+
+	var/list/hearers = get_hearers_in_view(hearing_distance, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
+	hearers -= ignored_mobs
+
+	for (var/mob/hearer in hearers)
+		if(HAS_TRAIT(hearer, TRAIT_DEAF))
+			continue
+
+		balloon_alert(hearer, (hearer == src && self_message) || message)
+
 // Do not use.
 // MeasureText blocks. I have no idea for how long.
 // I would've made the maptext_height update on its own, but I don't know
@@ -42,6 +56,10 @@
 
 	var/client/viewer_client = viewer?.client
 	if (isnull(viewer_client))
+		return
+
+	if(!runechat_prefs_check(viewer, EMOTE_MESSAGE))
+		to_chat(viewer, span_emote("[icon2html(src, viewer)] [src.name]: [text]"))
 		return
 
 	var/image/balloon_alert = image(loc = isturf(src) ? src : get_atom_on_turf(src), layer = ABOVE_MOB_LAYER)

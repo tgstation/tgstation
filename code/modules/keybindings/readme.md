@@ -33,9 +33,9 @@ No client-set keybindings at this time, but it shouldn't be too hard if someone 
 
 Notes about certain keys:
 
-* `Tab` has client-sided behavior but acts normally
-* `T`, `O`, and `M` move focus to the input when pressed. This fires the keyUp macro right away.
-* `\` needs to be escaped in the dmf so any usage is `\\`
+- `Tab` has client-sided behavior but acts normally
+- `T`, `O`, and `M` move focus to the input when pressed. This fires the keyUp macro right away.
+- `\` needs to be escaped in the dmf so any usage is `\\`
 
 You cannot `TICK_CHECK` or check `world.tick_usage` inside of procs called by key down and up
 events. They happen outside of a byond tick and have no meaning there. Key looping

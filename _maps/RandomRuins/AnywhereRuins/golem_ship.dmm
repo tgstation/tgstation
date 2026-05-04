@@ -217,7 +217,7 @@
 /area/ruin/powered/golem_ship)
 "ok" = (
 /obj/structure/table,
-/obj/item/stack/sticky_tape{
+/obj/item/stack/medical/wrap/sticky_tape{
 	pixel_y = 12;
 	pixel_x = 4
 	},

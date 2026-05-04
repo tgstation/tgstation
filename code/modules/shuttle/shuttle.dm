@@ -74,7 +74,7 @@
 /obj/docking_port/singularity_act()
 	return FALSE
 
-/obj/docking_port/shuttleRotate()
+/obj/docking_port/shuttleRotate(rotation, params)
 	return //we don't rotate with shuttles via this code.
 
 ///returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle

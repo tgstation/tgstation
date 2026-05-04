@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish
 	name = "fish"
 	desc = "very bland"
+	abstract_type = /obj/item/fish
 	icon = 'icons/obj/aquarium/fish.dmi'
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -35,7 +36,10 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	obj_flags = UNIQUE_RENAME
 	item_flags = SLOWS_WHILE_IN_HAND
 	//we handle slowdowns internally, and the fish weight modifier from materials already contributes to it.
-	material_flags = MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_COLOR|MATERIAL_ADD_PREFIX|MATERIAL_NO_SLOWDOWN
+	material_flags = MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_COLOR|MATERIAL_ADD_PREFIX|MATERIAL_NO_SLOWDOWN|MATERIAL_NO_EDIBILITY
+
+	max_integrity = 200
+	integrity_failure = 0.5
 
 	/// Flags for fish variables that would otherwise be TRUE/FALSE
 	var/fish_flags = FISH_FLAG_SHOW_IN_CATALOG|FISH_DO_FLOP_ANIM|FISH_FLAG_EXPERIMENT_SCANNABLE
@@ -75,8 +79,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	///icon used when the fish is dead, ifset.
 	var/icon_state_dead
 
-	/// Current fish health. Dies at 0.
-	var/health = 100
 	/// The message shown when the fish dies.
 	var/death_text = "%SRC dies."
 
@@ -136,9 +138,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	/// The maximum size this fish can reach, calculated the first time update_size_and_weight() is called.
 	var/maximum_size
 
-	/// Weight in grams. Null until update_size_and_weight is called. Grind results scale with it. Don't think too hard how a trout could fit in a blender.
+	/// Weight in "kiloclam". Null until update_size_and_weight is called. Grind results scale with it. Don't think too hard how a trout could fit in a blender.
 	var/weight
-	/// Average weight for this fish type in grams
+	/// Average weight for this fish type in "kiloclam"
 	var/average_weight = 1000
 	/// Temporarily stores the new weight of the fish from randomize_size_and_weight() to be used by update_size_weight() later, so that it can be deferred.
 	var/temp_weight
@@ -210,16 +212,16 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		RegisterSignal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, PROC_REF(on_temp_animation))
 		check_flopping()
 	if(status != FISH_DEAD)
-		ADD_TRAIT(src, TRAIT_UNCOMPOSTABLE, REF(src)) //Composting a food that is not real food wouldn't work anyway.
+		ADD_TRAIT(src, TRAIT_UNCOMPOSTABLE, REF(src)) //Compost fish only when it's dead.
 		START_PROCESSING(SSobj, src)
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_FISH_STASIS), PROC_REF(enter_stasis))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_FISH_STASIS), PROC_REF(exit_stasis))
 
 	//Adding this because not all fish have the gore foodtype that makes them automatically eligible for dna infusion.
-	ADD_TRAIT(src, TRAIT_VALID_DNA_INFUSION, INNATE_TRAIT)
+	add_traits(list(TRAIT_DUCT_TAPE_UNREPAIRABLE, TRAIT_VALID_DNA_INFUSION), INNATE_TRAIT)
 
-	//stops new fish from being able to reproduce right away.
+	//new fish should be modestly hungry and cannot reproduce right away.
 	breeding_wait = world.time + (breeding_timeout * NEW_FISH_BREEDING_TIMEOUT_MULT)
 	last_feeding = world.time - (feeding_frequency * NEW_FISH_LAST_FEEDING_MULT)
 
@@ -230,6 +232,37 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	register_context()
 	register_item_context()
 
+	if(!apply_qualities || !PERFORM_ALL_TESTS(focus_only/fish_population) || type == abstract_type || stable_population > 1)
+		return
+	if(length(compatible_types))
+		for(var/obj/item/fish/fishie as anything in compatible_types)
+			if(fishie::stable_population > 1)
+				if(!HAS_TRAIT(src, TRAIT_FISH_RECESSIVE))
+					stack_trace("[type] has a stable population of [stable_population] but is compatible with fishes with a higher stable population. \
+						However, it doesn't have the [/datum/fish_trait/recessive] trait. Either increase its stable population or add the trait to it.")
+				return
+	if(!HAS_TRAIT(src, TRAIT_FISH_NO_MATING) && !HAS_TRAIT(src, TRAIT_FISH_CROSSBREEDER))
+		var/list/pick_one = list(
+			/datum/fish_trait/crossbreeder,
+			/datum/fish_trait/no_mating,
+		)
+		stack_trace("[type] has a stable_population of [stable_population] but has neither of these traits: [english_list(pick_one)]. \
+			Either increase its stable population or add one of these traits to it.")
+
+/obj/item/fish/grind_results()
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/list/grind_results = fish_grind_results()
+	for(var/reagent_type in grind_results)
+		grind_results[reagent_type] *= max(FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1), 0.1)
+
+	return grind_results
+
+/obj/item/fish/proc/fish_grind_results()
+	RETURN_TYPE(/list/datum/reagent)
+
+	return list()
+
 /obj/item/fish/suicide_act(mob/living/user)
 	if(force == 0)
 		user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but nothing happens!"))
@@ -239,6 +272,11 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	ADD_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
 	slapperoni(user, iteration = 1)
 	return MANUAL_SUICIDE
+
+/obj/item/fish/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+	return ..()
 
 /obj/item/fish/proc/slapperoni(mob/living/user, iteration)
 	stoplag(0.1 SECONDS)
@@ -290,7 +328,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(!HAS_TRAIT(interacting_with, TRAIT_CATCH_AND_RELEASE))
 		return NONE
 	if(HAS_TRAIT(src, TRAIT_NODROP))
-		balloon_alert(user, "it's stuck to your hand!")
+		balloon_alert(user, "[p_theyre()] stuck to your hand!")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "releasing fish...")
 	if(!do_after(user, 3 SECONDS, interacting_with))
@@ -298,7 +336,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	balloon_alert(user, "fish released")
 	var/goodbye_text = "Bye bye [name]."
 	if(status == FISH_DEAD && !HAS_MIND_TRAIT(user, TRAIT_NAIVE))
-		goodbye_text = "May it rest in peace..."
+		goodbye_text = "May [p_they()] rest in peace..."
 	user.visible_message(span_notice("[user] releases [src] into [interacting_with]"), \
 		span_notice("You release [src] into [interacting_with]. [goodbye_text]"), \
 		span_notice("You hear a splash."))
@@ -343,7 +381,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/proc/on_fish_cooked(datum/source, cooking_time)
 	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE)
-	adjust_health(0)
+	damage_fish(max_integrity)
 
 	//Remove the blood from the reagents holder and reward the player with some extra nutriment added to the fish.
 	var/datum/reagent/consumable/nutriment/protein/protein = reagents.has_reagent(/datum/reagent/consumable/nutriment/protein, check_subtypes = TRUE)
@@ -376,7 +414,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/proc/on_fish_cooked_again(datum/source, cooking_time)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(src, TRAIT_FISH_SURVIVE_COOKING))
-		adjust_health(0)
+		damage_fish(max_integrity)
 	if(cooking_time >= FISH_SAFE_COOKING_DURATION)
 		well_cooked()
 
@@ -409,7 +447,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		return
 	bites_amount++
 	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
-	adjust_health(health - (initial(health) / bites_to_finish) * 3)
+	damage_fish((max_integrity / bites_to_finish) * 3)
 	flinch_on_eat(eater, feeder)
 
 /obj/item/fish/proc/flinch_on_eat(mob/living/eater, mob/living/feeder)
@@ -466,8 +504,8 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	. = ..()
 	if(!reagents)
 		return
-	reagents.convert_reagent(/datum/reagent/consumable/nutriment/protein, /datum/reagent/consumable/liquidgibs, 0.4, include_source_subtypes = TRUE)
-	reagents.convert_reagent(/datum/reagent/consumable/nutriment/protein, /datum/reagent/blood, 0.2, include_source_subtypes = TRUE)
+	reagents.convert_reagent(/datum/reagent/consumable/nutriment/protein, /datum/reagent/consumable/liquidgibs, multiplier = 0.4, include_source_subtypes = TRUE)
+	reagents.convert_reagent(/datum/reagent/consumable/nutriment/protein, /datum/reagent/blood, multiplier = 0.2, include_source_subtypes = TRUE)
 
 ///When processed, the reagents inside this fish will be passed to the created atoms.
 /obj/item/fish/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option, list/created_atoms)
@@ -510,22 +548,25 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		. += span_boldnicegreen("Caught by [catcher_name] on [catch_date].")
 
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
-		. += span_notice("It's [size] cm long.")
-		. += span_notice("It weighs [weight] g.")
+		. += span_notice("[p_theyre(TRUE)] [size] cm long.")
+		. += span_notice("[p_they(TRUE)] weighs [weight] [span_tooltip("the standard unit of measurement for space age fish", "kiloclam")].")
+
+		if(HAS_TRAIT(src, TRAIT_FISH_GENEGUNNED))
+			. += span_warning("[p_theyve(TRUE)] been edited by a fish genegun. [p_they(TRUE)]'ll die if edited again.")
 
 	. += get_health_warnings(user, always_deep = FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
-		. += span_smallnoticeital("It can be used as a fishing bait.")
+		. += span_smallnoticeital("[p_they(TRUE)] can be used as a fishing bait.")
 
 	if(bites_amount)
-		. += span_warning("It's been bitten by someone.")
+		. += span_warning("[p_theyve(TRUE)] been bitten by someone.")
 
 /obj/item/fish/proc/get_health_warnings(mob/user, always_deep = FALSE)
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) && !always_deep)
 		return
 	if(status == FISH_DEAD)
-		return span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
+		return span_deadsay("[p_theyre(TRUE)] [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
 
 	var/list/warnings = list()
 	if(get_starvation_mult())
@@ -533,7 +574,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
 		warnings += "drowning"
 
-	var/health_ratio = health / initial(health)
+	var/health_ratio = get_health_percentage()
 	switch(health_ratio)
 		if(0 to 0.25)
 			warnings += "dying"
@@ -545,7 +586,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 			warnings += "mostly healthy"
 
 	if(length(warnings))
-		. += span_warning("It's [english_list(warnings)].")
+		. += span_warning("[p_theyre(TRUE)] [english_list(warnings)].")
 
 	return .
 
@@ -624,8 +665,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	var/make_edible = !weight
 	if(weight)
-		for(var/reagent_type in grind_results)
-			grind_results[reagent_type] /= max(FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1), 0.1)
 		if(reagents) //This fish has reagents. Adjust the maximum volume of the reagent holder and do some math to adjut the reagents too.
 			var/new_weight_ratio = new_weight / weight
 			var/volume_diff = reagents.maximum_volume * new_weight_ratio - reagents.maximum_volume
@@ -657,17 +696,14 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		var/mob/mob = loc
 		mob.update_equipment_speed_mods()
 
-	for(var/reagent_type in grind_results)
-		grind_results[reagent_type] *= max(FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1), 0.1)
-
 	var/mats_len = length(custom_materials)
 	if(update_materials && mats_len)
 		var/list/new_mats_list = custom_materials.Copy()
 		var/multiplier = 1 / mats_len
 		var/unmodified_weight = weight
 		for(var/mat_type in custom_materials)
-			var/datum/material/material = GET_MATERIAL_REF(mat_type)
-			unmodified_weight /= GET_MATERIAL_MODIFIER(material.fish_weight_modifier, multiplier)
+			var/datum/material/material = SSmaterials.get_material(mat_type)
+			unmodified_weight /= GET_MATERIAL_MODIFIER(1 + (material.get_property(MATERIAL_DENSITY) - 4) * 0.1, multiplier)
 		multiplier = unmodified_weight / weight
 		for(var/mat_type in new_mats_list)
 			new_mats_list[mat_type] *= multiplier
@@ -707,7 +743,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	block_chance = initial(block_chance)
 	armour_penetration = initial(armour_penetration)
 	wound_bonus = initial(wound_bonus)
-	bare_wound_bonus = initial(bare_wound_bonus)
+	exposed_wound_bonus = initial(exposed_wound_bonus)
 	toolspeed = initial(toolspeed)
 
 	var/weight_rank = GET_FISH_WEIGHT_RANK(weight)
@@ -719,12 +755,16 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(bonus_malus)
 		calculate_fish_force_bonus(bonus_malus)
 
+	throwforce = force
+
 	if(material_flags & MATERIAL_EFFECTS && length(custom_materials)) //struck by metal gen or something.
-		var/multiplier = 1 / length(custom_materials)
 		if(material_flags & MATERIAL_AFFECT_STATISTICS)
+			var/index = 1
 			for(var/current_material in custom_materials)
-				var/datum/material/material = GET_MATERIAL_REF(current_material)
-				force *= GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+				var/datum/material/material = SSmaterials.get_material(current_material)
+				change_material_strength(material, custom_materials[material], get_material_multiplier(material, custom_materials, index))
+				index += 1
+
 		var/datum/material/master = get_master_material()
 		if(master?.item_sound_override)
 			hitsound = master.item_sound_override
@@ -735,10 +775,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 			drop_sound = master.item_sound_override
 
 	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
-
-	throwforce = force
-
-	if(force >=15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
+	if(force >= 15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
 		hitsound = SFX_ALT_FISH_SLAP // do more damage - do heavier slap sound
 
 ///A proc that makes the fish slightly stronger or weaker if there's a noticeable discrepancy between size and weight.
@@ -769,9 +806,8 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/apply_single_mat_effect(datum/material/custom_material, amount, multiplier)
 	. = ..()
 	//The materials are being increased/decreased along with the weight.
-	if(fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT)
-		return
-	material_weight_mult *= GET_MATERIAL_MODIFIER(custom_material.fish_weight_modifier, multiplier)
+	if(!(fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT))
+		material_weight_mult *= GET_MATERIAL_MODIFIER(1 + (custom_material.get_property(MATERIAL_DENSITY) - 4) * 0.1, multiplier)
 
 /obj/item/fish/apply_material_effects()
 	. = ..()
@@ -992,7 +1028,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	switch(new_status)
 		if(FISH_ALIVE)
 			status = FISH_ALIVE
-			health = initial(health) // since the fishe has been revived
+			repair_damage(max_integrity)
 			regenerate_bites(bites_amount)
 			last_feeding = world.time //reset hunger
 			check_flopping()
@@ -1027,10 +1063,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 			if(!isnum(var_value) || var_value == 0)
 				return FALSE
 			update_size_and_weight(size, var_value)
-		if(NAMEOF(src, health))
-			if(!isnum(var_value))
-				return FALSE
-			adjust_health(health)
 		if(NAMEOF(src, fish_flags))
 			var/old_fish_flags = fish_flags
 			fish_flags = var_value
@@ -1078,7 +1110,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		balloon_alert(user, "invalid creature!")
 		return
 	if(status != FISH_DEAD)
-		balloon_alert(user, "it's not dead!")
+		balloon_alert(user, "[p_theyre(TRUE)] not dead!")
 		return
 	set_status(FISH_ALIVE)
 	injector.expend(src, user)
@@ -1088,7 +1120,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	SIGNAL_HANDLER
 	visual.icon = dedicated_in_aquarium_icon || icon
 	visual.icon_state = dedicated_in_aquarium_icon_state || "[initial(icon_state)]_small"
-	visual.color = aquarium_vc_color
 
 /obj/item/fish/proc/randomize_aquarium_position(datum/source, atom/movable/current_aquarium, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
@@ -1205,33 +1236,47 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	return TRUE
 
 /obj/item/fish/proc/process_health(seconds_per_tick)
-	var/health_change_per_second = 0
+	var/health_change = 0
 	if(!proper_environment())
-		health_change_per_second -= 2.5 //Dying here
+		health_change -= 2.5 //Dying here
 	var/starvation_mult = get_starvation_mult()
 	if(starvation_mult)
-		health_change_per_second -= 0.25 * starvation_mult //Starving
+		health_change -= 0.25 * starvation_mult //Starving
 	else
-		health_change_per_second += 0.5 //Slowly healing
+		health_change += 0.5 //Slowly healing
 	if(HAS_TRAIT(src, TRAIT_FISH_ON_TESLIUM))
-		health_change_per_second -= 0.65
+		health_change -= 0.65
 
-	adjust_health(health + health_change_per_second * seconds_per_tick)
+	if(!health_change)
+		return
 
-/obj/item/fish/proc/adjust_health(amount)
-	if(status == FISH_DEAD || amount == health)
+	health_change *= seconds_per_tick
+	if(health_change < 0)
+		damage_fish(-health_change)
+	else
+		repair_damage(health_change)
+
+///Used to damage this fish while it's still alive. Prevents the fish from taking damage beyond the integrity_failure threshold
+/obj/item/fish/proc/damage_fish(amount)
+	if(status == FISH_DEAD || amount <= 0)
 		return
-	var/pre_health = health
-	var/initial_health = initial(health)
-	health = clamp(amount, 0, initial_health)
-	if(health <= 0)
-		set_status(FISH_DEAD)
+	var/current_integrity = get_integrity()
+	take_damage(min(amount, current_integrity - max_integrity * integrity_failure), sound_effect = FALSE, armour_penetration = 100)
+
+/// fish dies when its integrity reaches 50%
+/obj/item/fish/atom_break(damage_flag)
+	. = ..()
+	set_status(FISH_DEAD)
+
+/obj/item/fish/repair_damage(amount)
+	. = ..()
+	if(!. || !bites_amount)
 		return
-	if(amount < pre_health || !bites_amount)
-		return
-	var/health_to_pre_health_diff = amount - pre_health
-	var/init_health_to_pre_diff = initial_health - pre_health
-	var/bites_to_recover = bites_amount * (health_to_pre_health_diff / init_health_to_pre_diff)
+	var/current_integrity = get_integrity()
+	var/old_integrity = current_integrity - amount
+	var/old_max_integrity_diff = max_integrity - old_integrity
+	var/percent = (max_integrity - current_integrity)  / old_max_integrity_diff
+	var/bites_to_recover = bites_amount * percent
 	regenerate_bites(bites_to_recover)
 
 /obj/item/fish/proc/regenerate_bites(amount)
@@ -1240,6 +1285,12 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		return
 	bites_amount -= amount
 	generate_fish_reagents(amount)
+
+/// returns a value between 0 and 1 representing how much integrity the fish has before dying (atom_break)
+/obj/item/fish/proc/get_health_percentage()
+	var/max_health = max_integrity * (1 - integrity_failure)
+	var/death_thres = max_integrity - max_health
+	return CLAMP01((get_integrity() - death_thres) / max_health)
 
 /// Returns tracked_fish_by_type but flattened and without the items in the blacklist, also shuffled if shuffle is TRUE.
 /obj/item/fish/proc/get_aquarium_fishes(shuffle = FALSE, blacklist)
@@ -1258,7 +1309,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		return FALSE
 	if(!being_targeted && length(get_aquarium_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
-	return !HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH) && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
+	return !HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH) && get_health_percentage() >= 0.8 && world.time >= breeding_wait
 
 /obj/item/fish/proc/try_to_reproduce()
 	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
@@ -1270,19 +1321,17 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(!HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
 		var/list/available_fishes = list()
 		SEND_SIGNAL(loc, COMSIG_AQUARIUM_GET_REPRODUCTION_CANDIDATES, src, available_fishes)
+		available_fishes -= src //self-reproduction goes last
 		if(length(available_fishes))
-			//make sure we check if the fish can reproduce with itself last, since that should've lower priority
-			available_fishes = shuffle(available_fishes) - src
-			available_fishes += src
+			available_fishes = shuffle(available_fishes)
 			for(var/obj/item/fish/other_fish as anything in available_fishes)
 				if(other_fish.ready_to_reproduce(TRUE))
 					second_fish = other_fish
 					break
 
-	if(!second_fish || second_fish == src) //check if the fish can self-reproduce in these cases.
-		if(!HAS_TRAIT(src, TRAIT_FISH_SELF_REPRODUCE))
-			return FALSE
-		second_fish = null //set it to null, since this will make the following operations a bit easier
+	//check if the fish can self-reproduce if there's no other option
+	if(!second_fish && !HAS_TRAIT(src, TRAIT_FISH_SELF_REPRODUCE))
+		return FALSE
 
 	if(PERFORM_ALL_TESTS(fish_breeding) && second_fish && !length(evolution_types))
 		return create_offspring(second_fish.type, second_fish)
@@ -1326,6 +1375,10 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	return create_offspring(chosen_type, second_fish, chosen_evolution)
 
+///The timeout multiplier for offspring fish, the ones generated when two compatible fish are coupled
+#define OFFSPRING_FISH_BREEDING_TIMEOUT_MULT 2
+
+/// A product of fish breeding is spawned, and it's inherited traits are handled here.
 /obj/item/fish/proc/create_offspring(chosen_type, obj/item/fish/partner, datum/fish_evolution/evolution)
 	var/obj/item/fish/new_fish = new chosen_type (loc, FALSE)
 	//Try to pass down compatible traits based on inheritability
@@ -1340,7 +1393,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		var/ratio_weight = new_fish.average_size * (((weight / average_weight) + (partner.weight / partner.average_weight)) / 2)
 		var/mean_weight = (weight + partner.weight)/2
 		new_fish.randomize_size_and_weight((mean_size + ratio_size) * 0.5, (mean_weight + ratio_weight) * 0.5, 0.3, update = FALSE)
-		partner.breeding_wait = world.time + breeding_timeout
+		partner.breeding_wait = world.time + partner.breeding_timeout
 
 		if(length(partner.custom_materials))
 			if(length(custom_materials))
@@ -1365,9 +1418,17 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	else
 		new_fish.update_size_and_weight(new_fish.temp_size, new_fish.temp_weight)
 
+
+	var/list/fishing_data = list(new_fish.size, new_fish.weight, new_fish.custom_materials)
+	log_fish("[new_fish] has been bred at [new_fish.drop_location()] from [partner].", fishing_data)
+
 	breeding_wait = world.time + breeding_timeout
 
+	new_fish.breeding_wait = world.time + new_fish.breeding_timeout * OFFSPRING_FISH_BREEDING_TIMEOUT_MULT
+
 	return new_fish
+
+#undef OFFSPRING_FISH_BREEDING_TIMEOUT_MULT
 
 #define PAUSE_BETWEEN_PHASES 15
 #define PAUSE_BETWEEN_FLOPS 2
@@ -1461,15 +1522,15 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 #define FISH_PRICE_SOFT_CAP_EXPONENT 0.86
 
 ///Returns the price of this fish, for the fish export.
-/obj/item/fish/proc/get_export_price(price, elasticity_percent)
-	var/size_weight_exponentation = (size * weight * FISH_PRICE_MULTIPLIER)^FISH_PRICE_CURVE_EXPONENT
+/obj/item/fish/proc/get_export_price(price)
+	var/size_weight_exponentation = (size * weight * FISH_PRICE_MULTIPLIER)**FISH_PRICE_CURVE_EXPONENT
 	var/raw_price = price + size_weight_exponentation
 	if(raw_price >= FISH_PRICE_SOFT_CAP_THRESHOLD + 1)
-		var/soft_cap = (raw_price - FISH_PRICE_SOFT_CAP_THRESHOLD)^FISH_PRICE_SOFT_CAP_EXPONENT
+		var/soft_cap = (raw_price - FISH_PRICE_SOFT_CAP_THRESHOLD)**FISH_PRICE_SOFT_CAP_EXPONENT
 		raw_price = FISH_PRICE_SOFT_CAP_THRESHOLD + soft_cap
 	if(HAS_TRAIT(src, TRAIT_FISH_LOW_PRICE)) //Avoid printing money by simply ordering fish and sending it back.
 		raw_price *= 0.05
-	return raw_price * elasticity_percent
+	return raw_price
 
 #undef FISH_PRICE_MULTIPLIER
 #undef FISH_PRICE_CURVE_EXPONENT
@@ -1491,7 +1552,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		happiness_value += 2
 	if(bites_amount) // ouch
 		happiness_value -= 2
-	if(health < initial(health) * 0.6)
+	if(get_health_percentage() < 0.6)
 		happiness_value -= 1
 	return clamp(happiness_value, FISH_SAD, FISH_VERY_HAPPY)
 
@@ -1531,7 +1592,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		else
 			user.visible_message(
 				span_warning("[src] bites [user]'s hand!"),
-				span_warning("You pet [src] as you hold it, only for [p_them()] to happily bite back!"),
+				span_warning("You pet [src] as you hold [p_they()], only for [p_them()] to happily bite back!"),
 				vision_distance = DEFAULT_MESSAGE_RANGE - 3,
 			)
 		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
@@ -1541,7 +1602,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		if(in_aquarium)
 			to_chat(user, span_notice("[src] dances around!"))
 		else
-			to_chat(user, span_notice("You pet [src] as you hold it."))
+			to_chat(user, span_notice("You pet [src] as you hold [p_they()]."))
 		user.add_mood_event("petted_fish", /datum/mood_event/fish_petting, src, HAS_MIND_TRAIT(user, TRAIT_MORBID))
 		playsound(src, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
 	addtimer(CALLBACK(src, PROC_REF(undo_petted)), 30 SECONDS)
@@ -1549,10 +1610,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 /obj/item/fish/proc/undo_petted()
 	fish_flags &= ~FISH_FLAG_PETTED
-
-/obj/item/fish/update_atom_colour()
-	. = ..()
-	aquarium_vc_color = color || initial(aquarium_vc_color)
 
 ///Proc called in trophy_fishes.dm, when a fish is mounted on persistent trophy mounts
 /obj/item/fish/proc/persistence_save(list/data)

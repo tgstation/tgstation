@@ -18,6 +18,7 @@
 	desc = "A flower crown made out of the flowers of the rainbow bunch plant."
 	icon_state = "rainbow_bunch_crown_1"
 	base_icon_state = "rainbow_bunch_crown"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.3) //tied together with cable coil
 
 /obj/item/clothing/head/costume/garland/rainbowbunch/Initialize(mapload)
 	. = ..()
@@ -38,16 +39,19 @@
 	desc = "A bright flower crown made out sunflowers that is sure to brighten up anyone's day!"
 	icon_state = "sunflower_crown"
 	worn_icon_state = "sunflower_crown"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.3) //tied together with cable coil
 
 /obj/item/clothing/head/costume/garland/poppy
 	name = "poppy crown"
 	desc = "A flower crown made out of a string of bright red poppies."
 	icon_state = "poppy_crown"
 	worn_icon_state = "poppy_crown"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.3) //tied together with cable coil
 
 /obj/item/clothing/head/costume/garland/lily
 	name = "lily crown"
 	desc = "A leafy flower crown with a cluster of large white lilies at the front."
 	icon_state = "lily_crown"
 	worn_icon_state = "lily_crown"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.3) //tied together with cable coil
 

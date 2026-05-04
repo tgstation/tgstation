@@ -126,6 +126,7 @@
 	foodtypes = MEAT|FRIED|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/rice_dough
 	name = "rice dough"
@@ -210,9 +211,10 @@
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 	)
 	tastes = list("rice" = 1, "meat" = 1, "pineapple" = 1, "veggies" = 1)
-	foodtypes = MEAT | GRAIN | PINEAPPLE | FRUIT | VEGETABLES
+	foodtypes = MEAT | GRAIN | PINEAPPLE | FRUIT | VEGETABLES | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/ikareis
 	name = "ikareis"
@@ -229,6 +231,7 @@
 	foodtypes = MEAT | GRAIN | SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/hawaiian_fried_rice
 	name = "\improper Hawaiian fried rice"
@@ -260,6 +263,7 @@
 	foodtypes = MEAT | GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/mediterranean_fried_rice
 	name = "mediterranean fried rice"
@@ -275,6 +279,7 @@
 	foodtypes = MEAT | GRAIN | VEGETABLES | DAIRY | FRUIT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/egg_fried_rice
 	name = "egg fried rice"
@@ -286,13 +291,13 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
 	tastes = list("rice" = 1, "egg" = 1, "soy sauce" = 1)
-	foodtypes = MEAT | GRAIN
+	foodtypes = MEAT | GRAIN | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/salad/egg_fried_rice/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 /obj/item/food/salad/bibimbap
 	name = "bibimbap"
@@ -306,13 +311,14 @@
 		/datum/reagent/consumable/capsaicin = 2,
 	)
 	tastes = list("rice" = 1, "spicy cabbage" = 1, "chilli heat" = 1, "egg" = 1, "meat" = 1)
-	foodtypes = MEAT | VEGETABLES | GRAIN
+	foodtypes = MEAT | VEGETABLES | GRAIN | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/bibimbap/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 // Noodles
 /obj/item/food/salad/bulgogi_noodles
@@ -329,6 +335,7 @@
 	foodtypes = MEAT | GRAIN | VEGETABLES | FRUIT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/yakisoba_katsu
 	name = "yakisoba katsu"
@@ -344,6 +351,7 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/martian_fried_noodles
 	name = "\improper Martian fried noodles"
@@ -356,9 +364,10 @@
 		/datum/reagent/consumable/nutriment = 8,
 	)
 	tastes = list("noodles" = 1, "meat" = 1, "nuts" = 1, "onion" = 1, "egg" = 1)
-	foodtypes = GRAIN | NUTS | MEAT | VEGETABLES
+	foodtypes = GRAIN | NUTS | MEAT | VEGETABLES | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/simple_fried_noodles
 	name = "simple fried noodles"
@@ -377,7 +386,7 @@
 
 /obj/item/food/salad/simple_fried_noodles/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 // Curry
 /obj/item/food/salad/setagaya_curry //let me explain...
@@ -395,6 +404,7 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN|FRUIT|SUGAR
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_5 //Extensive and secretly guarded. Was previously 2 and I thought it was pathetic.
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 // Burgers and Sandwiches
 /obj/item/food/burger/big_blue
@@ -411,6 +421,7 @@
 	foodtypes = MEAT | GRAIN | DAIRY | VEGETABLES | FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //It's THE big blue, Baby!
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/burger/chappy
 	name = "\improper Chappy patty"
@@ -422,7 +433,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("bun" = 1, "fried pork" = 2, "egg" = 1, "cheese" = 1, "ketchup" = 1)
-	foodtypes =  MEAT|GRAIN|DAIRY|FRIED
+	foodtypes =  MEAT|GRAIN|DAIRY|FRIED|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -441,6 +452,7 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/marte_cubano_sandwich
 	name = "\improper Marte Cubano sandwich"
@@ -456,6 +468,7 @@
 	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/little_shiro_sandwich
 	name = "\improper Little Shiro sandwich"
@@ -469,9 +482,10 @@
 		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("egg" = 1, "meat" = 1, "kimchi" = 1, "mozzarella" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED
+	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/croque_martienne
 	name = "croque-martienne"
@@ -484,9 +498,10 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("egg" = 1, "toast" = 1, "pork" = 1, "pineapple" = 1, "cheese" = 1)
-	foodtypes = MEAT|GRAIN|FRUIT|DAIRY|FRIED|PINEAPPLE|BREAKFAST
+	foodtypes = MEAT|GRAIN|FRUIT|DAIRY|FRIED|PINEAPPLE|BREAKFAST|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/prospect_sunrise
 	name = "\improper Prospect Sunrise"
@@ -499,9 +514,10 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("egg" = 1, "toast" = 1, "bacon" = 1, "pickles" = 1, "cheese" = 1)
-	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN | BREAKFAST
+	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN | BREAKFAST | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 // Snacks
 /obj/item/food/takoyaki
@@ -520,7 +536,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/takoyaki/russian
-	name = "Russian takoyaki"
+	name = "russian takoyaki"
 	desc = "A dangerous twist on a classic dish, that makes for the perfect cover for evading the police."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "russian_takoyaki"
@@ -548,6 +564,7 @@
 	foodtypes = MEAT|GRAIN|FRIED|VEGETABLES|DAIRY|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Batter AND Cargo ingredients.
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/okonomiyaki
 	name = "okonomiyaki"
@@ -566,7 +583,7 @@
 //hey, the name literally means "grilled how you like it", it'd be crazy to not make it customisable
 /obj/item/food/okonomiyaki/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 /obj/item/food/brat_kimchi
 	name = "brat-kimchi"
@@ -583,6 +600,7 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/tonkatsuwurst
 	name = "tonkatsuwurst"
@@ -598,6 +616,7 @@
 	foodtypes = MEAT|VEGETABLES|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Cargo ingredients and a few steps.
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/kebab/ti_hoeh_koe
 	name = "ti hoeh koe skewer"
@@ -639,9 +658,10 @@
 		/datum/reagent/consumable/nutriment/protein = 4,
 	)
 	tastes = list("curry" = 1, "egg" = 1, "pastry" = 1)
-	foodtypes = GRAIN | MEAT | VEGETABLES | FRIED
+	foodtypes = GRAIN | MEAT | VEGETABLES | FRIED | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/roti_john
 	name = "roti john"
@@ -654,9 +674,10 @@
 		/datum/reagent/consumable/nutriment = 10,
 	)
 	tastes = list("bread" = 1, "egg" = 1, "meat" = 1, "onion" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|BREAKFAST
+	foodtypes = MEAT|VEGETABLES|GRAIN|BREAKFAST|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/izakaya_fries
 	name = "izakaya fries"
@@ -688,6 +709,7 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/loco_moco
 	name = "loco moco"
@@ -699,9 +721,10 @@
 		/datum/reagent/consumable/nutriment/protein = 8,
 	)
 	tastes = list("rice" = 1, "burger" = 1, "gravy" = 1, "egg" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|FRIED
+	foodtypes = MEAT|VEGETABLES|GRAIN|FRIED|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/wild_duck_fries
 	name = "wild duck fries"
@@ -718,6 +741,7 @@
 	foodtypes = MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Requires a complex 3 as an ingredient.
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/little_hawaii_hotdog
 	name = "\improper Little Hawaii hotdog"
@@ -734,6 +758,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_price = PAYCHECK_CREW * 1.2
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/salt_chilli_fries
 	name = "salt n' chilli fries"
@@ -778,6 +803,7 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/chapsilog
 	name = "chapsilog"
@@ -791,7 +817,7 @@
 		/datum/reagent/consumable/garlic = 1,
 	)
 	tastes = list("ham" = 1, "garlic rice" = 1, "egg" = 1)
-	foodtypes = MEAT|GRAIN|FRIED|BREAKFAST|VEGETABLES
+	foodtypes = MEAT|GRAIN|FRIED|BREAKFAST|VEGETABLES|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -806,7 +832,7 @@
 		/datum/reagent/consumable/nutriment = 3,
 	)
 	tastes = list("ham" = 1, "onion" = 1, "pepper" = 1, "potato" = 1)
-	foodtypes = MEAT | VEGETABLES | BREAKFAST
+	foodtypes = MEAT | VEGETABLES | BREAKFAST | EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -840,6 +866,7 @@
 	foodtypes = MEAT|GRAIN|FRUIT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/huoxing_tofu
 	name = "\improper Huoxing tofu"
@@ -856,6 +883,7 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/feizhou_ji
 	name = "fēizhōu jī"
@@ -871,7 +899,7 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
-
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/galinha_de_cabidela
 	name = "galinha de cabidela"
@@ -886,6 +914,7 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/katsu_curry
 	name = "katsu curry"
@@ -900,6 +929,7 @@
 	foodtypes = MEAT|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/beef_bowl
 	name = "beef bowl"
@@ -915,6 +945,7 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/salt_chilli_bowl
 	name = "salt n' chilli octopus bowl"
@@ -944,7 +975,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("seafood" = 1, "rice" = 1, "egg" = 1, "onion" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN|SEAFOOD
+	foodtypes = MEAT|VEGETABLES|GRAIN|SEAFOOD|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -977,7 +1008,7 @@
 		/datum/reagent/consumable/garlic = 1,
 	)
 	tastes = list("yoghurt" = 1, "garlic" = 1, "lemon" = 1, "egg" = 1, "chilli heat" = 1)
-	foodtypes = MEAT|VEGETABLES|DAIRY|FRIED|BREAKFAST
+	foodtypes = MEAT|VEGETABLES|DAIRY|FRIED|BREAKFAST|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -996,6 +1027,7 @@
 	foodtypes = MEAT|GRAIN|FRUIT|SUGAR|ORANGES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 // Desserts
 /obj/item/food/cake/spekkoek
@@ -1051,7 +1083,7 @@
 		/datum/reagent/consumable/sugar = 4,
 	)
 	tastes = list("custard" = 1, "vanilla" = 1, "sweet pastry" = 1)
-	foodtypes = GRAIN|FRUIT|DAIRY
+	foodtypes = GRAIN|FRUIT|DAIRY|EGG
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -1213,6 +1245,7 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN|FRUIT|PINEAPPLE|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Uses Sambal
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	custom_price = PAYCHECK_CREW * 2
 
 /obj/item/food/frickles
@@ -1277,6 +1310,7 @@
 	foodtypes = MEAT | RAW
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/kebab/raw_ballpark_tsukune/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/kebab/ballpark_tsukune, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -1294,6 +1328,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 // Ethereal-suitable cross-culture food
 /*	Ethereals are, as part of the uplifting process, considered as citizens of the Terran Federation.

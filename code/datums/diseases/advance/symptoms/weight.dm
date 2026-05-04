@@ -1,5 +1,5 @@
 /*Weight Loss
- * Reduces stealth
+ * No effect on stealth
  * Increases resistance
  * Reduces stage speed
  * Reduces transmissibility
@@ -9,7 +9,7 @@
 	name = "Weight Loss"
 	desc = "The virus mutates the host's metabolism, making it almost unable to gain nutrition from food."
 	illness = "Placid Reflux"
-	stealth = -2
+	stealth = 0
 	resistance = 2
 	stage_speed = -2
 	transmittable = -2
@@ -19,6 +19,8 @@
 	symptom_delay_min = 15
 	symptom_delay_max = 45
 	required_organ = ORGAN_SLOT_STOMACH
+	symptom_cure = /datum/reagent/medicine/diphenhydramine // It's good with terrible stats, it should be harder to cure
+	cure_color = "orange"
 	threshold_descs = list(
 		"Stealth 4" = "The symptom is less noticeable."
 	)

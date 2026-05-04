@@ -23,16 +23,18 @@
 		RegisterSignal(controlled_drone,COMSIG_QDELETING, PROC_REF(drone_destroyed))
 		RegisterSignal(controlled_drone,COMSIG_EXODRONE_STATUS_CHANGED, PROC_REF(on_exodrone_status_changed))
 		update_icon()
+		playsound(src, 'sound/machines/terminal/terminal_on.ogg', 20, vary = TRUE)
 
 /obj/machinery/computer/exodrone_control_console/proc/on_exodrone_status_changed()
 	SIGNAL_HANDLER
 	//Notify we need human action and switch screeb icon to alert.
-	playsound(src,'sound/machines/ping.ogg',30,FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 20, vary = TRUE)
 	update_icon()
 
 /obj/machinery/computer/exodrone_control_console/proc/drone_destroyed()
 	SIGNAL_HANDLER
 	signal_lost = TRUE
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 20, vary = TRUE)
 	end_drone_control()
 
 /obj/machinery/computer/exodrone_control_console/proc/end_drone_control()
@@ -41,6 +43,7 @@
 		UnregisterSignal(controlled_drone,list(COMSIG_QDELETING,COMSIG_EXODRONE_STATUS_CHANGED))
 		controlled_drone = null
 		update_icon()
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 20, vary = TRUE)
 
 /obj/machinery/computer/exodrone_control_console/Destroy()
 	. = ..()
@@ -114,7 +117,7 @@
 			signal_lost = FALSE
 			return TRUE
 		if("self_destruct")
-			qdel(controlled_drone) //var will be nulled in signal response
+			controlled_drone.handle_deconstruct()
 			return TRUE
 		if("add_tool")
 			if(controlled_drone && controlled_drone.drone_status == EXODRONE_IDLE)

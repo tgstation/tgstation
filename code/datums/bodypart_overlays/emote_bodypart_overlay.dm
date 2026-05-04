@@ -39,13 +39,22 @@
  *
  * Returns the given overlay, which can be deleted to stop displaying it. Will return null if no bodypart matching the overlay's attached_body_zone field can be found.
  */
-/mob/living/carbon/human/proc/give_emote_overlay(overlay_typepath)
-	var/datum/bodypart_overlay/simple/emote/overlay = new overlay_typepath()
-	var/obj/item/bodypart/bodypart = src.get_bodypart(overlay.attached_body_zone)
+/mob/living/carbon/human/proc/give_emote_overlay(datum/bodypart_overlay/simple/emote/overlay_typepath)
+	var/obj/item/bodypart/bodypart = get_bodypart(overlay_typepath::attached_body_zone)
 	if(!bodypart)
 		return null
+	if(locate(overlay_typepath) in bodypart.bodypart_overlays)
+		return null
+	var/datum/bodypart_overlay/simple/emote/overlay = new overlay_typepath()
 	bodypart.add_bodypart_overlay(overlay)
 	return overlay
+
+/datum/bodypart_overlay/simple/emote/tongue
+	icon_state = "tongue"
+	draw_color = COLOR_TONGUE_PINK
+	layers = EXTERNAL_ADJACENT
+	offset_key = OFFSET_FACE
+	attached_body_zone = BODY_ZONE_HEAD
 
 /datum/bodypart_overlay/simple/emote/blush
 	icon_state = "blush"
@@ -53,6 +62,19 @@
 	layers = EXTERNAL_ADJACENT
 	offset_key = OFFSET_FACE
 	attached_body_zone = BODY_ZONE_HEAD
+
+/datum/bodypart_overlay/simple/emote/blush/color_image(image/overlay, layer, obj/item/bodypart/limb)
+	var/base_color = limb.owner?.get_bloodtype()?.get_damage_color()
+	if(!base_color)
+		return ..()
+
+	var/list/blood_hsl = rgb2num(base_color, COLORSPACE_HSL)
+	//  take blood color then just make it a lot brighter and desaturate it a bit
+	blood_hsl[2] = max(0, blood_hsl[2] - 20)
+	blood_hsl[3] = min(100, blood_hsl[3] + 30)
+
+	overlay.color = rgb(blood_hsl[1], blood_hsl[2], blood_hsl[3], space = COLORSPACE_HSL)
+	overlay.alpha = 200
 
 /datum/bodypart_overlay/simple/emote/cry
 	icon_state = "tears"

@@ -74,7 +74,7 @@
 	if(squash_flags & SQUASHED_SHOULD_BE_GIBBED)
 		target.gib(DROP_ALL_REMAINS)
 	else
-		target.adjustBruteLoss(squash_damage)
+		target.adjust_brute_loss(squash_damage)
 
 /datum/component/squashable/UnregisterFromParent()
 	. = ..()

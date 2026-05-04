@@ -58,7 +58,7 @@
 		return
 
 	var/list/valid_targets = list()
-	for (var/obj/item/bodypart/possible_target as anything in limbed_victim.bodyparts)
+	for (var/obj/item/bodypart/possible_target as anything in limbed_victim.get_bodyparts())
 		if (possible_target.bodypart_flags & BODYPART_UNREMOVABLE)
 			continue
 		if (!(possible_target.body_zone in target_zones))

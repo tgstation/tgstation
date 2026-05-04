@@ -429,3 +429,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/boombox, 32)
 	icon_state = "download_gun"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/download, 32)
+
+/obj/structure/sign/poster/official/mining
+	name = "Undiscovered Species"
+	desc = "A poster showing one of the Ash Walker species. We still know very little about them, be a pioneer! \
+	When people read this poster they'll feel better!"
+	icon_state = "ashwalkers"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/mining, 32)

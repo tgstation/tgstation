@@ -364,6 +364,7 @@
 						old_component.InheritComponent(arglist(arguments))
 					else
 						old_component.InheritComponent(new_component, TRUE)
+						QDEL_NULL(new_component)
 
 				if(COMPONENT_DUPE_SOURCES)
 					if((source in old_component.sources) && !old_component.allow_source_update(source))
@@ -456,6 +457,9 @@
 			var/c_type = target.type
 			qdel(target)
 			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
+		if(COMPONENT_NOTRANSFER)
+			qdel(target)
+			return
 
 	AddComponent(target)
 	if(!QDELETED(target))

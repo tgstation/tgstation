@@ -48,7 +48,7 @@
 		if(isliving(victim))
 			var/mob/living/victim_living = victim
 			victim_living.Paralyze(10 SECONDS)
-			victim_living.adjustBruteLoss(5)
+			victim_living.adjust_brute_loss(5)
 			to_chat(victim, span_userdanger("You're slammed into the floor by [caster]!"))
 	else
 		if(sparkle_path)
@@ -90,7 +90,6 @@
 	overlay_icon_state = "bg_alien_border"
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "tailsweep"
-	panel = "Alien"
 	sound = 'sound/effects/magic/tail_swing.ogg'
 
 	cooldown_time = 15 SECONDS

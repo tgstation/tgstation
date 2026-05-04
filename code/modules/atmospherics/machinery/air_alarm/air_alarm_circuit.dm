@@ -311,8 +311,8 @@
 	disable = add_input_port("Disable", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_scrubber))
 	request_update = add_input_port("Request Data", PORT_TYPE_SIGNAL, trigger = PROC_REF(update_data))
 
-	enabled = add_output_port("Enabled", PORT_TYPE_NUMBER)
-	is_siphoning = add_output_port("Siphoning", PORT_TYPE_NUMBER)
+	enabled = add_output_port("Enabled", PORT_TYPE_BOOLEAN)
+	is_siphoning = add_output_port("Siphoning", PORT_TYPE_BOOLEAN)
 	filtering = add_output_port("Filtered Gases", PORT_TYPE_LIST(PORT_TYPE_STRING))
 	update_received = add_output_port("Update Received", PORT_TYPE_SIGNAL)
 
@@ -351,7 +351,7 @@
 	. = ..()
 	var/static/list/meta_data = list()
 	if(length(meta_data) == 0)
-		for(var/typepath as anything in GLOB.meta_gas_info)
+		for(var/typepath in GLOB.meta_gas_info)
 			meta_data += GLOB.meta_gas_info[typepath][META_GAS_ID]
 	. += create_table_notices(meta_data, column_name = "Gas", column_name_plural = "Gases")
 
@@ -534,10 +534,10 @@
 	disable = add_input_port("Disable", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_vent))
 	request_update = add_input_port("Request Data", PORT_TYPE_SIGNAL, trigger = PROC_REF(update_data))
 
-	enabled = add_output_port("Enabled", PORT_TYPE_NUMBER)
-	is_siphoning = add_output_port("Siphoning", PORT_TYPE_NUMBER)
-	external_on = add_output_port("External On", PORT_TYPE_NUMBER)
-	internal_on = add_output_port("Internal On", PORT_TYPE_NUMBER)
+	enabled = add_output_port("Enabled", PORT_TYPE_BOOLEAN)
+	is_siphoning = add_output_port("Siphoning", PORT_TYPE_BOOLEAN)
+	external_on = add_output_port("External On", PORT_TYPE_BOOLEAN)
+	internal_on = add_output_port("Internal On", PORT_TYPE_BOOLEAN)
 	current_external_pressure = add_output_port("External Pressure", PORT_TYPE_NUMBER)
 	current_internal_pressure = add_output_port("Internal Pressure", PORT_TYPE_NUMBER)
 	update_received = add_output_port("Update Received", PORT_TYPE_SIGNAL)

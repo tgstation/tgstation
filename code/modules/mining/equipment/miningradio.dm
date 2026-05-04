@@ -19,5 +19,6 @@
 		state_normal = "weatherwarning", \
 		state_warning = "urgentwarning", \
 		state_danger = "direwarning", \
+		radar_z_trait = ZTRAIT_MINING, \
 	)
 	set_frequency(FREQ_SUPPLY)

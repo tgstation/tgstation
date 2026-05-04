@@ -4,15 +4,17 @@
 	name = "water"
 	icon_state = "extinguish"
 	pass_flags = PASSTABLE | PASSMACHINE | PASSSTRUCTURE | PASSGRILLE | PASSBLOB | PASSVEHICLE
-	var/life = 15
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	/// Amount of turfs we pass before deleting ourselves
+	var/life = 15
 
 /obj/effect/particle_effect/water/Initialize(mapload)
 	. = ..()
-	QDEL_IN(src, 70)
+	QDEL_IN(src, 7 SECONDS)
 
 /obj/effect/particle_effect/water/Move(turf/newloc)
-	if (--src.life < 1)
+	life -= 1
+	if (life <= 0)
 		qdel(src)
 		return FALSE
 	return ..()
@@ -20,8 +22,7 @@
 /obj/effect/particle_effect/water/Bump(atom/A)
 	if(reagents)
 		reagents.expose(A)
-	if(A.reagents)
-		A.reagents.expose_temperature(-25)
+		A.reagents?.expose_temperature(reagents.chem_temp)
 	return ..()
 
 ///Extinguisher snowflake
@@ -38,7 +39,7 @@
 /// Starts the effect moving at a target with a delay in deciseconds, and a lifetime in moves
 /// Returns the created loop
 /obj/effect/particle_effect/water/extinguisher/proc/move_at(atom/target, delay, lifetime)
-	var/datum/move_loop/loop = GLOB.move_manager.move_towards_legacy(src, target, delay, timeout = delay * lifetime, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/loop = GLOB.move_manager.move_towards_legacy(src, target, delay, timeout = delay * lifetime, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_forcemove))
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(movement_stopped))
 	return loop
@@ -71,17 +72,11 @@
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM
 
-//Usage: set_up(number of bits of steam, use North/South/East/West only, spawn location)
+// Usage: set_up(number of bits of steam, use North/South/East/West only, spawn location)
 // The attach(atom/atom) proc is optional, and can be called to attach the effect
 // to something, like a smoking beaker, so then you can just call start() and the steam
 // will always spawn at the items location, even if it's moved.
 
-/* Example:
- *var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread() -- creates new system
- *steam.set_up(5, 0, mob.loc) -- sets up variables
- *OPTIONAL: steam.attach(mob)
- *steam.start() -- spawns the effect
-*/
 /////////////////////////////////////////////
 /obj/effect/particle_effect/steam
 	name = "steam"
@@ -90,11 +85,8 @@
 
 /obj/effect/particle_effect/steam/Initialize(mapload)
 	. = ..()
-	QDEL_IN(src, 20)
+	QDEL_IN(src, 2 SECONDS)
 
-/datum/effect_system/steam_spread
+/datum/effect_system/basic/steam_spread
+	delete_on_stop = TRUE
 	effect_type = /obj/effect/particle_effect/steam
-
-/obj/effect/particle_effect/water/Bump(atom/A)
-	if(A.reagents && reagents)
-		A.reagents.expose_temperature(reagents.chem_temp)

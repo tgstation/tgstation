@@ -10,16 +10,17 @@
 	name = "Deafness"
 	desc = "The virus causes inflammation of the eardrums, causing intermittent deafness."
 	illness = "Aural Perforation"
-	stealth = -1
-	resistance = -2
-	stage_speed = -1
-	transmittable = -3
+	stealth = 0
+	resistance = 1
+	stage_speed = 1
+	transmittable = -2
 	level = 4
 	severity = 4
 	base_message_chance = 100
 	symptom_delay_min = 25
 	symptom_delay_max = 80
 	required_organ = ORGAN_SLOT_EARS
+	symptom_cure = /datum/reagent/medicine/psicodine
 	threshold_descs = list(
 		"Resistance 9" = "Causes permanent deafness, instead of intermittent.",
 		"Stealth 4" = "The symptom remains hidden until active.",
@@ -45,7 +46,6 @@
 		return
 
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
-	var/obj/item/organ/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
 
 	switch(advanced_disease.stage)
 		if(3, 4)
@@ -53,15 +53,18 @@
 				to_chat(infected_mob, span_warning("[pick("You hear a ringing in your ear.", "Your ears pop.")]"))
 		if(5)
 			if(causes_permanent_deafness)
-				if(ears.damage < ears.maxHealth)
+				if(!HAS_TRAIT_FROM(infected_mob, TRAIT_DEAF, DISEASE_TRAIT))
 					to_chat(infected_mob, span_userdanger("Your ears pop painfully and start bleeding!"))
 					// Just absolutely murder me man
-					ears.apply_organ_damage(ears.maxHealth)
+					infected_mob.adjust_organ_loss(ORGAN_SLOT_EARS, INFINITY)
 					infected_mob.emote("scream")
 					ADD_TRAIT(infected_mob, TRAIT_DEAF, DISEASE_TRAIT)
 			else
 				to_chat(infected_mob, span_userdanger("Your ears pop and begin ringing loudly!"))
-				ears.deaf = min(20, ears.deaf + 15)
+				var/obj/item/organ/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
+				var/deafness_to_add = min(40 SECONDS - ears.temporary_deafness, 30 SECONDS)
+				if(deafness_to_add > 0)
+					ears.adjust_temporary_deafness(deafness_to_add)
 
 /datum/symptom/deafness/on_stage_change(datum/disease/advance/advanced_disease)
 	. = ..()

@@ -2,6 +2,7 @@
 ////////////////////////////////////////////SALAD////////////////////////////////////////////
 /obj/item/food/salad
 	icon = 'icons/obj/food/soupsalad.dmi'
+	abstract_type = /obj/item/food/salad
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	bite_consumption = 3
 	w_class = WEIGHT_CLASS_NORMAL
@@ -37,6 +38,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/doctor_delight = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
 	foodtypes = VEGETABLES | MEAT | FRIED
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/salad/fruit
 	name = "fruit salad"
@@ -119,6 +121,7 @@
 	tastes = list("rice" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/salad/risotto
 	name = "risotto"
@@ -143,7 +146,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("rice" = 1, "egg" = 1)
-	foodtypes = MEAT|VEGETABLES|GRAIN
+	foodtypes = MEAT|VEGETABLES|GRAIN|EGG
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/salad/edensalad
@@ -170,6 +173,7 @@
 	tastes = list("building heat" = 2, "savory meat and vegtables" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/bowl
 	name = "bowl"
@@ -177,7 +181,7 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
 	base_icon_state = "bowl"
-	reagent_flags = OPENCONTAINER | DUNKABLE
+	initial_reagent_flags = OPENCONTAINER | DUNKABLE
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*5)
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_CREW * 0.6
@@ -188,11 +192,12 @@
 	volume = SOUP_SERVING_SIZE + 5
 	gulp_size = 3
 
+	loop_drink = TRUE
+
 /obj/item/reagent_containers/cup/bowl/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
-	AddElement(/datum/element/foodlike_drink)
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+	AddComponent(/datum/component/ingredients_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
 	AddComponent( \
 		/datum/component/takes_reagent_appearance, \
 		on_icon_changed = CALLBACK(src, PROC_REF(on_cup_change)), \
@@ -258,7 +263,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/greek_salad
-	name = "Greek salad"
+	name = "greek salad"
 	desc = "A popular salad made of tomatoes, onions, feta cheese, and olives all drizzled in olive oil. Though it feels like it's missing something..."
 	icon_state = "greek_salad"
 	food_reagents = list(
@@ -270,7 +275,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/salad/caesar_salad
-	name = "Caesar salad"
+	name = "caesar salad"
 	desc = "A simple yet flavorful salad of onions, lettuce, croutons, and shreds of cheese dressed in oil. Comes with a slice of pita bread!"
 	icon_state = "caesar_salad"
 	food_reagents = list(
@@ -303,7 +308,7 @@
 		/datum/reagent/consumable/nutriment/protein = 4,
 	)
 	tastes = list("creamy potatoes" = 2, "eggs" = 2, "mayonnaise" = 1, "onions" = 1)
-	foodtypes = MEAT|VEGETABLES|BREAKFAST
+	foodtypes = MEAT|VEGETABLES|BREAKFAST|EGG
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/spinach_fruit_salad
@@ -330,3 +335,4 @@
 	tastes = list("lettuce" = 2, "salami" = 2, "mozzarella cheese" = 2, "tomatoes" = 2, "dressing" = 1)
 	foodtypes = MEAT|VEGETABLES|FRUIT|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)

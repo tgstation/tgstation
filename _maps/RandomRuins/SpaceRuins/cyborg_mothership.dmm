@@ -11,8 +11,8 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "e" = (
-/obj/effect/decal/cleanable/oil/streak,
-/obj/effect/decal/cleanable/oil{
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/obj/effect/decal/cleanable/blood/oil{
 	pixel_x = 8;
 	pixel_y = 15
 	},
@@ -20,7 +20,7 @@
 /area/space)
 "f" = (
 /obj/structure/spacevine,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "g" = (
@@ -38,7 +38,7 @@
 /area/space)
 "k" = (
 /obj/structure/spacevine,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "m" = (
@@ -46,7 +46,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "n" = (
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "o" = (
@@ -67,11 +67,11 @@
 /area/space)
 "u" = (
 /obj/structure/spacevine,
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "v" = (
-/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "w" = (
@@ -103,7 +103,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "G" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "H" = (
@@ -130,7 +130,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "N" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "O" = (
@@ -144,7 +144,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "R" = (
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "S" = (
@@ -172,7 +172,7 @@
 /area/space)
 "Y" = (
 /mob/living/basic/hivebot/range,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "Z" = (

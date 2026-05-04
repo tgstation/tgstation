@@ -8,9 +8,9 @@
 	desc = "A scavenger that eats raw ores, often found alongside ash walkers. Produces a thick, nutritious milk."
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "gutlunch"
-	combat_mode = FALSE
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"
+	combat_mode = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_BUG|MOB_MINING
 	basic_mob_flags = DEL_ON_DEATH
 	speak_emote = list("warbles", "quavers")
@@ -46,16 +46,16 @@
 
 /mob/living/basic/mining/gutlunch/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 	if(!istype(target, /obj/structure/ore_container/food_trough/gutlunch_trough))
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	var/obj/ore_food = locate(/obj/item/stack/ore) in target
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
 		UnarmedAttack(ore_food, TRUE, modifiers)
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/mining/gutlunch/proc/after_birth(mob/living/basic/mining/gutlunch/grub/baby, mob/living/partner)
 	var/our_color = LAZYACCESS(atom_colours, FIXED_COLOUR_PRIORITY) || COLOR_GRAY

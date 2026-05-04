@@ -11,7 +11,7 @@
 	/// Helps determine the icon state of this item when it's used on self.
 	var/book_open = FALSE
 	/// How fast we can drain influences
-	var/drain_speed = 10 SECONDS
+	var/drain_speed = 5 SECONDS
 	/// How fast we can draw runes
 	var/draw_speed = 8 SECONDS
 
@@ -79,7 +79,7 @@
 	desc = "A hideous, ragged book covered in separately-blinking eyes, all of them staring at you. You have no idea how to hold this thing, and to be honest you're not sure if you want to."
 	base_icon_state = "book_morbus"
 	icon_state = "book_morbus"
-	drain_speed = 7 SECONDS
+	drain_speed = 2.5 SECONDS
 	draw_speed = 5 SECONDS
 	/// List of mobs we've cursed with transmutation. When the codex is destroyed all those curses become undone
 	var/list/transmuted_victims = list()
@@ -94,7 +94,7 @@
 		return
 	var/mob/living/carbon/human/human_user = user
 	to_chat(human_user, span_userdanger("Your mind burns as you stare at the pages!"))
-	human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+	human_user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10, 190)
 	human_user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/item/codex_cicatrix/morbus/examine_more(mob/user)

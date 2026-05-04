@@ -29,9 +29,8 @@
 
 /mob/living/basic/mining/hivelord/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/item/organ/monster_core/regenerative_core)
 	AddElement(/datum/element/relay_attackers)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/organ/monster_core/regenerative_core)
 	AddComponent(/datum/component/clickbox, icon_state = "hivelord", max_scale = INFINITY, dead_state = "hivelord_dead") // They writhe so much.
 	AddComponent(/datum/component/appearance_on_aggro, aggro_state = "hivelord_alert")
 	spawn_brood = new(src)
@@ -60,7 +59,7 @@
 /// Spawns a worm on the specified turf
 /mob/living/basic/mining/hivelord/proc/complete_spawn(turf/spawn_turf)
 	var/mob/living/brood = new death_spawn_type(spawn_turf)
-	brood.faction = faction
+	SET_FACTION_AND_ALLIES_FROM(brood, src)
 	brood.ai_controller?.set_blackboard_key(ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
 	brood.dir = get_dir(src, spawn_turf)
 

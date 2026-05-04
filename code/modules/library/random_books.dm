@@ -3,10 +3,18 @@
 
 /obj/item/book/manual/random/Initialize(mapload)
 	..()
-	var/static/banned_books = list(/obj/item/book/manual/random, /obj/item/book/manual/nuclear, /obj/item/book/manual/wiki)
-	var/newtype = pick(subtypesof(/obj/item/book/manual) - banned_books)
+	var/newtype = get_random_manual()
 	new newtype(loc)
 	return INITIALIZE_HINT_QDEL
+
+/// Gets a random manuel book type excluding certain banned books
+/proc/get_random_manual()
+	var/list/options = list()
+	options += valid_subtypesof(/obj/item/book/manual)
+	options += valid_subtypesof(/obj/item/tgui_book/manual)
+	options -= /obj/item/book/manual/random // no recursion
+	options -= /obj/item/book/manual/nuclear // why would nanotrasen stock instructions on how to nuke their own station?
+	return pick(options)
 
 /obj/item/book/random
 	icon_state = "random_book"

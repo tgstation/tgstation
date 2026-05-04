@@ -13,6 +13,7 @@
 	sight = SEE_TURFS
 	speed = 1
 	ai_controller = /datum/ai_controller/basic_controller/rust_walker
+	mob_biotypes = MOB_ROBOTIC|MOB_MINERAL
 
 /mob/living/basic/heretic_summon/rust_walker/Initialize(mapload)
 	. = ..()
@@ -28,6 +29,9 @@
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
 
+/mob/living/basic/heretic_summon/rust_walker/do_rust_heretic_act(atom/target)
+	target.rust_heretic_act(RUST_RESISTANCE_TITANIUM)
+
 /mob/living/basic/heretic_summon/rust_walker/update_icon_state()
 	. = ..()
 	if(stat == DEAD) // We usually delete on death but just in case
@@ -38,13 +42,13 @@
 		icon_state = "[base_icon_state]_s"
 	icon_living = icon_state
 
-/mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/heretic_summon/rust_walker/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //dead or deleted
 		return
 	var/turf/our_turf = get_turf(src)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		adjustBruteLoss(-3 * seconds_per_tick)
+		adjust_brute_loss(-3 * seconds_per_tick)
 
 	return ..()
 
@@ -57,6 +61,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/rust
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/use_mob_ability/rust_walker,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability,

@@ -13,7 +13,6 @@
 
 	invocation = "GIN'YU CAPAN."
 	invocation_type = INVOCATION_WHISPER
-	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 
 	active_msg = "You prepare to swap minds with a target..."
 	deactive_msg = "You dispel mind swap."
@@ -112,7 +111,7 @@
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/cult) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/changeling) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
-		|| mind_to_swap.key?[1] == "@" \
+		|| IS_FAKE_KEY(mind_to_swap.key) \
 	)
 		to_chat(caster, span_warning("[to_swap.p_Their()] mind is resisting your spell!"))
 		return FALSE

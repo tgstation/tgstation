@@ -2,12 +2,12 @@
 	name = "Death Sandwich Poisoning"
 	desc = "If left untreated the subject will ultimately perish."
 	form = "Condition"
-	spread_text = "Unknown"
 	max_stages = 3
-	cure_text = "Anacea" // I ain't about to make a second sandwich to counteract the first one, so closest thing I'm going for is this.
+	cure_text = /datum/reagent/toxin/anacea::name // I ain't about to make a second sandwich to counteract the first one, so closest thing I'm going for is this.
 	cures = list(/datum/reagent/toxin/anacea)
 	cure_chance = 4
-	agent = "eating the Death Sandwich wrong"
+	agent = "Eating the Death Sandwich wrong"
+	spread_text = "None"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	severity = DISEASE_SEVERITY_DANGEROUS
 	disease_flags = CURABLE
@@ -16,7 +16,7 @@
 	bypasses_immunity = TRUE
 	required_organ = ORGAN_SLOT_STOMACH
 
-/datum/disease/death_sandwich_poisoning/stage_act(seconds_per_tick, times_fired)
+/datum/disease/death_sandwich_poisoning/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -28,7 +28,7 @@
 			if(SPT_PROB(0.5, seconds_per_tick))
 				affected_mob.emote("gag")
 			if(SPT_PROB(0.5, seconds_per_tick))
-				affected_mob.adjustToxLoss(5)
+				affected_mob.adjust_tox_loss(5)
 		if(2)
 			if(SPT_PROB(5, seconds_per_tick))
 				affected_mob.emote("cough")
@@ -39,7 +39,7 @@
 				if(prob(20))
 					affected_mob.take_bodypart_damage(burn = 1)
 			if(SPT_PROB(3, seconds_per_tick))
-				affected_mob.adjustToxLoss(10)
+				affected_mob.adjust_tox_loss(10)
 
 		if(3)
 			if(SPT_PROB(5, seconds_per_tick))
@@ -53,8 +53,7 @@
 				if(prob(60))
 					affected_mob.take_bodypart_damage(burn = 2)
 			if(SPT_PROB(6, seconds_per_tick))
-				affected_mob.adjustToxLoss(15)
+				affected_mob.adjust_tox_loss(15)
 			if(SPT_PROB(1.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You try to scream, but nothing comes out!"))
 				affected_mob.set_silence_if_lower(5 SECONDS)
-

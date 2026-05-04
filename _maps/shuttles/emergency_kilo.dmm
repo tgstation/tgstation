@@ -41,8 +41,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "ai" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium,
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "ao" = (
 /obj/effect/turf_decal/delivery,
@@ -150,6 +150,7 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bb" = (
@@ -167,10 +168,6 @@
 /area/shuttle/escape/brig)
 "bg" = (
 /obj/machinery/status_display/evac,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"bh" = (
-/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bi" = (
@@ -217,6 +214,7 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/mask/breath,
+/obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bp" = (
@@ -288,6 +286,7 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
 "bO" = (
@@ -436,6 +435,7 @@
 "cu" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "cw" = (
@@ -555,6 +555,7 @@
 /obj/machinery/camera/autoname{
 	dir = 8
 	},
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
 "hE" = (
@@ -906,7 +907,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Br" = (
-/obj/machinery/vending/wallmed/directional/east{
+/obj/machinery/wall_healer/free/directional/east{
 	use_power = 0
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1217,6 +1218,7 @@
 /obj/structure/table/optable,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/south,
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "Su" = (
@@ -1227,7 +1229,7 @@
 /area/shuttle/escape)
 "TQ" = (
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/vending/wallmed/directional/east{
+/obj/machinery/wall_healer/free/directional/east{
 	use_power = 0
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1254,6 +1256,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "VD" = (
@@ -1304,6 +1307,7 @@
 /obj/machinery/stasis{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "XM" = (
@@ -1326,7 +1330,7 @@ ab
 ac
 ab
 ac
-ai
+ab
 bb
 ab
 bq
@@ -1338,7 +1342,7 @@ ab
 bX
 ab
 bX
-ai
+ab
 ab
 as
 cS
@@ -1430,8 +1434,8 @@ cS
 (5,1,1) = {"
 ab
 ac
+ab
 ai
-as
 cw
 IX
 Mo
@@ -1446,7 +1450,7 @@ MQ
 bZ
 as
 ab
-bg
+ab
 as
 Dr
 cV
@@ -1477,7 +1481,7 @@ XD
 sy
 Rk
 ru
-cL
+ab
 dc
 cT
 "}
@@ -1543,7 +1547,7 @@ bY
 kh
 dZ
 Uc
-bh
+ab
 bo
 Em
 Wu
@@ -1585,15 +1589,15 @@ cu
 oZ
 Wv
 RH
-cL
+ab
 dc
 cT
 "}
 (11,1,1) = {"
 ab
 ac
+ab
 ai
-as
 as
 aO
 aX
@@ -1608,7 +1612,7 @@ pj
 bZ
 as
 ab
-bg
+ab
 as
 lU
 db
@@ -1704,19 +1708,19 @@ ab
 ab
 ab
 ac
-ai
-ac
 ab
 ac
 ab
 ac
+ab
+ac
 ac
 ac
 ab
 ac
 ab
 ab
-ai
+ab
 ab
 as
 cS

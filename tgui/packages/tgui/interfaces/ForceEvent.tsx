@@ -1,4 +1,4 @@
-import { paginate } from 'common/collections';
+import { chunk } from 'es-toolkit';
 import { createContext, useContext, useState } from 'react';
 import {
   Button,
@@ -8,7 +8,7 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -120,7 +120,6 @@ function PanelOptions(props) {
           onChange={setSearchQuery}
           placeholder="Search..."
           value={searchQuery}
-          expensive
         />
       </Stack.Item>
       <Stack.Item>
@@ -169,7 +168,7 @@ function EventSection(props) {
     EVENT_PAGE_ITEMS,
   );
 
-  const sectionTitle = searchQuery ? 'Searching...' : category.name + ' Events';
+  const sectionTitle = searchQuery ? 'Searching...' : `${category.name} Events`;
 
   return (
     <Section scrollable fill title={sectionTitle} buttons={<PanelOptions />}>
@@ -216,7 +215,7 @@ function EventTabs(props) {
   const { categoryState } = useForceEventContext();
   const [category, setCategory] = categoryState;
 
-  const layerCats = paginate(categories, CATEGORY_PAGE_ITEMS);
+  const layerCats = chunk(categories, CATEGORY_PAGE_ITEMS);
 
   return (
     <Section mb="-6px">

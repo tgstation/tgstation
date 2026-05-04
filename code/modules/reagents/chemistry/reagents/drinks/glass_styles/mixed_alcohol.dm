@@ -1030,6 +1030,209 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "blue_hawaiian"
 
+/datum/glass_style/drinking_glass/boston_sour
+	required_drink_type = /datum/reagent/consumable/ethanol/boston_sour
+	name = "Boston Sour"
+	desc = "A classic twist upon a whiskey sour that uses an egg white to provide texture and structure. Despite what some say, the egg white is not sterilized by the alcohol of the whiskey, but if the eggs are handled properly it's probably fine..."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "boston_sour"
+
+/datum/glass_style/drinking_glass/star
+	required_drink_type = /datum/reagent/consumable/ethanol/star
+	name = "Star"
+	desc = "This cocktail takes rustic applejack and refines it with sweet vermouth. As comfortable out in the orchard as it is within the estate."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "star"
+
+/datum/glass_style/drinking_glass/old_fashioned
+	required_drink_type = /datum/reagent/consumable/ethanol/old_fashioned
+	name = "Old Fashioned"
+	desc = "The original Cocktail... With some added anachronisms."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "old_fashioned"
+
+/datum/glass_style/drinking_glass/sazerac
+	required_drink_type = /datum/reagent/consumable/ethanol/sazerac
+	name = "Sazerac"
+	desc = "A classic cocktail from New Orleans, this drink uses creole style bitters and an absinthe rinse of the serving glass to impart a delightful anise scent."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "sazerac"
+
+/datum/glass_style/drinking_glass/amaretto_sour
+	required_drink_type = /datum/reagent/consumable/ethanol/amaretto_sour
+	name = "Amaretto Sour"
+	desc = "This sweet play on the sour formula has gained popularity among tizirian audiences due to it's nutty-eggy nature. It's still perfectly suited to most anyone's palette, as long as they're not vegan."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "amaretto_sour"
+
+/datum/glass_style/drinking_glass/ramos_gin_fizz
+	required_drink_type = /datum/reagent/consumable/ethanol/ramos_gin_fizz
+	name = "Ramos Gin Fizz"
+	desc = "This cocktail commits the heresy of combining citrus and cream, but with proper technique avoids curdling and creates a beautifully textural head of foam. Famously delicious, famously innovative, famously annoying to make."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "ramos_gin_fizz"
+
+/datum/glass_style/drinking_glass/french_75
+	required_drink_type = /datum/reagent/consumable/ethanol/french_75
+	name = "French 75"
+	desc = "Named after a field artillery piece used by french forces in the early 20th century, this classy champagne cocktail has changed many times throughout history, although it's ability to evoke victory has remained constant."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "french_75"
+
+/datum/glass_style/drinking_glass/sangria
+	required_drink_type = /datum/reagent/consumable/ethanol/sangria
+	name = "Sangria"
+	desc = "A wine punch for hot summer days. No bloodletting is involved in it's creation, one hopes."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "sangria"
+
+/datum/glass_style/drinking_glass/suffering_bastard
+	required_drink_type = /datum/reagent/consumable/ethanol/suffering_bastard
+	name = "Suffering Bastard"
+	desc = "Originally meant as a hangover cure for soldiers away from home, then later adapted into tiki aesthetics, this drink has an uncanny ability to cure headaches and settle stomachs."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "suffering_bastard"
+
+/datum/glass_style/drinking_glass/blue_blazer
+	required_drink_type = /datum/reagent/consumable/ethanol/blue_blazer
+	name = "Blue Blazer"
+	desc = "A visually stunning drink created by one of the fathers of cocktail bartending, made by tossing flaming whiskey between two glasses. Not to be served if it's above fifty degrees farenheit outside, although that's not much of a concern on a space station."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "blue_blazer"
+
+/datum/glass_style/drinking_glass/hot_toddy
+	required_drink_type = /datum/reagent/consumable/ethanol/hot_toddy
+	name = "Hot Toddy"
+	desc = "Transports you away from the cold of whatever sub-zero hellhole you're in, if only for a moment."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "hot_toddy"
+
+/datum/glass_style/drinking_glass/tizirian_sour
+	required_drink_type = /datum/reagent/consumable/ethanol/tizirian_sour
+	name = "Tizirian Sour"
+	desc = "From Trinidad to Tobago to Tiziria, it's quite rare to find a cocktail that uses bitters as a base spirit like this."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "tizirian_sour"
+
+/datum/glass_style/drinking_glass/daiquiri
+	required_drink_type = /datum/reagent/consumable/ethanol/daiquiri
+	name = "Daiquiri"
+	desc = "Pure, simple, natural. A cuban classic."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "daiquiri"
+
+/datum/glass_style/drinking_glass/flip_cocktail
+	required_drink_type = /datum/reagent/consumable/ethanol/flip_cocktail
+	name = "Flip Cocktail"
+	desc = "No red-hot iron poker included, unfortunately."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "flip_cocktail"
+
+/datum/glass_style/drinking_glass/bartenders_handshake
+	required_drink_type = /datum/reagent/consumable/ethanol/bartenders_handshake
+	name = "Bartender's Handshake"
+	desc = "Truly, a drink only its mother (or father) could love."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "bartenders_handshake"
+
+/datum/glass_style/drinking_glass/brandy_crusta
+	required_drink_type = /datum/reagent/consumable/ethanol/brandy_crusta
+	name = "Brandy Crusta"
+	desc = "The encrusted rim of this drink reminds you of a saccharine snow… or just a sugary margarita."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "brandy_crusta"
+
+/datum/glass_style/drinking_glass/casino
+	required_drink_type = /datum/reagent/consumable/ethanol/casino
+	name = "Casino"
+	desc = "For when you want to feel classy while you blow your salary on slots."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "casino"
+
+/datum/glass_style/drinking_glass/garibaldi
+	required_drink_type = /datum/reagent/consumable/ethanol/garibaldi
+	name = "Garibaldi"
+	desc = "A drink for unifiers and revolutionaries."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "garibaldi"
+
+/datum/glass_style/drinking_glass/improved_whiskey
+	required_drink_type = /datum/reagent/consumable/ethanol/improved_whiskey
+	name = "Improved Whiskey Cocktail"
+	desc = "A descendent of the old fashioned, which also predates the Old Fashioned by about a decade. A student of cocktail histories can resolve this paradox."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "improved_whiskey"
+
+/datum/glass_style/drinking_glass/jungle_bird
+	required_drink_type = /datum/reagent/consumable/ethanol/jungle_bird
+	name = "Jungle Bird"
+	desc = "SQUAWK! No drunks in the engine room! SQUAWK!"
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "jungle_bird"
+
+/datum/glass_style/drinking_glass/last_word
+	required_drink_type = /datum/reagent/consumable/ethanol/last_word
+	name = "Last Word"
+	desc = "It speaks for itself."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "last_word"
+
+/datum/glass_style/drinking_glass/mary_pickford
+	required_drink_type = /datum/reagent/consumable/ethanol/mary_pickford
+	name = "Mary Pickford"
+	desc = "May just leave you feeling a tad coquettish."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "mary_pickford"
+
+/datum/glass_style/drinking_glass/negroni
+	required_drink_type = /datum/reagent/consumable/ethanol/negroni
+	name = "Negroni"
+	desc = "Hail to the crimson count."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "negroni"
+
+/datum/glass_style/drinking_glass/nuclear_daiquiri
+	required_drink_type = /datum/reagent/consumable/ethanol/nuclear_daiquiri
+	name = "Nuclear daiquiri"
+	desc = "A funk bomb in a glass."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "nuclear_daiquiri"
+
+/datum/glass_style/drinking_glass/nuclear_daiquiri_thermo
+	required_drink_type = /datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo
+	name = "Thermonuclear Daiquiri"
+	desc = "You seem to hear an erratic ticking noise when you look at this drink."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "nuclear_daiquiri_thermo"
+
+/datum/glass_style/drinking_glass/poets_dream
+	required_drink_type = /datum/reagent/consumable/ethanol/poets_dream
+	name = "Poet's Dream"
+	desc = "'Those which dwell beyond the veil have little time for poetry,' it is said, 'but they have a tremendous amount of time for poets.' Or was it 'have the most tremendous time with poets?'"
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "poets_dream"
+
+/datum/glass_style/drinking_glass/pousse_cafe
+	required_drink_type = /datum/reagent/consumable/ethanol/pousse_cafe
+	name = "Pousse Cafe"
+	desc = "If a bartender serves you this without you ordering it, they probably want to impress you. If you ordered it yourself, they probably want to put your head on a pike."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "pousse_cafe"
+
+/datum/glass_style/drinking_glass/spritz
+	required_drink_type = /datum/reagent/consumable/ethanol/spritz
+	name = "Spritz"
+	desc = "Perhaps the best way to start a night out on the town."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "spritz"
+
+/datum/glass_style/drinking_glass/vieux_carre
+	required_drink_type = /datum/reagent/consumable/ethanol/vieux_carre
+	name = "Vieux Carré"
+	desc = "Laissez les bons temps rouler!"
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "vieux_carre"
+
 // Shot glasses
 
 /datum/glass_style/shot_glass/toxins_special

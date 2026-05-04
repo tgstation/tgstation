@@ -11,3 +11,8 @@
 	suffix = "advanced"
 	name = "advanced syndicate infiltrator"
 	description = "A much larger version of the standard Syndicate infiltrator that feels more like Kilostation. Has APCs, but power is not a concern for nuclear operatives. Also comes with atmos!"
+
+/datum/map_template/shuttle/infiltrator/clown
+	suffix = "clown"
+	name = "clown syndicate infiltrator"
+	description = "A version of the base infiltrator that spawns with a bananiumbomb"

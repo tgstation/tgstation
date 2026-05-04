@@ -14,7 +14,6 @@
 	objectives += survive
 
 /datum/antagonist/survivalist/on_gain()
-	owner.special_role = "survivalist"
 	forge_objectives()
 	. = ..()
 
@@ -51,11 +50,13 @@
 
 /datum/antagonist/survivalist/magic/on_gain()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
+	owner.add_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
+	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+		blessed_hud.check_hud(owner.current)
 
 /datum/antagonist/survivalist/magic/on_removal()
-	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
-	return..()
+	owner.remove_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
+	return ..()
 
 /// Applied by the battle royale objective
 /datum/antagonist/survivalist/battle_royale

@@ -73,7 +73,6 @@
 	))
 	/// Areas where you can't be tasked to draw a rune, usually because they're too mean
 	var/static/list/area_blacklist = typecacheof(list(
-		/area/station/cargo/warehouse, // This SHOULD be fine except SOMEBODY gave this area to a kilo structure which is IN SPACE
 		/area/station/engineering/supermatter,
 		/area/station/engineering/transit_tube,
 		/area/station/science/ordnance/bomb,

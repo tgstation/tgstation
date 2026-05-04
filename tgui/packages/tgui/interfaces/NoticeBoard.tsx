@@ -1,5 +1,5 @@
 import { Box, Button, Section, Stack } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -14,7 +14,7 @@ export const NoticeBoard = (props) => {
   const { allowed, items = [] } = data;
 
   return (
-    <Window width={425} height={176}>
+    <Window width={425} height={220}>
       <Window.Content backgroundColor="#704D25">
         {!items.length ? (
           <Section>

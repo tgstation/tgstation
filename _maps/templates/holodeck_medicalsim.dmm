@@ -112,7 +112,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/item/retractor,
 /obj/item/cautery,
 /turf/open/floor/holofloor{

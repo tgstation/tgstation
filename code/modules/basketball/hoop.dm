@@ -18,6 +18,7 @@
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
 	interaction_flags_click = NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5)
 	/// Keeps track of the total points scored
 	var/total_score = 0
 	/// The chance to score a ball into the hoop based on distance
@@ -25,7 +26,7 @@
 
 /obj/structure/hoop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED, post_rotation = CALLBACK(src, PROC_REF(reset_appearance)))
+	AddElement(/datum/element/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED, post_rotation_proccall = PROC_REF(post_rotation))
 	update_appearance()
 	register_context()
 
@@ -33,7 +34,7 @@
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Reset score"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/structure/hoop/proc/reset_appearance()
+/obj/structure/hoop/proc/post_rotation(mob/user, degrees)
 	update_appearance()
 
 /obj/structure/hoop/proc/score(obj/item/toy/basketball/ball, mob/living/baller, points)
@@ -93,7 +94,7 @@
 	if(!baller.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
 		return // TK users aren't allowed to dunk
 
-	if(!baller.transferItemToLoc(ball, drop_location()))
+	if(!baller.transfer_item_to_turf(ball, drop_location()))
 		return
 
 	var/dunk_dir = get_dir(baller, src)
@@ -102,14 +103,14 @@
 	var/dunk_pixel_w = ((dunk_dir & EAST) && 16) || ((dunk_dir & WEST) && -16) || 0
 
 	animate(baller, pixel_w = dunk_pixel_w, pixel_z = dunk_pixel_z, time = 0.5 SECONDS, easing = BOUNCE_EASING|EASE_IN|EASE_OUT, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
-	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_PARALLEL)
+	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 
 	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
 	baller.add_mood_event("basketball", /datum/mood_event/basketball_dunk)
 	score(ball, baller, 2)
 
 	if(istype(ball, /obj/item/toy/basketball))
-		baller.adjustStaminaLoss(STAMINA_COST_DUNKING)
+		baller.adjust_stamina_loss(STAMINA_COST_DUNKING)
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
 	. = ..()
@@ -127,7 +128,7 @@
 	loser.Paralyze(100)
 	visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
 	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
-	baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
+	baller.adjust_stamina_loss(STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
 
 /obj/structure/hoop/click_ctrl(mob/user)
@@ -148,13 +149,16 @@
 	var/click_on_hoop = TRUE
 	var/mob/living/thrower = throwingdatum?.get_thrower()
 
+	if(!istype(thrower))
+		return
+
 	// aim penalty for not clicking directly on the hoop when shooting
 	if(!istype(backboard) || backboard != src)
 		click_on_hoop = FALSE
 		score_chance *= 0.5
 
 	// aim penalty for spinning while shooting
-	if(istype(thrower) && HAS_TRAIT(thrower, TRAIT_SPINNING))
+	if(HAS_TRAIT(thrower, TRAIT_SPINNING))
 		score_chance *= 0.5
 
 	if(prob(score_chance))

@@ -72,7 +72,7 @@ export const GasmixParser = (props: GasmixParserProps) => {
           )
         }
       >
-        {(total_moles ? temperature.toFixed(2) : '-') + ' K'}
+        {`${total_moles ? temperature.toFixed(2) : '-'} K`}
       </LabeledList.Item>
       <LabeledList.Item
         label={
@@ -83,7 +83,7 @@ export const GasmixParser = (props: GasmixParserProps) => {
           )
         }
       >
-        {(total_moles ? volume.toFixed(2) : '-') + ' L'}
+        {`${total_moles ? volume.toFixed(2) : '-'} L`}
       </LabeledList.Item>
       <LabeledList.Item
         label={
@@ -94,7 +94,7 @@ export const GasmixParser = (props: GasmixParserProps) => {
           )
         }
       >
-        {(total_moles ? pressure.toFixed(2) : '-') + ' kPa'}
+        {`${total_moles ? pressure.toFixed(2) : '-'} kPa`}
       </LabeledList.Item>
       {detailedReactions ? (
         reactions.map((reaction) => (

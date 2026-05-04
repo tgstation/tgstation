@@ -2,6 +2,7 @@
 	name = "circuit imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
+	base_icon_state = "circuit_imprinter"
 	production_animation = "circuit_imprinter_ani"
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 	allowed_buildtypes = IMPRINTER

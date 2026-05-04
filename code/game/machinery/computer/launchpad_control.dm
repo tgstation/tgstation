@@ -12,9 +12,7 @@
 /obj/machinery/computer/launchpad/Initialize(mapload)
 	launchpads = list()
 	. = ..()
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/bluespace_launchpad/console,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/bluespace_launchpad/console), only_root_path = TRUE))
 
 /obj/item/circuit_component/bluespace_launchpad/console
 	display_name = "Bluespace Launchpad Console"

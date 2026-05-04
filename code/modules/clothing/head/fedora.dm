@@ -38,7 +38,7 @@
 
 /obj/item/clothing/head/fedora/carpskin/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
+	AddElement(/datum/element/adjust_fishing_difficulty, -6)
 
 /obj/item/clothing/head/fedora/beige/press
 	name = "press fedora"
@@ -47,9 +47,11 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/head/fedora/greyscale
-	icon_state = "fedora_greyscale"
 	inhand_icon_state = null
-	greyscale_colors = "#F0DAB4#794D2E"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/fedora/greyscale"
+	post_init_icon_state = "fedora_greyscale"
 	greyscale_config = /datum/greyscale_config/fedora
 	greyscale_config_worn = /datum/greyscale_config/fedora/worn
+	greyscale_colors = "#F0DAB4#794D2E"
 	flags_1 = IS_PLAYER_COLORABLE_1

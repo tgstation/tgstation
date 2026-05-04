@@ -82,14 +82,14 @@
 /datum/component/combustible_flooder/proc/hotspots_react(datum/source, air, exposed_temperature)
 	SIGNAL_HANDLER
 
-	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(exposed_temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		flood(null, exposed_temperature)
 
 /// Being attacked by something
 /datum/component/combustible_flooder/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(thing.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(thing.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		flood(user, thing.get_temperature())
 
 /// Shot by something

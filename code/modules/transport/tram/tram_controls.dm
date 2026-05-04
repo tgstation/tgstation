@@ -64,7 +64,7 @@
 
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 	if(tram)
-		RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_display))
+		RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(update_display))
 
 /obj/machinery/computer/tram_controls/update_current_power_usage()
 	return // We get power from area rectifiers

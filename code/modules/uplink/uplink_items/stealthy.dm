@@ -48,7 +48,7 @@
 	name = "Suppressor"
 	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Makarov, Stechkin APS and C-20r, but not revolvers or energy guns."
 	item = /obj/item/suppressor
-	cost = 3
+	cost = 1
 	surplus = 10
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
@@ -80,15 +80,17 @@
 
 
 /datum/uplink_item/stealthy_weapons/martialarts
-	name = "Martial Arts Scroll"
+	name = "Martial Arts Scroll and Martial Arts Outfit"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat \
-			and gain the ability to swat bullets from the air, but you will also refuse to use dishonorable ranged weaponry."
-	item = /obj/item/book/granter/martial/carp
+			and gain the ability to swat bullets from the air, and if in the correct attire, avoid attacks. But you will \
+			also refuse to use dishonorable ranged weaponry, and armored clothing will make it harder to avoid attacks. \
+			Comes prepackaged with a set of martial arts clothing!"
+	item = /obj/item/storage/box/syndicate/sleeping_carp
 	progression_minimum = 30 MINUTES
 	population_minimum = TRAITOR_POPULATION_LOWPOP
 	cost = 17
 	surplus = 0
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
+	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS|UPLINK_SPY)
 
 /datum/uplink_item/stealthy_weapons/crossbow
 	name = "Miniature Energy Crossbow"

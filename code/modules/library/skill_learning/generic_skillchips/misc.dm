@@ -1,15 +1,5 @@
 //Contains generic skillchips that are fairly short and simple
 
-/obj/item/skillchip/basketweaving
-	name = "Basketsoft 3000 skillchip"
-	desc = "Underwater edition."
-	auto_traits = list(TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE)
-	skill_name = "Underwater Basketweaving"
-	skill_description = "Master intricate art of using twine to create perfect baskets while submerged."
-	skill_icon = "shopping-basket"
-	activate_message = span_notice("You're one with the twine and the sea.")
-	deactivate_message = span_notice("Higher mysteries of underwater basketweaving leave your mind.")
-
 /obj/item/skillchip/wine_taster
 	name = "WINE skillchip"
 	desc = "Wine.Is.Not.Equal version 5."
@@ -22,6 +12,7 @@
 
 /obj/item/skillchip/bonsai
 	name = "Hedge 3 skillchip"
+	desc = "\"Learn how to trim hedges and potted plants into new shapes. Third edition.\""
 	auto_traits = list(TRAIT_BONSAI)
 	skill_name = "Hedgetrimming"
 	skill_description = "Trim hedges and potted plants into marvelous new shapes with any old knife. Not applicable to plastic plants."
@@ -31,6 +22,7 @@
 
 /obj/item/skillchip/useless_adapter
 	name = "Skillchip adapter"
+	desc = "Yo dawg, heard you like skillchips so we put a skillchip in your skillchip so you can... uuuh..."
 	skill_name = "Useless adapter"
 	skill_description = "Allows you to insert another skillchip into this adapter after it has been inserted into your brain..."
 	skill_icon = "plug"
@@ -43,6 +35,7 @@
 
 /obj/item/skillchip/light_remover
 	name = "N16H7M4R3 skillchip"
+	desc = "A skillchip about safe lightbulb removal. Whoever came up with that awful name should be fired."
 	auto_traits = list(TRAIT_LIGHTBULB_REMOVER)
 	skill_name = "Lightbulb Removing"
 	skill_description = "Stop failing taking out lightbulbs today, no gloves needed!"
@@ -52,6 +45,7 @@
 
 /obj/item/skillchip/disk_verifier
 	name = "K33P-TH4T-D15K skillchip"
+	desc = "A skillchip with a tiny print of a nuclear authentification disk stamped onto it."
 	auto_traits = list(TRAIT_DISK_VERIFIER)
 	skill_name = "Nuclear Disk Verification"
 	skill_description = "Nuclear authentication disks have an extremely long serial number for verification. This skillchip stores that number, which allows the user to automatically spot forgeries."
@@ -70,6 +64,7 @@
 
 /obj/item/skillchip/appraiser
 	name = "GENUINE ID Appraisal Now! skillchip"
+	desc = "The name couldn't be any more desperate and self-explainatory, by skillchip naming standards."
 	auto_traits = list(TRAIT_ID_APPRAISER)
 	skill_name = "ID Appraisal"
 	skill_description = "Appraise an ID and see if it's issued from centcom, or just a cruddy station-printed one."
@@ -79,6 +74,7 @@
 
 /obj/item/skillchip/sabrage
 	name = "Le S48R4G3 skillchip"
+	desc = "A skillchip faintly smelling of alcohol. Best used in conjuction with a sabre or otherwise a sharp blade."
 	auto_traits = list(TRAIT_SABRAGE_PRO)
 	skill_name = "Sabrage Proficiency"
 	skill_description = "Grants the user knowledge of the intricate structure of a champagne bottle's structural weakness at the neck, \
@@ -102,11 +98,12 @@
 
 /obj/item/skillchip/brainwashing/on_activate(mob/living/carbon/user, silent = FALSE)
 	to_chat(user, span_danger("You get a pounding headache as the chip sends corrupt memories into your head!"))
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 20)
 	. = ..()
 
 /obj/item/skillchip/chefs_kiss
 	name = "K1SS skillchip"
+	desc = "This skillchip faintly smells of apple pie, how lovely. Consult a dietician before use."
 	auto_traits = list(TRAIT_CHEF_KISS)
 	skill_name = "Chef's Kiss"
 	skill_description = "Allows you to kiss food you've created to make them with love."
@@ -125,6 +122,7 @@
 
 /obj/item/skillchip/drunken_brawler
 	name = "F0RC3 4DD1CT10N skillchip"
+	desc = "A skillchip reeking of alcohol, said to improve one's fighting prowess while inebriated, as if that will save you from liver cirrhosis."
 	auto_traits = list(TRAIT_DRUNKEN_BRAWLER)
 	skill_name = "Drunken Unarmed Proficiency"
 	skill_description = "When intoxicated, you gain increased unarmed effectiveness."
@@ -134,6 +132,7 @@
 
 /obj/item/skillchip/master_angler
 	name = "Mast-Angl-Er skillchip"
+	desc = "A skillchip brimmed with encyclopedic excerpts and factoids about fishing and fishes."
 	auto_traits = list(TRAIT_REVEAL_FISH, TRAIT_EXAMINE_FISHING_SPOT, TRAIT_EXAMINE_FISH, TRAIT_EXAMINE_DEEPER_FISH)
 	skill_name = "Fisherman's Discernment"
 	skill_description = "Lists fishes when examining a fishing spot, gives a hint of whatever thing's biting the hook and more."

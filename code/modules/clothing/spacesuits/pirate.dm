@@ -4,10 +4,11 @@
 	icon_state = "spacepirate"
 	inhand_icon_state = "space_pirate_helmet"
 	armor_type = /datum/armor/space_pirate
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 	fishing_modifier = -2
-	visor_dirt = null
+	visor_dirt = "space_dirt"
+	has_visor = TRUE
 
 /datum/armor/space_pirate
 	melee = 30
@@ -30,8 +31,8 @@
 	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/cup/glass/bottle/rum)
 	slowdown = 0
 	armor_type = /datum/armor/space_pirate
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 	fishing_modifier = -3
 
 /obj/item/clothing/head/helmet/space/pirate/tophat

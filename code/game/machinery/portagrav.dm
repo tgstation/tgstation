@@ -86,20 +86,19 @@
 	max_range = new_range
 	update_field()
 
+/obj/machinery/power/portagrav/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : base_icon_state
+
 /obj/machinery/power/portagrav/screwdriver_act(mob/living/user, obj/item/tool)
-	. = NONE
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_o", base_icon_state, tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/power/portagrav/crowbar_act(mob/living/user, obj/item/tool)
-	. = NONE
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/power/portagrav/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
 	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
-		return
+		return NONE
 	if(!panel_open)
 		balloon_alert(user, "must open panel!")
 		return ITEM_INTERACT_BLOCKING

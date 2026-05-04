@@ -4,8 +4,8 @@
  * Placed machine that handles destructive experiments (but can also do the normal ones)
  */
 /obj/machinery/destructive_scanner
-	name = "Experimental Destructive Scanner"
-	desc = "A much larger version of the hand-held scanner, a charred label warns about its destructive capabilities."
+	name = "experimental destructive scanner"
+	desc = "A much larger version of the hand-held scanner. A charred label warns about its destructive capabilities."
 	icon = 'icons/obj/machines/destructive_scanner.dmi'
 	icon_state = "tube_open"
 	circuit = /obj/item/circuitboard/machine/destructive_scanner
@@ -104,8 +104,11 @@
 	. = ..()
 	icon_state = scanning ? "tube_on" : "tube_open"
 
-/obj/machinery/destructive_scanner/attackby(obj/item/object, mob/user, list/modifiers, list/attack_modifiers)
-	if (!scanning && default_deconstruction_screwdriver(user, "tube_open", "tube_open", object) || default_deconstruction_crowbar(object))
-		update_icon()
-		return
-	return ..()
+/obj/machinery/destructive_scanner/screwdriver_act(mob/living/user, obj/item/tool)
+	return scanning ? NONE : default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/destructive_scanner/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/destructive_scanner/can_crowbar_deconstruct()
+	return ..() && !scanning

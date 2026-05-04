@@ -22,9 +22,9 @@
 	return FALSE
 
 /atom/proc/attempt_wire_interaction(mob/user)
-	if(!wires)
+	if(isnull(wires))
 		return WIRE_INTERACTION_FAIL
-	if(!user.CanReach(src))
+	if(!IsReachableBy(user))
 		return WIRE_INTERACTION_FAIL
 	INVOKE_ASYNC(wires, TYPE_PROC_REF(/datum/wires, interact), user)
 	return WIRE_INTERACTION_BLOCK
@@ -43,19 +43,40 @@
 	var/wire_behavior = WIRES_INPUT
 
 	/// List of all wires.
-	var/list/wires = list()
+	var/list/wires
 	/// List of cut wires.
-	var/list/cut_wires = list() // List of wires that have been cut.
+	var/list/cut_wires // List of wires that have been cut.
 	/// Dictionary of colours to wire.
-	var/list/colors = list()
+	var/list/colors
 	/// List of attached assemblies.
-	var/list/assemblies = list()
+	var/list/assemblies
 
 	/// If every instance of these wires should be random. Prevents wires from showing up in station blueprints.
 	var/randomize = FALSE
 
 	/// Lazy assoc list of refs to mobs to refs to photos they have studied for wires
 	var/list/studied_photos
+
+	/// Assoc list of possible wire colors -> their greyscale variants
+	var/static/list/default_possible_colors = list(
+		"blue" = "dim grey",
+		"brown" = "dim grey",
+		"crimson" = "grey",
+		"cyan" = "light grey",
+		"gold" = "grey",
+		"green" = "grey",
+		"grey" = "grey",
+		"lime" = "light grey",
+		"magenta" = "grey",
+		"orange" = "grey",
+		"pink" = "grey",
+		"purple" = "grey",
+		"red" = "grey",
+		"silver" = "light grey",
+		"violet" = "grey",
+		"white" = "white",
+		"yellow" = "light grey",
+	)
 
 /datum/wires/New(atom/holder)
 	..()
@@ -82,10 +103,10 @@
 	holder = null
 	//properly clear refs to avoid harddels & other problems
 	for(var/color in assemblies)
-		var/obj/item/assembly/assembly = assemblies[color]
+		var/obj/item/assembly/assembly = LAZYACCESS(assemblies, color)
 		assembly.holder = null
 		assembly.connected = null
-	LAZYCLEARLIST(assemblies)
+	LAZYNULL(assemblies)
 	return ..()
 
 /// Adds a number of wires which do absolutely nothing.
@@ -94,7 +115,7 @@
 		var/dud = WIRE_DUD_PREFIX + "[--duds]"
 		if(dud in wires)
 			continue
-		wires += dud
+		LAZYADD(wires, dud)
 
 ///Called when holder is qdeleted for us to clean ourselves as not to leave any unlawful references.
 /datum/wires/proc/on_holder_qdel(atom/source, force)
@@ -103,27 +124,7 @@
 	qdel(src)
 
 /datum/wires/proc/randomize()
-	var/static/list/default_possible_colors = list(
-		"blue",
-		"brown",
-		"crimson",
-		"cyan",
-		"gold",
-		"green",
-		"grey",
-		"lime",
-		"magenta",
-		"orange",
-		"pink",
-		"purple",
-		"red",
-		"silver",
-		"violet",
-		"white",
-		"yellow",
-	)
-
-	if(length(wires) > length(default_possible_colors))
+	if(LAZYLEN(wires) > length(default_possible_colors))
 		stack_trace("Wire type [type] has more wires than possible colors, consider adding more colors or removing wires.")
 
 	var/list/possible_colors = default_possible_colors.Copy()
@@ -131,10 +132,10 @@
 	for(var/wire in shuffle(wires))
 		if(!length(possible_colors))
 			possible_colors = default_possible_colors.Copy()
-		colors[pick_n_take(possible_colors)] = wire
+		LAZYSET(colors, pick_n_take(possible_colors), wire)
 
 /datum/wires/proc/shuffle_wires()
-	colors.Cut()
+	LAZYCLEARLIST(colors)
 	randomize()
 
 /datum/wires/proc/repair()
@@ -142,7 +143,7 @@
 		cut(wire) // I KNOW I KNOW OK
 
 /datum/wires/proc/get_wire(color)
-	return colors[color]
+	return LAZYACCESS(colors, color)
 
 /datum/wires/proc/get_color_of_wire(wire_type)
 	for(var/color in colors)
@@ -151,12 +152,12 @@
 			return color
 
 /datum/wires/proc/get_attached(color)
-	if(assemblies[color])
-		return assemblies[color]
+	if(LAZYACCESS(assemblies, color))
+		return LAZYACCESS(assemblies, color)
 	return null
 
 /datum/wires/proc/is_attached(color)
-	if(assemblies[color])
+	if(LAZYACCESS(assemblies, color))
 		return TRUE
 
 /datum/wires/proc/is_cut(wire)
@@ -166,7 +167,7 @@
 	return is_cut(get_wire(color))
 
 /datum/wires/proc/is_all_cut()
-	if(cut_wires.len == wires.len)
+	if(LAZYLEN(cut_wires) == LAZYLEN(wires))
 		return TRUE
 
 /datum/wires/proc/is_dud(wire)
@@ -175,27 +176,27 @@
 /datum/wires/proc/is_dud_color(color)
 	return is_dud(get_wire(color))
 
-/datum/wires/proc/cut(wire, source)
+/datum/wires/proc/cut(wire, mob/living/source)
 	if(is_cut(wire))
-		cut_wires -= wire
+		LAZYREMOVE(cut_wires, wire)
 		SEND_SIGNAL(src, COMSIG_MEND_WIRE(wire), wire)
 		on_cut(wire, mend = TRUE, source = source)
 	else
-		cut_wires += wire
+		LAZYADD(cut_wires, wire)
 		SEND_SIGNAL(src, COMSIG_CUT_WIRE(wire), wire)
 		on_cut(wire, mend = FALSE, source = source)
 
-/datum/wires/proc/cut_color(color, source)
+/datum/wires/proc/cut_color(color, mob/living/source)
 	cut(get_wire(color), source)
 
 /datum/wires/proc/cut_random(source)
-	cut(wires[rand(1, wires.len)], source)
+	cut(LAZYACCESS(wires, rand(1, LAZYLEN(wires))), source)
 
 /datum/wires/proc/cut_all(source)
 	for(var/wire in wires)
 		cut(wire, source)
 
-/datum/wires/proc/pulse(wire, user, force=FALSE)
+/datum/wires/proc/pulse(wire, mob/living/user, force=FALSE)
 	if(!force && is_cut(wire))
 		return
 	SEND_SIGNAL(src, COMSIG_PULSE_WIRE, wire, user)
@@ -204,26 +205,26 @@
 /datum/wires/proc/pulse_color(color, mob/living/user, force=FALSE)
 	pulse(get_wire(color), user, force)
 
-/datum/wires/proc/pulse_assembly(obj/item/assembly/S)
-	for(var/color in assemblies)
-		if(S == assemblies[color])
+/datum/wires/proc/pulse_assembly(obj/item/assembly/assembly)
+	for(var/color, our_assembly in assemblies)
+		if(assembly == our_assembly)
 			pulse_color(color, force=TRUE)
 			return TRUE
 
-/datum/wires/proc/attach_assembly(color, obj/item/assembly/S)
-	if(S && istype(S) && S.assembly_behavior && !is_attached(color) && !(SEND_SIGNAL(S, COMSIG_ASSEMBLY_PRE_ATTACH, holder) & COMPONENT_CANCEL_ATTACH))
-		assemblies[color] = S
-		S.forceMove(holder)
-		S.connected = src
-		S.on_attach() // Notify assembly that it is attached
-		return S
+/datum/wires/proc/attach_assembly(color, obj/item/assembly/assembly)
+	if(assembly && istype(assembly) && assembly.assembly_behavior && !is_attached(color) && !(SEND_SIGNAL(assembly, COMSIG_ASSEMBLY_PRE_ATTACH, holder) & COMPONENT_CANCEL_ATTACH))
+		LAZYSET(assemblies, color, assembly)
+		assembly.forceMove(holder)
+		assembly.connected = src
+		assembly.on_attach() // Notify assembly that it is attached
+		return assembly
 
 /datum/wires/proc/detach_assembly(color)
-	var/obj/item/assembly/S = get_attached(color)
-	if(S && istype(S))
-		assemblies -= color
-		S.on_detach()		// Notify the assembly.  This should remove the reference to our holder
-		return S
+	var/obj/item/assembly/assembly = get_attached(color)
+	if(assembly && istype(assembly))
+		LAZYREMOVE(assemblies, color)
+		assembly.on_detach()		// Notify the assembly.  This should remove the reference to our holder
+		return assembly
 
 /// Called from [/atom/proc/emp_act]
 /datum/wires/proc/emp_pulse()
@@ -247,21 +248,22 @@
 /datum/wires/proc/get_status()
 	return list()
 
-/datum/wires/proc/on_cut(wire, mend = FALSE, source = null)
+/datum/wires/proc/on_cut(wire, mend = FALSE, mob/living/source = null)
 	return
 
-/datum/wires/proc/on_pulse(wire, user)
+/datum/wires/proc/on_pulse(wire, mob/living/user)
 	return
 // End Overridable Procs
 
 /datum/wires/proc/interact(mob/user)
 	if(!interactable(user))
-		return
+		return FALSE
 	ui_interact(user)
-	for(var/A in assemblies)
-		var/obj/item/I = assemblies[A]
-		if(istype(I) && I.on_found(user))
-			return
+	for(var/color, assembly in assemblies)
+		var/obj/item/assembly_item = assembly
+		if(istype(assembly_item) && assembly_item.on_found(user))
+			break
+	return TRUE
 
 /**
  * Checks whether wire assignments should be revealed.
@@ -355,10 +357,12 @@
 	var/list/data = list()
 	var/list/payload = list()
 	var/reveal_wires = can_reveal_wires(user)
+	var/colorblind = HAS_TRAIT(user, TRAIT_COLORBLIND)
 
 	for(var/color in colors)
 		payload.Add(list(list(
 			"color" = color,
+			"shownColor" = colorblind ? default_possible_colors[color] : color,
 			"wire" = (((reveal_wires || always_reveal_wire(color)) && !is_dud_color(color)) ? get_wire(color) : null),
 			"cut" = is_color_cut(color),
 			"attached" = is_attached(color)

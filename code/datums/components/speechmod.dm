@@ -18,7 +18,7 @@
 	var/datum/callback/should_modify_speech = null
 
 /datum/component/speechmod/Initialize(replacements = list(), end_string = "", end_string_chance = 100, slots, uppercase = FALSE, should_modify_speech)
-	if (!ismob(parent) && !isitem(parent) && !istype(parent, /datum/mutation/human))
+	if (!ismob(parent) && !isitem(parent) && !istype(parent, /datum/mutation))
 		return COMPONENT_INCOMPATIBLE
 
 	src.replacements = replacements
@@ -28,7 +28,7 @@
 	src.uppercase = uppercase
 	src.should_modify_speech = should_modify_speech
 
-	if (istype(parent, /datum/mutation/human))
+	if (istype(parent, /datum/mutation))
 		RegisterSignal(parent, COMSIG_MUTATION_GAINED, PROC_REF(on_mutation_gained))
 		RegisterSignal(parent, COMSIG_MUTATION_LOST, PROC_REF(on_mutation_lost))
 		return
@@ -50,10 +50,13 @@
 		targeted = owner.loc
 		RegisterSignal(targeted, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_unequipped))
-	RegisterSignal(parent, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_implanted))
-	RegisterSignal(parent, COMSIG_ORGAN_REMOVED, PROC_REF(on_removed))
+	if (isorgan(parent))
+		RegisterSignal(parent, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_implanted))
+		RegisterSignal(parent, COMSIG_ORGAN_REMOVED, PROC_REF(on_removed))
+	else
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
+		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_unequipped))
+
 
 /datum/component/speechmod/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER

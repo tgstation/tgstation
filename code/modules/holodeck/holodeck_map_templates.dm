@@ -109,6 +109,11 @@
 	template_id = "holodeck_card_battle"
 	mappath = "_maps/templates/holodeck_card_battle.dmm"
 
+/datum/map_template/holodeck/fitness
+	name = "Holodeck - Gymnasium"
+	template_id = "holodeck_fitness"
+	mappath = "_maps/templates/holodeck_fitness.dmm"
+
 //bad evil no good programs
 
 /datum/map_template/holodeck/medicalsim

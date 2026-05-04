@@ -27,9 +27,10 @@
 /obj/item/mining_scanner/admin
 
 /obj/item/mining_scanner/admin/attack_self(mob/user)
-	for(var/turf/closed/mineral/M in world)
-		if(M.scan_state)
-			M.icon_state = M.scan_state
+	for(var/turf/closed/mineral/rock in world)
+		if(rock.scan_state)
+			var/mutable_appearance/rock_overlay = mutable_appearance(rock.scan_icon, rock.scan_state, FLASH_LAYER, rock, ABOVE_LIGHTING_PLANE, appearance_flags = RESET_TRANSFORM)
+			rock.add_overlay(rock_overlay)
 	qdel(src)
 
 /obj/item/t_scanner/adv_mining_scanner
@@ -49,8 +50,9 @@
 	/// The range of the scanner in tiles.
 	var/range = 7
 
-/obj/item/t_scanner/adv_mining_scanner/cyborg
-	shut_off_on_unequip = FALSE
+//get no effects from the t-ray scanner, which auto-shuts off.
+/obj/item/t_scanner/adv_mining_scanner/cyborg_unequip(mob/user)
+	return
 
 /obj/item/t_scanner/adv_mining_scanner/cyborg/Initialize(mapload)
 	. = ..()
@@ -69,15 +71,12 @@
 		var/turf/t = get_turf(src)
 		mineral_scan_pulse(t, range, src)
 
-/proc/mineral_scan_pulse(turf/T, range = world.view, obj/item/scanner)
-	var/list/minerals = list()
+/proc/mineral_scan_pulse(turf/start_turf, range = world.view, obj/item/scanner)
 	var/vents_nearby = FALSE
 	var/undiscovered = FALSE
 	var/radar_volume = 30
-	for(var/turf/closed/mineral/mineral in  RANGE_TURFS(range, T))
-		if(mineral.scan_state)
-			minerals += mineral
-	for(var/obj/structure/ore_vent/vent in range(range, T))
+
+	for(var/obj/structure/ore_vent/vent in range(range, start_turf))
 		if(!vents_nearby && (!vent.discovered || !vent.tapped))
 			vents_nearby = TRUE
 			if(vent.discovered)
@@ -86,28 +85,25 @@
 		radar_volume = max(potential_volume, radar_volume)
 		vent.add_mineral_overlays()
 
-	if(LAZYLEN(minerals))
-		for(var/turf/closed/mineral/M in minerals)
-			var/obj/effect/temp_visual/mining_overlay/oldC = locate(/obj/effect/temp_visual/mining_overlay) in M
-			if(oldC)
-				qdel(oldC)
-			var/obj/effect/temp_visual/mining_overlay/C = new /obj/effect/temp_visual/mining_overlay(M)
-			C.icon_state = M.scan_state
+	for(var/turf/closed/mineral/mineral in RANGE_TURFS(range, start_turf))
+		if(mineral.scan_state)
+			mineral.flash_scan()
 
 	if(vents_nearby && scanner)
 		if(undiscovered)
 			playsound(scanner, 'sound/machines/radar-ping.ogg', radar_volume, FALSE)
+			scanner.balloon_alert_to_viewers("ore vent nearby")
 		else
 			playsound(scanner, 'sound/machines/sonar-ping.ogg', radar_volume, FALSE)
-		scanner.balloon_alert_to_viewers("ore vent nearby")
 		scanner.spasm_animation(1.5 SECONDS)
 
 /obj/effect/temp_visual/mining_overlay
 	plane = HIGH_GAME_PLANE
 	layer = FLASH_LAYER
-	icon = 'icons/effects/ore_visuals.dmi'
-	appearance_flags = 0 //to avoid having TILE_BOUND in the flags, so that the 480x480 icon states let you see it no matter where you are
-	duration = 35
+	icon = 'icons/blanks/480x480.dmi'
+	icon_state = "nothing"
+	appearance_flags = NONE // to avoid having TILE_BOUND in the flags, so that the 480x480 icon states let you see it no matter where you are
+	duration = 3.5 SECONDS
 	pixel_x = -224
 	pixel_y = -224
 	/// What animation easing to use when we create the ore overlay on rock walls/ore vents.
@@ -116,11 +112,3 @@
 /obj/effect/temp_visual/mining_overlay/Initialize(mapload)
 	. = ..()
 	animate(src, alpha = 0, time = duration, easing = easing_style)
-
-/obj/effect/temp_visual/mining_overlay/vent
-	icon = 'icons/effects/vent_overlays.dmi'
-	icon_state = "unknown"
-	duration = 45
-	pixel_x = 0
-	pixel_y = 0
-	easing_style = CIRCULAR_EASING|EASE_IN

@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 	/area/station/engineering/main,
 	/area/station/engineering/supermatter,
 	/area/station/engineering/atmospherics_engine,
-	/area/station/ai_monitored/turret_protected/ai,
+	/area/station/ai/satellite/chamber,
 	/area/ruin/comms_agent //fixes icemoon comms station being affected
 
 )))

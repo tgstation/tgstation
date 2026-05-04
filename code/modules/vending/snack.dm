@@ -51,12 +51,16 @@
 
 /obj/machinery/vending/snack/blue
 	icon_state = "snackblue"
+	allow_custom = FALSE
 
 /obj/machinery/vending/snack/orange
 	icon_state = "snackorange"
+	allow_custom = FALSE
 
 /obj/machinery/vending/snack/green
 	icon_state = "snackgreen"
+	allow_custom = FALSE
 
 /obj/machinery/vending/snack/teal
 	icon_state = "snackteal"
+	allow_custom = FALSE

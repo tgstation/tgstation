@@ -11,7 +11,7 @@
 		/obj/item/food/grown/apple = 1
 	)
 	result = /obj/item/food/salad/herbsalad
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/aesirsalad
 	name = "Aesir salad"
@@ -21,7 +21,7 @@
 		/obj/item/food/grown/apple/gold = 1
 	)
 	result = /obj/item/food/salad/aesirsalad
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/validsalad
 	name = "Valid salad"
@@ -33,7 +33,7 @@
 	)
 	result = /obj/item/food/salad/validsalad
 	added_foodtypes = FRIED
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/melonfruitbowl
 	name ="Melon fruit bowl"
@@ -46,7 +46,7 @@
 		/obj/item/food/grown/ambrosia = 1
 	)
 	result = /obj/item/food/melonfruitbowl
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/fruitsalad
 	name = "Fruit salad"
@@ -59,7 +59,7 @@
 
 	)
 	result = /obj/item/food/salad/fruit
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/junglesalad
 	name = "Jungle salad"
@@ -71,7 +71,7 @@
 
 	)
 	result = /obj/item/food/salad/jungle
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/citrusdelight
 	name = "Citrus delight"
@@ -83,7 +83,7 @@
 
 	)
 	result = /obj/item/food/salad/citrusdelight
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/edensalad
 	name = "Salad of Eden"
@@ -95,7 +95,7 @@
 		/obj/item/food/grown/peace = 1
 	)
 	result = /obj/item/food/salad/edensalad
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/kale_salad
 	name = "Kale salad"
@@ -107,7 +107,7 @@
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
 	)
 	result = /obj/item/food/salad/kale_salad
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/greek_salad
 	name = "Greek salad"
@@ -121,7 +121,7 @@
 		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/salad/greek_salad
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/caesar_salad
 	name = "Caesar salad"
@@ -134,7 +134,7 @@
 		/obj/item/food/breadslice/plain = 1,
 	)
 	result = /obj/item/food/salad/caesar_salad
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/spring_salad
 	name = "Spring salad"
@@ -146,7 +146,7 @@
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 5,
 	)
 	result = /obj/item/food/salad/spring_salad
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/potato_salad
 	name = "Potato salad"
@@ -158,7 +158,7 @@
 		/datum/reagent/consumable/mayonnaise = 5,
 	)
 	result = /obj/item/food/salad/potato_salad
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/spinach_fruit_salad
 	name = "Spinach fruit salad"
@@ -170,7 +170,7 @@
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
 	)
 	result = /obj/item/food/salad/spinach_fruit_salad
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/antipasto_salad
 	name = "Antipasto salad"
@@ -183,4 +183,5 @@
 		/obj/item/food/cheese/mozzarella = 1,
 	)
 	result = /obj/item/food/salad/antipasto_salad
-	category = CAT_SALAD
+	dish_category = DISH_SALAD
+	cuisine_category = CUISINE_ITALIAN

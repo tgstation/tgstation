@@ -1,11 +1,11 @@
-import { Dispatch, useEffect, useState } from 'react';
+import { type Dispatch, useEffect, useState } from 'react';
 import { Button, Section, Stack, Table } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { SORTING_TYPES } from './contants';
-import { FilterState } from './filters';
+import type { FilterState } from './filters';
 import { SubsystemRow } from './SubsystemRow';
-import { ControllerData, SubsystemData } from './types';
+import type { ControllerData, SubsystemData } from './types';
 
 type Props = {
   filterOpts: FilterState;
@@ -54,7 +54,7 @@ export function SubsystemViews(props: Props) {
   let currentMax = 0;
   if (inDeciseconds) {
     for (let i = 0; i < sorted.length; i++) {
-      let value = sorted[i][propName];
+      const value = sorted[i][propName];
       if (typeof value !== 'number') {
         continue;
       }

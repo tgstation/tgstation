@@ -51,6 +51,27 @@ path/corner/color_name {\
 COLORED_SOFA(/obj/structure/chair/sofa, brown, SOFA_BROWN)
 COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 
+// Make crafted brown sofas use the "retro sofa" display name without changing map-spawned ones.
+/obj/structure/chair/sofa/middle/brown/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		name = "retro sofa"
+
+/obj/structure/chair/sofa/left/brown/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		name = "retro sofa"
+
+/obj/structure/chair/sofa/right/brown/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		name = "retro sofa"
+
+/obj/structure/chair/sofa/corner/brown/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		name = "retro sofa"
+
 // Original icon ported from Eris(?) and updated to work here.
 /obj/structure/chair/sofa/corp
 	name = "sofa"
@@ -73,25 +94,31 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 /obj/structure/chair/sofa/bench
 	name = "bench"
 	desc = "Perfectly designed to be comfortable to sit on, and hellish to sleep on."
-	icon_state = "bench_middle"
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/structure/chair/sofa/bench"
+	post_init_icon_state = "bench_middle"
 	greyscale_config = /datum/greyscale_config/bench_middle
 	greyscale_colors = "#af7d28"
 	has_armrest = FALSE
 
 /obj/structure/chair/sofa/bench/left
-	icon_state = "bench_left"
+	icon_state = "/obj/structure/chair/sofa/bench/left"
+	post_init_icon_state = "bench_left"
 	greyscale_config = /datum/greyscale_config/bench_left
 
 /obj/structure/chair/sofa/bench/right
-	icon_state = "bench_right"
+	icon_state = "/obj/structure/chair/sofa/bench/right"
+	post_init_icon_state = "bench_right"
 	greyscale_config = /datum/greyscale_config/bench_right
 
 /obj/structure/chair/sofa/bench/corner
-	icon_state = "bench_corner"
+	icon_state = "/obj/structure/chair/sofa/bench/corner"
+	post_init_icon_state = "bench_corner"
 	greyscale_config = /datum/greyscale_config/bench_corner
 
 /obj/structure/chair/sofa/bench/solo
-	icon_state = "bench_solo"
+	icon_state = "/obj/structure/chair/sofa/bench/solo"
+	post_init_icon_state = "bench_solo"
 	greyscale_config = /datum/greyscale_config/bench_solo
 
 
@@ -105,6 +132,7 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 3
 	has_armrest = FALSE
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/structure/chair/sofa/bamboo/left
 	icon_state = "bamboo_sofaend_left"

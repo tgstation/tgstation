@@ -41,8 +41,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB
 	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
-	///Whether or not the web is from the genetics power
-	var/genetic = FALSE
 	///Whether or not the web is a sealed web
 	var/sealed = FALSE
 	///Do we need to offset this based on a sprite frill?
@@ -57,6 +55,11 @@
 	if (has_frill)
 		pixel_x = -9
 		pixel_y = -9
+
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	return ..()
 
 /obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)
@@ -75,31 +78,42 @@
 
 /obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(genetic)
-		return
 	if(sealed)
 		return FALSE
-	if(isliving(mover))
-		if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
-			return TRUE
-		if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
-			return TRUE
-		if(prob(stuck_chance))
-			stuck_react(mover)
-			return FALSE
-		return .
 	if(isprojectile(mover))
 		return prob(projectile_stuck_chance)
 	return .
 
-/// Show some feedback when you can't pass through something
-/obj/structure/spider/stickyweb/proc/stuck_react(atom/movable/stuck_guy)
-	loc.balloon_alert(stuck_guy, "stuck in web!")
-	stuck_guy.Shake(duration = 0.1 SECONDS)
+/obj/structure/spider/stickyweb/proc/is_whitelisted(mob/candidate)
+	return HAS_TRAIT(candidate, TRAIT_WEB_SURFER)
+
+/obj/structure/spider/stickyweb/proc/on_entered(datum/source, atom/movable/victim, old_loc)
+	SIGNAL_HANDLER
+
+	if(!isliving(victim))
+		return
+	if(is_whitelisted(victim) || victim.pulledby && is_whitelisted(victim.pulledby))
+		return
+	if(prob(stuck_chance))
+		stuck_react(victim)
+
+/// Drains stamina and shows feedback when you get stuck moving thru a web
+/obj/structure/spider/stickyweb/proc/stuck_react(mob/living/victim)
+	if(victim.get_stamina_loss() > 90)
+		if(victim.body_position != LYING_DOWN)
+			to_chat(victim, span_warning("You trip over \the [src] due to exhaustion!"))
+
+		victim.SetKnockdown(3 SECONDS)
+		return
+
+	if(prob(25))
+		loc.balloon_alert(victim, "stuck in web!")
+		victim.Shake(duration = 0.2 SECONDS)
+
+	victim.adjust_stamina_loss(rand(10, 15))
 
 /// Web made by geneticists, needs special handling to allow them to pass through their own webs
 /obj/structure/spider/stickyweb/genetic
-	genetic = TRUE
 	desc = "It's stringy, sticky, and came out of your coworker."
 	/// Mob with special permission to cross this web
 	var/mob/living/allowed_mob
@@ -113,19 +127,8 @@
 	allowed_mob = allowedmob
 	return ..()
 
-/obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(mover == allowed_mob)
-		return TRUE
-	else if(isliving(mover)) //we change the spider to not be able to go through here
-		if(mover.pulledby == allowed_mob)
-			return TRUE
-		if(prob(50))
-			stuck_react(mover)
-			return FALSE
-	else if(isprojectile(mover))
-		return prob(30)
-	return .
+/obj/structure/spider/stickyweb/genetic/is_whitelisted(mob/candidate)
+	return candidate == allowed_mob
 
 /// Web with a 100% chance to intercept movement
 /obj/structure/spider/stickyweb/very_sticky

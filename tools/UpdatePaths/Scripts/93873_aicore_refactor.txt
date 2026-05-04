@@ -1,0 +1,1 @@
+/obj/structure/ai_core/deactivated/@SUBTYPES : /obj/structure/ai_core/@SUBTYPES{@OLD;state=5}

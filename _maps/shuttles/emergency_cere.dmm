@@ -352,10 +352,10 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bL" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32;
-	pixel_y = 32
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
 	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bM" = (
@@ -511,12 +511,13 @@
 "cu" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/stasis,
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cv" = (
@@ -565,6 +566,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cE" = (
@@ -618,6 +620,7 @@
 "cI" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/vitals_reader/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cJ" = (
@@ -639,6 +642,7 @@
 "cN" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/machinery/vitals_reader/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cO" = (
@@ -1541,7 +1545,7 @@ bn
 bn
 ac
 ad
-aZ
+bL
 bc
 bc
 ba
@@ -1585,7 +1589,7 @@ aZ
 aZ
 aZ
 ME
-bL
+bc
 bc
 bT
 bW
@@ -1952,7 +1956,7 @@ aa
 ab
 ab
 ac
-ac
+ab
 ac
 ab
 ab

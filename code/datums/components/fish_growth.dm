@@ -72,8 +72,7 @@
 		var/obj/item/fish/fishie = result
 		fishie.breeding_wait = source.breeding_wait
 		fishie.last_feeding = source.last_feeding
-		var/health_percent = source.health / initial(source.health)
-		fishie.adjust_health(fishie.health * health_percent)
+		fishie.update_integrity(fishie.max_integrity * source.get_integrity_percentage())
 	else
 		result = new result_type (location)
 		if(location != source.loc)

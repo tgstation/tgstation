@@ -35,6 +35,7 @@
 	icon_state = "shell_unfinished"
 	desc = "The incomplete body of a golem. Add ten sheets of certain minerals to finish."
 	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20)
 	/// Amount of minerals you need to feed the shell to wake it up
 	var/required_stacks = 10
 	/// Type of shell to create
@@ -61,7 +62,23 @@
 	new shell_type(get_turf(src), /* creator = */ user, /* made_of = */ stack_type)
 	qdel(src)
 
+/obj/item/golem_shell/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	to_chat(user, span_notice("You begin dislodging structurally integral chunks."))
+	playsound(src, 'sound/items/tools/crowbar.ogg',  70)
+	if(!do_after(user, delay = 1 SECONDS, target = src))
+		return
+	if(QDELETED(src))
+		return
+	new /obj/item/stack/sheet/mineral/adamantine(get_turf(src), 1) //Return less than was used to construct the shell
+	to_chat(user, span_notice("The shell collapses in on itself!"))
+	playsound(src, 'sound/effects/rock/rock_break.ogg', 40)
+	qdel(src)
+	return
+
 ///made with xenobiology, the golem obeys its creator
 /obj/item/golem_shell/servant
 	name = "incomplete servant golem shell"
 	shell_type = /obj/effect/mob_spawn/ghost_role/human/golem/servant
+	custom_materials = list(/datum/material/adamantine = SHEET_MATERIAL_AMOUNT * 3)

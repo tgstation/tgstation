@@ -229,6 +229,8 @@
 	tube_construction = /obj/structure/c_transit_tube/station/dispenser
 	base_icon_state = "dispenser0"
 	open_status = STATION_TUBE_OPEN
+	COOLDOWN_DECLARE(freight_output)
+	COOLDOWN_DECLARE(freight_message)
 
 /obj/structure/transit_tube/station/dispenser/close_animation()
 	return
@@ -249,6 +251,14 @@
 /obj/structure/transit_tube/station/dispenser/Bumped(atom/movable/AM)
 	if(!(istype(AM) && AM.dir == boarding_dir) || AM.anchored)
 		return
+	if(!isliving(AM))
+		if(!COOLDOWN_FINISHED(src, freight_output))
+			if(COOLDOWN_FINISHED(src, freight_message))
+				AM.visible_message(span_notice("Freight pod dispenser is recharging. Please wait."))
+				COOLDOWN_START(src, freight_message, 10 SECONDS)
+			return
+		COOLDOWN_START(src, freight_output, 2 SECONDS)
+
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
 	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))
 	playsound(src, 'sound/items/weapons/emitter2.ogg', 50, TRUE)

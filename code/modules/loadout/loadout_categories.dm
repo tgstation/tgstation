@@ -57,6 +57,9 @@
 	var/list/formatted_list = list()
 
 	for(var/datum/loadout_item/item as anything in associated_items)
+		if(item.is_disabled())
+			continue
+
 		var/list/item_data = item.to_ui_data()
 		UNTYPED_LIST_ADD(formatted_list, item_data)
 

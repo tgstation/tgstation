@@ -278,6 +278,5 @@ Charged extracts:
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)
 	user.visible_message(span_warning("[src] swells and splits into three new slimes!"))
 	for(var/i in 1 to 3)
-		var/mob/living/basic/slime/new_slime = new (get_turf(user))
-		new_slime.random_colour()
+		new /mob/living/basic/slime/random(get_turf(user))
 	return ..()

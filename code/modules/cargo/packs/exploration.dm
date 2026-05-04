@@ -1,7 +1,7 @@
 /// Exploration drone unlockables ///
 
 /datum/supply_pack/exploration
-	special = TRUE
+	order_flags = ORDER_SPECIAL
 	group = "Outsourced"
 
 /datum/supply_pack/exploration/scrapyard
@@ -37,6 +37,6 @@
 	crate_name = "shrubbery crate"
 	var/shrub_amount = 8
 
-/datum/supply_pack/exploration/shrubbery/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/exploration/shrubbery/fill(obj/container)
 	for(var/i in 1 to shrub_amount)
-		new /obj/item/grown/shrub(C)
+		new /obj/item/grown/shrub(container)

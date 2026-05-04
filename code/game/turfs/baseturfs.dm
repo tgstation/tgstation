@@ -100,6 +100,13 @@
 		return null
 	return baseturfs.len - index + 1
 
+/// Similar to depth_to_find_baseturf, but directly returns the index of the found baseturf.
+/// This number can be passed into insert_baseturf to insert a baseturf before the found baseturf.
+/turf/proc/level_to_find_baseturf(baseturf_type)
+	if(!islist(baseturfs))
+		return baseturfs == baseturf_type ? 1 : null
+	return baseturfs.Find(baseturf_type) || null
+
 /// Returns the baseturf at the given depth.
 /// For example, baseturf_at_depth(1) will give the baseturf that would show up when scraping once.
 /turf/proc/baseturf_at_depth(index)
@@ -181,3 +188,8 @@
 		insert_baseturf(search_position, stack_type)
 	else if(type == search_type)
 		insert_baseturf(turf_type = stack_type)
+
+/// Gets a copy of the baseturfs up to the specified depth
+/turf/proc/get_baseturfs_to_depth(depth)
+	var/list/baseturf_list = islist(baseturfs) ? baseturfs : list(baseturfs)
+	return baseturf_list.Copy(baseturf_list.len - depth + 1)

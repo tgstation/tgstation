@@ -13,5 +13,6 @@
 		"Cook": {
 			"additional_cqc_areas": ["/area/station/service/cafeteria"]
 		}
-	}
+	},
+	"bonus_weakpoints": 2
 }

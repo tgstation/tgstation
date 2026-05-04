@@ -27,7 +27,7 @@
 
 /datum/smite/retcon/proc/delete_bank_account(mob/living/target)
 	var/name = target.real_name
-	var/account_list = flatten_list(SSeconomy.bank_accounts_by_id)
+	var/account_list = assoc_to_values(SSeconomy.bank_accounts_by_id)
 	for(var/datum/bank_account/account in account_list)
 		if(account.account_holder == name)
 			qdel(account)

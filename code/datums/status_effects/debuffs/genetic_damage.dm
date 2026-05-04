@@ -27,7 +27,7 @@
 	. = ..()
 	UnregisterSignal(owner, COMSIG_LIVING_HEALTHSCAN)
 
-/datum/status_effect/genetic_damage/refresh(mob/living/owner, total_damage)
+/datum/status_effect/genetic_damage/refresh(effect, total_damage)
 	. = ..()
 	src.total_damage += total_damage
 
@@ -39,7 +39,7 @@
 		return
 
 	if(total_damage >= minimum_before_tox_damage)
-		owner.adjustToxLoss(toxin_damage_per_second * seconds_between_ticks)
+		owner.adjust_tox_loss(toxin_damage_per_second * seconds_between_ticks)
 
 	total_damage -= remove_per_second * seconds_between_ticks
 	if(total_damage <= 0)

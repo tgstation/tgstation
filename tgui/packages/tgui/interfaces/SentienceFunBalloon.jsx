@@ -23,8 +23,7 @@ export const SentienceFunBalloon = (props) => {
                 <Input
                   fluid
                   value={group_name}
-                  expensive
-                  onChange={(value) =>
+                  onBlur={(value) =>
                     act('group_name', {
                       updated_name: value,
                     })
@@ -33,13 +32,14 @@ export const SentienceFunBalloon = (props) => {
               </LabeledList.Item>
               <LabeledList.Item label="Effect range">
                 <NumberInput
+                  tickWhileDragging
                   width="84px"
                   value={range}
                   minValue={1}
                   maxValue={100}
                   step={1}
                   stepPixelSize={15}
-                  onDrag={(value) =>
+                  onChange={(value) =>
                     act('effect_range', {
                       updated_range: value,
                     })

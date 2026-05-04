@@ -25,7 +25,7 @@
 	health = 50
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/cow
 	/// what this cow munches on, and what can be used to tame it.
 	var/list/food_types = list(/obj/item/food/grown/wheat)
@@ -37,6 +37,7 @@
 	var/milked_reagent = /datum/reagent/consumable/milk
 
 /datum/emote/cow
+	abstract_type = /datum/emote/cow
 	mob_type_allowed_typecache = /mob/living/basic/cow
 	mob_type_blacklist_typecache = list()
 
@@ -78,6 +79,7 @@
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15)
 
 /mob/living/basic/cow/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	visible_message("[src] [tame_message] as it seems to bond with [tamer].", "You [self_tame_message], recognizing [tamer] as your new pal.")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 

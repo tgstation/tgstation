@@ -13,8 +13,11 @@
 	description = "Nanotrasen is interested in a virus with a [stat_name] stat of exactly [stat_value]. Central Command will pay handsomely for such a virus."
 	reward += rand(0, 4) * CARGO_CRATE_VALUE
 
+/datum/bounty/virus/print_required()
+	return "At least 1u"
+
 /datum/bounty/virus/can_claim()
-	return ..() && shipped
+	return shipped
 
 /datum/bounty/virus/applies_to(obj/export)
 	if(shipped)
@@ -23,12 +26,10 @@
 		return FALSE
 	if(!istype(export, /obj/item/reagent_containers || !export.reagents || !export.reagents.reagent_list))
 		return FALSE
-	var/datum/reagent/blood/blud = locate() in export.reagents.reagent_list
-	if(!blud)
-		return FALSE
-	for(var/datum/disease/advance/virus in blud.get_diseases())
-		if(accepts_virus(virus))
-			return TRUE
+	for(var/datum/reagent/reagent as anything in export.reagents.reagent_list)
+		for(var/datum/disease/advance/virus in reagent.data?["viruses"])
+			if(accepts_virus(virus))
+				return TRUE
 	return FALSE
 
 /datum/bounty/virus/ship(obj/export)
@@ -63,4 +64,3 @@
 
 /datum/bounty/virus/transmit/accepts_virus(datum/disease/advance/virus)
 	return virus.totalTransmittable() == stat_value
-

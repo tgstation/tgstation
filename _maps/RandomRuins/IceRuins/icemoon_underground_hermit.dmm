@@ -18,6 +18,7 @@
 /area/ruin/powered/hermit)
 "dY" = (
 /obj/structure/sink/directional/south,
+/obj/structure/glowshroom/single,
 /turf/open/floor/plating,
 /area/ruin/powered/hermit)
 "gr" = (
@@ -25,7 +26,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/hermit)
 "ha" = (
-/obj/effect/mob_spawn/ghost_role/human/hermit,
+/obj/effect/mob_spawn/ghost_role/human/hermit/icemoon,
 /turf/open/floor/wood,
 /area/ruin/powered/hermit)
 "hN" = (
@@ -51,8 +52,7 @@
 /turf/closed/wall/mineral/wood,
 /area/icemoon/underground/explored)
 "oJ" = (
-/obj/structure/glowshroom/single,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/ruin/powered/hermit)
 "ph" = (
 /turf/closed/mineral/snowmountain/icemoon/unscrapeable,

@@ -65,6 +65,9 @@
 	if(triggered || !isturf(loc) || iseffect(on_who) || !armed)
 		return FALSE
 
+	if(on_who.anchored || HAS_TRAIT(on_who, TRAIT_WALLMOUNTED))
+		return FALSE
+
 	var/mob/living/living_mob
 	if(ismob(on_who))
 		if(!isliving(on_who)) //no ghosties.
@@ -135,9 +138,7 @@
 	else
 		visible_message(span_danger("[icon2html(src, viewers(src))] [src] detonates!"))
 
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
+	do_sparks(3, TRUE, src)
 	mineEffect(triggerer)
 	triggered = TRUE
 	SEND_SIGNAL(src, COMSIG_MINE_TRIGGERED, triggerer)

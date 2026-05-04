@@ -123,7 +123,7 @@
 		return
 	var/mob/living/honorbound = source
 	var/obj/item/thrown_item = thrown_movable
-	var/mob/thrown_by = throwingdatum.get_thrower()
+	var/mob/thrown_by = throwingdatum?.get_thrower()
 	if(thrown_item.throwforce < honorbound.health && ishuman(thrown_by))
 		INVOKE_ASYNC(src, PROC_REF(flub), thrown_by)
 
@@ -216,7 +216,7 @@
 			if(PUNISHMENT_BRAND)
 				var/mob/living/carbon/human/branded = interfering
 				to_chat(interfering, span_warning("[GLOB.deity] brands your flesh for interfering with [chaplain]'s sparring match!!"))
-				var/obj/item/bodypart/branded_limb = pick(branded.bodyparts)
+				var/obj/item/bodypart/branded_limb = pick(branded.get_bodyparts())
 				branded_limb.force_wound_upwards(/datum/wound/burn/flesh/severe/brand, wound_source = "divine intervention")
 				branded.emote("scream")
 
@@ -287,7 +287,7 @@
 				to_chat(loser, span_userdanger("[GLOB.deity] is enraged by your lackluster sparring record!"))
 				lightningbolt(loser)
 				loser.add_mood_event("sparring", /datum/mood_event/banished)
-				loser.mind.holy_role = NONE
+				loser.mind.set_holy_role(NONE)
 				to_chat(loser, span_userdanger("You have been excommunicated! You are no longer holy!"))
 		if(STAKES_MONEY_MATCH)
 			to_chat(loser, span_userdanger("You've lost all your money to [winner]!"))

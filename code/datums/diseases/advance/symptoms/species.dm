@@ -15,6 +15,7 @@
 	transmittable = 0
 	level = 5
 	severity = 0
+	symptom_cure = null
 
 /datum/symptom/undead_adaptation/OnAdd(datum/disease/advance/A)
 	A.process_dead = TRUE
@@ -41,6 +42,7 @@
 	transmittable = 3
 	level = 5
 	severity = 0
+	symptom_cure = null
 
 /datum/symptom/inorganic_adaptation/OnAdd(datum/disease/advance/A)
 	A.infectable_biotypes |= MOB_MINERAL | MOB_ROBOTIC // Plasmamen, golems, and androids.

@@ -7,12 +7,8 @@
 		"Long Range Scan Report": 0,
 		"UFOs Shot Down": 0
 	},
-	"required_site_traits": [
-		"in space"
-	],
-	"loot_categories": [
-		"research"
-	],
+	"required_site_traits": ["in space"],
+	"loot_categories": ["research"],
 	"scan_band_mods": {},
 	"deep_scan_description": "",
 	"triggers": [],

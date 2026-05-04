@@ -4,15 +4,15 @@
 	icon_state = "fermenter"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-	reagent_flags = TRANSPARENT | DRAINABLE
+	reagent_flags = /obj/machinery/plumbing::reagent_flags | DRAINABLE
 	buffer = 400
 
 	///input dir
 	var/eat_dir = SOUTH
 
-/obj/machinery/plumbing/fermenter/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/fermenter/Initialize(mapload, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_supply, layer)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)

@@ -7,5 +7,5 @@ This is a simple app that does a few things
 - Connects to a TGS instance via command line parameters.
 - Uses the .tgs.yml information to automatically set up a TGS instance.
 - Runs a TGS deploy/launch and validates that they succeeded.
- 
- Look for its invocation in the GitHub workflows
+
+Look for its invocation in the GitHub workflows

@@ -4,19 +4,19 @@ import path from "path";
 import process from "process";
 
 const createComment = (screenshotFailures, zipFileUrl) => {
-	const formatScreenshotFailure = ({ directory, diffUrl, newUrl, oldUrl }) => {
-		const img = (url) => {
-			if (url) {
-				return `![](${url})`;
-			} else {
-				return "None produced.";
-			}
-		};
+  const formatScreenshotFailure = ({ directory, diffUrl, newUrl, oldUrl }) => {
+    const img = (url) => {
+      if (url) {
+        return `![](${url})`;
+      } else {
+        return "None produced.";
+      }
+    };
 
-		return `| ${directory} | ${img(oldUrl)} | ${img(newUrl)} | ${img(diffUrl)} |`;
-	};
+    return `| ${directory} | ${img(oldUrl)} | ${img(newUrl)} | ${img(diffUrl)} |`;
+  };
 
-	return `
+  return `
 		Screenshot tests failed!
 
 		${zipFileUrl ? `[Download zip file of new screenshots.](${zipFileUrl})` : "No zip file could be produced, this is a bug!"}
@@ -64,54 +64,59 @@ const createComment = (screenshotFailures, zipFileUrl) => {
 
 			If you need help, you can ask maintainers either on Discord or on this pull request.
 		</details>
-	`.replace(/\t/g, ''); // If we keep tabs, it'll become a code block.
+	`.replace(/\t/g, ""); // If we keep tabs, it'll become a code block.
 };
 
 export async function showScreenshotTestResults({ github, context, exec }) {
-	const { FILE_HOUSE_KEY } = process.env;
+  const { FILE_HOUSE_KEY } = process.env;
 
-	// Check if bad-screenshots is in the artifacts
-	const { data: { artifacts } } = await github.rest.actions.listWorkflowRunArtifacts({
-		owner: context.repo.owner,
-		repo: context.repo.repo,
-		run_id: context.payload.workflow_run.id,
-	});
+  // Check if bad-screenshots is in the artifacts
+  const {
+    data: { artifacts },
+  } = await github.rest.actions.listWorkflowRunArtifacts({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    run_id: context.payload.workflow_run.id,
+  });
 
-	const badScreenshots = artifacts.find(({ name }) => name === 'bad-screenshots');
-	if (!badScreenshots) {
-		console.log("No bad screenshots found");
-		return;
-	}
+  const badScreenshots = artifacts.find(
+    ({ name }) => name === "bad-screenshots",
+  );
+  if (!badScreenshots) {
+    console.log("No bad screenshots found");
+    return;
+  }
 
-	// Download the screenshots from the artifacts
-	const download = await github.rest.actions.downloadArtifact({
-		owner: context.repo.owner,
-		repo: context.repo.repo,
-		artifact_id: badScreenshots.id,
-		archive_format: "zip",
-	});
+  // Download the screenshots from the artifacts
+  const download = await github.rest.actions.downloadArtifact({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    artifact_id: badScreenshots.id,
+    archive_format: "zip",
+  });
 
-	fs.writeFileSync("bad-screenshots.zip", Buffer.from(download.data));
+  fs.writeFileSync("bad-screenshots.zip", Buffer.from(download.data));
 
-	await exec.exec("unzip bad-screenshots.zip -d bad-screenshots");
+  await exec.exec("unzip bad-screenshots.zip -d bad-screenshots");
 
-	const prNumberFile = path.join("bad-screenshots", "pull_request_number.txt");
+  const prNumberFile = path.join("bad-screenshots", "pull_request_number.txt");
 
-	if (!fs.existsSync(prNumberFile)) {
-		console.log("No PR number found");
-		return;
-	}
+  if (!fs.existsSync(prNumberFile)) {
+    console.log("No PR number found");
+    return;
+  }
 
-	const prNumber = parseInt(fs.readFileSync(prNumberFile, "utf8"), 10);
-	if (!prNumber) {
-		console.log("No PR number found");
-		return;
-	}
+  const prNumber = parseInt(fs.readFileSync(prNumberFile, "utf8"), 10);
+  if (!prNumber) {
+    console.log("No PR number found");
+    return;
+  }
 
-	fs.rmSync(prNumberFile);
+  fs.rmSync(prNumberFile);
 
-	// Validate the PR
-	const result = await github.graphql(`query($owner:String!, $repo:String!, $prNumber:Int!) {
+  // Validate the PR
+  const result = await github.graphql(
+    `query($owner:String!, $repo:String!, $prNumber:Int!) {
 		repository(owner: $owner, name: $repo) {
 			pullRequest(number: $prNumber) {
 				commits(last: 1) {
@@ -127,110 +132,118 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 				}
 			}
 		}
-	}`, {
-		owner: context.repo.owner,
-		repo: context.repo.repo,
-		prNumber,
-	});
+	}`,
+    {
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      prNumber,
+    },
+  );
 
-	const validPr = result
-		.repository
-		.pullRequest
-		.commits
-		.nodes[0]
-		.commit
-		.checkSuites
-		.nodes
-		.some(({ id }) => id === context.payload.workflow_run.check_suite_node_id);
+  const validPr =
+    result.repository.pullRequest.commits.nodes[0].commit.checkSuites.nodes.some(
+      ({ id }) => id === context.payload.workflow_run.check_suite_node_id,
+    );
 
-	if (!validPr) {
-		console.log(`PR #${prNumber} is not valid (expected check suite ID ${context.payload.workflow_run.check_suite_node_id})`);
-		return;
-	}
+  if (!validPr) {
+    console.log(
+      `PR #${prNumber} is not valid (expected check suite ID ${context.payload.workflow_run.check_suite_node_id})`,
+    );
+    return;
+  }
 
-	// Upload the screenshots
-	// 1. Loop over the bad-screenshots directory
-	// 2. Upload the screenshot
-	// 3. Save the URL
-	const uploadFile = async (filename) => {
-		if (!fs.existsSync(filename)) {
-			return;
-		}
+  // Upload the screenshots
+  // 1. Loop over the bad-screenshots directory
+  // 2. Upload the screenshot
+  // 3. Save the URL
+  const uploadFile = async (filename) => {
+    if (!fs.existsSync(filename)) {
+      return;
+    }
 
-		const formData = new FormData();
+    const formData = new FormData();
 
-		formData.set("key", FILE_HOUSE_KEY);
+    formData.set("key", FILE_HOUSE_KEY);
 
-		formData.set("file", await fileFrom(filename), path.basename(filename));
+    formData.set("file", await fileFrom(filename), path.basename(filename));
 
-		return fetch("https://file.house/api/upload", {
-			method: "POST",
-			body: formData,
-		})
-			.then(response => response.json())
-			.then(response => {
-				console.log(response);
-				return response;
-			})
-			.then(({ url }) => url);
-	};
+    return fetch("https://file.house/api/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        return response;
+      })
+      .then(({ url }) => url);
+  };
 
-	const screenshotFailures = [];
+  const screenshotFailures = [];
 
-	for (const directory of fs.readdirSync("bad-screenshots")) {
-		console.log(`Uploading screenshots for ${directory}`);
+  for (const directory of fs.readdirSync("bad-screenshots")) {
+    console.log(`Uploading screenshots for ${directory}`);
 
-		let diffUrl;
-		let newUrl;
-		let oldUrl;
+    let diffUrl;
+    let newUrl;
+    let oldUrl;
 
-		await Promise.all([
-			uploadFile(path.join("bad-screenshots", directory, "new.png")).then(url => newUrl = url),
-			uploadFile(path.join("bad-screenshots", directory, "old.png")).then(url => oldUrl = url),
-			uploadFile(path.join("bad-screenshots", directory, "diff.png")).then(url => diffUrl = url),
-		]);
+    await Promise.all([
+      uploadFile(path.join("bad-screenshots", directory, "new.png")).then(
+        (url) => (newUrl = url),
+      ),
+      uploadFile(path.join("bad-screenshots", directory, "old.png")).then(
+        (url) => (oldUrl = url),
+      ),
+      uploadFile(path.join("bad-screenshots", directory, "diff.png")).then(
+        (url) => (diffUrl = url),
+      ),
+    ]);
 
-		console.log(`New URL (${directory}): ${newUrl}`);
-		console.log(`Old URL (${directory}): ${oldUrl}`);
-		console.log(`Diff URL (${directory}): ${diffUrl}`);
+    console.log(`New URL (${directory}): ${newUrl}`);
+    console.log(`Old URL (${directory}): ${oldUrl}`);
+    console.log(`Diff URL (${directory}): ${diffUrl}`);
 
-		screenshotFailures.push({ directory, diffUrl, newUrl, oldUrl });
-	}
+    screenshotFailures.push({ directory, diffUrl, newUrl, oldUrl });
+  }
 
-	if (screenshotFailures.length === 0) {
-		console.log("No screenshot failures found");
-		return;
-	}
+  if (screenshotFailures.length === 0) {
+    console.log("No screenshot failures found");
+    return;
+  }
 
-	// Upload zip file for quick fixes
-	const zipFilePath = path.join("data", "screenshot-update");
-	const finalDestination = path.join(
-		zipFilePath,
-		"code", "modules", "unit_tests", "screenshots",
-	)
+  // Upload zip file for quick fixes
+  const zipFilePath = path.join("data", "screenshot-update");
+  const finalDestination = path.join(
+    zipFilePath,
+    "code",
+    "modules",
+    "unit_tests",
+    "screenshots",
+  );
 
-	fs.mkdirSync(finalDestination, { recursive: true });
+  fs.mkdirSync(finalDestination, { recursive: true });
 
-	for (const { directory } of screenshotFailures) {
-		fs.copyFileSync(
-			path.join("bad-screenshots", directory, "new.png"),
-			path.join(finalDestination, `${directory}.png`),
-		)
-	}
+  for (const { directory } of screenshotFailures) {
+    fs.copyFileSync(
+      path.join("bad-screenshots", directory, "new.png"),
+      path.join(finalDestination, `${directory}.png`),
+    );
+  }
 
-	await exec.exec("zip", ["-r", `../screenshot-update.zip`, "."], {
-		cwd: zipFilePath,
-	});
+  await exec.exec("zip", ["-r", `../screenshot-update.zip`, "."], {
+    cwd: zipFilePath,
+  });
 
-	const zipUrl = await uploadFile(`${zipFilePath}.zip`);
+  const zipUrl = await uploadFile(`${zipFilePath}.zip`);
 
-	// Post the comment
-	const comment = createComment(screenshotFailures, zipUrl);
+  // Post the comment
+  const comment = createComment(screenshotFailures, zipUrl);
 
-	await github.rest.issues.createComment({
-		owner: context.repo.owner,
-		repo: context.repo.repo,
-		issue_number: prNumber,
-		body: comment,
-	});
+  await github.rest.issues.createComment({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    issue_number: prNumber,
+    body: comment,
+  });
 }

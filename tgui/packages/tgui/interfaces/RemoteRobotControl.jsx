@@ -34,7 +34,7 @@ export const RemoteRobotControlContent = (props) => {
     return (
       <Section
         key={robot.ref}
-        title={robot.name + ' (' + robot.model + ')'}
+        title={`${robot.name} (${robot.model})`}
         buttons={
           <>
             <Button

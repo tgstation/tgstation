@@ -87,8 +87,8 @@ export const MODpaint = (props) => {
                         step={1}
                         stepPixelSize={0.75}
                         format={(value) => `${value}%`}
-                        onDrag={(e, value) => {
-                          let retColor = currentColor;
+                        onChange={(e, value) => {
+                          const retColor = currentColor;
                           retColor[row * 4 + col] = value / 100;
                           act('transition_color', { color: retColor });
                         }}

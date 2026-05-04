@@ -7,20 +7,25 @@
 		/datum/action/cooldown/spell/charged/psychic_booster,
 		/datum/action/cooldown/spell/forcewall/psychic_wall,
 	)
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
+	shade_color = "blue"
+	variant_traits_added = list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
+	/// Echolocation component we assigned
+	VAR_FINAL/datum/weakref/echolocation_component
+	/// Antimagic component we assigned
+	VAR_FINAL/datum/weakref/antimagic_component
 
 /obj/item/organ/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
-	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
-	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
+	echolocation_component = WEAKREF(inserted_into.AddComponent(/datum/component/echolocation, echo_icon = "psyker"))
+	antimagic_component = WEAKREF(inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND))
 
 /obj/item/organ/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
 	. = ..()
-	qdel(removed_from.GetComponent(/datum/component/echolocation))
-	qdel(removed_from.GetComponent(/datum/component/anti_magic))
+	qdel(echolocation_component)
+	qdel(antimagic_component)
 
-/obj/item/organ/brain/psyker/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/psyker/on_life(seconds_per_tick)
 	. = ..()
 	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(zone)
 	if(istype(psyker_head))
@@ -35,18 +40,12 @@
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
-	head_flags = HEAD_DEBRAIN
+	bodypart_traits = list(TRAIT_BALD, TRAIT_SHAVED)
+	head_flags = HEAD_DEBRAIN | HEAD_NO_DISFIGURE // ignore disfigurement by damage, as we're always disfigured
 
-/obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, lazy)
+/obj/item/bodypart/head/psyker/Initialize(mapload)
 	. = ..()
-	if(!.)
-		return
-	new_head_owner.become_blind(bodypart_trait_source)
-
-/obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
-	owner.cure_blind(bodypart_trait_source)
-	return ..()
+	ADD_TRAIT(src, TRAIT_DISFIGURED, INNATE_TRAIT)
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
 /mob/living/carbon/human/proc/slow_psykerize()
@@ -76,10 +75,14 @@
 	if(stat == DEAD || !old_head || !old_brain)
 		return FALSE
 	var/obj/item/bodypart/head/psyker/psyker_head = new()
-	if(!psyker_head.replace_limb(src, special = TRUE))
+	if(!psyker_head.replace_limb(src))
 		return FALSE
+	psyker_head.species_id = dna?.species?.id
+	var/list/our_drops = psyker_head.get_butcher_drops(force = TRUE)
+	if (length(our_drops))
+		psyker_head.butcher_drops = string_list(our_drops)
 	qdel(old_head)
-	var/obj/item/organ/brain/psyker/psyker_brain = new()
+	var/obj/item/organ/brain/psyker/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes. Who'da thunk.
 	old_brain.before_organ_replacement(psyker_brain)
 	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
@@ -103,15 +106,16 @@
 	if(!burden || burden.burden_level < 9)
 		to_chat(human_user, span_warning("You aren't burdened enough."))
 		return FALSE
-	for(var/obj/item/nullrod/null_rod in get_turf(religious_tool))
-		transformation_target = null_rod
-		return ..()
+	for(var/obj/item/possible_rod in get_turf(religious_tool))
+		if(HAS_TRAIT(possible_rod, TRAIT_NULLROD_ITEM))
+			transformation_target = possible_rod
+			return ..()
 	to_chat(human_user, span_warning("You need to place a null rod on [religious_tool] to do this!"))
 	return FALSE
 
 /datum/religion_rites/nullrod_transformation/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/nullrod/null_rod = transformation_target
+	var/obj/item/null_rod = transformation_target
 	transformation_target = null
 	if(QDELETED(null_rod) || null_rod.loc != get_turf(religious_tool))
 		to_chat(user, span_warning("Your target left the altar!"))
@@ -174,27 +178,9 @@
 
 /obj/item/gun/ballistic/revolver/chaplain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
-	AddComponent(/datum/component/effect_remover, \
-		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
-		success_forcesay = "BEGONE FOUL MAGIKS!!", \
-		tip_text = "Clear rune", \
-		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
-		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
-	)
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25)
+	AddElement(/datum/element/nullrod_core, FALSE)
 	name = pick(possible_names)
 	desc = possible_names[name]
-
-/obj/item/gun/ballistic/revolver/chaplain/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
-	SIGNAL_HANDLER
-	if(!istype(target, /obj/effect/rune))
-		return
-
-	var/obj/effect/rune/target_rune = target
-	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
-	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/gun/ballistic/revolver/chaplain/suicide_act(mob/living/user)
 	. = ..()

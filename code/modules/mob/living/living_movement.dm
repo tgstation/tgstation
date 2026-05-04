@@ -46,7 +46,7 @@
 		return
 
 	update_gravity(gravity_state)
-
+	SEND_SIGNAL(src, COMSIG_LIVING_GRAVITY_CHANGED, gravity_state, old_grav_state)
 	if(gravity_state > STANDARD_GRAVITY)
 		gravity_animate()
 	else if(old_grav_state > STANDARD_GRAVITY)
@@ -73,7 +73,12 @@
 	return ..()
 
 /mob/living/proc/update_move_intent_slowdown()
-	add_movespeed_modifier((move_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run)
+	add_movespeed_modifier(get_move_intent_slowdown())
+
+/mob/living/proc/get_move_intent_slowdown()
+	if(move_intent == MOVE_INTENT_WALK)
+		return /datum/movespeed_modifier/config_walk_run/walk
+	return /datum/movespeed_modifier/config_walk_run/run
 
 /mob/living/proc/update_turf_movespeed(turf/open/turf)
 	if(isopenturf(turf) && !HAS_TRAIT(turf, TRAIT_TURF_IGNORE_SLOWDOWN))

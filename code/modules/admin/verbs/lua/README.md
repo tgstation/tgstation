@@ -208,34 +208,44 @@ Writes `value` to the underlying data the pointer references.
 If `possible_pointer` is a pointer, reads it. Otherwise, it is returned as-is.
 
 # The SS13 package
+
 The `SS13` package contains various helper functions that use code specific to tgstation.
 
 ## SS13.state
+
 A reference to the state datum (`/datum/lua_state`) handling this Lua state.
 
 ## SS13.get_runner_ckey()
+
 The ckey of the user who ran the lua script in the current context. Can be unreliable if accessed after sleeping.
 
 ## SS13.get_runner_client()
+
 Returns the client of the user who ran the lua script in the current context. Can be unreliable if accessed after sleeping.
 
 ## SS13.global_proc
+
 A wrapper for the magic string used to tell `WrapAdminProcCall` to call a global proc.
 For instance, `/datum/callback` must be instantiated with `SS13.global_proc` as its first argument to specify that it will be invoking a global proc.
 The following example declares a callback which will execute the global proc `to_chat`:
+
 ```lua
 local callback = SS13.new("/datum/callback", SS13.global_proc, "to_chat", dm.world, "Hello World")
 ```
 
 ## SS13.istype(thing, type)
+
 Equivalent to the DM statement `istype(thing, text2path(type))`.
 
 ## SS13.new(type, ...)
+
 An alias for `dm.new`
 
 ## SS13.is_valid(datum)
+
 Can be used to determine if the datum passed is not nil, not undefined and not qdel'd all in one. A helper function that allows you to check the validity from only one function.
 Example usage:
+
 ```lua
 local datum = SS13.new("/datum")
 dm.global_procs.qdel(datum)
@@ -249,25 +259,31 @@ print(SS13.is_valid(datum)) -- true
 ```
 
 ## SS13.type(string)
+
 Converts a string into a typepath. Equivalent to doing `dm.global_proc("_text2path", "/path/to/type")`
 
 ## SS13.qdel(datum)
+
 Deletes a datum. You shouldn't try to reference it after calling this function. Equivalent to doing `dm.global_proc("qdel", datum)`
 
 ## SS13.await(thing_to_call, proc_to_call, ...)
+
 Calls `proc_to_call` on `thing_to_call`, with `...` as its arguments, and sleeps until that proc returns.
 Returns two return values - the first is the return value of the proc, and the second is the message of any runtime exception thrown by the called proc.
 The following example calls and awaits the return of `poll_ghost_candidates`:
+
 ```lua
 local ghosts, runtime = SS13.await(SS13.global_proc, "poll_ghost_candidates", "Would you like to be considered for something?")
 ```
 
 ## SS13.wait(time, timer)
+
 Waits for a number of **seconds** specified with the `time` argument. You can optionally specify a timer subsystem using the `timer` argument.
 
 Internally, this function creates a timer that will resume the current task after `time` seconds, then yields the current task by calling `coroutine.yield` with no arguments and ignores the return values. If the task is prematurely resumed, the timer will be safely deleted.
 
 ## SS13.register_signal(datum, signal, func)
+
 Registers the Lua function `func` as a handler for `signal` on `datum`.
 
 Like with signal handlers written in DM, Lua signal handlers should not sleep (either by calling `sleep` or `coroutine.yield`).
@@ -275,6 +291,7 @@ Like with signal handlers written in DM, Lua signal handlers should not sleep (e
 This function returns whether the signal registration was successful.
 
 The following example defines a function which will register a signal that makes `target` make a honking sound any time it moves:
+
 ```lua
 function honk(target)
 	SS13.register_signal(target, "movable_moved", function(source)
@@ -286,12 +303,15 @@ end
 NOTE: if `func` is an anonymous function declared inside the call to `SS13.register_signal`, it cannot be referenced in order to unregister that signal with `SS13.unregister_signal`
 
 ## SS13.unregister_signal(datum, signal, func)
+
 Unregister a signal previously registered using `SS13.register_signal`. `func` must be a function for which a handler for the specified signal has already been registered. If `func` is `nil`, all handlers for that signal will be unregistered.
 
 ## SS13.set_timeout(time, func)
+
 Creates a timer which will execute `func` after `time` **seconds**. `func` should not expect to be passed any arguments, as it will not be passed any. Unlike `SS13.wait`, `SS13.set_timeout` does not yield or sleep the current task, making it suitable for use in signal handlers for `SS13.register_signal`
 
 The following example will output a message to chat after 5 seconds:
+
 ```lua
 SS13.set_timeout(5, function()
 	dm.global_procs.to_chat(dm.world, "Hello World!")
@@ -299,15 +319,19 @@ end)
 ```
 
 ## SS13.start_loop(time, amount, func)
+
 Creates a timer which will execute `func` after `time` **seconds**. `func` should not expect to be passed any arguments, as it will not be passed any. Works exactly the same as `SS13.set_timeout` except it will loop the timer `amount` times. If `amount` is set to -1, it will loop indefinitely. Returns a number value, which represents the timer's id. Can be stopped with `SS13.end_loop`
 Returns a number, the timer id, which is needed to stop indefinite timers.
 The following example will output a message to chat every 5 seconds, repeating 10 times:
+
 ```lua
 SS13.start_loop(5, 10, function()
 	dm.global_procs.to_chat(dm.world, "Hello World!")
 end)
 ```
+
 The following example will output a message to chat every 5 seconds, until `SS13.end_loop(timerid)` is called:
+
 ```lua
 local timerid = SS13.start_loop(5, -1, function()
 	dm.global_proc.to_chat(dm.world, "Hello World!")
@@ -315,8 +339,10 @@ end)
 ```
 
 ## SS13.end_loop(id)
+
 Prematurely ends a loop that hasn't ended yet, created with `SS13.start_loop`. Silently fails if there is no started loop with the specified id.
 The following example will output a message to chat every 5 seconds and delete it after it has repeated 20 times:
+
 ```lua
 local repeated_amount = 0
 -- timerid won't be in the looping function's scope if declared before the function is declared.
@@ -331,5 +357,6 @@ end)
 ```
 
 ## SS13.stop_all_loops()
+
 Stops all current running loops that haven't ended yet.
 Useful in case you accidentally left a indefinite loop running without storing the id anywhere.

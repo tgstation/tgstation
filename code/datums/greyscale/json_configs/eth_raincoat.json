@@ -9,7 +9,7 @@
 			"type": "icon_state",
 			"icon_state": "eth_raincoat_glow",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"eth_raincoat_t": [
@@ -22,7 +22,7 @@
 			"type": "icon_state",
 			"icon_state": "eth_raincoat_glow",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }

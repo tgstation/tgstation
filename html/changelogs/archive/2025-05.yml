@@ -614,3 +614,217 @@
       experience.
   sqnztb:
   - rscadd: 'New holiday for May 22: Goth Day.'
+2025-05-24:
+  Ezel:
+  - bugfix: Adds missing dragnet beacon to catwalk
+  - bugfix: Adds missing HoS office authenication device.
+  - map: Gives CE/CMO/RD their proper camera monitors
+  - map: Medbay Camera's is now its own proper network
+  - map: Removes a camera from Prison maintenance and Security closet
+  - map: Disables AI control on Prison Maintenance Door
+  - bugfix: Minisat Camera's now use the proper network
+  - bugfix: Engine Camera's now use the proper network
+  OnlineGirlfriend:
+  - image: update sprite for Screwdriver (drink)
+  SmArtKar:
+  - bugfix: Fixed ampersands in TM titles breaking the in-game issue report button
+2025-05-25:
+  Hardly:
+  - image: resprited the modern hairstyle to look modern
+  Sprite by Crumpaloo, commissioned by me!:
+  - rscadd: Adds a jumbo monkey plushie, go feed it bananas!
+  TealSeer:
+  - bugfix: fixed being able to add seemingly infinite refined bluespace crystals
+      to pipe bombs
+  - refactor: /obj/item/stack/split_stack no longer tries to move the stack into the
+      user's hands, use /obj/item/stack/split_n_take for that
+  Zergspower:
+  - qol: cyborg circuit upgrade can now handle cells as well, reduction in borg related
+      rage from building APC's down by 400%
+  - bugfix: fixes borg inducers instantly depleting their cells, moves the inducer
+      cell act to be to an internal cell to compensate for power differences
+  throwawayuseless:
+  - balance: Nooartrium no longer applies its side effects at double speed.
+  vinylspiders:
+  - refactor: preview icons for greyscale items are now automatically generated, meaning
+      you can see GAGS as they actually appear ingame while mapping or viewing the
+      loadout menu.
+2025-05-26:
+  00-Steven:
+  - balance: Egg boxes' storage UI is now 6 slots wide, such that it contains an even
+      dozen slots when full.
+  - balance: The storage UIs for heart-shaped chocolate boxes, pickle jars, and rolling
+      paper packs are now 4, 5, and 5 slots wide respectively, such that they fill
+      the whole storage UI when full.
+  - balance: Fryish and its fried snack cousins can now be stored in nugget boxes.
+  - bugfix: Pickle jars can actually hold the ten pickles they spawn with.
+  - bugfix: Fertile egg boxes, coffee condiment displays, and coffee cart racks have
+      the right amount of slots.
+  - bugfix: Coffee cart racks spawn with the sprite for holding 1 cartridge like they
+      do, rather than looking like they're holding 4 cartridges.
+  - code_imp: Refactored holochip merging. Please report any issues.
+  - qol: Holochips now have usage screentips.
+  Aliceee2ch:
+  - bugfix: Now the telecomm hub does not turn on with a multitool after EMP
+  - bugfix: Lockboxes now correctly use the closed icon_state when first spawned
+  Ben10Omintrix:
+  - rscadd: snails are now growable from cytology. u can swab snails or watering cans
+      for samples
+  Ghommie:
+  - bugfix: Stickmen summoned by the papier-mache robe are once again hostile.
+  Krysonism:
+  - rscadd: Added the ability to create a spore print seed by using paper on mushrooms.
+  SmArtKar:
+  - bugfix: Fixed cultists, blood brothers and headrevs sometimes not getting their
+      roundstart items
+  SyncIt21:
+  - bugfix: recycler won't spit out indestructible items if its indirectly stored
+      on the mob
+  TheRealSpriteMan1337:
+  - spellcheck: Makes the computer and machine frame building tips consistent, decapitalizes
+      the improvised chem heater's name and change its description.
+  mc-oofert:
+  - bugfix: removed a camera from the deathmatch meta brig map, disciple of pete has
+      low-range signalers, deathmatch bolt of possession deals brain damage instead,
+      split personality may not roll in deathmatch
+  throwawayuseless:
+  - bugfix: Plasma now contributes to the fuel gauge of rigged welders, making them
+      less extremely obvious.
+2025-05-27:
+  00-Steven:
+  - qol: Added screentips for inserting cash into and recolouring ID cards.
+  - qol: Added screentips for copying access directly from a card using a chameleon
+      ID card.
+  - qol: Added screentips for setting prisoner ID sentence time.
+  - qol: Added screentips for forging cardboard ID cards.
+  - balance: Nugget boxes work as stasis fish cases for Fryish and Fritterish.
+  1393F:
+  - bugfix: The advanced roasting stick can once again roast sausages on singularities
+      from a few tiles away!
+  Absolucy:
+  - bugfix: Firelocks now skip checking uninitialized turfs, which caused errors with
+      the holodeck.
+  Arturlang:
+  - balance: Full heals no longer replace all organs, though they still replace any
+      hazardous organs and re-add missing ones and heal the rest.
+  Bisar:
+  - bugfix: Atmos machines should no longer remove labels when you adjust their settings.
+  Holoo-1:
+  - bugfix: fixed camera static not being drawn for AI in multicamera mode. Also fixes
+      secondary AI cameras not existing and gives them their AI name
+  TiviPlus:
+  - bugfix: fixed a runtime error with the escape menu
+  Tostah:
+  - rscadd: Adds 2u sanguarite to atropens
+  Y0SH1M4S73R:
+  - bugfix: Shuttle flight control computers will show you when the linked shuttle
+      cannot move.
+  - bugfix: The MOD soul core no longer tells you there's no charge source while worn.
+  jlsnow301:
+  - bugfix: Tgui inputs have been tweaked again to fix issues and seem more responsive.
+  - bugfix: Fixed unwrapped tgui bluescreen text
+  moocowswag:
+  - bugfix: conveyors now remember what they should be doing after losing and regaining
+      power.
+  necromanceranne:
+  - bugfix: If an energy weapon is indestructible, so is the cell within the weapon.
+  - bugfix: Cells inside of energy guns are bomb proof so as to not brick a gun that
+      somehow survives being bombed.
+  throwawayuseless:
+  - rscadd: Reflex Hammer, used to test your kneejerk reflex. Print one now, from
+      your local lathe!
+  - rscadd: New chemistry catalysts! Combine phenol, unstable mutagen, and plasma
+      in a 1:3:1 competitive reaction, similar to tempomyocin and purity tester. Adding
+      stable plasma to either of the two precursors will create the new catalysts,
+      one regulating pH, and the other temperature. If you're having trouble getting
+      the one you want, you can optionally add gold to the beaker as the competitive
+      reaction progresses, which will cause the pH precursor to form more quickly.
+  timothymtorres:
+  - qol: '`map_export` admin verb can now save atmos for turfs and air canisters'
+  - bugfix: Fix shuttle engines built from a circuit board having it's `anchored`
+      state not matching the correct `engine_state`. This would consider the engine
+      to be anchored already when it was not and allow someone to weld it despite
+      it being able to be dragged and moved around.
+  vinylspiders:
+  - qol: Slimes will no longer have a chance to move when being put in BZ enviroments
+      via the xenobiology console
+2025-05-28:
+  Ben10Omintrix:
+  - rscadd: added stoats to the game
+  Melbert:
+  - bugfix: Cargorilla is back
+  - rscadd: Silicons get a HUD animation when they perish.
+  SmArtKar:
+  - balance: Neruwhine can no longer roll voidwalker traumas.
+  - bugfix: Fixed the planetary gravity damage status effect not clearing itself when
+      you lose the voided trauma.
+  Y0SH1M4S73R:
+  - rscadd: Advanced camera consoles now have usb ports. Connected circuits can get
+      the position the camera is viewing, get the location of targeted entities, and
+      provide the console with actions that the user can activate.
+  necromanceranne:
+  - bugfix: The BR-38 no longer has a completely unintended accuracy malus built in.
+  throwawayuseless:
+  - bugfix: Wavelength is now the main factor in how long your microlaser takes to
+      activate, rather than intensity for some reason.
+  timothymtorres:
+  - code_imp: Properly document circuitboard vars
+2025-05-29:
+  Goat:
+  - bugfix: Strongarm implant no longer gives the text about being broken when you
+      use your empty hand.
+  - code_imp: Toolset arms are now a subtype of arm implants instead of all arm implants
+      being treated like toolset arms.
+  SmArtKar:
+  - rscadd: Colorblind people can no longer see wire colors
+  - bugfix: Fixed eyecharts not considering people with monochromacy colorblind
+  Y0SH1M4S73R:
+  - spellcheck: Stations in the Spinward Sector have reported malfunctioning AIs swearing
+      fealty to the dead god Ratvar.
+2025-05-30:
+  00-Steven:
+  - refactor: Refactored the folder/biscuit interaction chain. Please report any issues.
+  - bugfix: Picking up paper into a folder/biscuit by clicking on the paper with it
+      is now less prone to inventory jank.
+  - qol: Picking up paper into a folder/biscuit now plays the pickup animation, consistent
+      with inserting it otherwise.
+  - qol: Folders and biscuit cards now have screentips.
+  - sound: Inserting paper into a folder now plays the pickup/drop sounds, consistent
+      with taking it out.
+  - balance: You can now examine things through advanced camera consoles.
+  - balance: You can now examine things while in a holopad call.
+  - balance: You can now examine things while looking up or down.
+  JohnFulpWillard:
+  - rscadd: Added a 'Ghost settings' button, taking the spot of the pAI candidate
+      button and replacing the "Ghost" tab of the Stat panel. This button contains
+      buttons pertinent to your time as an Observer.
+  - rscadd: Added a new sleep HUD element when you're resting.
+  - rscadd: Xenos' HUD looks a little closer to human ones, with the rest button on
+      the right side.
+  - qol: Added a new accessibility setting for users who get inconsistent double clicks.
+  - spellcheck: The header for RD consoles now says what type of points it's counting.
+  necromanceranne:
+  - balance: Projectiles that have armour penetration, or can pass straight through
+      structures, can potentially hit a pilot inside of a mech.
+  - rscadd: Felinids, when sufficiently manic and starving, will sometimes take a
+      chunk out of their fellow spessman. With their teeth.
+  - balance: Carp-infused mutants have pointy teeth.
+  - balance: Melee weapons with sufficient armour penetration can potentially overpenetrate
+      and hit the pilot if you attack it while in combat mode.
+  ocan4214:
+  - bugfix: fixed Civilian Bounty Terminal not filling rest of the window when opened
+      first time.
+  throwawayuseless:
+  - bugfix: Binders and The Book Of Babel now fit on bookshelves.
+  timothymtorres:
+  - qol: Replace hardcoded atmos values for virtual domain turfs
+  - bugfix: Fix `map_export` admin verb not blacklisting `obj/effects`
+  - bugfix: Fix map linter conditional rule crashing
+2025-05-31:
+  Ezel/Improvedname, Toriate, JohnFulpWillard:
+  - rscadd: Re-added the Dragoon Tomb lair, now has a Skybulge spear and Drachen armor.
+  - balance: Ice whelps now spit out cold fire.
+  JohnFulpWillard:
+  - qol: Info buttons previously at the top right of your screen (Changelog, wiki,
+      forums) is now in the Escape menu.
+  - qol: Fullscreen is now a preferences and will follow you through rounds.

@@ -54,7 +54,7 @@
 /area/virtual_domain)
 "cj" = (
 /obj/structure/transit_tube/crossing,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain/protected_space)
 "ct" = (
 /obj/structure/closet/syndicate{
@@ -115,6 +115,7 @@
 /obj/structure/table/reinforced,
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
 /obj/item/ammo_box/magazine/m7mm,
+/obj/structure/sign/departments/cargo/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain/protected_space)
 "da" = (
@@ -122,8 +123,8 @@
 /turf/open/floor/plastic,
 /area/virtual_domain)
 "dd" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/syndicate,
+/obj/structure/sign/warning/vacuum/external/directional/north,
+/turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
 "di" = (
 /obj/machinery/power/terminal{
@@ -208,7 +209,7 @@
 /area/virtual_domain)
 "hA" = (
 /obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain)
 "hD" = (
 /obj/structure/table/reinforced,
@@ -222,10 +223,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
-"iL" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall/r_wall/syndicate,
-/area/virtual_domain/protected_space)
 "iU" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -318,7 +315,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
 	enabled = 0;
-	icon_state = "control_kill";
 	lethal = 1;
 	name = "Ship turret control panel";
 	pixel_y = 32;
@@ -377,7 +373,7 @@
 /area/virtual_domain)
 "nU" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain)
 "og" = (
 /obj/structure/table/reinforced,
@@ -437,7 +433,7 @@
 /area/space/virtual_domain)
 "qU" = (
 /obj/structure/sign/poster/contraband/c20r,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain/protected_space)
 "qY" = (
 /obj/machinery/light/small/directional/south,
@@ -452,7 +448,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
 "ru" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain)
 "rH" = (
 /obj/machinery/airalarm/directional/north,
@@ -603,7 +599,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
 "xS" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/virtual_domain)
 "yl" = (
 /obj/machinery/door/airlock/grunge{
@@ -658,7 +654,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
 "zN" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain/protected_space)
 "Aa" = (
 /obj/structure/chair/comfy/shuttle,
@@ -839,7 +835,7 @@
 	on = 0;
 	shot_delay = 10
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/virtual_domain)
 "Im" = (
 /obj/structure/table/reinforced,
@@ -1006,6 +1002,10 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
+"PQ" = (
+/obj/structure/sign/warning/vacuum/external/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain)
 "PR" = (
 /obj/machinery/door/password/voice/sfc{
 	password = null
@@ -1111,7 +1111,7 @@
 /area/virtual_domain/protected_space)
 "UQ" = (
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain)
 "Vg" = (
 /turf/open/space/basic,
@@ -1123,7 +1123,7 @@
 	on = 0;
 	shot_delay = 10
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain)
 "Vq" = (
 /obj/structure/transit_tube/station/dispenser/reverse{
@@ -1133,7 +1133,7 @@
 /area/virtual_domain/safehouse)
 "Wd" = (
 /obj/structure/sign/poster/contraband/tools,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain/protected_space)
 "Wy" = (
 /obj/structure/closet/crate/secure/gear{
@@ -2971,8 +2971,8 @@ qx
 ru
 uP
 uP
+ru
 dd
-uP
 uP
 uP
 Ox
@@ -2980,8 +2980,8 @@ aw
 uP
 uP
 uP
-uP
-dd
+PQ
+ru
 uP
 Qg
 ru
@@ -2992,7 +2992,7 @@ qx
 qx
 qx
 qx
-iL
+zN
 cZ
 dp
 dp

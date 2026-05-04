@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "b" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -10,7 +10,7 @@
 /area/template_noop)
 "d" = (
 /obj/structure/stone_tile/slab,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "e" = (
 /obj/structure/stone_tile,
@@ -302,7 +302,7 @@
 /area/lavaland/surface/outdoors)
 "I" = (
 /obj/structure/stone_tile/slab/cracked,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "J" = (
 /obj/structure/fluff/divine/convertaltar,

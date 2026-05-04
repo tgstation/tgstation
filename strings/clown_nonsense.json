@@ -1,12 +1,5 @@
 {
-	"honk": [
-		"HENK",
-		"HONK!!!",
-		"HONK!",
-		"honk",
-		"HONK",
-		"HOOOOOOONK"
-	],
+	"honk": ["HENK", "HONK!!!", "HONK!", "honk", "HONK", "HOOOOOOONK"],
 
 	"rare": [
 		" :) ",
@@ -34,5 +27,4 @@
 		"pranking",
 		"slip"
 	]
-
 }

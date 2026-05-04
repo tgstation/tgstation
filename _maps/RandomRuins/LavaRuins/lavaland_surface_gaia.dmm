@@ -88,7 +88,7 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/unpowered/gaia)
 "w" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/ruin/unpowered/gaia)
 "x" = (
 /obj/structure/flora/bush/sunny/style_random,

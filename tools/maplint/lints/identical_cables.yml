@@ -1,4 +1,4 @@
 /obj/structure/cable:
   banned_neighbors:
     /obj/structure/cable:
-        identical: true
+      identical: true

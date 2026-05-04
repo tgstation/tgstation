@@ -7,6 +7,7 @@
 #define CHANGETURF_TRAPDOOR_INDUCED (1<<6) // Caused by a trapdoor, for trapdoor to know that this changeturf was caused by itself
 #define CHANGETURF_GENERATE_SHUTTLE_CEILING (1<<7) // Generate a shuttle ceiling on the above turf
 #define CHANGETURF_NO_AREA_CHANGE (1<<8) // Prevents turfs like space from autoadjusting their area
+#define CHANGETURF_INHERIT_MOUNTS (1<<9) //All objects attached to the turf don't fall off after transform
 
 #define IS_OPAQUE_TURF(turf) (turf.directional_opacity == ALL_CARDINALS)
 
@@ -89,6 +90,7 @@
 #define RUST_RESISTANCE_REINFORCED 2
 #define RUST_RESISTANCE_TITANIUM 3
 #define RUST_RESISTANCE_ORGANIC 4
+/// Should not be rustable. EVER. Includes thing like space, lava, chasms, admin walls
 #define RUST_RESISTANCE_ABSOLUTE 5
 
 /// Turf will be passable if density is 0

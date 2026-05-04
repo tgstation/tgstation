@@ -141,7 +141,7 @@
 		return
 #endif
 
-	var/datum/lighting_object/lighting_object = master_NE?.lighting_object
+	var/atom/movable/lighting_object/lighting_object = master_NE?.lighting_object
 	if (lighting_object && !lighting_object.needs_update)
 		lighting_object.needs_update = TRUE
 		SSlighting.objects_queue += lighting_object
@@ -162,10 +162,6 @@
 		SSlighting.objects_queue += lighting_object
 
 	self_destruct_if_idle()
-
-
-/datum/lighting_corner/dummy/New()
-	return
 
 /datum/lighting_corner/Destroy(force)
 	if (!force)

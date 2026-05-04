@@ -85,7 +85,7 @@
 			return
 
 		// cyborg rightclick code, allowing borgos to use weapons at range
-		if(CanReach(A,W))
+		if(A.IsReachableBy(src, W?.reach))
 			W.melee_attack_chain(src, A, modifiers)
 			return
 		else if(isturf(A) || isturf(A.loc))

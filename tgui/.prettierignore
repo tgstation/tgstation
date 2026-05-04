@@ -1,20 +1,12 @@
-## NPM
-/**/node_modules
+node_modules
+public
 
-## Yarn
-/.yarn
-/yarn.lock
-/.pnp.*
+*.js
+*.ts
+*.tsx
+*.css
+*.jsx
+*.json
 
-.swcrc
-/docs
-/packages/tgui-polyfill
-/packages/tgfont/static
-**/*.json
-**/*.yml
-**/*.md
-
-# Avoid running on any bundles.
-/public/**/*
 # Running it on tgui.html is fine, however.
 !/public/tgui.html

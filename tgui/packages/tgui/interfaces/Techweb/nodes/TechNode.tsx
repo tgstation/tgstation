@@ -6,13 +6,13 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { Experiment } from '../../ExperimentConfigure';
 import { useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
 import { LockedExperiment } from '../LockedExperiment';
-import { TechwebNode } from '../types';
+import type { TechwebNode } from '../types';
 
 type Props = {
   node: TechwebNode;
@@ -206,7 +206,7 @@ export function TechNode(props: Props) {
             if (thisExp === null || thisExp === undefined) {
               return <LockedExperiment key={index} />;
             }
-            return <Experiment key={thisExp} exp={thisExp} />;
+            return <Experiment key={thisExp.name} exp={thisExp} />;
           })}
         </Collapsible>
       )}
@@ -221,7 +221,7 @@ export function TechNode(props: Props) {
               return <LockedExperiment key={index} />;
             }
             return (
-              <Experiment key={thisExp} exp={thisExp}>
+              <Experiment key={thisExp.name} exp={thisExp}>
                 <Box className="Techweb__ExperimentDiscount">
                   Provides a discount of {discount_experiments[k]} points to all
                   required point pools.

@@ -5,6 +5,15 @@
 	implant_color = "r"
 	uses = FREEDOM_IMPLANT_CHARGES
 
+	implant_info = "Activated manually. \
+		Unlocks bindings on arms and legs when activated, but not larger ones e.g. straightjackets."
+
+	implant_lore = "The CSMD Freedom Beacon is a hybrid signal transmitter and specialized nanite manufactory \
+		designed to defeat handcuffs, legcuffs, and other equivalent arm and leg bindings by both transmitting \
+		unlock signals for electrical cuff lock systems and, in the event of failure, generating thin nanite tendrils \
+		to nondestructively unsecure relevant bindings. Unfortunately, this only works for bindings on the arms and legs; \
+		larger restraints, such as straightjackets are too complex for the nanites to deal with."
+
 /obj/item/implant/freedom/implant(mob/living/target, mob/user, silent, force)
 	. = ..()
 	if(!.)
@@ -42,16 +51,6 @@
 
 	return FALSE
 
-/obj/item/implant/freedom/get_data()
-	return "<b>Implant Specifications:</b><BR> \
-		<b>Name:</b> Freedom Beacon<BR> \
-		<b>Life:</b> Optimum [initial(uses)] uses<BR> \
-		<b>Important Notes:</b> <font color='red'>Illegal</font><BR> \
-		<HR> \
-		<b>Implant Details:</b> <BR> \
-		<b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking \
-		mechanisms. These signals will release any bindings on both the arms and legs.<BR> \
-		<b>Disclaimer:</b> Heavy-duty restraints such as straightjackets are deemed \"too complex\" to release from."
 
 /obj/item/implanter/freedom
 	name = "implanter (freedom)"

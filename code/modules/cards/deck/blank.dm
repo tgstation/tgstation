@@ -5,7 +5,6 @@
 	icon_state = "deck_white_full"
 	deckstyle = "white"
 	has_unique_card_icons = FALSE
-	is_standard_deck = FALSE
 	decksize = 25
 	can_play_52_card_pickup = FALSE
 
@@ -13,9 +12,7 @@
 	icon_state = "deck_black_full"
 	deckstyle = "black"
 
-/obj/item/toy/cards/deck/blank/Initialize(mapload)
-	. = ..()
-
+/obj/item/toy/cards/deck/blank/initialize_cards()
 	for(var/_ in 1 to decksize)
 		initial_cards += /datum/deck_card/blank
 

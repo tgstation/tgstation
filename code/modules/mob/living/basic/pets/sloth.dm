@@ -38,6 +38,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	ai_controller = /datum/ai_controller/basic_controller/sloth
 
 /datum/emote/sloth
+	abstract_type = /datum/emote/sloth
 	mob_type_allowed_typecache = /mob/living/basic/sloth
 	mob_type_blacklist_typecache = list()
 
@@ -90,7 +91,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 

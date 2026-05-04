@@ -1,7 +1,7 @@
 /// Used for all kinds of weather, ex. lavaland ash storms.
 SUBSYSTEM_DEF(weather)
 	name = "Weather"
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	dependencies = list(
 		/datum/controller/subsystem/mapping,
 	)
@@ -109,7 +109,8 @@ SUBSYSTEM_DEF(weather)
 
 
 	var/datum/weather/W = new weather_datum_type(z_levels, weather_data)
-	W.telegraph()
+	W.telegraph(weather_data)
+	return W
 
 /datum/controller/subsystem/weather/proc/make_eligible(z, possible_weather)
 	eligible_zlevels[z] = possible_weather

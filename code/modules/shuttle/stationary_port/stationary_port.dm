@@ -10,8 +10,12 @@
 	var/shuttle_template_id
 	/// Used to check if the shuttle template is enabled in the config file
 	var/json_key
-	///If true, the shuttle can always dock at this docking port, despite its area checks, or if something is already docked
+	/// If true, the shuttle can always dock at this docking port, despite its area checks, or if something is already docked
 	var/override_can_dock_checks = FALSE
+	// Our initial roundstart coordinates
+	var/initial_x = -1
+	var/initial_y = -1
+	var/initial_z = -1
 
 /obj/docking_port/stationary/get_save_vars()
 	return ..() + NAMEOF(src, roundstart_template)
@@ -26,6 +30,10 @@
 	if(mapload)
 		for(var/turf/T in return_turfs())
 			T.turf_flags |= NO_RUINS
+
+	initial_x = x
+	initial_y = y
+	initial_z = z
 
 	if(SSshuttle.initialized)
 		return INITIALIZE_HINT_LATELOAD

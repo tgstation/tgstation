@@ -9,12 +9,12 @@
 
 /obj/item/organ/heart/gland/slime/on_mob_insert(mob/living/carbon/gland_owner)
 	. = ..()
-	gland_owner.faction |= FACTION_SLIME
+	gland_owner.add_faction(FACTION_SLIME)
 	gland_owner.grant_language(/datum/language/slime, source = LANGUAGE_GLAND)
 
 /obj/item/organ/heart/gland/slime/on_mob_remove(mob/living/carbon/gland_owner)
 	. = ..()
-	gland_owner.faction -= FACTION_SLIME
+	gland_owner.remove_faction(FACTION_SLIME)
 	gland_owner.remove_language(/datum/language/slime, source = LANGUAGE_GLAND)
 
 /obj/item/organ/heart/gland/slime/activate()

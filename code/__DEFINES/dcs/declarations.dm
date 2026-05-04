@@ -58,22 +58,19 @@
 //Redirection component init flags
 #define REDIRECT_TRANSFER_WITH_TURF 1
 
-//Arch
-#define ARCH_PROB "probability" //Probability for each item
-#define ARCH_MAXDROP "max_drop_amount" //each item's max drop amount
-
 //Ouch my toes!
 #define CALTROP_BYPASS_SHOES (1 << 0)
 #define CALTROP_IGNORE_WALKERS (1 << 1)
 #define CALTROP_SILENT (1 << 2)
 #define CALTROP_NOSTUN (1 << 3)
 #define CALTROP_NOCRAWL (1 << 4)
+#define CALTROP_ANTS (1 << 5)
 
-//Ingredient type in datum/component/customizable_reagent_holder
+//Ingredient type in datum/component/ingredients_holder
 #define CUSTOM_INGREDIENT_TYPE_EDIBLE 1
 #define CUSTOM_INGREDIENT_TYPE_DRYABLE 2
 
-//Icon overlay type in datum/component/customizable_reagent_holder
+//Icon overlay type in datum/component/ingredients_holder
 #define CUSTOM_INGREDIENT_ICON_NOCHANGE 0
 #define CUSTOM_INGREDIENT_ICON_FILL 1
 #define CUSTOM_INGREDIENT_ICON_SCATTER 2

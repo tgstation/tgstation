@@ -17,7 +17,7 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
-	mecha_flags = CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | HAS_LIGHTS | BEACON_TRACKABLE
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	mech_type = EXOSUIT_MODULE_RIPLEY
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
@@ -75,7 +75,7 @@
 	movedelay = 4
 	max_temperature = 30000
 	max_integrity = 250
-	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_TEMP_CONTROL|MECHA_CABIN_AIR_BREACH|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	armor_type = /datum/armor/mecha_ripley_mk2
 	wreckage = /obj/structure/mecha_wreckage/ripley/mk2
@@ -96,8 +96,16 @@
 	name = "\improper APLU \"Paddy\""
 	icon_state = "paddy"
 	base_icon_state = "paddy"
+	movedelay = 5
+	slow_pressure_step_in = 5
+	fast_pressure_step_in = 3
 	max_temperature = 20000
 	max_integrity = 250
+	overclock_name = "siren"
+	can_use_overclock = TRUE
+	overclock_coeff = 1.5
+	overclock_safety = TRUE
+	overclock_action_type = /datum/action/vehicle/sealed/mecha/mech_overclock/siren
 	mech_type = EXOSUIT_MODULE_PADDY
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
@@ -111,10 +119,6 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
-	///Siren Lights/Sound State
-	var/siren = FALSE
-	///Overlay for Siren Lights
-	var/mutable_appearance/sirenlights
 	///Looping sound datum for the Siren audio
 	var/datum/looping_sound/siren/weewooloop
 
@@ -132,63 +136,46 @@
 	weewooloop = new(src, FALSE, FALSE)
 	weewooloop.volume = 100
 
-/obj/vehicle/sealed/mecha/ripley/paddy/generate_actions()
-	. = ..()
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/siren)
-
 /obj/vehicle/sealed/mecha/ripley/paddy/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
 	var/obj/item/mecha_parts/mecha_equipment/ejector/seccage/cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector/seccage) in equip_by_category[MECHA_UTILITY]
 	for(var/mob/contained in cargo_holder)
 		cargo_holder.cheese_it(contained)
-	togglesiren(force_off = TRUE)
+	if(overclock_mode)
+		toggle_overclock(FALSE)
 	return ..()
 
-/obj/vehicle/sealed/mecha/ripley/paddy/proc/togglesiren(force_off = FALSE)
-	if(force_off || siren)
-		weewooloop.stop()
-		siren = FALSE
-	else
+/obj/vehicle/sealed/mecha/ripley/paddy/toggle_overclock(forced_state)
+	. = ..()
+	if(!.)
+		return
+
+	if(overclock_mode)
 		weewooloop.start()
-		siren = TRUE
-	for(var/mob/occupant as anything in occupants)
-		balloon_alert(occupant, "siren [siren ? "activated" : "disabled"]")
-		var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/siren) in occupant.actions
-		act.button_icon_state = "mech_siren_[siren ? "on" : "off"]"
-		act.build_all_button_icons()
+	else
+		weewooloop.stop()
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/vehicle/sealed/mecha/ripley/paddy/update_overlays()
 	. = ..()
-	if(!siren)
+	if(!overclock_mode)
 		return
-	sirenlights = new()
-	sirenlights.icon = icon
-	sirenlights.icon_state = "paddy_sirens"
-	SET_PLANE_EXPLICIT(sirenlights, ABOVE_LIGHTING_PLANE, src)
-	. += sirenlights
+	. += mutable_appearance(icon, "paddy_sirens", null, src, ABOVE_LIGHTING_PLANE)
 
 /obj/vehicle/sealed/mecha/ripley/paddy/Destroy()
 	QDEL_NULL(weewooloop)
 	return ..()
 
-/datum/action/vehicle/sealed/mecha/siren
-	name = "Toggle External Siren and Lights"
+/datum/action/vehicle/sealed/mecha/mech_overclock/siren
+	name = "Toggle Chase Siren"
 	button_icon_state = "mech_siren_off"
 
-/datum/action/vehicle/sealed/mecha/siren/New()
-	. = ..()
+/datum/action/vehicle/sealed/mecha/mech_overclock/siren/get_button_icon_state()
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
-	button_icon_state = "mech_siren_[secmech?.siren ? "on" : "off"]"
-
-/datum/action/vehicle/sealed/mecha/siren/Trigger(trigger_flags, forced_state = FALSE)
-	if(!..())
-		return
-	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
-	secmech.togglesiren()
+	return "mech_siren_[secmech.overclock_mode ? "on" : "off"]"
 
 /obj/vehicle/sealed/mecha/ripley/paddy/preset
 	accesses = list(ACCESS_SECURITY)
-	mecha_flags = CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE | ID_LOCK_ON
+	mecha_flags = CAN_STRAFE | HAS_LIGHTS | ID_LOCK_ON
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw,
@@ -208,7 +195,7 @@
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
-	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | AI_COMPATIBLE
 	enter_delay = 40
 	silicon_icon_state = null
 	equip_by_category = list(
@@ -297,6 +284,8 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	icon_state = "mecha_bin"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
+	can_be_triggered = TRUE
+	action_type = /datum/action/vehicle/sealed/mecha/equipment/cargo_module
 	///Number of atoms we can store
 	var/cargo_capacity = 15
 

@@ -147,25 +147,29 @@
 	name = flipped ? cardname : "card"
 	return ..()
 
-/obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, list/params, list/attack_modifier, flip_card=FALSE)
-	var/obj/item/toy/singlecard/card
+/obj/item/toy/singlecard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/toy/singlecard/card = null
 
-	if(istype(item, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = item
+	if(istype(tool, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = tool
 		if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // recycle card into deck (if unwielded)
-			dealer_deck.insert(src)
-			user.balloon_alert_to_viewers("puts card in deck")
-			return
+			if(dealer_deck.insert(src))
+				user.balloon_alert_to_viewers("puts card in deck")
+				return ITEM_INTERACT_SUCCESS
+
+			to_chat(user, span_warning("\The [dealer_deck] is stacked too high!"))
+			return ITEM_INTERACT_BLOCKING
+
 		card = dealer_deck.draw(user)
 
-	if(istype(item, /obj/item/toy/singlecard))
-		card = item
+	if(istype(tool, /obj/item/toy/singlecard))
+		card = tool
 
 	if(card) // card + card = combine into cardhand
-		if(flip_card)
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			card.Flip()
 
-		if(istype(item, /obj/item/toy/cards/deck))
+		if(istype(tool, /obj/item/toy/cards/deck))
 			// only decks cause a balloon alert
 			user.balloon_alert_to_viewers("deals a card")
 
@@ -179,63 +183,48 @@
 			user.temporarilyRemoveItemFromInventory(src, TRUE)
 			new_cardhand.pickup(user)
 			user.put_in_active_hand(new_cardhand)
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(item, /obj/item/toy/cards/cardhand)) // insert into cardhand
-		var/obj/item/toy/cards/cardhand/target_cardhand = item
-		target_cardhand.insert(src)
-		return
+	if(istype(tool, /obj/item/toy/cards/cardhand)) // insert into cardhand
+		return tool.item_interaction(user, src, modifiers)
 
-	var/can_item_write
 	var/marked_cheating_color
 
-	if(istype(item, /obj/item/pen))
-		var/obj/item/pen/pen = item
-		can_item_write = TRUE
+	if(istype(tool, /obj/item/pen))
+		var/obj/item/pen/pen = tool
 		marked_cheating_color = (pen.colour == "white" && "invisible") || pen.colour
 
-	if(istype(item, /obj/item/toy/crayon))
-		var/obj/item/toy/crayon/crayon = item
-		can_item_write = TRUE
+	if(istype(tool, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/crayon = tool
 		marked_cheating_color = (crayon.crayon_color == "mime" && "invisible") || crayon.crayon_color
 
-	if(can_item_write && !blank) // You cheated not only the game, but yourself
+	if(marked_cheating_color && !blank && IS_WRITING_UTENSIL(tool)) // You cheated not only the game, but yourself
 		marked_color = marked_cheating_color
-		to_chat(user, span_notice("You put a [marked_color] mark in the corner of [src] with the [item]. Cheat to win!"))
-		return
+		to_chat(user, span_notice("You put a [marked_color] mark in the corner of [src] with the [tool]. Cheat to win!"))
+		return ITEM_INTERACT_SUCCESS
 
-	if(can_item_write)
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on [src]!"))
-			return
+	if(!user.can_write(tool))
+		return NONE
 
-		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
-		if(!cardtext || !user.can_perform_action(src))
-			return
+	var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
+	if(!cardtext || !user.can_perform_action(src))
+		return ITEM_INTERACT_BLOCKING
 
-		cardname = cardtext
-		blank = FALSE
-		update_appearance()
-		return
-	return ..()
-
-/obj/item/toy/singlecard/attackby_secondary(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	attackby(item, user, modifiers, flip_card=TRUE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	cardname = cardtext
+	blank = FALSE
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/singlecard/attack_hand_secondary(mob/living/carbon/human/user, modifiers)
 	attack_self(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/item/toy/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)
-	attack_self(user)
 
 /obj/item/toy/singlecard/attack_self(mob/living/carbon/human/user)
 	if(!ishuman(user) || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 		return
 
 	Flip()
-	if(isturf(src.loc)) // only display tihs message when flipping in a visible spot like on a table
+	if(isturf(src.loc)) // only display this message when flipping in a visible spot like on a table
 		user.balloon_alert_to_viewers("flips a card")
 
 /obj/item/toy/singlecard/click_alt(mob/living/carbon/human/user)

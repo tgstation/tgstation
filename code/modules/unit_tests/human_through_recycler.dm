@@ -13,7 +13,7 @@
 	if(assistant.stat < UNCONSCIOUS)
 		TEST_FAIL("Assistant was not made unconscious by the emagged recycler!") // crush_living() on the recycler should have made the assistant unconscious or worse.
 	// crush_living() on the recycler should have applied the crush_damage to the assistant.
-	var/damage_incurred = assistant.getBruteLoss()
+	var/damage_incurred = assistant.get_brute_loss()
 	TEST_ASSERT_EQUAL(damage_incurred, chewer.crush_damage, "Assistant did not take the expected amount of brute damage ([chewer.crush_damage]) from the emagged recycler! Took ([damage_incurred]) instead.")
 	TEST_ASSERT(chewer.bloody, "The emagged recycler did not become bloody after crushing the assistant!")
 

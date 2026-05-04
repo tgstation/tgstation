@@ -1,5 +1,10 @@
 /// The random offset applied to square coordinates, causes intermingling at biome borders
 #define BIOME_RANDOM_SQUARE_DRIFT 2
+// Categories for spawned things
+#define CAVE_SPAWN_MOB "mob"
+#define CAVE_SPAWN_FEATURE "feature"
+#define CAVE_SPAWN_TENDRIL "tendril"
+#define CAVE_SPAWN_MEGAFAUNA "megafauna"
 
 /datum/map_generator/cave_generator
 	var/name = "Cave Generator"
@@ -31,9 +36,6 @@
 	var/list/weighted_feature_spawn_list
 	///Expanded list of extra features that can spawn in the area. Reads from the weighted list
 	var/list/feature_spawn_list
-	/// The turf types to replace with a biome-related turf, as typecache.
-	/// Leave empty for all open turfs (but not closed turfs) to be hijacked.
-	var/list/biome_accepted_turfs = list()
 	/// An associative list of biome type to the list of turfs that were
 	/// generated of that biome specifically. Helps to improve the efficiency
 	/// of biome-related operations. Is populated through
@@ -49,6 +51,21 @@
 	/// result in slower transitions
 	var/perlin_zoom = 65
 
+	/// Should we populate turfs through biome datums if we have such
+	var/biome_population = TRUE
+	/// Noise threshold above which a biome is considered high heat
+	var/high_heat_threshold = -0.1
+	/// Noise threshold above which a biome is considered medium heat
+	var/medium_heat_threshold = -0.3
+	/// Noise threshold above which a biome is considered high humidity
+	var/high_humidity_threshold = -0.1
+	/// Noise threshold above which a biome is considered medium humidity
+	var/medium_humidity_threshold = -0.3
+	/// Should all generators on the same z level use the same seeds?
+	var/shared_seed = TRUE
+	/// Stamp size for DBP noise, aka frequency
+	var/biome_stamp_size = 75
+
 	///Base chance of spawning a mob
 	var/mob_spawn_chance = 6
 	///Base chance of spawning flora
@@ -57,6 +74,13 @@
 	var/feature_spawn_chance = 0.25
 	///Unique ID for this spawner
 	var/string_gen
+
+	/// Radius around features within which we avoid spawning other features
+	var/feature_exclusion_radius = 7
+	/// Radius around mobs which we avoid spawning other mobs
+	var/mob_exclusion_radius = 12
+	/// Radius around megafauna within which we avoid spawning tendrils
+	var/megafauna_exclusion_radius = 7
 
 	///Chance of cells starting closed
 	var/initial_closed_chance = 45
@@ -101,10 +125,9 @@
 	open_turf_types = expand_weights(weighted_open_turf_types)
 	closed_turf_types = expand_weights(weighted_closed_turf_types)
 
-
 /datum/map_generator/cave_generator/generate_terrain(list/turfs, area/generate_in)
 	. = ..()
-	if(!(generate_in.area_flags & CAVES_ALLOWED))
+	if(!(generate_in.area_flags_mapping & CAVES_ALLOWED))
 		return
 
 	if(length(possible_biomes))
@@ -114,7 +137,6 @@
 	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
 
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
-
 		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
 		var/turf/new_turf = pick(closed ? closed_turf_types : open_turf_types)
 
@@ -137,31 +159,46 @@
  * This should only be called by `generate_terrain()`, if you have to call this,
  * you're probably doing something wrong.
  */
-/datum/map_generator/cave_generator/proc/generate_terrain_with_biomes(list/turfs, area/generate_in)
-	if(!(generate_in.area_flags & CAVES_ALLOWED))
+/datum/map_generator/cave_generator/proc/generate_terrain_with_biomes(list/turf/turfs, area/generate_in)
+	if(!(generate_in.area_flags_mapping & CAVES_ALLOWED))
 		return
 
-	var/humidity_seed = rand(0, 50000)
-	var/heat_seed = rand(0, 50000)
+	var/humidity_seed = null
+	var/heat_seed = null
+
+	// Make sure that all caves on the same z level generate smoothly regardless of the area
+	if (shared_seed)
+		var/static/list/static_heat = null
+		var/static/list/static_humi = null
+		if (!static_heat)
+			static_heat = list()
+			static_humi = list()
+
+		var/z_key = "[turfs[1].z]"
+		if (!static_heat[z_key])
+			static_heat[z_key] = rand(0, 50000)
+			static_humi[z_key] = rand(0, 50000)
+
+		heat_seed = static_heat[z_key]
+		humidity_seed = static_humi[z_key]
+	else
+		humidity_seed = rand(0, 50000)
+		heat_seed = rand(0, 50000)
 
 	var/start_time = REALTIMEOFDAY
 	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
 
 	var/humidity_gen = list()
-	humidity_gen[BIOME_HIGH_HUMIDITY] = rustg_dbp_generate("[humidity_seed]", "60", "75", "[world.maxx]", "-0.1", "1.1")
-	humidity_gen[BIOME_MEDIUM_HUMIDITY] = rustg_dbp_generate("[humidity_seed]", "60", "75", "[world.maxx]", "-0.3", "-0.1")
+	humidity_gen[BIOME_HIGH_HUMIDITY] = rustg_dbp_generate("[humidity_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[high_heat_threshold]", "1.1")
+	humidity_gen[BIOME_MEDIUM_HUMIDITY] = rustg_dbp_generate("[humidity_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[medium_heat_threshold]", "[high_heat_threshold]")
 
 	var/heat_gen = list()
-	heat_gen[BIOME_HIGH_HEAT] = rustg_dbp_generate("[heat_seed]", "60", "75", "[world.maxx]", "-0.1", "1.1")
-	heat_gen[BIOME_MEDIUM_HEAT] = rustg_dbp_generate("[heat_seed]", "60", "75", "[world.maxx]", "-0.3", "-0.1")
+	heat_gen[BIOME_HIGH_HEAT] = rustg_dbp_generate("[heat_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[high_heat_threshold]", "1.1")
+	heat_gen[BIOME_MEDIUM_HEAT] = rustg_dbp_generate("[heat_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[medium_heat_threshold]", "[high_heat_threshold]")
 
-	var/list/expanded_closed_turfs = src.closed_turf_types
-	var/list/expanded_open_turfs = src.open_turf_types
-
+	var/list/to_generate = list()
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
 		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
-		var/new_turf_type = pick(closed ? expanded_closed_turfs : expanded_open_turfs)
-
 		var/datum/biome/selected_biome
 
 		// Here comes the meat of the biome code.
@@ -179,126 +216,120 @@
 			BIOME_HIGH_HEAT : text2num(heat_gen[BIOME_MEDIUM_HEAT][coordinate]) ? BIOME_MEDIUM_HEAT : BIOME_LOW_HEAT
 
 		selected_biome = possible_biomes[heat_level][humidity_level]
-
-		// Currently, we only affect open turfs, because biomes don't currently
-		// have a definition for biome-specific closed turfs.
-		if((!length(biome_accepted_turfs) && !closed) || biome_accepted_turfs[new_turf_type])
-			LAZYADD(generated_turfs_per_biome[selected_biome], gen_turf)
-
-		else
-			// The assumption is this will be faster then changeturf, and changeturf isn't required since by this point
-			// The old tile hasn't got the chance to init yet
-			var/turf/new_turf = new new_turf_type(gen_turf)
-
-			if(gen_turf.turf_flags & NO_RUINS)
-				new_turf.turf_flags |= NO_RUINS
-
+		LAZYSET(to_generate[selected_biome], gen_turf, closed)
 		CHECK_TICK
 
-	for(var/biome in generated_turfs_per_biome)
+	for(var/biome in to_generate)
 		var/datum/biome/generating_biome = SSmapping.biomes[biome]
-
-		var/list/turf/generated_turfs = generating_biome.generate_turfs_for_terrain(generated_turfs_per_biome[biome])
-
+		var/list/turf/generated_turfs = generating_biome.generate_turfs_for_terrain(to_generate[biome])
 		generated_turfs_per_biome[biome] = generated_turfs
 
 	var/message = "[name] terrain generation finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"), MESSAGE_TYPE_DEBUG)
 	log_world(message)
 
-
 /datum/map_generator/cave_generator/populate_terrain(list/turfs, area/generate_in)
-	if(length(possible_biomes))
+	if (biome_population && length(possible_biomes))
 		return populate_terrain_with_biomes(turfs, generate_in)
 
 	// Area var pullouts to make accessing in the loop faster
-	var/flora_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(flora_spawn_list)
-	var/feature_allowed = (generate_in.area_flags & FLORA_ALLOWED) && length(feature_spawn_list)
-	var/mobs_allowed = (generate_in.area_flags & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
-	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
+	var/flora_allowed = (generate_in.area_flags_mapping & FLORA_ALLOWED) && length(flora_spawn_list)
+	var/feature_allowed = (generate_in.area_flags_mapping & FLORA_ALLOWED) && length(feature_spawn_list)
+	var/mobs_allowed = (generate_in.area_flags_mapping & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
+	var/megas_allowed = (generate_in.area_flags_mapping & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
 
 	var/start_time = REALTIMEOFDAY
 
-	for(var/turf/target_turf as anything in turfs)
-		if(!(target_turf.type in open_turf_types)) //only put stuff on open turfs we generated, so closed walls and rivers and stuff are skipped
+	// Assoc list of spawned categories to
+	var/list/spawn_data = list(
+		CAVE_SPAWN_FEATURE = list(),
+		CAVE_SPAWN_TENDRIL = list(),
+		CAVE_SPAWN_MOB = list(),
+		CAVE_SPAWN_MEGAFAUNA = list(),
+	)
+
+	var/list/open_turf_cache = typecacheof(open_turf_types)
+	for (var/turf/target_turf as anything in turfs)
+		// Only put stuff on open turfs we generated, so closed walls and rivers and stuff are skipped
+		if (!is_type_in_typecache(target_turf, open_turf_cache))
 			continue
 
-		// If we've spawned something yet
-		var/spawned_something = FALSE
+		CHECK_TICK
 
-		if(!(target_turf.turf_flags & TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES))
-			///Spawning isn't done in procs to save on overhead on the 60k turfs we're going through.
-			//FLORA SPAWNING HERE
-			if(flora_allowed && prob(flora_spawn_chance))
+		if (!(target_turf.turf_flags & TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES))
+			if (flora_allowed && prob(flora_spawn_chance))
 				var/flora_type = pick(flora_spawn_list)
 				new flora_type(target_turf)
-				spawned_something = TRUE
+				continue
 
-			//FEATURE SPAWNING HERE
-			//we may have generated something from the flora list on the target turf, so let's not place
-			//a feature here if that's the case (because it would look stupid)
-			if(feature_allowed && !spawned_something && prob(feature_spawn_chance))
+			if (feature_allowed && prob(feature_spawn_chance))
 				var/can_spawn = TRUE
-
-				var/atom/picked_feature = pick(feature_spawn_list)
-
-				for(var/obj/structure/existing_feature in range(7, target_turf))
-					if(istype(existing_feature, picked_feature))
+				for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_FEATURE])
+					if (get_dist(spawn_turf, target_turf) <= feature_exclusion_radius)
 						can_spawn = FALSE
 						break
 
-				if(can_spawn)
+				if (can_spawn)
+					var/picked_feature = pick(feature_spawn_list)
 					new picked_feature(target_turf)
-					spawned_something = TRUE
+					spawn_data[CAVE_SPAWN_FEATURE] += target_turf
+					continue
 
-		//MOB SPAWNING HERE
-		if(mobs_allowed && !spawned_something && prob(mob_spawn_chance))
-			var/atom/picked_mob = pick(mob_spawn_list)
-			var/is_megafauna = FALSE
+		if (!mobs_allowed || !prob(mob_spawn_chance))
+			continue
 
-			if(picked_mob == SPAWN_MEGAFAUNA)
-				if(megas_allowed) //this is danger. it's boss time.
-					picked_mob = pick(megafauna_spawn_list)
-					is_megafauna = TRUE
-				else //this is not danger, don't spawn a boss, spawn something else
-					picked_mob = pick(mob_spawn_no_mega_list) //What if we used 100% of the brain...and did something (slightly) less shit than a while loop?
+		var/picked_mob = pick(megas_allowed ? mob_spawn_list : mob_spawn_no_mega_list)
+		var/is_megafauna = FALSE
+		if (picked_mob == SPAWN_MEGAFAUNA)
+			picked_mob = pick(megafauna_spawn_list)
+			is_megafauna = TRUE
 
-			var/can_spawn = TRUE
-
-			// prevents tendrils spawning in each other's collapse range
-			if(ispath(picked_mob, /obj/structure/spawner/lavaland))
-				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, target_turf))
-					can_spawn = FALSE
-					break
-			// if the random is not a tendril (hopefully meaning it is a mob), avoid spawning if there's another one within 12 tiles
-			else
-				var/list/things_in_range = range(12, target_turf)
-				for(var/mob/living/mob_blocker in things_in_range)
-					if(ismining(mob_blocker))
-						can_spawn = FALSE
-						break
-				// Also block spawns if there's a random lavaland mob spawner nearby and it's not a mega
-				if(!is_megafauna)
-					can_spawn = can_spawn && !(locate(/obj/effect/spawner/random/lavaland_mob) in things_in_range)
-			//if there's a megafauna within standard view don't spawn anything at all (This isn't really consistent, I don't know why we do this. you do you tho)
-			if(can_spawn)
-				for(var/mob/living/simple_animal/hostile/megafauna/found_fauna in range(7, target_turf))
+		var/can_spawn = TRUE
+		if(ispath(picked_mob, /obj/structure/spawner/lavaland))
+			// Prevents tendrils spawning in each other's collapse range
+			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_TENDRIL])
+				if (get_dist(spawn_turf, target_turf) <= 2)
 					can_spawn = FALSE
 					break
 
-			if(can_spawn)
-				if(ispath(picked_mob, /mob/living/simple_animal/hostile/megafauna/bubblegum)) //there can be only one bubblegum, so don't waste spawns on it
-					weighted_megafauna_spawn_list.Remove(picked_mob)
-					megafauna_spawn_list = expand_weights(weighted_megafauna_spawn_list)
-					megas_allowed = megas_allowed && length(megafauna_spawn_list)
-				new picked_mob(target_turf)
-				spawned_something = TRUE
-		CHECK_TICK
+			// Also avoid spawning them next to megafauna
+			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_MEGAFAUNA])
+				if (get_dist(spawn_turf, target_turf) <= megafauna_exclusion_radius)
+					can_spawn = FALSE
+					break
+		else if (is_megafauna)
+			// Megafauna can spawn wherever it wants as long as its not next to another mega
+			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_MEGAFAUNA])
+				if (get_dist(spawn_turf, target_turf) <= megafauna_exclusion_radius)
+					can_spawn = FALSE
+					break
+		else
+			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_MOB])
+				if (get_dist(spawn_turf, target_turf) <= mob_exclusion_radius)
+					can_spawn = FALSE
+					break
+
+		if (!can_spawn)
+			continue
+
+		if (ispath(picked_mob, /obj/structure/spawner/lavaland))
+			spawn_data[CAVE_SPAWN_TENDRIL] += target_turf
+		else
+			if (is_megafauna)
+				spawn_data[CAVE_SPAWN_MEGAFAUNA] += target_turf
+			spawn_data[CAVE_SPAWN_MOB] += target_turf
+
+		new picked_mob(target_turf)
+
+		// There can be only one Bubblegum, so don't waste spawns on it
+		if(ispath(picked_mob, /mob/living/simple_animal/hostile/megafauna/bubblegum))
+			weighted_megafauna_spawn_list.Remove(picked_mob)
+			megafauna_spawn_list = expand_weights(weighted_megafauna_spawn_list)
+			megas_allowed = megas_allowed && length(megafauna_spawn_list)
 
 	var/message = "[name] terrain population finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"), MESSAGE_TYPE_DEBUG)
 	log_world(message)
-
 
 /**
  * This handles the population of terrain with biomes. Should only be called by
@@ -310,9 +341,9 @@
  */
 /datum/map_generator/cave_generator/proc/populate_terrain_with_biomes(list/turfs, area/generate_in)
 	// Area var pullouts to make accessing in the loop faster
-	var/flora_allowed = (generate_in.area_flags & FLORA_ALLOWED)
-	var/features_allowed = (generate_in.area_flags & FLORA_ALLOWED)
-	var/fauna_allowed = (generate_in.area_flags & MOB_SPAWN_ALLOWED)
+	var/flora_allowed = (generate_in.area_flags_mapping & FLORA_ALLOWED)
+	var/features_allowed = (generate_in.area_flags_mapping & FLORA_ALLOWED)
+	var/fauna_allowed = (generate_in.area_flags_mapping & MOB_SPAWN_ALLOWED)
 
 	var/start_time = REALTIMEOFDAY
 
@@ -332,7 +363,6 @@
 	var/message = "[name] terrain population finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"), MESSAGE_TYPE_DEBUG)
 	log_world(message)
-
 
 /datum/map_generator/cave_generator/jungle
 	possible_biomes = list(
@@ -355,3 +385,7 @@
 
 
 #undef BIOME_RANDOM_SQUARE_DRIFT
+#undef CAVE_SPAWN_MOB
+#undef CAVE_SPAWN_FEATURE
+#undef CAVE_SPAWN_TENDRIL
+#undef CAVE_SPAWN_MEGAFAUNA

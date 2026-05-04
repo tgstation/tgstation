@@ -6,6 +6,7 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "eldritch_flask"
 	list_reagents = list(/datum/reagent/eldritch = 50)
+	can_lid = FALSE
 
 // Unique bottle that lets you instantly draw blood from a victim
 /obj/item/reagent_containers/cup/phylactery
@@ -15,7 +16,7 @@
 	icon_state = "phylactery"
 	base_icon_state = "phylactery"
 	has_variable_transfer_amount = FALSE
-	reagent_flags = OPENCONTAINER | DUNKABLE | TRANSPARENT
+	initial_reagent_flags = OPENCONTAINER | DUNKABLE | TRANSPARENT
 	volume = 10
 	/// Cooldown before you can steal blood again
 	COOLDOWN_DECLARE(drain_cooldown)
@@ -26,11 +27,12 @@
 		return NONE
 	if(!isliving(target))
 		return NONE
+	user.changeNext_move(CLICK_CD_MELEE)
 	var/mob/living/living_target = target
+	if(living_target == user)
+		return ITEM_INTERACT_BLOCKING
 	if(reagents.total_volume >= reagents.maximum_volume)
 		to_chat(user, span_notice("[src] is full."))
-		return ITEM_INTERACT_BLOCKING
-	if(living_target == user)
 		return ITEM_INTERACT_BLOCKING
 	if(living_target.can_block_magic(MAGIC_RESISTANCE_HOLY))
 		to_chat(user, span_warning("You are unable to draw any blood from [living_target]!"))

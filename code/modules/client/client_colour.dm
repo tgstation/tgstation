@@ -170,6 +170,14 @@
 
 // Color types
 
+///we want it to be less harsh for players to take blindness quirk, this adds enough color to not cause too much eye strain
+/datum/client_colour/blindness
+	priority = CLIENT_COLOR_HELMET_PRIORITY
+	split_filters = TRUE
+	color = list(/*R*/ 0.51,0.3,0.3,0, /*G*/ 0.29,0.51,0.29,0, /*B*/ 0.3,0.3,0.61,0, /*A*/ 0,0,0,1, /*C*/ 0,0,0,0) // dim and less saturated
+	fade_in = 2 SECONDS
+	fade_out = 2 SECONDS
+
 ///A client color that makes the screen look a bit more grungy, halloweenesque even.
 /datum/client_colour/halloween_helmet
 	priority = CLIENT_COLOR_HELMET_PRIORITY
@@ -196,6 +204,16 @@
 	split_filters = TRUE
 	fade_in = 2 SECONDS
 	fade_out = 2 SECONDS
+
+/datum/client_colour/monochrome/New(mob/owner)
+	. = ..()
+	if (owner)
+		ADD_TRAIT(owner, TRAIT_COLORBLIND, type)
+
+/datum/client_colour/monochrome/Destroy()
+	if (owner)
+		REMOVE_TRAIT(owner, TRAIT_COLORBLIND, type)
+	return ..()
 
 /datum/client_colour/monochrome/glasses
 	priority = CLIENT_COLOR_GLASSES_PRIORITY

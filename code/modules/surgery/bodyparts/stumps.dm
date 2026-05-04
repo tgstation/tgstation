@@ -1,0 +1,72 @@
+// Invisible bodyparts that serve as placeholders for a missing limb
+// Used so we can add behavior to "missing limbs" without putting it on the mob itself
+
+/obj/item/bodypart/head/stump
+	limb_id = null
+	plaintext_zone = "neck stump"
+	stump_typepath = null
+	scarrable = FALSE
+	biological_state = NONE
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP | BODYPART_VIRGIN
+
+	head_flags = NONE
+	teeth_count = 0 // lol?
+
+/obj/item/bodypart/head/stump/Initialize(mapload)
+	. = ..()
+	name = "stump"
+	// these traits are largely redundant, as many places that check for disabled limbs filter stumps.
+	// however, marking them as unusable for the sake of completeness might make it easier to work with.
+	ADD_TRAIT(src, TRAIT_PARALYSIS, INNATE_TRAIT)
+
+/obj/item/bodypart/leg/left/stump
+	limb_id = null
+	plaintext_zone = "left leg stump"
+	stump_typepath = null
+	scarrable = FALSE
+	biological_state = NONE
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP | BODYPART_VIRGIN
+
+/obj/item/bodypart/leg/left/stump/Initialize(mapload)
+	. = ..()
+	name = "stump"
+	ADD_TRAIT(src, TRAIT_PARALYSIS, INNATE_TRAIT)
+
+/obj/item/bodypart/leg/right/stump
+	limb_id = null
+	plaintext_zone = "right leg stump"
+	stump_typepath = null
+	scarrable = FALSE
+	biological_state = NONE
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP | BODYPART_VIRGIN
+
+/obj/item/bodypart/leg/right/stump/Initialize(mapload)
+	. = ..()
+	name = "stump"
+	ADD_TRAIT(src, TRAIT_PARALYSIS, INNATE_TRAIT)
+
+/obj/item/bodypart/arm/left/stump
+	limb_id = null
+	plaintext_zone = "left arm stump"
+	stump_typepath = null
+	scarrable = FALSE
+	biological_state = NONE
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP | BODYPART_VIRGIN
+
+/obj/item/bodypart/arm/left/stump/Initialize(mapload)
+	. = ..()
+	name = "stump"
+	ADD_TRAIT(src, TRAIT_PARALYSIS, INNATE_TRAIT)
+
+/obj/item/bodypart/arm/right/stump
+	limb_id = null
+	plaintext_zone = "right arm stump"
+	stump_typepath = null
+	scarrable = FALSE
+	biological_state = NONE
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP | BODYPART_VIRGIN
+
+/obj/item/bodypart/arm/right/stump/Initialize(mapload)
+	. = ..()
+	name = "stump"
+	ADD_TRAIT(src, TRAIT_PARALYSIS, INNATE_TRAIT)

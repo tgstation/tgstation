@@ -16,8 +16,6 @@
 	light_color = LIGHT_COLOR_GREEN
 	/// Server linked to.
 	var/obj/machinery/telecomms/message_server/linked_server = null
-	/// Sparks effect - For emag
-	var/datum/effect_system/spark_spread/spark_system
 	/// Computer properties.
 	/// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/screen = MSG_MON_SCREEN_MAIN
@@ -34,7 +32,6 @@
 
 /obj/machinery/computer/message_monitor/Initialize(mapload)
 	..()
-	spark_system = new
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/message_monitor/post_machine_initialize()
@@ -69,22 +66,21 @@
 /obj/machinery/computer/message_monitor/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if(!isnull(linked_server))
-		obj_flags |= EMAGGED
-		screen = MSG_MON_SCREEN_HACKED
-		spark_system.set_up(5, 0, src)
-		spark_system.start()
-		var/obj/item/paper/monitorkey/monitor_key_paper = new(loc, linked_server)
-		// Will help make emagging the console not so easy to get away with.
-		monitor_key_paper.add_raw_text("<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>")
-		var/time = 100 * length(linked_server.decryptkey)
-		addtimer(CALLBACK(src, PROC_REF(unemag_console)), time)
-		error_message = "%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
-		linked_server.toggled = FALSE
-		return TRUE
-	else
+	if(isnull(linked_server))
 		to_chat(user, span_notice("A no server error appears on the screen."))
-	return FALSE
+		return FALSE
+
+	obj_flags |= EMAGGED
+	screen = MSG_MON_SCREEN_HACKED
+	do_sparks(5, FALSE, src)
+	var/obj/item/paper/monitorkey/monitor_key_paper = new(loc, linked_server)
+	// Will help make emagging the console not so easy to get away with.
+	monitor_key_paper.add_raw_text("<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>")
+	var/time = 100 * length(linked_server.decryptkey)
+	addtimer(CALLBACK(src, PROC_REF(unemag_console)), time)
+	error_message = "%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
+	linked_server.toggled = FALSE
+	return TRUE
 
 /// Remove the emag effect from the console
 /obj/machinery/computer/message_monitor/proc/unemag_console()

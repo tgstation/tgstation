@@ -1,6 +1,6 @@
 PROCESSING_SUBSYSTEM_DEF(idle_ai_behaviors)
 	name = "AI Idle Behaviors"
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	wait = 1.5 SECONDS
 	priority = FIRE_PRIORITY_IDLE_NPC
 	dependencies = list(

@@ -112,15 +112,15 @@
 	visible_message(span_warning("[src] burns up in a sinister flash, taking an evil energy with it..."))
 	burn()
 
-/obj/item/coupon/attack_atom(obj/O, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!istype(O, /obj/machinery/computer/cargo))
+/obj/item/coupon/attack_atom(obj/attacked_obj, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(!istype(attacked_obj, /obj/machinery/computer/cargo))
 		return ..()
 	if(discount_pct_off == COUPON_OMEN)
-		to_chat(user, span_warning("\The [O] validates the coupon as authentic, but refuses to accept it..."))
-		O.say("Coupon fulfillment already in progress...")
+		to_chat(user, span_warning("\The [attacked_obj] validates the coupon as authentic, but refuses to accept it..."))
+		attacked_obj.say("Coupon fulfillment already in progress...")
 		return
 
-	inserted_console = O
+	inserted_console = attacked_obj
 	LAZYADD(inserted_console.loaded_coupons, src)
 	inserted_console.say("Coupon for [initial(discounted_pack.name)] applied!")
 	forceMove(inserted_console)
@@ -129,4 +129,4 @@
 	if(inserted_console)
 		LAZYREMOVE(inserted_console.loaded_coupons, src)
 		inserted_console = null
-	. = ..()
+	return ..()

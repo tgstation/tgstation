@@ -1,6 +1,6 @@
 /datum/crafting_recipe/ed209
 	name = "ED209"
-	result = /mob/living/simple_animal/bot/secbot/ed209
+	result = /mob/living/basic/bot/secbot/ed209
 	reqs = list(
 		/obj/item/robot_suit = 1,
 		/obj/item/clothing/head/helmet/sec = 1,
@@ -18,7 +18,7 @@
 
 /datum/crafting_recipe/secbot
 	name = "Secbot"
-	result = /mob/living/simple_animal/bot/secbot
+	result = /mob/living/basic/bot/secbot
 	reqs = list(
 		/obj/item/assembly/signaler = 1,
 		/obj/item/clothing/head/helmet/sec = 1,
@@ -38,7 +38,7 @@
 		/obj/item/assembly/prox_sensor = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
 	)
-	parts = list(/obj/item/reagent_containers/cup/bucket = 1)
+	parts = list(/obj/item/reagent_containers/cup/bucket = 1) //cleanbot/Entered() handles bucket colors
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
@@ -70,18 +70,9 @@
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
-	var/mob/living/basic/bot/medbot/bot = result
-	var/obj/item/storage/medkit/medkit = bot.contents[3]
-	bot.medkit_type = medkit
-	bot.health_analyzer = bot.contents[4]
-	bot.skin = medkit.get_medbot_skin()
-	bot.damage_type_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
-	bot.update_appearance()
-
 /datum/crafting_recipe/honkbot
 	name = "Honkbot"
-	result = /mob/living/basic/bot/honkbot
+	result = /mob/living/basic/bot/secbot/honkbot
 	reqs = list(
 		/obj/item/storage/box/clown = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
@@ -151,7 +142,6 @@
 		/obj/item/food/grown/potato = 1,
 		/obj/item/stack/cable_coil = 5,
 	)
-	parts = list(/obj/item/aicard = 1)
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/aitater/aispook
@@ -162,18 +152,6 @@
 		/obj/item/food/grown/pumpkin = 1,
 		/obj/item/stack/cable_coil = 5,
 	)
-
-/datum/crafting_recipe/aitater/on_craft_completion(mob/user, atom/result)
-	var/obj/item/aicard/new_card = result
-	var/obj/item/aicard/base_card = result.contents[1]
-	var/mob/living/silicon/ai = base_card.AI
-
-	if(ai)
-		base_card.AI = null
-		ai.forceMove(new_card)
-		new_card.AI = ai
-		new_card.update_appearance()
-	qdel(base_card)
 
 /datum/crafting_recipe/mod_core_standard
 	name = "MOD core (Standard)"
@@ -213,6 +191,4 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/soulstone = 1,
 	)
-	parts = list(/obj/item/soulstone = 1)
 	category = CAT_ROBOT
-	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED

@@ -56,6 +56,21 @@ ADMIN_VERB(jump_to_key, R_ADMIN, "Jump To Key", "Jump to a specific player.", AD
 	user.mob.abstract_move(M.loc)
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Key")
 
+ADMIN_VERB(jump_to_ghost, R_ADMIN, "Jump To Ghost", "Jump your body to your Aghost.", ADMIN_CATEGORY_GAME)
+	var/mob/dead/observer/ghost = user.mob
+	if(!isobserver(ghost))
+		return
+	var/mob/living/body = ghost?.mind?.current
+	if(!body)
+		to_chat(user, "No valid body to bring to ghost.", confidential = TRUE)
+		return
+	log_admin("[key_name(user)] jumped to their Aghost at [AREACOORD(ghost.loc)]")
+	message_admins("[key_name_admin(user)] jumped to their Aghost [ADMIN_FLW(body)] at [AREACOORD(ghost.loc)]")
+	body.abstract_move(ghost.loc)
+	body.setDir(ghost.dir)
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
+	BLACKBOX_LOG_ADMIN_VERB("Jump To Ghost")
+
 ADMIN_VERB_AND_CONTEXT_MENU(get_mob, R_ADMIN, "Get Mob", "Teleport a mob to your location.", ADMIN_CATEGORY_GAME, mob/target in world)
 	var/atom/loc = get_turf(user.mob)
 	target.admin_teleport(loc)

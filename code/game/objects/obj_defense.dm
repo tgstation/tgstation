@@ -8,7 +8,7 @@
 	take_damage(damage_taken, BRUTE, MELEE, 1, get_dir(src, hit_by))
 
 /obj/ex_act(severity, target)
-	if(resistance_flags & INDESTRUCTIBLE)
+	if(resistance_flags & (INDESTRUCTIBLE|BOMB_PROOF))
 		return FALSE
 
 	. = ..() //contents explosion
@@ -27,7 +27,7 @@
 
 	return TRUE
 
-/obj/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+/obj/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE, blocked = null)
 	. = ..()
 	if(. != BULLET_ACT_HIT)
 		return .
@@ -61,12 +61,8 @@
 	return TRUE
 
 /obj/blob_act(obj/structure/blob/B)
-	if (!..())
+	if (!..() || HAS_TRAIT(src, TRAIT_UNDERFLOOR))
 		return
-	if(isturf(loc))
-		var/turf/T = loc
-		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
-			return
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
 /obj/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
@@ -127,12 +123,11 @@
 
 ///Called when the obj is exposed to fire.
 /obj/fire_act(exposed_temperature, exposed_volume)
-	if(isturf(loc))
-		var/turf/our_turf = loc
-		if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
-			return
-	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
-		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
+	if(HAS_TRAIT(src, TRAIT_UNDERFLOOR))
+		return
+	var/potential_damage = 0.02 * exposed_temperature
+	if(exposed_temperature && !(resistance_flags & FIRE_PROOF) && (potential_damage > damage_deflection))
+		take_damage(clamp(potential_damage, 0, 20), BURN, FIRE, 0)
 	if(QDELETED(src)) // take_damage() can send our obj to an early grave, let's stop here if that happens
 		return
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))

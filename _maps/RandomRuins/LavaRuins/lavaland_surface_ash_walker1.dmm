@@ -6,13 +6,13 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ac" = (
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ad" = (
 /obj/structure/stone_tile/block{
@@ -21,13 +21,13 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ae" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "af" = (
 /obj/structure/stone_tile/block{
@@ -36,37 +36,30 @@
 /obj/structure/stone_tile{
 	dir = 8
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ag" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ah" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ai" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 4
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "aj" = (
 /obj/structure/stone_tile/slab,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ak" = (
 /turf/closed/indestructible/riveted/boss,
 /area/ruin/unpowered/ash_walkers)
-"al" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "aq" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -74,27 +67,11 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ar" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 9
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "as" = (
 /turf/closed/wall/mineral/wood,
 /area/ruin/unpowered/ash_walkers)
-"at" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "au" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -154,12 +131,6 @@
 /obj/item/flashlight/flare/torch,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
-"aF" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "aG" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -210,13 +181,7 @@
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "aR" = (
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/indestructible/riveted/boss,
 /area/lavaland/surface/outdoors)
 "aS" = (
 /obj/structure/stone_tile/block{
@@ -323,18 +288,11 @@
 /obj/structure/stone_tile,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
-"bh" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 5
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "bi" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "bj" = (
 /obj/structure/stone_tile/block/cracked{
@@ -489,7 +447,7 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "bG" = (
 /turf/closed/indestructible/riveted/boss/see_through,
@@ -583,39 +541,39 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 8
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "cP" = (
 /obj/structure/stone_tile/block,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "cQ" = (
 /obj/structure/stone_tile/block/cracked,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "cR" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "cT" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "du" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "dz" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "dB" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
@@ -628,24 +586,24 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/center/cracked,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "dC" = (
 /obj/structure/stone_tile,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "dD" = (
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "dE" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "dP" = (
 /obj/structure/stone_tile/block{
@@ -952,13 +910,6 @@
 /obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
-"vV" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "wB" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile{
@@ -1232,13 +1183,6 @@
 /obj/structure/ore_container/food_trough/gutlunch_trough,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"Kg" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 10
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "Kt" = (
 /obj/structure/water_source/puddle{
 	pixel_x = -3;
@@ -1341,13 +1285,6 @@
 "PK" = (
 /obj/effect/mapping_helpers/no_lava,
 /obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Rq" = (
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 6
-	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "RE" = (
@@ -1687,8 +1624,8 @@ ah
 aa
 ai
 aq
-at
-aF
+aR
+aR
 aR
 aR
 eC
@@ -1905,15 +1842,15 @@ cQ
 "}
 (20,1,1) = {"
 ah
+aj
+ak
+ak
+fM
 Gv
+TC
 Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
+qH
+KQ
 Gv
 Dz
 qm
@@ -1926,16 +1863,16 @@ ah
 cR
 "}
 (21,1,1) = {"
-ah
+aa
+aj
+ak
+ak
 Gv
-ar
-cp
-cp
-cp
-cp
-cp
-Kg
 Gv
+Gv
+PA
+qH
+KQ
 Gv
 Gv
 qm
@@ -1948,16 +1885,16 @@ ah
 ah
 "}
 (22,1,1) = {"
-ah
+aa
+aj
+ak
+ak
 Gv
-al
-fM
-Gv
-Gv
-TC
+bJ
+bJ
 Gv
 qH
-KQ
+Tl
 Gv
 Gv
 qm
@@ -1970,18 +1907,18 @@ ah
 ah
 "}
 (23,1,1) = {"
-ah
+aa
+aj
+ak
+ak
+bJ
 Gv
-al
 Gv
 Gv
-Gv
-Gv
-PA
 qH
-KQ
 Gv
-Gv
+sz
+sz
 qm
 Gv
 PK
@@ -1992,62 +1929,62 @@ ah
 ah
 "}
 (24,1,1) = {"
-ah
-Gv
-al
-Gv
-bJ
-bJ
-Gv
-Gv
-qH
-Tl
-Gv
-Gv
-qm
-sz
-Gv
-ah
-ah
-ah
-ah
-ah
-"}
-(25,1,1) = {"
-ah
-Gv
-al
-bJ
-Gv
-Gv
-Gv
-Gv
-qH
-Gv
-sz
-sz
-qm
-Gv
-Gv
-ah
-ah
-ah
-ah
-ah
-"}
-(26,1,1) = {"
-ah
-Gv
-al
+aa
+aa
+ak
+ak
 Gv
 bJ
 bJ
-Gv
 Gv
 Pk
 sz
 Gv
 Oe
+qm
+sz
+Gv
+ah
+ah
+ah
+ah
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+ak
+ak
+Gv
+Gv
+TC
+Gv
+qH
+Gv
+Dz
+Oe
+qm
+Gv
+Gv
+ah
+ah
+ah
+ah
+aa
+"}
+(26,1,1) = {"
+aa
+ah
+ak
+ak
+Gv
+JD
+Gv
+Gv
+qH
+Gv
+Gv
+Gv
 Gv
 Gv
 Gv
@@ -2058,18 +1995,18 @@ aa
 aa
 "}
 (27,1,1) = {"
+aa
 ah
-Gv
-al
-Gv
-Gv
-TC
+ak
+ak
 Gv
 Gv
+Gv
+PA
 qH
 Gv
-Dz
-Oe
+Gv
+Gv
 Gv
 Gv
 Gv
@@ -2081,17 +2018,17 @@ aa
 "}
 (28,1,1) = {"
 ah
+ah
+ak
+ak
+TC
 Gv
-al
-Gv
-JD
-Gv
-Gv
-Gv
+PA
+TC
 qH
 Gv
-Gv
-Gv
+mo
+ah
 Gv
 Dz
 Gv
@@ -2103,17 +2040,17 @@ aa
 "}
 (29,1,1) = {"
 ah
+ah
+ak
+ak
 Gv
-al
 Gv
 Gv
 Gv
-Gv
-PA
 qH
-Gv
-Gv
-Gv
+Uh
+ty
+ah
 Gv
 Gv
 Gv
@@ -2124,17 +2061,17 @@ aa
 aa
 "}
 (30,1,1) = {"
+aa
 ah
+ak
+ak
+ak
+ak
+ak
+cp
+cp
 Gv
-al
-TC
-Gv
-PA
-Gv
-TC
-qH
-Gv
-mo
+ty
 ah
 ah
 ah
@@ -2146,17 +2083,17 @@ aa
 aa
 "}
 (31,1,1) = {"
+aa
+aa
+aa
+ak
+ak
+ak
+ak
+ak
 ah
-Gv
-bh
-vV
-vV
-vV
-vV
-vV
-Rq
-Uh
-ty
+ah
+ah
 ah
 ah
 ah
@@ -2168,17 +2105,17 @@ aa
 aa
 "}
 (32,1,1) = {"
+aa
+aa
+aa
+aa
 ah
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-Gv
-ty
+ah
+ah
+ah
+ah
+ah
+ah
 ah
 ah
 aa
@@ -2190,19 +2127,19 @@ aa
 aa
 "}
 (33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ah
 ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+aa
 aa
 aa
 aa

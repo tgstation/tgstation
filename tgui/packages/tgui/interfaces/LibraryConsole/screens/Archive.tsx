@@ -3,7 +3,7 @@ import { NoticeBox, Stack } from 'tgui-core/components';
 
 import { PageSelect } from '../components/PageSelect';
 import { SearchAndDisplay } from '../components/Search';
-import { LibraryConsoleData } from '../types';
+import type { LibraryConsoleData } from '../types';
 
 export function Archive(props) {
   const { act, data } = useBackend<LibraryConsoleData>();

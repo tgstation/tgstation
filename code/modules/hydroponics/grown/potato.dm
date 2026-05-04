@@ -14,7 +14,7 @@
 	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "potato-grow"
 	icon_dead = "potato-dead"
-	genes = list(/datum/plant_gene/trait/battery, /datum/plant_gene/trait/one_bite)
+	genes = list(/datum/plant_gene/trait/soil_lover, /datum/plant_gene/trait/battery, /datum/plant_gene/trait/one_bite)
 	mutatelist = list(/obj/item/seeds/potato/sweet)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	graft_gene = /datum/plant_gene/trait/battery
@@ -25,8 +25,10 @@
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
 	icon_state = "potato"
 	foodtypes = VEGETABLES
-	juice_typepath = /datum/reagent/consumable/potato_juice
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
+
+/obj/item/food/grown/potato/juice_typepath()
+	return /datum/reagent/consumable/potato_juice
 
 /obj/item/food/grown/potato/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_potato, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)

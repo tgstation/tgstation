@@ -14,10 +14,6 @@
 	var/nebula_type
 	///How much power we use every time we block the nebula's effects
 	var/power_use_per_block = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
-	///State we use when actively blocking a nebula
-	var/active_icon_state
-	/// State for when we're broken and wont work anymore. Make sure to also set integrity_failure for this to work
-	var/broken_icon_state
 
 /obj/machinery/nebula_shielding/Initialize(mapload)
 	. = ..()
@@ -46,12 +42,14 @@
 /obj/machinery/nebula_shielding/update_icon_state()
 	. = ..()
 
-	if((machine_stat & BROKEN) && broken_icon_state)
-		icon_state = broken_icon_state
-	else if(!powered())
-		icon_state = initial(icon_state)
+	if((machine_stat & BROKEN))
+		icon_state = "[base_icon_state]_broken"
+	else if(panel_open)
+		icon_state = "[base_icon_state]_open"
+	else if(powered())
+		icon_state = "[base_icon_state]_on"
 	else
-		icon_state = active_icon_state
+		icon_state = base_icon_state
 
 ///Short-lived nebula shielding sent by centcom in-case there hasn't been shielding for a while
 /obj/machinery/nebula_shielding/emergency
@@ -89,8 +87,7 @@
 	desc = "Generates a field around the station, protecting it from a radioactive nebula."
 
 	icon_state = "radioactive_shielding"
-	active_icon_state = "radioactive_shielding_on"
-	broken_icon_state = "radioactive_shielding_broken"
+	base_icon_state = "radioactive_shielding"
 
 	circuit = /obj/item/circuitboard/machine/radioactive_nebula_shielding
 
@@ -109,14 +106,11 @@
 	if(isopenturf(turf))
 		turf.atmos_spawn_air("[GAS_TRITIUM]=1;[TURF_TEMPERATURE(T20C)]")
 
-/obj/machinery/nebula_shielding/radiation/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, initial(icon_state) + "_open", initial(icon_state), item))
-		return
+/obj/machinery/nebula_shielding/radiation/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-	if(default_deconstruction_crowbar(item))
-		return
-
-	return ..()
+/obj/machinery/nebula_shielding/radiation/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 ///Emergency shielding so people aren't permanently in a radstorm if shit goes very wrong in engineering
 /obj/machinery/nebula_shielding/emergency/radiation
@@ -128,6 +122,10 @@
 	pixel_x = 0
 
 	nebula_type = /datum/station_trait/nebula/hostile/radiation
+
+/obj/machinery/nebula_shielding/emergency/radiation/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/nebula_shielding/emergency/radiation/self_destruct()
 	var/turf/open/turf = get_turf(src)

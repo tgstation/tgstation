@@ -1,40 +1,3 @@
-//bitfield defines
-
-///can honkbots slip people?
-#define HONKBOT_MODE_SLIP (1<<0)
-///can honkbots check IDs?
-#define HONKBOT_CHECK_IDS (1<<1)
-///can honkbots check records?
-#define HONKBOT_CHECK_RECORDS (1<<2)
-///can honkbots handcuff people?
-#define HONKBOT_HANDCUFF_TARGET (1<<3)
-
-DEFINE_BITFIELD(honkbot_flags, list(
-	"CAN_SLIP" = HONKBOT_MODE_SLIP,
-	"CHECK_IDS" = HONKBOT_CHECK_IDS,
-	"CHECK_RECORDS" = HONKBOT_CHECK_RECORDS,
-	"CAN_FAKE_CUFF" = HONKBOT_HANDCUFF_TARGET,
-))
-
-///can we fix breaches
-#define REPAIRBOT_FIX_BREACHES (1<<0)
-///can we fix grilles
-#define REPAIRBOT_REPLACE_WINDOWS (1<<1)
-///can we replace tiles
-#define REPAIRBOT_REPLACE_TILES (1<<2)
-///can we fix girders
-#define REPAIRBOT_FIX_GIRDERS (1<<3)
-///can we build girders
-#define REPAIRBOT_BUILD_GIRDERS (1<<4)
-
-DEFINE_BITFIELD(repairbot_flags, list(
-	"FIX_BREACHES" = REPAIRBOT_FIX_BREACHES,
-	"REPLACE_WINDOWS" = REPAIRBOT_REPLACE_WINDOWS,
-	"REPLACE_TILES" = REPAIRBOT_REPLACE_TILES,
-	"FIX_GIRDERS" = REPAIRBOT_FIX_GIRDERS,
-	"BUILD_GIRDERS" = REPAIRBOT_BUILD_GIRDERS,
-))
-
 // bot keys
 ///The first beacon we find
 #define BB_BEACON_TARGET "beacon_target"
@@ -112,6 +75,10 @@ DEFINE_BITFIELD(repairbot_flags, list(
 #define BB_WASH_FRUSTRATION "wash_frustration"
 ///key that holds cooldown after we finish cleaning something, so we dont immediately run off to patrol
 #define BB_POST_CLEAN_COOLDOWN "post_clean_cooldown"
+
+//secbots
+///threat of our current target
+#define BB_CURRENT_CRIMINAL_ASSESSMENT "current_criminal_assessment"
 
 //Honkbots
 ///key that holds all possible clown friends

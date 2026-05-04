@@ -9,25 +9,25 @@
 			"type": "icon_state",
 			"icon_state": "gnome_hat",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_body",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_pants",
 			"blend_mode": "overlay",
-			"color_ids": [ 3 ]
+			"color_ids": [3]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_beard",
 			"blend_mode": "overlay",
-			"color_ids": [ 4 ]
+			"color_ids": [4]
 		}
 	],
 	"gnome_burried_1": [
@@ -40,25 +40,25 @@
 			"type": "icon_state",
 			"icon_state": "gnome_hat_burried_1",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_body_burried_1",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_pants_burried_1",
 			"blend_mode": "overlay",
-			"color_ids": [ 3 ]
+			"color_ids": [3]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_beard_burried_1",
 			"blend_mode": "overlay",
-			"color_ids": [ 4 ]
+			"color_ids": [4]
 		}
 	],
 	"gnome_burried_2": [
@@ -71,25 +71,25 @@
 			"type": "icon_state",
 			"icon_state": "gnome_hat_burried_2",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_body_burried_2",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_pants_burried_2",
 			"blend_mode": "overlay",
-			"color_ids": [ 3 ]
+			"color_ids": [3]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_beard_burried_2",
 			"blend_mode": "overlay",
-			"color_ids": [ 4 ]
+			"color_ids": [4]
 		}
 	],
 	"gnome_burried_3": [
@@ -102,25 +102,25 @@
 			"type": "icon_state",
 			"icon_state": "gnome_hat_burried_3",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_body_burried_3",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_pants_burried_3",
 			"blend_mode": "overlay",
-			"color_ids": [ 3 ]
+			"color_ids": [3]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "gnome_beard_burried_3",
 			"blend_mode": "overlay",
-			"color_ids": [ 4 ]
+			"color_ids": [4]
 		}
 	]
 }

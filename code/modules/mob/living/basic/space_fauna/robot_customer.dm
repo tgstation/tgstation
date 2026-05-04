@@ -66,10 +66,6 @@
 	QDEL_NULL(hud_to_show_on_hover)
 	return ..()
 
-///Robots need robot gibs...!
-/mob/living/basic/robot_customer/spawn_gibs()
-	new /obj/effect/gibspawner/robot(drop_location(), src)
-
 /mob/living/basic/robot_customer/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if(grime_carried && prob(grime_carried * 20) && !throwing && !(movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && has_gravity())
@@ -122,3 +118,8 @@
 		order = attending_venue.order_food_line(wanted_item)
 
 	. += span_notice("Their order was: \"[order].\"")
+
+/mob/living/basic/robot_customer/death()
+	new /obj/effect/gibspawner/robot(drop_location())
+
+	return ..()

@@ -9,6 +9,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_and_hunt_target/watering_can,
 		/datum/ai_planning_subtree/find_and_hunt_target/fill_watercan,
@@ -39,7 +40,7 @@
 /datum/ai_behavior/find_and_set/treatable_hydro
 	action_cooldown = 5 SECONDS
 
-/datum/ai_behavior/find_and_set/treatable_hydro/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/treatable_hydro/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/possible_trays = list()
 	var/mob/living/living_pawn = controller.pawn
 	var/waterlevel_threshold = controller.blackboard[BB_WATERLEVEL_THRESHOLD]
@@ -101,7 +102,7 @@
 /datum/ai_behavior/find_and_set/beamable_hydroplants
 	action_cooldown = 15 SECONDS
 
-/datum/ai_behavior/find_and_set/beamable_hydroplants/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/beamable_hydroplants/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/possible_trays = list()
 
 	for(var/obj/machinery/hydroponics/hydro in oview(search_range, controller.pawn))
@@ -150,6 +151,7 @@
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/seedling_rapid,

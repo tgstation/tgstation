@@ -16,7 +16,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	gold_core_spawnable = NO_SPAWN
-	speech_probability_rate = 13
+	speech_probability_rate = 6
 
 	/// Callback to save our memory at the end of the round.
 	var/datum/callback/roundend_callback = null
@@ -42,7 +42,7 @@
 	if(!SStts.tts_enabled)
 		return
 
-	voice = pick(SStts.available_speakers)
+	voice = SStts.random_tts_voice()
 	if(SStts.pitch_enabled)
 		if(findtext(voice, "Woman"))
 			pitch = 12 // up-pitch by one octave

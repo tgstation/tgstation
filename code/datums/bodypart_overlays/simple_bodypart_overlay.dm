@@ -24,6 +24,7 @@
 /datum/bodypart_overlay/simple/sixpack
 	icon_state = "sixpack"
 	layers = EXTERNAL_ADJACENT
+	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
 
 ///bags drawn beneath the eyes
 /datum/bodypart_overlay/simple/bags

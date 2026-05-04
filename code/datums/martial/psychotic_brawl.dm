@@ -73,7 +73,7 @@
 			if(iscarbon(defender))
 				var/mob/living/carbon/carbon_defender = defender
 				if(!istype(carbon_defender.head, /obj/item/clothing/head/helmet/) && !istype(carbon_defender.head, /obj/item/clothing/head/utility/hardhat))
-					carbon_defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+					carbon_defender.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5)
 			attacker.Stun(rand(1 SECONDS, 4.5 SECONDS))
 			defender.Stun(rand(0.5 SECONDS, 3 SECONDS))
 			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))

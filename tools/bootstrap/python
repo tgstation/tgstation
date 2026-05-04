@@ -25,6 +25,12 @@ PythonDir="$Cache/python-$PythonVersion"
 PythonExe="$PythonDir/python.exe"
 Log="$Cache/last-command.log"
 
+# function that prints an error message and exits
+error_exit() {
+    echo "If you are seeing this message, please try to fix it by running tools/hooks/install.(bat/sh) again."
+    exit 1
+}
+
 # If a portable Python for Windows is not present, search on $PATH.
 if [ "$(uname)" = "Linux" ] || [ ! -f "$PythonExe" ]; then
 	# Strip the "App Execution Aliases" from $PATH. Even if the user installed
@@ -55,7 +61,7 @@ if [ "$(uname)" = "Linux" ] || [ ! -f "$PythonExe" ]; then
 			echo "Please install Python from https://www.python.org/downloads/ or using your system's package manager."
 		fi
 		echo
-		exit 1
+		error_exit
 	fi
 
 	# Create a venv and activate it
@@ -70,13 +76,14 @@ if [ "$(uname)" = "Linux" ] || [ ! -f "$PythonExe" ]; then
 		PythonExe="$PythonDir/scripts/python3.exe";
 	else
 		echo "bootstrap/python failed to find the python executable inside its virtualenv"
-		exit 1
+		error_exit
 	fi
 fi
 
 # Use pip to install our requirements
 if [ ! -f "$PythonDir/requirements.txt" ] || [ "$(b2sum < "$Sdk/requirements.txt")" != "$(b2sum < "$PythonDir/requirements.txt")" ]; then
 	echo "Updating dependencies..."
+    "$PythonExe" -m ensurepip --default-pip
 	"$PythonExe" -m pip install -U wheel
 	"$PythonExe" -m pip install -U pip -r "$Sdk/requirements.txt"
 	cp "$Sdk/requirements.txt" "$PythonDir/requirements.txt"

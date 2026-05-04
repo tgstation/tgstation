@@ -2,14 +2,13 @@
 #define CLIENT_ORGAN_MULT 10
 
 /datum/export/organ
+	abstract_type = /datum/export/organ
 	include_subtypes = FALSE //CentCom doesn't need organs from non-humans.
 
-/datum/export/organ/get_cost(obj/exported_item, apply_elastic)
-	if(HAS_TRAIT(exported_item, TRAIT_CLIENT_STARTING_ORGAN))
-		// Multiply value for organs that started in a player
-		// Unaffected by price elasticity as there's a limited amount of these in play
-		return round(init_cost * CLIENT_ORGAN_MULT)
-	return ..()
+/datum/export/organ/get_base_cost(obj/exported_item)
+	// Multiply value for organs that started in a player
+	// Unaffected by price elasticity as there's a limited amount of these in play
+	return round(..() * HAS_TRAIT(exported_item, TRAIT_CLIENT_STARTING_ORGAN) ? CLIENT_ORGAN_MULT : 1)
 
 /datum/export/organ/heart
 	cost = CARGO_CRATE_VALUE * 0.2 //For the man who has everything and nothing.
@@ -46,18 +45,17 @@
 	unit_name = "humanoid tongue"
 	export_types = list(/obj/item/organ/tongue)
 
-/datum/export/organ/external/tail/lizard
+/datum/export/organ/lizard_tail
 	cost = CARGO_CRATE_VALUE * 1.25
 	unit_name = "lizard tail"
 	export_types = list(/obj/item/organ/tail/lizard)
 
-
-/datum/export/organ/external/tail/cat
+/datum/export/organ/cat_tail
 	cost = CARGO_CRATE_VALUE * 1.5
 	unit_name = "cat tail"
 	export_types = list(/obj/item/organ/tail/cat)
 
-/datum/export/organ/ears/cat
+/datum/export/organ/cat_ears
 	cost = CARGO_CRATE_VALUE
 	unit_name = "cat ears"
 	export_types = list(/obj/item/organ/ears/cat)

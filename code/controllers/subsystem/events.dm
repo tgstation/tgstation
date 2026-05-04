@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(events)
 	var/list/control = list()
 	///assoc list of all datum/round_event_control, ordered by name. name => event
 	var/list/events_by_name = list()
+	///assoc list of all nonrunning event types, ordered by name. name => event typepath
+	var/list/nonrunning_events_by_name = list()
 	///list of all existing /datum/round_event currently being run.
 	var/list/running = list()
 	///cache of currently running events, for lag checking.
@@ -24,7 +26,10 @@ SUBSYSTEM_DEF(events)
 /datum/controller/subsystem/events/Initialize()
 	for(var/type in typesof(/datum/round_event_control))
 		var/datum/round_event_control/event = new type()
-		if(!event.typepath || !event.valid_for_map())
+		if(!event.typepath)
+			continue
+		if(!event.valid_for_map())
+			nonrunning_events_by_name[event.name] = event.type
 			continue //don't want this one! leave it for the garbage collector
 		control += event //add it to the list of all events (controls)
 		events_by_name[event.name] = event
@@ -49,8 +54,9 @@ SUBSYSTEM_DEF(events)
 	var/list/configuration = json_decode(file2text(json_file))
 	for(var/variable in configuration)
 		var/datum/round_event_control/event = events_by_name[variable]
-		if(!event)
-			stack_trace("Invalid event [event] attempting to be configured.")
+		if(isnull(event))
+			if(isnull(nonrunning_events_by_name[variable])) // don't stack_trace events that aren't running due to map flags
+				stack_trace("Invalid event [variable] attempting to be configured.")
 			continue
 		for(var/event_variable in configuration[variable])
 			if(!(event.vars.Find(event_variable)))

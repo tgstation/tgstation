@@ -24,7 +24,10 @@
 	/// This uses the same nested list format as turfs_by_zlevel
 	var/list/list/turf/turfs_to_uncontain_by_zlevel = list()
 
-	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	/// General flag for area properties
+	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | CULT_PERMITTED
+	/// Flag for mapping related area properties (such as cavegen)
+	var/area_flags_mapping = UNIQUE_AREA
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
@@ -58,6 +61,8 @@
 
 	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
+	/// Whether or not this area unifies all of its motion sensors.
+	var/motion_monitored = FALSE
 
 	/// Size of the area in open turfs, only calculated for indoors areas.
 	var/areasize = 0
@@ -112,8 +117,13 @@
 	/// Wire assignment for airlocks in this area
 	var/airlock_wires = /datum/wires/airlock
 
-	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
+	/// Should we actually be running our mapgen if one is set?
+	/// FALSE here with a set map_generator allows the area to probe from shared generators without actually generating its' turfs
+	var/use_mapgen = TRUE
+	/// Datum that would be used in terrain generation behavior
 	var/datum/map_generator/map_generator
+	/// Should the map_generator be shared with all other willing areas on our z_level?
+	var/share_map_generator = TRUE
 
 	///Used to decide what kind of reverb the area makes sound have
 	var/sound_environment = SOUND_ENVIRONMENT_NONE
@@ -163,7 +173,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/New()
 	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
-	if (area_flags & UNIQUE_AREA)
+	if (area_flags_mapping & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
 	GLOB.areas += src
 	energy_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
@@ -210,30 +220,61 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/LateInitialize()
 	power_change() // all machines set to current power level, also updates icon
 	update_beauty()
+	if(motion_monitored)
+		AddComponent(/datum/component/monitored_area)
 
 /// Generate turfs, including cool cave wall gen
 /area/proc/RunTerrainGeneration()
-	if(map_generator)
-		map_generator = new map_generator()
-		var/list/turfs = list()
-		for(var/turf/T in contents)
-			turfs += T
-		map_generator.generate_terrain(turfs, src)
+	if (!use_mapgen || !map_generator)
+		return
+	map_generator = get_generator()
+	var/list/turfs = list()
+	for(var/turf/T in contents)
+		turfs += T
+	map_generator.generate_terrain(turfs, src)
 
 /// Populate the previously generated terrain with mobs and objects
 /area/proc/RunTerrainPopulation()
-	if(map_generator)
-		var/list/turfs = list()
-		for(var/turf/T in contents)
-			turfs += T
-		map_generator.populate_terrain(turfs, src)
+	if (!use_mapgen || !map_generator)
+		return
+	map_generator = get_generator()
+	var/list/turfs = list()
+	for(var/turf/T in contents)
+		turfs += T
+	map_generator.populate_terrain(turfs, src)
 
 /area/proc/test_gen()
-	if(map_generator)
-		var/list/turfs = list()
-		for(var/turf/T in contents)
-			turfs += T
-		map_generator.generate_terrain(turfs, src)
+	if (!use_mapgen || !map_generator)
+		return
+	map_generator = get_generator()
+	var/list/turfs = list()
+	for(var/turf/T in contents)
+		turfs += T
+	map_generator.generate_terrain(turfs, src)
+
+/// Gets own, or shared, map generator
+/area/proc/get_generator()
+	RETURN_TYPE(/datum/map_generator)
+	if (!map_generator)
+		return
+
+	if (istype(map_generator))
+		return map_generator
+
+	if (!share_map_generator)
+		map_generator = new map_generator()
+		return map_generator
+
+	var/list/z_generators = GLOB.map_generators_by_z["[z]"]
+	if (z_generators && z_generators[map_generator])
+		map_generator = z_generators[map_generator]
+
+	if (!istype(map_generator))
+		var/new_generator = new map_generator()
+		LAZYSET(GLOB.map_generators_by_z["[z]"], map_generator, new_generator)
+		map_generator = new_generator
+
+	return map_generator
 
 /// Returns the highest zlevel that this area contains turfs for
 /area/proc/get_highest_zlevel()

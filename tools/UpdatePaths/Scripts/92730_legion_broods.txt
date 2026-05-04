@@ -1,0 +1,2 @@
+/mob/living/basic/legion_brood/@SUBTYPES : /mob/living/basic/mining/legion_brood/@SUBTYPES{@OLD}
+

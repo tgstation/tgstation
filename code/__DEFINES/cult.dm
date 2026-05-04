@@ -36,6 +36,7 @@
 /// Defines for cult item_dispensers.
 #define PREVIEW_IMAGE "preview"
 #define OUTPUT_ITEMS "output"
+#define RADIAL_DESC "radial_desc"
 
 /// The global Nar'sie that the cult's summoned
 GLOBAL_DATUM(cult_narsie, /obj/narsie)
@@ -60,3 +61,6 @@ GLOBAL_LIST(sacrificed)
 #define CURSED_BLADE_UNLOCKED "Cursed Blade"
 #define CRIMSON_MEDALLION_UNLOCKED "Crimson Medallion"
 #define PROTEON_ORB_UNLOCKED "Proteon Orb"
+
+///how many times can the shuttle be cursed?
+#define MAX_SHUTTLE_CURSES 3

@@ -11,7 +11,7 @@ import { capitalize } from 'tgui-core/string';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { useModifyState } from './hooks';
-import { LibraryAdminData, ModifyTypes } from './types';
+import { type LibraryAdminData, ModifyTypes } from './types';
 
 function getActionColor(reason: string) {
   switch (reason) {

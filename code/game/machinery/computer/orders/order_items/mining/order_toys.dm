@@ -34,6 +34,6 @@
 	cost_per_order = 525
 
 /datum/orderable_item/toys_drones/drone_sentience
-	purchase_path = /obj/item/slimepotion/slime/sentience/mining
+	purchase_path = /obj/item/slimepotion/sentience/mining
 	cost_per_order = 850
 

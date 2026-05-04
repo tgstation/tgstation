@@ -105,12 +105,6 @@
 /obj/item/stack/sheet/sinew,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"L" = (
-/obj/effect/decal/cleanable/blood/hitsplatter{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "M" = (
 /obj/structure/statue/bone/skull,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -255,7 +249,7 @@ I
 G
 G
 q
-L
+x
 G
 s
 g

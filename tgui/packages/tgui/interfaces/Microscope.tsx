@@ -8,7 +8,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -118,9 +118,7 @@ const CellList = (props) => {
                     fluid
                     color="good"
                     key={reagent}
-                    tooltip={
-                      '+' + cell_line.supplementaries[reagent] + '% growth/sec.'
-                    }
+                    tooltip={`+${cell_line.supplementaries[reagent]}% growth/sec.`}
                   >
                     {reagent}
                   </Button>
@@ -133,7 +131,7 @@ const CellList = (props) => {
                     fluid
                     color="bad"
                     key={reagent}
-                    tooltip={cell_line.suppressives[reagent] + '% growth/sec.'}
+                    tooltip={`${cell_line.suppressives[reagent]}% growth/sec.`}
                   >
                     {reagent}
                   </Button>

@@ -8,11 +8,12 @@
 #define MAX_CORES_BIOSCRAMBLER 8
 #define MAX_CORES_DIMENSIONAL 8
 #define MAX_CORES_ECTOPLASMIC 8
+#define MAX_CORES_WEATHER 5
 
 ///Defines for the different types of explosion a flux anomaly can have
-#define FLUX_NO_EXPLOSION 0
-#define FLUX_EXPLOSIVE 1
-#define FLUX_LOW_EXPLOSIVE 2
+#define FLUX_NO_EMP 0
+#define FLUX_EMP 1
+#define FLUX_LIGHT_EMP 2
 
 /// Chance of anomalies moving every process tick
 #define ANOMALY_MOVECHANCE 45
@@ -29,7 +30,6 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list (
 	/obj/item/organ/pod_hair,
 	/obj/item/organ/spines,
 	/obj/item/organ/wings,
-	/obj/item/organ/wings/functional,
 	/obj/item/organ/alien,
 	/obj/item/organ/brain,
 	/obj/item/organ/body_egg,

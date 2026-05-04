@@ -6,9 +6,9 @@
 /datum/reagent/method_patch_test/expose_mob(mob/living/target, methods = PATCH, reac_volume, show_message = TRUE)
 	. = ..()
 	if(methods & PATCH)
-		target.setBruteLoss(20)
+		target.set_brute_loss(20)
 	if(methods & INJECT)
-		target.setBruteLoss(10)
+		target.set_brute_loss(10)
 
 /datum/unit_test/reagent_mob_expose/Run()
 	// Life() is handled just by tests
@@ -23,7 +23,7 @@
 	// INGEST
 	TEST_ASSERT_EQUAL(human.fire_stacks, 0, "Human has fire stacks before taking phlogiston")
 	drink.reagents.add_reagent(/datum/reagent/phlogiston, 10)
-	drink.attack(human, human)
+	drink.melee_attack_chain(human, human)
 	TEST_ASSERT_EQUAL(human.fire_stacks, 1, "Human does not have fire stacks after taking phlogiston")
 	human.Life(SSMOBS_DT)
 	TEST_ASSERT(human.fire_stacks > 1, "Human fire stacks did not increase after life tick")
@@ -47,18 +47,18 @@
 
 	// PATCH
 	human.fully_heal(ALL)
-	TEST_ASSERT_EQUAL(human.getBruteLoss(), 0, "Human health did not set properly")
+	TEST_ASSERT_EQUAL(human.get_brute_loss(), 0, "Human health did not set properly")
 	patch.reagents.add_reagent(/datum/reagent/method_patch_test, 1)
 	patch.self_delay = 0
 	patch.interact_with_atom(human, human)
 	patch.get_embed().process(SSdcs.wait / 10)
 	human.Life(SSMOBS_DT)
-	TEST_ASSERT_EQUAL(human.getBruteLoss(), 20, "Human health did not update after patch was applied")
+	TEST_ASSERT_EQUAL(human.get_brute_loss(), 20, "Human health did not update after patch was applied")
 
 	// INJECT
 	syringe.reagents.add_reagent(/datum/reagent/method_patch_test, 1)
 	syringe.melee_attack_chain(human, human)
-	TEST_ASSERT_EQUAL(human.getBruteLoss(), 10, "Human health did not update after injection from syringe")
+	TEST_ASSERT_EQUAL(human.get_brute_loss(), 10, "Human health did not update after injection from syringe")
 
 	// INHALE
 	human.fully_heal(ALL)

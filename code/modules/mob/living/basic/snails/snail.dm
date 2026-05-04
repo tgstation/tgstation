@@ -10,6 +10,10 @@
 	icon = 'icons/mob/simple/pets.dmi'
 	butcher_results = list(/obj/item/food/meat/slab/bugmeat = 1)
 	mob_biotypes = MOB_ORGANIC
+	density = FALSE
+	mob_size = MOB_SIZE_TINY
+	held_w_class = WEIGHT_CLASS_TINY
+	pass_flags = PASSTABLE | PASSMOB
 	health = 30
 	maxHealth = 30
 	speed = 6
@@ -44,6 +48,7 @@
 	AddElement(/datum/element/basic_eating, food_types = eatable_food)
 	create_reagents(100, REAGENT_HOLDER_ALIVE)
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagents_update))
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAIL, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 	if (minion_path)
 		AddElement(/datum/element/regal_rat_minion, converted_path = minion_path, success_balloon = "gurgle", pet_commands = GLOB.regal_rat_minion_commands)
@@ -75,7 +80,8 @@
 	apply_damage(500) //ouch
 
 /mob/living/basic/snail/mob_pickup(mob/living/user)
-	var/obj/item/clothing/head/mob_holder/snail/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/obj/item/mob_holder/snail/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	SEND_SIGNAL(src, COMSIG_LIVING_SCOOPED_UP, user, holder)
 	var/display_message = "[user] [HAS_TRAIT(src, TRAIT_MOVE_FLOATING) ? "scoops up [src]" : "peels [src] off the ground"]!"
 	user.visible_message(span_warning(display_message))
 	user.put_in_hands(holder)
@@ -105,9 +111,9 @@
 
 
 ///snail's custom holder object
-/obj/item/clothing/head/mob_holder/snail
+/obj/item/mob_holder/snail
 
-/obj/item/clothing/head/mob_holder/snail/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/mob_holder/snail/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/machinery/hydroponics))
 		return NONE
 

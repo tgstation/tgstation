@@ -16,6 +16,7 @@
 	shrapnel_type = /obj/projectile/bullet/shrapnel/ied
 	det_time = 225 SECONDS //this is handled by assemblies now
 	display_timer = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.65, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	/// Explosive power
 	var/power = 5
 	/// Our assembly that when activated causes us to explode
@@ -127,6 +128,8 @@
 		return
 	if(istype(activator, /obj/item/assembly/signaler))
 		return //no signallers, signallers send a signal and i can imagine this having bad sideeffects if some has multiple of the same frequency in their backpack and uses them inhand by accident
+	log_grenade(user)
+	add_fingerprint(user)
 	activator.activate()
 	update_icon(UPDATE_ICON_STATE)
 	user.balloon_alert_to_viewers("arming!")
@@ -159,9 +162,6 @@
 /obj/item/grenade/iedcasing/Destroy()
 	. = ..()
 	activator = null
-
-
-
 
 /obj/item/grenade/iedcasing/spawned
 	power = 2.5 //20u welding fuel
@@ -198,6 +198,7 @@
 	/// Static list of reagent to explosive power
 	var/static/list/fuel_power = list(
 		/datum/reagent/fuel = 0.5,
+		/datum/reagent/toxin/plasma = 0.75,
 		/datum/reagent/gunpowder = 1,
 		/datum/reagent/nitroglycerin = 2,
 		/datum/reagent/tatp = 2.5,
@@ -225,8 +226,9 @@
 			var/atom/movable/to_put = item
 			if(isstack(item))
 				var/obj/item/stack/as_stack = item
-				to_put = as_stack.split_stack(user = null, amount = 1)
-				as_stack.merge_type = null //prevent them from merging inside for contents.len
+				var/obj/item/stack/new_stack = as_stack.split_stack(1)
+				new_stack.merge_type = null //prevent them from merging inside for contents.len
+				to_put = new_stack
 			to_put.forceMove(src)
 			return
 

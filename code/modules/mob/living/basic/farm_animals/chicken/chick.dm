@@ -34,6 +34,7 @@
 	var/grow_as = /mob/living/basic/chicken
 
 /datum/emote/chick
+	abstract_type = /datum/emote/chick
 	mob_type_allowed_typecache = /mob/living/basic/chick
 	mob_type_blacklist_typecache = list()
 
@@ -82,7 +83,7 @@
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/chicken),
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 

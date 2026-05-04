@@ -5,7 +5,7 @@
 		BB_ONLY_FISH_WHILE_HUNGRY = TRUE,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
@@ -51,7 +51,7 @@
 /datum/ai_planning_subtree/fish/drilled_ice
 	find_fishable_behavior = /datum/ai_behavior/find_and_set/in_list/drilled_ice
 
-/datum/ai_behavior/find_and_set/in_list/drilled_ice/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
+/datum/ai_behavior/find_and_set/in_list/drilled_ice/search_tactic(datum/ai_controller/controller, locate_paths, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/atom/possible_ice as anything in RANGE_TURFS(search_range, controller.pawn))
 		if(!istype(possible_ice, /turf/open/misc/ice))
 			continue
@@ -67,7 +67,7 @@
 		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/pet/penguin/baby),
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 

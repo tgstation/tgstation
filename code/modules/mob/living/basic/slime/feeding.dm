@@ -17,7 +17,7 @@
 			balloon_alert(src, "not hungry!")
 		return FALSE
 
-	if(check_friendship && (REF(meal) in faction))
+	if(check_friendship && has_faction(REF(meal)))
 		return FALSE
 
 	if(check_adjacent && (!Adjacent(meal) || !isturf(loc)))

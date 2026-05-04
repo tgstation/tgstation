@@ -49,22 +49,21 @@
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_removed_organ))
 	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_added_organ))
 	RegisterSignal(parent, COMSIG_HEART_MANUAL_PULSE, PROC_REF(on_pump))
-	RegisterSignals(parent, list(COMSIG_LIVING_DEATH, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD)), PROC_REF(pause))
-	RegisterSignals(parent, list(COMSIG_LIVING_REVIVE, SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD)), PROC_REF(restart))
+	RegisterSignal(parent, COMSIG_LIVING_UPDATE_BLOOD_STATUS, PROC_REF(on_update_blood_status))
 
 	pump_action.cooldown_time = pump_delay - (1 SECONDS) //you can pump up to a second early
 	pump_action.Grant(parent)
 
 	var/mob/living/carbon/carbon_parent = parent
 	var/obj/item/organ/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
-	if(parent_heart && !HAS_TRAIT(carbon_parent, TRAIT_NOBLOOD) && carbon_parent.stat != DEAD)
+	if(parent_heart && CAN_HAVE_BLOOD(carbon_parent) && carbon_parent.stat != DEAD)
 		START_PROCESSING(SSdcs, src)
 		COOLDOWN_START(src, heart_timer, pump_delay)
 
 	to_chat(parent, span_userdanger("Your heart no longer beats automatically! You have to pump it manually - otherwise you'll die!"))
 
 /datum/component/manual_heart/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN, COMSIG_HEART_MANUAL_PULSE, COMSIG_LIVING_REVIVE, COMSIG_LIVING_DEATH, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD), SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD)))
+	UnregisterSignal(parent, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN, COMSIG_HEART_MANUAL_PULSE, COMSIG_LIVING_REVIVE, COMSIG_LIVING_DEATH, COMSIG_LIVING_UPDATE_BLOOD_STATUS))
 
 	to_chat(parent, span_userdanger("You feel your heart start beating normally again!"))
 	var/mob/living/carbon/carbon_parent = parent
@@ -95,14 +94,14 @@
 
 	var/mob/living/carbon/carbon_owner = owner
 
-	if(HAS_TRAIT(carbon_owner, TRAIT_NOBLOOD))
+	if(!CAN_HAVE_BLOOD(carbon_owner))
 		return
-	carbon_owner.blood_volume = min(carbon_owner.blood_volume + (blood_loss * 0.5), BLOOD_VOLUME_MAXIMUM)
+	carbon_owner.adjust_blood_volume(blood_loss * 0.5)
 	carbon_owner.remove_client_colour(REF(src))
 	add_colour = TRUE
-	carbon_owner.adjustBruteLoss(-heal_brute)
-	carbon_owner.adjustFireLoss(-heal_burn)
-	carbon_owner.adjustOxyLoss(-heal_oxy)
+	carbon_owner.adjust_brute_loss(-heal_brute)
+	carbon_owner.adjust_fire_loss(-heal_burn)
+	carbon_owner.adjust_oxy_loss(-heal_oxy)
 
 /datum/component/manual_heart/process()
 	var/mob/living/carbon/carbon_parent = parent
@@ -115,12 +114,20 @@
 	if(!COOLDOWN_FINISHED(src, heart_timer))
 		return
 
-	carbon_parent.blood_volume = max(carbon_parent.blood_volume - blood_loss, 0)
+	carbon_parent.adjust_blood_volume(-blood_loss)
 	to_chat(carbon_parent, span_userdanger("You have to keep pumping your blood!"))
 	COOLDOWN_START(src, heart_timer, MANUAL_HEART_GRACE_PERIOD) //give two full seconds before losing more blood
 	if(add_colour)
 		carbon_parent.add_client_colour(/datum/client_colour/manual_heart_blood, REF(src))
 		add_colour = FALSE
+
+/datum/component/manual_heart/proc/on_update_blood_status(datum/source, had_blood, has_blood, new_blood_volume, old_blood_volume)
+	SIGNAL_HANDLER
+
+	if (has_blood)
+		restart()
+	else
+		pause()
 
 ///If a new heart is added, start processing.
 /datum/component/manual_heart/proc/check_added_organ(mob/organ_owner, obj/item/organ/new_organ)
@@ -151,7 +158,7 @@
 /datum/component/manual_heart/proc/check_valid()
 	var/mob/living/carbon/carbon_parent = parent
 	var/obj/item/organ/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
-	return !isnull(parent_heart) && !HAS_TRAIT(carbon_parent, TRAIT_NOBLOOD) && carbon_parent.stat != DEAD
+	return !isnull(parent_heart) && CAN_HAVE_BLOOD(carbon_parent) && carbon_parent.stat != DEAD
 
 ///Action to pump your heart. Cooldown will always be set to 1 second less than the pump delay.
 /datum/action/cooldown/manual_heart
@@ -169,7 +176,7 @@
 ///The action button is only available when you're a living carbon with blood and a heart.
 /datum/action/cooldown/manual_heart/IsAvailable(feedback = FALSE)
 	var/mob/living/carbon/heart_haver = owner
-	if(!istype(heart_haver) || HAS_TRAIT(heart_haver, TRAIT_NOBLOOD) || heart_haver.stat == DEAD)
+	if(!istype(heart_haver) || !CAN_HAVE_BLOOD(heart_haver) || heart_haver.stat == DEAD)
 		return FALSE
 	var/obj/item/organ/heart/heart_havers_heart = heart_haver.get_organ_slot(ORGAN_SLOT_HEART)
 	if(isnull(heart_havers_heart))

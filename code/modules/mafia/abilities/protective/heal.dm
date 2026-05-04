@@ -13,7 +13,7 @@
 	///The message sent when you've successfully saved someone.
 	var/saving_message = "someone nursed you back to health"
 
-/datum/mafia_ability/heal/set_target(datum/mafia_controller/game, datum/mafia_role/new_target)
+/datum/mafia_ability/heal/set_target(datum/mafia_role/new_target)
 	. = ..()
 	if(!.)
 		return FALSE

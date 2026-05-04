@@ -22,7 +22,7 @@
 
 	true = add_output_port("True", PORT_TYPE_SIGNAL)
 	false = add_output_port("False", PORT_TYPE_SIGNAL)
-	result = add_output_port("Result", PORT_TYPE_NUMBER)
+	result = add_output_port("Result", PORT_TYPE_BOOLEAN)
 
 /**
  * Used by derivatives to load their own ports in for custom use.

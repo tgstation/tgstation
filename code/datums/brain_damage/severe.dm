@@ -10,6 +10,7 @@
 	name = "Mutism"
 	desc = "Patient is completely unable to speak."
 	scan_desc = "extensive damage to the brain's speech center"
+	symptoms = "Completley incapable of producing sound or speech verbally."
 	gain_text = span_warning("You forget how to speak!")
 	lose_text = span_notice("You suddenly remember how to speak.")
 
@@ -25,17 +26,18 @@
 	name = "Aphasia"
 	desc = "Patient is unable to speak or understand any language."
 	scan_desc = "extensive damage to the brain's language center"
+	symptoms = "Completely incapable of understanding or producing language besides incomprehensible utterances."
 	gain_text = span_warning("You have trouble forming words in your head...")
 	lose_text = span_notice("You suddenly remember how languages work.")
 
 /datum/brain_trauma/severe/aphasia/on_gain()
-	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/aphasia, LANGUAGE_APHASIA)
+	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/aphasia, source = LANGUAGE_APHASIA)
 	owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 	. = ..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
 	if(!QDELING(owner))
-		owner.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_APHASIA)
+		owner.remove_blocked_language(subtypesof(/datum/language), source = LANGUAGE_APHASIA)
 		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 
 	..()
@@ -44,6 +46,7 @@
 	name = "Cerebral Blindness"
 	desc = "Patient's brain is no longer connected to its eyes."
 	scan_desc = "extensive damage to the brain's occipital lobe"
+	symptoms = "Exhibits a complete loss of vision despite having fully functional eyes."
 	gain_text = span_warning("You can't see!")
 	lose_text = span_notice("Your vision returns.")
 
@@ -59,6 +62,7 @@
 	name = "Paralysis"
 	desc = "Patient's brain can no longer control part of its motor functions."
 	scan_desc = "cerebral paralysis"
+	symptoms = "Experience a complete loss of voluntary movement in specific body parts."
 	gain_text = ""
 	lose_text = ""
 	var/paralysis_type
@@ -117,11 +121,13 @@
 
 /datum/brain_trauma/severe/paralysis/paraplegic
 	random_gain = FALSE
+	known_trauma = FALSE
 	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
 /datum/brain_trauma/severe/paralysis/hemiplegic
 	random_gain = FALSE
+	known_trauma = FALSE
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
 /datum/brain_trauma/severe/paralysis/hemiplegic/left
@@ -134,6 +140,7 @@
 	name = "Narcolepsy"
 	desc = "Patient may involuntarily fall asleep during normal activities."
 	scan_desc = "traumatic narcolepsy"
+	symptoms = "Experiences sudden and uncontrollable episodes of drowsiness or sleepiness during regular activities."
 	gain_text = span_warning("You have a constant feeling of drowsiness...")
 	lose_text = span_notice("You feel awake and aware again.")
 	/// Odds seconds_per_tick the user falls asleep
@@ -149,7 +156,7 @@
 	var/sleep_time_minimum = 6 SECONDS
 	var/sleep_time_maximum = 6 SECONDS
 
-/datum/brain_trauma/severe/narcolepsy/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/narcolepsy/on_life(seconds_per_tick)
 	if(owner.IsSleeping())
 		return
 
@@ -164,14 +171,15 @@
 
 	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
 	var/caffeinated = HAS_TRAIT(owner, TRAIT_STIMULATED)
+	var/final_sleep_chance = sleep_chance
 	if(owner.move_intent == MOVE_INTENT_RUN)
-		sleep_chance += sleep_chance_running
+		final_sleep_chance += sleep_chance_running
 	if(drowsy)
-		sleep_chance += sleep_chance_drowsy //stack drowsy ontop of base or running odds with the += operator
+		final_sleep_chance += sleep_chance_drowsy //stack drowsy ontop of base or running odds with the += operator
 	if(caffeinated)
-		sleep_chance = sleep_chance / 2 //make it harder to fall asleep on caffeine
+		final_sleep_chance *= 0.5 //make it harder to fall asleep on caffeine
 
-	if (!SPT_PROB(sleep_chance, seconds_per_tick))
+	if(!SPT_PROB(final_sleep_chance, seconds_per_tick))
 		return
 
 	//if not drowsy, don't fall asleep but make them drowsy
@@ -196,14 +204,16 @@
 	sleep_chance_drowsy = 1
 	sleep_time_minimum = 20 SECONDS
 	sleep_time_maximum = 30 SECONDS
+	known_trauma = FALSE
 
 /datum/brain_trauma/severe/monophobia
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
 	scan_desc = "monophobia"
+	symptoms = "Experiences intense fear and anxiety when alone, often leading to panic attacks, \
+		nausea, rapid heartbeat, and in severe cases, fainting, vomiting, or heart failure."
 	gain_text = span_warning("You feel really lonely...")
 	lose_text = span_notice("You feel like you could be safe on your own.")
-	var/stress = 0
 
 /datum/brain_trauma/severe/monophobia/on_gain()
 	. = ..()
@@ -217,6 +227,7 @@
 	name = "Discoordination"
 	desc = "Patient is unable to use complex tools or machinery."
 	scan_desc = "extreme discoordination"
+	symptoms = "Completely incapable of performing tasks that require fine motor skills or coordination, such as using tools or operating machinery."
 	gain_text = span_warning("You can barely control your hands!")
 	lose_text = span_notice("You feel in control of your hands again.")
 
@@ -232,6 +243,8 @@
 	name = "Traumatic Non-Violence"
 	desc = "Patient is extremely unwilling to harm others in violent ways."
 	scan_desc = "pacific syndrome"
+	symptoms = "Completely incapable of willing themselves to commit acts of violence or harm towards others, \
+		often going to great lengths to avoid confrontations or situations that may lead to violence."
 	gain_text = span_notice("You feel oddly peaceful.")
 	lose_text = span_notice("You no longer feel compelled to not harm.")
 
@@ -247,6 +260,8 @@
 	name = "Hypnotic Stupor"
 	desc = "Patient is prone to episodes of extreme stupor that leaves them extremely suggestible."
 	scan_desc = "oneiric feedback loop"
+	symptoms = "Experiences sudden episodes of deep stupor or trance-like states, during which the patient becomes highly suggestible to external influences, \
+		often leading to altered perceptions or behaviors, memories imposed by others, or in severe cases, danger to self or others."
 	gain_text = span_warning("You feel somewhat dazed.")
 	lose_text = span_notice("You feel like a fog was lifted from your mind.")
 
@@ -254,7 +269,7 @@
 	..()
 	owner.remove_status_effect(/datum/status_effect/trance)
 
-/datum/brain_trauma/severe/hypnotic_stupor/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/hypnotic_stupor/on_life(seconds_per_tick)
 	..()
 	if(SPT_PROB(0.5, seconds_per_tick) && !owner.has_status_effect(/datum/status_effect/trance))
 		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
@@ -266,6 +281,7 @@
 	gain_text = span_warning("You feel odd, like you just forgot something important.")
 	lose_text = span_notice("You feel like a weight was lifted from your mind.")
 	random_gain = FALSE
+	known_trauma = FALSE
 	var/trigger_phrase = "Nanotrasen"
 
 /datum/brain_trauma/severe/hypnotic_trigger/New(phrase)
@@ -278,7 +294,7 @@
 	owner.remove_status_effect(/datum/status_effect/trance)
 
 /datum/brain_trauma/severe/hypnotic_trigger/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
 		return
 
 	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
@@ -295,6 +311,8 @@
 	name = "Dyslexia"
 	desc = "Patient is unable to read or write."
 	scan_desc = "dyslexia"
+	symptoms = "Experiences significant difficulties in reading and writing, often confusing letters and words, \
+		leading to challenges in literacy-related tasks such as reading scanners or completing paperwork."
 	gain_text = span_warning("You have trouble reading or writing...")
 	lose_text = span_notice("You suddenly remember how to read and write.")
 
@@ -306,115 +324,12 @@
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
 	..()
 
-/*
- * Brain traumas that eldritch paintings apply
- * This one is for "The Sister and He Who Wept" or /obj/structure/sign/painting/eldritch
- */
-/datum/brain_trauma/severe/weeping
-	name = "Psychotic Depression"
-	desc = "Patient is suffering from severe depressive episodes. Patient sometimes hallucinates during these episodes."
-	scan_desc = "depression"
-	gain_text = span_warning("The weeping... It haunts my mind...")
-	lose_text = span_notice("Your fixation ends. You feel significantly less stressed.")
-	random_gain = FALSE
-	/// Our cooldown declare for causing hallucinations
-	COOLDOWN_DECLARE(weeping_hallucinations)
-
-/datum/brain_trauma/severe/weeping/on_life(seconds_per_tick, times_fired)
-	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
-		return
-	// If they have examined a painting recently
-	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
-		return
-	if(!COOLDOWN_FINISHED(src, weeping_hallucinations))
-		return
-	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
-	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
-	COOLDOWN_START(src, weeping_hallucinations, 10 SECONDS)
-	return ..()
-
-//This one is for "The First Desire" or /obj/structure/sign/painting/eldritch/desire
-/datum/brain_trauma/severe/flesh_desire
-	name = "Bean's Disorder"
-	desc = "Patient has a fixation on consuming raw flesh, particularly that of the same species. Patient also suffers from psychosomatic hunger pangs."
-	scan_desc = "moderate eating disorder"
-	gain_text = span_warning("You feel a hunger, for organs and raw meat...")
-	lose_text = span_notice("Your appetite returns to normal.")
-	random_gain = FALSE
-	/// How much faster we loose hunger
-	var/hunger_rate = 15
-
-/datum/brain_trauma/severe/flesh_desire/on_gain()
-	// Allows them to eat faster, mainly for flavor
-	ADD_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
-	ADD_TRAIT(owner, TRAIT_FLESH_DESIRE, REF(src))
-	return ..()
-
-/datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
-	// Causes them to need to eat at 10x the normal rate
-	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
-	if(SPT_PROB(10, seconds_per_tick))
-		to_chat(owner, span_notice(pick("You can't stop thinking about raw meat...", "You **NEED** to eat someone.", "The hunger pangs are back...", "You hunger for flesh.", "You are starving!")))
-	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
-
-/datum/brain_trauma/severe/flesh_desire/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
-	REMOVE_TRAIT(owner, TRAIT_FLESH_DESIRE, REF(src))
-	return ..()
-
-// This one is for "Lady out of gates" or /obj/item/wallframe/painting/eldritch/beauty
-/datum/brain_trauma/severe/eldritch_beauty
-	name = "Obsessive Perfectionism"
-	desc = "Patient is fixated on the perceived 'imperfection' of objects around them. Patient is agitated by the feeling of clothing on their body."
-	scan_desc = "obsessive personality disorder"
-	gain_text = span_warning("It's all *imperfect*! I can't stand any of it touching me!")
-	lose_text = span_notice("Your mind calms.")
-	random_gain = FALSE
-	/// How much damage we deal with each scratch
-	var/scratch_damage = 0.5
-
-/datum/brain_trauma/severe/eldritch_beauty/on_life(seconds_per_tick, times_fired)
-	if(owner.incapacitated)
-		return
-
-	// Scratching code
-	var/obj/item/bodypart/bodypart = owner.get_bodypart(owner.get_random_valid_zone(even_weights = TRUE))
-	if(!bodypart || !IS_ORGANIC_LIMB(bodypart) || (bodypart.bodypart_flags & BODYPART_PSEUDOPART))
-		return
-	if(!ishuman(owner))
-		return
-	// Jumpsuits ruin the "perfection" of the body
-	var/mob/living/carbon/human/scratcher = owner
-	if(!length(scratcher.get_clothing_on_part(bodypart)))
-		return
-
-	owner.apply_damage(scratch_damage, BRUTE, bodypart)
-	if(SPT_PROB(33, seconds_per_tick))
-		to_chat(owner, span_notice("You scratch furiously at your clothed [bodypart.plaintext_zone]!"))
-
-// This one is for "Climb over the rusted mountain" or /obj/structure/sign/painting/eldritch/rust
-/datum/brain_trauma/severe/rusting
-	name = "Intermittent Psychic Manifestation Syndrome"
-	desc = "Patient suffers from a rare psychic disorder, and may manifest or amplify psychic phenomena in the area. Patient has no control over these phenomena."
-	scan_desc = "dangerous psi-wave activity"
-	gain_text = span_warning("Climb the rust. Master entropy.")
-	lose_text = span_notice("You feel like you just woke up from a bad dream.")
-	random_gain = FALSE
-
-/datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
-	var/atom/tile = get_turf(owner)
-	// Examining a painting should stop this effect to give counterplay
-	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
-		return
-
-	if(SPT_PROB(50, seconds_per_tick))
-		to_chat(owner, span_notice("You feel the decay..."))
-		tile.rust_heretic_act()
-
 /datum/brain_trauma/severe/kleptomaniac
 	name = "Kleptomania"
 	desc = "Patient is prone to stealing things."
 	scan_desc = "kleptomania"
+	symptoms = "Experiences an uncontrollable urge to steal nearby items, often without need or reason, \
+		leading to compulsive theft behaviors that can interfere with daily life and social interactions."
 	gain_text = span_warning("You feel a sudden urge to take that. Surely no one will notice.")
 	lose_text = span_notice("You no longer feel the urge to take things.")
 	/// Cooldown between allowing steal attempts
@@ -434,7 +349,7 @@
 	if(damage_amount >= 5 && (damage_type == BRUTE || damage_type == BURN || damage_type == STAMINA))
 		COOLDOWN_START(src, steal_cd, 12 SECONDS)
 
-/datum/brain_trauma/severe/kleptomaniac/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/severe/kleptomaniac/on_life(seconds_per_tick)
 	if(owner.usable_hands <= 0)
 		return
 	if(!SPT_PROB(5, seconds_per_tick))
@@ -460,7 +375,7 @@
 		stealables += potential_stealable
 
 	for(var/obj/item/stealable as anything in shuffle(stealables))
-		if(!owner.CanReach(stealable, view_only = TRUE) || stealable.IsObscured())
+		if(!stealable.IsReachableBy(owner) || stealable.IsObscured())
 			continue
 		// Try to do a raw click on the item with one of our empty hands, to pick it up (duh)
 		owner.log_message("attempted to pick up (kleptomania)", LOG_ATTACK, color = "orange")

@@ -67,6 +67,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
+/obj/effect/landmark/flaps_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "n" = (
@@ -114,6 +115,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
+/obj/effect/landmark/flaps_install,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "w" = (

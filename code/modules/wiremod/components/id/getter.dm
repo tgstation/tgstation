@@ -22,7 +22,7 @@
 
 /obj/item/circuit_component/id_getter/populate_ports()
 	target = add_input_port("Target", PORT_TYPE_ATOM)
-	prioritize_hands = add_input_port("Prioritize Hands", PORT_TYPE_NUMBER)
+	prioritize_hands = add_input_port("Prioritize Hands", PORT_TYPE_BOOLEAN)
 	id_port = add_output_port("ID", PORT_TYPE_ATOM)
 
 /obj/item/circuit_component/id_getter/input_received(datum/port/input/port)

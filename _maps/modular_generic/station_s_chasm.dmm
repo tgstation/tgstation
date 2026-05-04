@@ -61,7 +61,7 @@
 /area/template_noop)
 "E" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron,
 /area/template_noop)
 "N" = (

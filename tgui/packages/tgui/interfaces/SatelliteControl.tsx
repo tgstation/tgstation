@@ -5,7 +5,7 @@ import {
   ProgressBar,
   Section,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -72,7 +72,7 @@ const SatelliteDisplay = (props) => {
           <Button.Checkbox
             key={satellite.id}
             checked={satellite.active}
-            content={'#' + satellite.id + ' ' + satellite.mode}
+            content={`#${satellite.id} ${satellite.mode}`}
             onClick={() =>
               act('toggle', {
                 id: satellite.id,

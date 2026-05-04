@@ -39,8 +39,8 @@
 	if(!networked)
 		GLOB.allbountyboards += computer
 		networked = TRUE
-	if(computer.computer_id_slot)
-		current_user = computer.computer_id_slot?.registered_account
+	if(computer.stored_id)
+		current_user = computer.stored_id?.registered_account
 	for(var/i in GLOB.request_list)
 		if(!i)
 			continue
@@ -102,7 +102,7 @@
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 				return
 			request_target.transfer_money(current_user, active_request.value, "Bounties: Request Completed")
-			computer.say("Paid out [active_request.value] credits.")
+			computer.say("Paid out [active_request.value] [MONEY_NAME].")
 			GLOB.request_list.Remove(active_request)
 			return TRUE
 		if("clear")

@@ -1,0 +1,1 @@
+/obj/structure/no_effect_signpost/@SUBTYPES : /obj/structure/signpost/@SUBTYPES{@OLD}

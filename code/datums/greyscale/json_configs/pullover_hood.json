@@ -1,0 +1,10 @@
+{
+	"hood_pullover": [
+		{
+			"type": "icon_state",
+			"icon_state": "hood_pullover",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

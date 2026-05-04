@@ -67,7 +67,7 @@
 	// finally, screenshot test of taking jumpsuit (everything) off
 	// which should test that the autogen legs disappear (here to cover a bug in which it does not disappear)
 	dummy.delete_equipment()
-	TEST_ASSERT_EQUAL(length(dummy.get_equipped_items()), 0, "Dummy (Ashwalker) should have no equipment!")
+	TEST_ASSERT_EQUAL(length(dummy.get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD)), 0, "Dummy (Ashwalker) should have no equipment!")
 	finished_icon = icon(finished_icon)
 	finished_icon.Insert(getFlatIcon(dummy, no_anim = TRUE), dir = SOUTH, frame = 9)
 

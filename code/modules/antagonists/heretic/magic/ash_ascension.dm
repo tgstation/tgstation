@@ -110,7 +110,7 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 300
+	cooldown_time = 30 SECONDS
 
 	invocation = "F'R."
 	invocation_type = INVOCATION_WHISPER
@@ -154,7 +154,7 @@
 			if((L in hit_list) || L == source)
 				continue
 			hit_list += L
-			L.adjustFireLoss(20)
+			L.adjust_fire_loss(20)
 			to_chat(L, span_userdanger("You're hit by [source]'s eldritch flames!"))
 
 		new /obj/effect/hotspot(T)

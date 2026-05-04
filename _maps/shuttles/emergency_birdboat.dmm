@@ -53,6 +53,7 @@
 "an" = (
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ao" = (
@@ -235,6 +236,7 @@
 /obj/machinery/stasis{
 	dir = 4
 	},
+/obj/machinery/vitals_reader/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aY" = (
@@ -255,7 +257,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "iP" = (
-/obj/machinery/vending/wallmed/directional/south{
+/obj/machinery/wall_healer/free/directional/south{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium,

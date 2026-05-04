@@ -13,6 +13,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	armor_type = /datum/armor/structure_bookcase
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4)
 	var/state = BOOKCASE_UNANCHORED
 	/// When enabled, books_to_load number of random books will be generated for this bookcase
 	var/load_random_books = FALSE
@@ -28,6 +29,7 @@
 
 /obj/structure/bookcase/Initialize(mapload)
 	. = ..()
+	obj_flags |= UNIQUE_RENAME | RENAME_NO_DESC
 	if(!mapload || QDELETED(src))
 		return
 	// Only mapload from here on
@@ -170,17 +172,6 @@
 			update_appearance()
 			return
 
-	if(IS_WRITING_UTENSIL(attacking_item))
-		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
-			return ..()
-		var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
-		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
-			return ..()
-		if(!newname)
-			return
-		name = "bookcase ([sanitize(newname)])"
-		return
-
 	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		if(length(contents))
 			balloon_alert(user, "remove the books first")
@@ -229,6 +220,9 @@
 	var/amount = length(contents)
 	icon_state = "book-[clamp(amount, 0, 5)]"
 	return ..()
+
+/obj/structure/bookcase/nameformat(input, user)
+	return "bookcase[input? " ([input])" : null]"
 
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"

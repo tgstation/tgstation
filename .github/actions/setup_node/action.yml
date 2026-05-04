@@ -5,7 +5,7 @@ description: Install Node using the version specified in `dependencies.sh`; addi
 
 inputs:
   restore-yarn-cache:
-    description: 'If `true`, restores the Yarn cache alongside installing node.'
+    description: "If `true`, restores the Yarn cache alongside installing node."
     required: false
     type: boolean
     default: false

@@ -28,6 +28,6 @@
 
 /datum/unit_test/armor_verification/proc/armor_totals(datum/armor/armor)
 	var/total = 0
-	for(var/key in ARMOR_LIST_ALL())
+	for(var/key in ARMOR_LIST_ALL)
 		total += armor.vars[key]
 	return total

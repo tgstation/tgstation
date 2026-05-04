@@ -12,8 +12,8 @@ import {
 } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { Antagonist, Category } from '../antagonists/base';
-import { PreferencesMenuData } from '../types';
+import { type Antagonist, Category } from '../antagonists/base';
+import type { PreferencesMenuData } from '../types';
 
 const requireAntag = require.context(
   '../antagonists/antagonists',
@@ -111,8 +111,7 @@ function AntagSelection(props: AntagSelectionProps) {
           const isBanned =
             data.antag_bans && data.antag_bans.indexOf(antagonist.key) !== -1;
 
-          const daysLeft =
-            (data.antag_days_left && data.antag_days_left[antagonist.key]) || 0;
+          const daysLeft = data.antag_days_left?.[antagonist.key] || 0;
 
           return (
             <Flex.Item

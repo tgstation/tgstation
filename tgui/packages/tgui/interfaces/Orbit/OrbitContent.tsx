@@ -11,7 +11,7 @@ import { useBackend } from '../../backend';
 import { ANTAG2COLOR } from './constants';
 import { getAntagCategories } from './helpers';
 import { OrbitCollapsible } from './OrbitCollapsible';
-import { AntagGroup, Observable, OrbitData } from './types';
+import type { AntagGroup, Observable, OrbitData } from './types';
 
 type ContentSection = {
   content: Observable[];

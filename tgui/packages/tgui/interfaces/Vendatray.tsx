@@ -1,5 +1,5 @@
 import { Box, Button, Image, Section, Stack } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -59,22 +59,21 @@ const ProductInfo = (props) => {
           <Button icon="pen" onClick={() => act('Adjust')} />
         </Box>
       </Section>
-      <>
-        <Button
-          fluid
-          icon="window-restore"
-          content={tray_open ? 'Open' : 'Closed'}
-          selected={tray_open}
-          onClick={() => act('Open')}
-        />
-        <Button.Confirm
-          fluid
-          icon="money-bill-wave"
-          content="Purchase Item"
-          disabled={!product_name}
-          onClick={() => act('Buy')}
-        />
-      </>
+
+      <Button
+        fluid
+        icon="window-restore"
+        content={tray_open ? 'Open' : 'Closed'}
+        selected={tray_open}
+        onClick={() => act('Open')}
+      />
+      <Button.Confirm
+        fluid
+        icon="money-bill-wave"
+        content="Purchase Item"
+        disabled={!product_name}
+        onClick={() => act('Buy')}
+      />
     </>
   );
 };

@@ -31,7 +31,7 @@
 /mob/living/basic/zombie/Initialize(mapload)
 	. = ..()
 	apply_dynamic_human_appearance(src, outfit, /datum/species/zombie, bloody_slots = ITEM_SLOT_OCLOTHING)
-	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/decal/remains/human)))
+	AddElement(/datum/element/death_drops, /obj/effect/decal/remains/human)
 
 /mob/living/basic/zombie/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -79,6 +79,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/random_speech/zombie,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,

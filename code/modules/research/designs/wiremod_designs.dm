@@ -725,3 +725,17 @@
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
 	)
+
+/datum/design/implant_shell
+	name = "Implant Shell Case"
+	desc = "A tiny shell that can be implanted in a living being."
+	id = "implant_shell"
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 5,
+	)
+	build_path = /obj/item/implantcase/circuit
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)

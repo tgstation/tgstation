@@ -5,7 +5,7 @@
 	icon_state = "target_h"
 	density = FALSE
 	max_integrity = 1800
-	item_flags = CAN_BE_HIT
+	obj_flags = CAN_BE_HIT
 	/// Lazylist to keep track of bullet-hole overlays.
 	var/list/bullethole_overlays
 
@@ -32,7 +32,7 @@
 	if(isnull(always_leave_marks))
 		always_leave_marks = typecacheof(list(
 			/obj/projectile/beam/practice,
-			/obj/projectile/beam/laser/carbine/practice,
+			/obj/projectile/beam/laser/rapid/practice,
 		))
 
 	var/is_invalid_damage = hitting_projectile.damage_type != BRUTE && hitting_projectile.damage_type != BURN

@@ -20,13 +20,14 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	name = "mutated gondola-heart"
 	desc = "Gondola DNA infused into what was once a normal heart."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "heart"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/heart/gondola"
+	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GONDOLA_COLORS
 	organ_traits = list(TRAIT_PACIFISM)
 	///keeps track of whether the receiver actually gained factions
-	var/list/factions_to_remove = list()
+	var/list/factions_to_remove
 
 /obj/item/organ/heart/gondola/Initialize(mapload)
 	. = ..()
@@ -36,25 +37,24 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 
 /obj/item/organ/heart/gondola/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	if(!(FACTION_HOSTILE in receiver.faction))
-		factions_to_remove += FACTION_HOSTILE
-	if(!(FACTION_MINING in receiver.faction))
-		factions_to_remove += FACTION_MINING
-	receiver.faction |= list(FACTION_HOSTILE, FACTION_MINING)
+	if(!receiver.has_faction(FACTION_HOSTILE))
+		LAZYADD(factions_to_remove, FACTION_HOSTILE)
+	if(!receiver.has_faction(FACTION_MINING))
+		LAZYADD(factions_to_remove, FACTION_MINING)
+	receiver.add_faction(list(FACTION_HOSTILE, FACTION_MINING))
 
 /obj/item/organ/heart/gondola/on_mob_remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
-	for(var/faction in factions_to_remove)
-		heartless.faction -= faction
-	//reset this for a different target
-	factions_to_remove = list()
+	if(LAZYLEN(factions_to_remove))
+		heartless.remove_faction(factions_to_remove)
 
 /// Zen (tounge): You can no longer speak, but get a powerful positive moodlet
 /obj/item/organ/tongue/gondola
 	name = "mutated gondola-tongue"
 	desc = "Gondola DNA infused into what was once a normal tongue."
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "tongue"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/tongue/gondola"
+	post_init_icon_state = "tongue"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GONDOLA_COLORS
 	organ_traits = list(TRAIT_MUTE)
@@ -76,8 +76,9 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 /obj/item/organ/liver/gondola
 	name = "mutated gondola-liver"
 	desc = "Gondola DNA infused into what was once a normal liver."
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "liver"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/liver/gondola"
+	post_init_icon_state = "liver"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GONDOLA_COLORS
 

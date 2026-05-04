@@ -25,6 +25,7 @@
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
+	exotic_bloodtype = BLOOD_TYPE_OIL
 	meat = null
 	mutantbrain = /obj/item/organ/brain/cybernetic
 	mutanttongue = /obj/item/organ/tongue/robot

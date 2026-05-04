@@ -13,8 +13,8 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BUG|MOB_MINING
 	friendly_verb_continuous = "harmlessly rolls into"
 	friendly_verb_simple = "harmlessly roll into"
-	maxHealth = 45
-	health = 45
+	maxHealth = 175
+	health = 175
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attack_verb_continuous = "barrels into"
@@ -38,6 +38,8 @@
 		/datum/pet_command/follow/start_active,
 		/datum/pet_command/fetch,
 	)
+	/// Do we have emissives?
+	var/has_emissive = TRUE
 
 /mob/living/basic/mining/goldgrub/Initialize(mapload)
 	. = ..()
@@ -47,16 +49,26 @@
 	else
 		can_lay_eggs = FALSE
 
-	var/list/food_types = string_list(list(/obj/item/stack/ore))
+	// Rarer ores heal us a bit depending on the rarity
+	var/static/list/food_types = list(
+		/obj/item/stack/ore = 0,
+		/obj/item/stack/ore/gold = 5,
+		/obj/item/stack/ore/uranium = 5,
+		/obj/item/stack/ore/diamond = 15,
+		/obj/item/stack/ore/bluespace_crystal = 20,
+		/obj/item/stack/ore/bananium = 30,
+	)
+
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/spit_ore = BB_SPIT_ABILITY,
 		/datum/action/cooldown/mob_cooldown/burrow = BB_BURROW_ABILITY,
 	)
+
 	grant_actions_by_list(innate_actions)
 
 	AddElement(/datum/element/ore_collecting)
 	AddElement(/datum/element/basic_eating, food_types = food_types, add_to_contents = TRUE)
-	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
+	AddComponent(/datum/component/proficient_miner, 0.05, TRUE) // Speedy boi
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddComponent(\
 		/datum/component/appearance_on_aggro,\
@@ -72,15 +84,17 @@
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
+	if(has_emissive)
+		update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
 
 	if(stat != CONSCIOUS)
-		return COMPONENT_BULLET_PIERCED
+		return NONE
 
-	///high penetration bullets should still go through. No goldgrub can save you from the colossus' death bolts.
-	if(prob(hitting_projectile.armour_penetration))
+	/// Reflects PKA/PKC shots and plasma cutter beams, unless they have high armor penetration
+	if(prob(hitting_projectile.armour_penetration) || (hitting_projectile.armor_flag != BOMB && hitting_projectile.armor_flag != ENERGY))
 		return NONE
 
 	visible_message(span_danger("[hitting_projectile] is repelled by [source]'s girth!"))
@@ -90,6 +104,7 @@
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 	for(var/obj/item/stack/ore/ore in src)
 		ore.forceMove(loc)
+
 	if(!gibbed)
 		visible_message(span_danger("[src] spits out its consumed ores!"))
 
@@ -113,6 +128,7 @@
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 5)
 
 /mob/living/basic/mining/goldgrub/tamed(mob/living/tamer, atom/food)
+	. = ..()
 	new /obj/effect/temp_visual/heart(src.loc)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/goldgrub)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
@@ -138,6 +154,11 @@
 		return
 	new /obj/item/food/egg/green/grub_egg(get_turf(src))
 
+/mob/living/basic/mining/goldgrub/update_overlays()
+	. = ..()
+	if(has_emissive)
+		. += emissive_appearance(icon, "[icon_state]_e", src)
+
 /mob/living/basic/mining/goldgrub/baby
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	name = "goldgrub baby"
@@ -153,6 +174,7 @@
 	can_tame = FALSE
 	can_lay_eggs = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/babygrub
+	has_emissive = FALSE
 
 /mob/living/basic/mining/goldgrub/baby/Initialize(mapload)
 	. = ..()

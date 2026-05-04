@@ -28,11 +28,11 @@
 
 /obj/projectile/energy/flora/mut/on_hit_plant_effect(mob/living/hit_plant)
 	if(prob(85))
-		hit_plant.adjustFireLoss(rand(5, 15))
+		hit_plant.adjust_fire_loss(rand(5, 15))
 		hit_plant.show_message(span_userdanger("The radiation beam singes you!"))
 		return
 
-	hit_plant.adjustToxLoss(rand(3, 6))
+	hit_plant.adjust_tox_loss(rand(3, 6))
 	hit_plant.Paralyze(10 SECONDS)
 	hit_plant.visible_message(
 		span_warning("[hit_plant] writhes in pain as [hit_plant.p_their()] vacuoles boil."),

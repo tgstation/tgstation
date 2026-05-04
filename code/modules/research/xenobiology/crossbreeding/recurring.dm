@@ -8,6 +8,7 @@ Recurring extracts:
 	desc = "A tiny, glowing core, wrapped in several layers of goo."
 	effect = "recurring"
 	icon_state = "recurring"
+	abstract_type = /obj/item/slimecross/recurring
 	var/extract_type
 	var/obj/item/slime_extract/extract
 	var/cooldown = 0

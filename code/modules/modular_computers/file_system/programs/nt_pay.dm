@@ -42,7 +42,7 @@
 /datum/computer_file/program/nt_pay/ui_data(mob/user)
 	var/list/data = list()
 
-	current_user = computer.computer_id_slot?.registered_account || null
+	current_user = computer.stored_id?.registered_account || null
 	if(!current_user)
 		data["name"] = null
 	else
@@ -50,7 +50,7 @@
 		data["owner_token"] = current_user.pay_token
 		data["money"] = current_user.account_balance
 		data["wanted_token"] = wanted_token
-		data["transaction_list"] = current_user.transaction_history
+		data["transaction_list"] = current_user.transaction_history || list()
 
 	return data
 
@@ -60,6 +60,11 @@
 	SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, payment_result)
 
 /datum/computer_file/program/nt_pay/proc/_pay(token, money_to_send, mob/user)
+	var/area/user_area = get_area(user)
+	if(user_area && is_area_virtual(user_area))
+		to_chat(user, span_notice("You cannot send virtual money to real accounts."))
+		return NT_PAY_STATUS_NO_ACCOUNT
+
 	money_to_send = round(money_to_send)
 
 	if(IS_DEPARTMENTAL_ACCOUNT(current_user))
@@ -78,10 +83,10 @@
 		return NT_PAY_STATUS_INVALID_MONEY
 	if(token == current_user.pay_token)
 		if(user)
-			to_chat(user, span_notice("You can't send credits to yourself."))
+			to_chat(user, span_notice("You can't send [MONEY_NAME] to yourself."))
 		return NT_PAY_SATUS_SENDER_IS_RECEIVER
 
-	for(var/account as anything in SSeconomy.bank_accounts_by_id)
+	for(var/account in SSeconomy.bank_accounts_by_id)
 		var/datum/bank_account/acc = SSeconomy.bank_accounts_by_id[account]
 		if(acc.pay_token == token)
 			recipient = acc
@@ -95,12 +100,12 @@
 		current_user.bank_card_talk("You cannot afford it.")
 		return NT_PAY_STATUS_INVALID_MONEY
 
-	recipient.bank_card_talk("You received [money_to_send] credit(s). Reason: transfer from [current_user.account_holder]")
+	recipient.bank_card_talk("You received [money_to_send] [MONEY_NAME](s). Reason: transfer from [current_user.account_holder]")
 	recipient.transfer_money(current_user, money_to_send)
 	for(var/obj/item/card/id/id_card as anything in recipient.bank_cards)
 		SEND_SIGNAL(id_card, COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, computer, money_to_send)
 
-	current_user.bank_card_talk("You send [money_to_send] credit(s) to [recipient.account_holder]. Now you have [current_user.account_balance] credit(s)")
+	current_user.bank_card_talk("You send [money_to_send] [MONEY_NAME](s) to [recipient.account_holder]. Now you have [current_user.account_balance] [MONEY_NAME](s)")
 
 	return NT_PAY_STATUS_SUCCESS
 
@@ -127,14 +132,14 @@
 	var/obj/item/modular_computer/modpc = associated_program.computer
 	RegisterSignal(modpc, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, PROC_REF(on_payment_done))
 	RegisterSignal(modpc, COMSIG_MODULAR_COMPUTER_INSERTED_ID, PROC_REF(register_id))
-	if(modpc.computer_id_slot)
-		register_id(inserted_id = modpc.computer_id_slot)
+	if(modpc.stored_id)
+		register_id(inserted_id = modpc.stored_id)
 
 /obj/item/circuit_component/mod_program/nt_pay/unregister_shell()
 	var/obj/item/modular_computer/modpc = associated_program.computer
 	UnregisterSignal(modpc, list(COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, COMSIG_MODULAR_COMPUTER_INSERTED_ID))
-	if(modpc.computer_id_slot)
-		UnregisterSignal(modpc.computer_id_slot, list(COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, COMSIG_MOVABLE_MOVED))
+	if(modpc.stored_id)
+		UnregisterSignal(modpc.stored_id, list(COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, COMSIG_MOVABLE_MOVED))
 	return ..()
 
 /obj/item/circuit_component/mod_program/nt_pay/proc/register_id(datum/source, obj/item/card/inserted_id, mob/user)

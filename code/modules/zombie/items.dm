@@ -8,17 +8,29 @@
 	hitsound = 'sound/effects/hallucinations/growl1.ogg'
 	force = 21 // Just enough to break airlocks with melee attacks
 	wound_bonus = -30
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	sharpness = SHARP_EDGED
+	/// Chance of infection on hit
+	var/infect_chance = 100
 
 /obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(QDELETED(target))
+		return
 	if(ishuman(target))
-		try_to_zombie_infect(target, user, user.zone_selected)
+		try_to_zombie_infect(target, user, user.zone_selected, infect_chance)
 	else if(isliving(target))
 		check_feast(target, user)
 
-/proc/try_to_zombie_infect(mob/living/carbon/human/target, mob/living/user, def_zone = BODY_ZONE_CHEST)
+/obj/item/mutant_hand/zombie/weak
+	force = 16
+	demolition_mod = 1.33
+	exposed_wound_bonus = 10
+	infect_chance = 50
+
+/proc/try_to_zombie_infect(mob/living/carbon/human/target, mob/living/user, def_zone = BODY_ZONE_CHEST, base_chance = 100)
 	CHECK_DNA_AND_SPECIES(target)
+	if(!prob(base_chance))
+		return
 
 	// Can't zombify with no head
 	if(!target.get_bodypart(BODY_ZONE_HEAD))
@@ -71,10 +83,10 @@
 		target.investigate_log("has been devoured by a zombie.", INVESTIGATE_DEATHS)
 		target.gib(DROP_ALL_REMAINS)
 		var/need_mob_update
-		need_mob_update = user.adjustBruteLoss(-hp_gained, updating_health = FALSE)
-		need_mob_update += user.adjustToxLoss(-hp_gained, updating_health = FALSE)
-		need_mob_update += user.adjustFireLoss(-hp_gained, updating_health = FALSE)
-		need_mob_update += user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
+		need_mob_update = user.adjust_brute_loss(-hp_gained, updating_health = FALSE)
+		need_mob_update += user.adjust_tox_loss(-hp_gained, updating_health = FALSE)
+		need_mob_update += user.adjust_fire_loss(-hp_gained, updating_health = FALSE)
+		need_mob_update += user.adjust_organ_loss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
 		user.set_nutrition(min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL))
 		if(need_mob_update)
 			user.updatehealth()

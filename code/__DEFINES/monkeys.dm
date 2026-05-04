@@ -30,8 +30,15 @@
 #define MONKEY_HATRED_AMOUNT 4
 /// amount of aggro to add to an enemy when a monkey is recruited
 #define MONKEY_RECRUIT_HATED_AMOUNT 2
+/// amount of aggro to add if someone stole the food we wanted
+#define MONKEY_FOOD_HATRED_AMOUNT 2
 /// probability of reducing aggro by one when the monkey attacks
 #define MONKEY_HATRED_REDUCTION_PROB 20
+
+/// Monkey was calmed, such as from weed
+#define MONKEY_CALMED_HATRED_AMOUNT -2
+/// Monkey was angered, such as from alcohol
+#define MONKEY_ANGERED_HATRED_AMOUNT 2
 
 ///Monkey recruit cooldown
 #define MONKEY_RECRUIT_COOLDOWN (1 MINUTES)

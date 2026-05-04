@@ -26,7 +26,7 @@
 		add_action = "add", \
 		remove_action = "remove", \
 		is_output = TRUE, \
-		port_type = PORT_TYPE_NUMBER, \
+		port_type = PORT_TYPE_BOOLEAN, \
 		prefix = "Bit", \
 		minimum_amount = 1, \
 		maximum_amount = MAX_BITFIELD_SIZE \
@@ -46,6 +46,6 @@
 	for(var/iteration in 1 to len)
 		var/datum/port/output/bit = bit_array[iteration]
 		if(iteration == 1 && is_negative)
-			bit.set_output(1)
+			bit.set_output(TRUE)
 			continue
 		bit.set_output(!!(to_convert & (1<< (len - iteration))))

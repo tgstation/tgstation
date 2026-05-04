@@ -46,7 +46,7 @@
 	removed_from.remove_traits(applied_traits + TRAIT_WING_BUFFET_TIRED, REF(src))
 
 /// Decay our accumulated additional tiredness
-/datum/action/cooldown/mob_cooldown/wing_buffet/proc/on_life(mob/living/liver, seconds_per_tick, times_fired)
+/datum/action/cooldown/mob_cooldown/wing_buffet/proc/on_life(mob/living/liver, seconds_per_tick)
 	SIGNAL_HANDLER
 	if (liver.stat == DEAD)
 		return // not so life now buddy

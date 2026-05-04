@@ -21,7 +21,7 @@
 	is_editable = TRUE
 
 /obj/structure/sign/chalkboard_menu
-	name = "\improper Chalkboard coffee menu"
+	name = "chalkboard coffee menu"
 	icon_state = "chalkboard_menu"
 	icon = 'icons/obj/machines/barsigns.dmi'
 	desc = "85cr for a iced lactose-free caramel frappe?! Who buys that?!"
@@ -109,3 +109,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/xenobio_guide, 32)
 	return data
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/tram_plate, 32)
+
+/obj/structure/sign/nanotrasen
+	name = "\improper Nanotrasen logo sign"
+	sign_change_name = "Corporate Logo - Nanotrasen"
+	desc = "A sign with the Nanotrasen logo on it. Glory to Nanotrasen!"
+	icon_state = "nanotrasen"
+	is_editable = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/nanotrasen, 32)
+
+/obj/structure/sign/logo
+	name = "\improper Nanotrasen logo sign"
+	desc = "The Nanotrasen corporate logo."
+	icon_state = "nanotrasen_sign1"
+	buildable_sign = FALSE

@@ -10,9 +10,9 @@ Modular map loading is a system to allow maps to be generated with random varian
 
 This root object handled picking and loading in map modules. It has two variables, and one proc.
 
-* `var/config_file` - A string, points to a TOML configuration file, which is used to hold the information necessary to pull the correct map files and place them on the correct roots. This will be the same for all roots on a map.
-* `var/key` - A string, used to pull a list of `.dmm` files from the configuration file.
-* `load_map()` - Called asynchronously in the root's `Initialize()`. This proc creates a new instance of `/datum/map_template/map_module`, ingests the configuration file `config_file` points to, and picks a `.dmm` file path which maps to the root's `key`, by picking a random filename from among those which `key` maps to, and appending it to a folder path. This file path is passed into the map templace instance's `load()`, and the template takes over.
+- `var/config_file` - A string, points to a TOML configuration file, which is used to hold the information necessary to pull the correct map files and place them on the correct roots. This will be the same for all roots on a map.
+- `var/key` - A string, used to pull a list of `.dmm` files from the configuration file.
+- `load_map()` - Called asynchronously in the root's `Initialize()`. This proc creates a new instance of `/datum/map_template/map_module`, ingests the configuration file `config_file` points to, and picks a `.dmm` file path which maps to the root's `key`, by picking a random filename from among those which `key` maps to, and appending it to a folder path. This file path is passed into the map templace instance's `load()`, and the template takes over.
 
 INITIALIZE_IMMEDIATE is used to ensure the ruins are loaded at the right time to avoid runtime errors related to lighting.
 
@@ -20,9 +20,9 @@ INITIALIZE_IMMEDIATE is used to ensure the ruins are loaded at the right time to
 
 This map templace subtype is responsible for loading in the module, it has two variables and two relevant procs.
 
-* `var/x_offset` and `var/y_offset` - Integers, used to store the offsets used to correctly align the module when it is loaded.
-* `load()` - Extends the functionality of the general map template's `load()` to allow a map to be specified at runtime. This means `preload_size()` must be called again here as the template's map file has been changed. The origin turf for the map to be loaded from is set using the offsets, and the map is loaded as per the parent.
-* `preload_size()` - Extends the functionality of the general map template's `preload_size()` to run the `discover_offset` proc, calculating the offset of `/obj/modular_map_connector` and setting the offset variables accordingly.
+- `var/x_offset` and `var/y_offset` - Integers, used to store the offsets used to correctly align the module when it is loaded.
+- `load()` - Extends the functionality of the general map template's `load()` to allow a map to be specified at runtime. This means `preload_size()` must be called again here as the template's map file has been changed. The origin turf for the map to be loaded from is set using the offsets, and the map is loaded as per the parent.
+- `preload_size()` - Extends the functionality of the general map template's `preload_size()` to run the `discover_offset` proc, calculating the offset of `/obj/modular_map_connector` and setting the offset variables accordingly.
 
 ### /obj/modular_map_connector
 
@@ -30,7 +30,7 @@ This object is used only to determine the offsets to be used on loading, and has
 
 ### TOML configuration
 
-This TOML file is used to map between a list of `.dmm` files and a string key. The file consists of two parts. The first is a line 
+This TOML file is used to map between a list of `.dmm` files and a string key. The file consists of two parts. The first is a line
 
 ```
 directory = "_maps/etc/"
@@ -57,9 +57,9 @@ This section will cover the basics of how to use map modules as a mapper. If you
 
 First we need to create a map, as we usually would. Let's say we want to create a new space ruin `foobar.dmm`, and we put it in the appropriate folder as usual, `_maps/RandomRuins/SpaceRuins/foobar.dmm`. We now need to create three more things.
 
-* `code/modules/ruins/spaceruin_code/foobar.dm` - A code file like would be used to store any code specific to this map.
-* `strings/modular_maps/foobar.toml`- A configuration file, this will be looked at in more detail later.
-* `_maps/RandomRuins/SpaceRuins/foobar/` - A new subfolder, which is where we will put the `.dmm` files for the modules.
+- `code/modules/ruins/spaceruin_code/foobar.dm` - A code file like would be used to store any code specific to this map.
+- `strings/modular_maps/foobar.toml`- A configuration file, this will be looked at in more detail later.
+- `_maps/RandomRuins/SpaceRuins/foobar/` - A new subfolder, which is where we will put the `.dmm` files for the modules.
 
 In `code/modules/ruins/spaceruin_code/foobar.dm` we need to add a small piece of code to define a new modular map root type for our map, which should look like this
 

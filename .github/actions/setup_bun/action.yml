@@ -1,0 +1,17 @@
+# This action is a wrapper around `oven-sh/setup-bun` to use the version specified in
+# `dependencies.sh`.
+name: Setup Bun
+description: Install Bun using the version specified in `dependencies.sh`
+
+runs:
+  using: composite
+  steps:
+    - name: Configure Bun version
+      shell: bash
+      run: |
+        source dependencies.sh
+        echo "BUN_VERSION_REQUIRED=$BUN_VERSION" >> $GITHUB_ENV
+    - name: Install Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: ${{ env.BUN_VERSION_REQUIRED }}

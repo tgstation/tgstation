@@ -1,6 +1,6 @@
 {
 	"templates": [
-		{ 
+		{
 			"template": "default",
 			"icon": "icons/runtime/tcg/xenos.dmi",
 			"series": "resinfront",
@@ -43,7 +43,7 @@
 			"id": "drone",
 			"name": "Xenomorph Drone",
 			"desc": "Rarely seen on the frontline, the Drone is your average worker that lays the foundation of the hive.",
-			"rules": "{$Hivemind}. Tap: Summon a Xeno faction creature for 1 less mana.",
+			"rules": "{$Hivemind}. Tap: Summon a Xeno faction creature for 1 less plasma.",
 			"icon_state": "xeno_drone",
 			"power": 1,
 			"resolve": 1,
@@ -276,7 +276,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
 			"rarity": "rare",
-			"summon_icon_state" :"xenoshrike"
+			"summon_icon_state": "xenoshrike"
 		},
 		{
 			"id": "bull",

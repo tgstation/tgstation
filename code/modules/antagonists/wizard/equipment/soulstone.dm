@@ -24,7 +24,6 @@
 	var/theme = THEME_CULT
 	/// Role check, if any needed
 	var/required_role = /datum/antagonist/cult
-	grind_results = list(/datum/reagent/hauntium = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
 
 /obj/item/soulstone/Initialize(mapload)
 	. = ..()
@@ -32,6 +31,15 @@
 		RegisterSignal(src, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
 	if(!base_name)
 		base_name = initial(name)
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/mod_core_soul)
+
+	AddElement(
+		/datum/element/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
+/obj/item/soulstone/grind_results()
+	return list(/datum/reagent/hauntium = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
 
 /obj/item/soulstone/update_appearance(updates)
 	. = ..()
@@ -156,43 +164,6 @@
 	. = ..()
 	if(!isliving(user) || isnull(user.mind))
 		return
-	if(!user.mind.has_crafting_recipe(/datum/crafting_recipe/mod_core_soul))
-		. += span_notice("You know... there might be <a href='byond://?src=[REF(src)];learn_soul_core_recipe=1'>alternate uses</a> for something like this.")
-
-/obj/item/soulstone/Topic(href, list/href_list)
-	. = ..()
-
-	if(href_list["learn_soul_core_recipe"])
-		learn_soul_core_recipe(usr)
-
-/obj/item/soulstone/proc/learn_soul_core_recipe(mob/user)
-	if(user.mind?.has_crafting_recipe(/datum/crafting_recipe/mod_core_soul))
-		return
-	if(!soul_core_learning_check(user))
-		return
-	var/list/remarks = list(
-		"You begin brainstorming...",
-		"Are constructs <i>powered</i> by souls?",
-		"Then wouldn't that mean...",
-		"Can that energy be turned into electricity?",
-		"You have an idea...",
-	)
-	for(var/remark in remarks)
-		to_chat(user, span_notice("[remark]"))
-		if(!do_after(
-			user,
-			5 SECONDS,
-			timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_HELD_ITEM,
-			extra_checks = CALLBACK(src, PROC_REF(soul_core_learning_check), user),
-			interaction_key = "soul_core_learn",
-			max_interact_count = 1
-			))
-			return
-	user.mind?.teach_crafting_recipe(/datum/crafting_recipe/mod_core_soul)
-	to_chat(user, span_notice("You learned to craft [/obj/item/mod/core/soul::name]."))
-
-/obj/item/soulstone/proc/soul_core_learning_check(mob/user)
-	return user.is_holding(src) || (user.loc == loc) || (isturf(loc) && user.Adjacent(loc))
 
 /obj/item/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
 	for(var/mob/living/basic/shade/shade in src)
@@ -348,7 +319,8 @@
 				return FALSE
 
 		if(grab_sleeping ? victim.stat == CONSCIOUS : victim.stat != DEAD)
-			to_chat(user, "[span_userdanger("Capture failed!")]: Kill or maim the victim first!")
+			to_chat(user, span_userdanger("Capture failed!"))
+			to_chat(user, span_danger("Kill or maim the victim first!"))
 			return FALSE
 
 	victim.grab_ghost()
@@ -356,7 +328,8 @@
 		init_shade(victim, user)
 		return TRUE
 
-	to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
+	to_chat(user, span_userdanger("Capture failed!"))
+	to_chat(user, span_warning("The soul has already fled its mortal frame. You attempt to bring it back..."))
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		check_jobban = ROLE_CULTIST,
 		poll_time = 20 SECONDS,
@@ -377,7 +350,8 @@
 		to_chat(user, span_userdanger("Your body is wracked with debilitating pain!"))
 		return
 	if(contents.len)
-		to_chat(user, "[span_userdanger("Capture failed!")]: [src] is full! Free an existing soul to make room.")
+		to_chat(user, span_userdanger("Capture failed!"))
+		to_chat(user, span_danger("[src] is full! Free an existing soul to make room."))
 		return FALSE
 	shade.AddComponent(/datum/component/soulstoned, src)
 	update_appearance()
@@ -414,7 +388,7 @@
 /obj/item/soulstone/proc/check_menu(mob/user, obj/structure/constructshell/shell)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated || !user.is_holding(src) || !user.CanReach(shell, src))
+	if(user.incapacitated || !user.is_holding(src) || !shell.IsReachableBy(user, reach))
 		return FALSE
 	return TRUE
 
@@ -440,7 +414,7 @@
 		soulstone_spirit.copy_languages(user, LANGUAGE_MASTER)
 	soulstone_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
 	if(user)
-		soulstone_spirit.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
+		soulstone_spirit.add_ally(user) //Add the master as a faction, allowing inter-mob cooperation
 		if(IS_CULTIST(user))
 			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult/shade)
 			SSblackbox.record_feedback("tally", "cult_shade_created", 1)
@@ -486,7 +460,7 @@
 
 /// Called when a ghost is chosen to become a shade.
 /obj/item/soulstone/proc/on_poll_concluded(mob/living/master, mob/living/victim, mob/dead/observer/ghost)
-	if(isnull(victim) || master.incapacitated || !master.is_holding(src) || !master.CanReach(victim, src))
+	if(isnull(victim) || master.incapacitated || !master.is_holding(src) || !victim.IsReachableBy(master, reach))
 		return FALSE
 	if(isnull(ghost?.client))
 		to_chat(master, span_danger("There were no spirits willing to become a shade."))
@@ -543,7 +517,7 @@
 			else
 				make_new_construct(/mob/living/basic/construct/harvester, target, creator, cultoverride, loc_override)
 
-/proc/make_new_construct(mob/living/basic/construct/ctype, mob/target, mob/stoner = null, cultoverride = FALSE, loc_override = null)
+/proc/make_new_construct(mob/living/basic/construct/ctype, mob/target, mob/stoner = null, cultoverride = FALSE, loc_override = null, ghost_activated = FALSE)
 	if(QDELETED(target))
 		return
 	var/mob/living/basic/construct/newstruct = new ctype(loc_override || get_turf(target))
@@ -552,19 +526,51 @@
 	flick("make_[makeicon][theme]", newstruct)
 	playsound(newstruct, 'sound/effects/constructform.ogg', 50)
 	if(stoner)
-		newstruct.faction |= "[REF(stoner)]"
+		newstruct.add_ally(stoner)
 		newstruct.construct_master = stoner
 		var/datum/action/innate/seek_master/seek_master = new
 		seek_master.Grant(newstruct)
 
-	if (isnull(target.mind))
-		newstruct.PossessByPlayer(target.key)
+	if(ghost_activated)
+		if(isnull(target.mind))
+			newstruct.PossessByPlayer(target.ckey)
+		else
+			target.mind.transfer_to(newstruct, force_key_move = TRUE)
+
+	else if (!target.ckey || isnull(target.mind) || is_banned_from(target.ckey, ROLE_CULTIST))
+		to_chat(stoner, span_userdanger("Shell imbuement failed!"))
+		to_chat(stoner, span_warning("The soul has already fled its mortal frame. You attempt to bring it back..."))
+		target = SSpolling.poll_ghosts_for_target(
+			"Do you want to play as [span_danger(newstruct.real_name)]?",
+			check_jobban = ROLE_CULTIST,
+			role = ROLE_CULTIST,
+			poll_time = 10 SECONDS,
+			checked_target = newstruct,
+			alert_pic = newstruct,
+			role_name_text = "inactive construct",
+			ignore_category = POLL_IGNORE_SHADE
+		)
+
+		if (QDELETED(newstruct))
+			return
+
+		if (!target?.client)
+			if (!QDELETED(stoner))
+				to_chat(stoner, span_danger("There were no spirits willing to become a construct."))
+			new /obj/structure/constructshell(newstruct.drop_location())
+			qdel(newstruct)
+			return
+
+		if (!QDELETED(stoner))
+			to_chat(stoner, span_notice("A new soul has possessed [newstruct]!"))
+		newstruct.PossessByPlayer(target.ckey)
 	else
 		target.mind.transfer_to(newstruct, force_key_move = TRUE)
+
 	var/atom/movable/screen/alert/bloodsense/sense_alert
 	if(newstruct.mind && !IS_CULTIST(newstruct) && ((stoner && IS_CULTIST(stoner)) || cultoverride) && SSticker.HasRoundStarted())
 		newstruct.mind.add_antag_datum(/datum/antagonist/cult/construct)
-	if(IS_CULTIST(stoner) || cultoverride)
+	if(cultoverride || (stoner && IS_CULTIST(stoner)))
 		to_chat(newstruct, span_cult_bold("You are still bound to serve the cult[stoner ? " and [stoner]" : ""], follow [stoner?.p_their() || "their"] orders and help [stoner?.p_them() || "them"] complete [stoner?.p_their() || "their"] goals at all costs."))
 	else if(stoner)
 		to_chat(newstruct, span_boldwarning("You are still bound to serve your creator, [stoner], follow [stoner.p_their()] orders and help [stoner.p_them()] complete [stoner.p_their()] goals at all costs."))
@@ -577,10 +583,27 @@
 /obj/item/soulstone/anybody
 	required_role = null
 
+/obj/item/ectoplasm
+	name = "ectoplasm"
+	desc = "Spooky."
+	gender = PLURAL
+	icon = 'icons/effects/magic.dmi'
+	icon_state = "ectoplasm"
+
+/obj/item/ectoplasm/grind_results()
+	return list(/datum/reagent/hauntium = 25)
+
+/obj/item/ectoplasm/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!"))
+	return OXYLOSS
+
 /obj/item/soulstone/mystic
 	icon_state = "mystic_soulstone"
 	theme = THEME_WIZARD
 	required_role = /datum/antagonist/wizard
+
+/obj/item/ectoplasm/mystic
+	icon_state = "mysticplasm"
 
 /obj/item/soulstone/anybody/revolver
 	one_use = TRUE
@@ -589,6 +612,10 @@
 /obj/item/soulstone/anybody/purified
 	icon_state = "purified_soulstone"
 	theme = THEME_HOLY
+
+/obj/item/ectoplasm/angelic
+	icon = 'icons/effects/magic.dmi'
+	icon_state = "angelplasm"
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"

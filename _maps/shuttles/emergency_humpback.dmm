@@ -126,7 +126,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "he" = (
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
 "hk" = (
@@ -297,7 +297,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "rL" = (
@@ -513,8 +513,7 @@
 /area/shuttle/escape)
 "Dj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
-	dir = 1;
-	chamber_id = "evacair"
+	dir = 1
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/air,
@@ -562,6 +561,11 @@
 "GR" = (
 /turf/open/floor/iron/smooth,
 /area/shuttle/escape)
+"HG" = (
+/obj/machinery/stasis,
+/obj/machinery/vitals_reader/directional/west,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
 "IB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/diamond,
@@ -576,6 +580,7 @@
 "JW" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/computer/operating,
+/obj/machinery/vitals_reader/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Kf" = (
@@ -614,6 +619,11 @@
 "Lp" = (
 /obj/structure/closet/crate/secure/loot,
 /turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
+"Lw" = (
+/obj/structure/table/optable,
+/obj/machinery/vitals_reader/directional/east,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "LB" = (
 /obj/machinery/door/airlock/command{
@@ -721,10 +731,6 @@
 /area/shuttle/escape)
 "Sl" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/escape)
-"Sx" = (
-/obj/structure/table/optable,
-/turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "SC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1004,7 +1010,7 @@ mF
 (7,1,1) = {"
 rt
 eK
-Pt
+HG
 EJ
 MP
 OO
@@ -1088,7 +1094,7 @@ mF
 (10,1,1) = {"
 rt
 eK
-Sx
+zn
 hs
 nG
 ed
@@ -1116,7 +1122,7 @@ mF
 (11,1,1) = {"
 rt
 eK
-zn
+Lw
 hs
 he
 kZ

@@ -2,6 +2,7 @@
 	name = "crystal core"
 	icon_state = "ethereal_heart-on"
 	base_icon_state = "ethereal_heart"
+	beat_noise = "a pulsing crackle"
 	visual = TRUE //This is used by the ethereal species for color
 	desc = "A crystal-like organ that functions similarly to a heart for Ethereals. It can revive its owner."
 
@@ -211,10 +212,13 @@
 
 	ethereal_heart.current_crystal = null
 	COOLDOWN_START(ethereal_heart, crystalize_cooldown, CRYSTALIZE_COOLDOWN_LENGTH)
-	ethereal_heart.owner.forceMove(get_turf(src))
-	REMOVE_TRAIT(ethereal_heart.owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
+
+	for(var/mob/living/living in contents)
+		living.forceMove(get_turf(src))
+		REMOVE_TRAIT(living, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
+		visible_message(span_notice("The crystals shatters, causing [living] to fall out."))
+
 	deltimer(crystal_heal_timer)
-	visible_message(span_notice("The crystals shatters, causing [ethereal_heart.owner] to fall out."))
 	return ..()
 
 /obj/structure/ethereal_crystal/update_overlays()

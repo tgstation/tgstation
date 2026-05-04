@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   # /tg/ DM server
@@ -10,18 +10,18 @@ services:
       dockerfile: Dockerfile
     entrypoint: bash /entrypoint.sh
     env_file:
-     - .env
-    ports: 
+      - .env
+    ports:
       - "1337:1337"
     depends_on:
       - db
     volumes:
       - ./entrypoint.sh:/entrypoint.sh:ro #
-      - ../../config:/gamecfg_ro:ro # Contains the default configuration, as defined in config/ 
+      - ../../config:/gamecfg_ro:ro # Contains the default configuration, as defined in config/
       - ./gamecfg:/gamecfg:ro # Contains the override config files, entrypoint.sh overrides using these
       - gamedata:/tgstation/data # Contains the game data, contained nicely in a volume
 
-  # MariaDB/MySQL database: game 
+  # MariaDB/MySQL database: game
   # (if you don't really need this, feel free to remove this section.)
   db:
     image: mariadb
@@ -31,9 +31,9 @@ services:
       - MYSQL_DATABASE=tgstation
       - MYSQL_USER=gamelord
       - MYSQL_PASSWORD=gamelord
-    volumes: 
-        - ../../SQL/tgstation_schema.sql:/docker-entrypoint-initdb.d/tgstation_schema.sql:ro
-        - database:/var/lib/mysql
+    volumes:
+      - ../../SQL/tgstation_schema.sql:/docker-entrypoint-initdb.d/tgstation_schema.sql:ro
+      - database:/var/lib/mysql
 
   # Adminer, for managing the DB, has the 'donotstart' profile attached by default. Remove this line if this is needed
   adminer:

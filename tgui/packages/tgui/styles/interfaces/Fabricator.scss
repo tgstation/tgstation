@@ -102,18 +102,16 @@
 
   &__Title,
   &__Button {
-    @include button.button-color(var(--color-base));
-    background-color: hsl(from var(--color-base) h s l / 0);
-    color: button.$color-transparent-text;
     position: relative;
-
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    margin: 0;
     padding: var(--space-s) var(--space-m);
     border-radius: 0;
-    margin: 0;
-    transition: opacity var(--transition-time-slow) ease-out;
+
+    @include button.button-color();
+    @include button.button-color-transparent();
 
     &:first-child {
       border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium);

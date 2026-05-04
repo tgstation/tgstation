@@ -82,7 +82,7 @@
 
 	if(fake_bubbles.Adjacent(hallucinator))
 		hallucinator.Paralyze(8 SECONDS)
-		hallucinator.adjustStaminaLoss(40)
+		hallucinator.adjust_stamina_loss(40)
 		step_away(hallucinator, fake_bubbles)
 		shake_camera(hallucinator, 4, 3)
 		hallucinator.visible_message(

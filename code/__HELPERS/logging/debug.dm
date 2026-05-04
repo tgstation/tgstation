@@ -27,15 +27,16 @@
 /proc/log_mapping(text, skip_world_log)
 #ifdef UNIT_TESTS
 	GLOB.unit_test_mapping_logs += text
+	return
 #endif
 #ifdef MAP_TEST
 	message_admins("Mapping: [text]")
-#endif
+#else
 	logger.Log(LOG_CATEGORY_DEBUG_MAPPING, text)
 	if(skip_world_log)
 		return
 	SEND_TEXT(world.log, text)
-
+#endif
 /// Logging for game performance
 /proc/log_perf(list/perf_info)
 	. = "[perf_info.Join(",")]\n"

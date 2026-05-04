@@ -6,6 +6,10 @@
 	name = "Dogmatic Compulsions"
 	desc = "Patient feels compelled to follow supposed \"rules of combat\"."
 	scan_desc = "damaged frontal lobe"
+	symptoms = "Gains a strict code of honor that governs their behavior, \
+		forbidding them from attacking those who are unready, just, or innocent. \
+		This code often leads to strife, both external and internal, \
+		as the patient struggles to reconcile their beliefs with the realities of combat and survival."
 	gain_text = span_notice("You feel honorbound!")
 	lose_text = span_warning("You feel unshackled from your code of honor!")
 	random_gain = FALSE
@@ -100,10 +104,10 @@
 /// Checks a mob for any obvious signs of evil, and applies a guilty reason for each.
 /datum/brain_trauma/special/honorbound/proc/check_visible_guilt(mob/living/attacked_mob)
 	//will most likely just hit nuke ops but good catch-all. WON'T hit traitors
-	if(ROLE_SYNDICATE in attacked_mob.faction)
+	if(attacked_mob.has_faction(ROLE_SYNDICATE))
 		guilty(attacked_mob, "for their misaligned association with the Syndicate!")
 	//not an antag datum check so it applies to wizard minions as well
-	if(ROLE_WIZARD in attacked_mob.faction)
+	if(attacked_mob.has_faction(ROLE_WIZARD))
 		guilty(attacked_mob, "for blasphemous magicks!")
 	if(HAS_TRAIT(attacked_mob, TRAIT_CULT_HALO))
 		guilty(attacked_mob, "for blasphemous worship!")
@@ -206,7 +210,7 @@
 		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN, SCHOOL_SANGUINE)
 			to_chat(user, span_userdanger("[GLOB.deity] is enraged by your use of forbidden magic!"))
 			lightningbolt(user)
-			user.mind.holy_role = NONE
+			user.mind.set_holy_role(NONE)
 			qdel(src)
 			owner.add_mood_event("honorbound", /datum/mood_event/banished) //add mood event after we already cleared our events
 			to_chat(user, span_userdanger("You have been excommunicated! You are no longer holy!"))

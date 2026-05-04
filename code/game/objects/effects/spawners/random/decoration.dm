@@ -7,7 +7,7 @@
 	name = "decoration material spawner"
 	icon_state = "tile"
 	loot = list(
-		/obj/item/stack/sheet/sandblock{amount = 30} = 25,
+		/obj/item/stack/ore/glass/thirty = 25,
 		/obj/item/stack/sheet/mineral/wood{amount = 30} = 25,
 		/obj/item/stack/sheet/bronze/thirty = 20,
 		/obj/item/stack/tile/noslip{amount = 20} = 10,

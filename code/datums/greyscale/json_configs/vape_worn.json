@@ -1,15 +1,15 @@
 {
-    "vape_worn": [
-        {
-            "type": "icon_state",
-            "icon_state": "vapeWorn",
-            "blend_mode": "overlay",
-            "color_ids": [ 1 ]
-        },
+	"vape_worn": [
 		{
-            "type": "icon_state",
-            "icon_state": "vapeVapor",
-            "blend_mode": "overlay"
-        }
-    ]
+			"type": "icon_state",
+			"icon_state": "vapeWorn",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "vapeVapor",
+			"blend_mode": "overlay"
+		}
+	]
 }

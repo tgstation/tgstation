@@ -16,8 +16,8 @@
 			drone.visible_message(span_notice("[drone] begins to cannibalize parts from [src]."), span_notice("You begin to cannibalize parts from [src]..."))
 			if(do_after(drone, 6 SECONDS, 0, target = src))
 				drone.visible_message(span_notice("[drone] repairs itself using [src]'s remains!"), span_notice("You repair yourself using [src]'s remains."))
-				drone.adjustBruteLoss(-src.maxHealth)
-				new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
+				drone.adjust_brute_loss(-src.maxHealth)
+				new /obj/effect/decal/cleanable/blood/splatter/oil(get_turf(src))
 				ghostize(can_reenter_corpse = FALSE)
 				qdel(src)
 			else
@@ -93,7 +93,7 @@
 		to_chat(user, span_warning("You need to remain still to tighten [src]'s screws!"))
 		return ITEM_INTERACT_SUCCESS
 
-	adjustBruteLoss(-getBruteLoss())
+	adjust_brute_loss(-get_brute_loss())
 	visible_message(span_notice("[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!"), span_notice("[src == user ? "You tighten" : "[user] tightens"] your loose screws."))
 	return ITEM_INTERACT_SUCCESS
 
@@ -112,9 +112,6 @@
 			)
 		update_drone_hack(FALSE)
 	return ITEM_INTERACT_SUCCESS
-
-/mob/living/basic/drone/transferItemToLoc(obj/item/item, newloc, force, silent)
-	return !(item.type in drone_item_whitelist_flat) && ..()
 
 /mob/living/basic/drone/getarmor(def_zone, type)
 	var/armorval = 0
@@ -157,7 +154,7 @@
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = TRUE
 		set_shy(FALSE)
-		mind.special_role = "hacked drone"
+		LAZYADD(mind.special_roles, "Hacked Drone")
 		REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 		speed = 1 //gotta go slow
 		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on destroying the station!")
@@ -173,7 +170,7 @@
 		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
 		hacked = FALSE
 		set_shy(initial(shy))
-		mind.special_role = null
+		LAZYREMOVE(mind.special_roles, "Hacked Drone")
 		ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 		speed = initial(speed)
 		message_admins("[ADMIN_LOOKUPFLW(src)], a hacked drone, was restored to factory defaults!")

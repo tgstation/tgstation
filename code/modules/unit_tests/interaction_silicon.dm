@@ -34,5 +34,5 @@
 	borgo.forceMove(locate(attacker.x + 1, attacker.y, attacker.z))
 	attacker.set_combat_mode(TRUE)
 	click_wrapper(attacker, borgo)
-	TEST_ASSERT_EQUAL(borgo.getBruteLoss(), 0, "Cyborg took damage from an unarmed punched - \
+	TEST_ASSERT_EQUAL(borgo.get_brute_loss(), 0, "Cyborg took damage from an unarmed punched - \
 		their unarmed damage threshold should be too high for this to happen.")

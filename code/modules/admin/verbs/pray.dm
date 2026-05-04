@@ -1,51 +1,50 @@
-/mob/verb/pray(msg as text)
-	set category = "IC"
-	set name = "Pray"
+/mob/verb/pray(message as text)
+	set name = VERB_PRAY
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, span_danger("Speech is currently admin-disabled."), confidential = TRUE)
+		to_chat(src, span_danger("Speech is currently admin-disabled."), confidential = TRUE)
 		return
 
-	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	if(!msg)
+	message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)
+	if(!message)
 		return
-	log_prayer("[src.key]/([src.name]): [msg]")
-	if(usr.client)
-		if(usr.client.prefs.muted & MUTE_PRAY)
-			to_chat(usr, span_danger("You cannot pray (muted)."), confidential = TRUE)
+	log_prayer("[src.key]/([src.name]): [message]")
+	if(src.client)
+		if(src.client.prefs.muted & MUTE_PRAY)
+			to_chat(src, span_danger("You cannot pray (muted)."), confidential = TRUE)
 			return
-		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
+		if(src.client.handle_spam_prevention(message, MUTE_PRAY))
 			return
 
 	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage/book.dmi', "bible")
 	var/font_color = "purple"
 	var/prayer_type = "PRAYER"
 	var/deity
-	if(usr.job == JOB_CHAPLAIN)
+	if(src.job == JOB_CHAPLAIN)
 		cross.icon_state = "kingyellow"
 		font_color = "blue"
 		prayer_type = "CHAPLAIN PRAYER"
 		if(GLOB.deity)
 			deity = GLOB.deity
-	else if(IS_CULTIST(usr))
+	else if(IS_CULTIST(src))
 		cross.icon_state = "tome"
 		font_color = "red"
 		prayer_type = "CULTIST PRAYER"
 		deity = "Nar'Sie"
-	else if(isliving(usr))
-		var/mob/living/L = usr
+	else if(isliving(src))
+		var/mob/living/L = src
 		if(HAS_TRAIT(L, TRAIT_SPIRITUAL))
 			cross.icon_state = "holylight"
 			font_color = "blue"
 			prayer_type = "SPIRITUAL PRAYER"
 
-	var/msg_tmp = msg
-	GLOB.requests.pray(usr.client, msg, usr.job == JOB_CHAPLAIN)
-	msg = span_adminnotice("[icon2html(cross, GLOB.admins)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(msg)]")
+	var/msg_tmp = message
+	GLOB.requests.pray(src.client, message, src.job == JOB_CHAPLAIN)
+	message = span_adminnotice("[icon2html(cross, GLOB.admins)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(message)]")
 	for(var/client/C in GLOB.admins)
 		if(get_chat_toggles(C) & CHAT_PRAYER)
-			to_chat(C, msg, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
-	to_chat(usr, span_info("You pray to the gods: \"[msg_tmp]\""), confidential = TRUE)
+			to_chat(C, message, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
+	to_chat(src, span_info("You pray to the gods: \"[msg_tmp]\""), confidential = TRUE)
 
 	BLACKBOX_LOG_ADMIN_VERB("Prayer")
 

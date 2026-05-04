@@ -53,29 +53,8 @@
 		"@pick(free_move)right shin"
 	],
 
-
-	"inner_outer" : [
-		"inner ",
-		"outer ",
-		"",
-		""
-	],
-	"upper_lower" : [
-		"upper ",
-		"lower ",
-		"",
-		""
-	],
-	"free_move" : [
-		"inner ",
-		"outer ",
-		"upper ",
-		"lower ",
-		"",
-		""
-	],
-	"left_right" : [
-		"left ",
-		"right "
-	]
+	"inner_outer": ["inner ", "outer ", "", ""],
+	"upper_lower": ["upper ", "lower ", "", ""],
+	"free_move": ["inner ", "outer ", "upper ", "lower ", "", ""],
+	"left_right": ["left ", "right "]
 }

@@ -12,7 +12,7 @@
 	human.say("*beep")
 	TEST_ASSERT_EQUAL(emotes_used, 1, "Human beeped, when that should be restricted to silicons")
 
-	human.setOxyLoss(140)
+	human.set_oxy_loss(140)
 
 	TEST_ASSERT(human.stat != CONSCIOUS, "Human is somehow conscious after receiving suffocation damage")
 

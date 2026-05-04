@@ -24,3 +24,12 @@
 ///from /datum/status_effect/slime_leech: (mob/living/basic/slime/draining_slime)
 #define COMSIG_SLIME_DRAINED "slime_drained"
 
+/// from /mob/living/basic/mutate(): (mob/living/basic/mutated_mob)
+#define COMSIG_BASICMOB_MUTATED "basicmob_mutated"
+	///cancel further mutation modifications to the mob such as shiny mutation.
+	#define MUTATED_NO_FURTHER_MUTATIONS (1 << 0)
+
+/// from /mob/living/basic/raptor/proc/change_growth_stage() : (new_stage, prev_stage)
+#define COMSIG_RAPTOR_GROWTH_STAGE_CHANGE "raptor_growth_stage_change"
+	/// Cancel raptor growth
+	#define COMPONENT_CANCEL_RAPTOR_GROWTH (1<<0)

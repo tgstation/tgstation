@@ -47,7 +47,7 @@
 	average_size = 100
 	average_weight = 2000
 	breeding_timeout = 4 MINUTES
-	health = 150
+	max_integrity = 300
 	beauty = FISH_BEAUTY_GOOD
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	random_case_rarity = FISH_RARITY_RARE

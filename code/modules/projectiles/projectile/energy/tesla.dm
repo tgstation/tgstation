@@ -29,13 +29,14 @@
 	name = "tesla bolt"
 	icon_state = null
 	hitscan = TRUE
-	tracer_type = /obj/effect/projectile/tracer/lightning
 	impact_effect_type = null
 	damage = 5
 	var/shock_damage = 10
 
 /obj/projectile/energy/tesla_cannon/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
+	firer.Beam(target, icon_state = "tesla", time = 1, icon_state_variants = 24)
+
 	if(isliving(target))
 		var/mob/living/victim = target
 		victim.electrocute_act(shock_damage, src, siemens_coeff = 1, flags = SHOCK_NOSTUN|SHOCK_TESLA)

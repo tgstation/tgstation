@@ -1,15 +1,64 @@
-
-/mob/living/proc/get_bodypart(zone)
+/**
+ * Returns a bodypart of the specified zone that this mob has
+ *
+ * * zone: the zone to get.
+ * Defaults to chest, allowing for skilling zone nullchecks if you don't care what bodypart you get.
+ * * include_stumps: whether or not to consider stumps as valid bodyparts to return.
+ * Defaults to FALSE, meaning that if a limb is missing (is a stump), nothing will be returned.
+ *
+ * Returns a bodypart, or null.
+ */
+/mob/living/proc/get_bodypart(zone = BODY_ZONE_CHEST, include_stumps = FALSE)
 	return
 
-/mob/living/carbon/get_bodypart(zone)
+/mob/living/carbon/get_bodypart(zone = BODY_ZONE_CHEST, include_stumps = FALSE)
 	RETURN_TYPE(/obj/item/bodypart)
 
-	if(!zone)
-		zone = BODY_ZONE_CHEST
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if(bodypart.body_zone == zone)
-			return bodypart
+		if(!include_stumps && IS_STUMP(bodypart))
+			continue
+		if(bodypart.body_zone != zone)
+			continue
+		return bodypart
+
+/**
+ * Returns all bodyparts this mob has, optionally including stumps.
+ *
+ * include_stumps: whether or not to consider stumps as valid bodyparts to return.
+ * Defaults to FALSE, meaning that if a limb is missing (is a stump), it won't be included in the returned list.
+ *
+ * Returns a list of bodyparts, which may be empty.
+ */
+/mob/living/proc/get_bodyparts(include_stumps = FALSE)
+	var/list/parts = list()
+	for(var/zone in get_all_limbs())
+		var/obj/item/bodypart/bodypart = get_bodypart(zone, include_stumps)
+		if(bodypart)
+			parts += bodypart
+
+	return parts
+
+/**
+ * Returns all bodyparts this mob has, indexed by their body zone
+ * Also includes stumps and nulls, so be sure to check for those if you use this proc.
+ * (Note: nulls will be very rare - as 95% of missing limbs are represented as stumps - but not impossible due to some edge cases)
+ *
+ * Returns a list of bodyparts indexed by their body zone
+ */
+/mob/living/proc/get_bodyparts_by_zones() as /list
+	var/list/parts = list()
+	for(var/zone in get_all_limbs())
+		parts[zone] = get_bodypart(zone)
+	return parts
+
+///Returns TRUE/FALSE on whether the mob should have a limb in a given zone, used for species-restrictions.
+/mob/living/carbon/proc/should_have_limb(zone)
+	if(!zone || !dna)
+		return TRUE
+	var/datum/species/carbon_species = dna.species
+	if(zone in carbon_species.bodypart_overrides)
+		return TRUE
+	return FALSE
 
 /// Replaces a single limb and deletes the old one if there was one
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
@@ -108,10 +157,26 @@
 /mob/living/carbon/alien/larva/has_right_hand(check_disabled = TRUE)
 	return TRUE
 
+/// Returns the bodypart holding the passed item
+/mob/living/carbon/proc/get_hand_of_item(obj/item/I)
+	return get_bodypart(get_hand_zone_of_item(I))
 
-/mob/living/carbon/proc/get_missing_limbs()
+///Returns a list of all limbs this mob should have.
+/mob/living/proc/get_all_limbs() as /list
 	RETURN_TYPE(/list)
-	var/list/full = GLOB.all_body_zones.Copy()
+	return GLOB.all_body_zones.Copy()
+
+///Returns a list of all limbs this mob should have.
+/mob/living/carbon/get_all_limbs()
+	// gets the "normal list", ie chest-head-legs-arms. order matters for human rendering!
+	. = dna?.species?.bodypart_overrides.Copy() || ..()
+	// includes any additional adminbussed hands
+	for(var/obj/item/bodypart/hand in hand_bodyparts)
+		. |= hand.body_zone
+
+///Returns a list of all missing limbs this mob should have on them, but don't.
+/mob/living/carbon/proc/get_missing_limbs() as /list
+	var/list/full = get_all_limbs()
 	for(var/zone in full)
 		if(get_bodypart(zone))
 			full -= zone
@@ -128,7 +193,7 @@
 	return list()
 
 /mob/living/carbon/get_disabled_limbs()
-	var/list/full = GLOB.all_body_zones.Copy()
+	var/list/full = get_all_limbs()
 	var/list/disabled = list()
 	for(var/zone in full)
 		var/obj/item/bodypart/affecting = get_bodypart(zone)
@@ -153,12 +218,12 @@
 
 ///Remove all embedded objects from all limbs on the carbon mob
 /mob/living/carbon/proc/remove_all_embedded_objects()
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts(include_stumps = TRUE))
 		for(var/obj/item/embedded as anything in bodypart.embedded_objects)
 			remove_embedded_object(embedded)
 
 /mob/living/carbon/proc/has_embedded_objects(include_harmless = FALSE)
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts(include_stumps = TRUE))
 		for(var/obj/item/embedded as anything in bodypart.embedded_objects)
 			if(!include_harmless && embedded.get_embed().is_harmless(consider_stamina = TRUE))
 				continue
@@ -169,6 +234,8 @@
 // FUCK YOU AUGMENT CODE - With love, Kapu
 /mob/living/carbon/proc/newBodyPart(zone)
 	var/path = dna.species.bodypart_overrides[zone]
+	if(isnull(path))
+		return null
 	var/obj/item/bodypart/new_bodypart = new path()
 	return new_bodypart
 
@@ -202,7 +269,7 @@
 /// Makes sure that the owner's bodytype flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodytypes()
 	var/all_limb_flags = NONE
-	for(var/obj/item/bodypart/limb as anything in bodyparts)
+	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
 		for(var/obj/item/organ/organ in limb)
 			all_limb_flags |= organ.external_bodytypes
 		all_limb_flags |= limb.bodytype
@@ -212,12 +279,22 @@
 /// Makes sure that the owner's bodyshape flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodyshapes()
 	var/all_limb_flags = NONE
-	for(var/obj/item/bodypart/limb as anything in bodyparts)
+	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
 		for(var/obj/item/organ/organ in limb)
 			all_limb_flags |= organ.external_bodyshapes
 		all_limb_flags |= limb.bodyshape
 
 	bodyshape = all_limb_flags
+
+/// Get all bodyshapes but filter out bodyshapes that are currently being hidden
+/mob/living/carbon/proc/get_active_bodyshapes()
+	var/active_shapes = bodyshape
+	// future todo: both of these are state based, maybe we can just remove relevant bodyshapes directly. would remove the need for this proc
+	if((active_shapes & BODYSHAPE_DIGITIGRADE) && is_digitigrade_squished())
+		active_shapes &= ~BODYSHAPE_DIGITIGRADE
+	if((active_shapes & BODYSHAPE_SNOUTED) && (obscured_slots & HIDESNOUT))
+		active_shapes &= ~BODYSHAPE_SNOUTED
+	return active_shapes
 
 /proc/skintone2hex(skin_tone)
 	. = 0

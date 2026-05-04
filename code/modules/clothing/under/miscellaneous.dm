@@ -1,6 +1,7 @@
 /obj/item/clothing/under/misc
 	icon = 'icons/obj/clothing/under/misc.dmi'
 	worn_icon = 'icons/mob/clothing/under/misc.dmi'
+	abstract_type = /obj/item/clothing/under/misc
 
 /obj/item/clothing/under/misc/pj
 	name = "\improper PJs"
@@ -63,7 +64,7 @@
 
 /obj/item/clothing/under/misc/adminsuit/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -25)
+	AddElement(/datum/element/adjust_fishing_difficulty, -25)
 
 /datum/armor/clothing_under/adminsuit
 	melee = 100

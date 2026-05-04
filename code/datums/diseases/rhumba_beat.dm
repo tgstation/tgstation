@@ -1,17 +1,19 @@
 /datum/disease/rhumba_beat
 	name = "The Rhumba Beat"
+	desc = "They call me Cuban Pete - I'm the king of the Rumba Beat - When I play the maracas I go chick-chicky-boom, chick-chicky-boom."
 	max_stages = 5
-	spread_text = "On contact"
+	spread_text = "Skin contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	cure_text = "Chick Chicky Boom!"
-	cures = list("plasma")
+	cures = list(/datum/reagent/toxin/plasma)
 	agent = "Unknown"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spreading_modifier = 1
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	bypasses_immunity = TRUE
+	visibility_flags = HIDDEN_BOOK
 
-/datum/disease/rhumba_beat/stage_act(seconds_per_tick, times_fired)
+/datum/disease/rhumba_beat/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -19,7 +21,7 @@
 	switch(stage)
 		if(2)
 			if(SPT_PROB(26, seconds_per_tick))
-				affected_mob.adjustFireLoss(5)
+				affected_mob.adjust_fire_loss(5)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel strange..."))
 		if(3)

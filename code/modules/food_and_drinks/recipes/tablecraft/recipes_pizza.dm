@@ -5,7 +5,8 @@
 
 /datum/crafting_recipe/food/pizza
 	added_foodtypes = RAW
-	category = CAT_PIZZA
+	cuisine_category = CUISINE_ITALIAN
+	dish_category = DISH_PIZZA
 
 /datum/crafting_recipe/food/pizza/margherita
 	reqs = list(
@@ -15,7 +16,7 @@
 	)
 	result = /obj/item/food/pizza/margherita/raw
 
-/datum/crafting_recipe/food/meatpizza
+/datum/crafting_recipe/food/pizza/meatpizza
 	reqs = list(
 		/obj/item/food/flatdough = 1,
 		/obj/item/food/meat/rawcutlet = 4,

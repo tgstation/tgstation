@@ -6,23 +6,23 @@
 	/// Remember last heart we ate and reset bites_taken counter if we start eat new one
 	var/datum/weakref/last_heart_we_ate
 	/// List of all mutations allowed to get.
-	var/static/list/datum/mutation/human/mutations_list = list(
-		/datum/mutation/human/adaptation/cold,
-		/datum/mutation/human/adaptation/heat,
-		/datum/mutation/human/adaptation/pressure,
-		/datum/mutation/human/adaptation/thermal,
-		/datum/mutation/human/chameleon,
-		/datum/mutation/human/cryokinesis,
-		/datum/mutation/human/pyrokinesis,
-		/datum/mutation/human/dwarfism,
-		/datum/mutation/human/cindikinesis,
-		/datum/mutation/human/insulated,
-		/datum/mutation/human/telekinesis,
-		/datum/mutation/human/telepathy,
-		/datum/mutation/human/thermal,
-		/datum/mutation/human/tongue_spike,
-		/datum/mutation/human/webbing,
-		/datum/mutation/human/xray,
+	var/static/list/datum/mutation/mutations_list = list(
+		/datum/mutation/adaptation/cold,
+		/datum/mutation/adaptation/heat,
+		/datum/mutation/adaptation/pressure,
+		/datum/mutation/adaptation/thermal,
+		/datum/mutation/chameleon,
+		/datum/mutation/cryokinesis,
+		/datum/mutation/pyrokinesis,
+		/datum/mutation/dwarfism,
+		/datum/mutation/cindikinesis,
+		/datum/mutation/insulated,
+		/datum/mutation/telekinesis,
+		/datum/mutation/telepathy,
+		/datum/mutation/thermal,
+		/datum/mutation/tongue_spike,
+		/datum/mutation/webbing,
+		/datum/mutation/xray,
 	)
 
 /datum/component/heart_eater/Initialize(...)
@@ -35,11 +35,13 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_SPECIES_GAIN, PROC_REF(on_species_change))
 	RegisterSignal(parent, COMSIG_LIVING_FINISH_EAT, PROC_REF(eat_eat_eat))
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_rip_heart))
 
 /datum/component/heart_eater/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, COMSIG_LIVING_FINISH_EAT)
 	UnregisterSignal(parent, COMSIG_SPECIES_GAIN)
+	UnregisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK)
 
 /datum/component/heart_eater/proc/prepare_species(mob/living/carbon/human/eater)
 	if(eater.get_liked_foodtypes() & GORE)
@@ -68,7 +70,7 @@
 	var/obj/item/organ/heart/previous_heart = last_heart_we_ate?.resolve()
 	if(we_ate_heart == previous_heart)
 		return
-	if (!HAS_TRAIT(we_ate_heart, TRAIT_USED_ORGAN))
+	if (!HAS_TRAIT(we_ate_heart, TRAIT_ORGAN_USED_BY_PLAYER))
 		to_chat(eater, span_warning("This heart is utterly lifeless, you won't receive any boons from consuming it!"))
 		return
 	bites_taken = 0
@@ -94,8 +96,8 @@
 
 ///Not Perfect heart give random mutation.
 /datum/component/heart_eater/proc/not_perfect_heart(mob/living/carbon/human/eater)
-	var/datum/mutation/human/new_mutation
-	var/list/datum/mutation/human/shuffle_mutation_list = shuffle(mutations_list)
+	var/datum/mutation/new_mutation
+	var/list/datum/mutation/shuffle_mutation_list = shuffle(mutations_list)
 	for(var/mutation_in_list in shuffle_mutation_list)
 		if(is_type_in_list(mutation_in_list, eater.dna.mutations))
 			continue
@@ -104,18 +106,76 @@
 	if(isnull(new_mutation))
 		healing_heart(eater)
 		return
-	eater.dna.add_mutation(new_mutation)
+	eater.dna.add_mutation(new_mutation, MUTATION_SOURCE_HEART_EATER)
 	healing_heart(eater)
 	to_chat(eater, span_warning("This heart is not right for you. You now have [new_mutation.name] mutation."))
 
 ///Heart eater give also strong healing from hearts.
 /datum/component/heart_eater/proc/healing_heart(mob/living/carbon/human/eater)
 	for(var/heal_organ in eater.organs)
-		eater.adjustOrganLoss(heal_organ, -50)
+		eater.adjust_organ_loss(heal_organ, -50)
 	for(var/datum/wound/heal_wound in eater.all_wounds)
 		heal_wound.remove_wound()
-	eater.adjustBruteLoss(-50)
-	eater.adjustFireLoss(-50)
-	eater.adjustToxLoss(-50)
-	eater.adjustOxyLoss(-50)
-	eater.adjustStaminaLoss(-50)
+	eater.adjust_brute_loss(-50)
+	eater.adjust_fire_loss(-50)
+	eater.adjust_tox_loss(-50)
+	eater.adjust_oxy_loss(-50)
+	eater.adjust_stamina_loss(-50)
+
+/datum/component/heart_eater/proc/try_rip_heart(mob/living/source, mob/living/carbon/target, proximity, modifiers)
+	SIGNAL_HANDLER
+	if(!istype(target))
+		return
+	if(!IS_DEAD_OR_INCAP(target))
+		return
+	if(!source.combat_mode)
+		return
+	if(source.zone_selected != BODY_ZONE_CHEST)
+		return
+	var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
+	if(!can_rip_heart(source, target, source.active_hand_index))
+		return
+	if(chest.get_wound_type(/datum/wound/blunt/bone/critical) && !target.get_organ_slot(ORGAN_SLOT_HEART)) //Don't bother trying to rip a heart out of someone we can see doesn't have one.
+		return
+	INVOKE_ASYNC(src, PROC_REF(do_rip_heart), source, target)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/component/heart_eater/proc/can_rip_heart(mob/living/user, mob/living/carbon/target, hand_index)
+	if(!IS_DEAD_OR_INCAP(target))
+		return FALSE
+	if(!user.has_hand_for_held_index(hand_index))
+		return FALSE
+	if(user.get_item_for_held_index(hand_index))
+		return FALSE
+	return TRUE
+
+/datum/component/heart_eater/proc/do_rip_heart(mob/living/user, mob/living/carbon/target)
+	playsound(target, 'sound/items/weapons/slice.ogg', 50, TRUE)
+	var/hand_index = user.active_hand_index
+	if(!do_after(
+		user,
+		3 SECONDS,
+		target,
+		timed_action_flags = IGNORE_HELD_ITEM,
+		extra_checks = CALLBACK(src, PROC_REF(can_rip_heart), user, target, hand_index),
+		interaction_key = "[DOAFTER_SOURCE_RIP_HEART]_[hand_index]",
+		max_interact_count = 1,
+		))
+		user.balloon_alert(user, "interrupted!")
+		return
+	var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
+	chest.force_wound_upwards(/datum/wound/blunt/bone/critical, wound_source = "heart ripped")
+	var/obj/item/organ/heart = target.get_organ_slot(ORGAN_SLOT_HEART)
+	if(!heart)
+		target.balloon_alert(user, "no heart!?")
+		return
+	heart.Remove(target)
+	to_chat(user, span_warning("You rip [target]'s [heart.name] out of [target.p_their()] chest!"))
+	target.visible_message(
+		span_warning("[user] rips [target]'s [heart.name] out of [target.p_their()] chest!"),
+		span_userdanger("[user] rips your [heart.name] out of your chest!"),
+		span_userdanger("You feel something being torn out of your chest!"),
+		ignored_mobs = list(user),
+		)
+	if(!user.put_in_hand(heart, hand_index))
+		heart.forceMove(user.drop_location())

@@ -100,7 +100,8 @@
 	if (isnull(bayonet) || !user.combat_mode)
 		return NONE
 
-	INVOKE_ASYNC(bayonet, TYPE_PROC_REF(/obj/item, melee_attack_chain), user, target, modifiers)
+	// RMB is used for butchering, and bayonets are usually are knives
+	INVOKE_ASYNC(bayonet, TYPE_PROC_REF(/obj/item, melee_attack_chain), user, target, modifiers - RIGHT_CLICK)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/bayonet_attachable/proc/on_attackby(obj/item/source, obj/item/attacking_item, mob/attacker, list/modifiers)

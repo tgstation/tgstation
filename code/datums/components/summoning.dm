@@ -76,8 +76,8 @@
 		var/mob/living/simple_animal/hostile/angry_boy = summoned
 		angry_boy.friends |= summoner // do not attack our summon boy
 	spawned_mobs |= summoned
-	if(faction != null)
-		summoned.faction = faction.Copy()
+	if(faction)
+		summoned.set_faction(faction)
 	RegisterSignals(summoned, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_spawned_death))
 	spawn_location.visible_message(span_danger("[summoned] [spawn_text]!"))
 

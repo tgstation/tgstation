@@ -1,12 +1,6 @@
-/// Disable to use builtin DM-based generation.
-/// IconForge is 250x times faster but requires storing the icons in tmp/ and may result in higher asset transport.
-/// Note that the builtin GAGS editor still uses the 'legacy' generation to allow for debugging.
-/// IconForge also does not support the color matrix layer type or the 'or' blend_mode, however both are currently unused.
-#define USE_RUSTG_ICONFORGE_GAGS
-
 PROCESSING_SUBSYSTEM_DEF(greyscale)
 	name = "Greyscale"
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	wait = 3 SECONDS
 	init_stage = INITSTAGE_EARLY
 	var/list/datum/greyscale_config/configurations = list()
@@ -17,8 +11,8 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 #endif
 
 /datum/controller/subsystem/processing/greyscale/Initialize()
-	for(var/datum/greyscale_layer/fake_type as anything in subtypesof(/datum/greyscale_layer))
-		layer_types[initial(fake_type.layer_type)] = fake_type
+	for(var/datum/greyscale_layer/greyscale_layer as anything in subtypesof(/datum/greyscale_layer))
+		layer_types[initial(greyscale_layer.layer_type)] = greyscale_layer
 
 	for(var/greyscale_type in subtypesof(/datum/greyscale_config))
 		var/datum/greyscale_config/config = new greyscale_type()
@@ -35,7 +29,7 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 #endif
 
 	// This final verification step is for things that need other greyscale configurations to be finished loading
-	for(var/greyscale_type as anything in configurations)
+	for(var/greyscale_type in configurations)
 		CHECK_TICK
 		var/datum/greyscale_config/config = configurations[greyscale_type]
 		config.CrossVerify()
@@ -78,7 +72,7 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 	var/cached_file = gags_cache[uid]
 	if(cached_file)
 		return cached_file
-	var/output_path = "tmp/gags/gags-[uid].dmi"
+	var/output_path = "tmp/gags/icons/gags-[uid].dmi"
 	var/iconforge_output = rustg_iconforge_gags(type, colors, output_path)
 	// Handle errors from IconForge
 	if(iconforge_output != "OK")

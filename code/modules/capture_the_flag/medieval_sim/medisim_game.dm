@@ -23,7 +23,7 @@
 		return
 	var/mob/living/carbon/human/human_knight = .
 	randomize_human_normie(human_knight)
-	human_knight.dna.add_mutation(/datum/mutation/human/medieval, MUT_OTHER)
+	human_knight.dna.add_mutation(/datum/mutation/medieval, MUTATION_SOURCE_MEDIEVAL_CTF)
 	var/oldname = human_knight.name
 	var/title = "error"
 	switch (human_knight.gender)
@@ -62,8 +62,9 @@
 /obj/item/ctf_flag/blue/medisim
 	name = "\improper Bluesworth Hold Fair Maiden"
 	desc = "Protect your maiden, and capture theirs!"
-	icon = 'icons/obj/toys/plushes.dmi'
-	icon_state = "map_plushie_slime"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/ctf_flag/blue/medisim"
+	post_init_icon_state = "map_plushie_slime"
 	greyscale_config = /datum/greyscale_config/plush_slime
 	greyscale_colors = "#3399ff#000000"
 	force = 0

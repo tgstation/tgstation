@@ -3,23 +3,68 @@
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
 	/// The ID of the blast door electronics to match to the ID of the blast door being used.
-	var/id = null
+	var/id = -1
 	/// Cooldown of the door's controller. Updates when pressed (activate())
 	var/cooldown = FALSE
+	/// Should we toggle open/close of doors based on their current state
 	var/sync_doors = TRUE
+
+/obj/item/assembly/control/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/assembly/control/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(istype(held_item, /obj/item/assembly/control))
+		context[SCREENTIP_CONTEXT_LMB] = "Copy ID"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/assembly/control/examine(mob/user)
 	. = ..()
 	if(id)
-		. += span_notice("Its channel ID is '[id]'.")
+		if(id != -1)
+			. += span_notice("Its channel ID is '[id]'.")
+		else
+			. += span_notice("Interact with pod door to generate an new id")
+	. += span_notice("You can interact with another controller to copy its ID.")
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
-	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door ID", id, 100)
-	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	var/list/door_ids = list()
+	var/list/display_ids = list("UNIQUE")
+	for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
+		if(!M.id || (M.id in door_ids))
+			continue
+		door_ids += "[M.id]"
+		if(M.owner?.resolve() != user)
+			continue
+		var/area/door_area = get_area(M)
+		display_ids += "[door_area.name]([M.id])"
+
+	var/change_id = tgui_input_list(user, "Set Controller ID", "Controller ID", display_ids)
+	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
-	id = change_id
+
+	if(change_id == "UNIQUE")
+		id = -1
+	else
+		var/start = findtext(change_id, "(") + 1
+		var/end = length(change_id) - 1
+		if(start == end)
+			id = "[change_id[start]]"
+		else
+			id = copytext(change_id, start, end)
 	balloon_alert(user, "id changed")
-	to_chat(user, span_notice("You change the ID to [id]."))
+	if(id != -1)
+		to_chat(user, span_notice("You change the ID to [id]."))
+	else
+		to_chat(user, span_notice("You now must interact with an pod door to generate an unique ID."))
+
+/obj/item/assembly/control/interact_with_atom(obj/item/assembly/control/interacting_with, mob/living/user, list/modifiers)
+	. = NONE
+	if(istype(interacting_with))
+		id = interacting_with.id
+		balloon_alert(user, "id changed")
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/assembly/control/activate()
 	var/openclose

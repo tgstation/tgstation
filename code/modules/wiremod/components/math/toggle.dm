@@ -16,7 +16,7 @@
 	var/toggle_state = FALSE
 
 /obj/item/circuit_component/compare/toggle/populate_custom_ports()
-	toggle_set = add_input_port("Set Toggle State", PORT_TYPE_NUMBER)
+	toggle_set = add_input_port("Set Toggle State", PORT_TYPE_BOOLEAN)
 	toggle_and_compare = add_input_port("Toggle And Compare", PORT_TYPE_SIGNAL)
 	toggle_state = FALSE
 

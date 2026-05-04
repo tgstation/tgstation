@@ -26,7 +26,7 @@
 	name = "4.6x30mm bullet"
 	damage = 20
 	wound_bonus = -5
-	bare_wound_bonus = 5
+	exposed_wound_bonus = 5
 	embed_falloff_tile = -4
 
 /obj/projectile/bullet/c46x30mm/ap

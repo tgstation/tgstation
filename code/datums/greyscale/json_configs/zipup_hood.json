@@ -1,0 +1,10 @@
+{
+	"hood_zipup": [
+		{
+			"type": "icon_state",
+			"icon_state": "hood_zipup",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

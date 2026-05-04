@@ -18,7 +18,7 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "dW" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
@@ -33,12 +33,12 @@
 "hR" = (
 /obj/item/shard/titanium,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "if" = (
 /obj/structure/lattice,
 /obj/structure/mecha_wreckage/gygax,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "is" = (
 /turf/template_noop,
 /area/template_noop)
@@ -51,7 +51,7 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "jI" = (
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "jZ" = (
@@ -98,12 +98,12 @@
 	pixel_x = 12
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lc" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/iron,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lB" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood,
@@ -112,7 +112,7 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "lP" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "mU" = (
@@ -172,7 +172,7 @@
 "wJ" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "xJ" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -215,7 +215,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "CT" = (
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /turf/open/floor/catwalk_floor/iron_smooth/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "DD" = (
@@ -268,13 +268,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Lk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Mn" = (
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
@@ -289,7 +289,7 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Ov" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/catwalk_floor/iron_smooth/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "OJ" = (
@@ -298,7 +298,7 @@
 "PG" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Qc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
 	dir = 8
@@ -311,7 +311,7 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Te" = (
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/effect/turf_decal/stripes/full,
@@ -322,7 +322,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Vl" = (
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
@@ -334,7 +334,7 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "WN" = (
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /obj/effect/turf_decal/stripes/full,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4

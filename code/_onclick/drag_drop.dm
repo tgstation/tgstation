@@ -11,7 +11,8 @@
 	if(!usr || !over)
 		return
 
-	var/proximity_check = usr.client.check_drag_proximity(src, over, src_location, over_location, src_control, over_control, params)
+	var/client/usrclient = GET_CLIENT(usr)
+	var/proximity_check = usrclient.check_drag_proximity(src, over, src_location, over_location, src_control, over_control, params)
 	if(proximity_check)
 		return proximity_check
 
@@ -38,7 +39,7 @@
 	var/combined_atom_flags = interaction_flags_atom | over.interaction_flags_atom
 	if(!(combined_atom_flags & INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS))
 		//Check for adjacency
-		if(!(combined_atom_flags & INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT) && (!CanReach(user) || !over.CanReach(user)))
+		if(!(combined_atom_flags & INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT) && (!IsReachableBy(user) || !over.IsReachableBy(user)))
 			return // should stop you from dragging through windows
 
 		if(!(combined_atom_flags & INTERACT_ATOM_MOUSEDROP_IGNORE_USABILITY))

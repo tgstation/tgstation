@@ -50,7 +50,7 @@
 /obj/machinery/blackbox_recorder/Destroy()
 	if(stored)
 		stored.forceMove(loc)
-		new /obj/effect/decal/cleanable/oil(loc)
+		new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /obj/machinery/blackbox_recorder/update_icon_state()
@@ -105,7 +105,7 @@
 	if (calibrating)
 		calibrating += world.time
 		say("Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
-		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", "This is an automated message. System calibration started at [station_time_timestamp()].")
+		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", "This is an automated message. System calibration started at [server_timestamp(ic_time = TRUE)] (PT: [round_timestamp()]).")
 	else
 		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 

@@ -155,7 +155,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 	if(isobserver(mob))
 		play_records[EXP_TYPE_GHOST] = minutes
-	else if(isliving(mob))
+	else if(isliving(mob) && !isnull(mob.mind))
 		var/mob/living/living_mob = mob
 		var/list/mob_exp_list = living_mob.get_exp_list(minutes)
 		if(!length(mob_exp_list))

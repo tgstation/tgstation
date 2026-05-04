@@ -1,7 +1,6 @@
 /datum/job/mime
 	title = JOB_MIME
 	description = "..."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -56,7 +55,7 @@
 	belt = /obj/item/modular_computer/pda/mime
 	ears = /obj/item/radio/headset/headset_srv
 	gloves = /obj/item/clothing/gloves/color/white
-	head = /obj/item/clothing/head/frenchberet
+	head = /obj/item/clothing/head/beret/frenchberet
 	mask = /obj/item/clothing/mask/gas/mime
 	shoes = /obj/item/clothing/shoes/laceup
 
@@ -77,8 +76,7 @@
 		var/datum/action/cooldown/spell/vow_of_silence/vow = new(H.mind)
 		vow.Grant(H)
 
-	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.show_to(H)
+	ADD_TRAIT(H, TRAIT_MIME_FAN, INNATE_TRAIT)
 
 /obj/item/book/granter/action/spell/mime/mimery
 	name = "Guide to Dank Mimery"

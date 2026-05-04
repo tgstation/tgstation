@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Button, Stack } from 'tgui-core/components';
 
-import { AirAlarmData, AlarmScreen } from '../types';
+import type { AirAlarmData, AlarmScreen } from '../types';
 
 type Props = {
   setScreen?: Dispatch<SetStateAction<AlarmScreen>>;

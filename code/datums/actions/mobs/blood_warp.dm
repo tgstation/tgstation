@@ -3,7 +3,7 @@
 	button_icon = 'icons/effects/blood.dmi'
 	button_icon_state = "floor1"
 	desc = "Allows you to teleport to blood at a clicked position."
-	cooldown_time = 0
+	cooldown_time = 0 SECONDS
 	/// The range of turfs to try to jaunt to from around the target
 	var/pick_range = 5
 	/// The range of turfs if a client is using this ability

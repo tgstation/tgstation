@@ -29,8 +29,7 @@ ADMIN_VERB(message_pda, R_ADMIN, "PDA Message", "Send a message to a user's PDA.
 /datum/admin_pda_panel/ui_static_data(mob/user)
 	var/list/data = list()
 	var/list/available_messengers = list()
-	for(var/messenger_ref in get_messengers_sorted_by_name())
-		var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
+	for(var/datum/computer_file/program/messenger/messenger as anything in GLOB.pda_messengers_by_name)
 		available_messengers[REF(messenger)] = list(
 			ref = REF(messenger),
 			username = get_messenger_name(messenger),
@@ -55,8 +54,7 @@ ADMIN_VERB(message_pda, R_ADMIN, "PDA Message", "Send a message to a user's PDA.
 			if(!spam && (ref in GLOB.pda_messengers))
 				targets += GLOB.pda_messengers[ref]
 			else
-				for(var/messenger_ref in get_messengers_sorted_by_name())
-					var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
+				for(var/datum/computer_file/program/messenger/messenger as anything in GLOB.pda_messengers_by_name)
 					if(messenger.invisible && !params["include_invisible"])
 						continue
 					targets += messenger

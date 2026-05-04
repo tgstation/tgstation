@@ -1,0 +1,2 @@
+/obj/machinery/computer/station_alert/station_only : /obj/machinery/computer/station_alert{@OLD}
+/obj/effect/landmark/start/hangover/closet : /obj/effect/landmark/start/hangover{@OLD}

@@ -11,6 +11,6 @@
 	if(!my_hud)
 		return
 
-	for(var/group_key as anything in my_hud.master_groups)
+	for(var/group_key in my_hud.master_groups)
 		var/datum/plane_master_group/group = my_hud.master_groups[group_key]
 		group.build_planes_offset(my_hud, my_hud.current_plane_offset)

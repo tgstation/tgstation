@@ -8,7 +8,7 @@
 	desc = "A small electronic device able to ignite combustible substances."
 	icon_state = "igniter"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
-	var/datum/effect_system/spark_spread/sparks
+	var/datum/effect_system/basic/spark_spread/sparks
 	heat = 1000
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
@@ -21,15 +21,12 @@
 
 /obj/item/assembly/igniter/Initialize(mapload)
 	. = ..()
-	sparks = new
-	sparks.set_up(2, 0, src)
+	sparks = new(src, 2, FALSE)
 	sparks.attach(src)
 
 /obj/item/assembly/igniter/Destroy()
-	if(sparks)
-		qdel(sparks)
-	sparks = null
-	. = ..()
+	QDEL_NULL(sparks)
+	return ..()
 
 /obj/item/assembly/igniter/activate()
 	if(!..())
@@ -38,14 +35,16 @@
 	if(location)
 		location.hotspot_expose(heat, EXPOSED_VOLUME)
 	if(holder)
-		SEND_SIGNAL(holder.loc, COMSIG_IGNITER_ACTIVATE)
+		SEND_SIGNAL(holder.loc, COMSIG_IGNITER_ACTIVATE, src)
 	if(QDELETED(src))
 		return TRUE
 	sparks.start()
 	return TRUE
 
 /obj/item/assembly/igniter/attack_self(mob/user)
-	activate()
+	// Don't trigger when interacting with assemblies
+	if (!holder)
+		activate()
 	add_fingerprint(user)
 
 /obj/item/assembly/igniter/ignition_effect(atom/A, mob/user)
@@ -59,7 +58,7 @@
 	desc = "A small electronic device able to chill their surroundings."
 	icon_state = "freezer"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
-	heat = 200
+	heat = MIN_FREEZE_TEMP
 
 /obj/item/assembly/igniter/condenser/activate()
 	. = ..()
@@ -68,9 +67,8 @@
 	var/turf/location = get_turf(loc)
 	if(location)
 		var/datum/gas_mixture/enviro = location.return_air()
-		enviro.temperature = clamp(min(ROOM_TEMP, enviro.temperature*0.85),MIN_FREEZE_TEMP,MAX_FREEZE_TEMP)
+		enviro.temperature = clamp(min(ROOM_TEMP, enviro.temperature * 0.85), MIN_FREEZE_TEMP, MAX_FREEZE_TEMP)
 		location.air_update_turf(FALSE, FALSE)
-	sparks.start()
 
 #undef EXPOSED_VOLUME
 #undef ROOM_TEMP

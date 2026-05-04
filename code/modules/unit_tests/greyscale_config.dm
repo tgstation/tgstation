@@ -5,7 +5,7 @@
 	for(var/obj/item/item_path as anything in subtypesof(/obj/item))
 		if(isnull(initial(item_path.greyscale_colors)))
 			continue //All configs depend on greyscale_colors being defined.
-		var/held_icon_state = initial(item_path.inhand_icon_state) || initial(item_path.icon_state)
+		var/held_icon_state = initial(item_path.inhand_icon_state) || initial(item_path.post_init_icon_state)
 
 		var/datum/greyscale_config/lefthand = SSgreyscale.configurations["[initial(item_path.greyscale_config_inhand_left)]"]
 		if(lefthand && !lefthand.icon_states[held_icon_state])
@@ -16,7 +16,7 @@
 			TEST_FAIL("[righthand.DebugName()] is missing a sprite for the held righthand for [item_path]. Expected icon state: '[held_icon_state]'")
 
 		var/datum/greyscale_config/worn = SSgreyscale.configurations["[initial(item_path.greyscale_config_worn)]"]
-		var/worn_icon_state = initial(item_path.worn_icon_state) || initial(item_path.icon_state)
+		var/worn_icon_state = initial(item_path.worn_icon_state) || initial(item_path.post_init_icon_state)
 		if(worn && !worn.icon_states[worn_icon_state])
 			TEST_FAIL("[worn.DebugName()] is missing a sprite for the worn overlay for [item_path]. Expected icon state: '[worn_icon_state]'")
 

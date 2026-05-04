@@ -8,3 +8,5 @@
 #define DOAFTER_SOURCE_PLANTING_DEVICE "doafter_planting_device"
 #define DOAFTER_SOURCE_CHARGE_CRANKRECHARGE "doafter_charge_crank_recharge"
 #define DOAFTER_SOURCE_REMOVING_HOOK "doafter_removing_hook"
+#define DOAFTER_SOURCE_CHARGING_ESWORD "doafter_charging_esword"
+#define DOAFTER_SOURCE_RIP_HEART "doafter_rip_heart"

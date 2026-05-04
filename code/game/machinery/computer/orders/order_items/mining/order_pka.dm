@@ -34,7 +34,7 @@
 	cost_per_order = 150
 
 /datum/orderable_item/accelerator/aoe_mobs
-	purchase_path = /obj/item/borg/upgrade/modkit/aoe/mobs
+	purchase_path = /obj/item/borg/upgrade/modkit/cooldown/aoe/mobs
 	cost_per_order = 1500
 
 /datum/orderable_item/accelerator/minebot_passthrough

@@ -13,7 +13,7 @@
 	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
 	max_integrity = 25
-
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	var/climbable = TRUE
 	///item released when deconstructed
 	var/item_deconstruct = /obj/item/stack/rods
@@ -32,6 +32,7 @@
 	icon_state = "railing_corner"
 	density = FALSE
 	climbable = FALSE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/railing/corner/unbreakable
 	resistance_flags = INDESTRUCTIBLE
@@ -72,7 +73,7 @@
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+	AddElement(/datum/element/simple_rotation, ROTATION_NEEDS_ROOM)
 
 /obj/structure/railing/examine(mob/user)
 	. = ..()
@@ -172,6 +173,7 @@
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/railing/wooden_fence/Initialize(mapload)
 	. = ..()

@@ -8,7 +8,7 @@ import {
   Table,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -204,7 +204,7 @@ const OmnitongueToggle = (props) => {
       selected={omnitongue}
       onClick={() => act('toggle_omnitongue')}
     >
-      {'Omnitongue ' + (omnitongue ? 'Enabled' : 'Disabled')}
+      {`Omnitongue ${omnitongue ? 'Enabled' : 'Disabled'}`}
     </Button>
   );
 };

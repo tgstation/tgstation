@@ -6,5 +6,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_amount = 50
-	grind_results = list(/datum/reagent/ammonia = 10)
 	merge_type = /obj/item/stack/ammonia_crystals
+
+/obj/item/stack/ammonia_crystals/grind_results()
+	return list(/datum/reagent/ammonia = 10)

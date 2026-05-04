@@ -24,8 +24,8 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
           <Stack.Item key={index}>
             <ObjectiveElement
               key={prim_obj.id}
-              name={prim_obj['task_name']}
-              description={prim_obj['task_text']}
+              name={prim_obj.task_name}
+              description={prim_obj.task_text}
             />
           </Stack.Item>
         ))}

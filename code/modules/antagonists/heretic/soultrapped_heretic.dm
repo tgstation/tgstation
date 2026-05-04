@@ -3,7 +3,7 @@
 	name = "\improper Soultrapped Heretic"
 	roundend_category = "Heretics"
 	antagpanel_category = "Heretic"
-	job_rank = ROLE_HERETIC
+	pref_flag = ROLE_HERETIC
 	antag_moodlet = /datum/mood_event/soultrapped_heretic
 	antag_hud_name = "heretic"
 

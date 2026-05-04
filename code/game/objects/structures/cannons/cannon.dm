@@ -15,13 +15,14 @@
 	var/anchorable_cannon = TRUE
 	var/obj/item/stack/cannonball/loaded_cannonball = null
 	var/charge_ignited = FALSE
-	var/fire_delay = 15
+	var/fire_delay = 1.5 SECONDS
 	var/charge_size = 15
 	var/fire_sound = 'sound/items/weapons/gun/general/cannon.ogg'
 
 /obj/structure/cannon/Initialize(mapload)
 	. = ..()
 	create_reagents(charge_size)
+	AddElement(/datum/element/simple_rotation)
 
 /obj/structure/cannon/examine(mob/user)
 	. = ..()
@@ -83,7 +84,7 @@
 
 	else if(is_reagent_container(used_item))
 		var/obj/item/reagent_containers/powder_keg = used_item
-		if(!(powder_keg.reagent_flags & OPENCONTAINER))
+		if(!powder_keg.is_open_container())
 			return ..()
 		if(istype(powder_keg, /obj/item/rag))
 			return ..()
@@ -116,6 +117,7 @@
 	icon_state = "garbagegun"
 	anchored = FALSE
 	anchorable_cannon = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 11.15, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 	var/fires_before_deconstruction = 5
 
 /obj/structure/cannon/trash/fire()

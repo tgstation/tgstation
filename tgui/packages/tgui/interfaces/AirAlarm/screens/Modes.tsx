@@ -1,7 +1,7 @@
 import { useBackend } from 'tgui/backend';
 import { Button, NoticeBox, Stack } from 'tgui-core/components';
 
-import { AirAlarmData } from '../types';
+import type { AirAlarmData } from '../types';
 
 export function AirAlarmControlModes(props) {
   const { act, data } = useBackend<AirAlarmData>();
@@ -28,7 +28,7 @@ export function AirAlarmControlModes(props) {
             }
             onClick={() => act('mode', { mode: mode.path })}
           >
-            {mode.name + ' - ' + mode.desc}
+            {`${mode.name} - ${mode.desc}`}
           </Button>
         </Stack.Item>
       ))}

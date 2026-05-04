@@ -11,7 +11,12 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { FAIcon, LoadoutItem, LoadoutManagerData, ReskinOption } from './base';
+import type {
+  FAIcon,
+  LoadoutItem,
+  LoadoutManagerData,
+  ReskinOption,
+} from './base';
 import { ItemIcon } from './ItemDisplay';
 
 // Used in LoadoutItem to make buttons relating to how an item can be edited
@@ -86,9 +91,11 @@ function LoadoutModifyButtons(props: ButtonsProps) {
   const { modifyItemDimmer } = props;
 
   function isActive(item: LoadoutItem, reskin: ReskinOption) {
-    return loadout_list && loadout_list[item.path]['reskin']
-      ? loadout_list[item.path]['reskin'] === reskin.name
-      : item.icon_state === reskin.skin_icon_state;
+    const loadoutItem = loadout_list?.[item.path];
+    if (Array.isArray(loadoutItem)) {
+      return item.icon_state === reskin.skin_icon_state;
+    }
+    return 'reskin' in loadoutItem && loadoutItem.reskin === reskin.name;
   }
 
   return (
@@ -97,7 +104,7 @@ function LoadoutModifyButtons(props: ButtonsProps) {
         <LabeledList>
           {!!modifyItemDimmer.reskins && (
             <LabeledList.Item label="Styles" verticalAlign="middle">
-              <Flex wrap width="50%">
+              <Flex wrap width="100%">
                 {modifyItemDimmer.reskins.map((reskin) => (
                   <Flex.Item key={reskin.tooltip} mr={1} mb={1}>
                     <Button
@@ -116,7 +123,7 @@ function LoadoutModifyButtons(props: ButtonsProps) {
                       {modifyItemDimmer.icon ? (
                         <DmIcon
                           fallback={<Icon name="spinner" spin color="gray" />}
-                          icon={modifyItemDimmer.icon}
+                          icon={reskin.skin_icon || modifyItemDimmer.icon}
                           icon_state={reskin.skin_icon_state}
                           style={{
                             transform: `scale(2) translateY(2px)`,
@@ -187,9 +194,10 @@ export function LoadoutModifyDimmer(props: DimmerProps) {
           position: 'relative',
           display: 'inline-block',
           padding: '5px',
+          boxShadow: '0px 4px 8px 3px rgba(0, 0, 0, 0.7)',
         }}
       >
-        <Stack.Item height="20px">
+        <Stack.Item height="20px" p={0.5} mb={1}>
           <Flex justify="flex-end">
             <Flex.Item>
               <Button
@@ -218,7 +226,7 @@ export function LoadoutModifyDimmer(props: DimmerProps) {
           </Flex>
         </Stack.Item>
         <Stack.Item>
-          <Stack justify="center">
+          <Stack justify="center" p={0.5}>
             <Button
               onClick={() => {
                 setModifyItemDimmer(null);

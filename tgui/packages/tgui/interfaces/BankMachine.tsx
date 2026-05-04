@@ -6,7 +6,7 @@ import {
   Section,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -25,7 +25,7 @@ export const BankMachine = (props) => {
     <Window width={350} height={155}>
       <Window.Content>
         <NoticeBox danger>Authorized personnel only</NoticeBox>
-        <Section title={station_name + ' Vault'}>
+        <Section title={`${station_name} Vault`}>
           <LabeledList>
             <LabeledList.Item
               label="Current Balance"

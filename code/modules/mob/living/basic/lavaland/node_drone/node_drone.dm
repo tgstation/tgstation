@@ -48,6 +48,10 @@
 	/// Set when the drone is begining to leave lavaland after the vent is secured.
 	var/escaping = FALSE
 
+/mob/living/basic/node_drone/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_MINING_AOE_IMMUNE, INNATE_TRAIT)
+
 /mob/living/basic/node_drone/death(gibbed)
 	. = ..()
 	explosion(origin = src, light_impact_range = 1, smoke = 1)
@@ -56,7 +60,6 @@
 	attached_vent?.node = null //clean our reference to the vent both ways.
 	attached_vent = null
 	return ..()
-
 
 /mob/living/basic/node_drone/examine(mob/user)
 	. = ..()
@@ -151,7 +154,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find vents to run away from
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = null
 	planning_subtrees = list(

@@ -95,6 +95,7 @@
 
 ///An ID card capable of shapeshifting to other IDs given by the Key Keepers Burden knowledge
 /obj/item/card/id/advanced/heretic
+	access = list(ACCESS_HERETIC)
 	///List of IDs this card consumed
 	var/list/obj/item/card/id/fused_ids = list()
 	///The first portal in the portal pair, so we can clear it later
@@ -139,7 +140,7 @@
 	trim = card.trim
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearing = loc
-		wearing.sec_hud_set_ID()
+		wearing.update_ID_card()
 	assignment = card.assignment
 	registered_age = card.registered_age
 	registered_name = card.registered_name

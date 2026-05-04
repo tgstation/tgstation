@@ -153,7 +153,7 @@ const validateRegExp = (str: string) => {
 const CategoryViewer = (props: CategoryViewerProps) => {
   const [search, setSearch] = useState('');
   let [searchRegex, setSearchRegex] = useState(false);
-  let [caseSensitive, setCaseSensitive] = useState(false);
+  const [caseSensitive, setCaseSensitive] = useState(false);
   if (!search && searchRegex) {
     setSearchRegex(false);
     searchRegex = false;
@@ -172,12 +172,7 @@ const CategoryViewer = (props: CategoryViewerProps) => {
       }`}
       buttons={
         <>
-          <Input
-            placeholder="Search"
-            value={search}
-            onChange={setSearch}
-            expensive
-          />
+          <Input placeholder="Search" value={search} onChange={setSearch} />
           <Button
             icon="code"
             tooltip="RegEx Search"

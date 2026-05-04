@@ -111,7 +111,7 @@
 	if(user.client?.screen_maps[assigned_view])
 		return
 
-	var/atom/movable/screen/map_view/char_preview/new_view = new(null, src)
+	var/atom/movable/screen/map_view/char_preview/new_view = new(null, null, src)
 	new_view.generate_view(assigned_view)
 	new_view.display_to(user, window)
 	return new_view

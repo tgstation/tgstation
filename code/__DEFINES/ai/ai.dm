@@ -61,6 +61,13 @@
 #define PAUSE_DURING_DO_AFTER (1<<2)
 /// Continue processing while in stasis
 #define CAN_ACT_IN_STASIS (1<<3)
+/// Continue processing while aggressively grabbed
+#define CAN_ACT_WHILE_GRABBED (1<<4)
+
+/// Flags we expect for most AI controllers
+#define DEFAULT_AI_FLAGS (PAUSE_DURING_DO_AFTER | CAN_ACT_WHILE_GRABBED)
+/// Flags for passive mobs that are easy to push around
+#define PASSIVE_AI_FLAGS (PAUSE_DURING_DO_AFTER | STOP_MOVING_WHEN_PULLED)
 
 //Base Subtree defines
 
@@ -69,6 +76,8 @@
 
 //Generic subtree defines
 
+/// default search range (tiles, passed to oview) when using find_and_set
+#define SEARCH_TACTIC_DEFAULT_RANGE 7
 /// probability that the pawn should try resisting out of restraints
 #define RESIST_SUBTREE_PROB 50
 ///macro for whether it's appropriate to resist right now, used by resist subtree

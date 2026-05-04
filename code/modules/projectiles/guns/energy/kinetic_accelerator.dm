@@ -270,7 +270,7 @@
 	new /obj/effect/temp_visual/explosion/fast(get_turf(target))
 
 	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(2, target) - target)
-		mineral_turf.gets_drilled(firer, 0.1)
+		mineral_turf.drill_aoe(firer, 0.1)
 
 	for(var/mob/living/living_mob in range(2, target) - firer - target)
 		if(!ismining(living_mob))
@@ -291,8 +291,10 @@
 	model_flags = BORG_MODEL_MINER
 	//Most modkits are supposed to allow duplicates. The ones that don't should be blocked by PKA code anyways.
 	allow_duplicates = TRUE
+	// If defined with a type of mod, prevents paring this mod with another of the same mod in the same PKA
 	var/denied_type = null
-	var/maximum_of_type = 1
+	// If defined, limits the number of a mod to this value in a single PKA. If denied_type is not defined. but this value is above 1, it will default to types of itself.
+	var/maximum_of_type = 0
 	var/cost = 30
 	var/modifier = 1 //For use in any mod kit that has numerical modifiers
 	var/minebot_upgrade = TRUE
@@ -323,14 +325,21 @@
 	else if(istype(KA.loc, /mob/living/basic/mining_drone))
 		to_chat(user, span_notice("The modkit you're trying to install is not rated for minebot use."))
 		return FALSE
-	if(denied_type)
+
+	var/type_to_limit = denied_type
+
+	if(!type_to_limit && maximum_of_type)
+		type_to_limit = src
+
+	if(type_to_limit)
 		var/number_of_denied = 0
 		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
-			if(istype(modkit_upgrade, denied_type))
+			if(istype(modkit_upgrade, type_to_limit))
 				number_of_denied++
-			if(number_of_denied >= maximum_of_type)
+			if(maximum_of_type && number_of_denied >= maximum_of_type || !maximum_of_type && number_of_denied) //if we denied a type, or we have a maximum to reach, break
 				. = FALSE
 				break
+
 	if(KA.get_remaining_mod_capacity() >= cost)
 		if(.)
 			if(transfer_to_loc && !user.transferItemToLoc(src, KA))
@@ -392,7 +401,6 @@
 
 // Recalculate recharge time after adding or removing cooldown mods.
 /obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
-
 	var/new_recharge_time = initial(KA.recharge_time)
 	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
 		if(istype(modkit_upgrade, src))
@@ -400,17 +408,14 @@
 
 	return new_recharge_time
 
-
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
 	if(.)
 		KA.recharge_time = get_recharge_time(KA)
 
-
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
 	..()
 	KA.recharge_time = get_recharge_time(KA)
-
 
 /obj/item/borg/upgrade/modkit/cooldown/minebot
 	name = "minebot cooldown decrease"
@@ -423,73 +428,84 @@
 	minebot_upgrade = TRUE
 	minebot_exclusive = TRUE
 
-
-//AoE blasts
-/obj/item/borg/upgrade/modkit/aoe
+// AoE blasts
+// These are a subtype of cooldown so they can affect firing speed
+/obj/item/borg/upgrade/modkit/cooldown/aoe
 	modifier = 0
 	cost = 10
+	denied_type = /obj/item/borg/upgrade/modkit/cooldown/aoe
 	maximum_of_type = 1
+	/// Does the AOE mine turfs?
 	var/turf_aoe = FALSE
+	/// Have we taken another kit's AOE?
 	var/stats_stolen = FALSE
+	/// Multiplier for mob damage
+	var/damage_modifier = 0
 
-/obj/item/borg/upgrade/modkit/aoe/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
+/obj/item/borg/upgrade/modkit/cooldown/aoe/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
-	if(.)
-		for(var/obj/item/borg/upgrade/modkit/aoe/AOE in KA.modkits) //make sure only one of the aoe modules has values if somebody has multiple
-			if(AOE.stats_stolen || AOE == src)
-				continue
-			modifier += AOE.modifier //take its modifiers
-			AOE.modifier = 0
-			turf_aoe += AOE.turf_aoe
-			AOE.turf_aoe = FALSE
-			AOE.stats_stolen = TRUE
+	if(!.)
+		return
+	for(var/obj/item/borg/upgrade/modkit/cooldown/aoe/AOE in KA.modkits) //make sure only one of the aoe modules has values if somebody has multiple
+		if(AOE.stats_stolen || AOE == src)
+			continue
+		modifier += AOE.modifier //take its modifiers
+		damage_modifier += AOE.damage_modifier
+		AOE.modifier = 0
+		AOE.damage_modifier = 0
+		turf_aoe += AOE.turf_aoe
+		AOE.turf_aoe = FALSE
+		AOE.stats_stolen = TRUE
 
-/obj/item/borg/upgrade/modkit/aoe/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+/obj/item/borg/upgrade/modkit/cooldown/aoe/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
 	..()
 	modifier = initial(modifier) //get our modifiers back
+	damage_modifier = initial(damage_modifier)
 	turf_aoe = initial(turf_aoe)
 	stats_stolen = FALSE
 
-/obj/item/borg/upgrade/modkit/aoe/modify_projectile(obj/projectile/kinetic/K)
+/obj/item/borg/upgrade/modkit/cooldown/aoe/modify_projectile(obj/projectile/kinetic/K)
 	K.name = "kinetic explosion"
 
-/obj/item/borg/upgrade/modkit/aoe/projectile_strike(obj/projectile/kinetic/kinetic_blast, turf/target_turf, atom/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+/obj/item/borg/upgrade/modkit/cooldown/aoe/projectile_strike(obj/projectile/kinetic/kinetic_blast, turf/target_turf, atom/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
 	if(stats_stolen)
 		return
 	new /obj/effect/temp_visual/explosion/fast(target_turf)
 	if(turf_aoe)
-		for(var/T in RANGE_TURFS(2, target_turf) - target_turf)
+		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
 			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
 				M.gets_drilled(kinetic_blast.firer, 0.1)
 
-	if(modifier)
-		for(var/mob/living/living_mob in range(2, target) - kinetic_blast.firer - target)
+	if(!damage_modifier)
+		return
 
-			if(!ismining(living_mob))
-				continue
+	for(var/mob/living/living_mob in range(1, target) - kinetic_blast.firer - target)
+		if(!ismining(living_mob))
+			continue
+		var/armor = living_mob.run_armor_check(kinetic_blast.def_zone, kinetic_blast.armor_flag, armour_penetration = kinetic_blast.armour_penetration)
+		living_mob.apply_damage(kinetic_blast.damage * damage_modifier, kinetic_blast.damage_type, kinetic_blast.def_zone, armor)
+		to_chat(living_mob, span_userdanger("You're struck by a [kinetic_blast.name]!"))
 
-			var/armor = living_mob.run_armor_check(kinetic_blast.def_zone, kinetic_blast.armor_flag, armour_penetration = kinetic_blast.armour_penetration)
-			living_mob.apply_damage(kinetic_blast.damage*modifier, kinetic_blast.damage_type, kinetic_blast.def_zone, armor)
-			to_chat(living_mob, span_userdanger("You're struck by a [kinetic_blast.name]!"))
-
-/obj/item/borg/upgrade/modkit/aoe/turfs
+/obj/item/borg/upgrade/modkit/cooldown/aoe/turfs
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
-	denied_type = /obj/item/borg/upgrade/modkit/aoe/turfs
 	turf_aoe = TRUE
+	// Negates one CD modifier
+	modifier = -/obj/item/borg/upgrade/modkit/cooldown::modifier
 
-/obj/item/borg/upgrade/modkit/aoe/mobs
+/obj/item/borg/upgrade/modkit/cooldown/aoe/mobs
 	name = "offensive explosion"
 	desc = "Causes the kinetic accelerator to damage mobs in an AoE."
-	modifier = 1
+	damage_modifier = 1
 
-/obj/item/borg/upgrade/modkit/aoe/mobs/andturfs
+/obj/item/borg/upgrade/modkit/cooldown/aoe/mobs/andturfs
 	name = "offensive mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock and damage mobs in an AoE."
 	turf_aoe = TRUE
+	modifier = -1 // Slightly better than normal turf AOE as its a rare find
 
-//Minebot passthrough
+// Minebot passthrough
 /obj/item/borg/upgrade/modkit/minebot_passthrough
 	name = "minebot passthrough"
 	desc = "Causes kinetic accelerator shots to pass through minebots."
@@ -614,7 +630,6 @@
 	name = "decrease pressure penalty"
 	desc = "A syndicate modification kit that increases the damage a kinetic accelerator does in high pressure environments."
 	modifier = 2
-	denied_type = /obj/item/borg/upgrade/modkit/indoors
 	maximum_of_type = 2
 	cost = 35
 
@@ -696,5 +711,5 @@
 /obj/item/borg/upgrade/modkit/tracer/adjustable/proc/choose_bolt_color(mob/user)
 	set waitfor = FALSE
 
-	var/new_color = input(user,"","Choose Color",bolt_color) as color|null
+	var/new_color = tgui_color_picker(user, "", "Choose Color", bolt_color)
 	bolt_color = new_color || bolt_color

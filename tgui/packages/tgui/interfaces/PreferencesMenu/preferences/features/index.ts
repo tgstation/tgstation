@@ -3,7 +3,7 @@
 // extremely small, and so it's easier for everyone to just combine them
 // together.
 // This still helps to prevent the server from needing to send client UI data
-import { Feature } from './base';
+import type { Feature } from './base';
 
 // while also preventing downstreams from needing to mutate existing files.
 export const features: Record<string, Feature<unknown>> = {};

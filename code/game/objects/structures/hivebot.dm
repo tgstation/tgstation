@@ -10,9 +10,7 @@
 
 /obj/structure/hivebot_beacon/Initialize(mapload)
 	. = ..()
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(2, holder = src, location = loc)
-	smoke.start()
+	do_smoke(2, src, loc)
 	visible_message(span_bolddanger("[src] warps in!"))
 	playsound(src.loc, 'sound/effects/empulse.ogg', 25, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(warpbots)), rand(1 SECONDS, 1 MINUTES))

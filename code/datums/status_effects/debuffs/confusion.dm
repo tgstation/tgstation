@@ -27,7 +27,7 @@
 	SIGNAL_HANDLER
 
 	// How much time is left in the duration, in seconds.
-	var/time_left = (duration - world.time) / 10
+	var/time_left = duration / 10
 	var/direction = move_args[MOVE_ARG_DIRECTION]
 	var/new_dir
 

@@ -9,7 +9,7 @@
 		/obj/item/food/meat/steak/plain/human = 2
 	)
 	result = /obj/item/food/kebab/human
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/kebab
 	name = "Kebab"
@@ -18,7 +18,7 @@
 		/obj/item/food/meat/steak = 2
 	)
 	result = /obj/item/food/kebab/monkey
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/tofukebab
 	name = "Tofu kebab"
@@ -27,7 +27,7 @@
 		/obj/item/food/tofu = 2
 	)
 	result = /obj/item/food/kebab/tofu
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/tailkebab
 	name = "Lizard tail kebab"
@@ -36,7 +36,7 @@
 		/obj/item/organ/tail/lizard = 1
 	)
 	result = /obj/item/food/kebab/tail
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/fiestaskewer
 	name = "Fiesta Skewer"
@@ -48,7 +48,7 @@
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/kebab/fiesta
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 ////////////////////////////////////////////////MR SPIDER////////////////////////////////////////////////
 
@@ -61,7 +61,7 @@
 	)
 	result = /obj/item/food/spidereggsham
 	removed_foodtypes = TOXIC
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
 
@@ -73,7 +73,7 @@
 	)
 	result = /obj/item/food/tempehstarter
 	added_foodtypes = GROSS
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/cornedbeef
 	name = "Corned beef"
@@ -83,7 +83,7 @@
 		/obj/item/food/grown/cabbage = 2
 	)
 	result = /obj/item/food/cornedbeef
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/bearsteak
 	name = "Filet migrawr"
@@ -94,7 +94,7 @@
 	tool_paths = list(/obj/item/lighter)
 	result = /obj/item/food/bearsteak
 	added_foodtypes = ALCOHOL
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/stewedsoymeat
 	name = "Stewed soymeat"
@@ -104,7 +104,7 @@
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/stewedsoymeat
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/sausage
 	name = "Raw sausage"
@@ -113,7 +113,7 @@
 		/obj/item/food/meat/rawcutlet = 2
 	)
 	result = /obj/item/food/raw_sausage
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/nugget
 	name = "Chicken nugget"
@@ -121,7 +121,7 @@
 		/obj/item/food/meat/cutlet = 1
 	)
 	result = /obj/item/food/nugget
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/rawkhinkali
 	name = "Raw Khinkali"
@@ -131,7 +131,7 @@
 		/obj/item/food/meatball = 1
 	)
 	result = /obj/item/food/rawkhinkali
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/meatbun
 	name = "Meat bun"
@@ -142,7 +142,7 @@
 		/obj/item/food/grown/cabbage = 1
 	)
 	result = /obj/item/food/meatbun
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/pigblanket
 	name = "Pig in a Blanket"
@@ -152,7 +152,7 @@
 		/obj/item/food/meat/cutlet = 1
 	)
 	result = /obj/item/food/pigblanket
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/ratkebab
 	name = "Rat Kebab"
@@ -161,7 +161,7 @@
 		/obj/item/food/deadmouse = 1
 	)
 	result = /obj/item/food/kebab/rat
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/doubleratkebab
 	name = "Double Rat Kebab"
@@ -170,7 +170,7 @@
 		/obj/item/food/deadmouse = 2
 	)
 	result = /obj/item/food/kebab/rat/double
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/ricepork
 	name = "Rice and Pork"
@@ -181,7 +181,7 @@
 	)
 	result = /obj/item/food/salad/ricepork
 	removed_foodtypes = BREAKFAST
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/ribs
 	name = "BBQ Ribs"
@@ -192,7 +192,7 @@
 	)
 	result = /obj/item/food/bbqribs
 	added_foodtypes = SUGAR
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/meatclown
 	name = "Meat Clown"
@@ -201,7 +201,7 @@
 		/obj/item/food/grown/banana = 1
 	)
 	result = /obj/item/food/meatclown
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/lasagna
 	name = "Lasagna"
@@ -212,7 +212,7 @@
 		/obj/item/food/spaghetti/raw = 1
 	)
 	result = /obj/item/food/lasagna
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/gumbo
 	name = "Black eyed gumbo"
@@ -225,7 +225,7 @@
 	)
 	result = /obj/item/food/salad/gumbo
 	removed_foodtypes = BREAKFAST
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 
 /datum/crafting_recipe/food/fried_chicken
@@ -238,7 +238,7 @@
 	result = /obj/item/food/fried_chicken
 	removed_foodtypes = RAW
 	added_foodtypes = FRIED
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/beef_stroganoff
 	name = "Beef Stroganoff"
@@ -255,7 +255,7 @@
 	)
 	result = /obj/item/food/beef_stroganoff
 	added_foodtypes = DAIRY
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/beef_wellington
 	name = "Beef Wellington"
@@ -271,7 +271,7 @@
 	)
 	result = /obj/item/food/beef_wellington
 	removed_foodtypes = BREAKFAST
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/korta_wellington
 	name = "Korta Wellington"
@@ -287,7 +287,7 @@
 	)
 	result = /obj/item/food/korta_wellington
 	removed_foodtypes = BREAKFAST
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/full_roast
 	name = "Roast Chicken Dinner"
@@ -306,7 +306,7 @@
 	)
 	result = /obj/item/food/roast_dinner
 	added_foodtypes = GRAIN
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/full_roast_lizzy
 	name = "Grain-Free Roast Chicken Dinner"
@@ -326,7 +326,7 @@
 	)
 	result = /obj/item/food/roast_dinner_lizzy
 	added_foodtypes = NUTS
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/full_roast_tofu
 	name = "Meat-Free Roast Dinner"
@@ -345,7 +345,7 @@
 	)
 	result = /obj/item/food/roast_dinner_tofu
 	added_foodtypes = GRAIN
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/full_english
 	name = "Full English Breakfast"
@@ -359,7 +359,7 @@
 		/obj/item/food/butteredtoast = 1
 	)
 	result = /obj/item/food/full_english
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/envirochow
 	name = "Envirochow"
@@ -370,7 +370,7 @@
 	result = /obj/item/food/canned/envirochow
 	removed_foodtypes = RAW|GORE
 	added_foodtypes = GROSS
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/meatloaf
 	name = "Meatloaf"
@@ -381,7 +381,7 @@
 		/datum/reagent/consumable/ketchup = 10,
 	)
 	result = /obj/item/food/raw_meatloaf
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/sweet_and_sour_meatballs
 	name = "Sweet and sour meatballs"
@@ -392,7 +392,7 @@
 		/datum/reagent/consumable/sugar = 5,
 	)
 	result = /obj/item/food/sweet_and_sour_meatballs
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/pineapple_skewer
 	name = "Pineapple skewer"
@@ -402,4 +402,5 @@
 		/obj/item/food/meat/cutlet = 2,
 	)
 	result = /obj/item/food/kebab/pineapple_skewer
-	category = CAT_MEAT
+	dish_category = DISH_MEAT
+	meal_category = MEAL_APPETIZER
