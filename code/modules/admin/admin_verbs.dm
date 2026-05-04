@@ -72,7 +72,7 @@ ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", 
 		user.mob.add_to_all_human_data_huds()
 		user.mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
 		to_chat(user, span_adminnotice(span_bold("Invisimin off. Invisibility reset.")), confidential = TRUE)
-		if(isobserver(user.mob))
+		if(isobserver(user.mob) && !user.holder.fakekey) // Set the alpha back if we're not still stealth mode
 			user.mob.alpha = initial(user.mob.alpha)
 		return
 
