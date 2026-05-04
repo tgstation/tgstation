@@ -60,7 +60,6 @@
 	eyes.eye_color_left = human.eye_color_left
 	eyes.eye_color_right = human.eye_color_right
 	eyes.bodypart_insert(head)
-	human.update_body()
 	head.update_limb()
 	head.update_icon_dropped()
 	RegisterSignal(head, COMSIG_QDELETING, PROC_REF(on_head_destroyed))
