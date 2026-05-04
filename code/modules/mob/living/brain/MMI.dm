@@ -29,7 +29,7 @@
 	SIGNAL_HANDLER
 	if(isnull(brainmob?.client) || mecha)
 		return
-	brainmob.reset_perspective(get_turf(source))
+	brainmob.reset_perspective(source.loc || source)
 
 /obj/item/mmi/Destroy()
 	set_mecha(null)
