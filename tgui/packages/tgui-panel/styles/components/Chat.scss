@@ -69,7 +69,7 @@
 
 .Chat__highlight {
   color: var(--highlight-color);
-  background: color-mix(in srgb, var(--highlight-color) 15%, transparent);
+  background: oklch(from var(--highlight-color) l c h / 15%);
   border-radius: 2px;
   padding: 0 2px;
 }
@@ -79,7 +79,7 @@
 }
 
 .ChatMessage--highlighted {
-  background: color-mix(in srgb, var(--highlight-color) 8%, transparent);
+  background: oklch(from var(--highlight-color) l c h / 8%);
   border-left: 2px solid var(--highlight-color);
   padding-left: 0.5em;
 }

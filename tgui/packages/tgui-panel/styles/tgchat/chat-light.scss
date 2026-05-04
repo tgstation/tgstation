@@ -269,20 +269,12 @@ a:visited {
 
 .Chat__highlight {
   color: oklch(from var(--highlight-color) min(l, 0.45) c h);
-  background: color-mix(
-    in srgb,
-    oklch(from var(--highlight-color) min(l, 0.45) c h) 25%,
-    transparent
-  );
+  background: oklch(from var(--highlight-color) min(l, 0.45) c h / 25%);
 }
 
 .ChatMessage--highlighted {
   border-left-color: oklch(from var(--highlight-color) min(l, 0.45) c h);
-  background: color-mix(
-    in srgb,
-    oklch(from var(--highlight-color) min(l, 0.45) c h) 14%,
-    transparent
-  );
+  background: oklch(from var(--highlight-color) min(l, 0.45) c h / 14%);
 }
 
 h1,
