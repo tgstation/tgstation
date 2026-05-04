@@ -23,3 +23,6 @@
   vinylspiders:
   - code_imp: fixes mining mobs being able to spawn too close to one another under
       certain circumstances
+2026-05-04:
+  SmArtKar:
+  - admin: Added a new debug tool which displays a detailed breakdown of in-game visuals
