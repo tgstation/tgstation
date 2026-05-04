@@ -8,8 +8,10 @@
 
 	/// Weakref of what is marked to copy
 	var/datum/weakref/marked
-	/// List of copies currently in circulation (all weakrefs)
+	/// List of copies currently in circulation
 	var/list/copies = list()
+	/// The max amount of copies that can exist at a time
+	var/max_copies = 50
 
 /// Scan the nearest mob/object
 /datum/gizpulse/scan/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
@@ -23,15 +25,20 @@
 			continue
 
 		copier.marked = WEAKREF(candidate)
-		playsound(src, 'sound/machines/ping.ogg', 50)
+		playsound(src, 'sound/items/weapons/flash.ogg', 80) //give some feedback that *something* happened
 		return
 
 /// Make a copy of whatever you previously scanned
+/datum/gizpulse/copy
+	/// Reference to the gizmodes' copies list so we can track deletions
+	var/list/copies
+
 /datum/gizpulse/copy/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
 	if(!istype(master, /datum/gizmodes/copier))
 		return
 
 	var/datum/gizmodes/copier/copier = master
+	copies = copier.copies
 
 	var/atom/movable/object_to_copy = copier.marked?.resolve()
 
@@ -46,7 +53,19 @@
 	copy.appearance = object_to_copy
 	copy.density = object_to_copy.density
 
-	copier.copies.Add(WEAKREF(copy))
+	copies.Add(copy)
+
+	if(copies.len > copier.max_copies)
+		var/obj/item/gizmo_copy/copy_to_delete = copies[1]
+		qdel(copy_to_delete) //it gets removed from the list on del
+
+	RegisterSignal(copy, COMSIG_ATOM_DESTRUCTION, PROC_REF(remove_from_list))
+
+/// Remove a copy from a list if they're deleted
+/datum/gizpulse/copy/proc/remove_from_list(datum/source)
+	SIGNAL_HANDLER
+
+	copies.Remove(source)
 
 /// Wipe all current copies
 /datum/gizpulse/erase/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
@@ -55,8 +74,8 @@
 
 	var/datum/gizmodes/copier/copier = master
 
-	for(var/datum/weakref/ref as anything in copier.copies)
-		qdel(ref)
+	for(var/copy in copier.copies)
+		qdel(copy)
 
 	copier.copies.Cut()
 

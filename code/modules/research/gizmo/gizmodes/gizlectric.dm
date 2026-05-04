@@ -4,6 +4,7 @@
 		/datum/gizpulse/electric/emp = 1,
 		/datum/gizpulse/electric/discharge = 1,
 		/datum/gizpulse/electric/charge = 1,
+		/datum/gizpulse/electric/revive = 1,
 	)
 
 	guaranteed_active_gizmodes = list(
@@ -12,8 +13,8 @@
 			/datum/gizpulse/electric/passive_charge = 1,
 		)
 	)
-	min_modes = 2
-	max_modes = 3
+	min_modes = 3
+	max_modes = 4
 
 	cooldown_time = 6 SECONDS
 
@@ -90,6 +91,31 @@
 		holder.Beam(power_source, icon_state = "g_beam", time = 5)
 		playsound(power_source, 'sound/effects/magic/ethereal_exit.ogg', 40)
 		return
+
+/// Revive people in a radius like the revival surgery
+/datum/gizpulse/electric/revive
+	/// The charge cost for a defibrillation pulse
+	var/defib_cost = STANDARD_CELL_CHARGE * 0.5
+
+/datum/gizpulse/electric/revive/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
+	if(!istype(master, /datum/gizmodes/electric))
+		return
+
+	var/datum/gizmodes/electric/electromaster = master
+
+	if(electromaster.power.charge() < defib_cost)
+		return
+
+	electromaster.power.use(defib_cost)
+
+	for(var/mob/living/dead in orange(holder, 3))
+		if(dead.stat & DEAD)
+			dead.revive()
+			dead.adjust_oxy_loss(-200)
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), dead, 'sound/machines/defib/defib_zap.ogg', 60), 3 SECONDS)
+
+	new /obj/effect/temp_visual/circle_wave(get_turf(holder), COLOR_YELLOW)
+	playsound(holder, 'sound/machines/defib/defib_charge.ogg', 80)
 
 /// Look for the nearest power-containing object and suck the power out
 /datum/gizpulse/electric/draw/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)

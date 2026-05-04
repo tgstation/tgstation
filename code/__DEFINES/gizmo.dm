@@ -36,4 +36,5 @@
 	/datum/gizmodes/dispenser/food = 1,\
 	/datum/gizmodes/sputter = 1,\
 	/datum/gizmodes/copier = 1,\
+	/datum/gizmodes/bad = 1,\
 )
