@@ -2825,7 +2825,8 @@
 
 /datum/reagent/pax/peaceborg
 	name = "Synthpax"
-	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster."
+	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster \
+	and cannot overpower any retaliatory responses triggered by physical trauma."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
