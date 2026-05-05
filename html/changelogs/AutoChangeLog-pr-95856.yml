@@ -1,0 +1,6 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - admin: "invisimin now makes the admin invisible to ghosts/observers, as well as pierce-immune and able to phase through walls"
+  - qol: "aghosting while invisimin'd or stealthmin'd will carry over your invisibility to the aghost so you no longer have to trigger it again"
+  - admin: "added a new admin verb, 'Toggle Admin ESP', which lets you see ghosts and invisimins while active"
