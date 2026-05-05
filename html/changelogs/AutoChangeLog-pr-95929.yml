@@ -1,0 +1,4 @@
+author: "strandsofivy"
+delete-after: True
+changes:
+  - bugfix: "The PDA direct messenger will no longer overzealously break words, resulting in cleaner chat message formatting overall."
