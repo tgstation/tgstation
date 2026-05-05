@@ -340,6 +340,10 @@
 			if(!locate(/obj/structure/thermoplastic) in dest_turf) // for tram construction
 				return ", must be made on solid ground!"
 
+	if(considered_flags & CRAFT_NO_SILICONS)
+		if(issilicon(crafter))
+			return ", cannot be crafted by silicon lifeforms!"
+
 	if(considered_flags & CRAFT_CHECK_DENSITY)
 		for(var/obj/object in dest_turf)
 			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
