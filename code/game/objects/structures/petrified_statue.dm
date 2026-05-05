@@ -8,7 +8,7 @@
 	///Should we leave a brain behind when the statue is wrecked?
 	var/brain = TRUE
 	///Time left before the petrification ends and we let the mob free
-	var/timer = 48 SECONDS
+	var/timer = 8 MINUTES
 	///The mob that got medusa'd
 	var/mob/living/petrified_mob
 
@@ -37,7 +37,7 @@
 /obj/structure/statue/petrified/process(seconds_per_tick)
 	if(!petrified_mob)
 		STOP_PROCESSING(SSobj, src)
-	timer -= seconds_per_tick
+	timer -= seconds_per_tick SECONDS
 	petrified_mob.Stun(4 SECONDS) //So they can't do anything while petrified
 	if(timer <= 0)
 		STOP_PROCESSING(SSobj, src)

@@ -2980,14 +2980,10 @@
 /datum/reagent/metalgen
 	name = "Metalgen"
 	data = list("material"=null)
-	description = "A purple metal morphic liquid, said to impose its metallic properties on whatever it touches."
+	description = "A purple, metallic liquid, said to impose its metallic properties on whatever it touches."
 	color = "#b000aa"
 	taste_mult = 0 // oderless and tasteless
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE
-	/// The material flags used to apply the transmuted materials
-	var/applied_material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	/// The amount of materials to apply to the transmuted objects if they don't contain materials
-	var/default_material_amount = 100
 
 /datum/reagent/metalgen/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
@@ -3007,6 +3003,10 @@
 	if(!metal_ref)
 		return
 
+	metal_transmute(target, metal_ref)
+
+/// Change the material type of an object or turf, but with visuals and effects related to the material
+/proc/metal_transmute(atom/target, metal_type, default_material_amount = 100, applied_material_flags = MATERIAL_METALGEN)
 	if(is_type_in_typecache(target, GLOB.blacklisted_metalgen_types)) //some stuff can lead to exploits if transmuted
 		return
 
@@ -3021,12 +3021,12 @@
 	// Delete existing materials first before changing the material flags
 	if(length(target.custom_materials))
 		target.set_custom_materials()
-	var/list/metal_dat = list((metal_ref) = metal_amount)
+	var/list/metal_dat = list((metal_type) = metal_amount)
 	target.material_flags = applied_material_flags
 	if (target.has_material_slots())
 		var/list/new_slots = target.get_material_slots()
 		for (var/slot_type in new_slots)
-			new_slots[slot_type] = metal_ref
+			new_slots[slot_type] = metal_type
 		// Safe to call and doesn't do anything as no materials are currently present on the target
 		target.set_material_slots(new_slots)
 	target.set_custom_materials(metal_dat)
@@ -3534,3 +3534,48 @@
 /datum/reagent/luminescent_fluid/pink
 	name = "Pink Luminiscent Fluid"
 	color = LIGHT_COLOR_PINK
+
+/// Reagent that polymorphs you
+/datum/reagent/polyjuice
+	name = "Polyjuice"
+	description = "A vibrant liquid which causes sudden and irreversible changes in the body plan of living creatures."
+	color = "#ff00ea"
+	metabolization_rate = REAGENTS_METABOLISM
+	taste_description = "magic"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_MAINTENANCE_PILL
+
+	/// Cycle to polymorph
+	var/polymorph_cycle = 10
+
+/datum/reagent/polyjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+
+	if(current_cycle > polymorph_cycle)
+		affected_mob.wabbajack()
+
+/// Turns you into STONE
+/datum/reagent/metalgen/gorgium
+	name = "Gorgium"
+	description = "Turns the affected... into STONE!!!"
+	color = "#929292"
+	metabolization_rate = 10 * REAGENTS_METABOLISM
+	taste_description = "rocks"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_MAINTENANCE_PILL
+
+	data = list("material" = /datum/material/rock)
+
+	/// Less than this and it wont petrify
+	var/min_volume_to_pretrify = 3
+	/// So 1u of exposure is 5 seconds of statue time
+	var/reagent_to_time_conversion = 5 SECONDS
+
+/datum/reagent/metalgen/gorgium/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+
+	if(reac_volume < min_volume_to_pretrify)
+		return
+
+	exposed_mob.Stun(4 SECONDS)
+	exposed_mob.petrify(reac_volume * reagent_to_time_conversion)
