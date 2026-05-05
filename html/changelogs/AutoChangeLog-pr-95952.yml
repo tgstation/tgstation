@@ -1,0 +1,6 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - rscadd: "Adds three new maintpill-only chems! Go eat more maintpills, and maybe you'll find out what they are :)"
+  - rscadd: "Adds a new secret chem, which can rarely be found on a petrified piece of paper somewhere in maintenance..."
+  - bugfix: "Fixes miscellaneous sources of petrification lasting 10x as long as intended"
