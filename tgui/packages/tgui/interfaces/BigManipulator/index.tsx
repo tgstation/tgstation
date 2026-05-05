@@ -140,24 +140,14 @@ const ConfigRow = (props: ConfigRowProps) => {
   );
 };
 
-const getPointButtonNumber = (
-  turf: string,
-  manipulatorPosition: string,
-): number | null => {
-  const [px, py] = turf.split(',').map(Number);
-  const [bx, by] = manipulatorPosition.split(',').map(Number);
-  const dx = px - bx;
-  const dy = py - by;
-  if (dx === -1 && dy === 1) return 1;
-  if (dx === 0 && dy === 1) return 2;
-  if (dx === 1 && dy === 1) return 3;
-  if (dx === -1 && dy === 0) return 4;
-  if (dx === 0 && dy === 0) return 5;
-  if (dx === 1 && dy === 0) return 6;
-  if (dx === -1 && dy === -1) return 7;
-  if (dx === 0 && dy === -1) return 8;
-  if (dx === 1 && dy === -1) return 9;
-  return null;
+const getPointButtonNumber = (offset: string): number | null => {
+  const [dx, dy] = offset.split(',').map(Number);
+  if (!Number.isFinite(dx) || !Number.isFinite(dy)) return null;
+  if (dx < -1 || dx > 1 || dy < -1 || dy > 1) return null;
+  if (dx === 0 && dy === 0) return null;
+  const xIndex = dx + 1;
+  const yIndex = 1 - dy;
+  return yIndex * 3 + xIndex + 1;
 };
 
 const getFilteringModeText = (mode: number) => {
@@ -187,7 +177,7 @@ function TaskEditModal(props: TaskEditModalProps) {
   const isInteract = task.task_type.includes('interact');
 
   const currentButton = task.turf
-    ? getPointButtonNumber(task.turf, data.manipulator_position)
+    ? getPointButtonNumber(task.turf)
     : null;
 
   return (
@@ -507,7 +497,7 @@ const TaskList = () => {
                                 '...'}
                             </Box>
                           )}
-                          {task.turf && <Box>...at {task.turf}...</Box>}
+                          {task.turf && <Box>...at [{task.turf}]...</Box>}
                           {task.time && <Box>...for {task.time} second{task.time > 1 && "s"}...</Box>}
                         </Box>
                       </Box>
@@ -606,6 +596,58 @@ export const BigManipulator = () => {
           }
         >
           <MasterControls />
+        </Section>
+        <Section
+
+        >
+          <Stack>
+            <Stack.Item grow>
+            <Button style={{
+              width: '100%',
+              lineHeight: '24px'
+            }}
+              icon={ data.disk_inserted ? "eject" : 'info' }
+              disabled={!data.disk_inserted || !!active || !!stopping}
+              color={!data.disk_inserted && "none"}
+              onClick={() => act('disk_eject')}
+            >
+              { data.disk_inserted ? "floppy drive (tasks: " + data.disk_task_count + ")" : "No drives inserted" }
+            </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button style={{
+              lineHeight: '24px'
+            }}
+                icon="download"
+                disabled={!data.disk_inserted || !!active || !!stopping}
+                onClick={() => act('disk_read')}
+              >
+                Read
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button style={{
+              lineHeight: '24px'
+            }}
+                icon="upload"
+                disabled={!data.disk_inserted || !!data.disk_read_only || !!active || !!stopping}
+                onClick={() => act('disk_write')}
+              >
+                Write
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button.Confirm style={{
+              lineHeight: '24px'
+            }}
+                icon="trash"
+                disabled={!data.disk_inserted || !!data.disk_read_only || !!active || !!stopping}
+                confirmContent="Clear?"
+                onClick={() => act('disk_clear')}
+              >Clear
+              </Button.Confirm>
+            </Stack.Item>
+          </Stack>
         </Section>
         <TaskList />
       </Window.Content>

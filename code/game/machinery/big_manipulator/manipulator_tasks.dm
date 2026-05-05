@@ -8,9 +8,10 @@
 	return
 
 /datum/manipulator_task/proc/serialize()
-	return list()
+	return list("type" = type)
 
-/datum/manipulator_task/proc/deserialize(list/task_data)
+/datum/manipulator_task/New(...)
+	..()
 	return
 
 // ===== WAIT =====
@@ -28,10 +29,23 @@
 /datum/manipulator_task/simple/wait/run_task(obj/machinery/big_manipulator/manipulator)
 	manipulator.schedule_next_cycle(time_seconds SECONDS)
 
+/datum/manipulator_task/simple/wait/serialize()
+	var/list/data = ..()
+	data["time_seconds"] = time_seconds
+	return data
+
+/datum/manipulator_task/simple/wait/New(..., serialized_data)
+	..()
+	if(serialized_data)
+		time_seconds = serialized_data["time_seconds"]
+	return
+
 // ===== BASE CARGO =====
 
 /datum/manipulator_task/cargo
 	var/turf/interaction_turf
+	var/offset_dx
+	var/offset_dy
 	var/should_use_filters = FALSE
 	var/list/atom_filters = list()
 	var/filtering_mode = TAKE_ITEMS
@@ -41,7 +55,36 @@
 	)
 	var/list/interaction_priorities = list()
 
-/datum/manipulator_task/cargo/New(turf/new_turf, manipulator_tier)
+/datum/manipulator_task/cargo/New(turf/new_turf, manipulator_tier, serialized_data)
+	if(serialized_data)
+		var/list/offset = serialized_data["offset"]
+		if(islist(offset))
+			offset_dx = offset["dx"]
+			offset_dy = offset["dy"]
+		if(new_turf)
+			interaction_turf = new_turf
+
+		should_use_filters = !!serialized_data["should_use_filters"]
+		atom_filters = serialized_data["atom_filters"] || list()
+		filtering_mode = serialized_data["filtering_mode"]
+		type_filters = serialized_data["type_filters"] || list()
+
+		var/list/prios_data = serialized_data["interaction_priorities"]
+		if(islist(prios_data))
+			interaction_priorities = list()
+			for(var/list/prio_data as anything in prios_data)
+				if(!islist(prio_data))
+					continue
+				var/prio_type = prio_data["type"]
+				if(!ispath(prio_type, /datum/manipulator_priority))
+					continue
+				var/datum/manipulator_priority/prio = new prio_type
+				prio.active = !!prio_data["active"]
+				interaction_priorities += prio
+
+		..()
+		return
+
 	if(!new_turf)
 		stack_trace("New manipulator task created with no valid turf reference passed.")
 		qdel(src)
@@ -53,6 +96,8 @@
 
 	interaction_turf = new_turf
 	interaction_priorities = fill_priority_list(manipulator_tier)
+	..()
+	return
 
 /datum/manipulator_task/cargo/proc/fill_priority_list(manipulator_tier)
 	return list()
@@ -138,6 +183,25 @@
 /datum/manipulator_task/cargo/can_run(obj/machinery/big_manipulator/manipulator)
 	return is_valid()
 
+/datum/manipulator_task/cargo/serialize()
+	var/list/data = ..()
+	data["offset"] = list(
+		"dx" = offset_dx,
+		"dy" = offset_dy,
+	)
+	data["should_use_filters"] = should_use_filters
+	data["atom_filters"] = atom_filters
+	data["filtering_mode"] = filtering_mode
+	data["type_filters"] = type_filters
+	data["interaction_priorities"] = list()
+	for(var/datum/manipulator_priority/prio as anything in interaction_priorities)
+		data["interaction_priorities"] += list(list(
+			"type" = prio.type,
+			"active" = prio.active,
+		))
+	return data
+
+
 /datum/manipulator_task/cargo/Destroy()
 	interaction_turf = null
 	QDEL_LIST(interaction_priorities)
@@ -190,6 +254,17 @@
 	manipulator.held_object = WEAKREF(selected)
 	manipulator.manipulator_arm.update_claw(manipulator.held_object)
 	manipulator.schedule_next_cycle()
+
+/datum/manipulator_task/cargo/pickup/serialize()
+	var/list/data = ..()
+	data["pickup_eagerness"] = pickup_eagerness
+	return data
+
+/datum/manipulator_task/cargo/pickup/New(turf/new_turf, manipulator_tier, serialized_data)
+	..(new_turf, manipulator_tier, serialized_data)
+	if(serialized_data)
+		pickup_eagerness = serialized_data["pickup_eagerness"]
+	return
 
 /datum/manipulator_task/cargo/pickup/proc/find_pickup_candidate(obj/machinery/big_manipulator/manipulator)
 	var/list/candidates = list()
@@ -245,6 +320,11 @@
 	do_dropoff(manipulator)
 	return TRUE
 
+/datum/manipulator_task/cargo/dropoff_base/serialize()
+	var/list/data = ..()
+	return data
+
+
 /datum/manipulator_task/cargo/dropoff_base/proc/do_dropoff(obj/machinery/big_manipulator/manipulator)
 	return
 
@@ -282,6 +362,17 @@
 
 	return TRUE
 
+/datum/manipulator_task/cargo/dropoff_base/drop/serialize()
+	var/list/data = ..()
+	data["overflow_status"] = overflow_status
+	return data
+
+/datum/manipulator_task/cargo/dropoff_base/drop/New(turf/new_turf, manipulator_tier, serialized_data)
+	..(new_turf, manipulator_tier, serialized_data)
+	if(serialized_data)
+		overflow_status = serialized_data["overflow_status"]
+	return
+
 /datum/manipulator_task/cargo/dropoff_base/drop/do_dropoff(obj/machinery/big_manipulator/manipulator)
 	manipulator.try_drop_thing(src)
 
@@ -297,6 +388,17 @@
 	if(should_use_filters && !check_filters_for_atom(target))
 		return FALSE
 	return TRUE
+
+/datum/manipulator_task/cargo/dropoff_base/throw/serialize()
+	var/list/data = ..()
+	data["throw_range"] = throw_range
+	return data
+
+/datum/manipulator_task/cargo/dropoff_base/throw/New(turf/new_turf, manipulator_tier, serialized_data)
+	..(new_turf, manipulator_tier, serialized_data)
+	if(serialized_data)
+		throw_range = serialized_data["throw_range"]
+	return
 
 /datum/manipulator_task/cargo/dropoff_base/throw/do_dropoff(obj/machinery/big_manipulator/manipulator)
 	manipulator.throw_thing(src)
@@ -327,6 +429,23 @@
 		return FALSE
 	return TRUE
 
+/datum/manipulator_task/cargo/dropoff_base/use/serialize()
+	var/list/data = ..()
+	data["worker_interaction"] = worker_interaction
+	data["use_post_interaction"] = use_post_interaction
+	data["worker_combat_mode"] = worker_combat_mode
+	data["worker_use_rmb"] = worker_use_rmb
+	return data
+
+/datum/manipulator_task/cargo/dropoff_base/use/New(turf/new_turf, manipulator_tier, serialized_data)
+	..(new_turf, manipulator_tier, serialized_data)
+	if(serialized_data)
+		worker_interaction = serialized_data["worker_interaction"]
+		use_post_interaction = serialized_data["use_post_interaction"]
+		worker_combat_mode = !!serialized_data["worker_combat_mode"]
+		worker_use_rmb = !!serialized_data["worker_use_rmb"]
+	return
+
 /datum/manipulator_task/cargo/dropoff_base/use/do_dropoff(obj/machinery/big_manipulator/manipulator)
 	manipulator.try_use_thing(src)
 
@@ -356,6 +475,23 @@
 
 /datum/manipulator_task/cargo/interact/run_task(obj/machinery/big_manipulator/manipulator)
 	manipulator.rotate_to_point(src, src, PROC_REF(try_interact))
+
+/datum/manipulator_task/cargo/interact/serialize()
+	var/list/data = ..()
+	data["worker_interaction"] = worker_interaction
+	data["use_post_interaction"] = use_post_interaction
+	data["worker_combat_mode"] = worker_combat_mode
+	data["worker_use_rmb"] = worker_use_rmb
+	return data
+
+/datum/manipulator_task/cargo/interact/New(turf/new_turf, manipulator_tier, serialized_data)
+	..(new_turf, manipulator_tier, serialized_data)
+	if(serialized_data)
+		worker_interaction = serialized_data["worker_interaction"]
+		use_post_interaction = serialized_data["use_post_interaction"]
+		worker_combat_mode = !!serialized_data["worker_combat_mode"]
+		worker_use_rmb = !!serialized_data["worker_use_rmb"]
+	return
 
 /datum/manipulator_task/cargo/interact/proc/try_interact(obj/machinery/big_manipulator/manipulator)
 	var/atom/movable/held = manipulator.held_object?.resolve()

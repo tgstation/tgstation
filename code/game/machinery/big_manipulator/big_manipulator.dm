@@ -25,6 +25,8 @@
 	var/datum/weakref/monkey_worker = null
 	/// Weakref to the ID that locked this manipulator.
 	var/datum/weakref/id_lock = null
+	/// Inserted manipulator task disk.
+	var/obj/item/disk/manipulator/task_disk = null
 	/// The manipulator's arm.
 	var/obj/effect/big_manipulator_arm/manipulator_arm = null
 	/// Is the power access wire cut? Disables the power button if `TRUE`.
@@ -52,7 +54,10 @@
 
 /// Attempts to find a suitable turf near the manipulator for creating a cargo task.
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
-	for(var/turf/checked_turf in orange(get_turf(src), 1))
+	var/turf/base = get_turf(src)
+	for(var/turf/checked_turf in orange(base, 1))
+		if(checked_turf == base)
+			continue
 		if(!isclosedturf(checked_turf))
 			return checked_turf
 	return null
@@ -93,6 +98,11 @@
 		return FALSE
 
 	tasks += new_task
+
+	if(istype(new_task, /datum/manipulator_task/cargo))
+		var/datum/manipulator_task/cargo/cargo_task = new_task
+		cargo_task.offset_dx = new_turf.x - x
+		cargo_task.offset_dy = new_turf.y - y
 
 	if(obj_flags & EMAGGED && istype(new_task, /datum/manipulator_task/cargo))
 		var/datum/manipulator_task/cargo/cargo_task = new_task
@@ -159,10 +169,15 @@
 	try_press_on(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/machinery/big_manipulator/click_alt(mob/user)
+	eject_task_disk(user)
+	return CLICK_ACTION_SUCCESS
+
 /obj/machinery/big_manipulator/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
 	context[SCREENTIP_CONTEXT_RMB] = "Toggle"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Eject disk"
 
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Interact with wires" : "Open UI"
@@ -184,6 +199,9 @@
 
 /obj/machinery/big_manipulator/Destroy(force)
 	unregister_task_turf_signals()
+	if(task_disk)
+		task_disk.forceMove(drop_location())
+		task_disk = null
 	QDEL_NULL(manipulator_arm)
 	QDEL_LIST(tasks)
 	id_lock = null
@@ -202,65 +220,6 @@
 	poor_monkey.remove_offsets(type)
 	monkey_worker = null
 
-/obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	. = ..()
-
-	if(!old_loc || !isturf(old_loc))
-		return
-
-	var/turf/old_turf = old_loc
-	var/turf/new_turf = get_turf(src)
-	if(!new_turf || old_turf == new_turf)
-		return
-
-	var/dx = new_turf.x - old_turf.x
-	var/dy = new_turf.y - old_turf.y
-
-	if(dx == 0 && dy == 0)
-		return
-
-	for(var/datum/manipulator_task/cargo/cargo_task in tasks)
-		update_task_position(cargo_task, dx, dy)
-
-	if(waiting_for_signal)
-		register_task_turf_signals()
-
-/// Updates a single cargo task's turf position by the given offset.
-/obj/machinery/big_manipulator/proc/update_task_position(datum/manipulator_task/cargo/task, dx, dy)
-	if(!task || !task.interaction_turf)
-		return
-
-	var/turf/old_turf = task.interaction_turf
-	var/turf/manipulator_turf = get_turf(src)
-	if(!manipulator_turf)
-		return
-
-	var/turf/new_turf = locate(old_turf.x + dx, old_turf.y + dy, manipulator_turf.z)
-
-	if(!anchored)
-		if(new_turf)
-			task.interaction_turf = new_turf
-		return
-
-	if(!new_turf || isclosedturf(new_turf))
-		new_turf = find_suitable_turf_near(new_turf || old_turf)
-		if(!new_turf)
-			remove_invalid_task(task)
-			return
-
-	if(new_turf == old_turf)
-		return
-
-	task.interaction_turf = new_turf
-
-/// Finds a suitable turf near the given location.
-/obj/machinery/big_manipulator/proc/find_suitable_turf_near(turf/center)
-	if(!center)
-		return null
-	for(var/turf/each in orange(1, src))
-		if(!isclosedturf(each))
-			return each
-	return null
 
 /// Removes an invalid task from the list.
 /obj/machinery/big_manipulator/proc/remove_invalid_task(datum/manipulator_task/task)
@@ -308,6 +267,21 @@
 /obj/machinery/big_manipulator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
 		return NONE
+
+	if(istype(tool, /obj/item/disk/manipulator))
+		if(on || stopping)
+			balloon_alert(user, "turn it off first!")
+			return ITEM_INTERACT_BLOCKING
+		if(task_disk)
+			task_disk.forceMove(drop_location())
+			task_disk = null
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		task_disk = tool
+		balloon_alert(user, "disk inserted")
+		SStgui.update_uis(src)
+		return ITEM_INTERACT_SUCCESS
+
 	if(!panel_open || !is_wire_tool(tool))
 		return NONE
 	wires.interact(user)
@@ -475,6 +449,9 @@
 	data["manipulator_position"] = "[x],[y]"
 	data["tasking_strategy"] = tasking_strategy
 	data["has_monkey"] = !isnull(monkey_worker?.resolve())
+	data["disk_inserted"] = !isnull(task_disk)
+	data["disk_read_only"] = task_disk?.read_only
+	data["disk_task_count"] = length(task_disk?.tasks_data)
 
 	var/list/tasks_data = list()
 	for(var/datum/manipulator_task/task in tasks)
@@ -485,8 +462,7 @@
 		if(istype(task, /datum/manipulator_task/cargo/pickup))
 			td["task_type"] = TASK_TYPE_PICKUP
 			var/datum/manipulator_task/cargo/pickup/t = task
-			var/turf/turf = t.interaction_turf
-			td["turf"] = turf ? "[turf.x],[turf.y]" : "0,0"
+			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
 			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
@@ -496,8 +472,7 @@
 		else if(istype(task, /datum/manipulator_task/cargo/dropoff_base/drop))
 			td["task_type"] = TASK_TYPE_DROP
 			var/datum/manipulator_task/cargo/dropoff_base/drop/t = task
-			var/turf/turf = t.interaction_turf
-			td["turf"] = turf ? "[turf.x],[turf.y]" : "0,0"
+			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
 			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
@@ -507,8 +482,7 @@
 		else if(istype(task, /datum/manipulator_task/cargo/dropoff_base/throw))
 			td["task_type"] = TASK_TYPE_THROW
 			var/datum/manipulator_task/cargo/dropoff_base/throw/t = task
-			var/turf/turf = t.interaction_turf
-			td["turf"] = turf ? "[turf.x],[turf.y]" : "0,0"
+			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
 			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
@@ -518,8 +492,7 @@
 		else if(istype(task, /datum/manipulator_task/cargo/dropoff_base/use))
 			td["task_type"] = TASK_TYPE_USE
 			var/datum/manipulator_task/cargo/dropoff_base/use/t = task
-			var/turf/turf = t.interaction_turf
-			td["turf"] = turf ? "[turf.x],[turf.y]" : "0,0"
+			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
 			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
@@ -532,8 +505,7 @@
 		else if(istype(task, /datum/manipulator_task/cargo/interact))
 			td["task_type"] = TASK_TYPE_INTERACT
 			var/datum/manipulator_task/cargo/interact/t = task
-			var/turf/turf = t.interaction_turf
-			td["turf"] = turf ? "[turf.x],[turf.y]" : "0,0"
+			td["turf"] = "[t.offset_dx],[t.offset_dy]"
 			td["filters_status"] = t.should_use_filters
 			td["filtering_mode"] = t.filtering_mode
 			td["item_filters"] = _collect_filter_names(t.atom_filters)
@@ -619,6 +591,127 @@
 				maybe_wake()
 			return success
 
+		if("disk_eject")
+			return eject_task_disk(ui.user)
+
+		if("disk_read")
+			if(read_disk_tasks(ui.user))
+				maybe_wake()
+			return TRUE
+
+		if("disk_write")
+			return write_disk_tasks(ui.user)
+
+		if("disk_clear")
+			return clear_disk_tasks(ui.user)
+
+
+/obj/machinery/big_manipulator/proc/eject_task_disk(mob/user)
+	if(on || stopping)
+		balloon_alert(user, "turn it off first!")
+		return FALSE
+	if(!task_disk)
+		return FALSE
+	var/obj/item/disk/manipulator/d = task_disk
+	task_disk = null
+	if(user && istype(user) && user.put_in_hands(d))
+		balloon_alert(user, "disk ejected")
+	else
+		d.forceMove(drop_location())
+		balloon_alert(user, "disk dropped")
+	SStgui.update_uis(src)
+	return TRUE
+
+/obj/machinery/big_manipulator/proc/clear_disk_tasks(mob/user)
+	if(on || stopping)
+		balloon_alert(user, "turn it off first!")
+		return FALSE
+	if(!task_disk)
+		return FALSE
+	if(task_disk.read_only)
+		balloon_alert(user, "disk protected")
+		return FALSE
+	task_disk.set_tasks(list())
+	balloon_alert(user, "cleared")
+	SStgui.update_uis(src)
+	return TRUE
+
+/obj/machinery/big_manipulator/proc/write_disk_tasks(mob/user)
+	if(on || stopping)
+		balloon_alert(user, "turn it off first!")
+		return FALSE
+	if(!task_disk)
+		return FALSE
+	if(task_disk.read_only)
+		balloon_alert(user, "disk protected")
+		return FALSE
+
+	var/list/out = list()
+	for(var/datum/manipulator_task/task as anything in tasks)
+		out += list(task.serialize())
+
+	task_disk.set_tasks(out)
+	balloon_alert(user, "written")
+	SStgui.update_uis(src)
+	return TRUE
+
+/obj/machinery/big_manipulator/proc/read_disk_tasks(mob/user)
+	if(on || stopping)
+		balloon_alert(user, "turn it off first!")
+		return FALSE
+	if(!task_disk)
+		return FALSE
+
+	QDEL_LIST(tasks)
+	tasks = list()
+	current_task = null
+
+	var/turf/base = get_turf(src)
+	var/datum/stock_part/servo/locate_servo = locate() in component_parts
+	var/manipulator_tier = locate_servo ? locate_servo.tier : 1
+
+	for(var/list/task_data as anything in task_disk.tasks_data)
+		if(length(tasks) >= interaction_point_limit)
+			break
+		if(!islist(task_data))
+			continue
+		var/task_type = task_data["type"]
+		if(!ispath(task_type, /datum/manipulator_task))
+			continue
+		var/datum/manipulator_task/new_task
+		if(ispath(task_type, /datum/manipulator_task/cargo))
+			if(!base)
+				continue
+			var/list/offset = task_data["offset"]
+			if(!islist(offset))
+				continue
+			var/dx = offset["dx"]
+			var/dy = offset["dy"]
+			if(!isnum(dx) || !isnum(dy))
+				continue
+			if(dx < -1 || dx > 1 || dy < -1 || dy > 1)
+				continue
+			if(dx == 0 && dy == 0)
+				continue
+			var/turf/target_turf = locate(base.x + dx, base.y + dy, base.z)
+			if(!target_turf || isclosedturf(target_turf))
+				continue
+			new_task = new task_type(target_turf, manipulator_tier, serialized_data = task_data)
+			if(istype(new_task, /datum/manipulator_task/cargo))
+				var/datum/manipulator_task/cargo/c = new_task
+				c.offset_dx = dx
+				c.offset_dy = dy
+		else
+			new_task = new task_type(serialized_data = task_data)
+		if(!new_task || QDELETED(new_task))
+			continue
+		tasks += new_task
+
+	process_upgrades()
+	validate_all_tasks()
+	balloon_alert(user, "loaded")
+	SStgui.update_uis(src)
+	return TRUE
 
 /obj/machinery/big_manipulator/proc/adjust_param_for_task(task_ref, param, value, mob/user)
 	if(!param)
@@ -668,6 +761,8 @@
 			if(!new_turf || isclosedturf(new_turf))
 				return FALSE
 			cargo_task.interaction_turf = new_turf
+			cargo_task.offset_dx = dx
+			cargo_task.offset_dy = dy
 			return TRUE
 
 		if("toggle_filter_skip")

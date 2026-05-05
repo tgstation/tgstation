@@ -49,4 +49,7 @@ export interface ManipulatorData {
   manipulator_position: string;
   tasking_strategy: string;
   has_monkey: BooleanLike;
+  disk_inserted: BooleanLike;
+  disk_read_only: BooleanLike;
+  disk_task_count: number;
 }
