@@ -259,7 +259,12 @@
  */
 /mob/living/carbon/proc/item_coverage_changed(added_slots, removed_slots)
 	update_clothing(hidden_slots_to_inventory_slots(added_slots|removed_slots))
-	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
+	if((added_slots|removed_slots) & (HIDEHAIR|HIDEFACIALHAIR))
+		update_hair()
+	if((added_slots|removed_slots) & HIDEEYES)
+		update_eyes()
+	// HIDEJUMPSUIT is for digitigrade legs, HIDEEARS is for lizard frills, the others should be obvious
+	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
 		update_body()
 
 /// Returns the helmet if an air tank compatible helmet is equipped.
