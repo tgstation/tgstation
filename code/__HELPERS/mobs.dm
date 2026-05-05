@@ -413,6 +413,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 
 		if(isobserver(M))
 			var/rendered_message = message
+			override = TRUE
 
 			if(follow_target)
 				var/F
@@ -425,12 +426,13 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 				var/turf_link = TURF_LINK(M, turf_target)
 				rendered_message = "[turf_link] [message]"
 
-			if(original_message && M.see_invisible >= follow_target.invisibility && (!SSlag_switch.measures[DISABLE_DEAD_RUNECHAT] || HAS_TRAIT(M, TRAIT_BYPASS_MEASURES)) && M.runechat_prefs_check(M))
-				M.create_chat_message(follow_target, /datum/language/common, original_message, list(SPAN_ITALICS))
-
 			to_chat(M, rendered_message, avoid_highlighting = speaker_key == M.key)
 		else
 			to_chat(M, message, avoid_highlighting = speaker_key == M.key)
+
+		// Ghost runechat
+		if(original_message && (override || M.see_invisible >= follow_target.invisibility) && (!SSlag_switch.measures[DISABLE_DEAD_RUNECHAT] || HAS_TRAIT(M, TRAIT_BYPASS_MEASURES)) && M.runechat_prefs_check(M))
+			M.create_chat_message(follow_target, /datum/language/common, original_message, list(SPAN_ITALICS))
 
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
