@@ -203,7 +203,6 @@ SUBSYSTEM_DEF(ticker)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
-				SSlag_switch.set_measure(DISABLE_DEAD_RUNECHAT, FALSE) // Turn ghost runechat off (anti-lag)
 				declare_completion(force_ending)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
