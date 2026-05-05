@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Changed how chat highlights are styled - any color should look good now, regardless of light or dark mode."
