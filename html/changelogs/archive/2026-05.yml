@@ -39,6 +39,19 @@
   Melbert:
   - refactor: Refactored hair and eye rendering a bit, they're now rendered separately
       to the head - report any oddities with either. Lips too but to a lesser degree.
+  - rscadd: Adds Penguin tier zero gene infusion (gives you penguin ears, which make
+      you waddle)
+  - rscadd: Adds Plant tier zero gene infusion (gives you plant hair / organs, which
+      do nothing)
+  - rscadd: Adds Stoat tier one gene infusion (makes you tall, snouted, gives you
+      finer instincts, allows you to dodge large foes)
+  - rscadd: April 26th is Chernobyl Disaster Remembrance Day.
+  Time-Green:
+  - rscadd: Adds three new maintpill-only chems! Go eat more maintpills, and maybe
+      you'll find out what they are :)
+  - rscadd: Adds a new secret chem, which can rarely be found on a petrified piece
+      of paper somewhere in maintenance...
+  - bugfix: Fixes miscellaneous sources of petrification lasting 10x as long as intended
   Y0SH1M4S73R:
   - rscadd: Ghosts and spirits have once again been split into two species. Becoming
       a ghost is only possible through a lucky polymorph, or the "Forsake Body" spell,
@@ -47,3 +60,15 @@
   - balance: Ghost's passthrough ability has unlimited range and no longer leaves
       behind a grave. It is affected by holy water, and makes you drop all your equipment,
       along with any bodyparts and organs that are not ghostly in nature.
+  lelandkemble:
+  - bugfix: You can now get the paddles from a compact defib by clicking on it
+  strandsofivy:
+  - bugfix: The PDA direct messenger will no longer overzealously break words, resulting
+      in cleaner chat message formatting overall.
+  vinylspiders:
+  - admin: invisimin now makes the admin invisible to ghosts/observers, as well as
+      pierce-immune and able to phase through walls
+  - qol: aghosting while invisimin'd or stealthmin'd will carry over your invisibility
+      to the aghost so you no longer have to trigger it again
+  - admin: added a new admin verb, 'Toggle Admin ESP', which lets you see ghosts and
+      invisimins while active
