@@ -41,8 +41,8 @@
 /datum/component/digitigrade_limb/proc/on_attach(obj/item/bodypart/limb, mob/living/carbon/new_limb_owner)
 	SIGNAL_HANDLER
 
-	RegisterSignal(new_limb_owner, COMSIG_ITEM_EQUIPPED, PROC_REF(equipped_item))
-	RegisterSignal(new_limb_owner, COMSIG_ITEM_DROPPED, PROC_REF(unequipped_item))
+	RegisterSignal(new_limb_owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(equipped_item))
+	RegisterSignal(new_limb_owner, COMSIG_MOB_DROPPED_ITEM, PROC_REF(unequipped_item))
 	RegisterSignal(new_limb_owner, COMSIG_CARBON_ITEM_COVERAGE_CHANGED, PROC_REF(coverage_changed))
 	for(var/obj/item/equipped as anything in new_limb_owner.get_equipped_items())
 		if(equipped_item(equipped, new_limb_owner, new_limb_owner.get_slot_by_item(equipped)))
@@ -51,8 +51,8 @@
 /datum/component/digitigrade_limb/proc/on_remove(obj/item/bodypart/limb, mob/living/carbon/old_limb_owner)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(old_limb_owner, COMSIG_ITEM_EQUIPPED)
-	UnregisterSignal(old_limb_owner, COMSIG_ITEM_DROPPED)
+	UnregisterSignal(old_limb_owner, COMSIG_MOB_EQUIPPED_ITEM)
+	UnregisterSignal(old_limb_owner, COMSIG_MOB_DROPPED_ITEM)
 	UnregisterSignal(old_limb_owner, COMSIG_CARBON_ITEM_COVERAGE_CHANGED)
 	LAZYNULL(squashing_us)
 	update_limb_id()
@@ -112,18 +112,20 @@
 /// Digitigrade limbs that are butchered add the component to the replacement limb
 /datum/component/digitigrade_limb/proc/on_butchered(datum/source, obj/item/bodypart/replacement)
 	SIGNAL_HANDLER
-	replacement.AddComponent(/datum/component/digitigrade_limb, "[initial(replacement.limb_id)]_[BODYPART_ID_DIGITIGRADE]")
+	squashed_id = "[initial(replacement.limb_id)]_[BODYPART_ID_DIGITIGRADE]"
+	free_id = initial(replacement.limb_id)
+	replacement.TakeComponent(src)
 
 /datum/component/digitigrade_limb/proc/update_limb_id(sprite_update = TRUE)
 	var/obj/item/bodypart/limb = parent
 	var/old_id = limb.limb_id
 	if(LAZYLEN(squashing_us))
 		limb.limb_id = squashed_id
-		limb.bodyshape &= ~BODYSHAPE_DIGITIGRADE
+		limb.remove_bodyshape(BODYSHAPE_DIGITIGRADE)
 
 	else
 		limb.limb_id = free_id
-		limb.bodyshape |= BODYSHAPE_DIGITIGRADE
+		limb.add_bodyshape(BODYSHAPE_DIGITIGRADE)
 
 	if(!sprite_update || old_id == limb.limb_id)
 		return
@@ -138,3 +140,5 @@
 			thing.update_slot_icon()
 	// Updates the actual mob sprite
 	limb.owner.update_body_parts()
+	// Underwear too
+	limb.owner.update_underwear()

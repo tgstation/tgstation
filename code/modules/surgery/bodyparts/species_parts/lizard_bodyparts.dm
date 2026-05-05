@@ -61,7 +61,7 @@
 
 /obj/item/bodypart/leg/left/digitigrade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/digitigrade_limb, BODYPART_ID_DIGITIGRADE, SPECIES_LIZARD)
+	AddComponent(/datum/component/digitigrade_limb, SPECIES_LIZARD, initial(limb_id))
 
 /obj/item/bodypart/leg/right/digitigrade
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
@@ -73,4 +73,4 @@
 
 /obj/item/bodypart/leg/right/digitigrade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/digitigrade_limb, BODYPART_ID_DIGITIGRADE, SPECIES_LIZARD)
+	AddComponent(/datum/component/digitigrade_limb, SPECIES_LIZARD, initial(limb_id))

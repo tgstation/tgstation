@@ -858,7 +858,10 @@ generate/load female uniform sprites matching all previously decided variables
 	update_underwear()
 	return ..()
 
-/mob/living/carbon/human/proc/update_underwear()
+/mob/living/carbon/proc/update_underwear()
+	return
+
+/mob/living/carbon/human/update_underwear()
 	remove_overlay(BODY_LAYER)
 	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(src, TRAIT_NO_UNDERWEAR))
 		return
