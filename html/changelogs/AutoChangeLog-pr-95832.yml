@@ -1,6 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - balance: "Cargo manifest stamp payments/penalties are now consistently applied as a percentage of the order value"
-  - balance: "Maximum payment for an approved cargo manifest raised to 120cr"
-  - balance: "Cargo orders that arrive empty and stamped denied receive a full refund regardless of crate return"

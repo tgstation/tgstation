@@ -1,6 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - rscadd: "Ghosts and spirits have once again been split into two species. Becoming a ghost is only possible through a lucky polymorph, or the \"Forsake Body\" spell, available for two points in a wizard's spellbook."
-  - rscdel: "Spirits no longer have the passthrough ability."
-  - balance: "Ghost's passthrough ability has unlimited range and no longer leaves behind a grave. It is affected by holy water, and makes you drop all your equipment, along with any bodyparts and organs that are not ghostly in nature."

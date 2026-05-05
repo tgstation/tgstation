@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored hair and eye rendering a bit, they're now rendered separately to the head - report any oddities with either. Lips too but to a lesser degree."
