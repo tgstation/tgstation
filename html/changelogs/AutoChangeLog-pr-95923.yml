@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds Penguin tier zero gene infusion (gives you penguin ears, which make you waddle)"
+  - rscadd: "Adds Plant tier zero gene infusion (gives you plant hair / organs, which do nothing)"
+  - rscadd: "Adds Stoat tier one gene infusion (makes you tall, snouted, gives you finer instincts, allows you to dodge large foes)"
