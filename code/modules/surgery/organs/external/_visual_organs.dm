@@ -144,7 +144,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	feature_key = FEATURE_FRILLS
 
 /datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
-	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEEARS)
+	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
 
 ///Guess what part of the lizard this is?
 /obj/item/organ/snout
