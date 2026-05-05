@@ -37,6 +37,8 @@
 #define CRAFT_IGNORE_DO_AFTER (1<<9)
 /// This craft won't change the materials of the resulting item to match that of the combined components
 #define CRAFT_NO_MATERIALS (1<<10)
+/// This craft can't be performed by silicons, to prevent AIs and Cyborgs from making golem shells to change their laws/operate things for them that require hands.
+#define CRAFT_NO_SILICONS (1<<11)
 
 //Crafting blacklist behaviors
 /// By default, blacklist the result if it's not in reqs
