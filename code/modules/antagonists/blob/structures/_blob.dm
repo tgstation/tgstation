@@ -157,11 +157,18 @@
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
 
-/// Can this blob structure make further blobs? Defaults to true. For blob structure types that can't expand, but can still fight.
-/obj/structure/blob/proc/can_make_blob()
+/// Can this blob structure make further blobs? For special cases (e.g. blobs not going past crit mass count if not ending the round)
+/obj/structure/blob/proc/can_make_blob(mob/eye/blob/controller = null)
+	// If it's not being done with a controller, it's being done automatically. Because it's not player-controlled, it's not worth worrying about.
+	if(!controller)
+		return TRUE
+	// If it's not supposed to end the round and it's at the win count, don't make more. (400 tiles is still a lot to fight through...)
+	if(!controller.end_round_on_victory && (controller.blobs_legit.len >= controller.blobwincount))
+		return FALSE
+	// Otherwise, it's probably fine.
 	return TRUE
 
-/obj/structure/blob/proc/expand(turf/T = null, controller = null, expand_reaction = 1)
+/obj/structure/blob/proc/expand(turf/T = null, mob/eye/blob/controller = null, expand_reaction = 1)
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
@@ -176,7 +183,7 @@
 		return
 	var/make_blob = TRUE //can we make a blob?
 
-	if(!can_make_blob())
+	if(!can_make_blob(controller))
 		make_blob = FALSE
 
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
