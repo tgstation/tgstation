@@ -69,7 +69,7 @@
 /datum/status_effect/cuffed_item/proc/on_examine_more(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_warning("There's [cuffed.examine_title(user)] bound to [owner.p_their()] [owner.get_held_index_name(owner.get_held_index_of_item(cuffed))] by [cuffs.examine_title(user)].")
+	examine_list += span_warning("There's [cuffed.examine_title(user)] bound to [owner.p_their()] wrist by [cuffs.examine_title(user)].")
 
 ///What happens if one of the items is moved away from the mob
 /datum/status_effect/cuffed_item/proc/on_displaced(datum/source)
