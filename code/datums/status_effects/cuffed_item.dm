@@ -14,10 +14,10 @@
 	var/obj/item/cuffed
 	///Reference to the pair of handcuffs used to bind the item
 	var/obj/item/restraints/handcuffs/cuffs
-
-	var/datum/component/leash/link_effect
-	var/datum/component/tug_towards/tug_effect
-	var/datum/beam/beam_effect
+	// Tracks the various things we apply to whatever we are cuffed to
+	VAR_PRIVATE/datum/component/leash/link_effect
+	VAR_PRIVATE/datum/component/tug_towards/tug_effect
+	VAR_PRIVATE/datum/beam/beam_effect
 
 /datum/status_effect/cuffed_item/on_creation(mob/living/new_owner, obj/item/cuffed, obj/item/restraints/handcuffs/cuffs)
 	src.cuffed = cuffed
