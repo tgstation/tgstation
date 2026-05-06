@@ -6,7 +6,7 @@
 
 	// Test lizards as their own thing so we can get more coverage on their features
 	var/mob/living/carbon/human/lizard = allocate(/mob/living/carbon/human/dummy/consistent)
-	lizard.dna.features[FEATURE_MUTANT_COLOR] = "#099"
+	lizard.dna.features[FEATURE_MUTANT_COLOR] = "#886600"
 	lizard.dna.features[FEATURE_TAIL_LIZARD] = "Light Tiger"
 	lizard.dna.features[FEATURE_SNOUT] = "Sharp + Light"
 	lizard.dna.features[FEATURE_HORNS] = "Simple"
