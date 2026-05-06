@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "animating a wand of animation works, and that animated wand of animation animating a wand of animation does not runtime"
