@@ -225,7 +225,6 @@
 	blue.set_value(clamp(blue.value, 0, 255))
 	green.set_value(clamp(green.value, 0, 255))
 	var/signboard_color = rgb(red.value, green.value, blue.value)
-	testing("color_received: signboard color: [signboard_color]")
 	if(signboard_color && signboard_color != rgb(0, 0, 0) && is_color_dark_with_saturation(signboard_color, 25))
 		fail_reason.set_output("Color too dark to display.")
 		on_fail.set_output(COMPONENT_SIGNAL)
