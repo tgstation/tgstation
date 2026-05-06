@@ -72,6 +72,9 @@
 		return
 	GLOB.religious_sect.rites_list.Remove(src.type)
 
+/datum/religion_rites/proc/refund(percent = 1.0)
+	GLOB.religious_sect.adjust_favor(favor_cost * percent)
+
 /**** Mechanical God ****/
 
 /datum/religion_rites/synthconversion
@@ -241,7 +244,7 @@
 		return FALSE
 	//uses HAS_TRAIT_FROM because junkies are also hopelessly addicted
 	if(HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
-		to_chat(user, span_warning("You've already adapted.</b>"))
+		to_chat(user, span_warning("You've already adapted."))
 		return FALSE
 	return ..()
 

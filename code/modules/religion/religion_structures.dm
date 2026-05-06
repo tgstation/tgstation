@@ -11,6 +11,8 @@
 	buckle_lying = 90 //we turn to you!
 	/// Do we have lit candles?
 	var/lit_candles = TRUE
+	/// Optional emissive overlay
+	var/emissive_icon_state
 
 /obj/structure/altar/Initialize(mapload)
 	. = ..()
@@ -21,7 +23,10 @@
 /obj/structure/altar/update_overlays()
 	. = ..()
 	if (lit_candles)
-		. += "convertaltarcandle"
+		. += mutable_appearance(icon, "convertaltarcandle", alpha = src.alpha)
+		. += emissive_appearance(icon, "convertaltarcandle", src, alpha = src.alpha)
+	if(emissive_icon_state)
+		. += emissive_appearance(icon, emissive_icon_state, src, alpha = src.alpha)
 
 /obj/structure/altar/attack_hand(mob/living/user, list/modifiers)
 	if(!Adjacent(user) || !user.pulling)
@@ -75,13 +80,16 @@
 		lit_candles = FALSE
 		icon = initial(icon)
 		icon_state = initial(icon_state)
+		emissive_icon_state = initial(emissive_icon_state)
 	else
-		lit_candles = TRUE
 		sect_to_altar = GLOB.religious_sect
+		lit_candles = GLOB.religious_sect.candle_overlay
 		if(sect_to_altar.altar_icon)
 			icon = sect_to_altar.altar_icon
 		if(sect_to_altar.altar_icon_state)
 			icon_state = sect_to_altar.altar_icon_state
+		if(sect_to_altar.altar_emissive_icon_state)
+			emissive_icon_state = sect_to_altar.altar_emissive_icon_state
 	update_appearance(UPDATE_OVERLAYS) //Light the candles!
 
 /obj/structure/altar/of_gods/proc/get_chaplains()

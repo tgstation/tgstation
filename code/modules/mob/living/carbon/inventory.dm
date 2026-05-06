@@ -172,7 +172,8 @@
 	if(!(slot & item.slot_flags)) // Things below only update if slotted in (ie: not held)
 		return
 	if(item.hair_mask)
-		update_body()
+		LAZYADD(hair_masks, item.hair_mask)
+		update_hair()
 	add_item_coverage(item)
 
 /mob/living/carbon/has_unequipped(obj/item/item)
@@ -182,7 +183,8 @@
 
 	hud_used?.update_locked_slots()
 	if(item.hair_mask)
-		update_body()
+		LAZYREMOVE(hair_masks, item.hair_mask)
+		update_hair()
 	remove_item_coverage(item)
 
 /mob/living/carbon/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
@@ -443,6 +445,8 @@
 	var/covered_flags = NONE
 	for(var/obj/item/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
 		if(worn_item.slot_flags & exluded_equipment_slots)
+			continue
+		if(worn_item.flags_cover & ALLOW_SURGERY_THROUGH)
 			continue
 		covered_flags |= worn_item.body_parts_covered
 
