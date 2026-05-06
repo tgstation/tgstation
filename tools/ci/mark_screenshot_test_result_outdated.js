@@ -28,7 +28,7 @@ export async function markScreenshotTestResultOutdated({ github, context }) {
     {
       owner: context.repo.owner,
       repo: context.repo.repo,
-      pull_number: context.payload.pull_request.number,
+      prNumber: context.payload.pull_request.number,
     },
   );
   const oudatedCommentIds = prComments.repository.pullRequest.comments.nodes
