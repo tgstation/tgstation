@@ -144,9 +144,7 @@
 	update_appearance()
 
 /obj/structure/signboard/holosign/proc/sanitize_color(color)
-	testing("before sanitizing: [color]")
 	. = sanitize_hexcolor(color)
-	testing("sanitized color: [. || "(null)"]")
 	if(!. || . == COLOR_BLACK)
 		return null
 
