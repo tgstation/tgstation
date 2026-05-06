@@ -472,6 +472,7 @@
 			if(G.can_reenter_corpse || even_if_they_cant_reenter)
 				return G
 			break
+	return FALSE
 
 /datum/mind/proc/grab_ghost(force)
 	var/mob/dead/observer/G = get_ghost(even_if_they_cant_reenter = force)
