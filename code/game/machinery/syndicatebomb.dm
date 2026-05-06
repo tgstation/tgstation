@@ -20,7 +20,7 @@
 	/// What is the lowest amount of time we can set the timer to?
 	var/minimum_timer = SYNDIEBOMB_MIN_TIMER_SECONDS
 	/// What is the highest amount of time we can set the timer to?
-	var/maximum_timer = 100 MINUTES
+	var/maximum_timer = 100*60 // 100 MINUTES // not using the MINUTES define because those are for deciseconds
 	/// What is the default amount of time we set the timer to?
 	var/timer_set = SYNDIEBOMB_MIN_TIMER_SECONDS
 	/// Can we be unanchored?
