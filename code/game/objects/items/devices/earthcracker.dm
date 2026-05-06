@@ -82,9 +82,6 @@
 		update_appearance(UPDATE_ICON)
 		return NONE
 
-/obj/item/earthcracker/Destroy(force)
-	. = ..()
-
 /obj/item/earthcracker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	switch(status)
 		if(EARTHCRACKER_ACTIVE)
