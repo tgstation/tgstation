@@ -2,6 +2,10 @@
 #define EARTHCRACKER_ACTIVE "active"
 #define EARTHCRACKER_SPENT "spent"
 
+/**
+ * The E-2 Earthcracker, a traitor device that creates intentional weakpoints on the station after use, which can be triggered via explosions.
+ * See weakpoint.dm for more specifics on their effects.
+ */
 /obj/item/earthcracker
 	name = "E-2 Earthcracker"
 	desc = "A nasty automated pilebunker can be used to create a massive weakpoint in flooring,\
@@ -35,7 +39,7 @@
 		if(EARTHCRACKER_ACTIVE)
 			if(activation_timer)
 				return FALSE
-			var/response = (tgui_alert(user, "Activate the earthcracker?", "Activate?", list("Yes", "No")) == "Yes")
+			var/response = tgui_alert(user, "Activate the earthcracker?", "Activate?", list("Yes", "No")) == "Yes"
 			if(!response)
 				return FALSE
 			if(!user.Adjacent(src))
@@ -80,7 +84,6 @@
 
 /obj/item/earthcracker/Destroy(force)
 	. = ..()
-	QDEL_NULL(particles)
 
 /obj/item/earthcracker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	switch(status)
@@ -122,7 +125,7 @@
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
-/** The fun part. We spawn a huge weakpoint here. */
+/// The fun part. We spawn a huge weakpoint here.
 /obj/item/earthcracker/proc/strike_the_earth()
 	if(QDELETED(src))
 		return
@@ -131,9 +134,7 @@
 	new weakpoint_type(cracked_hull)
 	handle_after_activation(cracked_hull)
 
-/**
- * Cleanup after an earthcracker is activated either for sabotage or mining.
- */
+/// Cleanup after an earthcracker is activated either for sabotage or mining.
 /obj/item/earthcracker/proc/handle_after_activation(turf/cracked_hull)
 	do_sparks(2, FALSE, src)
 	cracked_hull.levelupdate()
@@ -143,16 +144,14 @@
 	particles = new /particles/smoke/burning/small
 	activation_timer = null
 
-/** Called after the earthcracker activates. */
+/// Called after the earthcracker activates.
 /obj/item/earthcracker/proc/post_break()
 	deconstruct(TRUE)
 
-/**
- * When this item is used on a mining Z, we perform an action that breaks all rocks in a radius around us, the same as starting an ore vent wave.
- */
+/// When this item is used on a mining Z, we perform an action that breaks all rocks in a radius around us, the same as starting an ore vent wave.
 /obj/item/earthcracker/proc/mining_act(mob/user)
 	for(var/i in 1 to 5)
-		for(var/turf/rock in oview(i))
+		for(var/turf/rock in oview(i)) // This collects a list of rings of turfs (in a growing radius of i) that we'll applying logic to "drill" below.
 
 			if(istype(rock, /turf/closed/mineral))
 				if(prob(50 + (i * 8)))
@@ -169,7 +168,7 @@
 		sleep(0.6 SECONDS)
 	handle_after_activation()
 
-// Small subtype for shenanigans.
+/// Small subtype for shenanigans.
 /obj/item/earthcracker/small
 	name = "E-1 Earthcracker"
 	desc = "A rusty automated pilebunker can be used to create a weakpoint in flooring,\
