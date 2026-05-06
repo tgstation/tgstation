@@ -14,6 +14,8 @@
 	var/obj/item/cuffed
 	///Reference to the pair of handcuffs used to bind the item
 	var/obj/item/restraints/handcuffs/cuffs
+
+	var/obj/item/bodypart/cuffed_to
 	// Tracks the various things we apply to whatever we are cuffed to
 	VAR_PRIVATE/datum/component/leash/link_effect
 	VAR_PRIVATE/datum/component/tug_towards/tug_effect
@@ -27,7 +29,8 @@
 
 /datum/status_effect/cuffed_item/on_apply()
 	owner.temporarilyRemoveItemFromInventory(cuffs, force = TRUE)
-	if(!update_link())
+	cuffed_to = owner.get_inactive_hand()
+	if(isnull(cuffed_to) || !update_link())
 		owner.put_in_hands(cuffs)
 		qdel(src)
 		return FALSE
@@ -44,9 +47,12 @@
 	RegisterSignals(cuffs, list(COMSIG_ITEM_EQUIPPED, COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(cleanup_effect))
 	RegisterSignal(cuffs, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(on_item_update_appearance))
 
+	RegisterSignal(cuffed_to, COMSIG_QDELETING, PROC_REF(cleanup_effect))
+	RegisterSignals(cuffed_to, COMSIG_BODYPART_REMOVED, PROC_REF(cuffed_to_removed))
+
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
 
-	owner.log_message("bound [src] to themselves with restraints", LOG_GAME)
+	owner.log_message("bound [src] to [owner.p_themselves()] with restraints", LOG_GAME)
 
 	return TRUE
 
@@ -54,7 +60,8 @@
 	//Prevent possible recursions from these signals
 	UnregisterSignal(cuffed, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_ITEM_PRE_STORAGE_INSERTION))
 	UnregisterSignal(cuffs, list(COMSIG_ITEM_EQUIPPED, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-
+	UnregisterSignal(cuffed_to, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING))
+	UnregisterSignal(owner, list(COMSIG_ATOM_EXAMINE_MORE, COMSIG_CARBON_POST_ATTACH_LIMB))
 	cuffed = null
 
 	if(!QDELETED(cuffs))
@@ -63,18 +70,45 @@
 			cuffs.forceMove(owner.drop_location())
 	cuffs = null
 
+	cuffed_to = null
+
 	break_leash()
 
 ///Called when someone examines the owner twice, so they can know if someone has a cuffed item
 /datum/status_effect/cuffed_item/proc/on_examine_more(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_warning("There's [cuffed.examine_title(user)] bound to [owner.p_their()] wrist by [cuffs.examine_title(user)].")
+	examine_list += span_warning("There's [cuffed.examine_title(user)] bound to [owner.p_their()] \
+		[cuffed_to.plaintext_zone] by [cuffs.examine_title(user)].")
 
 ///What happens if one of the items is moved away from the mob
 /datum/status_effect/cuffed_item/proc/on_displaced(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)
+
+/// What happens if the limb we're cuffed to is removed?
+/datum/status_effect/cuffed_item/proc/cuffed_to_removed(datum/source, mob/living/carbon/owner, special)
+	SIGNAL_HANDLER
+	// if special we will just wait for the new limb
+	if(special)
+		UnregisterSignal(cuffed_to, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED))
+		cuffed_to = null
+		RegisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(new_cuffed_to_attached))
+		return
+	// otherwise we wipe the effect
+	qdel(src)
+
+/// Specifically if our cuffed limb is removed "specially", change it to the newly applied arm
+/datum/status_effect/cuffed_item/proc/new_cuffed_to_attached(datum/source, obj/item/bodypart/limb, special)
+	SIGNAL_HANDLER
+
+	if(!istype(limb, /obj/item/bodypart/arm))
+		return
+
+	cuffed_to = limb
+	RegisterSignal(cuffed_to, COMSIG_QDELETING, PROC_REF(cleanup_effect))
+	RegisterSignal(cuffed_to, COMSIG_BODYPART_REMOVED, PROC_REF(cuffed_to_removed))
+	UnregisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB)
 
 /// Check if we need to spawn the tether effect or not
 /datum/status_effect/cuffed_item/proc/check_for_link(...)
