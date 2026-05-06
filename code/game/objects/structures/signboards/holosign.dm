@@ -147,7 +147,7 @@
 	testing("before sanitizing: [color]")
 	. = sanitize_hexcolor(color)
 	testing("sanitized color: [. || "(null)"]")
-	if(!. || . == "#000000")
+	if(!. || . == COLOR_BLACK)
 		return null
 
 /obj/structure/signboard/holosign/proc/set_color(new_color)
