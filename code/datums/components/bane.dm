@@ -162,14 +162,20 @@
 	if(!is_bane_target(hit_atom))
 		return
 
+	var/list/damage_modifiers = list("[FORCE_MULTIPLIER]" = damage_multiplier, "[FORCE_MODIFIER]" = added_damage)
+	pre_bane_callback?.Invoke(target, firer, damage_modifiers)
+
+	// We're not modifying the throwforce of the item we're just applying more damage as a separate damage event
+	// That's why we do damage_multiplier - 1 (so that a 1.5x multiplier would apply 0.5x damage here for a total of 1.5x)
 	var/obj/item/throwing_item = parent
-	var/extra_damage = (throwing_item.throwforce * max(0, damage_multiplier - 1)) + added_damage
+	var/extra_damage = (throwing_item.throwforce * max(0, damage_modifiers[FORCE_MULTIPLIER] - 1)) + damage_modifiers[FORCE_MODIFIER]
 	if(extra_damage > 0)
 		var/mob/living/living_target = hit_atom // safe assertion from is_bane_target
 		living_target.apply_damage(extra_damage, throwing_item.damtype, hit_zone, blocked)
 
-	SEND_SIGNAL(hit_atom, COMSIG_LIVING_BANED, throwingdatum?.thrower?.resolve(), hit_atom)
-	on_bane_callback?.Invoke(hit_atom, throwingdatum?.thrower?.resolve())
+	var/mob/thrower = throwingdatum?.thrower?.resolve()
+	SEND_SIGNAL(hit_atom, COMSIG_LIVING_BANED, thrower, hit_atom)
+	on_bane_callback?.Invoke(hit_atom, thrower)
 
 // Projectile hit handling
 /datum/component/bane/proc/projectile_hit(datum/source, atom/firer, atom/target, angle, hit_zone, blocked, ...)
@@ -178,16 +184,13 @@
 	if(!is_bane_target(target))
 		return
 
-	var/list/damage_modifiers = list()
+	var/list/damage_modifiers = list("[FORCE_MULTIPLIER]" = damage_multiplier, "[FORCE_MODIFIER]" = added_damage)
 	pre_bane_callback?.Invoke(target, firer, damage_modifiers)
-
-	var/damage_multiplier = LAZYACCESS(damage_modifiers, FORCE_MULTIPLIER) || src.damage_multiplier
-	var/added_damage = LAZYACCESS(damage_modifiers, FORCE_MODIFIER) || src.added_damage
 
 	// We're not modifying the projectile damage we're just applying more damage as a separate damage event
 	// That's why we do damage_multiplier - 1 (so that a 1.5x multiplier would apply 0.5x damage here for a total of 1.5x)
 	var/obj/projectile/projectile_owner = parent
-	var/extra_damage = (projectile_owner.damage * max(0, damage_multiplier - 1)) + added_damage
+	var/extra_damage = (projectile_owner.damage * max(0, damage_modifiers[FORCE_MULTIPLIER] - 1)) + damage_modifiers[FORCE_MODIFIER]
 	if(extra_damage > 0)
 		var/mob/living/living_target = target // safe assertion from is_bane_target
 		living_target.apply_damage(extra_damage, projectile_owner.damage_type, hit_zone, blocked)
