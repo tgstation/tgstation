@@ -15,7 +15,7 @@
 	///Reference to the pair of handcuffs used to bind the item
 	var/obj/item/restraints/handcuffs/cuffs
 	///Reference to the bodypart we're cuffed to
-	var/obj/item/bodypart/cuffed_to
+	var/obj/item/bodypart/arm/cuffed_to
 	//Tracks the various things we apply to whatever we are cuffed to for cleanup
 	VAR_PRIVATE/datum/component/leash/link_effect
 	VAR_PRIVATE/datum/component/tug_towards/tug_effect
@@ -47,6 +47,7 @@
 	RegisterSignals(cuffs, list(COMSIG_ITEM_EQUIPPED, COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(cleanup_effect))
 	RegisterSignal(cuffs, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(on_item_update_appearance))
 
+	cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier + 0.5, cuffed_to.click_cd_modifier + 0.25)
 	RegisterSignal(cuffed_to, COMSIG_QDELETING, PROC_REF(cleanup_effect))
 	RegisterSignal(cuffed_to, COMSIG_BODYPART_REMOVED, PROC_REF(cuffed_to_removed))
 
@@ -70,6 +71,7 @@
 			cuffs.forceMove(owner.drop_location())
 	cuffs = null
 
+	cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier - 0.5, cuffed_to.click_cd_modifier - 0.25)
 	cuffed_to = null
 
 	break_leash()
@@ -92,6 +94,7 @@
 	// if special we will just wait for the new limb
 	if(special)
 		UnregisterSignal(cuffed_to, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED))
+		cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier - 0.5, cuffed_to.click_cd_modifier - 0.25)
 		cuffed_to = null
 		RegisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(new_cuffed_to_attached))
 		return
@@ -106,6 +109,7 @@
 		return
 
 	cuffed_to = limb
+	cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier + 0.5, cuffed_to.click_cd_modifier + 0.25)
 	RegisterSignal(cuffed_to, COMSIG_QDELETING, PROC_REF(cleanup_effect))
 	RegisterSignal(cuffed_to, COMSIG_BODYPART_REMOVED, PROC_REF(cuffed_to_removed))
 	UnregisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB)
