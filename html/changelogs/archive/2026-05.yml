@@ -73,6 +73,14 @@
   - admin: added a new admin verb, 'Toggle Admin ESP', which lets you see ghosts and
       invisimins while active
 2026-05-06:
+  Absolucy, vinylspiders, neocloudy:
+  - rscadd: Added a pair of signboards that can be crafted in the crafting menu, a
+      wooden one, and a holographic one. Perfect for advertising or otherwise getting
+      your VERY important message across to passersby.
+  Hatterhat:
+  - admin: Admins can now varedit blob overminds (the eye mob) to not kill everyone
+      on the station if they hit critical mass. (Admins will still have to remove
+      the blob from the shuttle subsystem's "hostile environments" tracker, though.)
   vinylspiders:
   - code_imp: speeds ghost runechat up a bit, and makes it show as italic
   - admin: adds a 'toggle dead runechat' admin verb in case you need to disable it
