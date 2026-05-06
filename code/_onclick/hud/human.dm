@@ -71,112 +71,6 @@
 			continue
 		inv.alpha = (blocked_slots & inv.slot_id) ? 128 : initial(inv.alpha)
 
-/datum/hud/human/hidden_inventory_update(mob/viewer)
-	if(!mymob)
-		return
-	var/mob/living/carbon/human/H = mymob
-
-	var/mob/screenmob = viewer || H
-
-	if(screenmob.hud_used.inventory_shown && screenmob.hud_used.hud_shown)
-		if(H.shoes)
-			H.shoes.screen_loc = ui_shoes
-			screenmob.client.screen += H.shoes
-		if(H.gloves)
-			H.gloves.screen_loc = ui_gloves
-			screenmob.client.screen += H.gloves
-		if(H.ears)
-			H.ears.screen_loc = ui_ears
-			screenmob.client.screen += H.ears
-		if(H.glasses)
-			H.glasses.screen_loc = ui_glasses
-			screenmob.client.screen += H.glasses
-		if(H.w_uniform)
-			H.w_uniform.screen_loc = ui_iclothing
-			screenmob.client.screen += H.w_uniform
-		if(H.wear_suit)
-			H.wear_suit.screen_loc = ui_oclothing
-			screenmob.client.screen += H.wear_suit
-		if(H.wear_mask)
-			H.wear_mask.screen_loc = ui_mask
-			screenmob.client.screen += H.wear_mask
-		if(H.wear_neck)
-			H.wear_neck.screen_loc = ui_neck
-			screenmob.client.screen += H.wear_neck
-		if(H.head)
-			H.head.screen_loc = ui_head
-			screenmob.client.screen += H.head
-	else
-		if(H.shoes)
-			screenmob.client.screen -= H.shoes
-		if(H.gloves)
-			screenmob.client.screen -= H.gloves
-		if(H.ears)
-			screenmob.client.screen -= H.ears
-		if(H.glasses)
-			screenmob.client.screen -= H.glasses
-		if(H.w_uniform)
-			screenmob.client.screen -= H.w_uniform
-		if(H.wear_suit)
-			screenmob.client.screen -= H.wear_suit
-		if(H.wear_mask)
-			screenmob.client.screen -= H.wear_mask
-		if(H.wear_neck)
-			screenmob.client.screen -= H.wear_neck
-		if(H.head)
-			screenmob.client.screen -= H.head
-
-/datum/hud/human/persistent_inventory_update(mob/viewer)
-	if(!mymob)
-		return
-	..()
-	var/mob/living/carbon/human/H = mymob
-
-	var/mob/screenmob = viewer || H
-
-	if(screenmob.hud_used)
-		if(screenmob.hud_used.hud_shown)
-			if(H.s_store)
-				H.s_store.screen_loc = ui_sstore1
-				screenmob.client.screen += H.s_store
-			if(H.wear_id)
-				H.wear_id.screen_loc = ui_id
-				screenmob.client.screen += H.wear_id
-			if(H.belt)
-				H.belt.screen_loc = ui_belt
-				screenmob.client.screen += H.belt
-			if(H.back)
-				H.back.screen_loc = ui_back
-				screenmob.client.screen += H.back
-			if(H.l_store)
-				H.l_store.screen_loc = ui_storage1
-				screenmob.client.screen += H.l_store
-			if(H.r_store)
-				H.r_store.screen_loc = ui_storage2
-				screenmob.client.screen += H.r_store
-		else
-			if(H.s_store)
-				screenmob.client.screen -= H.s_store
-			if(H.wear_id)
-				screenmob.client.screen -= H.wear_id
-			if(H.belt)
-				screenmob.client.screen -= H.belt
-			if(H.back)
-				screenmob.client.screen -= H.back
-			if(H.l_store)
-				screenmob.client.screen -= H.l_store
-			if(H.r_store)
-				screenmob.client.screen -= H.r_store
-
-	if(hud_version != HUD_STYLE_NOHUD)
-		for(var/obj/item/I in H.held_items)
-			I.screen_loc = ui_hand_position(H.get_held_index_of_item(I))
-			screenmob.client.screen += I
-	else
-		for(var/obj/item/I in H.held_items)
-			I.screen_loc = null
-			screenmob.client.screen -= I
-
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"
 	set name = "Toggle hotkey buttons"
@@ -200,6 +94,13 @@
 	screen_loc = ui_iclothing
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
+/datum/inventory_slot/human/uniform/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.w_uniform
+
 /datum/inventory_slot/human/suit
 	name = "suit"
 	slot_id = ITEM_SLOT_OCLOTHING
@@ -208,12 +109,26 @@
 	screen_loc = ui_oclothing
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
+/datum/inventory_slot/human/suit/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.wear_suit
+
 /datum/inventory_slot/human/id
 	name = "id"
 	icon_state = "id"
 	icon_full = "template_small"
 	screen_loc = ui_id
 	slot_id = ITEM_SLOT_ID
+
+/datum/inventory_slot/human/id/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.wear_id
 
 /datum/inventory_slot/human/mask
 	name = "mask"
@@ -223,6 +138,13 @@
 	slot_id = ITEM_SLOT_MASK
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
+/datum/inventory_slot/human/mask/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.wear_mask
+
 /datum/inventory_slot/human/neck
 	name = "neck"
 	icon_state = "neck"
@@ -231,12 +153,26 @@
 	slot_id = ITEM_SLOT_NECK
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
+/datum/inventory_slot/human/neck/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.wear_neck
+
 /datum/inventory_slot/human/back
 	name = "back"
 	icon_state = "back"
 	icon_full = "template_small"
 	screen_loc = ui_back
 	slot_id = ITEM_SLOT_BACK
+
+/datum/inventory_slot/human/back/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.back
 
 /datum/inventory_slot/human/l_pocket
 	name = "left pocket"
@@ -245,6 +181,13 @@
 	screen_loc = ui_storage1
 	slot_id = ITEM_SLOT_LPOCKET
 
+/datum/inventory_slot/human/l_pocket/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.l_store
+
 /datum/inventory_slot/human/r_pocket
 	name = "right pocket"
 	icon_state = "pocket"
@@ -252,12 +195,26 @@
 	screen_loc = ui_storage2
 	slot_id = ITEM_SLOT_RPOCKET
 
+/datum/inventory_slot/human/r_pocket/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.r_store
+
 /datum/inventory_slot/human/suit_storage
 	name = "suit storage"
 	icon_state = "suit_storage"
 	icon_full = "template"
 	screen_loc = ui_sstore1
 	slot_id = ITEM_SLOT_SUITSTORE
+
+/datum/inventory_slot/human/suit_storage/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.s_store
 
 /datum/inventory_slot/human/gloves
 	name = "gloves"
@@ -267,6 +224,13 @@
 	slot_id = ITEM_SLOT_GLOVES
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
+/datum/inventory_slot/human/gloves/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.gloves
+
 /datum/inventory_slot/human/eyes
 	name = "eyes"
 	icon_state = "glasses"
@@ -274,6 +238,13 @@
 	screen_loc = ui_glasses
 	slot_id = ITEM_SLOT_EYES
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
+
+/datum/inventory_slot/human/eyes/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.glasses
 
 /datum/inventory_slot/human/ears
 	name = "ears"
@@ -283,6 +254,13 @@
 	slot_id = ITEM_SLOT_EARS
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
+/datum/inventory_slot/human/ears/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.ears
+
 /datum/inventory_slot/human/head
 	name = "head"
 	icon_state = "head"
@@ -290,6 +268,13 @@
 	screen_loc = ui_head
 	slot_id = ITEM_SLOT_HEAD
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
+
+/datum/inventory_slot/human/head/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.head
 
 /datum/inventory_slot/human/shoes
 	name = "shoes"
@@ -299,9 +284,23 @@
 	slot_id = ITEM_SLOT_FEET
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
+/datum/inventory_slot/human/shoes/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.shoes
+
 /datum/inventory_slot/human/belt
 	name = "belt"
 	icon_state = "belt"
 	icon_full = "template_small"
 	screen_loc = ui_belt
 	slot_id = ITEM_SLOT_BELT
+
+/datum/inventory_slot/human/belt/get_slot_item(mob/owner)
+	if (!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human = owner
+	return human.belt

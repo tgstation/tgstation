@@ -112,8 +112,7 @@
 	if(equipping.pulledby)
 		equipping.pulledby.stop_pulling()
 
-	equipping.screen_loc = null
-	client?.screen -= equipping
+	hud_used?.update_inventory_slot(slot)
 
 	for(var/mob/dead/observe as anything in observers)
 		observe.client?.screen -= equipping

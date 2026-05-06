@@ -943,14 +943,8 @@
 
 	var/previous_index = active_hand_index
 	active_hand_index = held_index
-	if(hud_used)
-		var/atom/movable/screen/inventory/hand/held_location
-		held_location = hud_used.hand_slots[previous_index]
-		if(!isnull(held_location))
-			held_location.update_appearance()
-		held_location = hud_used.hand_slots[held_index]
-		if(!isnull(held_location))
-			held_location.update_appearance()
+	hud_used?.update_inventory_slot(ITEM_SLOT_HANDS, previous_index)
+	hud_used?.update_inventory_slot(ITEM_SLOT_HANDS, held_index)
 	return TRUE
 
 /mob/proc/activate_hand(selected_hand)

@@ -74,15 +74,12 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/atom/movable/screen/screen_objects = list()
 	/// List of screen objects by their screen group
 	var/list/screen_groups[SCREEN_GROUP_AMT]
-	/// List of all inventory slot screen objects by their slot ID. Some slots are fake and will be missing from here!
-	var/list/inv_slots[SLOTS_AMT]
-	/// List of hand slot objects, kept separate from the rest of inventory as mobs can have varying amount of hands
-	var/list/atom/movable/screen/inventory/hand/hand_slots = null
 
 	/// List of typepaths of /datum/inventory_slot which will be used to automatically create inventory slot UI elements
 	/// If assigned a typepath instead of a list, it will instead use all valid subtypes of said typepath
 	/// Safe to change in initialize_screen_objects() but not later
-	var/list/inventory_slots = null
+	/// After init gets reassigned into a slot_id -> inventory slot datum alist
+	var/list/datum/inventory_slot/inventory_slots = null
 
 	/// List of weakrefs to objects that we add to our screen that we don't expect to DO anything
 	/// They typically use * in their render target. They exist solely so we can reuse them,
@@ -99,8 +96,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	add_screen_object(/atom/movable/screen/button_palette, HUD_MOB_TOGGLE_PALETTE)
 	add_screen_object(/atom/movable/screen/palette_scroll/down, HUD_MOB_PALETTE_DOWN)
 	add_screen_object(/atom/movable/screen/palette_scroll/up, HUD_MOB_PALETTE_UP)
-
-	hand_slots = list()
 
 	var/datum/plane_master_group/main/main_group = new(PLANE_GROUP_MAIN)
 	main_group.attach_to(src)
@@ -143,8 +138,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(floating_actions)
 	screentip_text = null
 	screen_groups = null
-	inv_slots.Cut()
-	hand_slots.Cut()
+	inventory_slots.Cut()
 	QDEL_LIST_ASSOC_VAL(screen_objects)
 	QDEL_LIST_ASSOC_VAL(master_groups)
 	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
@@ -361,7 +355,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += group_hotkeys
 			if (length(group_info))
 				screenmob.client.screen += group_info
-			if (length(group_storage))
+			// Do not show open storages to viewers, they get their own storage UIs
+			if (length(group_storage) && viewmob == mymob)
 				screenmob.client.screen += group_storage
 
 			screenmob.client.screen += palette
@@ -376,8 +371,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += group_info
 
 			// Hands are apart of the static group but still should be presetn in the reduced mode
-			for (var/atom/movable/screen/hand in hand_slots)
-				screenmob.client.screen += hand
+			for (var/i in 1 to length(mymob.held_items))
+				var/atom/movable/screen/hand = screen_objects[HUD_KEY_HAND_SLOT(i)]
+				if (hand)
+					screenmob.client.screen += hand
 
 			if(action_intent)
 				//move this to the alternative position, where zone_select usually is.
@@ -387,7 +384,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			hud_shown = FALSE
 
 	hud_version = display_hud_version
-	persistent_inventory_update(screenmob)
+	inventory_update(screenmob)
 	// Gives all of the actions the screenmob owes to their hud
 	screenmob.update_action_buttons(TRUE)
 	// Handles alerts - the things on the right side of the screen
@@ -425,19 +422,30 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(!.)
 		return
 	var/mob/screenmob = viewmob || mymob
-	hidden_inventory_update(screenmob)
+	inventory_update(screenmob)
 
 /datum/hud/new_player/show_hud(version = 0, mob/viewmob)
 	. = ..()
 	if(.)
 		show_station_trait_buttons()
 
-/datum/hud/proc/hidden_inventory_update()
-	return
-
-/datum/hud/proc/persistent_inventory_update(mob/viewer)
-	if(!mymob)
+/datum/hud/proc/inventory_update(mob/viewer)
+	if (!mymob)
 		return
+
+	for (var/slot_id in inventory_slots)
+		var/datum/inventory_slot/slot = inventory_slots[slot_id]
+		if (!istype(slot))
+			continue
+		slot.update_inventory_slot(src, mymob)
+
+/datum/hud/proc/update_inventory_slot(...)
+	var/slot_id = args[1]
+	if (!mymob)
+		return
+	var/datum/inventory_slot/slot = inventory_slots[slot_id]
+	if (istype(slot))
+		slot.update_inventory_slot(arglist(list(src, mymob) + args.Copy(2)))
 
 /datum/hud/proc/update_ui_style(new_ui_style)
 	// do nothing if overridden by a subtype or already on that style
@@ -481,8 +489,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /// Rebuilds our mob's hand slot screen elements
 /datum/hud/proc/build_hand_slots(update_hud = FALSE)
-	QDEL_LIST(hand_slots)
-	hand_slots = new /list(length(mymob.held_items))
 
 	for(var/i in 1 to length(mymob.held_items))
 		var/atom/movable/screen/inventory/hand/hand_box = add_screen_object(/atom/movable/screen/inventory/hand, HUD_KEY_HAND_SLOT(i), HUD_GROUP_STATIC, ui_style, ui_hand_position(i))
@@ -490,7 +496,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		hand_box.icon_state = "hand_[mymob.held_index_to_dir(i)]"
 		hand_box.held_index = i
 		hand_box.update_appearance()
-		hand_slots[i] = hand_box
 
 	var/num_of_swaps = 0
 	for(var/atom/movable/screen/swap_hand/swap_hands in screen_groups[HUD_GROUP_STATIC])
@@ -526,22 +531,20 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if (ispath(inventory_slots))
 		created_paths = valid_subtypesof(inventory_slots)
 
+	var/alist/new_slots = alist()
 	for (var/datum/inventory_slot/slot_type as anything in created_paths)
 		var/datum/inventory_slot/inv_slot = GLOB.inventory_slot_datums[slot_type]
 		if (!inv_slot)
 			stack_trace("[src] attempted to use an invalid inventory slot: [slot_type]")
 			continue
 		inv_slot.create_element(src)
+		new_slots[inv_slot.slot_id] = inv_slot
 
-	update_inventory_slots()
+	// Lets add an abstract "hands" slot to ourselves for native handling
+	new_slots[ITEM_SLOT_HANDS] = GLOB.inventory_slot_datums[/datum/inventory_slot/hands]
 
-/// Updates all of our inventory slots
-/// Avoid calling directly in favor of specific update procs
-/datum/hud/proc/update_inventory_slots()
-	for(var/atom/movable/screen/inventory/inv in screen_groups[HUD_GROUP_STATIC] + screen_groups[HUD_GROUP_TOGGLEABLE_INVENTORY])
-		if(inv.slot_id)
-			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
-			inv.update_appearance()
+	inventory_slots = new_slots
+	inventory_update()
 
 /datum/hud/proc/position_action(atom/movable/screen/movable/action_button/button, position)
 	// This is kinda a hack, I'm sorry.
