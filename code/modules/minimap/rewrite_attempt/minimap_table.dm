@@ -26,6 +26,13 @@
 	var/mutable_appearance/emissive
 	var/datum/light_middleman/middleman
 	var/flicker_min_alpha = 150
+	/// HUD elements used by the holotable minimap view.
+	var/list/table_huds = list(
+		HUD_TAC_MINIMAP = /atom/movable/screen/minimap_display/nuclear,
+		HUD_TAC_MINIMAP_Z_INDICATOR = /atom/movable/screen/minimap_z_indicator,
+		HUD_TAC_MINIMAP_Z_INDICATOR_UP = /atom/movable/screen/minimap_z_up,
+		HUD_TAC_MINIMAP_Z_INDICATOR_DOWN = /atom/movable/screen/minimap_z_down,
+	)
 
 /obj/machinery/minimap_table/Initialize(mapload)
 	. = ..()
@@ -40,7 +47,7 @@
 /obj/machinery/minimap_table/Destroy(force)
 	. = ..()
 	for(var/mob/viewer as anything in viewers)
-		viewer.hud_used.remove_screen_object(HUD_TAC_MINIMAP)
+		remove_table_huds(viewer.hud_used)
 	viewers = null
 	QDEL_NULL(idle)
 	QDEL_NULL(emissive)
@@ -123,15 +130,24 @@
 		deactivate()
 
 /obj/machinery/minimap_table/proc/show_minimap(mob/user)
-	var/atom/movable/screen/minimap_display/instanced = new(null, user.hud_used, minimap)
-	user.hud_used.add_screen_object(instanced, HUD_TAC_MINIMAP, HUD_GROUP_STATIC, update_screen = TRUE)
+	add_table_huds(user.hud_used)
 	viewers |= user
 
 /obj/machinery/minimap_table/proc/hide_minmap(mob/user)
-	user.hud_used.remove_screen_object(HUD_TAC_MINIMAP)
+	remove_table_huds(user.hud_used)
 	viewers -= user
 	if(!length(viewers))
 		addtimer(CALLBACK(src, PROC_REF(deactive_without_viewers)), 10 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE)
+
+/obj/machinery/minimap_table/proc/add_table_huds(datum/hud/hud)
+	for(var/element in table_huds)
+		var/hud_element_type = table_huds[element]
+		var/instanced = new hud_element_type(null, hud, minimap, null, target_z)
+		hud.add_screen_object(instanced, element, HUD_GROUP_STATIC, update_screen = TRUE)
+
+/obj/machinery/minimap_table/proc/remove_table_huds(datum/hud/hud)
+	for(var/element in table_huds)
+		hud.remove_screen_object(element)
 
 /obj/machinery/minimap_table/proc/set_minimap()
 	minimap = get_minimap_for_z(target_z)

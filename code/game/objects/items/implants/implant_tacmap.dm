@@ -42,12 +42,14 @@
 ///Remove all action of type minimap from the wearer, and make him disappear from the minimap
 /obj/item/implant/tacmap/proc/remove_minimap(mob/user)
 	my_map?.remove_marker(user)
+	remove_minimap_blip(MINIMAP_NUKEOP_BLIP, user)
 	minimap_action?.Remove(user)
 
 ///Updates the wearer's minimap icon
 /obj/item/implant/tacmap/proc/update_minimap_icon(mob/wearer)
 	SIGNAL_HANDLER
 	my_map.remove_marker(wearer)
+	remove_minimap_blip(MINIMAP_NUKEOP_BLIP, wearer)
 
 	if(!get_minimap_marker(wearer))
 		return
@@ -60,6 +62,7 @@
 		return
 	if(IS_NUKE_OP(wearer))
 		my_map.add_marker(wearer, marker_flags, image('icons/ui_icons/minimap/map_blips.dmi', null, "syndicate", MINIMAP_BLIPS_LAYER))
+		add_minimap_blip(wearer, MINIMAP_NUKEOP_BLIP, "syndicate")
 		return
 	return
 
@@ -107,12 +110,24 @@
 	var/datum/team/nuclear/nukie_team = nukie.get_team()
 	my_map = nukie_team.nuclear_tacmap // Specify that we are using the nukeop map before calling parent
 	RegisterSignal(target, COMSIG_MINIMAP_ACTION_TRIGGER, PROC_REF(deny_nukie_base_open))
+	var/datum/action/minimap_new/rewrite_action = locate(/datum/action/minimap_new) in target.actions
+	if(rewrite_action)
+		rewrite_action.Remove(target)
+		qdel(rewrite_action)
+		rewrite_action = new /datum/action/minimap_new/nuclear
+		rewrite_action.Grant(target)
 
 	return ..()
 
 /obj/item/implant/tacmap/nuclear/removed(mob/living/source, silent, special)
 	. = ..()
 	UnregisterSignal(source, COMSIG_MINIMAP_ACTION_TRIGGER)
+	var/datum/action/minimap_new/nuclear/rewrite_action = locate(/datum/action/minimap_new/nuclear) in source.actions
+	if(rewrite_action)
+		rewrite_action.Remove(source)
+		qdel(rewrite_action)
+		rewrite_action = new /datum/action/minimap_new
+		rewrite_action.Grant(source)
 
 /obj/item/implant/tacmap/nuclear/proc/deny_nukie_base_open(mob/living/user)
 	var/turf/user_turf = get_turf(user)

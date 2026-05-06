@@ -16,8 +16,10 @@
 	var/list/atom/movable/screen/minimap_label/labels = list()
 	/// indexed list of currently displayed blips.
 	var/list/atom/movable/screen/minimap_blip/blips = list()
+	/// Tagged blips currently rendered on this minimap display.
+	var/list/atom/movable/screen/minimap_blip/active_tagged_blips = list()
 	/// The list of minimap blip tags we're going to read from the globalist and listen for additions to
-	var/list/valid_minimap_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP)
+	var/list/valid_minimap_blip_tags = list()
 	var/last_drag_x
 	var/last_drag_y
 	/// fixed z-level to stay on
@@ -44,15 +46,26 @@
 		HUD_TAC_MINIMAP_TOOL_CLEAR  = /atom/movable/screen/minimap_toolbar_button/clear,
 	)
 
-/atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap)
+/atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap, list/minimap_blip_tags, initial_fixed_z_level)
 	. = ..()
 	if(isnull(minimap))
 		CRASH("[type] created without a minimap reference!")
+	if(!isnull(initial_fixed_z_level))
+		fixed_z_level = initial_fixed_z_level
+		var/datum/minimap/fixed_minimap = get_minimap_for_z(initial_fixed_z_level)
+		if(!isnull(fixed_minimap))
+			minimap = fixed_minimap
+	if(length(minimap_blip_tags))
+		valid_minimap_blip_tags = minimap_blip_tags.Copy()
 	drawing = new
 	vis_contents += drawing
 	set_minimap(minimap)
 	screentip = new
 	vis_contents += screentip
+	if(length(valid_minimap_blip_tags))
+		for(var/blip_tag in valid_minimap_blip_tags)
+			RegisterSignal(SSdcs, COMSIG_MINIMAP_ADD(blip_tag), PROC_REF(on_tagged_blip_add))
+			RegisterSignal(SSdcs, COMSIG_MINIMAP_REMOVE(blip_tag), PROC_REF(on_tagged_blip_remove))
 	on_z_level_change(hud.mymob)
 	show_tagged_blips()
 
@@ -66,6 +79,11 @@
 	QDEL_NULL(drawing)
 	QDEL_NULL(screentip)
 	QDEL_LIST(labels)
+	if(length(valid_minimap_blip_tags))
+		for(var/blip_tag in valid_minimap_blip_tags)
+			UnregisterSignal(SSdcs, COMSIG_MINIMAP_ADD(blip_tag))
+			UnregisterSignal(SSdcs, COMSIG_MINIMAP_REMOVE(blip_tag))
+	active_tagged_blips.Cut()
 	if(hud?.mymob)
 		UnregisterSignal(hud.mymob, COMSIG_MOVABLE_Z_CHANGED)
 	return ..()
@@ -74,12 +92,12 @@
 	if(hud)
 		for(var/key in toolbar_button_types)
 			hud.remove_screen_object(key, update = FALSE)
+		for(var/signal in hud_signals)
+			UnregisterSignal(hud_owner?.mymob, signal, hud_signals[signal])
+	. = ..()
 	if(hud?.mymob)
 		for(var/signal in hud_signals)
 			RegisterSignal(hud_owner.mymob, signal, hud_signals[signal])
-	. = ..()
-	for(var/signal in hud_signals)
-		UnregisterSignal(src, signal, hud_signals[signal])
 	for(var/hud_key, hud_type in toolbar_button_types)
 		var/atom/movable/screen/minimap_toolbar_button/button = new hud_type(null, hud_owner, src)
 		hud_owner.add_screen_object(button, hud_key, HUD_GROUP_STATIC, update_screen = FALSE)
@@ -168,17 +186,46 @@
 	var/new_minimap = get_minimap_for_z(new_z)
 	if(isnull(new_minimap))
 		return
+	if(!isnull(fixed_z_level))
+		fixed_z_level = new_z
 	set_minimap(new_minimap)
 
+/atom/movable/screen/minimap_display/proc/set_fixed_z_level(new_fixed_z, apply_immediately = FALSE)
+	fixed_z_level = new_fixed_z
+	if(apply_immediately)
+		change_z_level(new_fixed_z)
+
 /atom/movable/screen/minimap_display/proc/show_tagged_blips()
+	if(!length(valid_minimap_blip_tags))
+		return
 	for(var/blip_flag in valid_minimap_blip_tags)
 		var/blip_list = GLOB.minimap_blip_tags[blip_flag]
 		for(var/atom/movable/screen/minimap_blip/blip as anything in blip_list)
-			if(blip.track_target.z == minimap.z)
-				blip.register_target(blip.track_target)
-				blip.start_tracking_target()
-				blips += blip
-				vis_contents += blip
+			on_tagged_blip_add(null, blip)
+
+/atom/movable/screen/minimap_display/proc/on_tagged_blip_add(datum/source, atom/movable/screen/minimap_blip/blip)
+	SIGNAL_HANDLER
+	if(isnull(blip) || QDELETED(blip) || isnull(minimap))
+		return
+	if(!(blip.blip_tag in valid_minimap_blip_tags))
+		return
+	if(blip.track_target?.z != minimap.z)
+		return
+	if(blip in active_tagged_blips)
+		return
+	blip.register_target(blip.track_target)
+	blip.start_tracking_target()
+	active_tagged_blips += blip
+	vis_contents += blip
+
+/atom/movable/screen/minimap_display/proc/on_tagged_blip_remove(datum/source, atom/movable/screen/minimap_blip/blip)
+	SIGNAL_HANDLER
+	if(isnull(blip))
+		return
+	if(!(blip in active_tagged_blips))
+		return
+	active_tagged_blips -= blip
+	vis_contents -= blip
 
 /atom/movable/screen/minimap_display/proc/set_minimap(datum/minimap/minimap)
 	icon = minimap.base_map
@@ -187,6 +234,10 @@
 	src.minimap = minimap
 	drawing.clear_canvas(minimap.base_map)
 	screentip?.maptext = ""
+	for(var/atom/movable/screen/minimap_blip/blip as anything in active_tagged_blips)
+		vis_contents -= blip
+	active_tagged_blips.Cut()
+	show_tagged_blips()
 	reposition_toolbar_buttons()
 
 /atom/movable/screen/minimap_display/proc/add_blip(name, icon_state, x, y, large = FALSE)
@@ -221,8 +272,31 @@
 
 /atom/movable/screen/minimap_display/proc/z_change_request(new_z_change)
 	SIGNAL_HANDLER
-	var/new_z = minimap.z + new_z_change
+	var/current_z = get_viewed_z_level()
+	var/new_z = get_clamped_connected_z(current_z + new_z_change, current_z)
 	INVOKE_ASYNC(src, PROC_REF(change_z_level), new_z)
+
+/atom/movable/screen/minimap_display/proc/get_viewed_z_level()
+	if(!isnull(fixed_z_level))
+		return fixed_z_level
+	return minimap?.z
+
+/atom/movable/screen/minimap_display/proc/get_clamped_connected_z(requested_z, source_z)
+	if(isnull(source_z))
+		return requested_z
+	var/list/connected_levels = SSmapping.get_connected_levels(source_z)
+	if(!length(connected_levels))
+		return requested_z
+	if(requested_z in connected_levels)
+		return requested_z
+	var/closest_z = connected_levels[1]
+	var/closest_distance = abs(closest_z - requested_z)
+	for(var/connected_z as anything in connected_levels)
+		var/current_distance = abs(connected_z - requested_z)
+		if(current_distance < closest_distance)
+			closest_z = connected_z
+			closest_distance = current_distance
+	return closest_z
 
 /atom/movable/screen/minimap_display/proc/select_draw_tool(color, icon/mouse_icon = null)
 	draw_color = color
@@ -283,5 +357,8 @@
 	vis_contents += new_label
 	labels += new_label
 	log_minimap_drawing("[key_name(user)] placed label '[label_text]' at [area_name]")
+
+/atom/movable/screen/minimap_display/nuclear
+	valid_minimap_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP)
 
 #undef MINIMAP_TOOLBAR_ERASE_RANGE

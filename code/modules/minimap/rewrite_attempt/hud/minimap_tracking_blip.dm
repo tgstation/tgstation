@@ -38,7 +38,8 @@
 /atom/movable/screen/minimap_blip/proc/start_tracking_target()
 	if(tracking)
 		return
-	RegisterSignals(track_target, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED), PROC_REF(update_blip))
+	RegisterSignal(track_target, COMSIG_MOVABLE_MOVED, PROC_REF(update_blip))
+	RegisterSignal(track_target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_target_z_changed))
 	tracking = TRUE
 	INVOKE_ASYNC(src, PROC_REF(delayed_setup))
 
@@ -46,8 +47,18 @@
 	minimap = get_minimap_for_z(track_target.z)
 	update_blip()
 
+/atom/movable/screen/minimap_blip/proc/on_target_z_changed(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+	if(isnull(track_target))
+		return
+	if(isnull(minimap) || minimap.z != track_target.z)
+		minimap = get_minimap_for_z(track_target.z)
+	update_blip()
+
 /atom/movable/screen/minimap_blip/proc/update_blip()
 	SIGNAL_HANDLER
+	if(isnull(track_target) || isnull(minimap))
+		return
 	var/half_size = large ? 5 : 3
 	pixel_w = MINIMAP_WORLD_TO_PIXEL(track_target.x, minimap.min_x, half_size)
 	pixel_z = MINIMAP_WORLD_TO_PIXEL(track_target.y, minimap.min_y, half_size)

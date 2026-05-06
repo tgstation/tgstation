@@ -3,6 +3,8 @@
 	name = "Toggle Minimap"
 	button_icon = 'icons/hud/implants.dmi'
 	button_icon_state = "minimap"
+	/// Optional minimap blip tags to render on the rewrite minimap display.
+	var/list/minimap_blip_tags = list()
 	/// list of hud elements we add and remove and check for when this action is triggered
 	var/list/huds = list(
 		HUD_TAC_MINIMAP = /atom/movable/screen/minimap_display,
@@ -39,8 +41,16 @@
 /datum/action/minimap_new/proc/add_huds(datum/hud/hud, datum/minimap/minimap)
 	for(var/element in huds)
 		var/hud_element_type = huds[element]
-		var/instanced = new hud_element_type(null, hud, minimap)
+		var/instanced = new hud_element_type(null, hud, minimap, minimap_blip_tags)
 		hud.add_screen_object(instanced, element, HUD_GROUP_STATIC, update_screen = TRUE)
+
+/datum/action/minimap_new/nuclear
+	huds = list(
+		HUD_TAC_MINIMAP = /atom/movable/screen/minimap_display/nuclear,
+		HUD_TAC_MINIMAP_Z_INDICATOR = /atom/movable/screen/minimap_z_indicator,
+		HUD_TAC_MINIMAP_Z_INDICATOR_UP = /atom/movable/screen/minimap_z_up,
+		HUD_TAC_MINIMAP_Z_INDICATOR_DOWN = /atom/movable/screen/minimap_z_down
+	)
 
 /datum/action/minimap_new/proc/remove_huds(datum/hud/hud)
 	for(var/element in huds)
