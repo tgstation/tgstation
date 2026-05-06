@@ -22,8 +22,6 @@
 	var/animation_duration = 5.1 SECONDS
 	var/interactivity_range = 3
 	var/datum/proximity_monitor/proximity
-	var/mutable_appearance/idle
-	var/mutable_appearance/emissive
 	var/datum/light_middleman/middleman
 	var/flicker_min_alpha = 150
 	/// HUD elements used by the holotable minimap view.
@@ -49,8 +47,6 @@
 	for(var/mob/viewer as anything in viewers)
 		remove_table_huds(viewer.hud_used)
 	viewers = null
-	QDEL_NULL(idle)
-	QDEL_NULL(emissive)
 
 /obj/machinery/minimap_table/RangedAttackOn(mob/A, list/modifiers)
 	if(get_dist(src, A) > interactivity_range)
@@ -172,7 +168,7 @@
 		idle.pixel_y = animation_y
 		. += idle
 
-		emissive = emissive_appearance(hologram_icon_file, holo_state, src, ABOVE_MOB_LAYER, effect_type = EMISSIVE_NO_BLOOM)
+		var/mutable_appearance/emissive = emissive_appearance(hologram_icon_file, holo_state, src, ABOVE_MOB_LAYER, effect_type = EMISSIVE_NO_BLOOM)
 		emissive.pixel_x = animation_x
 		emissive.pixel_y = animation_y
 		. += emissive

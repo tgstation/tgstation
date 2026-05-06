@@ -270,7 +270,7 @@
 	vis_contents.Cut()
 	vis_contents += screentip // add screentip back in
 
-/atom/movable/screen/minimap_display/proc/z_change_request(new_z_change)
+/atom/movable/screen/minimap_display/proc/z_change_request(mob/hud_owner, new_z_change)
 	SIGNAL_HANDLER
 	var/current_z = get_viewed_z_level()
 	var/new_z = get_clamped_connected_z(current_z + new_z_change, current_z)

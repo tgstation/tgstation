@@ -23,9 +23,9 @@
 	var/text = "Floor<br/>[(used_z - bottom_z) + 1]"
 	maptext = MAPTEXT_TINY_UNICODE("<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[text]</div>")
 
-/atom/movable/screen/minimap_z_indicator/proc/on_minimap_change_request(new_z_change)
+/atom/movable/screen/minimap_z_indicator/proc/on_minimap_change_request(mob/hud_owner, new_z_change)
 	SIGNAL_HANDLER
-	var/current_turf = get_turf(hud?.mymob)
+	var/current_turf = get_turf(hud_owner)
 	on_z_level_change(null, current_turf, FALSE)
 
 /atom/movable/screen/minimap_z_indicator/proc/get_displayed_z_level(turf/current_turf)
