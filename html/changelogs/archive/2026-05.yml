@@ -72,3 +72,8 @@
       to the aghost so you no longer have to trigger it again
   - admin: added a new admin verb, 'Toggle Admin ESP', which lets you see ghosts and
       invisimins while active
+2026-05-06:
+  vinylspiders:
+  - code_imp: speeds ghost runechat up a bit, and makes it show as italic
+  - admin: adds a 'toggle dead runechat' admin verb in case you need to disable it
+      midround for an event or something
