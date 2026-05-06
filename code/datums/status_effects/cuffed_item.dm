@@ -48,7 +48,7 @@
 	RegisterSignal(cuffs, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(on_item_update_appearance))
 
 	RegisterSignal(cuffed_to, COMSIG_QDELETING, PROC_REF(cleanup_effect))
-	RegisterSignals(cuffed_to, COMSIG_BODYPART_REMOVED, PROC_REF(cuffed_to_removed))
+	RegisterSignal(cuffed_to, COMSIG_BODYPART_REMOVED, PROC_REF(cuffed_to_removed))
 
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
 
