@@ -23,6 +23,7 @@ jobs:
         working-directory: tools/screenshot-test-comparison
       - name: Mark previous results as outdated
         if: github.event.pull_request
+        uses: actions/github-script@v9
         with:
           script: |
             const { markScreenshotTestResultOutdated } = await import('${{ github.workspace }}/tools/ci/mark_screenshot_test_result_outdated.js');
