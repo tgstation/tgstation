@@ -47,10 +47,16 @@
 	if(cuffs.used || DOING_INTERACTION_WITH_TARGET(user, source))
 		return
 
+	var/num_cuffs = 0
 	for(var/datum/status_effect/cuffed_item/effect in user.status_effects)
 		if(effect.cuffed == source)
 			to_chat(user, span_warning("[source] is already cuffed to your wrist!"))
 			return
+		num_cuffs += 1
+
+	if(num_cuffs >= user.usable_hands)
+		to_chat(user, span_warning("You don't have anymore hands free to cuff [source] to!"))
+		return
 
 	if(cuffs.handcuffs_clumsiness_check(user))
 		return
