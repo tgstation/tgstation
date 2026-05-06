@@ -151,11 +151,9 @@
 /obj/structure/signboard/holosign/proc/set_color(new_color)
 	new_color = sanitize_color(new_color)
 	if(!new_color)
-		testing("signboard color invalid or null, removing")
 		current_color = null
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	else
-		testing("signboard color valid, adding")
 		current_color = new_color
 		add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
 	set_light(l_color = current_color || src::light_color)
