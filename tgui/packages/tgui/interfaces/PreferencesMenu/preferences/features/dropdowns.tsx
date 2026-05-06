@@ -1,7 +1,6 @@
 import {
   type ComponentProps,
   type ReactNode,
-  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -62,7 +61,20 @@ export function generateOptions(
 }
 
 export function FeatureDropdownInput(props: DropdownInputProps) {
-  return FeatureDropdownInputCore(props, generateOptions);
+  const { serverData, disabled, buttons, handleSetValue, value } = props;
+  const dropdownOptions = serverData ? generateOptions(serverData) : [];
+  const displayText = serverData?.display_names?.[value] || String(value);
+  return (
+    <Dropdown
+      buttons={buttons}
+      disabled={disabled || !serverData}
+      onSelected={handleSetValue}
+      displayText={displayText ? capitalizeFirst(displayText) : ''}
+      options={dropdownOptions}
+      selected={value}
+      width="100%"
+    />
+  );
 }
 
 export function FeatureDropdownInputCore(
@@ -86,22 +98,6 @@ export function FeatureDropdownInputCore(
   );
 }
 
-export function FeatureDropdownInput(props: DropdownInputProps) {
-  const populateOptions = useCallback(
-    (
-      serverData: FeatureChoicedServerData,
-      setDropdownOptions: (newValue: DropdownOptions) => void
-    ) => {
-      setDropdownOptions(generateOptions(serverData));
-    },
-    [],
-  );
-
-  return <FeatureDropdownInputCore
-    dropdownProps={props}
-    populateOptions={populateOptions}
-  />
-}
 
 export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
   const { serverData, handleSetValue, value } = props;
