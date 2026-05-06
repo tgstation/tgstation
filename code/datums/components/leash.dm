@@ -160,8 +160,6 @@
 
 	var/atom/movable/movable_parent = parent
 
-	SSblackbox.record_feedback("tally", "leash_force_teleport_back", 1, reason)
-
 	if (force_teleport_out_effect)
 		new force_teleport_out_effect(movable_parent.loc)
 
