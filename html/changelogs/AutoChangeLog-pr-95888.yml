@@ -1,0 +1,4 @@
+author: "Shroopy"
+delete-after: True
+changes:
+  - bugfix: "Fixed syndicate bombs having a maximum timer of 1000 minutes instead of 100 minutes."

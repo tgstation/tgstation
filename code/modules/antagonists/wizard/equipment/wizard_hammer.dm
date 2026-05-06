@@ -113,16 +113,15 @@
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
 
-/obj/item/mjollnir/attack(mob/living/target_mob, mob/user)
-	..()
-	if(QDELETED(target_mob))
+/obj/item/mjollnir/afterattack(atom/target, mob/user)
+	if(QDELETED(target))
 		return
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		yeet_shock(target_mob)
+	if(HAS_TRAIT(src, TRAIT_WIELDED) && isliving(target))
+		yeet_shock(target)
 
 /obj/item/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(.)
+		return
 	if(!QDELETED(hit_atom) && isliving(hit_atom))
 		yeet_shock(hit_atom)

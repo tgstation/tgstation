@@ -6,7 +6,6 @@
 /// Currently liver, stomach, lungs and tail plus tongue
 #define FISH_INFUSION_ALL_ORGANS 4
 
-///bonus of the observing gondola: you can ignore environmental hazards
 /datum/status_effect/organ_set_bonus/fish
 	id = "organ_set_bonus_fish"
 	tick_interval = 1 SECONDS
