@@ -77,11 +77,12 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
   );
 }
 
-export function FeatureDropdownInputCore(
-  props: DropdownInputProps,
-  populateOptions: (serverData: FeatureChoicedServerData) => DropdownOptions,
-) {
-  const { serverData, disabled, buttons, handleSetValue, value } = props;
+export type FeatureDropdownInputCoreProps = DropdownInputProps & {
+  populateOptions: (serverData: FeatureChoicedServerData) => DropdownOptions;
+};
+
+export function FeatureDropdownInputCore(props: FeatureDropdownInputCoreProps) {
+  const { serverData, disabled, buttons, handleSetValue, value, populateOptions } = props;
   const dropdownOptions = serverData ? populateOptions(serverData) : [];
   const displayText = serverData?.display_names?.[value] || String(value);
 
