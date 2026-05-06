@@ -96,6 +96,7 @@
 		damage_multiplier = 2.25, \
 		should_bane_callback = CALLBACK(src, PROC_REF(should_bane_fish_infusions)), \
 		on_bane_callback = CALLBACK(src, PROC_REF(on_bane_fish_infusions)), \
+		label_text = "fishpeople", \
 	)
 
 /obj/item/fishing_rod/add_context(atom/source, list/context, obj/item/held_item, mob/user)

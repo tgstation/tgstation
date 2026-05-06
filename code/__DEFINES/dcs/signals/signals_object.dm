@@ -681,3 +681,6 @@
 
 /// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
 #define COMSIG_REFLECTION_UPDATED "reflection_updated"
+
+/// From /datum/element/weapon_description: (list/readout)
+#define COMSIG_ITEM_WEAPON_LABEL_READOUT "item_weapon_label_readout"

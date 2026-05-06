@@ -37,7 +37,8 @@
 	AddComponent(/datum/component/bane, \
 		damage_multiplier = 1.35, \
 		should_bane_callback = CALLBACK(src, PROC_REF(bane_check)), \
-		on_bane_callback = CALLBACK(src, PROC_REF(bane_message)) \
+		on_bane_callback = CALLBACK(src, PROC_REF(bane_message)), \
+		label_text = "assistants", \
 	)
 
 /obj/item/melee/sabre/proc/bane_check(mob/living/target)
