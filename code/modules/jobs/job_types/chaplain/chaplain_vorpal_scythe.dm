@@ -79,12 +79,8 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 /obj/item/vorpalscythe/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/nullrod_core, chaplain_spawnable = FALSE, rune_remove_line = "TO DUST WITH YE!! AWAY!!") // The implant is the actual item the chappie can select
-	AddComponent(
-		/datum/component/butchering, \
-		speed = 3 SECONDS, \
-		effectiveness = 125, \
-	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE) //also good at killing plants
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_PLANT, damage_multiplier = 1.5) //also good at killing plants
+	AddComponent(/datum/component/butchering, speed = 3 SECONDS, effectiveness = 125)
 
 /obj/item/vorpalscythe/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(ismonkey(target) && !target.mind) //Don't empower from hitting monkeys. Hit a corgi or something, I don't know.
