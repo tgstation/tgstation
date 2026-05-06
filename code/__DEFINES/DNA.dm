@@ -31,7 +31,6 @@
 #define MUTATION_SOURCE_SPELL "spell"
 ///From the heart eater component
 #define MUTATION_SOURCE_HEART_EATER "heart_eater"
-#define MUTATION_SOURCE_RAT_HEART "rat_heart"
 #define MUTATION_SOURCE_CLOWN_CLUMSINESS "clown_clumsiness"
 #define MUTATION_SOURCE_CHANGELING "changeling"
 #define MUTATION_SOURCE_GHOST_ROLE "ghost_role"

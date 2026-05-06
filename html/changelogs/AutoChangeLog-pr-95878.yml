@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - admin: "Admins can now varedit blob overminds (the eye mob) to not kill everyone on the station if they hit critical mass. (Admins will still have to remove the blob from the shuttle subsystem's \"hostile environments\" tracker, though.)"

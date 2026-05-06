@@ -1,7 +1,9 @@
+import { useCallback } from 'react';
 import { Gender } from '../../gender';
-import type { FeatureChoiced } from '../base';
+import type { FeatureChoicedServerData, FeatureChoiced } from '../base';
 import {
   type DropdownInputProps,
+  type DropdownOptions,
   FeatureDropdownInputCore,
   generateOptions,
 } from '../dropdowns';
@@ -15,13 +17,12 @@ function FeatureBodyTypeDropdownInput(props: DropdownInputProps) {
   return FeatureDropdownInputCore(props, (serverData) => {
     let options = generateOptions(serverData);
 
-    const current_gender = props.character_preferences.misc.gender;
-    if (current_gender !== Gender.Male && current_gender !== Gender.Female) {
-      options = options.filter(
-        (option) =>
-          option.value === Gender.Male || option.value === Gender.Female,
-      );
-    }
+  const populateOptions = useCallback(
+    (
+      serverData: FeatureChoicedServerData,
+      setDropdownOptions: (newValue: DropdownOptions) => void
+    ) => {
+      let options = generateOptions(serverData);
 
     return options;
   });

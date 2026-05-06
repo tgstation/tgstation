@@ -417,7 +417,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return TRUE
 
 /datum/preferences/proc/GetQuirkBalance()
-	var/bal = CONFIG_GET(number/default_quirk_points)
+	var/bal = SSquirks.default_quirk_points
 	for(var/V in all_quirks)
 		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
@@ -442,7 +442,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(LAZYLEN(quirks_removed))
 		LAZYADD(feedback, "The following quirks are incompatible with your species:")
 		LAZYADD(feedback, quirks_removed)
-	if(!CONFIG_GET(flag/disable_quirk_points) && GetQuirkBalance() < 0)
+	if(SSquirks.points_enabled && GetQuirkBalance() < 0)
 		LAZYADD(feedback, "Your quirks have been reset.")
 		all_quirks = list()
 	if(LAZYLEN(feedback))

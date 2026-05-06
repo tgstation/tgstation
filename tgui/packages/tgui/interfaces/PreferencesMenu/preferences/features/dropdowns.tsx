@@ -1,6 +1,7 @@
 import {
   type ComponentProps,
   type ReactNode,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -32,7 +33,7 @@ type IconnedDropdownInputProps = FeatureValueProps<
 
 export type FeatureWithIcons<T> = Feature<string, T, FeatureChoicedServerData>;
 
-type DropdownOptions = ComponentProps<typeof Dropdown>['options'];
+export type DropdownOptions = ComponentProps<typeof Dropdown>['options'];
 
 type DropdownEntry = {
   displayText: ReactNode;
@@ -83,6 +84,23 @@ export function FeatureDropdownInputCore(
       width="100%"
     />
   );
+}
+
+export function FeatureDropdownInput(props: DropdownInputProps) {
+  const populateOptions = useCallback(
+    (
+      serverData: FeatureChoicedServerData,
+      setDropdownOptions: (newValue: DropdownOptions) => void
+    ) => {
+      setDropdownOptions(generateOptions(serverData));
+    },
+    [],
+  );
+
+  return <FeatureDropdownInputCore
+    dropdownProps={props}
+    populateOptions={populateOptions}
+  />
 }
 
 export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
