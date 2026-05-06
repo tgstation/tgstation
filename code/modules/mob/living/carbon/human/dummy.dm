@@ -76,8 +76,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	item.item_flags |= IN_INVENTORY
 	if(!item.visual_equipped(src, slot, initial))
 		return FALSE
-
+	if(!(slot & item.slot_flags)) // Things below only update if slotted in (ie: not held)
+		return TRUE
 	add_item_coverage(item)
+	if(item.hair_mask)
+		LAZYADD(hair_masks, item.hair_mask)
+		update_hair()
 	return TRUE
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
