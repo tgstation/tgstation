@@ -70,7 +70,7 @@
 	name = "Manipulator Task Disk"
 	desc = "Produce additional disks for storing manipulator tasks."
 	id = "manipulator_task_disk"
-	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
+	build_type = AUTOLATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/manipulator
 	category = list(
