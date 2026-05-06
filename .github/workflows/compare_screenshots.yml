@@ -21,6 +21,12 @@ jobs:
       - name: Setup screenshot comparison
         run: npm i
         working-directory: tools/screenshot-test-comparison
+      - name: Mark previous results as outdated
+        if: github.event.pull_request
+        with:
+          script: |
+            const { markScreenshotTestResultOutdated } = await import('${{ github.workspace }}/tools/ci/mark_screenshot_test_result_outdated.js');
+            await markScreenshotTestResultOutdated({ github, context })
       - name: Run screenshot comparison
         run: node tools/screenshot-test-comparison/index.js artifacts code/modules/unit_tests/screenshots artifacts/screenshot_comparisons
       # workflow_run does not give you the PR it ran on,
