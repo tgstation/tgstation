@@ -164,7 +164,7 @@
 
 	var/mob/thrower = throwingdatum?.thrower?.resolve()
 	var/list/damage_modifiers = list("[FORCE_MULTIPLIER]" = damage_multiplier, "[FORCE_MODIFIER]" = added_damage)
-	pre_bane_callback?.Invoke(target, thrower, damage_modifiers)
+	pre_bane_callback?.Invoke(hit_atom, thrower, damage_modifiers)
 
 	// We're not modifying the throwforce of the item we're just applying more damage as a separate damage event
 	// That's why we do damage_multiplier - 1 (so that a 1.5x multiplier would apply 0.5x damage here for a total of 1.5x)
