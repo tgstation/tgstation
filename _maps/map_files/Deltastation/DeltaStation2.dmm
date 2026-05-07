@@ -2356,7 +2356,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay Treatment Center";
-	id_tag = MedbayFoyer
+	id_tag = "MedbayFoyer"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/turf_decal/stripes/line{
@@ -52519,7 +52519,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay Treatment Center";
-	id_tag = MedbayFoyer
+	id_tag = "MedbayFoyer"
 	},
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron,
