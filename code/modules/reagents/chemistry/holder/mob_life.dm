@@ -106,7 +106,7 @@
 	if(tick_return & COMSIG_MOB_STOP_REAGENT_TICK)
 		return FALSE
 
-	if(liverless && !reagent.self_consuming) //need to be metabolized
+	if(liverless && !reagent.self_consuming) //need to be6 metabolized
 		return FALSE
 
 	var/need_mob_update = FALSE
