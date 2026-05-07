@@ -729,7 +729,7 @@
 
 /obj/item/scalpel/cruel/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/bane, affected_biotypes = MOB_UNDEAD, damage_multiplier = 3) //Just in case one of the tennants get uppity
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_UNDEAD, damage_multiplier = 2) //Just in case one of the tennants get uppity
 
 /obj/item/surgicaldrill/cruel
 	name = "tearing drill"

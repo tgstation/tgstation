@@ -492,13 +492,13 @@
 
 // Different type of bug mobs get different amounts of damage multipliers
 /obj/item/melee/flyswatter/proc/bane_check(mob/living/target, mob/living/attacker, list/attack_modifiers)
-	if(isbasicmob(target))
+	if(isanimal_or_basicmob(target))
 		MODIFY_ATTACK_FORCE(attack_modifiers, 24)
 	else if(isflyperson(target))
 		MODIFY_ATTACK_FORCE(attack_modifiers, 29)
 	else if(ismoth(target))
 		MODIFY_ATTACK_FORCE(attack_modifiers, 9)
-	else
+	else // ?? Whatever
 		MODIFY_ATTACK_FORCE(attack_modifiers, 14)
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
