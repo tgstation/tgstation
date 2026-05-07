@@ -551,3 +551,26 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if(turf_adjacent.planetary_atmos)
 			return TRUE
 	return FALSE
+
+/// Check if the turf has access to the sun, by checking for opaque turfs in the direction of the sun.
+/// Returns TRUE if the sun is blocked, FALSE if it is not.
+/turf/proc/is_sunlight_blocked()
+	if(HAS_TRAIT(src, TRAIT_TURF_SUN_BLOCKED))
+		return TRUE
+
+	var/occlusion_distance = 20
+	var/target_x = round(sin(SSsun.azimuth), 0.01)
+	var/target_y = round(cos(SSsun.azimuth), 0.01)
+	var/x_hit = x
+	var/y_hit = y
+	var/turf/hit
+	for(var/run in 1 to occlusion_distance)
+		x_hit += target_x
+		y_hit += target_y
+		hit = locate(round(x_hit, 1), round(y_hit, 1), z)
+		if(IS_OPAQUE_TURF(hit))
+			return TRUE
+		if(hit.x == 1 || hit.x == world.maxx || hit.y == 1 || hit.y == world.maxy) // edge of the map
+			break
+
+	return FALSE
