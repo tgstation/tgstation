@@ -34,7 +34,7 @@
 
 /datum/status_effect/spacer/gravity_wellness/tick(seconds_between_ticks)
 	var/in_nograv = !owner.has_gravity()
-	var/nograv_mod = in_nograv ? 1.5 : 0.5
+	var/nograv_mod = in_nograv ? 2 : 0.5
 	owner.adjust_disgust(-1 * nograv_mod * disgust_healing_per_second * seconds_between_ticks)
 
 	if(!in_nograv)
