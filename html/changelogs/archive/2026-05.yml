@@ -98,3 +98,8 @@
   Shroopy:
   - bugfix: Fixed syndicate bombs having a maximum timer of 1000 minutes instead of
       100 minutes.
+  SmArtKar, SentryPrimis:
+  - rscadd: Siderite and Shale lavaland biomes now have unique floors, as well as
+      flora, features and fauna!
+  - bugfix: Fixed some ruins generating with default basalt walls instead of their
+      biome's walls

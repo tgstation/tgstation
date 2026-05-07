@@ -1,5 +1,0 @@
-author: "SmArtKar, SentryPrimis"
-delete-after: True
-changes:
-  - rscadd: "Siderite and Shale lavaland biomes now have unique floors, as well as flora, features and fauna!"
-  - bugfix: "Fixed some ruins generating with default basalt walls instead of their biome's walls"
