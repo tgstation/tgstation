@@ -4883,6 +4883,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/engineering)
+"brD" = (
+/obj/structure/chair/stool/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/security/execution/education)
 "brJ" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/landmark/event_spawn,
@@ -6304,6 +6309,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "bKp" = (
@@ -6743,7 +6749,6 @@
 /turf/open/floor/plating,
 /area/mine/eva/lower)
 "bQS" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/security/execution/education)
@@ -9960,9 +9965,6 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
-"cLp" = (
-/turf/open/floor/plating,
-/area/station/security/execution/education)
 "cLq" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 1
@@ -41549,6 +41551,7 @@
 	id = "executionshutters";
 	name = "Exterior Shutters"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/execution/education)
 "lPc" = (
@@ -64120,6 +64123,7 @@
 	id = "executionshutters";
 	name = "Exterior Shutters"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/execution/education)
 "sbc" = (
@@ -70740,6 +70744,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "tSF" = (
@@ -79521,6 +79526,7 @@
 "wAe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "wAf" = (
@@ -80618,6 +80624,7 @@
 "wQu" = (
 /obj/structure/chair,
 /obj/structure/sign/warning/electric_shock/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/execution/education)
 "wQx" = (
@@ -180823,7 +180830,7 @@ pNm
 eUB
 wnv
 iEY
-pCn
+brD
 pCn
 vFX
 tpH
@@ -181334,7 +181341,7 @@ ncn
 aDS
 ncn
 pNm
-cLp
+iEN
 fdG
 saX
 gjq
