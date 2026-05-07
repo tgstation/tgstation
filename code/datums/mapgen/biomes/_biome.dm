@@ -1,3 +1,8 @@
+#define CAVE_SPAWN_MOB "mob"
+#define CAVE_SPAWN_FEATURE "feature"
+#define CAVE_SPAWN_TENDRIL "tendril"
+#define CAVE_SPAWN_MEGAFAUNA "megafauna"
+
 ///This datum handles the transitioning from a turf to a specific biome, and handles spawning decorative structures and mobs.
 /datum/biome
 	/// Type of turf this biome creates for open turfs
@@ -19,7 +24,15 @@
 	/// Weighted list of type paths of fauna that can be spawned when the
 	/// turf spawns fauna.
 	var/list/fauna_types = list()
-
+	/// Weighted list of megafauna that can spawn from SPAWN_MEGAFAUNA fauna entry
+	/// Defaults to GLOB.megafauna_spawn_list
+	var/list/megafauna_types = null
+	/// Radius around features within which we avoid spawning other features
+	var/feature_exclusion_radius = 7
+	/// Radius around mobs which we avoid spawning other mobs
+	var/mob_exclusion_radius = 12
+	/// Radius around megafauna within which we avoid spawning tendrils
+	var/megafauna_exclusion_radius = 7
 
 /datum/biome/New()
 	. = ..()
@@ -32,6 +45,8 @@
 	if(length(feature_types))
 		feature_types = expand_weights(feature_types)
 
+	if(isnull(megafauna_types))
+		megafauna_types = GLOB.megafauna_spawn_list
 
 ///This proc handles the creation of a turf of a specific biome type
 /datum/biome/proc/generate_turf(turf/gen_turf, closed)
@@ -107,57 +122,93 @@
 	if(!has_flora && !has_features && !has_fauna)
 		return
 
+	// Assoc list of spawned categories to
+	// Static as to be shared between all biomes
+	var/static/list/spawn_data
+	if (isnull(spawn_data))
+		spawn_data = list(
+			CAVE_SPAWN_FEATURE = list(),
+			CAVE_SPAWN_TENDRIL = list(),
+			CAVE_SPAWN_MOB = list(),
+			CAVE_SPAWN_MEGAFAUNA = list(),
+		)
+
 	for(var/turf/target_turf as anything in target_turfs)
-		// We do the CHECK_TICK here because there's a bunch of continue calls
-		// in this.
+		// Only put stuff on open turfs we generated, so closed walls and rivers and stuff are skipped
+		if(!istype(target_turf, open_turf_type))
+			continue
+
 		CHECK_TICK
+		if (!(target_turf.turf_flags & TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES))
+			if (flora_allowed && prob(flora_density))
+				var/flora_type = pick(flora_types)
+				new flora_type(target_turf)
+				continue
 
-		if(istype(target_turf, closed_turf_type))
+			if (features_allowed && prob(feature_density))
+				var/can_spawn = TRUE
+				for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_FEATURE])
+					if (get_dist(spawn_turf, target_turf) <= feature_exclusion_radius)
+						can_spawn = FALSE
+						break
+
+				if (can_spawn)
+					var/picked_feature = pick(feature_types)
+					new picked_feature(target_turf)
+					spawn_data[CAVE_SPAWN_FEATURE] += target_turf
+					continue
+
+		if (!fauna_allowed || !prob(fauna_density))
 			continue
 
-		if(has_flora && prob(flora_density))
-			var/obj/structure/flora = pick(flora_types)
-			new flora(target_turf)
-			continue
+		var/picked_mob = pick(fauna_types)
+		var/is_megafauna = FALSE
+		if (picked_mob == SPAWN_MEGAFAUNA)
+			picked_mob = pick_weight(megafauna_types)
+			is_megafauna = TRUE
 
-		if(has_features && prob(feature_density))
-			var/can_spawn = TRUE
-
-			var/atom/picked_feature = pick(feature_types)
-
-			var/list/features_in_range = range(7, target_turf)
-			for(var/obj/structure/existing_feature in features_in_range)
-				if(istype(existing_feature, picked_feature))
+		var/can_spawn = TRUE
+		if(ispath(picked_mob, /obj/structure/spawner/lavaland))
+			// Prevents tendrils spawning in each other's collapse range
+			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_TENDRIL])
+				if (get_dist(spawn_turf, target_turf) <= 2)
 					can_spawn = FALSE
 					break
 
-			if(can_spawn)
-				new picked_feature(target_turf)
-				continue
-
-		if(has_fauna && prob(fauna_density))
-			var/mob/picked_mob = pick(fauna_types)
-
-			// prevents tendrils spawning in each other's collapse range
-			if(ispath(picked_mob, /obj/structure/spawner/lavaland))
-				var/blocked = FALSE
-				for(var/obj/structure/spawner/lavaland/spawn_blocker in range(2, target_turf))
-					blocked = TRUE
+			// Also avoid spawning them next to megafauna
+			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_MEGAFAUNA])
+				if (get_dist(spawn_turf, target_turf) <= megafauna_exclusion_radius)
+					can_spawn = FALSE
+					break
+		else if (is_megafauna)
+			// Megafauna can spawn wherever it wants as long as its not next to another mega
+			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_MEGAFAUNA])
+				if (get_dist(spawn_turf, target_turf) <= megafauna_exclusion_radius)
+					can_spawn = FALSE
+					break
+		else
+			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_MOB])
+				if (get_dist(spawn_turf, target_turf) <= mob_exclusion_radius)
+					can_spawn = FALSE
 					break
 
-				if(blocked)
-					continue
+		if (!can_spawn)
+			continue
 
-			// if the random is not a tendril (hopefully meaning it is a mob), avoid spawning if there's another one within 12 tiles
-			else
-				var/list/things_in_range = range(12, target_turf)
-				var/blocked = FALSE
-				for(var/mob/living/mob_blocker in things_in_range)
-					if(ismining(mob_blocker))
-						blocked = TRUE
-						break
+		if (ispath(picked_mob, /obj/structure/spawner/lavaland))
+			spawn_data[CAVE_SPAWN_TENDRIL] += target_turf
+		else
+			if (is_megafauna)
+				spawn_data[CAVE_SPAWN_MEGAFAUNA] += target_turf
+			spawn_data[CAVE_SPAWN_MOB] += target_turf
 
-				if(blocked)
-					continue
+		new picked_mob(target_turf)
 
-			new picked_mob(target_turf)
+		// There can be only one Bubblegum, so don't waste spawns on it
+		if(ispath(picked_mob, /mob/living/simple_animal/hostile/megafauna/bubblegum))
+			megafauna_types.Remove(picked_mob)
+
+#undef CAVE_SPAWN_MOB
+#undef CAVE_SPAWN_FEATURE
+#undef CAVE_SPAWN_TENDRIL
+#undef CAVE_SPAWN_MEGAFAUNA

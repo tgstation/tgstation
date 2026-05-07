@@ -260,7 +260,7 @@
 /area/ruin/powered/beach)
 "gX" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer4,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors/explored)
 "hj" = (
 /obj/structure/flora/tree/palm,
@@ -630,7 +630,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "wL" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors/explored)
 "wY" = (
 /turf/open/floor/pod/light,

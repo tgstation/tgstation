@@ -40,7 +40,7 @@
 	icon_state = base_icon_state
 
 /obj/structure/flora/ash/tall_shroom //exists only so that the spawning check doesn't allow these spawning near other things
-	regrowth_time_low = 4200
+	regrowth_time_low = 7 MINUTES
 
 /obj/structure/flora/ash/leaf_shroom
 	name = "leafy mushrooms"
@@ -54,8 +54,8 @@
 	harvest_message_med = "You pluck a number of leaves, leaving a few unsuitable ones."
 	harvest_message_high = "You pluck quite a lot of suitable leaves."
 	harvest_time = 20
-	regrowth_time_low = 2400
-	regrowth_time_high = 6000
+	regrowth_time_low = 4 MINUTES
+	regrowth_time_high = 10 MINUTES
 
 /obj/structure/flora/ash/leaf_shroom/get_potential_products()
 	return list(/obj/item/food/grown/ash_flora/mushroom_leaf = 1)
@@ -72,8 +72,8 @@
 	harvest_message_med = "You slice off a few conks from the larger mushrooms."
 	harvest_message_high = "You slice off a number of caps and conks from these mushrooms."
 	harvest_time = 50
-	regrowth_time_low = 3000
-	regrowth_time_high = 5400
+	regrowth_time_low = 5 MINUTES
+	regrowth_time_high = 9 MINUTES
 
 /obj/structure/flora/ash/cap_shroom/get_potential_products()
 	return list(/obj/item/food/grown/ash_flora/mushroom_cap = 1)
@@ -92,8 +92,8 @@
 	harvest_message_med = "You pick and decapitate several mushrooms for their stems."
 	harvest_message_high = "You acquire a number of stems from these mushrooms."
 	harvest_time = 40
-	regrowth_time_low = 3000
-	regrowth_time_high = 6000
+	regrowth_time_low = 5 MINUTES
+	regrowth_time_high = 10 MINUTES
 
 /obj/structure/flora/ash/stem_shroom/get_potential_products()
 	return list(/obj/item/food/grown/ash_flora/mushroom_stem = 1)
@@ -110,8 +110,8 @@
 	harvest_message_med = "You pick several cactus fruit." //shouldn't show up, because you can't get more than two
 	harvest_message_high = "You pick a pair of cactus fruit."
 	harvest_time = 10
-	regrowth_time_low = 4800
-	regrowth_time_high = 7200
+	regrowth_time_low = 8 MINUTES
+	regrowth_time_high = 12 MINUTES
 	can_uproot = FALSE //Don't want 50 in one tile to decimate whoever dare step on the mass of cacti
 
 /obj/structure/flora/ash/cacti/Initialize(mapload)
@@ -133,8 +133,8 @@
 	harvest_message_med = "You grab a good haul of mushrooms."
 	harvest_message_high = "You hit the mushroom motherlode and make off with a bunch of tasty mushrooms."
 	harvest_time = 25
-	regrowth_time_low = 3000
-	regrowth_time_high = 5400
+	regrowth_time_low = 5 MINUTES
+	regrowth_time_high = 9 MINUTES
 	number_of_variants = 2
 	harvest_message_true_thresholds = FALSE
 
@@ -155,8 +155,8 @@
 	harvest_message_low = "You pluck a single, suitable flower."
 	harvest_message_med = "You pluck a number of flowers, leaving a few unsuitable ones."
 	harvest_message_high = "You pluck quite a lot of suitable flowers."
-	regrowth_time_low = 2500
-	regrowth_time_high = 4000
+	regrowth_time_low = 4 MINUTES
+	regrowth_time_high = 7 MINUTES
 	number_of_variants = 2
 
 /obj/structure/flora/ash/fireblossom/get_potential_products()
@@ -173,6 +173,50 @@
 	set_light_range(initial(light_range))
 	update_light()
 	return ..()
+
+/obj/structure/flora/ash/glowgrowth
+	name = "glowgrowth colony"
+	desc = "A colony of bioluminescent fungi growing on a hot air vent, feeding off mineral particulate blowing through it."
+	icon_state = "glowgrowth1"
+	base_icon_state = "glowgrowth"
+	density = TRUE // Large rock formations with plants ontop
+	light_range = 1.7
+	light_power = 1.2
+	light_color = "#67b6a5"
+	harvested_name = "hot air vent"
+	harvested_desc = "A ridged porous rock formation exuming hot air from the depths of the planet."
+	harvest_amount_high = 4
+	harvest_verb = "scrape"
+	harvest_message_low = "You scrape off a thin layer of glowing fungi."
+	harvest_message_med = "You pick a sizeable patch of glowing fungi."
+	harvest_message_high = "You grab a large fistful of glowing fungi."
+	regrowth_time_low = 8 MINUTES
+	regrowth_time_high = 16 MINUTES
+	number_of_variants = 3
+
+/obj/structure/flora/ash/glowgrowth/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/obj/structure/flora/ash/glowgrowth/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/glowgrowth = 1)
+
+/obj/structure/flora/ash/glowgrowth/after_harvest()
+	set_light_on(FALSE)
+	update_light()
+	update_appearance()
+	return ..()
+
+/obj/structure/flora/ash/glowgrowth/regrow()
+	set_light_on(TRUE)
+	update_light()
+	update_appearance()
+	return ..()
+
+/obj/structure/flora/ash/glowgrowth/update_overlays()
+	. = ..()
+	if (!harvested)
+		. += emissive_appearance(icon, "[icon_state]e", src, alpha = 120)
 
 ///Snow flora to exist on icebox.
 /obj/structure/flora/ash/chilly
@@ -273,6 +317,13 @@
 	. = ..()
 	// Fire flowers make fireproof raptors
 	AddElement(/datum/element/raptor_food, color_chances = string_list(list(/datum/raptor_color/blue = 5)))
+
+/obj/item/food/grown/ash_flora/glowgrowth
+	name = "glowgrowth sheet"
+	desc = "A thick sheet of glowing fungi."
+	icon_state = "glowgrowth"
+	seed = /obj/item/seeds/lavaland/glowgrowth // Cannot be grown in hydroponics as it feeds off mineral air
+	wine_power = 50
 
 // SEEDS
 
@@ -400,6 +451,17 @@
 	genes = list(/datum/plant_gene/trait/fire_resistance, /datum/plant_gene/trait/glow/yellow)
 	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	reagents_add = list(/datum/reagent/consumable/tinlux = 0.04, /datum/reagent/consumable/nutriment = 0.03, /datum/reagent/carbon = 0.05)
+
+/obj/item/seeds/lavaland/glowgrowth
+	name = "glowgrowth mycelium pack"
+	desc = "This mycelium grows into glowgrowth fungi."
+	plantname = "Glowgrowth Fungi"
+	icon_state = "mycelium-glowgrowth"
+	species = "glowgrowth"
+	product = /obj/item/food/grown/ash_flora/glowgrowth
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance, /datum/plant_gene/trait/glow/blue) // Fungal metab doesn't do anything (cause it can't be planted) but it shows up in analyzers
+	reagents_add = list(/datum/reagent/luminescent_fluid/cyan = 0.06, /datum/reagent/consumable/nutriment = 0.01, /datum/reagent/silicon = 0.03)
+	seed_flags = parent_type::seed_flags | NO_PLANTING
 
 //CRAFTING
 
