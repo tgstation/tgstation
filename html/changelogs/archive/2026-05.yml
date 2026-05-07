@@ -95,6 +95,9 @@
   Higgin:
   - bugfix: positive viruses no longer self-cure when not having spaceacillin or meeting
       the nutrition/satiety requirements.
+  Melbert:
+  - bugfix: Facial hair color can be separate from hair color again
+  - bugfix: Hair covering things update when they need up
   Shroopy:
   - bugfix: Fixed syndicate bombs having a maximum timer of 1000 minutes instead of
       100 minutes.
