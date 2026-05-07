@@ -1,3 +1,10 @@
+function shouldMarkAsOutdated(comment) {
+  return (
+    !comment.isMinimized &&
+    comment.author.login === 'github-actions' &&
+    comment.bodyText.toLowerCase().includes('screenshot test')
+  );
+}
 // Checks comments to see if any screenshot test results are outdated, mark them as outdated if so
 export async function markScreenshotTestResultOutdated({ github, context }) {
   // we have to use graphql because it differentiates outdated comments
@@ -24,32 +31,9 @@ export async function markScreenshotTestResultOutdated({ github, context }) {
       prNumber: context.payload.pull_request.number,
     },
   );
-  //   const oudatedCommentIds = prComments.repository.pullRequest.comments.nodes
-  //     .filter(shouldMarkAsOutdated)
-  //     .map((comment) => comment.id);
-  const oudatedCommentIds = [];
-  for (const comment of prComments.repository.pullRequest.comments.nodes) {
-    if (comment.isMinimized) {
-      console.log(`Comment ${comment.id} is already minimized, skipping`);
-      continue;
-    }
-    if (
-      comment.author.login !== 'github-actions[bot]' &&
-      comment.author.login !== 'github-actions'
-    ) {
-      console.log(
-        `Comment ${comment.id} is authored by ${comment.author.login}, not a bot, skipping`,
-      );
-      continue;
-    }
-    if (!comment.bodyText.toLowerCase().includes('screenshot test')) {
-      console.log(
-        `Comment ${comment.id} does not mention \"screenshot test\", skipping`,
-      );
-      continue;
-    }
-    oudatedCommentIds.push(comment.id);
-  }
+  const oudatedCommentIds = prComments.repository.pullRequest.comments.nodes
+    .filter(shouldMarkAsOutdated)
+    .map((comment) => comment.id);
 
   if (oudatedCommentIds.length === 0) {
     console.log(
@@ -65,7 +49,8 @@ export async function markScreenshotTestResultOutdated({ github, context }) {
       `mutation($commentId:ID!) {
             minimizeComment(input:{subjectId:$commentId, classifier:OUTDATED}) {
                 minimizedComment {
-                    id
+                    isMinimized
+                    minimizedReason
                 }
             }
         }`,
@@ -73,6 +58,6 @@ export async function markScreenshotTestResultOutdated({ github, context }) {
         commentId,
       },
     );
-    console.log(`Marked comment ${commentId} as outdated`);
+    console.log(`Marked comment as outdated`);
   }
 }
