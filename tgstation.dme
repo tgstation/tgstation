@@ -1303,6 +1303,7 @@
 #include "code\datums\components\religious_tool.dm"
 #include "code\datums\components\rename.dm"
 #include "code\datums\components\reskinnable_atom.dm"
+#include "code\datums\components\revenant_prison.dm"
 #include "code\datums\components\revenge_ability.dm"
 #include "code\datums\components\rot.dm"
 #include "code\datums\components\scope.dm"

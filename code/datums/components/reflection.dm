@@ -204,6 +204,7 @@
 	reflection.name = "[target.name]'s reflection"
 
 	SEND_SIGNAL(target, COMSIG_REFLECTION_UPDATED, parent, reflection)
+	SEND_SIGNAL(parent, COMSIG_REFLECTION_UPDATED, parent, reflection)
 
 ///Called when the target movable changes its appearance or dir.
 /datum/component/reflection/proc/update_reflection(atom/movable/source)

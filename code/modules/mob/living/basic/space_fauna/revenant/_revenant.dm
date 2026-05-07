@@ -62,6 +62,8 @@
 	var/draining = FALSE
 	/// Have we already given this revenant abilities?
 	var/generated_objectives_and_spells = FALSE
+	/// ckey of the player who controlled this mob when it was killed
+	var/old_ckey = ""
 
 	/// Lazylist of drained mobs to ensure that we don't steal a soul from someone twice
 	var/list/drained_mobs = null
@@ -343,10 +345,7 @@
 
 	visible_message(span_danger("[src]'s body breaks apart into a fine pile of blue dust."))
 
-	var/obj/item/ectoplasm/revenant/goop = new(get_turf(src)) // the ectoplasm will handle moving us out of dormancy
-	goop.old_ckey = client.ckey
-	goop.revenant = src
-	forceMove(goop)
+	new /obj/item/ectoplasm/revenant(get_turf(src), src) // the ectoplasm will handle moving us out of dormancy
 
 /mob/living/basic/revenant/proc/on_move(datum/source, atom/entering_loc)
 	SIGNAL_HANDLER
@@ -519,4 +518,28 @@
 	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) && !istype(reflecting_in, /obj/structure/mirror/magic))
 		apply_wibbly_filters(reflection)
 
+/mob/living/basic/revenant/proc/get_new_user()
+	message_admins("A poll for the reforming revenant was created.")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to be [span_notice(name)] (reforming)?", check_jobban = ROLE_REVENANT, role = ROLE_REVENANT, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "reforming revenant", chat_text_border_icon = src)
+	if(!chosen_one)
+		message_admins("No candidates were found for the new revenant.")
+		visible_message(span_revenwarning("A blue dust appears from thin air and settles down."))
+		new /obj/item/ectoplasm/revenant(get_turf(src)) // inert
+		qdel(src)
+	else
+		PossessByPlayer(chosen_one.key)
+		message_admins("[chosen_one.key] has been made into the reformed revenant via poll.")
+		qdel(chosen_one)
+
+/mob/living/basic/revenant/proc/reform(cause)
+	if(QDELETED(src))
+		return FALSE
+
+	death_reset()
+	if(isnull(client))
+		INVOKE_ASYNC(src, PROC_REF(get_new_user))
+	else
+		message_admins("[client.ckey] has been remade into a revenant.")
+		log_message("was remade as a revenant.", LOG_GAME)
+	return TRUE
 #undef REVENANT_STUNNED_TRAIT

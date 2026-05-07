@@ -15,6 +15,9 @@
 #define PRIDE_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD, CHANGE_RACE, CHANGE_SEX, CHANGE_EYES)
 #define MAGIC_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD, CHANGE_RACE, CHANGE_SEX, CHANGE_EYES, CHANGE_NAME)
 
+// Chance for the mirror to be haunted at creation
+#define ROUNDSTART_CURSED_CHANCE 0.2
+
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
@@ -57,6 +60,8 @@
 	)
 	if(mapload)
 		find_and_mount_on_atom()
+		if(prob(ROUNDSTART_CURSED_CHANCE))
+			AddComponent(/datum/component/revenant_prison, create_on_release = TRUE)
 	update_choices()
 	register_context()
 
@@ -75,7 +80,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 /obj/structure/mirror/broken/Initialize(mapload)
 	. = ..()
-	atom_break(null, mapload)
+	atom_break(null, init = TRUE)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
@@ -265,10 +270,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	user.update_eyes()
 	to_chat(user, span_notice("You gaze at your new eyes with your new eyes. Perfect!"))
 
+
+/obj/structure/mirror/proc/release_revenant()
+	message_admins("A revenant escaped its mirror containment and is now reforming.")
+	SEND_SIGNAL(src, COMSIG_REVENANT_RELEASE, cause = "mirror breaking")
+	visible_message(span_revenwarning("The revenant cackles as it escapes from the [src]!"))
+	playsound(loc, 'sound/effects/chemistry/ahaha.ogg', 100, TRUE)
+
 /obj/structure/mirror/examine(mob/user)
 	. = ..()
 	if(deconstructable)
 		. += span_notice("It's mounted to the wall with a couple of <b>bolts</b>.")
+	if(GetComponent(/datum/component/revenant_prison))
+		. += span_revenwarning("The reflection is shifting and distorted.")
 
 /obj/structure/mirror/examine_status(mob/living/carbon/human/user)
 	if(broken)
@@ -302,13 +316,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		to_chat(unlucky_dude, span_warning("A chill runs down your spine as [src] shatters..."))
 		unlucky_dude.AddComponent(/datum/component/omen, incidents_left = 7)
 
-/obj/structure/mirror/atom_break(damage_flag, mapload)
+/obj/structure/mirror/atom_break(damage_flag, init = FALSE)
 	. = ..()
 	if(broken)
 		return
 	icon_state = "mirror_broke"
-	if(!mapload)
+	if(!init)
 		playsound(src, SFX_SHATTER, 70, TRUE)
+		if(GetComponent(/datum/component/revenant_prison))
+			release_revenant()
 	if(desc == initial(desc))
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE
@@ -463,3 +479,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 #undef INERT_MIRROR_OPTIONS
 #undef PRIDE_MIRROR_OPTIONS
 #undef MAGIC_MIRROR_OPTIONS
+
+#undef ROUNDSTART_CURSED_CHANCE
