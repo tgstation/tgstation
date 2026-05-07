@@ -52,6 +52,12 @@
 	var/secondary_loot_generated
 	/// Has this domain been beaten with high enough score to spawn a tech disk?
 	var/disk_reward_spawned = FALSE
+	/// The amount of points towards the spawning of the main crate, on maps using points.
+	var/main_crate_points = 0
+	/// The amount of points required to spawn the main crate, on maps using points.
+	var/main_crate_point_goal = 10
+	/// The location the crate will spawn when enough points are accumulated, on maps using points.
+	var/main_crate_loc
 
 	/**
 	 * Modularity
@@ -99,7 +105,19 @@
 
 /// Sends a point to any loot signals on the map
 /datum/lazy_template/virtual_domain/proc/add_points(points_to_add = 1)
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_GOAL_POINT, points_to_add)
+	main_crate_points += points_to_add
+	if(main_crate_points >= main_crate_point_goal)
+		reveal()
+
+/datum/lazy_template/virtual_domain/proc/reveal()
+	if(!main_crate_loc)
+		return
+	var/turf/spawn_loc = get_turf(main_crate_loc)
+	playsound(spawn_loc, 'sound/effects/magic/blink.ogg', 50, TRUE)
+	var/obj/structure/closet/crate/secure/bitrunning/encrypted/crate = new()
+	crate.forceMove(spawn_loc) // Triggers any on-move effects on that turf
+	do_sparks(5, FALSE, spawn_loc, spark_type = /datum/effect_system/basic/spark_spread/quantum)
+	main_crate_loc = null
 
 /// Loads the ghost candidates.
 /datum/lazy_template/virtual_domain/proc/load_advanced_npcs(list/mob/lucky_ghosts)

@@ -3880,7 +3880,6 @@
 #include "code\modules\bitrunning\antagonists\netguardian.dm"
 #include "code\modules\bitrunning\components\avatar_connection.dm"
 #include "code\modules\bitrunning\components\avatar_gear.dm"
-#include "code\modules\bitrunning\components\bitrunning_points.dm"
 #include "code\modules\bitrunning\components\glitch.dm"
 #include "code\modules\bitrunning\components\netpod_healing.dm"
 #include "code\modules\bitrunning\components\npc_friendly.dm"
