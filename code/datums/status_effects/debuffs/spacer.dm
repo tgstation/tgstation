@@ -18,15 +18,19 @@
 // The good side (being in space)
 /datum/status_effect/spacer/gravity_wellness
 	alert_type = null
-	tick_interval = 3 SECONDS
+	tick_interval = 1 SECONDS
 	/// How much disgust to heal per tick
-	var/disgust_healing_per_tick = 1.5
-	/// How much of stamina damage to heal per tick when we've been in nograv for a while
-	var/stamina_heal_per_tick = 3
+	var/disgust_healing_per_second = 1
+	/// How much of stamina damage to heal per tick when we've been in nograv for a while.
+	var/stamina_heal_per_second = 5
 	/// How many seconds of stuns to reduce per tick when we've been in nograv for a while
-	var/stun_heal_per_tick = 3 SECONDS
+	var/stun_heal_per_second = 2 SECONDS
+	/// How much to reduce incoming knockdown effects while in nograv for a while
+	var/knockdown_multiplier = 0.8
 	/// Tracks how long we've been in no gravity
 	VAR_FINAL/seconds_in_nograv = 0 SECONDS
+	/// Tracks if we've applied knockdown modifier reduction to the mob
+	VAR_FINAL/knockdown_mod_applied = FALSE
 
 /datum/status_effect/spacer/gravity_wellness/tick(seconds_between_ticks)
 	var/in_nograv = !owner.has_gravity()
@@ -35,16 +39,37 @@
 
 	if(!in_nograv)
 		seconds_in_nograv = 0 SECONDS
+		if(knockdown_mod_applied)
+			remove_knockdown_mod()
 		return
 
 	seconds_in_nograv += (seconds_between_ticks * 0.1)
 
-	if(seconds_in_nograv >= 3 MINUTES)
-		// This has some interesting side effects with gravitum or similar negating effects that may be worth nothing
-		owner.adjust_stamina_loss(-1 * stamina_heal_per_tick)
+	if(seconds_in_nograv >= 2 MINUTES)
+		// With 5 stamina healing per second you'd get out of stamcrit in 5 seconds instead of the usual 10
+		owner.adjust_stamina_loss(-1 * stamina_heal_per_tick * stamcrit_mod)
+	if(seconds_in_nograv >= 20 SECONDS)
 		owner.AdjustAllImmobility(-1 * stun_heal_per_tick)
-		// For comparison: Ephedrine heals 4 stamina per tick / 2 per second
-		// and Nicotine heals 5 seconds of stun per tick / 2.5 per second
+		if(!knockdown_mod_applied)
+			apply_knockdown_mod()
+
+/datum/status_effect/spacer/gravity_wellness/on_remove()
+	. = ..()
+	remove_knockdown_mod()
+
+/datum/status_effect/spacer/gravity_wellness/proc/apply_knockdown_mod()
+	if(knockdown_mod_applied || !ishuman(owner))
+		return
+	var/mob/living/carbon/human/the_spacer = owner
+	the_spacer.physiology.knockdown_mod *= knockdown_multiplier
+	knockdown_mod_applied = TRUE
+
+/datum/status_effect/spacer/gravity_wellness/proc/remove_knockdown_mod()
+	if(!knockdown_mod_applied || !ishuman(owner))
+		return
+	var/mob/living/carbon/human/the_spacer = owner
+	the_spacer.physiology.knockdown_mod /= knockdown_multiplier
+	knockdown_mod_applied = FALSE
 
 // The bad side (being on a planet)
 /datum/status_effect/spacer/gravity_sickness
@@ -125,7 +150,7 @@
 /datum/movespeed_modifier/spacer/in_space
 	movetypes = FLOATING
 	blacklisted_movetypes = FLYING
-	multiplicative_slowdown = -0.1
+	multiplicative_slowdown = -0.15
 
 /datum/movespeed_modifier/spacer/on_planet
 	movetypes = GROUND|FLYING
@@ -136,4 +161,4 @@
 	multiplicative_slowdown = 0.5
 
 /datum/movespeed_modifier/spacer/on_planet/nerfed
-	multiplicative_slowdown = 0.25
+	multiplicative_slowdown = 0.15
