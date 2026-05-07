@@ -28,6 +28,10 @@
 	var/suffix = null
 	///What flavor or ruin is this? eg ZTRAIT_SPACE_RUINS
 	var/ruin_type = null
+	///is this ruin "enclosed" by walls. This is relevant for terrain gen with cellular automata to know whether this ruin will spawn inside of walls, or should spawn in the open.
+	var/enclosed_for_terrain = FALSE
+	///Padding to be used to ensure extra space around the ruin for terrain gen purposes. If a ruin is NOT enclosed and this is set to 1; there will be at least one layer of open terrain around the ruin. If a ruin IS enclosed and this is set to 1; there will be at least one layer of wall terrain around the ruin.
+	var/terrain_padding = 0
 
 /datum/map_template/ruin/New()
 	if(!name && id)

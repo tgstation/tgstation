@@ -107,11 +107,9 @@
  * * death_limit: If the number of neighboring cells is lower than this amount, a cell dies
  * * width: The width of the grid.
  * * height: The height of the grid.
- * * def_alive_grid: (Optional) A grid string of '0'/'1' indicating cells that are permanently alive. Legacy mode when omitted.
- * * def_dead_grid: (Optional) A grid string of '0'/'1' indicating cells that are permanently dead. Legacy mode when omitted.
  */
-#define rustg_cnoise_generate(percentage, smoothing_iterations, birth_limit, death_limit, width, height, def_alive_grid, def_dead_grid) \
-	RUSTG_CALL(RUST_G, "cnoise_generate")(percentage, smoothing_iterations, birth_limit, death_limit, width, height, def_alive_grid, def_dead_grid)
+#define rustg_cnoise_generate(percentage, smoothing_iterations, birth_limit, death_limit, width, height) \
+	RUSTG_CALL(RUST_G, "cnoise_generate")(percentage, smoothing_iterations, birth_limit, death_limit, width, height)
 
 /**
  * This proc generates a grid of perlin-like noise

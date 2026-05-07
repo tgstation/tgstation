@@ -17,6 +17,9 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ruins_templates = list()
 
+	///Assoc list of all ruins spawned, key center of ruin spawn -> value ruin instance
+	var/list/active_ruins = alist()
+
 	///List of ruins, separated by their theme
 	var/list/themed_ruins = list()
 
