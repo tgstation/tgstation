@@ -33,9 +33,12 @@ export async function markScreenshotTestResultOutdated({ github, context }) {
       console.log(`Comment ${comment.id} is already minimized, skipping`);
       continue;
     }
-    if (comment.author.login !== 'github-actions[bot]') {
+    if (
+      comment.author.login !== 'github-actions[bot]' &&
+      comment.author.login !== 'github-actions'
+    ) {
       console.log(
-        `Comment ${comment.id} is not from github-actions[bot], skipping`,
+        `Comment ${comment.id} is authored by ${comment.author.login}, not a bot, skipping`,
       );
       continue;
     }
