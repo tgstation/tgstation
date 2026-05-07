@@ -66,7 +66,7 @@
 		for(var/blip_tag in valid_minimap_blip_tags)
 			RegisterSignal(SSdcs, COMSIG_MINIMAP_ADD(blip_tag), PROC_REF(on_tagged_blip_add))
 			RegisterSignal(SSdcs, COMSIG_MINIMAP_REMOVE(blip_tag), PROC_REF(on_tagged_blip_remove))
-	on_z_level_change(hud.mymob)
+	INVOKE_ASYNC(src, PROC_REF(on_z_level_change), hud_owner.mymob)
 	show_tagged_blips()
 
 /atom/movable/screen/minimap_display/Destroy()

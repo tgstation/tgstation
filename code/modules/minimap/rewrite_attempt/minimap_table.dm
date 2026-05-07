@@ -99,13 +99,14 @@
 	play_animation("closing")
 
 /obj/machinery/minimap_table/proc/light_pulsate()
+	SIGNAL_HANDLER
 	var/obj/effect/abstract/main_light = middleman.primary_intercept
 	var/matrix/center = matrix()
+	// center it since we're a 2x2 machine
 	center.Translate(16, 0)
 	main_light.transform = center
 	if(!active)
 		return
-	// center it since we're a 2x2 machine
 
 
 	var/matrix/bigTransform = matrix()
