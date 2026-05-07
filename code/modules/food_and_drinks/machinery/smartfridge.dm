@@ -506,7 +506,7 @@
 		use_energy(active_power_usage)
 
 /obj/machinery/smartfridge/drying/accept_check(obj/item/O)
-	return HAS_TRAIT(O, TRAIT_DRYABLE)
+	return HAS_TRAIT(O, TRAIT_DRYABLE) && !HAS_TRAIT(O, TRAIT_DRIED)
 
 /**
  * Toggles drying on or off
