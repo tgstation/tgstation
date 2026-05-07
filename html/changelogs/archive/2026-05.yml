@@ -89,6 +89,9 @@
   - admin: adds a 'toggle dead runechat' admin verb in case you need to disable it
       midround for an event or something
 2026-05-07:
+  ArcaneMusic:
+  - rscadd: Adds the E-2 Earthcracker device as a purchasable traitor item for 2 TC.
+      Use it to create potentially devastating weakpoints onto the station!
   Higgin:
   - bugfix: positive viruses no longer self-cure when not having spaceacillin or meeting
       the nutrition/satiety requirements.
