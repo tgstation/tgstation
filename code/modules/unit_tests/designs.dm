@@ -33,6 +33,7 @@
 
 /datum/unit_test/design_source/Run()
 	var/list/all_designs = list()
+	var/list/mat_requirements_types = typesof(/datum/material_requirement)
 
 	for (var/datum/design/design as anything in subtypesof(/datum/design))
 		design = new design()
@@ -42,6 +43,46 @@
 			TEST_FAIL("Design [design.type] shares an ID \"[design.id]\" with another design")
 			continue
 		all_designs[design.id] = design.type
+
+		//Perform material checks onto the design if needed to ensure the required materials (minus the removed_materials) match the custom materials of the object.
+		if(design.inherit_materials != DESIGN_INHERIT_MATS || !design.build_path || is_type_in_list(datum/material_requirement, design.materials))
+			continue
+
+		var/atom/generic_instance = allocate(design.build_path)
+		var/list/expected_materials = design.materials.Copy()
+		for(var/mat_type, amount in design.removed_materials)
+			expected_materials[mat_type] -= amount
+			if(expected_materials[mat_type] <= 0)
+				expected_materials -= mat_type
+
+		var/atom/printed_instance = allocate(design.build_path)
+		if(!isstack(printed_instance))
+			split_materials_uniformly(expected_materials, 1, printed_instance)
+
+		if(generic_instance.compare_materials(printed_instance))
+			continue
+
+		var/target_var = NAMEOF(generic_instance, custom_materials)
+		var/warning = "[target_var] of [generic_instance.type] differs from the materials required by the design [design.type]"
+
+		var/what_it_should_be
+		var/what_it_is
+		if(isstack(generic_instance))
+			var/obj/item/stack/generic_stack = generic_instance
+			var/obj/item/stack/printed_stack = printed_instance
+			target_var = NAMEOF(generic_stack, mats_per_unit)
+			what_it_should_be = printed_stack.transcribe_materials_list(printed_stack.mats_per_unit)
+			what_it_is = generic_stack.transcribe_materials_list(generic_stack.mats_per_unit)
+		else
+			what_it_should_be = printed_instance.transcribe_materials_list()
+			what_it_is = generic_instance.transcribe_materials_list()
+
+		TEST_FAIL("[warning]. should be: [target_var] = [what_it_should_be] (current value: [what_it_is]). \
+			Fix that or set the [NAMEOF(design, perform_materials_checks)] var of [design.type] to FALSE. \
+			You can also edit the [NAMEOF(design, removed_materials)] alist of the design.")
+
+		if(generic_instance.contents.len)
+			stack_trace("[generic_instance.type] has extra contents")
 
 	for (var/datum/techweb_node/node as anything in subtypesof(/datum/techweb_node))
 		node = new node()

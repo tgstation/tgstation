@@ -1,18 +1,21 @@
-/datum/design/iron
-	name = "Iron"
-	id = "iron"
+/datum/design/material
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/stack/sheet/iron
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
+	//We can reasonably believe that material sheets already have said materials to begin with and don't need this.
+	inherit_materials = DESIGN_DONT_INHERIT_MATS
 
-/datum/design/rods
+/datum/design/material/iron
+	name = "Iron"
+	id = "iron"
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/stack/sheet/iron
+
+/datum/design/material/rods
 	name = "Iron Rod"
 	id = "rods"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/rods
 	category = list(
@@ -20,10 +23,9 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
 
-/datum/design/glass
+/datum/design/material/glass
 	name = "Glass"
 	id = "glass"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/glass
 	category = list(
@@ -31,88 +33,53 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
 
-/datum/design/rglass
+/datum/design/material/rglass
 	name = "Reinforced Glass"
 	id = "rglass"
 	build_type = AUTOLATHE | SMELTER | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/rglass
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/silver
+/datum/design/material/silver
 	name = "Silver"
 	id = "silver"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/silver
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
 
-/datum/design/gold
+/datum/design/material/gold
 	name = "Gold"
 	id = "gold"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/gold
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
 
-/datum/design/diamond
+/datum/design/material/diamond
 	name = "Diamond"
 	id = "diamond"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/diamond
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
 
-/datum/design/plasma
+/datum/design/material/plasma
 	name = "Plasma"
 	id = "plasma"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/plasma = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/plasma
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
 
-/datum/design/uranium
+/datum/design/material/uranium
 	name = "Uranium"
 	id = "uranium"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/uranium
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
 
-/datum/design/bananium
+/datum/design/material/bananium
 	name = "Bananium"
 	id = "bananium"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/bananium = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/bananium
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
 
-/datum/design/titanium
+/datum/design/material/titanium
 	name = "Titanium"
 	id = "titanium"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/titanium
 	category = list(
@@ -120,46 +87,26 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
 
-/datum/design/plastic
+/datum/design/material/plastic
 	name = "Plastic"
 	id = "plastic"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/plastic
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
 
-/datum/design/bs_crystal
+/datum/design/material/bs_crystal
 	name = "Bluespace Crystal"
 	id = "bscrystal"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/bluespace_crystal
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
 
-/datum/design/mythril
+/datum/design/material/mythril
 	name = "Mythril"
 	id = "mythril"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/mythril = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/mythril
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)
 
-/datum/design/alien_alloy
+/datum/design/material/alien_alloy
 	name = "Alien Alloy"
 	id = "allienalloy"
-	build_type = AUTOLATHE
 	materials = list(/datum/material/alloy/alien = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/abductor
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
-	)

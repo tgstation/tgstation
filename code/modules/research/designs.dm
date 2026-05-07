@@ -58,6 +58,21 @@ other types of metals and chemistry for reagents).
 	/// For protolathe designs that don't require reagents: If they can be exported to autolathes with a design disk or not.
 	var/autolathe_exportable = TRUE
 
+	/// If set, an amount of materials that will be removed from the custom materials of the built object
+	var/alist/removed_materials
+	/**
+	 * A variable for if and how we want the printed object to receive the materials that were used to print it.
+	 *
+	 * * DESIGN_INHERIT_MATS: default setting, this will also be unit tested to ensure that the object built from an unupgraded protolathe
+	 * has the same materials of an object of the same type only instantiated in a generic way.
+	 * * DESIGN_INHERIT_SPECIAL: get the materials, but don't perform unit test checks
+	 * * DESIGN_DONT_INHERIT_MATS: The printed object won't have the materials that were used to print it.
+	 *
+	 * P.S. unit test checks for materials are not performed on designs that use /datum/material_requirement.
+	 * The only thing we would've to check in that case would be the amounts but not the types, and that isn't worth it.
+	 */
+	var/inherit_materials = DESIGN_INHERIT_MATS
+
 /datum/design/error_design
 	name = "ERROR"
 	desc = "This usually means something in the database has corrupted. If this doesn't go away automatically, inform Central Command so their techs can fix this ASAP(tm)"

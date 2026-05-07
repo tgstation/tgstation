@@ -114,5 +114,9 @@
 		for(var/mat in material_map_amounts)
 			var/list/mat_per_item = material_map_amounts[mat]
 			final_material_list[mat] = mat_per_item[index]
-		object.set_custom_materials(final_material_list, multiplier)
+		if(isstack(object))
+			var/obj/item/stack/stack = object
+			stack.mats_per_unit = SSmaterials.get_material_set_cache(final_material_list, multiplier / stack.amount)
+		else
+			object.set_custom_materials(final_material_list, multiplier)
 		index += 1

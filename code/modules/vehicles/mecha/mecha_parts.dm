@@ -403,13 +403,16 @@
 /obj/item/circuitboard/mecha/phazon/peripherals
 	name = "Phazon Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/mecha/phazon/targeting
 	name = "Phazon Weapon Control and Targeting module (Exosuit Board)"
 	icon_state = "mcontroller"
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/mecha/phazon/main
 	name = "Phazon Central Control module (Exosuit Board)"
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/mecha/clarke/peripherals
 	name = "Clarke Peripherals Control module (Exosuit Board)"

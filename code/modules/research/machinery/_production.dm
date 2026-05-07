@@ -412,7 +412,12 @@
 		return
 
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
-	var/list/design_materials = design.materials
+	var/list/design_materials = design.materials.Copy()
+	for(var/mat_type, amount in design.removed_materials)
+		design_materials[mat_type] -= amount
+		if(expected_materials[mat_type] <= 0)
+			design_materials -= mat_type
+
 	if(!materials.mat_container.has_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1))
 		say("Unable to continue production, missing materials.")
 		finalize_build()
@@ -420,10 +425,11 @@
 	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "processed", "[design.name]", user_data = user_data)
 
 	var/atom/movable/created
+	var/number_to_make = 1
 	if(is_stack)
 		var/obj/item/stack/stack_item = initial(design.build_path)
 		var/max_stack_amount = initial(stack_item.max_amount)
-		var/number_to_make = (initial(stack_item.amount) * items_remaining)
+		number_to_make = (initial(stack_item.amount) * items_remaining)
 		while(number_to_make > max_stack_amount)
 			created = design.create_result(target, design_materials, amount = max_stack_amount)
 			if(isitem(created))
@@ -431,9 +437,8 @@
 				created.pixel_y = created.base_pixel_y + rand(-6, 6)
 			number_to_make -= max_stack_amount
 
-		created = design.create_result(target, design_materials, amount = number_to_make)
-	else
-		created = design.create_result(target, design_materials)
+	created = design.create_result(target, design_materials, amount = number_to_make)
+	if(design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
 		split_materials_uniformly(design_materials, material_cost_coefficient, created)
 
 	if(isitem(created))
