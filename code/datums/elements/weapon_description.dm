@@ -97,6 +97,8 @@
 	if(attached_proc)
 		readout += call(source, attached_proc)()
 
+	SEND_SIGNAL(source, COMSIG_ITEM_WEAPON_LABEL_READOUT, readout)
+
 	// Finally bringing the fields together
 	return readout.Join("\n")
 

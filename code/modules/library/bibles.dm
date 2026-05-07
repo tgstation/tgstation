@@ -365,13 +365,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/syndicate/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_SPIRIT, added_damage = 25)
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
 		success_forcesay = "BEGONE FOUL MAGIKS!!", \
 		tip_text = "Clear rune", \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/book/bible/syndicate/attack_self(mob/living/carbon/human/user, modifiers)
 	if(!uses || !istype(user))

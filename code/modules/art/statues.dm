@@ -332,13 +332,16 @@
 	. = ..()
 	AddElement(/datum/element/eyestab)
 	AddElement(/datum/element/wall_engraver)
-	//deals 200 damage to statues, meaning you can actually kill one in ~250 hits
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/statue, damage_multiplier = 40)
+	AddComponent(/datum/component/bane, damage_multiplier = 40, should_bane_callback = CALLBACK(src, PROC_REF(bane_check)), label_text = "statues")
 
 /obj/item/chisel/Destroy()
 	prepared_block = null
 	tracked_user = null
 	return ..()
+
+/// Bane component callback
+/obj/item/chisel/proc/bane_check(mob/living/target)
+	return istype(target, /mob/living/basic/statue)
 
 /*
 Hit the block to start

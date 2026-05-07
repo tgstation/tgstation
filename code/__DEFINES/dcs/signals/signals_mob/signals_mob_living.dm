@@ -70,13 +70,6 @@
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
 
-///from base of element/bane/activate(): (item/weapon, mob/user)
-#define COMSIG_OBJECT_PRE_BANING "obj_pre_baning"
-	#define COMPONENT_CANCEL_BANING (1<<0)
-
-///from base of element/bane/activate(): (item/weapon, mob/user)
-#define COMSIG_OBJECT_ON_BANING "obj_on_baning"
-
 // adjust_x_loss messages sent from /mob/living/proc/adjust[x]Loss
 /// Returned from all the following messages if you actually aren't going to apply any change
 #define COMPONENT_IGNORE_CHANGE (1<<0)
