@@ -19,23 +19,11 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	var/desc = ""
 	var/list/factor
 
-/**
- * Electrolyzer reaction.
- * Args:
- * * air_mixture: The gas_mixture receiving the electrolysis.
- * * working_power: How much energy to put into the electrolysis, in electrolyzer units. A value of 1 is what a tier 1 electrolyzer would put in.
- * * electrolyzer_args: Additional arguments for alternative methods of electrolysis.
- */
-/datum/electrolyzer_reaction/proc/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
+/datum/electrolyzer_reaction/proc/react(turf/location, datum/gas_mixture/air_mixture, working_power)
 	return
 
-/**
- * Checks whether the requirements are met for a reaction.
- * Args:
- * * air_mixture: The air mixture to check the requirements for.
- * * electrolyzer_args: Additional arguments for alternative methods of electrolysis.
- */
-/datum/electrolyzer_reaction/proc/reaction_check(datum/gas_mixture/air_mixture, list/electrolyzer_args = list())
+
+/datum/electrolyzer_reaction/proc/reaction_check(datum/gas_mixture/air_mixture)
 	var/temp = air_mixture.temperature
 	var/list/cached_gases = air_mixture.gases
 	if((requirements["MIN_TEMP"] && temp < requirements["MIN_TEMP"]) || (requirements["MAX_TEMP"] && temp > requirements["MAX_TEMP"]))
@@ -61,7 +49,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
 
-/datum/electrolyzer_reaction/h2o_conversion/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
+/datum/electrolyzer_reaction/h2o_conversion/react(turf/location, datum/gas_mixture/air_mixture, working_power)
 
 	var/old_heat_capacity = air_mixture.heat_capacity()
 
@@ -79,32 +67,23 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	desc = "Conversion of Hypernoblium into Antinoblium"
 	requirements = list(
 		/datum/gas/hypernoblium = MINIMUM_MOLE_COUNT,
+		"MAX_TEMP" = 150
 	)
 	factor = list(
 		/datum/gas/hypernoblium = "1 mole of Hypernoblium gets consumed",
-		/datum/gas/antinoblium = "1 mole of Antinoblium get produced",
-		"Location" = "Can only happen on turfs that are being struck by supermatter zaps with a power level above 5 GeV.",
+		/datum/gas/antinoblium = "0.5 moles of Antinoblium get produced",
+		"Temperature" = "Can only occur under 150 kelvin.",
+
+		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
 
-/datum/electrolyzer_reaction/nob_conversion/reaction_check(datum/gas_mixture/air_mixture, list/electrolyzer_args = list())
-	if(!electrolyzer_args[ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER] || electrolyzer_args[ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER] <= POWER_PENALTY_THRESHOLD)
-		return FALSE
-	. = ..()
-
-/datum/electrolyzer_reaction/nob_conversion/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
-	/// The supermatter zap power_level.
-	var/supermatter_power = electrolyzer_args[ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER]
-	var/list/cached_gases = air_mixture.gases
+/datum/electrolyzer_reaction/nob_conversion/react(turf/location, datum/gas_mixture/air_mixture, working_power)
 	var/old_heat_capacity = air_mixture.heat_capacity()
 	air_mixture.assert_gases(/datum/gas/hypernoblium, /datum/gas/antinoblium)
-	var/list/hypernoblium = cached_gases[/datum/gas/hypernoblium]
-	var/list/antinoblium = cached_gases[/datum/gas/antinoblium]
-	var/electrolysed = hypernoblium[MOLES] * clamp(supermatter_power - POWER_PENALTY_THRESHOLD, 0, CRITICAL_POWER_PENALTY_THRESHOLD - POWER_PENALTY_THRESHOLD) / (CRITICAL_POWER_PENALTY_THRESHOLD - POWER_PENALTY_THRESHOLD)
-
-	air_mixture.adjust_gas(/datum/gas/hypernoblium, -electrolysed)
-	air_mixture.adjust_gas(/datum/gas/antinoblium, electrolysed)
-
-	var/new_heat_capacity = old_heat_capacity + electrolysed * (antinoblium[GAS_META][META_GAS_SPECIFIC_HEAT] - hypernoblium[GAS_META][META_GAS_SPECIFIC_HEAT])
+	var/proportion = min(air_mixture.gases[/datum/gas/hypernoblium][MOLES], (1.5 * (working_power ** 2)))
+	air_mixture.gases[/datum/gas/hypernoblium][MOLES] -= proportion
+	air_mixture.gases[/datum/gas/antinoblium][MOLES] += proportion * 0.5
+	var/new_heat_capacity = air_mixture.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air_mixture.temperature = max(air_mixture.temperature * old_heat_capacity / new_heat_capacity, TCMB)
 
@@ -124,7 +103,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
 
-/datum/electrolyzer_reaction/halon_generation/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
+/datum/electrolyzer_reaction/halon_generation/react(turf/location, datum/gas_mixture/air_mixture, working_power)
 	var/old_heat_capacity = air_mixture.heat_capacity()
 	air_mixture.assert_gases(/datum/gas/bz, /datum/gas/oxygen, /datum/gas/halon)
 	var/reaction_efficency = min(air_mixture.gases[/datum/gas/bz][MOLES] * (1 - NUM_E ** (-0.5 * air_mixture.temperature * working_power / FIRE_MINIMUM_TEMPERATURE_TO_EXIST)), air_mixture.gases[/datum/gas/bz][MOLES])

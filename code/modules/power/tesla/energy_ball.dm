@@ -350,12 +350,6 @@
 	else
 		power = closest_atom.zap_act(power, zap_flags)
 
-	// Electrolysis.
-	var/turf/target_turf = get_turf(closest_atom)
-	if(target_turf?.return_air())
-		var/datum/gas_mixture/air_mixture = target_turf.return_air()
-		air_mixture.electrolyze(working_power = power / 200)
-		target_turf.air_update_turf()
 
 	if(prob(20))//I know I know
 		var/list/shocked_copy = shocked_targets.Copy()

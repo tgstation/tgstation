@@ -1043,7 +1043,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/handle_environment(mob/living/carbon/human/humi, datum/gas_mixture/environment, seconds_per_tick)
 	handle_environment_pressure(humi, environment, seconds_per_tick)
-	handle_gas_interaction(humi, environment, seconds_per_tick)
 
 /**
  * Body temperature handler for species
@@ -1350,24 +1349,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
 			H.seconds_in_low_pressure += seconds_per_tick
 
-/**
- *	Handles exposure to the skin of various gases.
- */
-/datum/species/proc/handle_gas_interaction(mob/living/carbon/human/human, datum/gas_mixture/environment, seconds_per_tick)
-	/// Some non-clothing items may end up in these slots, e.g. flowers worn on the head, so we should consider clothing_flags as potentially nonexistant as a var.
-	/// Otherwise we will get a very spammy runtime.
-	var/suit_flags = astype(human?.wear_suit, /obj/item/clothing)?.clothing_flags
-	var/head_flags = astype(human?.head, /obj/item/clothing)?.clothing_flags
-
-	if((suit_flags & STOPSPRESSUREDAMAGE) && (head_flags & STOPSPRESSUREDAMAGE))
-		return
-
-	for(var/gas_id in environment.gases)
-		var/gas_amount = environment.gases[gas_id][MOLES]
-		switch(gas_id)
-			if(/datum/gas/antinoblium) // Antinoblium - irradiates the target.
-				if(gas_amount >= MOLES_GAS_VISIBLE && SPT_PROB(1, gas_amount * seconds_per_tick))
-					SSradiation.irradiate(human)
 
 ////////////
 //  Stun  //
