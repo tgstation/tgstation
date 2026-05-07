@@ -162,8 +162,9 @@
 	if(!is_bane_target(hit_atom))
 		return
 
+	var/mob/thrower = throwingdatum?.thrower?.resolve()
 	var/list/damage_modifiers = list("[FORCE_MULTIPLIER]" = damage_multiplier, "[FORCE_MODIFIER]" = added_damage)
-	pre_bane_callback?.Invoke(target, firer, damage_modifiers)
+	pre_bane_callback?.Invoke(target, thrower, damage_modifiers)
 
 	// We're not modifying the throwforce of the item we're just applying more damage as a separate damage event
 	// That's why we do damage_multiplier - 1 (so that a 1.5x multiplier would apply 0.5x damage here for a total of 1.5x)
@@ -173,7 +174,6 @@
 		var/mob/living/living_target = hit_atom // safe assertion from is_bane_target
 		living_target.apply_damage(extra_damage, throwing_item.damtype, hit_zone, blocked)
 
-	var/mob/thrower = throwingdatum?.thrower?.resolve()
 	SEND_SIGNAL(hit_atom, COMSIG_LIVING_BANED, thrower, hit_atom)
 	on_bane_callback?.Invoke(hit_atom, thrower)
 
