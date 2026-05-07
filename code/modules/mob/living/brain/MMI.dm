@@ -22,6 +22,14 @@
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.set_broadcasting(FALSE) //researching radio mmis turned the robofabs into radios because this didnt start as 0.
 	laws.set_laws_config()
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
+/// Refreshes the brainmob's camera when the MMI changes hands or is dropped.
+/obj/item/mmi/proc/on_moved(atom/movable/source, atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+	if(isnull(brainmob?.client) || mecha)
+		return
+	brainmob.reset_perspective(source.loc || source)
 
 /obj/item/mmi/Destroy()
 	set_mecha(null)
