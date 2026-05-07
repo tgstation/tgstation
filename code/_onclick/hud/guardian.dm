@@ -19,10 +19,3 @@
 	icon_state = "suit_storage"
 	slot_id = ITEM_SLOT_DEX_STORAGE
 	screen_loc = ui_back
-
-/datum/inventory_slot/guardian_storage/get_slot_item(mob/owner)
-	if (!istype(owner, /mob/living/basic/guardian/dextrous))
-		return
-
-	var/mob/living/basic/guardian/dextrous/dex_guardian = owner
-	return dex_guardian.internal_storage

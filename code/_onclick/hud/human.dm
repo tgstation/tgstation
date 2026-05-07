@@ -94,12 +94,6 @@
 	screen_loc = ui_iclothing
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
-/datum/inventory_slot/human/uniform/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.w_uniform
 
 /datum/inventory_slot/human/suit
 	name = "suit"
@@ -109,26 +103,12 @@
 	screen_loc = ui_oclothing
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
-/datum/inventory_slot/human/suit/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.wear_suit
-
 /datum/inventory_slot/human/id
 	name = "id"
 	icon_state = "id"
 	icon_full = "template_small"
 	screen_loc = ui_id
 	slot_id = ITEM_SLOT_ID
-
-/datum/inventory_slot/human/id/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.wear_id
 
 /datum/inventory_slot/human/mask
 	name = "mask"
@@ -138,13 +118,6 @@
 	slot_id = ITEM_SLOT_MASK
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
-/datum/inventory_slot/human/mask/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.wear_mask
-
 /datum/inventory_slot/human/neck
 	name = "neck"
 	icon_state = "neck"
@@ -153,26 +126,12 @@
 	slot_id = ITEM_SLOT_NECK
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
-/datum/inventory_slot/human/neck/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.wear_neck
-
 /datum/inventory_slot/human/back
 	name = "back"
 	icon_state = "back"
 	icon_full = "template_small"
 	screen_loc = ui_back
 	slot_id = ITEM_SLOT_BACK
-
-/datum/inventory_slot/human/back/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.back
 
 /datum/inventory_slot/human/l_pocket
 	name = "left pocket"
@@ -181,13 +140,6 @@
 	screen_loc = ui_storage1
 	slot_id = ITEM_SLOT_LPOCKET
 
-/datum/inventory_slot/human/l_pocket/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.l_store
-
 /datum/inventory_slot/human/r_pocket
 	name = "right pocket"
 	icon_state = "pocket"
@@ -195,26 +147,12 @@
 	screen_loc = ui_storage2
 	slot_id = ITEM_SLOT_RPOCKET
 
-/datum/inventory_slot/human/r_pocket/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.r_store
-
 /datum/inventory_slot/human/suit_storage
 	name = "suit storage"
 	icon_state = "suit_storage"
 	icon_full = "template"
 	screen_loc = ui_sstore1
 	slot_id = ITEM_SLOT_SUITSTORE
-
-/datum/inventory_slot/human/suit_storage/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.s_store
 
 /datum/inventory_slot/human/gloves
 	name = "gloves"
@@ -224,13 +162,6 @@
 	slot_id = ITEM_SLOT_GLOVES
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
-/datum/inventory_slot/human/gloves/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.gloves
-
 /datum/inventory_slot/human/eyes
 	name = "eyes"
 	icon_state = "glasses"
@@ -238,13 +169,6 @@
 	screen_loc = ui_glasses
 	slot_id = ITEM_SLOT_EYES
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
-
-/datum/inventory_slot/human/eyes/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.glasses
 
 /datum/inventory_slot/human/ears
 	name = "ears"
@@ -254,13 +178,6 @@
 	slot_id = ITEM_SLOT_EARS
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
-/datum/inventory_slot/human/ears/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.ears
-
 /datum/inventory_slot/human/head
 	name = "head"
 	icon_state = "head"
@@ -268,13 +185,6 @@
 	screen_loc = ui_head
 	slot_id = ITEM_SLOT_HEAD
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
-
-/datum/inventory_slot/human/head/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.head
 
 /datum/inventory_slot/human/shoes
 	name = "shoes"
@@ -284,23 +194,9 @@
 	slot_id = ITEM_SLOT_FEET
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
-/datum/inventory_slot/human/shoes/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.shoes
-
 /datum/inventory_slot/human/belt
 	name = "belt"
 	icon_state = "belt"
 	icon_full = "template_small"
 	screen_loc = ui_belt
 	slot_id = ITEM_SLOT_BELT
-
-/datum/inventory_slot/human/belt/get_slot_item(mob/owner)
-	if (!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/human = owner
-	return human.belt

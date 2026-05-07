@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 
 /// Returns the item held in this slot by hud's mymob
 /datum/inventory_slot/proc/get_slot_item(mob/owner)
-	return
+	return owner.get_item_by_slot(slot_id)
 
 /// Returns a screen object for this slot for a particular hud datum
 /datum/inventory_slot/proc/get_screen_slot(datum/hud/hud)
@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 		return
 
 	var/obj/item/slot_item = get_slot_item(owner)
-	slot.update_icon()
+	slot.update_appearance(UPDATE_ICON)
 	if (!slot_item)
 		slot.vis_contents.Cut()
 		return
@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 		return
 
 	var/obj/item/slot_item = get_slot_item(owner, hand_index)
-	slot.update_icon()
+	slot.update_appearance(UPDATE_ICON)
 	if (!slot_item)
 		slot.vis_contents.Cut()
 		return
