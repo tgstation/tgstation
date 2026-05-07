@@ -45,10 +45,10 @@
 
 	seconds_in_nograv += (seconds_between_ticks * 0.1)
 
-	if(seconds_in_nograv >= 2 MINUTES)
+	if(seconds_in_nograv >= 1 MINUTES)
 		// With 4 stamina healing per second you'd get out of stamcrit in 6 seconds instead of the usual 10
 		owner.adjust_stamina_loss(-1 * stamina_heal_per_second * seconds_between_ticks)
-	if(seconds_in_nograv >= 20 SECONDS)
+	if(seconds_in_nograv >= 10 SECONDS)
 		owner.AdjustAllImmobility(-1 * stun_heal_per_second * seconds_between_ticks)
 		if(!knockdown_mod_applied)
 			apply_knockdown_mod()
