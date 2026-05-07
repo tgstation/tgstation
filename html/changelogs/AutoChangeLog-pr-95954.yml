@@ -1,4 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - bugfix: "positive viruses no longer self-cure when not having spaceacillin or meeting the nutrition/satiety requirements."
