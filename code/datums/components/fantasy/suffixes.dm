@@ -82,7 +82,7 @@
 	// This works even with the species picks since we're only accessing the name
 
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/bane, affected_biotypes = picked_mobtype, damage_modifier = 2)
+	comp.appliedComponents += master.AddComponent(/datum/component/bane, affected_biotypes = picked_mobtype, damage_multiplier = 2)
 	return "[newName] of [initial(picked_mobtype.name)] slaying"
 
 /datum/fantasy_affix/summoning
