@@ -1,10 +1,3 @@
-function shouldMarkAsOutdated(comment) {
-  return (
-    !comment.isMinimized &&
-    comment.author.login === 'github-actions[bot]' &&
-    comment.bodyText.toLowerCase().includes('screenshot test')
-  );
-}
 // Checks comments to see if any screenshot test results are outdated, mark them as outdated if so
 export async function markScreenshotTestResultOutdated({ github, context }) {
   // we have to use graphql because it differentiates outdated comments
@@ -31,9 +24,29 @@ export async function markScreenshotTestResultOutdated({ github, context }) {
       prNumber: context.payload.pull_request.number,
     },
   );
-  const oudatedCommentIds = prComments.repository.pullRequest.comments.nodes
-    .filter(shouldMarkAsOutdated)
-    .map((comment) => comment.id);
+  //   const oudatedCommentIds = prComments.repository.pullRequest.comments.nodes
+  //     .filter(shouldMarkAsOutdated)
+  //     .map((comment) => comment.id);
+  const oudatedCommentIds = [];
+  for (const comment of prComments.repository.pullRequest.comments.nodes) {
+    if (comment.isMinimized) {
+      console.log(`Comment ${comment.id} is already minimized, skipping`);
+      continue;
+    }
+    if (comment.author.login !== 'github-actions[bot]') {
+      console.log(
+        `Comment ${comment.id} is not from github-actions[bot], skipping`,
+      );
+      continue;
+    }
+    if (!comment.bodyText.toLowerCase().includes('screenshot test')) {
+      console.log(
+        `Comment ${comment.id} does not mention \"screenshot test\", skipping`,
+      );
+      continue;
+    }
+    oudatedCommentIds.push(comment.id);
+  }
 
   if (oudatedCommentIds.length === 0) {
     console.log(
