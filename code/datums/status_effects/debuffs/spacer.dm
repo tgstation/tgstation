@@ -20,7 +20,7 @@
 	alert_type = null
 	tick_interval = 1 SECONDS
 	/// How much disgust to heal per tick
-	var/disgust_healing_per_second = 1
+	var/disgust_healing_per_second = 0.5
 	/// How much of stamina damage to heal per tick when we've been in nograv for a while.
 	var/stamina_heal_per_second = 4
 	/// How many seconds of stuns to reduce per tick when we've been in nograv for a while
