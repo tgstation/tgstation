@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Facial hair color can be separate from hair color again"
+  - bugfix: "Hair covering things update when they need up"
