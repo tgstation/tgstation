@@ -92,6 +92,13 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			sec_job.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
 
+		if("change_lobby_music")
+			var/new_song = input("Pick file:", "File") as null|file
+			if(isnull(new_song) || !isfile(new_song))
+				return TRUE
+			message_admins("[key_name_admin(holder)] changed the lobby music.")
+			SSticker.set_lobby_music(new_song, override = TRUE)
+
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
 			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease? This will also grant immunity for that disease",, list("Yes", "Cancel"))
