@@ -55,11 +55,14 @@
 		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 		if(TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_RMB] = "Rotate"
+			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/binary/crystallizer/screwdriver_act(mob/living/user, obj/item/tool)
 	return on ? NONE : default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/atmospherics/components/binary/crystallizer/wrench_act(mob/living/user, obj/item/tool)
+	return default_change_direction_wrench(user, tool)
 
 /obj/machinery/atmospherics/components/binary/crystallizer/crowbar_act(mob/living/user, obj/item/tool)
 	return crowbar_deconstruction_act(user, tool, internal.return_pressure())
