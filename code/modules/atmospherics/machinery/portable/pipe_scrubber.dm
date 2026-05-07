@@ -94,8 +94,8 @@
 	for(var/gas in filtering.gases & scrubbing)
 		filtered.add_gas(gas)
 
-		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
-		filtering.gases[gas][MOLES] = 0
+		filtered.set_gas(gas, filtering.gases[gas][MOLES])  // Shuffle the "bad" gasses to the filtered mixture.
+		filtering.set_gas(gas, 0)
 	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
 
 	internal_tank.air_contents.merge(filtered) // Store filtered out gasses.
