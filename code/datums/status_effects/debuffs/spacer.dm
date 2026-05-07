@@ -26,7 +26,7 @@
 	/// How many seconds of stuns to reduce per tick when we've been in nograv for a while
 	var/stun_heal_per_second = 2 SECONDS
 	/// How much to reduce incoming knockdown effects while in nograv for a while
-	var/knockdown_multiplier = 0.8
+	var/knockdown_multiplier = 0.75
 	/// Tracks how long we've been in no gravity
 	VAR_FINAL/seconds_in_nograv = 0 SECONDS
 	/// Tracks if we've applied knockdown modifier reduction to the mob
