@@ -141,6 +141,12 @@
 /obj/item/implant/tacmap/drawing
 	minimap_type = /datum/action/minimap/map_drawing
 
+// Subtype that just lets them open it off-base.
+/obj/item/implant/tacmap/nuclear/offbase
+
+/obj/item/implant/tacmap/nuclear/offbase/deny_nukie_base_open(mob/living/user)
+	return
+
 /obj/item/implanter/tacmap
 	name = "implanter (minimap)"
 	imp_type = /obj/item/implant/tacmap
