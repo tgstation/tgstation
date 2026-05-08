@@ -31,6 +31,7 @@
 	source = _source
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(source_deleted))
 	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(source_moved))
+	RegisterSignal(source, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
 
 	range = _range
 	volume = _volume
@@ -167,12 +168,12 @@
 	RemoveListener(source)
 
 /// Respond to any mob in the world being logged into.
-/datum/sound_token/proc/player_login(mob/player)
+/datum/sound_token/proc/player_login(datum/source, mob/player)
 	SIGNAL_HANDLER
 	AddOrUpdateListener(player)
 
 /// Respond to any cliented mob becoming uncliented
-/datum/sound_token/proc/player_logout(mob/player)
+/datum/sound_token/proc/player_logout(datum/source, mob/player)
 	SIGNAL_HANDLER
 	RemoveListener(player)
 
@@ -185,3 +186,14 @@
 	SIGNAL_HANDLER
 
 	qdel(src)
+
+///Update env when source i entering new area
+/datum/sound_token/proc/on_enter_area(datum/source, area/area_to_register)
+	SIGNAL_HANDLER
+	set_new_environment(area_to_register.sound_environment || SOUND_ENVIRONMENT_NONE)
+
+/datum/sound_token/proc/set_new_environment(new_env)
+	if(sound.environment == new_env)
+		return
+	sound.environment = new_env
+	update_all_listeners()
