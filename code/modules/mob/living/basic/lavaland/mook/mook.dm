@@ -187,7 +187,7 @@
 	if(istype(intruder, /mob/living/basic/mining/mook))
 		return
 	for(var/mob/living/basic/mining/mook/villager in oview(src, 9))
-		villager.ai_controller?.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, intruder)
+		villager.ai_controller?.set_blackboard_key_assoc(BB_BASIC_MOB_RETALIATE_LIST, intruder, world.time)
 
 
 /mob/living/basic/mining/mook/worker
