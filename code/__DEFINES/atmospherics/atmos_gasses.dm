@@ -19,3 +19,6 @@
 #define GAS_HELIUM "helium"
 #define GAS_ANTINOBLIUM "antinoblium"
 #define GAS_HALON "halon"
+#define GAS_SHITIUM "shitium"
+#define GAS_STRANGERIUM "strangerium"
+#define GAS_ADSKIDERIUM "adskiderium"

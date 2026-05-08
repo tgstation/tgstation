@@ -299,6 +299,34 @@
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009a00#006600"
 
+/obj/machinery/portable_atmospherics/canister/shitium
+	name = "Shitium canister"
+	gas_type = /datum/gas/shitium
+	filled = 1
+	icon_state = "/obj/machinery/portable_atmospherics/canister/shitium"
+	post_init_icon_state = ""
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#009a00#006600"
+
+/obj/machinery/portable_atmospherics/canister/strangerium
+	name = "Strangerium canister"
+	gas_type = /datum/gas/strangerium
+	filled = 1
+	icon_state = "/obj/machinery/portable_atmospherics/canister/shitium"
+	post_init_icon_state = ""
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#009a00#006600"
+
+/obj/machinery/portable_atmospherics/canister/adskiderium
+	name = "Adskiderium canister"
+	gas_type = /datum/gas/adskiderium
+	filled = 1
+	icon_state = "/obj/machinery/portable_atmospherics/canister/shitium"
+	post_init_icon_state = ""
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#009a00#006600"
+
+
 // Special canisters below here
 
 /obj/machinery/portable_atmospherics/canister/fusion_test

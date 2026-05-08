@@ -161,6 +161,7 @@
 	add_gas_reaction(/datum/gas/nitrium, while_present = PROC_REF(too_much_nitrium))
 	add_gas_reaction(/datum/gas/tritium, while_present = PROC_REF(too_much_tritium))
 	add_gas_reaction(/datum/gas/zauker, while_present = PROC_REF(too_much_zauker))
+	add_gas_reaction(/datum/gas/shitium, while_present = PROC_REF(too_much_shitium))
 
 ///Simply exists so that you don't keep any alerts from your previous lack of lungs.
 /obj/item/organ/lungs/on_mob_insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
@@ -587,6 +588,21 @@
 	if(zauker_pp > gas_stimulation_min)
 		var/existing = breather.reagents.get_reagent_amount(/datum/reagent/zauker)
 		breather.reagents.add_reagent(/datum/reagent/zauker, max(0, 1 - existing))
+
+/obj/item/organ/lungs/proc/too_much_shitium(mob/living/carbon/breather, datum/gas_mixture/breath, shitium_pp, old_shitium_pp)
+	breathe_gas_volume(breath, /datum/gas/shitium)
+	breather.adjust_fire_loss(shitium_pp * 0.80)
+
+	// Проверяем, достаточно ли высокое парциальное давление для превращения
+	if(shitium_pp > 5) // Пороговое значение
+		// Проверяем, что breather - человек
+		if(ishuman(breather))
+			var/mob/living/carbon/human/H = breather
+			// Проверяем, что он еще не плазмамен
+			if(!isplasmaman(H))
+				// Превращаем в плазмамена
+				H.set_species(/datum/species/plasmaman)
+				to_chat(H, span_danger("Вы чувствуете, как ваше тело превращается в плазму! Вы теперь плазмамен!"))
 
 /**
  * This proc tests if the lungs can breathe, if they can breathe a given gas mixture, and throws/clears gas alerts.

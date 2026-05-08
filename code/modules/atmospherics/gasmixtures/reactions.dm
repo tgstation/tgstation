@@ -1267,3 +1267,89 @@
 
 
 #undef SET_REACTION_RESULTS
+
+
+/datum/gas_reaction/shitium_meat_transformation
+	priority_group = PRIORITY_FORMATION
+	name = "Shitium Meat Transformation"
+	id = "shitiummeat"
+	desc = "Transforms turfs into MEAT"
+
+/datum/gas_reaction/shitium_meat_transformation/init_reqs()
+	requirements = list(
+		/datum/gas/shitium = MINIMUM_MOLE_COUNT,
+		"MIN_TEMP" = 250,
+	)
+
+/datum/gas_reaction/shitium_meat_transformation/react(datum/gas_mixture/air, datum/holder)
+	if(!isturf(holder))
+		return NO_REACTION
+
+
+
+	var/turf/T = holder
+	var/list/cached_gases = air.gases
+	var/shitium = cached_gases[/datum/gas/shitium]
+
+	if(!shitium || shitium[MOLES] < 1)
+		return NO_REACTION
+
+	var/datum/dimension_theme/meat/meat_theme = new()
+
+	var/datum/material/meat_material = SSmaterials.get_material(/datum/material/meat)
+
+	// Get atmospherically adjacent turfs (connected through open doors, vents, etc.)
+	var/list/adjacent_turfs = orange(1, T)
+
+	if(meat_theme.can_convert(T) && (!T.custom_materials || !T.custom_materials[meat_material]))
+		meat_theme.apply_theme(T, FALSE, TRUE)
+		shitium[MOLES] -= 1
+
+
+	// Transform atmospherically connected turfs
+	for(var/turf/adjacent in adjacent_turfs)
+		if(!meat_theme.can_convert(adjacent))
+			continue
+		if(adjacent.custom_materials && adjacent.custom_materials[meat_material])
+			continue
+		// Check if we have enough gas
+		if(shitium[MOLES] < 1)
+			break
+		meat_theme.apply_theme(adjacent, FALSE, TRUE)
+		shitium[MOLES] -= 1
+
+	// Преобразуем предметы на текущем тайле в мясо
+	// Сначала собираем все предметы, которые нужно преобразовать
+	var/list/items_to_convert = list()
+	for(var/obj/item/item in T)
+		// Пропускаем мясо, чтобы не создавать бесконечную рекурсию
+		if(istype(item, /obj/item/food/meat))
+			continue
+		// Пропускаем некоторые специальные типы (настройте по желанию)
+		if(istype(item, /obj/item/trash) || istype(item, /obj/item/gun) || istype(item, /obj/item/clothing))
+			// Эти предметы не превращаются в мясо
+			continue
+		items_to_convert += item
+
+	// Преобразуем предметы
+	for(var/obj/item/item in items_to_convert)
+		if(shitium[MOLES] < 0.3) // Предметы требуют меньше газа
+			break
+
+		// Звуковой эффект "жмяк" мяса
+		playsound(T, 'sound/effects/meatslap.ogg', 50, TRUE)
+		// Визуальный эффект трансмутации (тот же, что и для тайлов)
+		new /obj/effect/temp_visual/transmute_tile_flash(T)
+		// Создаем кусок мяса
+		var/obj/item/food/meat/slab/new_meat = new /obj/item/food/meat/slab(T)
+		// Удаляем оригинальный предмет
+
+
+		// Сохраняем позицию оригинального предмета
+		new_meat.pixel_x = item.pixel_x
+		new_meat.pixel_y = item.pixel_y
+
+		qdel(item)
+		shitium[MOLES] -= 0.3
+
+	return REACTING

@@ -305,6 +305,36 @@
 	desc = "We still don't know what it does, but it sells for a lot."
 	primary_color = COLOR_MAROON
 
+/datum/gas/shitium
+	id = GAS_SHITIUM
+	specific_heat = 20
+	name = "Shitium"
+	rarity = 900
+	purchaseable = TRUE
+	base_value = 0.2
+	desc = "Gas for shit"
+	primary_color = "#c10f2d"
+
+/datum/gas/strangerium
+	id = GAS_STRANGERIUM
+	specific_heat = 20
+	name = "Strangerium"
+	rarity = 900
+	purchaseable = TRUE
+	base_value = 0.2
+	desc = "Gas for shit"
+	primary_color = "#c10f2d"
+
+/datum/gas/adskiderium
+	id = GAS_ADSKIDERIUM
+	specific_heat = 20
+	name = "Adskiderium"
+	rarity = 900
+	purchaseable = TRUE
+	base_value = 0.2
+	desc = "Gas for shit"
+	primary_color = "#c10f2d"
+
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

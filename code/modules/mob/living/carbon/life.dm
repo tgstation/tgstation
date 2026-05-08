@@ -161,7 +161,7 @@
 		breath = empty_breath
 
 	// Ensure gas volumes are present.
-	breath.assert_gases(/datum/gas/bz, /datum/gas/carbon_dioxide, /datum/gas/freon, /datum/gas/plasma, /datum/gas/pluoxium, /datum/gas/miasma, /datum/gas/nitrous_oxide, /datum/gas/nitrium, /datum/gas/oxygen)
+	breath.assert_gases(/datum/gas/bz, /datum/gas/carbon_dioxide, /datum/gas/freon, /datum/gas/plasma, /datum/gas/pluoxium, /datum/gas/miasma, /datum/gas/nitrous_oxide, /datum/gas/nitrium, /datum/gas/oxygen, /datum/gas/shitium, /datum/gas/strangerium, /datum/gas/adskiderium)
 
 	/// The list of gases in the breath.
 	var/list/breath_gases = breath.gases
@@ -203,6 +203,8 @@
 	var/nitrium_pp = 0
 	var/miasma_pp = 0
 
+	var/shitium_pp = 0
+
 	var/can_breathe_vacuum = HAS_TRAIT(src, TRAIT_NO_BREATHLESS_DAMAGE)
 
 	// Check for moles of gas and handle partial pressures / special conditions.
@@ -219,6 +221,7 @@
 		miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
 		n2o_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
 		nitrium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrium][MOLES])
+		shitium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/shitium][MOLES])
 
 	// Breath has 0 moles of gas.
 	else if(can_breathe_vacuum)
@@ -384,6 +387,10 @@
 			need_mob_update += adjust_tox_loss(nitrium_pp * 0.05, updating_health = FALSE)
 		if(need_mob_update)
 			updatehealth()
+
+	if(shitium_pp)
+		to_chat(src, span_danger("SHITIUM: pp=[shitium_pp], damage=[shitium_pp * 0.80]"))
+		adjust_fire_loss(shitium_pp * 0.25)
 
 	// Handle chemical euphoria mood event, caused by N2O.
 	if (n2o_euphoria == EUPHORIA_ACTIVE)

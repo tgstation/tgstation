@@ -26,4 +26,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		GAS_HELIUM = /obj/machinery/portable_atmospherics/canister/helium,
 		GAS_ANTINOBLIUM = /obj/machinery/portable_atmospherics/canister/antinoblium,
 		GAS_HALON = /obj/machinery/portable_atmospherics/canister/halon,
+		GAS_SHITIUM = /obj/machinery/portable_atmospherics/canister/shitium,
+		GAS_STRANGERIUM = /obj/machinery/portable_atmospherics/canister/strangerium,
+		GAS_ADSKIDERIUM = /obj/machinery/portable_atmospherics/canister/adskiderium,
 	))
