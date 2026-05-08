@@ -68,9 +68,6 @@
 /mob/living/basic/bot/generate_random_mob_name(unique)
 	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
 
-/mob/living/simple_animal/bot/generate_random_mob_name(unique)
-	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
-
 GLOBAL_VAR(command_name)
 /proc/command_name()
 	if (GLOB.command_name)

@@ -51,7 +51,7 @@
 /datum/action/cooldown/bot_announcement/ui_data(mob/user)
 	var/list/data = list()
 
-	var/mob/living/simple_animal/bot/bot_owner = owner
+	var/mob/living/basic/bot/bot_owner = owner
 	if(istype(bot_owner))
 		var/list/channels = list()
 		for(var/channel in bot_owner.internal_radio.channels)
@@ -149,7 +149,7 @@
 
 /// Speak the provided line on the provided radio channel
 /datum/action/cooldown/bot_announcement/proc/announce(line, channel)
-	var/mob/living/simple_animal/bot/bot_owner = owner
+	var/mob/living/basic/bot/bot_owner = owner
 	if (!(bot_owner.bot_mode_flags & BOT_MODE_ON))
 		return
 

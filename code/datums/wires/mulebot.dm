@@ -3,7 +3,7 @@
 #define SLOW_MOTOR_SPEED 3
 
 /datum/wires/mulebot
-	holder_type = /mob/living/simple_animal/bot/mulebot
+	holder_type = /mob/living/basic/bot/mulebot
 	proper_name = "Mulebot"
 	randomize = TRUE
 
@@ -19,12 +19,12 @@
 /datum/wires/mulebot/interactable(mob/user)
 	if(!..())
 		return FALSE
-	var/mob/living/simple_animal/bot/mulebot/mule = holder
-	if(mule.bot_cover_flags & BOT_COVER_MAINTS_OPEN)
+	var/mob/living/basic/bot/mulebot/mule = holder
+	if(mule.bot_access_flags & BOT_COVER_MAINTS_OPEN)
 		return TRUE
 
 /datum/wires/mulebot/on_cut(wire, mend, source)
-	var/mob/living/simple_animal/bot/mulebot/mule = holder
+	var/mob/living/basic/bot/mulebot/mule = holder
 	switch(wire)
 		if(WIRE_MOTOR1, WIRE_MOTOR2)
 			if(is_cut(WIRE_MOTOR1) && is_cut(WIRE_MOTOR2))
@@ -49,7 +49,7 @@
 				holder.audible_message(span_hear("Something inside [mule] clicks ominously!"), null,  1)
 
 /datum/wires/mulebot/on_pulse(wire)
-	var/mob/living/simple_animal/bot/mulebot/mule = holder
+	var/mob/living/basic/bot/mulebot/mule = holder
 	if(!mule.has_power(TRUE))
 		return //logically mulebots can't flash and beep if they don't have power.
 	switch(wire)
@@ -57,13 +57,14 @@
 			holder.visible_message(span_notice("[icon2html(mule, viewers(holder))] The charge light flickers."))
 		if(WIRE_AVOIDANCE)
 			holder.visible_message(span_notice("[icon2html(mule, viewers(holder))] The external warning lights flash briefly."))
-			flick("[mule.base_icon]1", mule)
+			flick("[mule.base_icon_state]1", mule)
 		if(WIRE_LOADCHECK)
 			holder.visible_message(span_notice("[icon2html(mule, viewers(holder))] The load platform clunks."))
 		if(WIRE_MOTOR1, WIRE_MOTOR2)
 			holder.visible_message(span_notice("[icon2html(mule, viewers(holder))] The drive motor whines briefly."))
 		else
 			holder.visible_message(span_notice("[icon2html(mule, viewers(holder))] You hear a radio crackle."))
+
 
 #undef FAST_MOTOR_SPEED
 #undef AVERAGE_MOTOR_SPEED

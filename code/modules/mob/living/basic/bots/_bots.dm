@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/proc/get_emagged_message()
 	return get_policy(ROLE_EMAGGED_BOT) || "You are a malfunctioning bot! Disrupt everyone and cause chaos!"
 
-/mob/living/basic/bot/proc/turn_on()
+/mob/living/basic/bot/proc/turn_on(mob/user)
 	if(stat == DEAD)
 		return FALSE
 	set_mode_flags(bot_mode_flags | BOT_MODE_ON)

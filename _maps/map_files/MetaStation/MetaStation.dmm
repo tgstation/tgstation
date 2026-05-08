@@ -20075,7 +20075,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gWz" = (
-/mob/living/simple_animal/bot/mulebot,
+/mob/living/basic/bot/mulebot,
 /obj/structure/cable,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
@@ -21862,7 +21862,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/exterior)
 "hBo" = (
-/mob/living/simple_animal/bot/mulebot,
+/mob/living/basic/bot/mulebot,
 /obj/structure/cable,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
@@ -30569,7 +30569,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/effect/decal/cleanable/blood/gibs/down,
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/basic/bot/mulebot{
 	name = "Leaping Rabbit"
 	},
 /obj/structure/disposalpipe/segment,
