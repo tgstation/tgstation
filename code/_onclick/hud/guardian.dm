@@ -14,26 +14,8 @@
 	. = ..()
 	add_screen_object(/atom/movable/screen/healths/guardian, HUD_MOB_HEALTH, HUD_GROUP_INFO)
 
-/datum/hud/dextrous/guardian/persistent_inventory_update()
-	if(!mymob)
-		return
-
-	if(!istype(mymob, /mob/living/basic/guardian/dextrous))
-		return ..()
-
-	var/mob/living/basic/guardian/dextrous/dex_guardian = mymob
-	if(hud_shown)
-		if(dex_guardian.internal_storage)
-			dex_guardian.internal_storage.screen_loc = ui_back
-			dex_guardian.client.screen += dex_guardian.internal_storage
-	else
-		if(dex_guardian.internal_storage)
-			dex_guardian.internal_storage.screen_loc = null
-	return ..()
-
 /datum/inventory_slot/guardian_storage
 	name = "internal storage"
 	icon_state = "suit_storage"
 	slot_id = ITEM_SLOT_DEX_STORAGE
 	screen_loc = ui_back
-

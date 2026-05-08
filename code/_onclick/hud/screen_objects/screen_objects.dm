@@ -219,10 +219,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/inventory/MouseEntered(location, control, params)
 	. = ..()
-	add_overlays()
+	if (usr == hud?.mymob)
+		add_overlays()
 
 /atom/movable/screen/inventory/MouseExited()
 	..()
+	if (usr != hud?.mymob)
+		return
 	cut_overlay(object_overlay)
 	QDEL_NULL(object_overlay)
 

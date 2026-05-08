@@ -253,19 +253,6 @@
 /mob/living/carbon/proc/get_held_overlays()
 	var/list/hands = list()
 	for(var/obj/item/I in held_items)
-		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			I.screen_loc = ui_hand_position(get_held_index_of_item(I))
-			client.screen += I
-			if(length(observers))
-				for(var/mob/dead/observe as anything in observers)
-					if(observe.client && observe.client.eye == src)
-						observe.client.screen += I
-					else
-						observers -= observe
-						if(!observers.len)
-							observers = null
-							break
-
 		var/icon_file = I.lefthand_file
 		if(IS_RIGHT_INDEX(get_held_index_of_item(I)))
 			icon_file = I.righthand_file
@@ -334,45 +321,31 @@
 
 /mob/living/carbon/update_worn_mask()
 	remove_overlay(FACEMASK_LAYER)
+	hud_used?.update_inventory_slot(ITEM_SLOT_MASK)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_MASK) + 1])
-		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_MASK) + 1]
-		inv.update_appearance()
-
-	if(wear_mask)
-		if(!(obscured_slots & HIDEMASK))
-			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
-		update_hud_wear_mask(wear_mask)
+	if(wear_mask && !(obscured_slots & HIDEMASK))
+		overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
 
 	apply_overlay(FACEMASK_LAYER)
 
 /mob/living/carbon/update_worn_neck()
 	remove_overlay(NECK_LAYER)
+	hud_used?.update_inventory_slot(ITEM_SLOT_NECK)
 
-	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
-		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1]
-		inv.update_appearance()
-
-	if(wear_neck)
-		if(!(obscured_slots & HIDENECK))
-			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi')
-		update_hud_neck(wear_neck)
+	if(wear_neck && !(obscured_slots & HIDENECK))
+		overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi')
 
 	apply_overlay(NECK_LAYER)
 
 /mob/living/carbon/update_worn_back()
 	remove_overlay(BACK_LAYER)
-
-	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
-		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1]
-		inv.update_appearance()
+	hud_used?.update_inventory_slot(ITEM_SLOT_BACK)
 
 	if(back)
 		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi')
-		update_hud_back(back)
 
 	apply_overlay(BACK_LAYER)
 
@@ -386,24 +359,20 @@
 
 /mob/living/carbon/update_worn_head()
 	remove_overlay(HEAD_LAYER)
+	hud_used?.update_inventory_slot(ITEM_SLOT_HEAD)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1])
-		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
-		inv.update_appearance()
-
-	if(head)
-		if(!(obscured_slots & HIDEHEADGEAR))
-			overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi')
-		update_hud_head(head)
+	if(head && !(obscured_slots & HIDEHEADGEAR))
+		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 
 	apply_overlay(HEAD_LAYER)
 
 
 /mob/living/carbon/update_worn_handcuffs()
 	remove_overlay(HANDCUFF_LAYER)
+	hud_used?.update_inventory_slot(ITEM_SLOT_HANDS)
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
@@ -414,30 +383,6 @@
 
 
 //mob HUD updates for items in our inventory
-
-//update whether handcuffs appears on our hud.
-/mob/living/carbon/proc/update_hud_handcuffed()
-	if(!hud_used)
-		return
-
-	for(var/atom/movable/screen/inventory/hand/hand in hud_used.hand_slots)
-		hand.update_appearance()
-
-//update whether our head item appears on our hud.
-/mob/living/carbon/proc/update_hud_head(obj/item/I)
-	return
-
-//update whether our mask item appears on our hud.
-/mob/living/carbon/proc/update_hud_wear_mask(obj/item/I)
-	return
-
-//update whether our neck item appears on our hud.
-/mob/living/carbon/proc/update_hud_neck(obj/item/I)
-	return
-
-//update whether our back item appears on our hud.
-/mob/living/carbon/proc/update_hud_back(obj/item/I)
-	return
 
 /// Overlays for the worn overlay so you can overlay while you overlay
 /// eg: ammo counters, primed grenade flashing, etc.

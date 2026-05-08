@@ -475,17 +475,6 @@
 	. = ..()
 	update_held_items()
 
-/mob/living/simple_animal/update_held_items()
-	. = ..()
-	if(!client || !hud_used || hud_used.hud_version == HUD_STYLE_NOHUD)
-		return
-	var/turf/our_turf = get_turf(src)
-	for(var/obj/item/I in held_items)
-		var/index = get_held_index_of_item(I)
-		SET_PLANE(I, ABOVE_HUD_PLANE, our_turf)
-		I.screen_loc = ui_hand_position(index)
-		client.screen |= I
-
 //ANIMAL RIDING
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)

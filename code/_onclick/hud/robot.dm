@@ -10,8 +10,10 @@
 	add_screen_object(/atom/movable/screen/memories, HUD_MOB_MEMORIES, HUD_GROUP_STATIC, ui_style, ui_borg_memories_menu)
 	add_screen_object(/atom/movable/screen/robot/radio, HUD_CYBORG_RADIO)
 
+	// Cyborg modules are their "hands", and use hand keys for ease of handling as they behave functionally the same
+	// Generic code can just typecheck for /atom/movable/screen/inventory/hud if it needs explicitly hands
 	for (var/i in BORG_CHOOSE_MODULE_ONE to BORG_CHOOSE_MODULE_THREE)
-		var/atom/movable/screen/robot/module_slot/module = add_screen_object(/atom/movable/screen/robot/module_slot, HUD_KEY_CYBORG_MODULE(i))
+		var/atom/movable/screen/robot/module_slot/module = add_screen_object(/atom/movable/screen/robot/module_slot, HUD_KEY_HAND_SLOT(i))
 		module.set_slot(i)
 
 	add_screen_object(/atom/movable/screen/robot/lamp, HUD_CYBORG_LAMP)
@@ -33,25 +35,3 @@
 	add_screen_object(/atom/movable/screen/healths/robot, HUD_MOB_HEALTH, HUD_GROUP_INFO)
 
 	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_HOTKEYS, ui_style, ui_borg_pull)
-
-/datum/hud/robot/persistent_inventory_update(mob/viewer)
-	if(!mymob)
-		return
-	var/mob/living/silicon/robot/R = mymob
-
-	var/mob/screenmob = viewer || R
-	if(!screenmob.hud_used)
-		return
-
-	if(!screenmob.hud_used.hud_shown)
-		for(var/obj/item/I in R.held_items)
-			screenmob.client.screen -= I
-		return
-
-	for(var/i in 1 to length(R.held_items))
-		var/obj/item/I = R.held_items[i]
-		if(!I)
-			continue
-		var/atom/movable/screen/robot/module_slot/slot = screen_objects[HUD_KEY_CYBORG_MODULE(i)]
-		I.screen_loc = slot.screen_loc
-		screenmob.client.screen += I
