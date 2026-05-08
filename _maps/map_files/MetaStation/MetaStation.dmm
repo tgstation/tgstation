@@ -6336,6 +6336,7 @@
 /area/station/engineering/break_room)
 "cjD" = (
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/gizmo/toggle/tucker_tubes,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "cky" = (
@@ -40648,6 +40649,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/prison/garden)
+"nQg" = (
+/obj/effect/spawner/random/gizmo,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "nQA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -105953,7 +105958,7 @@ jgK
 tUn
 dQT
 wXF
-jSk
+nQg
 ukF
 sIW
 jSk
