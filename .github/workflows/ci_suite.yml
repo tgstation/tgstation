@@ -74,12 +74,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+      - name: Generate App Token
+        id: app-token-generation
+        uses: actions/create-github-app-token@v3.1.1
+        if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
+        with:
+          client-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+        env:
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+          APP_ID: ${{ secrets.APP_ID }}
       - name: Mark previous results as outdated
         uses: actions/github-script@v9
         with:
           script: |
             const { markScreenshotTestResultOutdated } = await import('${{ github.workspace }}/tools/ci/mark_screenshot_test_result_outdated.js');
             await markScreenshotTestResultOutdated({ github, context })
+          github-token: ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }}
 
   compare_screenshots:
     if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'
