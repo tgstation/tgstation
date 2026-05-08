@@ -47,8 +47,16 @@
 	if(cuffs.used || DOING_INTERACTION_WITH_TARGET(user, source))
 		return
 
-	if(HAS_TRAIT_FROM(source, TRAIT_NODROP, CUFFED_ITEM_TRAIT))
-		to_chat(user, span_warning("[source] is already cuffed to your wrist!"))
+	for(var/datum/status_effect/cuffed_item/effect in user.status_effects)
+		if(effect.cuffed == source)
+			to_chat(user, span_warning("[source] is already cuffed to your wrist!"))
+			return
+		if(effect.cuffed_to == user.get_inactive_hand())
+			to_chat(user, span_warning("You already have something cuffed to your opposite wrist!"))
+			return
+
+	if(!user.get_inactive_hand())
+		to_chat(user, span_warning("You don't have another hand to cuff [source] to!"))
 		return
 
 	if(cuffs.handcuffs_clumsiness_check(user))
