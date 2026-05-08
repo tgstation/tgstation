@@ -106,3 +106,9 @@
       flora, features and fauna!
   - bugfix: Fixed some ruins generating with default basalt walls instead of their
       biome's walls
+2026-05-08:
+  TheRyeGuyWhoWillNowDie:
+  - balance: Granibitaluri heals 1.5 brute and burn at best now, and scales down to
+      0.5 at worst.
+  Y0SH1M4S73R:
+  - balance: You can no longer get Xenomicrobes and Nanomachines from botany mutations.
