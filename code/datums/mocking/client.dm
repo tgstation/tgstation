@@ -83,7 +83,7 @@
 /datum/client_interface/proc/get_award_status(achievement_type, mob/user, value = 1)
 	return FALSE
 
-/datum/client_interface/proc/set_fullscreen(logging_in = FALSE)
+/datum/client_interface/proc/set_fullscreen()
 	return TRUE
 
 /datum/client_interface/proc/check_drag_proximity(atom/dragging, atom/over, src_location, over_location, src_control, over_control, params)

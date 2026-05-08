@@ -203,7 +203,7 @@
 			flashed_client = player_mob.client
 	if(!flashed_client || (!flashed_client.prefs.read_preference(/datum/preference/toggle/window_flashing) && !ignorepref))
 		return
-	winset(flashed_client, "mainwindow", "flash=5")
+	winset(flashed_client, SKIN_MAINWINDOW, "flash=5")
 
 /**
  * Recursively checks if an item is inside a given type/atom, even through layers of storage.
