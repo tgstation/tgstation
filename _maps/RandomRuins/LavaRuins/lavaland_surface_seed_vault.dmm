@@ -600,8 +600,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered/seedvault)
 "yq" = (
-/obj/structure/tank_holder/extinguisher,
-/turf/open/floor/iron/freezer,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered/seedvault)
 "Bb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -694,9 +695,9 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
+aa
+aa
+aa
 aa
 aa
 aa
@@ -717,7 +718,7 @@ ac
 ac
 ac
 ac
-yq
+ac
 ac
 aa
 aa
@@ -854,7 +855,7 @@ aT
 ac
 ac
 ac
-bb
+yq
 bb
 aN
 aN
