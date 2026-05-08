@@ -8,6 +8,8 @@
 	screen_loc = "1,1"
 	var/list/origin_px
 	var/atom/movable/screen/minimap_drawing/drawing
+	/// Cached list of Z levels to drawings.
+	var/alist/cached_drawings = alist()
 	/// A reference to the minimap used for this display.
 	var/datum/minimap/minimap
 	/// Screentext in vis_contents used for the maptext.
@@ -57,8 +59,6 @@
 			minimap = fixed_minimap
 	if(length(minimap_blip_tags))
 		valid_minimap_blip_tags = minimap_blip_tags.Copy()
-	drawing = new
-	vis_contents += drawing
 	set_minimap(minimap)
 	screentip = new
 	vis_contents += screentip
@@ -76,7 +76,7 @@
 		for(var/key in toolbar_button_types)
 			hud.remove_screen_object(key, update = FALSE)
 	minimap = null
-	QDEL_NULL(drawing)
+	cached_drawings.Cut()
 	QDEL_NULL(screentip)
 	QDEL_LIST(labels)
 	if(length(valid_minimap_blip_tags))
@@ -232,7 +232,15 @@
 	screen_loc = "1:[minimap.base_map.Width() / 2],1:[minimap.base_map.Height() / 2]"
 	origin_px = params2screenpixel(screen_loc)
 	src.minimap = minimap
-	drawing.clear_canvas(minimap.base_map)
+	if(cached_drawings[minimap.z])
+		vis_contents -= drawing
+		drawing = cached_drawings[minimap.z]
+		vis_contents |= drawing
+	else
+		drawing = new
+		vis_contents += drawing
+		drawing.clear_canvas(minimap.base_map)
+		cached_drawings[minimap.z] = drawing
 	screentip?.maptext = ""
 	for(var/atom/movable/screen/minimap_blip/blip as anything in active_tagged_blips)
 		vis_contents -= blip
