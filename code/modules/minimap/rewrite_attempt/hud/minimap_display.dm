@@ -219,6 +219,8 @@
 		return
 	for(var/blip_flag in valid_minimap_blip_tags)
 		var/blip_list = GLOB.minimap_blip_tags[blip_flag]
+		if(!blip_list)
+			continue
 		for(var/atom/movable/screen/minimap_blip/blip as anything in blip_list)
 			on_tagged_blip_add(null, blip)
 
@@ -259,7 +261,7 @@
 	var/atom/movable/screen/minimap_blip/new_blip = new(null, null, hud.mymob, icon_state, large)
 	new_blip.register_target(hud.mymob)
 	new_blip.start_tracking_target()
-	blips |= new_blip
+	blips[name] = new_blip
 	show_minimap_element(new_blip)
 
 /atom/movable/screen/minimap_display/proc/update_blip(name, x, y)
@@ -351,12 +353,12 @@
 	clear_all_annotations(user, /atom/movable/screen/minimap_label)
 	sync_visible_objects(minimap?.z)
 
-/atom/movable/screen/minimap_display/proc/clear_all_annotations(annotation_type = /atom/movable/screen/minimap_label, mob/user)
-	var/list/cleared_levels = list()
+/atom/movable/screen/minimap_display/proc/clear_all_annotations(mob/user, annotation_type = /atom/movable/screen/minimap_label)
 	var/alist/annotation_store = GLOB.minimap_annotations[annotation_share_tag]
 	var/alist/items_by_z = annotation_store?[annotation_type]
 	if(isnull(items_by_z))
 		return
+	var/list/cleared_levels = list()
 	for(var/z_level as anything in items_by_z)
 		var/list/items = items_by_z[z_level]
 		if(!length(items))
@@ -367,7 +369,7 @@
 	refresh_visible_annotations()
 	for(var/z_level as anything in cleared_levels)
 		sync_visible_objects(z_level)
-	var/user_name = user ? key_name(user) : "unknown"
+	var/user_name = user ? key_name(user) : "System"
 	log_minimap_drawing("[user_name] has cleared all [annotation_type] annotations")
 
 /atom/movable/screen/minimap_display/proc/async_place_label(mob/user, icon_x, icon_y)
@@ -385,27 +387,35 @@
 	new_label.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: left'>[label_text]</span>")
 	new_label.pixel_w = icon_x
 	new_label.pixel_z = icon_y
-	show_minimap_element(new_label)
+	var/list/labels_for_z = get_or_create_annotation_list(/atom/movable/screen/minimap_label, minimap.z)
+	labels_for_z += new_label
 	sync_visible_objects(minimap?.z)
 	log_minimap_drawing("[key_name(user)] placed label '[label_text]' at [area_name]")
 
-/atom/movable/screen/minimap_display/proc/refresh_visible_annotations()
-	if(isnull(minimap))
-		return
+/atom/movable/screen/minimap_display/proc/get_or_create_annotation_list(annotation_type, z_level)
 	var/alist/annotation_store = GLOB.minimap_annotations[annotation_share_tag]
 	if(isnull(annotation_store))
 		annotation_store = alist()
 		GLOB.minimap_annotations[annotation_share_tag] = annotation_store
+	var/alist/by_z = annotation_store[annotation_type]
+	if(isnull(by_z))
+		by_z = alist()
+		annotation_store[annotation_type] = by_z
+	var/list/items = by_z[z_level]
+	if(isnull(items))
+		items = list()
+		by_z[z_level] = items
+	return items
 
-	var/alist/drawings_by_z = annotation_store[/atom/movable/screen/minimap_drawing]
-	if(isnull(drawings_by_z))
-		drawings_by_z = alist()
-		annotation_store[/atom/movable/screen/minimap_drawing] = drawings_by_z
-	var/atom/movable/screen/minimap_drawing/target_drawing = drawings_by_z[minimap.z]
+/atom/movable/screen/minimap_display/proc/refresh_visible_annotations()
+	if(isnull(minimap))
+		return
+	var/list/drawings = get_or_create_annotation_list(/atom/movable/screen/minimap_drawing, minimap.z)
+	var/atom/movable/screen/minimap_drawing/target_drawing = length(drawings) ? drawings[1] : null
 	if(isnull(target_drawing))
 		target_drawing = new
 		target_drawing.clear_canvas(minimap.base_map)
-		drawings_by_z[minimap.z] = target_drawing
+		drawings += target_drawing
 	if(drawing != target_drawing)
 		if(!isnull(drawing))
 			hide_minimap_element(drawing)
@@ -413,14 +423,7 @@
 	show_minimap_element(drawing)
 
 	hide_visible_elements_by_type(/atom/movable/screen/minimap_label)
-	var/alist/labels_by_z = annotation_store[/atom/movable/screen/minimap_label]
-	if(isnull(labels_by_z))
-		labels_by_z = alist()
-		annotation_store[/atom/movable/screen/minimap_label] = labels_by_z
-	var/list/atom/movable/screen/minimap_label/labels_for_z = labels_by_z[minimap.z]
-	if(isnull(labels_for_z))
-		labels_for_z = list()
-		labels_by_z[minimap.z] = labels_for_z
+	var/list/labels_for_z = get_or_create_annotation_list(/atom/movable/screen/minimap_label, minimap.z)
 	if(length(labels_for_z))
 		show_minimap_elements(labels_for_z)
 
