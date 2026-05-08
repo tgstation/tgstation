@@ -3,7 +3,6 @@
 #define GOLIATH_PUPIL_COLOR COLOR_RED
 #define GOLIATH_COLORS GOLIATH_ORGAN_COLOR + GOLIATH_SCLERA_COLOR + GOLIATH_PUPIL_COLOR
 
-///bonus of the goliath: you can swim through space!
 /datum/status_effect/organ_set_bonus/goliath
 	id = "organ_set_bonus_goliath"
 	organs_needed = 4

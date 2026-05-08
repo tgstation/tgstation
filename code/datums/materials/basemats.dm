@@ -940,3 +940,19 @@
 	// Oops, all chainsawfish!
 	challenge.register_reward_signals(GLOB.preset_fish_sources[/datum/fish_source/portal/syndicate])
 
+/datum/material/rock
+	name = "rock"
+	desc = "Marble maybe?"
+	color = "#919191"
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 0,
+		MATERIAL_ELECTRICAL = 0,
+		MATERIAL_THERMAL = 1,
+		MATERIAL_CHEMICAL = 0,
+		MATERIAL_BEAUTY = 0.8,
+	)
+	texture_layer_icon_state = "sand"

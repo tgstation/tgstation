@@ -155,7 +155,7 @@
 "iE" = (
 /obj/structure/barricade/wooden/crude,
 /obj/item/paper/fluff/ruins/elephant_graveyard,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/unpowered/elephant_graveyard)
 "iR" = (
 /obj/structure/statue/bone/skull/half{
@@ -165,7 +165,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "jx" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/lavaland_atmos,
 /area/ruin/powered/graveyard_shuttle)
 "jK" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -376,7 +376,7 @@
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "Bu" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/unpowered/elephant_graveyard)
 "Cn" = (
 /obj/structure/flora/rock/style_random,
@@ -388,7 +388,7 @@
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "Cu" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface)
 "Di" = (
 /obj/item/organ/lungs,
@@ -435,7 +435,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "Iy" = (
 /obj/item/paper/fluff/ruins/elephant_graveyard,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface)
 "Iz" = (
 /obj/structure/table,
@@ -519,7 +519,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "NO" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/unpowered/elephant_graveyard)
 "Oa" = (
 /obj/effect/decal/cleanable/generic,

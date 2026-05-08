@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Mining mobs now use priority when choosing their target, prioritizing NODE drones over miners who haven't attacked them or their allies"

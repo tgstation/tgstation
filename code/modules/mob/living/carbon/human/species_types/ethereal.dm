@@ -112,16 +112,16 @@
 				currently_flickered = FALSE
 			ethereal_light.set_light_on(TRUE)
 		fixed_mut_color = current_color
-		ethereal.update_body()
 		ethereal.set_facial_haircolor(current_color, override = TRUE, update = FALSE)
-		ethereal.set_haircolor(current_color, override = TRUE,  update = TRUE)
+		ethereal.set_haircolor(current_color, override = TRUE, update = FALSE)
+		ethereal.update_body()
 	else
 		ethereal_light.set_light_on(FALSE)
 		var/dead_color = rgb(128,128,128)
 		fixed_mut_color = dead_color
-		ethereal.update_body()
 		ethereal.set_facial_haircolor(dead_color, override = TRUE, update = FALSE)
-		ethereal.set_haircolor(dead_color, override = TRUE, update = TRUE)
+		ethereal.set_haircolor(dead_color, override = TRUE, update = FALSE)
+		ethereal.update_body()
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/source, severity, protection)
 	SIGNAL_HANDLER

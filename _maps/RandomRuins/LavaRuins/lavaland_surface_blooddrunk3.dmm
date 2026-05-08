@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "c" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "d" = (
 /obj/structure/stone_tile/block{
@@ -12,7 +12,7 @@
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "e" = (
 /obj/structure/stone_tile/block{
@@ -21,7 +21,7 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "f" = (
 /obj/structure/stone_tile/block{
@@ -30,19 +30,19 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "g" = (
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "h" = (
 /obj/structure/stone_tile{
 	dir = 1
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "i" = (
 /obj/structure/stone_tile{
@@ -52,7 +52,7 @@
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "j" = (
 /obj/structure/stone_tile,
@@ -62,7 +62,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "k" = (
 /obj/structure/stone_tile/cracked,
@@ -72,7 +72,7 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "l" = (
 /obj/structure/stone_tile{
@@ -82,7 +82,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "m" = (
 /obj/structure/stone_tile{
@@ -92,13 +92,13 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "o" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "p" = (
 /obj/structure/stone_tile{
@@ -108,7 +108,7 @@
 	dir = 8
 	},
 /obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "q" = (
 /obj/structure/stone_tile{
@@ -118,7 +118,7 @@
 /obj/structure/stone_tile{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "r" = (
 /obj/structure/stone_tile{
@@ -128,21 +128,21 @@
 	dir = 8
 	},
 /obj/structure/stone_tile,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "s" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "t" = (
 /obj/structure/stone_tile/block/cracked,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "u" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "z" = (
 /turf/closed/mineral/volcanic/lava_land_surface/biome_replace,

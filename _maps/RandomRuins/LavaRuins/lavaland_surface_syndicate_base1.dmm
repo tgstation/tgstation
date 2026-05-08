@@ -1898,7 +1898,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "pa" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "pe" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2068,7 +2068,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/syndicate_lava_base/virology)
 "rC" = (
 /obj/machinery/door/firedoor,
@@ -2111,7 +2111,7 @@
 /turf/open/floor/engine/co2,
 /area/ruin/syndicate_lava_base/engineering)
 "si" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "sl" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4268,7 +4268,7 @@
 	key = "mistake"
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "Wv" = (
 /obj/effect/decal/cleanable/dirt,

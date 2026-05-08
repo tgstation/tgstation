@@ -2,6 +2,7 @@
 /datum/ai_controller/basic_controller/legion
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/legion,
+		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_AGGRO_RANGE = 5, // Unobservant
 		BB_BASIC_MOB_FLEE_DISTANCE = 6,
@@ -11,6 +12,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/call_reinforcements/mining,
 		/datum/ai_planning_subtree/random_speech/legion,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability,
@@ -21,6 +23,7 @@
 /datum/ai_controller/basic_controller/legion_brood
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/legion,
+		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining/low_node_priority,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 

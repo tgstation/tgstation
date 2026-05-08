@@ -12,8 +12,9 @@
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
 
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), PROC_REF(refresh_obscured))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), PROC_REF(husk_trait_toggle))
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_INVISIBLE_MAN), SIGNAL_REMOVETRAIT(TRAIT_INVISIBLE_MAN)), PROC_REF(invisible_man_toggle))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_UNDERWEAR), SIGNAL_REMOVETRAIT(TRAIT_NO_UNDERWEAR)), PROC_REF(no_underwear_toggle))
 
 /// Gaining or losing [TRAIT_DWARF] updates our height and grants passtable
 /mob/living/carbon/human/proc/on_dwarf_trait(datum/source)
@@ -67,8 +68,19 @@
 	)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5, frequency = 0.8)
 
+/mob/living/carbon/human/proc/husk_trait_toggle(datum/source)
+	SIGNAL_HANDLER
+	refresh_obscured()
+	update_body()
+
 /// When [TRAIT_INVISIBLE_MAN] is added or removed we need to update a few things
 /mob/living/carbon/human/proc/invisible_man_toggle(datum/source)
 	SIGNAL_HANDLER
 	refresh_obscured()
 	update_visible_name()
+	update_body()
+
+/// When [TRAIT_NO_UNDERWEAR] is added or removed we need to update our body to hide or show underwear sprites
+/mob/living/carbon/human/proc/no_underwear_toggle(datum/source)
+	SIGNAL_HANDLER
+	update_body()

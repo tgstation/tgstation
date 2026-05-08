@@ -769,7 +769,6 @@
 
 	invisible_man.add_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS, TRAIT_NO_BLOOD_OVERLAY), type)
 
-	invisible_man.update_body()
 	invisible_man.remove_from_all_data_huds()
 	invisible_man.sound_environment_override = SOUND_ENVIROMENT_PHASED
 
@@ -781,7 +780,6 @@
 
 		to_chat(invisible_man, span_notice("As you sober up, opacity once again returns to your body meats."))
 
-	invisible_man.update_body()
 	invisible_man.sound_environment_override = NONE
 
 	if(!invisible_man.hud_used)

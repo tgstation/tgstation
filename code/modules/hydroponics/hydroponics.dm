@@ -1168,6 +1168,9 @@
 	if(myseed)
 		to_chat(user, span_warning("[src] already has a plant growing in it!"))
 		return
+	if(young_plant.seed_flags & NO_PLANTING)
+		to_chat(user, span_warning("[young_plant] cannot be planted in [src]!"))
+		return
 	if(istype(young_plant, /obj/item/seeds/kudzu))
 		investigate_log("had Kudzu planted in it by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_BOTANY)
 	if(!user.transferItemToLoc(young_plant, src))

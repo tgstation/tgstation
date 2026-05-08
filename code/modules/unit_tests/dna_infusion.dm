@@ -3,9 +3,12 @@
 
 /datum/unit_test/valid_dna_infusion/Run()
 	for(var/datum/infuser_entry/infuser_entry as anything in assoc_to_values(GLOB.infuser_entries))
-		for(var/input_type in infuser_entry.input_obj_or_mob)
+		for(var/datum/input_type as anything in infuser_entry.input_obj_or_mob)
 			if(ispath(input_type, /mob/living))
 				continue
+			if(input_type == input_type::abstract_type)
+				input_type = pick(subtypesof(input_type))
+
 			var/atom/movable/movable = allocate(input_type)
 			if(!HAS_TRAIT(movable, TRAIT_VALID_DNA_INFUSION))
 				//TEST_FAIL() doesn't early return the unit test so we can keep checking.

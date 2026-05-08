@@ -281,6 +281,7 @@
 	if (length(drop_results))
 		butcher_drops = string_list(drop_results)
 		butcher_drop_cache[type] = butcher_drops
+	update_limb(TRUE)
 	update_icon_dropped()
 	refresh_bleed_rate()
 
@@ -1168,7 +1169,7 @@
 	update_draw_color()
 
 	if(!is_creating || !owner)
-		return
+		return FALSE
 
 	// There should technically to be an ishuman(owner) check here, but it is absent because no basetype carbons use bodyparts
 	// No, xenos don't actually use bodyparts. Don't ask.

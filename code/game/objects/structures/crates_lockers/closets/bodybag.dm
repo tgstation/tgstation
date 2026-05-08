@@ -159,11 +159,9 @@
 		content.forceMove(folding_bodybag)
 		if(isliving(content))
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
-		if(iscarbon(content))
-			var/mob/living/carbon/mob = content
-			if (mob.dna?.get_mutation(/datum/mutation/dwarfism))
-				max_weight_of_contents = max(WEIGHT_CLASS_NORMAL, max_weight_of_contents)
-				continue
+		if(HAS_TRAIT(content, TRAIT_DWARF))
+			max_weight_of_contents = max(WEIGHT_CLASS_NORMAL, max_weight_of_contents)
+			continue
 		if(!isitem(content))
 			max_weight_of_contents = max(WEIGHT_CLASS_BULKY, max_weight_of_contents)
 			continue

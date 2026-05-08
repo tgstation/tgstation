@@ -328,7 +328,7 @@
 		// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
 		new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
 		new_limb_owner.updatehealth()
-		new_limb_owner.update_body()
+		new_limb_owner.update_body() // updates lips + hair + eyes
 		new_limb_owner.update_damage_overlays()
 		if(!special)
 			new_limb_owner.hud_used?.update_locked_slots()
@@ -372,7 +372,7 @@
 		sexy_chad.lip_color = lip_color
 
 	new_head_owner.updatehealth()
-	new_head_owner.update_body()
+	new_head_owner.update_body() // updates lips + hair + eyes
 	new_head_owner.update_damage_overlays()
 
 /obj/item/bodypart/arm/try_attach_limb(mob/living/carbon/new_arm_owner, special, lazy)

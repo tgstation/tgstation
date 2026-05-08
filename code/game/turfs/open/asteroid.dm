@@ -186,9 +186,34 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
 	turf_flags = NO_RUINS
 
-/// A turf that can't we can't build openspace chasms on or spawn ruins in.
-/turf/closed/mineral/volcanic/lava_land_surface/do_not_chasm
-	turf_flags = NO_RUINS
+/// Variant for ruins which replaces itself with the floor of a biome it generates in
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "basalt_biome"
+	smoothing_flags = NONE
+	/// Area type to whose generator we try to default to
+	var/default_area = /area/lavaland/surface/outdoors/unexplored/danger
+
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/Initialize(mapload)
+	. = ..()
+	// Just spawn a normal lavaland rock if we fail to get a mapgen, such as being spawned over lava
+	var/supposed_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	var/area/cur_area = loc
+	var/datum/map_generator/cave_generator/map_generator = cur_area?.get_generator()
+	if (!map_generator)
+		cur_area = GLOB.areas_by_type[default_area]
+		map_generator = cur_area?.get_generator()
+
+	if (istype(map_generator))
+		var/biome = map_generator.get_biome_for_turf(src)
+		if (biome)
+			var/datum/biome/generating_biome = SSmapping.biomes[biome]
+			supposed_type = generating_biome.open_turf_type
+
+	var/cur_flags = turf_flags
+	var/turf/new_turf = ChangeTurf(supposed_type, flags = CHANGETURF_FORCEOP | CHANGETURF_INHERIT_AIR)
+	if(cur_flags & NO_RUINS)
+		new_turf.turf_flags |= NO_RUINS
 
 /turf/open/misc/asteroid/lowpressure
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
@@ -200,6 +225,77 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	baseturfs = /turf/open/misc/asteroid/airless
 	turf_type = /turf/open/misc/asteroid/airless
 	worm_chance = 0
+
+/turf/open/misc/asteroid/basalt/smooth
+	smoothing_flags = SMOOTH_BITMASK
+	layer = MID_TURF_LAYER
+	floor_variance = 0
+	transform = MAP_SWITCH(TRANSLATE_MATRIX(-8, -8), matrix())
+	/// DMI used by unsmoothed turfs for variance
+	var/variant_dmi = null
+	/// Amount of variants this turf has
+	var/variant_num = 8
+
+/turf/open/misc/asteroid/basalt/smooth/set_smoothed_icon_state(new_junction)
+	. = ..()
+	if (new_junction == 255 && variant_dmi)
+		icon = variant_dmi
+		icon_state = "[base_icon_state][rand(1, variant_num)]"
+	else
+		icon = initial(icon)
+
+/turf/open/misc/asteroid/basalt/smooth/update_overlays()
+	. = ..()
+	if (smoothing_junction != 255 && variant_dmi)
+		. = list(mutable_appearance(variant_dmi, "[base_icon_state][rand(1, variant_num)]")) + .
+
+/turf/open/misc/asteroid/basalt/smooth/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	. = ..()
+	if (!.)
+		return
+	if(!smoothing_flags)
+		return
+	underlay_appearance.transform = transform
+
+/turf/open/misc/asteroid/basalt/smooth/siderite
+	name = "siderite floor"
+	baseturfs = /turf/open/misc/asteroid/basalt/smooth/siderite
+	icon = 'icons/turf/floors/siderite.dmi'
+	damaged_dmi = 'icons/turf/floors/siderite_variants.dmi'
+	variant_dmi = 'icons/turf/floors/siderite_variants.dmi'
+	icon_state = "siderite-255"
+	base_icon_state = "siderite"
+	layer = HIGH_TURF_LAYER
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SIDERITE
+	canSmoothWith = SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_CLOSED_TURFS
+	dig_result = /obj/item/stack/ore/glass/siderite
+
+/turf/open/misc/asteroid/basalt/smooth/siderite/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
+
+/turf/open/misc/asteroid/basalt/smooth/siderite/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
+
+/turf/open/misc/asteroid/basalt/smooth/shale
+	name = "shale floor"
+	baseturfs = /turf/open/misc/asteroid/basalt/smooth/shale
+	icon = 'icons/turf/floors/shale.dmi'
+	damaged_dmi = 'icons/turf/floors/shale_variants.dmi'
+	variant_dmi = 'icons/turf/floors/shale_variants.dmi'
+	icon_state = "shale-255"
+	base_icon_state = "shale"
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SHALE
+	canSmoothWith = SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_CLOSED_TURFS
+
+/turf/open/misc/asteroid/basalt/smooth/shale/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
+
+/turf/open/misc/asteroid/basalt/smooth/shale/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
 
 /turf/open/misc/asteroid/snow
 	gender = PLURAL

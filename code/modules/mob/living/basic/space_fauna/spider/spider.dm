@@ -51,8 +51,6 @@
 	var/directive = ""
 	/// Short description of what this mob is capable of, for radial menu uses
 	var/menu_description = "Tanky and strong for the defense of the nest and other spiders."
-	/// If true then you shouldn't be told that you're a spider antagonist as soon as you are placed into this mob
-	var/apply_spider_antag = TRUE
 	/// Commands you can give this spider once it is tamed
 	var/static/list/tamed_commands = list(
 		/datum/pet_command/idle,
@@ -221,7 +219,6 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider/pest
-	apply_spider_antag = FALSE
 	///list of pet commands we follow
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,

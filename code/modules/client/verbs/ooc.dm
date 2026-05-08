@@ -133,7 +133,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	else
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
-
 /client/proc/set_ooc()
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"

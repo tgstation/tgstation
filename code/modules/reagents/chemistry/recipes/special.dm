@@ -197,8 +197,23 @@
 		if(RNGCHEM_CATALYSTS)
 			return list(/datum/reagent/wittel)
 
+///Random recipe that turns stuff into ROCKS
+/datum/chemical_reaction/randomized/gorgium
+	persistence_period = 7
+	results = list(/datum/reagent/metalgen/gorgium = 20)
+
+/datum/chemical_reaction/randomized/gorgium/GetPossibleReagents(kind)
+	var/list/possible_ingredients = list()
+	for(var/datum/reagent/reagent as anything in valid_subtypesof(/datum/reagent))
+		var/chemical_flags = reagent::chemical_flags
+		if(VALID_RANDOM_RECIPE_REAGENT(chemical_flags))
+			possible_ingredients += reagent
+	return possible_ingredients
+
 /obj/item/paper/secretrecipe
 	name = "Old Recipe"
+	/// The recipes we can spawn with
+	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/metalgen, /datum/chemical_reaction/randomized/secret_sauce)
 
 /obj/item/paper/secretrecipe/Initialize(mapload)
 	. = ..()
@@ -223,7 +238,7 @@
 /obj/item/paper/secretrecipe/proc/UpdateInfo()
 	PRIVATE_PROC(TRUE)
 
-	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[pick(valid_subtypesof(/datum/chemical_reaction/randomized))]
+	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[pick(possible_recipes)]
 	if(!recipe)
 		add_raw_text("This recipe is illegible.")
 		update_appearance()
@@ -260,6 +275,26 @@
 	dat += "."
 	add_raw_text(dat.Join(""))
 	update_appearance()
+
+/// Paper that spawns a recipe for the petrification serum
+/obj/item/paper/secretrecipe/gorgium
+	name = "paper" //gets affixed by rock
+	possible_recipes = list(/datum/chemical_reaction/randomized/gorgium)
+
+/obj/item/paper/secretrecipe/gorgium/Initialize(mapload)
+	. = ..()
+
+	metal_transmute(src, /datum/material/rock)
+
+/// Recipe that always has metalgen
+/obj/item/paper/secretrecipe/metalgen
+	name = "paper" //gets affixed by uranium
+	possible_recipes = list(/datum/chemical_reaction/randomized/metalgen)
+
+/obj/item/paper/secretrecipe/metalgen/Initialize(mapload)
+	. = ..()
+
+	metal_transmute(src, /datum/material/uranium)
 
 #undef RNGCHEM_INPUT
 #undef RNGCHEM_CATALYSTS

@@ -105,6 +105,7 @@
 #define COMSIG_MOB_SIGHT_CHANGE "mob_sight_changed"
 ///from base of mob/set_invis_see(): (new_invis, old_invis)
 #define COMSIG_MOB_SEE_INVIS_CHANGE "mob_see_invis_change"
+	#define COMPONENT_BLOCK_INVIS_CHANGE (1<<0)
 
 /// from /mob/living/proc/apply_damage(): (list/damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 /// allows you to add multiplicative damage modifiers to the damage mods argument to adjust incoming damage

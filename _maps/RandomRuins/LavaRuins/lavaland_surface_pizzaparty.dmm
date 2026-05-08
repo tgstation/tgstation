@@ -3,11 +3,11 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ac" = (
 /obj/structure/lattice,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ad" = (
 /turf/closed/wall,
@@ -153,7 +153,7 @@
 /area/ruin/unpowered)
 "hQ" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "is" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -496,7 +496,7 @@
 "Fg" = (
 /mob/living/basic/mining/goliath,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "FF" = (
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
@@ -516,7 +516,7 @@
 /area/ruin/unpowered)
 "Jt" = (
 /obj/item/stack/sheet/iron,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "KA" = (
 /obj/structure/table/wood,
@@ -609,7 +609,7 @@
 "RP" = (
 /obj/item/clothing/under/shorts/blue,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "RV" = (
 /obj/structure/girder,
@@ -631,7 +631,7 @@
 /area/ruin/unpowered)
 "Sz" = (
 /obj/structure/flora/ash/fireblossom,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "SQ" = (
 /obj/item/clothing/shoes/sneakers/orange,

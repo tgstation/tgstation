@@ -246,5 +246,7 @@ sound/effect/droplet.ogg -- "Drop - Water" By mattfinarelli -- https://freesound
 
 sound/effects/swapper/swap_A.ogg and swap_B.ogg by ArcaneMusic, License: Creative Commons 0, man-made mouth noises, slight cleanup in audacity.
 
+sound/items/weapons/earthcracker_bang.mp3 by Jean Filho -- https://freesound.org/people/Jean_Filho/sounds/807381/ -- License: Creative Commons 0
+
 sound/machines/data_transmission.ogg -- Elements from Tim Verberne -- https://freesound.org/people/Tim_Verberne/sounds/558942/ -- License: Creative Commons 0
  and samples from Ping.ogg from throughout the codebase.
