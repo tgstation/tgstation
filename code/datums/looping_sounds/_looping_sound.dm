@@ -260,11 +260,11 @@
 
 /// Stops sound playing on current channel, if specified
 /datum/looping_sound/proc/stop_current()
+	QDEL_NULL(sound_token_instance)
 	if(!sound_channel || !ismob(parent))
 		return
 	var/mob/mob_parent = parent
 	mob_parent.stop_sound_channel(sound_channel)
-	QDEL_NULL(sound_token_instance)
 
 /// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.
 /datum/looping_sound/proc/on_stop()

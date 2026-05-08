@@ -14,5 +14,5 @@ SUBSYSTEM_DEF(sound_tokens)
 		if(!owned_mob)
 			continue
 		for(var/datum/sound_token/current_token in playing_sound_tokens)
-			current_token.AddOrUpdateListener(owned_mob)
+			current_token.UpdateListener(owned_mob)
 

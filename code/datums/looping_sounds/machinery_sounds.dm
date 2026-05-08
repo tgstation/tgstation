@@ -82,15 +82,6 @@
 	falloff_exponent = 4
 	use_sound_tokens = TRUE
 
-/datum/looping_sound/deep_fryer
-	mid_length = 0.2 SECONDS
-	mid_sounds = list(
-		'sound/machines/fryer/deep_fryer_1.ogg',
-		'sound/machines/fryer/deep_fryer_2.ogg',
-	)
-	volume = 30
-	use_sound_tokens = TRUE
-
 /datum/looping_sound/microwave
 	start_sound = 'sound/machines/microwave/microwave-start.ogg'
 	start_length = 1 SECONDS
