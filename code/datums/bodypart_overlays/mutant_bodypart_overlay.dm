@@ -72,22 +72,20 @@
 /datum/bodypart_overlay/mutant/proc/get_base_icon_state()
 	return sprite_datum.icon_state
 
+///Used to build the final incon state for the sprite
+/datum/bodypart_overlay/mutant/proc/build_icon_state(image_layer, obj/item/bodypart/limb)
+	PROTECTED_PROC(TRUE)
+	var/gender_key = (sprite_datum.gender_specific && limb?.limb_gender) || "m" // Male is default because sprite accessories are so ancient they predate the concept of not hardcoding gender
+	var/base_state = get_base_icon_state()
+	var/layer_key = mutant_bodyparts_layertext(image_layer)
+	return "[gender_key]_[feature_key]_[base_state]_[layer_key]"
+
 ///Get the image we need to draw on the person. Called from get_overlay() which is called from _bodyparts.dm. Limb can be null
 /datum/bodypart_overlay/mutant/get_image(image_layer, obj/item/bodypart/limb)
 	if(!sprite_datum)
 		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
 
-	var/gender = limb?.limb_gender || "m"
-	var/list/icon_state_builder = list()
-	icon_state_builder += sprite_datum.gender_specific ? gender : "m" //Male is default because sprite accessories are so ancient they predate the concept of not hardcoding gender
-	icon_state_builder += feature_key
-	icon_state_builder += get_base_icon_state()
-	icon_state_builder += mutant_bodyparts_layertext(image_layer)
-
-	var/finished_icon_state = icon_state_builder.Join("_")
-
-	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = image_layer)
-
+	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, build_icon_state(image_layer, limb), layer = image_layer)
 	if(sprite_datum.center)
 		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
 
@@ -102,20 +100,17 @@
 ///Change our accessory sprite, using the accesssory type. If you need to change the sprite for something, use simple_change_sprite()
 /datum/bodypart_overlay/mutant/set_appearance(accessory_type)
 	sprite_datum = fetch_sprite_datum(accessory_type)
-	cache_key = jointext(generate_icon_cache(), "_")
 
 ///In a lot of cases, appearances are stored in DNA as the Name, instead of the path. Use set_appearance instead of possible
 /datum/bodypart_overlay/mutant/proc/set_appearance_from_name(accessory_name)
 	sprite_datum = fetch_sprite_datum_from_name(accessory_name)
-	cache_key = jointext(generate_icon_cache(), "_")
 
 ///Generate a unique key based on our sprites. So that if we've aleady drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse, but mostly curse)
-/datum/bodypart_overlay/mutant/generate_icon_cache()
+/datum/bodypart_overlay/mutant/generate_icon_cache(obj/item/bodypart/limb)
 	. = list()
 	. += "[get_base_icon_state()]"
 	. += "[feature_key]"
 	. += "[dye_color || draw_color]"
-	return .
 
 ///Return a dumb glob list for this specific feature (called from parse_sprite)
 /datum/bodypart_overlay/mutant/proc/get_global_feature_list()

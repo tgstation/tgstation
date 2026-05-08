@@ -144,7 +144,32 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	feature_key = FEATURE_FRILLS
 
 /datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
-	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEEARS)
+	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
+
+/datum/bodypart_overlay/mutant/frills/generate_icon_cache(obj/item/bodypart/limb)
+	. = ..()
+	if(LAZYLEN(limb?.owner?.hair_masks))
+		. += jointext(limb.owner.hair_masks, ",")
+
+/datum/bodypart_overlay/mutant/frills/get_image(image_layer, obj/item/bodypart/limb)
+	if(!LAZYLEN(limb?.owner?.hair_masks))
+		return ..()
+
+	var/list/hair_masks_to_use = limb.owner.hair_masks
+	var/icon_state_to_use = build_icon_state(image_layer, limb)
+	var/frill_cache_key = "[sprite_datum.type]-[icon_state_to_use]-[jointext(hair_masks_to_use, ",")]"
+	var/static/list/cached_frill_icons
+	var/icon/cached_icon = LAZYACCESS(cached_frill_icons, frill_cache_key)
+	if(isnull(cached_icon))
+		cached_icon = icon(sprite_datum.icon, build_icon_state(image_layer, limb))
+		for(var/datum/hair_mask/mask as anything in hair_masks_to_use)
+			cached_icon.Blend(icon(mask::icon, mask::icon_state), ICON_ADD)
+		LAZYSET(cached_frill_icons, frill_cache_key, cached_icon)
+
+	var/mutable_appearance/uncached_appearance = mutable_appearance(cached_icon, layer = image_layer)
+	if(sprite_datum.center)
+		center_image(uncached_appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
+	return uncached_appearance
 
 ///Guess what part of the lizard this is?
 /obj/item/organ/snout
