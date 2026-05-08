@@ -361,7 +361,6 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
-/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bf" = (
@@ -600,6 +599,10 @@
 /obj/machinery/light/floor,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered/seedvault)
+"yq" = (
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/iron/freezer,
+/area/ruin/powered/seedvault)
 "Bb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/freezer,
@@ -691,9 +694,9 @@ aa
 aa
 aa
 ab
-ab
-aa
-aa
+ac
+ac
+ac
 aa
 aa
 aa
@@ -714,8 +717,8 @@ ac
 ac
 ac
 ac
+yq
 ac
-aa
 aa
 aa
 aa
@@ -736,7 +739,7 @@ OE
 ah
 ac
 ca
-ac
+ah
 ac
 ac
 ac
