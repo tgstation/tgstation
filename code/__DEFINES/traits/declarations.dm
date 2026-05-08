@@ -1654,4 +1654,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes the owner desensetized to death, but happy whenever someone gets blown to pieces (as a sacrifice to the necropolis) unless its another worshipper
 #define TRAIT_NECROPOLIS_WORSHIP "necropolis_worship"
 
+/// Makes the owner immune from the pacification from synthpax
+#define TRAIT_SYNTHPAX_IMMUNE "synthpax_immune"
+
 // END TRAIT DEFINES
