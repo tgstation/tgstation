@@ -109,6 +109,12 @@
 	/// The pitch adjustment that this movable uses when speaking.
 	var/pitch = 0
 
+	/// The base set of blips to use for blip calculation.
+	var/blip_base = "male"
+
+	/// The blip variant to use for blip calculation.
+	var/blip_number = "1"
+
 	/// Datum that keeps all data related to zero-g drifting and handles related code/comsigs
 	var/datum/drift_handler/drift_handler
 
@@ -1734,6 +1740,8 @@
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_PARTICLES, "Edit Particles")
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
+	if(SStts.tts_enabled)
+		VV_DROPDOWN_OPTION(VV_HK_SET_TTS_VOICE, "Modify TTS Voice")
 
 /atom/movable/vv_do_topic(list/href_list)
 	. = ..()
@@ -1789,6 +1797,14 @@
 		to_chat(usr, span_notice("Deadchat now control [src]."))
 		log_admin("[key_name(usr)] has added deadchat control to [src]")
 		message_admins(span_notice("[key_name(usr)] has added deadchat control to [src]"))
+
+	if(href_list[VV_HK_SET_TTS_VOICE])
+		var/chosen_voice = tgui_input_list(usr, "Choose a voice to use.", "Choose a voice.", SStts.available_speakers)
+		if(!chosen_voice)
+			return
+		voice = chosen_voice
+		log_admin("[key_name(usr)] has set [src]'s voice as [chosen_voice].")
+		message_admins(span_notice("[key_name(usr)] has set [src]'s voice as [chosen_voice]."))
 
 /**
 * A wrapper for setDir that should only be able to fail by living mobs.

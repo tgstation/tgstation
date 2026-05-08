@@ -435,13 +435,15 @@
 
 /datum/config_entry/flag/disallow_circuit_sounds
 
-/datum/config_entry/flag/tts_no_whisper
-
 /datum/config_entry/string/tts_http_url
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/tts_http_token
 	protection = CONFIG_ENTRY_LOCKED|CONFIG_ENTRY_HIDDEN
+
+/datum/config_entry/string/tts_tram_announcer_override
+
+/datum/config_entry/string/tts_computer_voice_override
 
 /datum/config_entry/number/tts_max_concurrent_requests
 	default = 4

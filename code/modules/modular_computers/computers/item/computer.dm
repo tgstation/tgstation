@@ -13,6 +13,7 @@
 	armor_type = /datum/armor/item_modular_computer
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	interaction_flags_mouse_drop = NEED_HANDS | ALLOW_RESTING
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/stored_id
@@ -153,6 +154,11 @@
 	install_default_programs()
 	register_context()
 	update_appearance()
+
+/obj/item/modular_computer/LateInitialize()
+	. = ..()
+	if(SStts.tts_enabled)
+		voice = SStts.computer_voice
 
 ///Initialize the shell for this item, or the physical machinery it belongs to.
 /obj/item/modular_computer/proc/add_shell_component(capacity = SHELL_CAPACITY_MEDIUM, shell_flags = NONE)
