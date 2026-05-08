@@ -1279,6 +1279,7 @@
 /obj/machinery/rust_heretic_act(rust_strength)
 	var/damage = 500 + rust_strength * 200
 	take_damage(damage, BRUTE, BOMB, 1)
+	return TRUE
 
 /obj/machinery/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, occupant))

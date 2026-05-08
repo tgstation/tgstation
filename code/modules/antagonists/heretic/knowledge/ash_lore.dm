@@ -27,9 +27,7 @@
 	tips = list(
 		"Your Mansus Grasp applies a short blind and a mark that puts your opponent into stamina crit when triggered by your blade. The mark can spread to nearby opponents.",
 		"Selecting this path makes you immune to high temperature damage. Remember, however, that your clothes can still burn! If you want to protect yourself from your own fire, wear a Scorched Mantle.",
-		"Your Scorched Mantle will cause you to generate firestacks on your own body (Make sure you toggle the effect!). Upon reaching 5 fire stacks, your ashen spells will be  empowered (indicated by your spells being highlighted in green).",
-		"Your Ashen passage is a short cooldown jaunt capable of removing restraints. If empowered, it gains a longer jaunt time, and also will remove stuns and stamina crit.",
-		"Volcano blast can make short work of your enemies, should they be foolish enough to stick close to each other. If empowered, it will have no cast time and generate twice the amount of firestacks. Burn the heathens to ashes!",
+		"Your Scorched Mantle will keep you on fire while protecting you from the ill effects of it. Use this to your advantage by running into groups of enemies, spreading fire far and wide.",
 		"Do not neglect the Mask of Madness. It will slowly sap the stamina of your enemies and make them hallucinate.",
 		"Make sure to set as many enemies on fire as you possibly can! Nightwatcher's Rebirth will heal you and have its cooldown reduced based on how many mobs you siphon.",
 		"Your ascension grants you complete immunity to environmental hazards, including bombs! But you are still vulnerable to more conventional weaponry. Do not become overconfident.",
@@ -49,9 +47,10 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_ash
 	name = "Nightwatcher's Secret"
-	desc = "Opens up the Path of Ash to you. \
-		Allows you to transmute a match and a knife into an Ashen Blade. \
+	desc = "Opens up the Path of Ash to you.<br>\
+		Allows you to create a Ashen Blades. \
 		You can only create two at a time."
+	transmute_text = "Transmute a match and a knife."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -89,32 +88,46 @@
 
 /datum/heretic_knowledge/spell/ash_passage
 	name = "Ashen Passage"
-	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality, allowing you to traverse a short distance, passing though any walls. \
-			When empowered, it will break you out of any stuns and restraints, and will have a longer range."
+	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality, \
+		allowing you to traverse a short distance, passing though any walls."
 	gain_text = "He knew how to walk between the planes."
-
+	required_atoms = list(/obj/effect/decal/cleanable/ash = 1)
 	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 2
 	drafting_tier = 5
+	max_charges = 6
+	focus_recharge_amount = 0.15
+	holywater_drain_amount = 0.15
+	transmute_text = "To recharge, complete a ritual with a smearing of ash."
 
 /datum/heretic_knowledge/spell/fire_blast
 	name = "Volcano Blast"
 	desc = "Grants you Volcano Blast, a spell that - after a short charge - fires off a beam of energy \
 		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
-		the beam will continue to another target. \
-		When empowered, has instant cast time and blasts enemies with more flames."
+		the beam will continue to another target."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
 	action_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
+	required_atoms = list(/obj/structure/bonfire = 1)
 	cost = 2
 	research_tree_icon_frame = 7
+	max_charges = 3
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
+	transmute_text = "To recharge, complete a ritual with a lit bonfire."
+
+/datum/heretic_knowledge/spell/fire_blast/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	for(var/obj/structure/bonfire/fire in atoms)
+		if(!fire.burning)
+			atoms -= fire
+
+	return ..()
 
 /datum/heretic_knowledge/armor/ash
-	desc = "Allows you to transmute a table (or a suit), a mask and a match to create a scorched mantle. \
-		It provides completes protection from fire, and is able to produce more flames passively. \
-		When you have enough fire, you may cast empowered versions of your ashen spells. \
-		Acts as a focus while hooded."
+	desc = "Create a Scorched Mantle.<br>\
+		It provides completes protection from fire, and is able to produce more flames passively."
+	transmute_text = "Transmute a table (or a suit), a mask and a match."
 	gain_text = "The Watch remain as they fell, crumbling away from sight. \
-			Yet the winds blowing through the city call them back to service, dust kicked into the air, a drifting silhouette of the fallen."
+		Yet the winds blowing through the city call them back to service, dust kicked into the air, a drifting silhouette of the fallen."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash)
 	research_tree_icon_state = "ash_armor"
 	required_atoms = list(
@@ -125,9 +138,10 @@
 
 /datum/heretic_knowledge/mad_mask
 	name = "Mask of Madness"
-	desc = "Allows you to transmute any mask, four candles, a stun baton, and a liver to create a Mask of Madness. \
-		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
+	desc = "Create a Mask of Madness.<br>\
+		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity.<br>\
 		It can also be forced onto a heathen, to make them unable to take it off..."
+	transmute_text = "Transmute any mask, four candles, a stun baton, and a liver."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
 	required_atoms = list(
 		/obj/item/organ/liver = 1,
@@ -146,7 +160,6 @@
 	gain_text = "He returned, blade in hand, he swung and swung as the ash fell from the skies. \
 		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
 
-
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_ash"
 
@@ -160,24 +173,41 @@
 /datum/heretic_knowledge/spell/flame_birth
 	name = "Nightwatcher's Rebirth"
 	desc = "Grants you Nightwatcher's Rebirth, a spell that extinguishes you and \
-		burns all nearby heathens who are currently on fire, healing you for every victim afflicted. \
+		burns all nearby heathens who are currently on fire, healing you for every victim afflicted.<br>\
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
+	required_atoms = list(/mob/living/carbon/human = 1)
 	action_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 2
 	research_tree_icon_frame = 5
 	is_final_knowledge = TRUE
+	max_charges = 3
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
+	transmute_text = "To recharge, complete a ritual with a burning or husked corpse."
+
+/datum/heretic_knowledge/spell/flame_birth/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	for(var/mob/living/carbon/human/sacrifice in atoms)
+		if(sacrifice.stat != DEAD || ismonkey(sacrifice) || !sacrifice.on_fire || !HAS_TRAIT_FROM(sacrifice, TRAIT_HUSK, BURN))
+			atoms -= sacrifice
+
+	return ..()
+
+/datum/heretic_knowledge/spell/flame_birth/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/mob/living/carbon/human/sacrifice in selected_atoms)
+		sacrifice.apply_damage(30, BURN, BODY_ZONE_CHEST)
+		selected_atoms -= sacrifice
 
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"
-	desc = "The ascension ritual of the Path of Ash. \
-		Bring 3 burning or husked corpses to a transmutation rune to complete the ritual. \
-		When completed, you become a harbinger of flames, gaining two abilites. \
+	desc = "The ascension ritual of the Path of Ash.<br>\
+		When completed, you become a harbinger of flames, gaining two abilites.<br>\
 		Cascade, which causes a massive, growing ring of fire around you, \
-		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
-		Some ashen spells you already knew will be empowered as well. \
+		and Oath of Flame, causing you to passively create a ring of flames as you walk.<br>\
 		You will also become immune to flames, space, and similar environmental hazards."
+	transmute_text = "Transmute 3 burning or husked corpses."
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
 		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"

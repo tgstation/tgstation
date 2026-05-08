@@ -18,18 +18,29 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/spell/basic
 	name = "Break of Dawn"
-	desc = "Starts your journey into the Mansus. \
-		Grants you the Mansus Grasp, a powerful and upgradable \
-		disabling spell that can be cast regardless of having a focus."
+	desc = "Starts your journey into the Mansus.<br>\
+		Grants you the Mansus Grasp, a powerful and upgradable disabling spell."
 	action_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
 	cost = 0
 	is_starting_knowledge = TRUE
+	max_charges = 8
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.125
+	transmute_text = "Tapping influences and completing sacrifices will recharge the spell."
 
 // Heretics can enhance their fishing rods to fish better - fishing content.
 // Lasts until successfully fishing something up.
 /datum/heretic_knowledge/spell/basic/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	..()
+	. = ..()
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
+	RegisterSignal(our_heretic, COMSIG_HERETIC_INFLUENCE_DRAINED, PROC_REF(on_influence_tap))
+	RegisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE, PROC_REF(on_sacrifice))
+
+/datum/heretic_knowledge/spell/basic/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST)
+	UnregisterSignal(our_heretic, COMSIG_HERETIC_INFLUENCE_DRAINED)
+	UnregisterSignal(our_heretic, COMSIG_HERETIC_SACRIFICE)
 
 /datum/heretic_knowledge/spell/basic/proc/on_grasp_cast(mob/living/carbon/cast_on, datum/action/cooldown/spell/touch/touch_spell)
 	SIGNAL_HANDLER
@@ -58,6 +69,14 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		REMOVE_TRAIT(item, TRAIT_ROD_MANSUS_INFUSED, REF(item))
 		item.difficulty_modifier += 20
 
+/datum/heretic_knowledge/spell/basic/proc/on_influence_tap(...)
+	SIGNAL_HANDLER
+	add_charges(max_charges)
+
+/datum/heretic_knowledge/spell/basic/proc/on_sacrifice(...)
+	SIGNAL_HANDLER
+	add_charges(max_charges)
+
 /**
  * The Living Heart heretic knowledge.
  *
@@ -66,10 +85,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/living_heart
 	name = "The Living Heart"
-	desc = "Grants you a Living Heart, allowing you to track sacrifice targets. \
-		Should you lose your heart, you can transmute a poppy and a pool of blood \
-		to awaken your heart into a Living Heart. If your heart is Cybernetic, \
-		you will be unable to reawaken it."
+	desc = "Grants you a Living Heart, allowing you to track sacrifice targets."
+	transmute_text = "Should you lose your heart, you can transmute a poppy and a pool of blood \
+		to awaken your heart into a Living Heart."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/food/grown/poppy = 1,
@@ -80,6 +98,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "living_heart"
 	research_tree_icon_frame = 1
+	notice = "If your heart is Cybernetic, you will be unable to reawaken it."
 
 /datum/heretic_knowledge/living_heart/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -111,8 +130,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	if(where_to_put_our_heart)
 		where_to_put_our_heart.AddComponent(/datum/component/living_heart)
-		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], allowing you to track sacrifice targets. \
-			Should you lose your [where_to_put_our_heart.name], you can transmute a poppy and a pool of blood \
+		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], allowing you to track sacrifice targets."
+		transmute_text = "Should you lose your [where_to_put_our_heart.name], you can transmute a poppy and a pool of blood \
 			to awaken your [where_to_put_our_heart.name] into a Living Heart. \
 			Cybernetic [where_to_put_our_heart.name]\s will block the ritual!"
 
@@ -173,41 +192,47 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	return TRUE
 
-/**
- * Allows the heretic to craft a spell focus.
- * They require a focus to cast advanced spells.
- */
-/datum/heretic_knowledge/amber_focus
-	name = "Amber Focus"
-	desc = "Allows you to transmute a sheet of glass and a pair of eyes to create an Amber Focus. \
-		A focus must be worn in order to cast more advanced spells."
-	required_atoms = list(
-		/obj/item/organ/eyes = 1,
-		/obj/item/stack/sheet/glass = 1,
-	)
-	result_atoms = list(/obj/item/clothing/neck/heretic_focus)
-	cost = 0
-	priority = MAX_KNOWLEDGE_PRIORITY - 2 // Not as important as making a heart or sacrificing, but important enough.
-	is_starting_knowledge = TRUE
-	research_tree_icon_path = 'icons/obj/clothing/neck.dmi'
-	research_tree_icon_state = "eldritch_necklace"
-
 /datum/heretic_knowledge/spell/cloak_of_shadows
 	name = "Cloak of Shadow"
-	desc = "Grants you the spell Cloak of Shadow. This spell will completely conceal your identity in a purple smoke \
-		for three minutes, assisting you in keeping secrecy. Requires a focus to cast."
+	desc = "Grants you the spell Cloak of Shadow.<br>\
+		This spell will completely conceal your identity in a purple smoke for three minutes, assisting you in keeping secrecy."
 	action_to_add = /datum/action/cooldown/spell/shadow_cloak
 	cost = 0
 	is_starting_knowledge = TRUE
+	max_charges = 6
+	focus_recharge_amount = 0.16
+	holywater_drain_amount = 0.16
+	transmute_text = "Charges will return every three minutes. Using the spell again will reset the timer."
+	/// Cooldown for when we can give a charge back
+	COOLDOWN_DECLARE(charge_time)
+
+/datum/heretic_knowledge/spell/cloak_of_shadows/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/datum/heretic_knowledge/spell/cloak_of_shadows/process(seconds_per_tick)
+	if(charges >= max_charges)
+		STOP_PROCESSING(SSobj, src)
+	else if(COOLDOWN_FINISHED(src, charge_time))
+		add_charges(1)
+		COOLDOWN_START(src, charge_time, 3 MINUTES)
+
+/datum/heretic_knowledge/spell/cloak_of_shadows/deduct_charge(mob/living/source, datum/action/the_spell)
+	. = ..()
+	if(charges >= max_charges)
+		return
+	START_PROCESSING(SSobj, src)
+	COOLDOWN_START(src, charge_time, 2 MINUTES)
 
 /datum/heretic_knowledge/feast_of_owls
 	name = "Feast of Owls"
-	desc = "Allows you to undergo a ritual that gives you 5 knowledge points but locks you out of ascension. This can only be done once and cannot be reverted."
+	desc = "Allows you to undergo a ritual that grants you five knowledge points, but locks you out of ascension."
 	gain_text = "Under the soft glow of unreason there is a beast that stalks the night. I shall bring it forth and let it enter my presence. It will feast upon my amibitions and leave knowledge in its wake."
 	is_starting_knowledge = TRUE
 	required_atoms = list()
 	research_tree_icon_path = 'icons/mob/actions/actions_animal.dmi'
 	research_tree_icon_state = "god_transmit"
+	notice = "This can only be done once and cannot be reverted."
 	/// amount of research points granted
 	var/reward = 5
 

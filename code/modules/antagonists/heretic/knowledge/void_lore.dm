@@ -27,7 +27,7 @@
 	)
 	tips = list(
 		"Your Mansus Grasp allows you to mute your targets, making it ideal for silent assassinations (keep in mind that it won't short circuit their suit sensors, make sure you turn them off after you kill them). Yhe grasp also applies a mark that when triggered by the void blade will apply the maximum amount of stacks of void chill to your target, slowing them down to a crawl.",
-		"Void Cloak can be used to hide one of your blades and a Codex Cicatrix when the hood is down,  while acting as a focus when it's up.",
+		"Void Cloak can be used to hide one of your blades and a Codex Cicatrix.",
 		"Void chill is a debuff applied by your spells, your grasp, your mark and your blade once you unlock the upgrade. Each stack slows your target movement speed by 10% and make them gradually colder, up to a maximum of 5 stacks.",
 		"At 5 stacks void chill will also prevent your target from heating up.",
 		"You are immune to low pressure and cold damage at the start of the shift. Upgrade your passive to level 2 to no longer need to breathe. Use this to your advantage.",
@@ -38,20 +38,21 @@
 	start = /datum/heretic_knowledge/limited_amount/starting/base_void
 	knowledge_tier1 = /datum/heretic_knowledge/spell/void_phase
 	guaranteed_side_tier1 = /datum/heretic_knowledge/void_cloak
-	knowledge_tier2 = /datum/heretic_knowledge/spell/void_prison
+	knowledge_tier2 = /datum/heretic_knowledge/void_prison
 	guaranteed_side_tier2 = /datum/heretic_knowledge/ether
 	robes = /datum/heretic_knowledge/armor/void
 	knowledge_tier3 = /datum/heretic_knowledge/spell/void_pull
 	guaranteed_side_tier3 = /datum/heretic_knowledge/summon/maid_in_mirror
 	blade = /datum/heretic_knowledge/blade_upgrade/void
-	knowledge_tier4 = /datum/heretic_knowledge/spell/void_conduit
+	knowledge_tier4 = /datum/heretic_knowledge/void_conduit
 	ascension = /datum/heretic_knowledge/ultimate/void_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"
-	desc = "Opens up the Path of Void to you. \
-		Allows you to transmute a knife in sub-zero temperatures into a Void Blade. \
+	desc = "Opens up the Path of Void to you.<br>\
+		Allows you to create Void Blades. \
 		You can only create two at a time."
+	transmute_text = "Transmute a knife in sub-zero temperatures."
 	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
 		I start to realize the emptiness of existence. Something's watching me."
 	required_atoms = list(/obj/item/knife = 1)
@@ -85,35 +86,81 @@
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
-	desc = "Grants you Void Phase, a long range targeted teleport spell. \
-		Additionally causes damage to heathens around your original and target destination."
+	desc = "Grants you Void Phase, a long range targeted teleport spell.<br>\
+		Causes damage to heathens around your original and target destination."
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
 		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
+	required_atoms = list(
+		list(/obj/structure/window, /obj/item/stack/sheet/glass) = 1,
+	)
 	action_to_add = /datum/action/cooldown/spell/pointed/void_phase
 	cost = 2
 	research_tree_icon_frame = 7
+	max_charges = 4
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
+	transmute_text = "To recharge, complete a ritual with a pane of glass in a sub-zero environment."
 
-/datum/heretic_knowledge/spell/void_prison
+/datum/heretic_knowledge/spell/void_phase/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	if(!isopenturf(loc))
+		loc.balloon_alert(user, "ritual failed, invalid location!")
+		return FALSE
+
+	var/turf/open/our_turf = loc
+	if(our_turf.GetTemperature() > T0C)
+		loc.balloon_alert(user, "ritual failed, not cold enough!")
+		return FALSE
+
+	return ..()
+
+/datum/heretic_knowledge/void_prison
 	name = "Void Prison"
-	desc = "Grants you Void Prison, a spell that places your victim into a ball, making them unable to do anything or speak. \
-		Applies void chill afterwards."
+	desc = "Transmute a set of handcuffs, a stun baton, and a closet in sub-zero temperatures to gain a Void Prison.<br>\
+		A Void Prison is an orb that, when used, traps all nearby unmarked heathens into a stasis ball for 10 seconds. \
+		While in the ball, they are unable to speak, act, or be harmed. The Void Prison is consumed after one use."
+	transmute_text = "Transmute a set of handcuffs, a stun baton, and a closet in sub-zero temperatures."
 	gain_text = "At first, I see myself, waltzing along a snow-laden street. \
 		I try to yell, grab hold of this fool and tell them to run. \
 		But the only welts made are on my own beating fist. \
 		My smiling face turns to regard me, reflecting back in glassy eyes the empty path I have been lead down."
-
-	action_to_add = /datum/action/cooldown/spell/pointed/void_prison
+	required_atoms = list(
+		/obj/item/restraints/handcuffs = 1,
+		/obj/structure/closet = 1,
+		/obj/item/melee/baton/security = 1,
+	)
+	result_atoms = list(/obj/item/void_prison)
 	cost = 2
 	drafting_tier = 5
+	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	research_tree_icon_state = "voidball"
+
+	var/list/closet_blacklist = list(
+		/obj/structure/closet/crate,
+		/obj/structure/closet/body_bag,
+		/obj/structure/closet/cardboard,
+		/obj/structure/closet/infinite,
+	)
+
+/datum/heretic_knowledge/void_prison/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/obj/structure/closet/closet in atoms)
+		if(is_type_in_list(closet, closet_blacklist))
+			atoms -= closet
+
+/datum/heretic_knowledge/void_prison/cleanup_atoms(list/selected_atoms)
+	for(var/obj/structure/closet/closet in selected_atoms)
+		closet.dump_contents()
+
+	return ..()
 
 /datum/heretic_knowledge/armor/void
-	name = "Hollow Weave"
-	desc = "Allows you to transmute a table (or a suit) and a mask in sub-zero temperatures to create a Hollow Weave, this armor will periodically nullify attacks and grant you a short stealth camoflage to reposition yourself. \
-			Acts as a focus while hooded."
+	desc = "Create a Hollow Weave.<br>\
+		This armor will periodically nullify attacks and grant you a short stealth camouflage to reposition yourself."
+	transmute_text = "Transmute a table (or a suit) and a mask in sub-zero temperatures."
 	gain_text = "Stepping through the cold air, I am shocked by a new sensation. \
-				Thousands of almost imperceivable threads cling to my form. \
-				I am left adrift with every step. \
-				Even as I hear the crunch of snow as I plant my foot to the ground, I feel nothing."
+		Thousands of almost imperceivable threads cling to my form. \
+		I am left adrift with every step. \
+		Even as I hear the crunch of snow as I plant my foot to the ground, I feel nothing."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/void)
 	research_tree_icon_state = "void_armor"
 	required_atoms = list(
@@ -142,12 +189,38 @@
 	action_to_add = /datum/action/cooldown/spell/aoe/void_pull
 	cost = 2
 	research_tree_icon_frame = 6
+	max_charges = 4
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
+	transmute_text = "To recharge, travel through a sub-zero temperature environment for 20 seconds."
+
+	var/seconds_in_vacuum = 0
+
+/datum/heretic_knowledge/spell/void_pull/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+
+/datum/heretic_knowledge/spell/void_pull/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_LIFE)
+
+/datum/heretic_knowledge/spell/void_pull/proc/on_life(mob/living/source, seconds_per_tick)
+	SIGNAL_HANDLER
+
+	var/turf/source_turf = get_turf(source)
+	if(source_turf.GetTemperature() <= T0C)
+		seconds_in_vacuum += seconds_per_tick
+		if(seconds_in_vacuum >= 20)
+			add_charges(1)
+			seconds_in_vacuum -= 20
+	else
+		seconds_in_vacuum = 0
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
-	desc = "Your blade now freezes enemies. Additionally, you can now attack distant marked targets with your Void Blade, teleporting directly next to them."
+	desc = "Your blade now freezes enemies.<br>\
+		Additionally, you can now attack distant marked targets with your Void Blade, teleporting directly next to them."
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
-
 
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_void"
@@ -158,8 +231,11 @@
 
 	target.apply_status_effect(/datum/status_effect/void_chill, 2)
 
-/datum/heretic_knowledge/blade_upgrade/void/do_ranged_effects(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
-	if(!target.has_status_effect(/datum/status_effect/eldritch))
+/datum/heretic_knowledge/blade_upgrade/void/do_ranged_effects(mob/living/user, atom/target, obj/item/melee/sickly_blade/blade)
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+	if(!living_target.has_status_effect(/datum/status_effect/eldritch))
 		return
 
 	var/dir = angle2dir(dir2angle(get_dir(user, target)) + 180)
@@ -170,23 +246,94 @@
 /datum/heretic_knowledge/blade_upgrade/void/proc/follow_up_attack(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	blade.melee_attack_chain(user, target)
 
-/datum/heretic_knowledge/spell/void_conduit
+/datum/heretic_knowledge/void_conduit
 	name = "Void Conduit"
-	desc = "Grants you Void Conduit, a spell which summons a pulsing gate to the Void itself. Every pulse breaks windows and airlocks, while afflicting Heathens with an eldritch chill and shielding Heretics against low pressure."
+	desc = "Empowers your blade, allowing you to rip a hole through space itself.<br>\
+		Attacking space with one of your void blades will create conduit to the void, \
+		damaging and chilling nearby heathens, and destroying windows and airlocks in the area."
+	notice = "The blade is consumed in the process. You can also use this ability on snow, or any tile in a complete vacuum."
 	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
 		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
 		The doors won't close. I can't keep the cold out now."
-	action_to_add = /datum/action/cooldown/spell/conjure/void_conduit
 	cost = 2
 	is_final_knowledge = TRUE
+	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	research_tree_icon_state = "void_rift"
+	research_tree_icon_frame = 12
+
+/datum/heretic_knowledge/void_conduit/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_PREATTACK, PROC_REF(on_blade_preattack))
+
+/datum/heretic_knowledge/void_conduit/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_HERETIC_BLADE_PREATTACK)
+
+/datum/heretic_knowledge/void_conduit/proc/is_valid_turf(turf/open/affected_turf)
+	// space is the obvious one, snow is for icebox
+	if(isspaceturf(affected_turf) || issnowturf(affected_turf))
+		return TRUE
+	// works in any vacuum as a backup
+	var/datum/gas_mixture/air = affected_turf.return_air()
+	if(air?.return_pressure() <= 0)
+		return TRUE
+	return FALSE
+
+/datum/heretic_knowledge/void_conduit/proc/is_valid_turf_callback(turf/open/affected_turf, mob/living/source, obj/item/sword)
+	if(!source.is_holding(sword))
+		return FALSE
+	if(!is_valid_turf(affected_turf))
+		return FALSE
+	if(affected_turf.GetTemperature() > T0C)
+		return FALSE
+	return TRUE
+
+/datum/heretic_knowledge/void_conduit/proc/on_blade_preattack(mob/living/source, atom/target, obj/item/sword)
+	SIGNAL_HANDLER
+	if(!isopenturf(target))
+		return NONE
+
+	var/turf/open/affected_turf = target
+	if(!is_valid_turf(affected_turf))
+		return NONE
+
+	if(affected_turf.GetTemperature() <= T0C)
+		INVOKE_ASYNC(src, PROC_REF(create_conduit), affected_turf, source, sword)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	to_chat(source, span_mansus("[sword] hums with power, but [target] is not cold enough to create a conduit!"))
+	return NONE
+
+/datum/heretic_knowledge/void_conduit/proc/create_conduit(turf/open/affected_turf, mob/living/source, obj/item/sword)
+	playsound(source, 'sound/effects/cloth_rip.ogg', 50, TRUE) // funny thing is, can't hear sound in a vacuum
+	to_chat(source, span_mansus("You plunge [sword] deep into [affected_turf], trying to rip open a conduit to the void!"))
+	source.visible_message(
+		span_hypnophrase("[source] plunges [source.p_their()] [sword.name] into [affected_turf] - \
+			[isspaceturf(affected_turf) ? "but instead of nothing happening" : "contrary to what you expected"], a dark energy begins to flow from the site!"),
+		ignored_mobs = source,
+	)
+	var/obj/effect/temp_visual/void_conduit_opening/animation = new(affected_turf)
+	if(!do_after(source, 5 SECONDS, affected_turf, extra_checks = CALLBACK(src, PROC_REF(is_valid_turf_callback), affected_turf, source, sword)))
+		animate(animation, alpha = 0, time = 1 SECONDS)
+		QDEL_IN(animation, 1 SECONDS)
+		return
+	to_chat(source, span_mansus("The conduit opens, releasing a storm of void energy! [sword] shatters into a million tiny shards!"))
+	source.visible_message(
+		span_hypnophrase("A conduit to the void opens, releasing a storm of void energy!"),
+		ignored_mobs = source,
+	)
+	new /obj/structure/void_conduit(affected_turf)
+	source.dropItemToGround(sword)
+	qdel(sword)
+	playsound(source, SFX_SHATTER, 50, FALSE)
 
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"
-	desc = "The ascension ritual of the Path of Void. \
-		Bring 3 corpses to a transmutation rune in sub-zero temperatures to complete the ritual. \
+	desc = "The ascension ritual of the Path of Void.<br>\
 		When completed, causes a violent storm of void snow \
-		to assault the station, freezing and damaging heathens. Those nearby will be silenced and frozen even quicker. \
+		to assault the station, freezing and damaging heathens. Those nearby will be silenced and frozen even quicker.<br>\
 		Additionally, you will become immune to the effects of space."
+	transmute_text = "Transmute three corpses in sub-zero temperatures."
 	gain_text = "The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky. \
 		The Aristocrat stands before me, beckoning. We will play a waltz to the whispers of dying reality, \
 		as the world is destroyed before our eyes. The void will return all to nothing, WITNESS MY ASCENSION!"

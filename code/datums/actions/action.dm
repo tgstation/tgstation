@@ -336,6 +336,7 @@
 		current_button.color = rgb(255,255,255,255)
 	else
 		current_button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+	SEND_SIGNAL(src, COMSIG_ACTION_STATUS_UPDATE, current_button, force)
 
 /// Gives our action to the passed viewer.
 /// Puts our action in their actions list and shows them the button.

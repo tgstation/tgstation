@@ -90,11 +90,6 @@
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 	if(iscarbon(jaunter))
 		jaunter.drop_all_held_items()
-		// Sanity check to ensure we didn't lose our focus as a result.
-		if(!HAS_TRAIT(jaunter, TRAIT_ALLOW_HERETIC_CASTING))
-			REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
-			exit_jaunt(jaunter, our_turf)
-			return FALSE
 		// Give them some space hands to prevent them from doing things
 		var/obj/item/space_crawl/left_hand = new(jaunter)
 		var/obj/item/space_crawl/right_hand = new(jaunter)

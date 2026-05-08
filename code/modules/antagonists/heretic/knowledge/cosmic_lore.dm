@@ -49,9 +49,10 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	name = "Eternal Gate"
-	desc = "Opens up the Path of Cosmos to you. \
-		Allows you to transmute a sheet of plasma and a knife into an Cosmic Blade. \
+	desc = "Opens up the Path of Cosmos to you.<br>\
+		Allows you to create Cosmic Blades. \
 		You can only create two at a time."
+	transmute_text = "Transmute a sheet of plasma and a knife."
 	gain_text = "A nebula appeared in the sky, its infernal birth shone upon me. This was the start of a great transcendence."
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -78,24 +79,38 @@
 		However, people with a star mark will get transported along with another person using the rune."
 	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
 		I spoke, and heard my own words echoed back."
+	required_atoms = list(
+		list(/obj/item/pen, /obj/item/toy/crayon) = 1,
+	)
 	action_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 2
 	drafting_tier = 5
+	max_charges = 6
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
+	transmute_text = "To recharge, complete a ritual with a pen, crayon, or spray can."
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
 	desc = "Fires a projectile that moves very slowly, raising a short-lived wall of cosmic fields where it goes. \
 		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
+	required_atoms = list(
+		/obj/item/stack/sheet/mineral/plasma = 1,
+	)
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 2
+	max_charges = 4
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
+	transmute_text = "To recharge, complete a ritual with a sheet of plasma."
 
 /datum/heretic_knowledge/armor/cosmic
-
-	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of plasma to create a Starwoven Cloak, grants protection from the hazards of space while granting to the user the ability to levitate at will. \
-			Acts as a focus while hooded."
+	desc = "Create a Starwoven Cloak.<br>Grants protection from the hazards of space \
+		while granting to the user the ability to levitate at will."
+	transmute_text = "Transmute a table (or a suit), a mask and a sheet of plasma."
 	gain_text = "Like radiant cords, the stars shone in union across the silken shape of a billowing cloak, that at once does and does not drape my shoulders. \
-				The eyes of the Beast rested upon me, and through me."
+		The eyes of the Beast rested upon me, and through me."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic)
 	research_tree_icon_state = "cosmic_armor"
 	required_atoms = list(
@@ -112,8 +127,15 @@
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
 	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
 		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
+	required_atoms = list(
+		/obj/item/clothing/gloves = 1,
+	)
 	action_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 2
+	max_charges = 4
+	focus_recharge_amount = 0.25
+	holywater_drain_amount = 0.25
+	transmute_text = "To recharge, complete a ritual with a pair of gloves."
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
@@ -211,21 +233,37 @@
 	desc = "Grants you Cosmic Expansion, a spell that creates a 5x5 area of cosmic fields around you. \
 		Nearby beings will also receive a star mark."
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
+	required_atoms = list(/mob/living/carbon/human = 1)
 	action_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 2
 	is_final_knowledge = TRUE
+	max_charges = 2
+	holywater_drain_amount = 0.25
+	transmute_text = "To recharge, complete a ritual with a corpse with a star mark on it."
+
+/datum/heretic_knowledge/spell/cosmic_expansion/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/mob/living/carbon/human/sacrifice in atoms)
+		if(sacrifice.stat != DEAD || ismonkey(sacrifice) || !sacrifice.has_status_effect(/datum/status_effect/star_mark))
+			atoms -= sacrifice
+
+/datum/heretic_knowledge/spell/cosmic_expansion/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/mob/living/carbon/human/sacrifice in selected_atoms)
+		sacrifice.apply_damage(30, BURN, BODY_ZONE_CHEST)
+		selected_atoms -= sacrifice
 
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"
-	desc = "The ascension ritual of the Path of Cosmos. \
-		Bring 3 corpses with a star mark to a transmutation rune to complete the ritual. \
+	desc = "The ascension ritual of the Path of Cosmos.<br>\
 		When completed, you become the owner of a Star Gazer. \
 		You will be able to command the Star Gazer with Alt+click. \
-		You can also give it commands through speech. \
+		You can also give it commands through speech.<br>\
 		The Star Gazer is a strong ally who can even break down reinforced walls. \
-		The Star Gazer has an aura that will heal you and damage opponents. \
-		Star Touch can now teleport you to the Star Gazer when activated in your hand. \
+		The Star Gazer has an aura that will heal you and damage opponents.<br>\
+		Star Touch can now teleport you to the Star Gazer when activated in your hand.<br>\
 		Your cosmic expansion spell and your blades also become greatly empowered."
+	transmute_text = "Transmute three corpses with a star mark on them."
 	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. \
 		I clung on to them, they would protect me, and I would protect it. \
 		I closed my eyes with my head laid against their form. I was safe. \
@@ -314,14 +352,14 @@
 
 	var/mob/living/to_reset = bad_dog.resolve()
 
-	to_chat(owner, span_hierophant("You prompt [to_reset] to shift it\'s personality..."))
+	to_chat(owner, span_mansus("You prompt [to_reset] to shift it\'s personality..."))
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(to_reset.name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, alert_pic = to_reset, jump_target = owner, role_name_text = to_reset.name, amount_to_pick = 1)
 	if(isnull(chosen_one))
-		to_chat(owner, span_hierophant("Your request to shift [to_reset]'\s personality appears to have been denied... Looks like you're stuck with it for now."))
+		to_chat(owner, span_mansus("Your request to shift [to_reset]'\s personality appears to have been denied... Looks like you're stuck with it for now."))
 		StartCooldown()
 		return FALSE
-	to_chat(to_reset, span_hierophant("Your summoner reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
-	to_chat(owner, span_hierophant("The mind of [to_reset] has twisted itself to suit you better."))
+	to_chat(to_reset, span_mansus("Your summoner reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
+	to_chat(owner, span_mansus("The mind of [to_reset] has twisted itself to suit you better."))
 	message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(to_reset)])")
 	to_reset.ghostize(FALSE)
 	to_reset.PossessByPlayer(chosen_one.key)

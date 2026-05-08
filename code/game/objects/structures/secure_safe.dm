@@ -198,3 +198,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 
 /obj/structure/secure_safe/caps_spare/rust_heretic_act()
 	take_damage(damage_amount = 100, damage_type = BRUTE, damage_flag = MELEE, armour_penetration = 100)
+	return TRUE
