@@ -55,6 +55,7 @@
 	inserted_item = /obj/item/pen/red/security
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/citation_ticket,
 	)
 
 /obj/item/modular_computer/pda/heads/ce
@@ -113,6 +114,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/citation_ticket,
 	)
 
 /obj/item/modular_computer/pda/detective
@@ -134,6 +136,7 @@
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/citation_ticket,
 	)
 
 /**
