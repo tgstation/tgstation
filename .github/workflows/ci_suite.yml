@@ -63,6 +63,23 @@ jobs:
       alternate_tests: ${{ needs.collect_data.outputs.alternate_tests }}
       default_max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
 
+  mark_outdated_screenshot_tests:
+    if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'
+    name: Hide Outdated Screenshot Tests
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Mark previous results as outdated
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const { markScreenshotTestResultOutdated } = await import('${{ github.workspace }}/tools/ci/mark_screenshot_test_result_outdated.js');
+            await markScreenshotTestResultOutdated({ github, context })
+
   compare_screenshots:
     if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'
     needs: [collect_data, run_all_tests, run_alternate_tests]

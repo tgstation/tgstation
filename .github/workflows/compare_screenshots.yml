@@ -7,9 +7,6 @@ jobs:
   compare_screenshots:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
-    permissions:
-      pull-requests: write # to update comments
-      issues: write # to update comments
     steps:
       - uses: actions/checkout@v6
       - name: Setup directory
@@ -24,24 +21,6 @@ jobs:
       - name: Setup screenshot comparison
         run: npm i
         working-directory: tools/screenshot-test-comparison
-      - name: Generate App Token
-        id: app-token-generation
-        uses: actions/create-github-app-token@v3.1.1
-        if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
-        with:
-          client-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
-        env:
-          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
-          APP_ID: ${{ secrets.APP_ID }}
-      - name: Mark previous results as outdated
-        if: github.event.pull_request
-        uses: actions/github-script@v9
-        with:
-          script: |
-            const { markScreenshotTestResultOutdated } = await import('${{ github.workspace }}/tools/ci/mark_screenshot_test_result_outdated.js');
-            await markScreenshotTestResultOutdated({ github, context })
-          github-token: ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }}
       - name: Run screenshot comparison
         run: node tools/screenshot-test-comparison/index.js artifacts code/modules/unit_tests/screenshots artifacts/screenshot_comparisons
       # workflow_run does not give you the PR it ran on,
