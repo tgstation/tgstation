@@ -28,6 +28,8 @@
 	var/broadcast_name = "Curator News"
 	/// The networks it broadcasts to, default is CAMERANET_NETWORK_CURATOR
 	var/list/camera_networks = list(CAMERANET_NETWORK_CURATOR)
+	/// Range of the camera
+	var/camera_range = 7
 	/// The "virtual" security camera inside of the physical camera
 	var/obj/machinery/camera/internal_camera
 	/// The "virtual" radio inside of the the physical camera, a la microphone
@@ -86,6 +88,7 @@
 	// INTERNAL CAMERA
 	internal_camera = new(wielding_carbon) // Cameras for some reason do not work inside of obj's
 	internal_camera.internal_light = FALSE
+	internal_camera.view_range = camera_range
 	internal_camera.network = camera_networks
 	internal_camera.c_tag = "LIVE: [broadcast_name]"
 	start_broadcasting_network(camera_networks, "[broadcast_name] is now LIVE!")
@@ -126,3 +129,16 @@
 
 /obj/item/broadcast_camera/proc/set_microphone_state()
 	internal_radio.set_broadcasting(active_microphone)
+
+// Orderable from cargo
+/obj/item/broadcast_camera/cargo
+	slowdown = 0.3
+	item_flags = parent_type::item_flags | SLOWS_WHILE_IN_HAND
+	broadcast_name = "Camera Broadcast"
+	camera_range = 4
+
+/obj/item/broadcast_camera/cargo/Initialize(mapload)
+	. = ..()
+	// Gives each cargo camera a unique network id
+	var/static/cargo_camera_network_id = 0
+	camera_networks = list("cargo_camera_id_[cargo_camera_network_id++]")
