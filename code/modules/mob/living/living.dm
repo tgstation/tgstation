@@ -510,28 +510,12 @@
 		return
 	M.remove_offsets(GRABBING_TRAIT)
 
-//mob verbs are a lot faster than object verbs
-//for more info on why this is not atom/pull, see examinate() in mob.dm
-/mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
-	set name = "Pull"
-	set category = "IC"
-
-	if(istype(AM) && Adjacent(AM))
-		start_pulling(AM)
-	else if(!combat_mode) //Don;'t cancel pulls if misclicking in combat mode.
-		stop_pulling()
-
 /mob/living/stop_pulling()
 	if(ismob(pulling))
 		reset_pull_offsets(pulling)
 	..()
 	update_pull_movespeed()
 	update_pull_hud_icon()
-
-/mob/living/verb/stop_pulling1()
-	set name = "Stop Pulling"
-	set category = "IC"
-	stop_pulling()
 
 //same as above
 /mob/living/pointed(atom/A)
@@ -607,7 +591,7 @@
 
 /mob/living/proc/mob_sleep()
 	set name = "Sleep"
-	set category = "IC"
+	set hidden = TRUE
 
 	if(IsSleeping())
 		to_chat(src, span_warning("You are already sleeping!"))
@@ -662,9 +646,6 @@
 		return account
 
 /mob/living/proc/toggle_resting()
-	set name = "Rest"
-	set category = "IC"
-
 	set_resting(!resting, FALSE)
 
 
@@ -1134,10 +1115,7 @@
 		return FALSE
 	return TRUE
 
-/mob/living/verb/resist()
-	set name = "Resist"
-	set category = "IC"
-
+/mob/living/proc/resist()
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_resist)))
 
 ///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
@@ -2940,10 +2918,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	BLACKBOX_LOG_ADMIN_VERB("Give Guardian Spirit")
 
-/mob/living/verb/lookup()
-	set name = "Look Up"
-	set category = "IC"
-
+/mob/living/proc/lookup()
 	if(looking_vertically)
 		to_chat(src, "You set your head straight again.")
 		end_look()
@@ -2960,10 +2935,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	to_chat(src, "You tilt your head upwards.")
 	look_up()
 
-/mob/living/verb/lookdown()
-	set name = "Look Down"
-	set category = "IC"
-
+/mob/living/proc/lookdown()
 	if(looking_vertically)
 		to_chat(src, "You set your head straight again.")
 		end_look()

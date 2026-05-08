@@ -10,7 +10,7 @@
 
 /mob/living/verb/navigate()
 	set name = "Navigate"
-	set category = "IC"
+	set hidden = TRUE
 
 	if(incapacitated)
 		return

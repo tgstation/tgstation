@@ -1810,6 +1810,7 @@
 #include "code\datums\mapgen\biomes\lavaland.dm"
 #include "code\datums\mapgen\Cavegens\IcemoonCaves.dm"
 #include "code\datums\mapgen\Cavegens\LavalandGenerator.dm"
+#include "code\datums\martial\_action.dm"
 #include "code\datums\martial\_martial.dm"
 #include "code\datums\martial\boxing.dm"
 #include "code\datums\martial\cqc.dm"
