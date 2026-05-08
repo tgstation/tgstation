@@ -1333,10 +1333,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
-"qJ" = (
-/obj/effect/turf_decal/trimline/tram/filled,
-/turf/closed/indestructible/syndicate,
-/area/ruin/syndibiodome)
 "qN" = (
 /turf/closed/indestructible/syndicate,
 /area/ruin/syndibiodome)
@@ -5086,7 +5082,7 @@ qN
 mW
 qN
 qN
-qJ
+qN
 qN
 xf
 oH
