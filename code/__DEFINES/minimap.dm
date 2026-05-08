@@ -51,6 +51,7 @@ GLOBAL_LIST_INIT(all_minimap_flags, bitfield2list(MINIMAP_FLAG_ALL))
 #define MINIMAP_BOMB_BLIP "nuke"
 #define MINIMAP_NUKEDISK_BLIP "nuke_disk"
 #define MINIMAP_NUKEOP_BLIP "nukeop"
+#define MINIMAP_ANNOTATION_TAG_NUCLEAR "nuclear_ops"
 #define COMSIG_MINIMAP_ADD(blip_tag) "minimap_add_" + blip_tag
 #define COMSIG_MINIMAP_REMOVE(blip_tag) "minimap_remove_" + blip_tag
 // sends a index of how much to change by

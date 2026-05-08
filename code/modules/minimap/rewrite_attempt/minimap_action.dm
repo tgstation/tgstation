@@ -5,6 +5,8 @@
 	button_icon_state = "minimap"
 	/// Optional minimap blip tags to render on the rewrite minimap display.
 	var/list/minimap_blip_tags = list()
+	/// Optional annotation sharing tag for minimap drawings/labels.
+	var/annotation_share_tag
 	/// list of hud elements we add and remove and check for when this action is triggered
 	var/list/huds = list(
 		HUD_TAC_MINIMAP = /atom/movable/screen/minimap_display,
@@ -41,10 +43,11 @@
 /datum/action/minimap_new/proc/add_huds(datum/hud/hud, datum/minimap/minimap)
 	for(var/element in huds)
 		var/hud_element_type = huds[element]
-		var/instanced = new hud_element_type(null, hud, minimap, minimap_blip_tags)
+		var/instanced = new hud_element_type(null, hud, minimap, minimap_blip_tags, null, annotation_share_tag)
 		hud.add_screen_object(instanced, element, HUD_GROUP_STATIC, update_screen = TRUE)
 
 /datum/action/minimap_new/nuclear
+	annotation_share_tag = MINIMAP_ANNOTATION_TAG_NUCLEAR
 	huds = list(
 		HUD_TAC_MINIMAP = /atom/movable/screen/minimap_display/nuclear,
 		HUD_TAC_MINIMAP_Z_INDICATOR = /atom/movable/screen/minimap_z_indicator,

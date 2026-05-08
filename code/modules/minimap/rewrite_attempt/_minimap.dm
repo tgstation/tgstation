@@ -1,4 +1,6 @@
 GLOBAL_ALIST_EMPTY(minimap_blip_tags)
+GLOBAL_ALIST_EMPTY(minimap_annotations)
+GLOBAL_LIST_EMPTY(minimap_annotation_viewers)
 
 /// Create a minimap blip on the z-level in question, object is optional, and will tie the blip to the object in question, and will clean up itself if the object in question is deleted
 /proc/add_minimap_blip(atom/object, tag, icon_state, icon = 'icons/ui_icons/minimap/map_blips.dmi', large = FALSE)
