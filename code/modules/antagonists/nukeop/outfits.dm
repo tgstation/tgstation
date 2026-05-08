@@ -224,3 +224,8 @@
 	command_radio = TRUE
 	tc = 0
 	uplink_type = null
+	implants = list(
+		/obj/item/implant/weapons_auth,
+		/obj/item/implant/explosive,
+		/obj/item/implant/tacmap/nuclear/offbase,
+	)
