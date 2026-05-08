@@ -65,6 +65,7 @@ jobs:
 
   mark_outdated_screenshot_tests:
     if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'
+    needs: [collect_data, run_all_tests, run_alternate_tests]
     name: Hide Outdated Screenshot Tests
     runs-on: ubuntu-24.04
     permissions:
@@ -82,7 +83,7 @@ jobs:
 
   compare_screenshots:
     if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'
-    needs: [collect_data, run_all_tests, run_alternate_tests]
+    needs: [collect_data, mark_outdated_screenshot_tests]
     name: Compare Screenshot Tests
     uses: ./.github/workflows/compare_screenshots.yml
 
