@@ -145,7 +145,7 @@
 			//End Atmosphere affecting sound
 
 		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
-			return //No sound
+			return FALSE
 
 		var/dx = turf_source.x - turf_loc.x // Hearing from the right/left
 		sound_to_use.x = dx * distance_multiplier
@@ -175,12 +175,19 @@
 		var/client_volume_modifier = client.prefs.read_preference(volume_preference)
 		sound_to_use.volume *= (client_volume_modifier / 100)
 		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
-			return
+			return FALSE
 
 	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
 		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
 
 	SEND_SOUND(src, sound_to_use)
+	return TRUE
+
+
+///Creates a sound token, which lets you create spatial audio for !!important!! sounds that need to update as the source or listener move. Please do not use this for every single sound. I have an army of dachshunds that have been trained on the scent of poor use of sound tokens and they are ruthless. Also; this can probably be a macro.
+/proc/play_sound_token(atom/source, sound, range = 10, volume = 50, falloff_exponent = SOUND_FALLOFF_EXPONENT, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE)
+	return new /datum/sound_token(source, sound, range, volume, falloff_exponent, falloff_distance)
+
 
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, channel = 0, pressure_affected = FALSE, sound/S, datum/preference/numeric/volume/volume_preference = null)
 	if(!S)

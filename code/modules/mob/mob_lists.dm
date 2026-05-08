@@ -46,6 +46,9 @@
 ///Adds the cliented mob reference to the list of all player-mobs, besides to either the of dead or alive player-mob lists, as appropriate. Called on Login().
 /mob/proc/add_to_player_list()
 	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_GLOBAL_SIGNAL(SSdcs, COMSIG_GLOB_PLAYER_LOGIN, src)
+
 	GLOB.player_list |= src
 	if(client.holder)
 		GLOB.keyloop_list |= src
@@ -59,6 +62,9 @@
 ///Removes the mob reference from the list of all player-mobs, besides from either the of dead or alive player-mob lists, as appropriate. Called on Logout().
 /mob/proc/remove_from_player_list()
 	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_GLOBAL_SIGNAL(SSdcs, COMSIG_GLOB_PLAYER_LOGOUT, src)
+
 	GLOB.player_list -= src
 	GLOB.keyloop_list -= src
 	if(stat == DEAD)

@@ -67,6 +67,10 @@
 	var/reserve_random_channel = FALSE
 	//If we reserve a random sound channel, store the channel number here so we can clean it up later.
 	var/reserved_channel
+	///Whether this looping sound uses sound tokens. This should only be true for sounds that need to update as the source or listeners move. (Generally long or important sounds like grav-gen)
+	var/use_sound_tokens = FALSE
+	///The sound token instance for this looping sound._dm_db_new_con()
+	var/datum/sound_token/sound_token_instance
 
 /datum/looping_sound/New(
 	_parent,
@@ -104,11 +108,11 @@
 	if(timer_id)
 		return
 
-	if(!sound_channel && reserve_random_channel)
-		sound_channel = SSsounds.reserve_sound_channel_datumless()
+	if(!use_sound_tokens && !sound_channel && reserve_random_channel)
+		sound_channel = SSsounds.reserve_sound_channel()
 		reserved_channel = sound_channel
-
 	on_start()
+
 
 /**
  * The proc to call to stop the sound loop.
@@ -171,6 +175,14 @@
  * * volume_override - The volume we want to play the sound at, overriding the `volume` variable.
  */
 /datum/looping_sound/proc/play(soundfile, volume_override)
+
+	if(use_sound_tokens)
+		if(sound_token_instance)
+			sound_token_instance.set_volume(volume_override || volume, FALSE) // Don't update, we'll do that after
+			sound_token_instance.update_sound(soundfile, TRUE)
+		else
+			sound_token_instance = new /datum/sound_token(parent, soundfile, SOUND_RANGE + extra_range, volume_override || volume, falloff_exponent, falloff_distance)
+		return
 	var/sound/sound_to_play = sound(soundfile)
 	sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
 	sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
@@ -252,6 +264,7 @@
 		return
 	var/mob/mob_parent = parent
 	mob_parent.stop_sound_channel(sound_channel)
+	QDEL_NULL(sound_token_instance)
 
 /// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.
 /datum/looping_sound/proc/on_stop()

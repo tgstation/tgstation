@@ -1,0 +1,18 @@
+SUBSYSTEM_DEF(sound_tokens)
+	name = "Sound Tokens"
+	wait = 1
+	ss_flags = SS_TICKER | SS_BACKGROUND | SS_NO_INIT | SS_KEEP_TIMING
+
+	var/list/playing_sound_tokens = list()
+
+/datum/controller/subsystem/sound_tokens/fire(resumed)
+	for(var/client/client in GLOB.clients)
+		if(!client.needs_sound_token_update)
+			continue
+		client.needs_sound_token_update = FALSE
+		var/mob/owned_mob = client.mob
+		if(!owned_mob)
+			continue
+		for(var/datum/sound_token/current_token in playing_sound_tokens)
+			current_token.AddOrUpdateListener(owned_mob)
+

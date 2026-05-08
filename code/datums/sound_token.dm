@@ -1,0 +1,187 @@
+// Sound tokens, a datumized handler for spatial sound.
+// Creating a sound token registers all connected clients to the sound, so that they are in sync
+// Even if someone enters the range of the sound after it has started.
+// Updated by the SSsounds subsystem every tick, so that if the source or listener moves, the sound updates accordingly.
+/datum/sound_token
+	/// The atom playing the sound.
+	var/atom/source
+	/// k:v list of mob : sound status
+	var/list/listeners
+
+	/// Sound maximum range
+	var/range
+	/// Sound volume
+	var/volume
+	/// Sound falloff
+	var/falloff_exponent
+	/// Sound falloff distance
+	var/falloff_distance
+
+	/// The master copy of the playing sound.
+	var/sound/sound
+	/// Null sound for cancelling the sound entirely.
+	var/sound/null_sound
+
+	/// Status of the playing sound
+	var/sound_status = NONE
+	/// The channel being used.
+	var/sound_channel
+
+/datum/sound_token/New(atom/_source, _sound, _range = 10, _volume = 50, _falloff_exponent = SOUND_FALLOFF_EXPONENT, _falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE)
+	source = _source
+	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(source_deleted))
+	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(source_moved))
+
+	range = _range
+	volume = _volume
+	falloff_exponent = _falloff_exponent
+	falloff_distance = _falloff_distance
+
+	null_sound = sound(channel = sound_channel)
+	update_sound(_sound)
+
+	listeners = list()
+
+	for(var/mob/listener_mob in GLOB.player_list)
+		AddOrUpdateListener(listener_mob)
+
+	SSsound_tokens.playing_sound_tokens[src] = TRUE
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGIN, PROC_REF(player_login))
+	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGOUT, PROC_REF(player_logout))
+
+/datum/sound_token/Destroy(force, ...)
+	for(var/listener in listeners)
+		RemoveListener(listener)
+
+	listeners = null
+	source = null
+	SSsound_tokens.playing_sound_tokens -= src
+	return ..()
+
+///Lets us update the sound to a new one.
+/datum/sound_token/proc/update_sound(_sound, start_playing = FALSE)
+	sound = sound(_sound)
+	if(!sound_channel)
+		sound_channel = SSsounds.reserve_sound_channel_for_datum(src)
+	sound.channel = sound_channel
+	if(start_playing)
+		force_update_all_listeners(FALSE)
+
+/// Updates the data of a listener, or adds them if they are not present.
+/datum/sound_token/proc/AddOrUpdateListener(mob/listener_mob)
+	if(isnull(listeners[listener_mob]))
+		AddListener(listener_mob)
+	else
+		UpdateListener(listener_mob)
+
+/// Adds a listener to the sound.
+/datum/sound_token/proc/AddListener(mob/listener_mob)
+	if(!isnull(listeners[listener_mob]))
+		return FALSE
+
+	if(!listener_mob.client || isnewplayer(listener_mob))
+		return
+
+	listeners[listener_mob] = NONE
+	RegisterSignal(listener_mob, COMSIG_QDELETING, PROC_REF(listener_deleted))
+	RegisterSignals(listener_mob, list(SIGNAL_ADDTRAIT(TRAIT_DEAF),SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(listener_deafness_update))
+	UpdateListener(listener_mob, FALSE)
+	return TRUE
+
+/// Remove a listener from the sound.
+/datum/sound_token/proc/RemoveListener(mob/listener_mob)
+	UnregisterSignal(listener_mob, list(COMSIG_QDELETING, COMSIG_MOB_LOGIN, SIGNAL_ADDTRAIT(TRAIT_DEAF),SIGNAL_REMOVETRAIT(TRAIT_DEAF)))
+	listeners -= listener_mob
+	SEND_SOUND(listener_mob, null_sound)
+
+/datum/sound_token/proc/UpdateListener(mob/listener_mob, update_sound = TRUE)
+	var/turf/source_turf = get_turf(source)
+	var/turf/listener_turf = get_turf(listener_mob)
+
+	var/is_muted = listeners[listener_mob] & SOUND_MUTE
+	var/should_be_muted = FALSE
+	if(!source_turf || !listener_turf)
+		should_be_muted = TRUE
+		if(should_be_muted && is_muted)
+			return
+
+	var/distance = get_dist(source_turf, listener_turf)
+	if(distance > range)
+		should_be_muted = TRUE
+		if(should_be_muted && is_muted)
+			return
+
+	should_be_muted ||= HAS_TRAIT(listener_mob, TRAIT_DEAF)
+	if(should_be_muted && is_muted)
+		return
+
+	set_listener_status(listener_mob, should_be_muted ? SOUND_MUTE : NONE)
+	send_listener_sound(listener_mob, update_sound)
+
+/datum/sound_token/proc/send_listener_sound(mob/listener_mob, update_sound)
+	PRIVATE_PROC(TRUE)
+
+	sound.status = SOUND_STREAM|sound_status|listeners[listener_mob]
+	if(update_sound)
+		sound.status |= SOUND_UPDATE
+
+	if(sound.status & SOUND_MUTE)
+		SEND_SOUND(listener_mob, sound)
+		return
+
+	if(!listener_mob.playsound_local(get_turf(source), vol = volume, falloff_exponent = falloff_exponent, channel = sound_channel, sound_to_use = sound, max_distance = range, falloff_distance = falloff_distance, use_reverb = TRUE))
+		sound.status = SOUND_UPDATE|SOUND_MUTE
+		SEND_SOUND(listener_mob, sound)
+
+/datum/sound_token/proc/update_all_listeners()
+	for(var/mob/listener_mob in listeners)
+		if(listener_mob.client)
+			listener_mob.client.needs_sound_token_update = TRUE
+
+/datum/sound_token/proc/force_update_all_listeners(var/update_sound = TRUE)
+	for(var/mob/listener_mob in listeners)
+		if(listener_mob.client)
+			UpdateListener(listener_mob, update_sound)
+
+/// Setter for volume
+/datum/sound_token/proc/set_volume(new_volume, update_listeners = TRUE)
+	volume = new_volume
+	if(update_listeners)
+		update_all_listeners()
+
+/// Set the status of a listener. Does not update the sound.
+/datum/sound_token/proc/set_listener_status(mob/listener_mob, new_status)
+	if(isnull(listeners[listener_mob]))
+		return
+
+	listeners[listener_mob] = new_status
+
+/// Respond to TRAIT_DEAF addition/removal
+/datum/sound_token/proc/listener_deafness_update(atom/movable/source)
+	SIGNAL_HANDLER
+	UpdateListener(source)
+
+/datum/sound_token/proc/listener_deleted(datum/source)
+	SIGNAL_HANDLER
+	RemoveListener(source)
+
+/// Respond to any mob in the world being logged into.
+/datum/sound_token/proc/player_login(mob/player)
+	SIGNAL_HANDLER
+	AddOrUpdateListener(player)
+
+/// Respond to any cliented mob becoming uncliented
+/datum/sound_token/proc/player_logout(mob/player)
+	SIGNAL_HANDLER
+	RemoveListener(player)
+
+/// If the sound source moves, update all listeners.
+/datum/sound_token/proc/source_moved()
+	SIGNAL_HANDLER
+	update_all_listeners()
+
+/datum/sound_token/proc/source_deleted()
+	SIGNAL_HANDLER
+
+	qdel(src)
