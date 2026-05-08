@@ -54,9 +54,7 @@
 		CRASH("[type] created without a minimap reference!")
 	if(!isnull(initial_fixed_z_level))
 		fixed_z_level = initial_fixed_z_level
-		var/datum/minimap/fixed_minimap = get_minimap_for_z(initial_fixed_z_level)
-		if(!isnull(fixed_minimap))
-			minimap = fixed_minimap
+		apply_fixed_z_minimap(initial_fixed_z_level)
 	if(length(minimap_blip_tags))
 		valid_minimap_blip_tags = minimap_blip_tags.Copy()
 	set_minimap(minimap)
@@ -66,8 +64,16 @@
 		for(var/blip_tag in valid_minimap_blip_tags)
 			RegisterSignal(SSdcs, COMSIG_MINIMAP_ADD(blip_tag), PROC_REF(on_tagged_blip_add))
 			RegisterSignal(SSdcs, COMSIG_MINIMAP_REMOVE(blip_tag), PROC_REF(on_tagged_blip_remove))
-	INVOKE_ASYNC(src, PROC_REF(on_z_level_change), hud_owner.mymob)
+	on_z_level_change(hud_owner.mymob)
 	show_tagged_blips()
+
+/atom/movable/screen/minimap_display/proc/apply_fixed_z_minimap(target_z)
+	if(QDELETED(src) || isnull(target_z) || fixed_z_level != target_z)
+		return
+	var/datum/minimap/fixed_minimap = get_minimap_for_z(target_z)
+	if(QDELETED(src) || isnull(fixed_minimap) || fixed_z_level != target_z)
+		return
+	set_minimap(fixed_minimap)
 
 /atom/movable/screen/minimap_display/Destroy()
 	if(hud?.mymob?.client)
@@ -176,14 +182,22 @@
 	var/turf/mob_loc = get_turf(source)
 	if(!mob_loc || mob_loc.z != minimap.z)
 		if(isnull(fixed_z_level))
-			INVOKE_ASYNC(src, PROC_REF(change_z_level), mob_loc.z)
+			INVOKE_ASYNC(src, PROC_REF(resolve_and_change_z_level), mob_loc.z)
 			return
 		remove_blip("locator")
 		return
 	add_blip("locator", "locator", mob_loc.x, mob_loc.y)
 
-/atom/movable/screen/minimap_display/proc/change_z_level(new_z)
-	var/new_minimap = get_minimap_for_z(new_z)
+
+/atom/movable/screen/minimap_display/proc/resolve_and_change_z_level(new_z)
+	if(isnull(new_z))
+		return
+	var/datum/minimap/new_minimap = get_minimap_for_z(new_z)
+	if(QDELETED(src) || isnull(new_minimap))
+		return
+	change_z_level(new_z, new_minimap)
+
+/atom/movable/screen/minimap_display/proc/change_z_level(new_z, datum/minimap/new_minimap)
 	if(isnull(new_minimap))
 		return
 	if(!isnull(fixed_z_level))
@@ -193,7 +207,7 @@
 /atom/movable/screen/minimap_display/proc/set_fixed_z_level(new_fixed_z, apply_immediately = FALSE)
 	fixed_z_level = new_fixed_z
 	if(apply_immediately)
-		change_z_level(new_fixed_z)
+		INVOKE_ASYNC(src, PROC_REF(resolve_and_change_z_level), new_fixed_z)
 
 /atom/movable/screen/minimap_display/proc/show_tagged_blips()
 	if(!length(valid_minimap_blip_tags))
@@ -282,7 +296,7 @@
 	SIGNAL_HANDLER
 	var/current_z = get_viewed_z_level()
 	var/new_z = get_clamped_connected_z(current_z + new_z_change, current_z)
-	INVOKE_ASYNC(src, PROC_REF(change_z_level), new_z)
+	INVOKE_ASYNC(src, PROC_REF(resolve_and_change_z_level), new_z)
 
 /atom/movable/screen/minimap_display/proc/get_viewed_z_level()
 	if(!isnull(fixed_z_level))

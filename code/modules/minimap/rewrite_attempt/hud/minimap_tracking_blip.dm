@@ -41,9 +41,9 @@
 	RegisterSignal(track_target, COMSIG_MOVABLE_MOVED, PROC_REF(update_blip))
 	RegisterSignal(track_target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_target_z_changed))
 	tracking = TRUE
-	INVOKE_ASYNC(src, PROC_REF(delayed_setup))
+	INVOKE_ASYNC(src, PROC_REF(update_minimap))
 
-/atom/movable/screen/minimap_blip/proc/delayed_setup()
+/atom/movable/screen/minimap_blip/proc/update_minimap()
 	minimap = get_minimap_for_z(track_target.z)
 	update_blip()
 
@@ -52,8 +52,10 @@
 	if(isnull(track_target))
 		return
 	if(isnull(minimap) || minimap.z != track_target.z)
-		minimap = get_minimap_for_z(track_target.z)
-	update_blip()
+		INVOKE_ASYNC(src, PROC_REF(update_minimap))
+	else
+		// todo check if COMSIG_MOVABLE_MOVED is called anyway
+		update_blip()
 
 /atom/movable/screen/minimap_blip/proc/update_blip()
 	SIGNAL_HANDLER
