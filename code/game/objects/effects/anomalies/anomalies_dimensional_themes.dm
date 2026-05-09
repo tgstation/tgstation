@@ -506,3 +506,17 @@
 		/obj/structure/platform = list(/obj/structure/platform/bronze = 1),
 	)
 	sound = 'sound/effects/magic/clockwork/fellowship_armory.ogg'
+
+/datum/dimension_theme/shit
+	name = "Shit"
+	icon = 'icons/obj/weapons/spear.dmi'
+	icon_state = "ratvarian_spear"
+	material = /datum/material/meat/shit
+	sound = 'sound/items/eatfood.ogg'
+
+	random_spawns = list(
+		/obj/item/trash/can,
+		/obj/effect/decal/cleanable/dirt,
+		/mob/living/basic/cockroach,
+	)
+	random_spawn_chance = 15

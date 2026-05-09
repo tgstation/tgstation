@@ -1269,6 +1269,12 @@
 #undef SET_REACTION_RESULTS
 
 
+
+/**
+ * Shitium Transoformation
+ *
+ * Converts everything into shit.
+ */
 /datum/gas_reaction/shitium_meat_transformation
 	priority_group = PRIORITY_FORMATION
 	name = "Shitium Meat Transformation"
@@ -1294,9 +1300,9 @@
 	if(!shitium || shitium[MOLES] < 1)
 		return NO_REACTION
 
-	var/datum/dimension_theme/meat/meat_theme = new()
+	var/datum/dimension_theme/shit/meat_theme = new()
 
-	var/datum/material/meat_material = SSmaterials.get_material(/datum/material/meat)
+	var/datum/material/meat_material = SSmaterials.get_material(/datum/material/meat/shit)
 
 	// Get atmospherically adjacent turfs (connected through open doors, vents, etc.)
 	var/list/adjacent_turfs = orange(1, T)
@@ -1341,7 +1347,7 @@
 		// Визуальный эффект трансмутации (тот же, что и для тайлов)
 		new /obj/effect/temp_visual/transmute_tile_flash(T)
 		// Создаем кусок мяса
-		var/obj/item/food/meat/slab/new_meat = new /obj/item/food/meat/slab(T)
+		var/obj/item/food/meat/slab/new_meat = new /obj/item/food/meat/slab/shit(T)
 		// Удаляем оригинальный предмет
 
 
@@ -1351,5 +1357,54 @@
 
 		qdel(item)
 		shitium[MOLES] -= 0.3
+
+	return REACTING
+
+
+/**
+ * Strangerium
+ *
+ * Converts
+ */
+/datum/gas_reaction/strangerium_transformation
+	priority_group = PRIORITY_FORMATION
+	name = "Strangerium Transformation"
+	id = "strangerium"
+	desc = "Transforms"
+
+/datum/gas_reaction/strangerium_transformation/init_reqs()
+	requirements = list(
+		/datum/gas/strangerium = MINIMUM_MOLE_COUNT,
+		"MIN_TEMP" = 250,
+	)
+
+/datum/gas_reaction/strangerium_transformation/react(datum/gas_mixture/air, datum/holder)
+	if(!isturf(holder))
+		return NO_REACTION
+
+	var/turf/T = holder
+	var/list/cached_gases = air.gases
+	var/strangerium = cached_gases[/datum/gas/strangerium]
+
+
+
+	// Получаем ВСЕ компоненты
+	var/list/all_components = subtypesof(/datum/component)
+
+	// Фильтруем (опционально)
+	var/list/safe_components = list()
+	for(var/component_type in all_components)
+    	// Пропускаем абстрактные/проблемные компоненты
+		if(initial(component_type.abstract_type) == component_type)
+			continue
+		safe_components += component_type
+
+	for(var/obj/item/item in T)
+		if(strangerium[MOLES] < 0.1)
+			break
+
+    	var/component_path = pick(safe_components)  // ВНУТРИ ЦИКЛА
+		item.AddComponent(component_path)
+    	strangerium[MOLES] -= 0.1  // РАСХОД ГАЗА
 
 	return REACTING
