@@ -45,7 +45,7 @@
 	RegisterSignal(new_limb_owner, COMSIG_MOB_DROPPED_ITEM, PROC_REF(unequipped_item))
 	RegisterSignal(new_limb_owner, COMSIG_CARBON_ITEM_COVERAGE_CHANGED, PROC_REF(coverage_changed))
 	for(var/obj/item/equipped as anything in new_limb_owner.get_equipped_items())
-		if(equipped_item(equipped, new_limb_owner, new_limb_owner.get_slot_by_item(equipped)))
+		if(equipped_item(new_limb_owner, equipped, new_limb_owner.get_slot_by_item(equipped)))
 			LAZYOR(squashing_us, REF(equipped))
 
 /datum/component/digitigrade_limb/proc/on_remove(obj/item/bodypart/limb, mob/living/carbon/old_limb_owner)
