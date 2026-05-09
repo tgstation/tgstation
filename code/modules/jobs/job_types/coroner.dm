@@ -12,7 +12,6 @@
 	outfit = /datum/outfit/job/coroner
 	plasmaman_outfit = /datum/outfit/plasmaman/coroner
 
-	mind_traits = list(TRAIT_MORBID)
 	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_CORONER_METABOLISM)
 
@@ -72,4 +71,7 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/coroner
 	messenger = /obj/item/storage/backpack/messenger/coroner
 
-	skillchips = list(/obj/item/skillchip/entrails_reader)
+	skillchips = list(
+		/obj/item/skillchip/entrails_reader,
+		/obj/item/skillchip/morbid_suppression/coroner,
+		)

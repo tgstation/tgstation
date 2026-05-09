@@ -4853,6 +4853,7 @@
 #include "code\modules\library\skill_learning\generic_skillchips\acrobatics.dm"
 #include "code\modules\library\skill_learning\generic_skillchips\matrix_taunt.dm"
 #include "code\modules\library\skill_learning\generic_skillchips\misc.dm"
+#include "code\modules\library\skill_learning\generic_skillchips\morbid_suppression.dm"
 #include "code\modules\library\skill_learning\generic_skillchips\musical.dm"
 #include "code\modules\library\skill_learning\generic_skillchips\point.dm"
 #include "code\modules\library\skill_learning\generic_skillchips\self_surgery.dm"

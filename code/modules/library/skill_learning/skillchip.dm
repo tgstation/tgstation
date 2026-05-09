@@ -29,6 +29,8 @@
 	var/deactivate_message
 	//If set to FALSE, trying to extract the chip will destroy it instead
 	var/removable
+	// If set to TRUE, the chip, once activated, cannot then be deactivated without removal.
+	var/no_deactivation = FALSE
 	/// How complex the skillchip is. Brains can only handle so much complexity at once and skillchips will start to deactivate when the brain's complexity limit is exceeded.
 	var/complexity = 1
 	/// How many slots taken up in the brain by this chip. Max brain slots are hard set and should not be changed at all.
@@ -120,6 +122,10 @@
 	if(force)
 		on_deactivate(brain_owner, silent)
 		return
+
+	// If we haven't forced this, and the chip simply cannot be deactivated, do not deactivate.
+	if(no_deactivation)
+		return "Skillchip can't be deactivated."
 
 	// Is the chip still experiencing a cooldown period?
 	if(!COOLDOWN_FINISHED(src, chip_cooldown))
