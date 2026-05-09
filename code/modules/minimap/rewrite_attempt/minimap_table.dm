@@ -1,7 +1,8 @@
 
 /obj/machinery/minimap_table
-	name = "gorlex holotable"
-	desc = "Shows a minimap, funky!"
+	name = "reconnaissance platform"
+	desc = "This holographic projector displays a constant stream of tactical information, enabling cinematic planning and strategizing. \
+		Currently, it appears to be monitoring a nearby station and tracking key targets for a clandestine operation."
 	icon = 'icons/obj/machines/minimap_table.dmi'
 	icon_state = "off"
 	processing_flags = START_PROCESSING_MANUALLY
