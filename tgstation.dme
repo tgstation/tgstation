@@ -1803,7 +1803,6 @@
 #include "code\datums\looping_sounds\vents.dm"
 #include "code\datums\looping_sounds\weather.dm"
 #include "code\datums\mapgen\CaveGenerator.dm"
-#include "code\datums\mapgen\CaveGenerator2.dm"
 #include "code\datums\mapgen\JungleGenerator.dm"
 #include "code\datums\mapgen\biomes\_biome.dm"
 #include "code\datums\mapgen\biomes\jungle.dm"
