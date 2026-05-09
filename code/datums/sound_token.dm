@@ -140,7 +140,7 @@
 		if(listener_mob.client)
 			listener_mob.client.needs_sound_token_update = TRUE
 
-/datum/sound_token/proc/force_update_all_listeners(var/update_sound = TRUE)
+/datum/sound_token/proc/force_update_all_listeners(update_sound = TRUE)
 	for(var/mob/listener_mob in listeners)
 		if(listener_mob.client)
 			UpdateListener(listener_mob, update_sound)
