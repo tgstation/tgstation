@@ -9,7 +9,7 @@
 	VAR_PRIVATE/list/squashing_us
 
 /datum/component/digitigrade_limb/Initialize(squashed_id, free_id)
-	if(!isbodypart(parent))
+	if(!istype(parent, /obj/item/bodypart/leg))
 		return COMPONENT_INCOMPATIBLE
 
 	var/obj/item/bodypart/limb = parent
@@ -138,7 +138,5 @@
 	for(var/obj/item/thing as anything in limb.owner.get_equipped_items(INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT))
 		if(thing.supports_variations_flags & DIGITIGRADE_VARIATIONS)
 			thing.update_slot_icon()
-	// Updates the actual mob sprite
-	limb.owner.update_body_parts()
-	// Underwear too
-	limb.owner.update_underwear()
+	// Updates underwear and mob sprites
+	limb.owner.update_body()
