@@ -1837,3 +1837,29 @@
 	var/old_state = surgery_state
 	. = ..()
 	update_surgical_state(old_state, surgery_state ^ old_state)
+
+/// Adds biostate to the limb and ensures surgical states are updated accordingly
+/obj/item/bodypart/proc/add_biostate(new_biostate)
+	if(biological_state & new_biostate)
+		return
+
+	if(!LIMB_HAS_SKIN(src) && (new_biostate & BIOSTATE_HAS_SKIN))
+		remove_surgical_state(SKINLESS_SURGERY_STATES)
+	if(!LIMB_HAS_BONES(src) && (new_biostate & BIOSTATE_HAS_BONES))
+		remove_surgical_state(BONELESS_SURGERY_STATES)
+	if(!LIMB_HAS_VESSELS(src) && (new_biostate & BIOSTATE_HAS_VESSELS))
+		remove_surgical_state(VESSELLESS_SURGERY_STATES)
+	biological_state |= new_biostate
+
+/// Removes biostate from the limb and ensures surgical states are updated accordingly
+/obj/item/bodypart/proc/remove_biostate(old_biostate)
+	if(!(biological_state & old_biostate))
+		return
+
+	biological_state &= ~old_biostate
+	if(!LIMB_HAS_SKIN(src))
+		add_surgical_state(SKINLESS_SURGERY_STATES)
+	if(!LIMB_HAS_BONES(src))
+		add_surgical_state(BONELESS_SURGERY_STATES)
+	if(!LIMB_HAS_VESSELS(src))
+		add_surgical_state(VESSELLESS_SURGERY_STATES)
