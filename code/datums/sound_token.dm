@@ -27,7 +27,7 @@
 	/// The channel being used.
 	var/sound_channel
 
-/datum/sound_token/New(atom/_source, _sound, _range = 10, _volume = 50, _falloff_exponent = SOUND_FALLOFF_EXPONENT, _falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE)
+/datum/sound_token/new(atom/_source, _sound, _range = 10, _volume = 50, _falloff_exponent = SOUND_FALLOFF_EXPONENT, _falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE)
 	source = _source
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(source_deleted))
 	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(source_moved))
@@ -44,7 +44,7 @@
 	listeners = list()
 
 	for(var/mob/listener_mob in GLOB.player_list)
-		AddOrUpdateListener(listener_mob)
+		add_or_update_listener(listener_mob)
 
 	SSsound_tokens.playing_sound_tokens[src] = TRUE
 
@@ -53,7 +53,7 @@
 
 /datum/sound_token/Destroy(force, ...)
 	for(var/listener in listeners)
-		RemoveListener(listener)
+		remove_listener(listener)
 
 	listeners = null
 	source = null
@@ -70,14 +70,14 @@
 		force_update_all_listeners(FALSE)
 
 /// Updates the data of a listener, or adds them if they are not present.
-/datum/sound_token/proc/AddOrUpdateListener(mob/listener_mob)
+/datum/sound_token/proc/add_or_update_listener(mob/listener_mob)
 	if(isnull(listeners[listener_mob]))
-		AddListener(listener_mob)
+		add_listener(listener_mob)
 	else
-		UpdateListener(listener_mob)
+		update_listener(listener_mob)
 
 /// Adds a listener to the sound.
-/datum/sound_token/proc/AddListener(mob/listener_mob)
+/datum/sound_token/proc/add_listener(mob/listener_mob)
 	if(!isnull(listeners[listener_mob]))
 		return FALSE
 
@@ -86,17 +86,17 @@
 
 	listeners[listener_mob] = NONE
 	RegisterSignal(listener_mob, COMSIG_QDELETING, PROC_REF(listener_deleted))
-	RegisterSignals(listener_mob, list(SIGNAL_ADDTRAIT(TRAIT_DEAF),SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(listener_deafness_update))
-	UpdateListener(listener_mob, FALSE)
+	RegisterSignals(listener_mob, list(SIGNAL_ADDTRAIT(TRAIT_DEAF), SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(listener_deafness_update))
+	update_listener(listener_mob, FALSE)
 	return TRUE
 
 /// Remove a listener from the sound.
-/datum/sound_token/proc/RemoveListener(mob/listener_mob)
+/datum/sound_token/proc/remove_listener(mob/listener_mob)
 	UnregisterSignal(listener_mob, list(COMSIG_QDELETING, COMSIG_MOB_LOGIN, SIGNAL_ADDTRAIT(TRAIT_DEAF),SIGNAL_REMOVETRAIT(TRAIT_DEAF)))
 	listeners -= listener_mob
 	SEND_SOUND(listener_mob, null_sound)
 
-/datum/sound_token/proc/UpdateListener(mob/listener_mob, update_sound = TRUE)
+/datum/sound_token/proc/update_listener(mob/listener_mob, update_sound = TRUE)
 	var/turf/source_turf = get_turf(source)
 	var/turf/listener_turf = get_turf(listener_mob)
 
@@ -143,7 +143,7 @@
 /datum/sound_token/proc/force_update_all_listeners(update_sound = TRUE)
 	for(var/mob/listener_mob in listeners)
 		if(listener_mob.client)
-			UpdateListener(listener_mob, update_sound)
+			update_listener(listener_mob, update_sound)
 
 /// Setter for volume
 /datum/sound_token/proc/set_volume(new_volume, update_listeners = TRUE)
@@ -161,21 +161,21 @@
 /// Respond to TRAIT_DEAF addition/removal
 /datum/sound_token/proc/listener_deafness_update(atom/movable/source)
 	SIGNAL_HANDLER
-	UpdateListener(source)
+	update_listener(source)
 
 /datum/sound_token/proc/listener_deleted(datum/source)
 	SIGNAL_HANDLER
-	RemoveListener(source)
+	remove_listener(source)
 
 /// Respond to any mob in the world being logged into.
 /datum/sound_token/proc/player_login(datum/source, mob/player)
 	SIGNAL_HANDLER
-	AddOrUpdateListener(player)
+	add_or_update_listener(player)
 
 /// Respond to any cliented mob becoming uncliented
 /datum/sound_token/proc/player_logout(datum/source, mob/player)
 	SIGNAL_HANDLER
-	RemoveListener(player)
+	remove_listener(player)
 
 /// If the sound source moves, update all listeners.
 /datum/sound_token/proc/source_moved()
