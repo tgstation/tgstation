@@ -67,7 +67,7 @@
 		if(affected_turf.opacity)
 			break
 		var/blocked = FALSE
-		for(var/obj/potential_block in affected_turf.contents)
+		for(var/obj/potential_block in affected_turf)
 			if(potential_block.opacity)
 				blocked = TRUE
 				break
@@ -77,8 +77,8 @@
 		new_brimbeam.dir = owner.dir
 		beam_parts += new_brimbeam
 		new_brimbeam.assign_creator(owner)
-		for(var/mob/living/hit_mob in affected_turf.contents)
-			hit_mob.apply_damage(damage = 25, damagetype = BURN)
+		for(var/mob/living/hit_mob in affected_turf)
+			hit_mob.apply_damage(25, BURN, blocked = hit_mob.run_armor_check(null, LASER, silent = TRUE), wound_bonus = CANT_WOUND)
 			to_chat(hit_mob, span_userdanger("You're blasted by [owner]'s brimbeam!"))
 		RegisterSignal(new_brimbeam, COMSIG_QDELETING, PROC_REF(extinguish_laser)) // In case idk a singularity eats it or something
 	if(!length(beam_parts))
@@ -126,16 +126,12 @@
 	return ..()
 
 /obj/effect/brimbeam/process()
-	var/atom/ignore = creator?.resolve()
+	var/mob/living/ignore = creator?.resolve()
 	for(var/mob/living/hit_mob in get_turf(src))
-		if(hit_mob == ignore)
+		if(ignore?.faction_check_atom(hit_mob))
 			continue
-		damage(hit_mob)
-
-/// Hurt the passed mob
-/obj/effect/brimbeam/proc/damage(mob/living/hit_mob)
-	hit_mob.apply_damage(damage = 5, damagetype = BURN)
-	to_chat(hit_mob, span_danger("You're damaged by [src]!"))
+		if(hit_mob != ignore)
+			hit_mob.apply_damage(7, BURN, blocked = hit_mob.run_armor_check(null, LASER, silent = TRUE), wound_bonus = CANT_WOUND)
 
 /// Ignore damage dealt to this mob
 /obj/effect/brimbeam/proc/assign_creator(mob/living/maker)

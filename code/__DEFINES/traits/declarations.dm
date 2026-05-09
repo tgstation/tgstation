@@ -1591,6 +1591,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
 
+/// Ignores demolition modifiers
+#define TRAIT_IGNORE_DEMOLITION "ignore_demolition"
+
 /// Makes the mob immune to carpotoxin
 #define TRAIT_CARPOTOXIN_IMMUNE "carpotoxin_immune"
 
