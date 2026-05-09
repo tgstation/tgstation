@@ -13,7 +13,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/obj/item/bodypart/limb = parent
-	limb.add_bodypart_trait(TRAIT_DIGITIGRADE_FEET)
+	limb.bodytype |= BODYTYPE_DIGITIGRADE
 
 	src.squashed_id = squashed_id
 	src.free_id = free_id || initial(limb.limb_id)
@@ -35,7 +35,7 @@
 	var/obj/item/bodypart/limb = parent
 	if(!QDELING(parent) && ishuman(limb.owner))
 		on_remove(limb, limb.owner)
-	limb.remove_bodypart_trait(TRAIT_DIGITIGRADE_FEET)
+	limb.bodytype &= ~BODYTYPE_DIGITIGRADE
 	return ..()
 
 /datum/component/digitigrade_limb/proc/on_attach(obj/item/bodypart/limb, mob/living/carbon/new_limb_owner)

@@ -55,7 +55,7 @@
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
 	species_id = SPECIES_LIZARD
-	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
+	bodyshape = BODYSHAPE_HUMANOID
 	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 	footstep_type = FOOTSTEP_MOB_CLAW
 
@@ -67,7 +67,7 @@
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
 	species_id = SPECIES_LIZARD
-	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
+	bodyshape = BODYSHAPE_HUMANOID
 	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 	footstep_type = FOOTSTEP_MOB_CLAW
 
