@@ -187,7 +187,7 @@
 
 	qdel(src)
 
-///Update env when source i entering new area
+///Update env when source is entering new area
 /datum/sound_token/proc/on_enter_area(datum/source, area/area_to_register)
 	SIGNAL_HANDLER
 	set_new_environment(area_to_register.sound_environment || SOUND_ENVIRONMENT_NONE)

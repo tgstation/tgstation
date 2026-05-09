@@ -66,7 +66,7 @@
 ///Percentage of sound's range where no falloff is applied
 #define SOUND_DEFAULT_FALLOFF_DISTANCE 0 //Disabled because it doesn't actually have a nice effect, it just makes the jump to fall-off more shocking. maybe delete
 ///The default exponent of sound falloff
-#define SOUND_FALLOFF_EXPONENT 2
+#define SOUND_FALLOFF_EXPONENT 2.5
 
 #define SOUND_MINIMUM_PRESSURE 10
 
