@@ -209,7 +209,7 @@
 
 /obj/item/restraints/legcuffs/goliath_tentacle/drag/Initialize(mapload, mob/living/target, obj/effect/goliath_tentacle/tentacle)
 	. = ..()
-	QDEL_IN(src, 10 SECONDS)
+	QDEL_IN(src, 15 SECONDS)
 	if (. != INITIALIZE_HINT_QDEL)
 		START_PROCESSING(SSprocessing, src)
 
