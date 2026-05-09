@@ -89,3 +89,7 @@
 		if(GIZMO_PUZZLE_SOLVED)
 			holder.balloon_alert(user, "creak")
 			playsound(holder, 'sound/machines/creak.ogg', 30, FALSE)
+
+/// Sequences can be a bit shorter since you have to constantly type and scream them
+/datum/gizmo_puzzle/voice
+	code_length = 2

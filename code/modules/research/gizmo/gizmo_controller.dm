@@ -32,7 +32,7 @@
 
 /// Voice controller with a voice puzzle and interface. Comes with a wire interface that gives you the hint to use the voice interface
 /datum/gizmo_controller/voice
-	interfaces = list(GIZMO_INTERFACE_WIRES = /datum/gizmo_interface/voice_unlock, GIZMO_INTERFACE_VOICE = /datum/gizmo_interface)
+	interfaces = list(GIZMO_INTERFACE_WIRES = /datum/gizmo_interface/voice_unlock, GIZMO_INTERFACE_VOICE = /datum/gizmo_interface/voice)
 
 /// For held gizmo's
 /datum/gizmo_controller/item

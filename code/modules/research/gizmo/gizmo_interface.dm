@@ -57,6 +57,10 @@
 	min_modes = 0
 	max_modes = 0
 
+/// For the actual voice operated puzzle. Is a bit more forgiving
+/datum/gizmo_interface/voice
+	puzzle = /datum/gizmo_puzzle/voice
+
 /// Always bad!
 /datum/gizmo_interface/cursed
 	possible_active_modes = list(
