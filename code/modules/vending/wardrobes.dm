@@ -386,6 +386,8 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	premium = list(
 		/obj/item/autopsy_scanner = 1,
 		/obj/item/storage/medkit/coroner = 1,
+		/obj/item/skillchip/job/coroner = 1,
+		
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/coroner_wardrobe
 	payment_department = ACCOUNT_MED
