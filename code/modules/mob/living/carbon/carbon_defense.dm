@@ -674,8 +674,7 @@
 	var/changed_something = FALSE
 	var/obj/item/organ/new_organ = pick(GLOB.bioscrambler_valid_organs)
 	var/obj/item/organ/replaced = get_organ_slot(initial(new_organ.slot))
-	var/is_holo_organ = replaced && (replaced.flags_1 & HOLOGRAM_1)
-	if (!replaced || !IS_ROBOTIC_ORGAN(replaced) && !(is_holo_organ))
+	if (!replaced || ORGAN_CAN_BE_BIOSCRAMBLED(replaced))
 		changed_something = TRUE
 		new_organ = new new_organ()
 		new_organ.replace_into(src)
@@ -684,8 +683,7 @@
 	if (!HAS_TRAIT(src, TRAIT_NODISMEMBER))
 		var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
 		var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
-		var/is_holo_bodypart = (picked_user_part && (picked_user_part.flags_1 & HOLOGRAM_1))
-		if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part.bodytype) && !(is_holo_bodypart))
+		if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part))
 			changed_something = TRUE
 			new_part = new new_part()
 			new_part.replace_limb(src)
@@ -703,7 +701,7 @@
 /mob/living/carbon/proc/init_bioscrambler_lists()
 	var/list/body_parts = typesof(/obj/item/bodypart/chest) + typesof(/obj/item/bodypart/head) + subtypesof(/obj/item/bodypart/arm) + subtypesof(/obj/item/bodypart/leg)
 	for(var/obj/item/bodypart/part as anything in body_parts)
-		if(!is_type_in_typecache(part, GLOB.bioscrambler_parts_blacklist) && BODYTYPE_CAN_BE_BIOSCRAMBLED(initial(part.bodytype)))
+		if(!is_type_in_typecache(part, GLOB.bioscrambler_parts_blacklist) && BODYTYPE_CAN_BE_BIOSCRAMBLED(initial(part)))
 			continue
 		body_parts -= part
 	GLOB.bioscrambler_valid_parts = body_parts
