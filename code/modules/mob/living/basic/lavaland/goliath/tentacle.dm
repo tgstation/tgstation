@@ -135,7 +135,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_IGNORE_DEMOLITION, INNATE_TRAIT)
 	src.tentacle = tentacle
-	if (!target.equip_to_slot_if_possible(src, ITEM_SLOT_LEGCUFFED, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
+	if (!target?.equip_to_slot_if_possible(src, ITEM_SLOT_LEGCUFFED, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/restraints/legcuffs/goliath_tentacle/Destroy(force)
