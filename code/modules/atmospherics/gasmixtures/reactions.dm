@@ -1403,6 +1403,12 @@
 		if(strangerium[MOLES] < 0.1)
 			break
 
+
+		try
+			item.AddComponent(component_path)
+			strangerium[MOLES] -= 0.1
+		catch
+			continue
     	var/component_path = pick(safe_components)  // ВНУТРИ ЦИКЛА
 		item.AddComponent(component_path)
     	strangerium[MOLES] -= 0.1  // РАСХОД ГАЗА
