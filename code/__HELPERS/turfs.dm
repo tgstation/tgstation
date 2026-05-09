@@ -552,13 +552,18 @@ Turf and target are separate in case you want to teleport some distance from a t
 			return TRUE
 	return FALSE
 
-/// Check if the turf has access to the sun, by checking for opaque turfs in the direction of the sun.
-/// Returns TRUE if the sun is blocked, FALSE if it is not.
-/turf/proc/is_sunlight_blocked()
+/**
+ * Check if the turf has access to the sun, by checking for opaque turfs in the direction of the sun.
+ *
+ * occlusion_distance - determines how far away we check to see if the sun is blocked
+ *
+ * Returns TRUE if the sun is blocked
+ * Returns FALSE otherwise
+ */
+/turf/proc/is_sunlight_blocked(occlusion_distance = 20)
 	if(HAS_TRAIT(src, TRAIT_TURF_SUN_BLOCKED))
 		return TRUE
 
-	var/occlusion_distance = 20
 	var/target_x = round(sin(SSsun.azimuth), 0.01)
 	var/target_y = round(cos(SSsun.azimuth), 0.01)
 	var/x_hit = x
