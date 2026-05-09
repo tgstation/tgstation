@@ -35,6 +35,8 @@
 	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	melee_attack_cooldown = 0.8 SECONDS
+	melee_damage_lower = 5
+	melee_damage_upper = 10
 	/// Instructions you can give to dogs
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,

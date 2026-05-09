@@ -169,16 +169,16 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /mob/living/basic/raptor/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 	if(!istype(target, /obj/structure/ore_container/food_trough/raptor_trough))
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	var/obj/ore_food = locate(/obj/item/stack/ore) in target
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
 		UnarmedAttack(ore_food, TRUE, modifiers)
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/raptor/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	if (!combat_mode && istype(target, /mob/living/basic/raptor))

@@ -220,8 +220,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
 /// Humans with this trait cannot have underwear
 #define TRAIT_NO_UNDERWEAR "no_underwear"
-/// This carbon doesn't show an overlay when they have no brain
-#define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 /// Humans with this trait cannot get augmentation surgery
 #define TRAIT_NO_AUGMENTS "no_augments"
 /// This carbon doesn't get hungry
@@ -1222,9 +1220,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dreaming carbon when they are currently doing dreaming stuff
 #define TRAIT_DREAMING "currently_dreaming"
 
-/// Trait that allows non-heretics to have heretical dreams
-#define TRAIT_HERETICAL_DREAMS "heretical_dreams"
-
 /// Trait for if you've recently had a Last Word cocktail
 #define TRAIT_HAD_LAST_WORD "had_last_word"
 
@@ -1428,6 +1423,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait given when a mob is currently in invisimin mode
 #define TRAIT_INVISIMIN "invisimin"
+
+/// Trait given when a mob has admin esp turned on
+#define TRAIT_ADMIN_ESP "admin_esp"
 
 ///Trait given when a mob has been tipped
 #define TRAIT_MOB_TIPPED "mob_tipped"

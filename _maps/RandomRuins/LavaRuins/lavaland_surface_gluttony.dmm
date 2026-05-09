@@ -108,7 +108,7 @@
 /obj/structure/stone_tile/surrounding_tile/burnt{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ie" = (
 /obj/item/veilrender/vealrender,
@@ -130,7 +130,7 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "jM" = (
 /turf/closed/indestructible/necropolis,
@@ -182,7 +182,7 @@
 /obj/structure/stone_tile/surrounding/cracked{
 	dir = 1
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "nT" = (
 /turf/closed/indestructible/riveted/boss,
@@ -315,7 +315,7 @@
 /area/lavaland/surface/outdoors)
 "DH" = (
 /obj/structure/headpike/bone,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "DY" = (
 /obj/structure/stone_tile/center/burnt,
@@ -391,7 +391,7 @@
 /obj/structure/stone_tile/block/burnt{
 	dir = 4
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "MH" = (
 /turf/open/lava/smooth/lava_land_surface,
@@ -400,7 +400,7 @@
 /obj/structure/stone_tile/block/burnt{
 	dir = 8
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "Ol" = (
 /obj/effect/decal/cleanable/blood/footprints{
@@ -518,7 +518,7 @@
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
 "Zu" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "Zx" = (
 /obj/structure/stone_tile/surrounding/cracked,
