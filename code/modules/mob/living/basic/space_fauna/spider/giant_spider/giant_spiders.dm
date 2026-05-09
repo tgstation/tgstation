@@ -565,7 +565,6 @@
 	unsuitable_cold_damage = 1
 	unsuitable_heat_damage = 1
 	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl."
-	apply_spider_antag = FALSE
 	innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/lay_web/sticky_web,
 		/datum/action/cooldown/mob_cooldown/lay_web/web_spikes,
@@ -591,7 +590,6 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider/retaliate
-	apply_spider_antag = FALSE
 
 /mob/living/basic/spider/giant/sgt_araneus/Initialize(mapload)
 	. = ..()

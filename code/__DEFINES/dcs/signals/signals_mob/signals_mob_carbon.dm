@@ -63,7 +63,7 @@
 /// Sent to a limb when something *attempts* to change its surgery state (old_state, new_state, changed_states)
 #define COMSIG_BODYPART_UPDATING_SURGERY_STATE "bodypart_updating_surgery_state"
 
-/// Called from /obj/item/bodypart/proc/get_limb_icon(dropped, mob/living/carbon/update_on) : (list/limb_icons, dropped, mob/living/carbon/update_on)
+/// Called from /obj/item/bodypart/proc/get_limb_icon(dropped) : (list/limb_icons, dropped, mob/living/carbon/update_on)
 #define COMSIG_BODYPART_GET_LIMB_ICON "bodypart_get_limb_icon"
 
 /// Called from /obj/item/bodypart/proc/generate_icon_key() : (list/icon_keys)
