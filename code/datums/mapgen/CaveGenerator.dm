@@ -429,13 +429,13 @@
 	///Loop through all the active ruins for this z-level and make a json format out of it so we can send it to the generator
 	var/list/active_ruins_list = list()
 
-	for(var/turf/center_turf in SSmapping.active_ruins)
-		var/datum/map_template/ruin/active_ruin = SSmapping.active_ruins[center_turf]
-		if(center_turf.z != generate_in.z)
+	for(var/turf/bottom_left_turf in SSmapping.active_ruins)
+		var/datum/map_template/ruin/active_ruin = SSmapping.active_ruins[bottom_left_turf]
+		if(bottom_left_turf.z != generate_in.z)
 			continue
 		active_ruins_list += list(list(
-			"cx" = center_turf.x,
-			"cy" = center_turf.y,
+			"x" = bottom_left_turf.x,
+			"y" = bottom_left_turf.y,
 			"w" = active_ruin.width + active_ruin.terrain_padding * 2,
 			"h" = active_ruin.height + active_ruin.terrain_padding * 2,
 			"isEnclosed" = active_ruin.enclosed_for_terrain,

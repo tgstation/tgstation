@@ -153,7 +153,7 @@
 	name = "Ice-Ruin Lavaland Incursion"
 	id = "lavalandsite"
 	description = "I guess we never really left you huh?"
-	suffix = "icemoon_underground_lavaland.dmm"]
+	suffix = "icemoon_underground_lavaland.dmm"
 	enclosed_for_terrain = TRUE
 
 /datum/map_template/ruin/icemoon/underground/puzzle
