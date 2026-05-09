@@ -67,6 +67,12 @@
 		holo_atom.flags_1 |= HOLOGRAM_1
 		. += holo_atom
 
+	if(iscarbon(our_mob))
+		var/mob/living/carbon/holo_carbon_mob = our_mob
+		for(var/obj/item/organ/holo_organ as anything in holo_carbon_mob.organs)
+			holo_organ.flags_1 |= HOLOGRAM_1
+			. += holo_organ
+
 	// these vars are not really standardized but all would theoretically create stuff on death
 	our_mob.add_traits(list(TRAIT_PERMANENTLY_MORTAL, TRAIT_NO_BLOOD_OVERLAY, TRAIT_NOBLOOD, TRAIT_NOHUNGER, TRAIT_SPAWNED_MOB), INNATE_TRAIT)
 	RegisterSignal(our_mob, COMSIG_QDELETING, PROC_REF(handle_mob_delete))
@@ -78,6 +84,12 @@
 		for(var/atom/holo_atom as anything in our_mob.contents)
 			if(holo_atom.flags_1 & HOLOGRAM_1)
 				HC.derez(holo_atom)
+
+		if(iscarbon(our_mob))
+			var/mob/living/carbon/holo_carbon_mob = our_mob
+			for(var/obj/item/organ/holo_organ as anything in holo_carbon_mob.organs)
+				if(holo_organ.flags_1 & HOLOGRAM_1)
+					HC.derez(holo_organ)
 
 		HC.derez(our_mob)
 	qdel(src)
