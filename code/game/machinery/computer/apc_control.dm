@@ -48,7 +48,7 @@
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	if(!should_log)
 		return
-	LAZYADD(logs, "([station_time_timestamp()]): [auth_id] [log_text]")
+	LAZYADD(logs, "([round_timestamp()]): [auth_id] [log_text]")
 
 ///Resets the console's emagged state and re-enables logging of activity
 /obj/machinery/computer/apc_control/proc/restore_comp(mob/user)

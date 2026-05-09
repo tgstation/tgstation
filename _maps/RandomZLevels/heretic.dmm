@@ -9494,7 +9494,7 @@
 	dir = 5
 	},
 /obj/machinery/camera/directional/east{
-	network = list("ss13","medbay");
+	network = list("heretic_gate");
 	c_tag = "Medical - Surgery B"
 	},
 /obj/structure/disposalpipe/trunk{

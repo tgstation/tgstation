@@ -464,10 +464,13 @@
 	update_damage_overlays()
 	update_wound_overlays()
 	var/limb_count_update = 0
+	var/head_update = FALSE
 	var/list/new_limbs = list()
 	for(var/body_zone, limb_untyped in get_bodyparts_by_zones())
 		var/obj/item/bodypart/limb = limb_untyped
 		if(isnull(limb) || IS_STUMP(limb))
+			if(body_zone == BODY_ZONE_HEAD)
+				head_update = TRUE
 			if(icon_render_keys[body_zone])
 				icon_render_keys -= body_zone
 				limb_count_update += 1
@@ -483,6 +486,8 @@
 			new_limbs += limb_icon_cache[new_key]
 
 		else
+			if(body_zone == BODY_ZONE_HEAD)
+				head_update = TRUE
 			limb_icon_cache[new_key] ||= limb.get_limb_icon(dropped = FALSE)
 			new_limbs += limb_icon_cache[new_key]
 			icon_render_keys[limb.body_zone] = new_key
@@ -498,6 +503,10 @@
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 
 	apply_overlay(BODYPARTS_LAYER)
+	// for legacy support, head changes triggers an eye/hair update
+	if(head_update)
+		update_eyes()
+		update_hair()
 
 /mob/living/carbon/proc/update_face_offset()
 	return
@@ -543,6 +552,12 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_GENERATE_ICON_KEY, .)
 	return .
 
+/obj/item/bodypart/head/generate_icon_key()
+	. = ..()
+	if(lip_style)
+		. += lip_color
+		. += lip_style
+
 ///Generates a cache key specifically for husks
 /obj/item/bodypart/proc/generate_husk_key()
 	RETURN_TYPE(/list)
@@ -563,44 +578,6 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
-	return .
-
-/obj/item/bodypart/head/generate_icon_key()
-	. = ..()
-	if(lip_style)
-		. += "-[lip_style]"
-		. += "-[lip_color]"
-
-	if(facial_hair_hidden)
-		. += "-FACIAL_HAIR_HIDDEN"
-	else
-		. += "-[facial_hairstyle]"
-		. += "-[override_hair_color || fixed_hair_color || facial_hair_color]"
-		. += "-[facial_hair_alpha]"
-		var/facial_hair_gradient_style = get_hair_gradient_style(GRADIENT_FACIAL_HAIR_KEY)
-		if(facial_hair_gradient_style)
-			. += "-[facial_hair_gradient_style]"
-			. += "-[get_hair_gradient_color(GRADIENT_FACIAL_HAIR_KEY)]"
-
-	if(show_eyeless)
-		. += "-SHOW_EYELESS"
-	if(show_debrained)
-		. += "-SHOW_DEBRAINED"
-		return .
-
-	if(hair_hidden)
-		. += "-HAIR_HIDDEN"
-	else
-		. += "-[hairstyle]"
-		. += "-[override_hair_color || fixed_hair_color || hair_color]"
-		. += "-[hair_alpha]"
-		var/hair_gradient_style = get_hair_gradient_style(GRADIENT_HAIR_KEY)
-		if(hair_gradient_style)
-			. += "-[hair_gradient_style]"
-			. += "-[get_hair_gradient_color(GRADIENT_HAIR_KEY)]"
-		if(LAZYLEN(hair_masks))
-			. += "-[jointext(hair_masks, "-")]"
-
 	return .
 
 GLOBAL_LIST_EMPTY(masked_leg_icons_cache)

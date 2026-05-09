@@ -101,7 +101,7 @@
 	if (ispath(resulting_atom, /obj/item/stack))
 		var/obj/item/stack/stack_type = resulting_atom
 		while (spawning_amount > 0)
-			new_thing = new resulting_atom(target.drop_location(), new_amount = min(spawning_amount, stack_type::max_amount))
+			new_thing = new resulting_atom(target.drop_location(), min(spawning_amount, stack_type::max_amount))
 			spawning_amount -= stack_type::max_amount
 	else
 		for(var/repeated in 1 to spawning_amount)
