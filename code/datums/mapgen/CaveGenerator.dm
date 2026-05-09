@@ -434,8 +434,8 @@
 		if(bottom_left_turf.z != generate_in.z)
 			continue
 		active_ruins_list += list(list(
-			"x" = bottom_left_turf.x,
-			"y" = bottom_left_turf.y,
+			"x" = min(1, bottom_left_turf.x - active_ruin.terrain_padding),
+			"y" = min(1, bottom_left_turf.y - active_ruin.terrain_padding),
 			"w" = active_ruin.width + active_ruin.terrain_padding * 2,
 			"h" = active_ruin.height + active_ruin.terrain_padding * 2,
 			"isEnclosed" = active_ruin.enclosed_for_terrain,
