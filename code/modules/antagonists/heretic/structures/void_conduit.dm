@@ -111,4 +111,4 @@
 	. = ..()
 	transform = transform.Scale(0.1)
 	alpha = 0
-	animate(src, time = 5 SECONDS, transform = transform.Scale(1), alpha = /obj/structure/void_conduit::alpha
+	animate(src, time = 5 SECONDS, transform = transform.Scale(1), alpha = /obj/structure/void_conduit::alpha)
