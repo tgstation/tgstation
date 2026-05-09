@@ -404,22 +404,23 @@
  * A width*height string of '0' (wall) and '1' (floor) characters in row-major order.
  *
  * Arguments:
- * * width - Grid width (required)
- * * height - Grid height (required)
- * * prefabs_json - JSON array of prefab configs: [{"cx":55,"cy":65,"w":10,"h":10,"isEnclosed":true},...] (default: "[]")
- * * min_bsp_size - Minimum BSP leaf dimension (default: 20)
- * * max_ratio - Maximum aspect ratio for BSP splits (default: 2.5)
- * * padding - Room edge padding within BSP leaf (default: 2)
- * * room_fill_percent - How much of each BSP leaf a room fills, 1-100 (default: 50)
- * * corridor_width - Width of corridors between rooms (default: 1)
- * * loop_percent - Chance to add extra MST edges for loops (default: 15)
- * * noise_percent - Initial random floor density (default: 48)
- * * ca_steps - Cellular Automata smoothing iterations (default: 6)
- * * birth_limit - Neighbors to create floor (>=) (default: 5)
- * * survival_limit - Neighbors to survive as floor (>=) (default: 4)
+ * * width - Grid width
+ * * height - Grid height
+ * * prefabs_json - JSON array of prefab configs: [{"cx":55,"cy":65,"w":10,"h":10,"isEnclosed":true},...] (if none use "[]") cx = center of prefab x, cy = center of prefab y, w = prefab width, h = prefab height, isEnclosed = whether prefab should be treated like its wall or floor by the generation
+ * * min_bsp_size - Minimum BSP leaf dimension
+ * * max_ratio - Maximum aspect ratio for BSP splits
+ * * padding - Room edge padding within BSP leaf
+ * * room_fill_percent - How much of each BSP leaf a room fills, 1-100
+ * * corridor_width - Width of corridors between rooms
+ * * loop_percent - Chance to add extra MST edges for loops
+ * * noise_percent - Initial random floor density
+ * * ca_steps - Cellular Automata smoothing iterations
+ * * birth_limit - Neighbors to create floor (>=)
+ * * survival_limit - Neighbors to survive as floor (>=)
+ * * edge_is_alive - Whether out-of-bounds cells count as ALIVE (floor) for CA neighbor counts (1 = yes, 0 = no)
  */
-#define rustg_lavaland_generator_generate(width, height, prefabs_json, min_bsp_size, max_ratio, padding, room_fill_percent, corridor_width, loop_percent, noise_percent, ca_steps, birth_limit, survival_limit) \
-	RUSTG_CALL(RUST_G, "lavaland_generator_generate")(width, height, prefabs_json, min_bsp_size, max_ratio, padding, room_fill_percent, corridor_width, loop_percent, noise_percent, ca_steps, birth_limit, survival_limit)
+#define rustg_lavaland_generator_generate(width, height, prefabs_json, min_bsp_size, max_ratio, padding, room_fill_percent, corridor_width, loop_percent, noise_percent, ca_steps, birth_limit, survival_limit, edge_is_alive) \
+	RUSTG_CALL(RUST_G, "lavaland_generator_generate")(width, height, prefabs_json, min_bsp_size, max_ratio, padding, room_fill_percent, corridor_width, loop_percent, noise_percent, ca_steps, birth_limit, survival_limit, edge_is_alive)
 
 #define rustg_log_write(fname, text, format) RUSTG_CALL(RUST_G, "log_write")(fname, text, format)
 /proc/rustg_log_close_all() return RUSTG_CALL(RUST_G, "log_close_all")()

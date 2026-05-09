@@ -105,7 +105,8 @@
 	var/birth_limit = 6
 	/// Neighbors to survive as floor (>=) for lavaland generator
 	var/survival_limit = 4
-
+	///Whether out-of-boudns counts as being alive. Setting this to FALSE results in the edges of the generator generating more closed. Default behavior tends to open up tunnels outside.
+	var/edges_are_alive = TRUE
 
 /datum/map_generator/cave_generator/New()
 	. = ..()
@@ -202,7 +203,7 @@
 		heat_seed = rand(0, 50000)
 
 	var/start_time = REALTIMEOFDAY
-	string_gen = generate_cave()
+	string_gen = generate_cave(generate_in)
 
 	var/humidity_gen = list()
 	humidity_gen[BIOME_HIGH_HUMIDITY] = rustg_dbp_generate("[humidity_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[high_heat_threshold]", "1.1")
@@ -214,7 +215,7 @@
 
 	var/list/to_generate = list()
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
-		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
+		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "1"
 		var/datum/biome/selected_biome
 
 		// Here comes the meat of the biome code.
@@ -401,7 +402,9 @@
 
 	var/active_ruin_string = json_encode(active_ruins_list)
 
-	return rustg_lavaland_generator_generate("[world.maxx]", "[world.maxy]", active_ruin_string, "[min_bsp_size]","[max_ratio]", "[padding]", "[room_fill_percent]", "[corridor_width]","[loop_percent]", "[noise_percent]", "[ca_steps]", "[birth_limit]", "[survival_limit]")
+	var/string_gen = rustg_lavaland_generator_generate("[world.maxx]", "[world.maxy]", active_ruin_string, "[min_bsp_size]","[max_ratio]", "[padding]", "[room_fill_percent]", "[corridor_width]","[loop_percent]", "[noise_percent]", "[ca_steps]", "[birth_limit]", "[survival_limit]", "[edges_are_alive]")
+
+	return string_gen
 
 
 /datum/map_generator/cave_generator/jungle

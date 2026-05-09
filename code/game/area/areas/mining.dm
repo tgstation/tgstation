@@ -137,7 +137,7 @@
 	sound_environment = SOUND_AREA_LAVALAND
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
 	allow_shuttle_docking = TRUE
-	map_generator = /datum/map_generator/cave_generator
+	map_generator = /datum/map_generator/cave_generator/lavaland
 	use_mapgen = FALSE
 
 /area/lavaland/surface
