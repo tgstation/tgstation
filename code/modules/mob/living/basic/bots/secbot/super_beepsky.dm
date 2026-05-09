@@ -75,8 +75,11 @@
 
 /mob/living/basic/bot/secbot/grievous/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
+	if(.)
+		return
 	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, target)
 	playsound(src, 'sound/items/weapons/blade1.ogg', 50, TRUE, -1)
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/bot/secbot/grievous/explode()
 	var/atom/drop_location = drop_location()
