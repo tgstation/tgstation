@@ -105,12 +105,12 @@
 	// if it's a number, is it a bitflag?
 	var/list/matching_bitflags = get_matching_bitflags(name, value)
 
-	if(isnull(matching_bitflags))
-		return "<span class='value'>[VV_HTML_ENCODE(value)]</span>"
+	if(!isnull(matching_bitflags))
+		if(length(matching_bitflags))
+			return "[VV_HTML_ENCODE(matching_bitflags.Join(", "))]"
+		return "NONE"
 
-	if(length(matching_bitflags))
-		return "[VV_HTML_ENCODE(matching_bitflags.Join(", "))]"
-	return "NONE"
+	return "<span class='value'>[VV_HTML_ENCODE(value)]</span>"
 
 /datum/proc/debug_variable_value(name, level, datum/owner, sanitize, display_flags)
 	if("[src]" != "[type]") // If we have a name var, let's use it.
