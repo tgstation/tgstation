@@ -139,7 +139,7 @@
 		return
 	var/mob/living/carbon/human/human_owner = organ_owner
 	mob_base_height = human_owner.get_base_mob_height()
-	human_owner.set_mob_height(HUMAN_HEIGHT_TALLER, update_dna = FALSE)
+	human_owner.set_mob_height(HUMAN_HEIGHT_TALLEST, update_dna = FALSE)
 
 /obj/item/organ/heart/stoat/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
