@@ -28,7 +28,7 @@
 
 	if(user.mind && removed_trait)
 		ADD_TRAIT(user.mind, TRAIT_MORBID, JOB_TRAIT)
-		to_chat(span_hypnophrase("The stillness of death. I must understand it again. I yearn observe it. I must learn the secrets kept within pallid flesh..."))
+		to_chat(user, span_hypnophrase("The stillness of death. I must understand it again. I yearn observe it. I must learn the secrets kept within pallid flesh..."))
 		removed_trait = FALSE
 
 /obj/item/skillchip/morbid_suppression/coroner
