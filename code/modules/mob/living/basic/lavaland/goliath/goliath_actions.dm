@@ -23,7 +23,7 @@
 	new /obj/effect/goliath_tentacle(target, owner)
 	for(var/spawndir in GLOB.cardinals)
 		var/turf/adjacent_target = get_step(target, spawndir)
-		if(isgroundlessturf(adjacent_target))
+		if(isgroundlessturf(adjacent_target) && !islava(adjacent_target))
 			continue
 		if(isopenturf(adjacent_target) || ismineralturf(adjacent_target))
 			new /obj/effect/goliath_tentacle(adjacent_target)
