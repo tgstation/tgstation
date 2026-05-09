@@ -172,7 +172,8 @@
 	if(!(slot & item.slot_flags)) // Things below only update if slotted in (ie: not held)
 		return
 	if(item.hair_mask)
-		update_body()
+		LAZYADD(hair_masks, item.hair_mask)
+		update_hair()
 	add_item_coverage(item)
 
 /mob/living/carbon/has_unequipped(obj/item/item)
@@ -182,7 +183,8 @@
 
 	hud_used?.update_locked_slots()
 	if(item.hair_mask)
-		update_body()
+		LAZYREMOVE(hair_masks, item.hair_mask)
+		update_hair()
 	remove_item_coverage(item)
 
 /mob/living/carbon/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
@@ -260,8 +262,13 @@
 	update_clothing(hidden_slots_to_inventory_slots(added_slots|removed_slots))
 	if((added_slots|removed_slots) & HIDESNOUT)
 		synchronize_bodyshapes()
-
-	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
+	if((added_slots|removed_slots) & (HIDEHAIR|HIDEFACIALHAIR))
+		update_hair()
+	if((added_slots|removed_slots) & HIDEEYES)
+		update_eyes()
+	// HIDEJUMPSUIT is for digitigrade legs, HIDEEARS is for lizard frills, HIDEHAIR is for felinid ears and lizard horns, the others should be obvious
+	// future todo; we should collect a list of all bodypart overlays and what conceals/reveals them dynamically, rather than hardcoding this
+	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
 		update_body()
 
 /// Returns the helmet if an air tank compatible helmet is equipped.

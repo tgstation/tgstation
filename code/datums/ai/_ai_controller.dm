@@ -874,6 +874,8 @@ multiple modular subtrees with behaviors
  */
 /datum/ai_controller/proc/remove_thing_from_blackboard_key(key, thing)
 	var/associated_value = blackboard[key]
+	if(isnull(associated_value))
+		return
 	if(thing == associated_value)
 		stack_trace("remove_thing_from_blackboard_key was called un-necessarily in a situation where clear_blackboard_key would suffice. ")
 		clear_blackboard_key(key)

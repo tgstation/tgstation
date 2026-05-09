@@ -36,6 +36,7 @@ GLOBAL_PROTECT(href_token)
 	var/datum/particle_editor/particle_test
 	var/datum/colorblind_tester/color_test
 	var/datum/plane_master_debug/plane_debug
+	var/datum/appearance_debugger/appearance_debug
 	var/obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/library_manager
 	var/datum/pathfind_debug/path_debug
 	var/datum/spawn_menu/spawn_menu
@@ -98,6 +99,7 @@ GLOBAL_PROTECT(href_token)
 	GLOB.admin_datums[target] = src
 	deadmined = FALSE
 	plane_debug = new(src)
+	appearance_debug = new(src)
 	if (GLOB.directory[target])
 		associate(GLOB.directory[target]) //find the client for a ckey if they are connected and associate them with us
 
@@ -109,6 +111,7 @@ GLOBAL_PROTECT(href_token)
 	GLOB.deadmins[target] = src
 	GLOB.admin_datums -= target
 	QDEL_NULL(plane_debug)
+	QDEL_NULL(appearance_debug)
 	QDEL_NULL(path_debug)
 	deadmined = TRUE
 
