@@ -62,7 +62,7 @@
 
 /// From /obj/item/bodypart/proc/update_limb(): (dropping_limb, is_creating)
 #define COMSIG_BODYPART_UPDATED "bodypart_updated"
-
+/// From /datum/component/butchering/create_replacement_limb(): (replacement limb)
 #define COMSIG_BODYPART_BUTCHERED "bodypart_butchered"
 
 /// Sent to a limb when something *attempts* to change its surgery state (old_state, new_state, changed_states)
@@ -217,5 +217,5 @@
 #define COMSIG_START_DREAMING "start_dreaming"
 /// A mob has finished dreaming: (datum/dream/finished_dream)
 #define COMSIG_END_DREAMING "end_dreaming"
-
+/// From /mob/living/carbon/item_coverage_changed: (added_slots, removed_slots)
 #define COMSIG_CARBON_ITEM_COVERAGE_CHANGED "carbon_item_coverage_changed"
