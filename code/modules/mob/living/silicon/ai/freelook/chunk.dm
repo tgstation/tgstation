@@ -50,7 +50,7 @@
 	seenby -= eye
 
 	var/client/client = eye.GetViewerClient()
-	if(client && eye.use_visibility && seenby.len == 0)
+	if(client && eye.use_visibility)
 		client.images -= active_static_images
 
 /**
