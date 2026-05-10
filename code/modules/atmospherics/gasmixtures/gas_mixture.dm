@@ -147,7 +147,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	temperature_archived = temperature
 	for(var/id in cached_gases)
 		cached_gases[id][ARCHIVE] = cached_gases[id][MOLES]
-	total_moles = values_sum(cached_gases)
 
 	return TRUE
 
@@ -228,9 +227,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed.temperature = temperature
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
-		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
+		var/removal = QUANTIZE(cached_gases[id][MOLES] * ratio)
+		removed_gases[id][MOLES] = removal
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
-	total_moles -= values_sum(removed_gases)
+		total_moles -= removal
 	garbage_collect()
 
 	SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED)
@@ -251,9 +251,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed.temperature = temperature
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
+		var/removal = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
-	total_moles -= values_sum(removed_gases)
+		total_moles -= removal
 
 	garbage_collect()
 
@@ -439,13 +440,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative.
 
 		gas[MOLES] -= delta
-		mole_given -= delta
 		sharergas[MOLES] += delta
-		mole_taken += delta
 		moved_moles += delta
 		abs_moved_moles += abs(delta)
-	total_moles -= mole_given
-	sharer.total_moles += mole_taken
+	total_moles -= moved_moles
+	sharer.total_moles += moved_moles
 	last_share = abs_moved_moles
 
 	//THERMAL ENERGY TRANSFER
@@ -510,7 +509,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/cached_gases = gases
 	var/moles_sum = 0
 
-	if(total_moles > sample.total_moles)
+	if(QUANTIZE(total_moles - sample.total_moles) != 0)
 		return "total_moles_diff"
 
 	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
