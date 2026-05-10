@@ -3,6 +3,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
+/obj/item/dice/d6,
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "b" = (
@@ -64,6 +65,14 @@
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
+"j" = (
+/obj/structure/chair{
+	pixel_y = -2
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
 "k" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -110,10 +119,9 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "s" = (
-/obj/machinery/door/window/brigdoor/security/cell/left/directional/south{
-	id = "Holodeck Cell 2";
-	name = "Cell 2";
-	dir = 1
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/north{
+	name = "Holodeck Cell 2";
+	id = "Holodeck Cell 2"
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -126,10 +134,9 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "u" = (
-/obj/machinery/door/window/brigdoor/security/cell/left/directional/south{
-	id = "Holodeck Cell 1";
-	name = "Cell 1";
-	dir = 1
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/north{
+	name = "Holodeck Cell 1";
+	id = "Holodeck Cell 1"
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
@@ -139,7 +146,6 @@
 	},
 /obj/structure/bed,
 /obj/item/bedsheet/red,
-/obj/item/dice/d6,
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "w" = (
@@ -214,14 +220,6 @@
 	},
 /turf/open/floor/holofloor/white,
 /area/template_noop)
-"F" = (
-/obj/structure/chair{
-	pixel_y = -2
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/holofloor/dark,
-/area/template_noop)
 "G" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -252,6 +250,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
+/obj/item/toy/figure/prisoner,
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "K" = (
@@ -313,7 +312,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
-/obj/item/toy/figure/prisoner,
 /obj/effect/turf_decal/board_number/two,
 /obj/machinery/flasher/directional/west{
 	id = "Holodeck Cell 2";
@@ -401,7 +399,7 @@ E
 "}
 (5,1,1) = {"
 B
-F
+j
 R
 K
 Z
