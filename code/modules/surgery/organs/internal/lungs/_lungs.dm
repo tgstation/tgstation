@@ -653,7 +653,11 @@
 
 
 /obj/item/organ/lungs/proc/too_much_adskiderium(mob/living/carbon/breather, datum/gas_mixture/breath, adskiderium_pp, old_adskiderium_pp)
+	breathe_gas_volume(breath, /datum/gas/adskiderium)
 
+	if(breather.mind && !breather.mind.has_antag_datum(/datum/antagonist/cult_of_suffering/apostate))
+		if(adskiderium_pp > 5)  // Порог 5 кПа
+			breather.mind.add_antag_datum(/datum/antagonist/cult_of_suffering/apostate)
 
 /**
  * This proc tests if the lungs can breathe, if they can breathe a given gas mixture, and throws/clears gas alerts.

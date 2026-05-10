@@ -69,6 +69,7 @@
 #define ROLE_REVENANT "Revenant"
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
 #define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
+#define ROLE_CULT_OF_SUFFERING "Cult of Suffering"
 /// This flag specifically is used as a generic catch-all antag ban
 #define ROLE_SYNDICATE "Syndicate"
 #define ROLE_EXPERIMENTAL_CLONER "Experimental Cloner"
