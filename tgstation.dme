@@ -5053,6 +5053,7 @@
 #include "code\modules\minimap\rewrite_attempt\hud\minimal_z_level.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_display.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_drawing.dm"
+#include "code\modules\minimap\rewrite_attempt\hud\minimap_element.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_label.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_toolbar.dm"
 #include "code\modules\minimap\rewrite_attempt\hud\minimap_tracking_blip.dm"

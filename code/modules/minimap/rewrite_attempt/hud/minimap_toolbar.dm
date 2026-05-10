@@ -93,6 +93,6 @@
 		return
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		display.clear_all_annotations(usr, /atom/movable/screen/minimap_label)
+		display.clear_all_annotations(usr, /atom/movable/screen/minimap_element/label)
 	else
 		display.toggle_label_mode(mouse_icon)
