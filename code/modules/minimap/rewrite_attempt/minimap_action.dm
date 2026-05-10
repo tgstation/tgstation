@@ -3,6 +3,8 @@
 	name = "Toggle Minimap"
 	button_icon = 'icons/hud/implants.dmi'
 	button_icon_state = "minimap"
+	/// Optional fixed z-level for this action's minimap display.
+	var/fixed_z_level
 	/// Optional minimap blip tags to render on the rewrite minimap display.
 	var/list/minimap_blip_tags = list()
 	/// Optional annotation sharing tag for minimap drawings/labels.
@@ -27,12 +29,13 @@
 	if(SEND_SIGNAL(clicker, COMSIG_MINIMAP_ACTION_TRIGGER) & COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL)
 		return
 
-	var/datum/minimap/minimap = get_minimap_for_z(clicker.z)
+	var/display_z = isnull(fixed_z_level) ? clicker.z : fixed_z_level
+	var/datum/minimap/minimap = get_minimap_for_z(display_z)
 	if(isnull(minimap))
-		to_chat(clicker, span_notice("No minimap generated for z=[clicker.z]."))
+		to_chat(clicker, span_notice("No minimap generated for z=[display_z]."))
 		return
 	add_huds(hud, minimap)
-	to_chat(clicker, span_notice("Minimap shown for z=[clicker.z]."))
+	to_chat(clicker, span_notice("Minimap shown for z=[display_z]."))
 
 /datum/action/minimap_new/proc/has_minimap_huds(datum/hud/hud)
 	for(var/element in huds)
@@ -43,7 +46,7 @@
 /datum/action/minimap_new/proc/add_huds(datum/hud/hud, datum/minimap/minimap)
 	for(var/element in huds)
 		var/hud_element_type = huds[element]
-		var/instanced = new hud_element_type(null, hud, minimap, minimap_blip_tags, null, annotation_share_tag)
+		var/instanced = new hud_element_type(null, hud, minimap, minimap_blip_tags, fixed_z_level, annotation_share_tag)
 		hud.add_screen_object(instanced, element, HUD_GROUP_STATIC, update_screen = TRUE)
 
 /datum/action/minimap_new/nuclear

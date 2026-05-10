@@ -18,4 +18,5 @@ GLOBAL_LIST_EMPTY(minimap_annotation_viewers)
 		if(blip.track_target == object)
 			SEND_GLOBAL_SIGNAL(COMSIG_MINIMAP_REMOVE(tag), blip)
 			qdel(blip)
+			LAZYREMOVE(GLOB.minimap_blip_tags[tag], blip)
 			break

@@ -12,18 +12,31 @@
 	light_system = OVERLAY_LIGHT
 	density = TRUE
 	SET_BASE_PIXEL(0, 2)
+	/// Hologram icon sheet used for startup/idle/closing projection effects.
 	var/hologram_icon_file = 'icons/obj/machines/minimap_table_hologram.dmi'
-	var/target_z = 2
+	/// Z-trait used to resolve the minimap level this table displays.
+	var/target_z_trait = ZTRAIT_STATION
+	/// Cached minimap datum currently displayed by this table.
 	var/datum/minimap/minimap
+	/// Users currently viewing the table-projected minimap HUD.
 	var/list/mob/viewers = list()
+	/// Whether the table is currently active and projecting.
 	var/active = FALSE
+	/// Whether startup animation/state is currently in progress.
 	var/startup = FALSE
+	/// Pixel X offset for projected hologram overlays.
 	var/animation_x = -15
+	/// Pixel Y offset for projected hologram overlays.
 	var/animation_y = 18
+	/// Startup/closing animation duration.
 	var/animation_duration = 5.1 SECONDS
+	/// Max distance at which users can interact with the table.
 	var/interactivity_range = 3
+	/// Proximity monitor used to close viewers leaving interaction range.
 	var/datum/proximity_monitor/proximity
+	/// Light helper used for pulsing hologram illumination.
 	var/datum/light_middleman/middleman
+	/// Lowest alpha value used by the pulsing light animation.
 	var/flicker_min_alpha = 150
 	/// HUD elements used by the holotable minimap view.
 	var/list/table_huds = list(
@@ -138,6 +151,7 @@
 		addtimer(CALLBACK(src, PROC_REF(deactive_without_viewers)), 10 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE)
 
 /obj/machinery/minimap_table/proc/add_table_huds(datum/hud/hud)
+	var/target_z = resolve_target_z()
 	for(var/element in table_huds)
 		var/hud_element_type = table_huds[element]
 		var/instanced = new hud_element_type(null, hud, minimap, null, target_z, MINIMAP_ANNOTATION_TAG_NUCLEAR)
@@ -147,7 +161,16 @@
 	for(var/element in table_huds)
 		hud.remove_screen_object(element)
 
+/obj/machinery/minimap_table/proc/resolve_target_z()
+	if(isnull(target_z_trait))
+		return null
+	var/list/trait_levels = SSmapping.levels_by_trait(target_z_trait)
+	if(length(trait_levels))
+		return trait_levels[1]
+	return null
+
 /obj/machinery/minimap_table/proc/set_minimap()
+	var/target_z = resolve_target_z()
 	minimap = get_minimap_for_z(target_z)
 
 /obj/machinery/minimap_table/on_set_is_operational()

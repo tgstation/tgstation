@@ -2,13 +2,24 @@
 	name = "tactical map implant"
 	desc = "provides you with a map"
 	actions_types = list(/datum/action/minimap_new)
+	var/wearer_icon_state = null
+	/// Optional z-trait that resolves to the first z-level and locks the minimap there.
+	var/minimap_fixed_z_trait
+	var/static/list/minimap_refresh_signals = list(
+		COMSIG_MOB_STATCHANGE,
+		COMSIG_LIVING_REVIVE,
+		COMSIG_MOB_GHOSTIZED,
+	)
 
 /obj/item/implant/tacmap/implant(mob/living/target, mob/user, silent, force)
 	. = ..()
 	if(.)
+		configure_minimap_action()
+		RegisterSignals(target, minimap_refresh_signals, PROC_REF(refresh_minimap_icon))
 		addtimer(CALLBACK(src, PROC_REF(update_minimap_icon), target), 0.1 SECONDS) // Mobs are spawned inside nullspace sometimes so this avoids that hijinks.
 
 /obj/item/implant/tacmap/removed(mob/living/source, silent, special)
+	UnregisterSignal(source, minimap_refresh_signals)
 	remove_minimap(source)
 	return ..()
 
@@ -16,27 +27,54 @@
 /obj/item/implant/tacmap/proc/remove_minimap(mob/user)
 	remove_minimap_blip(MINIMAP_NUKEOP_BLIP, user)
 
+/obj/item/implant/tacmap/proc/refresh_minimap_icon()
+	SIGNAL_HANDLER
+	if(imp_in)
+		update_minimap_icon(imp_in)
+
+/obj/item/implant/tacmap/proc/resolve_fixed_minimap_z_level()
+	if(!isnull(minimap_fixed_z_trait))
+		var/list/trait_levels = SSmapping.levels_by_trait(minimap_fixed_z_trait)
+		if(length(trait_levels))
+			return trait_levels[1]
+	return null
+
+/obj/item/implant/tacmap/proc/configure_minimap_action()
+	var/datum/action/minimap_new/minimap_action = locate(/datum/action/minimap_new) in actions
+	if(isnull(minimap_action))
+		return
+	minimap_action.fixed_z_level = resolve_fixed_minimap_z_level()
+
+/obj/item/implant/tacmap/proc/get_minimap_icon_state(mob/living/wearer)
+	if(!wearer.appears_alive())
+		if(astype(wearer, /mob/living/carbon)?.can_defib_client())
+			return "undefibbable"
+		if(isnull(wearer.mind) && isnull(wearer.ai_controller))
+			var/mob/dead/observer/ghost = wearer.get_ghost(TRUE)
+			if(!ghost?.can_reenter_corpse)
+				return "undefibbable"
+		return "defibbable"
+	return wearer_icon_state
+
 ///Updates the wearer's minimap icon
 /obj/item/implant/tacmap/proc/update_minimap_icon(mob/wearer)
 	SIGNAL_HANDLER
 	remove_minimap_blip(MINIMAP_NUKEOP_BLIP, wearer)
-	if(IS_NUKE_OP(wearer))
-		add_minimap_blip(wearer, MINIMAP_NUKEOP_BLIP, "syndicate")
-
+	add_minimap_blip(wearer, MINIMAP_NUKEOP_BLIP, get_minimap_icon_state(wearer))
 
 /obj/item/implant/tacmap/nuclear // Nukie subtype, map shows you nuke disk, operatives, cayenne and the nuke
 	actions_types = list(/datum/action/minimap_new/nuclear)
+	wearer_icon_state = "syndicate"
 
 /obj/item/implant/tacmap/nuclear/implant(mob/living/target, mob/user, silent, force)
-	if(istype(target, /mob/living/basic/carp/pet/cayenne))
-		return ..()
-
-	var/datum/antagonist/nukeop/nukie = IS_NUKE_OP(target)
-	if(isnull(nukie))
-		return ..()
 	. = ..()
 	if(.)
 		RegisterSignal(target, COMSIG_MINIMAP_ACTION_TRIGGER, PROC_REF(deny_nukie_base_open))
+
+/obj/item/implant/tacmap/nuclear/get_minimap_icon_state(mob/living/wearer)
+	if(wearer.stat != DEAD && istype(wearer, /mob/living/basic/carp/pet/cayenne))
+		return "cayenne"
+	. = ..()
 
 /obj/item/implant/tacmap/nuclear/removed(mob/living/source, silent, special)
 	UnregisterSignal(source, COMSIG_MINIMAP_ACTION_TRIGGER)
@@ -56,6 +94,7 @@
 
 // Subtype that just lets them open it off-base.
 /obj/item/implant/tacmap/nuclear/offbase
+	minimap_fixed_z_trait = ZTRAIT_STATION
 
 /obj/item/implant/tacmap/nuclear/offbase/deny_nukie_base_open(mob/living/user)
 	return

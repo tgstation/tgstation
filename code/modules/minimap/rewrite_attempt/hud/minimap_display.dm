@@ -165,15 +165,38 @@
 
 	var/x = clamp(MINIMAP_ICON_TO_WORLD(icon_x, minimap.min_x), 1, world.maxx)
 	var/y = clamp(MINIMAP_ICON_TO_WORLD(icon_y, minimap.min_y), 1, world.maxy)
+	var/hover_text = get_hover_text(x, y)
+	screentip.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: left'>[hover_text]</span>")
+	screentip.pixel_w = icon_x
+	screentip.pixel_z = icon_y
+
+/atom/movable/screen/minimap_display/proc/get_hover_text(x, y)
+	var/closest_blip_name
+	var/closest_blip_distance
+	for(var/atom/movable/screen/minimap_blip/blip in visible_minimap_elements)
+		if(isnull(blip.track_target) || blip.track_target.z != minimap.z)
+			continue
+		if(!length(blip.name))
+			continue
+		var/hover_range = blip.large ? 2 : 1
+		var/x_distance = abs(blip.track_target.x - x)
+		var/y_distance = abs(blip.track_target.y - y)
+		if(x_distance > hover_range || y_distance > hover_range)
+			continue
+		var/distance = x_distance + y_distance
+		if(isnull(closest_blip_distance) || distance < closest_blip_distance)
+			closest_blip_distance = distance
+			closest_blip_name = blip.name
+
+	if(!isnull(closest_blip_name))
+		return closest_blip_name
 
 	var/area_name = minimap.map_position_to_name["[x]:[y]"]
 	if(isnull(area_name))
 		var/turf/hovered_loc = locate(x, y, minimap.z)
 		area_name = "[hovered_loc?.loc?.name]"
 		minimap.map_position_to_name["[x]:[y]"] = area_name
-	screentip.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: left'>[area_name]</span>")
-	screentip.pixel_w = icon_x
-	screentip.pixel_z = icon_y
+	return area_name
 
 /atom/movable/screen/minimap_display/MouseExited(location, control, params)
 	if(usr != get_mob())
@@ -230,7 +253,8 @@
 		return
 	if(!(blip.blip_tag in valid_minimap_blip_tags))
 		return
-	if(blip.track_target?.z != minimap.z)
+	var/turf/blip_turf = get_turf(blip.track_target)
+	if(blip_turf?.z != minimap.z)
 		return
 	blip.register_target(blip.track_target)
 	blip.start_tracking_target()
@@ -471,6 +495,6 @@
 
 /atom/movable/screen/minimap_display/nuclear
 	annotation_share_tag = MINIMAP_ANNOTATION_TAG_NUCLEAR
-	valid_minimap_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP)
+	valid_minimap_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP, MINIMAP_SYNDICATE_MECH_BLIP)
 
 #undef MINIMAP_TOOLBAR_ERASE_RANGE
