@@ -50,7 +50,7 @@
 	seenby -= eye
 
 	var/client/client = eye.GetViewerClient()
-	if((client && eye.use_visibility && seenby.len == 0) || iscarbon(client.mob)) // Avoid camera static not being removed, when seen by AI and anyone else.
+	if((client && eye.use_visibility && seenby.len == 0) || isliving(client.mob)) // Avoid camera static not being removed, when seen by AI and anyone else.
 		client.images -= active_static_images
 
 /**
