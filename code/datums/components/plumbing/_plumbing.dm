@@ -20,11 +20,6 @@
 	/// Ex - if this was set to "3", our component would only request the first 3 reagents found, even if more are available
 	var/distinct_reagent_cap = INFINITY
 
-	///Extra offset on supply pipe.
-	var/supply_offset = 0
-	///Extra offset on demand pipe.
-	var/demand_offset = 0
-
 /datum/component/plumbing/Initialize(ducting_layer)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -194,28 +189,8 @@
 		var/duct_y = offset - parent_movable.pixel_y - parent_movable.pixel_z
 		if(direction & initial(demand_connects))
 			color = demand_color
-			if(demand_offset)
-				switch(parent_movable.dir)
-					if(NORTH)
-						duct_y -= demand_offset
-					if(SOUTH)
-						duct_y += demand_offset
-					if(EAST)
-						duct_x -= demand_offset
-					if(WEST)
-						duct_x += demand_offset
 		else if(direction & initial(supply_connects))
 			color = supply_color
-			if(supply_offset)
-				switch(parent_movable.dir)
-					if(NORTH)
-						duct_y += supply_offset
-					if(SOUTH)
-						duct_y -= supply_offset
-					if(EAST)
-						duct_x += supply_offset
-					if(WEST)
-						duct_x -= supply_offset
 		else
 			continue
 
