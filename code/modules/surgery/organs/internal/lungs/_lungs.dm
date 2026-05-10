@@ -162,6 +162,8 @@
 	add_gas_reaction(/datum/gas/tritium, while_present = PROC_REF(too_much_tritium))
 	add_gas_reaction(/datum/gas/zauker, while_present = PROC_REF(too_much_zauker))
 	add_gas_reaction(/datum/gas/shitium, while_present = PROC_REF(too_much_shitium))
+	add_gas_reaction(/datum/gas/strangerium, while_present = PROC_REF(too_much_strangerium))
+	add_gas_reaction(/datum/gas/adskiderium, while_present = PROC_REF(too_much_adskiderium))
 
 ///Simply exists so that you don't keep any alerts from your previous lack of lungs.
 /obj/item/organ/lungs/on_mob_insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
@@ -603,6 +605,55 @@
 				// Превращаем в плазмамена
 				H.set_species(/datum/species/plasmaman)
 				to_chat(H, span_danger("Вы чувствуете, как ваше тело превращается в плазму! Вы теперь плазмамен!"))
+
+
+/obj/item/organ/lungs/proc/too_much_strangerium(mob/living/carbon/breather, datum/gas_mixture/breath, strangerium_pp, old_strangerium_pp)
+	breathe_gas_volume(breath, /datum/gas/strangerium)
+
+	var/mob/living/carbon/human/H = breather
+	var/obj/item/bodypart/head/current_head = H.get_bodypart(BODY_ZONE_HEAD)
+
+	// Если давление странгериума > порога (например, 10 кПа) и компонента ещё нет
+	if(strangerium_pp > 10)
+		// Отключаем нормальные функции лёгких
+		breath_present = list()
+		breathe_always = list()
+		breath_lost = list()
+
+		// Меняем название и описание
+		name = "окаменевшие лёгкие"
+		desc = "Эти лёгкие превратились в камень и производят булыжники. Они больше не могут дышать."
+
+		// Добавляем компонент производства булыжников
+		AddComponent(/datum/component/boulder_producer, interval = 30 SECONDS, needs_owner = TRUE, message = "Откашливаю булыжник!")
+
+		// Оповещаем игрока
+		to_chat(breather, span_userdanger("ВАШИ ЛЁГКИЕ ОКАМЕНЕЛИ! Вы больше не можете дышать!"))
+		to_chat(breather, span_warning("Теперь вы будете периодически откашливать булыжники."))
+
+		// Наносим урон лёгким от трансформации
+		breather.adjust_organ_loss(ORGAN_SLOT_LUNGS, 25)
+		breather.emote("cough")
+
+		// Логируем
+		message_admins("[key_name(breather)]'s lungs turned to stone from strangerium gas.")
+		log_game("[key_name(breather)]'s lungs turned to stone from strangerium gas.")
+
+
+
+		var/obj/item/bodypart/head/zombie_head = new /obj/item/bodypart/head/zombie
+		H.emote("scream")
+		playsound(H, 'sound/effects/splat.ogg', 50, TRUE)
+		H.del_and_replace_bodypart(zombie_head, special = TRUE)
+		H.update_body_parts()
+
+		// Звуковой эффект
+		playsound(breather, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
+
+
+
+/obj/item/organ/lungs/proc/too_much_adskiderium(mob/living/carbon/breather, datum/gas_mixture/breath, adskiderium_pp, old_adskiderium_pp)
+
 
 /**
  * This proc tests if the lungs can breathe, if they can breathe a given gas mixture, and throws/clears gas alerts.

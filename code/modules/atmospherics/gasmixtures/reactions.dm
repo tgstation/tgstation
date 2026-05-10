@@ -1388,29 +1388,121 @@
 
 
 
-	// Получаем ВСЕ компоненты
-	var/list/all_components = subtypesof(/datum/component)
 
-	// Фильтруем (опционально)
-	var/list/safe_components = list()
-	for(var/component_type in all_components)
-    	// Пропускаем абстрактные/проблемные компоненты
-		if(initial(component_type.abstract_type) == component_type)
-			continue
-		safe_components += component_type
+	if(!strangerium || strangerium[MOLES] < 10)
+		return NO_REACTION
+
+
+	// var/list/all_components = subtypesof(/datum/component)
+	// var/list/safe_components = list()
+	// for(var/component_type in all_components)
+	// 	safe_components += component_type
+
+	var/static/list/safe_components = list(
+		/datum/component/direct_explosive_trap,
+		/datum/component/areabound,
+		/datum/component/caltrop,
+		/datum/component/explode_on_attack,
+		/datum/component/irradiated,
+	)
+
+	var/random_component = pick(safe_components)
+	// for(var/component_type in all_components)
+	// 	if(initial(component_type.abstract_type) == component_type)
+	// 		continue
+	// 	safe_components += component_type
+
+
 
 	for(var/obj/item/item in T)
-		if(strangerium[MOLES] < 0.1)
-			break
+		if(!HAS_TRAIT(item, TRAIT_HAUNTED))
+			item.AddComponent(/datum/component/haunted_item, \
+				haunt_color = "#52336e", \
+				haunt_duration = 2 MINUTES, \
+				aggro_radius = 3, \
+				spawn_message = span_revenwarning("[item] begins to float ominously!"), \
+				despawn_message = span_revenwarning("[item] falls to the ground."), \
+				throw_force_bonus = 3 \
+			)
 
 
-		try
-			item.AddComponent(component_path)
-			strangerium[MOLES] -= 0.1
-		catch
-			continue
-    	var/component_path = pick(safe_components)  // ВНУТРИ ЦИКЛА
-		item.AddComponent(component_path)
-    	strangerium[MOLES] -= 0.1  // РАСХОД ГАЗА
+			// var/obj/structure/ore_vent/temp_vent = new /obj/structure/ore_vent(get_turf(item))
+
+			// temp_vent.mineral_breakdown = list(
+			// 	/datum/material/iron = 40,
+			// 	/datum/material/glass = 30,
+			// 	/datum/material/plasma = 20,
+			// 	/datum/material/silver = 10
+			// )
+			// temp_vent.boulder_size = rand(2, 4)
+
+
+			// var/boulder = temp_vent.produce_boulder(FALSE)
+			// qdel(temp_vent)
+
+
+
+
+
+
+			item.AddComponent(random_component)
+			message_admins("Strangerium: Added [random_component] to [item] ([ADMIN_VERBOSEJMP(T)])")
+			new /obj/effect/temp_visual/transmute_tile_flash(T)
+			playsound(T, 'sound/effects/curse/curseattack.ogg', 30, TRUE)
+			strangerium[MOLES] -= 10
 
 	return REACTING
+
+	// // Получаем ВСЕ компоненты
+	// var/list/all_components = subtypesof(/datum/component)
+	// var/initial_gas = strangerium[MOLES]
+	// // Фильтруем (опционально)
+	// var/list/safe_components = list()
+	// for(var/component_type in all_components)
+	// 	// Пропускаем абстрактные/проблемные компоненты
+	// 	if(initial(component_type.abstract_type) == component_type)
+	// 		continue
+	// 	safe_components += component_type
+
+	// if(!length(safe_components))
+	// 	return NO_REACTION
+
+	// for(var/obj/item/item in T)
+	// 	if(strangerium[MOLES] < 0.1)
+	// 		break
+
+	// 	var/component_path = pick(safe_components)
+	// 	try
+	// 		item.AddComponent(component_path)
+	// 		strangerium[MOLES] -= 0.1
+	// 		new /obj/effect/temp_visual/transmute_tile_flash(T)
+	// 		playsound(T, 'sound/magic/blink.ogg', 30, TRUE)
+	// 	catch
+	// 		continue
+
+	// var/used_gas = initial_gas - strangerium[MOLES]
+	// if(used_gas > 0)
+	// 	SET_REACTION_RESULTS(used_gas)
+	// 	return REACTING
+	// else
+	// 	return NO_REACTION
+
+
+/**
+ * Adskiderium
+ *
+ * Converts
+ */
+// /datum/gas_reaction/adskiderium_transformation
+// 	priority_group = PRIORITY_FORMATION
+// 	name = "Adskiderium Transformation"
+// 	id = "adskiderium"
+// 	desc = "Transforms"
+
+// /datum/gas_reaction/adskiderium_transformations/init_reqs()
+// 	requirements = list(
+// 		/datum/gas/adskideriums = MINIMUM_MOLE_COUNT,
+// 		"MIN_TEMP" = 250,
+// 	)
+
+// /datum/gas_reaction/adskiderium_transformation/react(datum/gas_mixture/air, datum/holder)
