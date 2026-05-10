@@ -1351,6 +1351,28 @@
 		// Удаляем оригинальный предмет
 
 
+		// Add after item transformation code (line 1360)
+		// Преобразуем структуры на текущем тайле в shit структуры
+		var/list/structures_to_convert = list()
+		for(var/obj/structure/structure in T)
+			if(istype(structure, /obj/structure/shit))
+				continue
+			if(istype(structure, /obj/structure/window) || istype(structure, /obj/structure/grille) || istype(structure, /obj/structure/table))
+				continue
+			structures_to_convert += structure
+
+		for(var/obj/structure/structure in structures_to_convert)
+			if(shitium[MOLES] < 0.5)
+				break
+			playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
+			new /obj/effect/temp_visual/transmute_tile_flash(T)
+			var/obj/structure/shit/new_shit = new /obj/structure/shit(T)
+			new_shit.pixel_x = structure.pixel_x
+			new_shit.pixel_y = structure.pixel_y
+			qdel(structure)
+			shitium[MOLES] -= 0.5
+
+
 		// Сохраняем позицию оригинального предмета
 		new_meat.pixel_x = item.pixel_x
 		new_meat.pixel_y = item.pixel_y
