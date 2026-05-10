@@ -489,6 +489,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 	if(SEND_SIGNAL(parent, COMSIG_ATOM_PRE_STORED_ITEM, to_insert, user, force, messages) & BLOCK_STORAGE_INSERT)
 		return FALSE
+	if(SEND_SIGNAL(to_insert, COMSIG_ITEM_PRE_STORAGE_INSERTION, parent, user, force, messages) & BLOCK_STORAGE_INSERT)
+		return FALSE
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_STORED_ITEM, to_insert, user, force)
 	SEND_SIGNAL(src, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
@@ -1068,10 +1070,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(to_show.active_storage != src && (to_show.stat == CONSCIOUS))
 		for(var/obj/item/thing in real_location)
 			if(thing.on_found(to_show))
-				to_show.active_storage.hide_contents(to_show)
+				to_show.active_storage?.hide_contents(to_show)
+				return FALSE
 
-	if(to_show.active_storage)
-		to_show.active_storage.hide_contents(to_show)
+	to_show.active_storage?.hide_contents(to_show)
 
 	to_show.active_storage = src
 
