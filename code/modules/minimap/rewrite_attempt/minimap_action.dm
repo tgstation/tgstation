@@ -58,8 +58,3 @@
 /datum/action/minimap_new/proc/remove_huds(datum/hud/hud)
 	for(var/element in huds)
 		hud.remove_screen_object(element)
-
-/mob/Initialize(mapload)
-	. = ..()
-	var/datum/action/minimap_new/minimap_action = new
-	minimap_action.Grant(src)

@@ -8,8 +8,6 @@
 	var/memorized_code
 	var/list/team_discounts
 	var/datum/weakref/war_button_ref
-	/// Tactical map that is shared between all nuke ops
-	var/datum/tactical_map/nuclear/nuclear_tacmap
 
 /datum/team/nuclear/New()
 	..()
@@ -18,10 +16,6 @@
 	var/datum/objective/maingoal = new core_objective()
 	maingoal.team = src
 	objectives += maingoal
-
-	if(isnull(nuclear_tacmap))
-		nuclear_tacmap = new()
-		nuclear_tacmap.initialize_tacmap()
 
 	// when a nuke team is created, the infiltrator has not loaded in yet - it takes some time. so no nuke, we have to wait
 	addtimer(CALLBACK(src, PROC_REF(assign_nuke_delayed)), 4 SECONDS)
