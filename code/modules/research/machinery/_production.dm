@@ -413,16 +413,17 @@
 
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
 	var/list/design_materials = design.materials.Copy()
-	for(var/mat_type, amount in design.removed_materials)
-		design_materials[mat_type] -= amount
-		if(expected_materials[mat_type] <= 0)
-			design_materials -= mat_type
 
 	if(!materials.mat_container.has_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1))
 		say("Unable to continue production, missing materials.")
 		finalize_build()
 		return
 	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "processed", "[design.name]", user_data = user_data)
+
+	for(var/mat_type, amount in design.removed_materials)
+		design_materials[mat_type] -= amount
+		if(design_materials[mat_type] <= 0)
+			design_materials -= mat_type
 
 	var/atom/movable/created
 	var/number_to_make = 1

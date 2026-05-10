@@ -107,9 +107,9 @@ other types of metals and chemistry for reagents).
 	return isnull(desc) ? initial(object_build_item_path.desc) : desc
 
 /// Produce the resulting item, optionally with a specfic amount if we're a stack design
-/datum/design/proc/create_result(atom/drop_loc, list/custom_materials, amount = null)
-	if (!ispath(build_path, /obj/item/stack) && !isnull(amount))
-		CRASH("[src] create_result was passed an amount, despite not being a stack design!")
+/datum/design/proc/create_result(atom/drop_loc, list/custom_materials, amount)
+	if (!ispath(build_path, /obj/item/stack) && amount > 1)
+		CRASH("[src] create_result was passed an amount higher than 1, despite not being a stack design!")
 
 	if (!ispath(build_path, /obj/item/stack))
 		return new build_path(drop_loc)

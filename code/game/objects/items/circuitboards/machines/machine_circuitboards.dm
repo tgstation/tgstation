@@ -1636,7 +1636,6 @@
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/servo = 1,
 		)
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/machine/tank_compressor
 	name = "Tank Compressor"
@@ -1708,6 +1707,7 @@
 		/datum/stock_part/matter_bin = 2,
 		/obj/item/reagent_containers/cup/beaker = 1,
 	)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/machine/smelter
 	name = "Boulder Smelter"

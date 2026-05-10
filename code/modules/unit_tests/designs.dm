@@ -33,7 +33,7 @@
 
 /datum/unit_test/design_source/Run()
 	var/list/all_designs = list()
-	var/list/mat_requirements_types = typesof(/datum/material_requirement)
+	var/list/generic_types = typesof(/datum/material_requirement) + typesof(/datum/material_slot) //we skip designs that can be printed with non-specific materials.
 
 	for (var/datum/design/design as anything in subtypesof(/datum/design))
 		design = new design()
@@ -45,25 +45,24 @@
 		all_designs[design.id] = design.type
 
 		//Perform material checks onto the design if needed to ensure the required materials (minus the removed_materials) match the custom materials of the object.
-		if(design.inherit_materials != DESIGN_INHERIT_MATS || !design.build_path || is_type_in_list(datum/material_requirement, design.materials))
+		if(design.inherit_materials != DESIGN_INHERIT_MATS || !design.build_path || !length(design.materials) || length(generic_types & design.materials))
 			continue
 
 		var/atom/generic_instance = allocate(design.build_path)
+
 		var/list/expected_materials = design.materials.Copy()
 		for(var/mat_type, amount in design.removed_materials)
 			expected_materials[mat_type] -= amount
 			if(expected_materials[mat_type] <= 0)
 				expected_materials -= mat_type
-
 		var/atom/printed_instance = allocate(design.build_path)
-		if(!isstack(printed_instance))
-			split_materials_uniformly(expected_materials, 1, printed_instance)
+		split_materials_uniformly(expected_materials, 1, printed_instance)
 
 		if(generic_instance.compare_materials(printed_instance))
 			continue
 
 		var/target_var = NAMEOF(generic_instance, custom_materials)
-		var/warning = "[target_var] of [generic_instance.type] differs from the materials required by the design [design.type]"
+		var/warning = "[target_var] of [generic_instance.type] differs from the materials of design [design.type]"
 
 		var/what_it_should_be
 		var/what_it_is
@@ -78,7 +77,7 @@
 			what_it_is = generic_instance.transcribe_materials_list()
 
 		TEST_FAIL("[warning]. should be: [target_var] = [what_it_should_be] (current value: [what_it_is]). \
-			Fix that or set the [NAMEOF(design, perform_materials_checks)] var of [design.type] to FALSE. \
+			Fix it or change the value of the [NAMEOF(design, inherit_materials)] var of [design.type]. \
 			You can also edit the [NAMEOF(design, removed_materials)] alist of the design.")
 
 		if(generic_instance.contents.len)
