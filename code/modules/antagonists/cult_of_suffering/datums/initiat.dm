@@ -18,6 +18,9 @@
 
 /datum/antagonist/cult_of_suffering/apostate/on_gain()
 		. = ..()
+
+
+		RegisterSignal(owner.current, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attack))
 		// Добавляем цель убийства
 		var/datum/objective/berserk/kill_objective = new
 		kill_objective.owner = owner
@@ -57,3 +60,15 @@
 		if(owner?.current)
 				to_chat(owner.current, span_notice("Эффект газа Адиум ослабевает... сознание проясняется."))
 		owner.remove_antag_datum(type)
+
+/datum/antagonist/cult_of_suffering/apostate/proc/on_attack(mob/living/source, atom/target)
+	SIGNAL_HANDLER
+
+	// Минимальная проверка: удар по живому (не себе)
+	if(!isliving(target) || target == source)
+		return
+
+	// Конвертируем в Cultist
+	owner.remove_antag_datum(type)
+	owner.add_antag_datum(/datum/antagonist/cult_of_suffering/cultist)
+	to_chat(owner.current, span_cult("КРОВЬЮ СТРАДАНИЯ ТЫ ПРИНЯТ В КУЛЬТ!"))

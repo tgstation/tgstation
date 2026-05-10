@@ -1,5 +1,5 @@
 /datum/antagonist/cult_of_suffering
-	name = "Cultist"
+	name = "Cult of Suffering"
 	roundend_category = "cult of suffering"
 	antagpanel_category = "Cult of Suffering"
 	antag_hud_name = "cult_of_suffering"

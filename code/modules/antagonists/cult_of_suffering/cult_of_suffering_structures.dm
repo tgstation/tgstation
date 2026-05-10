@@ -1,5 +1,5 @@
 // /obj/structure/destructible/cult_of_suffering
-// 	icon = 'icons/obj/antags/cult_of_suffer/structures.dmi'
+	// icon = 'icons/obj/antags/cult_of_suffer/structures.dmi'
 // 	break_sound = 'sound/effects/hallucinations/veryfar_noise.ogg'
 // 	density = TRUE
 // 	anchored = TRUE
