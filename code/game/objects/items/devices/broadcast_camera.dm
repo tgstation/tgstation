@@ -135,7 +135,7 @@
 	slowdown = 0.3
 	item_flags = parent_type::item_flags | SLOWS_WHILE_IN_HAND
 	broadcast_name = "Camera Broadcast"
-	camera_range = 4
+	camera_range = 5
 
 /obj/item/broadcast_camera/cargo/Initialize(mapload)
 	. = ..()
