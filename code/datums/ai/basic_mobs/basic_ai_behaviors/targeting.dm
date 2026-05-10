@@ -73,6 +73,10 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/atom/target = pick_final_target(controller, filtered_targets)
+
+	EVLOG_MAPTEXT(controller, "AI Targetting", "[controller.pawn] has selected [target] as a target for blackboard key [target_key]!", get_turf(target), "Target: [target]")
+	EVLOG_LINES(controller, "AI Targetting", "Line to target", get_turf(controller.pawn), get_turf(target))
+
 	controller.set_blackboard_key(target_key, target)
 	controller.set_blackboard_key(BB_BASIC_MOB_TARGET_REFRESH_COOLDOWN, world.time + priority_refresh_cooldown)
 
