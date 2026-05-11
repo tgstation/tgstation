@@ -43,7 +43,7 @@
 	RegisterSignal(cuffed, COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS, PROC_REF(get_strippable_action))
 	RegisterSignal(cuffed, COMSIG_ITEM_STRIPPABLE_ALT_ACTION, PROC_REF(do_strippable_action))
 	RegisterSignal(cuffed, COMSIG_ITEM_PRE_STORAGE_INSERTION, PROC_REF(block_storage_insert))
-	RegisterSignal(cuffed, COMSIG_ITEM_CUFFED_TO_MOB, PROC_REF(block_item_cuff))
+	RegisterSignal(cuffed, COMSIG_ITEM_PRE_CUFFED_TO_MOB, PROC_REF(block_item_cuff))
 
 	RegisterSignals(cuffs, list(COMSIG_ITEM_EQUIPPED, COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(cleanup_effect))
 	RegisterSignal(cuffs, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(on_item_update_appearance))
@@ -63,7 +63,7 @@
 	UnregisterSignal(cuffed, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_UPDATE_APPEARANCE,
-		COMSIG_ITEM_CUFFED_TO_MOB,
+		COMSIG_ITEM_PRE_CUFFED_TO_MOB,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS,

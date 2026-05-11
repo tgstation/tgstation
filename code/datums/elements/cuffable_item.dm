@@ -62,7 +62,7 @@
 	if(cuffs.handcuffs_clumsiness_check(user))
 		return
 
-	if(SEND_SIGNAL(source, COMSIG_ITEM_CUFFED_TO_MOB, user, cuffs) & BLOCK_ITEM_CUFF)
+	if(SEND_SIGNAL(source, COMSIG_ITEM_PRE_CUFFED_TO_MOB, user, cuffs) & BLOCK_ITEM_CUFF)
 		return
 
 	source.balloon_alert(user, "cuffing item...")
