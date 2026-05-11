@@ -81,11 +81,11 @@
 	if(usr == get_mob())
 		display?.clear_canvas_and_labels(usr)
 
-/// Label tool — left-click the map to place a text label. Right-click to clear all labels.
+/// Label tool — click the map to place labels, right-click a label to remove it, right-click this button to clear all labels.
 /atom/movable/screen/minimap_toolbar_button/label
 	icon_state = "label"
 	button_slot = 6
-	desc = "Toggle label mode. Click the map to place a label. Right-click this button to clear all labels."
+	desc = "Toggle label mode. Click the map to place a label. Right-click a nearby label on the map to remove it. Right-click this button to clear all labels."
 	mouse_icon = 'icons/ui_icons/minimap/minimap_mouse/label.dmi'
 
 /atom/movable/screen/minimap_toolbar_button/label/Click(location, control, params)

@@ -1,4 +1,5 @@
 #define MINIMAP_TOOLBAR_ERASE_RANGE 5
+#define MINIMAP_LABEL_REMOVE_PIXEL_RANGE 5
 
 /// Screen object that renders a [/datum/minimap] base map icon on the HUD.
 /atom/movable/screen/minimap_display
@@ -126,11 +127,38 @@
 	var/list/modifiers = params2list(params)
 	var/icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
+	var/right_click = LAZYACCESS(modifiers, RIGHT_CLICK)
 	if(can_draw && LAZYACCESS(modifiers, CTRL_CLICK))
 		INVOKE_ASYNC(src, PROC_REF(async_place_label), usr, icon_x, icon_y)
 		return
 	if(can_draw && label_mode)
+		if(right_click)
+			remove_nearest_label(icon_x, icon_y, usr)
+			return
 		INVOKE_ASYNC(src, PROC_REF(async_place_label), usr, icon_x, icon_y)
+
+/atom/movable/screen/minimap_display/proc/remove_nearest_label(icon_x, icon_y, mob/user)
+	var/list/labels_for_z = get_or_create_annotation_list(/atom/movable/screen/minimap_element/label, minimap.z)
+	if(!length(labels_for_z))
+		return
+	var/atom/movable/screen/minimap_element/label/nearest
+	var/nearest_dist_sq
+	for(var/atom/movable/screen/minimap_element/label/label as anything in labels_for_z)
+		var/dx = label.pixel_w - icon_x
+		var/dy = label.pixel_z - icon_y
+		var/dist_sq = (dx * dx) + (dy * dy)
+		if(dist_sq > (MINIMAP_LABEL_REMOVE_PIXEL_RANGE * MINIMAP_LABEL_REMOVE_PIXEL_RANGE))
+			continue
+		if(isnull(nearest_dist_sq) || dist_sq < nearest_dist_sq)
+			nearest_dist_sq = dist_sq
+			nearest = label
+	if(isnull(nearest))
+		return
+	labels_for_z -= nearest
+	hide_minimap_element(nearest)
+	qdel(nearest)
+	sync_visible_objects(minimap?.z)
+	log_minimap_drawing("[key_name(user)] removed a minimap label")
 
 /atom/movable/screen/minimap_display/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
@@ -528,3 +556,4 @@
 	valid_minimap_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP, MINIMAP_SYNDICATE_MECH_BLIP)
 
 #undef MINIMAP_TOOLBAR_ERASE_RANGE
+#undef MINIMAP_LABEL_REMOVE_PIXEL_RANGE
