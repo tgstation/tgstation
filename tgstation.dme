@@ -5049,7 +5049,6 @@
 #include "code\modules\minimap\minimap.dm"
 #include "code\modules\minimap\minimap_action.dm"
 #include "code\modules\minimap\minimap_table.dm"
-#include "code\modules\minimap\minimap_verbs.dm"
 #include "code\modules\minimap\hud\minimal_z_level.dm"
 #include "code\modules\minimap\hud\minimap_display.dm"
 #include "code\modules\minimap\hud\minimap_drawing.dm"
