@@ -1,11 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 9
-	},
-/obj/item/dice/d6,
-/turf/open/floor/holofloor/white,
-/area/template_noop)
 "b" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -13,13 +6,8 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "c" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 10
-	},
-/obj/structure/closet/secure_closet/brig{
-	req_one_access = null
-	},
-/turf/open/floor/holofloor/white,
+/obj/effect/turf_decal/caution,
+/turf/open/floor/holofloor/dark,
 /area/template_noop)
 "d" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -28,22 +16,21 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "e" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 5
-	},
-/obj/effect/turf_decal/board_number/four,
-/obj/machinery/flasher/directional/west{
-	id = "Holodeck Cell 4";
-	pixel_x = 0
-	},
-/turf/open/floor/holofloor/white,
-/area/template_noop)
-"f" = (
-/obj/machinery/door/window/brigdoor/security/cell/left/directional/south{
-	id = "Holodeck Cell 4";
-	name = "Cell 4"
+/obj/effect/turf_decal/board_number/two{
+	pixel_y = 21
 	},
 /turf/open/floor/holofloor,
+/area/template_noop)
+"f" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/machinery/flasher/directional/east{
+	id = "Holodeck Cell 3";
+	pixel_x = 0
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "g" = (
 /obj/structure/table,
@@ -57,6 +44,14 @@
 	name = "Cell 4";
 	pixel_y = -3
 	},
+/obj/item/restraints/handcuffs{
+	pixel_x = -17;
+	pixel_y = 9
+	},
+/obj/item/restraints/handcuffs{
+	pixel_x = -17;
+	pixel_y = -3
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "h" = (
@@ -66,21 +61,19 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "j" = (
-/obj/structure/chair{
-	pixel_y = -2
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/holofloor/dark,
-/area/template_noop)
-"k" = (
+/obj/structure/bed,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
-/obj/structure/closet/secure_closet/brig{
-	req_one_access = null
-	},
+/obj/item/bedsheet/red,
 /turf/open/floor/holofloor/white,
+/area/template_noop)
+"k" = (
+/obj/structure/chair/e_chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/holofloor/dark,
 /area/template_noop)
 "l" = (
 /obj/machinery/status_display/door_timer{
@@ -91,38 +84,46 @@
 /obj/structure/table,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
-"o" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 9
-	},
-/obj/effect/turf_decal/board_number/three,
-/obj/machinery/flasher/directional/east{
-	id = "Holodeck Cell 3";
-	pixel_x = 0
-	},
-/turf/open/floor/holofloor/white,
-/area/template_noop)
-"p" = (
+"n" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
-/obj/structure/bed,
-/obj/item/bedsheet/red,
+/obj/structure/closet/secure_closet/brig/holodeck{
+	id = "Holodeck Cell 4"
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"o" = (
+/obj/effect/turf_decal/board_number/four,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"p" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/item/instrument/harmonica,
+/obj/machinery/door/window/brigdoor/security/holodeck/left/directional/north{
+	id = "Holodeck Cell 3";
+	name = "Cell 3"
+	},
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "q" = (
-/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/board_number/one{
+	pixel_y = 21
+	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "r" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/holofloor,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/structure/closet/secure_closet/brig/holodeck{
+	id = "Holodeck Cell 3"
+	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "s" = (
-/obj/machinery/door/window/brigdoor/security/cell/left/directional/north{
-	name = "Holodeck Cell 2";
-	id = "Holodeck Cell 2"
-	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "t" = (
@@ -131,41 +132,45 @@
 	},
 /obj/structure/table,
 /obj/machinery/recharger,
+/obj/item/restraints/handcuffs{
+	pixel_x = -17;
+	pixel_y = 9
+	},
+/obj/item/restraints/handcuffs{
+	pixel_x = -17;
+	pixel_y = -3
+	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "u" = (
-/obj/machinery/door/window/brigdoor/security/cell/left/directional/north{
-	name = "Holodeck Cell 1";
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/structure/closet/secure_closet/brig/holodeck{
 	id = "Holodeck Cell 1"
 	},
-/turf/open/floor/holofloor,
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "v" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 6
+	dir = 9
 	},
-/obj/structure/bed,
-/obj/item/bedsheet/red,
+/obj/structure/closet/secure_closet/brig/holodeck{
+	id = "Holodeck Cell 2"
+	},
 /turf/open/floor/holofloor/white,
 /area/template_noop)
-"w" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/holofloor,
-/area/template_noop)
 "x" = (
-/obj/machinery/door/window/brigdoor/security/cell/left/directional/south{
-	id = "Holodeck Cell 3";
-	name = "Cell 3"
-	},
-/turf/open/floor/holofloor,
-/area/template_noop)
-"y" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
 /obj/structure/bed,
 /obj/item/bedsheet/red,
 /turf/open/floor/holofloor/white,
+/area/template_noop)
+"y" = (
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/holofloor/dark,
 /area/template_noop)
 "z" = (
 /obj/machinery/computer/records/security{
@@ -174,32 +179,26 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "A" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 5
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 1
 	},
-/obj/item/instrument/harmonica,
-/turf/open/floor/holofloor/white,
+/turf/open/floor/holofloor/dark,
 /area/template_noop)
 "B" = (
-/obj/structure/rack,
-/obj/item/restraints/handcuffs{
-	pixel_x = -3;
-	pixel_y = 5
+/obj/structure/closet{
+	name = "evidence closet"
 	},
-/obj/item/restraints/handcuffs{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "C" = (
-/obj/structure/bed,
 /obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 9
+	dir = 6
 	},
-/obj/item/bedsheet/red,
+/obj/item/coin/antagtoken,
+/obj/machinery/door/window/brigdoor/security/holodeck/left/directional/south{
+	id = "Holodeck Cell 1";
+	name = "Cell 1"
+	},
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "D" = (
@@ -211,15 +210,6 @@
 /obj/structure/table,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
-"E" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 6
-	},
-/obj/structure/closet/secure_closet/brig{
-	req_one_access = null
-	},
-/turf/open/floor/holofloor/white,
-/area/template_noop)
 "G" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -228,30 +218,29 @@
 /area/template_noop)
 "H" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 10
+	dir = 6
 	},
-/obj/effect/turf_decal/board_number/one,
-/obj/machinery/flasher/directional/east{
-	id = "Holodeck Cell 1";
-	pixel_x = 0
+/obj/machinery/flasher/directional/west{
+	id = "Holodeck Cell 2";
+	pixel_x = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "I" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 5
+	dir = 10
 	},
-/obj/structure/closet/secure_closet/brig{
-	req_one_access = null
+/obj/machinery/flasher/directional/east{
+	id = "Holodeck Cell 1";
+	pixel_x = 0
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "J" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 10
-	},
-/obj/item/toy/figure/prisoner,
-/turf/open/floor/holofloor/white,
+/obj/effect/turf_decal/trimline/red/filled/warning,
+/turf/open/floor/holofloor/dark,
 /area/template_noop)
 "K" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -278,11 +267,26 @@
 /obj/structure/table,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
+"O" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/machinery/flasher/directional/west{
+	id = "Holodeck Cell 4";
+	pixel_x = 0
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/holofloor/white,
+/area/template_noop)
 "P" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 6
+	dir = 9
 	},
-/obj/item/coin/antagtoken,
+/obj/item/dice/d6,
+/obj/machinery/door/window/brigdoor/security/holodeck/right/directional/north{
+	name = "Cell 4";
+	id = "Holodeck Cell 4"
+	},
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "Q" = (
@@ -300,6 +304,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "R" = (
+/obj/effect/turf_decal/board_number/three,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "S" = (
@@ -312,11 +317,8 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
-/obj/effect/turf_decal/board_number/two,
-/obj/machinery/flasher/directional/west{
-	id = "Holodeck Cell 2";
-	pixel_x = 1
-	},
+/obj/structure/bed,
+/obj/item/bedsheet/red,
 /turf/open/floor/holofloor/white,
 /area/template_noop)
 "U" = (
@@ -329,20 +331,34 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "V" = (
-/obj/structure/chair{
+/obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/caution/stand_clear,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "W" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/holofloor,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/obj/item/toy/figure/prisoner,
+/obj/machinery/door/window/brigdoor/security/holodeck/right/directional/south{
+	name = "Cell 2";
+	id = "Holodeck Cell 2"
+	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "X" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/holofloor,
+/area/template_noop)
+"Y" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/obj/structure/bed,
+/obj/item/bedsheet/red,
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "Z" = (
 /obj/structure/chair/comfy/black,
@@ -350,110 +366,110 @@
 /area/template_noop)
 
 (1,1,1) = {"
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
+j
+I
+s
+s
+s
+s
+s
+s
+f
+Y
 "}
 (2,1,1) = {"
-r
-r
-R
+u
+C
+q
 X
 S
 S
 G
 R
-r
+p
 r
 "}
 (3,1,1) = {"
-C
-H
-u
+y
+y
+s
 K
 D
 U
 b
-x
-o
-p
+s
+y
+y
 "}
 (4,1,1) = {"
-I
-P
-w
+B
+J
+s
 K
 h
 Q
 b
-q
+s
 A
-E
+c
 "}
 (5,1,1) = {"
 B
-j
-R
+J
+s
 K
 Z
 t
 b
-R
+s
 V
-B
+k
 "}
 (6,1,1) = {"
-k
+B
 J
-w
+s
 K
 z
 g
 b
-q
-a
+s
+A
 c
 "}
 (7,1,1) = {"
 y
-T
+y
 s
 K
 l
 N
 b
-f
-e
-v
+s
+y
+y
 "}
 (8,1,1) = {"
+v
 W
-W
-R
+e
 L
 d
 d
 M
-R
-W
-W
+o
+P
+n
 "}
 (9,1,1) = {"
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
+x
+H
+s
+s
+s
+s
+s
+s
+O
+T
 "}
