@@ -14,7 +14,7 @@
 	AddComponent(\
 		/datum/component/electrified_buckle,\
 		overlays_to_add = list(export_to_component),\
-		shock_flags = (SHOCK_NOGLOVES | SHOCK_IGNORE_IMMUNITY)\
+		shock_flags = (SHOCK_NOGLOVES)\
 	)
 
 /obj/structure/chair/e_chair/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
