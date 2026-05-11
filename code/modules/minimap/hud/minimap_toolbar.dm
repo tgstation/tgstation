@@ -8,6 +8,10 @@
 	var/button_slot = 0
 	/// Mouse cursor icon set when this button's tool is active. null = default cursor.
 	var/icon/mouse_icon = null
+	/// Draw color this button represents. null = erase mode.
+	var/draw_color = null
+	/// HUD key for this tool button. Used to track selection state.
+	var/tool_key = null
 
 /atom/movable/screen/minimap_toolbar_button/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/minimap_display/minimap_display)
 	. = ..()
@@ -20,21 +24,31 @@
 /atom/movable/screen/minimap_toolbar_button/MouseEntered(location, control, params)
 	add_filter("mouseover", 1, outline_filter(1, COLOR_LIME))
 	if(desc)
-		openToolTip(usr, src, params, title = name, content = desc)
+		openToolTip(usr, src, title = name, content = desc)
 
 /atom/movable/screen/minimap_toolbar_button/MouseExited(location, control, params)
 	remove_filter("mouseover")
 	if(desc)
 		closeToolTip(usr)
 
+/// Returns TRUE if this button should be shown as active.
+/atom/movable/screen/minimap_toolbar_button/proc/is_active()
+	return display && !display.label_mode && display.selected_tool_key == tool_key
+
+/// Updates the button's visual state to show if it's active.
+/atom/movable/screen/minimap_toolbar_button/proc/update_active_state()
+	if(is_active())
+		add_filter("active", 1, outline_filter(2, COLOR_YELLOW))
+	else
+		remove_filter("active")
+
 /atom/movable/screen/minimap_toolbar_button/draw
 	desc = "Left-drag on the map to draw."
-	/// The color written to [/atom/movable/screen/minimap_display/var/draw_color] when selected.
-	var/draw_color = COLOR_PINK
 
 /atom/movable/screen/minimap_toolbar_button/draw/Click(location, control, params)
 	if(usr == get_mob())
-		display?.select_draw_tool(draw_color, mouse_icon)
+		display?.select_draw_tool(draw_color, mouse_icon, tool_key)
+		display?.update_toolbar_button_states()
 
 /atom/movable/screen/minimap_toolbar_button/draw/red
 	button_slot = 0
@@ -69,13 +83,17 @@
 
 /atom/movable/screen/minimap_toolbar_button/erase/Click(location, control, params)
 	if(usr == get_mob())
-		display?.select_draw_tool(null, mouse_icon)
+		display?.select_draw_tool(null, mouse_icon, HUD_TAC_MINIMAP_TOOL_ERASE)
+		display?.update_toolbar_button_states()
 
 /// Clear tool — removes all drawings and labels.
 /atom/movable/screen/minimap_toolbar_button/clear
 	icon_state = "clear"
 	button_slot = 5
 	desc = "Clear all drawings and labels."
+
+/atom/movable/screen/minimap_toolbar_button/clear/is_active()
+	return FALSE
 
 /atom/movable/screen/minimap_toolbar_button/clear/Click(location, control, params)
 	if(usr == get_mob())
@@ -87,6 +105,9 @@
 	button_slot = 6
 	desc = "Toggle label mode. Click the map to place a label. Right-click a nearby label on the map to remove it. Right-click this button to clear all labels."
 	mouse_icon = 'icons/ui_icons/minimap/minimap_mouse/label.dmi'
+
+/atom/movable/screen/minimap_toolbar_button/label/is_active()
+	return display && display.label_mode
 
 /atom/movable/screen/minimap_toolbar_button/label/Click(location, control, params)
 	if(usr != get_mob())

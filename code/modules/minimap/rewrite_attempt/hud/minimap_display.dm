@@ -38,8 +38,6 @@
 	var/label_mode = FALSE
 	/// Mouse cursor icon for the currently selected draw/erase tool. Restored when label mode is toggled off.
 	var/icon/active_mouse_icon
-	/// Tracks which tool button is visually selected. null = nothing selected.
-	var/selected_tool_key = null
 	/// Maps HUD key → button type path. Used to create/remove toolbar buttons via [/datum/hud].
 	var/static/list/toolbar_button_types = list(
 		HUD_TAC_MINIMAP_TOOL_RED    = /atom/movable/screen/minimap_toolbar_button/draw/red,
@@ -125,7 +123,6 @@
 	if(can_draw)
 		for(var/hud_key, hud_type in toolbar_button_types)
 			var/atom/movable/screen/minimap_toolbar_button/button = new hud_type(null, hud_owner, src)
-			button.tool_key = hud_key
 			hud_owner.add_screen_object(button, hud_key, HUD_GROUP_STATIC, update_screen = FALSE)
 	reposition_toolbar_buttons()
 	hud_owner.show_hud(hud_owner.hud_version)
@@ -396,18 +393,16 @@
 			closest_distance = current_distance
 	return closest_z
 
-/atom/movable/screen/minimap_display/proc/select_draw_tool(color, icon/mouse_icon = null, tool_key = null)
+/atom/movable/screen/minimap_display/proc/select_draw_tool(color, icon/mouse_icon = null)
 	if(!can_draw)
 		return
-	// Toggle: if clicking the same tool, deselect it
-	if(selected_tool_key == tool_key && tool_key != null)
-		selected_tool_key = null
+	// Toggle: if clicking the same tool, disable it
+	if(draw_color == color)
 		draw_color = null
 		active_mouse_icon = null
 		if(hud?.mymob?.client)
 			hud.mymob.client.mouse_pointer_icon = null
 		return
-	selected_tool_key = tool_key
 	draw_color = color
 	label_mode = FALSE
 	active_mouse_icon = mouse_icon
@@ -420,15 +415,6 @@
 	label_mode = !label_mode
 	if(hud?.mymob?.client)
 		hud.mymob.client.mouse_pointer_icon = label_mode ? label_mouse_icon : active_mouse_icon
-	update_toolbar_button_states()
-
-/atom/movable/screen/minimap_display/proc/update_toolbar_button_states()
-	if(!hud)
-		return
-	for(var/hud_key in toolbar_button_types)
-		var/atom/movable/screen/minimap_toolbar_button/button = hud.screen_objects[hud_key]
-		if(button)
-			button.update_active_state()
 
 /atom/movable/screen/minimap_display/proc/reposition_toolbar_buttons()
 	if(!hud || !minimap)
@@ -449,6 +435,26 @@
 		var/atom/movable/screen/minimap_toolbar_button/button = hud.screen_objects[key]
 		if(button)
 			button.screen_loc = "1:[btn_x],1:[btn_top_y - ICON_SIZE_Y - button.button_slot * ICON_SIZE_Y]"
+
+/atom/movable/screen/minimap_display/proc/update_toolbar_button_states()
+	if(!hud)
+		return
+	// Update draw tool button states
+	var/atom/movable/screen/minimap_toolbar_button/draw/red_btn = hud.screen_objects[HUD_TAC_MINIMAP_TOOL_RED]
+	var/atom/movable/screen/minimap_toolbar_button/draw/yellow_btn = hud.screen_objects[HUD_TAC_MINIMAP_TOOL_YELLOW]
+	var/atom/movable/screen/minimap_toolbar_button/draw/purple_btn = hud.screen_objects[HUD_TAC_MINIMAP_TOOL_PURPLE]
+	var/atom/movable/screen/minimap_toolbar_button/draw/blue_btn = hud.screen_objects[HUD_TAC_MINIMAP_TOOL_BLUE]
+	var/atom/movable/screen/minimap_toolbar_button/erase/erase_btn = hud.screen_objects[HUD_TAC_MINIMAP_TOOL_ERASE]
+	if(red_btn)
+		red_btn.update_active_state(draw_color == TACMAP_DRAWING_RED)
+	if(yellow_btn)
+		yellow_btn.update_active_state(draw_color == TACMAP_DRAWING_YELLOW)
+	if(purple_btn)
+		purple_btn.update_active_state(draw_color == TACMAP_DRAWING_PURPLE)
+	if(blue_btn)
+		blue_btn.update_active_state(draw_color == TACMAP_DRAWING_BLUE)
+	if(erase_btn)
+		erase_btn.update_active_state(isnull(draw_color))
 
 /atom/movable/screen/minimap_display/proc/clear_canvas_and_labels(mob/user)
 	if(!can_draw)
