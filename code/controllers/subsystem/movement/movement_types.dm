@@ -74,6 +74,7 @@
 /datum/move_loop/proc/loop_stopped()
 	SHOULD_CALL_PARENT(TRUE)
 	status &= ~MOVELOOP_STATUS_RUNNING
+	EVLOG_TEXT(moving, "Moveloops", "Moveloop stopped")
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_STOP)
 
 /datum/move_loop/proc/info_deleted(datum/source)
@@ -127,6 +128,10 @@
 
 	owner?.processing_move_loop_flags = flags
 	var/result = move() //Result is an enum value. Enums defined in __DEFINES/movement.dm
+
+	if(result)
+		EVLOG_PATH(moving, "Moveloops", "Moved using [src]", list(old_loc, moving.loc)) //You might think, this runs a lot; but if not logging, it only does a lookup on the event logger.
+
 	if(moving)
 		var/direction = get_dir(old_loc, moving.loc)
 		SEND_SIGNAL(moving, COMSIG_MOVABLE_MOVED_FROM_LOOP, src, old_dir, direction)
@@ -413,7 +418,7 @@
 /datum/move_loop/has_target/jps/loop_stopped()
 	. = ..()
 	movement_path = null
-	EVLOG_TEXT(moving?.ai_controller, "JPS Moveloops", "Moveloop stopped")
+
 
 /datum/move_loop/has_target/jps/Destroy()
 	avoid = null
@@ -433,7 +438,7 @@
 /datum/move_loop/has_target/jps/proc/on_finish_pathing(list/path)
 	movement_path = path
 	is_pathing = FALSE
-	EVLOG_PATH(moving?.ai_controller, "JPS Moveloops", "Planned AI path", movement_path)
+	EVLOG_PATH(moving, "JPS", "Planned AI path", movement_path)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, path)
 
 /datum/move_loop/has_target/jps/move()
@@ -441,7 +446,7 @@
 		if(is_pathing)
 			return MOVELOOP_NOT_READY
 		else
-			EVLOG_TEXT(moving?.ai_controller, "JPS Moveloops", "Path recalculating due to lack of path")
+			EVLOG_TEXT(moving, "JPS", "Path recalculating due to lack of path")
 			INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 			return MOVELOOP_FAILURE
 
@@ -453,11 +458,10 @@
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
 	// to the side while moving but could maybe still follow their path without needing a whole new path
 	if(get_turf(moving) == next_step)
-		EVLOG_PATH(moving?.ai_controller, "JPS Moveloops", "Moved using JPS path", list(old_loc, next_step)) //You might think, this runs a lot; but if not logging, it only does a lookup on the event logger.
 		if(length(movement_path))
 			movement_path.Cut(1,2)
 	else
-		EVLOG_TEXT(moving?.ai_controller, "JPS Moveloops", "Path recalculating due to obstruction")
+		EVLOG_TEXT(moving, "Moveloops", "Path recalculating due to obstruction")
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE
 

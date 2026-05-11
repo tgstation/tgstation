@@ -63,8 +63,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 
 /datum/event_logger/Destroy()
 	_clear_all_overlays()
-	for(var/ref in tracks)
-		qdel(tracks[ref])
+	QDEL_LIST_ASSOC_VAL(tracks)
 	tracks = null
 	categories = null
 	user_overlays = null
@@ -244,7 +243,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 		else if(log_type == EVLOG_TYPE_LINES)
 			var/turf/turf_A = locate(evt["x1"], evt["y1"], evt["z1"])
 			var/turf/turf_B = locate(evt["x2"], evt["y2"], evt["z2"])
-			if(turf_A && turf_B && !(turf_A == turf_B))
+			if(turf_A && turf_B && turf_A != turf_B)
 				images += _make_line_images(turf_A, turf_B, color)
 
 		//Use SSPathfinder to render the full path
@@ -264,7 +263,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 				var/image/img = image('icons/turf/debug.dmi', found_turf, "circle", PATH_DEBUG_LAYER)
 				SET_PLANE_EXPLICIT(img, BALLOON_CHAT_PLANE, found_turf)
 				img.color = color
-				img.maptext = evt["text"]
+				img.maptext = MAPTEXT(evt["text"])
 				img.maptext_width = 200
 				img.maptext_height = 64
 				img.maptext_x = 0
@@ -290,8 +289,8 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	var/matrix/rot_matrix = matrix()
 	rot_matrix.Turn(Angle)
 
-	var/DX = (32 * turf_B.x + target_px) - (32 * turf_A.x + origin_px)
-	var/DY = (32 * turf_B.y + target_py) - (32 * turf_A.y + origin_py)
+	var/DX = (ICON_SIZE_X * turf_B.x + target_px) - (ICON_SIZE_X * turf_A.x + origin_px)
+	var/DY = (ICON_SIZE_Y * turf_B.y + target_py) - (ICON_SIZE_Y * turf_A.y + origin_py)
 	var/line_length = round(sqrt(DX ** 2 + DY ** 2))
 
 	for(var/N in 0 to line_length - 1 step 32)
@@ -300,20 +299,20 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 		if(DX == 0)
 			Pixel_x = 0
 		else
-			Pixel_x = round(sin(Angle) + 32 * sin(Angle) * (N + 16) / 32)
+			Pixel_x = round(sin(Angle) + ICON_SIZE_X * sin(Angle) * (N + 16) / 32)
 		if(DY == 0)
 			Pixel_y = 0
 		else
-			Pixel_y = round(cos(Angle) + 32 * cos(Angle) * (N + 16) / 32)
+			Pixel_y = round(cos(Angle) + ICON_SIZE_Y * cos(Angle) * (N + 16) / 32)
 
 		var/final_x = turf_A.x
 		var/final_y = turf_A.y
-		if(abs(Pixel_x) > 32)
-			final_x += Pixel_x > 0 ? round(Pixel_x / 32) : ceil(Pixel_x / 32)
-			Pixel_x %= 32
-		if(abs(Pixel_y) > 32)
-			final_y += Pixel_y > 0 ? round(Pixel_y / 32) : ceil(Pixel_y / 32)
-			Pixel_y %= 32
+		if(abs(Pixel_x) > ICON_SIZE_X)
+			final_x += Pixel_x > 0 ? round(Pixel_x / ICON_SIZE_X) : ceil(Pixel_x / ICON_SIZE_X)
+			Pixel_x %= ICON_SIZE_X
+		if(abs(Pixel_y) > ICON_SIZE_Y)
+			final_y += Pixel_y > 0 ? round(Pixel_y / ICON_SIZE_Y) : ceil(Pixel_y / ICON_SIZE_Y)
+			Pixel_y %= ICON_SIZE_Y
 
 		var/turf/seg_turf = locate(final_x, final_y, turf_A.z)
 		if(!seg_turf)
@@ -350,8 +349,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 /// Clears all tracks, categories and overlays.
 /datum/event_logger/proc/clear()
 	_clear_all_overlays()
-	for(var/ref in tracks)
-		qdel(tracks[ref])
+	QDEL_LIST_ASSOC_VAL(tracks)
 	tracks = list()
 	events_by_id = list()
 	categories = list()
@@ -390,24 +388,24 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 
 	// Categories
 	var/list/cats = list() //meow
-	for(var/cat in categories)
-		cats += list(list("name" = cat, "enabled" = categories[cat]))
+	for(var/cat, enabled in categories)
+		cats += list(list("name" = cat, "enabled" = enabled))
 	data["categories"] = cats
 
 	// Tracks
 	var/list/track_list = list()
-	for(var/ref in tracks)
-		var/datum/event_logger_track/track = tracks[ref]
+	for(var/ref, track_val in tracks)
+		var/datum/event_logger_track/track = track_val
 
 		// Converts track info to a list for tgui
 		var/list/info_pairs = list()
-		for(var/title in track.info)
-			info_pairs += list(list("title" = title, "entry" = track.info[title]))
+		for(var/title, entry in track.info)
+			info_pairs += list(list("title" = title, "entry" = entry))
 
 		track_list += list(list(
 			"name" = track.name,
 			"ref" = track.ref,
-			"events" = track.events.Copy(),
+			"events" = track.events,
 			"info" = info_pairs,
 		))
 	data["tracks"] = track_list
@@ -470,6 +468,26 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 			if(tgui_alert(user, "Stop tracking [target]?", "Confirm", list("Stop Tracking", "Cancel")) != "Stop Tracking")
 				return FALSE
 			target.disable_evlogging()
+			return TRUE
+
+		if("remove_track") // Removes a track and all its events from the logger entirely, and stops tracking the datum
+			var/track_ref = params["ref"]
+			var/datum/event_logger_track/track = tracks[track_ref]
+			if(!track)
+				return FALSE
+			// Remove all events from events_by_id
+			for(var/list/evt as anything in track.events)
+				events_by_id -= "[evt["id"]]"
+			// Disable evlogging on the datum if it still exists
+			var/datum/target = locate(track_ref)
+			if(target)
+				target.disable_evlogging()
+			// Clear overlays and deselect if this was the selected track
+			_clear_user_overlays(user)
+			if(selected_ref == track_ref)
+				selected_ref = null
+			qdel(track)
+			tracks -= track_ref
 			return TRUE
 
 		if("teleport_to_event")
