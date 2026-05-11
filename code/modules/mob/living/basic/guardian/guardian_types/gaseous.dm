@@ -42,12 +42,6 @@
 		UnregisterSignal(summoner, COMSIG_LIVING_LIFE)
 	return ..()
 
-/// Prevent our summoner from being on fire
-/mob/living/basic/guardian/gaseous/proc/on_summoner_ignited(mob/living/source)
-	SIGNAL_HANDLER
-	source.extinguish_mob()
-	source.set_fire_stacks(0, remove_wet_stacks = FALSE)
-
 /// Maintain our summoner at a stable body temperature
 /mob/living/basic/guardian/gaseous/proc/on_summoner_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
