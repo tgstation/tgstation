@@ -11,6 +11,7 @@
 	var/mob/living/living_target = target
 	var/mutable_appearance/crown = mutable_appearance('icons/mob/effects/demonic_crown.dmi', "demonic_crown", -HALO_LAYER)
 	crown.pixel_z = 12
+	crown.pixel_x = -1
 	living_target.add_overlay(crown)
 
 

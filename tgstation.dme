@@ -3449,6 +3449,8 @@
 #include "code\modules\antagonists\cult\datums\cult_team.dm"
 #include "code\modules\antagonists\cult\datums\cultist.dm"
 #include "code\modules\antagonists\cult\datums\shade.dm"
+#include "code\modules\antagonists\cult_of_suffering\cult_of_suffering_armor.dm"
+#include "code\modules\antagonists\cult_of_suffering\cult_of_suffering_items.dm"
 #include "code\modules\antagonists\cult_of_suffering\cult_of_suffering_objectives.dm"
 #include "code\modules\antagonists\cult_of_suffering\datums\cult_of_suffering.dm"
 #include "code\modules\antagonists\cult_of_suffering\datums\cultist.dm"
