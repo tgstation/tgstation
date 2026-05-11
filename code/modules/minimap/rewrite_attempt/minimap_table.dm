@@ -152,10 +152,14 @@
 
 /obj/machinery/minimap_table/proc/add_table_huds(datum/hud/hud)
 	var/target_z = resolve_target_z()
+	var/allow_draw = can_user_draw(hud?.mymob)
 	for(var/element in table_huds)
 		var/hud_element_type = table_huds[element]
-		var/instanced = new hud_element_type(null, hud, minimap, null, target_z, MINIMAP_ANNOTATION_TAG_NUCLEAR)
+		var/instanced = new hud_element_type(null, hud, minimap, null, target_z, MINIMAP_ANNOTATION_TAG_NUCLEAR, allow_draw)
 		hud.add_screen_object(instanced, element, HUD_GROUP_STATIC, update_screen = TRUE)
+
+/obj/machinery/minimap_table/proc/can_user_draw(mob/user)
+	return HAS_TRAIT(user, TRAIT_MINIMAP_TABLE_DRAW)
 
 /obj/machinery/minimap_table/proc/remove_table_huds(datum/hud/hud)
 	for(var/element in table_huds)

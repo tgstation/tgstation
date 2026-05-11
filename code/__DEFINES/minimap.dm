@@ -48,14 +48,17 @@ GLOBAL_LIST_INIT(all_minimap_flags, bitfield2list(MINIMAP_FLAG_ALL))
 #define MINIMAP_ICON_TO_WORLD(icon_coord, minimap_min) ((minimap_min) + floor(((icon_coord) - 1) / MINIMAP_PIXEL_MULTIPLIER))
 /// Converts a world tile coordinate to a pixel_w/pixel_z offset for placing a blip on the minimap display.
 #define MINIMAP_WORLD_TO_PIXEL(world_coord, minimap_min, half_size) (((world_coord) - (minimap_min)) * MINIMAP_PIXEL_MULTIPLIER + 1 - (half_size))
-#define MINIMAP_BOMB_BLIP "nuke"
-#define MINIMAP_NUKEDISK_BLIP "nuke_disk"
-#define MINIMAP_NUKEOP_BLIP "nukeop"
-#define MINIMAP_SYNDICATE_MECH_BLIP "syndicate_mech"
-#define MINIMAP_ANNOTATION_TAG_NUCLEAR "nuclear_ops"
 #define COMSIG_MINIMAP_ADD(blip_tag) "minimap_add_" + blip_tag
 #define COMSIG_MINIMAP_REMOVE(blip_tag) "minimap_remove_" + blip_tag
 // sends a index of how much to change by
 #define COMSIG_MINIMAP_CHANGE_Z_LEVEL "minimap_z_change"
 #define COMSIG_MINIMAP_ACTION_TRIGGER "minimap_action_trigger"
 	#define COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL (1<<0)
+
+
+#define MINIMAP_BOMB_BLIP "nuke"
+#define MINIMAP_NUKEDISK_BLIP "nuke_disk"
+#define MINIMAP_NUKEOP_BLIP "nukeop"
+#define MINIMAP_NUKEOP_BORG_BLIP "nukeop_borg"
+#define MINIMAP_SYNDICATE_MECH_BLIP "syndicate_mech"
+#define MINIMAP_ANNOTATION_TAG_NUCLEAR "nuclear_ops"

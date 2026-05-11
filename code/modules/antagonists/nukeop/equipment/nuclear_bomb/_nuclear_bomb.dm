@@ -53,6 +53,8 @@ GLOBAL_VAR(station_nuke_source)
 	var/proper_bomb = TRUE //Please
 	/// A reference to the countdown that goes up over the nuke
 	var/obj/effect/countdown/nuclearbomb/countdown
+	/// is this nuke on the MINIMAP_BOMB_BLIP tag minimap?
+	var/is_on_minimap = TRUE
 
 /obj/machinery/nuclearbomb/Initialize(mapload)
 	. = ..()
@@ -568,6 +570,8 @@ GLOBAL_VAR(station_nuke_source)
 	update_appearance()
 
 /obj/machinery/nuclearbomb/proc/update_minimap_blip()
+	if(!is_on_minimap)
+		return
 	var/blip_icon =  'icons/ui_icons/minimap/map_blips_large.dmi'
 	if(timing)
 		add_minimap_blip(src, MINIMAP_BOMB_BLIP, "nuke_on", blip_icon, TRUE)

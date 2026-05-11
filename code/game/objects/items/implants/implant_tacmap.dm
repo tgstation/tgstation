@@ -5,6 +5,8 @@
 	var/wearer_icon_state = null
 	/// Optional z-trait that resolves to the first z-level and locks the minimap there.
 	var/minimap_fixed_z_trait
+	/// Whether this implant allows drawing/labeling on the personal minimap HUD.
+	var/can_draw_on_personal_minimap = FALSE
 	var/static/list/minimap_refresh_signals = list(
 		COMSIG_MOB_STATCHANGE,
 		COMSIG_LIVING_REVIVE,
@@ -44,6 +46,7 @@
 	if(isnull(minimap_action))
 		return
 	minimap_action.fixed_z_level = resolve_fixed_minimap_z_level()
+	minimap_action.can_draw = can_draw_on_personal_minimap
 
 /obj/item/implant/tacmap/proc/get_minimap_icon_state(mob/living/wearer)
 	if(!wearer.appears_alive())
@@ -88,13 +91,21 @@
 
 /obj/item/implant/tacmap/nuclear/leader // Leader subtype lets him draw on the map
 	actions_types = list(/datum/action/minimap_new/nuclear)
+	can_draw_on_personal_minimap = TRUE
 
-/obj/item/implant/tacmap/drawing
-	actions_types = list(/datum/action/minimap_new)
+/obj/item/implant/tacmap/nuclear/leader/implant(mob/living/target, mob/user, silent, force)
+	. = ..()
+	if(.)
+		ADD_TRAIT(target, TRAIT_MINIMAP_TABLE_DRAW, REF(src))
+
+/obj/item/implant/tacmap/nuclear/leader/removed(mob/living/source, silent, special)
+	REMOVE_TRAIT(source, TRAIT_MINIMAP_TABLE_DRAW, REF(src))
+	return ..()
 
 // Subtype that just lets them open it off-base.
 /obj/item/implant/tacmap/nuclear/offbase
 	minimap_fixed_z_trait = ZTRAIT_STATION
+	can_draw_on_personal_minimap = TRUE
 
 /obj/item/implant/tacmap/nuclear/offbase/deny_nukie_base_open(mob/living/user)
 	return

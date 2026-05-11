@@ -31,6 +31,8 @@
 	)
 	/// Currently selected draw color. null = erase mode.
 	var/draw_color = TACMAP_DRAWING_RED
+	/// Whether this minimap instance allows drawing and labels.
+	var/can_draw = TRUE
 	/// When TRUE, left-clicking the map places a text label instead of drawing.
 	var/label_mode = FALSE
 	/// Mouse cursor icon for the currently selected draw/erase tool. Restored when label mode is toggled off.
@@ -46,7 +48,8 @@
 		HUD_TAC_MINIMAP_TOOL_CLEAR  = /atom/movable/screen/minimap_toolbar_button/clear,
 	)
 
-/atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap, list/minimap_blip_tags, initial_fixed_z_level, annotation_share_tag)
+/atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap, list/minimap_blip_tags, initial_fixed_z_level, annotation_share_tag, can_draw = TRUE)
+	src.can_draw = can_draw
 	. = ..()
 	if(isnull(minimap))
 		CRASH("[type] created without a minimap reference!")
@@ -100,7 +103,6 @@
 	blips.Cut()
 	return ..()
 
-// TODO - COMSIG_MOVABLE_Z_CHANGED doesn't work
 /atom/movable/screen/minimap_display/set_new_hud(datum/hud/hud_owner)
 	if(hud)
 		for(var/key in toolbar_button_types)
@@ -111,9 +113,10 @@
 	if(hud?.mymob)
 		for(var/signal in hud_signals)
 			RegisterSignal(hud_owner.mymob, signal, hud_signals[signal])
-	for(var/hud_key, hud_type in toolbar_button_types)
-		var/atom/movable/screen/minimap_toolbar_button/button = new hud_type(null, hud_owner, src)
-		hud_owner.add_screen_object(button, hud_key, HUD_GROUP_STATIC, update_screen = FALSE)
+	if(can_draw)
+		for(var/hud_key, hud_type in toolbar_button_types)
+			var/atom/movable/screen/minimap_toolbar_button/button = new hud_type(null, hud_owner, src)
+			hud_owner.add_screen_object(button, hud_key, HUD_GROUP_STATIC, update_screen = FALSE)
 	reposition_toolbar_buttons()
 	hud_owner.show_hud(hud_owner.hud_version)
 
@@ -123,10 +126,10 @@
 	var/list/modifiers = params2list(params)
 	var/icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
-	if(LAZYACCESS(modifiers, CTRL_CLICK))
+	if(can_draw && LAZYACCESS(modifiers, CTRL_CLICK))
 		INVOKE_ASYNC(src, PROC_REF(async_place_label), usr, icon_x, icon_y)
 		return
-	if(label_mode)
+	if(can_draw && label_mode)
 		INVOKE_ASYNC(src, PROC_REF(async_place_label), usr, icon_x, icon_y)
 
 /atom/movable/screen/minimap_display/MouseEntered(location, control, params)
@@ -134,6 +137,8 @@
 
 /atom/movable/screen/minimap_display/MouseDrag(over_object, src_location, over_location, src_control, over_control, params)
 	if(usr != get_mob())
+		return
+	if(!can_draw)
 		return
 	var/list/modifiers = params2list(params)
 	if(label_mode || LAZYACCESS(modifiers, CTRL_CLICK))
@@ -345,6 +350,8 @@
 	return closest_z
 
 /atom/movable/screen/minimap_display/proc/select_draw_tool(color, icon/mouse_icon = null)
+	if(!can_draw)
+		return
 	draw_color = color
 	label_mode = FALSE
 	active_mouse_icon = mouse_icon
@@ -352,6 +359,8 @@
 		hud.mymob.client.mouse_pointer_icon = mouse_icon
 
 /atom/movable/screen/minimap_display/proc/toggle_label_mode(icon/label_mouse_icon = null)
+	if(!can_draw)
+		return
 	label_mode = !label_mode
 	if(hud?.mymob?.client)
 		hud.mymob.client.mouse_pointer_icon = label_mode ? label_mouse_icon : active_mouse_icon
@@ -374,9 +383,11 @@
 	for(var/key in toolbar_button_types)
 		var/atom/movable/screen/minimap_toolbar_button/button = hud.screen_objects[key]
 		if(button)
-			button.screen_loc = "1:[btn_x],1:[btn_top_y - button.button_slot * ICON_SIZE_Y]"
+			button.screen_loc = "1:[btn_x],1:[btn_top_y - ICON_SIZE_Y - button.button_slot * ICON_SIZE_Y]"
 
 /atom/movable/screen/minimap_display/proc/clear_canvas_and_labels(mob/user)
+	if(!can_draw)
+		return
 	drawing.clear_canvas(minimap?.base_map)
 	clear_all_annotations(user, /atom/movable/screen/minimap_element/label)
 	sync_visible_objects(minimap?.z)
@@ -411,7 +422,19 @@
 	var/label_text = tgui_input_text(user, "What would you like the label at [area_name] to say?", "Add Label", max_length = 25)
 	if(!label_text || QDELETED(src))
 		return
+	var/list/filter_result = is_ic_filtered(label_text)
+	if(filter_result)
+		to_chat(user, span_warning("That label contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[label_text]\"</span>"))
+		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
+		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
+		log_filter("IC", label_text, filter_result)
+		return
 	var/atom/movable/screen/minimap_element/label/new_label = new
+	new_label.icon = 'icons/ui_icons/minimap/map_blips.dmi'
+	new_label.icon_state = "label"
+	new_label.maptext_x = 5
+	new_label.maptext_y = 5
+	new_label.maptext_width = 64
 	new_label.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: left'>[label_text]</span>")
 	new_label.pixel_w = icon_x
 	new_label.pixel_z = icon_y

@@ -916,11 +916,13 @@
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = list("north" = list(0, 3), "south" = list(0, 3), "east" = list(4, 3), "west" = list(-4, 3))
+	var/minimap_icon = "combatborg"
 
 /obj/item/robot_model/syndicate/rebuild_modules()
 	..()
 	var/mob/living/silicon/robot/cyborg = loc
 	cyborg.remove_faction(FACTION_SILICON) //ai turrets
+	add_minimap_blip(cyborg, MINIMAP_NUKEOP_BORG_BLIP, minimap_icon)
 
 /obj/item/robot_model/syndicate/remove_module(obj/item/removed_module)
 	..()
