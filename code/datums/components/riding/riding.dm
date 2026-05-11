@@ -68,7 +68,7 @@
 	RegisterSignals(parent, GLOB.movement_type_removetrait_signals, PROC_REF(on_movement_type_trait_loss))
 	RegisterSignal(parent, COMSIG_SUPERMATTER_CONSUMED, PROC_REF(on_entered_supermatter))
 	switch(other_unbuckle)
-		if(CAN_FORCE_UNBUCKLE)
+		if(CANNOT_FORCE_UNBUCKLE)
 			RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(block_unbuckle))
 		if(CAN_DISARM_UNBUCKLE)
 			RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(block_unbuckle))
@@ -333,8 +333,6 @@
 		return NONE
 
 	switch(other_unbuckle)
-		if(CAN_FORCE_UNBUCKLE)
-			return NONE
 		if(CANNOT_FORCE_UNBUCKLE)
 			to_chat(unbuckler, span_warning("You can't dismount [source]'s rider[length(source.buckled_mobs) == 1 ? "" : "s"]!"))
 		if(CAN_DISARM_UNBUCKLE)
