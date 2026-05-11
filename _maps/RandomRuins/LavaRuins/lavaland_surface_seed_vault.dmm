@@ -1,1109 +1,1125 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
-/area/lavaland/surface/outdoors)
-"ab" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
-/area/lavaland/surface/outdoors)
+/area/lavaland/surface/outdoors/unexplored)
+"ab" = (
+/obj/structure/closet/crate,
+/obj/item/vending_refill/hydroseeds,
+/obj/item/vending_refill/hydroseeds,
+/obj/item/storage/bag/plants/portaseeder,
+/turf/open/indestructible/plating,
+/area/ruin/powered/seedvault)
 "ac" = (
-/turf/closed/wall/r_wall,
+/obj/item/cultivator,
+/obj/item/cultivator,
+/obj/item/cultivator,
+/obj/item/cultivator,
+/obj/item/hatchet,
+/obj/item/hatchet,
+/obj/item/hatchet,
+/obj/item/hatchet,
+/obj/item/shovel/spade,
+/obj/item/shovel/spade,
+/obj/item/shovel/spade,
+/obj/item/shovel/spade,
+/obj/structure/closet,
+/turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "ad" = (
-/obj/machinery/vending/hydronutrients,
-/obj/effect/turf_decal/trimline/green/filled/line,
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "ae" = (
-/obj/machinery/smartfridge,
-/obj/effect/turf_decal/trimline/green/filled/line,
-/turf/open/floor/iron/dark,
+/obj/machinery/vending/autodrobe,
+/turf/open/floor/wood,
 /area/ruin/powered/seedvault)
 "af" = (
-/obj/machinery/vending/hydroseeds,
-/obj/effect/turf_decal/trimline/green/filled/line,
-/turf/open/floor/iron/dark,
+/obj/structure/lattice/catwalk,
+/turf/open/misc/asteroid/basalt/lava,
 /area/ruin/powered/seedvault)
 "ag" = (
-/obj/structure/table/wood,
-/obj/effect/turf_decal/trimline/green/filled/line,
-/obj/item/stack/sheet/glass{
-	amount = 10
-	},
-/obj/item/storage/toolbox/syndicate,
-/turf/open/floor/iron/dark,
+/obj/structure/aquarium,
+/turf/open/floor/circuit/telecomms,
 /area/ruin/powered/seedvault)
 "ah" = (
-/turf/open/floor/iron/freezer,
+/obj/machinery/light/blacklight/directional/south,
+/obj/structure/loom,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "ai" = (
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/item/reagent_containers/cup/beaker/bluespace,
-/obj/structure/table/wood,
-/obj/effect/turf_decal/trimline/green/filled/line,
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/components/tank/air/layer4,
+/turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "aj" = (
-/obj/structure/table/wood,
-/obj/item/gun/energy/floragun{
-	pixel_y = 6
-	},
-/obj/item/gun/energy/floragun{
-	pixel_y = 4
-	},
-/obj/item/gun/energy/floragun{
-	pixel_y = 2
-	},
-/obj/item/gun/energy/floragun,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/turf_decal/trimline/green/filled/line,
-/turf/open/floor/iron/dark,
+/obj/machinery/light/floor,
+/turf/open/floor/wood,
 /area/ruin/powered/seedvault)
 "al" = (
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer4,
+/turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "am" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark,
+/obj/machinery/vending/cytopro,
+/turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "an" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark,
+/obj/machinery/vending/wardrobe/hydro_wardrobe,
+/turf/open/floor/wood,
 /area/ruin/powered/seedvault)
 "ao" = (
-/obj/structure/loom,
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "ar" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/clothing/under/rank/civilian/hydroponics,
-/obj/item/clothing/under/rank/civilian/hydroponics,
-/obj/item/clothing/under/rank/civilian/hydroponics,
-/obj/item/clothing/under/rank/civilian/hydroponics,
-/obj/effect/decal/cleanable/cobweb,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/grass,
 /area/ruin/powered/seedvault)
 "as" = (
-/obj/machinery/door/airlock/multi_tile/public/glass,
-/turf/open/floor/iron/freezer,
+/obj/machinery/door/airlock/material,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
 /area/ruin/powered/seedvault)
 "at" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/cultivator,
-/obj/item/cultivator,
-/obj/item/cultivator,
-/obj/item/cultivator,
-/obj/item/shovel/spade,
-/obj/item/shovel/spade,
-/obj/item/shovel/spade,
-/obj/item/shovel/spade,
-/obj/item/hatchet,
-/obj/item/hatchet,
-/obj/item/hatchet,
-/obj/item/hatchet,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/grass,
 /area/ruin/powered/seedvault)
 "au" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/vault,
+/obj/machinery/chem_master,
+/turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "av" = (
-/obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aw" = (
-/obj/machinery/reagentgrinder{
-	pixel_y = 5
-	},
-/obj/structure/table/glass,
-/obj/effect/turf_decal/trimline/green/filled/end,
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/dark,
+/obj/machinery/smartfridge/drying/rack,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "ax" = (
-/obj/structure/reagent_dispensers/watertank/high,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 9
-	},
-/obj/effect/turf_decal/trimline/green/filled/corner,
-/turf/open/floor/iron/dark,
+/obj/machinery/light/directional/south,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "ay" = (
-/obj/structure/reagent_dispensers/watertank/high,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 5
-	},
-/obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
+/turf/closed/wall/mineral/titanium,
 /area/ruin/powered/seedvault)
 "az" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/soap/homemade,
-/obj/item/soap/homemade,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 6
-	},
-/turf/open/floor/iron/dark,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aA" = (
-/turf/open/floor/vault,
+/obj/machinery/light/blacklight/directional/north,
+/obj/structure/table,
+/obj/item/storage/bag/plants,
+/obj/item/storage/bag/plants,
+/obj/item/storage/bag/plants,
+/obj/item/storage/bag/plants,
+/obj/item/storage/bag/plants,
+/obj/item/storage/bag/plants,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aB" = (
-/obj/effect/spawner/random/food_or_drink/seed_vault,
-/obj/structure/closet/crate/hydroponics,
-/obj/effect/spawner/random/food_or_drink/seed_vault,
-/obj/effect/spawner/random/food_or_drink/seed_vault,
-/obj/item/vending_refill/hydronutrients,
-/obj/item/vending_refill/hydroseeds,
-/turf/open/floor/vault,
+/obj/machinery/door/airlock/grunge,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aE" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/structure/beebox,
-/obj/item/melee/flyswatter,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/queen_bee/bought,
-/obj/item/clothing/head/utility/beekeeper_head,
-/obj/item/clothing/suit/utility/beekeeper_suit,
-/obj/machinery/light/directional/west,
-/turf/open/floor/vault,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aF" = (
-/obj/structure/table/wood,
-/obj/item/lighter,
-/obj/item/lighter,
-/obj/item/storage/fancy/rollingpapers,
-/obj/item/storage/fancy/rollingpapers,
-/obj/item/storage/fancy/rollingpapers,
-/obj/item/storage/fancy/rollingpapers,
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
 /area/ruin/powered/seedvault)
 "aG" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+/obj/machinery/vending/hydroseeds,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aH" = (
-/obj/machinery/door/airlock/vault,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/freezer,
+/obj/item/construction/plumbing,
+/obj/structure/table,
+/turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "aI" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/vault,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aJ" = (
-/obj/structure/reagent_dispensers/watertank/high,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 10
-	},
-/obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
+/obj/machinery/airalarm/directional/west,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aL" = (
-/obj/structure/table/wood,
-/obj/item/geneshears{
-	pixel_x = 6
-	},
-/obj/item/geneshears,
-/obj/item/geneshears{
-	pixel_x = -6
-	},
-/obj/item/geneshears,
-/turf/open/floor/vault,
+/obj/machinery/light/blacklight/directional/south,
+/obj/item/storage/toolbox/syndicate,
+/obj/structure/table,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aM" = (
-/obj/structure/table/wood,
-/turf/open/floor/vault,
+/obj/structure/closet,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aN" = (
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/circuit/red,
 /area/ruin/powered/seedvault)
 "aO" = (
-/obj/machinery/light/directional/east,
-/obj/structure/reagent_dispensers/watertank/high,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 6
-	},
-/obj/effect/turf_decal/trimline/green/filled/corner{
+/obj/structure/railing,
+/obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/iron/dark,
+/turf/open/lava/smooth,
 /area/ruin/powered/seedvault)
 "aQ" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/freezer,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/obj/machinery/light/blacklight/directional/west,
+/turf/open/lava/smooth,
 /area/ruin/powered/seedvault)
 "aR" = (
-/obj/machinery/door/airlock/vault,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aS" = (
-/obj/structure/table/wood,
-/obj/item/storage/bag/plants{
-	pixel_x = -5
-	},
-/obj/item/storage/bag/plants{
-	pixel_y = -5
-	},
-/obj/item/storage/bag/plants{
-	pixel_y = 5
-	},
-/obj/item/storage/bag/plants{
-	pixel_x = 5
-	},
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
+/obj/machinery/seed_extractor,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aT" = (
-/obj/item/reagent_containers/cup/bucket,
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/bucket,
-/obj/item/reagent_containers/cup/bucket,
-/obj/item/reagent_containers/cup/bucket,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 5
-	},
-/turf/open/floor/iron/dark,
+/obj/machinery/biogenerator,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aU" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/freezer,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aV" = (
-/obj/effect/turf_decal/trimline/green/line,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 1
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/circuit/telecomms,
 /area/ruin/powered/seedvault)
 "aW" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/turf/open/floor/circuit/red,
 /area/ruin/powered/seedvault)
 "aX" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/structure/beebox,
-/obj/item/melee/flyswatter,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/queen_bee/bought,
-/obj/item/clothing/head/utility/beekeeper_head,
-/obj/item/clothing/suit/utility/beekeeper_suit,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/vault,
+/obj/machinery/vatgrower,
+/turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "aY" = (
-/obj/effect/decal/cleanable/food/plant_smudge,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/vault,
+/obj/structure/closet/crate,
+/obj/item/vending_refill/cytopro,
+/obj/item/vending_refill/cytopro,
+/obj/item/vending_refill/hydronutrients,
+/obj/item/vending_refill/hydronutrients,
+/obj/item/storage/bag/plants/portaseeder,
+/turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "ba" = (
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 8
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/turf/open/floor/circuit/green,
 /area/ruin/powered/seedvault)
 "bb" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/blue,
+/obj/machinery/hydroponics/constructable/fullupgrade,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bc" = (
-/obj/machinery/light/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 4
-	},
-/obj/machinery/hydroponics/constructable/fullupgrade,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "bd" = (
-/obj/machinery/chem_dispenser/mutagensaltpeter,
-/obj/effect/turf_decal/trimline/green/corner,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 9
-	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/circuit/telecomms,
 /area/ruin/powered/seedvault)
 "be" = (
-/obj/effect/turf_decal/trimline/green/line,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/light/floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/circuit/green,
 /area/ruin/powered/seedvault)
 "bf" = (
-/obj/machinery/biogenerator,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/green/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 5
-	},
-/turf/open/floor/mineral/plastitanium,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/watering_can/advanced,
+/obj/item/reagent_containers/cup/watering_can/advanced,
+/obj/item/reagent_containers/cup/watering_can/advanced,
+/obj/item/reagent_containers/cup/watering_can/advanced,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bh" = (
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 6
-	},
-/obj/machinery/hydroponics/constructable/fullupgrade,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/circuit/green,
 /area/ruin/powered/seedvault)
 "bi" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 8
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/circuit/green,
 /area/ruin/powered/seedvault)
 "bj" = (
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 10
-	},
 /obj/machinery/hydroponics/constructable/fullupgrade,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bk" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
 /area/ruin/powered/seedvault)
 "bl" = (
-/obj/machinery/light/directional/east,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 4
-	},
-/obj/machinery/hydroponics/constructable/fullupgrade,
-/turf/open/floor/mineral/plastitanium,
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "bm" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/disposaloutlet,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/machinery/light/directional/north,
-/turf/open/misc/grass/lavaland,
+/obj/machinery/fishing_portal_generator/full,
+/turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "bn" = (
-/obj/structure/window/spawner/directional/east,
-/obj/structure/flora/bush/pale/style_random,
-/obj/structure/flora/bush/flowers_pp/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/machinery/light/directional/north,
+/turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "bo" = (
-/obj/machinery/chem_master/condimaster,
-/obj/effect/turf_decal/trimline/green/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 10
-	},
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/door/airlock/engineering,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bp" = (
-/obj/machinery/seed_extractor,
-/obj/effect/turf_decal/trimline/green/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 6
-	},
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/circuit/red,
 /area/ruin/powered/seedvault)
 "br" = (
-/obj/structure/flora/bush/sunny/style_random,
-/obj/structure/flora/grass/jungle/b/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "bs" = (
-/obj/structure/window/spawner/directional/east,
-/obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/misc/grass/lavaland,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bu" = (
-/obj/structure/window/spawner/directional/east,
-/obj/structure/flora/bush/ferny/style_random,
-/obj/structure/flora/bush/flowers_yw/style_random,
-/obj/structure/flora/bush/sparsegrass/style_random,
-/obj/effect/decal/cleanable/glass,
-/turf/open/misc/grass/lavaland,
+/obj/machinery/hydroponics/constructable/fullupgrade,
+/obj/structure/disposalpipe/segment,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bw" = (
-/obj/machinery/light/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/green/line,
-/obj/machinery/hydroponics/constructable/fullupgrade,
-/turf/open/floor/mineral/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "bx" = (
-/obj/effect/decal/cleanable/glass,
-/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
-/area/lavaland/surface/outdoors)
+/obj/effect/mob_spawn/ghost_role/human/seed_vault,
+/turf/open/floor/wood,
+/area/ruin/powered/seedvault)
 "by" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/closed/wall/r_wall,
+/obj/machinery/door/airlock/material,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/indestructible/kitchen,
 /area/ruin/powered/seedvault)
 "bz" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/circuit/telecomms,
 /area/ruin/powered/seedvault)
 "bA" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/turf/closed/wall/r_wall,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/circuit/telecomms,
 /area/ruin/powered/seedvault)
 "bB" = (
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 5
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
 	},
-/obj/machinery/hydroponics/constructable/fullupgrade,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/disposal/bin,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bC" = (
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 9
-	},
-/obj/machinery/hydroponics/constructable/fullupgrade,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/smartfridge/food,
+/turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
-"ca" = (
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 4
-	},
-/turf/open/floor/iron/freezer,
+"cu" = (
+/obj/structure/closet,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "ds" = (
-/obj/effect/mob_spawn/ghost_role/human/seed_vault,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/freezer,
+/turf/open/floor/wood,
 /area/ruin/powered/seedvault)
 "eq" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
-/area/lavaland/surface/outdoors)
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
+/area/template_noop)
 "hf" = (
-/obj/structure/sink/directional/east,
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
+"hk" = (
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/template_noop)
+"jD" = (
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/grass,
+/area/ruin/powered/seedvault)
+"jT" = (
+/obj/structure/aquarium,
+/turf/open/floor/circuit/green,
 /area/ruin/powered/seedvault)
 "le" = (
-/obj/structure/window/spawner/directional/south,
-/obj/structure/flora/bush/flowers_pp/style_random,
-/obj/structure/flora/bush/generic/style_random,
-/obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/misc/grass/lavaland,
+/turf/open/indestructible/plating,
+/area/ruin/powered/seedvault)
+"lZ" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/obj/item/reagent_containers/cup/beaker/bluespace,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "og" = (
-/obj/effect/mob_spawn/ghost_role/human/seed_vault,
-/turf/open/floor/iron/freezer,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/wood,
 /area/ruin/powered/seedvault)
 "oR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/iron/freezer,
+/obj/machinery/chem_dispenser/mutagensaltpeter,
+/turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "pZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 4
-	},
-/obj/machinery/hydroponics/constructable/fullupgrade,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/door/airlock/external/glass/ruin,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "rF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 4
-	},
-/obj/machinery/hydroponics/constructable/fullupgrade,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "rX" = (
-/obj/structure/sink/directional/east,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/iron/dark,
-/area/ruin/powered/seedvault)
-"sv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/vault,
-/area/ruin/powered/seedvault)
-"vc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/light/floor,
-/turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered/seedvault)
-"yq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/mineral/titanium/blue,
-/area/ruin/powered/seedvault)
-"Bb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/freezer,
-/area/ruin/powered/seedvault)
-"GN" = (
-/obj/structure/table/wood,
-/obj/item/secateurs{
-	pixel_x = -6
-	},
-/obj/item/secateurs{
-	pixel_x = 6
-	},
-/obj/item/secateurs,
-/obj/item/secateurs{
-	pixel_x = -6
-	},
-/turf/open/floor/vault,
-/area/ruin/powered/seedvault)
-"Ik" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/light/floor,
-/turf/open/floor/iron/freezer,
-/area/ruin/powered/seedvault)
-"Kq" = (
-/obj/structure/sink/directional/west,
-/turf/open/floor/iron/dark,
-/area/ruin/powered/seedvault)
-"KF" = (
-/obj/machinery/door/airlock/titanium,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/vault,
-/area/ruin/powered/seedvault)
-"OE" = (
-/obj/effect/mob_spawn/ghost_role/human/seed_vault,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/freezer,
-/area/ruin/powered/seedvault)
-"PH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+/obj/machinery/modular_computer/preset/civilian{
 	dir = 4
 	},
-/turf/open/floor/iron/freezer,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
-"Uz" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
+"sv" = (
+/obj/machinery/light/blacklight/directional/east,
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
+"vc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/turf/open/indestructible/white,
+/area/ruin/powered/seedvault)
+"yq" = (
+/obj/machinery/light/blacklight/directional/north,
+/obj/structure/table,
+/obj/item/storage/box/syringes,
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
+"zK" = (
+/obj/item/fishing_rod,
+/obj/item/fishing_rod,
+/obj/item/fishing_rod,
+/obj/item/fishing_rod,
+/obj/structure/closet,
+/obj/item/storage/box/fishing_hooks,
+/obj/item/storage/box/fishing_lines,
+/obj/item/storage/box/fishing_lures,
+/obj/item/bait_can/worm/premium,
+/obj/item/bait_can/worm/premium,
+/obj/item/reagent_containers/cup/fish_feed,
+/obj/item/reagent_containers/cup/fish_feed,
+/turf/open/floor/plating,
+/area/ruin/powered/seedvault)
+"Bb" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/powered/seedvault)
+"GN" = (
+/obj/machinery/light/floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/turf/open/indestructible/white,
+/area/ruin/powered/seedvault)
+"GO" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
+"Ik" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
+"Ip" = (
+/obj/machinery/door/airlock/material,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/indestructible/white,
+/area/ruin/powered/seedvault)
+"Kq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/turf/open/floor/circuit/telecomms,
+/area/ruin/powered/seedvault)
+"KF" = (
+/obj/structure/chair/office,
+/turf/open/indestructible/white,
+/area/ruin/powered/seedvault)
+"OE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/wood,
+/area/ruin/powered/seedvault)
+"PH" = (
+/obj/machinery/hydroponics/constructable/fullupgrade,
+/obj/machinery/light/blacklight/directional/north,
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
+"SJ" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"Uz" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "Vn" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/iron/freezer,
-/area/ruin/powered/seedvault)
-"VF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/green/line{
+/obj/structure/disposalpipe/trunk,
+/obj/structure/disposaloutlet{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/green/line,
-/obj/machinery/hydroponics/constructable/fullupgrade,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/grass,
+/area/ruin/powered/seedvault)
+"VF" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/indestructible/white,
+/area/ruin/powered/seedvault)
+"VO" = (
+/obj/machinery/door/airlock/engineering,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
+"Wn" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 
 (1,1,1) = {"
-eq
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+hk
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+hk
 "}
 (2,1,1) = {"
-aa
-aa
-aa
-aa
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-ab
+hk
+hk
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+az
+Wn
+ay
+az
+az
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+hk
+hk
 "}
 (3,1,1) = {"
-aa
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-aa
-aa
-aa
-ab
-ab
-ab
-aa
-aa
-aa
-ab
-ab
-ab
+hk
+ay
+ay
+ds
+ds
+ae
+an
+bk
+aJ
+aE
+rX
+aE
+aE
+aE
+aE
+bk
+bc
+VF
+bc
+aX
+ay
+ay
+hk
 "}
 (4,1,1) = {"
-aa
-ac
+hk
+ay
+bx
+ds
+ds
 OE
-ah
-ac
-ca
-ah
-ac
-ac
-ac
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
+ds
+bk
+aE
+aE
+aU
+aE
+aE
+aE
+aE
+bC
+vc
+rF
+vc
+bc
+oR
+ay
+hk
 "}
 (5,1,1) = {"
-aa
-ac
-og
-ah
+hk
+bw
+bx
+ds
+aj
+aF
+aF
 as
-PH
-aQ
-av
-al
 aR
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
+aR
+av
+aR
+aR
+aR
+aR
+Ip
+rF
+ao
+GN
+bc
+KF
+bw
+hk
 "}
 (6,1,1) = {"
-aa
-ac
-og
-Vn
-Bb
-Bb
-ah
-av
-am
-aR
-ab
-ab
-ac
-ac
-ac
-ac
-ac
-aa
-aa
-aa
-"}
-(7,1,1) = {"
-aa
-ac
+hk
+bw
+bx
 ds
-ah
-ac
-PH
+ds
+og
+ds
+bk
+aE
 aU
-ac
-ac
-ac
-ac
-ac
-ac
+aE
+aE
+aE
+aI
+aE
+bk
+bc
+br
 rF
 bc
+au
+bw
+hk
+"}
+(7,1,1) = {"
+hk
+ay
+bx
+ds
+ds
+ds
+ds
+bk
+PH
+aU
+aL
+bk
+yq
+aI
+bj
+bk
+am
+bc
 rF
-ac
-ac
-ac
-aa
+bc
+aH
+ay
+hk
 "}
 (8,1,1) = {"
-aa
-ac
-ac
-ac
-ac
-PH
-ah
+hk
+ay
+ay
+ay
+ay
+ay
+ay
+bk
+bb
+aU
 aS
-ac
+bk
 aG
-ac
-bh
-aN
-aN
-aN
-aN
-aN
-bB
-ac
-aa
+aI
+bb
+bk
+bk
+bk
+by
+bk
+bk
+ay
+hk
 "}
 (9,1,1) = {"
-ac
-ac
+hk
+hk
+eq
+eq
+eq
 ar
 at
 az
-PH
-ah
-aT
-ac
-ac
-ac
-yq
 bb
-aN
-aN
-aN
-aN
-aN
-ac
-ac
+aU
+aT
+bk
+lZ
+aI
+bb
+bk
+bh
+Kq
+bA
+bd
+bh
+ay
+hk
 "}
 (10,1,1) = {"
-ac
-ad
-al
-al
-al
-PH
-ah
-al
-hf
-ac
-rX
+hk
+hk
+eq
+eq
+eq
+ar
+at
+az
 bb
-aN
+aU
+aU
+hf
+aE
+aI
+bb
+bk
 bd
 ba
-bo
-aN
-aN
-VF
-ac
+bp
+bh
+bd
+ay
+hk
 "}
 (11,1,1) = {"
-ac
-ae
-al
+hk
+hk
+eq
+eq
+eq
+jD
 Vn
 Bb
-Bb
-Bb
+bu
 Ik
-Bb
-aH
-Bb
-vc
-Uz
+Ik
+bB
+aE
+aI
+bb
+bk
 aV
 aW
 be
 aN
-aN
+bd
 bw
-ac
+hk
 "}
 (12,1,1) = {"
-ac
-af
-am
-al
-al
-PH
-ah
-al
-Kq
-ac
-Kq
+hk
+hk
+eq
+eq
+eq
+ar
+at
+az
 bb
-aN
-bf
-bi
-bp
-aN
-aN
-VF
-ac
-"}
-(13,1,1) = {"
-ac
-ac
-ac
+aE
 aw
-al
-PH
-ah
-aF
-ac
-ac
-ac
-aN
-aN
-aN
-bz
-aN
-aN
-aN
-ac
-ac
-"}
-(14,1,1) = {"
-ac
-ag
-an
-al
-al
-PH
-ah
-ah
-au
-aA
-ac
-bj
-aN
+bk
+bf
+aI
 bb
 bk
-aN
+bd
+bi
+bp
+bh
+bd
+ay
+hk
+"}
+(13,1,1) = {"
+hk
+hk
+eq
+eq
+eq
+ar
+at
+az
 bb
-bC
-ac
-aa
+aE
+aE
+bk
+GO
+aI
+bb
+bk
+bh
+bz
+bd
+ag
+jT
+ay
+hk
+"}
+(14,1,1) = {"
+hk
+hk
+bk
+bk
+bk
+bk
+bk
+bk
+PH
+aE
+ah
+bk
+aA
+aI
+bj
+bk
+bk
+bk
+bk
+bk
+bk
+ay
+hk
 "}
 (15,1,1) = {"
-ac
-ai
-al
-Vn
-Bb
-Bb
-ah
-aF
-ac
-aA
-ac
-ac
-ac
-pZ
-bl
-rF
-ac
-ac
-ac
-aa
-"}
-(16,1,1) = {"
-ac
-aj
-al
-al
-al
-PH
-ac
-ac
-ac
-aI
-aA
-aL
-ac
-by
-bA
-ac
-ac
-ab
-ab
-aa
-"}
-(17,1,1) = {"
-ac
-ac
-ao
-al
-al
-PH
-ac
-aX
-aE
-aA
-aA
-GN
-ac
+hk
+hk
+ay
 bm
-br
 le
-ab
-ab
-aa
-aa
-"}
-(18,1,1) = {"
-aa
-ac
-ac
-ax
-aJ
-oR
-KF
-sv
-sv
-aY
-aM
-ac
-ac
-bn
+ad
+Uz
+bk
+aE
+aE
+aE
 bs
-bu
-bx
-ab
-ab
-ab
-"}
-(19,1,1) = {"
-aa
-aa
+aE
+aI
+aE
+bk
+bn
+le
+le
 ac
 ay
-aO
-ah
-ac
+SJ
+SJ
+"}
+(16,1,1) = {"
+hk
+SJ
+bw
+zK
+le
+al
+al
+VO
+aI
+aI
+aI
+aI
+aI
+aI
+aE
+bo
+le
+le
+le
+aY
+bw
+SJ
+SJ
+"}
+(17,1,1) = {"
+hk
+SJ
+bw
+bl
+bl
+al
+ad
+bk
+aE
+aE
+aE
+aE
+aE
+aE
+aE
+bk
+le
+le
+le
+ab
+bw
+SJ
+SJ
+"}
+(18,1,1) = {"
+SJ
+SJ
+ay
+bl
+bl
+ai
+ax
+bk
+aE
+aE
+aE
+sv
+aE
+aE
+aE
+bk
+bn
+le
+le
+le
+ay
+SJ
+SJ
+"}
+(19,1,1) = {"
+SJ
+hk
+ay
+bw
+bw
+bw
+ay
+ay
+ay
 aB
 aB
+bk
 aB
-ac
-ac
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
+aB
+ay
+ay
+ay
+bw
+bw
+bw
+ay
+SJ
+hk
 "}
 (20,1,1) = {"
-aa
-aa
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-aa
+SJ
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+ay
+aE
+aE
+aM
+aE
+aE
+ay
+hk
+hk
+hk
+hk
+hk
+hk
+SJ
+hk
+"}
+(21,1,1) = {"
+SJ
+SJ
+SJ
+hk
+hk
+hk
+hk
+hk
+ay
+aE
+aE
+cu
+aE
+aE
+ay
+hk
+hk
+hk
+SJ
+SJ
+SJ
+SJ
+hk
+"}
+(22,1,1) = {"
+hk
+SJ
+SJ
+SJ
+SJ
+SJ
+hk
+hk
+ay
+pZ
+pZ
+ay
+pZ
+pZ
+ay
+hk
+SJ
+SJ
+SJ
+SJ
+SJ
+hk
+hk
+"}
+(23,1,1) = {"
+hk
+hk
+hk
+SJ
+SJ
+SJ
+SJ
+hk
+eq
+af
+af
+aQ
+af
+af
+eq
+hk
+SJ
+SJ
+SJ
+hk
+hk
+hk
+hk
+"}
+(24,1,1) = {"
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+eq
+af
+af
+aO
+af
+af
+eq
+hk
+hk
+hk
+hk
+hk
+hk
+hk
+hk
 "}

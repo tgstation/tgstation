@@ -164,9 +164,14 @@
 	mob_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
 	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
 
-/obj/effect/mob_spawn/ghost_role/human/seed_vault/Destroy()
-	new/obj/structure/fluff/empty_terrarium(get_turf(src))
-	return ..()
+/obj/effect/mob_spawn/ghost_role/human/seed_vault/proc/try_keep_home(mob/new_spawn)
+	var/static/list/allowed_areas = typecacheof(list(/area/lavaland, /area/ruin))
+	ADD_TRAIT(new_spawn, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION, INNATE_TRAIT)
+	new_spawn.AddComponent(/datum/component/hazard_area, area_whitelist = allowed_areas)
+
+/obj/effect/mob_spawn/ghost_role/human/seed_vault/special(mob/living/new_spawn, mob/mob_possessor, special_name)
+	. = ..()
+	try_keep_home(new_spawn)
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 
