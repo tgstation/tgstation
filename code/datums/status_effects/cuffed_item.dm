@@ -187,10 +187,9 @@
 	return BLOCK_STORAGE_INSERT
 
 /// Stops double cuff
-/datum/status_effect/cuffed_item/proc/block_item_cuff(datum/source, mob/cuffer, obj/item/cuffs)
+/datum/status_effect/cuffed_item/proc/block_item_cuff(obj/item/source, mob/cuffer, obj/item/cuffs)
 	SIGNAL_HANDLER
-	if(messages)
-		source.balloon_alert(cuffer, "cuffed to someone else!")
+	source.balloon_alert(cuffer, "cuffed to someone else!")
 	return BLOCK_ITEM_CUFF
 
 ///What happens if one of the items is moved away from the mob
