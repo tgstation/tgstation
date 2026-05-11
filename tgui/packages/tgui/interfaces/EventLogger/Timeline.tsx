@@ -10,6 +10,7 @@ export type TimelineMark<T = unknown> = {
   isMulti: boolean;
   count: number;
   tooltip: string;
+  tooltipHtml?: string | null;
   data: T;
 };
 
@@ -65,6 +66,11 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
   const outerRef = useRef<HTMLDivElement>(null);
   const anchorRef = useRef<{ tick: number; px: number } | null>(null);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [hoverTooltip, setHoverTooltip] = useState<{
+    x: number;
+    y: number;
+    html: string;
+  } | null>(null);
 
   // Track container width so we can compute fit-zoom
   useEffect(() => {
@@ -117,18 +123,17 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
   }
 
   /** Total content width in px — uses effectiveElapsed so ruler/rows fill the viewport */
-  const contentWidth =
-    effectiveElapsed * pxPerTick + LABEL_WIDTH + rulerInterval * pxPerTick;
+  const contentWidth = effectiveElapsed * pxPerTick + rulerInterval * pxPerTick;
 
   // Auto-scroll: only scroll if the playhead would be off-screen to the right
 
   useEffect(() => {
     if (!autoScroll || !running || !scrollRef.current) return;
     const container = scrollRef.current;
-    const playheadLeft = LABEL_WIDTH + elapsed * pxPerTick;
+    const playheadLeft = elapsed * pxPerTick;
     const visibleRight = container.scrollLeft + container.clientWidth;
     if (playheadLeft > visibleRight) {
-      container.scrollLeft = playheadLeft - container.clientWidth + LABEL_WIDTH;
+      container.scrollLeft = playheadLeft - container.clientWidth + 40;
     }
   });
 
@@ -141,9 +146,10 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
 
     // Save anchor: which tick is under the mouse
     const rect = container.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left + container.scrollLeft - LABEL_WIDTH;
+    const localX = Math.max(0, e.clientX - rect.left);
+    const mouseX = localX + container.scrollLeft;
     const tickUnderMouse = mouseX / pxPerTick;
-    anchorRef.current = { tick: tickUnderMouse, px: e.clientX - rect.left };
+    anchorRef.current = { tick: tickUnderMouse, px: localX };
 
     const delta = e.deltaY > 0 ? -1 : 1;
     let next: number;
@@ -163,7 +169,7 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
     const container = scrollRef.current;
     if (!anchor || !container) return;
     anchorRef.current = null;
-    container.scrollLeft = anchor.tick * pxPerTick - anchor.px + LABEL_WIDTH;
+    container.scrollLeft = anchor.tick * pxPerTick - anchor.px;
   }, [pxPerTick]);
 
   // Render
@@ -192,7 +198,7 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
       key={tick}
       style={{
         position: 'absolute',
-        left: `${LABEL_WIDTH + leftPx}px`,
+        left: `${leftPx}px`,
         top: 0,
         bottom: 0,
         width: '1px',
@@ -217,14 +223,32 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
     return (
       <div
         key={i}
-        title={mark.tooltip}
         onClick={(e) => {
           e.stopPropagation();
           onMarkClick(mark, e.ctrlKey || e.metaKey);
         }}
+        onMouseEnter={(e) => {
+          if (mark.tooltipHtml) {
+            setHoverTooltip({
+              x: e.clientX,
+              y: e.clientY,
+              html: mark.tooltipHtml,
+            });
+          }
+        }}
+        onMouseMove={(e) => {
+          if (mark.tooltipHtml) {
+            setHoverTooltip({
+              x: e.clientX,
+              y: e.clientY,
+              html: mark.tooltipHtml,
+            });
+          }
+        }}
+        onMouseLeave={() => setHoverTooltip(null)}
         style={{
           position: 'absolute',
-          left: `${LABEL_WIDTH + rawLeft - size / 2}px`,
+          left: `${rawLeft - size / 2}px`,
           top: `${topPx - size / 2}px`,
           width: `${size}px`,
           height: `${size}px`,
@@ -253,28 +277,26 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
   return (
     <div
       style={{
-        position: 'relative',
+        display: 'flex',
+        flexDirection: 'row',
         width: '100%',
         height: '100%',
-        overflow: 'hidden',
         background: '#1a1a1a',
+        overflow: 'hidden',
       }}
       ref={outerRef}
       onWheel={handleWheel}
     >
-      {/* Sticky row labels column */}
+      {/* Row labels column */}
       <div
         style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
+          flexShrink: 0,
           width: `${LABEL_WIDTH}px`,
-          height: '100%',
-          zIndex: 3,
           background: '#1a1a1a',
           borderRight: '1px solid #333',
           display: 'flex',
           flexDirection: 'column',
+          zIndex: 1,
         }}
       >
         {/* Ruler header space */}
@@ -310,14 +332,10 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
       <div
         ref={scrollRef}
         style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          right: 0,
-          bottom: 0,
+          flex: 1,
           overflowX: 'auto',
           overflowY: 'hidden',
-          zIndex: 1,
+          minWidth: 0,
         }}
       >
         {/* Inner content panel */}
@@ -348,7 +366,7 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
                 key={tick}
                 style={{
                   position: 'absolute',
-                  left: `${LABEL_WIDTH + leftPx}px`,
+                  left: `${leftPx}px`,
                   top: 0,
                   fontSize: '10px',
                   color: '#888',
@@ -362,7 +380,6 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
               </div>
             ))}
           </div>
-
           {/* Row stripes + guides (behind marks) */}
           {rulerGuides}
           {rows.map((row, i) => (
@@ -371,7 +388,7 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
               style={{
                 position: 'absolute',
                 top: `${RULER_HEIGHT + i * ROW_HEIGHT}px`,
-                left: `${LABEL_WIDTH}px`,
+                left: 0,
                 right: 0,
                 height: `${ROW_HEIGHT}px`,
                 background:
@@ -380,16 +397,14 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
               }}
             />
           ))}
-
           {/* Marks */}
           {markEls}
-
           {/* Playhead */}
-          {running && timeStart !== null && (
+          {!!running && timeStart !== null && (
             <div
               style={{
                 position: 'absolute',
-                left: `${LABEL_WIDTH + elapsed * pxPerTick}px`,
+                left: `${elapsed * pxPerTick}px`,
                 top: `${RULER_HEIGHT}px`,
                 bottom: 0,
                 width: '2px',
@@ -401,6 +416,17 @@ export function Timeline<T = unknown>(props: TimelineProps<T>) {
           )}
         </div>
       </div>
+      {hoverTooltip && (
+        <div
+          className="evlog-mark-tooltip"
+          style={{
+            position: 'fixed',
+            left: `${hoverTooltip.x + 14}px`,
+            top: `${hoverTooltip.y - 10}px`,
+          }}
+          dangerouslySetInnerHTML={{ __html: hoverTooltip.html }}
+        />
+      )}
     </div>
   );
 }

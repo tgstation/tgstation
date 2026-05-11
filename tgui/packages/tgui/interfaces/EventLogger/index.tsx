@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { sanitizeText } from '../../sanitize';
 
 import { CategoryBar } from './CategoryBar';
 import { ControlBar } from './ControlBar';
@@ -57,7 +58,13 @@ function buildMarks(
         count: evts.length,
         tooltip: isMulti
           ? `${evts.length} events at tick ${tick - (timeStart ?? 0)}`
-          : evts[0].info,
+          : evts[0].info.replace(/<[^>]*>/g, ''),
+        tooltipHtml: isMulti
+          ? null
+          : sanitizeText(evts[0].info, false, undefined, [
+              'style',
+              'background',
+            ]),
         data: evts,
       });
     }
@@ -108,11 +115,10 @@ export function EventLogger() {
             flex: 1,
             cursor: 'pointer',
           }}
-          title={track.name}
+          title={track.name.replace(/<[^>]*>/g, '')}
           onClick={() => handleSelectTrack(track)}
-        >
-          {track.name}
-        </span>
+          dangerouslySetInnerHTML={{ __html: sanitizeText(track.name) }}
+        />
         <button
           title="Remove track and all its events"
           onClick={(e) => {
@@ -179,12 +185,10 @@ export function EventLogger() {
     });
   }
 
-  const timelineHeight = 360;
-
   return (
     <Window title="Event Logger" width={1600} height={1080}>
       <Window.Content>
-        <Stack vertical fill>
+        <Stack vertical fill className="EventLogger">
           {/* Control bar */}
           <Stack.Item>
             <ControlBar
@@ -203,8 +207,8 @@ export function EventLogger() {
           </Stack.Item>
 
           {/* Timeline */}
-          <Stack.Item height={timelineHeight}>
-            <div style={{ height: `${timelineHeight}px` }}>
+          <Stack.Item grow={2} basis={0} style={{ minHeight: 0 }}>
+            <div style={{ height: '100%' }}>
               <Timeline<EventEntry[]>
                 rows={rows}
                 marks={marks}
@@ -224,7 +228,7 @@ export function EventLogger() {
           </Stack.Item>
 
           {/* Bottom row: track info + selected events */}
-          <Stack.Item height={200}>
+          <Stack.Item grow={3} basis={0} style={{ minHeight: 0 }}>
             <Stack fill>
               <Stack.Item grow={1} basis={0}>
                 <InfoPanel

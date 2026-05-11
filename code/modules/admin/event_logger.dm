@@ -1,12 +1,20 @@
 /// Global event logger datum, accessible anywhere for debug logging.
 GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 
-/// Sets the DF_EVLOGGING flag on this datum and fires COMSIG_EVLOGGING_ENABLED.
-/datum/proc/enable_evlogging()
+/// Enables event logging for a datum. If display_on is supplied then it will report the events as if theyre happening on that datum
+/datum/proc/enable_evlogging(datum/display_on = null)
+	if(display_on)
+		GLOB.event_logger.display_map[REF(src)] = REF(display_on)
+	if(datum_flags & DF_EVLOGGING)
+		return
 	datum_flags |= DF_EVLOGGING
 	SEND_SIGNAL(src, COMSIG_EVLOGGING_ENABLED)
 
+/// Disables event logging for a datum. If display_on was supplied during enable_evlogging, it will also remove the display mapping.
 /datum/proc/disable_evlogging()
+	GLOB.event_logger.display_map -= REF(src)
+	if(!(datum_flags & DF_EVLOGGING))
+		return
 	datum_flags &= ~DF_EVLOGGING
 	SEND_SIGNAL(src, COMSIG_EVLOGGING_DISABLED)
 
@@ -60,6 +68,8 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	var/list/user_overlays = list()
 	/// The mob currently waiting to click a target for pick-target mode, or null.
 	var/mob/awaiting_pick_user = null
+	/// Assoc list: REF(source datum) -> REF(display datum). Events from the source appear under the display datum's track.
+	var/list/display_map = list()
 
 /datum/event_logger/Destroy()
 	_clear_all_overlays()
@@ -67,6 +77,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	tracks = null
 	categories = null
 	user_overlays = null
+	display_map = null
 	return ..()
 
 /datum/event_logger/proc/start()
@@ -111,14 +122,23 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 /datum/event_logger/proc/_add_event(datum/source, list/event_data)
 	if(!running)
 		return
-	var/ref_string = REF(source)
+	// Resolve display routing: if source has a display_on target, log under that datum's track instead
+	var/datum/display_target
+	var/display_ref = display_map[REF(source)]
+	if(display_ref)
+		display_target = locate(display_ref)
+		if(!display_target) // display_on was deleted, remove the stale entry. Yeah this is a bit lame, but I felt like registering QDEL might be more of a hassle if we're using REF() anyway. Feel free to @ me over it
+			display_map -= REF(source)
+
+	var/datum/track_datum = display_target || source
+	var/ref_string = REF(track_datum)
 	if(!tracks[ref_string])
 		var/track_name
-		if(isatom(source))
-			var/atom/resolved_atom = source
-			track_name = "[ref_string] [resolved_atom] [source.type]"
+		if(isatom(track_datum))
+			var/atom/resolved_atom = track_datum
+			track_name = "[ref_string] [resolved_atom] [track_datum.type]"
 		else
-			track_name = "[ref_string] [source.type]"
+			track_name = "[ref_string] [track_datum.type]"
 		add_track(ref_string, track_name, null)
 	var/datum/event_logger_track/track = tracks[ref_string]
 	event_data["id"] = ++next_event_id
@@ -133,6 +153,8 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 	track.events += list(event_data)
 	events_by_id["[event_data["id"]]"] = event_data
 	SEND_SIGNAL(source, COMSIG_EVLOG_EVENT_ADDED, track, event_data)
+	if(display_target)
+		SEND_SIGNAL(display_target, COMSIG_EVLOG_EVENT_ADDED, track, event_data)
 
 /// Log a plain text event. Has no world-visuals, just puts text into the menu
 /datum/event_logger/proc/log_event_text(datum/source, category, info_string)

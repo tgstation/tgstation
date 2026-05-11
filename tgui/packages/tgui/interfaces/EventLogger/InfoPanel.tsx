@@ -1,24 +1,8 @@
-import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { Box, Button, LabeledList, Section, Stack } from 'tgui-core/components';
+import { sanitizeText } from '../../sanitize';
 import type { Track, TrackInfoEntry } from './types';
 import { CATEGORY_PALETTE } from './types';
-
-// Renders a string with **bold** markup as React spans.
-export function renderMarkup(text: string): ReactNode {
-  const parts = text.split('**');
-  return (
-    <span style={{ whiteSpace: 'pre-wrap' }}>
-      {parts.map((part, i) =>
-        i % 2 === 1 ? (
-          <strong key={i}>{part}</strong>
-        ) : (
-          <span key={i}>{part}</span>
-        ),
-      )}
-    </span>
-  );
-}
 
 export type InfoPanelProps = {
   tracks: Track[];
@@ -36,6 +20,7 @@ export function InfoPanel(props: InfoPanelProps) {
 
   // Resolve which track_info snapshot to display and whether it's event-specific
   let snapshotEntries: TrackInfoEntry[] | null = null;
+  let snapshotTrack: Track | null = null;
   let isLatest = false;
 
   if (selectedEventIds.size > 0) {
@@ -50,6 +35,7 @@ export function InfoPanel(props: InfoPanelProps) {
         ) {
           bestId = evt.id;
           snapshotEntries = evt.track_info;
+          snapshotTrack = t;
         }
       }
     }
@@ -63,7 +49,10 @@ export function InfoPanel(props: InfoPanelProps) {
         snapshotEntries = evt.track_info;
       }
     }
-    if (snapshotEntries) isLatest = true;
+    if (snapshotEntries) {
+      snapshotTrack = track;
+      isLatest = true;
+    }
   }
 
   const infoCategoryOrder: string[] = [];
@@ -101,7 +90,15 @@ export function InfoPanel(props: InfoPanelProps) {
         <LabeledList>
           {items.map((item) => (
             <LabeledList.Item key={item.title} label={item.title}>
-              {renderMarkup(item.entry)}
+              <span
+                style={{ whiteSpace: 'pre-wrap' }}
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeText(item.entry, false, undefined, [
+                    'style',
+                    'background',
+                  ]),
+                }}
+              />
             </LabeledList.Item>
           ))}
         </LabeledList>
@@ -109,9 +106,11 @@ export function InfoPanel(props: InfoPanelProps) {
     ));
   }
 
+  const displayName = snapshotTrack?.name ?? track?.name ?? 'Track Info';
+
   return (
     <Section
-      title={isLatest ? 'Track Info (latest snapshot)' : 'Track Info'}
+      title={isLatest ? `${displayName} (latest snapshot)` : displayName}
       fill
       scrollable
     >

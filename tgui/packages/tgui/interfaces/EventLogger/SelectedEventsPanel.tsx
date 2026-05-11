@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Box, Button, Section } from 'tgui-core/components';
+import { sanitizeText } from '../../sanitize';
 import type { EventEntry, Track } from './types';
 import {
   getEventPrimaryCoord,
@@ -97,9 +98,15 @@ export function SelectedEventsPanel(props: SelectedEventsPanelProps) {
                 <Box inline color="label" mr={0.5}>
                   #{evt.id}
                 </Box>
-                <span style={{ whiteSpace: 'pre-wrap', flex: 1 }}>
-                  {evt.info}
-                </span>
+                <span
+                  style={{ whiteSpace: 'pre-wrap', flex: 1 }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeText(evt.info, false, undefined, [
+                      'style',
+                      'background',
+                    ]),
+                  }}
+                />
               </Box>
             );
           })

@@ -575,6 +575,7 @@ multiple modular subtrees with behaviors
 		return
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 		fail_behavior(current_behavior)
+	EVLOG_TEXT(src, "AI Decisionmaking", "Actions were cancelled!")
 
 /datum/ai_controller/proc/fail_behavior(datum/ai_behavior/current_behavior)
 	var/list/arguments = list(src, FALSE)
@@ -959,12 +960,12 @@ multiple modular subtrees with behaviors
 /// When the pawn gets DF_EVLOGGING, propagate it to this controller too.
 /datum/ai_controller/proc/on_pawn_evlogging_enabled(datum/source)
 	SIGNAL_HANDLER
-	enable_evlogging()
+	enable_evlogging(pawn)
 
 /// When the pawn gets DF_EVLOGGING disabled, propagate it to this controller too.
 /datum/ai_controller/proc/on_pawn_evlogging_disabled(datum/source)
 	SIGNAL_HANDLER
-	disable_evlogging()
+	disable_evlogging(pawn)
 
 ///Register for an event being added so we can update track info
 /datum/ai_controller/enable_evlogging()
@@ -984,7 +985,7 @@ multiple modular subtrees with behaviors
 	var/list/current_behavior_info = list()
 	for(var/datum/ai_behavior/behavior in planned_behaviors)
 		if(current_behaviors.Find(behavior)) //Not really ideal; we should find a better way to do this.
-			current_behavior_info += "**ACTIVE: [behavior.type]**"
+			current_behavior_info += "ACTIVE: [span_bold("[behavior.type]")]"
 		else
 			current_behavior_info += "[behavior.type]"
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Behaviors", "Current Behavior", jointext(current_behavior_info, "\n"))

@@ -151,6 +151,8 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 	// Alright, we found something acceptable, let's use it yeah?
 	var/atom/target = pick_final_target(controller, accepted_targets)
+	EVLOG_MAPTEXT(controller, "AI Targetting", "[controller.pawn] has selected [target] as a target for blackboard key [target_key]! Behavior: [src]", get_turf(target), "Target: [target]")
+	EVLOG_LINES(controller, "AI Targetting", "Line to target", get_turf(controller.pawn), get_turf(target))
 	controller.set_blackboard_key(target_key, target)
 
 	var/atom/potential_hiding_location = strategy.find_hidden_mobs(pawn, target)
