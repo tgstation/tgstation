@@ -384,6 +384,11 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 ///Tgui stuff below!!
 
 
+/datum/event_logger/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/simple/chat_dark),
+	)
+
 /datum/event_logger/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

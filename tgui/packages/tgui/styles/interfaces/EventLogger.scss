@@ -1,11 +1,3 @@
-/**
- * Span classes for BYOND-formatted text rendered inside the EventLogger.
- * chat-dark.scss is loaded scoped here so its span classes apply to EventLogger
- * content and the fixed-position mark tooltip, without leaking globally.
- */
-
-@use 'sass:meta';
-
 // Custom HTML tooltip shown on timeline mark hover, rendered at fixed position
 .evlog-mark-tooltip {
   position: fixed;
@@ -21,10 +13,4 @@
   min-width: 120px;
   max-width: 320px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-}
-
-// Scope all chat-dark span classes so I can just use the DM span classes like a boss
-.EventLogger,
-.evlog-mark-tooltip {
-  @include meta.load-css('../../../tgui-panel/styles/tgchat/chat-dark.scss');
 }
