@@ -443,7 +443,7 @@
 
 	var/active_ruin_string = json_encode(active_ruins_list)
 
-	var/string_gen = rustg_lavaland_generator_generate("[world.maxx]", "[world.maxy]", active_ruin_string, "[min_bsp_size]","[max_ratio]", "[padding]", "[room_fill_percent]", "[corridor_width]","[loop_percent]", "[noise_percent]", "[ca_steps]", "[birth_limit]", "[survival_limit]", "[edges_are_alive]")
+	var/string_gen = rustg_cave_system_generator_generate("[world.maxx]", "[world.maxy]", active_ruin_string, "[min_bsp_size]","[max_ratio]", "[padding]", "[room_fill_percent]", "[corridor_width]","[loop_percent]", "[noise_percent]", "[ca_steps]", "[birth_limit]", "[survival_limit]", "[edges_are_alive]")
 
 	return string_gen
 
