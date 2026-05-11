@@ -31,6 +31,11 @@
 	var/current_z_shown
 	/// minimap state, if it's open or not
 	var/active = FALSE
+	/// z-traits where this minimap action cannot be opened and is forced closed.
+	var/list/minimap_ztrait_blacklist = list(
+		ZTRAIT_CENTCOM,
+		ZTRAIT_RESERVED,
+	)
 	/// list of z-trait overrides to show another z-trait's map
 	var/list/minimap_ztrait_overrides = list(
 		ZTRAIT_CENTCOM = ZTRAIT_STATION,
@@ -81,6 +86,9 @@
 		override_locator(owner.loc)
 	var/atom/movable/tracking = locator_override ? locator_override : owner
 	if(force_state)
+		if(is_blacklisted_minimap_z(tracking?.z))
+			to_chat(owner, span_warning("The minimap cannot be used on this z-level."))
+			return FALSE
 		if(locate(/atom/movable/screen/minimap) in owner.client.screen) //This seems like the most effective way to do this without some wacky code
 			to_chat(owner, span_warning("You already have a minimap open!"))
 			return FALSE
@@ -187,7 +195,20 @@
  */
 /datum/action/minimap/proc/on_owner_z_change(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
+	if(is_blacklisted_minimap_z(new_turf?.z))
+		if(minimap_displayed)
+			toggle_minimap(FALSE)
+			to_chat(owner, span_warning("Cannot view this z-level!"))
+		return
 	change_z_shown(new_turf.z)
+
+/datum/action/minimap/proc/is_blacklisted_minimap_z(z_level)
+	if(isnull(z_level))
+		return FALSE
+	for(var/trait in minimap_ztrait_blacklist)
+		if(SSmapping.level_trait(z_level, trait))
+			return TRUE
+	return FALSE
 
 /// changes the currently to be displayed z. takes the new z as an arg
 /datum/action/minimap/proc/change_z_shown(newz)

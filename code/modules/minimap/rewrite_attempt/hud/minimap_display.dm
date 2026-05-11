@@ -90,6 +90,8 @@
 		if(hud?.mymob)
 			for(var/signal in hud_signals)
 				UnregisterSignal(hud.mymob, signal, hud_signals[signal])
+		if(hud?.mymob?.client)
+			UnregisterSignal(hud.mymob.client, COMSIG_CLIENT_MOUSEUP)
 	if(length(GLOB.minimap_annotation_viewers[annotation_share_tag]))
 		GLOB.minimap_annotation_viewers[annotation_share_tag] -= src
 	minimap = null
@@ -110,10 +112,14 @@
 			hud.remove_screen_object(key, update = FALSE)
 		for(var/signal in hud_signals)
 			UnregisterSignal(hud_owner?.mymob, signal, hud_signals[signal])
+		if(hud?.mymob?.client)
+			UnregisterSignal(hud.mymob.client, COMSIG_CLIENT_MOUSEUP)
 	. = ..()
 	if(hud?.mymob)
 		for(var/signal in hud_signals)
 			RegisterSignal(hud_owner.mymob, signal, hud_signals[signal])
+		if(hud.mymob.client)
+			RegisterSignal(hud.mymob.client, COMSIG_CLIENT_MOUSEUP, PROC_REF(on_client_mouseup))
 	if(can_draw)
 		for(var/hud_key, hud_type in toolbar_button_types)
 			var/atom/movable/screen/minimap_toolbar_button/button = new hud_type(null, hud_owner, src)
@@ -172,22 +178,32 @@
 	if(label_mode || LAZYACCESS(modifiers, CTRL_CLICK))
 		return
 	var/list/mouse_px = params2screenpixel(LAZYACCESS(modifiers, SCREEN_LOC))
+	if(length(mouse_px) != 2)
+		return
 	var/x = mouse_px[1] - origin_px[1] + 1
 	var/y = mouse_px[2] - origin_px[2] + 1
+	var/icon_width = minimap?.base_map?.Width()
+	var/icon_height = minimap?.base_map?.Height()
+	if(isnull(icon_width) || isnull(icon_height))
+		return
+	if(x < 1 || y < 1 || x > icon_width || y > icon_height)
+		// End the current stroke when leaving map bounds to avoid long re-entry lines.
+		last_drag_x = null
+		last_drag_y = null
+		return
 	var/erase_pixel_range = isnull(draw_color) ? MINIMAP_TOOLBAR_ERASE_RANGE : 0
 
 	if(last_drag_x && last_drag_y)
 		drawing.draw_line(draw_color, last_drag_x, last_drag_y, x, y, erase_pixel_range, 1)
-		last_drag_x = null
-		last_drag_y = null
+		last_drag_x = x
+		last_drag_y = y
 	else
 		drawing.draw_box(draw_color, x, y, x + 1, y + 1, erase_pixel_range, 1)
 		last_drag_x = x
 		last_drag_y = y
 
-/atom/movable/screen/minimap_display/MouseUp(location, control, params)
-	if(usr != get_mob())
-		return
+/atom/movable/screen/minimap_display/proc/on_client_mouseup(client/source)
+	SIGNAL_HANDLER
 	last_drag_x = null
 	last_drag_y = null
 
@@ -464,8 +480,11 @@
 	new_label.maptext_y = 5
 	new_label.maptext_width = 64
 	new_label.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: left'>[label_text]</span>")
-	new_label.pixel_w = icon_x
-	new_label.pixel_z = icon_y
+	var/icon/label_icon = icon(new_label.icon, new_label.icon_state)
+	var/half_width = round(label_icon.Width() / 2)
+	var/half_height = round(label_icon.Height() / 2)
+	new_label.pixel_w = MINIMAP_WORLD_TO_PIXEL(x, minimap.min_x, half_width)
+	new_label.pixel_z = MINIMAP_WORLD_TO_PIXEL(y, minimap.min_y, half_height)
 	var/list/labels_for_z = get_or_create_annotation_list(/atom/movable/screen/minimap_element/label, minimap.z)
 	labels_for_z += new_label
 	sync_visible_objects(minimap?.z)
