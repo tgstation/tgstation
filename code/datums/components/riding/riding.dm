@@ -333,6 +333,8 @@
 		return NONE
 
 	switch(other_unbuckle)
+		if(CAN_FORCE_UNBUCKLE)
+			return NONE
 		if(CANNOT_FORCE_UNBUCKLE)
 			to_chat(unbuckler, span_warning("You can't dismount [source]'s rider[length(source.buckled_mobs) == 1 ? "" : "s"]!"))
 		if(CAN_DISARM_UNBUCKLE)
