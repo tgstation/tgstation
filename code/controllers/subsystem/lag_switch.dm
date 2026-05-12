@@ -88,9 +88,11 @@ SUBSYSTEM_DEF(lag_switch)
 	switch(measure_key)
 		if(DISABLE_DEAD_KEYLOOP)
 			if(state)
-				for(var/mob/user as anything in GLOB.player_list)
-					if(user.stat == DEAD && !user.client?.holder)
-						GLOB.keyloop_list -= user
+				var/list/all_observers = GLOB.dead_player_list + GLOB.current_observers_list
+				for(var/mob/observer as anything in all_observers)
+					if(observer.client?.holder) // Don't freeze admins
+						continue
+					GLOB.keyloop_list -= observer
 				deadchat_broadcast(span_big("To increase performance Observer freelook is now disabled. Please use Orbit, Teleport, and Jump to look around."), message_type = DEADCHAT_ANNOUNCEMENT)
 			else
 				GLOB.keyloop_list |= GLOB.player_list

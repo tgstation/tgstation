@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Explosions won't remove organs from skeletons/plasmamen"

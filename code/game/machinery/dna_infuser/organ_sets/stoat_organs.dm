@@ -161,7 +161,7 @@
 	liked_foodtypes = MEAT | RAW | GORE | BUGS
 	disliked_foodtypes = FRUIT | VEGETABLES
 	taste_sensitivity = 12
-	organ_traits = list(TRAIT_SPEAKS_CLEARLY, TRAIT_FERAL_BITER)
+	organ_traits = list(TRAIT_FERAL_BITER)
 
 /obj/item/organ/tongue/stoat/Initialize(mapload)
 	. = ..()

@@ -6,6 +6,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors/unexplored)
 "ab" = (
+/obj/structure/closet/crate,
 /obj/item/vending_refill/hydroseeds,
 /obj/item/vending_refill/hydroseeds,
 /obj/item/storage/bag/plants/portaseeder,
@@ -13,7 +14,6 @@
 /obj/item/seeds/cherry/bomb,
 /obj/item/seeds/cherry/bomb,
 /obj/item/seeds/sunflower/moonflower,
-/obj/structure/closet/crate/hydroponics,
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "ac" = (
@@ -230,6 +230,7 @@
 /turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "aY" = (
+/obj/structure/closet/crate,
 /obj/item/vending_refill/cytopro,
 /obj/item/vending_refill/cytopro,
 /obj/item/vending_refill/hydronutrients,
@@ -239,7 +240,6 @@
 /obj/item/seeds/berry/glow,
 /obj/item/seeds/berry/glow,
 /obj/item/seeds/sunflower/moonflower,
-/obj/structure/closet/crate/hydroponics,
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "ba" = (
@@ -433,11 +433,12 @@
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "lh" = (
-/obj/structure/closet/crate/hydroponics,
+/obj/machinery/light/directional/north,
+/obj/structure/closet/crate,
+/obj/item/queen_bee,
 /obj/item/bee_smoker,
 /obj/item/clothing/head/utility/beekeeper_head,
 /obj/item/clothing/suit/utility/beekeeper_suit,
-/obj/item/queen_bee,
 /obj/structure/beebox/unwrenched,
 /obj/item/honey_frame,
 /obj/item/honey_frame,
