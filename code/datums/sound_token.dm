@@ -52,18 +52,9 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGOUT, PROC_REF(player_logout))
 
 /datum/sound_token/Destroy(force, ...)
- 	UnregisterSignal(SSdcs, list(
- 		COMSIG_GLOB_PLAYER_LOGIN,
- 		COMSIG_GLOB_PLAYER_LOGOUT,
- 	))
- 	if(source)
- 		UnregisterSignal(source, list(
- 			COMSIG_QDELETING,
- 			COMSIG_MOVABLE_MOVED,
- 			COMSIG_ENTER_AREA,
- 		))
-
-
+	UnregisterSignal(SSdcs, list(COMSIG_GLOB_PLAYER_LOGIN, COMSIG_GLOB_PLAYER_LOGOUT))
+	if(source)
+		UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED, COMSIG_ENTER_AREA))
 	var/listener_list = listeners.Copy()
 	for(var/listener in listener_list)
 		remove_listener(listener)
@@ -106,12 +97,12 @@
 /// Remove a listener from the sound.
 /datum/sound_token/proc/remove_listener(mob/listener_mob)
 	if(isnull(listeners[listener_mob]))
- 		return
+		return
 
 	listeners -= listener_mob
 
 	if(QDELETED(listener_mob))
- 		return
+		return
 
 	UnregisterSignal(listener_mob, list(COMSIG_QDELETING, SIGNAL_ADDTRAIT(TRAIT_DEAF),SIGNAL_REMOVETRAIT(TRAIT_DEAF)))
 	SEND_SOUND(listener_mob, null_sound)

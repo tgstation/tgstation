@@ -69,7 +69,7 @@
 	var/reserved_channel
 	///Whether this looping sound uses sound tokens. This should only be true for sounds that need to update as the source or listeners move. (Generally long or important sounds like grav-gen)
 	var/use_sound_tokens = FALSE
-	///The sound token instance for this looping sound._dm_db_new_con()
+	///The sound token instance for this looping sound.
 	var/datum/sound_token/sound_token_instance
 
 /datum/looping_sound/New(
