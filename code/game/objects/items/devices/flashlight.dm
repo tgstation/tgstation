@@ -343,6 +343,7 @@
 	light_color = "#CCFFFF"
 	has_closed_handle = FALSE
 	COOLDOWN_DECLARE(holosign_cooldown)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/flashlight/pen/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, holosign_cooldown))

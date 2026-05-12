@@ -265,6 +265,7 @@
 	range = MECHA_MELEE|MECHA_RANGED
 	kickback = FALSE
 	mech_flags = EXOSUIT_MODULE_HONK
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
@@ -516,6 +517,7 @@
 	equip_cooldown = 20
 	mech_flags = EXOSUIT_MODULE_HONK
 	ammo_type = MECHA_AMMO_BANANA_PEEL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -530,6 +532,7 @@
 	equip_cooldown = 10
 	mech_flags = EXOSUIT_MODULE_HONK
 	ammo_type = MECHA_AMMO_MOUSETRAP
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(obj/item/assembly/mousetrap/armed/M)
 	M.secured = TRUE
@@ -554,6 +557,7 @@
 	var/punch_damage = 35
 	mech_flags = EXOSUIT_MODULE_HONK
 	ammo_type = MECHA_AMMO_PUNCHING_GLOVE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 3.75)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/get_snowflake_data()
 	. = ..()

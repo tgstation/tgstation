@@ -12,6 +12,7 @@
 	toxification_probability = 0
 
 	COOLDOWN_DECLARE(survival_cooldown)
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	///Cooldown for the activation of the organ
 	var/survival_cooldown_time = 5 MINUTES
 	///The lightning effect on our mob when the implant is active

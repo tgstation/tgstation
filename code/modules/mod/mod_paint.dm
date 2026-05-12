@@ -10,6 +10,7 @@
 	desc = "This kit will repaint your MODsuit to something unique."
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "paintkit"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 5)
 	var/obj/item/mod/control/editing_mod
 	var/atom/movable/screen/map_view/proxy_view
 	var/list/current_color

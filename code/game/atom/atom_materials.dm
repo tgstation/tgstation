@@ -613,7 +613,7 @@
 		if(as_sheets)
 			var/amount = sheets_from_value(mats_list[mat])
 			switch(amount)
-				if(0 to 0.9)
+				if(0 to 0.09)
 					amount_string = "SMALL_MATERIAL_AMOUNT * " + num2text(amount * 10)
 				if(0.1)
 					amount_string = "SMALL_MATERIAL_AMOUNT"

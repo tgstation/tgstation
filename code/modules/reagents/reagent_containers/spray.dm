@@ -448,6 +448,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 100
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/spray/medical/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/med_spray)

@@ -152,7 +152,6 @@
 //////////////////////////// ARMOR BOOSTER MODULES //////////////////////////////////////////////////////////
 /obj/item/mecha_parts/mecha_equipment/armor
 	equipment_slot = MECHA_ARMOR
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5)
 	//how much the armor of the mech is modified by
 	var/datum/armor/armor_mod
 
@@ -171,6 +170,7 @@
 	desc = "Boosts exosuit armor against melee attacks"
 	icon_state = "mecha_abooster_ccw"
 	armor_mod = /datum/armor/mecha_equipment_ccw_boost
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /datum/armor/mecha_equipment_ccw_boost
 	melee = 20
@@ -180,6 +180,7 @@
 	desc = "Boosts exosuit armor against ranged kinetic and energy projectiles. Completely blocks taser shots."
 	icon_state = "mecha_abooster_proj"
 	armor_mod = /datum/armor/mecha_equipment_ranged_boost
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /datum/armor/mecha_equipment_ranged_boost
 	bullet = 15
@@ -191,6 +192,7 @@
 		exosuit slightly more vulnerable to kinetic blows due to taking up valuable hull cushioning."
 	icon_state = "mecha_abooster_emp"
 	armor_mod = /datum/armor/mecha_equipment_energy_boost
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /datum/armor/mecha_equipment_energy_boost
 	melee = -5
@@ -538,6 +540,7 @@
 	icon = 'icons/obj/devices/mecha_equipment.dmi'
 	icon_state = "mecha_camera"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2)
 
 /obj/item/mecha_parts/camera_kit/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
 	if(mech.chassis_camera)

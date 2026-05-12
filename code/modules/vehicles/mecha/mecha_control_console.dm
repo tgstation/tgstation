@@ -79,6 +79,7 @@
 	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5)
 	/// If this beacon allows for AI control. Exists to avoid using istype() on checking
 	var/ai_beacon = FALSE
 	/// Cooldown variable for EMP pulsing
@@ -155,5 +156,6 @@
 /obj/item/mecha_parts/mecha_tracking/ai_control
 	name = "exosuit AI control beacon"
 	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 2)
 	ai_beacon = TRUE
 	flag_to_check = BEACON_CONTROLLABLE

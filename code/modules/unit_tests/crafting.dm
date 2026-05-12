@@ -161,7 +161,7 @@
 		var/what_it_is = copycat.transcribe_materials_list(copycat_mats)
 		//compose a text string containing the syntax and paths to use for editing the custom_materials var
 		if(result.custom_materials)
-			what_it_should_be += " (you can round a bit for values above 100)"
+			what_it_should_be += " (you can round values above SHEET_MATERIAL_AMOUNT to the nearest decimal)"
 
 
 		///This tells you about other ways to deal with the issue, if you can't just change the materials of the object. For example, if there are two different recipes for it.

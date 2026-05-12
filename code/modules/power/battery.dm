@@ -12,7 +12,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 2
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*12, /datum/material/glass=SMALL_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 1.2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*2)
 	rating_base = STANDARD_BATTERY_CHARGE
 	maxcharge = STANDARD_BATTERY_CHARGE
 	chargerate = STANDARD_BATTERY_RATE
@@ -75,7 +75,7 @@
 	name = "\improper Nanotrasen brand rechargeable AA megacell"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	maxcharge = STANDARD_BATTERY_CHARGE * 0.5
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
+	custom_materials = list(/datum/material/glass= SMALL_MATERIAL_AMOUNT)
 
 /obj/item/stock_parts/power_store/battery/crap/empty
 	empty = TRUE

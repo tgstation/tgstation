@@ -102,6 +102,7 @@
 	icon_state = "pHmeter"
 	icon = 'icons/obj/medical/chemical.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT)
 	///level of detail for output for the meter
 	var/scanmode = DETAILED_CHEM_OUTPUT
 

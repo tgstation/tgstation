@@ -333,6 +333,7 @@
 	drop_sound = SFX_CLOTH_DROP
 	pickup_sound = SFX_CLOTH_PICKUP
 	gender = PLURAL
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()

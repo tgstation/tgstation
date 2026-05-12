@@ -1858,6 +1858,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	force = 0
 	throwforce = 5
 	reach = 2
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	var/min_reach = 2
 
 /obj/item/extendohand/acme

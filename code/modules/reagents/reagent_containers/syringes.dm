@@ -331,6 +331,7 @@
 	volume = 60
 	dart_insert_casing_icon_state = "overlay_syringe_bluespace"
 	dart_insert_projectile_icon_state = "overlay_syringe_bluespace_proj"
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/syringe/piercing
 	name = "piercing syringe"
@@ -345,6 +346,7 @@
 	dart_insert_casing_icon_state = "overlay_syringe_piercing"
 	dart_insert_projectile_icon_state = "overlay_syringe_piercing_proj"
 	embed_type = /datum/embedding/syringe/piercing
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/embedding/syringe/piercing
 	embed_chance = 100
