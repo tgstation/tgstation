@@ -3393,7 +3393,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/consumable/ethanol/negroni //Aperitif that increases hunger
+/datum/reagent/consumable/ethanol/negroni //Aperitif that increases hunger if overfed
 	name = "Negroni"
 	description = "An iconic Italian aperitif, its simple intensity crowns it as perhaps the ultimate bitter cocktail. Supposedly it was named after an Italian count who wanted a stronger version of a spritz and asked his bartender to replace soda with gin."
 	boozepwr = 50
@@ -3473,7 +3473,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_HIGH
 
-/datum/reagent/consumable/ethanol/spritz //Aperitif that increases hunger
+/datum/reagent/consumable/ethanol/spritz //Aperitif that increases hunger if overfed
 	name = "Spritz" // If someone wants to add an elderflower spritz or something else like that, just rename this to spritz al bitter or whatever
 	description = "This bittersweet and refreshing aperitif brings to mind the beautiful summer sunsets of venice."
 	boozepwr = 20
