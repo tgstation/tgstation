@@ -82,8 +82,7 @@
 				prio.active = !!prio_data["active"]
 				interaction_priorities += prio
 
-		..()
-		return
+		return ..()
 
 	if(!new_turf)
 		stack_trace("New manipulator task created with no valid turf reference passed.")
@@ -97,7 +96,7 @@
 	interaction_turf = new_turf
 	interaction_priorities = fill_priority_list(manipulator_tier)
 	..()
-	return
+	return ..()
 
 /datum/manipulator_task/cargo/proc/fill_priority_list(manipulator_tier)
 	return list()
@@ -120,8 +119,8 @@
 				continue
 
 			if(isliving(thing))
-				var/mob/living/L = thing
-				if(L.stat == DEAD)
+				var/mob/living/living_mob = thing
+				if(living_mob.stat == DEAD)
 					continue
 
 			best_candidate = thing
@@ -335,10 +334,10 @@
 	var/overflow_status = POINT_OVERFLOW_ALLOWED
 
 /datum/manipulator_task/cargo/dropoff_base/drop/fill_priority_list(manipulator_tier)
-	var/list/priorities = new /list(2)
-	priorities[1] = new /datum/manipulator_priority/drop/in_storage
-	priorities[2] = new /datum/manipulator_priority/drop/on_floor
-	return priorities
+	return list(
+		new /datum/manipulator_priority/drop/in_storage,
+		new /datum/manipulator_priority/drop/on_floor
+	)
 
 /datum/manipulator_task/cargo/dropoff_base/drop/can_accept(atom/movable/target)
 	if(!..())
@@ -413,13 +412,14 @@
 	var/worker_use_rmb = FALSE
 
 /datum/manipulator_task/cargo/dropoff_base/use/fill_priority_list(manipulator_tier)
-	var/list/priorities = new /list(manipulator_tier == 4 ? 5 : 4)
-	priorities[1] = new /datum/manipulator_priority/interact/with_living
-	priorities[2] = new /datum/manipulator_priority/interact/with_structure
-	priorities[3] = new /datum/manipulator_priority/interact/with_machinery
-	priorities[4] = new /datum/manipulator_priority/interact/with_items
+	var/list/priorities =  list(
+		new /datum/manipulator_priority/interact/with_living,
+		new /datum/manipulator_priority/interact/with_structure,
+		new /datum/manipulator_priority/interact/with_machinery,
+		new /datum/manipulator_priority/interact/with_items,
+	)
 	if(manipulator_tier == 4)
-		priorities[5] = new /datum/manipulator_priority/interact/with_vehicles
+		priorities += new /datum/manipulator_priority/interact/with_vehicles
 	return priorities
 
 /datum/manipulator_task/cargo/dropoff_base/use/can_accept(atom/movable/target)
@@ -459,13 +459,14 @@
 	var/worker_use_rmb = FALSE
 
 /datum/manipulator_task/cargo/interact/fill_priority_list(manipulator_tier)
-	var/list/priorities = new /list(manipulator_tier == 4 ? 5 : 4)
-	priorities[1] = new /datum/manipulator_priority/interact/with_living
-	priorities[2] = new /datum/manipulator_priority/interact/with_structure
-	priorities[3] = new /datum/manipulator_priority/interact/with_machinery
-	priorities[4] = new /datum/manipulator_priority/interact/with_items
+	var/list/priorities =  list(
+		new /datum/manipulator_priority/interact/with_living,
+		new /datum/manipulator_priority/interact/with_structure,
+		new /datum/manipulator_priority/interact/with_machinery,
+		new /datum/manipulator_priority/interact/with_items,
+	)
 	if(manipulator_tier == 4)
-		priorities[5] = new /datum/manipulator_priority/interact/with_vehicles
+		priorities += new /datum/manipulator_priority/interact/with_vehicles
 	return priorities
 
 /datum/manipulator_task/cargo/interact/can_run(obj/machinery/big_manipulator/manipulator)

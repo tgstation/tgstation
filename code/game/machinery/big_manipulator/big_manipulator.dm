@@ -56,8 +56,6 @@
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
 	var/turf/base = get_turf(src)
 	for(var/turf/checked_turf in orange(base, 1))
-		if(checked_turf == base)
-			continue
 		if(!isclosedturf(checked_turf))
 			return checked_turf
 	return null
@@ -75,9 +73,9 @@
 	var/needs_turf = task_type in list(TASK_TYPE_PICKUP, TASK_TYPE_DROP, TASK_TYPE_THROW, TASK_TYPE_USE, TASK_TYPE_INTERACT)
 
 	if(needs_turf)
-		if(!new_turf) new_turf = find_suitable_turf()
 		if(!new_turf)
-			balloon_alert(user, "no suitable turfs found!")
+		new_turf = find_suitable_turf()
+		if(!new_turf)
 			return FALSE
 
 	switch(task_type)
@@ -94,7 +92,7 @@
 		if(TASK_TYPE_WAIT)
 			new_task = new /datum/manipulator_task/simple/wait()
 
-	if(!new_task || QDELETED(new_task))
+	if(QDELETED(new_task))
 		return FALSE
 
 	tasks += new_task
@@ -104,7 +102,7 @@
 		cargo_task.offset_dx = new_turf.x - x
 		cargo_task.offset_dy = new_turf.y - y
 
-	if(obj_flags & EMAGGED && istype(new_task, /datum/manipulator_task/cargo))
+	if((obj_flags & EMAGGED) && istype(new_task, /datum/manipulator_task/cargo))
 		var/datum/manipulator_task/cargo/cargo_task = new_task
 		cargo_task.type_filters += /mob/living
 
@@ -197,15 +195,23 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Interact with wires"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/big_manipulator/Destroy(force)
-	unregister_task_turf_signals()
+/obj/machinery/big_manipulator/atom_deconstruct(disassembled)
 	if(task_disk)
 		task_disk.forceMove(drop_location())
 		task_disk = null
+	unregister_task_turf_signals()
 	QDEL_NULL(manipulator_arm)
 	QDEL_LIST(tasks)
 	id_lock = null
-	. = ..()
+	return ..()
+
+/obj/machinery/big_manipulator/Destroy(force)
+	unregister_task_turf_signals()
+	QDEL_NULL(task_disk)
+	QDEL_NULL(manipulator_arm)
+	QDEL_LIST(tasks)
+	id_lock = null
+	return ..()
 
 /obj/machinery/big_manipulator/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -225,7 +231,7 @@
 /obj/machinery/big_manipulator/proc/remove_invalid_task(datum/manipulator_task/task)
 	if(!task)
 		return
-	tasks.Remove(task)
+	tasks -= task
 	qdel(task)
 
 /obj/machinery/big_manipulator/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -405,7 +411,7 @@
 /obj/machinery/big_manipulator/proc/validate_all_tasks()
 	for(var/datum/manipulator_task/cargo/cargo_task in tasks)
 		if(!cargo_task.is_valid())
-			tasks.Remove(cargo_task)
+			tasks -= cargo_task
 			qdel(cargo_task)
 
 /// Attempts to press the power button.
@@ -612,12 +618,12 @@
 		return FALSE
 	if(!task_disk)
 		return FALSE
-	var/obj/item/disk/manipulator/d = task_disk
+	var/obj/item/disk/manipulator/ejectable_disk = task_disk
 	task_disk = null
-	if(user && istype(user) && user.put_in_hands(d))
+	if(istype(user) && user.put_in_hands(ejectable_disk))
 		balloon_alert(user, "disk ejected")
 	else
-		d.forceMove(drop_location())
+		ejectable_disk.forceMove(drop_location())
 		balloon_alert(user, "disk dropped")
 	SStgui.update_uis(src)
 	return TRUE
@@ -723,6 +729,8 @@
 
 	switch(param)
 		if("set_name")
+			if(!value)
+				return FALSE
 			target_task.name = sanitize_name(value, allow_numbers = TRUE)
 			return TRUE
 
@@ -740,13 +748,15 @@
 
 		if("move_up")
 			var/idx = tasks.Find(target_task)
-			if(idx <= 1) return FALSE
+			if(idx <= 1)
+				return FALSE
 			tasks.Swap(idx, idx - 1)
 			return TRUE
 
 		if("move_down")
 			var/idx = tasks.Find(target_task)
-			if(idx >= length(tasks)) return FALSE
+			if(idx >= length(tasks))
+				return FALSE
 			tasks.Swap(idx, idx + 1)
 			return TRUE
 
@@ -755,6 +765,8 @@
 				return FALSE
 			var/datum/manipulator_task/cargo/cargo_task = target_task
 			var/button_number = text2num(value["buttonNumber"])
+			if(button_number < 1 || button_number > 9)
+				return
 			var/dx = ((button_number - 1) % 3) - 1
 			var/dy = 1 - round((button_number - 1) / 3)
 			var/turf/new_turf = locate(x + dx, y + dy, z)
@@ -821,67 +833,67 @@
 		if("cycle_pickup_eagerness")
 			if(!istype(target_task, /datum/manipulator_task/cargo/pickup))
 				return FALSE
-			var/datum/manipulator_task/cargo/pickup/t = target_task
-			t.pickup_eagerness = cycle_value(t.pickup_eagerness, list(PICKUP_CAN_WAIT, PICKUP_EAGER))
+			var/datum/manipulator_task/cargo/pickup/cycle_target_task = target_task
+			cycle_target_task.pickup_eagerness = cycle_value(cycle_target_task.pickup_eagerness, list(PICKUP_CAN_WAIT, PICKUP_EAGER))
 			return TRUE
 
 		if("cycle_overflow_status")
 			if(!istype(target_task, /datum/manipulator_task/cargo/dropoff_base/drop))
 				return FALSE
-			var/datum/manipulator_task/cargo/dropoff_base/drop/t = target_task
-			t.overflow_status = cycle_value(t.overflow_status, list(POINT_OVERFLOW_ALLOWED, POINT_OVERFLOW_FILTERS, POINT_OVERFLOW_HELD, POINT_OVERFLOW_FORBIDDEN))
+			var/datum/manipulator_task/cargo/dropoff_base/drop/cycle_target_task = target_task
+			cycle_target_task.overflow_status = cycle_value(cycle_target_task.overflow_status, list(POINT_OVERFLOW_ALLOWED, POINT_OVERFLOW_FILTERS, POINT_OVERFLOW_HELD, POINT_OVERFLOW_FORBIDDEN))
 			return TRUE
 
 		if("cycle_throw_range")
 			if(!istype(target_task, /datum/manipulator_task/cargo/dropoff_base/throw))
 				return FALSE
-			var/datum/manipulator_task/cargo/dropoff_base/throw/t = target_task
-			t.throw_range = cycle_value(t.throw_range, list(1, 2, 3, 4, 5, 6, 7))
+			var/datum/manipulator_task/cargo/dropoff_base/throw/cycle_target_task = target_task
+			cycle_target_task.throw_range = cycle_value(cycle_target_task.throw_range, list(1, 2, 3, 4, 5, 6, 7))
 			return TRUE
 
 		if("cycle_worker_interaction")
 			var/list/vals = list(WORKER_NORMAL_USE, WORKER_SINGLE_USE, WORKER_EMPTY_USE)
 			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
-				var/datum/manipulator_task/cargo/dropoff_base/use/t = target_task
-				t.worker_interaction = cycle_value(t.worker_interaction, vals)
+				var/datum/manipulator_task/cargo/dropoff_base/use/cycle_target_task = target_task
+				cycle_target_task.worker_interaction = cycle_value(cycle_target_task.worker_interaction, vals)
 				return TRUE
 			if(istype(target_task, /datum/manipulator_task/cargo/interact))
-				var/datum/manipulator_task/cargo/interact/t = target_task
-				t.worker_interaction = cycle_value(t.worker_interaction, vals)
+				var/datum/manipulator_task/cargo/interact/cycle_target_task = target_task
+				cycle_target_task.worker_interaction = cycle_value(cycle_target_task.worker_interaction, vals)
 				return TRUE
 			return FALSE
 
 		if("cycle_post_interaction")
 			var/list/vals = list(POST_INTERACTION_DROP_AT_POINT, POST_INTERACTION_DROP_AT_MACHINE, POST_INTERACTION_DROP_NEXT_FITTING, POST_INTERACTION_WAIT)
 			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
-				var/datum/manipulator_task/cargo/dropoff_base/use/t = target_task
-				t.use_post_interaction = cycle_value(t.use_post_interaction, vals)
+				var/datum/manipulator_task/cargo/dropoff_base/use/cycle_target_task = target_task
+				cycle_target_task.use_post_interaction = cycle_value(cycle_target_task.use_post_interaction, vals)
 				return TRUE
 			if(istype(target_task, /datum/manipulator_task/cargo/interact))
-				var/datum/manipulator_task/cargo/interact/t = target_task
-				t.use_post_interaction = cycle_value(t.use_post_interaction, vals)
+				var/datum/manipulator_task/cargo/interact/cycle_target_task = target_task
+				cycle_target_task.use_post_interaction = cycle_value(cycle_target_task.use_post_interaction, vals)
 				return TRUE
 			return FALSE
 
 		if("toggle_worker_rmb")
 			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
-				var/datum/manipulator_task/cargo/dropoff_base/use/t = target_task
-				t.worker_use_rmb = !t.worker_use_rmb
+				var/datum/manipulator_task/cargo/dropoff_base/use/cycle_target_task = target_task
+				cycle_target_task.worker_use_rmb = !cycle_target_task.worker_use_rmb
 				return TRUE
 			if(istype(target_task, /datum/manipulator_task/cargo/interact))
-				var/datum/manipulator_task/cargo/interact/t = target_task
-				t.worker_use_rmb = !t.worker_use_rmb
+				var/datum/manipulator_task/cargo/interact/cycle_target_task = target_task
+				cycle_target_task.worker_use_rmb = !cycle_target_task.worker_use_rmb
 				return TRUE
 			return FALSE
 
 		if("toggle_worker_combat")
 			if(istype(target_task, /datum/manipulator_task/cargo/dropoff_base/use))
-				var/datum/manipulator_task/cargo/dropoff_base/use/t = target_task
-				t.worker_combat_mode = !t.worker_combat_mode
+				var/datum/manipulator_task/cargo/dropoff_base/use/cycle_target_task = target_task
+				cycle_target_task.worker_combat_mode = !cycle_target_task.worker_combat_mode
 				return TRUE
 			if(istype(target_task, /datum/manipulator_task/cargo/interact))
-				var/datum/manipulator_task/cargo/interact/t = target_task
-				t.worker_combat_mode = !t.worker_combat_mode
+				var/datum/manipulator_task/cargo/interact/cycle_target_task = target_task
+				cycle_target_task.worker_combat_mode = !cycle_target_task.worker_combat_mode
 				return TRUE
 			return FALSE
 
