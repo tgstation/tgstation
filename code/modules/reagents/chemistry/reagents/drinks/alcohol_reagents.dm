@@ -3260,8 +3260,7 @@
 
 /datum/reagent/consumable/ethanol/aperitivo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //This and some of the cocktails it gets mixed into stimulate the apetite, as an aperitivo should
 	. = ..()
-	if(drinker.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		drinker.adjust_nutrition(-3 * REM * seconds_per_tick)
+	drinker.adjust_nutrition(-1 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
 
 /datum/reagent/consumable/ethanol/herbal_liqueur
@@ -3393,7 +3392,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
-/datum/reagent/consumable/ethanol/negroni //Aperitif that increases hunger if overfed
+/datum/reagent/consumable/ethanol/negroni //Aperitif that supresses overeating
 	name = "Negroni"
 	description = "An iconic Italian aperitif, its simple intensity crowns it as perhaps the ultimate bitter cocktail. Supposedly it was named after an Italian count who wanted a stronger version of a spritz and asked his bartender to replace soda with gin."
 	boozepwr = 50
@@ -3406,9 +3405,7 @@
 
 /datum/reagent/consumable/ethanol/negroni/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	if(drinker.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		drinker.adjust_nutrition(-1 * REM * seconds_per_tick)
-	drinker.overeatduration = 0
+	drinker.overeatduration -= 20
 
 /datum/reagent/consumable/ethanol/nuclear_daiquiri
 	name = "Nuclear daiquiri"
@@ -3473,7 +3470,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_HIGH
 
-/datum/reagent/consumable/ethanol/spritz //Aperitif that increases hunger if overfed
+/datum/reagent/consumable/ethanol/spritz //Aperitif that supresses overeating
 	name = "Spritz" // If someone wants to add an elderflower spritz or something else like that, just rename this to spritz al bitter or whatever
 	description = "This bittersweet and refreshing aperitif brings to mind the beautiful summer sunsets of venice."
 	boozepwr = 20
@@ -3486,9 +3483,7 @@
 
 /datum/reagent/consumable/ethanol/spritz/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	if(drinker.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		drinker.adjust_nutrition(-1 * REM * seconds_per_tick)
-	drinker.overeatduration = 0
+	drinker.overeatduration -= 20
 
 /datum/reagent/consumable/ethanol/vieux_carre
 	name = "Vieux Carré"
