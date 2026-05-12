@@ -990,8 +990,7 @@ multiple modular subtrees with behaviors
 			current_behavior_info += "[behavior.type]"
 	EVLOG_TRACK_INFO_ENTRY(track_info, "Behaviors", "Current Behavior", jointext(current_behavior_info, "\n"))
 
-	for(var/blackboard_key_name in blackboard)
-		var/blackboard_value = blackboard[blackboard_key_name]
+	for(var/blackboard_key_name, blackboard_value in blackboard)
 		var/value_string
 		if(isatom(blackboard_value))
 			value_string = "[blackboard_value]"
