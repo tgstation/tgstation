@@ -226,7 +226,7 @@
 		<br>\
 		The fact that you are looking at this relic weapon means one of two things.<br>\
 		<br>\
-		 A) A Tiger Cooperative evangelist has died during or before they could commit a bloody massacre in the name of God. Or <br>\
+		A) A Tiger Cooperative evangelist has died during or before they could commit a bloody massacre in the name of God. Or <br>\
 		<br>\
 		B) You are that evangelist, and will soon be adding another chapter to this gun's dark history." \
 	)
