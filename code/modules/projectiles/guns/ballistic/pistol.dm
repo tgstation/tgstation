@@ -381,7 +381,7 @@
 		rants regarding their hated foe in other areas of the imageboard.<br>\
 		<br>\
 		The author of the thread returned immediately following the news, claiming that those who frequented the imageboard had 'stolen' their 'dreams of freedom', and \
-		that clearly the moon men were attempting to discredit their invention through this publicity stunt. A slur-laiden rant from the thread author followed this declaration \
+		that clearly the moon men were attempting to discredit their invention through this publicity stunt. A slur-laiden rant from the thread author followed this declaration, \
 		leading to the the moderators of the imageboard to step in and close the thread for good." \
 	)
 
