@@ -997,7 +997,7 @@ multiple modular subtrees with behaviors
 			value_string = "[blackboard_value]"
 		else if(islist(blackboard_value))
 			var/list/blackboard_list = blackboard_value
-			value_string = blackboard_list.len ? jointext(blackboard_list, "\n") : "Empty List"
+			value_string = length(blackboard_list) ? jointext(blackboard_list, "\n") : "Empty List"
 		else if(isnull(blackboard_value))
 			value_string = "null"
 		else // I think I covered all cases?
