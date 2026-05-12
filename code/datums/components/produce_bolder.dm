@@ -4,14 +4,14 @@
 	var/boulder_type = /obj/item/stack/ore/glass/basalt
 	var/boulder_amount = 1
 	var/require_owner = FALSE
-	var/production_message = "Появляется булыжник!"
+	var/production_message = "Boulder appears!"
 
 /datum/component/boulder_producer/Initialize(
 	interval = 30 SECONDS,
 	boulder_path = /obj/item/stack/ore/glass/basalt,
 	amount = 1,
 	needs_owner = FALSE,
-	message = "Появляется булыжник!"
+	message = "Boulder appears!"
 )
 	production_interval = interval
 	boulder_type = boulder_path

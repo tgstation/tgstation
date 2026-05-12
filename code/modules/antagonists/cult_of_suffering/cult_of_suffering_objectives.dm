@@ -1,7 +1,7 @@
 /datum/objective/berserk
 	name = "berserk"
-	explanation_text = "Убивайте всех, кто не под влиянием газа Адиум!"
+	explanation_text = "Kill all!"
 
 	check_completion()
-		// Минимальная реализация - всегда не завершено для временного антагониста
+		// minimal - always not succes
 		return FALSE

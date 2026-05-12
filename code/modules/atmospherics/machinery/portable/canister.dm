@@ -309,7 +309,7 @@
 	greyscale_colors = "#009a00#006600"
 
 /obj/machinery/portable_atmospherics/canister/strangerium
-	name = "Strangerium canister"
+	name = "Kurchatov-Quantium canister"
 	gas_type = /datum/gas/strangerium
 	filled = 1
 	icon_state = "/obj/machinery/portable_atmospherics/canister/shitium"

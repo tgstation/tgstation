@@ -23,7 +23,7 @@
 	// tattoo.layer = -BODY_LAYER
 	// human_target.add_overlay(tattoo)
 
-	// Чёрные штаны
+	// black pants
 	var/obj/item/clothing/under/color/black/pants = new(get_turf(human_target))
 	human_target.equip_to_slot_if_possible(pants, ITEM_SLOT_ICLOTHING, FALSE, TRUE)
 

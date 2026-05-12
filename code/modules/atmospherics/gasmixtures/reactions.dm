@@ -1324,35 +1324,35 @@
 		meat_theme.apply_theme(adjacent, FALSE, TRUE)
 		shitium[MOLES] -= 1
 
-	// Преобразуем предметы на текущем тайле в мясо
-	// Сначала собираем все предметы, которые нужно преобразовать
+	// convert stuff into shit
+	// first collect all items which needs to be converted
 	var/list/items_to_convert = list()
 	for(var/obj/item/item in T)
-		// Пропускаем мясо, чтобы не создавать бесконечную рекурсию
+		// skip
 		if(istype(item, /obj/item/food/meat))
 			continue
-		// Пропускаем некоторые специальные типы (настройте по желанию)
+		// skip some stuff
 		if(istype(item, /obj/item/trash) || istype(item, /obj/item/gun) || istype(item, /obj/item/clothing))
-			// Эти предметы не превращаются в мясо
+			// these items not converting into shit
 			continue
 		items_to_convert += item
 
-	// Преобразуем предметы
+	// converting items
 	for(var/obj/item/item in items_to_convert)
-		if(shitium[MOLES] < 0.3) // Предметы требуют меньше газа
+		if(shitium[MOLES] < 0.3) // items needs less gas
 			break
 
-		// Звуковой эффект "жмяк" мяса
+		// sound of converting
 		playsound(T, 'sound/effects/meatslap.ogg', 50, TRUE)
-		// Визуальный эффект трансмутации (тот же, что и для тайлов)
+		// visual
 		new /obj/effect/temp_visual/transmute_tile_flash(T)
-		// Создаем кусок мяса
+		// new item
 		var/obj/item/food/meat/slab/new_meat = new /obj/item/food/meat/slab/shit(T)
-		// Удаляем оригинальный предмет
+		// delete original item
 
 
 		// Add after item transformation code (line 1360)
-		// Преобразуем структуры на текущем тайле в shit структуры
+		// convert structures on tile into shit
 		var/list/structures_to_convert = list()
 		for(var/obj/structure/structure in T)
 			if(istype(structure, /obj/structure/shit))
@@ -1373,7 +1373,7 @@
 			shitium[MOLES] -= 0.5
 
 
-		// Сохраняем позицию оригинального предмета
+		// save position of original item
 		new_meat.pixel_x = item.pixel_x
 		new_meat.pixel_y = item.pixel_y
 
@@ -1386,7 +1386,7 @@
 /**
  * Strangerium
  *
- * Converts
+ * Converts all into new, with new behavior, dynamiclly adding proc, components and all.
  */
 /datum/gas_reaction/strangerium_transformation
 	priority_group = PRIORITY_FORMATION
@@ -1475,13 +1475,13 @@
 
 	return REACTING
 
-	// // Получаем ВСЕ компоненты
+	// // getting all components
 	// var/list/all_components = subtypesof(/datum/component)
 	// var/initial_gas = strangerium[MOLES]
-	// // Фильтруем (опционально)
+	// // filter
 	// var/list/safe_components = list()
 	// for(var/component_type in all_components)
-	// 	// Пропускаем абстрактные/проблемные компоненты
+	// 	// skipping
 	// 	if(initial(component_type.abstract_type) == component_type)
 	// 		continue
 	// 	safe_components += component_type

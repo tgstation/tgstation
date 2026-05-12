@@ -595,16 +595,16 @@
 	breathe_gas_volume(breath, /datum/gas/shitium)
 	breather.adjust_fire_loss(shitium_pp * 0.80)
 
-	// Проверяем, достаточно ли высокое парциальное давление для превращения
-	if(shitium_pp > 5) // Пороговое значение
-		// Проверяем, что breather - человек
+	// check pressure
+	if(shitium_pp > 5)
+		// check for human
 		if(ishuman(breather))
 			var/mob/living/carbon/human/H = breather
-			// Проверяем, что он еще не плазмамен
+			// check
 			if(!isplasmaman(H))
-				// Превращаем в плазмамена
+				// converting to shitman
 				H.set_species(/datum/species/plasmaman)
-				to_chat(H, span_danger("Вы чувствуете, как ваше тело превращается в плазму! Вы теперь плазмамен!"))
+				to_chat(H, span_danger("You're feeling as your body transforms into... shit? You are now shitman!"))
 
 
 /obj/item/organ/lungs/proc/too_much_strangerium(mob/living/carbon/breather, datum/gas_mixture/breath, strangerium_pp, old_strangerium_pp)
@@ -613,29 +613,29 @@
 	var/mob/living/carbon/human/H = breather
 	var/obj/item/bodypart/head/current_head = H.get_bodypart(BODY_ZONE_HEAD)
 
-	// Если давление странгериума > порога (например, 10 кПа) и компонента ещё нет
+	// pressure
 	if(strangerium_pp > 10)
-		// Отключаем нормальные функции лёгких
+		// deactivate normal lungs functions
 		breath_present = list()
 		breathe_always = list()
 		breath_lost = list()
 
-		// Меняем название и описание
-		name = "окаменевшие лёгкие"
-		desc = "Эти лёгкие превратились в камень и производят булыжники. Они больше не могут дышать."
+		// change name and desc of lungs
+		name = "stone lugs"
+		desc = "These lungs have been turned into... stone? And they are producing boulders! They cant breath anymore."
 
-		// Добавляем компонент производства булыжников
-		AddComponent(/datum/component/boulder_producer, interval = 30 SECONDS, needs_owner = TRUE, message = "Откашливаю булыжник!")
+		// adding component of boulders producing
+		AddComponent(/datum/component/boulder_producer, interval = 30 SECONDS, needs_owner = TRUE, message = "Coughing with boulder!")
 
-		// Оповещаем игрока
-		to_chat(breather, span_userdanger("ВАШИ ЛЁГКИЕ ОКАМЕНЕЛИ! Вы больше не можете дышать!"))
-		to_chat(breather, span_warning("Теперь вы будете периодически откашливать булыжники."))
+		// giving alert to player
+		to_chat(breather, span_userdanger("YOUR LUNGS HAVE BEEN STONED! You cant breath anymore!"))
+		to_chat(breather, span_warning("Now you will cough with boulders sometimes."))
 
-		// Наносим урон лёгким от трансформации
+		// transform damage
 		breather.adjust_organ_loss(ORGAN_SLOT_LUNGS, 25)
 		breather.emote("cough")
 
-		// Логируем
+		// logs
 		message_admins("[key_name(breather)]'s lungs turned to stone from strangerium gas.")
 		log_game("[key_name(breather)]'s lungs turned to stone from strangerium gas.")
 
@@ -647,7 +647,7 @@
 		H.del_and_replace_bodypart(zombie_head, special = TRUE)
 		H.update_body_parts()
 
-		// Звуковой эффект
+		// sound
 		playsound(breather, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
 
 
@@ -656,7 +656,7 @@
 	breathe_gas_volume(breath, /datum/gas/adskiderium)
 
 	if(breather.mind && !breather.mind.has_antag_datum(/datum/antagonist/cult_of_suffering/apostate))
-		if(adskiderium_pp > 5)  // Порог 5 кПа
+		if(adskiderium_pp > 5)
 			breather.mind.add_antag_datum(/datum/antagonist/cult_of_suffering/apostate)
 
 /**
