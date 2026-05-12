@@ -179,6 +179,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
+/obj/machinery/light/dim/directional/west,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aN" = (
@@ -278,7 +279,7 @@
 /area/ruin/powered/seedvault)
 "bj" = (
 /obj/machinery/hydroponics/constructable/fullupgrade,
-/obj/machinery/light/blacklight/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bk" = (
@@ -312,6 +313,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bu" = (
@@ -496,7 +498,7 @@
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "sv" = (
-/obj/machinery/light/blacklight/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "sG" = (
@@ -526,6 +528,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
+"uX" = (
+/obj/machinery/light/directional/west,
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
 "vc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /obj/effect/decal/cleanable/ants,
@@ -533,6 +539,7 @@
 /area/ruin/powered/seedvault)
 "vV" = (
 /obj/item/kirbyplants/random,
+/obj/machinery/light/directional/east,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "yq" = (
@@ -618,7 +625,7 @@
 /area/ruin/powered/seedvault)
 "PH" = (
 /obj/machinery/hydroponics/constructable/fullupgrade,
-/obj/machinery/light/blacklight/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "Qb" = (
@@ -744,7 +751,7 @@ bk
 aJ
 aE
 rX
-aE
+uX
 Yb
 UE
 mz
