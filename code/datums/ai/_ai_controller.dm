@@ -984,7 +984,7 @@ multiple modular subtrees with behaviors
 
 	var/list/current_behavior_info = list()
 	for(var/datum/ai_behavior/behavior in planned_behaviors)
-		if(current_behaviors.Find(behavior)) //Not really ideal; we should find a better way to do this.
+		if(behavior in current_behaviors) //Not really ideal; we should find a better way to do this.
 			current_behavior_info += "ACTIVE: [span_bold("[behavior.type]")]"
 		else
 			current_behavior_info += "[behavior.type]"
