@@ -2506,6 +2506,10 @@
 /obj/machinery/chem_master,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
+"Be" = (
+/obj/machinery/light/small/red/directional/west,
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/control)
 "Bg" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
@@ -10278,7 +10282,7 @@ sD
 dn
 qN
 qN
-qN
+Be
 Wu
 th
 zE

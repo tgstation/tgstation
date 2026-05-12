@@ -325,7 +325,9 @@
 	if(isnull(minimap))
 		return
 	icon = minimap.base_map
-	screen_loc = "1:[minimap.base_map.Width() / 2],1:[minimap.base_map.Height() / 2]"
+	var/map_w = minimap.base_map.Width()
+	var/map_h = minimap.base_map.Height()
+	screen_loc = "1:[SCREEN_PIXEL_SIZE / 2 - map_w / 2],1:[SCREEN_PIXEL_SIZE / 2 - map_h / 2]"
 	origin_px = params2screenpixel(screen_loc)
 	src.minimap = minimap
 	refresh_visible_annotations()
@@ -433,18 +435,13 @@
 /atom/movable/screen/minimap_display/proc/reposition_toolbar_buttons()
 	if(!hud || !minimap)
 		return
-	// I hate math. I'm just throwing crap at the wall until this works. ~Lucy
-	var/map_w = minimap.base_map.Width()
-	var/map_h = minimap.base_map.Height()
+	// origin_px[1] is the minimap's left edge; place toolbar one icon-width to its left.
 	var/btn_x = origin_px[1] - ICON_SIZE_X - 4
-	if(btn_x <= (ICON_SIZE_X * 2))
-		btn_x = map_w + ICON_SIZE_X + 4
+	if(btn_x < 0)
+		btn_x = origin_px[1] + minimap.base_map.Width() + 4  // fall back to right side
+	// Toolbar is vertically centered at screen center, matching the minimap's center.
 	var/toolbar_h = length(toolbar_button_types) * ICON_SIZE_Y
-	var/btn_top_y = clamp(
-		origin_px[2] + round(map_h / 2) + toolbar_h,
-		ICON_SIZE_Y + toolbar_h,
-		SCREEN_PIXEL_SIZE - (ICON_SIZE_Y * 2)
-	)
+	var/btn_top_y = clamp(SCREEN_PIXEL_SIZE / 2 + toolbar_h / 2, toolbar_h, SCREEN_PIXEL_SIZE)
 	for(var/key in toolbar_button_types)
 		var/atom/movable/screen/minimap_toolbar_button/button = hud.screen_objects[key]
 		if(button)
