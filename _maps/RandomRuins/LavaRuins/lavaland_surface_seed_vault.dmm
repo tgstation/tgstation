@@ -10,6 +10,10 @@
 /obj/item/vending_refill/hydroseeds,
 /obj/item/vending_refill/hydroseeds,
 /obj/item/storage/bag/plants/portaseeder,
+/obj/item/seeds/gatfruit,
+/obj/item/seeds/cherry/bomb,
+/obj/item/seeds/cherry/bomb,
+/obj/item/seeds/sunflower/moonflower,
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "ac" = (
@@ -228,6 +232,10 @@
 /obj/item/vending_refill/hydronutrients,
 /obj/item/vending_refill/hydronutrients,
 /obj/item/storage/bag/plants/portaseeder,
+/obj/item/seeds/gatfruit,
+/obj/item/seeds/berry/glow,
+/obj/item/seeds/berry/glow,
+/obj/item/seeds/sunflower/moonflower,
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "ba" = (
@@ -387,6 +395,18 @@
 "le" = (
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
+"lh" = (
+/obj/machinery/light/directional/north,
+/obj/structure/closet/crate,
+/obj/item/queen_bee,
+/obj/item/bee_smoker,
+/obj/item/clothing/head/utility/beekeeper_head,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/structure/beebox/unwrenched,
+/obj/item/honey_frame,
+/obj/item/honey_frame,
+/turf/open/indestructible/plating,
+/area/ruin/powered/seedvault)
 "lZ" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/beaker/bluespace,
@@ -424,6 +444,14 @@
 "sv" = (
 /obj/machinery/light/blacklight/directional/east,
 /turf/open/indestructible,
+/area/ruin/powered/seedvault)
+"tv" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/energy/floragun,
+/obj/item/gun/energy/floragun,
+/obj/item/gun/energy/floragun,
+/obj/item/gun/energy/floragun,
+/turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "vc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
@@ -472,6 +500,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/indestructible/white,
+/area/ruin/powered/seedvault)
+"Jh" = (
+/obj/structure/table/reinforced,
+/obj/item/geneshears,
+/obj/item/geneshears,
+/obj/item/geneshears,
+/obj/item/geneshears,
+/turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "Kq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
@@ -965,10 +1001,10 @@ aE
 aE
 aE
 bk
-bn
-le
-le
-le
+lh
+lh
+tv
+Jh
 ay
 SJ
 SJ
