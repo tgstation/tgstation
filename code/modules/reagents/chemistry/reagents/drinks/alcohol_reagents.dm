@@ -3260,7 +3260,8 @@
 
 /datum/reagent/consumable/ethanol/aperitivo/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired) //This and some of the cocktails it gets mixed into stimulate the apetite, as an aperitivo should
 	. = ..()
-	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
+	if(drinker.nutrition >= NUTRITION_LEVEL_WELL_FED)
+		drinker.adjust_nutrition(-3 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
 
 /datum/reagent/consumable/ethanol/herbal_liqueur
@@ -3405,7 +3406,8 @@
 
 /datum/reagent/consumable/ethanol/negroni/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.adjust_nutrition(-3 * REM * seconds_per_tick)
+	if(drinker.nutrition >= NUTRITION_LEVEL_WELL_FED)
+		drinker.adjust_nutrition(-1 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
 
 /datum/reagent/consumable/ethanol/nuclear_daiquiri
@@ -3484,7 +3486,8 @@
 
 /datum/reagent/consumable/ethanol/spritz/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
+	if(drinker.nutrition >= NUTRITION_LEVEL_WELL_FED)
+		drinker.adjust_nutrition(-1 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
 
 /datum/reagent/consumable/ethanol/vieux_carre
