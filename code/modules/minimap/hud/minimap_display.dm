@@ -327,7 +327,9 @@
 	icon = minimap.base_map
 	var/map_w = minimap.base_map.Width()
 	var/map_h = minimap.base_map.Height()
-	screen_loc = "1:[SCREEN_PIXEL_SIZE / 2 - map_w / 2],1:[SCREEN_PIXEL_SIZE / 2 - map_h / 2]"
+	var/screen_size = get_screen_pixel_size()
+	var/map_offset_y = 32
+	screen_loc = "1:[screen_size / 2 - map_w / 2],1:[screen_size / 2 - map_h / 2 - map_offset_y]"
 	origin_px = params2screenpixel(screen_loc)
 	src.minimap = minimap
 	refresh_visible_annotations()
@@ -424,6 +426,14 @@
 		hud.mymob.client.mouse_pointer_icon = label_mode ? label_mouse_icon : active_mouse_icon
 	update_toolbar_button_states()
 
+/// Calculates the actual screen pixel size based on the client's view
+/atom/movable/screen/minimap_display/proc/get_screen_pixel_size()
+	if(!hud?.mymob?.client)
+		return SCREEN_PIXEL_SIZE  // fallback to constant if no client
+	var/list/view_pixels = view_to_pixels(hud.mymob.client.view_size.getView())
+	// Return the maximum dimension (typically square, but handle non-square views)
+	return max(view_pixels[1], view_pixels[2])
+
 /atom/movable/screen/minimap_display/proc/update_toolbar_button_states()
 	if(!hud)
 		return
@@ -439,9 +449,11 @@
 	var/btn_x = origin_px[1] - ICON_SIZE_X - 4
 	if(btn_x < 0)
 		btn_x = origin_px[1] + minimap.base_map.Width() + 4  // fall back to right side
-	// Toolbar is vertically centered at screen center, matching the minimap's center.
+	// Toolbar is vertically centered relative to the minimap's current position.
+	var/screen_size = get_screen_pixel_size()
 	var/toolbar_h = length(toolbar_button_types) * ICON_SIZE_Y
-	var/btn_top_y = clamp(SCREEN_PIXEL_SIZE / 2 + toolbar_h / 2, toolbar_h, SCREEN_PIXEL_SIZE)
+	var/map_center_y = origin_px[2] + minimap.base_map.Height() / 2
+	var/btn_top_y = clamp(map_center_y + toolbar_h / 2, toolbar_h, screen_size)
 	for(var/key in toolbar_button_types)
 		var/atom/movable/screen/minimap_toolbar_button/button = hud.screen_objects[key]
 		if(button)
