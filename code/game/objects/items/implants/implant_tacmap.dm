@@ -86,7 +86,7 @@
 /obj/item/implant/tacmap/nuclear/proc/deny_nukie_base_open(mob/living/user)
 	var/turf/user_turf = get_turf(user)
 	if(user_turf.onSyndieBase())
-		user.balloon_alert(user, "cannot use implant on base, use holotable!")
+		user.balloon_alert(user, "can't use implant in the base, go to the holotable!")
 		return COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL
 
 /obj/item/implant/tacmap/nuclear/leader // Leader subtype lets him draw on the map
