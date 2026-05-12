@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - spellcheck: "You are told you are downed instead of unconscious if you attempt to use an action that requires you to be conscious while in softcrit."

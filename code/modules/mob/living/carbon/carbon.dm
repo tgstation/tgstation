@@ -948,6 +948,7 @@
 			var/obj/item/bodypart/stump = new old_bodypart.stump_typepath()
 			stump.bodyshape = old_bodypart.bodyshape
 			stump.bodytype = old_bodypart.bodytype
+			stump.add_biostate(old_bodypart.biological_state & ~BIO_JOINTED)
 			if(!stump.try_attach_limb(src, special = TRUE))
 				// the only way this can happen is if the stump is rejected via signal
 				// not much we can do about that besides hope they know what they're doing
