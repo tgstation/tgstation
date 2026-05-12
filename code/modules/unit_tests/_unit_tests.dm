@@ -327,6 +327,7 @@
 #include "strippable.dm"
 #include "stuns.dm"
 #include "style_hotswapping.dm"
+#include "subsystem_flags.dm"
 #include "subsystem_init.dm"
 #include "suit_sensor.dm"
 #include "suit_storage_icons.dm"

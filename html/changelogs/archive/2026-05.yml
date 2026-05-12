@@ -149,7 +149,24 @@
 2026-05-11:
   Aliceee2ch:
   - bugfix: RND servers are visible once again.
+  CabinetOnFire:
+  - bugfix: Fixes the spawn panel being unable to spawn turfs
   Melbert:
   - bugfix: You can speak with a stoat tongue
   - bugfix: Stoat infusion is slightly taller
   - bugfix: Explosions won't remove organs from skeletons/plasmamen
+  - code_imp: Solar arrays don't check for the pressence of space vines every process
+      tick
+  - code_imp: Changes the way tongues allow you to speak correctly to make them less
+      prone to fault
+  - bugfix: Re-adding limbs surgically requires you do surgery again (ie, incise ->
+      retract -> clamp).
+  Time-Green:
+  - bugfix: Fixes voidwalker being unable to vomit jump if anyone vomits on a non-station
+      z-level
+  Y0SH1M4S73R:
+  - rscadd: Random polymorphs can turn you into hatchling blood worms that can mature,
+      but not reproduce.
+  vinylspiders:
+  - bugfix: disable dead keyloop lagswitch measure now properly affects new ghosts,
+      and fixes an issue where people can revive and still be frozen
