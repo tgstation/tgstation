@@ -1,7 +1,7 @@
 // Sound tokens, a datumized handler for spatial sound.
 // Creating a sound token registers all connected clients to the sound, so that they are in sync
 // Even if someone enters the range of the sound after it has started.
-// Updated by the SSsounds subsystem every tick, so that if the source or listener moves, the sound updates accordingly.
+// Updated by the SSsound_tokens subsystem every tick, so that if the source or listener moves, the sound updates accordingly.
 /datum/sound_token
 	/// The atom playing the sound.
 	var/atom/source
@@ -38,8 +38,8 @@
 	falloff_exponent = _falloff_exponent
 	falloff_distance = _falloff_distance
 
-	null_sound = sound(channel = sound_channel)
 	update_sound(_sound)
+	null_sound = sound(channel = sound_channel)
 
 	listeners = list()
 
@@ -52,7 +52,20 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGOUT, PROC_REF(player_logout))
 
 /datum/sound_token/Destroy(force, ...)
-	for(var/listener in listeners)
+ 	UnregisterSignal(SSdcs, list(
+ 		COMSIG_GLOB_PLAYER_LOGIN,
+ 		COMSIG_GLOB_PLAYER_LOGOUT,
+ 	))
+ 	if(source)
+ 		UnregisterSignal(source, list(
+ 			COMSIG_QDELETING,
+ 			COMSIG_MOVABLE_MOVED,
+ 			COMSIG_ENTER_AREA,
+ 		))
+
+
+	var/listener_list = listeners.Copy()
+	for(var/listener in listener_list)
 		remove_listener(listener)
 
 	listeners = null
@@ -92,8 +105,15 @@
 
 /// Remove a listener from the sound.
 /datum/sound_token/proc/remove_listener(mob/listener_mob)
-	UnregisterSignal(listener_mob, list(COMSIG_QDELETING, COMSIG_MOB_LOGIN, SIGNAL_ADDTRAIT(TRAIT_DEAF),SIGNAL_REMOVETRAIT(TRAIT_DEAF)))
+	if(isnull(listeners[listener_mob]))
+ 		return
+
 	listeners -= listener_mob
+
+	if(QDELETED(listener_mob))
+ 		return
+
+	UnregisterSignal(listener_mob, list(COMSIG_QDELETING, SIGNAL_ADDTRAIT(TRAIT_DEAF),SIGNAL_REMOVETRAIT(TRAIT_DEAF)))
 	SEND_SOUND(listener_mob, null_sound)
 
 /datum/sound_token/proc/update_listener(mob/listener_mob, update_sound = TRUE)

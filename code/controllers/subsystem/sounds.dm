@@ -114,7 +114,7 @@ SUBSYSTEM_DEF(sounds)
 	var/text_channel = num2text(channel)
 	var/using = using_channels[text_channel]
 	using_channels -= text_channel
-	if(using != TRUE) // datum channel
+	if(using != DATUMLESS) // datum channel
 		using_channels_by_datum[using] -= channel
 		if(!length(using_channels_by_datum[using]))
 			stop_tracking_datum(using)
