@@ -609,4 +609,5 @@
 /mob/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if(client)
-		client.needs_sound_token_update = TRUE
+
+		SSsound_tokens.clients_needing_update[client] = TRUE

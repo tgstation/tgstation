@@ -141,7 +141,7 @@
 /datum/sound_token/proc/update_all_listeners()
 	for(var/mob/listener_mob in listeners)
 		if(listener_mob.client)
-			listener_mob.client.needs_sound_token_update = TRUE
+			SSsound_tokens.clients_needing_update[listener_mob.client] = TRUE
 
 /datum/sound_token/proc/force_update_all_listeners(update_sound = TRUE)
 	for(var/mob/listener_mob in listeners)

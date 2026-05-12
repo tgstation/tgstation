@@ -258,6 +258,3 @@
 
 	/// OOC colour of the clients messages.
 	var/ooc_colour = null
-
-	/// Whether we're marked to get an update to our sound tokens. sound tokens 2026!!!
-	var/needs_sound_token_update = FALSE

@@ -5,11 +5,11 @@ SUBSYSTEM_DEF(sound_tokens)
 
 	var/list/playing_sound_tokens = list()
 
+	var/list/clients_needing_update = list()
+
 /datum/controller/subsystem/sound_tokens/fire(resumed)
-	for(var/client/client in GLOB.clients)
-		if(!client?.needs_sound_token_update)
-			continue
-		client.needs_sound_token_update = FALSE
+	for(var/client/client in clients_needing_update)
+		clients_needing_update -= client
 		var/mob/owned_mob = client.mob
 		if(!owned_mob)
 			continue
