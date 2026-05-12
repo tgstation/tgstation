@@ -1048,7 +1048,7 @@
 	..()
 
 /datum/chemical_reaction/hauntium_solidification
-	required_reagents = list(/datum/reagent/water/holywater = 10, /datum/reagent/hauntium = 20, /datum/reagent/iron = 1)
+	required_reagents = list(/datum/reagent/water/holywater = 10, /datum/reagent/ectoplasm = 20, /datum/reagent/iron = 1)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER

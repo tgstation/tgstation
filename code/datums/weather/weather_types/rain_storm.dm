@@ -196,7 +196,7 @@
 		/datum/reagent/aslimetoxin,
 		// misc
 		/datum/reagent/blood,
-		/datum/reagent/hauntium,
+		/datum/reagent/ectoplasm,
 		/datum/reagent/copper,
 	)
 	GLOB.wizard_rain_reagents |= allowed_exotic_reagents

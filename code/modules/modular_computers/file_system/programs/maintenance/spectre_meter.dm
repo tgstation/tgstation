@@ -91,7 +91,7 @@
 		var/list/materials = atom.has_material_type(/datum/material/hauntium)
 		if(materials)
 			spook_amount += materials[/datum/material/hauntium]/SHEET_MATERIAL_AMOUNT
-		spook_amount += atom.reagents?.get_reagent_amount(/datum/reagent/hauntium)/20
+		spook_amount += atom.reagents?.get_reagent_amount(/datum/reagent/ectoplasm)/20
 		if(!spook_amount)
 			continue
 		if(atom.loc == turf)

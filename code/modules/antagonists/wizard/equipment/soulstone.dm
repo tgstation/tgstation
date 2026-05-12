@@ -39,7 +39,7 @@
 	)
 
 /obj/item/soulstone/grind_results()
-	return list(/datum/reagent/hauntium = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
+	return list(/datum/reagent/ectoplasm = 25, /datum/reagent/silicon = 10) //can be ground into hauntium
 
 /obj/item/soulstone/update_appearance(updates)
 	. = ..()
@@ -591,7 +591,7 @@
 	icon_state = "ectoplasm"
 
 /obj/item/ectoplasm/grind_results()
-	return list(/datum/reagent/hauntium = 25)
+	return list(/datum/reagent/ectoplasm = 25)
 
 /obj/item/ectoplasm/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!"))

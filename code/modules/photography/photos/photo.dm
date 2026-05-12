@@ -15,7 +15,7 @@
 	var/scribble //Scribble on the back.
 
 /obj/item/photo/grind_results()
-	return LAZYACCESS(custom_materials, /datum/material/hauntium) ? list(/datum/reagent/hauntium = 20) : list(/datum/reagent/iodine = 4)
+	return LAZYACCESS(custom_materials, /datum/material/hauntium) ? list(/datum/reagent/ectoplasm = 20) : list(/datum/reagent/iodine = 4)
 
 /obj/item/photo/get_save_vars()
 	return ..() - NAMEOF(src, icon)

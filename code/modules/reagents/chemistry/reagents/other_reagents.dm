@@ -3366,10 +3366,10 @@
 	if(SPT_PROB(10, seconds_per_tick))
 		carbon_metabolizer.set_heartattack(TRUE)
 
-/datum/reagent/hauntium
-	name = "Hauntium"
+/datum/reagent/ectoplasm
+	name = "Ectoplasm"
 	color = "#3B3B3BA3"
-	description = "An eerie liquid created by purifying the presence of ghosts. If it happens to get in your body, it starts hurting your soul." //soul as in mood and heart
+	description = "The quasi-physical matter which serves as the primary constituent of spiritual entities such as ghosts. If it happens to get in your body, it starts hurting your soul." //soul as in mood and heart
 	taste_description = "evil spirits"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	material = /datum/material/hauntium
@@ -3378,7 +3378,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 //gives 20 seconds of haunting effect for every unit of it that touches an item
-/datum/reagent/hauntium/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
+/datum/reagent/ectoplasm/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	if(!isitem(exposed_obj))
 		return
@@ -3388,7 +3388,7 @@
 	exposed_item.make_haunted(HAUNTIUM_REAGENT_TRAIT, "#f8f8ff")
 	addtimer(CALLBACK(exposed_item, TYPE_PROC_REF(/obj/item/, remove_haunted), HAUNTIUM_REAGENT_TRAIT), reac_volume * 20 SECONDS)
 
-/datum/reagent/hauntium/on_mob_metabolize(mob/living/carbon/affected_mob, seconds_per_tick)
+/datum/reagent/ectoplasm/on_mob_metabolize(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
 	to_chat(affected_mob, span_userdanger("You feel an evil presence inside you!"))
 	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID))
@@ -3396,7 +3396,7 @@
 	else
 		affected_mob.add_mood_event("hauntium_spirits", /datum/mood_event/hauntium_spirits, name) //8 minutes of mood debuff
 
-/datum/reagent/hauntium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+/datum/reagent/ectoplasm/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID)) //if morbid or undead,acts like an addiction-less drug
 		var/common = -3.34 SECONDS * metabolization_ratio * seconds_per_tick
