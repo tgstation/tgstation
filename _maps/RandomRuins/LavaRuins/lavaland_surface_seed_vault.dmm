@@ -277,7 +277,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "bm" = (
-/obj/machinery/fishing_portal_generator/full,
+/obj/machinery/fishing_portal_generator,
 /turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "bn" = (
