@@ -45,7 +45,7 @@
 /area/ruin/powered/seedvault)
 "ag" = (
 /obj/structure/aquarium,
-/turf/open/floor/circuit/telecomms,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "ah" = (
 /obj/machinery/light/blacklight/directional/south,
@@ -80,10 +80,8 @@
 /turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "ar" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_br/style_3,
+/obj/structure/window/reinforced/unanchored/spawner/directional/north,
 /turf/open/floor/grass,
 /area/ruin/powered/seedvault)
 "as" = (
@@ -103,7 +101,6 @@
 "av" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
@@ -114,6 +111,7 @@
 "ax" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer4,
 /turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "ay" = (
@@ -182,10 +180,6 @@
 /obj/machinery/light/dim/directional/west,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
-"aN" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/circuit/red,
-/area/ruin/powered/seedvault)
 "aO" = (
 /obj/structure/railing,
 /obj/structure/railing{
@@ -220,11 +214,7 @@
 /area/ruin/powered/seedvault)
 "aV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/circuit/telecomms,
-/area/ruin/powered/seedvault)
-"aW" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
-/turf/open/floor/circuit/red,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aX" = (
 /obj/machinery/vatgrower,
@@ -243,10 +233,6 @@
 /obj/item/seeds/sunflower/moonflower,
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
-"ba" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
-/turf/open/floor/circuit/green,
-/area/ruin/powered/seedvault)
 "bb" = (
 /obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/indestructible,
@@ -255,12 +241,13 @@
 /turf/open/indestructible/white,
 /area/ruin/powered/seedvault)
 "bd" = (
-/turf/open/floor/circuit/telecomms,
+/obj/structure/table,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "be" = (
 /obj/machinery/light/floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/circuit/green,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bf" = (
 /obj/structure/table,
@@ -271,11 +258,8 @@
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bh" = (
-/turf/open/floor/circuit/green,
-/area/ruin/powered/seedvault)
-"bi" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/circuit/green,
+/obj/machinery/light/directional/north,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bj" = (
 /obj/machinery/hydroponics/constructable/fullupgrade,
@@ -300,10 +284,6 @@
 "bo" = (
 /obj/machinery/door/airlock/engineering,
 /turf/open/indestructible,
-/area/ruin/powered/seedvault)
-"bp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/circuit/red,
 /area/ruin/powered/seedvault)
 "br" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -339,12 +319,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/floor/circuit/telecomms,
+/obj/structure/aquarium,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/circuit/telecomms,
+/obj/machinery/atmospherics/components/binary/pump/on/general/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "bB" = (
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -400,10 +382,8 @@
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "hi" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_pp,
+/obj/structure/window/reinforced/unanchored/spawner/directional/north,
 /turf/open/floor/grass,
 /area/ruin/powered/seedvault)
 "hk" = (
@@ -425,7 +405,8 @@
 /area/ruin/powered/seedvault)
 "jT" = (
 /obj/structure/aquarium,
-/turf/open/floor/circuit/green,
+/obj/machinery/light/directional/south,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "ky" = (
 /obj/structure/flora/bush/flowers_yw/style_2,
@@ -455,10 +436,8 @@
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "mz" = (
-/obj/structure/window{
-	dir = 4
-	},
 /obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/grass,
 /area/ruin/powered/seedvault)
 "og" = (
@@ -502,10 +481,8 @@
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "sG" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/reinforced/unanchored/spawner/directional/north,
 /turf/open/floor/grass,
 /area/ruin/powered/seedvault)
 "tj" = (
@@ -549,10 +526,8 @@
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "zb" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/flora/bush/generic/style_random,
+/obj/structure/window/reinforced/unanchored/spawner/directional/north,
 /turf/open/floor/grass,
 /area/ruin/powered/seedvault)
 "zK" = (
@@ -579,8 +554,8 @@
 /turf/open/floor/grass,
 /area/ruin/powered/seedvault)
 "DA" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/circuit/telecomms,
+/obj/machinery/light/directional/south,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "GN" = (
 /obj/machinery/light/floor,
@@ -610,8 +585,9 @@
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "Kq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
-/turf/open/floor/circuit/telecomms,
+/obj/machinery/light/directional/north,
+/obj/structure/aquarium,
+/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "KF" = (
 /obj/structure/chair/office,
@@ -649,10 +625,8 @@
 /turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "UE" = (
-/obj/structure/window{
-	dir = 4
-	},
 /obj/structure/flora/bush/ferny,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/grass,
 /area/ruin/powered/seedvault)
 "Vn" = (
@@ -679,13 +653,9 @@
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "Yb" = (
-/obj/structure/window{
-	dir = 4
-	},
-/obj/structure/window{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_pp/style_2,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/ruin/powered/seedvault)
 
@@ -907,10 +877,10 @@ aI
 bb
 bk
 bh
-Kq
-bA
-bd
-bh
+aI
+aR
+aE
+DA
 ay
 hk
 "}
@@ -931,11 +901,11 @@ aE
 Qb
 bb
 bk
-DA
-ba
-bp
-bh
-bd
+uU
+aI
+aU
+aE
+aE
 ay
 hk
 "}
@@ -957,10 +927,10 @@ aI
 bb
 bk
 aV
-aW
+aI
 be
-aN
-bd
+uU
+aE
 bw
 hk
 "}
@@ -981,11 +951,11 @@ bf
 aI
 bb
 bk
-bd
-bi
-bp
-bh
-bd
+aE
+aU
+aU
+aE
+aE
 ay
 hk
 "}
@@ -1006,7 +976,7 @@ GO
 aI
 bb
 bk
-bh
+Kq
 bz
 bd
 ag
@@ -1070,7 +1040,7 @@ SJ
 bw
 zK
 le
-al
+ad
 al
 VO
 aI
@@ -1095,8 +1065,8 @@ SJ
 bw
 bl
 bl
-al
 ad
+bA
 bk
 aE
 aE
