@@ -32156,6 +32156,8 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "jbj" = (
