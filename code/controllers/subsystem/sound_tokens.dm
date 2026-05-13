@@ -14,6 +14,6 @@ SUBSYSTEM_DEF(sound_tokens)
 		if(!owned_mob)
 			continue
 		for(var/datum/sound_token/current_token in playing_sound_tokens)
-			current_token.update_listener(owned_mob)
+			current_token.add_or_update_listener(owned_mob)
 			CHECK_TICK //Need to see if this causes issues
 
