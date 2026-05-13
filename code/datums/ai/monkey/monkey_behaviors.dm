@@ -298,8 +298,8 @@
 
 	var/mob/living/target = pick_weight(valids)
 
-	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_TARGETTING, "[controller.pawn] has selected [target] as a target for blackboard key [set_key]! Behavior: [src]", get_turf(target), "Target: [target]")
-	EVLOG_LINES(controller, EVLOG_CATEGORY_AI_TARGETTING, "Line to target", get_turf(controller.pawn), get_turf(target))
+	EVLOG_MAPTEXT(controller, EVLOG_CATEGORY_AI_TARGETING, "[controller.pawn] has selected [target] as a target for blackboard key [set_key]! Behavior: [src]", get_turf(target), "Target: [target]")
+	EVLOG_LINES(controller, EVLOG_CATEGORY_AI_TARGETING, "Line to target", get_turf(controller.pawn), get_turf(target))
 
 	controller.set_blackboard_key(set_key, target)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
