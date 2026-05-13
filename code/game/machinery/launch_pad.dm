@@ -406,13 +406,13 @@
 			var/plus_y = text2num(params["y"])
 			if(plus_x || plus_y)
 				// sanitizes our ranges for us
-				current_pad.set_offset(
-					x = current_pad.x_offset + plus_x,
-					y = current_pad.y_offset + plus_y,
+				our_pad.set_offset(
+					x = our_pad.x_offset + plus_x,
+					y = our_pad.y_offset + plus_y,
 				)
 			else
 				// for resetting
-				current_pad.set_offset(
+				our_pad.set_offset(
 					x = 0,
 					y = 0,
 				)
