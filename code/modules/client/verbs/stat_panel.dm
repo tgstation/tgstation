@@ -1,7 +1,4 @@
-/client/verb/toggle_stat_panel()
-	set name = "Toggle Stat Panel"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, toggle_stat_panel, "Toggle Stat Panel", "", TRUE, "")
 	//Flip it
 	prefs.write_preference(GLOB.preference_entries[/datum/preference/toggle/statpanel], !prefs.read_preference(/datum/preference/toggle/statpanel))
 	set_stat_panel()
