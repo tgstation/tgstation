@@ -96,7 +96,7 @@
 	else if(state_open)
 		icon_state = "[base_icon_state]-open"
 	else
-		icon_state = "[base_icon_state]"
+		icon_state = "[base_icon_state]-idle"
 
 /obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)
 	. = ..()
