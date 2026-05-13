@@ -121,7 +121,21 @@
 
 	return TRUE
 
-OVERRIDE_INTERNAL_VERB(/client, MouseDown, datum/object, location, control, params)
+/client/MouseDown(atom/object, atom/location, control, params)
+	var/starting_usage = TICK_USAGE
+	if(caller)
+		__MouseDown(object, location, control, params)
+	else
+		// No reason to check here because we will do so later in the call chain, with more detail on who/what is being clicked on
+		var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(starting_usage, callee)
+		ASYNC
+			__MouseDown(object, location, control, params)
+
+		store_cost?.usage_at_end = TICK_USAGE
+		store_cost?.finished_on = world.time
+		store_cost?.enter_average()
+
+/client/proc/__MouseDown(atom/object, atom/location, control, params)
 	if(QDELETED(object)) //Yep, you can click on qdeleted things before they have time to nullspace. Fun.
 		return
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
@@ -135,7 +149,21 @@ OVERRIDE_INTERNAL_VERB(/client, MouseDown, datum/object, location, control, para
 			Click(selected_target[1], location, control, selected_target[2])
 			sleep(delay)
 
-OVERRIDE_INTERNAL_VERB(/client, MouseUp, datum/object, location, control, params)
+/client/MouseUp(atom/object, atom/location, control, params)
+	var/starting_usage = TICK_USAGE
+	if(caller)
+		__MouseUp(object, location, control, params)
+	else
+		// No reason to check here because we will do so later in the call chain, with more detail on who/what is being clicked on
+		var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(starting_usage, callee)
+		ASYNC
+			__MouseUp(object, location, control, params)
+
+		store_cost?.usage_at_end = TICK_USAGE
+		store_cost?.finished_on = world.time
+		store_cost?.enter_average()
+
+/client/proc/__MouseUp(atom/object, atom/location, control, params)
 	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
 		click_intercept_time = world.time
 	if(mouse_up_icon)

@@ -15,6 +15,8 @@
  * we need to "change" that name. Some places also rename verbs based off context (Topic does this), etc.
  * We need to be careful to only rename BEFORE checking if we need to queue, doing it after just creates unusable junk data (which is rarely something you want)
 **/
+
+/// This is the underlying workhorse. This macro runs the verb we want to execute and tracks its time, assuming thisi s being ran as a verb and all
 #define VERB_QUEUE_OR_FIRE(proc_name, call_on, lookup_method, queue_on) \
 	if(caller) { \
 		proc_name(arglist(args)); \
@@ -35,28 +37,10 @@
 		__store_cost.enter_average(); \
 	}
 
-// For weird bespoke cases where we can't just use args in the same way
-#define VERB_QUEUE_OR_FIRE_CUSTOM_ARGS(proc_name, call_on, lookup_method, queue_on, arguments...) \
-	if(caller) { \
-		proc_name(arguments); \
-	} else { \
-		var/datum/verb_cost_tracker/__store_cost = new /datum/verb_cost_tracker(TICK_USAGE, callee); \
-		if(INTELIGENT_TRY_QUEUE_VERB(VERB_CALLBACK(call_on, lookup_method(proc_name), arguments), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, queue_on)) { \
-			__store_cost.name_to_use = "nullified_verb"; \
-			__store_cost.usage_at_end = TICK_USAGE; \
-			__store_cost.finished_on = world.time; \
-			__store_cost.enter_average(); \
-			return; \
-		} \
-		ASYNC { \
-			proc_name(arguments); \
-		} \
-		__store_cost.usage_at_end = TICK_USAGE; \
-		__store_cost.finished_on = world.time; \
-		__store_cost.enter_average(); \
-	}
+// What follows are the shims, that define a wrapper proc that acts as the actual verb,
+// and then a child which we can execute (async or not depending on how VERB_QUEUE_OR_FIRE shakes out)
 
-// General case "verb like thing" definition, covervs verbs and also procs (which we can use as verbs sometimes)
+/// General case "verb like thing" shim, covervs verbs and also procs (which we can use as verbs sometimes)
 #define DEFINE_VERBLIKE(proc_type, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_instant, show_in_context_menu, queue_on, verb_args...) \
 ##parent_path/##proc_type/##verb_proc_name(##verb_args) { \
 	VERBLIKE_SET(name, ##verb_name); \
@@ -71,20 +55,8 @@
 \
 ##parent_path/proc/__##verb_proc_name(##verb_args)
 
-// These are like this just to like, define common variations. The args to these macros are kind of hard to read, so it's useful to not make people type them all out
-#define DEFINE_VERB(parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
-	DEFINE_VERBLIKE(verb, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, FALSE, TRUE, SSverb_manager, ##verb_args)
 
-#define DEFINE_INSTANT_VERB(parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
-	DEFINE_VERBLIKE(verb, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, TRUE, TRUE, SSverb_manager, ##verb_args)
-
-#define DEFINE_POPUP_HIDDEN_VERB(parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
-	DEFINE_VERBLIKE(verb, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, FALSE, FALSE, SSverb_manager, ##verb_args)
-
-#define DEFINE_PROC_VERB(parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
-	DEFINE_VERBLIKE(proc, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, FALSE, TRUE, SSverb_manager, ##verb_args)
-
-// Verbs on objects that require a bespoke src
+/// Shim for verbs on objects that require a bespoke src, these typically have much less defined otherwise. Can't be integrated into DEFINE_VERBLIKE due to src sillyness
 #define DEFINE_WORLD_OBJECT_VERB(parent_path, verb_proc_name, src_value, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
 ##parent_path/verb/##verb_proc_name(##verb_args) { \
 	set src in src_value; \
@@ -98,9 +70,9 @@
 \
 ##parent_path/proc/__##verb_proc_name(##verb_args)
 
-// HHHHH WHY DOES THIS EXIST DOES IT EVEN DO ANYTHING WHAT THE FUCK
-// for "verb like" procs with NO SOURCE. I'm convinced this is pointless but I don't want to look into it
-// you should probly never use this, it's only like this for legacy reasons and should be suspect for removal
+/// HHHHH WHY DOES THIS EXIST DOES IT EVEN DO ANYTHING WHAT THE FUCK
+/// for "verb like" procs with NO SOURCE TYPEPATH (how are they a verblike then). I'm convinced this is pointless but I don't want to look into it
+/// you should probly never use this, it's only like this for legacy reasons and should be suspect for removal
 #define DEFINE_PROC_NO_PARENT_VERB(verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
 /proc/##verb_proc_name(##verb_args) { \
 	VERBLIKE_SET(name, ##verb_name); \
@@ -112,14 +84,26 @@
 \
 /proc/__##verb_proc_name(##verb_args)
 
-// Allows us to shim internal verbs (topic, click, etc)
-#define OVERRIDE_INTERNAL_VERB(parent_path, verb_proc_name, verb_args...) \
-##parent_path/##verb_proc_name(##verb_args) { \
-	SHOULD_NOT_OVERRIDE(TRUE); \
-	VERB_QUEUE_OR_FIRE(__##verb_proc_name, src, PROC_REF, SSverb_manager); \
-}; \
-\
-##parent_path/proc/__##verb_proc_name(##verb_args)
+// These are like this just to like, define common variations. The args to these macros are kind of hard to read, so it's useful to not make people type them all out
+/// Standard verb definition, drops the instant and popup_menu verb values, and queues onto SSverb_manager
+#define DEFINE_VERB(parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
+	DEFINE_VERBLIKE(verb, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, FALSE, TRUE, SSverb_manager, ##verb_args)
+
+/// Instant verb definition, drops the instant and popup_menu verb values, and queues onto SSverb_manager
+/// OF NOTE, instant verbs are a theoretical feature of the engine which are meant to refuse to be queued by BYOND's internal verb manager
+/// So far as I am aware, this feature does not work
+#define DEFINE_INSTANT_VERB(parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
+	DEFINE_VERBLIKE(verb, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, TRUE, TRUE, SSverb_manager, ##verb_args)
+
+/// Hidden popup verb definition, drops the instant and popup_menu verb values, and queues onto SSverb_manager
+/// TLDR is if you right click this verb won't show up where you'd otherwise expect it
+#define DEFINE_POPUP_HIDDEN_VERB(parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
+	DEFINE_VERBLIKE(verb, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, FALSE, FALSE, SSverb_manager, ##verb_args)
+
+/// Standard verblike proc definition, drops the instant and popup_menu verb values, and queues onto SSverb_manager
+/// Just exists so people don't have to type /proc a bunch
+#define DEFINE_PROC_VERB(parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, verb_args...) \
+	DEFINE_VERBLIKE(proc, parent_path, verb_proc_name, verb_name, verb_desc, verb_hidden, verb_category, FALSE, TRUE, SSverb_manager, ##verb_args)
 
 /// Returns true if this verb is being ran as a verb (or if it was just invoked by a verb manager)
 /// false if it's being ran by some parent call
