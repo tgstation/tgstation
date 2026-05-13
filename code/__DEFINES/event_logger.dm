@@ -50,3 +50,12 @@
 #define EVLOG_TYPE_LINES "lines"
 #define EVLOG_TYPE_PATH "path"
 #define EVLOG_TYPE_MAPTEXT "maptext"
+
+
+
+///Categories go here. Put sane names in the string since they get displayed.
+#define EVLOG_CATEGORY_MOVELOOPS "Moveloops"
+#define EVLOG_CATEGORY_JPS "JPS"
+#define EVLOG_CATEGORY_AI_DECISIONMAKING "AI Decisionmaking"
+#define EVLOG_CATEGORY_AI_BEHAVIORS "AI Behaviors"
+#define EVLOG_CATEGORY_AI_TARGETTING "AI Targetting"

@@ -437,7 +437,7 @@ multiple modular subtrees with behaviors
 		for(var/datum/ai_behavior/behavior in planned_behaviors)
 			event_text += "Queued behavior [behavior.type]"
 
-		EVLOG_TEXT(src, "AI Decisionmaking", jointext(event_text, "\n"))
+		EVLOG_TEXT(src, EVLOG_CATEGORY_AI_DECISIONMAKING, jointext(event_text, "\n"))
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status, additional_flags = NONE)
@@ -575,7 +575,7 @@ multiple modular subtrees with behaviors
 		return
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 		fail_behavior(current_behavior)
-	EVLOG_TEXT(src, "AI Decisionmaking", "Actions were cancelled!")
+	EVLOG_TEXT(src, EVLOG_CATEGORY_AI_DECISIONMAKING, "Actions were cancelled!")
 
 /datum/ai_controller/proc/fail_behavior(datum/ai_behavior/current_behavior)
 	var/list/arguments = list(src, FALSE)
