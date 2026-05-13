@@ -288,10 +288,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
-"bk" = (
-/obj/machinery/door/airlock/grunge,
-/turf/closed/wall/r_wall,
-/area/ruin/powered/seedvault)
 "bl" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plating,
@@ -1132,7 +1128,7 @@ aN
 aN
 aN
 aB
-bk
+aB
 aN
 aB
 aB
