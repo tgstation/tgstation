@@ -12,12 +12,10 @@ GLOBAL_LIST_EMPTY(minimap_annotation_viewers)
 	SEND_GLOBAL_SIGNAL(COMSIG_MINIMAP_ADD(tag), new_blip)
 
 /proc/remove_minimap_blip(tag, atom/object)
-	var/blip_list = GLOB.minimap_blip_tags[tag]
-	if(!length(blip_list))
-		return
-	for(var/atom/movable/screen/minimap_element/blip/blip as anything in blip_list)
-		if(blip.track_target == object)
-			SEND_GLOBAL_SIGNAL(COMSIG_MINIMAP_REMOVE(tag), blip)
-			qdel(blip)
-			LAZYREMOVE(GLOB.minimap_blip_tags[tag], blip)
-			break
+	for(var/atom/movable/screen/minimap_element/blip/blip as anything in GLOB.minimap_blip_tags[tag])
+		if(blip.track_target != object)
+			continue
+		SEND_GLOBAL_SIGNAL(COMSIG_MINIMAP_REMOVE(tag), blip)
+		LAZYREMOVE(GLOB.minimap_blip_tags[tag], blip)
+		qdel(blip)
+		break

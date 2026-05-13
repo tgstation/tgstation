@@ -1,5 +1,3 @@
-
-
 /atom/movable/screen/minimap_element/blip
 	icon = 'icons/ui_icons/minimap/map_blips.dmi'
 	/// Is this a large blip? causes different pixel offsets to be applied
@@ -25,9 +23,10 @@
 		src.blip_tag = blip_tag
 
 /atom/movable/screen/minimap_element/blip/Destroy()
-	. = ..()
 	clear_tracking_signals()
-	GLOB.minimap_blip_tags -= src
+	for(var/tag in GLOB.minimap_blip_tags)
+		LAZYREMOVE(GLOB.minimap_blip_tags[tag], src)
+	return ..()
 
 /atom/movable/screen/minimap_element/blip/proc/register_target(atom/target)
 	if(!isnull(track_target))
