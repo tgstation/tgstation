@@ -235,6 +235,7 @@
 
 	if(ritual_result)
 		ritual.cleanup_atoms(selected_atoms)
+		SSblackbox.record_feedback("tally", "heretic_ritual_completed", 1, ritual.type)
 
 	// Clean up done, re-appear anything that hasn't been deleted.
 	for(var/atom/to_appear as anything in initial_selected_atoms)
