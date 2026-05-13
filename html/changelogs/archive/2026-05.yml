@@ -205,7 +205,23 @@
   timothymtorres:
   - bugfix: Fix shock immunity flag not working when electrocution occurs
 2026-05-13:
+  Absolucy, SmArtKar:
+  - qol: The color changing from regenerative rainbow, adamantine, and stabilized
+      pyrite extracts now looks far better.
+  - qol: The protection effect from regenerative rainbow extracts now actually makes
+      you all rainbowy.
+  - code_imp: Minor improvements to crossbreed status effect code.
+  CabinetOnFire:
+  - refactor: Implements "Event Logging" an improved way for programmers to debug
+      specific datums.
+  ElGitificador:
+  - bugfix: fixes a certain explosions message related to influences
   Glu-furro:
   - rscadd: 'Increased max prisoners from 2 to 4.
 
       :cl:'
+  Happyowl93:
+  - bugfix: fixes material floor duplication
+  necromanceranne:
+  - qol: Your overall athletics level is what protects you from a random heart attack.
+      If you achieve peak fitness, you are immune to random heart attacks.
