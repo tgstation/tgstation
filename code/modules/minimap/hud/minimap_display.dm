@@ -393,7 +393,7 @@
 		return requested_z
 	var/closest_z = connected_levels[1]
 	var/closest_distance = abs(closest_z - requested_z)
-	for(var/connected_z as anything in connected_levels)
+	for(var/connected_z in connected_levels)
 		var/current_distance = abs(connected_z - requested_z)
 		if(current_distance < closest_distance)
 			closest_z = connected_z
@@ -472,7 +472,7 @@
 	if(isnull(items_by_z))
 		return
 	var/list/cleared_levels = list()
-	for(var/z_level as anything in items_by_z)
+	for(var/z_level in items_by_z)
 		var/list/items = items_by_z[z_level]
 		if(!length(items))
 			continue
@@ -480,7 +480,7 @@
 		items_by_z[z_level] = list()
 		cleared_levels += z_level
 	refresh_visible_annotations()
-	for(var/z_level as anything in cleared_levels)
+	for(var/z_level in cleared_levels)
 		sync_visible_objects(z_level)
 	var/user_name = user ? key_name(user) : "System"
 	log_minimap_drawing("[user_name] has cleared all [annotation_type] annotations")
@@ -499,7 +499,7 @@
 	var/list/filter_result = is_ic_filtered(label_text)
 	if(filter_result)
 		to_chat(user, span_warning("That label contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[label_text]\"</span>"))
-		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
+		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, LOWER_TEXT(config.ic_filter_regex.match))
 		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
 		log_filter("IC", label_text, filter_result)
 		return

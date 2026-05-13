@@ -35,7 +35,7 @@
 
 	if(is_forbidden_minimap_z(clicker?.z))
 		to_chat(clicker, span_warning("The minimap cannot be used on this z-level."))
-		clicker.balloon_alert("invalid z-level!")
+		clicker.balloon_alert(clicker, "invalid z-level!")
 		return
 
 	var/display_z = isnull(fixed_z_level) ? clicker.z : fixed_z_level
