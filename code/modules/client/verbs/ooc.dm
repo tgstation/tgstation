@@ -3,7 +3,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 ///talking in OOC uses this
-DEFINE_VERB(/client, ooc, "VERB_OOC", "", FALSE, "", msg as text)
+DEFINE_VERB(/client, ooc, VERB_OOC, "", FALSE, "", msg as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
