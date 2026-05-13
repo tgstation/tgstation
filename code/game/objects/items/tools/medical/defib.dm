@@ -181,7 +181,7 @@
 
 	update_power()
 
-DEFINE_PROC_VERB(/obj/item/defibrillator, toggle_paddles, "Toggle Paddles", "", FALSE, "")
+/obj/item/defibrillator/proc/toggle_paddles(mob/living/user)
 	on = !on
 	if(on)
 		//Detach the paddles into the user's hands

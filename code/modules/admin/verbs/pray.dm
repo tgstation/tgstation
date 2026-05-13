@@ -1,4 +1,4 @@
-DEFINE_VERB(/mob, pray, VERB_PRAY, "", FALSE, "", msg as text)
+DEFINE_VERB(/mob, pray, VERB_PRAY, "", FALSE, "", message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(src, span_danger("Speech is currently admin-disabled."), confidential = TRUE)
 		return
@@ -36,13 +36,13 @@ DEFINE_VERB(/mob, pray, VERB_PRAY, "", FALSE, "", msg as text)
 			font_color = "blue"
 			prayer_type = "SPIRITUAL PRAYER"
 
-	var/msg_tmp = message
+	var/message_tmp = message
 	GLOB.requests.pray(src.client, message, src.job == JOB_CHAPLAIN)
 	message = span_adminnotice("[icon2html(cross, GLOB.admins)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(message)]")
 	for(var/client/C in GLOB.admins)
 		if(get_chat_toggles(C) & CHAT_PRAYER)
 			to_chat(C, message, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
-	to_chat(src, span_info("You pray to the gods: \"[msg_tmp]\""), confidential = TRUE)
+	to_chat(src, span_info("You pray to the gods: \"[message_tmp]\""), confidential = TRUE)
 
 	BLACKBOX_LOG_ADMIN_VERB("Prayer")
 

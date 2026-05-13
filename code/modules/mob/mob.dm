@@ -781,7 +781,7 @@ DEFINE_VERB(/mob, examinate, "Examine", "", FALSE, "", atom/examinify as mob|obj
  *
  * Calls attack self on the item and updates the inventory hud for hands
  */
-DEFINE_VERB(/mob, mode, "Activate Held Object", "", FALSE, "")
+DEFINE_VERB(/mob, mode, "Activate Held Object", "", FALSE, "IC")
 	set src = usr
 	if(VERB_JUST_FIRED())
 		execute_mode()
