@@ -9,8 +9,8 @@
 #define SKIN_MAPWINDOW_MAP "[SKIN_MAPWINDOW].map"
 #define SKIN_MAPWINDOW_STATUS_BAR "[SKIN_MAPWINDOW].status_bar"
 
-#define INFOWINDOW "infowindow"
-#define INFOWINDOW_INFO "[INFOWINDOW].info"
+#define SKIN_INFOWINDOW "info"
+#define SKIN_INFOWINDOW_CHILD "[SKIN_INFOWINDOW].info_child"
 
 #define SKIN_TGUISAY "tgui_say"
 #define SKIN_TGUISAY_BROWSER "[SKIN_TGUISAY].browser"
