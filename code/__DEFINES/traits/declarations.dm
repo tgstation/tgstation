@@ -1654,4 +1654,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes the owner desensetized to death, but happy whenever someone gets blown to pieces (as a sacrifice to the necropolis) unless its another worshipper
 #define TRAIT_NECROPOLIS_WORSHIP "necropolis_worship"
 
+/// Applied to an area, stops random power failures from affecting it
+#define TRAIT_AREA_BLOCK_POWER_FAIL "area_block_power_fail"
+
 // END TRAIT DEFINES
