@@ -526,10 +526,11 @@
 		visible_message(span_revenwarning("A blue dust appears from thin air and settles down."))
 		new /obj/item/ectoplasm/revenant(get_turf(src)) // inert
 		qdel(src)
-	else
-		PossessByPlayer(chosen_one.key)
-		message_admins("[chosen_one.key] has been made into the reformed revenant via poll.")
-		qdel(chosen_one)
+		return
+
+	PossessByPlayer(chosen_one.key)
+	message_admins("[chosen_one.key] has been made into the reformed revenant via poll.")
+	qdel(chosen_one)
 
 /mob/living/basic/revenant/proc/reform(cause)
 	if(QDELETED(src))
@@ -538,8 +539,9 @@
 	death_reset()
 	if(isnull(client))
 		INVOKE_ASYNC(src, PROC_REF(get_new_user))
-	else
-		message_admins("[client.ckey] has been remade into a revenant.")
-		log_message("was remade as a revenant.", LOG_GAME)
+		return TRUE
+
+	message_admins("[client.ckey] has been remade into a revenant.")
+	log_message("was remade as a revenant.", LOG_GAME)
 	return TRUE
 #undef REVENANT_STUNNED_TRAIT

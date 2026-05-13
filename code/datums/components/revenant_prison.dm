@@ -7,19 +7,18 @@
 	var/old_ckey
 
 /datum/component/revenant_prison/Initialize(mob/living/basic/revenant/revenant, create_on_release = FALSE)
+	if(!istype(revenant))
+		return COMPONENT_INCOMPATIBLE
 	. = ..()
 	if(create_on_release)
-		return .
-	if(!revenant)
-		return COMPONENT_INCOMPATIBLE
+		return
 	src.revenant = revenant
 	revenant.dormant = TRUE
 	old_ckey = revenant.client?.ckey
 	revenant.forceMove(parent)
 
 /datum/component/revenant_prison/Destroy()
-	if(revenant)
-		qdel(revenant)
+	QDEL_NULL(revenant)
 	return ..()
 
 /datum/component/revenant_prison/proc/release_revenant(cause)
