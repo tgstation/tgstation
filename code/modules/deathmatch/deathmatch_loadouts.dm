@@ -1165,26 +1165,9 @@
 /datum/outfit/deathmatch_loadout/syndicate_spaceman/pre_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
 	if(user.jumpsuit_style == PREF_SKIRT)
 		uniform = /obj/item/clothing/under/syndicate/skirt
-
-	switch(pick(list("red", "green", "dgreen", "blue", "orange", "black")))
-		if("green")
-			head = /obj/item/clothing/head/helmet/space/syndicate/green
-			suit = /obj/item/clothing/suit/space/syndicate/green
-		if("dgreen")
-			head = /obj/item/clothing/head/helmet/space/syndicate/green/dark
-			suit = /obj/item/clothing/suit/space/syndicate/green/dark
-		if("blue")
-			head = /obj/item/clothing/head/helmet/space/syndicate/blue
-			suit = /obj/item/clothing/suit/space/syndicate/blue
-		if("red")
-			head = /obj/item/clothing/head/helmet/space/syndicate
-			suit = /obj/item/clothing/suit/space/syndicate
-		if("orange")
-			head = /obj/item/clothing/head/helmet/space/syndicate/orange
-			suit = /obj/item/clothing/suit/space/syndicate/orange
-		if("black")
-			head = /obj/item/clothing/head/helmet/space/syndicate/black
-			suit = /obj/item/clothing/suit/space/syndicate/black
+	// pick a random syndicate spess suit
+	suit = pick(GLOB.syndicate_space_suits_to_helmets)
+	head = GLOB.syndicate_space_suits_to_helmets[suit]
 
 /datum/outfit/deathmatch_loadout/syndicate_spaceman/post_equip(mob/living/carbon/human/syndicate_spaceman, visuals_only)
 	. = ..()
