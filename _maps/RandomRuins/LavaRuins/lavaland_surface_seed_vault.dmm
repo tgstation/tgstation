@@ -4,7 +4,7 @@
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
-/area/lavaland/surface/outdoors/unexplored)
+/area/template_noop)
 "ab" = (
 /obj/structure/closet/crate,
 /obj/item/vending_refill/hydroseeds,
@@ -115,7 +115,8 @@
 /turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "ay" = (
-/turf/closed/wall/mineral/titanium,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "az" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -180,6 +181,9 @@
 /obj/machinery/light/dim/directional/west,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
+"aN" = (
+/turf/closed/wall/r_wall,
+/area/ruin/powered/seedvault)
 "aO" = (
 /obj/structure/railing,
 /obj/structure/railing{
@@ -192,7 +196,7 @@
 	dir = 1
 	},
 /obj/structure/railing,
-/obj/machinery/light/blacklight/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/powered/seedvault)
 "aR" = (
@@ -216,6 +220,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
+"aW" = (
+/obj/machinery/light/directional/north,
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
 "aX" = (
 /obj/machinery/vatgrower,
 /turf/open/indestructible/white,
@@ -232,6 +240,12 @@
 /obj/item/seeds/berry/glow,
 /obj/item/seeds/sunflower/moonflower,
 /turf/open/indestructible/plating,
+/area/ruin/powered/seedvault)
+"ba" = (
+/obj/machinery/atmospherics/components/binary/pump/on/general/visible/layer4{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "bb" = (
 /obj/machinery/hydroponics/constructable/fullupgrade,
@@ -259,6 +273,7 @@
 /area/ruin/powered/seedvault)
 "bh" = (
 /obj/machinery/light/directional/north,
+/obj/structure/aquarium,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bj" = (
@@ -283,6 +298,10 @@
 /area/ruin/powered/seedvault)
 "bo" = (
 /obj/machinery/door/airlock/engineering,
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
+"bp" = (
+/obj/machinery/light/directional/south,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "br" = (
@@ -321,12 +340,6 @@
 	},
 /obj/structure/aquarium,
 /turf/open/indestructible,
-/area/ruin/powered/seedvault)
-"bA" = (
-/obj/machinery/atmospherics/components/binary/pump/on/general/hidden/layer4{
-	dir = 8
-	},
-/turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "bB" = (
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -519,6 +532,21 @@
 /obj/machinery/light/directional/east,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
+"wD" = (
+/obj/structure/closet/crate,
+/obj/item/queen_bee,
+/obj/item/bee_smoker,
+/obj/item/clothing/head/utility/beekeeper_head,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/structure/beebox/unwrenched,
+/obj/item/honey_frame,
+/obj/item/honey_frame,
+/turf/open/indestructible/plating,
+/area/ruin/powered/seedvault)
+"wV" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
 "yq" = (
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/table,
@@ -547,15 +575,11 @@
 /area/ruin/powered/seedvault)
 "Bb" = (
 /obj/structure/disposalpipe/segment,
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/r_wall,
 /area/ruin/powered/seedvault)
 "Bj" = (
 /obj/structure/flora/bush/fullgrass,
 /turf/open/floor/grass,
-/area/ruin/powered/seedvault)
-"DA" = (
-/obj/machinery/light/directional/south,
-/turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "GN" = (
 /obj/machinery/light/floor,
@@ -584,11 +608,10 @@
 /obj/item/geneshears,
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
-"Kq" = (
-/obj/machinery/light/directional/north,
-/obj/structure/aquarium,
-/turf/open/indestructible,
-/area/ruin/powered/seedvault)
+"JA" = (
+/obj/machinery/door/airlock/vault,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/template_noop)
 "KF" = (
 /obj/structure/chair/office,
 /turf/open/indestructible/white,
@@ -648,8 +671,8 @@
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "Wn" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "Yb" = (
@@ -687,37 +710,37 @@ hk
 (2,1,1) = {"
 hk
 hk
-ay
-ay
-ay
-ay
-ay
-ay
-ay
-az
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+wV
 Wn
-ay
-az
-az
-ay
-ay
-ay
-ay
-ay
-ay
-ay
+aN
+wV
+wV
+aN
+aN
+aN
+aN
+aN
+aN
+aN
 hk
 hk
 "}
 (3,1,1) = {"
 hk
-ay
-ay
+aN
+aN
 ds
 ds
 ae
 an
-bk
+aN
 aJ
 aE
 rX
@@ -725,24 +748,24 @@ uX
 Yb
 UE
 mz
-bk
+aN
 bc
 VF
 bc
 aX
-ay
-ay
+aN
+aN
 hk
 "}
 (4,1,1) = {"
 hk
-ay
+aN
 bx
 ds
 ds
 OE
 ds
-bk
+aN
 aE
 aE
 aU
@@ -756,7 +779,7 @@ rF
 vc
 bc
 oR
-ay
+aN
 hk
 "}
 (5,1,1) = {"
@@ -781,7 +804,7 @@ ao
 GN
 os
 KF
-bw
+ay
 hk
 "}
 (6,1,1) = {"
@@ -792,7 +815,7 @@ ds
 ds
 og
 ds
-bk
+aN
 cP
 aU
 aE
@@ -800,24 +823,24 @@ vV
 aE
 aI
 aE
-bk
+aN
 bc
 br
 rF
 bc
 au
-bw
+ay
 hk
 "}
 (7,1,1) = {"
 hk
-ay
+aN
 bx
 ds
 iY
 ds
 tj
-bk
+aN
 PH
 aU
 aL
@@ -825,24 +848,24 @@ bk
 yq
 aI
 bj
-bk
+aN
 am
 bc
 rF
 bc
 aH
-ay
+aN
 hk
 "}
 (8,1,1) = {"
 hk
-ay
-ay
-ay
-ay
-ay
-ay
-bk
+aN
+aN
+aN
+aN
+aN
+aN
+aN
 bb
 aU
 aS
@@ -850,13 +873,13 @@ bk
 aG
 aI
 bb
-bk
-bk
-bk
+aN
+aN
+aN
 by
-bk
-bk
-ay
+aN
+aN
+aN
 hk
 "}
 (9,1,1) = {"
@@ -875,13 +898,13 @@ bk
 lZ
 aI
 bb
-bk
-bh
+aN
+aW
 aI
 aR
 aE
-DA
-ay
+bp
+aN
 hk
 "}
 (10,1,1) = {"
@@ -900,13 +923,13 @@ hf
 aE
 Qb
 bb
-bk
+aN
 uU
 aI
 aU
 aE
 aE
-ay
+aN
 hk
 "}
 (11,1,1) = {"
@@ -925,13 +948,13 @@ bB
 aE
 aI
 bb
-bk
+aN
 aV
 aI
 be
 uU
 aE
-bw
+ay
 hk
 "}
 (12,1,1) = {"
@@ -950,13 +973,13 @@ bk
 bf
 aI
 bb
-bk
+aN
 aE
 aU
 aU
 aE
 aE
-ay
+aN
 hk
 "}
 (13,1,1) = {"
@@ -975,24 +998,24 @@ bk
 GO
 aI
 bb
-bk
-Kq
+aN
+bh
 bz
 bd
 ag
 jT
-ay
+aN
 hk
 "}
 (14,1,1) = {"
 hk
 hk
-bk
-bk
-bk
-bk
-bk
-bk
+aN
+aN
+aN
+aN
+aN
+aN
 PH
 aE
 ah
@@ -1000,24 +1023,24 @@ bk
 aA
 aI
 bj
-bk
-bk
-bk
-bk
-bk
-bk
-ay
+aN
+aN
+aN
+aN
+aN
+aN
+aN
 hk
 "}
 (15,1,1) = {"
 hk
 hk
-ay
+aN
 bm
 le
 ad
 Uz
-bk
+aN
 aE
 uU
 aE
@@ -1025,19 +1048,19 @@ bs
 aE
 aI
 aE
-bk
+aN
 bn
 le
 le
 ac
-ay
+aN
 SJ
 SJ
 "}
 (16,1,1) = {"
 hk
 SJ
-bw
+ay
 zK
 le
 ad
@@ -1055,19 +1078,19 @@ le
 Tm
 le
 aY
-bw
+ay
 SJ
 SJ
 "}
 (17,1,1) = {"
 hk
 SJ
-bw
+ay
 bl
 bl
 ad
-bA
-bk
+ba
+aN
 aE
 aE
 aE
@@ -1075,24 +1098,24 @@ aE
 aE
 uU
 aE
-bk
+aN
 le
 le
 le
 ab
-bw
+ay
 SJ
 SJ
 "}
 (18,1,1) = {"
 SJ
 SJ
-ay
+aN
 bl
 bl
 ai
 ax
-bk
+aN
 aE
 aE
 aE
@@ -1100,37 +1123,37 @@ sv
 aE
 aE
 aE
-bk
+aN
 lh
-lh
+wD
 tv
 Jh
-ay
+aN
 SJ
 SJ
 "}
 (19,1,1) = {"
 SJ
 hk
-ay
-bw
-bw
-bw
+aN
 ay
 ay
 ay
+aN
+aN
+aN
 aB
 aB
-bk
+aN
 aB
 aB
+aN
+aN
+aN
 ay
 ay
 ay
-bw
-bw
-bw
-ay
+aN
 SJ
 hk
 "}
@@ -1143,13 +1166,13 @@ hk
 hk
 hk
 hk
-ay
+aN
 aE
 aE
 aM
 Qd
 aE
-ay
+aN
 hk
 hk
 hk
@@ -1168,13 +1191,13 @@ hk
 hk
 hk
 hk
-ay
+aN
 aE
 aE
 cu
 aE
 aE
-ay
+aN
 hk
 hk
 hk
@@ -1193,13 +1216,13 @@ SJ
 SJ
 hk
 hk
-ay
+aN
 pZ
 pZ
-ay
+aN
 pZ
 pZ
-ay
+aN
 hk
 SJ
 SJ
@@ -1242,7 +1265,7 @@ hk
 hk
 hk
 hk
-hk
+JA
 eq
 af
 af
