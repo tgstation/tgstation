@@ -410,6 +410,8 @@ SUBSYSTEM_DEF(tts)
 			completed_tts_messages[identifier]["ref"] = null
 			completed_tts_messages[identifier] = null
 			completed_tts_messages.Remove(identifier)
+			queued_radio_messages.Remove(identifier)
+			queued_radio_messages_compression.Remove(identifier)
 
 #undef TTS_ARBRITRARY_DELAY
 
