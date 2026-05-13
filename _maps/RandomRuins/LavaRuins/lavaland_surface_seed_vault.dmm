@@ -115,7 +115,14 @@
 /turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "ay" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/closet/crate,
+/obj/item/queen_bee,
+/obj/item/bee_smoker,
+/obj/item/clothing/head/utility/beekeeper_head,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/structure/beebox/unwrenched,
+/obj/item/honey_frame,
+/obj/item/honey_frame,
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "az" = (
@@ -321,7 +328,7 @@
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bw" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "bx" = (
@@ -532,21 +539,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
-"wD" = (
-/obj/structure/closet/crate,
-/obj/item/queen_bee,
-/obj/item/bee_smoker,
-/obj/item/clothing/head/utility/beekeeper_head,
-/obj/item/clothing/suit/utility/beekeeper_suit,
-/obj/structure/beebox/unwrenched,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/turf/open/indestructible/plating,
-/area/ruin/powered/seedvault)
-"wV" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/indestructible,
-/area/ruin/powered/seedvault)
 "yq" = (
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/table,
@@ -581,6 +573,10 @@
 /obj/structure/flora/bush/fullgrass,
 /turf/open/floor/grass,
 /area/ruin/powered/seedvault)
+"DE" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/indestructible,
+/area/ruin/powered/seedvault)
 "GN" = (
 /obj/machinery/light/floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
@@ -608,10 +604,6 @@
 /obj/item/geneshears,
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
-"JA" = (
-/obj/machinery/door/airlock/vault,
-/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
-/area/template_noop)
 "KF" = (
 /obj/structure/chair/office,
 /turf/open/indestructible/white,
@@ -717,11 +709,11 @@ aN
 aN
 aN
 aN
-wV
+DE
 Wn
 aN
-wV
-wV
+DE
+DE
 aN
 aN
 aN
@@ -804,7 +796,7 @@ ao
 GN
 os
 KF
-ay
+bw
 hk
 "}
 (6,1,1) = {"
@@ -829,7 +821,7 @@ br
 rF
 bc
 au
-ay
+bw
 hk
 "}
 (7,1,1) = {"
@@ -954,7 +946,7 @@ aI
 be
 uU
 aE
-ay
+bw
 hk
 "}
 (12,1,1) = {"
@@ -1060,7 +1052,7 @@ SJ
 (16,1,1) = {"
 hk
 SJ
-ay
+bw
 zK
 le
 ad
@@ -1078,14 +1070,14 @@ le
 Tm
 le
 aY
-ay
+bw
 SJ
 SJ
 "}
 (17,1,1) = {"
 hk
 SJ
-ay
+bw
 bl
 bl
 ad
@@ -1103,7 +1095,7 @@ le
 le
 le
 ab
-ay
+bw
 SJ
 SJ
 "}
@@ -1125,7 +1117,7 @@ aE
 aE
 aN
 lh
-wD
+ay
 tv
 Jh
 aN
@@ -1136,9 +1128,9 @@ SJ
 SJ
 hk
 aN
-ay
-ay
-ay
+bw
+bw
+bw
 aN
 aN
 aN
@@ -1150,9 +1142,9 @@ aB
 aN
 aN
 aN
-ay
-ay
-ay
+bw
+bw
+bw
 aN
 SJ
 hk
@@ -1265,7 +1257,7 @@ hk
 hk
 hk
 hk
-JA
+hk
 eq
 af
 af
