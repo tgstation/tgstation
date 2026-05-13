@@ -220,8 +220,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
 /// Humans with this trait cannot have underwear
 #define TRAIT_NO_UNDERWEAR "no_underwear"
-/// This carbon doesn't show an overlay when they have no brain
-#define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 /// Humans with this trait cannot get augmentation surgery
 #define TRAIT_NO_AUGMENTS "no_augments"
 /// This carbon doesn't get hungry
@@ -1428,6 +1426,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given when a mob is currently in invisimin mode
 #define TRAIT_INVISIMIN "invisimin"
 
+/// Trait given when a mob has admin esp turned on
+#define TRAIT_ADMIN_ESP "admin_esp"
+
 ///Trait given when a mob has been tipped
 #define TRAIT_MOB_TIPPED "mob_tipped"
 
@@ -1592,6 +1593,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
 
+/// Ignores demolition modifiers
+#define TRAIT_IGNORE_DEMOLITION "ignore_demolition"
+
 /// Makes the mob immune to carpotoxin
 #define TRAIT_CARPOTOXIN_IMMUNE "carpotoxin_immune"
 
@@ -1654,5 +1658,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Makes the owner desensetized to death, but happy whenever someone gets blown to pieces (as a sacrifice to the necropolis) unless its another worshipper
 #define TRAIT_NECROPOLIS_WORSHIP "necropolis_worship"
+
+/// Sunlight on this turf is blocked and thus you can't get solar power or whatever
+#define TRAIT_TURF_SUN_BLOCKED "turf_sun_blocked"
 
 // END TRAIT DEFINES

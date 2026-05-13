@@ -4,6 +4,7 @@
 /datum/ai_controller/basic_controller/brimdemon
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining/low_node_priority,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
@@ -11,6 +12,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk/no_target
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/call_reinforcements/mining,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic,
 		/datum/ai_planning_subtree/move_to_cardinal/brimdemon,
