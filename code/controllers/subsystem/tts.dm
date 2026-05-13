@@ -270,6 +270,8 @@ SUBSYSTEM_DEF(tts)
 		if(current_request.requests_errored())
 			if(queued_radio_messages[identifier])
 				queued_radio_messages.Remove(identifier)
+			if(queued_radio_messages_compression[identifier])
+				queued_radio_messages_compression.Remove(identifier)
 			current_request.timed_out = TRUE
 			log_tts("TTS HTTP request errored | Normal: [normal_response.error] | Blips: [blips_response.error] | Radio: [radio_response.error] | Radio Blips: [radio_blips_response.error] | Radio Gibberish [radio_gibberish_response.error]", list(
 				"normal" = normal_response,
@@ -343,6 +345,10 @@ SUBSYSTEM_DEF(tts)
 		// If current_target.timed_out is set to TRUE, it means the request failed in some way
 		// and there is no TTS audio file to play.
 		if(timeout < world.time || current_target.timed_out)
+			if(queued_radio_messages[current_target.identifier])
+				queued_radio_messages.Remove(current_target.identifier)
+			if(queued_radio_messages_compression[current_target.identifier])
+				queued_radio_messages_compression.Remove(current_target.identifier)
 			SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 			continue
 
@@ -389,6 +395,7 @@ SUBSYSTEM_DEF(tts)
 					var/obj/radio_obj = radio
 					if(QDELETED(radio_obj))
 						queued_radio_messages[identifier].Remove(radio)
+						queued_radio_messages_compression[identifier].Remove(radio)
 						continue
 
 				var/datum/tts_request/tts_request = completed_tts_messages[identifier]["ref"]
