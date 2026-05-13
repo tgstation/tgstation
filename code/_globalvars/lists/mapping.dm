@@ -145,7 +145,9 @@ GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
 GLOBAL_LIST_EMPTY(bar_areas)
+GLOBAL_LIST_EMPTY(river_waypoint_list) // Assoc list of river waypoint markers by z-level
 GLOBAL_LIST_EMPTY(mining_center) // For determining vent size ranked lists, epicenters for comparison goes here.
+GLOBAL_LIST_EMPTY(map_generators_by_z) // Assoc list of shared generators by z by type
 
 /// List of all the maps that have been cached for /proc/load_map
 GLOBAL_LIST_EMPTY(cached_maps)
@@ -170,22 +172,6 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(
 	/mob/living/simple_animal/hostile/megafauna/dragon = 4,
 ))
 
-/// List of how many minerals spawned based on proximity to an ore vent.
-GLOBAL_LIST_INIT(post_ore_random, list(
-	"[ORE_WALL_FAR]" = 0,
-	"[ORE_WALL_LOW]" = 0,
-	"[ORE_WALL_MEDIUM]" = 0,
-	"[ORE_WALL_HIGH]" = 0,
-	"[ORE_WALL_VERY_HIGH]" = 0,
-))
-/// List of how many minerals spawned randomly off of mining Z-levels, and at what quantity.
-GLOBAL_LIST_INIT(post_ore_manual, list(
-	"[ORE_WALL_FAR]" = 0,
-	"[ORE_WALL_LOW]" = 0,
-	"[ORE_WALL_MEDIUM]" = 0,
-	"[ORE_WALL_HIGH]" = 0,
-	"[ORE_WALL_VERY_HIGH]" = 0,
-))
 /// List of how many ore vents spawned, and of what size.
 GLOBAL_LIST_INIT(ore_vent_sizes, list(
 	LARGE_VENT_TYPE = 0,

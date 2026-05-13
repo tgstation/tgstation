@@ -769,7 +769,6 @@
 
 	invisible_man.add_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS, TRAIT_NO_BLOOD_OVERLAY), type)
 
-	invisible_man.update_body()
 	invisible_man.remove_from_all_data_huds()
 	invisible_man.sound_environment_override = SOUND_ENVIROMENT_PHASED
 
@@ -781,7 +780,6 @@
 
 		to_chat(invisible_man, span_notice("As you sober up, opacity once again returns to your body meats."))
 
-	invisible_man.update_body()
 	invisible_man.sound_environment_override = NONE
 
 	if(!invisible_man.hud_used)
@@ -920,6 +918,17 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	color = "#ffbebe" // kronkaine but with some red
 	ph = 4
 	chemical_flags = NONE
+
+/datum/reagent/drug/kronkaine/gore/on_mob_metabolize(mob/living/gored)
+	. = ..()
+	if(HAS_TRAIT(gored, TRAIT_ECHOLOCATOR))
+		to_chat(gored, span_nicegreen("OH YEAH! THAT'S THE STUFF! THAT'S GORE!"))
+
+/datum/reagent/drug/kronkaine/gore/on_mob_life(mob/living/gored, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(HAS_TRAIT(gored, TRAIT_ECHOLOCATOR))
+		gored.adjust_brute_loss(-2 * metabolization_ratio * seconds_per_tick)
+		gored.adjust_fire_loss(-2 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/drug/kronkaine/gore/overdose_start(mob/living/gored, metabolization_ratio)
 	. = ..()

@@ -60,19 +60,19 @@ GLOBAL_LIST_EMPTY(customized_pets)
 /// How much does meal complexity affect our growth?
 #define RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR 5
 /// Base value for raptor growth from meat
-#define RAPTOR_GROWTH_BASE_MEAT 10
+#define RAPTOR_GROWTH_BASE_MEAT 15
 /// Base value for raptor growth from ash flora
-#define RAPTOR_GROWTH_BASE_PLANT 5
+#define RAPTOR_GROWTH_BASE_PLANT 8
 /// How much growth progress raptors need to accumulate to fully grow into an adult
 #define RAPTOR_GROWTH_REQUIRED 100
 /// Minimum random growth value a baby raptor can gain per second
-#define RAPTOR_BABY_GROWTH_LOWER 0.5
+#define RAPTOR_BABY_GROWTH_LOWER 0.8
 /// Maximum random growth value a baby raptor can gain per second
-#define RAPTOR_BABY_GROWTH_UPPER 0.8
+#define RAPTOR_BABY_GROWTH_UPPER 1.2
 /// How long it takes for a raptor egg to grow up, in seconds
 #define RAPTOR_EGG_GROWTH_PROGRESS 100
 /// How much happiness percentage affects our growth speed
-#define RAPTOR_GROWTH_HAPPINESS_MULTIPLIER 0.005 // Full happiness increases growth rate by 50%
+#define RAPTOR_GROWTH_HAPPINESS_MULTIPLIER 0.0075 // Full happiness increases growth rate by 75%
 
 /// Damage boost per happiness percent
 #define RAPTOR_HAPPINESS_DAMAGE_BOOST 0.05
@@ -119,3 +119,11 @@ GLOBAL_LIST_EMPTY(customized_pets)
 #define BB_RAPTOR_FLEE_THRESHOLD "raptor_flee_threshold"
 
 #define MAX_RAPTOR_POP 64
+
+
+///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack continue as normal.
+#define BASIC_MOB_CONTINUE_ATTACK_CHAIN 0
+///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack end, but not set a cooldown. This is the default.
+#define BASIC_MOB_END_ATTACK_CHAIN 1
+///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack end, and sets a cooldown. Useful if you add behavior to early_melee_attack
+#define BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN 2

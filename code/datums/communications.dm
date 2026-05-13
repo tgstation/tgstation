@@ -28,6 +28,9 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	/// What is the higher bound of when the roundstart announcement is sent out?
 	var/waittime_h = 180 SECONDS
 
+	/// Tracks if we have announced greenshift at the start of the round or not
+	var/announced_greenshift = FALSE
+
 /datum/communciations_controller/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))
 		return TRUE
@@ -97,6 +100,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	if(greenshift)
 		station_goal_strings += "All special orders have been authorized for the shift. \
 			Feel free to pick one your crew wishes to specialize in - you are not expected to complete them all."
+		announced_greenshift = TRUE
 
 	else
 		for(var/datum/station_goal/station_goal as anything in SSstation.get_station_goals())
@@ -120,7 +124,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 
 		for(var/datum/command_footnote/footnote as anything in command_report_footnotes)
 			footnote_pile += "[footnote.message]<BR>"
-			footnote_pile += "<i>[footnote.signature]</i><BR>"
+			footnote_pile += "~ <i>[footnote.signature]</i><BR>"
 			footnote_pile += "<BR>"
 
 		. += "<hr><h4>Additional Notes: </h4>" + footnote_pile

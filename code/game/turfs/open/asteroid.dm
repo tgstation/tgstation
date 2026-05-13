@@ -1,5 +1,7 @@
 /**********************Asteroid**************************/
 
+#define DIG_SHEET_AMOUNT 5
+
 /turf/open/misc/asteroid //floor piece
 	gender = PLURAL
 	name = "asteroid sand"
@@ -86,14 +88,12 @@
 
 /// Drops itemstack when dug and changes icon
 /turf/open/misc/asteroid/proc/getDug()
-	if(dug || broken)
-		return
-	dug = TRUE
-	broken = TRUE
-	new dig_result(src, 5)
+	if(!break_tile())
+		return FALSE
+	new dig_result(src, DIG_SHEET_AMOUNT)
 	if(prob(worm_chance))
 		new /obj/item/food/bait/worm(src)
-	update_appearance()
+	return TRUE
 
 /// If the user can dig the turf
 /turf/open/misc/asteroid/proc/can_dig(mob/user)
@@ -101,6 +101,7 @@
 		return TRUE
 	if(user)
 		balloon_alert(user, "already excavated!")
+	return FALSE
 
 ///Refills the previously dug tile
 /turf/open/misc/asteroid/proc/refill_dug()
@@ -141,9 +142,11 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	dig_result = /obj/item/stack/ore/glass/basalt
 
 /turf/open/misc/asteroid/basalt/getDug()
+	. = ..()
+	if(!.)
+		return
 	set_light(0)
 	GLOB.dug_up_basalt |= src
-	return ..()
 
 /turf/open/misc/asteroid/basalt/Destroy()
 	GLOB.dug_up_basalt -= src
@@ -183,9 +186,34 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
 	turf_flags = NO_RUINS
 
-/// A turf that can't we can't build openspace chasms on or spawn ruins in.
-/turf/closed/mineral/volcanic/lava_land_surface/do_not_chasm
-	turf_flags = NO_RUINS
+/// Variant for ruins which replaces itself with the floor of a biome it generates in
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "basalt_biome"
+	smoothing_flags = NONE
+	/// Area type to whose generator we try to default to
+	var/default_area = /area/lavaland/surface/outdoors/unexplored/danger
+
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace/Initialize(mapload)
+	. = ..()
+	// Just spawn a normal lavaland rock if we fail to get a mapgen, such as being spawned over lava
+	var/supposed_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	var/area/cur_area = loc
+	var/datum/map_generator/cave_generator/map_generator = cur_area?.get_generator()
+	if (!map_generator)
+		cur_area = GLOB.areas_by_type[default_area]
+		map_generator = cur_area?.get_generator()
+
+	if (istype(map_generator))
+		var/biome = map_generator.get_biome_for_turf(src)
+		if (biome)
+			var/datum/biome/generating_biome = SSmapping.biomes[biome]
+			supposed_type = generating_biome.open_turf_type
+
+	var/cur_flags = turf_flags
+	var/turf/new_turf = ChangeTurf(supposed_type, flags = CHANGETURF_FORCEOP | CHANGETURF_INHERIT_AIR)
+	if(cur_flags & NO_RUINS)
+		new_turf.turf_flags |= NO_RUINS
 
 /turf/open/misc/asteroid/lowpressure
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
@@ -197,6 +225,77 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	baseturfs = /turf/open/misc/asteroid/airless
 	turf_type = /turf/open/misc/asteroid/airless
 	worm_chance = 0
+
+/turf/open/misc/asteroid/basalt/smooth
+	smoothing_flags = SMOOTH_BITMASK
+	layer = MID_TURF_LAYER
+	floor_variance = 0
+	transform = MAP_SWITCH(TRANSLATE_MATRIX(-8, -8), matrix())
+	/// DMI used by unsmoothed turfs for variance
+	var/variant_dmi = null
+	/// Amount of variants this turf has
+	var/variant_num = 8
+
+/turf/open/misc/asteroid/basalt/smooth/set_smoothed_icon_state(new_junction)
+	. = ..()
+	if (new_junction == 255 && variant_dmi)
+		icon = variant_dmi
+		icon_state = "[base_icon_state][rand(1, variant_num)]"
+	else
+		icon = initial(icon)
+
+/turf/open/misc/asteroid/basalt/smooth/update_overlays()
+	. = ..()
+	if (smoothing_junction != 255 && variant_dmi)
+		. = list(mutable_appearance(variant_dmi, "[base_icon_state][rand(1, variant_num)]")) + .
+
+/turf/open/misc/asteroid/basalt/smooth/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	. = ..()
+	if (!.)
+		return
+	if(!smoothing_flags)
+		return
+	underlay_appearance.transform = transform
+
+/turf/open/misc/asteroid/basalt/smooth/siderite
+	name = "siderite floor"
+	baseturfs = /turf/open/misc/asteroid/basalt/smooth/siderite
+	icon = 'icons/turf/floors/siderite.dmi'
+	damaged_dmi = 'icons/turf/floors/siderite_variants.dmi'
+	variant_dmi = 'icons/turf/floors/siderite_variants.dmi'
+	icon_state = "siderite-255"
+	base_icon_state = "siderite"
+	layer = HIGH_TURF_LAYER
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SIDERITE
+	canSmoothWith = SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_CLOSED_TURFS
+	dig_result = /obj/item/stack/ore/glass/siderite
+
+/turf/open/misc/asteroid/basalt/smooth/siderite/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
+
+/turf/open/misc/asteroid/basalt/smooth/siderite/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
+
+/turf/open/misc/asteroid/basalt/smooth/shale
+	name = "shale floor"
+	baseturfs = /turf/open/misc/asteroid/basalt/smooth/shale
+	icon = 'icons/turf/floors/shale.dmi'
+	damaged_dmi = 'icons/turf/floors/shale_variants.dmi'
+	variant_dmi = 'icons/turf/floors/shale_variants.dmi'
+	icon_state = "shale-255"
+	base_icon_state = "shale"
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_SHALE
+	canSmoothWith = SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_CLOSED_TURFS
+
+/turf/open/misc/asteroid/basalt/smooth/shale/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
+
+/turf/open/misc/asteroid/basalt/smooth/shale/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
 
 /turf/open/misc/asteroid/snow
 	gender = PLURAL
@@ -214,6 +313,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 	dig_result = /obj/item/stack/sheet/mineral/snow
+	leave_footprints = TRUE
 
 /turf/open/misc/asteroid/snow/burn_tile()
 	if(!burnt)
@@ -226,6 +326,67 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/snow/burnt_states()
 	return list("snow_dug")
+
+/turf/open/misc/asteroid/snow/add_footprint(mob/living/carbon/human/walker, movement_direction)
+	if(HAS_TRAIT(walker, TRAIT_NO_SNOWPRINTS))
+		return
+	// skip the special logic if the level doesn't naturally have snowstorms
+	if(!SSmapping.level_trait(z, ZTRAIT_SNOWSTORM))
+		return ..()
+
+	// if an active snow storm affecting this turf is currently in its main or wind down stage, skip footprint creation
+	for(var/datum/weather/snow_storm/active_weather in SSweather.processing)
+		if(active_weather.stage != MAIN_STAGE && active_weather.stage != WIND_DOWN_STAGE)
+			continue
+		if(!(loc in active_weather.impacted_areas))
+			continue
+		return
+
+	. = ..()
+	// when a snow storm enters its main stage, clear all of our footprints
+	for(var/snow_type in typesof(/datum/weather/snow_storm))
+		RegisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type), PROC_REF(snow_clear_footprints), override = TRUE)
+
+/turf/open/misc/asteroid/snow/proc/snow_clear_footprints(datum/source, datum/weather/storm)
+	SIGNAL_HANDLER
+
+	if(!(loc in storm.impacted_areas))
+		return
+
+	clear_footprints()
+	for(var/snow_type in typesof(/datum/weather/snow_storm))
+		UnregisterSignal(SSdcs, COMSIG_WEATHER_START(snow_type))
+
+/turf/open/misc/asteroid/snow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/sheet/mineral/snow))
+		return ..()
+
+	if(dug)
+		if(tool.use(DIG_SHEET_AMOUNT))
+			user.visible_message(
+				span_notice("[user] packs [src] back in."),
+				span_notice("You pack [src] back in."),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
+			refill_dug()
+			return ITEM_INTERACT_SUCCESS
+
+		to_chat(user, "You don't have enough [tool.name] to fill the hole.")
+		return ITEM_INTERACT_BLOCKING
+
+	if(footprint_entrance_dirs || footprint_exit_dirs)
+		if(tool.use(1))
+			user.visible_message(
+				span_notice("[user] fills in the footprints in [src]."),
+				span_notice("You fill in the footprints in [src]."),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
+			clear_footprints()
+			return ITEM_INTERACT_SUCCESS
+
+		return NONE
+
+	return NONE
 
 /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/openspace/icemoon
@@ -259,6 +420,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	damaged_dmi = null
+	leave_footprints = FALSE
 
 /turf/open/misc/asteroid/snow/ice/break_tile()
 	return FALSE
@@ -327,3 +489,4 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9"
 	planetary_atmos = TRUE
 
+#undef DIG_SHEET_AMOUNT

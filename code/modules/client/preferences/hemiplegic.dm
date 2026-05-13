@@ -12,7 +12,7 @@
 	if (!.)
 		return FALSE
 
-	return "Hemiplegic" in preferences.all_quirks
+	return /datum/quirk/hemiplegic::name in preferences.all_quirks
 
 /datum/preference/choiced/hemiplegic/apply_to_human(mob/living/carbon/human/target, value)
 	return

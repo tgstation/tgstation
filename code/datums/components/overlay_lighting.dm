@@ -229,6 +229,7 @@
 	var/mutable_appearance/mask_clone = new (visible_mask)
 	var/mutable_appearance/cone_clone = directional ? new /mutable_appearance(cone) : null
 	SEND_SIGNAL(parent, COMSIG_ATOM_OVERLAY_LIGHT_APPLIED, mask_clone, cone_clone, current_holder)
+	SEND_SIGNAL(current_holder, COMSIG_ATOM_HOLDER_OVERLAY_LIGHT_APPLIED, mask_clone, cone_clone, parent)
 
 /// Removes our overlay from our holder, assuming everything's setup proper
 /// MUST be called before modifying cone or visible_mask, or you will cause stuck lighting
@@ -242,6 +243,7 @@
 		current_holder.underlays -= cone
 	currently_displaying = FALSE
 	SEND_SIGNAL(parent, COMSIG_ATOM_OVERLAY_LIGHT_REMOVED, current_holder)
+	SEND_SIGNAL(current_holder, COMSIG_ATOM_HOLDER_OVERLAY_LIGHT_REMOVED, parent)
 
 ///Called to change the value of parent_attached_to.
 /datum/component/overlay_lighting/proc/set_parent_attached_to(atom/movable/new_parent_attached_to)
@@ -394,7 +396,7 @@
 		turn_off()
 	range = clamp(CEILING(new_range, 0.5), 1, 6)
 	var/pixel_bounds = ((range - 1) * 64) + 32
-	lumcount_range = CEILING(range, 1)
+	lumcount_range = ceil(range)
 	hide_from_holder()
 
 	visible_mask.icon = light_overlays["[pixel_bounds]"]

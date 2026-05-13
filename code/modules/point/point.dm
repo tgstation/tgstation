@@ -99,20 +99,21 @@
  *
  * overridden here and in /mob/dead/observer for different point span classes and sanity checks
  */
-DEFINE_VERB(/mob, pointed, "Point To", "", FALSE, "Object", atom/pointing_at as mob|obj|turf in view())
+DEFINE_VERB(/mob, pointed, "Point To", "", FALSE, "", atom/pointing_at as mob|obj|turf in view())
 	do_pointed(pointing_at)
 
 /mob/proc/do_pointed(atom/pointing_at)
-	if(istype(pointing_at, /obj/effect/temp_visual/point))
+	if(isnull(pointing_at) || istype(pointing_at, /obj/effect/temp_visual/point) || isarea(pointing_at))
 		return FALSE
 
 	if(client) //Clientless mobs can just go ahead and point
+		var/atom/atom_to_view_verify = pointing_at
 		if(ismovable(pointing_at))
 			var/atom/movable/pointed_movable = pointing_at
 			if(HAS_TRAIT(pointed_movable, TRAIT_SKIP_BASIC_REACH_CHECK) || pointing_at.loc.IsContainedAtomAccessible(pointing_at, src))
-				pointing_at = pointed_movable.loc
+				atom_to_view_verify = pointed_movable.loc
 
-		if(!(pointing_at in view(client.view, src)))
+		if(!(atom_to_view_verify in view(client.view, src)))
 			return FALSE
 	if(iscarbon(src)) // special interactions for carbons
 		var/mob/living/carbon/our_carbon = src

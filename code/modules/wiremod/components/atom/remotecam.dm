@@ -65,7 +65,7 @@
 	start = add_input_port("Start", PORT_TYPE_SIGNAL)
 	stop = add_input_port("Stop", PORT_TYPE_SIGNAL)
 	if(camera_range_settable)
-		camera_range = add_input_port("Camera Range", PORT_TYPE_NUMBER, default = 0)
+		camera_range = add_input_port("Far Range", PORT_TYPE_BOOLEAN, default = FALSE)
 	network = add_input_port("Network", PORT_TYPE_STRING, default = "ss13")
 
 	if(camera_range_settable)

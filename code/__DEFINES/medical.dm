@@ -31,3 +31,9 @@
 
 ///Cooldown for being on the recently treated trait for the purposes for bounty submission
 #define RECENTLY_HEALED_COOLDOWN 5 MINUTES
+
+// Return values for the limb_applicable component's callback can_apply
+/// Block the standard application of this item
+#define LIMB_APPLICABLE_BLOCK_APPLICATION (1<<0)
+/// Block the rest of the item_interaction chain, if application is not being done.
+#define LIMB_APPLICABLE_BLOCK_ITEM_INTERACTION (1<<1)

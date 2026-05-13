@@ -115,7 +115,10 @@
 /datum/reagents/ui_data(mob/user)
 	var/data = list()
 	data["selectedBitflags"] = ui_tags_selected
-	data["currentReagents"] = previous_reagent_list //This keeps the string of reagents that's updated when handle_reactions() is called
+
+	data["currentReagents"] = list()
+	for(var/datum/reagent/target as anything in reagent_list)
+		data["currentReagents"] += target.type
 	data["beakerSync"] = ui_beaker_sync
 	data["linkedBeaker"] = my_atom.name //To solidify the fact that the UI is linked to a beaker - not a machine.
 

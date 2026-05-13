@@ -45,11 +45,8 @@ Slimecrossing Items
 		ret[part.body_zone] = saved_part
 	return ret
 
-/obj/item/camera/rewind/photo_taken(atom/target, mob/user)
+/obj/item/camera/rewind/on_flash(atom/target, mob/user)
 	. = ..()
-	if(!.)
-		return
-
 	if(user == target)
 		to_chat(user, span_notice("You take a selfie!"))
 	else
@@ -66,10 +63,8 @@ Slimecrossing Items
 	pictures_left = 1
 	pictures_max = 1
 
-/obj/item/camera/timefreeze/photo_taken(atom/target, mob/user)
+/obj/item/camera/timefreeze/on_flash(atom/target, mob/user)
 	. = ..()
-	if(!.)
-		return
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
 
 //Hypercharged slime cell - Charged Yellow

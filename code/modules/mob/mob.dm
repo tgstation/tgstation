@@ -543,7 +543,7 @@ DEFINE_PROC_VERB(/mob, Cell, "Cell", "", TRUE, "Admin")
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
  * for why this isn't atom/verb/examine()
  */
-DEFINE_VERB(/mob, examinate, "Examine", "", FALSE, "IC", atom/examinify as mob|obj|turf in view())
+DEFINE_VERB(/mob, examinate, "Examine", "", FALSE, "", atom/examinify as mob|obj|turf in view())
 	if(VERB_JUST_FIRED())
 		run_examinate()
 	else
@@ -588,7 +588,10 @@ DEFINE_VERB(/mob, examinate, "Examine", "", FALSE, "IC", atom/examinify as mob|o
 		var/list/result = examinify.examine(src)
 		var/atom_title = examinify.examine_title(src, thats = TRUE)
 		examining(examinify, result)
-		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
+		var/alist/overrides = alist()
+		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result, overrides)
+		if (length(overrides))
+			result = overrides[max(overrides)]
 		if(removes_double_click)
 			result += span_notice("<i>You can <a href=byond://?src=[REF(src)];run_examinate=[REF(examinify)]>examine</a> [examinify] closer...</i>")
 		result_combined = (atom_title ? fieldset_block("[atom_title].", jointext(result, "<br>"), "boxed_message") : boxed_message(jointext(result, "<br>")))
@@ -764,13 +767,13 @@ DEFINE_VERB(/mob, examinate, "Examine", "", FALSE, "IC", atom/examinify as mob|o
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()
-	hud_used?.pull_icon?.update_appearance()
+	hud_used?.screen_objects[HUD_MOB_PULL]?.update_appearance()
 
 ///Update the resting hud icon
 /mob/proc/update_rest_hud_icon()
 	if(!hud_used)
 		return FALSE
-	hud_used.rest_icon?.update_appearance()
+	hud_used.screen_objects[HUD_MOB_REST]?.update_appearance()
 	return TRUE
 
 /**
@@ -778,7 +781,7 @@ DEFINE_VERB(/mob, examinate, "Examine", "", FALSE, "IC", atom/examinify as mob|o
  *
  * Calls attack self on the item and updates the inventory hud for hands
  */
-DEFINE_VERB(/mob, mode, "Activate Held Object", "", FALSE, "Object")
+DEFINE_VERB(/mob, mode, "Activate Held Object", "", FALSE, "")
 	set src = usr
 	if(VERB_JUST_FIRED())
 		execute_mode()
@@ -930,10 +933,10 @@ DEFINE_VERB(/mob, DisDblClick, ".dblclick", "", TRUE, null, argu = null as anyth
 	active_hand_index = held_index
 	if(hud_used)
 		var/atom/movable/screen/inventory/hand/held_location
-		held_location = hud_used.hand_slots["[previous_index]"]
+		held_location = hud_used.hand_slots[previous_index]
 		if(!isnull(held_location))
 			held_location.update_appearance()
-		held_location = hud_used.hand_slots["[held_index]"]
+		held_location = hud_used.hand_slots[held_index]
 		if(!isnull(held_location))
 			held_location.update_appearance()
 	return TRUE
@@ -1343,7 +1346,7 @@ DEFINE_VERB(/mob, DisDblClick, ".dblclick", "", TRUE, null, argu = null as anyth
  */
 /mob/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION("", "--- /mob ---")
 	VV_DROPDOWN_OPTION(VV_HK_GIB, "Gib")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_AI, "Give AI Controller")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_AI_SPEECH, "Give Random AI Speech")
@@ -1371,13 +1374,9 @@ DEFINE_VERB(/mob, DisDblClick, ".dblclick", "", TRUE, null, argu = null as anyth
 		return
 
 	if(href_list[VV_HK_REGEN_ICONS])
-		if(!check_rights(NONE))
-			return
 		regenerate_icons()
 
 	if(href_list[VV_HK_REGEN_ICONS_FULL])
-		if(!check_rights(NONE))
-			return
 		cut_overlays()
 		regenerate_icons()
 
@@ -1428,8 +1427,6 @@ DEFINE_VERB(/mob, DisDblClick, ".dblclick", "", TRUE, null, argu = null as anyth
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_give_direct_control, src)
 
 	if(href_list[VV_HK_OFFER_GHOSTS])
-		if(!check_rights(NONE))
-			return
 		offer_control(src)
 
 	if(href_list[VV_HK_VIEW_PLANES])
@@ -1438,8 +1435,6 @@ DEFINE_VERB(/mob, DisDblClick, ".dblclick", "", TRUE, null, argu = null as anyth
 		usr.client.edit_plane_masters(src)
 
 	if(href_list[VV_HK_GIVE_ACCESS])
-		if(!check_rights(NONE))
-			return
 		AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
 		to_chat(usr, span_notice("Access granted."))
 /**
@@ -1493,7 +1488,9 @@ DEFINE_VERB(/mob, open_language_menu_verb, "Open Language Menu", "", FALSE, "IC"
 /// Updates nutrition related effects
 /mob/living/proc/update_nutrition()
 	mob_mood?.update_nutrition_moodlets()
-	hud_used?.hunger?.update_hunger_bar()
+	var/atom/movable/screen/hunger/hunger_bar = hud_used?.screen_objects[HUD_MOB_HUNGER]
+	if (hunger_bar)
+		hunger_bar.update_hunger_bar()
 	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_NUTRITION)
 
 /// Apply a proper movespeed modifier based on items we have equipped

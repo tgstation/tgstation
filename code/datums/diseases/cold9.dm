@@ -1,15 +1,22 @@
 /datum/disease/cold9
 	name = "The Cold"
 	max_stages = 3
-	spread_text = "On contact"
+	spread_text = "Skin contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
-	cure_text = "Common Cold Anti-bodies & Spaceacillin"
+	cure_text = /datum/reagent/medicine/spaceacillin::name + " or common Cold antibodies"
 	cures = list(/datum/reagent/medicine/spaceacillin)
 	agent = "ICE9-rhinovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	desc = "If left untreated the subject will slow, as if partly frozen."
+	desc = "An adaption of the common cold, slightly more dangerous in nature. \
+		If left untreated the subject will slow, as if partly frozen."
 	severity = DISEASE_SEVERITY_HARMFUL
 	required_organ = ORGAN_SLOT_LUNGS
+
+/datum/disease/cold9/cure(add_resistance)
+	// buy one, get one free
+	if(add_resistance && affected_mob)
+		LAZYOR(affected_mob.disease_resistances, "[/datum/disease/cold]")
+	return ..()
 
 /datum/disease/cold9/stage_act(seconds_per_tick)
 	. = ..()

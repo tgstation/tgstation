@@ -323,7 +323,7 @@
 /obj/machinery/iv_drip/proc/get_reagents()
 	return use_internal_storage ? reagents : reagent_container?.reagents
 
-DEFINE_WORLD_OBJECT_VERB(/obj/machinery/iv_drip, eject_beaker, view(1), "Remove IV Container", "", FALSE, "Object")
+DEFINE_WORLD_OBJECT_VERB(/obj/machinery/iv_drip, eject_beaker, view(1), "Remove IV Container", "", FALSE, "")
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
@@ -339,7 +339,7 @@ DEFINE_WORLD_OBJECT_VERB(/obj/machinery/iv_drip, eject_beaker, view(1), "Remove 
 		reagent_container = null
 		update_appearance(UPDATE_ICON)
 
-DEFINE_WORLD_OBJECT_VERB(/obj/machinery/iv_drip, toggle_mode, view(1), "Toggle Mode", "", FALSE, "Object")
+DEFINE_WORLD_OBJECT_VERB(/obj/machinery/iv_drip, toggle_mode, view(1), "Toggle Mode", "", FALSE, "")
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return

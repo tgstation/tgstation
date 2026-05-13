@@ -102,14 +102,14 @@
 	// how much life we have left in these bandages
 	switch(current_gauze.absorption_capacity)
 		if(0 to 1.25)
-			msg += "nearly ruined"
+			msg += "nearly ruined "
 		if(1.25 to 2.75)
-			msg += "badly worn"
+			msg += "badly worn "
 		if(2.75 to 4)
-			msg += "slightly bloodied"
+			msg += "slightly bloodied "
 		if(4 to INFINITY)
-			msg += "clean"
-	msg += " [current_gauze.name]!"
+			msg += "clean "
+	msg += "[current_gauze.name]!"
 
 	return "<B>[msg.Join()]</B>"
 
@@ -158,7 +158,7 @@
 			adjust_blood_flow(0.25) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
-	if(current_gauze)
+	if(current_gauze?.absorption_rate)
 		var/gauze_power = current_gauze.absorption_rate
 		limb.seep_gauze(gauze_power * seconds_per_tick)
 		adjust_blood_flow(-gauze_power * seconds_per_tick)
@@ -181,7 +181,7 @@
 /datum/wound/slash/flesh/try_handling(mob/living/user)
 	if(user.pulling != victim || !HAS_TRAIT(user, TRAIT_WOUND_LICKER) || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		return FALSE
-	if(!isnull(user.hud_used?.zone_select) && user.zone_selected != limb.body_zone)
+	if(!isnull(user.hud_used?.screen_objects[HUD_MOB_ZONE_SELECTOR]) && user.zone_selected != limb.body_zone)
 		return FALSE
 
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))

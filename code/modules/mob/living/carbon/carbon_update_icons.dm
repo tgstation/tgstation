@@ -379,10 +379,13 @@
 /mob/living/carbon/update_worn_legcuffs()
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
-	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
-		apply_overlay(LEGCUFF_LAYER)
-		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
+	if(!legcuffed)
+		return
+	if(astype(legcuffed, /obj/item/restraints/legcuffs)?.legcuff_state)
+		var/obj/item/restraints/legcuffs/cuffs = legcuffed
+		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', cuffs.legcuff_state, -LEGCUFF_LAYER)
+	apply_overlay(LEGCUFF_LAYER)
+	throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
 /mob/living/carbon/update_worn_head()
 	remove_overlay(HEAD_LAYER)
@@ -417,11 +420,11 @@
 
 //update whether handcuffs appears on our hud.
 /mob/living/carbon/proc/update_hud_handcuffed()
-	if(hud_used)
-		for(var/hand in hud_used.hand_slots)
-			var/atom/movable/screen/inventory/hand/H = hud_used.hand_slots[hand]
-			if(H)
-				H.update_appearance()
+	if(!hud_used)
+		return
+
+	for(var/atom/movable/screen/inventory/hand/hand in hud_used.hand_slots)
+		hand.update_appearance()
 
 //update whether our head item appears on our hud.
 /mob/living/carbon/proc/update_hud_head(obj/item/I)
@@ -464,10 +467,13 @@
 	update_damage_overlays()
 	update_wound_overlays()
 	var/limb_count_update = 0
+	var/head_update = FALSE
 	var/list/new_limbs = list()
 	for(var/body_zone, limb_untyped in get_bodyparts_by_zones())
 		var/obj/item/bodypart/limb = limb_untyped
 		if(isnull(limb) || IS_STUMP(limb))
+			if(body_zone == BODY_ZONE_HEAD)
+				head_update = TRUE
 			if(icon_render_keys[body_zone])
 				icon_render_keys -= body_zone
 				limb_count_update += 1
@@ -483,6 +489,8 @@
 			new_limbs += limb_icon_cache[new_key]
 
 		else
+			if(body_zone == BODY_ZONE_HEAD)
+				head_update = TRUE
 			limb_icon_cache[new_key] ||= limb.get_limb_icon(dropped = FALSE)
 			new_limbs += limb_icon_cache[new_key]
 			icon_render_keys[limb.body_zone] = new_key
@@ -498,6 +506,10 @@
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 
 	apply_overlay(BODYPARTS_LAYER)
+	// for legacy support, head changes triggers an eye/hair update
+	if(head_update)
+		update_eyes()
+		update_hair()
 
 /mob/living/carbon/proc/update_face_offset()
 	return
@@ -536,12 +548,18 @@
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
 			continue
-		. += overlay.generate_icon_cache()
+		. += overlay.generate_icon_cache(src)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
 	SEND_SIGNAL(src, COMSIG_BODYPART_GENERATE_ICON_KEY, .)
 	return .
+
+/obj/item/bodypart/head/generate_icon_key()
+	. = ..()
+	if(lip_style)
+		. += lip_color
+		. += lip_style
 
 ///Generates a cache key specifically for husks
 /obj/item/bodypart/proc/generate_husk_key()
@@ -559,48 +577,10 @@
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, TRUE))
 			continue
-		. += overlay.generate_icon_cache()
+		. += overlay.generate_icon_cache(src)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
-	return .
-
-/obj/item/bodypart/head/generate_icon_key()
-	. = ..()
-	if(lip_style)
-		. += "-[lip_style]"
-		. += "-[lip_color]"
-
-	if(facial_hair_hidden)
-		. += "-FACIAL_HAIR_HIDDEN"
-	else
-		. += "-[facial_hairstyle]"
-		. += "-[override_hair_color || fixed_hair_color || facial_hair_color]"
-		. += "-[facial_hair_alpha]"
-		var/facial_hair_gradient_style = get_hair_gradient_style(GRADIENT_FACIAL_HAIR_KEY)
-		if(facial_hair_gradient_style)
-			. += "-[facial_hair_gradient_style]"
-			. += "-[get_hair_gradient_color(GRADIENT_FACIAL_HAIR_KEY)]"
-
-	if(show_eyeless)
-		. += "-SHOW_EYELESS"
-	if(show_debrained)
-		. += "-SHOW_DEBRAINED"
-		return .
-
-	if(hair_hidden)
-		. += "-HAIR_HIDDEN"
-	else
-		. += "-[hairstyle]"
-		. += "-[override_hair_color || fixed_hair_color || hair_color]"
-		. += "-[hair_alpha]"
-		var/hair_gradient_style = get_hair_gradient_style(GRADIENT_HAIR_KEY)
-		if(hair_gradient_style)
-			. += "-[hair_gradient_style]"
-			. += "-[get_hair_gradient_color(GRADIENT_HAIR_KEY)]"
-		if(LAZYLEN(hair_masks))
-			. += "-[jointext(hair_masks, "-")]"
-
 	return .
 
 GLOBAL_LIST_EMPTY(masked_leg_icons_cache)

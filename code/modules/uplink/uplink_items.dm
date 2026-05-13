@@ -78,7 +78,7 @@
 	/// Whether this can be discounted or not
 	var/cant_discount = FALSE
 	/// If discounted, is true. Used to send a signal to update reimbursement.
-	var/discounted = FALSE
+	VAR_FINAL/discounted = FALSE
 	/// If this value is changed on two items they will share stock, defaults to not sharing stock with any other item
 	var/stock_key = UPLINK_SHARED_STOCK_UNIQUE
 	/// How many items of this stock can be purchased.

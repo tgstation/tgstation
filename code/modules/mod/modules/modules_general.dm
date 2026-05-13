@@ -104,8 +104,6 @@
 	var/thrust_callback
 	/// How much force this module can apply per tick
 	var/drift_force = 1.5 NEWTONS
-	/// How much force this module's stabilizier can put out
-	var/stabilizer_force = 1.2 NEWTONS
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
@@ -129,7 +127,6 @@
 		/datum/component/jetpack, \
 		src.stabilize, \
 		drift_force, \
-		stabilizer_force, \
 		COMSIG_MODULE_TRIGGERED, \
 		COMSIG_MODULE_DEACTIVATED, \
 		MOD_ABORT_USE, \
@@ -177,7 +174,6 @@
 	overlay_state_inactive = "module_jetpackadv"
 	overlay_state_active = "module_jetpackadv_on"
 	drift_force = 2 NEWTONS
-	stabilizer_force = 2 NEWTONS
 
 /// Cooldown to use if we didn't actually launch a jump jet
 #define FAILED_ACTIVATION_COOLDOWN 3 SECONDS
@@ -248,7 +244,7 @@
 /obj/item/mod/module/status_readout/add_ui_data()
 	. = ..()
 	.["display_time"] = display_time
-	.["shift_time"] = station_time_timestamp()
+	.["shift_time"] = round_timestamp()
 	.["shift_id"] = GLOB.round_id
 	.["health"] = mod.wearer?.health || 0
 	.["health_max"] = mod.wearer?.getMaxHealth() || 0

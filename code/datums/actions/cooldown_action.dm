@@ -61,7 +61,7 @@
 	if(original)
 		create_sequence_actions()
 
-/datum/action/cooldown/create_button()
+/datum/action/cooldown/create_button(mob/viewer)
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext = ""
 	button.maptext_x = 4

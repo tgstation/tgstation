@@ -2228,7 +2228,7 @@
 /obj/structure/sign/directions/medical/directional/north{
 	pixel_y = 29
 	},
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /turf/open/floor/wood/large,
 /area/virtual_domain)
 "BW" = (

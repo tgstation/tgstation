@@ -453,7 +453,7 @@
 
 	return all_accessories
 
-DEFINE_VERB(/obj/item/clothing/under, toggle, "Adjust Suit Sensors", "", FALSE, "Object")
+DEFINE_VERB(/obj/item/clothing/under, toggle, "Adjust Suit Sensors", "", FALSE, "")
 	var/mob/user_mob = usr
 	if(!can_toggle_sensors(user_mob))
 		return
@@ -521,7 +521,7 @@ DEFINE_VERB(/obj/item/clothing/under, toggle, "Adjust Suit Sensors", "", FALSE, 
 		return
 	pop_accessory(user)
 
-DEFINE_VERB(/obj/item/clothing/under, jumpsuit_adjust, "Adjust Jumpsuit Style", "", FALSE, null)
+DEFINE_VERB(/obj/item/clothing/under, jumpsuit_adjust, "Adjust Jumpsuit Style", "", FALSE, "")
 	if(!can_adjust)
 		balloon_alert(usr, "can't be adjusted!")
 		return

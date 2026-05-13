@@ -78,7 +78,8 @@
 	// This can mean nothing happened, this can mean the target took damage, etc.
 
 	if(user.client && isitem(target))
-		if(isnull(user.get_inactive_held_item()))
+		var/mob/living/living_user = astype(user)
+		if(isnull(user.get_inactive_held_item() && living_user?.num_hands > 1))
 			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, modifiers)
 		else
 			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, modifiers)

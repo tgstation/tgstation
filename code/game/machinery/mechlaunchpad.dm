@@ -3,6 +3,7 @@
 	desc = "A slab of heavy plating designed to withstand orbital-drop impacts. Through some sort of advanced bluespace tech, this one seems able to send and receive Mechs. Requires linking to a console to function."
 	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "mechpad"
+	base_icon_state = "mechpad"
 	circuit = /obj/item/circuitboard/machine/mechpad
 	///ID of the console, used for linking up
 	var/id = "roboticsmining"
@@ -20,20 +21,19 @@
 	. += span_notice("Use a multitool with the panel open to save id to buffer.")
 	. += span_notice("Use wirecutters with the panel open to [mech_only ? "cut" : "mend"] the lifeform restriction wire.")
 
-/obj/machinery/mechpad/screwdriver_act(mob/user, obj/item/tool)
+/obj/machinery/mechpad/update_icon_state()
 	. = ..()
-	if(!.)
-		return default_deconstruction_screwdriver(user, "mechpad-open", "mechpad", tool)
+	icon_state = panel_open ? "[base_icon_state]-open" : base_icon_state
+
+/obj/machinery/mechpad/screwdriver_act(mob/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/mechpad/crowbar_act(mob/user, obj/item/tool)
-	..()
-	if(default_deconstruction_crowbar(tool))
-		return TRUE
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/mechpad/multitool_act(mob/living/user, obj/item/multitool/multitool)
-	. = NONE
 	if(!panel_open)
-		return
+		return NONE
 
 	multitool.set_buffer(src)
 	balloon_alert(user, "saved to multitool buffer")
@@ -41,10 +41,10 @@
 
 /obj/machinery/mechpad/wirecutter_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
-		return
+		return NONE
 	mech_only = !mech_only
 	to_chat(user, span_notice("You [mech_only ? "mend" : "cut"] the lifeform restriction wire."))
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Spawns a special supply pod whitelisted to only accept mechs and have its drop off location be another mechpad

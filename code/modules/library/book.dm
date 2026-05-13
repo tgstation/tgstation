@@ -297,8 +297,12 @@
 /obj/item/tgui_book/manual
 	abstract_type = /obj/item/tgui_book/manual
 
+/// Asserts a field is present in a list, stack traces if not
+#define ASSERT_DATA(data_list, data_field) \
+	if(!data_list[data_field]) { stack_trace("[type] - [data_list["id"]] lacks [data_field] information!"); }
+
 /obj/item/tgui_book/manual/dsm
-	name = "\improper SDSM-35"
+	name = "\improper SDSM-35" // 35 was picked based on the current edition plus the average years between edition divided by 500
 	desc = "The Space Diagnostic and Statistical Manual of Mental Disorders, \
 		a comprehensive book on all known mental disorders. \
 		On its 35th edition - though it's due for an update..."
@@ -360,12 +364,95 @@
 
 		// validate
 		for(var/list/trauma_data as anything in trauma_info)
-			if(isnull(trauma_data["desc"]))
+			// these are asserted to be present, no matter what
+			ASSERT_DATA(trauma_data, "full_name")
+			ASSERT_DATA(trauma_data, "scan_name")
+			ASSERT_DATA(trauma_data, "id")
+			// these start as null, so there is a chance they are missing
+			if(!trauma_data["desc"])
 				trauma_data["desc"] = "No description recorded - this is an error. Report this lack of research."
 				stack_trace("[type] - [trauma_data["id"]] lacks a description!")
-			if(isnull(trauma_data["symptoms"]))
+			if(!trauma_data["symptoms"])
 				trauma_data["symptoms"] = "No symptoms recorded - this is an error. Report this lack of research."
 				stack_trace("[type] - [trauma_data["id"]] lacks symptom information!")
 
 	data["traumas"] = trauma_info
 	return data
+
+/obj/item/tgui_book/manual/idc
+	name = "\improper IDC-27" // 27 was picked based on the current edition plus the average years between edition divided by 500
+	desc = "The Interplanetary Classification of Diseases, \
+		a comprehensive book on all known diseases and ailments. \
+		On its 27th edition - though it's due for an update..."
+	icon_state = "book7"
+	ui_name = "IDCBook"
+
+/obj/item/tgui_book/manual/idc/ui_static_data(mob/user)
+	var/list/data = list()
+
+	var/static/list/disease_info
+	if(!disease_info)
+		disease_info = list()
+
+		for(var/datum/disease/disease_type as anything in valid_subtypesof(/datum/disease))
+			if(disease_type::visibility_flags & HIDDEN_BOOK)
+				continue
+
+			var/list/disease_data = list()
+			disease_data["form"] = disease_type::form
+			disease_data["agent"] = disease_type::agent
+			disease_data["name"] = disease_type::name
+			disease_data["desc"] = disease_type::desc
+			disease_data["illness"] = "N/A"
+			disease_data["spread_by"] = disease_type::spread_text || get_disease_spread_text(disease_type::spread_flags)
+			disease_data["cured_by"] = disease_type::cure_text
+			disease_data["id"] = disease_type
+			disease_info += list(disease_data)
+
+		for(var/datum/symptom/symptom_type as anything in valid_subtypesof(/datum/symptom))
+			var/list/symptom_data = list()
+			symptom_data["form"] = "Symptom"
+			symptom_data["agent"] = "N/A"
+			symptom_data["name"] = symptom_type::name
+			symptom_data["desc"] = symptom_type::desc
+			symptom_data["illness"] = symptom_type::illness
+			symptom_data["spread_by"] = "N/A"
+			symptom_data["cured_by"] = symptom_type::symptom_cure::name
+			symptom_data["id"] = symptom_type
+			disease_info += list(symptom_data)
+
+		var/list/advanced_virus_info = list(
+			"form" = "Virus",
+			"agent" = "Microbes",
+			"name" = "Advanced Disease",
+			"desc" = "A catch-all category for diseases that are too complex to document in their entirety. \
+				The Virology department is known for bio-engineering these diseases, as such their danger can vary wildly. \
+				These diseases are often a combination of various symptoms, each cataloged in this book individually.",
+			"illness" = "N/A",
+			"spread_by" = "Varies by symptom combination",
+			"cured_by" = "Varies by symptom combination",
+			"id" = /datum/disease/advance,
+		)
+		disease_info += list(advanced_virus_info)
+
+		// validate
+		for(var/list/disease_data as anything in disease_info)
+			// these are asserted to be present, no matter what
+			ASSERT_DATA(disease_data, "form")
+			ASSERT_DATA(disease_data, "agent")
+			ASSERT_DATA(disease_data, "name")
+			ASSERT_DATA(disease_data, "spread_by")
+			ASSERT_DATA(disease_data, "illness")
+			ASSERT_DATA(disease_data, "id")
+			// these start as null, so there is a chance they are missing
+			if(!disease_data["desc"])
+				disease_data["desc"] = "No description recorded - this is an error. Report this lack of research."
+				stack_trace("[type] - [disease_data["id"]] lacks a description!")
+			if(!disease_data["cured_by"] && !ispath(disease_data["id"], /datum/symptom))
+				disease_data["cured_by"] = "Unknown"
+				stack_trace("[type] - [disease_data["id"]] lacks cure information!")
+
+	data["diseases"] = disease_info
+	return data
+
+#undef ASSERT_DATA

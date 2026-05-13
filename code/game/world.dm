@@ -130,12 +130,7 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
-	log_world("World loaded at [time_stamp()]!")
-
-	// From a really fucking old commit (91d7150)
-	// I wanted to move it but I think this needs to be after /world/New is called but before any sleeps?
-	// - Dominion/Cyberboss
-	GLOB.timezoneOffset = world.timezone * 36000
+	log_world("World loaded at [server_timestamp()]!")
 
 	// First possible sleep()
 	InitTgs()
@@ -173,8 +168,6 @@ GLOBAL_VAR(restart_counter)
 
 	// Initialize RETA system - code/modules/reta/reta_system.dm
 	reta_init_config()
-
-	LoadVerbs(/datum/verbs/menu)
 
 	if(fexists(RESTART_COUNTER_PATH))
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
@@ -248,7 +241,7 @@ GLOBAL_VAR(restart_counter)
 			GLOB.picture_logging_prefix += "R_[GLOB.round_id]_"
 			GLOB.picture_log_directory += "[GLOB.round_id]"
 		else
-			var/timestamp = replacetext(time_stamp(), ":", ".")
+			var/timestamp = replacetext(server_timestamp(), ":", ".")
 			GLOB.log_directory += "[timestamp]"
 			GLOB.picture_log_directory += "[timestamp]"
 			GLOB.picture_logging_prefix += "T_[timestamp]_"
@@ -623,7 +616,7 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 	return
 	#else
 	if(check_hard_reboot())
-		log_world("World hard rebooted at [time_stamp()]")
+		log_world("World hard rebooted at [server_timestamp()]")
 		shutdown_logging() // See comment below.
 		world.cleanup_external_cpu()
 		QDEL_NULL(Tracy)
@@ -631,7 +624,7 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 		TgsEndProcess()
 		return ..()
 
-	log_world("World rebooted at [time_stamp()]")
+	log_world("World rebooted at [server_timestamp()]")
 
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	world.cleanup_external_cpu()
@@ -689,7 +682,7 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 		else if(SSticker.current_state == GAME_STATE_SETTING_UP)
 			new_status += "<br>Starting: <b>Now</b>"
 		else if(SSticker.IsRoundInProgress())
-			new_status += "<br>Time: <b>[time2text(STATION_TIME_PASSED(), "hh:mm", NO_TIMEZONE)]</b>"
+			new_status += "<br>Time: <b>[round_timestamp("hh:mm")]</b>"
 			if(SSshuttle?.emergency && SSshuttle?.emergency?.mode != (SHUTTLE_IDLE || SHUTTLE_ENDGAME))
 				new_status += " | Shuttle: <b>[SSshuttle.emergency.getModeStr()] [SSshuttle.emergency.getTimerStr()]</b>"
 		else if(SSticker.current_state == GAME_STATE_FINISHED)

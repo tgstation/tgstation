@@ -20,13 +20,13 @@
 	base_icon_state = "alienpod1"
 	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_ORGANIC
-	// Not actually broken, just should never break...yeah.
-	broken = TRUE
-	damaged_dmi = null
 
 /turf/open/floor/plating/abductor/Initialize(mapload)
 	. = ..()
 	icon_state = "alienpod[rand(1,9)]"
+
+/turf/open/floor/plating/abductor/break_tile()
+	return FALSE
 
 /turf/open/floor/plating/abductor2
 	name = "alien plating"

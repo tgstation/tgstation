@@ -129,7 +129,7 @@
 	var/datum/port/output/are_headlights_on
 
 /obj/item/circuit_component/vim/populate_ports()
-	are_headlights_on = add_output_port("Are Headlights On", PORT_TYPE_NUMBER)
+	are_headlights_on = add_output_port("Are Headlights On", PORT_TYPE_BOOLEAN)
 	chime = add_output_port("On Chime Used", PORT_TYPE_SIGNAL)
 	buzz = add_output_port("On Buzz Used", PORT_TYPE_SIGNAL)
 

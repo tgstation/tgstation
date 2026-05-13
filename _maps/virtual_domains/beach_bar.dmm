@@ -1006,7 +1006,7 @@
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "VA" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "VE" = (

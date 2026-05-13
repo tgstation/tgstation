@@ -42,7 +42,7 @@
 	if(!SStts.tts_enabled)
 		return
 
-	voice = pick(SStts.available_speakers)
+	voice = SStts.random_tts_voice()
 	if(SStts.pitch_enabled)
 		if(findtext(voice, "Woman"))
 			pitch = 12 // up-pitch by one octave

@@ -223,7 +223,7 @@
 	color = "#60A584"
 
 /obj/item/food/bubblegum/happiness
-	name = "HP+ gum"
+	name = "\improper HP+ gum"
 	desc = "A rubbery strip of gum. It smells funny."
 	food_reagents = list(/datum/reagent/drug/happiness = 15)
 	tastes = list("paint thinner" = 1)

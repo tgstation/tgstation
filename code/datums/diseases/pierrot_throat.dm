@@ -8,7 +8,8 @@
 	agent = "H0NI<42 Virus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spreading_modifier = 0.75
-	desc = "If left untreated the subject will probably drive others to insanity."
+	desc = "A strange virus rumored to originate from unwashed clown costumes. \
+		If left untreated the subject's vocal cords will be affected, likely driving others to insanity."
 	severity = DISEASE_SEVERITY_MEDIUM
 	required_organ = ORGAN_SLOT_TONGUE
 

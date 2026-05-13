@@ -121,7 +121,9 @@
 
 	var/turf/user_drop_location = get_turf(user)
 	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_closed_turf_check), wall_structure)))
-		placed_poster.roll_and_drop(user_drop_location, user)
+		//only put back if the poster wasen't teared off or snipped with a wirecutter during placing
+		if(!QDELETED(placed_poster))
+			placed_poster.roll_and_drop(user_drop_location, user)
 		return ITEM_INTERACT_FAILURE
 
 	placed_poster.find_and_mount_on_atom()

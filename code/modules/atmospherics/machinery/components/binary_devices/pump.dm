@@ -173,7 +173,7 @@
 	input_temperature = add_output_port("Input Temperature", PORT_TYPE_NUMBER)
 	output_temperature = add_output_port("Output Temperature", PORT_TYPE_NUMBER)
 
-	is_active = add_output_port("Active", PORT_TYPE_NUMBER)
+	is_active = add_output_port("Active", PORT_TYPE_BOOLEAN)
 	turned_on = add_output_port("Turned On", PORT_TYPE_SIGNAL)
 	turned_off = add_output_port("Turned Off", PORT_TYPE_SIGNAL)
 

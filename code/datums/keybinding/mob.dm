@@ -21,7 +21,7 @@
 	return TRUE
 
 /datum/keybinding/mob/swap_hands
-	hotkey_keys = list(UNBOUND_KEY)
+	hotkey_keys = list("X")
 	name = "swap_hands"
 	full_name = "Swap hands"
 	description = ""
@@ -39,14 +39,14 @@
 	var/hand_index = NONE
 
 /datum/keybinding/mob/select_hand/right
-	hotkey_keys = list("Q")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "select_right_hand"
 	full_name = "Swap to Right Hand"
 	keybind_signal = COMSIG_KB_MOB_SELECTRIGHTHAND_DOWN
 	hand_index = RIGHT_HANDS
 
 /datum/keybinding/mob/select_hand/left
-	hotkey_keys = list("E")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "select_left_hand"
 	full_name = "Swap to Left Hand"
 	keybind_signal = COMSIG_KB_MOB_SELECTLEFTHAND_DOWN
@@ -81,7 +81,7 @@
 	return TRUE
 
 /datum/keybinding/mob/drop_item
-	hotkey_keys = list("X")
+	hotkey_keys = list("Q")
 	name = "drop_item"
 	full_name = "Drop Item"
 	description = "Drops the item in your active hand to the ground."

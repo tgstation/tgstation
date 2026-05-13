@@ -281,6 +281,7 @@
 	if (length(drop_results))
 		butcher_drops = string_list(drop_results)
 		butcher_drop_cache[type] = butcher_drops
+	update_limb(TRUE)
 	update_icon_dropped()
 	refresh_bleed_rate()
 
@@ -470,9 +471,8 @@
 
 	return jointext(check_list, "<br>")
 
-/// Returns surgery self-check information for this bodypart
-/obj/item/bodypart/proc/get_surgery_self_check()
-	var/list/surgery_message = list()
+/// Returns all surgical states, filtering out stuff which should not be reported
+/obj/item/bodypart/proc/get_reported_surgery_state()
 	var/reported_state = surgery_state
 	if(!LIMB_HAS_SKIN(src))
 		reported_state &= ~SKINLESS_SURGERY_STATES
@@ -480,6 +480,18 @@
 		reported_state &= ~BONELESS_SURGERY_STATES
 	if(!LIMB_HAS_VESSELS(src))
 		reported_state &= ~VESSELLESS_SURGERY_STATES
+
+	// hide surgical states applied by wounds if the limb isn't being operated on, to keep it simple
+	if(!HAS_TRAIT(src, TRAIT_READY_TO_OPERATE))
+		for(var/datum/wound/wound as anything in wounds)
+			reported_state &= ~wound.surgery_states
+
+	return reported_state
+
+/// Returns surgery self-check information for this bodypart
+/obj/item/bodypart/proc/get_surgery_self_check()
+	var/list/surgery_message = list()
+	var/reported_state = get_reported_surgery_state()
 
 	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_CUT))
 		surgery_message += "skin has been incised"
@@ -509,7 +521,7 @@
 
 	if(length(surgery_message))
 		return span_tooltip("Your limb is undergoing surgery. If no doctors are around, \
-			you could suture or cauterize yourself to cancel it.", span_warning("Its [english_list(surgery_message)]!"))
+			you could suture or cauterize yourself to cancel it.", span_smalldanger("Its [english_list(surgery_message)]!"))
 	return ""
 
 /// Returns surgery examine information for this bodypart
@@ -518,13 +530,7 @@
 	var/capital_zone = owner ? "[owner.p_Their()] [plaintext_zone]" : capitalize("[src]")
 	var/single_message = ""
 	var/list/sub_messages = list()
-	var/reported_state = surgery_state
-	if(!LIMB_HAS_SKIN(src))
-		reported_state &= ~SKINLESS_SURGERY_STATES
-	if(!LIMB_HAS_BONES(src))
-		reported_state &= ~BONELESS_SURGERY_STATES
-	if(!LIMB_HAS_VESSELS(src))
-		reported_state &= ~VESSELLESS_SURGERY_STATES
+	var/reported_state = get_reported_surgery_state()
 
 	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_CUT))
 		sub_messages += "skin has been incised"
@@ -563,9 +569,9 @@
 		single_message = "[owner?.p_Their() || "The"] chest cavity is wide open!"
 
 	if(length(sub_messages) >= 2)
-		return span_danger("[capital_zone]'s [english_list(sub_messages)].")
+		return span_smalldanger("[capital_zone]'s [english_list(sub_messages)].")
 	if(single_message)
-		return span_danger(single_message)
+		return span_smalldanger(single_message)
 	return ""
 
 /obj/item/bodypart/blob_act()
@@ -637,8 +643,7 @@
 			bodypart_organ.apply_organ_damage(bodypart_organ.maxHealth * 0.5)
 
 		if(owner)
-			if(!bodypart_organ.Remove(bodypart_organ.owner))
-				continue
+			bodypart_organ.Remove(bodypart_organ.owner)
 		else if(!bodypart_organ.bodypart_remove(src))
 			continue
 
@@ -1164,7 +1169,7 @@
 	update_draw_color()
 
 	if(!is_creating || !owner)
-		return
+		return FALSE
 
 	// There should technically to be an ishuman(owner) check here, but it is absent because no basetype carbons use bodyparts
 	// No, xenos don't actually use bodyparts. Don't ask.
@@ -1648,7 +1653,7 @@
  */
 /obj/item/bodypart/proc/seep_gauze(seep_amt = 0)
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
-	if(!current_gauze)
+	if(!current_gauze || !current_gauze.absorption_capacity)
 		return FALSE
 	current_gauze.absorption_capacity -= seep_amt
 	if(current_gauze.absorption_capacity <= 0)
@@ -1832,3 +1837,34 @@
 	var/old_state = surgery_state
 	. = ..()
 	update_surgical_state(old_state, surgery_state ^ old_state)
+
+/// Adds biostate to the limb and ensures surgical states are updated accordingly
+/obj/item/bodypart/proc/add_biostate(new_biostate)
+	if(biological_state & new_biostate)
+		return
+
+	var/had_skin = LIMB_HAS_SKIN(src)
+	var/had_bones = LIMB_HAS_BONES(src)
+	var/had_vessels = LIMB_HAS_VESSELS(src)
+
+	biological_state |= new_biostate
+
+	if(!had_skin && LIMB_HAS_SKIN(src))
+		remove_surgical_state(SKINLESS_SURGERY_STATES)
+	if(!had_bones && LIMB_HAS_BONES(src))
+		remove_surgical_state(BONELESS_SURGERY_STATES)
+	if(!had_vessels && LIMB_HAS_VESSELS(src))
+		remove_surgical_state(VESSELLESS_SURGERY_STATES)
+
+/// Removes biostate from the limb and ensures surgical states are updated accordingly
+/obj/item/bodypart/proc/remove_biostate(old_biostate)
+	if(!(biological_state & old_biostate))
+		return
+
+	biological_state &= ~old_biostate
+	if(!LIMB_HAS_SKIN(src))
+		add_surgical_state(SKINLESS_SURGERY_STATES)
+	if(!LIMB_HAS_BONES(src))
+		add_surgical_state(BONELESS_SURGERY_STATES)
+	if(!LIMB_HAS_VESSELS(src))
+		add_surgical_state(VESSELLESS_SURGERY_STATES)

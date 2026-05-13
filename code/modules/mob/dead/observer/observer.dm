@@ -222,18 +222,16 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(ghost_accs == GHOST_ACCS_FULL && (icon_state in GLOB.ghost_forms_with_accessories_list)) //check if this form supports accessories and if the client wants to show them
 		if(facial_hairstyle)
 			var/datum/sprite_accessory/S = SSaccessories.facial_hairstyles_list[facial_hairstyle]
-			if(S)
-				facial_hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
-				if(facial_hair_color)
-					facial_hair_overlay.color = facial_hair_color
+			if(S && S.icon_state != SPRITE_ACCESSORY_NONE)
+				facial_hair_overlay = mutable_appearance(S.icon, S.icon_state, -HAIR_LAYER)
+				facial_hair_overlay.color = facial_hair_color
 				facial_hair_overlay.alpha = 200
 				add_overlay(facial_hair_overlay)
 		if(hairstyle)
 			var/datum/sprite_accessory/hair/S = SSaccessories.hairstyles_list[hairstyle]
-			if(S)
-				hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
-				if(hair_color)
-					hair_overlay.color = hair_color
+			if(S && S.icon_state != SPRITE_ACCESSORY_NONE)
+				hair_overlay = mutable_appearance(S.icon, S.icon_state, -HAIR_LAYER)
+				hair_overlay.color = hair_color
 				hair_overlay.alpha = 200
 				hair_overlay.pixel_z = S.y_offset
 				add_overlay(hair_overlay)
@@ -374,7 +372,7 @@ DEFINE_VERB(/mob/dead/observer, reenter_corpse, "Re-enter Corpse", "", FALSE, ""
 		return
 	client.view_size.resetToDefault()//Let's reset so people can't become allseeing gods
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
-	if(mind.current.stat == DEAD && SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
+	if(mind.current.stat == DEAD && SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client.holder)
 		to_chat(src, span_warning("To leave your body again use the Ghost verb."))
 	mind.current.PossessByPlayer(key)
 	mind.current.client.init_verbs()
@@ -607,8 +605,9 @@ DEFINE_VERB(/mob/dead/observer, restore_ghost_appearance, "Restore Ghost Charact
 	else
 		remove_data_huds()
 	update_sight()
-	for(var/atom/movable/screen/ghost/hudbox/hud in hud_used?.static_inventory)
-		if(hud.relevant_flag & toggled)
+	for(var/hud_key in hud_used?.screen_objects)
+		var/atom/movable/screen/ghost/hudbox/hud = hud_used.screen_objects[hud_key]
+		if(istype(hud) && (hud.relevant_flag & toggled))
 			hud.update_appearance(UPDATE_ICON_STATE)
 
 // This is the ghost's follow verb with an argument

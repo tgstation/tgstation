@@ -70,7 +70,7 @@ other types of metals and chemistry for reagents).
 	var/list/temp_list = list()
 	// Go through all of our materials, get the subsystem instance, and then replace the list.
 	for(var/mat_type, amount in materials)
-		if(ispath(mat_type, /datum/material_requirement))
+		if(ispath(mat_type, /datum/material_requirement) || ispath(mat_type, /datum/material_slot))
 			temp_list[mat_type] = amount
 			continue
 

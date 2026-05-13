@@ -489,6 +489,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 	if(SEND_SIGNAL(parent, COMSIG_ATOM_PRE_STORED_ITEM, to_insert, user, force, messages) & BLOCK_STORAGE_INSERT)
 		return FALSE
+	if(SEND_SIGNAL(to_insert, COMSIG_ITEM_PRE_STORAGE_INSERTION, parent, user, force, messages) & BLOCK_STORAGE_INSERT)
+		return FALSE
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_STORED_ITEM, to_insert, user, force)
 	SEND_SIGNAL(src, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
@@ -499,7 +501,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		to_insert.forceMove(real_location)
 	if(get(real_location, /mob) != user)
 		to_insert.do_pickup_animation(real_location, user)
-	item_insertion_feedback(user, to_insert, override)
+	if (messages)
+		item_insertion_feedback(user, to_insert, override)
 	parent.update_appearance()
 	return TRUE
 
@@ -718,9 +721,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	for(var/mob/user as anything in is_using)
-		user.hud_used?.open_containers -= gone
+		if (user.hud_used?.screen_groups[HUD_GROUP_STORAGE])
+			user.hud_used.screen_groups[HUD_GROUP_STORAGE] -= gone
+
 		if(!user.client)
 			continue
+
 		var/client/cuser = user.client
 		cuser.screen -= gone
 
@@ -1064,10 +1070,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(to_show.active_storage != src && (to_show.stat == CONSCIOUS))
 		for(var/obj/item/thing in real_location)
 			if(thing.on_found(to_show))
-				to_show.active_storage.hide_contents(to_show)
+				to_show.active_storage?.hide_contents(to_show)
+				return FALSE
 
-	if(to_show.active_storage)
-		to_show.active_storage.hide_contents(to_show)
+	to_show.active_storage?.hide_contents(to_show)
 
 	to_show.active_storage = src
 
@@ -1086,9 +1092,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	LAZYOR(is_using, to_show)
 
-	to_show.hud_used.open_containers |= storage_interfaces[to_show].list_ui_elements()
+	// Don't add to screen_objects as that one gets its contents actually deleted
+	LAZYOR(to_show.hud_used.screen_groups[HUD_GROUP_STORAGE], storage_interfaces[to_show].list_ui_elements())
 	to_show.client.screen |= storage_interfaces[to_show].list_ui_elements()
-	to_show.hud_used.open_containers |= real_location.contents
+	LAZYOR(to_show.hud_used.screen_groups[HUD_GROUP_STORAGE], real_location.contents)
 	to_show.client.screen |= real_location.contents
 
 	return TRUE
@@ -1116,9 +1123,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(to_hide.client)
 		to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
 		to_hide.client.screen -= real_location.contents
-	if(to_hide.hud_used)
-		to_hide.hud_used.open_containers -= storage_interfaces[to_hide].list_ui_elements()
-		to_hide.hud_used.open_containers -=  real_location.contents
+	if(to_hide.hud_used.screen_groups[HUD_GROUP_STORAGE])
+		to_hide.hud_used.screen_groups[HUD_GROUP_STORAGE] -= storage_interfaces[to_hide].list_ui_elements()
+		to_hide.hud_used.screen_groups[HUD_GROUP_STORAGE] -= real_location.contents
 	QDEL_NULL(storage_interfaces[to_hide])
 	storage_interfaces -= to_hide
 
@@ -1149,7 +1156,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/additional_row = (!(adjusted_contents % screen_max_columns) && adjusted_contents < max_slots)
 
 	var/columns = clamp(max_slots, 1, screen_max_columns)
-	var/rows = clamp(CEILING(adjusted_contents / columns, 1) + additional_row, 1, screen_max_rows)
+	var/rows = clamp(ceil(adjusted_contents / columns) + additional_row, 1, screen_max_rows)
 
 	for (var/mob/ui_user as anything in storage_interfaces)
 		if (isnull(storage_interfaces[ui_user]))

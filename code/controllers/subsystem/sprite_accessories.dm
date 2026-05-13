@@ -29,17 +29,17 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	var/list/hair_masks_list //! stores /datum/hair_mask indexed by type
 
 	//Underwear
-	var/list/underwear_list //! stores /datum/sprite_accessory/underwear indexed by name
+	var/list/underwear_list //! stores /datum/sprite_accessory/clothing/underwear indexed by name
 	var/list/underwear_m //! stores only underwear name
 	var/list/underwear_f //! stores only underwear name
 
 	//Undershirts
-	var/list/undershirt_list //! stores /datum/sprite_accessory/undershirt indexed by name
+	var/list/undershirt_list //! stores /datum/sprite_accessory/clothing/undershirt indexed by name
 	var/list/undershirt_m //! stores only undershirt name
 	var/list/undershirt_f //! stores only undershirt name
 
 	//Socks
-	var/list/socks_list //! stores /datum/sprite_accessory/socks indexed by name
+	var/list/socks_list //! stores /datum/sprite_accessory/clothing/socks indexed by name
 
 	//All features, indexed by feature key, then name of the sprite accessory to the datum iteslf
 	var/list/list/feature_list
@@ -64,17 +64,17 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	facial_hairstyles_male_list = facial_hair_lists[MALE_SPRITE_LIST]
 	facial_hairstyles_female_list = facial_hair_lists[FEMALE_SPRITE_LIST]
 
-	var/underwear_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear)
+	var/underwear_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/clothing/underwear)
 	underwear_list = underwear_lists[DEFAULT_SPRITE_LIST]
 	underwear_m = underwear_lists[MALE_SPRITE_LIST]
 	underwear_f = underwear_lists[FEMALE_SPRITE_LIST]
 
-	var/undershirt_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt)
+	var/undershirt_lists = init_sprite_accessory_subtypes(/datum/sprite_accessory/clothing/undershirt)
 	undershirt_list = undershirt_lists[DEFAULT_SPRITE_LIST]
 	undershirt_m = undershirt_lists[MALE_SPRITE_LIST]
 	undershirt_f = undershirt_lists[FEMALE_SPRITE_LIST]
 
-	socks_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/socks)[DEFAULT_SPRITE_LIST]
+	socks_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/clothing/socks)[DEFAULT_SPRITE_LIST]
 
 	feature_list = list()
 	// felinids

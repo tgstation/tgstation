@@ -15,7 +15,7 @@
 	if (!..())
 		return FALSE
 
-	return "Food Allergy" in preferences.all_quirks
+	return /datum/quirk/item_quirk/food_allergic::name in preferences.all_quirks
 
 /datum/preference/choiced/food_allergy/apply_to_human(mob/living/carbon/human/target, value)
 	return

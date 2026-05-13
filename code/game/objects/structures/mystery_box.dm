@@ -77,6 +77,7 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	/obj/item/gun/magic/wand/door,
 	/obj/item/gun/magic/wand/nothing,
 	/obj/item/storage/belt/wands/full,
+	/obj/item/storage/belt/wands/full/discount,
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/chaos,
 	/obj/item/gun/magic/staff/door,

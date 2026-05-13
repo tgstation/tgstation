@@ -20,7 +20,7 @@
 	flipped = FALSE
 	..()
 
-DEFINE_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", "", FALSE, "Object")
+DEFINE_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", "", FALSE, "")
 	flip(usr)
 
 

@@ -203,9 +203,7 @@
 	return NONE
 
 /obj/machinery/biogenerator/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		return ITEM_INTERACT_BLOCKING
-
+	. = default_deconstruction_screwdriver(user, tool)
 	if(processing)
 		stop_process(FALSE)
 
@@ -213,18 +211,17 @@
 		beaker.forceMove(drop_location())
 		beaker = null
 
-	update_appearance(UPDATE_ICON)
-	return ITEM_INTERACT_SUCCESS
+	return .
 
 /obj/machinery/biogenerator/crowbar_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_BLOCKING
+	. = default_deconstruction_crowbar(user, tool)
+	if(!(. & ITEM_INTERACT_SUCCESS))
+		return
 	var/turf/drop_location = drop_location()
 	if(biomass > 0)
 		drop_location.visible_message(span_warning("Biomass spills from \the [src]'s biomass tank!"))
 		playsound(drop_location, 'sound/effects/slosh.ogg', 25, vary = TRUE)
 		new /obj/effect/decal/cleanable/greenglow(drop_location)
-	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/biogenerator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)

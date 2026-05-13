@@ -5,11 +5,19 @@
 	var/spread_flags = DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
 
 	//Fluff
+
+	/// What type of disease this is
 	var/form = "Virus"
+	/// The name of the disease (this one's kind of important)
 	var/name = "No disease"
+	/// The description of what the disease is and does
 	var/desc = ""
-	var/agent = "some microbes"
+	/// The agent that causes the disease, for example "virus", "bacteria", "parasite", "curse"
+	var/agent = "Unknown"
+	/// A string describing how the disease spreads, for example "Airborne", "Blood", "Skin contact", "Magic"
+	/// (Keep this strictly for how it spreads BETWEEN hosts, NOT how it affected the initial host. Use agent var for that)
 	var/spread_text = ""
+	/// A string describing how the disease can be cured, for example "Toxin remover", "Antibiotics", "Rest and hydration", "Prayers to the gods"
 	var/cure_text = ""
 
 	//Stages
@@ -139,9 +147,11 @@
 
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
 		switch(severity)
-			if(DISEASE_SEVERITY_POSITIVE) //good viruses don't go anywhere after hitting max stage - you can try to get rid of them by sleeping earlier
-				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_POSITIVE) //because of the way we later check for recovery_prob, we need to floor this at least equal to the scaling to avoid infinitely getting less likely to cure
-				if(((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) || ((affected_mob.nutrition > NUTRITION_LEVEL_STARVING) && (affected_mob.satiety >= 0))) && slowdown == 1) //any sort of malnourishment/immunosuppressant opens you to losing a good virus
+			if(DISEASE_SEVERITY_POSITIVE)
+				if(slowdown < 1 || (!(HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) && (affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)))
+					cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_POSITIVE)
+				else
+					recovery_prob = 0
 					return TRUE
 			if(DISEASE_SEVERITY_NONTHREAT)
 				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_NONTHREAT)
@@ -161,7 +171,7 @@
 		recovery_prob += DISEASE_RECOVERY_CONSTANT + (peaked_cycles / (cycles_to_beat / DISEASE_RECOVERY_SCALING)) //more severe viruses are beaten back more aggressively after the peak
 		if(stage_peaked)
 			recovery_prob *= DISEASE_PEAKED_RECOVERY_MULTIPLIER
-		if(slowdown != 1) //using spaceacillin can help get them over the finish line to kill a virus with decreasing effect over time
+		if(slowdown < 1) //using spaceacillin can help get them over the finish line to kill a virus with decreasing effect over time
 			recovery_prob += clamp((((1 - slowdown)*(DISEASE_SLOWDOWN_RECOVERY_BONUS * 2)) * ((DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION - chemical_offsets) / DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION)), 0, DISEASE_SLOWDOWN_RECOVERY_BONUS)
 			chemical_offsets = min(chemical_offsets + 1, DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION)
 		if(!HAS_TRAIT(affected_mob, TRAIT_NOHUNGER))
@@ -411,3 +421,16 @@
 			return 6
 		if(DISEASE_SEVERITY_BIOHAZARD)
 			return 7
+
+/proc/get_disease_spread_text(spread_flags)
+	if(spread_flags & DISEASE_SPREAD_AIRBORNE)
+		return "Airborne"
+	if(spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+		return "Skin contact"
+	if(spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+		return "Fluid contact"
+	if(spread_flags & DISEASE_SPREAD_BLOOD)
+		return "Blood"
+	if(spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS)
+		return "None"
+	return "Unknown"

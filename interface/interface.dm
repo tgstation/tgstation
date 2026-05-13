@@ -96,10 +96,18 @@ DEFINE_VERB(/client, changelog, "Changelog", "", FALSE, "OOC")
 	if(prefs.lastchangelog != GLOB.changelog_hash)
 		prefs.lastchangelog = GLOB.changelog_hash
 		prefs.save_preferences()
-		winset(src, "infobuttons.changelog", "font-style=;")
 
-DEFINE_VERB(/client, hotkeys_help, "Hotkeys Help", "", FALSE, "OOC")
+DEFINE_VERB(/client, hotkeys_help, "Hotkeys Help", "", TRUE, "")
 	if(!GLOB.hotkeys_tgui)
 		GLOB.hotkeys_tgui = new /datum/hotkeys_help()
 
 	GLOB.hotkeys_tgui.ui_interact(mob)
+
+DEFINE_VERB(/client, emote_panel, "Emote Panel", "", TRUE, "")
+	if(!isliving(mob))
+		to_chat(mob, span_notice("You can only use this while you're alive!"))
+		return
+
+	if(!GLOB.emote_panel)
+		GLOB.emote_panel = new /datum/emote_panel()
+	GLOB.emote_panel.ui_interact(mob)

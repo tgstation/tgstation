@@ -40,7 +40,7 @@
 		return
 
 	if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(held_item.tool_behaviour == TOOL_WELDER && !anchored)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"

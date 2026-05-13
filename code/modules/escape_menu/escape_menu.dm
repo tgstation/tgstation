@@ -13,6 +13,7 @@ DEFINE_VERB(/client, open_escape_menu, "Open Escape Menu", "", TRUE, "")
 	new /datum/escape_menu(src)
 
 #define PAGE_HOME "PAGE_HOME"
+#define PAGE_ADMIN "ADMIN_PAGE"
 #define PAGE_LEAVE_BODY "PAGE_LEAVE_BODY"
 #define PAGE_QUIT_GAME "PAGE_QUIT_GAME"
 
@@ -21,6 +22,8 @@ DEFINE_VERB(/client, open_escape_menu, "Open Escape Menu", "", TRUE, "")
 	var/client/client
 	/// A weakref to the hud this escape menu currently applies to
 	var/datum/weakref/our_hud_ref
+	/// The details at the top right that persists through all screens, showing round info.
+	var/atom/movable/screen/escape_menu/details/detail_screen
 
 	VAR_PRIVATE
 		ckey
@@ -46,6 +49,8 @@ DEFINE_VERB(/client, open_escape_menu, "Open Escape Menu", "", TRUE, "")
 	base_holder = new(client)
 	if(isnull(dim_screen))
 		dim_screen = new()
+	detail_screen = new()
+	detail_screen.update_text(client)
 	populate_base_ui()
 
 	page_holder = new(client)
@@ -61,7 +66,10 @@ DEFINE_VERB(/client, open_escape_menu, "Open Escape Menu", "", TRUE, "")
 	if (!isnull(ckey))
 		GLOB.escape_menus[ckey] = src
 
+	START_PROCESSING(SSescape_menu, src)
+
 /datum/escape_menu/Destroy(force)
+	STOP_PROCESSING(SSescape_menu, src)
 	QDEL_NULL(base_holder)
 	QDEL_NULL(page_holder)
 	resource_panels = null // list contents were already qdeled in QDEL_NULL(page_holder), so we can safely null this
@@ -78,6 +86,9 @@ DEFINE_VERB(/client, open_escape_menu, "Open Escape Menu", "", TRUE, "")
 	client = null
 
 	return ..()
+
+/datum/escape_menu/process(seconds_per_tick)
+	detail_screen.update_text(client)
 
 /datum/escape_menu/proc/on_client_qdel()
 	SIGNAL_HANDLER
@@ -113,6 +124,8 @@ DEFINE_VERB(/client, open_escape_menu, "Open Escape Menu", "", TRUE, "")
 	switch (menu_page)
 		if (PAGE_HOME)
 			show_home_page()
+		if (PAGE_ADMIN)
+			show_admin_page()
 		if (PAGE_LEAVE_BODY)
 			show_leave_body_page()
 		if(PAGE_QUIT_GAME)
@@ -124,12 +137,18 @@ DEFINE_VERB(/client, open_escape_menu, "Open Escape Menu", "", TRUE, "")
 	PRIVATE_PROC(TRUE)
 
 	base_holder.give_protected_screen_object(dim_screen)
-	base_holder.give_protected_screen_object(give_escape_menu_details())
+	base_holder.give_screen_object(detail_screen)
 
 /datum/escape_menu/proc/open_home_page()
 	PRIVATE_PROC(TRUE)
 
 	menu_page = PAGE_HOME
+	show_page()
+
+/datum/escape_menu/proc/open_admin_page()
+	PRIVATE_PROC(TRUE)
+
+	menu_page = PAGE_ADMIN
 	show_page()
 
 /datum/escape_menu/proc/open_leave_body()
@@ -148,9 +167,7 @@ DEFINE_VERB(/client, open_escape_menu, "Open Escape Menu", "", TRUE, "")
 	plane = ESCAPE_MENU_PLANE
 	clear_with_screen = FALSE
 
-// The escape menu can be opened before SSatoms
-INITIALIZE_IMMEDIATE(/atom/movable/screen/escape_menu)
-
 #undef PAGE_HOME
+#undef PAGE_ADMIN
 #undef PAGE_LEAVE_BODY
 #undef PAGE_QUIT_GAME

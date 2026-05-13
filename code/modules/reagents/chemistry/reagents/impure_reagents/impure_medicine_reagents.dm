@@ -86,8 +86,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	spawn_hands(affected_mob)
-	lag_remainder += seconds_per_tick - FLOOR(seconds_per_tick, 1)
-	seconds_per_tick = FLOOR(seconds_per_tick, 1)
+	lag_remainder += seconds_per_tick - floor(seconds_per_tick)
+	seconds_per_tick = floor(seconds_per_tick)
 	if(lag_remainder >= 1)
 		seconds_per_tick += 1
 		lag_remainder -= 1

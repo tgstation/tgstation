@@ -134,6 +134,10 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie/infectious,
 	)
 
+	var/regen_time = 6 SECONDS
+	var/regen_amount = 0.5
+	var/zombie_hand = /obj/item/mutant_hand/zombie
+
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	new_zombie.set_combat_mode(TRUE)
@@ -150,15 +154,15 @@
 
 	new_zombie.AddComponent( \
 		/datum/component/mutant_hands, \
-		mutant_hand_path = /obj/item/mutant_hand/zombie, \
+		mutant_hand_path = zombie_hand, \
 	)
 	new_zombie.AddComponent( \
 		/datum/component/regenerator, \
-		regeneration_delay = 6 SECONDS, \
-		brute_per_second = 0.5, \
-		burn_per_second = 0.5, \
-		tox_per_second = 0.5, \
-		oxy_per_second = 0.25, \
+		regeneration_delay = regen_time, \
+		brute_per_second = regen_amount, \
+		burn_per_second = regen_amount, \
+		tox_per_second = regen_amount, \
+		oxy_per_second = regen_amount * 0.5, \
 		heals_wounds = TRUE, \
 	)
 
@@ -178,6 +182,25 @@
 	. = ..()
 	if(!HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
 		playsound(carbon_mob, pick(spooks), 50, TRUE, 10)
+
+// Weaker subtype - less healing, weaker attacks, etc
+/datum/species/zombie/infectious/mindless
+	name = "Mindless Infectious Zombie"
+	id = SPECIES_ZOMBIE_INFECTIOUS_MINDLESS
+	regen_time = 10 SECONDS
+	regen_amount = 0.2
+	zombie_hand = /obj/item/mutant_hand/zombie/weak
+
+/datum/species/zombie/infectious/mindless/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species, pref_load, regenerate_icons)
+	. = ..()
+	new_zombie.add_movespeed_modifier(/datum/movespeed_modifier/mindless_zombie)
+
+/datum/species/zombie/infectious/mindless/on_species_loss(mob/living/carbon/human/was_zombie, datum/species/new_species, pref_load)
+	. = ..()
+	was_zombie.remove_movespeed_modifier(/datum/movespeed_modifier/mindless_zombie)
+
+/datum/movespeed_modifier/mindless_zombie
+	multiplicative_slowdown = 0.75
 
 // Your skin falls off
 /datum/species/human/krokodil_addict

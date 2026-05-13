@@ -53,9 +53,3 @@
 
 /datum/emote_panel/ui_state(mob/user)
 	return GLOB.always_state
-
-DEFINE_VERB(/mob/living, emote_panel, "Emote Panel", "Emote Panel", FALSE, "IC")
-	var/static/datum/emote_panel/emote_panel
-	if(isnull(emote_panel))
-		emote_panel = new
-	emote_panel.ui_interact(src)

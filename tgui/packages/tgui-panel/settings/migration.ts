@@ -59,6 +59,17 @@ function migrateHighlights(next: HighlightState): HighlightState {
       draft.highlightText ?? defaultHighlightSetting.highlightText;
   }
 
+  // Ensure that all highlights have the "enabled" var,
+  // setting it to true if it doesn't exist.
+  for (const id in draft.highlightSettingById) {
+    if (
+      draft.highlightSettingById[id] &&
+      draft.highlightSettingById[id].enabled === undefined
+    ) {
+      draft.highlightSettingById[id].enabled = true;
+    }
+  }
+
   return draft;
 }
 

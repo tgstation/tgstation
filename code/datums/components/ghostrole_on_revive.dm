@@ -87,11 +87,13 @@
 /datum/component/ghostrole_on_revive/proc/prepare_brain(obj/item/organ/source)
 	ADD_TRAIT(source, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
 	RegisterSignal(source, COMSIG_ORGAN_IMPLANTED, PROC_REF(prepare_mob_from_brain))
+	RegisterSignal(source, COMSIG_ATOM_EXAMINE, PROC_REF(brain_examine))
 	UnregisterSignal(source, COMSIG_ORGAN_REMOVED)
 
 /datum/component/ghostrole_on_revive/proc/unprepare_brain(obj/item/organ/source)
 	REMOVE_TRAIT(source, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
 	UnregisterSignal(source, COMSIG_ORGAN_IMPLANTED)
+	UnregisterSignal(source, COMSIG_ATOM_EXAMINE)
 	RegisterSignal(source, COMSIG_ORGAN_REMOVED, PROC_REF(prepare_brain))
 	source.owner?.med_hud_set_status()
 
@@ -101,6 +103,11 @@
 	REMOVE_TRAIT(source, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
 	UnregisterSignal(source, COMSIG_ORGAN_IMPLANTED)
 	prepare_mob(owner)
+
+/datum/component/ghostrole_on_revive/proc/brain_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_info("Another soul may take [source.p_their()] place if put in a body...")
 
 /datum/component/ghostrole_on_revive/proc/on_revive(mob/living/source)
 	SIGNAL_HANDLER

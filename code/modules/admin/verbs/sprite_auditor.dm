@@ -11,7 +11,7 @@ GLOBAL_DATUM_INIT(sprite_auditor, /datum/sprite_auditor, new)
 		"name" = author.real_name,
 		"ckey" = author.ckey,
 		"appearance" = icon_appearance,
-		"timestamp" = gameTimestamp(),
+		"timestamp" = round_timestamp(),
 	)))
 	SStgui.update_uis(src)
 

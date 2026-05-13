@@ -464,8 +464,9 @@
 		balloon_alert(user, "trigger locked, firing pin needed!")
 	return FALSE
 
+/// Called to put ammo back in a gun which recharges itself, should call super if successful
 /obj/item/gun/proc/recharge_newshot()
-	return
+	SEND_SIGNAL(src, COMSIG_GUN_REPLENISHED_CHARGE)
 
 /obj/item/gun/proc/process_burst(mob/living/user, atom/target, message = TRUE, params=null, zone_override = "", random_spread = 0, burst_spread_mult = 0, iteration = 0)
 	if(!user || !firing_burst)

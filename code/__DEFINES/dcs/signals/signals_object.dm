@@ -90,6 +90,12 @@
 /// from /obj/machinery/atmospherics/set_on(active): (on)
 #define COMSIG_ATMOS_MACHINE_SET_ON "atmos_machine_set_on"
 
+/// from /obj/machinery/power/emitter/interact(mob/user): (on)
+#define COMSIG_EMITTER_MACHINE_SET_ON "emitter_machine_set_on"
+
+/// from /obj/machinery/power/emitter/fire_beam(mob/user): (fired)
+#define COMSIG_EMITTER_MACHINE_ON_FIRE "emitter_machine_fire"
+
 /// from /obj/machinery/light_switch/set_lights(), sent to every switch in the area: (status)
 #define COMSIG_LIGHT_SWITCH_SET "light_switch_set"
 
@@ -151,6 +157,10 @@
 #define COMSIG_ITEM_STORED "item_stored"
 ///from base of datum/storage/handle_exit(): (datum/storage/storage)
 #define COMSIG_ITEM_UNSTORED "item_unstored"
+/// From datum/storage/attempt_insert()
+#define COMSIG_ITEM_PRE_STORAGE_INSERTION "item_pre_storage_insertion"
+	// return BLOCK_STORAGE_INSERT
+
 ///from base of obj/item/do_pickup_animation(): ()
 #define COMSIG_ITEM_BEFORE_PICKUP_ANIMATION "item_before_pickup_animation"
 ///from base of obj/item/do_drop_animation(): ()
@@ -195,9 +205,11 @@
 	#define COMPONENT_BLOCK_SHARPEN_BLOCKED (1<<1)
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY (1<<2)
 	#define COMPONENT_BLOCK_SHARPEN_MAXED (1<<3)
+	#define COMPONENT_BLOCK_SHARPEN_SHARPNESS (1<<4)
 
 ///Called when an armor plate is successfully applied to an object
 #define COMSIG_ARMOR_PLATED "armor_plated"
+
 ///Called when an item gets recharged by the ammo powerup
 #define COMSIG_ITEM_RECHARGED "item_recharged"
 ///Called when an item is being offered, from [/obj/item/proc/on_offered(mob/living/offerer)]
@@ -377,6 +389,8 @@
 
 ///called in /obj/item/firing_pin/proc/gun_remove(mob/living/user): (obj/item/firing_pin/pin, mob/living/user)
 #define COMSIG_GUN_PIN_REMOVED "gun_pin_removed"
+///called when an empty rechargeable gun gives itself more ammo
+#define COMSIG_GUN_REPLENISHED_CHARGE "gun_replenished_charge"
 
 // Jetpack things
 // Please kill me
@@ -666,5 +680,13 @@
 #define COMSIG_VENDING_UI_INTERACT "vending_ui_interact"
 	#define VENDING_DENIED (1<<0)
 
+/// From /obj/machinery/vending/dispense(): (obj/item/vended_item)
+#define COMSIG_VENDING_DISPENSED "vending_dispensed"
+
 /// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
 #define COMSIG_REFLECTION_UPDATED "reflection_updated"
+
+/// Send from /datum/element/cuffable_item(): (mob/cuffer, obj/item/cuffs)
+#define COMSIG_ITEM_PRE_CUFFED_TO_MOB "item_cuffed_to_mob"
+	/// Return to stop the cuffing from happening.
+	#define BLOCK_ITEM_CUFF (1<<0)

@@ -153,7 +153,7 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/crowbar_act(mob/user, obj/item/I)
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(user, I))
 		return TRUE
 	return ..()
 

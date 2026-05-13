@@ -1,25 +1,14 @@
-// Unrolled versions of DEFINE_VERB(), exists because src is set to client which fucks EVERYTHING up
-// I HATE it here dude SO MUCH
-/datum/verbs/menu/Preferences/verb/open_character_preferences()
-	VERBLIKE_SET(name, "Open Character Preferences")
-	VERBLIKE_SET(desc, "Open Character Preferences")
-	VERBLIKE_SET(category, "OOC")
-	SHOULD_NOT_OVERRIDE(TRUE)
-	VERB_QUEUE_OR_FIRE_CUSTOM_ARGS(__open_preferences_window, GLOBAL_PROC, GLOBAL_PROC_REF, SSverb_manager, PREFERENCE_TAB_CHARACTER_PREFERENCES)
-
-/datum/verbs/menu/Preferences/verb/open_game_preferences()
-	VERBLIKE_SET(name, "Open Game Preferences")
-	VERBLIKE_SET(desc, "Open Game Preferences")
-	VERBLIKE_SET(category, "OOC")
-	SHOULD_NOT_OVERRIDE(TRUE)
-	VERB_QUEUE_OR_FIRE_CUSTOM_ARGS(__open_preferences_window, GLOBAL_PROC, GLOBAL_PROC_REF, SSverb_manager, PREFERENCE_TAB_GAME_PREFERENCES)
-
-// I am sorry. I am so sorry.
-/proc/__open_preferences_window(preference_tab)
-	var/datum/preferences/preferences = usr?.client?.prefs
-	if (!preferences)
+DEFINE_VERB(/client, open_character_preferences, "Open Character Preferences", "Open Character Preferences", FALSE, "OOC")
+	if(!prefs)
 		return
+	prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+	prefs.update_static_data(usr)
+	prefs.ui_interact(usr)
 
-	preferences.current_window = preference_tab
-	preferences.update_static_data(usr)
-	preferences.ui_interact(usr)
+DEFINE_VERB(/client, open_game_preferences, "Open Game Preferences", "Open Game Preferences", FALSE, "OOC")
+	if(!prefs)
+		return
+	prefs.current_window = PREFERENCE_TAB_GAME_PREFERENCES
+	prefs.update_static_data(usr)
+	prefs.ui_interact(usr)
+

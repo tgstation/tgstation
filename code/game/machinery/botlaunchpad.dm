@@ -3,6 +3,7 @@
 	desc = "A lighter version of the orbital mech pad modified to launch bots. Requires linking to a remote to function."
 	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "botpad"
+	base_icon_state = "botpad"
 	circuit = /obj/item/circuitboard/machine/botpad
 	// ID of the console, used for linking up
 	var/id = "botlauncher"
@@ -16,10 +17,15 @@
 	launched_bot = null
 	return ..()
 
+/obj/machinery/botpad/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-open" : base_icon_state
+
 /obj/machinery/botpad/screwdriver_act(mob/user, obj/item/tool)
-	return default_deconstruction_screwdriver(user, "botpad-open", "botpad", tool)
+	return default_deconstruction_screwdriver(user, tool)
+
 /obj/machinery/botpad/crowbar_act(mob/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/botpad/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!panel_open)

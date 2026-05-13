@@ -817,7 +817,7 @@
 		START_PROCESSING(SSprojectiles, src)
 	// move it now to avoid potentially hitting yourself with firer-hitting projectiles
 	if (!deletion_queued && !hitscan)
-		process_movement(max(FLOOR(speed, 1), 1), tile_limit = TRUE)
+		process_movement(max(floor(speed)), tile_limit = TRUE)
 
 /// Makes projectile home onto the passed target with minor inaccuracy
 /obj/projectile/proc/set_homing_target(atom/target)
@@ -907,7 +907,7 @@
 		pixels_to_move = SSprojectiles.max_pixels_per_tick
 
 	overrun += MODULUS(pixels_to_move, 1)
-	pixels_to_move = FLOOR(pixels_to_move, 1)
+	pixels_to_move = floor(pixels_to_move)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_BEFORE_MOVE)
 
 	// Registering turf entries is done here instead of a connect_loc because else it could be called multiple times per tick and waste performance
@@ -978,8 +978,8 @@
 			distance_to_move = SSprojectiles.pixels_per_decisecond
 
 		// Figure out if we move to the next turf and if so, what its positioning relatively to us is
-		var/x_shift = distance_to_move >= x_to_border ? SIGN(movement_vector.pixel_x) : 0
-		var/y_shift = distance_to_move >= y_to_border ? SIGN(movement_vector.pixel_y) : 0
+		var/x_shift = distance_to_move >= x_to_border ? sign(movement_vector.pixel_x) : 0
+		var/y_shift = distance_to_move >= y_to_border ? sign(movement_vector.pixel_y) : 0
 		var/moving_turfs = x_shift || y_shift
 		// Calculate where in the turf we will be when we cross the edge.
 		// This is a projectile variable because its also used in hit VFX

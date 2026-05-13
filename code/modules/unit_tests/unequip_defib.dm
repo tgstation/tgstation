@@ -12,7 +12,7 @@
 
 	usr = dummy // mouse drop still uses usr
 
-	defib.MouseDrop(dummy.hud_used.hand_slots["1"])
+	defib.MouseDrop(dummy.hud_used.hand_slots[1])
 	if(!dummy.is_holding(defib))
 		TEST_FAIL("The dummy failed to remove the defib from their back via mouse drop.")
 

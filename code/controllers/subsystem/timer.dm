@@ -620,7 +620,7 @@ SUBSYSTEM_DEF(timer)
 			be supported and may refuse to run or run with a 0 wait")
 
 	if (flags & TIMER_CLIENT_TIME) // REALTIMEOFDAY has a resolution of 1 decisecond
-		wait = max(CEILING(wait, 1), 1) // so if we use tick_lag timers may be inserted in the "past"
+		wait = max(ceil(wait), 1) // so if we use tick_lag timers may be inserted in the "past"
 	else
 		wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
 

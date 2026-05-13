@@ -45,7 +45,7 @@
 			AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 	magpulse_fishing_modifier = fishing_modifier
 
-DEFINE_VERB(/obj/item/clothing/shoes/magboots, toggle, "Toggle Magboots", "", FALSE, "Object")
+DEFINE_VERB(/obj/item/clothing/shoes/magboots, toggle, "Toggle Magboots", "", FALSE, "")
 	if(!can_use(usr))
 		return
 	attack_self(usr)

@@ -615,6 +615,30 @@
 /datum/status_effect/tinlux_light/on_remove()
 	QDEL_NULL(mob_light_obj)
 
+///Makes the mob glow blue and rarely emit nuclear particles
+/datum/status_effect/cherenkov_radiation
+	id = "cherenkov_radiation"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	remove_on_fullheal = TRUE
+	alert_type = null
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+
+/datum/status_effect/cherenkov_radiation/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/cherenkov_radiation/on_apply()
+	mob_light_obj = owner.mob_light(2, 4, "#33ddff")
+	return TRUE
+
+/datum/status_effect/cherenkov_radiation/tick(seconds_between_ticks)
+	if(prob(3))
+		owner.fire_nuclear_particle()
+
+/datum/status_effect/cherenkov_radiation/on_remove()
+	QDEL_NULL(mob_light_obj)
+
 /datum/status_effect/gutted
 	id = "gutted"
 	alert_type = null
@@ -867,3 +891,28 @@
 		owner.add_mood_event("[id]_[moodlet_type]", moodlet_type)
 	else
 		owner.clear_mood_event("[id]_[moodlet_type]")
+
+/datum/status_effect/admin_esp
+	id = "admin_esp"
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	/// What the mob's see_invisible should be once this status effect is removed
+	VAR_PRIVATE/real_invis_see
+
+/datum/status_effect/admin_esp/on_apply()
+	real_invis_see = owner.see_invisible
+	owner.set_invis_see(SEE_INVISIBLE_ADMIN)
+	RegisterSignal(owner, COMSIG_MOB_SEE_INVIS_CHANGE, PROC_REF(on_invis_changed))
+	return TRUE
+
+/datum/status_effect/admin_esp/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_SEE_INVIS_CHANGE)
+	owner.set_invis_see(real_invis_see) // restore our 'real' invis_see
+
+/// Whenever our invis_see updates from some other source, keep real_invis_see up to date
+/datum/status_effect/admin_esp/proc/on_invis_changed(datum/source, see_invis, old_invis)
+	SIGNAL_HANDLER
+
+	real_invis_see = see_invis

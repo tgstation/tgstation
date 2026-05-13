@@ -265,13 +265,14 @@
 /**
  * Setter for mob height - updates the base height of the mob (which is then adjusted by traits or species)
  *
- * Exists so that the update is done immediately
- *
- * Returns TRUE if changed, FALSE otherwise
+ * * new_height - The new base height for this mob, should be one of the HUMAN_HEIGHT defines
+ * * update_dna - if TRUE (default), updates the mob's DNA with the new height value
  */
-/mob/living/carbon/human/proc/set_mob_height(new_height)
+/mob/living/carbon/human/proc/set_mob_height(new_height = HUMAN_HEIGHT_MEDIUM, update_dna = TRUE)
 	base_mob_height = new_height
 	update_mob_height()
+	if(update_dna)
+		dna?.update_ui_block(/datum/dna_block/identity/height)
 
 /**
  * Updates the mob's height
@@ -286,6 +287,13 @@
 	if(old_height != mob_height)
 		regenerate_icons()
 	SEND_SIGNAL(src, COMSIG_HUMAN_HEIGHT_UPDATED, old_height)
+
+/**
+ * Gets the mob's base height, ignoring adjustments from traits or species
+ * Necessary due to VAR_PRIVATE (it's not used in hot code anyways)
+ */
+/mob/living/carbon/human/proc/get_base_mob_height()
+	return base_mob_height
 
 /**
  * Makes a full copy of src and returns it.

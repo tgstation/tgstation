@@ -1,18 +1,21 @@
 /datum/disease/chronic_illness
 	name = "Hereditary Manifold Sickness"
 	max_stages = 5
-	spread_text = "Non-communicable disease"
+	spread_text = "None"
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	disease_flags = CHRONIC
 	infectable_biotypes = MOB_ORGANIC | MOB_MINERAL | MOB_ROBOTIC
 	process_dead = TRUE
 	stage_prob = 0.25
-	cure_text = "Sansufentanyl"
+	cure_text = "Abated by " + /datum/reagent/medicine/sansufentanyl::name
 	cures = list(/datum/reagent/medicine/sansufentanyl)
 	infectivity = 0
 	agent = "Quantum Entanglement"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	desc = "A disease discovered in an Interdyne laboratory caused by subjection to timestream correction technology."
+	desc = "A disease discovered in an Interdyne laboratory caused by subjection to timestream correction technology. \
+		It is completely uncurable - though it can be treated to reverse its progression - and non-contagious. \
+		If left untreated the subject will suffer from a variety of symptoms, \
+		including but not limited to dizziness, nausea, heart palpitations, and in the final stages, death."
 	severity = DISEASE_SEVERITY_UNCURABLE
 	bypasses_immunity = TRUE
 

@@ -137,7 +137,7 @@
 		current_range = spray_range
 	to_chat(user, span_notice("You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]."))
 
-DEFINE_VERB(/obj/item/reagent_containers/spray, empty, "Empty Spray Bottle", "", FALSE, "Object")
+DEFINE_VERB(/obj/item/reagent_containers/spray, empty, "Empty Spray Bottle", "", FALSE, "")
 	empty_bottle()
 
 /obj/item/reagent_containers/spray/proc/empty_bottle()

@@ -125,14 +125,13 @@
 	return FALSE
 
 
-DEFINE_VERB(/obj/item/taperecorder, ejectverb, "Eject Tape", "", FALSE, "Object")
+DEFINE_VERB(/obj/item/taperecorder, ejectverb, "Eject Tape", "", FALSE, "")
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
 		return
 	if(!mytape)
 		balloon_alert(usr, "no tape!")
 		return
-
 	eject(usr)
 
 
@@ -159,7 +158,7 @@ DEFINE_VERB(/obj/item/taperecorder, ejectverb, "Eject Tape", "", FALSE, "Object"
 	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.get_voice()]: [raw_message]"
 
 
-DEFINE_VERB(/obj/item/taperecorder, record, "Start Recording", "", FALSE, "Object")
+DEFINE_VERB(/obj/item/taperecorder, record, "Start Recording", "", FALSE, "")
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
 		return
@@ -199,7 +198,7 @@ DEFINE_VERB(/obj/item/taperecorder, record, "Start Recording", "", FALSE, "Objec
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 
 
-DEFINE_VERB(/obj/item/taperecorder, stop, "Stop", "", FALSE, "Object")
+DEFINE_VERB(/obj/item/taperecorder, stop, "Stop", "", FALSE, "")
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
 		return
@@ -217,7 +216,7 @@ DEFINE_VERB(/obj/item/taperecorder, stop, "Stop", "", FALSE, "Object")
 	update_appearance()
 	update_sound()
 
-DEFINE_VERB(/obj/item/taperecorder, play, "Play Tape", "", FALSE, "Object")
+DEFINE_VERB(/obj/item/taperecorder, play, "Play Tape", "", FALSE, "")
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
 		return
@@ -287,7 +286,7 @@ DEFINE_VERB(/obj/item/taperecorder, play, "Play Tape", "", FALSE, "Object")
 			if("Eject")
 				eject(user)
 
-DEFINE_VERB(/obj/item/taperecorder, print_transcript, "Print Transcript", "", FALSE, "Object")
+DEFINE_VERB(/obj/item/taperecorder, print_transcript, "Print Transcript", "", FALSE, "")
 	var/list/transcribed_info = mytape.storedinfo
 	if(!length(transcribed_info))
 		balloon_alert(usr, "tape is empty!")

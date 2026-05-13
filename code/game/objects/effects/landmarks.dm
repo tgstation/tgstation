@@ -576,6 +576,18 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		return created_joining_mob
 	return created_joining_mob
 
+/obj/effect/landmark/flaps_install
+	name = "plastic flaps install point"
+	icon_state = "flap-install"
+
+/obj/effect/landmark/flaps_install/Initialize(mapload)
+	. = ..()
+	GLOB.cargo_shuttle_flaps_landmarks += src
+
+/obj/effect/landmark/flaps_install/Destroy()
+	GLOB.cargo_shuttle_flaps_landmarks -= src
+	return ..()
+
 //Landmark that creates destinations for the navigate verb to path to
 /obj/effect/landmark/navigate_destination
 	name = "navigate verb destination"

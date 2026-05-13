@@ -239,6 +239,8 @@
 	on_dispense(vended_item, dispense_returned)
 	use_energy(active_power_usage)
 
+	SEND_SIGNAL(src, COMSIG_VENDING_DISPENSED, vended_item)
+
 	return vended_item
 
 /**

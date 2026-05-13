@@ -1,7 +1,7 @@
 //Speech verbs.
 
 ///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
-DEFINE_VERBLIKE(verb, /mob, say_verb, "Say", "", FALSE, "IC", /* instant = */ TRUE, /* context_menu = */ TRUE, SSspeech_controller, message as text)
+DEFINE_VERBLIKE(verb, /mob, say_verb, VERB_SAY, "", FALSE, "", FALSE, FALSE, SSspeech_controller, message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -13,7 +13,7 @@ DEFINE_VERBLIKE(verb, /mob, say_verb, "Say", "", FALSE, "IC", /* instant = */ TR
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
 ///like say(), but you always whisper it (yes it's silly)
-DEFINE_VERBLIKE(verb, /mob, whisper_verb, "Whisper", "", FALSE, "IC", /* instant = */ TRUE, /* context_menu = */ TRUE, SSspeech_controller, message as text)
+DEFINE_VERBLIKE(verb, /mob, whisper_verb, VERB_WHISPER, "", FALSE, "", FALSE, FALSE, SSspeech_controller, message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -34,7 +34,7 @@ DEFINE_VERBLIKE(verb, /mob, whisper_verb, "Whisper", "", FALSE, "IC", /* instant
 	say(message, language = language)
 
 ///The me emote verb
-DEFINE_VERBLIKE(verb, /mob, me_verb, "Me", "Perform a custom emote. Leave blank to pick between an audible or a visible emote (Defaults to visible).", FALSE, "IC", /* instant = */ TRUE, /* context_menu = */ TRUE, SSspeech_controller, message as text)
+DEFINE_VERBLIKE(verb, /mob, me_verb, VERB_ME, "", FALSE, "", FALSE, FALSE, SSspeech_controller, message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -158,12 +158,7 @@ DEFINE_VERBLIKE(verb, /mob, me_verb, "Me", "Perform a custom emote. Leave blank 
 	var/displayed_key = key
 	if(client?.holder?.fakekey)
 		displayed_key = null
-	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = displayed_key)
-	for(var/mob/mobs_hearing as anything in GLOB.player_list)
-		if(SSticker.current_state != GAME_STATE_FINISHED && (mobs_hearing.see_invisible < invisibility || !isdead(mobs_hearing)))
-			continue
-		if(runechat_prefs_check(mobs_hearing))
-			mobs_hearing.create_chat_message(src, /datum/language/common, message)
+	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = displayed_key, original_message = message)
 
 ///Check if this message is an emote
 /mob/proc/check_emote(message, forced)

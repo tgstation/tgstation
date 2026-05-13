@@ -355,33 +355,13 @@
 /atom/movable/screen/plane_master/o_light_visual
 	name = "Overlight light visual"
 	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\
-		<br>Exists because lighting updating is really slow, and movement needs to feel smooth.\
-		<br>We draw to the game plane, and mask out space for ourselves on the lighting plane so any color we have has the chance to display."
+		<br>Exists because lighting updating is really slow, and movement needs to feel smooth (also being an overlay lets us muck with it easier)."
 	plane = O_LIGHTING_VISUAL_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(RENDER_PLANE_O_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
-
-/atom/movable/screen/plane_master/o_light_visual/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	// I'd love for this to be HSL but filters don't work with blend modes
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_TURF_LIGHTING, offset), BLEND_MULTIPLY, relay_color = list(
-		-1, -1, -1, 0,
-		-1, -1, -1, 0,
-		-1, -1, -1, 0,
-		0, 0, 0, OVERLAY_LIGHTING_WEIGHT,
-		1, 1, 1, 0,
-	))
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR, offset), relay_color = list(
-		SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0, 0,
-		0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0,
-		0, 0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0,
-		0, 0, 0, 1,
-		-SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, 0,
-	))
 
 /atom/movable/screen/plane_master/above_lighting
 	name = "Above lighting"

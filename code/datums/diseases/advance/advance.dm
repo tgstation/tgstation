@@ -25,6 +25,7 @@
 	spread_text = "Unknown"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cures = null
+	visibility_flags = HIDDEN_BOOK // we have unique handling for advance diseases in the book
 
 	// NEW VARS
 	var/list/properties = list()

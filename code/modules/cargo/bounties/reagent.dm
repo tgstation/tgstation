@@ -26,6 +26,16 @@
 		shipped_volume = required_volume
 	return TRUE
 
+/datum/bounty/reagent/contribution_amount(obj/shipped)
+	return shipped.reagents.get_reagent_amount(wanted_reagent.type)
+
+/datum/bounty/reagent/get_total()
+	return shipped_volume
+
+/datum/bounty/reagent/get_max()
+	return required_volume
+
+
 /datum/bounty/reagent/simple_drink
 	name = "Simple Drink"
 	reward = CARGO_CRATE_VALUE * 3
@@ -84,6 +94,9 @@
 		/datum/reagent/consumable/ethanol/flip_cocktail,
 		/datum/reagent/consumable/ethanol/bitters_soda,
 		/datum/reagent/consumable/ethanol/star,
+		/datum/reagent/consumable/ethanol/brandy_crusta,
+		/datum/reagent/consumable/ethanol/casino,
+		/datum/reagent/consumable/ethanol/mary_pickford,
 	)
 
 	var/reagent_type = pick(possible_reagents)
@@ -122,6 +135,9 @@
 		/datum/reagent/consumable/ethanol/sangria,
 		/datum/reagent/consumable/ethanol/tizirian_sour,
 		/datum/reagent/consumable/ethanol/suffering_bastard,
+		/datum/reagent/consumable/ethanol/pousse_cafe,
+		/datum/reagent/consumable/ethanol/improved_whiskey,
+		/datum/reagent/consumable/ethanol/vieux_carre,
 	)
 
 	var/reagent_type = pick(possible_reagents)

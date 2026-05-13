@@ -2,7 +2,7 @@
 
 // Cans
 /obj/item/food/canned
-	name = "Canned Air"
+	name = "canned air"
 	desc = "If you ever wondered where air came from..."
 	food_reagents = list(
 		/datum/reagent/oxygen = 6,
@@ -65,7 +65,7 @@
 	foodtypes = FRUIT | SUGAR
 
 /obj/item/food/canned/peaches/maint
-	name = "Maintenance Peaches"
+	name = "maintenance peaches"
 	desc = "I have a mouth and I must eat."
 	icon_state = "peachcanmaint"
 	trash_type = /obj/item/trash/can/food/peaches/maint
@@ -117,6 +117,7 @@
 	if(!check_buffability(user))
 		return ..()
 	apply_buff(user)
+	return TRUE
 
 /obj/item/food/canned/envirochow/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!check_buffability(interacting_with))

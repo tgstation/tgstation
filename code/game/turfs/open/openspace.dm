@@ -191,7 +191,7 @@
 	if(!ismineralturf(T) || !drill_below)
 		return
 	var/turf/closed/mineral/M = T
-	M.mineralAmt = 0
+	M.mineral_amt = 0
 	M.gets_drilled()
 	baseturfs = /turf/open/openspace/icemoon //This is to ensure that IF random turf generation produces a openturf, there won't be other turfs assigned other than openspace.
 

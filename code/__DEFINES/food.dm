@@ -19,6 +19,7 @@
 #define BUGS (1<<18)
 #define GORE (1<<19)
 #define STONE (1<<20)
+#define EGG (1<<21)
 
 DEFINE_BITFIELD(foodtypes, list(
 	"MEAT" = MEAT,
@@ -42,6 +43,7 @@ DEFINE_BITFIELD(foodtypes, list(
 	"BUGS" = BUGS,
 	"GORE" = GORE,
 	"STONE" = STONE,
+	"EGG" = EGG,
 ))
 
 /// A list of food type names, in order of their flags
@@ -67,6 +69,7 @@ DEFINE_BITFIELD(foodtypes, list(
 	"BUGS", \
 	"GORE", \
 	"STONE", \
+	"EGG", \
 )
 
 /// IC meaning (more or less) for food flags
@@ -92,6 +95,7 @@ DEFINE_BITFIELD(foodtypes, list(
 	"Bugs", \
 	"Gore", \
 	"Rocks", \
+	"Eggs", \
 )
 
 /// Food types assigned to all podperson organs

@@ -146,26 +146,24 @@
 	return NONE
 
 /obj/machinery/door/poddoor/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
 		return ITEM_INTERACT_SUCCESS
-	else if (default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		return ITEM_INTERACT_SUCCESS
+
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(machine_stat & NOPOWER)
 		open(TRUE)
 		return ITEM_INTERACT_SUCCESS
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 	if (!panel_open)
 		balloon_alert(user, "open the panel first!")
-		return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 	if (deconstruction != BLASTDOOR_FINISHED)
-		return
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "removing airlock electronics...")
 	if(tool.use_tool(src, user, 10 SECONDS, volume = 50))
 		new /obj/item/electronics/airlock(loc)
@@ -176,15 +174,14 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/wirecutter_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 	if (!panel_open)
 		balloon_alert(user, "open the panel first!")
-		return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 	if (deconstruction != BLASTDOOR_NEEDS_ELECTRONICS)
-		return
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "removing internal cables...")
 	if(tool.use_tool(src, user, 10 SECONDS, volume = 50))
 		var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes

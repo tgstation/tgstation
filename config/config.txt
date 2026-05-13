@@ -649,5 +649,6 @@ TGUI_MAX_CHUNK_COUNT 32
 ## It increases initialization time significantly so you'll want to disable this in live environments.
 GENERATE_ASSETS_IN_INIT
 
-## Minimum time before a heretic can ascend, in minutes
-# MINIMUM_ASCENSION_TIME 3
+## Path from the config folder to the policy json
+POLICY_JSON_PATH policy.json
+

@@ -4,6 +4,7 @@
 /mob/living/basic/boss
 	combat_mode = TRUE
 	status_flags = NONE
+	abstract_type = /mob/living/basic/boss
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	faction = list(FACTION_MINING, FACTION_BOSS)
@@ -76,10 +77,11 @@
 
 /mob/living/basic/boss/early_melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!. || !istype(target))
+	if(. || !istype(target))
 		return
 	if(should_devour(target))
 		devour(target)
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /// Determines if this mob is worth devouring
 /mob/living/basic/boss/proc/should_devour(mob/living/victim)

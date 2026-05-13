@@ -21,8 +21,6 @@
 	mutanttongue = /obj/item/organ/tongue/vampire
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
-	/// UI displaying how much blood we have
-	var/atom/movable/screen/blood_level/blood_display
 
 /datum/species/human/vampire/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
@@ -33,19 +31,15 @@
 	. = ..()
 	to_chat(new_vampire, "[info_text]")
 	new_vampire.skin_tone = "albino"
-	new_vampire.update_body(0)
 	RegisterSignal(new_vampire, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(new_vampire, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	if(new_vampire.hud_used)
 		on_hud_created(new_vampire)
-	else
-		RegisterSignal(new_vampire, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /datum/species/human/vampire/on_species_loss(mob/living/carbon/human/old_vampire, datum/species/new_species, pref_load)
 	. = ..()
 	UnregisterSignal(old_vampire, COMSIG_ATOM_ATTACKBY)
-	if(blood_display)
-		old_vampire.hud_used.infodisplay -= blood_display
-		QDEL_NULL(blood_display)
+	old_vampire.hud_used?.remove_screen_object(HUD_MOB_BLOOD_LEVEL)
 
 /datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick)
 	. = ..()
@@ -72,10 +66,7 @@
 ///Gives the blood HUD to the vampire so they always know how much blood they have.
 /datum/species/human/vampire/proc/on_hud_created(mob/source)
 	SIGNAL_HANDLER
-	var/datum/hud/blood_hud = source.hud_used
-	blood_display = new(null, blood_hud)
-	blood_hud.infodisplay += blood_display
-	blood_hud.show_hud(blood_hud.hud_version)
+	source.hud_used.add_screen_object(/atom/movable/screen/blood_level, HUD_MOB_BLOOD_LEVEL, HUD_GROUP_INFO, update_screen = TRUE)
 
 /datum/species/human/vampire/proc/on_attackby(mob/living/source, obj/item/attacking_item, mob/living/attacker, list/modifiers, list/attack_modifiers)
 	SIGNAL_HANDLER
@@ -164,7 +155,6 @@
 	icon_state = "tongue_vampire"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
 	organ_traits = list(
-		TRAIT_SPEAKS_CLEARLY,
 		TRAIT_DRINKS_BLOOD,
 		// future todo : tie nobreath and nohunger to a vampire organ set bonus
 		TRAIT_NOBREATH,

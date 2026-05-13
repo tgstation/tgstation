@@ -34,7 +34,6 @@
 	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	combat_mode = TRUE
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -53,8 +52,8 @@
 	/// Coloured overlay we apply
 	var/mutable_appearance/overlay
 
-	/// Which toggle button the HUD uses.
-	var/toggle_button_type = /atom/movable/screen/guardian/toggle_mode/inactive
+	/// Which toggle button the guardian has. Won't get one if it's null.
+	var/toggle_button_type = null
 	/// Name used by the guardian creator.
 	var/creator_name = "Error"
 	/// Description used by the guardian creator.
@@ -76,11 +75,19 @@
 	/// Cooldown between the summoner resetting the guardian's client.
 	COOLDOWN_DECLARE(resetting_cooldown)
 
-	/// List of actions we give to our summoner
+	/// List of actions we give to our summoner.
 	var/static/list/control_actions = list(
 		/datum/action/cooldown/mob_cooldown/guardian_comms,
 		/datum/action/cooldown/mob_cooldown/recall_guardian,
 		/datum/action/cooldown/mob_cooldown/replace_guardian,
+	)
+	/// List of actions we give to ourselves.
+	var/static/list/self_actions = list(
+		/datum/action/cooldown/guardian/check_type,
+		/datum/action/cooldown/guardian/toggle_light,
+		/datum/action/cooldown/guardian/communicate,
+		/datum/action/cooldown/guardian/manifest,
+		/datum/action/cooldown/guardian/recall,
 	)
 
 /mob/living/basic/guardian/Initialize(mapload, datum/guardian_fluff/theme)
@@ -90,10 +97,10 @@
 	theme?.apply(src)
 	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/guardian/phase/out)
 	AddElement(/datum/element/simple_flying)
-	AddComponent(/datum/component/basic_inhands)
 	// life link
 	update_appearance(UPDATE_ICON)
 	manifest_effects()
+	create_actions()
 
 /mob/living/basic/guardian/Destroy()
 	GLOB.parasites -= src
@@ -101,6 +108,18 @@
 		recall_effects()
 	cut_summoner(different_person = TRUE)
 	return ..()
+
+///Creates the guardian's default action buttons and sets them to go in their proper location.
+///Subtypes overwrite this for special ability types and whatnot.
+/mob/living/basic/guardian/proc/create_actions()
+	for (var/action_type in self_actions + toggle_button_type)
+		if(isnull(action_type)) //no toggle button type
+			continue
+		if (locate(action_type) in actions)
+			continue
+		var/datum/action/new_action = new action_type(src)
+		new_action.Grant(src)
+	update_action_buttons()
 
 /mob/living/basic/guardian/update_overlays()
 	. = ..()

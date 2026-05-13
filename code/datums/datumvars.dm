@@ -38,7 +38,6 @@ GLOBAL_LIST_INIT(vv_var_blacklist, list(
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = list()
-	VV_DROPDOWN_OPTION("", "---")
 	VV_DROPDOWN_OPTION(VV_HK_CALLPROC, "Call Proc")
 	VV_DROPDOWN_OPTION(VV_HK_MARK, "Mark Object")
 	VV_DROPDOWN_OPTION(VV_HK_TAG, "Tag Datum")
@@ -61,6 +60,9 @@ GLOBAL_LIST_INIT(vv_var_blacklist, list(
 		return FALSE
 	if(href_list[VV_HK_MODIFY_TRAITS])
 		usr.client.holder.modify_traits(src)
+	if(href_list[VV_HK_DEBUG_APPEARANCE]) // On base datum as it is shared by atoms and mutable_appearance/image VVs
+		usr.client.holder.appearance_debug.set_target(src)
+		usr.client.holder.appearance_debug.ui_interact(usr)
 	return TRUE
 
 /datum/proc/vv_get_header()

@@ -116,6 +116,9 @@
 
 /obj/structure/emergency_shield/cult/barrier/Destroy()
 	if(parent_rune)
+		if(QDELING(parent_rune))
+			parent_rune = null
+			return ..()
 		parent_rune.visible_message(span_danger("The [parent_rune] fades away as [src] is destroyed!"))
 		QDEL_NULL(parent_rune)
 	return ..()
@@ -451,14 +454,15 @@
 /obj/machinery/power/shieldwallgen/screwdriver_act(mob/user, obj/item/tool)
 	if(!panel_open && locked)
 		balloon_alert(user, "unlock first!")
-		return
-	update_appearance(UPDATE_OVERLAYS)
-	return default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
+		return ITEM_INTERACT_BLOCKING
+
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/power/shieldwallgen/crowbar_act(mob/user, obj/item/tool)
 	if(active)
-		return
-	return default_deconstruction_crowbar(tool)
+		return ITEM_INTERACT_BLOCKING
+
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()

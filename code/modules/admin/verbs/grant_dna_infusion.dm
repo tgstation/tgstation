@@ -5,7 +5,7 @@
 */
 DEFINE_PROC_VERB(/client, grant_dna_infusion, "Apply DNA Infusion", "", FALSE, "Debug", mob/living/carbon/human/target in world)
 	var/list/infusions = list()
-	for(var/datum/infuser_entry/path as anything in subtypesof(/datum/infuser_entry))
+	for(var/datum/infuser_entry/path as anything in sort_list(subtypesof(/datum/infuser_entry), GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		var/str = "[initial(path.name)] ([path])"
 		infusions[str] = path
 

@@ -101,7 +101,7 @@
 
 /obj/machinery/computer/operating/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
-	if(isliving(user))
+	if(isliving(user) && !issilicon(user))
 		. = min(., ui_check(user))
 
 /// Checks for special ui state conditions
@@ -148,7 +148,7 @@
 	if(!zone_found)
 		return
 
-	var/atom/movable/screen/zone_sel/selector = user.hud_used?.zone_select
+	var/atom/movable/screen/zone_sel/selector = user.hud_used?.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector?.set_selected_zone(zone_found, user, FALSE)
 	LAZYREMOVE(zone_on_open, WEAKREF(user))
 	if(!LAZYLEN(zone_on_open))
@@ -257,7 +257,7 @@
 		if("change_zone")
 			if(params["new_zone"] in (GLOB.all_body_zones + GLOB.all_precise_body_zones))
 				target_zone = params["new_zone"]
-				var/atom/movable/screen/zone_sel/selector = ui.user.hud_used?.zone_select
+				var/atom/movable/screen/zone_sel/selector = ui.user.hud_used?.screen_objects[HUD_MOB_ZONE_SELECTOR]
 				selector?.set_selected_zone(params["new_zone"], ui.user, FALSE)
 			update_static_data_for_all_viewers()
 	return TRUE

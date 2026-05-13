@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(lighting)
 		/datum/controller/subsystem/atoms,
 		/datum/controller/subsystem/mapping,
 	)
-	wait = 2
+	wait = 1
 	ss_flags = SS_TICKER
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
 	var/static/list/corners_queue = list() // List of lighting corners queued for update.
@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(lighting)
 			for(var/turf/area_turf as anything in zlevel_turfs)
 				if(area_turf.space_lit)
 					continue
-				new /datum/lighting_object(area_turf)
+				new /atom/movable/lighting_object(null, area_turf)
 			CHECK_TICK
 		CHECK_TICK
 
@@ -53,6 +53,7 @@ SUBSYSTEM_DEF(lighting)
 
 	// UPDATE SOURCE QUEUE
 	var/i = 0
+	// something something cache locally for sonic speed
 	var/list/queue = current_sources
 	while(i < length(queue)) //we don't use for loop here because i cannot be changed during an iteration
 		i += 1
@@ -110,7 +111,7 @@ SUBSYSTEM_DEF(lighting)
 	while(i < length(queue)) //we don't use for loop here because i cannot be changed during an iteration
 		i += 1
 
-		var/datum/lighting_object/O = queue[i]
+		var/atom/movable/lighting_object/O = queue[i]
 		if(QDELETED(O))
 			continue
 		O.update()
@@ -132,3 +133,13 @@ SUBSYSTEM_DEF(lighting)
 /datum/controller/subsystem/lighting/Recover()
 	initialized = SSlighting.initialized
 	..()
+
+/// Takes a list of turfs in, and sets up static lighting for them as needed.
+/// Exactly what it says on the tin.
+/datum/controller/subsystem/lighting/proc/setup_static_lighting_if_needed(list/turfs)
+	for(var/turf/unlit as anything in turfs)
+		if(unlit.space_lit)
+			continue
+		var/area/loc_area = unlit.loc
+		if(loc_area.static_lighting)
+			unlit.lighting_build_overlay()

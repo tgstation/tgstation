@@ -62,6 +62,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "photocopier"
+	base_icon_state = "photocopier"
 	density = TRUE
 	power_channel = AREA_USAGE_EQUIP
 	max_integrity = 300
@@ -659,15 +660,15 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	to_chat(user, span_notice("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
 
-/obj/machinery/photocopier/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/machinery/photocopier/update_icon_state()
 	. = ..()
-	if(default_deconstruction_screwdriver(user, "photocopier2", "photocopier", tool))
-		return ITEM_INTERACT_SUCCESS
+	icon_state = panel_open ? "[base_icon_state]2" : base_icon_state
+
+/obj/machinery/photocopier/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/photocopier/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

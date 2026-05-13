@@ -241,7 +241,7 @@
 		if(Y1 == Y2)
 			return TRUE //Light cannot be blocked on same tile
 		else
-			var/sign = SIGN(Y2-Y1)
+			var/sign = sign(Y2-Y1)
 			Y1 += sign
 			while(Y1 != Y2)
 				current_turf = locate(X1, Y1, Z)
@@ -257,8 +257,8 @@
 		//b = y - mx
 		var/b = (Y1 + PY1/ICON_SIZE_Y - OFFSET_Y) - m*(X1 + PX1/ICON_SIZE_X - OFFSET_X)//In tiles
 
-		var/signX = SIGN(X2-X1)
-		var/signY = SIGN(Y2-Y1)
+		var/signX = sign(X2-X1)
+		var/signY = sign(Y2-Y1)
 		if(X1 < X2)
 			b += m
 		while(X1 != X2 || Y1 != Y2)
