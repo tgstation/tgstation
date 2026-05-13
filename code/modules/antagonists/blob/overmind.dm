@@ -207,7 +207,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		blob_points = INFINITY
 	else
 		to_chat(src, span_blob("You've reached critical mass, but something feels terribly wrong, stopping you from expanding further. All you can do now is fight as long as you can..."))
-		balloon_alert(src, "victory - expansion over critical mass disabled")
 	addtimer(CALLBACK(src, PROC_REF(victory)), 45 SECONDS)
 
 /// Actually *do* the blob's victory: give them their greentext and, depending on the end_round_on_victory variable, decide if everyone dies or if it's just a jumpscare.

@@ -1,7 +1,6 @@
 import {
   type ComponentProps,
   type ReactNode,
-  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -61,29 +60,30 @@ export function generateOptions(
   return newOptions;
 }
 
-export type FeatureDropdownInputCoreProps = {
-  dropdownProps: DropdownInputProps,
-  populateOptions: (
-    serverData: FeatureChoicedServerData,
-    setDropdownOptions: (newValue: DropdownOptions) => void,
-  ) => void,
+export function FeatureDropdownInput(props: DropdownInputProps) {
+  const { serverData, disabled, buttons, handleSetValue, value } = props;
+  const dropdownOptions = serverData ? generateOptions(serverData) : [];
+  const displayText = serverData?.display_names?.[value] || String(value);
+  return (
+    <Dropdown
+      buttons={buttons}
+      disabled={disabled || !serverData}
+      onSelected={handleSetValue}
+      displayText={displayText ? capitalizeFirst(displayText) : ''}
+      options={dropdownOptions}
+      selected={value}
+      width="100%"
+    />
+  );
 }
 
-export function FeatureDropdownInputCore(
-  props: FeatureDropdownInputCoreProps
-) {
-  const { dropdownProps, populateOptions } = props;
-  const { serverData, disabled, buttons, handleSetValue, value } =
-    dropdownProps;
+export type FeatureDropdownInputCoreProps = DropdownInputProps & {
+  populateOptions: (serverData: FeatureChoicedServerData) => DropdownOptions;
+};
 
-  const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>([]);
-
-  useEffect(() => {
-    if (serverData) {
-      populateOptions(serverData, setDropdownOptions);
-    }
-  }, [serverData, populateOptions]);
-
+export function FeatureDropdownInputCore(props: FeatureDropdownInputCoreProps) {
+  const { serverData, disabled, buttons, handleSetValue, value, populateOptions } = props;
+  const dropdownOptions = serverData ? populateOptions(serverData) : [];
   const displayText = serverData?.display_names?.[value] || String(value);
 
   return (
@@ -99,22 +99,6 @@ export function FeatureDropdownInputCore(
   );
 }
 
-export function FeatureDropdownInput(props: DropdownInputProps) {
-  const populateOptions = useCallback(
-    (
-      serverData: FeatureChoicedServerData,
-      setDropdownOptions: (newValue: DropdownOptions) => void
-    ) => {
-      setDropdownOptions(generateOptions(serverData));
-    },
-    [],
-  );
-
-  return <FeatureDropdownInputCore
-    dropdownProps={props}
-    populateOptions={populateOptions}
-  />
-}
 
 export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
   const { serverData, handleSetValue, value } = props;

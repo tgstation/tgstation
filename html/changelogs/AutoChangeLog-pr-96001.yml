@@ -1,0 +1,6 @@
+author: "Absolucy, SmArtKar"
+delete-after: True
+changes:
+  - qol: "The color changing from regenerative rainbow, adamantine, and stabilized pyrite extracts now looks far better."
+  - qol: "The protection effect from regenerative rainbow extracts now actually makes you all rainbowy."
+  - code_imp: "Minor improvements to crossbreed status effect code."

@@ -164,6 +164,7 @@
 		return TRUE
 	// If it's not supposed to end the round and it's at the win count, don't make more. (400 tiles is still a lot to fight through...)
 	if(!controller.end_round_on_victory && (controller.blobs_legit.len >= controller.blobwincount))
+		balloon_alert(controller, "max tiles reached!")
 		return FALSE
 	// Otherwise, it's probably fine.
 	return TRUE
