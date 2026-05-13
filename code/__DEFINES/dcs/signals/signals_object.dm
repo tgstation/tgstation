@@ -675,3 +675,6 @@
 
 /// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
 #define COMSIG_REFLECTION_UPDATED "reflection_updated"
+
+/// Sent from /datum/component/reflection when the reflection is updated to the component parent: (obj/effect/abstract/reflection)
+#define COMSIG_REFLECTED_IMAGE_UPDATED "reflected_image_updated"

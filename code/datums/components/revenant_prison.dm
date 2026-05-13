@@ -33,17 +33,17 @@
 	revenant = null
 	qdel(src)
 
-/datum/component/revenant_prison/proc/shift_reflection(datum/source, atom/movable/reflecting_in, obj/effect/abstract/reflection)
+/datum/component/revenant_prison/proc/shift_reflection(datum/source, obj/effect/abstract/reflection)
 	SIGNAL_HANDLER
 	apply_wibbly_filters(reflection)
 
 /datum/component/revenant_prison/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_REVENANT_RELEASE, PROC_REF(release_revenant))
-	RegisterSignal(parent, COMSIG_REFLECTION_UPDATED, PROC_REF(shift_reflection))
+	RegisterSignal(parent, COMSIG_REFLECTED_IMAGE_UPDATED, PROC_REF(shift_reflection))
 
 /datum/component/revenant_prison/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_REVENANT_RELEASE)
-	UnregisterSignal(parent, COMSIG_REFLECTION_UPDATED)
+	UnregisterSignal(parent, COMSIG_REFLECTED_IMAGE_UPDATED)
 
 /datum/component/revenant_prison/PostTransfer(datum/new_parent)
 	revenant.forceMove(new_parent)
