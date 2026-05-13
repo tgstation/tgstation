@@ -24,8 +24,6 @@
 
 /atom/movable/screen/minimap_element/blip/Destroy()
 	clear_tracking_signals()
-	for(var/tag in GLOB.minimap_blip_tags)
-		LAZYREMOVE(GLOB.minimap_blip_tags[tag], src)
 	return ..()
 
 /atom/movable/screen/minimap_element/blip/proc/register_target(atom/target)
