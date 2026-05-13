@@ -126,7 +126,7 @@
 /turf/open/indestructible/plating,
 /area/ruin/powered/seedvault)
 "az" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "aA" = (
@@ -289,7 +289,8 @@
 /turf/open/indestructible,
 /area/ruin/powered/seedvault)
 "bk" = (
-/turf/closed/wall/mineral/titanium/interior,
+/obj/machinery/door/airlock/grunge,
+/turf/closed/wall/r_wall,
 /area/ruin/powered/seedvault)
 "bl" = (
 /obj/structure/reagent_dispensers/watertank/high,
@@ -573,10 +574,6 @@
 /obj/structure/flora/bush/fullgrass,
 /turf/open/floor/grass,
 /area/ruin/powered/seedvault)
-"DE" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/indestructible,
-/area/ruin/powered/seedvault)
 "GN" = (
 /obj/machinery/light/floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
@@ -709,11 +706,11 @@ aN
 aN
 aN
 aN
-DE
+az
 Wn
 aN
-DE
-DE
+az
+az
 aN
 aN
 aN
@@ -836,7 +833,7 @@ aN
 PH
 aU
 aL
-bk
+aN
 yq
 aI
 bj
@@ -861,7 +858,7 @@ aN
 bb
 aU
 aS
-bk
+aN
 aG
 aI
 bb
@@ -886,7 +883,7 @@ az
 bb
 gk
 aT
-bk
+aN
 lZ
 aI
 bb
@@ -961,7 +958,7 @@ az
 bb
 aE
 aw
-bk
+aN
 bf
 aI
 bb
@@ -986,7 +983,7 @@ az
 bb
 aE
 tJ
-bk
+aN
 GO
 aI
 bb
@@ -1011,7 +1008,7 @@ aN
 PH
 aE
 ah
-bk
+aN
 aA
 aI
 bj
@@ -1135,7 +1132,7 @@ aN
 aN
 aN
 aB
-aB
+bk
 aN
 aB
 aB
