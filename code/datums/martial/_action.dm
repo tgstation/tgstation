@@ -31,6 +31,9 @@
 		clicker.cycle_style()
 		return TRUE
 	var/help_information = current_used_art.get_style_help()
+	if(isnull(help_information))
+		to_chat(clicker, span_notice("[current_used_art.name] doesn't have any combat information!"))
+		return TRUE
 	for(var/info in help_information)
 		to_chat(clicker, info)
 	return TRUE

@@ -327,7 +327,8 @@
 		LAZYINSERT(new_holder.martial_arts, 2, src)
 	else
 		LAZYADD(new_holder.martial_arts, src)
-	if(LAZYLEN(new_holder.martial_arts) == 1) //First martial art being added
+
+	if(LAZYLEN(new_holder.martial_arts) == 1 ? get_style_help() : !(locate(/datum/action/swap_arts) in new_holder.actions))
 		var/datum/action/swap_arts/new_action = new(new_holder, src)
 		new_action.Grant(new_holder)
 	if(LAZYLEN(new_holder.martial_arts) >= 2)
@@ -372,7 +373,7 @@
 	holder = null
 	if(LAZYLEN(old_holder.martial_arts) < 1) //no more arts, we check above to switch style already.
 		var/datum/action/swap_arts/swap_button = locate() in old_holder.actions
-		swap_button.Remove(old_holder)
+		qdel(swap_button)
 	return TRUE
 
 /**
@@ -436,4 +437,4 @@
 
 ///To be overwritten for artstyle help.
 /datum/martial_art/proc/get_style_help()
-	return list("No guide implemented!")
+	return FALSE
