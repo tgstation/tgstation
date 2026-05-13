@@ -865,6 +865,9 @@ ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIP
 		return
 	our_controller.planning_subtrees = list(GLOB.ai_subtrees[/datum/ai_planning_subtree/random_speech/blackboard]) + our_controller.planning_subtrees
 
+ADMIN_VERB(open_event_logger, R_DEBUG, "Open Event Logger", "Open the event logger interface.", ADMIN_CATEGORY_DEBUG)
+	GLOB.event_logger.ui_interact(user.mob)
+
 ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_EVENTS, object as text)
 	if(!object)
 		to_chat(user, span_boldwarning("Failed! Provide a full or partial typepath!"))
@@ -911,5 +914,6 @@ ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an it
 	message_admins("[key_name(user)] created a new black market item: [name] ([chosen]) for [price] credits, of quantity [quantity].")
 
 	BLACKBOX_LOG_ADMIN_VERB("Create Black Market Item")
+
 
 #undef STEALTH_MODE_TRAIT

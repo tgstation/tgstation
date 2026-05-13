@@ -685,3 +685,8 @@
 
 /// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
 #define COMSIG_REFLECTION_UPDATED "reflection_updated"
+
+/// Send from /datum/element/cuffable_item(): (mob/cuffer, obj/item/cuffs)
+#define COMSIG_ITEM_PRE_CUFFED_TO_MOB "item_cuffed_to_mob"
+	/// Return to stop the cuffing from happening.
+	#define BLOCK_ITEM_CUFF (1<<0)

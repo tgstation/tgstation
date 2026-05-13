@@ -43,6 +43,7 @@
 	RegisterSignal(cuffed, COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS, PROC_REF(get_strippable_action))
 	RegisterSignal(cuffed, COMSIG_ITEM_STRIPPABLE_ALT_ACTION, PROC_REF(do_strippable_action))
 	RegisterSignal(cuffed, COMSIG_ITEM_PRE_STORAGE_INSERTION, PROC_REF(block_storage_insert))
+	RegisterSignal(cuffed, COMSIG_ITEM_PRE_CUFFED_TO_MOB, PROC_REF(block_item_cuff))
 
 	RegisterSignals(cuffs, list(COMSIG_ITEM_EQUIPPED, COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(cleanup_effect))
 	RegisterSignal(cuffs, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(on_item_update_appearance))
@@ -59,10 +60,33 @@
 
 /datum/status_effect/cuffed_item/on_remove()
 	//Prevent possible recursions from these signals
-	UnregisterSignal(cuffed, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_ITEM_PRE_STORAGE_INSERTION))
-	UnregisterSignal(cuffs, list(COMSIG_ITEM_EQUIPPED, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-	UnregisterSignal(cuffed_to, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING))
-	UnregisterSignal(owner, list(COMSIG_ATOM_EXAMINE_MORE, COMSIG_CARBON_POST_ATTACH_LIMB))
+	UnregisterSignal(cuffed, list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ATOM_UPDATE_APPEARANCE,
+		COMSIG_ITEM_PRE_CUFFED_TO_MOB,
+		COMSIG_ITEM_DROPPED,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS,
+		COMSIG_ITEM_PRE_STORAGE_INSERTION,
+		COMSIG_ITEM_STRIPPABLE_ALT_ACTION,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_QDELETING,
+		COMSIG_TOPIC,
+	))
+	UnregisterSignal(cuffs, list(
+		COMSIG_ATOM_UPDATE_APPEARANCE,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_QDELETING,
+	))
+	UnregisterSignal(cuffed_to, list(
+		COMSIG_BODYPART_REMOVED,
+		COMSIG_QDELETING,
+	))
+	UnregisterSignal(owner, list(
+		COMSIG_ATOM_EXAMINE_MORE,
+		COMSIG_CARBON_POST_ATTACH_LIMB,
+	))
 	cuffed = null
 
 	if(!QDELETED(cuffs))
@@ -161,6 +185,12 @@
 	if(messages)
 		target_storage.balloon_alert(user, "can't store [source.name] while cuffed!")
 	return BLOCK_STORAGE_INSERT
+
+/// Stops double cuff
+/datum/status_effect/cuffed_item/proc/block_item_cuff(obj/item/source, mob/cuffer, obj/item/cuffs)
+	SIGNAL_HANDLER
+	source.balloon_alert(cuffer, "cuffed to someone else!")
+	return BLOCK_ITEM_CUFF
 
 ///What happens if one of the items is moved away from the mob
 /datum/status_effect/cuffed_item/proc/cleanup_effect(datum/source)

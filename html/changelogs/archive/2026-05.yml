@@ -146,3 +146,82 @@
   - balance: You can cuff shields to yourself again. Unless we figure out it's still
       oppressive in which case it'll probably be removed (again)
   - bugfix: IV drops should break your character's offsets less often
+2026-05-11:
+  Aliceee2ch:
+  - bugfix: RND servers are visible once again.
+  CabinetOnFire:
+  - bugfix: Fixes the spawn panel being unable to spawn turfs
+  Melbert:
+  - bugfix: You can speak with a stoat tongue
+  - bugfix: Stoat infusion is slightly taller
+  - bugfix: Explosions won't remove organs from skeletons/plasmamen
+  - code_imp: Solar arrays don't check for the pressence of space vines every process
+      tick
+  - code_imp: Changes the way tongues allow you to speak correctly to make them less
+      prone to fault
+  - bugfix: Re-adding limbs surgically requires you do surgery again (ie, incise ->
+      retract -> clamp).
+  Time-Green:
+  - bugfix: Fixes voidwalker being unable to vomit jump if anyone vomits on a non-station
+      z-level
+  Y0SH1M4S73R:
+  - rscadd: Random polymorphs can turn you into hatchling blood worms that can mature,
+      but not reproduce.
+  vinylspiders:
+  - bugfix: disable dead keyloop lagswitch measure now properly affects new ghosts,
+      and fixes an issue where people can revive and still be frozen
+2026-05-12:
+  Melbert:
+  - bugfix: Blocks two people cuffing to one item
+  SmArtKar:
+  - rscadd: Mining MOD sphere mode now fires a barrage of micromissiles instead of
+      a singular delayed explosive
+  - balance: Raptor are now immune to ice slippage
+  - balance: Mining MOD has had its ore digging speed increased
+  - bugfix: Buckled mobs can no longer "slip" (get stunned) on wet/icy tiles.
+  SmArtKar, thgvr:
+  - balance: Goliaths no longer hardstun, but instead bind and drag their targets
+      in with their tentacles. They are, however, much faster now.
+  - balance: Brimdemon beams can no longer wound, but deal a bit more DOT damage.
+      Their beams can also be interrupted by hitting them from the side or back in
+      melee.
+  - balance: Watchers and legions now try to maintain a few tiles of distance from
+      their targets instead of retreating.
+  - bugfix: Lobstrocity AI should no longer sometimes flee out of their aggro range
+      when retreating.
+  Y0SH1M4S73R:
+  - spellcheck: You are told you are downed instead of unconscious if you attempt
+      to use an action that requires you to be conscious while in softcrit.
+  kuricityy:
+  - balance: Flesh spiders are now slightly slower than your average spessmen. (10%)
+  - balance: Flesh spiders now regenerate after 3 seconds of not taking damage, compared
+      to 4.
+  lelandkemble:
+  - bugfix: sinks(and other methods of washing) clean out petri dishes
+  - rscadd: Added a new traitor item, Carnivorous Blood. It is purchasable in uplinks.
+      Carnivorous Blood is a reagent that eats away at a victim's blood once in their
+      bloodstream, doing so significantly faster if it has been mixed with the victim's
+      blood beforehand.
+  timothymtorres:
+  - bugfix: Fix shock immunity flag not working when electrocution occurs
+2026-05-13:
+  Absolucy, SmArtKar:
+  - qol: The color changing from regenerative rainbow, adamantine, and stabilized
+      pyrite extracts now looks far better.
+  - qol: The protection effect from regenerative rainbow extracts now actually makes
+      you all rainbowy.
+  - code_imp: Minor improvements to crossbreed status effect code.
+  CabinetOnFire:
+  - refactor: Implements "Event Logging" an improved way for programmers to debug
+      specific datums.
+  ElGitificador:
+  - bugfix: fixes a certain explosions message related to influences
+  Glu-furro:
+  - rscadd: 'Increased max prisoners from 2 to 4.
+
+      :cl:'
+  Happyowl93:
+  - bugfix: fixes material floor duplication
+  necromanceranne:
+  - qol: Your overall athletics level is what protects you from a random heart attack.
+      If you achieve peak fitness, you are immune to random heart attacks.
