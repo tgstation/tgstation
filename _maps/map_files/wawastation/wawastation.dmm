@@ -30957,11 +30957,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
-"kGq" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/space/basic,
-/area/station/maintenance/department/science)
 "kGu" = (
 /turf/open/floor/iron/stairs/medium,
 /area/station/command/corporate_showroom)
@@ -45316,10 +45311,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
-"pGD" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/space/basic,
-/area/station/maintenance/department/science)
 "pGH" = (
 /obj/machinery/door/airlock/external{
 	name = "Server Room"
@@ -108717,7 +108708,7 @@ lEj
 anz
 aku
 uOo
-pGD
+xAd
 anz
 anz
 anz
@@ -108974,7 +108965,7 @@ lEj
 vfR
 aku
 uOo
-kGq
+xAd
 anz
 anz
 iSU
@@ -109231,7 +109222,7 @@ lEj
 anz
 aku
 uOo
-kGq
+xAd
 anz
 foX
 aku
@@ -109488,7 +109479,7 @@ lEj
 anz
 aku
 uOo
-kGq
+xAd
 anz
 aku
 aku
@@ -110259,8 +110250,8 @@ lEj
 anz
 aku
 uOo
-kGq
-kGq
+xAd
+xAd
 ieo
 aku
 aku
@@ -170920,7 +170911,7 @@ bOw
 fSJ
 gYY
 gYY
-gYY
+lEj
 lEj
 lEj
 hyM
@@ -171434,9 +171425,9 @@ atV
 vIa
 cMZ
 gYY
-gYY
-gYY
-gYY
+kxB
+kxB
+kxB
 lEj
 uet
 cgu
