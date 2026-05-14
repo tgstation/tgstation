@@ -57,10 +57,6 @@
 		if(!required_catalysts)
 			qdel(src)
 			return
-		results = unwrap_reagent_list(recipe_data["results"])
-		if(!results)
-			qdel(src)
-			return
 	else
 		var/list/remaining_possible_reagents = GetPossibleReagents(RNGCHEM_INPUT)
 		var/list/remaining_possible_catalysts = GetPossibleReagents(RNGCHEM_CATALYSTS)
