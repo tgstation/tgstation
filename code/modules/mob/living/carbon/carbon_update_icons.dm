@@ -545,7 +545,7 @@
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
 			continue
-		. += overlay.generate_icon_cache()
+		. += overlay.generate_icon_cache(src)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
@@ -574,7 +574,7 @@
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, TRUE))
 			continue
-		. += overlay.generate_icon_cache()
+		. += overlay.generate_icon_cache(src)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"

@@ -106,3 +106,73 @@
       flora, features and fauna!
   - bugfix: Fixed some ruins generating with default basalt walls instead of their
       biome's walls
+2026-05-08:
+  TheRyeGuyWhoWillNowDie:
+  - balance: Granibitaluri heals 1.5 brute and burn at best now, and scales down to
+      0.5 at worst.
+  Y0SH1M4S73R:
+  - balance: You can no longer get Xenomicrobes and Nanomachines from botany mutations.
+2026-05-09:
+  1393F:
+  - bugfix: The crystallizer can be rotated once again, on left click
+  FalloutFalcon:
+  - bugfix: Drying rack no longer accepts or processes dried items
+  JohnFulpWillard:
+  - rscadd: Reorganized the UI around the game; the title bar has been removed in
+      favor of the old info buttons (top right of the screen), which now has some
+      new buttons for you.
+  - rscadd: The Status Panel is now able to be retracted with one of the infobuttons.
+  - qol: You can now go directly to your hotkey settings from your hotkeys help page.
+  Melbert:
+  - rscadd: Spacers are now "very tall" again, rather than just "decently tall".
+  - qol: Tweaks message displayed when examining recovered crew / thanatorenaisa bodies
+  - bugfix: Some masks no longer hide lizard frills.
+  - rscadd: Hats that flatten hair now also flatten lizard frills a bit.
+  Neocloudy:
+  - sound: Restored fire alarm sound quality
+  SmArtKar:
+  - rscadd: Mining mobs now use priority when choosing their target, prioritizing
+      NODE drones over miners who haven't attacked them or their allies
+  - bugfix: Removed a rogue syndiedome ruin decal
+  lelandkemble:
+  - bugfix: SyndEye PDA app tracking tracks successfully
+  - bugfix: You no longer need traitor on to get syndicate monkey or contractor ghost
+      polls, & banning from these roles bans from the polls as well
+2026-05-10:
+  Melbert:
+  - balance: Cuffing items to yourself no longer prevents you from dropping or being
+      disarmed of the item- instead, the item becomes "chained" to you, forcing it
+      to stay within one tile's reach under all circumstances.
+  - balance: You can cuff shields to yourself again. Unless we figure out it's still
+      oppressive in which case it'll probably be removed (again)
+  - bugfix: IV drops should break your character's offsets less often
+2026-05-11:
+  Aliceee2ch:
+  - bugfix: RND servers are visible once again.
+  CabinetOnFire:
+  - bugfix: Fixes the spawn panel being unable to spawn turfs
+  Melbert:
+  - bugfix: You can speak with a stoat tongue
+  - bugfix: Stoat infusion is slightly taller
+  - bugfix: Explosions won't remove organs from skeletons/plasmamen
+  - code_imp: Solar arrays don't check for the pressence of space vines every process
+      tick
+  - code_imp: Changes the way tongues allow you to speak correctly to make them less
+      prone to fault
+  - bugfix: Re-adding limbs surgically requires you do surgery again (ie, incise ->
+      retract -> clamp).
+  Time-Green:
+  - bugfix: Fixes voidwalker being unable to vomit jump if anyone vomits on a non-station
+      z-level
+  Y0SH1M4S73R:
+  - rscadd: Random polymorphs can turn you into hatchling blood worms that can mature,
+      but not reproduce.
+  vinylspiders:
+  - bugfix: disable dead keyloop lagswitch measure now properly affects new ghosts,
+      and fixes an issue where people can revive and still be frozen
+2026-05-12:
+  Melbert:
+  - bugfix: Blocks two people cuffing to one item
+  Y0SH1M4S73R:
+  - spellcheck: You are told you are downed instead of unconscious if you attempt
+      to use an action that requires you to be conscious while in softcrit.

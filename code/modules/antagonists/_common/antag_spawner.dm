@@ -323,8 +323,6 @@
 	var/pod_style = /datum/pod_style/syndicate
 	/// Do we use a random subtype of the outfit?
 	var/use_subtypes = TRUE
-	/// The antag role we check if the ghosts have enabled to get the poll.
-	var/poll_role_check = ROLE_TRAITOR
 	/// The mind's special role.
 	var/role_to_play = ROLE_SYNDICATE_MONKEY
 	/// What category to ignore the poll
@@ -351,8 +349,7 @@
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(
-		check_jobban = poll_role_check,
-		role = poll_role_check,
+		check_jobban = role_to_play,
 		poll_time = 10 SECONDS,
 		ignore_category = poll_ignore_category,
 		alert_pic = src,
@@ -409,7 +406,7 @@
 	outfit = /datum/outfit/contractor_partner
 	use_subtypes = FALSE
 	antag_datum = /datum/antagonist/traitor/contractor_support
-	poll_ignore_category = ROLE_TRAITOR
+	poll_ignore_category = POLL_IGNORE_CONTRACTOR_SUPPORT
 	role_to_play = ROLE_CONTRACTOR_SUPPORT
 
 /obj/item/antag_spawner/loadout/contractor/do_special_things(mob/living/carbon/human/contractor_support, mob/user)
@@ -426,9 +423,8 @@
 	outfit = /datum/outfit/syndicate_monkey
 	antag_datum = /datum/antagonist/syndicate_monkey
 	use_subtypes = FALSE
-	poll_role_check = ROLE_TRAITOR
 	role_to_play = ROLE_SYNDICATE_MONKEY
-	poll_ignore_category = POLL_IGNORE_SYNDICATE
+	poll_ignore_category = POLL_IGNORE_SYNDICATE_MONKEY
 	fail_text = "Unable to connect to the Animal Rights Consortium's Banana Ops. Please wait and try again later or use the beacon on your uplink to get your points refunded."
 
 /obj/item/antag_spawner/loadout/monkey_man/do_special_things(mob/living/carbon/human/monkey_man, mob/user)

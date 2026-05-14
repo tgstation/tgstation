@@ -438,7 +438,6 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 #undef SEE_DEADCHAT_ADMIN
 #undef SEE_DEADCHAT_NORMAL
 
-
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
 	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs
