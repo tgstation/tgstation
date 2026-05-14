@@ -16,7 +16,7 @@
 	var/obj/item/restraints/handcuffs/cuffs
 	///Reference to the bodypart we're cuffed to
 	var/obj/item/bodypart/arm/cuffed_to
-
+	///Reference to the component managing the link between the mob and the item
 	VAR_PRIVATE/datum/component/chained_together/link_effect
 
 /datum/status_effect/cuffed_item/on_creation(mob/living/new_owner, obj/item/cuffed, obj/item/restraints/handcuffs/cuffs)
