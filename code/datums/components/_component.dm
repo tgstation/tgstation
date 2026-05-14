@@ -408,17 +408,11 @@
  * Removes a component source from this datum
  */
 /datum/proc/RemoveComponentSource(source, datum/component/component_type)
-	if(ispath(component_type, /datum/component))
-		for(var/datum/component/component as anything in GetComponents(component_type))
-			if(source in component.sources)
-				component.on_source_remove(source)
-
-	else if(istype(component_type, /datum/component))
-		if(source in component_type.sources)
-			component_type.on_source_remove(source)
-
-	else
-		CRASH("Attempted to remove a component source with an invalid component type argument: [component_type || "null"]")
+	if(ispath(component_type))
+		component_type = GetExactComponent(component_type)
+	if(!component_type)
+		return
+	component_type.on_source_remove(source)
 
 /**
  * Get existing component of type, or create it and return a reference to it
