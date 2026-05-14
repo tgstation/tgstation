@@ -27,6 +27,7 @@
 	if(create_on_release)
 		revenant = new(get_turf(parent))
 	if(!revenant)
+		qdel(src)
 		return
 	message_admins("[revenant] has been released from [parent]. Cause: [cause]")
 	if(!revenant.reform(old_ckey))
