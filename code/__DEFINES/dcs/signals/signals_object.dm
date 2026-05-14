@@ -157,6 +157,10 @@
 #define COMSIG_ITEM_STORED "item_stored"
 ///from base of datum/storage/handle_exit(): (datum/storage/storage)
 #define COMSIG_ITEM_UNSTORED "item_unstored"
+/// From datum/storage/attempt_insert()
+#define COMSIG_ITEM_PRE_STORAGE_INSERTION "item_pre_storage_insertion"
+	// return BLOCK_STORAGE_INSERT
+
 ///from base of obj/item/do_pickup_animation(): ()
 #define COMSIG_ITEM_BEFORE_PICKUP_ANIMATION "item_before_pickup_animation"
 ///from base of obj/item/do_drop_animation(): ()
@@ -681,3 +685,8 @@
 
 /// Sent from /datum/component/reflection when the reflection is updated to the mob reflecting: (atom/movable/reflecting_in, obj/effect/abstract/reflection)
 #define COMSIG_REFLECTION_UPDATED "reflection_updated"
+
+/// Send from /datum/element/cuffable_item(): (mob/cuffer, obj/item/cuffs)
+#define COMSIG_ITEM_PRE_CUFFED_TO_MOB "item_cuffed_to_mob"
+	/// Return to stop the cuffing from happening.
+	#define BLOCK_ITEM_CUFF (1<<0)
