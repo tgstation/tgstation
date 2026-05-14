@@ -29,6 +29,7 @@
 		"razor",
 		"bucket",
 		"mop",
+		"wet_floor_sign",
 		"pushbroom",
 		"normtrash",
 		"wirebrush",
@@ -142,7 +143,6 @@
 		"syrup_bottle",
 		"foodtray",
 		"restaurant_portal",
-		"wet_floor_sign",
 	)
 
 /datum/techweb_node/food_proc
