@@ -336,6 +336,9 @@
 	fired_from = null
 	return ..()
 
+/obj/projectile/destabilizer/is_hostile_projectile()
+	return TRUE
+
 /obj/projectile/destabilizer/proc/on_parry(mob/user)
 	SIGNAL_HANDLER
 	boosted = TRUE
