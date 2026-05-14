@@ -57,10 +57,13 @@
 		middleman.being_overriding_light()
 
 /obj/machinery/minimap_table/Destroy(force)
-	. = ..()
 	for(var/mob/viewer as anything in viewers)
 		remove_table_huds(viewer.hud_used)
 	viewers = null
+	QDEL_NULL(proximity)
+	QDEL_NULL(middleman)
+	minimap = null
+	return ..()
 
 /obj/machinery/minimap_table/RangedAttackOn(mob/A, list/modifiers)
 	if(get_dist(src, A) > interactivity_range)
