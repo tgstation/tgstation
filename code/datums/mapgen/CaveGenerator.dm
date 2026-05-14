@@ -41,6 +41,8 @@
 	/// of biome-related operations. Is populated through
 	/// `generate_terrain_with_biomes()`.
 	var/list/generated_turfs_per_biome = list()
+	/// Same as generated_turfs_per_biome, but additionally indexed by area
+	var/list/generated_turfs_per_area_biome = list()
 	/// 2D list of all biomes based on heat and humidity combos. Associative by
 	/// `BIOME_X_HEAT` and then by `BIOME_X_HUMIDITY` (i.e.
 	/// `possible_biomes[BIOME_LOW_HEAT][BIOME_LOWMEDIUM_HUMIDITY]`).
@@ -65,14 +67,16 @@
 	var/shared_seed = TRUE
 	/// Stamp size for DBP noise, aka frequency
 	var/biome_stamp_size = 75
+	/// Stored noise maps per z level if we use a shared seed
+	var/static_biome_maps = list()
 
-	///Base chance of spawning a mob
+	/// Base chance of spawning a mob
 	var/mob_spawn_chance = 6
-	///Base chance of spawning flora
+	/// Base chance of spawning flora
 	var/flora_spawn_chance = 2
-	///Base chance of spawning features
+	/// Base chance of spawning features
 	var/feature_spawn_chance = 0.25
-	///Unique ID for this spawner
+	/// Unique ID for this spawner
 	var/string_gen
 
 	/// Radius around features within which we avoid spawning other features
@@ -196,6 +200,14 @@
 	heat_gen[BIOME_HIGH_HEAT] = rustg_dbp_generate("[heat_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[high_heat_threshold]", "1.1")
 	heat_gen[BIOME_MEDIUM_HEAT] = rustg_dbp_generate("[heat_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[medium_heat_threshold]", "[high_heat_threshold]")
 
+	if (shared_seed)
+		static_biome_maps["[turfs[1].z]"] = list(
+			BIOME_HIGH_HUMIDITY = humidity_gen[BIOME_HIGH_HUMIDITY],
+			BIOME_MEDIUM_HUMIDITY = humidity_gen[BIOME_MEDIUM_HUMIDITY],
+			BIOME_HIGH_HEAT = heat_gen[BIOME_HIGH_HEAT],
+			BIOME_MEDIUM_HEAT = heat_gen[BIOME_MEDIUM_HEAT],
+		)
+
 	var/list/to_generate = list()
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
 		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
@@ -222,11 +234,39 @@
 	for(var/biome in to_generate)
 		var/datum/biome/generating_biome = SSmapping.biomes[biome]
 		var/list/turf/generated_turfs = generating_biome.generate_turfs_for_terrain(to_generate[biome])
-		generated_turfs_per_biome[biome] = generated_turfs
+		generated_turfs_per_biome[biome] = (generated_turfs_per_biome[biome] || list()) + generated_turfs
+		var/list/area_list = generated_turfs_per_area_biome[biome]
+		if (!area_list)
+			area_list = list()
+			generated_turfs_per_area_biome[biome] = area_list
+		area_list[generate_in] = generated_turfs
 
 	var/message = "[name] terrain generation finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"), MESSAGE_TYPE_DEBUG)
 	log_world(message)
+
+/// Returns a biome datum that the turf was initialized with, or would be if it is present on our Z level and we use a consistent shared seed
+/// Not consistent between calls by itself due to using RNG in perlin zoom, needs a static coordinate-based formula
+/datum/map_generator/cave_generator/proc/get_biome_for_turf(turf/target)
+	for (var/biome in generated_turfs_per_biome)
+		var/list/generated_turfs = generated_turfs_per_biome[biome]
+		if (generated_turfs[target])
+			return biome
+
+	var/list/biome_map = static_biome_maps["[target.z]"]
+	if (!shared_seed || !biome_map)
+		return null
+
+	var/drift_x = clamp((target.x + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)), 1, world.maxx)
+	var/drift_y = clamp((target.y + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)), 2, world.maxy)
+	var/coordinate = world.maxx * (drift_y - 1) + drift_x
+
+	var/humidity_level = text2num(biome_map[BIOME_HIGH_HUMIDITY][coordinate]) ? \
+		BIOME_HIGH_HUMIDITY : text2num(biome_map[BIOME_MEDIUM_HUMIDITY][coordinate]) ? BIOME_MEDIUM_HUMIDITY : BIOME_LOW_HUMIDITY
+	var/heat_level = text2num(biome_map[BIOME_HIGH_HEAT][coordinate]) ? \
+		BIOME_HIGH_HEAT : text2num(biome_map[BIOME_MEDIUM_HEAT][coordinate]) ? BIOME_MEDIUM_HEAT : BIOME_LOW_HEAT
+
+	return possible_biomes[heat_level][humidity_level]
 
 /datum/map_generator/cave_generator/populate_terrain(list/turfs, area/generate_in)
 	if (biome_population && length(possible_biomes))
@@ -354,9 +394,10 @@
 		log_world(message)
 		return
 
-	for(var/biome in generated_turfs_per_biome)
+	for(var/biome in generated_turfs_per_area_biome)
 		var/datum/biome/generating_biome = SSmapping.biomes[biome]
-		generating_biome.populate_turfs(generated_turfs_per_biome[biome], flora_allowed, features_allowed, fauna_allowed)
+		var/list/areas_list = generated_turfs_per_area_biome[biome]
+		generating_biome.populate_turfs(areas_list[generate_in], flora_allowed, features_allowed, fauna_allowed)
 
 		CHECK_TICK
 

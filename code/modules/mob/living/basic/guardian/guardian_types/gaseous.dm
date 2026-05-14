@@ -33,19 +33,14 @@
 	. = ..()
 	if (QDELETED(src))
 		return
-	RegisterSignal(summoner, COMSIG_LIVING_IGNITED, PROC_REF(on_summoner_ignited))
+	ADD_TRAIT(summoner, TRAIT_NOFIRE, REF(src))
 	RegisterSignal(summoner, COMSIG_LIVING_LIFE, PROC_REF(on_summoner_life))
 
 /mob/living/basic/guardian/gaseous/cut_summoner(different_person)
 	if (!isnull(summoner))
-		UnregisterSignal(summoner, list(COMSIG_LIVING_IGNITED, COMSIG_LIVING_LIFE))
+		REMOVE_TRAIT(summoner, TRAIT_NOFIRE, REF(src))
+		UnregisterSignal(summoner, COMSIG_LIVING_LIFE)
 	return ..()
-
-/// Prevent our summoner from being on fire
-/mob/living/basic/guardian/gaseous/proc/on_summoner_ignited(mob/living/source)
-	SIGNAL_HANDLER
-	source.extinguish_mob()
-	source.set_fire_stacks(0, remove_wet_stacks = FALSE)
 
 /// Maintain our summoner at a stable body temperature
 /mob/living/basic/guardian/gaseous/proc/on_summoner_life(mob/living/source, seconds_per_tick)

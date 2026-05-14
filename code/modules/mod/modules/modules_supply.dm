@@ -208,10 +208,10 @@
 	// Even faster if it has ore!
 	var/has_ore = !isnull(rock.mineral_type)
 	if (has_ore)
-		toolspeed /= 1.5
+		toolspeed /= 2
 	rock.attackby(src, bumper, null, null, exp_multiplier)
 	if (has_ore)
-		toolspeed *= 1.5
+		toolspeed *= 2
 
 /obj/item/mod/module/drill/proc/on_module_activated(datum/source, obj/item/mod/module/module)
 	SIGNAL_HANDLER
@@ -231,7 +231,7 @@
 		return
 	toolspeed = initial(toolspeed)
 	use_energy_cost *= 2
-	exp_multiplier /= 2
+	exp_multiplier /= 0.2
 	ballin = FALSE
 	if (!active)
 		on_deactivation()
@@ -577,7 +577,7 @@
 /obj/item/mod/module/sphere_transform
 	name = "MOD sphere transform module"
 	desc = "A module able to move the suit's parts around, turning it and the user into a sphere. \
-		The sphere can move quickly, even through lava, and launch mining bombs to decimate terrain."
+		The sphere can move quickly, even through lava, and launch mining micromissile to decimate terrain and fauna alike."
 	icon_state = "sphere"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
@@ -687,12 +687,19 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/bullet/mining_bomb/bomb = new(mod.wearer.loc)
-	bomb.aim_projectile(target, mod.wearer)
-	bomb.firer = mod.wearer
-	playsound(src, 'sound/items/weapons/gun/general/grenade_launch.ogg', 75, TRUE)
-	INVOKE_ASYNC(bomb, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
+	INVOKE_ASYNC(src, PROC_REF(fire_missile), target)
+	for (var/i in 1 to 2)
+		addtimer(CALLBACK(src, PROC_REF(fire_missile), target), 0.2 SECONDS * i)
+
+/obj/item/mod/module/sphere_transform/proc/fire_missile(atom/target)
+	var/obj/projectile/bullet/mining_missile/missile = new(mod.wearer.loc)
+	missile.aim_projectile(target, mod.wearer)
+	missile.firer = mod.wearer
+	if (isliving(target))
+		missile.set_homing_target(target)
+	playsound(src, 'sound/items/weapons/gun/general/rocket_launch.ogg', 30, TRUE)
+	missile.fire()
 
 /obj/item/mod/module/sphere_transform/on_active_process(seconds_per_tick)
 	if(!mod.wearer.has_gravity())
@@ -703,80 +710,60 @@
 	if(mod.wearer.stat)
 		deactivate()
 
-/obj/projectile/bullet/mining_bomb
-	name = "mining bomb"
-	desc = "A bomb. Why are you examining this?"
-	icon_state = "mine_bomb"
+/obj/projectile/bullet/mining_missile
+	name = "mining micromissile"
+	desc = "A missile. Why are you examining this?"
+	icon_state = "mine_missile"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
-	damage = 0
+	damage = 3 // 3 * 4 = 12, *3 = 36 damage between 3 missiles
 	range = 6
+	homing_turn_speed = 12
 	suppressed = SUPPRESSED_VERY
 	armor_flag = BOMB
 	light_system = OVERLAY_LIGHT
 	light_range = 1
 	light_power = 1
-	light_color = COLOR_LIGHT_ORANGE
+	light_color = LIGHT_COLOR_BABY_BLUE
 	embed_type = null
 	can_hit_turfs = TRUE
-
-/obj/projectile/bullet/mining_bomb/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/projectile_drop, /obj/structure/mining_bomb)
-	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
-
-/obj/projectile/bullet/mining_bomb/proc/handle_drop(datum/source, obj/structure/mining_bomb/mining_bomb)
-	SIGNAL_HANDLER
-	addtimer(CALLBACK(mining_bomb, TYPE_PROC_REF(/obj/structure/mining_bomb, prime), firer), mining_bomb.prime_time)
-
-/obj/structure/mining_bomb
-	name = "mining bomb"
-	desc = "A bomb. Why are you examining this?"
-	icon_state = "mine_bomb"
-	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
-	anchored = TRUE
-	resistance_flags = FIRE_PROOF|LAVA_PROOF
-	light_system = OVERLAY_LIGHT
-	light_range = 1
-	light_power = 1
-	light_color = COLOR_LIGHT_ORANGE
-	/// Time to prime the explosion
-	var/prime_time = 0.1 SECONDS
-	/// Time to explode from the priming
-	var/explosion_time = 0.9 SECONDS // Roughly this much until the blast part of the explosion animation
-	/// Damage done on explosion.
-	var/damage = 7
-	/// Damage multiplier on hostile fauna.
+	/// Damage multiplier against lavaland fauna
 	var/fauna_boost = 4
 
-/obj/structure/mining_bomb/proc/prime(atom/movable/firer)
-	var/mutable_appearance/explosion_image = mutable_appearance('icons/effects/96x96.dmi', "judicial_explosion", FLOAT_LAYER, src, ABOVE_GAME_PLANE)
-	explosion_image.pixel_w = -32
-	explosion_image.pixel_z = -32
-	var/turf/our_loc = get_turf(src)
-	our_loc.flick_overlay_view(explosion_image, 1.35 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(boom), firer), explosion_time)
+/obj/projectile/bullet/mining_missile/on_hit(atom/target, blocked, pierce_hit)
+	playsound(get_turf(target), 'sound/items/weapons/sonic_jackhammer.ogg', 75, TRUE)
+	if (ismineralturf(target))
+		. = ..()
+		spawn_particles(target)
+		var/turf/closed/mineral/rock = target
+		rock.gets_drilled(firer)
+		return BULLET_ACT_HIT
 
-/obj/structure/mining_bomb/proc/boom(atom/movable/firer)
-	visible_message(span_danger("[src] explodes!"))
-	playsound(src, 'sound/effects/magic/magic_missile.ogg', 200, vary = TRUE)
-	var/turf/our_turf = get_turf(src)
-	for(var/turf/closed/mineral/rock in RANGE_TURFS(1, src))
-		if (rock == our_turf)
-			rock.gets_drilled(firer, 0)
-		else
-			rock.drill_aoe(firer, 0)
-	for(var/mob/living/victim in range(1, src))
-		if(HAS_TRAIT(victim, TRAIT_MINING_AOE_IMMUNE))
-			continue
-		victim.apply_damage(damage * (ismining(victim) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
-		to_chat(victim, span_userdanger("You are hit by a mining bomb explosion!"))
-		if(!firer)
-			continue
-		if(ishostile(victim))
-			var/mob/living/simple_animal/hostile/hostile_mob = victim
-			hostile_mob.GiveTarget(firer)
-		else if(isbasicmob(victim))
-			victim.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, firer)
-	for(var/obj/object in range(1, src))
-		object.take_damage(damage, BRUTE, BOMB)
-	qdel(src)
+	if (!isliving(target))
+		. = ..()
+		spawn_particles(target)
+		return
+
+	if (isliving(target))
+		var/mob/living/victim = target
+		if (ismining(victim))
+			damage *= fauna_boost
+	. = ..()
+	spawn_particles(target)
+
+/obj/projectile/bullet/mining_missile/proc/spawn_particles(atom/target)
+	var/obj/effect/abstract/particle_holder/impact_particles = new(get_turf(target), /particles/micromissile_impact)
+	impact_particles.particles.position = generator(GEN_VECTOR, list(impact_x - 2, impact_x + 2), list(impact_y - 2, impact_y + 2), NORMAL_RAND)
+	impact_particles.particles.velocity = generator(GEN_VECTOR, list(movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X - 2, movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X + 2), list(movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y - 2, movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y + 2), NORMAL_RAND)
+	QDEL_IN(impact_particles, 1 SECONDS)
+
+/particles/micromissile_impact
+	icon = 'icons/effects/particles/generic.dmi'
+	icon_state = "cross"
+	width = 100
+	height = 100
+	count = 10
+	spawning = 10
+	color = LIGHT_COLOR_BABY_BLUE
+	lifespan = 1 SECONDS
+	fade = 1 SECONDS
+	spin = generator(GEN_NUM, -20, 20)
