@@ -54,7 +54,8 @@
 
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
 
-	owner.log_message("bound [src] to [owner.p_themselves()] with restraints", LOG_GAME)
+	owner.log_message("bound [cuffed] to [owner.p_themselves()] with restraints", LOG_GAME)
+	SSblackbox.record_feedback("tally", "cuffed_item", 1, cuffed.type)
 
 	return TRUE
 
