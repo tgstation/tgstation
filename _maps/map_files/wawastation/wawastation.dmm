@@ -50262,6 +50262,9 @@
 /obj/effect/spawner/random/food_or_drink/seed_flowers,
 /turf/open/floor/iron/textured_large,
 /area/station/service/hydroponics/garden)
+"rot" = (
+/turf/closed/wall/r_wall,
+/area/station/science/cytology)
 "rox" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Pure to Port"
@@ -171684,7 +171687,7 @@ oka
 qZr
 wzX
 hfD
-gYY
+rot
 dVp
 dVt
 cdl
@@ -171941,7 +171944,7 @@ guk
 mNd
 mmV
 mmV
-gYY
+rot
 gTf
 dOg
 kqf
@@ -172198,7 +172201,7 @@ suO
 bHy
 mwX
 xGY
-gYY
+rot
 oGQ
 aIX
 oSG
@@ -172455,7 +172458,7 @@ suK
 wDa
 mmV
 uhc
-gYY
+rot
 xNo
 suw
 fdN
@@ -172712,7 +172715,7 @@ gYY
 gYY
 iha
 iha
-gYY
+ixU
 dVp
 dRh
 xBU
