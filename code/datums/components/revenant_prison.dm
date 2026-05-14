@@ -7,11 +7,12 @@
 	var/old_ckey
 
 /datum/component/revenant_prison/Initialize(mob/living/basic/revenant/revenant, create_on_release = FALSE)
+	if(create_on_release)
+		return ..()
 	if(!istype(revenant))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
-	if(create_on_release)
-		return
+
 	src.revenant = revenant
 	revenant.dormant = TRUE
 	old_ckey = revenant.client?.ckey
