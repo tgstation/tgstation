@@ -370,8 +370,11 @@
 					if((source in old_component.sources) && !old_component.allow_source_update(source))
 						return old_component // source already registered, no work to do
 
-					if(old_component.on_source_add(arglist(list(source) + raw_args.Copy(2))) == COMPONENT_INCOMPATIBLE)
+					var/source_result = old_component.on_source_add(arglist(list(source) + raw_args.Copy(2)))
+					if(source_result == COMPONENT_INCOMPATIBLE)
 						stack_trace("incompatible source added to a [old_component.type]. Args: [json_encode(raw_args)]")
+						return null
+					if(source_result == COMPONENT_REDUNDANT)
 						return null
 
 		else if(!new_component)
@@ -405,11 +408,17 @@
  * Removes a component source from this datum
  */
 /datum/proc/RemoveComponentSource(source, datum/component/component_type)
-	if(ispath(component_type))
-		component_type = GetExactComponent(component_type)
-	if(!component_type)
-		return
-	component_type.on_source_remove(source)
+	if(ispath(component_type, /datum/component))
+		for(var/datum/component/component as anything in GetComponents(component_type))
+			if(source in component.sources)
+				component.on_source_remove(source)
+
+	else if(istype(component_type, /datum/component))
+		if(source in component_type.sources)
+			component_type.on_source_remove(source)
+
+	else
+		CRASH("Attempted to remove a component source with an invalid component type argument: [component_type || "null"]")
 
 /**
  * Get existing component of type, or create it and return a reference to it
