@@ -221,7 +221,7 @@
 /obj/effect/mob_spawn/ghost_role/proc/can_ghost_take(mob/dead/observer/user)
 	if(is_banned_from(user.ckey, role_ban))
 		to_chat(user, span_warning("You are banned from this role!"))
-		return FALL_STOP_INTERCEPTING
+		return FALSE
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return FALSE
