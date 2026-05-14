@@ -44919,7 +44919,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "mEJ" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/science/genetics)
 "mEL" = (
 /obj/machinery/atmospherics/components/binary/valve/digital{
@@ -61374,9 +61374,6 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
-"rcb" = (
-/turf/closed/wall,
-/area/station/science/lab)
 "rcj" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=Lockers";
@@ -70603,6 +70600,9 @@
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/openspace,
 /area/station/engineering/storage/tech)
+"tIB" = (
+/turf/closed/wall/r_wall,
+/area/station/science/breakroom)
 "tIC" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
@@ -265498,7 +265498,7 @@ tia
 qNn
 uIQ
 gNi
-rcb
+oHK
 dUh
 bUa
 fbl
@@ -265743,8 +265743,8 @@ lah
 asU
 qPL
 elw
-omh
-omh
+elw
+elw
 pqo
 ftJ
 mEJ
@@ -265755,7 +265755,7 @@ mEJ
 jTG
 mEJ
 mEJ
-srP
+tIB
 srP
 rou
 lIk
@@ -266001,7 +266001,7 @@ eBg
 kCs
 omh
 peV
-omh
+elw
 oOc
 nvY
 qpu
@@ -266258,7 +266258,7 @@ qRr
 kGW
 omh
 wDr
-omh
+elw
 hpY
 dJZ
 wnK
@@ -266515,7 +266515,7 @@ ePm
 sBV
 omh
 wuC
-omh
+elw
 vav
 mlO
 cCu
@@ -266772,11 +266772,11 @@ ePm
 jXL
 omh
 dbw
-omh
-omh
-omh
-omh
-omh
+elw
+elw
+elw
+elw
+elw
 ouX
 ero
 itj
@@ -267033,7 +267033,7 @@ cRy
 cRy
 cRy
 qCF
-omh
+elw
 lfF
 iNn
 jKl
@@ -267290,13 +267290,13 @@ ozE
 pLJ
 dxm
 sHM
-omh
+elw
 cIb
 hAT
 xyE
 hDp
 hDp
-omh
+elw
 omh
 omh
 omh
@@ -267547,13 +267547,13 @@ omh
 gOP
 omh
 sHM
-omh
+elw
 jqw
 axN
 qvE
 nhI
 hDp
-omh
+elw
 qrP
 rpV
 fTW
@@ -267804,13 +267804,13 @@ omh
 icV
 omh
 sHM
-omh
+elw
 bCd
-omh
-omh
-omh
-omh
-omh
+elw
+elw
+elw
+elw
+elw
 lxR
 icE
 idt

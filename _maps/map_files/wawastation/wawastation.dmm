@@ -10817,9 +10817,6 @@
 /turf/open/floor/iron/dark/small,
 /area/station/science/cytology)
 "dOl" = (
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
-	name = "chimpanzee filth exhaust"
-	},
 /obj/machinery/light/directional/north,
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/white,
@@ -20061,7 +20058,7 @@
 /turf/closed/wall,
 /area/station/maintenance/central/greater)
 "gYY" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/science/genetics)
 "gZc" = (
 /obj/machinery/camera/directional/south{
@@ -38629,10 +38626,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/smooth_large,
-/area/station/science/research)
-"nmj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
 /area/station/science/research)
 "nmq" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -174263,7 +174256,7 @@ vpK
 raz
 obA
 dOl
-nmj
+dfM
 iHH
 bWi
 gTA

@@ -64847,7 +64847,7 @@
 /area/station/maintenance/space_hut)
 "vZB" = (
 /obj/structure/sign/directions/evac,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/maintenance/aft/lesser)
 "vZE" = (
 /obj/effect/spawner/random/structure/crate,
@@ -99330,12 +99330,12 @@ kQe
 qYt
 gPT
 qDa
-kQe
-kQe
-kQe
-kQe
-kQe
-kQe
+oIg
+oIg
+oIg
+oIg
+oIg
+oIg
 vZB
 dKC
 dKC
@@ -99583,17 +99583,17 @@ wOS
 orv
 dPY
 xWJ
-kQe
+oIg
 rAE
 cId
 oNm
-kQe
+oIg
 wBq
 bEC
 lsV
 aXW
 jxW
-dKC
+svS
 rhU
 nFa
 jjs
@@ -99840,7 +99840,7 @@ fma
 ujJ
 ujJ
 ujJ
-kQe
+oIg
 cDM
 poS
 jKv
@@ -99850,7 +99850,7 @@ oir
 wal
 tzg
 jxW
-dKC
+svS
 tjE
 xpE
 lqh
@@ -100107,7 +100107,7 @@ xoa
 wal
 xwS
 oCE
-dKC
+svS
 dKC
 dKC
 tNM
@@ -100621,7 +100621,7 @@ rRJ
 edH
 mHL
 sIQ
-kQe
+oIg
 ove
 lJw
 oHO

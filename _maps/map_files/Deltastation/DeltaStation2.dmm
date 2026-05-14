@@ -7239,9 +7239,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
-"bLq" = (
-/turf/closed/wall,
-/area/station/security/checkpoint/medical/medsci)
 "bLs" = (
 /turf/closed/wall/r_wall,
 /area/station/security/armory)
@@ -10234,7 +10231,7 @@
 /turf/open/floor/plating,
 /area/station/medical/cryo)
 "cwh" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/medical/pharmacy)
 "cwp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -22261,9 +22258,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
-"fxW" = (
-/turf/closed/wall,
-/area/station/command/heads_quarters/cmo)
 "fya" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -78432,6 +78426,9 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/wood/tile,
 /area/station/service/library/artgallery)
+"tqz" = (
+/turf/closed/wall/r_wall,
+/area/station/medical/medbay/lobby)
 "tqI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -90264,6 +90261,9 @@
 	dir = 1
 	},
 /area/station/maintenance/disposal/incinerator)
+"wlP" = (
+/turf/closed/wall/r_wall,
+/area/station/medical/coldroom)
 "wlS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
@@ -133459,12 +133459,12 @@ aAj
 aAj
 wCT
 aAj
-aAj
-aAj
-qQM
-qQM
-qQM
-qQM
+peU
+peU
+kzc
+kzc
+kzc
+kzc
 kzc
 vmK
 wWL
@@ -133696,8 +133696,8 @@ mlE
 kxg
 hJs
 xoS
-ceF
-ceF
+oJy
+oJy
 sfc
 sfc
 ceF
@@ -133716,7 +133716,7 @@ dEr
 qmd
 qbg
 xfU
-xWf
+dNN
 tCv
 bLC
 mPZ
@@ -133953,7 +133953,7 @@ mlE
 dvH
 whK
 lGJ
-ceF
+oJy
 gCS
 uZf
 fHc
@@ -133973,7 +133973,7 @@ cQn
 oiW
 uEV
 rCd
-xWf
+dNN
 gWz
 pdf
 kVo
@@ -134210,7 +134210,7 @@ hPs
 avR
 whK
 rcW
-ceF
+oJy
 oFr
 pXk
 hXQ
@@ -134230,7 +134230,7 @@ cZC
 lhC
 pdi
 ikZ
-xWf
+dNN
 orQ
 wRj
 jBw
@@ -134467,7 +134467,7 @@ hPs
 avR
 whK
 rcW
-ceF
+oJy
 rvY
 aAu
 xlM
@@ -134485,14 +134485,14 @@ iJa
 dQT
 qfi
 qfi
-bLq
-bLq
-bLq
-bLq
+dQT
+dQT
+dQT
+dQT
 rXA
 aSl
 rXA
-fxW
+loe
 loe
 fmh
 qjh
@@ -134724,7 +134724,7 @@ hPs
 avR
 qLG
 oKz
-ceF
+oJy
 jpB
 iAe
 bvb
@@ -134745,7 +134745,7 @@ brm
 qfi
 rxc
 amI
-bLq
+dQT
 ghA
 nQG
 rtw
@@ -134981,8 +134981,8 @@ mlE
 nYC
 pHt
 ryc
-ceF
-ceF
+oJy
+oJy
 fZn
 gFB
 wmS
@@ -135002,7 +135002,7 @@ upl
 swf
 sZr
 uoI
-bLq
+dQT
 akg
 hdH
 jgt
@@ -135259,7 +135259,7 @@ rDy
 qfi
 fLd
 uws
-bLq
+dQT
 deW
 pMF
 uZm
@@ -135502,7 +135502,7 @@ jKb
 vdA
 bYk
 viP
-ceF
+oJy
 xWf
 uZs
 xWf
@@ -135514,9 +135514,9 @@ dQT
 qqM
 cMM
 dQT
-bLq
-bLq
-bLq
+dQT
+dQT
+dQT
 qtq
 pMF
 nti
@@ -135759,7 +135759,7 @@ iiU
 fZg
 eAq
 okD
-ceF
+oJy
 lYW
 gFq
 fkz
@@ -135773,7 +135773,7 @@ hst
 dQT
 nYZ
 iTK
-nGk
+wlP
 vpC
 eEn
 fAn
@@ -136030,7 +136030,7 @@ ulp
 dQT
 xkU
 jew
-nGk
+wlP
 lrK
 pMF
 jDq
@@ -136287,7 +136287,7 @@ hsm
 dQT
 sqj
 gJe
-nGk
+wlP
 ofY
 sKJ
 myx
@@ -136544,7 +136544,7 @@ bzD
 dQT
 qSG
 hlO
-nGk
+wlP
 wtz
 wmn
 tQn
@@ -136801,7 +136801,7 @@ dQT
 dQT
 nGk
 acn
-nGk
+wlP
 fsa
 dXO
 ybs
@@ -138322,7 +138322,7 @@ iaY
 prP
 whK
 hiV
-uNY
+tqz
 squ
 pEU
 cwh
