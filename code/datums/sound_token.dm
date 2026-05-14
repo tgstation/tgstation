@@ -110,6 +110,11 @@
 		if(should_be_muted && is_muted)
 			return
 
+	if(source_turf.z != listener_turf.z)
+		should_be_muted = TRUE
+		if(should_be_muted && is_muted)
+			return
+
 	var/distance = get_dist(source_turf, listener_turf)
 	if(distance > range)
 		should_be_muted = TRUE
