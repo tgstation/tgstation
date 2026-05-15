@@ -111,11 +111,14 @@
  * * antag_datum: the antag datum of the uplink owner, for storing it in antag memory. optional!
  */
 /datum/mind/proc/give_uplink(silent = FALSE, datum/antagonist/antag_datum)
-	if(isnull(current))
+	if(!isliving(current))
 		return
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
-		return
+		var/datum/status_effect/shapechange_mob/shapeshift = current.has_status_effect(/datum/status_effect/shapechange_mob)
+		if (!ishuman(shapeshift?.caster_mob))
+			return
+		traitor_mob = shapeshift.caster_mob
 
 	var/obj/item/uplink_loc
 	var/uplink_spawn_location = traitor_mob.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
