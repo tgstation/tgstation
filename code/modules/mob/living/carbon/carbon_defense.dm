@@ -700,8 +700,7 @@
 /// Fill in the lists of things we can bioscramble into people
 /mob/living/carbon/proc/init_bioscrambler_lists()
 	var/list/body_parts = typesof(/obj/item/bodypart/chest) + typesof(/obj/item/bodypart/head) + subtypesof(/obj/item/bodypart/arm) + subtypesof(/obj/item/bodypart/leg)
-	for(var/obj/item/bodypart/part as anything in body_parts)
-		var/obj/item/bodypart/starter_part = initial(part)
+	for(var/obj/item/bodypart/starter_part as anything in body_parts)
 		if(!is_type_in_typecache(part, GLOB.bioscrambler_parts_blacklist) && BODYTYPE_CAN_BE_BIOSCRAMBLED(starter_part))
 			continue
 		body_parts -= part
