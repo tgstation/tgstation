@@ -121,11 +121,11 @@
 		traitor_mob = shapeshift.caster_mob
 
 	var/obj/item/uplink_loc
-	var/uplink_spawn_location = traitor_mob.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
+	var/uplink_spawn_location = current.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
 	var/cant_speak = (HAS_TRAIT(traitor_mob, TRAIT_MUTE) || is_mime_job(assigned_role))
 	if(uplink_spawn_location == UPLINK_RADIO && cant_speak)
 		if(!silent)
-			to_chat(traitor_mob, span_warning("You have been deemed ineligible for a radio uplink. Supplying standard uplink instead."))
+			to_chat(current, span_warning("You have been deemed ineligible for a radio uplink. Supplying standard uplink instead."))
 		uplink_spawn_location = UPLINK_PDA
 
 	if(uplink_spawn_location != UPLINK_IMPLANT)
@@ -137,7 +137,7 @@
 		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob)
 		new_implant.implant(traitor_mob, null, silent = TRUE)
 		if(!silent)
-			to_chat(traitor_mob, span_boldnotice("Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."))
+			to_chat(current, span_boldnotice("Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."))
 		add_memory(/datum/memory/key/traitor_uplink/implant, uplink_loc = "implant")
 		return new_implant
 
@@ -147,7 +147,7 @@
 	if(!new_uplink)
 		CRASH("Uplink creation failed.")
 	new_uplink.setup_unlock_code()
-	new_uplink.uplink_handler.owner = traitor_mob.mind
+	new_uplink.uplink_handler.owner = src
 	new_uplink.uplink_handler.assigned_role = traitor_mob.mind.assigned_role.title
 	new_uplink.uplink_handler.assigned_species = traitor_mob.dna.species.id
 
@@ -167,7 +167,7 @@
 
 	new_uplink.unlock_text = unlock_text
 	if(!silent)
-		to_chat(traitor_mob, span_boldnotice(unlock_text))
+		to_chat(current, span_boldnotice(unlock_text))
 	if(antag_datum)
 		antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
 	return .
