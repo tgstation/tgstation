@@ -359,6 +359,8 @@
 	switch(type)
 		if("ping")
 			send_message("ping/reply", payload)
+		if("ping/set")
+			client?.avgping = payload["ping"]
 		if("visible")
 			visible = TRUE
 			SEND_SIGNAL(src, COMSIG_TGUI_WINDOW_VISIBLE, client)

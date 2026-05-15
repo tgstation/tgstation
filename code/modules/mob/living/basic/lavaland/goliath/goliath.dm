@@ -9,7 +9,7 @@
 	pixel_x = -12
 	base_pixel_x = -12
 	gender = MALE // Female ones are the bipedal elites
-	speed = 30
+	speed = 12
 	basic_mob_flags = IMMUNE_TO_FISTS
 	maxHealth = 300
 	health = 300
@@ -197,7 +197,7 @@
 		This one is clearly ancient, and its tentacles constantly churn the earth around it."
 	maxHealth = 400
 	health = 400
-	crusher_drop_chance = 30 // Wow a whole 5% more likely, how generous
+	crusher_drop_chance = 100
 	/// Don't re-check nearby turfs for this long
 	COOLDOWN_DECLARE(retarget_turfs_cooldown)
 	/// List of places we might spawn a tentacle, if we're alive
@@ -214,7 +214,7 @@
 			tentacle_target_turfs -= target_turf
 			continue
 		if (prob(10))
-			new /obj/effect/goliath_tentacle(target_turf)
+			new /obj/effect/goliath_tentacle(target_turf, src)
 
 /mob/living/basic/mining/goliath/ancient/immortal/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -224,7 +224,7 @@
 
 /// Store nearby turfs in our list so we can pop them out later
 /mob/living/basic/mining/goliath/ancient/immortal/proc/cache_nearby_turfs()
-	COOLDOWN_START(src, retarget_turfs_cooldown, 10 SECONDS)
+	COOLDOWN_START(src, retarget_turfs_cooldown, 5 SECONDS)
 	LAZYCLEARLIST(tentacle_target_turfs)
 	for(var/turf/open/floor in orange(4, loc))
 		LAZYADD(tentacle_target_turfs, floor)
