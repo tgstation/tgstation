@@ -205,8 +205,6 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, login_music))
-		if(!isfile(var_value))
-			return FALSE
 		set_lobby_music(var_value, override = TRUE)
 	return ..()
 
