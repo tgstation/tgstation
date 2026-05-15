@@ -20,7 +20,7 @@
 	/// Lighting middleman, lets us do a flicker effect
 	var/datum/light_middleman/middleman
 
-/obj/item/flashlight/lantern/heretic/Initialize()
+/obj/item/flashlight/lantern/heretic/Initialize(mapload)
 	. = ..()
 	if(IS_OVERLAY_LIGHT_SYSTEM(light_system))
 		middleman = new(src, "lantern")
