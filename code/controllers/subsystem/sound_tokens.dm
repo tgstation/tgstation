@@ -3,7 +3,6 @@ SUBSYSTEM_DEF(sound_tokens)
 	wait = 1
 	ss_flags = SS_TICKER | SS_BACKGROUND | SS_NO_INIT
 
-	var/list/playing_sound_tokens = list()
 
 	var/list/clients_needing_update = list()
 

@@ -5,7 +5,7 @@
 	/// The atom playing the sound.
 	var/atom/source
 	/// k:v list of mob : sound status
-	var/list/listeners
+	var/list/listeners = list()
 
 	/// Sound maximum range
 	var/range
@@ -44,13 +44,11 @@
 	falloff_distance = _falloff_distance
 
 	update_sound(_sound)
+
 	null_sound = sound(channel = sound_channel)
 
-	listeners = list()
 	cell_tracker = new /datum/cell_tracker(range, range)
 	update_tracked_cells()
-
-	SSsound_tokens.playing_sound_tokens[src] = TRUE
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGIN, PROC_REF(player_login))
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGOUT, PROC_REF(player_logout))
@@ -61,7 +59,6 @@
 
 	listeners = null
 	source = null
-	SSsound_tokens.playing_sound_tokens -= src
 	return ..()
 
 ///Lets us update the sound to a new one.
