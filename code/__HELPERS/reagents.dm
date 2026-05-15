@@ -63,7 +63,7 @@
 	var/location = get_turf(my_atom)
 
 	var/datum/effect_system/fluid_spread/foam/foam = new foamtype(location, null, foam_volume, my_atom, carry = src, result_type = result_type)
-	foam.start(log = log, lifetime = src.lifetime, slippery = src.slippery)
+	foam.start(log = log, lifetime = lifetime, slippery = slippery)
 
 	clear_reagents()
 	if(!notification)
