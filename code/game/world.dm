@@ -165,8 +165,6 @@ GLOBAL_VAR(restart_counter)
 	// Initialize RETA system - code/modules/reta/reta_system.dm
 	reta_init_config()
 
-	LoadVerbs(/datum/verbs/menu)
-
 	if(fexists(RESTART_COUNTER_PATH))
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
 		fdel(RESTART_COUNTER_PATH)

@@ -128,10 +128,11 @@
 
 /datum/heretic_knowledge/armor/moon
 	desc = "Create a Resplendant Regalia.<br>While worn, renders you fully immune to disabling effects \
-		and converts all forms of damage into brain damage, though also causing pacifism (with the exception of your Moon Blade)."
+			While worn, pacifies you, while also rendering you fully immune to disabling effects and converting all forms of damage into brain damage."
 	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
 			The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
 			I observed, basking in the light, to find my self."
+	notice = "Despite the robe's pacifying effect, you can still use your Moon Blades, provided you ALSO wear a Moonlight Amulet."
 	transmute_text = "Transmute a table (or a suit), a mask and two sheets of glass."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon)
 	research_tree_icon_state = "moon_armor"

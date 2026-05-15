@@ -18,7 +18,7 @@
 		/obj/item/reagent_containers/applicator/pill/gravitum,
 	)
 	/// How high spacers get bumped up to
-	var/modded_height = HUMAN_HEIGHT_TALLER
+	var/modded_height = HUMAN_HEIGHT_TALLEST
 	/// How long on a planet before we get averse effects
 	var/planet_period = 3 MINUTES
 	/// TimerID for time spend on a planet
