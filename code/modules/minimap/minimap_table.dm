@@ -78,7 +78,7 @@
 	if(!is_operational || isnull(minimap) || isnull(user.hud_used))
 		return FALSE
 	if(!isnull(user.hud_used.screen_objects[HUD_TAC_MINIMAP]))
-		hide_minmap(user)
+		hide_minimap(user)
 		return TRUE
 	if(active)
 		show_minimap(user)
@@ -150,7 +150,7 @@
 	add_table_huds(user.hud_used)
 	viewers |= user
 
-/obj/machinery/minimap_table/proc/hide_minmap(mob/user)
+/obj/machinery/minimap_table/proc/hide_minimap(mob/user)
 	remove_table_huds(user.hud_used)
 	viewers -= user
 	if(!length(viewers))
@@ -216,7 +216,7 @@
 	if(mob_gone in adjacent)
 		return
 	if(mob_gone in viewers)
-		hide_minmap(gone)
+		hide_minimap(gone)
 
 /obj/machinery/minimap_table/proc/on_climb_enter()
 
