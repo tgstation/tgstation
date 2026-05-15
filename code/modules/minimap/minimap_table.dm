@@ -48,7 +48,6 @@
 
 /obj/machinery/minimap_table/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, PROC_REF(set_minimap))
 	proximity = new(src, interactivity_range)
 
 	if(IS_OVERLAY_LIGHT_SYSTEM(light_system))
@@ -64,6 +63,10 @@
 	QDEL_NULL(middleman)
 	minimap = null
 	return ..()
+
+/obj/machinery/minimap_table/post_machine_initialize()
+	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(set_minimap))
 
 /obj/machinery/minimap_table/RangedAttackOn(mob/A, list/modifiers)
 	if(get_dist(src, A) > interactivity_range)
