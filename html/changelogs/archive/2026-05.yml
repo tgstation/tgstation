@@ -249,3 +249,6 @@
   - spellcheck: Users of a Gaseous holoparasite no longer appear to repeatedly catch
       fire when they are not.
   - bugfix: You can unbuckle people from wheelchairs again
+2026-05-15:
+  JohnFulpWillard:
+  - bugfix: Stat panel's "Toggle Stat Panel" button now works.
