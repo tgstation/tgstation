@@ -1266,4 +1266,157 @@
 		air.temperature = max(air.temperature * heat_capacity / new_heat_capacity, TCMB)
 
 
+
+
+/**
+ * Plagium Formation
+ *
+ * Formation of Plagium by applying plasma and water vapor on miasma at slitly high, then room, - tempurture.
+ * Exothermic.
+ */
+/datum/gas_reaction/plagiumformation
+	priority_group = PRIORITY_FORMATION
+	name = "Plagium Gas Formation"
+	id = "plagiumformation"
+	desc = "Production of Plagium via application plasma and water vapor on miasma at slithgly warm tempurture."
+
+/datum/gas_reaction/plagiumformation/init_reqs()
+	requirements = list(
+		/datum/gas/plasma = MINIMUM_MOLE_COUNT,
+		/datum/gas/water_vapor = MINIMUM_MOLE_COUNT,
+		/datum/gas/miasma = MINIMUM_MOLE_COUNT,
+		"MIN_TEMP" = 320,
+		"MAX_TEMP" = 420,
+	)
+
+/datum/gas_reaction/plagiumformation/react(datum/gas_mixture/air)
+	var/list/cached_gases = air.gases
+
+
+	var/list/plasma = cached_gases[/datum/gas/plasma]
+	var/list/water_vapor = cached_gases[/datum/gas/water_vapor]
+	var/list/miasma = cached_gases[/datum/gas/miasma]
+
+	if(!plasma || !water_vapor || !miasma)
+		return NO_REACTION
+
+	var/plasma_moles = plasma[MOLES]
+	var/water_vapor_moles = water_vapor[MOLES]
+	var/miasma_moles = miasma[MOLES]
+
+	// equal parts of plasma, water vapor
+	var/limiting_factor = min(plasma_moles, water_vapor_moles, miasma_moles)
+
+	// effi - the best(at speed of production of Plagium) is 1:1 parts
+	var/ratio_efficiency = 1 - abs(plasma_moles - water_vapor_moles) / (plasma_moles + water_vapor_moles + 0.001)
+
+	// efficiency depends from temperture, high temp - miasma will start decompose
+	// best enviroment for viruses/bacterias/plague
+	// is wet and warm(slightly hotter then room temp) air
+	// So optimal temp is 350-400 Kelvins
+	var/temp = air.temperature
+	var/temp_efficiency
+	if(temp < 350)
+		temp_efficiency = (temp - 320) / 30 // lineal grow from 320K to 350K
+	else if(temp <= 400)
+		temp_efficiency = 1.0 // optimal
+	else
+		temp_efficiency = 1.0 - (temp - 400) / 100 // regress after 400K
+
+	// limit for effi
+	temp_efficiency = clamp(temp_efficiency, 0, 1)
+
+	// base reaction speed
+	var/base_rate = 0.01
+
+	// how much plagium will be formed
+	var/plagium_formed = limiting_factor * base_rate * ratio_efficiency * temp_efficiency
+
+	if(plagium_formed < 0.001)
+		return NO_REACTION
+
+	var/plasma_consumed = plagium_formed * 2.0 // 2 plasma on 1 mole Plagium
+	var/water_vapor_consumed = plagium_formed * 2.0 // 2 mole water vapor 1 mole Plagium
+	var/miasma_consumed = plagium_formed * 2.0
+
+	if(plasma_moles < plasma_consumed || water_vapor_moles < water_vapor_consumed || miasma_moles < miasma_consumed)
+		return NO_REACTION
+
+	var/old_heat_capacity = air.heat_capacity()
+
+	plasma[MOLES] -= plasma_consumed
+	water_vapor[MOLES] -= water_vapor_consumed
+	miasma[MOLES] -= miasma_consumed
+
+	ASSERT_GAS(/datum/gas/plagium, air)
+	cached_gases[/datum/gas/plagium][MOLES] += plagium_formed
+
+
+	// for bio and bacterial enviroment - the best - slitglhy warm temp
+	// so, when temp is too low, you need to give some more energy, cause its too cold
+	// when its alrigh temp, its amazing
+	// but when its too hot, it will sterialise, cause most microbes die at hot envi
+	var/energy_change
+	if(temp < 350)
+		// endothermic
+		energy_change = -plagium_formed * 1000
+	else if(temp <= 400)
+		// exothermic
+		energy_change = plagium_formed * 2000
+	else
+		// weak exothermic
+		energy_change = plagium_formed * 500
+
+	var/new_heat_capacity = air.heat_capacity()
+	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+	air.temperature = max(((air.temperature * old_heat_capacity + energy_change) / new_heat_capacity), TCMB)
+
+	SET_REACTION_RESULTS(plagium_formed)
+
+	air.garbage_collect()
+	return REACTING
+
+
+
+
+/**
+ * Plagium Sterilization
+ *
+ * Decompose Plagium at the Miasma at high temp.
+ *
+ */
+/datum/gas_reaction/plagster
+	priority_group = PRIORITY_POST_FORMATION
+	name = "Plagium Sterilization"
+	id = "plagium_decomposition"
+	desc = "Even advanced one pathogens cannot survive in a enough hot environment. Plagium decomposes on high temperature."
+
+/datum/gas_reaction/plagster/init_reqs()
+	requirements = list(
+		/datum/gas/plagium = MINIMUM_MOLE_COUNT,
+		"MIN_TEMP" = PLAGSTER_STERILIZATION_TEMP,
+	)
+
+/datum/gas_reaction/plagster/react(datum/gas_mixture/air, datum/holder)
+	var/list/cached_gases = air.gases
+	var/list/water_vapor = cached_gases[/datum/gas/water_vapor]
+	var/list/plagium = cached_gases[/datum/gas/plagium]
+	// As the name says it, it needs to be dry
+	if(water_vapor && water_vapor[MOLES] / air.total_moles() > PLAGSTER_STERILIZATION_MAX_HUMIDITY)
+		return NO_REACTION
+
+	//Replace plagium with miasma
+	var/miasma_air = min(plagium[MOLES], PLAGSTER_STERILIZATION_RATE_BASE + (air.temperature - PLAGSTER_STERILIZATION_TEMP) / PLAGSTER_STERILIZATION_RATE_SCALE)
+	plagium[MOLES] -= miasma_air
+	ASSERT_GAS(/datum/gas/miasma, air)
+	cached_gases[/datum/gas/miasma][MOLES] += miasma_air
+
+	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
+	air.temperature += miasma_air * PLAGSTER_STERILIZATION_ENERGY
+	SET_REACTION_RESULTS(miasma_air)
+
+	return REACTING
+
+
+
 #undef SET_REACTION_RESULTS

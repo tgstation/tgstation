@@ -305,6 +305,18 @@
 	desc = "We still don't know what it does, but it sells for a lot."
 	primary_color = COLOR_MAROON
 
+/datum/gas/plagium
+	id = GAS_PLAGIUM
+	specific_heat = 20
+	name = "Plagium"
+	dangerous = TRUE
+	gas_overlay = "miasma"
+	moles_visible = MOLES_GAS_VISIBLE * 60
+	rarity = 250
+	base_value = 1
+	desc = "oh"
+	primary_color = COLOR_OLIVE
+
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

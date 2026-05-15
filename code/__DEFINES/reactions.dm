@@ -34,6 +34,19 @@
 /// The amount of energy released when a mole of miasma is sterilized.
 #define MIASTER_STERILIZATION_ENERGY 2e-3
 
+// Plagster:
+
+/// The minimum temperature plagium begins being sterilized at.
+#define PLAGSTER_STERILIZATION_TEMP (FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 90) // + 90 is equal to 190°C yeah? or to 463Kelvins
+/// The maximum ratio of water vapor to other gases plagium can be sterilized at.
+#define PLAGSTER_STERILIZATION_MAX_HUMIDITY 0.1
+/// The minimum amount of plagium that will be sterilized in a reaction tick.
+#define PLAGSTER_STERILIZATION_RATE_BASE 20
+/// The temperature required to sterilize an additional mole of plagium in a reaction tick.
+#define PLAGSTER_STERILIZATION_RATE_SCALE 40 // 2 times more(by comparison to miasma), cause Plagium more resistant
+/// The amount of energy released when a mole of plagium is sterilized. Two times more energy, then miasma, cause Plagium is more hazardous\concentrated bio gas
+#define PLAGSTER_STERILIZATION_ENERGY 2e-2
+
 // Fire:
 
 // - General:

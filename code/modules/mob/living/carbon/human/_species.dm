@@ -1368,6 +1368,22 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(/datum/gas/antinoblium) // Antinoblium - irradiates the target.
 				if(gas_amount >= MOLES_GAS_VISIBLE && SPT_PROB(1, gas_amount * seconds_per_tick))
 					SSradiation.irradiate(human)
+			if(/datum/gas/plagium) // Plagium - biological and bacterial affection
+				// for testing 50 percent chance and 5 seconds
+				if(gas_amount >= 10 && SPT_PROB(10, 5))
+					var/consumption_amount = min(350, gas_amount)
+					environment.adjust_gas(/datum/gas/plagium, -consumption_amount)
+					human.bioscramble("plagium mutation")
+					playsound(human.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
+				if(gas_amount >= MOLES_GAS_VISIBLE && SPT_PROB(1, gas_amount * seconds_per_tick))
+					// right now it better to be commented out, something later will do
+					// SSradiation.irradiate(human)
+				if(gas_amount >= 10 && SPT_PROB(0.7, gas_amount * seconds_per_tick))
+					var/datum/disease/advance/random/random_disease = new(max_symptoms = 3, max_level = 6)
+					human.ForceContractDisease(random_disease, TRUE, FALSE)
+				if(gas_amount >= MOLES_GAS_VISIBLE && SPT_PROB(1, gas_amount * seconds_per_tick))
+					var/datum/disease/cold/cold = new()
+					human.ForceContractDisease(cold, TRUE, FALSE)
 
 ////////////
 //  Stun  //

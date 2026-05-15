@@ -299,6 +299,15 @@
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009a00#006600"
 
+/obj/machinery/portable_atmospherics/canister/plagium
+	name = "Plagium canister"
+	gas_type = /datum/gas/plagium
+	filled = 1
+	icon_state = "/obj/machinery/portable_atmospherics/canister/miasma"
+	post_init_icon_state = ""
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#009823#f7d5d3"
+
 // Special canisters below here
 
 /obj/machinery/portable_atmospherics/canister/fusion_test
