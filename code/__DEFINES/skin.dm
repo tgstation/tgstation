@@ -4,6 +4,7 @@
 //`setClientTheme` has a list of nearly every skin.dmf element in it.
 #define SKIN_MAINWINDOW "mainwindow"
 #define SKIN_MAINWINDOW_SPLIT "[SKIN_MAINWINDOW].split"
+#define SKIN_MAINWINDOW_TOOLTIP "mainwindow.tooltip"
 
 #define SKIN_MAPWINDOW "mapwindow"
 #define SKIN_MAPWINDOW_MAP "[SKIN_MAPWINDOW].map"
