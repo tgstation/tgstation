@@ -48782,7 +48782,9 @@
 /area/station/security/checkpoint/escape)
 "lWX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/bouldertech/refinery/smelter,
+/obj/machinery/bouldertech/refinery/smelter{
+	dir = 4
+	},
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mining"

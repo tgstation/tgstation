@@ -23418,7 +23418,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "iee" = (
-/obj/machinery/bouldertech/refinery/smelter,
+/obj/machinery/bouldertech/refinery/smelter{
+	dir = 4
+	},
 /obj/machinery/conveyor{
 	dir = 6;
 	id = "brm"
