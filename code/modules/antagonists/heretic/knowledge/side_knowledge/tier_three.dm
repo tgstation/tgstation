@@ -205,3 +205,8 @@
 	for(var/obj/item/flashlight/flare/candle/candle in atoms)
 		if(!candle.light_on)
 			atoms -= candle
+
+/datum/heretic_knowledge/mad_mask/prepare_atom_for_ritual_test(atom/what)
+	. = ..()
+	if(istype(what, /obj/item/flashlight/flare/candle))
+		what.set_light_on(TRUE)

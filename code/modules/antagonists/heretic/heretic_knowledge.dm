@@ -132,6 +132,12 @@
 /datum/heretic_knowledge/proc/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	return TRUE
 
+/// Used in unit testing to prepare the components for the test
+/datum/heretic_knowledge/proc/prepare_atom_for_ritual_test(atom/what)
+	if(isitem(item))
+		var/obj/item/item = what
+		item.item_flags &= ~ABSTRACT
+
 /**
  * Parses specific items into a more readble form.
  * Can be overriden by knoweldge subtypes.

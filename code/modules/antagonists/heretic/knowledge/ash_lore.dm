@@ -160,6 +160,11 @@
 		if(!candle.light_on)
 			atoms -= candle
 
+/datum/heretic_knowledge/nightwatchers_lantern/prepare_atom_for_ritual_test(atom/what)
+	. = ..()
+	if(istype(what, /obj/item/flashlight/flare/candle))
+		what.set_light_on(TRUE)
+
 /datum/heretic_knowledge/blade_upgrade/ash
 	name = "Fiery Blade"
 	desc = "Your blade now lights enemies ablaze on attack."
