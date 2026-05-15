@@ -106,7 +106,7 @@
 
 	slice.reagents.remove_all()
 	reagents.trans_to(slice, amount = reagents.total_volume / slices_left, no_react = TRUE)
-	SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, null, list(slice))
+	SEND_SIGNAL(src, COMSIG_PIZZA_SLICE_TAKEN, user, slice)
 
 	slices_left--
 	if(slices_left <= 0)
