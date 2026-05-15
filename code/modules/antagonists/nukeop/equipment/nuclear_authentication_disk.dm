@@ -57,10 +57,11 @@
 			if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
 				if(disk_comfort_level >= 2)
 					visible_message(span_notice("[src] sleeps soundly. Sleep tight, disky."))
-					message_admins("[src] is unsecured in [ADMIN_VERBOSEJMP(new_turf)]. The weight of Lone Operative is now [loneop.weight].")
-					if (prob(90)) // a eepy disky is a (mostly) safe disky
+					if (prob(90) && loneop.weight >= 10) // a eepy disky is a (mostly) safe disky
+						message_admins("[src] is unsecured in [ADMIN_VERBOSEJMP(new_turf)]. The weight of Lone Operative is still [loneop.weight].")
 						return
 			loneop.weight += 1
+			message_admins("[src] is unsecured in [ADMIN_VERBOSEJMP(new_turf)]. The weight of Lone Operative is now [loneop.weight].")
 			log_game("[src] was left unsecured in [loc_name(new_turf)]. Weight of the Lone Operative event increased to [loneop.weight].")
 
 /obj/item/disk/nuclear/examine(mob/user)
