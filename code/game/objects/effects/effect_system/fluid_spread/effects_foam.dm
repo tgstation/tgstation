@@ -35,8 +35,10 @@
 	var/slippery_foam = TRUE
 
 
-/obj/effect/particle_effect/fluid/foam/Initialize(mapload)
+/obj/effect/particle_effect/fluid/foam/Initialize(mapload, lifetime, slippery)
 	. = ..()
+	src.lifetime = lifetime ? lifetime : src.lifetime
+	src.slippery_foam = slippery ? slippery : src.slippery_foam
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100, can_slip_callback = CALLBACK(src, PROC_REF(try_slip)))
 	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
@@ -219,7 +221,7 @@
 	/// What type of thing the foam should leave behind when it dissipates.
 	var/atom/movable/result_type = null
 
-/datum/effect_system/fluid_spread/foam/New(turf/location, range = 1, amount = null, atom/holder = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE, reagent_scale = FOAM_REAGENT_SCALE)
+/datum/effect_system/fluid_spread/foam/New(turf/location, range = 1, amount = null, atom/holder = null, datum/reagents/carry = null, result_type = null, stop_reactions = FALSE, reagent_scale = FOAM_REAGENT_SCALE,)
 	. = ..()
 	chemholder = new(1000, NO_REACT)
 	carry?.trans_to(chemholder, carry.total_volume, no_react = stop_reactions, copy_only = TRUE)
@@ -231,8 +233,8 @@
 	QDEL_NULL(chemholder)
 	return ..()
 
-/datum/effect_system/fluid_spread/foam/start(log = FALSE)
-	var/obj/effect/particle_effect/fluid/foam/foam = new effect_type(location, new /datum/fluid_group(amount))
+/datum/effect_system/fluid_spread/foam/start(log = FALSE, lifetime, slippery)
+	var/obj/effect/particle_effect/fluid/foam/foam = new effect_type(location, new /datum/fluid_group(amount), lifetime, slippery)
 	var/foamcolor = mix_color_from_reagents(chemholder.reagent_list)
 	if(reagent_scale > 1) // Make room in case we were created by a particularly stuffed payload.
 		foam.reagents.maximum_volume *= reagent_scale
@@ -244,42 +246,24 @@
 		help_out_the_admins(foam, holder, location)
 	SSfoam.queue_spread(foam)
 
-// Slipless foam
-/// A foam variant which you can't slip on
-/obj/effect/particle_effect/fluid/foam/slipless_life
-	slippery_foam = FALSE
-
-/datum/effect_system/fluid_spread/foam/slipless
-	effect_type = /obj/effect/particle_effect/fluid/foam/slipless_life
 
 // Short-lived foam
 /// A foam variant which dissipates quickly.
 /obj/effect/particle_effect/fluid/foam/short_life
 	lifetime = 1 SECONDS
 
-/obj/effect/particle_effect/fluid/foam/short_life/slipless_life
-	slippery_foam = FALSE
-
 /datum/effect_system/fluid_spread/foam/short
 	effect_type = /obj/effect/particle_effect/fluid/foam/short_life
-
-/datum/effect_system/fluid_spread/foam/short/slipless
-	effect_type = /obj/effect/particle_effect/fluid/foam/short_life/slipless_life
-
 
 // Long lasting foam
 /// A foam variant which lasts for an extended amount of time.
 /obj/effect/particle_effect/fluid/foam/long_life
-	lifetime = 24 SECONDS
+	lifetime = 30 SECONDS
 
-/obj/effect/particle_effect/fluid/foam/long_life/slipless_life
-	slippery_foam = FALSE
-
+/// A factory which produces foam with an extended lifespan.
 /datum/effect_system/fluid_spread/foam/long
 	effect_type = /obj/effect/particle_effect/fluid/foam/long_life
-
-/datum/effect_system/fluid_spread/foam/long/slipless
-	effect_type = /obj/effect/particle_effect/fluid/foam/long_life/slipless_life
+	reagent_scale = FOAM_REAGENT_SCALE * (30 / 8)
 
 // Firefighting foam
 /// A variant of foam which absorbs plasma in the air if there is a fire.
