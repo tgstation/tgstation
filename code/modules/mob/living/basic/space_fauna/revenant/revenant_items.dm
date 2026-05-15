@@ -41,7 +41,7 @@
 			span_revenwarning("You scatter [src] across the area. A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"),
 		)
 		log_game("A revenant was trapped inside [nearby_mirror]")
-		message_admins("A revenant was trapped inside [nearby_mirror]")
+		message_admins("A revenant was trapped inside [nearby_mirror] [ADMIN_JMP(nearby_mirror)]")
 	user.dropItemToGround(src)
 	qdel(src)
 
@@ -56,7 +56,7 @@
 		visible_message(span_revenwarning("A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"))
 		nearby_mirror.TakeComponent(GetComponent(/datum/component/revenant_prison))
 		log_game("A revenant was trapped inside [nearby_mirror]")
-		message_admins("A revenant was trapped inside [nearby_mirror]")
+		message_admins("A revenant was trapped inside [nearby_mirror] [ADMIN_JMP(nearby_mirror)]")
 	qdel(src)
 
 /obj/item/ectoplasm/revenant/examine(mob/user)

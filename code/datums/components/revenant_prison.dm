@@ -9,7 +9,7 @@
 /datum/component/revenant_prison/Initialize(mob/living/basic/revenant/revenant, create_on_release = FALSE)
 	if(create_on_release)
 		return ..()
-	if(!istype(revenant))
+	if(!istype(revenant) || !isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
 
@@ -19,23 +19,25 @@
 	revenant.forceMove(parent)
 
 /datum/component/revenant_prison/Destroy()
+	if(revenant?.client)
+		revenant.ghostize(can_reenter_corpse = FALSE)
 	QDEL_NULL(revenant)
 	return ..()
 
 /datum/component/revenant_prison/proc/on_parent_break(obj/source, damage_flags)
 	SIGNAL_HANDLER
-	source.visible_message(span_revenwarning("The revenant cackles as it escapes from [source.name]!"))
+	source.visible_message(span_revenwarning("The revenant cackles as it escapes from [source]!"))
 	playsound(source.loc, 'sound/effects/chemistry/ahaha.ogg', 100, TRUE)
-	release_revenant(source, cause = "by [parent] breaking")
+	release_revenant(source, cause = "[parent] breaking")
 
-/datum/component/revenant_prison/proc/release_revenant(datum/source, cause)
+/datum/component/revenant_prison/proc/release_revenant(obj/source, cause)
 	SIGNAL_HANDLER
 	if(create_on_release)
 		revenant = new(get_turf(parent))
 	if(!revenant)
 		qdel(src)
 		return
-	message_admins("[revenant] has been released from [parent]. Cause: [cause]")
+	message_admins("[revenant] [ADMIN_FLW(revenant)] has been released from [source] [ADMIN_JMP(source)]. Cause: [cause]")
 	if(!revenant.reform(old_ckey))
 		message_admins("Couldn't reform revenant upon release.")
 	revenant = null
