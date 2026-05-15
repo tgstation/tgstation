@@ -234,7 +234,7 @@
 	return ..()
 
 /datum/effect_system/fluid_spread/foam/start(log = FALSE, lifetime, slippery)
-	var/obj/effect/particle_effect/fluid/foam/foam = new effect_type(location, new /datum/fluid_group(amount), lifetime, slippery)
+	var/obj/effect/particle_effect/fluid/foam/foam = new effect_type(location, new /datum/fluid_group(amount), lifetime = lifetime, slippery = slippery)
 	var/foamcolor = mix_color_from_reagents(chemholder.reagent_list)
 	if(reagent_scale > 1) // Make room in case we were created by a particularly stuffed payload.
 		foam.reagents.maximum_volume *= reagent_scale
