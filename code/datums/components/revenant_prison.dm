@@ -22,11 +22,11 @@
 	QDEL_NULL(revenant)
 	return ..()
 
-/datum/component/revenant_prison/proc/on_parent_break(datum/source, damage_flags)
+/datum/component/revenant_prison/proc/on_parent_break(obj/source, damage_flags)
 	SIGNAL_HANDLER
-	visible_message(span_revenwarning("The revenant cackles as it escapes from [parent.name]!"))
-	playsound(loc, 'sound/effects/chemistry/ahaha.ogg', 100, TRUE)
-	release_revenant("by [parent] breaking")
+	source.visible_message(span_revenwarning("The revenant cackles as it escapes from [source.name]!"))
+	playsound(source.loc, 'sound/effects/chemistry/ahaha.ogg', 100, TRUE)
+	release_revenant(source, cause = "by [parent] breaking")
 
 /datum/component/revenant_prison/proc/release_revenant(datum/source, cause)
 	SIGNAL_HANDLER
@@ -46,7 +46,7 @@
 	apply_wibbly_filters(reflection)
 
 /datum/component/revenant_prison/proc/on_parent_examine(datum/source, mob/user, list/examine_list)
-	if(istype(parent, /obj/item/mirror))
+	if(istype(parent, /obj/structure/mirror))
 		examine_list += span_revenwarning("The reflection is shifting and distorted.")
 
 /datum/component/revenant_prison/RegisterWithParent()
