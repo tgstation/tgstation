@@ -27,7 +27,7 @@
 	// Toggle off if already visible.
 	if(has_minimap_huds(hud))
 		remove_huds(hud)
-		to_chat(clicker, span_notice("Minimap hidden."))
+		clicker.balloon_alert(clicker, "minimap hidden")
 		return
 
 	if(SEND_SIGNAL(clicker, COMSIG_MINIMAP_ACTION_TRIGGER) & COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL)
@@ -41,10 +41,10 @@
 	var/display_z = isnull(fixed_z_level) ? clicker.z : fixed_z_level
 	var/datum/minimap/minimap = get_minimap_for_z(display_z)
 	if(isnull(minimap))
-		to_chat(clicker, span_notice("No minimap generated for z=[display_z]."))
+		clicker.balloon_alert(clicker, "no minimap generated")
 		return
 	add_huds(hud, minimap)
-	to_chat(clicker, span_notice("Minimap shown for z=[display_z]."))
+	clicker.balloon_alert(clicker, "minimap shown")
 
 /datum/action/minimap_new/Grant(mob/grant_to)
 	. = ..()
