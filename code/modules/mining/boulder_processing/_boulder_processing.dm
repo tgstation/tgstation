@@ -118,7 +118,7 @@
 	icon_state ="[base_icon_state][suffix]"
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
-	if(!anchored)
+	if(!anchored || !(dir == border_dir || dir == REVERSE_DIR(border_dir)))
 		return FALSE
 	if(istype(mover, /obj/item/stack/sheet))
 		return TRUE

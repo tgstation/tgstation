@@ -5060,9 +5060,7 @@
 /obj/machinery/conveyor{
 	id = "mining_internal"
 	},
-/obj/machinery/bouldertech/refinery/smelter{
-	dir = 4
-	},
+/obj/machinery/bouldertech/refinery/smelter,
 /obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
