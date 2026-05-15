@@ -112,14 +112,13 @@
 	var/turf/source_turf = get_turf(source)
 	var/turf/listener_turf = get_turf(listener_mob)
 
+	if(!source_turf || !listener_turf)
+		return
+
 	var/is_muted = listeners[listener_mob] & SOUND_MUTE
 	var/should_be_muted = FALSE
-	if(!source_turf || !listener_turf)
-		should_be_muted = TRUE
-		if(should_be_muted && is_muted)
-			return
 
-	if(source_turf.z != listener_turf.z)
+	if(source_turf?.z != listener_turf?.z)
 		should_be_muted = TRUE
 		if(should_be_muted && is_muted)
 			return
