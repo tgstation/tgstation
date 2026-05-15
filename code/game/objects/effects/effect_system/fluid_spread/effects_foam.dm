@@ -244,24 +244,42 @@
 		help_out_the_admins(foam, holder, location)
 	SSfoam.queue_spread(foam)
 
+// Slipless foam
+/// A foam variant which you can't slip on
+/obj/effect/particle_effect/fluid/foam/slipless_life
+	slippery_foam = FALSE
+
+/datum/effect_system/fluid_spread/foam/slipless
+	effect_type = /obj/effect/particle_effect/fluid/foam/slipless_life
 
 // Short-lived foam
 /// A foam variant which dissipates quickly.
 /obj/effect/particle_effect/fluid/foam/short_life
 	lifetime = 1 SECONDS
 
+/obj/effect/particle_effect/fluid/foam/short_life/slipless_life
+	slippery_foam = FALSE
+
 /datum/effect_system/fluid_spread/foam/short
 	effect_type = /obj/effect/particle_effect/fluid/foam/short_life
+
+/datum/effect_system/fluid_spread/foam/short/slipless
+	effect_type = /obj/effect/particle_effect/fluid/foam/short_life/slipless_life
+
 
 // Long lasting foam
 /// A foam variant which lasts for an extended amount of time.
 /obj/effect/particle_effect/fluid/foam/long_life
-	lifetime = 30 SECONDS
+	lifetime = 9 SECONDS
 
-/// A factory which produces foam with an extended lifespan.
+/obj/effect/particle_effect/fluid/foam/long_life/slipless_life
+	slippery_foam = FALSE
+
 /datum/effect_system/fluid_spread/foam/long
 	effect_type = /obj/effect/particle_effect/fluid/foam/long_life
-	reagent_scale = FOAM_REAGENT_SCALE * (30 / 8)
+
+/datum/effect_system/fluid_spread/foam/long/slipless
+	effect_type = /obj/effect/particle_effect/fluid/foam/long_life/slipless_life
 
 // Firefighting foam
 /// A variant of foam which absorbs plasma in the air if there is a fire.
