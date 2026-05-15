@@ -32,7 +32,7 @@
 	name = "bolt of binding"
 	icon_state = "tentacle_end"
 
-/obj/projectile/magic/tentacle_satff/on_hit(mob/living/target, blocked = 0, pierce_hit)
+/obj/projectile/magic/tentacle_staff/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if (. == BULLET_ACT_BLOCK || !istype(target) || blocked >= 100)
 		return
