@@ -78,7 +78,7 @@
 		if(length(ritual_requirements))
 			ritual_info = "Requires: [english_list(ritual_requirements)]"
 
-		var/list/ritual_icon_info = heretic_datum.get_icon_of_knowledge(ritual)
+		var/list/ritual_icon_info = heretic_datum.get_icon_of_knowledge(ritual.type)
 		var/icon/ritual_icon = icon(ritual_icon_info["icon"], ritual_icon_info["state"], ritual_icon_info["dir"], ritual_icon_info["frame"])
 		var/image/ritual_background = image(icon = 'icons/ui_icons/antags/heretic/knowledge.dmi', icon_state = heretic_datum.researched_knowledge[ritual.type][HKT_UI_BGR])
 

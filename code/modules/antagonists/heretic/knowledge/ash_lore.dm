@@ -39,7 +39,7 @@
 	knowledge_tier2 = /datum/heretic_knowledge/spell/fire_blast
 	guaranteed_side_tier2 = /datum/heretic_knowledge/rifle
 	robes = /datum/heretic_knowledge/armor/ash
-	knowledge_tier3 = /datum/heretic_knowledge/mad_mask
+	knowledge_tier3 = /datum/heretic_knowledge/nightwatchers_lantern
 	guaranteed_side_tier3 = /datum/heretic_knowledge/summon/ashy
 	blade = /datum/heretic_knowledge/blade_upgrade/ash
 	knowledge_tier4 = /datum/heretic_knowledge/spell/flame_birth
@@ -136,23 +136,29 @@
 		/obj/item/match = 1,
 	)
 
-/datum/heretic_knowledge/mad_mask
-	name = "Mask of Madness"
-	desc = "Create a Mask of Madness.<br>\
-		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity.<br>\
-		It can also be forced onto a heathen, to make them unable to take it off..."
-	transmute_text = "Transmute any mask, four candles, a stun baton, and a liver."
-	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
+/datum/heretic_knowledge/nightwatchers_lantern
+	name = "Nightwatcher's Lantern"
+	desc = "Create a burning lantern.<br>\
+		A burning lantern is a bright light that damages the eyes and eventually confuses those who witness it for too long. \
+		The effect is reduced for those with protective eyewear, and strengthened if the burning lantern is the only nearby source of light."
+	transmute_text = "Transmute a lamp, lantern, or seclight, a pair of eyes, a flash, and four lit candles."
+	gain_text = "The Nightwatcher did not venture out in the dark. That was foolish, even the Watch knew that. \
+		Their lantern burned with a light that could burn the sun."
+	result_atoms = list(/obj/item/flashlight/lantern/heretic)
 	required_atoms = list(
-		/obj/item/organ/liver = 1,
-		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
-		/obj/item/clothing/mask = 1,
+		list(/obj/item/flashlight/lamp, /obj/item/flashlight/lantern, /obj/item/flashlight/seclite) = 1,
+		/obj/item/organ/eyes = 1,
+		/obj/item/assembly/flash = 1,
 		/obj/item/flashlight/flare/candle = 4,
 	)
-	result_atoms = list(/obj/item/clothing/mask/madness_mask)
-	cost = 2
-	research_tree_icon_path = 'icons/obj/clothing/masks.dmi'
-	research_tree_icon_state = "mad_mask"
+	research_tree_icon_path = 'icons/obj/lighting.dmi'
+	research_tree_icon_state = "lantern"
+
+/datum/heretic_knowledge/nightwatchers_lantern/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/obj/item/flashlight/flare/candle/candle in atoms)
+		if(!candle.light_on)
+			atoms -= candle
 
 /datum/heretic_knowledge/blade_upgrade/ash
 	name = "Fiery Blade"

@@ -249,6 +249,8 @@
 	desc = "Sculpts an Amber Focus.<br>\
 		Recharges some spell charges every few minutes while worn, barring some exceptional spells."
 	transmute_text = "Transmute a sheet of glass and a pair of eyes."
+	gain_text = "I felt lost and directionless. Everything that I tried to grasp, slipped through my fingers. \
+		I needed something to hold onto, something to focus on, to keep me from straying too far from the path."
 	required_atoms = list(
 		/obj/item/organ/eyes = 1,
 		/obj/item/stack/sheet/glass = 1,
@@ -258,3 +260,29 @@
 	drafting_tier = 1
 	research_tree_icon_path = 'icons/obj/clothing/neck.dmi'
 	research_tree_icon_state = "eldritch_necklace"
+
+/datum/heretic_knowledge/miraculous_mirror
+	name = "Miraculous Mirror"
+	desc = "Craft a Miraculous Mirror.<br>\
+		The Miraculous Mirror allows you to freely change any aspect of your appearance. \
+		You can also use it to change your species, but doing so will cause the mirror to shatter in the process."
+	transmute_text = "Transmute five bars of silver and a pair of organic eyes."
+	gain_text = "I was imperfect, weak. How could I achieve such great things in such a sorry state? \
+		Every window I passed by, I saw a reflection of myself, and every time I did, I felt a burning desire to change, to be better, to start anew."
+	required_atoms = list(
+		/obj/item/organ/eyes = 1,
+		/obj/item/stack/sheet/mineral/silver = 5,
+	)
+	result_atoms = list(/obj/item/wallframe/mirror/heretic)
+	cost = 1
+	drafting_tier = 1
+	research_tree_icon_path = 'icons/obj/watercloset.dmi'
+	research_tree_icon_state = "magic_mirror"
+	research_tree_icon_frame = 2
+	is_shop_only = TRUE
+
+/datum/heretic_knowledge/miraculous_mirror/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/obj/item/organ/eyes/eye in atoms)
+		if(!IS_ORGANIC_ORGAN(eye))
+			atoms -= eye

@@ -133,7 +133,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /// Checks if the mob can continue to use the mirror
 /obj/structure/mirror/proc/can_use_mirror(mob/living/carbon/human/user)
-	return !QDELETED(src) && !QDELETED(user) && user.can_perform_action(src, FORBID_TELEKINESIS_REACH)
+	return !QDELETED(src) && !QDELETED(user) && !broken && user.can_perform_action(src, FORBID_TELEKINESIS_REACH)
 
 /obj/structure/mirror/proc/change_beard(mob/living/carbon/human/beard_dresser)
 	if(beard_dresser.physique == FEMALE)
@@ -355,6 +355,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	result_path = /obj/structure/mirror
 	pixel_shift = 28
 
+/obj/item/wallframe/mirror/heretic
+	name = /obj/structure/mirror/magic/lesser/heretic::name
+	desc = /obj/structure/mirror/magic/lesser/heretic::desc
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "magic_mirror"
+	result_path = /obj/structure/mirror/magic/lesser/heretic
+
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
@@ -415,6 +422,69 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	// Roundstart species don't have a flag, so it has to be set on Initialize.
 	selectable_races = get_selectable_species().Copy()
 	return ..()
+
+/obj/structure/mirror/magic/lesser/heretic
+	name = "miraculous mirror"
+	desc = "Gazing at your reflection, you feel like you could be better."
+	mirror_options = PRIDE_MIRROR_OPTIONS
+
+/obj/structure/mirror/magic/lesser/heretic/on_species_change(mob/living/carbon/human/race_changer, datum/species/newrace)
+	. = ..()
+	if(race_changer.dna?.species?.type == newrace.type)
+		return
+	atom_break(null)
+
+/obj/structure/mirror/magic/lesser/heretic/atom_deconstruct(disassembled)
+	new /obj/item/shard(loc) // never gives the frame back
+
+/obj/structure/mirror/magic/lesser/heretic/welder_act(mob/living/user, obj/item/I)
+	to_chat(user, span_alert("Trying to find where to start fixing [src] proves nigh impossible."))
+	return ITEM_INTERACT_BLOCKING
+
+/obj/structure/mirror/magic/lesser/heretic/pre_change(mob/living/carbon/human/user, picked)
+	if(IS_HERETIC(user))
+		return TRUE
+
+	to_chat(user, span_hypnophrase("You find yourself gazing at [src], unable to look away..."))
+	user.Immobilize(5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(change_something), user, picked), 5 SECONDS)
+	return FALSE
+
+/obj/structure/mirror/magic/lesser/heretic/proc/change_something(mob/living/carbon/human/user, picked)
+	if(QDELETED(src) || QDELETED(user))
+		return
+
+	if(!user.Adjacent(src))
+		to_chat(user, span_warning("Pulled away from [src], you snap out of your trance."))
+		return
+	if(broken)
+		to_chat(user, span_warning("With the shattering of [src], you snap out of your trance."))
+		return
+
+	// randomizes your stuff, doesn't affect DNA though so you could easily get genetics to fix you
+	switch(picked)
+		if(CHANGE_HAIR, CHANGE_BEARD)
+			to_chat(user, span_hypnophrase("The hair - yes, the hair is wrong - [pick("it can be improved", "it needs to be changed", "it must be different")]..."))
+			user.set_hairstyle(random_hairstyle(user.gender))
+			user.set_facial_hairstyle(random_facial_hairstyle(user.gender))
+		if(CHANGE_RACE)
+			to_chat(user, span_hypnophrase("The body - no, the body is all wrong - [pick("I must become anew", "I need to be different", "I want to be something else")]..."))
+			var/list/options = selectable_races.Copy() - user.dna.species.type
+			var/datum/species/newrace = GLOB.species_prototypes[pick(options)]
+			on_species_change(user, newrace)
+			user.set_species(newrace.type, icon_update = FALSE)
+		if(CHANGE_SEX)
+			to_chat(user, span_hypnophrase("My form - yes, the form is all wrong - I  need to change it...")) // the wording used here needs to be very deliberate...
+			var/list/options = list(MALE, FEMALE, PLURAL, NEUTER) - user.gender
+			user.gender = pick(options)
+			user.physique = user.gender
+		if(CHANGE_EYES)
+			to_chat(user, span_hypnophrase("My eyes - I cannot see clearly - [pick("They're simply not right", "they must be replaced", "they are both wrong")]..."))
+			user.set_eye_color(random_eye_color())
+		if(CHANGE_NAME) // not enabled by default but for badmin support
+			to_chat(user, span_hypnophrase("My name - it doesn't fit me - [pick("Something else would be better", "it must be changed", "Something more appropriate would be good")]..."))
+			user.real_name = user.generate_random_mob_name()
+			user.update_visible_name()
 
 /obj/structure/mirror/magic/badmin
 	race_flags = MIRROR_BADMIN

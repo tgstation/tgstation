@@ -180,3 +180,28 @@
 
 	research_tree_icon_dir = EAST
 	drafting_tier = 3
+
+/datum/heretic_knowledge/mad_mask
+	name = "Mask of Madness"
+	desc = "Create a Mask of Madness.<br>\
+		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity.<br>\
+		It can also be forced onto a heathen, to make them unable to take it off..."
+	transmute_text = "Transmute any mask, four lit candles, a stun baton, and a liver."
+	gain_text = "The Watch wore strange garb on duty. It allowed them to walk the city, seemingly unnoticed by the masses."
+	required_atoms = list(
+		/obj/item/organ/liver = 1,
+		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
+		/obj/item/clothing/mask = 1,
+		/obj/item/flashlight/flare/candle = 4,
+	)
+	result_atoms = list(/obj/item/clothing/mask/madness_mask)
+	cost = 2
+	research_tree_icon_path = 'icons/obj/clothing/masks.dmi'
+	research_tree_icon_state = "mad_mask"
+	drafting_tier = 3
+
+/datum/heretic_knowledge/mad_mask/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/obj/item/flashlight/flare/candle/candle in atoms)
+		if(!candle.light_on)
+			atoms -= candle
