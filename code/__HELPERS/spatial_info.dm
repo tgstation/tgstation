@@ -315,6 +315,10 @@
 
 ///Returns the distance between two atoms
 /proc/get_dist_euclidean(atom/first_location, atom/second_location)
+
+	if(first_location == second_location)
+		return -1
+
 	var/dx = first_location.x - second_location.x
 	var/dy = first_location.y - second_location.y
 
@@ -539,3 +543,24 @@
 		if(!test_turf.is_blocked_turf(exclude_mobs = TRUE))
 			return FALSE
 	return TRUE
+
+
+///Returns the manhattan distance between two atoms
+/proc/get_dist_manhattan(atom/first_location, atom/second_location)
+	if(first_location == second_location)
+		return -1
+
+	return abs(first_location.x - second_location.x) + abs(first_location.y - second_location.y) + abs(first_location.z - second_location.z)
+
+
+/// Returns the octile distance between two atoms. Returns INFINITY if either are not on a turf, for BYOND get_dist() parity.
+/proc/get_dist_octile(atom/first_location, atom/second_location)
+
+	if(first_location == second_location)
+		return -1
+
+	var/dx = abs(first_location.x - second_location.x)
+	var/dy = abs(first_location.y - second_location.y)
+	var/F = (sqrt(2) - 1)
+
+	return (dx < dy) ? F * dx + dy : F * dy + dx

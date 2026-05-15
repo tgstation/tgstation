@@ -81,7 +81,7 @@
 		BB_EMOTE_KEY = "scream", //spooky
 	)
 
-	ai_movement = /datum/ai_movement/jps //threat
+	ai_movement = /datum/ai_movement/astar //threat
 	idle_behavior = null
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,

@@ -707,7 +707,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	bot_reset() //Reset a bot before setting it to call mode.
 
-	set_path(get_path_to(src, waypoint, max_distance=200, access = REGION_ACCESS_ALL_STATION))
+	set_path(astar_path_to(src, waypoint, max_steps=200, access = REGION_ACCESS_ALL_STATION))
 	calling_ai = summoner //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -923,12 +923,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/proc/calc_path(turf/avoid)
 	check_bot_access()
-	set_path(get_path_to(src, patrol_target, max_distance=120, access=access_card.GetAccess(), exclude=avoid, diagonal_handling=DIAGONAL_REMOVE_ALL))
+	set_path(astar_path_to(src, patrol_target, max_steps=120, access=access_card.GetAccess(), exclude=avoid, use_diagonals=FALSE))
 
 /mob/living/simple_animal/bot/proc/calc_summon_path(turf/avoid)
 	check_bot_access()
 	var/datum/callback/path_complete = CALLBACK(src, PROC_REF(on_summon_path_finish))
-	SSpathfinder.pathfind(src, summon_target, max_distance=150, access=access_card.GetAccess(), exclude=avoid, diagonal_handling=DIAGONAL_REMOVE_ALL, on_finish=list(path_complete))
+	SSpathfinder.astar_pathfind(src, summon_target, max_steps=150, access=access_card.GetAccess(), exclude=avoid, use_diagonals=FALSE, on_finish=list(path_complete))
 
 /mob/living/simple_animal/bot/proc/on_summon_path_finish(list/path)
 	set_path(path)

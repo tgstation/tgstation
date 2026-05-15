@@ -5,7 +5,7 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 /// Enables testing/visualization of pathfinding work
 /datum/pathfind_debug
 	var/datum/admins/owner
-	var/datum/action/innate/path_debug/jps/jps_debug
+	var/datum/action/innate/path_debug/astar/astar_debug
 	var/datum/action/innate/path_debug/sssp/sssp_debug
 
 /datum/pathfind_debug/New(datum/admins/owner)
@@ -13,17 +13,17 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 	hook_client()
 
 /datum/pathfind_debug/Destroy(force)
-	QDEL_NULL(jps_debug)
+	QDEL_NULL(astar_debug)
 	QDEL_NULL(sssp_debug)
 	return ..()
 
 /datum/pathfind_debug/proc/hook_client()
 	if(!owner.owner)
 		return
-	QDEL_NULL(jps_debug)
+	QDEL_NULL(astar_debug)
 	QDEL_NULL(sssp_debug)
-	jps_debug = new
-	jps_debug.Grant(owner.owner.mob)
+	astar_debug = new
+	astar_debug.Grant(owner.owner.mob)
 	sssp_debug = new()
 	sssp_debug.Grant(owner.owner.mob)
 	RegisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT, PROC_REF(on_logout))
@@ -108,23 +108,22 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 /datum/action/innate/path_debug/proc/render_turf(turf/draw, direction)
 	return SSpathfinder.render_path_arrow(draw, direction)
 
-/datum/action/innate/path_debug/jps
-	name = "JPS Test"
+/datum/action/innate/path_debug/astar
+	name = "A* Test"
 	button_icon = 'icons/turf/debug.dmi'
-	button_icon_state = "jps"
+	button_icon_state = "astar"
 
-	// Mirror vars for jps calls
+	// Mirror vars for astar calls
 	var/turf/source_turf
 	var/turf/target_turf
 	var/max_distance
 	var/min_distance
 	var/allowed_on_space
 	var/turf/blacklisted_turf
-	var/diagonal_handling
 	/// List of turfs we are showing to our owner currently
 	var/list/turf/display_turfs
 
-/datum/action/innate/path_debug/jps/Activate()
+/datum/action/innate/path_debug/astar/Activate()
 	. = ..()
 	max_distance = tgui_input_number(owner, "How far should we be allowed to try and path", "Max Distance", min_value = 1, default = 30)
 	min_distance = tgui_input_number(owner, "How close should we try and get to the target before stopping", "Min Distance", min_value = 0, default = 0)
@@ -134,30 +133,23 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 		blacklisted_turf = pick_closest_path(text_blacklist)
 	else
 		blacklisted_turf = null
-	diagonal_handling = DIAGONAL_DO_NOTHING
-	switch(tgui_input_list(owner, "Pick how you want to handle diagonal moves", "Diagonal Moves", list("Leave Them Be", "Drop All", "Drop Odd Ones")))
-		if("Leave Them Be")
-			diagonal_handling = DIAGONAL_DO_NOTHING
-		if("Drop All")
-			diagonal_handling = DIAGONAL_REMOVE_ALL
-		if("Drop Odd Ones")
-			diagonal_handling = DIAGONAL_REMOVE_CLUNKY
 
-/datum/action/innate/path_debug/jps/Deactivate()
+
+/datum/action/innate/path_debug/astar/Deactivate()
 	source_turf = null
 	target_turf = null
 	display_turfs = list()
 	return ..()
 
-/datum/action/innate/path_debug/jps/left_clicked(turf/clicked_on)
+/datum/action/innate/path_debug/astar/left_clicked(turf/clicked_on)
 	source_turf = clicked_on
 	display_turfs = list()
 
-/datum/action/innate/path_debug/jps/right_clicked(turf/clicked_on)
+/datum/action/innate/path_debug/astar/right_clicked(turf/clicked_on)
 	target_turf = clicked_on
 	display_turfs = list()
 
-/datum/action/innate/path_debug/jps/build_visuals()
+/datum/action/innate/path_debug/astar/build_visuals()
 	. = ..()
 	if(source_turf)
 		var/image/start = image('icons/turf/debug.dmi', source_turf, "start", PATH_DEBUG_LAYER)
@@ -170,12 +162,12 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 
 	display_images += render_path(display_turfs)
 
-/datum/action/innate/path_debug/jps/path_ready()
+/datum/action/innate/path_debug/astar/path_ready()
 	return (source_turf && target_turf)
 
-/datum/action/innate/path_debug/jps/run_the_path(atom/movable/middle_man)
+/datum/action/innate/path_debug/astar/run_the_path(atom/movable/middle_man)
 	middle_man.forceMove(source_turf)
-	display_turfs = get_path_to(middle_man, target_turf, max_distance, min_distance, list(), allowed_on_space, blacklisted_turf, skip_first = FALSE, diagonal_handling = diagonal_handling)
+	display_turfs = SSpathfinder.astar_pathfind_now(middle_man, target_turf, max_distance, min_distance, list(), !allowed_on_space, blacklisted_turf, skip_first = FALSE)
 	update_visuals()
 
 /datum/action/innate/path_debug/sssp

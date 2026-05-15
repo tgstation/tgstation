@@ -79,7 +79,7 @@
 			continue
 		if(get_turf(found_item) == get_turf(controller.pawn))
 			return found_item
-		var/list/path = get_path_to(controller.pawn, found_item, max_distance = BOT_CLEAN_PATH_LIMIT, access = controller.get_access())
+		var/list/path = astar_path_to(controller.pawn, found_item, max_steps = BOT_CLEAN_PATH_LIMIT, access = controller.get_access())
 		if(!length(path))
 			controller.add_to_blacklist(found_item)
 			continue

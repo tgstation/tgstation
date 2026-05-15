@@ -54,7 +54,7 @@
 		BB_TARGET_MINIMUM_STAT = DEAD,
 		BB_AGGRO_RANGE = 2,
 	)
-	ai_movement = /datum/ai_movement/jps/bot
+	ai_movement = /datum/ai_movement/astar/bot
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,

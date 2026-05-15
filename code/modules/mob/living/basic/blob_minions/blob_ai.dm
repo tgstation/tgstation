@@ -1,6 +1,6 @@
 /**
  * Extremely simple AI, this isn't a very smart boy
- * Only notable quirk is that it uses JPS movement, simple avoidance would fail to realise it can path through blobs
+ * Only notable quirk is that it uses A* movement, simple avoidance would fail to realise it can path through blobs
  */
 /datum/ai_controller/basic_controller/blobbernaut
 	blackboard = list(
@@ -8,7 +8,7 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/astar
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
@@ -26,7 +26,7 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/astar
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
@@ -45,7 +45,7 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/astar
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,

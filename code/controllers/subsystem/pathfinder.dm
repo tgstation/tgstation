@@ -1,4 +1,4 @@
-/// Queues and manages JPS pathfinding steps
+/// Queues and manages pathfinding steps
 SUBSYSTEM_DEF(pathfinder)
 	name = "Pathfinder"
 	priority = FIRE_PRIORITY_PATHFINDING
@@ -59,23 +59,14 @@ SUBSYSTEM_DEF(pathfinder)
 
 		currentmaps.len--
 
-/// Initiates a pathfind. Returns true if we're good, FALSE if something's failed
-/datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
-	var/datum/pathfind/jps/path = new()
-	path.setup(requester, access, max_distance, simulated_only, exclude, on_finish, end, mintargetdist, skip_first, diagonal_handling)
-	if(path.start())
-		active_pathing += path
-		return TRUE
-	return FALSE
-
 /// Initiates a swarmed pathfind. Returns TRUE if we're good, FALSE if something's failed
 /// If a valid pathmap exists for the TARGET turf we'll use that, otherwise we have to build a new one
-/datum/controller/subsystem/pathfinder/proc/swarmed_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist = 0, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, list/datum/callback/on_finish)
+/datum/controller/subsystem/pathfinder/proc/swarmed_pathfind(atom/movable/requester, atom/end, max_steps = 30, mintargetdist = 0, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, list/datum/callback/on_finish)
 	var/turf/target = get_turf(end)
 	var/datum/can_pass_info/pass_info = new(requester, access)
 	// If there's a map we can use already, use it
 	var/datum/path_map/valid_map = get_valid_map(pass_info, target, simulated_only, exclude, age, include_building = TRUE)
-	if(valid_map && valid_map.expand(max_distance))
+	if(valid_map && valid_map.expand(max_steps))
 		path_map_passalong(on_finish, get_turf(requester), mintargetdist, skip_first, valid_map)
 		return TRUE
 
@@ -91,7 +82,7 @@ SUBSYSTEM_DEF(pathfinder)
 	empty.building = TRUE
 	path_map_cache(target, empty)
 	pass_in += CALLBACK(src, PROC_REF(path_map_fill), target, empty)
-	if(!SSpathfinder.can_pass_build_map(pass_info, target, max_distance, simulated_only, exclude, pass_in))
+	if(!SSpathfinder.can_pass_build_map(pass_info, target, max_steps, simulated_only, exclude, pass_in))
 		return FALSE
 	return TRUE
 
@@ -132,18 +123,18 @@ SUBSYSTEM_DEF(pathfinder)
 		source_to_maps[target] -= same_target
 
 /// Initiates a SSSP run. Returns true if we're good, FALSE if something's failed
-/datum/controller/subsystem/pathfinder/proc/build_map(atom/movable/requester, turf/source, max_distance = 30, access = list(), simulated_only = TRUE, turf/exclude, list/datum/callback/on_finish)
+/datum/controller/subsystem/pathfinder/proc/build_map(atom/movable/requester, turf/source, max_steps = 30, access = list(), simulated_only = TRUE, turf/exclude, list/datum/callback/on_finish)
 	var/datum/pathfind/sssp/path = new()
-	path.setup(requester, access, source, max_distance, simulated_only, exclude, on_finish)
+	path.setup(requester, access, source, max_steps, simulated_only, exclude, on_finish)
 	if(path.start())
 		active_pathing += path
 		return TRUE
 	return FALSE
 
 /// Initiates a SSSP run from a pass_info datum. Returns true if we're good, FALSE if something's failed
-/datum/controller/subsystem/pathfinder/proc/can_pass_build_map(datum/can_pass_info/pass_info, turf/source, max_distance = 30, simulated_only = TRUE, turf/exclude, list/datum/callback/on_finish)
+/datum/controller/subsystem/pathfinder/proc/can_pass_build_map(datum/can_pass_info/pass_info, turf/source, max_steps = 30, simulated_only = TRUE, turf/exclude, list/datum/callback/on_finish)
 	var/datum/pathfind/sssp/path = new()
-	path.setup_from_canpass(pass_info, source, max_distance, simulated_only, exclude, on_finish)
+	path.setup_from_canpass(pass_info, source, max_steps, simulated_only, exclude, on_finish)
 	if(path.start())
 		active_pathing += path
 		return TRUE
@@ -237,3 +228,75 @@ SUBSYSTEM_DEF(pathfinder)
 			continue
 		valid_maps += shared_source
 	return valid_maps
+
+
+
+/datum/controller/subsystem/pathfinder/proc/astar_pathfind(
+	atom/movable/invoker,
+	atom/end,
+	max_steps = 30,
+	mintargetdist,
+	list/access,
+	simulated_only = TRUE,
+	turf/exclude,
+	skip_first = TRUE,
+	use_diagonals = TRUE,
+	list/datum/callback/on_finish,
+	datum/callback/heuristic,
+)
+
+	var/datum/pathfind/astar/path = new(
+		invoker,
+		end,
+		access,
+		max_steps,
+		mintargetdist,
+		simulated_only,
+		exclude,
+		skip_first,
+		use_diagonals,
+		on_finish,
+		heuristic,
+	)
+
+	if(path.start())
+		active_pathing += path
+		return TRUE
+	return FALSE
+
+/datum/controller/subsystem/pathfinder/proc/astar_pathfind_now(
+	atom/movable/invoker,
+	atom/end,
+	max_steps = 14,
+	mintargetdist,
+	list/access,
+	simulated_only = TRUE,
+	turf/exclude,
+	skip_first = TRUE,
+	use_diagonals = TRUE,
+	datum/callback/heuristic,
+)
+
+	var/datum/pathfind/astar/path = new(
+		invoker,
+		end,
+		access,
+		max_steps,
+		mintargetdist,
+		simulated_only,
+		exclude,
+		skip_first,
+		use_diagonals,
+		null,
+		heuristic,
+	)
+
+	if(!path.start())
+		return FALSE
+
+	if(!path.search_step(FALSE))
+		path.early_exit()
+		return FALSE
+
+	path.finished()
+	return path.path

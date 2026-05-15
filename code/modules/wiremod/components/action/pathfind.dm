@@ -100,7 +100,7 @@
 		TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
 
 		old_dest = destination
-		path = get_path_to(src, destination, max_range, access=access)
+		path = astar_path_to(src, destination, max_range, access=access)
 		if(length(path) == 0 || !path)// Check if we can even path there
 			next_turf = null
 			failed.set_output(COMPONENT_SIGNAL)

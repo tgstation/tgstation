@@ -156,7 +156,7 @@
 
 	var/list/hand_around = list()
 	// We're guaranteed that hand_around will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
-	var/datum/callback/await = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around)
+	var/datum/callback/await = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(__pathfinding_finished), hand_around)
 
 	// We're gonna build a pathfind datum from our settings and set it running
 	var/datum/pathfind/sssp/based_off_us = new()
@@ -201,18 +201,18 @@
 	/// Our current position in the working queue
 	var/working_index
 
-/datum/pathfind/sssp/proc/setup(atom/movable/requester, list/access, turf/center, max_distance, simulated_only, turf/avoid, list/datum/callback/on_finish)
+/datum/pathfind/sssp/proc/setup(atom/movable/requester, list/access, turf/center, max_steps, simulated_only, turf/avoid, list/datum/callback/on_finish)
 	src.pass_info = new(requester, access)
 	src.start = center
-	src.max_distance = max_distance
+	src.max_steps = max_steps
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.on_finish = on_finish
 
-/datum/pathfind/sssp/proc/setup_from_canpass(datum/can_pass_info/info, turf/center, max_distance, simulated_only, turf/avoid, list/datum/callback/on_finish)
+/datum/pathfind/sssp/proc/setup_from_canpass(datum/can_pass_info/info, turf/center, max_steps, simulated_only, turf/avoid, list/datum/callback/on_finish)
 	src.pass_info = info
 	src.start = center
-	src.max_distance = max_distance
+	src.max_steps = max_steps
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.on_finish = on_finish
@@ -239,7 +239,7 @@
 
 		var/turf/next_turf = working_queue[working_index]
 		var/distance = working_distances[working_index] + 1
-		if(distance > max_distance)
+		if(distance > max_steps)
 			if(TICK_CHECK)
 				return TRUE
 			continue

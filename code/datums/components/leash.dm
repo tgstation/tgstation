@@ -128,7 +128,7 @@
 	current_path_tick += 1
 	var/our_path_tick = current_path_tick
 
-	var/list/path = get_path_to(parent, owner, mintargetdist = distance)
+	var/list/path = astar_path_to(parent, owner, mintargetdist = distance)
 
 	if (last_completed_path_tick > our_path_tick || QDELETED(src))
 		return

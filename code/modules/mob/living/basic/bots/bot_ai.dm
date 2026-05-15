@@ -10,7 +10,7 @@
 		BB_UNREACHABLE_LIST_COOLDOWN = 45 SECONDS,
 	)
 
-	ai_movement = /datum/ai_movement/jps/bot
+	ai_movement = /datum/ai_movement/astar/bot
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
@@ -39,7 +39,7 @@
 		return FALSE
 	if(get_turf(living_mob) == get_turf(living_target))
 		return ..()
-	var/list/path = get_path_to(living_mob, living_target, mintargetdist = my_controller.minimum_distance, max_distance = 10, access = my_controller.get_access())
+	var/list/path = astar_path_to(living_mob, living_target, mintargetdist = my_controller.minimum_distance, max_steps = 10, access = my_controller.get_access())
 	if(!length(path) || QDELETED(living_mob))
 		my_controller?.add_to_blacklist(living_target)
 		return FALSE
@@ -124,7 +124,7 @@
 		return TRUE
 	if(get_turf(pawn) == get_turf(target))
 		return TRUE
-	var/list/path = get_path_to(pawn, target, simulated_only = !HAS_TRAIT(pawn, TRAIT_SPACEWALK), mintargetdist = minimum_distance, max_distance = distance, access = get_access())
+	var/list/path = astar_path_to(pawn, target, simulated_only = !HAS_TRAIT(pawn, TRAIT_SPACEWALK), mintargetdist = minimum_distance, max_steps = distance, access = get_access())
 	return (!!length(path))
 
 /datum/ai_planning_subtree/find_patrol_beacon
@@ -205,7 +205,7 @@
 
 /datum/ai_behavior/travel_towards/beacon
 	clear_target = TRUE
-	new_movement_type = /datum/ai_movement/jps/bot/travel_to_beacon
+	new_movement_type = /datum/ai_movement/astar/bot/travel_to_beacon
 
 /datum/ai_behavior/travel_towards/beacon/setup(datum/ai_controller/controller, target_key)
 	var/atom/target_beacon = controller.blackboard[target_key]
@@ -231,7 +231,7 @@
 
 /datum/ai_behavior/travel_towards/bot_summon
 	clear_target = TRUE
-	new_movement_type = /datum/ai_movement/jps/bot/travel_to_beacon
+	new_movement_type = /datum/ai_movement/astar/bot/travel_to_beacon
 
 /datum/ai_behavior/travel_towards/bot_summon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn

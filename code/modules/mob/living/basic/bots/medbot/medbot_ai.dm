@@ -9,7 +9,7 @@
 		/datum/ai_planning_subtree/salute_authority,
 		/datum/ai_planning_subtree/find_patrol_beacon/medbot,
 	)
-	ai_movement = /datum/ai_movement/jps/bot/medbot
+	ai_movement = /datum/ai_movement/astar/bot/medbot
 	reset_keys = list(
 		BB_PATIENT_TARGET,
 		BB_BEACON_TARGET,
@@ -17,19 +17,19 @@
 		BB_BOT_SUMMON_TARGET,
 	)
 
-/datum/ai_movement/jps/bot/medbot
+/datum/ai_movement/astar/bot/medbot
 	maximum_length = BOT_PATIENT_PATH_LIMIT
 	max_pathing_attempts = 20
 
 // only AI isnt allowed to move when this flag is set, sentient players can
-/datum/ai_movement/jps/bot/medbot/allowed_to_move(datum/move_loop/source)
+/datum/ai_movement/astar/bot/medbot/allowed_to_move(datum/move_loop/source)
 	var/datum/ai_controller/controller = source.extra_info
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
 	if(bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE)
 		return FALSE
 	return ..()
 
-/datum/ai_movement/jps/bot/medbot/travel_to_beacon
+/datum/ai_movement/astar/bot/medbot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
 
 
@@ -225,6 +225,6 @@
 
 
 /datum/ai_behavior/travel_towards/beacon/medbot
-	new_movement_type = /datum/ai_movement/jps/bot/medbot/travel_to_beacon
+	new_movement_type = /datum/ai_movement/astar/bot/medbot/travel_to_beacon
 
 #undef BOT_PATIENT_PATH_LIMIT
