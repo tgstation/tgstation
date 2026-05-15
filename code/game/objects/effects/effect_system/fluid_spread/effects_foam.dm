@@ -270,7 +270,7 @@
 // Long lasting foam
 /// A foam variant which lasts for an extended amount of time.
 /obj/effect/particle_effect/fluid/foam/long_life
-	lifetime = 9 SECONDS
+	lifetime = 24 SECONDS
 
 /obj/effect/particle_effect/fluid/foam/long_life/slipless_life
 	slippery_foam = FALSE
