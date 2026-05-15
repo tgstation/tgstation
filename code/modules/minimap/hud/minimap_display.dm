@@ -189,7 +189,7 @@
 	var/icon_height = minimap?.base_map?.Height()
 	if(isnull(icon_width) || isnull(icon_height))
 		return
-	if(x < 1 || y < 1 || x > icon_width || y > icon_height)
+	if(!ISINRANGE(x, 1, icon_width) || !ISINRANGE(y, 1, icon_height))
 		// End the current stroke when leaving map bounds to avoid long re-entry lines.
 		last_drag_x = null
 		last_drag_y = null
