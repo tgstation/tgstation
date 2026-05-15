@@ -3020,6 +3020,7 @@
 #include "code\game\objects\structures\toiletbong.dm"
 #include "code\game\objects\structures\training_machine.dm"
 #include "code\game\objects\structures\traps.dm"
+#include "code\game\objects\structures\viro_contaiment.dm"
 #include "code\game\objects\structures\votingbox.dm"
 #include "code\game\objects\structures\windoor_assembly.dm"
 #include "code\game\objects\structures\window.dm"
