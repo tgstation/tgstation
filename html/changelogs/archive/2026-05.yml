@@ -253,3 +253,5 @@
   JohnFulpWillard:
   - bugfix: Stat panel's "Toggle Stat Panel" button now works.
   - bugfix: People who re-enter their body can now exit again by moving.
+  lelandkemble:
+  - spellcheck: The Moon path armor knowledge's description has been made more clear
