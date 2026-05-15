@@ -320,24 +320,6 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 					if(var_source.vars.Find(A))
 						. += A
 
-#define MAX_BITFIELD_BITS 24
-
-/// Converts a bitfield to a list of numbers
-/proc/bitfield2list(bitfield = 0, list/bitfield_list)
-	var/list/returned_list = list()
-	if(islist(bitfield_list))
-		var/max = min(length(bitfield_list), MAX_BITFIELD_BITS)
-		for(var/i in 0 to max)
-			if(bitfield & (1 << i))
-				returned_list += bitfield_list[i+1]
-	else
-		for(var/i in 0 to MAX_BITFIELD_BITS)
-			if(bitfield & (1 << i))
-				returned_list += (1 << i)
-
-	return returned_list
-#undef MAX_BITFIELD_BITS
-
 /// Converts a screen loc param to a x,y coordinate pixel on the screen.
 /proc/params2screenpixel(scr_loc)
 	var/list/x_and_y = splittext(scr_loc, ",")

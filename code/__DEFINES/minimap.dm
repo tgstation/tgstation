@@ -1,13 +1,8 @@
-#define MINIMAP_FLAG_NUCLEAR (1<<0)
-#define MINIMAP_FLAG_ALL (1<<5) - 1
-
 ///Converts the overworld x and y to minimap x and y values
 #define MINIMAP_PIXEL_FROM_WORLD(val) (val*2-3)
 
 //actual size of a users screen in pixels
 #define SCREEN_PIXEL_SIZE 480
-
-GLOBAL_LIST_INIT(all_minimap_flags, bitfield2list(MINIMAP_FLAG_ALL))
 
 //Drawing tool colors
 #define TACMAP_DRAWING_RED "#ff0000"
