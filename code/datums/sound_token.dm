@@ -264,20 +264,19 @@
 		for(var/mob/listener_mob as anything in cell.client_contents)
 			add_or_update_listener(listener_mob)
 
-/// Signal handler for SPATIAL_GRID_CELL_ENTERED on tracked cells. Adds newly arriving clients as listeners.
-/datum/sound_token/proc/on_cell_client_entered(datum/source, list/target_list)
+/// Signal handler for SPATIAL_GRID_CELL_ENTERED on tracked cells. Adds newly arriving mobs as listeners.
+/datum/sound_token/proc/on_cell_client_entered(datum/source, list/entering_mobs)
 	SIGNAL_HANDLER
 
-	if (!(locate(/mob/living) in target_list))
-		return
-
-	for(var/mob/listener_mob as anything in target_list)
+	for(var/mob/listener_mob as anything in entering_mobs)
+		if(!isnull(listeners[listener_mob])) // already added
+			continue
 		add_or_update_listener(listener_mob)
 
-/// Signal handler for SPATIAL_GRID_CELL_EXITED on tracked cells. Removes clients who have left all member cells.
-/datum/sound_token/proc/on_cell_client_exited(datum/source, list/exiting_clients)
+/// Signal handler for SPATIAL_GRID_CELL_EXITED on tracked cells. Removes mobs who have left all member cells.
+/datum/sound_token/proc/on_cell_client_exited(datum/source, list/exiting_mobs)
 	SIGNAL_HANDLER
-	for(var/mob/listener_mob as anything in exiting_clients)
+	for(var/mob/listener_mob as anything in exiting_mobs)
 		var/still_in_range = FALSE
 		if(SSspatial_grid.get_cell_of(listener_mob) in cell_tracker.member_cells)
 			still_in_range = TRUE
