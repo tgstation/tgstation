@@ -79,10 +79,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 /obj/structure/mirror/broken
 	icon_state = "mirror_broke"
 	cursable = FALSE
+	broken = TRUE
+	desc = "Oh no, seven years of bad luck!"
 
 /obj/structure/mirror/broken/Initialize(mapload)
 	. = ..()
-	atom_break(null, init = TRUE)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
@@ -309,13 +310,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		to_chat(unlucky_dude, span_warning("A chill runs down your spine as [src] shatters..."))
 		unlucky_dude.AddComponent(/datum/component/omen, incidents_left = 7)
 
-/obj/structure/mirror/atom_break(damage_flag, init = FALSE)
+/obj/structure/mirror/atom_break(damage_flag)
 	. = ..()
 	if(broken)
 		return
 	icon_state = "mirror_broke"
-	if(!init)
-		playsound(src, SFX_SHATTER, 70, TRUE)
+	playsound(src, SFX_SHATTER, 70, TRUE)
 	if(desc == initial(desc))
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE
