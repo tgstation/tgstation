@@ -68,6 +68,7 @@
 "aba" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /mob/living/carbon/human/species/monkey,
+/obj/item/grenade/smokebomb/viro_steri_smoke,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "abF" = (
@@ -20527,6 +20528,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/grenade/smokebomb/viro_steri_smoke,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "hcT" = (
@@ -41414,6 +41416,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/item/grenade/smokebomb/viro_steri_smoke,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "oet" = (
@@ -50275,6 +50278,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/firealarm_sanity,
 /obj/machinery/duct,
+/obj/item/grenade/smokebomb/viro_steri_smoke,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "rfY" = (
@@ -53901,6 +53905,10 @@
 /obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
+"ssd" = (
+/obj/item/grenade/smokebomb/viro_steri_smoke,
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "ssr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -56247,6 +56255,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/button/viro_steril,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "tgI" = (
@@ -57561,6 +57570,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/item/grenade/smokebomb/viro_steri_smoke,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "tEP" = (
@@ -58193,6 +58203,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
 /obj/effect/landmark/event_spawn,
+/obj/item/grenade/smokebomb/viro_steri_smoke,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "tOT" = (
@@ -62618,6 +62629,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/item/grenade/smokebomb/viro_steri_smoke,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "vow" = (
@@ -87580,7 +87592,7 @@ aaa
 aaa
 xjH
 vip
-dno
+ssd
 amP
 rVZ
 gqI
@@ -88352,7 +88364,7 @@ aaa
 xjH
 xyN
 dno
-dno
+ssd
 bHq
 gqI
 rHC
