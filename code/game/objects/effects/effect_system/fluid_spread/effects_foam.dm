@@ -31,14 +31,17 @@
 	var/allow_duplicate_results = TRUE
 	/// The amount of time this foam stick around for before it dissipates.
 	var/lifetime = 8 SECONDS
+	/// The orignal value of lifetime
+	var/oglifetime = 8 SECONDS
 	/// Whether or not this foam should be slippery.
 	var/slippery_foam = TRUE
 
 
-/obj/effect/particle_effect/fluid/foam/Initialize(mapload, lifetime, slippery)
+/obj/effect/particle_effect/fluid/foam/Initialize(mapload, fluid_group, source, lifetime, slippery)
 	. = ..()
 	src.lifetime = lifetime ? lifetime : src.lifetime
-	src.slippery_foam = slippery ? slippery : src.slippery_foam
+	src.oglifetime = src.lifetime
+	src.slippery_foam = !isnull(slippery) ? slippery : slippery_foam
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100, can_slip_callback = CALLBACK(src, PROC_REF(try_slip)))
 	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
@@ -167,7 +170,7 @@
 				continue
 			foam_mob(foaming, seconds_per_tick)
 
-		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
+		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src, src.oglifetime, src.slippery_foam)
 		reagents.trans_to(spread_foam, reagents.total_volume, copy_only = TRUE)
 		spread_foam.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		spread_foam.result_type = result_type
@@ -234,7 +237,7 @@
 	return ..()
 
 /datum/effect_system/fluid_spread/foam/start(log = FALSE, lifetime, slippery)
-	var/obj/effect/particle_effect/fluid/foam/foam = new effect_type(location, new /datum/fluid_group(amount), lifetime = lifetime, slippery = slippery)
+	var/obj/effect/particle_effect/fluid/foam/foam = new effect_type(location, new /datum/fluid_group(amount), null, lifetime, slippery)
 	var/foamcolor = mix_color_from_reagents(chemholder.reagent_list)
 	if(reagent_scale > 1) // Make room in case we were created by a particularly stuffed payload.
 		foam.reagents.maximum_volume *= reagent_scale
