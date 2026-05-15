@@ -32,7 +32,8 @@
 	///Can this mirror be removed from walls with tools?
 	var/deconstructable = TRUE
 	var/list/mirror_options = INERT_MIRROR_OPTIONS
-
+	// Can a revenant be imprisoned in this mirror?
+	var/cursable = TRUE
 	///Flags this race must have to be selectable with this type of mirror.
 	var/race_flags = MIRROR_MAGIC
 	///List of all Races that can be chosen, decided by its Initialize.
@@ -60,7 +61,7 @@
 	)
 	if(mapload)
 		find_and_mount_on_atom()
-		if(prob(ROUNDSTART_CURSED_CHANCE))
+		if(prob(ROUNDSTART_CURSED_CHANCE) && cursable)
 			AddComponent(/datum/component/revenant_prison, create_on_release = TRUE)
 	update_choices()
 	register_context()
@@ -77,6 +78,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 /obj/structure/mirror/broken
 	icon_state = "mirror_broke"
+	cursable = FALSE
 
 /obj/structure/mirror/broken/Initialize(mapload)
 	. = ..()
@@ -270,19 +272,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	user.update_eyes()
 	to_chat(user, span_notice("You gaze at your new eyes with your new eyes. Perfect!"))
 
-
-/obj/structure/mirror/proc/release_revenant()
-	message_admins("A revenant escaped its mirror containment and is now reforming.")
-	SEND_SIGNAL(src, COMSIG_REVENANT_RELEASE, cause = "mirror breaking")
-	visible_message(span_revenwarning("The revenant cackles as it escapes from the [src]!"))
-	playsound(loc, 'sound/effects/chemistry/ahaha.ogg', 100, TRUE)
-
 /obj/structure/mirror/examine(mob/user)
 	. = ..()
 	if(deconstructable)
 		. += span_notice("It's mounted to the wall with a couple of <b>bolts</b>.")
-	if(GetComponent(/datum/component/revenant_prison))
-		. += span_revenwarning("The reflection is shifting and distorted.")
 
 /obj/structure/mirror/examine_status(mob/living/carbon/human/user)
 	if(broken)
@@ -323,8 +316,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	icon_state = "mirror_broke"
 	if(!init)
 		playsound(src, SFX_SHATTER, 70, TRUE)
-		if(GetComponent(/datum/component/revenant_prison))
-			release_revenant()
 	if(desc == initial(desc))
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE
@@ -377,6 +368,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	icon_state = "magic_mirror"
 	mirror_options = MAGIC_MIRROR_OPTIONS
 	deconstructable = FALSE
+	cursable = FALSE
 
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()

@@ -21,7 +21,7 @@
 /obj/item/ectoplasm/revenant/proc/check_for_mirrors(turf/location, radius)
 	PRIVATE_PROC(TRUE)
 	for(var/obj/structure/mirror/mirror in view(radius, location))
-		if(!mirror.GetComponent(/datum/component/revenant_prison) && !mirror.broken)
+		if(!mirror.GetComponent(/datum/component/revenant_prison) && mirror.cursable)
 			return mirror
 	return null
 

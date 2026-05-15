@@ -22,7 +22,13 @@
 	QDEL_NULL(revenant)
 	return ..()
 
-/datum/component/revenant_prison/proc/release_revenant(cause)
+/datum/component/revenant_prison/proc/on_parent_break(datum/source, damage_flags)
+	SIGNAL_HANDLER
+	visible_message(span_revenwarning("The revenant cackles as it escapes from [parent.name]!"))
+	playsound(loc, 'sound/effects/chemistry/ahaha.ogg', 100, TRUE)
+	release_revenant("by [parent] breaking")
+
+/datum/component/revenant_prison/proc/release_revenant(datum/source, cause)
 	SIGNAL_HANDLER
 	if(create_on_release)
 		revenant = new(get_turf(parent))
@@ -39,11 +45,19 @@
 	SIGNAL_HANDLER
 	apply_wibbly_filters(reflection)
 
+/datum/component/revenant_prison/proc/on_parent_examine(datum/source, mob/user, list/examine_list)
+	if(istype(parent, /obj/item/mirror))
+		examine_list += span_revenwarning("The reflection is shifting and distorted.")
+
 /datum/component/revenant_prison/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_parent_examine))
+	RegisterSignal(parent, COMSIG_ATOM_BREAK, PROC_REF(on_parent_break))
 	RegisterSignal(parent, COMSIG_REVENANT_RELEASE, PROC_REF(release_revenant))
 	RegisterSignal(parent, COMSIG_REFLECTED_IMAGE_UPDATED, PROC_REF(shift_reflection))
 
 /datum/component/revenant_prison/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(parent, COMSIG_ATOM_BREAK)
 	UnregisterSignal(parent, COMSIG_REVENANT_RELEASE)
 	UnregisterSignal(parent, COMSIG_REFLECTED_IMAGE_UPDATED)
 
