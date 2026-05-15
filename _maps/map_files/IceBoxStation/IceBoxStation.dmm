@@ -35268,7 +35268,7 @@
 	id = "gene_shutters";
 	name = "Genetics Shutters"
 	},
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "jTT" = (
@@ -64824,7 +64824,7 @@
 	id = "gene_shutters";
 	name = "Genetics Shutters"
 	},
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "scb" = (

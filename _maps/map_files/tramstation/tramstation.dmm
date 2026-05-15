@@ -12882,12 +12882,12 @@
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "dpB" = (
-/obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "genetics_shutters";
 	name = "Genetics Shutters"
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "dpC" = (
