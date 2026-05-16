@@ -256,6 +256,8 @@
   lelandkemble:
   - spellcheck: The Moon path armor knowledge's description has been made more clear
 2026-05-16:
+  Aliceee2ch:
+  - map: Genetics Lab was made less secure and more public on every map, try it out!
   Melbert:
   - balance: 'Spacer: Reduction to cold damage increased from 20% to 33%'
   - balance: 'Spacer: Reduction to pressure damage increased from 20% to 33%'
@@ -286,3 +288,5 @@
       you be on combat mode to apply the bonus damage.
   - qol: Item with bane effects have an indicator about their effect in their combat
       label
+  - bugfix: sfx that plays when entering historian mode of a trophy case is no longer
+      mute
