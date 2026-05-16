@@ -226,8 +226,17 @@
   - qol: Your overall athletics level is what protects you from a random heart attack.
       If you achieve peak fitness, you are immune to random heart attacks.
 2026-05-14:
+  ArcaneMusic:
+  - qol: Grills now have screentips when using tools on them.
+  - qol: In-line with other deconstruction processes, grills now deconstruct on right
+      click.
   Derpguy3:
   - bugfix: The door control button in Deltastation's medical desk works again.
+  Iamgoofball:
+  - rscadd: You can now print basic wet floor signs at the Service Protolathe, because
+      you couldn't actually print them for decades.
+  Melbert:
+  - rscadd: You can purchase (lower quality) broadcast cameras in cargo for 800cr
   TealSeer:
   - bugfix: fixed arming grenades not being logged
   TheRyeGuyWhoWillNowDie:
@@ -240,3 +249,40 @@
   - spellcheck: Users of a Gaseous holoparasite no longer appear to repeatedly catch
       fire when they are not.
   - bugfix: You can unbuckle people from wheelchairs again
+2026-05-15:
+  JohnFulpWillard:
+  - bugfix: Stat panel's "Toggle Stat Panel" button now works.
+  - bugfix: People who re-enter their body can now exit again by moving.
+  lelandkemble:
+  - spellcheck: The Moon path armor knowledge's description has been made more clear
+2026-05-16:
+  Melbert:
+  - balance: 'Spacer: Reduction to cold damage increased from 20% to 33%'
+  - balance: 'Spacer: Reduction to pressure damage increased from 20% to 33%'
+  - balance: 'Spacer: Zero gravity drift speed increased from 20% to 25%'
+  - balance: 'Spacer: Zero gravity floating speed increased from 10% to 15%'
+  - balance: 'Spacer: Move speed penalty on planetary maps reduced from 25% to 15%'
+  - balance: 'Spacer: Passive effects now trigger every second, rather than every
+      three seconds'
+  - balance: 'Spacer: Disgust healing modifier while in zero gravity increased from
+      1x to 2x'
+  - balance: 'Spacer: Passive stun reduction in zero gravity changed from 3 seconds
+      per 3 seconds to 2 seconds per second'
+  - balance: 'Spacer: Passive stamina healing in zero gravity changed from 3 stamina
+      per 3 seconds to 4 stamina per second'
+  - balance: 'Spacer: Passive stun reduction in zero gravity now activates after 10
+      seconds in zero gravity, down from 3 minutes'
+  - balance: 'Spacer: Passive stamina healing in zero gravity now activates after
+      1 minute, down from 3 minutes'
+  - balance: 'Spacer: After being in zero gravity for 10 seconds, also reduces duration
+      of knockdown effects by 25%'
+  - refactor: Refactored bane, which is the bonus some items get to damage vs specific
+      mob types. Report any oddities or weird damage numbers you notice.
+  - balance: Flyswatter damage scales the same across all mob types (if you get a
+      +3 flyswatter you no longer one shot mothpeople)
+  - balance: Bonus damage from "bane" no longer ignore armor unless the weapon itself
+      does
+  - qol: All bane effects are now agnostic to combat mode, meaning they don't require
+      you be on combat mode to apply the bonus damage.
+  - qol: Item with bane effects have an indicator about their effect in their combat
+      label

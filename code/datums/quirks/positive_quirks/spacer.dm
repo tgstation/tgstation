@@ -30,6 +30,11 @@
 	/// Determines the last state we were in ([LAST_STATE_PLANET], [LAST_STATE_SPACE], or [LAST_STATE_NOGRAV])
 	VAR_FINAL/last_state
 
+	/// Modifier to damage taken from pressure/cold
+	VAR_FINAL/damage_mod = 0.66
+	/// Modifier to drift speed in zero G
+	VAR_FINAL/drift_mod = 0.75
+
 /datum/quirk/spacer_born/add(client/client_source)
 	if(isdummy(quirk_holder))
 		return
@@ -45,12 +50,12 @@
 	update_effects(quirk_holder, skip_timers = TRUE)
 
 	// drift slightly faster through zero G
-	quirk_holder.inertia_move_multiplier *= 0.8
+	quirk_holder.inertia_move_multiplier *= drift_mod
 
 	var/mob/living/carbon/human/human_quirker = quirk_holder
 	human_quirker.set_mob_height(modded_height)
-	human_quirker.physiology.pressure_mod *= 0.8
-	human_quirker.physiology.cold_mod *= 0.8
+	human_quirker.physiology.pressure_mod *= damage_mod
+	human_quirker.physiology.cold_mod *= damage_mod
 
 /datum/quirk/spacer_born/post_add()
 	var/on_a_planet = SSmapping.is_planetary()
@@ -76,15 +81,15 @@
 	if(QDELING(quirk_holder))
 		return
 
-	quirk_holder.inertia_move_multiplier /= 0.8
+	quirk_holder.inertia_move_multiplier /= drift_mod
 	quirk_holder.clear_mood_event("spacer")
 	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/spacer)
 	quirk_holder.remove_status_effect(/datum/status_effect/spacer)
 
 	var/mob/living/carbon/human/human_quirker = quirk_holder
 	human_quirker.set_mob_height(HUMAN_HEIGHT_MEDIUM)
-	human_quirker.physiology.pressure_mod /= 0.8
-	human_quirker.physiology.cold_mod /= 0.8
+	human_quirker.physiology.pressure_mod /= damage_mod
+	human_quirker.physiology.cold_mod /= damage_mod
 
 /// Check on Z change whether we should start or stop timers
 /datum/quirk/spacer_born/proc/spacer_moved(mob/living/source, turf/old_turf, turf/new_turf, same_z_layer)
