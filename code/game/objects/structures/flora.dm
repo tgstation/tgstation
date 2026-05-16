@@ -1059,8 +1059,81 @@
 
 /obj/structure/flora/rock/pile/style_random/Initialize(mapload)
 	. = ..()
-	icon_state = "lavarocks[rand(1, 3)]"
+	icon_state = "lavarocks[pick(3;1,3;2,1;3)]"
 	update_appearance()
+
+/obj/structure/flora/rock/pile/siderite
+	icon_state = "lavarocks_siderite1"
+
+/obj/structure/flora/rock/pile/siderite/get_potential_products()
+	return list(/obj/item/stack/ore/glass/siderite = 1)
+
+/obj/structure/flora/rock/pile/siderite/style_2
+	icon_state = "lavarocks_siderite2"
+
+/obj/structure/flora/rock/pile/siderite/style_3
+	icon_state = "lavarocks_siderite3"
+
+/obj/structure/flora/rock/pile/siderite/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "lavarocks_siderite[pick(3;1,3;2,1;3)]"
+	update_appearance()
+
+/obj/structure/flora/rock/pile/shale
+	icon_state = "lavarocks_shale1"
+
+/obj/structure/flora/rock/pile/shale/style_2
+	icon_state = "lavarocks_shale2"
+
+/obj/structure/flora/rock/pile/shale/style_3
+	icon_state = "lavarocks_shale3"
+
+/obj/structure/flora/rock/pile/shale/style_random/Initialize(mapload)
+	. = ..()
+	icon_state = "lavarocks_shale[pick(3;1,3;2,1;3)]"
+	update_appearance()
+
+/obj/structure/flora/rock/siderite_growth
+	name = "siderite growth"
+	desc = "A natural stalagmite formed of siderite, with thin pointy strands of dirty metal sticking out of the top."
+	icon_state = "siderite_growth1"
+	base_icon_state = "siderite_growth"
+	icon = 'icons/obj/mining_zones/terrain.dmi'
+	harvest_message_med = "You finish mining the growth."
+
+/obj/structure/flora/rock/siderite_growth/Initialize(mapload)
+	. = ..()
+	icon_state = "[base_icon_state][pick(3;1,3;2,1;3)]"
+	update_appearance()
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT)
+
+/obj/structure/flora/rock/siderite_growth/get_potential_products()
+	return list(/obj/item/stack/ore/glass/siderite = 1)
+
+/obj/structure/flora/rock/volcano
+	name = "volcanic pore"
+	desc = "A miniature volcano-like rock formed of the lava slowly pouring from it."
+	icon_state = "volcano_1"
+	base_icon_state = "volcano"
+	harvest_message_med = "You finish mining the pore buildup."
+	light_range = 3
+	light_power = 2.5
+	light_color = LIGHT_COLOR_LAVA
+
+/obj/structure/flora/rock/volcano/Initialize(mapload)
+	. = ..()
+	icon_state = "[base_icon_state]_[rand(1, 5)]"
+	update_appearance()
+
+/obj/structure/flora/rock/volcano/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]_e", src, alpha = 200)
+
+/obj/structure/flora/rock/volcano/after_harvest(user)
+	var/turf/open/our_turf = loc
+	if (istype(our_turf))
+		our_turf.ChangeTurf(/turf/open/lava/smooth, flags = CHANGETURF_INHERIT_AIR)
+	return ..()
 
 /obj/structure/flora/rock/pile/jungle
 	icon_state = "rock1"
