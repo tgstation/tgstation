@@ -128,6 +128,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		var/i = 1
 		while (i <= length(check_locs))
 			var/atom/movable/other_check = check_locs[i]
+			i += 1
 			if (!istype(other_check))
 				continue
 			if ((other_check in user.client.screen) && other_check.screen_loc)
