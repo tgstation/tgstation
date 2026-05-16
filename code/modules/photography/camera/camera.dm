@@ -187,6 +187,7 @@
 
 /**
  * Attempts to take an image of the target and all its surrounding tiles
+ * Returns TRUE if it successfully starts taking a picture.
  * Arguments
  *
  * * atom/target - the target we are trying to take a photo of
@@ -198,15 +199,16 @@
 	if(!on)
 		if(user)
 			user.balloon_alert(user, "flash still charging!")
-		return
+		return FALSE
 
 	if(blending)
 		if(user)
 			user.balloon_alert(user, "image still blending!")
-		return
+		return FALSE
 
 	blending = TRUE
 	INVOKE_ASYNC(src, PROC_REF(capture_image), target, user)
+	return TRUE
 
 /**
  * Renders an image of the target and all its surrounding tiles
