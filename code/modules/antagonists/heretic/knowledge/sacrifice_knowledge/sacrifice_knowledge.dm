@@ -39,6 +39,7 @@
 		/obj/item/organ/stomach/corrupt,
 		/obj/item/organ/tongue/corrupt,
 	)
+	var/backdoor_sacrifice_attempts = 0
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null
@@ -78,6 +79,30 @@
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		atoms += user
 		return TRUE
+
+	if(istype(get_area(loc), /area/centcom/heretic_backdoor))
+		loc.balloon_alert(user, "ritual failed, invalid location!")
+		switch(backdoor_sacrifice_attempts)
+			if(0)
+				to_chat(user, span_mansus("Attempting a sacrifice so close to the gods is risky..."))
+			if(1)
+				to_chat(user, span_mansus("<i>You hear a knocking sound[HAS_TRAIT(user, TRAIT_DEAF) ? ", despite your deafness" : ""]...</i>"))
+			if(2)
+				to_chat(user, span_mansus("<i>The knocking grows louder..."))
+				user.soundbang_act(SOUNDBANG_NORMAL, deafen_pwr = 10 SECONDS, stun_pwr = 1 SECONDS, damage_pwr = 10, ignore_deafness = TRUE)
+			if(3)
+				to_chat(user, span_mansus("<i>The knocking becomes deafening!</i>"))
+				user.soundbang_act(SOUNDBANG_OVERWHELMING, deafen_pwr = 20 SECONDS, stun_pwr = 4 SECONDS, damage_pwr = 20, ignore_deafness = TRUE)
+			if(4)
+				if(begin_sacrifice(user))
+					to_chat(user, span_mansus("<b><i>Your insolence is punished!</i></b>"))
+				else
+					to_chat(user, span_mansus("The knocking stops - but you can't help but feel like you've dodged a bullet, somehow."))
+			if(5 to INFINITY)
+				to_chat(user, span_mansus("You don't think trying it again would provide any more insight..."))
+
+		backdoor_sacrifice_attempts++
+		return FALSE
 
 	// If we have targets, we can check to see if we can do a sacrifice
 	// Let's remove any humans in our atoms list that aren't a sac target
@@ -135,7 +160,7 @@
 
 	if(!length(valid_targets))
 		if(!silent)
-			to_chat(user, span_hierophant_warning("No sacrifice targets could be found!"))
+			to_chat(user, span_mansus("No sacrifice targets could be found!"))
 		return FALSE
 
 	// Now, let's try to get four targets.

@@ -166,6 +166,11 @@
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
 
+/turf/open/floor/grass/norandomicon
+
+/turf/open/floor/grass/norandomicon/spawniconchange()
+	return
+
 /turf/open/floor/grass/lavaland
 	name = "dead grass patch"
 	desc = "It turns out grass doesn't grow very well in hell."

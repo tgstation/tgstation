@@ -210,3 +210,139 @@
 	. = ..()
 	if(istype(what, /obj/item/flashlight/flare/candle))
 		what.set_light_on(TRUE)
+
+/datum/heretic_knowledge/mansus_gate
+	name = "Keys to the Backdoor"
+	desc = "Open a backdoor to the Mansus.<br>\
+		Entering the container will transport you to the Mansus, granting you a safe haven to transmute or store equipment."
+	transmute_text = "Transmute a locker and a Codex Cicatrix or Codex Morbus."
+	notice = "Only willing individuals or the deceased can pass through the backdoor.\
+		<br>Attempting to perform a sacrifice so close to the gods may anger them.\
+		<br>You can only create one backdoor."
+	gain_text = "With any domain, its security is only as strong as its weakest point. \
+		The Codex speaks of backdoors to the Mansus - gates with shoddy chains, doors with brittle locks, trapdoors with rusted hinges. \
+		With the right key, I could easily exploit these."
+	required_atoms = list(
+		/obj/structure/closet = 1,
+		list(/obj/item/codex_cicatrix, /obj/item/codex_cicatrix/morbus) = 1,
+	)
+	cost = 2
+	research_tree_icon_path = 'icons/effects/effects.dmi'
+	research_tree_icon_state = "anom"
+	drafting_tier = 3
+	is_shop_only = TRUE
+	VAR_PRIVATE/used = FALSE
+
+/datum/heretic_knowledge/mansus_gate/can_be_invoked(datum/antagonist/heretic/invoker)
+	return !used
+
+/datum/heretic_knowledge/mansus_gate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/obj/structure/closet/locker = locate() in selected_atoms
+	if(isnull(locker))
+		stack_trace("Locker not found in selected atoms for mansus gate recipe!")
+		return FALSE
+
+	used = TRUE
+	INVOKE_ASYNC(src, PROC_REF(setup_link), locker)
+	return TRUE
+
+/datum/heretic_knowledge/mansus_gate/cleanup_atoms(list/selected_atoms)
+	for(var/obj/structure/closet/locker in selected_atoms)
+		selected_atoms -= locker
+	return ..()
+
+/datum/heretic_knowledge/mansus_gate/proc/setup_link(obj/structure/closet/crate/locker)
+	var/datum/map_template/masus_backdoor/backdoor = new()
+	var/datum/turf_reservation/reservation = SSmapping.request_turf_block_reservation(
+		width = backdoor.width,
+		height = backdoor.height,
+		reservation_type = /datum/turf_reservation/indestructible_plating,
+	)
+	var/turf/bottom_left = reservation.bottom_left_turfs[1]
+	backdoor.load(bottom_left)
+	var/obj/structure/closet/new_link = locate() in backdoor.created_atoms
+	new_link.resistance_flags |= INDESTRUCTIBLE
+	new_link.set_anchored(TRUE)
+	new_link.anchorable = FALSE
+	new_link.divable = FALSE
+	new_link.contents_pressure_protection = 1
+	new_link.contents_thermal_insulation = 1
+	locker.resistance_flags |= INDESTRUCTIBLE
+	locker.divable = FALSE
+	locker.contents_pressure_protection = 1
+	locker.contents_thermal_insulation = 1
+	GLOB.closet_teleport_controller.create_new_link(list(locker, new_link), subtle = TRUE)
+	RegisterSignal(new_link, COMSIG_CLOSET_TELEPORTER_PRE_SENDING, PROC_REF(closet_teleport_logic))
+	RegisterSignal(locker, COMSIG_CLOSET_TELEPORTER_PRE_SENDING, PROC_REF(closet_teleport_logic))
+
+/datum/heretic_knowledge/mansus_gate/proc/closet_teleport_logic(obj/structure/closet/crate/locker, atom/movable/sending_through)
+	SIGNAL_HANDLER
+
+	if(!is_station_level(locker.z))
+		return CLOSET_TELEPORT_FORCED
+
+	if(isliving(sending_through) && !consents_to_entry(sending_through))
+		locker.balloon_alert(sending_through, "the door refuses you!")
+		return CLOSET_TELEPORT_BLOCKED
+
+	for(var/mob/living/entering in sending_through.get_all_contents())
+		if(!consents_to_entry(entering))
+			if(isliving(sending_through))
+				locker.balloon_alert(sending_through, "the door refuses you!")
+			return CLOSET_TELEPORT_BLOCKED
+
+	return CLOSET_TELEPORT_FORCED
+
+/datum/heretic_knowledge/mansus_gate/proc/consents_to_entry(mob/living/entering)
+	if(IS_HERETIC_OR_MONSTER(entering))
+		return TRUE
+	if(!INCAPACITATED_IGNORING(entering, INCAPABLE_GRAB|INCAPABLE_STASIS))
+		return TRUE
+	return FALSE
+
+/datum/map_template/masus_backdoor
+	name = "The Mansus"
+	mappath = "_maps/templates/mansus_backdoor.dmm"
+	width = 59
+	height = 51
+	returns_created_atoms = TRUE
+
+/area/centcom/heretic_backdoor
+	name = "Mansus"
+	icon_state = "heretic"
+	requires_power = TRUE
+	always_unpowered = TRUE
+	ambience_index = AMBIENCE_SPOOKY
+	sound_environment = SOUND_ENVIRONMENT_PLAIN
+	area_flags = NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE | NO_BOH
+	static_lighting = FALSE
+	base_lighting_alpha = 200
+	base_lighting_color = "#FFF4AA"
+
+/area/centcom/heretic_backdoor/Entered(atom/movable/arrived, area/old_area)
+	. = ..()
+	if(isliving(arrived))
+		var/mob/living/arrived_mob = arrived
+		arrived_mob.add_movespeed_modifier(/datum/movespeed_modifier/heretic_backdoor_slowdown)
+		arrived_mob.adjust_temp_blindness(1 SECONDS)
+		arrived_mob.adjust_eye_blur(2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(greet_message), arrived_mob), 2 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+		if(!IS_HERETIC_OR_MONSTER(arrived_mob))
+			arrived_mob.apply_status_effect(/datum/status_effect/necropolis_curse, CURSE_BLINDING)
+
+/area/centcom/heretic_backdoor/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(isliving(gone))
+		var/mob/living/gone_mob = gone
+		gone_mob.remove_movespeed_modifier(/datum/movespeed_modifier/heretic_backdoor_slowdown)
+		gone_mob.remove_status_effect(/datum/status_effect/necropolis_curse)
+		gone_mob.adjust_temp_blindness(1 SECONDS)
+		gone_mob.adjust_eye_blur(2 SECONDS)
+
+/area/centcom/heretic_backdoor/proc/greet_message(mob/living/arrived_mob)
+	if(QDELETED(arrived_mob) || get_area(arrived_mob) != src)
+		return
+	to_chat(arrived_mob, span_mansus("A hollow sun shines down from above."))
+
+/datum/movespeed_modifier/heretic_backdoor_slowdown
+	multiplicative_slowdown = 0.5
