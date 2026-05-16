@@ -1,0 +1,15 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Spacer: Reduction to cold damage increased from 20% to 33%"
+  - balance: "Spacer: Reduction to pressure damage increased from 20% to 33%"
+  - balance: "Spacer: Zero gravity drift speed increased from 20% to 25%"
+  - balance: "Spacer: Zero gravity floating speed increased from 10% to 15%"
+  - balance: "Spacer: Move speed penalty on planetary maps reduced from 25% to 15%"
+  - balance: "Spacer: Passive effects now trigger every second, rather than every three seconds"
+  - balance: "Spacer: Disgust healing modifier while in zero gravity increased from 1x to 2x"
+  - balance: "Spacer: Passive stun reduction in zero gravity changed from 3 seconds per 3 seconds to 2 seconds per second"
+  - balance: "Spacer: Passive stamina healing in zero gravity changed from 3 stamina per 3 seconds to 4 stamina per second"
+  - balance: "Spacer: Passive stun reduction in zero gravity now activates after 10 seconds in zero gravity, down from 3 minutes"
+  - balance: "Spacer: Passive stamina healing in zero gravity now activates after 1 minute, down from 3 minutes"
+  - balance: "Spacer: After being in zero gravity for 10 seconds, also reduces duration of knockdown effects by 25%"
