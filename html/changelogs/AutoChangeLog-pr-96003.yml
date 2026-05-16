@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored bane, which is the bonus some items get to damage vs specific mob types. Report any oddities or weird damage numbers you notice."
-  - balance: "Flyswatter damage scales the same across all mob types (if you get a +3 flyswatter you no longer one shot mothpeople)"
-  - balance: "Bonus damage from \"bane\" no longer ignore armor unless the weapon itself does"
-  - qol: "All bane effects are now agnostic to combat mode, meaning they don't require you be on combat mode to apply the bonus damage."
-  - qol: "Item with bane effects have an indicator about their effect in their combat label"
