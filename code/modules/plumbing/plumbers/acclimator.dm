@@ -1,5 +1,5 @@
 ///Same as a tier 1 chem heater
-#define HEATER_COFFICIENT 0.3
+#define HEATER_COFFICIENT 0.1
 ///Decimal point in rounding temperature
 #define TEMP_ROUNDING 0.01
 ///Minimal allowed difference temperature range
