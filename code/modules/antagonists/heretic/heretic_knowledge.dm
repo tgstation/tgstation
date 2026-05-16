@@ -134,7 +134,7 @@
 
 /// Used in unit testing to prepare the components for the test
 /datum/heretic_knowledge/proc/prepare_atom_for_ritual_test(atom/what)
-	if(isitem(item))
+	if(isitem(what))
 		var/obj/item/item = what
 		item.item_flags &= ~ABSTRACT
 
