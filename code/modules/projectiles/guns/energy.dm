@@ -208,7 +208,6 @@
 				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
 				if(robot.cell.use(shot.e_cost)) //Take power from the borg...
 					cell.give(shot.e_cost) //... to recharge the shot
-					return ..()
 
 	if(!chambered)
 		var/obj/item/ammo_casing/energy/AC = ammo_type[select]
@@ -216,7 +215,6 @@
 			chambered = AC //...prepare a new shot based on the current ammo type selected
 			if(!chambered.loaded_projectile)
 				chambered.newshot()
-				return ..()
 
 /obj/item/gun/energy/handle_chamber()
 	if(chambered && !chambered.loaded_projectile) //if loaded_projectile is null, i.e the shot has been fired...
