@@ -22,7 +22,7 @@
 		return FALSE
 
 	var/obj/machinery/bouldertech/refinery/the_refinery = parent
-	if(ispath(reagent, /datum/reagent))
+	if(reagent)
 		if(reagent != the_refinery.waste_chemical) //Always allow waste chemicals to enter.
 			return FALSE
 
