@@ -5925,7 +5925,7 @@
 /area/station/service/kitchen)
 "cdl" = (
 /obj/machinery/duct,
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/cytology)
 "cdo" = (
@@ -11276,7 +11276,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "dVt" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/cytology)
 "dVu" = (
@@ -19312,7 +19312,7 @@
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
 "gKt" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/science/auxlab/firing_range)
 "gKu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
@@ -23521,7 +23521,7 @@
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "iha" = (
-/obj/effect/spawner/structure/window/hollow/middle{
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -33670,11 +33670,11 @@
 	},
 /area/station/science/research)
 "lDO" = (
-/obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "geneshut"
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "lDP" = (
@@ -37183,7 +37183,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "mNd" = (
-/obj/effect/spawner/structure/window/hollow/end{
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -49224,7 +49224,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/bitrunning/den)
 "qZr" = (
-/obj/effect/spawner/structure/window/hollow/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "qZB" = (
@@ -65902,7 +65902,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/teleporter)
 "wDa" = (
-/obj/effect/spawner/structure/window/hollow/end{
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -67467,10 +67467,10 @@
 	},
 /area/station/command/corporate_dock)
 "xeH" = (
-/obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "geneshut"
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "xeJ" = (
@@ -171690,10 +171690,10 @@ qZr
 wzX
 hfD
 rot
-dVp
+rot
 dVt
 cdl
-dVp
+rot
 lEj
 lEj
 gMk
@@ -171946,12 +171946,12 @@ guk
 mNd
 mmV
 mmV
-rot
+dVp
 gTf
 dOg
 kqf
-dVp
-dVp
+rot
+rot
 lEj
 gMk
 lEj
@@ -172203,7 +172203,7 @@ suO
 bHy
 mwX
 xGY
-rot
+dVp
 oGQ
 aIX
 oSG
@@ -172460,7 +172460,7 @@ suK
 wDa
 mmV
 uhc
-rot
+dVp
 xNo
 suw
 fdN
@@ -172717,12 +172717,12 @@ gYY
 gYY
 iha
 iha
-rot
+dVp
 dVp
 dRh
 xBU
 xje
-dVp
+rot
 lEj
 gMk
 gMk
@@ -172979,7 +172979,7 @@ dVp
 vqN
 mXJ
 iJT
-dVp
+rot
 uKm
 mWS
 gMk
@@ -173236,7 +173236,7 @@ sti
 fFg
 fFg
 dhR
-dVp
+rot
 lEj
 uet
 gMk
@@ -173492,8 +173492,8 @@ frG
 dVp
 dVt
 dVt
-dVp
-dVp
+rot
+rot
 lEj
 lEj
 lEj
@@ -174507,7 +174507,7 @@ vfJ
 vfJ
 vfJ
 jmY
-vfJ
+obA
 gKt
 dpp
 nIu
@@ -174764,7 +174764,7 @@ mNZ
 fYe
 lJq
 raz
-vfJ
+obA
 noO
 vzj
 jCT
@@ -175021,7 +175021,7 @@ uif
 fYe
 lJq
 raz
-vfJ
+obA
 dES
 vzj
 jCT
@@ -175278,7 +175278,7 @@ fYe
 fYe
 lJq
 wWE
-vfJ
+obA
 pvo
 dHa
 jCT
@@ -175535,7 +175535,7 @@ fYe
 fYe
 lJq
 jmY
-vfJ
+obA
 gOB
 vzj
 gFg
@@ -175792,7 +175792,7 @@ fYe
 fYe
 lJq
 raz
-vfJ
+obA
 egu
 qfu
 jXb
@@ -176049,7 +176049,7 @@ fYe
 fYe
 lJq
 raz
-vfJ
+obA
 hls
 ukx
 hOa
@@ -176306,7 +176306,7 @@ uif
 fYe
 lJq
 raz
-vfJ
+obA
 nas
 hOa
 ukx
@@ -176563,7 +176563,7 @@ fYe
 fYe
 lJq
 xeJ
-vfJ
+obA
 obA
 obA
 lno
