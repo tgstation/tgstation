@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "sfx that plays when entering historian mode of a trophy case is no longer mute"
