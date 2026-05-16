@@ -74,7 +74,7 @@
 
 	if(needs_turf)
 		if(!new_turf)
-		new_turf = find_suitable_turf()
+			new_turf = find_suitable_turf()
 		if(!new_turf)
 			return FALSE
 
