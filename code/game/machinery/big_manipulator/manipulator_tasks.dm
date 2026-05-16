@@ -95,7 +95,6 @@
 
 	interaction_turf = new_turf
 	interaction_priorities = fill_priority_list(manipulator_tier)
-	..()
 	return ..()
 
 /datum/manipulator_task/cargo/proc/fill_priority_list(manipulator_tier)
