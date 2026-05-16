@@ -1,9 +1,7 @@
-/**
- * The boulder machines take in many types of chems, but should only ever eject "waste" chems,
- */
+/// The boulder machines take in many types of chems, but should only ever eject "waste" chems,
 /datum/component/plumbing/boulder_reactions
-	demand_connects = EAST
-	supply_connects = WEST
+	demand_connects = WEST
+	supply_connects = EAST
 
 /datum/component/plumbing/boulder_reactions/Initialize(ducting_layer)
 	if(!istype(parent, /obj/machinery/bouldertech/refinery))
