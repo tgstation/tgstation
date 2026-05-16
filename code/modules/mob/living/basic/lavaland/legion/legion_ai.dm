@@ -5,7 +5,8 @@
 		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_AGGRO_RANGE = 5, // Unobservant
-		BB_BASIC_MOB_FLEE_DISTANCE = 6,
+		BB_RANGED_SKIRMISH_MIN_DISTANCE = 4,
+		BB_RANGED_SKIRMISH_MAX_DISTANCE = 6,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -15,8 +16,8 @@
 		/datum/ai_planning_subtree/call_reinforcements/mining,
 		/datum/ai_planning_subtree/random_speech/legion,
 		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/maintain_distance,
 		/datum/ai_planning_subtree/targeted_mob_ability,
-		/datum/ai_planning_subtree/flee_target/legion,
 	)
 
 /// Chase and attack whatever we are targeting, if it's friendly we will heal them

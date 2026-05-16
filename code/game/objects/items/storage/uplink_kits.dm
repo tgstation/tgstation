@@ -491,6 +491,11 @@
 	new /obj/item/reagent_containers/cup/bottle/amanitin(src)
 	new /obj/item/reagent_containers/syringe(src)
 
+/obj/item/storage/box/syndie_kit/carnivorous_blood/PopulateContents()
+	new /obj/item/reagent_containers/cup/bottle/carnivorous_blood(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/food/meat/slab/human(src)
+
 /obj/item/storage/box/syndie_kit/nuke
 	name = "nuke core extraction kit"
 	desc = "A box containing the equipment and instructions for extracting the plutonium cores of most Nanotrasen nuclear explosives."

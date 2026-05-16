@@ -5896,6 +5896,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/science/genetics,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "gene_desk_shutters";
+	name = "Genetics Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "bCf" = (
@@ -9359,6 +9364,11 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"cyT" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/turf/open/floor/iron/white,
+/area/station/science/genetics)
 "cyU" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
@@ -9437,7 +9447,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "cAi" = (
-/obj/effect/turf_decal/tile/purple/anticorner,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/corner{
 	dir = 1
 	},
@@ -19555,18 +19571,17 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "ftJ" = (
-/obj/structure/table/reinforced,
+/obj/machinery/door/airlock/research/glass{
+	name = "Genetics Lab"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "gene_desk_shutters";
 	name = "Genetics Shutters"
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/right/directional/east{
-	name = "Genetics Desk";
-	req_access = list("genetics")
-	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "ftN" = (
 /obj/machinery/rnd/destructive_analyzer,
@@ -28451,7 +28466,7 @@
 	},
 /obj/item/radio/intercom/directional/east,
 /obj/effect/landmark/start/hangover,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -33182,10 +33197,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/structure/sign/poster/official/random/directional/north,
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "jqx" = (
@@ -33653,7 +33668,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
+/obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/white/side{
@@ -35252,12 +35267,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "jTG" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "gene_shutters";
 	name = "Genetics Shutters"
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "jTT" = (
@@ -36938,9 +36953,6 @@
 /obj/machinery/telecomms/bus/preset_four,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
-"krY" = (
-/turf/closed/wall/r_wall,
-/area/station/science/breakroom)
 "ksb" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -37159,7 +37171,7 @@
 /area/station/science/xenobiology)
 "kuV" = (
 /obj/effect/turf_decal/arrows/red,
-/obj/effect/turf_decal/tile/purple/half{
+/obj/effect/turf_decal/tile/blue/half{
 	dir = 4
 	},
 /turf/open/floor/iron/half{
@@ -43660,7 +43672,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
+/obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
@@ -47788,12 +47800,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "nvY" = (
-/obj/structure/chair/stool/directional/west,
-/obj/effect/landmark/start/geneticist,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
@@ -51584,9 +51594,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/personal/patient{
-	name = "test subject's closet"
-	},
+/obj/machinery/vending/wardrobe/gene_wardrobe,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "ovm" = (
@@ -53064,8 +53072,9 @@
 /turf/open/floor/glass/reinforced,
 /area/station/science/ordnance/office)
 "oOc" = (
-/obj/machinery/vending/wardrobe/gene_wardrobe,
 /obj/structure/sign/departments/genetics/directional/north,
+/obj/structure/chair/stool/directional/west,
+/obj/effect/landmark/start/geneticist,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "oOg" = (
@@ -55020,12 +55029,18 @@
 /turf/open/floor/iron,
 /area/mine/production)
 "pqo" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "gene_desk_shutters";
 	name = "Genetics Shutters"
 	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/right/directional/east{
+	name = "Genetics Desk";
+	req_access = list("genetics")
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "pqv" = (
@@ -64809,11 +64824,11 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "sca" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "gene_shutters";
 	name = "Genetics Shutters"
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "scb" = (
@@ -70589,6 +70604,9 @@
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/openspace,
 /area/station/engineering/storage/tech)
+"tIB" = (
+/turf/closed/wall/r_wall,
+/area/station/science/breakroom)
 "tIC" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
@@ -86203,10 +86221,10 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/purple/half/contrasted{
+/obj/structure/sign/departments/evac/directional/east,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
-/obj/structure/sign/departments/evac/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 
@@ -265741,7 +265759,7 @@ mEJ
 jTG
 mEJ
 mEJ
-krY
+tIB
 srP
 rou
 lIk
@@ -266509,7 +266527,7 @@ crn
 tgB
 kKv
 fhb
-vAP
+cyT
 bsN
 sca
 gpj
