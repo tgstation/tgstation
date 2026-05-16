@@ -205,6 +205,7 @@
 			user.balloon_alert(user, "image still blending!")
 		return
 
+	blending = TRUE
 	INVOKE_ASYNC(src, PROC_REF(capture_image), target, user)
 
 /**
@@ -217,11 +218,14 @@
 	var/turf/target_turf = get_turf(target)
 	var/view_size = user?.client?.view || world.view
 	if(isnull(target_turf))
+		blending = FALSE
 		return
 	if(isAI(user))
 		if(!SScameras.is_visible_by_cameras(target_turf))
+			blending = FALSE
 			return
 	else if(!(target_turf in view(view_size, user)))
+		blending = FALSE
 		return
 
 	//These vars will be reused later on
@@ -232,11 +236,11 @@
 	var/viewer = get_turf(user?.client?.eye || user)
 	var/list/seen = get_hear_turfs(view_range, viewer)
 	if(!(target_turf in seen))
+		blending = FALSE
 		return
 
 	//taking the actual picture
 	on_flash(target, user)
-	blending = TRUE
 	var/list/mobs_spotted = list()
 	var/list/dead_spotted = list()
 	var/list/turfs = list()
