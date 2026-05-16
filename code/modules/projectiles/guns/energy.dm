@@ -215,6 +215,7 @@
 			chambered = AC //...prepare a new shot based on the current ammo type selected
 			if(!chambered.loaded_projectile)
 				chambered.newshot()
+				return ..()
 
 /obj/item/gun/energy/handle_chamber()
 	if(chambered && !chambered.loaded_projectile) //if loaded_projectile is null, i.e the shot has been fired...
