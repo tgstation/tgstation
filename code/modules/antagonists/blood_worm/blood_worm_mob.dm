@@ -233,9 +233,12 @@
 	for (var/datum/action/action as anything in actions)
 		action.Remove(target)
 
-/mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target, list/bodyparts)
-	for (var/obj/item/bodypart/head/blood_worm as anything in bodyparts)
-		bodyparts.Grant(target)
+/mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target, list/bodypart_overlays)
+	for (var/datum/bodypart_overlay/mutant/blood_worm_head as anything in bodypart_overlays)
+		var/obj/item/organ/blood_worm_head/new_head = new()
+		new_head.Insert(target, special = TRUE)
+		target.update_body()
+		// bodypart_overlays.Grant(target)
 
 /mob/living/basic/blood_worm/proc/sync_health(already_ejecting = FALSE)
 	if (!host)

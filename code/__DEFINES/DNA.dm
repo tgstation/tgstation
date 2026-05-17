@@ -77,6 +77,7 @@
 #define FEATURE_TAIL_XENO "tail_xeno"
 #define FEATURE_TAILSPINES "tailspines" // Different from regular spines, these appear on tails
 #define FEATURE_LEGS "legs"
+#define FEATURE_BLOOD_WORM_HEAD "blood_worm_head"
 
 ///flag for the transfer_flag argument from dna/proc/copy_dna(). This one makes it so the SE is copied too.
 #define COPY_DNA_SE (1<<0)
