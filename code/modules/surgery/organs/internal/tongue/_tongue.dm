@@ -8,7 +8,6 @@
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	voice_filter = ""
-	organ_traits = list(TRAIT_SPEAKS_CLEARLY)
 	/**
 	 * A cached list of paths of all the languages this tongue is capable of speaking
 	 *
@@ -31,6 +30,8 @@
 	///for temporary overrides of the above variable.
 	var/temp_say_mod = ""
 
+	/// Whether the owner of this tongue can speak clearly. Being set to FALSE means they mumble and slur things
+	var/speakable_with = TRUE
 	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
 	var/sense_of_taste = TRUE
 	/// Determines how "sensitive" this tongue is to tasting things, lower is more sensitive.
@@ -52,6 +53,8 @@
 	// - then we cache it via string list
 	// this results in tongues with identical possible languages sharing a cached list instance
 	languages_possible = string_list(get_possible_languages())
+	if(speakable_with)
+		add_organ_trait(TRAIT_SPEAKS_CLEARLY)
 	if(!sense_of_taste)
 		add_organ_trait(TRAIT_AGEUSIA)
 
@@ -155,7 +158,8 @@
 	add_organ_trait(TRAIT_AGEUSIA)
 
 /obj/item/organ/tongue/on_failure_recovery()
-	add_organ_trait(TRAIT_SPEAKS_CLEARLY)
+	if(speakable_with)
+		add_organ_trait(TRAIT_SPEAKS_CLEARLY)
 	if(sense_of_taste)
 		remove_organ_trait(TRAIT_AGEUSIA)
 
@@ -548,7 +552,7 @@
 	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
-	organ_traits = list(TRAIT_SPEAKS_CLEARLY, TRAIT_SILICON_EMOTES_ALLOWED)
+	organ_traits = list(TRAIT_SILICON_EMOTES_ALLOWED)
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 /obj/item/organ/tongue/robot/could_speak_language(datum/language/language_path)
@@ -610,7 +614,7 @@
 	say_mod = "meows"
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
-	organ_traits = list(TRAIT_SPEAKS_CLEARLY, TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE)
+	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE)
 	languages_native = list(/datum/language/nekomimetic)
 	actions_types = list(/datum/action/item_action/organ_action/go_feral)
 	var/feral_mode = FALSE

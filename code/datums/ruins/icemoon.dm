@@ -85,6 +85,15 @@
 	description = "A manufacturing and packaging facility producing insulated gloves."
 	suffix = "icemoon_surface_gloves.dmm"
 
+/datum/map_template/ruin/icemoon/shoe_facotry
+	name = "Ice-Ruin Shoe Factory"
+	id = "shoe_factory"
+	description = "An abandoned shoe factory."
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "shoe_factory.dmm"
+	allow_duplicates = FALSE
+	cost = 10
+
 // above and below ground together
 
 /datum/map_template/ruin/icemoon/mining_site

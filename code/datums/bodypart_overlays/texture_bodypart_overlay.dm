@@ -16,9 +16,9 @@
 /datum/bodypart_overlay/texture/modify_bodypart_appearance(datum/appearance)
 	appearance.add_filter("bodypart_texture_[texture_icon_state]", 1, layering_filter(icon = cached_texture_icon, blend_mode = BLEND_INSET_OVERLAY))
 
-/datum/bodypart_overlay/texture/generate_icon_cache()
+/datum/bodypart_overlay/texture/generate_icon_cache(obj/item/bodypart/limb)
 	. = ..()
-	. += "[type]"
+	. += type
 
 /datum/bodypart_overlay/texture/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
 	if (!..())

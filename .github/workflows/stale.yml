@@ -38,9 +38,11 @@ jobs:
       - name: Filter staled pull requests for announcement
         id: filter-prs
         uses: actions/github-script@v9
+        env:
+          input: ${{steps.stale.outputs.staled-issues-prs}}
         with:
           script: |
-            return JSON.parse(`${{steps.stale.outputs.staled-issues-prs}}`)
+            return JSON.parse(process.env.input)
                        .filter(issue => !!issue.pull_request)
                        .map(pr => ({
                         title: pr.title,
@@ -65,7 +67,7 @@ jobs:
           if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
           echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Send Discord notification
-        uses: tgstation/discord-notify@v3
+        uses: tgstation/discord-notify@main
         if: >
           steps.secrets_set.outputs.SECRETS_ENABLED
         with:

@@ -187,9 +187,6 @@ SUBSYSTEM_DEF(shuttle)
 
 		supply_packs[pack.id] = pack
 
-	for (var/obj/machinery/computer/cargo/express/console as anything in express_consoles)
-		console.packin_up(TRUE)
-
 	setup_shuttles(stationary_docking_ports)
 	has_purchase_shuttle_access = init_has_purchase_shuttle_access()
 

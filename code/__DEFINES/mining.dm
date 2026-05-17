@@ -44,8 +44,6 @@
 
 /// The number of points a miner gets for discovering a vent, multiplied by BOULDER_SIZE when completing a wave defense minus the discovery bonus.
 #define MINER_POINT_MULTIPLIER 100
-/// The multiplier that gets applied for automatically generated mining points.
-#define MINING_POINT_MACHINE_MULTIPLIER 0.5
 
 // String defines to use with CaveGenerator presets for what ore breakdown to use.
 #define OREGEN_PRESET_LAVALAND "lavaland"
@@ -63,3 +61,8 @@
 
 /// Maximum precision for ore spawn probabilities
 #define ORE_CHANCE_PRECISION 5
+
+/// Permanent style multiplier modifier earned from tapping vents, modified by vent size.
+#define ACTION_MULTIPLIER_PER_VENT_VALUE 0.1
+/// Permanent style multiplier modifier earned from killing a megafauna.
+#define ACTION_MULTIPLIER_MAJOR_KILL 0.1
