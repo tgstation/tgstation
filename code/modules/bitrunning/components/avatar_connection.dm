@@ -187,10 +187,11 @@
 	if(damage > 30 && prob(30))
 		INVOKE_ASYNC(old_body, TYPE_PROC_REF(/mob/living, emote), "scream")
 
+	var/zone = def_zone
 	if(istype(def_zone, /obj/item/bodypart)) // If the defined zone is a bodypart, then it is the bodypart of the domain avatar. We don't want that bodypart, we want the real body's bodypart, so we go back to zone.
-		def_zone = astype(def_zone, /obj/item/bodypart).body_zone
+		zone = astype(def_zone, /obj/item/bodypart).body_zone
 
-	old_body.apply_damage(damage, damage_type, def_zone, blocked, wound_bonus = CANT_WOUND)
+	old_body.apply_damage(damage, damage_type, zone, blocked, wound_bonus = CANT_WOUND)
 
 	if(old_body.stat > SOFT_CRIT) // KO!
 		full_avatar_disconnect(cause_damage = TRUE)
