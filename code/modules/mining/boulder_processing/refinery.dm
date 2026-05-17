@@ -119,7 +119,7 @@
 	circuit = /obj/item/circuitboard/machine/smelter
 	usage_sound = 'sound/machines/mining/smelter.ogg'
 	action = "smelting"
-	pixel_x = -2
+	pixel_x = -1
 
 /obj/machinery/bouldertech/refinery/smelter/Initialize(mapload)
 	. = ..()
