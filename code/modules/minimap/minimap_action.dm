@@ -15,6 +15,7 @@
 	var/can_draw = FALSE
 	/// list of hud elements we add and remove and check for when this action is triggered
 	var/list/huds = list(
+		HUD_TAC_MINIMAP_DIMMER = /atom/movable/screen/fullscreen/dimmer/minimap,
 		HUD_TAC_MINIMAP = /atom/movable/screen/minimap_display,
 		HUD_TAC_MINIMAP_Z_INDICATOR = /atom/movable/screen/minimap_z_indicator,
 		HUD_TAC_MINIMAP_Z_INDICATOR_UP = /atom/movable/screen/minimap_z_up,
@@ -93,6 +94,7 @@
 /datum/action/minimap_new/nuclear
 	annotation_share_tag = MINIMAP_ANNOTATION_TAG_NUCLEAR
 	huds = list(
+		HUD_TAC_MINIMAP_DIMMER = /atom/movable/screen/fullscreen/dimmer/minimap,
 		HUD_TAC_MINIMAP = /atom/movable/screen/minimap_display/nuclear,
 		HUD_TAC_MINIMAP_Z_INDICATOR = /atom/movable/screen/minimap_z_indicator,
 		HUD_TAC_MINIMAP_Z_INDICATOR_UP = /atom/movable/screen/minimap_z_up,

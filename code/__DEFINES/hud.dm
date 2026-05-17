@@ -171,6 +171,7 @@
 #define HUD_XENOBIO_CONSOLE "xenobio_console"
 
 #define HUD_TAC_MINIMAP "tac_minimap"
+#define HUD_TAC_MINIMAP_DIMMER "tac_minimap_dimmer"
 #define HUD_TAC_MINIMAP_Z_INDICATOR "tac_minimap_z_indicator"
 #define HUD_TAC_MINIMAP_Z_INDICATOR_UP "tac_minimap_z_up"
 #define HUD_TAC_MINIMAP_Z_INDICATOR_DOWN "tac_minimap_z_down"

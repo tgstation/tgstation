@@ -40,6 +40,7 @@
 	var/flicker_min_alpha = 150
 	/// HUD elements used by the holotable minimap view.
 	var/list/table_huds = list(
+		HUD_TAC_MINIMAP_DIMMER = /atom/movable/screen/fullscreen/dimmer/minimap,
 		HUD_TAC_MINIMAP = /atom/movable/screen/minimap_display/nuclear,
 		HUD_TAC_MINIMAP_Z_INDICATOR = /atom/movable/screen/minimap_z_indicator,
 		HUD_TAC_MINIMAP_Z_INDICATOR_UP = /atom/movable/screen/minimap_z_up,

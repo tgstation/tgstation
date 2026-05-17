@@ -5060,6 +5060,7 @@
 #include "code\modules\minimap\minimap_action.dm"
 #include "code\modules\minimap\minimap_table.dm"
 #include "code\modules\minimap\hud\minimal_z_level.dm"
+#include "code\modules\minimap\hud\minimap_dimmer.dm"
 #include "code\modules\minimap\hud\minimap_display.dm"
 #include "code\modules\minimap\hud\minimap_drawing.dm"
 #include "code\modules\minimap\hud\minimap_element.dm"
