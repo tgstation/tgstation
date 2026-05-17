@@ -115,10 +115,14 @@
 /obj/structure/stairs/proc/update_minimap_blip()
 	var/bottom_state = isTerminator() ? "stairs_up" : "stairs_down"
 	var/top_state = (bottom_state == "stairs_up") ? "stairs_down" : "stairs_up"
+	var/turf/current_turf = get_turf(src)
 
 	clear_minimap_blips()
-	add_minimap_blip_if_valid(get_turf(src), bottom_state)
-	add_minimap_blip_if_valid(get_step_multiz(src, UP), top_state)
+	if(isnull(current_turf))
+		return
+
+	add_minimap_blip_if_valid(current_turf, bottom_state)
+	add_minimap_blip_if_valid(get_step_multiz(current_turf, UP), top_state)
 
 /obj/structure/stairs/proc/clear_minimap_blips()
 	if(!islist(minimap_blip_targets))
