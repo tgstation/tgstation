@@ -701,9 +701,9 @@
 		/datum/material/titanium = 1,
 		/datum/material/silver = 1,
 		/datum/material/gold = 1,
-		/datum/material/diamond = 1,
+		/datum/material/diamond = 0.1,
 		/datum/material/uranium = 1,
-		/datum/material/bluespace = 1,
+		/datum/material/bluespace = 0.1,
 		/datum/material/plastic = 1,
 	)
 	defending_mobs = list(
