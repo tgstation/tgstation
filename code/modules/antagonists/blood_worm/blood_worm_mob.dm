@@ -244,6 +244,11 @@
 	var/mob/living/carbon/human/human_target = target
 	message_admins("DEBUG 2: Target is human: [human_target.real_name]")
 
+	var/obj/item/organ/existing = human_target.get_organ_slot("blood_worm_head")
+	if(existing)
+		message_admins("MINIMAL: Already has organ: [existing.type]")
+		return TRUE
+
 	for (var/datum/bodypart_overlay/mutant/blood_worm_head as anything in bodypart_overlays)
 		var/obj/item/organ/blood_worm_head/new_head = new()
 		new_head.Insert(target, special = TRUE)
