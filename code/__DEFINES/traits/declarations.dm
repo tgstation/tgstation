@@ -1657,4 +1657,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Sunlight on this turf is blocked and thus you can't get solar power or whatever
 #define TRAIT_TURF_SUN_BLOCKED "turf_sun_blocked"
 
+/// Mobs with this trait will always have be a priority target for mining mobs
+#define TRAIT_MINING_AGGRO "mining_aggro"
+
 // END TRAIT DEFINES
