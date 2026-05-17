@@ -1,5 +1,4 @@
 #define ARTIFACT_ROLL_CHANCE 7
-#define ARTIFACT_ROLL_CHANCE_BOSS 0
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
 #define OVERLAY_OFFSET_EACH 5
@@ -719,7 +718,6 @@
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 	)
 	excavation_warning = "Something big is nearby. Are you ABSOLUTELY ready to excavate this ore vent? A NODE drone will be deployed after threat is neutralized."
-	artifact_chance = ARTIFACT_ROLL_CHANCE_BOSS
 	///What boss do we want to spawn?
 	var/summoned_boss = null
 
@@ -817,7 +815,6 @@
 	return INITIALIZE_HINT_QDEL
 
 #undef ARTIFACT_ROLL_CHANCE
-#undef ARTIFACT_ROLL_CHANCE_BOSS
 #undef MINERAL_TYPE_OPTIONS_RANDOM
 #undef OVERLAY_OFFSET_START
 #undef OVERLAY_OFFSET_EACH
