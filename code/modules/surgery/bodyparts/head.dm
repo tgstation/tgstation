@@ -282,7 +282,7 @@
 	dmg_overlay_type = null
 	should_draw_greyscale = FALSE
 	biological_state = (BIO_FLESH|BIO_BLOODED)
-	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
+	head_flags = NONE
 
 	icon_husk = 'icons/mob/human/bodyparts.dmi'
 	husk_type = "blood_worm"

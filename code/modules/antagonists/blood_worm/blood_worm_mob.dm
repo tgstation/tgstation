@@ -86,6 +86,8 @@
 	var/list/innate_actions = list()
 	/// List of actions inside of a host.
 	var/list/host_actions = list()
+	// List of bodyparts of host, while inside host(only for adult worm)
+	var/list/host_bodyparts = list()
 
 	/// Whether the blood worm has a host AND is currently in control of that host.
 	var/is_possessing_host = FALSE
@@ -230,6 +232,10 @@
 /mob/living/basic/blood_worm/proc/remove_actions(mob/target, list/actions)
 	for (var/datum/action/action as anything in actions)
 		action.Remove(target)
+
+/mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target, list/bodyparts)
+	for (var/obj/item/bodypart/head/blood_worm as anything in bodyparts)
+		bodyparts.Grant(target)
 
 /mob/living/basic/blood_worm/proc/sync_health(already_ejecting = FALSE)
 	if (!host)

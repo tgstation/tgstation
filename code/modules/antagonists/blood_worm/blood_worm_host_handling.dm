@@ -41,6 +41,9 @@
 	TRAIT_BLOOD_WORM_HOST), // Used in code for recognizing blood worm hosts with a simple trait check.
 	BLOOD_WORM_HOST_TRAIT)
 
+	if(istype(src, /mob/living/basic/blood_worm/adult)) // istype or better to make ISADULTWORM() ??
+		host.add_traits(ADULT_BLOOD_WORM_HOST_TRAIT) // adding worm head to host
+
 	if (client)
 		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
 
@@ -50,6 +53,9 @@
 
 	remove_actions(src, innate_actions)
 	grant_actions(src, host_actions)
+
+	if(host.traits is have ADULT_BLOOD_WORM_HOST_TRAIT)
+		grant_bloodworm_head(src, host_bodyparts)
 
 	var/cached_blood_volume = host.get_blood_volume()
 
