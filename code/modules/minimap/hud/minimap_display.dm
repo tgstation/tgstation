@@ -32,6 +32,8 @@
 	)
 	/// Currently selected draw color. null = erase mode.
 	var/draw_color = TACMAP_DRAWING_RED
+	/// Y-axis offset for drawing to account for mouse cursor icon positioning.
+	var/draw_offset_y = -3
 	/// Whether this minimap instance allows drawing and labels.
 	var/can_draw = TRUE
 	/// When TRUE, left-clicking the map places a text label instead of drawing.
@@ -197,11 +199,11 @@
 	var/erase_pixel_range = isnull(draw_color) ? MINIMAP_TOOLBAR_ERASE_RANGE : 0
 
 	if(last_drag_x && last_drag_y)
-		drawing.draw_line(draw_color, last_drag_x, last_drag_y, x, y, erase_pixel_range, 1)
+		drawing.draw_line(draw_color, last_drag_x, last_drag_y + draw_offset_y, x, y + draw_offset_y, erase_pixel_range, 1)
 		last_drag_x = x
 		last_drag_y = y
 	else
-		drawing.draw_box(draw_color, x, y, x + 1, y + 1, erase_pixel_range, 1)
+		drawing.draw_box(draw_color, x, y + draw_offset_y, x + 1, y + 1 + draw_offset_y, erase_pixel_range, 1)
 		last_drag_x = x
 		last_drag_y = y
 
