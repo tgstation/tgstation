@@ -84,6 +84,7 @@
 #define VV_HK_REMOVECOMPONENT "removecomponent"
 #define VV_HK_MASS_REMOVECOMPONENT "massremovecomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
+#define VV_HK_DEBUG_APPEARANCE "debugappearance"
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"

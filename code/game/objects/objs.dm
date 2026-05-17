@@ -357,6 +357,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
 /obj/proc/get_demolition_modifier(obj/target)
+	if(HAS_TRAIT(target, TRAIT_IGNORE_DEMOLITION))
+		return 1
 	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
 		return (1 / demolition_mod)
 	return demolition_mod

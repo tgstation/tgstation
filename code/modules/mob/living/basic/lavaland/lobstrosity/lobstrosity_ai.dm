@@ -8,12 +8,13 @@
 /datum/ai_controller/basic_controller/lobstrosity
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_PRIORITY_STRATEGY = /datum/target_priority_strategy/mining,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
 		BB_LOBSTROSITY_FINGER_LUST = 0,
 		BB_LOBSTROSITY_NAIVE_HUNTER = FALSE,
-		BB_BASIC_MOB_FLEE_DISTANCE = 8,
+		BB_BASIC_MOB_FLEE_DISTANCE = 6,
 		BB_EAT_FOOD_COOLDOWN = 3 MINUTES,
 		BB_ONLY_FISH_WHILE_HUNGRY = TRUE,
 		BB_TARGET_PRIORITY_TRAIT = TRAIT_SCARY_FISHERMAN,
@@ -24,6 +25,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/call_reinforcements/mining,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/hoard_fingers,
 		/datum/ai_planning_subtree/pet_planning,

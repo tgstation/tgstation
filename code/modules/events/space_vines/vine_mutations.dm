@@ -268,6 +268,7 @@
 /datum/spacevine_mutation/transparency/on_birth(obj/structure/spacevine/holder)
 	holder.light_state = PASS_LIGHT
 	holder.alpha = 125
+	holder.unblock_sunlight()
 
 /datum/spacevine_mutation/gas_eater
 	abstract_type = /datum/spacevine_mutation/gas_eater

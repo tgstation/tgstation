@@ -788,14 +788,12 @@
 /obj/machinery/transport/tram_controller/hilbert
 	configured_transport_id = HILBERT_LINE_1
 
-/obj/machinery/transport/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
-	return NONE
-
 /obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()
 	register_context()
 	if(!id_tag)
 		id_tag = assign_random_name()
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_SECONDARY)
 
 /**
  * Mapped or built tram cabinet isn't located on a transport module.
