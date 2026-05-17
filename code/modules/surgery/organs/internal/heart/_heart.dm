@@ -35,7 +35,10 @@
 	var/beat = BEAT_NONE
 	/// whether the heart's been operated on to fix some of its damages
 	var/operated = FALSE
+	/// The message that is displayed when listening to a heart via a stethoscope
 	var/beat_noise = "a rhythmic thumping"
+	/// The rate at which blood is pumped by the heart is multiplied by this (value of 0 disables blood regeneration entirely)
+	var/blood_regeneration_multiplier = 1
 
 /obj/item/organ/heart/update_icon_state()
 	. = ..()
@@ -91,6 +94,14 @@
 /obj/item/organ/heart/OnEatFrom(eater, feeder)
 	. = ..()
 	Stop()
+
+/// Returns how effectively this heart regenerates the owner's blood based on organ health
+/obj/item/organ/heart/proc/get_blood_regeneration_multiplier()
+	if(!is_beating() || (organ_flags & ORGAN_FAILING))
+		return 0
+
+	var/health_percent = clamp((maxHealth - damage) / maxHealth, 0, 1)
+	return blood_regeneration_multiplier * health_percent
 
 /// Checks if the heart is beating.
 /// Can be overridden to add more conditions for more complex hearts.
@@ -165,6 +176,7 @@
 	base_icon_state = "cursedheart"
 	decay_factor = 0
 	beat_noise = "a pained screeching with every beat. <b>It seems to lack any kind of rhythm</b>"
+	blood_regeneration_multiplier = 0 // blood is pumped manually
 	var/pump_delay = 3 SECONDS
 	var/blood_loss = BLOOD_VOLUME_NORMAL * 0.2
 	var/heal_brute = 0
@@ -203,16 +215,10 @@
 	beat_noise = "a steady fsssh of hydraulics"
 	/// Whether or not we have a stabilization available. This prevents our owner from entering softcrit for an amount of time.
 	var/stabilization_available = FALSE
-
 	/// How long our stabilization lasts for.
 	var/stabilization_duration = 10 SECONDS
-
-	/// Whether our heart suppresses bleeders and restores blood automatically.
-	var/bleed_prevention = FALSE
-
 	/// The probability that our blood replication causes toxin damage.
-	var/toxification_probability = 20
-
+	var/toxification_probability = 0
 	/// Chance of permanent effects if emp-ed.
 	var/emp_vulnerability = 80
 
@@ -248,15 +254,11 @@
 		stabilize_heart()
 
 	// Wound healing is intentionally tied to blood volume.
-	if(bleed_prevention && ishuman(owner) && owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+	if(ishuman(owner) && owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		var/mob/living/carbon/human/wounded_owner = owner
-
-		wounded_owner.adjust_blood_volume(2 * seconds_per_tick)
 
 		if(toxification_probability && prob(toxification_probability))
 			wounded_owner.adjust_tox_loss(1 * seconds_per_tick, updating_health = FALSE)
-
-		wounded_owner.coagulant_effect(1 * seconds_per_tick)
 
 /obj/item/organ/heart/cybernetic/proc/stabilize_heart()
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
@@ -279,8 +281,9 @@
 	icon_state = "heart-c-u-on"
 	base_icon_state = "heart-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
-	bleed_prevention = TRUE
 	emp_vulnerability = 40
+	toxification_probability = 20
+	blood_regeneration_multiplier = 1.5
 
 /obj/item/organ/heart/cybernetic/tier3
 	name = "upgraded cybernetic heart"
@@ -290,9 +293,9 @@
 	base_icon_state = "heart-c-u2"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	stabilization_available = TRUE
-	toxification_probability = 0
-	bleed_prevention = TRUE
 	emp_vulnerability = 20
+	toxification_probability = 0
+	blood_regeneration_multiplier = 3
 
 /obj/item/organ/heart/cybernetic/surplus
 	name = "surplus prosthetic heart"
@@ -303,6 +306,7 @@
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 	beat_noise = "a concerningly irregular hydraulic hum. You <b>shouldn't touch this</b> while it's running"
 	emp_vulnerability = 100
+	blood_regeneration_multiplier = 0.5
 
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/heart/cybernetic/surplus/Initialize(mapload)
@@ -342,9 +346,8 @@
 	desc = "It beats ever strong."
 	icon_state = "heart-evolved-on"
 	base_icon_state = "heart-evolved"
-
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 1.2
-
+	blood_regeneration_multiplier = 1.5
 	/// Chance to heal per on_life
 	var/healing_probability = 10
 	/// Base healing we receive per tick at 0 damage and for standard versions
@@ -370,7 +373,7 @@
 
 	healing_probability = 5
 	base_healing = 0.5
-
+	blood_regeneration_multiplier = 1.25
 	// How much damage each magic block deals to us
 	var/damage_per_block = 50
 
