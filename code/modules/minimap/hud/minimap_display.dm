@@ -1,4 +1,3 @@
-#define MINIMAP_TOOLBAR_ERASE_RANGE 5
 #define MINIMAP_LABEL_REMOVE_PIXEL_RANGE 5
 
 /// Screen object that renders a [/datum/minimap] base map icon on the HUD.
@@ -21,27 +20,17 @@
 	var/list/atom/movable/screen/minimap_element/blip/blips = list()
 	/// The list of minimap blip tags we're going to read from the globalist and listen for additions to
 	var/list/valid_minimap_blip_tags = list()
-	var/last_drag_x
-	var/last_drag_y
 	/// fixed z-level to stay on
 	var/fixed_z_level
+	/// Y-axis offset for drawing to account for mouse cursor icon positioning.
+	var/draw_offset_y = -3
+	/// Whether this minimap instance allows drawing and labels.
+	var/can_draw = TRUE
 	/// list of signals we want to keep tied on the hud owner mob
 	var/list/hud_signals = list(
 		COMSIG_MOVABLE_Z_CHANGED = PROC_REF(on_z_level_change),
 		COMSIG_MINIMAP_CHANGE_Z_LEVEL = PROC_REF(z_change_request)
 	)
-	/// Currently selected draw color. null = erase mode.
-	var/draw_color = TACMAP_DRAWING_RED
-	/// Y-axis offset for drawing to account for mouse cursor icon positioning.
-	var/draw_offset_y = -3
-	/// Whether this minimap instance allows drawing and labels.
-	var/can_draw = TRUE
-	/// When TRUE, left-clicking the map places a text label instead of drawing.
-	var/label_mode = FALSE
-	/// Mouse cursor icon for the currently selected draw/erase tool. Restored when label mode is toggled off.
-	var/icon/active_mouse_icon
-	/// Tracks which tool button is visually selected. null = nothing selected.
-	var/selected_tool_key = null
 	/// Maps HUD key → button type path. Used to create/remove toolbar buttons via [/datum/hud].
 	var/static/list/toolbar_button_types = list(
 		HUD_TAC_MINIMAP_TOOL_RED    = /atom/movable/screen/minimap_toolbar_button/draw/red,
@@ -52,6 +41,8 @@
 		HUD_TAC_MINIMAP_TOOL_LABEL  = /atom/movable/screen/minimap_toolbar_button/label,
 		HUD_TAC_MINIMAP_TOOL_CLEAR  = /atom/movable/screen/minimap_toolbar_button/clear,
 	)
+	/// Currently active toolbar button (the active tool).
+	var/atom/movable/screen/minimap_toolbar_button/active_button = null
 
 /atom/movable/screen/minimap_display/Initialize(mapload, datum/hud/hud_owner, datum/minimap/minimap, list/minimap_blip_tags, initial_fixed_z_level, annotation_share_tag, can_draw = TRUE)
 	src.can_draw = can_draw
@@ -86,16 +77,18 @@
 	set_minimap(fixed_minimap)
 
 /atom/movable/screen/minimap_display/Destroy()
-	if(hud?.mymob?.client)
-		hud.mymob.client.mouse_pointer_icon = null
+	set_cursor_icon(null)
+	if(active_button)
+		active_button.on_deactivate()
+		active_button = null
 	if(hud)
 		for(var/key in toolbar_button_types)
 			hud.remove_screen_object(key, update = FALSE)
-		if(hud?.mymob)
+		if(get_mob())
 			for(var/signal in hud_signals)
-				UnregisterSignal(hud.mymob, signal, hud_signals[signal])
-		if(hud?.mymob?.client)
-			UnregisterSignal(hud.mymob.client, COMSIG_CLIENT_MOUSEUP)
+				UnregisterSignal(get_mob(), signal, hud_signals[signal])
+		if(get_mob()?.client)
+			UnregisterSignal(get_mob().client, COMSIG_CLIENT_MOUSEUP)
 	if(length(GLOB.minimap_annotation_viewers[annotation_share_tag]))
 		GLOB.minimap_annotation_viewers[annotation_share_tag] -= src
 	minimap = null
@@ -114,16 +107,17 @@
 	if(hud)
 		for(var/key in toolbar_button_types)
 			hud.remove_screen_object(key, update = FALSE)
-		for(var/signal in hud_signals)
-			UnregisterSignal(hud_owner?.mymob, signal, hud_signals[signal])
-		if(hud?.mymob?.client)
-			UnregisterSignal(hud.mymob.client, COMSIG_CLIENT_MOUSEUP)
+		if(get_mob())
+			for(var/signal in hud_signals)
+				UnregisterSignal(get_mob(), signal, hud_signals[signal])
+		if(get_mob()?.client)
+			UnregisterSignal(get_mob().client, COMSIG_CLIENT_MOUSEUP)
 	. = ..()
-	if(hud?.mymob)
+	if(get_mob())
 		for(var/signal in hud_signals)
-			RegisterSignal(hud_owner.mymob, signal, hud_signals[signal])
-		if(hud.mymob.client)
-			RegisterSignal(hud.mymob.client, COMSIG_CLIENT_MOUSEUP, PROC_REF(on_client_mouseup))
+			RegisterSignal(get_mob(), signal, hud_signals[signal])
+		if(get_mob()?.client)
+			RegisterSignal(get_mob().client, COMSIG_CLIENT_MOUSEUP, PROC_REF(on_client_mouseup))
 	if(can_draw)
 		for(var/hud_key, hud_type in toolbar_button_types)
 			var/atom/movable/screen/minimap_toolbar_button/button = new hud_type(null, hud_owner, src)
@@ -139,14 +133,9 @@
 	var/icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 	var/right_click = LAZYACCESS(modifiers, RIGHT_CLICK)
-	if(can_draw && LAZYACCESS(modifiers, CTRL_CLICK))
-		INVOKE_ASYNC(src, PROC_REF(async_place_label), usr, icon_x, icon_y)
+
+	if(active_button && active_button.on_click(icon_x, icon_y, right_click))
 		return
-	if(can_draw && label_mode)
-		if(right_click)
-			remove_nearest_label(icon_x, icon_y, usr)
-			return
-		INVOKE_ASYNC(src, PROC_REF(async_place_label), usr, icon_x, icon_y)
 
 /atom/movable/screen/minimap_display/proc/remove_nearest_label(icon_x, icon_y, mob/user)
 	var/list/labels_for_z = get_or_create_annotation_list(/atom/movable/screen/minimap_element/label, minimap.z)
@@ -177,42 +166,20 @@
 /atom/movable/screen/minimap_display/MouseDrag(over_object, src_location, over_location, src_control, over_control, params)
 	if(usr != get_mob())
 		return
-	if(!can_draw)
+	if(!active_button)
 		return
 	var/list/modifiers = params2list(params)
-	if(label_mode || LAZYACCESS(modifiers, CTRL_CLICK))
-		return
-	if(selected_tool_key == null)
-		return
 	var/list/mouse_px = params2screenpixel(LAZYACCESS(modifiers, SCREEN_LOC))
 	if(length(mouse_px) != 2)
 		return
 	var/x = mouse_px[1] - origin_px[1] + 1
 	var/y = mouse_px[2] - origin_px[2] + 1
-	var/icon_width = minimap?.base_map?.Width()
-	var/icon_height = minimap?.base_map?.Height()
-	if(isnull(icon_width) || isnull(icon_height))
-		return
-	if(!ISINRANGE(x, 1, icon_width) || !ISINRANGE(y, 1, icon_height))
-		// End the current stroke when leaving map bounds to avoid long re-entry lines.
-		last_drag_x = null
-		last_drag_y = null
-		return
-	var/erase_pixel_range = isnull(draw_color) ? MINIMAP_TOOLBAR_ERASE_RANGE : 0
-
-	if(last_drag_x && last_drag_y)
-		drawing.draw_line(draw_color, last_drag_x, last_drag_y + draw_offset_y, x, y + draw_offset_y, erase_pixel_range, 1)
-		last_drag_x = x
-		last_drag_y = y
-	else
-		drawing.draw_box(draw_color, x, y + draw_offset_y, x + 1, y + 1 + draw_offset_y, erase_pixel_range, 1)
-		last_drag_x = x
-		last_drag_y = y
+	active_button.on_mouse_drag(x, y)
 
 /atom/movable/screen/minimap_display/proc/on_client_mouseup(client/source)
 	SIGNAL_HANDLER
-	last_drag_x = null
-	last_drag_y = null
+	if(active_button)
+		active_button.on_mouse_up()
 
 /atom/movable/screen/minimap_display/MouseMove(location, control, params)
 	if(usr != get_mob())
@@ -260,8 +227,8 @@
 	if(usr != get_mob())
 		return
 	screentip.maptext = ""
-	last_drag_x = null
-	last_drag_y = null
+	if(active_button)
+		active_button.on_mouse_up()
 
 /atom/movable/screen/minimap_display/proc/on_z_level_change(mob/source)
 	SIGNAL_HANDLER
@@ -346,7 +313,7 @@
 /atom/movable/screen/minimap_display/proc/add_blip(name, icon_state, x, y, large = FALSE, layer = 12)
 	if(blips[name])
 		return
-	var/atom/movable/screen/minimap_element/blip/new_blip = new(null, null, hud.mymob, icon_state, large)
+	var/atom/movable/screen/minimap_element/blip/new_blip = new(null, null, get_mob(), icon_state, large)
 	new_blip.layer = layer
 	new_blip.start_tracking_target()
 	blips[name] = new_blip
@@ -404,36 +371,40 @@
 			closest_distance = current_distance
 	return closest_z
 
-/atom/movable/screen/minimap_display/proc/select_draw_tool(color, icon/mouse_icon = null, tool_key = null)
-	if(!can_draw)
+/// Activates a toolbar button as the active tool.
+/atom/movable/screen/minimap_display/proc/activate_button(atom/movable/screen/minimap_toolbar_button/button)
+	if(!button)
 		return
-	// Toggle: if clicking the same tool, deselect it
-	if(selected_tool_key == tool_key && tool_key != null)
-		selected_tool_key = null
-		active_mouse_icon = null
-		if(hud?.mymob?.client)
-			hud.mymob.client.mouse_pointer_icon = null
-		return
-	selected_tool_key = tool_key
-	draw_color = color
-	label_mode = FALSE
-	active_mouse_icon = mouse_icon
-	if(hud?.mymob?.client)
-		hud.mymob.client.mouse_pointer_icon = mouse_icon
 
-/atom/movable/screen/minimap_display/proc/toggle_label_mode(icon/label_mouse_icon = null)
-	if(!can_draw)
+	// Deselect if clicking the same button
+	if(active_button == button)
+		deactivate_button()
 		return
-	label_mode = !label_mode
-	if(hud?.mymob?.client)
-		hud.mymob.client.mouse_pointer_icon = label_mode ? label_mouse_icon : active_mouse_icon
+
+	deactivate_button()
+
+	active_button = button
+	button.on_activate()
 	update_toolbar_button_states()
+
+/// Deactivates the current tool button.
+/atom/movable/screen/minimap_display/proc/deactivate_button()
+	if(active_button)
+		active_button.on_deactivate()
+		active_button = null
+	update_toolbar_button_states()
+
+/// Sets the mouse cursor icon for the HUD client. Pass null to reset to default.
+/atom/movable/screen/minimap_display/proc/set_cursor_icon(icon/cursor_icon)
+	var/mob/owner = get_mob()
+	if(owner?.client)
+		owner.client.mouse_pointer_icon = cursor_icon
 
 /// Calculates the actual screen pixel size based on the client's view
 /atom/movable/screen/minimap_display/proc/get_screen_pixel_size()
-	if(!hud?.mymob?.client)
+	if(!get_mob()?.client)
 		return SCREEN_PIXEL_SIZE  // fallback to constant if no client
-	var/list/view_pixels = view_to_pixels(hud.mymob.client.view_size.getView())
+	var/list/view_pixels = view_to_pixels(get_mob().client.view_size.getView())
 	// Return the maximum dimension (typically square, but handle non-square views)
 	return max(view_pixels[1], view_pixels[2])
 
@@ -608,5 +579,4 @@
 	annotation_share_tag = MINIMAP_ANNOTATION_TAG_NUCLEAR
 	valid_minimap_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP, MINIMAP_SYNDICATE_MECH_BLIP, MINIMAP_SYNDIE_TURRET_BLIP, MINIMAP_LADDER_BLIP, MINIMAP_STAIR_BLIP)
 
-#undef MINIMAP_TOOLBAR_ERASE_RANGE
 #undef MINIMAP_LABEL_REMOVE_PIXEL_RANGE

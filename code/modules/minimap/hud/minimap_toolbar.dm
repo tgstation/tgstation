@@ -1,3 +1,5 @@
+#define MINIMAP_TOOLBAR_ERASE_RANGE 5
+
 /atom/movable/screen/minimap_toolbar_button
 	icon = 'icons/ui_icons/minimap/minimap_buttons.dmi'
 	icon_state = "draw"
@@ -12,6 +14,9 @@
 	var/draw_color = null
 	/// HUD key for this tool button. Used to track selection state.
 	var/tool_key = null
+	/// Coordinates of the last drag position during drawing.
+	var/last_drag_x
+	var/last_drag_y
 
 /atom/movable/screen/minimap_toolbar_button/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/minimap_display/minimap_display)
 	. = ..()
@@ -33,7 +38,7 @@
 
 /// Returns TRUE if this button should be shown as active.
 /atom/movable/screen/minimap_toolbar_button/proc/is_active()
-	return display && !display.label_mode && display.selected_tool_key == tool_key
+	return display && display.active_button == src
 
 /// Updates the button's visual state to show if it's active.
 /atom/movable/screen/minimap_toolbar_button/proc/update_active_state()
@@ -42,13 +47,57 @@
 	else
 		remove_filter("active")
 
+/// Called when this button is activated as the active tool.
+/atom/movable/screen/minimap_toolbar_button/proc/on_activate()
+	display?.set_cursor_icon(mouse_icon)
+
+/// Called when this button is deactivated.
+/atom/movable/screen/minimap_toolbar_button/proc/on_deactivate()
+	display?.set_cursor_icon(null)
+	last_drag_x = null
+	last_drag_y = null
+
+/// Called during mouse drag on the map. Override to implement tool behavior.
+/atom/movable/screen/minimap_toolbar_button/proc/on_mouse_drag(x, y)
+	return FALSE
+
+/// Called on mouse up. Override to clean up tool state.
+/atom/movable/screen/minimap_toolbar_button/proc/on_mouse_up()
+	last_drag_x = null
+	last_drag_y = null
+
+/// Called on click. Override to implement click behavior like label placement.
+/atom/movable/screen/minimap_toolbar_button/proc/on_click(icon_x, icon_y, right_click)
+	return FALSE
+
 /atom/movable/screen/minimap_toolbar_button/draw
 	desc = "Left-drag on the map to draw."
 
+/atom/movable/screen/minimap_toolbar_button/draw/on_mouse_drag(x, y)
+	if(isnull(display) || isnull(display.drawing))
+		return FALSE
+	var/icon_width = display.minimap?.base_map?.Width()
+	var/icon_height = display.minimap?.base_map?.Height()
+	if(isnull(icon_width) || isnull(icon_height))
+		return FALSE
+	if(!ISINRANGE(x, 1, icon_width) || !ISINRANGE(y, 1, icon_height))
+		last_drag_x = null
+		last_drag_y = null
+		return FALSE
+
+	if(last_drag_x && last_drag_y)
+		display.drawing.draw_line(draw_color, last_drag_x, last_drag_y + display.draw_offset_y, x, y + display.draw_offset_y, 0, 1)
+		last_drag_x = x
+		last_drag_y = y
+	else
+		display.drawing.draw_box(draw_color, x, y + display.draw_offset_y, x + 1, y + 1 + display.draw_offset_y, 0, 1)
+		last_drag_x = x
+		last_drag_y = y
+	return TRUE
+
 /atom/movable/screen/minimap_toolbar_button/draw/Click(location, control, params)
 	if(usr == get_mob())
-		display?.select_draw_tool(draw_color, mouse_icon, tool_key)
-		display?.update_toolbar_button_states()
+		display?.activate_button(src)
 
 /atom/movable/screen/minimap_toolbar_button/draw/red
 	button_slot = 0
@@ -81,10 +130,31 @@
 	desc = "Left-drag on the map to erase."
 	mouse_icon = 'icons/ui_icons/minimap/minimap_mouse/draw_erase.dmi'
 
+/atom/movable/screen/minimap_toolbar_button/erase/on_mouse_drag(x, y)
+	if(isnull(display) || isnull(display.drawing))
+		return FALSE
+	var/icon_width = display.minimap?.base_map?.Width()
+	var/icon_height = display.minimap?.base_map?.Height()
+	if(isnull(icon_width) || isnull(icon_height))
+		return FALSE
+	if(!ISINRANGE(x, 1, icon_width) || !ISINRANGE(y, 1, icon_height))
+		last_drag_x = null
+		last_drag_y = null
+		return FALSE
+
+	if(last_drag_x && last_drag_y)
+		display.drawing.draw_line(null, last_drag_x, last_drag_y + display.draw_offset_y, x, y + display.draw_offset_y, MINIMAP_TOOLBAR_ERASE_RANGE, 1)
+		last_drag_x = x
+		last_drag_y = y
+	else
+		display.drawing.draw_box(null, x, y + display.draw_offset_y, x + 1, y + 1 + display.draw_offset_y, MINIMAP_TOOLBAR_ERASE_RANGE, 1)
+		last_drag_x = x
+		last_drag_y = y
+	return TRUE
+
 /atom/movable/screen/minimap_toolbar_button/erase/Click(location, control, params)
 	if(usr == get_mob())
-		display?.select_draw_tool(null, mouse_icon, HUD_TAC_MINIMAP_TOOL_ERASE)
-		display?.update_toolbar_button_states()
+		display?.activate_button(src)
 
 /// Clear tool — removes all drawings and labels.
 /atom/movable/screen/minimap_toolbar_button/clear
@@ -106,8 +176,15 @@
 	desc = "Toggle label mode. Click the map to place a label. Right-click a nearby label on the map to remove it. Right-click this button to clear all labels."
 	mouse_icon = 'icons/ui_icons/minimap/minimap_mouse/label.dmi'
 
-/atom/movable/screen/minimap_toolbar_button/label/is_active()
-	return display && display.label_mode
+/atom/movable/screen/minimap_toolbar_button/label/on_click(icon_x, icon_y, right_click)
+	if(isnull(display))
+		return FALSE
+	if(right_click)
+		display.remove_nearest_label(icon_x, icon_y, usr)
+		return TRUE
+	// Place label asynchronously
+	INVOKE_ASYNC(display, /atom/movable/screen/minimap_display/proc/async_place_label, usr, icon_x, icon_y)
+	return TRUE
 
 /atom/movable/screen/minimap_toolbar_button/label/Click(location, control, params)
 	if(usr != get_mob())
@@ -116,4 +193,6 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		display.clear_all_annotations(usr, /atom/movable/screen/minimap_element/label)
 	else
-		display.toggle_label_mode(mouse_icon)
+		display?.activate_button(src)
+
+#undef MINIMAP_TOOLBAR_ERASE_RANGE
