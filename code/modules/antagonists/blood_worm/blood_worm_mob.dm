@@ -249,6 +249,25 @@
 		message_admins("MINIMAL: Already has organ: [existing.type]")
 		return TRUE
 
+	message_admins("MINIMAL DEBUG 4: No existing organ")
+
+	var/obj/item/organ/blood_worm_head/new_head = new()
+	message_admins("MINIMAL DEBUG 5: Organ created")
+
+	new_head.Insert(human_target, special = TRUE)
+	message_admins("MINIMAL DEBUG 6: Insert called")
+
+	var/obj/item/organ/check = human_target.get_organ_slot("blood_worm_head")
+	if(check)
+		message_admins("MINIMAL SUCCESS: Organ found after Insert: [check.type]")
+	else
+		message_admins("MINIMAL ERROR: Organ NOT found after Insert")
+
+	human_target.update_body()
+	message_admins("MINIMAL DEBUG 7: update_body called")
+
+	message_admins("MINIMAL END: Done")
+
 	for (var/datum/bodypart_overlay/mutant/blood_worm_head as anything in bodypart_overlays)
 		var/obj/item/organ/blood_worm_head/new_head = new()
 		new_head.Insert(target, special = TRUE)
