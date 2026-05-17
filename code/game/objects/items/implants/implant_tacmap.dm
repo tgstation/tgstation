@@ -49,14 +49,6 @@
 	minimap_action.can_draw = can_draw_on_personal_minimap
 
 /obj/item/implant/tacmap/proc/get_minimap_icon_state(mob/living/wearer)
-	if(!wearer.appears_alive())
-		if(astype(wearer, /mob/living/carbon)?.can_defib_client())
-			return "undefibbable"
-		if(isnull(wearer.mind) && isnull(wearer.ai_controller))
-			var/mob/dead/observer/ghost = wearer.get_ghost(TRUE)
-			if(!ghost?.can_reenter_corpse)
-				return "undefibbable"
-		return "defibbable"
 	return wearer_icon_state
 
 ///Updates the wearer's minimap icon
@@ -92,6 +84,7 @@
 /obj/item/implant/tacmap/nuclear/leader // Leader subtype lets him draw on the map
 	actions_types = list(/datum/action/minimap_new/nuclear)
 	can_draw_on_personal_minimap = TRUE
+	wearer_icon_state = "syndicate_leader"
 
 /obj/item/implant/tacmap/nuclear/leader/implant(mob/living/target, mob/user, silent, force)
 	. = ..()

@@ -554,6 +554,7 @@
 	var/list/labels_for_z = get_or_create_annotation_list(/atom/movable/screen/minimap_element/label, minimap.z)
 	if(length(labels_for_z))
 		show_minimap_elements(labels_for_z)
+	show_minimap_element(screentip)
 
 /atom/movable/screen/minimap_display/proc/sync_visible_objects(z_level)
 	if(isnull(z_level))
@@ -602,7 +603,7 @@
 
 /atom/movable/screen/minimap_display/nuclear
 	annotation_share_tag = MINIMAP_ANNOTATION_TAG_NUCLEAR
-	valid_minimap_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP, MINIMAP_SYNDICATE_MECH_BLIP)
+	valid_minimap_blip_tags = list(MINIMAP_BOMB_BLIP, MINIMAP_NUKEDISK_BLIP, MINIMAP_NUKEOP_BLIP, MINIMAP_SYNDICATE_MECH_BLIP, MINIMAP_SYNDIE_TURRET_BLIP, MINIMAP_LADDER_BLIP, MINIMAP_STAIR_BLIP)
 
 #undef MINIMAP_TOOLBAR_ERASE_RANGE
 #undef MINIMAP_LABEL_REMOVE_PIXEL_RANGE

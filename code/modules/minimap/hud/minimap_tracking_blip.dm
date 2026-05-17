@@ -41,7 +41,7 @@
 	track_target = null
 	tracking = FALSE
 	if(tracked_container)
-		UnregisterSignal(tracked_container, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(tracked_container, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED))
 		tracked_container = null
 
 /atom/movable/screen/minimap_element/blip/proc/start_tracking_target()
@@ -57,14 +57,16 @@
 	INVOKE_ASYNC(src, PROC_REF(update_minimap))
 
 /atom/movable/screen/minimap_element/blip/proc/update_minimap()
-	minimap = get_minimap_for_z(track_target.z)
+	var/turf/target_turf = get_turf(track_target)
+	minimap = get_minimap_for_z(target_turf.z)
 	update_blip()
 
 /atom/movable/screen/minimap_element/blip/proc/on_target_z_changed(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
 	if(isnull(track_target))
 		return
-	if(isnull(minimap) || minimap.z != track_target.z)
+	var/turf/target_turf = get_turf(track_target)
+	if(isnull(minimap) || minimap.z != target_turf?.z)
 		INVOKE_ASYNC(src, PROC_REF(update_minimap))
 	else
 		// todo check if COMSIG_MOVABLE_MOVED is called anyway
@@ -76,16 +78,17 @@
 	if(tracked_container == new_container)
 		return
 	if(tracked_container)
-		UnregisterSignal(tracked_container, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(tracked_container, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED))
 	tracked_container = new_container
 	if(tracked_container)
 		RegisterSignal(tracked_container, COMSIG_MOVABLE_MOVED, PROC_REF(update_blip))
+		RegisterSignal(tracked_container, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_target_z_changed))
 
 /atom/movable/screen/minimap_element/blip/proc/on_target_exiting(atom/movable/source, atom/old_loc, direction)
 	SIGNAL_HANDLER
 	// Clean up before entering the next loc; on_target_entering will rebind as needed.
 	if(tracked_container)
-		UnregisterSignal(tracked_container, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(tracked_container, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED))
 		tracked_container = null
 
 /atom/movable/screen/minimap_element/blip/proc/get_outermost_movable_loc(atom/start_loc)

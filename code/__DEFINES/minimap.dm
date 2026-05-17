@@ -56,4 +56,7 @@
 #define MINIMAP_NUKEOP_BLIP "nukeop"
 #define MINIMAP_NUKEOP_BORG_BLIP "nukeop_borg"
 #define MINIMAP_SYNDICATE_MECH_BLIP "syndicate_mech"
+#define MINIMAP_SYNDIE_TURRET_BLIP "syndie_turret"
+#define MINIMAP_LADDER_BLIP "ladder"
+#define MINIMAP_STAIR_BLIP "stair"
 #define MINIMAP_ANNOTATION_TAG_NUCLEAR "nuclear_ops"

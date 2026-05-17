@@ -11,11 +11,35 @@ GLOBAL_LIST_EMPTY(minimap_annotation_viewers)
 	LAZYADD(GLOB.minimap_blip_tags[tag], new_blip)
 	SEND_GLOBAL_SIGNAL(COMSIG_MINIMAP_ADD(tag), new_blip)
 
-/proc/remove_minimap_blip(tag, atom/object)
+/proc/get_minimap_blip(tag, atom/object)
+	if(!tag || !istype(object))
+		return
 	for(var/atom/movable/screen/minimap_element/blip/blip as anything in GLOB.minimap_blip_tags[tag])
-		if(blip.track_target != object)
+		if(blip.track_target == object)
+			return blip
+
+/proc/remove_minimap_blip(tag, atom/object)
+	var/atom/movable/screen/minimap_element/blip/blip = get_minimap_blip(tag, object)
+	if(isnull(blip))
+		return
+	SEND_GLOBAL_SIGNAL(COMSIG_MINIMAP_REMOVE(tag), blip)
+	LAZYREMOVE(GLOB.minimap_blip_tags[tag], blip)
+	qdel(blip)
+
+/// Returns minimap blips matching a tag that are within `distance` tiles of `target_turf` on the same z-level.
+/proc/get_minimap_blips_in_area(tag, turf/target_turf, distance)
+	if(!tag || isnull(target_turf) || !isnum(distance) || !islist(GLOB.minimap_blip_tags[tag]))
+		return list()
+
+	var/list/nearby_blips = list()
+	for(var/atom/movable/screen/minimap_element/blip/blip as anything in GLOB.minimap_blip_tags[tag])
+		var/turf/blip_turf = get_turf(blip.track_target)
+		if(isnull(blip_turf))
 			continue
-		SEND_GLOBAL_SIGNAL(COMSIG_MINIMAP_REMOVE(tag), blip)
-		LAZYREMOVE(GLOB.minimap_blip_tags[tag], blip)
-		qdel(blip)
-		break
+		if(blip_turf.z != target_turf.z)
+			continue
+		if(get_dist(blip_turf, target_turf) > distance)
+			continue
+		nearby_blips += blip
+
+	return nearby_blips
