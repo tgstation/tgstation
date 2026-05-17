@@ -177,12 +177,11 @@ export async function get_updated_label_set({ github, context }) {
   const {
     body = "",
     diff_url,
-    labels = [],
     mergeable,
     title = "",
   } = pull_request;
 
-  const updated_labels = new Set(labels.map((l) => l.name));
+  const updated_labels = new Set();
 
   // Always check file diffs
   if (diff_url) {
