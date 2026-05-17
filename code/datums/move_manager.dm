@@ -171,3 +171,68 @@ GLOBAL_DATUM_INIT(move_manager, /datum/move_manager, new)
 		return FALSE
 	qdel(our_loop)
 	return TRUE
+
+
+/** Astar movement
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * chasing - The atom we want to move towards
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * repath_delay - How often we're allowed to recalculate our path
+ * max_path_length - The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
+ * miminum_distance - Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example
+ * id - An ID card representing what access we have and what doors we can open
+ * simulated_only -  Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
+ * avoid - If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
+ * skip_first -  Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break things
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
+ * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
+ *
+**/
+/datum/move_manager/proc/astar_move(
+	moving,
+	chasing,
+	delay,
+	timeout,
+	repath_delay,
+	max_path_length,
+	minimum_distance,
+	list/access,
+	simulated_only,
+	turf/avoid,
+	skip_first,
+	subsystem,
+	priority,
+	flags,
+	datum/extra_info,
+	initial_path,
+	use_diagonals,
+	datum/callback/heuristic,
+)
+
+	return add_to_loop(
+		moving,
+		subsystem,
+		/datum/move_loop/has_target/astar,
+		priority,
+		flags,
+		extra_info,
+		delay,
+		timeout,
+		chasing,
+		repath_delay,
+		max_path_length,
+		minimum_distance,
+		access,
+		simulated_only,
+		avoid,
+		skip_first,
+		initial_path,
+		use_diagonals,
+		heuristic,
+)

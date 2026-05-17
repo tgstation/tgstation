@@ -812,3 +812,154 @@
 	y_rate = abs(y_rate)
 	x_ticker = 0
 	y_ticker = 0
+
+
+///Astar moveloops, lets us do smarter pathfinding towards the target.
+/datum/move_loop/has_target/astar
+	///How often we're allowed to recalculate our path
+	var/repath_delay
+	///Max amount of steps to search
+	var/max_path_length
+	///Minimum distance to the target before path returns
+	var/minimum_distance
+	///A list representing what access we have and what doors we can open.
+	var/list/access
+	///Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
+	var/simulated_only
+	///A perticular turf to avoid
+	var/turf/avoid
+	///Should we skip the first step? This is the tile we're currently on, which breaks some things
+	var/skip_first
+	///A list for the path we're currently following
+	var/list/movement_path
+	/// Should we use diagonals, or use only cardinals?
+	var/use_diagonals
+	///Cooldown for repathing, prevents spam
+	COOLDOWN_DECLARE(repath_cooldown)
+	///Bool used to determine if we're already making a path in AStar. this prevents us from re-pathing while we're already busy.
+	var/is_pathing = FALSE
+	///Callbacks to invoke once we make a path
+	var/list/datum/callback/on_finish_callbacks = list()
+
+	///AStar heuristic function
+	var/datum/callback/heuristic
+
+/datum/move_loop/has_target/astar/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
+	. = ..()
+	on_finish_callbacks += CALLBACK(src, PROC_REF(on_finish_pathing))
+
+/datum/move_loop/has_target/astar/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, list/initial_path, use_diagonals, datum/callback/heuristic)
+	. = ..()
+	if(!.)
+		return
+
+	src.repath_delay = repath_delay
+	src.max_path_length = max_path_length
+	src.minimum_distance = minimum_distance
+	src.access = access
+	src.simulated_only = simulated_only
+	src.avoid = avoid
+	src.skip_first = skip_first
+	src.use_diagonals = use_diagonals
+	src.heuristic = heuristic
+	movement_path = initial_path?.Copy()
+
+/datum/move_loop/has_target/astar/compare_loops(
+	datum/move_loop/loop_type,
+	priority,
+	flags,
+	extra_info,
+	delay,
+	timeout,
+	atom/chasing,
+	repath_delay,
+	max_path_length,
+	minimum_distance,
+	obj/item/card/id/id,
+	simulated_only,
+	turf/avoid,
+	skip_first,
+	initial_path,
+	use_diagonals,
+	datum/callback/heuristic,
+)
+	if(..() && \
+	repath_delay == src.repath_delay && \
+	max_path_length == src.max_path_length && \
+	minimum_distance == src.minimum_distance && \
+	access ~= src.access && \
+	simulated_only == src.simulated_only && \
+	avoid == src.avoid && \
+	use_diagonals == src.use_diagonals && \
+	heuristic == src.heuristic)
+		return TRUE
+	return FALSE
+
+/datum/move_loop/has_target/astar/loop_started()
+	. = ..()
+	if(!movement_path)
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+
+/datum/move_loop/has_target/astar/loop_stopped()
+	. = ..()
+	movement_path = null
+
+/datum/move_loop/has_target/astar/Destroy()
+	avoid = null
+	return ..()
+
+///Tries to calculate a new path for this moveloop.
+/datum/move_loop/has_target/astar/proc/recalculate_path()
+	if(!COOLDOWN_FINISHED(src, repath_cooldown))
+		return
+
+	COOLDOWN_START(src, repath_cooldown, repath_delay)
+
+	var/path_ok = SSpathfinder.astar_pathfind(
+		moving,
+		target,
+		max_path_length,
+		minimum_distance,
+		access,
+		simulated_only,
+		avoid,
+		skip_first,
+		use_diagonals = use_diagonals,
+		on_finish = on_finish_callbacks,
+		heuristic = heuristic
+	)
+
+	if(path_ok)
+		is_pathing = TRUE
+		SEND_SIGNAL(src, COMSIG_MOVELOOP_REPATH)
+
+///Called when a path has finished being created
+/datum/move_loop/has_target/astar/proc/on_finish_pathing(list/path)
+	movement_path = path
+	EVLOG_PATH(moving, EVLOG_CATEGORY_PATHING, "Planned AI path", movement_path)
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_FINISHED_PATHING, path)
+	is_pathing = FALSE
+
+/datum/move_loop/has_target/astar/move()
+	if(!length(movement_path))
+		if(is_pathing)
+			return MOVELOOP_NOT_READY
+		else
+			EVLOG_PATH(moving, EVLOG_CATEGORY_PATHING, "Re-pathing due to missing path", movement_path)
+			INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+			return MOVELOOP_FAILURE
+
+	var/turf/next_step = movement_path[1]
+	var/atom/old_loc = moving.loc
+	moving.Move(next_step, get_dir(moving, next_step), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
+	. = (old_loc != moving?.loc) ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
+
+	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
+	// to the side while moving but could maybe still follow their path without needing a whole new path
+	if(get_turf(moving) == next_step)
+		if(length(movement_path))
+			movement_path.Cut(1,2)
+	else
+		EVLOG_TEXT(moving, EVLOG_CATEGORY_MOVELOOPS, "Path recalculating due to obstruction")
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+		return MOVELOOP_FAILURE

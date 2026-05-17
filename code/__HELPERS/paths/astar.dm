@@ -35,10 +35,7 @@
 	/// An optional callback to invoke to return a positive value to add to the path's distance.
 	var/datum/callback/heuristic
 
-#ifdef DEBUG_PATHFINDING
-	/// List of all nodes we've parsed, used for debug spew.
-	var/list/all_nodes_ever = list()
-#endif
+
 
 
 /datum/pathfind/astar/New(
@@ -121,11 +118,7 @@
 		path.Cut(1,2)
 
 	hand_back(path)
-	#ifdef DEBUG_PATHFINDING
-	/// If the global flag is set, replace the current global node spew.
-	if(GLOB.__pathfinding_debug_generate)
-		GLOB.__pathfinding_debug_info = all_nodes_ever
-	#endif
+
 	return ..()
 
 /**
@@ -140,8 +133,8 @@
 	if(QDELETED(invoker))
 		return FALSE
 
-	var/static/list/lateral_search_dirs = list(EAST, WEST, NORTH, SOUTH)
-	var/static/list/all_search_dirs = list(EAST, WEST, NORTH, SOUTH, NORTHEAST, SOUTHWEST, NORTHWEST, SOUTHEAST)
+	var/list/lateral_search_dirs = list(EAST, WEST, NORTH, SOUTH)
+	var/list/all_search_dirs = list(EAST, WEST, NORTH, SOUTH, NORTHEAST, SOUTHWEST, NORTHWEST, SOUTHEAST)
 
 	while(length(open_binary_tree) && !path)
 		var/datum/astar_node/current_node = open_binary_tree[length(open_binary_tree)]
@@ -219,9 +212,6 @@
 			binary_insert_node(new_node)
 
 			open_turf_to_node[searching_turf] = new_node
-			#ifdef DEBUG_PATHFINDING
-			all_nodes_ever[++all_nodes_ever.len] = new_node
-			#endif
 
 			// Check to see if we're close enough to the end destination.
 			if(ASTAR_CLOSE_ENOUGH_TO_END(end, new_node))
@@ -239,9 +229,11 @@
 
 /datum/pathfind/astar/proc/can_step_diagonal(turf/from_turf, turf/to_turf)
 	var/in_dir = get_dir(from_turf, to_turf) // eg. northwest (1+8) = 9 (00001001)
-	var/first_step_direction_a = in_dir & 3 // eg. north   (1+8)&3 (0000 0011) = 1 (0000 0001)
-	var/first_step_direction_b = in_dir & 12 // eg. west   (1+8)&12 (0000 1100) = 8 (0000 1000)
+	var/first_step_direction_a = in_dir & (NORTH|SOUTH) // eg. north   (1+8)&3 (0000 0011) = 1 (0000 0001)
+	var/first_step_direction_b = in_dir & (EAST|WEST) // eg. west   (1+8)&12 (0000 1100) = 8 (0000 1000)
 
+	// Order matches BYOND's base move resolution for diagonals: the N/S component is tried first, then E/W.
+	// This ensures the passability check reflects what will actually happen during real movement.
 	for(var/direction in list(first_step_direction_a, first_step_direction_b))
 		var/turf/midpoint = get_step(from_turf, direction)
 		// If the midpoint is known to be inaccessible from the starting direction, no need to check it again.
