@@ -339,9 +339,9 @@
 	if(hurtguy_blood < BLOOD_VOLUME_MAXIMUM)
 		return
 
-	var/amount_to_recieve = min(max_blood_transfer, hurtguy_blood - BLOOD_VOLUME_MAXIMUM)
+	var/amount_to_receive = min(max_blood_transfer, hurtguy_blood - BLOOD_VOLUME_MAXIMUM)
 	// We ignore incompatibility here.
-	var/blood_received = hurtguy.transfer_blood_to(mendicant, amount_to_recieve, ignore_incompatibility = TRUE)
+	var/blood_received = hurtguy.transfer_blood_to(mendicant, amount_to_receive, ignore_incompatibility = TRUE)
 
 	if(!blood_received)
 		return
