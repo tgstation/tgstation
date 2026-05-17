@@ -238,6 +238,10 @@
 		var/obj/item/organ/blood_worm_head/new_head = new()
 		new_head.Insert(target, special = TRUE)
 		target.update_body()
+		message_admins("bodypart_overlays[bodypart_overlays], worm head is [blood_worm_head]")
+	message_admins("[key_name(src)] granted blood worm head overlay to [key_name(target)]")
+
+	return TRUE
 		// bodypart_overlays.Grant(target)
 
 /mob/living/basic/blood_worm/proc/sync_health(already_ejecting = FALSE)

@@ -38,11 +38,13 @@
 	TRAIT_NO_WITHDRAWALS, // Prevents OOC quirk choices from impacting blood worms as much. Stops withdrawals instead of addictions since the latter can be metagamed.
 	TRAIT_NO_SPLIT_PERSONALITY, // How about no?
 	TRAIT_BLOOD_HUD, // Self-explanatory, allows blood worms to seek prey even while in a host.
-	TRAIT_BLOOD_WORM_HOST), // Used in code for recognizing blood worm hosts with a simple trait check.
+	TRAIT_BLOOD_WORM_HOST,
+	ADULT_BLOOD_WORM_HOST_TRAIT), // Used in code for recognizing blood worm hosts with a simple trait check.
 	BLOOD_WORM_HOST_TRAIT)
 
-	if(istype(src, /mob/living/basic/blood_worm/adult)) // istype or better to make ISADULTWORM() ??
-		host.add_traits(ADULT_BLOOD_WORM_HOST_TRAIT) // adding worm head to host
+	message_admins("AFTER: Host [key_name(host)] traits: [host.living_flags]")
+	// if(istype(src, /mob/living/basic/blood_worm/adult)) // istype or better to make ISADULTWORM() ??
+	// 	host.add_traits(ADULT_BLOOD_WORM_HOST_TRAIT) // adding worm head to host
 
 	if (client)
 		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
@@ -55,7 +57,7 @@
 	grant_actions(src, host_actions)
 
 	if(HAS_TRAIT(host, ADULT_BLOOD_WORM_HOST_TRAIT))
-		grant_bloodworm_head(src, host_bodyparts)
+		grant_bloodworm_head(host, host_bodyparts)
 
 	var/cached_blood_volume = host.get_blood_volume()
 
