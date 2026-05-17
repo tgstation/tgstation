@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix holodeck mob organs and body parts not disappearing. Any holodeck mob organs and body parts can also no longer be bioscrambled."
