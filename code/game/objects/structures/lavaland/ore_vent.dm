@@ -1,4 +1,5 @@
-#define MAX_ARTIFACT_ROLL_CHANCE 10
+#define ARTIFACT_ROLL_CHANCE 5
+#define ARTIFACT_ROLL_CHANCE_BOSS 0
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
 #define OVERLAY_OFFSET_EACH 5
@@ -72,7 +73,7 @@
 	/// What base icon_state do we use for this vent's boulders?
 	var/boulder_icon_state = "boulder"
 	/// Percent chance that this vent will produce an artifact boulder.
-	var/artifact_chance = 0
+	var/artifact_chance = ARTIFACT_ROLL_CHANCE
 	/// We use a cooldown to prevent the wave defense from being started multiple times.
 	COOLDOWN_DECLARE(wave_cooldown)
 	/// We use a cooldown to prevent players from tapping boulders rapidly from vents.
@@ -526,6 +527,11 @@
 		var/atom/movable/flick_visual/visual = flick_overlay_view(mutable_appearance('icons/effects/vent_overlays.dmi', selected_mat.name), 4.5 SECONDS)
 		animate(visual, alpha = 0, time = 4.5 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
 
+	if(artifact_chance)
+		var/atom/movable/flick_visual/rare = flick_overlay_view(mutable_appearance('icons/effects/vent_overlays.dmi', "rare_ore"), 4.5 SECONDS)
+		animate(rare, alpha = 0, time = 4.5 SECONDS, easing = CIRCULAR_EASING|EASE_IN)
+
+
 /**
  * Here is where we handle producing a new boulder, based on the qualities of this ore vent.
  * Returns the boulder produced.
@@ -655,7 +661,6 @@
 	if(!unique_vent && !mapload)
 		generate_mineral_breakdown(map_loading = mapload) //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
 		generate_description()
-	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 	if(!mapload)
 		vent_size_setup(random = TRUE) // We only do this here specific to random distribution ore vents, and within mapload we handle this manually within SSore_generation.
 
@@ -712,6 +717,7 @@
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 	)
 	excavation_warning = "Something big is nearby. Are you ABSOLUTELY ready to excavate this ore vent? A NODE drone will be deployed after threat is neutralized."
+	artifact_chance = ARTIFACT_ROLL_CHANCE_BOSS
 	///What boss do we want to spawn?
 	var/summoned_boss = null
 
@@ -808,7 +814,8 @@
 	GLOB.mining_center += loc
 	return INITIALIZE_HINT_QDEL
 
-#undef MAX_ARTIFACT_ROLL_CHANCE
+#undef ARTIFACT_ROLL_CHANCE
+#undef ARTIFACT_ROLL_CHANCE_BOSS
 #undef MINERAL_TYPE_OPTIONS_RANDOM
 #undef OVERLAY_OFFSET_START
 #undef OVERLAY_OFFSET_EACH
