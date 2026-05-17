@@ -182,6 +182,8 @@
 	var/list/modifiers = params2list(params)
 	if(label_mode || LAZYACCESS(modifiers, CTRL_CLICK))
 		return
+	if(selected_tool_key == null)
+		return
 	var/list/mouse_px = params2screenpixel(LAZYACCESS(modifiers, SCREEN_LOC))
 	if(length(mouse_px) != 2)
 		return
@@ -408,7 +410,6 @@
 	// Toggle: if clicking the same tool, deselect it
 	if(selected_tool_key == tool_key && tool_key != null)
 		selected_tool_key = null
-		draw_color = null
 		active_mouse_icon = null
 		if(hud?.mymob?.client)
 			hud.mymob.client.mouse_pointer_icon = null
