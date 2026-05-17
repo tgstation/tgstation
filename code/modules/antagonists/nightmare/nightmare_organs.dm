@@ -84,6 +84,7 @@
 
 	beat_noise = "the writhing pulses of a fear given form" // evil schmeevil
 	decay_factor = 0
+	blood_regeneration_multiplier = 1.5
 	// No love is to be found in a heart so twisted.
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5)
 	// In case you want to drink light as well as eat it

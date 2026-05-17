@@ -266,6 +266,7 @@
 	name = "vampire heart"
 	icon_state = "heart_vampire"
 	desc = "Some guy stabbed his brother 6,000 years ago so now you have this."
+	blood_regeneration_multiplier = 0 // you need to drain victims for blood
 
 #undef VAMPIRES_PER_HOUSE
 #undef VAMP_DRAIN_AMOUNT

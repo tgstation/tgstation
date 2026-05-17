@@ -125,6 +125,7 @@
 	greyscale_colors = STOAT_COLORS
 	beat_noise = "a fast-paced high-pitched pit-pat"
 	maxHealth = parent_type::maxHealth * 0.8 // weaker heart
+	blood_regeneration_multiplier = 0.8
 	/// Tracks height of the mob on add
 	var/mob_base_height = HUMAN_HEIGHT_MEDIUM
 

@@ -6,6 +6,7 @@
 	icon_state = "viral"
 	mind_control_uses = 1
 	mind_control_duration = 1800
+	blood_regeneration_multiplier = 0.5
 
 /obj/item/organ/heart/gland/viral/activate()
 	to_chat(owner, span_warning("You feel sick."))

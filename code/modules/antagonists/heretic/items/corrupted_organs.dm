@@ -199,6 +199,7 @@
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	cell_line = CELL_LINE_ORGAN_HEART_CURSED
 	cells_minimum = 2 //guarantees we always get sacred heart and corrupted heart cells
+	blood_regeneration_multiplier = 0.75
 	/// How long until the next heart?
 	COOLDOWN_DECLARE(hand_cooldown)
 

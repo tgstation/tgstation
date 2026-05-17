@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	mind_control_uses = 3
 	mind_control_duration = 1500
+	blood_regeneration_multiplier = 1.5
 
 /obj/item/organ/heart/gland/blood/activate()
 	if(!ishuman(owner) || !owner.dna.species)
