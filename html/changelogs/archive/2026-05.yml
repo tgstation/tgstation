@@ -290,3 +290,10 @@
       label
   - bugfix: sfx that plays when entering historian mode of a trophy case is no longer
       mute
+2026-05-17:
+  JohnFulpWillard:
+  - bugfix: Multiple crab17 crashes will now individually affect you and require you
+      to visit each one.
+  timothymtorres:
+  - bugfix: Fix holodeck mob organs and body parts not disappearing. Any holodeck
+      mob organs and body parts can also no longer be bioscrambled.
