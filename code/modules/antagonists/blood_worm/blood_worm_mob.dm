@@ -250,10 +250,12 @@
 		target.update_body()
 		message_admins("bodypart_overlays[bodypart_overlays], worm head is [blood_worm_head]")
 	message_admins("[key_name(src)] granted blood worm head overlay to [key_name(target)]")
+
+	var/datum/sprite_accessory/accessory = SSaccessories.sprite_accessories?["blood_worm_head"]
 	if(accessory)
-	message_admins("DEBUG: Sprite accessory found: name=[accessory.name], icon=[accessory.icon], icon_state=[accessory.icon_state]")
-		else
-	message_admins("DEBUG ERROR: Sprite accessory 'blood_worm_head' not found in SSaccessories!")
+		message_admins("DEBUG: Sprite accessory found: name=[accessory.name], icon=[accessory.icon], icon_state=[accessory.icon_state]")
+	else
+		message_admins("DEBUG ERROR: Sprite accessory 'blood_worm_head' not found in SSaccessories!")
 
 	return TRUE
 		// bodypart_overlays.Grant(target)
