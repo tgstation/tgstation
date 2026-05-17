@@ -1,4 +1,4 @@
-#define ARTIFACT_ROLL_CHANCE 5
+#define ARTIFACT_ROLL_CHANCE 7
 #define ARTIFACT_ROLL_CHANCE_BOSS 0
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
@@ -162,6 +162,8 @@
 				. += span_notice("This vent produces [span_bold("large")] boulders containing [ore_string]")
 	else
 		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
+	if(artifact_chance)
+		. += span_notice("This vent has a low chance to produce an [span_bold("artifact boulder.")] These may contain rare minerals or strange artifacts.")
 
 /obj/structure/ore_vent/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(is_type_in_list(held_item, scanning_equipment))
