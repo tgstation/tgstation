@@ -792,7 +792,6 @@
 #include "code\controllers\subsystem\dynamic\dynamic_ruleset_roundstart.dm"
 #include "code\controllers\subsystem\dynamic\dynamic_testing.dm"
 #include "code\controllers\subsystem\movement\ai_movement.dm"
-#include "code\controllers\subsystem\movement\astar_movement.dm"
 #include "code\controllers\subsystem\movement\cliff_falling.dm"
 #include "code\controllers\subsystem\movement\hyperspace_drift.dm"
 #include "code\controllers\subsystem\movement\movement.dm"
