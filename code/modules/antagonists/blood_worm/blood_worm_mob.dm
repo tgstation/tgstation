@@ -269,7 +269,7 @@
 	message_admins("MINIMAL END: Done")
 
 	for (var/datum/bodypart_overlay/mutant/blood_worm_head as anything in bodypart_overlays)
-		var/obj/item/organ/blood_worm_head/new_head = new()
+		// var/obj/item/organ/blood_worm_head/new_head = new()
 		new_head.Insert(target, special = TRUE)
 		target.update_body()
 		message_admins("bodypart_overlays[bodypart_overlays], worm head is [blood_worm_head]")
