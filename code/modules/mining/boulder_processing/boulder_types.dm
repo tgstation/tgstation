@@ -38,7 +38,9 @@
 
 /// Adds a random amount of material to an artifact boulder, determined by BONUS_MAT defines and of the type bonus_mat defined on the boulder.
 /obj/item/boulder/artifact/proc/add_bonus_mats()
-	var/list/bonus_mats = custom_materials.Copy()
+	var/list/bonus_mats = list()
+	if(custom_materials)
+		bonus_mats = custom_materials.Copy()
 	bonus_mats[bonus_mat] += rand(BONUS_MATS_MINIMUM, BONUS_MATS_MAXIMUM) * SHEET_MATERIAL_AMOUNT
 	set_custom_materials(bonus_mats)
 
