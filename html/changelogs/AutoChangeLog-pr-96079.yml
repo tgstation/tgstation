@@ -1,7 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Bluespace launchpads are no longer invisible when deployed."
-  - bugfix: "Briefcase launchpad remotes now have a functioning reset button."
-  - bugfix: "Quantum pads now use their screwdrivered-open state when depowered."
-  - image: "Deep fryers now have a sprite with an open maintenance panel instead of becoming invisible when screwdrivered."

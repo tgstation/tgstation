@@ -298,13 +298,28 @@
   - bugfix: Fix holodeck mob organs and body parts not disappearing. Any holodeck
       mob organs and body parts can also no longer be bioscrambled.
 2026-05-18:
+  Grammi:
+  - qol: Guardian granters (holoparasites injectors, dusty shards, etc) now show if
+      they've been used on examine.
+  Hatterhat:
+  - bugfix: Bluespace launchpads are no longer invisible when deployed.
+  - bugfix: Briefcase launchpad remotes now have a functioning reset button.
+  - bugfix: Quantum pads now use their screwdrivered-open state when depowered.
+  - image: Deep fryers now have a sprite with an open maintenance panel instead of
+      becoming invisible when screwdrivered.
   Melbert:
   - qol: Thermite chemical reaction is tagged as "Damaging", making it easier to refer
       to.
+  - rscadd: '[Icebox] Security saw a minor remapping, with most notably the removal
+      of the labor shuttle and the integration of the labor camp into the bottom floor
+      of the perma-brig.'
   SmArtKar:
   - bugfix: Stumps no longer give a reattachment moodlet to mobs
   SyncIt21:
   - qol: plumbing assimilator has higher heating coefficient to that of tier 3 chem
       heater
+  emicchinya:
+  - spellcheck: Target Left arm, Right arm, Left leg and Cycle head keybinds are now
+      capitalized properly.
   timothymtorres:
   - map: Add human limbs to the holodeck medsim organ crate
