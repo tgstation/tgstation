@@ -1,0 +1,4 @@
+author: "Grammi"
+delete-after: True
+changes:
+  - qol: "Guardian granters (holoparasites injectors, dusty shards, etc) now show if they've been used on examine."
