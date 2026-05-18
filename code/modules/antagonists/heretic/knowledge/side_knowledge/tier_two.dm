@@ -71,6 +71,7 @@
 	cost = 2
 	drafting_tier = 2
 	max_charges = 1
+	path_recharge_amount = 0.0
 	transmute_text = "To recharge, complete a ritual with a straight jacket."
 
 /datum/heretic_knowledge/rune_carver

@@ -91,14 +91,12 @@
 	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality, \
 		allowing you to traverse a short distance, passing though any walls."
 	gain_text = "He knew how to walk between the planes."
-	required_atoms = list(/obj/effect/decal/cleanable/ash = 1)
 	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 2
 	drafting_tier = 5
 	max_charges = 6
 	focus_recharge_amount = 0.15
 	holywater_drain_amount = 0.15
-	transmute_text = "To recharge, complete a ritual with a smearing of ash."
 
 /datum/heretic_knowledge/spell/fire_blast
 	name = "Volcano Blast"
@@ -107,20 +105,11 @@
 		the beam will continue to another target."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
 	action_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
-	required_atoms = list(/obj/structure/bonfire = 1)
 	cost = 2
 	research_tree_icon_frame = 7
 	max_charges = 3
 	focus_recharge_amount = 0.33
 	holywater_drain_amount = 0.16
-	transmute_text = "To recharge, complete a ritual with a lit bonfire."
-
-/datum/heretic_knowledge/spell/fire_blast/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	for(var/obj/structure/bonfire/fire in atoms)
-		if(!fire.burning)
-			atoms -= fire
-
-	return ..()
 
 /datum/heretic_knowledge/armor/ash
 	desc = "Create a Scorched Mantle.<br>\
@@ -188,7 +177,6 @@
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
-	required_atoms = list(/mob/living/carbon/human = 1)
 	action_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 2
 	research_tree_icon_frame = 5
@@ -196,20 +184,6 @@
 	max_charges = 3
 	focus_recharge_amount = 0.33
 	holywater_drain_amount = 0.16
-	transmute_text = "To recharge, complete a ritual with a burning or husked corpse."
-
-/datum/heretic_knowledge/spell/flame_birth/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	for(var/mob/living/carbon/human/sacrifice in atoms)
-		if(sacrifice.stat != DEAD || ismonkey(sacrifice) || !sacrifice.on_fire || !HAS_TRAIT_FROM(sacrifice, TRAIT_HUSK, BURN))
-			atoms -= sacrifice
-
-	return ..()
-
-/datum/heretic_knowledge/spell/flame_birth/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	. = ..()
-	for(var/mob/living/carbon/human/sacrifice in selected_atoms)
-		sacrifice.apply_damage(30, BURN, BODY_ZONE_CHEST)
-		selected_atoms -= sacrifice
 
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"

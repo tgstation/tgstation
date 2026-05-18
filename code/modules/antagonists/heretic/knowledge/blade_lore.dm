@@ -100,13 +100,11 @@
 		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack.<br>\
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
-	required_atoms = list(/obj/item/stock_parts/power_store = 1)
 	action_to_add = /datum/action/cooldown/spell/realignment
 	cost = 2
 	max_charges = 3
 	focus_recharge_amount = 0.33
 	holywater_drain_amount = 0.16
-	transmute_text = "To recharge, complete a ritual with a cell or battery."
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
 #define BLOOD_FLOW_PER_SEVEIRTY -1
@@ -338,28 +336,15 @@
 	recharge_amount = 0.5
 	focus_recharge_amount = 0.33
 	holywater_drain_amount = 0.16
-	transmute_text = "To recharge, complete a ritual with a knife - this will return half of the spell's maximum charges. \
-		You will also gain two charge every time you knock someone into critical condition."
+	transmute_text = "Can be manually recharged by completing a ritual with a knife - this will return half of the spell's maximum charges."
 
 /datum/heretic_knowledge/spell/furious_steel/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	RegisterSignal(user, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hit_someone))
 	RegisterSignal(user, COMSIG_MOB_BLADE_BARRIER_TRIGGERED, PROC_REF(blade_barrier_triggered))
 
 /datum/heretic_knowledge/spell/furious_steel/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	UnregisterSignal(user, COMSIG_USER_PRE_ITEM_ATTACK)
 	UnregisterSignal(user, COMSIG_MOB_BLADE_BARRIER_TRIGGERED)
-
-/datum/heretic_knowledge/spell/furious_steel/proc/hit_someone(mob/living/source, mob/living/target, obj/item/used_weapon)
-	SIGNAL_HANDLER
-
-	if(target.stat == CONSCIOUS && !ismonkey(target))
-		addtimer(CALLBACK(src, PROC_REF(check_crit), target), 0.1 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE)
-
-/datum/heretic_knowledge/spell/furious_steel/proc/check_crit(mob/living/target)
-	if(target.stat != CONSCIOUS)
-		add_charges(2)
 
 /datum/heretic_knowledge/spell/furious_steel/proc/blade_barrier_triggered(mob/living/target, datum/status_effect/barrier)
 	SIGNAL_HANDLER

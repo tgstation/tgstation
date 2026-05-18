@@ -83,6 +83,7 @@ type KnowledgeTier = {
 
 type HereticPassive = {
   name: string;
+  recharge: string;
   description: string[];
 };
 
@@ -565,6 +566,147 @@ const PathInfo = ({ currentPath }: { currentPath?: HereticPath }) => {
   );
 };
 
+const PathProCons = ({
+  proconlist,
+  title,
+}: {
+  proconlist: string[];
+  title: string;
+}) => {
+  return (
+    <Stack vertical>
+      <Stack.Item>
+        <b>{title}:</b>
+      </Stack.Item>
+      <Stack.Item>
+        {proconlist.map((item, index) => (
+          <Stack.Item key={index} textAlign="left" mb={1}>
+            &bull; {item}
+          </Stack.Item>
+        ))}
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const PathContentUnselected = ({ path }: { path: HereticPath }) => {
+  return (
+    <Stack vertical>
+      <Stack.Item verticalAlign="center" textAlign="center">
+        <KnowledgeNode
+          node={path.starting_knowledge}
+          purchaseCategory={ShopCategory.Start}
+        />
+        <Stack.Item>
+          <h3>
+            Complexity:{' '}
+            <span style={{ color: path.complexity_color }}>
+              {path.complexity}
+            </span>
+          </h3>
+        </Stack.Item>
+      </Stack.Item>
+      <Stack.Item>
+        <Stack vertical>
+          {path.description.map((line, index) => (
+            <Stack.Item key={index}>{line}</Stack.Item>
+          ))}
+        </Stack>
+      </Stack.Item>
+      <Stack.Divider />
+      <Stack.Item>
+        <Stack>
+          <Stack.Item style={{ justifyItems: 'center' }} width="50%">
+            <Stack vertical>
+              <Stack.Item bold>Passive: {path.passive.name}</Stack.Item>
+              <Stack.Item italic>{path.passive.recharge}</Stack.Item>
+              <Stack.Item className="Passive" width="100%">
+                {path.passive.description[0]}
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+          <Stack.Item width="50%">
+            <Stack vertical>
+              <Stack.Item bold>Path Abilities:</Stack.Item>
+              <Stack.Item>
+                <Stack wrap="wrap" justify="center">
+                  {path.preview_abilities.map((ability) => (
+                    <Stack.Item key={`guaranteed_${ability.name}`} m={1}>
+                      <KnowledgeNode node={ability} can_buy={false} />
+                    </Stack.Item>
+                  ))}
+                </Stack>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Divider />
+      <Stack.Item>
+        <Stack>
+          <Stack.Item width="50%">
+            <PathProCons proconlist={path.pros} title="Pros" />
+          </Stack.Item>
+          <Stack.Item width="50%">
+            <PathProCons proconlist={path.cons} title="Cons" />
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const PathContentSelected = ({
+  path,
+  passive_level,
+}: {
+  path: HereticPath;
+  passive_level: number;
+}) => {
+  return (
+    <Stack vertical>
+      <Stack.Item>
+        {path.description.map((line, index) => (
+          <div key={index}>{line}</div>
+        ))}
+      </Stack.Item>
+      <Stack.Item>
+        <Stack vertical>
+          <Stack.Item bold>
+            Passive: {path.passive.name}, level: {passive_level}
+          </Stack.Item>
+          <Stack.Item italic>{path.passive.recharge}</Stack.Item>
+          {path.passive.description.map((line, index) => (
+            <Stack.Item
+              key={index}
+              className={`Passive ${passive_level >= index + 1 ? 'Passive--Active' : ''}`}
+              width="100%"
+            >
+              Level {index + 1}
+              <br />
+              {line}
+            </Stack.Item>
+          ))}
+        </Stack>
+      </Stack.Item>
+      <Stack.Item textAlign="left" mt={2} mb={1}>
+        <Stack.Item bold mb={1}>
+          Tips:
+        </Stack.Item>
+        <Stack.Item>
+          <Stack vertical>
+            {path.tips.map((tip, index) => (
+              <Stack.Item key={index} textAlign="left">
+                &bull; {tip}
+              </Stack.Item>
+            ))}
+          </Stack>
+        </Stack.Item>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 const PathContent = ({
   path,
   isPathSelected,
@@ -574,7 +716,7 @@ const PathContent = ({
 }) => {
   const { data } = useBackend<Info>();
   const { passive_level } = data;
-  const { name, description } = path.passive;
+
   return (
     <Section
       title={<h1 className="PathTitle">{path.route}</h1>}
@@ -583,98 +725,10 @@ const PathContent = ({
       scrollable
     >
       <Stack vertical>
-        {!isPathSelected && (
-          <Stack.Item verticalAlign="center" textAlign="center">
-            <h1>Choose Path:</h1>{' '}
-            <KnowledgeNode
-              node={path.starting_knowledge}
-              purchaseCategory={ShopCategory.Start}
-            />
-            <div>
-              <h3>
-                Complexity:{' '}
-                <span style={{ color: path.complexity_color }}>
-                  {path.complexity}
-                </span>
-              </h3>
-            </div>
-          </Stack.Item>
-        )}
-
-        <Stack.Item>
-          <b>Description:</b>{' '}
-          {path.description.map((line, index) => (
-            <div key={index}>{line}</div>
-          ))}
-        </Stack.Item>
-        {(!isPathSelected && (
-          <Stack.Item style={{ justifyItems: 'center' }}>
-            <b>Passive: {name}</b>
-            <p className="Passive">{description[0]}</p>
-          </Stack.Item>
-        )) || (
-          <Stack.Item>
-            <b>
-              Passive: {name}, level: {passive_level}
-            </b>
-            <Stack>
-              {description.map((line, index) => (
-                <Stack.Item
-                  key={index}
-                  className={`Passive ${passive_level >= index + 1 ? 'Passive--Active' : ''}`}
-                >
-                  Level {index + 1}
-                  <br />
-                  {line}
-                </Stack.Item>
-              ))}
-            </Stack>
-          </Stack.Item>
-        )}
-        <Stack.Item>
-          {!isPathSelected && (
-            <>
-              <b>Guaranteed Abilities:</b>
-              <Stack wrap="wrap" justify="center">
-                {path.preview_abilities.map((ability) => (
-                  <Stack.Item key={`guaranteed_${ability.name}`} m={1}>
-                    <KnowledgeNode node={ability} can_buy={false} />
-                  </Stack.Item>
-                ))}
-              </Stack>
-            </>
-          )}
-        </Stack.Item>
-        {!isPathSelected && (
-          <>
-            <Stack.Item>
-              <b>Pros:</b>
-              <div>
-                {path.pros.map((pro, index) => (
-                  <p key={index}>{pro}</p>
-                ))}
-              </div>
-            </Stack.Item>
-            <Stack.Item>
-              <b>Cons:</b>
-              <div>
-                {path.cons.map((con, index) => (
-                  <p key={index}>{con}</p>
-                ))}
-              </div>
-            </Stack.Item>
-          </>
-        )}
-
-        {isPathSelected && (
-          <Stack.Item textAlign="left" mt={2} mb={1}>
-            <b>Tips:</b>
-            <ul>
-              {path.tips.map((tip, index) => (
-                <li key={index}>{tip}</li>
-              ))}
-            </ul>
-          </Stack.Item>
+        {isPathSelected ? (
+          <PathContentSelected path={path} passive_level={passive_level} />
+        ) : (
+          <PathContentUnselected path={path} />
         )}
       </Stack>
     </Section>
@@ -698,7 +752,7 @@ export const AntagInfoHeretic = () => {
   const tabs = [
     { label: 'Information', icon: 'info', content: <IntroductionSection /> },
     {
-      label: 'Path Info',
+      label: 'Paths',
       icon: 'info',
       content: <PathInfo currentPath={currentPath} />,
     },

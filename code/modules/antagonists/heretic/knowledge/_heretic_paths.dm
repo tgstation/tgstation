@@ -88,6 +88,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 	var/datum/status_effect/heretic_passive/passive = new start.eldritch_passive()
 	data["passive"] = list(
 		"name" = initial(passive.name),
+		"recharge" = initial(passive.recharge_description),
 		"description" = passive.passive_descriptions.Copy(),
 	)
 	qdel(passive)

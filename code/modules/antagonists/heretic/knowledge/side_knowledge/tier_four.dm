@@ -13,6 +13,7 @@
 	research_tree_icon_frame = 6
 	drafting_tier = 4
 	max_charges = 2
+	path_recharge_amount = 0.0
 	holywater_drain_amount = 0.5
 	transmute_text = "To recharge, crush a bluespace crystal while standing over a rune."
 	/// Tracks tim ein EVA
@@ -91,9 +92,9 @@
 	cost = 2
 	drafting_tier = 4
 	max_charges = 3
+	path_recharge_amount = 0.0
 	focus_recharge_amount = 0.33
 	holywater_drain_amount = 0.33
-	transmute_text = "To recharge, complete a ritual with a bloodied rag or bandage, or a pool of blood."
 
 /datum/heretic_knowledge/spell/crimson_cleave/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()

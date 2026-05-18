@@ -90,28 +90,13 @@
 		Causes damage to heathens around your original and target destination."
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
 		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
-	required_atoms = list(
-		list(/obj/structure/window, /obj/item/stack/sheet/glass) = 1,
-	)
 	action_to_add = /datum/action/cooldown/spell/pointed/void_phase
 	cost = 2
 	research_tree_icon_frame = 7
 	max_charges = 4
+	path_recharge_amount = 0.25
 	focus_recharge_amount = 0.25
 	holywater_drain_amount = 0.25
-	transmute_text = "To recharge, complete a ritual with a pane of glass in a sub-zero environment."
-
-/datum/heretic_knowledge/spell/void_phase/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	if(!isopenturf(loc))
-		loc.balloon_alert(user, "ritual failed, invalid location!")
-		return FALSE
-
-	var/turf/open/our_turf = loc
-	if(our_turf.GetTemperature() > T0C)
-		loc.balloon_alert(user, "ritual failed, not cold enough!")
-		return FALSE
-
-	return ..()
 
 /datum/heretic_knowledge/void_prison
 	name = "Void Prison"
@@ -190,31 +175,9 @@
 	cost = 2
 	research_tree_icon_frame = 6
 	max_charges = 4
+	path_recharge_amount = 0.25
 	focus_recharge_amount = 0.25
 	holywater_drain_amount = 0.25
-	transmute_text = "To recharge, travel through a sub-zero temperature environment for 20 seconds."
-
-	var/seconds_in_vacuum = 0
-
-/datum/heretic_knowledge/spell/void_pull/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
-
-/datum/heretic_knowledge/spell/void_pull/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	UnregisterSignal(user, COMSIG_LIVING_LIFE)
-
-/datum/heretic_knowledge/spell/void_pull/proc/on_life(mob/living/source, seconds_per_tick)
-	SIGNAL_HANDLER
-
-	var/turf/source_turf = get_turf(source)
-	if(source_turf.GetTemperature() <= T0C)
-		seconds_in_vacuum += seconds_per_tick
-		if(seconds_in_vacuum >= 20)
-			add_charges(1)
-			seconds_in_vacuum -= 20
-	else
-		seconds_in_vacuum = 0
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"

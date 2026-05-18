@@ -122,7 +122,10 @@
 		they no longer looked man made. Or perhaps they never were in the first place."
 	action_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 2
-	max_charges = INFINITY
+	max_charges = 20
+	path_recharge_amount = 0.2
+	focus_recharge_amount = 0.5
+	holywater_drain_amount = 0.1
 
 /datum/heretic_knowledge/armor/rust
 	desc = "Create a Salvaged Remains.<br>\
@@ -150,13 +153,14 @@
 	cost = 2
 	research_tree_icon_frame = 5
 	max_charges = 12
+	path_recharge_amount = 0.25
 	focus_recharge_amount = 0.33
 	holywater_drain_amount = 0.16
-	transmute_text = "To recharge, complete a ritual with a toolbox."
+	transmute_text = "Can be manually recharged by completing a ritual with a toolbox."
 
 /datum/heretic_knowledge/blade_upgrade/rust
 	name = "Toxic Blade"
-	desc = "Your Rusty Blade now disgusts enemies on attack.<br>Allows you to rust Titanium and Plastitanium.."
+	desc = "Your Rusty Blade now disgusts enemies on attack.<br>Allows you to rust Titanium and Plastitanium."
 	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
@@ -183,28 +187,9 @@
 	cost = 2
 	drafting_tier = 5
 	max_charges = 4
+	path_recharge_amount = 0.25
 	focus_recharge_amount = 0.25
 	holywater_drain_amount = 0.25
-	transmute_text = "To recharge, corrode 30 tiles with your abilities and spells."
-
-	var/rust_counter = 0
-
-/datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	RegisterSignal(user, COMSIG_MOB_RUST_HERETIC_ACT, PROC_REF(on_rust_tile_rusted))
-
-/datum/heretic_knowledge/spell/entropic_plume/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	UnregisterSignal(user, COMSIG_MOB_RUST_HERETIC_ACT)
-
-/datum/heretic_knowledge/spell/entropic_plume/proc/on_rust_tile_rusted(mob/living/heretic, turf/rusted_target, result)
-	SIGNAL_HANDLER
-
-	if(isturf(rusted_target) && HAS_TRAIT(rusted_target, TRAIT_RUSTY) && result)
-		rust_counter += 1
-		if(rust_counter >= 30)
-			rust_counter -= 30
-			add_charges(1)
 
 /datum/heretic_knowledge/ultimate/rust_final
 	name = "Rustbringer's Oath"

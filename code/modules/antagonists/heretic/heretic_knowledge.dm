@@ -79,6 +79,7 @@
 	on_gain(user, our_heretic)
 	if(is_final_knowledge && !our_heretic.unlimited_blades)
 		our_heretic.disable_blade_breaking()
+	SEND_SIGNAL(our_heretic, COMSIG_HERETIC_RESEARCHED_KNOWLEDGE, src)
 
 /**
  * Called when the knowledge is applied to a mob.
@@ -215,10 +216,14 @@
 	var/max_charges = 1
 	/// Percent of max charges restored on a successful ritual
 	var/recharge_amount = 1.0
+	/// Percent of max charges restored on completing the path passive
+	var/path_recharge_amount = 0.5
 	/// What percent of the max charges the spell regains periodically while wearing a focus
 	var/focus_recharge_amount = 0.0
 	/// What percent of the max charges the spell loses periodically from consuming holy water
 	var/holywater_drain_amount = 0.0
+	/// When recharged via path passive, if TRUE, we bypass the max_charges cap.
+	var/path_recharge_can_surpass_cap = FALSE
 
 /datum/heretic_knowledge/spell/New()
 	. = ..()
@@ -342,6 +347,9 @@
 
 /// Add a number of charges, optionally bypassing the cap
 /datum/heretic_knowledge/spell/proc/add_charges(num, uncapped = FALSE)
+	if(num <= 0)
+		return FALSE
+
 	var/pre_charge_value = charges
 	if(uncapped)
 		charges += num
@@ -352,6 +360,9 @@
 
 /// Remove a number of charges (down to 0)
 /datum/heretic_knowledge/spell/proc/remove_charges(num)
+	if(num <= 0)
+		return FALSE
+
 	var/pre_charge_value = charges
 	charges = max(charges - num, 0)
 	update_charge_counter()
@@ -610,6 +621,8 @@
 
 	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
+
+	SEND_SIGNAL(user, COMSIG_HERETIC_SUMMONED_MOB, summoned)
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)

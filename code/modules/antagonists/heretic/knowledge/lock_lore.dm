@@ -195,7 +195,7 @@
 	max_charges = 12
 	focus_recharge_amount = 0.33
 	holywater_drain_amount = 0.33
-	transmute_text = "To recharge, complete a ritual with a pair of gloves."
+	transmute_text = "Can be manually recharged by completing a ritual with a pair of gloves."
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock
 	name = "Opening Blade"
@@ -216,15 +216,12 @@
 		While the spell is active, you cannot use your hands or other spells, and you are immune to slowdown. \
 		You are fully invincible but unable to harm anything. "
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
-	required_atoms = list(
-		list(/obj/item/clothing/suit/armor, /obj/item/clothing/suit/space) = 1,
-	)
 	action_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 2
 	is_final_knowledge = TRUE
-	max_charges = 2
-	holywater_drain_amount = 0.5
-	transmute_text = "To recharge, complete a ritual with a set of armor or space suit."
+	max_charges = 3
+	path_recharge_amount = 0.66
+	holywater_drain_amount = 0.33
 	notice = "&bull; Cannot be used near living sentient beings.<br>&bull; Cancelled if you are hit with an anti-magic item."
 
 /datum/heretic_knowledge/ultimate/lock_final

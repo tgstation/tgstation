@@ -94,15 +94,12 @@
 		confusion, oxygen loss and brain damage to its target over 10 seconds.<br>\
 		Casting the spell causes brain damage."
 	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
-	required_atoms = list(
-		/obj/item/clothing/glasses = 1,
-	)
 	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
 	cost = 2
 	max_charges = 6
+	path_recharge_amount = 0.33
 	focus_recharge_amount = 0.33
 	holywater_drain_amount = 0.33
-	transmute_text = "To recharge, complete a ritual with a pair of glasses or goggles."
 
 /datum/heretic_knowledge/moon_amulet
 	name = "Moonlight Amulet"
@@ -148,25 +145,14 @@
 		Anyone hit by it is forced to join the parade, following the projectile while suffering hallucinations."
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
+	notice = "There is no cap to the number of charges on the spell from applying Moonlight Amulets."
 	cost = 2
 	drafting_tier = 5
 	max_charges = 4
+	path_recharge_amount = 0.25
 	focus_recharge_amount = 0.25
 	holywater_drain_amount = 0.25
-	transmute_text = "To recharge, successfully apply a Moonlight Amulet to a heathen. \
-		There is no limit to the amount of charges you can have."
-
-/datum/heretic_knowledge/spell/moon_parade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	RegisterSignal(user, COMSIG_MOB_APPLIED_MOONLIGHT_AMULET, PROC_REF(on_amulet))
-
-/datum/heretic_knowledge/spell/moon_parade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	UnregisterSignal(user, COMSIG_MOB_APPLIED_MOONLIGHT_AMULET)
-
-/datum/heretic_knowledge/spell/moon_parade/proc/on_amulet(...)
-	SIGNAL_HANDLER
-	add_charges(1, uncapped = TRUE)
+	path_recharge_can_surpass_cap = TRUE
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"
@@ -200,29 +186,16 @@
 	desc = "Grants you Ringleaders Rise, an AoE spell that deals brain damage and causes hallucinations, scaling with sanity."
 	gain_text = "I grabbed his hand and we rose, those who saw the truth rose with us. \
 		The ringleader pointed up and the dim light of truth illuminated us further."
-
+	notice = "There is no cap to the number of charges on the spell from applying Moonlight Amulets."
 	action_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 2
-
 	research_tree_icon_frame = 5
 	is_final_knowledge = TRUE
 	max_charges = 2
+	path_recharge_amount = 0.25
 	focus_recharge_amount = 0.25
 	holywater_drain_amount = 0.25
-	transmute_text = "To recharge, successfully apply a Moonlight Amulet to a heathen. \
-		There is no limit to the amount of charges you can have."
-
-/datum/heretic_knowledge/spell/moon_ringleader/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	RegisterSignal(user, COMSIG_MOB_APPLIED_MOONLIGHT_AMULET, PROC_REF(on_amulet))
-
-/datum/heretic_knowledge/spell/moon_ringleader/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	UnregisterSignal(user, COMSIG_MOB_APPLIED_MOONLIGHT_AMULET)
-
-/datum/heretic_knowledge/spell/moon_ringleader/proc/on_amulet(...)
-	SIGNAL_HANDLER
-	add_charges(1, uncapped = TRUE)
+	path_recharge_can_surpass_cap = TRUE
 
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "The Last Act"

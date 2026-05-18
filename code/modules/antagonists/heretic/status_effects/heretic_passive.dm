@@ -14,6 +14,9 @@
 	var/passive_level = HERETIC_LEVEL_START
 	/// Name of the passive, used by the UI
 	var/name = "Heretic Passive"
+	/// Describes how users of this path recharge their spells
+	var/recharge_description = "Recharge spells by doing things."
+	/// Describes the various levels of the passive
 	var/list/passive_descriptions = list(
 		"Grants you a passive ability based on your heretic type. This ability will upgrade as you gain more power.",
 		"Your passive ability has been upgraded, doing something else.",
@@ -64,6 +67,10 @@
 	heretic_datum.passive_level = HERETIC_LEVEL_FINAL
 	heretic_datum.update_data_for_all_viewers()
 
+/datum/status_effect/heretic_passive/proc/recharge_spells()
+	owner.balloon_alert(owner, "spells recharged")
+	for(var/datum/heretic_knowledge/spell/spell in heretic_datum.get_researched_knowledge())
+		spell.add_charges(spell.max_charges * spell.path_recharge_amount, uncapped = spell.path_recharge_can_surpass_cap)
 
 //---- Ash Passive
 // Level 1 grants heat and ash storm immunity
@@ -71,11 +78,14 @@
 // Level 3 grants resistance to high pressure
 /datum/status_effect/heretic_passive/ash
 	name = "Vow of Destruction"
+	recharge_description = "Recharge spells by standing near living, burning foes."
 	passive_descriptions = list(
 		"Heat and ash storm immunity.",
 		"Lava immunity.",
 		"Resistance to high and low pressure."
 	)
+	/// Tracks total seconds nearby mobs are on fire, used to determine when to recharge spells
+	var/seconds_of_fire = 0
 
 /datum/status_effect/heretic_passive/ash/on_apply()
 	. = ..()
@@ -93,6 +103,24 @@
 	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE, TRAIT_LAVA_IMMUNE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTLOWPRESSURE), REF(src))
 	return ..()
 
+/datum/status_effect/heretic_passive/ash/tick(seconds_between_ticks)
+	. = ..()
+	var/seconds_gained = 0
+	for(var/mob/living/nearby_guy in view(owner, 3))
+		if(!nearby_guy.on_fire || nearby_guy.stat == DEAD || nearby_guy == owner)
+			continue
+
+		seconds_gained += seconds_between_ticks
+		if(seconds_gained >= 6)
+			break
+
+	seconds_of_fire += seconds_gained
+	if(seconds_of_fire < 30)
+		return
+
+	seconds_of_fire = 0
+	recharge_spells()
+
 //---- Blade Passive
 // Gives you riposte while wielding a heretic blade
 // Cooldown starts at 20 and goes down 5 seconds per level
@@ -102,6 +130,8 @@
 /datum/status_effect/heretic_passive/blade
 	name = "Dance of the Brand"
 	id = "blade_passive"
+	recharge_description = "Recharge spells by knocking brave foes into critical condition. \
+		(Brave foes are anyone who struck you first.)"
 	passive_descriptions = list(
 		"Being attacked while wielding a Heretic Blade in either hand will deliver a free, instant counterattack to the attacker. This effect can only trigger once every 20 seconds.",
 		"Immunity to fall damage.",
@@ -114,10 +144,34 @@
 	/// Whether the counter-attack is ready or not.
 	/// Used so we can give feedback when it's ready again
 	var/riposte_ready = TRUE
+	/// Lazylist of refs()s to mobs we've attacked in the last 30 seconds
+	VAR_PRIVATE/list/recently_attacked_refs
+	/// Lazylist of refs()s to mobs that have attacked us in the last 2 minutes before we attacked them
+	VAR_PRIVATE/list/recently_attacked_us_refs
 
 /datum/status_effect/heretic_passive/blade/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
+	RegisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hit_someone))
+
+/datum/status_effect/heretic_passive/blade/proc/hit_someone(mob/living/source, mob/living/target, obj/item/used_weapon)
+	SIGNAL_HANDLER
+
+	if(!isliving(target) || target == source)
+		return
+
+	// place the attacked mob in the "recently attacked" list so we can mark honorable foes
+	var/target_key = REF(target)
+	LAZYOR(recently_attacked_refs, target_key)
+	addtimer(CALLBACK(src, PROC_REF(remove_attacked_ref), target_key), 30 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE|TIMER_OVERRIDE)
+
+	if(target.stat == CONSCIOUS && LAZYFIND(recently_attacked_us_refs, target_key))
+		addtimer(CALLBACK(src, PROC_REF(check_crit), target), 0.2 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE)
+
+/datum/status_effect/heretic_passive/blade/proc/check_crit(mob/living/target)
+	if(QDELETED(target) || target.stat == CONSCIOUS)
+		return
+	recharge_spells()
 
 /datum/status_effect/heretic_passive/blade/heretic_level_upgrade()
 	. = ..()
@@ -125,7 +179,13 @@
 
 /datum/status_effect/heretic_passive/blade/on_remove()
 	. = ..()
-	UnregisterSignal(owner, list(COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_Z_IMPACT))
+	UnregisterSignal(owner, list(COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_Z_IMPACT, COMSIG_USER_PRE_ITEM_ATTACK))
+
+/datum/status_effect/heretic_passive/blade/proc/remove_attacked_ref(attacked_key)
+	LAZYREMOVE(recently_attacked_refs, attacked_key)
+
+/datum/status_effect/heretic_passive/blade/proc/remove_attacker_ref(attacker_key)
+	LAZYREMOVE(recently_attacked_us_refs, attacker_key)
 
 /// Blocks the effects from falling
 /datum/status_effect/heretic_passive/blade/proc/z_impact_react(datum/source, levels, turf/fell_on)
@@ -148,6 +208,16 @@
 )
 	SIGNAL_HANDLER
 
+	var/mob/living/attacker = hitby.loc
+	if(!istype(attacker))
+		return
+
+	// place the attacker in the list of "recently attacked us" if we did not attack them first
+	var/attacker_key = REF(attacker)
+	if(!LAZYFIND(recently_attacked_refs, attacker_key))
+		LAZYADD(recently_attacked_us_refs, attacker_key)
+		addtimer(CALLBACK(src, PROC_REF(remove_attacker_ref), attacker_key), 2 MINUTES, TIMER_DELETE_ME|TIMER_UNIQUE|TIMER_OVERRIDE)
+
 	if(attack_type != MELEE_ATTACK)
 		return
 
@@ -155,10 +225,6 @@
 		return
 
 	if(INCAPACITATED_IGNORING(source, INCAPABLE_GRAB))
-		return
-
-	var/mob/living/attacker = hitby.loc
-	if(!istype(attacker))
 		return
 
 	if(!source.Adjacent(attacker))
@@ -216,6 +282,7 @@
 /datum/status_effect/heretic_passive/cosmic
 	name = "Chosen of the Stars"
 	id = "cosmic_passive"
+	recharge_description = "Recharge spells by knocking foes standing in cosmic fields into critical condition."
 	passive_descriptions = list(
 		"Cosmic fields speed you up and regenerate stamina.",
 		"Cosmic fields disrupt grenades or signalers from being activated and turn off already primed grenades.",
@@ -227,6 +294,28 @@
 	if(locate(/obj/effect/forcefield/cosmic_field) in get_turf(owner))
 		var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
 		owner.adjust_stamina_loss(-15 * delta_time, updating_stamina = FALSE)
+
+/datum/status_effect/heretic_passive/cosmic/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hit_someone))
+
+/datum/status_effect/heretic_passive/cosmic/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK)
+
+/datum/status_effect/heretic_passive/cosmic/proc/hit_someone(mob/living/source, mob/living/target, obj/item/used_weapon)
+	SIGNAL_HANDLER
+
+	if(!isliving(target) || target == source || target.stat <= HARD_CRIT)
+		return
+
+	if(locate(/obj/effect/forcefield/cosmic_field) in target.loc)
+		addtimer(CALLBACK(src, PROC_REF(check_crit), target), 0.2 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE)
+
+/datum/status_effect/heretic_passive/cosmic/proc/check_crit(mob/living/target)
+	if(QDELETED(target) || target.stat == CONSCIOUS)
+		return
+	recharge_spells()
 
 /**
  * Creates a cosmic field at a given loc
@@ -261,6 +350,7 @@
 /datum/status_effect/heretic_passive/flesh
 	name = "Ravenous Hunger"
 	id = "flesh_passive"
+	recharge_description = "Recharge spells by summoning monsters into reality."
 	passive_descriptions = list(
 		"Immunity to Diseases, Disgust and space ants.",
 		"Eating organs or meat now heals you, gain the voracious and gluttonous trait and being fat doesn't slow you down.",
@@ -270,6 +360,7 @@
 /datum/status_effect/heretic_passive/flesh/on_apply()
 	. = ..()
 	owner.add_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY), REF(src))
+	RegisterSignal(owner, COMSIG_HERETIC_SUMMONED_MOB, PROC_REF(on_summon))
 
 /datum/status_effect/heretic_passive/flesh/tick(seconds_between_ticks)
 	. = ..()
@@ -325,6 +416,7 @@
 
 /// Gives/Removes damage resistance when we become/lose fatness
 /datum/status_effect/heretic_passive/flesh/proc/on_fat(datum/source)
+	SIGNAL_HANDLER
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/heretic = owner
@@ -335,10 +427,14 @@
 		heretic.physiology.damage_resistance -= 25
 		REMOVE_TRAIT(heretic, TRAIT_BATON_RESISTANCE, REF(src))
 
+/datum/status_effect/heretic_passive/flesh/proc/on_summon(datum/source, mob/living/summoned)
+	SIGNAL_HANDLER
+	recharge_spells()
+
 /datum/status_effect/heretic_passive/flesh/on_remove()
 	. = ..()
 	owner.remove_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY, TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON, TRAIT_BATON_RESISTANCE), REF(src))
-	UnregisterSignal(owner, list(COMSIG_LIVING_EAT_FOOD, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)))
+	UnregisterSignal(owner, list(COMSIG_LIVING_EAT_FOOD, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT), COMSIG_HERETIC_SUMMONED_MOB))
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/heretic = owner
@@ -355,16 +451,20 @@
 /datum/status_effect/heretic_passive/lock
 	name = "Open Invitation"
 	id = "lock_passive"
+	recharge_description = "Recharge spells by researching knowledge."
 	passive_descriptions = list(
 		"Shock insulation, all knowledges researched from the shop are cheaper",
 		"X-ray vision, you can see through walls and objects.",
 		"Grasp no longer goes on cooldown when used to open a door or locker."
 	)
+	/// Tracks points needed to be spent to recharge
+	var/points_to_recharge = 2
 
 /datum/status_effect/heretic_passive/lock/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, REF(src))
 	RegisterSignal(heretic_datum, COMSIG_HERETIC_SHOP_SETUP, PROC_REF(on_shop_setup)) // Just in case we are applying this after the shop was set up
+	RegisterSignal(heretic_datum, COMSIG_HERETIC_RESEARCHED_KNOWLEDGE, PROC_REF(on_research)) // Recharge spells whenever we research something
 
 /datum/status_effect/heretic_passive/lock/heretic_level_upgrade()
 	. = ..()
@@ -376,7 +476,8 @@
 	ADD_TRAIT(owner, TRAIT_LOCK_GRASP_UPGRADED, REF(src))
 
 /datum/status_effect/heretic_passive/lock/on_remove()
-	UnregisterSignal(owner, COMSIG_HERETIC_SHOP_SETUP)
+	UnregisterSignal(heretic_datum, COMSIG_HERETIC_SHOP_SETUP)
+	UnregisterSignal(heretic_datum, COMSIG_HERETIC_RESEARCHED_KNOWLEDGE)
 	owner.remove_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_XRAY_VISION, TRAIT_LOCK_GRASP_UPGRADED), REF(src))
 	owner.update_sight()
 	return ..()
@@ -389,6 +490,14 @@
 		if(heretic_info)
 			heretic_info[HKT_COST] = max(1, heretic_info[HKT_COST] - 1) // Reduce cost by 1, minimum of 1
 
+/datum/status_effect/heretic_passive/lock/proc/on_research(datum/source, datum/heretic_knowledge/researched_knowledge)
+	SIGNAL_HANDLER
+
+	points_to_recharge -= researched_knowledge.cost
+	if(points_to_recharge <= 0)
+		recharge_spells()
+		points_to_recharge = initial(points_to_recharge)
+
 //---- Moon Passive
 // Heals 5 brain damage per level
 // Prevents brain trauma
@@ -397,6 +506,7 @@
 /datum/status_effect/heretic_passive/moon
 	name = "Do You Hear The Voices Too?"
 	id = "moon_passive"
+	recharge_description = "Recharge spells by applying Moonlight Amulets to heathens."
 	passive_descriptions = list(
 		"Can no longer develop brain traumas, passively regenerates brain health, (this bonus is halved in combat).",
 		"Sleep immunity, increases the ratio at which your brain damage regenerates.",
@@ -413,12 +523,17 @@
 
 /datum/status_effect/heretic_passive/moon/on_apply()
 	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_APPLIED_MOONLIGHT_AMULET, PROC_REF(on_amulet))
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
 		return
 	ADD_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
 	owner.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+
+/datum/status_effect/heretic_passive/moon/proc/on_amulet(datum/source, ...)
+	SIGNAL_HANDLER
+	recharge_spells()
 
 /// Saves world.time when we are attacked by anything
 /datum/status_effect/heretic_passive/moon/proc/on_attacked(mob/victim, atom/attacker)
@@ -450,6 +565,7 @@
 	amulet = new()
 
 /datum/status_effect/heretic_passive/moon/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_APPLIED_MOONLIGHT_AMULET)
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
 		return ..()
@@ -467,20 +583,26 @@
 /datum/status_effect/heretic_passive/rust
 	name = "Leeching Walk"
 	id = "rust_passive"
+	recharge_description = "Recharge spells by rusting tiles."
 	passive_descriptions = list(
 		"Standing on Rusted tiles heals and purge chems off your body.",
 		"Standing on Rusted tiles closes up your wounds and heals your organs, you may now rust reinforced floors and walls, healing effect increased.",
 		"Standing on Rusted tiles regenerates your limbs, you may now rust titanium and plastitanium walls, healing effect increased."
 	)
+	/// Counts tiles rusted, total
+	var/rust_counter = 0
+	/// Counts down as tiles are rusted, when it hits 0 we reset and give spell charges
+	var/rust_counter_required = 60
 
 /datum/status_effect/heretic_passive/rust/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignal(owner, COMSIG_MOB_RUST_HERETIC_ACT, PROC_REF(on_rust_tile_rusted))
 
 /datum/status_effect/heretic_passive/rust/on_remove()
 	. = ..()
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE, COMSIG_MOB_RUST_HERETIC_ACT))
 
 /datum/status_effect/heretic_passive/rust/heretic_level_upgrade()
 	. = ..()
@@ -491,6 +613,18 @@
 	. = ..()
 	if(heretic_datum.rust_strength < 3)
 		heretic_datum.increase_rust_strength() // Bring us up to 3
+
+/datum/status_effect/heretic_passive/rust/proc/on_rust_tile_rusted(mob/living/heretic, turf/rusted_target, result)
+	SIGNAL_HANDLER
+
+	if(!isturf(rusted_target) || !HAS_TRAIT(rusted_target, TRAIT_RUSTY) || !result)
+		return
+
+	rust_counter += 1
+	rust_counter_required -= 1
+	if(rust_counter_required <= 0)
+		rust_counter_required = initial(rust_counter_required)
+		recharge_spells()
 
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].
@@ -560,15 +694,19 @@
 /datum/status_effect/heretic_passive/void
 	name = "Aristocrat's Way"
 	id = "void_passive"
+	recharge_description = "Recharge spells by knocking foes who are exposed to sub-zero temperature into critical condition."
 	passive_descriptions = list(
 		"Cold and low pressure immunity.",
 		"You no longer need to breathe.",
 		"Water, ice and slippery surfaces no slip you."
 	)
 
+	var/list/gained_charges_from
+
 /datum/status_effect/heretic_passive/void/on_apply()
 	. = ..()
 	owner.add_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE), REF(src))
+	RegisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hit_someone))
 
 /datum/status_effect/heretic_passive/void/heretic_level_upgrade()
 	. = ..()
@@ -581,6 +719,24 @@
 /datum/status_effect/heretic_passive/void/on_remove()
 	. = ..()
 	owner.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NOBREATH, TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), REF(src))
+	UnregisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK)
+
+/datum/status_effect/heretic_passive/void/proc/hit_someone(mob/living/source, mob/living/target, obj/item/used_weapon)
+	SIGNAL_HANDLER
+
+	if(!isliving(target) || target == source || target.stat <= HARD_CRIT || LAZYFIND(gained_charges_from, REF(target)))
+		return
+
+	var/turf/target_turf = get_turf(target)
+	if(target_turf?.GetTemperature() <= T0C)
+		addtimer(CALLBACK(src, PROC_REF(check_crit), target), 0.2 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE)
+
+/datum/status_effect/heretic_passive/void/proc/check_crit(mob/living/target)
+	if(QDELETED(target) || target.stat == CONSCIOUS)
+		return
+	LAZYADD(gained_charges_from, REF(target))
+	addtimer(CALLBACK(src, PROC_REF(remove_gained_from), REF(target)), 5 MINUTES, TIMER_DELETE_ME|TIMER_UNIQUE)
+	recharge_spells()
 
 #undef HERETIC_LEVEL_START
 #undef HERETIC_LEVEL_UPGRADE

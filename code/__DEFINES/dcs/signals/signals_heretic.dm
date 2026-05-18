@@ -40,3 +40,9 @@
 
 /// Sent to a heretic datum on a successful sacrifice: (mob/living/sacrificed, high_value)
 #define COMSIG_HERETIC_SACRIFICE "heretic_sacrifice"
+
+/// Sent to a mob when they summon a heretic monster
+#define COMSIG_HERETIC_SUMMONED_MOB "heretic_summoned_mob"
+
+/// Sent to a heretic when they successfully research a piece of heretic knowledge
+#define COMSIG_HERETIC_RESEARCHED_KNOWLEDGE "heretic_researched_knowledge"
