@@ -233,12 +233,18 @@
 	for (var/datum/action/action as anything in actions)
 		action.Remove(target)
 
+
+// its must rip collect\save all old organs, rip off head, then attach blood worm head, then insert all organs(brain, implants, hud, damaged ears and stuff)
+// all organs\content from the head must be saved with their state(damage or another vars)
+// so its must be the same content, which is collected and then inserted
 /mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target, list/bodypart_overlays)
-	var/mob/living/carbon/human/human_target = target
-	var/obj/item/organ/existing = human_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_BLOOD_WORM_HEAD)
-	var/obj/item/organ/blood_worm_head/new_head = new()
-	new_head.Insert(human_target, special = TRUE)
-	human_target.update_body()
+
+	var/current_head = target.get_bodypart(BODY_ZONE_HEAD) // will it get the head?
+	// var/mob/living/carbon/human/human_target = target
+	// var/obj/item/organ/existing = human_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_BLOOD_WORM_HEAD)
+	// var/obj/item/organ/blood_worm_head/new_head = new()
+	// new_head.Insert(human_target, special = TRUE)
+	// human_target.update_body()
 
 /mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/target, list/bodypart_overlays)
 	var/mob/living/carbon/human/human_target = target
