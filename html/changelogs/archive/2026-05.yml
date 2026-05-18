@@ -297,3 +297,14 @@
   timothymtorres:
   - bugfix: Fix holodeck mob organs and body parts not disappearing. Any holodeck
       mob organs and body parts can also no longer be bioscrambled.
+2026-05-18:
+  Melbert:
+  - qol: Thermite chemical reaction is tagged as "Damaging", making it easier to refer
+      to.
+  SmArtKar:
+  - bugfix: Stumps no longer give a reattachment moodlet to mobs
+  SyncIt21:
+  - qol: plumbing assimilator has higher heating coefficient to that of tier 3 chem
+      heater
+  timothymtorres:
+  - map: Add human limbs to the holodeck medsim organ crate
