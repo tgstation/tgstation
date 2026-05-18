@@ -14,3 +14,5 @@
 	TEST_ASSERT_NOTNULL(test_subject.dna.get_mutation(/datum/mutation/fire_immunity), "Dormant DNA Activator cleanup should not remove DNA vault mutations.")
 	TEST_ASSERT(HAS_TRAIT_FROM(test_subject, TRAIT_RESISTHEAT, DNA_VAULT_TRAIT), "Dormant DNA Activator cleanup should not strip shared DNA vault mutation traits.")
 	TEST_ASSERT(HAS_TRAIT_FROM(test_subject, TRAIT_NOFIRE, DNA_VAULT_TRAIT), "Dormant DNA Activator cleanup should not strip DNA vault-only traits.")
+
+	test_subject.dna.remove_mutation(/datum/mutation/fire_immunity, MUTATION_SOURCE_DNA_VAULT)
