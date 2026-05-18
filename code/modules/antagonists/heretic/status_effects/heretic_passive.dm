@@ -740,6 +740,9 @@
 	addtimer(CALLBACK(src, PROC_REF(remove_gained_from), REF(target)), 5 MINUTES, TIMER_DELETE_ME|TIMER_UNIQUE)
 	recharge_spells()
 
+/datum/status_effect/heretic_passive/void/proc/remove_gained_from(target_ref)
+	LAZYREMOVE(gained_charges_from, target_ref)
+
 #undef HERETIC_LEVEL_START
 #undef HERETIC_LEVEL_UPGRADE
 #undef HERETIC_LEVEL_FINAL
