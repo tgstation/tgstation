@@ -87,7 +87,7 @@
 	/// List of actions inside of a host.
 	var/list/host_actions = list()
 	// List of bodyparts of host, while inside host(only for adult worm)
-	var/list/host_bodyparts = list()
+	var/list/blood_worm_bodyparts = list()
 
 	/// Whether the blood worm has a host AND is currently in control of that host.
 	var/is_possessing_host = FALSE
@@ -243,20 +243,22 @@
 	var/list/saved_implants = list()
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
 
-	var/current_host_head = target:get_bodypart(BODY_ZONE_HEAD) // will it get the head?
+	// var/current_host_head = target:get_bodypart(BODY_ZONE_HEAD) // will it get the head?
 
-	for(var/obj/item/organ/organ_to_juggle in current_host_head:contents)
-		if(istype(organ_to_juggle, /obj/item/organ))
-			saved_organs += organ_to_juggle
-			organ_to_juggle.Remove(target, special = TRUE)
+	new_worm_head_to_attach.replace_limb(target)
 
-	current_host_head:drop_limb(special = TRUE)
-	new_worm_head_to_attach:try_attach_limb(target, special = TRUE)
+	// for(var/obj/item/organ/organ_to_juggle in current_host_head:contents)
+	// 	if(istype(organ_to_juggle, /obj/item/organ))
+	// 		saved_organs += organ_to_juggle
+	// 		organ_to_juggle.Remove(target, special = TRUE)
 
-	for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
-		organ_to_juggle.Insert(target, special = TRUE)
+	// current_host_head:drop_limb(special = TRUE)
+	// new_worm_head_to_attach:try_attach_limb(target, special = TRUE)
 
-	qdel(current_host_head)
+	// for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
+	// 	organ_to_juggle.Insert(target, special = TRUE)
+
+	// qdel(current_host_head)
 
 	target.update_body()
 
