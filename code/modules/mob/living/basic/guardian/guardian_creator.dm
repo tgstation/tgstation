@@ -116,6 +116,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	else
 		to_chat(user, failure_message)
 		used = FALSE
+
 /obj/item/guardian_creator/examine(mob/user)
 	. = ..()
 	if(used)
