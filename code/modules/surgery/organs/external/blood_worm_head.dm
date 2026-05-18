@@ -13,7 +13,7 @@
 	icon = 'icons/mob/human/blood_worm_features.dmi'
 	icon_state = "blood_worm_head_overlay"
 	layers = EXTERNAL_FRONT
-	color_source = NONE
+	// color_source = NONE
 	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
 
 /datum/sprite_accessory/blood_worm_head
