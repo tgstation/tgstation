@@ -3529,9 +3529,7 @@
 	pixel_x = 9;
 	pixel_y = 2
 	},
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/openspace,
 /area/station/ai/satellite/chamber)
 "aWk" = (
@@ -4537,9 +4535,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "bhQ" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/station/solars/starboard/fore)
@@ -7795,9 +7791,7 @@
 	dir = 4
 	},
 /obj/structure/ladder,
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "cai" = (
@@ -10309,9 +10303,7 @@
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/qm)
 "cHv" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "cHx" = (
@@ -11058,9 +11050,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "cRj" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -11811,9 +11801,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
 "cZT" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/security/interrogation)
@@ -11930,9 +11918,7 @@
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
 "dce" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/ai/satellite/chamber)
 "dch" = (
@@ -19824,9 +19810,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "fms" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/station/maintenance/starboard/central/upper)
@@ -19839,9 +19823,7 @@
 "fmM" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating/airless,
 /area/station/solars/starboard/aft)
 "fmO" = (
@@ -23066,9 +23048,7 @@
 /turf/open/floor/iron,
 /area/station/science/breakroom)
 "gdf" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "gdt" = (
@@ -30102,9 +30082,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/lab)
 "hYW" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft/upper)
 "hZa" = (
@@ -31877,9 +31855,7 @@
 /area/station/maintenance/starboard)
 "iwn" = (
 /obj/machinery/light/directional/north,
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/red/end,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/prison)
@@ -34336,9 +34312,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "jgu" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/station/maintenance/solars/port/aft)
@@ -37090,9 +37064,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/secondary/entry)
 "jRX" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 1
 	},
@@ -42557,9 +42529,7 @@
 /area/station/engineering/supermatter/room)
 "loN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners{
 	dir = 1
 	},
@@ -44327,9 +44297,7 @@
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "lNU" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/space_hut)
 "lNV" = (
@@ -44459,9 +44427,7 @@
 	},
 /area/station/medical/morgue)
 "lPo" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/iron/white/textured_large,
 /area/station/ai/satellite/foyer)
 "lPt" = (
@@ -58056,9 +58022,7 @@
 /obj/structure/railing/corner/end{
 	pixel_y = 2
 	},
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/openspace,
 /area/station/maintenance/aft/upper)
 "pxe" = (
@@ -58189,9 +58153,7 @@
 "pyE" = (
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/stripes/end,
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/office)
 "pyN" = (
@@ -60500,9 +60462,7 @@
 /turf/open/floor/iron,
 /area/station/science/lobby)
 "qeF" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
 "qeG" = (
@@ -63273,9 +63233,7 @@
 /area/station/command/meeting_room/council)
 "qQG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/maintenance/space_hut)
 "qQM" = (
@@ -69501,9 +69459,7 @@
 /area/station/maintenance/starboard/central)
 "sAS" = (
 /obj/machinery/airalarm/directional/east,
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/ai/satellite/chamber)
 "sBj" = (
@@ -71683,9 +71639,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "tfo" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/office)
 "tfp" = (
@@ -72285,9 +72239,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "tnt" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "tnu" = (
@@ -75895,9 +75847,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "ulX" = (
@@ -75992,9 +75942,7 @@
 /turf/open/floor/wood,
 /area/station/command/teleporter)
 "unh" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "unl" = (
@@ -76357,9 +76305,7 @@
 /turf/open/floor/iron,
 /area/station/science/explab)
 "urL" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/solars/starboard/fore)
 "urV" = (
@@ -87414,9 +87360,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "xiL" = (
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /obj/structure/lattice/catwalk,
 /turf/open/space/openspace,
 /area/station/solars/starboard/aft)
@@ -89976,17 +89920,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
 /obj/item/radio/intercom/directional/north,
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/office)
 "xQM" = (
 /obj/structure/ladder,
-/obj/structure/cable/multilayer/multiz{
-	cable_layer = 2
-	},
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "xQR" = (
