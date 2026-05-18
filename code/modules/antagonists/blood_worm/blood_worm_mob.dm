@@ -283,9 +283,16 @@
 
 	current_worm_head:drop_limb(special = TRUE)
 
-	// new_host_head_to_attach:dna = host_dna // currently not understand, how to give the dna or like smthgn like dna to the bodypart, can give owner
-	// via Update_owner() , but will it be the right?
-	new_host_head_to_attach:try_attach_limb(target, special = TRUE)
+	// now it will be with DNA of the owner, but also
+	// it will not loose the implants, cause they will be inserted
+	// ALSO if worm-player got into EMP or emag or something, and implants are now fucked
+	// so new head will get these fucked implants and organs
+	target:regenerate_limb(BODY_ZONE_HEAD)
+	var/new_host_head = target:get_bodypart(BODY_ZONE_HEAD)
+	for(var/obj/item/organ/organ_to_trash in new_host_head:contents)
+		if(istype(organ_to_juggle, /obj/item/organ)
+			organ_to_trash.Remove(target, special = TRUE)
+	// new_host_head_to_attach:try_attach_limb(target, special = TRUE)
 
 	for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
 		organ_to_juggle.Insert(target, special = TRUE)
