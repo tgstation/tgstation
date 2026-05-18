@@ -243,14 +243,14 @@
 	var/list/saved_implants = list()
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
 
-	var/current_head = target:get_bodypart(BODY_ZONE_HEAD) // will it get the head?
+	var/current_host_head = target:get_bodypart(BODY_ZONE_HEAD) // will it get the head?
 
-	for(var/obj/item/organ/organ_to_juggle in current_head:contents)
+	for(var/obj/item/organ/organ_to_juggle in current_host_head:contents)
 		if(istype(organ_to_juggle, /obj/item/organ))
 			saved_organs += organ_to_juggle
 			organ_to_juggle.Remove(target, special = TRUE)
 
-	current_head:drop_limb(special = TRUE)
+	current_host_head:drop_limb(special = TRUE)
 	new_worm_head_to_attach:try_attach_limb(target, special = TRUE)
 
 	for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
@@ -265,11 +265,36 @@
 	// human_target.update_body()
 
 /mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/target, list/bodypart_overlays)
-	var/mob/living/carbon/human/human_target = target
-	var/obj/item/organ/blood_worm_head/existing = human_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_BLOOD_WORM_HEAD)
-	existing.Remove(human_target, special = TRUE)
-	human_target.update_body()
-	qdel(existing)
+
+
+	var/list/saved_organs = list()
+	var/list/saved_implants = list()
+	var/datum/dna/host_dna = target:dna.Clone() // dna will be used to regen the head, at which we will insert organs and implants
+	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
+
+	var/current_worm_head = target:get_bodypart(BODY_ZONE_HEAD)
+
+	for(var/obj/item/organ/organ_to_juggle in current_worm_head:contents)
+		if(istype(organ_to_juggle, /obj/item/organ))
+			saved_organs += organ_to_juggle
+			organ_to_juggle.Remove(target, special = TRUE)
+
+	current_worm_head:drop_limb(special = TRUE)
+
+	new_host_head_to_attach.dna = host_dna
+	new_host_head_to_attach:try_attach_limb(target, special = TRUE)
+
+	for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
+		organ_to_juggle.Insert(target, special = TRUE)
+
+	target.update_body()
+
+
+	// var/mob/living/carbon/human/human_target = target
+	// var/obj/item/organ/blood_worm_head/existing = human_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_BLOOD_WORM_HEAD)
+	// existing.Remove(human_target, special = TRUE)
+	// human_target.update_body()
+	// qdel(existing)
 
 /mob/living/basic/blood_worm/proc/sync_health(already_ejecting = FALSE)
 	if (!host)
