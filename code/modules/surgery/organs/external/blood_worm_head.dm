@@ -16,6 +16,8 @@
 
 	color_src = FALSE
 
+	gender_specific = FALSE // maybe
+
 
 /datum/bodypart_overlay/mutant/blood_worm_head
 
@@ -29,4 +31,4 @@
 
 /datum/bodypart_overlay/mutant/blood_worm_head/New()
 	. = ..()
-	set_appearance_from_name(default_appearance)
+	set_appearance(/datum/sprite_accessory/blood_worm_head)
