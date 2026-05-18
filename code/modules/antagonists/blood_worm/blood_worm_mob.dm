@@ -269,7 +269,7 @@
 
 	var/list/saved_organs = list()
 	var/list/saved_implants = list()
-	var/datum/dna/host_dna = target:dna:Clone() // dna will be used to regen the head, at which we will insert organs and implants
+	var/datum/dna/host_dna = target:dna // dna will be used to regen the head, at which we will insert organs and implants
 	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
 
 	var/current_worm_head = target:get_bodypart(BODY_ZONE_HEAD)
@@ -281,7 +281,8 @@
 
 	current_worm_head:drop_limb(special = TRUE)
 
-	new_host_head_to_attach.dna = host_dna
+	// new_host_head_to_attach:dna = host_dna // currently not understand, how to give the dna or like smthgn like dna to the bodypart, can give owner
+	// via Update_owner() , but will it be the right?
 	new_host_head_to_attach:try_attach_limb(target, special = TRUE)
 
 	for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
