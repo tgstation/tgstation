@@ -1,0 +1,4 @@
+author: "emicchinya"
+delete-after: True
+changes:
+  - spellcheck: "Target Left arm, Right arm, Left leg and Cycle head keybinds are now capitalized properly."

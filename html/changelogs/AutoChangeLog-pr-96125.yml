@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Thermite chemical reaction is tagged as \"Damaging\", making it easier to refer to."
