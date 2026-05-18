@@ -205,6 +205,7 @@
 	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
 	is_final_knowledge = TRUE
 	max_charges = 4
+	path_recharge_amount = 0.0
 	holywater_drain_amount = 0.25
 	transmute_text = "You are rewarded with one charge for every sacrifice you complete. \
 		You will also be rewarded with a charge if you knock at least three combatants into critical condition while the spell is active. \

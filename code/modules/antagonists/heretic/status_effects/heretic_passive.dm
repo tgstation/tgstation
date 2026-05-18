@@ -109,6 +109,8 @@
 	for(var/mob/living/nearby_guy in view(owner, 3))
 		if(!nearby_guy.on_fire || nearby_guy.stat == DEAD || nearby_guy == owner)
 			continue
+		if(ismonkey(nearby_guy) && isnull(nearby_guy.mind))
+			continue
 
 		seconds_gained += seconds_between_ticks
 		if(seconds_gained >= 6)
