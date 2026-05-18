@@ -370,7 +370,7 @@
 	base_icon_state = "lava"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_LAVA
-	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA + SMOOTH_GROUP_FLOOR_BASALT + SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_MINERAL_WALLS + SMOOTH_GROUP_RED_ROCK_WALLS + SMOOTH_GROUP_SHALE_WALLS
+	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA + SMOOTH_GROUP_FLOOR_SIDERITE + SMOOTH_GROUP_FLOOR_SHALE + SMOOTH_GROUP_FLOOR_BASALT + SMOOTH_GROUP_MINERAL_WALLS + SMOOTH_GROUP_RED_ROCK_WALLS + SMOOTH_GROUP_SHALE_WALLS
 	underfloor_accessibility = 2 // This avoids strangeness when routing pipes / wires along catwalks over lava
 	/// *Inverse* smoothing bitflag for basalt overlays
 	var/basalt_junction = NONE
