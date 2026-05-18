@@ -127,7 +127,7 @@
 /obj/item/clothing/head/hats/caphat/bicorne
 	name = "captain's bicorne"
 	desc = "Why be king when you can be Emperor?"
-	icon_state = "capcap"
+	icon_state = "capbicorne"
 	dog_fashion = null
 
 /obj/item/clothing/head/caphat/beret
