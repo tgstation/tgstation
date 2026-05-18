@@ -152,7 +152,7 @@
 	//remove ourself from the duct
 	net.ducts -= src
 	if(!net.ducts.len)
-		qdel(net) //destroy the pipeline. Suppliers aren't important if there are ducts
+		qdel(net) //destroy the pipeline. Suppliers aren't important if there aren't any ducts left
 	net = null
 
 /obj/machinery/duct/Destroy()

@@ -351,16 +351,16 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	var/aspect_ratio = view_size[1] / view_size[2]
 
 	// Calculate desired pixel width using window size and aspect ratio
-	var/list/sizes = params2list(winget(src, "mainwindow.split;mapwindow", "size"))
+	var/list/sizes = params2list(winget(src, "[SKIN_MAINWINDOW_SPLIT];[SKIN_MAPWINDOW]", "size"))
 
 	// Client closed the window? Some other error? This is unexpected behaviour, let's
 	// CRASH with some info.
-	if(!sizes["mapwindow.size"])
+	if(!sizes["[SKIN_MAPWINDOW].size"])
 		CRASH("sizes does not contain mapwindow.size key. This means a winget failed to return what we wanted. --- sizes var: [sizes] --- sizes length: [length(sizes)]")
 
-	var/list/map_size = splittext(sizes["mapwindow.size"], "x")
+	var/list/map_size = splittext(sizes["[SKIN_MAPWINDOW].size"], "x")
 
-	var/split_size = splittext(sizes["mainwindow.split.size"], "x")
+	var/split_size = splittext(sizes["[SKIN_MAINWINDOW_SPLIT].size"], "x")
 	var/split_width = text2num(split_size[1])
 
 	// Window is minimized, we can't get proper data so return to avoid division by 0
@@ -399,7 +399,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	// Apply an ever-lowering offset until we finish or fail
 	var/delta
 	for(var/safety in 1 to 10)
-		var/after_size = winget(src, "mapwindow", "size")
+		var/after_size = winget(src, SKIN_MAPWINDOW, "size")
 		map_size = splittext(after_size, "x")
 		var/got_width = text2num(map_size[1])
 
