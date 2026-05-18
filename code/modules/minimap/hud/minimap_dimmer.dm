@@ -4,3 +4,4 @@
 	alpha = 180
 	plane = FULLSCREEN_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	clear_with_screen = TRUE
