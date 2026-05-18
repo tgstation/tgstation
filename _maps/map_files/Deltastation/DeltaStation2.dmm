@@ -1726,7 +1726,7 @@
 	},
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
-/area/station/tcommsat/server)
+/area/station/tcommsat/maints)
 "atR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3591,7 +3591,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/nanotrasen/directional/north,
+/obj/structure/sign/departments/telecomms/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "aSJ" = (
@@ -9626,7 +9626,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/tcommsat/server)
+/area/station/tcommsat/maints)
 "cnE" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -13734,7 +13734,6 @@
 "drG" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp{
-	pixel_x = 0;
 	pixel_y = 9
 	},
 /obj/effect/turf_decal/siding/wood{
@@ -14186,9 +14185,7 @@
 /obj/effect/landmark/start/hangover,
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/green/corner{
-	dir = 2
-	},
+/obj/effect/turf_decal/siding/green/corner,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "dvL" = (
@@ -17431,7 +17428,7 @@
 	},
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
-/area/station/tcommsat/server)
+/area/station/tcommsat/maints)
 "eoE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -24452,8 +24449,9 @@
 	dir = 4
 	},
 /obj/machinery/light/dim/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/tcommsat/server)
+/area/station/tcommsat/maints)
 "fYw" = (
 /obj/machinery/telecomms/bus/preset_three,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
@@ -28647,10 +28645,11 @@
 "gUN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/structure/tank_holder/oxygen/red,
 /obj/machinery/airalarm/directional/west,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/tcommsat/server)
+/area/station/tcommsat/maints)
 "gUU" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -34455,7 +34454,6 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/sign/departments/telecomms/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -40280,8 +40278,7 @@
 	pixel_y = 1
 	},
 /obj/item/radio/headset/headset_medsci{
-	pixel_x = -7;
-	pixel_y = 0
+	pixel_x = -7
 	},
 /obj/item/radio/headset/headset_medsci{
 	pixel_x = -7;
@@ -42468,7 +42465,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/tcommsat/server)
+/area/station/tcommsat/maints)
 "krL" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /obj/effect/decal/cleanable/cobweb,
@@ -49827,7 +49824,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
-/area/station/tcommsat/server)
+/area/station/tcommsat/maints)
 "mlB" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1
@@ -53007,8 +53004,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/structure/tank_holder/oxygen/red,
 /turf/open/floor/iron,
-/area/station/tcommsat/server)
+/area/station/tcommsat/maints)
 "naB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/purple{
@@ -54398,15 +54396,13 @@
 "nuH" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/actionfigure{
-	pixel_y = 20;
-	pixel_x = 0
+	pixel_y = 20
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/effect/spawner/random/bureaucracy/folder{
-	pixel_x = 3;
-	pixel_y = 0
+	pixel_x = 3
 	},
 /turf/open/floor/wood/large,
 /area/station/service/library/lounge)
@@ -77817,6 +77813,9 @@
 /obj/effect/turf_decal/siding/blue,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
+"tgR" = (
+/turf/closed/wall/r_wall,
+/area/station/tcommsat/maints)
 "tgS" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -85546,7 +85545,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/tcommsat/server)
+/area/station/tcommsat/maints)
 "vat" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -85964,7 +85963,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/holopad,
 /turf/open/floor/iron,
-/area/station/tcommsat/server)
+/area/station/tcommsat/maints)
 "vgi" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -136509,8 +136508,8 @@ wRS
 lPm
 hup
 xkw
-xkw
-xkw
+tgR
+tgR
 vpK
 mVu
 nQi
@@ -138051,8 +138050,8 @@ kfC
 rSJ
 hup
 xkw
-xkw
-xkw
+tgR
+tgR
 vpK
 dNm
 xAL
