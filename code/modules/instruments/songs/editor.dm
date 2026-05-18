@@ -10,7 +10,7 @@
 /datum/song/ui_state(mob/user)
 	if(ispAI(user))
 		return GLOB.always_state
-	return GLOB.default_state
+	return ..()
 
 /datum/song/ui_data(mob/user)
 	var/list/data = ..()
