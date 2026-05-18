@@ -131,6 +131,9 @@
 
 	STOP_PROCESSING(SSfastprocess, src)
 
+	if(HAS_TRAIT(host, ADULT_BLOOD_WORM_HOST_TRAIT))
+		remove_bloodworm_head(host, null)
+
 	REMOVE_TRAITS_IN(src, BLOOD_WORM_HOST_TRAIT)
 	REMOVE_TRAITS_IN(host, BLOOD_WORM_HOST_TRAIT)
 	host.physiology.bleed_mod /= BLOOD_WORM_BLEED_MOD

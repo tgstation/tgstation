@@ -289,6 +289,13 @@
 
 /mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/target, list/bodypart_overlays)
 
+	var/mob/living/carbon/human/human_target = target
+	var/obj/item/organ/blood_worm_head/existing = human_target.get_organ_slot("blood_worm_head")
+
+	existing.Remove(human_target, special = TRUE)
+	human_target.update_body()
+	qdel(existing)
+
 /mob/living/basic/blood_worm/proc/sync_health(already_ejecting = FALSE)
 	if (!host)
 		return
