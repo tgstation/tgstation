@@ -23,6 +23,7 @@
 
 	// name = "blood worm head overlay"
 
+	sprite_datum = /datum/sprite_accessory/blood_worm_head // OK
 	feature_key = FEATURE_BLOOD_WORM_HEAD // forgot this
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
 	imprint_on_next_insertion = FALSE // i think its need to be FALSE cause worms dont have DNA?
