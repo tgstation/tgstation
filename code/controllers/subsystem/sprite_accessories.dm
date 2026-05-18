@@ -102,7 +102,7 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	feature_list[FEATURE_TAIL_MONKEY] = INIT_ACCESSORY(/datum/sprite_accessory/tails/monkey)
 	feature_list[FEATURE_TAIL_XENO] = INIT_ACCESSORY(/datum/sprite_accessory/tails/xeno)
 	// blood worm features (worm head overlay on hosted mobs)
-	feature_list[FEATURE_BLOOD_WORM_HEAD] = INIT_ACCESSORY(/datum/sprite_accessory/blood_worm_head)
+	// feature_list[FEATURE_BLOOD_WORM_HEAD] = INIT_ACCESSORY(/datum/sprite_accessory/blood_worm_head)
 
 
 /// This proc just initializes all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
