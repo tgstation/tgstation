@@ -18,12 +18,16 @@
 
 	gender_specific = FALSE // maybe
 
+/datum/sprite_accessory/blood_worm_head/default
+	name = "blood_worm_head"
+	icon = 'icons/mob/human/blood_worm_features.dmi'
+
 
 /datum/bodypart_overlay/mutant/blood_worm_head
 
 	// name = "blood worm head overlay"
 
-	sprite_datum = /datum/sprite_accessory/blood_worm_head // OK
+	// sprite_datum = /datum/sprite_accessory/blood_worm_head // OK
 	feature_key = FEATURE_BLOOD_WORM_HEAD // forgot this
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
 	imprint_on_next_insertion = FALSE // i think its need to be FALSE cause worms dont have DNA?
