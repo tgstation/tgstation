@@ -29,7 +29,7 @@
 /atom/movable/screen/minimap_toolbar_button/MouseEntered(location, control, params)
 	add_filter("mouseover", 1, outline_filter(1, COLOR_LIME))
 	if(desc)
-		openToolTip(usr, src, title = name, content = desc)
+		openToolTip(usr, tip_src = display || src, params = params, title = name, content = desc)
 
 /atom/movable/screen/minimap_toolbar_button/MouseExited(location, control, params)
 	remove_filter("mouseover")
