@@ -200,6 +200,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	is_starting_knowledge = TRUE
 	max_charges = 6
+	path_recharge_amount = 0.0
 	focus_recharge_amount = 0.16
 	holywater_drain_amount = 0.16
 	transmute_text = "Charges will return every three minutes. Using the spell again will reset the timer."
