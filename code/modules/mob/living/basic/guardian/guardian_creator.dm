@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	/// Examine description if the creator is unused
 	var/unused_description = span_holoparasite("You feel beckoned to draw one...")
 	/// Examine description if the creator is used.
-	var/used_description = span_holoparasite("They seem rather uninteresting")
+	var/used_description = span_holoparasite("They seem rather uninteresting.")
 	/// Failure message if no ghost picks the holopara.
 	var/failure_message = span_boldholoparasite("..And draw a card! It's... blank? Maybe you should try again later.")
 	/// Failure message if we don't allow lings.
@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	use_message = span_holoparasite("You put the fishsticks in your mouth...")
 	used_message = span_holoparasite("Someone's already taken a bite out of these fishsticks! Ew.")
 	unused_description = span_holoparasite("They look hot and ready to eat!")
-	used_description = span_holoparasite("They look soggy and old.")
+	used_description = span_holoparasite("They look soggy and old...")
 	failure_message = span_boldholoparasite("You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.")
 	ling_failure = span_boldholoparasite("Carp'sie seems to not have taken you as the chosen one. Maybe it's because of your horrifying origin.")
 	success_message = span_holoparasite("<b>%GUARDIAN</b> has been caught!")
