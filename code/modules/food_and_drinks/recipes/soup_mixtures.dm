@@ -66,7 +66,7 @@
 	//number of ingredients who's requested amounts has been satisfied
 	var/completed_ingredients = 0
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		var/ingredient_type = ingredient.type
+		var/datum/ingredient_type = ingredient.type
 		do
 		{
 			var/ingredient_count = reqs_copy[ingredient_type]
