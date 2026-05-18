@@ -418,7 +418,7 @@
 /mob/living/basic/blood_worm/adult/Initialize(mapload)
 	. = ..()
 
-	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE, tear_time = 5 SECONDS, do_after_key = "blood_worm_wall_tear")
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE, tear_time = 10 SECONDS, do_after_key = "blood_worm_wall_tear")
 
 /mob/living/basic/blood_worm/hatchling/polymorph
 	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/polymorph
