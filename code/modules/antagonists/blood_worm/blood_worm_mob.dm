@@ -234,12 +234,30 @@
 		action.Remove(target)
 
 
-// its must rip collect\save all old organs, rip off head, then attach blood worm head, then insert all organs(brain, implants, hud, damaged ears and stuff)
+// its must collect\save all old organs, rip off head, then attach blood worm head, then insert all organs(brain, implants, hud, damaged ears and stuff)
 // all organs\content from the head must be saved with their state(damage or another vars)
 // so its must be the same content, which is collected and then inserted
 /mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target, list/bodypart_overlays)
 
-	var/current_head = target.get_bodypart(BODY_ZONE_HEAD) // will it get the head?
+	var/list/saved_organs = list()
+	var/list/saved_implants = list()
+	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
+
+	var/current_head = target:get_bodypart(BODY_ZONE_HEAD) // will it get the head?
+
+	for(var/obj/item/organ/organ_to_juggle in current_head.contents)
+		if(istype(organ_to_juggle, /obj/item/organ))
+			saved_organs += organ_to_juggle
+			organ_to_juggle.Remove(target, special = TRUE)
+
+	current_head.drop_limb(special = TRUE)
+	new_worm_head_to_attach.attach_limb(target, special = TRUE)
+
+	for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
+		organ_to_juggle.Insert(target, special = TRUE)
+
+	target.update_body()
+
 	// var/mob/living/carbon/human/human_target = target
 	// var/obj/item/organ/existing = human_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_BLOOD_WORM_HEAD)
 	// var/obj/item/organ/blood_worm_head/new_head = new()
