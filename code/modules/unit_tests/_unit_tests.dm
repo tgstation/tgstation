@@ -158,6 +158,7 @@
 #include "designs.dm"
 #include "dismemberment.dm"
 #include "dna_infusion.dm"
+#include "dna_vault.dm"
 #include "door_access.dm"
 #include "dragon_expiration.dm"
 #include "drink_icons.dm"
