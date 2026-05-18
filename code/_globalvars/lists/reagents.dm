@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 	// So instead, we're gonna wing it
 	var/list/reagent_to_react_count = list()
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
-		if(!ispath(reaction, /datum/chemical_reaction/randomized))
+		if(!istype(reaction, /datum/chemical_reaction/randomized))
 			for(var/reagent_id in reaction.required_reagents)
 				reagent_to_react_count[reagent_id] += 1
 
