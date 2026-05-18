@@ -2,17 +2,17 @@
 /// but teleporting if necessary.
 /datum/component/leash
 	/// The owner of the leash. If this is qdeleted, the leash is as well.
-	var/atom/movable/owner
-
+	var/atom/owner
 	/// The maximum distance you can move from your owner
 	var/distance
-
 	/// The object type to create on the old turf when forcibly teleporting out
 	var/force_teleport_out_effect
-
 	/// The object type to create on the new turf when forcibly teleporting out
 	var/force_teleport_in_effect
-
+	/// Avoid sending out "too far" bubbles
+	var/silent = FALSE
+	/// Should we snap instead of teleporting back?
+	var/snap_on_teleport = FALSE
 	VAR_PRIVATE
 		// Pathfinding can yield, so only move us closer if this is the best one
 		current_path_tick = 0
@@ -21,10 +21,12 @@
 		performing_path_move = FALSE
 
 /datum/component/leash/Initialize(
-	atom/movable/owner,
+	atom/owner,
 	distance = 3,
 	force_teleport_out_effect,
 	force_teleport_in_effect,
+	silent = FALSE,
+	snap_on_teleport = FALSE,
 )
 	. = ..()
 
@@ -32,8 +34,8 @@
 		stack_trace("Parent must be a movable")
 		return COMPONENT_INCOMPATIBLE
 
-	if (!ismovable(owner))
-		stack_trace("[owner] (owner) is not a movable")
+	if (!isatom(owner))
+		stack_trace("[owner] (owner) is not an atom")
 		return COMPONENT_INCOMPATIBLE
 
 	if (!isnum(distance))
@@ -52,18 +54,22 @@
 	src.distance = distance
 	src.force_teleport_out_effect = force_teleport_out_effect
 	src.force_teleport_in_effect = force_teleport_in_effect
+	src.silent = silent
+	src.snap_on_teleport = snap_on_teleport
 
 	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(on_owner_qdel))
+
+	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_parent_pre_move))
+	check_distance()
+
+	if (!ismovable(owner))
+		return
 
 	var/static/list/container_connections = list(
 		COMSIG_MOVABLE_MOVED = PROC_REF(on_owner_moved),
 	)
-
 	AddComponent(/datum/component/connect_containers, owner, container_connections)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
-	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_parent_pre_move))
-
-	check_distance()
 
 /datum/component/leash/Destroy()
 	owner = null
@@ -97,7 +103,7 @@
 	if (get_dist(new_location_turf, owner) <= distance)
 		return NONE
 
-	if (ismob(source))
+	if (ismob(source) && !silent)
 		source.balloon_alert(source, "too far!")
 
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
@@ -158,6 +164,10 @@
 /datum/component/leash/proc/force_teleport_back(reason)
 	PRIVATE_PROC(TRUE)
 
+	if (snap_on_teleport)
+		qdel(src)
+		return
+
 	var/atom/movable/movable_parent = parent
 
 	if (force_teleport_out_effect)
@@ -170,7 +180,8 @@
 
 	if (ismob(movable_parent))
 		SSblackbox.record_feedback("tally", "leash_force_teleport_back", 1, reason)
-		movable_parent.balloon_alert(movable_parent, "moved out of range!")
+		if(!silent)
+			movable_parent.balloon_alert(movable_parent, "moved out of range!")
 
 	SEND_SIGNAL(parent, COMSIG_LEASH_FORCE_TELEPORT)
 
