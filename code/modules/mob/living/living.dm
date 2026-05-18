@@ -13,6 +13,8 @@
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_atom_to_hud(src)
 	add_ally(src)
+	if(!pull_force)
+		remove_verb(src, /mob/living/verb/pulled)
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
@@ -509,6 +511,14 @@
 	if(!override && M.buckled)
 		return
 	M.remove_offsets(GRABBING_TRAIT)
+
+//mob verbs are a lot faster than object verbs
+//for more info on why this is not atom/pull, see examinate() in mob.dm
+/mob/living/verb/pulled(atom/movable/thing_pulled as mob|obj in oview(1))
+	set name = "Pull"
+
+	if(istype(thing_pulled) && Adjacent(thing_pulled))
+		start_pulling(thing_pulled)
 
 /mob/living/stop_pulling()
 	if(ismob(pulling))
@@ -2081,6 +2091,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 				return FALSE
 			update_transform(var_value/current_size)
 			. = TRUE
+		if(NAMEOF(src, pull_force))
+			if(var_value == 0) //no more pulling
+				remove_verb(src, /mob/living/verb/pulled)
+			else
+				add_verb(src, /mob/living/verb/pulled)
+			. = TRUE
+
 
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
