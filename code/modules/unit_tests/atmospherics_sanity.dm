@@ -19,7 +19,7 @@
 	/// We run this test in parallel, so we need to keep track of how many crawls are running
 	/// This is to prevent stack overflow mostly
 	var/crawls = 0
-
+	
 /datum/unit_test/atmospherics_sanity/proc/prepare_crawl()
 	starting_areas = list()
 	forbidden_areas = list()
@@ -109,7 +109,7 @@
 
 	// We should never find these
 	var/list/area/forbidden_types = list(
-		/area/station/engineering/supermatter,
+		/area/station/engineering/supermatter/engine,
 		/area/station/tcommsat/server,
 	)
 
@@ -122,8 +122,6 @@
 			remaining_areas += station_area
 
 	for(var/area/station/forbidden_area_type as anything in forbidden_types)
-		if(ispath(forbidden_area_type, /area/station/engineering/supermatter/room)) // FIXME!!! This is meant to be *specifically* the engine chamber!!
-			continue
 		var/area/forbidden_area = GLOB.areas_by_type[forbidden_area_type]
 		if(!isnull(forbidden_area))
 			forbidden_areas += forbidden_area

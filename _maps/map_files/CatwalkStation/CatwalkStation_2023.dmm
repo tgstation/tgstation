@@ -1927,7 +1927,7 @@
 "aAt" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "aAI" = (
 /obj/machinery/holopad,
 /obj/structure/disposalpipe/segment{
@@ -3464,7 +3464,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "aVI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3881,7 +3881,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "bab" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
@@ -4171,7 +4171,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "bdT" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -11758,7 +11758,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "cZz" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -14371,7 +14371,7 @@
 /obj/machinery/power/supermatter_crystal/engine,
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "dNZ" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -17846,7 +17846,7 @@
 	},
 /obj/effect/turf_decal/siding/red,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "eLM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door/directional/west{
@@ -27003,7 +27003,7 @@
 /obj/structure/sign/warning/radiation/rad_area/directional/south,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "hhN" = (
 /obj/structure/chair/sofa/corner/brown{
 	dir = 4
@@ -28496,7 +28496,7 @@
 "hDq" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "hDt" = (
 /obj/effect/turf_decal/delivery,
 /obj/item/radio/intercom/directional/north,
@@ -31974,7 +31974,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "iym" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -32326,7 +32326,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "iDq" = (
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/plating,
@@ -33109,7 +33109,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "iNI" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -34979,7 +34979,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "jqz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -39808,7 +39808,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "kDP" = (
 /obj/effect/turf_decal/trimline/blue/warning{
 	dir = 6
@@ -46869,7 +46869,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "mxj" = (
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/stripes/line,
@@ -49806,7 +49806,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "npb" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -52569,7 +52569,7 @@
 	name = "Supermatter Radiation Shutters"
 	},
 /turf/open/floor/plating,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "nYQ" = (
 /turf/open/floor/iron/smooth_half,
 /area/station/ai/satellite/foyer)
@@ -53101,7 +53101,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/orange/visible,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "ofY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -55380,7 +55380,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "oKt" = (
 /obj/structure/falsewall,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -56134,7 +56134,7 @@
 	name = "Supermatter Chamber"
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "oUd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -56291,7 +56291,7 @@
 	name = "Supermatter Chamber"
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "oXn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing/corner{
@@ -58525,7 +58525,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "pEI" = (
 /obj/structure/table,
 /obj/item/radio{
@@ -60741,7 +60741,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "qih" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/griddle,
@@ -65451,7 +65451,7 @@
 /obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "rwA" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -67983,7 +67983,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "shi" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/storage_shared)
@@ -71351,7 +71351,7 @@
 /obj/effect/turf_decal/trimline/brown,
 /obj/machinery/atmospherics/components/binary/pump/off/orange/visible,
 /turf/open/floor/plating,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "tbg" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/hull/air,
@@ -72184,7 +72184,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "tna" = (
 /obj/structure/fermenting_barrel/gunpowder,
 /obj/effect/decal/cleanable/greenglow,
@@ -73183,7 +73183,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible,
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "tBb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -74159,7 +74159,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "tNP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -74264,7 +74264,7 @@
 /area/station/engineering/atmos)
 "tPe" = (
 /turf/open/floor/glass/reinforced/plasma,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "tPl" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/structure/cable,
@@ -78506,7 +78506,7 @@
 /obj/machinery/atmospherics/components/binary/pump/off/cyan/visible,
 /obj/effect/turf_decal/trimline/blue,
 /turf/open/floor/plating,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "uRM" = (
 /obj/structure/table,
 /obj/effect/spawner/random/trash/janitor_supplies{
@@ -84946,7 +84946,7 @@
 	},
 /obj/effect/turf_decal/siding/red/corner,
 /turf/open/floor/engine,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "wAV" = (
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/plating,
@@ -88738,7 +88738,7 @@
 /area/station/maintenance/starboard)
 "xBE" = (
 /turf/closed/wall/r_wall,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/engine)
 "xBP" = (
 /obj/item/trash/can{
 	pixel_x = -8
