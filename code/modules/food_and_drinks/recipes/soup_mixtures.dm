@@ -91,7 +91,7 @@
 
 			//means we have to look for subtypes
 			else if(isnull(ingredient_count))
-				ingredient_type = type2parent(ingredient_type)
+				ingredient_type = ingredient_type::parent_type
 
 			//means we have no more remaining ingredients so bail, can happen if multiple ingredients of the same type/subtype are in the pot
 			else
