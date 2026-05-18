@@ -7,7 +7,14 @@
 
 	visual = TRUE // more sure
 
-	bodypart_overlay = /datum/bodypart_overlay/mutant/blood_worm_head
+	bodypart_overlay = /datum/bodypart_overlay/simple/blood_worm_head
+
+/datum/bodypart_overlay/simple/blood_worm_head
+	icon = 'icons/mob/human/blood_worm_features.dmi'
+	icon_state = "blood_worm_head_overlay"
+	layers = EXTERNAL_FRONT
+	color_source = NONE
+	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
 
 /datum/sprite_accessory/blood_worm_head
 	name = "blood_worm_head"
