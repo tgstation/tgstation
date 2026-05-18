@@ -260,12 +260,6 @@
 
 	target.update_body()
 
-	// var/mob/living/carbon/human/human_target = target
-	// var/obj/item/organ/existing = human_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_BLOOD_WORM_HEAD)
-	// var/obj/item/organ/blood_worm_head/new_head = new()
-	// new_head.Insert(human_target, special = TRUE)
-	// human_target.update_body()
-
 /mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/target, list/bodypart_overlays)
 
 
@@ -292,7 +286,6 @@
 	for(var/obj/item/organ/organ_to_trash in new_host_head:contents)
 		if(istype(organ_to_trash, /obj/item/organ))
 			organ_to_trash.Remove(target, special = TRUE)
-	// new_host_head_to_attach:try_attach_limb(target, special = TRUE)
 
 	for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
 		organ_to_juggle.Insert(target, special = TRUE)
@@ -300,13 +293,6 @@
 	qdel(current_worm_head)
 
 	target.update_body()
-
-
-	// var/mob/living/carbon/human/human_target = target
-	// var/obj/item/organ/blood_worm_head/existing = human_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_BLOOD_WORM_HEAD)
-	// existing.Remove(human_target, special = TRUE)
-	// human_target.update_body()
-	// qdel(existing)
 
 /mob/living/basic/blood_worm/proc/sync_health(already_ejecting = FALSE)
 	if (!host)
