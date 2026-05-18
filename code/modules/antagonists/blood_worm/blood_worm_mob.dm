@@ -290,7 +290,7 @@
 	target:regenerate_limb(BODY_ZONE_HEAD)
 	var/new_host_head = target:get_bodypart(BODY_ZONE_HEAD)
 	for(var/obj/item/organ/organ_to_trash in new_host_head:contents)
-		if(istype(organ_to_juggle, /obj/item/organ)
+		if(istype(organ_to_trash, /obj/item/organ))
 			organ_to_trash.Remove(target, special = TRUE)
 	// new_host_head_to_attach:try_attach_limb(target, special = TRUE)
 
