@@ -21,6 +21,7 @@
 /datum/sprite_accessory/blood_worm_head/default
 	name = "blood_worm_head"
 	icon = 'icons/mob/human/blood_worm_features.dmi'
+	icon_state = "blood_worm_head_overlay"
 
 
 /datum/bodypart_overlay/mutant/blood_worm_head
@@ -36,4 +37,4 @@
 
 /datum/bodypart_overlay/mutant/blood_worm_head/New()
 	. = ..()
-	set_appearance(/datum/sprite_accessory/blood_worm_head)
+	set_appearance_from_name("blood_worm_head")
