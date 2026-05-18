@@ -42,10 +42,6 @@
 	ADULT_BLOOD_WORM_HOST_TRAIT), // Used in code for recognizing blood worm hosts with a simple trait check.
 	BLOOD_WORM_HOST_TRAIT)
 
-	message_admins("AFTER: Host [key_name(host)] traits: [host._status_traits]")
-	// if(istype(src, /mob/living/basic/blood_worm/adult)) // istype or better to make ISADULTWORM() ??
-	// 	host.add_traits(ADULT_BLOOD_WORM_HOST_TRAIT) // adding worm head to host
-
 	if (client)
 		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
 

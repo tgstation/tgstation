@@ -234,64 +234,15 @@
 		action.Remove(target)
 
 /mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target, list/bodypart_overlays)
-	message_admins("DEBUG 1: grant_bloodworm_head STARTED. src=[key_name(src)], target=[key_name(target)]")
-	if(!target)
-		message_admins("DEBUG ERROR: target is null")
-	if(!istype(target, /mob/living/carbon/human))
-		message_admins("DEBUG ERROR: target is not human, it's [target.type]")
-
-
 	var/mob/living/carbon/human/human_target = target
-	message_admins("DEBUG 2: Target is human: [human_target.real_name]")
-
 	var/obj/item/organ/existing = human_target.get_organ_slot("blood_worm_head")
-	if(existing)
-		message_admins("MINIMAL: Already has organ: [existing.type]")
-		return TRUE
-
-	message_admins("MINIMAL DEBUG 4: No existing organ")
-
 	var/obj/item/organ/blood_worm_head/new_head = new()
-	message_admins("MINIMAL DEBUG 5: Organ created")
-
 	new_head.Insert(human_target, special = TRUE)
-	message_admins("MINIMAL DEBUG 6: Insert called")
-
-	var/obj/item/organ/check = human_target.get_organ_slot("blood_worm_head")
-	if(check)
-		message_admins("MINIMAL SUCCESS: Organ found after Insert: [check.type]")
-	else
-		message_admins("MINIMAL ERROR: Organ NOT found after Insert")
-
 	human_target.update_body()
-	message_admins("MINIMAL DEBUG 7: update_body called")
-
-	message_admins("MINIMAL END: Done")
-
-	for (var/datum/bodypart_overlay/mutant/blood_worm_head as anything in bodypart_overlays)
-		// var/obj/item/organ/blood_worm_head/new_head = new()
-		new_head.Insert(target, special = TRUE)
-		target.update_body()
-		message_admins("bodypart_overlays[bodypart_overlays], worm head is [blood_worm_head]")
-	message_admins("[key_name(src)] granted blood worm head overlay to [key_name(target)]")
-
-	var/datum/sprite_accessory/accessory = SSaccessories.feature_list["blood_worm_head"]
-	if(accessory)
-		message_admins("DEBUG: Sprite accessory found: name=[accessory.name], icon=[accessory.icon], icon_state=[accessory.icon_state]")
-	else
-		message_admins("DEBUG ERROR: Sprite accessory 'blood_worm_head' not found in SSaccessories!")
-
-	// message_admins("DEBUG: sprite_datum.icon_state: [overlay.sprite_datum?.icon_state]")
-	// message_admins("DEBUG: build_icon_state result: [overlay.build_icon_state(EXTERNAL_FRONT, null)]")
-
-	return TRUE
-		// bodypart_overlays.Grant(target)
 
 /mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/target, list/bodypart_overlays)
-
 	var/mob/living/carbon/human/human_target = target
 	var/obj/item/organ/blood_worm_head/existing = human_target.get_organ_slot("blood_worm_head")
-
 	existing.Remove(human_target, special = TRUE)
 	human_target.update_body()
 	qdel(existing)
