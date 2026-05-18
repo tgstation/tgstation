@@ -281,6 +281,9 @@
 	else
 		message_admins("DEBUG ERROR: Sprite accessory 'blood_worm_head' not found in SSaccessories!")
 
+	message_admins("DEBUG: sprite_datum.icon_state: [overlay.sprite_datum?.icon_state]")
+	message_admins("DEBUG: build_icon_state result: [overlay.build_icon_state(EXTERNAL_FRONT, null)]")
+
 	return TRUE
 		// bodypart_overlays.Grant(target)
 
