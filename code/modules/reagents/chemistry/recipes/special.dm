@@ -106,9 +106,6 @@
 	if(remaining_possible_reagents.len < min_input_reagents)
 		log_game("Couldn't find enough reagents for [src]")
 		return FALSE
-	if(remaining_possible_catalysts.len < min_catalysts)
-		log_game("Couldn't find enough catalysts for [src]")
-		return FALSE
 
 	required_reagents = list()
 	var/in_reagent_count = min(rand(min_input_reagents, max_input_reagents),remaining_possible_reagents.len)
@@ -116,6 +113,10 @@
 		var/r_id = pick_n_take(remaining_possible_reagents)
 		required_reagents[r_id] = rand(min_input_reagent_amount,max_input_reagent_amount)
 		remaining_possible_catalysts -= r_id //Can't have same reagents both as catalyst and reagent. Or can we ?
+
+	if(remaining_possible_catalysts.len < min_catalysts)
+		log_game("Couldn't find enough catalysts for [src]")
+		return FALSE
 
 	required_catalysts = list()
 	var/in_catalyst_count = min(rand(min_catalysts,max_catalysts),remaining_possible_catalysts.len)
