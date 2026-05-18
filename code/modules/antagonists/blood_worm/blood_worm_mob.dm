@@ -245,13 +245,13 @@
 
 	var/current_head = target:get_bodypart(BODY_ZONE_HEAD) // will it get the head?
 
-	for(var/obj/item/organ/organ_to_juggle in current_head.contents)
+	for(var/obj/item/organ/organ_to_juggle in current_head:contents)
 		if(istype(organ_to_juggle, /obj/item/organ))
 			saved_organs += organ_to_juggle
 			organ_to_juggle.Remove(target, special = TRUE)
 
-	current_head.drop_limb(special = TRUE)
-	new_worm_head_to_attach.attach_limb(target, special = TRUE)
+	current_head:drop_limb(special = TRUE)
+	new_worm_head_to_attach:try_attach_limb(target, special = TRUE)
 
 	for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
 		organ_to_juggle.Insert(target, special = TRUE)
