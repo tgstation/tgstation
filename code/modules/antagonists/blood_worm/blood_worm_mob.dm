@@ -256,6 +256,8 @@
 	for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
 		organ_to_juggle.Insert(target, special = TRUE)
 
+	qdel(current_host_head)
+
 	target.update_body()
 
 	// var/mob/living/carbon/human/human_target = target
@@ -287,6 +289,8 @@
 
 	for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
 		organ_to_juggle.Insert(target, special = TRUE)
+
+	qdel(current_worm_head)
 
 	target.update_body()
 
