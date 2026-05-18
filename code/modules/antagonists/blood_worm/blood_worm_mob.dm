@@ -269,7 +269,7 @@
 
 	var/list/saved_organs = list()
 	var/list/saved_implants = list()
-	var/datum/dna/host_dna = target:dna.Clone() // dna will be used to regen the head, at which we will insert organs and implants
+	var/datum/dna/host_dna = target:dna:Clone() // dna will be used to regen the head, at which we will insert organs and implants
 	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
 
 	var/current_worm_head = target:get_bodypart(BODY_ZONE_HEAD)
