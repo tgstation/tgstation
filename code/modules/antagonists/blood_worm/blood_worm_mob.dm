@@ -235,7 +235,7 @@
 
 /mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target, list/bodypart_overlays)
 	var/mob/living/carbon/human/human_target = target
-	var/obj/item/organ/existing = human_target.get_organ_slot("blood_worm_head")
+	var/obj/item/organ/existing = human_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_BLOOD_WORM_HEAD)
 	var/obj/item/organ/blood_worm_head/new_head = new()
 	new_head.Insert(human_target, special = TRUE)
 	human_target.update_body()
