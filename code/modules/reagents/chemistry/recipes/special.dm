@@ -46,7 +46,6 @@
 		if(!generate_recipe())
 			log_game("Couldn't generate recipe for [src]")
 			qdel(src)
-			return
 
 
 /datum/chemical_reaction/randomized/proc/load_recipe(recipe_data)
