@@ -4,8 +4,8 @@
 	icon_state = "vileworm"
 	icon_living = "vileworm"
 	icon_dead = "vileworm_dead"
-	maxHealth = 170
-	health = 170
+	maxHealth = 175
+	health = 175
 
 	attack_action_path = /datum/action/cooldown/mob_cooldown/bileworm_spew/corrupt
 	evolve_path = null
