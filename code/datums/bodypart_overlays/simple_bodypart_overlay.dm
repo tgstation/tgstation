@@ -38,4 +38,4 @@
 
 /datum/bodypart_overlay/simple/growth_blood_worm_head
 	icon_state = "blood_worm_head_grow_anim"
-	layers = EXTERNAL_FRONT
+	layers = ALL_EXTERNAL_OVERLAYS
