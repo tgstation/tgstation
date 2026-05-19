@@ -107,12 +107,13 @@
 
 /turf/closed/wall/proc/make_hole(atom/dir)
 	// getting turf before and after, where we then will place the holes
-	var/before_turf = get_turf(src, turn(dir, 180))
-	var/next_turf = get_turf(src, dir)
+	var/direction = dir
+	var/before_turf = get_turf(src, turn(direction, 180))
+	var/next_turf = get_turf(src, direction)
 
 	// cursed way to get the dir text
 	var/dir_text
-	switch(dir)
+	switch(direction)
 		if(NORTH) dir_text = "north"
 		if(SOUTH) dir_text = "south"
 		if(WEST) dir_text = "west"
