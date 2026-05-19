@@ -115,10 +115,10 @@
 	var/dir_text_enter
 	var/dir_text_exit
 	switch(direction)
-		if(NORTH) dir_text_enter = "north" dir_text_exit = "south"
-		if(SOUTH) dir_text_enter = "south" dir_text_exit = "north"
-		if(WEST) dir_text_enter = "west" dir_text_exit = "east"
-		if(EAST) dir_text_enter = "east" dir_text_exit = "west"
+		if(NORTH) dir_text_enter = "north", dir_text_exit = "south"
+		if(SOUTH) dir_text_enter = "south", dir_text_exit = "north"
+		if(WEST) dir_text_enter = "west", dir_text_exit = "east"
+		if(EAST) dir_text_enter = "east", dir_text_exit = "west"
 		else return
 
 	var/enter_hole = text2path("/obj/structure/wall_hole/directional/[dir_text_enter]")
