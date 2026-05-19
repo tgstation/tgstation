@@ -323,3 +323,16 @@
       capitalized properly.
   timothymtorres:
   - map: Add human limbs to the holodeck medsim organ crate
+2026-05-19:
+  ArcaneMusic:
+  - bugfix: Hydroponics trays will no longer produce pollen particles if the plant
+      in the tray has died.
+  - bugfix: Restocking a vending machine can no longer produce a zero credit holochip.
+  SmArtKar:
+  - bugfix: Fixed changeling tentacles not being able to fire
+  - bugfix: Pre-equipped shaft miners and handyman assistants now start with imprinted
+      PDAs like the rest of the job outfits.
+  TheRyeGuyWhoWillNowDie:
+  - map: fixed active turfs on shoe factory ruin
+  Wisemonster:
+  - rscadd: Added beartraps to the janitor closets of wawastation and icebox
