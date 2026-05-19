@@ -38,12 +38,12 @@
 	increase_stage()
 
 /// Play a fun animation and make our wall look damaged
-/datum/component/torn_wall/torn_wall_hole/proc/apply_visuals()
-	. = ..()
-	var/atom/atom_parent = parent
-	playsound(atom_parent, 'sound/effects/bang.ogg', 50, vary = TRUE)
-	atom_parent.update_appearance(UPDATE_ICON)
-	atom_parent.Shake(shake_interval = 0.1 SECONDS, duration = 0.5 SECONDS)
+// /datum/component/torn_wall/torn_wall_hole/proc/apply_visuals()
+// 	. = ..()
+// 	var/atom/atom_parent = parent
+// 	playsound(atom_parent, 'sound/effects/bang.ogg', 50, vary = TRUE)
+// 	atom_parent.update_appearance(UPDATE_ICON)
+// 	atom_parent.Shake(shake_interval = 0.1 SECONDS, duration = 0.5 SECONDS)
 
 /// Make the effect more dramatic
 /datum/component/torn_wall/torn_wall_hole/proc/increase_stage()
@@ -97,10 +97,10 @@
 // 	overlays += crack
 
 /// If the wall becomes any other turf, delete us. Transforming into a different works fine as a fix.
-/datum/component/torn_wall/torn_wall_hole/proc/on_turf_changed()
-	. = ..()
-	SIGNAL_HANDLER
-	qdel(src)
+// /datum/component/torn_wall/torn_wall_hole/proc/on_turf_changed()
+// 	. = ..()
+// 	SIGNAL_HANDLER
+// 	qdel(src)
 
 #undef TORN_WALL_HOLED
 #undef TORN_WALL_DAMAGED
