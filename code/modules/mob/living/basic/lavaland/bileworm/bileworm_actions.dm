@@ -78,6 +78,8 @@
 	REMOVE_TRAIT(burrower, TRAIT_GODMODE, REF(src))
 	burrower.RemoveInvisibility(type)
 
+#undef BILEWORM_JUMP_FRAMES
+
 /datum/action/cooldown/mob_cooldown/resurface/proc/burrow_again(mob/living/burrower, atom/target)
 	if (!QDELETED(burrower) && !burrower.stat)
 		// Burrow immediatelly after being stunned out of the first jump to avoid chainstuns
