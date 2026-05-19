@@ -592,7 +592,8 @@
 /datum/status_effect/heretic_passive/rust
 	name = "Leeching Walk"
 	id = "rust_passive"
-	recharge_description = "Recharge spells by rusting tiles."
+	recharge_description = "Recharge spells by a rusting a large number of tiles. \
+		(Rusting from items and summons are not counted.)"
 	passive_descriptions = list(
 		"Standing on Rusted tiles heals and purge chems off your body.",
 		"Standing on Rusted tiles closes up your wounds and heals your organs, you may now rust reinforced floors and walls, healing effect increased.",
