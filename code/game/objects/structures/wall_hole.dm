@@ -5,42 +5,24 @@
 	icon_state = "hole_worm_ver5_south"
 	anchored = TRUE
 	density = FALSE
-	// layer = SIGN_LAYER // why?
-	// plane = GAME_PLANE // wtf is that
-	// opacity = FALSE // maybe
-	// flags_1 = ON_BORDER_1
 
 	MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 29)
-
-// /obj/structure/wall_hole/Initialize(mapload)
-// 	. = ..()
-// 	set_opacity(FALSE)
-
-
-
-// /obj/structure/wall_hole/directional/north
-// 	icon_state = "hole_worm_ver5_north"
-// 	dir = NORTH
 
 /obj/structure/wall_hole/directional/north/Initialize(mapload)
 	. = ..()
 	icon_state = "hole_worm_ver5_south"
 
-// /obj/structure/wall_hole/directional/south
-// 	icon_state = "hole_worm_ver5_south"
-// 	dir = SOUTH
+/obj/structure/wall_hole/directional/south/Initialize(mapload)
+	. = ..()
+	icon_state = "hole_worm_ver5_north"
 
-// /obj/structure/wall_hole/directional/west
-// 	icon_state = "hole_worm_ver5_west"
-// 	dir = WEST
+/obj/structure/wall_hole/directional/west/Initialize(mapload)
+	. = ..()
+	icon_state = "hole_worm_ver5_east"
 
-// /obj/structure/wall_hole/directional/east
-// 	icon_state = "hole_worm_ver5_east"
-// 	dir = EAST
-
-// /obj/structure/wall_hole/update_icon_state()
-// 	icon_state = "hole_worm_ver5_[dir2text(dir)]"
-// 	return ..()
+/obj/structure/wall_hole/directional/east/Initialize(mapload)
+	. = ..()
+	icon_state = "hole_worm_ver5_west"
 
 /obj/structure/wall_hole/attack_hand(mob/user, list/modifiers)
 	. = ..()
