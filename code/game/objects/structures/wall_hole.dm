@@ -8,21 +8,27 @@
 
 /obj/structure/wall_hole/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
-		return
-	if(iscyborg(user) || isalien(user))
-		return
-	if(stored_extinguisher)
-		user.put_in_hands(stored_extinguisher)
-		user.balloon_alert(user, "extinguisher removed")
-		if(!opened)
-			opened = 1
-			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
-			update_appearance(UPDATE_ICON)
-	else
-		crawl_through_hole(user)
+	// if(.)
+	// 	return
+	// if(iscyborg(user) || isalien(user))
+	// 	return
+	// if(stored_extinguisher)
+	// 	user.put_in_hands(stored_extinguisher)
+	// 	user.balloon_alert(user, "extinguisher removed")
+	// 	if(!opened)
+	// 		opened = 1
+	// 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
+	// 		update_appearance(UPDATE_ICON)
+	// else
+	crawl_through_hole(user)
 
-/obj/structure/extinguisher_cabinet/proc/crawl_through_hole(mob/user)
+/obj/structure/wall_hole/proc/crawl_through_hole(mob/user)
+	var/mob/living/L = user
+
+	var/destination = get_step(get_turf(L), NORTH)
+
+	L.forceMove(destination)
+
 	// if(opened && broken)
 	// 	user.balloon_alert(user, "it's broken!")
 	// else
