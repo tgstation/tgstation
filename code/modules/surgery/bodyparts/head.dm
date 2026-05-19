@@ -300,4 +300,7 @@
 		offset_y = list("south" = 0),
 	)
 
+	growth_overlay = new /datum/bodypart_overlay/simple/growth_blood_worm_head()
+	add_bodypart_overlay(growth_overlay, update = FALSE)
+
 
