@@ -86,8 +86,6 @@
 	var/list/innate_actions = list()
 	/// List of actions inside of a host.
 	var/list/host_actions = list()
-	// List of bodyparts of host, while inside host(only for adult worm)
-	var/list/blood_worm_bodyparts = list()
 
 	/// Whether the blood worm has a host AND is currently in control of that host.
 	var/is_possessing_host = FALSE
