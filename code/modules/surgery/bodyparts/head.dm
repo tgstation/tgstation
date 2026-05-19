@@ -300,7 +300,7 @@
 		offset_y = list("south" = 0),
 	)
 
-/obj/item/bodypart/head/blood_worm/growth_animation()
+/obj/item/bodypart/head/blood_worm_head_growth_animation()
 	var/growth_overlay = new /datum/bodypart_overlay/simple/growth_blood_worm_head
 	add_bodypart_overlay(growth_overlay, update = FALSE)
 

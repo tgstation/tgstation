@@ -237,7 +237,8 @@
 // so its must be the same content, which is collected and then inserted
 /mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target)
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
-	new_worm_head_to_attach:growth_animation()
+	var/current_host_head = target:get_bodypart(BODY_ZONE_HEAD)
+	current_host_head:growth_animation()
 	new_worm_head_to_attach.replace_limb(target, TRUE)
 	target.update_body()
 
