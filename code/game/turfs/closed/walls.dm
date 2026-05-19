@@ -105,6 +105,8 @@
 		ScrapeAway()
 	QUEUE_SMOOTH_NEIGHBORS(src)
 
+/turf/closed/wall/proc/make_hole()
+
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)
 	if(girder_type)

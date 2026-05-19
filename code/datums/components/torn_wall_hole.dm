@@ -1,19 +1,17 @@
 
-#define TORN_WALL_RUINED 2
+#define TORN_WALL_HOLE 2
 #define TORN_WALL_DAMAGED 1
 #define TORN_WALL_INITIAL 0
 
 /**
- * Component applied to a wall to progressively destroy it.
+ * Component(which is child of /datum/component/torn_wall) applied to a wall to make a hole in it.
  * If component is applied to something which already has it, stage increases.
- * Wall is destroyed on third application.
+ * Wall will get the hole on third application.
  * Can be fixed using a welder
  */
-/datum/component/torn_wall
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	var/current_stage = TORN_WALL_INITIAL
+/datum/component/torn_wall/torn_wall_hole
 
-/datum/component/torn_wall/Initialize(current_stage)
+/datum/component/torn_wall/torn_wall_hole/Initialize(current_stage)
 	. = ..()
 	if (!isclosedturf(parent) || isindestructiblewall(parent))
 		return COMPONENT_INCOMPATIBLE
