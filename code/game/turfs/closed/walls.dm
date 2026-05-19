@@ -116,7 +116,7 @@
 		if(NORTH) dir_text = "north"
 		if(SOUTH) dir_text = "south"
 		if(WEST) dir_text = "west"
-		if(NORTH) dir_text = "east"
+		if(EAST) dir_text = "east"
 
 	new text2path("/obj/structure/wall_hole/directional/[dir_text]")(before_turf)
 	new text2path("/obj/structure/wall_hole/directional/[dir_text]")(next_turf)
