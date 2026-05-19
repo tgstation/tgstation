@@ -126,17 +126,23 @@
 	for (var/i in 1 to additional_shots)
 		if (!length(all_dirs))
 			return
+
 		SLEEP_CHECK_DEATH(shot_delay, firer)
 		if (hit_turf != target.loc)
-			all_dirs = GLOB.alldirs.Copy() // Refresh potential target turfs if they've moved
+			all_dirs = list(NONE) + GLOB.alldirs // Refresh potential target turfs if they've moved
+
 		var/turf/target_turf = null
 		// NODE drones get a much more focused barrage sent at them
 		if (istype(target, /mob/living/basic/node_drone) && prob(30))
 			target_turf = get_turf(target)
 		else
-			target_turf = get_step(target, pick_n_take(all_dirs))
+			var/target_dir = pick_n_take(all_dirs)
+			target_turf = target_dir ? get_step(target, target_dir) : get_turf(target)
+
 		if (target_turf == firer.loc) // Don't hit ourselves
-			target_turf = get_step(target, pick_n_take(all_dirs))
+			var/target_dir = pick_n_take(all_dirs)
+			target_turf = target_dir ? get_step(target, target_dir) : get_turf(target)
+
 		new acid_type(firer, target_turf)
 		if (i % 2 == 0)
 			playsound(firer, projectile_sound, 70)
