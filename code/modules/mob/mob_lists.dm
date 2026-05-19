@@ -66,7 +66,9 @@
 ///Adds the cliented mob reference to either the list of dead player-mobs or to the list of observers, depending on how they joined the game.
 /mob/proc/add_to_current_dead_players()
 	GLOB.dead_player_list |= src
-	if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client.holder)
+	if(!SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] || client.holder)
+		GLOB.keyloop_list |= src
+	else
 		GLOB.keyloop_list -= src
 
 /mob/dead/observer/add_to_current_dead_players()

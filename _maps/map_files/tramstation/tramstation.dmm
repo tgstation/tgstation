@@ -7529,6 +7529,9 @@
 	pixel_x = -5
 	},
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 9
+	},
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "bEo" = (
@@ -12215,6 +12218,9 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
+"ddt" = (
+/turf/closed/wall/r_wall,
+/area/station/science/genetics)
 "ddB" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -12876,6 +12882,11 @@
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "dpB" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "genetics_shutters";
+	name = "Genetics Shutters"
+	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/genetics)
@@ -33938,17 +33949,13 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "kNk" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/south{
-	name = "Genetics Lab Desk";
-	req_access = list("science")
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "genetics_shutters";
+	name = "Genetics Shutters"
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
-/obj/effect/turf_decal/tile/dark_green/fourcorners,
-/turf/open/floor/iron/white/side,
+/turf/open/floor/plating,
 /area/station/science/genetics)
 "kNn" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -35541,6 +35548,20 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"loD" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/dark_green/fourcorners,
+/obj/machinery/door/airlock/research/glass{
+	name = "Genetics Lab"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "genetics_shutters";
+	name = "Genetics Shutters"
+	},
+/turf/open/floor/iron/white/side,
+/area/station/science/genetics)
 "loF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/ai_slipper{
@@ -48006,6 +48027,24 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
+"pNO" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/south{
+	name = "Genetics Lab Desk";
+	req_access = list("science")
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/obj/effect/turf_decal/tile/dark_green/fourcorners,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "genetics_shutters";
+	name = "Genetics Shutters"
+	},
+/turf/open/floor/iron/white/side,
+/area/station/science/genetics)
 "pOg" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -52741,14 +52780,14 @@
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
 "rws" = (
-/obj/structure/table/glass,
-/obj/item/storage/box/monkeycubes{
-	pixel_x = -5
-	},
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = 9
-	},
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
+/obj/machinery/button/door/directional/east{
+	id = "genetics_shutters";
+	name = "Genetics Shutters";
+	pixel_y = 0;
+	req_access = list("genetics");
+	pixel_x = 23
+	},
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "rwF" = (
@@ -66349,6 +66388,9 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -5
+	},
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "wcy" = (
@@ -70858,9 +70900,6 @@
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/eighties,
 /area/station/commons/fitness/recreation/entertainment)
-"xNT" = (
-/turf/closed/wall/r_wall,
-/area/station/science/genetics)
 "xNW" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -120446,7 +120485,7 @@ aaa
 aaa
 aaa
 sQZ
-mtI
+sQZ
 fGK
 bwU
 vEl
@@ -185465,13 +185504,13 @@ tXz
 tXz
 tiG
 wfv
-xNT
-xNT
-xNT
-xNT
-xNT
-xNT
-kvt
+ddt
+ddt
+ddt
+ddt
+ddt
+ddt
+ddt
 dpB
 nZO
 kvt
@@ -185723,7 +185762,7 @@ tXz
 hmd
 bHb
 sed
-dpB
+pNO
 vpp
 gel
 wcw
@@ -186237,7 +186276,7 @@ gAQ
 eoX
 fyc
 vwD
-dpB
+loD
 iqM
 nzk
 rle
@@ -186493,8 +186532,8 @@ sJZ
 tXz
 fEd
 qpZ
-xNT
-xNT
+ddt
+ddt
 doH
 xNH
 nhP
@@ -186751,7 +186790,7 @@ tXz
 tiG
 fZS
 xgJ
-xNT
+ddt
 kTI
 nFn
 oPg
@@ -187008,16 +187047,16 @@ tJh
 lQm
 fZS
 pdn
-xNT
+ddt
 kNM
 ktg
 bDB
-xNT
+ddt
 kNM
 ktg
 rws
-xNT
-xNT
+ddt
+ddt
 syv
 aKO
 efB
@@ -187265,15 +187304,15 @@ qbp
 geG
 xdF
 lCy
-xNT
-xNT
-xNT
-xNT
-xNT
-xNT
-xNT
-xNT
-xNT
+ddt
+ddt
+ddt
+ddt
+ddt
+ddt
+ddt
+ddt
+ddt
 aaa
 syv
 syv
