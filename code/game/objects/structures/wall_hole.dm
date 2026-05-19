@@ -6,6 +6,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = SIGN_LAYER // why?
+	flags_1 = ON_BORDER_1
 
 // MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 29)
 
