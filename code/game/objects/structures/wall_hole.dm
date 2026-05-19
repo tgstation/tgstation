@@ -5,9 +5,9 @@
 	icon_state = "hole_worm_ver5"
 	anchored = TRUE
 	density = FALSE
-	layer = SIGN_LAYER
+	layer = SIGN_LAYER // why?
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 29)
 
 /obj/structure/wall_hole/attack_hand(mob/user, list/modifiers)
 	. = ..()
