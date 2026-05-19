@@ -2,12 +2,16 @@
 	name = "bloody hole at wall"
 	desc = "A wall at wall with bloody acid."
 	icon = 'icons/obj/wall_holes.dmi'
-	icon_state = "hole_worm_ver5"
+	icon_state = "hole_worm_ver5_south"
 	anchored = TRUE
 	density = FALSE
 	layer = SIGN_LAYER // why?
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 29)
+
+/obj/structure/wall_hole/update_icon_state()
+	icon_state = "hole_worm_ver5_[dir2text(dir)]"
+	return ..()
 
 /obj/structure/wall_hole/attack_hand(mob/user, list/modifiers)
 	. = ..()
