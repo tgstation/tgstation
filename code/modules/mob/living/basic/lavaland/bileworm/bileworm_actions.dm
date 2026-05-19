@@ -213,7 +213,7 @@
 
 		// Doesn't make much sense to use melee for mobs, but its a mining mob so eeeeeh
 		// Can't use acid either as its mostly for atom armor only
-		var/blocked = victim.run_armor_check(null, MELEE, silent = TRUE)
+		var/blocked = victim.run_armor_check(null, MELEE, armour_penetration = 40, silent = TRUE)
 		if (blocked >= 100)
 			continue
 
