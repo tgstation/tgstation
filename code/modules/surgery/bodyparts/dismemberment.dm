@@ -251,7 +251,7 @@
 		old_limb?.try_attach_limb(limb_owner, TRUE)
 		return FALSE
 
-	if(delete_old_limb && old_limb $$ !QDELETED(old_limb))
+	if(delete_old_limb && old_limb && !QDELETED(old_limb))
 		qdel(old_limb)
 	return TRUE
 

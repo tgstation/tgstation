@@ -238,28 +238,8 @@
 // all organs\content from the head must be saved with their state(damage or another vars)
 // so its must be the same content, which is collected and then inserted
 /mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target, list/bodypart_overlays)
-
-	var/list/saved_organs = list()
-	var/list/saved_implants = list()
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
-
-	// var/current_host_head = target:get_bodypart(BODY_ZONE_HEAD) // will it get the head?
-
-	new_worm_head_to_attach.replace_limb(target)
-
-	// for(var/obj/item/organ/organ_to_juggle in current_host_head:contents)
-	// 	if(istype(organ_to_juggle, /obj/item/organ))
-	// 		saved_organs += organ_to_juggle
-	// 		organ_to_juggle.Remove(target, special = TRUE)
-
-	// current_host_head:drop_limb(special = TRUE)
-	// new_worm_head_to_attach:try_attach_limb(target, special = TRUE)
-
-	// for(var/obj/item/organ/organ_to_juggle in saved_organs) // inserting at worm head
-	// 	organ_to_juggle.Insert(target, special = TRUE)
-
-	// qdel(current_host_head)
-
+	new_worm_head_to_attach.replace_limb(target, TRUE)
 	target.update_body()
 
 /mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/target, list/bodypart_overlays)
