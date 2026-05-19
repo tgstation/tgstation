@@ -6,7 +6,7 @@
 	// anchored = TRUE
 	// density = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 0)
 
 /obj/structure/wall_hole/attack_hand(mob/user, list/modifiers)
 	. = ..()
