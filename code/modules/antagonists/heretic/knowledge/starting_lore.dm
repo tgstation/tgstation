@@ -192,39 +192,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	return TRUE
 
-/datum/heretic_knowledge/spell/cloak_of_shadows
-	name = "Cloak of Shadow"
-	desc = "Grants you the spell Cloak of Shadow.<br>\
-		This spell will completely conceal your identity in a purple smoke for three minutes, assisting you in keeping secrecy."
-	action_to_add = /datum/action/cooldown/spell/shadow_cloak
-	cost = 0
-	is_starting_knowledge = TRUE
-	max_charges = 6
-	path_recharge_amount = 0.0
-	focus_recharge_amount = 0.16
-	holywater_drain_amount = 0.16
-	transmute_text = "Charges will return every three minutes. Using the spell again will reset the timer."
-	/// Cooldown for when we can give a charge back
-	COOLDOWN_DECLARE(charge_time)
-
-/datum/heretic_knowledge/spell/cloak_of_shadows/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/datum/heretic_knowledge/spell/cloak_of_shadows/process(seconds_per_tick)
-	if(charges >= max_charges)
-		STOP_PROCESSING(SSobj, src)
-	else if(COOLDOWN_FINISHED(src, charge_time))
-		add_charges(1)
-		COOLDOWN_START(src, charge_time, 3 MINUTES)
-
-/datum/heretic_knowledge/spell/cloak_of_shadows/deduct_charge(mob/living/source, datum/action/the_spell)
-	. = ..()
-	if(charges >= max_charges)
-		return
-	START_PROCESSING(SSobj, src)
-	COOLDOWN_START(src, charge_time, 2 MINUTES)
-
 /datum/heretic_knowledge/feast_of_owls
 	name = "Feast of Owls"
 	desc = "Allows you to undergo a ritual that grants you five knowledge points, but locks you out of ascension."

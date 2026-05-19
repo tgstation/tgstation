@@ -69,8 +69,15 @@
 
 /datum/status_effect/heretic_passive/proc/recharge_spells()
 	owner.balloon_alert(owner, "spells recharged")
-	for(var/datum/heretic_knowledge/spell/spell in heretic_datum.get_researched_knowledge())
-		spell.add_charges(spell.max_charges * spell.path_recharge_amount, uncapped = spell.path_recharge_can_surpass_cap)
+	var/list/main_path_knowledge = heretic_datum.get_researched_knowledge_by_category(HERETIC_KNOWLEDGE_TREE) \
+		+ heretic_datum.get_researched_knowledge_by_category(HERETIC_KNOWLEDGE_START)
+	var/list/side_path_knowledge = heretic_datum.get_researched_knowledge_by_category(HERETIC_KNOWLEDGE_DRAFT) \
+		+ heretic_datum.get_researched_knowledge_by_category(HERETIC_KNOWLEDGE_SHOP)
+
+	for(var/datum/heretic_knowledge/spell/spell in main_path_knowledge)
+		spell.add_charges(ceil(spell.max_charges * spell.path_recharge_amount), uncapped = spell.path_recharge_can_surpass_cap)
+	for(var/datum/heretic_knowledge/spell/spell in side_path_knowledge)
+		spell.add_charges(ceil(spell.max_charges * spell.path_recharge_amount * 0.5))
 
 //---- Ash Passive
 // Level 1 grants heat and ash storm immunity

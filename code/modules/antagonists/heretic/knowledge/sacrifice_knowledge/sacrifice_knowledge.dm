@@ -563,7 +563,7 @@
 			composed_return_message += span_green("alive, but with a shattered mind. ")
 
 		composed_return_message += span_notice("You hear a whisper... ")
-		composed_return_message += span_hypnophrase(get_area_name(safe_turf, TRUE))
+		composed_return_message += span_mansus(get_area_name(safe_turf, TRUE))
 		to_chat(heretic_mind.current, composed_return_message)
 
 /**

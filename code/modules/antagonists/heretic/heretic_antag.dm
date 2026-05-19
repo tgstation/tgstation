@@ -756,7 +756,7 @@
 /datum/antagonist/heretic/proc/passive_influence_gain()
 	adjust_knowledge_points(1)
 	if(owner?.current?.stat <= SOFT_CRIT)
-		to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
+		to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_mansus(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer)
 
 /datum/antagonist/heretic/proc/adjust_knowledge_points(amount, update = TRUE)
@@ -1007,6 +1007,17 @@
 	for(var/knowledge_type in researched_knowledge)
 		knowledge_list += researched_knowledge[knowledge_type][HKT_INSTANCE]
 	return knowledge_list
+
+/**
+ * Get a list of all knowledge datums that we've researched in a specific category.
+ */
+/datum/antagonist/heretic/proc/get_researched_knowledge_by_category(category_type)
+	var/list/knowledge_list = list()
+	for(var/knowledge_type in researched_knowledge)
+		if(researched_knowledge[knowledge_type][HKT_CATEGORY] == category_type)
+			knowledge_list += researched_knowledge[knowledge_type][HKT_INSTANCE]
+	return knowledge_list
+
 
 /**
  * Check if the wanted type-path is in the list of research knowledge.

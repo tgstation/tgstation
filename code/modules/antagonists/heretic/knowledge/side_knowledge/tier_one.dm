@@ -286,3 +286,23 @@
 	for(var/obj/item/organ/eyes/eye in atoms)
 		if(!IS_ORGANIC_ORGAN(eye))
 			atoms -= eye
+
+/datum/heretic_knowledge/spell/cloak_of_shadows
+	name = "Cloak of Shadow"
+	desc = "Grants you the spell Cloak of Shadow.<br>\
+		This spell will completely conceal your identity in a purple smoke for three minutes, assisting you in keeping secrecy."
+	notice = "Can only be cast if you have a Living Heart."
+	action_to_add = /datum/action/cooldown/spell/shadow_cloak
+	cost = 1
+	drafting_tier = 1
+	max_charges = INFINITY
+	is_shop_only = TRUE // not actually but it's got special requirements
+
+/datum/heretic_knowledge/spell/cloak_of_shadows/spell_check(datum/action/the_spell, feedback)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(the_spell.owner)
+	if(heretic_datum?.has_living_heart())
+		return ..()
+
+	if(feedback)
+		to_chat(the_spell.owner, span_mansus("You need a Living Heart to cast [the_spell]!"))
+	return SPELL_CANCEL_CAST

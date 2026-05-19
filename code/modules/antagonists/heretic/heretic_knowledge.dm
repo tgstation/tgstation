@@ -205,9 +205,9 @@
 /datum/heretic_knowledge/spell
 	abstract_type = /datum/heretic_knowledge/spell
 	/// Spell path we add to the heretic. Type-path.
-	var/datum/action/action_to_add
+	var/datum/action/cooldown/spell/action_to_add
 	/// The spell we actually created.
-	VAR_FINAL/datum/action/created_action_ref
+	VAR_FINAL/datum/action/cooldown/spell/created_action_ref
 	/// Used to display charges on the spell's action button, if applicable.
 	VAR_FINAL/mutable_appearance/charge_maptext
 	/// Charge count
@@ -279,7 +279,7 @@
 	return TRUE
 
 /datum/heretic_knowledge/spell/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	add_charges(max_charges * recharge_amount)
+	add_charges(ceil(max_charges * recharge_amount))
 	return TRUE
 
 /datum/heretic_knowledge/spell/proc/action_update(datum/action/source, atom/movable/screen/movable/action_button/button, ...)
@@ -317,10 +317,10 @@
 		return NONE
 
 	if(feedback)
-		to_chat(the_spell.owner, span_mansus("You don't have enough charges to cast this spell! [transmute_text]"))
+		to_chat(the_spell.owner, span_mansus("You don't have enough charges to cast this spell!"))
 	return SPELL_CANCEL_CAST
 
-/datum/heretic_knowledge/spell/proc/check_charges(mob/living/source, datum/action/the_spell)
+/datum/heretic_knowledge/spell/proc/check_charges(mob/living/source, datum/action/cooldown/the_spell)
 	SIGNAL_HANDLER
 
 	if(the_spell != created_action_ref)
@@ -334,7 +334,7 @@
 	to_chat(source, span_mansus("You don't have enough charges to cast this spell! [transmute_text]"))
 	return SPELL_CANCEL_CAST
 
-/datum/heretic_knowledge/spell/proc/deduct_charge(mob/living/source, datum/action/the_spell)
+/datum/heretic_knowledge/spell/proc/deduct_charge(mob/living/source, datum/action/cooldown/the_spell)
 	SIGNAL_HANDLER
 
 	if(the_spell != created_action_ref)
@@ -366,6 +366,8 @@
 	var/pre_charge_value = charges
 	charges = max(charges - num, 0)
 	update_charge_counter()
+	if(charges <= 0 && created_action_ref.owner?.click_intercept == created_action_ref)
+		created_action_ref.unset_click_ability(created_action_ref.owner, refund_cooldown = FALSE)
 	return charges != pre_charge_value
 
 /datum/heretic_knowledge/spell/proc/update_charge_counter()

@@ -47,7 +47,7 @@
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/datum/heretic_knowledge/spell/basic/grasp_knowledge = heretic_datum.get_knowledge(__IMPLIED_TYPE__)
-	grasp_knowledge?.add_charges(grasp_knowledge.max_charges * 0.5)
+	grasp_knowledge?.add_charges(ceil(grasp_knowledge.max_charges * 0.5))
 
 /obj/item/codex_cicatrix/proc/close_book()
 	close_animation()

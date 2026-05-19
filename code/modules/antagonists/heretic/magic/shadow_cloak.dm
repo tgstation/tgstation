@@ -33,6 +33,9 @@
 		return FALSE
 	return isliving(cast_on)
 
+/datum/action/cooldown/spell/shadow_cloak/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	return !!active_cloak
+
 /datum/action/cooldown/spell/shadow_cloak/before_cast(mob/living/cast_on)
 	. = ..()
 	sound = pick(
@@ -49,7 +52,7 @@
 /datum/action/cooldown/spell/shadow_cloak/cast(mob/living/cast_on)
 	. = ..()
 	if(active_cloak)
-		var/new_cd = max((uncloak_time - timeleft(uncloak_timer)) / 3, cooldown_time)
+		var/new_cd = max((uncloak_time - timeleft(uncloak_timer)), cooldown_time)
 		uncloak_mob(cast_on)
 		StartCooldown(new_cd)
 
@@ -63,7 +66,7 @@
 		return
 
 	uncloak_mob(cast_on)
-	StartCooldown(uncloak_timer / 3)
+	StartCooldown(uncloak_timer)
 
 /datum/action/cooldown/spell/shadow_cloak/proc/cloak_mob(mob/living/cast_on)
 	playsound(cast_on, 'sound/effects/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
@@ -106,7 +109,7 @@
 	removed.Knockdown(0.5 SECONDS)
 	removed.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak/early_remove)
 	addtimer(CALLBACK(removed, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/shadow_cloak/early_remove), 2 MINUTES, TIMER_UNIQUE|TIMER_OVERRIDE)
-	StartCooldown(uncloak_time * 2/3)
+	StartCooldown(uncloak_time)
 
 /// Shadow cloak effect. Conceals the owner in a cloud of purple smoke, making them unidentifiable.
 /// Also comes with some other buffs and debuffs - faster movespeed, slower actionspeed, etc.
