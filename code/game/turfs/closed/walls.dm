@@ -105,7 +105,29 @@
 		ScrapeAway()
 	QUEUE_SMOOTH_NEIGHBORS(src)
 
-/turf/closed/wall/proc/make_hole()
+/turf/closed/wall/proc/make_hole(atom/dir)
+	// getting turf before and after, where we then will place the holes
+	var/before_turf = get_turf(src, turn(dir, 180))
+	var/next_turf = get_turf(src, dir)
+
+	// cursed way to get the dir text
+	var/dir_text
+	switch(dir)
+		if(NORTH) dir_text = "north"
+		if(SOUTH) dir_text = "south"
+		if(WEST) dir_text = "west"
+		if(NORTH) dir_text = "east"
+
+	new text2path("/obj/structure/wall_hole/directional/[dir_text]")(before_turf)
+	new text2path("/obj/structure/wall_hole/directional/[dir_text]")(next_turf)
+
+	// placing the holes from two sides of the wall
+	new /obj/structure/wall_hole/directional/{dir}(before_turf)
+	new /obj/structure/wall_hole/directional/{dir}(next_turf)
+
+// or maybe its better to make it just like(without vars)
+// new /obj/structure/wall_hole/directional/{dir}(get_turf(src, turn(dir, 180)))
+// new /obj/structure/wall_hole/directional/{dir}(get_turf(src, dir))
 
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)

@@ -5,24 +5,29 @@
 	icon_state = "hole_worm_ver5_south"
 	anchored = TRUE
 	density = FALSE
+	var/dir_text = "here the text of dir"
 
 	MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 29)
 
 /obj/structure/wall_hole/directional/north/Initialize(mapload)
 	. = ..()
 	icon_state = "hole_worm_ver5_south"
+	dir_text = "north"
 
 /obj/structure/wall_hole/directional/south/Initialize(mapload)
 	. = ..()
 	icon_state = "hole_worm_ver5_north"
+	dir_text = "south"
 
 /obj/structure/wall_hole/directional/west/Initialize(mapload)
 	. = ..()
 	icon_state = "hole_worm_ver5_east"
+	dir_text = "west"
 
 /obj/structure/wall_hole/directional/east/Initialize(mapload)
 	. = ..()
 	icon_state = "hole_worm_ver5_west"
+	dir_text = "east"
 
 /obj/structure/wall_hole/attack_hand(mob/user, list/modifiers)
 	. = ..()
