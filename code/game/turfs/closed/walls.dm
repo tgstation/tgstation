@@ -117,13 +117,14 @@
 		if(SOUTH) dir_text = "south"
 		if(WEST) dir_text = "west"
 		if(EAST) dir_text = "east"
+		else return
 
 	new text2path("/obj/structure/wall_hole/directional/[dir_text]")(before_turf)
 	new text2path("/obj/structure/wall_hole/directional/[dir_text]")(next_turf)
 
 	// placing the holes from two sides of the wall
-	new /obj/structure/wall_hole/directional/{dir}(before_turf)
-	new /obj/structure/wall_hole/directional/{dir}(next_turf)
+	// new /obj/structure/wall_hole/directional/{dir}(before_turf)
+	// new /obj/structure/wall_hole/directional/{dir}(next_turf)
 
 // or maybe its better to make it just like(without vars)
 // new /obj/structure/wall_hole/directional/{dir}(get_turf(src, turn(dir, 180)))
