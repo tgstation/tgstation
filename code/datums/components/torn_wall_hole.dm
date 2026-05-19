@@ -39,6 +39,7 @@
 
 /// Play a fun animation and make our wall look damaged
 /datum/component/torn_wall/torn_wall_hole/proc/apply_visuals()
+	. = ..()
 	var/atom/atom_parent = parent
 	playsound(atom_parent, 'sound/effects/bang.ogg', 50, vary = TRUE)
 	atom_parent.update_appearance(UPDATE_ICON)
@@ -46,6 +47,7 @@
 
 /// Make the effect more dramatic
 /datum/component/torn_wall/torn_wall_hole/proc/increase_stage()
+	. = ..()
 	current_stage++
 	if (current_stage != TORN_WALL_HOLED)
 		apply_visuals()
@@ -96,6 +98,7 @@
 
 /// If the wall becomes any other turf, delete us. Transforming into a different works fine as a fix.
 /datum/component/torn_wall/torn_wall_hole/proc/on_turf_changed()
+	. = ..()
 	SIGNAL_HANDLER
 	qdel(src)
 
