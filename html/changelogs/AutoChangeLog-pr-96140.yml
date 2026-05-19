@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Pre-equipped shaft miners and handyman assistants now start with imprinted PDAs like the rest of the job outfits."
