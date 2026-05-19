@@ -24,8 +24,8 @@
 
 /obj/structure/wall_hole/proc/crawl_through_hole(mob/user)
 	var/mob/living/L = user
-	var/hole_turf = get_step(get_turf(L), L.dir)
-	var/exit_hole_turf = get_step(get_turf(L), L.dir)
+	var/hole_iself_turf = get_step(get_turf(L), L.dir)
+	var/exit_hole_turf = get_step(hole_iself_turf, L.dir)
 
 	L.forceMove(exit_hole_turf)
 
