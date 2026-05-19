@@ -38,7 +38,7 @@
 	increase_stage()
 
 /// Play a fun animation and make our wall look damaged
-/datum/component/torn_wall/proc/apply_visuals()
+/datum/component/torn_wall/torn_wall_hole/proc/apply_visuals()
 	var/atom/atom_parent = parent
 	playsound(atom_parent, 'sound/effects/bang.ogg', 50, vary = TRUE)
 	atom_parent.update_appearance(UPDATE_ICON)
@@ -61,41 +61,41 @@
 	attached_wall.make_hole(dir = 1)
 
 /// Fix it up on weld
-/datum/component/torn_wall/proc/on_welded(atom/source, mob/user, obj/item/tool)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(try_repair), source, user, tool)
-	return ITEM_INTERACT_BLOCKING
+// /datum/component/torn_wall/proc/on_welded(atom/source, mob/user, obj/item/tool)
+// 	SIGNAL_HANDLER
+// 	INVOKE_ASYNC(src, PROC_REF(try_repair), source, user, tool)
+// 	return ITEM_INTERACT_BLOCKING
 
 /// Fix us up
-/datum/component/torn_wall/proc/try_repair(atom/source, mob/user, obj/item/tool)
-	source.balloon_alert(user, "repairing...")
-	if(!tool.use_tool(source, user, 5 SECONDS, amount = 2, volume = 50))
-		source.balloon_alert(user, "interrupted!")
-		return
-	current_stage--
-	if (current_stage < TORN_WALL_INITIAL)
-		qdel(src)
-		return
-	source.update_appearance(UPDATE_ICON)
-	try_repair(source, user, tool) // Keep going
+// /datum/component/torn_wall/proc/try_repair(atom/source, mob/user, obj/item/tool)
+// 	source.balloon_alert(user, "repairing...")
+// 	if(!tool.use_tool(source, user, 5 SECONDS, amount = 2, volume = 50))
+// 		source.balloon_alert(user, "interrupted!")
+// 		return
+// 	current_stage--
+// 	if (current_stage < TORN_WALL_INITIAL)
+// 		qdel(src)
+// 		return
+// 	source.update_appearance(UPDATE_ICON)
+// 	try_repair(source, user, tool) // Keep going
 
 /// Give them a hint
-/datum/component/torn_wall/proc/on_examined(atom/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-	var/intensity = (current_stage == TORN_WALL_INITIAL) ? "slightly" : "badly"
-	examine_list += span_notice("It looks [intensity] damaged.")
-	examine_list += span_info("You may be able to repair it using a welding tool.")
+// /datum/component/torn_wall/proc/on_examined(atom/source, mob/user, list/examine_list)
+// 	SIGNAL_HANDLER
+// 	var/intensity = (current_stage == TORN_WALL_INITIAL) ? "slightly" : "badly"
+// 	examine_list += span_notice("It looks [intensity] damaged.")
+// 	examine_list += span_info("You may be able to repair it using a welding tool.")
 
 /// Show a little crack on here
-/datum/component/torn_wall/proc/on_update_overlays(turf/source, list/overlays)
-	SIGNAL_HANDLER
-	var/mutable_appearance/crack = mutable_appearance('icons/turf/overlays.dmi', "explodable", source.layer + 0.1)
-	if (current_stage == TORN_WALL_INITIAL)
-		crack.alpha *= 0.5
-	overlays += crack
+// /datum/component/torn_wall/proc/on_update_overlays(turf/source, list/overlays)
+// 	SIGNAL_HANDLER
+// 	var/mutable_appearance/crack = mutable_appearance('icons/turf/overlays.dmi', "explodable", source.layer + 0.1)
+// 	if (current_stage == TORN_WALL_INITIAL)
+// 		crack.alpha *= 0.5
+// 	overlays += crack
 
 /// If the wall becomes any other turf, delete us. Transforming into a different works fine as a fix.
-/datum/component/torn_wall/proc/on_turf_changed()
+/datum/component/torn_wall/torn_wall_hole/proc/on_turf_changed()
 	SIGNAL_HANDLER
 	qdel(src)
 
