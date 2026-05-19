@@ -53,7 +53,7 @@
 	grant_actions(src, host_actions)
 
 	if(HAS_TRAIT(host, ADULT_BLOOD_WORM_HOST_TRAIT))
-		grant_bloodworm_head(host, blood_worm_bodyparts)
+		grant_bloodworm_head(host)
 
 	var/cached_blood_volume = host.get_blood_volume()
 
@@ -128,7 +128,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 
 	if(HAS_TRAIT(host, ADULT_BLOOD_WORM_HOST_TRAIT))
-		remove_bloodworm_head(host, null)
+		remove_bloodworm_head(host)
 
 	REMOVE_TRAITS_IN(src, BLOOD_WORM_HOST_TRAIT)
 	REMOVE_TRAITS_IN(host, BLOOD_WORM_HOST_TRAIT)
