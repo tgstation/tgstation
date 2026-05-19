@@ -3,10 +3,10 @@
 	desc = "A wall at wall with bloody acid."
 	icon = 'icons/obj/wall_holes.dmi'
 	icon_state = "hole_worm_ver5"
-	anchored = TRUE
-	density = FALSE
+	// anchored = TRUE
+	// density = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 29)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole)
 
 /obj/structure/wall_hole/attack_hand(mob/user, list/modifiers)
 	. = ..()
