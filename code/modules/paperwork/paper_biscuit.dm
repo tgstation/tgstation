@@ -147,6 +147,8 @@
 	add_fingerprint(user)
 	if(!cracked)
 		return ..()
+	if(has_been_sealed)
+		return
 	if(tgui_alert(user, "Do you want to seal it? This can only be done once.", "Biscuit Sealing", list("Yes", "No")) != "Yes")
 		return
 	cracked = FALSE
