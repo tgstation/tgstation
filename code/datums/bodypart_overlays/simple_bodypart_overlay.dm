@@ -37,5 +37,7 @@
 	layers = EXTERNAL_FRONT
 
 /datum/bodypart_overlay/simple/growth_blood_worm_head
+
+	icon = 'icons/mob/human/species/misc/bodypart_overlay_simple.dmi'
 	icon_state = "blood_worm_head_grow_anim"
 	layers = ALL_EXTERNAL_OVERLAYS
