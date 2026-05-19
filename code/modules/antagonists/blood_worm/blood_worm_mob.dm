@@ -243,11 +243,8 @@
 	target.update_body()
 
 /mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/target)
-
-
 	var/list/saved_organs = list()
 	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
-
 	var/current_worm_head = target:get_bodypart(BODY_ZONE_HEAD)
 
 	for(var/obj/item/organ/organ_to_juggle in current_worm_head:contents)
@@ -263,7 +260,7 @@
 	// so new head will get these fucked implants and organs
 	target:regenerate_limb(BODY_ZONE_HEAD)
 	var/new_host_head = target:get_bodypart(BODY_ZONE_HEAD)
-	for(var/obj/item/organ/organ_to_trash in new_host_head:contents)
+	for(var/obj/item/organ/organ_to_trash in new_host_head:contents) // clean new head from organs
 		if(istype(organ_to_trash, /obj/item/organ))
 			organ_to_trash.Remove(target, special = TRUE)
 
