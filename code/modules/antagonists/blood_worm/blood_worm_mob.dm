@@ -238,16 +238,15 @@
 // all organs\content from the head must be saved with their state(damage or another vars)
 // so its must be the same content, which is collected and then inserted
 /mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target, list/blood_worm_bodyparts)
-	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
-	new_worm_head_to_attach.replace_limb(target, TRUE)
+	for(var/obj/item/bodypart/bodypart as anything in blood_worm_bodyparts)
+	// var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
+		bodypart.replace_limb(target, TRUE)
 	target.update_body()
 
 /mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/target, list/blood_worm_bodyparts)
 
 
 	var/list/saved_organs = list()
-	var/list/saved_implants = list()
-	var/datum/dna/host_dna = target:dna // dna will be used to regen the head, at which we will insert organs and implants
 	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
 
 	var/current_worm_head = target:get_bodypart(BODY_ZONE_HEAD)
