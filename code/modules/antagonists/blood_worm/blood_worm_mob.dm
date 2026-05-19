@@ -239,7 +239,7 @@
 // so its must be the same content, which is collected and then inserted
 /mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target)
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
-	bodypart.replace_limb(target, TRUE)
+	new_worm_head_to_attach.replace_limb(target, TRUE)
 	target.update_body()
 
 /mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/target)
