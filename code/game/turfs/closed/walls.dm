@@ -108,8 +108,8 @@
 /turf/closed/wall/proc/make_hole(atom/dir)
 	// getting turf before and after, where we then will place the holes
 	var/direction = dir
-	var/before_turf = get_step(src, turn(direction, 360))
-	var/next_turf = get_step(src, direction)
+	var/before_turf = get_step(src, turn(direction, 180))
+	var/next_turf = get_step(src, turn(direction, 180))
 
 	// cursed way to get the dir text
 	var/dir_text
