@@ -20,4 +20,12 @@
 			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 			update_appearance(UPDATE_ICON)
 	else
-		toggle_cabinet(user)
+		crawl_through_hole(user)
+
+/obj/structure/extinguisher_cabinet/proc/crawl_through_hole(mob/user)
+	// if(opened && broken)
+	// 	user.balloon_alert(user, "it's broken!")
+	// else
+	// 	playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
+	// 	opened = !opened
+	// 	update_appearance(UPDATE_ICON)
