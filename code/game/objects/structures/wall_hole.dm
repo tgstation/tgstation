@@ -3,8 +3,9 @@
 	desc = "A wall at wall with bloody acid."
 	icon = 'icons/obj/wall_holes.dmi'
 	icon_state = "hole_worm_ver5"
-	// anchored = TRUE
-	// density = FALSE
+	anchored = TRUE
+	density = FALSE
+	layer = SIGN_LAYER
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 0)
 
