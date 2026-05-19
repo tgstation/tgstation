@@ -6,7 +6,13 @@
 	anchored = TRUE
 	density = FALSE
 	layer = SIGN_LAYER // why?
+	plane = GAME_PLANE // wtf is that
+	opacity = FALSE // maybe
 	flags_1 = ON_BORDER_1
+
+/obj/structure/wall_hole/Initialize(mapload)
+	. = ..()
+	set_opacity(FALSE)
 
 // MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 29)
 
