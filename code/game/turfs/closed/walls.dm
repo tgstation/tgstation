@@ -127,14 +127,6 @@
 	new enter_hole(before_turf)
 	new exit_hole(next_turf)
 
-	// placing the holes from two sides of the wall
-	// new /obj/structure/wall_hole/directional/{dir}(before_turf)
-	// new /obj/structure/wall_hole/directional/{dir}(next_turf)
-
-// or maybe its better to make it just like(without vars)
-// new /obj/structure/wall_hole/directional/{dir}(get_turf(src, turn(dir, 180)))
-// new /obj/structure/wall_hole/directional/{dir}(get_turf(src, dir))
-
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)
 	if(girder_type)
