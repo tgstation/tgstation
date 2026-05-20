@@ -13,6 +13,8 @@
 
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
+	var/dir_for_hole = 1
+
 /datum/component/torn_wall/torn_wall_hole/Initialize(current_stage)
 	. = ..()
 	if (!isclosedturf(parent) || isindestructiblewall(parent))
@@ -63,7 +65,7 @@
 	// 	mineral_turf.gets_drilled()
 	// 	return
 
-	attached_wall.make_hole(dir = 1)
+	attached_wall.make_hole(dir_for_hole)
 
 /// Fix it up on weld
 // /datum/component/torn_wall/proc/on_welded(atom/source, mob/user, obj/item/tool)
