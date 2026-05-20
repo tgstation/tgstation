@@ -1,0 +1,5 @@
+author: "RusselNotSCP"
+delete-after: True
+changes:
+  - qol: "Aperitivo Liqueur's hunger inducing effect has been reduced"
+  - qol: "The Negroni and Spritz cocktails no longer induce hunger and now only reduce overfull-ness"
