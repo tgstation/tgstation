@@ -13,9 +13,9 @@
 
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
-	var/dir/dir_for_hole = 1
+	var/atom/dir/dir_for_hole = 1
 
-	var/dir/dir_of_tearer = 1
+	var/atom/dir/dir_of_tearer = 1
 
 /datum/component/torn_wall/torn_wall_hole/Initialize(current_stage, dir_of_tearer = 1)
 	. = ..()
