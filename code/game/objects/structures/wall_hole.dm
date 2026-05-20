@@ -7,7 +7,7 @@
 	density = FALSE
 	var/dir_text = "here the text of dir"
 
-	MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 29)
+	MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_hole, 31)
 
 /obj/structure/wall_hole/directional/north/Initialize(mapload)
 	. = ..()
