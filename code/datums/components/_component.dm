@@ -370,8 +370,11 @@
 					if((source in old_component.sources) && !old_component.allow_source_update(source))
 						return old_component // source already registered, no work to do
 
-					if(old_component.on_source_add(arglist(list(source) + raw_args.Copy(2))) == COMPONENT_INCOMPATIBLE)
+					var/source_result = old_component.on_source_add(arglist(list(source) + raw_args.Copy(2)))
+					if(source_result == COMPONENT_INCOMPATIBLE)
 						stack_trace("incompatible source added to a [old_component.type]. Args: [json_encode(raw_args)]")
+						return null
+					if(source_result == COMPONENT_REDUNDANT)
 						return null
 
 		else if(!new_component)
