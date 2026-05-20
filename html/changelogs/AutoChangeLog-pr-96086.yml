@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixed issues that arise from picking up two items cuffed to the same person"
+  - bugfix: "Fixed issues that arise from picking up two items cuffed to two different people"
+  - bugfix: "Fixed issues that arise from traveling z-levels while having a cuffed item"
