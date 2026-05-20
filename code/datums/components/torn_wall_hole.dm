@@ -15,11 +15,14 @@
 
 	var/dir_for_hole = 1
 
-/datum/component/torn_wall/torn_wall_hole/Initialize(current_stage)
+	var/dir_of_tearer = 1
+
+/datum/component/torn_wall/torn_wall_hole/Initialize(current_stage, dir_of_tearer = 1)
 	. = ..()
 	if (!isclosedturf(parent) || isindestructiblewall(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.current_stage = current_stage || src.current_stage
+
 
 /datum/component/torn_wall/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
