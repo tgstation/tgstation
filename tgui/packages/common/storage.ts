@@ -129,6 +129,7 @@ class IFrameIndexedDbBackend implements StorageBackend {
           message.data.key &&
           message.data.key === key
         ) {
+          clearTimeout(timeout);
           window.removeEventListener('message', listener);
           resolve(message.data.value);
         }
