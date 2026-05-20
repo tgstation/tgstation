@@ -107,6 +107,10 @@
 	name = "implanter (minimap)"
 	imp_type = /obj/item/implant/tacmap
 
+/obj/item/implanter/tacmap/nuclear
+	name = "implanter (operative minimap)"
+	imp_type = /obj/item/implant/tacmap/nuclear
+
 /obj/item/implantcase/tacmap
 	name = "implant case - 'Tactical Map'"
 	desc = "A glass case containing an implant with a virtual map."
