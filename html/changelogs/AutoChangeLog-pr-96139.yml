@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Hydroponics trays will no longer produce pollen particles if the plant in the tray has died."
