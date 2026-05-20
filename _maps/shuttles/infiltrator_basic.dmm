@@ -19,9 +19,9 @@
 /area/shuttle/syndicate/hallway)
 "ae" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/door/poddoor/shutters{
-	id = "syndieshutters";
-	name = "Blast Shutters"
+/obj/machinery/door/poddoor/shutters/syndicate{
+	name = "Blast Shutters";
+	id = "syndieshutters"
 	},
 /turf/open/floor/plating,
 /area/shuttle/syndicate/bridge)
