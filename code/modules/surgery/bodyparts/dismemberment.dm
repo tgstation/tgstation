@@ -26,7 +26,6 @@
 
 	drop_limb(dismembered = TRUE)
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
-	var/turf/owner_location = limb_owner.loc
 
 	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
 		return TRUE
