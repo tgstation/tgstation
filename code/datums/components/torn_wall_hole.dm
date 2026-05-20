@@ -11,6 +11,8 @@
  */
 /datum/component/torn_wall/torn_wall_hole
 
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+
 /datum/component/torn_wall/torn_wall_hole/Initialize(current_stage)
 	. = ..()
 	if (!isclosedturf(parent) || isindestructiblewall(parent))
@@ -53,6 +55,8 @@
 		return
 	var/turf/closed/wall/attached_wall = parent
 	playsound(attached_wall, 'sound/effects/meteorimpact.ogg', 100, vary = TRUE)
+
+	message_admins("so, hole appeared?")
 
 	// if(ismineralturf(attached_wall))
 	// 	var/turf/closed/mineral/mineral_turf = attached_wall
