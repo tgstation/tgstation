@@ -33,6 +33,7 @@ const testHubStorage = testGeneric(
   () => window.hubStorage && !!window.hubStorage.getItem,
 );
 
+const STORAGE_CDN_TIMEOUT = 5000;
 const persistedStorageKeys = ['panel-settings', 'chat-state', 'chat-messages'];
 
 class HubStorageBackend implements StorageBackend {
@@ -79,19 +80,25 @@ class IFrameIndexedDbBackend implements StorageBackend {
     iframe.src = Byond.storageCdn;
 
     const completePromise: Promise<boolean> = new Promise((resolve) => {
+      const timeout = setTimeout(() => resolve(false), STORAGE_CDN_TIMEOUT);
+      const resolveReady = (ready: boolean) => {
+        clearTimeout(timeout);
+        resolve(ready);
+      };
+
       fetch(Byond.storageCdn, { method: 'HEAD' })
         .then((response) => {
           if (response.status !== 200) {
-            resolve(false);
+            resolveReady(false);
           }
         })
         .catch(() => {
-          resolve(false);
+          resolveReady(false);
         });
 
       window.addEventListener('message', (message) => {
         if (message.data === 'ready') {
-          resolve(true);
+          resolveReady(true);
         }
       });
     });
