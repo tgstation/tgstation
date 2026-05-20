@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - qol: "Grills now have screentips when using tools on them."
-  - qol: "In-line with other deconstruction processes, grills now deconstruct on right click."
