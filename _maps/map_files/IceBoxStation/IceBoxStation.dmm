@@ -4910,18 +4910,6 @@
 /obj/structure/chair/sofa/corp,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
-"brX" = (
-/obj/machinery/conveyor{
-	id = "mining_internal"
-	},
-/obj/machinery/bouldertech/refinery/smelter{
-	dir = 4
-	},
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/mine/production)
 "brY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -79400,7 +79388,7 @@
 	id = "mining_internal"
 	},
 /obj/machinery/bouldertech/refinery/smelter{
-	dir = 4
+	dir = 1
 	},
 /obj/structure/railing/corner/end/flip{
 	dir = 4
