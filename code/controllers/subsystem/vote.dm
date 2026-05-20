@@ -312,8 +312,6 @@ SUBSYSTEM_DEF(vote)
 		"multiSelection" = current_vote?.choices_by_ckey,
 	)
 
-	data["voting"]= is_lower_admin ? voting : list()
-
 	var/list/all_vote_data = list()
 	for(var/vote_name in possible_votes)
 		var/datum/vote/vote = possible_votes[vote_name]
@@ -350,6 +348,7 @@ SUBSYSTEM_DEF(vote)
 
 	data["possibleVotes"] = all_vote_data
 	data["LastVoteTime"] = last_vote_time - world.time
+	data["deadVoteEnabled"] = CONFIG_GET(flag/no_dead_vote)
 
 	return data
 
@@ -374,7 +373,6 @@ SUBSYSTEM_DEF(vote)
 
 			voter.log_message("cancelled a vote.", LOG_ADMIN)
 			message_admins("[key_name_admin(voter)] has cancelled the current vote.")
-			SStgui.close_uis(src)
 			reset()
 			return TRUE
 
