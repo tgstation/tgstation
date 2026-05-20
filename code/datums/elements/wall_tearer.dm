@@ -62,6 +62,8 @@
 	if (is_valid != WALL_TEAR_ALLOWED)
 		return
 	tearer.do_attack_animation(target)
+	var/datum/component/torn_wall/torn_wall_hole/hole_component = target.AddComponent(/datum/component/torn_wall/torn_wall_hole)
+	hole_component.dir_for_hole = tearing_dir
 	target.AddComponent(/datum/component/torn_wall/torn_wall_hole, dir_of_tearer = tearing_dir)
 	is_valid = validate_target(target, tearer) // And now we might have just destroyed it
 	if (is_valid == WALL_TEAR_ALLOWED)

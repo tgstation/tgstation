@@ -22,6 +22,7 @@
 	if (!isclosedturf(parent) || isindestructiblewall(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.current_stage = current_stage || src.current_stage
+	src.dir_for_hole = dir_of_tearer
 
 
 /datum/component/torn_wall/RegisterWithParent()
