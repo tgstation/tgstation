@@ -80,11 +80,23 @@ class IFrameIndexedDbBackend implements StorageBackend {
     iframe.src = Byond.storageCdn;
 
     const completePromise: Promise<boolean> = new Promise((resolve) => {
-      const timeout = setTimeout(() => resolve(false), STORAGE_CDN_TIMEOUT);
+      const listener = (message: MessageEvent) => {
+        if (
+          message.source === iframe.contentWindow &&
+          message.data === 'ready'
+        ) {
+          resolveReady(true);
+        }
+      };
       const resolveReady = (ready: boolean) => {
         clearTimeout(timeout);
+        window.removeEventListener('message', listener);
         resolve(ready);
       };
+      const timeout = setTimeout(
+        () => resolveReady(false),
+        STORAGE_CDN_TIMEOUT,
+      );
 
       fetch(Byond.storageCdn, { method: 'HEAD' })
         .then((response) => {
@@ -96,11 +108,7 @@ class IFrameIndexedDbBackend implements StorageBackend {
           resolveReady(false);
         });
 
-      window.addEventListener('message', (message) => {
-        if (message.data === 'ready') {
-          resolveReady(true);
-        }
-      });
+      window.addEventListener('message', listener);
     });
 
     this.documentElement = document.body.appendChild(iframe);
@@ -115,11 +123,22 @@ class IFrameIndexedDbBackend implements StorageBackend {
 
   async get(key: string): Promise<any> {
     const promise = new Promise((resolve) => {
-      window.addEventListener('message', (message) => {
-        if (message.data.key && message.data.key === key) {
+      const listener = (message: MessageEvent) => {
+        if (
+          message.source === this.iframeWindow &&
+          message.data.key &&
+          message.data.key === key
+        ) {
+          window.removeEventListener('message', listener);
           resolve(message.data.value);
         }
-      });
+      };
+      const timeout = setTimeout(() => {
+        window.removeEventListener('message', listener);
+        resolve(undefined);
+      }, STORAGE_CDN_TIMEOUT);
+
+      window.addEventListener('message', listener);
     });
 
     this.iframeWindow.postMessage({ type: 'get', key: key }, '*');
