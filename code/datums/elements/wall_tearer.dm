@@ -74,7 +74,8 @@
 	if (!isclosedturf(target) || isindestructiblewall(target))
 		return WALL_TEAR_INVALID
 
-	// if (turf has )
+	if (HAS_TRAIT(target, TRAIT_WALL_HOLED))
+		return WALL_TEAR_INVALID
 
 	var/reinforced = istype(target, /turf/closed/wall/r_wall)
 	if (!allow_reinforced && reinforced)

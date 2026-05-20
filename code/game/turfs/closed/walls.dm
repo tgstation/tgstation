@@ -127,6 +127,8 @@
 	new enter_hole(before_turf)
 	new exit_hole(next_turf)
 
+	ADD_TRAIT(src, TRAIT_WALL_HOLED)
+
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)
 	if(girder_type)
