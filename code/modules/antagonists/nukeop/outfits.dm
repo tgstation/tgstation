@@ -95,6 +95,11 @@
 /datum/outfit/syndicate/full/loneop
 	name = "Syndicate Operative - Full Kit (Loneop)"
 	uplink_type = /obj/item/uplink/loneop
+	implants = list(
+		/obj/item/implant/weapons_auth,
+		/obj/item/implant/explosive,
+		/obj/item/implant/tacmap/nuclear/leader,
+	)
 
 /datum/outfit/syndicate/full/plasmaman
 	name = "Syndicate Operative - Full Kit (Plasmaman)"

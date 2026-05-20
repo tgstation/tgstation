@@ -923,6 +923,8 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	cyborg.remove_faction(FACTION_SILICON) //ai turrets
 	add_minimap_blip(cyborg, MINIMAP_NUKEOP_BORG_BLIP, minimap_icon)
+	var/datum/action/minimap_new/nuclear/tacmap_action = new
+	tacmap_action.Grant(cyborg)
 
 /obj/item/robot_model/syndicate/remove_module(obj/item/removed_module)
 	..()
@@ -954,6 +956,7 @@
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = list("north" = list(0, 3), "south" = list(0, 3), "east" = list(-1, 3), "west" = list(1, 3))
+	minimap_icon = "mediborg"
 
 /obj/item/robot_model/saboteur
 	name = "Syndicate Saboteur"
@@ -984,6 +987,7 @@
 	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
 	hat_offset = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(4, -4), "west" = list(-4, -4))
 	canDispose = TRUE
+	minimap_icon = "engiborg"
 	var/datum/weakref/thermal_vision_ref
 
 /datum/action/cooldown/borg_thermal

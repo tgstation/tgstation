@@ -28,7 +28,7 @@
 	// Toggle off if already visible.
 	if(has_minimap_huds(hud))
 		remove_huds(hud)
-		clicker.balloon_alert(clicker, "minimap hidden")
+		to_chat(clicker, span_notice("Minimap hidden."))
 		return
 
 	if(SEND_SIGNAL(clicker, COMSIG_MINIMAP_ACTION_TRIGGER) & COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL)
@@ -45,7 +45,7 @@
 		clicker.balloon_alert(clicker, "no minimap generated")
 		return
 	add_huds(hud, minimap)
-	clicker.balloon_alert(clicker, "minimap shown")
+	to_chat(clicker, span_notice("Minimap shown."))
 
 /datum/action/minimap_new/Grant(mob/grant_to)
 	. = ..()
