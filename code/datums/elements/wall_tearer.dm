@@ -61,7 +61,7 @@
 	if (is_valid != WALL_TEAR_ALLOWED)
 		return
 	tearer.do_attack_animation(target)
-	target.AddComponent(/datum/component/torn_wall)
+	target.AddComponent(/datum/component/torn_wall/torn_wall_hole)
 	is_valid = validate_target(target, tearer) // And now we might have just destroyed it
 	if (is_valid == WALL_TEAR_ALLOWED)
 		tearer.UnarmedAttack(target, proximity_flag = TRUE)

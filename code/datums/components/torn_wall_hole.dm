@@ -46,8 +46,7 @@
 // 	atom_parent.Shake(shake_interval = 0.1 SECONDS, duration = 0.5 SECONDS)
 
 /// Make the effect more dramatic
-/datum/component/torn_wall/torn_wall_hole/proc/increase_stage()
-	. = ..()
+/datum/component/torn_wall/torn_wall_hole/proc/increase_stage_of_holening()
 	current_stage++
 	if (current_stage != TORN_WALL_HOLED)
 		apply_visuals()
