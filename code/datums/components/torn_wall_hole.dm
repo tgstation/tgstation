@@ -65,7 +65,7 @@
 	// 	mineral_turf.gets_drilled()
 	// 	return
 
-	attached_wall.make_hole(dir_for_hole)
+	attached_wall.make_hole(dir = dir_for_hole)
 
 /// Fix it up on weld
 // /datum/component/torn_wall/proc/on_welded(atom/source, mob/user, obj/item/tool)
