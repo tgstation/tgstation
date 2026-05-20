@@ -48,7 +48,7 @@
 
 /datum/element/wall_tearer/proc/rip_and_tear(mob/living/tearer, atom/target)
 	// We need to do this three times to actually destroy it
-	var/atom/dir/tearing_dir = tearer.dir
+	var/atom/tearing_dir = tearer.dir
 	var/rip_time = (istype(target, /turf/closed/wall/r_wall) ? tear_time * reinforced_multiplier : tear_time) / 3
 	if (rip_time > 0)
 		tearer.visible_message(span_warning("[tearer] begins tearing through [target]!"))
