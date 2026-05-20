@@ -37,7 +37,7 @@
 	atom_parent.update_appearance(UPDATE_ICON)
 
 /datum/component/torn_wall/InheritComponent(datum/component/C, i_am_original)
-	increase_stage()
+	increase_stage_of_holening()
 
 /// Play a fun animation and make our wall look damaged
 // /datum/component/torn_wall/torn_wall_hole/proc/apply_visuals()
