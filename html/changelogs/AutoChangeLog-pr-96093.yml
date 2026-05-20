@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - admin: "Changing lobby music now updates for people in the lobby."

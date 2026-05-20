@@ -337,7 +337,20 @@
   Wisemonster:
   - rscadd: Added beartraps to the janitor closets of wawastation and icebox
 2026-05-20:
+  JohnFulpWillard:
+  - bugfix: Mafia players now get sent back to their bodies again post-game.
+  - admin: Admin players aren't forcefully put back into aghosted bodies after using
+      a temporary body spawner.
+  - admin: Changing lobby music now updates for people in the lobby.
+  Melbert:
+  - bugfix: Fixed issues that arise from picking up two items cuffed to the same person
+  - bugfix: Fixed issues that arise from picking up two items cuffed to two different
+      people
+  - bugfix: Fixed issues that arise from traveling z-levels while having a cuffed
+      item
   RusselNotSCP:
   - qol: Aperitivo Liqueur's hunger inducing effect has been reduced
   - qol: The Negroni and Spritz cocktails no longer induce hunger and now only reduce
       overfull-ness
+  SmArtKar:
+  - bugfix: Fixed shale and siderite biomes not spawning any features or mobs

@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Mafia players now get sent back to their bodies again post-game."
-  - admin: "Admin players aren't forcefully put back into aghosted bodies after using a temporary body spawner."
