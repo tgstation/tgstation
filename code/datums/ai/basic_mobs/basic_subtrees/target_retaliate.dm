@@ -9,12 +9,18 @@
 	var/hiding_place_key = BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION
 	/// do we check for faction?
 	var/check_faction = FALSE
+	/// Behavior to use to select our target
+	var/target_behavior = /datum/ai_behavior/target_from_retaliate_list
 
 /datum/ai_planning_subtree/target_retaliate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_BASIC_MOB_RETALIATE_LIST, target_key, targeting_strategy_key, hiding_place_key, check_faction)
+	controller.queue_behavior(target_behavior, BB_BASIC_MOB_RETALIATE_LIST, target_key, targeting_strategy_key, hiding_place_key, check_faction)
 
 /datum/ai_planning_subtree/target_retaliate/check_faction
 	check_faction = TRUE
+
+/// Variant which passes all remaining targets into a secondary list
+/datum/ai_planning_subtree/target_retaliate/check_faction/multi_target
+	target_behavior = /datum/ai_behavior/target_from_retaliate_list/multi_target
 
 /// Places a mob which you can see and who has recently attacked you into some 'run away from this' AI keys
 /// Can use a different targeting strategy than you use to select attack targets
@@ -90,3 +96,13 @@
 		return
 	var/usually_ignores_faction = controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || FALSE
 	controller.set_blackboard_key(BB_TEMPORARILY_IGNORE_FACTION, usually_ignores_faction)
+
+/// Everyone who didn't get targeted gets added into a secondary target list
+/datum/ai_behavior/target_from_retaliate_list/multi_target
+	/// Key to add everyone who didn't make the cut to
+	var/secondary_key = BB_BASIC_MOB_SECONDARY_TARGET_LIST
+
+/datum/ai_behavior/target_from_retaliate_list/multi_target/pick_final_target(datum/ai_controller/controller, list/enemies_list)
+	. = ..()
+	for (var/atom/thing as anything in enemies_list - .)
+		controller.insert_blackboard_key_lazylist(secondary_key, thing)

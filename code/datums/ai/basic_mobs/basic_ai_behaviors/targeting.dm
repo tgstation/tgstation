@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
 
-	controller.clear_blackboard_key(target_key)
+	clear_targets(controller, target_key)
 
 	// If we're using a field rn, just don't do anything yeah?
 	if(controller.blackboard[BB_FIND_TARGETS_FIELD(type)])
@@ -86,6 +86,9 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/datum/ai_behavior/find_potential_targets/proc/clear_targets(datum/ai_controller/controller, target_key)
+	controller.clear_blackboard_key(target_key)
 
 /datum/ai_behavior/find_potential_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
@@ -191,3 +194,18 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 /datum/ai_behavior/find_potential_targets/bigger_range
 	vision_range = 16
+
+/// Everyone who didn't get targeted gets added into a secondary target list
+/datum/ai_behavior/find_potential_targets/multi_target
+	/// Key to add everyone who didn't make the cut to
+	var/secondary_key = BB_BASIC_MOB_SECONDARY_TARGET_LIST
+
+/datum/ai_behavior/find_potential_targets/multi_target/clear_targets(datum/ai_controller/controller, target_key)
+	controller.clear_blackboard_key(target_key)
+	for (var/atom/thing as anything in controller.blackboard[secondary_key])
+		controller.remove_from_blackboard_lazylist_key(secondary_key, thing)
+
+/datum/ai_behavior/find_potential_targets/multi_target/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+	. = ..()
+	for (var/atom/thing as anything in filtered_targets - .)
+		controller.insert_blackboard_key_lazylist(secondary_key, thing)

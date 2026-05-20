@@ -1660,4 +1660,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Sunlight on this turf is blocked and thus you can't get solar power or whatever
 #define TRAIT_TURF_SUN_BLOCKED "turf_sun_blocked"
 
+/// Cannot be backstabbed with a crusher
+#define TRAIT_BACKSTAB_IMMUNE "backstab_immune"
+
 // END TRAIT DEFINES

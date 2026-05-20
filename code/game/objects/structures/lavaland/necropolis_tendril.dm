@@ -3,15 +3,17 @@
 	name = "necropolis tendril"
 	desc = "A vile tendril of corruption, originating deep underground. Terrible monsters are pouring out of it."
 
-	icon = 'icons/mob/simple/lavaland/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/tendril.dmi'
 	icon_state = "tendril"
+	pixel_w = -8
+	base_pixel_w = -8
 
 	faction = list(FACTION_MINING, FACTION_ASHWALKER)
 	max_mobs = 3
 	max_integrity = 250
 	mob_types = list(/mob/living/basic/mining/watcher)
 
-	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
+	move_resist = INFINITY // just killing it tears a massive hole in the ground, let's not move it
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	var/obj/effect/light_emitter/tendril/emitted_light
@@ -34,13 +36,18 @@
 GLOBAL_LIST_INIT(tendrils, list())
 /obj/structure/spawner/lavaland/Initialize(mapload)
 	. = ..()
-	emitted_light = new(loc)
+	update_appearance(UPDATE_OVERLAYS)
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
 			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
 	AddComponent(/datum/component/gps, "Eerie Signal")
 	GLOB.tendrils += src
+
+/obj/structure/spawner/lavaland/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
+	. += emissive_appearance(icon, "[icon_state]_e_bloom", src, effect_type = EMISSIVE_BLOOM)
 
 /obj/structure/spawner/lavaland/atom_deconstruct(disassembled)
 	new /obj/effect/collapse(loc)
