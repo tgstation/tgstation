@@ -64,6 +64,13 @@
 	if(isnull(user.mind))
 		return
 
+	var/obj/machinery/quantum_server/our_server = server_ref.resolve()
+	for(var/datum/weakref/ghostrole_weakref as anything in our_server.spawned_threat_refs)
+		var/mob/living/ghostrole = ghostrole_weakref.resolve()
+		if(ghostrole?.stat == CONSCIOUS && ghostrole.client && ghostrole.mind.has_antag_datum(/datum/antagonist/bitrunning_glitch))
+			balloon_alert(user, "the simulation refuses to let you leave!")
+			return
+
 	if(!HAS_TRAIT(user, TRAIT_TEMPORARY_BODY))
 		balloon_alert(user, "no connection detected")
 		return
