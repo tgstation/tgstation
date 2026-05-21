@@ -72,6 +72,8 @@
 	var/datum/action/cooldown/mob_cooldown/blood_worm/invade/invade_action
 	/// Typed, please initialize with a proper action subtype. (empty = no action)
 	var/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/cocoon_action
+	/// What is Typed? So need to give proper arg with type?
+	var/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/worm_head_action
 
 	// Host actions
 
@@ -122,6 +124,11 @@
 	if (ispath(transfuse_action, /datum/action/cooldown/mob_cooldown/blood_worm/inject))
 		transfuse_action = new transfuse_action(src)
 		host_actions += transfuse_action
+
+	if (ispath(worm_head_action, /datum/action/cooldown/mob_cooldown/blood_worm/worm_head))
+		worm_head_action = new worm_head_action(src)
+		host_actions += worm_head_action
+
 
 	eject_action = new(src)
 	host_actions += eject_action
