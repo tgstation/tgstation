@@ -405,6 +405,8 @@
 	var/obj/item/bodypart/cached_limb = limb // remove_wound() nulls limb so we have to track it locally
 	remove_wound(replaced=TRUE)
 	new_wound.apply_wound(cached_limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source, replacing = TRUE)
+	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED) && severity > new_wound.severity)
+		ADD_TRAIT(new_wound, TRAIT_WOUND_SCANNED, ANALYZER_TRAIT)
 	. = new_wound
 	qdel(src)
 
